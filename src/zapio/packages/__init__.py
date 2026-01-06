@@ -7,6 +7,7 @@ including toolchains, platforms, and libraries.
 from .arduino_core import ArduinoCore, ArduinoCoreError
 from .cache import Cache
 from .downloader import ChecksumError, DownloadError, ExtractionError, PackageDownloader
+from .esp32_platform import ESP32Platform, ESP32PlatformError
 from .toolchain import Toolchain, ToolchainError
 
 __all__ = [
@@ -19,4 +20,6 @@ __all__ = [
     "ToolchainError",
     "ArduinoCore",
     "ArduinoCoreError",
+    "ESP32Platform",
+    "ESP32PlatformError",
 ]

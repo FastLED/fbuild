@@ -84,6 +84,30 @@ class BoardConfig:
             "core": "arduino",
             "variant": "leonardo",
         },
+        "esp32-c3-devkitm-1": {
+            "name": "ESP32-C3 DevKit M-1",
+            "mcu": "esp32c3",
+            "f_cpu": "160000000L",
+            "board": "ESP32_DEV",
+            "core": "esp32",
+            "variant": "esp32c3",
+        },
+        "esp32-c6-devkitc-1": {
+            "name": "ESP32-C6 DevKit C-1",
+            "mcu": "esp32c6",
+            "f_cpu": "160000000L",
+            "board": "ESP32_DEV",
+            "core": "esp32",
+            "variant": "esp32c6",
+        },
+        "esp32-c6-devkitm-1": {
+            "name": "ESP32-C6 DevKit M-1",
+            "mcu": "esp32c6",
+            "f_cpu": "160000000L",
+            "board": "ESP32_DEV",
+            "core": "esp32",
+            "variant": "esp32c6",
+        },
     }
 
     def __init__(
@@ -121,6 +145,22 @@ class BoardConfig:
         self.vid = vid
         self.pid = pid
         self.extra_flags = extra_flags or {}
+
+    @property
+    def platform(self) -> str:
+        """
+        Detect platform type from MCU.
+
+        Returns:
+            Platform identifier: "avr" or "esp32"
+        """
+        if self.mcu.startswith("atmega"):
+            return "avr"
+        elif self.mcu.startswith("esp32"):
+            return "esp32"
+        else:
+            # Default to AVR for unknown
+            return "avr"
 
     @classmethod
     def from_boards_txt(

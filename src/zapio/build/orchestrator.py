@@ -21,11 +21,17 @@ from ..packages import Cache, Toolchain, ArduinoCore
 from ..packages.toolchain import ToolchainError
 from ..packages.arduino_core import ArduinoCoreError
 from ..packages.library_manager import LibraryManager, LibraryError
+from ..packages.esp32_platform import ESP32Platform
+from ..packages.esp32_toolchain import ESP32Toolchain
+from ..packages.esp32_framework import ESP32Framework
+from ..packages.esp32_library_manager import ESP32LibraryManager
 from .source_scanner import SourceScanner
 from .compiler import Compiler
 from .compiler import CompilerError as CompilerImportError
+from .esp32_compiler import ESP32Compiler
 from .linker import Linker, SizeInfo
 from .linker import LinkerError as LinkerImportError
+from .esp32_linker import ESP32Linker
 
 
 @dataclass
@@ -152,6 +158,25 @@ class BuildOrchestrator:
                 print(f"      Board: {board_config.name}")
                 print(f"      MCU: {board_config.mcu}")
                 print(f"      F_CPU: {board_config.f_cpu}")
+
+            # Detect platform and handle accordingly
+            if board_config.platform == "esp32":
+                if verbose_mode:
+                    print(f"      Platform: {board_config.platform} (using native ESP32 build)")
+                return self._build_esp32_native(
+                    project_dir, env_name, board_id, env_config, clean, verbose_mode, start_time
+                )
+            elif board_config.platform != "avr":
+                # Only AVR and ESP32 are supported natively
+                return BuildResult(
+                    success=False,
+                    hex_path=None,
+                    elf_path=None,
+                    size_info=None,
+                    build_time=time.time() - start_time,
+                    message=f"Platform '{board_config.platform}' is not supported. "
+                           f"Zapio currently supports 'avr' and 'esp32' platforms natively."
+                )
 
             # Phase 3: Ensure toolchain
             if verbose_mode:
@@ -373,6 +398,289 @@ class BuildOrchestrator:
                 message=f"Unexpected error: {e}"
             )
 
+    def _build_esp32_native(
+        self,
+        project_dir: Path,
+        env_name: str,
+        board_id: str,
+        env_config: dict,
+        clean: bool,
+        verbose: bool,
+        start_time: float
+    ) -> BuildResult:
+        """
+        Build ESP32 project using native build system (without PlatformIO).
+
+        Args:
+            project_dir: Project directory
+            env_name: Environment name
+            board_id: Board ID (e.g., esp32-c6-devkitm-1)
+            env_config: Environment configuration dict
+            clean: Whether to clean before build
+            verbose: Verbose output
+            start_time: Build start time
+
+        Returns:
+            BuildResult
+        """
+        try:
+            # Ensure cache is available
+            if self.cache is None:
+                return BuildResult(
+                    success=False,
+                    hex_path=None,
+                    elf_path=None,
+                    size_info=None,
+                    build_time=time.time() - start_time,
+                    message="Cache is required for ESP32 builds"
+                )
+
+            # Get platform URL from env_config
+            platform_url = env_config.get('platform')
+            if not platform_url:
+                return BuildResult(
+                    success=False,
+                    hex_path=None,
+                    elf_path=None,
+                    size_info=None,
+                    build_time=time.time() - start_time,
+                    message="No platform URL specified in platformio.ini"
+                )
+
+            if verbose:
+                print("[3/10] Initializing ESP32 platform...")
+
+            # Initialize platform
+            platform = ESP32Platform(self.cache, platform_url, show_progress=verbose)
+            platform.ensure_platform()
+
+            # Get board configuration
+            board_json = platform.get_board_json(board_id)
+            mcu = board_json.get("build", {}).get("mcu", "esp32c6")
+
+            if verbose:
+                print(f"      Board: {board_id}")
+                print(f"      MCU: {mcu}")
+
+            # Get required packages
+            packages = platform.get_required_packages(mcu)
+
+            # Initialize toolchain
+            if verbose:
+                print("[4/10] Initializing ESP32 toolchain...")
+
+            toolchain_url = packages.get("toolchain-riscv32-esp") or packages.get("toolchain-xtensa-esp-elf")
+            if not toolchain_url:
+                return BuildResult(
+                    success=False,
+                    hex_path=None,
+                    elf_path=None,
+                    size_info=None,
+                    build_time=time.time() - start_time,
+                    message="Toolchain URL not found in platform package"
+                )
+
+            # Determine toolchain type
+            toolchain_type = "riscv32-esp" if "riscv32" in toolchain_url else "xtensa-esp-elf"
+            toolchain = ESP32Toolchain(
+                self.cache,
+                toolchain_url,
+                toolchain_type,
+                show_progress=verbose
+            )
+            toolchain.ensure_toolchain()
+
+            # Initialize framework
+            if verbose:
+                print("[5/10] Initializing ESP32 framework...")
+
+            framework_url = packages.get("framework-arduinoespressif32")
+            libs_url = packages.get("framework-arduinoespressif32-libs")
+
+            if not framework_url or not libs_url:
+                return BuildResult(
+                    success=False,
+                    hex_path=None,
+                    elf_path=None,
+                    size_info=None,
+                    build_time=time.time() - start_time,
+                    message="Framework URLs not found in platform package"
+                )
+
+            framework = ESP32Framework(
+                self.cache,
+                framework_url,
+                libs_url,
+                show_progress=verbose
+            )
+            framework.ensure_framework()
+
+            # Setup build directory
+            build_dir = self.cache.get_build_dir(env_name)
+
+            if clean and build_dir.exists():
+                if verbose:
+                    print("[6/10] Cleaning build directory...")
+                import shutil
+                shutil.rmtree(build_dir)
+
+            build_dir.mkdir(parents=True, exist_ok=True)
+
+            # Initialize compiler
+            if verbose:
+                print("[7/10] Compiling Arduino core...")
+
+            compiler = ESP32Compiler(
+                platform,
+                toolchain,
+                framework,
+                board_id,
+                build_dir,
+                show_progress=verbose
+            )
+
+            # Compile Arduino core
+            core_obj_files = compiler.compile_core()
+            core_archive = compiler.create_core_archive(core_obj_files)
+
+            if verbose:
+                print(f"      Compiled {len(core_obj_files)} core source files")
+
+            # Handle library dependencies
+            lib_deps = env_config.get('lib_deps', '')
+            library_archives = []
+            library_include_paths = []
+
+            if lib_deps:
+                if verbose:
+                    print("[7.5/10] Processing library dependencies...")
+
+                # Parse lib_deps (can be string or list)
+                if isinstance(lib_deps, str):
+                    lib_specs = [dep.strip() for dep in lib_deps.split('\n') if dep.strip()]
+                else:
+                    lib_specs = lib_deps
+
+                if lib_specs:
+                    # Initialize library manager
+                    lib_manager = ESP32LibraryManager(build_dir)
+
+                    # Get compiler flags for library compilation
+                    lib_compiler_flags = compiler.get_base_flags()
+
+                    # Get include paths for library compilation
+                    lib_include_paths = compiler.get_include_paths()
+
+                    # Get toolchain bin path
+                    toolchain_bin_path = toolchain.get_bin_path()
+                    if toolchain_bin_path is None:
+                        return BuildResult(
+                            success=False,
+                            hex_path=None,
+                            elf_path=None,
+                            size_info=None,
+                            build_time=time.time() - start_time,
+                            message="Toolchain bin directory not found"
+                        )
+
+                    # Ensure libraries are downloaded and compiled
+                    libraries = lib_manager.ensure_libraries(
+                        lib_specs,
+                        toolchain_bin_path,
+                        lib_compiler_flags,
+                        lib_include_paths,
+                        show_progress=verbose
+                    )
+
+                    # Get library archives and include paths
+                    library_archives = [lib.archive_file for lib in libraries if lib.is_compiled]
+                    library_include_paths = lib_manager.get_library_include_paths()
+
+                    if verbose:
+                        print(f"      Compiled {len(libraries)} library dependencies")
+
+            # Add library include paths to compiler
+            if library_include_paths:
+                compiler.add_library_includes(library_include_paths)
+
+            # Find and compile sketch
+            if verbose:
+                print("[8/10] Compiling sketch...")
+
+            # Look for .ino files in the project directory
+            sketch_files = list(project_dir.glob("*.ino"))
+            if not sketch_files:
+                return BuildResult(
+                    success=False,
+                    hex_path=None,
+                    elf_path=None,
+                    size_info=None,
+                    build_time=time.time() - start_time,
+                    message=f"No .ino sketch file found in {project_dir}"
+                )
+
+            sketch_path = sketch_files[0]
+            sketch_obj_files = compiler.compile_sketch(sketch_path)
+
+            if verbose:
+                print(f"      Compiled {len(sketch_obj_files)} sketch file(s)")
+
+            # Initialize linker
+            if verbose:
+                print("[9/10] Linking firmware...")
+
+            linker = ESP32Linker(
+                platform,
+                toolchain,
+                framework,
+                board_id,
+                build_dir,
+                show_progress=verbose
+            )
+
+            # Link firmware
+            firmware_elf = linker.link(sketch_obj_files, core_archive, library_archives=library_archives)
+
+            # Generate binary
+            if verbose:
+                print("[10/10] Generating firmware binary...")
+
+            firmware_bin = linker.generate_bin(firmware_elf)
+
+            build_time = time.time() - start_time
+
+            if verbose:
+                print()
+                print("=" * 60)
+                print("BUILD SUCCESSFUL!")
+                print("=" * 60)
+                print(f"  Build time: {build_time:.2f}s")
+                print(f"  Firmware ELF: {firmware_elf}")
+                print(f"  Firmware BIN: {firmware_bin}")
+                print()
+
+            return BuildResult(
+                success=True,
+                hex_path=firmware_bin,  # Use .bin as hex_path for ESP32
+                elf_path=firmware_elf,
+                size_info=None,  # TODO: Add size info for ESP32
+                build_time=build_time,
+                message="Build successful (native ESP32 build)"
+            )
+
+        except Exception as e:
+            build_time = time.time() - start_time
+            import traceback
+            error_trace = traceback.format_exc()
+            return BuildResult(
+                success=False,
+                hex_path=None,
+                elf_path=None,
+                size_info=None,
+                build_time=build_time,
+                message=f"ESP32 native build failed: {e}\n\n{error_trace}"
+            )
+
     def _parse_config(self, project_dir: Path) -> PlatformIOConfig:
         """
         Parse platformio.ini configuration file.
@@ -430,11 +738,38 @@ class BuildOrchestrator:
             # Try to load from built-in defaults first
             return BoardConfig.from_board_id(board_id, overrides)
         except BoardConfigError:
-            # If that fails, we'd need boards.txt from Arduino core
-            # For now, just re-raise
+            # Check if this is an ESP32 board by looking at platform URL
+            platform_url = env_config.get('platform', '')
+            if 'espressif32' in platform_url or 'esp32' in platform_url.lower():
+                # For ESP32 boards, create a minimal BoardConfig
+                # The actual board JSON will be loaded by ESP32Platform
+                # Infer MCU from board_id (e.g., esp32dev -> esp32, esp32-s3-* -> esp32s3)
+                mcu = "esp32"
+                if "esp32s3" in board_id or "esp32-s3" in board_id:
+                    mcu = "esp32s3"
+                elif "esp32s2" in board_id or "esp32-s2" in board_id:
+                    mcu = "esp32s2"
+                elif "esp32c3" in board_id or "esp32-c3" in board_id:
+                    mcu = "esp32c3"
+                elif "esp32c6" in board_id or "esp32-c6" in board_id:
+                    mcu = "esp32c6"
+                elif "esp32h2" in board_id or "esp32-h2" in board_id:
+                    mcu = "esp32h2"
+
+                return BoardConfig(
+                    name=board_id,
+                    mcu=mcu,
+                    f_cpu="240000000L",  # Default ESP32 frequency
+                    board="ESP32_DEV",
+                    core="esp32",
+                    variant="esp32"
+                )
+
+            # If not ESP32, re-raise original error
             raise BuildOrchestratorError(
                 f"Unknown board: {board_id}\n"
-                "Supported boards: uno, mega, nano, leonardo"
+                "Supported AVR boards: uno, mega, nano, leonardo\n"
+                "For ESP32 boards, ensure platform URL contains 'espressif32'"
             )
 
     def _ensure_toolchain(self) -> Toolchain:
