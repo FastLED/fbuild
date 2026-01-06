@@ -2,8 +2,10 @@
 Unit tests for board configuration loader.
 """
 
-import pytest
 from pathlib import Path
+
+import pytest
+
 from zapio.config.board_config import BoardConfig, BoardConfigError
 
 
@@ -77,10 +79,7 @@ uno.pid=0x0043
     def test_init_with_required_fields(self):
         """Test initialization with required fields."""
         config = BoardConfig(
-            name="Arduino Uno",
-            mcu="atmega328p",
-            f_cpu="16000000L",
-            board="AVR_UNO"
+            name="Arduino Uno", mcu="atmega328p", f_cpu="16000000L", board="AVR_UNO"
         )
         assert config.name == "Arduino Uno"
         assert config.mcu == "atmega328p"
@@ -100,7 +99,7 @@ uno.pid=0x0043
             variant="standard",
             vid="0x2341",
             pid="0x0043",
-            extra_flags={"upload.speed": "115200"}
+            extra_flags={"upload.speed": "115200"},
         )
         assert config.vid == "0x2341"
         assert config.pid == "0x0043"
@@ -144,7 +143,7 @@ uno.build.f_cpu=16000000L
         """Test loading with overrides."""
         overrides = {
             "mcu": "atmega328pb",  # Override MCU
-            "f_cpu": "8000000L",   # Override frequency
+            "f_cpu": "8000000L",  # Override frequency
         }
         config = BoardConfig.from_boards_txt(minimal_boards_txt, "uno", overrides)
         assert config.mcu == "atmega328pb"
@@ -272,10 +271,7 @@ uno.build.board=AVR_UNO
     def test_get_defines_basic(self):
         """Test getting preprocessor defines."""
         config = BoardConfig(
-            name="Arduino Uno",
-            mcu="atmega328p",
-            f_cpu="16000000L",
-            board="AVR_UNO"
+            name="Arduino Uno", mcu="atmega328p", f_cpu="16000000L", board="AVR_UNO"
         )
         defines = config.get_defines()
         assert defines["F_CPU"] == "16000000L"
@@ -290,7 +286,7 @@ uno.build.board=AVR_UNO
             mcu="atmega328p",
             f_cpu="16000000L",
             board="AVR_TEST",
-            extra_flags={"define_custom": "1"}
+            extra_flags={"define_custom": "1"},
         )
         defines = config.get_defines()
         assert "CUSTOM" in defines
@@ -305,7 +301,7 @@ uno.build.board=AVR_UNO
             f_cpu="16000000L",
             board="AVR_UNO",
             core="arduino",
-            variant="standard"
+            variant="standard",
         )
         core_path = Path("/arduino/hardware/avr")
         includes = config.get_include_paths(core_path)
@@ -320,7 +316,7 @@ uno.build.board=AVR_UNO
             mcu="atmega2560",
             f_cpu="16000000L",
             board="AVR_MEGA2560",
-            variant="mega"
+            variant="mega",
         )
         core_path = Path("/arduino/hardware/avr")
         includes = config.get_include_paths(core_path)
@@ -334,7 +330,7 @@ uno.build.board=AVR_UNO
             mcu="atmega328p",
             f_cpu="16000000L",
             board="AVR_UNO",
-            core="arduino"
+            core="arduino",
         )
         core_path = Path("/arduino/hardware/avr")
         sources_dir = config.get_core_sources_dir(core_path)
@@ -348,7 +344,7 @@ uno.build.board=AVR_UNO
             mcu="atmega328p",
             f_cpu="16000000L",
             board="AVR_UNO",
-            variant="standard"
+            variant="standard",
         )
         core_path = Path("/arduino/hardware/avr")
         variant_dir = config.get_variant_dir(core_path)
@@ -358,10 +354,7 @@ uno.build.board=AVR_UNO
     def test_repr(self):
         """Test string representation."""
         config = BoardConfig(
-            name="Arduino Uno",
-            mcu="atmega328p",
-            f_cpu="16000000L",
-            board="AVR_UNO"
+            name="Arduino Uno", mcu="atmega328p", f_cpu="16000000L", board="AVR_UNO"
         )
         repr_str = repr(config)
         assert "Arduino Uno" in repr_str

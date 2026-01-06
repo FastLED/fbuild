@@ -11,6 +11,7 @@ from typing import Dict, Optional
 
 class BoardConfigError(Exception):
     """Exception raised for board configuration errors."""
+
     pass
 
 
@@ -126,7 +127,7 @@ class BoardConfig:
         cls,
         boards_txt_path: Path,
         board_id: str,
-        overrides: Optional[Dict[str, str]] = None
+        overrides: Optional[Dict[str, str]] = None,
     ) -> "BoardConfig":
         """
         Load board configuration from a boards.txt file.
@@ -156,9 +157,7 @@ class BoardConfig:
         board_data = cls._parse_boards_txt(boards_txt_path, board_id)
 
         if not board_data:
-            raise BoardConfigError(
-                f"Board '{board_id}' not found in {boards_txt_path}"
-            )
+            raise BoardConfigError(f"Board '{board_id}' not found in {boards_txt_path}")
 
         # Apply overrides from platformio.ini (board_build.*)
         if overrides:
@@ -175,9 +174,21 @@ class BoardConfig:
                 variant=board_data.get("variant", "standard"),
                 vid=board_data.get("vid"),
                 pid=board_data.get("pid"),
-                extra_flags={k: v for k, v in board_data.items()
-                           if k not in {"name", "mcu", "f_cpu", "board",
-                                      "core", "variant", "vid", "pid"}},
+                extra_flags={
+                    k: v
+                    for k, v in board_data.items()
+                    if k
+                    not in {
+                        "name",
+                        "mcu",
+                        "f_cpu",
+                        "board",
+                        "core",
+                        "variant",
+                        "vid",
+                        "pid",
+                    }
+                },
             )
         except KeyError as e:
             raise BoardConfigError(
@@ -186,9 +197,7 @@ class BoardConfig:
 
     @classmethod
     def from_board_id(
-        cls,
-        board_id: str,
-        overrides: Optional[Dict[str, str]] = None
+        cls, board_id: str, overrides: Optional[Dict[str, str]] = None
     ) -> "BoardConfig":
         """
         Load board configuration using built-in defaults.
@@ -258,19 +267,19 @@ class BoardConfig:
         prefix = f"{board_id}."
 
         try:
-            with open(boards_txt_path, 'r', encoding='utf-8') as f:
+            with open(boards_txt_path, "r", encoding="utf-8") as f:
                 for line in f:
                     line = line.strip()
 
                     # Skip comments and empty lines
-                    if not line or line.startswith('#'):
+                    if not line or line.startswith("#"):
                         continue
 
                     # Parse key=value pairs
-                    if '=' not in line:
+                    if "=" not in line:
                         continue
 
-                    key, value = line.split('=', 1)
+                    key, value = line.split("=", 1)
                     key = key.strip()
                     value = value.strip()
 
@@ -281,22 +290,20 @@ class BoardConfig:
                     # Remove board prefix and extract the field name
                     # uno.build.mcu -> mcu (from build.*)
                     # uno.name -> name
-                    field = key[len(prefix):]
+                    field = key[len(prefix) :]
 
                     # Handle build.* fields
-                    if field.startswith('build.'):
+                    if field.startswith("build."):
                         field = field[6:]  # Remove 'build.' prefix
 
                     # Handle upload.* fields (vid, pid)
-                    elif field.startswith('upload.'):
+                    elif field.startswith("upload."):
                         field = field[7:]  # Remove 'upload.' prefix
 
                     board_data[field] = value
 
         except Exception as e:
-            raise BoardConfigError(
-                f"Failed to parse {boards_txt_path}: {e}"
-            ) from e
+            raise BoardConfigError(f"Failed to parse {boards_txt_path}: {e}") from e
 
         return board_data
 
@@ -316,15 +323,15 @@ class BoardConfig:
             }
         """
         defines = {
-            'F_CPU': self.f_cpu,
-            'ARDUINO': '10819',  # Arduino version
-            f'ARDUINO_{self.board}': '',
-            'ARDUINO_ARCH_AVR': '',
+            "F_CPU": self.f_cpu,
+            "ARDUINO": "10819",  # Arduino version
+            f"ARDUINO_{self.board}": "",
+            "ARDUINO_ARCH_AVR": "",
         }
 
         # Add any extra defines from board configuration
         for key, value in self.extra_flags.items():
-            if key.startswith('define_'):
+            if key.startswith("define_"):
                 define_name = key[7:].upper()
                 defines[define_name] = value
 
@@ -347,8 +354,8 @@ class BoardConfig:
             ]
         """
         return [
-            core_path / 'cores' / self.core,
-            core_path / 'variants' / self.variant,
+            core_path / "cores" / self.core,
+            core_path / "variants" / self.variant,
         ]
 
     def get_core_sources_dir(self, core_path: Path) -> Path:
@@ -361,7 +368,7 @@ class BoardConfig:
         Returns:
             Path to core sources (e.g., cores/arduino)
         """
-        return core_path / 'cores' / self.core
+        return core_path / "cores" / self.core
 
     def get_variant_dir(self, core_path: Path) -> Path:
         """
@@ -373,7 +380,7 @@ class BoardConfig:
         Returns:
             Path to variant directory (e.g., variants/standard)
         """
-        return core_path / 'variants' / self.variant
+        return core_path / "variants" / self.variant
 
     def __repr__(self) -> str:
         """String representation of board configuration."""

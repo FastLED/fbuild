@@ -1,0 +1,280 @@
+"""Package downloader with progress tracking and checksum verification.
+
+This module handles downloading packages from URLs, extracting archives,
+and verifying integrity with checksums.
+"""
+
+import hashlib
+import tarfile
+import zipfile
+from pathlib import Path
+from typing import TYPE_CHECKING, Any, Optional
+from urllib.parse import urlparse
+
+if TYPE_CHECKING:
+    import requests
+    from tqdm import tqdm
+
+try:
+    import requests  # type: ignore[import-untyped]
+    from tqdm import tqdm  # type: ignore[import-untyped]
+
+    REQUESTS_AVAILABLE = True
+except ImportError:
+    REQUESTS_AVAILABLE = False
+    requests: Any = None
+    tqdm: Any = None
+
+
+class DownloadError(Exception):
+    """Raised when download fails."""
+
+    pass
+
+
+class ChecksumError(Exception):
+    """Raised when checksum verification fails."""
+
+    pass
+
+
+class ExtractionError(Exception):
+    """Raised when archive extraction fails."""
+
+    pass
+
+
+class PackageDownloader:
+    """Downloads and extracts packages with progress tracking."""
+
+    def __init__(self, chunk_size: int = 8192):
+        """Initialize downloader.
+
+        Args:
+            chunk_size: Size of chunks for downloading and hashing
+        """
+        self.chunk_size = chunk_size
+
+        if not REQUESTS_AVAILABLE:
+            raise ImportError(
+                "requests and tqdm are required for downloading. "
+                "Install with: pip install requests tqdm"
+            )
+
+    def download(
+        self,
+        url: str,
+        dest_path: Path,
+        checksum: Optional[str] = None,
+        show_progress: bool = True,
+    ) -> Path:
+        """Download a file from a URL.
+
+        Args:
+            url: URL to download from
+            dest_path: Destination file path
+            checksum: Optional SHA256 checksum for verification
+            show_progress: Whether to show progress bar
+
+        Returns:
+            Path to the downloaded file
+
+        Raises:
+            DownloadError: If download fails
+            ChecksumError: If checksum verification fails
+        """
+        dest_path = Path(dest_path)
+        dest_path.parent.mkdir(parents=True, exist_ok=True)
+
+        # Use temporary file during download
+        temp_file = dest_path.with_suffix(dest_path.suffix + ".tmp")
+
+        try:
+            # Start download with streaming
+            response = requests.get(url, stream=True, timeout=30)
+            response.raise_for_status()
+
+            # Get file size for progress bar
+            total_size = int(response.headers.get("content-length", 0))
+
+            # Setup progress bar
+            progress_bar = None
+            if show_progress and total_size > 0:
+                filename = Path(urlparse(url).path).name
+                progress_bar = tqdm(
+                    total=total_size,
+                    unit="B",
+                    unit_scale=True,
+                    unit_divisor=1024,
+                    desc=f"Downloading {filename}",
+                )
+
+            # Download file
+            sha256 = hashlib.sha256() if checksum else None
+
+            with open(temp_file, "wb") as f:
+                for chunk in response.iter_content(chunk_size=self.chunk_size):
+                    if chunk:
+                        f.write(chunk)
+                        if progress_bar:
+                            progress_bar.update(len(chunk))
+                        if sha256:
+                            sha256.update(chunk)
+
+            if progress_bar:
+                progress_bar.close()
+
+            # Verify checksum if provided
+            if checksum and sha256:
+                actual_checksum = sha256.hexdigest()
+                if actual_checksum.lower() != checksum.lower():
+                    temp_file.unlink()
+                    raise ChecksumError(
+                        f"Checksum mismatch for {url}\n"
+                        f"Expected: {checksum}\n"
+                        f"Got: {actual_checksum}"
+                    )
+
+            # Move temp file to final destination
+            if dest_path.exists():
+                dest_path.unlink()
+            temp_file.rename(dest_path)
+
+            return dest_path
+
+        except requests.RequestException as e:
+            if temp_file.exists():
+                temp_file.unlink()
+            raise DownloadError(f"Failed to download {url}: {e}")
+
+        except Exception:
+            if temp_file.exists():
+                temp_file.unlink()
+            raise
+
+    def extract_archive(
+        self, archive_path: Path, dest_dir: Path, show_progress: bool = True
+    ) -> Path:
+        """Extract an archive file.
+
+        Supports .tar.gz, .tar.bz2, .tar.xz, and .zip formats.
+
+        Args:
+            archive_path: Path to the archive file
+            dest_dir: Destination directory for extraction
+            show_progress: Whether to show progress information
+
+        Returns:
+            Path to the extracted directory
+
+        Raises:
+            ExtractionError: If extraction fails
+        """
+        archive_path = Path(archive_path)
+        dest_dir = Path(dest_dir)
+
+        if not archive_path.exists():
+            raise ExtractionError(f"Archive not found: {archive_path}")
+
+        dest_dir.mkdir(parents=True, exist_ok=True)
+
+        try:
+            if show_progress:
+                print(f"Extracting {archive_path.name}...")
+
+            # Determine archive type and extract
+            if archive_path.suffix == ".zip":
+                self._extract_zip(archive_path, dest_dir)
+            elif archive_path.name.endswith((".tar.gz", ".tar.bz2", ".tar.xz")):
+                self._extract_tar(archive_path, dest_dir)
+            else:
+                raise ExtractionError(
+                    f"Unsupported archive format: {archive_path.suffix}"
+                )
+
+            return dest_dir
+
+        except Exception as e:
+            raise ExtractionError(f"Failed to extract {archive_path}: {e}")
+
+    def _extract_tar(self, archive_path: Path, dest_dir: Path) -> None:
+        """Extract a tar archive.
+
+        Args:
+            archive_path: Path to tar archive
+            dest_dir: Destination directory
+        """
+        with tarfile.open(archive_path, "r:*") as tar:
+            tar.extractall(dest_dir)
+
+    def _extract_zip(self, archive_path: Path, dest_dir: Path) -> None:
+        """Extract a zip archive.
+
+        Args:
+            archive_path: Path to zip archive
+            dest_dir: Destination directory
+        """
+        with zipfile.ZipFile(archive_path, "r") as zip_file:
+            zip_file.extractall(dest_dir)
+
+    def download_and_extract(
+        self,
+        url: str,
+        cache_dir: Path,
+        extract_dir: Path,
+        checksum: Optional[str] = None,
+        show_progress: bool = True,
+    ) -> Path:
+        """Download and extract a package in one operation.
+
+        Args:
+            url: URL to download from
+            cache_dir: Directory to cache the downloaded archive
+            extract_dir: Directory to extract to
+            checksum: Optional SHA256 checksum
+            show_progress: Whether to show progress
+
+        Returns:
+            Path to the extracted directory
+        """
+        # Determine archive filename from URL
+        filename = Path(urlparse(url).path).name
+        archive_path = cache_dir / filename
+
+        # Download if not cached
+        if not archive_path.exists():
+            self.download(url, archive_path, checksum, show_progress)
+        elif show_progress:
+            print(f"Using cached {filename}")
+
+        # Extract
+        return self.extract_archive(archive_path, extract_dir, show_progress)
+
+    def verify_checksum(self, file_path: Path, expected: str) -> bool:
+        """Verify SHA256 checksum of a file.
+
+        Args:
+            file_path: Path to file to verify
+            expected: Expected SHA256 checksum (hex string)
+
+        Returns:
+            True if checksum matches
+
+        Raises:
+            ChecksumError: If checksum doesn't match
+        """
+        sha256 = hashlib.sha256()
+
+        with open(file_path, "rb") as f:
+            for chunk in iter(lambda: f.read(self.chunk_size), b""):
+                sha256.update(chunk)
+
+        actual = sha256.hexdigest()
+        if actual.lower() != expected.lower():
+            raise ChecksumError(
+                f"Checksum mismatch for {file_path}\n"
+                f"Expected: {expected}\n"
+                f"Got: {actual}"
+            )
+
+        return True

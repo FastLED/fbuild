@@ -1,0 +1,288 @@
+"""Unit tests for toolchain management."""
+
+import sys
+import tempfile
+from pathlib import Path
+from unittest.mock import patch
+
+import pytest
+
+from zapio.packages.cache import Cache
+from zapio.packages.toolchain import Toolchain, ToolchainError
+
+
+class TestToolchain:
+    """Test cases for Toolchain class."""
+
+    def test_detect_platform_windows(self):
+        """Test platform detection for Windows."""
+        with patch("platform.system", return_value="Windows"):
+            with patch("platform.machine", return_value="AMD64"):
+                plat, arch = Toolchain.detect_platform()
+                assert plat == "windows"
+                assert arch == "x86_64"
+
+    def test_detect_platform_linux_x86_64(self):
+        """Test platform detection for Linux x86_64."""
+        with patch("platform.system", return_value="Linux"):
+            with patch("platform.machine", return_value="x86_64"):
+                plat, arch = Toolchain.detect_platform()
+                assert plat == "linux"
+                assert arch == "x86_64"
+
+    def test_detect_platform_linux_arm(self):
+        """Test platform detection for Linux ARM."""
+        with patch("platform.system", return_value="Linux"):
+            with patch("platform.machine", return_value="aarch64"):
+                plat, arch = Toolchain.detect_platform()
+                assert plat == "linux"
+                assert arch == "aarch64"
+
+    def test_detect_platform_macos(self):
+        """Test platform detection for macOS."""
+        with patch("platform.system", return_value="Darwin"):
+            with patch("platform.machine", return_value="x86_64"):
+                plat, arch = Toolchain.detect_platform()
+                assert plat == "darwin"
+                assert arch == "x86_64"
+
+    def test_detect_platform_unsupported(self):
+        """Test error on unsupported platform."""
+        with patch("platform.system", return_value="UnknownOS"):
+            with pytest.raises(ToolchainError, match="Unsupported platform"):
+                Toolchain.detect_platform()
+
+    def test_get_package_info_windows(self):
+        """Test getting package info for Windows."""
+        with patch.object(
+            Toolchain, "detect_platform", return_value=("windows", "x86_64")
+        ):
+            with tempfile.TemporaryDirectory() as temp_dir:
+                cache = Cache(Path(temp_dir))
+                toolchain = Toolchain(cache)
+
+                package_name, checksum = toolchain.get_package_info()
+                assert package_name.endswith(".zip")
+                assert "mingw32" in package_name
+                assert checksum is not None
+
+    def test_get_package_info_linux(self):
+        """Test getting package info for Linux."""
+        with patch.object(
+            Toolchain, "detect_platform", return_value=("linux", "x86_64")
+        ):
+            with tempfile.TemporaryDirectory() as temp_dir:
+                cache = Cache(Path(temp_dir))
+                toolchain = Toolchain(cache)
+
+                package_name, checksum = toolchain.get_package_info()
+                assert package_name.endswith(".tar.bz2")
+                assert "linux-gnu" in package_name
+                assert checksum is not None
+
+    def test_get_package_info_macos(self):
+        """Test getting package info for macOS."""
+        with patch.object(
+            Toolchain, "detect_platform", return_value=("darwin", "x86_64")
+        ):
+            with tempfile.TemporaryDirectory() as temp_dir:
+                cache = Cache(Path(temp_dir))
+                toolchain = Toolchain(cache)
+
+                package_name, checksum = toolchain.get_package_info()
+                assert package_name.endswith(".tar.bz2")
+                assert "darwin" in package_name
+                assert checksum is not None
+
+    def test_get_package_info_unsupported_platform(self):
+        """Test error for unsupported platform."""
+        with patch.object(
+            Toolchain, "detect_platform", return_value=("freebsd", "x86_64")
+        ):
+            with tempfile.TemporaryDirectory() as temp_dir:
+                cache = Cache(Path(temp_dir))
+                toolchain = Toolchain(cache)
+
+                with pytest.raises(ToolchainError, match="No toolchain package"):
+                    toolchain.get_package_info()
+
+    def test_verify_tools_success(self):
+        """Test tool verification succeeds with all tools present."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            cache = Cache(Path(temp_dir))
+            toolchain = Toolchain(cache)
+
+            # Create toolchain directory structure with all required components
+            toolchain_path = Path(temp_dir) / "toolchain"
+
+            # Create required directories
+            bin_dir = toolchain_path / "bin"
+            bin_dir.mkdir(parents=True)
+            (toolchain_path / "avr" / "include" / "avr").mkdir(parents=True)
+            (toolchain_path / "avr" / "lib").mkdir(parents=True)
+            (toolchain_path / "lib" / "gcc" / "avr" / "7.3.0").mkdir(parents=True)
+
+            # Create required executables
+            exe_suffix = ".exe" if sys.platform == "win32" else ""
+            for tool in Toolchain.REQUIRED_TOOLS:
+                (bin_dir / f"{tool}{exe_suffix}").touch()
+
+            # Create required headers
+            for header in ["io.h", "interrupt.h"]:
+                (toolchain_path / "avr" / "include" / "avr" / header).touch()
+            for header in ["stdio.h", "stdlib.h", "string.h"]:
+                (toolchain_path / "avr" / "include" / header).touch()
+
+            # Create required libraries
+            (toolchain_path / "lib" / "gcc" / "avr" / "7.3.0" / "libgcc.a").touch()
+            (toolchain_path / "avr" / "lib" / "libc.a").touch()
+            (toolchain_path / "avr" / "lib" / "libm.a").touch()
+
+            assert toolchain._verify_toolchain(toolchain_path)
+
+    def test_verify_tools_missing_bin_dir(self):
+        """Test tool verification fails when bin directory missing."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            cache = Cache(Path(temp_dir))
+            toolchain = Toolchain(cache)
+
+            toolchain_path = Path(temp_dir) / "toolchain"
+            toolchain_path.mkdir()
+
+            assert not toolchain._verify_toolchain(toolchain_path)
+
+    def test_verify_tools_missing_tool(self):
+        """Test tool verification fails when a tool is missing."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            cache = Cache(Path(temp_dir))
+            toolchain = Toolchain(cache)
+
+            toolchain_path = Path(temp_dir) / "toolchain"
+            bin_dir = toolchain_path / "bin"
+            bin_dir.mkdir(parents=True)
+
+            # Create only some tools
+            exe_suffix = ".exe" if sys.platform == "win32" else ""
+            (bin_dir / f"avr-gcc{exe_suffix}").touch()
+
+            assert not toolchain._verify_toolchain(toolchain_path)
+
+    def test_get_tool_path_not_initialized(self):
+        """Test error when getting tool path before initialization."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            cache = Cache(Path(temp_dir))
+            toolchain = Toolchain(cache)
+
+            with pytest.raises(ToolchainError, match="not initialized"):
+                toolchain.get_tool_path("avr-gcc")
+
+    def test_get_tool_path_success(self):
+        """Test getting tool path after initialization."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            cache = Cache(Path(temp_dir))
+            toolchain = Toolchain(cache)
+
+            # Setup a fake toolchain
+            toolchain_path = Path(temp_dir) / "toolchain"
+            bin_dir = toolchain_path / "bin"
+            bin_dir.mkdir(parents=True)
+
+            exe_suffix = ".exe" if sys.platform == "win32" else ""
+            gcc_path = bin_dir / f"avr-gcc{exe_suffix}"
+            gcc_path.touch()
+
+            toolchain._toolchain_path = toolchain_path
+
+            result = toolchain.get_tool_path("avr-gcc")
+            assert result == gcc_path
+
+    def test_get_tool_path_not_found(self):
+        """Test error when tool doesn't exist."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            cache = Cache(Path(temp_dir))
+            toolchain = Toolchain(cache)
+
+            toolchain_path = Path(temp_dir) / "toolchain"
+            bin_dir = toolchain_path / "bin"
+            bin_dir.mkdir(parents=True)
+
+            toolchain._toolchain_path = toolchain_path
+
+            with pytest.raises(ToolchainError, match="Tool not found"):
+                toolchain.get_tool_path("avr-gcc")
+
+    def test_get_all_tools(self):
+        """Test getting all tool paths."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            cache = Cache(Path(temp_dir))
+            toolchain = Toolchain(cache)
+
+            # Setup a fake toolchain
+            toolchain_path = Path(temp_dir) / "toolchain"
+            bin_dir = toolchain_path / "bin"
+            bin_dir.mkdir(parents=True)
+
+            exe_suffix = ".exe" if sys.platform == "win32" else ""
+            for tool in Toolchain.REQUIRED_TOOLS:
+                (bin_dir / f"{tool}{exe_suffix}").touch()
+
+            toolchain._toolchain_path = toolchain_path
+
+            tools = toolchain.get_all_tools()
+            assert len(tools) == len(Toolchain.REQUIRED_TOOLS)
+            for tool_name in Toolchain.REQUIRED_TOOLS:
+                assert tool_name in tools
+                assert tools[tool_name].exists()
+
+    def test_ensure_toolchain_cached(self):
+        """Test using cached toolchain."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            cache = Cache(Path(temp_dir))
+            cache.ensure_directories()
+            toolchain = Toolchain(cache)
+
+            # Create a fake cached toolchain with new URL-based structure
+            toolchain_path = cache.get_toolchain_path(
+                Toolchain.BASE_URL, Toolchain.VERSION
+            )
+
+            # Create required directories
+            bin_dir = toolchain_path / "bin"
+            bin_dir.mkdir(parents=True)
+            (toolchain_path / "avr" / "include" / "avr").mkdir(parents=True)
+            (toolchain_path / "avr" / "include").mkdir(parents=True, exist_ok=True)
+            (toolchain_path / "avr" / "lib").mkdir(parents=True)
+            (toolchain_path / "lib" / "gcc" / "avr" / "7.3.0").mkdir(parents=True)
+
+            # Create required executables
+            exe_suffix = ".exe" if sys.platform == "win32" else ""
+            for tool in Toolchain.REQUIRED_TOOLS:
+                (bin_dir / f"{tool}{exe_suffix}").touch()
+
+            # Create required headers
+            for header in ["io.h", "interrupt.h"]:
+                (toolchain_path / "avr" / "include" / "avr" / header).touch()
+            for header in ["stdio.h", "stdlib.h", "string.h"]:
+                (toolchain_path / "avr" / "include" / header).touch()
+
+            # Create required libraries
+            (toolchain_path / "lib" / "gcc" / "avr" / "7.3.0" / "libgcc.a").touch()
+            (toolchain_path / "avr" / "lib" / "libc.a").touch()
+            (toolchain_path / "avr" / "lib" / "libm.a").touch()
+
+            # Ensure toolchain (should use cache)
+            result = toolchain.ensure_toolchain()
+            assert result == toolchain_path
+
+    def test_architecture_fallback(self):
+        """Test architecture fallback to x86_64."""
+        with patch.object(
+            Toolchain, "detect_platform", return_value=("linux", "unknown_arch")
+        ):
+            with tempfile.TemporaryDirectory() as temp_dir:
+                cache = Cache(Path(temp_dir))
+                toolchain = Toolchain(cache)
+
+                # Should fall back to x86_64
+                package_name, _ = toolchain.get_package_info()
+                assert "x86_64" in package_name

@@ -11,7 +11,9 @@ keywords = ["embedded", "arduino", "platformio", "compiler", "toolchain", "firmw
 license = { text = "BSD 3-Clause License" }
 classifiers = ["Programming Language :: Python :: 3"]
 dependencies = [
-
+    "requests>=2.28.0",
+    "tqdm>=4.64.0",
+    "click>=8.0.0",
 ]
 # Change this with the version number bump.
 version = "0.0.1"
@@ -48,6 +50,10 @@ profile = "black"
 [tool.mypy]
 ignore_missing_imports = true
 disable_error_code = ["import-untyped"]
+
+[tool.pyright]
+reportMissingImports = "none"
+extraPaths = ["src"]
 
 [project.scripts]
 zap = "zapio.cli:main"

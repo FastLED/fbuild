@@ -1,17 +1,18 @@
-// Blink LED example for Arduino Uno
-// This is the minimal test case for validating the build system
+// Arduino Blink Example
+// This is a standard "Hello World" program for embedded systems
+// It blinks the built-in LED on pin 13
 
 void setup() {
-  // Initialize built-in LED pin as output
+  // Initialize the built-in LED pin as an output
   pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop() {
-  // Turn LED on
+  // Turn the LED on
   digitalWrite(LED_BUILTIN, HIGH);
-  delay(1000);
+  delay(1000);  // Wait for 1 second
 
-  // Turn LED off
+  // Turn the LED off
   digitalWrite(LED_BUILTIN, LOW);
-  delay(1000);
+  delay(1000);  // Wait for 1 second
 }

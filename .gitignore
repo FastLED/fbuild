@@ -14,7 +14,7 @@ __pycache__/
 .Python
 prod_env/
 data/
-build/
+./build/
 develop-eggs/
 dist/
 downloads/
@@ -32,6 +32,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+.zap
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

@@ -12,6 +12,7 @@ from typing import Dict, List, Optional
 
 class PlatformIOConfigError(Exception):
     """Exception raised for platformio.ini configuration errors."""
+
     pass
 
 
@@ -52,12 +53,11 @@ class PlatformIOConfig:
             raise PlatformIOConfigError(f"Configuration file not found: {ini_path}")
 
         self.config = configparser.ConfigParser(
-            allow_no_value=True,
-            interpolation=configparser.ExtendedInterpolation()
+            allow_no_value=True, interpolation=configparser.ExtendedInterpolation()
         )
 
         try:
-            self.config.read(ini_path, encoding='utf-8')
+            self.config.read(ini_path, encoding="utf-8")
         except configparser.Error as e:
             raise PlatformIOConfigError(f"Failed to parse {ini_path}: {e}") from e
 
@@ -73,8 +73,8 @@ class PlatformIOConfig:
         """
         envs = []
         for section in self.config.sections():
-            if section.startswith('env:'):
-                env_name = section.split(':', 1)[1]
+            if section.startswith("env:"):
+                env_name = section.split(":", 1)[1]
                 envs.append(env_name)
         return envs
 
@@ -95,10 +95,10 @@ class PlatformIOConfig:
             config.get_env_config('uno')
             # Returns: {'platform': 'atmelavr', 'board': 'uno', 'framework': 'arduino'}
         """
-        section = f'env:{env_name}'
+        section = f"env:{env_name}"
 
         if section not in self.config:
-            available = ', '.join(self.get_environments())
+            available = ", ".join(self.get_environments())
             raise PlatformIOConfigError(
                 f"Environment '{env_name}' not found. "
                 f"Available environments: {available or 'none'}"
@@ -112,11 +112,11 @@ class PlatformIOConfig:
             if value is not None:
                 env_config[key] = value.strip()
             else:
-                env_config[key] = ''
+                env_config[key] = ""
 
         # Also check if there's a base [env] section to inherit from
-        if 'env' in self.config:
-            base_config = dict(self.config['env'])
+        if "env" in self.config:
+            base_config = dict(self.config["env"])
             # Environment-specific values override base values
             env_config = {**base_config, **env_config}
 
@@ -145,7 +145,7 @@ class PlatformIOConfig:
             Returns: ['-DDEBUG', '-DVERSION=1.0']
         """
         env_config = self.get_env_config(env_name)
-        build_flags_str = env_config.get('build_flags', '')
+        build_flags_str = env_config.get("build_flags", "")
 
         if not build_flags_str:
             return []
@@ -171,15 +171,15 @@ class PlatformIOConfig:
             Returns: ['SPI', 'Wire']
         """
         env_config = self.get_env_config(env_name)
-        lib_deps_str = env_config.get('lib_deps', '')
+        lib_deps_str = env_config.get("lib_deps", "")
 
         if not lib_deps_str:
             return []
 
         # Split on newlines and commas, strip whitespace, filter empty
         deps = []
-        for line in lib_deps_str.split('\n'):
-            for dep in line.split(','):
+        for line in lib_deps_str.split("\n"):
+            for dep in line.split(","):
                 dep = dep.strip()
                 if dep:
                     deps.append(dep)
@@ -195,7 +195,7 @@ class PlatformIOConfig:
         Returns:
             True if environment exists, False otherwise
         """
-        return f'env:{env_name}' in self.config
+        return f"env:{env_name}" in self.config
 
     def get_default_environment(self) -> Optional[str]:
         """
@@ -209,11 +209,11 @@ class PlatformIOConfig:
             Otherwise returns the first environment found
         """
         # Check for explicit default_envs in [platformio] section
-        if 'platformio' in self.config:
-            default_envs = self.config['platformio'].get('default_envs', '').strip()
+        if "platformio" in self.config:
+            default_envs = self.config["platformio"].get("default_envs", "").strip()
             if default_envs:
                 # Can be comma-separated, take the first one
-                return default_envs.split(',')[0].strip()
+                return default_envs.split(",")[0].strip()
 
         # Fall back to first environment
         envs = self.get_environments()

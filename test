@@ -1,5 +1,19 @@
 #!/bin/bash
 
 set -e
-echo "Running unittests"
-uv run pytest -n auto tests -v --durations=0
+
+echo "========================================"
+echo "Running unit tests (parallel)"
+echo "========================================"
+uv run pytest -n auto tests/unit -v --durations=0
+
+echo ""
+echo "========================================"
+echo "Running integration tests (serial)"
+echo "========================================"
+uv run pytest tests/integration -v --durations=0
+
+echo ""
+echo "========================================"
+echo "All tests completed successfully!"
+echo "========================================"

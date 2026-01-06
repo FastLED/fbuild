@@ -13,7 +13,8 @@ class MainTester(unittest.TestCase):
 
     def test_imports(self) -> None:
         """Test command line interface (CLI)."""
-        rtn = os.system(COMMAND)
+        # Test that the CLI can be invoked with --help (which returns 0)
+        rtn = os.system(f"{COMMAND} --help")
         self.assertEqual(0, rtn)
 
 

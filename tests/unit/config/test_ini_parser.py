@@ -3,7 +3,7 @@ Unit tests for platformio.ini parser.
 """
 
 import pytest
-from pathlib import Path
+
 from zapio.config.ini_parser import PlatformIOConfig, PlatformIOConfigError
 
 
@@ -150,13 +150,13 @@ build_flags = ${common.build_flags} -DUNO_FLAG
         """Test getting list of environments with single env."""
         config = PlatformIOConfig(minimal_config)
         envs = config.get_environments()
-        assert envs == ['uno']
+        assert envs == ["uno"]
 
     def test_get_environments_multiple(self, multi_env_config):
         """Test getting list of environments with multiple envs."""
         config = PlatformIOConfig(multi_env_config)
         envs = config.get_environments()
-        assert set(envs) == {'uno', 'mega'}
+        assert set(envs) == {"uno", "mega"}
 
     def test_get_environments_empty(self, tmp_ini_path):
         """Test getting environments when none are defined."""
@@ -168,16 +168,16 @@ build_flags = ${common.build_flags} -DUNO_FLAG
     def test_get_env_config_valid(self, minimal_config):
         """Test getting configuration for valid environment."""
         config = PlatformIOConfig(minimal_config)
-        env_config = config.get_env_config('uno')
-        assert env_config['platform'] == 'atmelavr'
-        assert env_config['board'] == 'uno'
-        assert env_config['framework'] == 'arduino'
+        env_config = config.get_env_config("uno")
+        assert env_config["platform"] == "atmelavr"
+        assert env_config["board"] == "uno"
+        assert env_config["framework"] == "arduino"
 
     def test_get_env_config_nonexistent(self, minimal_config):
         """Test getting config for non-existent environment."""
         config = PlatformIOConfig(minimal_config)
         with pytest.raises(PlatformIOConfigError, match="not found"):
-            config.get_env_config('mega')
+            config.get_env_config("mega")
 
     def test_get_env_config_missing_required_field(self, tmp_ini_path):
         """Test that missing required fields raise error."""
@@ -189,33 +189,33 @@ framework = arduino
         tmp_ini_path.write_text(content)
         config = PlatformIOConfig(tmp_ini_path)
         with pytest.raises(PlatformIOConfigError, match="missing required fields"):
-            config.get_env_config('uno')
+            config.get_env_config("uno")
 
     def test_get_env_config_with_inheritance(self, config_with_inheritance):
         """Test that environment inherits from base [env] section."""
         config = PlatformIOConfig(config_with_inheritance)
 
-        uno_config = config.get_env_config('uno')
-        assert uno_config['platform'] == 'atmelavr'
-        assert uno_config['board'] == 'uno'
-        assert uno_config['framework'] == 'arduino'
+        uno_config = config.get_env_config("uno")
+        assert uno_config["platform"] == "atmelavr"
+        assert uno_config["board"] == "uno"
+        assert uno_config["framework"] == "arduino"
 
-        mega_config = config.get_env_config('mega')
-        assert mega_config['platform'] == 'atmelavr'
-        assert mega_config['board'] == 'megaatmega2560'
-        assert mega_config['framework'] == 'arduino'
+        mega_config = config.get_env_config("mega")
+        assert mega_config["platform"] == "atmelavr"
+        assert mega_config["board"] == "megaatmega2560"
+        assert mega_config["framework"] == "arduino"
 
     # Test get_build_flags
     def test_get_build_flags_present(self, config_with_build_flags):
         """Test parsing build flags."""
         config = PlatformIOConfig(config_with_build_flags)
-        flags = config.get_build_flags('uno')
-        assert flags == ['-DDEBUG', '-DVERSION=1.0', '-Os']
+        flags = config.get_build_flags("uno")
+        assert flags == ["-DDEBUG", "-DVERSION=1.0", "-Os"]
 
     def test_get_build_flags_absent(self, minimal_config):
         """Test getting build flags when none specified."""
         config = PlatformIOConfig(minimal_config)
-        flags = config.get_build_flags('uno')
+        flags = config.get_build_flags("uno")
         assert flags == []
 
     def test_get_build_flags_multiline(self, tmp_ini_path):
@@ -232,20 +232,20 @@ build_flags =
 """
         tmp_ini_path.write_text(content)
         config = PlatformIOConfig(tmp_ini_path)
-        flags = config.get_build_flags('uno')
-        assert set(flags) == {'-DDEBUG', '-DVERSION=1.0', '-Os'}
+        flags = config.get_build_flags("uno")
+        assert set(flags) == {"-DDEBUG", "-DVERSION=1.0", "-Os"}
 
     # Test get_lib_deps
     def test_get_lib_deps_present(self, config_with_lib_deps):
         """Test parsing library dependencies."""
         config = PlatformIOConfig(config_with_lib_deps)
-        deps = config.get_lib_deps('uno')
-        assert deps == ['SPI', 'Wire', 'Adafruit GFX Library']
+        deps = config.get_lib_deps("uno")
+        assert deps == ["SPI", "Wire", "Adafruit GFX Library"]
 
     def test_get_lib_deps_absent(self, minimal_config):
         """Test getting lib_deps when none specified."""
         config = PlatformIOConfig(minimal_config)
-        deps = config.get_lib_deps('uno')
+        deps = config.get_lib_deps("uno")
         assert deps == []
 
     def test_get_lib_deps_comma_separated(self, tmp_ini_path):
@@ -259,32 +259,32 @@ lib_deps = SPI, Wire, Adafruit GFX Library
 """
         tmp_ini_path.write_text(content)
         config = PlatformIOConfig(tmp_ini_path)
-        deps = config.get_lib_deps('uno')
-        assert deps == ['SPI', 'Wire', 'Adafruit GFX Library']
+        deps = config.get_lib_deps("uno")
+        assert deps == ["SPI", "Wire", "Adafruit GFX Library"]
 
     # Test has_environment
     def test_has_environment_exists(self, minimal_config):
         """Test checking for existing environment."""
         config = PlatformIOConfig(minimal_config)
-        assert config.has_environment('uno') is True
+        assert config.has_environment("uno") is True
 
     def test_has_environment_not_exists(self, minimal_config):
         """Test checking for non-existent environment."""
         config = PlatformIOConfig(minimal_config)
-        assert config.has_environment('mega') is False
+        assert config.has_environment("mega") is False
 
     # Test get_default_environment
     def test_get_default_environment_explicit(self, config_with_default_env):
         """Test getting explicitly specified default environment."""
         config = PlatformIOConfig(config_with_default_env)
         default = config.get_default_environment()
-        assert default == 'mega'
+        assert default == "mega"
 
     def test_get_default_environment_first(self, multi_env_config):
         """Test getting default environment falls back to first."""
         config = PlatformIOConfig(multi_env_config)
         default = config.get_default_environment()
-        assert default in ['uno', 'mega']  # Should be one of them
+        assert default in ["uno", "mega"]  # Should be one of them
 
     def test_get_default_environment_none(self, tmp_ini_path):
         """Test getting default when no environments exist."""
@@ -310,16 +310,18 @@ framework = arduino
 """
         tmp_ini_path.write_text(content)
         config = PlatformIOConfig(tmp_ini_path)
-        assert config.get_default_environment() == 'mega'
+        assert config.get_default_environment() == "mega"
 
     # Test variable substitution
-    @pytest.mark.skip(reason="Variable substitution with underscores needs special handling")
+    @pytest.mark.skip(
+        reason="Variable substitution with underscores needs special handling"
+    )
     def test_variable_substitution(self, config_with_variable_substitution):
         """Test that variable substitution works."""
         config = PlatformIOConfig(config_with_variable_substitution)
-        flags = config.get_build_flags('uno')
-        assert '-DCOMMON_FLAG' in flags
-        assert '-DUNO_FLAG' in flags
+        flags = config.get_build_flags("uno")
+        assert "-DCOMMON_FLAG" in flags
+        assert "-DUNO_FLAG" in flags
 
     # Test real-world config
     def test_real_world_config(self, tmp_ini_path):
@@ -352,25 +354,25 @@ build_flags = -DRELEASE -O2
 
         # Test environments
         envs = config.get_environments()
-        assert 'uno' in envs
-        assert 'mega' in envs
+        assert "uno" in envs
+        assert "mega" in envs
 
         # Test default environment
-        assert config.get_default_environment() == 'uno'
+        assert config.get_default_environment() == "uno"
 
         # Test uno config
-        uno_config = config.get_env_config('uno')
-        assert uno_config['platform'] == 'atmelavr'
-        assert uno_config['board'] == 'uno'
-        assert uno_config['framework'] == 'arduino'
-        assert uno_config['upload_port'] == 'COM3'
-        assert uno_config['monitor_speed'] == '9600'
+        uno_config = config.get_env_config("uno")
+        assert uno_config["platform"] == "atmelavr"
+        assert uno_config["board"] == "uno"
+        assert uno_config["framework"] == "arduino"
+        assert uno_config["upload_port"] == "COM3"
+        assert uno_config["monitor_speed"] == "9600"
 
         # Test build flags
-        uno_flags = config.get_build_flags('uno')
-        assert '-DDEBUG' in uno_flags
-        assert '-Os' in uno_flags
+        uno_flags = config.get_build_flags("uno")
+        assert "-DDEBUG" in uno_flags
+        assert "-Os" in uno_flags
 
-        mega_flags = config.get_build_flags('mega')
-        assert '-DRELEASE' in mega_flags
-        assert '-O2' in mega_flags
+        mega_flags = config.get_build_flags("mega")
+        assert "-DRELEASE" in mega_flags
+        assert "-O2" in mega_flags
