@@ -6,8 +6,12 @@
 CRGB leds[NUM_LEDS];
 
 void setup() {
+  Serial.begin(115200);
   pinMode(LED_BUILTIN, OUTPUT);
   FastLED.addLeds<WS2812, DATA_PIN, GRB>(leds, NUM_LEDS);
+
+  delay(1000);  // wait for host to connect
+  Serial.println("TEST PASSED");
 }
 
 void loop() {

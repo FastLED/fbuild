@@ -1,45 +1,37 @@
-"""ESP32 Compiler.
+"""Configurable Compiler.
 
-This module handles compilation of ESP32 Arduino sketches and core files.
+This module provides a generic, configuration-driven compiler that can compile
+for any platform (ESP32, AVR, etc.) based on platform configuration files.
 
-Compilation Process:
-    1. Preprocess .ino files (add function prototypes, Arduino wrapper)
-    2. Extract compilation flags from platform.json and board.json
-    3. Compile Arduino core sources (.c/.cpp files)
-    4. Compile sketch files (.ino preprocessed to .cpp)
-    5. Compile library dependencies
-    6. Generate .o object files for linking
-
-Compilation Strategy:
-    - Use GCC/G++ from toolchain (riscv32-esp-elf-gcc or xtensa-esp32-elf-gcc)
-    - Pass correct include paths (core, variant, SDK, libraries)
-    - Apply MCU-specific compilation flags
-    - Generate position-independent code for ESP32
+Design:
+    - Loads compilation flags, includes, and settings from JSON/Python config
+    - Generic implementation replaces platform-specific compiler classes
+    - Same interface as ESP32Compiler for drop-in replacement
 """
 
-import re
+import json
 import subprocess
 from pathlib import Path
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Union
 
 from ..packages.esp32_platform import ESP32Platform
 from ..packages.esp32_toolchain import ESP32Toolchain
 from ..packages.esp32_framework import ESP32Framework
 
 
-class ESP32CompilerError(Exception):
-    """Raised when ESP32 compilation operations fail."""
+class ConfigurableCompilerError(Exception):
+    """Raised when configurable compilation operations fail."""
     pass
 
 
-class ESP32Compiler:
-    """Manages ESP32 compilation process.
+class ConfigurableCompiler:
+    """Generic compiler driven by platform configuration.
 
     This class handles:
-    - .ino file preprocessing
-    - Compilation flag extraction
-    - Source file compilation
+    - Loading platform-specific config from JSON
+    - Source file compilation with configured flags
     - Object file generation
+    - Core archive creation
     """
 
     def __init__(
@@ -49,17 +41,21 @@ class ESP32Compiler:
         framework: ESP32Framework,
         board_id: str,
         build_dir: Path,
-        show_progress: bool = True
+        platform_config: Optional[Union[Dict, Path]] = None,
+        show_progress: bool = True,
+        user_build_flags: Optional[List[str]] = None
     ):
-        """Initialize ESP32 compiler.
+        """Initialize configurable compiler.
 
         Args:
-            platform: ESP32 platform instance
-            toolchain: ESP32 toolchain instance
-            framework: ESP32 framework instance
+            platform: Platform instance
+            toolchain: Toolchain instance
+            framework: Framework instance
             board_id: Board identifier (e.g., "esp32-c6-devkitm-1")
             build_dir: Directory for build artifacts
+            platform_config: Platform config dict or path to config JSON file
             show_progress: Whether to show compilation progress
+            user_build_flags: Build flags from platformio.ini
         """
         self.platform = platform
         self.toolchain = toolchain
@@ -67,6 +63,7 @@ class ESP32Compiler:
         self.board_id = board_id
         self.build_dir = build_dir
         self.show_progress = show_progress
+        self.user_build_flags = user_build_flags or []
 
         # Load board configuration
         self.board_config = platform.get_board_json(board_id)
@@ -77,123 +74,28 @@ class ESP32Compiler:
         # Get variant name
         self.variant = self.board_config.get("build", {}).get("variant", "")
 
+        # Load platform configuration
+        if platform_config is None:
+            # Try to load from default location
+            config_path = Path(__file__).parent.parent / "platform_configs" / f"{self.mcu}.json"
+            if config_path.exists():
+                with open(config_path, 'r') as f:
+                    self.config = json.load(f)
+            else:
+                raise ConfigurableCompilerError(
+                    f"No platform configuration found for {self.mcu}. "
+                    f"Expected: {config_path}"
+                )
+        elif isinstance(platform_config, dict):
+            self.config = platform_config
+        else:
+            # Assume it's a path
+            with open(platform_config, 'r') as f:
+                self.config = json.load(f)
+
         # Cache for compilation flags
         self._compile_flags_cache: Optional[Dict[str, List[str]]] = None
         self._include_paths_cache: Optional[List[Path]] = None
-
-    def preprocess_ino(self, ino_path: Path) -> Path:
-        """Preprocess .ino file to .cpp file.
-
-        Arduino .ino files need preprocessing:
-        1. Extract function prototypes
-        2. Add #include <Arduino.h>
-        3. Wrap in standard C++ structure
-
-        Args:
-            ino_path: Path to .ino file
-
-        Returns:
-            Path to generated .cpp file
-
-        Raises:
-            ESP32CompilerError: If preprocessing fails
-        """
-        if not ino_path.exists():
-            raise ESP32CompilerError(f"Sketch file not found: {ino_path}")
-
-        # Read .ino content
-        try:
-            with open(ino_path, 'r', encoding='utf-8') as f:
-                ino_content = f.read()
-        except Exception as e:
-            raise ESP32CompilerError(f"Failed to read {ino_path}: {e}")
-
-        # Generate .cpp file path
-        cpp_path = self.build_dir / "sketch" / f"{ino_path.stem}.ino.cpp"
-        cpp_path.parent.mkdir(parents=True, exist_ok=True)
-
-        # Extract function prototypes
-        prototypes = self._extract_function_prototypes(ino_content)
-
-        # Generate .cpp content
-        cpp_content = self._generate_cpp_from_ino(ino_content, prototypes)
-
-        # Write .cpp file
-        try:
-            with open(cpp_path, 'w', encoding='utf-8') as f:
-                f.write(cpp_content)
-        except Exception as e:
-            raise ESP32CompilerError(f"Failed to write {cpp_path}: {e}")
-
-        if self.show_progress:
-            print(f"Preprocessed {ino_path.name} -> {cpp_path.name}")
-
-        return cpp_path
-
-    def _extract_function_prototypes(self, content: str) -> List[str]:
-        """Extract function prototypes from Arduino sketch.
-
-        Args:
-            content: Sketch file content
-
-        Returns:
-            List of function prototype strings
-        """
-        prototypes = []
-
-        # Match function definitions (simplified regex)
-        # Pattern: return_type function_name(parameters) {
-        # This is a simplified version - Arduino IDE does more sophisticated parsing
-        function_pattern = re.compile(
-            r'^(\w+(?:\s*\*)?)\s+(\w+)\s*\(([^)]*)\)\s*\{',
-            re.MULTILINE
-        )
-
-        for match in function_pattern.finditer(content):
-            return_type = match.group(1).strip()
-            func_name = match.group(2).strip()
-            params = match.group(3).strip()
-
-            # Skip setup() and loop() as they're standard Arduino functions
-            if func_name in ['setup', 'loop']:
-                continue
-
-            # Skip if it looks like a class method or already has prototype
-            if '::' in func_name or return_type in ['class', 'struct', 'enum']:
-                continue
-
-            prototype = f"{return_type} {func_name}({params});"
-            prototypes.append(prototype)
-
-        return prototypes
-
-    def _generate_cpp_from_ino(self, ino_content: str, prototypes: List[str]) -> str:
-        """Generate .cpp file content from .ino content.
-
-        Args:
-            ino_content: Original .ino file content
-            prototypes: List of function prototypes
-
-        Returns:
-            Complete .cpp file content
-        """
-        lines = []
-
-        # Add Arduino header
-        lines.append('#include <Arduino.h>')
-        lines.append('')
-
-        # Add function prototypes
-        if prototypes:
-            lines.append('// Function prototypes')
-            lines.extend(prototypes)
-            lines.append('')
-
-        # Add original sketch content
-        lines.append('// Original sketch content')
-        lines.append(ino_content)
-
-        return '\n'.join(lines)
 
     def _parse_flag_string(self, flag_string: str) -> List[str]:
         """Parse a flag string that may contain quoted values.
@@ -206,14 +108,12 @@ class ESP32Compiler:
         """
         import shlex
         try:
-            # Use shlex to properly handle quoted strings
             return shlex.split(flag_string)
         except Exception:
-            # Fallback to simple split if shlex fails
             return flag_string.split()
 
     def get_compile_flags(self) -> Dict[str, List[str]]:
-        """Extract compilation flags from board and platform configuration.
+        """Get compilation flags from configuration.
 
         Returns:
             Dictionary with 'cflags', 'cxxflags', and 'common' keys
@@ -227,33 +127,28 @@ class ESP32Compiler:
             'cxxflags': []  # C++-specific flags
         }
 
-        # Get SDK flags directory
-        sdk_flags_dir = self.framework.get_sdk_flags_dir(self.mcu)
+        # Get flags from config
+        config_flags = self.config.get('compiler_flags', {})
 
-        # Read defines from SDK flags
-        defines_file = sdk_flags_dir / "defines"
-        if defines_file.exists():
-            with open(defines_file, 'r') as f:
-                defines_content = f.read().strip()
-                # Parse defines carefully to handle quoted strings
-                defines_flags = self._parse_flag_string(defines_content)
-                flags['common'].extend(defines_flags)
+        # Common flags (CCFLAGS in PlatformIO)
+        if 'common' in config_flags:
+            flags['common'] = config_flags['common'].copy()
 
-        # Read C flags from SDK
-        c_flags_file = sdk_flags_dir / "c_flags"
-        if c_flags_file.exists():
-            with open(c_flags_file, 'r') as f:
-                c_flags_content = f.read().strip()
-                c_flags_parsed = self._parse_flag_string(c_flags_content)
-                flags['cflags'].extend(c_flags_parsed)
+        # C-specific flags (CFLAGS in PlatformIO)
+        if 'c' in config_flags:
+            flags['cflags'] = config_flags['c'].copy()
 
-        # Read C++ flags from SDK
-        cpp_flags_file = sdk_flags_dir / "cpp_flags"
-        if cpp_flags_file.exists():
-            with open(cpp_flags_file, 'r') as f:
-                cpp_flags_content = f.read().strip()
-                cpp_flags_parsed = self._parse_flag_string(cpp_flags_content)
-                flags['cxxflags'].extend(cpp_flags_parsed)
+        # C++-specific flags (CXXFLAGS in PlatformIO)
+        if 'cxx' in config_flags:
+            flags['cxxflags'] = config_flags['cxx'].copy()
+
+        # Add defines from config (CPPDEFINES in PlatformIO)
+        defines = self.config.get('defines', [])
+        for define in defines:
+            if isinstance(define, str):
+                flags['common'].append(f'-D{define}')
+            elif isinstance(define, list) and len(define) == 2:
+                flags['common'].append(f'-D{define[0]}={define[1]}')
 
         # Add Arduino-specific defines
         build_config = self.board_config.get("build", {})
@@ -263,7 +158,7 @@ class ESP32Compiler:
         flags['common'].extend([
             f'-DF_CPU={f_cpu}',
             '-DARDUINO=10812',  # Arduino version
-            '-DESP32',  # ESP32 platform define (required by many libraries like FastLED)
+            '-DESP32',  # ESP32 platform define
             f'-DARDUINO_{board}',
             '-DARDUINO_ARCH_ESP32',
             f'-DARDUINO_BOARD="{board}"',
@@ -273,7 +168,6 @@ class ESP32Compiler:
         # Add board-specific extra flags if present
         extra_flags = build_config.get("extra_flags", "")
         if extra_flags:
-            # Handle both string and list types
             if isinstance(extra_flags, str):
                 flag_list = extra_flags.split()
             else:
@@ -282,6 +176,14 @@ class ESP32Compiler:
             for flag in flag_list:
                 if flag.startswith('-D'):
                     flags['common'].append(flag)
+
+        # Add user build flags from platformio.ini
+        # These override/extend board defaults
+        for flag in self.user_build_flags:
+            if flag.startswith('-D'):
+                # Add defines to common flags
+                flags['common'].append(flag)
+            # Could extend to handle other flag types if needed
 
         self._compile_flags_cache = flags
         return flags
@@ -306,7 +208,6 @@ class ESP32Compiler:
             variant_dir = self.framework.get_variant_dir(self.variant)
             includes.append(variant_dir)
         except Exception:
-            # Variant might not exist
             pass
 
         # SDK include paths
@@ -323,6 +224,47 @@ class ESP32Compiler:
         self._include_paths_cache = includes
         return includes
 
+    def preprocess_ino(self, ino_path: Path) -> Path:
+        """Preprocess .ino file to .cpp file.
+
+        Args:
+            ino_path: Path to .ino file
+
+        Returns:
+            Path to generated .cpp file
+
+        Raises:
+            ConfigurableCompilerError: If preprocessing fails
+        """
+        if not ino_path.exists():
+            raise ConfigurableCompilerError(f"Sketch file not found: {ino_path}")
+
+        # Read .ino content
+        try:
+            with open(ino_path, 'r', encoding='utf-8') as f:
+                ino_content = f.read()
+        except Exception as e:
+            raise ConfigurableCompilerError(f"Failed to read {ino_path}: {e}")
+
+        # Generate .cpp file path
+        cpp_path = self.build_dir / "sketch" / f"{ino_path.stem}.ino.cpp"
+        cpp_path.parent.mkdir(parents=True, exist_ok=True)
+
+        # Simple preprocessing: add Arduino.h and content
+        cpp_content = '#include <Arduino.h>\n\n' + ino_content
+
+        # Write .cpp file
+        try:
+            with open(cpp_path, 'w', encoding='utf-8') as f:
+                f.write(cpp_content)
+        except Exception as e:
+            raise ConfigurableCompilerError(f"Failed to write {cpp_path}: {e}")
+
+        if self.show_progress:
+            print(f"Preprocessed {ino_path.name} -> {cpp_path.name}")
+
+        return cpp_path
+
     def compile_source(
         self,
         source_path: Path,
@@ -338,17 +280,17 @@ class ESP32Compiler:
             Path to generated .o file
 
         Raises:
-            ESP32CompilerError: If compilation fails
+            ConfigurableCompilerError: If compilation fails
         """
         if not source_path.exists():
-            raise ESP32CompilerError(f"Source file not found: {source_path}")
+            raise ConfigurableCompilerError(f"Source file not found: {source_path}")
 
         # Determine compiler based on file extension
         is_cpp = source_path.suffix in ['.cpp', '.cxx', '.cc']
         compiler_path = self.toolchain.get_gxx_path() if is_cpp else self.toolchain.get_gcc_path()
 
         if compiler_path is None or not compiler_path.exists():
-            raise ESP32CompilerError(
+            raise ConfigurableCompilerError(
                 f"Compiler not found: {compiler_path}. "
                 "Ensure toolchain is installed."
             )
@@ -369,10 +311,9 @@ class ESP32Compiler:
 
         # Get include paths
         includes = self.get_include_paths()
-        # Convert paths to forward slashes for GCC compatibility on Windows
         include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in includes]
 
-        # Write include paths to a response file to avoid command line length limits
+        # Write include paths to response file
         response_file = self.build_dir / "includes.rsp"
         response_file.parent.mkdir(parents=True, exist_ok=True)
         with open(response_file, 'w') as f:
@@ -381,7 +322,7 @@ class ESP32Compiler:
         # Build compiler command
         cmd = [str(compiler_path)]
         cmd.extend(compile_flags)
-        cmd.append(f"@{response_file}")  # Use response file for includes
+        cmd.append(f"@{response_file}")
         cmd.extend(['-c', str(source_path)])
         cmd.extend(['-o', str(output_path)])
 
@@ -399,21 +340,19 @@ class ESP32Compiler:
 
             if result.returncode != 0:
                 error_msg = f"Compilation failed for {source_path.name}\n"
-                error_msg += f"Command: {' '.join(cmd)}\n"
                 error_msg += f"stderr: {result.stderr}\n"
                 error_msg += f"stdout: {result.stdout}"
-                raise ESP32CompilerError(error_msg)
+                raise ConfigurableCompilerError(error_msg)
 
             if self.show_progress and result.stderr:
-                # Print warnings
                 print(result.stderr)
 
             return output_path
 
         except subprocess.TimeoutExpired:
-            raise ESP32CompilerError(f"Compilation timeout for {source_path.name}")
+            raise ConfigurableCompilerError(f"Compilation timeout for {source_path.name}")
         except Exception as e:
-            raise ESP32CompilerError(f"Failed to compile {source_path.name}: {e}")
+            raise ConfigurableCompilerError(f"Failed to compile {source_path.name}: {e}")
 
     def compile_sketch(self, sketch_path: Path) -> List[Path]:
         """Compile an Arduino sketch.
@@ -425,7 +364,7 @@ class ESP32Compiler:
             List of generated object file paths
 
         Raises:
-            ESP32CompilerError: If compilation fails
+            ConfigurableCompilerError: If compilation fails
         """
         object_files = []
 
@@ -445,7 +384,7 @@ class ESP32Compiler:
             List of generated object file paths
 
         Raises:
-            ESP32CompilerError: If compilation fails
+            ConfigurableCompilerError: If compilation fails
         """
         object_files = []
 
@@ -465,8 +404,7 @@ class ESP32Compiler:
                 obj_path = core_obj_dir / f"{source.stem}.o"
                 compiled_obj = self.compile_source(source, obj_path)
                 object_files.append(compiled_obj)
-            except ESP32CompilerError as e:
-                # Continue on error but report it
+            except ConfigurableCompilerError as e:
                 if self.show_progress:
                     print(f"Warning: Failed to compile {source.name}: {e}")
 
@@ -482,15 +420,15 @@ class ESP32Compiler:
             Path to generated core.a file
 
         Raises:
-            ESP32CompilerError: If archive creation fails
+            ConfigurableCompilerError: If archive creation fails
         """
         if not object_files:
-            raise ESP32CompilerError("No object files provided for archive")
+            raise ConfigurableCompilerError("No object files provided for archive")
 
         # Get archiver tool
         ar_path = self.toolchain.get_ar_path()
         if ar_path is None or not ar_path.exists():
-            raise ESP32CompilerError(
+            raise ConfigurableCompilerError(
                 f"Archiver not found: {ar_path}. "
                 "Ensure toolchain is installed."
             )
@@ -499,7 +437,6 @@ class ESP32Compiler:
         archive_path = self.build_dir / "core.a"
 
         # Build archiver command
-        # ar rcs core.a obj1.o obj2.o ...
         cmd = [str(ar_path), "rcs", str(archive_path)]
         cmd.extend([str(obj) for obj in object_files])
 
@@ -517,13 +454,12 @@ class ESP32Compiler:
 
             if result.returncode != 0:
                 error_msg = "Archive creation failed\n"
-                error_msg += f"Command: {' '.join(cmd)}\n"
                 error_msg += f"stderr: {result.stderr}\n"
                 error_msg += f"stdout: {result.stdout}"
-                raise ESP32CompilerError(error_msg)
+                raise ConfigurableCompilerError(error_msg)
 
             if not archive_path.exists():
-                raise ESP32CompilerError(f"Archive was not created: {archive_path}")
+                raise ConfigurableCompilerError(f"Archive was not created: {archive_path}")
 
             if self.show_progress:
                 size = archive_path.stat().st_size
@@ -532,9 +468,9 @@ class ESP32Compiler:
             return archive_path
 
         except subprocess.TimeoutExpired:
-            raise ESP32CompilerError("Archive creation timeout")
+            raise ConfigurableCompilerError("Archive creation timeout")
         except Exception as e:
-            raise ESP32CompilerError(f"Failed to create archive: {e}")
+            raise ConfigurableCompilerError(f"Failed to create archive: {e}")
 
     def get_compiler_info(self) -> Dict[str, Any]:
         """Get information about the compiler configuration.
@@ -571,7 +507,7 @@ class ESP32Compiler:
         """
         flags = self.get_compile_flags()
         base_flags = flags['common'].copy()
-        base_flags.extend(flags['cxxflags'])  # Include C++ flags for library compilation
+        base_flags.extend(flags['cxxflags'])
         return base_flags
 
     def add_library_includes(self, library_includes: List[Path]) -> None:
@@ -580,7 +516,5 @@ class ESP32Compiler:
         Args:
             library_includes: List of library include directory paths
         """
-        # Clear cache to force re-computation with new includes
         if self._include_paths_cache is not None:
             self._include_paths_cache.extend(library_includes)
-        # If cache not yet built, includes will be added on next get_include_paths call

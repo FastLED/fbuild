@@ -12,7 +12,7 @@ to generating firmware binaries. It integrates all build system components:
 
 import time
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List
 from dataclasses import dataclass
 
 from ..config import PlatformIOConfig, BoardConfig
@@ -28,10 +28,10 @@ from ..packages.esp32_library_manager import ESP32LibraryManager
 from .source_scanner import SourceScanner
 from .compiler import Compiler
 from .compiler import CompilerError as CompilerImportError
-from .esp32_compiler import ESP32Compiler
+from .configurable_compiler import ConfigurableCompiler
 from .linker import Linker, SizeInfo
 from .linker import LinkerError as LinkerImportError
-from .esp32_linker import ESP32Linker
+from .configurable_linker import ConfigurableLinker
 
 
 @dataclass
@@ -163,8 +163,10 @@ class BuildOrchestrator:
             if board_config.platform == "esp32":
                 if verbose_mode:
                     print(f"      Platform: {board_config.platform} (using native ESP32 build)")
+                # Get build flags from platformio.ini
+                build_flags = config.get_build_flags(env_name)
                 return self._build_esp32_native(
-                    project_dir, env_name, board_id, env_config, clean, verbose_mode, start_time
+                    project_dir, env_name, board_id, env_config, clean, verbose_mode, start_time, build_flags
                 )
             elif board_config.platform != "avr":
                 # Only AVR and ESP32 are supported natively
@@ -406,7 +408,8 @@ class BuildOrchestrator:
         env_config: dict,
         clean: bool,
         verbose: bool,
-        start_time: float
+        start_time: float,
+        build_flags: List[str]
     ) -> BuildResult:
         """
         Build ESP32 project using native build system (without PlatformIO).
@@ -419,6 +422,7 @@ class BuildOrchestrator:
             clean: Whether to clean before build
             verbose: Verbose output
             start_time: Build start time
+            build_flags: User build flags from platformio.ini
 
         Returns:
             BuildResult
@@ -530,13 +534,15 @@ class BuildOrchestrator:
             if verbose:
                 print("[7/10] Compiling Arduino core...")
 
-            compiler = ESP32Compiler(
+            compiler = ConfigurableCompiler(
                 platform,
                 toolchain,
                 framework,
                 board_id,
                 build_dir,
-                show_progress=verbose
+                platform_config=None,  # Will auto-load from platform_configs/{mcu}.json
+                show_progress=verbose,
+                user_build_flags=build_flags
             )
 
             # Compile Arduino core
@@ -629,12 +635,13 @@ class BuildOrchestrator:
             if verbose:
                 print("[9/10] Linking firmware...")
 
-            linker = ESP32Linker(
+            linker = ConfigurableLinker(
                 platform,
                 toolchain,
                 framework,
                 board_id,
                 build_dir,
+                platform_config=None,  # Will auto-load from platform_configs/{mcu}.json
                 show_progress=verbose
             )
 
@@ -647,6 +654,26 @@ class BuildOrchestrator:
 
             firmware_bin = linker.generate_bin(firmware_elf)
 
+            # For ESP32 platforms, also generate bootloader and partition table
+            bootloader_bin = None
+            partitions_bin = None
+            if mcu.startswith("esp32"):
+                if verbose:
+                    print("[11/12] Generating bootloader...")
+                try:
+                    bootloader_bin = linker.generate_bootloader()
+                except Exception as e:
+                    if verbose:
+                        print(f"Warning: Could not generate bootloader: {e}")
+
+                if verbose:
+                    print("[12/12] Generating partition table...")
+                try:
+                    partitions_bin = linker.generate_partition_table()
+                except Exception as e:
+                    if verbose:
+                        print(f"Warning: Could not generate partition table: {e}")
+
             build_time = time.time() - start_time
 
             if verbose:
@@ -657,6 +684,10 @@ class BuildOrchestrator:
                 print(f"  Build time: {build_time:.2f}s")
                 print(f"  Firmware ELF: {firmware_elf}")
                 print(f"  Firmware BIN: {firmware_bin}")
+                if bootloader_bin:
+                    print(f"  Bootloader: {bootloader_bin}")
+                if partitions_bin:
+                    print(f"  Partitions: {partitions_bin}")
                 print()
 
             return BuildResult(

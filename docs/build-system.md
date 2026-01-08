@@ -199,7 +199,7 @@ avr-size -A firmware.elf
 
 **Location**: `src/zapio/cli.py`
 
-The CLI uses Click for argument parsing and provides the following commands:
+The CLI uses argparse for argument parsing and dataclasses for strong typing. All arguments are immediately parsed into typed dataclass instances, providing type safety throughout the application.
 
 **Build Command**:
 ```bash

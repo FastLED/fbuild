@@ -14,6 +14,22 @@ Zapio is a next-generation embedded development tool designed to replace Platfor
 
 **Current Status**: v0.1.0 - Full Arduino Uno support with working build system
 
+## Examples
+
+`uv run zap deploy tests/esp32c6 --clean`
+`uv run zap monitor --timeout 60 --halt-on-error "TEST FAILED" --halt-on-success "TEST PASSED"`
+
+  * this will require the use of pyserial to attach to the usb
+  * see how this is done in platformio
+
+
+`uv run zap deploy tests/esp32c6 --no-build`
+`uv run zap deploy tests/esp32c6/**/firmware.bin`
+
+**complex**
+
+`uv run zap deploy tests/esp32c6 --monitor="--timeout 60 --halt-on-error \"TEST FAILED\" --halt-on-success \"TEST PASSED\"`
+
 ## Key Features
 
 - **URL-based Package Management**: Direct URLs to toolchains and platforms - no hidden registries
