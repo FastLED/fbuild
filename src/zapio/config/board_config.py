@@ -108,6 +108,14 @@ class BoardConfig:
             "core": "esp32",
             "variant": "esp32c6",
         },
+        "esp32-c5-devkitc-1": {
+            "name": "ESP32-C5 DevKit C-1",
+            "mcu": "esp32c5",
+            "f_cpu": "160000000L",
+            "board": "ESP32_DEV",
+            "core": "esp32",
+            "variant": "esp32c5",
+        },
         "teensy40": {
             "name": "Teensy 4.0",
             "mcu": "imxrt1062",
