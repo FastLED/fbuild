@@ -70,6 +70,8 @@ disable_error_code = ["import-untyped"]
 typeCheckingMode = "basic"
 reportMissingImports = "none"
 extraPaths = ["src"]
+# Exclude test directories from strict parameter type checking (pytest fixtures don't need types)
+exclude = ["**/test_*.py", "**/tests/**"]
 
 # Enable useful warnings that catch real bugs
 reportUnusedImport = "warning"
@@ -81,6 +83,9 @@ reportUnnecessaryIsInstance = "warning"
 reportUnnecessaryComparison = "warning"
 reportUnnecessaryCast = "warning"
 reportImplicitStringConcatenation = "warning"
+
+# Enforce parameter and return type annotations (but only for missing annotations, not unknown types)
+reportMissingParameterType = "error"
 
 [project.scripts]
 zap = "zapio.cli:main"

@@ -19,6 +19,7 @@ from .configurable_compiler import ConfigurableCompiler
 from .configurable_linker import ConfigurableLinker
 from .linker import SizeInfo
 from .orchestrator import IBuildOrchestrator, BuildResult
+from .build_utils import safe_rmtree
 
 
 @dataclass
@@ -411,8 +412,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         if clean and build_dir.exists():
             if verbose:
                 print("[6/10] Cleaning build directory...")
-            import shutil
-            shutil.rmtree(build_dir)
+            safe_rmtree(build_dir)
 
         build_dir.mkdir(parents=True, exist_ok=True)
         return build_dir

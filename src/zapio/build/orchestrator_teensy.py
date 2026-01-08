@@ -14,10 +14,12 @@ from ..packages import Cache
 from ..packages.platform_teensy import PlatformTeensy
 from ..packages.toolchain_teensy import ToolchainTeensy
 from ..packages.library_manager import LibraryManager, LibraryError
+from ..config.board_config import BoardConfig
 from .configurable_compiler import ConfigurableCompiler
 from .configurable_linker import ConfigurableLinker
 from .linker import SizeInfo
 from .orchestrator import IBuildOrchestrator, BuildResult
+from .build_utils import safe_rmtree
 
 
 @dataclass
@@ -305,8 +307,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
         if clean and build_dir.exists():
             if verbose:
                 print("[1/7] Cleaning build directory...")
-            import shutil
-            shutil.rmtree(build_dir)
+            safe_rmtree(build_dir)
 
         build_dir.mkdir(parents=True, exist_ok=True)
         return build_dir
@@ -317,7 +318,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
         build_dir: Path,
         compiler: ConfigurableCompiler,
         toolchain: ToolchainTeensy,
-        board_config,
+        board_config: BoardConfig,
         verbose: bool
     ) -> tuple[List[Path], List[Path]]:
         """

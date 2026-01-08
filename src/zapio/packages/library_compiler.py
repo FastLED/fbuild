@@ -6,7 +6,10 @@ with Link-Time Optimization (LTO) support.
 
 import subprocess
 from pathlib import Path
-from typing import List, Tuple
+from typing import TYPE_CHECKING, Callable, List, Optional, Tuple
+
+if TYPE_CHECKING:
+    from .library_manager import LibraryInfo
 
 
 class LibraryCompilationError(Exception):
@@ -23,7 +26,7 @@ class LibraryCompiler:
         archive_file: Path,
         info_file: Path,
         compiler_flags: List[str],
-        get_info_func,
+        get_info_func: "Callable[[], Optional[LibraryInfo]]",
     ) -> Tuple[bool, str]:
         """Check if a library needs to be rebuilt.
 
