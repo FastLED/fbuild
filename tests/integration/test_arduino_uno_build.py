@@ -13,6 +13,7 @@ from pathlib import Path
 import pytest
 
 
+@pytest.mark.integration
 @pytest.mark.xdist_group(name="arduino_uno")
 class TestArduinoUnoBuild:
     """Integration tests for Arduino Uno firmware build"""

@@ -71,3 +71,11 @@ reportImplicitStringConcatenation = "warning"
 
 [project.scripts]
 zap = "zapio.cli:main"
+
+[tool.pytest.ini_options]
+markers = [
+    "integration: marks tests as integration tests (deselected by default, run with --full)",
+]
+# By default, skip integration tests
+addopts = "-m 'not integration'"
+testpaths = ["tests"]

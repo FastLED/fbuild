@@ -2,16 +2,32 @@
 
 set -e
 
+# Check for --full flag
+FULL_MODE=false
+for arg in "$@"; do
+    if [ "$arg" == "--full" ]; then
+        FULL_MODE=true
+        break
+    fi
+done
+
 echo "========================================"
 echo "Running unit tests (parallel)"
 echo "========================================"
 uv run pytest -n auto tests/unit -v --durations=0
 
-echo ""
-echo "========================================"
-echo "Running integration tests (serial)"
-echo "========================================"
-uv run pytest tests/integration -v --durations=0
+if [ "$FULL_MODE" == "true" ]; then
+    echo ""
+    echo "========================================"
+    echo "Running integration tests (serial)"
+    echo "========================================"
+    uv run pytest tests/integration -v --durations=0
+else
+    echo ""
+    echo "========================================"
+    echo "Skipping integration tests (use --full to run them)"
+    echo "========================================"
+fi
 
 echo ""
 echo "========================================"
