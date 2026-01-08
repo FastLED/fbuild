@@ -16,10 +16,10 @@ class PackageError(Exception):
     pass
 
 
-class Package(ABC):
-    """Abstract base class for downloadable packages.
+class IPackage(ABC):
+    """Interface for downloadable packages.
 
-    This class defines the common interface for all package types:
+    This interface defines the common contract for all package types:
     - Toolchains (AVR, RISC-V, Xtensa)
     - Frameworks (Arduino-ESP32)
     - Cores (Arduino AVR Core)
@@ -57,8 +57,8 @@ class Package(ABC):
         pass
 
 
-class Toolchain(Package):
-    """Abstract base class for toolchain packages.
+class IToolchain(IPackage):
+    """Interface for toolchain packages.
 
     Toolchains provide compiler, linker, and binary utilities for
     specific architectures (AVR, RISC-V, Xtensa).
@@ -128,8 +128,8 @@ class Toolchain(Package):
         pass
 
 
-class Framework(Package):
-    """Abstract base class for framework packages.
+class IFramework(IPackage):
+    """Interface for framework packages.
 
     Frameworks provide core Arduino implementation, variants,
     and built-in libraries for specific platforms.

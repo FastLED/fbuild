@@ -28,7 +28,7 @@ from typing import Any, Dict, Optional
 
 from .cache import Cache
 from .downloader import DownloadError, ExtractionError, PackageDownloader
-from .package import Package, PackageError
+from .package import IPackage, PackageError
 
 
 class PlatformErrorESP32(PackageError):
@@ -37,7 +37,7 @@ class PlatformErrorESP32(PackageError):
     pass
 
 
-class PlatformESP32(Package):
+class PlatformESP32(IPackage):
     """Manages ESP32 platform package download, extraction, and access.
 
     This class handles the pioarduino/platform-espressif32 package which contains:

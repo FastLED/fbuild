@@ -11,7 +11,7 @@ from typing import List, Optional
 
 from ..config.board_config import BoardConfig
 from ..config.mcu_specs import get_max_flash, get_max_ram
-from ..packages.package import Toolchain
+from ..packages.package import IToolchain
 from .avr_compiler import CompilerAVR
 from .linker import LinkerAVR
 
@@ -39,7 +39,7 @@ class BuildComponentFactory:
 
     @staticmethod
     def create_compiler(
-        toolchain: Toolchain,
+        toolchain: IToolchain,
         board_config: BoardConfig,
         core_path: Path,
         lib_include_paths: Optional[List[Path]] = None
@@ -87,7 +87,7 @@ class BuildComponentFactory:
 
     @staticmethod
     def create_linker(
-        toolchain: Toolchain,
+        toolchain: IToolchain,
         board_config: BoardConfig
     ) -> LinkerAVR:
         """

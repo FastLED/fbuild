@@ -18,7 +18,7 @@ from ..packages.esp32_library_manager import LibraryManagerESP32
 from .configurable_compiler import ConfigurableCompiler
 from .configurable_linker import ConfigurableLinker
 from .linker import SizeInfo
-from .orchestrator import BuildOrchestrator, BuildResult
+from .orchestrator import IBuildOrchestrator, BuildResult
 
 
 @dataclass
@@ -35,7 +35,7 @@ class BuildResultESP32:
     message: str
 
 
-class OrchestratorESP32(BuildOrchestrator):
+class OrchestratorESP32(IBuildOrchestrator):
     """
     Orchestrates ESP32-specific build process.
 

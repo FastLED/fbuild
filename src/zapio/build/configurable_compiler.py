@@ -19,7 +19,7 @@ from ..packages.esp32_framework import FrameworkESP32
 from .flag_builder import FlagBuilder
 from .compilation_executor import CompilationExecutor
 from .archive_creator import ArchiveCreator
-from .compiler import Compiler, CompilerError
+from .compiler import ICompiler, CompilerError
 
 
 class ConfigurableCompilerError(CompilerError):
@@ -27,7 +27,7 @@ class ConfigurableCompilerError(CompilerError):
     pass
 
 
-class ConfigurableCompiler(Compiler):
+class ConfigurableCompiler(ICompiler):
     """Generic compiler driven by platform configuration.
 
     This class handles:
@@ -372,3 +372,60 @@ class ConfigurableCompiler(Compiler):
         """
         if self._include_paths_cache is not None:
             self._include_paths_cache.extend(library_includes)
+
+    def needs_rebuild(self, source: Path, object_file: Path) -> bool:
+        """Check if source file needs to be recompiled.
+
+        Args:
+            source: Source file path
+            object_file: Object file path
+
+        Returns:
+            True if source is newer than object file or object doesn't exist
+        """
+        if not object_file.exists():
+            return True
+
+        source_mtime = source.stat().st_mtime
+        object_mtime = object_file.stat().st_mtime
+
+        return source_mtime > object_mtime
+
+    def compile(
+        self,
+        source: Path,
+        output: Path,
+        extra_flags: Optional[List[str]] = None
+    ):
+        """Compile source file (auto-detects C vs C++).
+
+        Args:
+            source: Path to source file
+            output: Path to output .o object file
+            extra_flags: Additional compiler flags
+
+        Returns:
+            CompileResult with compilation status
+
+        Raises:
+            ConfigurableCompilerError: If compilation fails
+        """
+        from .compiler import CompileResult  # Import here to avoid circular dependency
+
+        try:
+            obj_path = self.compile_source(source, output)
+            return CompileResult(
+                success=True,
+                object_file=obj_path,
+                stdout="",
+                stderr="",
+                returncode=0
+            )
+        except ConfigurableCompilerError as e:
+            return CompileResult(
+                success=False,
+                object_file=None,
+                stdout="",
+                stderr=str(e),
+                returncode=1
+            )

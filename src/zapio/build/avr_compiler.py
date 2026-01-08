@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import List, Dict, Optional
 from dataclasses import dataclass
 
-from .compiler import Compiler, CompilerError
+from .compiler import ICompiler, CompilerError
 
 
 @dataclass
@@ -23,7 +23,7 @@ class CompileResult:
     returncode: int
 
 
-class CompilerAVR(Compiler):
+class CompilerAVR(ICompiler):
     """
     Wrapper for AVR-GCC compiler.
 

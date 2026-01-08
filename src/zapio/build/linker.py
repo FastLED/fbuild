@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import List, Optional
 from dataclasses import dataclass
 
-from .compiler import Linker, LinkerError
+from .compiler import ILinker, LinkerError
 
 
 @dataclass
@@ -99,7 +99,7 @@ class LinkResult:
     stderr: str
 
 
-class LinkerAVR(Linker):
+class LinkerAVR(ILinker):
     """
     Wrapper for AVR linker tools.
 

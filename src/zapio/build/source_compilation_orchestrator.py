@@ -3,13 +3,13 @@ Source file compilation orchestration for Zapio build system.
 
 This module handles the orchestration of compiling multiple source files,
 including caching, progress reporting, and error handling. It provides a
-higher-level interface over the low-level Compiler class.
+higher-level interface over the low-level ICompiler interface.
 """
 
 from pathlib import Path
 from typing import List
 
-from .compiler import Compiler, CompilerError
+from .compiler import ICompiler, CompilerError
 
 
 class SourceCompilationOrchestratorError(Exception):
@@ -49,7 +49,7 @@ class SourceCompilationOrchestrator:
 
     def compile_sources(
         self,
-        compiler: Compiler,
+        compiler: ICompiler,
         sources: List[Path],
         output_dir: Path,
         source_type: str
@@ -112,7 +112,7 @@ class SourceCompilationOrchestrator:
 
     def compile_multiple_groups(
         self,
-        compiler: Compiler,
+        compiler: ICompiler,
         sketch_sources: List[Path],
         core_sources: List[Path],
         variant_sources: List[Path],

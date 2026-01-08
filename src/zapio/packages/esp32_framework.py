@@ -53,7 +53,7 @@ from typing import Any, Dict, List, Optional
 from .archive_utils import ArchiveExtractor, URLVersionExtractor
 from .cache import Cache
 from .downloader import DownloadError, ExtractionError
-from .package import Framework, PackageError
+from .package import IFramework, PackageError
 from .sdk_utils import SDKPathResolver
 
 
@@ -63,7 +63,7 @@ class FrameworkErrorESP32(PackageError):
     pass
 
 
-class FrameworkESP32(Framework):
+class FrameworkESP32(IFramework):
     """Manages ESP32 framework download, extraction, and access.
 
     This class handles the Arduino-ESP32 framework which includes:

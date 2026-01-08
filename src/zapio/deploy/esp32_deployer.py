@@ -13,10 +13,10 @@ from typing import Optional
 from zapio.config import PlatformIOConfig
 from zapio.packages import Cache
 
-from .deployer import Deployer, DeploymentError, DeploymentResult
+from .deployer import DeploymentError, DeploymentResult, IDeployer
 
 
-class ESP32Deployer(Deployer):
+class ESP32Deployer(IDeployer):
     """Handles firmware deployment to embedded devices."""
 
     def __init__(self, verbose: bool = False):

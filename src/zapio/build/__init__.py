@@ -18,17 +18,17 @@ __all__ = [
 # Import base classes
 try:
     from .orchestrator import (  # noqa: F401
-        BuildOrchestrator,
+        IBuildOrchestrator,
         BuildResult,
         BuildOrchestratorError
     )
-    __all__.extend(['BuildOrchestrator', 'BuildResult', 'BuildOrchestratorError'])
+    __all__.extend(['IBuildOrchestrator', 'BuildResult', 'BuildOrchestratorError'])
 except ImportError:
     pass
 
 try:
-    from .compiler import Compiler, CompilerError, Linker, LinkerError  # noqa: F401
-    __all__.extend(['Compiler', 'CompilerError', 'Linker', 'LinkerError'])
+    from .compiler import ICompiler, CompilerError, ILinker, LinkerError  # noqa: F401
+    __all__.extend(['ICompiler', 'CompilerError', 'ILinker', 'LinkerError'])
 except ImportError:
     pass
 

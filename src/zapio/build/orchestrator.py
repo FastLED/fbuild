@@ -30,8 +30,8 @@ class BuildOrchestratorError(Exception):
     pass
 
 
-class BuildOrchestrator(ABC):
-    """Abstract base class for build orchestrators.
+class IBuildOrchestrator(ABC):
+    """Interface for build orchestrators.
 
     Build orchestrators coordinate the entire build process:
     1. Parse configuration

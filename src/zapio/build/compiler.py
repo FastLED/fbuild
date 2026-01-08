@@ -25,10 +25,10 @@ class CompilerError(Exception):
     pass
 
 
-class Compiler(ABC):
-    """Abstract base class for source code compilers.
+class ICompiler(ABC):
+    """Interface for source code compilers.
 
-    This class defines the common interface for all compiler implementations:
+    This interface defines the common contract for all compiler implementations:
     - AVR Compiler (avr-gcc/avr-g++)
     - ESP32 Compiler (riscv32-esp-elf-gcc, xtensa-esp32-elf-gcc)
     - Configurable Compiler (platform-agnostic)
@@ -72,6 +72,7 @@ class Compiler(ABC):
         """
         pass
 
+    @abstractmethod
     def needs_rebuild(self, source: Path, object_file: Path) -> bool:
         """Check if source file needs to be recompiled.
 
@@ -82,14 +83,9 @@ class Compiler(ABC):
         Returns:
             True if source is newer than object file or object doesn't exist
         """
-        if not object_file.exists():
-            return True
+        pass
 
-        source_mtime = source.stat().st_mtime
-        object_mtime = object_file.stat().st_mtime
-
-        return source_mtime > object_mtime
-
+    @abstractmethod
     def compile(
         self,
         source: Path,
@@ -97,9 +93,6 @@ class Compiler(ABC):
         extra_flags: Optional[List[str]] = None
     ) -> CompileResult:
         """Compile source file (auto-detects C vs C++).
-
-        This is a convenience method that calls compile_source.
-        Subclasses can override this to provide custom compile logic.
 
         Args:
             source: Path to source file
@@ -112,30 +105,13 @@ class Compiler(ABC):
         Raises:
             CompilerError: If compilation fails
         """
-        # Default implementation: delegate to compile_source
-        try:
-            obj_path = self.compile_source(source, output)
-            return CompileResult(
-                success=True,
-                object_file=obj_path,
-                stdout="",
-                stderr="",
-                returncode=0
-            )
-        except CompilerError as e:
-            return CompileResult(
-                success=False,
-                object_file=None,
-                stdout="",
-                stderr=str(e),
-                returncode=1
-            )
+        pass
 
 
-class Linker(ABC):
-    """Abstract base class for linkers.
+class ILinker(ABC):
+    """Interface for linkers.
 
-    This class defines the common interface for all linker implementations:
+    This interface defines the common contract for all linker implementations:
     - AVR Linker (avr-gcc linker)
     - ESP32 Linker (riscv32/xtensa linker)
     - Configurable Linker (platform-agnostic)

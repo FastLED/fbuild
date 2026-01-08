@@ -25,8 +25,8 @@ class DeploymentError(Exception):
     pass
 
 
-class Deployer(ABC):
-    """Abstract base class for firmware deployers.
+class IDeployer(ABC):
+    """Interface for firmware deployers.
 
     Deployers handle uploading firmware to embedded devices:
     1. Locate firmware binaries

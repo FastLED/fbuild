@@ -31,10 +31,10 @@ from .source_compilation_orchestrator import (
     SourceCompilationOrchestratorError
 )
 from .build_component_factory import BuildComponentFactory
-from .orchestrator import BuildOrchestrator, BuildResult, BuildOrchestratorError
+from .orchestrator import IBuildOrchestrator, BuildResult, BuildOrchestratorError
 
 
-class BuildOrchestratorAVR(BuildOrchestrator):
+class BuildOrchestratorAVR(IBuildOrchestrator):
     """
     Orchestrates the complete build process for embedded projects.
 

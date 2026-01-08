@@ -42,7 +42,7 @@ from typing import Any, Dict, Literal, Optional, cast
 
 from .cache import Cache
 from .downloader import DownloadError, ExtractionError, PackageDownloader
-from .package import PackageError, Toolchain
+from .package import IToolchain, PackageError
 from .platform_utils import PlatformDetector
 from .toolchain_binaries import ToolchainBinaryFinder
 from .toolchain_metadata import MetadataParseError, ToolchainMetadataParser
@@ -57,7 +57,7 @@ class ToolchainErrorESP32(PackageError):
 ToolchainType = Literal["riscv32-esp", "xtensa-esp-elf"]
 
 
-class ToolchainESP32(Toolchain):
+class ToolchainESP32(IToolchain):
     """Manages ESP32 toolchain download, extraction, and access.
 
     This class handles downloading and managing GCC toolchains for ESP32 family:

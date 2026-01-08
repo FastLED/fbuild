@@ -11,8 +11,9 @@ from .downloader import ChecksumError, DownloadError, ExtractionError, PackageDo
 from .esp32_platform import PlatformErrorESP32, PlatformESP32
 from .github_utils import GitHubURLOptimizer
 from .library_compiler import LibraryCompilationError, LibraryCompiler
-from .package import Framework, Package, PackageError
-from .package import Toolchain as BaseToolchain
+from .package import IFramework, IPackage
+from .package import IToolchain as BaseToolchain
+from .package import PackageError
 from .platform_utils import PlatformDetector, PlatformError
 from .sdk_utils import SDKPathResolver
 from .toolchain import ToolchainAVR as Toolchain
@@ -21,9 +22,9 @@ from .toolchain_binaries import BinaryNotFoundError, ToolchainBinaryFinder
 from .toolchain_metadata import MetadataParseError, ToolchainMetadataParser
 
 __all__ = [
-    "Package",
+    "IPackage",
     "BaseToolchain",
-    "Framework",
+    "IFramework",
     "PackageError",
     "Cache",
     "PackageDownloader",

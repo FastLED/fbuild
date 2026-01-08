@@ -10,7 +10,7 @@ from typing import Any, Dict, Optional
 
 from .cache import Cache
 from .downloader import PackageDownloader
-from .package import PackageError, Toolchain
+from .package import IToolchain, PackageError
 from .platform_utils import PlatformDetector, PlatformError
 
 
@@ -20,7 +20,7 @@ class ToolchainError(PackageError):
     pass
 
 
-class ToolchainAVR(Toolchain):
+class ToolchainAVR(IToolchain):
     """Manages AVR-GCC toolchain."""
 
     # AVR-GCC version used by Arduino

@@ -18,7 +18,7 @@ from ..packages.esp32_platform import PlatformESP32
 from ..packages.esp32_toolchain import ToolchainESP32
 from ..packages.esp32_framework import FrameworkESP32
 from .binary_generator import BinaryGenerator
-from .compiler import Linker, LinkerError
+from .compiler import ILinker, LinkerError
 
 
 class ConfigurableLinkerError(LinkerError):
@@ -26,7 +26,7 @@ class ConfigurableLinkerError(LinkerError):
     pass
 
 
-class ConfigurableLinker(Linker):
+class ConfigurableLinker(ILinker):
     """Generic linker driven by platform configuration.
 
     This class handles:

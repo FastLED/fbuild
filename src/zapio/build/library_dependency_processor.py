@@ -11,7 +11,7 @@ from typing import List, Optional
 
 from ..config.board_config import BoardConfig
 from ..packages.library_manager import LibraryManager
-from ..packages.toolchain import Toolchain
+from ..packages.toolchain import ToolchainAVR
 
 
 class LibraryDependencyProcessor:
@@ -62,7 +62,7 @@ class LibraryDependencyProcessor:
     def process_dependencies(
         self,
         lib_deps: List[str],
-        toolchain: Toolchain,
+        toolchain: ToolchainAVR,
         board_config: BoardConfig,
         core_path: Path
     ) -> 'LibraryProcessingResult':

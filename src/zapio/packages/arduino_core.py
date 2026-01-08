@@ -9,7 +9,7 @@ from typing import Any, Dict, Optional
 
 from .cache import Cache
 from .downloader import PackageDownloader
-from .package import Framework, PackageError
+from .package import IFramework, PackageError
 
 
 class ArduinoCoreError(PackageError):
@@ -18,7 +18,7 @@ class ArduinoCoreError(PackageError):
     pass
 
 
-class ArduinoCore(Framework):
+class ArduinoCore(IFramework):
     """Manages Arduino core platform packages."""
 
     # Arduino AVR core version
