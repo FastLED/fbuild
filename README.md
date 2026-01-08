@@ -201,17 +201,31 @@ Size: 12KB (4318 bytes program, 3689 bytes RAM)
 Build time: 78.59 seconds
 ```
 
-### Supported Boards
 
-Currently supported:
+### Supported Platforms and Boards
+
+**Arduino AVR Platform** - Fully Supported ✓
 - **Arduino Uno** (atmega328p, 16MHz) - Fully tested ✓
 
-Planned support:
+**ESP32 Platform** - Supported ✓
+- **ESP32 Dev** (esp32dev) - Supported ✓
+- **ESP32-C3** (esp32-c3-devkitm-1) - Supported ✓
+- **ESP32-C6** (esp32c6-devkit) - Supported ✓
+- **ESP32-S3** (esp32-s3-devkitc-1) - Supported ✓
+- **ESP32-S2** - Supported ✓
+- **ESP32-H2** - Supported ✓
+- **ESP32-P4** - Supported ✓
+- **ESP32-C2** - Supported ✓ (v0.1.0+)
+  - Uses skeleton library approach with ROM linker scripts
+  - Full Arduino framework support
+  - 220KB firmware size typical
+
+**Planned Support**:
 - Arduino Mega
 - Arduino Nano
 - Arduino Leonardo
 - More AVR boards
-
+- Teensy 3.x/4.x platforms
 ## Performance
 
 **Benchmarks** (Arduino Uno Blink sketch):

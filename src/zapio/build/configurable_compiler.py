@@ -157,7 +157,14 @@ class ConfigurableCompiler(ICompiler):
         if hasattr(self.framework, 'get_sdk_dir'):
             flash_mode = self.board_config.get("build", {}).get("flash_mode", "qio")
             sdk_dir = self.framework.get_sdk_dir()  # type: ignore[attr-defined]
-            flash_config_dir = sdk_dir / self.mcu / f"{flash_mode}_qspi" / "include"
+
+            # Apply SDK fallback for MCUs not fully supported in the platform
+            # (e.g., esp32c2 can use esp32c3 SDK)
+            from ..packages.sdk_utils import SDKPathResolver
+            resolver = SDKPathResolver(sdk_dir, show_progress=False)
+            resolved_mcu = resolver._resolve_mcu(self.mcu)
+
+            flash_config_dir = sdk_dir / resolved_mcu / f"{flash_mode}_qspi" / "include"
             if flash_config_dir.exists():
                 includes.append(flash_config_dir)
 

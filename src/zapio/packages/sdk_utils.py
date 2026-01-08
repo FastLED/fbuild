@@ -15,6 +15,11 @@ class SDKPathResolver:
     used by ESP-IDF based projects.
     """
 
+    # MCU fallback mappings for platforms that don't have full SDK support
+    MCU_FALLBACKS = {
+        "esp32c2": "esp32c3",  # ESP32-C2 can use ESP32-C3 SDK (both rv32imc RISC-V)
+    }
+
     def __init__(self, sdk_base_dir: Path, show_progress: bool = True):
         """Initialize SDK path resolver.
 
@@ -24,6 +29,34 @@ class SDKPathResolver:
         """
         self.sdk_base_dir = sdk_base_dir
         self.show_progress = show_progress
+
+    def _resolve_mcu(self, mcu: str) -> str:
+        """Resolve MCU to actual SDK directory, applying fallback if needed.
+
+        Args:
+            mcu: MCU type (e.g., "esp32c2", "esp32c6")
+
+        Returns:
+            Resolved MCU type for SDK lookup
+        """
+        # Check if MCU SDK directory exists
+        mcu_dir = self.sdk_base_dir / mcu
+        if mcu_dir.exists():
+            return mcu
+
+        # Try fallback if available
+        if mcu in self.MCU_FALLBACKS:
+            fallback_mcu = self.MCU_FALLBACKS[mcu]
+            fallback_dir = self.sdk_base_dir / fallback_mcu
+            if fallback_dir.exists():
+                if self.show_progress:
+                    print(
+                        f"      Note: Using {fallback_mcu} SDK for {mcu} (compatible)"
+                    )
+                return fallback_mcu
+
+        # No fallback available, return original
+        return mcu
 
     def get_sdk_includes(self, mcu: str) -> List[Path]:
         """Get list of ESP-IDF include directories for a specific MCU.
@@ -38,11 +71,14 @@ class SDKPathResolver:
         Returns:
             List of include directory paths (305 paths for esp32c6)
         """
+        # Resolve MCU with fallback if needed
+        resolved_mcu = self._resolve_mcu(mcu)
+
         # Read the SDK's includes file
-        includes_file = self.get_sdk_flags_dir(mcu) / "includes"
+        includes_file = self.get_sdk_flags_dir(resolved_mcu) / "includes"
         if not includes_file.exists():
             # Fallback to recursive discovery if includes file doesn't exist
-            return self._get_sdk_includes_recursive(mcu)
+            return self._get_sdk_includes_recursive(resolved_mcu)
 
         try:
             # Read includes file (single line with space-separated entries)
@@ -50,7 +86,7 @@ class SDKPathResolver:
 
             # Parse the includes: "-iwithprefixbefore path1 -iwithprefixbefore path2 ..."
             # The -iwithprefixbefore flag means to prepend the SDK include directory
-            sdk_include_base = self.sdk_base_dir / mcu / "include"
+            sdk_include_base = self.sdk_base_dir / resolved_mcu / "include"
 
             includes = []
             parts = includes_content.split()
@@ -162,17 +198,20 @@ class SDKPathResolver:
         Returns:
             List of .a library file paths
         """
+        # Resolve MCU with fallback if needed
+        resolved_mcu = self._resolve_mcu(mcu)
+
         libs = []
 
         # Get main SDK libraries
-        sdk_lib_dir = self.sdk_base_dir / mcu / "lib"
+        sdk_lib_dir = self.sdk_base_dir / resolved_mcu / "lib"
         if sdk_lib_dir.exists():
             libs.extend(sdk_lib_dir.glob("*.a"))
 
         # Get flash mode-specific libraries (qio_qspi or dio_qspi)
         # For ESP32-C6: Only libspi_flash.a
         # For ESP32-S3: Multiple libraries including libfreertos.a, libesp_system.a, etc.
-        flash_lib_dir = self.sdk_base_dir / mcu / f"{flash_mode}_qspi"
+        flash_lib_dir = self.sdk_base_dir / resolved_mcu / f"{flash_mode}_qspi"
         if flash_lib_dir.exists():
             # Collect ALL .a libraries from flash mode directory
             # ESP32-S3 has: libfreertos.a, libspi_flash.a, libesp_system.a,
@@ -191,4 +230,6 @@ class SDKPathResolver:
         Returns:
             Path to flags directory
         """
-        return self.sdk_base_dir / mcu / "flags"
+        # Resolve MCU with fallback if needed
+        resolved_mcu = self._resolve_mcu(mcu)
+        return self.sdk_base_dir / resolved_mcu / "flags"

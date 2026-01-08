@@ -372,15 +372,23 @@ class OrchestratorESP32(IBuildOrchestrator):
             print("[5/10] Initializing ESP32 framework...")
 
         framework_url = packages.get("framework-arduinoespressif32")
-        libs_url = packages.get("framework-arduinoespressif32-libs")
+        libs_url = packages.get("framework-arduinoespressif32-libs", "")
 
-        if not framework_url or not libs_url:
+        if not framework_url:
             return None
+
+        # Find skeleton library if present (e.g., framework-arduino-esp32c2-skeleton-lib)
+        skeleton_lib_url = None
+        for package_name, package_url in packages.items():
+            if package_name.startswith("framework-arduino-") and package_name.endswith("-skeleton-lib"):
+                skeleton_lib_url = package_url
+                break
 
         framework = FrameworkESP32(
             self.cache,
             framework_url,
             libs_url,
+            skeleton_lib_url=skeleton_lib_url,
             show_progress=verbose
         )
         framework.ensure_framework()

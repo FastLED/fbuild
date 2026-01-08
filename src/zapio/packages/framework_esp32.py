@@ -78,6 +78,7 @@ class FrameworkESP32(IFramework):
         cache: Cache,
         framework_url: str,
         libs_url: str,
+        skeleton_lib_url: Optional[str] = None,
         show_progress: bool = True,
     ):
         """Initialize ESP32 framework manager.
@@ -86,11 +87,13 @@ class FrameworkESP32(IFramework):
             cache: Cache manager instance
             framework_url: URL to Arduino-ESP32 core package (.tar.xz)
             libs_url: URL to ESP-IDF precompiled libraries (.tar.xz)
+            skeleton_lib_url: Optional URL to MCU-specific skeleton library
             show_progress: Whether to show download/extraction progress
         """
         self.cache = cache
         self.framework_url = framework_url
         self.libs_url = libs_url
+        self.skeleton_lib_url = skeleton_lib_url
         self.show_progress = show_progress
         self.archive_extractor = ArchiveExtractor(show_progress=show_progress)
 
@@ -100,8 +103,8 @@ class FrameworkESP32(IFramework):
         )
 
         # Get framework paths from cache
-        # We'll use a combined hash for both URLs to keep them together
-        combined_url = f"{framework_url}|{libs_url}"
+        # We'll use a combined hash for all URLs to keep them together
+        combined_url = f"{framework_url}|{libs_url}|{skeleton_lib_url or ''}"
         self.framework_path = cache.get_platform_path(combined_url, self.version)
 
     def ensure_package(self) -> Path:
@@ -144,12 +147,23 @@ class FrameworkESP32(IFramework):
                 self.framework_url, self.framework_path, "Arduino-ESP32 core"
             )
 
-            # Download and extract ESP-IDF libraries
-            self.archive_extractor.download_and_extract(
-                self.libs_url,
-                self.framework_path / "tools" / "sdk",
-                "ESP-IDF libraries",
-            )
+            # Download and extract ESP-IDF libraries (if URL is not empty)
+            if self.libs_url:
+                self.archive_extractor.download_and_extract(
+                    self.libs_url,
+                    self.framework_path / "tools" / "sdk",
+                    "ESP-IDF libraries",
+                )
+
+            # Download and extract skeleton library if provided
+            if self.skeleton_lib_url:
+                if self.show_progress:
+                    print("Downloading skeleton library...")
+                self.archive_extractor.download_and_extract(
+                    self.skeleton_lib_url,
+                    self.framework_path / "tools" / "sdk",
+                    "Skeleton library",
+                )
 
             if self.show_progress:
                 print(f"ESP32 framework installed to {self.framework_path}")

@@ -87,6 +87,8 @@ class BoardConfigLoader:
             return "esp32c3"
         elif "esp32c6" in board_id_lower or "esp32-c6" in board_id_lower:
             return "esp32c6"
+        elif "esp32c2" in board_id_lower or "esp32-c2" in board_id_lower:
+            return "esp32c2"
         elif "esp32h2" in board_id_lower or "esp32-h2" in board_id_lower:
             return "esp32h2"
         else:

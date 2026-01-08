@@ -121,8 +121,15 @@ class ConfigurableLinker(ILinker):
 
         # Otherwise use ESP32-style SDK directory approach
         elif hasattr(self.framework, 'get_sdk_dir'):
+            # Apply SDK fallback for MCUs not fully supported in the platform
+            # (e.g., esp32c2 can use esp32c3 SDK)
+            from ..packages.sdk_utils import SDKPathResolver
+            sdk_dir = self.framework.get_sdk_dir()  # type: ignore[attr-defined]
+            resolver = SDKPathResolver(sdk_dir, show_progress=False)
+            resolved_mcu = resolver._resolve_mcu(self.mcu)
+
             # Get linker script directory
-            sdk_ld_dir = self.framework.get_sdk_dir() / self.mcu / "ld"  # type: ignore[attr-defined]
+            sdk_ld_dir = sdk_dir / resolved_mcu / "ld"
 
             if not sdk_ld_dir.exists():
                 raise ConfigurableLinkerError(f"Linker script directory not found: {sdk_ld_dir}")

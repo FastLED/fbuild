@@ -268,6 +268,16 @@ class PlatformESP32(IPackage):
         if libs_url:
             packages["framework-arduinoespressif32-libs"] = libs_url
 
+        # Check for MCU-specific skeleton libraries
+        # These are used when the main libs package is empty or incomplete
+        # The naming pattern is: framework-arduino-{mcu_suffix}-skeleton-lib
+        # where mcu_suffix is extracted from the MCU name (e.g., "esp32c2" -> "c2")
+        mcu_suffix = board_mcu.replace("esp32", "")
+        skeleton_lib_name = f"framework-arduino-{mcu_suffix}-skeleton-lib"
+        skeleton_lib_url = self.get_package_url(skeleton_lib_name)
+        if skeleton_lib_url:
+            packages[skeleton_lib_name] = skeleton_lib_url
+
         # Determine which toolchain is needed based on MCU architecture
         if board_mcu in [
             "esp32c3",
