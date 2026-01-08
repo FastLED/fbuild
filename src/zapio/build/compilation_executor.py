@@ -108,12 +108,16 @@ class CompilationExecutor:
 
             return output_path
 
-        except subprocess.TimeoutExpired:
-            raise CompilationError(f"Compilation timeout for {source_path.name}")
+        except subprocess.TimeoutExpired as e:
+            raise CompilationError(f"Compilation timeout for {source_path.name}") from e
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             if isinstance(e, CompilationError):
                 raise
-            raise CompilationError(f"Failed to compile {source_path.name}: {e}")
+            raise CompilationError(f"Failed to compile {source_path.name}: {e}") from e
 
     def _write_response_file(self, include_flags: List[str]) -> Path:
         """Write include paths to response file.
@@ -161,8 +165,12 @@ class CompilationExecutor:
         try:
             with open(ino_path, 'r', encoding='utf-8') as f:
                 ino_content = f.read()
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
-            raise CompilationError(f"Failed to read {ino_path}: {e}")
+            raise CompilationError(f"Failed to read {ino_path}: {e}") from e
 
         # Generate .cpp file path
         cpp_path = output_dir / "sketch" / f"{ino_path.stem}.ino.cpp"
@@ -175,8 +183,12 @@ class CompilationExecutor:
         try:
             with open(cpp_path, 'w', encoding='utf-8') as f:
                 f.write(cpp_content)
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
-            raise CompilationError(f"Failed to write {cpp_path}: {e}")
+            raise CompilationError(f"Failed to write {cpp_path}: {e}") from e
 
         if self.show_progress:
             print(f"Preprocessed {ino_path.name} -> {cpp_path.name}")

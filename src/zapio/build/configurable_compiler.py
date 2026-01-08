@@ -139,6 +139,10 @@ class ConfigurableCompiler:
         try:
             variant_dir = self.framework.get_variant_dir(self.variant)
             includes.append(variant_dir)
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception:
             pass
 
@@ -170,6 +174,10 @@ class ConfigurableCompiler:
         """
         try:
             return self.compilation_executor.preprocess_ino(ino_path, self.build_dir)
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise ConfigurableCompilerError(str(e))
 
@@ -225,6 +233,10 @@ class ConfigurableCompiler:
                 compile_flags=compile_flags,
                 include_paths=includes
             )
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise ConfigurableCompilerError(str(e))
 
@@ -309,6 +321,10 @@ class ConfigurableCompiler:
                 build_dir=self.build_dir,
                 object_files=object_files
             )
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise ConfigurableCompilerError(str(e))
 

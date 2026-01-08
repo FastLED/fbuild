@@ -68,6 +68,10 @@ class FlagBuilder:
         """
         try:
             return shlex.split(flag_string)
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception:
             return flag_string.split()
 

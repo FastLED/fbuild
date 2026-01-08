@@ -173,6 +173,11 @@ class ESP32Toolchain:
         """
         try:
             return PlatformDetector.detect_esp32_platform()
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise ESP32ToolchainError(str(e))
 
@@ -306,6 +311,11 @@ class ESP32Toolchain:
             raise ESP32ToolchainError(
                 f"Failed to install {self.toolchain_type} toolchain: {e}"
             )
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise ESP32ToolchainError(f"Unexpected error installing toolchain: {e}")
 
@@ -415,6 +425,11 @@ class ESP32Toolchain:
         """
         try:
             return self.binary_finder.verify_installation()
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise ESP32ToolchainError(str(e))
 

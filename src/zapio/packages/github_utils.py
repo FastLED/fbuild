@@ -53,6 +53,11 @@ class GitHubURLOptimizer:
             # Default to main if both fail
             return "main"
 
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception:
             # If we can't detect, default to main
             return "main"

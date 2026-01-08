@@ -125,6 +125,11 @@ class ArduinoCore:
             print(f"Arduino core ready at {core_path}")
             return core_path
 
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise ArduinoCoreError(f"Failed to setup Arduino core: {e}")
 
@@ -197,6 +202,11 @@ class ArduinoCore:
             if "uno.name" not in content:
                 print("boards.txt missing uno configuration")
                 return False
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             print(f"Failed to read boards.txt: {e}")
             return False

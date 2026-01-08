@@ -79,6 +79,10 @@ class ArchiveExtractor:
 
         except (DownloadError, ExtractionError):
             raise
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
         except Exception as e:
             raise ArchiveExtractionError(f"Failed to extract {description}: {e}")
 
@@ -128,6 +132,10 @@ class ArchiveExtractor:
                         dest.unlink()
                     shutil.copy2(item, dest)
 
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
         except Exception as e:
             raise ExtractionError(f"Failed to extract archive: {e}")
         finally:

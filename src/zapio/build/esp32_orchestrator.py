@@ -210,6 +210,10 @@ class ESP32Orchestrator:
                 message="Build successful (native ESP32 build)"
             )
 
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             build_time = time.time() - start_time
             import traceback
@@ -443,6 +447,10 @@ class ESP32Orchestrator:
             print("[11/12] Generating bootloader...")
         try:
             bootloader_bin = linker.generate_bootloader()
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             if self.verbose:
                 print(f"Warning: Could not generate bootloader: {e}")
@@ -451,6 +459,10 @@ class ESP32Orchestrator:
             print("[12/12] Generating partition table...")
         try:
             partitions_bin = linker.generate_partition_table()
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             if self.verbose:
                 print(f"Warning: Could not generate partition table: {e}")

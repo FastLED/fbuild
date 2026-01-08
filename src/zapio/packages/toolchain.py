@@ -235,6 +235,11 @@ class Toolchain:
             print(f"Toolchain ready at {toolchain_path}")
             return toolchain_path
 
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise ToolchainError(f"Failed to setup toolchain: {e}")
 

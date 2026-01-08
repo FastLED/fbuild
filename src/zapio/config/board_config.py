@@ -342,6 +342,10 @@ class BoardConfig:
 
                     board_data[field] = value
 
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
         except Exception as e:
             raise BoardConfigError(f"Failed to parse {boards_txt_path}: {e}") from e
 

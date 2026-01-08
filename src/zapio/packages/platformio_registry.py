@@ -132,6 +132,10 @@ class PlatformIORegistry:
                     return owner_info.get("username")
                 return owner_info
 
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
         except Exception as e:
             print(f"Warning: Could not search for library {name}: {e}")
 
@@ -262,6 +266,10 @@ class PlatformIORegistry:
             self.downloader.download(
                 lib_version.download_url, archive_path, show_progress=show_progress
             )
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
         except Exception as e:
             raise RegistryError(f"Failed to download library: {e}") from e
 
@@ -276,6 +284,10 @@ class PlatformIORegistry:
             self.downloader.extract_archive(
                 archive_path, extract_dir, show_progress=show_progress
             )
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
         except Exception as e:
             raise RegistryError(f"Failed to extract library: {e}") from e
 

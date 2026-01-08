@@ -351,6 +351,11 @@ class LibraryManager:
 
             return library
 
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise LibraryError(f"Failed to download library from {url}: {e}") from e
 
@@ -446,6 +451,11 @@ class LibraryManager:
 
         except LibraryCompilationError as e:
             raise LibraryError(str(e)) from e
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise LibraryError(
                 f"Failed to compile library '{library.name}': {e}"

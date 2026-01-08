@@ -100,12 +100,16 @@ class ArchiveCreator:
 
             return archive_path
 
-        except subprocess.TimeoutExpired:
-            raise ArchiveError(f"Archive creation timeout for {archive_path.name}")
+        except subprocess.TimeoutExpired as e:
+            raise ArchiveError(f"Archive creation timeout for {archive_path.name}") from e
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             if isinstance(e, ArchiveError):
                 raise
-            raise ArchiveError(f"Failed to create archive {archive_path.name}: {e}")
+            raise ArchiveError(f"Failed to create archive {archive_path.name}: {e}") from e
 
     def create_core_archive(
         self,

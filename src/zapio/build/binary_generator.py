@@ -155,10 +155,14 @@ class BinaryGenerator:
 
             return output_bin
 
-        except subprocess.TimeoutExpired:
-            raise BinaryGeneratorError("Binary generation timeout")
+        except subprocess.TimeoutExpired as e:
+            raise BinaryGeneratorError("Binary generation timeout") from e
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
-            raise BinaryGeneratorError(f"Failed to generate binary: {e}")
+            raise BinaryGeneratorError(f"Failed to generate binary: {e}") from e
 
     def _generate_bin_objcopy(self, elf_path: Path, output_bin: Path) -> Path:
         """Generate firmware.bin using objcopy (for non-ESP32 platforms).
@@ -219,10 +223,14 @@ class BinaryGenerator:
 
             return output_bin
 
-        except subprocess.TimeoutExpired:
-            raise BinaryGeneratorError("Binary generation timeout")
+        except subprocess.TimeoutExpired as e:
+            raise BinaryGeneratorError("Binary generation timeout") from e
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
-            raise BinaryGeneratorError(f"Failed to generate binary: {e}")
+            raise BinaryGeneratorError(f"Failed to generate binary: {e}") from e
 
     def generate_bootloader(self, output_bin: Optional[Path] = None) -> Path:
         """Generate bootloader.bin from bootloader ELF file.
@@ -322,10 +330,14 @@ class BinaryGenerator:
 
             return output_bin
 
-        except subprocess.TimeoutExpired:
-            raise BinaryGeneratorError("Bootloader generation timeout")
+        except subprocess.TimeoutExpired as e:
+            raise BinaryGeneratorError("Bootloader generation timeout") from e
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
-            raise BinaryGeneratorError(f"Failed to generate bootloader: {e}")
+            raise BinaryGeneratorError(f"Failed to generate bootloader: {e}") from e
 
     def generate_partition_table(self, output_bin: Optional[Path] = None) -> Path:
         """Generate partitions.bin from partition CSV file.
@@ -402,10 +414,14 @@ class BinaryGenerator:
 
             return output_bin
 
-        except subprocess.TimeoutExpired:
-            raise BinaryGeneratorError("Partition table generation timeout")
+        except subprocess.TimeoutExpired as e:
+            raise BinaryGeneratorError("Partition table generation timeout") from e
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
-            raise BinaryGeneratorError(f"Failed to generate partition table: {e}")
+            raise BinaryGeneratorError(f"Failed to generate partition table: {e}") from e
 
     @staticmethod
     def _normalize_flash_freq(flash_freq: Any) -> str:

@@ -253,6 +253,10 @@ def deploy_command(args: DeployArgs) -> None:
 
     except FileNotFoundError as e:
         ErrorFormatter.handle_file_not_found(e)
+    except KeyboardInterrupt as ke:
+        from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+        handle_keyboard_interrupt_properly(ke)
     except Exception as e:
         ErrorFormatter.handle_unexpected_error(e, args.verbose)
 
@@ -291,6 +295,10 @@ def monitor_command(args: MonitorArgs) -> None:
 
     except FileNotFoundError as e:
         ErrorFormatter.handle_file_not_found(e)
+    except KeyboardInterrupt as ke:
+        from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+        handle_keyboard_interrupt_properly(ke)
     except Exception as e:
         ErrorFormatter.handle_unexpected_error(e, args.verbose)
 

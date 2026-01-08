@@ -85,6 +85,11 @@ class Deployer:
 
         except DeploymentError as e:
             return DeploymentResult(success=False, message=str(e))
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             return DeploymentResult(
                 success=False, message=f"Unexpected deployment error: {e}"
@@ -333,6 +338,11 @@ class Deployer:
         except ImportError:
             if self.verbose:
                 print("pyserial not installed. Cannot auto-detect port.")
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             if self.verbose:
                 print(f"Port detection failed: {e}")

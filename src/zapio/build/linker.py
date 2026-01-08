@@ -237,6 +237,10 @@ class Linker:
                 stderr=link_result.stderr
             )
 
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             return LinkResult(
                 success=False,
@@ -275,6 +279,9 @@ class Linker:
                 except PermissionError:
                     # File might be locked, wait a bit
                     time.sleep(0.05)
+                except KeyboardInterrupt as ke:
+                    from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+                    handle_keyboard_interrupt_properly(ke)
                 except Exception:
                     # Other error, just continue
                     break
@@ -306,6 +313,10 @@ class Linker:
                 time.sleep(0.02 * (attempt + 1))  # Exponential backoff: 20ms, 40ms, 60ms...
 
             return False
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception:
             return False
 
@@ -383,6 +394,10 @@ class Linker:
                 check=False
             )
             return result
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             from types import SimpleNamespace
             return SimpleNamespace(
@@ -418,6 +433,10 @@ class Linker:
                 check=False
             )
             return result.returncode == 0 and hex_path.exists()
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception:
             return False
 
@@ -452,6 +471,10 @@ class Linker:
                     self.max_ram
                 )
             return None
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception:
             return None
 
@@ -485,6 +508,10 @@ class Linker:
                 check=False
             )
             return result.returncode == 0
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception:
             return False
 

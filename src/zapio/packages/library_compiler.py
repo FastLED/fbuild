@@ -205,6 +205,11 @@ class LibraryCompiler:
             raise LibraryCompilationError(
                 f"Compilation failed for library '{library_name}': {e}"
             ) from e
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise LibraryCompilationError(
                 f"Failed to compile library '{library_name}': {e}"

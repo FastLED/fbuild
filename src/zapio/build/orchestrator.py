@@ -344,6 +344,10 @@ class BuildOrchestrator:
                 build_time=build_time,
                 message=str(e)
             )
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             build_time = time.time() - start_time
             return BuildResult(
@@ -432,6 +436,10 @@ class BuildOrchestrator:
 
         try:
             return PlatformIOConfig(ini_path)
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise BuildOrchestratorError(
                 f"Failed to parse platformio.ini: {e}"
@@ -452,6 +460,10 @@ class BuildOrchestrator:
             toolchain = Toolchain(cache)
             toolchain.ensure_toolchain()
             return toolchain
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise BuildOrchestratorError(
                 f"Failed to setup toolchain: {e}"
@@ -472,6 +484,10 @@ class BuildOrchestrator:
             arduino_core = ArduinoCore(cache)
             arduino_core.ensure_avr_core()
             return arduino_core
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise BuildOrchestratorError(
                 f"Failed to setup Arduino core: {e}"

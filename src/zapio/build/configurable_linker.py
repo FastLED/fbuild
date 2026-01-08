@@ -323,6 +323,10 @@ class ConfigurableLinker:
 
         except subprocess.TimeoutExpired:
             raise ConfigurableLinkerError("Linking timeout")
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise ConfigurableLinkerError(f"Failed to link: {e}")
 
@@ -341,6 +345,10 @@ class ConfigurableLinker:
         """
         try:
             return self.binary_generator.generate_bin(elf_path, output_bin)
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise ConfigurableLinkerError(f"Binary generation failed: {e}")
 
@@ -359,6 +367,10 @@ class ConfigurableLinker:
         """
         try:
             return self.binary_generator.generate_bootloader(output_bin)
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise ConfigurableLinkerError(f"Bootloader generation failed: {e}")
 
@@ -376,6 +388,10 @@ class ConfigurableLinker:
         """
         try:
             return self.binary_generator.generate_partition_table(output_bin)
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise ConfigurableLinkerError(f"Partition table generation failed: {e}")
 
@@ -399,6 +415,10 @@ class ConfigurableLinker:
             scripts = self.get_linker_scripts()
             info['linker_scripts'] = [s.name for s in scripts]
             info['linker_script_count'] = len(scripts)
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             info['linker_scripts_error'] = str(e)
 
@@ -407,6 +427,10 @@ class ConfigurableLinker:
             libs = self.get_sdk_libraries()
             info['sdk_library_count'] = len(libs)
             info['sdk_libraries_sample'] = [lib.name for lib in libs[:10]]
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             info['sdk_libraries_error'] = str(e)
 

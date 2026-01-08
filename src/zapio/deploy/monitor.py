@@ -70,6 +70,10 @@ class SerialMonitor:
 
         try:
             env_config = config.get_env_config(env_name)
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
         except Exception as e:
             print(f"Error: {e}")
             return 1
@@ -136,6 +140,12 @@ class SerialMonitor:
                         line = ser.readline()
                         try:
                             text = line.decode("utf-8", errors="replace").rstrip()
+                        except KeyboardInterrupt as ke:
+                            from zapio.interrupt_utils import (
+                                handle_keyboard_interrupt_properly,
+                            )
+
+                            handle_keyboard_interrupt_properly(ke)
                         except Exception:
                             text = str(line)
 
@@ -206,6 +216,10 @@ class SerialMonitor:
         except ImportError:
             if self.verbose:
                 print("pyserial not installed. Cannot auto-detect port.")
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
         except Exception as e:
             if self.verbose:
                 print(f"Port detection failed: {e}")

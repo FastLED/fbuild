@@ -146,6 +146,11 @@ class ESP32Framework:
 
         except (DownloadError, ExtractionError) as e:
             raise ESP32FrameworkError(f"Failed to install ESP32 framework: {e}")
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise ESP32FrameworkError(f"Unexpected error installing framework: {e}")
 
@@ -334,6 +339,11 @@ class ESP32Framework:
                 return json.load(f)
         except json.JSONDecodeError as e:
             raise ESP32FrameworkError(f"Failed to parse package.json: {e}")
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise ESP32FrameworkError(f"Failed to read package.json: {e}")
 

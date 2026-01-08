@@ -208,6 +208,11 @@ class ESP32LibraryManager:
             if stored_flags != compiler_flags:
                 return True, "Compiler flags changed"
 
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception:
             return True, "Could not load build info"
 
@@ -342,6 +347,11 @@ class ESP32LibraryManager:
             raise ESP32LibraryError(
                 f"Compilation failed for library '{library.name}': {e}"
             ) from e
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise ESP32LibraryError(
                 f"Failed to compile library '{library.name}': {e}"

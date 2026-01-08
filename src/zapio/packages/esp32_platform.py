@@ -163,6 +163,11 @@ class ESP32Platform:
 
         except (DownloadError, ExtractionError) as e:
             raise ESP32PlatformError(f"Failed to install ESP32 platform: {e}")
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise ESP32PlatformError(f"Unexpected error installing platform: {e}")
 
@@ -205,6 +210,11 @@ class ESP32Platform:
                 return json.load(f)
         except json.JSONDecodeError as e:
             raise ESP32PlatformError(f"Failed to parse platform.json: {e}")
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise ESP32PlatformError(f"Failed to read platform.json: {e}")
 
@@ -297,6 +307,11 @@ class ESP32Platform:
                 return json.load(f)
         except json.JSONDecodeError as e:
             raise ESP32PlatformError(f"Failed to parse board JSON: {e}")
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise ESP32PlatformError(f"Failed to read board JSON: {e}")
 
