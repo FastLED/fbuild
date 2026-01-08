@@ -26,7 +26,8 @@ dev = [
 ]
 
 [tool.setuptools]
-package-dir = {"" = "src"}
+packages = ["zapio", "lint.ruff_plugins"]
+package-dir = {"zapio" = "src/zapio", "lint.ruff_plugins" = "lint_plugins/ruff"}
 
 [tool.ruff]
 line-length = 200
@@ -47,6 +48,18 @@ disable = [
 
 [tool.isort]
 profile = "black"
+skip_glob = [
+    "*/.zap/**",
+    "*/.build/**",
+    "*/build/**",
+    "*/__pycache__/**",
+    "*/.venv/**",
+    "*/.git/**",
+    "*/.pytest_cache/**",
+    "*/.mypy_cache/**",
+    "*/.ruff_cache/**",
+    "*.egg-info/**",
+]
 
 [tool.mypy]
 ignore_missing_imports = true
@@ -79,3 +92,5 @@ markers = [
 # By default, skip integration tests
 addopts = "-m 'not integration'"
 testpaths = ["tests"]
+[project.entry-points."flake8.extension"]
+KBI = "lint.ruff_plugins.keyboard_interrupt_checker:KeyboardInterruptChecker"

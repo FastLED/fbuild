@@ -11,5 +11,7 @@ echo Running isort src tests
 uv run isort --profile black src tests
 echo Running pyright src tests
 uv run pyright src tests
+echo Running flake8 KeyboardInterrupt checks
+flake8 src --select=KBI
 echo Linting complete!
 exit 0
