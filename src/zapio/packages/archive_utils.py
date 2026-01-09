@@ -75,7 +75,18 @@ class ArchiveExtractor:
             if self.show_progress:
                 print(f"Extracting {description}...")
 
-            self._extract_tar_xz(archive_path, target_dir)
+            # Detect archive type and use appropriate extraction method
+            if archive_path.suffix == ".zip":
+                self._extract_zip(archive_path, target_dir)
+            elif archive_path.name.endswith(".tar.xz") or archive_path.name.endswith(
+                ".txz"
+            ):
+                self._extract_tar_xz(archive_path, target_dir)
+            elif archive_path.name.endswith((".tar.gz", ".tgz")):
+                self._extract_tar_gz(archive_path, target_dir)
+            else:
+                # Default to tar.xz for backwards compatibility
+                self._extract_tar_xz(archive_path, target_dir)
 
         except (DownloadError, ExtractionError):
             raise
@@ -109,6 +120,120 @@ class ArchiveExtractor:
 
             # Find the extracted directory
             # Usually it's a subdirectory like "esp32/" or directly extracted
+            extracted_items = list(temp_extract.iterdir())
+
+            if len(extracted_items) == 1 and extracted_items[0].is_dir():
+                # Single directory extracted - use its contents
+                source_dir = extracted_items[0]
+            else:
+                # Multiple items or files - use temp_extract as source
+                source_dir = temp_extract
+
+            # Move contents to target directory
+            target_dir.mkdir(parents=True, exist_ok=True)
+
+            for item in source_dir.iterdir():
+                dest = target_dir / item.name
+                if item.is_dir():
+                    if dest.exists():
+                        shutil.rmtree(dest)
+                    shutil.copytree(item, dest)
+                else:
+                    if dest.exists():
+                        dest.unlink()
+                    shutil.copy2(item, dest)
+
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+        except Exception as e:
+            raise ExtractionError(f"Failed to extract archive: {e}")
+        finally:
+            # Clean up temp directory
+            if temp_extract.exists():
+                shutil.rmtree(temp_extract, ignore_errors=True)
+
+    def _extract_zip(self, archive_path: Path, target_dir: Path) -> None:
+        """Extract a .zip archive to target directory.
+
+        Handles archives that extract to a single subdirectory or directly to multiple files.
+
+        Args:
+            archive_path: Path to the .zip archive file
+            target_dir: Directory to extract contents into
+
+        Raises:
+            ExtractionError: If extraction fails
+        """
+        import zipfile
+
+        # Create temp extraction directory
+        temp_extract = target_dir.parent / f"temp_extract_{archive_path.name}"
+        temp_extract.mkdir(parents=True, exist_ok=True)
+
+        try:
+            # Extract .zip archive
+            with zipfile.ZipFile(archive_path, "r") as zf:
+                zf.extractall(temp_extract)
+
+            # Find the extracted directory
+            extracted_items = list(temp_extract.iterdir())
+
+            if len(extracted_items) == 1 and extracted_items[0].is_dir():
+                # Single directory extracted - use its contents
+                source_dir = extracted_items[0]
+            else:
+                # Multiple items or files - use temp_extract as source
+                source_dir = temp_extract
+
+            # Move contents to target directory
+            target_dir.mkdir(parents=True, exist_ok=True)
+
+            for item in source_dir.iterdir():
+                dest = target_dir / item.name
+                if item.is_dir():
+                    if dest.exists():
+                        shutil.rmtree(dest)
+                    shutil.copytree(item, dest)
+                else:
+                    if dest.exists():
+                        dest.unlink()
+                    shutil.copy2(item, dest)
+
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+        except Exception as e:
+            raise ExtractionError(f"Failed to extract archive: {e}")
+        finally:
+            # Clean up temp directory
+            if temp_extract.exists():
+                shutil.rmtree(temp_extract, ignore_errors=True)
+
+    def _extract_tar_gz(self, archive_path: Path, target_dir: Path) -> None:
+        """Extract a .tar.gz archive to target directory.
+
+        Handles archives that extract to a single subdirectory or directly to multiple files.
+
+        Args:
+            archive_path: Path to the .tar.gz archive file
+            target_dir: Directory to extract contents into
+
+        Raises:
+            ExtractionError: If extraction fails
+        """
+        # Create temp extraction directory
+        temp_extract = target_dir.parent / f"temp_extract_{archive_path.name}"
+        temp_extract.mkdir(parents=True, exist_ok=True)
+
+        try:
+            # Extract .tar.gz archive
+            with tarfile.open(archive_path, "r:gz") as tar:
+                tar.extractall(temp_extract)
+
+            # Find the extracted directory
             extracted_items = list(temp_extract.iterdir())
 
             if len(extracted_items) == 1 and extracted_items[0].is_dir():

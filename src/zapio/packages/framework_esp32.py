@@ -53,6 +53,7 @@ from typing import Any, Dict, List, Optional
 from .archive_utils import ArchiveExtractor, URLVersionExtractor
 from .cache import Cache
 from .downloader import DownloadError, ExtractionError
+from .header_trampoline_cache import HeaderTrampolineCache
 from .package import IFramework, PackageError
 from .sdk_utils import SDKPathResolver
 
@@ -168,6 +169,10 @@ class FrameworkESP32(IFramework):
             if self.show_progress:
                 print(f"ESP32 framework installed to {self.framework_path}")
 
+            # Post-install: Generate header trampolines for all MCU variants
+            # This pre-generates trampoline caches to avoid Windows command-line length issues
+            self._post_install_generate_trampolines()
+
             return self.framework_path
 
         except (DownloadError, ExtractionError) as e:
@@ -179,6 +184,103 @@ class FrameworkESP32(IFramework):
             raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise FrameworkErrorESP32(f"Unexpected error installing framework: {e}")
+
+    def _post_install_generate_trampolines(self) -> None:
+        """Generate header trampolines for all MCU variants after framework installation.
+
+        This post-install step pre-generates trampoline caches for all ESP32 MCU variants
+        found in the SDK. This ensures that Windows builds with sccache don't hit the
+        32K command-line length limit due to excessive -I arguments.
+
+        The trampolines are generated once at framework install time rather than at
+        every compile time, improving build performance.
+        """
+        import platform as platform_module
+
+        # Only generate trampolines on Windows
+        if platform_module.system() != "Windows":
+            if self.show_progress:
+                print("[trampolines] Skipping post-install generation (not Windows)")
+            return
+
+        try:
+            if self.show_progress:
+                print(
+                    "[trampolines] Post-install: Generating header trampoline caches..."
+                )
+
+            # Find all MCU variants in the SDK
+            sdk_dir = self.get_sdk_dir()
+            if not sdk_dir.exists():
+                if self.show_progress:
+                    print("[trampolines] Warning: SDK directory not found, skipping")
+                return
+
+            # Look for MCU-specific directories
+            mcu_variants = []
+            for item in sdk_dir.iterdir():
+                if item.is_dir() and item.name.startswith("esp32"):
+                    mcu_variants.append(item.name)
+
+            if not mcu_variants:
+                if self.show_progress:
+                    print("[trampolines] Warning: No MCU variants found in SDK")
+                return
+
+            if self.show_progress:
+                print(
+                    f"[trampolines] Found {len(mcu_variants)} MCU variant(s): {', '.join(mcu_variants)}"
+                )
+
+            # Generate trampolines for each MCU variant
+            trampoline_cache = HeaderTrampolineCache(show_progress=self.show_progress)
+
+            # Exclude ESP-IDF headers that use relative paths or #include_next that break trampolines
+            exclude_patterns = [
+                "newlib/platform_include",  # Uses #include_next which breaks trampolines
+                "newlib\\platform_include",  # Windows path variant
+                "/bt/",  # Bluetooth SDK uses relative paths between bt/include and bt/controller
+                "\\bt\\",  # Windows path variant
+            ]
+
+            for mcu in mcu_variants:
+                try:
+                    # Get SDK include paths for this MCU
+                    include_paths = self.get_sdk_includes(mcu)
+
+                    if self.show_progress:
+                        print(
+                            f"[trampolines] Generating cache for {mcu} ({len(include_paths)} include paths)..."
+                        )
+
+                    # Generate trampolines with exclusions (this will create C:/inc/NNN directories)
+                    trampoline_paths = trampoline_cache.generate_trampolines(
+                        include_paths, exclude_patterns=exclude_patterns
+                    )
+
+                    if self.show_progress:
+                        print(
+                            f"[trampolines] Generated {len(trampoline_paths)} trampoline directories for {mcu}"
+                        )
+
+                except KeyboardInterrupt:
+                    raise
+                except Exception as e:
+                    if self.show_progress:
+                        print(
+                            f"[trampolines] Warning: Failed to generate trampolines for {mcu}: {e}"
+                        )
+                    continue
+
+            if self.show_progress:
+                print("[trampolines] Post-install generation complete")
+
+        except KeyboardInterrupt:
+            raise
+        except Exception as e:
+            # Don't fail the entire installation if trampoline generation fails
+            if self.show_progress:
+                print(f"[trampolines] Warning: Post-install generation failed: {e}")
 
     def is_installed(self) -> bool:
         """Check if framework is already installed.

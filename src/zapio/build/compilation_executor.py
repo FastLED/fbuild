@@ -8,11 +8,17 @@ Design:
     - Generates response files for include paths (avoids command line length limits)
     - Provides clear error messages for compilation failures
     - Supports both C and C++ compilation
+    - Integrates sccache for compilation caching
+    - Uses header trampoline cache to avoid Windows command-line length limits
 """
 
 import subprocess
+import shutil
+import platform
 from pathlib import Path
-from typing import List
+from typing import List, Optional
+
+from ..packages.header_trampoline_cache import HeaderTrampolineCache
 
 
 class CompilationError(Exception):
@@ -30,15 +36,48 @@ class CompilationExecutor:
     - Supporting progress display
     """
 
-    def __init__(self, build_dir: Path, show_progress: bool = True):
+    def __init__(self, build_dir: Path, show_progress: bool = True, use_sccache: bool = True, use_trampolines: bool = True):
         """Initialize compilation executor.
 
         Args:
             build_dir: Build directory for response files
             show_progress: Whether to show compilation progress
+            use_sccache: Whether to use sccache for caching (default: True)
+            use_trampolines: Whether to use header trampolines on Windows (default: True)
         """
         self.build_dir = build_dir
         self.show_progress = show_progress
+        self.use_sccache = use_sccache
+        self.use_trampolines = use_trampolines
+        self.sccache_path: Optional[Path] = None
+        self.trampoline_cache: Optional[HeaderTrampolineCache] = None
+
+        # Check if sccache is available
+        if self.use_sccache:
+            sccache_exe = shutil.which("sccache")
+            if sccache_exe:
+                self.sccache_path = Path(sccache_exe)
+                # Always print sccache status for visibility
+                print(f"[sccache] Enabled: {self.sccache_path}")
+            else:
+                # Try common Windows locations (Git Bash uses /c/ paths)
+                common_locations = [
+                    Path("/c/tools/python13/Scripts/sccache.exe"),
+                    Path("C:/tools/python13/Scripts/sccache.exe"),
+                    Path.home() / ".cargo" / "bin" / "sccache.exe",
+                ]
+                for loc in common_locations:
+                    if loc.exists():
+                        self.sccache_path = loc
+                        print(f"[sccache] Enabled: {self.sccache_path}")
+                        break
+                else:
+                    # Always warn if sccache not found
+                    print("[sccache] Warning: not found in PATH, proceeding without cache")
+
+        # Initialize trampoline cache if enabled and on Windows
+        if self.use_trampolines and platform.system() == 'Windows':
+            self.trampoline_cache = HeaderTrampolineCache(show_progress=show_progress)
 
     def compile_source(
         self,
@@ -74,12 +113,52 @@ class CompilationExecutor:
         # Ensure output directory exists
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
-        # Convert include paths to flags and write to response file
-        include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in include_paths]
+        # Apply header trampoline cache on Windows when enabled
+        # This resolves Windows CreateProcess 32K limit issues with sccache
+        effective_include_paths = include_paths
+        if self.trampoline_cache is not None and platform.system() == 'Windows':
+            # Use trampolines to shorten include paths
+            # Exclude ESP-IDF headers that use relative paths that break trampolines
+            try:
+                exclude_patterns = [
+                    'newlib/platform_include',  # Uses #include_next which breaks trampolines
+                    'newlib\\platform_include',  # Windows path variant
+                    '/bt/',  # Bluetooth SDK uses relative paths between bt/include and bt/controller
+                    '\\bt\\'  # Windows path variant
+                ]
+                effective_include_paths = self.trampoline_cache.generate_trampolines(
+                    include_paths,
+                    exclude_patterns=exclude_patterns
+                )
+            except KeyboardInterrupt:
+                raise
+            except Exception as e:
+                if self.show_progress:
+                    print(f"[trampolines] Warning: Failed to generate trampolines, using original paths: {e}")
+                effective_include_paths = include_paths
+
+        # Convert include paths to flags - ensure no quotes for sccache compatibility
+        # GCC response files with quotes cause sccache to treat @file literally
+        include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in effective_include_paths]
         response_file = self._write_response_file(include_flags)
 
-        # Build compiler command
-        cmd = [str(compiler_path)]
+        # Build compiler command with optional sccache wrapper
+        # With trampolines enabled, we can now use sccache even with many includes
+        use_sccache = self.sccache_path is not None
+
+        cmd = []
+        if use_sccache:
+            cmd.append(str(self.sccache_path))
+            # Use absolute resolved path for sccache
+            # On Windows, sccache needs consistent path format (all backslashes)
+            resolved_compiler = compiler_path.resolve()
+            compiler_str = str(resolved_compiler)
+            # Normalize to Windows backslashes on Windows
+            if platform.system() == 'Windows':
+                compiler_str = compiler_str.replace('/', '\\')
+            cmd.append(compiler_str)
+        else:
+            cmd.append(str(compiler_path))
         cmd.extend(compile_flags)
         cmd.append(f"@{response_file}")
         cmd.extend(['-c', str(source_path)])

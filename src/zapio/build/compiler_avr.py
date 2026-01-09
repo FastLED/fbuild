@@ -2,10 +2,11 @@
 AVR compiler wrapper for building Arduino sketches.
 
 This module provides a wrapper around avr-gcc and avr-g++ for compiling
-C and C++ source files to object files.
+C and C++ source files to object files with sccache support.
 """
 
 import subprocess
+import shutil
 from pathlib import Path
 from typing import List, Dict, Optional
 from dataclasses import dataclass
@@ -38,7 +39,8 @@ class CompilerAVR(ICompiler):
         mcu: str,
         f_cpu: str,
         includes: List[Path],
-        defines: Dict[str, str]
+        defines: Dict[str, str],
+        use_sccache: bool = True
     ):
         """
         Initialize compiler.
@@ -50,6 +52,7 @@ class CompilerAVR(ICompiler):
             f_cpu: CPU frequency (e.g., 16000000L)
             includes: List of include directories
             defines: Dictionary of preprocessor defines
+            use_sccache: Whether to use sccache for caching (default: True)
         """
         self.avr_gcc = Path(avr_gcc)
         self.avr_gpp = Path(avr_gpp)
@@ -57,6 +60,17 @@ class CompilerAVR(ICompiler):
         self.f_cpu = f_cpu
         self.includes = [Path(p) for p in includes]
         self.defines = defines
+        self.use_sccache = use_sccache
+        self.sccache_path: Optional[Path] = None
+
+        # Check if sccache is available
+        if self.use_sccache:
+            sccache_exe = shutil.which("sccache")
+            if sccache_exe:
+                self.sccache_path = Path(sccache_exe)
+                print(f"[sccache] Enabled for AVR compiler: {self.sccache_path}")
+            else:
+                print("[sccache] Warning: not found in PATH, proceeding without cache")
 
         # Verify tools exist
         if not self.avr_gcc.exists():
@@ -199,7 +213,11 @@ class CompilerAVR(ICompiler):
         extra_flags: List[str]
     ) -> List[str]:
         """Build avr-gcc command for C compilation."""
-        cmd = [
+        cmd = []
+        # Prepend sccache if available
+        if self.sccache_path:
+            cmd.append(str(self.sccache_path))
+        cmd.extend([
             str(self.avr_gcc),
             '-c',              # Compile only, don't link
             '-g',              # Include debug symbols
@@ -211,7 +229,7 @@ class CompilerAVR(ICompiler):
             '-flto',           # Link-time optimization
             '-fno-fat-lto-objects',  # LTO bytecode only
             f'-mmcu={self.mcu}',    # Target MCU
-        ]
+        ])
 
         # Add defines
         for key, value in self.defines.items():
@@ -243,7 +261,11 @@ class CompilerAVR(ICompiler):
         extra_flags: List[str]
     ) -> List[str]:
         """Build avr-g++ command for C++ compilation."""
-        cmd = [
+        cmd = []
+        # Prepend sccache if available
+        if self.sccache_path:
+            cmd.append(str(self.sccache_path))
+        cmd.extend([
             str(self.avr_gpp),
             '-c',              # Compile only, don't link
             '-g',              # Include debug symbols
@@ -258,7 +280,7 @@ class CompilerAVR(ICompiler):
             '-flto',           # Link-time optimization
             '-fno-fat-lto-objects',  # LTO bytecode only
             f'-mmcu={self.mcu}',        # Target MCU
-        ]
+        ])
 
         # Add defines
         for key, value in self.defines.items():

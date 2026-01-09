@@ -229,6 +229,13 @@ class OrchestratorESP32(IBuildOrchestrator):
 
             # Compile Arduino core
             core_obj_files = compiler.compile_core()
+
+            # Add Bluetooth stub for non-ESP32 targets (ESP32-C6, ESP32-S3, etc.)
+            # where esp32-hal-bt.c fails to compile but btInUse() is still referenced
+            bt_stub_obj = self._create_bt_stub(build_dir, compiler, verbose)
+            if bt_stub_obj:
+                core_obj_files.append(bt_stub_obj)
+
             core_archive = compiler.create_core_archive(core_obj_files)
 
             if verbose:
@@ -525,6 +532,65 @@ class OrchestratorESP32(IBuildOrchestrator):
             print(f"      Compiled {len(sketch_obj_files)} sketch file(s)")
 
         return sketch_obj_files
+
+    def _create_bt_stub(
+        self,
+        build_dir: Path,
+        compiler: ConfigurableCompiler,
+        verbose: bool
+    ) -> Optional[Path]:
+        """
+        Create a Bluetooth stub for ESP32 targets where esp32-hal-bt.c fails to compile.
+
+        On non-ESP32 targets (ESP32-C6, ESP32-S3, etc.), the esp32-hal-bt.c file may
+        fail to compile due to SDK incompatibilities, but initArduino() still references
+        btInUse(). This creates a stub implementation that returns false.
+
+        Args:
+            build_dir: Build directory
+            compiler: Configured compiler instance
+            verbose: Whether to print verbose output
+
+        Returns:
+            Path to compiled stub object file, or None on error
+        """
+        try:
+            # Create stub source file
+            stub_dir = build_dir / "stubs"
+            stub_dir.mkdir(parents=True, exist_ok=True)
+            stub_file = stub_dir / "bt_stub.c"
+
+            # Write minimal btInUse() implementation
+            stub_content = """// Bluetooth stub for ESP32 targets where esp32-hal-bt.c fails to compile
+// This provides a fallback implementation of btInUse() that always returns false
+
+#include <stdbool.h>
+
+// Weak attribute allows this to be overridden if the real implementation links
+__attribute__((weak)) bool btInUse(void) {
+    return false;
+}
+"""
+            stub_file.write_text(stub_content)
+
+            # Compile the stub
+            stub_obj = stub_dir / "bt_stub.o"
+            compiled_obj = compiler.compile_source(stub_file, stub_obj)
+
+            if verbose:
+                print(f"      Created Bluetooth stub: {compiled_obj.name}")
+
+            return compiled_obj
+
+        except KeyboardInterrupt as ke:
+            from zapio.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
+        except Exception as e:
+            if verbose:
+                print(f"Warning: Failed to create Bluetooth stub: {e}")
+            return None
 
     def _generate_boot_components(
         self,
