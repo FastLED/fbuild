@@ -267,26 +267,94 @@ def daemon_command(action: str) -> None:
         ErrorFormatter.handle_unexpected_error(e, verbose=False)
 
 
+def parse_default_action_args(argv: list[str]) -> DeployArgs:
+    """Parse arguments for the default action (fbuild <project_dir> [flags]).
+
+    Args:
+        argv: Command-line arguments (sys.argv)
+
+    Returns:
+        DeployArgs with parsed values
+
+    Raises:
+        SystemExit: If project directory is invalid or required arguments are missing
+    """
+    if len(argv) < 2:
+        ErrorFormatter.print_error("Missing project directory", "")
+        sys.exit(1)
+
+    project_dir = Path(argv[1])
+    PathValidator.validate_project_dir(project_dir)
+
+    # Parse remaining arguments
+    monitor: Optional[str] = None
+    port: Optional[str] = None
+    environment: Optional[str] = None
+    clean = False
+    verbose = False
+
+    i = 2
+    while i < len(argv):
+        arg = argv[i]
+
+        # Handle --monitor flag
+        if arg.startswith("--monitor="):
+            monitor = arg.split("=", 1)[1]
+            i += 1
+        elif arg == "--monitor" and i + 1 < len(argv):
+            monitor = argv[i + 1]
+            i += 2
+        # Handle --port flag
+        elif arg.startswith("--port="):
+            port = arg.split("=", 1)[1]
+            i += 1
+        elif arg in ("-p", "--port") and i + 1 < len(argv):
+            port = argv[i + 1]
+            i += 2
+        # Handle --environment flag
+        elif arg.startswith("--environment="):
+            environment = arg.split("=", 1)[1]
+            i += 1
+        elif arg.startswith("-e="):
+            environment = arg.split("=", 1)[1]
+            i += 1
+        elif arg in ("-e", "--environment") and i + 1 < len(argv):
+            environment = argv[i + 1]
+            i += 2
+        # Handle --clean flag
+        elif arg in ("-c", "--clean"):
+            clean = True
+            i += 1
+        # Handle --verbose flag
+        elif arg in ("-v", "--verbose"):
+            verbose = True
+            i += 1
+        else:
+            # Unknown flag - warn and skip
+            ErrorFormatter.print_error(f"Unknown flag in default action: {arg}", "")
+            print("Hint: Use 'fbuild deploy --help' to see available flags")
+            sys.exit(1)
+
+    return DeployArgs(
+        project_dir=project_dir,
+        environment=environment,
+        port=port,
+        clean=clean,
+        monitor=monitor if monitor is not None else "",  # Empty string means monitor with default settings
+        verbose=verbose,
+    )
+
+
 def main() -> None:
     """fbuild - Modern embedded build system.
 
     Replace PlatformIO with URL-based platform/toolchain management.
     """
-    # Handle default action: fbuild <project_dir> → deploy with monitor
+    # Handle default action: fbuild <project_dir> [flags] → deploy with monitor
     # This check must happen before argparse to avoid conflicts
     if len(sys.argv) >= 2 and not sys.argv[1].startswith("-") and sys.argv[1] not in ["build", "deploy", "monitor", "daemon"]:
         # User provided a path without a subcommand - use default action
-        project_dir = Path(sys.argv[1])
-        PathValidator.validate_project_dir(project_dir)
-
-        deploy_args = DeployArgs(
-            project_dir=project_dir,
-            environment=None,
-            port=None,
-            clean=False,
-            monitor="",  # Empty string means monitor with default settings
-            verbose=False,
-        )
+        deploy_args = parse_default_action_args(sys.argv)
         deploy_command(deploy_args)
         return
 
