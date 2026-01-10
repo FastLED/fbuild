@@ -14,14 +14,14 @@ done
 echo "========================================"
 echo "Running unit tests (parallel)"
 echo "========================================"
-uv run pytest -n auto tests/unit -v --durations=0
+uv run --group test pytest -n auto tests/unit -v --durations=0
 
 if [ "$FULL_MODE" == "true" ]; then
     echo ""
     echo "========================================"
     echo "Running integration tests (serial)"
     echo "========================================"
-    uv run pytest tests/integration -v --durations=0
+    uv run --group test pytest tests/integration -v --durations=0
 else
     echo ""
     echo "========================================"

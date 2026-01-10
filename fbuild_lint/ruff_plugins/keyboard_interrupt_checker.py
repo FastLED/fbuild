@@ -5,6 +5,7 @@ This plugin ensures that try-except blocks that catch broad exceptions
 
 Error Codes:
     KBI001: Try-except catches Exception/BaseException without KeyboardInterrupt handler
+    KBI002: KeyboardInterrupt handler must call _thread.interrupt_main() or handle_keyboard_interrupt_properly()
 """
 
 import ast
@@ -54,6 +55,7 @@ class TryExceptVisitor(ast.NodeVisitor):
         # Check if any handler catches Exception or BaseException
         catches_broad_exception = False
         has_keyboard_interrupt_handler = False
+        keyboard_interrupt_handlers = []
 
         for handler in node.handlers:
             if handler.type is None:
@@ -64,6 +66,7 @@ class TryExceptVisitor(ast.NodeVisitor):
                     catches_broad_exception = True
                 elif handler.type.id == "KeyboardInterrupt":
                     has_keyboard_interrupt_handler = True
+                    keyboard_interrupt_handlers.append(handler)
             elif isinstance(handler.type, ast.Tuple):
                 # Check if tuple contains Exception or BaseException
                 for exc_type in handler.type.elts:
@@ -72,6 +75,7 @@ class TryExceptVisitor(ast.NodeVisitor):
                             catches_broad_exception = True
                         elif exc_type.id == "KeyboardInterrupt":
                             has_keyboard_interrupt_handler = True
+                            keyboard_interrupt_handlers.append(handler)
 
         # If we catch broad exceptions without KeyboardInterrupt handler, that's an error
         if catches_broad_exception and not has_keyboard_interrupt_handler:
@@ -86,5 +90,48 @@ class TryExceptVisitor(ast.NodeVisitor):
                 )
             )
 
+        # Check all KeyboardInterrupt handlers to ensure they call _thread.interrupt_main()
+        for keyboard_interrupt_handler in keyboard_interrupt_handlers:
+            if not self._handler_calls_interrupt_main(keyboard_interrupt_handler):
+                self.errors.append(
+                    (
+                        keyboard_interrupt_handler.lineno,
+                        keyboard_interrupt_handler.col_offset,
+                        (
+                            "KBI002 KeyboardInterrupt handler must call _thread.interrupt_main() "
+                            "or use handle_keyboard_interrupt_properly(). "
+                            "Add: import _thread; _thread.interrupt_main()"
+                        ),
+                    )
+                )
+
         # Continue visiting child nodes
         self.generic_visit(node)
+
+    def _handler_calls_interrupt_main(self, handler: ast.ExceptHandler) -> bool:
+        """Check if a KeyboardInterrupt handler properly calls _thread.interrupt_main().
+
+        Args:
+            handler: The exception handler to check
+
+        Returns:
+            True if the handler calls _thread.interrupt_main() or handle_keyboard_interrupt_properly()
+        """
+        # Check for calls to _thread.interrupt_main() or handle_keyboard_interrupt_properly()
+        for node in ast.walk(handler):
+            if isinstance(node, ast.Call):
+                # Check for _thread.interrupt_main()
+                if isinstance(node.func, ast.Attribute):
+                    if (
+                        isinstance(node.func.value, ast.Name)
+                        and node.func.value.id == "_thread"
+                        and node.func.attr == "interrupt_main"
+                    ):
+                        return True
+
+                # Check for handle_keyboard_interrupt_properly()
+                if isinstance(node.func, ast.Name):
+                    if node.func.id == "handle_keyboard_interrupt_properly":
+                        return True
+
+        return False
