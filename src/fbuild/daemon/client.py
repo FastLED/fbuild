@@ -301,6 +301,73 @@ def request_build(
                 return False
 
 
+def _display_monitor_summary(project_dir: Path) -> None:
+    """Display monitor summary from JSON file.
+
+    Args:
+        project_dir: Project directory where summary file is located
+    """
+    summary_file = project_dir / ".fbuild" / "monitor_summary.json"
+    if not summary_file.exists():
+        return
+
+    try:
+        with open(summary_file, "r", encoding="utf-8") as f:
+            summary = json.load(f)
+
+        print("\n" + "=" * 50)
+        print("Monitor Summary")
+        print("=" * 50)
+
+        # Display expect pattern result
+        if summary.get("expect_pattern"):
+            pattern = summary["expect_pattern"]
+            found = summary.get("expect_found", False)
+            status = "FOUND ✓" if found else "NOT FOUND ✗"
+            print(f'Expected pattern: "{pattern}" - {status}')
+
+        # Display halt on error pattern result
+        if summary.get("halt_on_error_pattern"):
+            pattern = summary["halt_on_error_pattern"]
+            found = summary.get("halt_on_error_found", False)
+            status = "FOUND ✗" if found else "NOT FOUND ✓"
+            print(f'Error pattern: "{pattern}" - {status}')
+
+        # Display halt on success pattern result
+        if summary.get("halt_on_success_pattern"):
+            pattern = summary["halt_on_success_pattern"]
+            found = summary.get("halt_on_success_found", False)
+            status = "FOUND ✓" if found else "NOT FOUND ✗"
+            print(f'Success pattern: "{pattern}" - {status}')
+
+        # Display statistics
+        lines = summary.get("lines_processed", 0)
+        elapsed = summary.get("elapsed_time", 0.0)
+        exit_reason = summary.get("exit_reason", "unknown")
+
+        print(f"Lines processed: {lines}")
+        print(f"Time elapsed: {elapsed:.2f}s")
+
+        # Translate exit_reason to user-friendly text
+        reason_text = {
+            "timeout": "Timeout reached",
+            "expect_found": "Expected pattern found",
+            "halt_error": "Error pattern detected",
+            "halt_success": "Success pattern detected",
+            "interrupted": "Interrupted by user",
+            "error": "Serial port error",
+        }.get(exit_reason, exit_reason)
+
+        print(f"Exit reason: {reason_text}")
+        print("=" * 50)
+
+    except KeyboardInterrupt:  # noqa: KBI002
+        raise
+    except Exception:
+        # Silently fail - don't disrupt the user experience
+        pass
+
+
 def request_deploy(
     project_dir: Path,
     environment: str,
@@ -364,6 +431,8 @@ def request_deploy(
     print("📦 Deploy Progress:")
     start_time = time.time()
     last_message: str | None = None
+    monitoring_started = False
+    output_file_position = 0
 
     while True:
         try:
@@ -382,16 +451,73 @@ def request_deploy(
                 display_status(status)
                 last_message = status.message
 
+            # If monitoring phase started, tail the output file
+            if monitor_after and status.state == DaemonState.MONITORING and not monitoring_started:
+                monitoring_started = True
+                print()  # Add blank line before serial output
+
+            if monitoring_started:
+                # Tail the output file
+                output_file = project_dir / ".fbuild" / "monitor_output.txt"
+                if output_file.exists():
+                    try:
+                        with open(output_file, "r", encoding="utf-8", errors="replace") as f:
+                            f.seek(output_file_position)
+                            new_lines = f.read()
+                            if new_lines:
+                                print(new_lines, end="", flush=True)
+                                output_file_position = f.tell()
+                    except KeyboardInterrupt:  # noqa: KBI002
+                        raise
+                    except Exception:
+                        pass  # Ignore read errors
+
             # Check completion
             if status.state == DaemonState.COMPLETED:
+                # Read any remaining output
+                if monitoring_started:
+                    output_file = project_dir / ".fbuild" / "monitor_output.txt"
+                    if output_file.exists():
+                        try:
+                            with open(output_file, "r", encoding="utf-8", errors="replace") as f:
+                                f.seek(output_file_position)
+                                new_lines = f.read()
+                                if new_lines:
+                                    print(new_lines, end="", flush=True)
+                        except KeyboardInterrupt:  # noqa: KBI002
+                            raise
+                        except Exception:
+                            pass
+
+                    # Display monitor summary
+                    _display_monitor_summary(project_dir)
+
                 print(f"\n✅ Deploy completed in {elapsed:.1f}s")
                 return True
             elif status.state == DaemonState.FAILED:
+                # Read any remaining output
+                if monitoring_started:
+                    output_file = project_dir / ".fbuild" / "monitor_output.txt"
+                    if output_file.exists():
+                        try:
+                            with open(output_file, "r", encoding="utf-8", errors="replace") as f:
+                                f.seek(output_file_position)
+                                new_lines = f.read()
+                                if new_lines:
+                                    print(new_lines, end="", flush=True)
+                        except KeyboardInterrupt:  # noqa: KBI002
+                            raise
+                        except Exception:
+                            pass
+
+                    # Display monitor summary
+                    _display_monitor_summary(project_dir)
+
                 print(f"\n❌ Deploy failed: {status.message}")
                 return False
 
             # Sleep before next poll
-            time.sleep(0.5)
+            time.sleep(0.1 if monitoring_started else 0.5)
 
         except KeyboardInterrupt:  # noqa: KBI002
             # Prompt user whether to keep the operation running
@@ -474,6 +600,8 @@ def request_monitor(
     print("👁️  Monitor Output:")
     start_time = time.time()
     last_message: str | None = None
+    monitoring_started = False
+    output_file_position = 0
 
     while True:
         try:
@@ -492,21 +620,73 @@ def request_monitor(
                 display_status(status)
                 last_message = status.message
 
-                # Display recent output lines
-                if status.output_lines:
-                    for line in status.output_lines:
-                        print(f"     {line}")
+            # If monitoring phase started, tail the output file
+            if status.state == DaemonState.MONITORING and not monitoring_started:
+                monitoring_started = True
+                print()  # Add blank line before serial output
+
+            if monitoring_started:
+                # Tail the output file
+                output_file = project_dir / ".fbuild" / "monitor_output.txt"
+                if output_file.exists():
+                    try:
+                        with open(output_file, "r", encoding="utf-8", errors="replace") as f:
+                            f.seek(output_file_position)
+                            new_lines = f.read()
+                            if new_lines:
+                                print(new_lines, end="", flush=True)
+                                output_file_position = f.tell()
+                    except KeyboardInterrupt:  # noqa: KBI002
+                        raise
+                    except Exception:
+                        pass  # Ignore read errors
 
             # Check completion
             if status.state == DaemonState.COMPLETED:
+                # Read any remaining output
+                if monitoring_started:
+                    output_file = project_dir / ".fbuild" / "monitor_output.txt"
+                    if output_file.exists():
+                        try:
+                            with open(output_file, "r", encoding="utf-8", errors="replace") as f:
+                                f.seek(output_file_position)
+                                new_lines = f.read()
+                                if new_lines:
+                                    print(new_lines, end="", flush=True)
+                        except KeyboardInterrupt:  # noqa: KBI002
+                            raise
+                        except Exception:
+                            pass
+
+                    # Display monitor summary
+                    _display_monitor_summary(project_dir)
+
                 print(f"\n✅ Monitor completed in {elapsed:.1f}s")
                 return True
             elif status.state == DaemonState.FAILED:
+                # Read any remaining output
+                if monitoring_started:
+                    output_file = project_dir / ".fbuild" / "monitor_output.txt"
+                    if output_file.exists():
+                        try:
+                            with open(output_file, "r", encoding="utf-8", errors="replace") as f:
+                                f.seek(output_file_position)
+                                new_lines = f.read()
+                                if new_lines:
+                                    print(new_lines, end="", flush=True)
+                        except KeyboardInterrupt:  # noqa: KBI002
+                            raise
+                        except Exception:
+                            pass
+
+                    # Display monitor summary
+                    _display_monitor_summary(project_dir)
+
                 print(f"\n❌ Monitor failed: {status.message}")
                 return False
 
             # Sleep before next poll
-            time.sleep(0.5)
+            time.sleep(0.1 if monitoring_started else 0.5)
 
         except KeyboardInterrupt:  # noqa: KBI002
             # Prompt user whether to keep the operation running

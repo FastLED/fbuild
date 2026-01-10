@@ -4,6 +4,7 @@ Serial monitor module for embedded devices.
 This module provides serial monitoring capabilities with optional halt conditions.
 """
 
+import json
 import re
 import sys
 import time
@@ -31,6 +32,59 @@ class SerialMonitor:
         """
         self.verbose = verbose
 
+    def _write_summary(
+        self,
+        summary_file: Optional[Path],
+        expect: Optional[str],
+        expect_found: bool,
+        halt_on_error: Optional[str],
+        halt_on_error_found: bool,
+        halt_on_success: Optional[str],
+        halt_on_success_found: bool,
+        lines_processed: int,
+        elapsed_time: float,
+        exit_reason: str,
+    ) -> None:
+        """Write monitoring summary to JSON file.
+
+        Args:
+            summary_file: Path to write summary JSON
+            expect: Expected pattern (or None)
+            expect_found: Whether expect pattern was found
+            halt_on_error: Error pattern (or None)
+            halt_on_error_found: Whether error pattern was found
+            halt_on_success: Success pattern (or None)
+            halt_on_success_found: Whether success pattern was found
+            lines_processed: Total lines read from serial
+            elapsed_time: Time elapsed in seconds
+            exit_reason: Reason for exit (timeout/expect_found/halt_error/halt_success/interrupted/error)
+        """
+        if not summary_file:
+            return
+
+        summary = {
+            "expect_pattern": expect,
+            "expect_found": expect_found,
+            "halt_on_error_pattern": halt_on_error,
+            "halt_on_error_found": halt_on_error_found,
+            "halt_on_success_pattern": halt_on_success,
+            "halt_on_success_found": halt_on_success_found,
+            "lines_processed": lines_processed,
+            "elapsed_time": round(elapsed_time, 2),
+            "exit_reason": exit_reason,
+        }
+
+        try:
+            summary_file.parent.mkdir(parents=True, exist_ok=True)
+            with open(summary_file, "w", encoding="utf-8") as f:
+                json.dump(summary, f, indent=2)
+        except KeyboardInterrupt:  # noqa: KBI002
+            raise
+        except Exception as e:
+            # Silently fail - don't disrupt the monitor operation
+            if self.verbose:
+                print(f"Warning: Could not write summary file: {e}")
+
     def monitor(
         self,
         project_dir: Path,
@@ -41,6 +95,8 @@ class SerialMonitor:
         halt_on_error: Optional[str] = None,
         halt_on_success: Optional[str] = None,
         expect: Optional[str] = None,
+        output_file: Optional[Path] = None,
+        summary_file: Optional[Path] = None,
     ) -> int:
         """Monitor serial output from device.
 
@@ -53,6 +109,8 @@ class SerialMonitor:
             halt_on_error: String pattern that triggers error exit
             halt_on_success: String pattern that triggers success exit
             expect: Expected pattern - checked at timeout/success for exit code
+            output_file: Optional file to write serial output to (for client streaming)
+            summary_file: Optional file to write summary JSON to (for client display)
 
         Returns:
             Exit code (0 for success, 1 for error)
@@ -124,16 +182,29 @@ class SerialMonitor:
             # Give device a moment to start booting after reset
             time.sleep(0.2)
 
+            # Open output file for streaming (if specified)
+            output_fp = None
+            if output_file:
+                try:
+                    output_file.parent.mkdir(parents=True, exist_ok=True)
+                    output_fp = open(output_file, "w", encoding="utf-8", errors="replace")
+                except KeyboardInterrupt:  # noqa: KBI002
+                    raise
+                except Exception as e:
+                    print(f"Warning: Could not open output file {output_file}: {e}")
+
             start_time = time.time()
 
             # Track statistics
             expect_found = False
             halt_on_error_found = False
             halt_on_success_found = False
+            lines_processed = 0
 
             while True:
                 # Check timeout
                 if timeout and (time.time() - start_time) > timeout:
+                    elapsed_time = time.time() - start_time
                     print()
                     print(f"--- Monitor timeout after {timeout} seconds ---")
 
@@ -157,6 +228,22 @@ class SerialMonitor:
                                 safe_print(f"✗ Success pattern NOT found: '{halt_on_success}'")
 
                     ser.close()
+                    if output_fp:
+                        output_fp.close()
+
+                    # Write summary
+                    self._write_summary(
+                        summary_file,
+                        expect,
+                        expect_found,
+                        halt_on_error,
+                        halt_on_error_found,
+                        halt_on_success,
+                        halt_on_success_found,
+                        lines_processed,
+                        elapsed_time,
+                        "timeout",
+                    )
 
                     # Check expect keyword for exit code
                     if expect:
@@ -187,6 +274,19 @@ class SerialMonitor:
                         safe_print(text)
                         sys.stdout.flush()
 
+                        # Write to output file if specified
+                        if output_fp:
+                            try:
+                                output_fp.write(text + "\n")
+                                output_fp.flush()
+                            except KeyboardInterrupt:  # noqa: KBI002
+                                raise
+                            except Exception:
+                                pass  # Ignore write errors
+
+                        # Increment line counter
+                        lines_processed += 1
+
                         # Check for expect pattern (track but don't halt)
                         if expect and re.search(expect, text, re.IGNORECASE):
                             expect_found = True
@@ -194,6 +294,7 @@ class SerialMonitor:
                         # Check halt conditions
                         if halt_on_error and re.search(halt_on_error, text, re.IGNORECASE):
                             halt_on_error_found = True
+                            elapsed_time = time.time() - start_time
                             print()
                             print(f"--- Found error pattern: '{halt_on_error}' ---")
 
@@ -213,10 +314,28 @@ class SerialMonitor:
                                 safe_print(f"✗ Error pattern found: '{halt_on_error}'")
 
                             ser.close()
+                            if output_fp:
+                                output_fp.close()
+
+                            # Write summary
+                            self._write_summary(
+                                summary_file,
+                                expect,
+                                expect_found,
+                                halt_on_error,
+                                halt_on_error_found,
+                                halt_on_success,
+                                halt_on_success_found,
+                                lines_processed,
+                                elapsed_time,
+                                "halt_error",
+                            )
+
                             return 1
 
                         if halt_on_success and re.search(halt_on_success, text, re.IGNORECASE):
                             halt_on_success_found = True
+                            elapsed_time = time.time() - start_time
                             print()
                             print(f"--- Found success pattern: '{halt_on_success}' ---")
 
@@ -236,6 +355,23 @@ class SerialMonitor:
                                         safe_print(f"✓ Error pattern not found: '{halt_on_error}'")
 
                             ser.close()
+                            if output_fp:
+                                output_fp.close()
+
+                            # Write summary
+                            exit_reason = "expect_found" if (expect and expect_found) else "halt_success"
+                            self._write_summary(
+                                summary_file,
+                                expect,
+                                expect_found,
+                                halt_on_error,
+                                halt_on_error_found,
+                                halt_on_success,
+                                halt_on_success_found,
+                                lines_processed,
+                                elapsed_time,
+                                exit_reason,
+                            )
 
                             # Check expect keyword for exit code
                             if expect:
@@ -246,18 +382,76 @@ class SerialMonitor:
                         time.sleep(0.01)
 
                 except serial.SerialException as e:
+                    elapsed_time = time.time() - start_time
                     print(f"\nError reading from serial port: {e}")
                     ser.close()
+                    if output_fp:
+                        output_fp.close()
+
+                    # Write summary
+                    self._write_summary(
+                        summary_file,
+                        expect,
+                        expect_found,
+                        halt_on_error,
+                        halt_on_error_found,
+                        halt_on_success,
+                        halt_on_success_found,
+                        lines_processed,
+                        elapsed_time,
+                        "error",
+                    )
+
                     return 1
 
         except serial.SerialException as e:
             print(f"Error opening serial port {port}: {e}")
+            if output_fp:
+                output_fp.close()
+
+            # Write summary (minimal - couldn't even start monitoring)
+            self._write_summary(
+                summary_file,
+                expect,
+                False,
+                halt_on_error,
+                False,
+                halt_on_success,
+                False,
+                0,
+                0.0,
+                "error",
+            )
+
             return 1
         except KeyboardInterrupt:  # noqa: KBI002
+            elapsed_time = time.time() - start_time if "start_time" in locals() else 0.0
+            lines = lines_processed if "lines_processed" in locals() else 0
+            exp_found = expect_found if "expect_found" in locals() else False
+            halt_err_found = halt_on_error_found if "halt_on_error_found" in locals() else False
+            halt_succ_found = halt_on_success_found if "halt_on_success_found" in locals() else False
+
             print()
             print("--- Monitor interrupted ---")
             if ser is not None:
                 ser.close()
+            if output_fp:
+                output_fp.close()
+
+            # Write summary
+            self._write_summary(
+                summary_file,
+                expect,
+                exp_found,
+                halt_on_error,
+                halt_err_found,
+                halt_on_success,
+                halt_succ_found,
+                lines,
+                elapsed_time,
+                "interrupted",
+            )
+
             return 0
 
     def _detect_serial_port(self) -> Optional[str]:

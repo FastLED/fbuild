@@ -650,6 +650,18 @@ def process_monitor_request(request: MonitorRequest, process_tracker: ProcessTra
         # Start monitor
         logging.info(f"Starting monitor on {port}")
 
+        # Create output file path for streaming
+        output_file = Path(project_dir) / ".fbuild" / "monitor_output.txt"
+        output_file.parent.mkdir(parents=True, exist_ok=True)
+        # Clear/truncate output file before starting
+        output_file.write_text("", encoding="utf-8")
+
+        # Create summary file path
+        summary_file = Path(project_dir) / ".fbuild" / "monitor_summary.json"
+        # Clear old summary file
+        if summary_file.exists():
+            summary_file.unlink()
+
         try:
             monitor = SerialMonitor(verbose=False)
             exit_code = monitor.monitor(
@@ -661,6 +673,8 @@ def process_monitor_request(request: MonitorRequest, process_tracker: ProcessTra
                 halt_on_error=request.halt_on_error,
                 halt_on_success=request.halt_on_success,
                 expect=request.expect,
+                output_file=output_file,
+                summary_file=summary_file,
             )
 
             if exit_code == 0:
