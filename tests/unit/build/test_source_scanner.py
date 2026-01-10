@@ -406,3 +406,216 @@ T getValue(T input) {
         assert 'void setup();' in content
         assert 'unsigned long getTime();' in content
         assert 'float* getPointer(int* value, const char* name);' in content
+
+    def test_function_called_before_definition(self, temp_project):
+        """Test function called in loop before being defined (like draw example)."""
+        ino_file = temp_project['src'] / "forward_call.ino"
+        ino_file.write_text("""void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  draw();
+}
+
+void draw() {
+  Serial.println("Drawing");
+}
+""")
+
+        scanner = SourceScanner(
+            temp_project['project'],
+            temp_project['build']
+        )
+        result = scanner.scan()
+
+        cpp_file = result.sketch_sources[0]
+        content = cpp_file.read_text()
+
+        # Check that draw() prototype is declared before setup()
+        lines = content.split('\n')
+
+        # Find positions
+        draw_proto_idx = None
+        setup_def_idx = None
+        draw_def_idx = None
+
+        for i, line in enumerate(lines):
+            if 'void draw();' in line:
+                draw_proto_idx = i
+            if 'void setup()' in line and '{' in line:
+                setup_def_idx = i
+            if 'void draw()' in line and '{' in line:
+                draw_def_idx = i
+
+        # Prototype should appear before setup definition
+        assert draw_proto_idx is not None, "draw() prototype not found"
+        assert setup_def_idx is not None, "setup() definition not found"
+        assert draw_def_idx is not None, "draw() definition not found"
+        assert draw_proto_idx < setup_def_idx, "draw() prototype should appear before setup()"
+        assert setup_def_idx < draw_def_idx, "setup() should appear before draw() definition"
+
+    def test_line_numbers_preserved(self, temp_project):
+        """Test that #line directives preserve original line numbers."""
+        ino_file = temp_project['src'] / "linetest.ino"
+        ino_content = """void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  helper();
+}
+
+void helper() {
+  Serial.println("Line 9");
+}
+"""
+        ino_file.write_text(ino_content)
+
+        scanner = SourceScanner(
+            temp_project['project'],
+            temp_project['build']
+        )
+        result = scanner.scan()
+
+        cpp_file = result.sketch_sources[0]
+        content = cpp_file.read_text()
+
+        # Check that #line directives exist
+        assert '#line' in content, "#line directives should be present"
+
+        # The original code should start with proper line directive
+        # pointing to line 1 of the original .ino file
+        assert f'#line 1 "{ino_file.name}"' in content or '#line 1' in content
+
+    def test_multiline_function_signature(self, temp_project):
+        """Test function signature spanning multiple lines."""
+        ino_file = temp_project['src'] / "multiline.ino"
+        ino_file.write_text("""void setup() {}
+
+void loop() {
+  processData();
+}
+
+void processData(
+    int param1,
+    float param2,
+    const char* param3
+) {
+  // Process data
+}
+""")
+
+        scanner = SourceScanner(
+            temp_project['project'],
+            temp_project['build']
+        )
+        result = scanner.scan()
+
+        cpp_file = result.sketch_sources[0]
+        content = cpp_file.read_text()
+
+        # Check that processData prototype is present
+        # It should be normalized to a single line or kept as multiline
+        assert 'void processData' in content
+        assert 'param1' in content
+        assert 'param2' in content
+        assert 'param3' in content
+
+    def test_existing_forward_declarations_moved(self, temp_project):
+        """Test that existing forward declarations are moved to the top."""
+        ino_file = temp_project['src'] / "existing_decl.ino"
+        ino_file.write_text("""// Forward declaration in the middle
+void helper();
+
+void setup() {
+  helper();
+}
+
+void loop() {
+  draw();
+}
+
+void helper() {
+  Serial.println("Helper");
+}
+
+void draw() {
+  Serial.println("Draw");
+}
+""")
+
+        scanner = SourceScanner(
+            temp_project['project'],
+            temp_project['build']
+        )
+        result = scanner.scan()
+
+        cpp_file = result.sketch_sources[0]
+        content = cpp_file.read_text()
+
+        # Both prototypes should be at the top (after includes)
+        lines = content.split('\n')
+
+        # Find the section with function prototypes
+        proto_section_start = None
+        setup_def_idx = None
+        helper_proto_found = False
+        draw_proto_found = False
+
+        for i, line in enumerate(lines):
+            if '// Function prototypes' in line or 'Function prototypes' in line:
+                proto_section_start = i
+            if 'void helper();' in line and proto_section_start is not None and i > proto_section_start:
+                helper_proto_found = True
+            if 'void draw();' in line and proto_section_start is not None and i > proto_section_start:
+                draw_proto_found = True
+            if 'void setup()' in line and '{' in line:
+                setup_def_idx = i
+
+        # Prototypes should be before setup
+        assert proto_section_start is not None, "Prototype section not found"
+        assert helper_proto_found, "helper() prototype not found in prototype section"
+        assert draw_proto_found, "draw() prototype not found in prototype section"
+        assert setup_def_idx is not None, "setup() not found"
+        assert proto_section_start < setup_def_idx, "Prototypes should be before setup()"
+
+    def test_complex_return_types(self, temp_project):
+        """Test functions with complex return types (pointers, references, const)."""
+        ino_file = temp_project['src'] / "complex_types.ino"
+        ino_file.write_text("""void setup() {}
+
+void loop() {
+  getData();
+  getRef();
+  getConstPtr();
+}
+
+int* getData() {
+  static int data = 42;
+  return &data;
+}
+
+String& getRef() {
+  static String str = "test";
+  return str;
+}
+
+const char* getConstPtr() {
+  return "hello";
+}
+""")
+
+        scanner = SourceScanner(
+            temp_project['project'],
+            temp_project['build']
+        )
+        result = scanner.scan()
+
+        cpp_file = result.sketch_sources[0]
+        content = cpp_file.read_text()
+
+        # Check prototypes with complex return types
+        assert 'int* getData();' in content or 'int *getData();' in content
+        assert 'String& getRef();' in content or 'String &getRef();' in content
+        assert 'const char* getConstPtr();' in content or 'const char *getConstPtr();' in content

@@ -212,8 +212,10 @@ class SourceScanner:
         Arduino preprocessing rules:
         1. Concatenate multiple .ino files (alphabetically)
         2. Add #include <Arduino.h> at the top
-        3. Extract function prototypes
-        4. Add function prototypes before first function definition
+        3. Extract function prototypes from definitions
+        4. Remove existing forward declarations from body
+        5. Add all function prototypes before first function definition
+        6. Add #line directives to preserve original line numbers
 
         Args:
             ino_files: List of .ino files to preprocess
@@ -232,30 +234,226 @@ class SourceScanner:
 
         content = '\n\n'.join(combined_content)
 
-        # Extract function prototypes
-        prototypes = self._extract_function_prototypes(content)
+        # Extract function prototypes and clean content
+        prototypes, cleaned_content = self._extract_and_clean_functions(content)
+
+        # Find where to insert prototypes (after last #include)
+        lines = cleaned_content.split('\n')
+        last_include_idx = -1
+        for i, line in enumerate(lines):
+            stripped = line.strip()
+            if stripped.startswith('#include'):
+                last_include_idx = i
 
         # Build final .cpp file
-        cpp_lines = [
-            '#include <Arduino.h>',
-            '',
-            '// Function prototypes',
-        ]
+        cpp_lines = ['#include <Arduino.h>', '']
 
-        # Add prototypes
+        # If there were other includes, add them
+        if last_include_idx >= 0:
+            for i in range(last_include_idx + 1):
+                if i == 0 and lines[i].strip() == '#include <Arduino.h>':
+                    continue  # Skip duplicate Arduino.h
+                if lines[i].strip():
+                    cpp_lines.append(lines[i])
+            cpp_lines.append('')
+
+        # Add function prototypes section
+        cpp_lines.append('// Function prototypes')
         for prototype in prototypes:
             cpp_lines.append(prototype)
+        cpp_lines.append('')
 
-        cpp_lines.extend([
-            '',
-            '// Original sketch code',
-            content
-        ])
+        # Add #line directive to preserve line numbers
+        # Use the first .ino file name for reference
+        ino_filename = ino_files[0].name if ino_files else 'sketch.ino'
+        cpp_lines.append(f'#line 1 "{ino_filename}"')
+
+        # Add the rest of the cleaned content
+        start_idx = last_include_idx + 1 if last_include_idx >= 0 else 0
+        cpp_lines.extend(lines[start_idx:])
 
         cpp_content = '\n'.join(cpp_lines)
         output_file.write_text(cpp_content, encoding='utf-8')
 
         return output_file
+
+    def _extract_and_clean_functions(self, content: str) -> tuple[List[str], str]:
+        """
+        Extract function prototypes and remove existing forward declarations.
+
+        Handles:
+        - Single-line function signatures
+        - Multi-line function signatures
+        - Existing forward declarations (removes them from body)
+
+        Args:
+            content: Sketch source code
+
+        Returns:
+            Tuple of (prototypes list, cleaned content)
+        """
+        prototypes = []
+        lines = content.split('\n')
+        cleaned_lines = []
+
+        in_multiline_comment = False
+        in_function_signature = False
+        current_signature = []
+
+        i = 0
+        while i < len(lines):
+            line = lines[i]
+            stripped = line.strip()
+
+            # Track multiline comments
+            if '/*' in stripped:
+                in_multiline_comment = True
+            if '*/' in stripped:
+                in_multiline_comment = False
+                cleaned_lines.append(line)
+                i += 1
+                continue
+
+            # Keep comments and preprocessor directives as-is
+            if in_multiline_comment:
+                cleaned_lines.append(line)
+                i += 1
+                continue
+            if stripped.startswith('//'):
+                cleaned_lines.append(line)
+                i += 1
+                continue
+            if stripped.startswith('#'):
+                cleaned_lines.append(line)
+                i += 1
+                continue
+
+            # Check for function signature start
+            if not in_function_signature and stripped:
+                # Pattern to detect start of function signature
+                # Matches return_type function_name(
+                sig_start_pattern = r'^([a-zA-Z_][\w\s\*&:<>,]*?)\s+([a-zA-Z_]\w*)\s*\('
+                match = re.match(sig_start_pattern, stripped)
+
+                if match:
+                    in_function_signature = True
+                    current_signature = [line]
+
+                    # Check if signature completes on same line
+                    if '{' in stripped:
+                        # Complete signature on one line
+                        in_function_signature = False
+                        prototype = self._extract_prototype_from_signature(''.join(current_signature))
+                        if prototype:
+                            prototypes.append(prototype)
+                            cleaned_lines.append(line)
+                        current_signature = []
+                    elif stripped.endswith(';'):
+                        # This is a forward declaration - skip it
+                        in_function_signature = False
+                        prototype = self._extract_prototype_from_declaration(stripped)
+                        if prototype:
+                            prototypes.append(prototype)
+                        current_signature = []
+                        # Don't add to cleaned_lines (remove it)
+                    i += 1
+                    continue
+                else:
+                    cleaned_lines.append(line)
+                    i += 1
+                    continue
+
+            # Continue collecting multi-line signature
+            if in_function_signature:
+                current_signature.append(line)
+
+                if '{' in stripped:
+                    # Signature complete
+                    in_function_signature = False
+                    full_signature = '\n'.join(current_signature)
+                    prototype = self._extract_prototype_from_signature(full_signature)
+                    if prototype:
+                        prototypes.append(prototype)
+                    # Add all signature lines to cleaned content
+                    cleaned_lines.extend(current_signature)
+                    current_signature = []
+                elif stripped.endswith(';'):
+                    # Forward declaration on multiple lines - skip it
+                    in_function_signature = False
+                    full_signature = '\n'.join(current_signature)
+                    prototype = self._extract_prototype_from_declaration(full_signature.replace('\n', ' '))
+                    if prototype:
+                        prototypes.append(prototype)
+                    current_signature = []
+                    # Don't add to cleaned_lines
+
+                i += 1
+                continue
+
+            cleaned_lines.append(line)
+            i += 1
+
+        return prototypes, '\n'.join(cleaned_lines)
+
+    def _extract_prototype_from_signature(self, signature: str) -> str:
+        """
+        Extract prototype from function definition signature.
+
+        Args:
+            signature: Function signature (may be multi-line) ending with {
+
+        Returns:
+            Function prototype string or empty string
+        """
+        # Remove the opening brace and everything after
+        sig = signature.split('{')[0].strip()
+
+        # Normalize whitespace
+        sig = re.sub(r'\s+', ' ', sig)
+
+        # Pattern to match function signature
+        pattern = r'^([a-zA-Z_][\w\s\*&:<>,]*?)\s+([a-zA-Z_]\w*)\s*\((.*?)\)\s*$'
+        match = re.match(pattern, sig)
+
+        if match:
+            return_type = match.group(1).strip()
+            func_name = match.group(2).strip()
+            params = match.group(3).strip()
+
+            # Skip common false positives
+            if func_name in ['if', 'while', 'for', 'switch', 'catch']:
+                return ''
+
+            return f"{return_type} {func_name}({params});"
+
+        return ''
+
+    def _extract_prototype_from_declaration(self, declaration: str) -> str:
+        """
+        Extract prototype from existing forward declaration.
+
+        Args:
+            declaration: Forward declaration line ending with ;
+
+        Returns:
+            Function prototype string or empty string (already ends with ;)
+        """
+        # Clean up the declaration
+        decl = declaration.strip()
+        if not decl.endswith(';'):
+            decl += ';'
+
+        # Normalize whitespace
+        decl = re.sub(r'\s+', ' ', decl)
+
+        # Verify it looks like a function declaration
+        pattern = r'^([a-zA-Z_][\w\s\*&:<>,]*?)\s+([a-zA-Z_]\w*)\s*\((.*?)\)\s*;$'
+        match = re.match(pattern, decl)
+
+        if match:
+            return decl
+
+        return ''
 
     def _extract_function_prototypes(self, content: str) -> List[str]:
         """

@@ -115,9 +115,10 @@ class TryExceptVisitor(ast.NodeVisitor):
             handler: The exception handler to check
 
         Returns:
-            True if the handler calls _thread.interrupt_main() or handle_keyboard_interrupt_properly()
+            True if the handler calls _thread.interrupt_main(), handle_keyboard_interrupt_properly(),
+            sys.exit(), or ErrorFormatter.handle_keyboard_interrupt() (which are allowed for CLI error handlers)
         """
-        # Check for calls to _thread.interrupt_main() or handle_keyboard_interrupt_properly()
+        # Check for calls to _thread.interrupt_main(), handle_keyboard_interrupt_properly(), or sys.exit()
         for node in ast.walk(handler):
             if isinstance(node, ast.Call):
                 # Check for _thread.interrupt_main()
@@ -128,10 +129,23 @@ class TryExceptVisitor(ast.NodeVisitor):
                         and node.func.attr == "interrupt_main"
                     ):
                         return True
+                    # Check for sys.exit()
+                    if (
+                        isinstance(node.func.value, ast.Name)
+                        and node.func.value.id == "sys"
+                        and node.func.attr == "exit"
+                    ):
+                        return True
+                    # Check for ErrorFormatter.handle_keyboard_interrupt() or similar
+                    if node.func.attr == "handle_keyboard_interrupt":
+                        return True
 
                 # Check for handle_keyboard_interrupt_properly()
                 if isinstance(node.func, ast.Name):
                     if node.func.id == "handle_keyboard_interrupt_properly":
+                        return True
+                    # Check for handle_keyboard_interrupt()
+                    if node.func.id == "handle_keyboard_interrupt":
                         return True
 
         return False
