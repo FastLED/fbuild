@@ -309,6 +309,24 @@ def main() -> None:
 
     Replace PlatformIO with URL-based platform/toolchain management.
     """
+    # Handle default action: fbuild <project_dir> → deploy with monitor
+    # This check must happen before argparse to avoid conflicts
+    if len(sys.argv) >= 2 and not sys.argv[1].startswith("-") and sys.argv[1] not in ["build", "deploy", "monitor", "daemon"]:
+        # User provided a path without a subcommand - use default action
+        project_dir = Path(sys.argv[1])
+        PathValidator.validate_project_dir(project_dir)
+
+        deploy_args = DeployArgs(
+            project_dir=project_dir,
+            environment=None,
+            port=None,
+            clean=False,
+            monitor="",  # Empty string means monitor with default settings
+            verbose=False,
+        )
+        deploy_command(deploy_args)
+        return
+
     parser = argparse.ArgumentParser(
         prog="fbuild",
         description="fbuild - Modern embedded build system",

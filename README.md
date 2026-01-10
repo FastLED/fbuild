@@ -16,19 +16,32 @@ Fbuild is a next-generation embedded development tool featuring a clean, transpa
 
 ## Examples
 
-`uv run fbuild deploy tests/esp32c6 --clean`
-`uv run fbuild monitor --timeout 60 --halt-on-error "TEST FAILED" --halt-on-success "TEST PASSED"`
+**Quick start** - Build, deploy, and monitor in one command:
 
-  * this will require the use of pyserial to attach to the usb
-  * see how this is done in platformio
+```bash
+# Default action: build + deploy + monitor
+uv run fbuild tests/esp32c6
+```
 
+**Deploy commands:**
 
-`uv run fbuild deploy tests/esp32c6 --no-build`
-`uv run fbuild deploy tests/esp32c6/**/firmware.bin`
+```bash
+# Deploy with clean build
+uv run fbuild deploy tests/esp32c6 --clean
 
-**complex**
+# Deploy with monitoring and test patterns
+uv run fbuild deploy tests/esp32c6 --monitor="--timeout 60 --halt-on-error \"TEST FAILED\" --halt-on-success \"TEST PASSED\""
+```
 
-`uv run fbuild deploy tests/esp32c6 --monitor="--timeout 60 --halt-on-error \"TEST FAILED\" --halt-on-success \"TEST PASSED\"`
+**Monitor command:**
+
+```bash
+# Monitor serial output with pattern matching
+uv run fbuild monitor --timeout 60 --halt-on-error "TEST FAILED" --halt-on-success "TEST PASSED"
+```
+
+  * Serial monitoring requires pyserial to attach to the USB device
+  * Port auto-detection works similarly to PlatformIO
 
 ## Key Features
 

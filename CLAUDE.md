@@ -148,6 +148,16 @@ lib_deps =
 
 ## CLI Usage
 
+### Default Action (Quick Start)
+```bash
+# Build, deploy, and monitor in one command
+fbuild [project_dir]
+
+# Example:
+fbuild tests/esp32c6
+```
+This is equivalent to `fbuild deploy [project_dir] --monitor`
+
 ### Build Command
 ```bash
 fbuild build [project_dir] -e [environment] [-c/--clean] [-v/--verbose]
