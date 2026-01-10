@@ -314,27 +314,40 @@ class ConfigurableCompiler(ICompiler):
         core_obj_dir = self.build_dir / "obj" / "core"
         core_obj_dir.mkdir(parents=True, exist_ok=True)
 
-        # Compile each core source
-        for source in core_sources:
-            try:
-                obj_path = core_obj_dir / f"{source.stem}.o"
+        # Disable individual file progress messages when using progress bar
+        original_show_progress = self.compilation_executor.show_progress
+        if progress_bar is not None:
+            self.compilation_executor.show_progress = False
 
-                # Skip compilation if object file is up-to-date
-                if not self.needs_rebuild(source, obj_path):
-                    object_files.append(obj_path)
+        try:
+            # Compile each core source
+            for source in core_sources:
+                # Update progress bar BEFORE compilation for better UX
+                if progress_bar is not None:
+                    progress_bar.set_description(f'Compiling {source.name[:30]}')
+
+                try:
+                    obj_path = core_obj_dir / f"{source.stem}.o"
+
+                    # Skip compilation if object file is up-to-date
+                    if not self.needs_rebuild(source, obj_path):
+                        object_files.append(obj_path)
+                        if progress_bar is not None:
+                            progress_bar.update(1)
+                        continue
+
+                    compiled_obj = self.compile_source(source, obj_path)
+                    object_files.append(compiled_obj)
                     if progress_bar is not None:
                         progress_bar.update(1)
-                    continue
-
-                compiled_obj = self.compile_source(source, obj_path)
-                object_files.append(compiled_obj)
-                if progress_bar is not None:
-                    progress_bar.update(1)
-            except ConfigurableCompilerError as e:
-                if self.show_progress:
-                    print(f"Warning: Failed to compile {source.name}: {e}")
-                if progress_bar is not None:
-                    progress_bar.update(1)
+                except ConfigurableCompilerError as e:
+                    if self.show_progress:
+                        print(f"Warning: Failed to compile {source.name}: {e}")
+                    if progress_bar is not None:
+                        progress_bar.update(1)
+        finally:
+            # Restore original show_progress setting
+            self.compilation_executor.show_progress = original_show_progress
 
         return object_files
 
