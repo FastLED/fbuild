@@ -11,13 +11,16 @@ Design:
 
 import json
 from pathlib import Path
-from typing import Any, List, Dict, Optional, Union
+from typing import Any, List, Dict, Optional, Union, TYPE_CHECKING
 
 from ..packages.package import IPackage, IToolchain, IFramework
 from .flag_builder import FlagBuilder
 from .compilation_executor import CompilationExecutor
 from .archive_creator import ArchiveCreator
 from .compiler import ICompiler, CompilerError
+
+if TYPE_CHECKING:
+    from ..daemon.compilation_queue import CompilationJobQueue
 
 
 class ConfigurableCompilerError(CompilerError):
@@ -45,7 +48,8 @@ class ConfigurableCompiler(ICompiler):
         platform_config: Optional[Union[Dict, Path]] = None,
         show_progress: bool = True,
         user_build_flags: Optional[List[str]] = None,
-        compilation_executor: Optional[CompilationExecutor] = None
+        compilation_executor: Optional[CompilationExecutor] = None,
+        compilation_queue: Optional['CompilationJobQueue'] = None
     ):
         """Initialize configurable compiler.
 
@@ -59,6 +63,7 @@ class ConfigurableCompiler(ICompiler):
             show_progress: Whether to show compilation progress
             user_build_flags: Build flags from platformio.ini
             compilation_executor: Optional pre-initialized CompilationExecutor
+            compilation_queue: Optional compilation queue for async/parallel compilation
         """
         self.platform = platform
         self.toolchain = toolchain
@@ -67,6 +72,8 @@ class ConfigurableCompiler(ICompiler):
         self.build_dir = build_dir
         self.show_progress = show_progress
         self.user_build_flags = user_build_flags or []
+        self.compilation_queue = compilation_queue
+        self.pending_jobs: List[str] = []  # Track async job IDs
 
         # Load board configuration
         self.board_config = platform.get_board_json(board_id)  # type: ignore[attr-defined]
@@ -241,7 +248,23 @@ class ConfigurableCompiler(ICompiler):
         # Get include paths
         includes = self.get_include_paths()
 
-        # Compile using executor
+        # Async mode: submit to queue and return immediately
+        if self.compilation_queue is not None:
+            # Convert include paths to flags
+            include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in includes]
+            # Build command that would be executed
+            cmd = self.compilation_executor._build_compile_command(
+                compiler_path, source_path, output_path, compile_flags, include_flags
+            )
+
+            # Submit to async compilation queue
+            job_id = self._submit_async_compilation(source_path, output_path, cmd)
+            self.pending_jobs.append(job_id)
+
+            # Return output path optimistically (validated in wait_all_jobs())
+            return output_path
+
+        # Sync mode: compile using executor (legacy behavior)
         try:
             return self.compilation_executor.compile_source(
                 compiler_path=compiler_path,
@@ -349,6 +372,13 @@ class ConfigurableCompiler(ICompiler):
             # Restore original show_progress setting
             self.compilation_executor.show_progress = original_show_progress
 
+        # Wait for all async jobs to complete (if using async mode)
+        if hasattr(self, 'wait_all_jobs'):
+            try:
+                self.wait_all_jobs()
+            except ConfigurableCompilerError as e:
+                raise ConfigurableCompilerError(f"Core compilation failed: {e}")
+
         return object_files
 
     def create_core_archive(self, object_files: List[Path]) -> Path:
@@ -444,6 +474,103 @@ class ConfigurableCompiler(ICompiler):
         object_mtime = object_file.stat().st_mtime
 
         return source_mtime > object_mtime
+
+    def _submit_async_compilation(
+        self,
+        source: Path,
+        output: Path,
+        cmd: List[str]
+    ) -> str:
+        """
+        Submit compilation job to async queue.
+
+        Args:
+            source: Source file path
+            output: Output object file path
+            cmd: Full compiler command
+
+        Returns:
+            Job ID for tracking
+        """
+        import time
+        from ..daemon.compilation_queue import CompilationJob
+
+        job_id = f"compile_{source.stem}_{int(time.time() * 1000000)}"
+
+        job = CompilationJob(
+            job_id=job_id,
+            source_path=source,
+            output_path=output,
+            compiler_cmd=cmd,
+            response_file=None  # ConfigurableCompiler doesn't use response files
+        )
+
+        if self.compilation_queue is None:
+            raise ConfigurableCompilerError("Compilation queue not initialized")
+        self.compilation_queue.submit_job(job)
+        return job_id
+
+    def wait_all_jobs(self) -> None:
+        """
+        Wait for all pending async compilation jobs to complete.
+
+        This method must be called after using async compilation mode
+        to wait for all submitted jobs and validate their results.
+
+        Raises:
+            ConfigurableCompilerError: If any compilation fails
+        """
+        if not self.compilation_queue:
+            return
+
+        if not self.pending_jobs:
+            return
+
+        # Wait for all jobs to complete
+        self.compilation_queue.wait_for_completion(self.pending_jobs)
+
+        # Collect failed jobs
+        failed_jobs = []
+
+        for job_id in self.pending_jobs:
+            job = self.compilation_queue.get_job_status(job_id)
+
+            if job is None:
+                # This shouldn't happen
+                failed_jobs.append(f"Job {job_id} not found")
+                continue
+
+            if job.state.value != "completed":
+                failed_jobs.append(f"{job.source_path.name}: {job.stderr[:200]}")
+
+        # Clear pending jobs
+        self.pending_jobs.clear()
+
+        # Raise error if any jobs failed
+        if failed_jobs:
+            error_msg = f"Compilation failed for {len(failed_jobs)} file(s):\n"
+            error_msg += "\n".join(f"  - {err}" for err in failed_jobs[:5])
+            if len(failed_jobs) > 5:
+                error_msg += f"\n  ... and {len(failed_jobs) - 5} more"
+            raise ConfigurableCompilerError(error_msg)
+
+    def get_statistics(self) -> Dict[str, int]:
+        """
+        Get compilation statistics from the queue.
+
+        Returns:
+            Dictionary with compilation statistics
+        """
+        if not self.compilation_queue:
+            return {
+                "total_jobs": 0,
+                "pending": 0,
+                "running": 0,
+                "completed": 0,
+                "failed": 0
+            }
+
+        return self.compilation_queue.get_statistics()
 
     def compile(
         self,

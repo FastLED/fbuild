@@ -6,12 +6,10 @@ This module provides the `fbuild` CLI tool for building embedded firmware.
 
 import argparse
 import sys
-import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 
-from fbuild.build import BuildOrchestratorAVR
 from fbuild.cli_utils import (
     EnvironmentDetector,
     ErrorFormatter,
@@ -73,9 +71,6 @@ def build_command(args: BuildArgs) -> None:
     print()
 
     try:
-        # Create orchestrator
-        orchestrator = BuildOrchestratorAVR(verbose=args.verbose)
-
         # Determine environment name
         env_name = EnvironmentDetector.detect_environment(args.project_dir, args.environment)
 
@@ -87,53 +82,16 @@ def build_command(args: BuildArgs) -> None:
         else:
             print(f"Building environment: {env_name}...")
 
-        # Perform build
-        start_time = time.time()
-        result = orchestrator.build(
+        # Route build through daemon for background processing
+        success = daemon_client.request_build(
             project_dir=args.project_dir,
-            env_name=env_name,
-            clean=args.clean,
+            environment=env_name,
+            clean_build=args.clean,
             verbose=args.verbose,
         )
-        build_time = time.time() - start_time
 
-        # Check result
-        if result.success:
-            # Success output
-            ErrorFormatter.print_success("Build successful!")
-            print()
-            print(f"Firmware: {result.hex_path}")
-
-            # Display size information
-            if result.size_info:
-                size_info = result.size_info
-                print()
-                print("Firmware Size:")
-
-                # Program memory (Flash)
-                flash_bytes = size_info.total_flash
-                if size_info.max_flash:
-                    flash_percent = (flash_bytes / size_info.max_flash) * 100
-                    print(f"  Program:  {flash_bytes:>6} bytes ({flash_percent:>5.1f}% of {size_info.max_flash} bytes)")
-                else:
-                    print(f"  Program:  {flash_bytes:>6} bytes")
-
-                # RAM usage
-                ram_bytes = size_info.data + size_info.bss
-                if size_info.max_ram:
-                    ram_percent = (ram_bytes / size_info.max_ram) * 100
-                    print(f"  RAM:      {ram_bytes:>6} bytes ({ram_percent:>5.1f}% of {size_info.max_ram} bytes)")
-                else:
-                    print(f"  RAM:      {ram_bytes:>6} bytes")
-
-                print()
-
-            print(f"Build time: {build_time:.2f}s")
-            sys.exit(0)
-        else:
-            # Failure output
-            ErrorFormatter.print_error("Build failed!", result.message)
-            sys.exit(1)
+        # Exit with appropriate code
+        sys.exit(0 if success else 1)
 
     except FileNotFoundError as e:
         ErrorFormatter.handle_file_not_found(e)

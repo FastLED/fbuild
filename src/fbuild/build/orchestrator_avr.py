@@ -10,10 +10,12 @@ to generating firmware binaries. It integrates all build system components:
 - Linking (avr-gcc linker, avr-objcopy)
 """
 
+import logging
 import time
 from pathlib import Path
 from typing import Optional, List, Any
 
+from ..interrupt_utils import handle_keyboard_interrupt_properly
 from ..config import PlatformIOConfig, BoardConfig, BoardConfigLoader
 from ..config.board_config import BoardConfigError
 from ..packages import Cache, Toolchain, ArduinoCore
@@ -33,6 +35,13 @@ from .source_compilation_orchestrator import (
 from .build_component_factory import BuildComponentFactory
 from .orchestrator import IBuildOrchestrator, BuildResult, BuildOrchestratorError
 from .build_state import BuildStateTracker
+
+# Import daemon accessor functions for async compilation
+try:
+    from ..daemon import daemon
+    DAEMON_AVAILABLE = True
+except ImportError:
+    DAEMON_AVAILABLE = False
 
 
 class BuildOrchestratorAVR(IBuildOrchestrator):
@@ -80,6 +89,17 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
         self.cache = cache
         self.verbose = verbose
 
+    def _log(self, message: str, verbose_only: bool = True) -> None:
+        """
+        Log a message and optionally print it.
+
+        Args:
+            message: Message to log
+            verbose_only: If True, only log if verbose mode is enabled
+        """
+        if not verbose_only or self.verbose:
+            logging.info(message)
+
     def build(
         self,
         project_dir: Path,
@@ -115,6 +135,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             # Phase 1: Parse configuration
             if verbose_mode:
                 print("[1/9] Parsing platformio.ini...")
+                self._log("[1/9] Parsing platformio.ini...")
 
             config = self._parse_config(project_dir)
 
@@ -128,12 +149,14 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
 
             if verbose_mode:
                 print(f"      Building environment: {env_name}")
+                self._log(f"      Building environment: {env_name}")
 
             env_config = config.get_env_config(env_name)
 
             # Phase 2: Load board configuration
             if verbose_mode:
                 print("[2/9] Loading board configuration...")
+                self._log("[2/9] Loading board configuration...")
 
             board_id = env_config['board']
             board_config = BoardConfigLoader.load_board_config(board_id, env_config)
@@ -142,6 +165,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                 print(f"      Board: {board_config.name}")
                 print(f"      MCU: {board_config.mcu}")
                 print(f"      F_CPU: {board_config.f_cpu}")
+                self._log(f"      Board: {board_config.name}, MCU: {board_config.mcu}, F_CPU: {board_config.f_cpu}")
 
             # Detect platform and handle accordingly
             if board_config.platform == "esp32":
@@ -175,25 +199,30 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             # Phase 3: Ensure toolchain
             if verbose_mode:
                 print("[3/9] Ensuring AVR toolchain...")
+                self._log("[3/9] Ensuring AVR toolchain...")
 
             toolchain = self._ensure_toolchain()
 
             if verbose_mode:
                 print("      Toolchain ready")
+                self._log("      Toolchain ready")
 
             # Phase 4: Ensure Arduino core
             if verbose_mode:
                 print("[4/9] Ensuring Arduino core...")
+                self._log("[4/9] Ensuring Arduino core...")
 
             arduino_core = self._ensure_arduino_core()
             core_path = arduino_core.ensure_avr_core()
 
             if verbose_mode:
                 print(f"      Core ready: version {arduino_core.AVR_VERSION}")
+                self._log(f"      Core ready: version {arduino_core.AVR_VERSION}")
 
             # Phase 5: Setup build directories
             if verbose_mode:
                 print("[5/11] Preparing build directories...")
+                self._log("[5/11] Preparing build directories...")
 
             if clean:
                 self.cache.clean_build(env_name)
@@ -206,6 +235,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             # Phase 5.5: Check build state and invalidate cache if needed
             if verbose_mode:
                 print("[5.5/11] Checking build configuration state...")
+                self._log("[5.5/11] Checking build configuration state...")
 
             state_tracker = BuildStateTracker(build_dir)
             build_flags = config.get_build_flags(env_name)
@@ -229,6 +259,8 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                     for reason in reasons:
                         print(f"        - {reason}")
                     print("      Cleaning build artifacts...")
+                    self._log(f"      Build cache invalidated: {', '.join(reasons)}")
+                    self._log("      Cleaning build artifacts...")
                 # Clean build artifacts to force rebuild
                 self.cache.clean_build(env_name)
                 # Recreate directories
@@ -236,10 +268,12 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             else:
                 if verbose_mode:
                     print("      Build configuration unchanged, using cached artifacts")
+                    self._log("      Build configuration unchanged, using cached artifacts")
 
             # Phase 6: Download and compile library dependencies
             if verbose_mode:
                 print("[6/11] Processing library dependencies...")
+                self._log("[6/11] Processing library dependencies...")
 
             lib_deps = config.get_lib_deps(env_name)
 
@@ -262,6 +296,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             # Phase 7: Scan source files
             if verbose_mode:
                 print("[7/11] Scanning source files...")
+                self._log("[7/11] Scanning source files...")
 
             sources = self._scan_sources(
                 project_dir,
@@ -281,13 +316,29 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                 print(f"      Core: {len(sources.core_sources)} files")
                 print(f"      Variant: {len(sources.variant_sources)} files")
                 print(f"      Total: {total_sources} files")
+                self._log(f"      Sketch: {len(sources.sketch_sources)} files, Core: {len(sources.core_sources)} files, Variant: {len(sources.variant_sources)} files, Total: {total_sources} files")
 
             # Phase 8: Compile sources
             if verbose_mode:
                 print("[8/11] Compiling sources...")
+                self._log("[8/11] Compiling sources...")
+
+            # Get compilation queue from daemon if available
+            compilation_queue = None
+            if DAEMON_AVAILABLE:
+                try:
+                    compilation_queue = daemon.get_compilation_queue()
+                    if compilation_queue and verbose_mode:
+                        print(f"      [async] Using parallel compilation with {compilation_queue.num_workers} workers")
+                        self._log(f"      [async] Using parallel compilation with {compilation_queue.num_workers} workers")
+                except KeyboardInterrupt as ke:
+                    handle_keyboard_interrupt_properly(ke)
+                except Exception:
+                    # Daemon not running or queue not initialized - use sync mode
+                    pass
 
             compiler = BuildComponentFactory.create_compiler(
-                toolchain, board_config, core_path, lib_include_paths
+                toolchain, board_config, core_path, lib_include_paths, compilation_queue
             )
 
             compilation_orchestrator = SourceCompilationOrchestrator(verbose=verbose_mode)
@@ -306,6 +357,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             # Phase 9: Link firmware
             if verbose_mode:
                 print("[9/11] Linking firmware...")
+                self._log("[9/11] Linking firmware...")
 
             elf_path = build_dir / 'firmware.elf'
             hex_path = build_dir / 'firmware.hex'
@@ -330,10 +382,12 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
 
             if verbose_mode:
                 print(f"      Firmware: {hex_path}")
+                self._log(f"      Firmware: {hex_path}")
 
             # Phase 10: Save build state for future cache validation
             if verbose_mode:
                 print("[10/11] Saving build state...")
+                self._log("[10/11] Saving build state...")
             state_tracker.save_state(current_state)
 
             # Phase 11: Display results
@@ -345,6 +399,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                 SizeInfoPrinter.print_size_info(link_result.size_info)
                 print()
                 print(f"Build time: {build_time:.2f}s")
+                self._log(f"[11/11] Build complete! Build time: {build_time:.2f}s")
 
             return BuildResult(
                 success=True,
@@ -375,9 +430,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                 message=str(e)
             )
         except KeyboardInterrupt as ke:
-            from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
             handle_keyboard_interrupt_properly(ke)
-            raise  # Never reached, but satisfies type checker
         except Exception as e:
             build_time = time.time() - start_time
             return BuildResult(
@@ -512,9 +565,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
         try:
             return PlatformIOConfig(ini_path)
         except KeyboardInterrupt as ke:
-            from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
             handle_keyboard_interrupt_properly(ke)
-            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise BuildOrchestratorError(
                 f"Failed to parse platformio.ini: {e}"
@@ -536,9 +587,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             toolchain.ensure_toolchain()
             return toolchain
         except KeyboardInterrupt as ke:
-            from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
             handle_keyboard_interrupt_properly(ke)
-            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise BuildOrchestratorError(
                 f"Failed to setup toolchain: {e}"
@@ -560,9 +609,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             arduino_core.ensure_avr_core()
             return arduino_core
         except KeyboardInterrupt as ke:
-            from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
             handle_keyboard_interrupt_properly(ke)
-            raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise BuildOrchestratorError(
                 f"Failed to setup Arduino core: {e}"

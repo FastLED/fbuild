@@ -34,14 +34,20 @@ from typing import Any
 import psutil
 
 from fbuild.build import BuildOrchestratorAVR
+from fbuild.daemon.compilation_queue import CompilationJobQueue
+from fbuild.daemon.error_collector import ErrorCollector
+from fbuild.daemon.file_cache import FileCache
 from fbuild.daemon.messages import (
+    BuildRequest,
     DaemonState,
     DaemonStatus,
     DeployRequest,
     MonitorRequest,
     OperationType,
 )
+from fbuild.daemon.operation_registry import OperationRegistry
 from fbuild.daemon.process_tracker import ProcessTracker
+from fbuild.daemon.subprocess_manager import SubprocessManager
 from fbuild.deploy import ESP32Deployer
 from fbuild.deploy.monitor import SerialMonitor
 
@@ -50,16 +56,25 @@ DAEMON_NAME = "fbuild_daemon"
 DAEMON_DIR = Path.home() / ".fbuild" / "daemon"
 PID_FILE = DAEMON_DIR / f"{DAEMON_NAME}.pid"
 STATUS_FILE = DAEMON_DIR / "daemon_status.json"
+BUILD_REQUEST_FILE = DAEMON_DIR / "build_request.json"
 DEPLOY_REQUEST_FILE = DAEMON_DIR / "deploy_request.json"
 MONITOR_REQUEST_FILE = DAEMON_DIR / "monitor_request.json"
 LOG_FILE = DAEMON_DIR / "daemon.log"
 PROCESS_REGISTRY_FILE = DAEMON_DIR / "process_registry.json"
+FILE_CACHE_FILE = DAEMON_DIR / "file_cache.json"
 ORPHAN_CHECK_INTERVAL = 5  # Check for orphaned processes every 5 seconds
 IDLE_TIMEOUT = 43200  # 12 hours
 
 # Global state
 _daemon_pid: int | None = None
 _daemon_started_at: float | None = None
+
+# Daemon subsystems (initialized on daemon start)
+_compilation_queue: CompilationJobQueue | None = None
+_operation_registry: OperationRegistry | None = None
+_subprocess_manager: SubprocessManager | None = None
+_file_cache: FileCache | None = None
+_error_collector: ErrorCollector | None = None
 
 # Lock management
 _locks_lock = threading.Lock()  # Master lock for lock dictionaries
@@ -95,6 +110,101 @@ def setup_logging(foreground: bool = False) -> None:
     file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     file_handler.setFormatter(file_formatter)
     logger.addHandler(file_handler)
+
+
+def init_daemon_subsystems() -> None:
+    """Initialize daemon subsystems (compilation queue, operation registry, etc.)."""
+    global _compilation_queue, _operation_registry, _subprocess_manager, _file_cache, _error_collector
+
+    logging.info("Initializing daemon subsystems...")
+
+    # Initialize compilation queue with worker pool
+    try:
+        import multiprocessing
+
+        num_workers = multiprocessing.cpu_count()
+    except (ImportError, NotImplementedError):
+        num_workers = 4  # Fallback for systems without multiprocessing
+
+    _compilation_queue = CompilationJobQueue(num_workers=num_workers)
+    _compilation_queue.start()
+    logging.info(f"Compilation queue started with {num_workers} workers")
+
+    # Initialize operation registry
+    _operation_registry = OperationRegistry(max_history=100)
+    logging.info("Operation registry initialized")
+
+    # Initialize subprocess manager
+    _subprocess_manager = SubprocessManager()
+    logging.info("Subprocess manager initialized")
+
+    # Initialize file cache
+    _file_cache = FileCache(cache_file=FILE_CACHE_FILE)
+    logging.info("File cache initialized")
+
+    # Initialize error collector (created per-operation, but we can have a global one)
+    _error_collector = ErrorCollector()
+    logging.info("Error collector initialized")
+
+    logging.info("✅ All daemon subsystems initialized successfully")
+
+
+def shutdown_daemon_subsystems() -> None:
+    """Shutdown daemon subsystems gracefully."""
+    global _compilation_queue
+
+    logging.info("Shutting down daemon subsystems...")
+
+    if _compilation_queue:
+        _compilation_queue.shutdown()
+        logging.info("Compilation queue shut down")
+
+    logging.info("✅ All daemon subsystems shut down")
+
+
+def get_compilation_queue() -> CompilationJobQueue | None:
+    """Get global compilation queue instance.
+
+    Returns:
+        CompilationJobQueue instance or None if not initialized
+    """
+    return _compilation_queue
+
+
+def get_operation_registry() -> OperationRegistry | None:
+    """Get global operation registry instance.
+
+    Returns:
+        OperationRegistry instance or None if not initialized
+    """
+    return _operation_registry
+
+
+def get_subprocess_manager() -> SubprocessManager | None:
+    """Get global subprocess manager instance.
+
+    Returns:
+        SubprocessManager instance or None if not initialized
+    """
+    return _subprocess_manager
+
+
+def get_file_cache() -> FileCache | None:
+    """Get global file cache instance.
+
+    Returns:
+        FileCache instance or None if not initialized
+    """
+    return _file_cache
+
+
+def get_error_collector() -> ErrorCollector | None:
+    """Get global error collector instance.
+
+    Returns:
+        ErrorCollector instance or None if not initialized
+    """
+    return _error_collector
 
 
 def read_status_file_safe() -> DaemonStatus:
@@ -594,6 +704,108 @@ def process_monitor_request(request: MonitorRequest, process_tracker: ProcessTra
             _operation_in_progress = False
 
 
+def process_build_request(request: BuildRequest, process_tracker: ProcessTracker) -> bool:
+    """Execute build request.
+
+    Args:
+        request: BuildRequest object
+        process_tracker: ProcessTracker instance
+
+    Returns:
+        True if build successful, False otherwise
+    """
+    global _operation_in_progress
+
+    project_dir = request.project_dir
+    environment = request.environment
+    caller_pid = request.caller_pid
+    caller_cwd = request.caller_cwd
+    request_id = request.request_id
+    clean_build = request.clean_build
+    verbose = request.verbose
+
+    logging.info(f"Processing build request {request_id}: env={environment}, project={project_dir}, clean={clean_build}")
+
+    # Acquire project lock (prevent concurrent builds of same project)
+    project_lock = get_project_lock(project_dir)
+    if not project_lock.acquire(blocking=False):
+        logging.warning(f"Project {project_dir} is already being built")
+        update_status(
+            DaemonState.FAILED,
+            f"Project {project_dir} is already being built by another process",
+        )
+        return False
+
+    try:
+        # Mark operation in progress
+        with _operation_lock:
+            _operation_in_progress = True
+
+        update_status(
+            DaemonState.BUILDING,
+            f"Building {environment}",
+            environment=environment,
+            project_dir=project_dir,
+            request_started_at=time.time(),
+            request_id=request_id,
+            caller_pid=caller_pid,
+            caller_cwd=caller_cwd,
+            operation_type=OperationType.BUILD,
+        )
+
+        # Execute build
+        logging.info(f"Building project: {project_dir}")
+
+        try:
+            orchestrator = BuildOrchestratorAVR(verbose=verbose)
+            build_result = orchestrator.build(
+                project_dir=Path(project_dir),
+                env_name=environment,
+                clean=clean_build,
+                verbose=verbose,
+            )
+
+            if not build_result.success:
+                logging.error(f"Build failed: {build_result.message}")
+                update_status(
+                    DaemonState.FAILED,
+                    f"Build failed: {build_result.message}",
+                    exit_code=1,
+                    operation_in_progress=False,
+                )
+                return False
+
+            logging.info("Build completed successfully")
+            update_status(
+                DaemonState.COMPLETED,
+                "Build successful",
+                exit_code=0,
+                operation_in_progress=False,
+            )
+            return True
+
+        except KeyboardInterrupt:
+            _thread.interrupt_main()
+            raise
+        except Exception as e:
+            logging.error(f"Build exception: {e}")
+            update_status(
+                DaemonState.FAILED,
+                f"Build exception: {e}",
+                exit_code=1,
+                operation_in_progress=False,
+            )
+            return False
+
+    finally:
+        # Release project lock
+        project_lock.release()
+
+        # Mark operation complete
+        with _operation_lock:
+            _operation_in_progress = False
+
+
 def should_shutdown() -> bool:
     """Check if daemon should shutdown.
 
@@ -662,6 +874,9 @@ def cleanup_and_exit() -> None:
     """Clean up daemon state and exit."""
     logging.info("Daemon shutting down")
 
+    # Shutdown subsystems
+    shutdown_daemon_subsystems()
+
     # Remove PID file
     try:
         PID_FILE.unlink(missing_ok=True)
@@ -715,6 +930,9 @@ def run_daemon_loop() -> None:
     # This must happen before processing any requests to ensure clean state
     update_status(DaemonState.IDLE, "Daemon starting...")
 
+    # Initialize daemon subsystems
+    init_daemon_subsystems()
+
     # Initialize process tracker
     process_tracker = ProcessTracker(PROCESS_REGISTRY_FILE)
 
@@ -759,6 +977,18 @@ def run_daemon_loop() -> None:
                     raise
                 except Exception as e:
                     logging.error(f"Error during cancel signal cleanup: {e}", exc_info=True)
+
+            # Check for build requests
+            build_request = read_request_file(BUILD_REQUEST_FILE, BuildRequest)
+            if build_request:
+                last_activity = time.time()
+                logging.info(f"Received build request: {build_request}")
+
+                # Process request
+                process_build_request(build_request, process_tracker)
+
+                # Clear request file
+                clear_request_file(BUILD_REQUEST_FILE)
 
             # Check for deploy requests
             deploy_request = read_request_file(DEPLOY_REQUEST_FILE, DeployRequest)

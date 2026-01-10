@@ -7,13 +7,16 @@ the logic for setting up these components with correct parameters.
 """
 
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, TYPE_CHECKING
 
 from ..config.board_config import BoardConfig
 from ..config.mcu_specs import get_max_flash, get_max_ram
 from ..packages.package import IToolchain
 from .compiler_avr import CompilerAVR
 from .linker import LinkerAVR
+
+if TYPE_CHECKING:
+    from ..daemon.compilation_queue import CompilationJobQueue
 
 
 class BuildComponentFactory:
@@ -42,7 +45,8 @@ class BuildComponentFactory:
         toolchain: IToolchain,
         board_config: BoardConfig,
         core_path: Path,
-        lib_include_paths: Optional[List[Path]] = None
+        lib_include_paths: Optional[List[Path]] = None,
+        compilation_queue: Optional['CompilationJobQueue'] = None
     ) -> CompilerAVR:
         """
         Create compiler instance with appropriate settings.
@@ -52,12 +56,14 @@ class BuildComponentFactory:
         - MCU and F_CPU from board configuration
         - Include paths (core + variant + libraries)
         - Defines (Arduino version, board-specific defines)
+        - Optional compilation queue for async/parallel compilation
 
         Args:
             toolchain: Toolchain instance
             board_config: Board configuration
             core_path: Arduino core path
             lib_include_paths: Optional library include paths
+            compilation_queue: Optional compilation queue for async compilation
 
         Returns:
             Configured Compiler instance
@@ -82,7 +88,8 @@ class BuildComponentFactory:
             mcu=board_config.mcu,
             f_cpu=board_config.f_cpu,
             includes=include_paths,
-            defines=defines
+            defines=defines,
+            compilation_queue=compilation_queue
         )
 
     @staticmethod

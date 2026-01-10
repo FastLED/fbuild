@@ -16,10 +16,14 @@ import _thread
 import subprocess
 import shutil
 import platform
+import time
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, TYPE_CHECKING
 
 from ..packages.header_trampoline_cache import HeaderTrampolineCache
+
+if TYPE_CHECKING:
+    from ..daemon.compilation_queue import CompilationJobQueue
 
 
 class CompilationError(Exception):
@@ -142,29 +146,11 @@ class CompilationExecutor:
         # Convert include paths to flags - ensure no quotes for sccache compatibility
         # GCC response files with quotes cause sccache to treat @file literally
         include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in effective_include_paths]
-        response_file = self._write_response_file(include_flags)
 
-        # Build compiler command with optional sccache wrapper
-        # With trampolines enabled, we can now use sccache even with many includes
-        use_sccache = self.sccache_path is not None
-
-        cmd = []
-        if use_sccache:
-            cmd.append(str(self.sccache_path))
-            # Use absolute resolved path for sccache
-            # On Windows, sccache needs consistent path format (all backslashes)
-            resolved_compiler = compiler_path.resolve()
-            compiler_str = str(resolved_compiler)
-            # Normalize to Windows backslashes on Windows
-            if platform.system() == 'Windows':
-                compiler_str = compiler_str.replace('/', '\\')
-            cmd.append(compiler_str)
-        else:
-            cmd.append(str(compiler_path))
-        cmd.extend(compile_flags)
-        cmd.append(f"@{response_file}")
-        cmd.extend(['-c', str(source_path)])
-        cmd.extend(['-o', str(output_path)])
+        # Build compiler command
+        cmd = self._build_compile_command(
+            compiler_path, source_path, output_path, compile_flags, include_flags
+        )
 
         # Execute compilation
         if self.show_progress:
@@ -199,6 +185,55 @@ class CompilationExecutor:
             if isinstance(e, CompilationError):
                 raise
             raise CompilationError(f"Failed to compile {source_path.name}: {e}") from e
+
+    def _build_compile_command(
+        self,
+        compiler_path: Path,
+        source_path: Path,
+        output_path: Path,
+        compile_flags: List[str],
+        include_paths: List[str]
+    ) -> List[str]:
+        """Build compilation command with optional sccache wrapper.
+
+        Args:
+            compiler_path: Path to compiler executable
+            source_path: Path to source file
+            output_path: Path for output object file
+            compile_flags: Compilation flags
+            include_paths: Include paths (or include flags if already converted)
+
+        Returns:
+            List of command arguments
+        """
+        # Include paths are already converted to flags (List[str])
+        include_flags = include_paths
+
+        # Write response file for includes
+        response_file = self._write_response_file(include_flags)
+
+        # Build compiler command with optional sccache wrapper
+        use_sccache = self.sccache_path is not None
+
+        cmd = []
+        if use_sccache:
+            cmd.append(str(self.sccache_path))
+            # Use absolute resolved path for sccache
+            # On Windows, sccache needs consistent path format (all backslashes)
+            resolved_compiler = compiler_path.resolve()
+            compiler_str = str(resolved_compiler)
+            # Normalize to Windows backslashes on Windows
+            if platform.system() == 'Windows':
+                compiler_str = compiler_str.replace('/', '\\')
+            cmd.append(compiler_str)
+        else:
+            cmd.append(str(compiler_path))
+        cmd.extend(compile_flags)
+        cmd.append(f"@{response_file}")
+        cmd.extend(['-c', str(source_path)])
+        cmd.extend(['-o', str(output_path)])
+
+        return cmd
 
     def _write_response_file(self, include_flags: List[str]) -> Path:
         """Write include paths to response file.
@@ -275,3 +310,104 @@ class CompilationExecutor:
             print(f"Preprocessed {ino_path.name} -> {cpp_path.name}")
 
         return cpp_path
+
+    def compile_source_async(
+        self,
+        compiler_path: Path,
+        source_path: Path,
+        output_path: Path,
+        compile_flags: List[str],
+        include_paths: List[Path],
+        job_queue: 'CompilationJobQueue'
+    ) -> str:
+        """Compile a single source file asynchronously via daemon queue.
+
+        This method submits a compilation job to the daemon's CompilationJobQueue
+        for parallel execution instead of blocking on subprocess.run().
+
+        Args:
+            compiler_path: Path to compiler executable (gcc/g++)
+            source_path: Path to source file
+            output_path: Path for output object file
+            compile_flags: Compilation flags
+            include_paths: Include directory paths
+            job_queue: CompilationJobQueue from daemon
+
+        Returns:
+            Job ID string for tracking the compilation job
+
+        Raises:
+            CompilationError: If job submission fails
+        """
+        from ..daemon.compilation_queue import CompilationJob
+
+        if not compiler_path.exists():
+            raise CompilationError(
+                f"Compiler not found: {compiler_path}. Ensure toolchain is installed."
+            )
+
+        if not source_path.exists():
+            raise CompilationError(f"Source file not found: {source_path}")
+
+        # Ensure output directory exists
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+
+        # Apply header trampoline cache on Windows when enabled
+        effective_include_paths = include_paths
+        if self.trampoline_cache is not None and platform.system() == 'Windows':
+            try:
+                exclude_patterns = [
+                    'newlib/platform_include',
+                    'newlib\\platform_include',
+                    '/bt/',
+                    '\\bt\\'
+                ]
+                effective_include_paths = self.trampoline_cache.generate_trampolines(
+                    include_paths,
+                    exclude_patterns=exclude_patterns
+                )
+            except KeyboardInterrupt:
+                _thread.interrupt_main()
+                raise
+            except Exception as e:
+                if self.show_progress:
+                    print(f"[trampolines] Warning: Failed to generate trampolines, using original paths: {e}")
+                effective_include_paths = include_paths
+
+        # Convert include paths to flags
+        include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in effective_include_paths]
+        response_file = self._write_response_file(include_flags)
+
+        # Build compiler command with optional sccache wrapper
+        use_sccache = self.sccache_path is not None
+
+        cmd = []
+        if use_sccache:
+            cmd.append(str(self.sccache_path))
+            resolved_compiler = compiler_path.resolve()
+            compiler_str = str(resolved_compiler)
+            if platform.system() == 'Windows':
+                compiler_str = compiler_str.replace('/', '\\')
+            cmd.append(compiler_str)
+        else:
+            cmd.append(str(compiler_path))
+        cmd.extend(compile_flags)
+        cmd.append(f"@{response_file}")
+        cmd.extend(['-c', str(source_path)])
+        cmd.extend(['-o', str(output_path)])
+
+        # Create and submit compilation job
+        job_id = f"compile_{source_path.stem}_{int(time.time()*1000000)}"
+
+        job = CompilationJob(
+            job_id=job_id,
+            source_path=source_path,
+            output_path=output_path,
+            compiler_cmd=cmd,
+            response_file=response_file
+        )
+
+        # Submit to queue
+        job_queue.submit_job(job)
+
+        return job_id

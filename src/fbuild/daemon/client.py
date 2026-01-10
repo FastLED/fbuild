@@ -17,6 +17,7 @@ from typing import Any
 import psutil
 
 from fbuild.daemon.messages import (
+    BuildRequest,
     DaemonState,
     DaemonStatus,
     DeployRequest,
@@ -28,6 +29,7 @@ DAEMON_NAME = "fbuild_daemon"
 DAEMON_DIR = Path.home() / ".fbuild" / "daemon"
 PID_FILE = DAEMON_DIR / f"{DAEMON_NAME}.pid"
 STATUS_FILE = DAEMON_DIR / "daemon_status.json"
+BUILD_REQUEST_FILE = DAEMON_DIR / "build_request.json"
 DEPLOY_REQUEST_FILE = DAEMON_DIR / "deploy_request.json"
 MONITOR_REQUEST_FILE = DAEMON_DIR / "monitor_request.json"
 
@@ -201,6 +203,102 @@ def ensure_daemon_running() -> bool:
 
     print("❌ Failed to start daemon")
     return False
+
+
+def request_build(
+    project_dir: Path,
+    environment: str,
+    clean_build: bool = False,
+    verbose: bool = False,
+    timeout: float = 1800,
+) -> bool:
+    """Request a build operation from the daemon.
+
+    Args:
+        project_dir: Project directory
+        environment: Build environment
+        clean_build: Whether to perform clean build
+        verbose: Enable verbose build output
+        timeout: Maximum wait time in seconds (default: 30 minutes)
+
+    Returns:
+        True if build successful, False otherwise
+    """
+    # Ensure daemon is running
+    if not ensure_daemon_running():
+        return False
+
+    print("\n📤 Submitting build request...")
+    print(f"   Project: {project_dir}")
+    print(f"   Environment: {environment}")
+    if clean_build:
+        print("   Clean build: Yes")
+
+    # Create request
+    request = BuildRequest(
+        project_dir=str(project_dir.absolute()),
+        environment=environment,
+        clean_build=clean_build,
+        verbose=verbose,
+        caller_pid=os.getpid(),
+        caller_cwd=os.getcwd(),
+    )
+
+    # Submit request
+    write_request_file(BUILD_REQUEST_FILE, request)
+    print(f"   Request ID: {request.request_id}")
+    print("   ✅ Submitted\n")
+
+    # Monitor progress
+    print("🔨 Build Progress:")
+    start_time = time.time()
+    last_message: str | None = None
+
+    while True:
+        try:
+            elapsed = time.time() - start_time
+
+            # Check timeout
+            if elapsed > timeout:
+                print(f"\n❌ Build timeout ({timeout}s)")
+                return False
+
+            # Read status
+            status = read_status_file()
+
+            # Display progress when message changes
+            if status.message != last_message:
+                display_status(status)
+                last_message = status.message
+
+            # Check completion
+            if status.state == DaemonState.COMPLETED:
+                print(f"\n✅ Build completed in {elapsed:.1f}s")
+                return True
+            elif status.state == DaemonState.FAILED:
+                print(f"\n❌ Build failed: {status.message}")
+                return False
+
+            # Sleep before next poll
+            time.sleep(0.5)
+
+        except KeyboardInterrupt:  # noqa: KBI002
+            # Prompt user whether to keep the operation running
+            print("\n\n⚠️  Interrupted by user (Ctrl-C)")
+            response = input("Keep operation running in background? (y/n): ").strip().lower()
+
+            if response in ("y", "yes"):
+                print("\n✅ Operation continues in background")
+                print("   Check status: fbuild daemon status")
+                print("   Stop daemon: fbuild daemon stop")
+                return False  # Operation not completed, but detached
+            else:
+                print("\n🛑 Requesting daemon to stop operation...")
+                # Create a cancel signal file
+                cancel_file = DAEMON_DIR / f"cancel_{request.request_id}.signal"
+                cancel_file.touch()
+                print("   Operation cancellation requested")
+                return False
 
 
 def request_deploy(

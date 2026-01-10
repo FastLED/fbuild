@@ -114,7 +114,7 @@ class SourceScanner:
             return []
 
         # Directories to exclude from scanning
-        excluded_dirs = {'.zap', '.pio', 'build', '.git', '__pycache__', 'node_modules'}
+        excluded_dirs = {'.zap', '.pio', 'build', '.git', '__pycache__', 'node_modules', '.fbuild'}
 
         sources = []
 
@@ -189,7 +189,7 @@ class SourceScanner:
             return []
 
         # Directories to exclude from scanning
-        excluded_dirs = {'.zap', '.pio', 'build', '.git', '__pycache__', 'node_modules'}
+        excluded_dirs = {'.zap', '.pio', 'build', '.git', '__pycache__', 'node_modules', '.fbuild'}
 
         headers: set[Path] = set()
 

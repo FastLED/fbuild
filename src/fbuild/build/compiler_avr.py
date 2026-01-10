@@ -8,10 +8,13 @@ C and C++ source files to object files with sccache support.
 import subprocess
 import shutil
 from pathlib import Path
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, TYPE_CHECKING
 from dataclasses import dataclass
 
 from .compiler import ICompiler, CompilerError
+
+if TYPE_CHECKING:
+    from ..daemon.compilation_queue import CompilationJobQueue
 
 
 @dataclass
@@ -40,7 +43,8 @@ class CompilerAVR(ICompiler):
         f_cpu: str,
         includes: List[Path],
         defines: Dict[str, str],
-        use_sccache: bool = True
+        use_sccache: bool = True,
+        compilation_queue: Optional['CompilationJobQueue'] = None
     ):
         """
         Initialize compiler.
@@ -53,6 +57,7 @@ class CompilerAVR(ICompiler):
             includes: List of include directories
             defines: Dictionary of preprocessor defines
             use_sccache: Whether to use sccache for caching (default: True)
+            compilation_queue: Optional compilation queue for async/parallel compilation
         """
         self.avr_gcc = Path(avr_gcc)
         self.avr_gpp = Path(avr_gpp)
@@ -62,6 +67,8 @@ class CompilerAVR(ICompiler):
         self.defines = defines
         self.use_sccache = use_sccache
         self.sccache_path: Optional[Path] = None
+        self.compilation_queue = compilation_queue
+        self.pending_jobs: List[str] = []  # Track async job IDs
 
         # Check if sccache is available
         if self.use_sccache:
@@ -127,6 +134,10 @@ class CompilerAVR(ICompiler):
         """
         Compile source file (auto-detects C vs C++).
 
+        Supports dual-mode operation:
+        - If compilation_queue is set: submits job asynchronously and returns deferred result
+        - If compilation_queue is None: executes synchronously (legacy mode)
+
         Args:
             source: Path to source file
             output: Path to output .o object file
@@ -134,9 +145,35 @@ class CompilerAVR(ICompiler):
 
         Returns:
             CompileResult with compilation status
+            When async mode: returns success=True with deferred=True, actual result via wait_all_jobs()
+            When sync mode: returns actual compilation result immediately
         """
         source = Path(source)
 
+        # Async mode: submit to queue and defer result
+        if self.compilation_queue is not None:
+            # Build the command based on file type
+            if source.suffix == '.c':
+                cmd = self._build_c_command(source, output, extra_flags or [])
+            elif source.suffix in ['.cpp', '.cxx', '.cc']:
+                cmd = self._build_cpp_command(source, output, extra_flags or [])
+            else:
+                raise CompilerError(f"Unknown source file type: {source.suffix}")
+
+            # Submit to async compilation queue
+            job_id = self._submit_async_compilation(source, output, cmd)
+            self.pending_jobs.append(job_id)
+
+            # Return deferred result (actual result via wait_all_jobs())
+            return CompileResult(
+                success=True,
+                object_file=output,  # Optimistic - will be validated in wait_all_jobs()
+                stdout="",
+                stderr="",
+                returncode=0
+            )
+
+        # Sync mode: execute synchronously (legacy behavior)
         if source.suffix == '.c':
             return self.compile_c(source, output, extra_flags)
         elif source.suffix in ['.cpp', '.cxx', '.cc']:
@@ -342,6 +379,119 @@ class CompilerAVR(ICompiler):
                 stderr=str(e),
                 returncode=-1
             )
+
+    def _submit_async_compilation(
+        self,
+        source: Path,
+        output: Path,
+        cmd: List[str]
+    ) -> str:
+        """
+        Submit compilation job to async queue.
+
+        Args:
+            source: Source file path
+            output: Output object file path
+            cmd: Full compiler command
+
+        Returns:
+            Job ID for tracking
+        """
+        import time
+        from ..daemon.compilation_queue import CompilationJob
+
+        job_id = f"compile_{source.stem}_{int(time.time() * 1000000)}"
+
+        job = CompilationJob(
+            job_id=job_id,
+            source_path=source,
+            output_path=output,
+            compiler_cmd=cmd,
+            response_file=None  # AVR doesn't use response files for includes
+        )
+
+        if self.compilation_queue is None:
+            raise CompilerError("Compilation queue not initialized")
+        self.compilation_queue.submit_job(job)
+        return job_id
+
+    def wait_all_jobs(self) -> List[CompileResult]:
+        """
+        Wait for all pending async compilation jobs to complete.
+
+        This method must be called after using async compilation mode
+        to wait for all submitted jobs and collect their results.
+
+        Returns:
+            List of CompileResult for all pending jobs
+
+        Raises:
+            CompilerError: If any compilation fails
+        """
+        if not self.compilation_queue:
+            return []
+
+        if not self.pending_jobs:
+            return []
+
+        # Wait for all jobs to complete
+        self.compilation_queue.wait_for_completion(self.pending_jobs)
+
+        # Collect results
+        results = []
+        failed_jobs = []
+
+        for job_id in self.pending_jobs:
+            job = self.compilation_queue.get_job_status(job_id)
+
+            if job is None:
+                # This shouldn't happen
+                failed_jobs.append(f"Job {job_id} not found")
+                continue
+
+            result = CompileResult(
+                success=(job.state.value == "completed"),
+                object_file=job.output_path if job.state.value == "completed" else None,
+                stdout=job.stdout,
+                stderr=job.stderr,
+                returncode=job.result_code or -1
+            )
+
+            results.append(result)
+
+            if not result.success:
+                failed_jobs.append(f"{job.source_path.name}: {job.stderr[:200]}")
+
+        # Clear pending jobs
+        self.pending_jobs.clear()
+
+        # Raise error if any jobs failed
+        if failed_jobs:
+            error_msg = f"Compilation failed for {len(failed_jobs)} file(s):\n"
+            error_msg += "\n".join(f"  - {err}" for err in failed_jobs[:5])
+            if len(failed_jobs) > 5:
+                error_msg += f"\n  ... and {len(failed_jobs) - 5} more"
+            raise CompilerError(error_msg)
+
+        return results
+
+    def get_statistics(self) -> Dict[str, int]:
+        """
+        Get compilation statistics from the queue.
+
+        Returns:
+            Dictionary with compilation statistics
+        """
+        if not self.compilation_queue:
+            return {
+                "total_jobs": 0,
+                "pending": 0,
+                "running": 0,
+                "completed": 0,
+                "failed": 0
+            }
+
+        return self.compilation_queue.get_statistics()
 
     # BaseCompiler interface implementation
     def compile_source(

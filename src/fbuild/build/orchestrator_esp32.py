@@ -261,6 +261,19 @@ class OrchestratorESP32(IBuildOrchestrator):
                 show_progress=verbose
             )
 
+            # Try to get compilation queue from daemon for async compilation
+            compilation_queue = None
+            try:
+                from ..daemon import daemon
+                compilation_queue = daemon.get_compilation_queue()
+                if compilation_queue and verbose:
+                    num_workers = getattr(compilation_queue, 'num_workers', 'unknown')
+                    print(f"[Async Mode] Using daemon compilation queue with {num_workers} workers")
+            except (ImportError, AttributeError):
+                # Daemon not available or not running - use synchronous compilation
+                if verbose:
+                    print("[Sync Mode] Daemon not available, using synchronous compilation")
+
             # Initialize compiler
             if verbose:
                 print("[7/10] Compiling Arduino core...")
@@ -276,7 +289,8 @@ class OrchestratorESP32(IBuildOrchestrator):
                 platform_config=None,
                 show_progress=verbose,
                 user_build_flags=build_flags,
-                compilation_executor=compilation_executor
+                compilation_executor=compilation_executor,
+                compilation_queue=compilation_queue
             )
 
             # Compile Arduino core with progress bar

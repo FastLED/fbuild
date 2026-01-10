@@ -5,6 +5,7 @@ This module defines typed dataclasses for all client-daemon communication,
 ensuring type safety and validation.
 
 Supports:
+- Build operations (compilation and linking)
 - Deploy operations (firmware upload)
 - Monitor operations (serial monitoring)
 - Status updates and progress tracking
@@ -39,6 +40,7 @@ class DaemonState(Enum):
 class OperationType(Enum):
     """Type of operation being performed."""
 
+    BUILD = "build"
     DEPLOY = "deploy"
     MONITOR = "monitor"
     BUILD_AND_DEPLOY = "build_and_deploy"
@@ -159,6 +161,49 @@ class MonitorRequest:
             caller_cwd=data["caller_cwd"],
             timestamp=data.get("timestamp", time.time()),
             request_id=data.get("request_id", f"monitor_{int(time.time() * 1000)}"),
+        )
+
+
+@dataclass
+class BuildRequest:
+    """Client → Daemon: Build request message.
+
+    Attributes:
+        project_dir: Absolute path to project directory
+        environment: Build environment name
+        clean_build: Whether to perform clean build
+        verbose: Enable verbose build output
+        caller_pid: Process ID of requesting client
+        caller_cwd: Working directory of requesting client
+        timestamp: Unix timestamp when request was created
+        request_id: Unique identifier for this request
+    """
+
+    project_dir: str
+    environment: str
+    clean_build: bool
+    verbose: bool
+    caller_pid: int
+    caller_cwd: str
+    timestamp: float = field(default_factory=time.time)
+    request_id: str = field(default_factory=lambda: f"build_{int(time.time() * 1000)}")
+
+    def to_dict(self) -> dict[str, Any]:
+        """Convert to dictionary for JSON serialization."""
+        return asdict(self)
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "BuildRequest":
+        """Create BuildRequest from dictionary."""
+        return cls(
+            project_dir=data["project_dir"],
+            environment=data["environment"],
+            clean_build=data.get("clean_build", False),
+            verbose=data.get("verbose", False),
+            caller_pid=data["caller_pid"],
+            caller_cwd=data["caller_cwd"],
+            timestamp=data.get("timestamp", time.time()),
+            request_id=data.get("request_id", f"build_{int(time.time() * 1000)}"),
         )
 
 

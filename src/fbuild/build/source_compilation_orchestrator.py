@@ -60,6 +60,10 @@ class SourceCompilationOrchestrator:
         Compiles each source file to an object file, using cached objects when
         possible. Reports progress based on verbose setting.
 
+        Supports both sync and async compilation modes. When compiler has
+        a compilation_queue set, submissions are async and this method waits
+        for all jobs to complete before returning.
+
         Args:
             compiler: Compiler instance
             sources: List of source files to compile
@@ -107,6 +111,16 @@ class SourceCompilationOrchestrator:
                 raise SourceCompilationOrchestratorError(
                     f"Compilation failed for {source}: {e}"
                 )
+
+        # Wait for all async jobs to complete (if using async mode)
+        # This is a no-op for sync compilation
+        try:
+            if hasattr(compiler, 'wait_all_jobs') and callable(getattr(compiler, 'wait_all_jobs')):
+                getattr(compiler, 'wait_all_jobs')()
+        except CompilerError as e:
+            raise SourceCompilationOrchestratorError(
+                f"Async compilation failed: {e}"
+            )
 
         return objects
 
