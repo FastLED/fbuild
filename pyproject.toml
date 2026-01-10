@@ -26,9 +26,9 @@ dev = [
     "pytest-cov",
 ]
 
-[tool.setuptools]
-packages = ["fbuild", "lint.ruff_plugins"]
-package-dir = {"fbuild" = "src/fbuild", "lint.ruff_plugins" = "lint_plugins/ruff"}
+[tool.setuptools.packages.find]
+where = ["src", "."]
+include = ["fbuild*", "fbuild_lint*"]
 
 [tool.ruff]
 line-length = 200
@@ -111,4 +111,4 @@ markers = [
 addopts = "-m 'not integration'"
 testpaths = ["tests"]
 [project.entry-points."flake8.extension"]
-KBI = "lint.ruff_plugins.keyboard_interrupt_checker:KeyboardInterruptChecker"
+KBI = "fbuild_lint.ruff_plugins.keyboard_interrupt_checker:KeyboardInterruptChecker"

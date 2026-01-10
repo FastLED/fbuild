@@ -1,6 +1,6 @@
 # Fbuild
 
-A modern, reliable replacement for PlatformIO that fixes all the bugs and simplifies embedded development.
+A fast, next-generation multi-platform compiler, deployer, and monitor for embedded development.
 
 [![Linting](../../actions/workflows/lint.yml/badge.svg)](../../actions/workflows/lint.yml)
 
@@ -10,7 +10,7 @@ A modern, reliable replacement for PlatformIO that fixes all the bugs and simpli
 
 ## What is Fbuild?
 
-Fbuild is a next-generation embedded development tool designed to replace PlatformIO with a cleaner, more reliable architecture. Built from the ground up to address the pain points developers face with existing tools.
+Fbuild is a next-generation embedded development tool featuring a clean, transparent architecture. It provides fast incremental builds, URL-based package management, and comprehensive multi-platform support for Arduino and ESP32 development.
 
 **Current Status**: v0.1.0 - Full Arduino Uno support with working build system
 
@@ -241,27 +241,22 @@ Build time: 78.59 seconds
 - Program: 1,058 bytes (3.3% of 32KB flash)
 - RAM: 9 bytes (0.4% of 2KB RAM)
 
-## Why Fbuild over PlatformIO?
+## Key Benefits
 
 ### Transparency
-- **Fbuild**: Direct URLs, hash-based caching, know exactly what you're downloading
-- **PlatformIO**: Hidden package registry, opaque dependency resolution
+Direct URLs and hash-based caching mean you know exactly what you're downloading. No hidden package registries or opaque dependency resolution.
 
 ### Reliability
-- **Fbuild**: Real downloads with checksum verification, no mocks in production
-- **PlatformIO**: Complex dependency chains, frequent breaking changes
+Real downloads with checksum verification ensure consistent, reproducible builds. No mocks in production code.
 
 ### Speed
-- **Fbuild**: Optimized incremental builds (<1s), smart caching
-- **PlatformIO**: Can be slow, especially with clean builds
+Optimized incremental builds complete in under 1 second, with intelligent caching for full rebuilds in 2-5 seconds.
 
 ### Code Quality
-- **Fbuild**: 100% type-safe (mypy), PEP 8 compliant, comprehensive tests
-- **PlatformIO**: Mixed code quality, harder to contribute to
+100% type-safe (mypy), PEP 8 compliant, and comprehensive test coverage ensure a maintainable and reliable codebase.
 
-### Error Messages
-- **Fbuild**: Clear, actionable error messages with suggestions
-- **PlatformIO**: Often cryptic errors requiring forum searches
+### Clear Error Messages
+Actionable error messages with suggestions help you quickly identify and fix issues without requiring forum searches.
 
 ## Architecture
 

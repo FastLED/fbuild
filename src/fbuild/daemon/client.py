@@ -294,8 +294,8 @@ def request_deploy(
 
             if response in ("y", "yes"):
                 print("\n✅ Operation continues in background")
-                print("   Check status: zap daemon status")
-                print("   Stop daemon: zap daemon stop")
+                print("   Check status: fbuild daemon status")
+                print("   Stop daemon: fbuild daemon stop")
                 return False  # Operation not completed, but detached
             else:
                 print("\n🛑 Requesting daemon to stop operation...")
@@ -406,8 +406,8 @@ def request_monitor(
 
             if response in ("y", "yes"):
                 print("\n✅ Operation continues in background")
-                print("   Check status: zap daemon status")
-                print("   Stop daemon: zap daemon stop")
+                print("   Check status: fbuild daemon status")
+                print("   Stop daemon: fbuild daemon stop")
                 return False  # Operation not completed, but detached
             else:
                 print("\n🛑 Requesting daemon to stop operation...")

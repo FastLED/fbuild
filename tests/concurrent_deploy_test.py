@@ -29,7 +29,7 @@ def check_prerequisites() -> Tuple[bool, List[str]]:
     """
     errors = []
 
-    # Check if zap command exists
+    # Check if fbuild command exists
     try:
         result = subprocess.run(
             ["fbuild", "--help"],
@@ -37,9 +37,9 @@ def check_prerequisites() -> Tuple[bool, List[str]]:
             timeout=5,
         )
         if result.returncode != 0:
-            errors.append("'zap' command not found or not working")
+            errors.append("'fbuild' command not found or not working")
     except (subprocess.TimeoutExpired, FileNotFoundError):
-        errors.append("'zap' command not found in PATH")
+        errors.append("'fbuild' command not found in PATH")
 
     # Check if test directories exist
     test_dirs = [

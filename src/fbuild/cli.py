@@ -245,9 +245,9 @@ def daemon_command(action: str) -> None:
     """Manage the fbuild daemon.
 
     Examples:
-        zap daemon status    # Show daemon status
-        zap daemon stop      # Stop the daemon
-        zap daemon restart   # Restart the daemon
+        fbuild daemon status    # Show daemon status
+        fbuild daemon stop      # Stop the daemon
+        fbuild daemon restart   # Restart the daemon
     """
     try:
         if action == "status":
