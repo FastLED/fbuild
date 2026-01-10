@@ -303,6 +303,10 @@ def process_deploy_request(request: DeployRequest, process_tracker: ProcessTrack
                 )
                 return False
 
+        # Variables for post-deploy monitoring
+        monitor_after = False
+        monitor_request_data = None
+
         try:
             # Mark operation in progress
             with _operation_lock:
@@ -321,53 +325,52 @@ def process_deploy_request(request: DeployRequest, process_tracker: ProcessTrack
                 port=port,
             )
 
-            # If clean build requested, build first
-            if request.clean_build:
-                logging.info(f"Building project: {project_dir}")
-                update_status(
-                    DaemonState.BUILDING,
-                    f"Building {environment}",
-                    environment=environment,
-                    project_dir=project_dir,
-                    request_id=request_id,
-                    caller_pid=caller_pid,
-                    caller_cwd=caller_cwd,
-                    operation_type=OperationType.BUILD_AND_DEPLOY,
-                    port=port,
+            # Build firmware (always build before deploy, incremental or clean)
+            logging.info(f"Building project: {project_dir}")
+            update_status(
+                DaemonState.BUILDING,
+                f"Building {environment}",
+                environment=environment,
+                project_dir=project_dir,
+                request_id=request_id,
+                caller_pid=caller_pid,
+                caller_cwd=caller_cwd,
+                operation_type=OperationType.BUILD_AND_DEPLOY,
+                port=port,
+            )
+
+            try:
+                orchestrator = BuildOrchestratorAVR(verbose=False)
+                build_result = orchestrator.build(
+                    project_dir=Path(project_dir),
+                    env_name=environment,
+                    clean=request.clean_build,
+                    verbose=False,
                 )
 
-                try:
-                    orchestrator = BuildOrchestratorAVR(verbose=False)
-                    build_result = orchestrator.build(
-                        project_dir=Path(project_dir),
-                        env_name=environment,
-                        clean=True,
-                        verbose=False,
-                    )
-
-                    if not build_result.success:
-                        logging.error(f"Build failed: {build_result.message}")
-                        update_status(
-                            DaemonState.FAILED,
-                            f"Build failed: {build_result.message}",
-                            exit_code=1,
-                            operation_in_progress=False,
-                        )
-                        return False
-
-                    logging.info("Build completed successfully")
-                except KeyboardInterrupt:
-                    _thread.interrupt_main()
-                    raise
-                except Exception as e:
-                    logging.error(f"Build exception: {e}")
+                if not build_result.success:
+                    logging.error(f"Build failed: {build_result.message}")
                     update_status(
                         DaemonState.FAILED,
-                        f"Build exception: {e}",
+                        f"Build failed: {build_result.message}",
                         exit_code=1,
                         operation_in_progress=False,
                     )
                     return False
+
+                logging.info("Build completed successfully")
+            except KeyboardInterrupt:
+                _thread.interrupt_main()
+                raise
+            except Exception as e:
+                logging.error(f"Build exception: {e}")
+                update_status(
+                    DaemonState.FAILED,
+                    f"Build exception: {e}",
+                    exit_code=1,
+                    operation_in_progress=False,
+                )
+                return False
 
             # Deploy firmware
             logging.info(f"Deploying to {port if port else 'auto-detected port'}")
@@ -404,20 +407,13 @@ def process_deploy_request(request: DeployRequest, process_tracker: ProcessTrack
                 logging.info("Deploy completed successfully")
                 used_port = deploy_result.port if deploy_result.port else port
 
-                update_status(
-                    DaemonState.COMPLETED,
-                    "Deploy successful",
-                    exit_code=0,
-                    operation_in_progress=False,
-                    port=used_port,
-                )
+                # Store monitor request info before releasing locks
+                monitor_after = request.monitor_after and used_port
+                monitor_request_data = None
 
-                # Start monitor if requested
-                if request.monitor_after and used_port:
-                    logging.info("Starting monitor after successful deploy")
-
+                if monitor_after:
                     # Create monitor request from deploy context
-                    monitor_request = MonitorRequest(
+                    monitor_request_data = MonitorRequest(
                         project_dir=project_dir,
                         environment=environment,
                         port=used_port,
@@ -429,12 +425,15 @@ def process_deploy_request(request: DeployRequest, process_tracker: ProcessTrack
                         caller_cwd=caller_cwd,
                         request_id=f"monitor_after_{request_id}",
                     )
-
-                    # Process monitor request immediately
-                    # Note: This blocks until monitor completes/times out
-                    process_monitor_request(monitor_request, process_tracker)
-
-                return True
+                else:
+                    # No monitoring requested - mark deploy as completed
+                    update_status(
+                        DaemonState.COMPLETED,
+                        "Deploy successful",
+                        exit_code=0,
+                        operation_in_progress=False,
+                        port=used_port,
+                    )
 
             except KeyboardInterrupt:
                 _thread.interrupt_main()
@@ -453,6 +452,26 @@ def process_deploy_request(request: DeployRequest, process_tracker: ProcessTrack
             # Release port lock
             if port_lock:
                 port_lock.release()
+
+        # Start monitor if requested (after releasing port lock to avoid deadlock)
+        if monitor_after and monitor_request_data:
+            logging.info("Starting monitor after successful deploy")
+
+            # Update status to indicate we're transitioning to monitor
+            # This prevents the client from seeing COMPLETED before monitoring starts
+            update_status(
+                DaemonState.MONITORING,
+                "Transitioning to monitor after deploy",
+                environment=monitor_request_data.environment,
+                project_dir=monitor_request_data.project_dir,
+            )
+
+            # Process monitor request immediately
+            # Note: This blocks until monitor completes/times out
+            # The monitor will set final COMPLETED/FAILED status
+            process_monitor_request(monitor_request_data, process_tracker)
+
+        return True
 
     finally:
         # Release project lock
