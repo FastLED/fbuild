@@ -5,6 +5,7 @@ This module handles Teensy platform builds separately from AVR/ESP32 builds,
 providing cleaner separation of concerns and better maintainability.
 """
 
+import _thread
 import time
 from pathlib import Path
 from typing import List, Optional
@@ -21,6 +22,7 @@ from .configurable_linker import ConfigurableLinker
 from .linker import SizeInfo
 from .orchestrator import IBuildOrchestrator, BuildResult
 from .build_utils import safe_rmtree
+from .build_state import BuildStateTracker
 
 
 @dataclass
@@ -110,10 +112,11 @@ class OrchestratorTeensy(IBuildOrchestrator):
             env_config = config.get_env_config(env_name)
             board_id = env_config.get("board", "teensy41")
             build_flags = config.get_build_flags(env_name)
+            lib_deps = config.get_lib_deps(env_name)
 
             # Call internal build method
             teensy_result = self._build_teensy(
-                project_dir, env_name, board_id, env_config, build_flags, clean, verbose_mode
+                project_dir, env_name, board_id, env_config, build_flags, lib_deps, clean, verbose_mode
             )
 
             # Convert BuildResultTeensy to BuildResult
@@ -127,6 +130,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
             )
 
         except KeyboardInterrupt:
+            _thread.interrupt_main()
             raise
         except Exception as e:
             return BuildResult(
@@ -145,6 +149,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
         board_id: str,
         env_config: dict,
         build_flags: List[str],
+        lib_deps: List[str],
         clean: bool = False,
         verbose: bool = False
     ) -> BuildResultTeensy:
@@ -157,6 +162,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
             board_id: Board ID (e.g., teensy41)
             env_config: Environment configuration dict
             build_flags: User build flags from platformio.ini
+            lib_deps: Library dependencies from platformio.ini
             clean: Whether to clean before build
             verbose: Verbose output mode
 
@@ -192,6 +198,38 @@ class OrchestratorTeensy(IBuildOrchestrator):
 
             # Setup build directory
             build_dir = self._setup_build_directory(env_name, clean, verbose)
+
+            # Check build state and invalidate cache if needed
+            if verbose:
+                print("[3.5/7] Checking build configuration state...")
+
+            state_tracker = BuildStateTracker(build_dir)
+            needs_rebuild, reasons, current_state = state_tracker.check_invalidation(
+                platformio_ini_path=project_dir / "platformio.ini",
+                platform="teensy",
+                board=board_id,
+                framework=env_config.get('framework', 'arduino'),
+                toolchain_version=platform.toolchain.version,
+                framework_version=platform.framework.version,
+                platform_version=f"teensy-{platform.framework.version}",
+                build_flags=build_flags,
+                lib_deps=lib_deps,
+            )
+
+            if needs_rebuild:
+                if verbose:
+                    print("      Build cache invalidated:")
+                    for reason in reasons:
+                        print(f"        - {reason}")
+                    print("      Cleaning build artifacts...")
+                # Clean build artifacts to force rebuild
+                if build_dir.exists():
+                    safe_rmtree(build_dir)
+                # Recreate build directory
+                build_dir.mkdir(parents=True, exist_ok=True)
+            else:
+                if verbose:
+                    print("      Build configuration unchanged, using cached artifacts")
 
             # Initialize compiler
             if verbose:
@@ -264,6 +302,11 @@ class OrchestratorTeensy(IBuildOrchestrator):
                 self._print_success(
                     build_time, firmware_elf, firmware_hex, size_info
                 )
+
+            # Save build state for future cache validation
+            if verbose:
+                print("[7.5/7] Saving build state...")
+            state_tracker.save_state(current_state)
 
             return BuildResultTeensy(
                 success=True,

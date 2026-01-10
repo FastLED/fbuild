@@ -18,6 +18,7 @@ Architecture:
               Status File    Progress Updates
 """
 
+import _thread
 import json
 import logging
 import os
@@ -127,6 +128,7 @@ def read_status_file_safe() -> DaemonStatus:
 
         return default_status
     except KeyboardInterrupt:
+        _thread.interrupt_main()
         raise
     except Exception as e:
         logging.error(f"Unexpected error reading status file: {e}")
@@ -150,6 +152,7 @@ def write_status_file_atomic(status: dict[str, Any]) -> None:
         temp_file.replace(STATUS_FILE)
 
     except KeyboardInterrupt:
+        _thread.interrupt_main()
         temp_file.unlink(missing_ok=True)
         raise
     except Exception as e:
@@ -208,6 +211,7 @@ def read_request_file(request_file: Path, request_class: type) -> Any:
         logging.error(f"Failed to parse request file {request_file}: {e}")
         return None
     except KeyboardInterrupt:
+        _thread.interrupt_main()
         raise
     except Exception as e:
         logging.error(f"Unexpected error reading request file {request_file}: {e}")
@@ -219,6 +223,7 @@ def clear_request_file(request_file: Path) -> None:
     try:
         request_file.unlink(missing_ok=True)
     except KeyboardInterrupt:
+        _thread.interrupt_main()
         raise
     except Exception as e:
         logging.error(f"Failed to clear request file {request_file}: {e}")
@@ -352,6 +357,7 @@ def process_deploy_request(request: DeployRequest, process_tracker: ProcessTrack
 
                     logging.info("Build completed successfully")
                 except KeyboardInterrupt:
+                    _thread.interrupt_main()
                     raise
                 except Exception as e:
                     logging.error(f"Build exception: {e}")
@@ -431,6 +437,7 @@ def process_deploy_request(request: DeployRequest, process_tracker: ProcessTrack
                 return True
 
             except KeyboardInterrupt:
+                _thread.interrupt_main()
                 raise
             except Exception as e:
                 logging.error(f"Deploy exception: {e}")
@@ -545,6 +552,7 @@ def process_monitor_request(request: MonitorRequest, process_tracker: ProcessTra
                 return False
 
         except KeyboardInterrupt:
+            _thread.interrupt_main()
             raise
         except Exception as e:
             logging.error(f"Monitor exception: {e}")
@@ -578,6 +586,7 @@ def should_shutdown() -> bool:
         try:
             shutdown_file.unlink()
         except KeyboardInterrupt:
+            _thread.interrupt_main()
             raise
         except Exception:
             pass
@@ -601,6 +610,7 @@ def should_cancel_operation(request_id: str) -> bool:
         try:
             cancel_file.unlink()
         except KeyboardInterrupt:
+            _thread.interrupt_main()
             raise
         except Exception:
             pass
@@ -635,6 +645,7 @@ def cleanup_and_exit() -> None:
     try:
         PID_FILE.unlink(missing_ok=True)
     except KeyboardInterrupt:
+        _thread.interrupt_main()
         raise
     except Exception as e:
         logging.error(f"Failed to remove PID file: {e}")
@@ -656,10 +667,12 @@ def cleanup_stale_cancel_signals() -> None:
                     logging.info(f"Cleaning up stale cancel signal: {signal_file.name}")
                     signal_file.unlink()
             except KeyboardInterrupt:
+                _thread.interrupt_main()
                 raise
             except Exception as e:
                 logging.warning(f"Failed to clean up {signal_file.name}: {e}")
     except KeyboardInterrupt:
+        _thread.interrupt_main()
         raise
     except Exception as e:
         logging.error(f"Error during cancel signal cleanup: {e}")
@@ -710,6 +723,7 @@ def run_daemon_loop() -> None:
                         logging.info(f"Cleaned up orphaned processes for {len(orphaned_clients)} dead clients: {orphaned_clients}")
                     last_orphan_check = time.time()
                 except KeyboardInterrupt:
+                    _thread.interrupt_main()
                     raise
                 except Exception as e:
                     logging.error(f"Error during orphan cleanup: {e}", exc_info=True)
@@ -720,6 +734,7 @@ def run_daemon_loop() -> None:
                     cleanup_stale_cancel_signals()
                     last_cancel_cleanup = time.time()
                 except KeyboardInterrupt:
+                    _thread.interrupt_main()
                     raise
                 except Exception as e:
                     logging.error(f"Error during cancel signal cleanup: {e}", exc_info=True)
@@ -751,7 +766,7 @@ def run_daemon_loop() -> None:
             # Sleep briefly to avoid busy-wait
             time.sleep(0.5)
 
-        except KeyboardInterrupt:
+        except KeyboardInterrupt:  # noqa: KBI002
             logging.warning("Daemon interrupted by user")
             cleanup_and_exit()
         except Exception as e:
@@ -797,6 +812,7 @@ def main() -> int:
                 logging.info(f"Removing stale PID file for PID {existing_pid}")
                 PID_FILE.unlink()
         except KeyboardInterrupt:
+            _thread.interrupt_main()
             raise
         except Exception as e:
             logging.warning(f"Error checking existing PID: {e}")
@@ -835,6 +851,6 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         sys.exit(main())
-    except KeyboardInterrupt:
+    except KeyboardInterrupt:  # noqa: KBI002
         print("\nDaemon interrupted by user")
         sys.exit(130)

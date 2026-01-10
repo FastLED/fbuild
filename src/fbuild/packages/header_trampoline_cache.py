@@ -37,6 +37,7 @@ Properties:
 - Fully compatible with GCC and sccache
 """
 
+import _thread
 import hashlib
 import json
 import platform
@@ -106,6 +107,7 @@ class HeaderTrampolineCache:
             with open(self.metadata_file, "r") as f:
                 metadata = json.load(f)
         except KeyboardInterrupt:
+            _thread.interrupt_main()
             raise
         except Exception:
             return True
@@ -200,6 +202,7 @@ class HeaderTrampolineCache:
             return self._merge_paths(include_paths, filtered_paths, trampoline_paths, excluded_indices)
 
         except KeyboardInterrupt:
+            _thread.interrupt_main()
             raise
         except Exception as e:
             raise TrampolineCacheError(f"Failed to generate trampoline cache: {e}") from e
@@ -226,6 +229,7 @@ class HeaderTrampolineCache:
             for ext in header_extensions:
                 header_files.extend(original_path.rglob(f"*{ext}"))
         except KeyboardInterrupt:
+            _thread.interrupt_main()
             raise
         except Exception as e:
             if self.show_progress:
@@ -254,6 +258,7 @@ class HeaderTrampolineCache:
                     f.write(trampoline_content)
 
             except KeyboardInterrupt:
+                _thread.interrupt_main()
                 raise
             except Exception as e:
                 if self.show_progress:
@@ -381,6 +386,7 @@ class HeaderTrampolineCache:
                     metadata = json.load(f)
                 info["metadata"] = metadata
             except KeyboardInterrupt:
+                _thread.interrupt_main()
                 raise
             except Exception:
                 pass

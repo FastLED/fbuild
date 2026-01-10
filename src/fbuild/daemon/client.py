@@ -5,6 +5,7 @@ Client interface for requesting deploy and monitor operations from the daemon.
 Handles daemon lifecycle, request submission, and progress monitoring.
 """
 
+import _thread
 import json
 import os
 import subprocess
@@ -53,12 +54,14 @@ def is_daemon_running() -> bool:
             PID_FILE.unlink()
             return False
     except KeyboardInterrupt:
+        _thread.interrupt_main()
         raise
     except Exception:
         # Corrupted PID file - remove it
         try:
             PID_FILE.unlink(missing_ok=True)
         except KeyboardInterrupt:
+            _thread.interrupt_main()
             raise
         except Exception:
             pass
@@ -109,6 +112,7 @@ def read_status_file() -> DaemonStatus:
             updated_at=time.time(),
         )
     except KeyboardInterrupt:
+        _thread.interrupt_main()
         raise
     except Exception:
         return DaemonStatus(
@@ -176,6 +180,7 @@ def ensure_daemon_running() -> bool:
         try:
             STATUS_FILE.unlink()
         except KeyboardInterrupt:
+            _thread.interrupt_main()
             raise
         except Exception:
             pass  # Best effort - continue even if delete fails
@@ -287,7 +292,7 @@ def request_deploy(
             # Sleep before next poll
             time.sleep(0.5)
 
-        except KeyboardInterrupt:
+        except KeyboardInterrupt:  # noqa: KBI002
             # Prompt user whether to keep the operation running
             print("\n\n⚠️  Interrupted by user (Ctrl-C)")
             response = input("Keep operation running in background? (y/n): ").strip().lower()
@@ -399,7 +404,7 @@ def request_monitor(
             # Sleep before next poll
             time.sleep(0.5)
 
-        except KeyboardInterrupt:
+        except KeyboardInterrupt:  # noqa: KBI002
             # Prompt user whether to keep the operation running
             print("\n\n⚠️  Interrupted by user (Ctrl-C)")
             response = input("Keep operation running in background? (y/n): ").strip().lower()
@@ -461,6 +466,7 @@ def get_daemon_status() -> dict[str, Any]:
             with open(PID_FILE) as f:
                 status["pid"] = int(f.read().strip())
         except KeyboardInterrupt:
+            _thread.interrupt_main()
             raise
         except Exception:
             status["pid"] = None
@@ -499,6 +505,6 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         sys.exit(main())
-    except KeyboardInterrupt:
+    except KeyboardInterrupt:  # noqa: KBI002
         print("\nInterrupted by user")
         sys.exit(130)

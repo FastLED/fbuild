@@ -138,7 +138,7 @@ def build_command(args: BuildArgs) -> None:
         ErrorFormatter.handle_file_not_found(e)
     except PermissionError as e:
         ErrorFormatter.handle_permission_error(e)
-    except KeyboardInterrupt:
+    except KeyboardInterrupt:  # noqa: KBI002
         ErrorFormatter.handle_keyboard_interrupt()
     except Exception as e:
         ErrorFormatter.handle_unexpected_error(e, args.verbose)
@@ -298,7 +298,7 @@ def daemon_command(action: str) -> None:
             print("Valid actions: status, stop, restart")
             sys.exit(1)
 
-    except KeyboardInterrupt:
+    except KeyboardInterrupt:  # noqa: KBI002
         ErrorFormatter.handle_keyboard_interrupt()
     except Exception as e:
         ErrorFormatter.handle_unexpected_error(e, verbose=False)

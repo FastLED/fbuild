@@ -12,6 +12,7 @@ Key features:
 - Thread-safe operations for daemon use
 """
 
+import _thread
 import json
 import logging
 import threading
@@ -101,6 +102,7 @@ class ProcessTracker:
 
             logging.info(f"Loaded {len(self._registry)} process trees from registry")
         except KeyboardInterrupt:
+            _thread.interrupt_main()
             raise
         except Exception as e:
             logging.warning(f"Failed to load process registry: {e}")
@@ -120,6 +122,7 @@ class ProcessTracker:
             temp_file.replace(self.registry_file)
 
         except KeyboardInterrupt:
+            _thread.interrupt_main()
             raise
         except Exception as e:
             logging.error(f"Failed to save process registry: {e}")
@@ -202,6 +205,7 @@ class ProcessTracker:
             info.last_updated = time.time()
             logging.debug(f"Root process {info.root_pid} no longer exists")
         except KeyboardInterrupt:
+            _thread.interrupt_main()
             raise
         except Exception as e:
             logging.warning(f"Failed to update child PIDs for client={client_pid}: {e}")
@@ -264,6 +268,7 @@ class ProcessTracker:
             children = root_proc.children(recursive=True)
             all_pids = [child.pid for child in children] + [info.root_pid]
         except KeyboardInterrupt:
+            _thread.interrupt_main()
             raise
         except Exception:
             pass  # Use cached PID list
@@ -277,6 +282,7 @@ class ProcessTracker:
             except psutil.NoSuchProcess:
                 pass  # Already dead
             except KeyboardInterrupt:
+                _thread.interrupt_main()
                 raise
             except Exception as e:
                 logging.warning(f"Failed to get process {pid}: {e}")
@@ -290,6 +296,7 @@ class ProcessTracker:
             except psutil.NoSuchProcess:
                 pass  # Already dead
             except KeyboardInterrupt:
+                _thread.interrupt_main()
                 raise
             except Exception as e:
                 logging.warning(f"Failed to terminate process {proc.pid}: {e}")
@@ -303,6 +310,7 @@ class ProcessTracker:
                 proc.kill()
                 logging.warning(f"Force killed stubborn process {proc.pid}")
             except KeyboardInterrupt:
+                _thread.interrupt_main()
                 raise
             except Exception as e:
                 logging.warning(f"Failed to force kill process {proc.pid}: {e}")

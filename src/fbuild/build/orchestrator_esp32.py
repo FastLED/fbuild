@@ -5,6 +5,7 @@ This module handles ESP32 platform builds separately from AVR builds,
 providing cleaner separation of concerns and better maintainability.
 """
 
+import _thread
 import time
 from pathlib import Path
 from typing import List, Optional
@@ -21,6 +22,7 @@ from .configurable_linker import ConfigurableLinker
 from .linker import SizeInfo
 from .orchestrator import IBuildOrchestrator, BuildResult
 from .build_utils import safe_rmtree
+from .build_state import BuildStateTracker
 
 
 @dataclass
@@ -112,10 +114,11 @@ class OrchestratorESP32(IBuildOrchestrator):
             env_config = config.get_env_config(env_name)
             board_id = env_config.get("board", "")
             build_flags = config.get_build_flags(env_name)
+            lib_deps = config.get_lib_deps(env_name)
 
             # Call internal build method
             esp32_result = self._build_esp32(
-                project_dir, env_name, board_id, env_config, build_flags, clean, verbose_mode
+                project_dir, env_name, board_id, env_config, build_flags, lib_deps, clean, verbose_mode
             )
 
             # Convert BuildResultESP32 to BuildResult
@@ -129,6 +132,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             )
 
         except KeyboardInterrupt:
+            _thread.interrupt_main()
             raise
         except Exception as e:
             return BuildResult(
@@ -147,6 +151,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         board_id: str,
         env_config: dict,
         build_flags: List[str],
+        lib_deps: List[str],
         clean: bool = False,
         verbose: bool = False
     ) -> BuildResultESP32:
@@ -159,6 +164,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             board_id: Board ID (e.g., esp32-c6-devkitm-1)
             env_config: Environment configuration dict
             build_flags: User build flags from platformio.ini
+            lib_deps: Library dependencies from platformio.ini
             clean: Whether to clean before build
             verbose: Verbose output mode
 
@@ -214,6 +220,39 @@ class OrchestratorESP32(IBuildOrchestrator):
 
             # Setup build directory
             build_dir = self._setup_build_directory(env_name, clean, verbose)
+
+            # Check build state and invalidate cache if needed
+            if verbose:
+                print("[6.5/10] Checking build configuration state...")
+
+            state_tracker = BuildStateTracker(build_dir)
+            needs_rebuild, reasons, current_state = state_tracker.check_invalidation(
+                platformio_ini_path=project_dir / "platformio.ini",
+                platform="esp32",
+                board=board_id,
+                framework=env_config.get('framework', 'arduino'),
+                toolchain_version=toolchain.version,
+                framework_version=framework.version,
+                platform_version=platform.version,
+                build_flags=build_flags,
+                lib_deps=lib_deps,
+            )
+
+            if needs_rebuild:
+                if verbose:
+                    print("      Build cache invalidated:")
+                    for reason in reasons:
+                        print(f"        - {reason}")
+                    print("      Cleaning build artifacts...")
+                # Clean build artifacts to force rebuild
+                from .build_utils import safe_rmtree
+                if build_dir.exists():
+                    safe_rmtree(build_dir)
+                # Recreate build directory
+                build_dir.mkdir(parents=True, exist_ok=True)
+            else:
+                if verbose:
+                    print("      Build configuration unchanged, using cached artifacts")
 
             # Initialize compilation executor early to show sccache status
             from .compilation_executor import CompilationExecutor
@@ -331,6 +370,11 @@ class OrchestratorESP32(IBuildOrchestrator):
                     build_time, firmware_elf, firmware_bin,
                     bootloader_bin, partitions_bin
                 )
+
+            # Save build state for future cache validation
+            if verbose:
+                print("[10.5/10] Saving build state...")
+            state_tracker.save_state(current_state)
 
             return BuildResultESP32(
                 success=True,

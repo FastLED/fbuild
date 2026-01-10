@@ -46,6 +46,7 @@ ESP-IDF Libraries Structure:
             └── ...
 """
 
+import _thread
 import json
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -250,6 +251,7 @@ class FrameworkESP32(IFramework):
                         print(f"[trampolines] Generated {len(trampoline_paths)} trampoline directories for {mcu}")
 
                 except KeyboardInterrupt:
+                    _thread.interrupt_main()
                     raise
                 except Exception as e:
                     if self.show_progress:
@@ -260,6 +262,7 @@ class FrameworkESP32(IFramework):
                 print("[trampolines] Post-install generation complete")
 
         except KeyboardInterrupt:
+            _thread.interrupt_main()
             raise
         except Exception as e:
             # Don't fail the entire installation if trampoline generation fails

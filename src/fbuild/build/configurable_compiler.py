@@ -274,9 +274,19 @@ class ConfigurableCompiler(ICompiler):
         # Preprocess .ino to .cpp
         cpp_path = self.preprocess_ino(sketch_path)
 
+        # Determine object file path
+        obj_dir = self.build_dir / "obj"
+        obj_dir.mkdir(parents=True, exist_ok=True)
+        obj_path = obj_dir / f"{cpp_path.stem}.o"
+
+        # Skip compilation if object file is up-to-date
+        if not self.needs_rebuild(cpp_path, obj_path):
+            object_files.append(obj_path)
+            return object_files
+
         # Compile preprocessed .cpp
-        obj_path = self.compile_source(cpp_path)
-        object_files.append(obj_path)
+        compiled_obj = self.compile_source(cpp_path, obj_path)
+        object_files.append(compiled_obj)
 
         return object_files
 
@@ -308,6 +318,14 @@ class ConfigurableCompiler(ICompiler):
         for source in core_sources:
             try:
                 obj_path = core_obj_dir / f"{source.stem}.o"
+
+                # Skip compilation if object file is up-to-date
+                if not self.needs_rebuild(source, obj_path):
+                    object_files.append(obj_path)
+                    if progress_bar is not None:
+                        progress_bar.update(1)
+                    continue
+
                 compiled_obj = self.compile_source(source, obj_path)
                 object_files.append(compiled_obj)
                 if progress_bar is not None:

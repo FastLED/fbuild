@@ -12,6 +12,7 @@ Design:
     - Uses header trampoline cache to avoid Windows command-line length limits
 """
 
+import _thread
 import subprocess
 import shutil
 import platform
@@ -131,6 +132,7 @@ class CompilationExecutor:
                     exclude_patterns=exclude_patterns
                 )
             except KeyboardInterrupt:
+                _thread.interrupt_main()
                 raise
             except Exception as e:
                 if self.show_progress:

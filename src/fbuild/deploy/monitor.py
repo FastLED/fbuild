@@ -178,7 +178,7 @@ class SerialMonitor:
         except serial.SerialException as e:
             print(f"Error opening serial port {port}: {e}")
             return 1
-        except KeyboardInterrupt:
+        except KeyboardInterrupt:  # noqa: KBI002
             print()
             print("--- Monitor interrupted ---")
             if ser is not None:

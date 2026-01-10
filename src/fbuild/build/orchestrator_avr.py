@@ -32,6 +32,7 @@ from .source_compilation_orchestrator import (
 )
 from .build_component_factory import BuildComponentFactory
 from .orchestrator import IBuildOrchestrator, BuildResult, BuildOrchestratorError
+from .build_state import BuildStateTracker
 
 
 class BuildOrchestratorAVR(IBuildOrchestrator):
@@ -202,6 +203,40 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             core_build_dir = self.cache.get_core_build_dir(env_name)
             src_build_dir = self.cache.get_src_build_dir(env_name)
 
+            # Phase 5.5: Check build state and invalidate cache if needed
+            if verbose_mode:
+                print("[5.5/11] Checking build configuration state...")
+
+            state_tracker = BuildStateTracker(build_dir)
+            build_flags = config.get_build_flags(env_name)
+            lib_deps = config.get_lib_deps(env_name)
+
+            needs_rebuild, reasons, current_state = state_tracker.check_invalidation(
+                platformio_ini_path=project_dir / "platformio.ini",
+                platform=board_config.platform,
+                board=board_id,
+                framework=env_config.get('framework', 'arduino'),
+                toolchain_version=toolchain.VERSION,
+                framework_version=arduino_core.AVR_VERSION,
+                platform_version=arduino_core.AVR_VERSION,  # Using core version as platform version
+                build_flags=build_flags,
+                lib_deps=lib_deps,
+            )
+
+            if needs_rebuild:
+                if verbose_mode:
+                    print("      Build cache invalidated:")
+                    for reason in reasons:
+                        print(f"        - {reason}")
+                    print("      Cleaning build artifacts...")
+                # Clean build artifacts to force rebuild
+                self.cache.clean_build(env_name)
+                # Recreate directories
+                self.cache.ensure_build_directories(env_name)
+            else:
+                if verbose_mode:
+                    print("      Build configuration unchanged, using cached artifacts")
+
             # Phase 6: Download and compile library dependencies
             if verbose_mode:
                 print("[6/11] Processing library dependencies...")
@@ -296,11 +331,16 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             if verbose_mode:
                 print(f"      Firmware: {hex_path}")
 
-            # Phase 10-11: Display results
+            # Phase 10: Save build state for future cache validation
+            if verbose_mode:
+                print("[10/11] Saving build state...")
+            state_tracker.save_state(current_state)
+
+            # Phase 11: Display results
             build_time = time.time() - start_time
 
             if verbose_mode:
-                print("[10-11/11] Build complete!")
+                print("[11/11] Build complete!")
                 print()
                 SizeInfoPrinter.print_size_info(link_result.size_info)
                 print()
