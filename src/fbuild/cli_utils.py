@@ -22,6 +22,7 @@ class MonitorFlags:
     timeout: Optional[int] = None
     halt_on_error: Optional[str] = None
     halt_on_success: Optional[str] = None
+    expect: Optional[str] = None
     baud: int = 115200
 
 
@@ -88,6 +89,9 @@ class MonitorFlagParser:
                 i += 2
             elif arg == "--halt-on-success" and i + 1 < len(monitor_args):
                 flags.halt_on_success = monitor_args[i + 1]
+                i += 2
+            elif arg == "--expect" and i + 1 < len(monitor_args):
+                flags.expect = monitor_args[i + 1]
                 i += 2
             elif arg == "--baud" and i + 1 < len(monitor_args):
                 flags.baud = int(monitor_args[i + 1])

@@ -420,6 +420,7 @@ def process_deploy_request(request: DeployRequest, process_tracker: ProcessTrack
                         baud_rate=None,  # Use config default
                         halt_on_error=request.monitor_halt_on_error,
                         halt_on_success=request.monitor_halt_on_success,
+                        expect=request.monitor_expect,
                         timeout=request.monitor_timeout,
                         caller_pid=caller_pid,
                         caller_cwd=caller_cwd,
@@ -549,6 +550,7 @@ def process_monitor_request(request: MonitorRequest, process_tracker: ProcessTra
                 timeout=int(request.timeout) if request.timeout is not None else None,
                 halt_on_error=request.halt_on_error,
                 halt_on_success=request.halt_on_success,
+                expect=request.expect,
             )
 
             if exit_code == 0:

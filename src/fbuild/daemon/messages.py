@@ -62,6 +62,7 @@ class DeployRequest:
         monitor_timeout: Timeout for monitor in seconds (if monitor_after=True)
         monitor_halt_on_error: Pattern to halt on error (if monitor_after=True)
         monitor_halt_on_success: Pattern to halt on success (if monitor_after=True)
+        monitor_expect: Expected pattern to check at timeout/success (if monitor_after=True)
         caller_pid: Process ID of requesting client
         caller_cwd: Working directory of requesting client
         timestamp: Unix timestamp when request was created
@@ -76,6 +77,7 @@ class DeployRequest:
     monitor_timeout: float | None
     monitor_halt_on_error: str | None
     monitor_halt_on_success: str | None
+    monitor_expect: str | None
     caller_pid: int
     caller_cwd: str
     timestamp: float = field(default_factory=time.time)
@@ -97,6 +99,7 @@ class DeployRequest:
             monitor_timeout=data.get("monitor_timeout"),
             monitor_halt_on_error=data.get("monitor_halt_on_error"),
             monitor_halt_on_success=data.get("monitor_halt_on_success"),
+            monitor_expect=data.get("monitor_expect"),
             caller_pid=data["caller_pid"],
             caller_cwd=data["caller_cwd"],
             timestamp=data.get("timestamp", time.time()),
@@ -115,6 +118,7 @@ class MonitorRequest:
         baud_rate: Serial baud rate (optional, use config default if None)
         halt_on_error: Pattern to halt on (error detection)
         halt_on_success: Pattern to halt on (success detection)
+        expect: Expected pattern to check at timeout/success
         timeout: Maximum monitoring time in seconds
         caller_pid: Process ID of requesting client
         caller_cwd: Working directory of requesting client
@@ -128,6 +132,7 @@ class MonitorRequest:
     baud_rate: int | None
     halt_on_error: str | None
     halt_on_success: str | None
+    expect: str | None
     timeout: float | None
     caller_pid: int
     caller_cwd: str
@@ -148,6 +153,7 @@ class MonitorRequest:
             baud_rate=data.get("baud_rate"),
             halt_on_error=data.get("halt_on_error"),
             halt_on_success=data.get("halt_on_success"),
+            expect=data.get("expect"),
             timeout=data.get("timeout"),
             caller_pid=data["caller_pid"],
             caller_cwd=data["caller_cwd"],

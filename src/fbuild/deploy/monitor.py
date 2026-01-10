@@ -39,6 +39,7 @@ class SerialMonitor:
         timeout: Optional[int] = None,
         halt_on_error: Optional[str] = None,
         halt_on_success: Optional[str] = None,
+        expect: Optional[str] = None,
     ) -> int:
         """Monitor serial output from device.
 
@@ -50,6 +51,7 @@ class SerialMonitor:
             timeout: Timeout in seconds (None for infinite)
             halt_on_error: String pattern that triggers error exit
             halt_on_success: String pattern that triggers success exit
+            expect: Expected pattern - checked at timeout/success for exit code
 
         Returns:
             Exit code (0 for success, 1 for error)
@@ -123,18 +125,47 @@ class SerialMonitor:
 
             start_time = time.time()
 
+            # Track statistics
+            expect_found = False
+            halt_on_error_found = False
+            halt_on_success_found = False
+
             while True:
                 # Check timeout
                 if timeout and (time.time() - start_time) > timeout:
                     print()
-                    if halt_on_error or halt_on_success:
-                        print(f"--- Timeout after {timeout} seconds (no pattern matched) ---")
-                        ser.close()
-                        return 1  # Error: pattern was expected but not found
+                    print(f"--- Monitor timeout after {timeout} seconds ---")
+
+                    # Print statistics
+                    if expect or halt_on_error or halt_on_success:
+                        print("\n--- Test Results ---")
+                        if expect:
+                            if expect_found:
+                                print(f"✓ Expected pattern found: '{expect}'")
+                            else:
+                                print(f"✗ Expected pattern NOT found: '{expect}'")
+                        if halt_on_error:
+                            if halt_on_error_found:
+                                print(f"✗ Error pattern found: '{halt_on_error}'")
+                            else:
+                                print(f"✓ Error pattern not found: '{halt_on_error}'")
+                        if halt_on_success:
+                            if halt_on_success_found:
+                                print(f"✓ Success pattern found: '{halt_on_success}'")
+                            else:
+                                print(f"✗ Success pattern NOT found: '{halt_on_success}'")
+
+                    ser.close()
+
+                    # Check expect keyword for exit code
+                    if expect:
+                        return 0 if expect_found else 1
                     else:
-                        print(f"--- Monitor timeout after {timeout} seconds ---")
-                        ser.close()
-                        return 0  # Success: just a timed monitoring session
+                        # Legacy behavior when no expect is specified
+                        if halt_on_error or halt_on_success:
+                            return 1  # Error: pattern was expected but not found
+                        else:
+                            return 0  # Success: just a timed monitoring session
 
                 # Read line from serial
                 try:
@@ -155,18 +186,61 @@ class SerialMonitor:
                         print(text)
                         sys.stdout.flush()
 
+                        # Check for expect pattern (track but don't halt)
+                        if expect and re.search(expect, text, re.IGNORECASE):
+                            expect_found = True
+
                         # Check halt conditions
                         if halt_on_error and re.search(halt_on_error, text, re.IGNORECASE):
+                            halt_on_error_found = True
                             print()
                             print(f"--- Found error pattern: '{halt_on_error}' ---")
+
+                            # Print statistics
+                            if expect or halt_on_success:
+                                print("\n--- Test Results ---")
+                                if expect:
+                                    if expect_found:
+                                        print(f"✓ Expected pattern found: '{expect}'")
+                                    else:
+                                        print(f"✗ Expected pattern NOT found: '{expect}'")
+                                if halt_on_success:
+                                    if halt_on_success_found:
+                                        print(f"✓ Success pattern found: '{halt_on_success}'")
+                                    else:
+                                        print(f"✗ Success pattern NOT found: '{halt_on_success}'")
+                                print(f"✗ Error pattern found: '{halt_on_error}'")
+
                             ser.close()
                             return 1
 
                         if halt_on_success and re.search(halt_on_success, text, re.IGNORECASE):
+                            halt_on_success_found = True
                             print()
                             print(f"--- Found success pattern: '{halt_on_success}' ---")
+
+                            # Print statistics
+                            if expect or halt_on_error:
+                                print("\n--- Test Results ---")
+                                if expect:
+                                    if expect_found:
+                                        print(f"✓ Expected pattern found: '{expect}'")
+                                    else:
+                                        print(f"✗ Expected pattern NOT found: '{expect}'")
+                                print(f"✓ Success pattern found: '{halt_on_success}'")
+                                if halt_on_error:
+                                    if halt_on_error_found:
+                                        print(f"✗ Error pattern found: '{halt_on_error}'")
+                                    else:
+                                        print(f"✓ Error pattern not found: '{halt_on_error}'")
+
                             ser.close()
-                            return 0
+
+                            # Check expect keyword for exit code
+                            if expect:
+                                return 0 if expect_found else 1
+                            else:
+                                return 0
                     else:
                         time.sleep(0.01)
 

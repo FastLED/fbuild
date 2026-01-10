@@ -54,6 +54,7 @@ class MonitorArgs:
     timeout: Optional[int] = None
     halt_on_error: Optional[str] = None
     halt_on_success: Optional[str] = None
+    expect: Optional[str] = None
     verbose: bool = False
 
 
@@ -167,11 +168,13 @@ def deploy_command(args: DeployArgs) -> None:
         monitor_timeout = None
         monitor_halt_on_error = None
         monitor_halt_on_success = None
+        monitor_expect = None
         if monitor_after and args.monitor is not None:
             flags = MonitorFlagParser.parse_monitor_flags(args.monitor)
             monitor_timeout = flags.timeout
             monitor_halt_on_error = flags.halt_on_error
             monitor_halt_on_success = flags.halt_on_success
+            monitor_expect = flags.expect
 
         # Use daemon for concurrent deploy management
         success = daemon_client.request_deploy(
@@ -183,6 +186,7 @@ def deploy_command(args: DeployArgs) -> None:
             monitor_timeout=monitor_timeout,
             monitor_halt_on_error=monitor_halt_on_error,
             monitor_halt_on_success=monitor_halt_on_success,
+            monitor_expect=monitor_expect,
             timeout=1800,  # 30 minute timeout for deploy
         )
 
@@ -223,6 +227,7 @@ def monitor_command(args: MonitorArgs) -> None:
             baud_rate=args.baud,
             halt_on_error=args.halt_on_error,
             halt_on_success=args.halt_on_success,
+            expect=args.expect,
             timeout=args.timeout,
         )
 
@@ -461,6 +466,11 @@ def main() -> None:
         help="Pattern that triggers success exit (regex)",
     )
     monitor_parser.add_argument(
+        "--expect",
+        default=None,
+        help="Expected pattern - checked at timeout/success, exit 0 if found, 1 if not (regex)",
+    )
+    monitor_parser.add_argument(
         "-v",
         "--verbose",
         action="store_true",
@@ -518,6 +528,7 @@ def main() -> None:
             timeout=parsed_args.timeout,
             halt_on_error=parsed_args.halt_on_error,
             halt_on_success=parsed_args.halt_on_success,
+            expect=parsed_args.expect,
             verbose=parsed_args.verbose,
         )
         monitor_command(monitor_args)

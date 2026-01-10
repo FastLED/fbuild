@@ -212,6 +212,7 @@ def request_deploy(
     monitor_timeout: float | None = None,
     monitor_halt_on_error: str | None = None,
     monitor_halt_on_success: str | None = None,
+    monitor_expect: str | None = None,
     timeout: float = 1800,
 ) -> bool:
     """Request a deploy operation from the daemon.
@@ -225,6 +226,7 @@ def request_deploy(
         monitor_timeout: Timeout for monitor (if monitor_after=True)
         monitor_halt_on_error: Pattern to halt on error (if monitor_after=True)
         monitor_halt_on_success: Pattern to halt on success (if monitor_after=True)
+        monitor_expect: Expected pattern to check at timeout/success (if monitor_after=True)
         timeout: Maximum wait time in seconds (default: 30 minutes)
 
     Returns:
@@ -250,6 +252,7 @@ def request_deploy(
         monitor_timeout=monitor_timeout,
         monitor_halt_on_error=monitor_halt_on_error,
         monitor_halt_on_success=monitor_halt_on_success,
+        monitor_expect=monitor_expect,
         caller_pid=os.getpid(),
         caller_cwd=os.getcwd(),
     )
@@ -318,6 +321,7 @@ def request_monitor(
     baud_rate: int | None = None,
     halt_on_error: str | None = None,
     halt_on_success: str | None = None,
+    expect: str | None = None,
     timeout: float | None = None,
 ) -> bool:
     """Request a monitor operation from the daemon.
@@ -329,6 +333,7 @@ def request_monitor(
         baud_rate: Serial baud rate (optional)
         halt_on_error: Pattern to halt on (error detection)
         halt_on_success: Pattern to halt on (success detection)
+        expect: Expected pattern to check at timeout/success
         timeout: Maximum monitoring time in seconds
 
     Returns:
@@ -356,6 +361,7 @@ def request_monitor(
         baud_rate=baud_rate,
         halt_on_error=halt_on_error,
         halt_on_success=halt_on_success,
+        expect=expect,
         timeout=timeout,
         caller_pid=os.getpid(),
         caller_cwd=os.getcwd(),
