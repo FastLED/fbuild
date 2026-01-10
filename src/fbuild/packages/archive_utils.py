@@ -110,9 +110,20 @@ class ArchiveExtractor:
         temp_extract.mkdir(parents=True, exist_ok=True)
 
         try:
-            # Extract .tar.xz archive
+            # Extract .tar.xz archive with progress tracking
             with tarfile.open(archive_path, "r:xz") as tar:
-                tar.extractall(temp_extract)
+                members = tar.getmembers()
+                total_members = len(members)
+
+                if self.show_progress:
+                    from tqdm import tqdm
+
+                    with tqdm(total=total_members, unit="file", desc=f"Extracting {archive_path.name}") as pbar:
+                        for member in members:
+                            tar.extract(member, temp_extract)
+                            pbar.update(1)
+                else:
+                    tar.extractall(temp_extract)
 
             # Find the extracted directory
             # Usually it's a subdirectory like "esp32/" or directly extracted
@@ -127,6 +138,9 @@ class ArchiveExtractor:
 
             # Move contents to target directory
             target_dir.mkdir(parents=True, exist_ok=True)
+
+            if self.show_progress:
+                print(f"Moving extracted files to {target_dir.name}...")
 
             for item in source_dir.iterdir():
                 dest = target_dir / item.name
@@ -169,9 +183,20 @@ class ArchiveExtractor:
         temp_extract.mkdir(parents=True, exist_ok=True)
 
         try:
-            # Extract .zip archive
+            # Extract .zip archive with progress tracking
             with zipfile.ZipFile(archive_path, "r") as zf:
-                zf.extractall(temp_extract)
+                members = zf.namelist()
+                total_members = len(members)
+
+                if self.show_progress:
+                    from tqdm import tqdm
+
+                    with tqdm(total=total_members, unit="file", desc=f"Extracting {archive_path.name}") as pbar:
+                        for member in members:
+                            zf.extract(member, temp_extract)
+                            pbar.update(1)
+                else:
+                    zf.extractall(temp_extract)
 
             # Find the extracted directory
             extracted_items = list(temp_extract.iterdir())
@@ -185,6 +210,9 @@ class ArchiveExtractor:
 
             # Move contents to target directory
             target_dir.mkdir(parents=True, exist_ok=True)
+
+            if self.show_progress:
+                print(f"Moving extracted files to {target_dir.name}...")
 
             for item in source_dir.iterdir():
                 dest = target_dir / item.name
@@ -225,9 +253,20 @@ class ArchiveExtractor:
         temp_extract.mkdir(parents=True, exist_ok=True)
 
         try:
-            # Extract .tar.gz archive
+            # Extract .tar.gz archive with progress tracking
             with tarfile.open(archive_path, "r:gz") as tar:
-                tar.extractall(temp_extract)
+                members = tar.getmembers()
+                total_members = len(members)
+
+                if self.show_progress:
+                    from tqdm import tqdm
+
+                    with tqdm(total=total_members, unit="file", desc=f"Extracting {archive_path.name}") as pbar:
+                        for member in members:
+                            tar.extract(member, temp_extract)
+                            pbar.update(1)
+                else:
+                    tar.extractall(temp_extract)
 
             # Find the extracted directory
             extracted_items = list(temp_extract.iterdir())
@@ -241,6 +280,9 @@ class ArchiveExtractor:
 
             # Move contents to target directory
             target_dir.mkdir(parents=True, exist_ok=True)
+
+            if self.show_progress:
+                print(f"Moving extracted files to {target_dir.name}...")
 
             for item in source_dir.iterdir():
                 dest = target_dir / item.name

@@ -179,8 +179,10 @@ class OrchestratorESP32(IBuildOrchestrator):
             # Initialize platform
             if verbose:
                 print("[3/10] Initializing ESP32 platform...")
+            else:
+                print("Initializing ESP32 platform...")
 
-            platform = PlatformESP32(self.cache, platform_url, show_progress=verbose)
+            platform = PlatformESP32(self.cache, platform_url, show_progress=True)
             platform.ensure_platform()
 
             # Get board configuration
@@ -213,9 +215,18 @@ class OrchestratorESP32(IBuildOrchestrator):
             # Setup build directory
             build_dir = self._setup_build_directory(env_name, clean, verbose)
 
+            # Initialize compilation executor early to show sccache status
+            from .compilation_executor import CompilationExecutor
+            compilation_executor = CompilationExecutor(
+                build_dir=build_dir,
+                show_progress=verbose
+            )
+
             # Initialize compiler
             if verbose:
                 print("[7/10] Compiling Arduino core...")
+            else:
+                print("Compiling Arduino core...")
 
             compiler = ConfigurableCompiler(
                 platform,
@@ -225,11 +236,33 @@ class OrchestratorESP32(IBuildOrchestrator):
                 build_dir,
                 platform_config=None,
                 show_progress=verbose,
-                user_build_flags=build_flags
+                user_build_flags=build_flags,
+                compilation_executor=compilation_executor
             )
 
-            # Compile Arduino core
-            core_obj_files = compiler.compile_core()
+            # Compile Arduino core with progress bar
+            if verbose:
+                core_obj_files = compiler.compile_core()
+            else:
+                # Use tqdm progress bar for non-verbose mode
+                from tqdm import tqdm
+
+                # Get number of core source files for progress tracking
+                core_sources = framework.get_core_sources(compiler.core)
+                total_files = len(core_sources)
+
+                # Create progress bar
+                with tqdm(
+                    total=total_files,
+                    desc='Compiling Arduino core',
+                    unit='file',
+                    ncols=80,
+                    leave=False
+                ) as pbar:
+                    core_obj_files = compiler.compile_core(progress_bar=pbar)
+
+                # Print completion message
+                print(f"Compiled {len(core_obj_files)} core files")
 
             # Add Bluetooth stub for non-ESP32 targets (ESP32-C6, ESP32-S3, etc.)
             # where esp32-hal-bt.c fails to compile but btInUse() is still referenced
@@ -262,6 +295,8 @@ class OrchestratorESP32(IBuildOrchestrator):
             # Initialize linker
             if verbose:
                 print("[9/10] Linking firmware...")
+            else:
+                print("Linking firmware...")
 
             linker = ConfigurableLinker(
                 platform,
@@ -279,6 +314,8 @@ class OrchestratorESP32(IBuildOrchestrator):
             # Generate binary
             if verbose:
                 print("[10/10] Generating firmware binary...")
+            else:
+                print("Generating firmware binary...")
 
             firmware_bin = linker.generate_bin(firmware_elf)
 
@@ -344,6 +381,8 @@ class OrchestratorESP32(IBuildOrchestrator):
         """
         if verbose:
             print("[4/10] Initializing ESP32 toolchain...")
+        else:
+            print("Initializing ESP32 toolchain...")
 
         toolchain_url = packages.get("toolchain-riscv32-esp") or packages.get("toolchain-xtensa-esp-elf")
         if not toolchain_url:
@@ -355,7 +394,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             self.cache,
             toolchain_url,
             toolchain_type,
-            show_progress=verbose
+            show_progress=True
         )
         toolchain.ensure_toolchain()
         return toolchain
@@ -379,6 +418,8 @@ class OrchestratorESP32(IBuildOrchestrator):
         """
         if verbose:
             print("[5/10] Initializing ESP32 framework...")
+        else:
+            print("Initializing ESP32 framework...")
 
         framework_url = packages.get("framework-arduinoespressif32")
         libs_url = packages.get("framework-arduinoespressif32-libs", "")
@@ -398,7 +439,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             framework_url,
             libs_url,
             skeleton_lib_url=skeleton_lib_url,
-            show_progress=verbose
+            show_progress=True
         )
         framework.ensure_framework()
         return framework
@@ -420,6 +461,8 @@ class OrchestratorESP32(IBuildOrchestrator):
         if clean and build_dir.exists():
             if verbose:
                 print("[6/10] Cleaning build directory...")
+            else:
+                print("Cleaning build directory...")
             safe_rmtree(build_dir)
 
         build_dir.mkdir(parents=True, exist_ok=True)

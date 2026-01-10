@@ -44,7 +44,8 @@ class ConfigurableCompiler(ICompiler):
         build_dir: Path,
         platform_config: Optional[Union[Dict, Path]] = None,
         show_progress: bool = True,
-        user_build_flags: Optional[List[str]] = None
+        user_build_flags: Optional[List[str]] = None,
+        compilation_executor: Optional[CompilationExecutor] = None
     ):
         """Initialize configurable compiler.
 
@@ -57,6 +58,7 @@ class ConfigurableCompiler(ICompiler):
             platform_config: Platform config dict or path to config JSON file
             show_progress: Whether to show compilation progress
             user_build_flags: Build flags from platformio.ini
+            compilation_executor: Optional pre-initialized CompilationExecutor
         """
         self.platform = platform
         self.toolchain = toolchain
@@ -105,10 +107,14 @@ class ConfigurableCompiler(ICompiler):
             variant=self.variant,
             user_build_flags=self.user_build_flags
         )
-        self.compilation_executor = CompilationExecutor(
-            build_dir=self.build_dir,
-            show_progress=self.show_progress
-        )
+        # Use provided executor or create a new one
+        if compilation_executor is not None:
+            self.compilation_executor = compilation_executor
+        else:
+            self.compilation_executor = CompilationExecutor(
+                build_dir=self.build_dir,
+                show_progress=self.show_progress
+            )
         self.archive_creator = ArchiveCreator(show_progress=self.show_progress)
 
         # Cache for include paths
@@ -274,8 +280,11 @@ class ConfigurableCompiler(ICompiler):
 
         return object_files
 
-    def compile_core(self) -> List[Path]:
+    def compile_core(self, progress_bar: Optional[Any] = None) -> List[Path]:
         """Compile Arduino core sources.
+
+        Args:
+            progress_bar: Optional tqdm progress bar to update during compilation
 
         Returns:
             List of generated object file paths
@@ -301,9 +310,13 @@ class ConfigurableCompiler(ICompiler):
                 obj_path = core_obj_dir / f"{source.stem}.o"
                 compiled_obj = self.compile_source(source, obj_path)
                 object_files.append(compiled_obj)
+                if progress_bar is not None:
+                    progress_bar.update(1)
             except ConfigurableCompilerError as e:
                 if self.show_progress:
                     print(f"Warning: Failed to compile {source.name}: {e}")
+                if progress_bar is not None:
+                    progress_bar.update(1)
 
         return object_files
 
