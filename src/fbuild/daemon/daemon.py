@@ -161,20 +161,26 @@ def reload_build_modules() -> None:
 
     reloaded_count = 0
     for module_name in modules_to_reload:
-        if module_name in sys.modules:
-            try:
+        try:
+            if module_name in sys.modules:
+                # Module already loaded - reload it to pick up changes
                 importlib.reload(sys.modules[module_name])
                 reloaded_count += 1
                 logging.debug(f"Reloaded module: {module_name}")
-            except KeyboardInterrupt as ke:
-                from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+            else:
+                # Module not loaded yet - import it for the first time
+                __import__(module_name)
+                reloaded_count += 1
+                logging.debug(f"Imported module: {module_name}")
+        except KeyboardInterrupt as ke:
+            from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
 
-                handle_keyboard_interrupt_properly(ke)
-            except Exception as e:
-                logging.warning(f"Failed to reload module {module_name}: {e}")
+            handle_keyboard_interrupt_properly(ke)
+        except Exception as e:
+            logging.warning(f"Failed to reload/import module {module_name}: {e}")
 
     if reloaded_count > 0:
-        logging.info(f"Reloaded {reloaded_count} build modules")
+        logging.info(f"Loaded/reloaded {reloaded_count} build modules")
 
 
 def init_daemon_subsystems() -> None:

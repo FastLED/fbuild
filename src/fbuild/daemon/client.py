@@ -273,19 +273,22 @@ def request_build(
 
             # Check completion
             if status.state == DaemonState.COMPLETED:
-                print(f"\n✅ Build completed in {elapsed:.1f}s")
-                return True
+                # Verify this completion is for OUR request (not a stale status)
+                if status.request_id == request.request_id:
+                    print(f"\n✅ Build completed in {elapsed:.1f}s")
+                    return True
+                # Otherwise, it's a stale status from previous operation - keep waiting
             elif status.state == DaemonState.FAILED:
-                print(f"\n❌ Build failed: {status.message}")
-                return False
+                # Verify this failure is for OUR request (not a stale status)
+                if status.request_id == request.request_id:
+                    print(f"\n❌ Build failed: {status.message}")
+                    return False
+                # Otherwise, it's a stale status from previous operation - keep waiting
 
             # Sleep before next poll
             time.sleep(0.5)
 
-        except KeyboardInterrupt:
-            # Interrupt other threads
-            _thread.interrupt_main()
-
+        except KeyboardInterrupt:  # noqa: KBI002
             # Prompt user whether to keep the operation running
             print("\n\n⚠️  Interrupted by user (Ctrl-C)")
             response = input("Keep operation running in background? (y/n): ").strip().lower()
@@ -364,7 +367,7 @@ def _display_monitor_summary(project_dir: Path) -> None:
         print(f"Exit reason: {reason_text}")
         print("=" * 50)
 
-    except KeyboardInterrupt:
+    except KeyboardInterrupt:  # noqa: KBI002
         raise
     except Exception:
         # Silently fail - don't disrupt the user experience
@@ -470,62 +473,65 @@ def request_deploy(
                             if new_lines:
                                 print(new_lines, end="", flush=True)
                                 output_file_position = f.tell()
-                    except KeyboardInterrupt:
+                    except KeyboardInterrupt:  # noqa: KBI002
                         raise
                     except Exception:
                         pass  # Ignore read errors
 
             # Check completion
             if status.state == DaemonState.COMPLETED:
-                # Read any remaining output
-                if monitoring_started:
-                    output_file = project_dir / ".fbuild" / "monitor_output.txt"
-                    if output_file.exists():
-                        try:
-                            with open(output_file, "r", encoding="utf-8", errors="replace") as f:
-                                f.seek(output_file_position)
-                                new_lines = f.read()
-                                if new_lines:
-                                    print(new_lines, end="", flush=True)
-                        except KeyboardInterrupt:
-                            raise
-                        except Exception:
-                            pass
+                # Verify this completion is for OUR request (not a stale status)
+                if status.request_id == request.request_id:
+                    # Read any remaining output
+                    if monitoring_started:
+                        output_file = project_dir / ".fbuild" / "monitor_output.txt"
+                        if output_file.exists():
+                            try:
+                                with open(output_file, "r", encoding="utf-8", errors="replace") as f:
+                                    f.seek(output_file_position)
+                                    new_lines = f.read()
+                                    if new_lines:
+                                        print(new_lines, end="", flush=True)
+                            except KeyboardInterrupt:  # noqa: KBI002
+                                raise
+                            except Exception:
+                                pass
 
-                    # Display monitor summary
-                    _display_monitor_summary(project_dir)
+                        # Display monitor summary
+                        _display_monitor_summary(project_dir)
 
-                print(f"\n✅ Deploy completed in {elapsed:.1f}s")
-                return True
+                    print(f"\n✅ Deploy completed in {elapsed:.1f}s")
+                    return True
+                # Otherwise, it's a stale status from previous operation - keep waiting
             elif status.state == DaemonState.FAILED:
-                # Read any remaining output
-                if monitoring_started:
-                    output_file = project_dir / ".fbuild" / "monitor_output.txt"
-                    if output_file.exists():
-                        try:
-                            with open(output_file, "r", encoding="utf-8", errors="replace") as f:
-                                f.seek(output_file_position)
-                                new_lines = f.read()
-                                if new_lines:
-                                    print(new_lines, end="", flush=True)
-                        except KeyboardInterrupt:
-                            raise
-                        except Exception:
-                            pass
+                # Verify this failure is for OUR request (not a stale status)
+                if status.request_id == request.request_id:
+                    # Read any remaining output
+                    if monitoring_started:
+                        output_file = project_dir / ".fbuild" / "monitor_output.txt"
+                        if output_file.exists():
+                            try:
+                                with open(output_file, "r", encoding="utf-8", errors="replace") as f:
+                                    f.seek(output_file_position)
+                                    new_lines = f.read()
+                                    if new_lines:
+                                        print(new_lines, end="", flush=True)
+                            except KeyboardInterrupt:  # noqa: KBI002
+                                raise
+                            except Exception:
+                                pass
 
-                    # Display monitor summary
-                    _display_monitor_summary(project_dir)
+                        # Display monitor summary
+                        _display_monitor_summary(project_dir)
 
-                print(f"\n❌ Deploy failed: {status.message}")
-                return False
+                    print(f"\n❌ Deploy failed: {status.message}")
+                    return False
+                # Otherwise, it's a stale status from previous operation - keep waiting
 
             # Sleep before next poll
             time.sleep(0.1 if monitoring_started else 0.5)
 
-        except KeyboardInterrupt:
-            # Interrupt other threads
-            _thread.interrupt_main()
-
+        except KeyboardInterrupt:  # noqa: KBI002
             # Prompt user whether to keep the operation running
             print("\n\n⚠️  Interrupted by user (Ctrl-C)")
             response = input("Keep operation running in background? (y/n): ").strip().lower()
@@ -642,62 +648,65 @@ def request_monitor(
                             if new_lines:
                                 print(new_lines, end="", flush=True)
                                 output_file_position = f.tell()
-                    except KeyboardInterrupt:
+                    except KeyboardInterrupt:  # noqa: KBI002
                         raise
                     except Exception:
                         pass  # Ignore read errors
 
             # Check completion
             if status.state == DaemonState.COMPLETED:
-                # Read any remaining output
-                if monitoring_started:
-                    output_file = project_dir / ".fbuild" / "monitor_output.txt"
-                    if output_file.exists():
-                        try:
-                            with open(output_file, "r", encoding="utf-8", errors="replace") as f:
-                                f.seek(output_file_position)
-                                new_lines = f.read()
-                                if new_lines:
-                                    print(new_lines, end="", flush=True)
-                        except KeyboardInterrupt:
-                            raise
-                        except Exception:
-                            pass
+                # Verify this completion is for OUR request (not a stale status)
+                if status.request_id == request.request_id:
+                    # Read any remaining output
+                    if monitoring_started:
+                        output_file = project_dir / ".fbuild" / "monitor_output.txt"
+                        if output_file.exists():
+                            try:
+                                with open(output_file, "r", encoding="utf-8", errors="replace") as f:
+                                    f.seek(output_file_position)
+                                    new_lines = f.read()
+                                    if new_lines:
+                                        print(new_lines, end="", flush=True)
+                            except KeyboardInterrupt:  # noqa: KBI002
+                                raise
+                            except Exception:
+                                pass
 
-                    # Display monitor summary
-                    _display_monitor_summary(project_dir)
+                        # Display monitor summary
+                        _display_monitor_summary(project_dir)
 
-                print(f"\n✅ Monitor completed in {elapsed:.1f}s")
-                return True
+                    print(f"\n✅ Monitor completed in {elapsed:.1f}s")
+                    return True
+                # Otherwise, it's a stale status from previous operation - keep waiting
             elif status.state == DaemonState.FAILED:
-                # Read any remaining output
-                if monitoring_started:
-                    output_file = project_dir / ".fbuild" / "monitor_output.txt"
-                    if output_file.exists():
-                        try:
-                            with open(output_file, "r", encoding="utf-8", errors="replace") as f:
-                                f.seek(output_file_position)
-                                new_lines = f.read()
-                                if new_lines:
-                                    print(new_lines, end="", flush=True)
-                        except KeyboardInterrupt:
-                            raise
-                        except Exception:
-                            pass
+                # Verify this failure is for OUR request (not a stale status)
+                if status.request_id == request.request_id:
+                    # Read any remaining output
+                    if monitoring_started:
+                        output_file = project_dir / ".fbuild" / "monitor_output.txt"
+                        if output_file.exists():
+                            try:
+                                with open(output_file, "r", encoding="utf-8", errors="replace") as f:
+                                    f.seek(output_file_position)
+                                    new_lines = f.read()
+                                    if new_lines:
+                                        print(new_lines, end="", flush=True)
+                            except KeyboardInterrupt:  # noqa: KBI002
+                                raise
+                            except Exception:
+                                pass
 
-                    # Display monitor summary
-                    _display_monitor_summary(project_dir)
+                        # Display monitor summary
+                        _display_monitor_summary(project_dir)
 
-                print(f"\n❌ Monitor failed: {status.message}")
-                return False
+                    print(f"\n❌ Monitor failed: {status.message}")
+                    return False
+                # Otherwise, it's a stale status from previous operation - keep waiting
 
             # Sleep before next poll
             time.sleep(0.1 if monitoring_started else 0.5)
 
-        except KeyboardInterrupt:
-            # Interrupt other threads
-            _thread.interrupt_main()
-
+        except KeyboardInterrupt:  # noqa: KBI002
             # Prompt user whether to keep the operation running
             print("\n\n⚠️  Interrupted by user (Ctrl-C)")
             response = input("Keep operation running in background? (y/n): ").strip().lower()
@@ -798,6 +807,6 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         sys.exit(main())
-    except KeyboardInterrupt:
+    except KeyboardInterrupt:  # noqa: KBI002
         print("\nInterrupted by user")
         sys.exit(130)
