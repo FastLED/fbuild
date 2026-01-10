@@ -191,6 +191,71 @@ class ErrorFormatter:
         sys.exit(1)
 
 
+class BannerFormatter:
+    """Formats and displays banner messages with borders."""
+
+    DEFAULT_WIDTH = 80
+    DEFAULT_BORDER_CHAR = "="
+
+    @staticmethod
+    def format_banner(
+        message: str,
+        width: int = DEFAULT_WIDTH,
+        border_char: str = DEFAULT_BORDER_CHAR,
+        center: bool = True,
+    ) -> str:
+        """Format a banner message with top and bottom borders.
+
+        Args:
+            message: The message to display (can be multi-line)
+            width: Width of the banner in characters (default: 80)
+            border_char: Character to use for borders (default: "=")
+            center: Whether to center text (default: True)
+
+        Returns:
+            Formatted banner string with borders
+        """
+        lines = message.split("\n")
+        border = border_char * width
+        formatted_lines = [border]
+
+        for line in lines:
+            if center:
+                # Center the text
+                padding = (width - len(line)) // 2
+                formatted_line = " " * padding + line
+            else:
+                # Left-align with 2-space indent
+                formatted_line = "  " + line
+
+            formatted_lines.append(formatted_line)
+
+        formatted_lines.append(border)
+        return "\n".join(formatted_lines)
+
+    @staticmethod
+    def print_banner(
+        message: str,
+        width: int = DEFAULT_WIDTH,
+        border_char: str = DEFAULT_BORDER_CHAR,
+        center: bool = True,
+    ) -> None:
+        """Print a banner message with top and bottom borders.
+
+        Args:
+            message: The message to display (can be multi-line)
+            width: Width of the banner in characters (default: 80)
+            border_char: Character to use for borders (default: "=")
+            center: Whether to center text (default: True)
+        """
+        print()
+        print(
+            BannerFormatter.format_banner(
+                message, width=width, border_char=border_char, center=center
+            )
+        )
+
+
 class PathValidator:
     """Validates project paths and directories."""
 

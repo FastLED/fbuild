@@ -15,6 +15,7 @@ from ..packages.platform_esp32 import PlatformESP32
 from ..packages.toolchain_esp32 import ToolchainESP32
 from ..packages.framework_esp32 import FrameworkESP32
 from ..packages.library_manager_esp32 import LibraryManagerESP32
+from ..cli_utils import BannerFormatter
 from .configurable_compiler import ConfigurableCompiler
 from .configurable_linker import ConfigurableLinker
 from .linker import SizeInfo
@@ -659,18 +660,17 @@ __attribute__((weak)) bool btInUse(void) {
             bootloader_bin: Optional path to bootloader
             partitions_bin: Optional path to partition table
         """
-        print()
-        print("=" * 60)
-        print("BUILD SUCCESSFUL!")
-        print("=" * 60)
-        print(f"  Build time: {build_time:.2f}s")
-        print(f"  Firmware ELF: {firmware_elf}")
-        print(f"  Firmware BIN: {firmware_bin}")
+        # Build success message
+        message_lines = ["BUILD SUCCESSFUL!"]
+        message_lines.append(f"Build time: {build_time:.2f}s")
+        message_lines.append(f"Firmware ELF: {firmware_elf}")
+        message_lines.append(f"Firmware BIN: {firmware_bin}")
         if bootloader_bin:
-            print(f"  Bootloader: {bootloader_bin}")
+            message_lines.append(f"Bootloader: {bootloader_bin}")
         if partitions_bin:
-            print(f"  Partitions: {partitions_bin}")
-        print()
+            message_lines.append(f"Partitions: {partitions_bin}")
+
+        BannerFormatter.print_banner("\n".join(message_lines), width=60, center=False)
 
     def _error_result(self, start_time: float, message: str) -> BuildResultESP32:
         """

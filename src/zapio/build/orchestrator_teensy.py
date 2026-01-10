@@ -15,6 +15,7 @@ from ..packages.platform_teensy import PlatformTeensy
 from ..packages.toolchain_teensy import ToolchainTeensy
 from ..packages.library_manager import LibraryManager, LibraryError
 from ..config.board_config import BoardConfig
+from ..cli_utils import BannerFormatter
 from .configurable_compiler import ConfigurableCompiler
 from .configurable_linker import ConfigurableLinker
 from .linker import SizeInfo
@@ -464,19 +465,19 @@ class OrchestratorTeensy(IBuildOrchestrator):
             firmware_hex: Path to firmware hex
             size_info: Size information
         """
-        print()
-        print("=" * 60)
-        print("BUILD SUCCESSFUL!")
-        print("=" * 60)
-        print(f"  Build time: {build_time:.2f}s")
-        print(f"  Firmware ELF: {firmware_elf}")
-        print(f"  Firmware HEX: {firmware_hex}")
+        # Build success message
+        message_lines = ["BUILD SUCCESSFUL!"]
+        message_lines.append(f"Build time: {build_time:.2f}s")
+        message_lines.append(f"Firmware ELF: {firmware_elf}")
+        message_lines.append(f"Firmware HEX: {firmware_hex}")
 
         if size_info:
-            print(f"  Program size: {size_info.text + size_info.data} bytes")
-            print(f"  Data size: {size_info.bss + size_info.data} bytes")
+            message_lines.append(
+                f"Program size: {size_info.text + size_info.data} bytes"
+            )
+            message_lines.append(f"Data size: {size_info.bss + size_info.data} bytes")
 
-        print()
+        BannerFormatter.print_banner("\n".join(message_lines), width=60, center=False)
 
     def _error_result(self, start_time: float, message: str) -> BuildResultTeensy:
         """
