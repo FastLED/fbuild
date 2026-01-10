@@ -4,7 +4,6 @@ Serial monitor module for embedded devices.
 This module provides serial monitoring capabilities with optional halt conditions.
 """
 
-import _thread
 import re
 import sys
 import time

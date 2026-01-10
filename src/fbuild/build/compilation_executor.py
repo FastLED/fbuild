@@ -16,7 +16,6 @@ import _thread
 import subprocess
 import shutil
 import platform
-import _thread
 from pathlib import Path
 from typing import List, Optional
 

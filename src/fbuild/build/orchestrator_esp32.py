@@ -7,7 +7,6 @@ providing cleaner separation of concerns and better maintainability.
 
 import _thread
 import time
-import _thread
 from pathlib import Path
 from typing import List, Optional
 from dataclasses import dataclass
