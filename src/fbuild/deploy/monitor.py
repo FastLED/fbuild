@@ -10,6 +10,7 @@ import time
 from pathlib import Path
 from typing import Optional
 
+from fbuild.cli_utils import safe_print
 from fbuild.config import PlatformIOConfig
 
 
@@ -138,22 +139,22 @@ class SerialMonitor:
 
                     # Print statistics
                     if expect or halt_on_error or halt_on_success:
-                        print("\n--- Test Results ---")
+                        safe_print("\n--- Test Results ---")
                         if expect:
                             if expect_found:
-                                print(f"✓ Expected pattern found: '{expect}'")
+                                safe_print(f"✓ Expected pattern found: '{expect}'")
                             else:
-                                print(f"✗ Expected pattern NOT found: '{expect}'")
+                                safe_print(f"✗ Expected pattern NOT found: '{expect}'")
                         if halt_on_error:
                             if halt_on_error_found:
-                                print(f"✗ Error pattern found: '{halt_on_error}'")
+                                safe_print(f"✗ Error pattern found: '{halt_on_error}'")
                             else:
-                                print(f"✓ Error pattern not found: '{halt_on_error}'")
+                                safe_print(f"✓ Error pattern not found: '{halt_on_error}'")
                         if halt_on_success:
                             if halt_on_success_found:
-                                print(f"✓ Success pattern found: '{halt_on_success}'")
+                                safe_print(f"✓ Success pattern found: '{halt_on_success}'")
                             else:
-                                print(f"✗ Success pattern NOT found: '{halt_on_success}'")
+                                safe_print(f"✗ Success pattern NOT found: '{halt_on_success}'")
 
                     ser.close()
 
@@ -183,7 +184,7 @@ class SerialMonitor:
                             text = str(line)
 
                         # Print the line
-                        print(text)
+                        safe_print(text)
                         sys.stdout.flush()
 
                         # Check for expect pattern (track but don't halt)
@@ -198,18 +199,18 @@ class SerialMonitor:
 
                             # Print statistics
                             if expect or halt_on_success:
-                                print("\n--- Test Results ---")
+                                safe_print("\n--- Test Results ---")
                                 if expect:
                                     if expect_found:
-                                        print(f"✓ Expected pattern found: '{expect}'")
+                                        safe_print(f"✓ Expected pattern found: '{expect}'")
                                     else:
-                                        print(f"✗ Expected pattern NOT found: '{expect}'")
+                                        safe_print(f"✗ Expected pattern NOT found: '{expect}'")
                                 if halt_on_success:
                                     if halt_on_success_found:
-                                        print(f"✓ Success pattern found: '{halt_on_success}'")
+                                        safe_print(f"✓ Success pattern found: '{halt_on_success}'")
                                     else:
-                                        print(f"✗ Success pattern NOT found: '{halt_on_success}'")
-                                print(f"✗ Error pattern found: '{halt_on_error}'")
+                                        safe_print(f"✗ Success pattern NOT found: '{halt_on_success}'")
+                                safe_print(f"✗ Error pattern found: '{halt_on_error}'")
 
                             ser.close()
                             return 1
@@ -221,18 +222,18 @@ class SerialMonitor:
 
                             # Print statistics
                             if expect or halt_on_error:
-                                print("\n--- Test Results ---")
+                                safe_print("\n--- Test Results ---")
                                 if expect:
                                     if expect_found:
-                                        print(f"✓ Expected pattern found: '{expect}'")
+                                        safe_print(f"✓ Expected pattern found: '{expect}'")
                                     else:
-                                        print(f"✗ Expected pattern NOT found: '{expect}'")
-                                print(f"✓ Success pattern found: '{halt_on_success}'")
+                                        safe_print(f"✗ Expected pattern NOT found: '{expect}'")
+                                safe_print(f"✓ Success pattern found: '{halt_on_success}'")
                                 if halt_on_error:
                                     if halt_on_error_found:
-                                        print(f"✗ Error pattern found: '{halt_on_error}'")
+                                        safe_print(f"✗ Error pattern found: '{halt_on_error}'")
                                     else:
-                                        print(f"✓ Error pattern not found: '{halt_on_error}'")
+                                        safe_print(f"✓ Error pattern not found: '{halt_on_error}'")
 
                             ser.close()
 

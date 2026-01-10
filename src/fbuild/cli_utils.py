@@ -15,6 +15,43 @@ from typing import Optional
 from fbuild.config import PlatformIOConfig
 
 
+def safe_print(text: str, end: str = "\n") -> None:
+    """Print text safely handling encoding errors on Windows.
+
+    Args:
+        text: Text to print
+        end: End character (default newline)
+    """
+    try:
+        print(text, end=end)
+        sys.stdout.flush()
+    except KeyboardInterrupt:  # noqa: KBI002
+        # Re-raise KeyboardInterrupt to allow proper handling
+        raise
+    except (UnicodeEncodeError, AttributeError):
+        # Fallback for Windows console that doesn't support UTF-8
+        # Replace Unicode checkmarks and X marks with ASCII equivalents
+        safe_text = text.replace("✓", "[OK]").replace("✗", "[X]")
+        try:
+            print(safe_text, end=end)
+            sys.stdout.flush()
+        except KeyboardInterrupt:  # noqa: KBI002
+            # Re-raise KeyboardInterrupt to allow proper handling
+            raise
+        except Exception:
+            # Last resort: write bytes directly
+            try:
+                output = (safe_text + end).encode("ascii", errors="replace")
+                sys.stdout.buffer.write(output)
+                sys.stdout.buffer.flush()
+            except KeyboardInterrupt:  # noqa: KBI002
+                # Re-raise KeyboardInterrupt to allow proper handling
+                raise
+            except Exception:
+                # If all else fails, just skip the output
+                pass
+
+
 @dataclass
 class MonitorFlags:
     """Parsed monitor flags from command-line string."""
