@@ -158,6 +158,7 @@ class SerialMonitor:
         print(f"Opening serial port {port} at {baud} baud...")
 
         ser = None
+        output_fp = None
         try:
             # Open serial port
             ser = serial.Serial(
@@ -184,7 +185,6 @@ class SerialMonitor:
             time.sleep(0.2)
 
             # Open output file for streaming (if specified)
-            output_fp = None
             if output_file:
                 try:
                     output_file.parent.mkdir(parents=True, exist_ok=True)

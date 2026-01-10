@@ -725,7 +725,7 @@ def process_deploy_request(request: DeployRequest, process_tracker: ProcessTrack
                         timeout=request.monitor_timeout,
                         caller_pid=caller_pid,
                         caller_cwd=caller_cwd,
-                        request_id=f"monitor_after_{request_id}",
+                        request_id=request_id,
                     )
                 else:
                     # No monitoring requested - mark deploy as completed
@@ -808,7 +808,7 @@ def process_monitor_request(request: MonitorRequest, process_tracker: ProcessTra
     # Acquire port lock (monitor requires exclusive port access)
     if not port:
         logging.error("Monitor requires port to be specified")
-        update_status(DaemonState.FAILED, "Monitor requires port to be specified")
+        update_status(DaemonState.FAILED, "Monitor requires port to be specified", request_id=request_id)
         return False
 
     port_lock = get_port_lock(port)
@@ -817,6 +817,7 @@ def process_monitor_request(request: MonitorRequest, process_tracker: ProcessTra
         update_status(
             DaemonState.FAILED,
             f"Port {port} is already in use by another operation",
+            request_id=request_id,
         )
         return False
 
@@ -878,6 +879,7 @@ def process_monitor_request(request: MonitorRequest, process_tracker: ProcessTra
                     "Monitor completed",
                     exit_code=exit_code,
                     operation_in_progress=False,
+                    request_id=request_id,
                 )
                 return True
             else:
@@ -887,6 +889,7 @@ def process_monitor_request(request: MonitorRequest, process_tracker: ProcessTra
                     f"Monitor failed (exit {exit_code})",
                     exit_code=exit_code,
                     operation_in_progress=False,
+                    request_id=request_id,
                 )
                 return False
 
@@ -900,6 +903,7 @@ def process_monitor_request(request: MonitorRequest, process_tracker: ProcessTra
                 f"Monitor exception: {e}",
                 exit_code=1,
                 operation_in_progress=False,
+                request_id=request_id,
             )
             return False
 
