@@ -60,6 +60,8 @@ class DeployRequest:
         clean_build: Whether to perform clean build
         monitor_after: Whether to start monitor after deploy
         monitor_timeout: Timeout for monitor in seconds (if monitor_after=True)
+        monitor_halt_on_error: Pattern to halt on error (if monitor_after=True)
+        monitor_halt_on_success: Pattern to halt on success (if monitor_after=True)
         caller_pid: Process ID of requesting client
         caller_cwd: Working directory of requesting client
         timestamp: Unix timestamp when request was created
@@ -72,6 +74,8 @@ class DeployRequest:
     clean_build: bool
     monitor_after: bool
     monitor_timeout: float | None
+    monitor_halt_on_error: str | None
+    monitor_halt_on_success: str | None
     caller_pid: int
     caller_cwd: str
     timestamp: float = field(default_factory=time.time)
@@ -91,6 +95,8 @@ class DeployRequest:
             clean_build=data.get("clean_build", False),
             monitor_after=data.get("monitor_after", False),
             monitor_timeout=data.get("monitor_timeout"),
+            monitor_halt_on_error=data.get("monitor_halt_on_error"),
+            monitor_halt_on_success=data.get("monitor_halt_on_success"),
             caller_pid=data["caller_pid"],
             caller_cwd=data["caller_cwd"],
             timestamp=data.get("timestamp", time.time()),

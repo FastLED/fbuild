@@ -173,9 +173,13 @@ def deploy_command(args: DeployArgs) -> None:
         # Parse monitor flags if provided
         monitor_after = args.monitor is not None
         monitor_timeout = None
+        monitor_halt_on_error = None
+        monitor_halt_on_success = None
         if monitor_after and args.monitor is not None:
             flags = MonitorFlagParser.parse_monitor_flags(args.monitor)
             monitor_timeout = flags.timeout
+            monitor_halt_on_error = flags.halt_on_error
+            monitor_halt_on_success = flags.halt_on_success
 
         # Use daemon for concurrent deploy management
         success = daemon_client.request_deploy(
@@ -185,6 +189,8 @@ def deploy_command(args: DeployArgs) -> None:
             clean_build=args.clean,
             monitor_after=monitor_after,
             monitor_timeout=monitor_timeout,
+            monitor_halt_on_error=monitor_halt_on_error,
+            monitor_halt_on_success=monitor_halt_on_success,
             timeout=1800,  # 30 minute timeout for deploy
         )
 

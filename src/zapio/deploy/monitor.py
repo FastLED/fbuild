@@ -130,9 +130,16 @@ class SerialMonitor:
                 # Check timeout
                 if timeout and (time.time() - start_time) > timeout:
                     print()
-                    print(f"--- Timeout after {timeout} seconds ---")
-                    ser.close()
-                    return 1
+                    if halt_on_error or halt_on_success:
+                        print(
+                            f"--- Timeout after {timeout} seconds (no pattern matched) ---"
+                        )
+                        ser.close()
+                        return 1  # Error: pattern was expected but not found
+                    else:
+                        print(f"--- Monitor timeout after {timeout} seconds ---")
+                        ser.close()
+                        return 0  # Success: just a timed monitoring session
 
                 # Read line from serial
                 try:

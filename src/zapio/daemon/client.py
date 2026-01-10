@@ -169,15 +169,29 @@ def ensure_daemon_running() -> bool:
     if is_daemon_running():
         return True
 
+    # If we reach here, daemon is not running (stale PID was cleaned by is_daemon_running)
+    # Clear stale status file to prevent race condition where client reads old status
+    # from previous daemon run before new daemon writes fresh status
+    if STATUS_FILE.exists():
+        try:
+            STATUS_FILE.unlink()
+        except KeyboardInterrupt:
+            raise
+        except Exception:
+            pass  # Best effort - continue even if delete fails
+
     print("🔗 Starting Zapio daemon...")
     start_daemon()
-    time.sleep(2)  # Give daemon time to initialize
 
-    # Wait up to 10 seconds for daemon to start
+    # Wait up to 10 seconds for daemon to start and write fresh status
     for _ in range(10):
         if is_daemon_running():
-            print("✅ Daemon started successfully")
-            return True
+            # Daemon is running - check if status file is fresh
+            status = read_status_file()
+            if status.state != DaemonState.UNKNOWN:
+                # Valid status received from new daemon
+                print("✅ Daemon started successfully")
+                return True
         time.sleep(1)
 
     print("❌ Failed to start daemon")
@@ -191,6 +205,8 @@ def request_deploy(
     clean_build: bool = False,
     monitor_after: bool = False,
     monitor_timeout: float | None = None,
+    monitor_halt_on_error: str | None = None,
+    monitor_halt_on_success: str | None = None,
     timeout: float = 1800,
 ) -> bool:
     """Request a deploy operation from the daemon.
@@ -202,6 +218,8 @@ def request_deploy(
         clean_build: Whether to perform clean build
         monitor_after: Whether to start monitor after deploy
         monitor_timeout: Timeout for monitor (if monitor_after=True)
+        monitor_halt_on_error: Pattern to halt on error (if monitor_after=True)
+        monitor_halt_on_success: Pattern to halt on success (if monitor_after=True)
         timeout: Maximum wait time in seconds (default: 30 minutes)
 
     Returns:
@@ -225,6 +243,8 @@ def request_deploy(
         clean_build=clean_build,
         monitor_after=monitor_after,
         monitor_timeout=monitor_timeout,
+        monitor_halt_on_error=monitor_halt_on_error,
+        monitor_halt_on_success=monitor_halt_on_success,
         caller_pid=os.getpid(),
         caller_cwd=os.getcwd(),
     )
