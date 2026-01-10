@@ -9,8 +9,11 @@ Design:
     - Same interface as ESP32Linker for drop-in replacement
 """
 
+import gc
 import json
+import platform
 import subprocess
+import time
 from pathlib import Path
 from typing import List, Dict, Any, Optional, Union
 
@@ -325,19 +328,58 @@ class ConfigurableLinker(ILinker):
             print(f"  SDK libraries: {len(sdk_libs)}")
             print(f"  Linker scripts: {len(linker_scripts)}")
 
-        try:
-            result = subprocess.run(
-                cmd,
-                capture_output=True,
-                text=True,
-                timeout=120
-            )
+        # Add retry logic for Windows file locking issues
+        is_windows = platform.system() == "Windows"
+        max_retries = 5 if is_windows else 1
+        delay = 0.1
 
-            if result.returncode != 0:
-                error_msg = "Linking failed\n"
-                error_msg += f"stderr: {result.stderr}\n"
-                error_msg += f"stdout: {result.stdout}"
-                raise ConfigurableLinkerError(error_msg)
+        try:
+            for attempt in range(max_retries):
+                # On Windows, force garbage collection and add delay before retry
+                if is_windows and attempt > 0:
+                    gc.collect()
+                    time.sleep(delay)
+                    if self.show_progress:
+                        print(f"  Retrying linking (attempt {attempt + 1}/{max_retries})...")
+
+                result = subprocess.run(
+                    cmd,
+                    capture_output=True,
+                    text=True,
+                    timeout=120
+                )
+
+                if result.returncode != 0:
+                    # Check if error is due to file truncation/locking (Windows-specific)
+                    # Windows file locking manifests as: "file truncated", "error reading", "No such file", or "no more archived files"
+                    stderr_lower = result.stderr.lower()
+                    is_file_locking_error = (
+                        "file truncated" in stderr_lower or
+                        "error reading" in stderr_lower or
+                        "no such file" in stderr_lower or
+                        "no more archived files" in stderr_lower
+                    )
+                    if is_windows and is_file_locking_error:
+                        if attempt < max_retries - 1:
+                            if self.show_progress:
+                                print("  [Windows] Detected file locking error, retrying...")
+                            delay = min(delay * 2, 1.0)  # Exponential backoff, max 1s
+                            continue
+                        else:
+                            # Last attempt failed
+                            error_msg = f"Linking failed after {max_retries} attempts (file locking)\n"
+                            error_msg += f"stderr: {result.stderr}\n"
+                            error_msg += f"stdout: {result.stdout}"
+                            raise ConfigurableLinkerError(error_msg)
+                    else:
+                        # Non-file-locking error, fail immediately
+                        error_msg = "Linking failed\n"
+                        error_msg += f"stderr: {result.stderr}\n"
+                        error_msg += f"stdout: {result.stdout}"
+                        raise ConfigurableLinkerError(error_msg)
+
+                # Success - linker returned 0
+                break
 
             if not output_elf.exists():
                 raise ConfigurableLinkerError(f"firmware.elf was not created: {output_elf}")

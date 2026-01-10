@@ -19,6 +19,7 @@ Architecture:
 """
 
 import _thread
+import importlib
 import json
 import logging
 import os
@@ -33,7 +34,7 @@ from typing import Any
 
 import psutil
 
-from fbuild.build import BuildOrchestratorAVR
+# Import modules (not classes) to enable proper reloading
 from fbuild.daemon.compilation_queue import CompilationJobQueue
 from fbuild.daemon.error_collector import ErrorCollector
 from fbuild.daemon.file_cache import FileCache
@@ -48,8 +49,6 @@ from fbuild.daemon.messages import (
 from fbuild.daemon.operation_registry import OperationRegistry
 from fbuild.daemon.process_tracker import ProcessTracker
 from fbuild.daemon.subprocess_manager import SubprocessManager
-from fbuild.deploy import ESP32Deployer
-from fbuild.deploy.monitor import SerialMonitor
 
 # Daemon configuration
 DAEMON_NAME = "fbuild_daemon"
@@ -110,6 +109,65 @@ def setup_logging(foreground: bool = False) -> None:
     file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     file_handler.setFormatter(file_formatter)
     logger.addHandler(file_handler)
+
+
+def reload_build_modules() -> None:
+    """Reload build-related modules to pick up code changes.
+
+    This is critical for development on Windows where daemon caching prevents
+    testing code changes. Reloads key modules that are frequently modified.
+
+    Order matters: reload dependencies first, then modules that import them.
+    """
+    modules_to_reload = [
+        # Core utilities and packages (reload first - no dependencies)
+        "fbuild.packages.downloader",
+        "fbuild.packages.archive_utils",
+        "fbuild.packages.platformio_registry",
+        "fbuild.packages.toolchain",
+        "fbuild.packages.toolchain_esp32",
+        "fbuild.packages.arduino_core",
+        "fbuild.packages.framework_esp32",
+        "fbuild.packages.platform_esp32",
+        "fbuild.packages.library_manager",
+        "fbuild.packages.library_manager_esp32",
+        # Build system (reload second - depends on packages)
+        "fbuild.build.archive_creator",
+        "fbuild.build.compiler",
+        "fbuild.build.configurable_compiler",
+        "fbuild.build.linker",
+        "fbuild.build.configurable_linker",
+        "fbuild.build.source_scanner",
+        "fbuild.build.compilation_executor",
+        # Orchestrators (reload third - depends on build system)
+        "fbuild.build.orchestrator",
+        "fbuild.build.orchestrator_avr",
+        "fbuild.build.orchestrator_esp32",
+        # Deploy and monitor (reload with build system)
+        "fbuild.deploy.deployer",
+        "fbuild.deploy.deployer_esp32",
+        "fbuild.deploy.monitor",
+        # Top-level module packages (reload last to update __init__.py imports)
+        "fbuild.build",
+        "fbuild.deploy",
+    ]
+
+    reloaded_count = 0
+    for module_name in modules_to_reload:
+        if module_name in sys.modules:
+            try:
+                importlib.reload(sys.modules[module_name])
+                reloaded_count += 1
+                logging.debug(f"Reloaded module: {module_name}")
+            except KeyboardInterrupt as ke:
+                from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+                handle_keyboard_interrupt_properly(ke)
+            except Exception as e:
+                logging.warning(f"Failed to reload module {module_name}: {e}")
+
+    if reloaded_count > 0:
+        logging.info(f"Reloaded {reloaded_count} build modules")
 
 
 def init_daemon_subsystems() -> None:
@@ -437,6 +495,10 @@ def process_deploy_request(request: DeployRequest, process_tracker: ProcessTrack
 
             # Build firmware (always build before deploy, incremental or clean)
             logging.info(f"Building project: {project_dir}")
+
+            # Reload build modules to pick up code changes
+            reload_build_modules()
+
             update_status(
                 DaemonState.BUILDING,
                 f"Building {environment}",
@@ -450,7 +512,10 @@ def process_deploy_request(request: DeployRequest, process_tracker: ProcessTrack
             )
 
             try:
-                orchestrator = BuildOrchestratorAVR(verbose=False)
+                # Get fresh class after module reload - must use getattr to get the reloaded class
+                # Using fbuild.build.BuildOrchestratorAVR directly would use cached import
+                orchestrator_class = getattr(sys.modules["fbuild.build.orchestrator_avr"], "BuildOrchestratorAVR")
+                orchestrator = orchestrator_class(verbose=False)
                 build_result = orchestrator.build(
                     project_dir=Path(project_dir),
                     env_name=environment,
@@ -497,7 +562,10 @@ def process_deploy_request(request: DeployRequest, process_tracker: ProcessTrack
             )
 
             try:
-                deployer = ESP32Deployer(verbose=False)
+                # Get fresh class after module reload - must use getattr to get the reloaded class
+                # Using fbuild.deploy.ESP32Deployer directly would use cached import
+                deployer_class = getattr(sys.modules["fbuild.deploy.deployer_esp32"], "ESP32Deployer")
+                deployer = deployer_class(verbose=False)
                 deploy_result = deployer.deploy(
                     project_dir=Path(project_dir),
                     env_name=environment,
@@ -663,7 +731,10 @@ def process_monitor_request(request: MonitorRequest, process_tracker: ProcessTra
             summary_file.unlink()
 
         try:
-            monitor = SerialMonitor(verbose=False)
+            # Get fresh class after module reload - must use getattr to get the reloaded class
+            # Using fbuild.deploy.monitor.SerialMonitor directly would use cached import
+            monitor_class = getattr(sys.modules["fbuild.deploy.monitor"], "SerialMonitor")
+            monitor = monitor_class(verbose=False)
             exit_code = monitor.monitor(
                 project_dir=Path(project_dir),
                 env_name=environment,
@@ -770,8 +841,14 @@ def process_build_request(request: BuildRequest, process_tracker: ProcessTracker
         # Execute build
         logging.info(f"Building project: {project_dir}")
 
+        # Reload build modules to pick up code changes
+        reload_build_modules()
+
         try:
-            orchestrator = BuildOrchestratorAVR(verbose=verbose)
+            # Get fresh class after module reload - must use getattr to get the reloaded class
+            # Using fbuild.build.BuildOrchestratorAVR directly would use cached import
+            orchestrator_class = getattr(sys.modules["fbuild.build.orchestrator_avr"], "BuildOrchestratorAVR")
+            orchestrator = orchestrator_class(verbose=verbose)
             build_result = orchestrator.build(
                 project_dir=Path(project_dir),
                 env_name=environment,

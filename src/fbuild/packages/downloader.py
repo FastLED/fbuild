@@ -4,11 +4,14 @@ This module handles downloading packages from URLs, extracting archives,
 and verifying integrity with checksums.
 """
 
+import gc
 import hashlib
+import platform
 import tarfile
+import time
 import zipfile
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any, Callable, Optional, TypeVar
 from urllib.parse import urlparse
 
 if TYPE_CHECKING:
@@ -42,6 +45,76 @@ class ExtractionError(Exception):
     """Raised when archive extraction fails."""
 
     pass
+
+
+T = TypeVar("T")
+
+
+def _retry_windows_file_operation(
+    operation: Callable[[], T],
+    max_retries: int = 10,
+    initial_delay: float = 0.05,
+) -> T:
+    """Retry a file operation on Windows to handle transient locking issues.
+
+    Windows file handles can be delayed in release due to antivirus scanning,
+    delayed garbage collection, or OS-level file caching. This function retries
+    file operations with exponential backoff to handle these transient issues.
+
+    Args:
+        operation: Callable that performs the file operation
+        max_retries: Maximum number of retry attempts
+        initial_delay: Initial delay in seconds (doubles each retry)
+
+    Returns:
+        Result of the operation
+
+    Raises:
+        The last exception encountered if all retries fail
+    """
+    is_windows = platform.system() == "Windows"
+
+    if not is_windows:
+        # On non-Windows systems, just call the function directly
+        return operation()
+
+    # Windows: use retry logic for file operations
+    delay = initial_delay
+    last_exception = None
+
+    for attempt in range(max_retries):
+        try:
+            # Force garbage collection to release file handles
+            if attempt > 0:
+                gc.collect()
+                time.sleep(delay)
+
+            return operation()
+
+        except (PermissionError, OSError, FileNotFoundError) as e:
+            # WinError 32: File is being used by another process
+            # WinError 2: File not found (temp file disappeared due to handle delays)
+            # Also catch OSError with errno 13 (access denied) or 32 (in use)
+            last_exception = e
+
+            # Check if this is a retriable error
+            is_retriable = False
+            if isinstance(e, (PermissionError, FileNotFoundError)):
+                is_retriable = True
+            elif hasattr(e, "errno") and e.errno in (2, 13, 32):
+                is_retriable = True
+
+            if is_retriable and attempt < max_retries - 1:
+                delay = min(delay * 2, 2.0)  # Exponential backoff, max 2s
+                continue
+
+            # Not retriable or exhausted retries
+            raise
+
+    # If we get here, all retries failed
+    if last_exception:
+        raise last_exception
+    raise PermissionError(f"Failed to perform file operation after {max_retries} attempts")
 
 
 class PackageDownloader:
@@ -121,23 +194,41 @@ class PackageDownloader:
             if progress_bar:
                 progress_bar.close()
 
+            # Force garbage collection to help release file handles (Windows)
+            gc.collect()
+
+            # On Windows, add delay to let file handles stabilize after write
+            if platform.system() == "Windows":
+                time.sleep(0.2)
+
             # Verify checksum if provided
             if checksum and sha256:
                 actual_checksum = sha256.hexdigest()
                 if actual_checksum.lower() != checksum.lower():
-                    temp_file.unlink()
+                    # Delete temp file before raising (not inside retry wrapper)
+                    try:
+                        _retry_windows_file_operation(lambda: temp_file.unlink())
+                    except KeyboardInterrupt as ke:
+                        from fbuild.interrupt_utils import (
+                            handle_keyboard_interrupt_properly,
+                        )
+
+                        handle_keyboard_interrupt_properly(ke)
+                    except Exception:
+                        pass  # Ignore unlink errors, we're about to raise checksum error anyway
+                    # Raise checksum error (NOT inside retry wrapper)
                     raise ChecksumError(f"Checksum mismatch for {url}\n" + f"Expected: {checksum}\n" + f"Got: {actual_checksum}")
 
             # Move temp file to final destination
             if dest_path.exists():
-                dest_path.unlink()
-            temp_file.rename(dest_path)
+                _retry_windows_file_operation(lambda: dest_path.unlink())
+            _retry_windows_file_operation(lambda: temp_file.rename(dest_path))
 
             return dest_path
 
         except requests.RequestException as e:
             if temp_file.exists():
-                temp_file.unlink()
+                _retry_windows_file_operation(lambda: temp_file.unlink())
             raise DownloadError(f"Failed to download {url}: {e}")
 
         except KeyboardInterrupt as ke:
@@ -147,7 +238,7 @@ class PackageDownloader:
             raise  # Never reached, but satisfies type checker
         except Exception:
             if temp_file.exists():
-                temp_file.unlink()
+                _retry_windows_file_operation(lambda: temp_file.unlink())
             raise
 
     def extract_archive(self, archive_path: Path, dest_dir: Path, show_progress: bool = True) -> Path:

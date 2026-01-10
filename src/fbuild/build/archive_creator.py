@@ -10,7 +10,10 @@ Design:
     - Shows archive size information
 """
 
+import gc
+import platform
 import subprocess
+import time
 from pathlib import Path
 from typing import List
 
@@ -77,39 +80,86 @@ class ArchiveCreator:
         if self.show_progress:
             print(f"Creating {archive_path.name} archive from {len(object_files)} object files...")
 
-        try:
-            result = subprocess.run(
-                cmd,
-                capture_output=True,
-                text=True,
-                timeout=60
-            )
+        # On Windows, add retry logic to handle file locking issues
+        # Object files may still have open handles from compiler/antivirus
+        is_windows = platform.system() == "Windows"
+        max_retries = 5 if is_windows else 1
+        delay = 0.1
+        last_error = None
 
-            if result.returncode != 0:
-                error_msg = f"Archive creation failed for {archive_path.name}\n"
-                error_msg += f"stderr: {result.stderr}\n"
-                error_msg += f"stdout: {result.stdout}"
-                raise ArchiveError(error_msg)
+        for attempt in range(max_retries):
+            try:
+                # On Windows, force garbage collection and add delay before retry
+                if is_windows and attempt > 0:
+                    gc.collect()
+                    time.sleep(delay)
+                    if self.show_progress:
+                        print(f"  Retrying archive creation (attempt {attempt + 1}/{max_retries})...")
 
-            if not archive_path.exists():
-                raise ArchiveError(f"Archive was not created: {archive_path}")
+                result = subprocess.run(
+                    cmd,
+                    capture_output=True,
+                    text=True,
+                    timeout=60
+                )
 
-            if self.show_progress:
-                size = archive_path.stat().st_size
-                print(f"✓ Created {archive_path.name}: {size:,} bytes ({size / 1024 / 1024:.2f} MB)")
+                if result.returncode != 0:
+                    # Check if error is due to file truncation/locking (Windows-specific)
+                    # Windows file locking manifests as: "file truncated", "error reading", or "No such file"
+                    stderr_lower = result.stderr.lower()
+                    is_file_locking_error = (
+                        "file truncated" in stderr_lower or
+                        "error reading" in stderr_lower or
+                        "no such file" in stderr_lower
+                    )
+                    if is_windows and is_file_locking_error:
+                        last_error = result.stderr
+                        if attempt < max_retries - 1:
+                            if self.show_progress:
+                                print("  [Windows] Detected file locking error, retrying...")
+                            delay = min(delay * 2, 1.0)  # Exponential backoff, max 1s
+                            continue
+                        else:
+                            # Last attempt failed
+                            error_msg = f"Archive creation failed after {max_retries} attempts (file locking)\n"
+                            error_msg += f"stderr: {result.stderr}\n"
+                            error_msg += f"stdout: {result.stdout}"
+                            raise ArchiveError(error_msg)
 
-            return archive_path
+                    error_msg = f"Archive creation failed for {archive_path.name}\n"
+                    error_msg += f"stderr: {result.stderr}\n"
+                    error_msg += f"stdout: {result.stdout}"
+                    raise ArchiveError(error_msg)
 
-        except subprocess.TimeoutExpired as e:
-            raise ArchiveError(f"Archive creation timeout for {archive_path.name}") from e
-        except KeyboardInterrupt as ke:
-            from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
-            handle_keyboard_interrupt_properly(ke)
-            raise  # Never reached, but satisfies type checker
-        except Exception as e:
-            if isinstance(e, ArchiveError):
-                raise
-            raise ArchiveError(f"Failed to create archive {archive_path.name}: {e}") from e
+                if not archive_path.exists():
+                    raise ArchiveError(f"Archive was not created: {archive_path}")
+
+                if self.show_progress:
+                    size = archive_path.stat().st_size
+                    print(f"✓ Created {archive_path.name}: {size:,} bytes ({size / 1024 / 1024:.2f} MB)")
+
+                return archive_path
+
+            except subprocess.TimeoutExpired as e:
+                raise ArchiveError(f"Archive creation timeout for {archive_path.name}") from e
+            except KeyboardInterrupt as ke:
+                from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+                handle_keyboard_interrupt_properly(ke)
+                raise  # Never reached, but satisfies type checker
+            except Exception as e:
+                if isinstance(e, ArchiveError):
+                    raise
+                # If Windows file locking error, retry
+                if is_windows and attempt < max_retries - 1:
+                    last_error = str(e)
+                    delay = min(delay * 2, 1.0)
+                    continue
+                raise ArchiveError(f"Failed to create archive {archive_path.name}: {e}") from e
+
+        # If we exhausted retries, raise the last error
+        if last_error:
+            raise ArchiveError(f"Archive creation failed after {max_retries} attempts: {last_error}")
+        raise ArchiveError(f"Archive creation failed after {max_retries} attempts")
 
     def create_core_archive(
         self,
