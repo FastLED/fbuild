@@ -6,7 +6,7 @@ import os
 
 from setuptools import setup
 
-URL = "https://github.com/zackees/fbuild"
+URL = "https://github.com/fastled/fbuild"
 KEYWORDS = "embedded arduino platformio compiler toolchain firmware microcontroller URL-based"
 HERE = os.path.dirname(os.path.abspath(__file__))
 
