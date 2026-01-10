@@ -5,9 +5,10 @@ propagated to the main thread when caught in exception handlers.
 """
 
 import _thread
+from typing import NoReturn
 
 
-def handle_keyboard_interrupt_properly(ke: KeyboardInterrupt) -> None:
+def handle_keyboard_interrupt_properly(ke: KeyboardInterrupt) -> NoReturn:
     """Handle KeyboardInterrupt by propagating it to the main thread.
 
     This utility ensures that KeyboardInterrupt is properly handled in try-except
