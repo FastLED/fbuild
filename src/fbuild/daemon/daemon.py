@@ -28,7 +28,7 @@ import subprocess
 import sys
 import threading
 import time
-from logging.handlers import RotatingFileHandler
+from logging.handlers import TimedRotatingFileHandler
 from pathlib import Path
 from typing import Any
 
@@ -87,6 +87,10 @@ def setup_logging(foreground: bool = False) -> None:
     """Setup logging for daemon."""
     DAEMON_DIR.mkdir(parents=True, exist_ok=True)
 
+    # Enhanced log format with function name and line number
+    LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - [%(funcName)s:%(lineno)d] - %(message)s"
+    LOG_DATEFMT = "%Y-%m-%d %H:%M:%S"
+
     # Configure root logger
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
@@ -95,18 +99,21 @@ def setup_logging(foreground: bool = False) -> None:
     if foreground:
         console_handler = logging.StreamHandler(sys.stdout)
         console_handler.setLevel(logging.INFO)
-        console_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+        console_formatter = logging.Formatter(fmt=LOG_FORMAT, datefmt=LOG_DATEFMT)
         console_handler.setFormatter(console_formatter)
         logger.addHandler(console_handler)
 
-    # Rotating file handler (always)
-    file_handler = RotatingFileHandler(
+    # Timed rotating file handler (always) - rotates daily at midnight
+    file_handler = TimedRotatingFileHandler(
         str(LOG_FILE),
-        maxBytes=10 * 1024 * 1024,  # 10MB
-        backupCount=3,
+        when="midnight",  # Rotate at midnight
+        interval=1,  # Daily rotation
+        backupCount=2,  # Keep 2 days of backups (total 3 files)
+        utc=False,  # Use local time
+        atTime=None,  # Rotate exactly at midnight
     )
     file_handler.setLevel(logging.INFO)
-    file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+    file_formatter = logging.Formatter(fmt=LOG_FORMAT, datefmt=LOG_DATEFMT)
     file_handler.setFormatter(file_formatter)
     logger.addHandler(file_handler)
 
@@ -175,36 +182,49 @@ def init_daemon_subsystems() -> None:
     global _compilation_queue, _operation_registry, _subprocess_manager, _file_cache, _error_collector
 
     logging.info("Initializing daemon subsystems...")
+    logging.debug(f"Daemon directory: {DAEMON_DIR}")
+    logging.debug(f"PID file: {PID_FILE}")
+    logging.debug(f"Log file: {LOG_FILE}")
 
     # Initialize compilation queue with worker pool
+    logging.debug("Determining optimal worker pool size...")
     try:
         import multiprocessing
 
         num_workers = multiprocessing.cpu_count()
-    except (ImportError, NotImplementedError):
+        logging.debug(f"Detected CPU count: {num_workers}")
+    except (ImportError, NotImplementedError) as e:
         num_workers = 4  # Fallback for systems without multiprocessing
+        logging.warning(f"Could not detect CPU count ({e}), using fallback: {num_workers} workers")
 
+    logging.debug(f"Creating compilation queue with {num_workers} workers...")
     _compilation_queue = CompilationJobQueue(num_workers=num_workers)
+    logging.debug("Starting compilation queue worker pool...")
     _compilation_queue.start()
     logging.info(f"Compilation queue started with {num_workers} workers")
 
     # Initialize operation registry
+    logging.debug("Creating operation registry (max_history=100)...")
     _operation_registry = OperationRegistry(max_history=100)
     logging.info("Operation registry initialized")
 
     # Initialize subprocess manager
+    logging.debug("Creating subprocess manager...")
     _subprocess_manager = SubprocessManager()
     logging.info("Subprocess manager initialized")
 
     # Initialize file cache
+    logging.debug(f"Creating file cache (cache_file={FILE_CACHE_FILE})...")
     _file_cache = FileCache(cache_file=FILE_CACHE_FILE)
     logging.info("File cache initialized")
 
     # Initialize error collector (created per-operation, but we can have a global one)
+    logging.debug("Creating global error collector...")
     _error_collector = ErrorCollector()
     logging.info("Error collector initialized")
 
     logging.info("✅ All daemon subsystems initialized successfully")
+    logging.debug("Active subsystems: compilation_queue, operation_registry, subprocess_manager, file_cache, error_collector")
 
 
 def shutdown_daemon_subsystems() -> None:
@@ -212,12 +232,29 @@ def shutdown_daemon_subsystems() -> None:
     global _compilation_queue
 
     logging.info("Shutting down daemon subsystems...")
+    logging.debug("Beginning subsystem shutdown sequence")
 
     if _compilation_queue:
-        _compilation_queue.shutdown()
-        logging.info("Compilation queue shut down")
+        logging.debug("Shutting down compilation queue...")
+        try:
+            _compilation_queue.shutdown()
+            logging.info("Compilation queue shut down")
+        except KeyboardInterrupt:
+            logging.warning("KeyboardInterrupt during compilation queue shutdown")
+            raise
+        except Exception as e:
+            logging.error(f"Error shutting down compilation queue: {e}")
+    else:
+        logging.debug("Compilation queue not initialized, skipping shutdown")
+
+    # Log shutdown of other subsystems (they don't have explicit shutdown methods)
+    logging.debug("Cleaning up operation registry...")
+    logging.debug("Cleaning up subprocess manager...")
+    logging.debug("Cleaning up file cache...")
+    logging.debug("Cleaning up error collector...")
 
     logging.info("✅ All daemon subsystems shut down")
+    logging.debug("Subsystem shutdown sequence complete")
 
 
 def get_compilation_queue() -> CompilationJobQueue | None:
@@ -271,6 +308,7 @@ def read_status_file_safe() -> DaemonStatus:
     Returns:
         DaemonStatus object (or default if corrupted)
     """
+    logging.debug(f"Reading status file: {STATUS_FILE}")
     default_status = DaemonStatus(
         state=DaemonState.IDLE,
         message="",
@@ -278,14 +316,20 @@ def read_status_file_safe() -> DaemonStatus:
     )
 
     if not STATUS_FILE.exists():
+        logging.debug("Status file does not exist, returning default status")
         return default_status
 
+    logging.debug("Status file exists, attempting to read...")
     try:
         with open(STATUS_FILE) as f:
             data = json.load(f)
 
+        logging.debug(f"Status file JSON parsed successfully ({len(data)} keys)")
+
         # Parse into typed DaemonStatus
-        return DaemonStatus.from_dict(data)
+        status = DaemonStatus.from_dict(data)
+        logging.debug(f"Status parsed: state={status.state}, message='{status.message[:50] if status.message else ''}'")
+        return status
 
     except (json.JSONDecodeError, ValueError) as e:
         logging.warning(f"Corrupted status file detected: {e}")
@@ -311,20 +355,27 @@ def write_status_file_atomic(status: dict[str, Any]) -> None:
         status: Status dictionary to write
     """
     temp_file = STATUS_FILE.with_suffix(".tmp")
+    logging.debug(f"Writing status file atomically: {STATUS_FILE}")
+    logging.debug(f"Using temp file: {temp_file}")
 
     try:
+        logging.debug(f"Writing JSON to temp file ({len(status)} keys)...")
         with open(temp_file, "w") as f:
             json.dump(status, f, indent=2)
 
+        logging.debug("JSON written, performing atomic rename...")
         # Atomic rename
         temp_file.replace(STATUS_FILE)
+        logging.debug("Status file written successfully")
 
     except KeyboardInterrupt:
+        logging.warning("KeyboardInterrupt during status file write, cleaning up temp file")
         _thread.interrupt_main()
         temp_file.unlink(missing_ok=True)
         raise
     except Exception as e:
         logging.error(f"Failed to write status file: {e}")
+        logging.debug("Cleaning up temp file after write failure")
         temp_file.unlink(missing_ok=True)
 
 
@@ -338,10 +389,14 @@ def update_status(state: DaemonState, message: str, **kwargs: Any) -> None:
     """
     global _daemon_pid, _daemon_started_at, _operation_in_progress
 
+    logging.debug(f"Updating daemon status: state={state}, message='{message[:50] if message else ''}'")
+
     # Extract operation_in_progress from kwargs if provided to avoid duplicate keyword argument
     operation_in_progress = kwargs.pop("operation_in_progress", _operation_in_progress)
+    logging.debug(f"Operation in progress: {operation_in_progress}")
 
     # Create typed DaemonStatus object
+    logging.debug("Creating DaemonStatus object...")
     status_obj = DaemonStatus(
         state=state,
         message=message,
@@ -352,7 +407,9 @@ def update_status(state: DaemonState, message: str, **kwargs: Any) -> None:
         **kwargs,
     )
 
+    logging.debug(f"Writing status to file (additional fields: {len(kwargs)})")
     write_status_file_atomic(status_obj.to_dict())
+    logging.debug("Status update complete")
 
 
 def read_request_file(request_file: Path, request_class: type) -> Any:
@@ -365,15 +422,24 @@ def read_request_file(request_file: Path, request_class: type) -> Any:
     Returns:
         Request object if valid, None otherwise
     """
+    logging.debug(f"Reading request file: {request_file}")
+    logging.debug(f"Request class: {request_class.__name__}")
+
     if not request_file.exists():
+        logging.debug(f"Request file does not exist: {request_file}")
         return None
 
+    logging.debug("Request file exists, attempting to read...")
     try:
         with open(request_file) as f:
             data = json.load(f)
 
+        logging.debug(f"Request JSON parsed successfully ({len(data)} keys)")
+
         # Parse into typed request
-        return request_class.from_dict(data)
+        request = request_class.from_dict(data)
+        logging.debug(f"Request parsed successfully: {request_class.__name__}")
+        return request
 
     except (json.JSONDecodeError, ValueError, TypeError) as e:
         logging.error(f"Failed to parse request file {request_file}: {e}")
@@ -388,9 +454,12 @@ def read_request_file(request_file: Path, request_class: type) -> Any:
 
 def clear_request_file(request_file: Path) -> None:
     """Remove request file after processing."""
+    logging.debug(f"Clearing request file: {request_file}")
     try:
         request_file.unlink(missing_ok=True)
+        logging.debug(f"Request file cleared successfully: {request_file}")
     except KeyboardInterrupt:
+        logging.warning(f"KeyboardInterrupt while clearing request file: {request_file}")
         _thread.interrupt_main()
         raise
     except Exception as e:
@@ -406,10 +475,19 @@ def get_port_lock(port: str) -> threading.Lock:
     Returns:
         Threading lock for this port
     """
+    logging.debug(f"Acquiring lock registry access for port: {port}")
     with _locks_lock:
+        logging.debug(f"Lock registry accessed, checking if port lock exists: {port}")
         if port not in _port_locks:
+            logging.info(f"Creating new port lock for: {port}")
             _port_locks[port] = threading.Lock()
-        return _port_locks[port]
+            logging.debug(f"Port lock created successfully: {port} (total port locks: {len(_port_locks)})")
+        else:
+            logging.debug(f"Reusing existing port lock for: {port}")
+
+        lock = _port_locks[port]
+        logging.debug(f"Returning port lock for: {port} (locked: {lock.locked()})")
+        return lock
 
 
 def get_project_lock(project_dir: str) -> threading.Lock:
@@ -421,10 +499,19 @@ def get_project_lock(project_dir: str) -> threading.Lock:
     Returns:
         Threading lock for this project
     """
+    logging.debug(f"Acquiring lock registry access for project: {project_dir}")
     with _locks_lock:
+        logging.debug(f"Lock registry accessed, checking if project lock exists: {project_dir}")
         if project_dir not in _project_locks:
+            logging.info(f"Creating new project lock for: {project_dir}")
             _project_locks[project_dir] = threading.Lock()
-        return _project_locks[project_dir]
+            logging.debug(f"Project lock created successfully: {project_dir} (total project locks: {len(_project_locks)})")
+        else:
+            logging.debug(f"Reusing existing project lock for: {project_dir}")
+
+        lock = _project_locks[project_dir]
+        logging.debug(f"Returning project lock for: {project_dir} (locked: {lock.locked()})")
+        return lock
 
 
 def process_deploy_request(request: DeployRequest, process_tracker: ProcessTracker) -> bool:
@@ -447,39 +534,56 @@ def process_deploy_request(request: DeployRequest, process_tracker: ProcessTrack
     request_id = request.request_id
 
     logging.info(f"Processing deploy request {request_id}: env={environment}, project={project_dir}, port={port}")
+    logging.debug(f"Deploy request details: caller_pid={caller_pid}, caller_cwd={caller_cwd}, clean_build={request.clean_build}")
+    logging.debug(f"Monitor after deploy: {request.monitor_after}")
 
     # Acquire project lock (prevent concurrent builds of same project)
+    logging.debug(f"Acquiring project lock for: {project_dir}")
     project_lock = get_project_lock(project_dir)
+    logging.debug("Attempting non-blocking lock acquisition...")
     if not project_lock.acquire(blocking=False):
         logging.warning(f"Project {project_dir} is already being built")
+        logging.debug("Lock acquisition failed, returning False")
         update_status(
             DaemonState.FAILED,
             f"Project {project_dir} is already being built by another process",
         )
         return False
 
+    logging.debug(f"Project lock acquired successfully for: {project_dir}")
+
     try:
         # Acquire port lock if port specified
         port_lock = None
         if port:
+            logging.debug(f"Port specified ({port}), acquiring port lock...")
             port_lock = get_port_lock(port)
+            logging.debug("Attempting non-blocking port lock acquisition...")
             if not port_lock.acquire(blocking=False):
                 logging.warning(f"Port {port} is already in use")
+                logging.debug("Port lock acquisition failed, returning False")
                 update_status(
                     DaemonState.FAILED,
                     f"Port {port} is already in use by another operation",
                 )
                 return False
+            logging.debug(f"Port lock acquired successfully for: {port}")
+        else:
+            logging.debug("No port specified, skipping port lock")
 
         # Variables for post-deploy monitoring
         monitor_after = False
         monitor_request_data = None
+        logging.debug("Initializing post-deploy monitoring variables")
 
         try:
             # Mark operation in progress
+            logging.debug("Marking operation in progress...")
             with _operation_lock:
                 _operation_in_progress = True
+            logging.debug("Operation marked as in progress")
 
+            logging.info("Updating status to DEPLOYING")
             update_status(
                 DaemonState.DEPLOYING,
                 f"Deploying {environment}",
@@ -495,10 +599,10 @@ def process_deploy_request(request: DeployRequest, process_tracker: ProcessTrack
 
             # Build firmware (always build before deploy, incremental or clean)
             logging.info(f"Building project: {project_dir}")
+            logging.debug(f"Build mode: {'clean' if request.clean_build else 'incremental'}")
 
             # Reload build modules to pick up code changes
             reload_build_modules()
-
             update_status(
                 DaemonState.BUILDING,
                 f"Building {environment}",
@@ -514,8 +618,10 @@ def process_deploy_request(request: DeployRequest, process_tracker: ProcessTrack
             try:
                 # Get fresh class after module reload - must use getattr to get the reloaded class
                 # Using fbuild.build.BuildOrchestratorAVR directly would use cached import
+                logging.debug("Creating BuildOrchestratorAVR instance...")
                 orchestrator_class = getattr(sys.modules["fbuild.build.orchestrator_avr"], "BuildOrchestratorAVR")
                 orchestrator = orchestrator_class(verbose=False)
+                logging.debug(f"Starting build: project={project_dir}, env={environment}, clean={request.clean_build}")
                 build_result = orchestrator.build(
                     project_dir=Path(project_dir),
                     env_name=environment,
@@ -523,8 +629,10 @@ def process_deploy_request(request: DeployRequest, process_tracker: ProcessTrack
                     verbose=False,
                 )
 
+                logging.debug(f"Build result: success={build_result.success}")
                 if not build_result.success:
                     logging.error(f"Build failed: {build_result.message}")
+                    logging.debug(f"Build exit code: {build_result.exit_code if hasattr(build_result, 'exit_code') else 'N/A'}")
                     update_status(
                         DaemonState.FAILED,
                         f"Build failed: {build_result.message}",
@@ -534,6 +642,7 @@ def process_deploy_request(request: DeployRequest, process_tracker: ProcessTrack
                     return False
 
                 logging.info("Build completed successfully")
+                logging.debug(f"Build output: {build_result.firmware_path if hasattr(build_result, 'firmware_path') else 'N/A'}")
             except KeyboardInterrupt:
                 _thread.interrupt_main()
                 raise
@@ -549,6 +658,7 @@ def process_deploy_request(request: DeployRequest, process_tracker: ProcessTrack
 
             # Deploy firmware
             logging.info(f"Deploying to {port if port else 'auto-detected port'}")
+            logging.debug(f"Target port: {port if port else 'auto-detect'}")
             update_status(
                 DaemonState.DEPLOYING,
                 f"Deploying {environment}",
@@ -564,16 +674,20 @@ def process_deploy_request(request: DeployRequest, process_tracker: ProcessTrack
             try:
                 # Get fresh class after module reload - must use getattr to get the reloaded class
                 # Using fbuild.deploy.ESP32Deployer directly would use cached import
+                logging.debug("Creating ESP32Deployer instance...")
                 deployer_class = getattr(sys.modules["fbuild.deploy.deployer_esp32"], "ESP32Deployer")
                 deployer = deployer_class(verbose=False)
+                logging.debug(f"Starting deploy: project={project_dir}, env={environment}, port={port}")
                 deploy_result = deployer.deploy(
                     project_dir=Path(project_dir),
                     env_name=environment,
                     port=port,
                 )
 
+                logging.debug(f"Deploy result: success={deploy_result.success}")
                 if not deploy_result.success:
                     logging.error(f"Deploy failed: {deploy_result.message}")
+                    logging.debug(f"Deploy exit code: {deploy_result.exit_code if hasattr(deploy_result, 'exit_code') else 'N/A'}")
                     update_status(
                         DaemonState.FAILED,
                         f"Deploy failed: {deploy_result.message}",
@@ -584,12 +698,15 @@ def process_deploy_request(request: DeployRequest, process_tracker: ProcessTrack
 
                 logging.info("Deploy completed successfully")
                 used_port = deploy_result.port if deploy_result.port else port
+                logging.debug(f"Used port: {used_port}")
 
                 # Store monitor request info before releasing locks
                 monitor_after = request.monitor_after and used_port
                 monitor_request_data = None
+                logging.debug(f"Monitor after deploy: {monitor_after}")
 
                 if monitor_after:
+                    logging.debug("Creating monitor request for post-deploy monitoring...")
                     # Create monitor request from deploy context
                     monitor_request_data = MonitorRequest(
                         project_dir=project_dir,
@@ -905,16 +1022,20 @@ def should_shutdown() -> bool:
     """
     # Check for shutdown signal file
     shutdown_file = DAEMON_DIR / "shutdown.signal"
+    logging.debug(f"Checking for shutdown signal: {shutdown_file}")
     if shutdown_file.exists():
         logging.info("Shutdown signal detected")
+        logging.debug(f"Removing shutdown signal file: {shutdown_file}")
         try:
             shutdown_file.unlink()
+            logging.debug("Shutdown signal file removed successfully")
         except KeyboardInterrupt:
             _thread.interrupt_main()
             raise
-        except Exception:
-            pass
+        except Exception as e:
+            logging.warning(f"Failed to remove shutdown signal file: {e}")
         return True
+    logging.debug("No shutdown signal detected")
     return False
 
 
@@ -929,16 +1050,20 @@ def should_cancel_operation(request_id: str) -> bool:
     """
     # Check for cancel signal file
     cancel_file = DAEMON_DIR / f"cancel_{request_id}.signal"
+    logging.debug(f"Checking for cancel signal: {cancel_file}")
     if cancel_file.exists():
         logging.info(f"Cancel signal detected for request {request_id}")
+        logging.debug(f"Removing cancel signal file: {cancel_file}")
         try:
             cancel_file.unlink()
+            logging.debug("Cancel signal file removed successfully")
         except KeyboardInterrupt:
             _thread.interrupt_main()
             raise
-        except Exception:
-            pass
+        except Exception as e:
+            logging.warning(f"Failed to remove cancel signal file: {e}")
         return True
+    logging.debug(f"No cancel signal detected for request {request_id}")
     return False
 
 
@@ -947,30 +1072,42 @@ def signal_handler(signum: int, frame: object) -> None:
     global _operation_in_progress
 
     signal_name = "SIGTERM" if signum == signal.SIGTERM else "SIGINT"
+    logging.info(f"Signal handler invoked: received {signal_name} (signal number {signum})")
+    logging.debug(f"Current PID: {os.getpid()}")
 
+    logging.debug("Acquiring operation lock to check operation status...")
     with _operation_lock:
+        logging.debug(f"Operation lock acquired, checking if operation in progress: {_operation_in_progress}")
         if _operation_in_progress:
             logging.warning(f"Received {signal_name} during active operation. Refusing graceful shutdown.")
+            logging.debug("Printing warning message to console...")
             print(
                 f"\n⚠️  {signal_name} received during operation\n⚠️  Cannot shutdown gracefully while operation is active\n⚠️  Use 'kill -9 {os.getpid()}' to force termination\n",
                 flush=True,
             )
+            logging.info("Signal handler exiting without shutdown (operation active)")
             return  # Refuse shutdown
         else:
-            logging.info(f"Received {signal_name}, shutting down gracefully")
+            logging.info(f"Received {signal_name}, shutting down gracefully (no operation in progress)")
+            logging.debug("Calling cleanup_and_exit()...")
             cleanup_and_exit()
 
 
 def cleanup_and_exit() -> None:
     """Clean up daemon state and exit."""
     logging.info("Daemon shutting down")
+    logging.debug("Beginning cleanup sequence...")
 
     # Shutdown subsystems
+    logging.debug("Shutting down daemon subsystems...")
     shutdown_daemon_subsystems()
+    logging.debug("Daemon subsystems shut down successfully")
 
     # Remove PID file
+    logging.debug(f"Removing PID file: {PID_FILE}")
     try:
         PID_FILE.unlink(missing_ok=True)
+        logging.debug("PID file removed successfully")
     except KeyboardInterrupt:
         _thread.interrupt_main()
         raise
@@ -978,26 +1115,42 @@ def cleanup_and_exit() -> None:
         logging.error(f"Failed to remove PID file: {e}")
 
     # Set final status
+    logging.debug("Writing final daemon status...")
     update_status(DaemonState.IDLE, "Daemon shut down")
+    logging.debug("Final status written")
 
+    logging.info("Cleanup complete, exiting with status 0")
     sys.exit(0)
 
 
 def cleanup_stale_cancel_signals() -> None:
     """Clean up stale cancel signal files (older than 5 minutes)."""
+    logging.debug("Starting stale cancel signal cleanup...")
+    logging.debug(f"Scanning directory: {DAEMON_DIR}")
     try:
-        for signal_file in DAEMON_DIR.glob("cancel_*.signal"):
+        signal_files = list(DAEMON_DIR.glob("cancel_*.signal"))
+        logging.debug(f"Found {len(signal_files)} cancel signal files")
+
+        cleaned_count = 0
+        for signal_file in signal_files:
             try:
                 # Check file age
                 file_age = time.time() - signal_file.stat().st_mtime
+                logging.debug(f"Checking {signal_file.name}: age={file_age:.1f}s")
                 if file_age > 300:  # 5 minutes
-                    logging.info(f"Cleaning up stale cancel signal: {signal_file.name}")
+                    logging.info(f"Cleaning up stale cancel signal: {signal_file.name} (age: {file_age:.1f}s)")
                     signal_file.unlink()
+                    cleaned_count += 1
+                    logging.debug(f"Successfully removed: {signal_file.name}")
+                else:
+                    logging.debug(f"Signal file still fresh, skipping: {signal_file.name}")
             except KeyboardInterrupt:
                 _thread.interrupt_main()
                 raise
             except Exception as e:
                 logging.warning(f"Failed to clean up {signal_file.name}: {e}")
+
+        logging.debug(f"Cleanup complete: removed {cleaned_count} stale cancel signals")
     except KeyboardInterrupt:
         _thread.interrupt_main()
         raise
@@ -1009,23 +1162,31 @@ def run_daemon_loop() -> None:
     """Main daemon loop: process deploy and monitor requests."""
     global _daemon_pid, _daemon_started_at
 
+    logging.info("Starting daemon loop...")
+    logging.debug("Registering signal handlers...")
     # Register signal handlers
     signal.signal(signal.SIGTERM, signal_handler)
     signal.signal(signal.SIGINT, signal_handler)
+    logging.debug("Signal handlers registered (SIGTERM, SIGINT)")
 
     # Initialize daemon tracking variables
     _daemon_pid = os.getpid()
     _daemon_started_at = time.time()
+    logging.debug(f"Daemon PID: {_daemon_pid}, started at: {_daemon_started_at}")
 
     # Write initial IDLE status IMMEDIATELY to prevent clients from reading stale status
     # This must happen before processing any requests to ensure clean state
+    logging.debug("Writing initial IDLE status...")
     update_status(DaemonState.IDLE, "Daemon starting...")
 
     # Initialize daemon subsystems
+    logging.debug("Initializing daemon subsystems...")
     init_daemon_subsystems()
 
     # Initialize process tracker
+    logging.debug(f"Initializing process tracker (registry: {PROCESS_REGISTRY_FILE})...")
     process_tracker = ProcessTracker(PROCESS_REGISTRY_FILE)
+    logging.debug("Process tracker initialized")
 
     logging.info(f"Daemon started with PID {_daemon_pid}")
     update_status(DaemonState.IDLE, "Daemon ready")
@@ -1033,17 +1194,28 @@ def run_daemon_loop() -> None:
     last_activity = time.time()
     last_orphan_check = time.time()
     last_cancel_cleanup = time.time()
+    logging.debug(f"Idle timeout: {IDLE_TIMEOUT}s, orphan check interval: {ORPHAN_CHECK_INTERVAL}s")
+
+    logging.info("Entering main daemon loop...")
+    iteration_count = 0
 
     while True:
         try:
+            iteration_count += 1
+            logging.debug(f"Loop iteration {iteration_count}")
+
             # Check for shutdown signal
             if should_shutdown():
+                logging.info("Shutdown requested via signal")
                 cleanup_and_exit()
 
             # Check idle timeout
-            if time.time() - last_activity > IDLE_TIMEOUT:
-                logging.info(f"Idle timeout reached ({IDLE_TIMEOUT}s), shutting down")
+            idle_time = time.time() - last_activity
+            if idle_time > IDLE_TIMEOUT:
+                logging.info(f"Idle timeout reached ({idle_time:.1f}s / {IDLE_TIMEOUT}s), shutting down")
                 cleanup_and_exit()
+            elif iteration_count % 100 == 0:  # Log every 100 iterations to avoid spam
+                logging.debug(f"Idle time: {idle_time:.1f}s / {IDLE_TIMEOUT}s")
 
             # Periodically check for and cleanup orphaned processes
             if time.time() - last_orphan_check >= ORPHAN_CHECK_INTERVAL:
@@ -1108,8 +1280,9 @@ def run_daemon_loop() -> None:
             # Sleep briefly to avoid busy-wait
             time.sleep(0.5)
 
-        except KeyboardInterrupt:  # noqa: KBI002
+        except KeyboardInterrupt:
             logging.warning("Daemon interrupted by user")
+            _thread.interrupt_main()
             cleanup_and_exit()
         except Exception as e:
             logging.error(f"Daemon error: {e}", exc_info=True)
@@ -1193,6 +1366,6 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         sys.exit(main())
-    except KeyboardInterrupt:  # noqa: KBI002
+    except KeyboardInterrupt:
         print("\nDaemon interrupted by user")
         sys.exit(130)

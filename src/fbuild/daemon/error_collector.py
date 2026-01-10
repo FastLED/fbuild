@@ -93,9 +93,13 @@ class ErrorCollector:
         Returns:
             List of build errors
         """
+        logging.debug(f"Retrieving errors (severity filter: {severity.value if severity else 'None'})")
         with self.lock:
             if severity:
-                return [e for e in self.errors if e.severity == severity]
+                filtered = [e for e in self.errors if e.severity == severity]
+                logging.debug(f"Filtered {len(filtered)} errors by severity {severity.value} (total: {len(self.errors)})")
+                return filtered
+            logging.debug(f"Returning all {len(self.errors)} errors")
             return self.errors.copy()
 
     def get_errors_by_phase(self, phase: str) -> list[BuildError]:
@@ -107,8 +111,11 @@ class ErrorCollector:
         Returns:
             List of build errors for the phase
         """
+        logging.debug(f"Retrieving errors for phase: {phase}")
         with self.lock:
-            return [e for e in self.errors if e.phase == phase]
+            phase_errors = [e for e in self.errors if e.phase == phase]
+            logging.debug(f"Found {len(phase_errors)} errors in phase '{phase}' (total: {len(self.errors)})")
+            return phase_errors
 
     def has_fatal_errors(self) -> bool:
         """Check if any fatal errors occurred.
@@ -116,8 +123,12 @@ class ErrorCollector:
         Returns:
             True if fatal errors exist
         """
+        logging.debug("Checking for fatal errors")
         with self.lock:
-            return any(e.severity == ErrorSeverity.FATAL for e in self.errors)
+            has_fatal = any(e.severity == ErrorSeverity.FATAL for e in self.errors)
+            fatal_count = sum(1 for e in self.errors if e.severity == ErrorSeverity.FATAL)
+            logging.debug(f"Fatal error check result: {has_fatal} ({fatal_count} fatal errors)")
+            return has_fatal
 
     def has_errors(self) -> bool:
         """Check if any errors (non-warning) occurred.
@@ -125,8 +136,12 @@ class ErrorCollector:
         Returns:
             True if errors exist
         """
+        logging.debug("Checking for errors (non-warning)")
         with self.lock:
-            return any(e.severity in (ErrorSeverity.ERROR, ErrorSeverity.FATAL) for e in self.errors)
+            has_errs = any(e.severity in (ErrorSeverity.ERROR, ErrorSeverity.FATAL) for e in self.errors)
+            error_count = sum(1 for e in self.errors if e.severity in (ErrorSeverity.ERROR, ErrorSeverity.FATAL))
+            logging.debug(f"Error check result: {has_errs} ({error_count} errors or fatal)")
+            return has_errs
 
     def has_warnings(self) -> bool:
         """Check if any warnings occurred.
@@ -134,8 +149,12 @@ class ErrorCollector:
         Returns:
             True if warnings exist
         """
+        logging.debug("Checking for warnings")
         with self.lock:
-            return any(e.severity == ErrorSeverity.WARNING for e in self.errors)
+            has_warn = any(e.severity == ErrorSeverity.WARNING for e in self.errors)
+            warning_count = sum(1 for e in self.errors if e.severity == ErrorSeverity.WARNING)
+            logging.debug(f"Warning check result: {has_warn} ({warning_count} warnings)")
+            return has_warn
 
     def get_error_count(self) -> dict[str, int]:
         """Get count of errors by severity.
@@ -143,6 +162,7 @@ class ErrorCollector:
         Returns:
             Dictionary with counts by severity
         """
+        logging.debug("Computing error counts by severity")
         with self.lock:
             counts = {
                 "warnings": sum(1 for e in self.errors if e.severity == ErrorSeverity.WARNING),
@@ -150,6 +170,7 @@ class ErrorCollector:
                 "fatal": sum(1 for e in self.errors if e.severity == ErrorSeverity.FATAL),
                 "total": len(self.errors),
             }
+        logging.debug(f"Error counts: {counts['total']} total ({counts['fatal']} fatal, {counts['errors']} errors, {counts['warnings']} warnings)")
         return counts
 
     def format_errors(self, max_errors: Optional[int] = None) -> str:
@@ -161,11 +182,14 @@ class ErrorCollector:
         Returns:
             Formatted error report
         """
+        logging.debug(f"Formatting errors (max_errors: {max_errors})")
         with self.lock:
             if not self.errors:
+                logging.debug("No errors to format")
                 return "No errors"
 
             errors_to_show = self.errors if max_errors is None else self.errors[:max_errors]
+            logging.debug(f"Formatting {len(errors_to_show)} errors (total: {len(self.errors)})")
             lines = []
 
             for err in errors_to_show:
@@ -179,7 +203,9 @@ class ErrorCollector:
             summary = f"\nSummary: {counts['fatal']} fatal, {counts['errors']} errors, {counts['warnings']} warnings"
             lines.append(summary)
 
-            return "\n\n".join(lines)
+            formatted = "\n\n".join(lines)
+            logging.debug(f"Error formatting complete: {len(lines)} sections, {len(formatted)} characters")
+            return formatted
 
     def format_summary(self) -> str:
         """Format a brief summary of errors.
@@ -187,8 +213,10 @@ class ErrorCollector:
         Returns:
             Brief error summary
         """
+        logging.debug("Formatting error summary")
         counts = self.get_error_count()
         if counts["total"] == 0:
+            logging.debug("No errors for summary")
             return "No errors"
 
         parts = []
@@ -199,7 +227,9 @@ class ErrorCollector:
         if counts["warnings"] > 0:
             parts.append(f"{counts['warnings']} warnings")
 
-        return ", ".join(parts)
+        summary = ", ".join(parts)
+        logging.debug(f"Error summary: {summary}")
+        return summary
 
     def clear(self) -> None:
         """Clear all collected errors."""
@@ -216,10 +246,13 @@ class ErrorCollector:
         Returns:
             First fatal error or None
         """
+        logging.debug("Retrieving first fatal error")
         with self.lock:
             for error in self.errors:
                 if error.severity == ErrorSeverity.FATAL:
+                    logging.debug(f"Found first fatal error: phase={error.phase}, message={error.error_message}")
                     return error
+        logging.debug("No fatal errors found")
         return None
 
     def get_compilation_errors(self) -> list[BuildError]:
@@ -228,7 +261,10 @@ class ErrorCollector:
         Returns:
             List of compilation errors
         """
-        return self.get_errors_by_phase("compile")
+        logging.debug("Retrieving compilation-phase errors")
+        compilation_errors = self.get_errors_by_phase("compile")
+        logging.debug(f"Found {len(compilation_errors)} compilation errors")
+        return compilation_errors
 
     def get_link_errors(self) -> list[BuildError]:
         """Get all link-phase errors.
@@ -236,4 +272,7 @@ class ErrorCollector:
         Returns:
             List of link errors
         """
-        return self.get_errors_by_phase("link")
+        logging.debug("Retrieving link-phase errors")
+        link_errors = self.get_errors_by_phase("link")
+        logging.debug(f"Found {len(link_errors)} link errors")
+        return link_errors

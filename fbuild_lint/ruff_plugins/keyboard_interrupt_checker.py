@@ -116,8 +116,15 @@ class TryExceptVisitor(ast.NodeVisitor):
 
         Returns:
             True if the handler calls _thread.interrupt_main(), handle_keyboard_interrupt_properly(),
-            sys.exit(), or ErrorFormatter.handle_keyboard_interrupt() (which are allowed for CLI error handlers)
+            sys.exit(), ErrorFormatter.handle_keyboard_interrupt(), or re-raises the exception
         """
+        # Check for re-raise (bare raise statement)
+        for node in ast.walk(handler):
+            if isinstance(node, ast.Raise):
+                # Bare raise (re-raise) is allowed
+                if node.exc is None:
+                    return True
+
         # Check for calls to _thread.interrupt_main(), handle_keyboard_interrupt_properly(), or sys.exit()
         for node in ast.walk(handler):
             if isinstance(node, ast.Call):

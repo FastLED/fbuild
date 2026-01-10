@@ -76,11 +76,13 @@ class OperationRegistry:
         Args:
             max_history: Maximum number of completed operations to retain
         """
+        logging.debug(f"Initializing OperationRegistry with max_history={max_history}")
         self.operations: dict[str, Operation] = {}
         self.lock = threading.Lock()
         self.max_history = max_history
-
+        logging.debug("OperationRegistry lock and storage initialized")
         logging.info(f"OperationRegistry initialized (max_history={max_history})")
+        logging.debug("Registry ready to track operations")
 
     def register_operation(self, operation: Operation) -> str:
         """Register new operation.
@@ -91,11 +93,20 @@ class OperationRegistry:
         Returns:
             Operation ID
         """
+        logging.debug(f"Registering operation: {operation.operation_id}")
+        logging.debug(f"Operation type: {operation.operation_type.value}, project: {operation.project_dir}, env: {operation.environment}")
+        logging.debug(f"Request ID: {operation.request_id}, caller PID: {operation.caller_pid}")
+        logging.debug(f"Initial state: {operation.state.value}")
+
         with self.lock:
+            logging.debug("Acquiring lock for operation registration")
+            existing_count = len(self.operations)
             self.operations[operation.operation_id] = operation
+            logging.debug(f"Operation added to registry, total operations: {existing_count} -> {len(self.operations)}")
             self._cleanup_old_operations()
 
         logging.info(f"Registered operation {operation.operation_id}: {operation.operation_type.value} {operation.project_dir}")
+        logging.debug(f"Active operations after registration: {len([op for op in self.operations.values() if op.state in (OperationState.QUEUED, OperationState.RUNNING)])}")
         return operation.operation_id
 
     def get_operation(self, operation_id: str) -> Optional[Operation]:
@@ -107,8 +118,14 @@ class OperationRegistry:
         Returns:
             Operation or None if not found
         """
+        logging.debug(f"Querying operation by ID: {operation_id}")
         with self.lock:
-            return self.operations.get(operation_id)
+            op = self.operations.get(operation_id)
+            if op:
+                logging.debug(f"Found operation: {operation_id}, state: {op.state.value}, type: {op.operation_type.value}")
+            else:
+                logging.debug(f"Operation not found: {operation_id}")
+            return op
 
     def update_state(self, operation_id: str, state: OperationState, **kwargs: Any) -> None:
         """Update operation state.
@@ -118,28 +135,44 @@ class OperationRegistry:
             state: New state
             **kwargs: Additional fields to update
         """
+        logging.debug(f"Updating operation state: {operation_id} -> {state.value}")
+        logging.debug(f"Additional fields to update: {list(kwargs.keys())}")
+
         with self.lock:
             if operation_id not in self.operations:
                 logging.warning(f"Cannot update unknown operation: {operation_id}")
+                logging.debug(f"Known operations: {list(self.operations.keys())}")
                 return
 
             op = self.operations[operation_id]
             old_state = op.state
+            logging.debug(f"Current operation state: {old_state.value}")
             op.state = state
 
             # Auto-update timestamps
             if state == OperationState.RUNNING and op.started_at is None:
                 op.started_at = time.time()
+                logging.debug(f"Operation started at {op.started_at}")
             elif state in (OperationState.COMPLETED, OperationState.FAILED, OperationState.CANCELLED):
                 if op.completed_at is None:
                     op.completed_at = time.time()
+                    duration = op.duration()
+                    logging.debug(f"Operation completed at {op.completed_at}, duration: {duration:.2f}s" if duration else f"Operation completed at {op.completed_at}")
 
             # Update additional fields
             for key, value in kwargs.items():
                 if hasattr(op, key):
+                    old_value = getattr(op, key)
                     setattr(op, key, value)
+                    logging.debug(f"Updated field {key}: {old_value} -> {value}")
 
-            logging.debug(f"Operation {operation_id} state: {old_state.value} -> {state.value}")
+            logging.info(f"Operation {operation_id} state: {old_state.value} -> {state.value}")
+            if state in (OperationState.COMPLETED, OperationState.FAILED, OperationState.CANCELLED):
+                logging.info(
+                    f"Operation {operation_id} finished: state={state.value}, type={op.operation_type.value}, duration={op.duration():.2f}s"
+                    if op.duration()
+                    else f"Operation {operation_id} finished: state={state.value}"
+                )
 
     def get_active_operations(self) -> list[Operation]:
         """Get all active (running/queued) operations.
@@ -147,8 +180,13 @@ class OperationRegistry:
         Returns:
             List of active operations
         """
+        logging.debug("Querying active operations")
         with self.lock:
-            return [op for op in self.operations.values() if op.state in (OperationState.QUEUED, OperationState.RUNNING)]
+            active = [op for op in self.operations.values() if op.state in (OperationState.QUEUED, OperationState.RUNNING)]
+            logging.debug(f"Found {len(active)} active operations (queued or running)")
+            if active:
+                logging.debug(f"Active operation IDs: {[op.operation_id for op in active]}")
+            return active
 
     def get_operations_by_project(self, project_dir: str) -> list[Operation]:
         """Get all operations for a specific project.
@@ -159,8 +197,13 @@ class OperationRegistry:
         Returns:
             List of operations for the project
         """
+        logging.debug(f"Querying operations for project: {project_dir}")
         with self.lock:
-            return [op for op in self.operations.values() if op.project_dir == project_dir]
+            ops = [op for op in self.operations.values() if op.project_dir == project_dir]
+            logging.debug(f"Found {len(ops)} operations for project {project_dir}")
+            if ops:
+                logging.debug(f"Operation states: {[(op.operation_id, op.state.value) for op in ops]}")
+            return ops
 
     def is_project_busy(self, project_dir: str) -> bool:
         """Check if a project has any active operations.
@@ -171,8 +214,11 @@ class OperationRegistry:
         Returns:
             True if project has active operations
         """
+        logging.debug(f"Checking if project is busy: {project_dir}")
         with self.lock:
-            return any(op.project_dir == project_dir and op.state in (OperationState.QUEUED, OperationState.RUNNING) for op in self.operations.values())
+            busy = any(op.project_dir == project_dir and op.state in (OperationState.QUEUED, OperationState.RUNNING) for op in self.operations.values())
+            logging.debug(f"Project {project_dir} busy: {busy}")
+            return busy
 
     def get_statistics(self) -> dict[str, int]:
         """Get operation statistics.
@@ -180,6 +226,7 @@ class OperationRegistry:
         Returns:
             Dictionary with operation counts by state
         """
+        logging.debug("Computing operation statistics")
         with self.lock:
             stats = {
                 "total_operations": len(self.operations),
@@ -189,6 +236,12 @@ class OperationRegistry:
                 "failed": sum(1 for op in self.operations.values() if op.state == OperationState.FAILED),
                 "cancelled": sum(1 for op in self.operations.values() if op.state == OperationState.CANCELLED),
             }
+        logging.debug(
+            f"Operation statistics: total={stats['total_operations']}, queued={stats['queued']}, running={stats['running']}, completed={stats['completed']}, failed={stats['failed']}, cancelled={stats['cancelled']}"
+        )
+        if stats["total_operations"] > 0:
+            success_rate = (stats["completed"] / stats["total_operations"]) * 100 if stats["total_operations"] > 0 else 0
+            logging.info(f"Operation success rate: {success_rate:.1f}% ({stats['completed']}/{stats['total_operations']})")
         return stats
 
     def _cleanup_old_operations(self) -> None:
@@ -198,12 +251,18 @@ class OperationRegistry:
             key=lambda x: x.completed_at or 0,
         )
 
+        logging.debug(f"Checking for old operations to cleanup: {len(completed_ops)} completed, max_history={self.max_history}")
+
         if len(completed_ops) > self.max_history:
             to_remove = completed_ops[: len(completed_ops) - self.max_history]
+            logging.debug(f"Removing {len(to_remove)} old operations to maintain max_history limit")
             for op in to_remove:
+                logging.debug(f"Removing old operation: {op.operation_id}, state: {op.state.value}, completed: {op.completed_at}")
                 del self.operations[op.operation_id]
 
-            logging.debug(f"Cleaned up {len(to_remove)} old operations")
+            logging.info(f"Cleaned up {len(to_remove)} old operations (history size: {len(completed_ops)} -> {len(completed_ops) - len(to_remove)})")
+        else:
+            logging.debug(f"No cleanup needed: {len(completed_ops)} operations within max_history={self.max_history}")
 
     def clear_completed_operations(self, older_than_seconds: Optional[float] = None) -> int:
         """Clear completed operations.
@@ -214,9 +273,12 @@ class OperationRegistry:
         Returns:
             Number of operations cleared
         """
+        logging.debug(f"Clearing completed operations (older_than: {older_than_seconds}s)" if older_than_seconds else "Clearing all completed operations")
+
         with self.lock:
             now = time.time()
             to_remove = []
+            total_completed = 0
 
             for op_id, op in self.operations.items():
                 if op.state not in (
@@ -226,15 +288,24 @@ class OperationRegistry:
                 ):
                     continue
 
+                total_completed += 1
+
                 if older_than_seconds is None:
                     to_remove.append(op_id)
+                    logging.debug(f"Marking operation for removal: {op_id} (no age filter)")
                 elif op.completed_at and (now - op.completed_at) > older_than_seconds:
+                    age = now - op.completed_at
                     to_remove.append(op_id)
+                    logging.debug(f"Marking operation for removal: {op_id} (age: {age:.1f}s > {older_than_seconds}s)")
+
+            logging.debug(f"Found {len(to_remove)} operations to remove out of {total_completed} completed")
 
             for op_id in to_remove:
                 del self.operations[op_id]
 
             if to_remove:
-                logging.info(f"Cleared {len(to_remove)} completed operations")
+                logging.info(f"Cleared {len(to_remove)} completed operations (remaining: {len(self.operations)})")
+            else:
+                logging.debug("No operations to clear")
 
             return len(to_remove)

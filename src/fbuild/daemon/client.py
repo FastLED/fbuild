@@ -282,7 +282,10 @@ def request_build(
             # Sleep before next poll
             time.sleep(0.5)
 
-        except KeyboardInterrupt:  # noqa: KBI002
+        except KeyboardInterrupt:
+            # Interrupt other threads
+            _thread.interrupt_main()
+
             # Prompt user whether to keep the operation running
             print("\n\n⚠️  Interrupted by user (Ctrl-C)")
             response = input("Keep operation running in background? (y/n): ").strip().lower()
@@ -361,7 +364,7 @@ def _display_monitor_summary(project_dir: Path) -> None:
         print(f"Exit reason: {reason_text}")
         print("=" * 50)
 
-    except KeyboardInterrupt:  # noqa: KBI002
+    except KeyboardInterrupt:
         raise
     except Exception:
         # Silently fail - don't disrupt the user experience
@@ -467,7 +470,7 @@ def request_deploy(
                             if new_lines:
                                 print(new_lines, end="", flush=True)
                                 output_file_position = f.tell()
-                    except KeyboardInterrupt:  # noqa: KBI002
+                    except KeyboardInterrupt:
                         raise
                     except Exception:
                         pass  # Ignore read errors
@@ -484,7 +487,7 @@ def request_deploy(
                                 new_lines = f.read()
                                 if new_lines:
                                     print(new_lines, end="", flush=True)
-                        except KeyboardInterrupt:  # noqa: KBI002
+                        except KeyboardInterrupt:
                             raise
                         except Exception:
                             pass
@@ -505,7 +508,7 @@ def request_deploy(
                                 new_lines = f.read()
                                 if new_lines:
                                     print(new_lines, end="", flush=True)
-                        except KeyboardInterrupt:  # noqa: KBI002
+                        except KeyboardInterrupt:
                             raise
                         except Exception:
                             pass
@@ -519,7 +522,10 @@ def request_deploy(
             # Sleep before next poll
             time.sleep(0.1 if monitoring_started else 0.5)
 
-        except KeyboardInterrupt:  # noqa: KBI002
+        except KeyboardInterrupt:
+            # Interrupt other threads
+            _thread.interrupt_main()
+
             # Prompt user whether to keep the operation running
             print("\n\n⚠️  Interrupted by user (Ctrl-C)")
             response = input("Keep operation running in background? (y/n): ").strip().lower()
@@ -636,7 +642,7 @@ def request_monitor(
                             if new_lines:
                                 print(new_lines, end="", flush=True)
                                 output_file_position = f.tell()
-                    except KeyboardInterrupt:  # noqa: KBI002
+                    except KeyboardInterrupt:
                         raise
                     except Exception:
                         pass  # Ignore read errors
@@ -653,7 +659,7 @@ def request_monitor(
                                 new_lines = f.read()
                                 if new_lines:
                                     print(new_lines, end="", flush=True)
-                        except KeyboardInterrupt:  # noqa: KBI002
+                        except KeyboardInterrupt:
                             raise
                         except Exception:
                             pass
@@ -674,7 +680,7 @@ def request_monitor(
                                 new_lines = f.read()
                                 if new_lines:
                                     print(new_lines, end="", flush=True)
-                        except KeyboardInterrupt:  # noqa: KBI002
+                        except KeyboardInterrupt:
                             raise
                         except Exception:
                             pass
@@ -688,7 +694,10 @@ def request_monitor(
             # Sleep before next poll
             time.sleep(0.1 if monitoring_started else 0.5)
 
-        except KeyboardInterrupt:  # noqa: KBI002
+        except KeyboardInterrupt:
+            # Interrupt other threads
+            _thread.interrupt_main()
+
             # Prompt user whether to keep the operation running
             print("\n\n⚠️  Interrupted by user (Ctrl-C)")
             response = input("Keep operation running in background? (y/n): ").strip().lower()
@@ -789,6 +798,6 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         sys.exit(main())
-    except KeyboardInterrupt:  # noqa: KBI002
+    except KeyboardInterrupt:
         print("\nInterrupted by user")
         sys.exit(130)

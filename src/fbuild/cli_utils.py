@@ -25,7 +25,7 @@ def safe_print(text: str, end: str = "\n") -> None:
     try:
         print(text, end=end)
         sys.stdout.flush()
-    except KeyboardInterrupt:  # noqa: KBI002
+    except KeyboardInterrupt:
         # Re-raise KeyboardInterrupt to allow proper handling
         raise
     except (UnicodeEncodeError, AttributeError):
@@ -35,7 +35,7 @@ def safe_print(text: str, end: str = "\n") -> None:
         try:
             print(safe_text, end=end)
             sys.stdout.flush()
-        except KeyboardInterrupt:  # noqa: KBI002
+        except KeyboardInterrupt:
             # Re-raise KeyboardInterrupt to allow proper handling
             raise
         except Exception:
@@ -44,7 +44,7 @@ def safe_print(text: str, end: str = "\n") -> None:
                 output = (safe_text + end).encode("ascii", errors="replace")
                 sys.stdout.buffer.write(output)
                 sys.stdout.buffer.flush()
-            except KeyboardInterrupt:  # noqa: KBI002
+            except KeyboardInterrupt:
                 # Re-raise KeyboardInterrupt to allow proper handling
                 raise
             except Exception:
