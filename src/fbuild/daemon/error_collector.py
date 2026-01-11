@@ -82,8 +82,6 @@ class ErrorCollector:
 
             self.errors.append(error)
 
-        logging.debug(f"Added {error.severity.value} error in phase {error.phase}: {error.error_message}")
-
     def get_errors(self, severity: Optional[ErrorSeverity] = None) -> list[BuildError]:
         """Get all errors, optionally filtered by severity.
 
@@ -111,7 +109,6 @@ class ErrorCollector:
         Returns:
             List of build errors for the phase
         """
-        logging.debug(f"Retrieving errors for phase: {phase}")
         with self.lock:
             phase_errors = [e for e in self.errors if e.phase == phase]
             logging.debug(f"Found {len(phase_errors)} errors in phase '{phase}' (total: {len(self.errors)})")
@@ -123,7 +120,6 @@ class ErrorCollector:
         Returns:
             True if fatal errors exist
         """
-        logging.debug("Checking for fatal errors")
         with self.lock:
             has_fatal = any(e.severity == ErrorSeverity.FATAL for e in self.errors)
             fatal_count = sum(1 for e in self.errors if e.severity == ErrorSeverity.FATAL)
@@ -149,7 +145,6 @@ class ErrorCollector:
         Returns:
             True if warnings exist
         """
-        logging.debug("Checking for warnings")
         with self.lock:
             has_warn = any(e.severity == ErrorSeverity.WARNING for e in self.errors)
             warning_count = sum(1 for e in self.errors if e.severity == ErrorSeverity.WARNING)
@@ -162,7 +157,6 @@ class ErrorCollector:
         Returns:
             Dictionary with counts by severity
         """
-        logging.debug("Computing error counts by severity")
         with self.lock:
             counts = {
                 "warnings": sum(1 for e in self.errors if e.severity == ErrorSeverity.WARNING),
@@ -185,7 +179,6 @@ class ErrorCollector:
         logging.debug(f"Formatting errors (max_errors: {max_errors})")
         with self.lock:
             if not self.errors:
-                logging.debug("No errors to format")
                 return "No errors"
 
             errors_to_show = self.errors if max_errors is None else self.errors[:max_errors]
@@ -213,10 +206,8 @@ class ErrorCollector:
         Returns:
             Brief error summary
         """
-        logging.debug("Formatting error summary")
         counts = self.get_error_count()
         if counts["total"] == 0:
-            logging.debug("No errors for summary")
             return "No errors"
 
         parts = []
@@ -228,7 +219,6 @@ class ErrorCollector:
             parts.append(f"{counts['warnings']} warnings")
 
         summary = ", ".join(parts)
-        logging.debug(f"Error summary: {summary}")
         return summary
 
     def clear(self) -> None:
@@ -238,7 +228,7 @@ class ErrorCollector:
             self.errors.clear()
 
         if error_count > 0:
-            logging.debug(f"Cleared {error_count} errors from ErrorCollector")
+            logging.info(f"Cleared {error_count} errors")
 
     def get_first_fatal_error(self) -> Optional[BuildError]:
         """Get the first fatal error encountered.
@@ -246,13 +236,10 @@ class ErrorCollector:
         Returns:
             First fatal error or None
         """
-        logging.debug("Retrieving first fatal error")
         with self.lock:
             for error in self.errors:
                 if error.severity == ErrorSeverity.FATAL:
-                    logging.debug(f"Found first fatal error: phase={error.phase}, message={error.error_message}")
                     return error
-        logging.debug("No fatal errors found")
         return None
 
     def get_compilation_errors(self) -> list[BuildError]:
@@ -261,7 +248,6 @@ class ErrorCollector:
         Returns:
             List of compilation errors
         """
-        logging.debug("Retrieving compilation-phase errors")
         compilation_errors = self.get_errors_by_phase("compile")
         logging.debug(f"Found {len(compilation_errors)} compilation errors")
         return compilation_errors
@@ -272,7 +258,6 @@ class ErrorCollector:
         Returns:
             List of link errors
         """
-        logging.debug("Retrieving link-phase errors")
         link_errors = self.get_errors_by_phase("link")
         logging.debug(f"Found {len(link_errors)} link errors")
         return link_errors

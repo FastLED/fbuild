@@ -11,6 +11,7 @@ import os
 import subprocess
 import sys
 import time
+from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Any
 
@@ -224,87 +225,14 @@ def request_build(
     Returns:
         True if build successful, False otherwise
     """
-    # Ensure daemon is running
-    if not ensure_daemon_running():
-        return False
-
-    print("\n📤 Submitting build request...")
-    print(f"   Project: {project_dir}")
-    print(f"   Environment: {environment}")
-    if clean_build:
-        print("   Clean build: Yes")
-
-    # Create request
-    request = BuildRequest(
-        project_dir=str(project_dir.absolute()),
+    handler = BuildRequestHandler(
+        project_dir=project_dir,
         environment=environment,
         clean_build=clean_build,
         verbose=verbose,
-        caller_pid=os.getpid(),
-        caller_cwd=os.getcwd(),
+        timeout=timeout,
     )
-
-    # Submit request
-    write_request_file(BUILD_REQUEST_FILE, request)
-    print(f"   Request ID: {request.request_id}")
-    print("   ✅ Submitted\n")
-
-    # Monitor progress
-    print("🔨 Build Progress:")
-    start_time = time.time()
-    last_message: str | None = None
-
-    while True:
-        try:
-            elapsed = time.time() - start_time
-
-            # Check timeout
-            if elapsed > timeout:
-                print(f"\n❌ Build timeout ({timeout}s)")
-                return False
-
-            # Read status
-            status = read_status_file()
-
-            # Display progress when message changes
-            if status.message != last_message:
-                display_status(status)
-                last_message = status.message
-
-            # Check completion
-            if status.state == DaemonState.COMPLETED:
-                # Verify this completion is for OUR request (not a stale status)
-                if status.request_id == request.request_id:
-                    print(f"\n✅ Build completed in {elapsed:.1f}s")
-                    return True
-                # Otherwise, it's a stale status from previous operation - keep waiting
-            elif status.state == DaemonState.FAILED:
-                # Verify this failure is for OUR request (not a stale status)
-                if status.request_id == request.request_id:
-                    print(f"\n❌ Build failed: {status.message}")
-                    return False
-                # Otherwise, it's a stale status from previous operation - keep waiting
-
-            # Sleep before next poll
-            time.sleep(0.5)
-
-        except KeyboardInterrupt:  # noqa: KBI002
-            # Prompt user whether to keep the operation running
-            print("\n\n⚠️  Interrupted by user (Ctrl-C)")
-            response = input("Keep operation running in background? (y/n): ").strip().lower()
-
-            if response in ("y", "yes"):
-                print("\n✅ Operation continues in background")
-                print("   Check status: fbuild daemon status")
-                print("   Stop daemon: fbuild daemon stop")
-                return False  # Operation not completed, but detached
-            else:
-                print("\n🛑 Requesting daemon to stop operation...")
-                # Create a cancel signal file
-                cancel_file = DAEMON_DIR / f"cancel_{request.request_id}.signal"
-                cancel_file.touch()
-                print("   Operation cancellation requested")
-                return False
+    return handler.execute()
 
 
 def _display_monitor_summary(project_dir: Path) -> None:
@@ -374,6 +302,464 @@ def _display_monitor_summary(project_dir: Path) -> None:
         pass
 
 
+# ============================================================================
+# REQUEST HANDLER ARCHITECTURE
+# ============================================================================
+
+
+class BaseRequestHandler(ABC):
+    """Base class for handling daemon requests with common functionality.
+
+    Implements the template method pattern to eliminate duplication across
+    build, deploy, and monitor request handlers.
+    """
+
+    def __init__(self, project_dir: Path, environment: str, timeout: float = 1800):
+        """Initialize request handler.
+
+        Args:
+            project_dir: Project directory
+            environment: Build environment
+            timeout: Maximum wait time in seconds (default: 30 minutes)
+        """
+        self.project_dir = project_dir
+        self.environment = environment
+        self.timeout = timeout
+        self.start_time = 0.0
+        self.last_message: str | None = None
+        self.monitoring_started = False
+        self.output_file_position = 0
+
+    @abstractmethod
+    def create_request(self) -> BuildRequest | DeployRequest | MonitorRequest:
+        """Create the specific request object.
+
+        Returns:
+            Request object (BuildRequest, DeployRequest, or MonitorRequest)
+        """
+        pass
+
+    @abstractmethod
+    def get_request_file(self) -> Path:
+        """Get the request file path.
+
+        Returns:
+            Path to request file
+        """
+        pass
+
+    @abstractmethod
+    def get_operation_name(self) -> str:
+        """Get the operation name for display.
+
+        Returns:
+            Operation name (e.g., "Build", "Deploy", "Monitor")
+        """
+        pass
+
+    @abstractmethod
+    def get_operation_emoji(self) -> str:
+        """Get the operation emoji for display.
+
+        Returns:
+            Operation emoji (e.g., "🔨", "📦", "👁️")
+        """
+        pass
+
+    def should_tail_output(self) -> bool:
+        """Check if output file should be tailed.
+
+        Returns:
+            True if output should be tailed, False otherwise
+        """
+        return False
+
+    def on_monitoring_started(self) -> None:
+        """Hook called when monitoring phase starts."""
+        pass
+
+    def on_completion(self, elapsed: float) -> None:
+        """Hook called on successful completion.
+
+        Args:
+            elapsed: Elapsed time in seconds
+        """
+        pass
+
+    def on_failure(self, status: DaemonStatus, elapsed: float) -> None:
+        """Hook called on failure.
+
+        Args:
+            status: Current daemon status
+            elapsed: Elapsed time in seconds
+        """
+        pass
+
+    def print_submission_info(self) -> None:
+        """Print request submission information."""
+        print(f"\n📤 Submitting {self.get_operation_name().lower()} request...")
+        print(f"   Project: {self.project_dir}")
+        print(f"   Environment: {self.environment}")
+
+    def tail_output_file(self) -> None:
+        """Tail the output file and print new lines."""
+        output_file = self.project_dir / ".fbuild" / "monitor_output.txt"
+        if output_file.exists():
+            try:
+                with open(output_file, "r", encoding="utf-8", errors="replace") as f:
+                    f.seek(self.output_file_position)
+                    new_lines = f.read()
+                    if new_lines:
+                        print(new_lines, end="", flush=True)
+                        self.output_file_position = f.tell()
+            except KeyboardInterrupt:  # noqa: KBI002
+                raise
+            except Exception:
+                pass  # Ignore read errors
+
+    def read_remaining_output(self) -> None:
+        """Read any remaining output from output file."""
+        if not self.monitoring_started:
+            return
+
+        output_file = self.project_dir / ".fbuild" / "monitor_output.txt"
+        if output_file.exists():
+            try:
+                with open(output_file, "r", encoding="utf-8", errors="replace") as f:
+                    f.seek(self.output_file_position)
+                    new_lines = f.read()
+                    if new_lines:
+                        print(new_lines, end="", flush=True)
+            except KeyboardInterrupt:  # noqa: KBI002
+                raise
+            except Exception:
+                pass
+
+    def handle_keyboard_interrupt(self, request_id: str) -> bool:
+        """Handle keyboard interrupt with background option.
+
+        Args:
+            request_id: Request ID for cancellation
+
+        Returns:
+            False (operation not completed or cancelled)
+        """
+        print("\n\n⚠️  Interrupted by user (Ctrl-C)")
+        response = input("Keep operation running in background? (y/n): ").strip().lower()
+
+        if response in ("y", "yes"):
+            print("\n✅ Operation continues in background")
+            print("   Check status: fbuild daemon status")
+            print("   Stop daemon: fbuild daemon stop")
+            return False
+        else:
+            print("\n🛑 Requesting daemon to stop operation...")
+            cancel_file = DAEMON_DIR / f"cancel_{request_id}.signal"
+            cancel_file.touch()
+            print("   Operation cancellation requested")
+            return False
+
+    def execute(self) -> bool:
+        """Execute the request and monitor progress.
+
+        Returns:
+            True if operation successful, False otherwise
+        """
+        # Ensure daemon is running
+        if not ensure_daemon_running():
+            return False
+
+        # Print submission info
+        self.print_submission_info()
+
+        # Create and submit request
+        request = self.create_request()
+        write_request_file(self.get_request_file(), request)
+        print(f"   Request ID: {request.request_id}")
+        print("   ✅ Submitted\n")
+
+        # Monitor progress
+        print(f"{self.get_operation_emoji()} {self.get_operation_name()} Progress:")
+        self.start_time = time.time()
+
+        while True:
+            try:
+                elapsed = time.time() - self.start_time
+
+                # Check timeout
+                if elapsed > self.timeout:
+                    print(f"\n❌ {self.get_operation_name()} timeout ({self.timeout}s)")
+                    return False
+
+                # Read status
+                status = read_status_file()
+
+                # Display progress when message changes
+                if status.message != self.last_message:
+                    display_status(status)
+                    self.last_message = status.message
+
+                # Handle monitoring phase
+                if self.should_tail_output() and status.state == DaemonState.MONITORING:
+                    if not self.monitoring_started:
+                        self.monitoring_started = True
+                        print()  # Blank line before serial output
+                        self.on_monitoring_started()
+
+                if self.monitoring_started and self.should_tail_output():
+                    self.tail_output_file()
+
+                # Check completion
+                if status.state == DaemonState.COMPLETED:
+                    if status.request_id == request.request_id:
+                        self.read_remaining_output()
+                        self.on_completion(elapsed)
+                        print(f"\n✅ {self.get_operation_name()} completed in {elapsed:.1f}s")
+                        return True
+
+                elif status.state == DaemonState.FAILED:
+                    if status.request_id == request.request_id:
+                        self.read_remaining_output()
+                        self.on_failure(status, elapsed)
+                        print(f"\n❌ {self.get_operation_name()} failed: {status.message}")
+                        return False
+
+                # Sleep before next poll
+                poll_interval = 0.1 if self.monitoring_started else 0.5
+                time.sleep(poll_interval)
+
+            except KeyboardInterrupt:  # noqa: KBI002
+                return self.handle_keyboard_interrupt(request.request_id)
+
+
+class BuildRequestHandler(BaseRequestHandler):
+    """Handler for build requests."""
+
+    def __init__(
+        self,
+        project_dir: Path,
+        environment: str,
+        clean_build: bool = False,
+        verbose: bool = False,
+        timeout: float = 1800,
+    ):
+        """Initialize build request handler.
+
+        Args:
+            project_dir: Project directory
+            environment: Build environment
+            clean_build: Whether to perform clean build
+            verbose: Enable verbose build output
+            timeout: Maximum wait time in seconds
+        """
+        super().__init__(project_dir, environment, timeout)
+        self.clean_build = clean_build
+        self.verbose = verbose
+
+    def create_request(self) -> BuildRequest:
+        """Create build request."""
+        return BuildRequest(
+            project_dir=str(self.project_dir.absolute()),
+            environment=self.environment,
+            clean_build=self.clean_build,
+            verbose=self.verbose,
+            caller_pid=os.getpid(),
+            caller_cwd=os.getcwd(),
+        )
+
+    def get_request_file(self) -> Path:
+        """Get build request file path."""
+        return BUILD_REQUEST_FILE
+
+    def get_operation_name(self) -> str:
+        """Get operation name."""
+        return "Build"
+
+    def get_operation_emoji(self) -> str:
+        """Get operation emoji."""
+        return "🔨"
+
+    def print_submission_info(self) -> None:
+        """Print build submission information."""
+        super().print_submission_info()
+        if self.clean_build:
+            print("   Clean build: Yes")
+
+
+class DeployRequestHandler(BaseRequestHandler):
+    """Handler for deploy requests."""
+
+    def __init__(
+        self,
+        project_dir: Path,
+        environment: str,
+        port: str | None = None,
+        clean_build: bool = False,
+        monitor_after: bool = False,
+        monitor_timeout: float | None = None,
+        monitor_halt_on_error: str | None = None,
+        monitor_halt_on_success: str | None = None,
+        monitor_expect: str | None = None,
+        timeout: float = 1800,
+    ):
+        """Initialize deploy request handler.
+
+        Args:
+            project_dir: Project directory
+            environment: Build environment
+            port: Serial port (optional)
+            clean_build: Whether to perform clean build
+            monitor_after: Whether to start monitor after deploy
+            monitor_timeout: Timeout for monitor
+            monitor_halt_on_error: Pattern to halt on error
+            monitor_halt_on_success: Pattern to halt on success
+            monitor_expect: Expected pattern to check
+            timeout: Maximum wait time in seconds
+        """
+        super().__init__(project_dir, environment, timeout)
+        self.port = port
+        self.clean_build = clean_build
+        self.monitor_after = monitor_after
+        self.monitor_timeout = monitor_timeout
+        self.monitor_halt_on_error = monitor_halt_on_error
+        self.monitor_halt_on_success = monitor_halt_on_success
+        self.monitor_expect = monitor_expect
+
+    def create_request(self) -> DeployRequest:
+        """Create deploy request."""
+        return DeployRequest(
+            project_dir=str(self.project_dir.absolute()),
+            environment=self.environment,
+            port=self.port,
+            clean_build=self.clean_build,
+            monitor_after=self.monitor_after,
+            monitor_timeout=self.monitor_timeout,
+            monitor_halt_on_error=self.monitor_halt_on_error,
+            monitor_halt_on_success=self.monitor_halt_on_success,
+            monitor_expect=self.monitor_expect,
+            caller_pid=os.getpid(),
+            caller_cwd=os.getcwd(),
+        )
+
+    def get_request_file(self) -> Path:
+        """Get deploy request file path."""
+        return DEPLOY_REQUEST_FILE
+
+    def get_operation_name(self) -> str:
+        """Get operation name."""
+        return "Deploy"
+
+    def get_operation_emoji(self) -> str:
+        """Get operation emoji."""
+        return "📦"
+
+    def should_tail_output(self) -> bool:
+        """Check if output should be tailed."""
+        return self.monitor_after
+
+    def print_submission_info(self) -> None:
+        """Print deploy submission information."""
+        super().print_submission_info()
+        if self.port:
+            print(f"   Port: {self.port}")
+
+    def on_completion(self, elapsed: float) -> None:
+        """Handle completion with monitor summary."""
+        if self.monitoring_started:
+            _display_monitor_summary(self.project_dir)
+
+    def on_failure(self, status: DaemonStatus, elapsed: float) -> None:
+        """Handle failure with monitor summary."""
+        if self.monitoring_started:
+            _display_monitor_summary(self.project_dir)
+
+
+class MonitorRequestHandler(BaseRequestHandler):
+    """Handler for monitor requests."""
+
+    def __init__(
+        self,
+        project_dir: Path,
+        environment: str,
+        port: str | None = None,
+        baud_rate: int | None = None,
+        halt_on_error: str | None = None,
+        halt_on_success: str | None = None,
+        expect: str | None = None,
+        timeout: float | None = None,
+    ):
+        """Initialize monitor request handler.
+
+        Args:
+            project_dir: Project directory
+            environment: Build environment
+            port: Serial port (optional)
+            baud_rate: Serial baud rate (optional)
+            halt_on_error: Pattern to halt on error
+            halt_on_success: Pattern to halt on success
+            expect: Expected pattern to check
+            timeout: Maximum monitoring time in seconds
+        """
+        super().__init__(project_dir, environment, timeout or 3600)
+        self.port = port
+        self.baud_rate = baud_rate
+        self.halt_on_error = halt_on_error
+        self.halt_on_success = halt_on_success
+        self.expect = expect
+        self.monitor_timeout = timeout
+
+    def create_request(self) -> MonitorRequest:
+        """Create monitor request."""
+        return MonitorRequest(
+            project_dir=str(self.project_dir.absolute()),
+            environment=self.environment,
+            port=self.port,
+            baud_rate=self.baud_rate,
+            halt_on_error=self.halt_on_error,
+            halt_on_success=self.halt_on_success,
+            expect=self.expect,
+            timeout=self.monitor_timeout,
+            caller_pid=os.getpid(),
+            caller_cwd=os.getcwd(),
+        )
+
+    def get_request_file(self) -> Path:
+        """Get monitor request file path."""
+        return MONITOR_REQUEST_FILE
+
+    def get_operation_name(self) -> str:
+        """Get operation name."""
+        return "Monitor"
+
+    def get_operation_emoji(self) -> str:
+        """Get operation emoji."""
+        return "👁️"
+
+    def should_tail_output(self) -> bool:
+        """Check if output should be tailed."""
+        return True
+
+    def print_submission_info(self) -> None:
+        """Print monitor submission information."""
+        super().print_submission_info()
+        if self.port:
+            print(f"   Port: {self.port}")
+        if self.baud_rate:
+            print(f"   Baud rate: {self.baud_rate}")
+        if self.monitor_timeout:
+            print(f"   Timeout: {self.monitor_timeout}s")
+
+    def on_completion(self, elapsed: float) -> None:
+        """Handle completion with monitor summary."""
+        if self.monitoring_started:
+            _display_monitor_summary(self.project_dir)
+
+    def on_failure(self, status: DaemonStatus, elapsed: float) -> None:
+        """Handle failure with monitor summary."""
+        if self.monitoring_started:
+            _display_monitor_summary(self.project_dir)
+
+
 def request_deploy(
     project_dir: Path,
     environment: str,
@@ -403,19 +789,8 @@ def request_deploy(
     Returns:
         True if deploy successful, False otherwise
     """
-    # Ensure daemon is running
-    if not ensure_daemon_running():
-        return False
-
-    print("\n📤 Submitting deploy request...")
-    print(f"   Project: {project_dir}")
-    print(f"   Environment: {environment}")
-    if port:
-        print(f"   Port: {port}")
-
-    # Create request
-    request = DeployRequest(
-        project_dir=str(project_dir.absolute()),
+    handler = DeployRequestHandler(
+        project_dir=project_dir,
         environment=environment,
         port=port,
         clean_build=clean_build,
@@ -424,130 +799,9 @@ def request_deploy(
         monitor_halt_on_error=monitor_halt_on_error,
         monitor_halt_on_success=monitor_halt_on_success,
         monitor_expect=monitor_expect,
-        caller_pid=os.getpid(),
-        caller_cwd=os.getcwd(),
+        timeout=timeout,
     )
-
-    # Submit request
-    write_request_file(DEPLOY_REQUEST_FILE, request)
-    print(f"   Request ID: {request.request_id}")
-    print("   ✅ Submitted\n")
-
-    # Monitor progress
-    print("📦 Deploy Progress:")
-    start_time = time.time()
-    last_message: str | None = None
-    monitoring_started = False
-    output_file_position = 0
-
-    while True:
-        try:
-            elapsed = time.time() - start_time
-
-            # Check timeout
-            if elapsed > timeout:
-                print(f"\n❌ Deploy timeout ({timeout}s)")
-                return False
-
-            # Read status
-            status = read_status_file()
-
-            # Display progress when message changes
-            if status.message != last_message:
-                display_status(status)
-                last_message = status.message
-
-            # If monitoring phase started, tail the output file
-            if monitor_after and status.state == DaemonState.MONITORING and not monitoring_started:
-                monitoring_started = True
-                print()  # Add blank line before serial output
-
-            if monitoring_started:
-                # Tail the output file
-                output_file = project_dir / ".fbuild" / "monitor_output.txt"
-                if output_file.exists():
-                    try:
-                        with open(output_file, "r", encoding="utf-8", errors="replace") as f:
-                            f.seek(output_file_position)
-                            new_lines = f.read()
-                            if new_lines:
-                                print(new_lines, end="", flush=True)
-                                output_file_position = f.tell()
-                    except KeyboardInterrupt:  # noqa: KBI002
-                        raise
-                    except Exception:
-                        pass  # Ignore read errors
-
-            # Check completion
-            if status.state == DaemonState.COMPLETED:
-                # Verify this completion is for OUR request (not a stale status)
-                if status.request_id == request.request_id:
-                    # Read any remaining output
-                    if monitoring_started:
-                        output_file = project_dir / ".fbuild" / "monitor_output.txt"
-                        if output_file.exists():
-                            try:
-                                with open(output_file, "r", encoding="utf-8", errors="replace") as f:
-                                    f.seek(output_file_position)
-                                    new_lines = f.read()
-                                    if new_lines:
-                                        print(new_lines, end="", flush=True)
-                            except KeyboardInterrupt:  # noqa: KBI002
-                                raise
-                            except Exception:
-                                pass
-
-                        # Display monitor summary
-                        _display_monitor_summary(project_dir)
-
-                    print(f"\n✅ Deploy completed in {elapsed:.1f}s")
-                    return True
-                # Otherwise, it's a stale status from previous operation - keep waiting
-            elif status.state == DaemonState.FAILED:
-                # Verify this failure is for OUR request (not a stale status)
-                if status.request_id == request.request_id:
-                    # Read any remaining output
-                    if monitoring_started:
-                        output_file = project_dir / ".fbuild" / "monitor_output.txt"
-                        if output_file.exists():
-                            try:
-                                with open(output_file, "r", encoding="utf-8", errors="replace") as f:
-                                    f.seek(output_file_position)
-                                    new_lines = f.read()
-                                    if new_lines:
-                                        print(new_lines, end="", flush=True)
-                            except KeyboardInterrupt:  # noqa: KBI002
-                                raise
-                            except Exception:
-                                pass
-
-                        # Display monitor summary
-                        _display_monitor_summary(project_dir)
-
-                    print(f"\n❌ Deploy failed: {status.message}")
-                    return False
-                # Otherwise, it's a stale status from previous operation - keep waiting
-
-            # Sleep before next poll
-            time.sleep(0.1 if monitoring_started else 0.5)
-
-        except KeyboardInterrupt:  # noqa: KBI002
-            # Prompt user whether to keep the operation running
-            print("\n\n⚠️  Interrupted by user (Ctrl-C)")
-            response = input("Keep operation running in background? (y/n): ").strip().lower()
-
-            if response in ("y", "yes"):
-                print("\n✅ Operation continues in background")
-                print("   Check status: fbuild daemon status")
-                print("   Stop daemon: fbuild daemon stop")
-                return False  # Operation not completed, but detached
-            else:
-                print("\n🛑 Requesting daemon to stop operation...")
-                # Create a cancel signal file
-                cancel_file = DAEMON_DIR / f"cancel_{request.request_id}.signal"
-                cancel_file.touch()
-                print("   Operation cancellation requested")
-                return False
+    return handler.execute()
 
 
 def request_monitor(
@@ -575,23 +829,8 @@ def request_monitor(
     Returns:
         True if monitoring successful, False otherwise
     """
-    # Ensure daemon is running
-    if not ensure_daemon_running():
-        return False
-
-    print("\n📤 Submitting monitor request...")
-    print(f"   Project: {project_dir}")
-    print(f"   Environment: {environment}")
-    if port:
-        print(f"   Port: {port}")
-    if baud_rate:
-        print(f"   Baud rate: {baud_rate}")
-    if timeout:
-        print(f"   Timeout: {timeout}s")
-
-    # Create request
-    request = MonitorRequest(
-        project_dir=str(project_dir.absolute()),
+    handler = MonitorRequestHandler(
+        project_dir=project_dir,
         environment=environment,
         port=port,
         baud_rate=baud_rate,
@@ -599,130 +838,8 @@ def request_monitor(
         halt_on_success=halt_on_success,
         expect=expect,
         timeout=timeout,
-        caller_pid=os.getpid(),
-        caller_cwd=os.getcwd(),
     )
-
-    # Submit request
-    write_request_file(MONITOR_REQUEST_FILE, request)
-    print(f"   Request ID: {request.request_id}")
-    print("   ✅ Submitted\n")
-
-    # Monitor progress
-    print("👁️  Monitor Output:")
-    start_time = time.time()
-    last_message: str | None = None
-    monitoring_started = False
-    output_file_position = 0
-
-    while True:
-        try:
-            elapsed = time.time() - start_time
-
-            # Check timeout
-            if timeout and elapsed > timeout:
-                print(f"\n⏱️  Monitor timeout ({timeout}s)")
-                return True  # Timeout is expected for monitor
-
-            # Read status
-            status = read_status_file()
-
-            # Display progress when message changes
-            if status.message != last_message:
-                display_status(status)
-                last_message = status.message
-
-            # If monitoring phase started, tail the output file
-            if status.state == DaemonState.MONITORING and not monitoring_started:
-                monitoring_started = True
-                print()  # Add blank line before serial output
-
-            if monitoring_started:
-                # Tail the output file
-                output_file = project_dir / ".fbuild" / "monitor_output.txt"
-                if output_file.exists():
-                    try:
-                        with open(output_file, "r", encoding="utf-8", errors="replace") as f:
-                            f.seek(output_file_position)
-                            new_lines = f.read()
-                            if new_lines:
-                                print(new_lines, end="", flush=True)
-                                output_file_position = f.tell()
-                    except KeyboardInterrupt:  # noqa: KBI002
-                        raise
-                    except Exception:
-                        pass  # Ignore read errors
-
-            # Check completion
-            if status.state == DaemonState.COMPLETED:
-                # Verify this completion is for OUR request (not a stale status)
-                if status.request_id == request.request_id:
-                    # Read any remaining output
-                    if monitoring_started:
-                        output_file = project_dir / ".fbuild" / "monitor_output.txt"
-                        if output_file.exists():
-                            try:
-                                with open(output_file, "r", encoding="utf-8", errors="replace") as f:
-                                    f.seek(output_file_position)
-                                    new_lines = f.read()
-                                    if new_lines:
-                                        print(new_lines, end="", flush=True)
-                            except KeyboardInterrupt:  # noqa: KBI002
-                                raise
-                            except Exception:
-                                pass
-
-                        # Display monitor summary
-                        _display_monitor_summary(project_dir)
-
-                    print(f"\n✅ Monitor completed in {elapsed:.1f}s")
-                    return True
-                # Otherwise, it's a stale status from previous operation - keep waiting
-            elif status.state == DaemonState.FAILED:
-                # Verify this failure is for OUR request (not a stale status)
-                if status.request_id == request.request_id:
-                    # Read any remaining output
-                    if monitoring_started:
-                        output_file = project_dir / ".fbuild" / "monitor_output.txt"
-                        if output_file.exists():
-                            try:
-                                with open(output_file, "r", encoding="utf-8", errors="replace") as f:
-                                    f.seek(output_file_position)
-                                    new_lines = f.read()
-                                    if new_lines:
-                                        print(new_lines, end="", flush=True)
-                            except KeyboardInterrupt:  # noqa: KBI002
-                                raise
-                            except Exception:
-                                pass
-
-                        # Display monitor summary
-                        _display_monitor_summary(project_dir)
-
-                    print(f"\n❌ Monitor failed: {status.message}")
-                    return False
-                # Otherwise, it's a stale status from previous operation - keep waiting
-
-            # Sleep before next poll
-            time.sleep(0.1 if monitoring_started else 0.5)
-
-        except KeyboardInterrupt:  # noqa: KBI002
-            # Prompt user whether to keep the operation running
-            print("\n\n⚠️  Interrupted by user (Ctrl-C)")
-            response = input("Keep operation running in background? (y/n): ").strip().lower()
-
-            if response in ("y", "yes"):
-                print("\n✅ Operation continues in background")
-                print("   Check status: fbuild daemon status")
-                print("   Stop daemon: fbuild daemon stop")
-                return False  # Operation not completed, but detached
-            else:
-                print("\n🛑 Requesting daemon to stop operation...")
-                # Create a cancel signal file
-                cancel_file = DAEMON_DIR / f"cancel_{request.request_id}.signal"
-                cancel_file.touch()
-                print("   Operation cancellation requested")
-                return False
+    return handler.execute()
 
 
 def stop_daemon() -> bool:

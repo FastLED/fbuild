@@ -29,23 +29,18 @@ class FileCache:
         Args:
             cache_file: Path to cache file (JSON format)
         """
-        logger.debug(f"Initializing FileCache with cache file: {cache_file}")
         self.cache_file = cache_file
         self.cache: dict[str, str] = {}
         self.lock = threading.Lock()
-        logger.debug("FileCache storage and lock initialized")
         self._load_cache()
         logger.info(f"FileCache initialized with {len(self.cache)} cached entries")
 
     def _load_cache(self):
         """Load cache from disk."""
-        logger.debug(f"Loading cache from disk: {self.cache_file}")
         if not self.cache_file.exists():
-            logger.debug(f"Cache file not found: {self.cache_file}, starting with empty cache")
             return
 
         try:
-            logger.debug(f"Reading cache file: {self.cache_file}")
             with open(self.cache_file, "r", encoding="utf-8") as f:
                 data = json.load(f)
             logger.debug(f"Parsed {len(data)} cache entries from JSON")
@@ -55,11 +50,9 @@ class FileCache:
                 logger.debug(f"Sample cache keys: {list(self.cache.keys())[:3]}")
         except json.JSONDecodeError as e:
             logger.warning(f"Failed to parse cache JSON from {self.cache_file}: {e}")
-            logger.debug("Initializing empty cache due to parse error")
             self.cache = {}
         except IOError as e:
             logger.warning(f"Failed to read cache file {self.cache_file}: {e}")
-            logger.debug("Initializing empty cache due to I/O error")
             self.cache = {}
 
     def _save_cache(self):
@@ -67,22 +60,18 @@ class FileCache:
 
         Uses atomic write pattern (temp file + rename) to prevent corruption.
         """
-        logger.debug(f"Saving cache to disk: {self.cache_file}")
         logger.debug(f"Cache entries to save: {len(self.cache)}")
 
         try:
             # Ensure cache directory exists
-            logger.debug(f"Ensuring cache directory exists: {self.cache_file.parent}")
             self.cache_file.parent.mkdir(parents=True, exist_ok=True)
 
             # Write to temporary file
             temp_file = self.cache_file.with_suffix(".tmp")
-            logger.debug(f"Writing cache to temporary file: {temp_file}")
             with open(temp_file, "w", encoding="utf-8") as f:
                 json.dump(self.cache, f, indent=2)
 
             # Atomic rename
-            logger.debug(f"Atomically renaming {temp_file} -> {self.cache_file}")
             temp_file.replace(self.cache_file)
 
             logger.debug(f"Saved cache with {len(self.cache)} entries to {self.cache_file}")
@@ -104,7 +93,6 @@ class FileCache:
             FileNotFoundError: If file does not exist
             IOError: If file cannot be read
         """
-        logger.debug(f"Computing file hash: {file_path}")
         sha256 = hashlib.sha256()
         bytes_read = 0
 
@@ -135,11 +123,9 @@ class FileCache:
         Returns:
             True if file has changed or not in cache, False otherwise
         """
-        logger.debug(f"Checking if file has changed: {file_path}")
 
         if not file_path.exists():
             logger.warning(f"File does not exist: {file_path}")
-            logger.debug("Non-existent file considered changed")
             return True
 
         file_key = str(file_path.absolute())
@@ -149,7 +135,6 @@ class FileCache:
 
         # File not in cache - consider it changed
         if cached_hash is None:
-            logger.debug(f"File not in cache: {file_path} - cache miss")
             return True
 
         try:
@@ -159,13 +144,12 @@ class FileCache:
             if changed:
                 logger.debug(f"File changed: {file_path} (cached: {cached_hash[:16]}..., current: {current_hash[:16]}...)")
             else:
-                logger.debug(f"File unchanged: {file_path} - cache hit")
+                logger.debug(f"File unchanged: {file_path}")
 
             return changed
 
-        except (FileNotFoundError, IOError) as e:
+        except (FileNotFoundError, IOError):
             # If we can't hash the file, assume it changed
-            logger.debug(f"Failed to hash file, assuming changed: {e}")
             return True
 
     def update(self, file_path: Path):
@@ -174,7 +158,6 @@ class FileCache:
         Args:
             file_path: Path to file
         """
-        logger.debug(f"Updating cache entry: {file_path}")
 
         if not file_path.exists():
             logger.warning(f"Cannot update cache for non-existent file: {file_path}")
@@ -182,7 +165,6 @@ class FileCache:
 
         try:
             file_key = str(file_path.absolute())
-            logger.debug("Computing hash for cache update")
             current_hash = self.get_file_hash(file_path)
 
             with self.lock:
@@ -191,12 +173,9 @@ class FileCache:
                 cache_size = len(self.cache)
 
             logger.debug(f"Cache entry {'updated' if was_cached else 'added'}: {file_path} (total entries: {cache_size})")
-            logger.debug("Persisting cache to disk")
 
             with self.lock:
                 self._save_cache()
-
-            logger.debug(f"Updated cache for: {file_path}")
 
         except (FileNotFoundError, IOError) as e:
             logger.error(f"Failed to update cache for {file_path}: {e}")
@@ -214,7 +193,6 @@ class FileCache:
 
         for file_path in file_paths:
             if not file_path.exists():
-                logger.debug(f"Skipping non-existent file in batch: {file_path}")
                 skipped_count += 1
                 continue
 
@@ -253,30 +231,23 @@ class FileCache:
         Returns:
             True if recompilation needed, False otherwise
         """
-        logger.debug(f"Checking recompilation need: source={source_path.name}, object={object_path.name}")
 
         # Object doesn't exist - must compile
         if not object_path.exists():
-            logger.debug(f"Object file missing: {object_path} - recompilation needed")
             logger.debug("Reason: object file does not exist")
             return True
 
         # Source changed - must recompile
-        logger.debug("Checking if source file changed via cache")
         if self.has_changed(source_path):
-            logger.debug(f"Source file changed: {source_path} - recompilation needed")
             logger.debug("Reason: source file hash differs from cache")
             return True
 
         # Object older than source - must recompile
-        logger.debug("Checking file modification times")
         try:
             source_mtime = source_path.stat().st_mtime
             object_mtime = object_path.stat().st_mtime
-            logger.debug(f"Source mtime: {source_mtime}, Object mtime: {object_mtime}")
 
             if object_mtime < source_mtime:
-                logger.debug(f"Object file older than source: {object_path} - recompilation needed")
                 logger.debug(f"Reason: object mtime ({object_mtime}) < source mtime ({source_mtime})")
                 return True
 
@@ -295,18 +266,15 @@ class FileCache:
         Args:
             file_path: Path to file
         """
-        logger.debug(f"Invalidating cache entry: {file_path}")
         file_key = str(file_path.absolute())
 
         with self.lock:
             if file_key in self.cache:
-                logger.debug(f"Removing cache entry for: {file_path}")
                 del self.cache[file_key]
-                logger.debug("Persisting cache after invalidation")
                 self._save_cache()
                 logger.info(f"Invalidated cache entry: {file_path} (total entries: {len(self.cache)})")
             else:
-                logger.debug(f"Cache entry not found for invalidation: {file_path}")
+                logger.debug(f"Cache entry not found: {file_path}")
 
     def clear(self):
         """Clear entire cache."""
@@ -314,7 +282,6 @@ class FileCache:
         with self.lock:
             old_size = len(self.cache)
             self.cache.clear()
-            logger.debug(f"Cache cleared in memory: {old_size} entries removed")
             self._save_cache()
             logger.info(f"Cache cleared: removed {old_size} entries")
 
@@ -324,12 +291,10 @@ class FileCache:
         Returns:
             Dictionary with cache statistics
         """
-        logger.debug("Computing cache statistics")
         with self.lock:
             stats = {
                 "total_entries": len(self.cache),
             }
-        logger.debug(f"Cache statistics: {stats['total_entries']} entries")
         return stats
 
 

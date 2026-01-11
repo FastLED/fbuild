@@ -60,7 +60,6 @@ class SubprocessManager:
         Args:
             max_history: Maximum number of executions to keep in history
         """
-        logger.debug(f"Initializing SubprocessManager with max_history={max_history}")
         self.executions: dict[str, SubprocessExecution] = {}
         self.lock = threading.Lock()
         self.max_history = max_history
@@ -93,12 +92,8 @@ class SubprocessManager:
         with self.lock:
             self._execution_counter += 1
             execution_id = f"subprocess_{int(time.time() * 1000000)}_{self._execution_counter}"
-
-        logger.debug(f"Generated execution ID: {execution_id}")
         logger.debug(f"Subprocess command: {' '.join(str(c) for c in command)}")
-        logger.debug(f"Working directory: {cwd}")
         logger.debug(f"Environment variables: {len(env) if env else 0} vars")
-        logger.debug(f"Timeout setting: {timeout}s" if timeout else "No timeout")
         logger.debug(f"Capture output: {capture_output}")
 
         execution = SubprocessExecution(
@@ -134,8 +129,6 @@ class SubprocessManager:
                 timeout=timeout,
                 check=check,
             )
-
-            logger.debug(f"Subprocess {execution_id} completed with return code: {result.returncode}")
             execution.returncode = result.returncode
             execution.stdout = result.stdout if capture_output else None
             execution.stderr = result.stderr if capture_output else None
@@ -153,16 +146,14 @@ class SubprocessManager:
             else:
                 logger.warning(f"Subprocess {execution_id}: FAILED with code {result.returncode} in {duration:.2f}s")
                 if result.stderr and capture_output:
-                    logger.debug(f"Subprocess {execution_id} stderr preview: {result.stderr[:200]}")
+                    logger.debug(f"Subprocess {execution_id} stderr: {result.stderr[:200]}")
 
         except subprocess.TimeoutExpired as e:
             logger.error(f"Subprocess {execution_id}: TIMEOUT after {timeout}s")
-            logger.debug(f"Killing subprocess {execution_id} due to timeout")
             execution.error = f"Timeout after {timeout}s"
             execution.returncode = -1
             execution.stderr = str(e)
             execution.end_time = time.time()
-            logger.debug(f"Subprocess {execution_id} marked as timeout failure")
 
         except subprocess.CalledProcessError as e:
             logger.error(f"Subprocess {execution_id}: CalledProcessError with exit code {e.returncode}")
@@ -171,7 +162,6 @@ class SubprocessManager:
             execution.stdout = e.stdout if capture_output else None
             execution.stderr = e.stderr if capture_output else None
             execution.end_time = time.time()
-            logger.debug(f"Subprocess {execution_id} marked as called process error")
 
         except KeyboardInterrupt as ke:
             logger.warning(f"Subprocess {execution_id}: KeyboardInterrupt received")
@@ -182,7 +172,6 @@ class SubprocessManager:
             execution.error = str(e)
             execution.returncode = -1
             execution.end_time = time.time()
-            logger.debug(f"Subprocess {execution_id} marked as exception failure")
 
         logger.debug(f"Returning execution result for {execution_id} (success={execution.success()})")
         return execution
@@ -196,13 +185,12 @@ class SubprocessManager:
         Returns:
             SubprocessExecution if found, None otherwise
         """
-        logger.debug(f"Looking up execution: {execution_id}")
         with self.lock:
             execution = self.executions.get(execution_id)
             if execution:
                 logger.debug(f"Found execution {execution_id} (success={execution.success()})")
             else:
-                logger.debug(f"Execution {execution_id} not found in history")
+                logger.debug(f"Execution {execution_id} not found")
             return execution
 
     def get_statistics(self) -> dict[str, Any]:
@@ -211,13 +199,10 @@ class SubprocessManager:
         Returns:
             Dictionary with execution counts and statistics
         """
-        logger.debug("Calculating subprocess execution statistics")
         with self.lock:
             total = len(self.executions)
             successful = sum(1 for e in self.executions.values() if e.success())
             failed = sum(1 for e in self.executions.values() if not e.success())
-
-            logger.debug(f"Subprocess stats: total={total}, successful={successful}, failed={failed}")
 
             # Calculate average duration for successful executions
             successful_durations: list[float] = []
@@ -249,7 +234,6 @@ class SubprocessManager:
         Returns:
             List of failed SubprocessExecution objects
         """
-        logger.debug(f"Retrieving up to {count} recent failures")
         with self.lock:
             failures = [e for e in self.executions.values() if not e.success()]
             logger.debug(f"Found {len(failures)} total failures in history")
@@ -263,10 +247,8 @@ class SubprocessManager:
 
     def clear_history(self):
         """Clear all execution history."""
-        logger.debug("Clearing subprocess execution history")
         with self.lock:
             count = len(self.executions)
-            logger.debug(f"Clearing {count} execution records from history")
             self.executions.clear()
             logger.info(f"Subprocess execution history cleared ({count} records removed)")
 
@@ -277,10 +259,7 @@ class SubprocessManager:
         """
         current_count = len(self.executions)
         if current_count <= self.max_history:
-            logger.debug(f"No cleanup needed: {current_count} executions <= {self.max_history} max_history")
             return
-
-        logger.debug(f"Cleanup triggered: {current_count} executions > {self.max_history} max_history")
 
         # Get all executions sorted by end time
         all_executions = sorted(self.executions.values(), key=lambda e: e.end_time or 0)
@@ -294,10 +273,8 @@ class SubprocessManager:
         # Remove oldest successes if we're over limit
         to_remove = len(self.executions) - self.max_history
         if to_remove > 0 and len(successes) > to_remove:
-            logger.debug(f"Removing {to_remove} oldest successful executions")
             for execution in successes[:to_remove]:
                 del self.executions[execution.execution_id]
-                logger.debug(f"Removed execution {execution.execution_id} from history")
 
             logger.info(f"Cleaned up {to_remove} old successful subprocess executions (history now: {len(self.executions)})")
         else:
@@ -318,11 +295,9 @@ def get_subprocess_manager() -> SubprocessManager:
         RuntimeError: If subprocess manager not initialized
     """
     global _subprocess_manager
-    logger.debug("Retrieving global SubprocessManager instance")
     if _subprocess_manager is None:
         logger.error("SubprocessManager accessed before initialization")
         raise RuntimeError("SubprocessManager not initialized. Call init_subprocess_manager() first.")
-    logger.debug("Returning initialized SubprocessManager instance")
     return _subprocess_manager
 
 
@@ -336,7 +311,6 @@ def init_subprocess_manager(max_history: int = 1000) -> SubprocessManager:
         Initialized SubprocessManager instance
     """
     global _subprocess_manager
-    logger.debug(f"Initializing global SubprocessManager with max_history={max_history}")
     _subprocess_manager = SubprocessManager(max_history=max_history)
     logger.info("Global SubprocessManager initialized successfully")
     return _subprocess_manager
