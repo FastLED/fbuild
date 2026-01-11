@@ -12,16 +12,27 @@ A fast, next-generation multi-platform compiler, deployer, and monitor for embed
 
 Fbuild is a next-generation embedded development tool featuring a clean, transparent architecture. It provides fast incremental builds, URL-based package management, and comprehensive multi-platform support for Arduino and ESP32 development.
 
-**Current Status**: v0.1.0 - Full Arduino Uno support with working build system
+**Current Status**: v1.1.0 - Full Arduino Uno / esp32c6 support with working build system
 
 ## Examples
 
 **Quick start** - Build, deploy, and monitor in one command:
 
 ```bash
-# Default action: build + deploy + monitor
-uv run fbuild tests/esp32c6
+# install
+pip install fbuild
 ```
+
+```bash
+# Default action: build + deploy
+fbuild tests/esp32c6
+```
+
+```bash
+# Default action: build + deploy + monitor
+fbuild tests/esp32c6 --monitor
+```
+
 
 **Deploy commands:**
 
