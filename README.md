@@ -1,8 +1,6 @@
 ![fbuild](https://github.com/user-attachments/assets/7db78eba-b10f-44c7-ae32-7fc0b5e46642)
 
-
-
-*A drop in replacement for platformio support platformio: A fast, next-generation multi-platform compiler, deployer, and monitor for embedded development.*
+*A fast, next-generation multi-platform compiler, deployer, and monitor for embedded development.*
 
 # fbuild
 
