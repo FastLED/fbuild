@@ -12,6 +12,15 @@ A fast, next-generation multi-platform compiler, deployer, and monitor for embed
 
 Fbuild is a next-generation embedded development tool featuring a clean, transparent architecture. It provides fast incremental builds, URL-based package management, and comprehensive multi-platform support for Arduino and ESP32 development.
 
+**Design Goals**
+
+  * Correct and parallel package management system
+    * locking is done through a daemon process
+    * packages are fingerprinted to their version and cached, download only once
+    * sccache for caching compiles
+  * Eesily add features via AI
+    * This codebase is designed and implemented by AI, just fork it and ask ai to make your change Please send us a PR!
+    
 **Current Status**: v1.1.0 - Full Arduino Uno / esp32c6 support with working build system
 
 ## Examples
