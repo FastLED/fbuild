@@ -18,6 +18,7 @@ fbuiold uses the same `platformio.ini` already used in platformio sketches.
 
 **Design Goals**
 
+  * Replaces `platformio` in `FastLED` repo builders
   * Correct and parallel package management system
     * locking is done through a daemon process
     * packages are fingerprinted to their version and cached, download only once
