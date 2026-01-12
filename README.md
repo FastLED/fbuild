@@ -1,14 +1,10 @@
-# Fbuild
+![fbuild](https://github.com/user-attachments/assets/7db78eba-b10f-44c7-ae32-7fc0b5e46642)
 
-A fast, next-generation multi-platform compiler, deployer, and monitor for embedded development.
 
-[![Linting](../../actions/workflows/lint.yml/badge.svg)](../../actions/workflows/lint.yml)
 
-[![MacOS_Tests](../../actions/workflows/push_macos.yml/badge.svg)](../../actions/workflows/push_macos.yml)
-[![Ubuntu_Tests](../../actions/workflows/push_ubuntu.yml/badge.svg)](../../actions/workflows/push_ubuntu.yml)
-[![Win_Tests](../../actions/workflows/push_win.yml/badge.svg)](../../actions/workflows/push_win.yml)
+*A drop in replacement for platformio support platformio: A fast, next-generation multi-platform compiler, deployer, and monitor for embedded development.*
 
-## What is Fbuild?
+# fbuild
 
 Fbuild is a next-generation embedded development tool featuring a clean, transparent architecture. It provides fast incremental builds, URL-based package management, and soon to be comprehensive multi-platform support for Arduino and ESP32 development.
 
