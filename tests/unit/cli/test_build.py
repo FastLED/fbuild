@@ -375,7 +375,7 @@ class TestCLIBuild:
 
         assert exc_info.value.code == 0
         captured = capsys.readouterr()
-        assert "1.2.0" in captured.out
+        assert "1.2.1" in captured.out
 
 
 class TestCLIIntegration:
