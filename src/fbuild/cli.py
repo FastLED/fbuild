@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 
+from fbuild import __version__
 from fbuild.cli_utils import (
     EnvironmentDetector,
     ErrorFormatter,
@@ -67,7 +68,7 @@ def build_command(args: BuildArgs) -> None:
         fbuild build --verbose           # Verbose output
     """
     # Print header
-    print("fbuild Build System v0.1.0")
+    print(f"fbuild Build System v{__version__}")
     print()
 
     try:
@@ -115,7 +116,7 @@ def deploy_command(args: DeployArgs) -> None:
         fbuild deploy --clean            # Clean build before deploy
         fbuild deploy --monitor="--timeout 60 --halt-on-success \"TEST PASSED\""  # Deploy and monitor
     """
-    print("fbuild Deployment System v0.1.0")
+    print(f"fbuild Deployment System v{__version__}")
     print()
 
     try:
@@ -367,7 +368,7 @@ def main() -> None:
     parser.add_argument(
         "--version",
         action="version",
-        version="fbuild 0.1.0",
+        version=f"fbuild {__version__}",
     )
 
     subparsers = parser.add_subparsers(dest="command", help="Command to run")
