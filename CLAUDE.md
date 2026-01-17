@@ -63,6 +63,7 @@ fbuild is a next-generation embedded development tool designed to replace Platfo
 - **`arduino-core-structure.md`** - Arduino core organization
 - **`toolchain-packages.md`** - Toolchain details and package information
 - **`PLATFORM_CONFIG_FORMAT.md`** - Platform configuration format specification
+- **`DEVELOPMENT.md`** - Development mode guide for contributors
 
 ### Tests (`tests/`)
 Integration test projects for multiple platforms:
@@ -261,9 +262,17 @@ fbuild monitor [project_dir] -e [environment] [-p/--port] [-b/--baud]
 ### Setting Up Development Environment
 1. Clone the repository
 2. Install in development mode: `pip install -e .`
-3. Run tests: `pytest`
-4. Check types: `mypy src/fbuild`
-5. Lint code: `ruff check src/fbuild`
+3. **Enable development mode:** `export FBUILD_DEV_MODE=1` (see DEVELOPMENT.md)
+4. Run tests: `pytest`
+5. Check types: `mypy src/fbuild`
+6. Lint code: `ruff check src/fbuild`
+
+### Development Mode
+When developing fbuild itself, **always set `FBUILD_DEV_MODE=1`** to isolate:
+- Daemon files in `.fbuild/daemon_dev/` (instead of `~/.fbuild/daemon/`)
+- Cache files in `.fbuild/cache_dev/` (instead of `.fbuild/cache/`)
+
+This prevents interference with production fbuild installations. See `DEVELOPMENT.md` for details.
 
 ### Running Tests
 The `tests/` directory contains integration test projects for various platforms. Each test project has a `platformio.ini` configuration and example sketches.

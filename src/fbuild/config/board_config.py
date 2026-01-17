@@ -132,6 +132,38 @@ class BoardConfig:
             "core": "teensy4",
             "variant": "teensy41",
         },
+        "rpipico": {
+            "name": "Raspberry Pi Pico",
+            "mcu": "rp2040",
+            "f_cpu": "133000000L",
+            "board": "RASPBERRY_PI_PICO",
+            "core": "rp2040",
+            "variant": "rpipico",
+        },
+        "rpipicow": {
+            "name": "Raspberry Pi Pico W",
+            "mcu": "rp2040",
+            "f_cpu": "133000000L",
+            "board": "RASPBERRY_PI_PICO_W",
+            "core": "rp2040",
+            "variant": "rpipicow",
+        },
+        "rpipico2": {
+            "name": "Raspberry Pi Pico 2",
+            "mcu": "rp2350",
+            "f_cpu": "150000000L",
+            "board": "RASPBERRY_PI_PICO_2",
+            "core": "rp2040",
+            "variant": "rpipico2",
+        },
+        "rpipico2w": {
+            "name": "Raspberry Pi Pico 2 W",
+            "mcu": "rp2350",
+            "f_cpu": "150000000L",
+            "board": "RASPBERRY_PI_PICO_2_W",
+            "core": "rp2040",
+            "variant": "rpipico2w",
+        },
     }
 
     def __init__(
@@ -176,7 +208,7 @@ class BoardConfig:
         Detect platform type from MCU.
 
         Returns:
-            Platform identifier: "avr", "esp32", or "teensy"
+            Platform identifier: "avr", "esp32", "teensy", or "raspberrypi"
         """
         if self.mcu.startswith("atmega"):
             return "avr"
@@ -184,6 +216,8 @@ class BoardConfig:
             return "esp32"
         elif self.mcu.startswith("imxrt"):
             return "teensy"
+        elif self.mcu.startswith("rp20"):
+            return "raspberrypi"
         else:
             # Default to AVR for unknown
             return "avr"

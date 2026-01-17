@@ -27,7 +27,15 @@ from fbuild.daemon.messages import (
 
 # Daemon configuration (must match daemon settings)
 DAEMON_NAME = "fbuild_daemon"
-DAEMON_DIR = Path.home() / ".fbuild" / "daemon"
+
+# Check for development mode (when running from repo)
+if os.environ.get("FBUILD_DEV_MODE") == "1":
+    # Use project-local daemon directory for development
+    DAEMON_DIR = Path.cwd() / ".fbuild" / "daemon_dev"
+else:
+    # Use home directory for production
+    DAEMON_DIR = Path.home() / ".fbuild" / "daemon"
+
 PID_FILE = DAEMON_DIR / f"{DAEMON_NAME}.pid"
 STATUS_FILE = DAEMON_DIR / "daemon_status.json"
 BUILD_REQUEST_FILE = DAEMON_DIR / "build_request.json"

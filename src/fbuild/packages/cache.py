@@ -62,9 +62,16 @@ class Cache:
 
         # Check for environment variable override
         cache_env = os.environ.get("FBUILD_CACHE_DIR")
+        dev_mode = os.environ.get("FBUILD_DEV_MODE") == "1"
+
         if cache_env:
+            # Explicit cache directory override
             self.cache_root = Path(cache_env).resolve()
+        elif dev_mode:
+            # Development mode: use project-local cache
+            self.cache_root = self.project_dir / ".fbuild" / "cache_dev"
         else:
+            # Production: use project-local cache (default)
             self.cache_root = self.project_dir / ".fbuild" / "cache"
 
         self.build_root = self.project_dir / ".fbuild" / "build"

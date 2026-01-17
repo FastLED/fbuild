@@ -1,0 +1,76 @@
+{
+  "name": "RP2350",
+  "description": "Configuration for RP2350 MCU (Raspberry Pi Pico 2) extracted from arduino-pico",
+  "mcu": "rp2350",
+  "architecture": "arm-cortex-m33",
+
+  "compiler_flags": {
+    "common": [
+      "-march=armv8-m.main+fp+dsp",
+      "-mcpu=cortex-m33",
+      "-mthumb",
+      "-mfloat-abi=hard",
+      "-mfpu=fpv5-sp-d16",
+      "-Os",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-fno-exceptions",
+      "-Wno-error=unused-function",
+      "-Wno-error=unused-variable",
+      "-Wno-error=deprecated-declarations",
+      "-Wno-unused-parameter",
+      "-Wno-sign-compare",
+      "-g",
+      "-MMD"
+    ],
+    "c": [
+      "-std=gnu17"
+    ],
+    "cxx": [
+      "-std=gnu++17",
+      "-fno-rtti",
+      "-fno-exceptions",
+      "-fno-threadsafe-statics"
+    ]
+  },
+
+  "linker_flags": [
+    "-march=armv8-m.main+fp+dsp",
+    "-mcpu=cortex-m33",
+    "-mthumb",
+    "-mfloat-abi=hard",
+    "-mfpu=fpv5-sp-d16",
+    "-Wl,--cref",
+    "-Wl,--check-sections",
+    "-Wl,--gc-sections",
+    "-Wl,--unresolved-symbols=report-all",
+    "-Wl,--warn-common",
+    "-Wl,--warn-section-align",
+    "-Wl,--wrap=malloc",
+    "-Wl,--wrap=calloc",
+    "-Wl,--wrap=realloc",
+    "-Wl,--wrap=free",
+    "-u", "_printf_float",
+    "-u", "_scanf_float"
+  ],
+
+  "linker_scripts": [
+    "memmap_default.ld"
+  ],
+
+  "defines": [
+    "ARDUINO_ARCH_RP2040",
+    ["F_CPU", "150000000L"],
+    "PICO_BOARD",
+    "PICO_BUILD",
+    "PICO_NO_HARDWARE",
+    "PICO_ON_DEVICE",
+    ["TARGET_RP2350", "1"],
+    ["PICO_RP2350", "1"],
+    "PICO_RP2350A",
+    "CFG_TUSB_MCU=OPT_MCU_RP2040",
+    "LWIP_IPV4=1",
+    "LWIP_IPV6=0",
+    "__ARM_FEATURE_DSP=1"
+  ]
+}
