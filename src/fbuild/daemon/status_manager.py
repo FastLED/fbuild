@@ -12,11 +12,14 @@ import logging
 import threading
 import time
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from fbuild.daemon.messages import DaemonState, DaemonStatus
 from fbuild.daemon.port_state_manager import PortStateManager
 from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+if TYPE_CHECKING:
+    from fbuild.daemon.lock_manager import ResourceLockManager
 
 
 class StatusManager:
@@ -51,6 +54,7 @@ class StatusManager:
         daemon_pid: int,
         daemon_started_at: float | None = None,
         port_state_manager: PortStateManager | None = None,
+        lock_manager: "ResourceLockManager | None" = None,
     ):
         """Initialize the StatusManager.
 
@@ -59,6 +63,7 @@ class StatusManager:
             daemon_pid: PID of the daemon process
             daemon_started_at: Timestamp when daemon started (defaults to now)
             port_state_manager: Optional PortStateManager for including port state in status
+            lock_manager: Optional ResourceLockManager for including lock state in status
         """
         self.status_file = status_file
         self.daemon_pid = daemon_pid
@@ -66,6 +71,7 @@ class StatusManager:
         self._lock = threading.Lock()
         self._operation_in_progress = False
         self._port_state_manager = port_state_manager
+        self._lock_manager = lock_manager
 
         # Ensure parent directory exists
         self.status_file.parent.mkdir(parents=True, exist_ok=True)
@@ -108,6 +114,11 @@ class StatusManager:
             if self._port_state_manager is not None:
                 ports_summary = self._port_state_manager.get_ports_summary()
 
+            # Get lock state summary if lock_manager is available
+            locks_summary: dict[str, Any] = {}
+            if self._lock_manager is not None:
+                locks_summary = self._lock_manager.get_lock_details()
+
             # Create typed DaemonStatus object
             status_obj = DaemonStatus(
                 state=state,
@@ -117,6 +128,7 @@ class StatusManager:
                 daemon_started_at=self.daemon_started_at,
                 operation_in_progress=self._operation_in_progress,
                 ports=ports_summary,
+                locks=locks_summary,
                 **kwargs,
             )
 

@@ -137,13 +137,14 @@ def create_daemon_context(
     port_state_manager = PortStateManager()
     logging.info("Port state manager initialized")
 
-    # Initialize status manager (with port state manager for status visibility)
+    # Initialize status manager (with port state manager and lock manager for status visibility)
     logging.debug(f"Creating status manager (status_file={status_file_path})...")
     status_manager = StatusManager(
         status_file=status_file_path,
         daemon_pid=daemon_pid,
         daemon_started_at=daemon_started_at,
         port_state_manager=port_state_manager,
+        lock_manager=lock_manager,
     )
     logging.info("Status manager initialized")
 
@@ -194,6 +195,17 @@ def cleanup_daemon_context(context: DaemonContext) -> None:
             raise
         except Exception as e:
             logging.error(f"Error shutting down compilation queue: {e}")
+
+    # Clear all locks during shutdown
+    if context.lock_manager:
+        try:
+            cleared = context.lock_manager.clear_all_locks()
+            logging.info(f"Cleared {cleared} locks during shutdown")
+        except KeyboardInterrupt:  # noqa: KBI002
+            logging.warning("KeyboardInterrupt during lock manager cleanup")
+            raise
+        except Exception as e:
+            logging.error(f"Error clearing locks: {e}")
 
     # Log cleanup of other subsystems (they don't have explicit shutdown methods)
     logging.debug("Cleaning up subprocess manager...")

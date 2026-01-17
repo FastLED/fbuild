@@ -162,8 +162,15 @@ def test_execute_operation_with_monitor(processor, mock_context):
     mock_monitor.assert_called_once()
 
 
-def test_build_firmware_success(processor, deploy_request, mock_context):
+def test_build_firmware_success(processor, deploy_request, mock_context, tmp_path):
     """Test successful firmware build."""
+    # Create a temporary platformio.ini file
+    platformio_ini = tmp_path / "platformio.ini"
+    platformio_ini.write_text("[env:esp32dev]\nplatform = espressif32\nboard = esp32dev\nframework = arduino\n")
+
+    # Update deploy_request to use the temporary directory
+    deploy_request.project_dir = str(tmp_path)
+
     # Mock the orchestrator
     mock_orchestrator = MagicMock()
     mock_build_result = MagicMock()
@@ -172,16 +179,28 @@ def test_build_firmware_success(processor, deploy_request, mock_context):
 
     mock_orchestrator_class = MagicMock(return_value=mock_orchestrator)
 
-    with patch.object(sys, "modules", {"fbuild.build.orchestrator_avr": MagicMock(BuildOrchestratorAVR=mock_orchestrator_class), **sys.modules}):
+    # Mock sys.modules to contain the orchestrator class
+    mock_module = MagicMock()
+    mock_module.OrchestratorESP32 = mock_orchestrator_class
+
+    with patch.dict(sys.modules, {"fbuild.build.orchestrator_esp32": mock_module}):
         with patch.object(processor, "_reload_build_modules"):
             with patch.object(processor, "_update_status"):
-                result = processor._build_firmware(deploy_request, mock_context)
+                with patch("fbuild.packages.cache.Cache"):
+                    result = processor._build_firmware(deploy_request, mock_context)
 
     assert result is True
 
 
-def test_build_firmware_failure(processor, deploy_request, mock_context):
+def test_build_firmware_failure(processor, deploy_request, mock_context, tmp_path):
     """Test firmware build failure."""
+    # Create a temporary platformio.ini file
+    platformio_ini = tmp_path / "platformio.ini"
+    platformio_ini.write_text("[env:esp32dev]\nplatform = espressif32\nboard = esp32dev\nframework = arduino\n")
+
+    # Update deploy_request to use the temporary directory
+    deploy_request.project_dir = str(tmp_path)
+
     # Mock the orchestrator
     mock_orchestrator = MagicMock()
     mock_build_result = MagicMock()
@@ -191,10 +210,15 @@ def test_build_firmware_failure(processor, deploy_request, mock_context):
 
     mock_orchestrator_class = MagicMock(return_value=mock_orchestrator)
 
-    with patch.object(sys, "modules", {"fbuild.build.orchestrator_avr": MagicMock(BuildOrchestratorAVR=mock_orchestrator_class), **sys.modules}):
+    # Mock sys.modules to contain the orchestrator class
+    mock_module = MagicMock()
+    mock_module.OrchestratorESP32 = mock_orchestrator_class
+
+    with patch.dict(sys.modules, {"fbuild.build.orchestrator_esp32": mock_module}):
         with patch.object(processor, "_reload_build_modules"):
             with patch.object(processor, "_update_status"):
-                result = processor._build_firmware(deploy_request, mock_context)
+                with patch("fbuild.packages.cache.Cache"):
+                    result = processor._build_firmware(deploy_request, mock_context)
 
     assert result is False
 

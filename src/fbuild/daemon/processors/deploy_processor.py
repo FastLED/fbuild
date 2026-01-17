@@ -138,15 +138,75 @@ class DeployRequestProcessor(RequestProcessor):
         # Reload build modules to pick up code changes
         self._reload_build_modules()
 
-        # Get fresh orchestrator class after module reload
+        # Detect platform type from platformio.ini to select appropriate orchestrator
         try:
-            orchestrator_class = getattr(sys.modules["fbuild.build.orchestrator_avr"], "BuildOrchestratorAVR")
-        except (KeyError, AttributeError) as e:
-            logging.error(f"Failed to get BuildOrchestratorAVR class: {e}")
+            from fbuild.config.ini_parser import PlatformIOConfig
+
+            project_path = Path(request.project_dir)
+            ini_path = project_path / "platformio.ini"
+
+            if not ini_path.exists():
+                logging.error(f"platformio.ini not found at {ini_path}")
+                return False
+
+            config = PlatformIOConfig(ini_path)
+            env_config = config.get_env_config(request.environment)
+            platform = env_config.get("platform", "").lower()
+
+            logging.info(f"Detected platform: {platform}")
+
+        except KeyboardInterrupt as ke:
+            from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
+        except Exception as e:
+            logging.error(f"Failed to parse platformio.ini: {e}")
             return False
 
-        # Execute build
-        orchestrator = orchestrator_class(verbose=False)
+        # Normalize platform name (handle both direct names and URLs)
+        # URLs like "https://.../platform-espressif32.zip" -> "espressif32"
+        # URLs like "https://.../platform-atmelavr.zip" -> "atmelavr"
+        # "raspberrypi" or "platform-raspberrypi" -> "raspberrypi"
+        platform_name = platform
+        if "platform-espressif32" in platform:
+            platform_name = "espressif32"
+        elif "platform-atmelavr" in platform or platform == "atmelavr":
+            platform_name = "atmelavr"
+        elif "platform-raspberrypi" in platform or platform == "raspberrypi":
+            platform_name = "raspberrypi"
+
+        logging.info(f"Normalized platform: {platform_name}")
+
+        # Select orchestrator based on platform
+        if platform_name == "atmelavr":
+            module_name = "fbuild.build.orchestrator_avr"
+            class_name = "BuildOrchestratorAVR"
+        elif platform_name == "espressif32":
+            module_name = "fbuild.build.orchestrator_esp32"
+            class_name = "OrchestratorESP32"
+        elif platform_name == "raspberrypi":
+            module_name = "fbuild.build.orchestrator_rp2040"
+            class_name = "OrchestratorRP2040"
+        else:
+            logging.error(f"Unsupported platform: {platform_name}")
+            return False
+
+        # Get fresh orchestrator class after module reload
+        try:
+            orchestrator_class = getattr(sys.modules[module_name], class_name)
+        except (KeyError, AttributeError) as e:
+            logging.error(f"Failed to get {class_name} from {module_name}: {e}")
+            return False
+
+        # Create orchestrator and execute build
+        # Create a Cache instance for package management
+        from fbuild.packages.cache import Cache
+
+        cache = Cache(project_dir=Path(request.project_dir))
+
+        # Initialize orchestrator with cache (ESP32 requires it, AVR accepts it)
+        orchestrator = orchestrator_class(cache=cache, verbose=False)
         build_result = orchestrator.build(
             project_dir=Path(request.project_dir),
             env_name=request.environment,

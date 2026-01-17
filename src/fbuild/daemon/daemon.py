@@ -68,6 +68,7 @@ LOG_FILE = DAEMON_DIR / "daemon.log"
 PROCESS_REGISTRY_FILE = DAEMON_DIR / "process_registry.json"
 FILE_CACHE_FILE = DAEMON_DIR / "file_cache.json"
 ORPHAN_CHECK_INTERVAL = 5  # Check for orphaned processes every 5 seconds
+STALE_LOCK_CHECK_INTERVAL = 60  # Check for stale locks every 60 seconds
 IDLE_TIMEOUT = 43200  # 12 hours
 
 
@@ -295,6 +296,7 @@ def run_daemon_loop() -> None:
     last_activity = time.time()
     last_orphan_check = time.time()
     last_cancel_cleanup = time.time()
+    last_stale_lock_check = time.time()
 
     logging.info("Entering main daemon loop...")
     iteration_count = 0
@@ -344,6 +346,46 @@ def run_daemon_loop() -> None:
                     raise
                 except Exception as e:
                     logging.error(f"Error during cancel signal cleanup: {e}", exc_info=True)
+
+            # Check for manual stale lock clear signal
+            clear_locks_signal = DAEMON_DIR / "clear_stale_locks.signal"
+            if clear_locks_signal.exists():
+                try:
+                    clear_locks_signal.unlink()
+                    logging.info("Received manual clear stale locks signal")
+                    stale_locks = context.lock_manager.get_stale_locks()
+                    stale_count = len(stale_locks["port_locks"]) + len(stale_locks["project_locks"])
+                    if stale_count > 0:
+                        logging.warning(f"Manually clearing {stale_count} stale locks...")
+                        released = context.lock_manager.force_release_stale_locks()
+                        logging.info(f"Force-released {released} stale locks")
+                    else:
+                        logging.info("No stale locks to clear")
+                except KeyboardInterrupt:
+                    _thread.interrupt_main()
+                    raise
+                except Exception as e:
+                    logging.error(f"Error handling clear locks signal: {e}", exc_info=True)
+
+            # Periodically check for and cleanup stale locks (every 60 seconds)
+            if time.time() - last_stale_lock_check >= STALE_LOCK_CHECK_INTERVAL:
+                try:
+                    # Check for stale locks (held beyond timeout)
+                    stale_locks = context.lock_manager.get_stale_locks()
+                    stale_count = len(stale_locks["port_locks"]) + len(stale_locks["project_locks"])
+                    if stale_count > 0:
+                        logging.warning(f"Found {stale_count} stale locks, force-releasing...")
+                        released = context.lock_manager.force_release_stale_locks()
+                        logging.info(f"Force-released {released} stale locks")
+
+                    # Also clean up unused lock entries (memory cleanup)
+                    context.lock_manager.cleanup_unused_locks()
+                    last_stale_lock_check = time.time()
+                except KeyboardInterrupt:
+                    _thread.interrupt_main()
+                    raise
+                except Exception as e:
+                    logging.error(f"Error during stale lock cleanup: {e}", exc_info=True)
 
             # Check for build requests (with lock for atomic consumption)
             with build_request_lock:

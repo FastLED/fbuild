@@ -14,6 +14,7 @@ from abc import ABC, abstractmethod
 from contextlib import ExitStack
 from typing import TYPE_CHECKING, Any
 
+from fbuild.daemon.lock_manager import LockAcquisitionError
 from fbuild.daemon.messages import DaemonState, OperationType
 
 if TYPE_CHECKING:
@@ -340,18 +341,27 @@ class RequestProcessor(ABC):
             True if all locks acquired, False if any lock is unavailable
         """
         required_locks = self.get_required_locks(request, context)
+        operation_type = self.get_operation_type()
+        operation_desc = f"{operation_type.value} for {request.environment}"
 
         # Acquire project lock if needed
         if "project" in required_locks:
             project_dir = required_locks["project"]
             try:
-                lock_stack.enter_context(context.lock_manager.acquire_project_lock(project_dir, blocking=False))
-            except RuntimeError:
-                logging.warning(f"Project {project_dir} is already being built")
+                lock_stack.enter_context(
+                    context.lock_manager.acquire_project_lock(
+                        project_dir,
+                        blocking=False,
+                        operation_id=request.request_id,
+                        description=operation_desc,
+                    )
+                )
+            except LockAcquisitionError as e:
+                logging.warning(f"Project lock unavailable: {e}")
                 self._update_status(
                     context,
                     DaemonState.FAILED,
-                    f"Project {project_dir} is already being built by another process",
+                    str(e),
                     request=request,
                 )
                 return False
@@ -361,13 +371,20 @@ class RequestProcessor(ABC):
             port = required_locks["port"]
             if port:  # Only acquire if port is not None/empty
                 try:
-                    lock_stack.enter_context(context.lock_manager.acquire_port_lock(port, blocking=False))
-                except RuntimeError:
-                    logging.warning(f"Port {port} is already in use")
+                    lock_stack.enter_context(
+                        context.lock_manager.acquire_port_lock(
+                            port,
+                            blocking=False,
+                            operation_id=request.request_id,
+                            description=operation_desc,
+                        )
+                    )
+                except LockAcquisitionError as e:
+                    logging.warning(f"Port lock unavailable: {e}")
                     self._update_status(
                         context,
                         DaemonState.FAILED,
-                        f"Port {port} is already in use by another operation",
+                        str(e),
                         request=request,
                     )
                     return False

@@ -230,6 +230,7 @@ class DaemonStatus:
         exit_code: Process exit code (None if still running)
         port: Serial port being used
         ports: Dictionary of active ports with their state information
+        locks: Dictionary of lock state information (port_locks, project_locks)
     """
 
     state: DaemonState
@@ -250,6 +251,7 @@ class DaemonStatus:
     exit_code: int | None = None
     port: str | None = None
     ports: dict[str, Any] = field(default_factory=dict)
+    locks: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
@@ -293,6 +295,7 @@ class DaemonStatus:
             exit_code=data.get("exit_code"),
             port=data.get("port"),
             ports=data.get("ports", {}),
+            locks=data.get("locks", {}),
         )
 
     def is_stale(self, timeout_seconds: float = 30.0) -> bool:
