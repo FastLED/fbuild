@@ -1,0 +1,25 @@
+fbuild Build System v1.2.0
+
+Building project: C:\Users\niteris\dev\fbuild\tests\fastled_validation_v2
+Environment: esp32c6
+
+🔗 Starting fbuild daemon...
+✅ Daemon started successfully
+
+📤 Submitting build request...
+   Project: C:\Users\niteris\dev\fbuild\tests\fastled_validation_v2
+   Environment: esp32c6
+   Request ID: build_1768646152435
+   ✅ Submitted
+
+🔨 Build Progress:
+  ℹ️  Daemon ready
+  🔨 Building esp32c6
+  ❌ Build failed
+  🔨 Building esp32p4
+  ❌ Build failed
+  🔨 Building esp32p4
+  🔨 Building esp32c6
+  ❌ Build failed
+
+❌ Build failed: Build failed

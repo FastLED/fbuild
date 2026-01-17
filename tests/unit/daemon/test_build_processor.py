@@ -73,9 +73,15 @@ def test_execute_operation_success(processor, build_request, mock_context):
     # Mock the orchestrator class in sys.modules
     mock_orchestrator_class = MagicMock(return_value=mock_orchestrator)
 
-    with patch.object(sys, "modules", {"fbuild.build.orchestrator_avr": MagicMock(BuildOrchestratorAVR=mock_orchestrator_class), **sys.modules}):
+    # Mock platformio.ini existence and config
+    mock_config = MagicMock()
+    mock_config.get_env_config.return_value = {"platform": "espressif32"}
+
+    with patch.object(sys, "modules", {"fbuild.build.orchestrator_esp32": MagicMock(OrchestratorESP32=mock_orchestrator_class), **sys.modules}):
         with patch.object(processor, "_reload_build_modules"):
-            result = processor.execute_operation(build_request, mock_context)
+            with patch("pathlib.Path.exists", return_value=True):
+                with patch("fbuild.config.ini_parser.PlatformIOConfig", return_value=mock_config):
+                    result = processor.execute_operation(build_request, mock_context)
 
     assert result is True
     mock_orchestrator.build.assert_called_once_with(
@@ -144,9 +150,15 @@ def test_execute_operation_with_clean_build(processor, mock_context):
     # Mock the orchestrator class in sys.modules
     mock_orchestrator_class = MagicMock(return_value=mock_orchestrator)
 
-    with patch.object(sys, "modules", {"fbuild.build.orchestrator_avr": MagicMock(BuildOrchestratorAVR=mock_orchestrator_class), **sys.modules}):
+    # Mock platformio.ini existence and config
+    mock_config = MagicMock()
+    mock_config.get_env_config.return_value = {"platform": "espressif32"}
+
+    with patch.object(sys, "modules", {"fbuild.build.orchestrator_esp32": MagicMock(OrchestratorESP32=mock_orchestrator_class), **sys.modules}):
         with patch.object(processor, "_reload_build_modules"):
-            result = processor.execute_operation(request, mock_context)
+            with patch("pathlib.Path.exists", return_value=True):
+                with patch("fbuild.config.ini_parser.PlatformIOConfig", return_value=mock_config):
+                    result = processor.execute_operation(request, mock_context)
 
     assert result is True
     mock_orchestrator.build.assert_called_once_with(

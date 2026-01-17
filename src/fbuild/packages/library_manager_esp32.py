@@ -6,6 +6,8 @@ them with the ESP32 toolchain.
 """
 
 import json
+import logging
+import platform
 import subprocess
 from pathlib import Path
 from typing import List, Optional
@@ -15,6 +17,8 @@ from fbuild.packages.platformio_registry import (
     PlatformIORegistry,
     RegistryError,
 )
+
+logger = logging.getLogger(__name__)
 
 
 class LibraryErrorESP32(Exception):
@@ -84,37 +88,44 @@ class LibraryESP32:
         include_dirs = []
 
         if not self.src_dir.exists():
+            logger.warning(f"[INCLUDE_DEBUG] src_dir does not exist: {self.src_dir}")
             return include_dirs
 
         # Check for src/src/ structure
         src_src = self.src_dir / "src"
         if src_src.exists() and src_src.is_dir():
+            logger.debug(f"[INCLUDE_DEBUG] Found nested src/, adding: {src_src}")
             include_dirs.append(src_src)
         else:
+            logger.debug(f"[INCLUDE_DEBUG] No nested src/, adding base: {self.src_dir}")
             include_dirs.append(self.src_dir)
 
         # Look for additional include directories
         for name in ["include", "Include", "INCLUDE"]:
             inc_dir = self.lib_dir / name
             if inc_dir.exists():
+                logger.debug(f"[INCLUDE_DEBUG] Found additional include dir: {inc_dir}")
                 include_dirs.append(inc_dir)
 
+        logger.debug(f"[INCLUDE_DEBUG] Final include_dirs for {self.name}: {include_dirs}")
         return include_dirs
 
 
 class LibraryManagerESP32:
     """Manages ESP32 library dependencies."""
 
-    def __init__(self, build_dir: Path, registry: Optional[PlatformIORegistry] = None):
+    def __init__(self, build_dir: Path, registry: Optional[PlatformIORegistry] = None, project_dir: Optional[Path] = None):
         """Initialize library manager.
 
         Args:
             build_dir: Build directory (.fbuild/build/{board})
             registry: Optional registry client
+            project_dir: Optional project directory (for resolving relative local library paths)
         """
         self.build_dir = Path(build_dir)
         self.libs_dir = self.build_dir / "libs"
         self.registry = registry or PlatformIORegistry()
+        self.project_dir = Path(project_dir) if project_dir else None
 
         # Ensure libs directory exists
         self.libs_dir.mkdir(parents=True, exist_ok=True)
@@ -143,8 +154,219 @@ class LibraryManagerESP32:
         lib_dir = self.libs_dir / lib_name
         return LibraryESP32(lib_dir, lib_name)
 
+    def _handle_local_library(self, spec: LibrarySpec, show_progress: bool = True) -> LibraryESP32:
+        """Handle a local library specification (file:// or relative path).
+
+        Args:
+            spec: Library specification with is_local=True
+            show_progress: Whether to show progress
+
+        Returns:
+            LibraryESP32 instance
+
+        Raises:
+            LibraryErrorESP32: If local library setup fails
+        """
+        import logging
+
+        logger = logging.getLogger(__name__)
+
+        logger.debug(f"[LOCAL_LIB] Step 1: Starting _handle_local_library for spec: {spec}")
+
+        if not spec.local_path:
+            raise LibraryErrorESP32(f"Local library spec has no path: {spec}")
+
+        logger.debug(f"[LOCAL_LIB] Step 2: spec.local_path = {spec.local_path}")
+
+        library = self.get_library(spec)
+        logger.debug(f"[LOCAL_LIB] Step 3: Created library instance, lib_dir = {library.lib_dir}")
+
+        # Skip if already set up
+        if library.exists:
+            logger.debug("[LOCAL_LIB] Step 4: Library already exists, returning early")
+            if show_progress:
+                print(f"Local library '{spec.name}' already set up")
+            return library
+
+        logger.debug("[LOCAL_LIB] Step 5: Library doesn't exist, need to set up")
+
+        # Resolve the local path (relative to project directory if available, otherwise cwd)
+        local_path = spec.local_path
+        logger.debug(f"[LOCAL_LIB] Step 6: local_path before absolute check: {local_path}, is_absolute={local_path.is_absolute()}")
+
+        if not local_path.is_absolute():
+            # Make absolute relative to project directory (where platformio.ini is)
+            # If project_dir not set, fall back to current working directory
+            base_dir = self.project_dir if self.project_dir else Path.cwd()
+            logger.debug(f"[LOCAL_LIB] Step 7: Converting to absolute, base_dir = {base_dir}")
+            local_path = base_dir / local_path
+            logger.debug(f"[LOCAL_LIB] Step 8: After joining: local_path = {local_path}")
+
+        # Normalize path (resolve .. and .)
+        logger.debug(f"[LOCAL_LIB] Step 9: Before resolve(), local_path = {local_path}")
+        local_path = local_path.resolve()
+        logger.debug(f"[LOCAL_LIB] Step 10: After resolve(), local_path = {local_path}")
+
+        # Verify library exists
+        logger.debug(f"[LOCAL_LIB] Step 11: Checking if local_path exists: {local_path}")
+        if not local_path.exists():
+            raise LibraryErrorESP32(f"Local library path does not exist: {local_path}")
+
+        logger.debug("[LOCAL_LIB] Step 12: Path exists, checking if directory")
+        if not local_path.is_dir():
+            raise LibraryErrorESP32(f"Local library path is not a directory: {local_path}")
+
+        logger.debug("[LOCAL_LIB] Step 13: Checking for library.json or library.properties")
+        # Look for library.json (Arduino library metadata)
+        library_json = local_path / "library.json"
+        library_properties = local_path / "library.properties"
+
+        if not library_json.exists() and not library_properties.exists():
+            # Check if there's a src subdirectory (common Arduino structure)
+            logger.debug("[LOCAL_LIB] Step 14: No metadata files, checking for src/ directory")
+            src_dir = local_path / "src"
+            if not src_dir.exists():
+                raise LibraryErrorESP32(f"Local library has no library.json, library.properties, or src/ directory: {local_path}")
+
+        logger.debug("[LOCAL_LIB] Step 15: Library structure validated")
+        if show_progress:
+            print(f"Setting up local library '{spec.name}' from {local_path}")
+
+        # Create library directory structure
+        logger.debug(f"[LOCAL_LIB] Step 16: Creating library directory: {library.lib_dir}")
+        library.lib_dir.mkdir(parents=True, exist_ok=True)
+
+        # Create a symlink or copy to the source directory
+        # On Windows, force copy instead of symlink due to MSYS/cross-compiler incompatibility
+        # MSYS creates /c/Users/... symlinks that ESP32 cross-compiler can't follow when
+        # include paths use Windows format (C:/Users/...)
+        import os
+        import shutil
+
+        is_windows = platform.system() == "Windows"
+        logger.debug(f"[LOCAL_LIB] Step 17: Platform detected: {platform.system()} (is_windows={is_windows})")
+
+        # Check if local_path has a src/ subdirectory (Arduino library structure)
+        # If so, copy from local_path/src instead of local_path to avoid path duplication
+        source_path = local_path / "src" if (local_path / "src").is_dir() else local_path
+        logger.debug(f"[LOCAL_LIB] Step 17.5: Source path for copy/symlink: {source_path}")
+
+        if is_windows:
+            # Windows: Always copy to avoid MSYS symlink issues with ESP32 cross-compiler
+            logger.debug("[LOCAL_LIB] Step 18: Windows detected, forcing copy (no symlink)")
+            if show_progress:
+                print(f"  Copying library files from {source_path}...")
+
+            if library.src_dir.exists():
+                logger.debug("[LOCAL_LIB] Step 19: Removing existing src_dir before copy")
+                shutil.rmtree(library.src_dir)
+
+            # Define ignore function to exclude build artifacts and version control
+            # This prevents recursive .fbuild directories and other unnecessary files
+            def ignore_build_artifacts(directory: str, contents: list[str]) -> list[str]:
+                ignored = []
+                for name in contents:
+                    if name in {".fbuild", ".pio", ".git", ".venv", "__pycache__", ".pytest_cache", "node_modules", ".cache", "build", ".build", ".vscode", ".idea"}:
+                        ignored.append(name)
+                        logger.debug(f"[LOCAL_LIB] Ignoring: {os.path.join(directory, name)}")
+                return ignored
+
+            logger.debug("[LOCAL_LIB] Step 20: Calling shutil.copytree() with symlinks=False and ignore filter")
+            # symlinks=False: Dereference any symlinks in source tree (important for nested dependencies)
+            # ignore: Skip build artifacts, version control, and cache directories
+            shutil.copytree(source_path, library.src_dir, symlinks=False, ignore=ignore_build_artifacts)
+            logger.debug("[LOCAL_LIB] Step 21: Copy completed successfully")
+            if show_progress:
+                print(f"  Copied library files to {library.src_dir}")
+        else:
+            # Unix: Use symlink for efficiency (actual files stay in original location)
+            logger.debug(f"[LOCAL_LIB] Step 18: Unix platform, attempting symlink from {library.src_dir} to {source_path}")
+            try:
+                # Try to create symlink first (faster, no disk space duplication)
+                if library.src_dir.exists():
+                    logger.debug("[LOCAL_LIB] Step 19: Removing existing src_dir")
+                    library.src_dir.unlink()
+                logger.debug("[LOCAL_LIB] Step 20: Calling os.symlink()")
+                os.symlink(str(source_path), str(library.src_dir), target_is_directory=True)
+                logger.debug("[LOCAL_LIB] Step 21: Symlink created successfully")
+                if show_progress:
+                    print(f"  Created symlink to {source_path}")
+            except OSError as e:
+                # Symlink failed (maybe no permissions), fall back to copying
+                logger.debug(f"[LOCAL_LIB] Step 22: Symlink failed with error: {e}, falling back to copy")
+                if show_progress:
+                    print("  Symlink failed, copying library files...")
+
+                if library.src_dir.exists():
+                    logger.debug("[LOCAL_LIB] Step 23: Removing existing src_dir before copy")
+                    shutil.rmtree(library.src_dir)
+
+                # Define ignore function to exclude build artifacts and version control
+                def ignore_build_artifacts(directory: str, contents: list[str]) -> list[str]:
+                    ignored = []
+                    for name in contents:
+                        if name in {".fbuild", ".pio", ".git", ".venv", "__pycache__", ".pytest_cache", "node_modules", ".cache", "build", ".build", ".vscode", ".idea"}:
+                            ignored.append(name)
+                            logger.debug(f"[LOCAL_LIB] Ignoring: {os.path.join(directory, name)}")
+                    return ignored
+
+                logger.debug("[LOCAL_LIB] Step 24: Calling shutil.copytree() with symlinks=False and ignore filter")
+                shutil.copytree(source_path, library.src_dir, symlinks=False, ignore=ignore_build_artifacts)
+                logger.debug("[LOCAL_LIB] Step 25: Copy completed successfully")
+                if show_progress:
+                    print(f"  Copied library files to {library.src_dir}")
+
+        # Create library.json metadata
+        import json
+
+        logger.debug("[LOCAL_LIB] Step 25: Creating library.json metadata")
+
+        lib_name = spec.name
+        lib_version = "local"
+
+        # Try to read version from existing metadata
+        logger.debug(f"[LOCAL_LIB] Step 26: Checking if source library.json exists: {library_json}")
+        if library_json.exists():
+            logger.debug("[LOCAL_LIB] Step 27: Reading metadata from source library.json")
+            try:
+                with open(library_json, "r", encoding="utf-8") as f:
+                    metadata = json.load(f)
+                    lib_name = metadata.get("name", spec.name)
+                    lib_version = metadata.get("version", "local")
+                logger.debug(f"[LOCAL_LIB] Step 28: Read metadata: name={lib_name}, version={lib_version}")
+            except KeyboardInterrupt as ke:
+                from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+                handle_keyboard_interrupt_properly(ke)
+                raise  # Never reached
+            except Exception as e:
+                logger.debug(f"[LOCAL_LIB] Step 29: Failed to read metadata: {e}, using defaults")
+                pass  # Use defaults
+
+        # Save library info in the expected location
+        info_file = library.lib_dir / "library.json"
+        logger.debug(f"[LOCAL_LIB] Step 30: Writing library info to: {info_file}")
+        with open(info_file, "w", encoding="utf-8") as f:
+            json.dump(
+                {
+                    "name": lib_name,
+                    "owner": "local",
+                    "version": lib_version,
+                    "local_path": str(local_path),
+                    "is_local": True,
+                },
+                f,
+                indent=2,
+            )
+
+        logger.debug("[LOCAL_LIB] Step 31: Local library setup completed successfully")
+        if show_progress:
+            print(f"Local library '{spec.name}' set up successfully")
+
+        return library
+
     def download_library(self, spec: LibrarySpec, show_progress: bool = True) -> LibraryESP32:
-        """Download a library from PlatformIO registry.
+        """Download a library from PlatformIO registry or set up local library.
 
         Args:
             spec: Library specification
@@ -154,9 +376,14 @@ class LibraryManagerESP32:
             LibraryESP32 instance
 
         Raises:
-            LibraryErrorESP32: If download fails
+            LibraryErrorESP32: If download or setup fails
         """
         try:
+            # Check if this is a local library first
+            if spec.is_local:
+                return self._handle_local_library(spec, show_progress)
+
+            # Remote library - use existing registry logic
             library = self.get_library(spec)
 
             # Skip if already downloaded
@@ -265,8 +492,13 @@ class LibraryManagerESP32:
                 else:
                     compiler = gcc_path
 
-                # Output object file
-                obj_file = library.lib_dir / f"{source.stem}.o"
+                # Output object file - maintain directory structure relative to src_dir
+                # This prevents name collisions and keeps .d files organized
+                rel_path = source.relative_to(library.src_dir)
+                obj_file = library.src_dir / rel_path.with_suffix(".o")
+
+                # Ensure output directory exists
+                obj_file.parent.mkdir(parents=True, exist_ok=True)
 
                 # Build compile command
                 cmd = [str(compiler), "-c"]

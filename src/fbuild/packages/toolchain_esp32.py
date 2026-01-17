@@ -267,11 +267,16 @@ class ToolchainESP32(IToolchain):
                 import shutil
 
                 for item in final_bin_path.iterdir():
-                    if item.name != "temp_extract" and not item.name.endswith((".zip", ".tar", ".xz", ".gz")):
-                        if item.is_dir():
-                            shutil.rmtree(item)
-                        else:
-                            item.unlink()
+                    # Skip temp files and archives that might be locked by antivirus
+                    if item.name != "temp_extract" and not item.name.endswith((".zip", ".tar", ".xz", ".gz", ".download", ".tmp")):
+                        try:
+                            if item.is_dir():
+                                shutil.rmtree(item)
+                            else:
+                                item.unlink()
+                        except (PermissionError, OSError):
+                            # Ignore errors removing old files (might be locked by antivirus)
+                            pass
 
             # Copy contents from source_dir to final_bin_path
             import shutil

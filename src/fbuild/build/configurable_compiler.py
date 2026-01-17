@@ -181,6 +181,17 @@ class ConfigurableCompiler(ICompiler):
             if flash_config_dir.exists():
                 includes.append(flash_config_dir)
 
+        # Add Arduino built-in libraries (e.g., SPI, Wire, WiFi) for ESP32
+        if hasattr(self.framework, 'get_libraries_dir'):
+            libs_dir = self.framework.get_libraries_dir()
+            if libs_dir.exists():
+                # Add src subdirectory of each built-in library
+                for lib_entry in libs_dir.iterdir():
+                    if lib_entry.is_dir() and not lib_entry.name.startswith("."):
+                        lib_src = lib_entry / "src"
+                        if lib_src.exists():
+                            includes.append(lib_src)
+
         self._include_paths_cache = includes
         return includes
 

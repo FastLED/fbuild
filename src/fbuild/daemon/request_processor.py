@@ -147,7 +147,10 @@ class RequestProcessor(ABC):
                 _thread.interrupt_main()
                 raise
             except Exception as e:
+                import traceback
+
                 logging.error(f"{self.get_operation_type().value} exception: {e}")
+                logging.error(f"Traceback:\n{traceback.format_exc()}")
                 self._update_status(
                     context,
                     DaemonState.FAILED,

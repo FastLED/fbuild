@@ -28,6 +28,8 @@ class LibrarySpec:
     owner: str
     name: str
     version: Optional[str] = None
+    is_local: bool = False
+    local_path: Optional[Path] = None
 
     @classmethod
     def parse(cls, spec: str) -> "LibrarySpec":
@@ -39,6 +41,8 @@ class LibrarySpec:
         - name@version (e.g., FastLED@^3.7.8)
         - name (e.g., FastLED)
         - URL (e.g., https://github.com/FastLED/FastLED)
+        - file:// path (e.g., file://../../fastled9)
+        - Relative path (e.g., ../../fastled9)
 
         Args:
             spec: Library specification string
@@ -49,6 +53,14 @@ class LibrarySpec:
         Raises:
             RegistryError: If spec format is invalid
         """
+        # Handle file:// URLs - local library paths
+        if spec.startswith("file://"):
+            path_str = spec.replace("file://", "", 1)
+            local_path = Path(path_str)
+            # Extract library name from path
+            name = local_path.name
+            return cls(owner="", name=name, version=None, is_local=True, local_path=local_path)
+
         # Handle URLs - convert to owner/name format
         if spec.startswith("http://") or spec.startswith("https://"):
             # Extract owner/name from GitHub URL
@@ -58,7 +70,22 @@ class LibrarySpec:
                 return cls(owner=owner, name=name, version=None)
             raise RegistryError(f"Cannot parse URL as library spec: {spec}")
 
-        # Parse owner/name@version format
+        # Handle relative/absolute paths (../foo, ./foo, /abs/path, C:/path)
+        # IMPORTANT: Check this AFTER URLs and BEFORE registry specs
+        # to avoid confusing "owner/name" registry specs with paths
+        is_path = (
+            spec.startswith(".")  # Relative paths like ./foo, ../bar
+            or spec.startswith("/")  # Absolute Unix paths
+            or spec.startswith("\\")  # Absolute Windows paths (UNC)
+            or (len(spec) > 2 and spec[1] == ":")  # Windows drive letter (C:/, D:/)
+        )
+        if is_path:
+            local_path = Path(spec)
+            name = local_path.name
+            return cls(owner="", name=name, version=None, is_local=True, local_path=local_path)
+
+        # Parse owner/name@version format (registry specs)
+        # This must come AFTER path checking to avoid treating "owner/name" as a path
         if "@" in spec:
             lib_part, version = spec.rsplit("@", 1)
         else:

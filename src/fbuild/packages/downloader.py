@@ -157,7 +157,8 @@ class PackageDownloader:
         dest_path.parent.mkdir(parents=True, exist_ok=True)
 
         # Use temporary file during download
-        temp_file = dest_path.with_suffix(dest_path.suffix + ".tmp")
+        # Use .download extension instead of .tmp to avoid antivirus interference
+        temp_file = Path(str(dest_path) + ".download")
 
         try:
             # Start download with streaming
@@ -201,6 +202,18 @@ class PackageDownloader:
             if platform.system() == "Windows":
                 time.sleep(0.2)
 
+                # Check if temp file still exists (antivirus might quarantine immediately)
+                if not temp_file.exists():
+                    # File was quarantined immediately after download
+                    # Check if antivirus moved it to dest_path already
+                    if dest_path.exists():
+                        # Antivirus renamed it for us
+                        return dest_path
+                    # Otherwise, file was deleted/quarantined - this is unrecoverable
+                    raise DownloadError(
+                        f"Downloaded file was immediately quarantined by antivirus: {temp_file}. " + f"Try adding an exclusion for {dest_path.parent} or disabling antivirus temporarily."
+                    )
+
             # Verify checksum if provided
             if checksum and sha256:
                 actual_checksum = sha256.hexdigest()
@@ -220,15 +233,144 @@ class PackageDownloader:
                     raise ChecksumError(f"Checksum mismatch for {url}\n" + f"Expected: {checksum}\n" + f"Got: {actual_checksum}")
 
             # Move temp file to final destination
+            # For large files, antivirus scanning can take longer, so use more aggressive retry
             if dest_path.exists():
-                _retry_windows_file_operation(lambda: dest_path.unlink())
-            _retry_windows_file_operation(lambda: temp_file.rename(dest_path))
+                # Try to delete existing file, but don't fail if antivirus is holding it
+                # The rename logic below will handle this case with extended retry
+                try:
+                    _retry_windows_file_operation(lambda: dest_path.unlink())
+                except (PermissionError, OSError):
+                    # File is locked (likely by antivirus), skip deletion
+                    # The rename will handle this with copy fallback
+                    pass
+
+            # Use longer max delay for rename to handle antivirus scanning of large files
+            def rename_with_extended_retry() -> Path:
+                """Rename with extended retry specifically for large file antivirus delays."""
+                import shutil
+
+                delay = 0.2
+                max_delay = 15.0  # Allow up to 15s for antivirus scanning
+
+                # Initial check - fail fast if file is already gone
+                if not temp_file.exists():
+                    if dest_path.exists():
+                        # Antivirus already moved it
+                        return dest_path
+                    raise FileNotFoundError(f"Temp file was quarantined immediately after download: {temp_file}. " + f"Add antivirus exclusion for {dest_path.parent} and retry.")
+
+                for attempt in range(30):  # More attempts for rename
+                    try:
+                        if attempt > 0:
+                            gc.collect()
+                            time.sleep(delay)
+
+                        # Check if temp file still exists (antivirus might have moved/quarantined it)
+                        if not temp_file.exists():
+                            # Wait and check if it reappears or if dest already exists
+                            time.sleep(min(delay * 2, max_delay))
+                            gc.collect()  # Try to release any file handles
+
+                            if dest_path.exists():
+                                # File was already moved (possibly by antivirus restoration)
+                                return dest_path
+
+                            # Check again after longer wait
+                            if not temp_file.exists():
+                                # File disappeared - could be antivirus quarantine
+                                if attempt < 25:  # Give more attempts for file to reappear
+                                    delay = min(delay * 1.3, max_delay)
+                                    continue
+
+                                # Last resort: check if dest_path appeared
+                                if dest_path.exists():
+                                    return dest_path
+
+                                raise FileNotFoundError(
+                                    f"Temp file disappeared (possibly quarantined by antivirus): {temp_file}. " + f"Try disabling antivirus or adding an exclusion for {dest_path.parent}"
+                                )
+
+                        # Try to rename/move the file
+                        try:
+                            # On Windows, if dest exists, try to delete it first
+                            if dest_path.exists():
+                                try:
+                                    dest_path.unlink()
+                                except (PermissionError, OSError):
+                                    # Dest file is locked, use copy fallback immediately
+                                    if attempt >= 3:  # Give a few attempts, then use copy
+                                        shutil.copy2(temp_file, dest_path)
+                                        try:
+                                            temp_file.unlink()
+                                        except KeyboardInterrupt as ke:
+                                            from fbuild.interrupt_utils import (
+                                                handle_keyboard_interrupt_properly,
+                                            )
+
+                                            handle_keyboard_interrupt_properly(ke)
+                                            raise  # Never reached, but satisfies type checker
+                                        except Exception:
+                                            pass  # Ignore unlink errors after successful copy
+                                        return dest_path
+                                    # Otherwise retry
+                                    raise
+
+                            return temp_file.rename(dest_path)
+                        except (PermissionError, OSError) as rename_err:
+                            # If rename fails, try copy + delete as fallback
+                            if attempt >= 15:  # Use copy method after multiple rename failures
+                                try:
+                                    shutil.copy2(temp_file, dest_path)
+                                    try:
+                                        temp_file.unlink()
+                                    except KeyboardInterrupt as ke:
+                                        from fbuild.interrupt_utils import (
+                                            handle_keyboard_interrupt_properly,
+                                        )
+
+                                        handle_keyboard_interrupt_properly(ke)
+                                        raise  # Never reached, but satisfies type checker
+                                    except Exception:
+                                        pass  # Ignore unlink errors after successful copy
+                                    return dest_path
+                                except KeyboardInterrupt as ke:
+                                    from fbuild.interrupt_utils import (
+                                        handle_keyboard_interrupt_properly,
+                                    )
+
+                                    handle_keyboard_interrupt_properly(ke)
+                                    raise  # Never reached, but satisfies type checker
+                                except Exception:
+                                    pass  # Let the outer exception handling deal with it
+                            raise rename_err
+
+                    except (PermissionError, OSError, FileNotFoundError) as e:
+                        if attempt < 29 and (isinstance(e, (PermissionError, FileNotFoundError)) or (hasattr(e, "errno") and e.errno in (2, 13, 32))):
+                            delay = min(delay * 1.3, max_delay)
+                            continue
+                        raise
+                raise PermissionError(f"Failed to move file after extended retry: {temp_file} -> {dest_path}")
+
+            if platform.system() == "Windows":
+                dest_path = rename_with_extended_retry()
+            else:
+                dest_path = _retry_windows_file_operation(lambda: temp_file.rename(dest_path))
 
             return dest_path
 
         except requests.RequestException as e:
             if temp_file.exists():
-                _retry_windows_file_operation(lambda: temp_file.unlink())
+                try:
+                    _retry_windows_file_operation(lambda: temp_file.unlink())
+                except KeyboardInterrupt as ke:
+                    from fbuild.interrupt_utils import (
+                        handle_keyboard_interrupt_properly,
+                    )
+
+                    handle_keyboard_interrupt_properly(ke)
+                    raise  # Never reached, but satisfies type checker
+                except Exception:
+                    pass  # Ignore cleanup errors when reporting download error
             raise DownloadError(f"Failed to download {url}: {e}")
 
         except KeyboardInterrupt as ke:
@@ -238,7 +380,17 @@ class PackageDownloader:
             raise  # Never reached, but satisfies type checker
         except Exception:
             if temp_file.exists():
-                _retry_windows_file_operation(lambda: temp_file.unlink())
+                try:
+                    _retry_windows_file_operation(lambda: temp_file.unlink())
+                except KeyboardInterrupt as ke:
+                    from fbuild.interrupt_utils import (
+                        handle_keyboard_interrupt_properly,
+                    )
+
+                    handle_keyboard_interrupt_properly(ke)
+                    raise  # Never reached, but satisfies type checker
+                except Exception:
+                    pass  # Ignore cleanup errors when reporting original error
             raise
 
     def extract_archive(self, archive_path: Path, dest_dir: Path, show_progress: bool = True) -> Path:

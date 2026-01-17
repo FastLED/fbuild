@@ -25,6 +25,7 @@ import os
 import signal
 import subprocess
 import sys
+import threading
 import time
 from logging.handlers import TimedRotatingFileHandler
 from pathlib import Path
@@ -72,12 +73,12 @@ def setup_logging(foreground: bool = False) -> None:
 
     # Configure root logger
     logger = logging.getLogger()
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG)  # CHANGED: Enable DEBUG logging
 
     # Console handler (for foreground mode)
     if foreground:
         console_handler = logging.StreamHandler(sys.stdout)
-        console_handler.setLevel(logging.INFO)
+        console_handler.setLevel(logging.DEBUG)  # CHANGED: Enable DEBUG logging
         console_formatter = logging.Formatter(fmt=LOG_FORMAT, datefmt=LOG_DATEFMT)
         console_handler.setFormatter(console_formatter)
         logger.addHandler(console_handler)
@@ -91,7 +92,7 @@ def setup_logging(foreground: bool = False) -> None:
         utc=False,  # Use local time
         atTime=None,  # Rotate exactly at midnight
     )
-    file_handler.setLevel(logging.INFO)
+    file_handler.setLevel(logging.DEBUG)  # CHANGED: Enable DEBUG logging
     file_formatter = logging.Formatter(fmt=LOG_FORMAT, datefmt=LOG_DATEFMT)
     file_handler.setFormatter(file_formatter)
     logger.addHandler(file_handler)
@@ -134,7 +135,12 @@ def read_request_file(request_file: Path, request_class: type) -> BuildRequest |
 def clear_request_file(request_file: Path) -> None:
     """Remove request file after processing."""
     try:
+        file_existed = request_file.exists()
         request_file.unlink(missing_ok=True)
+        if file_existed:
+            logging.debug(f"[ATOMIC_CONSUME] Successfully deleted request file: {request_file.name}")
+        else:
+            logging.warning(f"[ATOMIC_CONSUME] Request file already deleted: {request_file.name}")
     except KeyboardInterrupt:
         logging.warning(f"KeyboardInterrupt while clearing request file: {request_file}")
         _thread.interrupt_main()
@@ -285,6 +291,11 @@ def run_daemon_loop() -> None:
     logging.info("Entering main daemon loop...")
     iteration_count = 0
 
+    # Locks for atomic request consumption
+    build_request_lock = threading.Lock()
+    deploy_request_lock = threading.Lock()
+    monitor_request_lock = threading.Lock()
+
     while True:
         try:
             iteration_count += 1
@@ -326,8 +337,13 @@ def run_daemon_loop() -> None:
                 except Exception as e:
                     logging.error(f"Error during cancel signal cleanup: {e}", exc_info=True)
 
-            # Check for build requests
-            build_request = read_request_file(BUILD_REQUEST_FILE, BuildRequest)
+            # Check for build requests (with lock for atomic consumption)
+            with build_request_lock:
+                build_request = read_request_file(BUILD_REQUEST_FILE, BuildRequest)
+                if build_request:
+                    # Clear request file IMMEDIATELY (atomic consumption)
+                    clear_request_file(BUILD_REQUEST_FILE)
+
             if build_request:
                 last_activity = time.time()
                 logging.info(f"Received build request: {build_request}")
@@ -341,11 +357,13 @@ def run_daemon_loop() -> None:
                 # Mark operation complete
                 context.status_manager.set_operation_in_progress(False)
 
-                # Clear request file
-                clear_request_file(BUILD_REQUEST_FILE)
+            # Check for deploy requests (with lock for atomic consumption)
+            with deploy_request_lock:
+                deploy_request = read_request_file(DEPLOY_REQUEST_FILE, DeployRequest)
+                if deploy_request:
+                    # Clear request file IMMEDIATELY (atomic consumption)
+                    clear_request_file(DEPLOY_REQUEST_FILE)
 
-            # Check for deploy requests
-            deploy_request = read_request_file(DEPLOY_REQUEST_FILE, DeployRequest)
             if deploy_request:
                 last_activity = time.time()
                 logging.info(f"Received deploy request: {deploy_request}")
@@ -359,11 +377,13 @@ def run_daemon_loop() -> None:
                 # Mark operation complete
                 context.status_manager.set_operation_in_progress(False)
 
-                # Clear request file
-                clear_request_file(DEPLOY_REQUEST_FILE)
+            # Check for monitor requests (with lock for atomic consumption)
+            with monitor_request_lock:
+                monitor_request = read_request_file(MONITOR_REQUEST_FILE, MonitorRequest)
+                if monitor_request:
+                    # Clear request file IMMEDIATELY (atomic consumption)
+                    clear_request_file(MONITOR_REQUEST_FILE)
 
-            # Check for monitor requests
-            monitor_request = read_request_file(MONITOR_REQUEST_FILE, MonitorRequest)
             if monitor_request:
                 last_activity = time.time()
                 logging.info(f"Received monitor request: {monitor_request}")
@@ -376,9 +396,6 @@ def run_daemon_loop() -> None:
 
                 # Mark operation complete
                 context.status_manager.set_operation_in_progress(False)
-
-                # Clear request file
-                clear_request_file(MONITOR_REQUEST_FILE)
 
             # Sleep briefly to avoid busy-wait
             time.sleep(0.5)
@@ -469,6 +486,9 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         sys.exit(main())
-    except KeyboardInterrupt:  # noqa: KBI002
+    except KeyboardInterrupt as ke:
+        from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+        handle_keyboard_interrupt_properly(ke)
         print("\nDaemon interrupted by user")
         sys.exit(130)
