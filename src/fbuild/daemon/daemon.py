@@ -467,6 +467,7 @@ def main() -> int:
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
             stdin=subprocess.DEVNULL,
+            cwd=str(DAEMON_DIR),
         )
         return 0
 
