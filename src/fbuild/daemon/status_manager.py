@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Any
 
 from fbuild.daemon.messages import DaemonState, DaemonStatus
+from fbuild.daemon.port_state_manager import PortStateManager
 from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
 
 
@@ -49,6 +50,7 @@ class StatusManager:
         status_file: Path,
         daemon_pid: int,
         daemon_started_at: float | None = None,
+        port_state_manager: PortStateManager | None = None,
     ):
         """Initialize the StatusManager.
 
@@ -56,12 +58,14 @@ class StatusManager:
             status_file: Path to the status file
             daemon_pid: PID of the daemon process
             daemon_started_at: Timestamp when daemon started (defaults to now)
+            port_state_manager: Optional PortStateManager for including port state in status
         """
         self.status_file = status_file
         self.daemon_pid = daemon_pid
         self.daemon_started_at = daemon_started_at if daemon_started_at is not None else time.time()
         self._lock = threading.Lock()
         self._operation_in_progress = False
+        self._port_state_manager = port_state_manager
 
         # Ensure parent directory exists
         self.status_file.parent.mkdir(parents=True, exist_ok=True)
@@ -99,6 +103,11 @@ class StatusManager:
             if operation_in_progress is not None:
                 self._operation_in_progress = operation_in_progress
 
+            # Get port state summary if port_state_manager is available
+            ports_summary: dict[str, Any] = {}
+            if self._port_state_manager is not None:
+                ports_summary = self._port_state_manager.get_ports_summary()
+
             # Create typed DaemonStatus object
             status_obj = DaemonStatus(
                 state=state,
@@ -107,6 +116,7 @@ class StatusManager:
                 daemon_pid=self.daemon_pid,
                 daemon_started_at=self.daemon_started_at,
                 operation_in_progress=self._operation_in_progress,
+                ports=ports_summary,
                 **kwargs,
             )
 
@@ -192,7 +202,7 @@ class StatusManager:
             # Atomic rename
             temp_file.replace(self.status_file)
 
-        except KeyboardInterrupt:
+        except KeyboardInterrupt:  # noqa: KBI002
             logging.warning("KeyboardInterrupt during status file write, cleaning up temp file")
             temp_file.unlink(missing_ok=True)
             raise

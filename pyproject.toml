@@ -114,9 +114,11 @@ fbuild = "fbuild.cli:main"
 [tool.pytest.ini_options]
 markers = [
     "integration: marks tests as integration tests (deselected by default, run with --full)",
+    "concurrent_safety: marks tests as concurrent safety tests (deselected by default, run with --full)",
+    "hardware: marks tests that require ESP32 hardware",
 ]
-# By default, skip integration tests
-addopts = "-m 'not integration'"
+# By default, skip integration and concurrent_safety tests
+addopts = "-m 'not integration and not concurrent_safety'"
 testpaths = ["tests"]
 [project.entry-points."flake8.extension"]
 KBI = "fbuild_lint.ruff_plugins.keyboard_interrupt_checker:KeyboardInterruptChecker"

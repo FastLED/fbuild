@@ -8,18 +8,16 @@ makes dependencies explicit, and eliminates global mutable state.
 
 import threading
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING
+from pathlib import Path
 
 from fbuild.daemon.compilation_queue import CompilationJobQueue
 from fbuild.daemon.error_collector import ErrorCollector
 from fbuild.daemon.file_cache import FileCache
 from fbuild.daemon.lock_manager import ResourceLockManager
 from fbuild.daemon.operation_registry import OperationRegistry
+from fbuild.daemon.port_state_manager import PortStateManager
 from fbuild.daemon.status_manager import StatusManager
 from fbuild.daemon.subprocess_manager import SubprocessManager
-
-if TYPE_CHECKING:
-    from pathlib import Path
 
 
 @dataclass
@@ -42,6 +40,7 @@ class DaemonContext:
         file_cache: Cache for file modification times
         error_collector: Global error collector for operations
         lock_manager: Unified resource lock manager for ports and projects
+        port_state_manager: Manager for tracking COM port states
         status_manager: Manager for daemon status file operations
         operation_in_progress: Flag indicating if any operation is running
         operation_lock: Lock protecting the operation_in_progress flag
@@ -58,6 +57,7 @@ class DaemonContext:
     file_cache: FileCache
     error_collector: ErrorCollector
     lock_manager: ResourceLockManager
+    port_state_manager: PortStateManager
     status_manager: StatusManager
 
     # Operation state
@@ -69,8 +69,8 @@ def create_daemon_context(
     daemon_pid: int,
     daemon_started_at: float,
     num_workers: int,
-    file_cache_path: "Path",
-    status_file_path: "Path",
+    file_cache_path: Path,
+    status_file_path: Path,
 ) -> DaemonContext:
     """Factory function to create and initialize a DaemonContext.
 
@@ -133,12 +133,17 @@ def create_daemon_context(
     lock_manager = ResourceLockManager()
     logging.info("Resource lock manager initialized")
 
-    # Initialize status manager
+    # Initialize port state manager
+    port_state_manager = PortStateManager()
+    logging.info("Port state manager initialized")
+
+    # Initialize status manager (with port state manager for status visibility)
     logging.debug(f"Creating status manager (status_file={status_file_path})...")
     status_manager = StatusManager(
         status_file=status_file_path,
         daemon_pid=daemon_pid,
         daemon_started_at=daemon_started_at,
+        port_state_manager=port_state_manager,
     )
     logging.info("Status manager initialized")
 
@@ -152,6 +157,7 @@ def create_daemon_context(
         file_cache=file_cache,
         error_collector=error_collector,
         lock_manager=lock_manager,
+        port_state_manager=port_state_manager,
         status_manager=status_manager,
     )
 
@@ -183,7 +189,7 @@ def cleanup_daemon_context(context: DaemonContext) -> None:
         try:
             context.compilation_queue.shutdown()
             logging.info("Compilation queue shut down")
-        except KeyboardInterrupt:
+        except KeyboardInterrupt:  # noqa: KBI002
             logging.warning("KeyboardInterrupt during compilation queue shutdown")
             raise
         except Exception as e:

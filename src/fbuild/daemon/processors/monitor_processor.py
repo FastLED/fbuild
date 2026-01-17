@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 from fbuild.daemon.messages import DaemonState, OperationType
+from fbuild.daemon.port_state_manager import PortState
 from fbuild.daemon.request_processor import RequestProcessor
 
 if TYPE_CHECKING:
@@ -103,44 +104,62 @@ class MonitorRequestProcessor(RequestProcessor):
         """
         logging.info(f"Starting monitor on {request.port}")
 
-        # Create output file path for streaming
-        output_file = Path(request.project_dir) / ".fbuild" / "monitor_output.txt"
-        output_file.parent.mkdir(parents=True, exist_ok=True)
-        # Clear/truncate output file before starting
-        output_file.write_text("", encoding="utf-8")
-
-        # Create summary file path
-        summary_file = Path(request.project_dir) / ".fbuild" / "monitor_summary.json"
-        # Clear old summary file
-        if summary_file.exists():
-            summary_file.unlink()
+        # Track port state as MONITORING
+        port = request.port
+        if port:
+            context.port_state_manager.acquire_port(
+                port=port,
+                state=PortState.MONITORING,
+                client_pid=request.caller_pid,
+                project_dir=request.project_dir,
+                environment=request.environment,
+                operation_id=request.request_id,
+            )
 
         try:
-            # Get fresh monitor class after module reload
-            # Using direct import would use cached version
-            monitor_class = getattr(sys.modules["fbuild.deploy.monitor"], "SerialMonitor")
-        except (KeyError, AttributeError) as e:
-            logging.error(f"Failed to get SerialMonitor class: {e}")
-            return False
+            # Create output file path for streaming
+            output_file = Path(request.project_dir) / ".fbuild" / "monitor_output.txt"
+            output_file.parent.mkdir(parents=True, exist_ok=True)
+            # Clear/truncate output file before starting
+            output_file.write_text("", encoding="utf-8")
 
-        # Create monitor and execute
-        monitor = monitor_class(verbose=False)
-        exit_code = monitor.monitor(
-            project_dir=Path(request.project_dir),
-            env_name=request.environment,
-            port=request.port,
-            baud=request.baud_rate if request.baud_rate else 115200,
-            timeout=int(request.timeout) if request.timeout is not None else None,
-            halt_on_error=request.halt_on_error,
-            halt_on_success=request.halt_on_success,
-            expect=request.expect,
-            output_file=output_file,
-            summary_file=summary_file,
-        )
+            # Create summary file path
+            summary_file = Path(request.project_dir) / ".fbuild" / "monitor_summary.json"
+            # Clear old summary file
+            if summary_file.exists():
+                summary_file.unlink()
 
-        if exit_code == 0:
-            logging.info("Monitor completed successfully")
-            return True
-        else:
-            logging.error(f"Monitor failed with exit code {exit_code}")
-            return False
+            try:
+                # Get fresh monitor class after module reload
+                # Using direct import would use cached version
+                monitor_class = getattr(sys.modules["fbuild.deploy.monitor"], "SerialMonitor")
+            except (KeyError, AttributeError) as e:
+                logging.error(f"Failed to get SerialMonitor class: {e}")
+                return False
+
+            # Create monitor and execute
+            monitor = monitor_class(verbose=False)
+            exit_code = monitor.monitor(
+                project_dir=Path(request.project_dir),
+                env_name=request.environment,
+                port=request.port,
+                baud=request.baud_rate if request.baud_rate else 115200,
+                timeout=int(request.timeout) if request.timeout is not None else None,
+                halt_on_error=request.halt_on_error,
+                halt_on_success=request.halt_on_success,
+                expect=request.expect,
+                output_file=output_file,
+                summary_file=summary_file,
+            )
+
+            if exit_code == 0:
+                logging.info("Monitor completed successfully")
+                return True
+            else:
+                logging.error(f"Monitor failed with exit code {exit_code}")
+                return False
+
+        finally:
+            # Release port state when monitoring completes
+            if port:
+                context.port_state_manager.release_port(port)

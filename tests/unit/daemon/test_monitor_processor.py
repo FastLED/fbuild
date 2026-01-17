@@ -25,6 +25,7 @@ def mock_context():
     context.status_manager = MagicMock()
     context.lock_manager = MagicMock()
     context.operation_registry = MagicMock()
+    context.port_state_manager = MagicMock()
     return context
 
 

@@ -6,6 +6,7 @@ This module provides common utilities used across CLI commands including:
 - Monitor argument parsing
 """
 
+import _thread
 import shlex
 import sys
 from dataclasses import dataclass
@@ -26,8 +27,7 @@ def safe_print(text: str, end: str = "\n") -> None:
         print(text, end=end)
         sys.stdout.flush()
     except KeyboardInterrupt:
-        # Re-raise KeyboardInterrupt to allow proper handling
-        raise
+        _thread.interrupt_main()
     except (UnicodeEncodeError, AttributeError):
         # Fallback for Windows console that doesn't support UTF-8
         # Replace Unicode checkmarks and X marks with ASCII equivalents
@@ -36,8 +36,7 @@ def safe_print(text: str, end: str = "\n") -> None:
             print(safe_text, end=end)
             sys.stdout.flush()
         except KeyboardInterrupt:
-            # Re-raise KeyboardInterrupt to allow proper handling
-            raise
+            _thread.interrupt_main()
         except Exception:
             # Last resort: write bytes directly
             try:
@@ -45,8 +44,7 @@ def safe_print(text: str, end: str = "\n") -> None:
                 sys.stdout.buffer.write(output)
                 sys.stdout.buffer.flush()
             except KeyboardInterrupt:
-                # Re-raise KeyboardInterrupt to allow proper handling
-                raise
+                _thread.interrupt_main()
             except Exception:
                 # If all else fails, just skip the output
                 pass

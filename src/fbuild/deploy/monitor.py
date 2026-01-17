@@ -79,7 +79,7 @@ class SerialMonitor:
             summary_file.parent.mkdir(parents=True, exist_ok=True)
             with open(summary_file, "w", encoding="utf-8") as f:
                 json.dump(summary, f, indent=2)
-        except KeyboardInterrupt:
+        except KeyboardInterrupt:  # noqa: KBI002
             raise
         except Exception as e:
             # Silently fail - don't disrupt the monitor operation
@@ -189,7 +189,7 @@ class SerialMonitor:
                 try:
                     output_file.parent.mkdir(parents=True, exist_ok=True)
                     output_fp = open(output_file, "w", encoding="utf-8", errors="replace")
-                except KeyboardInterrupt:
+                except KeyboardInterrupt:  # noqa: KBI002
                     raise
                 except Exception as e:
                     print(f"Warning: Could not open output file {output_file}: {e}")
@@ -280,7 +280,7 @@ class SerialMonitor:
                             try:
                                 output_fp.write(text + "\n")
                                 output_fp.flush()
-                            except KeyboardInterrupt:
+                            except KeyboardInterrupt:  # noqa: KBI002
                                 raise
                             except Exception:
                                 pass  # Ignore write errors

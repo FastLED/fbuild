@@ -229,6 +229,7 @@ class DaemonStatus:
         output_lines: Recent output lines from the operation
         exit_code: Process exit code (None if still running)
         port: Serial port being used
+        ports: Dictionary of active ports with their state information
     """
 
     state: DaemonState
@@ -248,6 +249,7 @@ class DaemonStatus:
     output_lines: list[str] = field(default_factory=list)
     exit_code: int | None = None
     port: str | None = None
+    ports: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
@@ -290,6 +292,7 @@ class DaemonStatus:
             output_lines=data.get("output_lines", []),
             exit_code=data.get("exit_code"),
             port=data.get("port"),
+            ports=data.get("ports", {}),
         )
 
     def is_stale(self, timeout_seconds: float = 30.0) -> bool:

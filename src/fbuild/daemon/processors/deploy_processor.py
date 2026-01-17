@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 from fbuild.daemon.messages import DaemonState, MonitorRequest, OperationType
+from fbuild.daemon.port_state_manager import PortState
 from fbuild.daemon.request_processor import RequestProcessor
 
 if TYPE_CHECKING:
@@ -103,9 +104,14 @@ class DeployRequestProcessor(RequestProcessor):
         if not used_port:
             return False
 
-        # Phase 3: Optional monitoring
+        # Phase 3: Optional monitoring or release port state
         if request.monitor_after and used_port:
+            # _start_monitoring handles port state release when monitoring completes
             self._start_monitoring(request, used_port, context)
+        else:
+            # No monitoring requested - release port state now
+            if used_port:
+                context.port_state_manager.release_port(used_port)
 
         logging.info("Deploy completed successfully")
         return True
@@ -189,28 +195,75 @@ class DeployRequestProcessor(RequestProcessor):
             logging.error(f"Failed to get ESP32Deployer class: {e}")
             return None
 
-        # Execute deploy
-        deployer = deployer_class(verbose=False)
-        deploy_result = deployer.deploy(
-            project_dir=Path(request.project_dir),
-            env_name=request.environment,
-            port=request.port,
-        )
-
-        if not deploy_result.success:
-            logging.error(f"Deploy failed: {deploy_result.message}")
-            self._update_status(
-                context,
-                DaemonState.FAILED,
-                f"Deploy failed: {deploy_result.message}",
-                request=request,
-                exit_code=1,
-                operation_in_progress=False,
+        # Track port state as UPLOADING before deployment starts
+        used_port = request.port
+        if used_port:
+            context.port_state_manager.acquire_port(
+                port=used_port,
+                state=PortState.UPLOADING,
+                client_pid=request.caller_pid,
+                project_dir=request.project_dir,
+                environment=request.environment,
+                operation_id=request.request_id,
             )
-            return None
 
-        # Return the port that was actually used
-        return deploy_result.port if deploy_result.port else request.port
+        try:
+            # Execute deploy
+            deployer = deployer_class(verbose=False)
+            deploy_result = deployer.deploy(
+                project_dir=Path(request.project_dir),
+                env_name=request.environment,
+                port=request.port,
+            )
+
+            if not deploy_result.success:
+                logging.error(f"Deploy failed: {deploy_result.message}")
+                self._update_status(
+                    context,
+                    DaemonState.FAILED,
+                    f"Deploy failed: {deploy_result.message}",
+                    request=request,
+                    exit_code=1,
+                    operation_in_progress=False,
+                )
+                # Release port state on failure
+                if used_port:
+                    context.port_state_manager.release_port(used_port)
+                return None
+
+            # Update used_port with actual port if auto-detected
+            actual_port = deploy_result.port if deploy_result.port else request.port
+
+            # If port changed (auto-detected), update port state tracking
+            if actual_port and actual_port != used_port:
+                # Release old port state if we tracked one
+                if used_port:
+                    context.port_state_manager.release_port(used_port)
+                # Track the actual port used
+                context.port_state_manager.acquire_port(
+                    port=actual_port,
+                    state=PortState.UPLOADING,
+                    client_pid=request.caller_pid,
+                    project_dir=request.project_dir,
+                    environment=request.environment,
+                    operation_id=request.request_id,
+                )
+
+            # Return the port that was actually used
+            return actual_port
+
+        except KeyboardInterrupt:  # noqa: KBI002
+            logging.warning("Deploy interrupted by user")
+            # Release port state on interruption
+            if used_port:
+                context.port_state_manager.release_port(used_port)
+            raise
+        except Exception as e:
+            logging.error(f"Deploy exception: {e}")
+            # Release port state on exception
+            if used_port:
+                context.port_state_manager.release_port(used_port)
+            raise
 
     def _start_monitoring(self, request: "DeployRequest", port: str, context: "DaemonContext") -> None:
         """Start monitoring after successful deployment.
@@ -229,6 +282,9 @@ class DeployRequestProcessor(RequestProcessor):
             context: The daemon context
         """
         logging.info(f"Monitor after deploy requested for port {port}")
+
+        # Transition port state to MONITORING
+        context.port_state_manager.update_state(port, PortState.MONITORING)
 
         # Update status to indicate transition to monitoring
         self._update_status(
@@ -253,14 +309,20 @@ class DeployRequestProcessor(RequestProcessor):
             request_id=request.request_id,
         )
 
-        # Import and use MonitorRequestProcessor to handle monitoring
-        # This will be imported at runtime to avoid circular dependencies
-        from fbuild.daemon.processors.monitor_processor import MonitorRequestProcessor
+        try:
+            # Import and use MonitorRequestProcessor to handle monitoring
+            # This will be imported at runtime to avoid circular dependencies
+            from fbuild.daemon.processors.monitor_processor import (
+                MonitorRequestProcessor,
+            )
 
-        monitor_processor = MonitorRequestProcessor()
-        # Note: This will block until monitoring completes
-        # The locks will be released by the base class after execute_operation returns
-        monitor_processor.process_request(monitor_request, context)
+            monitor_processor = MonitorRequestProcessor()
+            # Note: This will block until monitoring completes
+            # The locks will be released by the base class after execute_operation returns
+            monitor_processor.process_request(monitor_request, context)
+        finally:
+            # Release port state when monitoring completes
+            context.port_state_manager.release_port(port)
 
     def _reload_build_modules(self) -> None:
         """Reload build-related modules to pick up code changes.

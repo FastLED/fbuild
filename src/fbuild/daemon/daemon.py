@@ -469,6 +469,6 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         sys.exit(main())
-    except KeyboardInterrupt:
+    except KeyboardInterrupt:  # noqa: KBI002
         print("\nDaemon interrupted by user")
         sys.exit(130)
