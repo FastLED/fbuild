@@ -13,7 +13,10 @@ fbuild is a next-generation embedded development tool designed to replace Platfo
 - Compiles Arduino sketches using native toolchains (AVR-GCC, ESP32 toolchains)
 - Transparent URL-based package management (no hidden registries)
 - Fast incremental builds (0.76s rebuilds, 3s full builds)
-- Library dependency management from GitHub URLs
+- Library dependency management from GitHub URLs and local paths (symlinks)
+- **Environment inheritance** - Full support for `extends` directive in platformio.ini
+- **Source directory override** - Configure custom source directories (e.g., examples/)
+- **Board build customization** - Support for board_build.* and board_upload.* overrides
 - Cross-platform support (Windows, macOS, Linux)
 - 100% type-safe with comprehensive testing
 
@@ -142,9 +145,88 @@ lib_deps =
 - **board** - Target board (uno, esp32dev, esp32c6, etc.)
 - **framework** - Framework to use (arduino)
 - **build_flags** - Compiler flags
-- **lib_deps** - Library dependencies (GitHub URLs)
+- **lib_deps** - Library dependencies (GitHub URLs, local paths, symlinks)
+- **extends** - Inherit configuration from another environment
+- **board_build.*** - Board-specific build settings (flash_mode, flash_size, partitions, etc.)
+- **board_upload.*** - Board-specific upload settings
+- **src_dir** (in [platformio] section) - Override source directory path
 - **upload_port** - Serial port for uploading
 - **monitor_speed** - Serial monitor baud rate
+
+### Advanced Configuration Features
+
+#### Environment Inheritance (`extends`)
+Environments can inherit from other environments using the `extends` directive:
+
+```ini
+[env:generic-esp]
+platform = espressif32
+framework = arduino
+build_flags = -DDEBUG
+
+[env:esp32c6]
+extends = env:generic-esp
+board = esp32-c6-devkitc-1
+build_flags = ${env:generic-esp.build_flags} -DSPECIFIC_FLAG
+```
+
+Features:
+- Multi-level inheritance (child -> parent -> grandparent)
+- Automatic circular dependency detection
+- Variable substitution with `${env:parent.key}` syntax
+- Abstract base environments (without required fields) are supported
+
+#### Source Directory Override (`src_dir`)
+Customize the source directory location in the [platformio] section:
+
+```ini
+[platformio]
+src_dir = examples/Blink
+default_envs = esp32c6
+
+[env:esp32c6]
+platform = espressif32
+board = esp32-c6-devkitc-1
+framework = arduino
+```
+
+This is particularly useful for building example sketches from subdirectories.
+
+#### Board Build Customization
+Override board-specific build settings:
+
+```ini
+[env:esp32c6]
+platform = espressif32
+board = esp32-c6-devkitc-1
+framework = arduino
+board_build.flash_mode = dio
+board_build.flash_size = 4MB
+board_build.partitions = huge_app.csv
+board_upload.flash_size = 4MB
+```
+
+Common board_build options:
+- `flash_mode` - Flash access mode (dio, qio, qout, dout)
+- `flash_size` - Flash memory size (4MB, 8MB, 16MB, etc.)
+- `partitions` - Partition table CSV file
+- `mcu` - MCU type override
+- `f_cpu` - CPU frequency override
+
+#### Library Dependencies with Symlinks
+Support for local library development using symlinks:
+
+```ini
+[env:esp32c6]
+platform = espressif32
+board = esp32-c6-devkitc-1
+framework = arduino
+lib_deps =
+    FastLED=symlink://./
+    https://github.com/user/library
+```
+
+On Windows, symlinks are automatically converted to directory copies for compatibility.
 
 ## CLI Usage
 

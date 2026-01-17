@@ -76,23 +76,37 @@ class PlatformIOConfig:
                 envs.append(env_name)
         return envs
 
-    def get_env_config(self, env_name: str) -> Dict[str, str]:
+    def get_env_config(self, env_name: str, _visited: Optional[set] = None, _validate: bool = True) -> Dict[str, str]:
         """
-        Get configuration for a specific environment.
+        Get configuration for a specific environment with inheritance support.
 
         Args:
             env_name: Name of the environment (e.g., 'uno')
+            _visited: Internal parameter for circular dependency detection
+            _validate: Internal parameter to control validation (default: True)
 
         Returns:
             Dictionary of configuration key-value pairs
 
         Raises:
-            PlatformIOConfigError: If environment not found or missing required fields
+            PlatformIOConfigError: If environment not found, missing required fields,
+                                  or circular dependency detected
 
         Example:
             config.get_env_config('uno')
             # Returns: {'platform': 'atmelavr', 'board': 'uno', 'framework': 'arduino'}
         """
+        # Initialize visited set for circular dependency detection
+        if _visited is None:
+            _visited = set()
+
+        # Check for circular dependency
+        if env_name in _visited:
+            chain = " -> ".join(_visited) + f" -> {env_name}"
+            raise PlatformIOConfigError(f"Circular dependency detected in environment inheritance: {chain}")
+
+        _visited.add(env_name)
+
         section = f"env:{env_name}"
 
         if section not in self.config:
@@ -100,22 +114,77 @@ class PlatformIOConfig:
             raise PlatformIOConfigError(f"Environment '{env_name}' not found. " + f"Available environments: {available or 'none'}")
 
         # Collect all key-value pairs from the environment section
+        # Use raw=True to avoid interpolation errors when referencing parent environments
         env_config = {}
         for key in self.config[section]:
-            value = self.config[section][key]
+            value = self.config[section].get(key, raw=True)
             # Handle multi-line values (like lib_deps)
-            env_config[key] = value.strip()
+            env_config[key] = value.strip() if value else ""
 
         # Also check if there's a base [env] section to inherit from
         if "env" in self.config:
-            base_config = dict(self.config["env"])
+            base_config = {}
+            for key in self.config["env"]:
+                value = self.config["env"].get(key, raw=True)
+                base_config[key] = value.strip() if value else ""
             # Environment-specific values override base values
             env_config = {**base_config, **env_config}
 
-        # Validate required fields
-        missing_fields = self.REQUIRED_FIELDS - set(env_config.keys())
-        if missing_fields:
-            raise PlatformIOConfigError(f"Environment '{env_name}' is missing required fields: " + f"{', '.join(sorted(missing_fields))}")
+        # Handle 'extends' directive for environment inheritance
+        if "extends" in env_config:
+            parent_ref = env_config["extends"].strip()
+            # Parse parent reference (can be "env:parent" or just "parent")
+            parent_name = parent_ref.replace("env:", "").strip()
+
+            # Recursively get parent config (don't validate parent, it might be abstract)
+            parent_config = self.get_env_config(parent_name, _visited, _validate=False)
+
+            # Merge: parent values first, then child overrides
+            merged_config = parent_config.copy()
+            for key, value in env_config.items():
+                if key == "extends":
+                    # Remove 'extends' key from final config
+                    continue
+                merged_config[key] = value
+
+            env_config = merged_config
+
+        # Now perform manual variable interpolation for cross-environment references
+        # This handles ${env:parent.key} syntax
+        import re
+
+        interpolated_config = {}
+        for key, value in env_config.items():
+            # Look for ${env:name.key} patterns
+            pattern = r"\$\{env:([^}]+)\}"
+            matches = re.findall(pattern, value)
+
+            interpolated_value = value
+            for match in matches:
+                # Parse the reference: "env:parent.build_flags"
+                parts = match.split(".")
+                if len(parts) == 2:
+                    ref_env = parts[0]
+                    ref_key = parts[1]
+
+                    # Get the referenced environment's config
+                    # Create a new visited set to avoid false circular dependency detection
+                    # Don't validate the referenced environment (it might be an abstract base)
+                    ref_config = self.get_env_config(ref_env, set(), _validate=False)
+
+                    if ref_key in ref_config:
+                        # Replace the variable reference with the actual value
+                        interpolated_value = interpolated_value.replace(f"${{env:{match}}}", ref_config[ref_key])
+
+            interpolated_config[key] = interpolated_value
+
+        env_config = interpolated_config
+
+        # Validate required fields (only if validation is enabled)
+        if _validate:
+            missing_fields = self.REQUIRED_FIELDS - set(env_config.keys())
+            if missing_fields:
+                raise PlatformIOConfigError(f"Environment '{env_name}' is missing required fields: " + f"{', '.join(sorted(missing_fields))}")
 
         return env_config
 
@@ -207,3 +276,72 @@ class PlatformIOConfig:
         # Fall back to first environment
         envs = self.get_environments()
         return envs[0] if envs else None
+
+    def get_src_dir(self) -> Optional[str]:
+        """
+        Get source directory override from [platformio] section.
+
+        Returns:
+            Source directory path relative to project root, or None if not specified
+
+        Example:
+            If [platformio] section has src_dir = examples/Blink, returns 'examples/Blink'
+        """
+        if "platformio" in self.config:
+            src_dir = self.config["platformio"].get("src_dir", "").strip()
+            # Remove inline comments (everything after ';')
+            if ";" in src_dir:
+                src_dir = src_dir.split(";")[0].strip()
+            return src_dir if src_dir else None
+        return None
+
+    def get_platformio_config(self, key: str, default: Optional[str] = None) -> Optional[str]:
+        """
+        Get a configuration value from the [platformio] section.
+
+        Args:
+            key: Configuration key to retrieve
+            default: Default value if key not found
+
+        Returns:
+            Configuration value or default
+
+        Example:
+            build_cache_dir = config.get_platformio_config('build_cache_dir', '.pio/build_cache')
+        """
+        if "platformio" in self.config:
+            value = self.config["platformio"].get(key, "").strip()
+            return value if value else default
+        return default
+
+    def get_board_overrides(self, env_name: str) -> Dict[str, str]:
+        """
+        Get board build and upload overrides from environment configuration.
+
+        Extracts all board_build.* and board_upload.* settings from the
+        environment configuration.
+
+        Args:
+            env_name: Name of the environment
+
+        Returns:
+            Dictionary of board override settings (e.g., {'flash_mode': 'dio', 'flash_size': '4MB'})
+
+        Example:
+            For board_build.flash_mode = dio and board_build.flash_size = 4MB
+            Returns: {'flash_mode': 'dio', 'flash_size': '4MB'}
+        """
+        env_config = self.get_env_config(env_name)
+        overrides = {}
+
+        for key, value in env_config.items():
+            if key.startswith("board_build."):
+                # Extract the override key (e.g., "flash_mode" from "board_build.flash_mode")
+                override_key = key.replace("board_build.", "")
+                overrides[override_key] = value
+            elif key.startswith("board_upload."):
+                # Also handle upload overrides
+                override_key = "upload_" + key.replace("board_upload.", "")
+                overrides[override_key] = value
+
+        return overrides

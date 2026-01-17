@@ -346,12 +346,18 @@ class OrchestratorESP32(IBuildOrchestrator):
             if library_include_paths:
                 compiler.add_library_includes(library_include_paths)
 
+            # Get src_dir override from platformio.ini
+            from ..config import PlatformIOConfig
+            config_for_src_dir = PlatformIOConfig(project_dir / "platformio.ini")
+            src_dir_override = config_for_src_dir.get_src_dir()
+
             # Find and compile sketch
-            sketch_obj_files = self._compile_sketch(project_dir, compiler, start_time, verbose)
+            sketch_obj_files = self._compile_sketch(project_dir, compiler, start_time, verbose, src_dir_override)
             if sketch_obj_files is None:
+                search_dir = project_dir / src_dir_override if src_dir_override else project_dir
                 return self._error_result(
                     start_time,
-                    f"No .ino sketch file found in {project_dir}"
+                    f"No .ino sketch file found in {search_dir}"
                 )
 
             # Initialize linker
@@ -621,7 +627,8 @@ class OrchestratorESP32(IBuildOrchestrator):
         project_dir: Path,
         compiler: ConfigurableCompiler,
         start_time: float,
-        verbose: bool
+        verbose: bool,
+        src_dir_override: Optional[str] = None
     ) -> Optional[List[Path]]:
         """
         Find and compile sketch files.
@@ -631,6 +638,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             compiler: Configured compiler instance
             start_time: Build start time for error reporting
             verbose: Verbose output mode
+            src_dir_override: Optional source directory override (relative to project_dir)
 
         Returns:
             List of compiled object files or None if no sketch found
@@ -638,8 +646,16 @@ class OrchestratorESP32(IBuildOrchestrator):
         if verbose:
             logger.info("[8/10] Compiling sketch...")
 
-        # Look for .ino files in the project directory
-        sketch_files = list(project_dir.glob("*.ino"))
+        # Determine source directory
+        if src_dir_override:
+            src_dir = project_dir / src_dir_override
+            if verbose:
+                logger.info(f"      Using source directory override: {src_dir_override}")
+        else:
+            src_dir = project_dir
+
+        # Look for .ino files in the source directory
+        sketch_files = list(src_dir.glob("*.ino"))
         if not sketch_files:
             return None
 

@@ -41,6 +41,8 @@ class LibrarySpec:
         - name@version (e.g., FastLED@^3.7.8)
         - name (e.g., FastLED)
         - URL (e.g., https://github.com/FastLED/FastLED)
+        - symlink:// path (e.g., symlink://./)
+        - Name=symlink://path (e.g., FastLED=symlink://./)
         - file:// path (e.g., file://../../fastled9)
         - Relative path (e.g., ../../fastled9)
 
@@ -53,6 +55,21 @@ class LibrarySpec:
         Raises:
             RegistryError: If spec format is invalid
         """
+        # Handle Name=symlink://path format (FastLED pattern)
+        if "=" in spec and "symlink://" in spec:
+            name, path_spec = spec.split("=", 1)
+            path_spec = path_spec.replace("symlink://", "", 1).strip()
+            local_path = Path(path_spec)
+            return cls(owner="", name=name.strip(), version=None, is_local=True, local_path=local_path)
+
+        # Handle bare symlink://path format
+        if spec.startswith("symlink://"):
+            path_str = spec.replace("symlink://", "", 1)
+            local_path = Path(path_str)
+            # Extract library name from path (last component)
+            name = local_path.name if local_path.name else "library"
+            return cls(owner="", name=name, version=None, is_local=True, local_path=local_path)
+
         # Handle file:// URLs - local library paths
         if spec.startswith("file://"):
             path_str = spec.replace("file://", "", 1)
