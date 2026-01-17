@@ -52,7 +52,10 @@ class PlatformIOConfig:
         if not ini_path.exists():
             raise PlatformIOConfigError(f"Configuration file not found: {ini_path}")
 
-        self.config = configparser.ConfigParser(allow_no_value=True, interpolation=configparser.ExtendedInterpolation())
+        # Use interpolation=None to disable Python's built-in interpolation.
+        # PlatformIO uses a different syntax: ${env:section.key} instead of ${section:key}
+        # We handle this manually in get_env_config() with a custom regex-based interpolation.
+        self.config = configparser.ConfigParser(allow_no_value=True, interpolation=None)
 
         try:
             self.config.read(ini_path, encoding="utf-8")

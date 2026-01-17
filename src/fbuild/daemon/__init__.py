@@ -8,11 +8,13 @@ operations with proper locking and process tree tracking.
 from fbuild.daemon.client import (
     ensure_daemon_running,
     get_daemon_status,
+    request_build,
     request_deploy,
     request_monitor,
     stop_daemon,
 )
 from fbuild.daemon.messages import (
+    BuildRequest,
     DaemonState,
     DaemonStatus,
     DeployRequest,
@@ -21,6 +23,7 @@ from fbuild.daemon.messages import (
 )
 
 __all__ = [
+    "BuildRequest",
     "DaemonState",
     "DaemonStatus",
     "DeployRequest",
@@ -28,6 +31,7 @@ __all__ = [
     "OperationType",
     "ensure_daemon_running",
     "get_daemon_status",
+    "request_build",
     "request_deploy",
     "request_monitor",
     "stop_daemon",
