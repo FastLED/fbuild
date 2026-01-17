@@ -386,12 +386,15 @@ class OrchestratorESP32(IBuildOrchestrator):
                 linker, mcu, verbose
             )
 
+            # Get size information from ELF file
+            size_info = linker.get_size_info(firmware_elf)
+
             build_time = time.time() - start_time
 
             if verbose:
                 self._print_success(
                     build_time, firmware_elf, firmware_bin,
-                    bootloader_bin, partitions_bin
+                    bootloader_bin, partitions_bin, size_info
                 )
 
             # Save build state for future cache validation
@@ -405,7 +408,7 @@ class OrchestratorESP32(IBuildOrchestrator):
                 firmware_elf=firmware_elf,
                 bootloader_bin=bootloader_bin,
                 partitions_bin=partitions_bin,
-                size_info=None,  # TODO: Add size info for ESP32
+                size_info=size_info,
                 build_time=build_time,
                 message="Build successful (native ESP32 build)"
             )
@@ -762,7 +765,8 @@ __attribute__((weak)) bool btInUse(void) {
         firmware_elf: Path,
         firmware_bin: Path,
         bootloader_bin: Optional[Path],
-        partitions_bin: Optional[Path]
+        partitions_bin: Optional[Path],
+        size_info: Optional[SizeInfo] = None
     ) -> None:
         """
         Print build success message.
@@ -773,6 +777,7 @@ __attribute__((weak)) bool btInUse(void) {
             firmware_bin: Path to firmware binary
             bootloader_bin: Optional path to bootloader
             partitions_bin: Optional path to partition table
+            size_info: Optional size information to display
         """
         # Build success message
         message_lines = ["BUILD SUCCESSFUL!"]
@@ -785,6 +790,13 @@ __attribute__((weak)) bool btInUse(void) {
             message_lines.append(f"Partitions: {partitions_bin}")
 
         BannerFormatter.print_banner("\n".join(message_lines), width=60, center=False)
+
+        # Print size information if available
+        if size_info:
+            print()
+            from .build_utils import SizeInfoPrinter
+            SizeInfoPrinter.print_size_info(size_info)
+            print()
 
     def _error_result(self, start_time: float, message: str) -> BuildResultESP32:
         """
