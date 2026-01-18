@@ -41,11 +41,13 @@ from fbuild.daemon.messages import (
     BuildRequest,
     DaemonState,
     DeployRequest,
+    InstallDependenciesRequest,
     MonitorRequest,
 )
 from fbuild.daemon.process_tracker import ProcessTracker
 from fbuild.daemon.processors.build_processor import BuildRequestProcessor
 from fbuild.daemon.processors.deploy_processor import DeployRequestProcessor
+from fbuild.daemon.processors.install_deps_processor import InstallDependenciesProcessor
 from fbuild.daemon.processors.monitor_processor import MonitorRequestProcessor
 
 # Daemon configuration
@@ -64,6 +66,7 @@ STATUS_FILE = DAEMON_DIR / "daemon_status.json"
 BUILD_REQUEST_FILE = DAEMON_DIR / "build_request.json"
 DEPLOY_REQUEST_FILE = DAEMON_DIR / "deploy_request.json"
 MONITOR_REQUEST_FILE = DAEMON_DIR / "monitor_request.json"
+INSTALL_DEPS_REQUEST_FILE = DAEMON_DIR / "install_deps_request.json"
 LOG_FILE = DAEMON_DIR / "daemon.log"
 PROCESS_REGISTRY_FILE = DAEMON_DIR / "process_registry.json"
 FILE_CACHE_FILE = DAEMON_DIR / "file_cache.json"
@@ -288,6 +291,7 @@ def run_daemon_loop() -> None:
     # Create request processors
     build_processor = BuildRequestProcessor()
     deploy_processor = DeployRequestProcessor()
+    install_deps_processor = InstallDependenciesProcessor()
     monitor_processor = MonitorRequestProcessor()
 
     logging.info(f"Daemon started with PID {daemon_pid}")
@@ -304,6 +308,7 @@ def run_daemon_loop() -> None:
     # Locks for atomic request consumption
     build_request_lock = threading.Lock()
     deploy_request_lock = threading.Lock()
+    install_deps_request_lock = threading.Lock()
     monitor_request_lock = threading.Lock()
 
     while True:
@@ -443,6 +448,26 @@ def run_daemon_loop() -> None:
 
                 # Process request
                 monitor_processor.process_request(monitor_request, context)
+
+                # Mark operation complete
+                context.status_manager.set_operation_in_progress(False)
+
+            # Check for install dependencies requests (with lock for atomic consumption)
+            with install_deps_request_lock:
+                install_deps_request = read_request_file(INSTALL_DEPS_REQUEST_FILE, InstallDependenciesRequest)
+                if install_deps_request:
+                    # Clear request file IMMEDIATELY (atomic consumption)
+                    clear_request_file(INSTALL_DEPS_REQUEST_FILE)
+
+            if install_deps_request:
+                last_activity = time.time()
+                logging.info(f"Received install dependencies request: {install_deps_request}")
+
+                # Mark operation in progress
+                context.status_manager.set_operation_in_progress(True)
+
+                # Process request
+                install_deps_processor.process_request(install_deps_request, context)
 
                 # Mark operation complete
                 context.status_manager.set_operation_in_progress(False)

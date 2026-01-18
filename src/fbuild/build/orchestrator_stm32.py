@@ -17,7 +17,6 @@ from ..packages.platform_stm32 import PlatformSTM32
 from ..packages.toolchain_stm32 import ToolchainSTM32
 from ..packages.library_manager import LibraryManager, LibraryError
 from ..config.board_config import BoardConfig
-from ..cli_utils import BannerFormatter
 from .configurable_compiler import ConfigurableCompiler
 from .configurable_linker import ConfigurableLinker
 from .linker import SizeInfo
@@ -653,7 +652,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
         logger.info(f"Output: {firmware_hex}")
 
         if size_info:
-            logger.info(f"Flash: {size_info.program_bytes:,} bytes")
-            logger.info(f"RAM:   {size_info.data_bytes:,} bytes")
+            logger.info(f"Flash: {size_info.total_flash:,} bytes")
+            logger.info(f"RAM:   {size_info.total_ram:,} bytes")
 
         logger.info("=" * 60)

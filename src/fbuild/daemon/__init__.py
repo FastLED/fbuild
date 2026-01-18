@@ -10,6 +10,7 @@ from fbuild.daemon.client import (
     get_daemon_status,
     request_build,
     request_deploy,
+    request_install_dependencies,
     request_monitor,
     stop_daemon,
 )
@@ -18,6 +19,7 @@ from fbuild.daemon.messages import (
     DaemonState,
     DaemonStatus,
     DeployRequest,
+    InstallDependenciesRequest,
     MonitorRequest,
     OperationType,
 )
@@ -27,12 +29,14 @@ __all__ = [
     "DaemonState",
     "DaemonStatus",
     "DeployRequest",
+    "InstallDependenciesRequest",
     "MonitorRequest",
     "OperationType",
     "ensure_daemon_running",
     "get_daemon_status",
     "request_build",
     "request_deploy",
+    "request_install_dependencies",
     "request_monitor",
     "stop_daemon",
 ]

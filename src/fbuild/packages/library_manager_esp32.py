@@ -186,10 +186,7 @@ class LibraryManagerESP32:
             logger.debug(f"[TOOLCHAIN] Using discovered toolchain: {gcc_files[0]}")
             return gcc_files[0], gxx_files[0]
 
-        raise LibraryErrorESP32(
-            f"No suitable ESP32 toolchain found in {toolchain_path}. "
-            f"Expected xtensa-esp32-elf-gcc or riscv32-esp-elf-gcc"
-        )
+        raise LibraryErrorESP32(f"No suitable ESP32 toolchain found in {toolchain_path}. Expected xtensa-esp32-elf-gcc or riscv32-esp-elf-gcc")
 
     def _find_toolchain_ar(self, toolchain_path: Path) -> Path:
         """Find ar archiver in the toolchain directory.
@@ -220,10 +217,7 @@ class LibraryManagerESP32:
         if ar_files:
             return ar_files[0]
 
-        raise LibraryErrorESP32(
-            f"No suitable ar archiver found in {toolchain_path}. "
-            f"Expected xtensa-esp32-elf-ar or riscv32-esp-elf-ar"
-        )
+        raise LibraryErrorESP32(f"No suitable ar archiver found in {toolchain_path}. Expected xtensa-esp32-elf-ar or riscv32-esp-elf-ar")
 
     def get_library(self, spec: LibrarySpec) -> LibraryESP32:
         """Get a library instance for a specification.

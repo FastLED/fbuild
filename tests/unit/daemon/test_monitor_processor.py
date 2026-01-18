@@ -163,18 +163,26 @@ def test_execute_operation_failure(processor, monitor_request, mock_context):
 
 def test_execute_operation_monitor_import_error(processor, monitor_request, mock_context):
     """Test monitor execution when SerialMonitor import fails."""
-    # Use a dict that doesn't have the monitor module but has pathlib
-    empty_modules = {k: v for k, v in sys.modules.items() if "pathlib" in k or "_frozen" in k or k.startswith("_")}
+    # Remove the monitor module from sys.modules to simulate import failure
+    # We need to patch sys.modules.get to raise KeyError for the specific module
+    original_modules = sys.modules.copy()
 
-    with patch.object(sys, "modules", empty_modules):
-        # Mock Path operations without importing pathlib
-        mock_path = MagicMock()
-        mock_path.parent.mkdir = MagicMock()
-        mock_path.write_text = MagicMock()
-        mock_path.exists = MagicMock(return_value=False)
+    # Create a patched modules dict that raises KeyError for fbuild.deploy.monitor
+    class ModulesDict(dict):
+        def __getitem__(self, key):
+            if key == "fbuild.deploy.monitor":
+                raise KeyError(key)
+            return super().__getitem__(key)
 
-        with patch("fbuild.daemon.processors.monitor_processor.Path", return_value=mock_path):
-            result = processor.execute_operation(monitor_request, mock_context)
+    patched_modules = ModulesDict(original_modules)
+    # Remove the actual module if it exists
+    patched_modules.pop("fbuild.deploy.monitor", None)
+
+    with patch.object(sys, "modules", patched_modules):
+        with patch("pathlib.Path.mkdir"):
+            with patch("pathlib.Path.write_text"):
+                with patch("pathlib.Path.exists", return_value=False):
+                    result = processor.execute_operation(monitor_request, mock_context)
 
     assert result is False
 

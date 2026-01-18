@@ -22,6 +22,7 @@ from fbuild.daemon.messages import (
     DaemonState,
     DaemonStatus,
     DeployRequest,
+    InstallDependenciesRequest,
     MonitorRequest,
 )
 
@@ -41,6 +42,7 @@ STATUS_FILE = DAEMON_DIR / "daemon_status.json"
 BUILD_REQUEST_FILE = DAEMON_DIR / "build_request.json"
 DEPLOY_REQUEST_FILE = DAEMON_DIR / "deploy_request.json"
 MONITOR_REQUEST_FILE = DAEMON_DIR / "monitor_request.json"
+INSTALL_DEPS_REQUEST_FILE = DAEMON_DIR / "install_deps_request.json"
 
 
 def is_daemon_running() -> bool:
@@ -339,11 +341,11 @@ class BaseRequestHandler(ABC):
         self.output_file_position = 0
 
     @abstractmethod
-    def create_request(self) -> BuildRequest | DeployRequest | MonitorRequest:
+    def create_request(self) -> BuildRequest | DeployRequest | InstallDependenciesRequest | MonitorRequest:
         """Create the specific request object.
 
         Returns:
-            Request object (BuildRequest, DeployRequest, or MonitorRequest)
+            Request object (BuildRequest, DeployRequest, InstallDependenciesRequest, or MonitorRequest)
         """
         pass
 
@@ -766,6 +768,88 @@ class MonitorRequestHandler(BaseRequestHandler):
         """Handle failure with monitor summary."""
         if self.monitoring_started:
             _display_monitor_summary(self.project_dir)
+
+
+class InstallDependenciesRequestHandler(BaseRequestHandler):
+    """Handler for install dependencies requests."""
+
+    def __init__(
+        self,
+        project_dir: Path,
+        environment: str,
+        verbose: bool = False,
+        timeout: float = 1800,
+    ):
+        """Initialize install dependencies request handler.
+
+        Args:
+            project_dir: Project directory
+            environment: Build environment
+            verbose: Enable verbose output
+            timeout: Maximum wait time in seconds
+        """
+        super().__init__(project_dir, environment, timeout)
+        self.verbose = verbose
+
+    def create_request(self) -> InstallDependenciesRequest:
+        """Create install dependencies request."""
+        return InstallDependenciesRequest(
+            project_dir=str(self.project_dir.absolute()),
+            environment=self.environment,
+            verbose=self.verbose,
+            caller_pid=os.getpid(),
+            caller_cwd=os.getcwd(),
+        )
+
+    def get_request_file(self) -> Path:
+        """Get install dependencies request file path."""
+        return INSTALL_DEPS_REQUEST_FILE
+
+    def get_operation_name(self) -> str:
+        """Get operation name."""
+        return "Install Dependencies"
+
+    def get_operation_emoji(self) -> str:
+        """Get operation emoji."""
+        return "📦"
+
+    def print_submission_info(self) -> None:
+        """Print install dependencies submission information."""
+        super().print_submission_info()
+        if self.verbose:
+            print("   Verbose: Yes")
+
+
+def request_install_dependencies(
+    project_dir: Path,
+    environment: str,
+    verbose: bool = False,
+    timeout: float = 1800,
+) -> bool:
+    """Request a dependency installation operation from the daemon.
+
+    This pre-installs toolchain, platform, framework, and libraries without
+    actually performing a build. Useful for:
+    - Pre-warming the cache before builds
+    - Ensuring dependencies are available offline
+    - Separating dependency installation from compilation
+
+    Args:
+        project_dir: Project directory
+        environment: Build environment
+        verbose: Enable verbose output
+        timeout: Maximum wait time in seconds (default: 30 minutes)
+
+    Returns:
+        True if dependencies installed successfully, False otherwise
+    """
+    handler = InstallDependenciesRequestHandler(
+        project_dir=project_dir,
+        environment=environment,
+        verbose=verbose,
+        timeout=timeout,
+    )
+    return handler.execute()
 
 
 def request_deploy(

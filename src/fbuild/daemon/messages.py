@@ -208,6 +208,52 @@ class BuildRequest:
 
 
 @dataclass
+class InstallDependenciesRequest:
+    """Client → Daemon: Install dependencies request message.
+
+    This request downloads and caches all dependencies (toolchain, platform,
+    framework, libraries) without performing a build. Useful for:
+    - Pre-warming the cache before builds
+    - Ensuring dependencies are available offline
+    - Separating dependency installation from compilation
+
+    Attributes:
+        project_dir: Absolute path to project directory
+        environment: Build environment name
+        verbose: Enable verbose output
+        caller_pid: Process ID of requesting client
+        caller_cwd: Working directory of requesting client
+        timestamp: Unix timestamp when request was created
+        request_id: Unique identifier for this request
+    """
+
+    project_dir: str
+    environment: str
+    verbose: bool
+    caller_pid: int
+    caller_cwd: str
+    timestamp: float = field(default_factory=time.time)
+    request_id: str = field(default_factory=lambda: f"install_deps_{int(time.time() * 1000)}")
+
+    def to_dict(self) -> dict[str, Any]:
+        """Convert to dictionary for JSON serialization."""
+        return asdict(self)
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "InstallDependenciesRequest":
+        """Create InstallDependenciesRequest from dictionary."""
+        return cls(
+            project_dir=data["project_dir"],
+            environment=data["environment"],
+            verbose=data.get("verbose", False),
+            caller_pid=data["caller_pid"],
+            caller_cwd=data["caller_cwd"],
+            timestamp=data.get("timestamp", time.time()),
+            request_id=data.get("request_id", f"install_deps_{int(time.time() * 1000)}"),
+        )
+
+
+@dataclass
 class DaemonStatus:
     """Daemon → Client: Status update message.
 
