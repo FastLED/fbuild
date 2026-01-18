@@ -1142,6 +1142,233 @@ def display_lock_status() -> None:
     print()
 
 
+def list_all_daemons() -> list[dict[str, Any]]:
+    """List all running fbuild daemon instances by scanning processes.
+
+    This function scans all running processes to find fbuild daemons,
+    which is useful for detecting multiple daemon instances that may
+    have been started due to race conditions or startup errors.
+
+    Returns:
+        List of dictionaries with daemon info:
+        - pid: Process ID
+        - cmdline: Command line arguments
+        - uptime: Time since process started (seconds)
+        - is_primary: True if this matches the PID file (primary daemon)
+
+    Example:
+        >>> daemons = list_all_daemons()
+        >>> for d in daemons:
+        ...     print(f"PID {d['pid']}: uptime {d['uptime']:.1f}s")
+    """
+    daemons: list[dict[str, Any]] = []
+
+    # Get primary daemon PID from PID file
+    primary_pid = None
+    if PID_FILE.exists():
+        try:
+            with open(PID_FILE) as f:
+                primary_pid = int(f.read().strip())
+        except (ValueError, OSError):
+            pass
+
+    for proc in psutil.process_iter(["pid", "cmdline", "create_time", "name"]):
+        try:
+            cmdline = proc.info.get("cmdline")
+            proc_name = proc.info.get("name", "")
+            if not cmdline:
+                continue
+
+            # Skip non-Python processes
+            if not proc_name.lower().startswith("python"):
+                continue
+
+            # Detect fbuild daemon processes
+            # Look for patterns like "python daemon.py" in fbuild package
+            is_daemon = False
+
+            # Check for direct daemon.py execution from fbuild package
+            # Must end with daemon.py and have fbuild in the path
+            for arg in cmdline:
+                if arg.endswith("daemon.py") and "fbuild" in arg.lower():
+                    is_daemon = True
+                    break
+
+            # Check for python -m fbuild.daemon.daemon execution
+            if not is_daemon and "-m" in cmdline:
+                for i, arg in enumerate(cmdline):
+                    if arg == "-m" and i + 1 < len(cmdline):
+                        module = cmdline[i + 1]
+                        if module in ("fbuild.daemon.daemon", "fbuild.daemon"):
+                            is_daemon = True
+                            break
+
+            if is_daemon:
+                pid = proc.info["pid"]
+                create_time = proc.info.get("create_time", time.time())
+                daemons.append(
+                    {
+                        "pid": pid,
+                        "cmdline": cmdline,
+                        "uptime": time.time() - create_time,
+                        "is_primary": pid == primary_pid,
+                    }
+                )
+
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+            continue
+
+    return daemons
+
+
+def force_kill_daemon(pid: int) -> bool:
+    """Force kill a daemon process by PID using SIGKILL.
+
+    This is a forceful termination that doesn't give the daemon
+    time to clean up. Use graceful_kill_daemon() when possible.
+
+    Args:
+        pid: Process ID to kill
+
+    Returns:
+        True if process was killed, False if it didn't exist
+
+    Example:
+        >>> if force_kill_daemon(12345):
+        ...     print("Daemon killed")
+    """
+    try:
+        proc = psutil.Process(pid)
+        proc.kill()  # SIGKILL on Unix, TerminateProcess on Windows
+        proc.wait(timeout=5)
+        return True
+    except psutil.NoSuchProcess:
+        return False
+    except psutil.TimeoutExpired:
+        # Process didn't die even with SIGKILL - unusual but handle it
+        return True
+    except psutil.AccessDenied:
+        print(f"Access denied: cannot kill process {pid}")
+        return False
+
+
+def graceful_kill_daemon(pid: int, timeout: int = 10) -> bool:
+    """Gracefully terminate a daemon process with fallback to force kill.
+
+    Sends SIGTERM first to allow cleanup, then SIGKILL if the process
+    doesn't exit within the timeout period.
+
+    Args:
+        pid: Process ID to terminate
+        timeout: Seconds to wait before force killing (default: 10)
+
+    Returns:
+        True if process was terminated, False if it didn't exist
+
+    Example:
+        >>> if graceful_kill_daemon(12345, timeout=5):
+        ...     print("Daemon terminated gracefully")
+    """
+    try:
+        proc = psutil.Process(pid)
+        proc.terminate()  # SIGTERM on Unix, TerminateProcess on Windows
+
+        try:
+            proc.wait(timeout=timeout)
+            return True
+        except psutil.TimeoutExpired:
+            # Process didn't exit gracefully - force kill
+            print(f"Process {pid} didn't exit gracefully, force killing...")
+            proc.kill()
+            proc.wait(timeout=5)
+            return True
+
+    except psutil.NoSuchProcess:
+        return False
+    except psutil.AccessDenied:
+        print(f"Access denied: cannot terminate process {pid}")
+        return False
+
+
+def kill_all_daemons(force: bool = False) -> int:
+    """Kill all running daemon instances.
+
+    Useful when multiple daemons have started due to race conditions
+    or when the daemon system is in an inconsistent state.
+
+    Args:
+        force: If True, use SIGKILL immediately. If False, try SIGTERM first.
+
+    Returns:
+        Number of daemons killed
+
+    Example:
+        >>> killed = kill_all_daemons(force=False)
+        >>> print(f"Killed {killed} daemon(s)")
+    """
+    killed = 0
+    daemons = list_all_daemons()
+
+    if not daemons:
+        return 0
+
+    for daemon in daemons:
+        pid = daemon["pid"]
+        if force:
+            if force_kill_daemon(pid):
+                killed += 1
+                print(f"Force killed daemon (PID {pid})")
+        else:
+            if graceful_kill_daemon(pid):
+                killed += 1
+                print(f"Gracefully terminated daemon (PID {pid})")
+
+    # Clean up PID file if we killed any daemons
+    if killed > 0 and PID_FILE.exists():
+        try:
+            PID_FILE.unlink()
+        except OSError:
+            pass
+
+    return killed
+
+
+def display_daemon_list() -> None:
+    """Display all running daemon instances in a human-readable format."""
+    daemons = list_all_daemons()
+
+    if not daemons:
+        print("No fbuild daemon instances found")
+        return
+
+    print(f"\n=== Running fbuild Daemons ({len(daemons)} found) ===\n")
+
+    for daemon in daemons:
+        pid = daemon["pid"]
+        uptime = daemon["uptime"]
+        is_primary = daemon["is_primary"]
+
+        # Format uptime
+        if uptime < 60:
+            uptime_str = f"{uptime:.1f}s"
+        elif uptime < 3600:
+            uptime_str = f"{uptime / 60:.1f}m"
+        else:
+            uptime_str = f"{uptime / 3600:.1f}h"
+
+        primary_str = " (PRIMARY)" if is_primary else " (ORPHAN)"
+        print(f"  PID {pid}: uptime {uptime_str}{primary_str}")
+
+    print()
+
+    # Warn about multiple daemons
+    if len(daemons) > 1:
+        print("⚠️  Multiple daemon instances detected!")
+        print("   This can cause lock conflicts and unexpected behavior.")
+        print("   Use 'fbuild daemon kill-all' to clean up, then restart.")
+        print()
+
+
 def main() -> int:
     """Command-line interface for client."""
     import argparse
@@ -1151,6 +1378,10 @@ def main() -> int:
     parser.add_argument("--stop", action="store_true", help="Stop the daemon")
     parser.add_argument("--locks", action="store_true", help="Show lock status")
     parser.add_argument("--clear-locks", action="store_true", help="Clear stale locks")
+    parser.add_argument("--list", action="store_true", help="List all daemon instances")
+    parser.add_argument("--kill", type=int, metavar="PID", help="Kill specific daemon by PID")
+    parser.add_argument("--kill-all", action="store_true", help="Kill all daemon instances")
+    parser.add_argument("--force", action="store_true", help="Force kill (with --kill or --kill-all)")
 
     args = parser.parse_args()
 
@@ -1169,6 +1400,27 @@ def main() -> int:
 
     if args.clear_locks:
         return 0 if request_clear_stale_locks() else 1
+
+    if args.list:
+        display_daemon_list()
+        return 0
+
+    if args.kill:
+        if args.force:
+            success = force_kill_daemon(args.kill)
+        else:
+            success = graceful_kill_daemon(args.kill)
+        if success:
+            print(f"Daemon (PID {args.kill}) terminated")
+            return 0
+        else:
+            print(f"Failed to terminate daemon (PID {args.kill}) - process may not exist")
+            return 1
+
+    if args.kill_all:
+        killed = kill_all_daemons(force=args.force)
+        print(f"Killed {killed} daemon instance(s)")
+        return 0
 
     parser.print_help()
     return 1

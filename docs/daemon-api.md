@@ -167,6 +167,211 @@ def get_daemon_status(self) -> tuple[bool, str, int | None]:
     """
 ```
 
+---
+
+## Daemon Lifetime Management API
+
+### Overview
+
+The daemon lifetime management API provides tools for discovering, monitoring, and controlling daemon instances. This is particularly useful for:
+
+- Detecting multiple daemon instances (race condition debugging)
+- Graceful and force shutdown of daemons
+- Cleaning up orphaned daemon processes
+- Troubleshooting lock contention issues
+
+### Functions
+
+#### `list_all_daemons()`
+
+```python
+def list_all_daemons() -> list[dict[str, Any]]:
+    """
+    List all running fbuild daemon instances by scanning processes.
+
+    Returns:
+        List of dictionaries with daemon info:
+        - pid: Process ID
+        - cmdline: Command line arguments
+        - uptime: Time since process started (seconds)
+        - is_primary: True if this matches the PID file (primary daemon)
+
+    Example:
+        >>> daemons = list_all_daemons()
+        >>> for d in daemons:
+        ...     print(f"PID {d['pid']}: uptime {d['uptime']:.1f}s")
+    """
+```
+
+#### `force_kill_daemon(pid)`
+
+```python
+def force_kill_daemon(pid: int) -> bool:
+    """
+    Force kill a daemon process by PID using SIGKILL.
+
+    This is a forceful termination that doesn't give the daemon
+    time to clean up. Use graceful_kill_daemon() when possible.
+
+    Args:
+        pid: Process ID to kill
+
+    Returns:
+        True if process was killed, False if it didn't exist
+
+    Example:
+        >>> if force_kill_daemon(12345):
+        ...     print("Daemon killed")
+    """
+```
+
+#### `graceful_kill_daemon(pid, timeout)`
+
+```python
+def graceful_kill_daemon(pid: int, timeout: int = 10) -> bool:
+    """
+    Gracefully terminate a daemon process with fallback to force kill.
+
+    Sends SIGTERM first to allow cleanup, then SIGKILL if the process
+    doesn't exit within the timeout period.
+
+    Args:
+        pid: Process ID to terminate
+        timeout: Seconds to wait before force killing (default: 10)
+
+    Returns:
+        True if process was terminated, False if it didn't exist
+
+    Example:
+        >>> if graceful_kill_daemon(12345, timeout=5):
+        ...     print("Daemon terminated gracefully")
+    """
+```
+
+#### `kill_all_daemons(force)`
+
+```python
+def kill_all_daemons(force: bool = False) -> int:
+    """
+    Kill all running daemon instances.
+
+    Useful when multiple daemons have started due to race conditions
+    or when the daemon system is in an inconsistent state.
+
+    Args:
+        force: If True, use SIGKILL immediately. If False, try SIGTERM first.
+
+    Returns:
+        Number of daemons killed
+
+    Example:
+        >>> killed = kill_all_daemons(force=False)
+        >>> print(f"Killed {killed} daemon(s)")
+    """
+```
+
+#### `display_daemon_list()`
+
+```python
+def display_daemon_list() -> None:
+    """
+    Display all running daemon instances in a human-readable format.
+
+    Output includes:
+    - PID of each daemon
+    - Uptime (formatted as seconds, minutes, or hours)
+    - PRIMARY/ORPHAN status
+    - Warning if multiple daemons detected
+    """
+```
+
+### CLI Commands
+
+The daemon management commands are accessible via the `fbuild daemon` subcommand:
+
+```bash
+# List all daemon instances
+fbuild daemon list
+
+# Show lock status
+fbuild daemon locks
+
+# Clear stale locks
+fbuild daemon clear-locks
+
+# Kill specific daemon by PID (graceful)
+fbuild daemon kill --pid 12345
+
+# Force kill specific daemon by PID
+fbuild daemon kill --pid 12345 --force
+
+# Kill all daemon instances (graceful)
+fbuild daemon kill-all
+
+# Force kill all daemon instances
+fbuild daemon kill-all --force
+```
+
+### Use Cases
+
+#### 1. Detecting Multiple Daemon Instances
+
+```bash
+$ fbuild daemon list
+
+=== Running fbuild Daemons (2 found) ===
+
+  PID 28752: uptime 12.6m (ORPHAN)
+  PID 37192: uptime 12.6m (PRIMARY)
+
+⚠️  Multiple daemon instances detected!
+   This can cause lock conflicts and unexpected behavior.
+   Use 'fbuild daemon kill-all' to clean up, then restart.
+```
+
+#### 2. Cleaning Up After a Crash
+
+```bash
+# Kill all daemons and restart fresh
+$ fbuild daemon kill-all
+Gracefully terminated daemon (PID 28752)
+Gracefully terminated daemon (PID 37192)
+✅ Killed 2 daemon instance(s)
+
+$ fbuild daemon restart
+🔗 Starting fbuild daemon...
+✅ Daemon started successfully
+```
+
+#### 3. Debugging Lock Issues
+
+```bash
+# Check current lock status
+$ fbuild daemon locks
+
+=== Lock Status ===
+
+Port Locks:
+  COM13: HELD by deploy_1234567890 (45.2s)
+
+Project Locks:
+  C:\Users\user\project: HELD by deploy_1234567890 (45.2s)
+
+# Clear stale locks if daemon crashed
+$ fbuild daemon clear-locks
+Signal sent to daemon to clear stale locks
+```
+
+#### 4. Force Kill Unresponsive Daemon
+
+```bash
+# Graceful kill didn't work, use force
+$ fbuild daemon kill --pid 12345 --force
+✅ Daemon (PID 12345) terminated
+```
+
+---
+
 ##### Method: `submit_deploy_request`
 
 ```python

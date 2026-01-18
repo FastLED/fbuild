@@ -213,13 +213,19 @@ def monitor_command(args: MonitorArgs) -> None:
         ErrorFormatter.handle_unexpected_error(e, args.verbose)
 
 
-def daemon_command(action: str) -> None:
+def daemon_command(action: str, pid: Optional[int] = None, force: bool = False) -> None:
     """Manage the fbuild daemon.
 
     Examples:
-        fbuild daemon status    # Show daemon status
-        fbuild daemon stop      # Stop the daemon
-        fbuild daemon restart   # Restart the daemon
+        fbuild daemon status       # Show daemon status
+        fbuild daemon stop         # Stop the daemon
+        fbuild daemon restart      # Restart the daemon
+        fbuild daemon list         # List all daemon instances
+        fbuild daemon locks        # Show lock status
+        fbuild daemon clear-locks  # Clear stale locks
+        fbuild daemon kill --pid 12345        # Kill specific daemon
+        fbuild daemon kill-all               # Kill all daemons
+        fbuild daemon kill-all --force       # Force kill all daemons
     """
     try:
         if action == "status":
@@ -265,9 +271,53 @@ def daemon_command(action: str) -> None:
             else:
                 ErrorFormatter.print_error("Failed to restart daemon", "")
                 sys.exit(1)
+
+        elif action == "list":
+            # List all daemon instances
+            daemon_client.display_daemon_list()
+
+        elif action == "locks":
+            # Show lock status
+            daemon_client.display_lock_status()
+
+        elif action == "clear-locks":
+            # Clear stale locks
+            if daemon_client.request_clear_stale_locks():
+                sys.exit(0)
+            else:
+                sys.exit(1)
+
+        elif action == "kill":
+            # Kill specific daemon by PID
+            if pid is None:
+                ErrorFormatter.print_error("--pid required for kill action", "")
+                print("Usage: fbuild daemon kill --pid <PID> [--force]")
+                sys.exit(1)
+
+            if force:
+                success = daemon_client.force_kill_daemon(pid)
+            else:
+                success = daemon_client.graceful_kill_daemon(pid)
+
+            if success:
+                print(f"✅ Daemon (PID {pid}) terminated")
+                sys.exit(0)
+            else:
+                ErrorFormatter.print_error(f"Failed to terminate daemon (PID {pid})", "Process may not exist")
+                sys.exit(1)
+
+        elif action == "kill-all":
+            # Kill all daemon instances
+            killed = daemon_client.kill_all_daemons(force=force)
+            if killed > 0:
+                print(f"✅ Killed {killed} daemon instance(s)")
+            else:
+                print("No daemon instances found to kill")
+            sys.exit(0)
+
         else:
             ErrorFormatter.print_error(f"Unknown daemon action: {action}", "")
-            print("Valid actions: status, stop, restart")
+            print("Valid actions: status, stop, restart, list, locks, clear-locks, kill, kill-all")
             sys.exit(1)
 
     except KeyboardInterrupt:  # noqa: KBI002
@@ -520,8 +570,19 @@ def main() -> None:
     )
     daemon_parser.add_argument(
         "action",
-        choices=["status", "stop", "restart"],
+        choices=["status", "stop", "restart", "list", "locks", "clear-locks", "kill", "kill-all"],
         help="Daemon action to perform",
+    )
+    daemon_parser.add_argument(
+        "--pid",
+        type=int,
+        default=None,
+        help="PID of daemon to kill (required for 'kill' action)",
+    )
+    daemon_parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Force kill without graceful shutdown (for 'kill' and 'kill-all' actions)",
     )
 
     # Parse arguments
@@ -569,7 +630,7 @@ def main() -> None:
         )
         monitor_command(monitor_args)
     elif parsed_args.command == "daemon":
-        daemon_command(parsed_args.action)
+        daemon_command(parsed_args.action, pid=parsed_args.pid, force=parsed_args.force)
 
 
 if __name__ == "__main__":
