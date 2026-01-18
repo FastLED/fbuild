@@ -7,7 +7,14 @@ including toolchains, platforms, and libraries.
 from .archive_utils import ArchiveExtractionError, ArchiveExtractor, URLVersionExtractor
 from .arduino_core import ArduinoCore, ArduinoCoreError
 from .cache import Cache
+from .concurrent_manager import (
+    ConcurrentPackageManager,
+    PackageLockError,
+    PackageResult,
+    PackageSpec,
+)
 from .downloader import ChecksumError, DownloadError, ExtractionError, PackageDownloader
+from .fingerprint import FingerprintRegistry, PackageFingerprint
 from .github_utils import GitHubURLOptimizer
 from .library_compiler import LibraryCompilationError, LibraryCompiler
 from .package import IFramework, IPackage
@@ -50,4 +57,10 @@ __all__ = [
     "BinaryNotFoundError",
     "ToolchainMetadataParser",
     "MetadataParseError",
+    "PackageFingerprint",
+    "FingerprintRegistry",
+    "ConcurrentPackageManager",
+    "PackageSpec",
+    "PackageResult",
+    "PackageLockError",
 ]

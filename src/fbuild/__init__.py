@@ -14,8 +14,7 @@ def is_available() -> bool:
         True if fbuild daemon client is available, False otherwise.
     """
     try:
-        from fbuild.daemon import client as daemon_client  # noqa: F401
-
+        __import__("fbuild.daemon.client")
         return True
     except ImportError:
         return False
