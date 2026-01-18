@@ -271,12 +271,9 @@ class TestCLIBuild:
             mock_client.request_build.side_effect = KeyboardInterrupt()
             mock_env_detector.detect_environment.return_value = "default"
 
-            with pytest.raises(SystemExit) as exc_info:
+            # The handler now re-raises KeyboardInterrupt after calling _thread.interrupt_main()
+            with pytest.raises(KeyboardInterrupt):
                 main()
-
-            assert exc_info.value.code == 130  # Standard SIGINT exit code
-            captured = capsys.readouterr()
-            assert "interrupted" in captured.out
 
     def test_build_unexpected_error(self, project_dir, monkeypatch, capsys):
         """Test build with unexpected error."""

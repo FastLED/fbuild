@@ -41,6 +41,8 @@ class DeployArgs:
     clean: bool = False
     monitor: Optional[str] = None
     verbose: bool = False
+    qemu: bool = False
+    qemu_timeout: int = 30
 
 
 @dataclass
@@ -102,9 +104,10 @@ def build_command(args: BuildArgs) -> None:
         ErrorFormatter.handle_file_not_found(e)
     except PermissionError as e:
         ErrorFormatter.handle_permission_error(e)
-    except KeyboardInterrupt:  # noqa: KBI002
-        ErrorFormatter.handle_keyboard_interrupt()
-        sys.exit(130)
+    except KeyboardInterrupt as ke:
+        from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+        handle_keyboard_interrupt_properly(ke)
     except Exception as e:
         ErrorFormatter.handle_unexpected_error(e, args.verbose)
 
@@ -119,6 +122,8 @@ def deploy_command(args: DeployArgs) -> None:
         fbuild deploy -p COM3            # Deploy to specific port
         fbuild deploy --clean            # Clean build before deploy
         fbuild deploy --monitor="--timeout 60 --halt-on-success \"TEST PASSED\""  # Deploy and monitor
+        fbuild deploy --qemu             # Deploy to QEMU emulator (requires Docker)
+        fbuild deploy --qemu --qemu-timeout 60  # Deploy to QEMU with 60s timeout
     """
     # Initialize timer and verbose mode
     init_timer()
@@ -129,6 +134,55 @@ def deploy_command(args: DeployArgs) -> None:
     try:
         # Determine environment name
         env_name = EnvironmentDetector.detect_environment(args.project_dir, args.environment)
+
+        # Handle QEMU deployment
+        if args.qemu:
+            log("Deploying to QEMU emulator...")
+            from fbuild.config import PlatformIOConfig
+            from fbuild.deploy.qemu_runner import (
+                QEMURunner,
+                check_docker_available,
+                map_board_to_machine,
+            )
+
+            # Check Docker is available
+            if not check_docker_available():
+                ErrorFormatter.print_error("Docker is not available", "QEMU deployment requires Docker to be installed and running")
+                print("\nInstall Docker:")
+                print("  - Windows/Mac: https://www.docker.com/products/docker-desktop")
+                print("  - Linux: https://docs.docker.com/engine/install/")
+                sys.exit(1)
+
+            # Load config to get board type
+            ini_path = args.project_dir / "platformio.ini"
+            if not ini_path.exists():
+                ErrorFormatter.print_error("platformio.ini not found", str(ini_path))
+                sys.exit(1)
+
+            config = PlatformIOConfig(ini_path)
+            env_config = config.get_env_config(env_name)
+            board_id = env_config.get("board", "esp32dev")
+
+            # Map board to QEMU machine type
+            machine = map_board_to_machine(board_id)
+
+            # Find firmware
+            build_dir = args.project_dir / ".fbuild" / "build" / env_name
+            firmware_bin = build_dir / "firmware.bin"
+
+            if not firmware_bin.exists():
+                ErrorFormatter.print_error("Firmware not found", f"Run 'fbuild build' first. Expected: {firmware_bin}")
+                sys.exit(1)
+
+            # Run QEMU
+            runner = QEMURunner(verbose=args.verbose)
+            exit_code = runner.run(
+                firmware_path=firmware_bin,
+                machine=machine,
+                timeout=args.qemu_timeout,
+            )
+
+            sys.exit(exit_code)
 
         # Parse monitor flags if provided
         monitor_after = args.monitor is not None
@@ -320,9 +374,10 @@ def daemon_command(action: str, pid: Optional[int] = None, force: bool = False) 
             print("Valid actions: status, stop, restart, list, locks, clear-locks, kill, kill-all")
             sys.exit(1)
 
-    except KeyboardInterrupt:  # noqa: KBI002
-        ErrorFormatter.handle_keyboard_interrupt()
-        sys.exit(130)
+    except KeyboardInterrupt as ke:
+        from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+        handle_keyboard_interrupt_properly(ke)
     except Exception as e:
         ErrorFormatter.handle_unexpected_error(e, verbose=False)
 
@@ -497,6 +552,17 @@ def main() -> None:
         help="Monitor flags to pass after deployment (e.g., '--timeout 60 --halt-on-success \"TEST PASSED\"')",
     )
     deploy_parser.add_argument(
+        "--qemu",
+        action="store_true",
+        help="Deploy to QEMU emulator instead of physical device (requires Docker)",
+    )
+    deploy_parser.add_argument(
+        "--qemu-timeout",
+        type=int,
+        default=30,
+        help="Timeout in seconds for QEMU execution (default: 30)",
+    )
+    deploy_parser.add_argument(
         "-v",
         "--verbose",
         action="store_true",
@@ -614,6 +680,8 @@ def main() -> None:
             clean=parsed_args.clean,
             monitor=parsed_args.monitor,
             verbose=parsed_args.verbose,
+            qemu=parsed_args.qemu,
+            qemu_timeout=parsed_args.qemu_timeout,
         )
         deploy_command(deploy_args)
     elif parsed_args.command == "monitor":
