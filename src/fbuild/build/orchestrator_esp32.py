@@ -24,6 +24,7 @@ from .linker import SizeInfo
 from .orchestrator import IBuildOrchestrator, BuildResult
 from .build_utils import safe_rmtree
 from .build_state import BuildStateTracker
+from ..output import log_phase, log_detail, log_warning
 
 # Module-level logger
 logger = logging.getLogger(__name__)
@@ -196,10 +197,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             platform_url = self._resolve_platform_url(platform_url)
 
             # Initialize platform
-            if verbose:
-                logger.info("[3/10] Initializing ESP32 platform...")
-            else:
-                logger.info("Initializing ESP32 platform...")
+            log_phase(3, 12, "Initializing ESP32 platform...")
 
             platform = PlatformESP32(self.cache, platform_url, show_progress=True)
             platform.ensure_platform()
@@ -208,9 +206,8 @@ class OrchestratorESP32(IBuildOrchestrator):
             board_json = platform.get_board_json(board_id)
             mcu = board_json.get("build", {}).get("mcu", "esp32c6")
 
-            if verbose:
-                logger.info(f"      Board: {board_id}")
-                logger.info(f"      MCU: {mcu}")
+            log_detail(f"Board: {board_id}", verbose_only=True)
+            log_detail(f"MCU: {mcu}", verbose_only=True)
 
             # Get required packages
             packages = platform.get_required_packages(mcu)
@@ -235,8 +232,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             build_dir = self._setup_build_directory(env_name, clean, verbose)
 
             # Check build state and invalidate cache if needed
-            if verbose:
-                logger.info("[6.5/10] Checking build configuration state...")
+            log_detail("Checking build configuration state...", verbose_only=True)
 
             state_tracker = BuildStateTracker(build_dir)
             needs_rebuild, reasons, current_state = state_tracker.check_invalidation(
@@ -252,11 +248,10 @@ class OrchestratorESP32(IBuildOrchestrator):
             )
 
             if needs_rebuild:
-                if verbose:
-                    logger.info("      Build cache invalidated:")
-                    for reason in reasons:
-                        logger.info(f"        - {reason}")
-                    logger.info("      Cleaning build artifacts...")
+                log_detail("Build cache invalidated:", verbose_only=True)
+                for reason in reasons:
+                    log_detail(f"  - {reason}", indent=8, verbose_only=True)
+                log_detail("Cleaning build artifacts...", verbose_only=True)
                 # Clean build artifacts to force rebuild
                 from .build_utils import safe_rmtree
                 if build_dir.exists():
@@ -264,8 +259,7 @@ class OrchestratorESP32(IBuildOrchestrator):
                 # Recreate build directory
                 build_dir.mkdir(parents=True, exist_ok=True)
             else:
-                if verbose:
-                    logger.info("      Build configuration unchanged, using cached artifacts")
+                log_detail("Build configuration unchanged, using cached artifacts", verbose_only=True)
 
             # Initialize compilation executor early to show sccache status
             from .compilation_executor import CompilationExecutor
@@ -289,10 +283,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             #         print("[Sync Mode] Daemon not available, using synchronous compilation")
 
             # Initialize compiler
-            if verbose:
-                logger.info("[7/10] Compiling Arduino core...")
-            else:
-                logger.info("Compiling Arduino core...")
+            log_phase(7, 12, "Compiling Arduino core...")
 
             compiler = ConfigurableCompiler(
                 platform,
@@ -329,7 +320,7 @@ class OrchestratorESP32(IBuildOrchestrator):
                     core_obj_files = compiler.compile_core(progress_bar=pbar)
 
                 # Print completion message
-                logger.info(f"Compiled {len(core_obj_files)} core files")
+                log_detail(f"Compiled {len(core_obj_files)} core files")
 
             # Add Bluetooth stub for non-ESP32 targets (ESP32-C6, ESP32-S3, etc.)
             # where esp32-hal-bt.c fails to compile but btInUse() is still referenced
@@ -339,8 +330,7 @@ class OrchestratorESP32(IBuildOrchestrator):
 
             core_archive = compiler.create_core_archive(core_obj_files)
 
-            if verbose:
-                logger.info(f"      Compiled {len(core_obj_files)} core source files")
+            log_detail(f"Compiled {len(core_obj_files)} core source files", verbose_only=True)
 
             # Handle library dependencies
             library_archives, library_include_paths = self._process_libraries(
@@ -366,10 +356,7 @@ class OrchestratorESP32(IBuildOrchestrator):
                 )
 
             # Initialize linker
-            if verbose:
-                logger.info("[9/10] Linking firmware...")
-            else:
-                logger.info("Linking firmware...")
+            log_phase(9, 12, "Linking firmware...")
 
             linker = ConfigurableLinker(
                 platform,
@@ -385,10 +372,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             firmware_elf = linker.link(sketch_obj_files, core_archive, library_archives=library_archives)
 
             # Generate binary
-            if verbose:
-                logger.info("[10/10] Generating firmware binary...")
-            else:
-                logger.info("Generating firmware binary...")
+            log_phase(10, 12, "Generating firmware binary...")
 
             firmware_bin = linker.generate_bin(firmware_elf)
 
@@ -409,8 +393,7 @@ class OrchestratorESP32(IBuildOrchestrator):
                 )
 
             # Save build state for future cache validation
-            if verbose:
-                logger.info("[10.5/10] Saving build state...")
+            log_detail("Saving build state...", verbose_only=True)
             state_tracker.save_state(current_state)
 
             return BuildResultESP32(
@@ -460,10 +443,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         Returns:
             ToolchainESP32 instance or None on failure
         """
-        if verbose:
-            logger.info("[4/10] Initializing ESP32 toolchain...")
-        else:
-            logger.info("Initializing ESP32 toolchain...")
+        log_phase(4, 12, "Initializing ESP32 toolchain...")
 
         toolchain_url = packages.get("toolchain-riscv32-esp") or packages.get("toolchain-xtensa-esp-elf")
         if not toolchain_url:
@@ -497,10 +477,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         Returns:
             FrameworkESP32 instance or None on failure
         """
-        if verbose:
-            logger.info("[5/10] Initializing ESP32 framework...")
-        else:
-            logger.info("Initializing ESP32 framework...")
+        log_phase(5, 12, "Initializing ESP32 framework...")
 
         framework_url = packages.get("framework-arduinoespressif32")
         libs_url = packages.get("framework-arduinoespressif32-libs", "")
@@ -540,10 +517,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         build_dir = self.cache.get_build_dir(env_name)
 
         if clean and build_dir.exists():
-            if verbose:
-                logger.info("[6/10] Cleaning build directory...")
-            else:
-                logger.info("Cleaning build directory...")
+            log_phase(6, 12, "Cleaning build directory...")
             safe_rmtree(build_dir)
 
         build_dir.mkdir(parents=True, exist_ok=True)
@@ -579,8 +553,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         if not lib_deps:
             return library_archives, library_include_paths
 
-        if verbose:
-            logger.info("[7.5/10] Processing library dependencies...")
+        log_phase(8, 12, "Processing library dependencies...", verbose_only=True)
 
         # Parse lib_deps (can be string or list)
         if isinstance(lib_deps, str):
@@ -603,8 +576,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         # Get toolchain bin path
         toolchain_bin_path = toolchain.get_bin_path()
         if toolchain_bin_path is None:
-            if verbose:
-                logger.info("      Warning: Toolchain bin directory not found, skipping libraries")
+            log_warning("Toolchain bin directory not found, skipping libraries")
             return library_archives, library_include_paths
 
         # Ensure libraries are downloaded and compiled
@@ -622,8 +594,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         library_archives = [lib.archive_file for lib in libraries if lib.is_compiled]
         library_include_paths = lib_manager.get_library_include_paths()
 
-        if verbose:
-            logger.info(f"      Compiled {len(libraries)} library dependencies")
+        log_detail(f"Compiled {len(libraries)} library dependencies", verbose_only=True)
 
         return library_archives, library_include_paths
 
@@ -648,14 +619,12 @@ class OrchestratorESP32(IBuildOrchestrator):
         Returns:
             List of compiled object files or None if no sketch found
         """
-        if verbose:
-            logger.info("[8/10] Compiling sketch...")
+        log_phase(8, 12, "Compiling sketch...", verbose_only=True)
 
         # Determine source directory
         if src_dir_override:
             src_dir = project_dir / src_dir_override
-            if verbose:
-                logger.info(f"      Using source directory override: {src_dir_override}")
+            log_detail(f"Using source directory override: {src_dir_override}", verbose_only=True)
         else:
             src_dir = project_dir
 
@@ -667,8 +636,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         sketch_path = sketch_files[0]
         sketch_obj_files = compiler.compile_sketch(sketch_path)
 
-        if verbose:
-            logger.info(f"      Compiled {len(sketch_obj_files)} sketch file(s)")
+        log_detail(f"Compiled {len(sketch_obj_files)} sketch file(s)", verbose_only=True)
 
         return sketch_obj_files
 
@@ -716,8 +684,7 @@ __attribute__((weak)) bool btInUse(void) {
             stub_obj = stub_dir / "bt_stub.o"
             compiled_obj = compiler.compile_source(stub_file, stub_obj)
 
-            if verbose:
-                logger.info(f"      Created Bluetooth stub: {compiled_obj.name}")
+            log_detail(f"Created Bluetooth stub: {compiled_obj.name}", verbose_only=True)
 
             return compiled_obj
 
@@ -727,8 +694,7 @@ __attribute__((weak)) bool btInUse(void) {
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
-            if verbose:
-                logger.info(f"Warning: Failed to create Bluetooth stub: {e}")
+            log_warning(f"Failed to create Bluetooth stub: {e}")
             return None
 
     def _generate_boot_components(
@@ -754,8 +720,7 @@ __attribute__((weak)) bool btInUse(void) {
         if not mcu.startswith("esp32"):
             return bootloader_bin, partitions_bin
 
-        if verbose:
-            logger.info("[11/12] Generating bootloader...")
+        log_phase(11, 12, "Generating bootloader...", verbose_only=True)
         try:
             bootloader_bin = linker.generate_bootloader()
         except KeyboardInterrupt as ke:
@@ -763,11 +728,9 @@ __attribute__((weak)) bool btInUse(void) {
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
-            if verbose:
-                logger.info(f"Warning: Could not generate bootloader: {e}")
+            log_warning(f"Could not generate bootloader: {e}")
 
-        if verbose:
-            logger.info("[12/12] Generating partition table...")
+        log_phase(12, 12, "Generating partition table...", verbose_only=True)
         try:
             partitions_bin = linker.generate_partition_table()
         except KeyboardInterrupt as ke:
@@ -775,8 +738,7 @@ __attribute__((weak)) bool btInUse(void) {
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
-            if verbose:
-                logger.info(f"Warning: Could not generate partition table: {e}")
+            log_warning(f"Could not generate partition table: {e}")
 
         return bootloader_bin, partitions_bin
 
@@ -867,9 +829,9 @@ __attribute__((weak)) bool btInUse(void) {
 
         # Handle PlatformIO shorthand formats
         if platform_spec in ("platformio/espressif32", "espressif32"):
-            logger.info(f"Resolving platform shorthand '{platform_spec}' to pioarduino stable release")
+            log_detail(f"Resolving platform shorthand '{platform_spec}' to pioarduino stable release")
             return DEFAULT_ESP32_URL
 
         # For unknown formats, return as-is and let the download fail with a clear error
-        logger.warning(f"Unknown platform format: {platform_spec}, attempting to use as URL")
+        log_warning(f"Unknown platform format: {platform_spec}, attempting to use as URL")
         return platform_spec

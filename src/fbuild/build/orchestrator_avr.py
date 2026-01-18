@@ -35,6 +35,9 @@ from .source_compilation_orchestrator import (
 from .build_component_factory import BuildComponentFactory
 from .orchestrator import IBuildOrchestrator, BuildResult, BuildOrchestratorError
 from .build_state import BuildStateTracker
+from ..output import (
+    log, log_phase, log_detail, log_build_complete, log_firmware_path, set_verbose
+)
 
 # Import daemon accessor functions for async compilation
 # TODO: Re-enable when get_compilation_queue() is implemented in daemon module
@@ -126,6 +129,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
         """
         start_time = time.time()
         verbose_mode = verbose if verbose is not None else self.verbose
+        set_verbose(verbose_mode)
 
         try:
             project_dir = Path(project_dir).resolve()
@@ -135,9 +139,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                 self.cache = Cache(project_dir)
 
             # Phase 1: Parse configuration
-            if verbose_mode:
-                print("[1/9] Parsing platformio.ini...")
-                self._log("[1/9] Parsing platformio.ini...")
+            log_phase(1, 9, "Parsing platformio.ini...", verbose_only=not verbose_mode)
 
             config = self._parse_config(project_dir)
 
@@ -149,38 +151,30 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                         "No environment specified and no default found in platformio.ini"
                     )
 
-            if verbose_mode:
-                print(f"      Building environment: {env_name}")
-                self._log(f"      Building environment: {env_name}")
+            log_detail(f"Building environment: {env_name}", verbose_only=not verbose_mode)
 
             env_config = config.get_env_config(env_name)
 
             # Phase 2: Load board configuration
-            if verbose_mode:
-                print("[2/9] Loading board configuration...")
-                self._log("[2/9] Loading board configuration...")
+            log_phase(2, 9, "Loading board configuration...", verbose_only=not verbose_mode)
 
             board_id = env_config['board']
             board_config = BoardConfigLoader.load_board_config(board_id, env_config)
 
-            if verbose_mode:
-                print(f"      Board: {board_config.name}")
-                print(f"      MCU: {board_config.mcu}")
-                print(f"      F_CPU: {board_config.f_cpu}")
-                self._log(f"      Board: {board_config.name}, MCU: {board_config.mcu}, F_CPU: {board_config.f_cpu}")
+            log_detail(f"Board: {board_config.name}", verbose_only=not verbose_mode)
+            log_detail(f"MCU: {board_config.mcu}", verbose_only=not verbose_mode)
+            log_detail(f"F_CPU: {board_config.f_cpu}", verbose_only=not verbose_mode)
 
             # Detect platform and handle accordingly
             if board_config.platform == "esp32":
-                if verbose_mode:
-                    print(f"      Platform: {board_config.platform} (using native ESP32 build)")
+                log_detail(f"Platform: {board_config.platform} (using native ESP32 build)", verbose_only=not verbose_mode)
                 # Get build flags from platformio.ini
                 build_flags = config.get_build_flags(env_name)
                 return self._build_esp32(
                     project_dir, env_name, board_id, env_config, clean, verbose_mode, start_time, build_flags
                 )
             elif board_config.platform == "teensy":
-                if verbose_mode:
-                    print(f"      Platform: {board_config.platform} (using native Teensy build)")
+                log_detail(f"Platform: {board_config.platform} (using native Teensy build)", verbose_only=not verbose_mode)
                 # Get build flags from platformio.ini
                 build_flags = config.get_build_flags(env_name)
                 return self._build_teensy(
@@ -199,32 +193,22 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                 )
 
             # Phase 3: Ensure toolchain
-            if verbose_mode:
-                print("[3/9] Ensuring AVR toolchain...")
-                self._log("[3/9] Ensuring AVR toolchain...")
+            log_phase(3, 9, "Ensuring AVR toolchain...", verbose_only=not verbose_mode)
 
             toolchain = self._ensure_toolchain()
 
-            if verbose_mode:
-                print("      Toolchain ready")
-                self._log("      Toolchain ready")
+            log_detail("Toolchain ready", verbose_only=not verbose_mode)
 
             # Phase 4: Ensure Arduino core
-            if verbose_mode:
-                print("[4/9] Ensuring Arduino core...")
-                self._log("[4/9] Ensuring Arduino core...")
+            log_phase(4, 9, "Ensuring Arduino core...", verbose_only=not verbose_mode)
 
             arduino_core = self._ensure_arduino_core()
             core_path = arduino_core.ensure_avr_core()
 
-            if verbose_mode:
-                print(f"      Core ready: version {arduino_core.AVR_VERSION}")
-                self._log(f"      Core ready: version {arduino_core.AVR_VERSION}")
+            log_detail(f"Core ready: version {arduino_core.AVR_VERSION}", verbose_only=not verbose_mode)
 
             # Phase 5: Setup build directories
-            if verbose_mode:
-                print("[5/11] Preparing build directories...")
-                self._log("[5/11] Preparing build directories...")
+            log_phase(5, 11, "Preparing build directories...", verbose_only=not verbose_mode)
 
             if clean:
                 self.cache.clean_build(env_name)
@@ -235,9 +219,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             src_build_dir = self.cache.get_src_build_dir(env_name)
 
             # Phase 5.5: Check build state and invalidate cache if needed
-            if verbose_mode:
-                print("[5.5/11] Checking build configuration state...")
-                self._log("[5.5/11] Checking build configuration state...")
+            log_phase(5, 11, "Checking build configuration state...", verbose_only=not verbose_mode)
 
             state_tracker = BuildStateTracker(build_dir)
             build_flags = config.get_build_flags(env_name)
@@ -256,26 +238,19 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             )
 
             if needs_rebuild:
-                if verbose_mode:
-                    print("      Build cache invalidated:")
-                    for reason in reasons:
-                        print(f"        - {reason}")
-                    print("      Cleaning build artifacts...")
-                    self._log(f"      Build cache invalidated: {', '.join(reasons)}")
-                    self._log("      Cleaning build artifacts...")
+                log_detail("Build cache invalidated:", verbose_only=not verbose_mode)
+                for reason in reasons:
+                    log_detail(f"  - {reason}", indent=8, verbose_only=not verbose_mode)
+                log_detail("Cleaning build artifacts...", verbose_only=not verbose_mode)
                 # Clean build artifacts to force rebuild
                 self.cache.clean_build(env_name)
                 # Recreate directories
                 self.cache.ensure_build_directories(env_name)
             else:
-                if verbose_mode:
-                    print("      Build configuration unchanged, using cached artifacts")
-                    self._log("      Build configuration unchanged, using cached artifacts")
+                log_detail("Build configuration unchanged, using cached artifacts", verbose_only=not verbose_mode)
 
             # Phase 6: Download and compile library dependencies
-            if verbose_mode:
-                print("[6/11] Processing library dependencies...")
-                self._log("[6/11] Processing library dependencies...")
+            log_phase(6, 11, "Processing library dependencies...", verbose_only=not verbose_mode)
 
             lib_deps = config.get_lib_deps(env_name)
 
@@ -296,9 +271,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             lib_objects = lib_result.object_files
 
             # Phase 7: Scan source files
-            if verbose_mode:
-                print("[7/11] Scanning source files...")
-                self._log("[7/11] Scanning source files...")
+            log_phase(7, 11, "Scanning source files...", verbose_only=not verbose_mode)
 
             sources = self._scan_sources(
                 project_dir,
@@ -313,17 +286,13 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                 + len(sources.variant_sources)
             )
 
-            if verbose_mode:
-                print(f"      Sketch: {len(sources.sketch_sources)} files")
-                print(f"      Core: {len(sources.core_sources)} files")
-                print(f"      Variant: {len(sources.variant_sources)} files")
-                print(f"      Total: {total_sources} files")
-                self._log(f"      Sketch: {len(sources.sketch_sources)} files, Core: {len(sources.core_sources)} files, Variant: {len(sources.variant_sources)} files, Total: {total_sources} files")
+            log_detail(f"Sketch: {len(sources.sketch_sources)} files", verbose_only=not verbose_mode)
+            log_detail(f"Core: {len(sources.core_sources)} files", verbose_only=not verbose_mode)
+            log_detail(f"Variant: {len(sources.variant_sources)} files", verbose_only=not verbose_mode)
+            log_detail(f"Total: {total_sources} files", verbose_only=not verbose_mode)
 
             # Phase 8: Compile sources
-            if verbose_mode:
-                print("[8/11] Compiling sources...")
-                self._log("[8/11] Compiling sources...")
+            log_phase(8, 11, "Compiling sources...", verbose_only=not verbose_mode)
 
             # Get compilation queue from daemon if available
             # TODO: Implement get_compilation_queue() in daemon module
@@ -358,9 +327,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             all_core_objects = compilation_result.all_core_objects
 
             # Phase 9: Link firmware
-            if verbose_mode:
-                print("[9/11] Linking firmware...")
-                self._log("[9/11] Linking firmware...")
+            log_phase(9, 11, "Linking firmware...", verbose_only=not verbose_mode)
 
             elf_path = build_dir / 'firmware.elf'
             hex_path = build_dir / 'firmware.hex'
@@ -383,26 +350,19 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                     f"Linking failed:\n{link_result.stderr}"
                 )
 
-            if verbose_mode:
-                print(f"      Firmware: {hex_path}")
-                self._log(f"      Firmware: {hex_path}")
+            log_firmware_path(hex_path, verbose_only=not verbose_mode)
 
             # Phase 10: Save build state for future cache validation
-            if verbose_mode:
-                print("[10/11] Saving build state...")
-                self._log("[10/11] Saving build state...")
+            log_phase(10, 11, "Saving build state...", verbose_only=not verbose_mode)
             state_tracker.save_state(current_state)
 
             # Phase 11: Display results
             build_time = time.time() - start_time
 
-            if verbose_mode:
-                print("[11/11] Build complete!")
-                print()
-                SizeInfoPrinter.print_size_info(link_result.size_info)
-                print()
-                print(f"Build time: {build_time:.2f}s")
-                self._log(f"[11/11] Build complete! Build time: {build_time:.2f}s")
+            log_phase(11, 11, "Build complete!", verbose_only=not verbose_mode)
+            log("")
+            SizeInfoPrinter.print_size_info(link_result.size_info)
+            log_build_complete(build_time, verbose_only=not verbose_mode)
 
             return BuildResult(
                 success=True,

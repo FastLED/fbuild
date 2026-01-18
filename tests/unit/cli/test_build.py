@@ -129,6 +129,11 @@ class TestCLIBuild:
             mock_client.request_build.return_value = True
             mock_env_detector.detect_environment.return_value = "default"
 
+            # Reset output module to use current sys.stdout (captured by capsys)
+            from fbuild import output
+
+            output.init_timer(sys.stdout)
+
             with pytest.raises(SystemExit) as exc_info:
                 main()
 
@@ -375,7 +380,9 @@ class TestCLIBuild:
 
         assert exc_info.value.code == 0
         captured = capsys.readouterr()
-        assert "1.2.4" in captured.out
+        from fbuild import __version__
+
+        assert __version__ in captured.out
 
 
 class TestCLIIntegration:

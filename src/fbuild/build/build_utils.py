@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any, Callable, Optional
 
 from ..build.linker import SizeInfo
+from ..output import log_size_info
 
 
 class SizeInfoPrinter:
@@ -27,22 +28,16 @@ class SizeInfoPrinter:
         if not size_info:
             return
 
-        print("Firmware Size:")
-        print(f"  Program:  {size_info.total_flash:6d} bytes", end="")
-        if size_info.flash_percent is not None:
-            print(
-                f" ({size_info.flash_percent:5.1f}% of {size_info.max_flash} bytes)"
-            )
-        else:
-            print()
-
-        print(f"  Data:     {size_info.data:6d} bytes")
-        print(f"  BSS:      {size_info.bss:6d} bytes")
-        print(f"  RAM:      {size_info.total_ram:6d} bytes", end="")
-        if size_info.ram_percent is not None:
-            print(f" ({size_info.ram_percent:5.1f}% of {size_info.max_ram} bytes)")
-        else:
-            print()
+        log_size_info(
+            program_bytes=size_info.total_flash,
+            program_percent=size_info.flash_percent,
+            max_flash=size_info.max_flash,
+            data_bytes=size_info.data,
+            bss_bytes=size_info.bss,
+            ram_bytes=size_info.total_ram,
+            ram_percent=size_info.ram_percent,
+            max_ram=size_info.max_ram
+        )
 
 
 def remove_readonly(func: Callable[[str], None], path: str, excinfo: Any) -> None:

@@ -18,6 +18,7 @@ from fbuild.cli_utils import (
     PathValidator,
 )
 from fbuild.daemon import client as daemon_client
+from fbuild.output import init_timer, log, log_header, set_verbose
 
 
 @dataclass
@@ -67,9 +68,12 @@ def build_command(args: BuildArgs) -> None:
         fbuild build --clean             # Clean build
         fbuild build --verbose           # Verbose output
     """
+    # Initialize timer and verbose mode
+    init_timer()
+    set_verbose(args.verbose)
+
     # Print header
-    print(f"fbuild Build System v{__version__}")
-    print()
+    log_header("fbuild Build System", __version__)
 
     try:
         # Determine environment name
@@ -77,11 +81,11 @@ def build_command(args: BuildArgs) -> None:
 
         # Show build start message
         if args.verbose:
-            print(f"Building project: {args.project_dir}")
-            print(f"Environment: {env_name}")
-            print()
+            log(f"Building project: {args.project_dir}")
+            log(f"Environment: {env_name}")
+            log("")
         else:
-            print(f"Building environment: {env_name}...")
+            log(f"Building environment: {env_name}...")
 
         # Route build through daemon for background processing
         success = daemon_client.request_build(
@@ -116,8 +120,11 @@ def deploy_command(args: DeployArgs) -> None:
         fbuild deploy --clean            # Clean build before deploy
         fbuild deploy --monitor="--timeout 60 --halt-on-success \"TEST PASSED\""  # Deploy and monitor
     """
-    print(f"fbuild Deployment System v{__version__}")
-    print()
+    # Initialize timer and verbose mode
+    init_timer()
+    set_verbose(args.verbose)
+
+    log_header("fbuild Deployment System", __version__)
 
     try:
         # Determine environment name

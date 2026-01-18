@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import List
 
 from .compiler import ICompiler, CompilerError
+from ..output import log_file, log_detail
 
 
 class SourceCompilationOrchestratorError(Exception):
@@ -88,14 +89,12 @@ class SourceCompilationOrchestrator:
 
             # Check if rebuild needed (incremental compilation)
             if not compiler.needs_rebuild(source, obj_path):
-                if self.verbose:
-                    print(f"      [{source_type}] {source.name} (cached)")
+                log_file(source_type, source.name, cached=True, verbose_only=not self.verbose)
                 objects.append(obj_path)
                 continue
 
             # Compile source file
-            if self.verbose:
-                print(f"      [{source_type}] {source.name}")
+            log_file(source_type, source.name, cached=False, verbose_only=not self.verbose)
 
             try:
                 result = compiler.compile(source, obj_path)
@@ -179,9 +178,8 @@ class SourceCompilationOrchestrator:
         # Combine core and variant objects
         all_core_objects = core_objects + variant_objects
 
-        if self.verbose:
-            total_objects = len(sketch_objects) + len(all_core_objects)
-            print(f"      Compiled {total_objects} objects")
+        total_objects = len(sketch_objects) + len(all_core_objects)
+        log_detail(f"Compiled {total_objects} objects", verbose_only=not self.verbose)
 
         return MultiGroupCompilationResult(
             sketch_objects=sketch_objects,
