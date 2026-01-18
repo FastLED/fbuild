@@ -220,12 +220,12 @@ class PlatformIOConfig:
         i = 0
         while i < len(raw_flags):
             flag = raw_flags[i]
-            if flag == '-D' and i + 1 < len(raw_flags):
+            if flag == "-D" and i + 1 < len(raw_flags):
                 # Next token is the define name/value
                 next_token = raw_flags[i + 1]
                 # Only combine if next token doesn't start with dash
-                if not next_token.startswith('-'):
-                    flags.append(f'-D{next_token}')
+                if not next_token.startswith("-"):
+                    flags.append(f"-D{next_token}")
                     i += 2
                     continue
             if flag:

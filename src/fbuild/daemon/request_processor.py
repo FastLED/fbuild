@@ -97,6 +97,10 @@ class RequestProcessor(ABC):
             return False
 
         # Use ExitStack to manage multiple locks as context managers
+        # We store the result to return after lock release and status update
+        result: bool = False
+        exception_to_reraise: BaseException | None = None
+
         with ExitStack() as lock_stack:
             # Acquire required locks
             if not self._acquire_locks(request, context, lock_stack):
@@ -140,13 +144,13 @@ class RequestProcessor(ABC):
                         operation_in_progress=False,
                     )
 
-                return success
+                result = success
 
-            except KeyboardInterrupt:
+            except KeyboardInterrupt as ki:
                 import _thread
 
                 _thread.interrupt_main()
-                raise
+                exception_to_reraise = ki
             except Exception as e:
                 import traceback
 
@@ -160,11 +164,43 @@ class RequestProcessor(ABC):
                     exit_code=1,
                     operation_in_progress=False,
                 )
-                return False
+                result = False
             finally:
                 # Mark operation complete
                 with context.operation_lock:
                     context.operation_in_progress = False
+
+        # After locks are released (ExitStack has exited), update status to reflect
+        # the new lock state. This ensures the status file shows locks as released.
+        # We read the current status and re-write it to capture the updated lock state.
+        try:
+            current_status = context.status_manager.read_status()
+            context.status_manager.update_status(
+                state=current_status.state,
+                message=current_status.message,
+                environment=getattr(current_status, "environment", request.environment),
+                project_dir=getattr(current_status, "project_dir", request.project_dir),
+                request_id=getattr(current_status, "request_id", request.request_id),
+                caller_pid=getattr(current_status, "caller_pid", request.caller_pid),
+                caller_cwd=getattr(current_status, "caller_cwd", request.caller_cwd),
+                exit_code=getattr(current_status, "exit_code", None),
+            )
+        except KeyboardInterrupt as ke:
+            import _thread
+
+            _thread.interrupt_main()
+            raise ke
+        except Exception as e:
+            logging.warning(f"Failed to update status after lock release: {e}")
+
+        # Re-raise KeyboardInterrupt if it was caught
+        if exception_to_reraise is not None:
+            import _thread
+
+            _thread.interrupt_main()
+            raise exception_to_reraise
+
+        return result
 
     @abstractmethod
     def get_operation_type(self) -> OperationType:

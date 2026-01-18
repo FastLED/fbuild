@@ -109,10 +109,10 @@ class LockAcquisitionError(RuntimeError):
             duration_str = f" (held for {hold_duration:.1f}s)" if hold_duration else ""
             if lock_info.is_stale():
                 message = (
-                    f"{resource_type.capitalize()} lock unavailable for: {resource_id}. " f"STALE lock held by: {holder_desc}{duration_str}. " f"Consider force-releasing with clear_stale_locks()."
+                    f"{resource_type.capitalize()} lock unavailable for: {resource_id}. " + f"STALE lock held by: {holder_desc}{duration_str}. " + "Consider force-releasing with clear_stale_locks()."
                 )
             else:
-                message = f"{resource_type.capitalize()} lock unavailable for: {resource_id}. " f"Currently held by: {holder_desc}{duration_str}."
+                message = f"{resource_type.capitalize()} lock unavailable for: {resource_id}. " + f"Currently held by: {holder_desc}{duration_str}."
         else:
             message = f"{resource_type.capitalize()} lock unavailable for: {resource_id}"
 
@@ -195,7 +195,7 @@ class ResourceLockManager:
                 lock_info.holder_description = description or f"Operation on port {port}"
                 lock_info.timeout = timeout
 
-            logging.debug(f"Port lock acquired for: {port} " f"(count={lock_info.acquisition_count}, operation={operation_id})")
+            logging.debug(f"Port lock acquired for: {port} " + f"(count={lock_info.acquisition_count}, operation={operation_id})")
             yield
         finally:
             # Clear holder info before releasing
@@ -251,7 +251,7 @@ class ResourceLockManager:
                 lock_info.holder_description = description or f"Build for {project_dir}"
                 lock_info.timeout = timeout
 
-            logging.debug(f"Project lock acquired for: {project_dir} " f"(count={lock_info.acquisition_count}, operation={operation_id})")
+            logging.debug(f"Project lock acquired for: {project_dir} " + f"(count={lock_info.acquisition_count}, operation={operation_id})")
             yield
         finally:
             # Clear holder info before releasing
@@ -339,7 +339,7 @@ class ResourceLockManager:
                 return False
 
             # Clear holder info and mark as released
-            logging.warning(f"Force-releasing {resource_type} lock for: {resource_id} " f"(was held by: {lock_info.holder_description})")
+            logging.warning(f"Force-releasing {resource_type} lock for: {resource_id} " + f"(was held by: {lock_info.holder_description})")
             lock_info.last_released_at = time.time()
             lock_info.holder_thread_id = None
             lock_info.holder_operation_id = None
