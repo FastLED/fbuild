@@ -108,20 +108,16 @@ class ESP32Deployer(IDeployer):
         cache = Cache(project_dir)
 
         # Import ESP32 packages
-        from fbuild.config import BoardConfig
         from fbuild.packages.framework_esp32 import FrameworkESP32
         from fbuild.packages.platform_esp32 import PlatformESP32
 
-        # Get board config to determine MCU type
-        board_config = BoardConfig.from_board_id(board_id)
-        mcu = board_config.mcu
-
-        # Ensure platform is downloaded
+        # Ensure platform is downloaded first (needed to get board JSON)
         platform = PlatformESP32(cache, platform_url, show_progress=self.verbose)
         platform.ensure_platform()
 
-        # Get board JSON to determine required packages
+        # Get board JSON to determine MCU and required packages
         board_json = platform.get_board_json(board_id)
+        mcu = board_json.get("build", {}).get("mcu", "esp32")
         packages = platform.get_required_packages(mcu)
 
         # Initialize framework
