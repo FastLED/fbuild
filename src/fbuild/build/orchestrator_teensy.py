@@ -23,6 +23,7 @@ from .linker import SizeInfo
 from .orchestrator import IBuildOrchestrator, BuildResult
 from .build_utils import safe_rmtree
 from .build_state import BuildStateTracker
+from .build_info_generator import BuildInfoGenerator
 
 
 @dataclass
@@ -307,6 +308,42 @@ class OrchestratorTeensy(IBuildOrchestrator):
             if verbose:
                 print("[7.5/7] Saving build state...")
             state_tracker.save_state(current_state)
+
+            # Generate build_info.json
+            build_info_generator = BuildInfoGenerator(build_dir)
+            # Parse f_cpu from string (e.g., "600000000L") to int
+            f_cpu_int = int(board_config.f_cpu.rstrip("L"))
+            # Build toolchain_paths dict, filtering out None values
+            toolchain_paths_raw = {
+                "gcc": platform.toolchain.get_gcc_path(),
+                "gxx": platform.toolchain.get_gxx_path(),
+                "ar": platform.toolchain.get_ar_path(),
+                "objcopy": platform.toolchain.get_objcopy_path(),
+                "size": platform.toolchain.get_size_path(),
+            }
+            toolchain_paths = {k: v for k, v in toolchain_paths_raw.items() if v is not None}
+            build_info = build_info_generator.generate_generic(
+                env_name=env_name,
+                board_id=board_id,
+                board_name=board_config.name,
+                mcu=board_config.mcu,
+                platform="teensy",
+                f_cpu=f_cpu_int,
+                build_time=build_time,
+                elf_path=firmware_elf,
+                hex_path=firmware_hex,
+                size_info=size_info,
+                build_flags=build_flags,
+                lib_deps=lib_deps,
+                toolchain_version=platform.toolchain.version,
+                toolchain_paths=toolchain_paths,
+                framework_name="arduino",
+                framework_version=platform.framework.version,
+                core_path=platform.framework.get_cores_dir(),
+            )
+            build_info_generator.save(build_info)
+            if verbose:
+                print(f"      Build info saved to {build_info_generator.build_info_path}")
 
             return BuildResultTeensy(
                 success=True,

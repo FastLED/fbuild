@@ -206,6 +206,7 @@ class BuildRequestProcessor(RequestProcessor):
             "fbuild.build.source_scanner",
             "fbuild.build.compilation_executor",
             "fbuild.build.build_state",
+            "fbuild.build.build_info_generator",
             "fbuild.build.build_utils",
             # Orchestrators (reload third - depends on build system)
             "fbuild.build.orchestrator",

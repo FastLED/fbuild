@@ -35,6 +35,7 @@ from .source_compilation_orchestrator import (
 from .build_component_factory import BuildComponentFactory
 from .orchestrator import IBuildOrchestrator, BuildResult, BuildOrchestratorError
 from .build_state import BuildStateTracker
+from .build_info_generator import BuildInfoGenerator
 from ..output import (
     log, log_phase, log_detail, log_build_complete, log_firmware_path, set_verbose
 )
@@ -356,8 +357,42 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             log_phase(10, 11, "Saving build state...", verbose_only=not verbose_mode)
             state_tracker.save_state(current_state)
 
-            # Phase 11: Display results
+            # Phase 10.5: Generate build_info.json
             build_time = time.time() - start_time
+            build_info_generator = BuildInfoGenerator(build_dir)
+            toolchain_tools = toolchain.get_all_tools()
+            # Parse f_cpu from string (e.g., "16000000L") to int
+            f_cpu_int = int(board_config.f_cpu.rstrip("L"))
+            # Build toolchain_paths dict, filtering out None values
+            toolchain_paths_raw = {
+                "gcc": toolchain_tools.get("avr-gcc"),
+                "gxx": toolchain_tools.get("avr-g++"),
+                "ar": toolchain_tools.get("avr-ar"),
+                "objcopy": toolchain_tools.get("avr-objcopy"),
+                "size": toolchain_tools.get("avr-size"),
+            }
+            toolchain_paths = {k: v for k, v in toolchain_paths_raw.items() if v is not None}
+            build_info = build_info_generator.generate_avr(
+                env_name=env_name,
+                board_id=board_id,
+                board_name=board_config.name,
+                mcu=board_config.mcu,
+                f_cpu=f_cpu_int,
+                build_time=build_time,
+                elf_path=elf_path,
+                hex_path=hex_path,
+                size_info=link_result.size_info,
+                build_flags=build_flags,
+                lib_deps=lib_deps,
+                toolchain_version=toolchain.VERSION,
+                toolchain_paths=toolchain_paths,
+                framework_version=arduino_core.AVR_VERSION,
+                core_path=core_path,
+            )
+            build_info_generator.save(build_info)
+            log_detail(f"Build info saved to {build_info_generator.build_info_path}", verbose_only=not verbose_mode)
+
+            # Phase 11: Display results
 
             log_phase(11, 11, "Build complete!", verbose_only=not verbose_mode)
             log("")

@@ -24,6 +24,7 @@ from .linker import SizeInfo
 from .orchestrator import IBuildOrchestrator, BuildResult
 from .build_utils import safe_rmtree
 from .build_state import BuildStateTracker
+from .build_info_generator import BuildInfoGenerator
 from ..output import log_phase, log_detail, log_warning
 
 # Module-level logger
@@ -395,6 +396,46 @@ class OrchestratorESP32(IBuildOrchestrator):
             # Save build state for future cache validation
             log_detail("Saving build state...", verbose_only=True)
             state_tracker.save_state(current_state)
+
+            # Generate build_info.json
+            build_info_generator = BuildInfoGenerator(build_dir)
+            board_name = board_json.get("name", board_id)
+            # Parse f_cpu from string (e.g., "160000000L" or "160000000") to int
+            f_cpu_raw = board_json.get("build", {}).get("f_cpu", "0")
+            f_cpu_int = int(str(f_cpu_raw).rstrip("L")) if f_cpu_raw else 0
+            # Build toolchain_paths dict, filtering out None values
+            toolchain_paths_raw = {
+                "gcc": toolchain.get_gcc_path(),
+                "gxx": toolchain.get_gxx_path(),
+                "ar": toolchain.get_ar_path(),
+                "objcopy": toolchain.get_objcopy_path(),
+                "size": toolchain.get_size_path(),
+            }
+            toolchain_paths = {k: v for k, v in toolchain_paths_raw.items() if v is not None}
+            build_info = build_info_generator.generate_esp32(
+                env_name=env_name,
+                board_id=board_id,
+                board_name=board_name,
+                mcu=mcu,
+                f_cpu=f_cpu_int,
+                build_time=build_time,
+                elf_path=firmware_elf,
+                bin_path=firmware_bin,
+                size_info=size_info,
+                build_flags=build_flags,
+                lib_deps=lib_deps,
+                toolchain_version=toolchain.version,
+                toolchain_paths=toolchain_paths,
+                framework_version=framework.version,
+                core_path=framework.get_cores_dir(),
+                bootloader_path=bootloader_bin,
+                partitions_path=partitions_bin,
+                application_offset=board_json.get("build", {}).get("app_offset", "0x10000"),
+                flash_mode=env_config.get("board_build.flash_mode"),
+                flash_size=env_config.get("board_build.flash_size"),
+            )
+            build_info_generator.save(build_info)
+            log_detail(f"Build info saved to {build_info_generator.build_info_path}", verbose_only=True)
 
             return BuildResultESP32(
                 success=True,
