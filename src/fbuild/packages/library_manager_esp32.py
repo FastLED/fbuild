@@ -141,6 +141,90 @@ class LibraryManagerESP32:
         """
         return name.lower().replace("/", "_").replace("@", "_")
 
+    def _find_toolchain_compilers(self, toolchain_path: Path) -> tuple[Path, Path]:
+        """Find GCC and G++ compilers in the toolchain directory.
+
+        ESP32 uses different toolchains depending on the MCU architecture:
+        - Xtensa (ESP32, ESP32-S2, ESP32-S3): xtensa-esp32-elf-gcc, xtensa-esp32-elf-g++
+        - RISC-V (ESP32-C3, C6, H2): riscv32-esp-elf-gcc, riscv32-esp-elf-g++
+
+        This method auto-detects which toolchain is available.
+
+        Args:
+            toolchain_path: Path to toolchain bin directory
+
+        Returns:
+            Tuple of (gcc_path, gxx_path)
+
+        Raises:
+            LibraryErrorESP32: If no suitable compiler is found
+        """
+        # Check for Xtensa toolchain first (more common for ESP32)
+        exe_suffix = ".exe" if platform.system() == "Windows" else ""
+
+        # Xtensa toolchain (ESP32, S2, S3)
+        xtensa_gcc = toolchain_path / f"xtensa-esp32-elf-gcc{exe_suffix}"
+        xtensa_gxx = toolchain_path / f"xtensa-esp32-elf-g++{exe_suffix}"
+
+        if xtensa_gcc.exists() and xtensa_gxx.exists():
+            logger.debug(f"[TOOLCHAIN] Using Xtensa toolchain: {xtensa_gcc}")
+            return xtensa_gcc, xtensa_gxx
+
+        # RISC-V toolchain (ESP32-C3, C6, H2)
+        riscv_gcc = toolchain_path / f"riscv32-esp-elf-gcc{exe_suffix}"
+        riscv_gxx = toolchain_path / f"riscv32-esp-elf-g++{exe_suffix}"
+
+        if riscv_gcc.exists() and riscv_gxx.exists():
+            logger.debug(f"[TOOLCHAIN] Using RISC-V toolchain: {riscv_gcc}")
+            return riscv_gcc, riscv_gxx
+
+        # Fallback: try to find any gcc/g++ pattern
+        gcc_files = list(toolchain_path.glob(f"*-gcc{exe_suffix}"))
+        gxx_files = list(toolchain_path.glob(f"*-g++{exe_suffix}"))
+
+        if gcc_files and gxx_files:
+            logger.debug(f"[TOOLCHAIN] Using discovered toolchain: {gcc_files[0]}")
+            return gcc_files[0], gxx_files[0]
+
+        raise LibraryErrorESP32(
+            f"No suitable ESP32 toolchain found in {toolchain_path}. "
+            f"Expected xtensa-esp32-elf-gcc or riscv32-esp-elf-gcc"
+        )
+
+    def _find_toolchain_ar(self, toolchain_path: Path) -> Path:
+        """Find ar archiver in the toolchain directory.
+
+        Args:
+            toolchain_path: Path to toolchain bin directory
+
+        Returns:
+            Path to ar binary
+
+        Raises:
+            LibraryErrorESP32: If no suitable ar is found
+        """
+        exe_suffix = ".exe" if platform.system() == "Windows" else ""
+
+        # Check for Xtensa ar
+        xtensa_ar = toolchain_path / f"xtensa-esp32-elf-ar{exe_suffix}"
+        if xtensa_ar.exists():
+            return xtensa_ar
+
+        # Check for RISC-V ar
+        riscv_ar = toolchain_path / f"riscv32-esp-elf-ar{exe_suffix}"
+        if riscv_ar.exists():
+            return riscv_ar
+
+        # Fallback: try to find any ar pattern
+        ar_files = list(toolchain_path.glob(f"*-ar{exe_suffix}"))
+        if ar_files:
+            return ar_files[0]
+
+        raise LibraryErrorESP32(
+            f"No suitable ar archiver found in {toolchain_path}. "
+            f"Expected xtensa-esp32-elf-ar or riscv32-esp-elf-ar"
+        )
+
     def get_library(self, spec: LibrarySpec) -> LibraryESP32:
         """Get a library instance for a specification.
 
@@ -476,8 +560,10 @@ class LibraryManagerESP32:
 
             # Compile each source file
             object_files = []
-            gcc_path = toolchain_path / "riscv32-esp-elf-gcc"
-            gxx_path = toolchain_path / "riscv32-esp-elf-g++"
+
+            # Auto-detect toolchain prefix from available binaries
+            # ESP32/S2/S3 use xtensa, C3/C6/H2 use RISC-V
+            gcc_path, gxx_path = self._find_toolchain_compilers(toolchain_path)
 
             # Create response file for include paths (avoid Windows command line length limit)
             include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in all_includes]
@@ -521,7 +607,7 @@ class LibraryManagerESP32:
                 object_files.append(obj_file)
 
             # Create static archive using ar
-            ar_path = toolchain_path / "riscv32-esp-elf-ar"
+            ar_path = self._find_toolchain_ar(toolchain_path)
 
             if show_progress:
                 print(f"  Creating archive: {library.archive_file.name}")

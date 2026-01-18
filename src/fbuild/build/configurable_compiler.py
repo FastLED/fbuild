@@ -166,6 +166,47 @@ class ConfigurableCompiler(ICompiler):
             sdk_includes = self.framework.get_sdk_includes(self.mcu)  # type: ignore[attr-defined]
             includes.extend(sdk_includes)
 
+        # STM32-specific system includes (CMSIS, HAL)
+        if hasattr(self.framework, 'get_stm32_system_includes'):
+            # Determine MCU family from MCU name
+            mcu_upper = self.mcu.upper()
+            if mcu_upper.startswith("STM32F0"):
+                mcu_family = "STM32F0xx"
+            elif mcu_upper.startswith("STM32F1"):
+                mcu_family = "STM32F1xx"
+            elif mcu_upper.startswith("STM32F2"):
+                mcu_family = "STM32F2xx"
+            elif mcu_upper.startswith("STM32F3"):
+                mcu_family = "STM32F3xx"
+            elif mcu_upper.startswith("STM32F4"):
+                mcu_family = "STM32F4xx"
+            elif mcu_upper.startswith("STM32F7"):
+                mcu_family = "STM32F7xx"
+            elif mcu_upper.startswith("STM32G0"):
+                mcu_family = "STM32G0xx"
+            elif mcu_upper.startswith("STM32G4"):
+                mcu_family = "STM32G4xx"
+            elif mcu_upper.startswith("STM32H7"):
+                mcu_family = "STM32H7xx"
+            elif mcu_upper.startswith("STM32L0"):
+                mcu_family = "STM32L0xx"
+            elif mcu_upper.startswith("STM32L1"):
+                mcu_family = "STM32L1xx"
+            elif mcu_upper.startswith("STM32L4"):
+                mcu_family = "STM32L4xx"
+            elif mcu_upper.startswith("STM32L5"):
+                mcu_family = "STM32L5xx"
+            elif mcu_upper.startswith("STM32U5"):
+                mcu_family = "STM32U5xx"
+            elif mcu_upper.startswith("STM32WB"):
+                mcu_family = "STM32WBxx"
+            elif mcu_upper.startswith("STM32WL"):
+                mcu_family = "STM32WLxx"
+            else:
+                mcu_family = "STM32F4xx"  # Default fallback
+            system_includes = self.framework.get_stm32_system_includes(mcu_family)  # type: ignore[attr-defined]
+            includes.extend(system_includes)
+
         # Add flash mode specific sdkconfig.h path (ESP32-specific)
         if hasattr(self.framework, 'get_sdk_dir'):
             flash_mode = self.board_config.get("build", {}).get("flash_mode", "qio")

@@ -96,17 +96,19 @@ class BuildRequestProcessor(RequestProcessor):
             logging.error(f"Failed to parse platformio.ini: {e}")
             return False
 
-        # Normalize platform name (handle both direct names and URLs)
-        # URLs like "https://.../platform-espressif32.zip" -> "espressif32"
-        # URLs like "https://.../platform-atmelavr.zip" -> "atmelavr"
-        # "raspberrypi" or "platform-raspberrypi" -> "raspberrypi"
+        # Normalize platform name (handle various platform specification formats)
+        # URL formats: "https://.../platform-espressif32.zip" -> "espressif32"
+        # PlatformIO format: "platformio/espressif32" -> "espressif32"
+        # Direct names: "atmelavr", "espressif32", "ststm32", etc.
         platform_name = platform
-        if "platform-espressif32" in platform:
+        if "platform-espressif32" in platform or "platformio/espressif32" in platform or platform == "espressif32":
             platform_name = "espressif32"
-        elif "platform-atmelavr" in platform or platform == "atmelavr":
+        elif "platform-atmelavr" in platform or "platformio/atmelavr" in platform or platform == "atmelavr":
             platform_name = "atmelavr"
-        elif "platform-raspberrypi" in platform or platform == "raspberrypi":
+        elif "platform-raspberrypi" in platform or "platformio/raspberrypi" in platform or platform == "raspberrypi":
             platform_name = "raspberrypi"
+        elif "platform-ststm32" in platform or "platformio/ststm32" in platform or platform == "ststm32":
+            platform_name = "ststm32"
 
         logging.info(f"Normalized platform: {platform_name}")
 
@@ -120,6 +122,9 @@ class BuildRequestProcessor(RequestProcessor):
         elif platform_name == "raspberrypi":
             module_name = "fbuild.build.orchestrator_rp2040"
             class_name = "OrchestratorRP2040"
+        elif platform_name == "ststm32":
+            module_name = "fbuild.build.orchestrator_stm32"
+            class_name = "OrchestratorSTM32"
         else:
             logging.error(f"Unsupported platform: {platform_name}")
             return False
@@ -175,13 +180,16 @@ class BuildRequestProcessor(RequestProcessor):
             "fbuild.packages.toolchain_esp32",
             "fbuild.packages.toolchain_teensy",
             "fbuild.packages.toolchain_rp2040",
+            "fbuild.packages.toolchain_stm32",
             "fbuild.packages.arduino_core",
             "fbuild.packages.framework_esp32",
             "fbuild.packages.framework_teensy",
             "fbuild.packages.framework_rp2040",
+            "fbuild.packages.framework_stm32",
             "fbuild.packages.platform_esp32",
             "fbuild.packages.platform_teensy",
             "fbuild.packages.platform_rp2040",
+            "fbuild.packages.platform_stm32",
             "fbuild.packages.library_manager",
             "fbuild.packages.library_manager_esp32",
             # Config system (reload early - needed to detect platform type)
@@ -190,18 +198,22 @@ class BuildRequestProcessor(RequestProcessor):
             "fbuild.config.board_loader",
             # Build system (reload second - depends on packages)
             "fbuild.build.archive_creator",
+            "fbuild.build.flag_builder",
             "fbuild.build.compiler",
             "fbuild.build.configurable_compiler",
             "fbuild.build.linker",
             "fbuild.build.configurable_linker",
             "fbuild.build.source_scanner",
             "fbuild.build.compilation_executor",
+            "fbuild.build.build_state",
+            "fbuild.build.build_utils",
             # Orchestrators (reload third - depends on build system)
             "fbuild.build.orchestrator",
             "fbuild.build.orchestrator_avr",
             "fbuild.build.orchestrator_esp32",
             "fbuild.build.orchestrator_teensy",
             "fbuild.build.orchestrator_rp2040",
+            "fbuild.build.orchestrator_stm32",
             # Daemon processors (reload to pick up processor code changes)
             "fbuild.daemon.processors.build_processor",
             # Deploy and monitor (reload with build system)

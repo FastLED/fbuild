@@ -129,17 +129,45 @@ class FlagBuilder:
         """
         build_config = self.board_config.get("build", {})
         f_cpu = build_config.get("f_cpu", "160000000L")
+        mcu = build_config.get("mcu", "")
         board = build_config.get("board", self.board_id.upper().replace("-", "_"))
 
+        # Detect platform from MCU
+        is_stm32 = mcu.lower().startswith("stm32")
+        is_esp32 = mcu.lower().startswith("esp32")
+
+        # Common Arduino defines
         flags['common'].extend([
             f'-DF_CPU={f_cpu}',
             '-DARDUINO=10812',  # Arduino version
-            '-DESP32',  # ESP32 platform define
-            f'-DARDUINO_{board}',
-            '-DARDUINO_ARCH_ESP32',
             f'-DARDUINO_BOARD="{board}"',
             f'-DARDUINO_VARIANT="{self.variant}"',
         ])
+
+        if is_stm32:
+            # STM32-specific defines
+            flags['common'].extend([
+                f'-DARDUINO_{board}',
+                '-DARDUINO_ARCH_STM32',
+            ])
+            # Add product line define (e.g., STM32F103xB, STM32F446xx)
+            product_line = build_config.get("product_line", "")
+            if product_line:
+                flags['common'].append(f'-D{product_line}')
+            # Add VARIANT_H pointing to correct variant header
+            if self.variant:
+                # Variant header path relative to variants directory
+                flags['common'].append(f'-DVARIANT_H="{self.variant}/variant.h"')
+        elif is_esp32:
+            # ESP32-specific defines
+            flags['common'].extend([
+                '-DESP32',
+                f'-DARDUINO_{board}',
+                '-DARDUINO_ARCH_ESP32',
+            ])
+        else:
+            # Generic Arduino defines
+            flags['common'].append(f'-DARDUINO_{board}')
 
     def _add_board_extra_flags(self, flags: Dict[str, List[str]]) -> None:
         """Add board-specific extra flags.

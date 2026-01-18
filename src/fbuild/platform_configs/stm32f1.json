@@ -1,0 +1,59 @@
+{
+  "name": "STM32F1",
+  "description": "Configuration for STM32F1xx MCU family (Cortex-M3)",
+  "mcu": "stm32f1",
+  "architecture": "arm-cortex-m3",
+
+  "compiler_flags": {
+    "common": [
+      "-Os",
+      "-mcpu=cortex-m3",
+      "-mthumb",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-Wno-error=unused-function",
+      "-Wno-error=unused-variable",
+      "-Wno-error=deprecated-declarations",
+      "-Wno-unused-parameter",
+      "-Wno-sign-compare",
+      "-g",
+      "-gdwarf-2",
+      "-MMD"
+    ],
+    "c": [
+      "-std=gnu17",
+      "-Wno-old-style-declaration"
+    ],
+    "cxx": [
+      "-std=gnu++17",
+      "-fno-exceptions",
+      "-fno-rtti",
+      "-fno-threadsafe-statics"
+    ]
+  },
+
+  "linker_flags": [
+    "-mcpu=cortex-m3",
+    "-mthumb",
+    "-Wl,--gc-sections",
+    "-Wl,--cref",
+    "-Wl,--check-sections",
+    "-Wl,--unresolved-symbols=report-all",
+    "-Wl,--warn-common",
+    "--specs=nano.specs",
+    "--specs=nosys.specs",
+    "-Wl,--entry=Reset_Handler"
+  ],
+
+  "linker_scripts": [
+    "ldscript.ld"
+  ],
+
+  "defines": [
+    "STM32F1",
+    "ARDUINO_ARCH_STM32",
+    ["STM32_CORE_VERSION_MAJOR", "2"],
+    ["STM32_CORE_VERSION_MINOR", "12"],
+    "USE_HAL_DRIVER"
+  ]
+}

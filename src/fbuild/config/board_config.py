@@ -164,6 +164,55 @@ class BoardConfig:
             "core": "rp2040",
             "variant": "rpipico2w",
         },
+        # STM32 boards
+        "nucleo_f446re": {
+            "name": "ST Nucleo F446RE",
+            "mcu": "stm32f446ret6",
+            "f_cpu": "180000000L",
+            "board": "NUCLEO_F446RE",
+            "core": "arduino",
+            "variant": "STM32F4xx/F446R(C-E)T_NUCLEO",
+        },
+        "nucleo_f411re": {
+            "name": "ST Nucleo F411RE",
+            "mcu": "stm32f411ret6",
+            "f_cpu": "100000000L",
+            "board": "NUCLEO_F411RE",
+            "core": "arduino",
+            "variant": "STM32F4xx/F411R(C-E)T",
+        },
+        "nucleo_f103rb": {
+            "name": "ST Nucleo F103RB",
+            "mcu": "stm32f103rbt6",
+            "f_cpu": "72000000L",
+            "board": "NUCLEO_F103RB",
+            "core": "arduino",
+            "variant": "STM32F1xx/F103R(8-B)T",
+        },
+        "nucleo_l476rg": {
+            "name": "ST Nucleo L476RG",
+            "mcu": "stm32l476rgt6",
+            "f_cpu": "80000000L",
+            "board": "NUCLEO_L476RG",
+            "core": "arduino",
+            "variant": "STM32L4xx/L476R(C-E-G)T",
+        },
+        "bluepill_f103c8": {
+            "name": "Blue Pill F103C8",
+            "mcu": "stm32f103c8t6",
+            "f_cpu": "72000000L",
+            "board": "BLUEPILL_F103C8",
+            "core": "arduino",
+            "variant": "STM32F1xx/F103C8T_BLUEPILL",
+        },
+        "blackpill_f411ce": {
+            "name": "Black Pill F411CE",
+            "mcu": "stm32f411ceu6",
+            "f_cpu": "100000000L",
+            "board": "BLACKPILL_F411CE",
+            "core": "arduino",
+            "variant": "STM32F4xx/F411C(C-E)(U-Y)",
+        },
     }
 
     def __init__(
@@ -208,7 +257,7 @@ class BoardConfig:
         Detect platform type from MCU.
 
         Returns:
-            Platform identifier: "avr", "esp32", "teensy", or "raspberrypi"
+            Platform identifier: "avr", "esp32", "teensy", "raspberrypi", or "ststm32"
         """
         if self.mcu.startswith("atmega"):
             return "avr"
@@ -218,6 +267,8 @@ class BoardConfig:
             return "teensy"
         elif self.mcu.startswith("rp20"):
             return "raspberrypi"
+        elif self.mcu.startswith("stm32"):
+            return "ststm32"
         else:
             # Default to AVR for unknown
             return "avr"

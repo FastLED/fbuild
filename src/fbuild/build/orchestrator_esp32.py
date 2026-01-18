@@ -190,6 +190,11 @@ class OrchestratorESP32(IBuildOrchestrator):
                     "No platform URL specified in platformio.ini"
                 )
 
+            # Resolve platform shorthand to actual download URL
+            # PlatformIO supports formats like "platformio/espressif32" which need
+            # to be converted to a real download URL
+            platform_url = self._resolve_platform_url(platform_url)
+
             # Initialize platform
             if verbose:
                 logger.info("[3/10] Initializing ESP32 platform...")
@@ -835,3 +840,36 @@ __attribute__((weak)) bool btInUse(void) {
             build_time=time.time() - start_time,
             message=message
         )
+
+    @staticmethod
+    def _resolve_platform_url(platform_spec: str) -> str:
+        """
+        Resolve platform specification to actual download URL.
+
+        PlatformIO supports several formats for specifying platforms:
+        - Full URL: "https://github.com/.../platform-espressif32.zip" -> used as-is
+        - Shorthand: "platformio/espressif32" -> resolved to pioarduino stable release
+        - Name only: "espressif32" -> resolved to pioarduino stable release
+
+        Args:
+            platform_spec: Platform specification from platformio.ini
+
+        Returns:
+            Actual download URL for the platform
+        """
+        # Default stable release URL for espressif32 (pioarduino fork)
+        # This is the recommended platform for ESP32 Arduino development
+        DEFAULT_ESP32_URL = "https://github.com/pioarduino/platform-espressif32/releases/download/stable/platform-espressif32.zip"
+
+        # If it's already a proper URL, use it as-is
+        if platform_spec.startswith("http://") or platform_spec.startswith("https://"):
+            return platform_spec
+
+        # Handle PlatformIO shorthand formats
+        if platform_spec in ("platformio/espressif32", "espressif32"):
+            logger.info(f"Resolving platform shorthand '{platform_spec}' to pioarduino stable release")
+            return DEFAULT_ESP32_URL
+
+        # For unknown formats, return as-is and let the download fail with a clear error
+        logger.warning(f"Unknown platform format: {platform_spec}, attempting to use as URL")
+        return platform_spec
