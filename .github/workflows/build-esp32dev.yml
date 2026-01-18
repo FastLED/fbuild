@@ -1,0 +1,31 @@
+name: Build ESP32 Dev
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install fbuild
+        run: pip install -e .
+
+      - name: Build ESP32 Dev
+        run: fbuild build tests/esp32dev -e esp32dev
+
+      - name: Verify firmware output
+        run: |
+          test -f tests/esp32dev/.fbuild/build/esp32dev/firmware.bin
+          echo "Build successful - firmware.bin generated"

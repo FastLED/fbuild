@@ -1,0 +1,31 @@
+name: Build ESP32-S3
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install fbuild
+        run: pip install -e .
+
+      - name: Build ESP32-S3
+        run: fbuild build tests/esp32s3 -e esp32s3
+
+      - name: Verify firmware output
+        run: |
+          test -f tests/esp32s3/.fbuild/build/esp32s3/firmware.bin
+          echo "Build successful - firmware.bin generated"
