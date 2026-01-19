@@ -1731,6 +1731,62 @@ def get_daemon_log_path() -> Path:
     return DAEMON_DIR / "daemon.log"
 
 
+def display_daemon_stats_compact() -> None:
+    """Display daemon stats in a compact single-line format.
+
+    This function is called immediately when the client starts to show
+    the current daemon status. It's designed to be non-intrusive.
+    """
+    if not is_daemon_running():
+        print("🔴 Daemon: not running")
+        return
+
+    status = read_status_file()
+
+    # Calculate uptime if daemon_started_at is available
+    uptime_str = ""
+    if status.daemon_started_at:
+        uptime = time.time() - status.daemon_started_at
+        if uptime < 60:
+            uptime_str = f"{uptime:.0f}s"
+        elif uptime < 3600:
+            uptime_str = f"{uptime / 60:.0f}m"
+        else:
+            uptime_str = f"{uptime / 3600:.1f}h"
+
+    # Build the status line
+    pid_str = f"PID {status.daemon_pid}" if status.daemon_pid else ""
+    state_emoji = {
+        DaemonState.IDLE: "🟢",
+        DaemonState.BUILDING: "🔨",
+        DaemonState.DEPLOYING: "📦",
+        DaemonState.MONITORING: "👁️",
+        DaemonState.COMPLETED: "✅",
+        DaemonState.FAILED: "❌",
+        DaemonState.UNKNOWN: "❓",
+    }.get(status.state, "❓")
+
+    # Count active locks
+    port_locks = status.locks.get("port_locks", {}) if status.locks else {}
+    active_port_locks = sum(1 for info in port_locks.values() if isinstance(info, dict) and info.get("is_held"))
+
+    # Build compact stats line
+    parts = [f"{state_emoji} Daemon: {status.state.value}"]
+    if pid_str:
+        parts.append(pid_str)
+    if uptime_str:
+        parts.append(f"up {uptime_str}")
+    if active_port_locks > 0:
+        parts.append(f"locks: {active_port_locks}")
+    if status.operation_in_progress:
+        op_info = status.current_operation or status.message
+        if op_info and len(op_info) > 30:
+            op_info = op_info[:27] + "..."
+        parts.append(f"[{op_info}]")
+
+    print(" | ".join(parts))
+
+
 def main() -> int:
     """Command-line interface for client."""
     import argparse

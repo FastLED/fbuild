@@ -459,7 +459,7 @@ def show_command(target: str, follow: bool = True, lines: int = 50) -> None:
         ErrorFormatter.handle_unexpected_error(e, verbose=False)
 
 
-def daemon_command(action: str, pid: Optional[int] = None, force: bool = False) -> None:
+def daemon_command(action: str, pid: Optional[int] = None, force: bool = False, follow: bool = True, lines: int = 50) -> None:
     """Manage the fbuild daemon.
 
     Examples:
@@ -469,6 +469,7 @@ def daemon_command(action: str, pid: Optional[int] = None, force: bool = False) 
         fbuild daemon list         # List all daemon instances
         fbuild daemon locks        # Show lock status
         fbuild daemon clear-locks  # Clear stale locks
+        fbuild daemon monitor      # Tail daemon logs (alias for 'fbuild show daemon')
         fbuild daemon kill --pid 12345        # Kill specific daemon
         fbuild daemon kill-all               # Kill all daemons
         fbuild daemon kill-all --force       # Force kill all daemons
@@ -561,9 +562,14 @@ def daemon_command(action: str, pid: Optional[int] = None, force: bool = False) 
                 print("No daemon instances found to kill")
             sys.exit(0)
 
+        elif action == "monitor":
+            # Monitor daemon logs (tail the log file)
+            daemon_client.tail_daemon_logs(follow=follow, lines=lines)
+            sys.exit(0)
+
         else:
             ErrorFormatter.print_error(f"Unknown daemon action: {action}", "")
-            print("Valid actions: status, stop, restart, list, locks, clear-locks, kill, kill-all")
+            print("Valid actions: status, stop, restart, list, locks, clear-locks, monitor, kill, kill-all")
             sys.exit(1)
 
     except KeyboardInterrupt as ke:
@@ -657,6 +663,13 @@ def main() -> None:
 
     Replace PlatformIO with URL-based platform/toolchain management.
     """
+    # Display daemon stats as the first action (unless --version or --help anywhere)
+    help_flags = {"--version", "-V", "--help", "-h"}
+    skip_stats = any(arg in help_flags for arg in sys.argv)
+    if len(sys.argv) >= 2 and not skip_stats:
+        daemon_client.display_daemon_stats_compact()
+        print()  # Blank line after stats
+
     # Handle default action: fbuild <project_dir> [flags] → deploy with monitor
     # This check must happen before argparse to avoid conflicts
     if len(sys.argv) >= 2 and not sys.argv[1].startswith("-") and sys.argv[1] not in ["build", "deploy", "monitor", "daemon", "device", "show"]:
@@ -857,7 +870,7 @@ def main() -> None:
     )
     daemon_parser.add_argument(
         "action",
-        choices=["status", "stop", "restart", "list", "locks", "clear-locks", "kill", "kill-all"],
+        choices=["status", "stop", "restart", "list", "locks", "clear-locks", "monitor", "kill", "kill-all"],
         help="Daemon action to perform",
     )
     daemon_parser.add_argument(
@@ -870,6 +883,18 @@ def main() -> None:
         "--force",
         action="store_true",
         help="Force kill without graceful shutdown (for 'kill' and 'kill-all' actions)",
+    )
+    daemon_parser.add_argument(
+        "--no-follow",
+        action="store_true",
+        dest="no_follow",
+        help="Don't follow the log file, just print last lines and exit (for 'monitor' action)",
+    )
+    daemon_parser.add_argument(
+        "--lines",
+        type=int,
+        default=50,
+        help="Number of lines to show initially (for 'monitor' action, default: 50)",
     )
 
     # Device command
@@ -958,7 +983,13 @@ def main() -> None:
         )
         monitor_command(monitor_args)
     elif parsed_args.command == "daemon":
-        daemon_command(parsed_args.action, pid=parsed_args.pid, force=parsed_args.force)
+        daemon_command(
+            parsed_args.action,
+            pid=parsed_args.pid,
+            force=parsed_args.force,
+            follow=not parsed_args.no_follow,
+            lines=parsed_args.lines,
+        )
     elif parsed_args.command == "show":
         show_command(
             target=parsed_args.target,

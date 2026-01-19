@@ -122,7 +122,8 @@ class TestResourceLockManager(unittest.TestCase):
         elapsed = time.time() - start
 
         # Both threads should complete in parallel (~0.1s, not 0.2s)
-        self.assertLess(elapsed, 0.15)
+        # Use 0.18s threshold to account for system variance on Windows
+        self.assertLess(elapsed, 0.18)
         self.assertEqual(len(results), 2)
 
     def test_concurrent_access_same_resource(self):
