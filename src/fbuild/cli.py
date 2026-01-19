@@ -141,12 +141,12 @@ def deploy_command(args: DeployArgs) -> None:
             from fbuild.config import PlatformIOConfig
             from fbuild.deploy.qemu_runner import (
                 QEMURunner,
-                check_docker_available,
+                ensure_docker_available,
                 map_board_to_machine,
             )
 
-            # Check Docker is available
-            if not check_docker_available():
+            # Ensure Docker is available (attempts auto-start if not running)
+            if not ensure_docker_available():
                 ErrorFormatter.print_error("Docker is not available", "QEMU deployment requires Docker to be installed and running")
                 print("\nInstall Docker:")
                 print("  - Windows/Mac: https://www.docker.com/products/docker-desktop")

@@ -106,6 +106,20 @@ def check_docker_available() -> bool:
         return False
 
 
+def ensure_docker_available() -> bool:
+    """Ensure Docker is available, attempting to start daemon if necessary.
+
+    This function checks if Docker is installed and running, and attempts
+    to start Docker Desktop automatically if it's not running.
+
+    Returns:
+        True if Docker is now available, False otherwise
+    """
+    from fbuild.deploy.docker_utils import ensure_docker_available as _ensure
+
+    return _ensure()
+
+
 class QEMURunner:
     """Runner for ESP32 QEMU emulation using Docker containers.
 
