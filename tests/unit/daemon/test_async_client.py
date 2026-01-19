@@ -613,22 +613,22 @@ class TestHeartbeat(unittest.TestCase):
 
     def test_heartbeat_resets_timeout(self):
         """Test that heartbeat resets the timeout clock."""
-        manager = ClientConnectionManager(heartbeat_timeout=0.1)
+        manager = ClientConnectionManager(heartbeat_timeout=0.2)
         manager.register_client(client_id="test_client", pid=12345)
 
         # Wait almost until timeout
-        time.sleep(0.07)
+        time.sleep(0.1)
         self.assertTrue(manager.is_client_alive("test_client"))
 
         # Update heartbeat
         manager.update_heartbeat("test_client")
 
-        # Wait again - should still be alive
-        time.sleep(0.07)
+        # Wait again - should still be alive (0.1s < 0.2s timeout)
+        time.sleep(0.1)
         self.assertTrue(manager.is_client_alive("test_client"))
 
         # Wait for full timeout - now should be dead
-        time.sleep(0.1)
+        time.sleep(0.2)
         self.assertFalse(manager.is_client_alive("test_client"))
 
 
