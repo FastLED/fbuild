@@ -234,7 +234,7 @@ class SharedSerialManager:
             is_last_reader = session.reader_client_ids == {client_id}
 
             if not (is_owner or no_readers or is_last_reader):
-                logging.warning(f"Client {client_id} not allowed to close port {port} " f"(owner: {session.owner_client_id}, readers: {session.reader_client_ids})")
+                logging.warning(f"Client {client_id} not allowed to close port {port} (owner: {session.owner_client_id}, readers: {session.reader_client_ids})")
                 return False
 
             return self._close_port_internal(port)
@@ -398,7 +398,7 @@ class SharedSerialManager:
                 # Wait with timeout
                 remaining = deadline - time.time()
                 if remaining <= 0:
-                    logging.warning(f"Timeout acquiring writer on {port} for {client_id} " f"(current writer: {session.writer_client_id})")
+                    logging.warning(f"Timeout acquiring writer on {port} for {client_id} (current writer: {session.writer_client_id})")
                     return False
 
                 condition.wait(timeout=min(remaining, 0.5))
@@ -421,7 +421,7 @@ class SharedSerialManager:
             session = self._sessions[port]
 
             if session.writer_client_id != client_id:
-                logging.warning(f"Client {client_id} is not the writer on {port} " f"(current: {session.writer_client_id})")
+                logging.warning(f"Client {client_id} is not the writer on {port} (current: {session.writer_client_id})")
                 return False
 
             session.writer_client_id = None
@@ -456,7 +456,7 @@ class SharedSerialManager:
             session = self._sessions[port]
 
             if session.writer_client_id != client_id:
-                logging.warning(f"Client {client_id} cannot write to {port} " f"(current writer: {session.writer_client_id})")
+                logging.warning(f"Client {client_id} cannot write to {port} (current writer: {session.writer_client_id})")
                 return -1
 
             if port not in self._serial_ports:
@@ -720,7 +720,7 @@ class SharedSerialManager:
 
             # Must be the writer to reset
             if session.writer_client_id != client_id:
-                logging.warning(f"Client {client_id} cannot reset device on {port} " f"(current writer: {session.writer_client_id})")
+                logging.warning(f"Client {client_id} cannot reset device on {port} (current writer: {session.writer_client_id})")
                 return False
 
             if port not in self._serial_ports:

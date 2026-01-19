@@ -9,6 +9,7 @@ makes dependencies explicit, and eliminates global mutable state.
 import threading
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from fbuild.daemon.async_client import ClientConnectionManager
 from fbuild.daemon.compilation_queue import CompilationJobQueue
@@ -22,6 +23,9 @@ from fbuild.daemon.port_state_manager import PortStateManager
 from fbuild.daemon.shared_serial import SharedSerialManager
 from fbuild.daemon.status_manager import StatusManager
 from fbuild.daemon.subprocess_manager import SubprocessManager
+
+if TYPE_CHECKING:
+    from fbuild.daemon.async_server import AsyncDaemonServer
 
 
 @dataclass
@@ -74,6 +78,9 @@ class DaemonContext:
     firmware_ledger: FirmwareLedger
     shared_serial_manager: SharedSerialManager
 
+    # Async server for real-time client communication (Iteration 2)
+    async_server: "AsyncDaemonServer | None" = None
+
     # Operation state
     operation_in_progress: bool = False
     operation_lock: threading.Lock = field(default_factory=threading.Lock)
@@ -85,6 +92,8 @@ def create_daemon_context(
     num_workers: int,
     file_cache_path: Path,
     status_file_path: Path,
+    enable_async_server: bool = True,
+    async_server_port: int = 9876,
 ) -> DaemonContext:
     """Factory function to create and initialize a DaemonContext.
 
@@ -97,6 +106,9 @@ def create_daemon_context(
         num_workers: Number of compilation worker threads
         file_cache_path: Path to the file cache JSON file
         status_file_path: Path to the status file
+        enable_async_server: Whether to start the async TCP server for real-time
+            client communication. Defaults to True.
+        async_server_port: Port for async server to listen on. Defaults to 9876.
 
     Returns:
         Fully initialized DaemonContext
@@ -189,6 +201,27 @@ def create_daemon_context(
     client_manager.register_cleanup_callback(on_client_disconnect)
     logging.info("Client cleanup callback registered")
 
+    # Initialize async server for real-time client communication (Iteration 2)
+    async_server = None
+    if enable_async_server:
+        try:
+            from fbuild.daemon.async_server import AsyncDaemonServer
+
+            async_server = AsyncDaemonServer(
+                host="localhost",
+                port=async_server_port,
+                configuration_lock_manager=configuration_lock_manager,
+                firmware_ledger=firmware_ledger,
+                shared_serial_manager=shared_serial_manager,
+                client_manager=client_manager,
+            )
+            logging.info(f"Async server initialized on port {async_server_port}")
+        except KeyboardInterrupt:  # noqa: KBI002
+            raise
+        except Exception as e:
+            logging.error(f"Failed to initialize async server: {e}")
+            # Continue without async server - fall back to file-based IPC
+
     # Create context
     context = DaemonContext(
         daemon_pid=daemon_pid,
@@ -205,6 +238,7 @@ def create_daemon_context(
         configuration_lock_manager=configuration_lock_manager,
         firmware_ledger=firmware_ledger,
         shared_serial_manager=shared_serial_manager,
+        async_server=async_server,
     )
 
     logging.info("✅ Daemon context initialized successfully")
@@ -230,7 +264,18 @@ def cleanup_daemon_context(context: DaemonContext) -> None:
 
     logging.info("Shutting down daemon context...")
 
-    # Shutdown shared serial manager first (closes all serial ports)
+    # Shutdown async server first (stops accepting new connections)
+    if context.async_server:
+        try:
+            context.async_server.stop()
+            logging.info("Async server stopped")
+        except KeyboardInterrupt:  # noqa: KBI002
+            logging.warning("KeyboardInterrupt during async server shutdown")
+            raise
+        except Exception as e:
+            logging.error(f"Error shutting down async server: {e}")
+
+    # Shutdown shared serial manager (closes all serial ports)
     if context.shared_serial_manager:
         try:
             context.shared_serial_manager.shutdown()

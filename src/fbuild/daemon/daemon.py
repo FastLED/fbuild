@@ -279,6 +279,14 @@ def run_daemon_loop() -> None:
     # Write initial IDLE status IMMEDIATELY to prevent clients from reading stale status
     context.status_manager.update_status(DaemonState.IDLE, "Daemon starting...")
 
+    # Start async server in background thread for real-time client communication
+    if context.async_server is not None:
+        logging.info("Starting async server in background thread...")
+        context.async_server.start_in_background()
+        logging.info("Async server started successfully")
+    else:
+        logging.warning("Async server not available, clients will use file-based IPC only")
+
     # Initialize process tracker
     process_tracker = ProcessTracker(PROCESS_REGISTRY_FILE)
 

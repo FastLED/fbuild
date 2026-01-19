@@ -81,7 +81,7 @@ class LockingRequestProcessor:
         config_key = (request.project_dir, request.environment, request.port)
         manager = context.configuration_lock_manager
 
-        logging.info(f"Lock acquire request: client={request.client_id}, " f"config={config_key}, type={request.lock_type.value}")
+        logging.info(f"Lock acquire request: client={request.client_id}, config={config_key}, type={request.lock_type.value}")
 
         try:
             if request.lock_type == LockType.EXCLUSIVE:
@@ -242,7 +242,7 @@ class FirmwareRequestProcessor:
         """
         ledger = context.firmware_ledger
 
-        logging.debug(f"Firmware query request: port={request.port}, " f"source_hash={request.source_hash[:16]}...")
+        logging.debug(f"Firmware query request: port={request.port}, source_hash={request.source_hash[:16]}...")
 
         try:
             # Get deployment info if available
@@ -302,7 +302,7 @@ class FirmwareRequestProcessor:
         """
         ledger = context.firmware_ledger
 
-        logging.info(f"Firmware record request: port={request.port}, " f"project={request.project_dir}, env={request.environment}")
+        logging.info(f"Firmware record request: port={request.port}, project={request.project_dir}, env={request.environment}")
 
         try:
             ledger.record_deployment(
@@ -360,7 +360,7 @@ class SerialSessionProcessor:
         """
         manager = context.shared_serial_manager
 
-        logging.info(f"Serial attach request: client={request.client_id}, " f"port={request.port}, as_reader={request.as_reader}")
+        logging.info(f"Serial attach request: client={request.client_id}, port={request.port}, as_reader={request.as_reader}")
 
         try:
             # Check if port is already open
@@ -450,7 +450,7 @@ class SerialSessionProcessor:
         """
         manager = context.shared_serial_manager
 
-        logging.info(f"Serial detach request: client={request.client_id}, " f"port={request.port}, close_port={request.close_port}")
+        logging.info(f"Serial detach request: client={request.client_id}, port={request.port}, close_port={request.close_port}")
 
         try:
             # Detach reader
@@ -586,7 +586,7 @@ class SerialSessionProcessor:
         """
         manager = context.shared_serial_manager
 
-        logging.debug(f"Serial buffer request: client={request.client_id}, " f"port={request.port}, max_lines={request.max_lines}")
+        logging.debug(f"Serial buffer request: client={request.client_id}, port={request.port}, max_lines={request.max_lines}")
 
         try:
             session_info = manager.get_session_info(request.port) or {}
@@ -746,7 +746,7 @@ class ClientConnectionProcessor:
         """
         manager = context.client_manager
 
-        logging.info(f"Client disconnect request: client_id={request.client_id}, " f"reason={request.reason}")
+        logging.info(f"Client disconnect request: client_id={request.client_id}, reason={request.reason}")
 
         try:
             success = manager.unregister_client(request.client_id)

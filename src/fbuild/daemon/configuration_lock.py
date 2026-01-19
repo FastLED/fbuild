@@ -313,7 +313,7 @@ class ConfigurationLockManager:
 
             # If non-blocking, return False
             if timeout <= 0:
-                logging.debug(f"Exclusive lock not available for {config_key}, " f"current state: {lock.state.value}")
+                logging.debug(f"Exclusive lock not available for {config_key}, current state: {lock.state.value}")
                 return False
 
             # Add to waiting queue
@@ -322,7 +322,7 @@ class ConfigurationLockManager:
                 description=description,
             )
             lock.waiting_queue.append(waiting_request)
-            logging.debug(f"Client {client_id} added to waiting queue for {config_key}, " f"position: {len(lock.waiting_queue)}")
+            logging.debug(f"Client {client_id} added to waiting queue for {config_key}, position: {len(lock.waiting_queue)}")
 
         # Wait outside the master lock to avoid blocking other operations
         if waiting_request:
@@ -343,7 +343,7 @@ class ConfigurationLockManager:
                     pass  # Already removed
 
                 if not signaled:
-                    logging.debug(f"Timeout waiting for exclusive lock on {config_key} " f"for client {client_id}")
+                    logging.debug(f"Timeout waiting for exclusive lock on {config_key} for client {client_id}")
                     return False
 
                 # Try to acquire now that we've been signaled
@@ -356,7 +356,7 @@ class ConfigurationLockManager:
                     )
                     lock.last_activity_at = time.time()
                     self._track_client_lock(client_id, config_key)
-                    logging.debug(f"Exclusive lock acquired (after wait) for {config_key} " f"by {client_id}")
+                    logging.debug(f"Exclusive lock acquired (after wait) for {config_key} by {client_id}")
                     return True
                 else:
                     # Lock was taken by someone else
@@ -395,13 +395,13 @@ class ConfigurationLockManager:
 
             # Cannot acquire if exclusive lock is held
             if lock.state == LockState.LOCKED_EXCLUSIVE:
-                logging.debug(f"Shared read lock not available for {config_key}, " f"exclusive lock held by {lock.exclusive_holder.client_id if lock.exclusive_holder else 'unknown'}")
+                logging.debug(f"Shared read lock not available for {config_key}, exclusive lock held by {lock.exclusive_holder.client_id if lock.exclusive_holder else 'unknown'}")
                 return False
 
             # Cannot acquire if there are clients waiting for exclusive lock
             # (to prevent starvation of exclusive lock requests)
             if lock.waiting_queue:
-                logging.debug(f"Shared read lock not available for {config_key}, " f"{len(lock.waiting_queue)} clients waiting for exclusive lock")
+                logging.debug(f"Shared read lock not available for {config_key}, {len(lock.waiting_queue)} clients waiting for exclusive lock")
                 return False
 
             # Acquire shared read lock
@@ -413,7 +413,7 @@ class ConfigurationLockManager:
             )
             lock.last_activity_at = time.time()
             self._track_client_lock(client_id, config_key)
-            logging.debug(f"Shared read lock acquired for {config_key} by {client_id}, " f"total shared holders: {len(lock.shared_holders)}")
+            logging.debug(f"Shared read lock acquired for {config_key} by {client_id}, total shared holders: {len(lock.shared_holders)}")
             return True
 
     def release(self, config_key: tuple[str, str, str], client_id: str) -> bool:
@@ -459,7 +459,7 @@ class ConfigurationLockManager:
                     # Grant to next waiting client if any
                     self._grant_next_waiting(lock)
 
-                logging.debug(f"Shared read lock released for {config_key} by {client_id}, " f"remaining shared holders: {len(lock.shared_holders)}")
+                logging.debug(f"Shared read lock released for {config_key} by {client_id}, remaining shared holders: {len(lock.shared_holders)}")
                 return True
 
             logging.debug(f"Client {client_id} does not hold a lock for {config_key}")
@@ -625,7 +625,7 @@ class ConfigurationLockManager:
 
             # Need to wait for other shared holders to release
             if timeout <= 0:
-                logging.debug(f"Cannot upgrade lock for {config_key}, " f"{len(lock.shared_holders) - 1} other shared holders")
+                logging.debug(f"Cannot upgrade lock for {config_key}, {len(lock.shared_holders) - 1} other shared holders")
                 return False
 
             # Release our shared lock and join waiting queue with priority
@@ -661,7 +661,7 @@ class ConfigurationLockManager:
                     )
                     lock_check.last_activity_at = time.time()
                     # Don't re-track since we kept the tracking from shared
-                    logging.debug(f"Lock upgraded (immediate) to exclusive for {config_key} " f"by {client_id}")
+                    logging.debug(f"Lock upgraded (immediate) to exclusive for {config_key} by {client_id}")
                     return True
 
             remaining_timeout = timeout - (time.time() - start_time)
@@ -682,7 +682,7 @@ class ConfigurationLockManager:
                     pass
 
                 if not signaled:
-                    logging.debug(f"Timeout waiting for upgrade on {config_key} " f"for client {client_id}")
+                    logging.debug(f"Timeout waiting for upgrade on {config_key} for client {client_id}")
                     # Re-acquire shared lock
                     lock_wait.shared_holders[client_id] = LockHolder(
                         client_id=client_id,
@@ -702,7 +702,7 @@ class ConfigurationLockManager:
                         lock_type="exclusive",
                     )
                     lock_wait.last_activity_at = time.time()
-                    logging.debug(f"Lock upgraded (after wait) to exclusive for {config_key} " f"by {client_id}")
+                    logging.debug(f"Lock upgraded (after wait) to exclusive for {config_key} by {client_id}")
                     return True
                 else:
                     # Someone else got the lock
@@ -749,7 +749,7 @@ class ConfigurationLockManager:
             # If there are clients waiting for exclusive, don't downgrade
             # (they should get the exclusive lock next)
             if lock.waiting_queue:
-                logging.debug(f"Cannot downgrade lock for {config_key}, " f"{len(lock.waiting_queue)} clients waiting for exclusive")
+                logging.debug(f"Cannot downgrade lock for {config_key}, {len(lock.waiting_queue)} clients waiting for exclusive")
                 return False
 
             # Downgrade to shared read

@@ -275,7 +275,7 @@ class ClientConnectionManager:
 
             # Remove client from registry
             del self._clients[client_id]
-            logging.info(f"Client unregistered: {client_id} " f"(had {resource_count} attached resources)")
+            logging.info(f"Client unregistered: {client_id} (had {resource_count} attached resources)")
             return True
 
     def heartbeat(self, client_id: str) -> bool:
@@ -359,7 +359,7 @@ class ClientConnectionManager:
             for client_id, client_info in list(self._clients.items()):
                 if not client_info.is_alive(timeout_seconds):
                     dead_clients.append(client_id)
-                    logging.warning(f"Client {client_id} is dead " f"(no heartbeat for {client_info.time_since_heartbeat():.1f}s)")
+                    logging.warning(f"Client {client_id} is dead (no heartbeat for {client_info.time_since_heartbeat():.1f}s)")
 
             # Clean up dead clients
             for client_id in dead_clients:
@@ -448,7 +448,7 @@ class ClientConnectionManager:
         """
         with self._lock:
             self._cleanup_callbacks.append(callback)
-            logging.debug(f"Cleanup callback registered " f"(total callbacks: {len(self._cleanup_callbacks)})")
+            logging.debug(f"Cleanup callback registered (total callbacks: {len(self._cleanup_callbacks)})")
 
     def _call_cleanup_callbacks_unlocked(self, client_id: str) -> None:
         """Call all cleanup callbacks for a client (must hold lock).

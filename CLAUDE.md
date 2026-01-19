@@ -363,6 +363,24 @@ This project follows:
 - Comprehensive test coverage
 - Clear documentation
 
+## Coding Guidelines
+
+### Locking Strategy: Memory-Based Daemon Locks Only
+
+**IMPORTANT:** This project uses **only memory-based daemon locks** (held by the daemon process in memory via `threading.Lock`). File-based locks using `fcntl`, `msvcrt`, or `.lock` files are **NOT allowed**.
+
+**Rationale:**
+- Cross-process synchronization is handled by the daemon which holds locks in memory
+- File-based locks are problematic on Windows and can cause issues with stale lock files
+- The daemon provides a centralized point of coordination for all clients
+
+**What this means for contributors:**
+- Use `threading.Lock` for in-process synchronization within a single process
+- Do NOT use `fcntl.flock()`, `msvcrt.locking()`, or similar file-based locking mechanisms
+- Do NOT create `.lock` files for cross-process synchronization
+- All cross-process coordination must go through the daemon's lock manager (`ResourceLockManager`)
+- Ledger files (board_ledger.json, firmware_ledger.json) use `threading.Lock` internally; cross-process safety is guaranteed by the daemon
+
 ## Additional Resources
 
 - **README.md** - Comprehensive user guide with quick start

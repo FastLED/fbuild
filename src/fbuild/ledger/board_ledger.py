@@ -2,15 +2,16 @@
 Board Ledger - Track attached chip/port mappings.
 
 This module provides a simple ledger to cache chip type detections for serial ports.
-The cache is stored in ~/.fbuild/board_ledger.json and uses file locking for
-thread-safe access.
+The cache is stored in ~/.fbuild/board_ledger.json.
 
 Features:
 - Port to chip type mapping with timestamps
 - Automatic stale entry expiration (24 hours)
-- Thread-safe file access with file locking
+- Thread-safe in-process access via threading.Lock
 - Chip type validation against known ESP32 variants
 - Integration with esptool for chip detection
+
+Note: Cross-process synchronization is handled by the daemon which holds locks in memory.
 """
 
 import json
@@ -96,7 +97,8 @@ class BoardLedger:
     """Manages port to chip type mappings with persistent storage.
 
     The ledger stores mappings in ~/.fbuild/board_ledger.json and provides
-    thread-safe access through file locking.
+    thread-safe in-process access through threading.Lock. Cross-process
+    synchronization is handled by the daemon which holds locks in memory.
 
     Example:
         >>> ledger = BoardLedger()
@@ -161,60 +163,6 @@ class BoardLedger:
         except OSError as e:
             raise BoardLedgerError(f"Failed to write ledger: {e}") from e
 
-    def _acquire_file_lock(self) -> Any:
-        """Acquire a file lock for cross-process synchronization.
-
-        Returns:
-            Lock file handle (or None on platforms without locking support)
-        """
-        self._ensure_directory()
-        lock_path = self._ledger_path.with_suffix(".lock")
-
-        try:
-            # Open lock file
-            lock_file = open(lock_path, "w", encoding="utf-8")
-
-            # Platform-specific locking
-            if sys.platform == "win32":
-                import msvcrt
-
-                msvcrt.locking(lock_file.fileno(), msvcrt.LK_NBLCK, 1)
-            else:  # pragma: no cover - Unix only
-                import fcntl  # type: ignore[import-not-found]
-
-                fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
-
-            return lock_file
-        except (ImportError, OSError):
-            # Locking not available or failed - continue without lock
-            return None
-
-    def _release_file_lock(self, lock_file: Any) -> None:
-        """Release a file lock.
-
-        Args:
-            lock_file: Lock file handle from _acquire_file_lock
-        """
-        if lock_file is None:
-            return
-
-        try:
-            if sys.platform == "win32":
-                import msvcrt
-
-                try:
-                    msvcrt.locking(lock_file.fileno(), msvcrt.LK_UNLCK, 1)
-                except OSError:
-                    pass
-            else:  # pragma: no cover - Unix only
-                import fcntl  # type: ignore[import-not-found]
-
-                fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
-
-            lock_file.close()
-        except (ImportError, OSError):
-            pass
-
     def get_chip(self, port: str) -> str | None:
         """Get the cached chip type for a port.
 
@@ -225,20 +173,16 @@ class BoardLedger:
             Chip type string (e.g., "ESP32-S3") or None if not found/stale
         """
         with self._lock:
-            lock_file = self._acquire_file_lock()
-            try:
-                data = self._read_ledger()
-                entry_data = data.get(port)
-                if entry_data is None:
-                    return None
+            data = self._read_ledger()
+            entry_data = data.get(port)
+            if entry_data is None:
+                return None
 
-                entry = LedgerEntry.from_dict(entry_data)
-                if entry.is_stale():
-                    return None
+            entry = LedgerEntry.from_dict(entry_data)
+            if entry.is_stale():
+                return None
 
-                return entry.chip_type
-            finally:
-                self._release_file_lock(lock_file)
+            return entry.chip_type
 
     def set_chip(self, port: str, chip_type: str) -> None:
         """Set the chip type for a port.
@@ -258,13 +202,9 @@ class BoardLedger:
         entry = LedgerEntry(chip_type=normalized, timestamp=time.time())
 
         with self._lock:
-            lock_file = self._acquire_file_lock()
-            try:
-                data = self._read_ledger()
-                data[port] = entry.to_dict()
-                self._write_ledger(data)
-            finally:
-                self._release_file_lock(lock_file)
+            data = self._read_ledger()
+            data[port] = entry.to_dict()
+            self._write_ledger(data)
 
     def clear(self, port: str) -> bool:
         """Clear the cached chip type for a port.
@@ -276,16 +216,12 @@ class BoardLedger:
             True if entry was cleared, False if not found
         """
         with self._lock:
-            lock_file = self._acquire_file_lock()
-            try:
-                data = self._read_ledger()
-                if port in data:
-                    del data[port]
-                    self._write_ledger(data)
-                    return True
-                return False
-            finally:
-                self._release_file_lock(lock_file)
+            data = self._read_ledger()
+            if port in data:
+                del data[port]
+                self._write_ledger(data)
+                return True
+            return False
 
     def clear_all(self) -> int:
         """Clear all entries from the ledger.
@@ -294,14 +230,10 @@ class BoardLedger:
             Number of entries cleared
         """
         with self._lock:
-            lock_file = self._acquire_file_lock()
-            try:
-                data = self._read_ledger()
-                count = len(data)
-                self._write_ledger({})
-                return count
-            finally:
-                self._release_file_lock(lock_file)
+            data = self._read_ledger()
+            count = len(data)
+            self._write_ledger({})
+            return count
 
     def clear_stale(self, threshold: float = STALE_THRESHOLD_SECONDS) -> int:
         """Remove all stale entries from the ledger.
@@ -313,22 +245,18 @@ class BoardLedger:
             Number of entries removed
         """
         with self._lock:
-            lock_file = self._acquire_file_lock()
-            try:
-                data = self._read_ledger()
-                original_count = len(data)
+            data = self._read_ledger()
+            original_count = len(data)
 
-                # Filter out stale entries
-                fresh_data = {}
-                for port, entry_data in data.items():
-                    entry = LedgerEntry.from_dict(entry_data)
-                    if not entry.is_stale(threshold):
-                        fresh_data[port] = entry_data
+            # Filter out stale entries
+            fresh_data = {}
+            for port, entry_data in data.items():
+                entry = LedgerEntry.from_dict(entry_data)
+                if not entry.is_stale(threshold):
+                    fresh_data[port] = entry_data
 
-                self._write_ledger(fresh_data)
-                return original_count - len(fresh_data)
-            finally:
-                self._release_file_lock(lock_file)
+            self._write_ledger(fresh_data)
+            return original_count - len(fresh_data)
 
     def get_all(self) -> dict[str, LedgerEntry]:
         """Get all non-stale entries in the ledger.
@@ -337,17 +265,13 @@ class BoardLedger:
             Dictionary mapping port names to LedgerEntry objects
         """
         with self._lock:
-            lock_file = self._acquire_file_lock()
-            try:
-                data = self._read_ledger()
-                result = {}
-                for port, entry_data in data.items():
-                    entry = LedgerEntry.from_dict(entry_data)
-                    if not entry.is_stale():
-                        result[port] = entry
-                return result
-            finally:
-                self._release_file_lock(lock_file)
+            data = self._read_ledger()
+            result = {}
+            for port, entry_data in data.items():
+                entry = LedgerEntry.from_dict(entry_data)
+                if not entry.is_stale():
+                    result[port] = entry
+            return result
 
     def get_environment(self, port: str) -> str | None:
         """Get the environment name for a cached port.
