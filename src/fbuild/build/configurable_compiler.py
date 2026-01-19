@@ -336,6 +336,11 @@ class ConfigurableCompiler(ICompiler):
     def compile_sketch(self, sketch_path: Path) -> List[Path]:
         """Compile an Arduino sketch.
 
+        This method handles Arduino sketches that may contain multiple source files:
+        - The main .ino file is preprocessed and compiled
+        - Additional .cpp files in the sketch directory are also compiled
+        - The sketch directory is added to include paths for header file resolution
+
         Args:
             sketch_path: Path to .ino file
 
@@ -346,6 +351,12 @@ class ConfigurableCompiler(ICompiler):
             ConfigurableCompilerError: If compilation fails
         """
         object_files = []
+
+        # Add sketch directory to include paths so headers like ValidationConfig.h can be found
+        sketch_dir = sketch_path.parent
+        include_paths = self.get_include_paths()
+        if sketch_dir not in include_paths:
+            include_paths.insert(0, sketch_dir)  # Add at front for priority
 
         # Preprocess .ino to .cpp
         cpp_path = self.preprocess_ino(sketch_path)
@@ -358,11 +369,29 @@ class ConfigurableCompiler(ICompiler):
         # Skip compilation if object file is up-to-date
         if not self.needs_rebuild(cpp_path, obj_path):
             object_files.append(obj_path)
-            return object_files
+        else:
+            # Compile preprocessed .cpp
+            compiled_obj = self.compile_source(cpp_path, obj_path)
+            object_files.append(compiled_obj)
 
-        # Compile preprocessed .cpp
-        compiled_obj = self.compile_source(cpp_path, obj_path)
-        object_files.append(compiled_obj)
+        # Find and compile additional .cpp files in the sketch directory
+        # (Arduino IDE compiles all .cpp files in the sketch folder)
+        for cpp_file in sketch_dir.glob("*.cpp"):
+            cpp_obj_path = obj_dir / f"{cpp_file.stem}.o"
+
+            # Skip compilation if object file is up-to-date
+            if not self.needs_rebuild(cpp_file, cpp_obj_path):
+                object_files.append(cpp_obj_path)
+                continue
+
+            try:
+                compiled_obj = self.compile_source(cpp_file, cpp_obj_path)
+                object_files.append(compiled_obj)
+            except ConfigurableCompilerError as e:
+                # Re-raise with more context about which file failed
+                raise ConfigurableCompilerError(
+                    f"Failed to compile sketch source file {cpp_file.name}: {e}"
+                )
 
         return object_files
 
