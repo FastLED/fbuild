@@ -251,9 +251,7 @@ class DeployRequestProcessor(RequestProcessor):
             env_config = config.get_env_config(environment)
             build_flags = env_config.get("build_flags", "")
 
-            if isinstance(build_flags, str):
-                return build_flags.split() if build_flags else []
-            return list(build_flags) if build_flags else []
+            return build_flags.split() if build_flags else []
         except KeyboardInterrupt:  # noqa: KBI002
             raise
         except Exception as e:

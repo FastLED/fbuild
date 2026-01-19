@@ -767,7 +767,7 @@ class SharedSerialManager:
 
             # Only owner can clear buffer
             if session.owner_client_id != client_id:
-                logging.warning(f"Client {client_id} cannot clear buffer on {port} " f"(owner: {session.owner_client_id})")
+                logging.warning(f"Client {client_id} cannot clear buffer on {port} (owner: {session.owner_client_id})")
                 return False
 
             session.output_buffer.clear()
@@ -796,7 +796,7 @@ class SharedSerialManager:
 
             # Only owner can change baud rate
             if session.owner_client_id != client_id:
-                logging.warning(f"Client {client_id} cannot set baud rate on {port} " f"(owner: {session.owner_client_id})")
+                logging.warning(f"Client {client_id} cannot set baud rate on {port} (owner: {session.owner_client_id})")
                 return False
 
             if port not in self._serial_ports:

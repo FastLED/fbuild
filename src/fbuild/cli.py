@@ -272,6 +272,193 @@ def monitor_command(args: MonitorArgs) -> None:
         ErrorFormatter.handle_unexpected_error(e, args.verbose)
 
 
+def device_command(
+    action: str,
+    device_id: Optional[str] = None,
+    lease_type: str = "exclusive",
+    description: str = "",
+    reason: str = "",
+    refresh: bool = False,
+) -> None:
+    """Manage devices connected to the daemon.
+
+    Examples:
+        fbuild device list                           # List all connected devices
+        fbuild device list --refresh                 # Refresh device discovery before listing
+        fbuild device status <device_id>             # Show detailed device status
+        fbuild device lease <device_id>              # Acquire exclusive lease on device
+        fbuild device lease <device_id> --monitor    # Acquire monitor (read-only) lease
+        fbuild device release <device_id>            # Release lease on device
+        fbuild device take <device_id> --reason "Urgent deployment"  # Preempt current holder
+    """
+    try:
+        if action == "list":
+            # List all devices
+            devices = daemon_client.list_devices(refresh=refresh)
+            if devices is None:
+                ErrorFormatter.print_error("Failed to list devices", "Daemon may not be running")
+                sys.exit(1)
+
+            if not devices:
+                print("No devices found")
+                sys.exit(0)
+
+            print(f"Found {len(devices)} device(s):\n")
+            for device in devices:
+                device_id = device.get("device_id", "unknown")
+                port = device.get("port", "unknown")
+                connected = "✅ connected" if device.get("is_connected", False) else "❌ disconnected"
+                exclusive = device.get("exclusive_holder")
+                monitor_count = device.get("monitor_count", 0)
+
+                print(f"  {device_id}")
+                print(f"    Port: {port}")
+                print(f"    Status: {connected}")
+                if exclusive:
+                    print(f"    Exclusive holder: {exclusive}")
+                if monitor_count > 0:
+                    print(f"    Monitor sessions: {monitor_count}")
+                print()
+
+            sys.exit(0)
+
+        elif action == "status":
+            if not device_id:
+                ErrorFormatter.print_error("Device ID required", "Usage: fbuild device status <device_id>")
+                sys.exit(1)
+
+            status = daemon_client.get_device_status(device_id)
+            if status is None:
+                ErrorFormatter.print_error(f"Device not found: {device_id}", "")
+                sys.exit(1)
+
+            print(f"Device: {device_id}")
+            print(f"  Connected: {'✅ Yes' if status.get('is_connected') else '❌ No'}")
+            print(f"  Port: {status.get('device_info', {}).get('port', 'unknown')}")
+            print(f"  Available for exclusive: {'✅ Yes' if status.get('is_available_for_exclusive') else '❌ No'}")
+
+            if status.get("exclusive_lease"):
+                lease = status["exclusive_lease"]
+                print(f"  Exclusive holder: {lease.get('client_id', 'unknown')}")
+                print(f"    Description: {lease.get('description', 'N/A')}")
+
+            if status.get("monitor_count", 0) > 0:
+                print(f"  Monitor sessions: {status['monitor_count']}")
+                for monitor in status.get("monitor_leases", []):
+                    print(f"    - {monitor.get('client_id', 'unknown')}")
+
+            sys.exit(0)
+
+        elif action == "lease":
+            if not device_id:
+                ErrorFormatter.print_error("Device ID required", "Usage: fbuild device lease <device_id>")
+                sys.exit(1)
+
+            result = daemon_client.acquire_device_lease(
+                device_id=device_id,
+                lease_type=lease_type,
+                description=description,
+            )
+
+            if result is None:
+                ErrorFormatter.print_error("Failed to acquire lease", "Daemon may not be running")
+                sys.exit(1)
+
+            if result.get("success"):
+                lease_id = result.get("lease_id", "unknown")
+                print(f"✅ Acquired {lease_type} lease on device {device_id}")
+                print(f"   Lease ID: {lease_id}")
+                sys.exit(0)
+            else:
+                ErrorFormatter.print_error(f"Failed to acquire lease: {result.get('message', 'unknown error')}", "")
+                sys.exit(1)
+
+        elif action == "release":
+            if not device_id:
+                ErrorFormatter.print_error("Device ID or lease ID required", "Usage: fbuild device release <device_id>")
+                sys.exit(1)
+
+            result = daemon_client.release_device_lease(device_id)
+
+            if result is None:
+                ErrorFormatter.print_error("Failed to release lease", "Daemon may not be running")
+                sys.exit(1)
+
+            if result.get("success"):
+                print(f"✅ Released lease on device {device_id}")
+                sys.exit(0)
+            else:
+                ErrorFormatter.print_error(f"Failed to release lease: {result.get('message', 'unknown error')}", "")
+                sys.exit(1)
+
+        elif action == "take":
+            if not device_id:
+                ErrorFormatter.print_error("Device ID required", 'Usage: fbuild device take <device_id> --reason "..."')
+                sys.exit(1)
+
+            if not reason:
+                ErrorFormatter.print_error("Reason required for preemption", 'Usage: fbuild device take <device_id> --reason "..."')
+                sys.exit(1)
+
+            result = daemon_client.preempt_device(device_id, reason)
+
+            if result is None:
+                ErrorFormatter.print_error("Failed to preempt device", "Daemon may not be running")
+                sys.exit(1)
+
+            if result.get("success"):
+                preempted = result.get("preempted_client_id")
+                print(f"✅ Preempted device {device_id}")
+                if preempted:
+                    print(f"   Previous holder: {preempted}")
+                print(f"   Lease ID: {result.get('lease_id', 'unknown')}")
+                sys.exit(0)
+            else:
+                ErrorFormatter.print_error(f"Failed to preempt device: {result.get('message', 'unknown error')}", "")
+                sys.exit(1)
+
+        else:
+            ErrorFormatter.print_error(f"Unknown device action: {action}", "")
+            print("Valid actions: list, status, lease, release, take")
+            sys.exit(1)
+
+    except KeyboardInterrupt as ke:
+        from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+        handle_keyboard_interrupt_properly(ke)
+    except Exception as e:
+        ErrorFormatter.handle_unexpected_error(e, verbose=False)
+
+
+def show_command(target: str, follow: bool = True, lines: int = 50) -> None:
+    """Show daemon logs or other information.
+
+    Examples:
+        fbuild show daemon             # Tail daemon logs (Ctrl-C to stop, daemon continues)
+        fbuild show daemon --no-follow # Show last 50 lines and exit
+        fbuild show daemon --lines 100 # Show last 100 lines then follow
+    """
+    try:
+        if target == "daemon":
+            daemon_client.tail_daemon_logs(follow=follow, lines=lines)
+            sys.exit(0)
+        else:
+            from fbuild.cli_utils import ErrorFormatter
+
+            ErrorFormatter.print_error(f"Unknown target: {target}", "")
+            print("Valid targets: daemon")
+            sys.exit(1)
+
+    except KeyboardInterrupt as ke:
+        from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+        handle_keyboard_interrupt_properly(ke)
+    except Exception as e:
+        from fbuild.cli_utils import ErrorFormatter
+
+        ErrorFormatter.handle_unexpected_error(e, verbose=False)
+
+
 def daemon_command(action: str, pid: Optional[int] = None, force: bool = False) -> None:
     """Manage the fbuild daemon.
 
@@ -472,7 +659,7 @@ def main() -> None:
     """
     # Handle default action: fbuild <project_dir> [flags] → deploy with monitor
     # This check must happen before argparse to avoid conflicts
-    if len(sys.argv) >= 2 and not sys.argv[1].startswith("-") and sys.argv[1] not in ["build", "deploy", "monitor", "daemon"]:
+    if len(sys.argv) >= 2 and not sys.argv[1].startswith("-") and sys.argv[1] not in ["build", "deploy", "monitor", "daemon", "device", "show"]:
         # User provided a path without a subcommand - use default action
         deploy_args = parse_default_action_args(sys.argv)
         deploy_command(deploy_args)
@@ -640,6 +827,29 @@ def main() -> None:
         help="Show verbose output",
     )
 
+    # Show command
+    show_parser = subparsers.add_parser(
+        "show",
+        help="Show daemon logs or other information",
+    )
+    show_parser.add_argument(
+        "target",
+        choices=["daemon"],
+        help="What to show (currently only 'daemon' for daemon logs)",
+    )
+    show_parser.add_argument(
+        "--no-follow",
+        action="store_true",
+        dest="no_follow",
+        help="Don't follow the log file (just print last lines and exit)",
+    )
+    show_parser.add_argument(
+        "--lines",
+        type=int,
+        default=50,
+        help="Number of lines to show initially (default: 50)",
+    )
+
     # Daemon command
     daemon_parser = subparsers.add_parser(
         "daemon",
@@ -660,6 +870,44 @@ def main() -> None:
         "--force",
         action="store_true",
         help="Force kill without graceful shutdown (for 'kill' and 'kill-all' actions)",
+    )
+
+    # Device command
+    device_parser = subparsers.add_parser(
+        "device",
+        help="Manage devices connected to the daemon",
+    )
+    device_parser.add_argument(
+        "action",
+        choices=["list", "status", "lease", "release", "take"],
+        help="Device action to perform",
+    )
+    device_parser.add_argument(
+        "device_id",
+        nargs="?",
+        default=None,
+        help="Device ID (required for status, lease, release, take)",
+    )
+    device_parser.add_argument(
+        "--monitor",
+        action="store_true",
+        dest="lease_monitor",
+        help="Acquire monitor (read-only) lease instead of exclusive (for 'lease' action)",
+    )
+    device_parser.add_argument(
+        "--description",
+        default="",
+        help="Description for lease (for 'lease' action)",
+    )
+    device_parser.add_argument(
+        "--reason",
+        default="",
+        help="Reason for preemption (required for 'take' action)",
+    )
+    device_parser.add_argument(
+        "--refresh",
+        action="store_true",
+        help="Refresh device discovery before listing (for 'list' action)",
     )
 
     # Parse arguments
@@ -711,6 +959,22 @@ def main() -> None:
         monitor_command(monitor_args)
     elif parsed_args.command == "daemon":
         daemon_command(parsed_args.action, pid=parsed_args.pid, force=parsed_args.force)
+    elif parsed_args.command == "show":
+        show_command(
+            target=parsed_args.target,
+            follow=not parsed_args.no_follow,
+            lines=parsed_args.lines,
+        )
+    elif parsed_args.command == "device":
+        lease_type = "monitor" if parsed_args.lease_monitor else "exclusive"
+        device_command(
+            action=parsed_args.action,
+            device_id=parsed_args.device_id,
+            lease_type=lease_type,
+            description=parsed_args.description,
+            reason=parsed_args.reason,
+            refresh=parsed_args.refresh,
+        )
 
 
 if __name__ == "__main__":

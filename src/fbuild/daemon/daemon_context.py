@@ -14,6 +14,7 @@ from typing import TYPE_CHECKING
 from fbuild.daemon.async_client import ClientConnectionManager
 from fbuild.daemon.compilation_queue import CompilationJobQueue
 from fbuild.daemon.configuration_lock import ConfigurationLockManager
+from fbuild.daemon.device_manager import DeviceManager
 from fbuild.daemon.error_collector import ErrorCollector
 from fbuild.daemon.file_cache import FileCache
 from fbuild.daemon.firmware_ledger import FirmwareLedger
@@ -54,6 +55,7 @@ class DaemonContext:
         configuration_lock_manager: Centralized locking for (project, env, port) configs
         firmware_ledger: Tracks deployed firmware on devices to avoid re-upload
         shared_serial_manager: Manages shared serial port access for multiple clients
+        device_manager: Manages device inventory and exclusive/monitor leases
         operation_in_progress: Flag indicating if any operation is running
         operation_lock: Lock protecting the operation_in_progress flag
     """
@@ -77,6 +79,9 @@ class DaemonContext:
     configuration_lock_manager: ConfigurationLockManager
     firmware_ledger: FirmwareLedger
     shared_serial_manager: SharedSerialManager
+
+    # Device manager for resource management (multi-board concurrent development)
+    device_manager: DeviceManager
 
     # Async server for real-time client communication (Iteration 2)
     async_server: "AsyncDaemonServer | None" = None
@@ -187,6 +192,10 @@ def create_daemon_context(
     shared_serial_manager = SharedSerialManager()
     logging.info("Shared serial manager initialized")
 
+    # Initialize device manager for multi-board resource management
+    device_manager = DeviceManager()
+    logging.info("Device manager initialized")
+
     # Register cleanup callbacks: when a client disconnects, release their resources
     def on_client_disconnect(client_id: str) -> None:
         """Cleanup callback for when a client disconnects."""
@@ -195,6 +204,10 @@ def create_daemon_context(
         released = configuration_lock_manager.release_all_client_locks(client_id)
         if released > 0:
             logging.info(f"Released {released} configuration locks for client {client_id}")
+        # Release all device leases held by this client
+        released = device_manager.release_all_client_leases(client_id)
+        if released > 0:
+            logging.info(f"Released {released} device leases for client {client_id}")
         # Disconnect from shared serial sessions
         shared_serial_manager.disconnect_client(client_id)
 
@@ -214,6 +227,7 @@ def create_daemon_context(
                 firmware_ledger=firmware_ledger,
                 shared_serial_manager=shared_serial_manager,
                 client_manager=client_manager,
+                device_manager=device_manager,
             )
             logging.info(f"Async server initialized on port {async_server_port}")
         except KeyboardInterrupt:  # noqa: KBI002
@@ -238,6 +252,7 @@ def create_daemon_context(
         configuration_lock_manager=configuration_lock_manager,
         firmware_ledger=firmware_ledger,
         shared_serial_manager=shared_serial_manager,
+        device_manager=device_manager,
         async_server=async_server,
     )
 
@@ -296,6 +311,17 @@ def cleanup_daemon_context(context: DaemonContext) -> None:
             raise
         except Exception as e:
             logging.error(f"Error clearing configuration locks: {e}")
+
+    # Clear all device leases
+    if context.device_manager:
+        try:
+            cleared = context.device_manager.clear_all_leases()
+            logging.info(f"Cleared {cleared} device leases during shutdown")
+        except KeyboardInterrupt:  # noqa: KBI002
+            logging.warning("KeyboardInterrupt during device manager cleanup")
+            raise
+        except Exception as e:
+            logging.error(f"Error clearing device leases: {e}")
 
     # Clear all client connections
     if context.client_manager:

@@ -29,6 +29,7 @@ import threading
 import time
 from logging.handlers import TimedRotatingFileHandler
 from pathlib import Path
+from typing import Any, Callable
 
 import psutil
 
@@ -70,10 +71,25 @@ INSTALL_DEPS_REQUEST_FILE = DAEMON_DIR / "install_deps_request.json"
 LOG_FILE = DAEMON_DIR / "daemon.log"
 PROCESS_REGISTRY_FILE = DAEMON_DIR / "process_registry.json"
 FILE_CACHE_FILE = DAEMON_DIR / "file_cache.json"
+
+# Device management request/response files
+DEVICE_LIST_REQUEST_FILE = DAEMON_DIR / "device_list_request.json"
+DEVICE_LIST_RESPONSE_FILE = DAEMON_DIR / "device_list_response.json"
+DEVICE_STATUS_REQUEST_FILE = DAEMON_DIR / "device_status_request.json"
+DEVICE_STATUS_RESPONSE_FILE = DAEMON_DIR / "device_status_response.json"
+DEVICE_LEASE_REQUEST_FILE = DAEMON_DIR / "device_lease_request.json"
+DEVICE_LEASE_RESPONSE_FILE = DAEMON_DIR / "device_lease_response.json"
+DEVICE_RELEASE_REQUEST_FILE = DAEMON_DIR / "device_release_request.json"
+DEVICE_RELEASE_RESPONSE_FILE = DAEMON_DIR / "device_release_response.json"
+DEVICE_PREEMPT_REQUEST_FILE = DAEMON_DIR / "device_preempt_request.json"
+DEVICE_PREEMPT_RESPONSE_FILE = DAEMON_DIR / "device_preempt_response.json"
 ORPHAN_CHECK_INTERVAL = 5  # Check for orphaned processes every 5 seconds
 STALE_LOCK_CHECK_INTERVAL = 60  # Check for stale locks every 60 seconds
 DEAD_CLIENT_CHECK_INTERVAL = 10  # Check for dead clients every 10 seconds
-IDLE_TIMEOUT = 43200  # 12 hours
+IDLE_TIMEOUT = 43200  # 12 hours (fallback)
+# Self-eviction timeout: if daemon has 0 clients AND 0 ops for this duration, shutdown
+# Per TASK.md: "If daemon has 0 clients AND 0 running operations, immediately evict the daemon within 4 seconds."
+SELF_EVICTION_TIMEOUT = 4.0  # 4 seconds
 
 
 def setup_logging(foreground: bool = False) -> None:
@@ -253,6 +269,211 @@ def cleanup_and_exit(context: DaemonContext) -> None:
     sys.exit(0)
 
 
+def handle_device_request(
+    request_file: Path,
+    response_file: Path,
+    handler_func: Callable[[dict[str, Any], DaemonContext], dict[str, Any]],
+    context: DaemonContext,
+) -> bool:
+    """Handle a device request file if it exists.
+
+    Args:
+        request_file: Path to request JSON file
+        response_file: Path to response JSON file
+        handler_func: Function that processes the request and returns response dict
+        context: Daemon context
+
+    Returns:
+        True if a request was processed, False otherwise
+    """
+    import json
+
+    if not request_file.exists():
+        return False
+
+    try:
+        with open(request_file) as f:
+            request_data = json.load(f)
+
+        # Clear request file immediately (atomic consumption)
+        request_file.unlink(missing_ok=True)
+
+        # Process request
+        response_data = handler_func(request_data, context)
+
+        # Write response atomically
+        temp_file = response_file.with_suffix(".tmp")
+        with open(temp_file, "w") as f:
+            json.dump(response_data, f, indent=2)
+        temp_file.replace(response_file)
+
+        return True
+
+    except json.JSONDecodeError as e:
+        logging.error(f"Invalid JSON in request file {request_file}: {e}")
+        request_file.unlink(missing_ok=True)
+        return False
+    except KeyboardInterrupt:
+        _thread.interrupt_main()
+        raise
+    except Exception as e:
+        logging.error(f"Error handling device request {request_file}: {e}")
+        # Try to write error response
+        try:
+            response_data = {"success": False, "message": str(e)}
+            with open(response_file, "w") as f:
+                json.dump(response_data, f)
+        except KeyboardInterrupt:
+            _thread.interrupt_main()
+            raise
+        except Exception:
+            pass
+        return False
+
+
+def handle_device_list_request(request_data: dict[str, Any], context: DaemonContext) -> dict[str, Any]:
+    """Handle device list request."""
+    refresh = request_data.get("refresh", False)
+
+    if refresh:
+        context.device_manager.refresh_devices()
+
+    devices = context.device_manager.get_all_devices()
+    device_list = []
+
+    for device_id, state in devices.items():
+        device_list.append(
+            {
+                "device_id": device_id,
+                "port": state.device_info.port,
+                "is_connected": state.is_connected,
+                "exclusive_holder": (state.exclusive_lease.client_id if state.exclusive_lease else None),
+                "monitor_count": len(state.monitor_leases),
+            }
+        )
+
+    logging.info(f"Device list request processed: {len(device_list)} devices")
+    return {"success": True, "devices": device_list}
+
+
+def handle_device_status_request(request_data: dict[str, Any], context: DaemonContext) -> dict[str, Any]:
+    """Handle device status request."""
+    device_id = request_data.get("device_id")
+    if not device_id:
+        return {"success": False, "message": "device_id is required"}
+
+    status = context.device_manager.get_device_status(device_id)
+    if not status.get("exists", False):
+        return {"success": False, "message": f"Device {device_id} not found"}
+
+    logging.info(f"Device status request processed for {device_id}")
+    return {"success": True, **status}
+
+
+def handle_device_lease_request(request_data: dict[str, Any], context: DaemonContext) -> dict[str, Any]:
+    """Handle device lease request."""
+    device_id = request_data.get("device_id")
+    lease_type = request_data.get("lease_type", "exclusive")
+    description = request_data.get("description", "")
+    # Generate a client ID for file-based IPC clients (they don't have a persistent connection)
+    client_id = request_data.get("client_id", f"file-ipc-{time.time()}")
+
+    if not device_id:
+        return {"success": False, "message": "device_id is required"}
+
+    if lease_type == "monitor":
+        lease = context.device_manager.acquire_monitor(
+            device_id=device_id,
+            client_id=client_id,
+            description=description,
+        )
+    else:
+        lease = context.device_manager.acquire_exclusive(
+            device_id=device_id,
+            client_id=client_id,
+            description=description,
+        )
+
+    if lease is None:
+        return {
+            "success": False,
+            "message": f"Failed to acquire {lease_type} lease on {device_id}",
+        }
+
+    logging.info(f"Device lease acquired: {lease_type} on {device_id} (lease_id={lease.lease_id})")
+    return {"success": True, "lease_id": lease.lease_id, "client_id": client_id}
+
+
+def handle_device_release_request(request_data: dict[str, Any], context: DaemonContext) -> dict[str, Any]:
+    """Handle device release request."""
+    device_id = request_data.get("device_id")
+    client_id = request_data.get("client_id")
+
+    if not device_id:
+        return {"success": False, "message": "device_id is required"}
+
+    # If device_id looks like a UUID, it might be a lease_id
+    # Try to find the actual device and release by client
+    state = context.device_manager.get_device(device_id)
+
+    if state is None:
+        # Try looking up by lease_id
+        return {"success": False, "message": f"Device {device_id} not found"}
+
+    # If client_id not provided, try to release any lease on this device
+    # This is a simplification for file-based IPC where we don't track clients persistently
+    if state.exclusive_lease:
+        actual_client_id = client_id if client_id else state.exclusive_lease.client_id
+        result = context.device_manager.release_lease(state.exclusive_lease.lease_id, actual_client_id)
+        if result:
+            logging.info(f"Released exclusive lease on {device_id}")
+            return {"success": True, "message": f"Released exclusive lease on {device_id}"}
+
+    return {"success": False, "message": f"No lease found to release on {device_id}"}
+
+
+def handle_device_preempt_request(request_data: dict[str, Any], context: DaemonContext) -> dict[str, Any]:
+    """Handle device preempt request."""
+    device_id = request_data.get("device_id")
+    reason = request_data.get("reason", "")
+    client_id = request_data.get("client_id", f"file-ipc-{time.time()}")
+
+    if not device_id:
+        return {"success": False, "message": "device_id is required"}
+
+    if not reason:
+        return {"success": False, "message": "reason is required for preemption"}
+
+    try:
+        success, preempted_client_id = context.device_manager.preempt_device(
+            device_id=device_id,
+            requesting_client_id=client_id,
+            reason=reason,
+        )
+
+        if success:
+            # Get the new lease info
+            state = context.device_manager.get_device(device_id)
+            lease_id = state.exclusive_lease.lease_id if state and state.exclusive_lease else None
+
+            logging.info(f"Device {device_id} preempted from {preempted_client_id} by {client_id}")
+            return {
+                "success": True,
+                "preempted_client_id": preempted_client_id,
+                "lease_id": lease_id,
+                "client_id": client_id,
+            }
+        else:
+            return {"success": False, "message": f"Failed to preempt device {device_id}"}
+
+    except KeyboardInterrupt:
+        _thread.interrupt_main()
+        raise
+    except Exception as e:
+        logging.error(f"Error during device preemption: {e}")
+        return {"success": False, "message": str(e)}
+
+
 def run_daemon_loop() -> None:
     """Main daemon loop: process build, deploy and monitor requests."""
     daemon_pid = os.getpid()
@@ -311,6 +532,8 @@ def run_daemon_loop() -> None:
     last_cancel_cleanup = time.time()
     last_stale_lock_check = time.time()
     last_dead_client_check = time.time()
+    # Track when daemon became "empty" (0 clients, 0 ops) for self-eviction
+    daemon_empty_since: float | None = None
 
     logging.info("Entering main daemon loop...")
     iteration_count = 0
@@ -320,6 +543,13 @@ def run_daemon_loop() -> None:
     deploy_request_lock = threading.Lock()
     install_deps_request_lock = threading.Lock()
     monitor_request_lock = threading.Lock()
+
+    # Locks for device management requests
+    device_list_request_lock = threading.Lock()
+    device_status_request_lock = threading.Lock()
+    device_lease_request_lock = threading.Lock()
+    device_release_request_lock = threading.Lock()
+    device_preempt_request_lock = threading.Lock()
 
     while True:
         try:
@@ -337,6 +567,27 @@ def run_daemon_loop() -> None:
             if idle_time > IDLE_TIMEOUT:
                 logging.info(f"Idle timeout reached ({idle_time:.1f}s / {IDLE_TIMEOUT}s), shutting down")
                 cleanup_and_exit(context)
+
+            # Self-eviction check: if daemon has 0 clients AND 0 ops for SELF_EVICTION_TIMEOUT, shutdown
+            # Per TASK.md: ensures daemon doesn't linger when no clients are connected
+            client_count = context.client_manager.get_client_count()
+            operation_running = context.status_manager.get_operation_in_progress()
+            daemon_is_empty = client_count == 0 and not operation_running
+
+            if daemon_is_empty:
+                if daemon_empty_since is None:
+                    daemon_empty_since = time.time()
+                    logging.debug("Daemon is now empty (0 clients, 0 ops), starting eviction timer")
+                else:
+                    empty_duration = time.time() - daemon_empty_since
+                    if empty_duration >= SELF_EVICTION_TIMEOUT:
+                        logging.info(f"Self-eviction triggered: daemon empty for {empty_duration:.1f}s (threshold: {SELF_EVICTION_TIMEOUT}s), shutting down")
+                        cleanup_and_exit(context)
+            else:
+                # Reset the timer if clients connect or operations start
+                if daemon_empty_since is not None:
+                    logging.debug(f"Daemon is no longer empty (clients={client_count}, op_running={operation_running})")
+                    daemon_empty_since = None
 
             # Periodically check for and cleanup orphaned processes
             if time.time() - last_orphan_check >= ORPHAN_CHECK_INTERVAL:
@@ -494,6 +745,47 @@ def run_daemon_loop() -> None:
 
                 # Mark operation complete
                 context.status_manager.set_operation_in_progress(False)
+
+            # Check for device management requests (these don't mark operation_in_progress)
+            with device_list_request_lock:
+                handle_device_request(
+                    DEVICE_LIST_REQUEST_FILE,
+                    DEVICE_LIST_RESPONSE_FILE,
+                    handle_device_list_request,
+                    context,
+                )
+
+            with device_status_request_lock:
+                handle_device_request(
+                    DEVICE_STATUS_REQUEST_FILE,
+                    DEVICE_STATUS_RESPONSE_FILE,
+                    handle_device_status_request,
+                    context,
+                )
+
+            with device_lease_request_lock:
+                handle_device_request(
+                    DEVICE_LEASE_REQUEST_FILE,
+                    DEVICE_LEASE_RESPONSE_FILE,
+                    handle_device_lease_request,
+                    context,
+                )
+
+            with device_release_request_lock:
+                handle_device_request(
+                    DEVICE_RELEASE_REQUEST_FILE,
+                    DEVICE_RELEASE_RESPONSE_FILE,
+                    handle_device_release_request,
+                    context,
+                )
+
+            with device_preempt_request_lock:
+                handle_device_request(
+                    DEVICE_PREEMPT_REQUEST_FILE,
+                    DEVICE_PREEMPT_RESPONSE_FILE,
+                    handle_device_preempt_request,
+                    context,
+                )
 
             # Sleep briefly to avoid busy-wait
             time.sleep(0.5)

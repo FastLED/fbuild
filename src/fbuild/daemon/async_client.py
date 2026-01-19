@@ -20,7 +20,8 @@ from dataclasses import asdict, dataclass, field
 from typing import Any, Callable
 
 # Default heartbeat timeout: clients not sending heartbeat in this time are considered dead
-DEFAULT_HEARTBEAT_TIMEOUT = 30.0
+# Per TASK.md: "If daemon misses heartbeats for ~3–4s, daemon closes the connection"
+DEFAULT_HEARTBEAT_TIMEOUT = 4.0
 
 # Cleanup interval for checking dead clients
 CLEANUP_INTERVAL = 10.0

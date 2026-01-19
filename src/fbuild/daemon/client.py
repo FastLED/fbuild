@@ -1440,6 +1440,297 @@ def display_daemon_list() -> None:
         print()
 
 
+# ============================================================================
+# DEVICE MANAGEMENT FUNCTIONS
+# ============================================================================
+
+
+def list_devices(refresh: bool = False) -> list[dict[str, Any]] | None:
+    """List all devices known to the daemon.
+
+    Args:
+        refresh: Whether to refresh device discovery before listing.
+
+    Returns:
+        List of device info dictionaries, or None if daemon not running.
+        Each device dict contains:
+        - device_id: Stable device identifier
+        - port: Current port (may change)
+        - is_connected: Whether device is currently connected
+        - exclusive_holder: Client ID holding exclusive lease (or None)
+        - monitor_count: Number of active monitor leases
+    """
+    if not is_daemon_running():
+        return None
+
+    # For now, we use a signal file to communicate with the daemon
+    # In the future, this should use the async TCP connection
+    request_file = DAEMON_DIR / "device_list_request.json"
+    response_file = DAEMON_DIR / "device_list_response.json"
+
+    # Clean up any old response file
+    response_file.unlink(missing_ok=True)
+
+    # Write request
+    request = {"refresh": refresh, "timestamp": time.time()}
+    with open(request_file, "w") as f:
+        json.dump(request, f)
+
+    # Wait for response (timeout 5 seconds)
+    for _ in range(50):
+        if response_file.exists():
+            try:
+                with open(response_file) as f:
+                    response = json.load(f)
+                response_file.unlink(missing_ok=True)
+                if response.get("success"):
+                    return response.get("devices", [])
+                return []
+            except (json.JSONDecodeError, OSError):
+                pass
+        time.sleep(0.1)
+
+    # Timeout - clean up
+    request_file.unlink(missing_ok=True)
+    return None
+
+
+def get_device_status(device_id: str) -> dict[str, Any] | None:
+    """Get detailed status for a specific device.
+
+    Args:
+        device_id: The device ID to query.
+
+    Returns:
+        Device status dictionary, or None if device not found or daemon not running.
+    """
+    if not is_daemon_running():
+        return None
+
+    request_file = DAEMON_DIR / "device_status_request.json"
+    response_file = DAEMON_DIR / "device_status_response.json"
+
+    # Clean up any old response file
+    response_file.unlink(missing_ok=True)
+
+    # Write request
+    request = {"device_id": device_id, "timestamp": time.time()}
+    with open(request_file, "w") as f:
+        json.dump(request, f)
+
+    # Wait for response
+    for _ in range(50):
+        if response_file.exists():
+            try:
+                with open(response_file) as f:
+                    response = json.load(f)
+                response_file.unlink(missing_ok=True)
+                if response.get("success"):
+                    return response
+                return None
+            except (json.JSONDecodeError, OSError):
+                pass
+        time.sleep(0.1)
+
+    request_file.unlink(missing_ok=True)
+    return None
+
+
+def acquire_device_lease(
+    device_id: str,
+    lease_type: str = "exclusive",
+    description: str = "",
+) -> dict[str, Any] | None:
+    """Acquire a lease on a device.
+
+    Args:
+        device_id: The device ID to lease.
+        lease_type: Type of lease - "exclusive" or "monitor".
+        description: Description of the operation.
+
+    Returns:
+        Response dictionary with success status and lease_id, or None if failed.
+    """
+    if not is_daemon_running():
+        return None
+
+    request_file = DAEMON_DIR / "device_lease_request.json"
+    response_file = DAEMON_DIR / "device_lease_response.json"
+
+    response_file.unlink(missing_ok=True)
+
+    request = {
+        "device_id": device_id,
+        "lease_type": lease_type,
+        "description": description,
+        "timestamp": time.time(),
+    }
+    with open(request_file, "w") as f:
+        json.dump(request, f)
+
+    for _ in range(50):
+        if response_file.exists():
+            try:
+                with open(response_file) as f:
+                    response = json.load(f)
+                response_file.unlink(missing_ok=True)
+                return response
+            except (json.JSONDecodeError, OSError):
+                pass
+        time.sleep(0.1)
+
+    request_file.unlink(missing_ok=True)
+    return None
+
+
+def release_device_lease(device_id: str) -> dict[str, Any] | None:
+    """Release a lease on a device.
+
+    Args:
+        device_id: The device ID or lease ID to release.
+
+    Returns:
+        Response dictionary with success status, or None if failed.
+    """
+    if not is_daemon_running():
+        return None
+
+    request_file = DAEMON_DIR / "device_release_request.json"
+    response_file = DAEMON_DIR / "device_release_response.json"
+
+    response_file.unlink(missing_ok=True)
+
+    request = {"device_id": device_id, "timestamp": time.time()}
+    with open(request_file, "w") as f:
+        json.dump(request, f)
+
+    for _ in range(50):
+        if response_file.exists():
+            try:
+                with open(response_file) as f:
+                    response = json.load(f)
+                response_file.unlink(missing_ok=True)
+                return response
+            except (json.JSONDecodeError, OSError):
+                pass
+        time.sleep(0.1)
+
+    request_file.unlink(missing_ok=True)
+    return None
+
+
+def preempt_device(device_id: str, reason: str) -> dict[str, Any] | None:
+    """Preempt a device from its current holder.
+
+    Args:
+        device_id: The device ID to preempt.
+        reason: Reason for preemption (required).
+
+    Returns:
+        Response dictionary with success status and preempted_client_id, or None if failed.
+    """
+    if not is_daemon_running():
+        return None
+
+    if not reason:
+        return {"success": False, "message": "Reason is required for preemption"}
+
+    request_file = DAEMON_DIR / "device_preempt_request.json"
+    response_file = DAEMON_DIR / "device_preempt_response.json"
+
+    response_file.unlink(missing_ok=True)
+
+    request = {"device_id": device_id, "reason": reason, "timestamp": time.time()}
+    with open(request_file, "w") as f:
+        json.dump(request, f)
+
+    for _ in range(50):
+        if response_file.exists():
+            try:
+                with open(response_file) as f:
+                    response = json.load(f)
+                response_file.unlink(missing_ok=True)
+                return response
+            except (json.JSONDecodeError, OSError):
+                pass
+        time.sleep(0.1)
+
+    request_file.unlink(missing_ok=True)
+    return None
+
+
+def tail_daemon_logs(follow: bool = True, lines: int = 50) -> None:
+    """Tail the daemon log file.
+
+    This function streams the daemon's log output, allowing users to see
+    what the daemon is doing in real-time without affecting its operation.
+
+    Per TASK.md: `fbuild show daemon` should attach to daemon log stream
+    and tail it, with exit NOT stopping the daemon.
+
+    Args:
+        follow: If True, continuously follow the log file (like tail -f).
+                If False, just print the last N lines and exit.
+        lines: Number of lines to show initially (default: 50).
+    """
+    log_file = DAEMON_DIR / "daemon.log"
+
+    if not log_file.exists():
+        print("❌ Daemon log file not found")
+        print(f"   Expected at: {log_file}")
+        print("   Hint: Start the daemon first with 'fbuild build <project>'")
+        return
+
+    print(f"📋 Tailing daemon log: {log_file}")
+    if follow:
+        print("   (Press Ctrl-C to stop viewing - daemon will continue running)\n")
+    print("=" * 60)
+
+    try:
+        with open(log_file, "r", encoding="utf-8", errors="replace") as f:
+            # Read initial lines
+            all_lines = f.readlines()
+
+            # Show last N lines
+            if len(all_lines) > lines:
+                print(f"... (showing last {lines} lines) ...\n")
+                for line in all_lines[-lines:]:
+                    print(line, end="")
+            else:
+                for line in all_lines:
+                    print(line, end="")
+
+            if not follow:
+                return
+
+            # Follow mode - continuously read new content
+            while True:
+                line = f.readline()
+                if line:
+                    print(line, end="", flush=True)
+                else:
+                    # No new content - sleep briefly
+                    time.sleep(0.1)
+
+    except KeyboardInterrupt:
+        import _thread
+
+        _thread.interrupt_main()
+        print("\n\n" + "=" * 60)
+        print("✅ Stopped viewing logs (daemon continues running)")
+        print("   Use 'fbuild daemon status' to check daemon status")
+        print("   Use 'fbuild daemon stop' to stop the daemon")
+
+
+def get_daemon_log_path() -> Path:
+    """Get the path to the daemon log file.
+
+    Returns:
+        Path to daemon.log file
+    """
+    return DAEMON_DIR / "daemon.log"
+
+
 def main() -> int:
     """Command-line interface for client."""
     import argparse
@@ -1453,6 +1744,9 @@ def main() -> int:
     parser.add_argument("--kill", type=int, metavar="PID", help="Kill specific daemon by PID")
     parser.add_argument("--kill-all", action="store_true", help="Kill all daemon instances")
     parser.add_argument("--force", action="store_true", help="Force kill (with --kill or --kill-all)")
+    parser.add_argument("--tail", action="store_true", help="Tail daemon logs")
+    parser.add_argument("--no-follow", action="store_true", help="Don't follow log file (with --tail)")
+    parser.add_argument("--lines", type=int, default=50, help="Number of lines to show initially (with --tail)")
 
     args = parser.parse_args()
 
@@ -1491,6 +1785,10 @@ def main() -> int:
     if args.kill_all:
         killed = kill_all_daemons(force=args.force)
         print(f"Killed {killed} daemon instance(s)")
+        return 0
+
+    if args.tail:
+        tail_daemon_logs(follow=not args.no_follow, lines=args.lines)
         return 0
 
     parser.print_help()

@@ -46,13 +46,16 @@ if TYPE_CHECKING:
     from fbuild.daemon.async_client import ClientConnectionManager
     from fbuild.daemon.configuration_lock import ConfigurationLockManager
     from fbuild.daemon.daemon_context import DaemonContext
+    from fbuild.daemon.device_manager import DeviceManager
     from fbuild.daemon.firmware_ledger import FirmwareLedger
     from fbuild.daemon.shared_serial import SharedSerialManager
 
 # Default server configuration
 DEFAULT_PORT = 9876
 DEFAULT_HOST = "127.0.0.1"
-DEFAULT_HEARTBEAT_TIMEOUT = 30.0
+# Heartbeat timeout: clients must send heartbeat every ~1s; if missed for 4s, disconnect
+# Per TASK.md requirement: "If daemon misses heartbeats for ~3–4s, daemon closes the connection"
+DEFAULT_HEARTBEAT_TIMEOUT = 4.0
 DEFAULT_READ_BUFFER_SIZE = 65536
 DEFAULT_WRITE_TIMEOUT = 10.0
 
@@ -66,6 +69,7 @@ class SubscriptionType(Enum):
     LOCKS = "locks"  # Lock state changes
     FIRMWARE = "firmware"  # Firmware deployment events
     SERIAL = "serial"  # Serial port events
+    DEVICES = "devices"  # Device lease events
     STATUS = "status"  # Daemon status updates
     ALL = "all"  # All events
 
@@ -92,6 +96,13 @@ class MessageType(Enum):
     SERIAL_DETACH = "serial_detach"
     SERIAL_WRITE = "serial_write"
     SERIAL_READ = "serial_read"
+
+    # Device operations
+    DEVICE_LIST = "device_list"
+    DEVICE_LEASE = "device_lease"
+    DEVICE_RELEASE = "device_release"
+    DEVICE_PREEMPT = "device_preempt"
+    DEVICE_STATUS = "device_status"
 
     # Subscription
     SUBSCRIBE = "subscribe"
@@ -197,6 +208,7 @@ class AsyncDaemonServer:
         firmware_ledger: "FirmwareLedger | None" = None,
         shared_serial_manager: "SharedSerialManager | None" = None,
         client_manager: "ClientConnectionManager | None" = None,
+        device_manager: "DeviceManager | None" = None,
         # Full context can also be passed (takes precedence)
         context: "DaemonContext | None" = None,
     ) -> None:
@@ -215,6 +227,7 @@ class AsyncDaemonServer:
             firmware_ledger: FirmwareLedger for firmware tracking
             shared_serial_manager: SharedSerialManager for serial port operations
             client_manager: ClientConnectionManager for client tracking
+            device_manager: DeviceManager for device leasing
             context: Full DaemonContext (if provided, individual managers are extracted)
         """
         self._host = host
@@ -228,12 +241,14 @@ class AsyncDaemonServer:
             self._firmware_ledger = context.firmware_ledger
             self._shared_serial_manager = context.shared_serial_manager
             self._client_manager = context.client_manager
+            self._device_manager = getattr(context, "device_manager", None)
             self._context = context  # Keep reference for legacy access
         else:
             self._configuration_lock_manager = configuration_lock_manager
             self._firmware_ledger = firmware_ledger
             self._shared_serial_manager = shared_serial_manager
             self._client_manager = client_manager
+            self._device_manager = device_manager
             self._context = None  # No full context available
 
         # Client tracking
@@ -265,6 +280,11 @@ class AsyncDaemonServer:
             MessageType.SERIAL_DETACH: self._handle_serial_detach,
             MessageType.SERIAL_WRITE: self._handle_serial_write,
             MessageType.SERIAL_READ: self._handle_serial_read,
+            MessageType.DEVICE_LIST: self._handle_device_list,
+            MessageType.DEVICE_LEASE: self._handle_device_lease,
+            MessageType.DEVICE_RELEASE: self._handle_device_release,
+            MessageType.DEVICE_PREEMPT: self._handle_device_preempt,
+            MessageType.DEVICE_STATUS: self._handle_device_status,
             MessageType.SUBSCRIBE: self._handle_subscribe,
             MessageType.UNSUBSCRIBE: self._handle_unsubscribe,
         }
@@ -781,6 +801,12 @@ class AsyncDaemonServer:
                 released = self._configuration_lock_manager.release_all_client_locks(client_id)
                 if released > 0:
                     logging.info(f"Released {released} configuration locks for client {client_id}")
+
+            # Release device leases held by this client
+            if self._device_manager is not None:
+                released = self._device_manager.release_all_client_leases(client_id)
+                if released > 0:
+                    logging.info(f"Released {released} device leases for client {client_id}")
 
             # Disconnect from shared serial sessions
             if self._shared_serial_manager is not None:
@@ -1623,6 +1649,408 @@ class AsyncDaemonServer:
             "message": "Unsubscribed",
             "subscriptions": [s.value for s in client.subscriptions],
         }
+
+    # =========================================================================
+    # Message Handlers - Device Operations
+    # =========================================================================
+
+    async def _handle_device_list(
+        self,
+        client: ClientConnection,  # noqa: ARG002
+        data: dict[str, Any],
+    ) -> dict[str, Any]:
+        """Handle device list request.
+
+        Args:
+            client: The client connection (unused but required for handler signature)
+            data: List request data (include_disconnected, refresh)
+
+        Returns:
+            Response with device list
+        """
+        include_disconnected = data.get("include_disconnected", False)
+        refresh = data.get("refresh", False)
+
+        # Check that device manager is available
+        if self._device_manager is None:
+            return {
+                "success": False,
+                "message": "Device manager not available",
+                "devices": [],
+                "total_devices": 0,
+                "connected_devices": 0,
+                "total_leases": 0,
+            }
+
+        try:
+            # Refresh device inventory if requested
+            if refresh:
+                self._device_manager.refresh_devices()
+
+            # Get device status
+            all_status = self._device_manager.get_all_leases()
+
+            # Filter devices based on include_disconnected
+            devices = []
+            for _device_id, device_state in all_status.get("devices", {}).items():
+                if include_disconnected or device_state.get("is_connected", False):
+                    devices.append(device_state)
+
+            return {
+                "success": True,
+                "message": f"Found {len(devices)} device(s)",
+                "devices": devices,
+                "total_devices": all_status.get("total_devices", 0),
+                "connected_devices": all_status.get("connected_devices", 0),
+                "total_leases": all_status.get("total_leases", 0),
+            }
+
+        except KeyboardInterrupt:  # noqa: KBI002
+            raise
+        except Exception as e:
+            logging.error(f"Error listing devices: {e}")
+            return {
+                "success": False,
+                "message": f"Device list error: {e}",
+                "devices": [],
+                "total_devices": 0,
+                "connected_devices": 0,
+                "total_leases": 0,
+            }
+
+    async def _handle_device_lease(
+        self,
+        client: ClientConnection,
+        data: dict[str, Any],
+    ) -> dict[str, Any]:
+        """Handle device lease request.
+
+        Args:
+            client: The client connection
+            data: Lease request data (device_id, lease_type, description, allows_monitors, timeout)
+
+        Returns:
+            Response with lease result
+        """
+        from fbuild.daemon.device_manager import LeaseType
+
+        device_id = data.get("device_id", "")
+        lease_type_str = data.get("lease_type", "exclusive")
+        description = data.get("description", "")
+        allows_monitors = data.get("allows_monitors", True)
+        timeout = data.get("timeout", 300.0)
+
+        if not device_id:
+            return {
+                "success": False,
+                "message": "device_id is required",
+            }
+
+        # Check that device manager is available
+        if self._device_manager is None:
+            return {
+                "success": False,
+                "message": "Device manager not available",
+            }
+
+        try:
+            lease_type = LeaseType(lease_type_str)
+        except ValueError:
+            return {
+                "success": False,
+                "message": f"Invalid lease type: {lease_type_str}. Must be 'exclusive' or 'monitor'",
+            }
+
+        try:
+            if lease_type == LeaseType.EXCLUSIVE:
+                lease = self._device_manager.acquire_exclusive(
+                    device_id=device_id,
+                    client_id=client.client_id,
+                    description=description,
+                    allows_monitors=allows_monitors,
+                    timeout=timeout,
+                )
+            else:  # MONITOR
+                lease = self._device_manager.acquire_monitor(
+                    device_id=device_id,
+                    client_id=client.client_id,
+                    description=description,
+                )
+
+            if lease:
+                logging.info(f"Client {client.client_id} acquired {lease_type.value} lease for device {device_id} (lease_id={lease.lease_id})")
+
+                # Broadcast lease event
+                await self.broadcast(
+                    SubscriptionType.DEVICES,
+                    {
+                        "event": "lease_acquired",
+                        "client_id": client.client_id,
+                        "device_id": device_id,
+                        "lease_id": lease.lease_id,
+                        "lease_type": lease_type.value,
+                    },
+                )
+
+                return {
+                    "success": True,
+                    "message": f"{lease_type.value} lease acquired",
+                    "lease_id": lease.lease_id,
+                    "device_id": device_id,
+                    "lease_type": lease_type.value,
+                    "allows_monitors": lease.allows_monitors,
+                }
+            else:
+                device_status = self._device_manager.get_device_status(device_id)
+                return {
+                    "success": False,
+                    "message": "Lease not available",
+                    "device_id": device_id,
+                    "lease_type": lease_type.value,
+                    "is_connected": device_status.get("is_connected", False),
+                    "has_exclusive": device_status.get("exclusive_lease") is not None,
+                }
+
+        except KeyboardInterrupt:  # noqa: KBI002
+            raise
+        except Exception as e:
+            logging.error(f"Error acquiring device lease for {client.client_id}: {e}")
+            return {
+                "success": False,
+                "message": f"Device lease error: {e}",
+            }
+
+    async def _handle_device_release(
+        self,
+        client: ClientConnection,
+        data: dict[str, Any],
+    ) -> dict[str, Any]:
+        """Handle device lease release request.
+
+        Args:
+            client: The client connection
+            data: Release request data (lease_id)
+
+        Returns:
+            Response with release result
+        """
+        lease_id = data.get("lease_id", "")
+
+        if not lease_id:
+            return {
+                "success": False,
+                "message": "lease_id is required",
+            }
+
+        # Check that device manager is available
+        if self._device_manager is None:
+            return {
+                "success": False,
+                "message": "Device manager not available",
+            }
+
+        try:
+            released = self._device_manager.release_lease(lease_id, client.client_id)
+
+            if released:
+                logging.info(f"Client {client.client_id} released lease {lease_id}")
+
+                # Broadcast lease release event
+                await self.broadcast(
+                    SubscriptionType.DEVICES,
+                    {
+                        "event": "lease_released",
+                        "client_id": client.client_id,
+                        "lease_id": lease_id,
+                    },
+                )
+
+                return {
+                    "success": True,
+                    "message": "Lease released",
+                    "lease_id": lease_id,
+                }
+            else:
+                return {
+                    "success": False,
+                    "message": "Lease not found or not owned by this client",
+                    "lease_id": lease_id,
+                }
+
+        except KeyboardInterrupt:  # noqa: KBI002
+            raise
+        except Exception as e:
+            logging.error(f"Error releasing device lease {lease_id} for {client.client_id}: {e}")
+            return {
+                "success": False,
+                "message": f"Device release error: {e}",
+            }
+
+    async def _handle_device_preempt(
+        self,
+        client: ClientConnection,
+        data: dict[str, Any],
+    ) -> dict[str, Any]:
+        """Handle device preemption request.
+
+        Forcibly takes the exclusive lease from the current holder.
+        The reason is REQUIRED and must not be empty.
+
+        Args:
+            client: The client connection
+            data: Preempt request data (device_id, reason)
+
+        Returns:
+            Response with preemption result
+        """
+        device_id = data.get("device_id", "")
+        reason = data.get("reason", "")
+
+        if not device_id:
+            return {
+                "success": False,
+                "message": "device_id is required",
+            }
+
+        if not reason or not reason.strip():
+            return {
+                "success": False,
+                "message": "reason is required and must not be empty",
+            }
+
+        # Check that device manager is available
+        if self._device_manager is None:
+            return {
+                "success": False,
+                "message": "Device manager not available",
+            }
+
+        try:
+            success, preempted_client_id = self._device_manager.preempt_device(
+                device_id=device_id,
+                requesting_client_id=client.client_id,
+                reason=reason,
+            )
+
+            if success:
+                logging.warning(f"PREEMPTION: {client.client_id} took device {device_id} from {preempted_client_id}. Reason: {reason}")
+
+                # Broadcast preemption event to all subscribers
+                await self.broadcast(
+                    SubscriptionType.DEVICES,
+                    {
+                        "event": "device_preempted",
+                        "device_id": device_id,
+                        "preempted_by": client.client_id,
+                        "preempted_client_id": preempted_client_id,
+                        "reason": reason,
+                    },
+                )
+
+                # Send direct notification to preempted client if they're still connected
+                if preempted_client_id:
+                    preempted_client = await self.get_client_async(preempted_client_id)
+                    if preempted_client:
+                        await self._send_message(
+                            preempted_client,
+                            MessageType.BROADCAST,
+                            {
+                                "event_type": "device_preemption",
+                                "data": {
+                                    "device_id": device_id,
+                                    "preempted_by": client.client_id,
+                                    "reason": reason,
+                                },
+                                "timestamp": time.time(),
+                            },
+                        )
+
+                # Get the new lease for the requester
+                device_status = self._device_manager.get_device_status(device_id)
+                new_lease = device_status.get("exclusive_lease")
+
+                return {
+                    "success": True,
+                    "message": f"Device preempted from {preempted_client_id}",
+                    "device_id": device_id,
+                    "preempted_client_id": preempted_client_id,
+                    "lease_id": new_lease.get("lease_id") if new_lease else None,
+                    "lease_type": "exclusive",
+                }
+            else:
+                return {
+                    "success": False,
+                    "message": "Preemption failed - device may not have an exclusive holder",
+                    "device_id": device_id,
+                }
+
+        except KeyboardInterrupt:  # noqa: KBI002
+            raise
+        except Exception as e:
+            logging.error(f"Error preempting device {device_id} for {client.client_id}: {e}")
+            return {
+                "success": False,
+                "message": f"Device preemption error: {e}",
+            }
+
+    async def _handle_device_status(
+        self,
+        client: ClientConnection,  # noqa: ARG002
+        data: dict[str, Any],
+    ) -> dict[str, Any]:
+        """Handle device status request.
+
+        Args:
+            client: The client connection (unused but required for handler signature)
+            data: Status request data (device_id)
+
+        Returns:
+            Response with device status
+        """
+        device_id = data.get("device_id", "")
+
+        if not device_id:
+            return {
+                "success": False,
+                "message": "device_id is required",
+            }
+
+        # Check that device manager is available
+        if self._device_manager is None:
+            return {
+                "success": False,
+                "message": "Device manager not available",
+                "device_id": device_id,
+                "exists": False,
+            }
+
+        try:
+            status = self._device_manager.get_device_status(device_id)
+
+            if not status.get("exists", False):
+                return {
+                    "success": True,
+                    "message": "Device not found",
+                    "device_id": device_id,
+                    "exists": False,
+                    "is_connected": False,
+                }
+
+            return {
+                "success": True,
+                "message": "Device status retrieved",
+                **status,
+            }
+
+        except KeyboardInterrupt:  # noqa: KBI002
+            raise
+        except Exception as e:
+            logging.error(f"Error getting device status for {device_id}: {e}")
+            return {
+                "success": False,
+                "message": f"Device status error: {e}",
+                "device_id": device_id,
+            }
 
     # =========================================================================
     # Status and Introspection
