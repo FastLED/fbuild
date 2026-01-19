@@ -72,6 +72,7 @@ PROCESS_REGISTRY_FILE = DAEMON_DIR / "process_registry.json"
 FILE_CACHE_FILE = DAEMON_DIR / "file_cache.json"
 ORPHAN_CHECK_INTERVAL = 5  # Check for orphaned processes every 5 seconds
 STALE_LOCK_CHECK_INTERVAL = 60  # Check for stale locks every 60 seconds
+DEAD_CLIENT_CHECK_INTERVAL = 10  # Check for dead clients every 10 seconds
 IDLE_TIMEOUT = 43200  # 12 hours
 
 
@@ -301,6 +302,7 @@ def run_daemon_loop() -> None:
     last_orphan_check = time.time()
     last_cancel_cleanup = time.time()
     last_stale_lock_check = time.time()
+    last_dead_client_check = time.time()
 
     logging.info("Entering main daemon loop...")
     iteration_count = 0
@@ -371,6 +373,19 @@ def run_daemon_loop() -> None:
                     raise
                 except Exception as e:
                     logging.error(f"Error handling clear locks signal: {e}", exc_info=True)
+
+            # Periodically check for and cleanup dead clients (every 10 seconds)
+            if time.time() - last_dead_client_check >= DEAD_CLIENT_CHECK_INTERVAL:
+                try:
+                    dead_clients = context.client_manager.cleanup_dead_clients()
+                    if dead_clients:
+                        logging.info(f"Cleaned up {len(dead_clients)} dead clients: {dead_clients}")
+                    last_dead_client_check = time.time()
+                except KeyboardInterrupt:
+                    _thread.interrupt_main()
+                    raise
+                except Exception as e:
+                    logging.error(f"Error during dead client cleanup: {e}", exc_info=True)
 
             # Periodically check for and cleanup stale locks (every 60 seconds)
             if time.time() - last_stale_lock_check >= STALE_LOCK_CHECK_INTERVAL:

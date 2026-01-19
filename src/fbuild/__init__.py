@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-__version__ = "1.2.5"
+__version__ = "1.2.7"
 
 
 def is_available() -> bool:

@@ -10,12 +10,16 @@ import threading
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from fbuild.daemon.async_client import ClientConnectionManager
 from fbuild.daemon.compilation_queue import CompilationJobQueue
+from fbuild.daemon.configuration_lock import ConfigurationLockManager
 from fbuild.daemon.error_collector import ErrorCollector
 from fbuild.daemon.file_cache import FileCache
+from fbuild.daemon.firmware_ledger import FirmwareLedger
 from fbuild.daemon.lock_manager import ResourceLockManager
 from fbuild.daemon.operation_registry import OperationRegistry
 from fbuild.daemon.port_state_manager import PortStateManager
+from fbuild.daemon.shared_serial import SharedSerialManager
 from fbuild.daemon.status_manager import StatusManager
 from fbuild.daemon.subprocess_manager import SubprocessManager
 
@@ -42,6 +46,10 @@ class DaemonContext:
         lock_manager: Unified resource lock manager for ports and projects
         port_state_manager: Manager for tracking COM port states
         status_manager: Manager for daemon status file operations
+        client_manager: Manager for async client connections with heartbeat
+        configuration_lock_manager: Centralized locking for (project, env, port) configs
+        firmware_ledger: Tracks deployed firmware on devices to avoid re-upload
+        shared_serial_manager: Manages shared serial port access for multiple clients
         operation_in_progress: Flag indicating if any operation is running
         operation_lock: Lock protecting the operation_in_progress flag
     """
@@ -59,6 +67,12 @@ class DaemonContext:
     lock_manager: ResourceLockManager
     port_state_manager: PortStateManager
     status_manager: StatusManager
+
+    # New managers for centralized locking and shared state (Iteration 1-2)
+    client_manager: ClientConnectionManager
+    configuration_lock_manager: ConfigurationLockManager
+    firmware_ledger: FirmwareLedger
+    shared_serial_manager: SharedSerialManager
 
     # Operation state
     operation_in_progress: bool = False
@@ -148,6 +162,33 @@ def create_daemon_context(
     )
     logging.info("Status manager initialized")
 
+    # Initialize new managers for centralized locking and shared state (Iteration 1-2)
+    client_manager = ClientConnectionManager()
+    logging.info("Client connection manager initialized")
+
+    configuration_lock_manager = ConfigurationLockManager()
+    logging.info("Configuration lock manager initialized")
+
+    firmware_ledger = FirmwareLedger()
+    logging.info(f"Firmware ledger initialized (path={firmware_ledger.ledger_path})")
+
+    shared_serial_manager = SharedSerialManager()
+    logging.info("Shared serial manager initialized")
+
+    # Register cleanup callbacks: when a client disconnects, release their resources
+    def on_client_disconnect(client_id: str) -> None:
+        """Cleanup callback for when a client disconnects."""
+        logging.info(f"Cleaning up resources for disconnected client: {client_id}")
+        # Release all configuration locks held by this client
+        released = configuration_lock_manager.release_all_client_locks(client_id)
+        if released > 0:
+            logging.info(f"Released {released} configuration locks for client {client_id}")
+        # Disconnect from shared serial sessions
+        shared_serial_manager.disconnect_client(client_id)
+
+    client_manager.register_cleanup_callback(on_client_disconnect)
+    logging.info("Client cleanup callback registered")
+
     # Create context
     context = DaemonContext(
         daemon_pid=daemon_pid,
@@ -160,6 +201,10 @@ def create_daemon_context(
         lock_manager=lock_manager,
         port_state_manager=port_state_manager,
         status_manager=status_manager,
+        client_manager=client_manager,
+        configuration_lock_manager=configuration_lock_manager,
+        firmware_ledger=firmware_ledger,
+        shared_serial_manager=shared_serial_manager,
     )
 
     logging.info("✅ Daemon context initialized successfully")
@@ -184,6 +229,39 @@ def cleanup_daemon_context(context: DaemonContext) -> None:
     import logging
 
     logging.info("Shutting down daemon context...")
+
+    # Shutdown shared serial manager first (closes all serial ports)
+    if context.shared_serial_manager:
+        try:
+            context.shared_serial_manager.shutdown()
+            logging.info("Shared serial manager shut down")
+        except KeyboardInterrupt:  # noqa: KBI002
+            logging.warning("KeyboardInterrupt during shared serial manager shutdown")
+            raise
+        except Exception as e:
+            logging.error(f"Error shutting down shared serial manager: {e}")
+
+    # Clear all configuration locks
+    if context.configuration_lock_manager:
+        try:
+            cleared = context.configuration_lock_manager.clear_all_locks()
+            logging.info(f"Cleared {cleared} configuration locks during shutdown")
+        except KeyboardInterrupt:  # noqa: KBI002
+            logging.warning("KeyboardInterrupt during configuration lock manager cleanup")
+            raise
+        except Exception as e:
+            logging.error(f"Error clearing configuration locks: {e}")
+
+    # Clear all client connections
+    if context.client_manager:
+        try:
+            cleared = context.client_manager.clear_all_clients()
+            logging.info(f"Cleared {cleared} client connections during shutdown")
+        except KeyboardInterrupt:  # noqa: KBI002
+            logging.warning("KeyboardInterrupt during client manager cleanup")
+            raise
+        except Exception as e:
+            logging.error(f"Error clearing client connections: {e}")
 
     # Shutdown compilation queue
     if context.compilation_queue:
@@ -210,5 +288,6 @@ def cleanup_daemon_context(context: DaemonContext) -> None:
     # Log cleanup of other subsystems (they don't have explicit shutdown methods)
     logging.debug("Cleaning up subprocess manager...")
     logging.debug("Cleaning up error collector...")
+    logging.debug("Firmware ledger persists to disk - no cleanup needed")
 
     logging.info("✅ Daemon context cleaned up")

@@ -26,6 +26,9 @@ from fbuild.daemon.messages import (
     MonitorRequest,
 )
 
+# Spinner characters for progress indication
+SPINNER_CHARS = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"]
+
 # Daemon configuration (must match daemon settings)
 DAEMON_NAME = "fbuild_daemon"
 
@@ -175,6 +178,37 @@ def display_status(status: DaemonStatus, prefix: str = "  ") -> None:
         print(f"{prefix}❌ {display_text}", flush=True)
     else:
         print(f"{prefix}ℹ️  {display_text}", flush=True)
+
+
+def display_spinner_progress(
+    status: DaemonStatus,
+    elapsed: float,
+    spinner_idx: int,
+    prefix: str = "  ",
+) -> None:
+    """Display spinner with elapsed time when status hasn't changed.
+
+    Uses carriage return to update in place without new line.
+
+    Args:
+        status: DaemonStatus object
+        elapsed: Elapsed time in seconds
+        spinner_idx: Current spinner index
+        prefix: Line prefix for indentation
+    """
+    spinner = SPINNER_CHARS[spinner_idx % len(SPINNER_CHARS)]
+    display_text = status.current_operation or status.message
+
+    # Format elapsed time
+    mins = int(elapsed) // 60
+    secs = int(elapsed) % 60
+    if mins > 0:
+        time_str = f"{mins}m {secs}s"
+    else:
+        time_str = f"{secs}s"
+
+    # Use carriage return to update in place
+    print(f"\r{prefix}{spinner} {display_text} ({time_str})", end="", flush=True)
 
 
 def ensure_daemon_running() -> bool:
@@ -339,6 +373,8 @@ class BaseRequestHandler(ABC):
         self.last_message: str | None = None
         self.monitoring_started = False
         self.output_file_position = 0
+        self.spinner_idx = 0
+        self.last_spinner_update = 0.0
 
     @abstractmethod
     def create_request(self) -> BuildRequest | DeployRequest | InstallDependenciesRequest | MonitorRequest:
@@ -506,13 +542,28 @@ class BaseRequestHandler(ABC):
 
                 # Display progress when message changes
                 if status.message != self.last_message:
+                    # Clear spinner line before new status message
+                    if self.last_message is not None:
+                        print("\r" + " " * 80 + "\r", end="", flush=True)
                     display_status(status)
                     self.last_message = status.message
+                    self.last_spinner_update = time.time()
+                else:
+                    # Show spinner with elapsed time when in building/deploying state
+                    if status.state in (DaemonState.BUILDING, DaemonState.DEPLOYING):
+                        current_time = time.time()
+                        # Update spinner every 100ms
+                        if current_time - self.last_spinner_update >= 0.1:
+                            self.spinner_idx += 1
+                            display_spinner_progress(status, elapsed, self.spinner_idx)
+                            self.last_spinner_update = current_time
 
                 # Handle monitoring phase
                 if self.should_tail_output() and status.state == DaemonState.MONITORING:
                     if not self.monitoring_started:
                         self.monitoring_started = True
+                        # Clear spinner line before monitor output
+                        print("\r" + " " * 80 + "\r", end="", flush=True)
                         print()  # Blank line before serial output
                         self.on_monitoring_started()
 
@@ -524,21 +575,27 @@ class BaseRequestHandler(ABC):
                     if status.request_id == request.request_id:
                         self.read_remaining_output()
                         self.on_completion(elapsed)
-                        print(f"\n✅ {self.get_operation_name()} completed in {elapsed:.1f}s")
+                        # Clear spinner line before completion message
+                        print("\r" + " " * 80 + "\r", end="", flush=True)
+                        print(f"✅ {self.get_operation_name()} completed in {elapsed:.1f}s")
                         return True
 
                 elif status.state == DaemonState.FAILED:
                     if status.request_id == request.request_id:
                         self.read_remaining_output()
                         self.on_failure(status, elapsed)
-                        print(f"\n❌ {self.get_operation_name()} failed: {status.message}")
+                        # Clear spinner line before failure message
+                        print("\r" + " " * 80 + "\r", end="", flush=True)
+                        print(f"❌ {self.get_operation_name()} failed: {status.message}")
                         return False
 
                 # Sleep before next poll
-                poll_interval = 0.1 if self.monitoring_started else 0.5
+                poll_interval = 0.1 if self.monitoring_started else 0.1  # Faster polling for spinner
                 time.sleep(poll_interval)
 
             except KeyboardInterrupt:  # noqa: KBI002
+                # Clear spinner line before interrupt handling
+                print("\r" + " " * 80 + "\r", end="", flush=True)
                 return self.handle_keyboard_interrupt(request.request_id)
 
 

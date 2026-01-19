@@ -4,6 +4,11 @@ Deploy Request Processor - Handles build + deploy operations.
 This module implements the DeployRequestProcessor which executes build and
 deployment operations for Arduino/ESP32 projects. It coordinates building
 the firmware and then uploading it to the target device.
+
+Enhanced in Iteration 2 with:
+- FirmwareLedger integration to skip re-upload if firmware is unchanged
+- Source and build flags hash tracking
+- ConfigurationLockManager for centralized locking
 """
 
 import logging
@@ -11,6 +16,11 @@ import sys
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from fbuild.daemon.firmware_ledger import (
+    compute_build_flags_hash,
+    compute_firmware_hash,
+    compute_source_hash,
+)
 from fbuild.daemon.messages import DaemonState, MonitorRequest, OperationType
 from fbuild.daemon.port_state_manager import PortState
 from fbuild.daemon.request_processor import RequestProcessor
@@ -79,9 +89,10 @@ class DeployRequestProcessor(RequestProcessor):
         process_deploy_request function. All boilerplate (locks, status
         updates, error handling) is handled by the base RequestProcessor.
 
-        The operation has two phases:
-        1. Build: Compile the firmware
-        2. Deploy: Upload the firmware to device
+        The operation has three phases:
+        1. Check: See if firmware is already deployed (skip redeploy if unchanged)
+        2. Build: Compile the firmware
+        3. Deploy: Upload the firmware to device
 
         If monitor_after is requested, the processor will coordinate
         transitioning to monitoring after successful deployment.
@@ -93,9 +104,28 @@ class DeployRequestProcessor(RequestProcessor):
         Returns:
             True if deploy succeeded, False otherwise
         """
+        # Phase 0: Check if we can skip deployment using firmware ledger
+        skip_deploy, source_hash, build_flags_hash = self._check_firmware_ledger(request, context)
+
+        if skip_deploy and request.port:
+            logging.info(f"Firmware unchanged, skipping build and deploy for {request.port}")
+            # Update status to indicate skip
+            self._update_status(
+                context,
+                DaemonState.COMPLETED,
+                "Firmware unchanged, skipping deploy",
+                request=request,
+                operation_in_progress=False,
+            )
+            # If monitoring requested, still start it (firmware is already there)
+            if request.monitor_after:
+                self._start_monitoring(request, request.port, context)
+            return True
+
         # Phase 1: Build firmware
         logging.info(f"Building project: {request.project_dir}")
-        if not self._build_firmware(request, context):
+        build_result = self._build_firmware(request, context)
+        if not build_result:
             return False
 
         # Phase 2: Deploy firmware
@@ -103,6 +133,9 @@ class DeployRequestProcessor(RequestProcessor):
         used_port = self._deploy_firmware(request, context)
         if not used_port:
             return False
+
+        # Phase 2.5: Record deployment in firmware ledger
+        self._record_deployment(request, used_port, source_hash, build_flags_hash, context)
 
         # Phase 3: Optional monitoring or release port state
         if request.monitor_after and used_port:
@@ -115,6 +148,187 @@ class DeployRequestProcessor(RequestProcessor):
 
         logging.info("Deploy completed successfully")
         return True
+
+    def _check_firmware_ledger(self, request: "DeployRequest", context: "DaemonContext") -> tuple[bool, str, str]:
+        """Check if firmware is already deployed and unchanged.
+
+        Uses the firmware ledger to determine if we can skip the build and deploy.
+        This is a major optimization when the same firmware is deployed multiple
+        times without changes.
+
+        Args:
+            request: The deploy request
+            context: The daemon context
+
+        Returns:
+            Tuple of (can_skip, source_hash, build_flags_hash)
+        """
+        if not request.port:
+            # Can't check without a known port
+            return False, "", ""
+
+        try:
+            project_path = Path(request.project_dir)
+
+            # Get source files to hash
+            source_files = self._get_source_files(project_path)
+            if not source_files:
+                logging.debug("No source files found for hashing")
+                return False, "", ""
+
+            # Compute hashes
+            source_hash = compute_source_hash(source_files)
+            build_flags_hash = compute_build_flags_hash(self._get_build_flags(project_path, request.environment))
+
+            # Check if redeploy is needed
+            needs_redeploy = context.firmware_ledger.needs_redeploy(
+                port=request.port,
+                source_hash=source_hash,
+                build_flags_hash=build_flags_hash,
+            )
+
+            if not needs_redeploy:
+                logging.info(f"Firmware ledger indicates no changes for {request.port}")
+                return True, source_hash, build_flags_hash
+
+            logging.debug("Source or build flags changed, redeploy needed")
+            return False, source_hash, build_flags_hash
+
+        except KeyboardInterrupt:  # noqa: KBI002
+            raise
+        except Exception as e:
+            logging.warning(f"Error checking firmware ledger: {e}")
+            return False, "", ""
+
+    def _get_source_files(self, project_path: Path) -> list[Path]:
+        """Get list of source files in the project.
+
+        Args:
+            project_path: Path to the project directory
+
+        Returns:
+            List of source file paths
+        """
+        source_extensions = {".c", ".cpp", ".h", ".hpp", ".ino", ".S"}
+        source_files = []
+
+        # Check standard source directories
+        src_dirs = [
+            project_path / "src",
+            project_path / "include",
+            project_path / "lib",
+        ]
+
+        # Also check for .ino files in project root
+        for f in project_path.glob("*.ino"):
+            source_files.append(f)
+
+        for src_dir in src_dirs:
+            if src_dir.exists():
+                for ext in source_extensions:
+                    source_files.extend(src_dir.rglob(f"*{ext}"))
+
+        return source_files
+
+    def _get_build_flags(self, project_path: Path, environment: str) -> list[str]:
+        """Get build flags from platformio.ini.
+
+        Args:
+            project_path: Path to the project directory
+            environment: Build environment name
+
+        Returns:
+            List of build flags
+        """
+        try:
+            from fbuild.config.ini_parser import PlatformIOConfig
+
+            ini_path = project_path / "platformio.ini"
+            if not ini_path.exists():
+                return []
+
+            config = PlatformIOConfig(ini_path)
+            env_config = config.get_env_config(environment)
+            build_flags = env_config.get("build_flags", "")
+
+            if isinstance(build_flags, str):
+                return build_flags.split() if build_flags else []
+            return list(build_flags) if build_flags else []
+        except KeyboardInterrupt:  # noqa: KBI002
+            raise
+        except Exception as e:
+            logging.warning(f"Error reading build flags: {e}")
+            return []
+
+    def _record_deployment(
+        self,
+        request: "DeployRequest",
+        port: str,
+        source_hash: str,
+        build_flags_hash: str,
+        context: "DaemonContext",
+    ) -> None:
+        """Record successful deployment in firmware ledger.
+
+        Args:
+            request: The deploy request
+            port: Port the firmware was deployed to
+            source_hash: Hash of source files
+            build_flags_hash: Hash of build flags
+            context: The daemon context
+        """
+        try:
+            project_path = Path(request.project_dir)
+
+            # Find the firmware file
+            firmware_path = self._find_firmware_path(project_path, request.environment)
+            if not firmware_path:
+                logging.warning("Could not find firmware file for ledger recording")
+                return
+
+            # Compute firmware hash
+            firmware_hash = compute_firmware_hash(firmware_path)
+
+            # Record in ledger
+            context.firmware_ledger.record_deployment(
+                port=port,
+                firmware_hash=firmware_hash,
+                source_hash=source_hash,
+                project_dir=str(project_path),
+                environment=request.environment,
+                build_flags_hash=build_flags_hash,
+            )
+            logging.info(f"Recorded deployment in firmware ledger for {port}")
+
+        except KeyboardInterrupt:  # noqa: KBI002
+            raise
+        except Exception as e:
+            logging.warning(f"Error recording deployment in ledger: {e}")
+
+    def _find_firmware_path(self, project_path: Path, environment: str) -> Path | None:
+        """Find the firmware file for the given environment.
+
+        Args:
+            project_path: Path to the project directory
+            environment: Build environment name
+
+        Returns:
+            Path to firmware file, or None if not found
+        """
+        # Check common firmware locations
+        build_dir = project_path / ".pio" / "build" / environment
+        if not build_dir.exists():
+            build_dir = project_path / ".fbuild" / "build" / environment
+
+        if not build_dir.exists():
+            return None
+
+        # Look for firmware files (prefer .bin, then .hex, then .elf)
+        for ext in [".bin", ".hex", ".elf"]:
+            for firmware_file in build_dir.glob(f"*{ext}"):
+                return firmware_file
+
+        return None
 
     def _build_firmware(self, request: "DeployRequest", context: "DaemonContext") -> bool:
         """Build the firmware.
