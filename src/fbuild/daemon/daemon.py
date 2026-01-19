@@ -19,6 +19,7 @@ Architecture:
 """
 
 import _thread
+import json
 import logging
 import multiprocessing
 import os
@@ -27,12 +28,14 @@ import subprocess
 import sys
 import threading
 import time
+from dataclasses import dataclass, field
 from logging.handlers import TimedRotatingFileHandler
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any, Callable, TypeVar
 
 import psutil
 
+from fbuild.daemon.connection_registry import ConnectionRegistry
 from fbuild.daemon.daemon_context import (
     DaemonContext,
     cleanup_daemon_context,
@@ -50,6 +53,9 @@ from fbuild.daemon.processors.build_processor import BuildRequestProcessor
 from fbuild.daemon.processors.deploy_processor import DeployRequestProcessor
 from fbuild.daemon.processors.install_deps_processor import InstallDependenciesProcessor
 from fbuild.daemon.processors.monitor_processor import MonitorRequestProcessor
+
+# Type variable for request types
+RequestT = TypeVar("RequestT", BuildRequest, DeployRequest, MonitorRequest, InstallDependenciesRequest)
 
 # Daemon configuration
 DAEMON_NAME = "fbuild_daemon"
@@ -83,6 +89,12 @@ DEVICE_RELEASE_REQUEST_FILE = DAEMON_DIR / "device_release_request.json"
 DEVICE_RELEASE_RESPONSE_FILE = DAEMON_DIR / "device_release_response.json"
 DEVICE_PREEMPT_REQUEST_FILE = DAEMON_DIR / "device_preempt_request.json"
 DEVICE_PREEMPT_RESPONSE_FILE = DAEMON_DIR / "device_preempt_response.json"
+
+# Connection management file patterns
+CONNECTION_FILES_PATTERN = "connect_*.json"
+HEARTBEAT_FILES_PATTERN = "heartbeat_*.json"
+DISCONNECT_FILES_PATTERN = "disconnect_*.json"
+
 ORPHAN_CHECK_INTERVAL = 5  # Check for orphaned processes every 5 seconds
 STALE_LOCK_CHECK_INTERVAL = 60  # Check for stale locks every 60 seconds
 DEAD_CLIENT_CHECK_INTERVAL = 10  # Check for dead clients every 10 seconds
@@ -90,6 +102,51 @@ IDLE_TIMEOUT = 43200  # 12 hours (fallback)
 # Self-eviction timeout: if daemon has 0 clients AND 0 ops for this duration, shutdown
 # Per TASK.md: "If daemon has 0 clients AND 0 running operations, immediately evict the daemon within 4 seconds."
 SELF_EVICTION_TIMEOUT = 4.0  # 4 seconds
+
+
+@dataclass
+class RequestConfig:
+    """Configuration for a request type in the daemon loop."""
+
+    request_file: Path
+    request_class: type
+    processor: Any
+    lock: threading.Lock = field(default_factory=threading.Lock)
+
+
+@dataclass
+class DeviceRequestConfig:
+    """Configuration for a device management request."""
+
+    request_file: Path
+    response_file: Path
+    handler: Callable[[dict[str, Any], DaemonContext], dict[str, Any]]
+    lock: threading.Lock = field(default_factory=threading.Lock)
+
+
+@dataclass
+class PeriodicTask:
+    """Configuration for a periodic daemon task."""
+
+    name: str
+    interval: float
+    callback: Callable[[], None]
+    last_run: float = 0.0
+
+    def should_run(self) -> bool:
+        """Check if enough time has passed since last run."""
+        return time.time() - self.last_run >= self.interval
+
+    def run(self) -> None:
+        """Execute the task and update last run time."""
+        try:
+            self.callback()
+            self.last_run = time.time()
+        except KeyboardInterrupt:
+            _thread.interrupt_main()
+            raise
+        except Exception as e:
+            logging.error(f"Error in periodic task '{self.name}': {e}", exc_info=True)
 
 
 def setup_logging(foreground: bool = False) -> None:
@@ -127,29 +184,23 @@ def setup_logging(foreground: bool = False) -> None:
     logger.addHandler(file_handler)
 
 
-def read_request_file(request_file: Path, request_class: type) -> BuildRequest | DeployRequest | MonitorRequest | None:
+def read_request_file(request_file: Path, request_class: type[RequestT]) -> RequestT | None:
     """Read and parse request file.
 
     Args:
         request_file: Path to request file
-        request_class: Class to parse into (BuildRequest, DeployRequest, or MonitorRequest)
+        request_class: Class to parse into (BuildRequest, DeployRequest, MonitorRequest, or InstallDependenciesRequest)
 
     Returns:
         Request object if valid, None otherwise
     """
-    import json
-
     if not request_file.exists():
         return None
 
     try:
         with open(request_file) as f:
             data = json.load(f)
-
-        # Parse into typed request
-        request = request_class.from_dict(data)
-        return request
-
+        return request_class.from_dict(data)
     except (json.JSONDecodeError, ValueError, TypeError) as e:
         logging.error(f"Failed to parse request file {request_file}: {e}")
         return None
@@ -269,60 +320,49 @@ def cleanup_and_exit(context: DaemonContext) -> None:
     sys.exit(0)
 
 
-def handle_device_request(
-    request_file: Path,
-    response_file: Path,
-    handler_func: Callable[[dict[str, Any], DaemonContext], dict[str, Any]],
-    context: DaemonContext,
-) -> bool:
+def handle_device_request(config: DeviceRequestConfig, context: DaemonContext) -> bool:
     """Handle a device request file if it exists.
 
     Args:
-        request_file: Path to request JSON file
-        response_file: Path to response JSON file
-        handler_func: Function that processes the request and returns response dict
+        config: Device request configuration
         context: Daemon context
 
     Returns:
         True if a request was processed, False otherwise
     """
-    import json
-
-    if not request_file.exists():
+    if not config.request_file.exists():
         return False
 
     try:
-        with open(request_file) as f:
+        with open(config.request_file) as f:
             request_data = json.load(f)
 
         # Clear request file immediately (atomic consumption)
-        request_file.unlink(missing_ok=True)
+        config.request_file.unlink(missing_ok=True)
 
         # Process request
-        response_data = handler_func(request_data, context)
+        response_data = config.handler(request_data, context)
 
         # Write response atomically
-        temp_file = response_file.with_suffix(".tmp")
+        temp_file = config.response_file.with_suffix(".tmp")
         with open(temp_file, "w") as f:
             json.dump(response_data, f, indent=2)
-        temp_file.replace(response_file)
+        temp_file.replace(config.response_file)
 
         return True
 
     except json.JSONDecodeError as e:
-        logging.error(f"Invalid JSON in request file {request_file}: {e}")
-        request_file.unlink(missing_ok=True)
+        logging.error(f"Invalid JSON in request file {config.request_file}: {e}")
+        config.request_file.unlink(missing_ok=True)
         return False
     except KeyboardInterrupt:
         _thread.interrupt_main()
         raise
     except Exception as e:
-        logging.error(f"Error handling device request {request_file}: {e}")
-        # Try to write error response
+        logging.error(f"Error handling device request {config.request_file}: {e}")
         try:
-            response_data = {"success": False, "message": str(e)}
-            with open(response_file, "w") as f:
-                json.dump(response_data, f)
+            with open(config.response_file, "w") as f:
+                json.dump({"success": False, "message": str(e)}, f)
         except KeyboardInterrupt:
             _thread.interrupt_main()
             raise
@@ -474,6 +514,109 @@ def handle_device_preempt_request(request_data: dict[str, Any], context: DaemonC
         return {"success": False, "message": str(e)}
 
 
+def process_operation_request(config: RequestConfig, context: DaemonContext) -> bool:
+    """Process an operation request if one exists.
+
+    Atomically consumes the request file and processes it.
+
+    Args:
+        config: Request configuration (file, class, processor, lock)
+        context: Daemon context
+
+    Returns:
+        True if a request was processed, False otherwise
+    """
+    # Atomically read and clear request file under lock
+    with config.lock:
+        request = read_request_file(config.request_file, config.request_class)
+        if request:
+            clear_request_file(config.request_file)
+
+    if not request:
+        return False
+
+    logging.info(f"Received {config.request_class.__name__}: {request}")
+
+    # Mark operation in progress
+    context.status_manager.set_operation_in_progress(True)
+    try:
+        config.processor.process_request(request, context)
+    finally:
+        context.status_manager.set_operation_in_progress(False)
+
+    return True
+
+
+def process_connection_files(registry: ConnectionRegistry, daemon_dir: Path) -> None:
+    """Process connection/heartbeat/disconnect files from clients."""
+    # Process connect files
+    for connect_file in daemon_dir.glob("connect_*.json"):
+        try:
+            with open(connect_file) as f:
+                data = json.load(f)
+
+            # Extract connection ID from filename
+            conn_id = connect_file.stem.replace("connect_", "")
+
+            # Register the connection
+            registry.register_connection(
+                connection_id=data.get("client_id", conn_id),
+                project_dir=data.get("project_dir", ""),
+                environment=data.get("environment", ""),
+                platform=data.get("platform", ""),
+                client_pid=data.get("pid", 0),
+                client_hostname=data.get("hostname", ""),
+                client_version=data.get("version", ""),
+            )
+
+            # Remove processed file
+            connect_file.unlink(missing_ok=True)
+            logging.info(f"Registered connection from {data.get('hostname')} pid={data.get('pid')}")
+        except KeyboardInterrupt:
+            _thread.interrupt_main()
+            raise
+        except Exception as e:
+            logging.error(f"Error processing connect file {connect_file}: {e}")
+            connect_file.unlink(missing_ok=True)
+
+    # Process heartbeat files
+    for heartbeat_file in daemon_dir.glob("heartbeat_*.json"):
+        try:
+            with open(heartbeat_file) as f:
+                data = json.load(f)
+
+            conn_id = data.get("client_id", heartbeat_file.stem.replace("heartbeat_", ""))
+            registry.update_heartbeat(conn_id)
+
+            # Remove processed file
+            heartbeat_file.unlink(missing_ok=True)
+        except KeyboardInterrupt:
+            _thread.interrupt_main()
+            raise
+        except Exception as e:
+            logging.debug(f"Error processing heartbeat file {heartbeat_file}: {e}")
+            heartbeat_file.unlink(missing_ok=True)
+
+    # Process disconnect files
+    for disconnect_file in daemon_dir.glob("disconnect_*.json"):
+        try:
+            with open(disconnect_file) as f:
+                data = json.load(f)
+
+            conn_id = data.get("client_id", disconnect_file.stem.replace("disconnect_", ""))
+            registry.unregister_connection(conn_id)
+
+            # Remove processed file
+            disconnect_file.unlink(missing_ok=True)
+            logging.info(f"Unregistered connection {conn_id} (reason: {data.get('reason', 'unknown')})")
+        except KeyboardInterrupt:
+            _thread.interrupt_main()
+            raise
+        except Exception as e:
+            logging.error(f"Error processing disconnect file {disconnect_file}: {e}")
+            disconnect_file.unlink(missing_ok=True)
+
+
 def run_daemon_loop() -> None:
     """Main daemon loop: process build, deploy and monitor requests."""
     daemon_pid = os.getpid()
@@ -497,6 +640,9 @@ def run_daemon_loop() -> None:
         status_file_path=STATUS_FILE,
     )
 
+    # Create connection registry for file-based client connection tracking
+    connection_registry = ConnectionRegistry(heartbeat_timeout=30.0)
+
     # Write initial IDLE status IMMEDIATELY to prevent clients from reading stale status
     context.status_manager.update_status(DaemonState.IDLE, "Daemon starting...")
 
@@ -518,38 +664,69 @@ def run_daemon_loop() -> None:
     signal.signal(signal.SIGTERM, signal_handler_wrapper)
     signal.signal(signal.SIGINT, signal_handler_wrapper)
 
-    # Create request processors
-    build_processor = BuildRequestProcessor()
-    deploy_processor = DeployRequestProcessor()
-    install_deps_processor = InstallDependenciesProcessor()
-    monitor_processor = MonitorRequestProcessor()
+    # Configure operation request processors
+    operation_requests = [
+        RequestConfig(BUILD_REQUEST_FILE, BuildRequest, BuildRequestProcessor()),
+        RequestConfig(DEPLOY_REQUEST_FILE, DeployRequest, DeployRequestProcessor()),
+        RequestConfig(MONITOR_REQUEST_FILE, MonitorRequest, MonitorRequestProcessor()),
+        RequestConfig(INSTALL_DEPS_REQUEST_FILE, InstallDependenciesRequest, InstallDependenciesProcessor()),
+    ]
+
+    # Configure device request handlers
+    device_requests = [
+        DeviceRequestConfig(DEVICE_LIST_REQUEST_FILE, DEVICE_LIST_RESPONSE_FILE, handle_device_list_request),
+        DeviceRequestConfig(DEVICE_STATUS_REQUEST_FILE, DEVICE_STATUS_RESPONSE_FILE, handle_device_status_request),
+        DeviceRequestConfig(DEVICE_LEASE_REQUEST_FILE, DEVICE_LEASE_RESPONSE_FILE, handle_device_lease_request),
+        DeviceRequestConfig(DEVICE_RELEASE_REQUEST_FILE, DEVICE_RELEASE_RESPONSE_FILE, handle_device_release_request),
+        DeviceRequestConfig(DEVICE_PREEMPT_REQUEST_FILE, DEVICE_PREEMPT_RESPONSE_FILE, handle_device_preempt_request),
+    ]
 
     logging.info(f"Daemon started with PID {daemon_pid}")
     context.status_manager.update_status(DaemonState.IDLE, "Daemon ready")
 
     last_activity = time.time()
-    last_orphan_check = time.time()
-    last_cancel_cleanup = time.time()
-    last_stale_lock_check = time.time()
-    last_dead_client_check = time.time()
-    # Track when daemon became "empty" (0 clients, 0 ops) for self-eviction
     daemon_empty_since: float | None = None
+
+    # Define periodic task callbacks
+    def cleanup_orphans() -> None:
+        orphaned_clients = process_tracker.cleanup_orphaned_processes()
+        if orphaned_clients:
+            logging.info(f"Cleaned up orphaned processes for {len(orphaned_clients)} dead clients: {orphaned_clients}")
+
+    def cleanup_cancel_signals() -> None:
+        cleanup_stale_cancel_signals()
+
+    def cleanup_dead_clients() -> None:
+        dead_clients = context.client_manager.cleanup_dead_clients()
+        if dead_clients:
+            logging.info(f"Cleaned up {len(dead_clients)} dead clients: {dead_clients}")
+
+    def cleanup_stale_locks() -> None:
+        stale_locks = context.lock_manager.get_stale_locks()
+        stale_count = len(stale_locks["port_locks"]) + len(stale_locks["project_locks"])
+        if stale_count > 0:
+            logging.warning(f"Found {stale_count} stale locks, force-releasing...")
+            released = context.lock_manager.force_release_stale_locks()
+            logging.info(f"Force-released {released} stale locks")
+        context.lock_manager.cleanup_unused_locks()
+
+    def process_connections() -> None:
+        process_connection_files(connection_registry, DAEMON_DIR)
+        cleaned = connection_registry.cleanup_stale_connections()
+        if cleaned > 0:
+            logging.info(f"Cleaned up {cleaned} stale connections")
+
+    # Configure periodic tasks
+    periodic_tasks = [
+        PeriodicTask("orphan_cleanup", ORPHAN_CHECK_INTERVAL, cleanup_orphans),
+        PeriodicTask("cancel_signal_cleanup", 60, cleanup_cancel_signals),
+        PeriodicTask("dead_client_cleanup", DEAD_CLIENT_CHECK_INTERVAL, cleanup_dead_clients),
+        PeriodicTask("stale_lock_cleanup", STALE_LOCK_CHECK_INTERVAL, cleanup_stale_locks),
+        PeriodicTask("connection_processing", 2, process_connections),
+    ]
 
     logging.info("Entering main daemon loop...")
     iteration_count = 0
-
-    # Locks for atomic request consumption
-    build_request_lock = threading.Lock()
-    deploy_request_lock = threading.Lock()
-    install_deps_request_lock = threading.Lock()
-    monitor_request_lock = threading.Lock()
-
-    # Locks for device management requests
-    device_list_request_lock = threading.Lock()
-    device_status_request_lock = threading.Lock()
-    device_lease_request_lock = threading.Lock()
-    device_release_request_lock = threading.Lock()
-    device_preempt_request_lock = threading.Lock()
 
     while True:
         try:
@@ -569,8 +746,7 @@ def run_daemon_loop() -> None:
                 cleanup_and_exit(context)
 
             # Self-eviction check: if daemon has 0 clients AND 0 ops for SELF_EVICTION_TIMEOUT, shutdown
-            # Per TASK.md: ensures daemon doesn't linger when no clients are connected
-            client_count = context.client_manager.get_client_count()
+            client_count = len(connection_registry.connections)
             operation_running = context.status_manager.get_operation_in_progress()
             daemon_is_empty = client_count == 0 and not operation_running
 
@@ -578,40 +754,17 @@ def run_daemon_loop() -> None:
                 if daemon_empty_since is None:
                     daemon_empty_since = time.time()
                     logging.debug("Daemon is now empty (0 clients, 0 ops), starting eviction timer")
-                else:
-                    empty_duration = time.time() - daemon_empty_since
-                    if empty_duration >= SELF_EVICTION_TIMEOUT:
-                        logging.info(f"Self-eviction triggered: daemon empty for {empty_duration:.1f}s (threshold: {SELF_EVICTION_TIMEOUT}s), shutting down")
-                        cleanup_and_exit(context)
-            else:
-                # Reset the timer if clients connect or operations start
-                if daemon_empty_since is not None:
-                    logging.debug(f"Daemon is no longer empty (clients={client_count}, op_running={operation_running})")
-                    daemon_empty_since = None
+                elif time.time() - daemon_empty_since >= SELF_EVICTION_TIMEOUT:
+                    logging.info(f"Self-eviction triggered: daemon empty for {time.time() - daemon_empty_since:.1f}s, shutting down")
+                    cleanup_and_exit(context)
+            elif daemon_empty_since is not None:
+                logging.debug(f"Daemon is no longer empty (clients={client_count}, op_running={operation_running})")
+                daemon_empty_since = None
 
-            # Periodically check for and cleanup orphaned processes
-            if time.time() - last_orphan_check >= ORPHAN_CHECK_INTERVAL:
-                try:
-                    orphaned_clients = process_tracker.cleanup_orphaned_processes()
-                    if orphaned_clients:
-                        logging.info(f"Cleaned up orphaned processes for {len(orphaned_clients)} dead clients: {orphaned_clients}")
-                    last_orphan_check = time.time()
-                except KeyboardInterrupt:
-                    _thread.interrupt_main()
-                    raise
-                except Exception as e:
-                    logging.error(f"Error during orphan cleanup: {e}", exc_info=True)
-
-            # Periodically cleanup stale cancel signals (every 60 seconds)
-            if time.time() - last_cancel_cleanup >= 60:
-                try:
-                    cleanup_stale_cancel_signals()
-                    last_cancel_cleanup = time.time()
-                except KeyboardInterrupt:
-                    _thread.interrupt_main()
-                    raise
-                except Exception as e:
-                    logging.error(f"Error during cancel signal cleanup: {e}", exc_info=True)
+            # Run periodic tasks
+            for task in periodic_tasks:
+                if task.should_run():
+                    task.run()
 
             # Check for manual stale lock clear signal
             clear_locks_signal = DAEMON_DIR / "clear_stale_locks.signal"
@@ -633,159 +786,15 @@ def run_daemon_loop() -> None:
                 except Exception as e:
                     logging.error(f"Error handling clear locks signal: {e}", exc_info=True)
 
-            # Periodically check for and cleanup dead clients (every 10 seconds)
-            if time.time() - last_dead_client_check >= DEAD_CLIENT_CHECK_INTERVAL:
-                try:
-                    dead_clients = context.client_manager.cleanup_dead_clients()
-                    if dead_clients:
-                        logging.info(f"Cleaned up {len(dead_clients)} dead clients: {dead_clients}")
-                    last_dead_client_check = time.time()
-                except KeyboardInterrupt:
-                    _thread.interrupt_main()
-                    raise
-                except Exception as e:
-                    logging.error(f"Error during dead client cleanup: {e}", exc_info=True)
+            # Process operation requests (build, deploy, monitor, install_deps)
+            for config in operation_requests:
+                if process_operation_request(config, context):
+                    last_activity = time.time()
 
-            # Periodically check for and cleanup stale locks (every 60 seconds)
-            if time.time() - last_stale_lock_check >= STALE_LOCK_CHECK_INTERVAL:
-                try:
-                    # Check for stale locks (held beyond timeout)
-                    stale_locks = context.lock_manager.get_stale_locks()
-                    stale_count = len(stale_locks["port_locks"]) + len(stale_locks["project_locks"])
-                    if stale_count > 0:
-                        logging.warning(f"Found {stale_count} stale locks, force-releasing...")
-                        released = context.lock_manager.force_release_stale_locks()
-                        logging.info(f"Force-released {released} stale locks")
-
-                    # Also clean up unused lock entries (memory cleanup)
-                    context.lock_manager.cleanup_unused_locks()
-                    last_stale_lock_check = time.time()
-                except KeyboardInterrupt:
-                    _thread.interrupt_main()
-                    raise
-                except Exception as e:
-                    logging.error(f"Error during stale lock cleanup: {e}", exc_info=True)
-
-            # Check for build requests (with lock for atomic consumption)
-            with build_request_lock:
-                build_request = read_request_file(BUILD_REQUEST_FILE, BuildRequest)
-                if build_request:
-                    # Clear request file IMMEDIATELY (atomic consumption)
-                    clear_request_file(BUILD_REQUEST_FILE)
-
-            if build_request:
-                last_activity = time.time()
-                logging.info(f"Received build request: {build_request}")
-
-                # Mark operation in progress
-                context.status_manager.set_operation_in_progress(True)
-
-                # Process request
-                build_processor.process_request(build_request, context)
-
-                # Mark operation complete
-                context.status_manager.set_operation_in_progress(False)
-
-            # Check for deploy requests (with lock for atomic consumption)
-            with deploy_request_lock:
-                deploy_request = read_request_file(DEPLOY_REQUEST_FILE, DeployRequest)
-                if deploy_request:
-                    # Clear request file IMMEDIATELY (atomic consumption)
-                    clear_request_file(DEPLOY_REQUEST_FILE)
-
-            if deploy_request:
-                last_activity = time.time()
-                logging.info(f"Received deploy request: {deploy_request}")
-
-                # Mark operation in progress
-                context.status_manager.set_operation_in_progress(True)
-
-                # Process request
-                deploy_processor.process_request(deploy_request, context)
-
-                # Mark operation complete
-                context.status_manager.set_operation_in_progress(False)
-
-            # Check for monitor requests (with lock for atomic consumption)
-            with monitor_request_lock:
-                monitor_request = read_request_file(MONITOR_REQUEST_FILE, MonitorRequest)
-                if monitor_request:
-                    # Clear request file IMMEDIATELY (atomic consumption)
-                    clear_request_file(MONITOR_REQUEST_FILE)
-
-            if monitor_request:
-                last_activity = time.time()
-                logging.info(f"Received monitor request: {monitor_request}")
-
-                # Mark operation in progress
-                context.status_manager.set_operation_in_progress(True)
-
-                # Process request
-                monitor_processor.process_request(monitor_request, context)
-
-                # Mark operation complete
-                context.status_manager.set_operation_in_progress(False)
-
-            # Check for install dependencies requests (with lock for atomic consumption)
-            with install_deps_request_lock:
-                install_deps_request = read_request_file(INSTALL_DEPS_REQUEST_FILE, InstallDependenciesRequest)
-                if install_deps_request:
-                    # Clear request file IMMEDIATELY (atomic consumption)
-                    clear_request_file(INSTALL_DEPS_REQUEST_FILE)
-
-            if install_deps_request:
-                last_activity = time.time()
-                logging.info(f"Received install dependencies request: {install_deps_request}")
-
-                # Mark operation in progress
-                context.status_manager.set_operation_in_progress(True)
-
-                # Process request
-                install_deps_processor.process_request(install_deps_request, context)
-
-                # Mark operation complete
-                context.status_manager.set_operation_in_progress(False)
-
-            # Check for device management requests (these don't mark operation_in_progress)
-            with device_list_request_lock:
-                handle_device_request(
-                    DEVICE_LIST_REQUEST_FILE,
-                    DEVICE_LIST_RESPONSE_FILE,
-                    handle_device_list_request,
-                    context,
-                )
-
-            with device_status_request_lock:
-                handle_device_request(
-                    DEVICE_STATUS_REQUEST_FILE,
-                    DEVICE_STATUS_RESPONSE_FILE,
-                    handle_device_status_request,
-                    context,
-                )
-
-            with device_lease_request_lock:
-                handle_device_request(
-                    DEVICE_LEASE_REQUEST_FILE,
-                    DEVICE_LEASE_RESPONSE_FILE,
-                    handle_device_lease_request,
-                    context,
-                )
-
-            with device_release_request_lock:
-                handle_device_request(
-                    DEVICE_RELEASE_REQUEST_FILE,
-                    DEVICE_RELEASE_RESPONSE_FILE,
-                    handle_device_release_request,
-                    context,
-                )
-
-            with device_preempt_request_lock:
-                handle_device_request(
-                    DEVICE_PREEMPT_REQUEST_FILE,
-                    DEVICE_PREEMPT_RESPONSE_FILE,
-                    handle_device_preempt_request,
-                    context,
-                )
+            # Process device management requests
+            for config in device_requests:
+                with config.lock:
+                    handle_device_request(config, context)
 
             # Sleep briefly to avoid busy-wait
             time.sleep(0.5)

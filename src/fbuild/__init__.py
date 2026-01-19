@@ -4,6 +4,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from fbuild.daemon.connection import DaemonConnection, connect_daemon
+
 __version__ = "1.2.11"
 
 
@@ -387,4 +389,6 @@ __all__ = [
     "is_available",
     "BuildContext",
     "Daemon",
+    "DaemonConnection",
+    "connect_daemon",
 ]

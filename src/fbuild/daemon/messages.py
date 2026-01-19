@@ -957,6 +957,108 @@ class ClientResponse:
         )
 
 
+@dataclass
+class DaemonIdentity:
+    """Identity information for a daemon instance.
+
+    This is returned when clients query daemon identity and is used
+    to distinguish between different daemon instances (e.g., dev vs prod).
+
+    Attributes:
+        name: Daemon name (e.g., "fbuild_daemon" or "fbuild_daemon_dev")
+        version: Daemon version string
+        started_at: Unix timestamp when daemon started
+        spawned_by_pid: PID of client that originally started the daemon
+        spawned_by_cwd: Working directory of client that started daemon
+        is_dev: Whether this is a development mode daemon
+        pid: Process ID of the daemon itself
+    """
+
+    name: str
+    version: str
+    started_at: float
+    spawned_by_pid: int
+    spawned_by_cwd: str
+    is_dev: bool
+    pid: int
+
+    def to_dict(self) -> dict[str, Any]:
+        """Convert to dictionary for JSON serialization."""
+        return asdict(self)
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "DaemonIdentity":
+        """Create DaemonIdentity from dictionary."""
+        return cls(
+            name=data["name"],
+            version=data["version"],
+            started_at=data["started_at"],
+            spawned_by_pid=data["spawned_by_pid"],
+            spawned_by_cwd=data["spawned_by_cwd"],
+            is_dev=data["is_dev"],
+            pid=data["pid"],
+        )
+
+
+@dataclass
+class DaemonIdentityRequest:
+    """Client -> Daemon: Request daemon identity information.
+
+    Attributes:
+        timestamp: Unix timestamp when request was created
+    """
+
+    timestamp: float = field(default_factory=time.time)
+
+    def to_dict(self) -> dict[str, Any]:
+        """Convert to dictionary for JSON serialization."""
+        return asdict(self)
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "DaemonIdentityRequest":
+        """Create DaemonIdentityRequest from dictionary."""
+        return cls(
+            timestamp=data.get("timestamp", time.time()),
+        )
+
+
+@dataclass
+class DaemonIdentityResponse:
+    """Daemon -> Client: Response with daemon identity.
+
+    Attributes:
+        success: Whether the request succeeded
+        message: Human-readable message
+        identity: The daemon identity (if success)
+        timestamp: Unix timestamp of response
+    """
+
+    success: bool
+    message: str
+    identity: DaemonIdentity | None = None
+    timestamp: float = field(default_factory=time.time)
+
+    def to_dict(self) -> dict[str, Any]:
+        """Convert to dictionary for JSON serialization."""
+        result = asdict(self)
+        if self.identity:
+            result["identity"] = self.identity.to_dict()
+        return result
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "DaemonIdentityResponse":
+        """Create DaemonIdentityResponse from dictionary."""
+        identity = None
+        if data.get("identity"):
+            identity = DaemonIdentity.from_dict(data["identity"])
+        return cls(
+            success=data["success"],
+            message=data["message"],
+            identity=identity,
+            timestamp=data.get("timestamp", time.time()),
+        )
+
+
 # =============================================================================
 # Device Management Messages (Resource Manager Expansion)
 # =============================================================================

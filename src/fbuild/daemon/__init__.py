@@ -14,6 +14,12 @@ from fbuild.daemon.client import (
     request_monitor,
     stop_daemon,
 )
+from fbuild.daemon.connection import DaemonConnection, connect_daemon
+from fbuild.daemon.connection_registry import (
+    ConnectionRegistry,
+    ConnectionState,
+    PlatformSlot,
+)
 from fbuild.daemon.messages import (
     BuildRequest,
     DaemonState,
@@ -26,12 +32,17 @@ from fbuild.daemon.messages import (
 
 __all__ = [
     "BuildRequest",
+    "ConnectionRegistry",
+    "ConnectionState",
+    "DaemonConnection",
     "DaemonState",
     "DaemonStatus",
     "DeployRequest",
     "InstallDependenciesRequest",
     "MonitorRequest",
     "OperationType",
+    "PlatformSlot",
+    "connect_daemon",
     "ensure_daemon_running",
     "get_daemon_status",
     "request_build",

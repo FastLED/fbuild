@@ -72,7 +72,7 @@ class BuildRequestProcessor(RequestProcessor):
         self._reload_build_modules()
 
         # Set up output file for streaming to client (after module reload!)
-        from fbuild.output import set_output_file, reset_timer
+        from fbuild.output import reset_timer, set_output_file
 
         output_file_path = Path(request.project_dir) / ".fbuild" / "build_output.txt"
         output_file_path.parent.mkdir(parents=True, exist_ok=True)
