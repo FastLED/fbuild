@@ -4,7 +4,7 @@
 
 fbuild is a next-generation embedded development tool designed to replace PlatformIO with a cleaner, more reliable architecture. It provides transparent URL-based package management, fast incremental builds, and comprehensive support for Arduino and ESP32 platforms.
 
-**Current Version:** v1.2.5
+**Current Version:** v1.2.8
 **Status:** Full Arduino Uno support with working build system
 **Language:** Python 3.10+ (Type-safe, PEP 8 compliant)
 
@@ -341,6 +341,19 @@ Latest commits show active development:
 - Ensure user has permission to access serial ports
 - Check correct port with `--port` option
 - Verify device is connected
+
+## Version Bumping Protocol
+
+When bumping the version, update **all three locations** to keep them in sync:
+
+1. **`src/fbuild/__init__.py`** - The `__version__` variable (canonical source)
+2. **`pyproject.toml`** - The `version` field under `[project]`
+3. **`CLAUDE.md`** - The `**Current Version:**` line in Project Overview
+
+Version format follows [Semantic Versioning](https://semver.org/): `MAJOR.MINOR.PATCH`
+- **PATCH**: Bug fixes, minor improvements (e.g., 1.2.7 → 1.2.8)
+- **MINOR**: New features, backward-compatible (e.g., 1.2.8 → 1.3.0)
+- **MAJOR**: Breaking changes (e.g., 1.3.0 → 2.0.0)
 
 ## Contributing
 
