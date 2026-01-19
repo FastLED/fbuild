@@ -4,7 +4,7 @@
 
 fbuild is a next-generation embedded development tool designed to replace PlatformIO with a cleaner, more reliable architecture. It provides transparent URL-based package management, fast incremental builds, and comprehensive support for Arduino and ESP32 platforms.
 
-**Current Version:** v1.2.9
+**Current Version:** v1.2.10
 **Status:** Full Arduino Uno support with working build system
 **Language:** Python 3.10+ (Type-safe, PEP 8 compliant)
 

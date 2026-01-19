@@ -155,6 +155,9 @@ def _check_wsl2_docker_backend() -> tuple[bool, str]:
         return False, "WSL2 not installed (wsl command not found)"
     except subprocess.TimeoutExpired:
         return False, "WSL2 command timed out"
+    except KeyboardInterrupt as ke:
+        handle_keyboard_interrupt_properly(ke)
+        return False, "Interrupted by user"  # Will not reach here
     except Exception as e:
         return False, f"Error checking WSL2 backend: {e}"
 
@@ -185,6 +188,9 @@ def _kill_docker_desktop_windows() -> bool:
 
         time.sleep(3)  # Allow cleanup
         return True
+    except KeyboardInterrupt as ke:
+        handle_keyboard_interrupt_properly(ke)
+        return False  # Will not reach here
     except Exception:
         return False
 
@@ -214,6 +220,9 @@ def _restart_docker_desktop_windows() -> tuple[bool, str]:
             stderr=subprocess.DEVNULL,
             creationflags=subprocess.DETACHED_PROCESS | subprocess.CREATE_NO_WINDOW,
         )
+    except KeyboardInterrupt as ke:
+        handle_keyboard_interrupt_properly(ke)
+        return False, "Interrupted by user"  # Will not reach here
     except Exception as e:
         return False, f"Failed to start Docker Desktop: {e}"
 
