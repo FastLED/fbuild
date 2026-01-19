@@ -65,10 +65,43 @@ class BuildRequestProcessor(RequestProcessor):
         """
         logging.info(f"Building project: {request.project_dir}")
 
-        # Reload build modules to pick up code changes
+        # Reload build modules FIRST to pick up code changes
         # This is critical for development on Windows where daemon caching
         # prevents testing code changes
+        # IMPORTANT: Must happen before setting output file because reload resets global state
         self._reload_build_modules()
+
+        # Set up output file for streaming to client (after module reload!)
+        from fbuild.output import set_output_file, reset_timer
+
+        output_file_path = Path(request.project_dir) / ".fbuild" / "build_output.txt"
+        output_file_path.parent.mkdir(parents=True, exist_ok=True)
+
+        # Clear output file at start to prevent stale output from previous builds
+        output_file_path.write_text("", encoding="utf-8")
+
+        output_file = None
+        try:
+            output_file = open(output_file_path, "a", encoding="utf-8")
+            set_output_file(output_file)
+            reset_timer()  # Fresh timestamps for this build
+
+            return self._execute_build(request, context)
+        finally:
+            set_output_file(None)  # Always clean up
+            if output_file is not None:
+                output_file.close()
+
+    def _execute_build(self, request: "BuildRequest", context: "DaemonContext") -> bool:
+        """Internal build execution logic.
+
+        Args:
+            request: The build request containing project_dir, environment, etc.
+            context: The daemon context with all subsystems
+
+        Returns:
+            True if build succeeded, False otherwise
+        """
 
         # Detect platform type from platformio.ini to select appropriate orchestrator
         try:

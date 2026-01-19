@@ -391,6 +391,7 @@ class BaseRequestHandler(ABC):
         self.start_time = 0.0
         self.last_message: str | None = None
         self.monitoring_started = False
+        self.build_output_started = False
         self.output_file_position = 0
         self.spinner_idx = 0
         self.last_spinner_update = 0.0
@@ -439,6 +440,14 @@ class BaseRequestHandler(ABC):
         """
         return False
 
+    def get_output_file_path(self) -> Path:
+        """Get the output file path to tail. Override in subclasses.
+
+        Returns:
+            Path to the output file
+        """
+        return self.project_dir / ".fbuild" / "monitor_output.txt"
+
     def on_monitoring_started(self) -> None:
         """Hook called when monitoring phase starts."""
         pass
@@ -468,7 +477,7 @@ class BaseRequestHandler(ABC):
 
     def tail_output_file(self) -> None:
         """Tail the output file and print new lines."""
-        output_file = self.project_dir / ".fbuild" / "monitor_output.txt"
+        output_file = self.get_output_file_path()
         if output_file.exists():
             try:
                 with open(output_file, "r", encoding="utf-8", errors="replace") as f:
@@ -484,10 +493,10 @@ class BaseRequestHandler(ABC):
 
     def read_remaining_output(self) -> None:
         """Read any remaining output from output file."""
-        if not self.monitoring_started:
+        if not self.monitoring_started and not self.build_output_started:
             return
 
-        output_file = self.project_dir / ".fbuild" / "monitor_output.txt"
+        output_file = self.get_output_file_path()
         if output_file.exists():
             try:
                 with open(output_file, "r", encoding="utf-8", errors="replace") as f:
@@ -569,18 +578,32 @@ class BaseRequestHandler(ABC):
                     self.last_spinner_update = time.time()
                 else:
                     # Show spinner with elapsed time when in building/deploying state
+                    # Only show spinner if we're not tailing build output
                     if status.state in (DaemonState.BUILDING, DaemonState.DEPLOYING):
-                        current_time = time.time()
-                        # Update spinner every 100ms
-                        if current_time - self.last_spinner_update >= 0.1:
-                            self.spinner_idx += 1
-                            display_spinner_progress(status, elapsed, self.spinner_idx)
-                            self.last_spinner_update = current_time
+                        if not (self.should_tail_output() and status.state == DaemonState.BUILDING and self.build_output_started):
+                            current_time = time.time()
+                            # Update spinner every 100ms
+                            if current_time - self.last_spinner_update >= 0.1:
+                                self.spinner_idx += 1
+                                display_spinner_progress(status, elapsed, self.spinner_idx)
+                                self.last_spinner_update = current_time
+
+                # Handle build output tailing phase
+                if self.should_tail_output() and status.state == DaemonState.BUILDING:
+                    if not self.build_output_started:
+                        self.build_output_started = True
+                        # Clear spinner line before build output
+                        print("\r" + " " * 80 + "\r", end="", flush=True)
+                        print()  # Blank line before build output
+                    self.tail_output_file()
 
                 # Handle monitoring phase
                 if self.should_tail_output() and status.state == DaemonState.MONITORING:
                     if not self.monitoring_started:
                         self.monitoring_started = True
+                        # Reset file position when transitioning from build to monitor
+                        if self.build_output_started:
+                            self.output_file_position = 0
                         # Clear spinner line before monitor output
                         print("\r" + " " * 80 + "\r", end="", flush=True)
                         print()  # Blank line before serial output
@@ -665,6 +688,14 @@ class BuildRequestHandler(BaseRequestHandler):
         """Get operation emoji."""
         return "🔨"
 
+    def should_tail_output(self) -> bool:
+        """Build operations should tail output."""
+        return True
+
+    def get_output_file_path(self) -> Path:
+        """Build output goes to build_output.txt."""
+        return self.project_dir / ".fbuild" / "build_output.txt"
+
     def print_submission_info(self) -> None:
         """Print build submission information."""
         super().print_submission_info()
@@ -745,7 +776,15 @@ class DeployRequestHandler(BaseRequestHandler):
 
     def should_tail_output(self) -> bool:
         """Check if output should be tailed."""
-        return self.monitor_after
+        # Always tail during build phase, and during monitor if monitor_after is set
+        return True
+
+    def get_output_file_path(self) -> Path:
+        """During build phase, use build_output.txt; during monitor, use monitor_output.txt."""
+        status = read_status_file()
+        if status.state == DaemonState.BUILDING:
+            return self.project_dir / ".fbuild" / "build_output.txt"
+        return self.project_dir / ".fbuild" / "monitor_output.txt"
 
     def print_submission_info(self) -> None:
         """Print deploy submission information."""

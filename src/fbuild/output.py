@@ -38,6 +38,7 @@ from typing import Optional, TextIO
 _start_time: Optional[float] = None
 _output_stream: TextIO = sys.stdout
 _verbose: bool = True
+_output_file: Optional[TextIO] = None
 
 
 def init_timer(output_stream: Optional[TextIO] = None) -> None:
@@ -77,6 +78,27 @@ def set_verbose(verbose: bool) -> None:
     _verbose = verbose
 
 
+def set_output_file(output_file: Optional[TextIO]) -> None:
+    """
+    Set a file to receive all log output (in addition to stdout).
+
+    Args:
+        output_file: File object to receive output, or None to disable file output
+    """
+    global _output_file
+    _output_file = output_file
+
+
+def get_output_file() -> Optional[TextIO]:
+    """
+    Get the current output file.
+
+    Returns:
+        The current output file, or None if not set
+    """
+    return _output_file
+
+
 def get_elapsed() -> float:
     """
     Get elapsed time since timer initialization.
@@ -112,8 +134,14 @@ def _print(message: str, end: str = "\n") -> None:
         end: End character (default newline)
     """
     timestamp = format_timestamp()
-    _output_stream.write(f"{timestamp} {message}{end}")
+    line = f"{timestamp} {message}{end}"
+    _output_stream.write(line)
     _output_stream.flush()
+
+    # Also write to output file if set
+    if _output_file is not None:
+        _output_file.write(line)
+        _output_file.flush()
 
 
 def log(message: str, verbose_only: bool = False) -> None:
