@@ -189,12 +189,26 @@ class QEMURunner:
             print(f"Error pulling Docker image: {e}")
             return False
 
-    def _prepare_firmware(self, firmware_path: Path, flash_size_mb: int = 4) -> Path:
+    def _prepare_firmware(self, firmware_path: Path, flash_size_mb: int = 4, machine: str = "esp32") -> Path:
         """Prepare firmware files for mounting into Docker container.
+
+        Creates a complete flash image with bootloader, partition table,
+        and application at their correct offsets for QEMU.
+
+        ESP32/ESP32-S2 Flash Layout:
+        - 0x1000: Bootloader (second stage)
+        - 0x8000: Partition table
+        - 0x10000: Application (firmware.bin)
+
+        ESP32-S3/ESP32-C3/ESP32-C6 Flash Layout:
+        - 0x0000: Bootloader (second stage)
+        - 0x8000: Partition table
+        - 0x10000: Application (firmware.bin)
 
         Args:
             firmware_path: Path to firmware.bin file
             flash_size_mb: Flash size in MB (must be 2, 4, 8, or 16)
+            machine: QEMU machine type (esp32, esp32s3, esp32c3)
 
         Returns:
             Path to the prepared firmware directory
@@ -212,19 +226,63 @@ class QEMURunner:
             # Create proper flash image for QEMU
             flash_size = flash_size_mb * 1024 * 1024
 
-            # Read firmware content
+            # ESP32 flash layout offsets - different MCUs have different bootloader offsets
+            # ESP32/ESP32-S2: 0x1000, ESP32-S3/C3/C6: 0x0
+            if machine in ["esp32", "esp32s2"]:
+                BOOTLOADER_OFFSET = 0x1000
+            else:
+                BOOTLOADER_OFFSET = 0x0
+            PARTITION_OFFSET = 0x8000
+            APP_OFFSET = 0x10000
+
+            # Start with erased flash (0xFF)
+            flash_data = bytearray(b"\xff" * flash_size)
+
+            # Try to find bootloader.bin and partitions.bin in the same directory
+            build_dir = firmware_path.parent
+            bootloader_path = build_dir / "bootloader.bin"
+            partitions_path = build_dir / "partitions.bin"
+
+            # Place bootloader at 0x1000 if available
+            if bootloader_path.exists():
+                bootloader_data = bootloader_path.read_bytes()
+                bootloader_end = BOOTLOADER_OFFSET + len(bootloader_data)
+                if bootloader_end <= flash_size:
+                    flash_data[BOOTLOADER_OFFSET:bootloader_end] = bootloader_data
+                    if self.verbose:
+                        print(f"  Bootloader: {len(bootloader_data)} bytes at 0x{BOOTLOADER_OFFSET:X}")
+                else:
+                    print("Warning: Bootloader too large to fit in flash")
+            else:
+                if self.verbose:
+                    print(f"  Warning: bootloader.bin not found at {bootloader_path}")
+
+            # Place partition table at 0x8000 if available
+            if partitions_path.exists():
+                partitions_data = partitions_path.read_bytes()
+                partitions_end = PARTITION_OFFSET + len(partitions_data)
+                if partitions_end <= flash_size:
+                    flash_data[PARTITION_OFFSET:partitions_end] = partitions_data
+                    if self.verbose:
+                        print(f"  Partitions: {len(partitions_data)} bytes at 0x{PARTITION_OFFSET:X}")
+                else:
+                    print("Warning: Partition table too large to fit in flash")
+            else:
+                if self.verbose:
+                    print(f"  Warning: partitions.bin not found at {partitions_path}")
+
+            # Place firmware at 0x10000
             firmware_data = firmware_path.read_bytes()
+            firmware_end = APP_OFFSET + len(firmware_data)
+            if firmware_end > flash_size:
+                raise ValueError(f"Firmware size ({len(firmware_data)} bytes) exceeds available space (flash_size={flash_size} - app_offset={APP_OFFSET})")
+            flash_data[APP_OFFSET:firmware_end] = firmware_data
+            if self.verbose:
+                print(f"  Application: {len(firmware_data)} bytes at 0x{APP_OFFSET:X}")
 
-            # Create flash image: firmware at beginning, rest filled with 0xFF
-            flash_data = firmware_data + b"\xff" * (flash_size - len(firmware_data))
-
-            # Ensure we have exactly the right size
-            if len(flash_data) > flash_size:
-                raise ValueError(f"Firmware size ({len(firmware_data)} bytes) exceeds flash size ({flash_size} bytes)")
-
-            flash_data = flash_data[:flash_size]  # Truncate to exact size
-
-            (temp_dir / "flash.bin").write_bytes(flash_data)
+            # Write the complete flash image
+            (temp_dir / "flash.bin").write_bytes(bytes(flash_data))
+            print(f"Created flash image: {flash_size_mb}MB ({flash_size:,} bytes)")
 
             return temp_dir
 
@@ -352,7 +410,7 @@ class QEMURunner:
         temp_firmware_dir: Optional[Path] = None
 
         try:
-            temp_firmware_dir = self._prepare_firmware(firmware_path, flash_size)
+            temp_firmware_dir = self._prepare_firmware(firmware_path, flash_size, machine)
 
             # Generate unique container name
             self.container_name = f"fbuild-qemu-{machine}-{int(time.time())}"
