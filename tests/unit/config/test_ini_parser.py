@@ -374,3 +374,77 @@ build_flags = -DRELEASE -O2
         mega_flags = config.get_build_flags("mega")
         assert "-DRELEASE" in mega_flags
         assert "-O2" in mega_flags
+
+    # Test get_src_dir
+    def test_get_src_dir_from_platformio_ini(self, tmp_ini_path):
+        """Test getting src_dir from platformio.ini."""
+        content = """
+[platformio]
+src_dir = examples/Blink
+
+[env:uno]
+platform = atmelavr
+board = uno
+framework = arduino
+"""
+        tmp_ini_path.write_text(content)
+        config = PlatformIOConfig(tmp_ini_path)
+        assert config.get_src_dir() == "examples/Blink"
+
+    def test_get_src_dir_returns_none_when_not_set(self, minimal_config):
+        """Test get_src_dir returns None when not specified."""
+        config = PlatformIOConfig(minimal_config)
+        assert config.get_src_dir() is None
+
+    def test_get_src_dir_env_var_overrides_ini(self, tmp_ini_path, monkeypatch):
+        """Test that PLATFORMIO_SRC_DIR env var takes precedence over platformio.ini."""
+        content = """
+[platformio]
+src_dir = examples/Blink
+
+[env:uno]
+platform = atmelavr
+board = uno
+framework = arduino
+"""
+        tmp_ini_path.write_text(content)
+        monkeypatch.setenv("PLATFORMIO_SRC_DIR", "examples/Validation")
+        config = PlatformIOConfig(tmp_ini_path)
+        assert config.get_src_dir() == "examples/Validation"
+
+    def test_get_src_dir_env_var_without_ini_setting(self, minimal_config, monkeypatch):
+        """Test PLATFORMIO_SRC_DIR works when platformio.ini has no src_dir."""
+        monkeypatch.setenv("PLATFORMIO_SRC_DIR", "examples/Test")
+        config = PlatformIOConfig(minimal_config)
+        assert config.get_src_dir() == "examples/Test"
+
+    def test_get_src_dir_empty_env_var_falls_back_to_ini(self, tmp_ini_path, monkeypatch):
+        """Test empty PLATFORMIO_SRC_DIR falls back to platformio.ini."""
+        content = """
+[platformio]
+src_dir = examples/Blink
+
+[env:uno]
+platform = atmelavr
+board = uno
+framework = arduino
+"""
+        tmp_ini_path.write_text(content)
+        monkeypatch.setenv("PLATFORMIO_SRC_DIR", "")
+        config = PlatformIOConfig(tmp_ini_path)
+        assert config.get_src_dir() == "examples/Blink"
+
+    def test_get_src_dir_with_inline_comment(self, tmp_ini_path):
+        """Test that inline comments are stripped from src_dir."""
+        content = """
+[platformio]
+src_dir = examples/Blink ; default sketch
+
+[env:uno]
+platform = atmelavr
+board = uno
+framework = arduino
+"""
+        tmp_ini_path.write_text(content)
+        config = PlatformIOConfig(tmp_ini_path)
+        assert config.get_src_dir() == "examples/Blink"

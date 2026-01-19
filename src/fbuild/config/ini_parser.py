@@ -6,6 +6,7 @@ environment configurations for building embedded projects.
 """
 
 import configparser
+import os
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -301,14 +302,25 @@ class PlatformIOConfig:
 
     def get_src_dir(self) -> Optional[str]:
         """
-        Get source directory override from [platformio] section.
+        Get source directory override.
+
+        Checks in order:
+        1. PLATFORMIO_SRC_DIR environment variable (matches PlatformIO behavior)
+        2. src_dir in [platformio] section of platformio.ini
 
         Returns:
             Source directory path relative to project root, or None if not specified
 
         Example:
+            If PLATFORMIO_SRC_DIR=examples/Validation, returns 'examples/Validation'
             If [platformio] section has src_dir = examples/Blink, returns 'examples/Blink'
         """
+        # First check environment variable (PlatformIO standard behavior)
+        env_src_dir = os.environ.get("PLATFORMIO_SRC_DIR", "").strip()
+        if env_src_dir:
+            return env_src_dir
+
+        # Fall back to platformio.ini setting
         if "platformio" in self.config:
             src_dir = self.config["platformio"].get("src_dir", "").strip()
             # Remove inline comments (everything after ';')

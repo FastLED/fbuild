@@ -450,7 +450,7 @@ class SerialMonitor:
 
             return 1
         except KeyboardInterrupt:
-            # Interrupt other threads
+            # Interrupt other threads (notify them of the interrupt)
             _thread.interrupt_main()
 
             elapsed_time = time.time() - start_time if "start_time" in locals() else 0.0
