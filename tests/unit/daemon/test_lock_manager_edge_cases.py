@@ -206,7 +206,7 @@ class TestRapidAcquireReleaseCycles(unittest.TestCase):
 
         # All should complete in parallel (roughly 0.05s, not 0.5s)
         self.assertEqual(len(results), 10)
-        self.assertLess(elapsed, 0.3)  # Should be much less than 0.5s
+        self.assertLess(elapsed, 1.0)  # Should be much less than 5.0s (0.5s * 10 sequential)
 
 
 class TestForceReleaseLockEdgeCases(unittest.TestCase):

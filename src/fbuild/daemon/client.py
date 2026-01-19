@@ -85,18 +85,37 @@ def is_daemon_running() -> bool:
 
 
 def start_daemon() -> None:
-    """Start the daemon process."""
+    """Start the daemon process.
+
+    Passes the spawning client's PID as an argument so the daemon can log
+    which client originally started it.
+
+    On Windows, uses proper detachment flags to ensure:
+    - Daemon survives client termination (DETACHED_PROCESS)
+    - Daemon is isolated from client's Ctrl-C signals (CREATE_NEW_PROCESS_GROUP)
+    """
     daemon_script = Path(__file__).parent / "daemon.py"
 
     if not daemon_script.exists():
         raise RuntimeError(f"Daemon script not found: {daemon_script}")
 
-    # Start daemon in background
+    # Pass spawning client PID so daemon can log who started it
+    spawner_pid = os.getpid()
+
+    # On Windows, use proper detachment flags:
+    # - CREATE_NEW_PROCESS_GROUP: Isolates daemon from client's Ctrl-C signals
+    # - DETACHED_PROCESS: Daemon survives client termination, no console inherited
+    creationflags = 0
+    if sys.platform == "win32":
+        creationflags = subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.DETACHED_PROCESS
+
+    # Start daemon in background as a fully detached process
     subprocess.Popen(
-        [sys.executable, str(daemon_script)],
+        [sys.executable, str(daemon_script), f"--spawned-by={spawner_pid}"],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
         stdin=subprocess.DEVNULL,
+        creationflags=creationflags,
     )
 
 

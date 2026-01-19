@@ -791,7 +791,16 @@ def run_daemon_loop() -> None:
             time.sleep(0.5)
 
         except KeyboardInterrupt:
-            logging.warning("Daemon interrupted by user")
+            # Check if operation is in progress - refuse to exit if so
+            if context.status_manager.get_operation_in_progress():
+                logging.warning("Received KeyboardInterrupt during active operation. Refusing to exit.")
+                print(
+                    f"\n⚠️  KeyboardInterrupt during operation\n⚠️  Cannot shutdown while operation is active\n⚠️  Use 'kill -9 {os.getpid()}' to force termination\n",
+                    flush=True,
+                )
+                # Continue the main loop instead of exiting
+                continue
+            logging.warning("Daemon interrupted by user (no operation in progress)")
             _thread.interrupt_main()
             cleanup_and_exit(context)
         except Exception as e:
@@ -800,13 +809,35 @@ def run_daemon_loop() -> None:
             time.sleep(1)
 
 
+def parse_spawner_pid() -> int | None:
+    """Parse --spawned-by argument from command line.
+
+    Returns:
+        The PID of the client that spawned this daemon, or None if not provided.
+    """
+    for arg in sys.argv:
+        if arg.startswith("--spawned-by="):
+            try:
+                return int(arg.split("=", 1)[1])
+            except (ValueError, IndexError):
+                return None
+    return None
+
+
 def main() -> int:
     """Main entry point for daemon."""
     # Parse command-line arguments
     foreground = "--foreground" in sys.argv
+    spawner_pid = parse_spawner_pid()
 
     # Setup logging
     setup_logging(foreground=foreground)
+
+    # Log spawner information immediately after logging setup
+    if spawner_pid is not None:
+        logging.info(f"Daemon spawned by client PID {spawner_pid}")
+    else:
+        logging.info("Daemon started without spawner info (manual start or legacy client)")
 
     # Ensure daemon directory exists
     DAEMON_DIR.mkdir(parents=True, exist_ok=True)
@@ -845,19 +876,32 @@ def main() -> int:
 
     # Simple daemonization for cross-platform compatibility
     try:
-        # Fork to background
+        # Fork to background (Unix/Linux/macOS)
         if hasattr(os, "fork") and os.fork() > 0:  # type: ignore[attr-defined]
             # Parent process exits
             return 0
     except (OSError, AttributeError):
-        # Fork not supported (Windows) - run in background as subprocess
-        logging.info("Fork not supported, using subprocess")
+        # Fork not supported (Windows) - run in background as detached subprocess
+        logging.info("Fork not supported (Windows), using detached subprocess")
+        # Build command with spawner info if available
+        cmd = [sys.executable, __file__, "--foreground"]
+        if spawner_pid is not None:
+            cmd.append(f"--spawned-by={spawner_pid}")
+
+        # On Windows, use proper detachment flags:
+        # - CREATE_NEW_PROCESS_GROUP: Isolates daemon from parent's Ctrl-C signals
+        # - DETACHED_PROCESS: Daemon survives parent termination, no console inherited
+        creationflags = 0
+        if sys.platform == "win32":
+            creationflags = subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.DETACHED_PROCESS
+
         subprocess.Popen(
-            [sys.executable, __file__, "--foreground"],
+            cmd,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
             stdin=subprocess.DEVNULL,
             cwd=str(DAEMON_DIR),
+            creationflags=creationflags,
         )
         return 0
 
