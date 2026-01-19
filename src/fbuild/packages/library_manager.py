@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 from urllib.parse import urlparse
 
+from fbuild.output import log_detail
 from fbuild.packages.downloader import PackageDownloader
 from fbuild.packages.github_utils import GitHubURLOptimizer
 from fbuild.packages.library_compiler import LibraryCompilationError, LibraryCompiler
@@ -269,7 +270,7 @@ class LibraryManager:
             if GitHubURLOptimizer.is_github_url(url):
                 url = GitHubURLOptimizer.optimize_url(url)
                 if show_progress:
-                    print(f"Optimized GitHub URL: {url}")
+                    log_detail(f"Optimized GitHub URL: {url}")
 
             # Extract library name
             lib_name = self._extract_library_name(original_url)
@@ -278,7 +279,7 @@ class LibraryManager:
             # Skip if already downloaded
             if library.exists:
                 if show_progress:
-                    print(f"Library '{lib_name}' already downloaded")
+                    log_detail(f"Library '{lib_name}' already downloaded")
                 return library
 
             # Create library directory
@@ -289,13 +290,13 @@ class LibraryManager:
             temp_archive = library.lib_dir / filename
 
             if show_progress:
-                print(f"Downloading library: {lib_name}")
+                log_detail(f"Downloading library: {lib_name}")
 
             self.downloader.download(url, temp_archive, show_progress=show_progress)
 
             # Extract to src directory
             if show_progress:
-                print(f"Extracting library: {lib_name}")
+                log_detail(f"Extracting library: {lib_name}")
 
             temp_extract = library.lib_dir / "_extract"
             temp_extract.mkdir(exist_ok=True)
@@ -475,8 +476,13 @@ class LibraryManager:
             List of compiled Library instances
         """
         libraries = []
+        total = len(lib_deps)
 
-        for url in lib_deps:
+        for index, url in enumerate(lib_deps, 1):
+            # Extract library name for logging
+            library_name = self._extract_library_name(url)
+            log_detail(f"[{index}/{total}] {library_name}")
+
             # Download library
             library = self.download_library(url, show_progress)
 
@@ -485,7 +491,7 @@ class LibraryManager:
 
             if needs_rebuild:
                 if show_progress and reason:
-                    print(f"Rebuilding library '{library.name}': {reason}")
+                    log_detail(f"Rebuilding library '{library.name}': {reason}")
 
                 self.compile_library(
                     library,

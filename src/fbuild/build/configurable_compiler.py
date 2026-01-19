@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any, List, Dict, Optional, Union, TYPE_CHECKING
 
 from ..packages.package import IPackage, IToolchain, IFramework
+from ..output import ProgressCallback
 from .flag_builder import FlagBuilder
 from .compilation_executor import CompilationExecutor
 from .archive_creator import ArchiveCreator
@@ -365,11 +366,12 @@ class ConfigurableCompiler(ICompiler):
 
         return object_files
 
-    def compile_core(self, progress_bar: Optional[Any] = None) -> List[Path]:
+    def compile_core(self, progress_bar: Optional[Any] = None, progress_callback: ProgressCallback | None = None) -> List[Path]:
         """Compile Arduino core sources.
 
         Args:
             progress_bar: Optional tqdm progress bar to update during compilation
+            progress_callback: Optional callback for progress notifications
 
         Returns:
             List of generated object file paths
@@ -394,9 +396,15 @@ class ConfigurableCompiler(ICompiler):
         if progress_bar is not None:
             self.compilation_executor.show_progress = False
 
+        total_sources = len(core_sources)
+
         try:
             # Compile each core source
-            for source in core_sources:
+            for idx, source in enumerate(core_sources, 1):
+                # Notify progress callback of file start
+                if progress_callback is not None:
+                    progress_callback.on_file_start(source.name, idx, total_sources)
+
                 # Update progress bar BEFORE compilation for better UX
                 if progress_bar is not None:
                     progress_bar.set_description(f'Compiling {source.name[:30]}')
@@ -407,17 +415,23 @@ class ConfigurableCompiler(ICompiler):
                     # Skip compilation if object file is up-to-date
                     if not self.needs_rebuild(source, obj_path):
                         object_files.append(obj_path)
+                        if progress_callback is not None:
+                            progress_callback.on_file_complete(source.name, idx, total_sources, cached=True)
                         if progress_bar is not None:
                             progress_bar.update(1)
                         continue
 
                     compiled_obj = self.compile_source(source, obj_path)
                     object_files.append(compiled_obj)
+                    if progress_callback is not None:
+                        progress_callback.on_file_complete(source.name, idx, total_sources, cached=False)
                     if progress_bar is not None:
                         progress_bar.update(1)
                 except ConfigurableCompilerError as e:
                     if self.show_progress:
                         print(f"Warning: Failed to compile {source.name}: {e}")
+                    if progress_callback is not None:
+                        progress_callback.on_file_complete(source.name, idx, total_sources, cached=False)
                     if progress_bar is not None:
                         progress_bar.update(1)
         finally:

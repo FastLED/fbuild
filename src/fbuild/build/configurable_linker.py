@@ -18,6 +18,7 @@ from pathlib import Path
 from typing import List, Dict, Any, Optional, Union
 
 from ..packages.package import IPackage, IToolchain, IFramework
+from ..output import log_detail, format_size
 from .binary_generator import BinaryGenerator
 from .compiler import ILinker, LinkerError
 
@@ -322,11 +323,15 @@ class ConfigurableLinker(ILinker):
 
         # Execute linker
         if self.show_progress:
-            print("Linking firmware.elf...")
-            print(f"  Object files: {len(object_files)}")
-            print(f"  Core archive: {core_archive.name}")
-            print(f"  SDK libraries: {len(sdk_libs)}")
-            print(f"  Linker scripts: {len(linker_scripts)}")
+            log_detail("Linking firmware.elf...")
+            log_detail(f"Object files: {len(object_files)}")
+            log_detail(f"Core archive: {core_archive.name}")
+            log_detail(f"SDK libraries: {len(sdk_libs)}")
+            log_detail(f"Linker scripts: {len(linker_scripts)}")
+            core_size = core_archive.stat().st_size if core_archive.exists() else 0
+            lib_size = sum(a.stat().st_size for a in library_archives if a.exists())
+            obj_size = sum(o.stat().st_size for o in object_files if o.exists())
+            log_detail(f"Inputs: core ({format_size(core_size)}) + {len(library_archives)} libs ({format_size(lib_size)}) + {len(object_files)} objects ({format_size(obj_size)})")
 
         # Add retry logic for Windows file locking issues
         is_windows = platform.system() == "Windows"
@@ -340,7 +345,7 @@ class ConfigurableLinker(ILinker):
                     gc.collect()
                     time.sleep(delay)
                     if self.show_progress:
-                        print(f"  Retrying linking (attempt {attempt + 1}/{max_retries})...")
+                        log_detail(f"Retrying linking (attempt {attempt + 1}/{max_retries})...")
 
                 result = subprocess.run(
                     cmd,
@@ -362,7 +367,7 @@ class ConfigurableLinker(ILinker):
                     if is_windows and is_file_locking_error:
                         if attempt < max_retries - 1:
                             if self.show_progress:
-                                print("  [Windows] Detected file locking error, retrying...")
+                                log_detail("[Windows] Detected file locking error, retrying...")
                             delay = min(delay * 2, 1.0)  # Exponential backoff, max 1s
                             continue
                         else:
@@ -386,7 +391,7 @@ class ConfigurableLinker(ILinker):
 
             if self.show_progress:
                 size = output_elf.stat().st_size
-                print(f"✓ Created firmware.elf: {size:,} bytes ({size / 1024 / 1024:.2f} MB)")
+                log_detail(f"Created firmware.elf: {format_size(size)}")
 
             return output_elf
 
@@ -477,7 +482,7 @@ class ConfigurableLinker(ILinker):
 
             if self.show_progress:
                 size = output_hex.stat().st_size
-                print(f"✓ Created firmware.hex: {size:,} bytes")
+                log_detail(f"Created firmware.hex: {format_size(size)}")
 
             return output_hex
 

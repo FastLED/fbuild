@@ -19,6 +19,7 @@ from ..packages.toolchain_rp2040 import ToolchainRP2040
 from ..packages.library_manager import LibraryManager, LibraryError
 from ..config.board_config import BoardConfig
 from ..cli_utils import BannerFormatter
+from ..output import DefaultProgressCallback
 from .configurable_compiler import ConfigurableCompiler
 from .configurable_linker import ConfigurableLinker
 from .linker import SizeInfo
@@ -276,9 +277,12 @@ class OrchestratorRP2040(IBuildOrchestrator):
                 user_build_flags=build_flags
             )
 
+            # Create progress callback for detailed file-by-file tracking
+            progress_callback = DefaultProgressCallback(verbose_only=not verbose)
+
             # Compile Arduino core with progress bar
             if verbose:
-                core_obj_files = compiler.compile_core()
+                core_obj_files = compiler.compile_core(progress_callback=progress_callback)
             else:
                 # Use tqdm progress bar for non-verbose mode
                 from tqdm import tqdm
@@ -295,7 +299,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
                     ncols=80,
                     leave=False
                 ) as pbar:
-                    core_obj_files = compiler.compile_core(progress_bar=pbar)
+                    core_obj_files = compiler.compile_core(progress_bar=pbar, progress_callback=progress_callback)
 
                 # Print completion message
                 logger.info(f"Compiled {len(core_obj_files)} core files")

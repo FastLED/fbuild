@@ -32,7 +32,7 @@ import sys
 import time
 from pathlib import Path
 from types import TracebackType
-from typing import Optional, TextIO
+from typing import Optional, Protocol, TextIO, runtime_checkable
 
 # Global state for the timer
 _start_time: Optional[float] = None
@@ -378,3 +378,211 @@ class TimedLogger:
     def log(self, message: str) -> None:
         """Log a message within this operation."""
         log(message, self.verbose_only)
+
+
+# =============================================================================
+# Progress Callback Protocol and Helpers
+# =============================================================================
+
+
+def format_size(size_bytes: int) -> str:
+    """
+    Format a byte count as a human-readable size.
+
+    Args:
+        size_bytes: Size in bytes
+
+    Returns:
+        Human-readable size string (e.g., "1.2 MB", "340 KB", "12 B")
+    """
+    if size_bytes < 0:
+        return "0 B"
+    if size_bytes < 1024:
+        return f"{size_bytes} B"
+    elif size_bytes < 1024 * 1024:
+        return f"{size_bytes / 1024:.1f} KB"
+    elif size_bytes < 1024 * 1024 * 1024:
+        return f"{size_bytes / (1024 * 1024):.1f} MB"
+    else:
+        return f"{size_bytes / (1024 * 1024 * 1024):.1f} GB"
+
+
+def format_progress_bar(current: int, total: int, width: int = 28) -> str:
+    """
+    Generate an ASCII progress bar.
+
+    Args:
+        current: Current progress value
+        total: Total progress value
+        width: Width of the progress bar in characters (default 28)
+
+    Returns:
+        ASCII progress bar string like "████████░░░░░░░░░░░░░░░░░░░░"
+
+    Examples:
+        >>> format_progress_bar(5, 10, 20)
+        '██████████░░░░░░░░░░'
+        >>> format_progress_bar(0, 10, 10)
+        '░░░░░░░░░░'
+        >>> format_progress_bar(10, 10, 10)
+        '██████████'
+    """
+    if total <= 0:
+        return "░" * width
+    ratio = min(1.0, max(0.0, current / total))
+    filled = int(width * ratio)
+    empty = width - filled
+    return "█" * filled + "░" * empty
+
+
+@runtime_checkable
+class ProgressCallback(Protocol):
+    """
+    Protocol for progress callback implementations.
+
+    This protocol defines the interface for tracking build progress events.
+    Implementations can log to terminal, update TUI elements, or report to daemons.
+    """
+
+    def on_file_start(self, file: str, index: int, total: int) -> None:
+        """
+        Called when compilation of a file starts.
+
+        Args:
+            file: Name or path of the file being compiled
+            index: Current file index (1-based)
+            total: Total number of files to compile
+        """
+        ...
+
+    def on_file_complete(self, file: str, index: int, total: int, cached: bool = False) -> None:
+        """
+        Called when compilation of a file completes.
+
+        Args:
+            file: Name or path of the file that was compiled
+            index: Current file index (1-based)
+            total: Total number of files to compile
+            cached: If True, the file was served from cache (not recompiled)
+        """
+        ...
+
+    def on_download_progress(self, url: str, downloaded: int, total: int) -> None:
+        """
+        Called during file download to report progress.
+
+        Args:
+            url: URL being downloaded
+            downloaded: Bytes downloaded so far
+            total: Total bytes to download (0 if unknown)
+        """
+        ...
+
+    def on_extract_progress(self, archive: str, extracted: int, total: int) -> None:
+        """
+        Called during archive extraction to report progress.
+
+        Args:
+            archive: Archive file being extracted
+            extracted: Number of files/items extracted so far
+            total: Total number of files/items to extract
+        """
+        ...
+
+    def on_phase_start(self, phase: int, total: int, message: str) -> None:
+        """
+        Called when a build phase starts.
+
+        Args:
+            phase: Current phase number (1-based)
+            total: Total number of phases
+            message: Phase description
+        """
+        ...
+
+    def on_phase_complete(self, phase: int, total: int, elapsed: float) -> None:
+        """
+        Called when a build phase completes.
+
+        Args:
+            phase: Completed phase number (1-based)
+            total: Total number of phases
+            elapsed: Time spent in this phase (seconds)
+        """
+        ...
+
+
+class DefaultProgressCallback:
+    """
+    Default implementation of ProgressCallback that logs to the existing output system.
+
+    This implementation uses log_detail() and log_phase() to display progress
+    in a format consistent with the rest of fbuild's output.
+    """
+
+    def __init__(self, verbose_only: bool = False, show_progress_bar: bool = True):
+        """
+        Initialize the default progress callback.
+
+        Args:
+            verbose_only: If True, only log when verbose mode is enabled
+            show_progress_bar: If True, show ASCII progress bars for downloads/extractions
+        """
+        self.verbose_only = verbose_only
+        self.show_progress_bar = show_progress_bar
+        self._last_download_percent: int = -1
+        self._last_extract_percent: int = -1
+
+    def on_file_start(self, file: str, index: int, total: int) -> None:
+        """Log file compilation start."""
+        log_detail(f"[{index}/{total}] Compiling {file}...", verbose_only=self.verbose_only)
+
+    def on_file_complete(self, file: str, index: int, total: int, cached: bool = False) -> None:
+        """Log file compilation completion."""
+        suffix = " (cached)" if cached else ""
+        log_detail(f"[{index}/{total}] {file}{suffix}", verbose_only=True)
+
+    def on_download_progress(self, url: str, downloaded: int, total: int) -> None:
+        """Log download progress (rate-limited to avoid excessive output)."""
+        if total <= 0:
+            return
+
+        percent = int(100 * downloaded / total)
+        # Only log at 10% intervals to avoid spam
+        if percent // 10 == self._last_download_percent // 10 and percent != 100:
+            return
+        self._last_download_percent = percent
+
+        filename = url.split("/")[-1][:30]
+        if self.show_progress_bar:
+            bar = format_progress_bar(downloaded, total, 20)
+            log_detail(f"{bar} {percent:3d}% {filename} ({format_size(downloaded)}/{format_size(total)})", verbose_only=self.verbose_only)
+        else:
+            log_detail(f"Downloading {filename}: {percent}% ({format_size(downloaded)}/{format_size(total)})", verbose_only=self.verbose_only)
+
+    def on_extract_progress(self, archive: str, extracted: int, total: int) -> None:
+        """Log extraction progress (rate-limited to avoid excessive output)."""
+        if total <= 0:
+            return
+
+        percent = int(100 * extracted / total)
+        # Only log at 25% intervals to avoid spam
+        if percent // 25 == self._last_extract_percent // 25 and percent != 100:
+            return
+        self._last_extract_percent = percent
+
+        archive_name = Path(archive).name[:30]
+        if self.show_progress_bar:
+            bar = format_progress_bar(extracted, total, 20)
+            log_detail(f"{bar} {percent:3d}% Extracting {archive_name} ({extracted}/{total} files)", verbose_only=self.verbose_only)
+        else:
+            log_detail(f"Extracting {archive_name}: {percent}% ({extracted}/{total} files)", verbose_only=self.verbose_only)
+
+    def on_phase_start(self, phase: int, total: int, message: str) -> None:
+        """Log phase start using log_phase."""
+        log_phase(phase, total, f"{message}...", verbose_only=self.verbose_only)
+
+    def on_phase_complete(self, phase: int, total: int, elapsed: float) -> None:
+        """Log phase completion with elapsed time."""
+        del phase, total  # Unused in default implementation
+        log_detail(f"Done ({elapsed:.2f}s)", verbose_only=self.verbose_only)

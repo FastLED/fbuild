@@ -8,6 +8,8 @@ import subprocess
 from pathlib import Path
 from typing import TYPE_CHECKING, Callable, List, Optional, Tuple
 
+from fbuild.output import ProgressCallback, log_detail
+
 if TYPE_CHECKING:
     from .library_manager import LibraryInfo
 
@@ -70,6 +72,7 @@ class LibraryCompiler:
         defines: List[str],
         extra_flags: List[str],
         show_progress: bool = True,
+        progress_callback: ProgressCallback | None = None,
     ) -> Tuple[Path, List[Path], List[str]]:
         """Compile a library into a static archive (.a file).
 
@@ -97,7 +100,7 @@ class LibraryCompiler:
         """
         try:
             if show_progress:
-                print(f"Compiling library: {library_name}")
+                log_detail(f"Compiling library: {library_name}")
 
             if not source_files:
                 raise LibraryCompilationError(f"No source files found in library '{library_name}'")
@@ -155,13 +158,20 @@ class LibraryCompiler:
                 compile_commands.append(" ".join(cmd))
 
                 # Compile
-                if show_progress:
-                    print(f"  Compiling {source.name}...")
+                file_index = source_files.index(source) + 1  # 1-based indexing
+                total_files = len(source_files)
+                if progress_callback:
+                    progress_callback.on_file_start(source.name, file_index, total_files)
+                elif show_progress:
+                    log_detail(f"Compiling {source.name}...")
 
                 result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8")
 
                 if result.returncode != 0:
                     raise LibraryCompilationError(f"Failed to compile {source}:\n{result.stderr}")
+
+                if progress_callback:
+                    progress_callback.on_file_complete(source.name, file_index, total_files)
 
                 object_files.append(obj_file)
 
@@ -170,7 +180,7 @@ class LibraryCompiler:
             archive_file = lib_dir / f"lib{library_name}.a"
 
             if show_progress:
-                print(f"  Creating archive: {archive_file.name}")
+                log_detail(f"Creating archive: {archive_file.name}")
 
             # Remove old archive if exists
             if archive_file.exists():
@@ -188,7 +198,7 @@ class LibraryCompiler:
             # Object files are needed for proper LTO symbol resolution
 
             if show_progress:
-                print(f"Library '{library_name}' compiled successfully")
+                log_detail(f"Library '{library_name}' compiled successfully")
 
             return archive_file, object_files, compile_commands
 

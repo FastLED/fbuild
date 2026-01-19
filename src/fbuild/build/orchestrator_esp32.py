@@ -25,7 +25,7 @@ from .orchestrator import IBuildOrchestrator, BuildResult
 from .build_utils import safe_rmtree
 from .build_state import BuildStateTracker
 from .build_info_generator import BuildInfoGenerator
-from ..output import log_phase, log_detail, log_warning
+from ..output import log_phase, log_detail, log_warning, DefaultProgressCallback
 
 # Module-level logger
 logger = logging.getLogger(__name__)
@@ -299,9 +299,12 @@ class OrchestratorESP32(IBuildOrchestrator):
                 compilation_queue=compilation_queue
             )
 
+            # Create progress callback for detailed file-by-file tracking
+            progress_callback = DefaultProgressCallback(verbose_only=not verbose)
+
             # Compile Arduino core with progress bar
             if verbose:
-                core_obj_files = compiler.compile_core()
+                core_obj_files = compiler.compile_core(progress_callback=progress_callback)
             else:
                 # Use tqdm progress bar for non-verbose mode
                 from tqdm import tqdm
@@ -318,7 +321,7 @@ class OrchestratorESP32(IBuildOrchestrator):
                     ncols=80,
                     leave=False
                 ) as pbar:
-                    core_obj_files = compiler.compile_core(progress_bar=pbar)
+                    core_obj_files = compiler.compile_core(progress_bar=pbar, progress_callback=progress_callback)
 
                 # Print completion message
                 log_detail(f"Compiled {len(core_obj_files)} core files")
