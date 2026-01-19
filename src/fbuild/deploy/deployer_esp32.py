@@ -138,6 +138,12 @@ class ESP32Deployer(IDeployer):
         if self.verbose:
             print(f"Using port: {port}")
 
+        # NOTE: We deliberately skip port pre-verification here.
+        # Raw serial.Serial() cannot recover a stuck Windows USB-CDC driver.
+        # esptool's connect sequence uses DTR/RTS hardware signals to reset
+        # the ESP32, which clears stuck driver states automatically.
+        # Let esptool handle all port access and recovery.
+
         # Determine chip type and flash parameters from board JSON
         chip = self._get_chip_type(mcu)
         flash_mode = board_json.get("build", {}).get("flash_mode", "dio")
@@ -184,6 +190,10 @@ class ESP32Deployer(IDeployer):
             port,
             "--baud",
             "460800",
+            "--before",
+            "default_reset",  # Use DTR/RTS to reset chip into bootloader (recovers stuck USB-CDC)
+            "--after",
+            "hard_reset",  # Reset chip after upload to run new firmware
             "write_flash",
             "-z",  # Compress
             "--flash-mode",
@@ -227,29 +237,40 @@ class ESP32Deployer(IDeployer):
             print(f"Running: {' '.join(cmd)}")
 
         # Execute esptool - must use cmd.exe for ESP32 on Windows
-        if sys.platform == "win32":
-            # Run via cmd.exe to avoid msys issues
-            env = os.environ.copy()
-            # Strip MSYS paths that cause issues
-            if "PATH" in env:
-                paths = env["PATH"].split(os.pathsep)
-                filtered_paths = [p for p in paths if "msys" not in p.lower()]
-                env["PATH"] = os.pathsep.join(filtered_paths)
+        # Use 120 second timeout to prevent hanging if device is unresponsive
+        upload_timeout = 120
+        try:
+            if sys.platform == "win32":
+                # Run via cmd.exe to avoid msys issues
+                env = os.environ.copy()
+                # Strip MSYS paths that cause issues
+                if "PATH" in env:
+                    paths = env["PATH"].split(os.pathsep)
+                    filtered_paths = [p for p in paths if "msys" not in p.lower()]
+                    env["PATH"] = os.pathsep.join(filtered_paths)
 
-            result = subprocess.run(
-                cmd,
-                cwd=project_dir,
-                capture_output=not self.verbose,
-                text=False,  # Don't decode as text - esptool may output binary data
-                env=env,
-                shell=False,
-            )
-        else:
-            result = subprocess.run(
-                cmd,
-                cwd=project_dir,
-                capture_output=not self.verbose,
-                text=False,  # Don't decode as text - esptool may output binary data
+                result = subprocess.run(
+                    cmd,
+                    cwd=project_dir,
+                    capture_output=not self.verbose,
+                    text=False,  # Don't decode as text - esptool may output binary data
+                    env=env,
+                    shell=False,
+                    timeout=upload_timeout,
+                )
+            else:
+                result = subprocess.run(
+                    cmd,
+                    cwd=project_dir,
+                    capture_output=not self.verbose,
+                    text=False,  # Don't decode as text - esptool may output binary data
+                    timeout=upload_timeout,
+                )
+        except subprocess.TimeoutExpired:
+            return DeploymentResult(
+                success=False,
+                message=f"Upload timed out after {upload_timeout}s. Device may be unresponsive or not in download mode. Try resetting the device.",
+                port=port,
             )
 
         if result.returncode != 0:
