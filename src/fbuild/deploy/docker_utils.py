@@ -3,6 +3,12 @@ Docker utilities for QEMU deployment.
 
 This module provides utilities for managing Docker containers for ESP32 QEMU emulation,
 including automatic Docker daemon startup detection and image management.
+
+Enhanced Docker auto-start functionality based on patterns from fastled-wasm:
+- WSL2 backend detection on Windows
+- Docker Desktop restart workflow
+- Retry logic for Docker client connection
+- Cross-platform support (Windows, macOS, Linux)
 """
 
 import os
@@ -10,6 +16,7 @@ import platform
 import subprocess
 import sys
 import time
+from pathlib import Path
 from typing import Optional
 
 from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
@@ -73,11 +80,14 @@ def get_docker_desktop_path() -> Optional[str]:
 
     if system == "Windows":
         # Common locations for Docker Desktop on Windows
+        home_dir = Path.home()
         paths = [
             r"C:\Program Files\Docker\Docker\Docker Desktop.exe",
             r"C:\Program Files (x86)\Docker\Docker\Docker Desktop.exe",
             os.path.expandvars(r"%ProgramFiles%\Docker\Docker\Docker Desktop.exe"),
             os.path.expandvars(r"%LocalAppData%\Programs\Docker\Docker\Docker Desktop.exe"),
+            str(home_dir / "AppData" / "Local" / "Docker" / "Docker Desktop.exe"),
+            str(home_dir / "AppData" / "Local" / "Programs" / "Docker" / "Docker" / "Docker Desktop.exe"),
         ]
         for path in paths:
             if os.path.exists(path):
@@ -99,11 +109,140 @@ def get_docker_desktop_path() -> Optional[str]:
     return None
 
 
+def _check_wsl2_docker_backend() -> tuple[bool, str]:
+    """Check if Docker's WSL2 backend (docker-desktop) is running on Windows.
+
+    Returns:
+        tuple[bool, str]: (is_running, status_message)
+    """
+    if platform.system() != "Windows":
+        return True, "Not Windows - WSL2 check not applicable"
+
+    try:
+        result = subprocess.run(
+            ["wsl", "--list", "--verbose"],
+            capture_output=True,
+            text=True,
+            timeout=10,
+            env=get_docker_env(),
+        )
+
+        if result.returncode != 0:
+            return False, "WSL2 not installed (wsl command failed)"
+
+        output = result.stdout
+
+        # Handle WSL output encoding issues (Git Bash adds spaces between characters)
+        cleaned_lines = []
+        for line in output.split("\n"):
+            cleaned = line.replace("\x00", "").strip()
+            # Remove spaces between single characters: "d o c k e r" -> "docker"
+            if " " in cleaned and len([c for c in cleaned.split() if len(c) == 1]) > 3:
+                cleaned = cleaned.replace(" ", "")
+            cleaned_lines.append(cleaned)
+
+        # Detect status: running/stopped
+        for line in cleaned_lines:
+            if "docker-desktop" in line.lower():
+                if "running" in line.lower():
+                    return True, "docker-desktop WSL2 backend is running"
+                elif "stopped" in line.lower():
+                    return False, "docker-desktop WSL2 backend is stopped"
+
+        return False, "docker-desktop WSL2 distribution not found"
+
+    except FileNotFoundError:
+        return False, "WSL2 not installed (wsl command not found)"
+    except subprocess.TimeoutExpired:
+        return False, "WSL2 command timed out"
+    except Exception as e:
+        return False, f"Error checking WSL2 backend: {e}"
+
+
+def _kill_docker_desktop_windows() -> bool:
+    """Forcefully terminate Docker Desktop and backend processes on Windows.
+
+    Returns:
+        bool: True if processes were killed successfully
+    """
+    if platform.system() != "Windows":
+        return False
+
+    try:
+        # Kill Docker Desktop GUI
+        subprocess.run(
+            ["taskkill", "/F", "/IM", "Docker Desktop.exe"],
+            capture_output=True,
+            timeout=10,
+        )
+
+        # Kill Docker backend engine
+        subprocess.run(
+            ["taskkill", "/F", "/IM", "com.docker.backend.exe"],
+            capture_output=True,
+            timeout=10,
+        )
+
+        time.sleep(3)  # Allow cleanup
+        return True
+    except Exception:
+        return False
+
+
+def _restart_docker_desktop_windows() -> tuple[bool, str]:
+    """Complete Docker Desktop restart workflow on Windows.
+
+    Returns:
+        tuple[bool, str]: (success, message)
+    """
+    print("  Attempting to restart Docker Desktop to fix WSL2 backend...")
+
+    docker_path = get_docker_desktop_path()
+    if not docker_path:
+        return False, "Docker Desktop executable not found"
+
+    print("  Stopping Docker Desktop...")
+    _kill_docker_desktop_windows()
+
+    time.sleep(5)  # Wait for cleanup
+
+    print("  Starting Docker Desktop...")
+    try:
+        subprocess.Popen(
+            [docker_path],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            creationflags=subprocess.DETACHED_PROCESS | subprocess.CREATE_NO_WINDOW,
+        )
+    except Exception as e:
+        return False, f"Failed to start Docker Desktop: {e}"
+
+    print("  Waiting for Docker Desktop and WSL2 backend to initialize...")
+
+    # Poll for up to 2 minutes
+    for attempt in range(120):
+        time.sleep(1)
+
+        # Check if Docker engine is available
+        if check_docker_daemon_running():
+            # Also check WSL2 backend
+            wsl_running, _ = _check_wsl2_docker_backend()
+            if wsl_running:
+                return True, "Docker Desktop restarted successfully - WSL2 backend is running"
+
+        # Progress indicator every 15 seconds
+        if (attempt + 1) % 15 == 0:
+            print(f"  Still waiting ({attempt + 1}s)...")
+
+    return False, "Docker Desktop started but WSL2 backend failed to initialize within 2 minutes"
+
+
 def start_docker_daemon() -> bool:
     """Attempt to start the Docker daemon.
 
     This function tries to start Docker Desktop on Windows/macOS
-    or the Docker service on Linux.
+    or the Docker service on Linux. On Windows, it includes WSL2
+    backend detection and restart workflow.
 
     Returns:
         True if Docker daemon started successfully, False otherwise
@@ -116,6 +255,22 @@ def start_docker_daemon() -> bool:
     print("Docker daemon is not running. Attempting to start...")
 
     if system == "Windows":
+        # Check WSL2 backend status on Windows
+        print("  Checking Docker Desktop WSL2 backend status...")
+        wsl_running, wsl_message = _check_wsl2_docker_backend()
+        print(f"  WSL2 Status: {wsl_message}")
+
+        # Detect split-brain state and trigger restart
+        if not wsl_running and "stopped" in wsl_message.lower():
+            print("  Issue detected: Docker Desktop app may be running but WSL2 backend is stopped")
+            success, message = _restart_docker_desktop_windows()
+            if success:
+                print(f"  {message}")
+                return True
+            else:
+                print(f"  {message}")
+                return False
+
         docker_path = get_docker_desktop_path()
         if docker_path:
             try:
@@ -126,9 +281,22 @@ def start_docker_daemon() -> bool:
                     stderr=subprocess.DEVNULL,
                     creationflags=subprocess.DETACHED_PROCESS | subprocess.CREATE_NO_WINDOW,
                 )
-                return _wait_for_docker_daemon()
+                success = _wait_for_docker_daemon(timeout=120)  # 2 minute timeout
+
+                if not success:
+                    # If startup failed, try full restart
+                    print("  Docker Desktop didn't start properly, attempting full restart...")
+                    success, message = _restart_docker_desktop_windows()
+                    if success:
+                        print(f"  {message}")
+                        return True
+                    else:
+                        print(f"  {message}")
+                        return False
+                return success
             except KeyboardInterrupt as ke:
                 handle_keyboard_interrupt_properly(ke)
+                return False
             except Exception as e:
                 print(f"Failed to start Docker Desktop: {e}")
                 return False
@@ -148,6 +316,7 @@ def start_docker_daemon() -> bool:
                 return _wait_for_docker_daemon()
             except KeyboardInterrupt as ke:
                 handle_keyboard_interrupt_properly(ke)
+                return False
             except Exception as e:
                 print(f"Failed to start Docker Desktop: {e}")
                 return False
@@ -176,6 +345,7 @@ def start_docker_daemon() -> bool:
                     return _wait_for_docker_daemon()
         except KeyboardInterrupt as ke:
             handle_keyboard_interrupt_properly(ke)
+            return False
         except Exception as e:
             print(f"Failed to start Docker service: {e}")
 
@@ -278,6 +448,7 @@ def pull_docker_image(image_name: str, timeout: int = 600) -> bool:
             return False
     except KeyboardInterrupt as ke:
         handle_keyboard_interrupt_properly(ke)
+        return False  # Will not reach here, but satisfies type checker
     except subprocess.TimeoutExpired:
         print(f"Timeout pulling {image_name}")
         return False

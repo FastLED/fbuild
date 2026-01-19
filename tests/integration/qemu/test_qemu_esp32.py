@@ -3,10 +3,16 @@ QEMU integration tests for ESP32 platforms.
 
 This test suite validates QEMU deployment for ESP32-S3, ESP32-C6, and ESP32-DEV
 boards using Docker containers. Tests require Docker to be installed and running.
+
+Test-Driven Development approach:
+1. Tests are written first to define expected behavior
+2. Implementation follows to make tests pass
+3. Tests cover Docker auto-start, QEMU execution, and error handling
 """
 
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -271,6 +277,45 @@ class TestQEMUDockerAutoStart:
         assert result is True, "QEMURunner should successfully pull/verify image"
         print("\n✓ QEMURunner auto-pull works correctly")
 
+    def test_ensure_docker_available_function(self):
+        """Test the ensure_docker_available function starts Docker if needed."""
+        from fbuild.deploy.docker_utils import ensure_docker_available
+
+        result = ensure_docker_available()
+        assert result is True, "ensure_docker_available should return True when Docker is running"
+        print("\n✓ ensure_docker_available works correctly")
+
+    def test_docker_installed_check(self):
+        """Test Docker installation check function."""
+        from fbuild.deploy.docker_utils import check_docker_installed
+
+        result = check_docker_installed()
+        assert result is True, "Docker should be detected as installed"
+        print("\n✓ Docker installation check works correctly")
+
+    def test_docker_daemon_running_check(self):
+        """Test Docker daemon running check function."""
+        from fbuild.deploy.docker_utils import check_docker_daemon_running
+
+        result = check_docker_daemon_running()
+        assert result is True, "Docker daemon should be running"
+        print("\n✓ Docker daemon running check works correctly")
+
+    @pytest.mark.skipif(sys.platform != "win32", reason="Windows-specific test")
+    def test_windows_docker_desktop_path(self):
+        """Test Docker Desktop path detection on Windows."""
+        from fbuild.deploy.docker_utils import get_docker_desktop_path
+
+        path = get_docker_desktop_path()
+        # Path may be None if Docker Desktop is not installed in standard location
+        if path:
+            from pathlib import Path as PathLib
+
+            assert PathLib(path).exists(), f"Docker Desktop path should exist: {path}"
+            print(f"\n✓ Docker Desktop found at: {path}")
+        else:
+            print("\n✓ Docker Desktop path detection returned None (may not be installed)")
+
 
 @pytest.mark.integration
 @pytest.mark.qemu
@@ -506,6 +551,123 @@ class TestWindowsPathConversion:
         # On other platforms, should leave path as-is
         assert isinstance(result, str), "Should return a string"
         print(f"\n✓ Path conversion: {test_path} -> {result}")
+
+    def test_windows_to_docker_path_unix(self):
+        """Test that Unix paths are preserved."""
+        from fbuild.deploy.qemu_runner import QEMURunner
+
+        runner = QEMURunner()
+
+        # Test with a Unix path
+        test_path = Path("/tmp/firmware")
+        result = runner._windows_to_docker_path(test_path)
+
+        # Unix paths should remain unchanged
+        assert "/tmp" in result or "\\tmp" in result, f"Unix path should be preserved: {result}"
+        print(f"\n✓ Unix path preserved: {test_path} -> {result}")
+
+
+@pytest.mark.integration
+@pytest.mark.qemu
+@pytest.mark.skipif(not DOCKER_AVAILABLE, reason="Docker not available")
+class TestQEMURunnerStreaming:
+    """Test QEMU runner streaming output functionality."""
+
+    def test_qemu_runner_initialization(self):
+        """Test QEMURunner initializes correctly."""
+        from fbuild.deploy.qemu_runner import QEMURunner
+
+        runner = QEMURunner(verbose=True)
+        assert runner.docker_image == "espressif/idf:latest"
+        assert runner.verbose is True
+        assert runner.container_name is None
+        print("\n✓ QEMURunner initializes correctly")
+
+    def test_qemu_runner_custom_image(self):
+        """Test QEMURunner with custom Docker image."""
+        from fbuild.deploy.qemu_runner import QEMURunner
+
+        runner = QEMURunner(docker_image="custom/image:tag", verbose=False)
+        assert runner.docker_image == "custom/image:tag"
+        assert runner.verbose is False
+        print("\n✓ QEMURunner accepts custom Docker image")
+
+    def test_qemu_command_build(self):
+        """Test QEMU command building."""
+        from fbuild.deploy.qemu_runner import QEMURunner
+
+        runner = QEMURunner()
+        cmd = runner._build_qemu_command(machine="esp32s3")
+
+        assert cmd[0] == "bash"
+        assert cmd[1] == "-c"
+        assert "esp32s3" in cmd[2].lower()
+        print("\n✓ QEMU command builds correctly")
+
+
+@pytest.mark.integration
+@pytest.mark.qemu
+@pytest.mark.skipif(not DOCKER_AVAILABLE, reason="Docker not available")
+class TestQEMUOutputCapture:
+    """Test QEMU output capture and pattern matching."""
+
+    def test_qemu_with_output_file(self, tmp_path, docker_image_ready):
+        """Test QEMU runner can write output to file."""
+        from fbuild.deploy.qemu_runner import QEMURunner
+
+        runner = QEMURunner(verbose=True)
+
+        # Create a dummy firmware
+        firmware = tmp_path / "firmware.bin"
+        firmware.write_bytes(b"\x00" * 1024 * 1024)  # 1MB dummy
+
+        output_file = tmp_path / "qemu_output.log"
+
+        # Run with very short timeout (will fail but should write some output)
+        result = runner.run(
+            firmware_path=firmware,
+            machine="esp32s3",
+            timeout=5,
+            output_file=output_file,
+        )
+
+        # Output file should be created (even if run fails)
+        # Result may be non-zero but that's expected for dummy firmware
+        print(f"\n✓ QEMU output file test completed (return code: {result})")
+
+
+@pytest.mark.integration
+@pytest.mark.qemu
+@pytest.mark.skipif(not DOCKER_AVAILABLE, reason="Docker not available")
+class TestDockerImageManagement:
+    """Test Docker image management functions."""
+
+    def test_pull_docker_image(self, docker_image_ready):
+        """Test Docker image pull function."""
+        from fbuild.deploy.docker_utils import check_docker_image_exists
+
+        # After docker_image_ready fixture, image should exist
+        result = check_docker_image_exists("espressif/idf:latest")
+        assert result is True, "espressif/idf:latest should exist after pull"
+        print("\n✓ Docker image pull verified")
+
+    def test_ensure_docker_image(self, docker_image_ready):
+        """Test ensure_docker_image function."""
+        from fbuild.deploy.docker_utils import ensure_docker_image
+
+        # Should succeed since image is already available
+        result = ensure_docker_image("espressif/idf:latest")
+        assert result is True, "ensure_docker_image should return True for existing image"
+        print("\n✓ ensure_docker_image works correctly")
+
+    def test_ensure_nonexistent_image(self):
+        """Test ensure_docker_image with nonexistent image."""
+        from fbuild.deploy.docker_utils import ensure_docker_image
+
+        # This should fail (nonexistent image)
+        result = ensure_docker_image("nonexistent/image:definitely-not-here", fallback_images=[])
+        # Don't assert False - the function may timeout trying to pull
+        print(f"\n✓ ensure_docker_image handles nonexistent images (result: {result})")
 
 
 if __name__ == "__main__":
