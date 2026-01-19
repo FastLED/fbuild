@@ -295,26 +295,127 @@ Actionable error messages with suggestions help you quickly identify and fix iss
 ## Architecture
 
 See [docs/build-system.md](docs/build-system.md) for comprehensive architecture documentation.
+See [docs/architecture.dot](docs/architecture.dot) for a Graphviz diagram (render with `dot -Tpng`).
 
-**High-level flow**:
 ```
-platformio.ini → Config Parser → Package Manager → Build Orchestrator
-                                        ↓
-                      ┌─────────────────┼─────────────────┬──────────────────┐
-                      ↓                 ↓                 ↓                  ↓
-                 Toolchain        Arduino Core      Source Scanner   Library Manager
-                (AVR-GCC)       (cores/variants)     (.ino/.cpp/.c)   (GitHub libs)
-                      ↓                 ↓                 ↓                  ↓
-                      └─────────────────┼─────────────────┴──────────────────┘
-                                        ↓
-                              Compiler (avr-g++)
-                                        ↓
-                              Linker (avr-gcc)
-                                        ↓
-                         objcopy (ELF → HEX)
-                                        ↓
-                                firmware.hex
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│                                      CLI LAYER                                          │
+│  ┌─────────────────────────────────────────────────────────────────────────────────┐    │
+│  │  cli.py                                                                         │    │
+│  │  ├── build command ──────┐                                                      │    │
+│  │  ├── deploy command ─────┼──► daemon/client.py ──► IPC (file-based) ──┐        │    │
+│  │  └── monitor command ────┘                                             │        │    │
+│  └────────────────────────────────────────────────────────────────────────│────────┘    │
+└───────────────────────────────────────────────────────────────────────────│─────────────┘
+                                                                            ▼
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│                              DAEMON LAYER (Background Process)                          │
+│                                                                                         │
+│  ┌──────────────────────────────────────────────────────────────────────────────────┐  │
+│  │  daemon.py (Server)                                                               │  │
+│  │  ├── lock_manager.py (ResourceLockManager) ◄── Memory-based locks only!          │  │
+│  │  ├── status_manager.py                                                            │  │
+│  │  ├── process_tracker.py                                                           │  │
+│  │  └── device_manager.py ──► device_discovery.py                                    │  │
+│  │                         └── shared_serial.py                                      │  │
+│  └──────────────────────────────────────────────────────────────────────────────────┘  │
+│                            │                                                            │
+│                            ▼                                                            │
+│  ┌─────────────────────────────────────────────────────────────────────────────────┐   │
+│  │  Request Processors (daemon/processors/)                                        │   │
+│  │  ├── build_processor.py ────────────► BUILD LAYER                               │   │
+│  │  ├── deploy_processor.py ───────────► DEPLOY LAYER                              │   │
+│  │  ├── monitor_processor.py ──────────► monitor.py                                │   │
+│  │  └── install_deps_processor.py ─────► PACKAGES LAYER                            │   │
+│  └─────────────────────────────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────────────────────────────┘
+                            │
+         ┌──────────────────┼──────────────────┐
+         ▼                  ▼                  ▼
+┌─────────────────┐ ┌─────────────────┐ ┌─────────────────────────────────────────────────┐
+│  CONFIG LAYER   │ │  PACKAGES LAYER │ │                  BUILD LAYER                    │
+│                 │ │                 │ │                                                 │
+│ ┌─────────────┐ │ │ ┌─────────────┐ │ │ ┌─────────────────────────────────────────────┐ │
+│ │ ini_parser  │ │ │ │   cache.py  │ │ │ │  Platform Orchestrators                     │ │
+│ │    .py      │ │ │ │      │      │ │ │ │  orchestrator.py (IBuildOrchestrator)       │ │
+│ │ (PlatformIO │ │ │ │      ▼      │ │ │ │       │                                     │ │
+│ │   Config)   │ │ │ │ downloader  │ │ │ │       ├── orchestrator_avr.py               │ │
+│ │      │      │ │ │ │    .py      │ │ │ │       ├── orchestrator_esp32.py             │ │
+│ │      ▼      │ │ │ └──────┬──────┘ │ │ │       ├── orchestrator_rp2040.py            │ │
+│ │board_config │ │ │        │        │ │ │       ├── orchestrator_stm32.py             │ │
+│ │    .py      │ │ │        ▼        │ │ │       └── orchestrator_teensy.py            │ │
+│ │      │      │ │ │ ┌─────────────┐ │ │ └─────────────────────────────────────────────┘ │
+│ │      ▼      │ │ │ │ Toolchains  │ │ │                      │                         │
+│ │board_loader │ │ │ │ toolchain   │ │ │                      ▼                         │
+│ │    .py      │ │ │ │   .py (AVR) │ │ │ ┌─────────────────────────────────────────────┐ │
+│ │      │      │ │ │ │ toolchain_  │ │ │ │  Compilation                                │ │
+│ │      ▼      │ │ │ │   esp32.py  │ │ │ │  source_scanner.py ──► compiler.py          │ │
+│ │ mcu_specs   │ │ │ │ toolchain_  │ │ │ │                              │              │ │
+│ │    .py      │ │ │ │   rp2040.py │ │ │ │  configurable_compiler.py    │              │ │
+│ └─────────────┘ │ │ │     ...     │ │ │ │         │                    │              │ │
+│                 │ │ └─────────────┘ │ │ │         ▼                    ▼              │ │
+│                 │ │        │        │ │ │  flag_builder.py ──► compilation_executor   │ │
+│                 │ │        ▼        │ │ └─────────────────────────────────────────────┘ │
+│                 │ │ ┌─────────────┐ │ │                      │                         │
+│                 │ │ │ Frameworks  │ │ │                      ▼                         │
+│                 │ │ │arduino_core │ │ │ ┌─────────────────────────────────────────────┐ │
+│                 │ │ │    .py      │ │ │ │  Linking                                    │ │
+│                 │ │ │ framework_  │ │ │ │  linker.py ──► archive_creator.py           │ │
+│                 │ │ │   esp32.py  │ │ │ │       │                                     │ │
+│                 │ │ │     ...     │ │ │ │       ▼                                     │ │
+│                 │ │ └─────────────┘ │ │ │  configurable_linker.py                     │ │
+│                 │ │        │        │ │ │       │                                     │ │
+│                 │ │        ▼        │ │ │       ▼                                     │ │
+│                 │ │ ┌─────────────┐ │ │ │  binary_generator.py ──► firmware.hex/.bin  │ │
+│                 │ │ │  Libraries  │ │ │ └─────────────────────────────────────────────┘ │
+│                 │ │ │ library_    │ │ │                                                 │
+│                 │ │ │  manager.py │ │ │  build_state.py (BuildStateTracker)             │
+│                 │ │ │      │      │ │ └─────────────────────────────────────────────────┘
+│                 │ │ │      ▼      │ │
+│                 │ │ │ library_    │ │
+│                 │ │ │ compiler.py │ │
+│                 │ │ │      │      │ │
+│                 │ │ │      ▼      │ │
+│                 │ │ │github_utils │ │
+│                 │ │ │platformio_  │ │
+│                 │ │ │ registry.py │ │
+│                 │ │ └─────────────┘ │
+└─────────────────┘ └─────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│                                    DEPLOY LAYER                                         │
+│                                                                                         │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐    │
+│  │  deployer.py    │  │ deployer_esp32  │  │   monitor.py    │  │  qemu_runner.py │    │
+│  │  (IDeployer)    │  │    .py          │  │ (Serial Monitor)│  │   (Emulator)    │    │
+│  │       │         │  │  (esptool)      │  │                 │  │                 │    │
+│  │       ▼         │  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘    │
+│  │   [avrdude]     │           │                    │                    │             │
+│  └────────┬────────┘           │                    │                    │             │
+│           └────────────────────┴────────────────────┴────────────────────┘             │
+│                                         │                                               │
+│                                         ▼                                               │
+│                          ┌──────────────────────────────┐                               │
+│                          │     External Dependencies    │                               │
+│                          │  esptool, avrdude, pyserial  │                               │
+│                          │         Docker (QEMU)        │                               │
+│                          └──────────────────────────────┘                               │
+└─────────────────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│                                    LEDGER LAYER                                         │
+│  ┌─────────────────────────────────┐  ┌─────────────────────────────────┐              │
+│  │  ledger/board_ledger.py         │  │  daemon/firmware_ledger.py      │              │
+│  │  (Board tracking)               │  │  (Firmware tracking)            │              │
+│  └─────────────────────────────────┘  └─────────────────────────────────┘              │
+└─────────────────────────────────────────────────────────────────────────────────────────┘
 ```
+
+**Key Data Flows:**
+
+1. **Build Request**: CLI → Daemon Client → Daemon Server → Build Processor → Platform Orchestrator → Compiler → Linker → firmware.hex/.bin
+2. **Deploy Request**: CLI → Daemon Client → Daemon Server → Deploy Processor → Deployer (esptool/avrdude) → Device
+3. **Package Download**: Orchestrator → Cache → Downloader → fingerprint verification → extracted packages
 
 ### Library System Architecture
 

@@ -1,0 +1,338 @@
+// fbuild Architecture Diagram
+// Generate PNG: dot -Tpng architecture.dot -o architecture.png
+// Generate SVG: dot -Tsvg architecture.dot -o architecture.svg
+
+digraph fbuild_architecture {
+    // Graph settings
+    rankdir=TB;
+    fontname="Helvetica";
+    node [fontname="Helvetica", shape=box, style="rounded,filled"];
+    edge [fontname="Helvetica"];
+    compound=true;
+    splines=ortho;
+    nodesep=0.5;
+    ranksep=0.8;
+
+    // Color scheme
+    // CLI: light blue
+    // Daemon: light orange
+    // Build: light green
+    // Config: light yellow
+    // Packages: light purple
+    // Deploy: light red
+    // Ledger: light gray
+
+    // =====================
+    // CLI Layer
+    // =====================
+    subgraph cluster_cli {
+        label="CLI Layer";
+        style="rounded,filled";
+        fillcolor="#e3f2fd";
+
+        cli [label="cli.py\n(Entry Point)", fillcolor="#bbdefb"];
+        cli_utils [label="cli_utils.py\n(Helpers)", fillcolor="#bbdefb"];
+    }
+
+    // =====================
+    // Daemon Layer
+    // =====================
+    subgraph cluster_daemon {
+        label="Daemon Layer (Background Process)";
+        style="rounded,filled";
+        fillcolor="#fff3e0";
+
+        subgraph cluster_daemon_core {
+            label="Core";
+            style="rounded";
+            fillcolor="#ffe0b2";
+
+            daemon [label="daemon.py\n(Server)", fillcolor="#ffcc80"];
+            client [label="client.py\n(Client API)", fillcolor="#ffcc80"];
+            lock_manager [label="lock_manager.py\n(ResourceLockManager)", fillcolor="#ffcc80"];
+            status_manager [label="status_manager.py", fillcolor="#ffcc80"];
+        }
+
+        subgraph cluster_processors {
+            label="Request Processors";
+            style="rounded";
+            fillcolor="#ffe0b2";
+
+            build_proc [label="build_processor.py", fillcolor="#ffcc80"];
+            deploy_proc [label="deploy_processor.py", fillcolor="#ffcc80"];
+            monitor_proc [label="monitor_processor.py", fillcolor="#ffcc80"];
+            install_deps_proc [label="install_deps_processor.py", fillcolor="#ffcc80"];
+        }
+
+        subgraph cluster_device {
+            label="Device Management";
+            style="rounded";
+            fillcolor="#ffe0b2";
+
+            device_manager [label="device_manager.py", fillcolor="#ffcc80"];
+            device_discovery [label="device_discovery.py", fillcolor="#ffcc80"];
+            shared_serial [label="shared_serial.py", fillcolor="#ffcc80"];
+        }
+
+        process_tracker [label="process_tracker.py", fillcolor="#ffcc80"];
+    }
+
+    // =====================
+    // Config Layer
+    // =====================
+    subgraph cluster_config {
+        label="Config Layer";
+        style="rounded,filled";
+        fillcolor="#fffde7";
+
+        ini_parser [label="ini_parser.py\n(PlatformIOConfig)", fillcolor="#fff9c4"];
+        board_config [label="board_config.py", fillcolor="#fff9c4"];
+        board_loader [label="board_loader.py", fillcolor="#fff9c4"];
+        mcu_specs [label="mcu_specs.py", fillcolor="#fff9c4"];
+    }
+
+    // =====================
+    // Build Layer
+    // =====================
+    subgraph cluster_build {
+        label="Build Layer";
+        style="rounded,filled";
+        fillcolor="#e8f5e9";
+
+        subgraph cluster_orchestrators {
+            label="Platform Orchestrators";
+            style="rounded";
+            fillcolor="#c8e6c9";
+
+            orchestrator [label="orchestrator.py\n(IBuildOrchestrator)", fillcolor="#a5d6a7"];
+            orchestrator_avr [label="orchestrator_avr.py", fillcolor="#a5d6a7"];
+            orchestrator_esp32 [label="orchestrator_esp32.py", fillcolor="#a5d6a7"];
+            orchestrator_rp2040 [label="orchestrator_rp2040.py", fillcolor="#a5d6a7"];
+            orchestrator_stm32 [label="orchestrator_stm32.py", fillcolor="#a5d6a7"];
+            orchestrator_teensy [label="orchestrator_teensy.py", fillcolor="#a5d6a7"];
+        }
+
+        subgraph cluster_compile {
+            label="Compilation";
+            style="rounded";
+            fillcolor="#c8e6c9";
+
+            source_scanner [label="source_scanner.py", fillcolor="#a5d6a7"];
+            compiler [label="compiler.py", fillcolor="#a5d6a7"];
+            configurable_compiler [label="configurable_compiler.py", fillcolor="#a5d6a7"];
+            compilation_executor [label="compilation_executor.py", fillcolor="#a5d6a7"];
+            flag_builder [label="flag_builder.py", fillcolor="#a5d6a7"];
+        }
+
+        subgraph cluster_link {
+            label="Linking";
+            style="rounded";
+            fillcolor="#c8e6c9";
+
+            linker [label="linker.py", fillcolor="#a5d6a7"];
+            configurable_linker [label="configurable_linker.py", fillcolor="#a5d6a7"];
+            archive_creator [label="archive_creator.py", fillcolor="#a5d6a7"];
+            binary_generator [label="binary_generator.py", fillcolor="#a5d6a7"];
+        }
+
+        build_state [label="build_state.py\n(BuildStateTracker)", fillcolor="#a5d6a7"];
+    }
+
+    // =====================
+    // Packages Layer
+    // =====================
+    subgraph cluster_packages {
+        label="Packages Layer";
+        style="rounded,filled";
+        fillcolor="#f3e5f5";
+
+        subgraph cluster_cache {
+            label="Cache & Download";
+            style="rounded";
+            fillcolor="#e1bee7";
+
+            cache [label="cache.py\n(Cache)", fillcolor="#ce93d8"];
+            downloader [label="downloader.py", fillcolor="#ce93d8"];
+            fingerprint [label="fingerprint.py", fillcolor="#ce93d8"];
+        }
+
+        subgraph cluster_toolchains {
+            label="Toolchains";
+            style="rounded";
+            fillcolor="#e1bee7";
+
+            toolchain [label="toolchain.py\n(AVR)", fillcolor="#ce93d8"];
+            toolchain_esp32 [label="toolchain_esp32.py", fillcolor="#ce93d8"];
+            toolchain_rp2040 [label="toolchain_rp2040.py", fillcolor="#ce93d8"];
+            toolchain_stm32 [label="toolchain_stm32.py", fillcolor="#ce93d8"];
+            toolchain_teensy [label="toolchain_teensy.py", fillcolor="#ce93d8"];
+        }
+
+        subgraph cluster_frameworks {
+            label="Frameworks";
+            style="rounded";
+            fillcolor="#e1bee7";
+
+            arduino_core [label="arduino_core.py", fillcolor="#ce93d8"];
+            framework_esp32 [label="framework_esp32.py", fillcolor="#ce93d8"];
+            framework_rp2040 [label="framework_rp2040.py", fillcolor="#ce93d8"];
+            framework_stm32 [label="framework_stm32.py", fillcolor="#ce93d8"];
+        }
+
+        subgraph cluster_libraries {
+            label="Libraries";
+            style="rounded";
+            fillcolor="#e1bee7";
+
+            library_manager [label="library_manager.py", fillcolor="#ce93d8"];
+            library_compiler [label="library_compiler.py", fillcolor="#ce93d8"];
+            github_utils [label="github_utils.py", fillcolor="#ce93d8"];
+            platformio_registry [label="platformio_registry.py", fillcolor="#ce93d8"];
+        }
+    }
+
+    // =====================
+    // Deploy Layer
+    // =====================
+    subgraph cluster_deploy {
+        label="Deploy Layer";
+        style="rounded,filled";
+        fillcolor="#ffebee";
+
+        deployer [label="deployer.py\n(IDeployer)", fillcolor="#ffcdd2"];
+        deployer_esp32 [label="deployer_esp32.py\n(esptool)", fillcolor="#ffcdd2"];
+        monitor [label="monitor.py\n(Serial Monitor)", fillcolor="#ffcdd2"];
+        qemu_runner [label="qemu_runner.py\n(Emulator)", fillcolor="#ffcdd2"];
+    }
+
+    // =====================
+    // Ledger Layer
+    // =====================
+    subgraph cluster_ledger {
+        label="Ledger Layer";
+        style="rounded,filled";
+        fillcolor="#eceff1";
+
+        board_ledger [label="board_ledger.py", fillcolor="#cfd8dc"];
+        firmware_ledger [label="firmware_ledger.py\n(in daemon)", fillcolor="#cfd8dc"];
+    }
+
+    // =====================
+    // External Dependencies
+    // =====================
+    subgraph cluster_external {
+        label="External";
+        style="rounded,filled";
+        fillcolor="#fafafa";
+
+        esptool [label="esptool\n(ESP32 Flash)", shape=ellipse, fillcolor="#e0e0e0"];
+        avrdude [label="avrdude\n(AVR Flash)", shape=ellipse, fillcolor="#e0e0e0"];
+        pyserial [label="pyserial\n(Serial I/O)", shape=ellipse, fillcolor="#e0e0e0"];
+        docker [label="Docker\n(QEMU)", shape=ellipse, fillcolor="#e0e0e0"];
+    }
+
+    // =====================
+    // Edges - Main Flow
+    // =====================
+
+    // CLI to Daemon
+    cli -> client [label="request"];
+    client -> daemon [label="IPC\n(file-based)", style=dashed];
+
+    // CLI helpers
+    cli -> cli_utils;
+
+    // Daemon internal
+    daemon -> build_proc;
+    daemon -> deploy_proc;
+    daemon -> monitor_proc;
+    daemon -> install_deps_proc;
+    daemon -> lock_manager [label="acquire/release"];
+    daemon -> device_manager;
+    daemon -> process_tracker;
+    daemon -> status_manager;
+
+    device_manager -> device_discovery;
+    device_manager -> shared_serial;
+
+    // Build processor to orchestrators
+    build_proc -> orchestrator [lhead=cluster_orchestrators];
+
+    // Orchestrator hierarchy
+    orchestrator -> orchestrator_avr [style=dashed, label="implements"];
+    orchestrator -> orchestrator_esp32 [style=dashed];
+    orchestrator -> orchestrator_rp2040 [style=dashed];
+    orchestrator -> orchestrator_stm32 [style=dashed];
+    orchestrator -> orchestrator_teensy [style=dashed];
+
+    // Orchestrators use config
+    orchestrator_esp32 -> ini_parser;
+    orchestrator_avr -> ini_parser;
+    ini_parser -> board_config;
+    board_config -> board_loader;
+    board_loader -> mcu_specs;
+
+    // Orchestrators use packages
+    orchestrator_esp32 -> cache;
+    orchestrator_esp32 -> toolchain_esp32;
+    orchestrator_esp32 -> framework_esp32;
+    orchestrator_avr -> toolchain;
+    orchestrator_avr -> arduino_core;
+
+    // Orchestrators use build components
+    orchestrator_esp32 -> source_scanner;
+    orchestrator_esp32 -> configurable_compiler;
+    orchestrator_esp32 -> configurable_linker;
+    orchestrator_esp32 -> binary_generator;
+    orchestrator_esp32 -> build_state;
+
+    orchestrator_avr -> source_scanner;
+    orchestrator_avr -> compiler;
+    orchestrator_avr -> linker;
+
+    // Compilation flow
+    source_scanner -> compiler;
+    compiler -> compilation_executor;
+    compilation_executor -> flag_builder;
+    configurable_compiler -> compilation_executor;
+
+    // Linking flow
+    compiler -> linker;
+    linker -> archive_creator;
+    linker -> binary_generator;
+    configurable_linker -> binary_generator;
+
+    // Package management
+    cache -> downloader;
+    downloader -> fingerprint;
+    toolchain -> downloader;
+    toolchain_esp32 -> downloader;
+    arduino_core -> downloader;
+    framework_esp32 -> downloader;
+
+    // Library management
+    library_manager -> downloader;
+    library_manager -> library_compiler;
+    library_manager -> github_utils;
+    library_manager -> platformio_registry;
+    orchestrator_esp32 -> library_manager;
+    orchestrator_avr -> library_manager;
+
+    // Deploy processor to deployers
+    deploy_proc -> deployer [lhead=cluster_deploy];
+    deployer -> deployer_esp32 [style=dashed, label="implements"];
+
+    // Monitor processor
+    monitor_proc -> monitor;
+    monitor_proc -> shared_serial;
+
+    // External tools
+    deployer_esp32 -> esptool;
+    deployer -> avrdude;
+    monitor -> pyserial;
+    qemu_runner -> docker;
+
+    // Ledger connections
+    daemon -> firmware_ledger;
+    build_proc -> board_ledger;
+}
