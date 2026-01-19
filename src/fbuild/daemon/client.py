@@ -667,6 +667,7 @@ class DeployRequestHandler(BaseRequestHandler):
         monitor_halt_on_error: str | None = None,
         monitor_halt_on_success: str | None = None,
         monitor_expect: str | None = None,
+        monitor_show_timestamp: bool = False,
         timeout: float = 1800,
     ):
         """Initialize deploy request handler.
@@ -681,6 +682,7 @@ class DeployRequestHandler(BaseRequestHandler):
             monitor_halt_on_error: Pattern to halt on error
             monitor_halt_on_success: Pattern to halt on success
             monitor_expect: Expected pattern to check
+            monitor_show_timestamp: Whether to prefix output lines with elapsed time
             timeout: Maximum wait time in seconds
         """
         super().__init__(project_dir, environment, timeout)
@@ -691,6 +693,7 @@ class DeployRequestHandler(BaseRequestHandler):
         self.monitor_halt_on_error = monitor_halt_on_error
         self.monitor_halt_on_success = monitor_halt_on_success
         self.monitor_expect = monitor_expect
+        self.monitor_show_timestamp = monitor_show_timestamp
 
     def create_request(self) -> DeployRequest:
         """Create deploy request."""
@@ -704,6 +707,7 @@ class DeployRequestHandler(BaseRequestHandler):
             monitor_halt_on_error=self.monitor_halt_on_error,
             monitor_halt_on_success=self.monitor_halt_on_success,
             monitor_expect=self.monitor_expect,
+            monitor_show_timestamp=self.monitor_show_timestamp,
             caller_pid=os.getpid(),
             caller_cwd=os.getcwd(),
         )
@@ -754,6 +758,7 @@ class MonitorRequestHandler(BaseRequestHandler):
         halt_on_success: str | None = None,
         expect: str | None = None,
         timeout: float | None = None,
+        show_timestamp: bool = False,
     ):
         """Initialize monitor request handler.
 
@@ -766,6 +771,7 @@ class MonitorRequestHandler(BaseRequestHandler):
             halt_on_success: Pattern to halt on success
             expect: Expected pattern to check
             timeout: Maximum monitoring time in seconds
+            show_timestamp: Whether to prefix output lines with elapsed time
         """
         super().__init__(project_dir, environment, timeout or 3600)
         self.port = port
@@ -774,6 +780,7 @@ class MonitorRequestHandler(BaseRequestHandler):
         self.halt_on_success = halt_on_success
         self.expect = expect
         self.monitor_timeout = timeout
+        self.show_timestamp = show_timestamp
 
     def create_request(self) -> MonitorRequest:
         """Create monitor request."""
@@ -788,6 +795,7 @@ class MonitorRequestHandler(BaseRequestHandler):
             timeout=self.monitor_timeout,
             caller_pid=os.getpid(),
             caller_cwd=os.getcwd(),
+            show_timestamp=self.show_timestamp,
         )
 
     def get_request_file(self) -> Path:
@@ -919,6 +927,7 @@ def request_deploy(
     monitor_halt_on_error: str | None = None,
     monitor_halt_on_success: str | None = None,
     monitor_expect: str | None = None,
+    monitor_show_timestamp: bool = False,
     timeout: float = 1800,
 ) -> bool:
     """Request a deploy operation from the daemon.
@@ -933,6 +942,7 @@ def request_deploy(
         monitor_halt_on_error: Pattern to halt on error (if monitor_after=True)
         monitor_halt_on_success: Pattern to halt on success (if monitor_after=True)
         monitor_expect: Expected pattern to check at timeout/success (if monitor_after=True)
+        monitor_show_timestamp: Whether to prefix output lines with elapsed time (SS.HH format)
         timeout: Maximum wait time in seconds (default: 30 minutes)
 
     Returns:
@@ -948,6 +958,7 @@ def request_deploy(
         monitor_halt_on_error=monitor_halt_on_error,
         monitor_halt_on_success=monitor_halt_on_success,
         monitor_expect=monitor_expect,
+        monitor_show_timestamp=monitor_show_timestamp,
         timeout=timeout,
     )
     return handler.execute()
@@ -962,6 +973,7 @@ def request_monitor(
     halt_on_success: str | None = None,
     expect: str | None = None,
     timeout: float | None = None,
+    show_timestamp: bool = False,
 ) -> bool:
     """Request a monitor operation from the daemon.
 
@@ -974,6 +986,7 @@ def request_monitor(
         halt_on_success: Pattern to halt on (success detection)
         expect: Expected pattern to check at timeout/success
         timeout: Maximum monitoring time in seconds
+        show_timestamp: Whether to prefix output lines with elapsed time (SS.HH format)
 
     Returns:
         True if monitoring successful, False otherwise
@@ -987,6 +1000,7 @@ def request_monitor(
         halt_on_success=halt_on_success,
         expect=expect,
         timeout=timeout,
+        show_timestamp=show_timestamp,
     )
     return handler.execute()
 

@@ -58,6 +58,7 @@ class MonitorArgs:
     halt_on_success: Optional[str] = None
     expect: Optional[str] = None
     verbose: bool = False
+    timestamp: bool = True
 
 
 def build_command(args: BuildArgs) -> None:
@@ -190,12 +191,14 @@ def deploy_command(args: DeployArgs) -> None:
         monitor_halt_on_error = None
         monitor_halt_on_success = None
         monitor_expect = None
+        monitor_show_timestamp = False
         if monitor_after and args.monitor is not None:
             flags = MonitorFlagParser.parse_monitor_flags(args.monitor)
             monitor_timeout = flags.timeout
             monitor_halt_on_error = flags.halt_on_error
             monitor_halt_on_success = flags.halt_on_success
             monitor_expect = flags.expect
+            monitor_show_timestamp = flags.timestamp
 
         # Use daemon for concurrent deploy management
         success = daemon_client.request_deploy(
@@ -208,6 +211,7 @@ def deploy_command(args: DeployArgs) -> None:
             monitor_halt_on_error=monitor_halt_on_error,
             monitor_halt_on_success=monitor_halt_on_success,
             monitor_expect=monitor_expect,
+            monitor_show_timestamp=monitor_show_timestamp,
             timeout=1800,  # 30 minute timeout for deploy
         )
 
@@ -250,6 +254,7 @@ def monitor_command(args: MonitorArgs) -> None:
             halt_on_success=args.halt_on_success,
             expect=args.expect,
             timeout=args.timeout,
+            show_timestamp=args.timestamp,
         )
 
         if success:
@@ -623,6 +628,12 @@ def main() -> None:
         help="Expected pattern - checked at timeout/success, exit 0 if found, 1 if not (regex)",
     )
     monitor_parser.add_argument(
+        "--no-timestamp",
+        action="store_true",
+        dest="no_timestamp",
+        help="Disable timestamp prefix on each output line (timestamps enabled by default)",
+    )
+    monitor_parser.add_argument(
         "-v",
         "--verbose",
         action="store_true",
@@ -695,6 +706,7 @@ def main() -> None:
             halt_on_success=parsed_args.halt_on_success,
             expect=parsed_args.expect,
             verbose=parsed_args.verbose,
+            timestamp=not parsed_args.no_timestamp,
         )
         monitor_command(monitor_args)
     elif parsed_args.command == "daemon":

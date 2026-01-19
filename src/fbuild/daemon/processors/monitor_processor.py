@@ -274,6 +274,7 @@ class MonitorRequestProcessor(RequestProcessor):
             expect=request.expect,
             output_file=output_file,
             summary_file=summary_file,
+            timestamp=request.show_timestamp,
         )
 
         if exit_code == 0:

@@ -68,6 +68,7 @@ class DeployRequest:
         monitor_halt_on_error: Pattern to halt on error (if monitor_after=True)
         monitor_halt_on_success: Pattern to halt on success (if monitor_after=True)
         monitor_expect: Expected pattern to check at timeout/success (if monitor_after=True)
+        monitor_show_timestamp: Whether to prefix monitor output lines with elapsed time
         caller_pid: Process ID of requesting client
         caller_cwd: Working directory of requesting client
         timestamp: Unix timestamp when request was created
@@ -85,6 +86,7 @@ class DeployRequest:
     monitor_expect: str | None
     caller_pid: int
     caller_cwd: str
+    monitor_show_timestamp: bool = False
     timestamp: float = field(default_factory=time.time)
     request_id: str = field(default_factory=lambda: f"deploy_{int(time.time() * 1000)}")
 
@@ -107,6 +109,7 @@ class DeployRequest:
             monitor_expect=data.get("monitor_expect"),
             caller_pid=data["caller_pid"],
             caller_cwd=data["caller_cwd"],
+            monitor_show_timestamp=data.get("monitor_show_timestamp", False),
             timestamp=data.get("timestamp", time.time()),
             request_id=data.get("request_id", f"deploy_{int(time.time() * 1000)}"),
         )
@@ -127,6 +130,7 @@ class MonitorRequest:
         timeout: Maximum monitoring time in seconds
         caller_pid: Process ID of requesting client
         caller_cwd: Working directory of requesting client
+        show_timestamp: Whether to prefix output lines with elapsed time (SS.HH format)
         timestamp: Unix timestamp when request was created
         request_id: Unique identifier for this request
     """
@@ -141,6 +145,7 @@ class MonitorRequest:
     timeout: float | None
     caller_pid: int
     caller_cwd: str
+    show_timestamp: bool = False
     timestamp: float = field(default_factory=time.time)
     request_id: str = field(default_factory=lambda: f"monitor_{int(time.time() * 1000)}")
 
@@ -162,6 +167,7 @@ class MonitorRequest:
             timeout=data.get("timeout"),
             caller_pid=data["caller_pid"],
             caller_cwd=data["caller_cwd"],
+            show_timestamp=data.get("show_timestamp", False),
             timestamp=data.get("timestamp", time.time()),
             request_id=data.get("request_id", f"monitor_{int(time.time() * 1000)}"),
         )

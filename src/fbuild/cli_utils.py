@@ -59,6 +59,7 @@ class MonitorFlags:
     halt_on_success: Optional[str] = None
     expect: Optional[str] = None
     baud: int = 115200
+    timestamp: bool = True
 
 
 class EnvironmentDetector:
@@ -105,7 +106,7 @@ class MonitorFlagParser:
 
         Args:
             flags_string: String containing monitor flags
-                (e.g., "--timeout 60 --halt-on-success 'TEST PASSED'")
+                (e.g., "--timeout 60 --halt-on-success 'TEST PASSED' --no-timestamp")
 
         Returns:
             MonitorFlags object with parsed values
@@ -131,6 +132,9 @@ class MonitorFlagParser:
             elif arg == "--baud" and i + 1 < len(monitor_args):
                 flags.baud = int(monitor_args[i + 1])
                 i += 2
+            elif arg == "--no-timestamp":
+                flags.timestamp = False
+                i += 1
             else:
                 i += 1
 

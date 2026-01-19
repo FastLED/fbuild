@@ -86,6 +86,20 @@ class SerialMonitor:
             if self.verbose:
                 print(f"Warning: Could not write summary file: {e}")
 
+    def _format_timestamp(self, start_time: float) -> str:
+        """Format elapsed time as timestamp prefix.
+
+        Args:
+            start_time: Start time from time.time()
+
+        Returns:
+            Formatted timestamp string in SS.HH format (seconds.hundredths)
+        """
+        elapsed = time.time() - start_time
+        seconds = int(elapsed)
+        hundredths = int((elapsed - seconds) * 100)
+        return f"{seconds:02d}.{hundredths:02d}"
+
     def monitor(
         self,
         project_dir: Path,
@@ -98,6 +112,7 @@ class SerialMonitor:
         expect: Optional[str] = None,
         output_file: Optional[Path] = None,
         summary_file: Optional[Path] = None,
+        timestamp: bool = False,
     ) -> int:
         """Monitor serial output from device.
 
@@ -112,6 +127,7 @@ class SerialMonitor:
             expect: Expected pattern - checked at timeout/success for exit code
             output_file: Optional file to write serial output to (for client streaming)
             summary_file: Optional file to write summary JSON to (for client display)
+            timestamp: Whether to prefix each line with elapsed time (SS.HH format)
 
         Returns:
             Exit code (0 for success, 1 for error)
@@ -271,14 +287,22 @@ class SerialMonitor:
                         except Exception:
                             text = str(line)
 
-                        # Print the line
-                        safe_print(text)
+                        # Print the line with optional timestamp prefix
+                        if timestamp:
+                            ts_prefix = self._format_timestamp(start_time)
+                            safe_print(f"{ts_prefix} {text}")
+                        else:
+                            safe_print(text)
                         sys.stdout.flush()
 
-                        # Write to output file if specified
+                        # Write to output file if specified (with timestamp if enabled)
                         if output_fp:
                             try:
-                                output_fp.write(text + "\n")
+                                if timestamp:
+                                    ts_prefix = self._format_timestamp(start_time)
+                                    output_fp.write(f"{ts_prefix} {text}\n")
+                                else:
+                                    output_fp.write(text + "\n")
                                 output_fp.flush()
                             except KeyboardInterrupt:  # noqa: KBI002
                                 raise

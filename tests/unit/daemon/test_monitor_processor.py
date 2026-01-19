@@ -26,6 +26,9 @@ def mock_context():
     context.lock_manager = MagicMock()
     context.operation_registry = MagicMock()
     context.port_state_manager = MagicMock()
+    context.shared_serial_manager = MagicMock()
+    # Return None from get_session_info to indicate port is not already managed
+    context.shared_serial_manager.get_session_info.return_value = None
     return context
 
 

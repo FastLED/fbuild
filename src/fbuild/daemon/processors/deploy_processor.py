@@ -580,6 +580,7 @@ class DeployRequestProcessor(RequestProcessor):
             timeout=request.monitor_timeout,
             caller_pid=request.caller_pid,
             caller_cwd=request.caller_cwd,
+            show_timestamp=request.monitor_show_timestamp,
             request_id=request.request_id,
         )
 
