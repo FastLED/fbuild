@@ -2,22 +2,27 @@
 
 This module tracks build configuration state to detect when builds need to be
 invalidated due to changes in:
+- fbuild version (automatic invalidation on version updates)
 - platformio.ini configuration
 - Framework versions
 - Platform versions
 - Toolchain versions
 - Library dependencies
+- Source files (.ino, .cpp, .c, .h)
 
 Design:
     - Stores build state metadata in .fbuild/build/{env_name}/build_state.json
     - Compares current state with saved state to detect changes
     - Provides clear reasons when invalidation is needed
+    - Version tracking ensures caches are invalidated when fbuild is updated
 """
 
 import hashlib
 import json
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
+
+from fbuild import __version__ as FBUILD_VERSION  # noqa: E402
 
 
 class BuildStateError(Exception):
@@ -39,6 +44,8 @@ class BuildState:
         platform_version: Optional[str] = None,
         build_flags: Optional[List[str]] = None,
         lib_deps: Optional[List[str]] = None,
+        source_files_hash: Optional[str] = None,
+        fbuild_version: Optional[str] = None,
     ):
         """Initialize build state.
 
@@ -52,6 +59,8 @@ class BuildState:
             platform_version: Version of platform package
             build_flags: List of build flags from platformio.ini
             lib_deps: List of library dependencies from platformio.ini
+            source_files_hash: Combined hash of all source files (.ino, .cpp, .c, .h)
+            fbuild_version: Version of fbuild (for automatic cache invalidation on updates)
         """
         self.platformio_ini_hash = platformio_ini_hash
         self.platform = platform
@@ -62,6 +71,8 @@ class BuildState:
         self.platform_version = platform_version
         self.build_flags = build_flags or []
         self.lib_deps = lib_deps or []
+        self.source_files_hash = source_files_hash
+        self.fbuild_version = fbuild_version or FBUILD_VERSION
 
     def to_dict(self) -> Dict:
         """Convert to dictionary for JSON serialization."""
@@ -75,6 +86,8 @@ class BuildState:
             "platform_version": self.platform_version,
             "build_flags": self.build_flags,
             "lib_deps": self.lib_deps,
+            "source_files_hash": self.source_files_hash,
+            "fbuild_version": self.fbuild_version,
         }
 
     @classmethod
@@ -90,6 +103,8 @@ class BuildState:
             platform_version=data.get("platform_version"),
             build_flags=data.get("build_flags", []),
             lib_deps=data.get("lib_deps", []),
+            source_files_hash=data.get("source_files_hash"),
+            fbuild_version=data.get("fbuild_version"),
         )
 
     def save(self, path: Path) -> None:
@@ -139,6 +154,12 @@ class BuildState:
 
         reasons = []
 
+        # Check fbuild version changes (first - most important for cache invalidation)
+        if self.fbuild_version != other.fbuild_version:
+            reasons.append(
+                f"fbuild version changed: {other.fbuild_version} -> {self.fbuild_version}"
+            )
+
         # Check platformio.ini changes
         if self.platformio_ini_hash != other.platformio_ini_hash:
             reasons.append("platformio.ini has changed")
@@ -181,6 +202,10 @@ class BuildState:
         if set(self.lib_deps) != set(other.lib_deps):
             reasons.append("Library dependencies have changed")
 
+        # Check source files changes
+        if self.source_files_hash != other.source_files_hash:
+            reasons.append("Source files have changed")
+
         needs_rebuild = len(reasons) > 0
         return needs_rebuild, reasons
 
@@ -213,6 +238,57 @@ class BuildStateTracker:
                 sha256.update(chunk)
         return sha256.hexdigest()
 
+    @staticmethod
+    def hash_source_files(source_dir: Path) -> str:
+        """Calculate combined SHA256 hash of all source files in a directory.
+
+        Scans for .ino, .cpp, .c, .h, .hpp files and creates a combined hash
+        based on file paths (sorted) and their contents. This ensures that
+        any change to source files invalidates the build cache.
+
+        Args:
+            source_dir: Directory to scan for source files
+
+        Returns:
+            SHA256 hash as hex string representing all source files
+        """
+        sha256 = hashlib.sha256()
+        source_extensions = {".ino", ".cpp", ".c", ".h", ".hpp", ".cc", ".cxx"}
+
+        # Find all source files recursively
+        source_files = []
+        if source_dir.exists():
+            for ext in source_extensions:
+                source_files.extend(source_dir.rglob(f"*{ext}"))
+
+        # Sort by path for deterministic ordering
+        source_files = sorted(source_files)
+
+        # Hash each file's path and content
+        for file_path in source_files:
+            # Include relative path in hash (so renames are detected)
+            try:
+                rel_path = file_path.relative_to(source_dir)
+            except ValueError:
+                rel_path = file_path
+            sha256.update(str(rel_path).encode("utf-8"))
+
+            # Hash file content
+            try:
+                with open(file_path, "rb") as f:
+                    for chunk in iter(lambda: f.read(8192), b""):
+                        sha256.update(chunk)
+            except (OSError, IOError):
+                # If we can't read a file, include its path and mtime
+                # This ensures the hash changes if the file becomes readable
+                try:
+                    mtime = file_path.stat().st_mtime
+                    sha256.update(f"UNREADABLE:{mtime}".encode("utf-8"))
+                except (OSError, IOError):
+                    sha256.update(b"MISSING")
+
+        return sha256.hexdigest()
+
     def create_state(
         self,
         platformio_ini_path: Path,
@@ -224,6 +300,7 @@ class BuildStateTracker:
         platform_version: Optional[str] = None,
         build_flags: Optional[List[str]] = None,
         lib_deps: Optional[List[str]] = None,
+        source_dir: Optional[Path] = None,
     ) -> BuildState:
         """Create a BuildState from current configuration.
 
@@ -237,12 +314,18 @@ class BuildStateTracker:
             platform_version: Platform version
             build_flags: Build flags from platformio.ini
             lib_deps: Library dependencies from platformio.ini
+            source_dir: Directory containing source files (.ino, .cpp, .c, .h)
 
         Returns:
             BuildState instance representing current configuration
         """
         # Hash platformio.ini
         ini_hash = self.hash_file(platformio_ini_path)
+
+        # Hash source files if directory provided
+        source_hash = None
+        if source_dir is not None:
+            source_hash = self.hash_source_files(source_dir)
 
         return BuildState(
             platformio_ini_hash=ini_hash,
@@ -254,6 +337,7 @@ class BuildStateTracker:
             platform_version=platform_version,
             build_flags=build_flags,
             lib_deps=lib_deps,
+            source_files_hash=source_hash,
         )
 
     def load_previous_state(self) -> Optional[BuildState]:
@@ -283,6 +367,7 @@ class BuildStateTracker:
         platform_version: Optional[str] = None,
         build_flags: Optional[List[str]] = None,
         lib_deps: Optional[List[str]] = None,
+        source_dir: Optional[Path] = None,
     ) -> Tuple[bool, List[str], BuildState]:
         """Check if build cache should be invalidated.
 
@@ -296,6 +381,7 @@ class BuildStateTracker:
             platform_version: Current platform version
             build_flags: Current build flags
             lib_deps: Current library dependencies
+            source_dir: Directory containing source files (.ino, .cpp, .c, .h)
 
         Returns:
             Tuple of (needs_rebuild, reasons, current_state)
@@ -314,6 +400,7 @@ class BuildStateTracker:
             platform_version=platform_version,
             build_flags=build_flags,
             lib_deps=lib_deps,
+            source_dir=source_dir,
         )
 
         # Load previous state

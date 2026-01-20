@@ -232,6 +232,13 @@ class OrchestratorESP32(IBuildOrchestrator):
             # Setup build directory
             build_dir = self._setup_build_directory(env_name, clean, verbose)
 
+            # Determine source directory for cache invalidation
+            # This is computed early to include source file changes in cache key
+            from ..config import PlatformIOConfig
+            config_for_src_dir = PlatformIOConfig(project_dir / "platformio.ini")
+            src_dir_override = config_for_src_dir.get_src_dir()
+            source_dir = project_dir / src_dir_override if src_dir_override else project_dir
+
             # Check build state and invalidate cache if needed
             log_detail("Checking build configuration state...", verbose_only=True)
 
@@ -246,6 +253,7 @@ class OrchestratorESP32(IBuildOrchestrator):
                 platform_version=platform.version,
                 build_flags=build_flags,
                 lib_deps=lib_deps,
+                source_dir=source_dir,
             )
 
             if needs_rebuild:
@@ -345,10 +353,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             if library_include_paths:
                 compiler.add_library_includes(library_include_paths)
 
-            # Get src_dir override from platformio.ini
-            from ..config import PlatformIOConfig
-            config_for_src_dir = PlatformIOConfig(project_dir / "platformio.ini")
-            src_dir_override = config_for_src_dir.get_src_dir()
+            # src_dir_override was computed earlier for cache invalidation
 
             # Find and compile sketch
             sketch_obj_files = self._compile_sketch(project_dir, compiler, start_time, verbose, src_dir_override)
