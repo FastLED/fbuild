@@ -41,13 +41,23 @@ class SizeInfo:
         return None
 
     @staticmethod
-    def parse(avr_size_output: str, max_flash: Optional[int] = None,
+    def parse(size_output: str, max_flash: Optional[int] = None,
               max_ram: Optional[int] = None) -> 'SizeInfo':
         """
-        Parse avr-size output.
+        Parse size tool output in either Berkeley or AVR format.
+
+        Supports two output formats:
+        1. Berkeley format (default for ESP32):
+           text    data     bss     dec     hex filename
+           123456   12345    4567  140368   2242c firmware.elf
+
+        2. AVR section format (avr-size -A):
+           .text            13558          0
+           .data               50   8388864
+           .bss               580   8388914
 
         Args:
-            avr_size_output: Output from `avr-size -A` command
+            size_output: Output from size command (Berkeley or AVR format)
             max_flash: Maximum flash size for board
             max_ram: Maximum RAM size for board
 
@@ -58,8 +68,37 @@ class SizeInfo:
         data = 0
         bss = 0
 
-        for line in avr_size_output.split('\n'):
-            parts = line.split()
+        lines = size_output.strip().split('\n')
+
+        # Try Berkeley format first (ESP32, ARM, etc.)
+        # Format: "   text    data     bss     dec     hex filename"
+        # Values: " 123456   12345    4567  140368   2242c firmware.elf"
+        for line in lines:
+            # Skip header line that contains column names
+            stripped = line.strip()
+            if stripped.startswith('text') or not stripped:
+                continue
+
+            # Try to parse as Berkeley format (6 columns: text, data, bss, dec, hex, filename)
+            parts = stripped.split()
+            if len(parts) >= 6:
+                try:
+                    # Berkeley format has: text, data, bss, dec_total, hex_total, filename
+                    maybe_text = int(parts[0])
+                    maybe_data = int(parts[1])
+                    maybe_bss = int(parts[2])
+                    # Validate by checking if dec column matches
+                    maybe_dec = int(parts[3])
+                    if maybe_dec == maybe_text + maybe_data + maybe_bss:
+                        # This is Berkeley format
+                        text = maybe_text
+                        data = maybe_data
+                        bss = maybe_bss
+                        break
+                except (ValueError, IndexError):
+                    pass
+
+            # Try AVR section format (section name, size, address)
             if len(parts) >= 2:
                 section = parts[0]
                 try:

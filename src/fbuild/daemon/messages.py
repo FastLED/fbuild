@@ -47,6 +47,7 @@ class OperationType(Enum):
     DEPLOY = "deploy"
     MONITOR = "monitor"
     BUILD_AND_DEPLOY = "build_and_deploy"
+    INSTALL_DEPENDENCIES = "install_dependencies"
 
     @classmethod
     def from_string(cls, value: str) -> "OperationType":

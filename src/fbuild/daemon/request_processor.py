@@ -22,6 +22,45 @@ if TYPE_CHECKING:
     from fbuild.daemon.messages import BuildRequest, DeployRequest, MonitorRequest
 
 
+# Mapping from OperationType to DaemonState for operation start
+_OPERATION_TO_STATE: dict[OperationType, DaemonState] = {
+    OperationType.BUILD: DaemonState.BUILDING,
+    OperationType.DEPLOY: DaemonState.DEPLOYING,
+    OperationType.BUILD_AND_DEPLOY: DaemonState.DEPLOYING,
+    OperationType.MONITOR: DaemonState.MONITORING,
+    OperationType.INSTALL_DEPENDENCIES: DaemonState.BUILDING,
+}
+
+# Mapping from OperationType to message templates
+_OPERATION_MESSAGES: dict[OperationType, dict[str, str]] = {
+    OperationType.BUILD: {
+        "starting": "Building {env}",
+        "success": "Build successful",
+        "failure": "Build failed",
+    },
+    OperationType.DEPLOY: {
+        "starting": "Deploying {env}",
+        "success": "Deploy successful",
+        "failure": "Deploy failed",
+    },
+    OperationType.BUILD_AND_DEPLOY: {
+        "starting": "Deploying {env}",
+        "success": "Deploy successful",
+        "failure": "Deploy failed",
+    },
+    OperationType.MONITOR: {
+        "starting": "Monitoring {env}",
+        "success": "Monitor completed",
+        "failure": "Monitor failed",
+    },
+    OperationType.INSTALL_DEPENDENCIES: {
+        "starting": "Installing dependencies for {env}",
+        "success": "Dependencies installed",
+        "failure": "Dependency installation failed",
+    },
+}
+
+
 class RequestProcessor(ABC):
     """Abstract base class for processing daemon requests.
 
@@ -122,10 +161,13 @@ class RequestProcessor(ABC):
                 )
 
                 # Execute the operation (implemented by subclass)
+                logging.debug(f"[REQUEST_PROCESSOR] Starting execute_operation for {request.request_id}")
                 success = self.execute_operation(request, context)
+                logging.debug(f"[REQUEST_PROCESSOR] execute_operation returned success={success}")
 
                 # Update final status
                 if success:
+                    logging.debug("[REQUEST_PROCESSOR] Updating status to COMPLETED")
                     self._update_status(
                         context,
                         DaemonState.COMPLETED,
@@ -134,7 +176,9 @@ class RequestProcessor(ABC):
                         exit_code=0,
                         operation_in_progress=False,
                     )
+                    logging.debug("[REQUEST_PROCESSOR] Status updated to COMPLETED")
                 else:
+                    logging.debug("[REQUEST_PROCESSOR] Updating status to FAILED")
                     self._update_status(
                         context,
                         DaemonState.FAILED,
@@ -143,6 +187,7 @@ class RequestProcessor(ABC):
                         exit_code=1,
                         operation_in_progress=False,
                     )
+                    logging.debug("[REQUEST_PROCESSOR] Status updated to FAILED")
 
                 result = success
 
@@ -173,8 +218,10 @@ class RequestProcessor(ABC):
         # After locks are released (ExitStack has exited), update status to reflect
         # the new lock state. This ensures the status file shows locks as released.
         # We read the current status and re-write it to capture the updated lock state.
+        logging.debug(f"[REQUEST_PROCESSOR] Locks released, updating status for lock state (result={result})")
         try:
             current_status = context.status_manager.read_status()
+            logging.debug(f"[REQUEST_PROCESSOR] Read current status: state={current_status.state}, message={current_status.message}")
             context.status_manager.update_status(
                 state=current_status.state,
                 message=current_status.message,
@@ -200,6 +247,7 @@ class RequestProcessor(ABC):
             _thread.interrupt_main()
             raise exception_to_reraise
 
+        logging.debug(f"[REQUEST_PROCESSOR] process_request completed, returning result={result}")
         return result
 
     @abstractmethod
@@ -288,20 +336,10 @@ class RequestProcessor(ABC):
     def get_starting_state(self) -> DaemonState:
         """Get the daemon state when operation starts.
 
-        Default implementation uses BUILDING. Override for different operations.
-
         Returns:
             DaemonState enum value for operation start
         """
-        operation_type = self.get_operation_type()
-        if operation_type == OperationType.BUILD:
-            return DaemonState.BUILDING
-        elif operation_type == OperationType.DEPLOY or operation_type == OperationType.BUILD_AND_DEPLOY:
-            return DaemonState.DEPLOYING
-        elif operation_type == OperationType.MONITOR:
-            return DaemonState.MONITORING
-        else:
-            return DaemonState.BUILDING
+        return _OPERATION_TO_STATE.get(self.get_operation_type(), DaemonState.BUILDING)
 
     def get_starting_message(self, request: "BuildRequest | DeployRequest | MonitorRequest") -> str:
         """Get the status message when operation starts.
@@ -312,15 +350,9 @@ class RequestProcessor(ABC):
         Returns:
             Human-readable status message
         """
-        operation_type = self.get_operation_type()
-        if operation_type == OperationType.BUILD:
-            return f"Building {request.environment}"
-        elif operation_type == OperationType.DEPLOY or operation_type == OperationType.BUILD_AND_DEPLOY:
-            return f"Deploying {request.environment}"
-        elif operation_type == OperationType.MONITOR:
-            return f"Monitoring {request.environment}"
-        else:
-            return f"Processing {request.environment}"
+        messages = _OPERATION_MESSAGES.get(self.get_operation_type())
+        template = messages["starting"] if messages else "Processing {env}"
+        return template.format(env=request.environment)
 
     def get_success_message(self, request: "BuildRequest | DeployRequest | MonitorRequest") -> str:
         """Get the status message on success.
@@ -331,15 +363,8 @@ class RequestProcessor(ABC):
         Returns:
             Human-readable success message
         """
-        operation_type = self.get_operation_type()
-        if operation_type == OperationType.BUILD:
-            return "Build successful"
-        elif operation_type == OperationType.DEPLOY or operation_type == OperationType.BUILD_AND_DEPLOY:
-            return "Deploy successful"
-        elif operation_type == OperationType.MONITOR:
-            return "Monitor completed"
-        else:
-            return "Operation successful"
+        messages = _OPERATION_MESSAGES.get(self.get_operation_type())
+        return messages["success"] if messages else "Operation successful"
 
     def get_failure_message(self, request: "BuildRequest | DeployRequest | MonitorRequest") -> str:
         """Get the status message on failure.
@@ -350,15 +375,8 @@ class RequestProcessor(ABC):
         Returns:
             Human-readable failure message
         """
-        operation_type = self.get_operation_type()
-        if operation_type == OperationType.BUILD:
-            return "Build failed"
-        elif operation_type == OperationType.DEPLOY or operation_type == OperationType.BUILD_AND_DEPLOY:
-            return "Deploy failed"
-        elif operation_type == OperationType.MONITOR:
-            return "Monitor failed"
-        else:
-            return "Operation failed"
+        messages = _OPERATION_MESSAGES.get(self.get_operation_type())
+        return messages["failure"] if messages else "Operation failed"
 
     def _acquire_locks(
         self,

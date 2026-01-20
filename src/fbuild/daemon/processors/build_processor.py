@@ -19,6 +19,45 @@ if TYPE_CHECKING:
     from fbuild.daemon.messages import BuildRequest
 
 
+# Platform name patterns for normalization
+# Each key is the normalized platform name, values are patterns to match
+_PLATFORM_PATTERNS: dict[str, list[str]] = {
+    "espressif32": ["platform-espressif32", "platformio/espressif32", "espressif32"],
+    "atmelavr": ["platform-atmelavr", "platformio/atmelavr", "atmelavr"],
+    "raspberrypi": ["platform-raspberrypi", "platformio/raspberrypi", "raspberrypi"],
+    "ststm32": ["platform-ststm32", "platformio/ststm32", "ststm32"],
+}
+
+# Mapping from normalized platform name to orchestrator info
+_PLATFORM_ORCHESTRATORS: dict[str, tuple[str, str]] = {
+    "atmelavr": ("fbuild.build.orchestrator_avr", "BuildOrchestratorAVR"),
+    "espressif32": ("fbuild.build.orchestrator_esp32", "OrchestratorESP32"),
+    "raspberrypi": ("fbuild.build.orchestrator_rp2040", "OrchestratorRP2040"),
+    "ststm32": ("fbuild.build.orchestrator_stm32", "OrchestratorSTM32"),
+}
+
+
+def _normalize_platform(platform: str) -> str:
+    """Normalize platform name from various formats.
+
+    Handles:
+    - URL formats: "https://.../platform-espressif32.zip" -> "espressif32"
+    - PlatformIO format: "platformio/espressif32" -> "espressif32"
+    - Direct names: "atmelavr", "espressif32", etc.
+
+    Args:
+        platform: Raw platform string from platformio.ini
+
+    Returns:
+        Normalized platform name
+    """
+    for normalized_name, patterns in _PLATFORM_PATTERNS.items():
+        for pattern in patterns:
+            if pattern in platform or platform == pattern:
+                return normalized_name
+    return platform  # Return as-is if no pattern matches
+
+
 class BuildRequestProcessor(RequestProcessor):
     """Processor for build requests.
 
@@ -110,11 +149,22 @@ class BuildRequestProcessor(RequestProcessor):
             set_output_file(output_file)
             reset_timer()  # Fresh timestamps for this build
 
-            return self._execute_build(request, context)
+            result = self._execute_build(request, context)
+            # Log to stdout after build completes (bypasses output file)
+            import sys
+
+            sys.stdout.write(f"\n[DEBUG] Build execution completed with result={result}\n")
+            sys.stdout.flush()
+            return result
         finally:
             set_output_file(None)  # Always clean up
             if output_file is not None:
                 output_file.close()
+            # Explicit flush to ensure all output is visible
+            import sys
+
+            sys.stdout.flush()
+            sys.stderr.flush()
 
     def _execute_build(self, request: "BuildRequest", context: "DaemonContext") -> bool:
         """Internal build execution logic.
@@ -153,38 +203,17 @@ class BuildRequestProcessor(RequestProcessor):
             logging.error(f"Failed to parse platformio.ini: {e}")
             return False
 
-        # Normalize platform name (handle various platform specification formats)
-        # URL formats: "https://.../platform-espressif32.zip" -> "espressif32"
-        # PlatformIO format: "platformio/espressif32" -> "espressif32"
-        # Direct names: "atmelavr", "espressif32", "ststm32", etc.
-        platform_name = platform
-        if "platform-espressif32" in platform or "platformio/espressif32" in platform or platform == "espressif32":
-            platform_name = "espressif32"
-        elif "platform-atmelavr" in platform or "platformio/atmelavr" in platform or platform == "atmelavr":
-            platform_name = "atmelavr"
-        elif "platform-raspberrypi" in platform or "platformio/raspberrypi" in platform or platform == "raspberrypi":
-            platform_name = "raspberrypi"
-        elif "platform-ststm32" in platform or "platformio/ststm32" in platform or platform == "ststm32":
-            platform_name = "ststm32"
-
+        # Normalize platform name
+        platform_name = _normalize_platform(platform)
         logging.info(f"Normalized platform: {platform_name}")
 
-        # Select orchestrator based on platform
-        if platform_name == "atmelavr":
-            module_name = "fbuild.build.orchestrator_avr"
-            class_name = "BuildOrchestratorAVR"
-        elif platform_name == "espressif32":
-            module_name = "fbuild.build.orchestrator_esp32"
-            class_name = "OrchestratorESP32"
-        elif platform_name == "raspberrypi":
-            module_name = "fbuild.build.orchestrator_rp2040"
-            class_name = "OrchestratorRP2040"
-        elif platform_name == "ststm32":
-            module_name = "fbuild.build.orchestrator_stm32"
-            class_name = "OrchestratorSTM32"
-        else:
+        # Get orchestrator info for the platform
+        orchestrator_info = _PLATFORM_ORCHESTRATORS.get(platform_name)
+        if not orchestrator_info:
             logging.error(f"Unsupported platform: {platform_name}")
             return False
+
+        module_name, class_name = orchestrator_info
 
         # Get fresh orchestrator class after module reload
         # Using direct import would use cached version

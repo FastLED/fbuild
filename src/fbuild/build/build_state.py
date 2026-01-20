@@ -113,9 +113,20 @@ class BuildState:
         Args:
             path: Path to build_state.json file
         """
+        import logging
         path.parent.mkdir(parents=True, exist_ok=True)
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(self.to_dict(), f, indent=2)
+        logging.debug(f"[BUILD_STATE] Saving build state to {path}")
+        try:
+            with open(path, "w", encoding="utf-8") as f:
+                json.dump(self.to_dict(), f, indent=2)
+            logging.debug(f"[BUILD_STATE] Build state saved successfully (fbuild_version={self.fbuild_version})")
+        except KeyboardInterrupt:
+            import _thread
+            _thread.interrupt_main()
+            raise
+        except Exception as e:
+            logging.error(f"[BUILD_STATE] Failed to save build state: {e}")
+            raise
 
     @classmethod
     def load(cls, path: Path) -> Optional["BuildState"]:
@@ -127,15 +138,20 @@ class BuildState:
         Returns:
             BuildState instance or None if file doesn't exist
         """
+        import logging
         if not path.exists():
+            logging.debug(f"[BUILD_STATE] State file does not exist: {path}")
             return None
 
         try:
             with open(path, "r", encoding="utf-8") as f:
                 data = json.load(f)
-            return cls.from_dict(data)
-        except (json.JSONDecodeError, KeyError):
+            state = cls.from_dict(data)
+            logging.debug(f"[BUILD_STATE] Loaded state from {path} (fbuild_version={state.fbuild_version})")
+            return state
+        except (json.JSONDecodeError, KeyError) as e:
             # Corrupted state file - return None to trigger rebuild
+            logging.warning(f"[BUILD_STATE] Corrupted state file {path}: {e}")
             return None
 
     def compare(self, other: Optional["BuildState"]) -> Tuple[bool, List[str]]:
