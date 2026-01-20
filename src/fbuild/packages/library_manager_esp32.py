@@ -12,6 +12,7 @@ import subprocess
 from pathlib import Path
 from typing import List, Optional
 
+from fbuild.output import log_detail
 from fbuild.packages.platformio_registry import (
     LibrarySpec,
     PlatformIORegistry,
@@ -263,7 +264,7 @@ class LibraryManagerESP32:
         if library.exists:
             logger.debug("[LOCAL_LIB] Step 4: Library already exists, returning early")
             if show_progress:
-                print(f"Local library '{spec.name}' already set up")
+                log_detail(f"Local library '{spec.name}' already set up")
             return library
 
         logger.debug("[LOCAL_LIB] Step 5: Library doesn't exist, need to set up")
@@ -308,7 +309,7 @@ class LibraryManagerESP32:
 
         logger.debug("[LOCAL_LIB] Step 15: Library structure validated")
         if show_progress:
-            print(f"Setting up local library '{spec.name}' from {local_path}")
+            log_detail(f"Setting up local library '{spec.name}' from {local_path}")
 
         # Create library directory structure
         logger.debug(f"[LOCAL_LIB] Step 16: Creating library directory: {library.lib_dir}")
@@ -333,7 +334,7 @@ class LibraryManagerESP32:
             # Windows: Always copy to avoid MSYS symlink issues with ESP32 cross-compiler
             logger.debug("[LOCAL_LIB] Step 18: Windows detected, forcing copy (no symlink)")
             if show_progress:
-                print(f"  Copying library files from {source_path}...")
+                log_detail(f"Copying library files from {source_path}...", indent=8)
 
             if library.src_dir.exists():
                 logger.debug("[LOCAL_LIB] Step 19: Removing existing src_dir before copy")
@@ -355,7 +356,7 @@ class LibraryManagerESP32:
             shutil.copytree(source_path, library.src_dir, symlinks=False, ignore=ignore_build_artifacts)
             logger.debug("[LOCAL_LIB] Step 21: Copy completed successfully")
             if show_progress:
-                print(f"  Copied library files to {library.src_dir}")
+                log_detail(f"Copied library files to {library.src_dir}", indent=8)
         else:
             # Unix: Use symlink for efficiency (actual files stay in original location)
             logger.debug(f"[LOCAL_LIB] Step 18: Unix platform, attempting symlink from {library.src_dir} to {source_path}")
@@ -368,12 +369,12 @@ class LibraryManagerESP32:
                 os.symlink(str(source_path), str(library.src_dir), target_is_directory=True)
                 logger.debug("[LOCAL_LIB] Step 21: Symlink created successfully")
                 if show_progress:
-                    print(f"  Created symlink to {source_path}")
+                    log_detail(f"Created symlink to {source_path}", indent=8)
             except OSError as e:
                 # Symlink failed (maybe no permissions), fall back to copying
                 logger.debug(f"[LOCAL_LIB] Step 22: Symlink failed with error: {e}, falling back to copy")
                 if show_progress:
-                    print("  Symlink failed, copying library files...")
+                    log_detail("Symlink failed, copying library files...", indent=8)
 
                 if library.src_dir.exists():
                     logger.debug("[LOCAL_LIB] Step 23: Removing existing src_dir before copy")
@@ -392,7 +393,7 @@ class LibraryManagerESP32:
                 shutil.copytree(source_path, library.src_dir, symlinks=False, ignore=ignore_build_artifacts)
                 logger.debug("[LOCAL_LIB] Step 25: Copy completed successfully")
                 if show_progress:
-                    print(f"  Copied library files to {library.src_dir}")
+                    log_detail(f"Copied library files to {library.src_dir}", indent=8)
 
         # Create library.json metadata
         import json
@@ -439,7 +440,7 @@ class LibraryManagerESP32:
 
         logger.debug("[LOCAL_LIB] Step 31: Local library setup completed successfully")
         if show_progress:
-            print(f"Local library '{spec.name}' set up successfully")
+            log_detail(f"Local library '{spec.name}' set up successfully")
 
         return library
 
@@ -467,7 +468,7 @@ class LibraryManagerESP32:
             # Skip if already downloaded
             if library.exists:
                 if show_progress:
-                    print(f"Library '{spec.name}' already downloaded")
+                    log_detail(f"Library '{spec.name}' already downloaded (cached)")
                 return library
 
             # Download from registry
@@ -537,16 +538,14 @@ class LibraryManagerESP32:
             LibraryErrorESP32: If compilation fails
         """
         try:
-            if show_progress:
-                print(f"Compiling library: {library.name}")
+            log_detail(f"Compiling library: {library.name}")
 
             # Get source files
             sources = library.get_source_files()
             if not sources:
                 raise LibraryErrorESP32(f"No source files found in library '{library.name}'")
 
-            if show_progress:
-                print(f"  Found {len(sources)} source file(s)")
+            log_detail(f"Found {len(sources)} source file(s)", indent=8)
 
             # Get library's own include directories
             lib_includes = library.get_include_dirs()
@@ -591,7 +590,7 @@ class LibraryManagerESP32:
 
                 # Compile
                 if show_progress:
-                    print(f"  Compiling {source.name}...")
+                    log_detail(f"Compiling {source.name}...", indent=8)
 
                 result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8")
 
@@ -603,8 +602,7 @@ class LibraryManagerESP32:
             # Create static archive using ar
             ar_path = self._find_toolchain_ar(toolchain_path)
 
-            if show_progress:
-                print(f"  Creating archive: {library.archive_file.name}")
+            log_detail(f"Creating archive: {library.archive_file.name}", indent=8)
 
             # Remove old archive if exists
             if library.archive_file.exists():
@@ -628,8 +626,7 @@ class LibraryManagerESP32:
             with open(library.build_info_file, "w", encoding="utf-8") as f:
                 json.dump(build_info, f, indent=2)
 
-            if show_progress:
-                print(f"Library '{library.name}' compiled successfully")
+            log_detail(f"Library '{library.name}' compiled successfully")
 
             return library.archive_file
 
@@ -676,8 +673,8 @@ class LibraryManagerESP32:
             needs_rebuild, reason = self.needs_rebuild(library, compiler_flags)
 
             if needs_rebuild:
-                if show_progress and reason:
-                    print(f"Rebuilding library '{library.name}': {reason}")
+                if reason:
+                    log_detail(f"Rebuilding library '{library.name}': {reason}")
 
                 self.compile_library(
                     library,
@@ -687,8 +684,7 @@ class LibraryManagerESP32:
                     show_progress,
                 )
             else:
-                if show_progress:
-                    print(f"Library '{library.name}' is up to date")
+                log_detail(f"Library '{library.name}' is up to date (cached)")
 
             libraries.append(library)
 

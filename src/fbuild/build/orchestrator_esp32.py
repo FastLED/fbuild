@@ -198,7 +198,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             platform_url = self._resolve_platform_url(platform_url)
 
             # Initialize platform
-            log_phase(3, 12, "Initializing ESP32 platform...")
+            log_phase(3, 13, "Initializing ESP32 platform...")
 
             platform = PlatformESP32(self.cache, platform_url, show_progress=True)
             platform.ensure_platform()
@@ -292,7 +292,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             #         print("[Sync Mode] Daemon not available, using synchronous compilation")
 
             # Initialize compiler
-            log_phase(7, 12, "Compiling Arduino core...")
+            log_phase(7, 13, "Compiling Arduino core...")
 
             compiler = ConfigurableCompiler(
                 platform,
@@ -365,7 +365,7 @@ class OrchestratorESP32(IBuildOrchestrator):
                 )
 
             # Initialize linker
-            log_phase(9, 12, "Linking firmware...")
+            log_phase(10, 13, "Linking firmware...")
 
             linker = ConfigurableLinker(
                 platform,
@@ -381,7 +381,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             firmware_elf = linker.link(sketch_obj_files, core_archive, library_archives=library_archives)
 
             # Generate binary
-            log_phase(10, 12, "Generating firmware binary...")
+            log_phase(11, 13, "Generating firmware binary...")
 
             firmware_bin = linker.generate_bin(firmware_elf)
 
@@ -492,7 +492,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         Returns:
             ToolchainESP32 instance or None on failure
         """
-        log_phase(4, 12, "Initializing ESP32 toolchain...")
+        log_phase(4, 13, "Initializing ESP32 toolchain...")
 
         toolchain_url = packages.get("toolchain-riscv32-esp") or packages.get("toolchain-xtensa-esp-elf")
         if not toolchain_url:
@@ -526,7 +526,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         Returns:
             FrameworkESP32 instance or None on failure
         """
-        log_phase(5, 12, "Initializing ESP32 framework...")
+        log_phase(5, 13, "Initializing ESP32 framework...")
 
         framework_url = packages.get("framework-arduinoespressif32")
         libs_url = packages.get("framework-arduinoespressif32-libs", "")
@@ -566,7 +566,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         build_dir = self.cache.get_build_dir(env_name)
 
         if clean and build_dir.exists():
-            log_phase(6, 12, "Cleaning build directory...")
+            log_phase(6, 13, "Cleaning build directory...")
             safe_rmtree(build_dir)
 
         build_dir.mkdir(parents=True, exist_ok=True)
@@ -602,7 +602,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         if not lib_deps:
             return library_archives, library_include_paths
 
-        log_phase(8, 12, "Processing library dependencies...", verbose_only=True)
+        log_phase(8, 13, "Processing library dependencies...")
 
         # Parse lib_deps (can be string or list)
         if isinstance(lib_deps, str):
@@ -668,7 +668,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         Returns:
             List of compiled object files or None if no sketch found
         """
-        log_phase(8, 12, "Compiling sketch...", verbose_only=True)
+        log_phase(9, 13, "Compiling sketch...")
 
         # Determine source directory
         if src_dir_override:
@@ -769,7 +769,7 @@ __attribute__((weak)) bool btInUse(void) {
         if not mcu.startswith("esp32"):
             return bootloader_bin, partitions_bin
 
-        log_phase(11, 12, "Generating bootloader...", verbose_only=True)
+        log_phase(12, 13, "Generating bootloader...")
         try:
             bootloader_bin = linker.generate_bootloader()
         except KeyboardInterrupt as ke:
@@ -779,7 +779,7 @@ __attribute__((weak)) bool btInUse(void) {
         except Exception as e:
             log_warning(f"Could not generate bootloader: {e}")
 
-        log_phase(12, 12, "Generating partition table...", verbose_only=True)
+        log_phase(13, 13, "Generating partition table...")
         try:
             partitions_bin = linker.generate_partition_table()
         except KeyboardInterrupt as ke:
