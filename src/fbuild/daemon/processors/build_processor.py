@@ -33,6 +33,27 @@ class BuildRequestProcessor(RequestProcessor):
         >>> success = processor.process_request(build_request, daemon_context)
     """
 
+    def __init__(self) -> None:
+        """Initialize the build processor."""
+        super().__init__()
+        self._last_error_message: str | None = None
+
+    def get_failure_message(self, request: "BuildRequest") -> str:
+        """Get the status message on failure.
+
+        Returns the actual build error message if available, otherwise
+        returns a generic failure message.
+
+        Args:
+            request: The request that failed
+
+        Returns:
+            Human-readable failure message with actual error details
+        """
+        if self._last_error_message:
+            return f"Build failed: {self._last_error_message}"
+        return "Build failed"
+
     def get_operation_type(self) -> OperationType:
         """Return BUILD operation type."""
         return OperationType.BUILD
@@ -64,6 +85,9 @@ class BuildRequestProcessor(RequestProcessor):
             True if build succeeded, False otherwise
         """
         logging.info(f"Building project: {request.project_dir}")
+
+        # Clear any previous error message
+        self._last_error_message = None
 
         # Reload build modules FIRST to pick up code changes
         # This is critical for development on Windows where daemon caching
@@ -190,6 +214,7 @@ class BuildRequestProcessor(RequestProcessor):
 
         if not build_result.success:
             logging.error(f"Build failed: {build_result.message}")
+            self._last_error_message = build_result.message
             return False
 
         logging.info("Build completed successfully")

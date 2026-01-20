@@ -332,6 +332,8 @@ class ConfigurableLinker(ILinker):
             lib_size = sum(a.stat().st_size for a in library_archives if a.exists())
             obj_size = sum(o.stat().st_size for o in object_files if o.exists())
             log_detail(f"Inputs: core ({format_size(core_size)}) + {len(library_archives)} libs ({format_size(lib_size)}) + {len(object_files)} objects ({format_size(obj_size)})")
+            # Log the actual linker command for debugging
+            log_detail(f"Linker command: {cmd[0]} ... ({len(cmd)} args total)")
 
         # Add retry logic for Windows file locking issues
         is_windows = platform.system() == "Windows"
@@ -347,12 +349,21 @@ class ConfigurableLinker(ILinker):
                     if self.show_progress:
                         log_detail(f"Retrying linking (attempt {attempt + 1}/{max_retries})...")
 
-                result = subprocess.run(
-                    cmd,
-                    capture_output=True,
-                    text=True,
-                    timeout=120
-                )
+                try:
+                    result = subprocess.run(
+                        cmd,
+                        capture_output=True,
+                        text=True,
+                        timeout=120
+                    )
+                except subprocess.TimeoutExpired:
+                    if attempt < max_retries - 1:
+                        if self.show_progress:
+                            log_detail(f"[Timeout] Linker timeout (attempt {attempt + 1}/{max_retries}), retrying...")
+                        delay = min(delay * 2, 2.0)  # Exponential backoff
+                        continue
+                    else:
+                        raise ConfigurableLinkerError(f"Linking timeout after {max_retries} attempts (120s each)")
 
                 if result.returncode != 0:
                     # Check if error is due to file truncation/locking (Windows-specific)
@@ -381,6 +392,9 @@ class ConfigurableLinker(ILinker):
                         error_msg = "Linking failed\n"
                         error_msg += f"stderr: {result.stderr}\n"
                         error_msg += f"stdout: {result.stdout}"
+                        # Log stderr to output file so clients can see it
+                        if result.stderr:
+                            log_detail(f"LINKER ERROR: {result.stderr[:1000]}")
                         raise ConfigurableLinkerError(error_msg)
 
                 # Success - linker returned 0
@@ -395,8 +409,6 @@ class ConfigurableLinker(ILinker):
 
             return output_elf
 
-        except subprocess.TimeoutExpired:
-            raise ConfigurableLinkerError("Linking timeout")
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
             handle_keyboard_interrupt_properly(ke)
