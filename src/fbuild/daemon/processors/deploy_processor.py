@@ -109,6 +109,12 @@ class DeployRequestProcessor(RequestProcessor):
 
         if skip_deploy and request.port:
             logging.info(f"Firmware unchanged, skipping build and deploy for {request.port}")
+
+            # IMPORTANT: Even when skipping deploy, we must reset the device to release
+            # the USB-CDC port. Without this, the port can get stuck in a locked state
+            # on Windows because esptool's RTS/DTR reset sequence never runs.
+            self._reset_device_port(request.port)
+
             # Update status to indicate skip
             self._update_status(
                 context,
@@ -199,6 +205,35 @@ class DeployRequestProcessor(RequestProcessor):
         except Exception as e:
             logging.warning(f"Error checking firmware ledger: {e}")
             return False, "", ""
+
+    def _reset_device_port(self, port: str) -> bool:
+        """Reset device on port using esptool's RTS/DTR sequence.
+
+        This ensures the USB-CDC port is properly released even when we skip
+        the firmware upload. Without this, Windows can leave the port in a
+        locked state because esptool's hardware reset sequence never runs.
+
+        Args:
+            port: Serial port to reset (e.g., "COM13", "/dev/ttyUSB0")
+
+        Returns:
+            True if reset succeeded, False otherwise (non-fatal)
+        """
+        try:
+            from fbuild.deploy.deployer_esp32 import reset_esp32_device
+
+            logging.info(f"Resetting device on {port} to release USB-CDC port")
+            success = reset_esp32_device(port, chip="auto", verbose=False)
+            if success:
+                logging.info(f"Device on {port} reset successfully")
+            else:
+                logging.warning(f"Device reset on {port} failed (non-fatal)")
+            return success
+        except KeyboardInterrupt:  # noqa: KBI002
+            raise
+        except Exception as e:
+            logging.warning(f"Error resetting device on {port}: {e} (non-fatal)")
+            return False
 
     def _get_source_files(self, project_path: Path) -> list[Path]:
         """Get list of source files in the project.

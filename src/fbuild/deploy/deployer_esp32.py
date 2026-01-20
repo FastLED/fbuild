@@ -16,6 +16,90 @@ from fbuild.packages import Cache
 from .deployer import DeploymentError, DeploymentResult, IDeployer
 
 
+def reset_esp32_device(port: str, chip: str = "auto", verbose: bool = False) -> bool:
+    """Reset an ESP32 device using esptool's RTS/DTR sequence.
+
+    This function runs a minimal esptool command that triggers the hardware
+    reset sequence (DTR/RTS toggling) to reset the device and release the
+    USB-CDC port. This is useful when skipping firmware upload but still
+    needing to ensure the port is in a clean state.
+
+    Args:
+        port: Serial port (e.g., "COM13", "/dev/ttyUSB0")
+        chip: Chip type for esptool (default: "auto" for auto-detection)
+        verbose: Whether to show verbose output
+
+    Returns:
+        True if reset succeeded, False otherwise
+    """
+    cmd = [
+        sys.executable,
+        "-m",
+        "esptool",
+        "--chip",
+        chip,
+        "--port",
+        port,
+        "--before",
+        "default_reset",  # Use DTR/RTS to reset chip
+        "--after",
+        "hard_reset",  # Reset chip after command
+        "read_mac",  # Minimal command - just read MAC address
+    ]
+
+    if verbose:
+        print(f"Resetting device on {port} via esptool...")
+
+    try:
+        # Use short timeout - this should be quick
+        if sys.platform == "win32":
+            env = os.environ.copy()
+            # Strip MSYS paths that cause issues
+            if "PATH" in env:
+                paths = env["PATH"].split(os.pathsep)
+                filtered_paths = [p for p in paths if "msys" not in p.lower()]
+                env["PATH"] = os.pathsep.join(filtered_paths)
+
+            result = subprocess.run(
+                cmd,
+                capture_output=not verbose,
+                text=True,
+                env=env,
+                shell=False,
+                timeout=15,
+            )
+        else:
+            result = subprocess.run(
+                cmd,
+                capture_output=not verbose,
+                text=True,
+                timeout=15,
+            )
+
+        if result.returncode == 0:
+            if verbose:
+                print(f"Device on {port} reset successfully")
+            return True
+        else:
+            if verbose:
+                print(f"Device reset failed: {result.stderr}")
+            return False
+
+    except subprocess.TimeoutExpired:
+        if verbose:
+            print(f"Device reset timed out on {port}")
+        return False
+    except KeyboardInterrupt:
+        import _thread
+
+        _thread.interrupt_main()
+        raise
+    except Exception as e:
+        if verbose:
+            print(f"Device reset error: {e}")
+        return False
+
+
 class ESP32Deployer(IDeployer):
     """Handles firmware deployment to embedded devices."""
 
