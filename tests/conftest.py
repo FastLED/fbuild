@@ -6,8 +6,9 @@ errors during test teardown. This is a known issue: https://github.com/pytest-de
 """
 
 import sys
-import pytest
 import warnings
+
+import pytest
 
 # Suppress ResourceWarnings from file cleanup in Python 3.13
 if sys.version_info >= (3, 13):

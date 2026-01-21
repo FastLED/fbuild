@@ -668,14 +668,11 @@ def main() -> None:
     # Skip reconfiguration in test environments (pytest capture, redirected streams)
     if sys.platform == "win32":
         import io
+
         try:
             # Check if we're in a test environment (pytest capture or redirected streams)
             # pytest's capture wraps stdout/stderr, so we detect this by checking the class name
-            is_pytest_capture = any(
-                "pytest" in type(stream).__module__.lower() or "capture" in type(stream).__name__.lower()
-                for stream in [sys.stdout, sys.stderr]
-                if hasattr(stream, "__module__")
-            )
+            is_pytest_capture = any("pytest" in type(stream).__module__.lower() or "capture" in type(stream).__name__.lower() for stream in [sys.stdout, sys.stderr] if hasattr(stream, "__module__"))
 
             # Only reconfigure if not in test environment and buffer exists
             if not is_pytest_capture and hasattr(sys.stdout, "buffer") and hasattr(sys.stderr, "buffer"):
