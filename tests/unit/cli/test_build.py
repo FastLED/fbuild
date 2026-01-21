@@ -9,16 +9,6 @@ import pytest
 from fbuild.cli import main
 
 
-@pytest.fixture(autouse=True)
-def reset_output_module():
-    """Reset the output module state after each test to avoid stream closure issues."""
-    yield
-    # Reset the output stream to sys.stdout after each test
-    from fbuild import output
-
-    output._output_stream = sys.stdout
-
-
 class TestCLIBuild:
     """Tests for the 'fbuild build' command."""
 

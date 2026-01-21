@@ -135,13 +135,21 @@ def _print(message: str, end: str = "\n") -> None:
     """
     timestamp = format_timestamp()
     line = f"{timestamp} {message}{end}"
-    _output_stream.write(line)
-    _output_stream.flush()
+    try:
+        _output_stream.write(line)
+        _output_stream.flush()
+    except (ValueError, OSError):
+        # Ignore if stream is closed (e.g., in test environment)
+        pass
 
     # Also write to output file if set
     if _output_file is not None:
-        _output_file.write(line)
-        _output_file.flush()
+        try:
+            _output_file.write(line)
+            _output_file.flush()
+        except (ValueError, OSError):
+            # Ignore if file is closed
+            pass
 
 
 def log(message: str, verbose_only: bool = False) -> None:

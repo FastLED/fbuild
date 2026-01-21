@@ -835,27 +835,28 @@ class TestForceReleaseRaceConditions(unittest.TestCase):
         self.manager = ResourceLockManager()
 
     def test_force_release_during_normal_release(self):
-        """Force release happening during normal release exposes cross-thread bug.
+        """Force release happening during normal release is now handled gracefully.
 
-        KNOWN BUG: When force_release_lock() releases a lock held by another thread,
-        the holder thread's context manager exit will raise RuntimeError because
+        FIXED: Previously, when force_release_lock() released a lock held by another thread,
+        the holder thread's context manager exit would raise RuntimeError because
         threading.Lock.release() can only be called from the acquiring thread.
 
-        This test documents the expected (buggy) behavior. The proper fix would be
-        to either:
-        1. Use threading.RLock instead of threading.Lock
-        2. Track the owning thread and skip release() if force-released
-        3. Catch and suppress RuntimeError in the finally block
+        This was fixed by catching and suppressing RuntimeError in the finally block
+        of acquire_port_lock and acquire_project_lock (option 3 from the original bug list).
+
+        This test now verifies that force-releasing doesn't cause exceptions in the holder thread.
         """
         port = "COM_FORCE_RACE"
         holder_error = []
+        holder_completed = []
 
         def holder_thread():
             try:
                 with self.manager.acquire_port_lock(port):
                     time.sleep(0.1)
-            except RuntimeError as e:
-                # KNOWN BUG: This RuntimeError is expected when force-releasing
+                holder_completed.append(True)
+            except Exception as e:
+                # Should not get any exceptions now
                 holder_error.append(str(e))
 
         def force_releaser():
@@ -870,10 +871,9 @@ class TestForceReleaseRaceConditions(unittest.TestCase):
         t1.join(timeout=5)
         t2.join(timeout=5)
 
-        # KNOWN BUG: Holder thread gets RuntimeError
-        # This documents the current behavior - not ideal but expected
-        self.assertEqual(len(holder_error), 1)
-        self.assertIn("release unlocked lock", holder_error[0])
+        # FIXED: No errors should occur, and holder thread should complete normally
+        self.assertEqual(len(holder_error), 0, f"Unexpected errors: {holder_error}")
+        self.assertEqual(len(holder_completed), 1, "Holder thread should complete successfully")
 
     def test_multiple_force_releases(self):
         """Multiple force releases on same lock should not crash."""

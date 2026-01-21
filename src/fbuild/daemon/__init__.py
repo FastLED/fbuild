@@ -14,12 +14,14 @@ from fbuild.daemon.client import (
     request_monitor,
     stop_daemon,
 )
+from fbuild.daemon.compilation_queue import CompilationJobQueue
 from fbuild.daemon.connection import DaemonConnection, connect_daemon
 from fbuild.daemon.connection_registry import (
     ConnectionRegistry,
     ConnectionState,
     PlatformSlot,
 )
+from fbuild.daemon.daemon import get_compilation_queue
 from fbuild.daemon.messages import (
     BuildRequest,
     DaemonState,
@@ -32,6 +34,7 @@ from fbuild.daemon.messages import (
 
 __all__ = [
     "BuildRequest",
+    "CompilationJobQueue",
     "ConnectionRegistry",
     "ConnectionState",
     "DaemonConnection",
@@ -44,6 +47,7 @@ __all__ = [
     "PlatformSlot",
     "connect_daemon",
     "ensure_daemon_running",
+    "get_compilation_queue",
     "get_daemon_status",
     "request_build",
     "request_deploy",

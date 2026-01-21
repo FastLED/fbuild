@@ -278,18 +278,17 @@ class OrchestratorESP32(IBuildOrchestrator):
             )
 
             # Try to get compilation queue from daemon for async compilation
-            # TODO: Implement get_compilation_queue() in daemon module
             compilation_queue = None
-            # try:
-            #     from ..daemon import daemon
-            #     compilation_queue = daemon.get_compilation_queue()
-            #     if compilation_queue and verbose:
-            #         num_workers = getattr(compilation_queue, 'num_workers', 'unknown')
-            #         print(f"[Async Mode] Using daemon compilation queue with {num_workers} workers")
-            # except (ImportError, AttributeError):
-            #     # Daemon not available or not running - use synchronous compilation
-            #     if verbose:
-            #         print("[Sync Mode] Daemon not available, using synchronous compilation")
+            try:
+                from fbuild.daemon.daemon import get_compilation_queue
+                compilation_queue = get_compilation_queue()
+                if compilation_queue and verbose:
+                    num_workers = getattr(compilation_queue, 'num_workers', 'unknown')
+                    print(f"[Async Mode] Using daemon compilation queue with {num_workers} workers")
+            except (ImportError, AttributeError):
+                # Daemon not available or not running - use synchronous compilation
+                if verbose:
+                    print("[Sync Mode] Daemon not available, using synchronous compilation")
 
             # Initialize compiler
             log_phase(7, 13, "Compiling Arduino core...")

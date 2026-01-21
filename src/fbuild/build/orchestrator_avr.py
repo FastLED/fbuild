@@ -40,14 +40,8 @@ from ..output import (
     log, log_phase, log_detail, log_build_complete, log_firmware_path, set_verbose
 )
 
-# Import daemon accessor functions for async compilation
-# TODO: Re-enable when get_compilation_queue() is implemented in daemon module
-# try:
-#     from ..daemon import daemon
-#     DAEMON_AVAILABLE = True
-# except ImportError:
-#     DAEMON_AVAILABLE = False
-DAEMON_AVAILABLE = False
+# Note: Daemon queue access is handled via dynamic import in build method
+# to avoid circular dependencies and hard daemon requirement
 
 
 class BuildOrchestratorAVR(IBuildOrchestrator):
@@ -296,19 +290,18 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             log_phase(8, 11, "Compiling sources...", verbose_only=not verbose_mode)
 
             # Get compilation queue from daemon if available
-            # TODO: Implement get_compilation_queue() in daemon module
             compilation_queue = None
-            # if DAEMON_AVAILABLE:
-            #     try:
-            #         compilation_queue = daemon.get_compilation_queue()
-            #         if compilation_queue and verbose_mode:
-            #             print(f"      [async] Using parallel compilation with {compilation_queue.num_workers} workers")
-            #             self._log(f"      [async] Using parallel compilation with {compilation_queue.num_workers} workers")
-            #     except KeyboardInterrupt as ke:
-            #         handle_keyboard_interrupt_properly(ke)
-            #     except Exception:
-            #         # Daemon not running or queue not initialized - use sync mode
-            #         pass
+            try:
+                from fbuild.daemon.daemon import get_compilation_queue
+                compilation_queue = get_compilation_queue()
+                if compilation_queue and verbose_mode:
+                    print(f"      [async] Using parallel compilation with {compilation_queue.num_workers} workers")
+                    self._log(f"      [async] Using parallel compilation with {compilation_queue.num_workers} workers")
+            except KeyboardInterrupt as ke:
+                handle_keyboard_interrupt_properly(ke)
+            except Exception:
+                # Daemon not running or queue not initialized - use sync mode
+                pass
 
             compiler = BuildComponentFactory.create_compiler(
                 toolchain, board_config, core_path, lib_include_paths, compilation_queue

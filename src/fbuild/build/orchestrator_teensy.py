@@ -236,6 +236,19 @@ class OrchestratorTeensy(IBuildOrchestrator):
             if verbose:
                 print("[4/7] Compiling Arduino core...")
 
+            # Try to get compilation queue from daemon for async compilation
+            compilation_queue = None
+            try:
+                from fbuild.daemon.daemon import get_compilation_queue
+                compilation_queue = get_compilation_queue()
+                if compilation_queue and verbose:
+                    num_workers = compilation_queue.num_workers
+                    print(f"[Async Mode] Using daemon compilation queue with {num_workers} workers")
+            except (ImportError, AttributeError):
+                # Daemon not available or not running - use synchronous compilation
+                if verbose:
+                    print("[Sync Mode] Daemon not available, using synchronous compilation")
+
             compiler = ConfigurableCompiler(
                 platform,
                 platform.toolchain,
@@ -244,7 +257,8 @@ class OrchestratorTeensy(IBuildOrchestrator):
                 build_dir,
                 platform_config=None,
                 show_progress=verbose,
-                user_build_flags=build_flags
+                user_build_flags=build_flags,
+                compilation_queue=compilation_queue
             )
 
             # Compile Arduino core

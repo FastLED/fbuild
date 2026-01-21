@@ -54,6 +54,8 @@ class TestArduinoUnoBuild:
             capture_output=True,
             text=True,
             timeout=120,  # 2 minute timeout
+            encoding="utf-8",
+            errors="replace",
         )
 
         build_time = time.time() - start_time
@@ -178,6 +180,8 @@ class TestArduinoUnoBuild:
             capture_output=True,
             text=True,
             timeout=120,
+            encoding="utf-8",
+            errors="replace",
         )
         assert result.returncode == 0, "Build failed"
 
@@ -315,6 +319,8 @@ framework = arduino
             capture_output=True,
             text=True,
             timeout=10,
+            encoding="utf-8",
+            errors="replace",
         )
 
         # Should fail

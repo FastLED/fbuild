@@ -14,6 +14,14 @@ from .package import IToolchain, PackageError
 from .platform_utils import PlatformDetector, PlatformError
 
 
+def _safe_print(message: str) -> None:
+    """Print message, ignoring errors if stdout is closed (e.g., in tests)."""
+    try:
+        print(message)
+    except (ValueError, OSError):
+        pass
+
+
 class ToolchainError(PackageError):
     """Raised when toolchain operations fail."""
 
@@ -176,12 +184,12 @@ class ToolchainAVR(IToolchain):
                 self._toolchain_path = toolchain_path
                 return toolchain_path
             else:
-                print("Cached toolchain failed validation, re-downloading...")
+                _safe_print("Cached toolchain failed validation, re-downloading...")
 
         # Need to download and extract
         self.cache.ensure_directories()
 
-        print(f"Downloading AVR-GCC toolchain ({self.VERSION})...")
+        _safe_print(f"Downloading AVR-GCC toolchain ({self.VERSION})...")
 
         try:
             # Ensure package directory exists
@@ -191,10 +199,10 @@ class ToolchainAVR(IToolchain):
             if force_download or not package_path.exists():
                 self.downloader.download(url, package_path, checksum)
             else:
-                print(f"Using cached {package_name}")
+                _safe_print(f"Using cached {package_name}")
 
             # Extract
-            print("Extracting toolchain...")
+            _safe_print("Extracting toolchain...")
             toolchain_path.parent.mkdir(parents=True, exist_ok=True)
 
             # Extract to a temporary location first
@@ -224,7 +232,7 @@ class ToolchainAVR(IToolchain):
                 raise ToolchainError("Toolchain verification failed after extraction")
 
             self._toolchain_path = toolchain_path
-            print(f"Toolchain ready at {toolchain_path}")
+            _safe_print(f"Toolchain ready at {toolchain_path}")
             return toolchain_path
 
         except KeyboardInterrupt as ke:
@@ -253,7 +261,7 @@ class ToolchainAVR(IToolchain):
         # Check required directories
         for dir_path in self.REQUIRED_DIRS:
             if not (toolchain_path / dir_path).exists():
-                print(f"Missing directory: {dir_path}")
+                _safe_print(f"Missing directory: {dir_path}")
                 return False
 
         # Check required executables
@@ -263,21 +271,21 @@ class ToolchainAVR(IToolchain):
         for tool in self.REQUIRED_TOOLS:
             tool_path = bin_dir / f"{tool}{exe_suffix}"
             if not tool_path.exists():
-                print(f"Missing tool: {tool}")
+                _safe_print(f"Missing tool: {tool}")
                 return False
 
         # Check required headers
         for header in self.REQUIRED_HEADERS:
             header_path = toolchain_path / header
             if not header_path.exists():
-                print(f"Missing header: {header}")
+                _safe_print(f"Missing header: {header}")
                 return False
 
         # Check required libraries (using glob patterns)
         for lib_pattern in self.REQUIRED_LIB_PATTERNS:
             lib_paths = list(toolchain_path.glob(lib_pattern))
             if not lib_paths:
-                print(f"Missing library matching: {lib_pattern}")
+                _safe_print(f"Missing library matching: {lib_pattern}")
                 return False
 
         return True

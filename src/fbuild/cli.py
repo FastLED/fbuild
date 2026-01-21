@@ -663,12 +663,41 @@ def main() -> None:
 
     Replace PlatformIO with URL-based platform/toolchain management.
     """
+    # Configure UTF-8 encoding for stdout/stderr to support emojis on Windows
+    # This prevents UnicodeEncodeError when printing emojis on Windows (cp1252 encoding)
+    # Skip reconfiguration in test environments (pytest capture, redirected streams)
+    if sys.platform == "win32":
+        import io
+        try:
+            # Check if we're in a test environment (pytest capture or redirected streams)
+            # pytest's capture wraps stdout/stderr, so we detect this by checking the class name
+            is_pytest_capture = any(
+                "pytest" in type(stream).__module__.lower() or "capture" in type(stream).__name__.lower()
+                for stream in [sys.stdout, sys.stderr]
+                if hasattr(stream, "__module__")
+            )
+
+            # Only reconfigure if not in test environment and buffer exists
+            if not is_pytest_capture and hasattr(sys.stdout, "buffer") and hasattr(sys.stderr, "buffer"):
+                # Don't reassign if already UTF-8 to avoid closing existing streams
+                if sys.stdout.encoding.lower() != "utf-8":
+                    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace", line_buffering=True)
+                if sys.stderr.encoding.lower() != "utf-8":
+                    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace", line_buffering=True)
+        except (ValueError, AttributeError):
+            # Ignore errors in test environment or when buffer is closed
+            pass
+
     # Display daemon stats as the first action (unless --version or --help anywhere)
     help_flags = {"--version", "-V", "--help", "-h"}
     skip_stats = any(arg in help_flags for arg in sys.argv)
     if len(sys.argv) >= 2 and not skip_stats:
-        daemon_client.display_daemon_stats_compact()
-        print()  # Blank line after stats
+        try:
+            daemon_client.display_daemon_stats_compact()
+            print()  # Blank line after stats
+        except (ValueError, OSError):
+            # Ignore if stdout is closed (e.g., in test environment)
+            pass
 
     # Handle default action: fbuild <project_dir> [flags] → deploy with monitor
     # This check must happen before argparse to avoid conflicts

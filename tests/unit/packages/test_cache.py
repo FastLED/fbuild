@@ -14,7 +14,9 @@ class TestCache:
         """Test initialization with default directory."""
         cache = Cache()
         assert cache.project_dir == Path.cwd().resolve()
-        assert cache.cache_root == cache.project_dir / ".fbuild" / "cache"
+        # Dev mode uses cache_dev, production uses cache
+        expected_cache_name = "cache_dev" if os.environ.get("FBUILD_DEV_MODE") == "1" else "cache"
+        assert cache.cache_root == cache.project_dir / ".fbuild" / expected_cache_name
         assert cache.build_root == cache.project_dir / ".fbuild" / "build"
 
     def test_init_custom_directory(self):
@@ -23,7 +25,9 @@ class TestCache:
             project_dir = Path(temp_dir)
             cache = Cache(project_dir)
             assert cache.project_dir == project_dir.resolve()
-            assert cache.cache_root == project_dir / ".fbuild" / "cache"
+            # Dev mode uses cache_dev, production uses cache
+            expected_cache_name = "cache_dev" if os.environ.get("FBUILD_DEV_MODE") == "1" else "cache"
+            assert cache.cache_root == project_dir / ".fbuild" / expected_cache_name
 
     def test_init_with_env_override(self):
         """Test cache directory override via environment variable."""

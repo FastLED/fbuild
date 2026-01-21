@@ -204,8 +204,13 @@ class ResourceLockManager:
                 lock_info.holder_thread_id = None
                 lock_info.holder_operation_id = None
                 lock_info.holder_description = None
-            lock_info.lock.release()
-            logging.debug(f"Port lock released for: {port}")
+            try:
+                lock_info.lock.release()
+                logging.debug(f"Port lock released for: {port}")
+            except RuntimeError:
+                # Lock was already released (e.g., via force_release_lock from another thread)
+                # This is expected in edge cases and can be safely ignored
+                logging.debug(f"Port lock for {port} was already released")
 
     @contextmanager
     def acquire_project_lock(
@@ -260,8 +265,13 @@ class ResourceLockManager:
                 lock_info.holder_thread_id = None
                 lock_info.holder_operation_id = None
                 lock_info.holder_description = None
-            lock_info.lock.release()
-            logging.debug(f"Project lock released for: {project_dir}")
+            try:
+                lock_info.lock.release()
+                logging.debug(f"Project lock released for: {project_dir}")
+            except RuntimeError:
+                # Lock was already released (e.g., via force_release_lock from another thread)
+                # This is expected in edge cases and can be safely ignored
+                logging.debug(f"Project lock for {project_dir} was already released")
 
     def _get_or_create_port_lock(self, port: str, timeout: float = DEFAULT_LOCK_TIMEOUT) -> LockInfo:
         """Get or create a lock for the given port."""
