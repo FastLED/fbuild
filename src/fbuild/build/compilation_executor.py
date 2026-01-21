@@ -21,6 +21,7 @@ from pathlib import Path
 from typing import List, Optional, TYPE_CHECKING
 
 from ..packages.header_trampoline_cache import HeaderTrampolineCache
+from ..output import log_detail
 
 if TYPE_CHECKING:
     from ..daemon.compilation_queue import CompilationJobQueue
@@ -28,6 +29,7 @@ if TYPE_CHECKING:
 
 class CompilationError(Exception):
     """Raised when compilation operations fail."""
+
     pass
 
 
@@ -55,7 +57,7 @@ class CompilationExecutor:
 
         # Disable sccache on Windows due to file locking issues
         # See: https://github.com/anthropics/claude-code/issues/...
-        if platform.system() == 'Windows':
+        if platform.system() == "Windows":
             if use_sccache and show_progress:
                 print("[sccache] Disabled on Windows due to file locking issues")
             self.use_sccache = False
@@ -90,17 +92,10 @@ class CompilationExecutor:
                     print("[sccache] Warning: not found in PATH, proceeding without cache")
 
         # Initialize trampoline cache if enabled and on Windows
-        if self.use_trampolines and platform.system() == 'Windows':
+        if self.use_trampolines and platform.system() == "Windows":
             self.trampoline_cache = HeaderTrampolineCache(show_progress=show_progress)
 
-    def compile_source(
-        self,
-        compiler_path: Path,
-        source_path: Path,
-        output_path: Path,
-        compile_flags: List[str],
-        include_paths: List[Path]
-    ) -> Path:
+    def compile_source(self, compiler_path: Path, source_path: Path, output_path: Path, compile_flags: List[str], include_paths: List[Path]) -> Path:
         """Compile a single source file.
 
         Args:
@@ -117,9 +112,7 @@ class CompilationExecutor:
             CompilationError: If compilation fails
         """
         if not compiler_path.exists():
-            raise CompilationError(
-                f"Compiler not found: {compiler_path}. Ensure toolchain is installed."
-            )
+            raise CompilationError(f"Compiler not found: {compiler_path}. Ensure toolchain is installed.")
 
         if not source_path.exists():
             raise CompilationError(f"Source file not found: {source_path}")
@@ -130,20 +123,17 @@ class CompilationExecutor:
         # Apply header trampoline cache on Windows when enabled
         # This resolves Windows CreateProcess 32K limit issues with sccache
         effective_include_paths = include_paths
-        if self.trampoline_cache is not None and platform.system() == 'Windows':
+        if self.trampoline_cache is not None and platform.system() == "Windows":
             # Use trampolines to shorten include paths
             # Exclude ESP-IDF headers that use relative paths that break trampolines
             try:
                 exclude_patterns = [
-                    'newlib/platform_include',  # Uses #include_next which breaks trampolines
-                    'newlib\\platform_include',  # Windows path variant
-                    '/bt/',  # Bluetooth SDK uses relative paths between bt/include and bt/controller
-                    '\\bt\\'  # Windows path variant
+                    "newlib/platform_include",  # Uses #include_next which breaks trampolines
+                    "newlib\\platform_include",  # Windows path variant
+                    "/bt/",  # Bluetooth SDK uses relative paths between bt/include and bt/controller
+                    "\\bt\\",  # Windows path variant
                 ]
-                effective_include_paths = self.trampoline_cache.generate_trampolines(
-                    include_paths,
-                    exclude_patterns=exclude_patterns
-                )
+                effective_include_paths = self.trampoline_cache.generate_trampolines(include_paths, exclude_patterns=exclude_patterns)
             except KeyboardInterrupt:
                 _thread.interrupt_main()
                 raise
@@ -157,21 +147,14 @@ class CompilationExecutor:
         include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in effective_include_paths]
 
         # Build compiler command
-        cmd = self._build_compile_command(
-            compiler_path, source_path, output_path, compile_flags, include_flags
-        )
+        cmd = self._build_compile_command(compiler_path, source_path, output_path, compile_flags, include_flags)
 
         # Execute compilation
         if self.show_progress:
-            print(f"Compiling {source_path.name}...")
+            log_detail(f"Compiling {source_path.name}...")
 
         try:
-            result = subprocess.run(
-                cmd,
-                capture_output=True,
-                text=True,
-                timeout=60
-            )
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
 
             if result.returncode != 0:
                 error_msg = f"Compilation failed for {source_path.name}\n"
@@ -180,7 +163,7 @@ class CompilationExecutor:
                 raise CompilationError(error_msg)
 
             if self.show_progress and result.stderr:
-                print(result.stderr)
+                log_detail(result.stderr)
 
             return output_path
 
@@ -188,6 +171,7 @@ class CompilationExecutor:
             raise CompilationError(f"Compilation timeout for {source_path.name}") from e
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
@@ -195,14 +179,7 @@ class CompilationExecutor:
                 raise
             raise CompilationError(f"Failed to compile {source_path.name}: {e}") from e
 
-    def _build_compile_command(
-        self,
-        compiler_path: Path,
-        source_path: Path,
-        output_path: Path,
-        compile_flags: List[str],
-        include_paths: List[str]
-    ) -> List[str]:
+    def _build_compile_command(self, compiler_path: Path, source_path: Path, output_path: Path, compile_flags: List[str], include_paths: List[str]) -> List[str]:
         """Build compilation command with optional sccache wrapper.
 
         Args:
@@ -232,15 +209,15 @@ class CompilationExecutor:
             resolved_compiler = compiler_path.resolve()
             compiler_str = str(resolved_compiler)
             # Normalize to Windows backslashes on Windows
-            if platform.system() == 'Windows':
-                compiler_str = compiler_str.replace('/', '\\')
+            if platform.system() == "Windows":
+                compiler_str = compiler_str.replace("/", "\\")
             cmd.append(compiler_str)
         else:
             cmd.append(str(compiler_path))
         cmd.extend(compile_flags)
         cmd.append(f"@{response_file}")
-        cmd.extend(['-c', str(source_path)])
-        cmd.extend(['-o', str(output_path)])
+        cmd.extend(["-c", str(source_path)])
+        cmd.extend(["-o", str(output_path)])
 
         return cmd
 
@@ -259,16 +236,12 @@ class CompilationExecutor:
         response_file = self.build_dir / "includes.rsp"
         response_file.parent.mkdir(parents=True, exist_ok=True)
 
-        with open(response_file, 'w') as f:
-            f.write('\n'.join(include_flags))
+        with open(response_file, "w") as f:
+            f.write("\n".join(include_flags))
 
         return response_file
 
-    def preprocess_ino(
-        self,
-        ino_path: Path,
-        output_dir: Path
-    ) -> Path:
+    def preprocess_ino(self, ino_path: Path, output_dir: Path) -> Path:
         """Preprocess .ino file to .cpp file.
 
         Simple preprocessing: adds Arduino.h include and renames to .cpp.
@@ -288,10 +261,11 @@ class CompilationExecutor:
 
         # Read .ino content
         try:
-            with open(ino_path, 'r', encoding='utf-8') as f:
+            with open(ino_path, "r", encoding="utf-8") as f:
                 ino_content = f.read()
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
@@ -302,14 +276,15 @@ class CompilationExecutor:
         cpp_path.parent.mkdir(parents=True, exist_ok=True)
 
         # Simple preprocessing: add Arduino.h and content
-        cpp_content = '#include <Arduino.h>\n\n' + ino_content
+        cpp_content = "#include <Arduino.h>\n\n" + ino_content
 
         # Write .cpp file
         try:
-            with open(cpp_path, 'w', encoding='utf-8') as f:
+            with open(cpp_path, "w", encoding="utf-8") as f:
                 f.write(cpp_content)
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
@@ -320,15 +295,7 @@ class CompilationExecutor:
 
         return cpp_path
 
-    def compile_source_async(
-        self,
-        compiler_path: Path,
-        source_path: Path,
-        output_path: Path,
-        compile_flags: List[str],
-        include_paths: List[Path],
-        job_queue: 'CompilationJobQueue'
-    ) -> str:
+    def compile_source_async(self, compiler_path: Path, source_path: Path, output_path: Path, compile_flags: List[str], include_paths: List[Path], job_queue: "CompilationJobQueue") -> str:
         """Compile a single source file asynchronously via daemon queue.
 
         This method submits a compilation job to the daemon's CompilationJobQueue
@@ -351,9 +318,7 @@ class CompilationExecutor:
         from ..daemon.compilation_queue import CompilationJob
 
         if not compiler_path.exists():
-            raise CompilationError(
-                f"Compiler not found: {compiler_path}. Ensure toolchain is installed."
-            )
+            raise CompilationError(f"Compiler not found: {compiler_path}. Ensure toolchain is installed.")
 
         if not source_path.exists():
             raise CompilationError(f"Source file not found: {source_path}")
@@ -363,18 +328,10 @@ class CompilationExecutor:
 
         # Apply header trampoline cache on Windows when enabled
         effective_include_paths = include_paths
-        if self.trampoline_cache is not None and platform.system() == 'Windows':
+        if self.trampoline_cache is not None and platform.system() == "Windows":
             try:
-                exclude_patterns = [
-                    'newlib/platform_include',
-                    'newlib\\platform_include',
-                    '/bt/',
-                    '\\bt\\'
-                ]
-                effective_include_paths = self.trampoline_cache.generate_trampolines(
-                    include_paths,
-                    exclude_patterns=exclude_patterns
-                )
+                exclude_patterns = ["newlib/platform_include", "newlib\\platform_include", "/bt/", "\\bt\\"]
+                effective_include_paths = self.trampoline_cache.generate_trampolines(include_paths, exclude_patterns=exclude_patterns)
             except KeyboardInterrupt:
                 _thread.interrupt_main()
                 raise
@@ -395,26 +352,20 @@ class CompilationExecutor:
             cmd.append(str(self.sccache_path))
             resolved_compiler = compiler_path.resolve()
             compiler_str = str(resolved_compiler)
-            if platform.system() == 'Windows':
-                compiler_str = compiler_str.replace('/', '\\')
+            if platform.system() == "Windows":
+                compiler_str = compiler_str.replace("/", "\\")
             cmd.append(compiler_str)
         else:
             cmd.append(str(compiler_path))
         cmd.extend(compile_flags)
         cmd.append(f"@{response_file}")
-        cmd.extend(['-c', str(source_path)])
-        cmd.extend(['-o', str(output_path)])
+        cmd.extend(["-c", str(source_path)])
+        cmd.extend(["-o", str(output_path)])
 
         # Create and submit compilation job
-        job_id = f"compile_{source_path.stem}_{int(time.time()*1000000)}"
+        job_id = f"compile_{source_path.stem}_{int(time.time() * 1000000)}"
 
-        job = CompilationJob(
-            job_id=job_id,
-            source_path=source_path,
-            output_path=output_path,
-            compiler_cmd=cmd,
-            response_file=response_file
-        )
+        job = CompilationJob(job_id=job_id, source_path=source_path, output_path=output_path, compiler_cmd=cmd, response_file=response_file)
 
         # Submit to queue
         job_queue.submit_job(job)

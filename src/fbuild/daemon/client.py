@@ -718,6 +718,7 @@ class DeployRequestHandler(BaseRequestHandler):
         monitor_halt_on_success: str | None = None,
         monitor_expect: str | None = None,
         monitor_show_timestamp: bool = False,
+        skip_build: bool = False,
         timeout: float = 1800,
     ):
         """Initialize deploy request handler.
@@ -733,6 +734,7 @@ class DeployRequestHandler(BaseRequestHandler):
             monitor_halt_on_success: Pattern to halt on success
             monitor_expect: Expected pattern to check
             monitor_show_timestamp: Whether to prefix output lines with elapsed time
+            skip_build: Whether to skip the build phase (upload-only mode)
             timeout: Maximum wait time in seconds
         """
         super().__init__(project_dir, environment, timeout)
@@ -744,6 +746,7 @@ class DeployRequestHandler(BaseRequestHandler):
         self.monitor_halt_on_success = monitor_halt_on_success
         self.monitor_expect = monitor_expect
         self.monitor_show_timestamp = monitor_show_timestamp
+        self.skip_build = skip_build
 
     def create_request(self) -> DeployRequest:
         """Create deploy request."""
@@ -758,6 +761,7 @@ class DeployRequestHandler(BaseRequestHandler):
             monitor_halt_on_success=self.monitor_halt_on_success,
             monitor_expect=self.monitor_expect,
             monitor_show_timestamp=self.monitor_show_timestamp,
+            skip_build=self.skip_build,
             caller_pid=os.getpid(),
             caller_cwd=os.getcwd(),
         )

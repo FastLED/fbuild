@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Any, List, Dict, Optional, Union, TYPE_CHECKING
 
 from ..packages.package import IPackage, IToolchain, IFramework
-from ..output import ProgressCallback
+from ..output import ProgressCallback, log_detail
 from .flag_builder import FlagBuilder
 from .compilation_executor import CompilationExecutor
 from .archive_creator import ArchiveCreator
@@ -26,6 +26,7 @@ if TYPE_CHECKING:
 
 class ConfigurableCompilerError(CompilerError):
     """Raised when configurable compilation operations fail."""
+
     pass
 
 
@@ -50,7 +51,7 @@ class ConfigurableCompiler(ICompiler):
         show_progress: bool = True,
         user_build_flags: Optional[List[str]] = None,
         compilation_executor: Optional[CompilationExecutor] = None,
-        compilation_queue: Optional['CompilationJobQueue'] = None
+        compilation_queue: Optional["CompilationJobQueue"] = None,
     ):
         """Initialize configurable compiler.
 
@@ -93,36 +94,24 @@ class ConfigurableCompiler(ICompiler):
             # Try to load from default location
             config_path = Path(__file__).parent.parent / "platform_configs" / f"{self.mcu}.json"
             if config_path.exists():
-                with open(config_path, 'r') as f:
+                with open(config_path, "r") as f:
                     self.config = json.load(f)
             else:
-                raise ConfigurableCompilerError(
-                    f"No platform configuration found for {self.mcu}. " +
-                    f"Expected: {config_path}"
-                )
+                raise ConfigurableCompilerError(f"No platform configuration found for {self.mcu}. " + f"Expected: {config_path}")
         elif isinstance(platform_config, dict):
             self.config = platform_config
         else:
             # Assume it's a path
-            with open(platform_config, 'r') as f:
+            with open(platform_config, "r") as f:
                 self.config = json.load(f)
 
         # Initialize utility components
-        self.flag_builder = FlagBuilder(
-            config=self.config,
-            board_config=self.board_config,
-            board_id=self.board_id,
-            variant=self.variant,
-            user_build_flags=self.user_build_flags
-        )
+        self.flag_builder = FlagBuilder(config=self.config, board_config=self.board_config, board_id=self.board_id, variant=self.variant, user_build_flags=self.user_build_flags)
         # Use provided executor or create a new one
         if compilation_executor is not None:
             self.compilation_executor = compilation_executor
         else:
-            self.compilation_executor = CompilationExecutor(
-                build_dir=self.build_dir,
-                show_progress=self.show_progress
-            )
+            self.compilation_executor = CompilationExecutor(build_dir=self.build_dir, show_progress=self.show_progress)
         self.archive_creator = ArchiveCreator(show_progress=self.show_progress)
 
         # Cache for include paths
@@ -157,18 +146,19 @@ class ConfigurableCompiler(ICompiler):
             includes.append(variant_dir)
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception:
             pass
 
         # SDK include paths (ESP32-specific)
-        if hasattr(self.framework, 'get_sdk_includes'):
+        if hasattr(self.framework, "get_sdk_includes"):
             sdk_includes = self.framework.get_sdk_includes(self.mcu)  # type: ignore[attr-defined]
             includes.extend(sdk_includes)
 
         # STM32-specific system includes (CMSIS, HAL)
-        if hasattr(self.framework, 'get_stm32_system_includes'):
+        if hasattr(self.framework, "get_stm32_system_includes"):
             # Determine MCU family from MCU name
             mcu_upper = self.mcu.upper()
             if mcu_upper.startswith("STM32F0"):
@@ -209,13 +199,14 @@ class ConfigurableCompiler(ICompiler):
             includes.extend(system_includes)
 
         # Add flash mode specific sdkconfig.h path (ESP32-specific)
-        if hasattr(self.framework, 'get_sdk_dir'):
+        if hasattr(self.framework, "get_sdk_dir"):
             flash_mode = self.board_config.get("build", {}).get("flash_mode", "qio")
             sdk_dir = self.framework.get_sdk_dir()  # type: ignore[attr-defined]
 
             # Apply SDK fallback for MCUs not fully supported in the platform
             # (e.g., esp32c2 can use esp32c3 SDK)
             from ..packages.sdk_utils import SDKPathResolver
+
             resolver = SDKPathResolver(sdk_dir, show_progress=False)
             resolved_mcu = resolver._resolve_mcu(self.mcu)
 
@@ -224,7 +215,7 @@ class ConfigurableCompiler(ICompiler):
                 includes.append(flash_config_dir)
 
         # Add Arduino built-in libraries (e.g., SPI, Wire, WiFi) for ESP32
-        if hasattr(self.framework, 'get_libraries_dir'):
+        if hasattr(self.framework, "get_libraries_dir"):
             libs_dir = self.framework.get_libraries_dir()
             if libs_dir.exists():
                 # Add src subdirectory of each built-in library
@@ -253,16 +244,13 @@ class ConfigurableCompiler(ICompiler):
             return self.compilation_executor.preprocess_ino(ino_path, self.build_dir)
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise ConfigurableCompilerError(str(e))
 
-    def compile_source(
-        self,
-        source_path: Path,
-        output_path: Optional[Path] = None
-    ) -> Path:
+    def compile_source(self, source_path: Path, output_path: Optional[Path] = None) -> Path:
         """Compile a single source file to object file.
 
         Args:
@@ -276,13 +264,11 @@ class ConfigurableCompiler(ICompiler):
             ConfigurableCompilerError: If compilation fails
         """
         # Determine compiler based on file extension
-        is_cpp = source_path.suffix in ['.cpp', '.cxx', '.cc']
+        is_cpp = source_path.suffix in [".cpp", ".cxx", ".cc"]
         compiler_path = self.toolchain.get_gxx_path() if is_cpp else self.toolchain.get_gcc_path()
 
         if compiler_path is None:
-            raise ConfigurableCompilerError(
-                f"Compiler path not found for {'C++' if is_cpp else 'C'} compilation"
-            )
+            raise ConfigurableCompilerError(f"Compiler path not found for {'C++' if is_cpp else 'C'} compilation")
 
         # Generate output path if not provided
         if output_path is None:
@@ -292,11 +278,11 @@ class ConfigurableCompiler(ICompiler):
 
         # Get compilation flags
         flags = self.get_compile_flags()
-        compile_flags = flags['common'].copy()
+        compile_flags = flags["common"].copy()
         if is_cpp:
-            compile_flags.extend(flags['cxxflags'])
+            compile_flags.extend(flags["cxxflags"])
         else:
-            compile_flags.extend(flags['cflags'])
+            compile_flags.extend(flags["cflags"])
 
         # Get include paths
         includes = self.get_include_paths()
@@ -306,9 +292,7 @@ class ConfigurableCompiler(ICompiler):
             # Convert include paths to flags
             include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in includes]
             # Build command that would be executed
-            cmd = self.compilation_executor._build_compile_command(
-                compiler_path, source_path, output_path, compile_flags, include_flags
-            )
+            cmd = self.compilation_executor._build_compile_command(compiler_path, source_path, output_path, compile_flags, include_flags)
 
             # Submit to async compilation queue
             job_id = self._submit_async_compilation(source_path, output_path, cmd)
@@ -319,15 +303,10 @@ class ConfigurableCompiler(ICompiler):
 
         # Sync mode: compile using executor (legacy behavior)
         try:
-            return self.compilation_executor.compile_source(
-                compiler_path=compiler_path,
-                source_path=source_path,
-                output_path=output_path,
-                compile_flags=compile_flags,
-                include_paths=includes
-            )
+            return self.compilation_executor.compile_source(compiler_path=compiler_path, source_path=source_path, output_path=output_path, compile_flags=compile_flags, include_paths=includes)
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
@@ -389,9 +368,7 @@ class ConfigurableCompiler(ICompiler):
                 object_files.append(compiled_obj)
             except ConfigurableCompilerError as e:
                 # Re-raise with more context about which file failed
-                raise ConfigurableCompilerError(
-                    f"Failed to compile sketch source file {cpp_file.name}: {e}"
-                )
+                raise ConfigurableCompilerError(f"Failed to compile sketch source file {cpp_file.name}: {e}")
 
         return object_files
 
@@ -414,7 +391,7 @@ class ConfigurableCompiler(ICompiler):
         core_sources = self.framework.get_core_sources(self.core)  # type: ignore[attr-defined]
 
         if self.show_progress:
-            print(f"Compiling {len(core_sources)} core source files...")
+            log_detail(f"Compiling {len(core_sources)} core source files...")
 
         # Create core object directory
         core_obj_dir = self.build_dir / "obj" / "core"
@@ -436,7 +413,7 @@ class ConfigurableCompiler(ICompiler):
 
                 # Update progress bar BEFORE compilation for better UX
                 if progress_bar is not None:
-                    progress_bar.set_description(f'Compiling {source.name[:30]}')
+                    progress_bar.set_description(f"Compiling {source.name[:30]}")
 
                 try:
                     obj_path = core_obj_dir / f"{source.stem}.o"
@@ -468,7 +445,7 @@ class ConfigurableCompiler(ICompiler):
             self.compilation_executor.show_progress = original_show_progress
 
         # Wait for all async jobs to complete (if using async mode)
-        if hasattr(self, 'wait_all_jobs'):
+        if hasattr(self, "wait_all_jobs"):
             try:
                 self.wait_all_jobs()
             except ConfigurableCompilerError as e:
@@ -496,13 +473,10 @@ class ConfigurableCompiler(ICompiler):
 
         # Create archive using creator
         try:
-            return self.archive_creator.create_core_archive(
-                ar_path=ar_path,
-                build_dir=self.build_dir,
-                object_files=object_files
-            )
+            return self.archive_creator.create_core_archive(ar_path=ar_path, build_dir=self.build_dir, object_files=object_files)
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
@@ -515,23 +489,23 @@ class ConfigurableCompiler(ICompiler):
             Dictionary with compiler information
         """
         info = {
-            'board_id': self.board_id,
-            'mcu': self.mcu,
-            'variant': self.variant,
-            'build_dir': str(self.build_dir),
-            'toolchain_type': self.toolchain.toolchain_type,  # type: ignore[attr-defined]
-            'gcc_path': str(self.toolchain.get_gcc_path()),
-            'gxx_path': str(self.toolchain.get_gxx_path()),
+            "board_id": self.board_id,
+            "mcu": self.mcu,
+            "variant": self.variant,
+            "build_dir": str(self.build_dir),
+            "toolchain_type": self.toolchain.toolchain_type,  # type: ignore[attr-defined]
+            "gcc_path": str(self.toolchain.get_gcc_path()),
+            "gxx_path": str(self.toolchain.get_gxx_path()),
         }
 
         # Add compile flags
         flags = self.get_compile_flags()
-        info['compile_flags'] = flags
+        info["compile_flags"] = flags
 
         # Add include paths
         includes = self.get_include_paths()
-        info['include_paths'] = [str(p) for p in includes]
-        info['include_count'] = len(includes)
+        info["include_paths"] = [str(p) for p in includes]
+        info["include_count"] = len(includes)
 
         return info
 
@@ -570,12 +544,7 @@ class ConfigurableCompiler(ICompiler):
 
         return source_mtime > object_mtime
 
-    def _submit_async_compilation(
-        self,
-        source: Path,
-        output: Path,
-        cmd: List[str]
-    ) -> str:
+    def _submit_async_compilation(self, source: Path, output: Path, cmd: List[str]) -> str:
         """
         Submit compilation job to async queue.
 
@@ -597,7 +566,7 @@ class ConfigurableCompiler(ICompiler):
             source_path=source,
             output_path=output,
             compiler_cmd=cmd,
-            response_file=None  # ConfigurableCompiler doesn't use response files
+            response_file=None,  # ConfigurableCompiler doesn't use response files
         )
 
         if self.compilation_queue is None:
@@ -657,22 +626,11 @@ class ConfigurableCompiler(ICompiler):
             Dictionary with compilation statistics
         """
         if not self.compilation_queue:
-            return {
-                "total_jobs": 0,
-                "pending": 0,
-                "running": 0,
-                "completed": 0,
-                "failed": 0
-            }
+            return {"total_jobs": 0, "pending": 0, "running": 0, "completed": 0, "failed": 0}
 
         return self.compilation_queue.get_statistics()
 
-    def compile(
-        self,
-        source: Path,
-        output: Path,
-        extra_flags: Optional[List[str]] = None
-    ):
+    def compile(self, source: Path, output: Path, extra_flags: Optional[List[str]] = None):
         """Compile source file (auto-detects C vs C++).
 
         Args:
@@ -690,18 +648,6 @@ class ConfigurableCompiler(ICompiler):
 
         try:
             obj_path = self.compile_source(source, output)
-            return CompileResult(
-                success=True,
-                object_file=obj_path,
-                stdout="",
-                stderr="",
-                returncode=0
-            )
+            return CompileResult(success=True, object_file=obj_path, stdout="", stderr="", returncode=0)
         except ConfigurableCompilerError as e:
-            return CompileResult(
-                success=False,
-                object_file=None,
-                stdout="",
-                stderr=str(e),
-                returncode=1
-            )
+            return CompileResult(success=False, object_file=None, stdout="", stderr=str(e), returncode=1)

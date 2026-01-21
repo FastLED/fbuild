@@ -629,13 +629,15 @@ class OrchestratorESP32(IBuildOrchestrator):
             return library_archives, library_include_paths
 
         # Ensure libraries are downloaded and compiled
+        # Always show progress for library compilation - compiling 300+ files
+        # without feedback is confusing UX, even in non-verbose mode
         logger.debug(f"[ORCHESTRATOR] Calling lib_manager.ensure_libraries with {len(lib_specs)} specs: {lib_specs}")
         libraries = lib_manager.ensure_libraries(
             lib_specs,
             toolchain_bin_path,
             lib_compiler_flags,
             lib_include_paths,
-            show_progress=verbose
+            show_progress=True
         )
         logger.debug(f"[ORCHESTRATOR] ensure_libraries returned {len(libraries)} libraries")
 

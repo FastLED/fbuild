@@ -72,6 +72,7 @@ class DeployRequest:
         monitor_show_timestamp: Whether to prefix monitor output lines with elapsed time
         caller_pid: Process ID of requesting client
         caller_cwd: Working directory of requesting client
+        skip_build: Whether to skip the build phase (upload-only mode)
         timestamp: Unix timestamp when request was created
         request_id: Unique identifier for this request
     """
@@ -88,6 +89,7 @@ class DeployRequest:
     caller_pid: int
     caller_cwd: str
     monitor_show_timestamp: bool = False
+    skip_build: bool = False
     timestamp: float = field(default_factory=time.time)
     request_id: str = field(default_factory=lambda: f"deploy_{int(time.time() * 1000)}")
 
@@ -111,6 +113,7 @@ class DeployRequest:
             caller_pid=data["caller_pid"],
             caller_cwd=data["caller_cwd"],
             monitor_show_timestamp=data.get("monitor_show_timestamp", False),
+            skip_build=data.get("skip_build", False),
             timestamp=data.get("timestamp", time.time()),
             request_id=data.get("request_id", f"deploy_{int(time.time() * 1000)}"),
         )

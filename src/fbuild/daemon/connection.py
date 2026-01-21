@@ -364,6 +364,7 @@ class DaemonConnection:
         monitor_halt_on_success: str | None = None,
         monitor_expect: str | None = None,
         monitor_show_timestamp: bool = False,
+        skip_build: bool = False,
         timeout: float = 1800,
     ) -> bool:
         """Deploy (build and upload) the project to a device.
@@ -377,6 +378,7 @@ class DaemonConnection:
             monitor_halt_on_success: Pattern to halt on success.
             monitor_expect: Expected pattern to check.
             monitor_show_timestamp: Prefix output with elapsed time.
+            skip_build: Skip build phase and upload existing firmware (upload-only mode).
             timeout: Maximum wait time in seconds (default: 30 minutes).
 
         Returns:
@@ -400,6 +402,7 @@ class DaemonConnection:
             monitor_halt_on_success=monitor_halt_on_success,
             monitor_expect=monitor_expect,
             monitor_show_timestamp=monitor_show_timestamp,
+            skip_build=skip_build,
             timeout=timeout,
         )
         return handler.execute()

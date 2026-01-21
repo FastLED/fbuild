@@ -47,6 +47,11 @@ class DeployRequestProcessor(RequestProcessor):
         >>> success = processor.process_request(deploy_request, daemon_context)
     """
 
+    def __init__(self) -> None:
+        """Initialize the deploy processor."""
+        super().__init__()
+        self._last_error_message: str | None = None
+
     def get_operation_type(self) -> OperationType:
         """Return DEPLOY operation type."""
         return OperationType.DEPLOY
@@ -79,7 +84,19 @@ class DeployRequestProcessor(RequestProcessor):
         return "Deploy successful"
 
     def get_failure_message(self, request: "DeployRequest") -> str:
-        """Get the failure status message."""
+        """Get the failure status message.
+
+        Returns the actual deploy error message if available, otherwise
+        returns a generic failure message.
+
+        Args:
+            request: The request that failed
+
+        Returns:
+            Human-readable failure message with actual error details
+        """
+        if self._last_error_message:
+            return f"Deploy failed: {self._last_error_message}"
         return "Deploy failed"
 
     def execute_operation(self, request: "DeployRequest", context: "DaemonContext") -> bool:
@@ -91,7 +108,7 @@ class DeployRequestProcessor(RequestProcessor):
 
         The operation has three phases:
         1. Check: See if firmware is already deployed (skip redeploy if unchanged)
-        2. Build: Compile the firmware
+        2. Build: Compile the firmware (can be skipped via skip_build flag)
         3. Deploy: Upload the firmware to device
 
         If monitor_after is requested, the processor will coordinate
@@ -104,35 +121,47 @@ class DeployRequestProcessor(RequestProcessor):
         Returns:
             True if deploy succeeded, False otherwise
         """
+        # Clear any previous error message
+        self._last_error_message = None
+
         # Phase 0: Check if we can skip deployment using firmware ledger
-        skip_deploy, source_hash, build_flags_hash = self._check_firmware_ledger(request, context)
+        # Only check ledger if skip_build is not explicitly set (normal deploy flow)
+        skip_deploy = False
+        source_hash = ""
+        build_flags_hash = ""
 
-        if skip_deploy and request.port:
-            logging.info(f"Firmware unchanged, skipping build and deploy for {request.port}")
+        if not request.skip_build:
+            skip_deploy, source_hash, build_flags_hash = self._check_firmware_ledger(request, context)
 
-            # IMPORTANT: Even when skipping deploy, we must reset the device to release
-            # the USB-CDC port. Without this, the port can get stuck in a locked state
-            # on Windows because esptool's RTS/DTR reset sequence never runs.
-            self._reset_device_port(request.port)
+            if skip_deploy and request.port:
+                logging.info(f"Firmware unchanged, skipping build and deploy for {request.port}")
 
-            # Update status to indicate skip
-            self._update_status(
-                context,
-                DaemonState.COMPLETED,
-                "Firmware unchanged, skipping deploy",
-                request=request,
-                operation_in_progress=False,
-            )
-            # If monitoring requested, still start it (firmware is already there)
-            if request.monitor_after:
-                self._start_monitoring(request, request.port, context)
-            return True
+                # IMPORTANT: Even when skipping deploy, we must reset the device to release
+                # the USB-CDC port. Without this, the port can get stuck in a locked state
+                # on Windows because esptool's RTS/DTR reset sequence never runs.
+                self._reset_device_port(request.port)
 
-        # Phase 1: Build firmware
-        logging.info(f"Building project: {request.project_dir}")
-        build_result = self._build_firmware(request, context)
-        if not build_result:
-            return False
+                # Update status to indicate skip
+                self._update_status(
+                    context,
+                    DaemonState.COMPLETED,
+                    "Firmware unchanged, skipping deploy",
+                    request=request,
+                    operation_in_progress=False,
+                )
+                # If monitoring requested, still start it (firmware is already there)
+                if request.monitor_after:
+                    self._start_monitoring(request, request.port, context)
+                return True
+
+        # Phase 1: Build firmware (skip if skip_build flag is set)
+        if request.skip_build:
+            logging.info(f"Skipping build phase (upload-only mode) for {request.project_dir}")
+        else:
+            logging.info(f"Building project: {request.project_dir}")
+            build_result = self._build_firmware(request, context)
+            if not build_result:
+                return False
 
         # Phase 2: Deploy firmware
         logging.info(f"Deploying to {request.port if request.port else 'auto-detected port'}")
@@ -463,6 +492,8 @@ class DeployRequestProcessor(RequestProcessor):
 
         if not build_result.success:
             logging.error(f"Build failed: {build_result.message}")
+            # Store error message for get_failure_message()
+            self._last_error_message = f"Build phase: {build_result.message}"
             self._update_status(
                 context,
                 DaemonState.FAILED,
@@ -495,11 +526,13 @@ class DeployRequestProcessor(RequestProcessor):
             operation_type=OperationType.DEPLOY,
         )
 
-        # Get fresh deployer class after module reload
+        # Import and get deployer class (explicit import ensures module is loaded)
         try:
-            deployer_class = getattr(sys.modules["fbuild.deploy.deployer_esp32"], "ESP32Deployer")
-        except (KeyError, AttributeError) as e:
-            logging.error(f"Failed to get ESP32Deployer class: {e}")
+            from fbuild.deploy.deployer_esp32 import ESP32Deployer
+
+            deployer_class = ESP32Deployer
+        except ImportError as e:
+            logging.error(f"Failed to import ESP32Deployer: {e}")
             return None
 
         # Track port state as UPLOADING before deployment starts
@@ -525,6 +558,8 @@ class DeployRequestProcessor(RequestProcessor):
 
             if not deploy_result.success:
                 logging.error(f"Deploy failed: {deploy_result.message}")
+                # Store error message for get_failure_message()
+                self._last_error_message = deploy_result.message
                 self._update_status(
                     context,
                     DaemonState.FAILED,
