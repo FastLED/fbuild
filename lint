@@ -13,5 +13,11 @@ echo Running pyright src tests
 uv run pyright src tests
 echo Running flake8 KeyboardInterrupt checks
 uv run flake8 src --select=KBI
+echo Running flake8 sys.path.insert checks
+uv run flake8 src scripts tests --select=SPI --exclude='*/.fbuild/*,*/.build/*,*/.zap/*'
+echo Running orchestrator signature checks
+uv run python scripts/check_orchestrator_signatures.py
+echo Running message serialization checks
+uv run python scripts/check_message_serialization.py
 echo Linting complete!
 exit 0

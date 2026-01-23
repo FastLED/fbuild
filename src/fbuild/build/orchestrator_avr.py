@@ -105,7 +105,8 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
         project_dir: Path,
         env_name: Optional[str] = None,
         clean: bool = False,
-        verbose: Optional[bool] = None
+        verbose: Optional[bool] = None,
+        jobs: int | None = None,
     ) -> BuildResult:
         """
         Execute complete build process.
@@ -115,6 +116,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             env_name: Environment name to build (defaults to first/default env)
             clean: Clean build (remove all artifacts before building)
             verbose: Override verbose setting
+            jobs: Number of parallel compilation jobs (None = CPU count, 1 = serial)
 
         Returns:
             BuildResult with build status and output paths
@@ -166,14 +168,14 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                 # Get build flags from platformio.ini
                 build_flags = config.get_build_flags(env_name)
                 return self._build_esp32(
-                    project_dir, env_name, board_id, env_config, clean, verbose_mode, start_time, build_flags
+                    project_dir, env_name, board_id, env_config, clean, verbose_mode, start_time, build_flags, jobs
                 )
             elif board_config.platform == "teensy":
                 log_detail(f"Platform: {board_config.platform} (using native Teensy build)", verbose_only=not verbose_mode)
                 # Get build flags from platformio.ini
                 build_flags = config.get_build_flags(env_name)
                 return self._build_teensy(
-                    project_dir, env_name, board_id, board_config, clean, verbose_mode, start_time, build_flags
+                    project_dir, env_name, board_id, board_config, clean, verbose_mode, start_time, build_flags, jobs
                 )
             elif board_config.platform != "avr":
                 # Only AVR, ESP32, and Teensy are supported natively
@@ -289,117 +291,106 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             # Phase 8: Compile sources
             log_phase(8, 11, "Compiling sources...", verbose_only=not verbose_mode)
 
-            # Get compilation queue from daemon if available
-            compilation_queue = None
-            try:
-                from fbuild.daemon.daemon import get_compilation_queue
-                compilation_queue = get_compilation_queue()
-                if compilation_queue and verbose_mode:
-                    print(f"      [async] Using parallel compilation with {compilation_queue.num_workers} workers")
-                    self._log(f"      [async] Using parallel compilation with {compilation_queue.num_workers} workers")
-            except KeyboardInterrupt as ke:
-                handle_keyboard_interrupt_properly(ke)
-            except Exception:
-                # Daemon not running or queue not initialized - use sync mode
-                pass
-
-            compiler = BuildComponentFactory.create_compiler(
-                toolchain, board_config, core_path, lib_include_paths, compilation_queue
-            )
-
-            compilation_orchestrator = SourceCompilationOrchestrator(verbose=verbose_mode)
-            compilation_result = compilation_orchestrator.compile_multiple_groups(
-                compiler=compiler,
-                sketch_sources=sources.sketch_sources,
-                core_sources=sources.core_sources,
-                variant_sources=sources.variant_sources,
-                src_build_dir=src_build_dir,
-                core_build_dir=core_build_dir
-            )
-
-            sketch_objects = compilation_result.sketch_objects
-            all_core_objects = compilation_result.all_core_objects
-
-            # Phase 9: Link firmware
-            log_phase(9, 11, "Linking firmware...", verbose_only=not verbose_mode)
-
-            elf_path = build_dir / 'firmware.elf'
-            hex_path = build_dir / 'firmware.hex'
-
-            linker = BuildComponentFactory.create_linker(toolchain, board_config)
-            # For LTO with -fno-fat-lto-objects, we pass library objects separately
-            # so they don't get archived (LTO bytecode doesn't work well in archives)
-            link_result = linker.link_legacy(
-                sketch_objects,
-                all_core_objects,
-                elf_path,
-                hex_path,
-                [],  # No library archives
-                None,  # No extra flags
-                lib_objects  # Library objects passed separately for LTO
-            )
-
-            if not link_result.success:
-                raise BuildOrchestratorError(
-                    f"Linking failed:\n{link_result.stderr}"
+            # Get compilation queue for this build using context manager
+            from fbuild.build.orchestrator import managed_compilation_queue
+            with managed_compilation_queue(jobs, verbose_mode) as compilation_queue:
+                compiler = BuildComponentFactory.create_compiler(
+                    toolchain, board_config, core_path, lib_include_paths, compilation_queue
                 )
 
-            log_firmware_path(hex_path, verbose_only=not verbose_mode)
+                compilation_orchestrator = SourceCompilationOrchestrator(verbose=verbose_mode)
+                compilation_result = compilation_orchestrator.compile_multiple_groups(
+                    compiler=compiler,
+                    sketch_sources=sources.sketch_sources,
+                    core_sources=sources.core_sources,
+                    variant_sources=sources.variant_sources,
+                    src_build_dir=src_build_dir,
+                    core_build_dir=core_build_dir
+                )
 
-            # Phase 10: Save build state for future cache validation
-            log_phase(10, 11, "Saving build state...", verbose_only=not verbose_mode)
-            state_tracker.save_state(current_state)
+                sketch_objects = compilation_result.sketch_objects
+                all_core_objects = compilation_result.all_core_objects
 
-            # Phase 10.5: Generate build_info.json
-            build_time = time.time() - start_time
-            build_info_generator = BuildInfoGenerator(build_dir)
-            toolchain_tools = toolchain.get_all_tools()
-            # Parse f_cpu from string (e.g., "16000000L") to int
-            f_cpu_int = int(board_config.f_cpu.rstrip("L"))
-            # Build toolchain_paths dict, filtering out None values
-            toolchain_paths_raw = {
-                "gcc": toolchain_tools.get("avr-gcc"),
-                "gxx": toolchain_tools.get("avr-g++"),
-                "ar": toolchain_tools.get("avr-ar"),
-                "objcopy": toolchain_tools.get("avr-objcopy"),
-                "size": toolchain_tools.get("avr-size"),
-            }
-            toolchain_paths = {k: v for k, v in toolchain_paths_raw.items() if v is not None}
-            build_info = build_info_generator.generate_avr(
-                env_name=env_name,
-                board_id=board_id,
-                board_name=board_config.name,
-                mcu=board_config.mcu,
-                f_cpu=f_cpu_int,
-                build_time=build_time,
-                elf_path=elf_path,
-                hex_path=hex_path,
-                size_info=link_result.size_info,
-                build_flags=build_flags,
-                lib_deps=lib_deps,
-                toolchain_version=toolchain.VERSION,
-                toolchain_paths=toolchain_paths,
-                framework_version=arduino_core.AVR_VERSION,
-                core_path=core_path,
-            )
-            build_info_generator.save(build_info)
-            log_detail(f"Build info saved to {build_info_generator.build_info_path}", verbose_only=not verbose_mode)
+                # Phase 9: Link firmware
+                log_phase(9, 11, "Linking firmware...", verbose_only=not verbose_mode)
 
-            # Phase 11: Display results
+                elf_path = build_dir / 'firmware.elf'
+                hex_path = build_dir / 'firmware.hex'
 
-            log_phase(11, 11, "Build complete!", verbose_only=not verbose_mode)
-            log("")
-            SizeInfoPrinter.print_size_info(link_result.size_info)
-            log_build_complete(build_time, verbose_only=not verbose_mode)
+                linker = BuildComponentFactory.create_linker(toolchain, board_config)
+                # For LTO with -fno-fat-lto-objects, we pass library objects separately
+                # so they don't get archived (LTO bytecode doesn't work well in archives)
+                link_result = linker.link_legacy(
+                    sketch_objects,
+                    all_core_objects,
+                    elf_path,
+                    hex_path,
+                    [],  # No library archives
+                    None,  # No extra flags
+                    lib_objects  # Library objects passed separately for LTO
+                )
 
-            return BuildResult(
-                success=True,
-                hex_path=hex_path,
-                elf_path=elf_path,
-                size_info=link_result.size_info,
-                build_time=build_time,
-                message="Build successful"
-            )
+                if not link_result.success:
+                    raise BuildOrchestratorError(
+                        f"Linking failed:\n{link_result.stderr}"
+                    )
+
+                log_firmware_path(hex_path, verbose_only=not verbose_mode)
+
+                # Phase 10: Save build state for future cache validation
+                log_phase(10, 11, "Saving build state...", verbose_only=not verbose_mode)
+                state_tracker.save_state(current_state)
+
+                # Phase 10.5: Generate build_info.json
+                build_time = time.time() - start_time
+                build_info_generator = BuildInfoGenerator(build_dir)
+                toolchain_tools = toolchain.get_all_tools()
+                # Parse f_cpu from string (e.g., "16000000L") to int
+                f_cpu_int = int(board_config.f_cpu.rstrip("L"))
+                # Build toolchain_paths dict, filtering out None values
+                toolchain_paths_raw = {
+                    "gcc": toolchain_tools.get("avr-gcc"),
+                    "gxx": toolchain_tools.get("avr-g++"),
+                    "ar": toolchain_tools.get("avr-ar"),
+                    "objcopy": toolchain_tools.get("avr-objcopy"),
+                    "size": toolchain_tools.get("avr-size"),
+                }
+                toolchain_paths = {k: v for k, v in toolchain_paths_raw.items() if v is not None}
+                build_info = build_info_generator.generate_avr(
+                    env_name=env_name,
+                    board_id=board_id,
+                    board_name=board_config.name,
+                    mcu=board_config.mcu,
+                    f_cpu=f_cpu_int,
+                    build_time=build_time,
+                    elf_path=elf_path,
+                    hex_path=hex_path,
+                    size_info=link_result.size_info,
+                    build_flags=build_flags,
+                    lib_deps=lib_deps,
+                    toolchain_version=toolchain.VERSION,
+                    toolchain_paths=toolchain_paths,
+                    framework_version=arduino_core.AVR_VERSION,
+                    core_path=core_path,
+                )
+                build_info_generator.save(build_info)
+                log_detail(f"Build info saved to {build_info_generator.build_info_path}", verbose_only=not verbose_mode)
+
+                # Phase 11: Display results
+
+                log_phase(11, 11, "Build complete!", verbose_only=not verbose_mode)
+                log("")
+                SizeInfoPrinter.print_size_info(link_result.size_info)
+                log_build_complete(build_time, verbose_only=not verbose_mode)
+
+                return BuildResult(
+                    success=True,
+                    hex_path=hex_path,
+                    elf_path=elf_path,
+                    size_info=link_result.size_info,
+                    build_time=build_time,
+                    message="Build successful"
+                )
 
         except (
             BuildOrchestratorError,
@@ -442,7 +433,8 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
         clean: bool,
         verbose: bool,
         start_time: float,
-        build_flags: List[str]
+        build_flags: List[str],
+        jobs: int | None = None
     ) -> BuildResult:
         """
         Build ESP32 project using native build system.
@@ -458,6 +450,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             verbose: Verbose output
             start_time: Build start time
             build_flags: User build flags from platformio.ini
+            jobs: Number of parallel compilation jobs (None = CPU count, 1 = serial)
 
         Returns:
             BuildResult
@@ -478,7 +471,8 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             project_dir=project_dir,
             env_name=env_name,
             clean=clean,
-            verbose=verbose
+            verbose=verbose,
+            jobs=jobs
         )
         return result
 
@@ -491,7 +485,8 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
         clean: bool,
         verbose: bool,
         start_time: float,
-        build_flags: List[str]
+        build_flags: List[str],
+        jobs: int | None = None
     ) -> BuildResult:
         """
         Build Teensy project using native build system.
@@ -505,6 +500,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             verbose: Verbose output
             start_time: Build start time
             build_flags: User build flags from platformio.ini
+            jobs: Number of parallel compilation jobs (None = CPU count, 1 = serial)
 
         Returns:
             BuildResult
@@ -527,7 +523,8 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             project_dir=project_dir,
             env_name=env_name,
             clean=clean,
-            verbose=verbose
+            verbose=verbose,
+            jobs=jobs
         )
 
         return result

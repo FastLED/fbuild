@@ -239,6 +239,7 @@ class BuildRequestProcessor(RequestProcessor):
             env_name=request.environment,
             clean=request.clean_build,
             verbose=request.verbose,
+            jobs=request.jobs,
         )
 
         if not build_result.success:

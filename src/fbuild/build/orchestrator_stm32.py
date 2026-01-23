@@ -20,7 +20,7 @@ from ..config.board_config import BoardConfig
 from .configurable_compiler import ConfigurableCompiler
 from .configurable_linker import ConfigurableLinker
 from .linker import SizeInfo
-from .orchestrator import IBuildOrchestrator, BuildResult
+from .orchestrator import IBuildOrchestrator, BuildResult, managed_compilation_queue
 from .build_utils import safe_rmtree
 from .build_state import BuildStateTracker
 from .build_info_generator import BuildInfoGenerator
@@ -66,7 +66,8 @@ class OrchestratorSTM32(IBuildOrchestrator):
         project_dir: Path,
         env_name: Optional[str] = None,
         clean: bool = False,
-        verbose: Optional[bool] = None
+        verbose: Optional[bool] = None,
+        jobs: int | None = None,
     ) -> BuildResult:
         """Execute complete build process (IBuildOrchestrator interface).
 
@@ -74,6 +75,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
             project_dir: Project root directory containing platformio.ini
             env_name: Environment name to build (defaults to first/default env)
             clean: Clean build (remove all artifacts before building)
+            jobs: Number of parallel compilation jobs (None = CPU count, 1 = serial)
             verbose: Override verbose setting
 
         Returns:
@@ -121,7 +123,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
 
             # Call internal build method
             stm32_result = self._build_stm32(
-                project_dir, env_name, board_id, env_config, build_flags, lib_deps, clean, verbose_mode
+                project_dir, env_name, board_id, env_config, build_flags, lib_deps, clean, verbose_mode, jobs
             )
 
             # Convert BuildResultSTM32 to BuildResult
@@ -156,7 +158,8 @@ class OrchestratorSTM32(IBuildOrchestrator):
         build_flags: List[str],
         lib_deps: List[str],
         clean: bool = False,
-        verbose: bool = False
+        verbose: bool = False,
+        jobs: int | None = None
     ) -> BuildResultSTM32:
         """
         Execute complete STM32 build process (internal implementation).
@@ -170,6 +173,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
             lib_deps: Library dependencies from platformio.ini
             clean: Whether to clean before build
             verbose: Verbose output mode
+            jobs: Number of parallel compilation jobs (None = CPU count, 1 = serial)
 
         Returns:
             BuildResultSTM32 with build status and output paths
@@ -255,172 +259,161 @@ class OrchestratorSTM32(IBuildOrchestrator):
             else:
                 logger.info("Compiling Arduino core...")
 
-            # Try to get compilation queue from daemon for async compilation
-            compilation_queue = None
-            try:
-                from fbuild.daemon.daemon import get_compilation_queue
-                compilation_queue = get_compilation_queue()
-                if compilation_queue and verbose:
-                    num_workers = compilation_queue.num_workers
-                    print(f"[Async Mode] Using daemon compilation queue with {num_workers} workers")
-            except (ImportError, AttributeError):
-                # Daemon not available or not running - use synchronous compilation
+            # Use managed compilation queue context manager for safe resource handling
+            with managed_compilation_queue(jobs, verbose) as compilation_queue:
+                compiler = ConfigurableCompiler(
+                    platform,
+                    platform.toolchain,
+                    platform.framework,
+                    board_id,
+                    build_dir,
+                    platform_config=platform_config,
+                    show_progress=verbose,
+                    user_build_flags=build_flags,
+                    compilation_queue=compilation_queue
+                )
+
+                # Compile Arduino core with progress bar
                 if verbose:
-                    print("[Sync Mode] Daemon not available, using synchronous compilation")
+                    core_obj_files = compiler.compile_core()
+                else:
+                    # Use tqdm progress bar for non-verbose mode
+                    from tqdm import tqdm
 
-            compiler = ConfigurableCompiler(
-                platform,
-                platform.toolchain,
-                platform.framework,
-                board_id,
-                build_dir,
-                platform_config=platform_config,
-                show_progress=verbose,
-                user_build_flags=build_flags,
-                compilation_queue=compilation_queue
-            )
+                    # Get number of core source files for progress tracking
+                    core_sources = platform.framework.get_core_sources("arduino")
+                    total_files = len(core_sources)
 
-            # Compile Arduino core with progress bar
-            if verbose:
-                core_obj_files = compiler.compile_core()
-            else:
-                # Use tqdm progress bar for non-verbose mode
-                from tqdm import tqdm
+                    # Create progress bar
+                    with tqdm(
+                        total=total_files,
+                        desc='Compiling Arduino core',
+                        unit='file',
+                        ncols=80,
+                        leave=False
+                    ) as pbar:
+                        core_obj_files = compiler.compile_core(progress_bar=pbar)
 
-                # Get number of core source files for progress tracking
-                core_sources = platform.framework.get_core_sources("arduino")
-                total_files = len(core_sources)
+                    # Print completion message
+                    logger.info(f"Compiled {len(core_obj_files)} core files")
 
-                # Create progress bar
-                with tqdm(
-                    total=total_files,
-                    desc='Compiling Arduino core',
-                    unit='file',
-                    ncols=80,
-                    leave=False
-                ) as pbar:
-                    core_obj_files = compiler.compile_core(progress_bar=pbar)
+                core_archive = compiler.create_core_archive(core_obj_files)
 
-                # Print completion message
-                logger.info(f"Compiled {len(core_obj_files)} core files")
+                if verbose:
+                    logger.info(f"      Compiled {len(core_obj_files)} core source files")
 
-            core_archive = compiler.create_core_archive(core_obj_files)
-
-            if verbose:
-                logger.info(f"      Compiled {len(core_obj_files)} core source files")
-
-            # Handle library dependencies (if any)
-            library_archives, library_include_paths = self._process_libraries(
-                env_config, build_dir, compiler, platform.toolchain, board_config, verbose, project_dir=project_dir
-            )
-
-            # Add library include paths to compiler
-            if library_include_paths:
-                compiler.add_library_includes(library_include_paths)
-
-            # Get src_dir override from platformio.ini
-            from ..config import PlatformIOConfig
-            config_for_src_dir = PlatformIOConfig(project_dir / "platformio.ini")
-            src_dir_override = config_for_src_dir.get_src_dir()
-
-            # Find and compile sketch
-            sketch_obj_files = self._compile_sketch(project_dir, compiler, start_time, verbose, src_dir_override)
-            if sketch_obj_files is None:
-                search_dir = project_dir / src_dir_override if src_dir_override else project_dir
-                return self._error_result(
-                    start_time,
-                    f"No .ino sketch file found in {search_dir}"
+                # Handle library dependencies (if any)
+                library_archives, library_include_paths = self._process_libraries(
+                    env_config, build_dir, compiler, platform.toolchain, board_config, verbose, project_dir=project_dir
                 )
 
-            # Initialize linker
-            if verbose:
-                logger.info("[6/7] Linking firmware...")
-            else:
-                logger.info("Linking firmware...")
+                # Add library include paths to compiler
+                if library_include_paths:
+                    compiler.add_library_includes(library_include_paths)
 
-            linker = ConfigurableLinker(
-                platform,
-                platform.toolchain,
-                platform.framework,
-                board_id,
-                build_dir,
-                platform_config=platform_config,
-                show_progress=verbose
-            )
+                # Get src_dir override from platformio.ini
+                from ..config import PlatformIOConfig
+                config_for_src_dir = PlatformIOConfig(project_dir / "platformio.ini")
+                src_dir_override = config_for_src_dir.get_src_dir()
 
-            # Link firmware
-            firmware_elf = linker.link(sketch_obj_files, core_archive, library_archives=library_archives)
+                # Find and compile sketch
+                sketch_obj_files = self._compile_sketch(project_dir, compiler, start_time, verbose, src_dir_override)
+                if sketch_obj_files is None:
+                    search_dir = project_dir / src_dir_override if src_dir_override else project_dir
+                    return self._error_result(
+                        start_time,
+                        f"No .ino sketch file found in {search_dir}"
+                    )
 
-            # Generate bin and hex files
-            if verbose:
-                logger.info("[7/7] Generating firmware...")
-            else:
-                logger.info("Generating firmware...")
+                # Initialize linker
+                if verbose:
+                    logger.info("[6/7] Linking firmware...")
+                else:
+                    logger.info("Linking firmware...")
 
-            firmware_bin = linker.generate_bin(firmware_elf)
-            firmware_hex = self._generate_hex(firmware_elf, platform.toolchain, verbose)
-
-            # Get size info
-            size_info = linker.get_size_info(firmware_elf)
-
-            build_time = time.time() - start_time
-
-            if verbose:
-                self._print_success(
-                    build_time, firmware_elf, firmware_hex, size_info
+                linker = ConfigurableLinker(
+                    platform,
+                    platform.toolchain,
+                    platform.framework,
+                    board_id,
+                    build_dir,
+                    platform_config=platform_config,
+                    show_progress=verbose
                 )
 
-            # Save build state for future cache validation
-            if verbose:
-                logger.info("[7.5/7] Saving build state...")
-            state_tracker.save_state(current_state)
+                # Link firmware
+                firmware_elf = linker.link(sketch_obj_files, core_archive, library_archives=library_archives)
 
-            # Generate build_info.json
-            build_info_generator = BuildInfoGenerator(build_dir)
-            # Parse f_cpu from string (e.g., "180000000L") to int
-            f_cpu_int = int(board_config.f_cpu.rstrip("L"))
-            # Build toolchain_paths dict, filtering out None values
-            toolchain_paths_raw = {
-                "gcc": platform.toolchain.get_gcc_path(),
-                "gxx": platform.toolchain.get_gxx_path(),
-                "ar": platform.toolchain.get_ar_path(),
-                "objcopy": platform.toolchain.get_objcopy_path(),
-                "size": platform.toolchain.get_size_path(),
-            }
-            toolchain_paths = {k: v for k, v in toolchain_paths_raw.items() if v is not None}
-            build_info = build_info_generator.generate_generic(
-                env_name=env_name,
-                board_id=board_id,
-                board_name=board_config.name,
-                mcu=board_config.mcu,
-                platform="ststm32",
-                f_cpu=f_cpu_int,
-                build_time=build_time,
-                elf_path=firmware_elf,
-                hex_path=firmware_hex,
-                bin_path=firmware_bin,
-                size_info=size_info,
-                build_flags=build_flags,
-                lib_deps=lib_deps,
-                toolchain_version=platform.toolchain.version,
-                toolchain_paths=toolchain_paths,
-                framework_name="arduino",
-                framework_version=platform.framework.version,
-                core_path=platform.framework.get_cores_dir(),
-            )
-            build_info_generator.save(build_info)
-            if verbose:
-                logger.info(f"      Build info saved to {build_info_generator.build_info_path}")
+                # Generate bin and hex files
+                if verbose:
+                    logger.info("[7/7] Generating firmware...")
+                else:
+                    logger.info("Generating firmware...")
 
-            return BuildResultSTM32(
-                success=True,
-                firmware_hex=firmware_hex,
-                firmware_bin=firmware_bin,
-                firmware_elf=firmware_elf,
-                size_info=size_info,
-                build_time=build_time,
-                message="Build successful (native STM32 build)"
-            )
+                firmware_bin = linker.generate_bin(firmware_elf)
+                firmware_hex = self._generate_hex(firmware_elf, platform.toolchain, verbose)
+
+                # Get size info
+                size_info = linker.get_size_info(firmware_elf)
+
+                build_time = time.time() - start_time
+
+                if verbose:
+                    self._print_success(
+                        build_time, firmware_elf, firmware_hex, size_info
+                    )
+
+                # Save build state for future cache validation
+                if verbose:
+                    logger.info("[7.5/7] Saving build state...")
+                state_tracker.save_state(current_state)
+
+                # Generate build_info.json
+                build_info_generator = BuildInfoGenerator(build_dir)
+                # Parse f_cpu from string (e.g., "180000000L") to int
+                f_cpu_int = int(board_config.f_cpu.rstrip("L"))
+                # Build toolchain_paths dict, filtering out None values
+                toolchain_paths_raw = {
+                    "gcc": platform.toolchain.get_gcc_path(),
+                    "gxx": platform.toolchain.get_gxx_path(),
+                    "ar": platform.toolchain.get_ar_path(),
+                    "objcopy": platform.toolchain.get_objcopy_path(),
+                    "size": platform.toolchain.get_size_path(),
+                }
+                toolchain_paths = {k: v for k, v in toolchain_paths_raw.items() if v is not None}
+                build_info = build_info_generator.generate_generic(
+                    env_name=env_name,
+                    board_id=board_id,
+                    board_name=board_config.name,
+                    mcu=board_config.mcu,
+                    platform="ststm32",
+                    f_cpu=f_cpu_int,
+                    build_time=build_time,
+                    elf_path=firmware_elf,
+                    hex_path=firmware_hex,
+                    bin_path=firmware_bin,
+                    size_info=size_info,
+                    build_flags=build_flags,
+                    lib_deps=lib_deps,
+                    toolchain_version=platform.toolchain.version,
+                    toolchain_paths=toolchain_paths,
+                    framework_name="arduino",
+                    framework_version=platform.framework.version,
+                    core_path=platform.framework.get_cores_dir(),
+                )
+                build_info_generator.save(build_info)
+                if verbose:
+                    logger.info(f"      Build info saved to {build_info_generator.build_info_path}")
+
+                return BuildResultSTM32(
+                    success=True,
+                    firmware_hex=firmware_hex,
+                    firmware_bin=firmware_bin,
+                    firmware_elf=firmware_elf,
+                    size_info=size_info,
+                    build_time=build_time,
+                    message="Build successful (native STM32 build)"
+                )
 
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly

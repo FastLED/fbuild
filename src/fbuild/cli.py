@@ -29,6 +29,7 @@ class BuildArgs:
     environment: Optional[str] = None
     clean: bool = False
     verbose: bool = False
+    jobs: Optional[int] = None
 
 
 @dataclass
@@ -96,6 +97,7 @@ def build_command(args: BuildArgs) -> None:
             environment=env_name,
             clean_build=args.clean,
             verbose=args.verbose,
+            jobs=args.jobs,
         )
 
         # Exit with appropriate code
@@ -746,6 +748,13 @@ def main() -> None:
         action="store_true",
         help="Show verbose build output",
     )
+    build_parser.add_argument(
+        "-j",
+        "--jobs",
+        type=int,
+        default=None,
+        help="Number of parallel compilation jobs (default: CPU count, use 1 for serial compilation)",
+    )
 
     # Deploy command
     deploy_parser = subparsers.add_parser(
@@ -980,6 +989,7 @@ def main() -> None:
             environment=parsed_args.environment,
             clean=parsed_args.clean,
             verbose=parsed_args.verbose,
+            jobs=parsed_args.jobs,
         )
         build_command(build_args)
     elif parsed_args.command == "deploy":

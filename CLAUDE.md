@@ -34,6 +34,11 @@ uv run --group test pytest tests/unit/test_foo.py -v
 fbuild build tests/uno -e uno
 fbuild build tests/esp32c6 -e esp32c6 -v  # verbose
 
+# Parallel compilation (default: uses all CPU cores)
+fbuild build tests/esp32c6 -e esp32c6     # automatic parallel
+fbuild build tests/uno -e uno --jobs 4    # use 4 workers
+fbuild build tests/uno -e uno --jobs 1    # serial (debugging)
+
 # Deploy and monitor
 fbuild deploy tests/esp32c6 --monitor
 ```
@@ -144,3 +149,212 @@ Uses standard platformio.ini with extensions:
 - `${env:parent.key}` - Variable substitution
 - `board_build.*` / `board_upload.*` - Board overrides
 - `symlink://./path` - Local library symlinks (auto-converted to copies on Windows)
+
+## Parallel Compilation
+
+fbuild automatically uses parallel compilation when the daemon is running:
+
+- **Automatic**: By default, uses all CPU cores for compilation
+- **Configurable**: Use `--jobs N` or `-j N` flag to control worker count
+- **Serial Mode**: Use `--jobs 1` to force serial compilation (useful for debugging)
+- **Implementation**: Daemon's `CompilationJobQueue` manages worker thread pool
+- **Fallback**: When daemon is unavailable, automatically falls back to synchronous compilation
+
+All platforms (ESP32, AVR, Teensy, RP2040, STM32) support parallel compilation. The orchestrators automatically detect the compilation queue from the daemon and use it if available.
+
+**Examples:**
+```bash
+fbuild build tests/esp32c6 -e esp32c6           # Uses all CPU cores
+fbuild build tests/uno -e uno --jobs 4          # Uses 4 workers
+fbuild build tests/esp32c6 -e esp32c6 --jobs 1  # Serial (debugging)
+```
+
+## Architecture Patterns and Protocols
+
+### SerializableMessage Protocol
+
+All daemon messages implement the `SerializableMessage` protocol for type-safe serialization:
+
+**File**: `src/fbuild/daemon/message_protocol.py`
+
+```python
+@runtime_checkable
+class SerializableMessage(Protocol):
+    """Protocol for messages that can be serialized to/from dictionaries."""
+
+    def to_dict(self) -> dict[str, Any]:
+        """Convert this message to a dictionary for JSON serialization."""
+        ...
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "SerializableMessage":
+        """Create a message instance from a dictionary."""
+        ...
+```
+
+**Key features**:
+- Automatic enum serialization/deserialization
+- Support for nested SerializableMessage objects
+- Proper handling of Optional types
+- Respects field defaults
+
+**Usage**:
+```python
+@dataclass
+class BuildRequest:
+    project_dir: str
+    jobs: int | None = None
+
+    def to_dict(self) -> dict[str, Any]:
+        return serialize_dataclass(self)
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "BuildRequest":
+        return deserialize_dataclass(cls, data)
+```
+
+### PlatformBuildMethod Protocol
+
+All platform-specific build methods follow the `PlatformBuildMethod` protocol signature:
+
+**File**: `src/fbuild/build/orchestrator.py`
+
+```python
+@runtime_checkable
+class PlatformBuildMethod(Protocol):
+    """Protocol defining the expected signature for internal _build_XXX() methods."""
+
+    def __call__(
+        self,
+        project_path: Path,
+        env_name: str,
+        target: str,
+        verbose: bool,
+        clean: bool,
+        jobs: int | None = None,
+    ) -> BuildResult:
+        """Execute platform-specific build."""
+        ...
+```
+
+**Purpose**: Ensures all platform orchestrators (AVR, ESP32, Teensy, RP2040, STM32) accept the same parameters, enabling consistent parameter passing.
+
+### managed_compilation_queue() Context Manager
+
+The `managed_compilation_queue()` context manager handles compilation queue lifecycle and resource cleanup:
+
+**File**: `src/fbuild/build/orchestrator.py`
+
+```python
+@contextlib.contextmanager
+def managed_compilation_queue(jobs: int | None, verbose: bool = False):
+    """Context manager for safely managing compilation queue lifecycle.
+
+    Args:
+        jobs: Number of parallel compilation jobs
+              - None: Use CPU count (daemon queue or fallback)
+              - 1: Serial mode (no queue)
+              - N: Custom worker count (temporary queue, requires cleanup)
+        verbose: Whether to log queue selection and lifecycle events
+
+    Yields:
+        Optional[CompilationJobQueue]: The queue to use, or None for serial mode
+    """
+    queue, should_cleanup = get_compilation_queue_for_build(jobs, verbose)
+    try:
+        yield queue
+    finally:
+        if should_cleanup and queue:
+            queue.shutdown_and_wait()  # Automatic cleanup
+```
+
+**Usage in orchestrators**:
+```python
+def build(self, project_dir: Path, ..., jobs: int | None = None) -> BuildResult:
+    with managed_compilation_queue(jobs, verbose=self.verbose) as queue:
+        # Queue is available throughout build
+        # Automatically cleaned up on exit (even if exception occurs)
+        return self._build_internal(...)
+```
+
+**Queue selection strategy**:
+1. `jobs=1` → Serial mode (returns None)
+2. `jobs=None` or `jobs=cpu_count()` → Daemon's shared queue (no cleanup)
+3. `jobs=N` (custom) → Temporary queue with N workers (requires cleanup)
+
+## Parameter Flow
+
+See `docs/parameter_flow.md` for comprehensive documentation on how parameters flow through the system from CLI to orchestrator. This includes:
+
+- Architecture overview with layer-by-layer diagrams
+- Complete example using the `jobs` parameter
+- Context manager pattern for resource management
+- Step-by-step guide for adding new parameters
+- Testing strategies (unit, integration, system)
+- Best practices and common pitfalls
+
+**Quick reference**:
+```
+CLI --jobs N → BuildArgs(jobs=N) → BuildRequest(jobs=N) →
+JSON serialization → Daemon → BuildProcessor →
+Orchestrator.build(jobs=N) → managed_compilation_queue(jobs=N)
+```
+
+## Linting and Code Quality
+
+### Custom Linting Checks
+
+fbuild includes custom linting plugins to enforce architectural patterns:
+
+**Run all lints**:
+```bash
+./lint  # Runs: ruff, black, isort, pyright, flake8, custom checks
+```
+
+**Custom checks**:
+1. **Orchestrator Signature Validation** (`tools/validate_orchestrator_signatures.py`)
+   - Ensures all platform orchestrators implement `IBuildOrchestrator` interface
+   - Validates internal build methods follow `PlatformBuildMethod` protocol
+   - Checks for required parameters (including `jobs`)
+
+2. **Message Protocol Validation** (planned)
+   - Verifies all daemon messages implement `SerializableMessage` protocol
+   - Checks for proper enum handling in serialization
+
+**Run signature validation**:
+```bash
+python tools/validate_orchestrator_signatures.py
+```
+
+**Expected output**:
+```
+Validating orchestrator signatures...
+
+[orchestrator_avr] BuildOrchestratorAVR
+  ✓ Inherits from IBuildOrchestrator
+  ✓ Implements build() method
+  ✓ build() signature matches IBuildOrchestrator
+  ✓ Has platform build method: _build_avr
+  ✓ _build_avr signature matches PlatformBuildMethod protocol
+
+[orchestrator_esp32] OrchestratorESP32
+  ✓ Inherits from IBuildOrchestrator
+  ...
+
+All orchestrators validated successfully.
+```
+
+## Best Practices for Adding Parameters
+
+When adding new CLI parameters that need to flow through to orchestrators:
+
+1. **Define in CLI**: Add to `BuildArgs` dataclass and argparse
+2. **Add to Message**: Update `BuildRequest` in `messages.py`
+3. **Update Client**: Pass parameter in `daemon/client.py`
+4. **Extract in Processor**: Forward to orchestrator in `build_processor.py`
+5. **Update Interface**: Add to `IBuildOrchestrator` in `orchestrator.py`
+6. **Implement**: Add to all platform orchestrators
+7. **Test**: Add integration tests in `test_parameter_flow.py`
+8. **Validate**: Run `./lint` to verify signature compliance
+
+See `docs/parameter_flow.md` for detailed examples and step-by-step instructions.

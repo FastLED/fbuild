@@ -275,6 +275,7 @@ def request_build(
     clean_build: bool = False,
     verbose: bool = False,
     timeout: float = 1800,
+    jobs: int | None = None,
 ) -> bool:
     """Request a build operation from the daemon.
 
@@ -284,6 +285,7 @@ def request_build(
         clean_build: Whether to perform clean build
         verbose: Enable verbose build output
         timeout: Maximum wait time in seconds (default: 30 minutes)
+        jobs: Number of parallel compilation jobs (default: CPU count, 1 for serial)
 
     Returns:
         True if build successful, False otherwise
@@ -294,6 +296,7 @@ def request_build(
         clean_build=clean_build,
         verbose=verbose,
         timeout=timeout,
+        jobs=jobs,
     )
     return handler.execute()
 
@@ -651,6 +654,7 @@ class BuildRequestHandler(BaseRequestHandler):
         clean_build: bool = False,
         verbose: bool = False,
         timeout: float = 1800,
+        jobs: int | None = None,
     ):
         """Initialize build request handler.
 
@@ -660,10 +664,12 @@ class BuildRequestHandler(BaseRequestHandler):
             clean_build: Whether to perform clean build
             verbose: Enable verbose build output
             timeout: Maximum wait time in seconds
+            jobs: Number of parallel compilation jobs (default: CPU count, 1 for serial)
         """
         super().__init__(project_dir, environment, timeout)
         self.clean_build = clean_build
         self.verbose = verbose
+        self.jobs = jobs
 
     def create_request(self) -> BuildRequest:
         """Create build request."""
@@ -674,6 +680,7 @@ class BuildRequestHandler(BaseRequestHandler):
             verbose=self.verbose,
             caller_pid=os.getpid(),
             caller_cwd=os.getcwd(),
+            jobs=self.jobs,
         )
 
     def get_request_file(self) -> Path:

@@ -89,6 +89,7 @@ def test_execute_operation_success(processor, build_request, mock_context):
         env_name="esp32dev",
         clean=False,
         verbose=False,
+        jobs=None,
     )
 
 
@@ -166,6 +167,7 @@ def test_execute_operation_with_clean_build(processor, mock_context):
         env_name="esp32dev",
         clean=True,
         verbose=True,
+        jobs=None,
     )
 
 

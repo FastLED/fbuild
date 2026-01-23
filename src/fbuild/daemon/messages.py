@@ -19,6 +19,12 @@ from dataclasses import asdict, dataclass, field
 from enum import Enum
 from typing import Any
 
+from fbuild.daemon.message_protocol import (
+    EnumSerializationMixin,
+    deserialize_dataclass,
+    serialize_dataclass,
+)
+
 
 class DaemonState(Enum):
     """Daemon state enumeration."""
@@ -95,28 +101,12 @@ class DeployRequest:
 
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
-        return asdict(self)
+        return serialize_dataclass(self)
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "DeployRequest":
         """Create DeployRequest from dictionary."""
-        return cls(
-            project_dir=data["project_dir"],
-            environment=data["environment"],
-            port=data.get("port"),
-            clean_build=data.get("clean_build", False),
-            monitor_after=data.get("monitor_after", False),
-            monitor_timeout=data.get("monitor_timeout"),
-            monitor_halt_on_error=data.get("monitor_halt_on_error"),
-            monitor_halt_on_success=data.get("monitor_halt_on_success"),
-            monitor_expect=data.get("monitor_expect"),
-            caller_pid=data["caller_pid"],
-            caller_cwd=data["caller_cwd"],
-            monitor_show_timestamp=data.get("monitor_show_timestamp", False),
-            skip_build=data.get("skip_build", False),
-            timestamp=data.get("timestamp", time.time()),
-            request_id=data.get("request_id", f"deploy_{int(time.time() * 1000)}"),
-        )
+        return deserialize_dataclass(cls, data)
 
 
 @dataclass
@@ -188,6 +178,7 @@ class BuildRequest:
         verbose: Enable verbose build output
         caller_pid: Process ID of requesting client
         caller_cwd: Working directory of requesting client
+        jobs: Number of parallel compilation jobs (None = CPU count)
         timestamp: Unix timestamp when request was created
         request_id: Unique identifier for this request
     """
@@ -198,26 +189,18 @@ class BuildRequest:
     verbose: bool
     caller_pid: int
     caller_cwd: str
+    jobs: int | None = None
     timestamp: float = field(default_factory=time.time)
     request_id: str = field(default_factory=lambda: f"build_{int(time.time() * 1000)}")
 
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
-        return asdict(self)
+        return serialize_dataclass(self)
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "BuildRequest":
         """Create BuildRequest from dictionary."""
-        return cls(
-            project_dir=data["project_dir"],
-            environment=data["environment"],
-            clean_build=data.get("clean_build", False),
-            verbose=data.get("verbose", False),
-            caller_pid=data["caller_pid"],
-            caller_cwd=data["caller_cwd"],
-            timestamp=data.get("timestamp", time.time()),
-            request_id=data.get("request_id", f"build_{int(time.time() * 1000)}"),
-        )
+        return deserialize_dataclass(cls, data)
 
 
 @dataclass
@@ -267,7 +250,7 @@ class InstallDependenciesRequest:
 
 
 @dataclass
-class DaemonStatus:
+class DaemonStatus(EnumSerializationMixin):
     """Daemon → Client: Status update message.
 
     Attributes:
@@ -314,48 +297,12 @@ class DaemonStatus:
 
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
-        result = asdict(self)
-        # Convert enums to string values
-        result["state"] = self.state.value
-        if self.operation_type:
-            result["operation_type"] = self.operation_type.value
-        else:
-            result["operation_type"] = None
-        return result
+        return serialize_dataclass(self)
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "DaemonStatus":
         """Create DaemonStatus from dictionary."""
-        # Convert state string to enum
-        state_str = data.get("state", "unknown")
-        state = DaemonState.from_string(state_str)
-
-        # Convert operation_type string to enum
-        operation_type = None
-        if data.get("operation_type"):
-            operation_type = OperationType.from_string(data["operation_type"])
-
-        return cls(
-            state=state,
-            message=data.get("message", ""),
-            updated_at=data.get("updated_at", time.time()),
-            operation_in_progress=data.get("operation_in_progress", False),
-            daemon_pid=data.get("daemon_pid"),
-            daemon_started_at=data.get("daemon_started_at"),
-            caller_pid=data.get("caller_pid"),
-            caller_cwd=data.get("caller_cwd"),
-            request_id=data.get("request_id"),
-            request_started_at=data.get("request_started_at"),
-            environment=data.get("environment"),
-            project_dir=data.get("project_dir"),
-            current_operation=data.get("current_operation"),
-            operation_type=operation_type,
-            output_lines=data.get("output_lines", []),
-            exit_code=data.get("exit_code"),
-            port=data.get("port"),
-            ports=data.get("ports", {}),
-            locks=data.get("locks", {}),
-        )
+        return deserialize_dataclass(cls, data)
 
     def is_stale(self, timeout_seconds: float = 30.0) -> bool:
         """Check if status hasn't been updated recently."""
