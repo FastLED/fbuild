@@ -7,8 +7,11 @@ them with the ESP32 toolchain.
 
 import json
 import logging
+import multiprocessing
 import platform
 import subprocess
+import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import List, Optional
 
@@ -21,6 +24,28 @@ from fbuild.packages.platformio_registry import (
 from fbuild.subprocess_utils import safe_run
 
 logger = logging.getLogger(__name__)
+
+
+def _compile_single_file(job: tuple) -> tuple[Path, str]:
+    """Compile a single source file (module-level function for thread pool execution).
+
+    Args:
+        job: Tuple of (source_path, obj_file, cmd)
+
+    Returns:
+        Tuple of (obj_file, stderr)
+
+    Raises:
+        LibraryErrorESP32: If compilation fails
+    """
+    source, obj_file, cmd = job
+
+    result = safe_run(cmd, capture_output=True, text=True, encoding="utf-8")
+
+    if result.returncode != 0:
+        raise LibraryErrorESP32(f"Failed to compile {source.name}:\n{result.stderr}")
+
+    return obj_file, result.stderr
 
 
 class LibraryErrorESP32(Exception):
@@ -552,9 +577,6 @@ class LibraryManagerESP32:
             lib_includes = library.get_include_dirs()
             all_includes = list(include_paths) + lib_includes
 
-            # Compile each source file
-            object_files = []
-
             # Auto-detect toolchain prefix from available binaries
             # ESP32/S2/S3 use xtensa, C3/C6/H2 use RISC-V
             gcc_path, gxx_path = self._find_toolchain_compilers(toolchain_path)
@@ -562,6 +584,8 @@ class LibraryManagerESP32:
             # Create include flags
             include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in all_includes]
 
+            # Prepare compilation jobs
+            compile_jobs = []
             for source in sources:
                 # Determine compiler based on extension
                 if source.suffix in [".cpp", ".cc", ".cxx"]:
@@ -607,16 +631,50 @@ class LibraryManagerESP32:
                 # Add source and output
                 cmd.extend(["-o", str(obj_file), str(source)])
 
-                # Compile
-                if show_progress:
-                    log_detail(f"Compiling {source.name}...", indent=8)
+                compile_jobs.append((source, obj_file, cmd))
 
-                result = safe_run(cmd, capture_output=True, text=True, encoding="utf-8")
+            # Compile all source files in parallel
+            object_files = []
+            num_workers = multiprocessing.cpu_count()
+            completed_count = 0
+            total_count = len(compile_jobs)
+            shutdown_requested = threading.Event()
 
-                if result.returncode != 0:
-                    raise LibraryErrorESP32(f"Failed to compile {source.name}:\n{result.stderr}")
+            with ThreadPoolExecutor(max_workers=num_workers) as executor:
+                # Submit all compilation jobs
+                future_to_job = {executor.submit(_compile_single_file, job): job for job in compile_jobs}
 
-                object_files.append(obj_file)
+                # Process results as they complete
+                try:
+                    for future in as_completed(future_to_job):
+                        if shutdown_requested.is_set():
+                            break  # Exit early on interrupt
+
+                        source, obj_file, _ = future_to_job[future]
+                        completed_count += 1
+
+                        try:
+                            result_obj_file, _stderr = future.result()
+                            object_files.append(result_obj_file)
+
+                            if show_progress:
+                                log_detail(f"[{completed_count}/{total_count}] {source.name}", indent=8)
+
+                        except LibraryErrorESP32 as e:
+                            # Signal shutdown and cancel remaining jobs
+                            shutdown_requested.set()
+                            executor.shutdown(wait=False, cancel_futures=True)
+                            raise e
+
+                except KeyboardInterrupt as ke:
+                    # On Ctrl-C: cancel pending jobs and exit immediately
+                    shutdown_requested.set()
+                    executor.shutdown(wait=False, cancel_futures=True)
+                    from fbuild.interrupt_utils import (
+                        handle_keyboard_interrupt_properly,
+                    )
+
+                    handle_keyboard_interrupt_properly(ke)
 
             # Create static archive using ar
             ar_path = self._find_toolchain_ar(toolchain_path)

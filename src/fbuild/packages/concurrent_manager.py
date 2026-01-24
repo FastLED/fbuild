@@ -436,11 +436,13 @@ class ConcurrentPackageManager:
 
         Returns:
             List of PackageResult for each spec (in same order)
+            Note: May return partial results if interrupted
         """
         if not specs:
             return []
 
         results: Dict[str, PackageResult] = {}
+        shutdown_requested = threading.Event()
 
         # Use ThreadPoolExecutor for parallel downloads
         with ThreadPoolExecutor(max_workers=min(self.max_workers, len(specs))) as executor:
@@ -448,36 +450,57 @@ class ConcurrentPackageManager:
             future_to_spec = {executor.submit(self.download_package, spec, force): spec for spec in specs}
 
             # Collect results as they complete
-            for future in as_completed(future_to_spec):
-                spec = future_to_spec[future]
-                try:
-                    result = future.result()
-                    results[spec.name] = result
+            try:
+                for future in as_completed(future_to_spec):
+                    if shutdown_requested.is_set():
+                        break  # Exit early on interrupt
 
-                    if self.show_progress:
-                        status = "✓" if result.success else "✗"
-                        cached = " (cached)" if result.was_cached else ""
-                        print(f"  {status} {spec.name}{cached}")
+                    spec = future_to_spec[future]
+                    try:
+                        result = future.result()
+                        results[spec.name] = result
 
-                except KeyboardInterrupt as ke:
-                    from fbuild.interrupt_utils import (
-                        handle_keyboard_interrupt_properly,
-                    )
+                        if self.show_progress:
+                            status = "✓" if result.success else "✗"
+                            cached = " (cached)" if result.was_cached else ""
+                            print(f"  {status} {spec.name}{cached}")
 
-                    handle_keyboard_interrupt_properly(ke)
-                except Exception as e:
-                    results[spec.name] = PackageResult(
-                        spec=spec,
-                        success=False,
-                        install_path=None,
-                        fingerprint=None,
-                        error=str(e),
-                        elapsed_time=0.0,
-                        was_cached=False,
-                    )
+                    except KeyboardInterrupt as ke:
+                        # On Ctrl-C: cancel pending downloads and exit immediately
+                        shutdown_requested.set()
+                        executor.shutdown(wait=False, cancel_futures=True)
+                        from fbuild.interrupt_utils import (
+                            handle_keyboard_interrupt_properly,
+                        )
+
+                        handle_keyboard_interrupt_properly(ke)
+
+                    except Exception as e:
+                        # On download error, record failure but continue with other packages
+                        results[spec.name] = PackageResult(
+                            spec=spec,
+                            success=False,
+                            install_path=None,
+                            fingerprint=None,
+                            error=str(e),
+                            elapsed_time=0.0,
+                            was_cached=False,
+                        )
+                        # Note: Don't shutdown here - allow other packages to complete
+
+            except KeyboardInterrupt as ke:
+                # Outer interrupt handler (shouldn't normally be reached)
+                shutdown_requested.set()
+                executor.shutdown(wait=False, cancel_futures=True)
+                from fbuild.interrupt_utils import (
+                    handle_keyboard_interrupt_properly,
+                )
+
+                handle_keyboard_interrupt_properly(ke)
 
         # Return results in original order
-        return [results[spec.name] for spec in specs]
+        # Note: If interrupted, only return results for completed downloads
+        return [results[spec.name] for spec in specs if spec.name in results]
 
     def cleanup_locks(self) -> int:
         """Remove unused package locks.
