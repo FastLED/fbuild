@@ -35,7 +35,6 @@ from typing import Any, Callable, TypeVar
 
 import psutil
 
-from fbuild.daemon.compilation_queue import CompilationJobQueue
 from fbuild.daemon.connection_registry import ConnectionRegistry
 from fbuild.daemon.daemon_context import (
     DaemonContext,
@@ -106,26 +105,6 @@ IDLE_TIMEOUT = 43200  # 12 hours (fallback)
 # Self-eviction timeout: if daemon has 0 clients AND 0 ops for this duration, shutdown
 # Per TASK.md: "If daemon has 0 clients AND 0 running operations, immediately evict the daemon within 4 seconds."
 SELF_EVICTION_TIMEOUT = 4.0  # 4 seconds
-
-
-def get_compilation_queue() -> CompilationJobQueue | None:
-    """Get the compilation queue from the daemon context.
-
-    This function provides module-level access to the compilation queue for
-    orchestrators and other components that need to submit compilation jobs.
-
-    Returns:
-        The compilation queue if the daemon is running, None otherwise.
-
-    Example:
-        >>> from fbuild.daemon import daemon
-        >>> queue = daemon.get_compilation_queue()
-        >>> if queue is not None:
-        ...     queue.submit_job(compile_fn, args)
-    """
-    if _daemon_context is not None:
-        return _daemon_context.compilation_queue
-    return None
 
 
 def set_daemon_context(context: DaemonContext) -> None:

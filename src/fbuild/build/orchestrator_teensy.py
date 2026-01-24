@@ -8,8 +8,11 @@ providing cleaner separation of concerns and better maintainability.
 import _thread
 import time
 from pathlib import Path
-from typing import List, Optional
+from typing import TYPE_CHECKING, List, Optional
 from dataclasses import dataclass
+
+if TYPE_CHECKING:
+    from fbuild.daemon.compilation_queue import CompilationJobQueue
 
 from ..packages import Cache
 from ..packages.platform_teensy import PlatformTeensy
@@ -64,6 +67,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
         clean: bool = False,
         verbose: Optional[bool] = None,
         jobs: int | None = None,
+        queue: Optional["CompilationJobQueue"] = None,
     ) -> BuildResult:
         """Execute complete build process (IBuildOrchestrator interface).
 
@@ -73,6 +77,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
             clean: Clean build (remove all artifacts before building)
             jobs: Number of parallel compilation jobs (None = CPU count, 1 = serial)
             verbose: Override verbose setting
+            queue: Compilation queue from daemon context (injected by build_processor)
 
         Returns:
             BuildResult with build status and output paths
@@ -119,7 +124,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
 
             # Call internal build method
             teensy_result = self._build_teensy(
-                project_dir, env_name, board_id, env_config, build_flags, lib_deps, clean, verbose_mode, jobs
+                project_dir, env_name, board_id, env_config, build_flags, lib_deps, clean, verbose_mode, jobs, queue
             )
 
             # Convert BuildResultTeensy to BuildResult
@@ -155,7 +160,8 @@ class OrchestratorTeensy(IBuildOrchestrator):
         lib_deps: List[str],
         clean: bool = False,
         verbose: bool = False,
-        jobs: int | None = None
+        jobs: int | None = None,
+        queue: Optional["CompilationJobQueue"] = None,
     ) -> BuildResultTeensy:
         """
         Execute complete Teensy build process (internal implementation).
@@ -241,7 +247,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
                 print("[4/7] Compiling Arduino core...")
 
             # Use managed compilation queue context manager for safe resource handling
-            with managed_compilation_queue(jobs, verbose) as compilation_queue:
+            with managed_compilation_queue(jobs, verbose, provided_queue=queue) as compilation_queue:
                 compiler = ConfigurableCompiler(
                     platform,
                     platform.toolchain,

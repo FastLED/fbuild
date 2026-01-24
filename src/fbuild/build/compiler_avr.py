@@ -5,13 +5,13 @@ This module provides a wrapper around avr-gcc and avr-g++ for compiling
 C and C++ source files to object files with sccache support.
 """
 
-import subprocess
 import shutil
 from pathlib import Path
 from typing import List, Dict, Optional, TYPE_CHECKING
 from dataclasses import dataclass
 
 from .compiler import ICompiler, CompilerError
+from ..subprocess_utils import safe_run
 
 if TYPE_CHECKING:
     from ..daemon.compilation_queue import CompilationJobQueue
@@ -349,7 +349,7 @@ class CompilerAVR(ICompiler):
     ) -> CompileResult:
         """Execute compiler command."""
         try:
-            result = subprocess.run(
+            result = safe_run(
                 cmd,
                 capture_output=True,
                 text=True,

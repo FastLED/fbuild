@@ -253,6 +253,9 @@ class ConfigurableCompiler(ICompiler):
     def compile_source(self, source_path: Path, output_path: Optional[Path] = None) -> Path:
         """Compile a single source file to object file.
 
+        Uses parallel compilation if queue available (jobs != 1),
+        otherwise compiles synchronously (jobs=1 explicitly specified).
+
         Args:
             source_path: Path to .c or .cpp source file
             output_path: Optional path for output .o file
@@ -287,7 +290,7 @@ class ConfigurableCompiler(ICompiler):
         # Get include paths
         includes = self.get_include_paths()
 
-        # Async mode: submit to queue and return immediately
+        # Parallel mode: submit to queue and return immediately
         if self.compilation_queue is not None:
             # Convert include paths to flags
             include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in includes]
@@ -301,7 +304,7 @@ class ConfigurableCompiler(ICompiler):
             # Return output path optimistically (validated in wait_all_jobs())
             return output_path
 
-        # Sync mode: compile using executor (legacy behavior)
+        # Serial mode: compile synchronously (only when jobs=1 specified)
         try:
             return self.compilation_executor.compile_source(compiler_path=compiler_path, source_path=source_path, output_path=output_path, compile_flags=compile_flags, include_paths=includes)
         except KeyboardInterrupt as ke:
@@ -605,7 +608,7 @@ class ConfigurableCompiler(ICompiler):
                 continue
 
             if job.state.value != "completed":
-                failed_jobs.append(f"{job.source_path.name}: {job.stderr[:200]}")
+                failed_jobs.append(f"{job.source_path.name}: {job.stderr[:1000]}")
 
         # Clear pending jobs
         self.pending_jobs.clear()

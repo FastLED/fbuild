@@ -107,7 +107,8 @@ class Daemon:
         """
         from fbuild.daemon import ensure_daemon_running
 
-        return ensure_daemon_running()
+        ensure_daemon_running()
+        return True
 
     @staticmethod
     def stop() -> bool:

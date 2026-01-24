@@ -26,6 +26,7 @@ def mock_context():
     context.status_manager = MagicMock()
     context.lock_manager = MagicMock()
     context.operation_registry = MagicMock()
+    context.compilation_queue = MagicMock()
     return context
 
 
@@ -90,6 +91,7 @@ def test_execute_operation_success(processor, build_request, mock_context):
         clean=False,
         verbose=False,
         jobs=None,
+        queue=mock_context.compilation_queue,
     )
 
 
@@ -168,6 +170,7 @@ def test_execute_operation_with_clean_build(processor, mock_context):
         clean=True,
         verbose=True,
         jobs=None,
+        queue=mock_context.compilation_queue,
     )
 
 

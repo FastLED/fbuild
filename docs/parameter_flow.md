@@ -381,7 +381,7 @@ def managed_compilation_queue(jobs: int | None, verbose: bool = False):
 
     Args:
         jobs: Number of parallel compilation jobs
-              - None: Use CPU count (daemon queue or fallback)
+              - None: Use CPU count (daemon's shared queue)
               - 1: Serial mode (no queue)
               - N: Custom worker count (temporary queue)
         verbose: Whether to log queue selection and lifecycle events
@@ -431,34 +431,24 @@ def get_compilation_queue_for_build(
 
     # Case 2: Default parallelism (daemon's shared queue)
     if jobs is None or jobs == cpu_count:
-        try:
-            from fbuild.daemon.daemon import get_compilation_queue
-            daemon_queue = get_compilation_queue()
-            if daemon_queue:
-                if verbose:
-                    print(f"[Async Mode] Using daemon queue with {daemon_queue.num_workers} workers")
-                return daemon_queue, False  # No cleanup needed
-        except (ImportError, AttributeError):
-            pass
+        from fbuild.daemon.daemon import get_compilation_queue
 
-        # Fallback to serial if daemon unavailable
+        # This will raise RuntimeError if daemon not available
+        daemon_queue = get_compilation_queue()
+
         if verbose:
-            print("[Sync Mode] Daemon queue not available, using synchronous compilation")
-        return None, False
+            print(f"[Parallel Mode] Using daemon queue with {daemon_queue.num_workers} workers")
+        return daemon_queue, False  # No cleanup needed
 
     # Case 3: Custom worker count (temporary queue)
-    try:
-        from fbuild.daemon.compilation_queue import CompilationJobQueue
+    from fbuild.daemon.compilation_queue import CompilationJobQueue
 
-        if verbose:
-            print(f"[Async Mode] Creating temporary queue with {jobs} workers")
+    if verbose:
+        print(f"[Parallel Mode] Creating temporary queue with {jobs} workers")
 
-        temp_queue = CompilationJobQueue(num_workers=jobs)
-        temp_queue.start()
-        return temp_queue, True  # Cleanup required!
-    except (ImportError, AttributeError) as e:
-        logging.warning(f"Failed to create temporary queue: {e}")
-        return None, False
+    temp_queue = CompilationJobQueue(num_workers=jobs)
+    temp_queue.start()
+    return temp_queue, True  # Cleanup required!
 ```
 
 ### Usage Patterns
@@ -485,6 +475,17 @@ def test_with_custom_queue():
         # Verify cleanup was called
         mock_queue.shutdown_and_wait.assert_called_once()
 ```
+
+### When Serial Compilation Happens
+
+Serial (synchronous) compilation only occurs when:
+
+1. **Intentional Serial Mode (`jobs=1`)**
+   - User explicitly requests serial compilation for debugging
+   - Example: `fbuild build --jobs 1`
+
+The daemon is always running during fbuild operations (auto-started by CLI).
+If daemon fails to start, the build will fail with a clear error message.
 
 ---
 

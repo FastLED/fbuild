@@ -17,6 +17,8 @@ import time
 from pathlib import Path
 from typing import List
 
+from ..subprocess_utils import safe_run
+
 
 class ArchiveError(Exception):
     """Raised when archive creation operations fail."""
@@ -96,7 +98,7 @@ class ArchiveCreator:
                     if self.show_progress:
                         print(f"  Retrying archive creation (attempt {attempt + 1}/{max_retries})...")
 
-                result = subprocess.run(
+                result = safe_run(
                     cmd,
                     capture_output=True,
                     text=True,

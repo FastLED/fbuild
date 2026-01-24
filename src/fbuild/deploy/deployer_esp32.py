@@ -13,6 +13,7 @@ from typing import Optional
 from fbuild.config import PlatformIOConfig
 from fbuild.packages import Cache
 
+from ..subprocess_utils import safe_run
 from .deployer import DeploymentError, DeploymentResult, IDeployer
 
 
@@ -60,7 +61,7 @@ def reset_esp32_device(port: str, chip: str = "auto", verbose: bool = False) -> 
                 filtered_paths = [p for p in paths if "msys" not in p.lower()]
                 env["PATH"] = os.pathsep.join(filtered_paths)
 
-            result = subprocess.run(
+            result = safe_run(
                 cmd,
                 capture_output=not verbose,
                 text=True,
@@ -69,7 +70,7 @@ def reset_esp32_device(port: str, chip: str = "auto", verbose: bool = False) -> 
                 timeout=15,
             )
         else:
-            result = subprocess.run(
+            result = safe_run(
                 cmd,
                 capture_output=not verbose,
                 text=True,

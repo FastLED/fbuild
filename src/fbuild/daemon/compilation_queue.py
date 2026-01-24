@@ -18,6 +18,7 @@ from threading import Lock, Thread
 from typing import Callable, Optional
 
 from ..interrupt_utils import handle_keyboard_interrupt_properly
+from ..subprocess_utils import safe_run
 
 
 class JobState(Enum):
@@ -145,7 +146,7 @@ class CompilationJobQueue:
 
         try:
             # Execute compiler subprocess
-            result = subprocess.run(job.compiler_cmd, capture_output=True, text=True, timeout=60)
+            result = safe_run(job.compiler_cmd, capture_output=True, text=True, timeout=60)
 
             with self.jobs_lock:
                 job.result_code = result.returncode

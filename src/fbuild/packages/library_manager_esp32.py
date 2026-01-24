@@ -18,6 +18,7 @@ from fbuild.packages.platformio_registry import (
     PlatformIORegistry,
     RegistryError,
 )
+from fbuild.subprocess_utils import safe_run
 
 logger = logging.getLogger(__name__)
 
@@ -592,7 +593,7 @@ class LibraryManagerESP32:
                 if show_progress:
                     log_detail(f"Compiling {source.name}...", indent=8)
 
-                result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8")
+                result = safe_run(cmd, capture_output=True, text=True, encoding="utf-8")
 
                 if result.returncode != 0:
                     raise LibraryErrorESP32(f"Failed to compile {source.name}:\n{result.stderr}")

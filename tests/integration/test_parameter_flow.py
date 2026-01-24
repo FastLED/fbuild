@@ -231,9 +231,9 @@ framework = arduino
         assert queue is None, "Serial mode should return None"
         assert should_cleanup is False, "Serial mode requires no cleanup"
 
-        # Test Case 2: jobs=None (default parallelism - daemon queue or fallback)
+        # Test Case 2: jobs=None (default parallelism - daemon's shared queue)
         queue, should_cleanup = get_compilation_queue_for_build(jobs=None, verbose=False)
-        # Either returns daemon queue (no cleanup) or None (no queue available)
+        # Returns daemon queue (no cleanup needed)
         assert should_cleanup is False, "Default mode should not require cleanup"
 
         # Test Case 3: Custom worker count (requires cleanup)

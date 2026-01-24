@@ -17,6 +17,8 @@ import time
 from pathlib import Path
 from typing import Optional
 
+from fbuild.subprocess_utils import safe_popen, safe_run
+
 # Docker image constants
 DEFAULT_DOCKER_IMAGE = "espressif/idf:latest"
 ALTERNATIVE_DOCKER_IMAGE = "espressif/idf:latest"
@@ -95,7 +97,7 @@ def check_docker_available() -> bool:
         True if Docker is available, False otherwise
     """
     try:
-        result = subprocess.run(
+        result = safe_run(
             ["docker", "version"],
             capture_output=True,
             timeout=10,
@@ -149,7 +151,7 @@ class QEMURunner:
         print(f"Ensuring Docker image {self.docker_image} is available...")
         try:
             # Check if image exists locally
-            result = subprocess.run(
+            result = safe_run(
                 ["docker", "images", "-q", self.docker_image],
                 capture_output=True,
                 text=True,
@@ -162,7 +164,7 @@ class QEMURunner:
             # Image doesn't exist, pull it
             print(f"Pulling Docker image: {self.docker_image}")
             print("This may take a few minutes on first run...")
-            result = subprocess.run(
+            result = safe_run(
                 ["docker", "pull", self.docker_image],
                 env=get_docker_env(),
             )
@@ -492,7 +494,7 @@ class QEMURunner:
 
         try:
             # Start the Docker process
-            proc = subprocess.Popen(
+            proc = safe_popen(
                 cmd,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
@@ -573,7 +575,7 @@ class QEMURunner:
             print("\nInterrupted by user")
             if self.container_name:
                 try:
-                    subprocess.run(
+                    safe_run(
                         ["docker", "stop", "--time=1", self.container_name],
                         capture_output=True,
                         timeout=10,

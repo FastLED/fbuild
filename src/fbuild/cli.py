@@ -5,6 +5,7 @@ This module provides the `fbuild` CLI tool for building embedded firmware.
 """
 
 import argparse
+import os
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -103,6 +104,10 @@ def build_command(args: BuildArgs) -> None:
         # Exit with appropriate code
         sys.exit(0 if success else 1)
 
+    except RuntimeError as e:
+        # Daemon startup failure
+        ErrorFormatter.handle_unexpected_error(e, args.verbose)
+        sys.exit(1)
     except FileNotFoundError as e:
         ErrorFormatter.handle_file_not_found(e)
     except PermissionError as e:
@@ -752,7 +757,7 @@ def main() -> None:
         "-j",
         "--jobs",
         type=int,
-        default=None,
+        default=os.cpu_count(),
         help="Number of parallel compilation jobs (default: CPU count, use 1 for serial compilation)",
     )
 

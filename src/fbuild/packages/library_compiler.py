@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Callable, List, Optional, Tuple
 
 from fbuild.output import ProgressCallback, log_detail
+from fbuild.subprocess_utils import safe_run
 
 if TYPE_CHECKING:
     from .library_manager import LibraryInfo
@@ -165,7 +166,7 @@ class LibraryCompiler:
                 elif show_progress:
                     log_detail(f"Compiling {source.name}...")
 
-                result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8")
+                result = safe_run(cmd, capture_output=True, text=True, encoding="utf-8")
 
                 if result.returncode != 0:
                     raise LibraryCompilationError(f"Failed to compile {source}:\n{result.stderr}")

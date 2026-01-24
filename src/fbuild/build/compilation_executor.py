@@ -22,6 +22,7 @@ from typing import List, Optional, TYPE_CHECKING
 
 from ..packages.header_trampoline_cache import HeaderTrampolineCache
 from ..output import log_detail
+from ..subprocess_utils import safe_run
 
 if TYPE_CHECKING:
     from ..daemon.compilation_queue import CompilationJobQueue
@@ -154,7 +155,7 @@ class CompilationExecutor:
             log_detail(f"Compiling {source_path.name}...")
 
         try:
-            result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+            result = safe_run(cmd, capture_output=True, text=True, timeout=60)
 
             if result.returncode != 0:
                 error_msg = f"Compilation failed for {source_path.name}\n"
@@ -233,7 +234,10 @@ class CompilationExecutor:
         Returns:
             Path to generated response file
         """
-        response_file = self.build_dir / "includes.rsp"
+        import time
+        # Make response file unique to avoid race conditions in parallel compilation
+        timestamp = int(time.time() * 1000000)
+        response_file = self.build_dir / f"includes_{timestamp}.rsp"
         response_file.parent.mkdir(parents=True, exist_ok=True)
 
         with open(response_file, "w") as f:

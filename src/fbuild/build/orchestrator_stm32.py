@@ -9,8 +9,11 @@ import _thread
 import logging
 import time
 from pathlib import Path
-from typing import List, Optional
+from typing import TYPE_CHECKING, List, Optional
 from dataclasses import dataclass
+
+if TYPE_CHECKING:
+    from fbuild.daemon.compilation_queue import CompilationJobQueue
 
 from ..packages import Cache
 from ..packages.platform_stm32 import PlatformSTM32
@@ -24,6 +27,7 @@ from .orchestrator import IBuildOrchestrator, BuildResult, managed_compilation_q
 from .build_utils import safe_rmtree
 from .build_state import BuildStateTracker
 from .build_info_generator import BuildInfoGenerator
+from ..subprocess_utils import safe_run
 
 # Module-level logger
 logger = logging.getLogger(__name__)
@@ -68,6 +72,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
         clean: bool = False,
         verbose: Optional[bool] = None,
         jobs: int | None = None,
+        queue: Optional["CompilationJobQueue"] = None,
     ) -> BuildResult:
         """Execute complete build process (IBuildOrchestrator interface).
 
@@ -77,6 +82,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
             clean: Clean build (remove all artifacts before building)
             jobs: Number of parallel compilation jobs (None = CPU count, 1 = serial)
             verbose: Override verbose setting
+            queue: Compilation queue from daemon context (injected by build_processor)
 
         Returns:
             BuildResult with build status and output paths
@@ -123,7 +129,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
 
             # Call internal build method
             stm32_result = self._build_stm32(
-                project_dir, env_name, board_id, env_config, build_flags, lib_deps, clean, verbose_mode, jobs
+                project_dir, env_name, board_id, env_config, build_flags, lib_deps, clean, verbose_mode, jobs, queue
             )
 
             # Convert BuildResultSTM32 to BuildResult
@@ -159,7 +165,8 @@ class OrchestratorSTM32(IBuildOrchestrator):
         lib_deps: List[str],
         clean: bool = False,
         verbose: bool = False,
-        jobs: int | None = None
+        jobs: int | None = None,
+        queue: Optional["CompilationJobQueue"] = None,
     ) -> BuildResultSTM32:
         """
         Execute complete STM32 build process (internal implementation).
@@ -260,7 +267,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
                 logger.info("Compiling Arduino core...")
 
             # Use managed compilation queue context manager for safe resource handling
-            with managed_compilation_queue(jobs, verbose) as compilation_queue:
+            with managed_compilation_queue(jobs, verbose, provided_queue=queue) as compilation_queue:
                 compiler = ConfigurableCompiler(
                     platform,
                     platform.toolchain,
@@ -447,7 +454,6 @@ class OrchestratorSTM32(IBuildOrchestrator):
         Raises:
             Exception: If HEX generation fails
         """
-        import subprocess
 
         hex_path = elf_path.parent / f"{elf_path.stem}.hex"
 
@@ -465,7 +471,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
             str(hex_path)
         ]
 
-        result = subprocess.run(cmd, capture_output=True, text=True)
+        result = safe_run(cmd, capture_output=True, text=True)
         if result.returncode != 0:
             raise Exception(f"objcopy failed: {result.stderr}")
 

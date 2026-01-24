@@ -13,7 +13,10 @@ to generating firmware binaries. It integrates all build system components:
 import logging
 import time
 from pathlib import Path
-from typing import Optional, List, Any
+from typing import TYPE_CHECKING, Optional, List, Any
+
+if TYPE_CHECKING:
+    from fbuild.daemon.compilation_queue import CompilationJobQueue
 
 from ..interrupt_utils import handle_keyboard_interrupt_properly
 from ..config import PlatformIOConfig, BoardConfig, BoardConfigLoader
@@ -107,6 +110,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
         clean: bool = False,
         verbose: Optional[bool] = None,
         jobs: int | None = None,
+        queue: Optional["CompilationJobQueue"] = None,
     ) -> BuildResult:
         """
         Execute complete build process.
@@ -117,6 +121,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             clean: Clean build (remove all artifacts before building)
             verbose: Override verbose setting
             jobs: Number of parallel compilation jobs (None = CPU count, 1 = serial)
+            queue: Compilation queue from daemon context (injected by build_processor)
 
         Returns:
             BuildResult with build status and output paths
@@ -293,7 +298,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
 
             # Get compilation queue for this build using context manager
             from fbuild.build.orchestrator import managed_compilation_queue
-            with managed_compilation_queue(jobs, verbose_mode) as compilation_queue:
+            with managed_compilation_queue(jobs, verbose_mode, provided_queue=queue) as compilation_queue:
                 compiler = BuildComponentFactory.create_compiler(
                     toolchain, board_config, core_path, lib_include_paths, compilation_queue
                 )

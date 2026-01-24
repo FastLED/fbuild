@@ -10,8 +10,11 @@ import logging
 import struct
 import time
 from pathlib import Path
-from typing import List, Optional
+from typing import TYPE_CHECKING, List, Optional
 from dataclasses import dataclass
+
+if TYPE_CHECKING:
+    from fbuild.daemon.compilation_queue import CompilationJobQueue
 
 from ..packages import Cache
 from ..packages.platform_rp2040 import PlatformRP2040
@@ -79,6 +82,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
         clean: bool = False,
         verbose: Optional[bool] = None,
         jobs: int | None = None,
+        queue: Optional["CompilationJobQueue"] = None,
     ) -> BuildResult:
         """Execute complete build process (IBuildOrchestrator interface).
 
@@ -88,6 +92,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
             clean: Clean build (remove all artifacts before building)
             jobs: Number of parallel compilation jobs (None = CPU count, 1 = serial)
             verbose: Override verbose setting
+            queue: Compilation queue from daemon context (injected by build_processor)
 
         Returns:
             BuildResult with build status and output paths
@@ -134,7 +139,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
 
             # Call internal build method
             rp2040_result = self._build_rp2040(
-                project_dir, env_name, board_id, env_config, build_flags, lib_deps, clean, verbose_mode, jobs
+                project_dir, env_name, board_id, env_config, build_flags, lib_deps, clean, verbose_mode, jobs, queue
             )
 
             # Convert BuildResultRP2040 to BuildResult
@@ -171,7 +176,8 @@ class OrchestratorRP2040(IBuildOrchestrator):
         lib_deps: List[str],
         clean: bool = False,
         verbose: bool = False,
-        jobs: int | None = None
+        jobs: int | None = None,
+        queue: Optional["CompilationJobQueue"] = None,
     ) -> BuildResultRP2040:
         """
         Execute complete RP2040/RP2350 build process (internal implementation).
@@ -271,7 +277,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
                 logger.info("Compiling Arduino core...")
 
             # Use managed compilation queue context manager for safe resource handling
-            with managed_compilation_queue(jobs, verbose) as compilation_queue:
+            with managed_compilation_queue(jobs, verbose, provided_queue=queue) as compilation_queue:
                 compiler = ConfigurableCompiler(
                     platform,
                     platform.toolchain,

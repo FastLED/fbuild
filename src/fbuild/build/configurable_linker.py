@@ -21,6 +21,7 @@ from ..packages.package import IPackage, IToolchain, IFramework
 from ..output import log_detail, format_size
 from .binary_generator import BinaryGenerator
 from .compiler import ILinker, LinkerError
+from ..subprocess_utils import safe_run
 
 
 class ConfigurableLinkerError(LinkerError):
@@ -350,7 +351,7 @@ class ConfigurableLinker(ILinker):
                         log_detail(f"Retrying linking (attempt {attempt + 1}/{max_retries})...")
 
                 try:
-                    result = subprocess.run(
+                    result = safe_run(
                         cmd,
                         capture_output=True,
                         text=True,
@@ -476,7 +477,7 @@ class ConfigurableLinker(ILinker):
         ]
 
         try:
-            result = subprocess.run(
+            result = safe_run(
                 cmd,
                 capture_output=True,
                 text=True,
@@ -543,7 +544,7 @@ class ConfigurableLinker(ILinker):
             return None
 
         try:
-            result = subprocess.run(
+            result = safe_run(
                 [str(size_tool), str(elf_path)],
                 capture_output=True,
                 text=True,

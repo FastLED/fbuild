@@ -34,6 +34,7 @@ _PLATFORM_ORCHESTRATORS: dict[str, tuple[str, str]] = {
     "espressif32": ("fbuild.build.orchestrator_esp32", "OrchestratorESP32"),
     "raspberrypi": ("fbuild.build.orchestrator_rp2040", "OrchestratorRP2040"),
     "ststm32": ("fbuild.build.orchestrator_stm32", "OrchestratorSTM32"),
+    "teensy": ("fbuild.build.orchestrator_teensy", "OrchestratorTeensy"),
 }
 
 
@@ -229,6 +230,9 @@ class BuildRequestProcessor(RequestProcessor):
 
         cache = Cache(project_dir=Path(request.project_dir))
 
+        # Get compilation queue from daemon context
+        compilation_queue = context.compilation_queue
+
         # Initialize orchestrator with cache (ESP32 requires it, AVR accepts it)
         logging.debug(f"[BUILD_PROCESSOR] Initializing {class_name} with cache={cache}, verbose={request.verbose}")
         logging.debug(f"[BUILD_PROCESSOR] orchestrator_class={orchestrator_class}, module={module_name}")
@@ -240,6 +244,7 @@ class BuildRequestProcessor(RequestProcessor):
             clean=request.clean_build,
             verbose=request.verbose,
             jobs=request.jobs,
+            queue=compilation_queue,
         )
 
         if not build_result.success:

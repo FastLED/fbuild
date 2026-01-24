@@ -161,7 +161,7 @@ class FlagBuilder:
         elif is_esp32:
             # ESP32-specific defines
             flags['common'].extend([
-                '-DESP32',
+                # '-DESP32',  # REMOVED: Redundant with ESP32 framework headers (causes "ESP32 redefined" error)
                 f'-DARDUINO_{board}',
                 '-DARDUINO_ARCH_ESP32',
             ])

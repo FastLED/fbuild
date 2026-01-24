@@ -12,6 +12,7 @@ from typing import List, Optional
 from dataclasses import dataclass
 
 from .compiler import ILinker, LinkerError
+from ..subprocess_utils import safe_run
 
 
 @dataclass
@@ -428,7 +429,7 @@ class LinkerAVR(ILinker):
         cmd.extend(extra_flags)
 
         try:
-            result = subprocess.run(
+            result = safe_run(
                 cmd,
                 capture_output=True,
                 text=True,
@@ -467,7 +468,7 @@ class LinkerAVR(ILinker):
         ]
 
         try:
-            result = subprocess.run(
+            result = safe_run(
                 cmd,
                 capture_output=True,
                 text=True,
@@ -498,7 +499,7 @@ class LinkerAVR(ILinker):
         ]
 
         try:
-            result = subprocess.run(
+            result = safe_run(
                 cmd,
                 capture_output=True,
                 text=True,
@@ -542,7 +543,7 @@ class LinkerAVR(ILinker):
         ]
 
         try:
-            result = subprocess.run(
+            result = safe_run(
                 cmd,
                 capture_output=True,
                 text=True,

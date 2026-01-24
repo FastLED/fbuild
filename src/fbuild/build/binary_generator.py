@@ -14,6 +14,8 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, Optional
 
+from ..subprocess_utils import safe_run
+
 
 class BinaryGeneratorError(Exception):
     """Raised when binary generation operations fail."""
@@ -131,7 +133,7 @@ class BinaryGenerator:
             print("Generating firmware.bin using esptool.py elf2image...")
 
         try:
-            result = subprocess.run(
+            result = safe_run(
                 cmd,
                 capture_output=True,
                 text=False,  # Don't decode as text - esptool may output binary data
@@ -201,7 +203,7 @@ class BinaryGenerator:
             print("Generating firmware.bin...")
 
         try:
-            result = subprocess.run(
+            result = safe_run(
                 cmd,
                 capture_output=True,
                 text=True,
@@ -306,7 +308,7 @@ class BinaryGenerator:
             print("Generating bootloader.bin...")
 
         try:
-            result = subprocess.run(
+            result = safe_run(
                 cmd,
                 capture_output=True,
                 text=False,
@@ -392,7 +394,7 @@ class BinaryGenerator:
             print("Generating partitions.bin...")
 
         try:
-            result = subprocess.run(
+            result = safe_run(
                 cmd,
                 capture_output=True,
                 text=True,

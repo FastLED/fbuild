@@ -126,6 +126,7 @@ class IBuildOrchestrator(ABC):
         clean: bool = False,
         verbose: Optional[bool] = None,
         jobs: int | None = None,
+        queue: Optional["CompilationJobQueue"] = None,
     ) -> BuildResult:
         """Execute complete build process.
 
@@ -135,6 +136,7 @@ class IBuildOrchestrator(ABC):
             clean: Clean build (remove all artifacts before building)
             verbose: Override verbose setting
             jobs: Number of parallel compilation jobs (None = CPU count, 1 = serial)
+            queue: Compilation queue from daemon context (injected by build_processor)
 
         Returns:
             BuildResult with build status and output paths
@@ -146,7 +148,7 @@ class IBuildOrchestrator(ABC):
 
 
 @contextlib.contextmanager
-def managed_compilation_queue(jobs: int | None, verbose: bool = False):
+def managed_compilation_queue(jobs: int | None, verbose: bool = False, provided_queue: Optional["CompilationJobQueue"] = None):
     """Context manager for safely managing compilation queue lifecycle.
 
     This context manager obtains a compilation queue using get_compilation_queue_for_build()
@@ -160,6 +162,7 @@ def managed_compilation_queue(jobs: int | None, verbose: bool = False):
     Args:
         jobs: Number of parallel compilation jobs (None = CPU count, 1 = serial, N = custom)
         verbose: Whether to log queue selection and lifecycle events
+        provided_queue: Queue from daemon context (bypasses queue creation logic)
 
     Yields:
         Optional[CompilationJobQueue]: The compilation queue to use, or None for synchronous compilation
@@ -171,11 +174,20 @@ def managed_compilation_queue(jobs: int | None, verbose: bool = False):
         # Queue is automatically cleaned up here if it was temporary
 
     Notes:
+        - Provided queue (from daemon): Used directly, no cleanup needed
         - Serial mode (jobs=1): Yields None, no cleanup needed
         - Default parallelism (jobs=None): Yields daemon's shared queue, no cleanup needed
         - Custom worker count: Creates temporary queue, automatically cleaned up on exit
         - Exceptions during shutdown are logged but don't mask the original exception
     """
+    # If queue provided explicitly (from build_processor), use it
+    if provided_queue is not None:
+        if verbose:
+            print(f"[Parallel Mode] Using provided queue with {provided_queue.num_workers} workers")
+        yield provided_queue  # No cleanup (managed by daemon)
+        return
+
+    # Otherwise, follow existing logic (for testing/standalone)
     queue, should_cleanup = get_compilation_queue_for_build(jobs, verbose)
     try:
         yield queue
@@ -194,12 +206,15 @@ def managed_compilation_queue(jobs: int | None, verbose: bool = False):
 
 
 def get_compilation_queue_for_build(jobs: int | None, verbose: bool = False) -> tuple[Optional["CompilationJobQueue"], bool]:
-    """Get appropriate compilation queue based on jobs parameter.
+    """Get appropriate compilation queue for standalone builds.
+
+    NOTE: In production, build_processor passes queue via
+    managed_compilation_queue(provided_queue=...). This function
+    is only for testing/standalone builds.
 
     This function implements the strategy for parallel compilation:
     1. jobs=1 (serial): Return None (synchronous compilation)
-    2. jobs=None or jobs=cpu_count: Use daemon's shared queue if available
-    3. jobs=N (custom): Create temporary per-build queue with N workers
+    2. jobs=N (custom or None): Create temporary per-build queue with N workers
 
     Args:
         jobs: Number of parallel compilation jobs (None = CPU count, 1 = serial, N = custom)
@@ -216,45 +231,21 @@ def get_compilation_queue_for_build(jobs: int | None, verbose: bool = False) -> 
         >>> if cleanup and queue:
         >>>     queue.shutdown()
     """
-    # Case 1: Serial compilation (jobs=1)
+    # Case 1: Serial compilation (jobs=1) - explicitly requested
     if jobs == 1:
         if verbose:
-            print("[Sync Mode] Using serial compilation (jobs=1)")
+            print("[Serial Mode] Using synchronous compilation (jobs=1)")
         return None, False
+
+    # Case 2: Create temporary queue (daemon queue passed explicitly)
+    from fbuild.daemon.compilation_queue import CompilationJobQueue
 
     cpu_count = multiprocessing.cpu_count()
+    worker_count = jobs if jobs is not None else cpu_count
 
-    # Case 2: Default parallelism (jobs=None or jobs=cpu_count) - use daemon's shared queue
-    if jobs is None or jobs == cpu_count:
-        try:
-            from fbuild.daemon.daemon import get_compilation_queue
-            daemon_queue = get_compilation_queue()
-            if daemon_queue:
-                if verbose:
-                    print(f"[Async Mode] Using daemon compilation queue with {daemon_queue.num_workers} workers")
-                return daemon_queue, False
-            else:
-                if verbose:
-                    print("[Sync Mode] Daemon queue not available, using synchronous compilation")
-                return None, False
-        except (ImportError, AttributeError):
-            if verbose:
-                print("[Sync Mode] Daemon not available, using synchronous compilation")
-            return None, False
+    if verbose:
+        print(f"[Parallel Mode] Creating temporary queue with {worker_count} workers")
 
-    # Case 3: Custom worker count (1 < jobs < cpu_count or jobs > cpu_count)
-    # Create a temporary per-build queue with the requested worker count
-    try:
-        from fbuild.daemon.compilation_queue import CompilationJobQueue
-
-        if verbose:
-            print(f"[Async Mode] Creating temporary compilation queue with {jobs} workers")
-
-        temp_queue = CompilationJobQueue(num_workers=jobs)
-        temp_queue.start()
-        return temp_queue, True  # True = caller must cleanup
-    except (ImportError, AttributeError) as e:
-        logging.warning(f"Failed to create temporary compilation queue: {e}")
-        if verbose:
-            print("[Sync Mode] Falling back to synchronous compilation")
-        return None, False
+    temp_queue = CompilationJobQueue(num_workers=worker_count)
+    temp_queue.start()
+    return temp_queue, True  # True = caller must cleanup

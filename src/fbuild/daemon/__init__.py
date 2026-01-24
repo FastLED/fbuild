@@ -21,7 +21,6 @@ from fbuild.daemon.connection_registry import (
     ConnectionState,
     PlatformSlot,
 )
-from fbuild.daemon.daemon import get_compilation_queue
 from fbuild.daemon.messages import (
     BuildRequest,
     DaemonState,
@@ -47,7 +46,6 @@ __all__ = [
     "PlatformSlot",
     "connect_daemon",
     "ensure_daemon_running",
-    "get_compilation_queue",
     "get_daemon_status",
     "request_build",
     "request_deploy",

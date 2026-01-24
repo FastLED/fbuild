@@ -230,14 +230,14 @@ def display_spinner_progress(
     print(f"\r{prefix}{spinner} {display_text} ({time_str})", end="", flush=True)
 
 
-def ensure_daemon_running() -> bool:
+def ensure_daemon_running() -> None:
     """Ensure daemon is running, start if needed.
 
-    Returns:
-        True if daemon is running or started successfully, False otherwise
+    Raises:
+        RuntimeError: If daemon cannot be started within 10 seconds
     """
     if is_daemon_running():
-        return True
+        return
 
     # If we reach here, daemon is not running (stale PID was cleaned by is_daemon_running)
     # Clear stale status file to prevent race condition where client reads old status
@@ -262,11 +262,11 @@ def ensure_daemon_running() -> bool:
             if status.state != DaemonState.UNKNOWN:
                 # Valid status received from new daemon
                 print("✅ Daemon started successfully")
-                return True
+                return
         time.sleep(1)
 
-    print("❌ Failed to start daemon")
-    return False
+    # Failed to start - this is a critical error
+    raise RuntimeError(f"Failed to start fbuild daemon within 10 seconds. Check daemon logs at: {DAEMON_DIR / 'daemon.log'}")
 
 
 def request_build(
@@ -543,7 +543,10 @@ class BaseRequestHandler(ABC):
             True if operation successful, False otherwise
         """
         # Ensure daemon is running
-        if not ensure_daemon_running():
+        try:
+            ensure_daemon_running()
+        except RuntimeError as e:
+            print(f"❌ {e}")
             return False
 
         # Print submission info
