@@ -190,7 +190,7 @@ class LibraryCompiler:
             # Create new archive
             cmd = [str(ar_path), "rcs", str(archive_file)] + [str(obj) for obj in object_files]
 
-            result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8")
+            result = safe_run(cmd, capture_output=True, text=True, encoding="utf-8")
 
             if result.returncode != 0:
                 raise LibraryCompilationError(f"Failed to create archive for {library_name}:\n{result.stderr}")

@@ -54,6 +54,8 @@ from fbuild.daemon.processors.deploy_processor import DeployRequestProcessor
 from fbuild.daemon.processors.install_deps_processor import InstallDependenciesProcessor
 from fbuild.daemon.processors.monitor_processor import MonitorRequestProcessor
 
+from ..subprocess_utils import safe_popen
+
 # Type variable for request types
 RequestT = TypeVar("RequestT", BuildRequest, DeployRequest, MonitorRequest, InstallDependenciesRequest)
 
@@ -928,7 +930,7 @@ def main() -> int:
         if sys.platform == "win32":
             creationflags = subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.DETACHED_PROCESS
 
-        subprocess.Popen(
+        safe_popen(
             cmd,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,

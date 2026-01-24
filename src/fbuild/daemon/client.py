@@ -26,6 +26,8 @@ from fbuild.daemon.messages import (
     MonitorRequest,
 )
 
+from ..subprocess_utils import safe_popen
+
 # Spinner characters for progress indication
 SPINNER_CHARS = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"]
 
@@ -110,7 +112,7 @@ def start_daemon() -> None:
         creationflags = subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.DETACHED_PROCESS
 
     # Start daemon in background as a fully detached process
-    subprocess.Popen(
+    safe_popen(
         [sys.executable, str(daemon_script), f"--spawned-by={spawner_pid}"],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,

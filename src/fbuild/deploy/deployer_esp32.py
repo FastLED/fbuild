@@ -334,7 +334,7 @@ class ESP32Deployer(IDeployer):
                     filtered_paths = [p for p in paths if "msys" not in p.lower()]
                     env["PATH"] = os.pathsep.join(filtered_paths)
 
-                result = subprocess.run(
+                result = safe_run(
                     cmd,
                     cwd=project_dir,
                     capture_output=not self.verbose,
@@ -344,7 +344,7 @@ class ESP32Deployer(IDeployer):
                     timeout=upload_timeout,
                 )
             else:
-                result = subprocess.run(
+                result = safe_run(
                     cmd,
                     cwd=project_dir,
                     capture_output=not self.verbose,

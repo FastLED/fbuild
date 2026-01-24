@@ -129,3 +129,4 @@ KBI = "fbuild_lint.ruff_plugins.keyboard_interrupt_checker:KeyboardInterruptChec
 OSC = "fbuild_lint.ruff_plugins.orchestrator_signature_checker:OrchestratorSignatureChecker"
 MSC = "fbuild_lint.ruff_plugins.message_serialization_checker:MessageSerializationChecker"
 SPI = "fbuild_lint.ruff_plugins.sys_path_checker:SysPathChecker"
+SUB = "fbuild_lint.ruff_plugins.subprocess_safety_checker:SubprocessSafetyChecker"

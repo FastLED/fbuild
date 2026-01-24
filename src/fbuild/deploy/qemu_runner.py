@@ -177,7 +177,7 @@ class QEMURunner:
                 if self.docker_image == DEFAULT_DOCKER_IMAGE:
                     print(f"Trying fallback image: {FALLBACK_DOCKER_IMAGE}")
                     self.docker_image = FALLBACK_DOCKER_IMAGE
-                    result = subprocess.run(
+                    result = safe_run(
                         ["docker", "pull", self.docker_image],
                         env=get_docker_env(),
                     )
@@ -547,7 +547,7 @@ class QEMURunner:
                 # Stop the container
                 if self.container_name:
                     try:
-                        subprocess.run(
+                        safe_run(
                             ["docker", "stop", "--time=1", self.container_name],
                             capture_output=True,
                             timeout=10,

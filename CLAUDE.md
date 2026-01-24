@@ -357,7 +357,14 @@ fbuild includes custom linting plugins to enforce architectural patterns:
    - Validates internal build methods follow `PlatformBuildMethod` protocol
    - Checks for required parameters (including `jobs`)
 
-2. **Message Protocol Validation** (planned)
+2. **Subprocess Safety Checker** (`fbuild_lint/ruff_plugins/subprocess_safety_checker.py`)
+   - Detects direct `subprocess.run()` / `subprocess.Popen()` calls
+   - Enforces use of `safe_run()` / `safe_popen()` from `subprocess_utils.py`
+   - Prevents ephemeral console windows on Windows
+   - Error codes: SUB001-SUB005
+   - See: `docs/subprocess_safety.md`
+
+3. **Message Protocol Validation** (planned)
    - Verifies all daemon messages implement `SerializableMessage` protocol
    - Checks for proper enum handling in serialization
 
@@ -398,3 +405,23 @@ When adding new CLI parameters that need to flow through to orchestrators:
 8. **Validate**: Run `./lint` to verify signature compliance
 
 See `docs/parameter_flow.md` for detailed examples and step-by-step instructions.
+
+## Subprocess Safety
+
+**ALWAYS use safe subprocess wrappers** to prevent console window flashing on Windows:
+
+```python
+# ❌ UNSAFE - Direct subprocess calls
+result = subprocess.run(cmd, ...)
+proc = subprocess.Popen(cmd, ...)
+
+# ✅ SAFE - Use wrappers from subprocess_utils
+from fbuild.subprocess_utils import safe_run, safe_popen
+
+result = safe_run(cmd, ...)
+proc = safe_popen(cmd, ...)
+```
+
+**Enforcement**: The `SUB` flake8 plugin (run via `./lint`) detects unsafe subprocess calls.
+
+**Details**: See `docs/subprocess_safety.md` for complete documentation.

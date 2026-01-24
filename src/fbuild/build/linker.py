@@ -5,7 +5,6 @@ This module provides a wrapper around avr-gcc linker, avr-ar, avr-objcopy,
 and avr-size for linking object files into firmware.
 """
 
-import subprocess
 import time
 from pathlib import Path
 from typing import List, Optional
@@ -336,7 +335,7 @@ class LinkerAVR(ILinker):
         cmd.extend(str(obj) for obj in core_objects)
 
         try:
-            result = subprocess.run(
+            result = safe_run(
                 cmd,
                 capture_output=True,
                 text=True,

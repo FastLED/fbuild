@@ -613,7 +613,7 @@ class LibraryManagerESP32:
             cmd = [str(ar_path), "rcs", str(library.archive_file)]
             cmd.extend([str(obj) for obj in object_files])
 
-            result = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8")
+            result = safe_run(cmd, capture_output=True, text=True, encoding="utf-8")
 
             if result.returncode != 0:
                 raise LibraryErrorESP32(f"Failed to create archive for {library.name}:\n{result.stderr}")

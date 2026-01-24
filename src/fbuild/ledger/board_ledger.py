@@ -24,6 +24,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from ..subprocess_utils import safe_run
+
 # Stale entry threshold: 24 hours
 STALE_THRESHOLD_SECONDS = 24 * 60 * 60
 
@@ -362,7 +364,7 @@ def detect_chip_with_esptool(port: str, verbose: bool = False) -> str:
             filtered_paths = [p for p in paths if "msys" not in p.lower()]
             env["PATH"] = os.pathsep.join(filtered_paths)
 
-        result = subprocess.run(
+        result = safe_run(
             cmd,
             capture_output=True,
             text=True,

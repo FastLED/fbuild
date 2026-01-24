@@ -21,6 +21,8 @@ from typing import Optional
 
 from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
 
+from ..subprocess_utils import safe_popen, safe_run
+
 
 def get_docker_env() -> dict[str, str]:
     """Get environment for Docker commands, handling Git Bash/MSYS2 path conversion."""
@@ -41,7 +43,7 @@ def check_docker_daemon_running() -> bool:
         True if Docker daemon is running, False otherwise
     """
     try:
-        result = subprocess.run(
+        result = safe_run(
             ["docker", "info"],
             capture_output=True,
             timeout=10,
@@ -59,7 +61,7 @@ def check_docker_installed() -> bool:
         True if Docker is installed, False otherwise
     """
     try:
-        result = subprocess.run(
+        result = safe_run(
             ["docker", "--version"],
             capture_output=True,
             timeout=5,
@@ -119,7 +121,7 @@ def _check_wsl2_docker_backend() -> tuple[bool, str]:
         return True, "Not Windows - WSL2 check not applicable"
 
     try:
-        result = subprocess.run(
+        result = safe_run(
             ["wsl", "--list", "--verbose"],
             capture_output=True,
             text=True,
@@ -173,14 +175,14 @@ def _kill_docker_desktop_windows() -> bool:
 
     try:
         # Kill Docker Desktop GUI
-        subprocess.run(
+        safe_run(
             ["taskkill", "/F", "/IM", "Docker Desktop.exe"],
             capture_output=True,
             timeout=10,
         )
 
         # Kill Docker backend engine
-        subprocess.run(
+        safe_run(
             ["taskkill", "/F", "/IM", "com.docker.backend.exe"],
             capture_output=True,
             timeout=10,
@@ -214,7 +216,7 @@ def _restart_docker_desktop_windows() -> tuple[bool, str]:
 
     print("  Starting Docker Desktop...")
     try:
-        subprocess.Popen(
+        safe_popen(
             [docker_path],
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
@@ -284,7 +286,7 @@ def start_docker_daemon() -> bool:
         if docker_path:
             try:
                 # Start Docker Desktop without waiting
-                subprocess.Popen(
+                safe_popen(
                     [docker_path],
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL,
@@ -317,7 +319,7 @@ def start_docker_daemon() -> bool:
         docker_path = get_docker_desktop_path()
         if docker_path:
             try:
-                subprocess.Popen(
+                safe_popen(
                     ["open", "-a", "Docker"],
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL,
@@ -336,7 +338,7 @@ def start_docker_daemon() -> bool:
     elif system == "Linux":
         try:
             # Try to start the Docker service using systemctl
-            result = subprocess.run(
+            result = safe_run(
                 ["sudo", "systemctl", "start", "docker"],
                 capture_output=True,
                 timeout=30,
@@ -345,7 +347,7 @@ def start_docker_daemon() -> bool:
                 return _wait_for_docker_daemon()
             else:
                 # Try without sudo (if user has permissions)
-                result = subprocess.run(
+                result = safe_run(
                     ["systemctl", "start", "docker"],
                     capture_output=True,
                     timeout=30,
@@ -418,7 +420,7 @@ def check_docker_image_exists(image_name: str) -> bool:
         True if image exists, False otherwise
     """
     try:
-        result = subprocess.run(
+        result = safe_run(
             ["docker", "images", "-q", image_name],
             capture_output=True,
             text=True,
@@ -444,7 +446,7 @@ def pull_docker_image(image_name: str, timeout: int = 600) -> bool:
     print("This may take a few minutes on first run...")
 
     try:
-        result = subprocess.run(
+        result = safe_run(
             ["docker", "pull", image_name],
             timeout=timeout,
             env=get_docker_env(),
