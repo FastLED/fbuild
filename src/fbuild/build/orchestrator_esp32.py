@@ -285,7 +285,10 @@ class OrchestratorESP32(IBuildOrchestrator):
             from .compilation_executor import CompilationExecutor
             compilation_executor = CompilationExecutor(
                 build_dir=build_dir,
-                show_progress=verbose
+                show_progress=verbose,
+                cache=self.cache,
+                mcu=mcu,
+                framework_version=framework.version,
             )
 
             # Get compilation queue for this build using context manager

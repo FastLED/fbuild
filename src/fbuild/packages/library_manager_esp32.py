@@ -559,11 +559,8 @@ class LibraryManagerESP32:
             # ESP32/S2/S3 use xtensa, C3/C6/H2 use RISC-V
             gcc_path, gxx_path = self._find_toolchain_compilers(toolchain_path)
 
-            # Create response file for include paths (avoid Windows command line length limit)
+            # Create include flags
             include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in all_includes]
-            response_file = library.lib_dir / "includes.rsp"
-            with open(response_file, "w") as f:
-                f.write("\n".join(include_flags))
 
             for source in sources:
                 # Determine compiler based on extension
@@ -580,12 +577,33 @@ class LibraryManagerESP32:
                 # Ensure output directory exists
                 obj_file.parent.mkdir(parents=True, exist_ok=True)
 
+                # Calculate command-line length to determine if response file needed
+                estimated_length = (
+                    len(str(compiler)) + sum(len(flag) + 1 for flag in compiler_flags) + sum(len(flag) + 1 for flag in include_flags) + len(str(source)) + len(str(obj_file)) + 50
+                )  # buffer
+
+                # Windows CreateProcess limit: 32,767 chars
+                # Use 80% threshold (26,214 chars) for safety margin
+                use_response_file = estimated_length > 26214
+
                 # Build compile command
                 cmd = [str(compiler), "-c"]
                 cmd.extend(compiler_flags)
 
-                # Use response file for include paths
-                cmd.append(f"@{response_file}")
+                if use_response_file:
+                    # Use response file for long command lines
+                    response_file = library.lib_dir / "includes.rsp"
+                    with open(response_file, "w") as f:
+                        f.write("\n".join(include_flags))
+                    cmd.append(f"@{response_file}")
+                    if show_progress:
+                        log_detail(f"[rsp] Using response file (cmd length: {estimated_length} chars)", indent=8)
+                else:
+                    # Direct include flags
+                    cmd.extend(include_flags)
+                    if show_progress:
+                        log_detail(f"[rsp] Direct flags (cmd length: {estimated_length} chars)", indent=8)
+
                 # Add source and output
                 cmd.extend(["-o", str(obj_file), str(source)])
 

@@ -1,11 +1,13 @@
 """Compilation Executor.
 
 This module handles executing compilation commands via subprocess with support
-for response files and proper error handling.
+for conditional response files and proper error handling.
 
 Design:
     - Wraps subprocess.run for compilation commands
-    - Generates response files for include paths (avoids command line length limits)
+    - Conditionally generates response files for include paths (only when command line exceeds 80% of 32K limit)
+    - With header trampolines: response files rarely needed (~4K chars vs 32K limit)
+    - Without trampolines: response files used as fallback for long include paths
     - Provides clear error messages for compilation failures
     - Supports both C and C++ compilation
     - Integrates sccache for compilation caching
@@ -26,6 +28,7 @@ from ..subprocess_utils import safe_run
 
 if TYPE_CHECKING:
     from ..daemon.compilation_queue import CompilationJobQueue
+    from ..packages.cache import Cache
 
 
 class CompilationError(Exception):
@@ -44,7 +47,16 @@ class CompilationExecutor:
     - Supporting progress display
     """
 
-    def __init__(self, build_dir: Path, show_progress: bool = True, use_sccache: bool = True, use_trampolines: bool = True):
+    def __init__(
+        self,
+        build_dir: Path,
+        show_progress: bool = True,
+        use_sccache: bool = True,
+        use_trampolines: bool = True,
+        cache: Optional["Cache"] = None,
+        mcu: Optional[str] = None,
+        framework_version: Optional[str] = None,
+    ):
         """Initialize compilation executor.
 
         Args:
@@ -52,9 +64,14 @@ class CompilationExecutor:
             show_progress: Whether to show compilation progress
             use_sccache: Whether to use sccache for caching (default: True)
             use_trampolines: Whether to use header trampolines on Windows (default: True)
+            cache: Cache object for accessing trampoline directory (optional)
+            mcu: MCU variant identifier (e.g., 'esp32c6', 'esp32c3') for MCU-specific caching
+            framework_version: Framework version string for cache invalidation
         """
         self.build_dir = build_dir
         self.show_progress = show_progress
+        self.mcu = mcu
+        self.framework_version = framework_version
 
         # Disable sccache on Windows due to file locking issues
         # See: https://github.com/anthropics/claude-code/issues/...
@@ -94,7 +111,19 @@ class CompilationExecutor:
 
         # Initialize trampoline cache if enabled and on Windows
         if self.use_trampolines and platform.system() == "Windows":
-            self.trampoline_cache = HeaderTrampolineCache(show_progress=show_progress)
+            if cache is not None:
+                # New location: .fbuild/cache/trampolines/{mcu}/{hash}/
+                cache.ensure_directories()
+                self.trampoline_cache = HeaderTrampolineCache(
+                    cache_root=cache.trampolines_dir,
+                    show_progress=show_progress,
+                    mcu_variant=mcu,
+                    framework_version=framework_version,
+                    platform_name="esp32",
+                )
+            else:
+                # Legacy fallback with warning
+                self.trampoline_cache = HeaderTrampolineCache(show_progress=show_progress)
 
     def compile_source(self, compiler_path: Path, source_path: Path, output_path: Path, compile_flags: List[str], include_paths: List[Path]) -> Path:
         """Compile a single source file.
@@ -180,6 +209,40 @@ class CompilationExecutor:
                 raise
             raise CompilationError(f"Failed to compile {source_path.name}: {e}") from e
 
+    def _estimate_command_length(
+        self, compiler_path: Path, compile_flags: List[str], include_flags: List[str], source_path: Path, output_path: Path
+    ) -> int:
+        """Estimate total command-line length.
+
+        Args:
+            compiler_path: Path to compiler
+            compile_flags: Compilation flags
+            include_flags: Include directory flags
+            source_path: Source file path
+            output_path: Output object file path
+
+        Returns:
+            Estimated command-line length in characters
+        """
+        # sccache wrapper if enabled
+        base_length = len(str(self.sccache_path)) if self.sccache_path else 0
+
+        # Compiler path
+        base_length += len(str(compiler_path))
+
+        # Compile flags
+        base_length += sum(len(flag) + 1 for flag in compile_flags)  # +1 for spaces
+
+        # Include flags
+        base_length += sum(len(flag) + 1 for flag in include_flags)
+
+        # Source and output paths
+        base_length += len("-c") + len(str(source_path)) + 1
+        base_length += len("-o") + len(str(output_path)) + 1
+
+        # Add 10% safety margin for shell escaping/quoting
+        return int(base_length * 1.1)
+
     def _build_compile_command(self, compiler_path: Path, source_path: Path, output_path: Path, compile_flags: List[str], include_paths: List[str]) -> List[str]:
         """Build compilation command with optional sccache wrapper.
 
@@ -196,8 +259,12 @@ class CompilationExecutor:
         # Include paths are already converted to flags (List[str])
         include_flags = include_paths
 
-        # Write response file for includes
-        response_file = self._write_response_file(include_flags)
+        # Calculate command-line length to determine if response file needed
+        estimated_cmd_length = self._estimate_command_length(compiler_path, compile_flags, include_flags, source_path, output_path)
+
+        # Windows CreateProcess limit: 32,767 chars
+        # Use 80% threshold (26,214 chars) for safety margin
+        use_response_file = estimated_cmd_length > 26214
 
         # Build compiler command with optional sccache wrapper
         use_sccache = self.sccache_path is not None
@@ -216,7 +283,19 @@ class CompilationExecutor:
         else:
             cmd.append(str(compiler_path))
         cmd.extend(compile_flags)
-        cmd.append(f"@{response_file}")
+
+        if use_response_file:
+            # Use response file for long command lines
+            response_file = self._write_response_file(include_flags)
+            cmd.append(f"@{response_file}")
+            if self.show_progress:
+                log_detail(f"[rsp] Using response file (cmd length: {estimated_cmd_length} chars)")
+        else:
+            # Direct include flags (trampolines make this safe)
+            cmd.extend(include_flags)
+            if self.show_progress:
+                log_detail(f"[rsp] Direct flags (cmd length: {estimated_cmd_length} chars)")
+
         cmd.extend(["-c", str(source_path)])
         cmd.extend(["-o", str(output_path)])
 
@@ -346,7 +425,13 @@ class CompilationExecutor:
 
         # Convert include paths to flags
         include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in effective_include_paths]
-        response_file = self._write_response_file(include_flags)
+
+        # Calculate command-line length to determine if response file needed
+        estimated_cmd_length = self._estimate_command_length(compiler_path, compile_flags, include_flags, source_path, output_path)
+
+        # Windows CreateProcess limit: 32,767 chars
+        # Use 80% threshold (26,214 chars) for safety margin
+        use_response_file = estimated_cmd_length > 26214
 
         # Build compiler command with optional sccache wrapper
         use_sccache = self.sccache_path is not None
@@ -362,14 +447,27 @@ class CompilationExecutor:
         else:
             cmd.append(str(compiler_path))
         cmd.extend(compile_flags)
-        cmd.append(f"@{response_file}")
+
+        response_file_path: Optional[Path] = None
+        if use_response_file:
+            # Use response file for long command lines
+            response_file_path = self._write_response_file(include_flags)
+            cmd.append(f"@{response_file_path}")
+            if self.show_progress:
+                log_detail(f"[rsp] Using response file (cmd length: {estimated_cmd_length} chars)")
+        else:
+            # Direct include flags (trampolines make this safe)
+            cmd.extend(include_flags)
+            if self.show_progress:
+                log_detail(f"[rsp] Direct flags (cmd length: {estimated_cmd_length} chars)")
+
         cmd.extend(["-c", str(source_path)])
         cmd.extend(["-o", str(output_path)])
 
         # Create and submit compilation job
         job_id = f"compile_{source_path.stem}_{int(time.time() * 1000000)}"
 
-        job = CompilationJob(job_id=job_id, source_path=source_path, output_path=output_path, compiler_cmd=cmd, response_file=response_file)
+        job = CompilationJob(job_id=job_id, source_path=source_path, output_path=output_path, compiler_cmd=cmd, response_file=response_file_path)
 
         # Submit to queue
         job_queue.submit_job(job)

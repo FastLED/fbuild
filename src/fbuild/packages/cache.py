@@ -21,9 +21,15 @@ Cache Structure:
     │   │           ├── variants/
     │   │           ├── boards.txt
     │   │           └── platform.txt
-    │   └── libraries/
-    │       └── {url_hash}/         # SHA256 hash of base URL
-    │           └── {version}/      # Version string
+    │   ├── libraries/
+    │   │   └── {url_hash}/         # SHA256 hash of base URL
+    │   │       └── {version}/      # Version string
+    │   └── trampolines/
+    │       └── {mcu}/              # MCU variant (esp32c6, esp32c3, etc.)
+    │           └── {hash}/         # SHA256 hash of paths+version+mcu
+    │               ├── 000/
+    │               ├── 001/
+    │               └── .metadata.json
     └── build/
         └── {env_name}/             # Build output per environment
             ├── core/               # Compiled core objects
@@ -108,6 +114,11 @@ class Cache:
         """Directory for downloaded libraries."""
         return self.cache_root / "libraries"
 
+    @property
+    def trampolines_dir(self) -> Path:
+        """Directory for header trampoline caches."""
+        return self.cache_root / "trampolines"
+
     def get_build_dir(self, env_name: str) -> Path:
         """Get build directory for a specific environment.
 
@@ -148,6 +159,7 @@ class Cache:
             self.toolchains_dir,
             self.platforms_dir,
             self.libraries_dir,
+            self.trampolines_dir,
         ]:
             directory.mkdir(parents=True, exist_ok=True)
 

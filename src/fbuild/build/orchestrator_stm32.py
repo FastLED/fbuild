@@ -277,7 +277,8 @@ class OrchestratorSTM32(IBuildOrchestrator):
                     platform_config=platform_config,
                     show_progress=verbose,
                     user_build_flags=build_flags,
-                    compilation_queue=compilation_queue
+                    compilation_queue=compilation_queue,
+                    cache=self.cache,
                 )
 
                 # Compile Arduino core with progress bar

@@ -61,25 +61,45 @@ class HeaderTrampolineCache:
     - Providing rewritten include paths
     """
 
-    def __init__(self, cache_root: Optional[Path] = None, show_progress: bool = True):
+    def __init__(
+        self,
+        cache_root: Optional[Path] = None,
+        show_progress: bool = True,
+        mcu_variant: Optional[str] = None,
+        framework_version: Optional[str] = None,
+        platform_name: str = "esp32",
+    ):
         """Initialize header trampoline cache.
 
         Args:
-            cache_root: Root directory for trampoline cache (default: C:/inc on Windows)
+            cache_root: Root directory for trampoline cache (default: C:/inc on Windows for legacy compatibility)
             show_progress: Whether to show cache generation progress
+            mcu_variant: MCU variant identifier (e.g., 'esp32c6', 'esp32c3')
+            framework_version: Framework version string for cache invalidation
+            platform_name: Platform identifier (e.g., 'esp32', 'avr')
         """
         self.show_progress = show_progress
+        self.mcu_variant = mcu_variant
+        self.framework_version = framework_version
+        self.platform_name = platform_name
 
         # Determine cache root
         if cache_root is None:
+            # Legacy fallback with warning
             if platform.system() == "Windows":
-                # Use short, root-level path on Windows
                 self.cache_root = Path("C:/inc")
+                if show_progress:
+                    print("[trampolines] WARNING: Using legacy C:/inc. Pass cache_root for new location.")
             else:
-                # Use /tmp/inc on Linux/Mac
                 self.cache_root = Path("/tmp/inc")
+                if show_progress:
+                    print("[trampolines] WARNING: Using legacy /tmp/inc. Pass cache_root for new location.")
         else:
-            self.cache_root = Path(cache_root)
+            # New location: cache_root/trampolines/{mcu}/
+            if mcu_variant:
+                self.cache_root = cache_root / mcu_variant
+            else:
+                self.cache_root = cache_root / "generic"
 
         # Metadata file tracks cache state
         self.metadata_file = self.cache_root / ".metadata.json"
@@ -89,8 +109,12 @@ class HeaderTrampolineCache:
 
         Cache needs regeneration when:
         - Cache doesn't exist
+        - Metadata version changed (forces upgrade)
         - Include path list changed
         - Include path order changed
+        - Framework version changed
+        - MCU variant changed
+        - Platform changed
         - Any original header files changed (not implemented yet)
 
         Args:
@@ -112,7 +136,13 @@ class HeaderTrampolineCache:
         except Exception:
             return True
 
-        # Check if include paths changed
+        # Force regeneration on metadata version upgrade
+        if metadata.get("version", "1.0") != "2.0":
+            if self.show_progress:
+                print("[trampolines] Metadata version upgrade, regenerating cache")
+            return True
+
+        # Check if configuration changed (includes version, MCU, platform in hash)
         current_hash = self._compute_include_hash(include_paths)
         cached_hash = metadata.get("include_hash", "")
 
@@ -268,15 +298,34 @@ class HeaderTrampolineCache:
     def _compute_include_hash(self, include_paths: List[Path]) -> str:
         """Compute hash of include path list for cache validation.
 
+        Hash includes paths, framework version, MCU variant, and platform to ensure
+        cache invalidation when any of these change.
+
         Args:
             include_paths: Ordered list of include paths
 
         Returns:
-            SHA256 hash of the include path list
+            SHA256 hash of the include path list and metadata
         """
-        # Convert paths to strings and join with newlines
+        components = []
+
+        # Include paths (resolved, normalized)
         path_str = "\n".join(str(p.resolve()) for p in include_paths)
-        return hashlib.sha256(path_str.encode("utf-8")).hexdigest()
+        components.append(path_str)
+
+        # Framework version (cache invalidation on upgrade)
+        if self.framework_version:
+            components.append(f"framework_version:{self.framework_version}")
+
+        # MCU variant (different MCUs have different headers)
+        if self.mcu_variant:
+            components.append(f"mcu:{self.mcu_variant}")
+
+        # Platform identifier
+        components.append(f"platform:{self.platform_name}")
+
+        combined = "\n".join(components)
+        return hashlib.sha256(combined.encode("utf-8")).hexdigest()
 
     def _save_metadata(self, include_paths: List[Path], trampoline_paths: List[Path]) -> None:
         """Save cache metadata.
@@ -285,12 +334,18 @@ class HeaderTrampolineCache:
             include_paths: Original include paths
             trampoline_paths: Generated trampoline paths
         """
+        from datetime import datetime
+
         metadata = {
-            "version": "1.0",
+            "version": "2.0",  # BUMPED from 1.0
             "include_hash": self._compute_include_hash(include_paths),
+            "framework_version": self.framework_version,  # NEW
+            "mcu_variant": self.mcu_variant,  # NEW
+            "platform": self.platform_name,  # NEW (now using platform_name field)
+            "os": platform.system(),  # Renamed from "platform" to "os"
             "original_paths": [str(p.resolve()) for p in include_paths],
             "trampoline_paths": [str(p) for p in trampoline_paths],
-            "platform": platform.system(),
+            "created_at": datetime.utcnow().isoformat() + "Z",  # NEW
         }
 
         with open(self.metadata_file, "w") as f:

@@ -52,6 +52,7 @@ class ConfigurableCompiler(ICompiler):
         user_build_flags: Optional[List[str]] = None,
         compilation_executor: Optional[CompilationExecutor] = None,
         compilation_queue: Optional["CompilationJobQueue"] = None,
+        cache: Optional[Any] = None,
     ):
         """Initialize configurable compiler.
 
@@ -66,6 +67,7 @@ class ConfigurableCompiler(ICompiler):
             user_build_flags: Build flags from platformio.ini
             compilation_executor: Optional pre-initialized CompilationExecutor
             compilation_queue: Optional compilation queue for async/parallel compilation
+            cache: Optional cache object for header trampoline support
         """
         self.platform = platform
         self.toolchain = toolchain
@@ -75,6 +77,7 @@ class ConfigurableCompiler(ICompiler):
         self.show_progress = show_progress
         self.user_build_flags = user_build_flags or []
         self.compilation_queue = compilation_queue
+        self.cache = cache
         self.pending_jobs: List[str] = []  # Track async job IDs
 
         # Load board configuration
@@ -111,7 +114,15 @@ class ConfigurableCompiler(ICompiler):
         if compilation_executor is not None:
             self.compilation_executor = compilation_executor
         else:
-            self.compilation_executor = CompilationExecutor(build_dir=self.build_dir, show_progress=self.show_progress)
+            # Get framework version if available
+            framework_version = getattr(self.framework, "version", None)
+            self.compilation_executor = CompilationExecutor(
+                build_dir=self.build_dir,
+                show_progress=self.show_progress,
+                cache=self.cache,
+                mcu=self.mcu,
+                framework_version=framework_version,
+            )
         self.archive_creator = ArchiveCreator(show_progress=self.show_progress)
 
         # Cache for include paths

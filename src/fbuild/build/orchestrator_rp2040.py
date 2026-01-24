@@ -287,7 +287,8 @@ class OrchestratorRP2040(IBuildOrchestrator):
                     platform_config=platform_config,
                     show_progress=verbose,
                     user_build_flags=build_flags,
-                    compilation_queue=compilation_queue
+                    compilation_queue=compilation_queue,
+                    cache=self.cache,
                 )
 
                 # Create progress callback for detailed file-by-file tracking

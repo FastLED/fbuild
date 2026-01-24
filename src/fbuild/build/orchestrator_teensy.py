@@ -257,7 +257,8 @@ class OrchestratorTeensy(IBuildOrchestrator):
                     platform_config=None,
                     show_progress=verbose,
                     user_build_flags=build_flags,
-                    compilation_queue=compilation_queue
+                    compilation_queue=compilation_queue,
+                    cache=self.cache,
                 )
 
                 # Compile Arduino core

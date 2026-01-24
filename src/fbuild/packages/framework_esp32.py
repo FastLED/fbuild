@@ -225,9 +225,6 @@ class FrameworkESP32(IFramework):
             if self.show_progress:
                 print(f"[trampolines] Found {len(mcu_variants)} MCU variant(s): {', '.join(mcu_variants)}")
 
-            # Generate trampolines for each MCU variant
-            trampoline_cache = HeaderTrampolineCache(show_progress=self.show_progress)
-
             # Exclude ESP-IDF headers that use relative paths or #include_next that break trampolines
             exclude_patterns = [
                 "newlib/platform_include",  # Uses #include_next which breaks trampolines
@@ -244,7 +241,17 @@ class FrameworkESP32(IFramework):
                     if self.show_progress:
                         print(f"[trampolines] Generating cache for {mcu} ({len(include_paths)} include paths)...")
 
-                    # Generate trampolines with exclusions (this will create C:/inc/NNN directories)
+                    # Use new cache location: .fbuild/cache/trampolines/{mcu}/{hash}/
+                    self.cache.ensure_directories()
+                    trampoline_cache = HeaderTrampolineCache(
+                        cache_root=self.cache.trampolines_dir,
+                        show_progress=self.show_progress,
+                        mcu_variant=mcu,
+                        framework_version=self.version,
+                        platform_name="esp32",
+                    )
+
+                    # Generate trampolines with exclusions
                     trampoline_paths = trampoline_cache.generate_trampolines(include_paths, exclude_patterns=exclude_patterns)
 
                     if self.show_progress:
