@@ -2,11 +2,13 @@
 Firmware deployment module for uploading to embedded devices.
 
 This module handles flashing firmware to ESP32 devices using esptool.
+Includes automatic crash-loop recovery for devices stuck in rapid reboot cycles.
 """
 
-import os
+import random
 import subprocess
 import sys
+import time
 from pathlib import Path
 from typing import Optional
 
@@ -15,90 +17,9 @@ from fbuild.packages import Cache
 
 from ..subprocess_utils import safe_run
 from .deployer import DeploymentError, DeploymentResult, IDeployer
-
-
-def reset_esp32_device(port: str, chip: str = "auto", verbose: bool = False) -> bool:
-    """Reset an ESP32 device using esptool's RTS/DTR sequence.
-
-    This function runs a minimal esptool command that triggers the hardware
-    reset sequence (DTR/RTS toggling) to reset the device and release the
-    USB-CDC port. This is useful when skipping firmware upload but still
-    needing to ensure the port is in a clean state.
-
-    Args:
-        port: Serial port (e.g., "COM13", "/dev/ttyUSB0")
-        chip: Chip type for esptool (default: "auto" for auto-detection)
-        verbose: Whether to show verbose output
-
-    Returns:
-        True if reset succeeded, False otherwise
-    """
-    cmd = [
-        sys.executable,
-        "-m",
-        "esptool",
-        "--chip",
-        chip,
-        "--port",
-        port,
-        "--before",
-        "default_reset",  # Use DTR/RTS to reset chip
-        "--after",
-        "hard_reset",  # Reset chip after command
-        "read_mac",  # Minimal command - just read MAC address
-    ]
-
-    if verbose:
-        print(f"Resetting device on {port} via esptool...")
-
-    try:
-        # Use short timeout - this should be quick
-        if sys.platform == "win32":
-            env = os.environ.copy()
-            # Strip MSYS paths that cause issues
-            if "PATH" in env:
-                paths = env["PATH"].split(os.pathsep)
-                filtered_paths = [p for p in paths if "msys" not in p.lower()]
-                env["PATH"] = os.pathsep.join(filtered_paths)
-
-            result = safe_run(
-                cmd,
-                capture_output=not verbose,
-                text=True,
-                env=env,
-                shell=False,
-                timeout=15,
-            )
-        else:
-            result = safe_run(
-                cmd,
-                capture_output=not verbose,
-                text=True,
-                timeout=15,
-            )
-
-        if result.returncode == 0:
-            if verbose:
-                print(f"Device on {port} reset successfully")
-            return True
-        else:
-            if verbose:
-                print(f"Device reset failed: {result.stderr}")
-            return False
-
-    except subprocess.TimeoutExpired:
-        if verbose:
-            print(f"Device reset timed out on {port}")
-        return False
-    except KeyboardInterrupt:
-        import _thread
-
-        _thread.interrupt_main()
-        raise
-    except Exception as e:
-        if verbose:
-            print(f"Device reset error: {e}")
-        return False
+from .esptool_utils import is_crash_loop_error
+from .platform_utils import get_filtered_env
+from .serial_utils import detect_serial_port
 
 
 class ESP32Deployer(IDeployer):
@@ -216,7 +137,7 @@ class ESP32Deployer(IDeployer):
 
         # Auto-detect port if not specified
         if not port:
-            port = self._detect_serial_port()
+            port = detect_serial_port(verbose=self.verbose)
             if not port:
                 raise DeploymentError("No serial port specified and auto-detection failed. " + "Use --port to specify a port.")
 
@@ -321,47 +242,114 @@ class ESP32Deployer(IDeployer):
             print("  Application: 0x10000")
             print(f"Running: {' '.join(cmd)}")
 
-        # Execute esptool - must use cmd.exe for ESP32 on Windows
+        # Execute esptool with crash-loop recovery
         # Use 120 second timeout to prevent hanging if device is unresponsive
         upload_timeout = 120
-        try:
-            if sys.platform == "win32":
-                # Run via cmd.exe to avoid msys issues
-                env = os.environ.copy()
-                # Strip MSYS paths that cause issues
-                if "PATH" in env:
-                    paths = env["PATH"].split(os.pathsep)
-                    filtered_paths = [p for p in paths if "msys" not in p.lower()]
-                    env["PATH"] = os.pathsep.join(filtered_paths)
 
-                result = safe_run(
-                    cmd,
-                    cwd=project_dir,
-                    capture_output=not self.verbose,
-                    text=False,  # Don't decode as text - esptool may output binary data
-                    env=env,
-                    shell=False,
-                    timeout=upload_timeout,
-                )
-            else:
-                result = safe_run(
-                    cmd,
-                    cwd=project_dir,
-                    capture_output=not self.verbose,
-                    text=False,  # Don't decode as text - esptool may output binary data
-                    timeout=upload_timeout,
-                )
-        except subprocess.TimeoutExpired:
-            return DeploymentResult(
-                success=False,
-                message=f"Upload timed out after {upload_timeout}s. Device may be unresponsive or not in download mode. Try resetting the device.",
-                port=port,
-            )
+        # Crash-loop recovery parameters
+        max_recovery_attempts = 20
+        min_delay_ms = 100
+        max_delay_ms = 1500
 
-        if result.returncode != 0:
+        result = None
+        recovery_mode_activated = False
+
+        for attempt in range(1, max_recovery_attempts + 1):
+            try:
+                if sys.platform == "win32":
+                    # Use filtered environment to avoid MSYS issues
+                    env = get_filtered_env()
+                    result = safe_run(
+                        cmd,
+                        cwd=project_dir,
+                        capture_output=not self.verbose,
+                        text=False,  # Don't decode as text - esptool may output binary data
+                        env=env,
+                        shell=False,
+                        timeout=upload_timeout,
+                    )
+                else:
+                    result = safe_run(
+                        cmd,
+                        cwd=project_dir,
+                        capture_output=not self.verbose,
+                        text=False,  # Don't decode as text - esptool may output binary data
+                        timeout=upload_timeout,
+                    )
+            except subprocess.TimeoutExpired:
+                # Check if we should retry
+                if attempt == 1:
+                    # First attempt timeout - might be crash-loop
+                    recovery_mode_activated = True
+                    if self.verbose:
+                        print(f"\nConnection timeout detected. Attempting recovery (attempt {attempt}/{max_recovery_attempts})...")
+
+                if recovery_mode_activated and attempt < max_recovery_attempts:
+                    delay_ms = random.randint(min_delay_ms, max_delay_ms)
+                    time.sleep(delay_ms / 1000.0)
+                    continue
+                else:
+                    return DeploymentResult(
+                        success=False,
+                        message=f"Upload timed out after {upload_timeout}s. Device may be unresponsive or not in download mode. Try resetting the device.",
+                        port=port,
+                    )
+
+            # Check result
+            if result and result.returncode == 0:
+                # Success!
+                if recovery_mode_activated and self.verbose:
+                    print(f"✓ Recovery successful on attempt {attempt}")
+                break  # Exit retry loop
+
+            # Check if this is a crash-loop error
+            if result:
+                error_output = ""
+                if result.stderr:
+                    error_output += result.stderr.decode("utf-8", errors="replace")
+                if result.stdout:
+                    error_output += result.stdout.decode("utf-8", errors="replace")
+
+                is_crash_loop = is_crash_loop_error(error_output)
+
+                if is_crash_loop and attempt == 1:
+                    # First attempt failed with crash-loop error - activate recovery
+                    recovery_mode_activated = True
+                    if self.verbose:
+                        print(f"\nCrash-loop detected on {port}. Attempting recovery...")
+                        print("This may take several attempts to catch the bootloader window.")
+
+                if recovery_mode_activated and attempt < max_recovery_attempts:
+                    # Continue recovery attempts
+                    if self.verbose:
+                        print(f"Attempt {attempt}/{max_recovery_attempts}: Waiting for bootloader window...", flush=True)
+
+                    delay_ms = random.randint(min_delay_ms, max_delay_ms)
+                    time.sleep(delay_ms / 1000.0)
+                    continue
+                elif not is_crash_loop:
+                    # Non-crash-loop error - fail immediately
+                    error_msg = "Upload failed"
+                    if result.stderr:
+                        error_msg = result.stderr.decode("utf-8", errors="replace")
+                    return DeploymentResult(success=False, message=f"Deployment failed: {error_msg}", port=port)
+                else:
+                    # Exhausted all recovery attempts
+                    break
+
+        # Final result check
+        if not result or result.returncode != 0:
             error_msg = "Upload failed"
-            if result.stderr:
+            if result and result.stderr:
                 error_msg = result.stderr.decode("utf-8", errors="replace")
+
+            if recovery_mode_activated:
+                error_msg += f"\n\nRecovery failed after {max_recovery_attempts} attempts."
+                error_msg += "\nSuggestions:"
+                error_msg += "\n  1. Manually hold the BOOT button and press RESET while deploying"
+                error_msg += "\n  2. Check power supply (ensure sufficient current for your device)"
+                error_msg += "\n  3. Try disconnecting and reconnecting the USB cable"
+
             return DeploymentResult(success=False, message=f"Deployment failed: {error_msg}", port=port)
 
         return DeploymentResult(success=True, message="Firmware uploaded successfully", port=port)
@@ -377,40 +365,3 @@ class ESP32Deployer(IDeployer):
         """
         # Map MCU names to esptool chip types
         return mcu  # Usually they match directly
-
-    def _detect_serial_port(self) -> Optional[str]:
-        """Auto-detect serial port for device.
-
-        Returns:
-            Serial port name or None if not found
-        """
-        try:
-            import serial.tools.list_ports
-
-            ports = list(serial.tools.list_ports.comports())
-
-            # Look for ESP32 or USB-SERIAL devices
-            for port in ports:
-                description = (port.description or "").lower()
-                manufacturer = (port.manufacturer or "").lower()
-
-                if any(x in description or x in manufacturer for x in ["cp210", "ch340", "usb-serial", "uart", "esp32"]):
-                    return port.device
-
-            # If no specific match, return first port
-            if ports:
-                return ports[0].device
-
-        except ImportError:
-            if self.verbose:
-                print("pyserial not installed. Cannot auto-detect port.")
-        except KeyboardInterrupt as ke:
-            from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
-
-            handle_keyboard_interrupt_properly(ke)
-            raise  # Never reached, but satisfies type checker
-        except Exception as e:
-            if self.verbose:
-                print(f"Port detection failed: {e}")
-
-        return None

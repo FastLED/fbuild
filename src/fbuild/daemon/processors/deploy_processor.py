@@ -249,7 +249,7 @@ class DeployRequestProcessor(RequestProcessor):
             True if reset succeeded, False otherwise (non-fatal)
         """
         try:
-            from fbuild.deploy.deployer_esp32 import reset_esp32_device
+            from fbuild.deploy.esptool_utils import reset_esp32_device
 
             logging.info(f"Resetting device on {port} to release USB-CDC port")
             success = reset_esp32_device(port, chip="auto", verbose=False)

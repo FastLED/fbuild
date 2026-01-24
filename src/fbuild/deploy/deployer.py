@@ -30,9 +30,13 @@ class IDeployer(ABC):
 
     Deployers handle uploading firmware to embedded devices:
     1. Locate firmware binaries
-    2. Detect or validate serial port
+    2. Detect or validate serial port (using shared serial_utils)
     3. Flash firmware to device
     4. Verify upload success
+
+    Note: Serial port detection is now provided by the shared
+    serial_utils.detect_serial_port() function instead of requiring
+    each deployer to implement its own detection logic.
     """
 
     @abstractmethod
@@ -47,21 +51,12 @@ class IDeployer(ABC):
         Args:
             project_dir: Path to project directory
             env_name: Environment name to deploy
-            port: Serial port to use (auto-detect if None)
+            port: Serial port to use (auto-detect if None using serial_utils.detect_serial_port())
 
         Returns:
             DeploymentResult with success status and message
 
         Raises:
             DeploymentError: If deployment fails
-        """
-        pass
-
-    @abstractmethod
-    def _detect_serial_port(self) -> Optional[str]:
-        """Auto-detect serial port for device.
-
-        Returns:
-            Serial port name or None if not found
         """
         pass
