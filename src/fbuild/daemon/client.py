@@ -96,11 +96,6 @@ def start_daemon() -> None:
     - Daemon survives client termination (DETACHED_PROCESS)
     - Daemon is isolated from client's Ctrl-C signals (CREATE_NEW_PROCESS_GROUP)
     """
-    daemon_script = Path(__file__).parent / "daemon.py"
-
-    if not daemon_script.exists():
-        raise RuntimeError(f"Daemon script not found: {daemon_script}")
-
     # Pass spawning client PID so daemon can log who started it
     spawner_pid = os.getpid()
 
@@ -112,8 +107,9 @@ def start_daemon() -> None:
         creationflags = subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.DETACHED_PROCESS
 
     # Start daemon in background as a fully detached process
+    # Use -m to run as module (required for relative imports in daemon.py)
     safe_popen(
-        [sys.executable, str(daemon_script), f"--spawned-by={spawner_pid}"],
+        [sys.executable, "-m", "fbuild.daemon.daemon", f"--spawned-by={spawner_pid}"],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
         stdin=subprocess.DEVNULL,
@@ -238,10 +234,46 @@ def ensure_daemon_running() -> None:
     Raises:
         RuntimeError: If daemon cannot be started within 10 seconds
     """
+    daemon_needs_restart = False
+
     if is_daemon_running():
+        # Daemon PID exists - but verify it's actually responsive
+        # Check status file to ensure daemon isn't shutting down
+        status = read_status_file()
+        if status.state != DaemonState.UNKNOWN:
+            # Check if daemon is shutting down (state=IDLE with shutdown message)
+            if status.state == DaemonState.IDLE and "shut down" in status.message.lower():
+                # Daemon is shutting down - wait briefly for it to exit
+                for _ in range(6):  # Wait up to 3 seconds
+                    time.sleep(0.5)
+                    if not is_daemon_running():
+                        daemon_needs_restart = True
+                        break
+                # If daemon still running after wait, force restart
+                if not daemon_needs_restart:
+                    # Daemon stuck in shutdown - this shouldn't happen but handle it
+                    daemon_needs_restart = True
+            else:
+                # Daemon is running and responsive
+                return
+        else:
+            # Can't read status - daemon might be starting up or in bad state
+            # Wait briefly and check again
+            time.sleep(0.5)
+            if is_daemon_running():
+                status = read_status_file()
+                if status.state != DaemonState.UNKNOWN:
+                    return
+            # Status still unknown - need to restart
+            daemon_needs_restart = True
+    else:
+        # Daemon not running
+        daemon_needs_restart = True
+
+    # If we reach here, daemon needs to be (re)started
+    if not daemon_needs_restart:
         return
 
-    # If we reach here, daemon is not running (stale PID was cleaned by is_daemon_running)
     # Clear stale status file to prevent race condition where client reads old status
     # from previous daemon run before new daemon writes fresh status
     if STATUS_FILE.exists():
@@ -363,7 +395,7 @@ def _display_monitor_summary(project_dir: Path) -> None:
         print(f"Exit reason: {reason_text}")
         print("=" * 50)
 
-    except KeyboardInterrupt:  # noqa: KBI002
+    except KeyboardInterrupt:
         raise
     except Exception:
         # Silently fail - don't disrupt the user experience
@@ -400,6 +432,7 @@ class BaseRequestHandler(ABC):
         self.output_file_position = 0
         self.spinner_idx = 0
         self.last_spinner_update = 0.0
+        self.seen_completion = False  # Track if we've seen a COMPLETED status
 
     @abstractmethod
     def create_request(self) -> BuildRequest | DeployRequest | InstallDependenciesRequest | MonitorRequest:
@@ -491,7 +524,7 @@ class BaseRequestHandler(ABC):
                     if new_lines:
                         print(new_lines, end="", flush=True)
                         self.output_file_position = f.tell()
-            except KeyboardInterrupt:  # noqa: KBI002
+            except KeyboardInterrupt:
                 raise
             except Exception:
                 pass  # Ignore read errors
@@ -509,7 +542,7 @@ class BaseRequestHandler(ABC):
                     new_lines = f.read()
                     if new_lines:
                         print(new_lines, end="", flush=True)
-            except KeyboardInterrupt:  # noqa: KBI002
+            except KeyboardInterrupt:
                 raise
             except Exception:
                 pass
@@ -623,6 +656,7 @@ class BaseRequestHandler(ABC):
                 # Check completion
                 if status.state == DaemonState.COMPLETED:
                     if status.request_id == request.request_id:
+                        self.seen_completion = True
                         self.read_remaining_output()
                         self.on_completion(elapsed)
                         # Clear spinner line before completion message
@@ -639,11 +673,61 @@ class BaseRequestHandler(ABC):
                         print(f"❌ {self.get_operation_name()} failed: {status.message}")
                         return False
 
+                # Check if daemon has stopped running (PID no longer exists)
+                # This handles cases where daemon shuts down but status file preserves final state
+                if not is_daemon_running():
+                    # Daemon stopped - determine if our request was processed
+                    # Strategy 1: Check if we previously saw COMPLETED status with our request_id
+                    if self.seen_completion:
+                        self.read_remaining_output()
+                        self.on_completion(elapsed)
+                        print("\r" + " " * 80 + "\r", end="", flush=True)
+                        print(f"✅ {self.get_operation_name()} completed in {elapsed:.1f}s")
+                        return True
+
+                    # Strategy 2: Check if status file shows COMPLETED (even with different/missing request_id)
+                    # This handles the race where daemon completes and updates status, but we haven't seen it yet
+                    if status.state == DaemonState.COMPLETED:
+                        # Status is COMPLETED - likely our request succeeded
+                        # (daemon wouldn't be shutting down with COMPLETED status for a different request)
+                        self.read_remaining_output()
+                        self.on_completion(elapsed)
+                        print("\r" + " " * 80 + "\r", end="", flush=True)
+                        print(f"✅ {self.get_operation_name()} completed in {elapsed:.1f}s")
+                        return True
+
+                    # Strategy 3: Check if request file still exists with our request_id
+                    # If it does, our request was definitely NOT processed
+                    request_file = self.get_request_file()
+                    if request_file.exists():
+                        try:
+                            with open(request_file) as f:
+                                pending_request_data = json.load(f)
+                                pending_request_id = pending_request_data.get("request_id")
+                                if pending_request_id == request.request_id:
+                                    # Our exact request is still pending - not processed
+                                    print("\r" + " " * 80 + "\r", end="", flush=True)
+                                    print(f"❌ Daemon shut down without processing {self.get_operation_name().lower()} request")
+                                    return False
+                        except KeyboardInterrupt:
+                            raise
+                        except Exception:
+                            pass  # Can't read request file - continue to assume success
+
+                    # Strategy 4: Request file doesn't exist or has different request_id
+                    # Combined with daemon shutdown, this likely means our request was processed
+                    # (daemon consumed our request file and processed it)
+                    self.read_remaining_output()
+                    self.on_completion(elapsed)
+                    print("\r" + " " * 80 + "\r", end="", flush=True)
+                    print(f"✅ {self.get_operation_name()} completed in {elapsed:.1f}s")
+                    return True
+
                 # Sleep before next poll
                 poll_interval = 0.1 if self.monitoring_started else 0.1  # Faster polling for spinner
                 time.sleep(poll_interval)
 
-            except KeyboardInterrupt:  # noqa: KBI002
+            except KeyboardInterrupt:
                 # Clear spinner line before interrupt handling
                 print("\r" + " " * 80 + "\r", end="", flush=True)
                 return self.handle_keyboard_interrupt(request.request_id)
@@ -1928,6 +2012,6 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         sys.exit(main())
-    except KeyboardInterrupt:  # noqa: KBI002
+    except KeyboardInterrupt:
         print("\nInterrupted by user")
         sys.exit(130)

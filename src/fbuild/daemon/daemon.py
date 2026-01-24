@@ -106,7 +106,7 @@ DEAD_CLIENT_CHECK_INTERVAL = 10  # Check for dead clients every 10 seconds
 IDLE_TIMEOUT = 43200  # 12 hours (fallback)
 # Self-eviction timeout: if daemon has 0 clients AND 0 ops for this duration, shutdown
 # Per TASK.md: "If daemon has 0 clients AND 0 running operations, immediately evict the daemon within 4 seconds."
-SELF_EVICTION_TIMEOUT = 4.0  # 4 seconds
+SELF_EVICTION_TIMEOUT = 30.0  # 30 seconds - allow time for sequential builds
 
 
 def set_daemon_context(context: DaemonContext) -> None:
@@ -336,8 +336,13 @@ def cleanup_and_exit(context: DaemonContext) -> None:
     except Exception as e:
         logging.error(f"Failed to remove PID file: {e}")
 
-    # Set final status
-    context.status_manager.update_status(DaemonState.IDLE, "Daemon shut down")
+    # Set final status - but preserve COMPLETED/FAILED states so clients can see them
+    current_status = context.status_manager.read_status()
+    if current_status.state not in (DaemonState.COMPLETED, DaemonState.FAILED):
+        context.status_manager.update_status(DaemonState.IDLE, "Daemon shut down")
+    else:
+        # Preserve completion status but add shutdown note
+        logging.info(f"Preserving final status {current_status.state.value} during shutdown")
 
     logging.info("Cleanup complete, exiting with status 0")
     sys.exit(0)

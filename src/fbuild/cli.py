@@ -987,6 +987,12 @@ def main() -> None:
     if hasattr(parsed_args, "project_dir"):
         PathValidator.validate_project_dir(parsed_args.project_dir)
 
+    # Validate jobs parameter
+    if hasattr(parsed_args, "jobs") and parsed_args.jobs is not None:
+        if parsed_args.jobs < 1:
+            log(f"❌ Error: --jobs must be at least 1 (got {parsed_args.jobs})")
+            sys.exit(1)
+
     # Execute command
     if parsed_args.command == "build":
         build_args = BuildArgs(
