@@ -666,6 +666,7 @@ def run_daemon_loop() -> None:
         num_workers=num_workers,
         file_cache_path=FILE_CACHE_FILE,
         status_file_path=STATUS_FILE,
+        daemon_dir=DAEMON_DIR,
     )
 
     # Set module-level context for cross-module access (enables get_compilation_queue())

@@ -14,6 +14,10 @@ from abc import ABC, abstractmethod
 from contextlib import ExitStack
 from typing import TYPE_CHECKING, Any
 
+from fbuild.daemon.cancellation import (
+    OperationCancelledException,
+    check_and_raise_if_cancelled,
+)
 from fbuild.daemon.lock_manager import LockAcquisitionError
 from fbuild.daemon.messages import DaemonState, OperationType
 
@@ -160,6 +164,14 @@ class RequestProcessor(ABC):
                     operation_type=self.get_operation_type(),
                 )
 
+                # Check for cancellation before starting operation
+                check_and_raise_if_cancelled(
+                    context.cancellation_registry,
+                    request.request_id,
+                    request.caller_pid,
+                    self.get_operation_type().value,
+                )
+
                 # Execute the operation (implemented by subclass)
                 logging.debug(f"[REQUEST_PROCESSOR] Starting execute_operation for {request.request_id}")
                 success = self.execute_operation(request, context)
@@ -190,6 +202,31 @@ class RequestProcessor(ABC):
                     logging.debug("[REQUEST_PROCESSOR] Status updated to FAILED")
 
                 result = success
+
+            except OperationCancelledException as ce:
+                # Handle cancellation gracefully
+                logging.info(f"Operation cancelled: {ce}")
+
+                # Cancel pending compilation jobs if any
+                if context.compilation_queue:
+                    cancelled_count = context.compilation_queue.cancel_all_jobs()
+                    if cancelled_count > 0:
+                        logging.info(f"Cancelled {cancelled_count} pending compilation jobs")
+
+                # Update status to CANCELLED
+                self._update_status(
+                    context,
+                    DaemonState.CANCELLED,
+                    str(ce),
+                    request=request,
+                    exit_code=130,  # Standard cancellation exit code (128 + SIGINT)
+                    operation_in_progress=False,
+                )
+
+                # Clean up signal file
+                context.cancellation_registry.cleanup_signal_file(request.request_id)
+
+                result = False
 
             except KeyboardInterrupt as ki:
                 import _thread

@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 from fbuild.daemon.async_client import ClientConnectionManager
+from fbuild.daemon.cancellation import CancellationRegistry
 from fbuild.daemon.compilation_queue import CompilationJobQueue
 from fbuild.daemon.configuration_lock import ConfigurationLockManager
 from fbuild.daemon.device_manager import DeviceManager
@@ -79,6 +80,7 @@ class DaemonContext:
     configuration_lock_manager: ConfigurationLockManager
     firmware_ledger: FirmwareLedger
     shared_serial_manager: SharedSerialManager
+    cancellation_registry: CancellationRegistry
 
     # Device manager for resource management (multi-board concurrent development)
     device_manager: DeviceManager
@@ -97,6 +99,7 @@ def create_daemon_context(
     num_workers: int,
     file_cache_path: Path,
     status_file_path: Path,
+    daemon_dir: Path,
     enable_async_server: bool = True,
     async_server_port: int = 9876,
 ) -> DaemonContext:
@@ -111,6 +114,7 @@ def create_daemon_context(
         num_workers: Number of compilation worker threads
         file_cache_path: Path to the file cache JSON file
         status_file_path: Path to the status file
+        daemon_dir: Path to the daemon directory (for cancel signals)
         enable_async_server: Whether to start the async TCP server for real-time
             client communication. Defaults to True.
         async_server_port: Port for async server to listen on. Defaults to 9876.
@@ -192,6 +196,10 @@ def create_daemon_context(
     shared_serial_manager = SharedSerialManager()
     logging.info("Shared serial manager initialized")
 
+    # Initialize cancellation registry for client disconnect detection
+    cancellation_registry = CancellationRegistry(daemon_dir=daemon_dir, cache_ttl=0.1)
+    logging.info("Cancellation registry initialized")
+
     # Initialize device manager for multi-board resource management
     device_manager = DeviceManager()
     logging.info("Device manager initialized")
@@ -252,6 +260,7 @@ def create_daemon_context(
         configuration_lock_manager=configuration_lock_manager,
         firmware_ledger=firmware_ledger,
         shared_serial_manager=shared_serial_manager,
+        cancellation_registry=cancellation_registry,
         device_manager=device_manager,
         async_server=async_server,
     )

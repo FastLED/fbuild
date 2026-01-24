@@ -27,6 +27,11 @@ def mock_context():
     context.lock_manager = MagicMock()
     context.operation_registry = MagicMock()
     context.compilation_queue = MagicMock()
+    context.cancellation_registry = MagicMock()
+    # Mock cancellation registry to return NOT_CANCELLED
+    from fbuild.daemon.cancellation import CancellationReason
+
+    context.cancellation_registry.check_cancellation.return_value = CancellationReason.NOT_CANCELLED
     return context
 
 

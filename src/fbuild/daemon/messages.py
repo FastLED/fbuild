@@ -35,6 +35,7 @@ class DaemonState(Enum):
     BUILDING = "building"
     COMPLETED = "completed"
     FAILED = "failed"
+    CANCELLED = "cancelled"  # Operation cancelled by client disconnect
     UNKNOWN = "unknown"
 
     @classmethod

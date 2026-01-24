@@ -246,6 +246,27 @@ class CompilationJobQueue:
             if cancelled_count > 0:
                 logging.info(f"Cancelled {cancelled_count} pending jobs")
 
+    def cancel_all_jobs(self) -> int:
+        """Cancel all pending jobs in the queue.
+
+        Running jobs are NOT cancelled - they will complete.
+        Only jobs in PENDING state are cancelled.
+
+        Returns:
+            Number of jobs cancelled
+        """
+        cancelled_count = 0
+        with self.jobs_lock:
+            for job in self.jobs.values():
+                if job.state == JobState.PENDING:
+                    job.state = JobState.CANCELLED
+                    cancelled_count += 1
+
+        if cancelled_count > 0:
+            logging.info(f"Cancelled {cancelled_count} pending compilation jobs")
+
+        return cancelled_count
+
     def get_statistics(self) -> dict[str, int]:
         """Get queue statistics.
 

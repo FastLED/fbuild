@@ -568,7 +568,8 @@ class BaseRequestHandler(ABC):
             print("\n🛑 Requesting daemon to stop operation...")
             cancel_file = DAEMON_DIR / f"cancel_{request_id}.signal"
             cancel_file.touch()
-            print("   Operation cancellation requested")
+            print("   ✅ Cancellation signal sent")
+            print("   Daemon will detect and abort operation within ~1 second")
             return False
 
     def execute(self) -> bool:

@@ -160,6 +160,13 @@ class BuildRequestProcessor(RequestProcessor):
         # The context is stored in the interpreter, not in the module.
         self._reload_build_modules()
 
+        # CHECK: After module reload, before expensive platform init
+        # This is a strategic cancellation check point - module reload is expensive,
+        # so we check if the client has disconnected before proceeding
+        from fbuild.daemon.cancellation import check_and_raise_if_cancelled
+
+        check_and_raise_if_cancelled(context.cancellation_registry, request.request_id, request.caller_pid, "build")
+
         # Set up output file for streaming to client
         # Now safe to do after reload because context survives reload
         from fbuild.output import reset_timer, set_output_file
