@@ -78,11 +78,15 @@ def test_execute_operation_success(processor, build_request, mock_context):
     mock_config = MagicMock()
     mock_config.get_env_config.return_value = {"platform": "espressif32"}
 
-    with patch.object(sys, "modules", {"fbuild.build.orchestrator_esp32": MagicMock(OrchestratorESP32=mock_orchestrator_class), **sys.modules}):
+    # Mock Cache to avoid filesystem operations
+    mock_cache = MagicMock()
+
+    with patch.dict(sys.modules, {"fbuild.build.orchestrator_esp32": MagicMock(OrchestratorESP32=mock_orchestrator_class)}):
         with patch.object(processor, "_reload_build_modules"):
             with patch("pathlib.Path.exists", return_value=True):
                 with patch("fbuild.config.ini_parser.PlatformIOConfig", return_value=mock_config):
-                    result = processor.execute_operation(build_request, mock_context)
+                    with patch("fbuild.packages.cache.Cache", return_value=mock_cache):
+                        result = processor.execute_operation(build_request, mock_context)
 
     assert result is True
     mock_orchestrator.build.assert_called_once_with(
@@ -107,7 +111,7 @@ def test_execute_operation_build_failure(processor, build_request, mock_context)
     # Mock the orchestrator class in sys.modules
     mock_orchestrator_class = MagicMock(return_value=mock_orchestrator)
 
-    with patch.object(sys, "modules", {"fbuild.build.orchestrator_avr": MagicMock(BuildOrchestratorAVR=mock_orchestrator_class), **sys.modules}):
+    with patch.dict(sys.modules, {"fbuild.build.orchestrator_avr": MagicMock(BuildOrchestratorAVR=mock_orchestrator_class)}):
         with patch.object(processor, "_reload_build_modules"):
             result = processor.execute_operation(build_request, mock_context)
 
@@ -116,16 +120,25 @@ def test_execute_operation_build_failure(processor, build_request, mock_context)
 
 def test_execute_operation_orchestrator_import_error(processor, build_request, mock_context):
     """Test build execution when orchestrator import fails."""
-    with patch.object(sys, "modules", {}):
+    # Remove orchestrator modules to simulate import error while keeping other modules intact
+    modules_without_orchestrators = {k: v for k, v in sys.modules.items() if not k.startswith("fbuild.build.orchestrator")}
+
+    # Mock platformio.ini existence and config
+    mock_config = MagicMock()
+    mock_config.get_env_config.return_value = {"platform": "espressif32"}
+
+    with patch.dict(sys.modules, modules_without_orchestrators, clear=True):
         with patch.object(processor, "_reload_build_modules"):
-            result = processor.execute_operation(build_request, mock_context)
+            with patch("pathlib.Path.exists", return_value=True):
+                with patch("fbuild.config.ini_parser.PlatformIOConfig", return_value=mock_config):
+                    result = processor.execute_operation(build_request, mock_context)
 
     assert result is False
 
 
 def test_execute_operation_orchestrator_attribute_error(processor, build_request, mock_context):
     """Test build execution when orchestrator class is missing."""
-    with patch.object(sys, "modules", {"fbuild.build.orchestrator_avr": MagicMock(spec=[]), **sys.modules}):  # No BuildOrchestratorAVR attribute
+    with patch.dict(sys.modules, {"fbuild.build.orchestrator_avr": MagicMock(spec=[])}):  # No BuildOrchestratorAVR attribute
         with patch.object(processor, "_reload_build_modules"):
             result = processor.execute_operation(build_request, mock_context)
 
@@ -157,11 +170,15 @@ def test_execute_operation_with_clean_build(processor, mock_context):
     mock_config = MagicMock()
     mock_config.get_env_config.return_value = {"platform": "espressif32"}
 
-    with patch.object(sys, "modules", {"fbuild.build.orchestrator_esp32": MagicMock(OrchestratorESP32=mock_orchestrator_class), **sys.modules}):
+    # Mock Cache to avoid filesystem operations
+    mock_cache = MagicMock()
+
+    with patch.dict(sys.modules, {"fbuild.build.orchestrator_esp32": MagicMock(OrchestratorESP32=mock_orchestrator_class)}):
         with patch.object(processor, "_reload_build_modules"):
             with patch("pathlib.Path.exists", return_value=True):
                 with patch("fbuild.config.ini_parser.PlatformIOConfig", return_value=mock_config):
-                    result = processor.execute_operation(request, mock_context)
+                    with patch("fbuild.packages.cache.Cache", return_value=mock_cache):
+                        result = processor.execute_operation(request, mock_context)
 
     assert result is True
     mock_orchestrator.build.assert_called_once_with(
@@ -182,26 +199,20 @@ def test_reload_build_modules(processor):
     mock_module1 = types.ModuleType("fbuild.packages.downloader")
     mock_module2 = types.ModuleType("fbuild.build.compiler")
 
-    # Save original sys.modules
-    original_modules = sys.modules.copy()
-
-    # Add our test modules to sys.modules
-    sys.modules["fbuild.packages.downloader"] = mock_module1
-    sys.modules["fbuild.build.compiler"] = mock_module2
-
-    try:
-        with patch("importlib.reload") as mock_reload:
-            # Configure reload to return the module
-            mock_reload.side_effect = lambda m: m
-
+    # Use patch.dict for safe, atomic cleanup (no sys.modules.clear()!)
+    with patch.dict(
+        sys.modules,
+        {
+            "fbuild.packages.downloader": mock_module1,
+            "fbuild.build.compiler": mock_module2,
+        },
+    ):
+        with patch("importlib.reload", side_effect=lambda m: m) as mock_reload:
             processor._reload_build_modules()
 
             # Should attempt to reload existing modules (at least the ones we provided)
             assert mock_reload.call_count >= 2
-    finally:
-        # Restore original sys.modules
-        sys.modules.clear()
-        sys.modules.update(original_modules)
+    # Automatic cleanup via context manager - no manual restore needed!
 
 
 def test_reload_build_modules_handles_errors(processor):
@@ -230,17 +241,11 @@ def test_reload_build_modules_handles_keyboard_interrupt(processor):
             raise KeyboardInterrupt()
         return module
 
-    # Save original sys.modules
-    original_modules = sys.modules.copy()
-    sys.modules["fbuild.packages.downloader"] = mock_module
-
-    try:
+    # Use patch.dict for safe, atomic cleanup (no sys.modules.clear()!)
+    with patch.dict(sys.modules, {"fbuild.packages.downloader": mock_module}):
         with patch("importlib.reload", side_effect=raise_once):
             with patch("fbuild.interrupt_utils.handle_keyboard_interrupt_properly") as mock_handler:
                 processor._reload_build_modules()
                 # Handler should be called at least once
                 assert mock_handler.call_count >= 1
-    finally:
-        # Restore original sys.modules
-        sys.modules.clear()
-        sys.modules.update(original_modules)
+    # Automatic cleanup via context manager - no manual restore needed!

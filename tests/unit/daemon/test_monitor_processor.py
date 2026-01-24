@@ -137,7 +137,7 @@ def test_execute_operation_success(processor, monitor_request, mock_context):
 
     mock_monitor_class = MagicMock(return_value=mock_monitor)
 
-    with patch.object(sys, "modules", {"fbuild.deploy.monitor": MagicMock(SerialMonitor=mock_monitor_class), **sys.modules}):
+    with patch.dict(sys.modules, {"fbuild.deploy.monitor": MagicMock(SerialMonitor=mock_monitor_class)}):
         with patch("pathlib.Path.mkdir"):
             with patch("pathlib.Path.write_text"):
                 with patch("pathlib.Path.exists", return_value=False):
@@ -155,7 +155,7 @@ def test_execute_operation_failure(processor, monitor_request, mock_context):
 
     mock_monitor_class = MagicMock(return_value=mock_monitor)
 
-    with patch.object(sys, "modules", {"fbuild.deploy.monitor": MagicMock(SerialMonitor=mock_monitor_class), **sys.modules}):
+    with patch.dict(sys.modules, {"fbuild.deploy.monitor": MagicMock(SerialMonitor=mock_monitor_class)}):
         with patch("pathlib.Path.mkdir"):
             with patch("pathlib.Path.write_text"):
                 with patch("pathlib.Path.exists", return_value=False):
@@ -181,7 +181,7 @@ def test_execute_operation_monitor_import_error(processor, monitor_request, mock
     # Remove the actual module if it exists
     patched_modules.pop("fbuild.deploy.monitor", None)
 
-    with patch.object(sys, "modules", patched_modules):
+    with patch.dict(sys.modules, patched_modules, clear=True):
         with patch("pathlib.Path.mkdir"):
             with patch("pathlib.Path.write_text"):
                 with patch("pathlib.Path.exists", return_value=False):
@@ -212,7 +212,7 @@ def test_execute_operation_with_timeout(processor, mock_context):
 
     mock_monitor_class = MagicMock(return_value=mock_monitor)
 
-    with patch.object(sys, "modules", {"fbuild.deploy.monitor": MagicMock(SerialMonitor=mock_monitor_class), **sys.modules}):
+    with patch.dict(sys.modules, {"fbuild.deploy.monitor": MagicMock(SerialMonitor=mock_monitor_class)}):
         with patch("pathlib.Path.mkdir"):
             with patch("pathlib.Path.write_text"):
                 with patch("pathlib.Path.exists", return_value=False):
@@ -246,7 +246,7 @@ def test_execute_operation_with_halt_patterns(processor, mock_context):
 
     mock_monitor_class = MagicMock(return_value=mock_monitor)
 
-    with patch.object(sys, "modules", {"fbuild.deploy.monitor": MagicMock(SerialMonitor=mock_monitor_class), **sys.modules}):
+    with patch.dict(sys.modules, {"fbuild.deploy.monitor": MagicMock(SerialMonitor=mock_monitor_class)}):
         with patch("pathlib.Path.mkdir"):
             with patch("pathlib.Path.write_text"):
                 with patch("pathlib.Path.exists", return_value=False):
@@ -267,7 +267,7 @@ def test_execute_operation_creates_output_files(processor, monitor_request, mock
 
     mock_monitor_class = MagicMock(return_value=mock_monitor)
 
-    with patch.object(sys, "modules", {"fbuild.deploy.monitor": MagicMock(SerialMonitor=mock_monitor_class), **sys.modules}):
+    with patch.dict(sys.modules, {"fbuild.deploy.monitor": MagicMock(SerialMonitor=mock_monitor_class)}):
         with patch("pathlib.Path.mkdir") as mock_mkdir:
             with patch("pathlib.Path.write_text") as mock_write:
                 with patch("pathlib.Path.exists", return_value=True):
@@ -304,7 +304,7 @@ def test_execute_operation_uses_default_baud_rate(processor, mock_context):
 
     mock_monitor_class = MagicMock(return_value=mock_monitor)
 
-    with patch.object(sys, "modules", {"fbuild.deploy.monitor": MagicMock(SerialMonitor=mock_monitor_class), **sys.modules}):
+    with patch.dict(sys.modules, {"fbuild.deploy.monitor": MagicMock(SerialMonitor=mock_monitor_class)}):
         with patch("pathlib.Path.mkdir"):
             with patch("pathlib.Path.write_text"):
                 with patch("pathlib.Path.exists", return_value=False):

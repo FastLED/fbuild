@@ -30,11 +30,56 @@ Usage:
 
 import sys
 import time
+from contextvars import ContextVar
+from dataclasses import dataclass, replace
 from pathlib import Path
 from types import TracebackType
 from typing import Optional, Protocol, TextIO, runtime_checkable
 
-# Global state for the timer
+
+@dataclass(frozen=True)
+class OutputContext:
+    """Immutable context for output operations.
+
+    Each build gets its own isolated context, preventing race conditions
+    when multiple builds run concurrently.
+
+    This context uses contextvars which:
+    - Are thread-safe and async-safe
+    - Survive module reloads (stored in interpreter, not module)
+    - Provide automatic isolation between concurrent operations
+    """
+
+    start_time: Optional[float]
+    output_stream: TextIO
+    verbose: bool
+    output_file: Optional[TextIO]
+
+
+# Context variable for current output context
+_output_context: ContextVar[OutputContext] = ContextVar(
+    "output_context",
+    default=OutputContext(
+        start_time=None,
+        output_stream=sys.stdout,
+        verbose=True,
+        output_file=None,
+    ),
+)
+
+
+def get_context() -> OutputContext:
+    """Get current output context.
+
+    Returns:
+        The current output context for this execution context
+    """
+    return _output_context.get()
+
+
+# DEPRECATED: Old module-level globals (for backward compatibility during transition)
+# These will be removed in a future version. Use contextvars instead.
+# DO NOT use these directly - they are not thread-safe!
 _start_time: Optional[float] = None
 _output_stream: TextIO = sys.stdout
 _verbose: bool = True
@@ -51,8 +96,17 @@ def init_timer(output_stream: Optional[TextIO] = None) -> None:
     Args:
         output_stream: Optional output stream (defaults to sys.stdout)
     """
+    ctx = get_context()
+    new_ctx = replace(
+        ctx,
+        start_time=time.time(),
+        output_stream=output_stream if output_stream is not None else ctx.output_stream,
+    )
+    _output_context.set(new_ctx)
+
+    # DEPRECATED: Update old globals for backward compatibility
     global _start_time, _output_stream
-    _start_time = time.time()
+    _start_time = new_ctx.start_time
     if output_stream is not None:
         _output_stream = output_stream
 
@@ -63,8 +117,13 @@ def reset_timer() -> None:
 
     Useful for resetting the epoch at the start of a new build phase.
     """
+    ctx = get_context()
+    new_ctx = replace(ctx, start_time=time.time())
+    _output_context.set(new_ctx)
+
+    # DEPRECATED: Update old globals for backward compatibility
     global _start_time
-    _start_time = time.time()
+    _start_time = new_ctx.start_time
 
 
 def set_verbose(verbose: bool) -> None:
@@ -74,6 +133,11 @@ def set_verbose(verbose: bool) -> None:
     Args:
         verbose: If True, all messages are printed. If False, only non-verbose messages.
     """
+    ctx = get_context()
+    new_ctx = replace(ctx, verbose=verbose)
+    _output_context.set(new_ctx)
+
+    # DEPRECATED: Update old globals for backward compatibility
     global _verbose
     _verbose = verbose
 
@@ -85,6 +149,11 @@ def set_output_file(output_file: Optional[TextIO]) -> None:
     Args:
         output_file: File object to receive output, or None to disable file output
     """
+    ctx = get_context()
+    new_ctx = replace(ctx, output_file=output_file)
+    _output_context.set(new_ctx)
+
+    # DEPRECATED: Update old globals for backward compatibility
     global _output_file
     _output_file = output_file
 
@@ -96,7 +165,8 @@ def get_output_file() -> Optional[TextIO]:
     Returns:
         The current output file, or None if not set
     """
-    return _output_file
+    ctx = get_context()
+    return ctx.output_file
 
 
 def get_elapsed() -> float:
@@ -106,10 +176,13 @@ def get_elapsed() -> float:
     Returns:
         Elapsed time in seconds
     """
-    global _start_time
-    if _start_time is None:
+    ctx = get_context()
+    if ctx.start_time is None:
+        # Auto-initialize if not set
         init_timer()
-    return time.time() - _start_time  # type: ignore
+        ctx = get_context()
+    assert ctx.start_time is not None  # For type checker
+    return time.time() - ctx.start_time
 
 
 def format_timestamp() -> str:
@@ -133,20 +206,22 @@ def _print(message: str, end: str = "\n") -> None:
         message: Message to print
         end: End character (default newline)
     """
+    ctx = get_context()
     timestamp = format_timestamp()
     line = f"{timestamp} {message}{end}"
+
     try:
-        _output_stream.write(line)
-        _output_stream.flush()
+        ctx.output_stream.write(line)
+        ctx.output_stream.flush()
     except (ValueError, OSError):
         # Ignore if stream is closed (e.g., in test environment)
         pass
 
     # Also write to output file if set
-    if _output_file is not None:
+    if ctx.output_file is not None:
         try:
-            _output_file.write(line)
-            _output_file.flush()
+            ctx.output_file.write(line)
+            ctx.output_file.flush()
         except (ValueError, OSError):
             # Ignore if file is closed
             pass
@@ -160,8 +235,8 @@ def log(message: str, verbose_only: bool = False) -> None:
         message: Message to log
         verbose_only: If True, only print if verbose mode is enabled
     """
-    global _verbose
-    if verbose_only and not _verbose:
+    ctx = get_context()
+    if verbose_only and not ctx.verbose:
         return
     _print(message)
 
@@ -178,8 +253,8 @@ def log_phase(phase: int, total: int, message: str, verbose_only: bool = False) 
         message: Phase description
         verbose_only: If True, only print if verbose mode is enabled
     """
-    global _verbose
-    if verbose_only and not _verbose:
+    ctx = get_context()
+    if verbose_only and not ctx.verbose:
         return
     _print(f"[{phase}/{total}] {message}")
 
@@ -193,8 +268,8 @@ def log_detail(message: str, indent: int = 6, verbose_only: bool = False) -> Non
         indent: Number of spaces to indent (default 6)
         verbose_only: If True, only print if verbose mode is enabled
     """
-    global _verbose
-    if verbose_only and not _verbose:
+    ctx = get_context()
+    if verbose_only and not ctx.verbose:
         return
     _print(f"{' ' * indent}{message}")
 
@@ -211,8 +286,8 @@ def log_file(source_type: str, filename: str, cached: bool = False, verbose_only
         cached: If True, append "(cached)" to message
         verbose_only: If True, only print if verbose mode is enabled
     """
-    global _verbose
-    if verbose_only and not _verbose:
+    ctx = get_context()
+    if verbose_only and not ctx.verbose:
         return
     suffix = " (cached)" if cached else ""
     _print(f"      [{source_type}] {filename}{suffix}")
@@ -255,8 +330,8 @@ def log_size_info(
         max_ram: Maximum RAM size (or None)
         verbose_only: If True, only print if verbose mode is enabled
     """
-    global _verbose
-    if verbose_only and not _verbose:
+    ctx = get_context()
+    if verbose_only and not ctx.verbose:
         return
 
     _print("Firmware Size:")
@@ -283,8 +358,8 @@ def log_build_complete(build_time: float, verbose_only: bool = False) -> None:
         build_time: Total build time in seconds
         verbose_only: If True, only print if verbose mode is enabled
     """
-    global _verbose
-    if verbose_only and not _verbose:
+    ctx = get_context()
+    if verbose_only and not ctx.verbose:
         return
     _print("")
     _print(f"Build time: {build_time:.2f}s")
@@ -328,8 +403,8 @@ def log_firmware_path(path: Path, verbose_only: bool = False) -> None:
         path: Path to firmware file
         verbose_only: If True, only print if verbose mode is enabled
     """
-    global _verbose
-    if verbose_only and not _verbose:
+    ctx = get_context()
+    if verbose_only and not ctx.verbose:
         return
     log_detail(f"Firmware: {path}")
 

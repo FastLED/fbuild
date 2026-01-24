@@ -5,6 +5,7 @@ This module implements the BuildRequestProcessor which executes build
 operations for Arduino/ESP32 projects using the appropriate orchestrator.
 """
 
+import contextvars
 import importlib
 import logging
 import sys
@@ -111,11 +112,34 @@ class BuildRequestProcessor(RequestProcessor):
         return {"project": request.project_dir}
 
     def execute_operation(self, request: "BuildRequest", context: "DaemonContext") -> bool:
-        """Execute the build operation.
+        """Execute the build operation with isolated output context.
 
         This is the core build logic extracted from the original
         process_build_request function. All boilerplate (locks, status
         updates, error handling) is handled by the base RequestProcessor.
+
+        The build runs in an isolated context copy to ensure concurrent builds
+        don't interfere with each other's output settings (timestamps, verbose
+        flags, output files). This is critical for thread safety.
+
+        Args:
+            request: The build request containing project_dir, environment, etc.
+            context: The daemon context with all subsystems
+
+        Returns:
+            True if build succeeded, False otherwise
+        """
+        # Run build in isolated context to prevent concurrent builds from
+        # interfering with each other's output state
+        ctx = contextvars.copy_context()
+        return ctx.run(self._execute_operation_isolated, request, context)
+
+    def _execute_operation_isolated(self, request: "BuildRequest", context: "DaemonContext") -> bool:
+        """Execute build with isolated output context (internal implementation).
+
+        This method runs within an isolated context created by execute_operation().
+        All output.py contextvars (start_time, output_file, verbose) are isolated
+        from other concurrent builds.
 
         Args:
             request: The build request containing project_dir, environment, etc.
@@ -132,10 +156,12 @@ class BuildRequestProcessor(RequestProcessor):
         # Reload build modules FIRST to pick up code changes
         # This is critical for development on Windows where daemon caching
         # prevents testing code changes
-        # IMPORTANT: Must happen before setting output file because reload resets global state
+        # NOTE: With contextvars, the output context SURVIVES module reload!
+        # The context is stored in the interpreter, not in the module.
         self._reload_build_modules()
 
-        # Set up output file for streaming to client (after module reload!)
+        # Set up output file for streaming to client
+        # Now safe to do after reload because context survives reload
         from fbuild.output import reset_timer, set_output_file
 
         output_file_path = Path(request.project_dir) / ".fbuild" / "build_output.txt"

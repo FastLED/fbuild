@@ -134,6 +134,39 @@ Always set `FBUILD_DEV_MODE=1` when developing. This isolates:
 - Type hints required for all functions
 - Line length: 200 chars (configured in pyproject.toml)
 
+### Thread-Safe Output System
+
+**All output goes through `src/fbuild/output.py` which uses `contextvars` for thread safety.**
+
+The output system was refactored to use Python's `contextvars` instead of module-level globals. This ensures concurrent builds don't interfere with each other's:
+- **Timestamps** (`start_time`) - Each build has isolated elapsed time tracking
+- **Output files** (`output_file`) - Each build writes to its own output file
+- **Verbose flags** (`verbose`) - Each build has independent verbosity settings
+- **Output streams** (`output_stream`) - Isolated stream handling
+
+**Key features:**
+- **Context survives module reloads** - Unlike globals, contextvars are stored in the interpreter, not the module
+- **Automatic thread isolation** - Each thread gets a copy of the parent context
+- **Explicit isolation in processors** - Build processor uses `contextvars.copy_context()` for guaranteed isolation
+
+**Implementation pattern:**
+```python
+# In build_processor.py
+import contextvars
+
+def execute_operation(self, request, context):
+    # Run build in isolated context
+    ctx = contextvars.copy_context()
+    return ctx.run(self._execute_operation_isolated, request, context)
+```
+
+**Testing:**
+- `tests/unit/test_concurrent_output_bug.py` - Demonstrates the original bug and verifies the fix
+- Tests use `run_in_isolated_context()` helper to ensure proper context isolation
+- Mark concurrent safety tests with `@pytest.mark.concurrent_safety`
+
+**⚠️ DEPRECATED:** Module-level globals (`_start_time`, `_output_stream`, `_verbose`, `_output_file`) are kept for backward compatibility but will be removed in a future version. Always use the context API (`get_context()`, `set_output_file()`, etc.).
+
 ## Test Organization
 
 - `tests/unit/` - Fast unit tests, run in parallel with `-n auto`
