@@ -116,6 +116,14 @@ class BoardConfig:
             "core": "esp32",
             "variant": "esp32c5",
         },
+        "teensy36": {
+            "name": "Teensy 3.6",
+            "mcu": "mk66fx1m0",
+            "f_cpu": "180000000L",
+            "board": "TEENSY36",
+            "core": "teensy3",
+            "variant": "teensy36",
+        },
         "teensy40": {
             "name": "Teensy 4.0",
             "mcu": "imxrt1062",

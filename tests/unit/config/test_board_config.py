@@ -202,6 +202,16 @@ uno.build.f_cpu=16000000L
         assert config.mcu == "atmega32u4"
         assert config.variant == "leonardo"
 
+    def test_from_board_id_teensy36(self):
+        """Test loading Teensy 3.6 from built-in defaults."""
+        config = BoardConfig.from_board_id("teensy36")
+        assert config.name == "Teensy 3.6"
+        assert config.mcu == "mk66fx1m0"
+        assert config.f_cpu == "180000000L"
+        assert config.board == "TEENSY36"
+        assert config.core == "teensy3"
+        assert config.variant == "teensy36"
+
     def test_from_board_id_unknown(self):
         """Test loading unknown board."""
         with pytest.raises(BoardConfigError, match="Unknown board"):

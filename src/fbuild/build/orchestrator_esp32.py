@@ -374,6 +374,9 @@ class OrchestratorESP32(IBuildOrchestrator):
                 # Initialize linker
                 log_phase(10, 13, "Linking firmware...")
 
+                print(f"DEBUG orchestrator: env_config keys: {list(env_config.keys())}")
+                print(f"DEBUG orchestrator: board_build.partitions = {env_config.get('board_build.partitions', 'NOT FOUND')}")
+
                 linker = ConfigurableLinker(
                     platform,
                     toolchain,
@@ -381,7 +384,8 @@ class OrchestratorESP32(IBuildOrchestrator):
                     board_id,
                     build_dir,
                     platform_config=None,
-                    show_progress=verbose
+                    show_progress=verbose,
+                    env_config=env_config
                 )
 
                 # Link firmware

@@ -74,7 +74,8 @@ class ConfigurableLinker(ILinker):
         board_id: str,
         build_dir: Path,
         platform_config: Optional[Union[Dict, Path]] = None,
-        show_progress: bool = True
+        show_progress: bool = True,
+        env_config: Optional[Dict[str, Any]] = None
     ):
         """Initialize configurable linker.
 
@@ -86,6 +87,7 @@ class ConfigurableLinker(ILinker):
             build_dir: Directory for build artifacts
             platform_config: Platform config dict or path to config JSON file
             show_progress: Whether to show linking progress
+            env_config: Optional platformio.ini environment configuration
         """
         self.platform = platform
         self.toolchain = toolchain
@@ -93,6 +95,7 @@ class ConfigurableLinker(ILinker):
         self.board_id = board_id
         self.build_dir = build_dir
         self.show_progress = show_progress
+        self.env_config = env_config or {}
 
         # Load board configuration
         self.board_config = platform.get_board_json(board_id)  # type: ignore[attr-defined]
@@ -130,7 +133,8 @@ class ConfigurableLinker(ILinker):
             build_dir=build_dir,
             toolchain=toolchain,
             framework=framework,
-            show_progress=show_progress
+            show_progress=show_progress,
+            env_config=self.env_config
         )
 
     def get_linker_scripts(self) -> List[Path]:

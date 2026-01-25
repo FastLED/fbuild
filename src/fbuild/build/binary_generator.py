@@ -38,7 +38,8 @@ class BinaryGenerator:
         build_dir: Path,
         toolchain: Any = None,
         framework: Any = None,
-        show_progress: bool = True
+        show_progress: bool = True,
+        env_config: Optional[Dict[str, Any]] = None
     ):
         """Initialize binary generator.
 
@@ -49,6 +50,7 @@ class BinaryGenerator:
             toolchain: Toolchain instance (required for objcopy)
             framework: Framework instance (required for ESP32 bootloader/partitions)
             show_progress: Whether to show generation progress
+            env_config: Optional platformio.ini environment configuration
         """
         self.mcu = mcu
         self.board_config = board_config
@@ -56,6 +58,7 @@ class BinaryGenerator:
         self.toolchain = toolchain
         self.framework = framework
         self.show_progress = show_progress
+        self.env_config = env_config or {}
 
     def generate_bin(self, elf_path: Path, output_bin: Optional[Path] = None) -> Path:
         """Generate firmware.bin from firmware.elf.
@@ -365,12 +368,22 @@ class BinaryGenerator:
         if output_bin is None:
             output_bin = self.build_dir / "partitions.bin"
 
-        # Find partition CSV file - use default.csv from framework
-        partitions_csv = self.framework.framework_path / "tools" / "partitions" / "default.csv"
+        # Get partition table name from env_config (board_build.partitions)
+        # Default to default.csv if not specified
+        raise BinaryGeneratorError("INTENTIONAL ERROR TO TEST IF THIS CODE IS REACHED")
+        partition_table = self.env_config.get("board_build.partitions", "default.csv")
+
+        # If partition_table doesn't have .csv extension, add it
+        if not partition_table.endswith(".csv"):
+            partition_table += ".csv"
+
+        # Find partition CSV file in framework
+        partitions_csv = self.framework.framework_path / "tools" / "partitions" / partition_table
 
         if not partitions_csv.exists():
             raise BinaryGeneratorError(
-                f"Partition CSV not found: {partitions_csv}"
+                f"Partition CSV not found: {partitions_csv}\n" +
+                f"Requested partition table: {partition_table}"
             )
 
         # Find gen_esp32part.py tool - also in framework

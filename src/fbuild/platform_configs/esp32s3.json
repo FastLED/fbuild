@@ -60,7 +60,6 @@
     "-Wl,--no-warn-rwx-segments",
     "-Wl,--orphan-handling=warn",
     "-fno-rtti",
-    "-fno-lto",
     "-Wl,--gc-sections",
     "-Wl,--warn-common",
     "-Wl,--wrap=log_printf",
