@@ -343,6 +343,10 @@ class OrchestratorESP32(IBuildOrchestrator):
                 if bt_stub_obj:
                     core_obj_files.append(bt_stub_obj)
 
+                # Wait for all pending async compilation jobs (including bt_stub) to complete
+                if hasattr(compiler, "wait_all_jobs"):
+                    compiler.wait_all_jobs()
+
                 core_archive = compiler.create_core_archive(core_obj_files)
 
                 log_detail(f"Compiled {len(core_obj_files)} core source files", verbose_only=True)
