@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 fbuild is a PlatformIO-compatible embedded development tool providing build, deploy, and monitor functionality for Arduino/ESP32 platforms. It uses URL-based package management and a daemon for cross-process coordination.
 
-**Current Version:** v1.3.10 (update in `src/fbuild/__init__.py`, `pyproject.toml`, and this file)
+**Current Version:** v1.3.11 (update in `src/fbuild/__init__.py`, `pyproject.toml`, and this file)
 
 ## Development Commands
 
