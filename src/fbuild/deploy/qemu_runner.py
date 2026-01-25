@@ -195,7 +195,9 @@ class QEMURunner:
         """Prepare firmware files for mounting into Docker container.
 
         Creates a complete flash image with bootloader, partition table,
-        and application at their correct offsets for QEMU.
+        and application at their correct offsets for QEMU using esptool.py.
+
+        Uses DIO flash mode for QEMU compatibility (QIO mode causes boot loops).
 
         ESP32/ESP32-S2 Flash Layout:
         - 0x1000: Bootloader (second stage)
@@ -222,12 +224,6 @@ class QEMURunner:
         temp_dir = Path(tempfile.mkdtemp(prefix="qemu_firmware_"))
 
         try:
-            # Copy firmware file
-            shutil.copy2(firmware_path, temp_dir / "firmware.bin")
-
-            # Create proper flash image for QEMU
-            flash_size = flash_size_mb * 1024 * 1024
-
             # ESP32 flash layout offsets - different MCUs have different bootloader offsets
             # ESP32/ESP32-S2: 0x1000, ESP32-S3/C3/C6: 0x0
             if machine in ["esp32", "esp32s2"]:
@@ -237,54 +233,88 @@ class QEMURunner:
             PARTITION_OFFSET = 0x8000
             APP_OFFSET = 0x10000
 
-            # Start with erased flash (0xFF)
-            flash_data = bytearray(b"\xff" * flash_size)
-
             # Try to find bootloader.bin and partitions.bin in the same directory
             build_dir = firmware_path.parent
             bootloader_path = build_dir / "bootloader.bin"
             partitions_path = build_dir / "partitions.bin"
 
-            # Place bootloader at 0x1000 if available
+            # Map machine to chip type for esptool
+            chip_map = {
+                "esp32": "esp32",
+                "esp32s2": "esp32s2",
+                "esp32s3": "esp32s3",
+                "esp32c3": "esp32c3",
+                "esp32c6": "esp32c6",
+            }
+            chip_type = chip_map.get(machine, "esp32")
+
+            # Build esptool.py merge_bin command with DIO flash mode for QEMU compatibility
+            cmd = [
+                sys.executable,
+                "-m",
+                "esptool",
+                "--chip",
+                chip_type,
+                "merge_bin",
+                "--flash_mode",
+                "dio",  # Use DIO mode for QEMU (QIO causes boot loops)
+                "--flash_freq",
+                "40m",
+                "--flash_size",
+                f"{flash_size_mb}MB",
+                "--fill-flash-size",
+                f"{flash_size_mb}MB",  # Pad to full flash size for QEMU
+                "--output",
+                str(temp_dir / "flash.bin"),
+            ]
+
+            # Add binaries at their offsets
+            files_added = []
             if bootloader_path.exists():
-                bootloader_data = bootloader_path.read_bytes()
-                bootloader_end = BOOTLOADER_OFFSET + len(bootloader_data)
-                if bootloader_end <= flash_size:
-                    flash_data[BOOTLOADER_OFFSET:bootloader_end] = bootloader_data
-                    if self.verbose:
-                        print(f"  Bootloader: {len(bootloader_data)} bytes at 0x{BOOTLOADER_OFFSET:X}")
-                else:
-                    print("Warning: Bootloader too large to fit in flash")
+                cmd.extend([hex(BOOTLOADER_OFFSET), str(bootloader_path)])
+                files_added.append(f"bootloader at 0x{BOOTLOADER_OFFSET:X}")
+                if self.verbose:
+                    print(f"  Bootloader: {bootloader_path.stat().st_size} bytes at 0x{BOOTLOADER_OFFSET:X}")
             else:
                 if self.verbose:
                     print(f"  Warning: bootloader.bin not found at {bootloader_path}")
 
-            # Place partition table at 0x8000 if available
             if partitions_path.exists():
-                partitions_data = partitions_path.read_bytes()
-                partitions_end = PARTITION_OFFSET + len(partitions_data)
-                if partitions_end <= flash_size:
-                    flash_data[PARTITION_OFFSET:partitions_end] = partitions_data
-                    if self.verbose:
-                        print(f"  Partitions: {len(partitions_data)} bytes at 0x{PARTITION_OFFSET:X}")
-                else:
-                    print("Warning: Partition table too large to fit in flash")
+                cmd.extend([hex(PARTITION_OFFSET), str(partitions_path)])
+                files_added.append(f"partitions at 0x{PARTITION_OFFSET:X}")
+                if self.verbose:
+                    print(f"  Partitions: {partitions_path.stat().st_size} bytes at 0x{PARTITION_OFFSET:X}")
             else:
                 if self.verbose:
                     print(f"  Warning: partitions.bin not found at {partitions_path}")
 
-            # Place firmware at 0x10000
-            firmware_data = firmware_path.read_bytes()
-            firmware_end = APP_OFFSET + len(firmware_data)
-            if firmware_end > flash_size:
-                raise ValueError(f"Firmware size ({len(firmware_data)} bytes) exceeds available space (flash_size={flash_size} - app_offset={APP_OFFSET})")
-            flash_data[APP_OFFSET:firmware_end] = firmware_data
-            if self.verbose:
-                print(f"  Application: {len(firmware_data)} bytes at 0x{APP_OFFSET:X}")
+            # Application is always required
+            if not firmware_path.exists():
+                raise ValueError(f"Firmware not found at {firmware_path}")
 
-            # Write the complete flash image
-            (temp_dir / "flash.bin").write_bytes(bytes(flash_data))
-            print(f"Created flash image: {flash_size_mb}MB ({flash_size:,} bytes)")
+            cmd.extend([hex(APP_OFFSET), str(firmware_path)])
+            files_added.append(f"application at 0x{APP_OFFSET:X}")
+            if self.verbose:
+                print(f"  Application: {firmware_path.stat().st_size} bytes at 0x{APP_OFFSET:X}")
+
+            # Run esptool.py merge_bin
+            if self.verbose:
+                print("Running esptool.py merge_bin with DIO flash mode...")
+                print(f"  Command: {' '.join(cmd)}")
+
+            result = safe_run(cmd, capture_output=True, text=True)
+            if result.returncode != 0:
+                raise RuntimeError(f"esptool.py merge_bin failed:\n{result.stderr}")
+
+            # Verify flash image was created
+            flash_bin_path = temp_dir / "flash.bin"
+            if not flash_bin_path.exists():
+                raise RuntimeError(f"esptool.py did not create flash.bin at {flash_bin_path}")
+
+            flash_size = flash_bin_path.stat().st_size
+            print(f"Created flash image with DIO mode: {flash_size_mb}MB ({flash_size:,} bytes)")
+            if self.verbose:
+                print(f"  Components: {', '.join(files_added)}")
 
             return temp_dir
 
