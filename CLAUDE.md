@@ -381,29 +381,51 @@ fbuild includes custom linting plugins to enforce architectural patterns:
 
 **Run all lints**:
 ```bash
-./lint  # Runs: ruff, black, isort, pyright, flake8, custom checks
+./lint  # Runs: ruff, black, isort, pyright, custom checks
 ```
 
 **Custom checks**:
-1. **Orchestrator Signature Validation** (`tools/validate_orchestrator_signatures.py`)
+1. **Orchestrator Signature Validation** (`scripts/check_orchestrator_signatures.py`)
    - Ensures all platform orchestrators implement `IBuildOrchestrator` interface
    - Validates internal build methods follow `PlatformBuildMethod` protocol
    - Checks for required parameters (including `jobs`)
 
-2. **Subprocess Safety Checker** (`fbuild_lint/ruff_plugins/subprocess_safety_checker.py`)
+2. **Message Serialization Checker** (`scripts/check_message_serialization.py`)
+   - Verifies all daemon messages implement `SerializableMessage` protocol
+   - Checks for proper enum handling in serialization
+
+3. **KeyboardInterrupt Checker** (`scripts/check_keyboard_interrupt.py`)
+   - Validates that try-except blocks properly handle KeyboardInterrupt
+   - Ensures bare except clauses don't accidentally catch Ctrl+C
+   - Implementation: `fbuild_lint/ruff_plugins/keyboard_interrupt_checker.py` (dev-only)
+
+4. **Sys.Path Checker** (`scripts/check_sys_path.py`)
+   - Detects improper sys.path.insert() usage outside test files
+   - Prevents fragile import hacks in production code
+   - Implementation: `fbuild_lint/ruff_plugins/sys_path_checker.py` (dev-only)
+
+5. **Subprocess Safety Checker** (`scripts/check_subprocess_safety.py`)
    - Detects direct `subprocess.run()` / `subprocess.Popen()` calls
    - Enforces use of `safe_run()` / `safe_popen()` from `subprocess_utils.py`
    - Prevents ephemeral console windows on Windows
    - Error codes: SUB001-SUB005
+   - Implementation: `fbuild_lint/ruff_plugins/subprocess_safety_checker.py` (dev-only)
    - See: `docs/subprocess_safety.md`
 
-3. **Message Protocol Validation** (planned)
-   - Verifies all daemon messages implement `SerializableMessage` protocol
-   - Checks for proper enum handling in serialization
+### Custom Linting Architecture
+
+**Implementation:**
+- Plugin implementations: `fbuild_lint/ruff_plugins/` (NOT distributed with package)
+- Standalone runners: `scripts/check_*.py` (invoke plugins via AST parsing)
+- All checks use AST analysis for zero runtime overhead
+- Plugins are excluded from distributed packages to prevent global pollution
+
+**Why Standalone Scripts?**
+Previously, plugins were registered via flake8 entry points, which caused them to activate globally for all Python projects when fbuild was installed. Now, plugins are only invoked explicitly via standalone scripts during fbuild development, ensuring they don't affect other projects.
 
 **Run signature validation**:
 ```bash
-python tools/validate_orchestrator_signatures.py
+python scripts/check_orchestrator_signatures.py
 ```
 
 **Expected output**:

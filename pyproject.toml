@@ -36,8 +36,9 @@ test = [
 ]
 
 [tool.setuptools.packages.find]
-where = ["src", "."]
-include = ["fbuild*", "fbuild_lint*"]
+where = ["src"]
+include = ["fbuild*"]
+exclude = ["fbuild_lint*"]
 
 [tool.setuptools.package-data]
 fbuild = ["py.typed"]
@@ -124,9 +125,3 @@ markers = [
 # By default, skip integration and concurrent_safety tests
 addopts = "-m 'not integration and not concurrent_safety'"
 testpaths = ["tests"]
-[project.entry-points."flake8.extension"]
-KBI = "fbuild_lint.ruff_plugins.keyboard_interrupt_checker:KeyboardInterruptChecker"
-OSC = "fbuild_lint.ruff_plugins.orchestrator_signature_checker:OrchestratorSignatureChecker"
-MSC = "fbuild_lint.ruff_plugins.message_serialization_checker:MessageSerializationChecker"
-SPI = "fbuild_lint.ruff_plugins.sys_path_checker:SysPathChecker"
-SUB = "fbuild_lint.ruff_plugins.subprocess_safety_checker:SubprocessSafetyChecker"

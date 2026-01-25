@@ -27,6 +27,7 @@ Example:
     >>> lines = manager.read_buffer("COM3", "client_1")
 """
 
+import _thread
 import logging
 import threading
 import time
@@ -663,8 +664,10 @@ class SharedSerialManager:
                         logging.error(f"Error reading from {port}: {e}")
                         # Brief sleep before retry
                         time.sleep(0.1)
-        except KeyboardInterrupt:  # noqa: KBI002
+        except KeyboardInterrupt:
             logging.debug(f"Serial reader thread for {port} interrupted")
+            _thread.interrupt_main()
+            raise
         except Exception as e:
             logging.error(f"Fatal error in reader thread for {port}: {e}")
         finally:

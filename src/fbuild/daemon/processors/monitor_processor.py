@@ -11,6 +11,7 @@ Enhanced in Iteration 2 with:
 - ConfigurationLockManager for centralized locking
 """
 
+import _thread
 import logging
 import sys
 import uuid
@@ -224,9 +225,10 @@ class MonitorRequestProcessor(RequestProcessor):
                     # Brief sleep to avoid busy-waiting
                     time.sleep(0.1)
 
-        except KeyboardInterrupt:  # noqa: KBI002
+        except KeyboardInterrupt:
             logging.info("Monitor interrupted by user")
-            return True
+            _thread.interrupt_main()
+            raise
 
     def _monitor_direct(self, request: "MonitorRequest", port: str | None, context: "DaemonContext") -> bool:
         """Monitor using direct serial access (exclusive).
