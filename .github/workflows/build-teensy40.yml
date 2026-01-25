@@ -1,0 +1,31 @@
+name: Build Teensy 4.0
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install fbuild
+        run: pip install -e .
+
+      - name: Build Teensy 4.0
+        run: fbuild build tests/teensy40 -e teensy40
+
+      - name: Verify firmware output
+        run: |
+          test -f tests/teensy40/.fbuild/build/teensy40/firmware.hex
+          echo "Build successful - firmware.hex generated"
