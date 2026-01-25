@@ -370,7 +370,6 @@ class BinaryGenerator:
 
         # Get partition table name from env_config (board_build.partitions)
         # Default to default.csv if not specified
-        raise BinaryGeneratorError("INTENTIONAL ERROR TO TEST IF THIS CODE IS REACHED")
         partition_table = self.env_config.get("board_build.partitions", "default.csv")
 
         # If partition_table doesn't have .csv extension, add it
@@ -437,6 +436,137 @@ class BinaryGenerator:
             raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise BinaryGeneratorError(f"Failed to generate partition table: {e}") from e
+
+    def generate_merged_bin(self, output_bin: Optional[Path] = None) -> Path:
+        """Generate merged.bin combining bootloader, partition table, and firmware.
+
+        This creates a single binary file that can be flashed to address 0x0 and contains
+        all components at their correct offsets. Useful for QEMU and factory programming.
+
+        Args:
+            output_bin: Optional path for output merged.bin
+
+        Returns:
+            Path to generated merged.bin
+
+        Raises:
+            BinaryGeneratorError: If generation fails
+        """
+        if not self.mcu.startswith("esp32"):
+            raise BinaryGeneratorError(
+                f"Merged bin generation only supported for ESP32 platforms, not {self.mcu}"
+            )
+
+        # Generate output path if not provided
+        if output_bin is None:
+            output_bin = self.build_dir / "merged.bin"
+
+        # Generate all required components first
+        firmware_bin = self.build_dir / "firmware.bin"
+        bootloader_bin = self.build_dir / "bootloader.bin"
+        partitions_bin = self.build_dir / "partitions.bin"
+
+        # Ensure all components exist
+        if not firmware_bin.exists():
+            raise BinaryGeneratorError(f"firmware.bin not found: {firmware_bin}")
+        if not bootloader_bin.exists():
+            raise BinaryGeneratorError(f"bootloader.bin not found: {bootloader_bin}")
+        if not partitions_bin.exists():
+            raise BinaryGeneratorError(f"partitions.bin not found: {partitions_bin}")
+
+        # Get flash offsets for each component based on MCU type
+        offsets = self._get_flash_offsets()
+
+        # Use esptool.py merge_bin to create merged binary
+        flash_size = self.board_config.get("build", {}).get("flash_size", "4MB")
+
+        cmd = [
+            sys.executable,
+            "-m",
+            "esptool",
+            "--chip",
+            self.mcu,
+            "merge_bin",
+            "--flash-mode",
+            self.board_config.get("build", {}).get("flash_mode", "dio"),
+            "--flash-freq",
+            self._normalize_flash_freq(self.board_config.get("build", {}).get("f_flash", "80m")),
+            "--flash-size",
+            flash_size,
+            "-o",
+            str(output_bin),
+            str(offsets["bootloader"]),
+            str(bootloader_bin),
+            str(offsets["partitions"]),
+            str(partitions_bin),
+            str(offsets["firmware"]),
+            str(firmware_bin)
+        ]
+
+        if self.show_progress:
+            print("Generating merged.bin...")
+
+        try:
+            result = safe_run(
+                cmd,
+                capture_output=True,
+                text=False,
+                timeout=60
+            )
+
+            if result.returncode != 0:
+                error_msg = "Merged bin generation failed\n"
+                stderr = result.stderr.decode('utf-8', errors='replace') if result.stderr else ""
+                stdout = result.stdout.decode('utf-8', errors='replace') if result.stdout else ""
+                error_msg += f"stderr: {stderr}\n"
+                error_msg += f"stdout: {stdout}"
+                raise BinaryGeneratorError(error_msg)
+
+            if not output_bin.exists():
+                raise BinaryGeneratorError(f"merged.bin was not created: {output_bin}")
+
+            if self.show_progress:
+                size = output_bin.stat().st_size
+                print(f"✓ Created merged.bin: {size:,} bytes ({size / 1024:.2f} KB)")
+                print("  Flash offsets:")
+                print(f"    Bootloader:    {offsets['bootloader']}")
+                print(f"    Partitions:    {offsets['partitions']}")
+                print(f"    Firmware:      {offsets['firmware']}")
+
+            return output_bin
+
+        except subprocess.TimeoutExpired as e:
+            raise BinaryGeneratorError("Merged bin generation timeout") from e
+        except KeyboardInterrupt as ke:
+            from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
+        except Exception as e:
+            raise BinaryGeneratorError(f"Failed to generate merged bin: {e}") from e
+
+    def _get_flash_offsets(self) -> Dict[str, str]:
+        """Get flash offsets for bootloader, partition table, and firmware based on MCU.
+
+        Returns:
+            Dictionary with 'bootloader', 'partitions', and 'firmware' offset strings
+        """
+        # Default offsets for most ESP32 variants
+        offsets = {
+            "bootloader": "0x0",
+            "partitions": "0x8000",
+            "firmware": "0x10000"
+        }
+
+        # ESP32-C3 and ESP32-C2 use different bootloader offset
+        if self.mcu in ["esp32c3", "esp32c2"]:
+            offsets["bootloader"] = "0x0"
+
+        # ESP32-S2 uses standard offsets
+        # ESP32-S3 uses standard offsets
+        # ESP32-C6 uses standard offsets
+        # ESP32-H2 uses standard offsets
+
+        return offsets
 
     @staticmethod
     def _normalize_flash_freq(flash_freq: Any) -> str:

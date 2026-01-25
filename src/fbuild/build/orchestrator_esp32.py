@@ -43,6 +43,7 @@ class BuildResultESP32:
     firmware_elf: Optional[Path]
     bootloader_bin: Optional[Path]
     partitions_bin: Optional[Path]
+    merged_bin: Optional[Path]
     size_info: Optional[SizeInfo]
     build_time: float
     message: str
@@ -401,6 +402,18 @@ class OrchestratorESP32(IBuildOrchestrator):
                     linker, mcu, verbose
                 )
 
+                # Generate merged bin if all components are available
+                merged_bin = None
+                if bootloader_bin and partitions_bin and firmware_bin:
+                    try:
+                        merged_bin = linker.generate_merged_bin()
+                    except KeyboardInterrupt as ke:
+                        from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+                        handle_keyboard_interrupt_properly(ke)
+                        raise  # Never reached, but satisfies type checker
+                    except Exception as e:
+                        log_warning(f"Could not generate merged bin: {e}")
+
                 # Get size information from ELF file
                 size_info = linker.get_size_info(firmware_elf)
 
@@ -409,7 +422,7 @@ class OrchestratorESP32(IBuildOrchestrator):
                 if verbose:
                     self._print_success(
                         build_time, firmware_elf, firmware_bin,
-                        bootloader_bin, partitions_bin, size_info
+                        bootloader_bin, partitions_bin, merged_bin, size_info
                     )
 
                 # Save build state for future cache validation
@@ -462,6 +475,7 @@ class OrchestratorESP32(IBuildOrchestrator):
                     firmware_elf=firmware_elf,
                     bootloader_bin=bootloader_bin,
                     partitions_bin=partitions_bin,
+                    merged_bin=merged_bin,
                     size_info=size_info,
                     build_time=build_time,
                     message="Build successful (native ESP32 build)"
@@ -481,6 +495,7 @@ class OrchestratorESP32(IBuildOrchestrator):
                 firmware_elf=None,
                 bootloader_bin=None,
                 partitions_bin=None,
+                merged_bin=None,
                 size_info=None,
                 build_time=build_time,
                 message=f"ESP32 native build failed: {e}\n\n{error_trace}"
@@ -811,6 +826,7 @@ __attribute__((weak)) bool btInUse(void) {
         firmware_bin: Path,
         bootloader_bin: Optional[Path],
         partitions_bin: Optional[Path],
+        merged_bin: Optional[Path],
         size_info: Optional[SizeInfo] = None
     ) -> None:
         """
@@ -822,6 +838,7 @@ __attribute__((weak)) bool btInUse(void) {
             firmware_bin: Path to firmware binary
             bootloader_bin: Optional path to bootloader
             partitions_bin: Optional path to partition table
+            merged_bin: Optional path to merged binary
             size_info: Optional size information to display
         """
         # Build success message
@@ -833,6 +850,8 @@ __attribute__((weak)) bool btInUse(void) {
             message_lines.append(f"Bootloader: {bootloader_bin}")
         if partitions_bin:
             message_lines.append(f"Partitions: {partitions_bin}")
+        if merged_bin:
+            message_lines.append(f"Merged BIN: {merged_bin}")
 
         BannerFormatter.print_banner("\n".join(message_lines), width=60, center=False)
 
@@ -860,6 +879,7 @@ __attribute__((weak)) bool btInUse(void) {
             firmware_elf=None,
             bootloader_bin=None,
             partitions_bin=None,
+            merged_bin=None,
             size_info=None,
             build_time=time.time() - start_time,
             message=message

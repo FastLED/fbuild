@@ -144,3 +144,4 @@ activate
 **/.DS_Store
 uv.lock
 .loop
+**/.pio

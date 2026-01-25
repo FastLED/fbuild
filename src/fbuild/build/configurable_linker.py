@@ -692,6 +692,27 @@ class ConfigurableLinker(ILinker):
         except Exception as e:
             raise ConfigurableLinkerError(f"Partition table generation failed: {e}")
 
+    def generate_merged_bin(self, output_bin: Optional[Path] = None) -> Path:
+        """Generate merged.bin combining bootloader, partition table, and firmware.
+
+        Args:
+            output_bin: Optional path for output merged.bin
+
+        Returns:
+            Path to generated merged.bin
+
+        Raises:
+            ConfigurableLinkerError: If generation fails
+        """
+        try:
+            return self.binary_generator.generate_merged_bin(output_bin)
+        except KeyboardInterrupt as ke:
+            from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
+        except Exception as e:
+            raise ConfigurableLinkerError(f"Merged bin generation failed: {e}")
+
     def get_linker_info(self) -> Dict[str, Any]:
         """Get information about the linker configuration.
 

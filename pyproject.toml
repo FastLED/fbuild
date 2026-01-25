@@ -19,7 +19,7 @@ dependencies = [
     "fasteners>=0.18",
 ]
 # Version is centralized in src/fbuild/__init__.py - keep in sync
-version = "1.3.12"
+version = "1.3.13"
 
 [project.optional-dependencies]
 dev = [
