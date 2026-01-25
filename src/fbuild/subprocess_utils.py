@@ -24,8 +24,13 @@ def get_subprocess_creation_flags() -> int:
 def safe_run(cmd: list[str], **kwargs: Any) -> subprocess.CompletedProcess:
     """Execute subprocess.run with platform-specific flags.
 
-    Automatically applies CREATE_NO_WINDOW on Windows to prevent
-    ephemeral console window flashing during compilation operations.
+    Automatically applies:
+    - CREATE_NO_WINDOW on Windows (prevents console window)
+    - stdin=DEVNULL (prevents console input handle inheritance)
+
+    The stdin redirect prevents keyboard input issues on Windows where
+    child processes can steal keystrokes from the parent terminal by
+    inheriting the console input buffer handle.
 
     Args:
         cmd: Command and arguments (same as subprocess.run)
@@ -35,8 +40,10 @@ def safe_run(cmd: list[str], **kwargs: Any) -> subprocess.CompletedProcess:
         CompletedProcess result from subprocess.run
 
     Note:
-        If 'creationflags' is explicitly provided in kwargs,
-        it will be OR'd with platform defaults to preserve custom flags.
+        - If 'creationflags' is explicitly provided in kwargs,
+          it will be OR'd with platform defaults to preserve custom flags.
+        - If 'stdin' is explicitly provided in kwargs, it will be used as-is.
+          Otherwise, stdin is automatically redirected to subprocess.DEVNULL.
     """
     default_flags = get_subprocess_creation_flags()
 
@@ -44,6 +51,11 @@ def safe_run(cmd: list[str], **kwargs: Any) -> subprocess.CompletedProcess:
         kwargs["creationflags"] = kwargs["creationflags"] | default_flags
     elif default_flags:
         kwargs["creationflags"] = default_flags
+
+    # Auto-redirect stdin to prevent console input handle inheritance
+    # This prevents child processes from stealing keystrokes on Windows
+    if "stdin" not in kwargs:
+        kwargs["stdin"] = subprocess.DEVNULL
 
     return subprocess.run(cmd, **kwargs)
 
@@ -54,6 +66,10 @@ def safe_popen(cmd: list[str], **kwargs: Any) -> subprocess.Popen:
     Similar to safe_run() but for Popen cases where you need
     the process handle for long-running operations.
 
+    Automatically applies:
+    - CREATE_NO_WINDOW on Windows (prevents console window)
+    - stdin=DEVNULL (prevents console input handle inheritance)
+
     Args:
         cmd: Command and arguments (same as subprocess.Popen)
         **kwargs: Additional arguments passed to subprocess.Popen
@@ -62,8 +78,10 @@ def safe_popen(cmd: list[str], **kwargs: Any) -> subprocess.Popen:
         Popen process handle
 
     Note:
-        If 'creationflags' is explicitly provided in kwargs,
-        it will be OR'd with platform defaults to preserve custom flags.
+        - If 'creationflags' is explicitly provided in kwargs,
+          it will be OR'd with platform defaults to preserve custom flags.
+        - If 'stdin' is explicitly provided in kwargs, it will be used as-is.
+          Otherwise, stdin is automatically redirected to subprocess.DEVNULL.
     """
     default_flags = get_subprocess_creation_flags()
 
@@ -71,5 +89,10 @@ def safe_popen(cmd: list[str], **kwargs: Any) -> subprocess.Popen:
         kwargs["creationflags"] = kwargs["creationflags"] | default_flags
     elif default_flags:
         kwargs["creationflags"] = default_flags
+
+    # Auto-redirect stdin to prevent console input handle inheritance
+    # This prevents child processes from stealing keystrokes on Windows
+    if "stdin" not in kwargs:
+        kwargs["stdin"] = subprocess.DEVNULL
 
     return subprocess.Popen(cmd, **kwargs)

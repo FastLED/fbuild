@@ -6,7 +6,11 @@ The fbuild codebase uses safe subprocess wrappers to prevent ephemeral shell win
 
 ## The Problem
 
-On Windows, direct subprocess calls without proper creation flags cause console windows to briefly appear and disappear during operations like compilation, linking, and deployment. This creates a poor user experience.
+On Windows, direct subprocess calls can cause two distinct issues:
+
+1. **Console window flashing**: Without proper creation flags, console windows briefly appear and disappear during operations like compilation, linking, and deployment.
+
+2. **Missing keystrokes**: Without stdin redirection, child processes inherit the parent's console input handle, allowing them to steal keystrokes from the terminal. This causes keyboard input to be lost or delayed in the parent terminal.
 
 ## The Solution
 
@@ -28,7 +32,10 @@ proc = safe_popen(cmd, ...)
 
 ### How It Works
 
-The wrappers automatically add `subprocess.CREATE_NO_WINDOW` flag on Windows:
+The wrappers automatically apply two protections:
+
+1. **CREATE_NO_WINDOW flag** on Windows (prevents console window flashing)
+2. **stdin=DEVNULL redirect** (prevents console input handle inheritance)
 
 ```python
 def safe_run(cmd: list[str], **kwargs: Any) -> subprocess.CompletedProcess:
@@ -40,15 +47,20 @@ def safe_run(cmd: list[str], **kwargs: Any) -> subprocess.CompletedProcess:
     elif default_flags:
         kwargs["creationflags"] = default_flags
 
+    # Auto-redirect stdin to prevent console input handle inheritance
+    if "stdin" not in kwargs:
+        kwargs["stdin"] = subprocess.DEVNULL
+
     return subprocess.run(cmd, **kwargs)
 ```
 
 ### Benefits
 
-1. **No Console Flashing**: Windows users don't see ephemeral console windows
-2. **Cross-Platform**: No-op on Linux/macOS (returns 0 for creation flags)
-3. **Composable**: Preserves custom creation flags via bitwise OR
-4. **Drop-in Replacement**: Same signature as subprocess.run/Popen
+1. **No Console Flashing**: Windows users don't see ephemeral console windows (CREATE_NO_WINDOW)
+2. **No Keystroke Loss**: Child processes don't steal keyboard input from the terminal (stdin redirect)
+3. **Cross-Platform**: Works on Linux/macOS without special flags
+4. **Composable**: Preserves custom creation flags and stdin settings via parameter detection
+5. **Drop-in Replacement**: Same signature as subprocess.run/Popen
 
 ## Enforcement: Flake8 Plugin
 
@@ -63,6 +75,7 @@ A custom flake8 plugin (`SUB`) detects unsafe subprocess calls:
 - `SUB003`: Direct `subprocess.call()` - use `safe_run()`
 - `SUB004`: Direct `subprocess.check_call()` - use `safe_run()`
 - `SUB005`: Direct `subprocess.check_output()` - use `safe_run()`
+- `SUB006`: Missing stdin redirect in `safe_run()`/`safe_popen()` (DISABLED - auto-redirect is now default)
 
 ### Usage
 
@@ -181,7 +194,31 @@ Unit tests in `tests/unit/test_subprocess_utils.py` verify:
 - Windows gets `CREATE_NO_WINDOW` flag
 - Other platforms get no flags
 - Custom creation flags are preserved via bitwise OR
+- stdin is auto-redirected to DEVNULL when not specified
+- Explicit stdin arguments are preserved
 - All subprocess methods are properly wrapped
+
+## stdin Auto-Redirect Behavior
+
+The wrappers automatically redirect stdin to `subprocess.DEVNULL` unless you explicitly specify stdin:
+
+```python
+# stdin auto-redirected to DEVNULL (safe - prevents keystroke loss)
+result = safe_run(["gcc", "-c", "main.c"], capture_output=True)
+
+# Explicit stdin=None (inherits from parent - use with caution)
+result = safe_run(["gcc", "-c", "main.c"], stdin=None)
+
+# Explicit stdin=PIPE (for interactive processes)
+proc = safe_popen(["python", "-i"], stdin=subprocess.PIPE)
+```
+
+**When to override stdin:**
+- Interactive processes that need user input (e.g., REPLs, debuggers)
+- Processes that read from stdin (e.g., `cat`, filters)
+- Testing scenarios where stdin inheritance is needed
+
+**Default behavior is safe:** Most build/deploy processes don't need stdin, so auto-redirect prevents issues.
 
 ## References
 

@@ -441,7 +441,7 @@ See `docs/parameter_flow.md` for detailed examples and step-by-step instructions
 
 ## Subprocess Safety
 
-**ALWAYS use safe subprocess wrappers** to prevent console window flashing on Windows:
+**ALWAYS use safe subprocess wrappers** to prevent console issues on Windows:
 
 ```python
 # ❌ UNSAFE - Direct subprocess calls
@@ -455,6 +455,16 @@ result = safe_run(cmd, ...)
 proc = safe_popen(cmd, ...)
 ```
 
+**What the wrappers do:**
+1. **Prevent console window flashing**: Applies `CREATE_NO_WINDOW` flag on Windows
+2. **Prevent keystroke loss**: Auto-redirects stdin to `subprocess.DEVNULL` to prevent child processes from stealing keyboard input
+
+**stdin Auto-Redirect:**
+- By default, stdin is redirected to `subprocess.DEVNULL`
+- Prevents child processes from inheriting the parent's console input handle
+- Fixes issues where background processes steal keystrokes from the terminal
+- Can be overridden with explicit `stdin=` parameter if needed (e.g., for interactive processes)
+
 **Enforcement**: The `SUB` flake8 plugin (run via `./lint`) detects unsafe subprocess calls.
 
-**Details**: See `docs/subprocess_safety.md` for complete documentation.
+**Details**: See `docs/subprocess_safety.md` for complete documentation and `INVESTIGATION.md` for the technical analysis of the keystroke loss issue.

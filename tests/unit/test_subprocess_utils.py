@@ -90,3 +90,86 @@ def test_safe_popen_merges_custom_creationflags(mock_popen):
         call_kwargs = mock_popen.call_args[1]
         expected = custom_flag | subprocess.CREATE_NO_WINDOW
         assert call_kwargs["creationflags"] == expected
+
+
+@patch("subprocess.run")
+def test_safe_run_auto_redirects_stdin(mock_run):
+    """Test that safe_run auto-redirects stdin when not specified."""
+    safe_run(["echo", "test"], capture_output=True)
+
+    mock_run.assert_called_once()
+    call_kwargs = mock_run.call_args[1]
+    assert "stdin" in call_kwargs
+    assert call_kwargs["stdin"] == subprocess.DEVNULL
+
+
+@patch("subprocess.run")
+def test_safe_run_preserves_explicit_stdin_none(mock_run):
+    """Test that explicit stdin=None is preserved."""
+    safe_run(["echo", "test"], stdin=None)
+
+    mock_run.assert_called_once()
+    call_kwargs = mock_run.call_args[1]
+    assert "stdin" in call_kwargs
+    assert call_kwargs["stdin"] is None
+
+
+@patch("subprocess.run")
+def test_safe_run_preserves_explicit_stdin_pipe(mock_run):
+    """Test that explicit stdin=PIPE is preserved."""
+    safe_run(["cat"], stdin=subprocess.PIPE)
+
+    mock_run.assert_called_once()
+    call_kwargs = mock_run.call_args[1]
+    assert "stdin" in call_kwargs
+    assert call_kwargs["stdin"] == subprocess.PIPE
+
+
+@patch("subprocess.Popen")
+def test_safe_popen_auto_redirects_stdin(mock_popen):
+    """Test that safe_popen auto-redirects stdin when not specified."""
+    safe_popen(["echo", "test"])
+
+    mock_popen.assert_called_once()
+    call_kwargs = mock_popen.call_args[1]
+    assert "stdin" in call_kwargs
+    assert call_kwargs["stdin"] == subprocess.DEVNULL
+
+
+@patch("subprocess.Popen")
+def test_safe_popen_preserves_explicit_stdin(mock_popen):
+    """Test that explicit stdin is preserved in safe_popen."""
+    safe_popen(["python", "-i"], stdin=subprocess.PIPE)
+
+    mock_popen.assert_called_once()
+    call_kwargs = mock_popen.call_args[1]
+    assert "stdin" in call_kwargs
+    assert call_kwargs["stdin"] == subprocess.PIPE
+
+
+@patch("subprocess.run")
+def test_safe_run_combines_flags_and_stdin_on_windows(mock_run):
+    """Test that both creationflags and stdin are applied together on Windows."""
+    with patch("sys.platform", "win32"):
+        safe_run(["echo", "test"], capture_output=True)
+
+        mock_run.assert_called_once()
+        call_kwargs = mock_run.call_args[1]
+        assert "creationflags" in call_kwargs
+        assert call_kwargs["creationflags"] == subprocess.CREATE_NO_WINDOW
+        assert "stdin" in call_kwargs
+        assert call_kwargs["stdin"] == subprocess.DEVNULL
+
+
+@patch("subprocess.run")
+def test_safe_run_stdin_redirect_on_linux(mock_run):
+    """Test that stdin is redirected even on Linux (cross-platform consistency)."""
+    with patch("sys.platform", "linux"):
+        safe_run(["echo", "test"], capture_output=True)
+
+        mock_run.assert_called_once()
+        call_kwargs = mock_run.call_args[1]
+        assert "stdin" in call_kwargs
+        assert call_kwargs["stdin"] == subprocess.DEVNULL
+        # Linux should not have creationflags
+        assert "creationflags" not in call_kwargs

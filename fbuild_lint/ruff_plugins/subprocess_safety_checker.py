@@ -32,6 +32,7 @@ class SubprocessSafetyChecker:
         "SUB003": "SUB003 Direct subprocess.call() call - use safe_run() from fbuild.subprocess_utils",
         "SUB004": "SUB004 Direct subprocess.check_call() call - use safe_run() from fbuild.subprocess_utils",
         "SUB005": "SUB005 Direct subprocess.check_output() call - use safe_run() from fbuild.subprocess_utils",
+        "SUB006": "SUB006 safe_run/safe_popen call missing stdin redirect - add stdin=subprocess.DEVNULL to prevent console input handle inheritance",
     }
 
     # Unsafe subprocess methods mapped to error codes
@@ -84,6 +85,21 @@ class SubprocessCallVisitor(ast.NodeVisitor):
         """Initialize the visitor."""
         self.errors: list[Tuple[int, int, str]] = []
 
+    def _has_stdin_argument(self, node: ast.Call) -> bool:
+        """Check if a function call has a 'stdin' keyword argument.
+
+        Args:
+            node: The Call node to check
+
+        Returns:
+            True if stdin is specified, False otherwise
+        """
+        # Check keyword arguments
+        for keyword in node.keywords:
+            if keyword.arg == "stdin":
+                return True
+        return False
+
     def visit_Call(self, node: ast.Call) -> None:
         """Visit a Call node and check for subprocess usage.
 
@@ -100,6 +116,18 @@ class SubprocessCallVisitor(ast.NodeVisitor):
                         error_code = SubprocessSafetyChecker.UNSAFE_METHODS[method_name]
                         message = SubprocessSafetyChecker.ERRORS[error_code]
                         self.errors.append((node.lineno, node.col_offset, message))
+
+        # Check for safe_run() and safe_popen() calls WITHOUT stdin redirect
+        # NOTE: This check is DISABLED by default because subprocess_utils.py now
+        # auto-redirects stdin. Enable this check if you want to enforce explicit
+        # stdin redirects in all code for documentation purposes.
+        """
+        if isinstance(node.func, ast.Name):
+            if node.func.id in ("safe_run", "safe_popen"):
+                if not self._has_stdin_argument(node):
+                    message = SubprocessSafetyChecker.ERRORS["SUB006"]
+                    self.errors.append((node.lineno, node.col_offset, message))
+        """
 
         # Continue visiting child nodes
         self.generic_visit(node)
