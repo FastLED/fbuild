@@ -49,6 +49,12 @@ DEPLOY_REQUEST_FILE = DAEMON_DIR / "deploy_request.json"
 MONITOR_REQUEST_FILE = DAEMON_DIR / "monitor_request.json"
 INSTALL_DEPS_REQUEST_FILE = DAEMON_DIR / "install_deps_request.json"
 
+# Serial Monitor API request files (used by fbuild.api.SerialMonitor)
+SERIAL_MONITOR_ATTACH_REQUEST_FILE = DAEMON_DIR / "serial_monitor_attach_request.json"
+SERIAL_MONITOR_DETACH_REQUEST_FILE = DAEMON_DIR / "serial_monitor_detach_request.json"
+SERIAL_MONITOR_POLL_REQUEST_FILE = DAEMON_DIR / "serial_monitor_poll_request.json"
+SERIAL_MONITOR_RESPONSE_FILE = DAEMON_DIR / "serial_monitor_response.json"
+
 
 def is_daemon_running() -> bool:
     """Check if daemon is running, clean up stale PID files.

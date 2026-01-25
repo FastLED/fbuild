@@ -47,12 +47,17 @@ from fbuild.daemon.messages import (
     DeployRequest,
     InstallDependenciesRequest,
     MonitorRequest,
+    SerialMonitorAttachRequest,
+    SerialMonitorDetachRequest,
+    SerialMonitorPollRequest,
+    SerialWriteRequest,
 )
 from fbuild.daemon.process_tracker import ProcessTracker
 from fbuild.daemon.processors.build_processor import BuildRequestProcessor
 from fbuild.daemon.processors.deploy_processor import DeployRequestProcessor
 from fbuild.daemon.processors.install_deps_processor import InstallDependenciesProcessor
 from fbuild.daemon.processors.monitor_processor import MonitorRequestProcessor
+from fbuild.daemon.processors.serial_monitor_processor import SerialMonitorAPIProcessor
 
 from ..subprocess_utils import safe_popen
 
@@ -94,6 +99,14 @@ DEVICE_RELEASE_REQUEST_FILE = DAEMON_DIR / "device_release_request.json"
 DEVICE_RELEASE_RESPONSE_FILE = DAEMON_DIR / "device_release_response.json"
 DEVICE_PREEMPT_REQUEST_FILE = DAEMON_DIR / "device_preempt_request.json"
 DEVICE_PREEMPT_RESPONSE_FILE = DAEMON_DIR / "device_preempt_response.json"
+
+# Serial Monitor API request/response files (used by fbuild.api.SerialMonitor)
+SERIAL_MONITOR_ATTACH_REQUEST_FILE = DAEMON_DIR / "serial_monitor_attach_request.json"
+SERIAL_MONITOR_DETACH_REQUEST_FILE = DAEMON_DIR / "serial_monitor_detach_request.json"
+SERIAL_MONITOR_POLL_REQUEST_FILE = DAEMON_DIR / "serial_monitor_poll_request.json"
+SERIAL_MONITOR_RESPONSE_FILE = DAEMON_DIR / "serial_monitor_response.json"
+SERIAL_WRITE_REQUEST_FILE = DAEMON_DIR / "serial_write_request.json"
+SERIAL_WRITE_RESPONSE_FILE = DAEMON_DIR / "serial_write_response.json"
 
 # Connection management file patterns
 CONNECTION_FILES_PATTERN = "connect_*.json"
@@ -575,6 +588,103 @@ def process_operation_request(config: RequestConfig, context: DaemonContext) -> 
     return True
 
 
+# Serial Monitor API request handlers
+# Global processor instance (reused across requests)
+_serial_monitor_processor = SerialMonitorAPIProcessor()
+
+
+def handle_serial_monitor_attach_request(request_data: dict[str, Any], context: DaemonContext) -> dict[str, Any]:
+    """Handle Serial Monitor API attach request.
+
+    Args:
+        request_data: Raw request dictionary
+        context: Daemon context
+
+    Returns:
+        Response dictionary
+    """
+    try:
+        request = SerialMonitorAttachRequest.from_dict(request_data)
+        response = _serial_monitor_processor.handle_attach(request, context)
+        return response.to_dict()
+    except KeyboardInterrupt:
+        raise
+    except Exception as e:
+        logging.error(f"Error handling serial monitor attach: {e}", exc_info=True)
+        from fbuild.daemon.messages import SerialMonitorResponse
+
+        return SerialMonitorResponse(success=False, message=f"Error: {e}").to_dict()
+
+
+def handle_serial_monitor_detach_request(request_data: dict[str, Any], context: DaemonContext) -> dict[str, Any]:
+    """Handle Serial Monitor API detach request.
+
+    Args:
+        request_data: Raw request dictionary
+        context: Daemon context
+
+    Returns:
+        Response dictionary
+    """
+    try:
+        request = SerialMonitorDetachRequest.from_dict(request_data)
+        response = _serial_monitor_processor.handle_detach(request, context)
+        return response.to_dict()
+    except KeyboardInterrupt:
+        raise
+    except Exception as e:
+        logging.error(f"Error handling serial monitor detach: {e}", exc_info=True)
+        from fbuild.daemon.messages import SerialMonitorResponse
+
+        return SerialMonitorResponse(success=False, message=f"Error: {e}").to_dict()
+
+
+def handle_serial_monitor_poll_request(request_data: dict[str, Any], context: DaemonContext) -> dict[str, Any]:
+    """Handle Serial Monitor API poll request.
+
+    Args:
+        request_data: Raw request dictionary
+        context: Daemon context
+
+    Returns:
+        Response dictionary
+    """
+    try:
+        request = SerialMonitorPollRequest.from_dict(request_data)
+        response = _serial_monitor_processor.handle_poll(request, context)
+        return response.to_dict()
+    except KeyboardInterrupt:
+        raise
+    except Exception as e:
+        logging.debug(f"Error handling serial monitor poll: {e}")  # Debug level to avoid spam
+        from fbuild.daemon.messages import SerialMonitorResponse
+
+        return SerialMonitorResponse(success=False, message=f"Error: {e}").to_dict()
+
+
+def handle_serial_write_request(request_data: dict[str, Any], context: DaemonContext) -> dict[str, Any]:
+    """Handle Serial Write request (used by both CLI and API).
+
+    Args:
+        request_data: Raw request dictionary
+        context: Daemon context
+
+    Returns:
+        Response dictionary
+    """
+    try:
+        request = SerialWriteRequest.from_dict(request_data)
+        response = _serial_monitor_processor.handle_write(request, context)
+        return response.to_dict()
+    except KeyboardInterrupt:
+        raise
+    except Exception as e:
+        logging.error(f"Error handling serial write: {e}", exc_info=True)
+        from fbuild.daemon.messages import SerialMonitorResponse
+
+        return SerialMonitorResponse(success=False, message=f"Error: {e}").to_dict()
+
+
 def process_connection_files(registry: ConnectionRegistry, daemon_dir: Path) -> None:
     """Process connection/heartbeat/disconnect files from clients."""
     # Process connect files
@@ -711,6 +821,11 @@ def run_daemon_loop() -> None:
         DeviceRequestConfig(DEVICE_LEASE_REQUEST_FILE, DEVICE_LEASE_RESPONSE_FILE, handle_device_lease_request),
         DeviceRequestConfig(DEVICE_RELEASE_REQUEST_FILE, DEVICE_RELEASE_RESPONSE_FILE, handle_device_release_request),
         DeviceRequestConfig(DEVICE_PREEMPT_REQUEST_FILE, DEVICE_PREEMPT_RESPONSE_FILE, handle_device_preempt_request),
+        # Serial Monitor API request handlers
+        DeviceRequestConfig(SERIAL_MONITOR_ATTACH_REQUEST_FILE, SERIAL_MONITOR_RESPONSE_FILE, handle_serial_monitor_attach_request),
+        DeviceRequestConfig(SERIAL_MONITOR_DETACH_REQUEST_FILE, SERIAL_MONITOR_RESPONSE_FILE, handle_serial_monitor_detach_request),
+        DeviceRequestConfig(SERIAL_MONITOR_POLL_REQUEST_FILE, SERIAL_MONITOR_RESPONSE_FILE, handle_serial_monitor_poll_request),
+        DeviceRequestConfig(SERIAL_WRITE_REQUEST_FILE, SERIAL_WRITE_RESPONSE_FILE, handle_serial_write_request),
     ]
 
     logging.info(f"Daemon started with PID {daemon_pid}")

@@ -13,6 +13,7 @@ Enhanced in Iteration 2 with:
 
 import logging
 import sys
+import time
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -124,6 +125,10 @@ class DeployRequestProcessor(RequestProcessor):
         # Clear any previous error message
         self._last_error_message = None
 
+        # Notify API monitors of impending preemption (if port is known)
+        if request.port:
+            self._notify_api_monitors_preemption(request.port, context)
+
         # Phase 0: Check if we can skip deployment using firmware ledger
         # Only check ledger if skip_build is not explicitly set (normal deploy flow)
         skip_deploy = False
@@ -171,6 +176,10 @@ class DeployRequestProcessor(RequestProcessor):
 
         # Phase 2.5: Record deployment in firmware ledger
         self._record_deployment(request, used_port, source_hash, build_flags_hash, context)
+
+        # Phase 2.6: Clear preemption notification (deploy complete)
+        if used_port:
+            self._clear_api_monitor_preemption(used_port, context)
 
         # Phase 3: Optional monitoring or release port state
         if request.monitor_after and used_port:
@@ -730,3 +739,62 @@ class DeployRequestProcessor(RequestProcessor):
 
         if reloaded_count > 0:
             logging.info(f"Loaded/reloaded {reloaded_count} build modules")
+
+    def _notify_api_monitors_preemption(self, port: str, context: "DaemonContext") -> None:
+        """Notify API monitors that deploy is about to preempt them.
+
+        Writes a preemption notification file that SerialMonitor clients can
+        detect. Clients with auto_reconnect=True will pause and wait for deploy
+        to complete.
+
+        Args:
+            port: Port that will be preempted
+            context: Daemon context
+        """
+        try:
+            import json
+
+            from fbuild.daemon.client import DAEMON_DIR
+
+            preempt_file = DAEMON_DIR / f"serial_monitor_preempt_{port}.json"
+            notification = {
+                "port": port,
+                "preempted_at": time.time(),
+                "preempted_by": "deploy_operation",
+            }
+
+            # Write notification atomically
+            temp_file = preempt_file.with_suffix(".tmp")
+            with open(temp_file, "w") as f:
+                json.dump(notification, f, indent=2)
+            temp_file.replace(preempt_file)
+
+            logging.info(f"[DeployPreemption] Notified API monitors of preemption on {port}")
+
+        except KeyboardInterrupt:  # noqa: KBI002
+            raise
+        except Exception as e:
+            logging.warning(f"[DeployPreemption] Failed to notify API monitors: {e}")
+
+    def _clear_api_monitor_preemption(self, port: str, context: "DaemonContext") -> None:
+        """Clear preemption notification after deploy completes.
+
+        Deletes the preemption file, signaling to SerialMonitor clients that
+        they can reconnect.
+
+        Args:
+            port: Port that was preempted
+            context: Daemon context
+        """
+        try:
+            from fbuild.daemon.client import DAEMON_DIR
+
+            preempt_file = DAEMON_DIR / f"serial_monitor_preempt_{port}.json"
+            if preempt_file.exists():
+                preempt_file.unlink()
+                logging.info(f"[DeployPreemption] Cleared preemption notification for {port}")
+
+        except KeyboardInterrupt:  # noqa: KBI002
+            raise
+        except Exception as e:
+            logging.warning(f"[DeployPreemption] Failed to clear preemption notification: {e}")
