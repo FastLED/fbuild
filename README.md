@@ -64,6 +64,57 @@ uv run fbuild monitor --timeout 60 --halt-on-error "TEST FAILED" --halt-on-succe
   * Serial monitoring requires pyserial to attach to the USB device
   * Port auto-detection works similarly to PlatformIO
 
+## QEMU Testing
+
+fbuild supports deploying to QEMU for testing ESP32 firmware without physical hardware.
+
+### Supported Platforms
+
+| Platform | QEMU Status | Notes |
+|----------|-------------|-------|
+| ESP32dev (original ESP32) | ✅ Fully supported | Recommended for QEMU testing |
+| ESP32-S3 | ❌ Not supported | Bootloader incompatible with QEMU |
+| ESP32C6 | ❌ Not supported | QEMU lacks C6 emulation |
+| ESP32C3 | ⚠️ Untested | May work (RISC-V architecture) |
+
+### Usage
+
+```bash
+# Build for QEMU (use esp32dev)
+fbuild build tests/esp32dev -e esp32dev-qemu
+
+# Deploy to QEMU
+fbuild deploy tests/esp32dev -e esp32dev-qemu --qemu
+```
+
+### Configuration
+
+Add QEMU environment to platformio.ini:
+
+```ini
+[env:esp32dev-qemu]
+platform = https://github.com/pioarduino/platform-espressif32/releases/download/55.03.34/platform-espressif32.zip
+board = esp32dev
+framework = arduino
+board_build.flash_mode = dio     # Required for QEMU
+board_upload.flash_mode = dio    # Required for QEMU
+```
+
+### Requirements
+
+- Docker installed and running
+- `espressif/idf:latest` Docker image (pulled automatically)
+
+### Known Limitations
+
+1. **ESP32-S3 bootloader incompatibility**: The ESP32-S3 software bootloader contains QIO mode detection logic that crashes in QEMU. Use ESP32dev for QEMU testing instead.
+
+2. **ESP32C6 chip ID mismatch**: QEMU doesn't have native ESP32C6 support yet. It falls back to ESP32C3 emulation, which causes chip ID validation failures.
+
+3. **Performance**: QEMU emulation is slower than real hardware. Use for basic functional testing, not performance validation.
+
+4. **Peripheral emulation**: Not all peripherals are fully emulated. Test on real hardware for production validation.
+
 ## Key Features
 
 - **URL-based Package Management**: Direct URLs to toolchains and platforms - no hidden registries

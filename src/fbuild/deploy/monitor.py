@@ -480,7 +480,8 @@ class SerialMonitor:
                 "interrupted",
             )
 
-            return 0
+            # Re-raise KeyboardInterrupt after cleanup to ensure proper propagation
+            raise
 
     def _detect_serial_port(self) -> Optional[str]:
         """Auto-detect serial port for device.
