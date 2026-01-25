@@ -29,6 +29,32 @@ class ConfigurableLinkerError(LinkerError):
     pass
 
 
+def _path_to_string(path: Path, relative_to: Optional[Path] = None) -> str:
+    """Convert a Path to a string suitable for Unix-based toolchains on Windows.
+
+    The ESP32 toolchain binaries (ld.exe, g++.exe) are native Windows executables
+    that understand Windows paths. When relative_to is provided, converts to a
+    relative path with forward slashes (Unix-style) which the toolchain prefers.
+
+    Args:
+        path: Path object to convert
+        relative_to: Optional base directory to make path relative to
+
+    Returns:
+        String representation (relative with forward slashes if relative_to provided, else absolute)
+    """
+    if relative_to is not None:
+        try:
+            # Try to make path relative to base directory
+            rel_path = path.resolve().relative_to(relative_to.resolve())
+            # Use forward slashes for relative paths (toolchain expects Unix-style)
+            return rel_path.as_posix()
+        except ValueError:
+            # If path is not relative to base (e.g., toolchain paths), use absolute
+            return str(path)
+    return str(path)
+
+
 class ConfigurableLinker(ILinker):
     """Generic linker driven by platform configuration.
 
@@ -258,13 +284,15 @@ class ConfigurableLinker(ILinker):
         sdk_libs = self.get_sdk_libraries()
 
         # Build linker command
-        cmd = [str(linker_path)]
+        # Linker executable must remain absolute path
+        cmd = [_path_to_string(linker_path)]
         cmd.extend(linker_flags)
 
         # Add linker script directory to library search path (ESP32-specific)
         if hasattr(self.framework, 'get_sdk_dir'):
             ld_dir = self.framework.get_sdk_dir() / self.mcu / "ld"  # type: ignore[attr-defined]
-            cmd.append(f"-L{ld_dir}")
+            # SDK directories stay absolute (outside build dir)
+            cmd.append(f"-L{_path_to_string(ld_dir)}")
 
             # For ESP32-S3, also add flash mode directory to search path
             if self.mcu == "esp32s3":
@@ -272,30 +300,32 @@ class ConfigurableLinker(ILinker):
                 psram_mode = self.board_config.get("build", {}).get("psram_mode", "qspi")
                 flash_dir = self.framework.get_sdk_dir() / self.mcu / f"{flash_mode}_{psram_mode}"  # type: ignore[attr-defined]
                 if flash_dir.exists():
-                    cmd.append(f"-L{flash_dir}")
+                    cmd.append(f"-L{_path_to_string(flash_dir)}")
 
             # Add linker scripts with ESP32-specific path handling
             for script in linker_scripts:
                 if script.parent == ld_dir or (self.mcu == "esp32s3" and script.parent.name.endswith(("_qspi", "_opi"))):
                     cmd.append(f"-T{script.name}")
                 else:
-                    cmd.append(f"-T{script}")
+                    # SDK scripts stay absolute (outside build dir)
+                    cmd.append(f"-T{_path_to_string(script)}")
         else:
             # For non-ESP32 platforms (e.g., Teensy), use absolute paths
             for script in linker_scripts:
-                cmd.append(f"-T{script}")
+                cmd.append(f"-T{_path_to_string(script)}")
 
-        # Add object files
-        cmd.extend([str(obj) for obj in object_files])
+        # Add object files using relative paths (they're in build_dir)
+        cmd.extend([_path_to_string(obj, relative_to=self.build_dir) for obj in object_files])
 
-        # Add core archive
-        cmd.append(str(core_archive))
+        # Add core archive using relative path (it's in build_dir)
+        cmd.append(_path_to_string(core_archive, relative_to=self.build_dir))
 
         # Add SDK library directory to search path (ESP32-specific)
         if hasattr(self.framework, 'get_sdk_dir'):
             sdk_lib_dir = self.framework.get_sdk_dir() / self.mcu / "lib"  # type: ignore[attr-defined]
             if sdk_lib_dir.exists():
-                cmd.append(f"-L{sdk_lib_dir}")
+                # SDK directories stay absolute (outside build dir)
+                cmd.append(f"-L{_path_to_string(sdk_lib_dir)}")
 
         # Group libraries to resolve circular dependencies
         cmd.append("-Wl,--start-group")
@@ -303,11 +333,12 @@ class ConfigurableLinker(ILinker):
         # Add user library archives first
         for lib_archive in library_archives:
             if lib_archive.exists():
-                cmd.append(str(lib_archive))
+                # Library archives may be in build_dir or outside, try relative first
+                cmd.append(_path_to_string(lib_archive, relative_to=self.build_dir))
 
-        # Add SDK libraries
+        # Add SDK libraries (these stay absolute - outside build dir)
         for lib in sdk_libs:
-            cmd.append(str(lib))
+            cmd.append(_path_to_string(lib))
 
         # Add standard libraries
         cmd.extend([
@@ -319,8 +350,8 @@ class ConfigurableLinker(ILinker):
 
         cmd.append("-Wl,--end-group")
 
-        # Add output
-        cmd.extend(["-o", str(output_elf)])
+        # Add output using relative path (it's in build_dir)
+        cmd.extend(["-o", _path_to_string(output_elf, relative_to=self.build_dir)])
 
         # Execute linker
         if self.show_progress:
@@ -335,6 +366,12 @@ class ConfigurableLinker(ILinker):
             log_detail(f"Inputs: core ({format_size(core_size)}) + {len(library_archives)} libs ({format_size(lib_size)}) + {len(object_files)} objects ({format_size(obj_size)})")
             # Log the actual linker command for debugging
             log_detail(f"Linker command: {cmd[0]} ... ({len(cmd)} args total)")
+            # Debug: show object file paths and conversion to relative
+            if object_files:
+                log_detail("Object file paths (first 3, converted to relative):")
+                for i, obj in enumerate(object_files[:3]):
+                    converted_path = _path_to_string(obj, relative_to=self.build_dir)
+                    log_detail(f"  [{i}] {obj} -> {converted_path}")
 
         # Add retry logic for Windows file locking issues
         is_windows = platform.system() == "Windows"
@@ -351,11 +388,49 @@ class ConfigurableLinker(ILinker):
                         log_detail(f"Retrying linking (attempt {attempt + 1}/{max_retries})...")
 
                 try:
+                    # Debug: log full linker command on first attempt
+                    if attempt == 0:
+                        debug_cmd_file = self.build_dir / "linker_command.txt"
+                        with open(debug_cmd_file, "w") as f:
+                            f.write("LINKER COMMAND:\n")
+                            f.write(f"CWD: {self.build_dir}\n\n")
+                            for i, arg in enumerate(cmd):
+                                f.write(f"  [{i}] {arg}\n")
+                        if self.show_progress:
+                            log_detail(f"Linker command saved to: {debug_cmd_file}")
+                            log_detail(f"Working directory: {self.build_dir}")
+
+                        # Debug: Test if the file is accessible with a simple subprocess call
+                        test_file = self.build_dir / "obj" / "Blink.ino.o"
+                        if test_file.exists():
+                            log_detail(f"DEBUG: Object file exists: {test_file}")
+                            log_detail(f"DEBUG: File size: {test_file.stat().st_size} bytes")
+                            # Try to access it with a simple command
+                            try:
+                                test_result = safe_run(
+                                    ["cmd.exe", "/c", "dir", "obj\\Blink.ino.o"],
+                                    cwd=str(self.build_dir),
+                                    capture_output=True,
+                                    text=True,
+                                    timeout=5
+                                )
+                                if test_result.returncode == 0:
+                                    log_detail("DEBUG: File accessible via subprocess dir command")
+                                else:
+                                    log_detail(f"DEBUG: dir command failed: {test_result.stderr}")
+                            except KeyboardInterrupt:
+                                raise
+                            except Exception as e:
+                                log_detail(f"DEBUG: Test access failed: {e}")
+                        else:
+                            log_detail(f"DEBUG: Object file DOES NOT EXIST: {test_file}")
+
                     result = safe_run(
                         cmd,
                         capture_output=True,
                         text=True,
-                        timeout=120
+                        timeout=120,
+                        cwd=str(self.build_dir)  # Run from build directory (must be string)
                     )
                 except subprocess.TimeoutExpired:
                     if attempt < max_retries - 1:

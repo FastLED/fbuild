@@ -384,6 +384,10 @@ class ConfigurableCompiler(ICompiler):
                 # Re-raise with more context about which file failed
                 raise ConfigurableCompilerError(f"Failed to compile sketch source file {cpp_file.name}: {e}")
 
+        # Wait for all async compilations to complete before returning
+        # (fixes race condition where linker runs before .o files are written)
+        self.wait_all_jobs()
+
         return object_files
 
     def compile_core(self, progress_bar: Optional[Any] = None, progress_callback: ProgressCallback | None = None) -> List[Path]:
