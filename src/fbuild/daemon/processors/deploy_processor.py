@@ -664,9 +664,17 @@ class DeployRequestProcessor(RequestProcessor):
         try:
             # Import and use MonitorRequestProcessor to handle monitoring
             # This will be imported at runtime to avoid circular dependencies
+            # Give Windows USB-CDC driver time to release port after esptool finishes
+            # and allow device to complete its post-deployment reboot
+            # Without this delay, the monitor may try to open the port while the device
+            # is still rebooting from deployment, causing "port busy" errors
+            import time
+
             from fbuild.daemon.processors.monitor_processor import (
                 MonitorRequestProcessor,
             )
+
+            time.sleep(2.0)  # 2 second delay for device reboot and driver cleanup
 
             monitor_processor = MonitorRequestProcessor()
             # Note: This will block until monitoring completes

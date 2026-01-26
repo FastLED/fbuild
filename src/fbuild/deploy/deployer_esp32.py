@@ -322,8 +322,16 @@ class ESP32Deployer(IDeployer):
                 if recovery_mode_activated and attempt < max_recovery_attempts:
                     # Continue recovery attempts
                     if self.verbose:
-                        print(f"Attempt {attempt}/{max_recovery_attempts}: Waiting for bootloader window...", flush=True)
+                        print(f"Attempt {attempt}/{max_recovery_attempts}: Resetting port and waiting for bootloader window...", flush=True)
 
+                    # Reset device to release Windows USB-CDC port lock
+                    # This is crucial on Windows where the USB-CDC driver doesn't
+                    # release port handles immediately after esptool closes the port
+                    from fbuild.deploy.esptool_utils import reset_esp32_device
+
+                    reset_esp32_device(port, chip=chip, verbose=self.verbose)
+
+                    # Add delay to let Windows driver fully release port
                     delay_ms = random.randint(min_delay_ms, max_delay_ms)
                     time.sleep(delay_ms / 1000.0)
                     continue
