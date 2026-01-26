@@ -118,8 +118,8 @@ STALE_LOCK_CHECK_INTERVAL = 60  # Check for stale locks every 60 seconds
 DEAD_CLIENT_CHECK_INTERVAL = 10  # Check for dead clients every 10 seconds
 IDLE_TIMEOUT = 43200  # 12 hours (fallback)
 # Self-eviction timeout: if daemon has 0 clients AND 0 ops for this duration, shutdown
-# Increased to 30s to accommodate validation workflows (deploy + 5s USB re-enum + 15s port check = 20s gap)
-SELF_EVICTION_TIMEOUT = 30.0  # 30 seconds - accommodates validation workflows
+# Increased to 120s to accommodate validation workflows with compilation (deploy + compile + upload + port check)
+SELF_EVICTION_TIMEOUT = 120.0  # 120 seconds - accommodates validation workflows with compilation
 
 
 def set_daemon_context(context: DaemonContext) -> None:
