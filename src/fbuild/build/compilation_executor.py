@@ -1,17 +1,13 @@
 """Compilation Executor.
 
-This module handles executing compilation commands via subprocess with support
-for conditional response files and proper error handling.
+This module handles executing compilation commands via subprocess with proper error handling.
 
 Design:
     - Wraps subprocess.run for compilation commands
-    - Conditionally generates response files for include paths (only when command line exceeds 80% of 32K limit)
-    - With header trampolines: response files rarely needed (~4K chars vs 32K limit)
-    - Without trampolines: response files used as fallback for long include paths
+    - Uses header trampoline cache to avoid Windows command-line length limits
     - Provides clear error messages for compilation failures
     - Supports both C and C++ compilation
     - Integrates sccache for compilation caching
-    - Uses header trampoline cache to avoid Windows command-line length limits
 """
 
 import _thread
@@ -209,39 +205,6 @@ class CompilationExecutor:
                 raise
             raise CompilationError(f"Failed to compile {source_path.name}: {e}") from e
 
-    def _estimate_command_length(
-        self, compiler_path: Path, compile_flags: List[str], include_flags: List[str], source_path: Path, output_path: Path
-    ) -> int:
-        """Estimate total command-line length.
-
-        Args:
-            compiler_path: Path to compiler
-            compile_flags: Compilation flags
-            include_flags: Include directory flags
-            source_path: Source file path
-            output_path: Output object file path
-
-        Returns:
-            Estimated command-line length in characters
-        """
-        # sccache wrapper if enabled
-        base_length = len(str(self.sccache_path)) if self.sccache_path else 0
-
-        # Compiler path
-        base_length += len(str(compiler_path))
-
-        # Compile flags
-        base_length += sum(len(flag) + 1 for flag in compile_flags)  # +1 for spaces
-
-        # Include flags
-        base_length += sum(len(flag) + 1 for flag in include_flags)
-
-        # Source and output paths
-        base_length += len("-c") + len(str(source_path)) + 1
-        base_length += len("-o") + len(str(output_path)) + 1
-
-        # Add 10% safety margin for shell escaping/quoting
-        return int(base_length * 1.1)
 
     def _build_compile_command(self, compiler_path: Path, source_path: Path, output_path: Path, compile_flags: List[str], include_paths: List[str]) -> List[str]:
         """Build compilation command with optional sccache wrapper.
@@ -258,13 +221,6 @@ class CompilationExecutor:
         """
         # Include paths are already converted to flags (List[str])
         include_flags = include_paths
-
-        # Calculate command-line length to determine if response file needed
-        estimated_cmd_length = self._estimate_command_length(compiler_path, compile_flags, include_flags, source_path, output_path)
-
-        # Windows CreateProcess limit: 32,767 chars
-        # Use 80% threshold (26,214 chars) for safety margin
-        use_response_file = estimated_cmd_length > 26214
 
         # Build compiler command with optional sccache wrapper
         use_sccache = self.sccache_path is not None
@@ -283,46 +239,12 @@ class CompilationExecutor:
         else:
             cmd.append(str(compiler_path))
         cmd.extend(compile_flags)
-
-        if use_response_file:
-            # Use response file for long command lines
-            response_file = self._write_response_file(include_flags)
-            cmd.append(f"@{response_file}")
-            if self.show_progress:
-                log_detail(f"[rsp] Using response file (cmd length: {estimated_cmd_length} chars)")
-        else:
-            # Direct include flags (trampolines make this safe)
-            cmd.extend(include_flags)
-            if self.show_progress:
-                log_detail(f"[rsp] Direct flags (cmd length: {estimated_cmd_length} chars)")
-
+        cmd.extend(include_flags)  # Trampolines ensure command line stays under 32K limit
         cmd.extend(["-c", str(source_path)])
         cmd.extend(["-o", str(output_path)])
 
         return cmd
 
-    def _write_response_file(self, include_flags: List[str]) -> Path:
-        """Write include paths to response file.
-
-        Response files avoid command line length limits when there are
-        many include paths.
-
-        Args:
-            include_flags: List of -I include flags
-
-        Returns:
-            Path to generated response file
-        """
-        import time
-        # Make response file unique to avoid race conditions in parallel compilation
-        timestamp = int(time.time() * 1000000)
-        response_file = self.build_dir / f"includes_{timestamp}.rsp"
-        response_file.parent.mkdir(parents=True, exist_ok=True)
-
-        with open(response_file, "w") as f:
-            f.write("\n".join(include_flags))
-
-        return response_file
 
     def preprocess_ino(self, ino_path: Path, output_dir: Path) -> Path:
         """Preprocess .ino file to .cpp file.
@@ -426,13 +348,6 @@ class CompilationExecutor:
         # Convert include paths to flags
         include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in effective_include_paths]
 
-        # Calculate command-line length to determine if response file needed
-        estimated_cmd_length = self._estimate_command_length(compiler_path, compile_flags, include_flags, source_path, output_path)
-
-        # Windows CreateProcess limit: 32,767 chars
-        # Use 80% threshold (26,214 chars) for safety margin
-        use_response_file = estimated_cmd_length > 26214
-
         # Build compiler command with optional sccache wrapper
         use_sccache = self.sccache_path is not None
 
@@ -447,27 +362,14 @@ class CompilationExecutor:
         else:
             cmd.append(str(compiler_path))
         cmd.extend(compile_flags)
-
-        response_file_path: Optional[Path] = None
-        if use_response_file:
-            # Use response file for long command lines
-            response_file_path = self._write_response_file(include_flags)
-            cmd.append(f"@{response_file_path}")
-            if self.show_progress:
-                log_detail(f"[rsp] Using response file (cmd length: {estimated_cmd_length} chars)")
-        else:
-            # Direct include flags (trampolines make this safe)
-            cmd.extend(include_flags)
-            if self.show_progress:
-                log_detail(f"[rsp] Direct flags (cmd length: {estimated_cmd_length} chars)")
-
+        cmd.extend(include_flags)  # Trampolines ensure command line stays under 32K limit
         cmd.extend(["-c", str(source_path)])
         cmd.extend(["-o", str(output_path)])
 
         # Create and submit compilation job
         job_id = f"compile_{source_path.stem}_{int(time.time() * 1000000)}"
 
-        job = CompilationJob(job_id=job_id, source_path=source_path, output_path=output_path, compiler_cmd=cmd, response_file=response_file_path)
+        job = CompilationJob(job_id=job_id, source_path=source_path, output_path=output_path, compiler_cmd=cmd, response_file=None)
 
         # Submit to queue
         job_queue.submit_job(job)

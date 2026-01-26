@@ -118,8 +118,8 @@ STALE_LOCK_CHECK_INTERVAL = 60  # Check for stale locks every 60 seconds
 DEAD_CLIENT_CHECK_INTERVAL = 10  # Check for dead clients every 10 seconds
 IDLE_TIMEOUT = 43200  # 12 hours (fallback)
 # Self-eviction timeout: if daemon has 0 clients AND 0 ops for this duration, shutdown
-# Per TASK.md: "If daemon has 0 clients AND 0 running operations, immediately evict the daemon within 4 seconds."
-SELF_EVICTION_TIMEOUT = 30.0  # 30 seconds - allow time for sequential builds
+# Per CLAUDE.md: "Daemon auto-evicts after 4 seconds of inactivity"
+SELF_EVICTION_TIMEOUT = 4.0  # 4 seconds - matches documented behavior
 
 
 def set_daemon_context(context: DaemonContext) -> None:

@@ -3,8 +3,12 @@
 This module handles downloading and compiling external libraries for ESP32 builds.
 It uses the PlatformIO registry to resolve and download libraries, then compiles
 them with the ESP32 toolchain.
+
+Header trampolines are used on Windows to reduce include path lengths, eliminating
+the need for response files which previously handled long command lines.
 """
 
+import _thread
 import json
 import logging
 import multiprocessing
@@ -13,7 +17,10 @@ import subprocess
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
-from typing import List, Optional
+from typing import TYPE_CHECKING, List, Optional
+
+if TYPE_CHECKING:
+    from fbuild.packages.header_trampoline_cache import HeaderTrampolineCache
 
 from fbuild.output import log_detail
 from fbuild.packages.platformio_registry import (
@@ -547,6 +554,7 @@ class LibraryManagerESP32:
         compiler_flags: List[str],
         include_paths: List[Path],
         show_progress: bool = True,
+        trampoline_cache: Optional["HeaderTrampolineCache"] = None,
     ) -> Path:
         """Compile a library into a static archive.
 
@@ -556,6 +564,7 @@ class LibraryManagerESP32:
             compiler_flags: Compiler flags
             include_paths: Include directories
             show_progress: Whether to show progress
+            trampoline_cache: Optional header trampoline cache for Windows (reduces command-line length)
 
         Returns:
             Path to compiled archive file
@@ -581,8 +590,27 @@ class LibraryManagerESP32:
             # ESP32/S2/S3 use xtensa, C3/C6/H2 use RISC-V
             gcc_path, gxx_path = self._find_toolchain_compilers(toolchain_path)
 
+            # Apply header trampolines on Windows (same logic as compilation_executor.py:153-177)
+            effective_includes = all_includes
+            if trampoline_cache is not None and platform.system() == "Windows":
+                try:
+                    exclude_patterns = [
+                        "newlib/platform_include",  # Uses #include_next which breaks trampolines
+                        "newlib\\platform_include",
+                        "/bt/",  # Bluetooth SDK uses relative paths
+                        "\\bt\\",
+                    ]
+                    effective_includes = trampoline_cache.generate_trampolines(all_includes, exclude_patterns=exclude_patterns)
+                except KeyboardInterrupt:
+                    _thread.interrupt_main()
+                    raise
+                except Exception as e:
+                    if show_progress:
+                        log_detail(f"[trampolines] Warning: Failed to generate trampolines for library {library.name}, using original paths: {e}", indent=8)
+                    effective_includes = all_includes
+
             # Create include flags
-            include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in all_includes]
+            include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in effective_includes]
 
             # Prepare compilation jobs
             compile_jobs = []
@@ -601,34 +629,10 @@ class LibraryManagerESP32:
                 # Ensure output directory exists
                 obj_file.parent.mkdir(parents=True, exist_ok=True)
 
-                # Calculate command-line length to determine if response file needed
-                estimated_length = (
-                    len(str(compiler)) + sum(len(flag) + 1 for flag in compiler_flags) + sum(len(flag) + 1 for flag in include_flags) + len(str(source)) + len(str(obj_file)) + 50
-                )  # buffer
-
-                # Windows CreateProcess limit: 32,767 chars
-                # Use 80% threshold (26,214 chars) for safety margin
-                use_response_file = estimated_length > 26214
-
-                # Build compile command
+                # Build compile command (trampolines ensure command line stays under 32K limit)
                 cmd = [str(compiler), "-c"]
                 cmd.extend(compiler_flags)
-
-                if use_response_file:
-                    # Use response file for long command lines
-                    response_file = library.lib_dir / "includes.rsp"
-                    with open(response_file, "w") as f:
-                        f.write("\n".join(include_flags))
-                    cmd.append(f"@{response_file}")
-                    if show_progress:
-                        log_detail(f"[rsp] Using response file (cmd length: {estimated_length} chars)", indent=8)
-                else:
-                    # Direct include flags
-                    cmd.extend(include_flags)
-                    if show_progress:
-                        log_detail(f"[rsp] Direct flags (cmd length: {estimated_length} chars)", indent=8)
-
-                # Add source and output
+                cmd.extend(include_flags)
                 cmd.extend(["-o", str(obj_file), str(source)])
 
                 compile_jobs.append((source, obj_file, cmd))
@@ -724,6 +728,7 @@ class LibraryManagerESP32:
         compiler_flags: List[str],
         include_paths: List[Path],
         show_progress: bool = True,
+        trampoline_cache: Optional["HeaderTrampolineCache"] = None,
     ) -> List[LibraryESP32]:
         """Ensure all library dependencies are downloaded and compiled.
 
@@ -733,6 +738,7 @@ class LibraryManagerESP32:
             compiler_flags: Compiler flags
             include_paths: Include directories
             show_progress: Whether to show progress
+            trampoline_cache: Optional header trampoline cache for Windows (reduces command-line length)
 
         Returns:
             List of compiled LibraryESP32 instances
@@ -759,6 +765,7 @@ class LibraryManagerESP32:
                     compiler_flags,
                     include_paths,
                     show_progress,
+                    trampoline_cache=trampoline_cache,
                 )
             else:
                 log_detail(f"Library '{library.name}' is up to date (cached)")

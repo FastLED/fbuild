@@ -654,6 +654,11 @@ class OrchestratorESP32(IBuildOrchestrator):
             log_warning("Toolchain bin directory not found, skipping libraries")
             return library_archives, library_include_paths
 
+        # Extract trampoline cache from compilation executor
+        trampoline_cache = None
+        if hasattr(compiler, 'compilation_executor') and compiler.compilation_executor:
+            trampoline_cache = getattr(compiler.compilation_executor, 'trampoline_cache', None)
+
         # Ensure libraries are downloaded and compiled
         # Always show progress for library compilation - compiling 300+ files
         # without feedback is confusing UX, even in non-verbose mode
@@ -663,7 +668,8 @@ class OrchestratorESP32(IBuildOrchestrator):
             toolchain_bin_path,
             lib_compiler_flags,
             lib_include_paths,
-            show_progress=True
+            show_progress=True,
+            trampoline_cache=trampoline_cache,
         )
         logger.debug(f"[ORCHESTRATOR] ensure_libraries returned {len(libraries)} libraries")
 
