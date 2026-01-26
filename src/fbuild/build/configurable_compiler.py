@@ -303,8 +303,31 @@ class ConfigurableCompiler(ICompiler):
 
         # Parallel mode: submit to queue and return immediately
         if self.compilation_queue is not None:
+            import platform
+            import _thread
+
+            # Apply header trampoline cache on Windows when enabled (same as compilation_executor.py:149-169)
+            # This resolves Windows CreateProcess 32K limit issues
+            effective_includes = includes
+            if self.compilation_executor.trampoline_cache is not None and platform.system() == "Windows":
+                try:
+                    exclude_patterns = [
+                        "newlib/platform_include",  # Uses #include_next which breaks trampolines
+                        "newlib\\platform_include",  # Windows path variant
+                        "/bt/",  # Bluetooth SDK uses relative paths between bt/include and bt/controller
+                        "\\bt\\",  # Windows path variant
+                    ]
+                    effective_includes = self.compilation_executor.trampoline_cache.generate_trampolines(includes, exclude_patterns=exclude_patterns)
+                except KeyboardInterrupt:
+                    _thread.interrupt_main()
+                    raise
+                except Exception as e:
+                    if self.show_progress:
+                        print(f"[trampolines] Warning: Failed to generate trampolines, using original paths: {e}")
+                    effective_includes = includes
+
             # Convert include paths to flags
-            include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in includes]
+            include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in effective_includes]
             # Build command that would be executed
             cmd = self.compilation_executor._build_compile_command(compiler_path, source_path, output_path, compile_flags, include_flags)
 
