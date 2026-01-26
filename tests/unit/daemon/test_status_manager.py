@@ -80,6 +80,8 @@ def test_read_status(temp_status_file):
 
     status = manager.read_status()
 
+    # State should be deserialized as enum
+    assert isinstance(status.state, DaemonState)
     assert status.state == DaemonState.DEPLOYING
     assert status.message == "Deploying firmware"
     assert status.daemon_pid == 12345

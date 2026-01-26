@@ -5,10 +5,15 @@ This module defines messages for acquiring exclusive or monitor access to device
 listing devices, and querying device status.
 """
 
+from __future__ import annotations
+
 import time
 from dataclasses import asdict, dataclass, field
 from enum import Enum
-from typing import Any
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    pass
 
 
 class DeviceLeaseType(Enum):
@@ -226,7 +231,7 @@ class DeviceListResponse:
 
     success: bool
     message: str
-    devices: list[dict[str, Any]] = field(default_factory=list)
+    devices: list[Any] = field(default_factory=list)  # list[DeviceState] - using Any to avoid circular import
     total_devices: int = 0
     connected_devices: int = 0
     total_leases: int = 0
@@ -234,11 +239,15 @@ class DeviceListResponse:
 
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
-        return asdict(self)
+        result = asdict(self)
+        # Manually serialize DeviceState objects
+        result["devices"] = [device.to_dict() if hasattr(device, "to_dict") else device for device in self.devices]
+        return result
 
     @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> "DeviceListResponse":
+    def from_dict(cls, data: dict[str, Any]) -> DeviceListResponse:
         """Create DeviceListResponse from dictionary."""
+        # Devices stay as dicts for now - full deserialization not needed
         return cls(
             success=data["success"],
             message=data["message"],
@@ -274,19 +283,25 @@ class DeviceStatusResponse:
     exists: bool = False
     is_connected: bool = False
     device_info: dict[str, Any] | None = None
-    exclusive_lease: dict[str, Any] | None = None
-    monitor_leases: list[dict[str, Any]] = field(default_factory=list)
+    exclusive_lease: Any | None = None  # DeviceLease | None - using Any to avoid circular import
+    monitor_leases: list[Any] = field(default_factory=list)  # list[DeviceLease] - using Any to avoid circular import
     monitor_count: int = 0
     is_available_for_exclusive: bool = False
     timestamp: float = field(default_factory=time.time)
 
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
-        return asdict(self)
+        result = asdict(self)
+        # Manually serialize DeviceLease objects
+        if self.exclusive_lease is not None and hasattr(self.exclusive_lease, "to_dict"):
+            result["exclusive_lease"] = self.exclusive_lease.to_dict()
+        result["monitor_leases"] = [lease.to_dict() if hasattr(lease, "to_dict") else lease for lease in self.monitor_leases]
+        return result
 
     @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> "DeviceStatusResponse":
+    def from_dict(cls, data: dict[str, Any]) -> DeviceStatusResponse:
         """Create DeviceStatusResponse from dictionary."""
+        # Leases stay as dicts for now - full deserialization not needed
         return cls(
             success=data["success"],
             message=data["message"],

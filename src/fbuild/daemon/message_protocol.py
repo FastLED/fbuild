@@ -17,7 +17,7 @@ Features:
 import dataclasses
 from dataclasses import fields, is_dataclass
 from enum import Enum
-from typing import Any, Protocol, Type, TypeVar, runtime_checkable
+from typing import Any, Protocol, Type, TypeVar, get_type_hints, runtime_checkable
 
 T = TypeVar("T")
 
@@ -173,6 +173,7 @@ def deserialize_dataclass(cls: Type[T], data: dict[str, Any]) -> T:
     - Nested SerializableMessage objects (recursively deserializes)
     - Field defaults (doesn't require optional fields in data)
     - Type validation
+    - Postponed annotation evaluation (from __future__ import annotations)
 
     Args:
         cls: Dataclass class to instantiate
@@ -200,6 +201,22 @@ def deserialize_dataclass(cls: Type[T], data: dict[str, Any]) -> T:
     if not is_dataclass(cls):
         raise TypeError(f"deserialize_dataclass requires a dataclass type, got {cls}")
 
+    # Resolve type hints to handle 'from __future__ import annotations'
+    # This converts string annotations like 'DaemonState' to actual type objects
+    try:
+        # Get the module's globals to help resolve forward references
+        # Some types might only be imported in TYPE_CHECKING blocks, so we need
+        # to pass the class's module namespace
+        import sys
+
+        module = sys.modules.get(cls.__module__)
+        globalns = getattr(module, "__dict__", {}) if module else {}
+        type_hints = get_type_hints(cls, globalns=globalns, include_extras=True)
+    except (NameError, AttributeError):
+        # If get_type_hints fails due to missing imports (e.g., TYPE_CHECKING-only imports),
+        # we'll try to resolve types manually for each field
+        type_hints = {}
+
     kwargs: dict[str, Any] = {}
 
     for field in fields(cls):
@@ -220,8 +237,25 @@ def deserialize_dataclass(cls: Type[T], data: dict[str, Any]) -> T:
             kwargs[field_name] = None
             continue
 
-        # Try to get the field type
-        field_type = field.type
+        # Get the resolved field type from type hints, fall back to field.type
+        field_type = type_hints.get(field_name, field.type)
+
+        # If field_type is a string (forward reference from 'from __future__ import annotations'),
+        # try to resolve it manually
+        if isinstance(field_type, str):
+            # Try to evaluate the string annotation in the class's module namespace
+            try:
+                import sys
+
+                module = sys.modules.get(cls.__module__)
+                if module:
+                    globalns = getattr(module, "__dict__", {})
+                    # Try to evaluate the annotation
+                    field_type = eval(field_type, globalns)
+            except (NameError, AttributeError, SyntaxError):
+                # If evaluation fails, we'll just pass the value through as-is
+                # This handles cases where the type is only imported in TYPE_CHECKING blocks
+                pass
 
         # Handle Optional types (Union[X, None] or X | None)
         # Extract the actual type if it's Optional

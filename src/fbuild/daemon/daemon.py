@@ -850,7 +850,7 @@ def run_daemon_loop() -> None:
 
     def cleanup_stale_locks() -> None:
         stale_locks = context.lock_manager.get_stale_locks()
-        stale_count = len(stale_locks["port_locks"]) + len(stale_locks["project_locks"])
+        stale_count = len(stale_locks.stale_port_locks) + len(stale_locks.stale_project_locks)
         if stale_count > 0:
             logging.warning(f"Found {stale_count} stale locks, force-releasing...")
             released = context.lock_manager.force_release_stale_locks()
@@ -920,7 +920,7 @@ def run_daemon_loop() -> None:
                     clear_locks_signal.unlink()
                     logging.info("Received manual clear stale locks signal")
                     stale_locks = context.lock_manager.get_stale_locks()
-                    stale_count = len(stale_locks["port_locks"]) + len(stale_locks["project_locks"])
+                    stale_count = len(stale_locks.stale_port_locks) + len(stale_locks.stale_project_locks)
                     if stale_count > 0:
                         logging.warning(f"Manually clearing {stale_count} stale locks...")
                         released = context.lock_manager.force_release_stale_locks()

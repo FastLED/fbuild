@@ -110,12 +110,15 @@ class StatusManager:
                 self._operation_in_progress = operation_in_progress
 
             # Get port state summary if port_state_manager is available
-            ports_summary: dict[str, Any] = {}
+            from fbuild.daemon.lock_types import LockStatusSummary
+            from fbuild.daemon.port_state_manager import PortsSummary
+
+            ports_summary: PortsSummary | None = None
             if self._port_state_manager is not None:
                 ports_summary = self._port_state_manager.get_ports_summary()
 
             # Get lock state summary if lock_manager is available
-            locks_summary: dict[str, Any] = {}
+            locks_summary: LockStatusSummary | None = None
             if self._lock_manager is not None:
                 locks_summary = self._lock_manager.get_lock_details()
 

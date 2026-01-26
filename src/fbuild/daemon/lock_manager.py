@@ -15,7 +15,10 @@ import threading
 import time
 from contextlib import contextmanager
 from dataclasses import dataclass, field
-from typing import Any, Iterator
+from typing import TYPE_CHECKING, Any, Iterator
+
+if TYPE_CHECKING:
+    from .lock_types import HeldLocksSummary, LockStatusSummary, StaleLocksSummary
 
 # Default lock timeout: 30 minutes (for long builds)
 DEFAULT_LOCK_TIMEOUT = 1800.0
@@ -287,35 +290,31 @@ class ResourceLockManager:
                 self._project_locks[project_dir] = LockInfo(lock=threading.Lock(), timeout=timeout)
             return self._project_locks[project_dir]
 
-    def get_stale_locks(self) -> dict[str, list[tuple[str, LockInfo]]]:
+    def get_stale_locks(self) -> "StaleLocksSummary":
         """Get all locks that are stale (held beyond their timeout).
 
         Returns:
-            Dictionary with 'port_locks' and 'project_locks' keys, each containing
-            a list of (resource_id, lock_info) tuples for stale locks.
+            StaleLocksSummary with lists of stale port and project locks
         """
-        with self._master_lock:
-            stale_ports = [(port, info) for port, info in self._port_locks.items() if info.is_stale()]
-            stale_projects = [(project, info) for project, info in self._project_locks.items() if info.is_stale()]
-            return {
-                "port_locks": stale_ports,
-                "project_locks": stale_projects,
-            }
+        from .lock_types import ResourceLock, StaleLocksSummary
 
-    def get_held_locks(self) -> dict[str, list[tuple[str, LockInfo]]]:
+        with self._master_lock:
+            stale_ports = [ResourceLock(resource_id=port, lock_info=info) for port, info in self._port_locks.items() if info.is_stale()]
+            stale_projects = [ResourceLock(resource_id=project, lock_info=info) for project, info in self._project_locks.items() if info.is_stale()]
+            return StaleLocksSummary(stale_port_locks=stale_ports, stale_project_locks=stale_projects)
+
+    def get_held_locks(self) -> "HeldLocksSummary":
         """Get all locks that are currently held.
 
         Returns:
-            Dictionary with 'port_locks' and 'project_locks' keys, each containing
-            a list of (resource_id, lock_info) tuples for held locks.
+            HeldLocksSummary with lists of held port and project locks
         """
+        from .lock_types import HeldLocksSummary, ResourceLock
+
         with self._master_lock:
-            held_ports = [(port, info) for port, info in self._port_locks.items() if info.is_held()]
-            held_projects = [(project, info) for project, info in self._project_locks.items() if info.is_held()]
-            return {
-                "port_locks": held_ports,
-                "project_locks": held_projects,
-            }
+            held_ports = [ResourceLock(resource_id=port, lock_info=info) for port, info in self._port_locks.items() if info.is_held()]
+            held_projects = [ResourceLock(resource_id=project, lock_info=info) for project, info in self._project_locks.items() if info.is_held()]
+            return HeldLocksSummary(held_port_locks=held_ports, held_project_locks=held_projects)
 
     def force_release_lock(self, resource_type: str, resource_id: str) -> bool:
         """Force-release a lock (use with caution - may cause race conditions).
@@ -374,12 +373,12 @@ class ResourceLockManager:
         stale = self.get_stale_locks()
         released = 0
 
-        for port, _ in stale["port_locks"]:
-            if self.force_release_lock("port", port):
+        for resource_lock in stale.stale_port_locks:
+            if self.force_release_lock("port", resource_lock.resource_id):
                 released += 1
 
-        for project, _ in stale["project_locks"]:
-            if self.force_release_lock("project", project):
+        for resource_lock in stale.stale_project_locks:
+            if self.force_release_lock("project", resource_lock.resource_id):
                 released += 1
 
         if released > 0:
@@ -455,18 +454,19 @@ class ResourceLockManager:
                 "project_locks": {project: info.acquisition_count for project, info in self._project_locks.items()},
             }
 
-    def get_lock_details(self) -> dict[str, dict[str, dict[str, Any]]]:
+    def get_lock_details(self) -> "LockStatusSummary":
         """Get detailed lock information for debugging and status reporting.
 
         Returns:
-            Dictionary with 'port_locks' and 'project_locks' keys, each containing
-            a mapping of resource identifier to detailed lock info dict.
+            LockStatusSummary with mappings of resource identifiers to lock info
         """
+        from .lock_types import LockStatusSummary
+
         with self._master_lock:
-            return {
-                "port_locks": {port: info.to_dict() for port, info in self._port_locks.items()},
-                "project_locks": {project: info.to_dict() for project, info in self._project_locks.items()},
-            }
+            return LockStatusSummary(
+                port_locks=dict(self._port_locks),
+                project_locks=dict(self._project_locks),
+            )
 
     def get_lock_count(self) -> dict[str, int]:
         """Get the total number of locks currently tracked.

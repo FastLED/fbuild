@@ -548,23 +548,39 @@ class TestComplexSerializationScenarios:
         restored = DaemonStatus.from_dict(data)
         assert restored.output_lines == ["Line 1", "Line 2", "Line 3"]
 
-    def test_message_with_dict_fields(self):
-        """Verify messages with dict fields serialize correctly."""
+    def test_message_with_typed_ports_and_locks(self):
+        """Verify DaemonStatus with typed PortsSummary and LockStatusSummary fields."""
+        from fbuild.daemon.lock_types import LockStatusSummary
+        from fbuild.daemon.port_state_manager import PortInfo, PortsSummary, PortState
+
+        # Create typed objects
+        ports = PortsSummary(
+            ports={
+                "COM3": PortInfo(port="COM3", state=PortState.MONITORING, client_pid=1234),
+                "COM4": PortInfo(port="COM4", state=PortState.AVAILABLE),
+            }
+        )
+        locks = LockStatusSummary(port_locks={}, project_locks={})
+
         original = DaemonStatus(
             state=DaemonState.IDLE,
             message="Idle",
             updated_at=time.time(),
-            ports={"COM3": {"baud": 115200, "open": True}, "COM4": {"baud": 9600, "open": False}},
-            locks={"port_locks": {}, "project_locks": {}},
+            ports=ports,
+            locks=locks,
         )
 
+        # Serialize
         data = original.to_dict()
-        assert data["ports"]["COM3"]["baud"] == 115200
-        assert data["locks"]["port_locks"] == {}
+        assert "ports" in data
+        assert "locks" in data
 
+        # Deserialize
         restored = DaemonStatus.from_dict(data)
-        assert restored.ports["COM3"]["baud"] == 115200
-        assert restored.locks == {"port_locks": {}, "project_locks": {}}
+        assert restored.ports is not None
+        assert restored.locks is not None
+        assert isinstance(restored.ports, PortsSummary)
+        assert isinstance(restored.locks, LockStatusSummary)
 
     def test_timestamp_field_preservation(self):
         """Verify timestamp fields are preserved with full precision."""

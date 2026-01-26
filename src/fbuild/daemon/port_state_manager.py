@@ -81,6 +81,71 @@ class PortInfo:
         )
 
 
+@dataclass
+class PortsSummary:
+    """Summary of all tracked ports with type safety.
+
+    Attributes:
+        ports: Dictionary mapping port names to PortInfo objects
+    """
+
+    ports: dict[str, PortInfo]
+
+    def get_port(self, port: str) -> PortInfo | None:
+        """Get info for a specific port.
+
+        Args:
+            port: Port identifier
+
+        Returns:
+            PortInfo for the port, or None if not found
+        """
+        return self.ports.get(port)
+
+    def get_ports_by_state(self, state: PortState) -> list[PortInfo]:
+        """Get all ports in a specific state.
+
+        Args:
+            state: State to filter by
+
+        Returns:
+            List of PortInfo objects in the given state
+        """
+        return [info for info in self.ports.values() if info.state == state]
+
+    def total_ports(self) -> int:
+        """Get total number of tracked ports.
+
+        Returns:
+            Number of ports
+        """
+        return len(self.ports)
+
+    def to_dict(self) -> dict[str, dict[str, Any]]:
+        """Convert to dictionary for JSON serialization.
+
+        Returns:
+            Dictionary mapping port names to port info dictionaries
+        """
+        return {port: info.to_dict() for port, info in self.ports.items()}
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "PortsSummary":
+        """Create PortsSummary from dictionary.
+
+        Args:
+            data: Dictionary mapping port names to port info dictionaries
+
+        Returns:
+            PortsSummary instance with parsed port info
+        """
+        ports = {}
+        for port, info_data in data.items():
+            if isinstance(info_data, dict):
+                ports[port] = PortInfo.from_dict(info_data)
+        return cls(ports=ports)
+
+
 class PortStateManager:
     """Tracks state of all COM ports in use by the daemon.
 
@@ -230,14 +295,28 @@ class PortStateManager:
         with self._lock:
             return port not in self._ports
 
-    def get_ports_summary(self) -> dict[str, dict[str, Any]]:
+    def get_ports_summary(self) -> PortsSummary:
         """Get a summary of all port states for status reporting.
 
         Returns:
-            Dictionary mapping port names to their info as dictionaries
+            PortsSummary with all tracked ports
         """
         with self._lock:
-            return {port: info.to_dict() for port, info in self._ports.items()}
+            # Create copies to avoid race conditions
+            ports_copy = {
+                port: PortInfo(
+                    port=info.port,
+                    state=info.state,
+                    client_pid=info.client_pid,
+                    project_dir=info.project_dir,
+                    environment=info.environment,
+                    operation_id=info.operation_id,
+                    acquired_at=info.acquired_at,
+                    last_activity=info.last_activity,
+                )
+                for port, info in self._ports.items()
+            }
+            return PortsSummary(ports=ports_copy)
 
     def get_port_count(self) -> int:
         """Get the number of ports currently tracked.

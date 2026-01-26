@@ -183,8 +183,9 @@ def display_daemon_stats_compact() -> None:
     }.get(status.state, "❓")
 
     # Count active locks
-    port_locks = status.locks.get("port_locks", {}) if status.locks else {}
-    active_port_locks = sum(1 for info in port_locks.values() if isinstance(info, dict) and info.get("is_held"))
+    active_port_locks = 0
+    if status.locks:
+        active_port_locks = sum(1 for info in status.locks.port_locks.values() if isinstance(info, dict) and info.get("is_held"))
 
     # Build compact stats line
     parts = [f"{state_emoji} Daemon: {status.state.value}"]

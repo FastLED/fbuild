@@ -127,6 +127,41 @@ class FirmwareEntry:
         )
 
 
+@dataclass
+class FirmwareLedgerData:
+    """Container for firmware ledger entries with type safety.
+
+    Attributes:
+        entries: Dictionary mapping port names to FirmwareEntry objects
+    """
+
+    entries: dict[str, FirmwareEntry]
+
+    def to_dict(self) -> dict[str, dict[str, Any]]:
+        """Convert to dictionary for JSON serialization.
+
+        Returns:
+            Dictionary mapping port names to entry dictionaries
+        """
+        return {port: entry.to_dict() for port, entry in self.entries.items()}
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "FirmwareLedgerData":
+        """Create FirmwareLedgerData from dictionary.
+
+        Args:
+            data: Dictionary mapping port names to entry dictionaries
+
+        Returns:
+            FirmwareLedgerData instance with parsed entries
+        """
+        entries = {}
+        for port, entry_data in data.items():
+            if isinstance(entry_data, dict):
+                entries[port] = FirmwareEntry.from_dict(entry_data)
+        return cls(entries=entries)
+
+
 class FirmwareLedger:
     """Manages port to firmware mapping with persistent storage.
 
@@ -166,34 +201,34 @@ class FirmwareLedger:
         """Ensure the parent directory exists."""
         self._ledger_path.parent.mkdir(parents=True, exist_ok=True)
 
-    def _read_ledger(self) -> dict[str, dict[str, Any]]:
+    def _read_ledger(self) -> FirmwareLedgerData:
         """Read the ledger file.
 
         Returns:
-            Dictionary mapping port names to entry dictionaries
+            FirmwareLedgerData instance with all ledger entries
         """
         if not self._ledger_path.exists():
-            return {}
+            return FirmwareLedgerData(entries={})
 
         try:
             with open(self._ledger_path, encoding="utf-8") as f:
                 data = json.load(f)
                 if not isinstance(data, dict):
-                    return {}
-                return data
+                    return FirmwareLedgerData(entries={})
+                return FirmwareLedgerData.from_dict(data)
         except (json.JSONDecodeError, OSError):
-            return {}
+            return FirmwareLedgerData(entries={})
 
-    def _write_ledger(self, data: dict[str, dict[str, Any]]) -> None:
+    def _write_ledger(self, data: FirmwareLedgerData) -> None:
         """Write the ledger file.
 
         Args:
-            data: Dictionary mapping port names to entry dictionaries
+            data: FirmwareLedgerData instance with all ledger entries
         """
         self._ensure_directory()
         try:
             with open(self._ledger_path, "w", encoding="utf-8") as f:
-                json.dump(data, f, indent=2)
+                json.dump(data.to_dict(), f, indent=2)
         except OSError as e:
             raise FirmwareLedgerError(f"Failed to write ledger: {e}") from e
 
@@ -227,9 +262,9 @@ class FirmwareLedger:
         )
 
         with self._lock:
-            data = self._read_ledger()
-            data[port] = entry.to_dict()
-            self._write_ledger(data)
+            ledger_data = self._read_ledger()
+            ledger_data.entries[port] = entry
+            self._write_ledger(ledger_data)
 
     def get_deployment(self, port: str) -> FirmwareEntry | None:
         """Get the deployment entry for a port.
@@ -241,12 +276,11 @@ class FirmwareLedger:
             FirmwareEntry or None if not found or stale
         """
         with self._lock:
-            data = self._read_ledger()
-            entry_data = data.get(port)
-            if entry_data is None:
+            ledger_data = self._read_ledger()
+            entry = ledger_data.entries.get(port)
+            if entry is None:
                 return None
 
-            entry = FirmwareEntry.from_dict(entry_data)
             if entry.is_stale():
                 return None
 
@@ -323,10 +357,10 @@ class FirmwareLedger:
             True if entry was cleared, False if not found
         """
         with self._lock:
-            data = self._read_ledger()
-            if port in data:
-                del data[port]
-                self._write_ledger(data)
+            ledger_data = self._read_ledger()
+            if port in ledger_data.entries:
+                del ledger_data.entries[port]
+                self._write_ledger(ledger_data)
                 return True
             return False
 
@@ -337,9 +371,9 @@ class FirmwareLedger:
             Number of entries cleared
         """
         with self._lock:
-            data = self._read_ledger()
-            count = len(data)
-            self._write_ledger({})
+            ledger_data = self._read_ledger()
+            count = len(ledger_data.entries)
+            self._write_ledger(FirmwareLedgerData(entries={}))
             return count
 
     def clear_stale(
@@ -355,18 +389,17 @@ class FirmwareLedger:
             Number of entries removed
         """
         with self._lock:
-            data = self._read_ledger()
-            original_count = len(data)
+            ledger_data = self._read_ledger()
+            original_count = len(ledger_data.entries)
 
             # Filter out stale entries
-            fresh_data = {}
-            for port, entry_data in data.items():
-                entry = FirmwareEntry.from_dict(entry_data)
+            fresh_entries = {}
+            for port, entry in ledger_data.entries.items():
                 if not entry.is_stale(threshold_seconds):
-                    fresh_data[port] = entry_data
+                    fresh_entries[port] = entry
 
-            self._write_ledger(fresh_data)
-            return original_count - len(fresh_data)
+            self._write_ledger(FirmwareLedgerData(entries=fresh_entries))
+            return original_count - len(fresh_entries)
 
     def get_all(self) -> dict[str, FirmwareEntry]:
         """Get all non-stale entries in the ledger.
@@ -375,10 +408,9 @@ class FirmwareLedger:
             Dictionary mapping port names to FirmwareEntry objects
         """
         with self._lock:
-            data = self._read_ledger()
+            ledger_data = self._read_ledger()
             result = {}
-            for port, entry_data in data.items():
-                entry = FirmwareEntry.from_dict(entry_data)
+            for port, entry in ledger_data.entries.items():
                 if not entry.is_stale():
                     result[port] = entry
             return result

@@ -4,16 +4,20 @@ Daemon status and identity messages.
 This module defines messages for querying daemon status, identity, and operational state.
 """
 
+from __future__ import annotations
+
 import time
 from dataclasses import asdict, dataclass, field
 from typing import Any
 
+from fbuild.daemon.lock_types import LockStatusSummary
 from fbuild.daemon.message_protocol import (
     EnumSerializationMixin,
     deserialize_dataclass,
     serialize_dataclass,
 )
 from fbuild.daemon.messages._base import DaemonState, OperationType
+from fbuild.daemon.port_state_manager import PortsSummary
 
 
 @dataclass
@@ -59,17 +63,45 @@ class DaemonStatus(EnumSerializationMixin):
     output_lines: list[str] = field(default_factory=list)
     exit_code: int | None = None
     port: str | None = None
-    ports: dict[str, Any] = field(default_factory=dict)
-    locks: dict[str, Any] = field(default_factory=dict)
+    ports: PortsSummary | None = None
+    locks: LockStatusSummary | None = None
 
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
-        return serialize_dataclass(self)
+        result = serialize_dataclass(self)
+        # Manually serialize the typed summaries (if they have to_dict method)
+        if self.ports is not None:
+            result["ports"] = self.ports.to_dict() if hasattr(self.ports, "to_dict") else self.ports
+        if self.locks is not None:
+            result["locks"] = self.locks.to_dict() if hasattr(self.locks, "to_dict") else self.locks
+        return result
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "DaemonStatus":
         """Create DaemonStatus from dictionary."""
-        return deserialize_dataclass(cls, data)
+        # Deserialize the typed summaries if present
+        ports_data = data.get("ports")
+        locks_data = data.get("locks")
+
+        # Create a copy of data without ports/locks for base deserialization
+        data_copy = {k: v for k, v in data.items() if k not in ("ports", "locks")}
+        status = deserialize_dataclass(cls, data_copy)
+
+        # Set the typed summaries - try to deserialize, fall back to raw dict
+        if ports_data is not None and isinstance(ports_data, dict):
+            try:
+                status.ports = PortsSummary.from_dict(ports_data)
+            except (KeyError, TypeError):
+                # Legacy format or incompatible data - keep as None
+                status.ports = None
+        if locks_data is not None and isinstance(locks_data, dict):
+            try:
+                status.locks = LockStatusSummary.from_dict(locks_data)
+            except (KeyError, TypeError):
+                # Legacy format or incompatible data - keep as None
+                status.locks = None
+
+        return status
 
     def is_stale(self, timeout_seconds: float = 30.0) -> bool:
         """Check if status hasn't been updated recently."""

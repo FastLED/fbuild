@@ -279,7 +279,7 @@ class TestForceReleaseLockEdgeCases(unittest.TestCase):
 
             # While still in context, check if stale detection works
             stale = self.manager.get_stale_locks()
-            self.assertEqual(len(stale["port_locks"]), 1)
+            self.assertEqual(len(stale.stale_port_locks), 1)
 
 
 class TestCleanupUnusedLocks(unittest.TestCase):
@@ -444,7 +444,7 @@ class TestLockTimeoutVsStaleThreshold(unittest.TestCase):
 
             # Lock should be stale
             stale = manager.get_stale_locks()
-            self.assertEqual(len(stale["port_locks"]), 1)
+            self.assertEqual(len(stale.stale_port_locks), 1)
 
 
 class TestHighContentionScenarios(unittest.TestCase):
@@ -524,19 +524,19 @@ class TestLockDetailsJsonSerialization(unittest.TestCase):
     def test_get_lock_details_empty(self):
         """Empty manager should return empty details."""
         details = self.manager.get_lock_details()
-        self.assertEqual(details["port_locks"], {})
-        self.assertEqual(details["project_locks"], {})
+        self.assertEqual(details.port_locks, {})
+        self.assertEqual(details.project_locks, {})
 
     def test_get_lock_details_with_locks(self):
         """Details should include all lock information."""
         with self.manager.acquire_port_lock("COM3", operation_id="op_123", description="Test operation"):
             details = self.manager.get_lock_details()
 
-            port_info = details["port_locks"]["COM3"]
-            self.assertTrue(port_info["is_held"])
-            self.assertEqual(port_info["holder_operation_id"], "op_123")
-            self.assertEqual(port_info["holder_description"], "Test operation")
-            self.assertEqual(port_info["acquisition_count"], 1)
+            port_info = details.port_locks["COM3"]
+            self.assertTrue(port_info.is_held())
+            self.assertEqual(port_info.holder_operation_id, "op_123")
+            self.assertEqual(port_info.holder_description, "Test operation")
+            self.assertEqual(port_info.acquisition_count, 1)
 
 
 class TestNonBlockingTimeout(unittest.TestCase):
@@ -574,17 +574,17 @@ class TestLockInfoStateConsistency(unittest.TestCase):
         with self.manager.acquire_port_lock(port, operation_id="op_123", description="Test operation"):
             # Verify holder info is set
             details = self.manager.get_lock_details()
-            port_info = details["port_locks"][port]
-            self.assertEqual(port_info["holder_operation_id"], "op_123")
-            self.assertEqual(port_info["holder_description"], "Test operation")
-            self.assertIsNotNone(port_info["holder_thread_id"])
+            port_info = details.port_locks[port]
+            self.assertEqual(port_info.holder_operation_id, "op_123")
+            self.assertEqual(port_info.holder_description, "Test operation")
+            self.assertIsNotNone(port_info.holder_thread_id)
 
         # After release, holder info should be cleared
         details = self.manager.get_lock_details()
-        port_info = details["port_locks"][port]
-        self.assertIsNone(port_info["holder_operation_id"])
-        self.assertIsNone(port_info["holder_description"])
-        self.assertIsNone(port_info["holder_thread_id"])
+        port_info = details.port_locks[port]
+        self.assertIsNone(port_info.holder_operation_id)
+        self.assertIsNone(port_info.holder_description)
+        self.assertIsNone(port_info.holder_thread_id)
 
     def test_lock_info_timestamps_monotonic(self):
         """Timestamps should be monotonically increasing."""
@@ -637,7 +637,7 @@ class TestExceptionHandlingInContextManager(unittest.TestCase):
 
         # Lock should not be held
         held = self.manager.get_held_locks()
-        self.assertEqual(len(held["port_locks"]), 0)
+        self.assertEqual(len(held.held_port_locks), 0)
 
         # Should be able to acquire again
         with self.manager.acquire_port_lock(port, blocking=False):
@@ -655,7 +655,7 @@ class TestExceptionHandlingInContextManager(unittest.TestCase):
 
         # Lock should not be held
         held = self.manager.get_held_locks()
-        self.assertEqual(len(held["port_locks"]), 0)
+        self.assertEqual(len(held.held_port_locks), 0)
 
     def test_lock_released_on_system_exit(self):
         """Lock should be released even on SystemExit."""
@@ -669,7 +669,7 @@ class TestExceptionHandlingInContextManager(unittest.TestCase):
 
         # Lock should not be held
         held = self.manager.get_held_locks()
-        self.assertEqual(len(held["port_locks"]), 0)
+        self.assertEqual(len(held.held_port_locks), 0)
 
 
 class TestReentrantAcquisitionAttempts(unittest.TestCase):
@@ -959,8 +959,8 @@ class TestGetHeldLocksEdgeCases(unittest.TestCase):
     def test_get_held_locks_empty(self):
         """get_held_locks should return empty lists when no locks held."""
         held = self.manager.get_held_locks()
-        self.assertEqual(held["port_locks"], [])
-        self.assertEqual(held["project_locks"], [])
+        self.assertEqual(held.held_port_locks, [])
+        self.assertEqual(held.held_project_locks, [])
 
     def test_get_held_locks_with_mixed_state(self):
         """get_held_locks should only return currently held locks."""
@@ -971,8 +971,8 @@ class TestGetHeldLocksEdgeCases(unittest.TestCase):
                 pass
 
             held = self.manager.get_held_locks()
-            self.assertEqual(len(held["port_locks"]), 1)
-            self.assertEqual(held["port_locks"][0][0], "COM_HELD")
+            self.assertEqual(len(held.held_port_locks), 1)
+            self.assertEqual(held.held_port_locks[0].resource_id, "COM_HELD")
 
 
 class TestGetStaleLocksBoundaryConditions(unittest.TestCase):
@@ -994,7 +994,7 @@ class TestGetStaleLocksBoundaryConditions(unittest.TestCase):
             time.sleep(0.001)
 
             stale = self.manager.get_stale_locks()
-            self.assertEqual(len(stale["port_locks"]), 1)
+            self.assertEqual(len(stale.stale_port_locks), 1)
 
     def test_lock_just_before_timeout(self):
         """Lock just before timeout should not be considered stale."""
@@ -1003,7 +1003,7 @@ class TestGetStaleLocksBoundaryConditions(unittest.TestCase):
         with self.manager.acquire_port_lock(port, timeout=10.0):
             # Lock was just acquired, well within timeout
             stale = self.manager.get_stale_locks()
-            self.assertEqual(len(stale["port_locks"]), 0)
+            self.assertEqual(len(stale.stale_port_locks), 0)
 
 
 class TestConcurrentAcquisitionOfNewLocks(unittest.TestCase):
@@ -1131,7 +1131,7 @@ class TestNegativeAndZeroTimeoutEdgeCases(unittest.TestCase):
 
             # But should be immediately stale
             stale = self.manager.get_stale_locks()
-            self.assertEqual(len(stale["port_locks"]), 1)
+            self.assertEqual(len(stale.stale_port_locks), 1)
 
     def test_very_small_timeout(self):
         """Lock with very small timeout (nanoseconds) should be immediately stale."""
@@ -1285,8 +1285,8 @@ class TestLockManagerSingletonBehavior(unittest.TestCase):
             # Manager2 should also be able to acquire (different lock)
             with manager2.acquire_port_lock("COM_SHARED", blocking=False):
                 # Both should report the lock as held
-                self.assertEqual(len(manager1.get_held_locks()["port_locks"]), 1)
-                self.assertEqual(len(manager2.get_held_locks()["port_locks"]), 1)
+                self.assertEqual(len(manager1.get_held_locks().held_port_locks), 1)
+                self.assertEqual(len(manager2.get_held_locks().held_port_locks), 1)
 
     def test_manager_isolation_with_cleanup(self):
         """Cleanup on one manager should not affect another."""
@@ -1561,7 +1561,7 @@ class TestLockDescriptionEdgeCases(unittest.TestCase):
 
         with self.manager.acquire_port_lock("COM_LONG", description=long_desc):
             details = self.manager.get_lock_details()
-            self.assertEqual(details["port_locks"]["COM_LONG"]["holder_description"], long_desc)
+            self.assertEqual(details.port_locks["COM_LONG"].holder_description, long_desc)
 
     def test_description_with_special_chars(self):
         """Description with special characters should work."""
@@ -1569,7 +1569,7 @@ class TestLockDescriptionEdgeCases(unittest.TestCase):
 
         with self.manager.acquire_port_lock("COM_SPECIAL", description=special_desc):
             details = self.manager.get_lock_details()
-            self.assertEqual(details["port_locks"]["COM_SPECIAL"]["holder_description"], special_desc)
+            self.assertEqual(details.port_locks["COM_SPECIAL"].holder_description, special_desc)
 
     def test_description_with_newlines(self):
         """Description with newlines should work."""
@@ -1577,14 +1577,14 @@ class TestLockDescriptionEdgeCases(unittest.TestCase):
 
         with self.manager.acquire_port_lock("COM_MULTI", description=multiline_desc):
             details = self.manager.get_lock_details()
-            self.assertEqual(details["port_locks"]["COM_MULTI"]["holder_description"], multiline_desc)
+            self.assertEqual(details.port_locks["COM_MULTI"].holder_description, multiline_desc)
 
     def test_none_vs_empty_description(self):
         """None description should generate default, empty should use empty."""
         # None description
         with self.manager.acquire_port_lock("COM_NONE", description=None):
             details = self.manager.get_lock_details()
-            desc = details["port_locks"]["COM_NONE"]["holder_description"]
+            desc = details.port_locks["COM_NONE"].holder_description
             # Should have generated a default description
             self.assertIsNotNone(desc)
             self.assertIn("COM_NONE", desc)
@@ -1668,8 +1668,8 @@ class TestPortProjectLockInteraction(unittest.TestCase):
             with self.manager.acquire_project_lock("SHARED_ID"):
                 # Both should be held
                 held = self.manager.get_held_locks()
-                self.assertEqual(len(held["port_locks"]), 1)
-                self.assertEqual(len(held["project_locks"]), 1)
+                self.assertEqual(len(held.held_port_locks), 1)
+                self.assertEqual(len(held.held_project_locks), 1)
 
     def test_cleanup_affects_both_lock_types(self):
         """cleanup_unused_locks should affect both port and project locks."""

@@ -29,38 +29,39 @@ def get_lock_status() -> dict[str, Any]:
         ...         print(f"Port {port} locked by: {info.get('holder_description')}")
     """
     status = read_status_file()
-    locks = status.locks if hasattr(status, "locks") and status.locks else {}
+    locks = status.locks
 
     # Extract stale locks
     stale_locks: list[dict[str, Any]] = []
 
-    port_locks = locks.get("port_locks", {})
-    for port, info in port_locks.items():
-        if isinstance(info, dict) and info.get("is_stale"):
-            stale_locks.append(
-                {
-                    "type": "port",
-                    "resource": port,
-                    "holder": info.get("holder_description"),
-                    "hold_duration": info.get("hold_duration"),
-                }
-            )
+    if locks:
+        # Iterate over port locks
+        for port, info in locks.port_locks.items():
+            if isinstance(info, dict) and info.get("is_stale"):
+                stale_locks.append(
+                    {
+                        "type": "port",
+                        "resource": port,
+                        "holder": info.get("holder_description"),
+                        "hold_duration": info.get("hold_duration"),
+                    }
+                )
 
-    project_locks = locks.get("project_locks", {})
-    for project, info in project_locks.items():
-        if isinstance(info, dict) and info.get("is_stale"):
-            stale_locks.append(
-                {
-                    "type": "project",
-                    "resource": project,
-                    "holder": info.get("holder_description"),
-                    "hold_duration": info.get("hold_duration"),
-                }
-            )
+        # Iterate over project locks
+        for project, info in locks.project_locks.items():
+            if isinstance(info, dict) and info.get("is_stale"):
+                stale_locks.append(
+                    {
+                        "type": "project",
+                        "resource": project,
+                        "holder": info.get("holder_description"),
+                        "hold_duration": info.get("hold_duration"),
+                    }
+                )
 
     return {
-        "port_locks": port_locks,
-        "project_locks": project_locks,
+        "port_locks": locks.port_locks if locks else {},
+        "project_locks": locks.project_locks if locks else {},
         "stale_locks": stale_locks,
     }
 
