@@ -112,6 +112,34 @@ class LibraryCompiler:
             gcc_path = compiler_path.parent / "avr-gcc"
             gxx_path = compiler_path.parent / "avr-g++"
 
+            # Find common base directory for relative path display
+            # Try to use lib_dir as base, or find common parent of all sources
+            try:
+                base_dir = lib_dir
+                # Verify all sources are under lib_dir
+                for src in source_files:
+                    src.relative_to(lib_dir)
+            except ValueError:
+                # If not all under lib_dir, find common parent
+                if source_files:
+                    base_dir = Path(*Path(source_files[0]).parts[:1])  # Start with root
+                    for src in source_files:
+                        try:
+                            src.relative_to(base_dir)
+                        except ValueError:
+                            # Find common parent
+                            parts1 = base_dir.parts
+                            parts2 = src.parts
+                            common = []
+                            for p1, p2 in zip(parts1, parts2):
+                                if p1 == p2:
+                                    common.append(p1)
+                                else:
+                                    break
+                            base_dir = Path(*common) if common else Path(".")
+                else:
+                    base_dir = lib_dir
+
             for source in source_files:
                 # Determine compiler based on extension
                 if source.suffix in [".cpp", ".cc", ".cxx"]:
@@ -158,13 +186,20 @@ class LibraryCompiler:
                 # Store command for rebuild detection
                 compile_commands.append(" ".join(cmd))
 
+                # Compute relative path for display (especially useful for unity builds)
+                try:
+                    rel_path_str = str(source.relative_to(base_dir))
+                except ValueError:
+                    # Fallback to filename if relative path fails
+                    rel_path_str = source.name
+
                 # Compile
                 file_index = source_files.index(source) + 1  # 1-based indexing
                 total_files = len(source_files)
                 if progress_callback:
-                    progress_callback.on_file_start(source.name, file_index, total_files)
+                    progress_callback.on_file_start(rel_path_str, file_index, total_files)
                 elif show_progress:
-                    log_detail(f"Compiling {source.name}...")
+                    log_detail(f"Compiling {rel_path_str}...")
 
                 result = safe_run(cmd, capture_output=True, text=True, encoding="utf-8")
 
@@ -172,7 +207,7 @@ class LibraryCompiler:
                     raise LibraryCompilationError(f"Failed to compile {source}:\n{result.stderr}")
 
                 if progress_callback:
-                    progress_callback.on_file_complete(source.name, file_index, total_files)
+                    progress_callback.on_file_complete(rel_path_str, file_index, total_files)
 
                 object_files.append(obj_file)
 

@@ -662,7 +662,9 @@ class LibraryManagerESP32:
                             object_files.append(result_obj_file)
 
                             if show_progress:
-                                log_detail(f"[{completed_count}/{total_count}] {source.name}", indent=8)
+                                # Show relative path from library src_dir for clarity (especially for unity builds)
+                                rel_path = source.relative_to(library.src_dir)
+                                log_detail(f"[{completed_count}/{total_count}] {rel_path}", indent=8)
 
                         except LibraryErrorESP32 as e:
                             # Signal shutdown and cancel remaining jobs

@@ -428,8 +428,9 @@ class ConfigurableCompiler(ICompiler):
         """
         object_files = []
 
-        # Get core sources
+        # Get core sources and directory for relative path display
         core_sources = self.framework.get_core_sources(self.core)  # type: ignore[attr-defined]
+        core_dir = self.framework.get_core_dir(self.core)  # type: ignore[attr-defined]
 
         if self.show_progress:
             log_detail(f"Compiling {len(core_sources)} core source files...")
@@ -448,13 +449,20 @@ class ConfigurableCompiler(ICompiler):
         try:
             # Compile each core source
             for idx, source in enumerate(core_sources, 1):
+                # Compute relative path for display (especially useful for unity builds)
+                try:
+                    rel_path_str = str(source.relative_to(core_dir))
+                except ValueError:
+                    # Fallback to filename if relative path fails
+                    rel_path_str = source.name
+
                 # Notify progress callback of file start
                 if progress_callback is not None:
-                    progress_callback.on_file_start(source.name, idx, total_sources)
+                    progress_callback.on_file_start(rel_path_str, idx, total_sources)
 
                 # Update progress bar BEFORE compilation for better UX
                 if progress_bar is not None:
-                    progress_bar.set_description(f"Compiling {source.name[:30]}")
+                    progress_bar.set_description(f"Compiling {rel_path_str[:30]}")
 
                 try:
                     obj_path = core_obj_dir / f"{source.stem}.o"
@@ -463,7 +471,7 @@ class ConfigurableCompiler(ICompiler):
                     if not self.needs_rebuild(source, obj_path):
                         object_files.append(obj_path)
                         if progress_callback is not None:
-                            progress_callback.on_file_complete(source.name, idx, total_sources, cached=True)
+                            progress_callback.on_file_complete(rel_path_str, idx, total_sources, cached=True)
                         if progress_bar is not None:
                             progress_bar.update(1)
                         continue
@@ -471,14 +479,14 @@ class ConfigurableCompiler(ICompiler):
                     compiled_obj = self.compile_source(source, obj_path)
                     object_files.append(compiled_obj)
                     if progress_callback is not None:
-                        progress_callback.on_file_complete(source.name, idx, total_sources, cached=False)
+                        progress_callback.on_file_complete(rel_path_str, idx, total_sources, cached=False)
                     if progress_bar is not None:
                         progress_bar.update(1)
                 except ConfigurableCompilerError as e:
                     if self.show_progress:
-                        print(f"Warning: Failed to compile {source.name}: {e}")
+                        print(f"Warning: Failed to compile {rel_path_str}: {e}")
                     if progress_callback is not None:
-                        progress_callback.on_file_complete(source.name, idx, total_sources, cached=False)
+                        progress_callback.on_file_complete(rel_path_str, idx, total_sources, cached=False)
                     if progress_bar is not None:
                         progress_bar.update(1)
         finally:
