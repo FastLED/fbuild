@@ -118,8 +118,8 @@ STALE_LOCK_CHECK_INTERVAL = 60  # Check for stale locks every 60 seconds
 DEAD_CLIENT_CHECK_INTERVAL = 10  # Check for dead clients every 10 seconds
 IDLE_TIMEOUT = 43200  # 12 hours (fallback)
 # Self-eviction timeout: if daemon has 0 clients AND 0 ops for this duration, shutdown
-# Per CLAUDE.md: "Daemon auto-evicts after 4 seconds of inactivity"
-SELF_EVICTION_TIMEOUT = 4.0  # 4 seconds - matches documented behavior
+# Increased to 30s to accommodate validation workflows (deploy + 5s USB re-enum + 15s port check = 20s gap)
+SELF_EVICTION_TIMEOUT = 30.0  # 30 seconds - accommodates validation workflows
 
 
 def set_daemon_context(context: DaemonContext) -> None:
@@ -384,11 +384,22 @@ def handle_device_request(config: DeviceRequestConfig, context: DaemonContext) -
         # Process request
         response_data = config.handler(request_data, context)
 
+        # Determine response file path
+        # If response includes _client_id, use per-client file (SerialMonitor API)
+        # Otherwise use shared response file (device management)
+        client_id = response_data.pop("_client_id", None)
+        if client_id:
+            # Per-client response file (SerialMonitor API)
+            response_file = config.response_file.parent / f"{config.response_file.stem}_{client_id}.json"
+        else:
+            # Shared response file (device management)
+            response_file = config.response_file
+
         # Write response atomically
-        temp_file = config.response_file.with_suffix(".tmp")
+        temp_file = response_file.with_suffix(".tmp")
         with open(temp_file, "w") as f:
             json.dump(response_data, f, indent=2)
-        temp_file.replace(config.response_file)
+        temp_file.replace(response_file)
 
         return True
 
@@ -601,19 +612,26 @@ def handle_serial_monitor_attach_request(request_data: dict[str, Any], context: 
         context: Daemon context
 
     Returns:
-        Response dictionary
+        Response dictionary (includes client_id for response file routing)
     """
     try:
         request = SerialMonitorAttachRequest.from_dict(request_data)
         response = _serial_monitor_processor.handle_attach(request, context)
-        return response.to_dict()
+        response_dict = response.to_dict()
+        # Include client_id in response for per-client file routing
+        response_dict["_client_id"] = request.client_id
+        return response_dict
     except KeyboardInterrupt:
         raise
     except Exception as e:
         logging.error(f"Error handling serial monitor attach: {e}", exc_info=True)
         from fbuild.daemon.messages import SerialMonitorResponse
 
-        return SerialMonitorResponse(success=False, message=f"Error: {e}").to_dict()
+        response_dict = SerialMonitorResponse(success=False, message=f"Error: {e}").to_dict()
+        # Try to include client_id if available
+        if "client_id" in request_data:
+            response_dict["_client_id"] = request_data["client_id"]
+        return response_dict
 
 
 def handle_serial_monitor_detach_request(request_data: dict[str, Any], context: DaemonContext) -> dict[str, Any]:
@@ -624,19 +642,24 @@ def handle_serial_monitor_detach_request(request_data: dict[str, Any], context: 
         context: Daemon context
 
     Returns:
-        Response dictionary
+        Response dictionary (includes client_id for response file routing)
     """
     try:
         request = SerialMonitorDetachRequest.from_dict(request_data)
         response = _serial_monitor_processor.handle_detach(request, context)
-        return response.to_dict()
+        response_dict = response.to_dict()
+        response_dict["_client_id"] = request.client_id
+        return response_dict
     except KeyboardInterrupt:
         raise
     except Exception as e:
         logging.error(f"Error handling serial monitor detach: {e}", exc_info=True)
         from fbuild.daemon.messages import SerialMonitorResponse
 
-        return SerialMonitorResponse(success=False, message=f"Error: {e}").to_dict()
+        response_dict = SerialMonitorResponse(success=False, message=f"Error: {e}").to_dict()
+        if "client_id" in request_data:
+            response_dict["_client_id"] = request_data["client_id"]
+        return response_dict
 
 
 def handle_serial_monitor_poll_request(request_data: dict[str, Any], context: DaemonContext) -> dict[str, Any]:
@@ -647,19 +670,24 @@ def handle_serial_monitor_poll_request(request_data: dict[str, Any], context: Da
         context: Daemon context
 
     Returns:
-        Response dictionary
+        Response dictionary (includes client_id for response file routing)
     """
     try:
         request = SerialMonitorPollRequest.from_dict(request_data)
         response = _serial_monitor_processor.handle_poll(request, context)
-        return response.to_dict()
+        response_dict = response.to_dict()
+        response_dict["_client_id"] = request.client_id
+        return response_dict
     except KeyboardInterrupt:
         raise
     except Exception as e:
         logging.debug(f"Error handling serial monitor poll: {e}")  # Debug level to avoid spam
         from fbuild.daemon.messages import SerialMonitorResponse
 
-        return SerialMonitorResponse(success=False, message=f"Error: {e}").to_dict()
+        response_dict = SerialMonitorResponse(success=False, message=f"Error: {e}").to_dict()
+        if "client_id" in request_data:
+            response_dict["_client_id"] = request_data["client_id"]
+        return response_dict
 
 
 def handle_serial_write_request(request_data: dict[str, Any], context: DaemonContext) -> dict[str, Any]:
@@ -670,19 +698,24 @@ def handle_serial_write_request(request_data: dict[str, Any], context: DaemonCon
         context: Daemon context
 
     Returns:
-        Response dictionary
+        Response dictionary (includes client_id for response file routing)
     """
     try:
         request = SerialWriteRequest.from_dict(request_data)
         response = _serial_monitor_processor.handle_write(request, context)
-        return response.to_dict()
+        response_dict = response.to_dict()
+        response_dict["_client_id"] = request.client_id
+        return response_dict
     except KeyboardInterrupt:
         raise
     except Exception as e:
         logging.error(f"Error handling serial write: {e}", exc_info=True)
         from fbuild.daemon.messages import SerialMonitorResponse
 
-        return SerialMonitorResponse(success=False, message=f"Error: {e}").to_dict()
+        response_dict = SerialMonitorResponse(success=False, message=f"Error: {e}").to_dict()
+        if "client_id" in request_data:
+            response_dict["_client_id"] = request_data["client_id"]
+        return response_dict
 
 
 def process_connection_files(registry: ConnectionRegistry, daemon_dir: Path) -> None:

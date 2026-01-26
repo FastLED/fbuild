@@ -140,8 +140,10 @@ class SharedSerialManager:
         self._writer_conditions: dict[str, threading.Condition] = {}  # port -> writer condition
         self._max_buffer_size = max_buffer_size
         self._reader_callbacks: dict[str, dict[str, Callable[[str, str], None]]] = {}  # port -> {client_id -> callback}
+        # Port open queuing (Fix #4) - serialize concurrent open attempts per port
+        self._port_open_locks: dict[str, threading.Lock] = {}  # port -> open lock
 
-    def open_port(self, port: str, baud_rate: int, client_id: str) -> bool:
+    def open_port(self, port: str, baud_rate: int, client_id: str, progress_callback: Callable[[int, int, float], None] | None = None) -> bool:
         """Open a serial port if not already open.
 
         The client that opens the port becomes the owner. Only the owner or the
@@ -151,64 +153,94 @@ class SharedSerialManager:
             port: Serial port identifier (e.g., "COM3", "/dev/ttyUSB0")
             baud_rate: Baud rate for the serial connection
             client_id: Unique identifier for the client
+            progress_callback: Optional callback for retry progress (attempt, max_retries, delay)
 
         Returns:
             True if port was opened successfully or was already open, False on error
         """
-        with self._lock:
-            # Check if port is already open
-            if port in self._sessions and self._sessions[port].is_open:
-                logging.info(f"Port {port} already open (requested by {client_id})")
-                return True
+        # Port open queuing (Fix #4) - serialize concurrent open attempts
+        # Ensure only one thread can attempt to open a specific port at a time
+        if port not in self._port_open_locks:
+            with self._lock:
+                if port not in self._port_open_locks:
+                    self._port_open_locks[port] = threading.Lock()
 
-            # Try to open the port
-            try:
-                import serial
+        # Acquire port-specific lock (queues concurrent open attempts)
+        with self._port_open_locks[port]:
+            with self._lock:
+                # Check if port is already open (may have been opened by queued client)
+                if port in self._sessions and self._sessions[port].is_open:
+                    logging.info(f"Port {port} already open (requested by {client_id})")
+                    return True
 
-                ser = serial.Serial(
-                    port,
-                    baud_rate,
-                    timeout=SERIAL_READ_TIMEOUT,
-                )
+                # Try to open the port with retry logic for Windows USB-CDC re-enumeration
+                # After esptool hard_reset, Windows may need 10-15 seconds to re-enumerate the port
+                max_retries = 15
+                retry_delay = 1.0  # Start with 1 second, will backoff
 
-                # Create session
-                session = SerialSession(
-                    port=port,
-                    baud_rate=baud_rate,
-                    is_open=True,
-                    owner_client_id=client_id,
-                    started_at=time.time(),
-                    output_buffer=deque(maxlen=self._max_buffer_size),
-                )
-                self._sessions[port] = session
-                self._serial_ports[port] = ser
-                self._writer_locks[port] = threading.Lock()
-                self._writer_conditions[port] = threading.Condition(self._writer_locks[port])
-                self._reader_callbacks[port] = {}
+                for attempt in range(max_retries):
+                    try:
+                        # Enhanced retry feedback (Fix #3)
+                        if attempt > 0 and progress_callback:
+                            progress_callback(attempt, max_retries, retry_delay)
 
-                # Start background reader thread
-                stop_event = threading.Event()
-                self._stop_events[port] = stop_event
-                reader_thread = threading.Thread(
-                    target=self._serial_reader_loop,
-                    args=(port, ser, stop_event),
-                    name=f"SerialReader-{port}",
-                    daemon=True,
-                )
-                self._reader_threads[port] = reader_thread
-                reader_thread.start()
+                        import serial
 
-                logging.info(f"Opened serial port {port} at {baud_rate} baud (owner: {client_id})")
-                return True
+                        ser = serial.Serial(
+                            port,
+                            baud_rate,
+                            timeout=SERIAL_READ_TIMEOUT,
+                        )
 
-            except ImportError:
-                logging.error("pyserial not installed. Install with: pip install pyserial")
-                return False
-            except KeyboardInterrupt:  # noqa: KBI002
-                raise
-            except Exception as e:
-                logging.error(f"Failed to open serial port {port}: {e}")
-                return False
+                        # Create session
+                        session = SerialSession(
+                            port=port,
+                            baud_rate=baud_rate,
+                            is_open=True,
+                            owner_client_id=client_id,
+                            started_at=time.time(),
+                            output_buffer=deque(maxlen=self._max_buffer_size),
+                        )
+                        self._sessions[port] = session
+                        self._serial_ports[port] = ser
+                        self._writer_locks[port] = threading.Lock()
+                        self._writer_conditions[port] = threading.Condition(self._writer_locks[port])
+                        self._reader_callbacks[port] = {}
+
+                        # Start background reader thread
+                        stop_event = threading.Event()
+                        self._stop_events[port] = stop_event
+                        reader_thread = threading.Thread(
+                            target=self._serial_reader_loop,
+                            args=(port, ser, stop_event),
+                            name=f"SerialReader-{port}",
+                            daemon=True,
+                        )
+                        self._reader_threads[port] = reader_thread
+                        reader_thread.start()
+
+                        if attempt > 0:
+                            logging.info(f"Opened serial port {port} at {baud_rate} baud after {attempt + 1} attempts (owner: {client_id})")
+                        else:
+                            logging.info(f"Opened serial port {port} at {baud_rate} baud (owner: {client_id})")
+                        return True
+
+                    except ImportError:
+                        logging.error("pyserial not installed. Install with: pip install pyserial")
+                        return False
+                    except KeyboardInterrupt:  # noqa: KBI002
+                        raise
+                    except Exception as e:
+                        if attempt < max_retries - 1:
+                            # Retry with exponential backoff (1s, 1s, 1s, 2s, 2s, 2s, 3s, ...)
+                            retry_delay = min(1.0 + (attempt // 3), 3.0)
+                            logging.debug(f"Failed to open {port} (attempt {attempt + 1}/{max_retries}): {e}. Retrying in {retry_delay}s...")
+                            time.sleep(retry_delay)
+                        else:
+                            logging.error(f"Failed to open serial port {port} after {max_retries} attempts: {e}")
+                            return False
+
+                return False  # Should never reach here, but just in case
 
     def close_port(self, port: str, client_id: str) -> bool:
         """Close a serial port.

@@ -87,12 +87,14 @@ class SerialMonitorAPIProcessor:
 
                     logging.info(f"[SerialMonitor] Client {request.client_id} attached to existing session on {request.port}")
                     return SerialMonitorResponse(
+                        request_id=request.request_id,
                         success=True,
                         message=f"Attached to existing session on {request.port}",
                     )
                 else:
                     logging.error(f"[SerialMonitor] Failed to attach client {request.client_id} to {request.port}")
                     return SerialMonitorResponse(
+                        request_id=request.request_id,
                         success=False,
                         message="Failed to attach to session",
                     )
@@ -108,6 +110,7 @@ class SerialMonitorAPIProcessor:
                 if not success:
                     logging.error(f"[SerialMonitor] Failed to open port {request.port}")
                     return SerialMonitorResponse(
+                        request_id=request.request_id,
                         success=False,
                         message=f"Failed to open port {request.port}",
                     )
@@ -121,6 +124,7 @@ class SerialMonitorAPIProcessor:
 
                     logging.info(f"[SerialMonitor] Opened {request.port} and attached client {request.client_id}")
                     return SerialMonitorResponse(
+                        request_id=request.request_id,
                         success=True,
                         message=f"Opened port {request.port} and attached",
                     )
@@ -128,6 +132,7 @@ class SerialMonitorAPIProcessor:
                     # Failed to attach after opening (shouldn't happen)
                     logging.error(f"[SerialMonitor] Opened {request.port} but failed to attach client {request.client_id}")
                     return SerialMonitorResponse(
+                        request_id=request.request_id,
                         success=False,
                         message="Failed to attach after opening port",
                     )
@@ -136,6 +141,7 @@ class SerialMonitorAPIProcessor:
                 # Port not open and open_if_needed=False
                 logging.warning(f"[SerialMonitor] Port {request.port} not open and open_if_needed=False")
                 return SerialMonitorResponse(
+                    request_id=request.request_id,
                     success=False,
                     message=f"Port {request.port} not open (open_if_needed=False)",
                 )
@@ -145,6 +151,7 @@ class SerialMonitorAPIProcessor:
         except Exception as e:
             logging.error(f"[SerialMonitor] Error in attach: {e}")
             return SerialMonitorResponse(
+                request_id=request.request_id,
                 success=False,
                 message=f"Error: {e}",
             )
@@ -181,12 +188,14 @@ class SerialMonitorAPIProcessor:
 
                 logging.info(f"[SerialMonitor] Client {request.client_id} detached from {request.port}")
                 return SerialMonitorResponse(
+                    request_id=request.request_id,
                     success=True,
                     message=f"Detached from {request.port}",
                 )
             else:
                 logging.warning(f"[SerialMonitor] Client {request.client_id} not attached to {request.port}")
                 return SerialMonitorResponse(
+                    request_id=request.request_id,
                     success=False,
                     message="Not attached to session",
                 )
@@ -196,6 +205,7 @@ class SerialMonitorAPIProcessor:
         except Exception as e:
             logging.error(f"[SerialMonitor] Error in detach: {e}")
             return SerialMonitorResponse(
+                request_id=request.request_id,
                 success=False,
                 message=f"Error: {e}",
             )
@@ -226,6 +236,7 @@ class SerialMonitorAPIProcessor:
             session_info = manager.get_session_info(request.port)
             if not session_info:
                 return SerialMonitorResponse(
+                    request_id=request.request_id,
                     success=False,
                     message=f"Port {request.port} not open",
                 )
@@ -233,6 +244,7 @@ class SerialMonitorAPIProcessor:
             reader_ids = session_info.get("reader_client_ids", [])
             if request.client_id not in reader_ids:
                 return SerialMonitorResponse(
+                    request_id=request.request_id,
                     success=False,
                     message="Not attached as reader",
                 )
@@ -259,6 +271,7 @@ class SerialMonitorAPIProcessor:
                 logging.debug(f"[SerialMonitor] Returning {len(new_lines)} new lines (last_index={request.last_index}, current={current_index})")
 
             return SerialMonitorResponse(
+                request_id=request.request_id,
                 success=True,
                 message="Poll successful",
                 lines=new_lines,
@@ -270,6 +283,7 @@ class SerialMonitorAPIProcessor:
         except Exception as e:
             logging.error(f"[SerialMonitor] Error in poll: {e}")
             return SerialMonitorResponse(
+                request_id=request.request_id,
                 success=False,
                 message=f"Error: {e}",
             )
@@ -300,11 +314,16 @@ class SerialMonitorAPIProcessor:
 
             data = base64.b64decode(request.data)
 
+            # Note: SerialWriteRequest doesn't have request_id yet
+            # For now, use empty string for compatibility
+            req_id = getattr(request, "request_id", "")
+
             # Acquire writer if requested
             if request.acquire_writer:
                 success = manager.acquire_writer(request.port, request.client_id, timeout=10.0)
                 if not success:
                     return SerialMonitorResponse(
+                        request_id=req_id,
                         success=False,
                         message="Failed to acquire writer lock",
                     )
@@ -315,12 +334,14 @@ class SerialMonitorAPIProcessor:
 
                 if bytes_written < 0:
                     return SerialMonitorResponse(
+                        request_id=req_id,
                         success=False,
                         message="Write failed",
                     )
 
                 logging.info(f"[SerialMonitor] Wrote {bytes_written} bytes to {request.port}")
                 return SerialMonitorResponse(
+                    request_id=req_id,
                     success=True,
                     message=f"Wrote {bytes_written} bytes",
                     bytes_written=bytes_written,
@@ -335,7 +356,9 @@ class SerialMonitorAPIProcessor:
             raise
         except Exception as e:
             logging.error(f"[SerialMonitor] Error in write: {e}")
+            req_id = getattr(request, "request_id", "") if "request" in locals() else ""
             return SerialMonitorResponse(
+                request_id=req_id,
                 success=False,
                 message=f"Error: {e}",
             )

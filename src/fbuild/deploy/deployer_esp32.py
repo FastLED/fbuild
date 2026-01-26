@@ -360,6 +360,17 @@ class ESP32Deployer(IDeployer):
 
             return DeploymentResult(success=False, message=f"Deployment failed: {error_msg}", port=port)
 
+        # Wait for USB-CDC driver to re-enumerate after hard_reset
+        # Windows needs significantly longer for ESP32-S3 USB-Serial/JTAG to re-enumerate
+        # This prevents "Failed to attach" errors when immediately trying to open serial monitor
+        if sys.platform == "win32":
+            if self.verbose:
+                print("⏳ Waiting for Windows USB-CDC driver to re-enumerate port...")
+            time.sleep(5.0)  # 5 second delay for Windows port re-enumeration (increased for ESP32-S3)
+        else:
+            # Linux/Mac typically faster, but still add small delay for safety
+            time.sleep(2.0)
+
         return DeploymentResult(success=True, message="Firmware uploaded successfully", port=port)
 
     def _get_chip_type(self, mcu: str) -> str:

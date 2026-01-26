@@ -6,6 +6,7 @@ read-only monitoring of serial ports via the daemon.
 """
 
 import time
+import uuid
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -19,6 +20,7 @@ class SerialMonitorAttachRequest:
     Used by fbuild.api.SerialMonitor to attach to daemon-managed serial port.
 
     Attributes:
+        request_id: Unique identifier for this request (UUID) - for response correlation
         client_id: Unique identifier for the client (UUID)
         port: Serial port to attach to (e.g., "COM13", "/dev/ttyUSB0")
         baud_rate: Baud rate for the connection (default: 115200)
@@ -26,8 +28,9 @@ class SerialMonitorAttachRequest:
         timestamp: Unix timestamp when request was created
     """
 
-    client_id: str
-    port: str
+    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    client_id: str = ""
+    port: str = ""
     baud_rate: int = 115200
     open_if_needed: bool = True
     timestamp: float = field(default_factory=time.time)
@@ -47,13 +50,15 @@ class SerialMonitorDetachRequest:
     """Client → Daemon: Request to detach from serial session.
 
     Attributes:
+        request_id: Unique identifier for this request (UUID) - for response correlation
         client_id: Unique identifier for the client
         port: Serial port to detach from
         timestamp: Unix timestamp when request was created
     """
 
-    client_id: str
-    port: str
+    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    client_id: str = ""
+    port: str = ""
     timestamp: float = field(default_factory=time.time)
 
     def to_dict(self) -> dict[str, Any]:
@@ -74,6 +79,7 @@ class SerialMonitorPollRequest:
     re-reading old lines.
 
     Attributes:
+        request_id: Unique identifier for this request (UUID) - for response correlation
         client_id: Unique identifier for the client
         port: Serial port to poll
         last_index: Last line index received (0 for initial poll)
@@ -81,8 +87,9 @@ class SerialMonitorPollRequest:
         timestamp: Unix timestamp when request was created
     """
 
-    client_id: str
-    port: str
+    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    client_id: str = ""
+    port: str = ""
     last_index: int = 0
     max_lines: int = 100
     timestamp: float = field(default_factory=time.time)
@@ -104,6 +111,7 @@ class SerialMonitorResponse:
     Used for attach, detach, poll, and write responses.
 
     Attributes:
+        request_id: Unique identifier for the original request - for correlation
         success: Whether the operation succeeded
         message: Human-readable status message
         lines: New output lines (for poll responses)
@@ -114,8 +122,9 @@ class SerialMonitorResponse:
         timestamp: Unix timestamp of the response
     """
 
-    success: bool
-    message: str
+    request_id: str = ""
+    success: bool = False
+    message: str = ""
     lines: list[str] = field(default_factory=list)
     current_index: int = 0
     is_preempted: bool = False

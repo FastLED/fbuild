@@ -21,14 +21,13 @@ from fbuild_lint.ruff_plugins.sys_path_checker import SysPathChecker
 
 
 def main() -> int:
-    """Run sys.path checker on source, scripts, and tests."""
+    """Run sys.path checker on source and scripts (tests are allowed to use sys.path.insert)."""
     base_dir = Path(__file__).parent.parent
 
-    # Check src, scripts, tests (matching current flake8 invocation)
+    # Check src and scripts only (tests are allowed to use sys.path.insert for fbuild_lint imports)
     search_dirs = [
         base_dir / "src",
         base_dir / "scripts",
-        base_dir / "tests",
     ]
 
     # Exclusions matching current flake8 call

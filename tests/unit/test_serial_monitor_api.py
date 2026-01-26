@@ -230,10 +230,11 @@ class TestSerialMonitorAPI:
 
         mon = SerialMonitor(port="COM13")
 
-        # Create response file
+        # Create response file with per-client naming scheme
         response_data = SerialMonitorResponse(success=True, message="Attached").to_dict()
 
-        response_file = temp_daemon_dir / "serial_monitor_response.json"
+        # Response file must match the per-client naming pattern used by SerialMonitor
+        response_file = temp_daemon_dir / f"serial_monitor_response_{mon.client_id}.json"
         with open(response_file, "w") as f:
             json.dump(response_data, f)
 

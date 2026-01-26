@@ -63,8 +63,10 @@ MonitorHook = Callable[[str], None]
 # Polling interval for reading new lines (100ms)
 POLL_INTERVAL = 0.1
 
-# Default timeout for attach/detach operations (5 seconds)
-OPERATION_TIMEOUT = 5.0
+# Default timeout for attach/detach operations (60 seconds)
+# Increased to 60s to allow SharedSerialManager retry logic to complete
+# Windows USB-CDC re-enumeration can take 10-20+ seconds, and retries add overhead
+OPERATION_TIMEOUT = 60.0
 
 
 class MonitorPreemptedException(Exception):
@@ -167,7 +169,8 @@ class SerialMonitor:
         self._attach_request_file = DAEMON_DIR / "serial_monitor_attach_request.json"
         self._detach_request_file = DAEMON_DIR / "serial_monitor_detach_request.json"
         self._poll_request_file = DAEMON_DIR / "serial_monitor_poll_request.json"
-        self._response_file = DAEMON_DIR / "serial_monitor_response.json"
+        # Use per-client response file to prevent race conditions
+        self._response_file = DAEMON_DIR / f"serial_monitor_response_{self.client_id}.json"
         self._preempt_file = DAEMON_DIR / f"serial_monitor_preempt_{port}.json"
 
         if self.verbose:
@@ -226,7 +229,7 @@ class SerialMonitor:
             logging.info(f"[SerialMonitor] Attached to {self.port}")
 
     def _detach(self) -> None:
-        """Send detach request to daemon."""
+        """Send detach request to daemon and wait for confirmation."""
         if not self._attached:
             return
 
@@ -235,10 +238,16 @@ class SerialMonitor:
             port=self.port,
         )
 
-        # Write detach request (best effort, don't wait for response)
+        # Write detach request and wait for confirmation
         try:
             self._write_request_file(self._detach_request_file, request)
-            if self.verbose:
+
+            # Wait for response to ensure daemon has fully processed detach
+            response = self._wait_for_response(timeout=OPERATION_TIMEOUT)
+            if not response or not response.success:
+                if self.verbose:
+                    logging.warning(f"[SerialMonitor] Detach confirmation failed: {response.message if response else 'timeout'}")
+            elif self.verbose:
                 logging.info(f"[SerialMonitor] Detached from {self.port}")
         except KeyboardInterrupt:
             raise
