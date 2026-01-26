@@ -21,28 +21,48 @@ from fbuild_lint.ruff_plugins.message_serialization_checker import MessageSerial
 
 
 def main() -> int:
-    """Run message serialization checker on messages.py."""
-    messages_file = Path(__file__).parent.parent / "src" / "fbuild" / "daemon" / "messages.py"
+    """Run message serialization checker on messages package."""
+    messages_dir = Path(__file__).parent.parent / "src" / "fbuild" / "daemon" / "messages"
 
-    if not messages_file.exists():
-        print(f"Messages file not found: {messages_file}")
+    if not messages_dir.exists():
+        print(f"Messages directory not found: {messages_dir}")
         return 1
 
-    print(f"Checking {messages_file.name}...")
+    # Collect all Python files in the messages package (except __pycache__)
+    message_files = sorted(messages_dir.glob("*.py"))
+    if not message_files:
+        print(f"No Python files found in {messages_dir}")
+        return 1
 
-    with open(messages_file) as f:
-        tree = ast.parse(f.read(), filename=str(messages_file))
+    print(f"Checking {len(message_files)} message files...")
+    total_errors = 0
 
-    checker = MessageSerializationChecker(tree)
-    errors = list(checker.run())
+    for message_file in message_files:
+        # Skip __init__.py and _base.py (base classes, not messages)
+        if message_file.name in ("__init__.py", "_base.py"):
+            continue
 
-    if errors:
-        print(f"Found {len(errors)} error(s):")
-        for line, col, msg, _ in errors:
-            print(f"  Line {line}: {msg}")
+        print(f"  {message_file.name}...", end=" ")
+
+        with open(message_file) as f:
+            tree = ast.parse(f.read(), filename=str(message_file))
+
+        checker = MessageSerializationChecker(tree)
+        errors = list(checker.run())
+
+        if errors:
+            print(f"FAILED ({len(errors)} error(s))")
+            for line, col, msg, _ in errors:
+                print(f"    Line {line}: {msg}")
+            total_errors += len(errors)
+        else:
+            print("OK")
+
+    if total_errors > 0:
+        print(f"\nTotal errors: {total_errors}")
         return 1
     else:
-        print("OK - all message serialization is complete")
+        print("\nAll message serialization is complete")
         return 0
 
 

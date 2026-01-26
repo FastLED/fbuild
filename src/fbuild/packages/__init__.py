@@ -4,6 +4,21 @@ This module handles downloading, caching, and managing external packages
 including toolchains, platforms, and libraries.
 """
 
+from .archive_extractors import (
+    ArchiveExtractorFactory,
+    BaseArchiveExtractor,
+    IArchiveExtractor,
+    TarGzExtractor,
+    TarXzExtractor,
+    ZipExtractor,
+)
+from .archive_strategies import (
+    DirectoryMover,
+    FileOperations,
+    IRetryStrategy,
+    UnixRetryStrategy,
+    WindowsRetryStrategy,
+)
 from .archive_utils import ArchiveExtractionError, ArchiveExtractor, URLVersionExtractor
 from .arduino_core import ArduinoCore, ArduinoCoreError
 from .cache import Cache
@@ -63,4 +78,16 @@ __all__ = [
     "PackageSpec",
     "PackageResult",
     "PackageLockError",
+    # Archive extraction strategies (advanced usage)
+    "IRetryStrategy",
+    "WindowsRetryStrategy",
+    "UnixRetryStrategy",
+    "FileOperations",
+    "DirectoryMover",
+    "IArchiveExtractor",
+    "BaseArchiveExtractor",
+    "TarXzExtractor",
+    "TarGzExtractor",
+    "ZipExtractor",
+    "ArchiveExtractorFactory",
 ]
