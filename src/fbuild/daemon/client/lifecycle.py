@@ -14,7 +14,7 @@ import psutil
 
 from fbuild.daemon.messages import DaemonState
 
-from ...subprocess_utils import safe_popen
+from ...subprocess_utils import get_python_executable, safe_popen
 
 # Daemon configuration (must match daemon settings)
 DAEMON_NAME = "fbuild_daemon"
@@ -104,7 +104,7 @@ def start_daemon() -> None:
     # Start daemon in background as a fully detached process
     # Use -m to run as module (required for relative imports in daemon.py)
     safe_popen(
-        [sys.executable, "-m", "fbuild.daemon.daemon", f"--spawned-by={spawner_pid}"],
+        [get_python_executable(), "-m", "fbuild.daemon.daemon", f"--spawned-by={spawner_pid}"],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
         stdin=subprocess.DEVNULL,

@@ -59,7 +59,7 @@ from fbuild.daemon.processors.install_deps_processor import InstallDependenciesP
 from fbuild.daemon.processors.monitor_processor import MonitorRequestProcessor
 from fbuild.daemon.processors.serial_monitor_processor import SerialMonitorAPIProcessor
 
-from ..subprocess_utils import safe_popen
+from ..subprocess_utils import get_python_executable, safe_popen
 
 # Type variable for request types
 RequestT = TypeVar("RequestT", BuildRequest, DeployRequest, MonitorRequest, InstallDependenciesRequest)
@@ -1040,7 +1040,7 @@ def main() -> int:
         # Fork not supported (Windows) - run in background as detached subprocess
         logging.info("Fork not supported (Windows), using detached subprocess")
         # Build command with spawner info if available
-        cmd = [sys.executable, __file__, "--foreground"]
+        cmd = [get_python_executable(), __file__, "--foreground"]
         if spawner_pid is not None:
             cmd.append(f"--spawned-by={spawner_pid}")
 

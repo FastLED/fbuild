@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 fbuild is a PlatformIO-compatible embedded development tool providing build, deploy, and monitor functionality for Arduino/ESP32 platforms. It uses URL-based package management and a daemon for cross-process coordination.
 
-**Current Version:** v1.3.19 (update in `src/fbuild/__init__.py`, `pyproject.toml`, and this file)
+**Current Version:** v1.3.20 (update in `src/fbuild/__init__.py`, `pyproject.toml`, and this file)
 
 ## Development Commands
 
@@ -477,9 +477,22 @@ result = safe_run(cmd, ...)
 proc = safe_popen(cmd, ...)
 ```
 
-**What the wrappers do:**
-1. **Prevent console window flashing**: Applies `CREATE_NO_WINDOW` flag on Windows
-2. **Prevent keystroke loss**: Auto-redirects stdin to `subprocess.DEVNULL` to prevent child processes from stealing keyboard input
+**CRITICAL: Use pythonw.exe for Python subprocess calls:**
+
+```python
+# ❌ UNSAFE - Uses python.exe (shows console window)
+cmd = [sys.executable, "-m", "esptool", ...]
+
+# ✅ SAFE - Uses pythonw.exe on Windows (no console window)
+from fbuild.subprocess_utils import get_python_executable
+
+cmd = [get_python_executable(), "-m", "esptool", ...]
+```
+
+**What the utilities provide:**
+1. **get_python_executable()**: Returns `pythonw.exe` on Windows (no console), `sys.executable` elsewhere
+2. **safe_run()/safe_popen()**: Apply `CREATE_NO_WINDOW` flag and auto-redirect stdin
+3. **Prevent keystroke loss**: Auto-redirects stdin to `subprocess.DEVNULL` to prevent child processes from stealing keyboard input
 
 **stdin Auto-Redirect:**
 - By default, stdin is redirected to `subprocess.DEVNULL`

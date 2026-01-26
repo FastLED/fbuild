@@ -8,7 +8,7 @@ including crash-loop detection and device reset operations.
 import subprocess
 import sys
 
-from fbuild.subprocess_utils import safe_run
+from fbuild.subprocess_utils import get_python_executable, safe_run
 
 
 def is_crash_loop_error(error_output: str) -> bool:
@@ -57,7 +57,7 @@ def reset_esp32_device(port: str, chip: str = "auto", verbose: bool = False) -> 
     from fbuild.deploy.platform_utils import get_filtered_env
 
     cmd = [
-        sys.executable,
+        get_python_executable(),
         "-m",
         "esptool",
         "--chip",

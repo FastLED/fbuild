@@ -6,7 +6,36 @@ apply platform-specific flags to prevent console window flashing on Windows.
 
 import subprocess
 import sys
+from pathlib import Path
 from typing import Any
+
+
+def get_python_executable() -> str:
+    """Get the Python executable path, preferring pythonw.exe on Windows.
+
+    On Windows, pythonw.exe runs Python scripts without showing a console window,
+    which is more effective than CREATE_NO_WINDOW for preventing window flashing.
+
+    Returns:
+        - Windows: Path to pythonw.exe if it exists, otherwise sys.executable
+        - Other platforms: sys.executable
+
+    Note:
+        pythonw.exe is typically installed alongside python.exe in virtual
+        environments and standard Python installations on Windows.
+    """
+    if sys.platform != "win32":
+        return sys.executable
+
+    # Try to find pythonw.exe next to python.exe
+    python_path = Path(sys.executable)
+    pythonw_path = python_path.parent / "pythonw.exe"
+
+    if pythonw_path.exists():
+        return str(pythonw_path)
+
+    # Fallback to regular python.exe
+    return sys.executable
 
 
 def get_subprocess_creation_flags() -> int:

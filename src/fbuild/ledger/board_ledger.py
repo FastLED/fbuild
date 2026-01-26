@@ -24,7 +24,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from ..subprocess_utils import safe_run
+from ..subprocess_utils import get_python_executable, safe_run
 
 # Stale entry threshold: 24 hours
 STALE_THRESHOLD_SECONDS = 24 * 60 * 60
@@ -378,7 +378,7 @@ def detect_chip_with_esptool(port: str, verbose: bool = False) -> str:
     try:
         # Build esptool command
         cmd = [
-            sys.executable,
+            get_python_executable(),
             "-m",
             "esptool",
             "--port",

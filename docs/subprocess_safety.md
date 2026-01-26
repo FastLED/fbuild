@@ -16,6 +16,28 @@ On Windows, direct subprocess calls can cause two distinct issues:
 
 **File**: `src/fbuild/subprocess_utils.py`
 
+### 1. Use pythonw.exe on Windows
+
+The most effective solution for Python subprocess calls is to use `pythonw.exe` instead of `python.exe` on Windows:
+
+```python
+from fbuild.subprocess_utils import get_python_executable
+
+# Instead of:
+cmd = [sys.executable, "-m", "esptool", ...]
+
+# Use:
+cmd = [get_python_executable(), "-m", "esptool", ...]
+```
+
+**Why pythonw.exe?**
+- `python.exe` always creates a console window, even with `CREATE_NO_WINDOW`
+- `pythonw.exe` is specifically designed to run Python without showing any console
+- Available in all standard Python installations and virtual environments on Windows
+- On non-Windows platforms, `get_python_executable()` returns `sys.executable`
+
+### 2. Safe Subprocess Wrappers
+
 Two wrapper functions automatically apply platform-specific flags:
 
 ```python
@@ -183,10 +205,23 @@ proc = safe_popen(
 
 ## Best Practices
 
-1. **Always Import**: Add `from fbuild.subprocess_utils import safe_run, safe_popen` at the top
-2. **Direct Replacement**: Replace `subprocess.run()` → `safe_run()`, same for Popen
-3. **No Behavior Change**: All parameters work identically
-4. **Check Before Commit**: Run `./lint` or `flake8 --select=SUB src/` before committing
+1. **Use pythonw.exe for Python calls**: Always use `get_python_executable()` instead of `sys.executable` when spawning Python processes
+   ```python
+   from fbuild.subprocess_utils import get_python_executable, safe_run
+
+   # Good
+   cmd = [get_python_executable(), "-m", "esptool", ...]
+   safe_run(cmd, ...)
+
+   # Bad
+   cmd = [sys.executable, "-m", "esptool", ...]
+   safe_run(cmd, ...)
+   ```
+
+2. **Always Import**: Add `from fbuild.subprocess_utils import safe_run, safe_popen` at the top
+3. **Direct Replacement**: Replace `subprocess.run()` → `safe_run()`, same for Popen
+4. **No Behavior Change**: All parameters work identically
+5. **Check Before Commit**: Run `./lint` or `flake8 --select=SUB src/` before committing
 
 ## Testing
 

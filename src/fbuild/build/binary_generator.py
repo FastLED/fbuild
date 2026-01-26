@@ -10,11 +10,10 @@ Design:
 """
 
 import subprocess
-import sys
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-from ..subprocess_utils import safe_run
+from ..subprocess_utils import get_python_executable, safe_run
 
 
 class BinaryGeneratorError(Exception):
@@ -113,7 +112,7 @@ class BinaryGenerator:
 
         # Build esptool.py elf2image command
         cmd = [
-            sys.executable,
+            get_python_executable(),
             "-m",
             "esptool",
             "--chip",
@@ -290,7 +289,7 @@ class BinaryGenerator:
 
         # Generate bootloader.bin using esptool.py elf2image
         cmd = [
-            sys.executable,
+            get_python_executable(),
             "-m",
             "esptool",
             "--chip",
@@ -395,7 +394,7 @@ class BinaryGenerator:
 
         # Generate partition table using gen_esp32part.py
         cmd = [
-            sys.executable,
+            get_python_executable(),
             str(gen_tool),
             "-q",
             str(partitions_csv),
@@ -481,7 +480,7 @@ class BinaryGenerator:
         flash_size = self.board_config.get("build", {}).get("flash_size", "4MB")
 
         cmd = [
-            sys.executable,
+            get_python_executable(),
             "-m",
             "esptool",
             "--chip",

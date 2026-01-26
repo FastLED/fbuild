@@ -15,7 +15,7 @@ from typing import Optional
 from fbuild.config import PlatformIOConfig
 from fbuild.packages import Cache
 
-from ..subprocess_utils import safe_run
+from ..subprocess_utils import get_python_executable, safe_run
 from .deployer import DeploymentError, DeploymentResult, IDeployer
 from .esptool_utils import is_crash_loop_error
 from .platform_utils import get_filtered_env
@@ -187,7 +187,7 @@ class ESP32Deployer(IDeployer):
         # Build esptool command to flash multiple binaries at different offsets
         # Flash layout: bootloader @ offset, partition table @ 0x8000, boot_app0 @ 0xe000, app @ 0x10000
         cmd = [
-            sys.executable,
+            get_python_executable(),
             "-m",
             "esptool",
             "--chip",

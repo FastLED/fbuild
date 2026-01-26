@@ -17,7 +17,7 @@ import time
 from pathlib import Path
 from typing import Optional
 
-from fbuild.subprocess_utils import safe_popen, safe_run
+from fbuild.subprocess_utils import get_python_executable, safe_popen, safe_run
 
 # Docker image constants
 DEFAULT_DOCKER_IMAGE = "espressif/idf:latest"
@@ -250,7 +250,7 @@ class QEMURunner:
 
             # Build esptool.py merge_bin command with DIO flash mode for QEMU compatibility
             cmd = [
-                sys.executable,
+                get_python_executable(),
                 "-m",
                 "esptool",
                 "--chip",
