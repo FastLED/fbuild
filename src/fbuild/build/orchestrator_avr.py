@@ -272,6 +272,11 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             lib_include_paths = lib_result.include_paths
             lib_objects = lib_result.object_files
 
+            # Get src_dir override from platformio.ini
+            from ..config import PlatformIOConfig
+            config_for_src_dir = PlatformIOConfig(project_dir / "platformio.ini")
+            src_dir_override = config_for_src_dir.get_src_dir()
+
             # Phase 7: Scan source files
             log_phase(7, 11, "Scanning source files...", verbose_only=not verbose_mode)
 
@@ -279,7 +284,8 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                 project_dir,
                 build_dir,
                 board_config,
-                core_path
+                core_path,
+                src_dir_override
             )
 
             total_sources = (
@@ -613,7 +619,8 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
         project_dir: Path,
         build_dir: Path,
         board_config: BoardConfig,
-        core_path: Path
+        core_path: Path,
+        src_dir_override: Optional[str] = None
     ) -> "SourceCollection":
         """
         Scan for all source files.
@@ -623,6 +630,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             build_dir: Build output directory
             board_config: Board configuration
             core_path: Arduino core installation path
+            src_dir_override: Optional source directory override (relative to project_dir)
 
         Returns:
             SourceCollection with all sources
@@ -630,10 +638,14 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
         scanner = SourceScanner(project_dir, build_dir)
 
         # Determine source directories
-        # Check if 'src' directory exists, otherwise use project root
-        src_dir = project_dir / 'src'
-        if not src_dir.exists():
-            src_dir = project_dir
+        # Use src_dir override from platformio.ini if specified
+        if src_dir_override:
+            src_dir = project_dir / src_dir_override
+        else:
+            # Check if 'src' directory exists, otherwise use project root
+            src_dir = project_dir / 'src'
+            if not src_dir.exists():
+                src_dir = project_dir
 
         core_dir = board_config.get_core_sources_dir(core_path)
         variant_dir = board_config.get_variant_dir(core_path)
