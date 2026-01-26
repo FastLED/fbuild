@@ -102,10 +102,16 @@ class BinaryGenerator:
         # Get chip type from MCU
         chip = self.mcu  # e.g., "esp32c6", "esp32s3"
 
-        # Get flash parameters from board config
-        flash_mode = self.board_config.get("build", {}).get("flash_mode", "dio")
-        flash_freq = self.board_config.get("build", {}).get("f_flash", "80m")
-        flash_size = self.board_config.get("build", {}).get("flash_size", "4MB")
+        # Get flash parameters from board config, with env_config overrides
+        flash_mode = self.env_config.get("board_build.flash_mode") or self.board_config.get("build", {}).get("flash_mode", "dio")
+        flash_freq = self.env_config.get("board_build.f_flash") or self.board_config.get("build", {}).get("f_flash", "80m")
+        flash_size = self.env_config.get("board_build.flash_size") or self.board_config.get("build", {}).get("flash_size", "4MB")
+
+        # DEBUG: Show configuration sources
+        print(f"DEBUG binary_generator: env_config keys = {list(self.env_config.keys())}")
+        print(f"DEBUG binary_generator: flash_mode from env_config = {self.env_config.get('board_build.flash_mode')}")
+        print(f"DEBUG binary_generator: flash_mode from board_config = {self.board_config.get('build', {}).get('flash_mode')}")
+        print(f"DEBUG binary_generator: FINAL flash_mode = {flash_mode}")
 
         # Convert frequency to esptool format if needed
         flash_freq = self._normalize_flash_freq(flash_freq)
@@ -260,32 +266,34 @@ class BinaryGenerator:
         if output_bin is None:
             output_bin = self.build_dir / "bootloader.bin"
 
-        # Get flash parameters from board config
-        flash_mode = self.board_config.get("build", {}).get("flash_mode", "dio")
-        flash_freq = self.board_config.get("build", {}).get("f_flash", "80m")
-        flash_size = self.board_config.get("build", {}).get("flash_size", "4MB")
+        # Get flash parameters from board config, with env_config overrides
+        flash_mode = self.env_config.get("board_build.flash_mode") or self.board_config.get("build", {}).get("flash_mode", "dio")
+        flash_freq = self.env_config.get("board_build.f_flash") or self.board_config.get("build", {}).get("f_flash", "80m")
+        flash_size = self.env_config.get("board_build.flash_size") or self.board_config.get("build", {}).get("flash_size", "4MB")
 
         # Convert frequency to esptool format if needed
         flash_freq = self._normalize_flash_freq(flash_freq)
 
-        # Find bootloader ELF file in framework SDK
-        bootloader_name = f"bootloader_{flash_mode}_{flash_freq.replace('m', 'm')}.elf"
+        # CRITICAL FIX: ESP32-C6/C3/C2/H2/S3 bootloaders MUST be in DIO mode
+        # even if the application uses QIO. The ROM bootloader can only load the
+        # second-stage bootloader in DIO mode. QIO is enabled later by the second-stage
+        # bootloader for the application. This is a known issue with esptool v4.7+.
+        # See: https://github.com/espressif/arduino-esp32/discussions/10418
+        # ESP32-S3 also requires DIO mode for bootloader when flash is configured as DIO
+        bootloader_flash_mode = flash_mode
+        if self.mcu in ["esp32c6", "esp32c3", "esp32c2", "esp32h2", "esp32s3"]:
+            bootloader_flash_mode = "dio"
+
+        # Find bootloader ELF file in framework SDK (use bootloader_flash_mode, not flash_mode)
+        bootloader_name = f"bootloader_{bootloader_flash_mode}_{flash_freq.replace('m', 'm')}.elf"
         sdk_bin_dir = self.framework.get_sdk_dir() / self.mcu / "bin"
         bootloader_elf = sdk_bin_dir / bootloader_name
+        print(f"DEBUG BOOTLOADER: MCU={self.mcu}, flash_mode={flash_mode}, bootloader_flash_mode={bootloader_flash_mode}, freq={flash_freq}, name={bootloader_name}")
 
         if not bootloader_elf.exists():
             raise BinaryGeneratorError(
                 f"Bootloader ELF not found: {bootloader_elf}"
             )
-
-        # CRITICAL FIX: ESP32-C6/C3/C2/H2 bootloaders MUST be generated in DIO mode
-        # even if the application uses QIO. The ROM bootloader can only load the
-        # second-stage bootloader in DIO mode. QIO is enabled later by the second-stage
-        # bootloader for the application. This is a known issue with esptool v4.7+.
-        # See: https://github.com/espressif/arduino-esp32/discussions/10418
-        bootloader_flash_mode = flash_mode
-        if self.mcu in ["esp32c6", "esp32c3", "esp32c2", "esp32h2"]:
-            bootloader_flash_mode = "dio"
 
         # Generate bootloader.bin using esptool.py elf2image
         cmd = [
