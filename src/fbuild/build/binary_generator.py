@@ -487,6 +487,12 @@ class BinaryGenerator:
         # Use esptool.py merge_bin to create merged binary
         flash_size = self.board_config.get("build", {}).get("flash_size", "4MB")
 
+        # Determine flash mode - use same override logic as bootloader generation
+        # ESP32-C6, C3, C2, H2, and S3 require DIO mode (RISC-V + Xtensa S3 issue)
+        flash_mode = self.board_config.get("build", {}).get("flash_mode", "dio")
+        if self.mcu in ["esp32c6", "esp32c3", "esp32c2", "esp32h2", "esp32s3"]:
+            flash_mode = "dio"
+
         cmd = [
             get_python_executable(),
             "-m",
@@ -495,7 +501,7 @@ class BinaryGenerator:
             self.mcu,
             "merge_bin",
             "--flash-mode",
-            self.board_config.get("build", {}).get("flash_mode", "dio"),
+            flash_mode,
             "--flash-freq",
             self._normalize_flash_freq(self.board_config.get("build", {}).get("f_flash", "80m")),
             "--flash-size",

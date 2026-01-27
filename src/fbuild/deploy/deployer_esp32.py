@@ -166,10 +166,10 @@ class ESP32Deployer(IDeployer):
 
         flash_size = "detect"
 
-        # CRITICAL FIX: ESP32-C6/C3/C2/H2 ROM bootloader can only load the second-stage
+        # CRITICAL FIX: ESP32-C6/C3/C2/H2/S3 ROM bootloader can only load the second-stage
         # bootloader in DIO mode. Must use DIO for flashing even if app uses QIO.
         # See: https://github.com/espressif/arduino-esp32/discussions/10418
-        if mcu in ["esp32c6", "esp32c3", "esp32c2", "esp32h2"]:
+        if mcu in ["esp32c6", "esp32c3", "esp32c2", "esp32h2", "esp32s3"]:
             flash_mode = "dio"
 
         # Determine bootloader offset based on MCU
