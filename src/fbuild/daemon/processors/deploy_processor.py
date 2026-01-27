@@ -755,6 +755,11 @@ class DeployRequestProcessor(RequestProcessor):
         detect. Clients with auto_reconnect=True will pause and wait for deploy
         to complete.
 
+        CRITICAL: Also FORCIBLY CLOSES any active serial monitor sessions on this port.
+        The notification file alone is not enough - we must actually close the pyserial
+        connection, otherwise esptool will get PermissionError(13) when trying to open
+        the port for firmware upload.
+
         Args:
             port: Port that will be preempted
             context: Daemon context
@@ -764,6 +769,15 @@ class DeployRequestProcessor(RequestProcessor):
 
             from fbuild.daemon.client import DAEMON_DIR
 
+            # STEP 1: Force-close any active serial monitor sessions on this port
+            # This is critical to release the pyserial handle before esptool attempts upload
+            with context.shared_serial_manager._lock:
+                if port in context.shared_serial_manager._sessions:
+                    logging.info(f"[DeployPreemption] Force-closing active serial session on {port}")
+                    context.shared_serial_manager._close_port_internal(port)
+                    logging.info(f"[DeployPreemption] Serial session closed on {port}")
+
+            # STEP 2: Write notification file for API clients
             preempt_file = DAEMON_DIR / f"serial_monitor_preempt_{port}.json"
             notification = {
                 "port": port,
