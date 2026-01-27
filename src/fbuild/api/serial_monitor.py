@@ -49,6 +49,7 @@ from pathlib import Path
 from typing import Any
 
 from fbuild.daemon.client import DAEMON_DIR
+from fbuild.daemon.client.lifecycle import ensure_daemon_running
 from fbuild.daemon.messages import (
     SerialMonitorAttachRequest,
     SerialMonitorDetachRequest,
@@ -208,6 +209,9 @@ class SerialMonitor:
             if self.verbose:
                 logging.warning("[SerialMonitor] Already attached, skipping attach")
             return
+
+        # Ensure daemon is running before attempting attach
+        ensure_daemon_running()  # Raises RuntimeError if daemon fails to start
 
         request = SerialMonitorAttachRequest(
             client_id=self.client_id,
@@ -428,7 +432,8 @@ class SerialMonitor:
 
         # Write request to serial_write_request.json (existing file)
         write_request_file = DAEMON_DIR / "serial_write_request.json"
-        write_response_file = DAEMON_DIR / "serial_write_response.json"
+        # Use per-client response file to prevent race conditions
+        write_response_file = DAEMON_DIR / f"serial_write_response_{self.client_id}.json"
 
         self._write_request_file(write_request_file, request)
 

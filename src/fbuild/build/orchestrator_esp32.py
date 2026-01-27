@@ -444,6 +444,17 @@ class OrchestratorESP32(IBuildOrchestrator):
                     "size": toolchain.get_size_path(),
                 }
                 toolchain_paths = {k: v for k, v in toolchain_paths_raw.items() if v is not None}
+                # Fallback flash settings from board JSON if not in env_config
+                flash_mode_env = env_config.get("board_build.flash_mode")
+                flash_mode_board = board_json.get("build", {}).get("flash_mode", "dio")
+                flash_mode = flash_mode_env or flash_mode_board
+                flash_size_env = env_config.get("board_build.flash_size")
+                flash_size_board = board_json.get("upload", {}).get("flash_size", "4MB")
+                flash_size = flash_size_env or flash_size_board
+                print(f"[ORCHESTRATOR] FLASH_MODE: env={flash_mode_env}, board={flash_mode_board}, final={flash_mode}", flush=True)
+                print(f"[ORCHESTRATOR] FLASH_SIZE: env={flash_size_env}, board={flash_size_board}, final={flash_size}", flush=True)
+                logging.debug(f"FLASH_MODE: env={flash_mode_env}, board={flash_mode_board}, final={flash_mode}")
+                logging.debug(f"FLASH_SIZE: env={flash_size_env}, board={flash_size_board}, final={flash_size}")
                 build_info = build_info_generator.generate_esp32(
                     env_name=env_name,
                     board_id=board_id,
@@ -463,8 +474,8 @@ class OrchestratorESP32(IBuildOrchestrator):
                     bootloader_path=bootloader_bin,
                     partitions_path=partitions_bin,
                     application_offset=board_json.get("build", {}).get("app_offset", "0x10000"),
-                    flash_mode=env_config.get("board_build.flash_mode"),
-                    flash_size=env_config.get("board_build.flash_size"),
+                    flash_mode=flash_mode,
+                    flash_size=flash_size,
                 )
                 build_info_generator.save(build_info)
                 log_detail(f"Build info saved to {build_info_generator.build_info_path}", verbose_only=True)
