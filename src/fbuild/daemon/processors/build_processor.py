@@ -184,11 +184,8 @@ class BuildRequestProcessor(RequestProcessor):
             reset_timer()  # Fresh timestamps for this build
 
             result = self._execute_build(request, context)
-            # Log to stdout after build completes (bypasses output file)
-            import sys
-
-            sys.stdout.write(f"\n[DEBUG] Build execution completed with result={result}\n")
-            sys.stdout.flush()
+            # Log after build completes
+            logging.debug(f"Build execution completed with result={result}")
             return result
         finally:
             set_output_file(None)  # Always clean up

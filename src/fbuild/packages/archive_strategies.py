@@ -5,6 +5,7 @@ particularly on Windows where file handle delays can cause PermissionError and O
 """
 
 import gc
+import logging
 import shutil
 import time
 from pathlib import Path
@@ -369,27 +370,27 @@ class DirectoryMover:
             Exception: If atomic move fails
         """
         if self.show_progress:
-            print(f"  [DEBUG] Moving {source.name} to {target}")
-            print(f"  [DEBUG] Source: {source}")
-            print(f"  [DEBUG] Target: {target}")
-            print(f"  [DEBUG] Source exists: {source.exists()}")
-            print(f"  [DEBUG] Target exists before: {target.exists()}")
+            logging.debug(f"Moving {source.name} to {target}")
+            logging.debug(f"Source: {source}")
+            logging.debug(f"Target: {target}")
+            logging.debug(f"Source exists: {source.exists()}")
+            logging.debug(f"Target exists before: {target.exists()}")
 
         if is_windows:
             result = self.file_ops.move(source, target)
             if self.show_progress:
-                print(f"  [DEBUG] shutil.move returned: {result}")
+                logging.debug(f"shutil.move returned: {result}")
         else:
             shutil.move(str(source), str(target))
 
         if self.show_progress:
-            print(f"  [DEBUG] Target exists after: {target.exists()}")
+            logging.debug(f"Target exists after: {target.exists()}")
             if target.exists() and target.is_dir():
                 try:
                     items = list(target.iterdir())
-                    print(f"  [DEBUG] Target has {len(items)} items")
+                    logging.debug(f"Target has {len(items)} items")
                     if items:
-                        print(f"  [DEBUG] First 5 items: {[i.name for i in items[:5]]}")
+                        logging.debug(f"First 5 items: {[i.name for i in items[:5]]}")
                 except KeyboardInterrupt as ke:
                     from fbuild.interrupt_utils import (
                         handle_keyboard_interrupt_properly,
@@ -397,7 +398,7 @@ class DirectoryMover:
 
                     handle_keyboard_interrupt_properly(ke)
                 except Exception as e:
-                    print(f"  [DEBUG] Could not list target: {e}")
+                    logging.debug(f"Could not list target: {e}")
 
     def _fallback_move(self, source: Path, target: Path) -> None:
         """Move directory using individual file operations (fallback strategy).

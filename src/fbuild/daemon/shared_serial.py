@@ -29,6 +29,7 @@ Example:
 
 import _thread
 import logging
+import platform
 import threading
 import time
 from collections import deque
@@ -174,9 +175,11 @@ class SharedSerialManager:
                     return True
 
                 # Try to open the port with retry logic for Windows USB-CDC re-enumeration
-                # After esptool hard_reset, Windows may need 10-15 seconds to re-enumerate the port
-                max_retries = 15
-                retry_delay = 1.0  # Start with 1 second, will backoff
+                # After esptool hard_reset, Windows may need 20-30 seconds to re-enumerate the port
+                # Windows USB-CDC drivers are slower to release port handles, so give more retries
+                is_windows = platform.system() == "Windows"
+                max_retries = 30 if is_windows else 15
+                retry_delay = 1.0  # Start with 1 second, will use exponential backoff
 
                 for attempt in range(max_retries):
                     try:
@@ -232,9 +235,12 @@ class SharedSerialManager:
                         raise
                     except Exception as e:
                         if attempt < max_retries - 1:
-                            # Retry with exponential backoff (1s, 1s, 1s, 2s, 2s, 2s, 3s, ...)
-                            retry_delay = min(1.0 + (attempt // 3), 3.0)
-                            logging.debug(f"Failed to open {port} (attempt {attempt + 1}/{max_retries}): {e}. Retrying in {retry_delay}s...")
+                            # Exponential backoff with max delay cap
+                            # 1s, 2s, 4s, 8s, 10s (max), 10s, ...
+                            base_delay = 1.0
+                            max_delay = 10.0
+                            retry_delay = min(base_delay * (2**attempt), max_delay)
+                            logging.debug(f"Failed to open {port} (attempt {attempt + 1}/{max_retries}): {e}. Retrying in {retry_delay:.1f}s...")
                             time.sleep(retry_delay)
                         else:
                             logging.error(f"Failed to open serial port {port} after {max_retries} attempts: {e}")

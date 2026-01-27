@@ -718,10 +718,16 @@ class DeployRequestProcessor(RequestProcessor):
             "fbuild.build.orchestrator",
             "fbuild.build.orchestrator_avr",
             "fbuild.build.orchestrator_esp32",
-            # Deploy and monitor (reload with build system)
+            # Deploy utilities (reload with build system)
+            "fbuild.deploy.esptool_utils",
+            "fbuild.deploy.serial_utils",
+            "fbuild.deploy.docker_utils",
+            "fbuild.deploy.platform_utils",
+            # Deploy core (reload after utilities)
             "fbuild.deploy.deployer",
             "fbuild.deploy.deployer_esp32",
             "fbuild.deploy.monitor",
+            "fbuild.deploy.qemu_runner",
             # Top-level module packages (reload last to update __init__.py imports)
             "fbuild.build",
             "fbuild.deploy",

@@ -9,6 +9,7 @@ Design:
     - Handles ESP32 bootloader and partition table generation
 """
 
+import logging
 import subprocess
 from pathlib import Path
 from typing import Any, Dict, Optional
@@ -108,10 +109,10 @@ class BinaryGenerator:
         flash_size = self.env_config.get("board_build.flash_size") or self.board_config.get("build", {}).get("flash_size", "4MB")
 
         # DEBUG: Show configuration sources
-        print(f"DEBUG binary_generator: env_config keys = {list(self.env_config.keys())}")
-        print(f"DEBUG binary_generator: flash_mode from env_config = {self.env_config.get('board_build.flash_mode')}")
-        print(f"DEBUG binary_generator: flash_mode from board_config = {self.board_config.get('build', {}).get('flash_mode')}")
-        print(f"DEBUG binary_generator: FINAL flash_mode = {flash_mode}")
+        logging.debug(f"binary_generator: env_config keys = {list(self.env_config.keys())}")
+        logging.debug(f"binary_generator: flash_mode from env_config = {self.env_config.get('board_build.flash_mode')}")
+        logging.debug(f"binary_generator: flash_mode from board_config = {self.board_config.get('build', {}).get('flash_mode')}")
+        logging.debug(f"binary_generator: FINAL flash_mode = {flash_mode}")
 
         # Convert frequency to esptool format if needed
         flash_freq = self._normalize_flash_freq(flash_freq)
@@ -288,7 +289,7 @@ class BinaryGenerator:
         bootloader_name = f"bootloader_{bootloader_flash_mode}_{flash_freq.replace('m', 'm')}.elf"
         sdk_bin_dir = self.framework.get_sdk_dir() / self.mcu / "bin"
         bootloader_elf = sdk_bin_dir / bootloader_name
-        print(f"DEBUG BOOTLOADER: MCU={self.mcu}, flash_mode={flash_mode}, bootloader_flash_mode={bootloader_flash_mode}, freq={flash_freq}, name={bootloader_name}")
+        logging.debug(f"BOOTLOADER: MCU={self.mcu}, flash_mode={flash_mode}, bootloader_flash_mode={bootloader_flash_mode}, freq={flash_freq}, name={bootloader_name}")
 
         if not bootloader_elf.exists():
             raise BinaryGeneratorError(
