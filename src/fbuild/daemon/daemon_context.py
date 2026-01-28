@@ -265,7 +265,7 @@ def create_daemon_context(
         async_server=async_server,
     )
 
-    logging.info("✅ Daemon context initialized successfully")
+    logging.info("Daemon context initialized successfully")
     return context
 
 
@@ -370,4 +370,4 @@ def cleanup_daemon_context(context: DaemonContext) -> None:
     logging.debug("Cleaning up error collector...")
     logging.debug("Firmware ledger persists to disk - no cleanup needed")
 
-    logging.info("✅ Daemon context cleaned up")
+    logging.info("Daemon context cleaned up")

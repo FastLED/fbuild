@@ -45,6 +45,18 @@ SERIAL_READ_TIMEOUT = 0.1
 # Writer acquisition timeout default
 DEFAULT_WRITER_TIMEOUT = 10.0
 
+# Boot crash patterns to detect device crashes
+BOOT_CRASH_PATTERNS = [
+    b"Guru Meditation Error",
+    b"panic'ed",
+    b"Core  0 register dump",
+    b"LoadProhibited",
+    b"StoreProhibited",
+    b"Unhandled exception",
+    b"abort() was called",
+    b"Task watchdog got triggered",
+]
+
 
 @dataclass
 class SerialSession:
@@ -144,6 +156,17 @@ class SharedSerialManager:
         # Port open queuing (Fix #4) - serialize concurrent open attempts per port
         self._port_open_locks: dict[str, threading.Lock] = {}  # port -> open lock
 
+    def _detect_boot_crash(self, buffer: bytes) -> bool:
+        """Detect if device has crashed during boot from serial buffer.
+
+        Args:
+            buffer: Serial data bytes to check
+
+        Returns:
+            True if crash pattern detected, False otherwise
+        """
+        return any(pattern in buffer for pattern in BOOT_CRASH_PATTERNS)
+
     def open_port(self, port: str, baud_rate: int, client_id: str, progress_callback: Callable[[int, int, float], None] | None = None) -> bool:
         """Open a serial port if not already open.
 
@@ -235,6 +258,40 @@ class SharedSerialManager:
                         raise
                     except Exception as e:
                         if attempt < max_retries - 1:
+                            # Check for boot crash in error message
+                            error_str = str(e).encode('utf-8', errors='ignore')
+                            if self._detect_boot_crash(error_str):
+                                logging.warning(f"Boot crash detected on {port}, forcing hardware reset...")
+                                # Immediate reset on crash detection (don't wait for attempt 3)
+                                try:
+                                    from fbuild.deploy.esptool_utils import reset_esp32_device
+                                    reset_success = reset_esp32_device(port, chip="auto", verbose=False)
+                                    if reset_success:
+                                        logging.info(f"Hardware reset successful on {port} after crash")
+                                        time.sleep(3.0)  # Wait for device to reboot
+                                    else:
+                                        logging.warning(f"Hardware reset failed on {port} (continuing retries)")
+                                except KeyboardInterrupt:  # noqa: KBI002
+                                    raise
+                                except Exception as reset_error:
+                                    logging.warning(f"Hardware reset error on {port}: {reset_error}")
+
+                            # Attempt hardware reset on 3rd failure for non-crash errors
+                            elif attempt == 2:
+                                logging.info(f"Attempting hardware reset on {port} to recover device...")
+                                try:
+                                    from fbuild.deploy.esptool_utils import reset_esp32_device
+                                    reset_success = reset_esp32_device(port, chip="auto", verbose=False)
+                                    if reset_success:
+                                        logging.info(f"Hardware reset successful on {port}")
+                                        time.sleep(3.0)
+                                    else:
+                                        logging.warning(f"Hardware reset failed on {port} (continuing retries)")
+                                except KeyboardInterrupt:  # noqa: KBI002
+                                    raise
+                                except Exception as reset_error:
+                                    logging.warning(f"Hardware reset error on {port}: {reset_error} (continuing retries)")
+
                             # Exponential backoff with max delay cap
                             # 1s, 2s, 4s, 8s, 10s (max), 10s, ...
                             base_delay = 1.0
@@ -387,6 +444,22 @@ class SharedSerialManager:
                 del self._reader_callbacks[port][client_id]
 
             logging.debug(f"Client {client_id} detached from {port}")
+
+            # ROOT CAUSE #1 FIX: Auto-close port when last client detaches
+            # If no readers and no writer remain, close the port to prevent resource leak
+            if len(session.reader_client_ids) == 0 and session.writer_client_id is None:
+                logging.info(f"Last client detached from {port}, auto-closing port to prevent leak")
+                # Release lock temporarily to call close_port (which acquires lock)
+                self._lock.release()
+                try:
+                    self.close_port(port, client_id)
+                except KeyboardInterrupt:  # noqa: KBI002
+                    raise
+                except Exception as e:
+                    logging.error(f"Error auto-closing port {port} after last client detached: {e}")
+                finally:
+                    self._lock.acquire()
+
             return True
 
     def acquire_writer(self, port: str, client_id: str, timeout: float = DEFAULT_WRITER_TIMEOUT) -> bool:
@@ -466,12 +539,28 @@ class SharedSerialManager:
             session.writer_client_id = None
             condition = self._writer_conditions.get(port)
 
+            # ROOT CAUSE #1 FIX: Check if we should auto-close port after releasing writer
+            should_auto_close = len(session.reader_client_ids) == 0
+            # Note: We check this inside the lock, but close outside (after notifying waiters)
+
         # Notify waiting writers
         if condition:
             with condition:
                 condition.notify_all()
 
         logging.info(f"Client {client_id} released writer on {port}")
+
+        # ROOT CAUSE #1 FIX: Auto-close port when last client releases writer
+        # If no readers and no writer remain, close the port to prevent resource leak
+        if should_auto_close:
+            logging.info(f"Last client (writer) released {port}, auto-closing port to prevent leak")
+            try:
+                self.close_port(port, client_id)
+            except KeyboardInterrupt:  # noqa: KBI002
+                raise
+            except Exception as e:
+                logging.error(f"Error auto-closing port {port} after writer release: {e}")
+
         return True
 
     def write(self, port: str, client_id: str, data: bytes) -> int:
@@ -684,6 +773,8 @@ class SharedSerialManager:
         """
         logging.debug(f"Serial reader thread started for {port}")
 
+        crash_detected = False
+
         try:
             while not stop_event.is_set():
                 try:
@@ -691,6 +782,12 @@ class SharedSerialManager:
                     if ser.in_waiting:
                         data = ser.readline()
                         if data:
+                            # Check for boot crash patterns
+                            if not crash_detected and self._detect_boot_crash(data):
+                                crash_detected = True
+                                logging.error(f"Boot crash detected on {port} in serial output")
+                                # Notify that device needs reset (logged for diagnostic purposes)
+
                             self.broadcast_output(port, data)
                     else:
                         # Small sleep to avoid busy-waiting

@@ -33,6 +33,13 @@ from ..output import log_phase, log_detail, log_warning, DefaultProgressCallback
 # Module-level logger
 logger = logging.getLogger(__name__)
 
+# ESP32 boards without PSRAM
+# These boards should use CONFIG_ESP32S3_DATA_CACHE_64KB instead of PSRAM flags
+NO_PSRAM_BOARDS = [
+    "seeed_xiao_esp32s3",  # Seeed XIAO ESP32-S3 (no PSRAM variant)
+    # Add other no-PSRAM ESP32 boards here as needed
+]
+
 
 @dataclass
 class BuildResultESP32:
@@ -67,6 +74,84 @@ class OrchestratorESP32(IBuildOrchestrator):
         """
         self.cache = cache
         self.verbose = verbose
+
+    @staticmethod
+    def board_has_psram(board_id: str) -> bool:
+        """
+        Detect if a board has PSRAM (external RAM) available.
+
+        ESP32 boards come in variants with and without PSRAM. Some boards like
+        the Seeed XIAO ESP32-S3 have no PSRAM and require different cache
+        configuration flags to prevent crashes.
+
+        Args:
+            board_id: Board identifier (e.g., "seeed_xiao_esp32s3")
+
+        Returns:
+            True if board has PSRAM, False otherwise
+
+        Example:
+            >>> OrchestratorESP32.board_has_psram("seeed_xiao_esp32s3")
+            False
+            >>> OrchestratorESP32.board_has_psram("esp32dev")
+            True
+        """
+        # Normalize board ID to lowercase for case-insensitive comparison
+        board_id_lower = board_id.lower()
+
+        # Check if board is in the no-PSRAM list
+        return board_id_lower not in NO_PSRAM_BOARDS
+
+    def _add_psram_flags(self, board_id: str, mcu: str, build_flags: List[str], verbose: bool) -> List[str]:
+        """
+        Add PSRAM-specific build flags based on board capabilities.
+
+        ESP32-S3 boards without PSRAM need CONFIG_ESP32S3_DATA_CACHE_64KB flag
+        to prevent "CORRUPT HEAP" crashes. Boards with PSRAM need BOARD_HAS_PSRAM
+        and CONFIG_SPIRAM_USE_MALLOC flags.
+
+        Args:
+            board_id: Board identifier (e.g., "seeed_xiao_esp32s3")
+            mcu: MCU type (e.g., "esp32s3")
+            build_flags: Existing build flags from platformio.ini
+            verbose: Enable verbose logging
+
+        Returns:
+            Modified build flags list with PSRAM flags added
+        """
+        # Create a new list to avoid modifying the original
+        flags = build_flags.copy()
+
+        # Only apply PSRAM detection to ESP32-S3 (other ESP32 variants handle PSRAM differently)
+        if mcu != "esp32s3":
+            return flags
+
+        # Check if board has PSRAM
+        has_psram = self.board_has_psram(board_id)
+
+        if has_psram:
+            # Board has PSRAM - add PSRAM enable flags
+            if "-DBOARD_HAS_PSRAM" not in flags:
+                flags.append("-DBOARD_HAS_PSRAM")
+                log_detail(f"Adding PSRAM flag: -DBOARD_HAS_PSRAM", verbose_only=verbose)
+
+            if "-DCONFIG_SPIRAM_USE_MALLOC" not in flags:
+                flags.append("-DCONFIG_SPIRAM_USE_MALLOC")
+                log_detail(f"Adding PSRAM malloc flag: -DCONFIG_SPIRAM_USE_MALLOC", verbose_only=verbose)
+        else:
+            # Board has NO PSRAM - add cache config flag and remove PSRAM flags if present
+            if "-DCONFIG_ESP32S3_DATA_CACHE_64KB" not in flags:
+                flags.append("-DCONFIG_ESP32S3_DATA_CACHE_64KB")
+                log_detail(f"Adding cache config flag for no-PSRAM board: -DCONFIG_ESP32S3_DATA_CACHE_64KB", verbose_only=verbose)
+
+            # Remove dangerous PSRAM flags if user accidentally added them
+            dangerous_flags = ["-DBOARD_HAS_PSRAM", "-DCONFIG_SPIRAM_USE_MALLOC"]
+            for flag in dangerous_flags:
+                if flag in flags:
+                    flags.remove(flag)
+                    log_warning(f"Removed dangerous flag {flag} for no-PSRAM board {board_id}")
+
+        return flags
 
     def build(
         self,
@@ -221,6 +306,10 @@ class OrchestratorESP32(IBuildOrchestrator):
 
             log_detail(f"Board: {board_id}", verbose_only=True)
             log_detail(f"MCU: {mcu}", verbose_only=True)
+
+            # Add PSRAM-specific build flags based on board capabilities
+            # This prevents "CORRUPT HEAP" crashes on boards without PSRAM
+            build_flags = self._add_psram_flags(board_id, mcu, build_flags, verbose)
 
             # Get required packages
             packages = platform.get_required_packages(mcu)

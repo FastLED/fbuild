@@ -121,6 +121,9 @@ markers = [
     "integration: marks tests as integration tests (deselected by default, run with --full)",
     "concurrent_safety: marks tests as concurrent safety tests (deselected by default, run with --full)",
     "hardware: marks tests that require ESP32 hardware",
+    "unit: marks tests as unit tests (fast, no external dependencies)",
+    "esp32s3: marks tests specific to ESP32-S3 hardware",
+    "diagnostic: marks tests as diagnostic/utility tests (always run, provide debugging info)",
 ]
 # By default, skip integration and concurrent_safety tests
 addopts = "-m 'not integration and not concurrent_safety'"
