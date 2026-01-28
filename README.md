@@ -48,10 +48,10 @@ fbuild tests/esp32c6 --monitor
 
 ```bash
 # Deploy with clean build
-uv run fbuild deploy tests/esp32c6 --clean
+fbuild deploy tests/esp32c6 --clean
 
 # Deploy with monitoring and test patterns
-uv run fbuild deploy tests/esp32c6 --monitor="--timeout 60 --halt-on-error \"TEST FAILED\" --halt-on-success \"TEST PASSED\""
+fbuild deploy tests/esp32c6 --monitor="--timeout 60 --halt-on-error \"TEST FAILED\" --halt-on-success \"TEST PASSED\""
 ```
 
 **Monitor command:**
