@@ -133,16 +133,16 @@ class OrchestratorESP32(IBuildOrchestrator):
             # Board has PSRAM - add PSRAM enable flags
             if "-DBOARD_HAS_PSRAM" not in flags:
                 flags.append("-DBOARD_HAS_PSRAM")
-                log_detail(f"Adding PSRAM flag: -DBOARD_HAS_PSRAM", verbose_only=verbose)
+                log_detail("Adding PSRAM flag: -DBOARD_HAS_PSRAM", verbose_only=verbose)
 
             if "-DCONFIG_SPIRAM_USE_MALLOC" not in flags:
                 flags.append("-DCONFIG_SPIRAM_USE_MALLOC")
-                log_detail(f"Adding PSRAM malloc flag: -DCONFIG_SPIRAM_USE_MALLOC", verbose_only=verbose)
+                log_detail("Adding PSRAM malloc flag: -DCONFIG_SPIRAM_USE_MALLOC", verbose_only=verbose)
         else:
             # Board has NO PSRAM - add cache config flag and remove PSRAM flags if present
             if "-DCONFIG_ESP32S3_DATA_CACHE_64KB" not in flags:
                 flags.append("-DCONFIG_ESP32S3_DATA_CACHE_64KB")
-                log_detail(f"Adding cache config flag for no-PSRAM board: -DCONFIG_ESP32S3_DATA_CACHE_64KB", verbose_only=verbose)
+                log_detail("Adding cache config flag for no-PSRAM board: -DCONFIG_ESP32S3_DATA_CACHE_64KB", verbose_only=verbose)
 
             # Remove dangerous PSRAM flags if user accidentally added them
             dangerous_flags = ["-DBOARD_HAS_PSRAM", "-DCONFIG_SPIRAM_USE_MALLOC"]

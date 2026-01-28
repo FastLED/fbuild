@@ -15,14 +15,12 @@ import os
 import subprocess
 import sys
 import time
-from pathlib import Path
-from typing import Any
 
 import pytest
 import serial
 
 # Import helpers from conftest
-from .conftest import start_fbuild_daemon, verify_port_accessible
+from .conftest import verify_port_accessible
 
 # Fixtures imported via pytest auto-discovery:
 # - esp32s3_port: Session-scoped fixture providing port name
@@ -58,8 +56,7 @@ def test_serial_context_manager_exception_safety(esp32s3_port: str) -> None:
     Impact: Prevents port locks when operations fail
     """
     # Phase 1: Verify port is accessible before test
-    assert verify_port_accessible(esp32s3_port, timeout=2.0), \
-        f"Port {esp32s3_port} not accessible before test"
+    assert verify_port_accessible(esp32s3_port, timeout=2.0), f"Port {esp32s3_port} not accessible before test"
 
     # Phase 2: Open port and raise exception within context manager
     exception_raised = False
@@ -96,8 +93,7 @@ def test_serial_context_manager_exception_safety(esp32s3_port: str) -> None:
         pytest.fail(f"Port {esp32s3_port} locked after exception: {e}")
 
     # Final verification
-    assert verify_port_accessible(esp32s3_port, timeout=2.0), \
-        f"Port {esp32s3_port} not accessible after test"
+    assert verify_port_accessible(esp32s3_port, timeout=2.0), f"Port {esp32s3_port} not accessible after test"
 
 
 @pytest.mark.integration
@@ -133,8 +129,7 @@ def test_daemon_serial_monitor_cleanup(esp32s3_port: str, clean_daemon: None) ->
     Location: src/fbuild/daemon/shared_serial.py lines 391-394
     """
     # Phase 1: Verify port is accessible before test
-    assert verify_port_accessible(esp32s3_port, timeout=2.0), \
-        f"Port {esp32s3_port} not accessible before test"
+    assert verify_port_accessible(esp32s3_port, timeout=2.0), f"Port {esp32s3_port} not accessible before test"
 
     # Phase 2: Start fbuild daemon
     # Note: clean_daemon fixture ensures daemon starts clean
@@ -144,9 +139,6 @@ def test_daemon_serial_monitor_cleanup(esp32s3_port: str, clean_daemon: None) ->
 
     # Use subprocess to start monitor in a way we can interrupt
     # The monitor command will open the port via daemon
-    monitor_script = Path(__file__).parent / "_helpers" / "monitor_wrapper.py"
-
-    # If helper script doesn't exist, create inline subprocess approach
     # We'll create a subprocess that runs fbuild monitor and can be interrupted
     monitor_cmd = [
         sys.executable,
@@ -224,8 +216,7 @@ def test_daemon_serial_monitor_cleanup(esp32s3_port: str, clean_daemon: None) ->
         pytest.fail(f"Port {esp32s3_port} appears accessible but cannot be opened: {e}")
 
     # Final verification
-    assert verify_port_accessible(esp32s3_port, timeout=2.0), \
-        f"Port {esp32s3_port} not accessible after test cleanup"
+    assert verify_port_accessible(esp32s3_port, timeout=2.0), f"Port {esp32s3_port} not accessible after test cleanup"
 
 
 # Helper function for manual testing and debugging
@@ -242,13 +233,13 @@ def _test_monitor_interrupt_manual(port: str) -> None:
     Args:
         port: Serial port to test (e.g., "COM13")
     """
-    print(f"\n=== Manual Monitor Interrupt Test ===")
+    print("\n=== Manual Monitor Interrupt Test ===")
     print(f"Port: {port}")
-    print(f"Instructions:")
-    print(f"  1. This will start fbuild monitor")
-    print(f"  2. Press Ctrl+C after you see output")
-    print(f"  3. We'll verify port is released")
-    print(f"\nStarting monitor in 3 seconds...\n")
+    print("Instructions:")
+    print("  1. This will start fbuild monitor")
+    print("  2. Press Ctrl+C after you see output")
+    print("  3. We'll verify port is released")
+    print("\nStarting monitor in 3 seconds...\n")
 
     time.sleep(3)
 

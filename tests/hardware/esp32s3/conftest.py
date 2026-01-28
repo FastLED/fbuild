@@ -17,7 +17,6 @@ from typing import Generator
 import pytest
 import serial
 
-
 # Port configuration
 DEFAULT_ESP32S3_PORT = "COM13"
 ESP32S3_PORT_ENV_VAR = "FBUILD_ESP32S3_PORT"
@@ -37,7 +36,7 @@ def esp32s3_port() -> str:
 
     # Verify port is accessible
     try:
-        with serial.Serial(port, 115200, timeout=1) as ser:
+        with serial.Serial(port, 115200, timeout=1):
             pass
     except serial.SerialException as e:
         raise RuntimeError(f"ESP32-S3 port {port} is not accessible: {e}")
@@ -77,7 +76,7 @@ def verify_port_accessible(port: str, timeout: float = 2.0) -> bool:
         True if port is accessible, False otherwise
     """
     try:
-        with serial.Serial(port, 115200, timeout=timeout) as ser:
+        with serial.Serial(port, 115200, timeout=timeout):
             return True
     except serial.SerialException:
         return False
@@ -144,6 +143,7 @@ def upload_psram_enabled_firmware(port: str, firmware_path: Path) -> bool:
 
 
 # Internal helper functions
+
 
 def _kill_fbuild_daemon() -> None:
     """Kill any running fbuild daemon processes."""

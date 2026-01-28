@@ -10,7 +10,6 @@ Expected: These tests will likely FAIL initially since PSRAM detection
 """
 
 import pytest
-from pathlib import Path
 
 
 @pytest.mark.unit
@@ -43,34 +42,19 @@ def test_psram_detection_xiao_esp32s3():
     config = get_board_config(board_name)
 
     # Verify PSRAM detection
-    assert hasattr(config, "has_psram"), (
-        "BoardConfig missing 'has_psram' attribute. "
-        "Phase 4 needs to add PSRAM detection to board configuration."
-    )
+    assert hasattr(config, "has_psram"), "BoardConfig missing 'has_psram' attribute. " "Phase 4 needs to add PSRAM detection to board configuration."
 
-    assert config.has_psram is False, (
-        f"Board {board_name} incorrectly reports has_psram=True. "
-        f"This board variant has no PSRAM and should report False."
-    )
+    assert config.has_psram is False, f"Board {board_name} incorrectly reports has_psram=True. " f"This board variant has no PSRAM and should report False."
 
     # Verify cache configuration flag is set correctly
     # When PSRAM is absent, ESP32-S3 should use 64KB data cache
-    assert hasattr(config, "build_flags"), (
-        "BoardConfig missing 'build_flags' attribute"
-    )
+    assert hasattr(config, "build_flags"), "BoardConfig missing 'build_flags' attribute"
 
     build_flags_str = " ".join(config.build_flags)
-    assert "CONFIG_ESP32S3_DATA_CACHE_64KB" in build_flags_str, (
-        f"Missing cache config flag for no-PSRAM board. "
-        f"Expected CONFIG_ESP32S3_DATA_CACHE_64KB in build flags. "
-        f"Got: {build_flags_str}"
-    )
+    assert "CONFIG_ESP32S3_DATA_CACHE_64KB" in build_flags_str, f"Missing cache config flag for no-PSRAM board. " f"Expected CONFIG_ESP32S3_DATA_CACHE_64KB in build flags. " f"Got: {build_flags_str}"
 
     # Verify PSRAM flags are NOT present
-    assert "BOARD_HAS_PSRAM" not in build_flags_str, (
-        f"BOARD_HAS_PSRAM should not be set for no-PSRAM variant. "
-        f"Got: {build_flags_str}"
-    )
+    assert "BOARD_HAS_PSRAM" not in build_flags_str, f"BOARD_HAS_PSRAM should not be set for no-PSRAM variant. " f"Got: {build_flags_str}"
 
 
 @pytest.mark.unit
@@ -104,20 +88,14 @@ def test_build_flags_respect_no_psram():
     except TypeError:
         # OrchestratorESP32 might require additional constructor args
         # Try with minimal config
-        pytest.skip(f"OrchestratorESP32 constructor signature unknown, cannot instantiate")
+        pytest.skip("OrchestratorESP32 constructor signature unknown, cannot instantiate")
 
     # Check if board_has_psram method exists
-    assert hasattr(orch, "board_has_psram"), (
-        "OrchestratorESP32 missing 'board_has_psram' method. "
-        "Phase 4 needs to implement PSRAM detection logic."
-    )
+    assert hasattr(orch, "board_has_psram"), "OrchestratorESP32 missing 'board_has_psram' method. " "Phase 4 needs to implement PSRAM detection logic."
 
     # Verify method returns False for XIAO ESP32-S3
     has_psram = orch.board_has_psram(board_name)
-    assert has_psram is False, (
-        f"board_has_psram() returned {has_psram} for {board_name}. "
-        f"Expected False (this board has no PSRAM)."
-    )
+    assert has_psram is False, f"board_has_psram() returned {has_psram} for {board_name}. " f"Expected False (this board has no PSRAM)."
 
     # Verify build flags generation
     # Try to get build flags (method name might vary)
@@ -142,21 +120,13 @@ def test_build_flags_respect_no_psram():
 
     # Verify correct cache config flag is present
     assert "CONFIG_ESP32S3_DATA_CACHE_64KB" in flags_str or "-DCONFIG_ESP32S3_DATA_CACHE_64KB" in flags_str, (
-        f"Missing cache config flag for no-PSRAM board. "
-        f"Expected CONFIG_ESP32S3_DATA_CACHE_64KB in build flags. "
-        f"Got: {flags_str}"
+        f"Missing cache config flag for no-PSRAM board. " f"Expected CONFIG_ESP32S3_DATA_CACHE_64KB in build flags. " f"Got: {flags_str}"
     )
 
     # Verify PSRAM flags are NOT present
-    assert "BOARD_HAS_PSRAM" not in flags_str, (
-        f"BOARD_HAS_PSRAM should not be set for no-PSRAM variant. "
-        f"Got: {flags_str}"
-    )
+    assert "BOARD_HAS_PSRAM" not in flags_str, f"BOARD_HAS_PSRAM should not be set for no-PSRAM variant. " f"Got: {flags_str}"
 
-    assert "CONFIG_SPIRAM_USE_MALLOC" not in flags_str, (
-        f"CONFIG_SPIRAM_USE_MALLOC should not be set for no-PSRAM variant. "
-        f"Got: {flags_str}"
-    )
+    assert "CONFIG_SPIRAM_USE_MALLOC" not in flags_str, f"CONFIG_SPIRAM_USE_MALLOC should not be set for no-PSRAM variant. " f"Got: {flags_str}"
 
 
 @pytest.mark.unit
@@ -191,18 +161,11 @@ def test_psram_board_list_includes_xiao():
         no_psram_boards = OrchestratorESP32.NO_PSRAM_BOARDS
 
     if no_psram_boards is None:
-        pytest.skip(
-            "NO_PSRAM_BOARDS list not found. "
-            "Phase 4 needs to create a list of boards without PSRAM."
-        )
+        pytest.skip("NO_PSRAM_BOARDS list not found. " "Phase 4 needs to create a list of boards without PSRAM.")
 
     # Verify XIAO ESP32-S3 is in the list
     board_name = "seeed_xiao_esp32s3"
-    assert board_name in no_psram_boards, (
-        f"Board '{board_name}' not found in NO_PSRAM_BOARDS list. "
-        f"This board has no PSRAM and must be included. "
-        f"Current list: {no_psram_boards}"
-    )
+    assert board_name in no_psram_boards, f"Board '{board_name}' not found in NO_PSRAM_BOARDS list. " f"This board has no PSRAM and must be included. " f"Current list: {no_psram_boards}"
 
 
 @pytest.mark.unit
@@ -268,26 +231,11 @@ def test_psram_crash_prevention():
     has_dangerous_flag = "BOARD_HAS_PSRAM" in flags_str
     has_psram_malloc = "CONFIG_SPIRAM_USE_MALLOC" in flags_str
 
-    assert not has_dangerous_flag, (
-        f"DANGEROUS: BOARD_HAS_PSRAM is set for a board without PSRAM! "
-        f"This will cause 'CORRUPT HEAP' crash on boot. "
-        f"Build flags: {flags_str}"
-    )
+    assert not has_dangerous_flag, f"DANGEROUS: BOARD_HAS_PSRAM is set for a board without PSRAM! " f"This will cause 'CORRUPT HEAP' crash on boot. " f"Build flags: {flags_str}"
 
-    assert not has_psram_malloc, (
-        f"DANGEROUS: CONFIG_SPIRAM_USE_MALLOC is set for a board without PSRAM! "
-        f"This will cause heap allocation failures. "
-        f"Build flags: {flags_str}"
-    )
+    assert not has_psram_malloc, f"DANGEROUS: CONFIG_SPIRAM_USE_MALLOC is set for a board without PSRAM! " f"This will cause heap allocation failures. " f"Build flags: {flags_str}"
 
     # Verify safe cache configuration is present instead
-    has_safe_cache_config = (
-        "CONFIG_ESP32S3_DATA_CACHE_64KB" in flags_str or
-        "-DCONFIG_ESP32S3_DATA_CACHE_64KB" in flags_str
-    )
+    has_safe_cache_config = "CONFIG_ESP32S3_DATA_CACHE_64KB" in flags_str or "-DCONFIG_ESP32S3_DATA_CACHE_64KB" in flags_str
 
-    assert has_safe_cache_config, (
-        f"Missing safe cache configuration for no-PSRAM board. "
-        f"Should have CONFIG_ESP32S3_DATA_CACHE_64KB. "
-        f"Build flags: {flags_str}"
-    )
+    assert has_safe_cache_config, f"Missing safe cache configuration for no-PSRAM board. " f"Should have CONFIG_ESP32S3_DATA_CACHE_64KB. " f"Build flags: {flags_str}"

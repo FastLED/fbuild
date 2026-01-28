@@ -259,12 +259,15 @@ class SharedSerialManager:
                     except Exception as e:
                         if attempt < max_retries - 1:
                             # Check for boot crash in error message
-                            error_str = str(e).encode('utf-8', errors='ignore')
+                            error_str = str(e).encode("utf-8", errors="ignore")
                             if self._detect_boot_crash(error_str):
                                 logging.warning(f"Boot crash detected on {port}, forcing hardware reset...")
                                 # Immediate reset on crash detection (don't wait for attempt 3)
                                 try:
-                                    from fbuild.deploy.esptool_utils import reset_esp32_device
+                                    from fbuild.deploy.esptool_utils import (
+                                        reset_esp32_device,
+                                    )
+
                                     reset_success = reset_esp32_device(port, chip="auto", verbose=False)
                                     if reset_success:
                                         logging.info(f"Hardware reset successful on {port} after crash")
@@ -280,7 +283,10 @@ class SharedSerialManager:
                             elif attempt == 2:
                                 logging.info(f"Attempting hardware reset on {port} to recover device...")
                                 try:
-                                    from fbuild.deploy.esptool_utils import reset_esp32_device
+                                    from fbuild.deploy.esptool_utils import (
+                                        reset_esp32_device,
+                                    )
+
                                     reset_success = reset_esp32_device(port, chip="auto", verbose=False)
                                     if reset_success:
                                         logging.info(f"Hardware reset successful on {port}")

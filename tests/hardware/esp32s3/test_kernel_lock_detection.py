@@ -22,7 +22,6 @@ Test Strategy:
 
 import ctypes
 import sys
-from ctypes import wintypes
 
 import pytest
 
@@ -122,9 +121,9 @@ def test_detect_kernel_lock(esp32s3_port):
     pyserial_error = None
 
     try:
-        with serial.Serial(esp32s3_port, 115200, timeout=1) as ser:
+        with serial.Serial(esp32s3_port, 115200, timeout=1):
             pyserial_accessible = True
-            print(f"[Diagnostic] ✅ Pyserial: Port accessible")
+            print("[Diagnostic] ✅ Pyserial: Port accessible")
     except serial.SerialException as e:
         pyserial_error = str(e)
         print(f"[Diagnostic] ❌ Pyserial: Port NOT accessible - {e}")
@@ -135,13 +134,13 @@ def test_detect_kernel_lock(esp32s3_port):
     # Step 2: Windows API check
     is_locked, error_code, diagnosis = is_kernel_locked(esp32s3_port)
 
-    print(f"[Diagnostic] Windows API Result:")
+    print("[Diagnostic] Windows API Result:")
     print(f"  - Locked: {is_locked}")
     print(f"  - Error Code: {error_code}")
     print(f"  - Diagnosis: {diagnosis}")
 
     # Step 3: Cross-reference results
-    print(f"\n[Diagnostic] Cross-Reference Analysis:")
+    print("\n[Diagnostic] Cross-Reference Analysis:")
 
     if pyserial_accessible and not is_locked:
         print("  ✅ CONSISTENT: Both methods report port accessible")
@@ -165,7 +164,7 @@ def test_detect_kernel_lock(esp32s3_port):
         print("  → Port is likely accessible via other methods")
 
     # Step 4: Diagnostic recommendations
-    print(f"\n[Diagnostic] Recommendations:")
+    print("\n[Diagnostic] Recommendations:")
 
     if pyserial_accessible:
         print("  ✅ Port is accessible - tests can proceed")
@@ -203,15 +202,9 @@ def _manual_diagnostic(port: str = "COM13"):
         print("ERROR: This diagnostic is Windows-only")
         return
 
-    print(f"=== Manual Port Diagnostic ===")
+    print("=== Manual Port Diagnostic ===")
     print(f"Port: {port}")
     print()
 
     # Run the diagnostic
-    class FakeFixture:
-        """Minimal fixture replacement for manual testing."""
-
-        pass
-
-    fixture = FakeFixture()
     test_detect_kernel_lock(port)

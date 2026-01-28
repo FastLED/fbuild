@@ -5,8 +5,7 @@ Tests the OrchestratorESP32.board_has_psram() method and _add_psram_flags()
 to ensure correct build flags are generated for boards with and without PSRAM.
 """
 
-import pytest
-from fbuild.build.orchestrator_esp32 import OrchestratorESP32, NO_PSRAM_BOARDS
+from fbuild.build.orchestrator_esp32 import NO_PSRAM_BOARDS, OrchestratorESP32
 from fbuild.packages import Cache
 
 
@@ -64,12 +63,7 @@ def test_add_psram_flags_for_xiao_no_psram():
     build_flags = []
 
     # Add PSRAM flags for XIAO ESP32-S3 (no PSRAM)
-    result_flags = orch._add_psram_flags(
-        board_id="seeed_xiao_esp32s3",
-        mcu="esp32s3",
-        build_flags=build_flags,
-        verbose=False
-    )
+    result_flags = orch._add_psram_flags(board_id="seeed_xiao_esp32s3", mcu="esp32s3", build_flags=build_flags, verbose=False)
 
     # Should add cache config flag for no-PSRAM board
     assert "-DCONFIG_ESP32S3_DATA_CACHE_64KB" in result_flags
@@ -88,12 +82,7 @@ def test_add_psram_flags_for_esp32dev_with_psram():
     build_flags = []
 
     # Add PSRAM flags for esp32dev (has PSRAM)
-    result_flags = orch._add_psram_flags(
-        board_id="esp32dev",
-        mcu="esp32s3",
-        build_flags=build_flags,
-        verbose=False
-    )
+    result_flags = orch._add_psram_flags(board_id="esp32dev", mcu="esp32s3", build_flags=build_flags, verbose=False)
 
     # Should add PSRAM enable flags
     assert "-DBOARD_HAS_PSRAM" in result_flags
@@ -109,19 +98,10 @@ def test_add_psram_flags_removes_dangerous_flags():
     orch = OrchestratorESP32(cache, verbose=False)
 
     # Start with dangerous flags already present (simulating user error)
-    build_flags = [
-        "-DBOARD_HAS_PSRAM",
-        "-DCONFIG_SPIRAM_USE_MALLOC",
-        "-DSOME_OTHER_FLAG"
-    ]
+    build_flags = ["-DBOARD_HAS_PSRAM", "-DCONFIG_SPIRAM_USE_MALLOC", "-DSOME_OTHER_FLAG"]
 
     # Add PSRAM flags for XIAO ESP32-S3 (no PSRAM)
-    result_flags = orch._add_psram_flags(
-        board_id="seeed_xiao_esp32s3",
-        mcu="esp32s3",
-        build_flags=build_flags,
-        verbose=False
-    )
+    result_flags = orch._add_psram_flags(board_id="seeed_xiao_esp32s3", mcu="esp32s3", build_flags=build_flags, verbose=False)
 
     # Dangerous flags should be removed
     assert "-DBOARD_HAS_PSRAM" not in result_flags
@@ -141,12 +121,7 @@ def test_add_psram_flags_only_applies_to_esp32s3():
 
     # Test with ESP32 (not S3)
     build_flags = []
-    result_flags = orch._add_psram_flags(
-        board_id="seeed_xiao_esp32s3",
-        mcu="esp32",  # Different MCU
-        build_flags=build_flags,
-        verbose=False
-    )
+    result_flags = orch._add_psram_flags(board_id="seeed_xiao_esp32s3", mcu="esp32", build_flags=build_flags, verbose=False)  # Different MCU
 
     # Should not add any flags for non-S3 MCU
     assert "-DCONFIG_ESP32S3_DATA_CACHE_64KB" not in result_flags
@@ -162,12 +137,7 @@ def test_add_psram_flags_doesnt_duplicate():
     # Start with cache config flag already present
     build_flags = ["-DCONFIG_ESP32S3_DATA_CACHE_64KB"]
 
-    result_flags = orch._add_psram_flags(
-        board_id="seeed_xiao_esp32s3",
-        mcu="esp32s3",
-        build_flags=build_flags,
-        verbose=False
-    )
+    result_flags = orch._add_psram_flags(board_id="seeed_xiao_esp32s3", mcu="esp32s3", build_flags=build_flags, verbose=False)
 
     # Should not duplicate the flag
     count = result_flags.count("-DCONFIG_ESP32S3_DATA_CACHE_64KB")
@@ -184,12 +154,7 @@ def test_add_psram_flags_immutability():
     original_copy = original_flags.copy()
 
     # Call _add_psram_flags
-    result_flags = orch._add_psram_flags(
-        board_id="seeed_xiao_esp32s3",
-        mcu="esp32s3",
-        build_flags=original_flags,
-        verbose=False
-    )
+    result_flags = orch._add_psram_flags(board_id="seeed_xiao_esp32s3", mcu="esp32s3", build_flags=original_flags, verbose=False)
 
     # Original flags should be unchanged
     assert original_flags == original_copy

@@ -12,7 +12,7 @@ Set FBUILD_ESP32S3_PORT environment variable to override.
 """
 
 import time
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
 import serial
