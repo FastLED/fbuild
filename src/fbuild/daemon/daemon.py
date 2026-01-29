@@ -19,21 +19,19 @@ Architecture:
 """
 
 import _thread
+import atexit
 import json
 import logging
 import multiprocessing
 import os
 import signal
-import subprocess
 import sys
 import threading
 import time
 from dataclasses import dataclass, field
 from logging.handlers import TimedRotatingFileHandler
 from pathlib import Path
-from typing import Any, Callable, TypeVar
-
-import psutil
+from typing import Any, Callable
 
 from fbuild.daemon.connection_registry import ConnectionRegistry
 from fbuild.daemon.daemon_context import (
@@ -42,61 +40,29 @@ from fbuild.daemon.daemon_context import (
     create_daemon_context,
 )
 from fbuild.daemon.messages import (
-    BuildRequest,
     DaemonState,
-    DeployRequest,
-    InstallDependenciesRequest,
-    MonitorRequest,
     SerialMonitorAttachRequest,
     SerialMonitorDetachRequest,
     SerialMonitorPollRequest,
     SerialWriteRequest,
 )
+from fbuild.daemon.paths import (
+    DAEMON_DIR,
+    FILE_CACHE_FILE,
+    LOG_FILE,
+    PID_FILE,
+    PROCESS_REGISTRY_FILE,
+    STATUS_FILE,
+)
 from fbuild.daemon.process_tracker import ProcessTracker
-from fbuild.daemon.processors.build_processor import BuildRequestProcessor
-from fbuild.daemon.processors.deploy_processor import DeployRequestProcessor
-from fbuild.daemon.processors.install_deps_processor import InstallDependenciesProcessor
-from fbuild.daemon.processors.monitor_processor import MonitorRequestProcessor
 from fbuild.daemon.processors.serial_monitor_processor import SerialMonitorAPIProcessor
 
-from ..subprocess_utils import get_python_executable, safe_popen
-
-# Type variable for request types
-RequestT = TypeVar("RequestT", BuildRequest, DeployRequest, MonitorRequest, InstallDependenciesRequest)
+# Type variable removed - no longer needed for file-based operation requests
 
 # Module-level daemon context accessor for cross-module access
 _daemon_context: DaemonContext | None = None
 
-# Daemon configuration
-DAEMON_NAME = "fbuild_daemon"
-
-# Check for development mode (when running from repo)
-if os.environ.get("FBUILD_DEV_MODE") == "1":
-    # Use project-local daemon directory for development
-    DAEMON_DIR = Path.cwd() / ".fbuild" / "daemon_dev"
-else:
-    # Use home directory for production
-    DAEMON_DIR = Path.home() / ".fbuild" / "daemon"
-
-PID_FILE = DAEMON_DIR / f"{DAEMON_NAME}.pid"
-STATUS_FILE = DAEMON_DIR / "daemon_status.json"
-BUILD_REQUEST_FILE = DAEMON_DIR / "build_request.json"
-DEPLOY_REQUEST_FILE = DAEMON_DIR / "deploy_request.json"
-MONITOR_REQUEST_FILE = DAEMON_DIR / "monitor_request.json"
-INSTALL_DEPS_REQUEST_FILE = DAEMON_DIR / "install_deps_request.json"
-LOG_FILE = DAEMON_DIR / "daemon.log"
-PROCESS_REGISTRY_FILE = DAEMON_DIR / "process_registry.json"
-FILE_CACHE_FILE = DAEMON_DIR / "file_cache.json"
-
-# Device management request/response files
-DEVICE_LIST_REQUEST_FILE = DAEMON_DIR / "device_list_request.json"
-DEVICE_LIST_RESPONSE_FILE = DAEMON_DIR / "device_list_response.json"
-DEVICE_STATUS_REQUEST_FILE = DAEMON_DIR / "device_status_request.json"
-DEVICE_STATUS_RESPONSE_FILE = DAEMON_DIR / "device_status_response.json"
-DEVICE_LEASE_REQUEST_FILE = DAEMON_DIR / "device_lease_request.json"
-DEVICE_LEASE_RESPONSE_FILE = DAEMON_DIR / "device_lease_response.json"
-DEVICE_RELEASE_REQUEST_FILE = DAEMON_DIR / "device_release_request.json"
-DEVICE_RELEASE_RESPONSE_FILE = DAEMON_DIR / "device_release_response.json"
+# Additional device files not in paths module yet
 DEVICE_PREEMPT_REQUEST_FILE = DAEMON_DIR / "device_preempt_request.json"
 DEVICE_PREEMPT_RESPONSE_FILE = DAEMON_DIR / "device_preempt_response.json"
 
@@ -140,14 +106,7 @@ def set_daemon_context(context: DaemonContext) -> None:
     _daemon_context = context
 
 
-@dataclass
-class RequestConfig:
-    """Configuration for a request type in the daemon loop."""
-
-    request_file: Path
-    request_class: type
-    processor: Any
-    lock: threading.Lock = field(default_factory=threading.Lock)
+# NOTE: RequestConfig dataclass removed - no longer needed for file-based operation requests
 
 
 @dataclass
@@ -220,49 +179,8 @@ def setup_logging(foreground: bool = False) -> None:
     logger.addHandler(file_handler)
 
 
-def read_request_file(request_file: Path, request_class: type[RequestT]) -> RequestT | None:
-    """Read and parse request file.
-
-    Args:
-        request_file: Path to request file
-        request_class: Class to parse into (BuildRequest, DeployRequest, MonitorRequest, or InstallDependenciesRequest)
-
-    Returns:
-        Request object if valid, None otherwise
-    """
-    if not request_file.exists():
-        return None
-
-    try:
-        with open(request_file) as f:
-            data = json.load(f)
-        return request_class.from_dict(data)
-    except (json.JSONDecodeError, ValueError, TypeError) as e:
-        logging.error(f"Failed to parse request file {request_file}: {e}")
-        return None
-    except KeyboardInterrupt:
-        _thread.interrupt_main()
-        raise
-    except Exception as e:
-        logging.error(f"Unexpected error reading request file {request_file}: {e}")
-        return None
-
-
-def clear_request_file(request_file: Path) -> None:
-    """Remove request file after processing."""
-    try:
-        file_existed = request_file.exists()
-        request_file.unlink(missing_ok=True)
-        if file_existed:
-            logging.debug(f"[ATOMIC_CONSUME] Successfully deleted request file: {request_file.name}")
-        else:
-            logging.warning(f"[ATOMIC_CONSUME] Request file already deleted: {request_file.name}")
-    except KeyboardInterrupt:
-        logging.warning(f"KeyboardInterrupt while clearing request file: {request_file}")
-        _thread.interrupt_main()
-        raise
-    except Exception as e:
-        logging.error(f"Failed to clear request file {request_file}: {e}")
+# NOTE: read_request_file() and clear_request_file() removed
+# Operations now use FastAPI HTTP endpoints instead of file-based requests
 
 
 def should_shutdown() -> bool:
@@ -361,8 +279,26 @@ def cleanup_and_exit(context: DaemonContext) -> None:
     sys.exit(0)
 
 
-def handle_device_request(config: DeviceRequestConfig, context: DaemonContext) -> bool:
-    """Handle a device request file if it exists.
+# NOTE: File-based device/lock/operation request handlers removed
+# All device management, lock management, and operations (build/deploy/monitor) now via FastAPI HTTP
+# Serial Monitor API still uses file-based IPC (see handle_serial_monitor_* functions below)
+
+
+# ============================================================================
+# Serial Monitor API File-Based IPC (still in use by fbuild.api.SerialMonitor)
+# ============================================================================
+# NOTE: These handlers are KEPT because fbuild.api.SerialMonitor still uses file-based IPC
+# TODO: Migrate SerialMonitor API to WebSockets in a future iteration
+
+# Global processor instance (reused across requests)
+_serial_monitor_processor = SerialMonitorAPIProcessor()
+
+
+def handle_serial_monitor_request(config: DeviceRequestConfig, context: DaemonContext) -> bool:
+    """Handle a serial monitor API request file if it exists.
+
+    This is a simplified version of the old handle_device_request that only handles
+    serial monitor API requests (attach, detach, poll, write).
 
     Args:
         config: Device request configuration
@@ -384,15 +320,11 @@ def handle_device_request(config: DeviceRequestConfig, context: DaemonContext) -
         # Process request
         response_data = config.handler(request_data, context)
 
-        # Determine response file path
-        # If response includes _client_id, use per-client file (SerialMonitor API)
-        # Otherwise use shared response file (device management)
+        # Serial monitor API uses per-client response files
         client_id = response_data.pop("_client_id", None)
         if client_id:
-            # Per-client response file (SerialMonitor API)
             response_file = config.response_file.parent / f"{config.response_file.stem}_{client_id}.json"
         else:
-            # Shared response file (device management)
             response_file = config.response_file
 
         # Write response atomically
@@ -411,7 +343,7 @@ def handle_device_request(config: DeviceRequestConfig, context: DaemonContext) -
         _thread.interrupt_main()
         raise
     except Exception as e:
-        logging.error(f"Error handling device request {config.request_file}: {e}")
+        logging.error(f"Error handling serial monitor request {config.request_file}: {e}")
         try:
             with open(config.response_file, "w") as f:
                 json.dump({"success": False, "message": str(e)}, f)
@@ -421,187 +353,6 @@ def handle_device_request(config: DeviceRequestConfig, context: DaemonContext) -
         except Exception:
             pass
         return False
-
-
-def handle_device_list_request(request_data: dict[str, Any], context: DaemonContext) -> dict[str, Any]:
-    """Handle device list request."""
-    refresh = request_data.get("refresh", False)
-
-    if refresh:
-        context.device_manager.refresh_devices()
-
-    devices = context.device_manager.get_all_devices()
-    device_list = []
-
-    for device_id, state in devices.items():
-        device_list.append(
-            {
-                "device_id": device_id,
-                "port": state.device_info.port,
-                "is_connected": state.is_connected,
-                "exclusive_holder": (state.exclusive_lease.client_id if state.exclusive_lease else None),
-                "monitor_count": len(state.monitor_leases),
-            }
-        )
-
-    logging.info(f"Device list request processed: {len(device_list)} devices")
-    return {"success": True, "devices": device_list}
-
-
-def handle_device_status_request(request_data: dict[str, Any], context: DaemonContext) -> dict[str, Any]:
-    """Handle device status request."""
-    device_id = request_data.get("device_id")
-    if not device_id:
-        return {"success": False, "message": "device_id is required"}
-
-    status = context.device_manager.get_device_status(device_id)
-    if not status.get("exists", False):
-        return {"success": False, "message": f"Device {device_id} not found"}
-
-    logging.info(f"Device status request processed for {device_id}")
-    return {"success": True, **status}
-
-
-def handle_device_lease_request(request_data: dict[str, Any], context: DaemonContext) -> dict[str, Any]:
-    """Handle device lease request."""
-    device_id = request_data.get("device_id")
-    lease_type = request_data.get("lease_type", "exclusive")
-    description = request_data.get("description", "")
-    # Generate a client ID for file-based IPC clients (they don't have a persistent connection)
-    client_id = request_data.get("client_id", f"file-ipc-{time.time()}")
-
-    if not device_id:
-        return {"success": False, "message": "device_id is required"}
-
-    if lease_type == "monitor":
-        lease = context.device_manager.acquire_monitor(
-            device_id=device_id,
-            client_id=client_id,
-            description=description,
-        )
-    else:
-        lease = context.device_manager.acquire_exclusive(
-            device_id=device_id,
-            client_id=client_id,
-            description=description,
-        )
-
-    if lease is None:
-        return {
-            "success": False,
-            "message": f"Failed to acquire {lease_type} lease on {device_id}",
-        }
-
-    logging.info(f"Device lease acquired: {lease_type} on {device_id} (lease_id={lease.lease_id})")
-    return {"success": True, "lease_id": lease.lease_id, "client_id": client_id}
-
-
-def handle_device_release_request(request_data: dict[str, Any], context: DaemonContext) -> dict[str, Any]:
-    """Handle device release request."""
-    device_id = request_data.get("device_id")
-    client_id = request_data.get("client_id")
-
-    if not device_id:
-        return {"success": False, "message": "device_id is required"}
-
-    # If device_id looks like a UUID, it might be a lease_id
-    # Try to find the actual device and release by client
-    state = context.device_manager.get_device(device_id)
-
-    if state is None:
-        # Try looking up by lease_id
-        return {"success": False, "message": f"Device {device_id} not found"}
-
-    # If client_id not provided, try to release any lease on this device
-    # This is a simplification for file-based IPC where we don't track clients persistently
-    if state.exclusive_lease:
-        actual_client_id = client_id if client_id else state.exclusive_lease.client_id
-        result = context.device_manager.release_lease(state.exclusive_lease.lease_id, actual_client_id)
-        if result:
-            logging.info(f"Released exclusive lease on {device_id}")
-            return {"success": True, "message": f"Released exclusive lease on {device_id}"}
-
-    return {"success": False, "message": f"No lease found to release on {device_id}"}
-
-
-def handle_device_preempt_request(request_data: dict[str, Any], context: DaemonContext) -> dict[str, Any]:
-    """Handle device preempt request."""
-    device_id = request_data.get("device_id")
-    reason = request_data.get("reason", "")
-    client_id = request_data.get("client_id", f"file-ipc-{time.time()}")
-
-    if not device_id:
-        return {"success": False, "message": "device_id is required"}
-
-    if not reason:
-        return {"success": False, "message": "reason is required for preemption"}
-
-    try:
-        success, preempted_client_id = context.device_manager.preempt_device(
-            device_id=device_id,
-            requesting_client_id=client_id,
-            reason=reason,
-        )
-
-        if success:
-            # Get the new lease info
-            state = context.device_manager.get_device(device_id)
-            lease_id = state.exclusive_lease.lease_id if state and state.exclusive_lease else None
-
-            logging.info(f"Device {device_id} preempted from {preempted_client_id} by {client_id}")
-            return {
-                "success": True,
-                "preempted_client_id": preempted_client_id,
-                "lease_id": lease_id,
-                "client_id": client_id,
-            }
-        else:
-            return {"success": False, "message": f"Failed to preempt device {device_id}"}
-
-    except KeyboardInterrupt:
-        _thread.interrupt_main()
-        raise
-    except Exception as e:
-        logging.error(f"Error during device preemption: {e}")
-        return {"success": False, "message": str(e)}
-
-
-def process_operation_request(config: RequestConfig, context: DaemonContext) -> bool:
-    """Process an operation request if one exists.
-
-    Atomically consumes the request file and processes it.
-
-    Args:
-        config: Request configuration (file, class, processor, lock)
-        context: Daemon context
-
-    Returns:
-        True if a request was processed, False otherwise
-    """
-    # Atomically read and clear request file under lock
-    with config.lock:
-        request = read_request_file(config.request_file, config.request_class)
-        if request:
-            clear_request_file(config.request_file)
-
-    if not request:
-        return False
-
-    logging.info(f"Received {config.request_class.__name__}: {request}")
-
-    # Mark operation in progress
-    context.status_manager.set_operation_in_progress(True)
-    try:
-        config.processor.process_request(request, context)
-    finally:
-        context.status_manager.set_operation_in_progress(False)
-
-    return True
-
-
-# Serial Monitor API request handlers
-# Global processor instance (reused across requests)
-_serial_monitor_processor = SerialMonitorAPIProcessor()
 
 
 def handle_serial_monitor_attach_request(request_data: dict[str, Any], context: DaemonContext) -> dict[str, Any]:
@@ -788,6 +539,72 @@ def process_connection_files(registry: ConnectionRegistry, daemon_dir: Path) -> 
             disconnect_file.unlink(missing_ok=True)
 
 
+def start_fastapi_server(context: DaemonContext) -> threading.Thread | None:
+    """Start FastAPI HTTP server in a background thread.
+
+    Args:
+        context: Daemon context to pass to FastAPI app
+
+    Returns:
+        Thread object if successful, None otherwise
+    """
+    try:
+        import uvicorn
+
+        from fbuild.daemon.client.http_utils import write_port_file
+        from fbuild.daemon.fastapi_app import (
+            create_app,
+            get_daemon_port,
+            set_daemon_context,
+        )
+
+        # Set daemon context for FastAPI dependency injection
+        set_daemon_context(context)
+
+        # Get port based on dev mode
+        port = get_daemon_port()
+
+        # Write port file for client discovery
+        write_port_file(port)
+
+        # Create FastAPI app
+        app = create_app()
+
+        # Configure uvicorn
+        config = uvicorn.Config(
+            app,
+            host="127.0.0.1",
+            port=port,
+            log_level="info",
+            access_log=False,  # Disable access logs to reduce noise
+        )
+        server = uvicorn.Server(config)
+
+        # Run server in background thread
+        def run_server():
+            try:
+                server.run()
+            except KeyboardInterrupt:
+                raise
+            except Exception as e:
+                logging.error(f"FastAPI server error: {e}", exc_info=True)
+
+        thread = threading.Thread(target=run_server, daemon=True, name="FastAPI-Server")
+        thread.start()
+
+        logging.info(f"FastAPI HTTP server started on http://127.0.0.1:{port}")
+        return thread
+
+    except ImportError as e:
+        logging.error(f"Failed to import FastAPI dependencies: {e}")
+        return None
+    except KeyboardInterrupt:
+        raise
+    except Exception as e:
+        logging.error(f"Failed to start FastAPI server: {e}", exc_info=True)
+        return None
+
+
 def run_daemon_loop() -> None:
     """Main daemon loop: process build, deploy and monitor requests."""
     daemon_pid = os.getpid()
@@ -829,6 +646,14 @@ def run_daemon_loop() -> None:
     else:
         logging.warning("Async server not available, clients will use file-based IPC only")
 
+    # Start FastAPI HTTP server in background thread
+    logging.info("Starting FastAPI HTTP server...")
+    fastapi_thread = start_fastapi_server(context)
+    if fastapi_thread:
+        logging.info("FastAPI HTTP server started successfully")
+    else:
+        logging.warning("Failed to start FastAPI HTTP server")
+
     # Initialize process tracker
     process_tracker = ProcessTracker(PROCESS_REGISTRY_FILE)
 
@@ -839,22 +664,11 @@ def run_daemon_loop() -> None:
     signal.signal(signal.SIGTERM, signal_handler_wrapper)
     signal.signal(signal.SIGINT, signal_handler_wrapper)
 
-    # Configure operation request processors
-    operation_requests = [
-        RequestConfig(BUILD_REQUEST_FILE, BuildRequest, BuildRequestProcessor()),
-        RequestConfig(DEPLOY_REQUEST_FILE, DeployRequest, DeployRequestProcessor()),
-        RequestConfig(MONITOR_REQUEST_FILE, MonitorRequest, MonitorRequestProcessor()),
-        RequestConfig(INSTALL_DEPS_REQUEST_FILE, InstallDependenciesRequest, InstallDependenciesProcessor()),
-    ]
+    # NOTE: Operation requests (build, deploy, monitor) are now handled via FastAPI HTTP endpoints
+    # File-based request processing has been removed in favor of HTTP/WebSocket communication
 
-    # Configure device request handlers
-    device_requests = [
-        DeviceRequestConfig(DEVICE_LIST_REQUEST_FILE, DEVICE_LIST_RESPONSE_FILE, handle_device_list_request),
-        DeviceRequestConfig(DEVICE_STATUS_REQUEST_FILE, DEVICE_STATUS_RESPONSE_FILE, handle_device_status_request),
-        DeviceRequestConfig(DEVICE_LEASE_REQUEST_FILE, DEVICE_LEASE_RESPONSE_FILE, handle_device_lease_request),
-        DeviceRequestConfig(DEVICE_RELEASE_REQUEST_FILE, DEVICE_RELEASE_RESPONSE_FILE, handle_device_release_request),
-        DeviceRequestConfig(DEVICE_PREEMPT_REQUEST_FILE, DEVICE_PREEMPT_RESPONSE_FILE, handle_device_preempt_request),
-        # Serial Monitor API request handlers
+    # Serial Monitor API still uses file-based IPC (used by fbuild.api.SerialMonitor)
+    serial_monitor_requests = [
         DeviceRequestConfig(SERIAL_MONITOR_ATTACH_REQUEST_FILE, SERIAL_MONITOR_RESPONSE_FILE, handle_serial_monitor_attach_request),
         DeviceRequestConfig(SERIAL_MONITOR_DETACH_REQUEST_FILE, SERIAL_MONITOR_RESPONSE_FILE, handle_serial_monitor_detach_request),
         DeviceRequestConfig(SERIAL_MONITOR_POLL_REQUEST_FILE, SERIAL_MONITOR_RESPONSE_FILE, handle_serial_monitor_poll_request),
@@ -966,15 +780,14 @@ def run_daemon_loop() -> None:
                 except Exception as e:
                     logging.error(f"Error handling clear locks signal: {e}", exc_info=True)
 
-            # Process operation requests (build, deploy, monitor, install_deps)
-            for config in operation_requests:
-                if process_operation_request(config, context):
-                    last_activity = time.time()
+            # NOTE: File-based request processing removed - all operations now via FastAPI HTTP
+            # Operations (build, deploy, monitor) are handled by FastAPI endpoints
+            # Device/lock management is handled by FastAPI endpoints
 
-            # Process device management requests
-            for config in device_requests:
+            # Process serial monitor API requests (still file-based for fbuild.api.SerialMonitor)
+            for config in serial_monitor_requests:
                 with config.lock:
-                    handle_device_request(config, context)
+                    handle_serial_monitor_request(config, context)
 
             # Sleep briefly to avoid busy-wait
             time.sleep(0.5)
@@ -998,111 +811,90 @@ def run_daemon_loop() -> None:
             time.sleep(1)
 
 
-def parse_spawner_pid() -> int | None:
-    """Parse --spawned-by argument from command line.
+def cleanup_pid_file(signum: int | None = None, frame: Any = None) -> None:
+    """Cleanup handler to ensure PID file is removed on exit.
+
+    This handler is registered for:
+    - SIGTERM (graceful termination signal)
+    - SIGINT (Ctrl+C)
+    - atexit (normal program exit)
+
+    Args:
+        signum: Signal number (if called from signal handler)
+        frame: Current stack frame (if called from signal handler)
+    """
+    try:
+        if PID_FILE.exists():
+            PID_FILE.unlink()
+            logging.info("PID file cleaned up")
+    except KeyboardInterrupt:
+        raise
+    except Exception as e:
+        # Don't raise exceptions in signal handlers
+        logging.error(f"Failed to cleanup PID file: {e}")
+
+
+def parse_launcher_pid() -> int:
+    """Parse --launched-by argument from command line.
 
     Returns:
-        The PID of the client that spawned this daemon, or None if not provided.
+        The PID of the client that launched this daemon.
+
+    Raises:
+        ValueError: If --launched-by argument is missing or invalid.
     """
     for arg in sys.argv:
-        if arg.startswith("--spawned-by="):
+        if arg.startswith("--launched-by="):
             try:
                 return int(arg.split("=", 1)[1])
             except (ValueError, IndexError):
-                return None
-    return None
+                raise ValueError(f"Invalid --launched-by argument: {arg}")
+    raise ValueError("Missing required --launched-by argument")
 
 
 def main() -> int:
-    """Main entry point for daemon."""
-    # Parse command-line arguments
-    foreground = "--foreground" in sys.argv
-    spawner_pid = parse_spawner_pid()
+    """
+    Daemon main entry point.
 
-    # Setup logging
-    setup_logging(foreground=foreground)
+    NOTE: This function NEVER spawns child processes. It runs in foreground mode only.
+    All spawn logic is in singleton_manager.py (called by daemon API).
 
-    # Log spawner information immediately after logging setup
-    if spawner_pid is not None:
-        logging.info(f"Daemon spawned by client PID {spawner_pid}")
-    else:
-        logging.info("Daemon started without spawner info (manual start or legacy client)")
+    The daemon is always launched with --launched-by=<PID> by the singleton manager.
+    """
+    # Parse arguments - launcher_pid is REQUIRED
+    try:
+        launcher_pid = parse_launcher_pid()
+    except ValueError as e:
+        print(f"Error: {e}", file=sys.stderr)
+        print("Usage: python -m fbuild.daemon.daemon --launched-by=<PID>", file=sys.stderr)
+        return 1
+
+    # Setup logging FIRST
+    setup_logging(foreground=True)  # Always foreground mode
+    logging.info(f"Daemon starting (launched by PID {launcher_pid})")
 
     # Ensure daemon directory exists
     DAEMON_DIR.mkdir(parents=True, exist_ok=True)
 
-    if foreground:
-        # Run in foreground (for debugging)
-        logging.info("Running in foreground mode")
-        # Write PID file
-        with open(PID_FILE, "w") as f:
-            f.write(str(os.getpid()))
-        try:
-            run_daemon_loop()
-        finally:
-            PID_FILE.unlink(missing_ok=True)
-        return 0
+    # Write PID file with launcher info (format: "daemon_pid,launcher_pid")
+    PID_FILE.write_text(f"{os.getpid()},{launcher_pid}\n")
+    logging.info(f"PID file written: {PID_FILE}")
 
-    # Check if daemon already running
-    if PID_FILE.exists():
-        try:
-            with open(PID_FILE) as f:
-                existing_pid = int(f.read().strip())
-            if psutil.pid_exists(existing_pid):
-                logging.info(f"Daemon already running with PID {existing_pid}")
-                print(f"Daemon already running with PID {existing_pid}")
-                return 0
-            else:
-                # Stale PID file
-                logging.info(f"Removing stale PID file for PID {existing_pid}")
-                PID_FILE.unlink()
-        except KeyboardInterrupt:
-            _thread.interrupt_main()
-            raise
-        except Exception as e:
-            logging.warning(f"Error checking existing PID: {e}")
-            PID_FILE.unlink(missing_ok=True)
+    # Register cleanup handlers for graceful PID file removal
+    # This ensures PID file is cleaned up on SIGTERM, SIGINT, and normal exit
+    signal.signal(signal.SIGTERM, cleanup_pid_file)
+    signal.signal(signal.SIGINT, cleanup_pid_file)
+    atexit.register(cleanup_pid_file)
+    logging.info("Registered cleanup handlers for SIGTERM, SIGINT, and atexit")
 
-    # Simple daemonization for cross-platform compatibility
-    try:
-        # Fork to background (Unix/Linux/macOS)
-        if hasattr(os, "fork") and os.fork() > 0:  # type: ignore[attr-defined]
-            # Parent process exits
-            return 0
-    except (OSError, AttributeError):
-        # Fork not supported (Windows) - run in background as detached subprocess
-        logging.info("Fork not supported (Windows), using detached subprocess")
-        # Build command with spawner info if available
-        cmd = [get_python_executable(), __file__, "--foreground"]
-        if spawner_pid is not None:
-            cmd.append(f"--spawned-by={spawner_pid}")
-
-        # On Windows, use proper detachment flags:
-        # - CREATE_NEW_PROCESS_GROUP: Isolates daemon from parent's Ctrl-C signals
-        # - DETACHED_PROCESS: Daemon survives parent termination, no console inherited
-        creationflags = 0
-        if sys.platform == "win32":
-            creationflags = subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.DETACHED_PROCESS
-
-        safe_popen(
-            cmd,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-            stdin=subprocess.DEVNULL,
-            cwd=str(DAEMON_DIR),
-            creationflags=creationflags,
-        )
-        return 0
-
-    # Child process continues
-    # Write PID file
-    with open(PID_FILE, "w") as f:
-        f.write(str(os.getpid()))
-
+    # Run daemon loop
     try:
         run_daemon_loop()
     finally:
-        PID_FILE.unlink(missing_ok=True)
+        # Cleanup (also called by signal handlers and atexit)
+        if PID_FILE.exists():
+            PID_FILE.unlink()
+        logging.info("Daemon exiting")
 
     return 0
 

@@ -3,15 +3,17 @@ fbuild Daemon - Concurrent Deploy and Monitor Management
 
 This package provides a singleton daemon for managing concurrent deploy and monitor
 operations with proper locking and process tree tracking.
+
+All operations now use HTTP/WebSocket communication via FastAPI.
 """
 
 from fbuild.daemon.client import (
     ensure_daemon_running,
     get_daemon_status,
-    request_build,
-    request_deploy,
-    request_install_dependencies,
-    request_monitor,
+    request_build_http,
+    request_deploy_http,
+    request_install_dependencies_http,
+    request_monitor_http,
     stop_daemon,
 )
 from fbuild.daemon.compilation_queue import CompilationJobQueue
@@ -47,9 +49,9 @@ __all__ = [
     "connect_daemon",
     "ensure_daemon_running",
     "get_daemon_status",
-    "request_build",
-    "request_deploy",
-    "request_install_dependencies",
-    "request_monitor",
+    "request_build_http",
+    "request_deploy_http",
+    "request_install_dependencies_http",
+    "request_monitor_http",
     "stop_daemon",
 ]

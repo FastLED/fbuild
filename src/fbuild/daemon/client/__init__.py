@@ -1,27 +1,23 @@
 """
 fbuild Daemon Client
 
-Client interface for interacting with the fbuild daemon.
-Handles lifecycle, requests, status monitoring, locks, devices, and process management.
+Client interface for interacting with the fbuild daemon via HTTP/WebSocket.
+All operations now use FastAPI HTTP endpoints instead of file-based IPC.
 """
 
-# Device management
-from .devices import (
-    acquire_device_lease,
-    get_device_status,
-    list_devices,
-    preempt_device,
-    release_device_lease,
+# Device management (HTTP-based)
+from .devices_http import (
+    acquire_device_lease_http,
+    get_device_status_http,
+    list_devices_http,
+    preempt_device_http,
+    release_device_lease_http,
 )
 
 # Lifecycle management
 from .lifecycle import (
-    BUILD_REQUEST_FILE,
     DAEMON_DIR,
     DAEMON_NAME,
-    DEPLOY_REQUEST_FILE,
-    INSTALL_DEPS_REQUEST_FILE,
-    MONITOR_REQUEST_FILE,
     PID_FILE,
     SERIAL_MONITOR_ATTACH_REQUEST_FILE,
     SERIAL_MONITOR_DETACH_REQUEST_FILE,
@@ -30,15 +26,14 @@ from .lifecycle import (
     STATUS_FILE,
     ensure_daemon_running,
     is_daemon_running,
-    start_daemon,
     stop_daemon,
 )
 
-# Lock management
-from .locks import (
-    display_lock_status,
-    get_lock_status,
-    request_clear_stale_locks,
+# Lock management (HTTP-based)
+from .locks_http import (
+    clear_stale_locks_http,
+    display_lock_status_http,
+    get_lock_status_http,
 )
 
 # Process management
@@ -52,18 +47,12 @@ from .management import (
     tail_daemon_logs,
 )
 
-# Request handling
-from .requests import (
-    BaseRequestHandler,
-    BuildRequestHandler,
-    DeployRequestHandler,
-    InstallDependenciesRequestHandler,
-    MonitorRequestHandler,
-    request_build,
-    request_deploy,
-    request_install_dependencies,
-    request_monitor,
-    write_request_file,
+# Request handling (HTTP-based)
+from .requests_http import (
+    request_build_http,
+    request_deploy_http,
+    request_install_dependencies_http,
+    request_monitor_http,
 )
 
 # Status monitoring
@@ -82,17 +71,12 @@ __all__ = [
     "DAEMON_NAME",
     "PID_FILE",
     "STATUS_FILE",
-    "BUILD_REQUEST_FILE",
-    "DEPLOY_REQUEST_FILE",
-    "MONITOR_REQUEST_FILE",
-    "INSTALL_DEPS_REQUEST_FILE",
     "SERIAL_MONITOR_ATTACH_REQUEST_FILE",
     "SERIAL_MONITOR_DETACH_REQUEST_FILE",
     "SERIAL_MONITOR_POLL_REQUEST_FILE",
     "SERIAL_MONITOR_RESPONSE_FILE",
     "ensure_daemon_running",
     "is_daemon_running",
-    "start_daemon",
     "stop_daemon",
     # Status
     "SPINNER_CHARS",
@@ -101,27 +85,21 @@ __all__ = [
     "display_status",
     "get_daemon_status",
     "read_status_file",
-    # Requests
-    "BaseRequestHandler",
-    "BuildRequestHandler",
-    "DeployRequestHandler",
-    "InstallDependenciesRequestHandler",
-    "MonitorRequestHandler",
-    "request_build",
-    "request_deploy",
-    "request_install_dependencies",
-    "request_monitor",
-    "write_request_file",
-    # Locks
-    "display_lock_status",
-    "get_lock_status",
-    "request_clear_stale_locks",
-    # Devices
-    "acquire_device_lease",
-    "get_device_status",
-    "list_devices",
-    "preempt_device",
-    "release_device_lease",
+    # Requests (HTTP-based)
+    "request_build_http",
+    "request_deploy_http",
+    "request_install_dependencies_http",
+    "request_monitor_http",
+    # Locks (HTTP-based)
+    "display_lock_status_http",
+    "get_lock_status_http",
+    "clear_stale_locks_http",
+    # Devices (HTTP-based)
+    "acquire_device_lease_http",
+    "get_device_status_http",
+    "list_devices_http",
+    "preempt_device_http",
+    "release_device_lease_http",
     # Management
     "display_daemon_list",
     "force_kill_daemon",

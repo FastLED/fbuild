@@ -312,15 +312,14 @@ class DaemonConnection:
         """
         self._check_closed()
 
-        from fbuild.daemon.client import InstallDependenciesRequestHandler
+        from fbuild.daemon.client import request_install_dependencies_http
 
-        handler = InstallDependenciesRequestHandler(
+        return request_install_dependencies_http(
             project_dir=self.project_dir,
             environment=self.environment,
             verbose=verbose,
             timeout=timeout,
         )
-        return handler.execute()
 
     def build(
         self,
@@ -343,16 +342,15 @@ class DaemonConnection:
         """
         self._check_closed()
 
-        from fbuild.daemon.client import BuildRequestHandler
+        from fbuild.daemon.client import request_build_http
 
-        handler = BuildRequestHandler(
+        return request_build_http(
             project_dir=self.project_dir,
             environment=self.environment,
             clean_build=clean,
             verbose=verbose,
             timeout=timeout,
         )
-        return handler.execute()
 
     def deploy(
         self,
@@ -389,9 +387,9 @@ class DaemonConnection:
         """
         self._check_closed()
 
-        from fbuild.daemon.client import DeployRequestHandler
+        from fbuild.daemon.client import request_deploy_http
 
-        handler = DeployRequestHandler(
+        return request_deploy_http(
             project_dir=self.project_dir,
             environment=self.environment,
             port=port,
@@ -401,11 +399,8 @@ class DaemonConnection:
             monitor_halt_on_error=monitor_halt_on_error,
             monitor_halt_on_success=monitor_halt_on_success,
             monitor_expect=monitor_expect,
-            monitor_show_timestamp=monitor_show_timestamp,
-            skip_build=skip_build,
             timeout=timeout,
         )
-        return handler.execute()
 
     def monitor(
         self,
@@ -436,9 +431,9 @@ class DaemonConnection:
         """
         self._check_closed()
 
-        from fbuild.daemon.client import MonitorRequestHandler
+        from fbuild.daemon.client import request_monitor_http
 
-        handler = MonitorRequestHandler(
+        return request_monitor_http(
             project_dir=self.project_dir,
             environment=self.environment,
             port=port,
@@ -447,9 +442,7 @@ class DaemonConnection:
             halt_on_success=halt_on_success,
             expect=expect,
             timeout=timeout,
-            show_timestamp=show_timestamp,
         )
-        return handler.execute()
 
     def get_status(self) -> dict[str, Any]:
         """Get current daemon status.

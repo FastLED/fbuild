@@ -1,14 +1,15 @@
-"""SerialMonitor API - Daemon-routed serial I/O for external scripts.
+"""WebSocket-based SerialMonitor API - Real-time daemon-routed serial I/O.
 
-This module provides the SerialMonitor context manager which routes all serial
-I/O through the fbuild daemon. This eliminates Windows driver-level port locks
-that cause PermissionError conflicts between validation scripts and deploy operations.
+This module provides the SerialMonitor context manager using WebSocket
+communication instead of file-based IPC. This eliminates polling overhead
+and provides real-time data delivery.
 
 Key Features:
-- Multiple clients can monitor the same port concurrently (shared read access)
+- Real-time data streaming (no 100ms polling delay)
+- Multiple clients can monitor the same port concurrently
 - Deploy operations can preempt monitors gracefully (auto-reconnect)
 - No OS-level port locks held by client processes
-- Simple context manager interface
+- Simple context manager interface (compatible with file-based API)
 
 Example Usage:
     >>> from fbuild.api import SerialMonitor
@@ -31,42 +32,42 @@ Example Usage:
     ...     mon.run_until(lambda: 'CONFIGURED' in mon.last_line, timeout=10.0)
 
 Architecture:
-    validate.py (client) → SerialMonitor API → Daemon (SharedSerialManager) → COM13
+    validate.py (client) → SerialMonitor API → WebSocket → Daemon (SharedSerialManager) → COM13
 
-IPC Mechanism:
-    File-based JSON request/response (consistent with build/deploy requests)
-    - 100ms polling interval (acceptable for validation use case)
-    - Request files: serial_monitor_attach/detach/poll_request.json
-    - Response file: serial_monitor_response.json
+WebSocket Protocol:
+    Client → Server:
+        {"type": "attach", "client_id": "...", "port": "COM13", "baud_rate": 115200}
+        {"type": "write", "data": "base64_encoded_data"}
+        {"type": "detach"}
+
+    Server → Client:
+        {"type": "attached", "success": true, "message": "..."}
+        {"type": "data", "lines": ["line1", "line2"], "current_index": 42}
+        {"type": "preempted", "reason": "deploy"}
+        {"type": "reconnected"}
+        {"type": "write_ack", "bytes_written": 10}
+        {"type": "error", "message": "..."}
 """
 
+import asyncio
+import base64
 import json
 import logging
 import time
 import uuid
 from collections.abc import Callable, Iterator
-from pathlib import Path
 from typing import Any
 
-from fbuild.daemon.client import DAEMON_DIR
+import websockets
+from websockets.asyncio.client import ClientConnection
+
+from fbuild.daemon.client.http_utils import get_daemon_port
 from fbuild.daemon.client.lifecycle import ensure_daemon_running
-from fbuild.daemon.messages import (
-    SerialMonitorAttachRequest,
-    SerialMonitorDetachRequest,
-    SerialMonitorPollRequest,
-    SerialMonitorResponse,
-    SerialWriteRequest,
-)
 
 # Hook type: callback function that receives each line
 MonitorHook = Callable[[str], None]
 
-# Polling interval for reading new lines (100ms)
-POLL_INTERVAL = 0.1
-
-# Default timeout for attach/detach operations (60 seconds)
-# Increased to 60s to allow SharedSerialManager retry logic to complete
-# Windows USB-CDC re-enumeration can take 10-20+ seconds, and retries add overhead
+# Default timeout for attach/detach operations
 OPERATION_TIMEOUT = 60.0
 
 
@@ -105,15 +106,15 @@ class MonitorHookError(Exception):
 
 
 class SerialMonitor:
-    """Context manager for daemon-routed serial monitoring.
+    """Context manager for WebSocket-based daemon-routed serial monitoring.
 
     This class provides a high-level API for monitoring serial output through
-    the fbuild daemon. It handles attachment, polling, preemption, and cleanup
-    automatically.
+    the fbuild daemon using WebSocket communication. It handles attachment,
+    real-time data streaming, preemption, and cleanup automatically.
 
-    The monitor uses file-based IPC to communicate with the daemon via the
-    SharedSerialManager. This eliminates OS-level port locks and enables
-    concurrent monitoring by multiple clients.
+    The monitor uses WebSocket to communicate with the daemon's
+    SharedSerialManager. This eliminates file-based polling and provides
+    real-time data delivery.
 
     Example:
         >>> with SerialMonitor(port='COM13', baud_rate=115200) as mon:
@@ -163,16 +164,14 @@ class SerialMonitor:
 
         # Tracking state
         self._attached = False
-        self._last_index = 0  # For incremental polling
         self.last_line = ""  # Most recent line (for hooks/conditions)
 
-        # File paths for IPC
-        self._attach_request_file = DAEMON_DIR / "serial_monitor_attach_request.json"
-        self._detach_request_file = DAEMON_DIR / "serial_monitor_detach_request.json"
-        self._poll_request_file = DAEMON_DIR / "serial_monitor_poll_request.json"
-        # Use per-client response file to prevent race conditions
-        self._response_file = DAEMON_DIR / f"serial_monitor_response_{self.client_id}.json"
-        self._preempt_file = DAEMON_DIR / f"serial_monitor_preempt_{port}.json"
+        # WebSocket connection
+        self._ws: ClientConnection | None = None
+        self._event_loop: asyncio.AbstractEventLoop | None = None
+        self._line_queue: asyncio.Queue[str] = asyncio.Queue()
+        self._error_queue: asyncio.Queue[Exception] = asyncio.Queue()
+        self._receiver_task: asyncio.Task | None = None
 
         if self.verbose:
             logging.info(f"[SerialMonitor] Initialized for {port} @ {baud_rate} baud (client_id={self.client_id})")
@@ -200,7 +199,7 @@ class SerialMonitor:
         self._detach()
 
     def _attach(self) -> None:
-        """Send attach request to daemon and wait for confirmation.
+        """Connect to WebSocket and send attach request.
 
         Raises:
             RuntimeError: If attach fails or times out
@@ -210,129 +209,163 @@ class SerialMonitor:
                 logging.warning("[SerialMonitor] Already attached, skipping attach")
             return
 
-        # Ensure daemon is running before attempting attach
-        ensure_daemon_running()  # Raises RuntimeError if daemon fails to start
+        # Ensure daemon is running
+        ensure_daemon_running()
 
-        request = SerialMonitorAttachRequest(
-            client_id=self.client_id,
-            port=self.port,
-            baud_rate=self.baud_rate,
-            open_if_needed=True,
-        )
+        # Get daemon port
+        daemon_port = get_daemon_port()
+        ws_url = f"ws://127.0.0.1:{daemon_port}/ws/serial-monitor"
 
-        # Write attach request
-        self._write_request_file(self._attach_request_file, request)
+        # Create event loop for async operations
+        try:
+            self._event_loop = asyncio.get_event_loop()
+        except RuntimeError:
+            # No event loop in current thread, create one
+            self._event_loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(self._event_loop)
 
-        # Wait for response
-        response = self._wait_for_response(timeout=OPERATION_TIMEOUT)
-        if not response or not response.success:
-            raise RuntimeError(f"Failed to attach to {self.port}: {response.message if response else 'timeout'}")
+        # Connect to WebSocket and attach
+        async def _connect_and_attach():
+            try:
+                self._ws = await websockets.connect(ws_url)
 
+                # Send attach request
+                attach_msg = {
+                    "type": "attach",
+                    "client_id": self.client_id,
+                    "port": self.port,
+                    "baud_rate": self.baud_rate,
+                    "open_if_needed": True,
+                }
+                await self._ws.send(json.dumps(attach_msg))
+
+                # Wait for attach response
+                response_text = await asyncio.wait_for(self._ws.recv(), timeout=OPERATION_TIMEOUT)
+                response = json.loads(response_text)
+
+                if response.get("type") != "attached" or not response.get("success"):
+                    raise RuntimeError(f"Failed to attach: {response.get('message', 'Unknown error')}")
+
+                # Start background receiver task
+                self._receiver_task = asyncio.create_task(self._receive_messages())
+
+                if self.verbose:
+                    logging.info(f"[SerialMonitor] Attached to {self.port}")
+
+            except KeyboardInterrupt:
+                if self._ws:
+                    await self._ws.close()
+                    self._ws = None
+                raise
+            except Exception as e:
+                if self._ws:
+                    await self._ws.close()
+                    self._ws = None
+                raise RuntimeError(f"Failed to attach to {self.port}: {e}") from e
+
+        self._event_loop.run_until_complete(_connect_and_attach())
         self._attached = True
-        if self.verbose:
-            logging.info(f"[SerialMonitor] Attached to {self.port}")
 
     def _detach(self) -> None:
-        """Send detach request to daemon and wait for confirmation."""
-        if not self._attached:
+        """Send detach request and close WebSocket connection."""
+        if not self._attached or not self._ws:
             return
 
-        request = SerialMonitorDetachRequest(
-            client_id=self.client_id,
-            port=self.port,
-        )
+        async def _detach_and_close():
+            try:
+                # Send detach request
+                detach_msg = {"type": "detach"}
+                await self._ws.send(json.dumps(detach_msg))  # type: ignore
 
-        # Write detach request and wait for confirmation
-        try:
-            self._write_request_file(self._detach_request_file, request)
+                # Wait for detach confirmation (with timeout)
+                try:
+                    response_text = await asyncio.wait_for(self._ws.recv(), timeout=5.0)  # type: ignore
+                    response = json.loads(response_text)
+                    if self.verbose:
+                        if response.get("type") == "detached" and response.get("success"):
+                            logging.info(f"[SerialMonitor] Detached from {self.port}")
+                        else:
+                            logging.warning(f"[SerialMonitor] Detach failed: {response.get('message', 'Unknown')}")
+                except asyncio.TimeoutError:
+                    if self.verbose:
+                        logging.warning("[SerialMonitor] Detach confirmation timeout")
 
-            # Wait for response to ensure daemon has fully processed detach
-            response = self._wait_for_response(timeout=OPERATION_TIMEOUT)
-            if not response or not response.success:
+            except KeyboardInterrupt:
+                raise
+            except Exception as e:
                 if self.verbose:
-                    logging.warning(f"[SerialMonitor] Detach confirmation failed: {response.message if response else 'timeout'}")
-            elif self.verbose:
-                logging.info(f"[SerialMonitor] Detached from {self.port}")
-        except KeyboardInterrupt:
-            raise
-        except Exception as e:
-            if self.verbose:
-                logging.warning(f"[SerialMonitor] Error during detach: {e}")
+                    logging.warning(f"[SerialMonitor] Error during detach: {e}")
+            finally:
+                # Cancel receiver task
+                if self._receiver_task:
+                    self._receiver_task.cancel()
+                    try:
+                        await self._receiver_task
+                    except asyncio.CancelledError:
+                        pass
+
+                # Close WebSocket
+                if self._ws:
+                    await self._ws.close()
+                    self._ws = None
+
+        if self._event_loop:
+            self._event_loop.run_until_complete(_detach_and_close())
 
         self._attached = False
 
-    def _poll_buffer(self, max_lines: int = 100) -> list[str]:
-        """Poll daemon for new output lines.
+    async def _receive_messages(self) -> None:
+        """Background task to receive messages from WebSocket and queue lines."""
+        try:
+            while self._ws:
+                try:
+                    message_text = await self._ws.recv()
+                    message = json.loads(message_text)
+                    msg_type = message.get("type")
 
-        Uses incremental polling with last_index to avoid re-reading old lines.
+                    if msg_type == "data":
+                        # Queue lines for read_lines()
+                        lines = message.get("lines", [])
+                        for line in lines:
+                            await self._line_queue.put(line)
 
-        Args:
-            max_lines: Maximum number of lines to fetch per poll
+                    elif msg_type == "preempted":
+                        # Handle preemption
+                        if self.auto_reconnect:
+                            if self.verbose:
+                                logging.info("[SerialMonitor] Preempted, waiting for reconnect...")
+                        else:
+                            # Queue exception
+                            preempted_by = message.get("preempted_by", "unknown")
+                            exc = MonitorPreemptedException(self.port, preempted_by)
+                            await self._error_queue.put(exc)
 
-        Returns:
-            List of new lines since last poll
+                    elif msg_type == "reconnected":
+                        if self.verbose:
+                            logging.info(f"[SerialMonitor] Reconnected to {self.port}")
 
-        Raises:
-            RuntimeError: If not attached or poll fails
-        """
-        if not self._attached:
-            raise RuntimeError("Cannot poll buffer: not attached")
+                    elif msg_type == "error":
+                        error_msg = message.get("message", "Unknown error")
+                        exc = RuntimeError(f"Monitor error: {error_msg}")
+                        await self._error_queue.put(exc)
 
-        request = SerialMonitorPollRequest(
-            client_id=self.client_id,
-            port=self.port,
-            last_index=self._last_index,
-            max_lines=max_lines,
-        )
+                except websockets.exceptions.ConnectionClosed:
+                    break
+                except KeyboardInterrupt:
+                    raise
+                except Exception as e:
+                    await self._error_queue.put(e)
+                    break
 
-        # Write poll request
-        self._write_request_file(self._poll_request_file, request)
-
-        # Wait for response (short timeout for poll)
-        response = self._wait_for_response(timeout=0.5)
-        if not response:
-            return []  # Timeout is normal during polling
-
-        if not response.success:
-            raise RuntimeError(f"Poll failed: {response.message}")
-
-        # Update index for next poll
-        self._last_index = response.current_index
-
-        return response.lines
-
-    def _check_preemption(self) -> bool:
-        """Check if deploy has preempted this monitor.
-
-        Returns:
-            True if preempted, False otherwise
-        """
-        return self._preempt_file.exists()
-
-    def _wait_for_reconnect(self) -> None:
-        """Wait for deploy to complete and re-attach.
-
-        Polls preemption file until it's deleted, then re-attaches.
-        """
-        if self.verbose:
-            logging.info(f"[SerialMonitor] Deploy preempted {self.port}, waiting to reconnect...")
-
-        # Poll until preemption file is deleted
-        while self._preempt_file.exists():
-            time.sleep(0.5)
-
-        # Re-attach
-        if self.verbose:
-            logging.info(f"[SerialMonitor] Deploy completed, reconnecting to {self.port}...")
-
-        self._attached = False  # Reset state
-        self._attach()
+        except asyncio.CancelledError:
+            pass
 
     def read_lines(self, timeout: float | None = None) -> Iterator[str]:
         """Stream lines from serial port (blocking iterator).
 
-        This is the main entry point for reading serial output. It polls the
-        daemon every 100ms for new lines, invokes hooks, and handles preemption.
+        This is the main entry point for reading serial output. It receives
+        lines pushed from the WebSocket in real-time, invokes hooks, and
+        handles preemption.
 
         Args:
             timeout: Maximum time to wait for lines (None = infinite)
@@ -351,53 +384,58 @@ class SerialMonitor:
 
         start_time = time.time()
 
+        async def _read_line_async():
+            """Read one line from queue with timeout."""
+            if timeout is not None:
+                remaining = timeout - (time.time() - start_time)
+                if remaining <= 0:
+                    return None
+                try:
+                    return await asyncio.wait_for(self._line_queue.get(), timeout=remaining)
+                except asyncio.TimeoutError:
+                    return None
+            else:
+                return await self._line_queue.get()
+
         while True:
+            # Check for errors from receiver task
+            if not self._error_queue.empty():
+                try:
+                    error = self._error_queue.get_nowait()
+                    raise error
+                except asyncio.QueueEmpty:
+                    pass
+
             # Check timeout
             if timeout is not None and (time.time() - start_time) > timeout:
                 if self.verbose:
                     logging.info("[SerialMonitor] Timeout reached, stopping read_lines")
                 return
 
-            # Check for preemption
-            if self._check_preemption():
-                if self.auto_reconnect:
-                    self._wait_for_reconnect()
-                    # Reset timeout after reconnect (optional - user might want different behavior)
-                    start_time = time.time()
-                    continue
-                else:
-                    raise MonitorPreemptedException(self.port, "deploy_operation")
+            # Read next line (async)
+            if not self._event_loop:
+                raise RuntimeError("Event loop not initialized")
 
-            # Poll for new lines
-            try:
-                lines = self._poll_buffer(max_lines=1000)
-            except RuntimeError as e:
-                if self.verbose:
-                    logging.error(f"[SerialMonitor] Poll error: {e}")
-                raise
+            line = self._event_loop.run_until_complete(_read_line_async())
+            if line is None:
+                # Timeout occurred
+                return
 
-            # Yield lines and invoke hooks
-            for line in lines:
-                self.last_line = line
-                yield line
+            # Update last_line and yield
+            self.last_line = line
+            yield line
 
-                # Invoke hooks (in order)
-                for hook in self.hooks:
-                    try:
-                        hook(line)
-                    except KeyboardInterrupt:
-                        raise
-                    except Exception as e:
-                        raise MonitorHookError(hook, e) from e
-
-            # Sleep before next poll
-            time.sleep(POLL_INTERVAL)
+            # Invoke hooks (in order)
+            for hook in self.hooks:
+                try:
+                    hook(line)
+                except KeyboardInterrupt:
+                    raise
+                except Exception as e:
+                    raise MonitorHookError(hook, e) from e
 
     def write(self, data: str | bytes) -> int:
         """Write data to serial port.
-
-        Uses existing SerialWriteRequest message (already in messages.py).
-        Automatically acquires writer lock, writes, and releases.
 
         Args:
             data: String or bytes to write to serial port
@@ -408,7 +446,7 @@ class SerialMonitor:
         Raises:
             RuntimeError: If not attached or write fails
         """
-        if not self._attached:
+        if not self._attached or not self._ws:
             raise RuntimeError("Cannot write: not attached")
 
         # Convert string to bytes if needed
@@ -418,38 +456,29 @@ class SerialMonitor:
             data_bytes = data
 
         # Encode to base64 for JSON transport
-        import base64
-
         data_b64 = base64.b64encode(data_bytes).decode("ascii")
 
-        # Create write request (reuse existing message type)
-        request = SerialWriteRequest(
-            client_id=self.client_id,
-            port=self.port,
-            data=data_b64,
-            acquire_writer=True,  # Auto-acquire writer lock
-        )
+        # Send write request
+        async def _write_async():
+            write_msg = {
+                "type": "write",
+                "data": data_b64,
+            }
+            await self._ws.send(json.dumps(write_msg))  # type: ignore
 
-        # Write request to serial_write_request.json (existing file)
-        write_request_file = DAEMON_DIR / "serial_write_request.json"
-        # Use per-client response file to prevent race conditions
-        write_response_file = DAEMON_DIR / f"serial_write_response_{self.client_id}.json"
+            # Wait for write_ack
+            response_text = await asyncio.wait_for(self._ws.recv(), timeout=5.0)  # type: ignore
+            response = json.loads(response_text)
 
-        self._write_request_file(write_request_file, request)
+            if response.get("type") != "write_ack" or not response.get("success"):
+                raise RuntimeError(f"Write failed: {response.get('message', 'Unknown error')}")
 
-        # Wait for response
-        response_data = self._wait_for_response_file(write_response_file, timeout=5.0)
-        if not response_data:
-            raise RuntimeError("Write request timeout")
+            return response.get("bytes_written", 0)
 
-        # Parse response (SerialSessionResponse)
-        from fbuild.daemon.messages import SerialSessionResponse
+        if not self._event_loop:
+            raise RuntimeError("Event loop not initialized")
 
-        response = SerialSessionResponse.from_dict(response_data)
-        if not response.success:
-            raise RuntimeError(f"Write failed: {response.message}")
-
-        return response.bytes_written
+        return self._event_loop.run_until_complete(_write_async())
 
     def write_json_rpc(self, request: dict, timeout: float = 5.0) -> dict | None:
         """Send JSON-RPC request and wait for matching response.
@@ -523,69 +552,3 @@ class SerialMonitor:
                 return False
 
         return False
-
-    def _write_request_file(self, file_path: Path, request: Any) -> None:
-        """Atomically write request file.
-
-        Args:
-            file_path: Path to request file
-            request: Request object with to_dict() method
-        """
-        DAEMON_DIR.mkdir(parents=True, exist_ok=True)
-
-        # Atomic write using temporary file
-        temp_file = file_path.with_suffix(".tmp")
-        with open(temp_file, "w") as f:
-            json.dump(request.to_dict(), f, indent=2)
-
-        # Atomic rename
-        temp_file.replace(file_path)
-
-    def _wait_for_response(self, timeout: float = 5.0) -> SerialMonitorResponse | None:
-        """Wait for response from daemon.
-
-        Polls response file until it appears or timeout expires.
-
-        Args:
-            timeout: Maximum time to wait for response
-
-        Returns:
-            SerialMonitorResponse object, or None if timeout
-        """
-        response_data = self._wait_for_response_file(self._response_file, timeout=timeout)
-        if not response_data:
-            return None
-
-        return SerialMonitorResponse.from_dict(response_data)
-
-    def _wait_for_response_file(self, file_path: Path, timeout: float = 5.0) -> dict | None:
-        """Wait for response file to appear and read it.
-
-        Args:
-            file_path: Path to response file
-            timeout: Maximum time to wait
-
-        Returns:
-            Response dictionary, or None if timeout
-        """
-        start_time = time.time()
-        poll_interval = 0.05  # 50ms polls for faster response
-
-        while (time.time() - start_time) < timeout:
-            if file_path.exists():
-                try:
-                    with open(file_path) as f:
-                        data = json.load(f)
-
-                    # Delete response file after reading
-                    file_path.unlink(missing_ok=True)
-                    return data
-
-                except (json.JSONDecodeError, OSError):
-                    # Corrupted or incomplete file, retry
-                    time.sleep(poll_interval)
-                    continue
-
-            time.sleep(poll_interval)
-
-        return None

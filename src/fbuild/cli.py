@@ -19,6 +19,22 @@ from fbuild.cli_utils import (
     PathValidator,
 )
 from fbuild.daemon import client as daemon_client
+from fbuild.daemon.client.devices_http import (
+    acquire_device_lease_http,
+    get_device_status_http,
+    list_devices_http,
+    preempt_device_http,
+    release_device_lease_http,
+)
+from fbuild.daemon.client.locks_http import (
+    clear_stale_locks_http,
+    display_lock_status_http,
+)
+from fbuild.daemon.client.requests_http import (
+    request_build_http,
+    request_deploy_http,
+    request_monitor_http,
+)
 from fbuild.output import init_timer, log, log_header, set_verbose
 
 
@@ -92,8 +108,8 @@ def build_command(args: BuildArgs) -> None:
         else:
             log(f"Building environment: {env_name}...")
 
-        # Route build through daemon for background processing
-        success = daemon_client.request_build(
+        # Route build through daemon for background processing (HTTP-based)
+        success = request_build_http(
             project_dir=args.project_dir,
             environment=env_name,
             clean_build=args.clean,
@@ -207,8 +223,8 @@ def deploy_command(args: DeployArgs) -> None:
             monitor_expect = flags.expect
             monitor_show_timestamp = flags.timestamp
 
-        # Use daemon for concurrent deploy management
-        success = daemon_client.request_deploy(
+        # Use daemon for concurrent deploy management (HTTP-based)
+        success = request_deploy_http(
             project_dir=args.project_dir,
             environment=env_name,
             port=args.port,
@@ -251,8 +267,8 @@ def monitor_command(args: MonitorArgs) -> None:
         # Determine environment name
         env_name = EnvironmentDetector.detect_environment(args.project_dir, args.environment)
 
-        # Use daemon for concurrent monitor management
-        success = daemon_client.request_monitor(
+        # Use daemon for concurrent monitor management (HTTP-based)
+        success = request_monitor_http(
             project_dir=args.project_dir,
             environment=env_name,
             port=args.port,
@@ -301,7 +317,7 @@ def device_command(
     try:
         if action == "list":
             # List all devices
-            devices = daemon_client.list_devices(refresh=refresh)
+            devices = list_devices_http(refresh=refresh)
             if devices is None:
                 ErrorFormatter.print_error("Failed to list devices", "Daemon may not be running")
                 sys.exit(1)
@@ -334,7 +350,7 @@ def device_command(
                 ErrorFormatter.print_error("Device ID required", "Usage: fbuild device status <device_id>")
                 sys.exit(1)
 
-            status = daemon_client.get_device_status(device_id)
+            status = get_device_status_http(device_id)
             if status is None:
                 ErrorFormatter.print_error(f"Device not found: {device_id}", "")
                 sys.exit(1)
@@ -361,7 +377,7 @@ def device_command(
                 ErrorFormatter.print_error("Device ID required", "Usage: fbuild device lease <device_id>")
                 sys.exit(1)
 
-            result = daemon_client.acquire_device_lease(
+            result = acquire_device_lease_http(
                 device_id=device_id,
                 lease_type=lease_type,
                 description=description,
@@ -385,7 +401,7 @@ def device_command(
                 ErrorFormatter.print_error("Device ID or lease ID required", "Usage: fbuild device release <device_id>")
                 sys.exit(1)
 
-            result = daemon_client.release_device_lease(device_id)
+            result = release_device_lease_http(device_id)
 
             if result is None:
                 ErrorFormatter.print_error("Failed to release lease", "Daemon may not be running")
@@ -407,7 +423,7 @@ def device_command(
                 ErrorFormatter.print_error("Reason required for preemption", 'Usage: fbuild device take <device_id> --reason "..."')
                 sys.exit(1)
 
-            result = daemon_client.preempt_device(device_id, reason)
+            result = preempt_device_http(device_id, reason)
 
             if result is None:
                 ErrorFormatter.print_error("Failed to preempt device", "Daemon may not be running")
@@ -532,13 +548,16 @@ def daemon_command(action: str, pid: Optional[int] = None, force: bool = False, 
 
         elif action == "locks":
             # Show lock status
-            daemon_client.display_lock_status()
+            display_lock_status_http()
 
         elif action == "clear-locks":
             # Clear stale locks
-            if daemon_client.request_clear_stale_locks():
+            result = clear_stale_locks_http()
+            if result.get("success"):
+                print(f"✅ {result.get('message', 'Locks cleared')}")
                 sys.exit(0)
             else:
+                ErrorFormatter.print_error(f"Failed to clear locks: {result.get('message', 'Unknown error')}", "")
                 sys.exit(1)
 
         elif action == "kill":

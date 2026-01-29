@@ -171,12 +171,12 @@ class Daemon:
         Returns:
             True if dependencies installed successfully, False otherwise.
         """
-        from fbuild.daemon import request_install_dependencies
+        from fbuild.daemon import request_install_dependencies_http
 
         # Handle BuildContext or individual parameters
         if isinstance(ctx_or_project_dir, BuildContext):
             ctx = ctx_or_project_dir
-            return request_install_dependencies(
+            return request_install_dependencies_http(
                 project_dir=ctx.project_dir,
                 environment=ctx.environment,
                 verbose=ctx.verbose,
@@ -185,7 +185,7 @@ class Daemon:
         else:
             if environment is None:
                 raise ValueError("environment is required when not using BuildContext")
-            return request_install_dependencies(
+            return request_install_dependencies_http(
                 project_dir=ctx_or_project_dir,
                 environment=environment,
                 verbose=verbose,
@@ -224,12 +224,12 @@ class Daemon:
         Returns:
             True if build successful, False otherwise.
         """
-        from fbuild.daemon import request_build
+        from fbuild.daemon import request_build_http
 
         # Handle BuildContext or individual parameters
         if isinstance(ctx_or_project_dir, BuildContext):
             ctx = ctx_or_project_dir
-            return request_build(
+            return request_build_http(
                 project_dir=ctx.project_dir,
                 environment=ctx.environment,
                 clean_build=ctx.clean_build,
@@ -239,7 +239,7 @@ class Daemon:
         else:
             if environment is None:
                 raise ValueError("environment is required when not using BuildContext")
-            return request_build(
+            return request_build_http(
                 project_dir=ctx_or_project_dir,
                 environment=environment,
                 clean_build=clean_build,
@@ -294,12 +294,12 @@ class Daemon:
         Returns:
             True if deploy successful, False otherwise.
         """
-        from fbuild.daemon import request_deploy
+        from fbuild.daemon import request_deploy_http
 
         # Handle BuildContext or individual parameters
         if isinstance(ctx_or_project_dir, BuildContext):
             ctx = ctx_or_project_dir
-            return request_deploy(
+            return request_deploy_http(
                 project_dir=ctx.project_dir,
                 environment=ctx.environment,
                 port=ctx.port,
@@ -314,7 +314,7 @@ class Daemon:
         else:
             if environment is None:
                 raise ValueError("environment is required when not using BuildContext")
-            return request_deploy(
+            return request_deploy_http(
                 project_dir=ctx_or_project_dir,
                 environment=environment,
                 port=port,
@@ -355,12 +355,12 @@ class Daemon:
         Returns:
             True if monitoring successful, False otherwise.
         """
-        from fbuild.daemon import request_monitor
+        from fbuild.daemon import request_monitor_http
 
         # Handle BuildContext or individual parameters
         if isinstance(ctx_or_project_dir, BuildContext):
             ctx = ctx_or_project_dir
-            return request_monitor(
+            return request_monitor_http(
                 project_dir=ctx.project_dir,
                 environment=ctx.environment,
                 port=ctx.port,
@@ -373,7 +373,7 @@ class Daemon:
         else:
             if environment is None:
                 raise ValueError("environment is required when not using BuildContext")
-            return request_monitor(
+            return request_monitor_http(
                 project_dir=ctx_or_project_dir,
                 environment=environment,
                 port=port,

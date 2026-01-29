@@ -17,6 +17,11 @@ dependencies = [
     "esptool>=4.6.0",
     "psutil>=5.9.0",
     "fasteners>=0.18",
+    "fastapi>=0.109.0",
+    "uvicorn[standard]>=0.27.0",
+    "websockets>=12.0",
+    "httpx>=0.26.0",
+    "pydantic>=2.0.0",
 ]
 # Version is centralized in src/fbuild/__init__.py - keep in sync
 version = "1.3.28"

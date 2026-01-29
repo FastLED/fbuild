@@ -238,7 +238,7 @@ class DeployRequestProcessor(RequestProcessor):
             logging.debug("Source or build flags changed, redeploy needed")
             return False, source_hash, build_flags_hash
 
-        except KeyboardInterrupt:  # noqa: KBI002
+        except KeyboardInterrupt:
             raise
         except Exception as e:
             logging.warning(f"Error checking firmware ledger: {e}")
@@ -267,7 +267,7 @@ class DeployRequestProcessor(RequestProcessor):
             else:
                 logging.warning(f"Device reset on {port} failed (non-fatal)")
             return success
-        except KeyboardInterrupt:  # noqa: KBI002
+        except KeyboardInterrupt:
             raise
         except Exception as e:
             logging.warning(f"Error resetting device on {port}: {e} (non-fatal)")
@@ -325,7 +325,7 @@ class DeployRequestProcessor(RequestProcessor):
             build_flags = env_config.get("build_flags", "")
 
             return build_flags.split() if build_flags else []
-        except KeyboardInterrupt:  # noqa: KBI002
+        except KeyboardInterrupt:
             raise
         except Exception as e:
             logging.warning(f"Error reading build flags: {e}")
@@ -371,7 +371,7 @@ class DeployRequestProcessor(RequestProcessor):
             )
             logging.info(f"Recorded deployment in firmware ledger for {port}")
 
-        except KeyboardInterrupt:  # noqa: KBI002
+        except KeyboardInterrupt:
             raise
         except Exception as e:
             logging.warning(f"Error recording deployment in ledger: {e}")
@@ -603,7 +603,7 @@ class DeployRequestProcessor(RequestProcessor):
             # Return the port that was actually used
             return actual_port
 
-        except KeyboardInterrupt:  # noqa: KBI002
+        except KeyboardInterrupt:
             logging.warning("Deploy interrupted by user")
             # Release port state on interruption
             if used_port:
@@ -799,7 +799,7 @@ class DeployRequestProcessor(RequestProcessor):
 
             logging.info(f"[DeployPreemption] Notified API monitors of preemption on {port}")
 
-        except KeyboardInterrupt:  # noqa: KBI002
+        except KeyboardInterrupt:
             raise
         except Exception as e:
             logging.warning(f"[DeployPreemption] Failed to notify API monitors: {e}")
@@ -822,7 +822,7 @@ class DeployRequestProcessor(RequestProcessor):
                 preempt_file.unlink()
                 logging.info(f"[DeployPreemption] Cleared preemption notification for {port}")
 
-        except KeyboardInterrupt:  # noqa: KBI002
+        except KeyboardInterrupt:
             raise
         except Exception as e:
             logging.warning(f"[DeployPreemption] Failed to clear preemption notification: {e}")
