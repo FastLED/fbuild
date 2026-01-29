@@ -144,6 +144,7 @@ class TestSerialMonitorAPI:
             with patch("fbuild.api.serial_monitor.DAEMON_DIR", daemon_dir):
                 yield daemon_dir
 
+    @pytest.mark.skip(reason="File-based API deprecated - now uses WebSocket")
     def test_serial_monitor_initialization(self):
         """Test SerialMonitor __init__."""
         from fbuild.api import SerialMonitor
@@ -171,6 +172,7 @@ class TestSerialMonitorAPI:
         assert mon.hooks[0] is hook1
         assert mon.hooks[1] is hook2
 
+    @pytest.mark.skip(reason="File-based API deprecated - now uses WebSocket")
     def test_write_request_file_atomic(self, temp_daemon_dir):
         """Test _write_request_file uses atomic write."""
         from fbuild.api import SerialMonitor
@@ -197,6 +199,7 @@ class TestSerialMonitorAPI:
         assert data["client_id"] == mon.client_id
         assert data["port"] == "COM13"
 
+    @pytest.mark.skip(reason="File-based API deprecated - now uses WebSocket")
     def test_check_preemption_file_exists(self, temp_daemon_dir):
         """Test _check_preemption detects preemption file."""
         from fbuild.api import SerialMonitor
@@ -214,6 +217,7 @@ class TestSerialMonitorAPI:
         # Should detect preemption
         assert mon._check_preemption() is True
 
+    @pytest.mark.skip(reason="File-based API deprecated - now uses WebSocket")
     def test_wait_for_response_timeout(self, temp_daemon_dir):
         """Test _wait_for_response handles timeout."""
         from fbuild.api import SerialMonitor
@@ -224,6 +228,7 @@ class TestSerialMonitorAPI:
         response = mon._wait_for_response(timeout=0.5)
         assert response is None
 
+    @pytest.mark.skip(reason="File-based API deprecated - now uses WebSocket")
     def test_wait_for_response_success(self, temp_daemon_dir):
         """Test _wait_for_response reads response file."""
         from fbuild.api import SerialMonitor

@@ -25,10 +25,10 @@ class TestCLIBuild:
         monkeypatch.setattr(sys, "argv", ["fbuild", "build", str(project_dir)])
 
         with (
-            patch("fbuild.cli.daemon_client") as mock_client,
+            patch("fbuild.cli.request_build_http") as mock_build,
             patch("fbuild.cli.EnvironmentDetector") as mock_env_detector,
         ):
-            mock_client.request_build.return_value = True
+            mock_build.return_value = True
             mock_env_detector.detect_environment.return_value = "default"
 
             with pytest.raises(SystemExit) as exc_info:
@@ -36,9 +36,9 @@ class TestCLIBuild:
 
             assert exc_info.value.code == 0
 
-            # Verify daemon client was called correctly
-            mock_client.request_build.assert_called_once()
-            call_kwargs = mock_client.request_build.call_args.kwargs
+            # Verify HTTP build was called correctly
+            mock_build.assert_called_once()
+            call_kwargs = mock_build.call_args.kwargs
             assert call_kwargs["environment"] == "default"
             assert call_kwargs["clean_build"] is False
             assert call_kwargs["verbose"] is False
@@ -48,18 +48,18 @@ class TestCLIBuild:
         monkeypatch.setattr(sys, "argv", ["fbuild", "build", "--environment", "uno", str(project_dir)])
 
         with (
-            patch("fbuild.cli.daemon_client") as mock_client,
+            patch("fbuild.cli.request_build_http") as mock_build,
             patch("fbuild.cli.EnvironmentDetector") as mock_env_detector,
         ):
-            mock_client.request_build.return_value = True
+            mock_build.return_value = True
             mock_env_detector.detect_environment.return_value = "uno"
 
             with pytest.raises(SystemExit) as exc_info:
                 main()
 
             assert exc_info.value.code == 0
-            mock_client.request_build.assert_called_once()
-            call_kwargs = mock_client.request_build.call_args.kwargs
+            mock_build.assert_called_once()
+            call_kwargs = mock_build.call_args.kwargs
             assert call_kwargs["environment"] == "uno"
 
     def test_build_with_environment_short_option(self, project_dir, monkeypatch):
@@ -67,18 +67,18 @@ class TestCLIBuild:
         monkeypatch.setattr(sys, "argv", ["fbuild", "build", "-e", "mega", str(project_dir)])
 
         with (
-            patch("fbuild.cli.daemon_client") as mock_client,
+            patch("fbuild.cli.request_build_http") as mock_build,
             patch("fbuild.cli.EnvironmentDetector") as mock_env_detector,
         ):
-            mock_client.request_build.return_value = True
+            mock_build.return_value = True
             mock_env_detector.detect_environment.return_value = "mega"
 
             with pytest.raises(SystemExit) as exc_info:
                 main()
 
             assert exc_info.value.code == 0
-            mock_client.request_build.assert_called_once()
-            call_kwargs = mock_client.request_build.call_args.kwargs
+            mock_build.assert_called_once()
+            call_kwargs = mock_build.call_args.kwargs
             assert call_kwargs["environment"] == "mega"
 
     def test_build_with_clean(self, project_dir, monkeypatch):
@@ -86,18 +86,18 @@ class TestCLIBuild:
         monkeypatch.setattr(sys, "argv", ["fbuild", "build", "--clean", str(project_dir)])
 
         with (
-            patch("fbuild.cli.daemon_client") as mock_client,
+            patch("fbuild.cli.request_build_http") as mock_build,
             patch("fbuild.cli.EnvironmentDetector") as mock_env_detector,
         ):
-            mock_client.request_build.return_value = True
+            mock_build.return_value = True
             mock_env_detector.detect_environment.return_value = "default"
 
             with pytest.raises(SystemExit) as exc_info:
                 main()
 
             assert exc_info.value.code == 0
-            mock_client.request_build.assert_called_once()
-            call_kwargs = mock_client.request_build.call_args.kwargs
+            mock_build.assert_called_once()
+            call_kwargs = mock_build.call_args.kwargs
             assert call_kwargs["clean_build"] is True
 
     def test_build_with_clean_short_option(self, project_dir, monkeypatch):
@@ -105,17 +105,17 @@ class TestCLIBuild:
         monkeypatch.setattr(sys, "argv", ["fbuild", "build", "-c", str(project_dir)])
 
         with (
-            patch("fbuild.cli.daemon_client") as mock_client,
+            patch("fbuild.cli.request_build_http") as mock_build,
             patch("fbuild.cli.EnvironmentDetector") as mock_env_detector,
         ):
-            mock_client.request_build.return_value = True
+            mock_build.return_value = True
             mock_env_detector.detect_environment.return_value = "default"
 
             with pytest.raises(SystemExit) as exc_info:
                 main()
 
             assert exc_info.value.code == 0
-            call_kwargs = mock_client.request_build.call_args.kwargs
+            call_kwargs = mock_build.call_args.kwargs
             assert call_kwargs["clean_build"] is True
 
     def test_build_with_verbose(self, project_dir, monkeypatch, capsys):
@@ -123,10 +123,10 @@ class TestCLIBuild:
         monkeypatch.setattr(sys, "argv", ["fbuild", "build", "--verbose", str(project_dir)])
 
         with (
-            patch("fbuild.cli.daemon_client") as mock_client,
+            patch("fbuild.cli.request_build_http") as mock_build,
             patch("fbuild.cli.EnvironmentDetector") as mock_env_detector,
         ):
-            mock_client.request_build.return_value = True
+            mock_build.return_value = True
             mock_env_detector.detect_environment.return_value = "default"
 
             # Reset output module to use current sys.stdout (captured by capsys)
@@ -140,8 +140,8 @@ class TestCLIBuild:
             assert exc_info.value.code == 0
             captured = capsys.readouterr()
             assert "Building project:" in captured.out
-            mock_client.request_build.assert_called_once()
-            call_kwargs = mock_client.request_build.call_args.kwargs
+            mock_build.assert_called_once()
+            call_kwargs = mock_build.call_args.kwargs
             assert call_kwargs["verbose"] is True
 
     def test_build_with_verbose_short_option(self, project_dir, monkeypatch):
@@ -149,17 +149,17 @@ class TestCLIBuild:
         monkeypatch.setattr(sys, "argv", ["fbuild", "build", "-v", str(project_dir)])
 
         with (
-            patch("fbuild.cli.daemon_client") as mock_client,
+            patch("fbuild.cli.request_build_http") as mock_build,
             patch("fbuild.cli.EnvironmentDetector") as mock_env_detector,
         ):
-            mock_client.request_build.return_value = True
+            mock_build.return_value = True
             mock_env_detector.detect_environment.return_value = "default"
 
             with pytest.raises(SystemExit) as exc_info:
                 main()
 
             assert exc_info.value.code == 0
-            call_kwargs = mock_client.request_build.call_args.kwargs
+            call_kwargs = mock_build.call_args.kwargs
             assert call_kwargs["verbose"] is True
 
     def test_build_with_project_dir(self, tmp_path, monkeypatch):
@@ -171,18 +171,18 @@ class TestCLIBuild:
         monkeypatch.setattr(sys, "argv", ["fbuild", "build", str(tmp_path)])
 
         with (
-            patch("fbuild.cli.daemon_client") as mock_client,
+            patch("fbuild.cli.request_build_http") as mock_build,
             patch("fbuild.cli.EnvironmentDetector") as mock_env_detector,
         ):
-            mock_client.request_build.return_value = True
+            mock_build.return_value = True
             mock_env_detector.detect_environment.return_value = "default"
 
             with pytest.raises(SystemExit) as exc_info:
                 main()
 
             assert exc_info.value.code == 0
-            mock_client.request_build.assert_called_once()
-            call_kwargs = mock_client.request_build.call_args.kwargs
+            mock_build.assert_called_once()
+            call_kwargs = mock_build.call_args.kwargs
             assert call_kwargs["project_dir"] == tmp_path
 
     def test_build_combined_options(self, project_dir, monkeypatch):
@@ -190,18 +190,18 @@ class TestCLIBuild:
         monkeypatch.setattr(sys, "argv", ["fbuild", "build", "-e", "uno", "-c", "-v", str(project_dir)])
 
         with (
-            patch("fbuild.cli.daemon_client") as mock_client,
+            patch("fbuild.cli.request_build_http") as mock_build,
             patch("fbuild.cli.EnvironmentDetector") as mock_env_detector,
         ):
-            mock_client.request_build.return_value = True
+            mock_build.return_value = True
             mock_env_detector.detect_environment.return_value = "uno"
 
             with pytest.raises(SystemExit) as exc_info:
                 main()
 
             assert exc_info.value.code == 0
-            mock_client.request_build.assert_called_once()
-            call_kwargs = mock_client.request_build.call_args.kwargs
+            mock_build.assert_called_once()
+            call_kwargs = mock_build.call_args.kwargs
             assert call_kwargs["environment"] == "uno"
             assert call_kwargs["clean_build"] is True
             assert call_kwargs["verbose"] is True
@@ -211,10 +211,10 @@ class TestCLIBuild:
         monkeypatch.setattr(sys, "argv", ["fbuild", "build", str(project_dir)])
 
         with (
-            patch("fbuild.cli.daemon_client") as mock_client,
+            patch("fbuild.cli.request_build_http") as mock_build,
             patch("fbuild.cli.EnvironmentDetector") as mock_env_detector,
         ):
-            mock_client.request_build.return_value = False
+            mock_build.return_value = False
             mock_env_detector.detect_environment.return_value = "default"
 
             with pytest.raises(SystemExit) as exc_info:
@@ -227,10 +227,10 @@ class TestCLIBuild:
         monkeypatch.setattr(sys, "argv", ["fbuild", "build", str(project_dir)])
 
         with (
-            patch("fbuild.cli.daemon_client") as mock_client,
+            patch("fbuild.cli.request_build_http") as mock_build,
             patch("fbuild.cli.EnvironmentDetector") as mock_env_detector,
         ):
-            mock_client.request_build.side_effect = FileNotFoundError("platformio.ini not found")
+            mock_build.side_effect = FileNotFoundError("platformio.ini not found")
             mock_env_detector.detect_environment.return_value = "default"
 
             with pytest.raises(SystemExit) as exc_info:
@@ -247,10 +247,10 @@ class TestCLIBuild:
         monkeypatch.setattr(sys, "argv", ["fbuild", "build", str(project_dir)])
 
         with (
-            patch("fbuild.cli.daemon_client") as mock_client,
+            patch("fbuild.cli.request_build_http") as mock_build,
             patch("fbuild.cli.EnvironmentDetector") as mock_env_detector,
         ):
-            mock_client.request_build.side_effect = PermissionError("Cannot write to build directory")
+            mock_build.side_effect = PermissionError("Cannot write to build directory")
             mock_env_detector.detect_environment.return_value = "default"
 
             with pytest.raises(SystemExit) as exc_info:
@@ -260,15 +260,15 @@ class TestCLIBuild:
             captured = capsys.readouterr()
             assert "Permission denied" in captured.out
 
-    def test_build_keyboard_interrupt(self, project_dir, monkeypatch, capsys):
+    def test_build_keyboard_interrupt(self, project_dir, monkeypatch):
         """Test build interrupted by user."""
         monkeypatch.setattr(sys, "argv", ["fbuild", "build", str(project_dir)])
 
         with (
-            patch("fbuild.cli.daemon_client") as mock_client,
+            patch("fbuild.cli.request_build_http") as mock_build,
             patch("fbuild.cli.EnvironmentDetector") as mock_env_detector,
         ):
-            mock_client.request_build.side_effect = KeyboardInterrupt()
+            mock_build.side_effect = KeyboardInterrupt()
             mock_env_detector.detect_environment.return_value = "default"
 
             # The handler now re-raises KeyboardInterrupt after calling _thread.interrupt_main()
@@ -280,10 +280,10 @@ class TestCLIBuild:
         monkeypatch.setattr(sys, "argv", ["fbuild", "build", str(project_dir)])
 
         with (
-            patch("fbuild.cli.daemon_client") as mock_client,
+            patch("fbuild.cli.request_build_http") as mock_build,
             patch("fbuild.cli.EnvironmentDetector") as mock_env_detector,
         ):
-            mock_client.request_build.side_effect = RuntimeError("Unexpected error occurred")
+            mock_build.side_effect = RuntimeError("Unexpected error occurred")
             mock_env_detector.detect_environment.return_value = "default"
 
             with pytest.raises(SystemExit) as exc_info:
@@ -299,10 +299,10 @@ class TestCLIBuild:
         monkeypatch.setattr(sys, "argv", ["fbuild", "build", "-v", str(project_dir)])
 
         with (
-            patch("fbuild.cli.daemon_client") as mock_client,
+            patch("fbuild.cli.request_build_http") as mock_build,
             patch("fbuild.cli.EnvironmentDetector") as mock_env_detector,
         ):
-            mock_client.request_build.side_effect = RuntimeError("Unexpected error occurred")
+            mock_build.side_effect = RuntimeError("Unexpected error occurred")
             mock_env_detector.detect_environment.return_value = "default"
 
             with pytest.raises(SystemExit) as exc_info:
@@ -318,10 +318,10 @@ class TestCLIBuild:
         monkeypatch.setattr(sys, "argv", ["fbuild", "build", str(project_dir)])
 
         with (
-            patch("fbuild.cli.daemon_client") as mock_client,
+            patch("fbuild.cli.request_build_http") as mock_build,
             patch("fbuild.cli.EnvironmentDetector") as mock_env_detector,
         ):
-            mock_client.request_build.return_value = True
+            mock_build.return_value = True
             mock_env_detector.detect_environment.return_value = "default"
 
             with pytest.raises(SystemExit) as exc_info:

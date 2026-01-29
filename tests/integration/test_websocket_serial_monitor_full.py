@@ -17,7 +17,6 @@ import asyncio
 import json
 import os
 import time
-from pathlib import Path
 
 import pytest
 import websockets
@@ -28,7 +27,11 @@ os.environ["FBUILD_DAEMON_PORT"] = "9176"
 
 from fbuild.daemon.client.devices_http import list_devices_http
 from fbuild.daemon.client.http_utils import get_daemon_base_url
-from fbuild.daemon.client.lifecycle import ensure_daemon_running, is_daemon_running, stop_daemon
+from fbuild.daemon.client.lifecycle import (
+    ensure_daemon_running,
+    is_daemon_running,
+    stop_daemon,
+)
 
 
 @pytest.fixture(scope="module")

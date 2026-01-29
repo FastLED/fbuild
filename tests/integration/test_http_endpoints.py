@@ -15,7 +15,6 @@ import os
 import time
 from pathlib import Path
 
-import httpx
 import pytest
 
 # Set dev mode and custom port for testing
@@ -29,12 +28,19 @@ from fbuild.daemon.client.devices_http import (
     preempt_device_http,
     release_device_lease_http,
 )
-from fbuild.daemon.client.http_utils import get_daemon_url, http_client, is_daemon_http_available
-from fbuild.daemon.client.lifecycle import ensure_daemon_running, is_daemon_running, stop_daemon
+from fbuild.daemon.client.http_utils import (
+    get_daemon_url,
+    http_client,
+    is_daemon_http_available,
+)
+from fbuild.daemon.client.lifecycle import (
+    ensure_daemon_running,
+    is_daemon_running,
+    stop_daemon,
+)
 from fbuild.daemon.client.locks_http import clear_stale_locks_http, get_lock_status_http
 from fbuild.daemon.client.requests_http import (
     request_build_http,
-    request_deploy_http,
     request_install_dependencies_http,
     request_monitor_http,
 )

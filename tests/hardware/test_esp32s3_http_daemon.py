@@ -25,8 +25,16 @@ os.environ["FBUILD_DEV_MODE"] = "1"
 os.environ["FBUILD_DAEMON_PORT"] = "9176"
 
 from fbuild.daemon.client.devices_http import list_devices_http
-from fbuild.daemon.client.http_utils import get_daemon_url, http_client, is_daemon_http_available
-from fbuild.daemon.client.lifecycle import ensure_daemon_running, is_daemon_running, stop_daemon
+from fbuild.daemon.client.http_utils import (
+    get_daemon_url,
+    http_client,
+    is_daemon_http_available,
+)
+from fbuild.daemon.client.lifecycle import (
+    ensure_daemon_running,
+    is_daemon_running,
+    stop_daemon,
+)
 from fbuild.daemon.client.requests_http import request_build_http, request_deploy_http
 
 # ESP32-S3 test project

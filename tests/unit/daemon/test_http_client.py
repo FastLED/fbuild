@@ -10,7 +10,6 @@ Tests the HTTP-based daemon communication layer, including:
 """
 
 import os
-import tempfile
 from pathlib import Path
 from unittest.mock import MagicMock, Mock, patch
 
@@ -20,7 +19,6 @@ import pytest
 from fbuild.daemon.client.http_utils import (
     DEFAULT_DEV_PORT,
     DEFAULT_PORT,
-    DEFAULT_TEST_PORT,
     deserialize_response,
     get_daemon_base_url,
     get_daemon_port,
@@ -78,11 +76,15 @@ class TestPortDiscovery:
                 # Should fall back to default
                 assert port in [DEFAULT_PORT, DEFAULT_DEV_PORT]
 
-    def test_port_dev_mode(self):
+    def test_port_dev_mode(self, tmp_path: Path):
         """Test port discovery in dev mode."""
-        with patch.dict(os.environ, {"FBUILD_DEV_MODE": "1"}, clear=True):
-            port = get_daemon_port()
-            assert port == DEFAULT_DEV_PORT
+        # Create a non-existent port file to ensure we test fallback to dev mode default
+        port_file = tmp_path / "daemon.port"
+
+        with patch("fbuild.daemon.client.http_utils.PORT_FILE", port_file):
+            with patch.dict(os.environ, {"FBUILD_DEV_MODE": "1"}, clear=True):
+                port = get_daemon_port()
+                assert port == DEFAULT_DEV_PORT
 
     def test_port_production_mode(self, tmp_path: Path):
         """Test port discovery in production mode."""
@@ -126,11 +128,15 @@ class TestURLGeneration:
             url = get_daemon_base_url()
             assert url == "http://127.0.0.1:9176"
 
-    def test_get_daemon_base_url_dev_mode(self):
+    def test_get_daemon_base_url_dev_mode(self, tmp_path: Path):
         """Test base URL generation in dev mode."""
-        with patch.dict(os.environ, {"FBUILD_DEV_MODE": "1"}, clear=True):
-            url = get_daemon_base_url()
-            assert url == f"http://127.0.0.1:{DEFAULT_DEV_PORT}"
+        # Create a non-existent port file to ensure we test fallback to dev mode default
+        port_file = tmp_path / "daemon.port"
+
+        with patch("fbuild.daemon.client.http_utils.PORT_FILE", port_file):
+            with patch.dict(os.environ, {"FBUILD_DEV_MODE": "1"}, clear=True):
+                url = get_daemon_base_url()
+                assert url == f"http://127.0.0.1:{DEFAULT_DEV_PORT}"
 
     def test_get_daemon_base_url_production(self, tmp_path: Path):
         """Test base URL generation in production mode."""
