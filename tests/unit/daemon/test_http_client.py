@@ -34,25 +34,31 @@ from fbuild.daemon.messages import BuildRequest
 class TestPortDiscovery:
     """Test port discovery from environment variables, port file, and defaults."""
 
-    def test_port_from_env_variable(self, tmp_path: Path):
+    def test_port_from_env_variable(self):
         """Test port discovery from FBUILD_DAEMON_PORT environment variable."""
         with patch.dict(os.environ, {"FBUILD_DAEMON_PORT": "9176"}):
             port = get_daemon_port()
             assert port == 9176
 
-    def test_port_from_env_variable_invalid(self):
+    def test_port_from_env_variable_invalid(self, tmp_path: Path):
         """Test that invalid FBUILD_DAEMON_PORT is ignored and fallback is used."""
-        with patch.dict(os.environ, {"FBUILD_DAEMON_PORT": "invalid"}):
-            port = get_daemon_port()
-            # Should fall back to default
-            assert port in [DEFAULT_PORT, DEFAULT_DEV_PORT]
+        # Mock PORT_FILE to not exist so it doesn't override the default
+        non_existent_port_file = tmp_path / "nonexistent.port"
+        with patch("fbuild.daemon.client.http_utils.PORT_FILE", non_existent_port_file):
+            with patch.dict(os.environ, {"FBUILD_DAEMON_PORT": "invalid"}):
+                port = get_daemon_port()
+                # Should fall back to default
+                assert port in [DEFAULT_PORT, DEFAULT_DEV_PORT]
 
-    def test_port_from_env_variable_out_of_range(self):
+    def test_port_from_env_variable_out_of_range(self, tmp_path: Path):
         """Test that out-of-range FBUILD_DAEMON_PORT is ignored."""
-        with patch.dict(os.environ, {"FBUILD_DAEMON_PORT": "99999"}):
-            port = get_daemon_port()
-            # Should fall back to default
-            assert port in [DEFAULT_PORT, DEFAULT_DEV_PORT]
+        # Mock PORT_FILE to not exist so it doesn't override the default
+        non_existent_port_file = tmp_path / "nonexistent.port"
+        with patch("fbuild.daemon.client.http_utils.PORT_FILE", non_existent_port_file):
+            with patch.dict(os.environ, {"FBUILD_DAEMON_PORT": "99999"}):
+                port = get_daemon_port()
+                # Should fall back to default
+                assert port in [DEFAULT_PORT, DEFAULT_DEV_PORT]
 
     def test_port_from_file(self, tmp_path: Path):
         """Test port discovery from port file."""

@@ -127,7 +127,7 @@ See `docs/architecture.dot` for Graphviz diagram. Render with: `dot -Tpng docs/a
 
 #### Communication Endpoints
 
-**HTTP REST API** (http://127.0.0.1:8765 in dev mode, port 8764 in production):
+**HTTP REST API** (http://127.0.0.1:8765 in production, port 8865 in dev mode):
 ```
 POST /api/build              - Build a project
 POST /api/deploy             - Deploy firmware to device
@@ -482,9 +482,29 @@ The fbuild daemon is **always running** during operations:
 - **Auto-Start**: CLI automatically starts daemon if not running
 - **Shared Queue**: Daemon maintains shared compilation queue with CPU-count workers
 - **Lifecycle**: Daemon auto-evicts after 4 seconds of inactivity
+- **Port Configuration**: Production uses port 8765, dev mode uses port 8865 (prod + 100)
 
 **Serial Mode**: Only occurs when user explicitly requests `--jobs 1` for debugging.
 This is NOT a fallback - it's an intentional design choice.
+
+### Daemon Spawn Race Condition Handling
+
+**Status**: ✅ FIXED in v1.3.31 (2026-01-29)
+
+fbuild handles concurrent daemon spawn attempts safely using a defense-in-depth approach:
+
+**Problem**: On Windows, `subprocess.Popen()` can return a PID before the process fully initializes. If the process crashes during startup, the client waits 10s for a PID that will never write the PID file, causing spurious errors even when a concurrent spawn succeeds.
+
+**Solution**:
+1. **Permissive PID Acceptance** - `wait_for_pid_file()` accepts any alive daemon PID, not just the expected one
+2. **Exponential Backoff Retry** - Up to 3 spawn attempts with delays (0s, 500ms, 2s)
+3. **HTTP Health Check Fallback** - If PID file wait fails, check if daemon HTTP is available
+4. **Append Mode Logging** - Spawn log preserves all attempts for debugging
+5. **Atomic Singleton Lock** - Only one process can spawn daemon at a time
+
+**Test Coverage**: `tests/unit/daemon/test_daemon_spawn_race.py` and `tests/stress_test_daemon_spawn.py`
+
+**Validation**: 10/10 concurrent spawns succeeded with zero spurious failures in stress testing.
 
 ## Parameter Flow
 

@@ -68,6 +68,7 @@ class Cache:
 
         # Check for environment variable override
         cache_env = os.environ.get("FBUILD_CACHE_DIR")
+        build_env = os.environ.get("FBUILD_BUILD_DIR")
         dev_mode = os.environ.get("FBUILD_DEV_MODE") == "1"
 
         if cache_env:
@@ -80,7 +81,12 @@ class Cache:
             # Production: use project-local cache (default)
             self.cache_root = self.project_dir / ".fbuild" / "cache"
 
-        self.build_root = self.project_dir / ".fbuild" / "build"
+        if build_env:
+            # Explicit build directory override (useful for Windows path length limits)
+            self.build_root = Path(build_env).resolve()
+        else:
+            # Default: project-local build directory
+            self.build_root = self.project_dir / ".fbuild" / "build"
 
     @staticmethod
     def hash_url(url: str) -> str:

@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from fbuild.packages.arduino_core import ArduinoCore, ArduinoCoreError
+from fbuild.packages.arduino_core import ArduinoCore
 from fbuild.packages.cache import Cache
 
 
@@ -101,11 +101,17 @@ class TestArduinoCore:
 
     def test_get_boards_txt_not_initialized(self):
         """Test error when getting boards.txt before initialization."""
+        # Import at function level to get current class after any module reloads
+        import importlib
+
+        arduino_core_module = importlib.import_module("fbuild.packages.arduino_core")
+        importlib.reload(arduino_core_module)
+
         with tempfile.TemporaryDirectory() as temp_dir:
             cache = Cache(Path(temp_dir))
-            core = ArduinoCore(cache)
+            core = arduino_core_module.ArduinoCore(cache)
 
-            with pytest.raises(ArduinoCoreError, match="not initialized"):
+            with pytest.raises(arduino_core_module.ArduinoCoreError, match="not initialized"):
                 core.get_boards_txt()
 
     def test_get_boards_txt_success(self):
@@ -126,15 +132,21 @@ class TestArduinoCore:
 
     def test_get_boards_txt_not_found(self):
         """Test error when boards.txt doesn't exist."""
+        # Import at function level to get current class after any module reloads
+        import importlib
+
+        arduino_core_module = importlib.import_module("fbuild.packages.arduino_core")
+        importlib.reload(arduino_core_module)
+
         with tempfile.TemporaryDirectory() as temp_dir:
             cache = Cache(Path(temp_dir))
-            core = ArduinoCore(cache)
+            core = arduino_core_module.ArduinoCore(cache)
 
             core_path = Path(temp_dir) / "core"
             core_path.mkdir()
             core._core_path = core_path
 
-            with pytest.raises(ArduinoCoreError, match="boards.txt not found"):
+            with pytest.raises(arduino_core_module.ArduinoCoreError, match="boards.txt not found"):
                 core.get_boards_txt()
 
     def test_get_platform_txt(self):
@@ -170,15 +182,21 @@ class TestArduinoCore:
 
     def test_get_core_dir_not_found(self):
         """Test error when core directory doesn't exist."""
+        # Import at function level to get current class after any module reloads
+        import importlib
+
+        arduino_core_module = importlib.import_module("fbuild.packages.arduino_core")
+        importlib.reload(arduino_core_module)
+
         with tempfile.TemporaryDirectory() as temp_dir:
             cache = Cache(Path(temp_dir))
-            core = ArduinoCore(cache)
+            core = arduino_core_module.ArduinoCore(cache)
 
             core_path = Path(temp_dir) / "core"
             core_path.mkdir()
             core._core_path = core_path
 
-            with pytest.raises(ArduinoCoreError, match="cores/arduino directory not found"):
+            with pytest.raises(arduino_core_module.ArduinoCoreError, match="cores/arduino directory not found"):
                 core.get_core_dir()
 
     def test_get_variant_dir(self):
@@ -198,15 +216,21 @@ class TestArduinoCore:
 
     def test_get_variant_dir_not_found(self):
         """Test error when variant doesn't exist."""
+        # Import at function level to get current class after any module reloads
+        import importlib
+
+        arduino_core_module = importlib.import_module("fbuild.packages.arduino_core")
+        importlib.reload(arduino_core_module)
+
         with tempfile.TemporaryDirectory() as temp_dir:
             cache = Cache(Path(temp_dir))
-            core = ArduinoCore(cache)
+            core = arduino_core_module.ArduinoCore(cache)
 
             core_path = Path(temp_dir) / "core"
             (core_path / "variants").mkdir(parents=True)
             core._core_path = core_path
 
-            with pytest.raises(ArduinoCoreError, match="Variant 'nonexistent' not found"):
+            with pytest.raises(arduino_core_module.ArduinoCoreError, match="Variant 'nonexistent' not found"):
                 core.get_variant_dir("nonexistent")
 
     def test_get_core_sources(self):

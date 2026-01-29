@@ -28,7 +28,7 @@ from fbuild.daemon.paths import DAEMON_DIR
 # HTTP client configuration
 DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 8765
-DEFAULT_DEV_PORT = 8766
+DEFAULT_DEV_PORT = 8865  # Dev mode uses prod + 100 for isolation
 DEFAULT_TEST_PORT = 9176  # Default port for testing when FBUILD_DAEMON_PORT is set
 DEFAULT_TIMEOUT = 30.0  # seconds
 DEFAULT_CONNECT_TIMEOUT = 5.0  # seconds

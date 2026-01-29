@@ -8,7 +8,7 @@ from unittest.mock import patch
 import pytest
 
 from fbuild.packages.cache import Cache
-from fbuild.packages.toolchain import ToolchainAVR, ToolchainError
+from fbuild.packages.toolchain import ToolchainAVR
 
 
 class TestToolchain:
@@ -48,9 +48,15 @@ class TestToolchain:
 
     def test_detect_platform_unsupported(self):
         """Test error on unsupported platform."""
+        # Import at function level to get current class after any module reloads
+        import importlib
+
+        toolchain_module = importlib.import_module("fbuild.packages.toolchain")
+        importlib.reload(toolchain_module)
+
         with patch("fbuild.packages.platform_utils.platform.system", return_value="UnknownOS"):
-            with pytest.raises(ToolchainError, match="Unsupported platform"):
-                ToolchainAVR.detect_platform()
+            with pytest.raises(toolchain_module.ToolchainError, match="Unsupported platform"):
+                toolchain_module.ToolchainAVR.detect_platform()
 
     def test_get_package_info_windows(self):
         """Test getting package info for Windows."""
@@ -90,12 +96,18 @@ class TestToolchain:
 
     def test_get_package_info_unsupported_platform(self):
         """Test error for unsupported platform."""
+        # Import at function level to get current class after any module reloads
+        import importlib
+
+        toolchain_module = importlib.import_module("fbuild.packages.toolchain")
+        importlib.reload(toolchain_module)
+
         with patch("fbuild.packages.platform_utils.PlatformDetector.detect_avr_platform", return_value=("freebsd", "x86_64")):
             with tempfile.TemporaryDirectory() as temp_dir:
                 cache = Cache(Path(temp_dir))
-                toolchain = ToolchainAVR(cache)
+                toolchain = toolchain_module.ToolchainAVR(cache)
 
-                with pytest.raises(ToolchainError, match="No toolchain package"):
+                with pytest.raises(toolchain_module.ToolchainError, match="No toolchain package"):
                     toolchain._get_package_details()
 
     def test_verify_tools_success(self):
@@ -161,11 +173,17 @@ class TestToolchain:
 
     def test_get_tool_path_not_initialized(self):
         """Test error when getting tool path before initialization."""
+        # Import at function level to get current class after any module reloads
+        import importlib
+
+        toolchain_module = importlib.import_module("fbuild.packages.toolchain")
+        importlib.reload(toolchain_module)
+
         with tempfile.TemporaryDirectory() as temp_dir:
             cache = Cache(Path(temp_dir))
-            toolchain = ToolchainAVR(cache)
+            toolchain = toolchain_module.ToolchainAVR(cache)
 
-            with pytest.raises(ToolchainError, match="not initialized"):
+            with pytest.raises(toolchain_module.ToolchainError, match="not initialized"):
                 toolchain.get_tool_path("avr-gcc")
 
     def test_get_tool_path_success(self):
@@ -190,9 +208,15 @@ class TestToolchain:
 
     def test_get_tool_path_not_found(self):
         """Test error when tool doesn't exist."""
+        # Import at function level to get current class after any module reloads
+        import importlib
+
+        toolchain_module = importlib.import_module("fbuild.packages.toolchain")
+        importlib.reload(toolchain_module)
+
         with tempfile.TemporaryDirectory() as temp_dir:
             cache = Cache(Path(temp_dir))
-            toolchain = ToolchainAVR(cache)
+            toolchain = toolchain_module.ToolchainAVR(cache)
 
             toolchain_path = Path(temp_dir) / "toolchain"
             bin_dir = toolchain_path / "bin"
@@ -200,7 +224,7 @@ class TestToolchain:
 
             toolchain._toolchain_path = toolchain_path
 
-            with pytest.raises(ToolchainError, match="Tool not found"):
+            with pytest.raises(toolchain_module.ToolchainError, match="Tool not found"):
                 toolchain.get_tool_path("avr-gcc")
 
     def test_get_all_tools(self):

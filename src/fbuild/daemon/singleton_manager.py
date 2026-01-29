@@ -167,9 +167,18 @@ def spawn_daemon_process(launcher_pid: int) -> int:
     # Ensure environment is passed (especially FBUILD_DEV_MODE)
     env = os.environ.copy()
 
-    # Open stderr log file (keep it open for daemon to write to)
+    # Open stderr log file in APPEND mode to preserve all spawn attempts
+    # This is critical for debugging race conditions - if the first spawn crashes,
+    # we need to see its output even though a concurrent spawn may succeed.
     stderr_log = DAEMON_DIR / "daemon_spawn.log"
-    stderr_file = open(str(stderr_log), "w")
+    stderr_file = open(str(stderr_log), "a", buffering=1)  # Line buffered for real-time output
+
+    # Write timestamp header for this spawn attempt
+    stderr_file.write(f"\n{'='*70}\n")
+    stderr_file.write(f"Spawn attempt at {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
+    stderr_file.write(f"Launcher PID: {launcher_pid}\n")
+    stderr_file.write(f"{'='*70}\n")
+    stderr_file.flush()
 
     # Use safe_popen to avoid console window issues on Windows
     proc = safe_popen(
@@ -180,24 +189,38 @@ def spawn_daemon_process(launcher_pid: int) -> int:
         env=env,  # Explicitly pass environment
     )
 
+    # Log the spawned PID
+    stderr_file.write(f"Spawned daemon PID: {proc.pid}\n")
+    stderr_file.flush()
+
     # Don't close stderr_file - daemon needs it
     # It will be closed when daemon exits
 
     return proc.pid
 
 
-def wait_for_pid_file(expected_pid: int, timeout: float = 10.0) -> None:
+def wait_for_pid_file(expected_pid: int, timeout: float = 10.0) -> int:
     """
-    Wait for daemon to write PID file with expected PID.
+    Wait for daemon to write PID file.
+
+    This function accepts ANY alive daemon PID, not just the expected one.
+    This tolerates race conditions where:
+    - Expected PID crashes immediately before writing PID file
+    - Concurrent spawn succeeds with different PID
+    - Windows process creation returns PID before full initialization
 
     Args:
-        expected_pid: PID we expect to see in PID file
+        expected_pid: PID we expect to see (for logging purposes)
         timeout: Maximum seconds to wait
 
+    Returns:
+        Actual daemon PID that successfully wrote the PID file
+
     Raises:
-        TimeoutError: If PID file not written within timeout
-        ValueError: If PID file contains wrong PID
+        TimeoutError: If no daemon writes PID file within timeout
     """
+    import logging
+
     deadline = time.time() + timeout
 
     while time.time() < deadline:
@@ -206,17 +229,21 @@ def wait_for_pid_file(expected_pid: int, timeout: float = 10.0) -> None:
                 pid_str = PID_FILE.read_text().strip()
                 pid = int(pid_str.split(",")[0])  # Format: "pid,launcher_pid"
 
-                if pid == expected_pid:
-                    return  # Success
+                # Check if this daemon is alive
+                if _check_pid_alive(pid):
+                    if pid != expected_pid:
+                        logging.warning(f"Expected PID {expected_pid}, but PID {pid} started successfully " f"(concurrent spawn or immediate crash + retry). Accepting alive daemon.")
+                    return pid  # ✅ Accept any alive daemon
                 else:
-                    raise ValueError(f"PID file contains wrong PID: expected {expected_pid}, got {pid}")
+                    # PID file contains dead process - keep waiting
+                    pass
             except (ValueError, IndexError):
                 # Corrupt PID file, keep waiting
                 pass
 
         time.sleep(0.1)
 
-    raise TimeoutError(f"Daemon PID {expected_pid} did not write PID file within {timeout}s")
+    raise TimeoutError(f"No daemon wrote PID file within {timeout}s (expected PID {expected_pid})")
 
 
 def _check_pid_alive(pid: int) -> bool:
