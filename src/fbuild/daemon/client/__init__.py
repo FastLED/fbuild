@@ -16,14 +16,6 @@ from .devices_http import (
 
 # Lifecycle management
 from .lifecycle import (
-    DAEMON_DIR,
-    DAEMON_NAME,
-    PID_FILE,
-    SERIAL_MONITOR_ATTACH_REQUEST_FILE,
-    SERIAL_MONITOR_DETACH_REQUEST_FILE,
-    SERIAL_MONITOR_POLL_REQUEST_FILE,
-    SERIAL_MONITOR_RESPONSE_FILE,
-    STATUS_FILE,
     ensure_daemon_running,
     is_daemon_running,
     stop_daemon,
@@ -67,14 +59,6 @@ from .status import (
 
 __all__ = [
     # Lifecycle
-    "DAEMON_DIR",
-    "DAEMON_NAME",
-    "PID_FILE",
-    "STATUS_FILE",
-    "SERIAL_MONITOR_ATTACH_REQUEST_FILE",
-    "SERIAL_MONITOR_DETACH_REQUEST_FILE",
-    "SERIAL_MONITOR_POLL_REQUEST_FILE",
-    "SERIAL_MONITOR_RESPONSE_FILE",
     "ensure_daemon_running",
     "is_daemon_running",
     "stop_daemon",

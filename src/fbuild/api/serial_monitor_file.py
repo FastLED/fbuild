@@ -48,7 +48,6 @@ from collections.abc import Callable, Iterator
 from pathlib import Path
 from typing import Any
 
-from fbuild.daemon.client import DAEMON_DIR
 from fbuild.daemon.client.lifecycle import ensure_daemon_running
 from fbuild.daemon.messages import (
     SerialMonitorAttachRequest,
@@ -57,6 +56,7 @@ from fbuild.daemon.messages import (
     SerialMonitorResponse,
     SerialWriteRequest,
 )
+from fbuild.daemon.paths import DAEMON_DIR
 
 # Hook type: callback function that receives each line
 MonitorHook = Callable[[str], None]

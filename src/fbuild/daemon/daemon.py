@@ -28,7 +28,7 @@ import signal
 import sys
 import threading
 import time
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from logging.handlers import TimedRotatingFileHandler
 from pathlib import Path
 from typing import Any, Callable
@@ -39,13 +39,7 @@ from fbuild.daemon.daemon_context import (
     cleanup_daemon_context,
     create_daemon_context,
 )
-from fbuild.daemon.messages import (
-    DaemonState,
-    SerialMonitorAttachRequest,
-    SerialMonitorDetachRequest,
-    SerialMonitorPollRequest,
-    SerialWriteRequest,
-)
+from fbuild.daemon.messages import DaemonState
 from fbuild.daemon.paths import (
     DAEMON_DIR,
     FILE_CACHE_FILE,
@@ -55,24 +49,11 @@ from fbuild.daemon.paths import (
     STATUS_FILE,
 )
 from fbuild.daemon.process_tracker import ProcessTracker
-from fbuild.daemon.processors.serial_monitor_processor import SerialMonitorAPIProcessor
 
 # Type variable removed - no longer needed for file-based operation requests
 
 # Module-level daemon context accessor for cross-module access
 _daemon_context: DaemonContext | None = None
-
-# Additional device files not in paths module yet
-DEVICE_PREEMPT_REQUEST_FILE = DAEMON_DIR / "device_preempt_request.json"
-DEVICE_PREEMPT_RESPONSE_FILE = DAEMON_DIR / "device_preempt_response.json"
-
-# Serial Monitor API request/response files (used by fbuild.api.SerialMonitor)
-SERIAL_MONITOR_ATTACH_REQUEST_FILE = DAEMON_DIR / "serial_monitor_attach_request.json"
-SERIAL_MONITOR_DETACH_REQUEST_FILE = DAEMON_DIR / "serial_monitor_detach_request.json"
-SERIAL_MONITOR_POLL_REQUEST_FILE = DAEMON_DIR / "serial_monitor_poll_request.json"
-SERIAL_MONITOR_RESPONSE_FILE = DAEMON_DIR / "serial_monitor_response.json"
-SERIAL_WRITE_REQUEST_FILE = DAEMON_DIR / "serial_write_request.json"
-SERIAL_WRITE_RESPONSE_FILE = DAEMON_DIR / "serial_write_response.json"
 
 # Connection management file patterns
 CONNECTION_FILES_PATTERN = "connect_*.json"
@@ -106,17 +87,7 @@ def set_daemon_context(context: DaemonContext) -> None:
     _daemon_context = context
 
 
-# NOTE: RequestConfig dataclass removed - no longer needed for file-based operation requests
-
-
-@dataclass
-class DeviceRequestConfig:
-    """Configuration for a device management request."""
-
-    request_file: Path
-    response_file: Path
-    handler: Callable[[dict[str, Any], DaemonContext], dict[str, Any]]
-    lock: threading.Lock = field(default_factory=threading.Lock)
+# NOTE: All file-based request handling removed - daemon uses HTTP/WebSocket only
 
 
 @dataclass
@@ -179,59 +150,7 @@ def setup_logging(foreground: bool = False) -> None:
     logger.addHandler(file_handler)
 
 
-# NOTE: read_request_file() and clear_request_file() removed
-# Operations now use FastAPI HTTP endpoints instead of file-based requests
-
-
-def should_shutdown() -> bool:
-    """Check if daemon should shutdown.
-
-    Returns:
-        True if shutdown signal detected, False otherwise
-    """
-    # Check for shutdown signal file
-    shutdown_file = DAEMON_DIR / "shutdown.signal"
-    if shutdown_file.exists():
-        logging.info("Shutdown signal detected")
-        try:
-            shutdown_file.unlink()
-        except KeyboardInterrupt:
-            _thread.interrupt_main()
-            raise
-        except Exception as e:
-            logging.warning(f"Failed to remove shutdown signal file: {e}")
-        return True
-    return False
-
-
-def cleanup_stale_cancel_signals() -> None:
-    """Clean up stale cancel signal files (older than 5 minutes)."""
-    try:
-        signal_files = list(DAEMON_DIR.glob("cancel_*.signal"))
-        logging.debug(f"Found {len(signal_files)} cancel signal files")
-
-        cleaned_count = 0
-        for signal_file in signal_files:
-            try:
-                # Check file age
-                file_age = time.time() - signal_file.stat().st_mtime
-                if file_age > 300:  # 5 minutes
-                    logging.info(f"Cleaning up stale cancel signal: {signal_file.name} (age: {file_age:.1f}s)")
-                    signal_file.unlink()
-                    cleaned_count += 1
-            except KeyboardInterrupt:
-                _thread.interrupt_main()
-                raise
-            except Exception as e:
-                logging.warning(f"Failed to clean up {signal_file.name}: {e}")
-
-        if cleaned_count > 0:
-            logging.info(f"Cleaned up {cleaned_count} cancel signal files")
-    except KeyboardInterrupt:
-        _thread.interrupt_main()
-        raise
-    except Exception as e:
-        logging.error(f"Error during cancel signal cleanup: {e}")
+# NOTE: All file-based request/signal handling removed - daemon uses HTTP/WebSocket only
 
 
 def signal_handler(signum: int, frame: object, context: DaemonContext) -> None:
@@ -279,194 +198,8 @@ def cleanup_and_exit(context: DaemonContext) -> None:
     sys.exit(0)
 
 
-# NOTE: File-based device/lock/operation request handlers removed
-# All device management, lock management, and operations (build/deploy/monitor) now via FastAPI HTTP
-# Serial Monitor API still uses file-based IPC (see handle_serial_monitor_* functions below)
-
-
-# ============================================================================
-# Serial Monitor API File-Based IPC (still in use by fbuild.api.SerialMonitor)
-# ============================================================================
-# NOTE: These handlers are KEPT because fbuild.api.SerialMonitor still uses file-based IPC
-# TODO: Migrate SerialMonitor API to WebSockets in a future iteration
-
-# Global processor instance (reused across requests)
-_serial_monitor_processor = SerialMonitorAPIProcessor()
-
-
-def handle_serial_monitor_request(config: DeviceRequestConfig, context: DaemonContext) -> bool:
-    """Handle a serial monitor API request file if it exists.
-
-    This is a simplified version of the old handle_device_request that only handles
-    serial monitor API requests (attach, detach, poll, write).
-
-    Args:
-        config: Device request configuration
-        context: Daemon context
-
-    Returns:
-        True if a request was processed, False otherwise
-    """
-    if not config.request_file.exists():
-        return False
-
-    try:
-        with open(config.request_file) as f:
-            request_data = json.load(f)
-
-        # Clear request file immediately (atomic consumption)
-        config.request_file.unlink(missing_ok=True)
-
-        # Process request
-        response_data = config.handler(request_data, context)
-
-        # Serial monitor API uses per-client response files
-        client_id = response_data.pop("_client_id", None)
-        if client_id:
-            response_file = config.response_file.parent / f"{config.response_file.stem}_{client_id}.json"
-        else:
-            response_file = config.response_file
-
-        # Write response atomically
-        temp_file = response_file.with_suffix(".tmp")
-        with open(temp_file, "w") as f:
-            json.dump(response_data, f, indent=2)
-        temp_file.replace(response_file)
-
-        return True
-
-    except json.JSONDecodeError as e:
-        logging.error(f"Invalid JSON in request file {config.request_file}: {e}")
-        config.request_file.unlink(missing_ok=True)
-        return False
-    except KeyboardInterrupt:
-        _thread.interrupt_main()
-        raise
-    except Exception as e:
-        logging.error(f"Error handling serial monitor request {config.request_file}: {e}")
-        try:
-            with open(config.response_file, "w") as f:
-                json.dump({"success": False, "message": str(e)}, f)
-        except KeyboardInterrupt:
-            _thread.interrupt_main()
-            raise
-        except Exception:
-            pass
-        return False
-
-
-def handle_serial_monitor_attach_request(request_data: dict[str, Any], context: DaemonContext) -> dict[str, Any]:
-    """Handle Serial Monitor API attach request.
-
-    Args:
-        request_data: Raw request dictionary
-        context: Daemon context
-
-    Returns:
-        Response dictionary (includes client_id for response file routing)
-    """
-    try:
-        request = SerialMonitorAttachRequest.from_dict(request_data)
-        response = _serial_monitor_processor.handle_attach(request, context)
-        response_dict = response.to_dict()
-        # Include client_id in response for per-client file routing
-        response_dict["_client_id"] = request.client_id
-        return response_dict
-    except KeyboardInterrupt:
-        raise
-    except Exception as e:
-        logging.error(f"Error handling serial monitor attach: {e}", exc_info=True)
-        from fbuild.daemon.messages import SerialMonitorResponse
-
-        response_dict = SerialMonitorResponse(success=False, message=f"Error: {e}").to_dict()
-        # Try to include client_id if available
-        if "client_id" in request_data:
-            response_dict["_client_id"] = request_data["client_id"]
-        return response_dict
-
-
-def handle_serial_monitor_detach_request(request_data: dict[str, Any], context: DaemonContext) -> dict[str, Any]:
-    """Handle Serial Monitor API detach request.
-
-    Args:
-        request_data: Raw request dictionary
-        context: Daemon context
-
-    Returns:
-        Response dictionary (includes client_id for response file routing)
-    """
-    try:
-        request = SerialMonitorDetachRequest.from_dict(request_data)
-        response = _serial_monitor_processor.handle_detach(request, context)
-        response_dict = response.to_dict()
-        response_dict["_client_id"] = request.client_id
-        return response_dict
-    except KeyboardInterrupt:
-        raise
-    except Exception as e:
-        logging.error(f"Error handling serial monitor detach: {e}", exc_info=True)
-        from fbuild.daemon.messages import SerialMonitorResponse
-
-        response_dict = SerialMonitorResponse(success=False, message=f"Error: {e}").to_dict()
-        if "client_id" in request_data:
-            response_dict["_client_id"] = request_data["client_id"]
-        return response_dict
-
-
-def handle_serial_monitor_poll_request(request_data: dict[str, Any], context: DaemonContext) -> dict[str, Any]:
-    """Handle Serial Monitor API poll request.
-
-    Args:
-        request_data: Raw request dictionary
-        context: Daemon context
-
-    Returns:
-        Response dictionary (includes client_id for response file routing)
-    """
-    try:
-        request = SerialMonitorPollRequest.from_dict(request_data)
-        response = _serial_monitor_processor.handle_poll(request, context)
-        response_dict = response.to_dict()
-        response_dict["_client_id"] = request.client_id
-        return response_dict
-    except KeyboardInterrupt:
-        raise
-    except Exception as e:
-        logging.debug(f"Error handling serial monitor poll: {e}")  # Debug level to avoid spam
-        from fbuild.daemon.messages import SerialMonitorResponse
-
-        response_dict = SerialMonitorResponse(success=False, message=f"Error: {e}").to_dict()
-        if "client_id" in request_data:
-            response_dict["_client_id"] = request_data["client_id"]
-        return response_dict
-
-
-def handle_serial_write_request(request_data: dict[str, Any], context: DaemonContext) -> dict[str, Any]:
-    """Handle Serial Write request (used by both CLI and API).
-
-    Args:
-        request_data: Raw request dictionary
-        context: Daemon context
-
-    Returns:
-        Response dictionary (includes client_id for response file routing)
-    """
-    try:
-        request = SerialWriteRequest.from_dict(request_data)
-        response = _serial_monitor_processor.handle_write(request, context)
-        response_dict = response.to_dict()
-        response_dict["_client_id"] = request.client_id
-        return response_dict
-    except KeyboardInterrupt:
-        raise
-    except Exception as e:
-        logging.error(f"Error handling serial write: {e}", exc_info=True)
-        from fbuild.daemon.messages import SerialMonitorResponse
-
-        response_dict = SerialMonitorResponse(success=False, message=f"Error: {e}").to_dict()
-        if "client_id" in request_data:
-            response_dict["_client_id"] = request_data["client_id"]
-        return response_dict
+# NOTE: All file-based handlers removed - daemon uses HTTP/WebSocket only
+# Serial Monitor API uses WebSocket endpoint: /ws/serial-monitor
 
 
 def process_connection_files(registry: ConnectionRegistry, daemon_dir: Path) -> None:
@@ -664,16 +397,8 @@ def run_daemon_loop() -> None:
     signal.signal(signal.SIGTERM, signal_handler_wrapper)
     signal.signal(signal.SIGINT, signal_handler_wrapper)
 
-    # NOTE: Operation requests (build, deploy, monitor) are now handled via FastAPI HTTP endpoints
-    # File-based request processing has been removed in favor of HTTP/WebSocket communication
-
-    # Serial Monitor API still uses file-based IPC (used by fbuild.api.SerialMonitor)
-    serial_monitor_requests = [
-        DeviceRequestConfig(SERIAL_MONITOR_ATTACH_REQUEST_FILE, SERIAL_MONITOR_RESPONSE_FILE, handle_serial_monitor_attach_request),
-        DeviceRequestConfig(SERIAL_MONITOR_DETACH_REQUEST_FILE, SERIAL_MONITOR_RESPONSE_FILE, handle_serial_monitor_detach_request),
-        DeviceRequestConfig(SERIAL_MONITOR_POLL_REQUEST_FILE, SERIAL_MONITOR_RESPONSE_FILE, handle_serial_monitor_poll_request),
-        DeviceRequestConfig(SERIAL_WRITE_REQUEST_FILE, SERIAL_WRITE_RESPONSE_FILE, handle_serial_write_request),
-    ]
+    # NOTE: All operations handled via FastAPI HTTP/WebSocket endpoints
+    # No file-based request processing
 
     logging.info(f"Daemon started with PID {daemon_pid}")
     context.status_manager.update_status(DaemonState.IDLE, "Daemon ready")
@@ -686,9 +411,6 @@ def run_daemon_loop() -> None:
         orphaned_clients = process_tracker.cleanup_orphaned_processes()
         if orphaned_clients:
             logging.info(f"Cleaned up orphaned processes for {len(orphaned_clients)} dead clients: {orphaned_clients}")
-
-    def cleanup_cancel_signals() -> None:
-        cleanup_stale_cancel_signals()
 
     def cleanup_dead_clients() -> None:
         dead_clients = context.client_manager.cleanup_dead_clients()
@@ -713,7 +435,6 @@ def run_daemon_loop() -> None:
     # Configure periodic tasks
     periodic_tasks = [
         PeriodicTask("orphan_cleanup", ORPHAN_CHECK_INTERVAL, cleanup_orphans),
-        PeriodicTask("cancel_signal_cleanup", 60, cleanup_cancel_signals),
         PeriodicTask("dead_client_cleanup", DEAD_CLIENT_CHECK_INTERVAL, cleanup_dead_clients),
         PeriodicTask("stale_lock_cleanup", STALE_LOCK_CHECK_INTERVAL, cleanup_stale_locks),
         PeriodicTask("connection_processing", 2, process_connections),
@@ -727,11 +448,6 @@ def run_daemon_loop() -> None:
             iteration_count += 1
             if iteration_count % 100 == 0:  # Log every 100 iterations to avoid spam
                 logging.debug(f"Daemon main loop iteration {iteration_count}")
-
-            # Check for shutdown signal
-            if should_shutdown():
-                logging.info("Shutdown requested via signal")
-                cleanup_and_exit(context)
 
             # Check idle timeout
             idle_time = time.time() - last_activity
@@ -760,34 +476,7 @@ def run_daemon_loop() -> None:
                 if task.should_run():
                     task.run()
 
-            # Check for manual stale lock clear signal
-            clear_locks_signal = DAEMON_DIR / "clear_stale_locks.signal"
-            if clear_locks_signal.exists():
-                try:
-                    clear_locks_signal.unlink()
-                    logging.info("Received manual clear stale locks signal")
-                    stale_locks = context.lock_manager.get_stale_locks()
-                    stale_count = len(stale_locks.stale_port_locks) + len(stale_locks.stale_project_locks)
-                    if stale_count > 0:
-                        logging.warning(f"Manually clearing {stale_count} stale locks...")
-                        released = context.lock_manager.force_release_stale_locks()
-                        logging.info(f"Force-released {released} stale locks")
-                    else:
-                        logging.info("No stale locks to clear")
-                except KeyboardInterrupt:
-                    _thread.interrupt_main()
-                    raise
-                except Exception as e:
-                    logging.error(f"Error handling clear locks signal: {e}", exc_info=True)
-
-            # NOTE: File-based request processing removed - all operations now via FastAPI HTTP
-            # Operations (build, deploy, monitor) are handled by FastAPI endpoints
-            # Device/lock management is handled by FastAPI endpoints
-
-            # Process serial monitor API requests (still file-based for fbuild.api.SerialMonitor)
-            for config in serial_monitor_requests:
-                with config.lock:
-                    handle_serial_monitor_request(config, context)
+            # NOTE: All operations handled via FastAPI HTTP/WebSocket endpoints
 
             # Sleep briefly to avoid busy-wait
             time.sleep(0.5)
@@ -869,23 +558,45 @@ def main() -> int:
         print("Usage: python -m fbuild.daemon.daemon --launched-by=<PID>", file=sys.stderr)
         return 1
 
-    # Setup logging FIRST
-    setup_logging(foreground=True)  # Always foreground mode
-    logging.info(f"Daemon starting (launched by PID {launcher_pid})")
+    # Wrap early initialization in try/except to handle startup failures gracefully
+    # This prevents daemon from crashing before writing PID file
+    try:
+        # Setup logging FIRST
+        setup_logging(foreground=True)  # Always foreground mode
+        logging.info(f"Daemon starting (launched by PID {launcher_pid})")
 
-    # Ensure daemon directory exists
-    DAEMON_DIR.mkdir(parents=True, exist_ok=True)
+        # Ensure daemon directory exists
+        DAEMON_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Write PID file with launcher info (format: "daemon_pid,launcher_pid")
-    PID_FILE.write_text(f"{os.getpid()},{launcher_pid}\n")
-    logging.info(f"PID file written: {PID_FILE}")
+        # Write PID file with launcher info (format: "daemon_pid,launcher_pid")
+        PID_FILE.write_text(f"{os.getpid()},{launcher_pid}\n")
+        logging.info(f"PID file written: {PID_FILE}")
 
-    # Register cleanup handlers for graceful PID file removal
-    # This ensures PID file is cleaned up on SIGTERM, SIGINT, and normal exit
-    signal.signal(signal.SIGTERM, cleanup_pid_file)
-    signal.signal(signal.SIGINT, cleanup_pid_file)
-    atexit.register(cleanup_pid_file)
-    logging.info("Registered cleanup handlers for SIGTERM, SIGINT, and atexit")
+        # Register cleanup handlers for graceful PID file removal
+        # This ensures PID file is cleaned up on SIGTERM, SIGINT, and normal exit
+        signal.signal(signal.SIGTERM, cleanup_pid_file)
+        signal.signal(signal.SIGINT, cleanup_pid_file)
+        atexit.register(cleanup_pid_file)
+        logging.info("Registered cleanup handlers for SIGTERM, SIGINT, and atexit")
+
+    except KeyboardInterrupt:
+        raise
+    except Exception as e:
+        # Startup failed - log to stderr and exit
+        error_msg = f"Daemon startup failed: {e}"
+        print(error_msg, file=sys.stderr)
+
+        # Try to write PID file even on failure so client can detect we started
+        # This allows client to read error from daemon_spawn.log
+        try:
+            DAEMON_DIR.mkdir(parents=True, exist_ok=True)
+            PID_FILE.write_text(f"{os.getpid()},{launcher_pid}\n")
+        except KeyboardInterrupt:
+            raise
+        except Exception:
+            pass  # PID file write failed, client will timeout
+
+        return 1
 
     # Run daemon loop
     try:

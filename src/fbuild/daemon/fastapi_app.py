@@ -302,13 +302,11 @@ def register_daemon_endpoints(app: FastAPI) -> None:
                 detail="Cannot shutdown while operation is in progress",
             )
 
-        # Create shutdown signal file (legacy mechanism)
-        from fbuild.daemon.paths import DAEMON_DIR
+        # Delegate to management endpoint (uses sys.exit via delayed thread)
+        from fbuild.daemon.endpoints.management import shutdown_daemon as shutdown_impl
 
-        shutdown_file = DAEMON_DIR / "shutdown.signal"
-        shutdown_file.touch()
-
-        return {"message": "Shutdown signal sent", "status": "shutting_down"}
+        response = await shutdown_impl()
+        return response.model_dump()
 
 
 def create_app() -> FastAPI:

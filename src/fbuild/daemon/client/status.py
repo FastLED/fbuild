@@ -9,8 +9,7 @@ import time
 from typing import Any
 
 from fbuild.daemon.messages import DaemonState, DaemonStatus
-
-from .lifecycle import PID_FILE, STATUS_FILE
+from fbuild.daemon.paths import PID_FILE, STATUS_FILE
 
 # Spinner characters for progress indication
 SPINNER_CHARS = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"]

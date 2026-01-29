@@ -4,6 +4,7 @@ Daemon Management Endpoints
 Provides HTTP endpoints for daemon lifecycle management and status.
 """
 
+import logging
 import time
 
 from fastapi import APIRouter
@@ -93,10 +94,20 @@ async def shutdown_daemon() -> ShutdownResponse:
     if context is None:
         return ShutdownResponse(success=False, message="Daemon context not available")
 
-    # Create shutdown signal file (daemon main loop will detect and exit)
-    from ..paths import DAEMON_DIR
+    # Initiate clean shutdown by calling cleanup_and_exit in a background thread
+    # This allows the HTTP response to be sent before the daemon terminates
+    import sys
+    import threading
 
-    shutdown_file = DAEMON_DIR / "shutdown.signal"
-    shutdown_file.touch()
+    def delayed_shutdown():
+        """Shutdown daemon after a short delay to allow HTTP response."""
+        import time
+
+        time.sleep(0.5)  # Allow time for HTTP response to be sent
+        logging.info("HTTP shutdown request received, terminating daemon")
+        sys.exit(0)
+
+    shutdown_thread = threading.Thread(target=delayed_shutdown, daemon=True)
+    shutdown_thread.start()
 
     return ShutdownResponse(success=True, message="Shutdown initiated")

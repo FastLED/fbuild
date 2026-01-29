@@ -16,35 +16,9 @@ from fbuild.daemon.client.http_utils import (
     http_client,
     is_daemon_http_available,
 )
-from fbuild.daemon.paths import (
-    BUILD_REQUEST_FILE,
-    DAEMON_DIR,
-    DAEMON_NAME,
-    DEPLOY_REQUEST_FILE,
-    INSTALL_DEPS_REQUEST_FILE,
-    MONITOR_REQUEST_FILE,
-    PID_FILE,
-    SERIAL_MONITOR_ATTACH_REQUEST_FILE,
-    SERIAL_MONITOR_DETACH_REQUEST_FILE,
-    SERIAL_MONITOR_POLL_REQUEST_FILE,
-    SERIAL_MONITOR_RESPONSE_FILE,
-    STATUS_FILE,
-)
+from fbuild.daemon.paths import DAEMON_DIR
 
-# Re-export for backward compatibility
 __all__ = [
-    "DAEMON_DIR",
-    "DAEMON_NAME",
-    "PID_FILE",
-    "STATUS_FILE",
-    "BUILD_REQUEST_FILE",
-    "DEPLOY_REQUEST_FILE",
-    "MONITOR_REQUEST_FILE",
-    "INSTALL_DEPS_REQUEST_FILE",
-    "SERIAL_MONITOR_ATTACH_REQUEST_FILE",
-    "SERIAL_MONITOR_DETACH_REQUEST_FILE",
-    "SERIAL_MONITOR_POLL_REQUEST_FILE",
-    "SERIAL_MONITOR_RESPONSE_FILE",
     "is_daemon_running",
     "ensure_daemon_running",
     "stop_daemon",
@@ -126,18 +100,12 @@ def stop_daemon() -> bool:
                 return False
             else:
                 print(f"⚠️  Shutdown request returned status {response.status_code}")
-                # Fall back to signal file for backward compatibility
-                shutdown_file = DAEMON_DIR / "shutdown.signal"
-                shutdown_file.touch()
-                print("Stopping daemon (fallback signal)...")
+                return False
     except KeyboardInterrupt:
         raise
     except Exception as e:
         print(f"⚠️  HTTP shutdown failed: {e}")
-        # Fall back to signal file
-        shutdown_file = DAEMON_DIR / "shutdown.signal"
-        shutdown_file.touch()
-        print("Stopping daemon (fallback signal)...")
+        return False
 
     # Wait for daemon to exit (check HTTP availability)
     for _ in range(10):

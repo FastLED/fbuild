@@ -773,7 +773,7 @@ class DeployRequestProcessor(RequestProcessor):
         try:
             import json
 
-            from fbuild.daemon.client import DAEMON_DIR
+            from fbuild.daemon.paths import DAEMON_DIR
 
             # STEP 1: Force-close any active serial monitor sessions on this port
             # This is critical to release the pyserial handle before esptool attempts upload
@@ -815,7 +815,7 @@ class DeployRequestProcessor(RequestProcessor):
             context: Daemon context
         """
         try:
-            from fbuild.daemon.client import DAEMON_DIR
+            from fbuild.daemon.paths import DAEMON_DIR
 
             preempt_file = DAEMON_DIR / f"serial_monitor_preempt_{port}.json"
             if preempt_file.exists():

@@ -10,7 +10,7 @@ from typing import Any
 
 import psutil
 
-from .lifecycle import DAEMON_DIR, PID_FILE
+from fbuild.daemon.paths import DAEMON_DIR, PID_FILE
 
 
 def list_all_daemons() -> list[dict[str, Any]]:
