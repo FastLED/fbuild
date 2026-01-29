@@ -16,45 +16,45 @@ class TestToolchain:
 
     def test_detect_platform_windows(self):
         """Test platform detection for Windows."""
-        with patch("platform.system", return_value="Windows"):
-            with patch("platform.machine", return_value="AMD64"):
+        with patch("fbuild.packages.platform_utils.platform.system", return_value="Windows"):
+            with patch("fbuild.packages.platform_utils.platform.machine", return_value="AMD64"):
                 plat, arch = ToolchainAVR.detect_platform()
                 assert plat == "windows"
                 assert arch == "x86_64"
 
     def test_detect_platform_linux_x86_64(self):
         """Test platform detection for Linux x86_64."""
-        with patch("platform.system", return_value="Linux"):
-            with patch("platform.machine", return_value="x86_64"):
+        with patch("fbuild.packages.platform_utils.platform.system", return_value="Linux"):
+            with patch("fbuild.packages.platform_utils.platform.machine", return_value="x86_64"):
                 plat, arch = ToolchainAVR.detect_platform()
                 assert plat == "linux"
                 assert arch == "x86_64"
 
     def test_detect_platform_linux_arm(self):
         """Test platform detection for Linux ARM."""
-        with patch("platform.system", return_value="Linux"):
-            with patch("platform.machine", return_value="aarch64"):
+        with patch("fbuild.packages.platform_utils.platform.system", return_value="Linux"):
+            with patch("fbuild.packages.platform_utils.platform.machine", return_value="aarch64"):
                 plat, arch = ToolchainAVR.detect_platform()
                 assert plat == "linux"
                 assert arch == "aarch64"
 
     def test_detect_platform_macos(self):
         """Test platform detection for macOS."""
-        with patch("platform.system", return_value="Darwin"):
-            with patch("platform.machine", return_value="x86_64"):
+        with patch("fbuild.packages.platform_utils.platform.system", return_value="Darwin"):
+            with patch("fbuild.packages.platform_utils.platform.machine", return_value="x86_64"):
                 plat, arch = ToolchainAVR.detect_platform()
                 assert plat == "darwin"
                 assert arch == "x86_64"
 
     def test_detect_platform_unsupported(self):
         """Test error on unsupported platform."""
-        with patch("platform.system", return_value="UnknownOS"):
+        with patch("fbuild.packages.platform_utils.platform.system", return_value="UnknownOS"):
             with pytest.raises(ToolchainError, match="Unsupported platform"):
                 ToolchainAVR.detect_platform()
 
     def test_get_package_info_windows(self):
         """Test getting package info for Windows."""
-        with patch.object(ToolchainAVR, "detect_platform", return_value=("windows", "x86_64")):
+        with patch("fbuild.packages.platform_utils.PlatformDetector.detect_avr_platform", return_value=("windows", "x86_64")):
             with tempfile.TemporaryDirectory() as temp_dir:
                 cache = Cache(Path(temp_dir))
                 toolchain = ToolchainAVR(cache)
@@ -66,7 +66,7 @@ class TestToolchain:
 
     def test_get_package_info_linux(self):
         """Test getting package info for Linux."""
-        with patch.object(ToolchainAVR, "detect_platform", return_value=("linux", "x86_64")):
+        with patch("fbuild.packages.platform_utils.PlatformDetector.detect_avr_platform", return_value=("linux", "x86_64")):
             with tempfile.TemporaryDirectory() as temp_dir:
                 cache = Cache(Path(temp_dir))
                 toolchain = ToolchainAVR(cache)
@@ -78,7 +78,7 @@ class TestToolchain:
 
     def test_get_package_info_macos(self):
         """Test getting package info for macOS."""
-        with patch.object(ToolchainAVR, "detect_platform", return_value=("darwin", "x86_64")):
+        with patch("fbuild.packages.platform_utils.PlatformDetector.detect_avr_platform", return_value=("darwin", "x86_64")):
             with tempfile.TemporaryDirectory() as temp_dir:
                 cache = Cache(Path(temp_dir))
                 toolchain = ToolchainAVR(cache)
@@ -90,7 +90,7 @@ class TestToolchain:
 
     def test_get_package_info_unsupported_platform(self):
         """Test error for unsupported platform."""
-        with patch.object(ToolchainAVR, "detect_platform", return_value=("freebsd", "x86_64")):
+        with patch("fbuild.packages.platform_utils.PlatformDetector.detect_avr_platform", return_value=("freebsd", "x86_64")):
             with tempfile.TemporaryDirectory() as temp_dir:
                 cache = Cache(Path(temp_dir))
                 toolchain = ToolchainAVR(cache)

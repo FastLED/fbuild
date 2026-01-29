@@ -3,11 +3,10 @@
 Tests the fbuild.api.SerialMonitor class and related message types.
 """
 
+import asyncio
 import json
-import tempfile
 import time
-from pathlib import Path
-from unittest.mock import Mock, patch
+from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
 
@@ -133,32 +132,32 @@ class TestSerialMonitorMessages:
 class TestSerialMonitorAPI:
     """Test SerialMonitor API class."""
 
-    @pytest.fixture
-    def temp_daemon_dir(self):
-        """Create temporary daemon directory for testing."""
-        with tempfile.TemporaryDirectory() as tmpdir:
-            daemon_dir = Path(tmpdir) / "daemon"
-            daemon_dir.mkdir()
-
-            # Patch DAEMON_DIR to use temp directory
-            with patch("fbuild.api.serial_monitor.DAEMON_DIR", daemon_dir):
-                yield daemon_dir
-
-    @pytest.mark.skip(reason="File-based API deprecated - now uses WebSocket")
     def test_serial_monitor_initialization(self):
-        """Test SerialMonitor __init__."""
+        """Test SerialMonitor __init__ with WebSocket fields."""
         from fbuild.api import SerialMonitor
 
         mon = SerialMonitor(port="COM13", baud_rate=115200)
 
+        # Basic fields (unchanged)
         assert mon.port == "COM13"
         assert mon.baud_rate == 115200
         assert mon.hooks == []
         assert mon.auto_reconnect is True
         assert mon.verbose is False
+
+        # WebSocket fields (not initialized until attach)
+        assert mon._ws is None
+        assert mon._event_loop is None
+        assert mon._receiver_task is None
+
+        # Queues initialized
+        assert isinstance(mon._line_queue, asyncio.Queue)
+        assert isinstance(mon._error_queue, asyncio.Queue)
+
+        # Client ID and state
         assert mon.client_id.startswith("serial_monitor_")
         assert mon._attached is False
-        assert mon._last_index == 0
+        assert mon.last_line == ""
 
     def test_serial_monitor_with_hooks(self):
         """Test SerialMonitor with custom hooks."""
@@ -172,85 +171,231 @@ class TestSerialMonitorAPI:
         assert mon.hooks[0] is hook1
         assert mon.hooks[1] is hook2
 
-    @pytest.mark.skip(reason="File-based API deprecated - now uses WebSocket")
-    def test_write_request_file_atomic(self, temp_daemon_dir):
-        """Test _write_request_file uses atomic write."""
+    @patch("fbuild.api.serial_monitor.websockets.connect")
+    @patch("fbuild.api.serial_monitor.ensure_daemon_running")
+    @patch("fbuild.api.serial_monitor.get_daemon_port", return_value=8765)
+    def test_websocket_attach_message(self, mock_port, mock_ensure, mock_connect):
+        """Test that attach sends properly formatted WebSocket message."""
         from fbuild.api import SerialMonitor
 
-        mon = SerialMonitor(port="COM13")
+        # Track messages sent
+        sent_messages = []
 
-        request = SerialMonitorAttachRequest(
-            client_id=mon.client_id,
-            port="COM13",
-            baud_rate=115200,
-        )
+        async def capture_send(data):
+            sent_messages.append(json.loads(data))
 
-        request_file = temp_daemon_dir / "test_request.json"
+        # Mock recv: return attached, then timeout (so _detach() doesn't hang)
+        recv_count = 0
 
-        # Write request
-        mon._write_request_file(request_file, request)
+        async def mock_recv_impl():
+            nonlocal recv_count
+            recv_count += 1
+            if recv_count == 1:
+                # Attach response
+                return json.dumps({"type": "attached", "success": True, "message": "Attached"})
+            # All subsequent recv() calls timeout (simulates no more messages)
+            await asyncio.sleep(10)  # Never returns
 
-        # Verify file exists and contains correct data
-        assert request_file.exists()
+        mock_ws = AsyncMock()
+        mock_ws.send = capture_send
+        mock_ws.recv = mock_recv_impl
+        mock_ws.close = AsyncMock()
 
-        with open(request_file) as f:
-            data = json.load(f)
+        # Make connect() return a coroutine that resolves to mock_ws
+        async def mock_connect_coro(url):
+            return mock_ws
 
-        assert data["client_id"] == mon.client_id
-        assert data["port"] == "COM13"
+        mock_connect.side_effect = mock_connect_coro
 
-    @pytest.mark.skip(reason="File-based API deprecated - now uses WebSocket")
-    def test_check_preemption_file_exists(self, temp_daemon_dir):
-        """Test _check_preemption detects preemption file."""
+        # Test attach
+        mon = SerialMonitor(port="COM13", baud_rate=115200)
+        mon._attach()
+
+        # Give receiver task time to start
+        time.sleep(0.1)
+
+        # Verify message format
+        assert len(sent_messages) >= 1
+        msg = sent_messages[0]
+        assert msg["type"] == "attach"
+        assert msg["client_id"] == mon.client_id
+        assert msg["port"] == "COM13"
+        assert msg["baud_rate"] == 115200
+        assert msg["open_if_needed"] is True
+
+        # Detach will timeout waiting for response (caught and logged)
+        mon._detach()
+
+    @patch("fbuild.api.serial_monitor.websockets.connect")
+    @patch("fbuild.api.serial_monitor.ensure_daemon_running")
+    @patch("fbuild.api.serial_monitor.get_daemon_port", return_value=8765)
+    def test_preemption_message_handling(self, mock_port, mock_ensure, mock_connect):
+        """Test preemption message handling with auto_reconnect=False."""
+        from fbuild.api import SerialMonitor
+        from fbuild.api.serial_monitor import MonitorPreemptedException
+
+        # Message sequence: attached → preempted → timeout
+        messages = [
+            json.dumps({"type": "attached", "success": True, "message": "Attached"}),
+            json.dumps({"type": "preempted", "preempted_by": "deploy_123", "reason": "deploy"}),
+        ]
+        msg_index = 0
+
+        async def mock_recv():
+            nonlocal msg_index
+            if msg_index < len(messages):
+                result = messages[msg_index]
+                msg_index += 1
+                return result
+            # Subsequent recv() calls timeout
+            await asyncio.sleep(10)
+
+        mock_ws = AsyncMock()
+        mock_ws.recv = mock_recv
+        mock_ws.send = AsyncMock()
+        mock_ws.close = AsyncMock()
+
+        # Make connect() return a coroutine that resolves to mock_ws
+        async def mock_connect_coro(url):
+            return mock_ws
+
+        mock_connect.side_effect = mock_connect_coro
+
+        # Test with auto_reconnect=False (should raise exception)
+        mon = SerialMonitor(port="COM13", auto_reconnect=False)
+        mon._attach()
+        time.sleep(0.3)  # Let receiver process preemption
+
+        # Should raise MonitorPreemptedException
+        with pytest.raises(MonitorPreemptedException) as exc_info:
+            for _ in mon.read_lines(timeout=1.0):
+                pass
+
+        assert exc_info.value.port == "COM13"
+        assert exc_info.value.preempted_by == "deploy_123"
+
+        # Detach will timeout waiting for response
+        mon._detach()
+
+    @patch("fbuild.api.serial_monitor.OPERATION_TIMEOUT", 0.5)
+    @patch("fbuild.api.serial_monitor.websockets.connect")
+    @patch("fbuild.api.serial_monitor.ensure_daemon_running")
+    @patch("fbuild.api.serial_monitor.get_daemon_port", return_value=8765)
+    def test_websocket_attach_timeout(self, m_port, m_ensure, m_connect):
+        """Test attach timeout when daemon doesn't respond."""
         from fbuild.api import SerialMonitor
 
+        # Mock WebSocket that never responds (times out)
+        async def mock_recv_timeout():
+            await asyncio.sleep(100)  # Never returns
+
+        mock_ws = AsyncMock()
+        mock_ws.recv = mock_recv_timeout
+        mock_ws.send = AsyncMock()
+        mock_ws.close = AsyncMock()
+
+        # Make connect() return a coroutine that resolves to mock_ws
+        async def mock_connect_coro(url):
+            return mock_ws
+
+        m_connect.side_effect = mock_connect_coro
+
+        # Attach should timeout
         mon = SerialMonitor(port="COM13")
+        with pytest.raises(RuntimeError) as exc_info:
+            mon._attach()
 
-        # No preemption initially
-        assert mon._check_preemption() is False
+        # Check error message contains timeout or failed to attach
+        error_msg = str(exc_info.value).lower()
+        assert "failed to attach" in error_msg or "timeout" in error_msg or "timed out" in error_msg
+        assert mon._attached is False
 
-        # Create preemption file
-        preempt_file = temp_daemon_dir / "serial_monitor_preempt_COM13.json"
-        with open(preempt_file, "w") as f:
-            json.dump({"port": "COM13", "preempted_at": time.time()}, f)
-
-        # Should detect preemption
-        assert mon._check_preemption() is True
-
-    @pytest.mark.skip(reason="File-based API deprecated - now uses WebSocket")
-    def test_wait_for_response_timeout(self, temp_daemon_dir):
-        """Test _wait_for_response handles timeout."""
+    @patch("fbuild.api.serial_monitor.websockets.connect")
+    @patch("fbuild.api.serial_monitor.ensure_daemon_running")
+    @patch("fbuild.api.serial_monitor.get_daemon_port", return_value=8765)
+    def test_websocket_attach_success(self, mock_port, mock_ensure, mock_connect):
+        """Test successful attach via WebSocket."""
         from fbuild.api import SerialMonitor
 
-        mon = SerialMonitor(port="COM13")
+        recv_count = 0
 
-        # No response file exists - should timeout
-        response = mon._wait_for_response(timeout=0.5)
-        assert response is None
+        async def mock_recv_impl():
+            nonlocal recv_count
+            recv_count += 1
+            if recv_count == 1:
+                # Attach response
+                return json.dumps({"type": "attached", "success": True, "message": "Attached to COM13"})
+            # Subsequent recv() calls timeout
+            await asyncio.sleep(10)
 
-    @pytest.mark.skip(reason="File-based API deprecated - now uses WebSocket")
-    def test_wait_for_response_success(self, temp_daemon_dir):
-        """Test _wait_for_response reads response file."""
+        # Mock successful response
+        mock_ws = AsyncMock()
+        mock_ws.recv = mock_recv_impl
+        mock_ws.send = AsyncMock()
+        mock_ws.close = AsyncMock()
+
+        # Make connect() return a coroutine that resolves to mock_ws
+        async def mock_connect_coro(url):
+            return mock_ws
+
+        mock_connect.side_effect = mock_connect_coro
+
+        # Test successful attach
+        mon = SerialMonitor(port="COM13", baud_rate=115200)
+        mon._attach()
+
+        # Give receiver task time to start
+        time.sleep(0.1)
+
+        # Verify state after attach
+        assert mon._attached is True
+        assert mon._ws is mock_ws
+        assert mon._event_loop is not None
+        assert mon._receiver_task is not None
+
+        # Verify message was sent
+        mock_ws.send.assert_called_once()
+
+        # Detach will timeout waiting for response
+        mon._detach()
+
+    @patch("fbuild.api.serial_monitor.websockets.connect")
+    @patch("fbuild.api.serial_monitor.ensure_daemon_running")
+    @patch("fbuild.api.serial_monitor.get_daemon_port", return_value=8765)
+    def test_context_manager_protocol(self, mock_port, mock_ensure, mock_connect):
+        """Test context manager calls attach/detach correctly."""
         from fbuild.api import SerialMonitor
 
-        mon = SerialMonitor(port="COM13")
+        recv_count = 0
 
-        # Create response file with per-client naming scheme
-        response_data = SerialMonitorResponse(success=True, message="Attached").to_dict()
+        async def mock_recv_impl():
+            nonlocal recv_count
+            recv_count += 1
+            if recv_count == 1:
+                # Attach response
+                return json.dumps({"type": "attached", "success": True, "message": "OK"})
+            # Subsequent recv() calls timeout
+            await asyncio.sleep(10)
 
-        # Response file must match the per-client naming pattern used by SerialMonitor
-        response_file = temp_daemon_dir / f"serial_monitor_response_{mon.client_id}.json"
-        with open(response_file, "w") as f:
-            json.dump(response_data, f)
+        mock_ws = AsyncMock()
+        mock_ws.recv = mock_recv_impl
+        mock_ws.send = AsyncMock()
+        mock_ws.close = AsyncMock()
 
-        # Should read response successfully
-        response = mon._wait_for_response(timeout=1.0)
-        assert response is not None
-        assert response.success is True
-        assert response.message == "Attached"
+        # Make connect() return a coroutine that resolves to mock_ws
+        async def mock_connect_coro(url):
+            return mock_ws
 
-        # Response file should be deleted after reading
-        assert not response_file.exists()
+        mock_connect.side_effect = mock_connect_coro
+
+        # Use context manager
+        with SerialMonitor(port="COM13") as mon:
+            time.sleep(0.1)  # Let receiver task start
+            assert mon._attached is True
+
+        # Should detach on exit
+        assert mon._attached is False
+        mock_ws.close.assert_called()
 
     def test_monitor_hook_error(self):
         """Test MonitorHookError exception."""
