@@ -229,8 +229,7 @@ class FrameworkESP32(IFramework):
             exclude_patterns = [
                 "newlib/platform_include",  # Uses #include_next which breaks trampolines
                 "newlib\\platform_include",  # Windows path variant
-                "/bt/",  # Bluetooth SDK uses relative paths between bt/include and bt/controller
-                "\\bt\\",  # Windows path variant
+                # NOTE: /bt/ exclusion removed - trampolines use absolute paths which work fine
             ]
 
             for mcu in mcu_variants:
@@ -251,11 +250,9 @@ class FrameworkESP32(IFramework):
                         platform_name="esp32",
                     )
 
-                    # Generate trampolines with exclusions
-                    trampoline_paths = trampoline_cache.generate_trampolines(include_paths, exclude_patterns=exclude_patterns)
-
-                    if self.show_progress:
-                        print(f"[trampolines] Generated {len(trampoline_paths)} trampoline directories for {mcu}")
+                    # Generate trampolines with exclusions (v3.0 unified design)
+                    trampoline_cache.generate_trampolines(include_paths, exclude_patterns=exclude_patterns)
+                    # Note: The generate_trampolines method now prints its own progress messages
 
                 except KeyboardInterrupt:
                     _thread.interrupt_main()

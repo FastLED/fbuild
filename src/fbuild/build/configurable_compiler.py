@@ -305,19 +305,23 @@ class ConfigurableCompiler(ICompiler):
         if self.compilation_queue is not None:
             import platform
             import _thread
+            import logging
 
             # Apply header trampoline cache on Windows when enabled (same as compilation_executor.py:149-169)
             # This resolves Windows CreateProcess 32K limit issues
             effective_includes = includes
+            logging.warning(f"[TRAMPOLINE_DEBUG] compilation_executor={self.compilation_executor}, trampoline_cache={self.compilation_executor.trampoline_cache}, is_windows={platform.system() == 'Windows'}")
             if self.compilation_executor.trampoline_cache is not None and platform.system() == "Windows":
+                logging.warning("[TRAMPOLINE_DEBUG] ENTERING trampoline generation block")
                 try:
                     exclude_patterns = [
                         "newlib/platform_include",  # Uses #include_next which breaks trampolines
                         "newlib\\platform_include",  # Windows path variant
-                        "/bt/",  # Bluetooth SDK uses relative paths between bt/include and bt/controller
-                        "\\bt\\",  # Windows path variant
+                        # NOTE: /bt/ exclusion removed - trampolines use absolute paths which work fine
                     ]
+                    logging.warning(f"[TRAMPOLINE_DEBUG] Calling generate_trampolines with {len(includes)} includes")
                     effective_includes = self.compilation_executor.trampoline_cache.generate_trampolines(includes, exclude_patterns=exclude_patterns)
+                    logging.warning(f"[TRAMPOLINE_DEBUG] After generate_trampolines, got {len(effective_includes)} effective includes")
                 except KeyboardInterrupt:
                     _thread.interrupt_main()
                     raise
@@ -328,6 +332,10 @@ class ConfigurableCompiler(ICompiler):
 
             # Convert include paths to flags
             include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in effective_includes]
+            logging.warning(f"[TRAMPOLINE_DEBUG] First include flag: {include_flags[0] if include_flags else 'EMPTY'}")
+            # Calculate total command line length
+            cmd_preview = " ".join(include_flags)
+            logging.warning(f"[TRAMPOLINE_DEBUG] Command line length: {len(cmd_preview)} chars")
             # Build command that would be executed
             cmd = self.compilation_executor._build_compile_command(compiler_path, source_path, output_path, compile_flags, include_flags)
 

@@ -108,7 +108,7 @@ class CompilationExecutor:
         # Initialize trampoline cache if enabled and on Windows
         if self.use_trampolines and platform.system() == "Windows":
             if cache is not None:
-                # New location: .fbuild/cache/trampolines/{mcu}/{hash}/
+                # Pass cache_root for metadata purposes, Windows uses ~/.fbuild/trampolines/
                 cache.ensure_directories()
                 self.trampoline_cache = HeaderTrampolineCache(
                     cache_root=cache.trampolines_dir,
@@ -118,7 +118,7 @@ class CompilationExecutor:
                     platform_name="esp32",
                 )
             else:
-                # Legacy fallback with warning
+                # Legacy fallback
                 self.trampoline_cache = HeaderTrampolineCache(show_progress=show_progress)
 
     def compile_source(self, compiler_path: Path, source_path: Path, output_path: Path, compile_flags: List[str], include_paths: List[Path]) -> Path:
@@ -156,8 +156,7 @@ class CompilationExecutor:
                 exclude_patterns = [
                     "newlib/platform_include",  # Uses #include_next which breaks trampolines
                     "newlib\\platform_include",  # Windows path variant
-                    "/bt/",  # Bluetooth SDK uses relative paths between bt/include and bt/controller
-                    "\\bt\\",  # Windows path variant
+                    # NOTE: /bt/ exclusion removed - trampolines use absolute paths which work fine
                 ]
                 effective_include_paths = self.trampoline_cache.generate_trampolines(include_paths, exclude_patterns=exclude_patterns)
             except KeyboardInterrupt:

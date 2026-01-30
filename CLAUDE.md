@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 fbuild is a PlatformIO-compatible embedded development tool providing build, deploy, and monitor functionality for Arduino/ESP32 platforms. It uses URL-based package management and a daemon for cross-process coordination.
 
-**Current Version:** v1.3.31 (update in `src/fbuild/__init__.py`, `pyproject.toml`, and this file)
+**Current Version:** v1.3.32 (update in `src/fbuild/__init__.py`, `pyproject.toml`, and this file)
 
 ## Development Commands
 
@@ -251,6 +251,36 @@ async def websocket_serial_monitor_api(websocket, context):
 ### Locking Strategy: Memory-Based Daemon Locks Only
 
 **Do NOT use file-based locks** (`fcntl`, `msvcrt`, `.lock` files). All cross-process synchronization goes through the daemon's `ResourceLockManager`. Use `threading.Lock` for in-process synchronization only.
+
+### Daemon Lifecycle Management
+
+**NEVER kill all Python processes** when working with fbuild. The daemon is shared across projects and killing it blindly will:
+- Interrupt other users' builds in progress
+- Kill Claude Code's own Python process (causing session termination)
+- Leave resources in an inconsistent state
+
+**To stop the daemon gracefully, use one of these methods:**
+
+1. **HTTP API (preferred):**
+   ```bash
+   curl -X POST http://127.0.0.1:8765/api/daemon/shutdown
+   ```
+
+2. **Kill specific daemon PID:**
+   ```bash
+   # Get daemon PID first
+   curl -s http://127.0.0.1:8765/api/daemon/info | python -c "import sys,json; print(json.load(sys.stdin)['pid'])"
+   # Then kill only that process
+   taskkill //PID <pid> //F  # Windows
+   kill <pid>                 # Linux/macOS
+   ```
+
+3. **Signal file (fallback):**
+   ```bash
+   touch ~/.fbuild/daemon/shutdown.signal
+   ```
+
+**NEVER run** commands like `pkill python`, `taskkill /IM python.exe /F`, or any command that kills all Python processes.
 
 ### Development Mode
 

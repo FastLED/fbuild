@@ -295,6 +295,7 @@ class BuildRequestProcessor(RequestProcessor):
         """
         modules_to_reload = [
             # Core utilities and packages (reload first - no dependencies)
+            "fbuild.packages.header_trampoline_cache",  # CRITICAL: Must reload trampoline cache
             "fbuild.packages.cache",
             "fbuild.packages.downloader",
             "fbuild.packages.archive_utils",
