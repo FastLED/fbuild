@@ -171,6 +171,7 @@ class SerialMonitor:
         self._event_loop: asyncio.AbstractEventLoop | None = None
         self._line_queue: asyncio.Queue[str] = asyncio.Queue()
         self._error_queue: asyncio.Queue[Exception] = asyncio.Queue()
+        self._write_ack_queue: asyncio.Queue[dict] = asyncio.Queue()  # For write acknowledgements
         self._receiver_task: asyncio.Task | None = None
 
         if self.verbose:
@@ -273,6 +274,16 @@ class SerialMonitor:
 
         async def _detach_and_close():
             try:
+                # Cancel receiver task FIRST to avoid concurrent recv() calls
+                if self._receiver_task:
+                    self._receiver_task.cancel()
+                    try:
+                        await self._receiver_task
+                    except asyncio.CancelledError:
+                        pass
+                    self._receiver_task = None
+
+                # Now we can safely send detach and receive confirmation
                 # Send detach request
                 detach_msg = {"type": "detach"}
                 await self._ws.send(json.dumps(detach_msg))  # type: ignore
@@ -296,7 +307,7 @@ class SerialMonitor:
                 if self.verbose:
                     logging.warning(f"[SerialMonitor] Error during detach: {e}")
             finally:
-                # Cancel receiver task
+                # Ensure receiver task is cancelled (in case of exceptions above)
                 if self._receiver_task:
                     self._receiver_task.cancel()
                     try:
@@ -328,6 +339,10 @@ class SerialMonitor:
                         lines = message.get("lines", [])
                         for line in lines:
                             await self._line_queue.put(line)
+
+                    elif msg_type == "write_ack":
+                        # Route write acknowledgements to write queue
+                        await self._write_ack_queue.put(message)
 
                     elif msg_type == "preempted":
                         # Handle preemption
@@ -466,9 +481,12 @@ class SerialMonitor:
             }
             await self._ws.send(json.dumps(write_msg))  # type: ignore
 
-            # Wait for write_ack
-            response_text = await asyncio.wait_for(self._ws.recv(), timeout=5.0)  # type: ignore
-            response = json.loads(response_text)
+            # Wait for write_ack via queue (receiver task routes it there)
+            # This avoids concurrent recv() calls on the WebSocket
+            try:
+                response = await asyncio.wait_for(self._write_ack_queue.get(), timeout=5.0)
+            except asyncio.TimeoutError:
+                raise RuntimeError("Write acknowledgement timeout") from None
 
             if response.get("type") != "write_ack" or not response.get("success"):
                 raise RuntimeError(f"Write failed: {response.get('message', 'Unknown error')}")
