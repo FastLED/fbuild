@@ -306,13 +306,14 @@ class SerialMonitorAPIProcessor:
         """
         manager = context.shared_serial_manager
 
-        logging.info(f"[SerialMonitor] Write request: client={request.client_id}, port={request.port}, acquire_writer={request.acquire_writer}")
+        logging.info(f"[SerialMonitor] Write: client={request.client_id}, port={request.port}, acquire_writer={request.acquire_writer}")
 
         try:
             # Decode data from base64
             import base64
 
             data = base64.b64decode(request.data)
+            logging.debug(f"[SerialMonitor] Write: decoded {len(data)} bytes from base64")
 
             # Note: SerialWriteRequest doesn't have request_id yet
             # For now, use empty string for compatibility
@@ -320,6 +321,7 @@ class SerialMonitorAPIProcessor:
 
             # Acquire writer if requested
             if request.acquire_writer:
+                logging.info(f"[SerialMonitor] Write: acquiring writer lock for {request.port}")
                 success = manager.acquire_writer(request.port, request.client_id, timeout=10.0)
                 if not success:
                     return SerialMonitorResponse(
@@ -327,10 +329,13 @@ class SerialMonitorAPIProcessor:
                         success=False,
                         message="Failed to acquire writer lock",
                     )
+                logging.info(f"[SerialMonitor] Write: acquired writer lock for {request.port}")
 
             try:
                 # Write data
+                logging.info(f"[SerialMonitor] Write: calling manager.write() for {request.port}")
                 bytes_written = manager.write(request.port, request.client_id, data)
+                logging.info(f"[SerialMonitor] Write: manager.write() returned {bytes_written}")
 
                 if bytes_written < 0:
                     return SerialMonitorResponse(

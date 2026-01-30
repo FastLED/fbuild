@@ -633,6 +633,7 @@ def create_websockets_router(get_daemon_context_dep: Callable[[], DaemonContext]
                         continue
 
                     msg_type = msg.get("type")
+                    logging.info(f"[WS_DEBUG] message_processor received: type={msg_type}")
 
                     # Check for shutdown sentinel
                     if msg_type == "_shutdown":
@@ -686,6 +687,7 @@ def create_websockets_router(get_daemon_context_dep: Callable[[], DaemonContext]
 
                     elif msg_type == "write":
                         # Handle write request
+                        logging.info(f"[WS_DEBUG] Write message received, attached={attached}, port={port}")
                         if not attached:
                             await websocket.send_json(
                                 {
@@ -704,23 +706,55 @@ def create_websockets_router(get_daemon_context_dep: Callable[[], DaemonContext]
                             acquire_writer=True,
                         )
 
-                        # Use thread pool
+                        # Use thread pool with timeout to prevent blocking forever
+                        # With serial write retry logic (3 attempts at 5s each + delays),
+                        # max time is ~18s. Use 20s to be safe.
                         loop = asyncio.get_event_loop()
-                        response = await loop.run_in_executor(
-                            None,
-                            processor.handle_write,
-                            write_request,
-                            context,
-                        )
+                        try:
+                            response = await asyncio.wait_for(
+                                loop.run_in_executor(
+                                    None,
+                                    processor.handle_write,
+                                    write_request,
+                                    context,
+                                ),
+                                timeout=20.0,  # Allow for serial write retries (3 x 5s + delays)
+                            )
+                        except asyncio.TimeoutError:
+                            # Write operation timed out - release writer and send error
+                            if context.shared_serial_manager:
+                                context.shared_serial_manager.release_writer(port or "", client_id or "")
+                            try:
+                                await websocket.send_json(
+                                    {
+                                        "type": "write_ack",
+                                        "success": False,
+                                        "bytes_written": 0,
+                                        "message": "Write operation timed out",
+                                    }
+                                )
+                            except KeyboardInterrupt:
+                                raise
+                            except Exception:
+                                # WebSocket may have been closed, ignore
+                                logging.warning("Could not send write_ack (WebSocket closed)")
+                            continue
 
-                        await websocket.send_json(
-                            {
-                                "type": "write_ack",
-                                "success": response.success,
-                                "bytes_written": response.bytes_written,
-                                "message": response.message,
-                            }
-                        )
+                        # Send write response - WebSocket may have been closed during write
+                        try:
+                            await websocket.send_json(
+                                {
+                                    "type": "write_ack",
+                                    "success": response.success,
+                                    "bytes_written": response.bytes_written,
+                                    "message": response.message,
+                                }
+                            )
+                        except KeyboardInterrupt:
+                            raise
+                        except Exception:
+                            # WebSocket may have been closed, ignore
+                            logging.warning("Could not send write_ack (WebSocket closed)")
 
                     elif msg_type == "detach":
                         # Handle detach request
@@ -820,6 +854,12 @@ def create_websockets_router(get_daemon_context_dep: Callable[[], DaemonContext]
                 except KeyboardInterrupt:
                     raise
                 except Exception as e:
+                    # Check if WebSocket is closed (ASGI error indicates closed connection)
+                    error_str = str(e)
+                    if "websocket.close" in error_str or "response already completed" in error_str:
+                        # WebSocket is closed, exit the pusher loop
+                        logging.debug("Data pusher detected WebSocket closed, exiting")
+                        break
                     logging.error(f"Error in serial monitor data pusher: {e}")
                     await asyncio.sleep(0.1)
 
@@ -848,6 +888,19 @@ def create_websockets_router(get_daemon_context_dep: Callable[[], DaemonContext]
                     raise
                 except asyncio.CancelledError:
                     pass
+
+            # Release writer lock if held (prevents stale locks on disconnect)
+            if client_id and port:
+                try:
+                    # Directly release writer through shared serial manager
+                    # This is necessary because handle_detach doesn't release the writer lock
+                    if context.shared_serial_manager:
+                        context.shared_serial_manager.release_writer(port, client_id)
+                except KeyboardInterrupt:
+                    raise
+                except Exception as e:
+                    # Ignore errors (client may not have been writer)
+                    logging.debug(f"Writer release in cleanup (may be expected): {e}")
 
             # Detach from serial session if still attached
             if client_id and port:

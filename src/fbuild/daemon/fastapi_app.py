@@ -39,6 +39,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
+from fbuild import __version__ as APP_VERSION
 from fbuild.daemon.client.http_utils import get_daemon_port
 
 if TYPE_CHECKING:
@@ -49,7 +50,6 @@ _daemon_context: DaemonContext | None = None
 
 # FastAPI app metadata
 APP_TITLE = "fbuild Daemon"
-APP_VERSION = "1.3.28"
 APP_DESCRIPTION = """
 fbuild Daemon API - Modern embedded development toolchain daemon.
 

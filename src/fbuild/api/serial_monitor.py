@@ -481,10 +481,38 @@ class SerialMonitor:
             }
             await self._ws.send(json.dumps(write_msg))  # type: ignore
 
-            # Wait for write_ack via queue (receiver task routes it there)
+            # Wait for write_ack or error via queues (receiver task routes them)
             # This avoids concurrent recv() calls on the WebSocket
+            # We need to check both queues since errors go to _error_queue
             try:
-                response = await asyncio.wait_for(self._write_ack_queue.get(), timeout=5.0)
+                # Create tasks for both queues
+                ack_task: asyncio.Task[dict] = asyncio.create_task(self._write_ack_queue.get())
+                error_task: asyncio.Task[Exception] = asyncio.create_task(self._error_queue.get())
+
+                done, pending = await asyncio.wait(
+                    [ack_task, error_task],
+                    timeout=25.0,  # Allow for serial write retries (max ~20s on server)
+                    return_when=asyncio.FIRST_COMPLETED,
+                )
+
+                # Cancel pending tasks
+                for task in pending:
+                    task.cancel()
+                    try:
+                        await task
+                    except asyncio.CancelledError:
+                        pass
+
+                if not done:
+                    raise RuntimeError("Write acknowledgement timeout") from None
+
+                # Check if error_task completed first (daemon sent an error)
+                if error_task in done:
+                    error = error_task.result()
+                    raise error
+
+                # It was a write_ack - get the response dict
+                response: dict = ack_task.result()
             except asyncio.TimeoutError:
                 raise RuntimeError("Write acknowledgement timeout") from None
 

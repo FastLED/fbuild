@@ -42,6 +42,12 @@ DEFAULT_BUFFER_SIZE = 10000
 # Serial read timeout in seconds
 SERIAL_READ_TIMEOUT = 0.1
 
+# Serial write timeout in seconds - prevents indefinite blocking on hardware flow control
+# ESP32-S3 USB CDC can block writes for extended periods during heavy output.
+# With retry logic in write(), each attempt has this timeout.
+# Total max write time = SERIAL_WRITE_TIMEOUT * max_retries + delays = ~18s
+SERIAL_WRITE_TIMEOUT = 5.0
+
 # Writer acquisition timeout default
 DEFAULT_WRITER_TIMEOUT = 10.0
 
@@ -216,6 +222,7 @@ class SharedSerialManager:
                             port,
                             baud_rate,
                             timeout=SERIAL_READ_TIMEOUT,
+                            write_timeout=SERIAL_WRITE_TIMEOUT,
                         )
 
                         # Create session
@@ -582,6 +589,7 @@ class SharedSerialManager:
         Returns:
             Number of bytes written, or -1 on error
         """
+        logging.debug(f"[SharedSerial] write() called: port={port}, client={client_id}, data_len={len(data)}")
         with self._lock:
             if port not in self._sessions or not self._sessions[port].is_open:
                 logging.warning(f"Cannot write to closed/unknown port: {port}")
@@ -599,18 +607,154 @@ class SharedSerialManager:
 
             ser = self._serial_ports[port]
 
+        # Flush input buffer before writing to prevent USB-CDC from blocking
+        # (ESP32-S3 USB-CDC can block writes if its TX buffer to host is full)
         try:
-            bytes_written = ser.write(data)
-            with self._lock:
-                if port in self._sessions:
-                    self._sessions[port].total_bytes_written += bytes_written
-            logging.debug(f"Wrote {bytes_written} bytes to {port}")
-            return bytes_written
-        except KeyboardInterrupt:  # noqa: KBI002
+            in_waiting = ser.in_waiting
+            if in_waiting > 0:
+                ser.reset_input_buffer()
+                logging.debug(f"[SharedSerial] write(): flushed {in_waiting} bytes from input buffer")
+        except KeyboardInterrupt:
             raise
         except Exception as e:
-            logging.error(f"Error writing to {port}: {e}")
-            return -1
+            logging.debug(f"[SharedSerial] write(): failed to flush input buffer: {e}")
+
+        # Set flow control signals
+        try:
+            ser.setDTR(True)
+            ser.setRTS(True)
+        except KeyboardInterrupt:
+            raise
+        except Exception:
+            pass  # Flow control not critical
+
+        # ESP32-S3 USB-CDC write strategy v5:
+        # Windows USB-CDC serial can fail writes when the device's TX buffer (to host) is full.
+        # The host driver may not accept new data until it has drained the RX buffer.
+        #
+        # Strategy v5: Use VERY short timeout with no pauses. Keep reading aggressively
+        # between each tiny write attempt. The key insight is that we need to drain
+        # faster than the device can fill the buffer.
+        chunk_timeout = 0.05  # Very short timeout - we'll drain and retry quickly
+        total_timeout = 20.0  # Allow more time for many rapid attempts
+
+        original_write_timeout = ser.write_timeout
+        total_written = 0
+        start_time = time.time()
+        attempts = 0
+        max_attempts = 200  # Many rapid attempts with short timeouts
+
+        try:
+            # Set timeout for writes
+            ser.write_timeout = chunk_timeout
+            logging.debug(f"[SharedSerial] write(): USB-CDC strategy v5 (timeout={chunk_timeout}s, max_attempts={max_attempts})")
+
+            # Initial aggressive drain - ESP32 USB-CDC can have a lot of buffered output
+            initial_drained = 0
+            drain_start = time.time()
+            try:
+                while ser.in_waiting > 0 and (time.time() - drain_start) < 1.0:
+                    n = ser.read(min(ser.in_waiting, 4096))
+                    if n:
+                        initial_drained += len(n)
+                    time.sleep(0.01)  # Brief pause to let more data arrive
+            except KeyboardInterrupt:
+                raise
+            except Exception:
+                pass
+            if initial_drained > 0:
+                logging.debug(f"[SharedSerial] write(): initial drain cleared {initial_drained} bytes")
+
+            remaining_data = data
+
+            while remaining_data and attempts < max_attempts:
+                # Check total timeout
+                elapsed = time.time() - start_time
+                if elapsed > total_timeout:
+                    logging.error(f"[SharedSerial] write(): total timeout exceeded ({elapsed:.1f}s > {total_timeout}s)")
+                    return total_written if total_written > 0 else -1
+
+                attempts += 1
+
+                try:
+                    # Drain input buffer aggressively before each write attempt
+                    drained = 0
+                    try:
+                        while ser.in_waiting > 0:
+                            n = ser.read(min(ser.in_waiting, 4096))
+                            if n:
+                                drained += len(n)
+                    except KeyboardInterrupt:
+                        raise
+                    except Exception:
+                        pass
+                    if drained > 0 and attempts <= 3:
+                        logging.debug(f"[SharedSerial] write(): attempt {attempts} - drained {drained} bytes from input buffer")
+
+                    # Try to write all data at once
+                    bytes_written = ser.write(remaining_data)
+
+                    # Log detailed info on first few attempts or when bytes are written
+                    if attempts <= 3 or bytes_written > 0:
+                        logging.debug(f"[SharedSerial] write(): attempt {attempts} - ser.write() returned {bytes_written}")
+
+                    if bytes_written is None:
+                        # pyserial can return None in some edge cases
+                        logging.warning(f"[SharedSerial] write(): attempt {attempts} - ser.write() returned None!")
+                        time.sleep(0.05)
+                        continue
+
+                    if bytes_written > 0:
+                        total_written += bytes_written
+                        remaining_data = remaining_data[bytes_written:]
+                        logging.debug(f"[SharedSerial] write(): progress {total_written}/{len(data)} bytes")
+                    elif bytes_written == 0:
+                        # Device returned 0 bytes - it's busy. Add small delay before retry
+                        time.sleep(0.05)
+
+                except KeyboardInterrupt:
+                    raise
+                except Exception as e:
+                    error_msg = str(e).lower()
+                    if "timeout" in error_msg or "timed out" in error_msg:
+                        # Log timeout on first few attempts
+                        if attempts <= 5:
+                            logging.warning(f"[SharedSerial] write(): attempt {attempts} - timeout exception: {e}")
+                        # Timeout - try recovery and retry
+                        try:
+                            # Drain input buffer (don't toggle DTR/RTS as it can reset ESP32)
+                            while ser.in_waiting > 0:
+                                ser.read(min(ser.in_waiting, 4096))
+                        except KeyboardInterrupt:
+                            raise
+                        except Exception:
+                            pass
+                        # No pause - just drain and retry immediately
+                    else:
+                        logging.error(f"[SharedSerial] write(): attempt {attempts} - non-timeout error: {e}")
+                        return total_written if total_written > 0 else -1
+
+            # Check if we succeeded
+            if remaining_data:
+                elapsed = time.time() - start_time
+                logging.warning(f"[SharedSerial] write(): FAILED - incomplete after {attempts} attempts in {elapsed:.1f}s, wrote {total_written}/{len(data)} bytes")
+                return total_written if total_written > 0 else -1
+
+            elapsed = time.time() - start_time
+            logging.info(f"[SharedSerial] write(): successfully wrote {total_written} bytes in {elapsed:.2f}s ({attempts} attempts)")
+            with self._lock:
+                if port in self._sessions:
+                    self._sessions[port].total_bytes_written += total_written
+            return total_written
+
+        finally:
+            # Restore original timeout
+            try:
+                ser.write_timeout = original_write_timeout
+            except KeyboardInterrupt:
+                raise
+            except Exception:
+                pass
 
     def read_buffer(self, port: str, client_id: str, max_lines: int = 100) -> list[str]:
         """Read recent output from the buffer.

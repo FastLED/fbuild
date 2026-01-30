@@ -455,20 +455,22 @@ def run_daemon_loop() -> None:
                 logging.info(f"Idle timeout reached ({idle_time:.1f}s / {IDLE_TIMEOUT}s), shutting down")
                 cleanup_and_exit(context)
 
-            # Self-eviction check: if daemon has 0 clients AND 0 ops for SELF_EVICTION_TIMEOUT, shutdown
+            # Self-eviction check: if daemon has 0 clients AND 0 ops AND 0 serial sessions for SELF_EVICTION_TIMEOUT, shutdown
             client_count = len(connection_registry.connections)
             operation_running = context.status_manager.get_operation_in_progress()
-            daemon_is_empty = client_count == 0 and not operation_running
+            # Also check for active serial sessions (WebSocket clients may be monitoring serial ports)
+            serial_session_count = context.shared_serial_manager.get_session_count() if context.shared_serial_manager else 0
+            daemon_is_empty = client_count == 0 and not operation_running and serial_session_count == 0
 
             if daemon_is_empty:
                 if daemon_empty_since is None:
                     daemon_empty_since = time.time()
-                    logging.debug("Daemon is now empty (0 clients, 0 ops), starting eviction timer")
+                    logging.debug("Daemon is now empty (0 clients, 0 ops, 0 serial sessions), starting eviction timer")
                 elif time.time() - daemon_empty_since >= SELF_EVICTION_TIMEOUT:
                     logging.info(f"Self-eviction triggered: daemon empty for {time.time() - daemon_empty_since:.1f}s, shutting down")
                     cleanup_and_exit(context)
             elif daemon_empty_since is not None:
-                logging.debug(f"Daemon is no longer empty (clients={client_count}, op_running={operation_running})")
+                logging.debug(f"Daemon is no longer empty (clients={client_count}, op_running={operation_running}, serial_sessions={serial_session_count})")
                 daemon_empty_since = None
 
             # Run periodic tasks
