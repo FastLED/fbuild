@@ -4,8 +4,11 @@ This module provides utilities for discovering and managing ESP-IDF SDK paths,
 including include directories and precompiled libraries.
 """
 
+import logging
 from pathlib import Path
 from typing import List
+
+logger = logging.getLogger(__name__)
 
 
 class SDKPathResolver:
@@ -184,12 +187,14 @@ class SDKPathResolver:
         add_includes_recursive(sdk_mcu_dir)
         return includes
 
-    def get_sdk_libs(self, mcu: str, flash_mode: str = "qio") -> List[Path]:
+    def get_sdk_libs(self, mcu: str, flash_mode: str = "qio", psram_mode: str = "qspi") -> List[Path]:
         """Get list of ESP-IDF precompiled libraries for a specific MCU.
 
         Args:
             mcu: MCU type (e.g., "esp32c6", "esp32s3")
             flash_mode: Flash mode (e.g., "qio", "dio") - determines flash library variant
+            psram_mode: PSRAM mode (e.g., "qspi", "opi") - determines PSRAM library variant.
+                       For boards without PSRAM, use "qspi" to get non-PSRAM SDK libraries.
 
         Returns:
             List of .a library file paths
@@ -204,16 +209,22 @@ class SDKPathResolver:
         if sdk_lib_dir.exists():
             libs.extend(sdk_lib_dir.glob("*.a"))
 
-        # Get flash mode-specific libraries (qio_qspi or dio_qspi)
+        # Get flash/psram mode-specific libraries (e.g., qio_qspi or qio_opi)
         # For ESP32-C6: Only libspi_flash.a
         # For ESP32-S3: Multiple libraries including libfreertos.a, libesp_system.a, etc.
-        flash_lib_dir = self.sdk_base_dir / resolved_mcu / f"{flash_mode}_qspi"
+        # Using qspi psram_mode for boards without PSRAM ensures we get SDK libraries
+        # that don't try to initialize PSRAM hardware (which would crash on boot).
+        flash_lib_dir = self.sdk_base_dir / resolved_mcu / f"{flash_mode}_{psram_mode}"
+        logger.info(f"SDK_LIBS: Using SDK library directory: {flash_lib_dir} (flash={flash_mode}, psram={psram_mode})")
         if flash_lib_dir.exists():
             # Collect ALL .a libraries from flash mode directory
             # ESP32-S3 has: libfreertos.a, libspi_flash.a, libesp_system.a,
             #               libesp_hw_support.a, libesp_psram.a, libbootloader_support.a
             flash_libs = list(flash_lib_dir.glob("*.a"))
             libs.extend(flash_libs)
+            logger.debug(f"SDK_LIBS: Found {len(flash_libs)} libraries in {flash_lib_dir}")
+        else:
+            logger.warning(f"SDK_LIBS: Flash/PSRAM lib directory does not exist: {flash_lib_dir}")
 
         return libs
 

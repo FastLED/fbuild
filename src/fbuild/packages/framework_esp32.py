@@ -397,18 +397,20 @@ class FrameworkESP32(IFramework):
         sdk_resolver = SDKPathResolver(self.get_sdk_dir(), self.show_progress)
         return sdk_resolver.get_sdk_includes(mcu)
 
-    def get_sdk_libs(self, mcu: str, flash_mode: str = "qio") -> List[Path]:
+    def get_sdk_libs(self, mcu: str, flash_mode: str = "qio", psram_mode: str = "qspi") -> List[Path]:
         """Get list of ESP-IDF precompiled libraries for a specific MCU.
 
         Args:
             mcu: MCU type (e.g., "esp32c6", "esp32s3")
             flash_mode: Flash mode (e.g., "qio", "dio") - determines flash library variant
+            psram_mode: PSRAM mode (e.g., "qspi", "opi") - determines PSRAM library variant.
+                       For boards without PSRAM, use "qspi" to get non-PSRAM SDK libraries.
 
         Returns:
             List of .a library file paths
         """
         sdk_resolver = SDKPathResolver(self.get_sdk_dir(), self.show_progress)
-        return sdk_resolver.get_sdk_libs(mcu, flash_mode)
+        return sdk_resolver.get_sdk_libs(mcu, flash_mode, psram_mode)
 
     def get_sdk_flags_dir(self, mcu: str) -> Path:
         """Get path to SDK flags directory for a specific MCU.

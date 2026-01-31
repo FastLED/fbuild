@@ -158,7 +158,10 @@ def signal_handler(signum: int, frame: object, context: DaemonContext) -> None:
     signal_name = "SIGTERM" if signum == signal.SIGTERM else "SIGINT"
     logging.info(f"Signal handler invoked: received {signal_name} (signal number {signum})")
 
-    if context.status_manager.get_operation_in_progress():
+    # Use context.operation_in_progress (set by request_processor) instead of status_manager
+    with context.operation_lock:
+        operation_running = context.operation_in_progress
+    if operation_running:
         logging.warning(f"Received {signal_name} during active operation. Refusing graceful shutdown.")
         print(
             f"\n⚠️  {signal_name} received during operation\n⚠️  Cannot shutdown gracefully while operation is active\n⚠️  Use 'kill -9 {os.getpid()}' to force termination\n",
@@ -457,7 +460,10 @@ def run_daemon_loop() -> None:
 
             # Self-eviction check: if daemon has 0 clients AND 0 ops AND 0 serial sessions for SELF_EVICTION_TIMEOUT, shutdown
             client_count = len(connection_registry.connections)
-            operation_running = context.status_manager.get_operation_in_progress()
+            # Use context.operation_in_progress (set by request_processor) instead of status_manager
+            # The status_manager flag was disconnected and never updated when operations started
+            with context.operation_lock:
+                operation_running = context.operation_in_progress
             # Also check for active serial sessions (WebSocket clients may be monitoring serial ports)
             serial_session_count = context.shared_serial_manager.get_session_count() if context.shared_serial_manager else 0
             daemon_is_empty = client_count == 0 and not operation_running and serial_session_count == 0
@@ -485,7 +491,10 @@ def run_daemon_loop() -> None:
 
         except KeyboardInterrupt:
             # Check if operation is in progress - refuse to exit if so
-            if context.status_manager.get_operation_in_progress():
+            # Use context.operation_in_progress (set by request_processor) instead of status_manager
+            with context.operation_lock:
+                operation_running = context.operation_in_progress
+            if operation_running:
                 logging.warning("Received KeyboardInterrupt during active operation. Refusing to exit.")
                 print(
                     f"\n⚠️  KeyboardInterrupt during operation\n⚠️  Cannot shutdown while operation is active\n⚠️  Use 'kill -9 {os.getpid()}' to force termination\n",

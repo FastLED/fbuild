@@ -296,7 +296,10 @@ def register_daemon_endpoints(app: FastAPI) -> None:
         Returns:
             Shutdown confirmation message
         """
-        if context.status_manager.get_operation_in_progress():
+        # Use context.operation_in_progress (set by request_processor) instead of status_manager
+        with context.operation_lock:
+            operation_running = context.operation_in_progress
+        if operation_running:
             raise HTTPException(
                 status_code=409,
                 detail="Cannot shutdown while operation is in progress",

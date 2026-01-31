@@ -176,7 +176,10 @@ class FlagBuilder:
             flags: Flags dictionary to update
         """
         build_config = self.board_config.get("build", {})
-        extra_flags = build_config.get("extra_flags", "")
+        # ESP32 boards: extra_flags is under build.arduino.extra_flags
+        # Other boards: extra_flags may be directly under build.extra_flags
+        arduino_config = build_config.get("arduino", {})
+        extra_flags = arduino_config.get("extra_flags", build_config.get("extra_flags", ""))
 
         if extra_flags:
             if isinstance(extra_flags, str):

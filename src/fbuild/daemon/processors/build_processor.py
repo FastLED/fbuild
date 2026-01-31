@@ -332,6 +332,7 @@ class BuildRequestProcessor(RequestProcessor):
             "fbuild.build.build_state",
             "fbuild.build.build_info_generator",
             "fbuild.build.build_utils",
+            "fbuild.build.psram_utils",
             # Orchestrators (reload third - depends on build system)
             "fbuild.build.orchestrator",
             "fbuild.build.orchestrator_avr",

@@ -22,6 +22,7 @@ from ..output import log_detail, format_size
 from .binary_generator import BinaryGenerator
 from .compiler import ILinker, LinkerError
 from ..subprocess_utils import safe_run
+from .psram_utils import get_psram_mode
 
 
 class ConfigurableLinkerError(LinkerError):
@@ -179,7 +180,8 @@ class ConfigurableLinker(ILinker):
                 # For ESP32-S3, sections.ld may be in flash mode subdirectories
                 elif self.mcu == "esp32s3" and script_name == "sections.ld":
                     flash_mode = self.board_config.get("build", {}).get("flash_mode", "qio")
-                    psram_mode = self.board_config.get("build", {}).get("psram_mode", "qspi")
+                    # Use get_psram_mode for correct handling of NO_PSRAM_BOARDS
+                    psram_mode = get_psram_mode(self.board_id, self.board_config)
                     flash_dir = sdk_ld_dir.parent / f"{flash_mode}_{psram_mode}"
                     alt_script_path = flash_dir / script_name
                     if alt_script_path.exists():
@@ -206,9 +208,11 @@ class ConfigurableLinker(ILinker):
         if hasattr(self.framework, 'get_sdk_libs'):
             # Get flash mode from board configuration
             flash_mode = self.board_config.get("build", {}).get("flash_mode", "qio")
+            # Use get_psram_mode for correct handling of NO_PSRAM_BOARDS
+            psram_mode = get_psram_mode(self.board_id, self.board_config)
 
             # Get SDK libraries
-            self._sdk_libs_cache = self.framework.get_sdk_libs(self.mcu, flash_mode)  # type: ignore[attr-defined]
+            self._sdk_libs_cache = self.framework.get_sdk_libs(self.mcu, flash_mode, psram_mode)  # type: ignore[attr-defined]
         else:
             # No SDK libraries for this framework (e.g., Teensy)
             self._sdk_libs_cache = []
@@ -301,7 +305,8 @@ class ConfigurableLinker(ILinker):
             # For ESP32-S3, also add flash mode directory to search path
             if self.mcu == "esp32s3":
                 flash_mode = self.board_config.get("build", {}).get("flash_mode", "qio")
-                psram_mode = self.board_config.get("build", {}).get("psram_mode", "qspi")
+                # Use get_psram_mode for correct handling of NO_PSRAM_BOARDS
+                psram_mode = get_psram_mode(self.board_id, self.board_config)
                 flash_dir = self.framework.get_sdk_dir() / self.mcu / f"{flash_mode}_{psram_mode}"  # type: ignore[attr-defined]
                 if flash_dir.exists():
                     cmd.append(f"-L{_path_to_string(flash_dir)}")

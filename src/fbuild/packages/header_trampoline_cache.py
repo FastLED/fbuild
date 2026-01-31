@@ -156,8 +156,8 @@ class HeaderTrampolineCache:
         except Exception:
             return True
 
-        # Force regeneration on metadata version upgrade (v3.0 for unified design)
-        if metadata.get("version", "1.0") != "3.0":
+        # Force regeneration on metadata version upgrade (v3.2 for QSPI SDK on no-PSRAM boards)
+        if metadata.get("version", "1.0") != "3.2":
             if self.show_progress:
                 print("[trampolines] Metadata version upgrade to v3.0 (unified), regenerating cache")
             return True
@@ -385,7 +385,7 @@ class HeaderTrampolineCache:
         from datetime import datetime, timezone
 
         metadata = {
-            "version": "3.0",  # BUMPED to 3.0 for unified design
+            "version": "3.2",  # BUMPED to 3.2 for QSPI SDK on no-PSRAM boards
             "include_hash": self._compute_include_hash(include_paths),
             "framework_version": self.framework_version,
             "mcu_variant": self.mcu_variant,

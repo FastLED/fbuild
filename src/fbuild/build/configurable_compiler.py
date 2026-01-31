@@ -10,6 +10,7 @@ Design:
 """
 
 import json
+import logging
 from pathlib import Path
 from typing import Any, List, Dict, Optional, Union, TYPE_CHECKING
 
@@ -19,6 +20,8 @@ from .flag_builder import FlagBuilder
 from .compilation_executor import CompilationExecutor
 from .archive_creator import ArchiveCreator
 from .compiler import ICompiler, CompilerError
+
+logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
     from ..daemon.compilation_queue import CompilationJobQueue
@@ -209,7 +212,9 @@ class ConfigurableCompiler(ICompiler):
             system_includes = self.framework.get_stm32_system_includes(mcu_family)  # type: ignore[attr-defined]
             includes.extend(system_includes)
 
-        # Add flash mode specific sdkconfig.h path (ESP32-specific)
+        # Add flash mode and PSRAM mode specific sdkconfig.h path (ESP32-specific)
+        # The sdkconfig.h contains critical SPIRAM settings like CONFIG_SPIRAM_IGNORE_NOTFOUND
+        # which allows boards without PSRAM to boot without crashing.
         if hasattr(self.framework, "get_sdk_dir"):
             flash_mode = self.board_config.get("build", {}).get("flash_mode", "qio")
             sdk_dir = self.framework.get_sdk_dir()  # type: ignore[attr-defined]
@@ -221,7 +226,26 @@ class ConfigurableCompiler(ICompiler):
             resolver = SDKPathResolver(sdk_dir, show_progress=False)
             resolved_mcu = resolver._resolve_mcu(self.mcu)
 
-            flash_config_dir = sdk_dir / resolved_mcu / f"{flash_mode}_qspi" / "include"
+            # Use get_psram_mode to select correct SDK variant for boards without PSRAM
+            # OPI variants (dio_opi, qio_opi, opi_opi) have CONFIG_SPIRAM_IGNORE_NOTFOUND=1
+            # which allows booting without PSRAM hardware. QSPI variants crash.
+            from .psram_utils import get_psram_mode
+            psram_mode = get_psram_mode(self.board_id, self.board_config)
+
+            # Convert MSYS/MinGW path format (\c\...) to Windows format (C:\...) if needed
+            # Python's Path() converts /c/... to \c\... on Windows
+            import platform
+            sdk_dir_str = str(sdk_dir)
+            if platform.system() == "Windows" and len(sdk_dir_str) >= 3:
+                # Check for \c\ pattern (MSYS style path converted by Python)
+                if sdk_dir_str[0] == "\\" and sdk_dir_str[2] == "\\":
+                    drive = sdk_dir_str[1].upper()
+                    sdk_dir_str = f"{drive}:{sdk_dir_str[2:]}"
+                    sdk_dir = Path(sdk_dir_str)
+
+            flash_config_dir = sdk_dir / resolved_mcu / f"{flash_mode}_{psram_mode}" / "include"
+            logger.debug(f"PSRAM_DEBUG: board_id={self.board_id}, flash_mode={flash_mode}, psram_mode={psram_mode}")
+            logger.debug(f"PSRAM_DEBUG: flash_config_dir={flash_config_dir}, exists={flash_config_dir.exists()}")
             if flash_config_dir.exists():
                 includes.append(flash_config_dir)
 

@@ -46,7 +46,7 @@ include = ["fbuild*"]
 exclude = ["fbuild_lint*"]
 
 [tool.setuptools.package-data]
-fbuild = ["py.typed"]
+fbuild = ["py.typed", "platform_configs/*.json"]
 
 [tool.ruff]
 line-length = 200
