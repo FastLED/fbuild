@@ -232,7 +232,7 @@ def wait_for_pid_file(expected_pid: int, timeout: float = 10.0) -> int:
                 # Check if this daemon is alive
                 if _check_pid_alive(pid):
                     if pid != expected_pid:
-                        logging.warning(f"Expected PID {expected_pid}, but PID {pid} started successfully " f"(concurrent spawn or immediate crash + retry). Accepting alive daemon.")
+                        logging.warning(f"Expected PID {expected_pid}, but PID {pid} started successfully (concurrent spawn or immediate crash + retry). Accepting alive daemon.")
                     return pid  # ✅ Accept any alive daemon
                 else:
                     # PID file contains dead process - keep waiting

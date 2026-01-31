@@ -298,7 +298,7 @@ def create_websockets_router(get_daemon_context_dep: Callable[[], DaemonContext]
     router = APIRouter(prefix="/ws", tags=["WebSocket"])
 
     @router.websocket("/status")
-    async def websocket_status(
+    async def websocket_status(  # type: ignore[reportUnusedFunction]
         websocket: WebSocket,
         context: DaemonContext = Depends(get_daemon_context_dep),
     ) -> None:
@@ -378,7 +378,7 @@ def create_websockets_router(get_daemon_context_dep: Callable[[], DaemonContext]
             await manager.disconnect_status(websocket)
 
     @router.websocket("/monitor/{session_id}")
-    async def websocket_monitor(
+    async def websocket_monitor(  # type: ignore[reportUnusedFunction]
         websocket: WebSocket,
         session_id: str,
         context: DaemonContext = Depends(get_daemon_context_dep),
@@ -453,7 +453,7 @@ def create_websockets_router(get_daemon_context_dep: Callable[[], DaemonContext]
             await manager.disconnect_monitor(session_id)
 
     @router.websocket("/logs")
-    async def websocket_logs(
+    async def websocket_logs(  # type: ignore[reportUnusedFunction]
         websocket: WebSocket,
         context: DaemonContext = Depends(get_daemon_context_dep),
     ) -> None:
@@ -509,7 +509,7 @@ def create_websockets_router(get_daemon_context_dep: Callable[[], DaemonContext]
             await manager.disconnect_logs(websocket)
 
     @router.websocket("/serial-monitor")
-    async def websocket_serial_monitor_api(
+    async def websocket_serial_monitor_api(  # type: ignore[reportUnusedFunction]
         websocket: WebSocket,
         context: DaemonContext = Depends(get_daemon_context_dep),
     ) -> None:

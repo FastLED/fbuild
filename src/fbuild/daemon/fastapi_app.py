@@ -177,7 +177,7 @@ def register_health_endpoints(app: FastAPI) -> None:
     """
 
     @app.get("/health", response_model=HealthResponse, tags=["Health"])
-    async def health_check(context: DaemonContext = Depends(get_daemon_context)) -> HealthResponse:
+    async def health_check(context: DaemonContext = Depends(get_daemon_context)) -> HealthResponse:  # type: ignore[reportUnusedFunction]
         """Health check endpoint.
 
         Returns basic health information about the daemon.
@@ -191,7 +191,7 @@ def register_health_endpoints(app: FastAPI) -> None:
         )
 
     @app.get("/", tags=["Health"])
-    async def root() -> dict[str, str]:
+    async def root() -> dict[str, str]:  # type: ignore[reportUnusedFunction]
         """Root endpoint - redirects to docs."""
         return {
             "message": "fbuild Daemon API",
@@ -255,7 +255,7 @@ def register_daemon_endpoints(app: FastAPI) -> None:
     """
 
     @app.get("/api/daemon/info", response_model=DaemonInfoResponse, tags=["Daemon"])
-    async def get_daemon_info(context: DaemonContext = Depends(get_daemon_context)) -> DaemonInfoResponse:
+    async def get_daemon_info(context: DaemonContext = Depends(get_daemon_context)) -> DaemonInfoResponse:  # type: ignore[reportUnusedFunction]
         """Get daemon information.
 
         Returns detailed information about the daemon process, including:
@@ -287,7 +287,7 @@ def register_daemon_endpoints(app: FastAPI) -> None:
         )
 
     @app.post("/api/daemon/shutdown", tags=["Daemon"])
-    async def shutdown_daemon(context: DaemonContext = Depends(get_daemon_context)) -> dict[str, str]:
+    async def shutdown_daemon(context: DaemonContext = Depends(get_daemon_context)) -> dict[str, str]:  # type: ignore[reportUnusedFunction]
         """Gracefully shutdown the daemon.
 
         This endpoint triggers a graceful shutdown of the daemon.

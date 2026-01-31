@@ -194,7 +194,7 @@ def create_operations_router(get_daemon_context_func: Any) -> APIRouter:
     router = APIRouter(prefix="/api", tags=["Operations"])
 
     @router.post("/build", response_model=OperationResponse)
-    async def build_endpoint(
+    async def build_endpoint(  # type: ignore[reportUnusedFunction]
         request: BuildRequestModel,
         context: DaemonContext = Depends(get_daemon_context_func),
     ) -> OperationResponse:
@@ -238,7 +238,7 @@ def create_operations_router(get_daemon_context_func: Any) -> APIRouter:
         )
 
     @router.post("/deploy", response_model=OperationResponse)
-    async def deploy_endpoint(
+    async def deploy_endpoint(  # type: ignore[reportUnusedFunction]
         request: DeployRequestModel,
         context: DaemonContext = Depends(get_daemon_context_func),
     ) -> OperationResponse:
@@ -277,7 +277,7 @@ def create_operations_router(get_daemon_context_func: Any) -> APIRouter:
         )
 
     @router.post("/monitor", response_model=OperationResponse)
-    async def monitor_endpoint(
+    async def monitor_endpoint(  # type: ignore[reportUnusedFunction]
         request: MonitorRequestModel,
         context: DaemonContext = Depends(get_daemon_context_func),
     ) -> OperationResponse:
@@ -316,7 +316,7 @@ def create_operations_router(get_daemon_context_func: Any) -> APIRouter:
         )
 
     @router.post("/install-deps", response_model=OperationResponse)
-    async def install_deps_endpoint(
+    async def install_deps_endpoint(  # type: ignore[reportUnusedFunction]
         request: InstallDepsRequestModel,
         context: DaemonContext = Depends(get_daemon_context_func),
     ) -> OperationResponse:

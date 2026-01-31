@@ -119,7 +119,7 @@ def request_daemon() -> DaemonResponse:
                     # Daemon is HTTP-available despite PID file wait failure
                     actual_pid = read_pid_file()
                     if actual_pid:
-                        logging.warning(f"PID file wait failed for {expected_pid}, but daemon {actual_pid} " f"is HTTP-available (graceful recovery from race condition)")
+                        logging.warning(f"PID file wait failed for {expected_pid}, but daemon {actual_pid} is HTTP-available (graceful recovery from race condition)")
                         success_msg = f"Daemon started (HTTP available, expected PID {expected_pid} but got {actual_pid}"
                         if attempt > 0:
                             success_msg += f", succeeded on attempt {attempt + 1})"

@@ -43,17 +43,6 @@ async def get_daemon_info() -> DaemonInfoResponse:
     from ..fastapi_app import get_daemon_context
 
     context = get_daemon_context()
-    if context is None:
-        # Daemon not fully initialized yet
-        import os
-
-        return DaemonInfoResponse(
-            pid=os.getpid(),
-            uptime=0.0,
-            status="initializing",
-            version="unknown",
-        )
-
     uptime = time.time() - context.daemon_started_at
 
     # Get version
@@ -90,9 +79,8 @@ async def shutdown_daemon() -> ShutdownResponse:
     """
     from ..fastapi_app import get_daemon_context
 
-    context = get_daemon_context()
-    if context is None:
-        return ShutdownResponse(success=False, message="Daemon context not available")
+    # Verify daemon context is initialized (raises HTTPException if not)
+    get_daemon_context()
 
     # Initiate clean shutdown by calling cleanup_and_exit in a background thread
     # This allows the HTTP response to be sent before the daemon terminates

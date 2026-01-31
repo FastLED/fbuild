@@ -6,7 +6,7 @@ Provides HTTP endpoints for device discovery, leasing, and status queries.
 
 from typing import Any
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from pydantic import BaseModel, Field
 
 router = APIRouter(prefix="/api/devices", tags=["devices"])
@@ -92,8 +92,6 @@ async def list_devices(request: DeviceListRequest) -> DeviceListResponse:
     from ..fastapi_app import get_daemon_context
 
     context = get_daemon_context()
-    if context.device_manager is None:
-        raise HTTPException(status_code=503, detail="Device manager not available")
     device_manager = context.device_manager
 
     # Optionally refresh device discovery
@@ -121,13 +119,11 @@ async def get_device_status(device_id: str) -> DeviceStatusResponse:
     from ..fastapi_app import get_daemon_context
 
     context = get_daemon_context()
-    if context.device_manager is None:
-        raise HTTPException(status_code=503, detail="Device manager not available")
     device_manager = context.device_manager
 
     status = device_manager.get_device_status(device_id)
 
-    if status is None:
+    if not status:
         return DeviceStatusResponse(success=False, message=f"Device not found: {device_id}")
 
     return DeviceStatusResponse(success=True, **status)
@@ -151,8 +147,6 @@ async def acquire_device_lease(
     from ..fastapi_app import get_daemon_context
 
     context = get_daemon_context()
-    if context.device_manager is None:
-        raise HTTPException(status_code=503, detail="Device manager not available")
     device_manager = context.device_manager
 
     # Generate a client_id (in real implementation, this should come from auth)
@@ -195,8 +189,6 @@ async def release_device_lease(
     from ..fastapi_app import get_daemon_context
 
     context = get_daemon_context()
-    if context.device_manager is None:
-        raise HTTPException(status_code=503, detail="Device manager not available")
     device_manager = context.device_manager
 
     try:
@@ -238,8 +230,6 @@ async def preempt_device(
     from ..fastapi_app import get_daemon_context
 
     context = get_daemon_context()
-    if context.device_manager is None:
-        raise HTTPException(status_code=503, detail="Device manager not available")
     device_manager = context.device_manager
 
     if not request.reason:

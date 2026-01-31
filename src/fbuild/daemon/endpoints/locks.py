@@ -6,7 +6,7 @@ Provides HTTP endpoints for lock status queries and stale lock cleanup.
 
 from typing import Any
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from pydantic import BaseModel
 
 router = APIRouter(prefix="/api/locks", tags=["locks"])
@@ -49,8 +49,6 @@ async def get_lock_status() -> LockStatusResponse:
     from ..fastapi_app import get_daemon_context
 
     context = get_daemon_context()
-    if context.lock_manager is None:
-        raise HTTPException(status_code=503, detail="Lock manager not available")
     lock_manager = context.lock_manager
 
     # Get lock status (returns dict with simple structure)
@@ -82,8 +80,6 @@ async def clear_stale_locks() -> ClearLocksResponse:
     from ..fastapi_app import get_daemon_context
 
     context = get_daemon_context()
-    if context.lock_manager is None:
-        raise HTTPException(status_code=503, detail="Lock manager not available")
     lock_manager = context.lock_manager
 
     try:

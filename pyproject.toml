@@ -108,10 +108,10 @@ exclude = ["**/test_*.py", "**/tests/**", "**/.zap/**", "**/.fbuild/**", "**/.bu
 reportUnusedImport = "warning"
 reportUnusedVariable = "warning"
 reportUnusedClass = "warning"
-reportUnusedFunction = "warning"
+reportUnusedFunction = "error"
 reportUnnecessaryTypeIgnoreComment = "warning"
 reportUnnecessaryIsInstance = "warning"
-reportUnnecessaryComparison = "warning"
+reportUnnecessaryComparison = "error"
 reportUnnecessaryCast = "warning"
 reportImplicitStringConcatenation = "warning"
 
