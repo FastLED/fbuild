@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 fbuild is a PlatformIO-compatible embedded development tool providing build, deploy, and monitor functionality for Arduino/ESP32 platforms. It uses URL-based package management and a daemon for cross-process coordination.
 
-**Current Version:** v1.3.35 (update in `src/fbuild/__init__.py`, `pyproject.toml`, and this file)
+**Current Version:** v1.3.36 (update in `src/fbuild/__init__.py`, `pyproject.toml`, and this file)
 
 ## Development Commands
 
@@ -379,6 +379,36 @@ These platform issues are NOT related to parallel compilation and affect serial 
 **Workaround**: Always specify an explicit `--jobs N` value (e.g., `--jobs 4`, `--jobs 2`).
 
 **Future Fix**: Pass compilation queue directly from daemon context instead of using global accessor.
+
+**Windows USB-CDC Serial Port Timeout Limitation**: On Windows, when esptool or other serial tools interact with ESP32 devices, the process can hang indefinitely if the device or USB-CDC driver is in a stuck state. This occurs because Windows serial port I/O operations can block in kernel space, making them immune to normal process termination signals.
+
+**Root Cause**: When a process is blocked in a Windows kernel-level I/O operation (e.g., `ReadFile()` or `WriteFile()` on a serial port handle), the `subprocess.run(timeout=N)` mechanism cannot interrupt it. The termination signal (SIGTERM/SIGKILL) is not delivered until the I/O operation completes or the driver releases the handle.
+
+**Symptoms**:
+- Upload process hangs for 20+ minutes instead of timing out after 120 seconds
+- Port remains locked even after killing the daemon
+- No error message or timeout exception is raised
+- Physical device reset required to unlock the port
+
+**Solution** (implemented in v1.3.36+):
+- **Watchdog Timeout**: The ESP32 deployer now uses `run_with_watchdog_timeout()` which monitors process output in real-time
+- **Inactivity Detection**: If no output is received for 30 seconds, the process is forcefully terminated
+- **Force Kill**: Uses `TerminateProcess()` on Windows for forceful termination when graceful termination fails
+- **Better Error Messages**: Provides actionable guidance when timeout occurs
+
+**Implementation**: See `src/fbuild/deploy/deployer_esp32.py:run_with_watchdog_timeout()`
+
+**User Workarounds** (if issue persists):
+1. Unplug and replug the USB cable
+2. Try a different USB port (preferably USB 2.0, not USB 3.0)
+3. Reset the device manually (hold BOOT button, press RESET)
+4. Check Device Manager for driver issues (yellow exclamation marks)
+5. Update USB-CDC drivers:
+   - ESP32-S3 USB-Serial/JTAG: CH343/CH340 drivers
+   - Other ESP32: CP210x or FTDI drivers
+6. As a last resort, use PlatformIO directly with `--no-fbuild` flag
+
+**Reference**: For detailed technical analysis, see `docs/windows_serial_limitations.md`
 
 ### Performance
 

@@ -30,10 +30,17 @@ logger = logging.getLogger(__name__)
 # These boards MUST use SDK variants that do NOT try to init PSRAM at boot
 # (which is the "qspi" variants: dio_qspi, qio_qspi)
 NO_PSRAM_BOARDS: List[str] = [
-    "seeed_xiao_esp32s3",            # Seeed XIAO ESP32-S3 (no PSRAM variant)
     "adafruit_qtpy_esp32s3_nopsram", # Adafruit QT Py ESP32-S3 No PSRAM
     "adafruit_feather_esp32s3_nopsram",  # Adafruit Feather ESP32-S3 No PSRAM
     # Add other no-PSRAM ESP32-S3 boards here as needed
+]
+
+# ESP32 boards with OPI PSRAM that incorrectly default to QSPI in boards.txt
+# These boards MUST use the OPI SDK variant, regardless of what boards.txt says
+# The board definitions default to psram_type=qspi but the hardware has OPI PSRAM
+OPI_PSRAM_BOARDS: List[str] = [
+    "seeed_xiao_esp32s3",  # Seeed XIAO ESP32-S3 has 8MB OPI PSRAM (esptool: "Embedded PSRAM 8MB (AP_3v3)")
+    # Add other OPI PSRAM boards that incorrectly default to QSPI here
 ]
 
 
@@ -41,9 +48,9 @@ def board_has_psram(board_id: str) -> bool:
     """
     Detect if a board has PSRAM (external RAM) available.
 
-    ESP32 boards come in variants with and without PSRAM. Some boards like
-    the Seeed XIAO ESP32-S3 have no PSRAM and require different SDK
-    configuration to prevent crashes.
+    ESP32 boards come in variants with and without PSRAM. Some boards
+    like the Adafruit QT Py ESP32-S3 "No PSRAM" variant require different
+    SDK configuration to prevent crashes.
 
     Args:
         board_id: Board identifier (e.g., "seeed_xiao_esp32s3")
@@ -52,8 +59,10 @@ def board_has_psram(board_id: str) -> bool:
         True if board has PSRAM, False otherwise
 
     Example:
-        >>> board_has_psram("seeed_xiao_esp32s3")
+        >>> board_has_psram("adafruit_qtpy_esp32s3_nopsram")
         False
+        >>> board_has_psram("seeed_xiao_esp32s3")
+        True
         >>> board_has_psram("esp32dev")
         True
     """
@@ -87,7 +96,9 @@ def get_psram_mode(board_id: str, board_config: dict) -> str:
         PSRAM mode string ("qspi", "opi", etc.)
 
     Example:
-        >>> get_psram_mode("seeed_xiao_esp32s3", {"build": {"arduino": {"memory_type": "qio_opi"}}})
+        >>> get_psram_mode("seeed_xiao_esp32s3", {"build": {"arduino": {"memory_type": "qio_qspi"}}})
+        "opi"  # Forced to OPI because board has OPI PSRAM hardware (in OPI_PSRAM_BOARDS)
+        >>> get_psram_mode("adafruit_qtpy_esp32s3_nopsram", {"build": {"arduino": {"memory_type": "qio_opi"}}})
         "qspi"  # Overridden to use QSPI SDK (no boot PSRAM init)
         >>> get_psram_mode("esp32dev", {"build": {"arduino": {"memory_type": "qio_opi"}}})
         "opi"  # Board has PSRAM, use actual memory_type
@@ -98,6 +109,13 @@ def get_psram_mode(board_id: str, board_config: dict) -> str:
     if not board_has_psram(board_id):
         logger.info(f"PSRAM_MODE: Board {board_id} in NO_PSRAM_BOARDS, using 'qspi' (no boot PSRAM init)")
         return "qspi"
+
+    # Check if board is in the OPI PSRAM override list
+    # These boards have OPI PSRAM hardware but their boards.txt defaults to QSPI
+    board_id_lower = board_id.lower()
+    if board_id_lower in OPI_PSRAM_BOARDS:
+        logger.info(f"PSRAM_MODE: Board {board_id} in OPI_PSRAM_BOARDS, forcing 'opi' (hardware has OPI PSRAM)")
+        return "opi"
 
     # Extract PSRAM mode from memory_type (format: "flash_psram", e.g., "qio_opi")
     arduino_config = board_config.get("build", {}).get("arduino", {})

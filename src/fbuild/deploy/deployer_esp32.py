@@ -5,9 +5,11 @@ This module handles flashing firmware to ESP32 devices using esptool.
 Includes automatic crash-loop recovery for devices stuck in rapid reboot cycles.
 """
 
+import io
 import random
 import subprocess
 import sys
+import threading
 import time
 from pathlib import Path
 from typing import Optional
@@ -15,11 +17,239 @@ from typing import Optional
 from fbuild.config import PlatformIOConfig
 from fbuild.packages import Cache
 
-from ..subprocess_utils import get_python_executable, safe_run
+from ..subprocess_utils import get_python_executable, safe_popen
 from .deployer import DeploymentError, DeploymentResult, IDeployer
 from .esptool_utils import is_crash_loop_error
 from .platform_utils import get_filtered_env
 from .serial_utils import detect_serial_port
+
+
+def run_with_watchdog_timeout(
+    cmd: list[str],
+    timeout: int,
+    inactivity_timeout: int = 30,
+    verbose: bool = False,
+    **kwargs,
+) -> subprocess.CompletedProcess:
+    """Run a command with both total timeout and inactivity timeout.
+
+    This function provides more robust timeout handling than subprocess.run(timeout=N)
+    on Windows, where kernel-level I/O operations (e.g., serial port reads) can block
+    process termination signals indefinitely.
+
+    Args:
+        cmd: Command to execute
+        timeout: Maximum total execution time in seconds
+        inactivity_timeout: Maximum time without output in seconds (default: 30)
+        verbose: Whether to print verbose output
+        **kwargs: Additional arguments passed to subprocess.Popen
+
+    Returns:
+        CompletedProcess with returncode, stdout, stderr
+
+    Raises:
+        subprocess.TimeoutExpired: If timeout or inactivity_timeout is exceeded
+
+    Note:
+        On Windows, if the process blocks in kernel I/O, this function will:
+        1. Attempt graceful termination (SIGTERM)
+        2. Wait 5 seconds for process to exit
+        3. Force kill (SIGKILL/TerminateProcess) if still running
+        4. Raise TimeoutExpired with appropriate error message
+    """
+    start_time = time.time()
+    last_output_time = start_time
+
+    # Ensure we capture output for monitoring
+    if "stdout" not in kwargs:
+        kwargs["stdout"] = subprocess.PIPE
+    if "stderr" not in kwargs:
+        kwargs["stderr"] = subprocess.PIPE
+
+    # Use safe_popen to apply platform-specific flags
+    process = safe_popen(cmd, **kwargs)
+
+    stdout_data = io.BytesIO()
+    stderr_data = io.BytesIO()
+
+    # Monitoring thread flags
+    timed_out = False
+    timeout_reason: Optional[str] = None
+
+    def monitor_output():
+        """Monitor process output and enforce timeouts."""
+        nonlocal last_output_time, timed_out, timeout_reason
+
+        while process.poll() is None:
+            elapsed = time.time() - start_time
+            time_since_output = time.time() - last_output_time
+
+            # Check total timeout
+            if elapsed > timeout:
+                timed_out = True
+                timeout_reason = f"Total timeout ({timeout}s) exceeded"
+                if verbose:
+                    print(f"\n⚠️  {timeout_reason}", flush=True)
+                break
+
+            # Check inactivity timeout
+            if time_since_output > inactivity_timeout:
+                timed_out = True
+                timeout_reason = f"No output for {inactivity_timeout}s (process may be stuck in kernel I/O)"
+                if verbose:
+                    print(f"\n⚠️  {timeout_reason}", flush=True)
+                break
+
+            time.sleep(0.1)
+
+    # Start monitoring thread
+    monitor_thread = threading.Thread(target=monitor_output, daemon=True)
+    monitor_thread.start()
+
+    # Read output in real-time using threads to avoid blocking
+    # We need separate reader threads because read() blocks
+    import queue
+
+    output_queue = queue.Queue()
+
+    def read_stream(stream, stream_name):
+        """Read from a stream in a separate thread."""
+        try:
+            while True:
+                chunk = stream.read(1024)
+                if not chunk:
+                    break
+                output_queue.put((stream_name, chunk))
+        except Exception:
+            pass  # Stream closed or error
+
+    # Start reader threads
+    stdout_thread = None
+    stderr_thread = None
+
+    if process.stdout:
+        stdout_thread = threading.Thread(target=read_stream, args=(process.stdout, "stdout"), daemon=True)
+        stdout_thread.start()
+
+    if process.stderr:
+        stderr_thread = threading.Thread(target=read_stream, args=(process.stderr, "stderr"), daemon=True)
+        stderr_thread.start()
+
+    # Process output from queue
+    try:
+        while process.poll() is None and not timed_out:
+            try:
+                # Non-blocking queue get with timeout
+                stream_name, chunk = output_queue.get(timeout=0.1)
+
+                if stream_name == "stdout":
+                    stdout_data.write(chunk)
+                    if verbose:
+                        sys.stdout.buffer.write(chunk)
+                        sys.stdout.flush()
+                else:  # stderr
+                    stderr_data.write(chunk)
+                    if verbose:
+                        sys.stderr.buffer.write(chunk)
+                        sys.stderr.flush()
+
+                last_output_time = time.time()
+            except queue.Empty:
+                # No output available, continue checking timeout
+                pass
+
+        # If timed out, forcefully terminate process
+        if timed_out:
+            if verbose:
+                print("⏳ Attempting to terminate process...", flush=True)
+
+            # Try graceful termination first
+            process.terminate()
+
+            # Wait up to 5 seconds for graceful exit
+            try:
+                process.wait(timeout=5)
+                if verbose:
+                    print("✓ Process terminated gracefully", flush=True)
+            except subprocess.TimeoutExpired:
+                # Graceful termination failed - force kill
+                if verbose:
+                    print("⚠️  Graceful termination failed, force killing process...", flush=True)
+
+                if sys.platform == "win32":
+                    # On Windows, use TerminateProcess (more forceful than kill())
+                    import ctypes
+
+                    kernel32 = ctypes.windll.kernel32
+                    handle = int(process._handle)
+                    kernel32.TerminateProcess(handle, 1)
+                else:
+                    # On Unix, use SIGKILL
+                    process.kill()
+
+                # Wait for process to exit
+                process.wait()
+
+                if verbose:
+                    print("✓ Process force killed", flush=True)
+
+            # Give reader threads a moment to finish reading any buffered data
+            time.sleep(0.2)
+
+            # Drain any remaining output from the queue before raising exception
+            while True:
+                try:
+                    stream_name, chunk = output_queue.get(timeout=0.1)
+                    if stream_name == "stdout":
+                        stdout_data.write(chunk)
+                    else:
+                        stderr_data.write(chunk)
+                except queue.Empty:
+                    break
+
+            # Raise TimeoutExpired with detailed message
+            raise subprocess.TimeoutExpired(
+                cmd=cmd,
+                timeout=timeout if timeout_reason and "Total timeout" in timeout_reason else inactivity_timeout,
+                output=stdout_data.getvalue(),
+                stderr=stderr_data.getvalue(),
+            )
+
+        # Drain remaining output from queue
+        # Give reader threads a moment to finish
+        time.sleep(0.1)
+        while not output_queue.empty():
+            try:
+                stream_name, chunk = output_queue.get_nowait()
+                if stream_name == "stdout":
+                    stdout_data.write(chunk)
+                    if verbose:
+                        sys.stdout.buffer.write(chunk)
+                        sys.stdout.flush()
+                else:
+                    stderr_data.write(chunk)
+                    if verbose:
+                        sys.stderr.buffer.write(chunk)
+                        sys.stderr.flush()
+            except queue.Empty:
+                break
+
+    finally:
+        # Ensure process is cleaned up
+        if process.poll() is None:
+            process.kill()
+            process.wait()
+
+        # Wait for monitor thread to finish
+        monitor_thread.join(timeout=1.0)
+
+    # Return CompletedProcess-like result
+    return subprocess.CompletedProcess(
+        args=cmd,
+        returncode=process.returncode,
+        stdout=stdout_data.getvalue(),
+        stderr=stderr_data.getvalue(),
+    )
 
 
 class ESP32Deployer(IDeployer):
@@ -244,7 +474,9 @@ class ESP32Deployer(IDeployer):
 
         # Execute esptool with crash-loop recovery
         # Use 120 second timeout to prevent hanging if device is unresponsive
+        # Use 30 second inactivity timeout to detect stuck I/O operations
         upload_timeout = 120
+        inactivity_timeout = 30
 
         # Crash-loop recovery parameters
         max_recovery_attempts = 20
@@ -259,27 +491,30 @@ class ESP32Deployer(IDeployer):
                 if sys.platform == "win32":
                     # Use filtered environment to avoid MSYS issues
                     env = get_filtered_env()
-                    result = safe_run(
+                    # Use watchdog timeout for better Windows serial port handling
+                    result = run_with_watchdog_timeout(
                         cmd,
+                        timeout=upload_timeout,
+                        inactivity_timeout=inactivity_timeout,
+                        verbose=self.verbose,
                         cwd=project_dir,
-                        capture_output=not self.verbose,
-                        text=False,  # Don't decode as text - esptool may output binary data
                         env=env,
                         shell=False,
-                        timeout=upload_timeout,
                     )
                 else:
-                    result = safe_run(
+                    # Use watchdog timeout for consistency across platforms
+                    result = run_with_watchdog_timeout(
                         cmd,
-                        cwd=project_dir,
-                        capture_output=not self.verbose,
-                        text=False,  # Don't decode as text - esptool may output binary data
                         timeout=upload_timeout,
+                        inactivity_timeout=inactivity_timeout,
+                        verbose=self.verbose,
+                        cwd=project_dir,
+                        shell=False,
                     )
-            except subprocess.TimeoutExpired:
+            except subprocess.TimeoutExpired as e:
                 # Check if we should retry
                 if attempt == 1:
-                    # First attempt timeout - might be crash-loop
+                    # First attempt timeout - might be crash-loop or stuck I/O
                     recovery_mode_activated = True
                     if self.verbose:
                         print(f"\nConnection timeout detected. Attempting recovery (attempt {attempt}/{max_recovery_attempts})...")
@@ -289,9 +524,32 @@ class ESP32Deployer(IDeployer):
                     time.sleep(delay_ms / 1000.0)
                     continue
                 else:
+                    # Build detailed error message
+                    error_msg = f"Upload timed out after {upload_timeout}s."
+                    if e.stderr:
+                        stderr_text = e.stderr.decode("utf-8", errors="replace") if isinstance(e.stderr, bytes) else str(e.stderr)
+                        if "No output for" in stderr_text:
+                            error_msg += "\n\n⚠️  Process stuck in kernel I/O (Windows serial port driver issue)."
+                            error_msg += "\n\nThis is a known Windows USB-CDC driver limitation where serial port"
+                            error_msg += "\nread/write operations can block indefinitely in kernel space."
+                            error_msg += "\n\nSuggestions:"
+                            error_msg += "\n  1. Unplug and replug the USB cable"
+                            error_msg += "\n  2. Try a different USB port"
+                            error_msg += "\n  3. Reset the device (hold BOOT button, press RESET)"
+                            error_msg += "\n  4. Check Device Manager for driver issues (yellow exclamation marks)"
+                            error_msg += "\n  5. Update USB-CDC drivers (esp32s3 CDC: CH343/CH340, others: CP210x/FTDI)"
+                        else:
+                            error_msg += "\n\nDevice may be unresponsive or not in download mode."
+                            error_msg += "\n\nSuggestions:"
+                            error_msg += "\n  1. Try resetting the device"
+                            error_msg += "\n  2. Check USB cable connection"
+                            error_msg += "\n  3. Verify correct port is selected"
+                    else:
+                        error_msg += " Device may be unresponsive or not in download mode. Try resetting the device."
+
                     return DeploymentResult(
                         success=False,
-                        message=f"Upload timed out after {upload_timeout}s. Device may be unresponsive or not in download mode. Try resetting the device.",
+                        message=error_msg,
                         port=port,
                     )
 
