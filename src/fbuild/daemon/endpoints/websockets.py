@@ -626,6 +626,11 @@ def create_websockets_router(get_daemon_context_dep: Callable[[], DaemonContext]
 
             while running:
                 try:
+                    # Check shutdown state early - avoid run_in_executor calls if shutting down
+                    if context.is_shutting_down:
+                        logging.debug("message_processor detected shutdown, exiting")
+                        break
+
                     # Get message from queue with timeout
                     try:
                         msg = await asyncio.wait_for(message_queue.get(), timeout=1.0)
@@ -810,6 +815,11 @@ def create_websockets_router(get_daemon_context_dep: Callable[[], DaemonContext]
             nonlocal last_index
             while True:
                 try:
+                    # Check shutdown state - avoid run_in_executor calls if shutting down
+                    if context.is_shutting_down:
+                        logging.debug("data_pusher detected shutdown, exiting")
+                        break
+
                     if not attached or not port:
                         # Not attached, sleep and check again
                         await asyncio.sleep(0.1)
@@ -909,13 +919,21 @@ def create_websockets_router(get_daemon_context_dep: Callable[[], DaemonContext]
                         client_id=client_id,
                         port=port,
                     )
-                    loop = asyncio.get_event_loop()
-                    await loop.run_in_executor(
-                        None,
-                        processor.handle_detach,
-                        detach_request,
-                        context,
-                    )
+
+                    # Check if daemon is shutting down
+                    if context.is_shutting_down:
+                        # Run synchronously - executor may be shut down
+                        # This avoids "cannot schedule new futures after shutdown" error
+                        processor.handle_detach(detach_request, context)
+                    else:
+                        # Run in executor as normal
+                        loop = asyncio.get_event_loop()
+                        await loop.run_in_executor(
+                            None,
+                            processor.handle_detach,
+                            detach_request,
+                            context,
+                        )
                 except KeyboardInterrupt:
                     raise
                 except Exception as e:

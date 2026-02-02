@@ -92,6 +92,9 @@ class DaemonContext:
     operation_in_progress: bool = False
     operation_lock: threading.Lock = field(default_factory=threading.Lock)
 
+    # Shutdown state - used to prevent executor calls during shutdown
+    is_shutting_down: bool = False
+
 
 def create_daemon_context(
     daemon_pid: int,
@@ -285,6 +288,11 @@ def cleanup_daemon_context(context: DaemonContext) -> None:
         ...     cleanup_daemon_context(context)
     """
     import logging
+
+    # Set shutdown flag FIRST - before any cleanup
+    # This allows WebSocket handlers to detect shutdown and avoid run_in_executor calls
+    # which would fail with "cannot schedule new futures after shutdown"
+    context.is_shutting_down = True
 
     logging.info("Shutting down daemon context...")
 
