@@ -156,7 +156,14 @@ class CompilationExecutor:
                 exclude_patterns = [
                     "newlib/platform_include",  # Uses #include_next which breaks trampolines
                     "newlib\\platform_include",  # Windows path variant
-                    # NOTE: /bt/ exclusion removed - trampolines use absolute paths which work fine
+                    "/bt/",  # ESP32 Bluetooth SDK uses relative includes that break with trampolines
+                    "\\bt\\",  # Windows path variant
+                    "/hal/esp32",  # Chip-specific hal uses #include_next
+                    "\\hal\\esp32",  # Windows path variant
+                    "lwip/include/lwip",  # lwip uses #include_next
+                    "lwip\\include\\lwip",  # Windows path variant
+                    "mbedtls/port/include",  # mbedtls uses #include_next
+                    "mbedtls\\port\\include",  # Windows path variant
                 ]
                 effective_include_paths = self.trampoline_cache.generate_trampolines(include_paths, exclude_patterns=exclude_patterns)
             except KeyboardInterrupt:
@@ -334,7 +341,13 @@ class CompilationExecutor:
         effective_include_paths = include_paths
         if self.trampoline_cache is not None and platform.system() == "Windows":
             try:
-                exclude_patterns = ["newlib/platform_include", "newlib\\platform_include", "/bt/", "\\bt\\"]
+                exclude_patterns = [
+                    "newlib/platform_include", "newlib\\platform_include",
+                    "/bt/", "\\bt\\",
+                    "/hal/esp32", "\\hal\\esp32",
+                    "lwip/include/lwip", "lwip\\include\\lwip",
+                    "mbedtls/port/include", "mbedtls\\port\\include",
+                ]
                 effective_include_paths = self.trampoline_cache.generate_trampolines(include_paths, exclude_patterns=exclude_patterns)
             except KeyboardInterrupt:
                 _thread.interrupt_main()

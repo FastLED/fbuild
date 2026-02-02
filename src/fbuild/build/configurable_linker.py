@@ -17,6 +17,7 @@ import time
 from pathlib import Path
 from typing import List, Dict, Any, Optional, Union
 
+from .. import platform_configs
 from ..packages.package import IPackage, IToolchain, IFramework
 from ..output import log_detail, format_size
 from .binary_generator import BinaryGenerator
@@ -106,15 +107,14 @@ class ConfigurableLinker(ILinker):
 
         # Load platform configuration
         if platform_config is None:
-            # Try to load from default location
-            config_path = Path(__file__).parent.parent / "platform_configs" / f"{self.mcu}.json"
-            if config_path.exists():
-                with open(config_path, 'r') as f:
-                    self.config = json.load(f)
+            # Load from package data using importlib.resources
+            loaded_config = platform_configs.load_config(self.mcu)
+            if loaded_config is not None:
+                self.config = loaded_config
             else:
                 raise ConfigurableLinkerError(
                     f"No platform configuration found for {self.mcu}. " +
-                    f"Expected: {config_path}"
+                    f"Available: {platform_configs.list_available_configs()}"
                 )
         elif isinstance(platform_config, dict):
             self.config = platform_config
@@ -326,8 +326,13 @@ class ConfigurableLinker(ILinker):
         # Add object files using relative paths (they're in build_dir)
         cmd.extend([_path_to_string(obj, relative_to=self.build_dir) for obj in object_files])
 
-        # Add core archive using relative path (it's in build_dir)
+        # Add core archive with --whole-archive for LTO support
+        # When using LTO with -fno-fat-lto-objects, archives contain only LTO bytecode.
+        # The linker plugin needs to see all objects from the archive to perform
+        # link-time optimization, so we must use --whole-archive.
+        cmd.append("-Wl,--whole-archive")
         cmd.append(_path_to_string(core_archive, relative_to=self.build_dir))
+        cmd.append("-Wl,--no-whole-archive")
 
         # Add SDK library directory to search path (ESP32-specific)
         if hasattr(self.framework, 'get_sdk_dir'):
@@ -339,13 +344,20 @@ class ConfigurableLinker(ILinker):
         # Group libraries to resolve circular dependencies
         cmd.append("-Wl,--start-group")
 
-        # Add user library archives first
-        for lib_archive in library_archives:
-            if lib_archive.exists():
-                # Library archives may be in build_dir or outside, try relative first
-                cmd.append(_path_to_string(lib_archive, relative_to=self.build_dir))
+        # Add user library archives with --whole-archive for LTO support
+        # This ensures all objects from LTO archives are considered during link-time optimization
+        # Without this, the linker may not pull in needed symbols from archives with LTO bytecode
+        if library_archives:
+            cmd.append("-Wl,--whole-archive")
+            for lib_archive in library_archives:
+                if lib_archive.exists():
+                    # Library archives may be in build_dir or outside, try relative first
+                    cmd.append(_path_to_string(lib_archive, relative_to=self.build_dir))
+            cmd.append("-Wl,--no-whole-archive")
 
         # Add SDK libraries (these stay absolute - outside build dir)
+        # NOTE: SDK libraries are NOT wrapped with --whole-archive because they are
+        # pre-compiled without LTO and should be linked normally
         for lib in sdk_libs:
             cmd.append(_path_to_string(lib))
 

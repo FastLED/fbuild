@@ -392,6 +392,29 @@ class ToolchainESP32(IToolchain):
         """
         return self.binary_finder.get_objdump_path()
 
+    def get_gcc_ar_path(self) -> Optional[Path]:
+        """Get path to gcc-ar (LTO-aware archiver).
+
+        gcc-ar is a wrapper around ar that works with LTO bytecode objects.
+        It ensures proper symbol table generation for archives containing
+        objects compiled with -flto -fno-fat-lto-objects.
+
+        Returns:
+            Path to gcc-ar binary or None if not found
+        """
+        return self.binary_finder.get_gcc_ar_path()
+
+    def get_gcc_ranlib_path(self) -> Optional[Path]:
+        """Get path to gcc-ranlib (LTO-aware ranlib).
+
+        gcc-ranlib is a wrapper around ranlib that works with LTO bytecode objects.
+        It updates the symbol table of archives containing LTO objects.
+
+        Returns:
+            Path to gcc-ranlib binary or None if not found
+        """
+        return self.binary_finder.get_gcc_ranlib_path()
+
     def get_all_tool_paths(self) -> Dict[str, Optional[Path]]:
         """Get paths to all common toolchain binaries.
 

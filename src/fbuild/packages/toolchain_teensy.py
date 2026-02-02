@@ -303,6 +303,27 @@ class ToolchainTeensy(IToolchain):
         """
         return self._find_binary("ar")
 
+    def get_gcc_ar_path(self) -> Optional[Path]:
+        """Get path to LTO-aware archiver (gcc-ar).
+
+        gcc-ar is a wrapper around ar that handles LTO bytecode objects properly.
+        It creates archive files with proper symbol indices for LTO builds.
+
+        Returns:
+            Path to gcc-ar binary or None if not found
+        """
+        return self._find_binary("gcc-ar")
+
+    def get_gcc_ranlib_path(self) -> Optional[Path]:
+        """Get path to LTO-aware ranlib (gcc-ranlib).
+
+        gcc-ranlib is a wrapper around ranlib that handles LTO bytecode objects.
+
+        Returns:
+            Path to gcc-ranlib binary or None if not found
+        """
+        return self._find_binary("gcc-ranlib")
+
     def get_objcopy_path(self) -> Optional[Path]:
         """Get path to objcopy utility.
 

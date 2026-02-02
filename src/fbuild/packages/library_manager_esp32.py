@@ -222,11 +222,16 @@ class LibraryManagerESP32:
 
         raise LibraryErrorESP32(f"No suitable ESP32 toolchain found in {toolchain_path}. Expected xtensa-esp32-elf-gcc or riscv32-esp-elf-gcc")
 
-    def _find_toolchain_ar(self, toolchain_path: Path) -> Path:
+    def _find_toolchain_ar(self, toolchain_path: Path, prefer_gcc_ar: bool = True) -> Path:
         """Find ar archiver in the toolchain directory.
+
+        For LTO support, prefer gcc-ar over regular ar. gcc-ar is an LTO-aware
+        wrapper that creates proper symbol indices for archives containing
+        LTO bytecode objects (-flto -fno-fat-lto-objects).
 
         Args:
             toolchain_path: Path to toolchain bin directory
+            prefer_gcc_ar: If True, prefer gcc-ar over regular ar for LTO support
 
         Returns:
             Path to ar binary
@@ -236,6 +241,27 @@ class LibraryManagerESP32:
         """
         exe_suffix = ".exe" if platform.system() == "Windows" else ""
 
+        if prefer_gcc_ar:
+            # Try gcc-ar first for LTO support
+            # Check for Xtensa gcc-ar
+            xtensa_gcc_ar = toolchain_path / f"xtensa-esp32-elf-gcc-ar{exe_suffix}"
+            if xtensa_gcc_ar.exists():
+                logger.debug(f"[TOOLCHAIN] Using Xtensa gcc-ar for LTO: {xtensa_gcc_ar}")
+                return xtensa_gcc_ar
+
+            # Check for RISC-V gcc-ar
+            riscv_gcc_ar = toolchain_path / f"riscv32-esp-elf-gcc-ar{exe_suffix}"
+            if riscv_gcc_ar.exists():
+                logger.debug(f"[TOOLCHAIN] Using RISC-V gcc-ar for LTO: {riscv_gcc_ar}")
+                return riscv_gcc_ar
+
+            # Fallback: try to find any gcc-ar pattern
+            gcc_ar_files = list(toolchain_path.glob(f"*-gcc-ar{exe_suffix}"))
+            if gcc_ar_files:
+                logger.debug(f"[TOOLCHAIN] Using discovered gcc-ar: {gcc_ar_files[0]}")
+                return gcc_ar_files[0]
+
+        # Fall back to regular ar
         # Check for Xtensa ar
         xtensa_ar = toolchain_path / f"xtensa-esp32-elf-ar{exe_suffix}"
         if xtensa_ar.exists():
@@ -599,6 +625,12 @@ class LibraryManagerESP32:
                         "newlib\\platform_include",
                         "/bt/",  # Bluetooth SDK uses relative paths
                         "\\bt\\",
+                        "/hal/esp32",  # Chip-specific hal uses #include_next
+                        "\\hal\\esp32",
+                        "lwip/include/lwip",  # lwip uses #include_next
+                        "lwip\\include\\lwip",
+                        "mbedtls/port/include",  # mbedtls uses #include_next
+                        "mbedtls\\port\\include",
                     ]
                     effective_includes = trampoline_cache.generate_trampolines(all_includes, exclude_patterns=exclude_patterns)
                 except KeyboardInterrupt:

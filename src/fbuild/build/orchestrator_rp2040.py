@@ -16,6 +16,7 @@ from dataclasses import dataclass
 if TYPE_CHECKING:
     from fbuild.daemon.compilation_queue import CompilationJobQueue
 
+from .. import platform_configs
 from ..packages import Cache
 from ..packages.platform_rp2040 import PlatformRP2040
 from ..packages.toolchain_rp2040 import ToolchainRP2040
@@ -262,13 +263,8 @@ class OrchestratorRP2040(IBuildOrchestrator):
                 if verbose:
                     logger.info("      Build configuration unchanged, using cached artifacts")
 
-            # Load platform configuration JSON for MCU-specific settings
-            import json
-            platform_config_path = Path(__file__).parent.parent / "platform_configs" / f"{board_config.mcu}.json"
-            platform_config = None
-            if platform_config_path.exists():
-                with open(platform_config_path, 'r') as f:
-                    platform_config = json.load(f)
+            # Load platform configuration from package data
+            platform_config = platform_configs.load_config(board_config.mcu)
 
             # Initialize compiler
             if verbose:

@@ -15,6 +15,7 @@ from dataclasses import dataclass
 if TYPE_CHECKING:
     from fbuild.daemon.compilation_queue import CompilationJobQueue
 
+from .. import platform_configs
 from ..packages import Cache
 from ..packages.platform_stm32 import PlatformSTM32
 from ..packages.toolchain_stm32 import ToolchainSTM32
@@ -251,14 +252,9 @@ class OrchestratorSTM32(IBuildOrchestrator):
                 if verbose:
                     logger.info("      Build configuration unchanged, using cached artifacts")
 
-            # Load platform configuration JSON for MCU-specific settings
-            import json
+            # Load platform configuration from package data
             mcu_family = platform._get_mcu_family(board_config.mcu).lower().replace("xx", "")
-            platform_config_path = Path(__file__).parent.parent / "platform_configs" / f"{mcu_family}.json"
-            platform_config = None
-            if platform_config_path.exists():
-                with open(platform_config_path, 'r') as f:
-                    platform_config = json.load(f)
+            platform_config = platform_configs.load_config(mcu_family)
 
             # Initialize compiler
             if verbose:

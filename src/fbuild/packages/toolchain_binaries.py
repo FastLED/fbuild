@@ -119,7 +119,7 @@ class ToolchainBinaryFinder:
         Returns:
             Dictionary mapping tool names to their paths
         """
-        common_tools = ["gcc", "g++", "ar", "objcopy", "size", "objdump"]
+        common_tools = ["gcc", "g++", "ar", "gcc-ar", "gcc-ranlib", "objcopy", "size", "objdump"]
         return self.find_all_binaries(common_tools)
 
     def verify_binary_exists(self, binary_name: str) -> bool:
@@ -194,3 +194,20 @@ class ToolchainBinaryFinder:
     def get_objdump_path(self) -> Optional[Path]:
         """Get path to objdump utility."""
         return self.find_binary("objdump")
+
+    def get_gcc_ar_path(self) -> Optional[Path]:
+        """Get path to gcc-ar (LTO-aware archiver).
+
+        gcc-ar is a wrapper around ar that works with LTO bytecode objects.
+        It ensures proper symbol table generation for archives containing
+        objects compiled with -flto -fno-fat-lto-objects.
+        """
+        return self.find_binary("gcc-ar")
+
+    def get_gcc_ranlib_path(self) -> Optional[Path]:
+        """Get path to gcc-ranlib (LTO-aware ranlib).
+
+        gcc-ranlib is a wrapper around ranlib that works with LTO bytecode objects.
+        It updates the symbol table of archives containing LTO objects.
+        """
+        return self.find_binary("gcc-ranlib")

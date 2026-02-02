@@ -17,7 +17,9 @@
       "-Wno-unused-parameter",
       "-ffunction-sections",
       "-fdata-sections",
-      "-MMD"
+      "-MMD",
+      "-flto",
+      "-fno-fat-lto-objects"
     ],
     "c": [
       "-std=gnu11"
@@ -37,6 +39,8 @@
     "-mfloat-abi=hard",
     "-mfpu=fpv5-d16",
     "-O2",
+    "-flto",
+    "-fuse-linker-plugin",
     "-Wl,--gc-sections",
     "-Wl,--print-memory-usage",
     "-lm",

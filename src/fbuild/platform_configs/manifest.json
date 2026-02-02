@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "description": "Platform configuration manifest for MCU-specific compiler/linker settings",
+  "vendors": {
+    "esp": {
+      "name": "Espressif",
+      "description": "ESP32 series microcontrollers",
+      "configs": [
+        "esp32",
+        "esp32c2",
+        "esp32c3",
+        "esp32c5",
+        "esp32c6",
+        "esp32p4",
+        "esp32s3"
+      ]
+    },
+    "teensy": {
+      "name": "PJRC Teensy",
+      "description": "Teensy development boards",
+      "configs": [
+        "imxrt1062"
+      ]
+    },
+    "rp": {
+      "name": "Raspberry Pi",
+      "description": "RP2040/RP2350 microcontrollers",
+      "configs": [
+        "rp2040",
+        "rp2350"
+      ]
+    },
+    "stm32": {
+      "name": "STMicroelectronics",
+      "description": "STM32 series microcontrollers",
+      "configs": [
+        "stm32f1",
+        "stm32f4"
+      ]
+    }
+  }
+}

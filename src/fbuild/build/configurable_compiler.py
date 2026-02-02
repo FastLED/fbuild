@@ -14,6 +14,7 @@ import logging
 from pathlib import Path
 from typing import Any, List, Dict, Optional, Union, TYPE_CHECKING
 
+from .. import platform_configs
 from ..packages.package import IPackage, IToolchain, IFramework
 from ..output import ProgressCallback, log_detail
 from .flag_builder import FlagBuilder
@@ -97,13 +98,12 @@ class ConfigurableCompiler(ICompiler):
 
         # Load platform configuration
         if platform_config is None:
-            # Try to load from default location
-            config_path = Path(__file__).parent.parent / "platform_configs" / f"{self.mcu}.json"
-            if config_path.exists():
-                with open(config_path, "r") as f:
-                    self.config = json.load(f)
+            # Load from package data using importlib.resources
+            loaded_config = platform_configs.load_config(self.mcu)
+            if loaded_config is not None:
+                self.config = loaded_config
             else:
-                raise ConfigurableCompilerError(f"No platform configuration found for {self.mcu}. " + f"Expected: {config_path}")
+                raise ConfigurableCompilerError(f"No platform configuration found for {self.mcu}. " + f"Available: {platform_configs.list_available_configs()}")
         elif isinstance(platform_config, dict):
             self.config = platform_config
         else:
@@ -341,7 +341,14 @@ class ConfigurableCompiler(ICompiler):
                     exclude_patterns = [
                         "newlib/platform_include",  # Uses #include_next which breaks trampolines
                         "newlib\\platform_include",  # Windows path variant
-                        # NOTE: /bt/ exclusion removed - trampolines use absolute paths which work fine
+                        "/bt/",  # ESP32 Bluetooth SDK uses relative includes that break with trampolines
+                        "\\bt\\",  # Windows path variant
+                        "/hal/esp32",  # Chip-specific hal uses #include_next
+                        "\\hal\\esp32",  # Windows path variant
+                        "lwip/include/lwip",  # lwip uses #include_next
+                        "lwip\\include\\lwip",  # Windows path variant
+                        "mbedtls/port/include",  # mbedtls uses #include_next
+                        "mbedtls\\port\\include",  # Windows path variant
                     ]
                     logging.warning(f"[TRAMPOLINE_DEBUG] Calling generate_trampolines with {len(includes)} includes")
                     effective_includes = self.compilation_executor.trampoline_cache.generate_trampolines(includes, exclude_patterns=exclude_patterns)

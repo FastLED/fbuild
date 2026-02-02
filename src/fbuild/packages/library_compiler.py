@@ -109,8 +109,22 @@ class LibraryCompiler:
             # Compile each source file
             object_files = []
             compile_commands = []
-            gcc_path = compiler_path.parent / "avr-gcc"
-            gxx_path = compiler_path.parent / "avr-g++"
+
+            # Derive toolchain prefix from compiler path for platform-agnostic support
+            # e.g., "avr-g++" -> "avr", "arm-none-eabi-g++" -> "arm-none-eabi"
+            compiler_name = compiler_path.stem  # e.g., "avr-g++" (without extension)
+            if compiler_name.endswith("-g++"):
+                prefix = compiler_name[:-4]  # Remove "-g++"
+            elif compiler_name.endswith("-gcc"):
+                prefix = compiler_name[:-4]  # Remove "-gcc"
+            else:
+                prefix = "avr"  # Fallback for AVR
+
+            gcc_path = compiler_path.parent / f"{prefix}-gcc"
+            gxx_path = compiler_path.parent / f"{prefix}-g++"
+
+            # Determine if this is an AVR platform (uses -mmcu flag) or ARM (uses -mcpu from extra_flags)
+            is_avr = prefix == "avr"
 
             # Find common base directory for relative path display
             # Try to use lib_dir as base, or find common parent of all sources
@@ -175,8 +189,13 @@ class LibraryCompiler:
                     "-fdata-sections",
                     "-flto",
                     "-fno-fat-lto-objects",  # LTO bytecode only, no assembly
-                    f"-mmcu={mcu}",
                 ]
+
+                # Add MCU-specific flags:
+                # - AVR uses -mmcu={mcu} (e.g., -mmcu=atmega328p)
+                # - ARM uses -mcpu=... from extra_flags (e.g., -mcpu=cortex-m7)
+                if is_avr:
+                    cmd.append(f"-mmcu={mcu}")
 
                 # Add defines from list (format: "KEY=value" or "KEY")
                 for define in defines:
@@ -220,11 +239,12 @@ class LibraryCompiler:
 
                 object_files.append(obj_file)
 
-            # Create static archive using avr-gcc-ar for LTO support
+            # Create static archive using gcc-ar for LTO support
             # gcc-ar is an LTO-aware wrapper that creates proper symbol indices
             # for archives containing LTO bytecode objects (-flto -fno-fat-lto-objects)
-            gcc_ar_path = compiler_path.parent / "avr-gcc-ar"
-            ar_path = gcc_ar_path if gcc_ar_path.exists() else compiler_path.parent / "avr-ar"
+            # Use the derived prefix for platform-agnostic support
+            gcc_ar_path = compiler_path.parent / f"{prefix}-gcc-ar"
+            ar_path = gcc_ar_path if gcc_ar_path.exists() else compiler_path.parent / f"{prefix}-ar"
             archive_file = lib_dir / f"lib{library_name}.a"
 
             if show_progress:
