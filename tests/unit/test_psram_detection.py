@@ -36,9 +36,13 @@ def test_no_psram_boards_list_exists():
     assert len(NO_PSRAM_BOARDS) > 0
 
 
-def test_xiao_esp32s3_in_no_psram_list():
-    """Verify Seeed XIAO ESP32-S3 is in the NO_PSRAM_BOARDS list."""
-    assert "seeed_xiao_esp32s3" in NO_PSRAM_BOARDS
+def test_nopsram_boards_in_no_psram_list():
+    """Verify boards without PSRAM are in the NO_PSRAM_BOARDS list."""
+    # These are explicitly "no PSRAM" board variants
+    assert "adafruit_qtpy_esp32s3_nopsram" in NO_PSRAM_BOARDS
+    assert "adafruit_feather_esp32s3_nopsram" in NO_PSRAM_BOARDS
+    # seeed_xiao_esp32s3 HAS 8MB OPI PSRAM, so should NOT be in the list
+    assert "seeed_xiao_esp32s3" not in NO_PSRAM_BOARDS
 
 
 def test_board_has_psram_static_method():
@@ -47,15 +51,22 @@ def test_board_has_psram_static_method():
     assert callable(OrchestratorESP32.board_has_psram)
 
 
-def test_xiao_esp32s3_has_no_psram():
-    """Verify XIAO ESP32-S3 is detected as having no PSRAM."""
-    assert OrchestratorESP32.board_has_psram("seeed_xiao_esp32s3") is False
+def test_xiao_esp32s3_has_psram():
+    """Verify XIAO ESP32-S3 is detected as having PSRAM (8MB OPI)."""
+    # seeed_xiao_esp32s3 HAS 8MB OPI PSRAM per hardware specs
+    assert OrchestratorESP32.board_has_psram("seeed_xiao_esp32s3") is True
 
 
-def test_xiao_esp32s3_case_insensitive():
-    """Verify PSRAM detection is case-insensitive."""
-    assert OrchestratorESP32.board_has_psram("SEEED_XIAO_ESP32S3") is False
-    assert OrchestratorESP32.board_has_psram("Seeed_XIAO_Esp32S3") is False
+def test_nopsram_board_detected():
+    """Verify boards without PSRAM are correctly detected."""
+    assert OrchestratorESP32.board_has_psram("adafruit_qtpy_esp32s3_nopsram") is False
+    assert OrchestratorESP32.board_has_psram("adafruit_feather_esp32s3_nopsram") is False
+
+
+def test_nopsram_case_insensitive():
+    """Verify PSRAM detection is case-insensitive for no-PSRAM boards."""
+    assert OrchestratorESP32.board_has_psram("ADAFRUIT_QTPY_ESP32S3_NOPSRAM") is False
+    assert OrchestratorESP32.board_has_psram("Adafruit_QTPy_ESP32S3_NoPSRAM") is False
 
 
 def test_esp32dev_has_psram():

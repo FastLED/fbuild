@@ -12,7 +12,7 @@ import sys
 import threading
 import time
 from pathlib import Path
-from typing import Optional
+from typing import IO, Any, Optional
 
 from fbuild.config import PlatformIOConfig
 from fbuild.packages import Cache
@@ -29,8 +29,8 @@ def run_with_watchdog_timeout(
     timeout: int,
     inactivity_timeout: int = 30,
     verbose: bool = False,
-    **kwargs,
-) -> subprocess.CompletedProcess:
+    **kwargs: Any,
+) -> subprocess.CompletedProcess[bytes]:
     """Run a command with both total timeout and inactivity timeout.
 
     This function provides more robust timeout handling than subprocess.run(timeout=N)
@@ -112,7 +112,7 @@ def run_with_watchdog_timeout(
 
     output_queue = queue.Queue()
 
-    def read_stream(stream, stream_name):
+    def read_stream(stream: IO[bytes], stream_name: str) -> None:
         """Read from a stream in a separate thread."""
         try:
             while True:
@@ -120,7 +120,7 @@ def run_with_watchdog_timeout(
                 if not chunk:
                     break
                 output_queue.put((stream_name, chunk))
-        except Exception:
+        except OSError:
             pass  # Stream closed or error
 
     # Start reader threads
@@ -181,7 +181,8 @@ def run_with_watchdog_timeout(
                     import ctypes
 
                     kernel32 = ctypes.windll.kernel32
-                    handle = int(process._handle)
+                    # Use getattr to access platform-specific _handle attribute
+                    handle = int(getattr(process, "_handle"))
                     kernel32.TerminateProcess(handle, 1)
                 else:
                     # On Unix, use SIGKILL
@@ -527,7 +528,7 @@ class ESP32Deployer(IDeployer):
                     # Build detailed error message
                     error_msg = f"Upload timed out after {upload_timeout}s."
                     if e.stderr:
-                        stderr_text = e.stderr.decode("utf-8", errors="replace") if isinstance(e.stderr, bytes) else str(e.stderr)
+                        stderr_text = e.stderr.decode("utf-8", errors="replace") if e.stderr else ""
                         if "No output for" in stderr_text:
                             error_msg += "\n\n⚠️  Process stuck in kernel I/O (Windows serial port driver issue)."
                             error_msg += "\n\nThis is a known Windows USB-CDC driver limitation where serial port"

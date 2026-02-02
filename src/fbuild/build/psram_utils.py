@@ -35,12 +35,13 @@ NO_PSRAM_BOARDS: List[str] = [
     # Add other no-PSRAM ESP32-S3 boards here as needed
 ]
 
-# ESP32 boards with OPI PSRAM that incorrectly default to QSPI in boards.txt
-# These boards MUST use the OPI SDK variant, regardless of what boards.txt says
-# The board definitions default to psram_type=qspi but the hardware has OPI PSRAM
+# ESP32 boards with OPI PSRAM that have incorrect memory_type in their board JSON
+# These boards MUST use the OPI SDK variant, regardless of what the JSON says
+# Only add boards here if their board JSON has the WRONG memory_type value
+# (e.g., qio_qspi when the hardware actually has OPI PSRAM)
+# NOTE: Most boards should NOT be here - the board JSON should be the source of truth
 OPI_PSRAM_BOARDS: List[str] = [
-    "seeed_xiao_esp32s3",  # Seeed XIAO ESP32-S3 has 8MB OPI PSRAM (esptool: "Embedded PSRAM 8MB (AP_3v3)")
-    # Add other OPI PSRAM boards that incorrectly default to QSPI here
+    # Add boards here ONLY if their board JSON has incorrect memory_type
 ]
 
 
@@ -96,8 +97,8 @@ def get_psram_mode(board_id: str, board_config: dict) -> str:
         PSRAM mode string ("qspi", "opi", etc.)
 
     Example:
-        >>> get_psram_mode("seeed_xiao_esp32s3", {"build": {"arduino": {"memory_type": "qio_qspi"}}})
-        "opi"  # Forced to OPI because board has OPI PSRAM hardware (in OPI_PSRAM_BOARDS)
+        >>> get_psram_mode("seeed_xiao_esp32s3", {"build": {"arduino": {"memory_type": "qio_opi"}}})
+        "opi"  # Board JSON has correct memory_type, use it
         >>> get_psram_mode("adafruit_qtpy_esp32s3_nopsram", {"build": {"arduino": {"memory_type": "qio_opi"}}})
         "qspi"  # Overridden to use QSPI SDK (no boot PSRAM init)
         >>> get_psram_mode("esp32dev", {"build": {"arduino": {"memory_type": "qio_opi"}}})
