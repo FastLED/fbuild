@@ -219,9 +219,12 @@ class LibraryManager:
         Returns:
             Library name in lowercase
         """
+        # Remove branch reference (e.g., #master) from URL before parsing
+        url_no_fragment = url.split("#")[0] if "#" in url else url
+
         # For GitHub URLs, use the repo name
-        if GitHubURLOptimizer.is_github_url(url):
-            parts = urlparse(url).path.strip("/").split("/")
+        if GitHubURLOptimizer.is_github_url(url_no_fragment):
+            parts = urlparse(url_no_fragment).path.strip("/").split("/")
             if len(parts) >= 2:
                 name = parts[1]
                 # Remove .git suffix if present

@@ -71,6 +71,11 @@ class GitHubURLOptimizer:
         Into:
             https://github.com/FastLED/FastLED/archive/refs/heads/main.zip
 
+        Also handles branch references:
+            https://github.com/FastLED/FastLED#master
+        Into:
+            https://github.com/FastLED/FastLED/archive/refs/heads/master.zip
+
         Args:
             url: Original GitHub URL
 
@@ -79,6 +84,11 @@ class GitHubURLOptimizer:
         """
         if not cls.is_github_url(url):
             return url
+
+        # Extract branch from URL fragment (e.g., #master or #main)
+        branch = None
+        if "#" in url:
+            url, branch = url.rsplit("#", 1)
 
         # Remove trailing slashes and .git suffix
         url = url.rstrip("/")
@@ -89,8 +99,9 @@ class GitHubURLOptimizer:
         if "/archive/" in url:
             return url
 
-        # Detect default branch
-        branch = cls.detect_default_branch(url)
+        # If no branch specified, detect default branch
+        if not branch:
+            branch = cls.detect_default_branch(url)
 
         # Build zip URL
         return f"{url}/archive/refs/heads/{branch}.zip"

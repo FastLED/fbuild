@@ -149,8 +149,17 @@ class LibraryCompiler:
                     compiler = gcc_path
                     std_flag = "-std=gnu11"
 
-                # Output object file
-                obj_file = lib_dir / f"{source.stem}.o"
+                # Output object file with unique name based on relative path
+                # This prevents collisions when multiple source files have the same base name
+                # (e.g., fl/_build.cpp and platforms/_build.cpp)
+                try:
+                    rel_path = source.relative_to(base_dir)
+                    # Replace path separators with underscores to create unique filename
+                    unique_name = str(rel_path).replace("/", "_").replace("\\", "_")
+                    unique_name = unique_name.rsplit(".", 1)[0]  # Remove extension
+                except ValueError:
+                    unique_name = source.stem
+                obj_file = lib_dir / f"{unique_name}.o"
 
                 # Build compile command
                 # Use -flto with -fno-fat-lto-objects to generate only LTO bytecode
@@ -211,8 +220,11 @@ class LibraryCompiler:
 
                 object_files.append(obj_file)
 
-            # Create static archive using avr-ar
-            ar_path = compiler_path.parent / "avr-ar"
+            # Create static archive using avr-gcc-ar for LTO support
+            # gcc-ar is an LTO-aware wrapper that creates proper symbol indices
+            # for archives containing LTO bytecode objects (-flto -fno-fat-lto-objects)
+            gcc_ar_path = compiler_path.parent / "avr-gcc-ar"
+            ar_path = gcc_ar_path if gcc_ar_path.exists() else compiler_path.parent / "avr-ar"
             archive_file = lib_dir / f"lib{library_name}.a"
 
             if show_progress:

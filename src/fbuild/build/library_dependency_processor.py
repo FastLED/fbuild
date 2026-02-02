@@ -89,7 +89,8 @@ class LibraryDependencyProcessor:
             return LibraryProcessingResult(
                 libraries=[],
                 include_paths=[],
-                object_files=[]
+                object_files=[],
+                archive_files=[]
             )
 
         if self.verbose:
@@ -120,10 +121,12 @@ class LibraryDependencyProcessor:
         # Get library artifacts
         lib_include_paths = self.library_manager.get_library_include_paths()
         lib_objects = self.library_manager.get_library_objects()
+        lib_archives = self.library_manager.get_library_archives()
 
         if self.verbose:
             print(f"      Compiled {len(libraries)} libraries")
             print(f"      Library objects: {len(lib_objects)}")
+            print(f"      Library archives: {len(lib_archives)}")
 
         # Extract library directory paths from Library objects
         library_paths = [lib.lib_dir for lib in libraries]
@@ -131,7 +134,8 @@ class LibraryDependencyProcessor:
         return LibraryProcessingResult(
             libraries=library_paths,
             include_paths=lib_include_paths,
-            object_files=lib_objects
+            object_files=lib_objects,
+            archive_files=lib_archives
         )
 
     def _prepare_defines(self, board_config: BoardConfig) -> List[str]:
@@ -170,7 +174,8 @@ class LibraryProcessingResult:
         self,
         libraries: List[Path],
         include_paths: List[Path],
-        object_files: List[Path]
+        object_files: List[Path],
+        archive_files: Optional[List[Path]] = None
     ):
         """
         Initialize library processing result.
@@ -179,7 +184,9 @@ class LibraryProcessingResult:
             libraries: List of library root directories
             include_paths: List of include directories to add to compiler
             object_files: List of compiled object files to link
+            archive_files: List of library archive files (.a) to link
         """
         self.libraries = libraries
         self.include_paths = include_paths
         self.object_files = object_files
+        self.archive_files = archive_files or []

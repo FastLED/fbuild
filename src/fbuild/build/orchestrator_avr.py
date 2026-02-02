@@ -270,7 +270,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             )
 
             lib_include_paths = lib_result.include_paths
-            lib_objects = lib_result.object_files
+            lib_archives = lib_result.archive_files
 
             # Get src_dir override from platformio.ini
             from ..config import PlatformIOConfig
@@ -329,16 +329,17 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                 hex_path = build_dir / 'firmware.hex'
 
                 linker = BuildComponentFactory.create_linker(toolchain, board_config)
-                # For LTO with -fno-fat-lto-objects, we pass library objects separately
-                # so they don't get archived (LTO bytecode doesn't work well in archives)
+                # Now using avr-gcc-ar for archive creation, which properly handles LTO
+                # bytecode objects. This allows using archives instead of passing objects directly.
+                # Previously, standard ar couldn't create proper symbol indices for LTO objects.
                 link_result = linker.link_legacy(
                     sketch_objects,
                     all_core_objects,
                     elf_path,
                     hex_path,
-                    [],  # No library archives
+                    lib_archives,  # Library archives (created with gcc-ar for LTO support)
                     None,  # No extra flags
-                    lib_objects  # Library objects passed separately for LTO
+                    None  # No additional objects needed when using archives
                 )
 
                 if not link_result.success:

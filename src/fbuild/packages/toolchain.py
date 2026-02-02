@@ -361,6 +361,38 @@ class ToolchainAVR(IToolchain):
         except ToolchainError:
             return None
 
+    def get_gcc_ar_path(self) -> Optional[Path]:
+        """Get path to LTO-aware archiver (gcc-ar).
+
+        The gcc-ar tool is a wrapper that invokes ar with the LTO plugin,
+        allowing proper symbol index creation for archives containing
+        LTO bytecode objects (compiled with -flto -fno-fat-lto-objects).
+
+        This enables proper dead code elimination when using archives
+        instead of passing object files directly to the linker.
+
+        Returns:
+            Path to gcc-ar binary or None if not found
+        """
+        try:
+            return self.get_tool_path("avr-gcc-ar")
+        except ToolchainError:
+            return None
+
+    def get_gcc_ranlib_path(self) -> Optional[Path]:
+        """Get path to LTO-aware ranlib (gcc-ranlib).
+
+        The gcc-ranlib tool is a wrapper that invokes ranlib with the LTO plugin,
+        for updating archive symbol indices with LTO support.
+
+        Returns:
+            Path to gcc-ranlib binary or None if not found
+        """
+        try:
+            return self.get_tool_path("avr-gcc-ranlib")
+        except ToolchainError:
+            return None
+
     def get_objcopy_path(self) -> Optional[Path]:
         """Get path to objcopy utility.
 

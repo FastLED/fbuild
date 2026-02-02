@@ -410,10 +410,15 @@ class LinkerAVR(ILinker):
         # Start group for circular dependencies
         cmd.append('-Wl,--start-group')
 
-        # Add library archives
-        for lib_archive in lib_archives:
-            if lib_archive.exists():
-                cmd.append(str(lib_archive))
+        # Add library archives with --whole-archive for LTO support
+        # This ensures all objects from LTO archives are considered during link-time optimization
+        # Without this, the linker may not pull in needed symbols from archives with LTO bytecode
+        if lib_archives:
+            cmd.append('-Wl,--whole-archive')
+            for lib_archive in lib_archives:
+                if lib_archive.exists():
+                    cmd.append(str(lib_archive))
+            cmd.append('-Wl,--no-whole-archive')
 
         # Add math library
         cmd.append('-lm')
