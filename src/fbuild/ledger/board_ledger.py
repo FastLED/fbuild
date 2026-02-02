@@ -2,7 +2,7 @@
 Board Ledger - Track attached chip/port mappings.
 
 This module provides a simple ledger to cache chip type detections for serial ports.
-The cache is stored in ~/.fbuild/board_ledger.json.
+The cache is stored in ~/.fbuild/daemon/board_ledger.json (or daemon_dev/ in dev mode).
 
 Features:
 - Port to chip type mapping with timestamps
@@ -150,10 +150,14 @@ class BoardLedger:
 
         Args:
             ledger_path: Optional custom path for ledger file.
-                        Defaults to ~/.fbuild/board_ledger.json
+                        Defaults to ~/.fbuild/daemon/board_ledger.json
+                        (or daemon_dev/ in dev mode)
         """
         if ledger_path is None:
-            self._ledger_path = Path.home() / ".fbuild" / "board_ledger.json"
+            if os.environ.get("FBUILD_DEV_MODE") == "1":
+                self._ledger_path = Path.home() / ".fbuild" / "daemon_dev" / "board_ledger.json"
+            else:
+                self._ledger_path = Path.home() / ".fbuild" / "daemon" / "board_ledger.json"
         else:
             self._ledger_path = ledger_path
 

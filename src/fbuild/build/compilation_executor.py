@@ -108,7 +108,7 @@ class CompilationExecutor:
         # Initialize trampoline cache if enabled and on Windows
         if self.use_trampolines and platform.system() == "Windows":
             if cache is not None:
-                # Pass cache_root for metadata purposes, Windows uses ~/.fbuild/trampolines/
+                # Pass cache_root (trampolines_dir), respects dev mode
                 cache.ensure_directories()
                 self.trampoline_cache = HeaderTrampolineCache(
                     cache_root=cache.trampolines_dir,

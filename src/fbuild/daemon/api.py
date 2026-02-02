@@ -80,8 +80,10 @@ def request_daemon() -> DaemonResponse:
         if is_daemon_http_available():
             # Daemon is running and HTTP server is responding
             # Read PID file for metadata (may not exist in dev mode)
-            pid = read_pid_file() if is_daemon_alive() else None
-            launcher = get_launcher_pid() if is_daemon_alive() else None
+            # Note: Don't guard with is_daemon_alive() - we already know daemon is alive via HTTP
+            # The is_daemon_alive() check can fail due to PID file timing issues
+            pid = read_pid_file()
+            launcher = get_launcher_pid()
             return DaemonResponse(status=DaemonStatus.ALREADY_RUNNING, pid=pid, launched_by=launcher, message=f"Daemon already running (HTTP available, PID {pid})")
 
         launcher_pid = os.getpid()

@@ -60,6 +60,11 @@ class Cache:
 
         Args:
             project_dir: Project directory. If None, uses current directory.
+
+        Cache location priority:
+        1. FBUILD_CACHE_DIR environment variable (explicit override)
+        2. Dev mode (FBUILD_DEV_MODE=1): ~/.fbuild/cache_dev/ (isolated from prod)
+        3. Production: ~/.fbuild/cache/ (global)
         """
         if project_dir is None:
             project_dir = Path.cwd()
@@ -75,11 +80,11 @@ class Cache:
             # Explicit cache directory override
             self.cache_root = Path(cache_env).resolve()
         elif dev_mode:
-            # Development mode: use project-local cache
-            self.cache_root = self.project_dir / ".fbuild" / "cache_dev"
+            # Development mode: use global ~/.fbuild/cache_dev/ (isolated from prod cache)
+            self.cache_root = Path.home() / ".fbuild" / "cache_dev"
         else:
-            # Production: use project-local cache (default)
-            self.cache_root = self.project_dir / ".fbuild" / "cache"
+            # Production: use global ~/.fbuild/cache/
+            self.cache_root = Path.home() / ".fbuild" / "cache"
 
         if build_env:
             # Explicit build directory override (useful for Windows path length limits)

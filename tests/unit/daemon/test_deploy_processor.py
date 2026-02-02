@@ -234,7 +234,7 @@ def test_deploy_firmware_success(processor, deploy_request, mock_context):
 
     mock_deployer_class = MagicMock(return_value=mock_deployer)
 
-    with patch.object(sys, "modules", {"fbuild.deploy.deployer_esp32": MagicMock(ESP32Deployer=mock_deployer_class), **sys.modules}):
+    with patch("fbuild.deploy.deployer_esp32.ESP32Deployer", mock_deployer_class):
         with patch.object(processor, "_update_status"):
             result = processor._deploy_firmware(deploy_request, mock_context)
 

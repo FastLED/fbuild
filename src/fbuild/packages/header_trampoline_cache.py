@@ -21,17 +21,17 @@ Design (v3.0):
                -I D:/build/project/config
                (305+ -I directives, ~25,000 chars)
 
-    Rewritten: -I ~/.fbuild/trampolines/esp32c6
+    Rewritten: -I ~/.fbuild/cache/trampolines/esp32c6
                (1 -I directive, ~50 chars)
 
-    Where ~/.fbuild/trampolines/esp32c6/freertos/FreeRTOS.h contains:
+    Where ~/.fbuild/cache/trampolines/esp32c6/freertos/FreeRTOS.h contains:
         #pragma once
         #include "D:/toolchains/esp-idf/components/freertos/include/freertos/FreeRTOS.h"
 
     The design flattens all headers into the root, handling conflicts by keeping first occurrence
     (matching GCC's -I ordering semantics where first match wins).
 
-    ~/.fbuild/trampolines/esp32c6/freertos/FreeRTOS.h → first -I path that contains it
+    ~/.fbuild/cache/trampolines/esp32c6/freertos/FreeRTOS.h → first -I path that contains it
 
     This works because:
     1. Headers in earlier -I paths take precedence (GCC behavior)
@@ -82,7 +82,7 @@ class HeaderTrampolineCache:
         """Initialize header trampoline cache.
 
         Args:
-            cache_root: Root directory for trampoline cache (on Windows, uses ~/.fbuild/trampolines/)
+            cache_root: Root directory for trampoline cache (on Windows, uses ~/.fbuild/cache/trampolines/)
             show_progress: Whether to show cache generation progress
             mcu_variant: MCU variant identifier (e.g., 'esp32c6', 'esp32c3')
             framework_version: Framework version string for cache invalidation
@@ -93,20 +93,32 @@ class HeaderTrampolineCache:
         self.framework_version = framework_version
         self.platform_name = platform_name
 
-        # On Windows, use ~/.fbuild/trampolines to keep all fbuild data in one place
+        # On Windows, use ~/.fbuild/cache/trampolines to keep all fbuild data in one place
         # The UNIFIED design uses a SINGLE directory, resulting in ONE -I directive
         #
         # Path calculation (v3.0 UNIFIED):
-        #   With ~/.fbuild/trampolines/{mcu}: ~50 chars TOTAL (1 -I directive)
+        #   With ~/.fbuild/cache/trampolines/{mcu}: ~50 chars TOTAL (1 -I directive)
         #   With old design: ~6,375 chars (375 × 17 chars per -I directive)
         #   Savings: >99% reduction in command-line length
         if platform.system() == "Windows":
-            # Use ~/.fbuild/trampolines on Windows for centralized storage
-            global_root = Path.home() / ".fbuild" / "trampolines"
-            if mcu_variant:
-                self.cache_root = global_root / mcu_variant
+            if cache_root is not None:
+                # Use provided cache_root (from Cache.trampolines_dir, respects dev mode)
+                if mcu_variant:
+                    self.cache_root = cache_root / mcu_variant
+                else:
+                    self.cache_root = cache_root / "generic"
             else:
-                self.cache_root = global_root / "generic"
+                # Fallback: use ~/.fbuild/cache/trampolines (or cache_dev in dev mode)
+                import os
+
+                if os.environ.get("FBUILD_DEV_MODE") == "1":
+                    global_root = Path.home() / ".fbuild" / "cache_dev" / "trampolines"
+                else:
+                    global_root = Path.home() / ".fbuild" / "cache" / "trampolines"
+                if mcu_variant:
+                    self.cache_root = global_root / mcu_variant
+                else:
+                    self.cache_root = global_root / "generic"
         elif cache_root is None:
             # Non-Windows without explicit cache_root
             self.cache_root = Path("/tmp/inc")

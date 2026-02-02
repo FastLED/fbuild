@@ -285,8 +285,9 @@ async def websocket_serial_monitor_api(websocket, context):
 ### Development Mode
 
 Always set `FBUILD_DEV_MODE=1` when developing. This isolates:
-- Daemon files → `.fbuild/daemon_dev/` (instead of `~/.fbuild/daemon/`)
-- Cache files → `.fbuild/cache_dev/` (instead of `.fbuild/cache/`)
+- Daemon files → `~/.fbuild/daemon_dev/` (instead of `~/.fbuild/daemon/`)
+- Cache files → `~/.fbuild/cache_dev/` (isolated from `~/.fbuild/cache/`)
+- Port → 8865 (instead of 8765)
 
 ### Platform Requirements
 

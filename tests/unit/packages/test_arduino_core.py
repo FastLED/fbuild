@@ -1,5 +1,6 @@
 """Unit tests for Arduino core management."""
 
+import os
 import tempfile
 from pathlib import Path
 
@@ -294,61 +295,79 @@ class TestArduinoCore:
     def test_ensure_avr_core_cached(self):
         """Test using cached Arduino core."""
         with tempfile.TemporaryDirectory() as temp_dir:
-            cache = Cache(Path(temp_dir))
-            cache.ensure_directories()
-            core = ArduinoCore(cache)
+            # Set FBUILD_CACHE_DIR to use temp directory for cache
+            old_cache_dir = os.environ.get("FBUILD_CACHE_DIR")
+            os.environ["FBUILD_CACHE_DIR"] = temp_dir
+            try:
+                cache = Cache(Path(temp_dir))
+                cache.ensure_directories()
+                core = ArduinoCore(cache)
 
-            # Create a fake cached core with URL-based structure
-            core_path = cache.get_platform_path(ArduinoCore.AVR_URL, ArduinoCore.AVR_VERSION)
+                # Create a fake cached core with URL-based structure
+                core_path = cache.get_platform_path(ArduinoCore.AVR_URL, ArduinoCore.AVR_VERSION)
 
-            (core_path / "cores" / "arduino").mkdir(parents=True)
-            (core_path / "variants" / "standard").mkdir(parents=True)
-            (core_path / "boards.txt").write_text("uno.name=Arduino Uno\n")
-            (core_path / "platform.txt").touch()
+                (core_path / "cores" / "arduino").mkdir(parents=True)
+                (core_path / "variants" / "standard").mkdir(parents=True)
+                (core_path / "boards.txt").write_text("uno.name=Arduino Uno\n")
+                (core_path / "platform.txt").touch()
 
-            # Create required headers
-            (core_path / "cores" / "arduino" / "Arduino.h").touch()
-            (core_path / "cores" / "arduino" / "HardwareSerial.h").touch()
-            (core_path / "variants" / "standard" / "pins_arduino.h").touch()
+                # Create required headers
+                (core_path / "cores" / "arduino" / "Arduino.h").touch()
+                (core_path / "cores" / "arduino" / "HardwareSerial.h").touch()
+                (core_path / "variants" / "standard" / "pins_arduino.h").touch()
 
-            # Create required source files
-            (core_path / "cores" / "arduino" / "main.cpp").touch()
-            (core_path / "cores" / "arduino" / "wiring.c").touch()
-            (core_path / "cores" / "arduino" / "wiring_digital.c").touch()
+                # Create required source files
+                (core_path / "cores" / "arduino" / "main.cpp").touch()
+                (core_path / "cores" / "arduino" / "wiring.c").touch()
+                (core_path / "cores" / "arduino" / "wiring_digital.c").touch()
 
-            # Ensure core (should use cache)
-            result = core.ensure_avr_core()
-            assert result == core_path
-            assert core._core_path == core_path
+                # Ensure core (should use cache)
+                result = core.ensure_avr_core()
+                assert result == core_path
+                assert core._core_path == core_path
+            finally:
+                if old_cache_dir is None:
+                    del os.environ["FBUILD_CACHE_DIR"]
+                else:
+                    os.environ["FBUILD_CACHE_DIR"] = old_cache_dir
 
     def test_ensure_avr_core_reuse_instance(self):
         """Test that ensure_avr_core returns cached instance."""
         with tempfile.TemporaryDirectory() as temp_dir:
-            cache = Cache(Path(temp_dir))
-            cache.ensure_directories()
-            core = ArduinoCore(cache)
+            # Set FBUILD_CACHE_DIR to use temp directory for cache
+            old_cache_dir = os.environ.get("FBUILD_CACHE_DIR")
+            os.environ["FBUILD_CACHE_DIR"] = temp_dir
+            try:
+                cache = Cache(Path(temp_dir))
+                cache.ensure_directories()
+                core = ArduinoCore(cache)
 
-            # Create a fake cached core with URL-based structure
-            core_path = cache.get_platform_path(ArduinoCore.AVR_URL, ArduinoCore.AVR_VERSION)
+                # Create a fake cached core with URL-based structure
+                core_path = cache.get_platform_path(ArduinoCore.AVR_URL, ArduinoCore.AVR_VERSION)
 
-            (core_path / "cores" / "arduino").mkdir(parents=True)
-            (core_path / "variants" / "standard").mkdir(parents=True)
-            (core_path / "boards.txt").write_text("uno.name=Arduino Uno\n")
-            (core_path / "platform.txt").touch()
+                (core_path / "cores" / "arduino").mkdir(parents=True)
+                (core_path / "variants" / "standard").mkdir(parents=True)
+                (core_path / "boards.txt").write_text("uno.name=Arduino Uno\n")
+                (core_path / "platform.txt").touch()
 
-            # Create required headers
-            (core_path / "cores" / "arduino" / "Arduino.h").touch()
-            (core_path / "cores" / "arduino" / "HardwareSerial.h").touch()
-            (core_path / "variants" / "standard" / "pins_arduino.h").touch()
+                # Create required headers
+                (core_path / "cores" / "arduino" / "Arduino.h").touch()
+                (core_path / "cores" / "arduino" / "HardwareSerial.h").touch()
+                (core_path / "variants" / "standard" / "pins_arduino.h").touch()
 
-            # Create required source files
-            (core_path / "cores" / "arduino" / "main.cpp").touch()
-            (core_path / "cores" / "arduino" / "wiring.c").touch()
-            (core_path / "cores" / "arduino" / "wiring_digital.c").touch()
+                # Create required source files
+                (core_path / "cores" / "arduino" / "main.cpp").touch()
+                (core_path / "cores" / "arduino" / "wiring.c").touch()
+                (core_path / "cores" / "arduino" / "wiring_digital.c").touch()
 
-            # First call
-            result1 = core.ensure_avr_core()
+                # First call
+                result1 = core.ensure_avr_core()
 
-            # Second call should return same path without checking cache
-            result2 = core.ensure_avr_core()
-            assert result1 == result2
+                # Second call should return same path without checking cache
+                result2 = core.ensure_avr_core()
+                assert result1 == result2
+            finally:
+                if old_cache_dir is None:
+                    del os.environ["FBUILD_CACHE_DIR"]
+                else:
+                    os.environ["FBUILD_CACHE_DIR"] = old_cache_dir

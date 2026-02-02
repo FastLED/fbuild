@@ -48,11 +48,11 @@ def _get_ledger_path() -> Path:
         Path to firmware_ledger.json, respecting FBUILD_DEV_MODE
     """
     if os.environ.get("FBUILD_DEV_MODE") == "1":
-        # Use project-local directory for development
-        return Path.cwd() / ".fbuild" / "daemon_dev" / "firmware_ledger.json"
+        # Use global ~/.fbuild/daemon_dev/ for development
+        return Path.home() / ".fbuild" / "daemon_dev" / "firmware_ledger.json"
     else:
-        # Use home directory for production
-        return Path.home() / ".fbuild" / "firmware_ledger.json"
+        # Use global ~/.fbuild/daemon/ for production
+        return Path.home() / ".fbuild" / "daemon" / "firmware_ledger.json"
 
 
 class FirmwareLedgerError(Exception):

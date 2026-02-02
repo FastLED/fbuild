@@ -14,9 +14,9 @@ class TestCache:
         """Test initialization with default directory."""
         cache = Cache()
         assert cache.project_dir == Path.cwd().resolve()
-        # Dev mode uses cache_dev, production uses cache
+        # Dev mode uses cache_dev, production uses cache (in home directory, not project)
         expected_cache_name = "cache_dev" if os.environ.get("FBUILD_DEV_MODE") == "1" else "cache"
-        assert cache.cache_root == cache.project_dir / ".fbuild" / expected_cache_name
+        assert cache.cache_root == Path.home() / ".fbuild" / expected_cache_name
         assert cache.build_root == cache.project_dir / ".fbuild" / "build"
 
     def test_init_custom_directory(self):
@@ -25,9 +25,9 @@ class TestCache:
             project_dir = Path(temp_dir)
             cache = Cache(project_dir)
             assert cache.project_dir == project_dir.resolve()
-            # Dev mode uses cache_dev, production uses cache
+            # Dev mode uses cache_dev, production uses cache (in home directory, not project)
             expected_cache_name = "cache_dev" if os.environ.get("FBUILD_DEV_MODE") == "1" else "cache"
-            assert cache.cache_root == project_dir / ".fbuild" / expected_cache_name
+            assert cache.cache_root == Path.home() / ".fbuild" / expected_cache_name
 
     def test_init_with_env_override(self):
         """Test cache directory override via environment variable."""
@@ -198,50 +198,77 @@ class TestCache:
     def test_is_toolchain_cached(self):
         """Test checking if toolchain is cached."""
         with tempfile.TemporaryDirectory() as temp_dir:
-            cache = Cache(Path(temp_dir))
-            cache.ensure_directories()
+            # Set FBUILD_CACHE_DIR to use temp directory for cache
+            old_cache_dir = os.environ.get("FBUILD_CACHE_DIR")
+            os.environ["FBUILD_CACHE_DIR"] = temp_dir
+            try:
+                cache = Cache(Path(temp_dir))
+                cache.ensure_directories()
 
-            url = "https://example.com/toolchain"
-            version = "7.3.0"
+                url = "https://example.com/toolchain"
+                version = "7.3.0"
 
-            # Create a toolchain directory
-            toolchain_path = cache.get_toolchain_path(url, version)
-            toolchain_path.mkdir(parents=True)
+                # Create a toolchain directory
+                toolchain_path = cache.get_toolchain_path(url, version)
+                toolchain_path.mkdir(parents=True)
 
-            assert cache.is_toolchain_cached(url, version)
-            assert not cache.is_toolchain_cached(url, "8.0.0")
+                assert cache.is_toolchain_cached(url, version)
+                assert not cache.is_toolchain_cached(url, "8.0.0")
+            finally:
+                if old_cache_dir is None:
+                    del os.environ["FBUILD_CACHE_DIR"]
+                else:
+                    os.environ["FBUILD_CACHE_DIR"] = old_cache_dir
 
     def test_is_toolchain_cached_file_not_dir(self):
         """Test that toolchain check fails for files."""
         with tempfile.TemporaryDirectory() as temp_dir:
-            cache = Cache(Path(temp_dir))
-            cache.ensure_directories()
+            # Set FBUILD_CACHE_DIR to use temp directory for cache
+            old_cache_dir = os.environ.get("FBUILD_CACHE_DIR")
+            os.environ["FBUILD_CACHE_DIR"] = temp_dir
+            try:
+                cache = Cache(Path(temp_dir))
+                cache.ensure_directories()
 
-            url = "https://example.com/toolchain"
-            version = "7.3.0"
+                url = "https://example.com/toolchain"
+                version = "7.3.0"
 
-            # Create a file instead of directory
-            toolchain_path = cache.get_toolchain_path(url, version)
-            toolchain_path.parent.mkdir(parents=True, exist_ok=True)
-            toolchain_path.touch()
+                # Create a file instead of directory
+                toolchain_path = cache.get_toolchain_path(url, version)
+                toolchain_path.parent.mkdir(parents=True, exist_ok=True)
+                toolchain_path.touch()
 
-            assert not cache.is_toolchain_cached(url, version)
+                assert not cache.is_toolchain_cached(url, version)
+            finally:
+                if old_cache_dir is None:
+                    del os.environ["FBUILD_CACHE_DIR"]
+                else:
+                    os.environ["FBUILD_CACHE_DIR"] = old_cache_dir
 
     def test_is_platform_cached(self):
         """Test checking if platform is cached."""
         with tempfile.TemporaryDirectory() as temp_dir:
-            cache = Cache(Path(temp_dir))
-            cache.ensure_directories()
+            # Set FBUILD_CACHE_DIR to use temp directory for cache
+            old_cache_dir = os.environ.get("FBUILD_CACHE_DIR")
+            os.environ["FBUILD_CACHE_DIR"] = temp_dir
+            try:
+                cache = Cache(Path(temp_dir))
+                cache.ensure_directories()
 
-            url = "https://example.com/platform"
-            version = "1.8.6"
+                url = "https://example.com/platform"
+                version = "1.8.6"
 
-            # Create a platform directory
-            platform_path = cache.get_platform_path(url, version)
-            platform_path.mkdir(parents=True)
+                # Create a platform directory
+                platform_path = cache.get_platform_path(url, version)
+                platform_path.mkdir(parents=True)
 
-            assert cache.is_platform_cached(url, version)
-            assert not cache.is_platform_cached(url, "2.0.0")
+                assert cache.is_platform_cached(url, version)
+                assert not cache.is_platform_cached(url, "2.0.0")
+            finally:
+                if old_cache_dir is None:
+                    del os.environ["FBUILD_CACHE_DIR"]
+                else:
+                    os.environ["FBUILD_CACHE_DIR"] = old_cache_dir
 
     def test_multiple_environments(self):
         """Test managing multiple build environments."""
@@ -263,30 +290,39 @@ class TestCache:
     def test_version_isolation(self):
         """Test that different versions don't conflict."""
         with tempfile.TemporaryDirectory() as temp_dir:
-            cache = Cache(Path(temp_dir))
-            cache.ensure_directories()
+            # Set FBUILD_CACHE_DIR to use temp directory for cache
+            old_cache_dir = os.environ.get("FBUILD_CACHE_DIR")
+            os.environ["FBUILD_CACHE_DIR"] = temp_dir
+            try:
+                cache = Cache(Path(temp_dir))
+                cache.ensure_directories()
 
-            url = "https://example.com/toolchain"
-            version1 = "7.3.0"
-            version2 = "8.0.0"
+                url = "https://example.com/toolchain"
+                version1 = "7.3.0"
+                version2 = "8.0.0"
 
-            # Create toolchains for both versions
-            path1 = cache.get_toolchain_path(url, version1)
-            path2 = cache.get_toolchain_path(url, version2)
+                # Create toolchains for both versions
+                path1 = cache.get_toolchain_path(url, version1)
+                path2 = cache.get_toolchain_path(url, version2)
 
-            path1.mkdir(parents=True)
-            path2.mkdir(parents=True)
+                path1.mkdir(parents=True)
+                path2.mkdir(parents=True)
 
-            # Both should be cached independently
-            assert cache.is_toolchain_cached(url, version1)
-            assert cache.is_toolchain_cached(url, version2)
+                # Both should be cached independently
+                assert cache.is_toolchain_cached(url, version1)
+                assert cache.is_toolchain_cached(url, version2)
 
-            # Paths should be different
-            assert path1 != path2
+                # Paths should be different
+                assert path1 != path2
 
-            # Same URL hash, different versions
-            url_hash = Cache.hash_url(url)
-            assert path1.name == version1
-            assert path2.name == version2
-            assert path1.parent.name == url_hash
-            assert path2.parent.name == url_hash
+                # Same URL hash, different versions
+                url_hash = Cache.hash_url(url)
+                assert path1.name == version1
+                assert path2.name == version2
+                assert path1.parent.name == url_hash
+                assert path2.parent.name == url_hash
+            finally:
+                if old_cache_dir is None:
+                    del os.environ["FBUILD_CACHE_DIR"]
+                else:
+                    os.environ["FBUILD_CACHE_DIR"] = old_cache_dir

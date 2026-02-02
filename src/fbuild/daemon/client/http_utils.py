@@ -29,7 +29,6 @@ from fbuild.daemon.paths import DAEMON_DIR
 DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 8765
 DEFAULT_DEV_PORT = 8865  # Dev mode uses prod + 100 for isolation
-DEFAULT_TEST_PORT = 9176  # Default port for testing when FBUILD_DAEMON_PORT is set
 DEFAULT_TIMEOUT = 30.0  # seconds
 DEFAULT_CONNECT_TIMEOUT = 5.0  # seconds
 
@@ -40,12 +39,14 @@ logger = logging.getLogger(__name__)
 
 
 def get_daemon_port() -> int:
-    """Get the daemon port based on environment variables, port file, and dev mode.
+    """Get the daemon port based on environment variables, port file, and mode.
 
     Priority:
     1. FBUILD_DAEMON_PORT environment variable (if set and valid)
     2. Port file (if exists and valid)
-    3. Environment-based default (8766 for dev mode, 8765 for production)
+    3. Mode-based default:
+       - Dev mode (FBUILD_DEV_MODE=1): 8865
+       - Production: 8765
 
     Returns:
         Port number for daemon HTTP server
@@ -80,7 +81,7 @@ def get_daemon_port() -> int:
         except (ValueError, OSError) as e:
             logger.warning(f"Failed to read port file {PORT_FILE}: {e}")
 
-    # Priority 3: Fall back to default based on dev mode
+    # Priority 3: Fall back to default based on mode
     if os.getenv("FBUILD_DEV_MODE") == "1":
         return DEFAULT_DEV_PORT
     return DEFAULT_PORT

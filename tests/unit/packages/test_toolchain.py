@@ -1,5 +1,6 @@
 """Unit tests for toolchain management."""
 
+import os
 import sys
 import tempfile
 from pathlib import Path
@@ -253,40 +254,49 @@ class TestToolchain:
     def test_ensure_toolchain_cached(self):
         """Test using cached toolchain."""
         with tempfile.TemporaryDirectory() as temp_dir:
-            cache = Cache(Path(temp_dir))
-            cache.ensure_directories()
-            toolchain = ToolchainAVR(cache)
+            # Set FBUILD_CACHE_DIR to use temp directory for cache
+            old_cache_dir = os.environ.get("FBUILD_CACHE_DIR")
+            os.environ["FBUILD_CACHE_DIR"] = temp_dir
+            try:
+                cache = Cache(Path(temp_dir))
+                cache.ensure_directories()
+                toolchain = ToolchainAVR(cache)
 
-            # Create a fake cached toolchain with new URL-based structure
-            toolchain_path = cache.get_toolchain_path(ToolchainAVR.BASE_URL, ToolchainAVR.VERSION)
+                # Create a fake cached toolchain with new URL-based structure
+                toolchain_path = cache.get_toolchain_path(ToolchainAVR.BASE_URL, ToolchainAVR.VERSION)
 
-            # Create required directories
-            bin_dir = toolchain_path / "bin"
-            bin_dir.mkdir(parents=True)
-            (toolchain_path / "avr" / "include" / "avr").mkdir(parents=True)
-            (toolchain_path / "avr" / "include").mkdir(parents=True, exist_ok=True)
-            (toolchain_path / "avr" / "lib").mkdir(parents=True)
-            (toolchain_path / "lib" / "gcc" / "avr" / "7.3.0").mkdir(parents=True)
+                # Create required directories
+                bin_dir = toolchain_path / "bin"
+                bin_dir.mkdir(parents=True)
+                (toolchain_path / "avr" / "include" / "avr").mkdir(parents=True)
+                (toolchain_path / "avr" / "include").mkdir(parents=True, exist_ok=True)
+                (toolchain_path / "avr" / "lib").mkdir(parents=True)
+                (toolchain_path / "lib" / "gcc" / "avr" / "7.3.0").mkdir(parents=True)
 
-            # Create required executables
-            exe_suffix = ".exe" if sys.platform == "win32" else ""
-            for tool in ToolchainAVR.REQUIRED_TOOLS:
-                (bin_dir / f"{tool}{exe_suffix}").touch()
+                # Create required executables
+                exe_suffix = ".exe" if sys.platform == "win32" else ""
+                for tool in ToolchainAVR.REQUIRED_TOOLS:
+                    (bin_dir / f"{tool}{exe_suffix}").touch()
 
-            # Create required headers
-            for header in ["io.h", "interrupt.h"]:
-                (toolchain_path / "avr" / "include" / "avr" / header).touch()
-            for header in ["stdio.h", "stdlib.h", "string.h"]:
-                (toolchain_path / "avr" / "include" / header).touch()
+                # Create required headers
+                for header in ["io.h", "interrupt.h"]:
+                    (toolchain_path / "avr" / "include" / "avr" / header).touch()
+                for header in ["stdio.h", "stdlib.h", "string.h"]:
+                    (toolchain_path / "avr" / "include" / header).touch()
 
-            # Create required libraries
-            (toolchain_path / "lib" / "gcc" / "avr" / "7.3.0" / "libgcc.a").touch()
-            (toolchain_path / "avr" / "lib" / "libc.a").touch()
-            (toolchain_path / "avr" / "lib" / "libm.a").touch()
+                # Create required libraries
+                (toolchain_path / "lib" / "gcc" / "avr" / "7.3.0" / "libgcc.a").touch()
+                (toolchain_path / "avr" / "lib" / "libc.a").touch()
+                (toolchain_path / "avr" / "lib" / "libm.a").touch()
 
-            # Ensure toolchain (should use cache)
-            result = toolchain.ensure_toolchain()
-            assert result == toolchain_path
+                # Ensure toolchain (should use cache)
+                result = toolchain.ensure_toolchain()
+                assert result == toolchain_path
+            finally:
+                if old_cache_dir is None:
+                    del os.environ["FBUILD_CACHE_DIR"]
+                else:
+                    os.environ["FBUILD_CACHE_DIR"] = old_cache_dir
 
     def test_architecture_fallback(self):
         """Test architecture fallback to x86_64."""
