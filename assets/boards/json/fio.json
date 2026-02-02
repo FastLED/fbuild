@@ -1,0 +1,20 @@
+{
+  "id": "fio",
+  "name": "Arduino Fio",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 8000000,
+  "ram": 2048,
+  "rom": 30720,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Arduino",
+  "url": "http://arduino.cc/en/Main/ArduinoBoardFio",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

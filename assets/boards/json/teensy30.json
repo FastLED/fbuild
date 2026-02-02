@@ -1,0 +1,14 @@
+{
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "teensy30",
+  "mcu": "MK20DX128",
+  "name": "Teensy 3.0",
+  "platform": "teensy",
+  "ram": 16384,
+  "rom": 131072,
+  "url": "https://www.pjrc.com/store/teensy3.html",
+  "vendor": "Teensy"
+}

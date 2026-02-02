@@ -1,0 +1,28 @@
+{
+  "id": "weact_mini_h743vitx",
+  "name": "WeAct Studio MiniSTM32H743VITX",
+  "platform": "ststm32",
+  "mcu": "STM32H743VIT6",
+  "fcpu": 480000000,
+  "ram": 524288,
+  "rom": 2097152,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube"
+  ],
+  "vendor": "WeAct Studio",
+  "url": "https://github.com/WeActStudio/MiniSTM32H7xx",
+  "connectivity": [
+    "can",
+    "ethernet"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {
+        "onboard": true,
+        "default": true
+      },
+      "stlink": {},
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 32000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "nrf51_beacon",
+  "mcu": "NRF51822",
+  "name": "Nordic Beacon Kit (PCA20006)",
+  "platform": "nordicnrf51",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://www.nordicsemi.com/Software-and-Tools/Reference-Designs/nRF51822-Beacon-Kit",
+  "vendor": "Nordic"
+}

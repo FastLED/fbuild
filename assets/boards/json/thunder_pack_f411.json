@@ -1,0 +1,28 @@
+{
+  "id": "thunder_pack_f411",
+  "name": "ThunderPack v1.1+",
+  "platform": "ststm32",
+  "mcu": "STM32F411CEU6",
+  "fcpu": 100000000,
+  "ram": 131072,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "ThunderPack",
+  "url": "https://github.com/jgillick/ThunderPack/tree/STM32F4",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "id": "megaatmega2560",
+  "name": "Arduino Mega or Mega 2560 ATmega2560 (Mega 2560)",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA2560",
+  "fcpu": 16000000,
+  "ram": 8192,
+  "rom": 253952,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Arduino",
+  "url": "https://www.arduino.cc/en/Main/ArduinoBoardMega2560",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

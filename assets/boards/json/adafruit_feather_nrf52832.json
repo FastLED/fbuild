@@ -1,0 +1,26 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "arduino",
+    "zephyr"
+  ],
+  "id": "adafruit_feather_nrf52832",
+  "mcu": "NRF52832",
+  "name": "Adafruit Bluefruit nRF52832 Feather",
+  "platform": "nordicnrf52",
+  "ram": 65536,
+  "rom": 524288,
+  "url": "https://www.adafruit.com/product/3406",
+  "vendor": "Adafruit"
+}

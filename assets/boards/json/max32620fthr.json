@@ -1,0 +1,19 @@
+{
+  "debug": {
+    "tools": {
+      "jlink": {}
+    }
+  },
+  "fcpu": 96000000,
+  "frameworks": [
+    "mbed"
+  ],
+  "id": "max32620fthr",
+  "mcu": "MAX32620FTHR",
+  "name": "MAX32620FTHR",
+  "platform": "maxim32",
+  "ram": 262144,
+  "rom": 2097152,
+  "url": "https://www.maximintegrated.com/en/products/microcontrollers/MAX32620FTHR.html",
+  "vendor": "Maxim"
+}

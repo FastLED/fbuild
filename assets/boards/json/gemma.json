@@ -1,0 +1,19 @@
+{
+  "id": "gemma",
+  "name": "Adafruit Gemma",
+  "platform": "atmelavr",
+  "mcu": "ATTINY85",
+  "fcpu": 8000000,
+  "ram": 512,
+  "rom": 8192,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Adafruit",
+  "url": "http://www.adafruit.com/products/1222",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

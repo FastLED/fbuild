@@ -1,0 +1,15 @@
+{
+  "fcpu": 83333333,
+  "frameworks": [
+    "bonfire-sdk",
+    "_bare"
+  ],
+  "id": "arty-axi-dram",
+  "mcu": "",
+  "name": "Bonfire on Arty, 256MB DRAM",
+  "platform": "Bonfire",
+  "ram": 268435456,
+  "rom": 32768,
+  "url": "https://bonfirecpu.eu",
+  "vendor": "Bonfire Project"
+}

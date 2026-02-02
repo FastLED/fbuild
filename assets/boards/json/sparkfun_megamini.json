@@ -1,0 +1,20 @@
+{
+  "id": "sparkfun_megamini",
+  "name": "SparkFun Mega Pro Mini 3.3V",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA2560",
+  "fcpu": 8000000,
+  "ram": 8192,
+  "rom": 258048,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "SparkFun",
+  "url": "https://www.sparkfun.com/products/10743",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

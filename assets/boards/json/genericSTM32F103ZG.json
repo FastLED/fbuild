@@ -1,0 +1,24 @@
+{
+  "id": "genericSTM32F103ZG",
+  "name": "STM32F103ZG (96k RAM. 1024k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F103ZGT6",
+  "fcpu": 72000000,
+  "ram": 98304,
+  "rom": 1048576,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Generic",
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103zg.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

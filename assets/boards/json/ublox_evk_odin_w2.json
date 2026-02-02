@@ -1,0 +1,28 @@
+{
+  "id": "ublox_evk_odin_w2",
+  "name": "u-blox EVK-ODIN-W2",
+  "platform": "ststm32",
+  "mcu": "STM32F439ZIY6",
+  "fcpu": 168000000,
+  "ram": 262144,
+  "rom": 2097152,
+  "frameworks": [
+    "stm32cube"
+  ],
+  "vendor": "u-blox",
+  "url": "https://developer.mbed.org/platforms/ublox-EVK-ODIN-W2/",
+  "connectivity": [
+    "bluetooth",
+    "can",
+    "ethernet",
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

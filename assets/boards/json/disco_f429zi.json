@@ -1,0 +1,32 @@
+{
+  "id": "disco_f429zi",
+  "name": "ST 32F429IDISCOVERY",
+  "platform": "ststm32",
+  "mcu": "STM32F429ZIT6",
+  "fcpu": 180000000,
+  "ram": 262144,
+  "rom": 2097152,
+  "frameworks": [
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1848/PF259090",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

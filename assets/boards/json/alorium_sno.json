@@ -1,0 +1,20 @@
+{
+  "id": "alorium_sno",
+  "name": "Alorium Sno",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 32256,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Alorium Technology",
+  "url": "https://www.aloriumtech.com/sno/",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

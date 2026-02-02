@@ -1,0 +1,25 @@
+{
+  "id": "opta_m4",
+  "name": "Arduino Opta (M4 core)",
+  "platform": "ststm32",
+  "mcu": "STM32H747XIH6",
+  "fcpu": 480000000,
+  "ram": 294248,
+  "rom": 1048576,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Arduino",
+  "url": "https://www.arduino.cc/pro/hardware-arduino-opta",
+  "connectivity": [
+    "bluetooth",
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

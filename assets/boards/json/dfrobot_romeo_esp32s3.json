@@ -1,0 +1,35 @@
+{
+  "id": "dfrobot_romeo_esp32s3",
+  "name": "DFRobot Romeo ESP32-S3",
+  "platform": "espressif32",
+  "mcu": "ESP32S3",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 16777216,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "DFRobot",
+  "url": "https://wiki.dfrobot.com/",
+  "connectivity": [
+    "bluetooth",
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "esp-prog": {},
+      "esp-bridge": {},
+      "iot-bus-jtag": {},
+      "jlink": {},
+      "minimodule": {},
+      "olimex-arm-usb-tiny-h": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-ocd": {},
+      "olimex-jtag-tiny": {},
+      "tumpa": {},
+      "esp-builtin": {}
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "cubecell_gps",
+  "mcu": "ASR6502",
+  "name": "Heltec CubeCell-GPS (HTCC-AB02S)",
+  "platform": "heltec-cubecell",
+  "ram": 16384,
+  "rom": 131072,
+  "url": "https://heltec.org/project/htcc-ab02s/",
+  "vendor": "Heltec"
+}

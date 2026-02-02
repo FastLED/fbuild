@@ -1,0 +1,19 @@
+{
+  "id": "blendmicro8",
+  "name": "RedBearLab Blend Micro 3.3V/8MHz",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA32U4",
+  "fcpu": 8000000,
+  "ram": 2560,
+  "rom": 28672,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "RedBearLab",
+  "url": "http://redbearlab.com/blendmicro/",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

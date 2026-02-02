@@ -1,0 +1,19 @@
+{
+  "id": "usbasp",
+  "name": "USBasp stick",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA8",
+  "fcpu": 12000000,
+  "ram": 1024,
+  "rom": 8192,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Atmel",
+  "url": "https://www.fischl.de/usbasp/",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

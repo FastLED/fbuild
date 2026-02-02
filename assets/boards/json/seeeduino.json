@@ -1,0 +1,20 @@
+{
+  "id": "seeeduino",
+  "name": "Seeeduino",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 32256,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "SeeedStudio",
+  "url": "https://www.seeedstudio.com/Seeeduino-V4.2-p-2517.html",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

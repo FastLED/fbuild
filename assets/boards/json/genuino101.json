@@ -1,0 +1,17 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "fcpu": 32000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "genuino101",
+  "mcu": "ARCV2EM",
+  "name": "Arduino/Genuino 101",
+  "platform": "intel_arc32",
+  "ram": 81920,
+  "rom": 155648,
+  "url": "https://www.arduino.cc/en/Main/ArduinoBoard101",
+  "vendor": "Intel"
+}

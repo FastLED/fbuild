@@ -1,0 +1,25 @@
+{
+  "id": "vccgnd_f103zet6",
+  "name": "VCCGND F103ZET6 Mini",
+  "platform": "ststm32",
+  "mcu": "STM32F103ZET6",
+  "fcpu": 72000000,
+  "ram": 65536,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "VCCGND",
+  "url": "https://stm32-base.org/boards/STM32F103ZET6-VCC-GND-XLarge",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

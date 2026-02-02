@@ -1,0 +1,19 @@
+{
+  "id": "sanguino_atmega644_8m",
+  "name": "Sanguino ATmega644 or ATmega644A (8 MHz)",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA644",
+  "fcpu": 8000000,
+  "ram": 4096,
+  "rom": 64512,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Sanguino",
+  "url": "https://github.com/Lauszus/Sanguino",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

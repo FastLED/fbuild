@@ -1,0 +1,25 @@
+{
+  "id": "genericSTM32F103VD",
+  "name": "STM32F103VD (64k RAM. 384k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F103VDT6",
+  "fcpu": 72000000,
+  "ram": 65536,
+  "rom": 393216,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "libopencm3",
+    "stm32cube"
+  ],
+  "vendor": "Generic",
+  "url": "http://www.st.com/en/microcontrollers/stm32f103vd.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

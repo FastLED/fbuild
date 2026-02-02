@@ -1,0 +1,20 @@
+{
+  "id": "panStampAVR",
+  "name": "PanStamp AVR",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 8000000,
+  "ram": 2048,
+  "rom": 32256,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "PanStamp",
+  "url": "http://www.panstamp.com/product/panstamp-avr/",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

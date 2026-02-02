@@ -1,0 +1,26 @@
+{
+  "id": "olimex_p405",
+  "name": "Olimex STM32-P405",
+  "platform": "ststm32",
+  "mcu": "STM32F405RGT6",
+  "fcpu": 168000000,
+  "ram": 131072,
+  "rom": 1048576,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "Olimex",
+  "url": "https://docs.zephyrproject.org/latest/boards/arm/olimex_stm32_p405/doc/index.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

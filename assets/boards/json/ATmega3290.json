@@ -1,0 +1,14 @@
+{
+  "id": "ATmega3290",
+  "name": "ATmega3290/A",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA3290",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 32768,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Microchip",
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega3290"
+}

@@ -1,0 +1,20 @@
+{
+  "id": "ATmega328",
+  "name": "ATmega328",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 32768,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Microchip",
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega328",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

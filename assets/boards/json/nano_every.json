@@ -1,0 +1,14 @@
+{
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "nano_every",
+  "mcu": "ATMEGA4809",
+  "name": "Arduino Nano Every",
+  "platform": "atmelmegaavr",
+  "ram": 6144,
+  "rom": 48640,
+  "url": "https://www.arduino.cc/en/Guide/NANOEvery",
+  "vendor": "Arduino"
+}

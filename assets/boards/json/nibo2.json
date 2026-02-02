@@ -1,0 +1,19 @@
+{
+  "id": "nibo2",
+  "name": "nicai-systems NIBO 2 robot",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA128",
+  "fcpu": 16000000,
+  "ram": 4096,
+  "rom": 131072,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "nicai-systems",
+  "url": "http://www.nicai-systems.com/en/nibo2",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

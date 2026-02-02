@@ -1,0 +1,22 @@
+{
+  "debug": {
+    "tools": {
+      "ti-icdi": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino",
+    "libopencm3"
+  ],
+  "id": "lplm4f120h5qr",
+  "mcu": "LPLM4F120H5QR",
+  "name": "TI LaunchPad (Stellaris) w/ lm4f120 (80MHz)",
+  "platform": "titiva",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "http://www.ti.com/tool/ek-lm4f120xl",
+  "vendor": "TI"
+}

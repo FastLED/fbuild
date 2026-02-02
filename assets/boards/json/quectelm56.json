@@ -1,0 +1,20 @@
+{
+  "connectivity": [
+    "cellular",
+    "bluetooth",
+    "gps"
+  ],
+  "fcpu": 260000000,
+  "frameworks": [
+    "arduino",
+    "logicromsdk"
+  ],
+  "id": "quectelm56",
+  "mcu": "MT6261",
+  "name": "Quectel M56",
+  "platform": "logicrom",
+  "ram": 96256,
+  "rom": 262144,
+  "url": "https://www.quectel.com/cn/product/m56.htm",
+  "vendor": "Quectel Wireless Solutions Co., Ltd."
+}

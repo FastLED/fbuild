@@ -1,0 +1,24 @@
+{
+  "id": "genericSTM32F103R4",
+  "name": "STM32F103R4 (6k RAM. 16k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F103R4T6",
+  "fcpu": 72000000,
+  "ram": 6144,
+  "rom": 16384,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Generic",
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103r4.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

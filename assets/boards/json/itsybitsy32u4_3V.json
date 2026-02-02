@@ -1,0 +1,19 @@
+{
+  "id": "itsybitsy32u4_3V",
+  "name": "Adafruit ItsyBitsy 3V/8MHz",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA32U4",
+  "fcpu": 8000000,
+  "ram": 2560,
+  "rom": 28672,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Adafruit",
+  "url": "https://www.adafruit.com/product/3675",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

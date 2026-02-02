@@ -1,0 +1,18 @@
+{
+  "connectivity": [
+    "cellular"
+  ],
+  "fcpu": 178000000,
+  "frameworks": [
+    "arduino",
+    "logicromsdk"
+  ],
+  "id": "m590",
+  "mcu": "RDA8955",
+  "name": "Neoway M590 GSM Module",
+  "platform": "logicrom",
+  "ram": 1040384,
+  "rom": 589824,
+  "url": "http://www.neoway.com/details/product_en/823.html",
+  "vendor": "Neoway Technology Co.Ltd."
+}

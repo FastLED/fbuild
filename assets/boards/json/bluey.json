@@ -1,0 +1,25 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "bluey",
+  "mcu": "NRF52832",
+  "name": "Bluey nRF52832 IoT",
+  "platform": "nordicnrf52",
+  "ram": 65536,
+  "rom": 524288,
+  "url": "https://electronut.in/portfolio/bluey/",
+  "vendor": "Electronut Labs"
+}

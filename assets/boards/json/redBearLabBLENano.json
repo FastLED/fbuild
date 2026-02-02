@@ -1,0 +1,28 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino",
+    "zephyr"
+  ],
+  "id": "redBearLabBLENano",
+  "mcu": "NRF51822",
+  "name": "RedBearLab BLE Nano 1.5",
+  "platform": "nordicnrf51",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://www.sparkfun.com/products/retired/13730",
+  "vendor": "RedBearLab"
+}

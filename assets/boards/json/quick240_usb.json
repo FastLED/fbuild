@@ -1,0 +1,14 @@
+{
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "quick240_usb",
+  "mcu": "32MX795F512L",
+  "name": "Pontech Quick240",
+  "platform": "microchippic32",
+  "ram": 131072,
+  "rom": 520192,
+  "url": "http://chipkit.net/wpcproduct/pontech-quick240/",
+  "vendor": "Pontech"
+}

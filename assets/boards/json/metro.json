@@ -1,0 +1,20 @@
+{
+  "id": "metro",
+  "name": "Adafruit Metro",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 32256,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Adafruit",
+  "url": "https://www.adafruit.com/products/2466",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

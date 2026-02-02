@@ -1,0 +1,21 @@
+{
+  "id": "esp32-pro",
+  "name": "OLIMEX ESP32-PRO",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "OLIMEX",
+  "url": "https://www.olimex.com/Products/IoT/ESP32/ESP32-PRO/open-source-hardware",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

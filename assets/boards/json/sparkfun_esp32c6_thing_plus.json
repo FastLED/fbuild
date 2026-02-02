@@ -1,0 +1,37 @@
+{
+  "id": "sparkfun_esp32c6_thing_plus",
+  "name": "Sparkfun ESP32-C6 Thing Plus",
+  "platform": "espressif32",
+  "mcu": "ESP32C6",
+  "fcpu": 160000000,
+  "ram": 327680,
+  "rom": 16777216,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "Sparkfun",
+  "url": "https://www.sparkfun.com/products/22924",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "zigbee",
+    "thread"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "esp-prog": {},
+      "esp-bridge": {},
+      "iot-bus-jtag": {},
+      "jlink": {},
+      "minimodule": {},
+      "olimex-arm-usb-tiny-h": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-ocd": {},
+      "olimex-jtag-tiny": {},
+      "tumpa": {},
+      "esp-builtin": {}
+    }
+  }
+}

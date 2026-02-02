@@ -1,0 +1,21 @@
+{
+  "id": "m5stamp-pico",
+  "name": "M5Stamp-Pico",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "M5Stack",
+  "url": "https://shop.m5stack.com/products/m5stamp-pico-mate-with-pin-headers",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

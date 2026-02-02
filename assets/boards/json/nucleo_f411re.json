@@ -1,0 +1,30 @@
+{
+  "id": "nucleo_f411re",
+  "name": "ST Nucleo F411RE",
+  "platform": "ststm32",
+  "mcu": "STM32F411RET6",
+  "fcpu": 100000000,
+  "ram": 131072,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F411RE/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

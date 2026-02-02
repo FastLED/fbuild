@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "STC15W1K16S",
+  "mcu": "STC15W1K16S",
+  "name": "Generic STC15W1K16S",
+  "platform": "intel_mcs51",
+  "ram": 1024,
+  "rom": 16384,
+  "url": "http://www.stcmicro.com/STC/STC15W1K24S.html",
+  "vendor": "STC"
+}

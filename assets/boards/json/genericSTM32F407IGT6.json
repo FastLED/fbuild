@@ -1,0 +1,26 @@
+{
+  "id": "genericSTM32F407IGT6",
+  "name": "STM32F407IG (192k RAM. 1024k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F407IGT6",
+  "fcpu": 168000000,
+  "ram": 131072,
+  "rom": 1048576,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Generic",
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f407ig.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "default": true
+      }
+    }
+  }
+}

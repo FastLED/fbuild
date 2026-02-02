@@ -1,0 +1,14 @@
+{
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "fubarino_sd",
+  "mcu": "32MX795F512H",
+  "name": "Fubarino SD (1.5)",
+  "platform": "microchippic32",
+  "ram": 131072,
+  "rom": 520192,
+  "url": "http://fubarino.org/sd/index.html",
+  "vendor": "Fubarino"
+}

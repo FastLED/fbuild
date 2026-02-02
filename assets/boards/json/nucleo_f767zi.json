@@ -1,0 +1,34 @@
+{
+  "id": "nucleo_f767zi",
+  "name": "ST Nucleo F767ZI",
+  "platform": "ststm32",
+  "mcu": "STM32F767ZIT6",
+  "fcpu": 216000000,
+  "ram": 524288,
+  "rom": 2097152,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F767ZI/",
+  "connectivity": [
+    "can",
+    "ethernet"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "oroca_edubot",
+  "name": "OROCA EduBot",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "OROCA",
+  "url": "https://github.com/oroca/OROCA-EduBot",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

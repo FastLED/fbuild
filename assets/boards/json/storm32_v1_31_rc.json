@@ -1,0 +1,25 @@
+{
+  "id": "storm32_v1_31_rc",
+  "name": "STorM32 BGC v1.31 RC",
+  "platform": "ststm32",
+  "mcu": "STM32F103RCT6",
+  "fcpu": 72000000,
+  "ram": 49152,
+  "rom": 262144,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "libopencm3",
+    "stm32cube"
+  ],
+  "vendor": "STorM32",
+  "url": "http://www.olliw.eu/storm32bgc-wiki/STorM32_Boards#STorM32-BGC_v1.3",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

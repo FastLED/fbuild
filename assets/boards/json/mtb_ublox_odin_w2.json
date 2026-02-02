@@ -1,0 +1,30 @@
+{
+  "id": "mtb_ublox_odin_w2",
+  "name": "u-blox ODIN-W2",
+  "platform": "ststm32",
+  "mcu": "STM32F439ZIY6",
+  "fcpu": 168000000,
+  "ram": 262144,
+  "rom": 2097152,
+  "frameworks": [
+    "stm32cube"
+  ],
+  "vendor": "u-blox",
+  "url": "https://os.mbed.com/modules/u-blox-odin-w2/",
+  "connectivity": [
+    "bluetooth",
+    "can",
+    "ethernet",
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "connectivity": [
+    "wifi",
+    "ble"
+  ],
+  "debug": {
+    "tools": {
+      "custom": {},
+      "openocd": {
+        "default": true
+      }
+    }
+  },
+  "fcpu": 100000000,
+  "frameworks": [
+    "base",
+    "arduino"
+  ],
+  "id": "bw15",
+  "mcu": "RTL8720CF",
+  "name": "BW15",
+  "platform": "libretiny",
+  "ram": 262144,
+  "rom": 1015808,
+  "url": "https://docs.ai-thinker.com/_media/rtl8710/docs/bw15_datasheet_en.pdf",
+  "vendor": "Ai-Thinker Co., Ltd."
+}

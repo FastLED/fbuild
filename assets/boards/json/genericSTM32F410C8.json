@@ -1,0 +1,24 @@
+{
+  "id": "genericSTM32F410C8",
+  "name": "STM32F410C8 (32k RAM. 64k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F410C8T6",
+  "fcpu": 100000000,
+  "ram": 32768,
+  "rom": 65536,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Generic",
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f410c8.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

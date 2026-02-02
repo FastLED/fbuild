@@ -1,0 +1,19 @@
+{
+  "id": "sparkfun_qduinomini",
+  "name": "SparkFun Qduino Mini",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA32U4",
+  "fcpu": 8000000,
+  "ram": 2560,
+  "rom": 28672,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "SparkFun",
+  "url": "https://www.sparkfun.com/products/13614",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

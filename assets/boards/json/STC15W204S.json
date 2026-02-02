@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "STC15W204S",
+  "mcu": "STC15W204S",
+  "name": "Generic STC15W204S",
+  "platform": "intel_mcs51",
+  "ram": 256,
+  "rom": 4096,
+  "url": "https://www.stcmicro.com/STC/STC15W204S.html",
+  "vendor": "STC"
+}

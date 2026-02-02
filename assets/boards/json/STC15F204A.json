@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "STC15F204A",
+  "mcu": "STC15F204A",
+  "name": "Generic STC15F204A",
+  "platform": "intel_mcs51",
+  "ram": 256,
+  "rom": 4096,
+  "url": "https://www.stcmicro.com/STC/STC15F204EA.html",
+  "vendor": "STC"
+}

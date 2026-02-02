@@ -1,0 +1,19 @@
+{
+  "connectivity": [
+    "cellular",
+    "bluetooth"
+  ],
+  "fcpu": 500000000,
+  "frameworks": [
+    "arduino",
+    "logicromsdk"
+  ],
+  "id": "n716",
+  "mcu": "RDA8910",
+  "name": "Neoway N716 LTE Cat.1 Module",
+  "platform": "logicrom",
+  "ram": 524288,
+  "rom": 1048576,
+  "url": "http://www.neoway.com/details/product_en/823.html",
+  "vendor": "Neoway Technology Co.Ltd."
+}

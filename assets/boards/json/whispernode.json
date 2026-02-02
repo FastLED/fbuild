@@ -1,0 +1,20 @@
+{
+  "id": "whispernode",
+  "name": "Talk2 Whisper Node",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 32256,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Wisen",
+  "url": "https://wisen.com.au/store/products/whisper-node-avr/",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

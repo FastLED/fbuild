@@ -1,0 +1,25 @@
+{
+  "connectivity": [
+    "NB-IoT",
+    "GPS"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "atmel-ice": {}
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "sodaq_sara",
+  "mcu": "SAMD21J18A",
+  "name": "SODAQ SARA",
+  "platform": "atmelsam",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://support.sodaq.com/sodaq-one/sara/",
+  "vendor": "SODAQ"
+}

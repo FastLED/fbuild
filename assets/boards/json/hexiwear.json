@@ -1,0 +1,26 @@
+{
+  "connectivity": [
+    "bluetooth",
+    "can",
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "jlink": {}
+    }
+  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "mbed",
+    "zephyr"
+  ],
+  "id": "hexiwear",
+  "mcu": "MK64FN1M0VDC12",
+  "name": "Hexiwear",
+  "platform": "freescalekinetis",
+  "ram": 262144,
+  "rom": 1048576,
+  "url": "https://developer.mbed.org/platforms/Hexiwear/",
+  "vendor": "MikroElektronika"
+}

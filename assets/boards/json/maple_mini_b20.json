@@ -1,0 +1,25 @@
+{
+  "id": "maple_mini_b20",
+  "name": "Maple Mini Bootloader 2.0",
+  "platform": "ststm32",
+  "mcu": "STM32F103CBT6",
+  "fcpu": 72000000,
+  "ram": 20480,
+  "rom": 122880,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "libopencm3",
+    "stm32cube"
+  ],
+  "vendor": "LeafLabs",
+  "url": "http://www.leaflabs.com/maple/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

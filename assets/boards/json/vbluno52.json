@@ -1,0 +1,28 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {
+        "onboard": true,
+        "default": true
+      }
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "zephyr"
+  ],
+  "id": "vbluno52",
+  "mcu": "NRF52832",
+  "name": "VNG VBLUno52",
+  "platform": "nordicnrf52",
+  "ram": 65536,
+  "rom": 524288,
+  "url": "https://vngiotlab.github.io/",
+  "vendor": "VNG"
+}

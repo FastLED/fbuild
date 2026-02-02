@@ -1,0 +1,28 @@
+{
+  "id": "pybstick26_std",
+  "name": "PYBStick Standard 26",
+  "platform": "ststm32",
+  "mcu": "STM32F411CEU6",
+  "fcpu": 100000000,
+  "ram": 131072,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "PYBStick",
+  "url": "https://shop.mchobby.be/fr/micropython/1844-pybstick-standard-26-micropython-et-arduino-3232100018440-garatronic.html",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

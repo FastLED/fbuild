@@ -1,0 +1,27 @@
+{
+  "connectivity": [
+    "wifi",
+    "ble"
+  ],
+  "debug": {
+    "tools": {
+      "custom": {},
+      "openocd": {
+        "default": true
+      }
+    }
+  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "base",
+    "arduino"
+  ],
+  "id": "cb3s",
+  "mcu": "BK7231N",
+  "name": "CB3S Wi-Fi Module",
+  "platform": "libretiny",
+  "ram": 262144,
+  "rom": 1083136,
+  "url": "https://developer.tuya.com/en/docs/iot/cb3s?id=Kai94mec0s076",
+  "vendor": "Tuya Inc."
+}

@@ -1,0 +1,35 @@
+{
+  "id": "wt32-eth01",
+  "name": "Wireless-Tag WT32-ETH01 Ethernet Module",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "Wireless-Tag",
+  "url": "http://www.wireless-tag.com/portfolio/wt32-eth01/",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "esp-prog": {},
+      "iot-bus-jtag": {},
+      "jlink": {},
+      "minimodule": {},
+      "olimex-arm-usb-tiny-h": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-ocd": {},
+      "olimex-jtag-tiny": {},
+      "tumpa": {}
+    }
+  }
+}

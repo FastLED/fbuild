@@ -1,0 +1,14 @@
+{
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "rgb_station",
+  "mcu": "32MX270F256D",
+  "name": "RGB Station",
+  "platform": "microchippic32",
+  "ram": 63488,
+  "rom": 245760,
+  "url": "https://github.com/chipKIT32/RGB_Station",
+  "vendor": "ChipKIT"
+}

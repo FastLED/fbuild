@@ -1,0 +1,19 @@
+{
+  "id": "lilypadatmega168",
+  "name": "Arduino LilyPad ATmega168",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA168",
+  "fcpu": 8000000,
+  "ram": 1024,
+  "rom": 14336,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Arduino",
+  "url": "http://arduino.cc/en/Main/ArduinoBoardLilyPad",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

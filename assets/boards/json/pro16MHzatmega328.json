@@ -1,0 +1,20 @@
+{
+  "id": "pro16MHzatmega328",
+  "name": "Arduino Pro or Pro Mini ATmega328 (5V, 16 MHz)",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 30720,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Arduino",
+  "url": "http://arduino.cc/en/Main/ArduinoBoardProMini",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

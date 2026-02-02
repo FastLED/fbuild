@@ -1,0 +1,25 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "mbed"
+  ],
+  "id": "sdt52832b",
+  "mcu": "NRF52832",
+  "name": "SDT52832B",
+  "platform": "nordicnrf52",
+  "ram": 65536,
+  "rom": 524288,
+  "url": "https://os.mbed.com/platforms/SDT52832B/",
+  "vendor": "Sigma Delta Technologies"
+}

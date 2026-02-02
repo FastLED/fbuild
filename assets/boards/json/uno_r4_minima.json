@@ -1,0 +1,22 @@
+{
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "cmsis-dap": {}
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino",
+    "fsp",
+    "cmsis"
+  ],
+  "id": "uno_r4_minima",
+  "mcu": "RA4M1",
+  "name": "Arduino Uno R4 Minima",
+  "platform": "renesas-ra",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://docs.arduino.cc/hardware/uno-r4-minima",
+  "vendor": "Arduino"
+}

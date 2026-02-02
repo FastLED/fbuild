@@ -1,0 +1,15 @@
+{
+  "fcpu": 62500000,
+  "frameworks": [
+    "bonfire-sdk",
+    "_bare"
+  ],
+  "id": "bonfire-basic-dram",
+  "mcu": "",
+  "name": "Bonfire Basic SOC, 32MB DRAM",
+  "platform": "Bonfire",
+  "ram": 33554432,
+  "rom": 32768,
+  "url": "https://bonfirecpu.eu",
+  "vendor": "Bonfire Project"
+}

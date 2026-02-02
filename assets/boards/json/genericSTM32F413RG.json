@@ -1,0 +1,24 @@
+{
+  "id": "genericSTM32F413RG",
+  "name": "STM32F413RG (320k RAM. 1024k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F413RGT6",
+  "fcpu": 100000000,
+  "ram": 327680,
+  "rom": 1048576,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Generic",
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f413rg.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

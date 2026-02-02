@@ -1,0 +1,29 @@
+{
+  "id": "nucleo_f070rb",
+  "name": "ST Nucleo F070RB",
+  "platform": "ststm32",
+  "mcu": "STM32F070RBT6",
+  "fcpu": 48000000,
+  "ram": 16384,
+  "rom": 131072,
+  "frameworks": [
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F070RB/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "zephyr"
+  ],
+  "id": "96b_nitrogen",
+  "mcu": "NRF52832",
+  "name": "96Boards Nitrogen",
+  "platform": "nordicnrf52",
+  "ram": 65536,
+  "rom": 524288,
+  "url": "https://www.96boards.org/product/nitrogen/",
+  "vendor": "96Boards"
+}

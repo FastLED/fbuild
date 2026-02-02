@@ -1,0 +1,25 @@
+{
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "cmsis-dap": {
+        "onboard": true,
+        "default": true
+      }
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino",
+    "fsp",
+    "cmsis"
+  ],
+  "id": "uno_r4_wifi",
+  "mcu": "RA4M1",
+  "name": "Arduino Uno R4 WiFi",
+  "platform": "renesas-ra",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://docs.arduino.cc/hardware/uno-r4-wifi",
+  "vendor": "Arduino"
+}

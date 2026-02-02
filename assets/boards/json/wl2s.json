@@ -1,0 +1,27 @@
+{
+  "connectivity": [
+    "wifi",
+    "ble"
+  ],
+  "debug": {
+    "tools": {
+      "custom": {},
+      "openocd": {
+        "default": true
+      }
+    }
+  },
+  "fcpu": 160000000,
+  "frameworks": [
+    "base",
+    "arduino"
+  ],
+  "id": "wl2s",
+  "mcu": "LN882HK",
+  "name": "WL2S Wi-Fi/BLE Module",
+  "platform": "libretiny",
+  "ram": 302080,
+  "rom": 1228800,
+  "url": "https://docs.libretiny.eu/boards/wl2s/",
+  "vendor": "Unknown"
+}

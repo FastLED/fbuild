@@ -1,0 +1,25 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "zephyr"
+  ],
+  "id": "ruuvitag",
+  "mcu": "NRF52832",
+  "name": "Ruuvi Tag",
+  "platform": "nordicnrf52",
+  "ram": 65536,
+  "rom": 524288,
+  "url": "https://ruuvi.com/",
+  "vendor": "Ruuvi"
+}

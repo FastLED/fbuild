@@ -1,0 +1,25 @@
+{
+  "id": "sparkfun_micromod_f405",
+  "name": "SparkFun MicroMod STM32F405",
+  "platform": "ststm32",
+  "mcu": "STM32F405RGT6",
+  "fcpu": 168000000,
+  "ram": 131072,
+  "rom": 1048576,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "SparkFun",
+  "url": "https://www.sparkfun.com/products/17713",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

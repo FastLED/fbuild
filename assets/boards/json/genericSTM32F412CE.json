@@ -1,0 +1,24 @@
+{
+  "id": "genericSTM32F412CE",
+  "name": "STM32F412CE (256k RAM. 512k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F412CEU6",
+  "fcpu": 100000000,
+  "ram": 262144,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Generic",
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f412ce.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

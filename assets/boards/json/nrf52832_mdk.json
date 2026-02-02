@@ -1,0 +1,28 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {
+        "onboard": true,
+        "default": true
+      }
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "zephyr"
+  ],
+  "id": "nrf52832_mdk",
+  "mcu": "NRF52832",
+  "name": "Makerdiary nRF52832-MDK",
+  "platform": "nordicnrf52",
+  "ram": 65536,
+  "rom": 524288,
+  "url": "https://wiki.makerdiary.com/nrf52832-mdk/",
+  "vendor": "Makerdiary"
+}

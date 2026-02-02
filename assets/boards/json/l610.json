@@ -1,0 +1,20 @@
+{
+  "connectivity": [
+    "cellular",
+    "bluetooth",
+    "gps"
+  ],
+  "fcpu": 500000000,
+  "frameworks": [
+    "arduino",
+    "logicromsdk"
+  ],
+  "id": "l610",
+  "mcu": "RDA8910",
+  "name": "Fibocom L610 LTE Cat.1 Module",
+  "platform": "logicrom",
+  "ram": 524288,
+  "rom": 1048576,
+  "url": "https://www.fibocom.com/en/myproducts/info_itemid_1902.html",
+  "vendor": "Fibocom Wireless Inc."
+}

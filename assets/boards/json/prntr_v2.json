@@ -1,0 +1,27 @@
+{
+  "id": "prntr_v2",
+  "name": "PrntrBoard V2",
+  "platform": "ststm32",
+  "mcu": "STM32F407VET6",
+  "fcpu": 168000000,
+  "ram": 131072,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "PrntrBoard",
+  "url": "https://github.com/ghent360/PrntrBoardV2",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

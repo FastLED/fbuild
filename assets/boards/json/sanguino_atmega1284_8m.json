@@ -1,0 +1,19 @@
+{
+  "id": "sanguino_atmega1284_8m",
+  "name": "Sanguino ATmega1284p (8MHz)",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA1284P",
+  "fcpu": 8000000,
+  "ram": 16384,
+  "rom": 130048,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Sanguino",
+  "url": "https://github.com/Lauszus/Sanguino",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

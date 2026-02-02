@@ -1,0 +1,32 @@
+{
+  "id": "mxchip_az3166",
+  "name": "Microsoft Azure IoT Development Kit (MXChip AZ3166)",
+  "platform": "ststm32",
+  "mcu": "STM32F412ZGT6",
+  "fcpu": 100000000,
+  "ram": 262144,
+  "rom": 1048576,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "MXChip",
+  "url": "https://microsoft.github.io/azure-iot-developer-kit/",
+  "connectivity": [
+    "can",
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

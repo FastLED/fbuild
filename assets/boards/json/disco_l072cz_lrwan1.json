@@ -1,0 +1,30 @@
+{
+  "id": "disco_l072cz_lrwan1",
+  "name": "ST DISCO-L072CZ-LRWAN1",
+  "platform": "ststm32",
+  "mcu": "STM32L072CZ",
+  "fcpu": 32000000,
+  "ram": 20480,
+  "rom": 196608,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://developer.mbed.org/platforms/ST-Discovery-LRWAN1/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

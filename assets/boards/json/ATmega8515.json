@@ -1,0 +1,14 @@
+{
+  "id": "ATmega8515",
+  "name": "ATmega8515",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA8515",
+  "fcpu": 16000000,
+  "ram": 512,
+  "rom": 8192,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Microchip",
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega8515"
+}

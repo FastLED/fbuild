@@ -1,0 +1,19 @@
+{
+  "debug": {
+    "tools": {
+      "jlink": {}
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "teensylc",
+  "mcu": "MKL26Z64",
+  "name": "Teensy LC",
+  "platform": "teensy",
+  "ram": 8192,
+  "rom": 63488,
+  "url": "http://www.pjrc.com/teensy/teensyLC.html",
+  "vendor": "Teensy"
+}

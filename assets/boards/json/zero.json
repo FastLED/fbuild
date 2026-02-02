@@ -1,0 +1,25 @@
+{
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "atmel-ice": {},
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino",
+    "zephyr"
+  ],
+  "id": "zero",
+  "mcu": "SAMD21G18A",
+  "name": "Arduino Zero (Programming/Debug Port)",
+  "platform": "atmelsam",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://www.arduino.cc/en/Main/ArduinoBoardZero",
+  "vendor": "Arduino"
+}

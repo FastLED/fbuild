@@ -1,0 +1,20 @@
+{
+  "id": "sleepypi",
+  "name": "SpellFoundry Sleepy Pi 2",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 8000000,
+  "ram": 2048,
+  "rom": 30720,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "SpellFoundry",
+  "url": "https://spellfoundry.com/product/sleepy-pi-2/",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

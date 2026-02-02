@@ -1,0 +1,20 @@
+{
+  "id": "megaatmega1280",
+  "name": "Arduino Mega or Mega 2560 ATmega1280",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA1280",
+  "fcpu": 16000000,
+  "ram": 8192,
+  "rom": 126976,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Arduino",
+  "url": "https://www.arduino.cc/en/Main/ArduinoBoardMega2560",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

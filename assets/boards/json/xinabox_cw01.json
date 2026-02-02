@@ -1,0 +1,19 @@
+{
+  "connectivity": [
+    "wifi"
+  ],
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino",
+    "esp8266-rtos-sdk",
+    "esp8266-nonos-sdk"
+  ],
+  "id": "xinabox_cw01",
+  "mcu": "ESP8266",
+  "name": "XinaBox CW01",
+  "platform": "espressif8266",
+  "ram": 81920,
+  "rom": 4194304,
+  "url": "https://xinabox.cc/products/cw01",
+  "vendor": "XinaBox"
+}

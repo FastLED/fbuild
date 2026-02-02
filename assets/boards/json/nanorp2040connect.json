@@ -1,0 +1,21 @@
+{
+  "id": "nanorp2040connect",
+  "name": "Arduino Nano RP2040 Connect",
+  "platform": "raspberrypi",
+  "mcu": "RP2040",
+  "fcpu": 133000000,
+  "ram": 270336,
+  "rom": 2097152,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Arduino",
+  "url": "https://blog.arduino.cc/2021/01/20/welcome-raspberry-pi-to-the-world-of-microcontrollers/",
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "jlink": {},
+      "raspberrypi-swd": {}
+    }
+  }
+}

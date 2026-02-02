@@ -1,0 +1,26 @@
+{
+  "connectivity": [
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "custom": {},
+      "openocd": {
+        "default": true
+      }
+    }
+  },
+  "fcpu": 62500000,
+  "frameworks": [
+    "base",
+    "arduino"
+  ],
+  "id": "generic-rtl8710bx-4mb-980k",
+  "mcu": "RTL8710BX",
+  "name": "Generic - RTL8710BX (4M/980k)",
+  "platform": "libretiny",
+  "ram": 262144,
+  "rom": 1003520,
+  "url": "https://docs.libretiny.eu/boards/generic-rtl8710bx-4mb-980k/",
+  "vendor": "Generic"
+}

@@ -1,0 +1,14 @@
+{
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "picadillo_35t",
+  "mcu": "32MX795F512L",
+  "name": "4D Systems PICadillo 35T",
+  "platform": "microchippic32",
+  "ram": 131072,
+  "rom": 520192,
+  "url": "http://www.4dsystems.com.au/product/Picadillo_35T/",
+  "vendor": "4D Systems"
+}

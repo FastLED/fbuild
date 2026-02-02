@@ -1,0 +1,14 @@
+{
+  "fcpu": 24000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "AVR128DB32",
+  "mcu": "AVR128DB32",
+  "name": "AVR128DB32",
+  "platform": "atmelmegaavr",
+  "ram": 16384,
+  "rom": 131072,
+  "url": "https://www.microchip.com/wwwproducts/en/AVR128DB32",
+  "vendor": "Microchip"
+}

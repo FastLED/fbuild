@@ -1,0 +1,24 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  },
+  "fcpu": 32000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "Sinobit",
+  "mcu": "NRF51822",
+  "name": "Sino:Bit",
+  "platform": "nordicnrf51",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://github.com/sinobitorg/",
+  "vendor": "sino:bit"
+}

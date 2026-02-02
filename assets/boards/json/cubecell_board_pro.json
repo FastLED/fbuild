@@ -1,0 +1,14 @@
+{
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "cubecell_board_pro",
+  "mcu": "ASR6601",
+  "name": "Heltec CubeCell-Board PRO (HTCC-AB03)",
+  "platform": "heltec-cubecell",
+  "ram": 229376,
+  "rom": 229376,
+  "url": "https://heltec.org/proudct_center",
+  "vendor": "Heltec"
+}

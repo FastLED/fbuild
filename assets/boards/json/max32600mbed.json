@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 24000000,
+  "frameworks": [
+    "mbed"
+  ],
+  "id": "max32600mbed",
+  "mcu": "MAX32600",
+  "name": "Maxim ARM mbed Enabled Development Platform for MAX32600",
+  "platform": "maxim32",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://developer.mbed.org/platforms/MAX32600mbed/",
+  "vendor": "Maxim"
+}

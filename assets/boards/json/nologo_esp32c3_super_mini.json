@@ -1,0 +1,35 @@
+{
+  "id": "nologo_esp32c3_super_mini",
+  "name": "Nologo ESP32C3 SuperMini",
+  "platform": "espressif32",
+  "mcu": "ESP32C3",
+  "fcpu": 160000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "Nologo",
+  "url": "https://www.nologo.tech/product/esp32/esp32c3/esp32c3supermini/esp32C3SuperMini.html",
+  "connectivity": [
+    "wifi",
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "esp-prog": {},
+      "esp-bridge": {},
+      "iot-bus-jtag": {},
+      "jlink": {},
+      "minimodule": {},
+      "olimex-arm-usb-tiny-h": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-ocd": {},
+      "olimex-jtag-tiny": {},
+      "tumpa": {},
+      "esp-builtin": {}
+    }
+  }
+}

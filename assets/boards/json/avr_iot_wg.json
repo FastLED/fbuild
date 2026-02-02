@@ -1,0 +1,14 @@
+{
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "avr_iot_wg",
+  "mcu": "ATMEGA4808",
+  "name": "AVR-IoT WG Development Board",
+  "platform": "atmelmegaavr",
+  "ram": 6144,
+  "rom": 49152,
+  "url": "https://www.microchip.com/developmenttools/ProductDetails/AC164160",
+  "vendor": "Microchip"
+}

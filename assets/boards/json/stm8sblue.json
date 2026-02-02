@@ -1,0 +1,20 @@
+{
+  "debug": {
+    "tools": {
+      "stlink": {}
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino",
+    "spl"
+  ],
+  "id": "stm8sblue",
+  "mcu": "STM8S103F3P6",
+  "name": "ST STM8S103F3 Breakout Board",
+  "platform": "ststm8",
+  "ram": 1024,
+  "rom": 8192,
+  "url": "https://tenbaht.github.io/sduino/hardware/stm8blue/",
+  "vendor": "ST"
+}

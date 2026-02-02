@@ -1,0 +1,14 @@
+{
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "chipkit_mx3",
+  "mcu": "32MX320F128H",
+  "name": "Digilent chipKIT MX3",
+  "platform": "microchippic32",
+  "ram": 16384,
+  "rom": 126976,
+  "url": "http://store.digilentinc.com/chipkit-mx3-microcontroller-board-with-pmod-headers/",
+  "vendor": "Digilent"
+}

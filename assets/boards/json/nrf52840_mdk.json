@@ -1,0 +1,28 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {
+        "onboard": true,
+        "default": true
+      }
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "zephyr"
+  ],
+  "id": "nrf52840_mdk",
+  "mcu": "NRF52840",
+  "name": "Makerdiary nRF52840-MDK",
+  "platform": "nordicnrf52",
+  "ram": 262144,
+  "rom": 1048576,
+  "url": "https://wiki.makerdiary.com/nrf52840-mdk",
+  "vendor": "Makerdiary"
+}

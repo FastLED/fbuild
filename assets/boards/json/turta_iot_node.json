@@ -1,0 +1,21 @@
+{
+  "id": "turta_iot_node",
+  "name": "Turta IoT Node",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "Turta",
+  "url": "https://www.turta.io/en/iotnode",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "id": "nucleo_f091rc",
+  "name": "ST Nucleo F091RC",
+  "platform": "ststm32",
+  "mcu": "STM32F091RCT6",
+  "fcpu": 48000000,
+  "ram": 32768,
+  "rom": 262144,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F091RC/",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

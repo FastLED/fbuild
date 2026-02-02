@@ -1,0 +1,38 @@
+{
+  "id": "rymcu-esp32-s3-devkitc-1",
+  "name": "RYMCU ESP32-S3-DevKitC-1-N8R2 (8 MB QD, 2 MB PSRAM)",
+  "platform": "espressif32",
+  "mcu": "ESP32S3",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 8388608,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "RYMCU",
+  "url": "https://rymcu.com/products",
+  "connectivity": [
+    "bluetooth",
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "esp-prog": {},
+      "esp-bridge": {},
+      "iot-bus-jtag": {},
+      "jlink": {},
+      "minimodule": {},
+      "olimex-arm-usb-tiny-h": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-ocd": {},
+      "olimex-jtag-tiny": {},
+      "tumpa": {},
+      "esp-builtin": {
+        "onboard": true,
+        "default": true
+      }
+    }
+  }
+}

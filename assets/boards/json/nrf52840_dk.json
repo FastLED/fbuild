@@ -1,0 +1,32 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {
+        "onboard": true,
+        "default": true
+      },
+      "stlink": {},
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "arduino",
+    "mbed",
+    "zephyr"
+  ],
+  "id": "nrf52840_dk",
+  "mcu": "NRF52840",
+  "name": "Nordic nRF52840-DK",
+  "platform": "nordicnrf52",
+  "ram": 262144,
+  "rom": 1048576,
+  "url": "https://os.mbed.com/platforms/Nordic-nRF52840-DK/",
+  "vendor": "Nordic"
+}

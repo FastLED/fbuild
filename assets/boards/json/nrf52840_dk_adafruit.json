@@ -1,0 +1,27 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {
+        "onboard": true
+      },
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "nrf52840_dk_adafruit",
+  "mcu": "NRF52840",
+  "name": "Nordic nRF52840-DK (Adafruit BSP)",
+  "platform": "nordicnrf52",
+  "ram": 248832,
+  "rom": 815104,
+  "url": "https://os.mbed.com/platforms/Nordic-nRF52840-DK/",
+  "vendor": "Nordic"
+}

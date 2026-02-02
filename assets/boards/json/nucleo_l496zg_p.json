@@ -1,0 +1,32 @@
+{
+  "id": "nucleo_l496zg_p",
+  "name": "ST Nucleo L496ZG-P",
+  "platform": "ststm32",
+  "mcu": "STM32L496ZGT6P",
+  "fcpu": 80000000,
+  "ram": 327680,
+  "rom": 1048576,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-l496zg-p.html",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "connectivity": [
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "custom": {},
+      "openocd": {
+        "default": true
+      }
+    }
+  },
+  "fcpu": 62500000,
+  "frameworks": [
+    "base",
+    "arduino"
+  ],
+  "id": "wr2le",
+  "mcu": "RTL8710BX",
+  "name": "WR2LE Wi-Fi Module",
+  "platform": "libretiny",
+  "ram": 262144,
+  "rom": 806912,
+  "url": "https://developer.tuya.com/en/docs/iot/wr2le?id=K9eio9y9e8i8c",
+  "vendor": "Tuya Inc."
+}

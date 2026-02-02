@@ -1,0 +1,27 @@
+{
+  "connectivity": [
+    "wifi",
+    "ble"
+  ],
+  "debug": {
+    "tools": {
+      "custom": {},
+      "openocd": {
+        "default": true
+      }
+    }
+  },
+  "fcpu": 100000000,
+  "frameworks": [
+    "base",
+    "arduino"
+  ],
+  "id": "generic-rtl8720cf-2mb-992k",
+  "mcu": "RTL8720CF",
+  "name": "Generic - RTL8720CF (2M/992k)",
+  "platform": "libretiny",
+  "ram": 262144,
+  "rom": 1015808,
+  "url": "https://docs.libretiny.eu/boards/generic-rtl8720cf-2mb-992k/",
+  "vendor": "Generic"
+}

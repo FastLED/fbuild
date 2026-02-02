@@ -1,0 +1,14 @@
+{
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega3209",
+  "mcu": "ATMEGA3209",
+  "name": "ATmega3209",
+  "platform": "atmelmegaavr",
+  "ram": 4096,
+  "rom": 32768,
+  "url": "https://www.microchip.com/wwwproducts/en/ATMEGA3209",
+  "vendor": "Microchip"
+}

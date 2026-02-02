@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "rv-link": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 5000000,
+  "frameworks": [
+    "nuclei-sdk"
+  ],
+  "id": "hbird_eval",
+  "mcu": "HUMMINGBIRD",
+  "name": "HummingBird Evaluation Kit",
+  "platform": "nuclei",
+  "ram": 65536,
+  "rom": 65536,
+  "url": "https://nucleisys.com/",
+  "vendor": "Nuclei"
+}

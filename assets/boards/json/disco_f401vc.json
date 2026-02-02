@@ -1,0 +1,27 @@
+{
+  "id": "disco_f401vc",
+  "name": "ST 32F401CDISCOVERY",
+  "platform": "ststm32",
+  "mcu": "STM32F401VCT6",
+  "fcpu": 84000000,
+  "ram": 65536,
+  "rom": 262144,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "ST",
+  "url": "http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1848/PF259098",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

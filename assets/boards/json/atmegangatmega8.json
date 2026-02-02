@@ -1,0 +1,19 @@
+{
+  "id": "atmegangatmega8",
+  "name": "Arduino NG or older ATmega8",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA8",
+  "fcpu": 16000000,
+  "ram": 1024,
+  "rom": 7168,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Arduino",
+  "url": "http://arduino.cc/en/main/boards",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

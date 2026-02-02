@@ -1,0 +1,14 @@
+{
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "cubecell_board_v2",
+  "mcu": "ASR6501",
+  "name": "Heltec CubeCell-Board-V2 (HTCC-AB01-V2)",
+  "platform": "heltec-cubecell",
+  "ram": 16384,
+  "rom": 131072,
+  "url": "https://heltec.org/project/htcc-ab01-v2/",
+  "vendor": "Heltec"
+}

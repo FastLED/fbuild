@@ -1,0 +1,25 @@
+{
+  "id": "stm32f4stamp",
+  "name": "STM32F4Stamp F405",
+  "platform": "ststm32",
+  "mcu": "STM32F405RGT6",
+  "fcpu": 168000000,
+  "ram": 131072,
+  "rom": 1048576,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Generic",
+  "url": "https://eleccelerator.com/stm32f4stamp-breakout-board/",
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "stlink": {
+        "default": true
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      }
+    }
+  },
+  "fcpu": 180000000,
+  "frameworks": [],
+  "id": "LowCostRTK",
+  "mcu": "STM32F469NIH6",
+  "name": "Aceinna Low Cost RTK",
+  "platform": "aceinna_imu",
+  "ram": 393216,
+  "rom": 1048576,
+  "url": "https://www.aceinna.com/inertial-systems/",
+  "vendor": "Aceinna"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "nucleo_l152re",
+  "name": "ST Nucleo L152RE",
+  "platform": "ststm32",
+  "mcu": "STM32L152RET6",
+  "fcpu": 32000000,
+  "ram": 81920,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "ST",
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-L152RE/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

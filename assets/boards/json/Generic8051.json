@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "Generic8051",
+  "mcu": "8051",
+  "name": "Generic 8051",
+  "platform": "intel_mcs51",
+  "ram": 128,
+  "rom": 4096,
+  "url": "https://en.wikipedia.org/wiki/Intel_8051",
+  "vendor": "Intel & Licensees"
+}

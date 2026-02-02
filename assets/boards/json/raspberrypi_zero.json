@@ -1,0 +1,14 @@
+{
+  "fcpu": 1000000000,
+  "frameworks": [
+    "wiringpi"
+  ],
+  "id": "raspberrypi_zero",
+  "mcu": "BCM2835",
+  "name": "Raspberry Pi Zero",
+  "platform": "linux_arm",
+  "ram": 536870912,
+  "rom": 536870912,
+  "url": "https://www.raspberrypi.org",
+  "vendor": "Raspberry Pi"
+}

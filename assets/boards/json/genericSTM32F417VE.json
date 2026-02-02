@@ -1,0 +1,24 @@
+{
+  "id": "genericSTM32F417VE",
+  "name": "STM32F417VE (128k RAM. 512k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F417VET6",
+  "fcpu": 168000000,
+  "ram": 131072,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Generic",
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f417ve.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  },
+  "fcpu": 32000000,
+  "frameworks": [
+    "arduino",
+    "zephyr"
+  ],
+  "id": "waveshare_ble400",
+  "mcu": "NRF51822",
+  "name": "Waveshare BLE400",
+  "platform": "nordicnrf51",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "http://www.waveshare.com/wiki/BLE400",
+  "vendor": "Waveshare"
+}

@@ -1,0 +1,30 @@
+{
+  "id": "nucleo_l073rz",
+  "name": "ST Nucleo L073RZ",
+  "platform": "ststm32",
+  "mcu": "STM32L073RZ",
+  "fcpu": 32000000,
+  "ram": 20480,
+  "rom": 196608,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-L073RZ/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "fcpu": 12000000,
+  "frameworks": [],
+  "id": "CH559",
+  "mcu": "CH559",
+  "name": "CH559",
+  "platform": "intel_mcs51",
+  "ram": 6400,
+  "rom": 65536,
+  "url": "http://www.wch-ic.com/products/CH559.html",
+  "vendor": "WCH"
+}

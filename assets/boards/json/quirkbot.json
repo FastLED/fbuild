@@ -1,0 +1,19 @@
+{
+  "id": "quirkbot",
+  "name": "Quirkbot",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA32U4",
+  "fcpu": 8000000,
+  "ram": 2560,
+  "rom": 28672,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Quirkbot",
+  "url": "http://quirkbot.com",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

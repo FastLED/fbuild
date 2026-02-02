@@ -1,0 +1,26 @@
+{
+  "id": "ublox_c030_u201",
+  "name": "u-blox C030-U201 IoT Starter Kit",
+  "platform": "ststm32",
+  "mcu": "STM32F437VG",
+  "fcpu": 180000000,
+  "ram": 262144,
+  "rom": 1048576,
+  "frameworks": [
+    "stm32cube"
+  ],
+  "vendor": "u-blox",
+  "url": "https://os.mbed.com/platforms/ublox-C030-N211/",
+  "connectivity": [
+    "gps",
+    "cellular"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

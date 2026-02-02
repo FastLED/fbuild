@@ -1,0 +1,30 @@
+{
+  "id": "disco_f407vg",
+  "name": "ST STM32F4DISCOVERY",
+  "platform": "ststm32",
+  "mcu": "STM32F407VGT6",
+  "fcpu": 168000000,
+  "ram": 131072,
+  "rom": 1048576,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "spl",
+    "libopencm3",
+    "stm32cube",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1848/PF252419",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

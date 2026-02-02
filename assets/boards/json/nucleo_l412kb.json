@@ -1,0 +1,27 @@
+{
+  "id": "nucleo_l412kb",
+  "name": "ST Nucleo L412KB",
+  "platform": "ststm32",
+  "mcu": "STM32L412KBU6",
+  "fcpu": 80000000,
+  "ram": 40960,
+  "rom": 131072,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-l412kb.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "connectivity": [
+    "wifi"
+  ],
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino",
+    "esp8266-rtos-sdk",
+    "esp8266-nonos-sdk"
+  ],
+  "id": "espresso_lite_v1",
+  "mcu": "ESP8266",
+  "name": "ESPresso Lite 1.0",
+  "platform": "espressif8266",
+  "ram": 81920,
+  "rom": 4194304,
+  "url": "http://www.espert.co",
+  "vendor": "ESPert"
+}

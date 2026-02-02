@@ -1,0 +1,25 @@
+{
+  "id": "netduino2plus",
+  "name": "N2+",
+  "platform": "ststm32",
+  "mcu": "STM32F405RGT6",
+  "fcpu": 168000000,
+  "ram": 131072,
+  "rom": 1048576,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Netduino",
+  "url": "http://developer.wildernesslabs.co/Netduino/About/",
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "stlink": {
+        "default": true
+      }
+    }
+  }
+}

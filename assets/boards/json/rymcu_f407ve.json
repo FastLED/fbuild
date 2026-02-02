@@ -1,0 +1,27 @@
+{
+  "id": "rymcu_f407ve",
+  "name": "RYMCU STM32F407VE (192k RAM. 512k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F407VET6",
+  "fcpu": 168000000,
+  "ram": 131072,
+  "rom": 514288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "RYMCU",
+  "url": "https://rymcu.com/products",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

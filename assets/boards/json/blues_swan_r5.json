@@ -1,0 +1,30 @@
+{
+  "id": "blues_swan_r5",
+  "name": "Blues Swan R5",
+  "platform": "ststm32",
+  "mcu": "STM32L4R5ZIY6",
+  "fcpu": 120000000,
+  "ram": 655360,
+  "rom": 2097152,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Blues",
+  "url": "https://blues.com/products/swan/",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

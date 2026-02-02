@@ -1,0 +1,12 @@
+{
+  "fcpu": 16000000,
+  "frameworks": [],
+  "id": "N76E003",
+  "mcu": "N76E003",
+  "name": "Generic N76E003",
+  "platform": "intel_mcs51",
+  "ram": 1024,
+  "rom": 18432,
+  "url": "https://www.nuvoton.com/products/microcontrollers/8bit-8051-mcus/low-pin-count-8051-series/n76e003/",
+  "vendor": "Nuvoton"
+}

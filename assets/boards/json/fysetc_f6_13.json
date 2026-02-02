@@ -1,0 +1,20 @@
+{
+  "id": "fysetc_f6_13",
+  "name": "FYSETC F6 V1.3",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA2560",
+  "fcpu": 16000000,
+  "ram": 8192,
+  "rom": 258048,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "FYSETC",
+  "url": "https://www.fysetc.com/",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

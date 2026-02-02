@@ -1,0 +1,25 @@
+{
+  "id": "eval_f107vc",
+  "name": "STM3210C-EVAL",
+  "platform": "ststm32",
+  "mcu": "STM32F107VCT6",
+  "fcpu": 72000000,
+  "ram": 65536,
+  "rom": 262144,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/stm3210c-eval.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "32u416m",
+  "name": "Microduino Core USB (ATmega32U4@16M,5V)",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA32U4",
+  "fcpu": 16000000,
+  "ram": 2560,
+  "rom": 28672,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Microduino",
+  "url": "http://wiki.microduinoinc.com/Microduino-Module_CoreUSB",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

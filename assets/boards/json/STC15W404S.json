@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "STC15W404S",
+  "mcu": "STC15W404S",
+  "name": "Generic STC15W404S",
+  "platform": "intel_mcs51",
+  "ram": 512,
+  "rom": 4096,
+  "url": "http://www.stcmicro.com/STC/STC15W404S.html",
+  "vendor": "STC"
+}

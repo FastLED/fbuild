@@ -1,0 +1,20 @@
+{
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "atmel-ice": {}
+    }
+  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "adafruit_pygamer_advance_m4",
+  "mcu": "SAMD51J20A",
+  "name": "Adafruit PyGamer Advance M4",
+  "platform": "atmelsam",
+  "ram": 262144,
+  "rom": 1048576,
+  "url": "https://www.adafruit.com/product/4242",
+  "vendor": "Adafruit"
+}

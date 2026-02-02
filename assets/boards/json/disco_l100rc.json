@@ -1,0 +1,26 @@
+{
+  "id": "disco_l100rc",
+  "name": "ST 32L100DISCOVERY",
+  "platform": "ststm32",
+  "mcu": "STM32L100RCT6",
+  "fcpu": 32000000,
+  "ram": 16384,
+  "rom": 262144,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/32l100cdiscovery.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      }
+    }
+  }
+}

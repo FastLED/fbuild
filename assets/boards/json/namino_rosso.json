@@ -1,0 +1,34 @@
+{
+  "id": "namino_rosso",
+  "name": "Namino Rosso",
+  "platform": "espressif32",
+  "mcu": "ESP32S3",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "MECT SRL",
+  "url": "https://namino.cc/boards/namino-rosso",
+  "connectivity": [
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "esp-prog": {},
+      "esp-bridge": {},
+      "iot-bus-jtag": {},
+      "jlink": {},
+      "minimodule": {},
+      "olimex-arm-usb-tiny-h": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-ocd": {},
+      "olimex-jtag-tiny": {},
+      "tumpa": {},
+      "esp-builtin": {}
+    }
+  }
+}

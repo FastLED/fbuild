@@ -1,0 +1,19 @@
+{
+  "id": "digispark-tiny",
+  "name": "Digispark USB",
+  "platform": "atmelavr",
+  "mcu": "ATTINY85",
+  "fcpu": 16500000,
+  "ram": 512,
+  "rom": 6012,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Digistump",
+  "url": "http://digistump.com/products/1",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

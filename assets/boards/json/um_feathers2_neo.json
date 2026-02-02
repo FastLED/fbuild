@@ -1,0 +1,32 @@
+{
+  "id": "um_feathers2_neo",
+  "name": "Unexpected Maker FeatherS2 Neo",
+  "platform": "espressif32",
+  "mcu": "ESP32S2",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "Unexpected Maker",
+  "url": "https://unexpectedmaker.com/feathers2-neo",
+  "connectivity": [
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "esp-prog": {},
+      "iot-bus-jtag": {},
+      "jlink": {},
+      "minimodule": {},
+      "olimex-arm-usb-tiny-h": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-ocd": {},
+      "olimex-jtag-tiny": {},
+      "tumpa": {}
+    }
+  }
+}

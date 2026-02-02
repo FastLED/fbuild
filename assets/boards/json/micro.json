@@ -1,0 +1,19 @@
+{
+  "id": "micro",
+  "name": "Arduino Micro",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA32U4",
+  "fcpu": 16000000,
+  "ram": 2560,
+  "rom": 28672,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Arduino",
+  "url": "https://www.arduino.cc/en/Main/ArduinoBoardMicro",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

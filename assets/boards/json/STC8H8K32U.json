@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "STC8H8K32U",
+  "mcu": "STC8H8K32U",
+  "name": "Generic STC8H8K32U",
+  "platform": "intel_mcs51",
+  "ram": 8448,
+  "rom": 32768,
+  "url": "http://www.stcmicro.com/stc/stc51.html",
+  "vendor": "STC"
+}

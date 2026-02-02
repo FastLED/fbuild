@@ -1,0 +1,23 @@
+{
+  "id": "lightblue-bean",
+  "name": "LightBlue Bean",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 8000000,
+  "ram": 2048,
+  "rom": 32256,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Punch Through",
+  "url": "https://punchthrough.com/bean",
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "fcpu": 200000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "openscope",
+  "mcu": "32MZ2048EFG124",
+  "name": "Digilent OpenScope",
+  "platform": "microchippic32",
+  "ram": 524288,
+  "rom": 2080768,
+  "url": "http://store.digilentinc.com/",
+  "vendor": "Digilent"
+}

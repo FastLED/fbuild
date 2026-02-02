@@ -1,0 +1,14 @@
+{
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "cerebot32mx4",
+  "mcu": "32MX460F512L",
+  "name": "Digilent Cerebot 32MX4",
+  "platform": "microchippic32",
+  "ram": 32768,
+  "rom": 520192,
+  "url": "http://store.digilentinc.com/cerebot-32mx4-limited-time-see-chipkit-pro-mx4/",
+  "vendor": "Digilent"
+}

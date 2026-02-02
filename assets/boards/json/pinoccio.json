@@ -1,0 +1,14 @@
+{
+  "id": "pinoccio",
+  "name": "Pinoccio Scout",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA256RFR2",
+  "fcpu": 16000000,
+  "ram": 32768,
+  "rom": 253952,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Pinoccio",
+  "url": "https://www.crowdsupply.com/pinoccio/mesh-sensor-network"
+}

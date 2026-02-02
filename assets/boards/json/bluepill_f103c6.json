@@ -1,0 +1,27 @@
+{
+  "id": "bluepill_f103c6",
+  "name": "BluePill F103C6",
+  "platform": "ststm32",
+  "mcu": "STM32F103C6T6",
+  "fcpu": 72000000,
+  "ram": 10240,
+  "rom": 32768,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Generic",
+  "url": "https://www.st.com/en/microcontrollers/stm32f103c6.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

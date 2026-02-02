@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "STC15F101",
+  "mcu": "STC15F101",
+  "name": "Generic STC15F101",
+  "platform": "intel_mcs51",
+  "ram": 128,
+  "rom": 1024,
+  "url": "http://www.stcmicro.com/STC/STC15F100.html",
+  "vendor": "STC"
+}

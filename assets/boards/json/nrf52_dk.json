@@ -1,0 +1,32 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {
+        "onboard": true,
+        "default": true
+      },
+      "stlink": {},
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "arduino",
+    "mbed",
+    "zephyr"
+  ],
+  "id": "nrf52_dk",
+  "mcu": "NRF52832",
+  "name": "Nordic nRF52-DK",
+  "platform": "nordicnrf52",
+  "ram": 65536,
+  "rom": 524288,
+  "url": "https://developer.mbed.org/platforms/Nordic-nRF52-DK/",
+  "vendor": "Nordic"
+}

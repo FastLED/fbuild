@@ -1,0 +1,27 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "seeedTinyBLE",
+  "mcu": "NRF51822",
+  "name": "Seeed Tiny BLE",
+  "platform": "nordicnrf51",
+  "ram": 16384,
+  "rom": 262144,
+  "url": "https://www.seeedstudio.com/Seeed-Tiny-BLE-BLE-6DOF-Mbed-Platform-p-2268.html",
+  "vendor": "SeeedStudio"
+}

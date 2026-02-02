@@ -1,0 +1,28 @@
+{
+  "id": "b96b_argonkey",
+  "name": "96Boards Argonkey (STEVAL-MKI187V1)",
+  "platform": "ststm32",
+  "mcu": "STM32F412CG",
+  "fcpu": 100000000,
+  "ram": 262144,
+  "rom": 1048576,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "96Boards",
+  "url": "https://www.st.com/en/evaluation-tools/steval-mki187v1.html",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

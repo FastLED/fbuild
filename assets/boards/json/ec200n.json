@@ -1,0 +1,18 @@
+{
+  "connectivity": [
+    "cellular"
+  ],
+  "fcpu": 416000000,
+  "frameworks": [
+    "arduino",
+    "logicromsdk"
+  ],
+  "id": "ec200n",
+  "mcu": "ASR1603",
+  "name": "Quectel EC200N LTE Cat.1 Module",
+  "platform": "logicrom",
+  "ram": 524288,
+  "rom": 524288,
+  "url": "",
+  "vendor": "Quectel Wireless Solutions Co., Ltd."
+}

@@ -1,0 +1,14 @@
+{
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "cui32",
+  "mcu": "32MX440F512H",
+  "name": "Pic32 CUI32-Development Stick",
+  "platform": "microchippic32",
+  "ram": 32768,
+  "rom": 520192,
+  "url": "https://www.sparkfun.com/products/retired/9645",
+  "vendor": "SparkFun"
+}

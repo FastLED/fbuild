@@ -1,0 +1,22 @@
+{
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "cmsis-dap": {}
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino",
+    "fsp",
+    "cmsis"
+  ],
+  "id": "nano_r4",
+  "mcu": "RA4M1",
+  "name": "Arduino Nano R4",
+  "platform": "renesas-ra",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://docs.arduino.cc/hardware/nano-r4/",
+  "vendor": "Arduino"
+}

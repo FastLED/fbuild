@@ -1,0 +1,24 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "cmsis-dap": {}
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "zephyr"
+  ],
+  "id": "particle_argon",
+  "mcu": "NRF52840",
+  "name": "Particle Argon",
+  "platform": "nordicnrf52",
+  "ram": 248832,
+  "rom": 815104,
+  "url": "https://docs.particle.io/argon",
+  "vendor": "Particle"
+}

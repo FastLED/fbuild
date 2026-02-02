@@ -1,0 +1,14 @@
+{
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATtiny426",
+  "mcu": "ATTINY426",
+  "name": "ATtiny426",
+  "platform": "atmelmegaavr",
+  "ram": 512,
+  "rom": 4096,
+  "url": "https://www.microchip.com/wwwproducts/en/ATTINY426",
+  "vendor": "Microchip"
+}

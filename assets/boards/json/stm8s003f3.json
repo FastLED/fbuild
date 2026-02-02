@@ -1,0 +1,20 @@
+{
+  "debug": {
+    "tools": {
+      "stlink": {}
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino",
+    "spl"
+  ],
+  "id": "stm8s003f3",
+  "mcu": "STM8S003F3P6",
+  "name": "ST STM8S003F3 chip",
+  "platform": "ststm8",
+  "ram": 1024,
+  "rom": 8192,
+  "url": "https://www.st.com/resource/en/datasheet/stm8s003f3.pdf",
+  "vendor": "ST"
+}

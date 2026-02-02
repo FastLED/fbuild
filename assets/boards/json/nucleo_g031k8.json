@@ -1,0 +1,27 @@
+{
+  "id": "nucleo_g031k8",
+  "name": "ST NUCLEO-G031K8",
+  "platform": "ststm32",
+  "mcu": "STM32G031K8",
+  "fcpu": 64000000,
+  "ram": 8192,
+  "rom": 65536,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-g031k8.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

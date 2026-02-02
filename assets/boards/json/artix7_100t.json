@@ -1,0 +1,22 @@
+{
+  "debug": {
+    "tools": {
+      "ftdi": {
+        "onboard": true
+      },
+      "jlink": {}
+    }
+  },
+  "fcpu": 50000000,
+  "frameworks": [
+    "shakti-sdk"
+  ],
+  "id": "artix7_100t",
+  "mcu": "C-CLASS",
+  "name": "Arty A7-100: Artix-7 FPGA Development Board",
+  "platform": "shakti",
+  "ram": 134217728,
+  "rom": 0,
+  "url": "https://www.xilinx.com/products/boards-and-kits/1-w51quh.html",
+  "vendor": "Xilinx"
+}

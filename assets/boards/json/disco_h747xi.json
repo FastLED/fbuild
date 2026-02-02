@@ -1,0 +1,33 @@
+{
+  "id": "disco_h747xi",
+  "name": "STM32H747I-DISCO",
+  "platform": "ststm32",
+  "mcu": "STM32H747XIH6",
+  "fcpu": 400000000,
+  "ram": 524288,
+  "rom": 2097152,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "mbed",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/stm32h747i-disco.html",
+  "connectivity": [
+    "can",
+    "ethernet"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

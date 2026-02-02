@@ -1,0 +1,24 @@
+{
+  "id": "thunder_pack",
+  "name": "ThunderPack v1.0",
+  "platform": "ststm32",
+  "mcu": "STM32L072KZ",
+  "fcpu": 32000000,
+  "ram": 20480,
+  "rom": 196608,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "ThunderPack",
+  "url": "https://github.com/jgillick/ThunderPack",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

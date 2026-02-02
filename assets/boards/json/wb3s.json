@@ -1,0 +1,27 @@
+{
+  "connectivity": [
+    "wifi",
+    "ble"
+  ],
+  "debug": {
+    "tools": {
+      "custom": {},
+      "openocd": {
+        "default": true
+      }
+    }
+  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "base",
+    "arduino"
+  ],
+  "id": "wb3s",
+  "mcu": "BK7231T",
+  "name": "WB3S Wi-Fi Module",
+  "platform": "libretiny",
+  "ram": 262144,
+  "rom": 1083136,
+  "url": "https://developer.tuya.com/en/docs/iot/wb3s-module-datasheet?id=K9dx20n6hz5n4",
+  "vendor": "Tuya Inc."
+}

@@ -1,0 +1,14 @@
+{
+  "id": "attiny1634",
+  "name": "Generic ATtiny1634",
+  "platform": "atmelavr",
+  "mcu": "ATTINY1634",
+  "fcpu": 8000000,
+  "ram": 1024,
+  "rom": 16384,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Atmel",
+  "url": "http://www.atmel.com/devices/ATTINY1634.aspx"
+}

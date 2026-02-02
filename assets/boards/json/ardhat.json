@@ -1,0 +1,20 @@
+{
+  "id": "ardhat",
+  "name": "ubIQio Ardhat",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 32256,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "ubIQio",
+  "url": "http://ardhat.com",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

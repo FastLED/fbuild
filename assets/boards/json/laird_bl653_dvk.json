@@ -1,0 +1,30 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {
+        "onboard": true,
+        "default": true
+      },
+      "stlink": {},
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "zephyr"
+  ],
+  "id": "laird_bl653_dvk",
+  "mcu": "NRF52833",
+  "name": "BL653 Development Kit",
+  "platform": "nordicnrf52",
+  "ram": 131072,
+  "rom": 524288,
+  "url": "https://www.lairdconnect.com/wireless-modules/bluetooth-modules/bluetooth-5-modules/bl653-series-bluetooth-51-802154-nfc-module",
+  "vendor": "Laird Connectivity"
+}

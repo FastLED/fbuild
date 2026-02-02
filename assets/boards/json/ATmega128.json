@@ -1,0 +1,19 @@
+{
+  "id": "ATmega128",
+  "name": "ATmega128/A",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA128",
+  "fcpu": 16000000,
+  "ram": 4096,
+  "rom": 131072,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Microchip",
+  "url": "https://www.microchip.com/wwwproducts/ATmega128",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

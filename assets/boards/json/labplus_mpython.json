@@ -1,0 +1,21 @@
+{
+  "id": "labplus_mpython",
+  "name": "Labplus mPython",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "Labplus",
+  "url": "https://github.com/labplus-cn/mpython",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

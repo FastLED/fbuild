@@ -1,0 +1,25 @@
+{
+  "id": "genericSTM32F407VGT6",
+  "name": "STM32F407VG (128k RAM. 1024k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F407VGT6",
+  "fcpu": 168000000,
+  "ram": 131072,
+  "rom": 1048576,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Generic",
+  "url": "https://www.st.com/content/st_com/en/products/microcontrollers/stm32-32-bit-arm-cortex-mcus/stm32-high-performance-mcus/stm32f4-series/stm32f407-417/stm32f407vg.html",
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "stlink": {
+        "default": true
+      }
+    }
+  }
+}

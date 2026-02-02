@@ -1,0 +1,21 @@
+{
+  "id": "sparkfun_esp32micromod",
+  "name": "SparkFun ESP32 MicroMod",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "SparkFun",
+  "url": "https://www.sparkfun.com/products/16781",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

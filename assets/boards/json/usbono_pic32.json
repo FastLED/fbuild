@@ -1,0 +1,14 @@
+{
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "usbono_pic32",
+  "mcu": "32MX440F512H",
+  "name": "PONTECH UAV100",
+  "platform": "microchippic32",
+  "ram": 32768,
+  "rom": 520192,
+  "url": "http://www.pontech.com/productdisplay/uav100",
+  "vendor": "PONTECH"
+}

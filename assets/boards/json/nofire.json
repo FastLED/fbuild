@@ -1,0 +1,14 @@
+{
+  "fcpu": 200000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "nofire",
+  "mcu": "32MZ2048EFG100",
+  "name": "Pontech NoFire",
+  "platform": "microchippic32",
+  "ram": 524288,
+  "rom": 2080768,
+  "url": "http://www.pontech.com/products",
+  "vendor": "Pontech"
+}

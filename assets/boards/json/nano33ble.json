@@ -1,0 +1,24 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "cmsis-dap": {}
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "nano33ble",
+  "mcu": "NRF52840",
+  "name": "Arduino Nano 33 BLE",
+  "platform": "nordicnrf52",
+  "ram": 262144,
+  "rom": 983040,
+  "url": "https://store.arduino.cc/arduino-nano-33-ble",
+  "vendor": "Arduino"
+}

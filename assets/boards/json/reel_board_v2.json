@@ -1,0 +1,27 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "zephyr"
+  ],
+  "id": "reel_board_v2",
+  "mcu": "NRF52840",
+  "name": "PHYTEC reel board v2",
+  "platform": "nordicnrf52",
+  "ram": 262144,
+  "rom": 1048576,
+  "url": "https://www.phytec.eu/reelboard",
+  "vendor": "PHYTEC"
+}

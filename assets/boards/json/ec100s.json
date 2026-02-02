@@ -1,0 +1,18 @@
+{
+  "connectivity": [
+    "cellular"
+  ],
+  "fcpu": 416000000,
+  "frameworks": [
+    "arduino",
+    "logicromsdk"
+  ],
+  "id": "ec100s",
+  "mcu": "ASR1601",
+  "name": "Quectel EC100S LTE Cat.1 Module",
+  "platform": "logicrom",
+  "ram": 524288,
+  "rom": 1048576,
+  "url": "",
+  "vendor": "Quectel Wireless Solutions Co., Ltd."
+}

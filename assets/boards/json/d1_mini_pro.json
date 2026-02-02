@@ -1,0 +1,19 @@
+{
+  "connectivity": [
+    "wifi"
+  ],
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino",
+    "esp8266-rtos-sdk",
+    "esp8266-nonos-sdk"
+  ],
+  "id": "d1_mini_pro",
+  "mcu": "ESP8266",
+  "name": "WeMos D1 mini Pro",
+  "platform": "espressif8266",
+  "ram": 81920,
+  "rom": 16777216,
+  "url": "https://wiki.wemos.cc/products:d1:d1_mini",
+  "vendor": "WEMOS"
+}

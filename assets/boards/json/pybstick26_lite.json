@@ -1,0 +1,28 @@
+{
+  "id": "pybstick26_lite",
+  "name": "PYBStick Lite 26",
+  "platform": "ststm32",
+  "mcu": "STM32F401CEU6",
+  "fcpu": 84000000,
+  "ram": 98304,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "PYBStick",
+  "url": "https://shop.mchobby.be/fr/micropython/1830-pybstick-lite-26-micropython-et-arduino-3232100018303-garatronic.html",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

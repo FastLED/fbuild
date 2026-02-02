@@ -1,0 +1,20 @@
+{
+  "id": "mightyhat",
+  "name": "LowPowerLab MightyHat",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 31744,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "LowPowerLab",
+  "url": "https://lowpowerlab.com/shop/product/130",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "nina_w10",
+  "name": "u-blox NINA-W10 series",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 2097152,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "u-blox",
+  "url": "https://www.u-blox.com/en/product/nina-w10-series",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

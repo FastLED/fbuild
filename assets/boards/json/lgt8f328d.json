@@ -1,0 +1,14 @@
+{
+  "fcpu": 32000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "lgt8f328d",
+  "mcu": "ATMEGA328P",
+  "name": "LGT8F328D",
+  "platform": "lgt8f",
+  "ram": 2048,
+  "rom": 29696,
+  "url": "http://www.lgtic.com/",
+  "vendor": "LogicGreen"
+}

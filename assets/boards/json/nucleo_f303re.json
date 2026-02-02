@@ -1,0 +1,30 @@
+{
+  "id": "nucleo_f303re",
+  "name": "ST Nucleo F303RE",
+  "platform": "ststm32",
+  "mcu": "STM32F303RET6",
+  "fcpu": 72000000,
+  "ram": 65536,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "http://developer.mbed.org/platforms/ST-Nucleo-F303RE/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "sodaq_mbili",
+  "name": "SODAQ Mbili",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA1284P",
+  "fcpu": 8000000,
+  "ram": 16384,
+  "rom": 130048,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "SODAQ",
+  "url": "http://support.sodaq.com/sodaq-one/sodaq-mbili-1284p/",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

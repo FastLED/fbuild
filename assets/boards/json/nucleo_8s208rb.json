@@ -1,0 +1,22 @@
+{
+  "debug": {
+    "tools": {
+      "stlink": {
+        "onboard": true,
+        "default": true
+      }
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "spl"
+  ],
+  "id": "nucleo_8s208rb",
+  "mcu": "STM8S208RBT6",
+  "name": "NUCLEO-8S208RB",
+  "platform": "ststm8",
+  "ram": 6144,
+  "rom": 131072,
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-8s208rb.html",
+  "vendor": "STMicroelectronics"
+}

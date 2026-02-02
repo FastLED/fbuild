@@ -1,0 +1,28 @@
+{
+  "id": "fysetc_s6",
+  "name": "FYSETC S6",
+  "platform": "ststm32",
+  "mcu": "STM32F446VET6",
+  "fcpu": 168000000,
+  "ram": 131072,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "FYSETC",
+  "url": "https://wiki.fysetc.com/FYSETC_S6/",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

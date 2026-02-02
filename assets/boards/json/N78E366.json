@@ -1,0 +1,12 @@
+{
+  "fcpu": 22118400,
+  "frameworks": [],
+  "id": "N78E366",
+  "mcu": "N78E366",
+  "name": "Generic N78E366",
+  "platform": "intel_mcs51",
+  "ram": 1280,
+  "rom": 65536,
+  "url": "https://www.nuvoton.com/products/microcontrollers/8bit-8051-mcus/standard-8051-series/n78e366a/",
+  "vendor": "Nuvoton"
+}

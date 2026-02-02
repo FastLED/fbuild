@@ -1,0 +1,38 @@
+{
+  "id": "freenove_esp32_s3_wroom",
+  "name": "Freenove ESP32-S3 WROOM N8R8 (8MB Flash / 8MB PSRAM)",
+  "platform": "espressif32",
+  "mcu": "ESP32S3",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 8388608,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "Freenove",
+  "url": "https://github.com/Freenove/Freenove_ESP32_S3_WROOM_Board",
+  "connectivity": [
+    "bluetooth",
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "esp-prog": {},
+      "esp-bridge": {},
+      "iot-bus-jtag": {},
+      "jlink": {},
+      "minimodule": {},
+      "olimex-arm-usb-tiny-h": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-ocd": {},
+      "olimex-jtag-tiny": {},
+      "tumpa": {},
+      "esp-builtin": {
+        "onboard": true,
+        "default": true
+      }
+    }
+  }
+}

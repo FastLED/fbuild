@@ -1,0 +1,19 @@
+{
+  "connectivity": [
+    "wifi"
+  ],
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino",
+    "esp8266-rtos-sdk",
+    "esp8266-nonos-sdk"
+  ],
+  "id": "d1_wroom_02",
+  "mcu": "ESP8266",
+  "name": "WeMos D1 ESP-WROOM-02",
+  "platform": "espressif8266",
+  "ram": 81920,
+  "rom": 2097152,
+  "url": "https://artofcircuits.com/product/esp-wroom-02-wifi-18650-battery-charger-board",
+  "vendor": "WeMos"
+}

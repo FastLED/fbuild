@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "mspdebug": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "lpmsp430fr2476",
+  "mcu": "MSP430FR2476",
+  "name": "TI LaunchPad MSP-EXP430FR2476LP",
+  "platform": "timsp430",
+  "ram": 8192,
+  "rom": 65536,
+  "url": "http://www.ti.com/product/MSP430FR2476",
+  "vendor": "TI"
+}

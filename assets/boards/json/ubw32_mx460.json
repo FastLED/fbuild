@@ -1,0 +1,14 @@
+{
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ubw32_mx460",
+  "mcu": "32MX460F512L",
+  "name": "UBW32 MX460",
+  "platform": "microchippic32",
+  "ram": 32768,
+  "rom": 520192,
+  "url": "http://www.schmalzhaus.com/UBW32/",
+  "vendor": "UBW32"
+}

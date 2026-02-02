@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "default": true
+      }
+    }
+  },
+  "fcpu": 80000000,
+  "frameworks": [],
+  "id": "OpenIMU330",
+  "mcu": "STM32L431CB",
+  "name": "Aceinna OpenIMU 330",
+  "platform": "aceinna_imu",
+  "ram": 65536,
+  "rom": 131072,
+  "url": "https://www.aceinna.com/inertial-systems/",
+  "vendor": "Aceinna"
+}

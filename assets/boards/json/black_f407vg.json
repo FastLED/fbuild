@@ -1,0 +1,28 @@
+{
+  "id": "black_f407vg",
+  "name": "Black STM32F407VG",
+  "platform": "ststm32",
+  "mcu": "STM32F407VGT6",
+  "fcpu": 168000000,
+  "ram": 131072,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/microcontrollers/stm32f407vg.html",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

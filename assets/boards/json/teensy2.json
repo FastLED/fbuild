@@ -1,0 +1,14 @@
+{
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "teensy2",
+  "mcu": "ATMEGA32U4",
+  "name": "Teensy 2.0",
+  "platform": "teensy",
+  "ram": 2560,
+  "rom": 32256,
+  "url": "https://www.pjrc.com/store/teensy.html",
+  "vendor": "Teensy"
+}

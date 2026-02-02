@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "mspdebug": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "lpmsp430fr2311",
+  "mcu": "MSP430FR2311",
+  "name": "TI LaunchPad MSP-EXP430FR2311LP",
+  "platform": "timsp430",
+  "ram": 1024,
+  "rom": 3840,
+  "url": "http://www.ti.com/product/MSP430FR2311",
+  "vendor": "TI"
+}

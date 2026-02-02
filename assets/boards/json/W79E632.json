@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "W79E632",
+  "mcu": "W79E632",
+  "name": "Generic W79E632",
+  "platform": "intel_mcs51",
+  "ram": 1280,
+  "rom": 65536,
+  "url": "https://www.nuvoton.com/products/microcontrollers/8bit-8051-mcus/standard-8051-series/w79e632a/",
+  "vendor": "Nuvoton"
+}

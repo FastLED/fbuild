@@ -1,0 +1,14 @@
+{
+  "id": "elektor_uno_r4",
+  "name": "Elektor Uno R4",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328PB",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 32256,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Elektor",
+  "url": "https://www.elektor.com/elektor-uno-r4"
+}

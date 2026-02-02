@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "STC8F1K17",
+  "mcu": "STC8F1K17",
+  "name": "Generic STC8F1K17",
+  "platform": "intel_mcs51",
+  "ram": 1280,
+  "rom": 17408,
+  "url": "http://www.stcmicro.com/stc/stc51.html",
+  "vendor": "STC"
+}

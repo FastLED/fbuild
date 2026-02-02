@@ -1,0 +1,28 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {
+        "onboard": true,
+        "default": true
+      },
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "zephyr"
+  ],
+  "id": "electronut_papyr",
+  "mcu": "NRF52840",
+  "name": "ElectronutLabs Papyr",
+  "platform": "nordicnrf52",
+  "ram": 262144,
+  "rom": 1048576,
+  "url": "https://docs.electronut.in/papyr",
+  "vendor": "ElectronutLabs"
+}

@@ -1,0 +1,19 @@
+{
+  "id": "engduinov3",
+  "name": "Engduino 3",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA32U4",
+  "fcpu": 8000000,
+  "ram": 2560,
+  "rom": 28672,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Engduino",
+  "url": "http://www.engduino.org",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

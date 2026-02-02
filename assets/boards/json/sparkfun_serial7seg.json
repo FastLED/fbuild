@@ -1,0 +1,20 @@
+{
+  "id": "sparkfun_serial7seg",
+  "name": "SparkFun Serial 7-Segment Display",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 8000000,
+  "ram": 2048,
+  "rom": 32256,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "SparkFun",
+  "url": "https://www.sparkfun.com/products/11441",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "168pa16m",
+  "name": "Microduino Core (Atmega168PA@16M,5V)",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA168P",
+  "fcpu": 16000000,
+  "ram": 1024,
+  "rom": 15872,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Microduino",
+  "url": "http://wiki.microduinoinc.com/Microduino-Module_Core",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

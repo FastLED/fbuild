@@ -1,0 +1,18 @@
+{
+  "connectivity": [
+    "cellular"
+  ],
+  "fcpu": 416000000,
+  "frameworks": [
+    "arduino",
+    "logicromsdk"
+  ],
+  "id": "eg912y",
+  "mcu": "ASR1603",
+  "name": "Quectel EG912Y LTE Cat.1 Module",
+  "platform": "logicrom",
+  "ram": 524288,
+  "rom": 524288,
+  "url": "",
+  "vendor": "Quectel Wireless Solutions Co., Ltd."
+}

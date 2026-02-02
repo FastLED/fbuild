@@ -1,0 +1,17 @@
+{
+  "connectivity": [
+    "wifi"
+  ],
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "d1_mini_lite",
+  "mcu": "ESP8266",
+  "name": "WeMos D1 mini Lite",
+  "platform": "espressif8266",
+  "ram": 81920,
+  "rom": 1048576,
+  "url": "https://wiki.wemos.cc/products:d1:d1_mini_lite",
+  "vendor": "WEMOS"
+}

@@ -1,0 +1,22 @@
+{
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "atmel-ice": {}
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino",
+    "zephyr"
+  ],
+  "id": "nano_33_iot",
+  "mcu": "SAMD21G18A",
+  "name": "NANO 33 IoT",
+  "platform": "atmelsam",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://store.arduino.cc/nano-33-iot",
+  "vendor": "Arduino"
+}

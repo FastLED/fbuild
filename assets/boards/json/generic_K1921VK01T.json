@@ -1,0 +1,20 @@
+{
+  "debug": {
+    "tools": {
+      "stlink": {}
+    }
+  },
+  "fcpu": 100000000,
+  "frameworks": [
+    "k1921vk_sdk",
+    "freertos"
+  ],
+  "id": "generic_K1921VK01T",
+  "mcu": "K1921VK01T",
+  "name": "Generic K1921VK01T",
+  "platform": "k1921vk",
+  "ram": 196608,
+  "rom": 1048576,
+  "url": "https://niiet.ru/product/%D0%BA1921%D0%B2%D0%BA01%D1%821/",
+  "vendor": "Generic"
+}

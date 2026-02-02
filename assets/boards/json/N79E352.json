@@ -1,0 +1,12 @@
+{
+  "fcpu": 22118400,
+  "frameworks": [],
+  "id": "N79E352",
+  "mcu": "N79E352",
+  "name": "Generic N79E352",
+  "platform": "intel_mcs51",
+  "ram": 256,
+  "rom": 8192,
+  "url": "https://www.nuvoton.com/products/microcontrollers/8bit-8051-mcus/standard-8051-series/n79e352r/",
+  "vendor": "Nuvoton"
+}

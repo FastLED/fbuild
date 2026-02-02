@@ -1,0 +1,28 @@
+{
+  "id": "nucleo_g491re",
+  "name": "Nucleo G491RE",
+  "platform": "ststm32",
+  "mcu": "STM32G491RET6",
+  "fcpu": 170000000,
+  "ram": 114688,
+  "rom": 524288,
+  "frameworks": [
+    "stm32cube"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-g491re.html",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

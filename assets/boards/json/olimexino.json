@@ -1,0 +1,26 @@
+{
+  "id": "olimexino",
+  "name": "OLIMEXINO-STM32",
+  "platform": "ststm32",
+  "mcu": "STM32F103RBT6",
+  "fcpu": 72000000,
+  "ram": 20480,
+  "rom": 131072,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "libopencm3",
+    "stm32cube",
+    "zephyr"
+  ],
+  "vendor": "Olimex",
+  "url": "https://docs.zephyrproject.org/latest/boards/arm/olimexino_stm32/doc/index.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

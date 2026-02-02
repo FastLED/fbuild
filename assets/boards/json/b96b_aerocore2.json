@@ -1,0 +1,24 @@
+{
+  "id": "b96b_aerocore2",
+  "name": "96Boards Neonkey",
+  "platform": "ststm32",
+  "mcu": "STM32F427VIT6",
+  "fcpu": 168000000,
+  "ram": 262144,
+  "rom": 2091752,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "96Boards",
+  "url": "https://www.96boards.org/product/aerocore2/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

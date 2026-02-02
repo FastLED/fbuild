@@ -1,0 +1,20 @@
+{
+  "id": "sparkfun_megapro16MHz",
+  "name": "SparkFun Mega Pro 5V/16MHz",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA2560",
+  "fcpu": 16000000,
+  "ram": 8192,
+  "rom": 253952,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "SparkFun",
+  "url": "https://www.sparkfun.com/products/11007",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

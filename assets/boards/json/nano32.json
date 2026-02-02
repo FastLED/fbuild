@@ -1,0 +1,21 @@
+{
+  "id": "nano32",
+  "name": "MakerAsia Nano32",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "MakerAsia",
+  "url": "http://iot-bits.com/nano32-esp32-development-board",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

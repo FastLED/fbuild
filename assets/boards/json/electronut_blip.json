@@ -1,0 +1,28 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {
+        "onboard": true,
+        "default": true
+      },
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "zephyr"
+  ],
+  "id": "electronut_blip",
+  "mcu": "NRF52840",
+  "name": "ElectronutLabs Blip",
+  "platform": "nordicnrf52",
+  "ram": 262144,
+  "rom": 1048576,
+  "url": "https://github.com/electronut/ElectronutLabs-blip",
+  "vendor": "ElectronutLabs"
+}

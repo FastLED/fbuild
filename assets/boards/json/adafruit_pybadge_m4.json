@@ -1,0 +1,20 @@
+{
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "atmel-ice": {}
+    }
+  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "adafruit_pybadge_m4",
+  "mcu": "SAMD51J19A",
+  "name": "Adafruit pyBadge M4 Express",
+  "platform": "atmelsam",
+  "ram": 196608,
+  "rom": 524288,
+  "url": "https://www.adafruit.com/product/4200",
+  "vendor": "Adafruit"
+}

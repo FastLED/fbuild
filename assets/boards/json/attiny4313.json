@@ -1,0 +1,19 @@
+{
+  "id": "attiny4313",
+  "name": "Generic ATtiny4313",
+  "platform": "atmelavr",
+  "mcu": "ATTINY4313",
+  "fcpu": 8000000,
+  "ram": 256,
+  "rom": 4096,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Atmel",
+  "url": "http://www.microchip.com/wwwproducts/en/ATTINY4313",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

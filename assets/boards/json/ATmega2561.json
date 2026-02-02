@@ -1,0 +1,14 @@
+{
+  "id": "ATmega2561",
+  "name": "ATmega2561",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA2561",
+  "fcpu": 16000000,
+  "ram": 8192,
+  "rom": 262144,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Microchip",
+  "url": "https://www.microchip.com/wwwproducts/ATmega2561"
+}

@@ -1,0 +1,19 @@
+{
+  "id": "ATmega324A",
+  "name": "ATmega324A",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA324A",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 32768,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Microchip",
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega324a",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "redbear_blend2",
+  "mcu": "NRF52832",
+  "name": "RedBearLab Blend 2",
+  "platform": "nordicnrf52",
+  "ram": 65536,
+  "rom": 524288,
+  "url": "https://redbear.cc/product/ble/blend-2.html",
+  "vendor": "RedBearLab"
+}

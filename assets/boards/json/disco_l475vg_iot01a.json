@@ -1,0 +1,35 @@
+{
+  "id": "disco_l475vg_iot01a",
+  "name": "ST B-L475E-IOT01A Discovery kit",
+  "platform": "ststm32",
+  "mcu": "STM32L475VGT6",
+  "fcpu": 80000000,
+  "ram": 98304,
+  "rom": 1048576,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://developer.mbed.org/platforms/ST-Discovery-L475E-IOT01A/",
+  "connectivity": [
+    "bluetooth",
+    "can",
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

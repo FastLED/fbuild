@@ -1,0 +1,33 @@
+{
+  "id": "nucleo_g474re",
+  "name": "Nucleo G474RE",
+  "platform": "ststm32",
+  "mcu": "STM32G474RET6",
+  "fcpu": 170000000,
+  "ram": 131072,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "mbed",
+    "libopencm3",
+    "stm32cube",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-g474re.html",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

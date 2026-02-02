@@ -1,0 +1,20 @@
+{
+  "id": "alorium_hinj",
+  "name": "Alorium Hinj",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 32256,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Alorium Technology",
+  "url": "https://www.aloriumtech.com/hinj/",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

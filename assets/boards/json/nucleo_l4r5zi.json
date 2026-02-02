@@ -1,0 +1,32 @@
+{
+  "id": "nucleo_l4r5zi",
+  "name": "ST Nucleo L4R5ZI",
+  "platform": "ststm32",
+  "mcu": "STM32L4R5ZIT6",
+  "fcpu": 120000000,
+  "ram": 655360,
+  "rom": 2097152,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-l4r5zi.html",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

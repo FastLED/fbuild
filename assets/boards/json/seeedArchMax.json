@@ -1,0 +1,31 @@
+{
+  "id": "seeedArchMax",
+  "name": "Seeed Arch Max",
+  "platform": "ststm32",
+  "mcu": "STM32F407VET6",
+  "fcpu": 168000000,
+  "ram": 196608,
+  "rom": 524288,
+  "frameworks": [
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "SeeedStudio",
+  "url": "https://developer.mbed.org/platforms/Seeed-Arch-Max/",
+  "connectivity": [
+    "ethernet"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

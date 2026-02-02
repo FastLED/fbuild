@@ -1,0 +1,28 @@
+{
+  "id": "armstrap_eagle512",
+  "name": "Armstrap Eagle 512",
+  "platform": "ststm32",
+  "mcu": "STM32F407VET6",
+  "fcpu": 168000000,
+  "ram": 196608,
+  "rom": 524288,
+  "frameworks": [
+    "cmsis",
+    "spl",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Armstrap",
+  "url": "http://docs.armstrap.org/en/latest/hardware-overview.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {
+        "onboard": true,
+        "default": true
+      },
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

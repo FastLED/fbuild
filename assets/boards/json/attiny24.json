@@ -1,0 +1,19 @@
+{
+  "id": "attiny24",
+  "name": "Generic ATtiny24",
+  "platform": "atmelavr",
+  "mcu": "ATTINY24",
+  "fcpu": 8000000,
+  "ram": 128,
+  "rom": 2048,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Atmel",
+  "url": "http://www.atmel.com/devices/ATTINY24.aspx",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

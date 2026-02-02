@@ -1,0 +1,27 @@
+{
+  "id": "electrosmith_daisy",
+  "name": "Electrosmith Daisy",
+  "platform": "ststm32",
+  "mcu": "STM32H750IBK6",
+  "fcpu": 400000000,
+  "ram": 524288,
+  "rom": 131072,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube"
+  ],
+  "vendor": "Electrosmith",
+  "url": "https://www.electro-smith.com/daisy/daisy",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

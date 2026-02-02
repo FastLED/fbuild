@@ -1,0 +1,20 @@
+{
+  "id": "raspduino",
+  "name": "BitWizard Raspduino",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 30720,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "BitWizard",
+  "url": "http://www.bitwizard.nl/wiki/index.php/Raspduino",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

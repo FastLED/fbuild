@@ -1,0 +1,14 @@
+{
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "fubarino_mini_20",
+  "mcu": "32MX270F256D",
+  "name": "Mini 2.0",
+  "platform": "microchippic32",
+  "ram": 63488,
+  "rom": 245760,
+  "url": "http://fubarino.org/mini/",
+  "vendor": "Fubarino"
+}

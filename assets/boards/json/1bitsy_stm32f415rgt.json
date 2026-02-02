@@ -1,0 +1,27 @@
+{
+  "id": "1bitsy_stm32f415rgt",
+  "name": "1Bitsy",
+  "platform": "ststm32",
+  "mcu": "STM32F415RGT",
+  "fcpu": 168000000,
+  "ram": 131072,
+  "rom": 1048576,
+  "frameworks": [
+    "libopencm3",
+    "cmsis",
+    "spl",
+    "stm32cube"
+  ],
+  "vendor": "1BitSquared",
+  "url": "http://1bitsy.org",
+  "debug": {
+    "tools": {
+      "blackmagic": {
+        "default": true
+      },
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "id": "nucleo_f439zi",
+  "name": "ST Nucleo F439ZI",
+  "platform": "ststm32",
+  "mcu": "STM32F439ZIT6",
+  "fcpu": 180000000,
+  "ram": 196608,
+  "rom": 2097152,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-f439zi.html",
+  "connectivity": [
+    "can",
+    "ethernet"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

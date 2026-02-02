@@ -1,0 +1,22 @@
+{
+  "id": "efm32gg11_stk3701",
+  "name": "SLSTK3701A Giant Gecko S1",
+  "platform": "siliconlabsefm32",
+  "mcu": "EFM32GG11B820F2048GL192",
+  "fcpu": 48000000,
+  "ram": 524288,
+  "rom": 2097152,
+  "frameworks": [
+    "mbed"
+  ],
+  "vendor": "Silicon Labs",
+  "url": "https://www.silabs.com/development-tools/mcu/32-bit/efm32gg11-starter-kit",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {
+        "onboard": true
+      }
+    }
+  }
+}

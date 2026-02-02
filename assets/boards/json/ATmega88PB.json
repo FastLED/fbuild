@@ -1,0 +1,14 @@
+{
+  "id": "ATmega88PB",
+  "name": "ATmega88PB",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA88PB",
+  "fcpu": 16000000,
+  "ram": 1024,
+  "rom": 8192,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Microchip",
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega88PB"
+}

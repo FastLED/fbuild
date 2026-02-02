@@ -1,0 +1,19 @@
+{
+  "id": "arduboy",
+  "name": "Arduboy",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA32U4",
+  "fcpu": 16000000,
+  "ram": 2560,
+  "rom": 28672,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Arduboy",
+  "url": "https://www.arduboy.com",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

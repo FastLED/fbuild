@@ -1,0 +1,29 @@
+{
+  "id": "nucleo_u575zi_q",
+  "name": "ST Nucleo U575ZI-Q",
+  "platform": "ststm32",
+  "mcu": "STM32U575ZIT6Q",
+  "fcpu": 160000000,
+  "ram": 262144,
+  "rom": 2097152,
+  "frameworks": [
+    "arduino",
+    "mbed"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-u575zi-q.html",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

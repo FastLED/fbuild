@@ -1,0 +1,33 @@
+{
+  "id": "nucleo_f303k8",
+  "name": "ST Nucleo F303K8",
+  "platform": "ststm32",
+  "mcu": "STM32F303K8T6",
+  "fcpu": 72000000,
+  "ram": 12288,
+  "rom": 65536,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F303K8/",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "mts_dragonfly_f411re",
+  "name": "MTS Dragonfly",
+  "platform": "ststm32",
+  "mcu": "STM32F411RET6",
+  "fcpu": 100000000,
+  "ram": 131072,
+  "rom": 524288,
+  "frameworks": [
+    "mbed",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "MultiTech",
+  "url": "https://developer.mbed.org/platforms/MTS-Dragonfly/",
+  "connectivity": [
+    "cellular"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

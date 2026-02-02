@@ -1,0 +1,21 @@
+{
+  "id": "lora_e5_dev_board",
+  "name": "SeeedStudio LoRa E5 Dev Board",
+  "platform": "ststm32",
+  "mcu": "STM32WLE5JC",
+  "fcpu": 48000000,
+  "ram": 65536,
+  "rom": 262144,
+  "frameworks": [
+    "arduino",
+    "zephyr"
+  ],
+  "vendor": "SeeedStudio",
+  "url": "https://www.seeedstudio.com/LoRa-E5-Dev-Kit-p-4868.html",
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

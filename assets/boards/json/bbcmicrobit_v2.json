@@ -1,0 +1,28 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "arduino",
+    "zephyr"
+  ],
+  "id": "bbcmicrobit_v2",
+  "mcu": "NRF52833",
+  "name": "BBC micro:bit V2",
+  "platform": "nordicnrf52",
+  "ram": 131072,
+  "rom": 524288,
+  "url": "https://microbit.org/new-microbit/",
+  "vendor": "BBC"
+}

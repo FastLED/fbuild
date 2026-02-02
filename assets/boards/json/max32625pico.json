@@ -1,0 +1,14 @@
+{
+  "fcpu": 96000000,
+  "frameworks": [
+    "mbed"
+  ],
+  "id": "max32625pico",
+  "mcu": "MAX32625",
+  "name": "MAX32625PICO",
+  "platform": "maxim32",
+  "ram": 163840,
+  "rom": 524288,
+  "url": "https://www.maximintegrated.com/en/products/microcontrollers/MAX32625PICO.html",
+  "vendor": "Maxim"
+}

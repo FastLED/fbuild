@@ -1,0 +1,20 @@
+{
+  "debug": {
+    "tools": {
+      "stlink": {}
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino",
+    "spl"
+  ],
+  "id": "stm8sblack",
+  "mcu": "STM8S105K4T6",
+  "name": "ST STM8S105K4T6 Breakout Board",
+  "platform": "ststm8",
+  "ram": 2048,
+  "rom": 16384,
+  "url": "https://github.com/TG9541/stm8ef/wiki/Breakout-Boards#stm8s105k4t6-breakout-board",
+  "vendor": "ST"
+}

@@ -1,0 +1,20 @@
+{
+  "id": "emonpi",
+  "name": "OpenEnergyMonitor emonPi",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 30720,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "OpenEnergyMonitor",
+  "url": "https://github.com/openenergymonitor/emonpi",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

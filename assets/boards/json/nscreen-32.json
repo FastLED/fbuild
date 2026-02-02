@@ -1,0 +1,21 @@
+{
+  "id": "nscreen-32",
+  "name": "YeaCreate NSCREEN-32",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 16777216,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "YeaCreate",
+  "url": "https://yeacreate.com",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

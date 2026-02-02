@@ -1,0 +1,25 @@
+{
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "atmel-ice": {},
+      "stlink": {}
+    }
+  },
+  "fcpu": 84000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "digix",
+  "mcu": "AT91SAM3X8E",
+  "name": "Digistump DigiX",
+  "platform": "atmelsam",
+  "ram": 98304,
+  "rom": 524288,
+  "url": "http://digistump.com/products/50",
+  "vendor": "Digistump"
+}

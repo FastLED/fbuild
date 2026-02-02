@@ -1,0 +1,14 @@
+{
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "xplained_pro_4809",
+  "mcu": "ATMEGA4809",
+  "name": "Xplained Pro ATmega4809",
+  "platform": "atmelmegaavr",
+  "ram": 6144,
+  "rom": 49152,
+  "url": "https://www.microchip.com/developmenttools/ProductDetails/atmega4809-xpro",
+  "vendor": "Microchip"
+}

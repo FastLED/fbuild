@@ -1,0 +1,20 @@
+{
+  "id": "ATmega2560",
+  "name": "ATmega2560",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA2560",
+  "fcpu": 16000000,
+  "ram": 8192,
+  "rom": 262144,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Microchip",
+  "url": "https://www.microchip.com/wwwproducts/ATmega2560",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

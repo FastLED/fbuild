@@ -1,0 +1,36 @@
+{
+  "id": "esp32-solo1",
+  "name": "Espressif Generic ESP32-solo1 4M Flash",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 160000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "Espressif",
+  "url": "https://en.wikipedia.org/wiki/ESP32",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "esp-prog": {},
+      "esp-bridge": {},
+      "iot-bus-jtag": {},
+      "jlink": {},
+      "minimodule": {},
+      "olimex-arm-usb-tiny-h": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-ocd": {},
+      "olimex-jtag-tiny": {},
+      "tumpa": {}
+    }
+  }
+}

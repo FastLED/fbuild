@@ -1,0 +1,14 @@
+{
+  "fcpu": 96000000,
+  "frameworks": [
+    "mbed"
+  ],
+  "id": "max32625mbed",
+  "mcu": "MAX32625",
+  "name": "MAX32625MBED",
+  "platform": "maxim32",
+  "ram": 163840,
+  "rom": 524288,
+  "url": "https://os.mbed.com/platforms/MAX32625MBED/",
+  "vendor": "Maxim"
+}

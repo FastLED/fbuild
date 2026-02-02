@@ -1,0 +1,19 @@
+{
+  "id": "1284p8m",
+  "name": "Microduino Core+ (ATmega1284P@8M,3.3V)",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA1284P",
+  "fcpu": 8000000,
+  "ram": 16384,
+  "rom": 130048,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Microduino",
+  "url": "http://wiki.microduinoinc.com/Microduino-Module_Core%2B",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

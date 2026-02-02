@@ -1,0 +1,35 @@
+{
+  "id": "bee_data_logger",
+  "name": "Smart Bee Data Logger",
+  "platform": "espressif32",
+  "mcu": "ESP32S3",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 8388608,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "Smart Bee",
+  "url": "https://github.com/strid3r21/Bee-Data-Logger",
+  "connectivity": [
+    "bluetooth",
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "esp-prog": {},
+      "esp-bridge": {},
+      "iot-bus-jtag": {},
+      "jlink": {},
+      "minimodule": {},
+      "olimex-arm-usb-tiny-h": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-ocd": {},
+      "olimex-jtag-tiny": {},
+      "tumpa": {},
+      "esp-builtin": {}
+    }
+  }
+}

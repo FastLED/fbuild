@@ -1,0 +1,21 @@
+{
+  "id": "tinypico",
+  "name": "Unexpected Maker TinyPICO",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "Unexpected Maker",
+  "url": "https://www.tinypico.com",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

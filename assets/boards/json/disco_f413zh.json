@@ -1,0 +1,32 @@
+{
+  "id": "disco_f413zh",
+  "name": "ST 32F413HDISCOVERY",
+  "platform": "ststm32",
+  "mcu": "STM32F413ZHT6",
+  "fcpu": 100000000,
+  "ram": 327680,
+  "rom": 1572864,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "mbed"
+  ],
+  "vendor": "ST",
+  "url": "https://os.mbed.com/platforms/ST-Discovery-F413H/",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "connectivity": [
+    "can",
+    "ethernet"
+  ],
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "chipkit_pro_mx7",
+  "mcu": "32MX795F512L",
+  "name": "Digilent chipKIT Pro MX7",
+  "platform": "microchippic32",
+  "ram": 131072,
+  "rom": 520192,
+  "url": "http://store.digilentinc.com/chipkit-pro-mx7-advanced-peripherals-embedded-systems-trainer-board/",
+  "vendor": "Digilent"
+}

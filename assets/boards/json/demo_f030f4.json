@@ -1,0 +1,25 @@
+{
+  "id": "demo_f030f4",
+  "name": "Demo F030F4",
+  "platform": "ststm32",
+  "mcu": "STM32F030F4P6",
+  "fcpu": 48000000,
+  "ram": 4096,
+  "rom": 16384,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Generic",
+  "url": "https://www.hotmcu.com/stm32f030f4p6-minimum-systerm-boardcortexm0-p-208.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

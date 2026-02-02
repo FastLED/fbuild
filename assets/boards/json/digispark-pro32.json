@@ -1,0 +1,14 @@
+{
+  "id": "digispark-pro32",
+  "name": "Digispark Pro (32 byte buffer)",
+  "platform": "atmelavr",
+  "mcu": "ATTINY167",
+  "fcpu": 16000000,
+  "ram": 512,
+  "rom": 14844,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Digistump",
+  "url": "http://digistump.com/products/109"
+}

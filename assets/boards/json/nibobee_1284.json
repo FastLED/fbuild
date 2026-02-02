@@ -1,0 +1,19 @@
+{
+  "id": "nibobee_1284",
+  "name": "nicai-systems NIBObee robot with Tuning Kit",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA1284P",
+  "fcpu": 20000000,
+  "ram": 16384,
+  "rom": 131072,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "nicai-systems",
+  "url": "http://www.nicai-systems.com/en/nibobee",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "id": "controllino_mega",
+  "name": "Controllino Mega",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA2560",
+  "fcpu": 16000000,
+  "ram": 8192,
+  "rom": 253952,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Controllino",
+  "url": "https://www.controllino.com/product/controllino-mega/",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

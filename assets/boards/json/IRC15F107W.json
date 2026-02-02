@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "IRC15F107W",
+  "mcu": "IRC15F107W",
+  "name": "Generic IRC15F107W",
+  "platform": "intel_mcs51",
+  "ram": 128,
+  "rom": 6144,
+  "url": "https://www.stcmicro.com/STC/STC15F104W.html",
+  "vendor": "STC"
+}

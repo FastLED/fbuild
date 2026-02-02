@@ -1,0 +1,25 @@
+{
+  "id": "malyanm200_f070cb",
+  "name": "M200 V2",
+  "platform": "ststm32",
+  "mcu": "STM32F070CBT6",
+  "fcpu": 48000000,
+  "ram": 15168,
+  "rom": 122880,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Malyan",
+  "url": "http://malyansys.com/en/product/fdm-series/m200-v2/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

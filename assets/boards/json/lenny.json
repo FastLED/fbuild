@@ -1,0 +1,14 @@
+{
+  "fcpu": 40000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "lenny",
+  "mcu": "32MX270F256D",
+  "name": "chipKIT Lenny",
+  "platform": "microchippic32",
+  "ram": 32768,
+  "rom": 122880,
+  "url": "http://chipkit.net/tag/lenny/",
+  "vendor": "chipKIT"
+}

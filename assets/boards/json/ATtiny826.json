@@ -1,0 +1,14 @@
+{
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATtiny826",
+  "mcu": "ATTINY826",
+  "name": "ATtiny826",
+  "platform": "atmelmegaavr",
+  "ram": 1024,
+  "rom": 8192,
+  "url": "https://www.microchip.com/wwwproducts/en/ATTINY826",
+  "vendor": "Microchip"
+}

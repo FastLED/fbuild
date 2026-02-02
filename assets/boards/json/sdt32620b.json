@@ -1,0 +1,14 @@
+{
+  "fcpu": 96000000,
+  "frameworks": [
+    "mbed"
+  ],
+  "id": "sdt32620b",
+  "mcu": "MAX32620IWG",
+  "name": "SDT32620B",
+  "platform": "maxim32",
+  "ram": 262144,
+  "rom": 2097152,
+  "url": "https://os.mbed.com/platforms/SDT32620B/",
+  "vendor": "Sigma Delta Technologies"
+}

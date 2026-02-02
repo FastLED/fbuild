@@ -1,0 +1,26 @@
+{
+  "id": "arduino_nano_matter",
+  "name": "Arduino Nano Matter",
+  "platform": "siliconlabsefm32",
+  "mcu": "CORTEX-M33",
+  "fcpu": 39000000,
+  "ram": 262144,
+  "rom": 1572864,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Arduino",
+  "url": "https://store.arduino.cc/products/nano-matter",
+  "connectivity": [
+    "bluetooth",
+    "thread",
+    "wifi",
+    "zigbee"
+  ],
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

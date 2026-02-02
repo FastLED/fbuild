@@ -1,0 +1,14 @@
+{
+  "id": "dwenguino",
+  "name": "Dwenguino",
+  "platform": "atmelavr",
+  "mcu": "AT90USB646",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 61440,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Dwengo",
+  "url": "http://www.dwengo.org/"
+}

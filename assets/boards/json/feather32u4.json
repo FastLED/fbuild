@@ -1,0 +1,19 @@
+{
+  "id": "feather32u4",
+  "name": "Adafruit Feather 32u4",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA32U4",
+  "fcpu": 8000000,
+  "ram": 2560,
+  "rom": 28672,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Adafruit",
+  "url": "https://learn.adafruit.com/adafruit-feather-32u4-bluefruit-le/",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

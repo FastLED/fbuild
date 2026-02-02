@@ -1,0 +1,35 @@
+{
+  "id": "m5stack-tab5-p4",
+  "name": "M5STACK Tab5 esp32-p4 Board (ES pre rev.300)",
+  "platform": "espressif32",
+  "mcu": "ESP32P4",
+  "fcpu": 360000000,
+  "ram": 512000,
+  "rom": 16777216,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "M5STACK",
+  "url": "https://docs.m5stack.com/en/core/Tab5",
+  "connectivity": [
+    "bluetooth",
+    "openthread"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "esp-prog": {},
+      "esp-bridge": {},
+      "iot-bus-jtag": {},
+      "jlink": {},
+      "minimodule": {},
+      "olimex-arm-usb-tiny-h": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-ocd": {},
+      "olimex-jtag-tiny": {},
+      "tumpa": {},
+      "esp-builtin": {}
+    }
+  }
+}

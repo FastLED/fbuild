@@ -1,0 +1,21 @@
+{
+  "id": "kits-edu",
+  "name": "KITS ESP32 EDU",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "KITS",
+  "url": "http://www.koreaits.com/new/product/summary.htm?goods_no=468&mid_no=103&no=17",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

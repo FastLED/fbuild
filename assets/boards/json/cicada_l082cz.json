@@ -1,0 +1,22 @@
+{
+  "id": "cicada_l082cz",
+  "name": "Cicada-L082CZ",
+  "platform": "ststm32",
+  "mcu": "STM32L082CZY6",
+  "fcpu": 32000000,
+  "ram": 20480,
+  "rom": 196608,
+  "frameworks": [
+    "arduino",
+    "stm32cube"
+  ],
+  "vendor": "Tlera Corporation",
+  "url": "https://www.tindie.com/products/tleracorp/lorasensortile/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

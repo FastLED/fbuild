@@ -1,0 +1,22 @@
+{
+  "debug": {
+    "tools": {
+      "ftdi": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 250000000,
+  "frameworks": [
+    "mbed",
+    "pulp-os"
+  ],
+  "id": "gapuino",
+  "mcu": "GAP8",
+  "name": "GAPuino GAP8",
+  "platform": "riscv_gap",
+  "ram": 8388608,
+  "rom": 67108864,
+  "url": "https://greenwaves-technologies.com/product/gapduino/",
+  "vendor": "GreenWaves Technologies"
+}

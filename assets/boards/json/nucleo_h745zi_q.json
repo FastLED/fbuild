@@ -1,0 +1,31 @@
+{
+  "id": "nucleo_h745zi_q",
+  "name": "ST Nucleo H745ZI-Q",
+  "platform": "ststm32",
+  "mcu": "STM32H745ZIT6",
+  "fcpu": 480000000,
+  "ram": 524288,
+  "rom": 1048576,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-h745zi-q.html",
+  "connectivity": [
+    "can",
+    "ethernet"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

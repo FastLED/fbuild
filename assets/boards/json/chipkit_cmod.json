@@ -1,0 +1,14 @@
+{
+  "fcpu": 40000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "chipkit_cmod",
+  "mcu": "32MX150F128D",
+  "name": "Digilent chipKIT Cmod",
+  "platform": "microchippic32",
+  "ram": 32768,
+  "rom": 126976,
+  "url": "http://store.digilentinc.com/chipkit-cmod-breadboardable-mz-microcontroller-board/",
+  "vendor": "Digilent"
+}

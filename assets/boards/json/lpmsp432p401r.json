@@ -1,0 +1,16 @@
+{
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino",
+    "tirtos",
+    "cmsis"
+  ],
+  "id": "lpmsp432p401r",
+  "mcu": "CORTEX-M4",
+  "name": "TI LaunchPad MSP\u2011EXP432P401R",
+  "platform": "timsp432",
+  "ram": 65536,
+  "rom": 262144,
+  "url": "https://academics.uccs.edu/mlaubhan/common/MSP432/slau597b.pdf",
+  "vendor": "TI"
+}

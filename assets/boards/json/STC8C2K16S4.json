@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "STC8C2K16S4",
+  "mcu": "STC8C2K16S4",
+  "name": "Generic STC8C2K16S4",
+  "platform": "intel_mcs51",
+  "ram": 2304,
+  "rom": 16384,
+  "url": "http://www.stcmicro.com/stc/stc51.html",
+  "vendor": "STC"
+}

@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "jlink": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "xmc4200_distance2go",
+  "mcu": "XMC4200",
+  "name": "XMC4200 Distance2Go",
+  "platform": "infineonxmc",
+  "ram": 40960,
+  "rom": 262144,
+  "url": "https://www.infineon.com",
+  "vendor": "Infineon"
+}

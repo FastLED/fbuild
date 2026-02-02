@@ -1,0 +1,26 @@
+{
+  "debug": {
+    "tools": {
+      "jlink": {
+        "onboard": true
+      },
+      "renode": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 320000000,
+  "frameworks": [
+    "freedom-e-sdk",
+    "freertos",
+    "zephyr"
+  ],
+  "id": "sparkfun_redboard_v",
+  "mcu": "FE310",
+  "name": "SparkFun RED-V RedBoard",
+  "platform": "sifive",
+  "ram": 16384,
+  "rom": 16777216,
+  "url": "https://www.sparkfun.com/products/15594",
+  "vendor": "SparkFun"
+}

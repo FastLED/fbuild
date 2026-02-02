@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "default": true
+      }
+    }
+  },
+  "fcpu": 120000000,
+  "frameworks": [],
+  "id": "OpenIMU335",
+  "mcu": "STM32F405RG",
+  "name": "Aceinna MTLT335",
+  "platform": "aceinna_imu",
+  "ram": 131072,
+  "rom": 1048576,
+  "url": "https://www.aceinna.com/inertial-systems/",
+  "vendor": "Aceinna"
+}

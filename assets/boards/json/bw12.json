@@ -1,0 +1,26 @@
+{
+  "connectivity": [
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "custom": {},
+      "openocd": {
+        "default": true
+      }
+    }
+  },
+  "fcpu": 62500000,
+  "frameworks": [
+    "base",
+    "arduino"
+  ],
+  "id": "bw12",
+  "mcu": "RTL8710BX",
+  "name": "BW12",
+  "platform": "libretiny",
+  "ram": 262144,
+  "rom": 479232,
+  "url": "http://www.ai-thinker.com/pro_view-13.html",
+  "vendor": "Ai-Thinker Co., Ltd."
+}

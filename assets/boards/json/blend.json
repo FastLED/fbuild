@@ -1,0 +1,19 @@
+{
+  "id": "blend",
+  "name": "RedBearLab Blend",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA32U4",
+  "fcpu": 16000000,
+  "ram": 2560,
+  "rom": 28672,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "RedBearLab",
+  "url": "http://redbearlab.com/blend/",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "silica_sensor_node",
+  "name": "ST Sensor Node",
+  "platform": "ststm32",
+  "mcu": "STM32L476JG",
+  "fcpu": 80000000,
+  "ram": 131072,
+  "rom": 1048576,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Avnet Silica",
+  "url": "https://www.avnet.com/shop/emea/products/avnet-engineering-services/silicastmsensornodeplus-3074457345633959668/",
+  "connectivity": [
+    "can",
+    "6LoWPAN"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "connectivity": [
+    "wifi"
+  ],
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino",
+    "esp8266-rtos-sdk",
+    "esp8266-nonos-sdk"
+  ],
+  "id": "inventone",
+  "mcu": "ESP8266",
+  "name": "Invent One",
+  "platform": "espressif8266",
+  "ram": 81920,
+  "rom": 4194304,
+  "url": "https://inventone.ng/",
+  "vendor": "Invent One"
+}

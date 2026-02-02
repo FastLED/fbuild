@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "IRC15W415AS",
+  "mcu": "IRC15W415AS",
+  "name": "Generic IRC15W415AS",
+  "platform": "intel_mcs51",
+  "ram": 512,
+  "rom": 15872,
+  "url": "https://www.stcmicro.com/STC/STC15W408AS.html",
+  "vendor": "STC"
+}

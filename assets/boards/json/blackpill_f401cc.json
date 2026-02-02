@@ -1,0 +1,25 @@
+{
+  "id": "blackpill_f401cc",
+  "name": "WeAct Studio BlackPill V2.0 (STM32F401CC)",
+  "platform": "ststm32",
+  "mcu": "STM32F401CCU6",
+  "fcpu": 84000000,
+  "ram": 65536,
+  "rom": 262144,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "WeAct Studio",
+  "url": "https://www.weact-tc.cn/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

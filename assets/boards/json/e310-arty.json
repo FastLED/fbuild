@@ -1,0 +1,35 @@
+{
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "qemu": {
+        "onboard": true
+      },
+      "renode": {
+        "onboard": true
+      },
+      "ftdi": {
+        "onboard": true
+      },
+      "minimodule": {},
+      "olimex-arm-usb-tiny-h": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-ocd": {},
+      "olimex-jtag-tiny": {},
+      "tumpa": {}
+    }
+  },
+  "fcpu": 450000000,
+  "frameworks": [
+    "freedom-e-sdk",
+    "freertos"
+  ],
+  "id": "e310-arty",
+  "mcu": "FE310",
+  "name": "Arty FPGA Dev Kit",
+  "platform": "sifive",
+  "ram": 268435456,
+  "rom": 16777216,
+  "url": "https://store.digilentinc.com/arty-a7-artix-7-fpga-development-board-for-makers-and-hobbyists/",
+  "vendor": "Xilinx"
+}

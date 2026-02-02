@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "mspdebug": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 25000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "lpmsp430f5529",
+  "mcu": "MSP430F5529",
+  "name": "TI LaunchPad MSP-EXP430F5529LP",
+  "platform": "timsp430",
+  "ram": 8192,
+  "rom": 48128,
+  "url": "http://www.ti.com/ww/en/launchpad/launchpads-msp430-msp-exp430f5529lp.html",
+  "vendor": "TI"
+}

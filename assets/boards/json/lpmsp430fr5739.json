@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "mspdebug": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "lpmsp430fr5739",
+  "mcu": "MSP430FR5739",
+  "name": "TI FraunchPad MSP-EXP430FR5739LP",
+  "platform": "timsp430",
+  "ram": 1024,
+  "rom": 15743,
+  "url": "http://www.ti.com/tool/msp-exp430fr5739",
+  "vendor": "TI"
+}

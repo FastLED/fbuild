@@ -1,0 +1,31 @@
+{
+  "id": "nucleo_l452re",
+  "name": "ST Nucleo L452RE",
+  "platform": "ststm32",
+  "mcu": "STM32L452RET6",
+  "fcpu": 80000000,
+  "ram": 163840,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-l452re.html",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

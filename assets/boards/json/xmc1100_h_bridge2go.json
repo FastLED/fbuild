@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "jlink": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 32000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "xmc1100_h_bridge2go",
+  "mcu": "XMC1100",
+  "name": "XMC1100 H-Bridge 2Go",
+  "platform": "infineonxmc",
+  "ram": 16384,
+  "rom": 65536,
+  "url": "https://www.infineon.com",
+  "vendor": "Infineon"
+}

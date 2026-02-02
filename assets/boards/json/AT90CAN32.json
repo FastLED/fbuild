@@ -1,0 +1,14 @@
+{
+  "id": "AT90CAN32",
+  "name": "AT90CAN32",
+  "platform": "atmelavr",
+  "mcu": "AT90CAN32",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 32768,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Microchip",
+  "url": "https://www.microchip.com/wwwproducts/AT90CAN32"
+}

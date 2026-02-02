@@ -1,0 +1,14 @@
+{
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATtiny1617",
+  "mcu": "ATTINY1617",
+  "name": "ATtiny1617",
+  "platform": "atmelmegaavr",
+  "ram": 2048,
+  "rom": 16384,
+  "url": "https://www.microchip.com/wwwproducts/en/ATTINY1617",
+  "vendor": "Microchip"
+}

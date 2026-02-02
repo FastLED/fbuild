@@ -1,0 +1,24 @@
+{
+  "id": "pybstick26_duino",
+  "name": "PYBSTICK26 Duino",
+  "platform": "ststm32",
+  "mcu": "STM32F072RB",
+  "fcpu": 48000000,
+  "ram": 16384,
+  "rom": 131072,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "PYBStick",
+  "url": "https://shop.mchobby.be/fr/compatibles-arduino/1851-pybstick-duino-arduino-uniquement-3232100018518-garatronic.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

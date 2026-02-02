@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "IRC15F2K63S2",
+  "mcu": "IRC15F2K63S2",
+  "name": "Generic IRC15F2K63S2",
+  "platform": "intel_mcs51",
+  "ram": 2048,
+  "rom": 65024,
+  "url": "http://www.stcmicro.com/STC/STC15F2K32S2.html",
+  "vendor": "STC"
+}

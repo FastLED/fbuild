@@ -1,0 +1,19 @@
+{
+  "connectivity": [
+    "wifi"
+  ],
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino",
+    "esp8266-rtos-sdk",
+    "esp8266-nonos-sdk"
+  ],
+  "id": "phoenix_v1",
+  "mcu": "ESP8266",
+  "name": "Phoenix 1.0",
+  "platform": "espressif8266",
+  "ram": 81920,
+  "rom": 4194304,
+  "url": "http://www.esp8266.com/wiki/doku.php?id=esp8266-module-family",
+  "vendor": "Espressif"
+}

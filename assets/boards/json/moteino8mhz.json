@@ -1,0 +1,20 @@
+{
+  "id": "moteino8mhz",
+  "name": "LowPowerLab Moteino (8Mhz)",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 8000000,
+  "ram": 2048,
+  "rom": 32256,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "LowPowerLab",
+  "url": "https://lowpowerlab.com/shop/product/159",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

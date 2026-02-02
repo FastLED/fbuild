@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "atmel-ice": {}
+    }
+  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "arduino",
+    "zephyr"
+  ],
+  "id": "adafruit_itsybitsy_m4",
+  "mcu": "SAMD51G19A",
+  "name": "Adafruit ItsyBitsy M4",
+  "platform": "atmelsam",
+  "ram": 196608,
+  "rom": 524288,
+  "url": "https://www.adafruit.com/product/3800",
+  "vendor": "Adafruit"
+}

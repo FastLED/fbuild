@@ -1,0 +1,24 @@
+{
+  "id": "genericSTM32F412CG",
+  "name": "STM32F412CG (256k RAM. 1024k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F412CGU6",
+  "fcpu": 100000000,
+  "ram": 262144,
+  "rom": 1048576,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Generic",
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f412cg.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

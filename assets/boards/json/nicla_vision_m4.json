@@ -1,0 +1,25 @@
+{
+  "id": "nicla_vision_m4",
+  "name": "Arduino Nicla Vision (M4 core)",
+  "platform": "ststm32",
+  "mcu": "STM32H747XIH6",
+  "fcpu": 480000000,
+  "ram": 294248,
+  "rom": 1048576,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Arduino",
+  "url": "https://store.arduino.cc/products/nicla-vision",
+  "connectivity": [
+    "bluetooth",
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}
