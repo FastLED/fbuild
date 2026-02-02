@@ -620,19 +620,9 @@ class LibraryManagerESP32:
             effective_includes = all_includes
             if trampoline_cache is not None and platform.system() == "Windows":
                 try:
-                    exclude_patterns = [
-                        "newlib/platform_include",  # Uses #include_next which breaks trampolines
-                        "newlib\\platform_include",
-                        "/bt/",  # Bluetooth SDK uses relative paths
-                        "\\bt\\",
-                        "/hal/esp32",  # Chip-specific hal uses #include_next
-                        "\\hal\\esp32",
-                        "lwip/include/lwip",  # lwip uses #include_next
-                        "lwip\\include\\lwip",
-                        "mbedtls/port/include",  # mbedtls uses #include_next
-                        "mbedtls\\port\\include",
-                    ]
-                    effective_includes = trampoline_cache.generate_trampolines(all_includes, exclude_patterns=exclude_patterns)
+                    from fbuild.packages.trampoline_excludes import get_exclude_patterns
+
+                    effective_includes = trampoline_cache.generate_trampolines(all_includes, exclude_patterns=get_exclude_patterns())
                 except KeyboardInterrupt:
                     _thread.interrupt_main()
                     raise

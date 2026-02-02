@@ -226,18 +226,9 @@ class FrameworkESP32(IFramework):
                 print(f"[trampolines] Found {len(mcu_variants)} MCU variant(s): {', '.join(mcu_variants)}")
 
             # Exclude ESP-IDF headers that use relative paths or #include_next that break trampolines
-            exclude_patterns = [
-                "newlib/platform_include",  # Uses #include_next which breaks trampolines
-                "newlib\\platform_include",  # Windows path variant
-                "/bt/",  # ESP32 Bluetooth SDK uses relative includes that break with trampolines
-                "\\bt\\",  # Windows path variant
-                "/hal/esp32",  # Chip-specific hal uses #include_next
-                "\\hal\\esp32",  # Windows path variant
-                "lwip/include/lwip",  # lwip uses #include_next
-                "lwip\\include\\lwip",  # Windows path variant
-                "mbedtls/port/include",  # mbedtls uses #include_next
-                "mbedtls\\port\\include",  # Windows path variant
-            ]
+            from fbuild.packages.trampoline_excludes import get_exclude_patterns
+
+            exclude_patterns = get_exclude_patterns()
 
             for mcu in mcu_variants:
                 try:

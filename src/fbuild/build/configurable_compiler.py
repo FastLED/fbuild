@@ -16,6 +16,7 @@ from typing import Any, List, Dict, Optional, Union, TYPE_CHECKING
 
 from .. import platform_configs
 from ..packages.package import IPackage, IToolchain, IFramework
+from ..packages.trampoline_excludes import get_exclude_patterns
 from ..output import ProgressCallback, log_detail
 from .flag_builder import FlagBuilder
 from .compilation_executor import CompilationExecutor
@@ -338,20 +339,8 @@ class ConfigurableCompiler(ICompiler):
             if self.compilation_executor.trampoline_cache is not None and platform.system() == "Windows":
                 logging.warning("[TRAMPOLINE_DEBUG] ENTERING trampoline generation block")
                 try:
-                    exclude_patterns = [
-                        "newlib/platform_include",  # Uses #include_next which breaks trampolines
-                        "newlib\\platform_include",  # Windows path variant
-                        "/bt/",  # ESP32 Bluetooth SDK uses relative includes that break with trampolines
-                        "\\bt\\",  # Windows path variant
-                        "/hal/esp32",  # Chip-specific hal uses #include_next
-                        "\\hal\\esp32",  # Windows path variant
-                        "lwip/include/lwip",  # lwip uses #include_next
-                        "lwip\\include\\lwip",  # Windows path variant
-                        "mbedtls/port/include",  # mbedtls uses #include_next
-                        "mbedtls\\port\\include",  # Windows path variant
-                    ]
                     logging.warning(f"[TRAMPOLINE_DEBUG] Calling generate_trampolines with {len(includes)} includes")
-                    effective_includes = self.compilation_executor.trampoline_cache.generate_trampolines(includes, exclude_patterns=exclude_patterns)
+                    effective_includes = self.compilation_executor.trampoline_cache.generate_trampolines(includes, exclude_patterns=get_exclude_patterns())
                     logging.warning(f"[TRAMPOLINE_DEBUG] After generate_trampolines, got {len(effective_includes)} effective includes")
                 except KeyboardInterrupt:
                     _thread.interrupt_main()

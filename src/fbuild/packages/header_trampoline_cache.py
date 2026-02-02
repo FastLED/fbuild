@@ -191,6 +191,7 @@ class HeaderTrampolineCache:
             include_paths: Ordered list of original include directory paths
             exclude_patterns: Optional list of path patterns to exclude from trampolining.
                             Paths matching these patterns will be returned as-is.
+                            If provided, uses custom patterns; otherwise uses centralized defaults.
 
         Returns:
             List containing:
@@ -200,13 +201,17 @@ class HeaderTrampolineCache:
         Raises:
             TrampolineCacheError: If trampoline generation fails
         """
-        # Filter out excluded paths
-        filtered_paths = []
-        excluded_paths = []
+        # Filter out excluded paths using centralized filter function
+        # This normalizes paths to forward slashes for consistent matching
+        from .trampoline_excludes import filter_paths
 
         if exclude_patterns:
+            # Custom patterns provided - use legacy matching but normalize paths
+            filtered_paths = []
+            excluded_paths = []
             for path in include_paths:
-                path_str = str(path)
+                # Normalize to forward slashes for consistent matching
+                path_str = str(path).replace("\\", "/")
                 excluded = False
 
                 for pattern in exclude_patterns:
@@ -218,7 +223,8 @@ class HeaderTrampolineCache:
                 if not excluded:
                     filtered_paths.append(path)
         else:
-            filtered_paths = list(include_paths)
+            # Use centralized filter function with default patterns
+            filtered_paths, excluded_paths = filter_paths(include_paths)
 
         # Check if regeneration needed (use filtered paths for cache validation)
         if not self.needs_regeneration(filtered_paths):
@@ -313,9 +319,20 @@ class HeaderTrampolineCache:
         headers_created = 0
         headers_skipped = 0
 
+        # Import exclusion check for individual header files
+        from .trampoline_excludes import should_exclude_path
+
         # Generate trampoline for each header
+        excluded_by_pattern = 0
         for header_file in header_files:
             try:
+                # Skip headers that match exclusion patterns (e.g., newlib/platform_include)
+                # This catches headers found via recursive scanning of project directories
+                if should_exclude_path(header_file):
+                    excluded_by_pattern += 1
+                    headers_skipped += 1
+                    continue
+
                 # Calculate relative path from original_path
                 rel_path = header_file.relative_to(original_path)
                 rel_path_str = str(rel_path).replace("\\", "/")
@@ -352,6 +369,10 @@ class HeaderTrampolineCache:
                 if self.show_progress:
                     print(f"[trampolines] Warning: Failed to create trampoline for {header_file}: {e}")
                 continue
+
+        # Log how many headers were excluded by pattern matching
+        if excluded_by_pattern > 0 and self.show_progress:
+            print(f"[trampolines] Excluded {excluded_by_pattern} headers matching exclusion patterns from {original_path}")
 
         return headers_created, headers_skipped
 
