@@ -8,6 +8,7 @@ import subprocess
 from pathlib import Path
 from typing import TYPE_CHECKING, Callable, List, Optional, Tuple
 
+from fbuild.build.build_profiles import BuildProfile, get_profile
 from fbuild.output import ProgressCallback, log_detail
 from fbuild.subprocess_utils import safe_run
 
@@ -74,12 +75,12 @@ class LibraryCompiler:
         extra_flags: List[str],
         show_progress: bool = True,
         progress_callback: ProgressCallback | None = None,
+        profile: BuildProfile = BuildProfile.RELEASE,
     ) -> Tuple[Path, List[Path], List[str]]:
         """Compile a library into a static archive (.a file).
 
         This function compiles all source files in a library and creates a static
-        archive. It uses Link-Time Optimization (LTO) with -fno-fat-lto-objects
-        to generate only LTO bytecode, avoiding assembly errors with complex code.
+        archive. The build profile determines optimization and other compiler flags.
 
         Args:
             library_name: Name of the library
@@ -92,6 +93,8 @@ class LibraryCompiler:
             defines: Preprocessor defines
             extra_flags: Additional compiler flags
             show_progress: Whether to show progress
+            progress_callback: Optional progress callback for UI feedback
+            profile: Build profile
 
         Returns:
             Tuple of (archive_path, object_files, compile_commands)
@@ -176,20 +179,18 @@ class LibraryCompiler:
                 obj_file = lib_dir / f"{unique_name}.o"
 
                 # Build compile command
-                # Use -flto with -fno-fat-lto-objects to generate only LTO bytecode
-                # This avoids assembly errors with complex code like FastLED
-                # The trade-off is we must link with object files, not archives
+                # Get profile flags for profile-aware compilation
+                profile_flags = get_profile(profile)
+
                 cmd = [
                     str(compiler),
                     "-c",
                     "-g",
-                    "-Os",
                     std_flag,
-                    "-ffunction-sections",
-                    "-fdata-sections",
-                    "-flto",
-                    "-fno-fat-lto-objects",  # LTO bytecode only, no assembly
                 ]
+
+                # Add all profile compile flags (optimization, section flags, LTO if enabled)
+                cmd.extend(profile_flags.compile_flags)
 
                 # Add MCU-specific flags:
                 # - AVR uses -mmcu={mcu} (e.g., -mmcu=atmega328p)

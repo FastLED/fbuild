@@ -12,9 +12,12 @@ Design:
 import logging
 import subprocess
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import TYPE_CHECKING, Any, Dict, Optional
 
 from ..subprocess_utils import get_python_executable, safe_run
+
+if TYPE_CHECKING:
+    from .build_context import BuildContext
 
 
 class BinaryGeneratorError(Exception):
@@ -31,34 +34,20 @@ class BinaryGenerator:
     - ESP32 partitions.bin generation
     """
 
-    def __init__(
-        self,
-        mcu: str,
-        board_config: Dict[str, Any],
-        build_dir: Path,
-        toolchain: Any = None,
-        framework: Any = None,
-        show_progress: bool = True,
-        env_config: Optional[Dict[str, Any]] = None
-    ):
+    def __init__(self, context: "BuildContext"):
         """Initialize binary generator.
 
         Args:
-            mcu: MCU type (e.g., "esp32c6", "atmega328p")
-            board_config: Board configuration dictionary
-            build_dir: Directory for build artifacts
-            toolchain: Toolchain instance (required for objcopy)
-            framework: Framework instance (required for ESP32 bootloader/partitions)
-            show_progress: Whether to show generation progress
-            env_config: Optional platformio.ini environment configuration
+            context: Build context containing all build configuration
         """
-        self.mcu = mcu
-        self.board_config = board_config
-        self.build_dir = build_dir
-        self.toolchain = toolchain
-        self.framework = framework
-        self.show_progress = show_progress
-        self.env_config = env_config or {}
+        # Extract everything from context (no redundant parameters)
+        self.mcu = context.mcu
+        self.board_config = context.board_config
+        self.build_dir = context.build_dir
+        self.toolchain = context.toolchain
+        self.framework = context.framework
+        self.show_progress = context.verbose
+        self.env_config = context.env_config
 
     def generate_bin(self, elf_path: Path, output_bin: Optional[Path] = None) -> Path:
         """Generate firmware.bin from firmware.elf.
@@ -188,9 +177,6 @@ class BinaryGenerator:
         Raises:
             BinaryGeneratorError: If conversion fails
         """
-        if self.toolchain is None:
-            raise BinaryGeneratorError("Toolchain required for objcopy binary generation")
-
         # Get objcopy tool
         objcopy_path = self.toolchain.get_objcopy_path()
         if objcopy_path is None or not objcopy_path.exists():
@@ -260,12 +246,8 @@ class BinaryGenerator:
                 f"Bootloader generation only supported for ESP32 platforms, not {self.mcu}"
             )
 
-        if self.framework is None:
-            raise BinaryGeneratorError("Framework required for bootloader generation")
-
         # Generate output path if not provided
-        if output_bin is None:
-            output_bin = self.build_dir / "bootloader.bin"
+        resolved_output: Path = output_bin if output_bin is not None else self.build_dir / "bootloader.bin"
 
         # Get flash parameters from board config, with env_config overrides
         flash_mode = self.env_config.get("board_build.flash_mode") or self.board_config.get("build", {}).get("flash_mode", "dio")
@@ -287,7 +269,11 @@ class BinaryGenerator:
 
         # Find bootloader ELF file in framework SDK (use bootloader_flash_mode, not flash_mode)
         bootloader_name = f"bootloader_{bootloader_flash_mode}_{flash_freq.replace('m', 'm')}.elf"
-        sdk_bin_dir = self.framework.get_sdk_dir() / self.mcu / "bin"
+        # get_sdk_dir() is ESP32-specific, access via getattr for type safety
+        sdk_dir = getattr(self.framework, 'get_sdk_dir', lambda: None)()
+        if sdk_dir is None:
+            raise BinaryGeneratorError("Framework does not support get_sdk_dir() method")
+        sdk_bin_dir = sdk_dir / self.mcu / "bin"
         bootloader_elf = sdk_bin_dir / bootloader_name
         logging.debug(f"BOOTLOADER: MCU={self.mcu}, flash_mode={flash_mode}, bootloader_flash_mode={bootloader_flash_mode}, freq={flash_freq}, name={bootloader_name}")
 
@@ -311,7 +297,7 @@ class BinaryGenerator:
             "--flash-size",
             flash_size,
             "-o",
-            str(output_bin),
+            str(resolved_output),
             str(bootloader_elf)
         ]
 
@@ -334,14 +320,14 @@ class BinaryGenerator:
                 error_msg += f"stdout: {stdout}"
                 raise BinaryGeneratorError(error_msg)
 
-            if not output_bin.exists():
-                raise BinaryGeneratorError(f"bootloader.bin was not created: {output_bin}")
+            if not resolved_output.exists():
+                raise BinaryGeneratorError(f"bootloader.bin was not created: {resolved_output}")
 
             if self.show_progress:
-                size = output_bin.stat().st_size
+                size = resolved_output.stat().st_size
                 print(f"✓ Created bootloader.bin: {size:,} bytes ({size / 1024:.2f} KB)")
 
-            return output_bin
+            return resolved_output
 
         except subprocess.TimeoutExpired as e:
             raise BinaryGeneratorError("Bootloader generation timeout") from e
@@ -369,12 +355,8 @@ class BinaryGenerator:
                 f"Partition table generation only supported for ESP32 platforms, not {self.mcu}"
             )
 
-        if self.framework is None:
-            raise BinaryGeneratorError("Framework required for partition table generation")
-
         # Generate output path if not provided
-        if output_bin is None:
-            output_bin = self.build_dir / "partitions.bin"
+        resolved_output: Path = output_bin if output_bin is not None else self.build_dir / "partitions.bin"
 
         # Get partition table name from env_config (board_build.partitions)
         # Default to default.csv if not specified
@@ -384,8 +366,11 @@ class BinaryGenerator:
         if not partition_table.endswith(".csv"):
             partition_table += ".csv"
 
-        # Find partition CSV file in framework
-        partitions_csv = self.framework.framework_path / "tools" / "partitions" / partition_table
+        # Find partition CSV file in framework (framework_path is ESP32-specific)
+        framework_path = getattr(self.framework, 'framework_path', None)
+        if framework_path is None:
+            raise BinaryGeneratorError("Framework does not have framework_path attribute")
+        partitions_csv = framework_path / "tools" / "partitions" / partition_table
 
         if not partitions_csv.exists():
             raise BinaryGeneratorError(
@@ -394,7 +379,7 @@ class BinaryGenerator:
             )
 
         # Find gen_esp32part.py tool - also in framework
-        gen_tool = self.framework.framework_path / "tools" / "gen_esp32part.py"
+        gen_tool = framework_path / "tools" / "gen_esp32part.py"
 
         if not gen_tool.exists():
             raise BinaryGeneratorError(
@@ -407,7 +392,7 @@ class BinaryGenerator:
             str(gen_tool),
             "-q",
             str(partitions_csv),
-            str(output_bin)
+            str(resolved_output)
         ]
 
         if self.show_progress:
@@ -427,14 +412,14 @@ class BinaryGenerator:
                 error_msg += f"stdout: {result.stdout}"
                 raise BinaryGeneratorError(error_msg)
 
-            if not output_bin.exists():
-                raise BinaryGeneratorError(f"partitions.bin was not created: {output_bin}")
+            if not resolved_output.exists():
+                raise BinaryGeneratorError(f"partitions.bin was not created: {resolved_output}")
 
             if self.show_progress:
-                size = output_bin.stat().st_size
+                size = resolved_output.stat().st_size
                 print(f"✓ Created partitions.bin: {size:,} bytes")
 
-            return output_bin
+            return resolved_output
 
         except subprocess.TimeoutExpired as e:
             raise BinaryGeneratorError("Partition table generation timeout") from e
@@ -466,8 +451,7 @@ class BinaryGenerator:
             )
 
         # Generate output path if not provided
-        if output_bin is None:
-            output_bin = self.build_dir / "merged.bin"
+        resolved_output: Path = output_bin if output_bin is not None else self.build_dir / "merged.bin"
 
         # Generate all required components first
         firmware_bin = self.build_dir / "firmware.bin"
@@ -508,7 +492,7 @@ class BinaryGenerator:
             "--flash-size",
             flash_size,
             "-o",
-            str(output_bin),
+            str(resolved_output),
             str(offsets["bootloader"]),
             str(bootloader_bin),
             str(offsets["partitions"]),
@@ -536,18 +520,18 @@ class BinaryGenerator:
                 error_msg += f"stdout: {stdout}"
                 raise BinaryGeneratorError(error_msg)
 
-            if not output_bin.exists():
-                raise BinaryGeneratorError(f"merged.bin was not created: {output_bin}")
+            if not resolved_output.exists():
+                raise BinaryGeneratorError(f"merged.bin was not created: {resolved_output}")
 
             if self.show_progress:
-                size = output_bin.stat().st_size
+                size = resolved_output.stat().st_size
                 print(f"✓ Created merged.bin: {size:,} bytes ({size / 1024:.2f} KB)")
                 print("  Flash offsets:")
                 print(f"    Bootloader:    {offsets['bootloader']}")
                 print(f"    Partitions:    {offsets['partitions']}")
                 print(f"    Firmware:      {offsets['firmware']}")
 
-            return output_bin
+            return resolved_output
 
         except subprocess.TimeoutExpired as e:
             raise BinaryGeneratorError("Merged bin generation timeout") from e

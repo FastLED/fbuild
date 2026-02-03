@@ -9,11 +9,12 @@ import logging
 import multiprocessing
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import TYPE_CHECKING, Optional, Protocol, runtime_checkable
+from typing import TYPE_CHECKING, Optional
 from dataclasses import dataclass
 
 if TYPE_CHECKING:
     from fbuild.build.linker import SizeInfo
+    from fbuild.build.build_context import BuildParams
     from fbuild.daemon.compilation_queue import CompilationJobQueue
 
 
@@ -34,60 +35,6 @@ class BuildOrchestratorError(Exception):
     pass
 
 
-@runtime_checkable
-class PlatformBuildMethod(Protocol):
-    """Protocol defining the expected signature for internal _build_XXX() methods.
-
-    Platform orchestrators implement internal build methods (e.g., _build_avr, _build_esp32)
-    that follow this protocol signature. This ensures consistent parameter passing across
-    all platform-specific implementations.
-
-    The jobs parameter controls parallel compilation:
-    - jobs=None: Use all CPU cores (default)
-    - jobs=1: Force serial compilation
-    - jobs=N: Use N parallel workers
-
-    Example:
-        class AVROrchestrator(PlatformOrchestrator):
-            def _build_avr(
-                self,
-                project_path: Path,
-                env_name: str,
-                target: str,
-                verbose: bool,
-                clean: bool,
-                jobs: int | None = None,
-            ) -> BuildResult:
-                # Implementation here
-                ...
-    """
-
-    def __call__(
-        self,
-        project_path: Path,
-        env_name: str,
-        target: str,
-        verbose: bool,
-        clean: bool,
-        jobs: int | None = None,
-    ) -> BuildResult:
-        """Execute platform-specific build.
-
-        Args:
-            project_path: Project root directory containing platformio.ini
-            env_name: Environment name to build
-            target: Build target (e.g., 'flash', 'firmware')
-            verbose: Enable verbose output
-            clean: Clean build (remove all artifacts before building)
-            jobs: Number of parallel compilation jobs (None = CPU count, 1 = serial)
-
-        Returns:
-            BuildResult with build status and output paths
-
-        Raises:
-            BuildOrchestratorError: If build fails at any phase
-        """
-        ...
 
 
 class IBuildOrchestrator(ABC):
@@ -101,42 +48,23 @@ class IBuildOrchestrator(ABC):
     5. Link firmware
     6. Generate binaries
 
-    Implementation Guidelines:
-    - Platform-specific implementations should define internal build methods (e.g., _build_avr, _build_esp32)
-      that follow the PlatformBuildMethod protocol signature
-    - Use the managed_compilation_queue() context manager for automatic resource cleanup when handling
-      compilation queues, especially for temporary per-build queues
-    - The jobs parameter controls parallel compilation: None=CPU count, 1=serial, N=custom worker count
+    The build method receives a BuildRequest with basic parameters:
+    - project_dir, env_name, clean
+    - profile and pre-resolved profile_flags
+    - compilation queue (mandatory)
+    - build_dir (incorporating profile name)
+    - verbose setting
 
-    Example:
-        class AVROrchestrator(IBuildOrchestrator):
-            def build(self, project_dir: Path, env_name: Optional[str] = None,
-                      clean: bool = False, verbose: Optional[bool] = None,
-                      jobs: int | None = None) -> BuildResult:
-                with managed_compilation_queue(jobs, verbose=verbose or False) as queue:
-                    return self._build_avr(project_dir, env_name, 'firmware',
-                                          verbose or False, clean, jobs)
+    The orchestrator creates a full BuildContext after platform initialization,
+    adding platform, toolchain, mcu, framework_version, and compilation_executor.
     """
 
     @abstractmethod
-    def build(
-        self,
-        project_dir: Path,
-        env_name: Optional[str] = None,
-        clean: bool = False,
-        verbose: Optional[bool] = None,
-        jobs: int | None = None,
-        queue: Optional["CompilationJobQueue"] = None,
-    ) -> BuildResult:
+    def build(self, request: "BuildParams") -> BuildResult:
         """Execute complete build process.
 
         Args:
-            project_dir: Project root directory containing platformio.ini
-            env_name: Environment name to build (defaults to first/default env)
-            clean: Clean build (remove all artifacts before building)
-            verbose: Override verbose setting
-            jobs: Number of parallel compilation jobs (None = CPU count, 1 = serial)
-            queue: Compilation queue from daemon context (injected by build_processor)
+            request: Build request with basic parameters from build_processor
 
         Returns:
             BuildResult with build status and output paths

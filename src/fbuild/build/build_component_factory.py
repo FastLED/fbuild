@@ -16,7 +16,7 @@ from .compiler_avr import CompilerAVR
 from .linker import LinkerAVR
 
 if TYPE_CHECKING:
-    from ..daemon.compilation_queue import CompilationJobQueue
+    from .build_context import BuildContext
 
 
 class BuildComponentFactory:
@@ -45,8 +45,8 @@ class BuildComponentFactory:
         toolchain: IToolchain,
         board_config: BoardConfig,
         core_path: Path,
+        context: "BuildContext",
         lib_include_paths: Optional[List[Path]] = None,
-        compilation_queue: Optional['CompilationJobQueue'] = None
     ) -> CompilerAVR:
         """
         Create compiler instance with appropriate settings.
@@ -56,14 +56,14 @@ class BuildComponentFactory:
         - MCU and F_CPU from board configuration
         - Include paths (core + variant + libraries)
         - Defines (Arduino version, board-specific defines)
-        - Optional compilation queue for async/parallel compilation
+        - Build context for compilation queue and profile settings
 
         Args:
             toolchain: Toolchain instance
             board_config: Board configuration
             core_path: Arduino core path
+            context: Build context containing profile, queue, and build settings
             lib_include_paths: Optional library include paths
-            compilation_queue: Optional compilation queue for async compilation
 
         Returns:
             Configured Compiler instance
@@ -89,13 +89,15 @@ class BuildComponentFactory:
             f_cpu=board_config.f_cpu,
             includes=include_paths,
             defines=defines,
-            compilation_queue=compilation_queue
+            context=context,
+            use_sccache=True,
         )
 
     @staticmethod
     def create_linker(
         toolchain: IToolchain,
-        board_config: BoardConfig
+        board_config: BoardConfig,
+        context: "BuildContext",
     ) -> LinkerAVR:
         """
         Create linker instance with appropriate settings.
@@ -104,10 +106,12 @@ class BuildComponentFactory:
         - Toolchain binaries (avr-gcc, avr-ar, avr-objcopy, avr-size)
         - MCU from board configuration
         - Flash and RAM limits from MCU specifications
+        - Build context for profile settings
 
         Args:
             toolchain: Toolchain instance
             board_config: Board configuration
+            context: Build context containing profile and build settings
 
         Returns:
             Configured Linker instance
@@ -126,6 +130,7 @@ class BuildComponentFactory:
             avr_objcopy=tools['avr-objcopy'],
             avr_size=tools['avr-size'],
             mcu=board_config.mcu,
+            context=context,
             max_flash=max_flash,
-            max_ram=max_ram
+            max_ram=max_ram,
         )

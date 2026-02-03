@@ -13,7 +13,7 @@ from typing import TYPE_CHECKING, List, Optional
 from dataclasses import dataclass
 
 if TYPE_CHECKING:
-    from fbuild.daemon.compilation_queue import CompilationJobQueue
+    from .build_context import BuildParams
 
 from ..packages import Cache
 from ..packages.platform_esp32 import PlatformESP32
@@ -25,7 +25,6 @@ from .configurable_compiler import ConfigurableCompiler
 from .configurable_linker import ConfigurableLinker
 from .linker import SizeInfo
 from .orchestrator import IBuildOrchestrator, BuildResult
-from .build_utils import safe_rmtree
 from .build_state import BuildStateTracker
 from .build_info_generator import BuildInfoGenerator
 from ..output import log_phase, log_detail, log_warning, DefaultProgressCallback
@@ -139,24 +138,11 @@ class OrchestratorESP32(IBuildOrchestrator):
 
         return flags
 
-    def build(
-        self,
-        project_dir: Path,
-        env_name: Optional[str] = None,
-        clean: bool = False,
-        verbose: Optional[bool] = None,
-        jobs: int | None = None,
-        queue: Optional["CompilationJobQueue"] = None,
-    ) -> BuildResult:
-        """Execute complete build process (BaseBuildOrchestrator interface).
+    def build(self, request: "BuildParams") -> BuildResult:
+        """Execute complete build process.
 
         Args:
-            project_dir: Project root directory containing platformio.ini
-            env_name: Environment name to build (defaults to first/default env)
-            clean: Clean build (remove all artifacts before building)
-            verbose: Override verbose setting
-            jobs: Number of parallel compilation jobs (None = CPU count, 1 = serial)
-            queue: Compilation queue from daemon context (injected by build_processor)
+            request: Build request with basic parameters from build_processor
 
         Returns:
             BuildResult with build status and output paths
@@ -166,7 +152,9 @@ class OrchestratorESP32(IBuildOrchestrator):
         """
         from ..config import PlatformIOConfig
 
-        verbose_mode = verbose if verbose is not None else self.verbose
+        # Extract from request
+        project_dir = request.project_dir
+        env_name = request.env_name
 
         # Parse platformio.ini to get environment configuration
         ini_path = project_dir / "platformio.ini"
@@ -183,19 +171,6 @@ class OrchestratorESP32(IBuildOrchestrator):
         try:
             config = PlatformIOConfig(ini_path)
 
-            # Determine environment to build
-            if env_name is None:
-                env_name = config.get_default_environment()
-                if env_name is None:
-                    return BuildResult(
-                        success=False,
-                        hex_path=None,
-                        elf_path=None,
-                        size_info=None,
-                        build_time=0.0,
-                        message="No environment specified and no default found in platformio.ini"
-                    )
-
             env_config = config.get_env_config(env_name)
             board_id = env_config.get("board", "")
             build_flags = config.get_build_flags(env_name)
@@ -207,7 +182,7 @@ class OrchestratorESP32(IBuildOrchestrator):
 
             # Call internal build method
             esp32_result = self._build_esp32(
-                project_dir, env_name, board_id, env_config, build_flags, lib_deps, clean, verbose_mode, jobs, queue
+                board_id, env_config, build_flags, lib_deps, request
             )
 
             # Convert BuildResultESP32 to BuildResult
@@ -235,36 +210,32 @@ class OrchestratorESP32(IBuildOrchestrator):
 
     def _build_esp32(
         self,
-        project_dir: Path,
-        env_name: str,
         board_id: str,
         env_config: dict,
         build_flags: List[str],
         lib_deps: List[str],
-        clean: bool = False,
-        verbose: bool = False,
-        jobs: int | None = None,
-        queue: Optional["CompilationJobQueue"] = None,
+        request: "BuildParams",
     ) -> BuildResultESP32:
         """
         Execute complete ESP32 build process (internal implementation).
 
         Args:
-            project_dir: Project directory
-            env_name: Environment name
             board_id: Board ID (e.g., esp32-c6-devkitm-1)
             env_config: Environment configuration dict
             build_flags: User build flags from platformio.ini
             lib_deps: Library dependencies from platformio.ini
-            clean: Whether to clean before build
-            verbose: Verbose output mode
-            jobs: Number of parallel compilation jobs (None = CPU count, 1 = serial)
-            queue: Compilation queue from daemon context (injected by build_processor)
+            request: Build request with basic parameters
 
         Returns:
             BuildResultESP32 with build status and output paths
         """
         start_time = time.time()
+
+        # Extract from request
+        project_dir = request.project_dir
+        env_name = request.env_name
+        verbose = request.verbose
+        build_dir = request.build_dir
 
         try:
             # Get platform URL from env_config
@@ -279,6 +250,10 @@ class OrchestratorESP32(IBuildOrchestrator):
             # PlatformIO supports formats like "platformio/espressif32" which need
             # to be converted to a real download URL
             platform_url = self._resolve_platform_url(platform_url)
+
+            # Print build profile banner
+            from .build_profiles import print_profile_banner
+            print_profile_banner(request.profile)
 
             # Initialize platform
             log_phase(3, 13, "Initializing ESP32 platform...")
@@ -316,8 +291,8 @@ class OrchestratorESP32(IBuildOrchestrator):
                     "Failed to initialize framework"
                 )
 
-            # Setup build directory
-            build_dir = self._setup_build_directory(env_name, clean, verbose)
+            # Ensure build directory exists
+            build_dir.mkdir(parents=True, exist_ok=True)
 
             # Determine source directory for cache invalidation
             # This is computed early to include source file changes in cache key
@@ -367,205 +342,216 @@ class OrchestratorESP32(IBuildOrchestrator):
                 framework_version=framework.version,
             )
 
-            # Get compilation queue for this build using context manager
-            from fbuild.build.orchestrator import managed_compilation_queue
-            with managed_compilation_queue(jobs, verbose, provided_queue=queue) as compilation_queue:
-                # Initialize compiler
-                log_phase(7, 13, "Compiling Arduino core...")
-
-                compiler = ConfigurableCompiler(
-                    platform,
-                    toolchain,
-                    framework,
-                    board_id,
-                    build_dir,
-                    platform_config=None,
-                    show_progress=verbose,
-                    user_build_flags=build_flags,
-                    compilation_executor=compilation_executor,
-                    compilation_queue=compilation_queue
+            # Load platform configuration ONCE (not redundantly in compiler/linker)
+            from .. import platform_configs
+            platform_config = platform_configs.load_config(mcu)
+            if platform_config is None:
+                return self._error_result(
+                    start_time,
+                    f"No platform configuration found for {mcu}. Available: {platform_configs.list_available_configs()}"
                 )
 
-                # Create progress callback for detailed file-by-file tracking
-                progress_callback = DefaultProgressCallback(verbose_only=not verbose)
+            # Extract variant and core from board config
+            variant = board_json.get("build", {}).get("variant", "")
+            core = board_json.get("build", {}).get("core", "arduino")
 
-                # Compile Arduino core with progress bar
-                if verbose:
-                    core_obj_files = compiler.compile_core(progress_callback=progress_callback)
-                else:
-                    # Use tqdm progress bar for non-verbose mode
-                    from tqdm import tqdm
+            # Create full BuildContext with all configuration loaded once
+            from .build_context import BuildContext
+            context = BuildContext.from_request(
+                request=request,
+                platform=platform,
+                toolchain=toolchain,
+                mcu=mcu,
+                framework_version=framework.version,
+                compilation_executor=compilation_executor,
+                cache=self.cache,
+                # New consolidated fields
+                framework=framework,
+                board_id=board_id,
+                board_config=board_json,
+                platform_config=platform_config,
+                variant=variant,
+                core=core,
+                user_build_flags=build_flags,
+                env_config=env_config,
+            )
 
-                    # Get number of core source files for progress tracking
-                    core_sources = framework.get_core_sources(compiler.core)
-                    total_files = len(core_sources)
+            # Initialize compiler (uses BuildContext for all configuration)
+            log_phase(7, 13, "Compiling Arduino core...")
 
-                    # Create progress bar
-                    with tqdm(
-                        total=total_files,
-                        desc='Compiling Arduino core',
-                        unit='file',
-                        ncols=80,
-                        leave=False
-                    ) as pbar:
-                        core_obj_files = compiler.compile_core(progress_bar=pbar, progress_callback=progress_callback)
+            compiler = ConfigurableCompiler(context)
 
-                    # Print completion message
-                    log_detail(f"Compiled {len(core_obj_files)} core files")
+            # Create progress callback for detailed file-by-file tracking
+            progress_callback = DefaultProgressCallback(verbose_only=not verbose)
 
-                # Add Bluetooth stub for non-ESP32 targets (ESP32-C6, ESP32-S3, etc.)
-                # where esp32-hal-bt.c fails to compile but btInUse() is still referenced
-                bt_stub_obj = self._create_bt_stub(build_dir, compiler, verbose)
-                if bt_stub_obj:
-                    core_obj_files.append(bt_stub_obj)
+            # Compile Arduino core with progress bar
+            if verbose:
+                core_obj_files = compiler.compile_core(progress_callback=progress_callback)
+            else:
+                # Use tqdm progress bar for non-verbose mode
+                from tqdm import tqdm
 
-                # Wait for all pending async compilation jobs (including bt_stub) to complete
-                if hasattr(compiler, "wait_all_jobs"):
-                    compiler.wait_all_jobs()
+                # Get number of core source files for progress tracking
+                core_sources = framework.get_core_sources(compiler.core)
+                total_files = len(core_sources)
 
-                core_archive = compiler.create_core_archive(core_obj_files)
+                # Create progress bar
+                with tqdm(
+                    total=total_files,
+                    desc='Compiling Arduino core',
+                    unit='file',
+                    ncols=80,
+                    leave=False
+                ) as pbar:
+                    core_obj_files = compiler.compile_core(progress_bar=pbar, progress_callback=progress_callback)
 
-                log_detail(f"Compiled {len(core_obj_files)} core source files", verbose_only=True)
+                # Print completion message
+                log_detail(f"Compiled {len(core_obj_files)} core files")
 
-                # Handle library dependencies
-                library_archives, library_include_paths = self._process_libraries(
-                    env_config, build_dir, compiler, toolchain, verbose, project_dir=project_dir
+            # Add Bluetooth stub for non-ESP32 targets (ESP32-C6, ESP32-S3, etc.)
+            # where esp32-hal-bt.c fails to compile but btInUse() is still referenced
+            bt_stub_obj = self._create_bt_stub(build_dir, compiler, verbose)
+            if bt_stub_obj:
+                core_obj_files.append(bt_stub_obj)
+
+            # Wait for all pending async compilation jobs (including bt_stub) to complete
+            if hasattr(compiler, "wait_all_jobs"):
+                compiler.wait_all_jobs()
+
+            core_archive = compiler.create_core_archive(core_obj_files)
+
+            log_detail(f"Compiled {len(core_obj_files)} core source files", verbose_only=True)
+
+            # Handle library dependencies
+            library_archives, library_include_paths = self._process_libraries(
+                env_config, build_dir, compiler, toolchain, verbose, project_dir=project_dir
+            )
+
+            # Add library include paths to compiler
+            if library_include_paths:
+                compiler.add_library_includes(library_include_paths)
+
+            # src_dir_override was computed earlier for cache invalidation
+
+            # Find and compile sketch
+            sketch_obj_files = self._compile_sketch(project_dir, compiler, start_time, verbose, src_dir_override)
+            if sketch_obj_files is None:
+                search_dir = project_dir / src_dir_override if src_dir_override else project_dir
+                return self._error_result(
+                    start_time,
+                    f"No .ino sketch file found in {search_dir}"
                 )
 
-                # Add library include paths to compiler
-                if library_include_paths:
-                    compiler.add_library_includes(library_include_paths)
+            # Initialize linker
+            log_phase(10, 13, "Linking firmware...")
 
-                # src_dir_override was computed earlier for cache invalidation
+            logging.debug(f"orchestrator: env_config keys: {list(env_config.keys())}")
+            logging.debug(f"orchestrator: board_build.partitions = {env_config.get('board_build.partitions', 'NOT FOUND')}")
 
-                # Find and compile sketch
-                sketch_obj_files = self._compile_sketch(project_dir, compiler, start_time, verbose, src_dir_override)
-                if sketch_obj_files is None:
-                    search_dir = project_dir / src_dir_override if src_dir_override else project_dir
-                    return self._error_result(
-                        start_time,
-                        f"No .ino sketch file found in {search_dir}"
-                    )
+            linker = ConfigurableLinker(context)
 
-                # Initialize linker
-                log_phase(10, 13, "Linking firmware...")
+            # Link firmware
+            firmware_elf = linker.link(sketch_obj_files, core_archive, library_archives=library_archives)
 
-                logging.debug(f"orchestrator: env_config keys: {list(env_config.keys())}")
-                logging.debug(f"orchestrator: board_build.partitions = {env_config.get('board_build.partitions', 'NOT FOUND')}")
+            # Generate binary
+            log_phase(11, 13, "Generating firmware binary...")
 
-                linker = ConfigurableLinker(
-                    platform,
-                    toolchain,
-                    framework,
-                    board_id,
-                    build_dir,
-                    platform_config=None,
-                    show_progress=verbose,
-                    env_config=env_config
+            firmware_bin = linker.generate_bin(firmware_elf)
+
+            # Generate bootloader and partition table
+            bootloader_bin, partitions_bin = self._generate_boot_components(
+                linker, mcu, verbose
+            )
+
+            # Generate merged bin if all components are available
+            merged_bin = None
+            if bootloader_bin and partitions_bin and firmware_bin:
+                try:
+                    merged_bin = linker.generate_merged_bin()
+                except KeyboardInterrupt as ke:
+                    from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+                    handle_keyboard_interrupt_properly(ke)
+                    raise  # Never reached, but satisfies type checker
+                except Exception as e:
+                    log_warning(f"Could not generate merged bin: {e}")
+
+            # Get size information from ELF file
+            size_info = linker.get_size_info(firmware_elf)
+
+            build_time = time.time() - start_time
+
+            if verbose:
+                self._print_success(
+                    build_time, firmware_elf, firmware_bin,
+                    bootloader_bin, partitions_bin, merged_bin, size_info
                 )
 
-                # Link firmware
-                firmware_elf = linker.link(sketch_obj_files, core_archive, library_archives=library_archives)
+            # Save build state for future cache validation
+            log_detail("Saving build state...", verbose_only=True)
+            state_tracker.save_state(current_state)
 
-                # Generate binary
-                log_phase(11, 13, "Generating firmware binary...")
+            # Generate build_info.json
+            build_info_generator = BuildInfoGenerator(build_dir)
+            board_name = board_json.get("name", board_id)
+            # Parse f_cpu from string (e.g., "160000000L" or "160000000") to int
+            f_cpu_raw = board_json.get("build", {}).get("f_cpu", "0")
+            f_cpu_int = int(str(f_cpu_raw).rstrip("L")) if f_cpu_raw else 0
+            # Build toolchain_paths dict, filtering out None values
+            toolchain_paths_raw = {
+                "gcc": toolchain.get_gcc_path(),
+                "gxx": toolchain.get_gxx_path(),
+                "ar": toolchain.get_ar_path(),
+                "objcopy": toolchain.get_objcopy_path(),
+                "size": toolchain.get_size_path(),
+            }
+            toolchain_paths = {k: v for k, v in toolchain_paths_raw.items() if v is not None}
+            # Fallback flash settings from board JSON if not in env_config
+            flash_mode_env = env_config.get("board_build.flash_mode")
+            flash_mode_board = board_json.get("build", {}).get("flash_mode", "dio")
+            flash_mode = flash_mode_env or flash_mode_board
+            flash_size_env = env_config.get("board_build.flash_size")
+            flash_size_board = board_json.get("upload", {}).get("flash_size", "4MB")
+            flash_size = flash_size_env or flash_size_board
+            print(f"[ORCHESTRATOR] FLASH_MODE: env={flash_mode_env}, board={flash_mode_board}, final={flash_mode}", flush=True)
+            print(f"[ORCHESTRATOR] FLASH_SIZE: env={flash_size_env}, board={flash_size_board}, final={flash_size}", flush=True)
+            logging.debug(f"FLASH_MODE: env={flash_mode_env}, board={flash_mode_board}, final={flash_mode}")
+            logging.debug(f"FLASH_SIZE: env={flash_size_env}, board={flash_size_board}, final={flash_size}")
+            build_info = build_info_generator.generate_esp32(
+                env_name=env_name,
+                board_id=board_id,
+                board_name=board_name,
+                mcu=mcu,
+                f_cpu=f_cpu_int,
+                build_time=build_time,
+                elf_path=firmware_elf,
+                bin_path=firmware_bin,
+                size_info=size_info,
+                build_flags=build_flags,
+                lib_deps=lib_deps,
+                toolchain_version=toolchain.version,
+                toolchain_paths=toolchain_paths,
+                framework_version=framework.version,
+                core_path=framework.get_cores_dir(),
+                bootloader_path=bootloader_bin,
+                partitions_path=partitions_bin,
+                application_offset=board_json.get("build", {}).get("app_offset", "0x10000"),
+                flash_mode=flash_mode,
+                flash_size=flash_size,
+            )
+            build_info_generator.save(build_info)
+            log_detail(f"Build info saved to {build_info_generator.build_info_path}", verbose_only=True)
 
-                firmware_bin = linker.generate_bin(firmware_elf)
-
-                # Generate bootloader and partition table
-                bootloader_bin, partitions_bin = self._generate_boot_components(
-                    linker, mcu, verbose
-                )
-
-                # Generate merged bin if all components are available
-                merged_bin = None
-                if bootloader_bin and partitions_bin and firmware_bin:
-                    try:
-                        merged_bin = linker.generate_merged_bin()
-                    except KeyboardInterrupt as ke:
-                        from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
-                        handle_keyboard_interrupt_properly(ke)
-                        raise  # Never reached, but satisfies type checker
-                    except Exception as e:
-                        log_warning(f"Could not generate merged bin: {e}")
-
-                # Get size information from ELF file
-                size_info = linker.get_size_info(firmware_elf)
-
-                build_time = time.time() - start_time
-
-                if verbose:
-                    self._print_success(
-                        build_time, firmware_elf, firmware_bin,
-                        bootloader_bin, partitions_bin, merged_bin, size_info
-                    )
-
-                # Save build state for future cache validation
-                log_detail("Saving build state...", verbose_only=True)
-                state_tracker.save_state(current_state)
-
-                # Generate build_info.json
-                build_info_generator = BuildInfoGenerator(build_dir)
-                board_name = board_json.get("name", board_id)
-                # Parse f_cpu from string (e.g., "160000000L" or "160000000") to int
-                f_cpu_raw = board_json.get("build", {}).get("f_cpu", "0")
-                f_cpu_int = int(str(f_cpu_raw).rstrip("L")) if f_cpu_raw else 0
-                # Build toolchain_paths dict, filtering out None values
-                toolchain_paths_raw = {
-                    "gcc": toolchain.get_gcc_path(),
-                    "gxx": toolchain.get_gxx_path(),
-                    "ar": toolchain.get_ar_path(),
-                    "objcopy": toolchain.get_objcopy_path(),
-                    "size": toolchain.get_size_path(),
-                }
-                toolchain_paths = {k: v for k, v in toolchain_paths_raw.items() if v is not None}
-                # Fallback flash settings from board JSON if not in env_config
-                flash_mode_env = env_config.get("board_build.flash_mode")
-                flash_mode_board = board_json.get("build", {}).get("flash_mode", "dio")
-                flash_mode = flash_mode_env or flash_mode_board
-                flash_size_env = env_config.get("board_build.flash_size")
-                flash_size_board = board_json.get("upload", {}).get("flash_size", "4MB")
-                flash_size = flash_size_env or flash_size_board
-                print(f"[ORCHESTRATOR] FLASH_MODE: env={flash_mode_env}, board={flash_mode_board}, final={flash_mode}", flush=True)
-                print(f"[ORCHESTRATOR] FLASH_SIZE: env={flash_size_env}, board={flash_size_board}, final={flash_size}", flush=True)
-                logging.debug(f"FLASH_MODE: env={flash_mode_env}, board={flash_mode_board}, final={flash_mode}")
-                logging.debug(f"FLASH_SIZE: env={flash_size_env}, board={flash_size_board}, final={flash_size}")
-                build_info = build_info_generator.generate_esp32(
-                    env_name=env_name,
-                    board_id=board_id,
-                    board_name=board_name,
-                    mcu=mcu,
-                    f_cpu=f_cpu_int,
-                    build_time=build_time,
-                    elf_path=firmware_elf,
-                    bin_path=firmware_bin,
-                    size_info=size_info,
-                    build_flags=build_flags,
-                    lib_deps=lib_deps,
-                    toolchain_version=toolchain.version,
-                    toolchain_paths=toolchain_paths,
-                    framework_version=framework.version,
-                    core_path=framework.get_cores_dir(),
-                    bootloader_path=bootloader_bin,
-                    partitions_path=partitions_bin,
-                    application_offset=board_json.get("build", {}).get("app_offset", "0x10000"),
-                    flash_mode=flash_mode,
-                    flash_size=flash_size,
-                )
-                build_info_generator.save(build_info)
-                log_detail(f"Build info saved to {build_info_generator.build_info_path}", verbose_only=True)
-
-                return BuildResultESP32(
-                    success=True,
-                    firmware_bin=firmware_bin,
-                    firmware_elf=firmware_elf,
-                    bootloader_bin=bootloader_bin,
-                    partitions_bin=partitions_bin,
-                    merged_bin=merged_bin,
-                    size_info=size_info,
-                    build_time=build_time,
-                    message="Build successful (native ESP32 build)"
-                )
+            return BuildResultESP32(
+                success=True,
+                firmware_bin=firmware_bin,
+                firmware_elf=firmware_elf,
+                bootloader_bin=bootloader_bin,
+                partitions_bin=partitions_bin,
+                merged_bin=merged_bin,
+                size_info=size_info,
+                build_time=build_time,
+                message="Build successful (native ESP32 build)"
+            )
 
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
@@ -662,27 +648,6 @@ class OrchestratorESP32(IBuildOrchestrator):
         )
         framework.ensure_framework()
         return framework
-
-    def _setup_build_directory(self, env_name: str, clean: bool, verbose: bool) -> Path:
-        """
-        Setup build directory with optional cleaning.
-
-        Args:
-            env_name: Environment name
-            clean: Whether to clean before build
-            verbose: Verbose output mode
-
-        Returns:
-            Build directory path
-        """
-        build_dir = self.cache.get_build_dir(env_name)
-
-        if clean and build_dir.exists():
-            log_phase(6, 13, "Cleaning build directory...")
-            safe_rmtree(build_dir)
-
-        build_dir.mkdir(parents=True, exist_ok=True)
-        return build_dir
 
     def _process_libraries(
         self,

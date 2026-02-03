@@ -14,9 +14,8 @@ from typing import TYPE_CHECKING, List, Optional
 from dataclasses import dataclass
 
 if TYPE_CHECKING:
-    from fbuild.daemon.compilation_queue import CompilationJobQueue
+    from .build_context import BuildParams
 
-from .. import platform_configs
 from ..packages import Cache
 from ..packages.platform_rp2040 import PlatformRP2040
 from ..packages.toolchain_rp2040 import ToolchainRP2040
@@ -27,7 +26,7 @@ from ..output import DefaultProgressCallback
 from .configurable_compiler import ConfigurableCompiler
 from .configurable_linker import ConfigurableLinker
 from .linker import SizeInfo
-from .orchestrator import IBuildOrchestrator, BuildResult, managed_compilation_queue
+from .orchestrator import IBuildOrchestrator, BuildResult
 from .build_utils import safe_rmtree
 from .build_state import BuildStateTracker
 from .build_info_generator import BuildInfoGenerator
@@ -76,24 +75,11 @@ class OrchestratorRP2040(IBuildOrchestrator):
         self.cache = cache
         self.verbose = verbose
 
-    def build(
-        self,
-        project_dir: Path,
-        env_name: Optional[str] = None,
-        clean: bool = False,
-        verbose: Optional[bool] = None,
-        jobs: int | None = None,
-        queue: Optional["CompilationJobQueue"] = None,
-    ) -> BuildResult:
-        """Execute complete build process (IBuildOrchestrator interface).
+    def build(self, request: "BuildParams") -> BuildResult:
+        """Execute complete build process.
 
         Args:
-            project_dir: Project root directory containing platformio.ini
-            env_name: Environment name to build (defaults to first/default env)
-            clean: Clean build (remove all artifacts before building)
-            jobs: Number of parallel compilation jobs (None = CPU count, 1 = serial)
-            verbose: Override verbose setting
-            queue: Compilation queue from daemon context (injected by build_processor)
+            request: Build request with basic parameters from build_processor
 
         Returns:
             BuildResult with build status and output paths
@@ -103,7 +89,9 @@ class OrchestratorRP2040(IBuildOrchestrator):
         """
         from ..config import PlatformIOConfig
 
-        verbose_mode = verbose if verbose is not None else self.verbose
+        # Extract from request
+        project_dir = request.project_dir
+        env_name = request.env_name
 
         # Parse platformio.ini to get environment configuration
         ini_path = project_dir / "platformio.ini"
@@ -120,19 +108,6 @@ class OrchestratorRP2040(IBuildOrchestrator):
         try:
             config = PlatformIOConfig(ini_path)
 
-            # Determine environment to build
-            if env_name is None:
-                env_name = config.get_default_environment()
-                if env_name is None:
-                    return BuildResult(
-                        success=False,
-                        hex_path=None,
-                        elf_path=None,
-                        size_info=None,
-                        build_time=0.0,
-                        message="No environment specified and no default found in platformio.ini"
-                    )
-
             env_config = config.get_env_config(env_name)
             board_id = env_config.get("board", "rpipico")
             build_flags = config.get_build_flags(env_name)
@@ -140,7 +115,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
 
             # Call internal build method
             rp2040_result = self._build_rp2040(
-                project_dir, env_name, board_id, env_config, build_flags, lib_deps, clean, verbose_mode, jobs, queue
+                board_id, env_config, build_flags, lib_deps, request
             )
 
             # Convert BuildResultRP2040 to BuildResult
@@ -169,35 +144,32 @@ class OrchestratorRP2040(IBuildOrchestrator):
 
     def _build_rp2040(
         self,
-        project_dir: Path,
-        env_name: str,
         board_id: str,
         env_config: dict,
         build_flags: List[str],
         lib_deps: List[str],
-        clean: bool = False,
-        verbose: bool = False,
-        jobs: int | None = None,
-        queue: Optional["CompilationJobQueue"] = None,
+        request: "BuildParams",
     ) -> BuildResultRP2040:
         """
         Execute complete RP2040/RP2350 build process (internal implementation).
 
         Args:
-            project_dir: Project directory
-            env_name: Environment name
             board_id: Board ID (e.g., rpipico, rpipico2)
             env_config: Environment configuration dict
             build_flags: User build flags from platformio.ini
             lib_deps: Library dependencies from platformio.ini
-            clean: Whether to clean before build
-            verbose: Verbose output mode
-            jobs: Number of parallel compilation jobs (None = CPU count, 1 = serial)
+            request: Build request with basic parameters
 
         Returns:
             BuildResultRP2040 with build status and output paths
         """
         start_time = time.time()
+
+        # Extract from request
+        project_dir = request.project_dir
+        env_name = request.env_name
+        verbose = request.verbose
+        build_dir = request.build_dir
 
         try:
             # Get board configuration
@@ -209,6 +181,10 @@ class OrchestratorRP2040(IBuildOrchestrator):
                 logger.info("Loading board configuration...")
 
             board_config = BoardConfig.from_board_id(board_id)
+
+            # Print build profile banner
+            from .build_profiles import print_profile_banner
+            print_profile_banner(request.profile)
 
             # Initialize platform
             if verbose:
@@ -228,8 +204,8 @@ class OrchestratorRP2040(IBuildOrchestrator):
                 logger.info(f"      MCU: {board_config.mcu}")
                 logger.info(f"      CPU Frequency: {board_config.f_cpu}")
 
-            # Setup build directory
-            build_dir = self._setup_build_directory(env_name, clean, verbose)
+            # Ensure build directory exists
+            build_dir.mkdir(parents=True, exist_ok=True)
 
             # Check build state and invalidate cache if needed
             if verbose:
@@ -263,8 +239,50 @@ class OrchestratorRP2040(IBuildOrchestrator):
                 if verbose:
                     logger.info("      Build configuration unchanged, using cached artifacts")
 
-            # Load platform configuration from package data
+            # Initialize compilation executor
+            from .compilation_executor import CompilationExecutor
+            compilation_executor = CompilationExecutor(
+                build_dir=build_dir,
+                show_progress=verbose,
+                cache=self.cache,
+                mcu=board_config.mcu,
+                framework_version=platform.framework.version,
+            )
+
+            # Load board JSON and platform config ONCE (not redundantly in compiler/linker)
+            board_json = platform.get_board_json(board_id)
+            from .. import platform_configs
             platform_config = platform_configs.load_config(board_config.mcu)
+            if platform_config is None:
+                return self._error_result(
+                    start_time,
+                    f"No platform configuration found for {board_config.mcu}. Available: {platform_configs.list_available_configs()}"
+                )
+
+            # Extract variant and core from board config
+            variant = board_json.get("build", {}).get("variant", "")
+            core = board_json.get("build", {}).get("core", "rp2040")
+
+            # Create full BuildContext with all configuration loaded once
+            from .build_context import BuildContext
+            context = BuildContext.from_request(
+                request=request,
+                platform=platform,
+                toolchain=platform.toolchain,
+                mcu=board_config.mcu,
+                framework_version=platform.framework.version,
+                compilation_executor=compilation_executor,
+                cache=self.cache,
+                # New consolidated fields
+                framework=platform.framework,
+                board_id=board_id,
+                board_config=board_json,
+                platform_config=platform_config,
+                variant=variant,
+                core=core,
+                user_build_flags=build_flags,
+                env_config=env_config,
+            )
 
             # Initialize compiler
             if verbose:
@@ -272,166 +290,145 @@ class OrchestratorRP2040(IBuildOrchestrator):
             else:
                 logger.info("Compiling Arduino core...")
 
-            # Use managed compilation queue context manager for safe resource handling
-            with managed_compilation_queue(jobs, verbose, provided_queue=queue) as compilation_queue:
-                compiler = ConfigurableCompiler(
-                    platform,
-                    platform.toolchain,
-                    platform.framework,
-                    board_id,
-                    build_dir,
-                    platform_config=platform_config,
-                    show_progress=verbose,
-                    user_build_flags=build_flags,
-                    compilation_queue=compilation_queue,
-                    cache=self.cache,
+            compiler = ConfigurableCompiler(context)
+
+            # Create progress callback for detailed file-by-file tracking
+            progress_callback = DefaultProgressCallback(verbose_only=not verbose)
+
+            # Compile Arduino core with progress bar
+            if verbose:
+                core_obj_files = compiler.compile_core(progress_callback=progress_callback)
+            else:
+                # Use tqdm progress bar for non-verbose mode
+                from tqdm import tqdm
+
+                # Get number of core source files for progress tracking
+                core_sources = platform.framework.get_core_sources("rp2040")
+                total_files = len(core_sources)
+
+                # Create progress bar
+                with tqdm(
+                    total=total_files,
+                    desc='Compiling Arduino core',
+                    unit='file',
+                    ncols=80,
+                    leave=False
+                ) as pbar:
+                    core_obj_files = compiler.compile_core(progress_bar=pbar, progress_callback=progress_callback)
+
+                # Print completion message
+                logger.info(f"Compiled {len(core_obj_files)} core files")
+
+            core_archive = compiler.create_core_archive(core_obj_files)
+
+            if verbose:
+                logger.info(f"      Compiled {len(core_obj_files)} core source files")
+
+            # Handle library dependencies (if any)
+            library_archives, library_include_paths = self._process_libraries(
+                env_config, build_dir, compiler, platform.toolchain, board_config, verbose, project_dir=project_dir
+            )
+
+            # Add library include paths to compiler
+            if library_include_paths:
+                compiler.add_library_includes(library_include_paths)
+
+            # Get src_dir override from platformio.ini
+            from ..config import PlatformIOConfig
+            config_for_src_dir = PlatformIOConfig(project_dir / "platformio.ini")
+            src_dir_override = config_for_src_dir.get_src_dir()
+
+            # Find and compile sketch
+            sketch_obj_files = self._compile_sketch(project_dir, compiler, start_time, verbose, src_dir_override)
+            if sketch_obj_files is None:
+                search_dir = project_dir / src_dir_override if src_dir_override else project_dir
+                return self._error_result(
+                    start_time,
+                    f"No .ino sketch file found in {search_dir}"
                 )
 
-                # Create progress callback for detailed file-by-file tracking
-                progress_callback = DefaultProgressCallback(verbose_only=not verbose)
+            # Initialize linker
+            if verbose:
+                logger.info("[6/7] Linking firmware...")
+            else:
+                logger.info("Linking firmware...")
 
-                # Compile Arduino core with progress bar
-                if verbose:
-                    core_obj_files = compiler.compile_core(progress_callback=progress_callback)
-                else:
-                    # Use tqdm progress bar for non-verbose mode
-                    from tqdm import tqdm
+            linker = ConfigurableLinker(context)
 
-                    # Get number of core source files for progress tracking
-                    core_sources = platform.framework.get_core_sources("rp2040")
-                    total_files = len(core_sources)
+            # Link firmware
+            firmware_elf = linker.link(sketch_obj_files, core_archive, library_archives=library_archives)
 
-                    # Create progress bar
-                    with tqdm(
-                        total=total_files,
-                        desc='Compiling Arduino core',
-                        unit='file',
-                        ncols=80,
-                        leave=False
-                    ) as pbar:
-                        core_obj_files = compiler.compile_core(progress_bar=pbar, progress_callback=progress_callback)
+            # Generate bin file (intermediate)
+            if verbose:
+                logger.info("[7/7] Generating firmware...")
+            else:
+                logger.info("Generating firmware...")
 
-                    # Print completion message
-                    logger.info(f"Compiled {len(core_obj_files)} core files")
+            firmware_bin = linker.generate_bin(firmware_elf)
 
-                core_archive = compiler.create_core_archive(core_obj_files)
+            # Generate UF2 file (final format for RP2040/RP2350)
+            firmware_uf2 = self._generate_uf2(firmware_bin, board_config.mcu, verbose)
 
-                if verbose:
-                    logger.info(f"      Compiled {len(core_obj_files)} core source files")
+            # Get size info
+            size_info = linker.get_size_info(firmware_elf)
 
-                # Handle library dependencies (if any)
-                library_archives, library_include_paths = self._process_libraries(
-                    env_config, build_dir, compiler, platform.toolchain, board_config, verbose, project_dir=project_dir
+            build_time = time.time() - start_time
+
+            if verbose:
+                self._print_success(
+                    build_time, firmware_elf, firmware_uf2, size_info
                 )
 
-                # Add library include paths to compiler
-                if library_include_paths:
-                    compiler.add_library_includes(library_include_paths)
+            # Save build state for future cache validation
+            if verbose:
+                logger.info("[7.5/7] Saving build state...")
+            state_tracker.save_state(current_state)
 
-                # Get src_dir override from platformio.ini
-                from ..config import PlatformIOConfig
-                config_for_src_dir = PlatformIOConfig(project_dir / "platformio.ini")
-                src_dir_override = config_for_src_dir.get_src_dir()
+            # Generate build_info.json
+            build_info_generator = BuildInfoGenerator(build_dir)
+            # Parse f_cpu from string (e.g., "133000000L") to int
+            f_cpu_int = int(board_config.f_cpu.rstrip("L"))
+            # Build toolchain_paths dict, filtering out None values
+            toolchain_paths_raw = {
+                "gcc": platform.toolchain.get_gcc_path(),
+                "gxx": platform.toolchain.get_gxx_path(),
+                "ar": platform.toolchain.get_ar_path(),
+                "objcopy": platform.toolchain.get_objcopy_path(),
+                "size": platform.toolchain.get_size_path(),
+            }
+            toolchain_paths = {k: v for k, v in toolchain_paths_raw.items() if v is not None}
+            build_info = build_info_generator.generate_generic(
+                env_name=env_name,
+                board_id=board_id,
+                board_name=board_config.name,
+                mcu=board_config.mcu,
+                platform="raspberrypi",
+                f_cpu=f_cpu_int,
+                build_time=build_time,
+                elf_path=firmware_elf,
+                bin_path=firmware_bin,
+                size_info=size_info,
+                build_flags=build_flags,
+                lib_deps=lib_deps,
+                toolchain_version=platform.toolchain.version,
+                toolchain_paths=toolchain_paths,
+                framework_name="arduino",
+                framework_version=platform.framework.version,
+                core_path=platform.framework.get_cores_dir(),
+            )
+            build_info_generator.save(build_info)
+            if verbose:
+                logger.info(f"      Build info saved to {build_info_generator.build_info_path}")
 
-                # Find and compile sketch
-                sketch_obj_files = self._compile_sketch(project_dir, compiler, start_time, verbose, src_dir_override)
-                if sketch_obj_files is None:
-                    search_dir = project_dir / src_dir_override if src_dir_override else project_dir
-                    return self._error_result(
-                        start_time,
-                        f"No .ino sketch file found in {search_dir}"
-                    )
-
-                # Initialize linker
-                if verbose:
-                    logger.info("[6/7] Linking firmware...")
-                else:
-                    logger.info("Linking firmware...")
-
-                linker = ConfigurableLinker(
-                    platform,
-                    platform.toolchain,
-                    platform.framework,
-                    board_id,
-                    build_dir,
-                    platform_config=platform_config,
-                    show_progress=verbose
-                )
-
-                # Link firmware
-                firmware_elf = linker.link(sketch_obj_files, core_archive, library_archives=library_archives)
-
-                # Generate bin file (intermediate)
-                if verbose:
-                    logger.info("[7/7] Generating firmware...")
-                else:
-                    logger.info("Generating firmware...")
-
-                firmware_bin = linker.generate_bin(firmware_elf)
-
-                # Generate UF2 file (final format for RP2040/RP2350)
-                firmware_uf2 = self._generate_uf2(firmware_bin, board_config.mcu, verbose)
-
-                # Get size info
-                size_info = linker.get_size_info(firmware_elf)
-
-                build_time = time.time() - start_time
-
-                if verbose:
-                    self._print_success(
-                        build_time, firmware_elf, firmware_uf2, size_info
-                    )
-
-                # Save build state for future cache validation
-                if verbose:
-                    logger.info("[7.5/7] Saving build state...")
-                state_tracker.save_state(current_state)
-
-                # Generate build_info.json
-                build_info_generator = BuildInfoGenerator(build_dir)
-                # Parse f_cpu from string (e.g., "133000000L") to int
-                f_cpu_int = int(board_config.f_cpu.rstrip("L"))
-                # Build toolchain_paths dict, filtering out None values
-                toolchain_paths_raw = {
-                    "gcc": platform.toolchain.get_gcc_path(),
-                    "gxx": platform.toolchain.get_gxx_path(),
-                    "ar": platform.toolchain.get_ar_path(),
-                    "objcopy": platform.toolchain.get_objcopy_path(),
-                    "size": platform.toolchain.get_size_path(),
-                }
-                toolchain_paths = {k: v for k, v in toolchain_paths_raw.items() if v is not None}
-                build_info = build_info_generator.generate_generic(
-                    env_name=env_name,
-                    board_id=board_id,
-                    board_name=board_config.name,
-                    mcu=board_config.mcu,
-                    platform="raspberrypi",
-                    f_cpu=f_cpu_int,
-                    build_time=build_time,
-                    elf_path=firmware_elf,
-                    bin_path=firmware_bin,
-                    size_info=size_info,
-                    build_flags=build_flags,
-                    lib_deps=lib_deps,
-                    toolchain_version=platform.toolchain.version,
-                    toolchain_paths=toolchain_paths,
-                    framework_name="arduino",
-                    framework_version=platform.framework.version,
-                    core_path=platform.framework.get_cores_dir(),
-                )
-                build_info_generator.save(build_info)
-                if verbose:
-                    logger.info(f"      Build info saved to {build_info_generator.build_info_path}")
-
-                return BuildResultRP2040(
-                    success=True,
-                    firmware_uf2=firmware_uf2,
-                    firmware_bin=firmware_bin,
-                    firmware_elf=firmware_elf,
-                    size_info=size_info,
-                    build_time=build_time,
-                    message="Build successful (native RP2040/RP2350 build)"
-                )
+            return BuildResultRP2040(
+                success=True,
+                firmware_uf2=firmware_uf2,
+                firmware_bin=firmware_bin,
+                firmware_elf=firmware_elf,
+                size_info=size_info,
+                build_time=build_time,
+                message="Build successful (native RP2040/RP2350 build)"
+            )
 
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
@@ -518,30 +515,6 @@ class OrchestratorRP2040(IBuildOrchestrator):
             logger.info(f"      UF2 file generated: {num_blocks} blocks, {len(bin_data)} bytes")
 
         return uf2_path
-
-    def _setup_build_directory(self, env_name: str, clean: bool, verbose: bool) -> Path:
-        """
-        Setup build directory with optional cleaning.
-
-        Args:
-            env_name: Environment name
-            clean: Whether to clean before build
-            verbose: Verbose output mode
-
-        Returns:
-            Build directory path
-        """
-        build_dir = self.cache.get_build_dir(env_name)
-
-        if clean and build_dir.exists():
-            if verbose:
-                logger.info("[1/7] Cleaning build directory...")
-            else:
-                logger.info("Cleaning build directory...")
-            safe_rmtree(build_dir)
-
-        build_dir.mkdir(parents=True, exist_ok=True)
-        return build_dir
 
     def _process_libraries(
         self,

@@ -8,10 +8,16 @@ Design:
     - Builds flags from configuration dictionaries
     - Adds platform-specific defines (Arduino, ESP32, etc.)
     - Merges user build flags from platformio.ini
+    - Applies build profile flags from BuildContext
 """
 
 import shlex
-from typing import List, Dict, Any, Optional
+from typing import TYPE_CHECKING, List, Dict
+
+from .build_profiles import merge_compile_flags
+
+if TYPE_CHECKING:
+    from .build_context import BuildContext
 
 
 class FlagBuilderError(Exception):
@@ -27,30 +33,25 @@ class FlagBuilder:
     - Building flags from platform config
     - Adding platform-specific defines
     - Merging user build flags
+    - Applying build profile flags from context
     """
 
-    def __init__(
-        self,
-        config: Dict[str, Any],
-        board_config: Dict[str, Any],
-        board_id: str,
-        variant: str,
-        user_build_flags: Optional[List[str]] = None
-    ):
+    def __init__(self, context: "BuildContext"):
         """Initialize flag builder.
 
         Args:
-            config: Platform configuration dictionary
-            board_config: Board-specific configuration
-            board_id: Board identifier (e.g., "esp32-c6-devkitm-1")
-            variant: Board variant name
-            user_build_flags: Build flags from platformio.ini
+            context: Build context containing all configuration
         """
-        self.config = config
-        self.board_config = board_config
-        self.board_id = board_id
-        self.variant = variant
-        self.user_build_flags = user_build_flags or []
+        # Extract everything from context (no redundant parameters)
+        self.config = context.platform_config
+        self.board_config = context.board_config
+        self.board_id = context.board_id
+        self.variant = context.variant
+        self.context = context
+        self.user_build_flags = context.user_build_flags
+
+        # Profile flags are pre-resolved in context
+        self._profile_flags = context.profile_flags
 
     @staticmethod
     def parse_flag_string(flag_string: str) -> List[str]:
@@ -102,6 +103,9 @@ class FlagBuilder:
         if 'cxx' in config_flags:
             flags['cxxflags'] = config_flags['cxx'].copy()
 
+        # Apply profile-based flags to common (replaces existing optimization and LTO flags)
+        self._apply_profile_flags(flags)
+
         # Add defines from config (CPPDEFINES in PlatformIO)
         defines = self.config.get('defines', [])
         for define in defines:
@@ -120,6 +124,17 @@ class FlagBuilder:
         self._add_user_flags(flags)
 
         return flags
+
+    def _apply_profile_flags(self, flags: Dict[str, List[str]]) -> None:
+        """Apply profile-based compilation flags declaratively.
+
+        Uses merge_compile_flags() to filter out profile-controlled flags
+        from platform config and add profile-specific flags.
+
+        Args:
+            flags: Flags dictionary to update
+        """
+        flags['common'] = merge_compile_flags(flags['common'], self._profile_flags)
 
     def _add_arduino_defines(self, flags: Dict[str, List[str]]) -> None:
         """Add Arduino-specific defines to flags.

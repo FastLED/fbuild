@@ -9,24 +9,20 @@ Design:
     - Same interface as ESP32Compiler for drop-in replacement
 """
 
-import json
 import logging
 from pathlib import Path
-from typing import Any, List, Dict, Optional, Union, TYPE_CHECKING
+from typing import Any, List, Dict, Optional, TYPE_CHECKING
 
-from .. import platform_configs
-from ..packages.package import IPackage, IToolchain, IFramework
 from ..packages.trampoline_excludes import get_exclude_patterns
 from ..output import ProgressCallback, log_detail
 from .flag_builder import FlagBuilder
-from .compilation_executor import CompilationExecutor
 from .archive_creator import ArchiveCreator
 from .compiler import ICompiler, CompilerError
 
 logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
-    from ..daemon.compilation_queue import CompilationJobQueue
+    from .build_context import BuildContext
 
 
 class ConfigurableCompilerError(CompilerError):
@@ -45,88 +41,38 @@ class ConfigurableCompiler(ICompiler):
     - Core archive creation
     """
 
-    def __init__(
-        self,
-        platform: IPackage,
-        toolchain: IToolchain,
-        framework: IFramework,
-        board_id: str,
-        build_dir: Path,
-        platform_config: Optional[Union[Dict, Path]] = None,
-        show_progress: bool = True,
-        user_build_flags: Optional[List[str]] = None,
-        compilation_executor: Optional[CompilationExecutor] = None,
-        compilation_queue: Optional["CompilationJobQueue"] = None,
-        cache: Optional[Any] = None,
-    ):
+    def __init__(self, context: "BuildContext"):
         """Initialize configurable compiler.
 
         Args:
-            platform: Platform instance
-            toolchain: Toolchain instance
-            framework: Framework instance
-            board_id: Board identifier (e.g., "esp32-c6-devkitm-1")
-            build_dir: Directory for build artifacts
-            platform_config: Platform config dict or path to config JSON file
-            show_progress: Whether to show compilation progress
-            user_build_flags: Build flags from platformio.ini
-            compilation_executor: Optional pre-initialized CompilationExecutor
-            compilation_queue: Optional compilation queue for async/parallel compilation
-            cache: Optional cache object for header trampoline support
+            context: Build context containing all build configuration
         """
-        self.platform = platform
-        self.toolchain = toolchain
-        self.framework = framework
-        self.board_id = board_id
-        self.build_dir = build_dir
-        self.show_progress = show_progress
-        self.user_build_flags = user_build_flags or []
-        self.compilation_queue = compilation_queue
-        self.cache = cache
+        # Extract everything from context (no redundant loading)
+        self.context = context
+        self.platform = context.platform
+        self.toolchain = context.toolchain
+        self.framework = context.framework
+        self.board_id = context.board_id
+        self.build_dir = context.build_dir
+        self.show_progress = context.verbose
+        self.user_build_flags = context.user_build_flags
+        self.cache = context.cache
+        self.mcu = context.mcu
         self.pending_jobs: List[str] = []  # Track async job IDs
 
-        # Load board configuration
-        self.board_config = platform.get_board_json(board_id)  # type: ignore[attr-defined]
+        # Extract pre-resolved values from context
+        self.compilation_queue = context.queue
+        self._profile_flags = context.profile_flags
+        self.compilation_executor = context.compilation_executor
 
-        # Get MCU type from board config
-        self.mcu = self.board_config.get("build", {}).get("mcu", "").lower()
-
-        # Get variant name
-        self.variant = self.board_config.get("build", {}).get("variant", "")
-
-        # Get core name from board config (defaults to "arduino" if not specified)
-        self.core = self.board_config.get("build", {}).get("core", "arduino")
-
-        # Load platform configuration
-        if platform_config is None:
-            # Load from package data using importlib.resources
-            loaded_config = platform_configs.load_config(self.mcu)
-            if loaded_config is not None:
-                self.config = loaded_config
-            else:
-                raise ConfigurableCompilerError(f"No platform configuration found for {self.mcu}. " + f"Available: {platform_configs.list_available_configs()}")
-        elif isinstance(platform_config, dict):
-            self.config = platform_config
-        else:
-            # Assume it's a path
-            with open(platform_config, "r") as f:
-                self.config = json.load(f)
+        # Pre-loaded configuration from context (no redundant loading!)
+        self.board_config = context.board_config
+        self.variant = context.variant
+        self.core = context.core
+        self.config = context.platform_config
 
         # Initialize utility components
-        self.flag_builder = FlagBuilder(config=self.config, board_config=self.board_config, board_id=self.board_id, variant=self.variant, user_build_flags=self.user_build_flags)
-        # Use provided executor or create a new one
-        if compilation_executor is not None:
-            self.compilation_executor = compilation_executor
-        else:
-            # Get framework version if available
-            framework_version = getattr(self.framework, "version", None)
-            self.compilation_executor = CompilationExecutor(
-                build_dir=self.build_dir,
-                show_progress=self.show_progress,
-                cache=self.cache,
-                mcu=self.mcu,
-                framework_version=framework_version,
-            )
+        self.flag_builder = FlagBuilder(context)
         self.archive_creator = ArchiveCreator(show_progress=self.show_progress)
 
         # Cache for include paths
@@ -327,55 +273,43 @@ class ConfigurableCompiler(ICompiler):
         includes = self.get_include_paths()
 
         # Parallel mode: submit to queue and return immediately
-        if self.compilation_queue is not None:
-            import platform
-            import _thread
-            import logging
+        import platform
+        import _thread
+        import logging
 
-            # Apply header trampoline cache on Windows when enabled (same as compilation_executor.py:149-169)
-            # This resolves Windows CreateProcess 32K limit issues
-            effective_includes = includes
-            logging.warning(f"[TRAMPOLINE_DEBUG] compilation_executor={self.compilation_executor}, trampoline_cache={self.compilation_executor.trampoline_cache}, is_windows={platform.system() == 'Windows'}")
-            if self.compilation_executor.trampoline_cache is not None and platform.system() == "Windows":
-                logging.warning("[TRAMPOLINE_DEBUG] ENTERING trampoline generation block")
-                try:
-                    logging.warning(f"[TRAMPOLINE_DEBUG] Calling generate_trampolines with {len(includes)} includes")
-                    effective_includes = self.compilation_executor.trampoline_cache.generate_trampolines(includes, exclude_patterns=get_exclude_patterns())
-                    logging.warning(f"[TRAMPOLINE_DEBUG] After generate_trampolines, got {len(effective_includes)} effective includes")
-                except KeyboardInterrupt:
-                    _thread.interrupt_main()
-                    raise
-                except Exception as e:
-                    if self.show_progress:
-                        print(f"[trampolines] Warning: Failed to generate trampolines, using original paths: {e}")
-                    effective_includes = includes
+        # Apply header trampoline cache on Windows when enabled (same as compilation_executor.py:149-169)
+        # This resolves Windows CreateProcess 32K limit issues
+        effective_includes = includes
+        logging.warning(f"[TRAMPOLINE_DEBUG] compilation_executor={self.compilation_executor}, trampoline_cache={self.compilation_executor.trampoline_cache}, is_windows={platform.system() == 'Windows'}")
+        if self.compilation_executor.trampoline_cache is not None and platform.system() == "Windows":
+            logging.warning("[TRAMPOLINE_DEBUG] ENTERING trampoline generation block")
+            try:
+                logging.warning(f"[TRAMPOLINE_DEBUG] Calling generate_trampolines with {len(includes)} includes")
+                effective_includes = self.compilation_executor.trampoline_cache.generate_trampolines(includes, exclude_patterns=get_exclude_patterns())
+                logging.warning(f"[TRAMPOLINE_DEBUG] After generate_trampolines, got {len(effective_includes)} effective includes")
+            except KeyboardInterrupt:
+                _thread.interrupt_main()
+                raise
+            except Exception as e:
+                if self.show_progress:
+                    print(f"[trampolines] Warning: Failed to generate trampolines, using original paths: {e}")
+                effective_includes = includes
 
-            # Convert include paths to flags
-            include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in effective_includes]
-            logging.warning(f"[TRAMPOLINE_DEBUG] First include flag: {include_flags[0] if include_flags else 'EMPTY'}")
-            # Calculate total command line length
-            cmd_preview = " ".join(include_flags)
-            logging.warning(f"[TRAMPOLINE_DEBUG] Command line length: {len(cmd_preview)} chars")
-            # Build command that would be executed
-            cmd = self.compilation_executor._build_compile_command(compiler_path, source_path, output_path, compile_flags, include_flags)
+        # Convert include paths to flags
+        include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in effective_includes]
+        logging.warning(f"[TRAMPOLINE_DEBUG] First include flag: {include_flags[0] if include_flags else 'EMPTY'}")
+        # Calculate total command line length
+        cmd_preview = " ".join(include_flags)
+        logging.warning(f"[TRAMPOLINE_DEBUG] Command line length: {len(cmd_preview)} chars")
+        # Build command that would be executed
+        cmd = self.compilation_executor._build_compile_command(compiler_path, source_path, output_path, compile_flags, include_flags)
 
-            # Submit to async compilation queue
-            job_id = self._submit_async_compilation(source_path, output_path, cmd)
-            self.pending_jobs.append(job_id)
+        # Submit to async compilation queue
+        job_id = self._submit_async_compilation(source_path, output_path, cmd)
+        self.pending_jobs.append(job_id)
 
-            # Return output path optimistically (validated in wait_all_jobs())
-            return output_path
-
-        # Serial mode: compile synchronously (only when jobs=1 specified)
-        try:
-            return self.compilation_executor.compile_source(compiler_path=compiler_path, source_path=source_path, output_path=output_path, compile_flags=compile_flags, include_paths=includes)
-        except KeyboardInterrupt as ke:
-            from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
-
-            handle_keyboard_interrupt_properly(ke)
-            raise  # Never reached, but satisfies type checker
-        except Exception as e:
-            raise ConfigurableCompilerError(str(e))
+        # Return output path optimistically (validated in wait_all_jobs())
+        return output_path
 
     def compile_sketch(self, sketch_path: Path) -> List[Path]:
         """Compile an Arduino sketch.
@@ -646,8 +580,6 @@ class ConfigurableCompiler(ICompiler):
             response_file=None,  # ConfigurableCompiler doesn't use response files
         )
 
-        if self.compilation_queue is None:
-            raise ConfigurableCompilerError("Compilation queue not initialized")
         self.compilation_queue.submit_job(job)
         return job_id
 

@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Optional
 
 from fbuild import __version__
+from fbuild.build.build_profiles import BuildProfile
 from fbuild.cli_utils import (
     EnvironmentDetector,
     ErrorFormatter,
@@ -47,6 +48,7 @@ class BuildArgs:
     clean: bool = False
     verbose: bool = False
     jobs: Optional[int] = None
+    profile: BuildProfile = BuildProfile.RELEASE
 
 
 @dataclass
@@ -115,6 +117,7 @@ def build_command(args: BuildArgs) -> None:
             clean_build=args.clean,
             verbose=args.verbose,
             jobs=args.jobs,
+            profile=args.profile,
         )
 
         # Exit with appropriate code
@@ -779,6 +782,18 @@ def main() -> None:
         default=os.cpu_count(),
         help="Number of parallel compilation jobs (default: CPU count, use 1 for serial compilation)",
     )
+    # Build profile (mutually exclusive)
+    profile_group = build_parser.add_mutually_exclusive_group()
+    profile_group.add_argument(
+        "--release",
+        action="store_true",
+        help="Optimized release build with LTO and -O3 (default)",
+    )
+    profile_group.add_argument(
+        "--quick",
+        action="store_true",
+        help="Fast development build (no LTO, -O2, section GC)",
+    )
 
     # Deploy command
     deploy_parser = subparsers.add_parser(
@@ -1014,12 +1029,15 @@ def main() -> None:
 
     # Execute command
     if parsed_args.command == "build":
+        # Determine profile: --quick sets quick, otherwise release (default)
+        profile = BuildProfile.QUICK if parsed_args.quick else BuildProfile.RELEASE
         build_args = BuildArgs(
             project_dir=parsed_args.project_dir,
             environment=parsed_args.environment,
             clean=parsed_args.clean,
             verbose=parsed_args.verbose,
             jobs=parsed_args.jobs,
+            profile=profile,
         )
         build_command(build_args)
     elif parsed_args.command == "deploy":

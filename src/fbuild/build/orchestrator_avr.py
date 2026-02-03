@@ -13,10 +13,10 @@ to generating firmware binaries. It integrates all build system components:
 import logging
 import time
 from pathlib import Path
-from typing import TYPE_CHECKING, Optional, List, Any
+from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
-    from fbuild.daemon.compilation_queue import CompilationJobQueue
+    from .build_context import BuildParams
 
 from ..interrupt_utils import handle_keyboard_interrupt_properly
 from ..config import PlatformIOConfig, BoardConfig, BoardConfigLoader
@@ -103,25 +103,12 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
         if not verbose_only or self.verbose:
             logging.info(message)
 
-    def build(
-        self,
-        project_dir: Path,
-        env_name: Optional[str] = None,
-        clean: bool = False,
-        verbose: Optional[bool] = None,
-        jobs: int | None = None,
-        queue: Optional["CompilationJobQueue"] = None,
-    ) -> BuildResult:
+    def build(self, request: "BuildParams") -> BuildResult:
         """
         Execute complete build process.
 
         Args:
-            project_dir: Project root directory containing platformio.ini
-            env_name: Environment name to build (defaults to first/default env)
-            clean: Clean build (remove all artifacts before building)
-            verbose: Override verbose setting
-            jobs: Number of parallel compilation jobs (None = CPU count, 1 = serial)
-            queue: Compilation queue from daemon context (injected by build_processor)
+            request: Build request with basic parameters from build_processor
 
         Returns:
             BuildResult with build status and output paths
@@ -130,12 +117,15 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             BuildOrchestratorError: If build fails at any phase
         """
         start_time = time.time()
-        verbose_mode = verbose if verbose is not None else self.verbose
+        verbose_mode = request.verbose
         set_verbose(verbose_mode)
 
-        try:
-            project_dir = Path(project_dir).resolve()
+        # Extract from request
+        project_dir = request.project_dir
+        env_name = request.env_name
+        clean = request.clean
 
+        try:
             # Initialize cache if not provided
             if self.cache is None:
                 self.cache = Cache(project_dir)
@@ -145,15 +135,11 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
 
             config = self._parse_config(project_dir)
 
-            # Determine environment to build
-            if env_name is None:
-                env_name = config.get_default_environment()
-                if env_name is None:
-                    raise BuildOrchestratorError(
-                        "No environment specified and no default found in platformio.ini"
-                    )
-
             log_detail(f"Building environment: {env_name}", verbose_only=not verbose_mode)
+
+            # Print build profile banner
+            from .build_profiles import print_profile_banner
+            print_profile_banner(request.profile)
 
             env_config = config.get_env_config(env_name)
 
@@ -170,18 +156,10 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             # Detect platform and handle accordingly
             if board_config.platform == "esp32":
                 log_detail(f"Platform: {board_config.platform} (using native ESP32 build)", verbose_only=not verbose_mode)
-                # Get build flags from platformio.ini
-                build_flags = config.get_build_flags(env_name)
-                return self._build_esp32(
-                    project_dir, env_name, board_id, env_config, clean, verbose_mode, start_time, build_flags, jobs
-                )
+                return self._build_esp32(request)
             elif board_config.platform == "teensy":
                 log_detail(f"Platform: {board_config.platform} (using native Teensy build)", verbose_only=not verbose_mode)
-                # Get build flags from platformio.ini
-                build_flags = config.get_build_flags(env_name)
-                return self._build_teensy(
-                    project_dir, env_name, board_id, board_config, clean, verbose_mode, start_time, build_flags, jobs
-                )
+                return self._build_teensy(request)
             elif board_config.platform != "avr":
                 # Only AVR, ESP32, and Teensy are supported natively
                 return BuildResult(
@@ -212,13 +190,15 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             # Phase 5: Setup build directories
             log_phase(5, 11, "Preparing build directories...", verbose_only=not verbose_mode)
 
+            build_dir = request.build_dir
             if clean:
-                self.cache.clean_build(env_name)
+                self.cache.clean_build(env_name, request.profile.value)
 
-            self.cache.ensure_build_directories(env_name)
-            build_dir = self.cache.get_build_dir(env_name)
-            core_build_dir = self.cache.get_core_build_dir(env_name)
-            src_build_dir = self.cache.get_src_build_dir(env_name)
+            self.cache.ensure_build_directories(env_name, request.profile.value)
+            core_build_dir = build_dir / "core"
+            src_build_dir = build_dir / "src"
+            core_build_dir.mkdir(parents=True, exist_ok=True)
+            src_build_dir.mkdir(parents=True, exist_ok=True)
 
             # Phase 5.5: Check build state and invalidate cache if needed
             log_phase(5, 11, "Checking build configuration state...", verbose_only=not verbose_mode)
@@ -245,9 +225,9 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                     log_detail(f"  - {reason}", indent=8, verbose_only=not verbose_mode)
                 log_detail("Cleaning build artifacts...", verbose_only=not verbose_mode)
                 # Clean build artifacts to force rebuild
-                self.cache.clean_build(env_name)
+                self.cache.clean_build(env_name, request.profile.value)
                 # Recreate directories
-                self.cache.ensure_build_directories(env_name)
+                self.cache.ensure_build_directories(env_name, request.profile.value)
             else:
                 log_detail("Build configuration unchanged, using cached artifacts", verbose_only=not verbose_mode)
 
@@ -302,107 +282,137 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             # Phase 8: Compile sources
             log_phase(8, 11, "Compiling sources...", verbose_only=not verbose_mode)
 
-            # Get compilation queue for this build using context manager
-            from fbuild.build.orchestrator import managed_compilation_queue
-            with managed_compilation_queue(jobs, verbose_mode, provided_queue=queue) as compilation_queue:
-                compiler = BuildComponentFactory.create_compiler(
-                    toolchain, board_config, core_path, lib_include_paths, compilation_queue
+            # Create BuildContext for compiler and linker
+            from .build_context import BuildContext
+            from .compilation_executor import CompilationExecutor
+
+            compilation_executor = CompilationExecutor(
+                build_dir=build_dir,
+                show_progress=verbose_mode,
+                cache=self.cache,
+                mcu=board_config.mcu,
+                framework_version=arduino_core.AVR_VERSION,
+            )
+
+            # For AVR, we use the arduino_core as both platform and framework
+            # since there's no separate platform package like ESP32
+            context = BuildContext.from_request(
+                request=request,
+                platform=arduino_core,  # ArduinoCore implements IFramework (extends IPackage)
+                toolchain=toolchain,
+                mcu=board_config.mcu,
+                framework_version=arduino_core.AVR_VERSION,
+                compilation_executor=compilation_executor,
+                cache=self.cache,
+                framework=arduino_core,
+                board_id=board_id,
+                board_config={},  # AVR doesn't use platform-style board config dicts
+                platform_config={},  # AVR doesn't have ESP32-style platform configs
+                variant=board_config.variant,
+                core=board_config.core,
+                user_build_flags=build_flags,
+                env_config=env_config,
+            )
+
+            # Queue is provided in context (mandatory)
+            compiler = BuildComponentFactory.create_compiler(
+                toolchain, board_config, core_path, context, lib_include_paths
+            )
+
+            compilation_orchestrator = SourceCompilationOrchestrator(verbose=verbose_mode)
+            compilation_result = compilation_orchestrator.compile_multiple_groups(
+                compiler=compiler,
+                sketch_sources=sources.sketch_sources,
+                core_sources=sources.core_sources,
+                variant_sources=sources.variant_sources,
+                src_build_dir=src_build_dir,
+                core_build_dir=core_build_dir
+            )
+
+            sketch_objects = compilation_result.sketch_objects
+            all_core_objects = compilation_result.all_core_objects
+
+            # Phase 9: Link firmware
+            log_phase(9, 11, "Linking firmware...", verbose_only=not verbose_mode)
+
+            elf_path = build_dir / 'firmware.elf'
+            hex_path = build_dir / 'firmware.hex'
+
+            linker = BuildComponentFactory.create_linker(toolchain, board_config, context)
+            # Now using avr-gcc-ar for archive creation, which properly handles LTO
+            # bytecode objects. This allows using archives instead of passing objects directly.
+            # Previously, standard ar couldn't create proper symbol indices for LTO objects.
+            link_result = linker.link_legacy(
+                sketch_objects,
+                all_core_objects,
+                elf_path,
+                hex_path,
+                lib_archives,  # Library archives (created with gcc-ar for LTO support)
+                None,  # No extra flags
+                None  # No additional objects needed when using archives
+            )
+
+            if not link_result.success:
+                raise BuildOrchestratorError(
+                    f"Linking failed:\n{link_result.stderr}"
                 )
 
-                compilation_orchestrator = SourceCompilationOrchestrator(verbose=verbose_mode)
-                compilation_result = compilation_orchestrator.compile_multiple_groups(
-                    compiler=compiler,
-                    sketch_sources=sources.sketch_sources,
-                    core_sources=sources.core_sources,
-                    variant_sources=sources.variant_sources,
-                    src_build_dir=src_build_dir,
-                    core_build_dir=core_build_dir
-                )
+            log_firmware_path(hex_path, verbose_only=not verbose_mode)
 
-                sketch_objects = compilation_result.sketch_objects
-                all_core_objects = compilation_result.all_core_objects
+            # Phase 10: Save build state for future cache validation
+            log_phase(10, 11, "Saving build state...", verbose_only=not verbose_mode)
+            state_tracker.save_state(current_state)
 
-                # Phase 9: Link firmware
-                log_phase(9, 11, "Linking firmware...", verbose_only=not verbose_mode)
+            # Phase 10.5: Generate build_info.json
+            build_time = time.time() - start_time
+            build_info_generator = BuildInfoGenerator(build_dir)
+            toolchain_tools = toolchain.get_all_tools()
+            # Parse f_cpu from string (e.g., "16000000L") to int
+            f_cpu_int = int(board_config.f_cpu.rstrip("L"))
+            # Build toolchain_paths dict, filtering out None values
+            toolchain_paths_raw = {
+                "gcc": toolchain_tools.get("avr-gcc"),
+                "gxx": toolchain_tools.get("avr-g++"),
+                "ar": toolchain_tools.get("avr-ar"),
+                "objcopy": toolchain_tools.get("avr-objcopy"),
+                "size": toolchain_tools.get("avr-size"),
+            }
+            toolchain_paths = {k: v for k, v in toolchain_paths_raw.items() if v is not None}
+            build_info = build_info_generator.generate_avr(
+                env_name=env_name,
+                board_id=board_id,
+                board_name=board_config.name,
+                mcu=board_config.mcu,
+                f_cpu=f_cpu_int,
+                build_time=build_time,
+                elf_path=elf_path,
+                hex_path=hex_path,
+                size_info=link_result.size_info,
+                build_flags=build_flags,
+                lib_deps=lib_deps,
+                toolchain_version=toolchain.VERSION,
+                toolchain_paths=toolchain_paths,
+                framework_version=arduino_core.AVR_VERSION,
+                core_path=core_path,
+            )
+            build_info_generator.save(build_info)
+            log_detail(f"Build info saved to {build_info_generator.build_info_path}", verbose_only=not verbose_mode)
 
-                elf_path = build_dir / 'firmware.elf'
-                hex_path = build_dir / 'firmware.hex'
+            # Phase 11: Display results
 
-                linker = BuildComponentFactory.create_linker(toolchain, board_config)
-                # Now using avr-gcc-ar for archive creation, which properly handles LTO
-                # bytecode objects. This allows using archives instead of passing objects directly.
-                # Previously, standard ar couldn't create proper symbol indices for LTO objects.
-                link_result = linker.link_legacy(
-                    sketch_objects,
-                    all_core_objects,
-                    elf_path,
-                    hex_path,
-                    lib_archives,  # Library archives (created with gcc-ar for LTO support)
-                    None,  # No extra flags
-                    None  # No additional objects needed when using archives
-                )
+            log_phase(11, 11, "Build complete!", verbose_only=not verbose_mode)
+            log("")
+            SizeInfoPrinter.print_size_info(link_result.size_info)
+            log_build_complete(build_time, verbose_only=not verbose_mode)
 
-                if not link_result.success:
-                    raise BuildOrchestratorError(
-                        f"Linking failed:\n{link_result.stderr}"
-                    )
-
-                log_firmware_path(hex_path, verbose_only=not verbose_mode)
-
-                # Phase 10: Save build state for future cache validation
-                log_phase(10, 11, "Saving build state...", verbose_only=not verbose_mode)
-                state_tracker.save_state(current_state)
-
-                # Phase 10.5: Generate build_info.json
-                build_time = time.time() - start_time
-                build_info_generator = BuildInfoGenerator(build_dir)
-                toolchain_tools = toolchain.get_all_tools()
-                # Parse f_cpu from string (e.g., "16000000L") to int
-                f_cpu_int = int(board_config.f_cpu.rstrip("L"))
-                # Build toolchain_paths dict, filtering out None values
-                toolchain_paths_raw = {
-                    "gcc": toolchain_tools.get("avr-gcc"),
-                    "gxx": toolchain_tools.get("avr-g++"),
-                    "ar": toolchain_tools.get("avr-ar"),
-                    "objcopy": toolchain_tools.get("avr-objcopy"),
-                    "size": toolchain_tools.get("avr-size"),
-                }
-                toolchain_paths = {k: v for k, v in toolchain_paths_raw.items() if v is not None}
-                build_info = build_info_generator.generate_avr(
-                    env_name=env_name,
-                    board_id=board_id,
-                    board_name=board_config.name,
-                    mcu=board_config.mcu,
-                    f_cpu=f_cpu_int,
-                    build_time=build_time,
-                    elf_path=elf_path,
-                    hex_path=hex_path,
-                    size_info=link_result.size_info,
-                    build_flags=build_flags,
-                    lib_deps=lib_deps,
-                    toolchain_version=toolchain.VERSION,
-                    toolchain_paths=toolchain_paths,
-                    framework_version=arduino_core.AVR_VERSION,
-                    core_path=core_path,
-                )
-                build_info_generator.save(build_info)
-                log_detail(f"Build info saved to {build_info_generator.build_info_path}", verbose_only=not verbose_mode)
-
-                # Phase 11: Display results
-
-                log_phase(11, 11, "Build complete!", verbose_only=not verbose_mode)
-                log("")
-                SizeInfoPrinter.print_size_info(link_result.size_info)
-                log_build_complete(build_time, verbose_only=not verbose_mode)
-
-                return BuildResult(
-                    success=True,
-                    hex_path=hex_path,
-                    elf_path=elf_path,
-                    size_info=link_result.size_info,
-                    build_time=build_time,
-                    message="Build successful"
-                )
+            return BuildResult(
+                success=True,
+                hex_path=hex_path,
+                elf_path=elf_path,
+                size_info=link_result.size_info,
+                build_time=build_time,
+                message="Build successful"
+            )
 
         except (
             BuildOrchestratorError,
@@ -436,33 +446,14 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                 message=f"Unexpected error: {e}"
             )
 
-    def _build_esp32(
-        self,
-        project_dir: Path,
-        env_name: str,
-        board_id: str,
-        env_config: dict[str, Any],
-        clean: bool,
-        verbose: bool,
-        start_time: float,
-        build_flags: List[str],
-        jobs: int | None = None
-    ) -> BuildResult:
+    def _build_esp32(self, request: "BuildParams") -> BuildResult:
         """
         Build ESP32 project using native build system.
 
         Delegates to ESP32Orchestrator for ESP32-specific build logic.
 
         Args:
-            project_dir: Project directory
-            env_name: Environment name
-            board_id: Board ID (e.g., esp32-c6-devkitm-1)
-            env_config: Environment configuration dict
-            clean: Whether to clean before build
-            verbose: Verbose output
-            start_time: Build start time
-            build_flags: User build flags from platformio.ini
-            jobs: Number of parallel compilation jobs (None = CPU count, 1 = serial)
+            request: Build request with basic parameters
 
         Returns:
             BuildResult
@@ -473,46 +464,19 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                 hex_path=None,
                 elf_path=None,
                 size_info=None,
-                build_time=time.time() - start_time,
+                build_time=0.0,
                 message="Cache is required for ESP32 builds"
             )
 
-        esp32_orchestrator = OrchestratorESP32(self.cache, verbose)
-        # Use the new BaseBuildOrchestrator-compliant interface
-        result = esp32_orchestrator.build(
-            project_dir=project_dir,
-            env_name=env_name,
-            clean=clean,
-            verbose=verbose,
-            jobs=jobs
-        )
-        return result
+        esp32_orchestrator = OrchestratorESP32(self.cache, request.verbose)
+        return esp32_orchestrator.build(request)
 
-    def _build_teensy(
-        self,
-        project_dir: Path,
-        env_name: str,
-        board_id: str,
-        board_config: BoardConfig,
-        clean: bool,
-        verbose: bool,
-        start_time: float,
-        build_flags: List[str],
-        jobs: int | None = None
-    ) -> BuildResult:
+    def _build_teensy(self, request: "BuildParams") -> BuildResult:
         """
         Build Teensy project using native build system.
 
         Args:
-            project_dir: Project directory
-            env_name: Environment name
-            board_id: Board ID (e.g., teensy41)
-            board_config: Board configuration
-            clean: Whether to clean before build
-            verbose: Verbose output
-            start_time: Build start time
-            build_flags: User build flags from platformio.ini
-            jobs: Number of parallel compilation jobs (None = CPU count, 1 = serial)
+            request: Build request with basic parameters
 
         Returns:
             BuildResult
@@ -523,23 +487,15 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                 hex_path=None,
                 elf_path=None,
                 size_info=None,
-                build_time=time.time() - start_time,
+                build_time=0.0,
                 message="Cache not initialized"
             )
 
         # Delegate to OrchestratorTeensy for native Teensy build
         from .orchestrator_teensy import OrchestratorTeensy
 
-        teensy_orchestrator = OrchestratorTeensy(self.cache, verbose)
-        result = teensy_orchestrator.build(
-            project_dir=project_dir,
-            env_name=env_name,
-            clean=clean,
-            verbose=verbose,
-            jobs=jobs
-        )
-
-        return result
+        teensy_orchestrator = OrchestratorTeensy(self.cache, request.verbose)
+        return teensy_orchestrator.build(request)
 
     def _parse_config(self, project_dir: Path) -> PlatformIOConfig:
         """

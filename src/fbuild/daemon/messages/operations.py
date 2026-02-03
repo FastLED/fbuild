@@ -8,6 +8,7 @@ import time
 from dataclasses import asdict, dataclass, field
 from typing import Any
 
+from fbuild.build.build_profiles import BuildProfile
 from fbuild.daemon.message_protocol import deserialize_dataclass, serialize_dataclass
 
 
@@ -23,6 +24,7 @@ class BuildRequest:
         caller_pid: Process ID of requesting client
         caller_cwd: Working directory of requesting client
         jobs: Number of parallel compilation jobs (None = CPU count)
+        profile: Build profile
         timestamp: Unix timestamp when request was created
         request_id: Unique identifier for this request
     """
@@ -34,6 +36,7 @@ class BuildRequest:
     caller_pid: int
     caller_cwd: str
     jobs: int | None = None
+    profile: BuildProfile = BuildProfile.RELEASE
     timestamp: float = field(default_factory=time.time)
     request_id: str = field(default_factory=lambda: f"build_{int(time.time() * 1000)}")
 

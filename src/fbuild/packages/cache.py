@@ -32,9 +32,10 @@ Cache Structure:
     │               └── .metadata.json
     └── build/
         └── {env_name}/             # Build output per environment
-            ├── core/               # Compiled core objects
-            ├── src/                # Compiled sketch objects
-            └── firmware.*          # Final firmware files
+            └── {profile}/          # Build profile (release or quick)
+                ├── core/           # Compiled core objects
+                ├── src/            # Compiled sketch objects
+                └── firmware.*      # Final firmware files
 
 This structure ensures that different versions from the same URL don't
 stomp on each other, and allows multiple sources to coexist.
@@ -130,38 +131,41 @@ class Cache:
         """Directory for header trampoline caches."""
         return self.cache_root / "trampolines"
 
-    def get_build_dir(self, env_name: str) -> Path:
-        """Get build directory for a specific environment.
+    def get_build_dir(self, env_name: str, profile: str = "release") -> Path:
+        """Get build directory for a specific environment and profile.
 
         Args:
             env_name: Environment name (e.g., 'uno', 'mega')
+            profile: Build profile ('release' or 'quick')
 
         Returns:
-            Path to the environment's build directory
+            Path to the environment's build directory (includes profile subdirectory)
         """
-        return self.build_root / env_name
+        return self.build_root / env_name / profile
 
-    def get_core_build_dir(self, env_name: str) -> Path:
+    def get_core_build_dir(self, env_name: str, profile: str = "release") -> Path:
         """Get directory for compiled core objects.
 
         Args:
             env_name: Environment name
+            profile: Build profile ('release' or 'quick')
 
         Returns:
             Path to core build directory
         """
-        return self.get_build_dir(env_name) / "core"
+        return self.get_build_dir(env_name, profile) / "core"
 
-    def get_src_build_dir(self, env_name: str) -> Path:
+    def get_src_build_dir(self, env_name: str, profile: str = "release") -> Path:
         """Get directory for compiled sketch objects.
 
         Args:
             env_name: Environment name
+            profile: Build profile ('release' or 'quick')
 
         Returns:
             Path to sketch build directory
         """
-        return self.get_build_dir(env_name) / "src"
+        return self.get_build_dir(env_name, profile) / "src"
 
     def ensure_directories(self) -> None:
         """Create all cache directories if they don't exist."""
@@ -174,28 +178,30 @@ class Cache:
         ]:
             directory.mkdir(parents=True, exist_ok=True)
 
-    def ensure_build_directories(self, env_name: str) -> None:
-        """Create build directories for a specific environment.
+    def ensure_build_directories(self, env_name: str, profile: str = "release") -> None:
+        """Create build directories for a specific environment and profile.
 
         Args:
             env_name: Environment name
+            profile: Build profile ('release' or 'quick')
         """
         for directory in [
-            self.get_build_dir(env_name),
-            self.get_core_build_dir(env_name),
-            self.get_src_build_dir(env_name),
+            self.get_build_dir(env_name, profile),
+            self.get_core_build_dir(env_name, profile),
+            self.get_src_build_dir(env_name, profile),
         ]:
             directory.mkdir(parents=True, exist_ok=True)
 
-    def clean_build(self, env_name: str) -> None:
-        """Remove all build artifacts for an environment.
+    def clean_build(self, env_name: str, profile: str = "release") -> None:
+        """Remove all build artifacts for an environment and profile.
 
         Args:
             env_name: Environment name
+            profile: Build profile ('release' or 'quick')
         """
         import shutil
 
-        build_dir = self.get_build_dir(env_name)
+        build_dir = self.get_build_dir(env_name, profile)
         if build_dir.exists():
             shutil.rmtree(build_dir)
 

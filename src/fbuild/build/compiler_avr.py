@@ -14,7 +14,7 @@ from .compiler import ICompiler, CompilerError
 from ..subprocess_utils import safe_run
 
 if TYPE_CHECKING:
-    from ..daemon.compilation_queue import CompilationJobQueue
+    from .build_context import BuildContext
 
 
 @dataclass
@@ -43,8 +43,8 @@ class CompilerAVR(ICompiler):
         f_cpu: str,
         includes: List[Path],
         defines: Dict[str, str],
-        use_sccache: bool = True,
-        compilation_queue: Optional['CompilationJobQueue'] = None
+        context: "BuildContext",
+        use_sccache: bool,
     ):
         """
         Initialize compiler.
@@ -56,8 +56,8 @@ class CompilerAVR(ICompiler):
             f_cpu: CPU frequency (e.g., 16000000L)
             includes: List of include directories
             defines: Dictionary of preprocessor defines
-            use_sccache: Whether to use sccache for caching (default: True)
-            compilation_queue: Optional compilation queue for async/parallel compilation
+            context: Build context containing profile flags, queue, and verbose settings
+            use_sccache: Whether to use sccache for caching
         """
         self.avr_gcc = Path(avr_gcc)
         self.avr_gpp = Path(avr_gpp)
@@ -67,8 +67,12 @@ class CompilerAVR(ICompiler):
         self.defines = defines
         self.use_sccache = use_sccache
         self.sccache_path: Optional[Path] = None
-        self.compilation_queue = compilation_queue
         self.pending_jobs: List[str] = []  # Track async job IDs
+
+        # Store context and extract pre-resolved profile flags
+        self.context = context
+        self.compilation_queue = context.queue
+        self._profile_flags = context.profile_flags
 
         # Check if sccache is available
         if self.use_sccache:
@@ -150,36 +154,26 @@ class CompilerAVR(ICompiler):
         """
         source = Path(source)
 
-        # Async mode: submit to queue and defer result
-        if self.compilation_queue is not None:
-            # Build the command based on file type
-            if source.suffix == '.c':
-                cmd = self._build_c_command(source, output, extra_flags or [])
-            elif source.suffix in ['.cpp', '.cxx', '.cc']:
-                cmd = self._build_cpp_command(source, output, extra_flags or [])
-            else:
-                raise CompilerError(f"Unknown source file type: {source.suffix}")
-
-            # Submit to async compilation queue
-            job_id = self._submit_async_compilation(source, output, cmd)
-            self.pending_jobs.append(job_id)
-
-            # Return deferred result (actual result via wait_all_jobs())
-            return CompileResult(
-                success=True,
-                object_file=output,  # Optimistic - will be validated in wait_all_jobs()
-                stdout="",
-                stderr="",
-                returncode=0
-            )
-
-        # Sync mode: execute synchronously (legacy behavior)
+        # Build the command based on file type
         if source.suffix == '.c':
-            return self.compile_c(source, output, extra_flags)
+            cmd = self._build_c_command(source, output, extra_flags or [])
         elif source.suffix in ['.cpp', '.cxx', '.cc']:
-            return self.compile_cpp(source, output, extra_flags)
+            cmd = self._build_cpp_command(source, output, extra_flags or [])
         else:
             raise CompilerError(f"Unknown source file type: {source.suffix}")
+
+        # Submit to async compilation queue
+        job_id = self._submit_async_compilation(source, output, cmd)
+        self.pending_jobs.append(job_id)
+
+        # Return deferred result (actual result via wait_all_jobs())
+        return CompileResult(
+            success=True,
+            object_file=output,  # Optimistic - will be validated in wait_all_jobs()
+            stdout="",
+            stderr="",
+            returncode=0
+        )
 
     def compile_sources(
         self,
@@ -258,15 +252,14 @@ class CompilerAVR(ICompiler):
             str(self.avr_gcc),
             '-c',              # Compile only, don't link
             '-g',              # Include debug symbols
-            '-Os',             # Optimize for size
             '-w',              # Suppress warnings (matches Arduino)
             '-std=gnu11',      # C11 with GNU extensions
-            '-ffunction-sections',  # Function sections for linker GC
-            '-fdata-sections',      # Data sections for linker GC
-            '-flto',           # Link-time optimization
-            '-fno-fat-lto-objects',  # LTO bytecode only
-            f'-mmcu={self.mcu}',    # Target MCU
         ])
+
+        # Add all profile flags (optimization, section flags, LTO if enabled)
+        cmd.extend(self._profile_flags.compile_flags)
+
+        cmd.append(f'-mmcu={self.mcu}')  # Target MCU
 
         # Add defines
         for key, value in self.defines.items():
@@ -306,18 +299,17 @@ class CompilerAVR(ICompiler):
             str(self.avr_gpp),
             '-c',              # Compile only, don't link
             '-g',              # Include debug symbols
-            '-Os',             # Optimize for size
             '-w',              # Suppress warnings (matches Arduino)
             '-std=gnu++11',    # C++11 with GNU extensions
             '-fpermissive',    # Allow some non-standard code
             '-fno-exceptions',  # Disable exceptions (no room on AVR)
-            '-ffunction-sections',      # Function sections
-            '-fdata-sections',          # Data sections
             '-fno-threadsafe-statics',  # No thread safety needed
-            '-flto',           # Link-time optimization
-            '-fno-fat-lto-objects',  # LTO bytecode only
-            f'-mmcu={self.mcu}',        # Target MCU
         ])
+
+        # Add all profile flags (optimization, section flags, LTO if enabled)
+        cmd.extend(self._profile_flags.compile_flags)
+
+        cmd.append(f'-mmcu={self.mcu}')  # Target MCU
 
         # Add defines
         for key, value in self.defines.items():
@@ -410,8 +402,6 @@ class CompilerAVR(ICompiler):
             response_file=None  # AVR doesn't use response files for includes
         )
 
-        if self.compilation_queue is None:
-            raise CompilerError("Compilation queue not initialized")
         self.compilation_queue.submit_job(job)
         return job_id
 
@@ -428,9 +418,6 @@ class CompilerAVR(ICompiler):
         Raises:
             CompilerError: If any compilation fails
         """
-        if not self.compilation_queue:
-            return []
-
         if not self.pending_jobs:
             return []
 
@@ -545,14 +532,13 @@ class CompilerAVR(ICompiler):
         common = [
             '-c',
             '-g',
-            '-Os',
             '-w',
-            '-ffunction-sections',
-            '-fdata-sections',
-            '-flto',
-            '-fno-fat-lto-objects',
-            f'-mmcu={self.mcu}',
         ]
+
+        # Add all profile flags (optimization, section flags, LTO if enabled)
+        common.extend(self._profile_flags.compile_flags)
+
+        common.append(f'-mmcu={self.mcu}')
 
         # C-specific flags
         cflags = [

@@ -39,6 +39,11 @@ fbuild build tests/esp32c6 -e esp32c6     # automatic parallel
 fbuild build tests/uno -e uno --jobs 4    # use 4 workers
 fbuild build tests/uno -e uno --jobs 1    # serial (debugging)
 
+# Build profiles (default: release with LTO)
+fbuild build tests/uno -e uno              # release build (default, LTO enabled)
+fbuild build tests/uno -e uno --release    # explicit release build
+fbuild build tests/uno -e uno --quick      # quick build (no LTO, faster compile)
+
 # Deploy and monitor
 fbuild deploy tests/esp32c6 --monitor
 ```
@@ -281,6 +286,35 @@ async def websocket_serial_monitor_api(websocket, context):
    ```
 
 **NEVER run** commands like `pkill python`, `taskkill /IM python.exe /F`, or any command that kills all Python processes.
+
+### No Default Arguments Policy
+
+**Default arguments are forbidden** in function and method signatures. All arguments must be explicitly specified at call sites.
+
+**Allowed exceptions:**
+1. **`None` as default**: Parameters can have `None` as a default when the parameter is truly optional or for testing scenarios where a particular parameter is not needed
+2. **Public API objects in `__init__`**: Classes exposed in `fbuild/__init__.py` may have default arguments for backwards compatibility
+
+**Why:**
+- Explicit is better than implicit
+- Prevents hidden coupling between components
+- Makes code more testable and refactorable
+- BuildContext consolidation (v1.3.37+) follows this pattern - all configuration is explicit
+
+**Example:**
+```python
+# BAD - default arguments hide dependencies
+def compile(source: Path, flags: List[str] = [], verbose: bool = False):
+    ...
+
+# GOOD - all arguments explicit, None allowed for optional
+def compile(source: Path, flags: List[str], verbose: bool):
+    ...
+
+# GOOD - None default for truly optional parameter
+def compile(source: Path, flags: List[str], output: Path | None = None):
+    ...
+```
 
 ### Development Mode
 

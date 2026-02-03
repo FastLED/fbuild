@@ -25,6 +25,7 @@ from pathlib import Path
 
 import httpx
 
+from fbuild.build.build_profiles import BuildProfile
 from fbuild.daemon.client.http_utils import (
     get_daemon_url,
     http_client,
@@ -45,6 +46,7 @@ def request_build_http(
     clean_build: bool = False,
     verbose: bool = False,
     jobs: int | None = None,
+    profile: BuildProfile = BuildProfile.RELEASE,
     timeout: float = 1800,
 ) -> bool:
     """Submit a build request to the daemon via HTTP.
@@ -55,6 +57,7 @@ def request_build_http(
         clean_build: Whether to perform clean build
         verbose: Enable verbose build output
         jobs: Number of parallel compilation jobs
+        profile: Build profile
         timeout: Request timeout in seconds
 
     Returns:
@@ -85,6 +88,7 @@ def request_build_http(
         caller_pid=os.getpid(),
         caller_cwd=os.getcwd(),
         jobs=jobs,
+        profile=profile,
     )
 
     # Print submission info

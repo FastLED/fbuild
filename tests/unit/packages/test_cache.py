@@ -81,22 +81,26 @@ class TestCache:
         assert cache.libraries_dir == cache.cache_root / "libraries"
 
     def test_get_build_dir(self):
-        """Test getting build directory for environment."""
+        """Test getting build directory for environment and profile."""
         cache = Cache()
+        # Default profile is 'release'
         build_dir = cache.get_build_dir("uno")
-        assert build_dir == cache.build_root / "uno"
+        assert build_dir == cache.build_root / "uno" / "release"
+        # Explicit quick profile
+        build_dir_quick = cache.get_build_dir("uno", profile="quick")
+        assert build_dir_quick == cache.build_root / "uno" / "quick"
 
     def test_get_core_build_dir(self):
         """Test getting core build directory."""
         cache = Cache()
         core_dir = cache.get_core_build_dir("uno")
-        assert core_dir == cache.build_root / "uno" / "core"
+        assert core_dir == cache.build_root / "uno" / "release" / "core"
 
     def test_get_src_build_dir(self):
         """Test getting sketch build directory."""
         cache = Cache()
         src_dir = cache.get_src_build_dir("uno")
-        assert src_dir == cache.build_root / "uno" / "src"
+        assert src_dir == cache.build_root / "uno" / "release" / "src"
 
     def test_ensure_directories(self):
         """Test creating cache directories."""

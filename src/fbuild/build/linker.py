@@ -7,11 +7,14 @@ and avr-size for linking object files into firmware.
 
 import time
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, TYPE_CHECKING
 from dataclasses import dataclass
 
 from .compiler import ILinker, LinkerError
 from ..subprocess_utils import safe_run
+
+if TYPE_CHECKING:
+    from .build_context import BuildContext
 
 
 @dataclass
@@ -153,8 +156,9 @@ class LinkerAVR(ILinker):
         avr_objcopy: Path,
         avr_size: Path,
         mcu: str,
-        max_flash: Optional[int] = None,
-        max_ram: Optional[int] = None
+        context: "BuildContext",
+        max_flash: Optional[int],
+        max_ram: Optional[int],
     ):
         """
         Initialize linker.
@@ -165,6 +169,7 @@ class LinkerAVR(ILinker):
             avr_objcopy: Path to avr-objcopy (for ELF to HEX conversion)
             avr_size: Path to avr-size (for size reporting)
             mcu: MCU type (e.g., atmega328p)
+            context: Build context containing pre-resolved profile flags
             max_flash: Maximum flash size for overflow detection
             max_ram: Maximum RAM size for overflow detection
         """
@@ -175,6 +180,10 @@ class LinkerAVR(ILinker):
         self.mcu = mcu
         self.max_flash = max_flash
         self.max_ram = max_ram
+
+        # Store context and extract pre-resolved profile flags
+        self.context = context
+        self._profile_flags = context.profile_flags
 
         # Verify tools exist
         if not self.avr_gcc.exists():
@@ -387,15 +396,19 @@ class LinkerAVR(ILinker):
         cmd = [
             str(self.avr_gcc),
             '-w',              # Suppress warnings
-            '-Os',             # Optimize for size
             '-g',              # Include debug info
-            '-flto',           # Link-time optimization
-            '-fuse-linker-plugin',  # Use LTO plugin
-            '-Wl,--gc-sections',    # Garbage collect unused sections
-            '-Wl,--allow-multiple-definition',  # Allow multiple definitions (needed for some libraries like FastLED)
+        ]
+
+        # Add all profile link flags (optimization, LTO, GC sections, etc.)
+        cmd.extend(self._profile_flags.link_flags)
+
+        # Allow multiple definitions (needed for some libraries like FastLED)
+        cmd.append('-Wl,--allow-multiple-definition')
+
+        cmd.extend([
             f'-mmcu={self.mcu}',    # Target MCU
             '-o', str(output_elf)
-        ]
+        ])
 
         # Add sketch objects
         cmd.extend(str(obj) for obj in sketch_objects)
@@ -410,9 +423,8 @@ class LinkerAVR(ILinker):
         # Start group for circular dependencies
         cmd.append('-Wl,--start-group')
 
-        # Add library archives with --whole-archive for LTO support
-        # This ensures all objects from LTO archives are considered during link-time optimization
-        # Without this, the linker may not pull in needed symbols from archives with LTO bytecode
+        # Add library archives with --whole-archive for proper symbol visibility
+        # This ensures LTO can see all symbols for cross-TU optimization
         if lib_archives:
             cmd.append('-Wl,--whole-archive')
             for lib_archive in lib_archives:

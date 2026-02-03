@@ -17,6 +17,8 @@ from unittest.mock import Mock, patch
 
 import pytest
 
+from fbuild.build.build_context import BuildContext
+from fbuild.build.build_profiles import BuildProfile, get_profile
 from fbuild.build.compilation_executor import CompilationExecutor
 from fbuild.build.configurable_compiler import ConfigurableCompiler
 
@@ -75,21 +77,43 @@ def test_parallel_compilation_uses_trampolines():
     mock_queue.submit_job = Mock()
 
     # Mock platform config to avoid file loading
-    platform_config = {"compiler": {"flags": {"common": ["-Os", "-Wall"], "cflags": ["-std=gnu11"], "cxxflags": ["-std=gnu++17"]}}}
+    platform_config = {
+        "compiler_flags": {"common": ["-Os", "-Wall"], "c": ["-std=gnu11"], "cxx": ["-std=gnu++17"]},
+        "defines": [],
+        "linker_flags": [],
+        "linker_scripts": [],
+    }
+    board_config = {"build": {"mcu": "esp32s3", "variant": "esp32s3", "core": "esp32"}}
 
-    # Create ConfigurableCompiler with parallel queue
-    compiler = ConfigurableCompiler(
+    # Create mock BuildContext with all required fields
+    mock_context = BuildContext(
+        project_dir=build_dir.parent,
+        env_name="esp32-s3-devkitc-1",
+        clean=False,
+        profile=BuildProfile.RELEASE,
+        profile_flags=get_profile(BuildProfile.RELEASE),
+        queue=mock_queue,
+        build_dir=build_dir,
+        verbose=False,
         platform=mock_platform,
         toolchain=mock_toolchain,
+        mcu="esp32s3",
+        framework_version="3.0.0",
+        cache=mock_cache,
+        compilation_executor=compilation_executor,
+        # New consolidated fields
         framework=mock_framework,
         board_id="esp32-s3-devkitc-1",
-        build_dir=build_dir,
+        board_config=board_config,
         platform_config=platform_config,
-        show_progress=False,
-        compilation_executor=compilation_executor,
-        compilation_queue=mock_queue,  # Parallel mode
-        cache=mock_cache,
+        variant="esp32s3",
+        core="esp32",
+        user_build_flags=[],
+        env_config={},
     )
+
+    # Create ConfigurableCompiler with BuildContext
+    compiler = ConfigurableCompiler(mock_context)
 
     # Mock get_include_paths to return our long paths
     compiler.get_include_paths = Mock(return_value=long_include_paths)

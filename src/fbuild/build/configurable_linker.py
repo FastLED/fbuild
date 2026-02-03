@@ -10,20 +10,21 @@ Design:
 """
 
 import gc
-import json
 import platform
 import subprocess
 import time
 from pathlib import Path
-from typing import List, Dict, Any, Optional, Union
+from typing import List, Dict, Any, Optional, TYPE_CHECKING
 
-from .. import platform_configs
-from ..packages.package import IPackage, IToolchain, IFramework
 from ..output import log_detail, format_size
 from .binary_generator import BinaryGenerator
 from .compiler import ILinker, LinkerError
+from .build_profiles import merge_link_flags
 from ..subprocess_utils import safe_run
 from .psram_utils import get_psram_mode
+
+if TYPE_CHECKING:
+    from .build_context import BuildContext
 
 
 class ConfigurableLinkerError(LinkerError):
@@ -68,75 +69,36 @@ class ConfigurableLinker(ILinker):
     - Converting .elf to .bin
     """
 
-    def __init__(
-        self,
-        platform: IPackage,
-        toolchain: IToolchain,
-        framework: IFramework,
-        board_id: str,
-        build_dir: Path,
-        platform_config: Optional[Union[Dict, Path]] = None,
-        show_progress: bool = True,
-        env_config: Optional[Dict[str, Any]] = None
-    ):
+    def __init__(self, context: "BuildContext"):
         """Initialize configurable linker.
 
         Args:
-            platform: Platform instance
-            toolchain: Toolchain instance
-            framework: Framework instance
-            board_id: Board identifier (e.g., "esp32-c6-devkitm-1")
-            build_dir: Directory for build artifacts
-            platform_config: Platform config dict or path to config JSON file
-            show_progress: Whether to show linking progress
-            env_config: Optional platformio.ini environment configuration
+            context: Build context containing all build configuration
         """
-        self.platform = platform
-        self.toolchain = toolchain
-        self.framework = framework
-        self.board_id = board_id
-        self.build_dir = build_dir
-        self.show_progress = show_progress
-        self.env_config = env_config or {}
+        # Extract everything from context (no redundant loading)
+        self.context = context
+        self.platform = context.platform
+        self.toolchain = context.toolchain
+        self.framework = context.framework
+        self.board_id = context.board_id
+        self.build_dir = context.build_dir
+        self.show_progress = context.verbose
+        self.mcu = context.mcu
+        self.env_config = context.env_config
 
-        # Load board configuration
-        self.board_config = platform.get_board_json(board_id)  # type: ignore[attr-defined]
+        # Extract pre-resolved profile flags from context
+        self._profile_flags = context.profile_flags
 
-        # Get MCU type from board config
-        self.mcu = self.board_config.get("build", {}).get("mcu", "").lower()
-
-        # Load platform configuration
-        if platform_config is None:
-            # Load from package data using importlib.resources
-            loaded_config = platform_configs.load_config(self.mcu)
-            if loaded_config is not None:
-                self.config = loaded_config
-            else:
-                raise ConfigurableLinkerError(
-                    f"No platform configuration found for {self.mcu}. " +
-                    f"Available: {platform_configs.list_available_configs()}"
-                )
-        elif isinstance(platform_config, dict):
-            self.config = platform_config
-        else:
-            # Assume it's a path
-            with open(platform_config, 'r') as f:
-                self.config = json.load(f)
+        # Pre-loaded configuration from context (no redundant loading!)
+        self.board_config = context.board_config
+        self.config = context.platform_config
 
         # Cache for linker paths
         self._linker_scripts_cache: Optional[List[Path]] = None
         self._sdk_libs_cache: Optional[List[Path]] = None
 
         # Initialize binary generator
-        self.binary_generator = BinaryGenerator(
-            mcu=self.mcu,
-            board_config=self.board_config,
-            build_dir=build_dir,
-            toolchain=toolchain,
-            framework=framework,
-            show_progress=show_progress,
-            env_config=self.env_config
-        )
+        self.binary_generator = BinaryGenerator(context)
 
     def get_linker_scripts(self) -> List[Path]:
         """Get list of linker script paths for the MCU.
@@ -220,21 +182,20 @@ class ConfigurableLinker(ILinker):
         return self._sdk_libs_cache or []
 
     def get_linker_flags(self) -> List[str]:
-        """Get linker flags from configuration.
+        """Get linker flags with profile settings applied.
+
+        Uses merge_link_flags() to declaratively apply profile linker flags.
 
         Returns:
             List of linker flags
         """
-        flags = []
-
-        # Get flags from config
-        config_flags = self.config.get('linker_flags', [])
-        flags.extend(config_flags)
+        # Get flags from config and merge with profile flags
+        config_flags = self.config.get('linker_flags', []).copy()
+        flags = merge_link_flags(config_flags, self._profile_flags)
 
         # Add map file flag with forward slashes for GCC compatibility
-        # Use "firmware.map" instead of board_id to avoid special characters
         map_file = self.build_dir / "firmware.map"
-        map_file_str = str(map_file).replace('\\', '/')
+        map_file_str = str(map_file).replace("\\", "/")
         flags.append(f'-Wl,-Map={map_file_str}')
 
         return flags
@@ -326,10 +287,8 @@ class ConfigurableLinker(ILinker):
         # Add object files using relative paths (they're in build_dir)
         cmd.extend([_path_to_string(obj, relative_to=self.build_dir) for obj in object_files])
 
-        # Add core archive with --whole-archive for LTO support
-        # When using LTO with -fno-fat-lto-objects, archives contain only LTO bytecode.
-        # The linker plugin needs to see all objects from the archive to perform
-        # link-time optimization, so we must use --whole-archive.
+        # Add core archive with --whole-archive for proper symbol visibility
+        # This ensures LTO can see all symbols for cross-TU optimization
         cmd.append("-Wl,--whole-archive")
         cmd.append(_path_to_string(core_archive, relative_to=self.build_dir))
         cmd.append("-Wl,--no-whole-archive")
@@ -344,9 +303,7 @@ class ConfigurableLinker(ILinker):
         # Group libraries to resolve circular dependencies
         cmd.append("-Wl,--start-group")
 
-        # Add user library archives with --whole-archive for LTO support
-        # This ensures all objects from LTO archives are considered during link-time optimization
-        # Without this, the linker may not pull in needed symbols from archives with LTO bytecode
+        # Add user library archives with --whole-archive for proper symbol visibility
         if library_archives:
             cmd.append("-Wl,--whole-archive")
             for lib_archive in library_archives:

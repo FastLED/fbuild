@@ -256,6 +256,7 @@ class BuildRequestProcessor(RequestProcessor):
 
         # Create orchestrator and execute build
         # Create a Cache instance for package management
+        from fbuild.build.build_context import BuildParams
         from fbuild.packages.cache import Cache
 
         cache = Cache(project_dir=Path(request.project_dir))
@@ -263,19 +264,27 @@ class BuildRequestProcessor(RequestProcessor):
         # Get compilation queue from daemon context
         compilation_queue = context.compilation_queue
 
+        # Calculate build_dir (incorporates profile name for separation)
+        build_dir = cache.get_build_dir(request.environment, str(request.profile))
+
+        # Create BuildParams with basic build parameters
+        # The orchestrator will create the full BuildContext after platform init
+        build_params = BuildParams.create(
+            project_dir=Path(request.project_dir),
+            env_name=request.environment,
+            clean=request.clean_build,
+            profile=request.profile,
+            queue=compilation_queue,
+            build_dir=build_dir,
+            verbose=request.verbose,
+        )
+
         # Initialize orchestrator with cache (ESP32 requires it, AVR accepts it)
         logging.debug(f"[BUILD_PROCESSOR] Initializing {class_name} with cache={cache}, verbose={request.verbose}")
         logging.debug(f"[BUILD_PROCESSOR] orchestrator_class={orchestrator_class}, module={module_name}")
         orchestrator = orchestrator_class(cache=cache, verbose=request.verbose)
         logging.debug(f"[BUILD_PROCESSOR] orchestrator created successfully: {orchestrator}")
-        build_result = orchestrator.build(
-            project_dir=Path(request.project_dir),
-            env_name=request.environment,
-            clean=request.clean_build,
-            verbose=request.verbose,
-            jobs=request.jobs,
-            queue=compilation_queue,
-        )
+        build_result = orchestrator.build(request=build_params)
 
         if not build_result.success:
             logging.error(f"Build failed: {build_result.message}")
@@ -333,6 +342,8 @@ class BuildRequestProcessor(RequestProcessor):
             "fbuild.build.build_info_generator",
             "fbuild.build.build_utils",
             "fbuild.build.psram_utils",
+            "fbuild.build.build_context",
+            "fbuild.build.build_profiles",
             # Orchestrators (reload third - depends on build system)
             "fbuild.build.orchestrator",
             "fbuild.build.orchestrator_avr",

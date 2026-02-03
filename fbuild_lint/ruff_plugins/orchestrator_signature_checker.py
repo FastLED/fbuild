@@ -47,12 +47,9 @@ class OrchestratorVisitor(ast.NodeVisitor):
     """AST visitor to check orchestrator build() method signatures."""
 
     # Required parameters for build() method
+    # As of v1.3.37, orchestrators use BuildParams request object instead of individual parameters
     REQUIRED_PARAMS = {
-        "project_dir": "Path",
-        "env_name": "Optional[str]",
-        "clean": "bool",
-        "verbose": "Optional[bool]",
-        "jobs": "int | None",
+        "request": "BuildParams",
     }
 
     # Expected return type

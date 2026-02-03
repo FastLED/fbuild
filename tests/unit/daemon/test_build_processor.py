@@ -14,6 +14,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
+from fbuild.build.build_profiles import BuildProfile
 from fbuild.daemon.daemon_context import DaemonContext
 from fbuild.daemon.messages import BuildRequest, OperationType
 from fbuild.daemon.processors.build_processor import BuildRequestProcessor
@@ -85,6 +86,7 @@ def test_execute_operation_success(processor, build_request, mock_context):
 
     # Mock Cache to avoid filesystem operations
     mock_cache = MagicMock()
+    mock_cache.get_build_dir.return_value = Path("/path/to/build")
 
     with patch.dict(sys.modules, {"fbuild.build.orchestrator_esp32": MagicMock(OrchestratorESP32=mock_orchestrator_class)}):
         with patch.object(processor, "_reload_build_modules"):
@@ -94,14 +96,16 @@ def test_execute_operation_success(processor, build_request, mock_context):
                         result = processor.execute_operation(build_request, mock_context)
 
     assert result is True
-    mock_orchestrator.build.assert_called_once_with(
-        project_dir=Path("/path/to/project"),
-        env_name="esp32dev",
-        clean=False,
-        verbose=False,
-        jobs=None,
-        queue=mock_context.compilation_queue,
-    )
+    # Verify build was called with a request parameter (BuildParams)
+    mock_orchestrator.build.assert_called_once()
+    call_kwargs = mock_orchestrator.build.call_args.kwargs
+    assert "request" in call_kwargs
+    build_params = call_kwargs["request"]
+    assert build_params.project_dir == Path("/path/to/project")
+    assert build_params.env_name == "esp32dev"
+    assert build_params.clean is False
+    assert build_params.verbose is False
+    assert build_params.profile == BuildProfile.RELEASE
 
 
 def test_execute_operation_build_failure(processor, build_request, mock_context):
@@ -177,6 +181,7 @@ def test_execute_operation_with_clean_build(processor, mock_context):
 
     # Mock Cache to avoid filesystem operations
     mock_cache = MagicMock()
+    mock_cache.get_build_dir.return_value = Path("/path/to/build")
 
     with patch.dict(sys.modules, {"fbuild.build.orchestrator_esp32": MagicMock(OrchestratorESP32=mock_orchestrator_class)}):
         with patch.object(processor, "_reload_build_modules"):
@@ -186,14 +191,16 @@ def test_execute_operation_with_clean_build(processor, mock_context):
                         result = processor.execute_operation(request, mock_context)
 
     assert result is True
-    mock_orchestrator.build.assert_called_once_with(
-        project_dir=Path("/path/to/project"),
-        env_name="esp32dev",
-        clean=True,
-        verbose=True,
-        jobs=None,
-        queue=mock_context.compilation_queue,
-    )
+    # Verify build was called with a request parameter (BuildParams)
+    mock_orchestrator.build.assert_called_once()
+    call_kwargs = mock_orchestrator.build.call_args.kwargs
+    assert "request" in call_kwargs
+    build_params = call_kwargs["request"]
+    assert build_params.project_dir == Path("/path/to/project")
+    assert build_params.env_name == "esp32dev"
+    assert build_params.clean is True
+    assert build_params.verbose is True
+    assert build_params.profile == BuildProfile.RELEASE
 
 
 def test_reload_build_modules(processor):
