@@ -10,7 +10,6 @@
       "-mthumb",
       "-mfloat-abi=hard",
       "-mfpu=fpv5-d16",
-      "-g",
       "-Wall",
       "-Wextra",
       "-Wno-unused-parameter",

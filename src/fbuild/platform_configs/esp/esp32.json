@@ -17,7 +17,6 @@
       "-Wno-unused-parameter",
       "-Wno-sign-compare",
       "-Wno-enum-conversion",
-      "-g",
       "-mdisable-hardware-atomics",
       "-freorder-blocks",
       "-Wwrite-strings",

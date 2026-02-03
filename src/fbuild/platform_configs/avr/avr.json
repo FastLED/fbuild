@@ -6,7 +6,6 @@
 
   "compiler_flags": {
     "common": [
-      "-g",
       "-w",
       "-ffunction-sections",
       "-fdata-sections",
@@ -25,7 +24,6 @@
 
   "linker_flags": [
     "-w",
-    "-g",
     "-Wl,--gc-sections",
     "-Wl,--allow-multiple-definition"
   ],

@@ -46,7 +46,6 @@ The `compiler_flags` object contains three arrays:
 - Optimization level (`-Os`, `-O2`, etc.)
 - Section management (`-ffunction-sections`, `-fdata-sections`)
 - Warning controls (`-Wno-error=...`)
-- Debug info (`-gdwarf-4`, `-ggdb`)
 - Architecture-specific options (`-march=...`, `-mlongcalls`)
 
 **C-specific flags** apply only to `.c` files:
@@ -141,8 +140,6 @@ The `defines` array contains preprocessor definitions in two formats:
       "-ffunction-sections",
       "-fdata-sections",
       "-Wno-error=unused-function",
-      "-gdwarf-4",
-      "-ggdb",
       "-MMD"
     ],
     "c": [

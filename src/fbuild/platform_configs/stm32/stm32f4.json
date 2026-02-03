@@ -17,7 +17,6 @@
       "-Wno-error=deprecated-declarations",
       "-Wno-unused-parameter",
       "-Wno-sign-compare",
-      "-g",
       "-MMD"
     ],
     "c": [

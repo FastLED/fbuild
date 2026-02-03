@@ -16,7 +16,6 @@
       "-Wno-unused-parameter",
       "-Wno-sign-compare",
       "-Wno-enum-conversion",
-      "-g",
       "-nostartfiles",
       "-freorder-blocks",
       "-Wwrite-strings",
