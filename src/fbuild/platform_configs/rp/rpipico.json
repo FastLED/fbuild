@@ -1,8 +1,10 @@
 {
-  "name": "RP2040",
-  "description": "Configuration for RP2040 MCU (Raspberry Pi Pico) extracted from arduino-pico",
+  "name": "Raspberry Pi Pico",
+  "board": "rpipico",
   "mcu": "rp2040",
   "architecture": "arm-cortex-m0plus",
+  "f_cpu": "133000000L",
+  "variant": "rpipico",
 
   "compiler_flags": {
     "common": [
@@ -82,6 +84,12 @@
     ["PICO_RP2040", "1"],
     "CFG_TUSB_MCU=OPT_MCU_RP2040",
     "LWIP_IPV4=1",
-    "LWIP_IPV6=0"
-  ]
+    "LWIP_IPV6=0",
+    "RASPBERRY_PI_PICO"
+  ],
+
+  "upload": {
+    "maximum_size": 2097152,
+    "maximum_ram_size": 270336
+  }
 }

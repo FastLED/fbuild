@@ -294,6 +294,10 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                 framework_version=arduino_core.AVR_VERSION,
             )
 
+            # Load platform config from JSON
+            from ..platform_configs import load_config as load_platform_config
+            platform_config = load_platform_config("avr") or {}
+
             # For AVR, we use the arduino_core as both platform and framework
             # since there's no separate platform package like ESP32
             context = BuildContext.from_request(
@@ -307,7 +311,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                 framework=arduino_core,
                 board_id=board_id,
                 board_config={},  # AVR doesn't use platform-style board config dicts
-                platform_config={},  # AVR doesn't have ESP32-style platform configs
+                platform_config=platform_config,  # Load from avr.json
                 variant=board_config.variant,
                 core=board_config.core,
                 user_build_flags=build_flags,

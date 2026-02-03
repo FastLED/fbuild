@@ -6,7 +6,6 @@
 
   "compiler_flags": {
     "common": [
-      "-Os",
       "-mcpu=cortex-m3",
       "-mthumb",
       "-ffunction-sections",
@@ -17,7 +16,6 @@
       "-Wno-unused-parameter",
       "-Wno-sign-compare",
       "-g",
-      "-gdwarf-2",
       "-MMD"
     ],
     "c": [
@@ -48,6 +46,24 @@
   "linker_scripts": [
     "ldscript.ld"
   ],
+
+  "linker_libs": [
+    "-lgcc",
+    "-lstdc++",
+    "-lm",
+    "-lc"
+  ],
+
+  "profiles": {
+    "release": {
+      "compile_flags": ["-Os"],
+      "link_flags": []
+    },
+    "quick": {
+      "compile_flags": ["-O1"],
+      "link_flags": []
+    }
+  },
 
   "defines": [
     "STM32F1",

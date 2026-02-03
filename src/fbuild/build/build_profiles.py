@@ -1,17 +1,24 @@
 """Build Profile Configuration.
 
-This module defines generic, profile-agnostic compilation and linking flags.
+This module defines build profiles that modify platform JSON flags.
 
 Design:
-    Profiles declare ALL flags they control explicitly as generic compile_flags
-    and link_flags. fbuild doesn't know or care what those flags are (LTO,
-    section flags, etc.) - the specific flags are implementation details of
-    each profile.
+    Platform JSON files are the source of truth for all flags. Base compiler and
+    linker flags do NOT include optimization or LTO flags. Instead, each profile
+    adds its own optimization/LTO flags:
+
+    - RELEASE: Adds -Os and LTO flags for optimized builds
+    - QUICK: Adds -O2 without LTO for faster compilation
+
+    Profile configuration in JSON (profiles.{profile}):
+    - compile_flags: Optimization and LTO flags for compilation
+    - link_flags: LTO flags for linking
 
     The system:
-    1. Filters out controlled flags from platform configuration
-    2. Merges in profile-specific flags
-    3. This is declarative - no ad-hoc flag manipulation elsewhere
+    1. Reads base flags from platform JSON configuration (no optimization/LTO)
+    2. Adds profile-specific flags from JSON (compile_flags, link_flags)
+
+    This is simpler than the previous filter-based approach - no regex needed.
 """
 
 from dataclasses import dataclass
@@ -32,125 +39,40 @@ class BuildProfile(Enum):
 
 @dataclass(frozen=True)
 class ProfileFlags:
-    """Generic build profile flags.
-
-    Profiles declare all flags they control explicitly. fbuild code just uses
-    profile.compile_flags and profile.link_flags without knowing what's in them.
-
-    All fields are mandatory - no defaults.
+    """Build profile configuration.
 
     Attributes:
         name: Profile identifier (matches BuildProfile enum value)
         description: Human-readable profile description
-        compile_flags: All compilation flags for this profile
-        link_flags: All linker flags for this profile
-        controlled_patterns: Flag prefixes this profile controls (stripped from platform config)
+        compile_flags: Flags to ADD (loaded from JSON)
+        link_flags: Flags to ADD (loaded from JSON)
+        controlled_patterns: DEPRECATED - kept for backward compatibility, always empty
     """
 
     name: str
     description: str
     compile_flags: tuple[str, ...]
     link_flags: tuple[str, ...]
-    controlled_patterns: tuple[str, ...]  # Ordered tuple, not unordered set
+    controlled_patterns: tuple[str, ...]  # DEPRECATED - always empty
 
 
 # Profile configurations - keyed by BuildProfile enum
 PROFILES: dict[BuildProfile, ProfileFlags] = {
     BuildProfile.RELEASE: ProfileFlags(
         name="release",
-        description="Optimized release build with LTO (default)",
-        compile_flags=(
-            "-Os",
-            "-ffunction-sections",
-            "-fdata-sections",
-            "-flto",
-            "-fno-fat-lto-objects",
-        ),
-        link_flags=(
-            "-Wl,--gc-sections",
-            "-flto",
-            "-fuse-linker-plugin",
-        ),
-        controlled_patterns=(
-            "-O",
-            "-flto",
-            "-fno-fat-lto-objects",
-            "-fuse-linker-plugin",
-            "-ffunction-sections",
-            "-fdata-sections",
-            "-Wl,--gc-sections",
-        ),
+        description="Optimized release build with LTO",
+        compile_flags=(),  # Loaded from JSON config profiles.release.compile_flags
+        link_flags=(),  # Loaded from JSON config profiles.release.link_flags
+        controlled_patterns=(),  # DEPRECATED
     ),
     BuildProfile.QUICK: ProfileFlags(
         name="quick",
-        description="Fast development build (no LTO)",
-        compile_flags=(
-            "-O2",
-            "-ffunction-sections",
-            "-fdata-sections",
-        ),
-        link_flags=(
-            "-Wl,--gc-sections",
-        ),
-        controlled_patterns=(
-            "-O",
-            "-flto",
-            "-fno-fat-lto-objects",
-            "-fuse-linker-plugin",
-            "-ffunction-sections",
-            "-fdata-sections",
-            "-Wl,--gc-sections",
-        ),
+        description="Fast development build (no LTO, -O2)",
+        compile_flags=(),  # Loaded from JSON config profiles.quick.compile_flags
+        link_flags=(),  # Loaded from JSON config profiles.quick.link_flags
+        controlled_patterns=(),  # DEPRECATED
     ),
 }
-
-
-def filter_platform_flags(flags: List[str], profile_flags: ProfileFlags) -> List[str]:
-    """Remove flags that the profile controls from platform config.
-
-    This strips any flags matching the profile's controlled_patterns so that
-    the profile's explicit flags take precedence.
-
-    Args:
-        flags: Platform configuration flags
-        profile_flags: The profile flags whose controlled patterns to filter
-
-    Returns:
-        Filtered list of flags with controlled patterns removed
-    """
-    return [f for f in flags if not any(f.startswith(p) for p in profile_flags.controlled_patterns)]
-
-
-def merge_compile_flags(platform_flags: List[str], profile_flags: ProfileFlags) -> List[str]:
-    """Merge platform flags with profile compile flags.
-
-    Filters out profile-controlled flags from platform config, then appends
-    all profile compile flags.
-
-    Args:
-        platform_flags: Flags from platform configuration
-        profile_flags: The profile flags to apply
-
-    Returns:
-        Merged list of compile flags
-    """
-    return filter_platform_flags(platform_flags, profile_flags) + list(profile_flags.compile_flags)
-
-
-def merge_link_flags(platform_flags: List[str], profile_flags: ProfileFlags) -> List[str]:
-    """Merge platform flags with profile link flags.
-
-    Filters out profile-controlled flags from platform config, then appends
-    all profile link flags.
-
-    Args:
-        platform_flags: Flags from platform configuration
-        profile_flags: The profile flags to apply
-
-    Returns:
-        Merged list of link flags
-    """
-    return filter_platform_flags(platform_flags, profile_flags) + list(profile_flags.link_flags)
 
 
 def get_profile(profile: BuildProfile) -> ProfileFlags:
@@ -165,38 +87,56 @@ def get_profile(profile: BuildProfile) -> ProfileFlags:
     return PROFILES[profile]
 
 
-def get_compile_flags(profile: BuildProfile, base_flags: List[str] | None = None) -> List[str]:
-    """Get compilation flags for a profile.
+def get_profile_flags_from_config(
+    profile: BuildProfile,
+    platform_config: dict
+) -> tuple[tuple[str, ...], tuple[str, ...]]:
+    """Load profile-specific flags from platform JSON config.
 
-    Filters controlled flags from base_flags and appends profile's compile_flags.
+    This function extracts compile and link flags from the platform's JSON
+    configuration file based on the selected build profile.
 
     Args:
         profile: BuildProfile enum value
-        base_flags: Existing compilation flags to filter
+        platform_config: Platform configuration dictionary (loaded from JSON)
 
     Returns:
-        List of flags with profile-specific flags applied
+        Tuple of (compile_flags, link_flags) as tuples of strings
     """
-    profile_flags = get_profile(profile)
-    flags = list(base_flags) if base_flags else []
-    return filter_platform_flags(flags, profile_flags) + list(profile_flags.compile_flags)
+    profiles = platform_config.get("profiles", {})
+    profile_data = profiles.get(profile.value, {})
+    compile_flags = tuple(profile_data.get("compile_flags", []))
+    link_flags = tuple(profile_data.get("link_flags", []))
+    return compile_flags, link_flags
+
+
+# Legacy functions kept for backward compatibility
+# These no longer do any filtering since controlled_patterns is always empty
+
+
+def filter_platform_flags(flags: List[str], profile_flags: ProfileFlags, profile: BuildProfile | None = None) -> List[str]:
+    """DEPRECATED: Returns flags unchanged. Filtering removed in favor of explicit profile flags."""
+    return flags
+
+
+def merge_compile_flags(platform_flags: List[str], profile_flags: ProfileFlags) -> List[str]:
+    """DEPRECATED: Returns platform_flags unchanged. Use get_profile_flags_from_config instead."""
+    return platform_flags
+
+
+def merge_link_flags(platform_flags: List[str], profile_flags: ProfileFlags) -> List[str]:
+    """DEPRECATED: Returns platform_flags unchanged. Use get_profile_flags_from_config instead."""
+    return platform_flags
+
+
+def get_compile_flags(profile: BuildProfile, base_flags: List[str] | None = None) -> List[str]:
+    """DEPRECATED: Returns base_flags unchanged. Use get_profile_flags_from_config instead."""
+    return list(base_flags) if base_flags else []
 
 
 def get_link_flags(profile: BuildProfile, base_flags: List[str] | None = None) -> List[str]:
-    """Get linker flags for a profile.
-
-    Filters controlled flags from base_flags and appends profile's link_flags.
-
-    Args:
-        profile: BuildProfile enum value
-        base_flags: Existing linker flags to filter
-
-    Returns:
-        List of flags with profile-specific flags applied
-    """
-    profile_flags = get_profile(profile)
-    flags = list(base_flags) if base_flags else []
-    return filter_platform_flags(flags, profile_flags) + list(profile_flags.link_flags)
+    """DEPRECATED: Returns base_flags unchanged. Use get_profile_flags_from_config instead."""
+    return list(base_flags) if base_flags else []
 
 
 def format_profile_banner(profile: BuildProfile, compiler: str | None = None) -> str:

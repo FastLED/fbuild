@@ -6,12 +6,9 @@
 
   "compiler_flags": {
     "common": [
-      "-Os",
       "-mlongcalls",
       "-ffunction-sections",
       "-fdata-sections",
-      "-flto",
-      "-fno-fat-lto-objects",
       "-Wno-error=unused-function",
       "-Wno-error=unused-variable",
       "-Wno-error=unused-but-set-variable",
@@ -20,8 +17,7 @@
       "-Wno-unused-parameter",
       "-Wno-sign-compare",
       "-Wno-enum-conversion",
-      "-gdwarf-4",
-      "-ggdb",
+      "-g",
       "-mdisable-hardware-atomics",
       "-freorder-blocks",
       "-Wwrite-strings",
@@ -65,8 +61,6 @@
     "-Wl,--no-warn-rwx-segments",
     "-Wl,--orphan-handling=warn",
     "-fno-rtti",
-    "-flto",
-    "-fuse-linker-plugin",
     "-Wl,--gc-sections",
     "-Wl,--warn-common",
     "-Wl,--wrap=log_printf",
@@ -122,6 +116,33 @@
     "memory.ld",
     "sections.ld"
   ],
+
+  "linker_libs": [
+    "-lgcc",
+    "-lstdc++",
+    "-lm",
+    "-lc"
+  ],
+
+  "profiles": {
+    "release": {
+      "compile_flags": ["-Os", "-flto", "-fno-fat-lto-objects"],
+      "link_flags": ["-flto", "-fuse-linker-plugin"]
+    },
+    "quick": {
+      "compile_flags": ["-O1"],
+      "link_flags": []
+    }
+  },
+
+  "esptool": {
+    "elf_sha256_offset": "0xb0",
+    "flash_offsets": {
+      "bootloader": "0x1000",
+      "partitions": "0x8000",
+      "firmware": "0x10000"
+    }
+  },
 
   "defines": [
     "ESP32_ARDUINO_LIB_BUILDER",

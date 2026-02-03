@@ -185,7 +185,6 @@ class LibraryCompiler:
                 cmd = [
                     str(compiler),
                     "-c",
-                    "-g",
                     std_flag,
                 ]
 

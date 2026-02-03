@@ -1,8 +1,11 @@
 {
-  "name": "STM32F4",
-  "description": "Configuration for STM32F4xx MCU family (Cortex-M4)",
-  "mcu": "stm32f4",
+  "name": "ST Nucleo F446RE",
+  "board": "nucleo_f446re",
+  "mcu": "stm32f446ret6",
   "architecture": "arm-cortex-m4",
+  "f_cpu": "180000000L",
+  "variant": "STM32F4xx/F446R(C-E)T",
+  "product_line": "STM32F446xx",
 
   "compiler_flags": {
     "common": [
@@ -71,9 +74,16 @@
 
   "defines": [
     "STM32F4",
+    "STM32F446xx",
     "ARDUINO_ARCH_STM32",
     ["STM32_CORE_VERSION_MAJOR", "2"],
     ["STM32_CORE_VERSION_MINOR", "12"],
-    "USE_HAL_DRIVER"
-  ]
+    "USE_HAL_DRIVER",
+    ["F_CPU", "180000000L"]
+  ],
+
+  "upload": {
+    "maximum_size": 524288,
+    "maximum_ram_size": 131072
+  }
 }

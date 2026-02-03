@@ -48,6 +48,7 @@ class BinaryGenerator:
         self.framework = context.framework
         self.show_progress = context.verbose
         self.env_config = context.env_config
+        self.platform_config = context.platform_config
 
     def generate_bin(self, elf_path: Path, output_bin: Optional[Path] = None) -> Path:
         """Generate firmware.bin from firmware.elf.
@@ -106,6 +107,10 @@ class BinaryGenerator:
         # Convert frequency to esptool format if needed
         flash_freq = self._normalize_flash_freq(flash_freq)
 
+        # Get esptool config from platform JSON (with fallback defaults)
+        esptool_config = self.platform_config.get("esptool", {})
+        elf_sha256_offset = esptool_config.get("elf_sha256_offset", "0xb0")
+
         # Build esptool.py elf2image command
         cmd = [
             get_python_executable(),
@@ -121,7 +126,7 @@ class BinaryGenerator:
             "--flash-size",
             flash_size,
             "--elf-sha256-offset",
-            "0xb0",
+            elf_sha256_offset,
             "-o",
             str(output_bin),
             str(elf_path)
@@ -548,21 +553,16 @@ class BinaryGenerator:
         Returns:
             Dictionary with 'bootloader', 'partitions', and 'firmware' offset strings
         """
-        # Default offsets for most ESP32 variants
+        # Get offsets from platform JSON config
+        esptool_config = self.platform_config.get("esptool", {})
+        flash_offsets = esptool_config.get("flash_offsets", {})
+
+        # Use JSON values or fallback to defaults
         offsets = {
-            "bootloader": "0x0",
-            "partitions": "0x8000",
-            "firmware": "0x10000"
+            "bootloader": flash_offsets.get("bootloader", "0x0"),
+            "partitions": flash_offsets.get("partitions", "0x8000"),
+            "firmware": flash_offsets.get("firmware", "0x10000")
         }
-
-        # ESP32-C3 and ESP32-C2 use different bootloader offset
-        if self.mcu in ["esp32c3", "esp32c2"]:
-            offsets["bootloader"] = "0x0"
-
-        # ESP32-S2 uses standard offsets
-        # ESP32-S3 uses standard offsets
-        # ESP32-C6 uses standard offsets
-        # ESP32-H2 uses standard offsets
 
         return offsets
 

@@ -1,0 +1,68 @@
+{
+  "name": "AVR",
+  "description": "Configuration for AVR MCU family (ATmega, ATtiny)",
+  "mcu": "avr",
+  "architecture": "avr",
+
+  "compiler_flags": {
+    "common": [
+      "-g",
+      "-w",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-MMD"
+    ],
+    "c": [
+      "-std=gnu11"
+    ],
+    "cxx": [
+      "-std=gnu++11",
+      "-fpermissive",
+      "-fno-exceptions",
+      "-fno-threadsafe-statics"
+    ]
+  },
+
+  "linker_flags": [
+    "-w",
+    "-g",
+    "-Wl,--gc-sections",
+    "-Wl,--allow-multiple-definition"
+  ],
+
+  "linker_libs": [
+    "-lm"
+  ],
+
+  "profiles": {
+    "release": {
+      "compile_flags": ["-Os"],
+      "link_flags": []
+    },
+    "quick": {
+      "compile_flags": ["-O1"],
+      "link_flags": []
+    }
+  },
+
+  "objcopy_flags": {
+    "hex": {
+      "format": "ihex",
+      "sections_remove": [".eeprom"]
+    },
+    "eeprom": {
+      "format": "ihex",
+      "sections_only": [".eeprom"],
+      "section_flags": {
+        ".eeprom": "alloc,load"
+      },
+      "section_lma": {
+        ".eeprom": "0"
+      }
+    }
+  },
+
+  "defines": [
+    "ARDUINO_ARCH_AVR"
+  ]
+}

@@ -11,7 +11,6 @@
       "-mthumb",
       "-mfloat-abi=hard",
       "-mfpu=fpv5-sp-d16",
-      "-Os",
       "-ffunction-sections",
       "-fdata-sections",
       "-fno-exceptions",
@@ -57,6 +56,24 @@
   "linker_scripts": [
     "memmap_default.ld"
   ],
+
+  "linker_libs": [
+    "-lgcc",
+    "-lstdc++",
+    "-lm",
+    "-lc"
+  ],
+
+  "profiles": {
+    "release": {
+      "compile_flags": ["-Os"],
+      "link_flags": []
+    },
+    "quick": {
+      "compile_flags": ["-O1"],
+      "link_flags": []
+    }
+  },
 
   "defines": [
     "ARDUINO_ARCH_RP2040",

@@ -1,14 +1,18 @@
 {
-  "name": "RP2040",
-  "description": "Configuration for RP2040 MCU (Raspberry Pi Pico) extracted from arduino-pico",
-  "mcu": "rp2040",
-  "architecture": "arm-cortex-m0plus",
+  "name": "Raspberry Pi Pico 2",
+  "board": "rpipico2",
+  "mcu": "rp2350",
+  "architecture": "arm-cortex-m33",
+  "f_cpu": "150000000L",
+  "variant": "rpipico2",
 
   "compiler_flags": {
     "common": [
-      "-march=armv6-m",
-      "-mcpu=cortex-m0plus",
+      "-march=armv8-m.main+fp+dsp",
+      "-mcpu=cortex-m33",
       "-mthumb",
+      "-mfloat-abi=hard",
+      "-mfpu=fpv5-sp-d16",
       "-ffunction-sections",
       "-fdata-sections",
       "-fno-exceptions",
@@ -32,9 +36,11 @@
   },
 
   "linker_flags": [
-    "-march=armv6-m",
-    "-mcpu=cortex-m0plus",
+    "-march=armv8-m.main+fp+dsp",
+    "-mcpu=cortex-m33",
     "-mthumb",
+    "-mfloat-abi=hard",
+    "-mfpu=fpv5-sp-d16",
     "-Wl,--cref",
     "-Wl,--check-sections",
     "-Wl,--gc-sections",
@@ -73,15 +79,23 @@
 
   "defines": [
     "ARDUINO_ARCH_RP2040",
-    ["F_CPU", "133000000L"],
+    ["F_CPU", "150000000L"],
     "PICO_BOARD",
     "PICO_BUILD",
     "PICO_NO_HARDWARE",
     "PICO_ON_DEVICE",
-    ["TARGET_RP2040", "1"],
-    ["PICO_RP2040", "1"],
+    ["TARGET_RP2350", "1"],
+    ["PICO_RP2350", "1"],
+    "PICO_RP2350A",
     "CFG_TUSB_MCU=OPT_MCU_RP2040",
     "LWIP_IPV4=1",
-    "LWIP_IPV6=0"
-  ]
+    "LWIP_IPV6=0",
+    "__ARM_FEATURE_DSP=1",
+    "RASPBERRY_PI_PICO_2"
+  ],
+
+  "upload": {
+    "maximum_size": 4194304,
+    "maximum_ram_size": 532480
+  }
 }

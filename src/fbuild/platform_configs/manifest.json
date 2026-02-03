@@ -2,6 +2,13 @@
   "version": 1,
   "description": "Platform configuration manifest for MCU-specific compiler/linker settings",
   "vendors": {
+    "avr": {
+      "name": "Microchip AVR",
+      "description": "AVR microcontrollers (ATmega, ATtiny)",
+      "configs": [
+        "avr"
+      ]
+    },
     "esp": {
       "name": "Espressif",
       "description": "ESP32 series microcontrollers",
@@ -15,27 +22,33 @@
         "esp32s3"
       ]
     },
-    "teensy": {
-      "name": "PJRC Teensy",
-      "description": "Teensy development boards",
-      "configs": [
-        "imxrt1062"
-      ]
-    },
     "rp": {
       "name": "Raspberry Pi",
       "description": "RP2040/RP2350 microcontrollers",
       "configs": [
         "rp2040",
-        "rp2350"
+        "rp2350",
+        "rpipico",
+        "rpipico2"
       ]
     },
     "stm32": {
       "name": "STMicroelectronics",
       "description": "STM32 series microcontrollers",
       "configs": [
+        "bluepill_f103c8",
+        "nucleo_f446re",
         "stm32f1",
         "stm32f4"
+      ]
+    },
+    "teensy": {
+      "name": "PJRC Teensy",
+      "description": "Teensy development boards",
+      "configs": [
+        "imxrt1062",
+        "teensy40",
+        "teensy41"
       ]
     }
   }

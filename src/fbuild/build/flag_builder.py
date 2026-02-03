@@ -14,7 +14,7 @@ Design:
 import shlex
 from typing import TYPE_CHECKING, List, Dict
 
-from .build_profiles import merge_compile_flags
+from .build_profiles import get_profile_flags_from_config
 
 if TYPE_CHECKING:
     from .build_context import BuildContext
@@ -126,15 +126,19 @@ class FlagBuilder:
         return flags
 
     def _apply_profile_flags(self, flags: Dict[str, List[str]]) -> None:
-        """Apply profile-based compilation flags declaratively.
+        """Apply profile-based compilation flags.
 
-        Uses merge_compile_flags() to filter out profile-controlled flags
-        from platform config and add profile-specific flags.
+        Adds profile-specific optimization and LTO flags from JSON config.
+        Base flags do not include optimization/LTO - each profile adds its own.
 
         Args:
             flags: Flags dictionary to update
         """
-        flags['common'] = merge_compile_flags(flags['common'], self._profile_flags)
+        profile = self.context.profile
+
+        # Add profile-specific flags from JSON config (e.g., -Os/-O2, LTO flags)
+        json_compile_flags, _ = get_profile_flags_from_config(profile, self.config)
+        flags['common'].extend(json_compile_flags)
 
     def _add_arduino_defines(self, flags: Dict[str, List[str]]) -> None:
         """Add Arduino-specific defines to flags.

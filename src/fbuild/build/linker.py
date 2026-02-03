@@ -185,6 +185,12 @@ class LinkerAVR(ILinker):
         self.context = context
         self._profile_flags = context.profile_flags
 
+        # Load profile-specific flags from JSON config
+        from .build_profiles import get_profile_flags_from_config
+        _, self._json_link_flags = get_profile_flags_from_config(
+            context.profile, context.platform_config
+        )
+
         # Verify tools exist
         if not self.avr_gcc.exists():
             raise LinkerError(f"avr-gcc not found: {self.avr_gcc}")
@@ -399,8 +405,10 @@ class LinkerAVR(ILinker):
             '-g',              # Include debug info
         ]
 
-        # Add all profile link flags (optimization, LTO, GC sections, etc.)
+        # Add profile flags from built-in ProfileFlags (for filtering)
         cmd.extend(self._profile_flags.link_flags)
+        # Add profile flags from JSON config
+        cmd.extend(self._json_link_flags)
 
         # Allow multiple definitions (needed for some libraries like FastLED)
         cmd.append('-Wl,--allow-multiple-definition')

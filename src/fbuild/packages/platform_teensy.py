@@ -86,104 +86,6 @@ class PlatformTeensy(IPackage):
         """
         return self.toolchain.is_installed() and self.framework.is_installed()
 
-    def get_compiler_flags(self, board_config: Any) -> List[str]:
-        """Get compiler flags for Teensy builds.
-
-        Args:
-            board_config: Board configuration object
-
-        Returns:
-            List of compiler flags
-        """
-        flags = [
-            # CPU and architecture
-            "-mcpu=cortex-m7",
-            "-mthumb",
-            "-mfloat-abi=hard",
-            "-mfpu=fpv5-d16",
-            # Optimization
-            "-O2",
-            "-g",
-            # Warnings
-            "-Wall",
-            "-Wextra",
-            "-Wno-unused-parameter",
-            # Standards
-            "-std=gnu11",  # For C files
-            # Board-specific defines
-            f"-DF_CPU={board_config.f_cpu}",
-            "-DARDUINO_TEENSY41",
-            "-D__IMXRT1062__",
-            "-DARDUINO=10819",
-            "-DTEENSYDUINO=159",
-            "-DUSB_SERIAL",
-            # Memory layout
-            "-DARDUINO_ARCH_TEENSY",
-        ]
-
-        return flags
-
-    def get_compiler_flags_cpp(self, board_config: Any) -> List[str]:
-        """Get C++ compiler flags for Teensy builds.
-
-        Args:
-            board_config: Board configuration object
-
-        Returns:
-            List of C++ compiler flags
-        """
-        # Start with base C flags
-        flags = self.get_compiler_flags(board_config)
-
-        # Replace C standard with C++ standard
-        flags = [f for f in flags if not f.startswith("-std=gnu11")]
-        flags.extend(
-            [
-                "-std=gnu++14",
-                "-fno-exceptions",
-                "-fno-rtti",
-                "-felide-constructors",
-                "-fno-threadsafe-statics",
-            ]
-        )
-
-        return flags
-
-    def get_linker_flags(self, board_config: Any, board_id: str = "teensy41") -> List[str]:
-        """Get linker flags for Teensy builds.
-
-        Args:
-            board_config: Board configuration object
-            board_id: Board identifier for linker script selection
-
-        Returns:
-            List of linker flags
-        """
-        # Get linker script
-        linker_script = self.framework.get_linker_script(board_id)
-        if not linker_script:
-            raise PlatformErrorTeensy(f"Linker script not found for board: {board_id}")
-
-        flags = [
-            # CPU and architecture
-            "-mcpu=cortex-m7",
-            "-mthumb",
-            "-mfloat-abi=hard",
-            "-mfpu=fpv5-d16",
-            # Optimization
-            "-O2",
-            # Linker script
-            f"-T{linker_script}",
-            # Linker options
-            "-Wl,--gc-sections",
-            "-Wl,--print-memory-usage",
-            # Math library
-            "-lm",
-            "-lstdc++",
-        ]
-
-        return flags
-
     def get_include_dirs(self, board_config: Any) -> List[Path]:
         """Get include directories for Teensy builds.
 
@@ -258,42 +160,25 @@ class PlatformTeensy(IPackage):
         Raises:
             PlatformErrorTeensy: If board is not supported
         """
-        # Map board IDs to their configurations
-        board_configs = {
-            "teensy41": {
-                "build": {
-                    "mcu": "imxrt1062",
-                    "f_cpu": "600000000L",
-                    "core": "teensy4",
-                    "variant": "teensy41",
-                    "board": "TEENSY41",
-                },
-                "name": "Teensy 4.1",
-                "upload": {
-                    "maximum_size": 8126464,
-                    "maximum_ram_size": 524288,
-                },
+        from .. import platform_configs
+
+        config = platform_configs.load_board_config(board_id)
+        if config is None:
+            available = [c for c in platform_configs.list_available_configs() if c.startswith("teensy")]
+            raise PlatformErrorTeensy(f"Unsupported board: {board_id}. Available: {', '.join(available)}")
+
+        # Transform to expected format for ConfigurableCompiler/Linker
+        return {
+            "build": {
+                "mcu": config.get("mcu", ""),
+                "f_cpu": config.get("f_cpu", "600000000L"),
+                "core": "teensy4",
+                "variant": config.get("variant", board_id),
+                "board": config.get("board", board_id.upper()),
             },
-            "teensy40": {
-                "build": {
-                    "mcu": "imxrt1062",
-                    "f_cpu": "600000000L",
-                    "core": "teensy4",
-                    "variant": "teensy40",
-                    "board": "TEENSY40",
-                },
-                "name": "Teensy 4.0",
-                "upload": {
-                    "maximum_size": 2031616,
-                    "maximum_ram_size": 524288,
-                },
-            },
+            "name": config.get("name", board_id),
+            "upload": config.get("upload", {}),
         }
-
-        if board_id not in board_configs:
-            raise PlatformErrorTeensy(f"Unsupported board: {board_id}. " + f"Supported boards: {', '.join(board_configs.keys())}")
-
-        return board_configs[board_id]
 
     def get_platform_info(self) -> Dict[str, Any]:
         """Get information about the installed platform.

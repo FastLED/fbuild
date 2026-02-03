@@ -19,7 +19,7 @@ from importlib import resources
 from typing import Any
 
 # Vendor directories to search
-VENDOR_DIRS = ["esp", "teensy", "rp", "stm32"]
+VENDOR_DIRS = ["avr", "esp", "teensy", "rp", "stm32"]
 
 
 def load_manifest() -> dict[str, Any] | None:
@@ -53,6 +53,41 @@ def load_config(mcu: str) -> dict[str, Any] | None:
         The configuration dictionary if found, None otherwise.
     """
     config_name = f"{mcu}.json"
+
+    try:
+        pkg_files = resources.files(__package__)
+
+        # Search in vendor subdirectories
+        for vendor in VENDOR_DIRS:
+            vendor_dir = pkg_files.joinpath(vendor)
+            try:
+                config_file = vendor_dir.joinpath(config_name)
+                if config_file.is_file():
+                    with config_file.open("r", encoding="utf-8") as f:
+                        return json.load(f)
+            except (FileNotFoundError, TypeError, AttributeError):
+                continue
+
+    except (FileNotFoundError, TypeError):
+        pass
+
+    return None
+
+
+def load_board_config(board_id: str) -> dict[str, Any] | None:
+    """Load board configuration for the specified board.
+
+    Searches all vendor subdirectories for the matching board config file.
+    Board configs contain all build settings including compiler flags, linker flags,
+    defines, and upload settings.
+
+    Args:
+        board_id: The board identifier (e.g., 'rpipico', 'teensy41', 'bluepill_f103c8')
+
+    Returns:
+        The configuration dictionary if found, None otherwise.
+    """
+    config_name = f"{board_id}.json"
 
     try:
         pkg_files = resources.files(__package__)

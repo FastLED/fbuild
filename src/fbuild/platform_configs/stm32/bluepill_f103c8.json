@@ -1,15 +1,16 @@
 {
-  "name": "STM32F4",
-  "description": "Configuration for STM32F4xx MCU family (Cortex-M4)",
-  "mcu": "stm32f4",
-  "architecture": "arm-cortex-m4",
+  "name": "BluePill F103C8",
+  "board": "bluepill_f103c8",
+  "mcu": "stm32f103c8t6",
+  "architecture": "arm-cortex-m3",
+  "f_cpu": "72000000L",
+  "variant": "STM32F1xx/F103C8T_F103CB(T-U)",
+  "product_line": "STM32F103xB",
 
   "compiler_flags": {
     "common": [
-      "-mcpu=cortex-m4",
+      "-mcpu=cortex-m3",
       "-mthumb",
-      "-mfloat-abi=hard",
-      "-mfpu=fpv4-sp-d16",
       "-ffunction-sections",
       "-fdata-sections",
       "-Wno-error=unused-function",
@@ -33,10 +34,8 @@
   },
 
   "linker_flags": [
-    "-mcpu=cortex-m4",
+    "-mcpu=cortex-m3",
     "-mthumb",
-    "-mfloat-abi=hard",
-    "-mfpu=fpv4-sp-d16",
     "-Wl,--gc-sections",
     "-Wl,--cref",
     "-Wl,--check-sections",
@@ -70,10 +69,17 @@
   },
 
   "defines": [
-    "STM32F4",
+    "STM32F1",
+    "STM32F103xB",
     "ARDUINO_ARCH_STM32",
     ["STM32_CORE_VERSION_MAJOR", "2"],
     ["STM32_CORE_VERSION_MINOR", "12"],
-    "USE_HAL_DRIVER"
-  ]
+    "USE_HAL_DRIVER",
+    ["F_CPU", "72000000L"]
+  ],
+
+  "upload": {
+    "maximum_size": 65536,
+    "maximum_ram_size": 20480
+  }
 }

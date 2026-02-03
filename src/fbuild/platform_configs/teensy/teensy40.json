@@ -1,6 +1,7 @@
 {
-  "name": "NXP i.MX RT1062",
-  "description": "Configuration for i.MX RT1062 MCU (Teensy 4.x) - ARM Cortex-M7 @ 600MHz",
+  "name": "Teensy 4.0",
+  "description": "Configuration for Teensy 4.0 board - NXP i.MX RT1062 ARM Cortex-M7 @ 600MHz",
+  "board": "teensy40",
   "mcu": "imxrt1062",
   "architecture": "arm",
 
@@ -39,7 +40,9 @@
     "-Wl,--print-memory-usage"
   ],
 
-  "linker_scripts": [],
+  "linker_scripts": [
+    "imxrt1062.ld"
+  ],
 
   "linker_libs": [
     "-lgcc",
@@ -62,6 +65,7 @@
   "defines": [
     "__IMXRT1062__",
     "ARDUINO_ARCH_TEENSY",
+    "ARDUINO_TEENSY40",
     ["ARDUINO", "10819"],
     ["TEENSYDUINO", "159"],
     "USB_SERIAL",

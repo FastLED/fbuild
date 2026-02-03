@@ -19,7 +19,6 @@ from typing import List, Dict, Any, Optional, TYPE_CHECKING
 from ..output import log_detail, format_size
 from .binary_generator import BinaryGenerator
 from .compiler import ILinker, LinkerError
-from .build_profiles import merge_link_flags
 from ..subprocess_utils import safe_run
 from .psram_utils import get_psram_mode
 
@@ -88,6 +87,12 @@ class ConfigurableLinker(ILinker):
 
         # Extract pre-resolved profile flags from context
         self._profile_flags = context.profile_flags
+
+        # Load profile-specific flags from JSON config
+        from .build_profiles import get_profile_flags_from_config
+        _, self._json_link_flags = get_profile_flags_from_config(
+            context.profile, context.platform_config
+        )
 
         # Pre-loaded configuration from context (no redundant loading!)
         self.board_config = context.board_config
@@ -184,14 +189,16 @@ class ConfigurableLinker(ILinker):
     def get_linker_flags(self) -> List[str]:
         """Get linker flags with profile settings applied.
 
-        Uses merge_link_flags() to declaratively apply profile linker flags.
+        Base linker flags do not include LTO - each profile adds its own.
 
         Returns:
             List of linker flags
         """
-        # Get flags from config and merge with profile flags
-        config_flags = self.config.get('linker_flags', []).copy()
-        flags = merge_link_flags(config_flags, self._profile_flags)
+        # Get base flags from config (no LTO flags)
+        flags = self.config.get('linker_flags', []).copy()
+
+        # Add profile-specific flags from JSON config (e.g., LTO flags)
+        flags.extend(self._json_link_flags)
 
         # Add map file flag with forward slashes for GCC compatibility
         map_file = self.build_dir / "firmware.map"
@@ -318,13 +325,13 @@ class ConfigurableLinker(ILinker):
         for lib in sdk_libs:
             cmd.append(_path_to_string(lib))
 
-        # Add standard libraries
-        cmd.extend([
-            "-lgcc",
-            "-lstdc++",
-            "-lm",
-            "-lc",
-        ])
+        # Add standard libraries from config
+        # All platform JSON configs should have linker_libs defined
+        linker_libs = self.config.get('linker_libs', [])
+        if not linker_libs:
+            # Fallback for compatibility - platforms should define linker_libs in JSON
+            linker_libs = ["-lgcc", "-lstdc++", "-lm", "-lc"]
+        cmd.extend(linker_libs)
 
         cmd.append("-Wl,--end-group")
 

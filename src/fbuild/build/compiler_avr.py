@@ -74,6 +74,12 @@ class CompilerAVR(ICompiler):
         self.compilation_queue = context.queue
         self._profile_flags = context.profile_flags
 
+        # Load profile-specific flags from JSON config
+        from .build_profiles import get_profile_flags_from_config
+        self._json_compile_flags, _ = get_profile_flags_from_config(
+            context.profile, context.platform_config
+        )
+
         # Check if sccache is available
         if self.use_sccache:
             sccache_exe = shutil.which("sccache")
@@ -256,8 +262,10 @@ class CompilerAVR(ICompiler):
             '-std=gnu11',      # C11 with GNU extensions
         ])
 
-        # Add all profile flags (optimization, section flags, LTO if enabled)
+        # Add profile flags from built-in ProfileFlags (for filtering)
         cmd.extend(self._profile_flags.compile_flags)
+        # Add profile flags from JSON config (e.g., -O2 for quick)
+        cmd.extend(self._json_compile_flags)
 
         cmd.append(f'-mmcu={self.mcu}')  # Target MCU
 
@@ -306,8 +314,10 @@ class CompilerAVR(ICompiler):
             '-fno-threadsafe-statics',  # No thread safety needed
         ])
 
-        # Add all profile flags (optimization, section flags, LTO if enabled)
+        # Add profile flags from built-in ProfileFlags (for filtering)
         cmd.extend(self._profile_flags.compile_flags)
+        # Add profile flags from JSON config (e.g., -O2 for quick)
+        cmd.extend(self._json_compile_flags)
 
         cmd.append(f'-mmcu={self.mcu}')  # Target MCU
 
@@ -535,8 +545,10 @@ class CompilerAVR(ICompiler):
             '-w',
         ]
 
-        # Add all profile flags (optimization, section flags, LTO if enabled)
+        # Add profile flags from built-in ProfileFlags (for filtering)
         common.extend(self._profile_flags.compile_flags)
+        # Add profile flags from JSON config (e.g., -O2 for quick)
+        common.extend(self._json_compile_flags)
 
         common.append(f'-mmcu={self.mcu}')
 
