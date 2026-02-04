@@ -237,20 +237,32 @@ class FrameworkTeensy(IFramework):
         Returns:
             Path to linker script or None if not found
         """
-        core_dir = self.get_core_dir("teensy4")
+        # Load board configuration to get core and linker script info
+        from .. import platform_configs
 
-        # Map board names to linker scripts
-        linker_scripts = {
-            "teensy41": "imxrt1062_t41.ld",
-            "teensy40": "imxrt1062.ld",
-        }
-
-        linker_script_name = linker_scripts.get(board)
-        if not linker_script_name:
+        config = platform_configs.load_board_config(board)
+        if not config:
             return None
 
-        linker_script_path = core_dir / linker_script_name
-        return linker_script_path if linker_script_path.exists() else None
+        # Get core directory from config
+        core_name = config.get("core", "teensy4")
+        core_dir = self.get_core_dir(core_name)
+
+        # Get linker script name(s) from config
+        linker_scripts = config.get("linker_scripts", [])
+        if not linker_scripts:
+            # Fallback: use MCU name for linker script (e.g., mkl26z64.ld)
+            mcu = config.get("mcu", "")
+            if mcu:
+                linker_scripts = [f"{mcu}.ld"]
+
+        # Return first linker script that exists
+        for script_name in linker_scripts:
+            linker_script_path = core_dir / script_name
+            if linker_script_path.exists():
+                return linker_script_path
+
+        return None
 
     def list_cores(self) -> List[str]:
         """List all available cores.

@@ -3,6 +3,9 @@
   "description": "Configuration for Teensy 4.1 board - NXP i.MX RT1062 ARM Cortex-M7 @ 600MHz",
   "board": "teensy41",
   "mcu": "imxrt1062",
+  "f_cpu": "600000000L",
+  "core": "teensy4",
+  "variant": "teensy41",
   "architecture": "arm",
 
   "compiler_flags": {

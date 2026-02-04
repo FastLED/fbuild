@@ -124,6 +124,14 @@ class BoardConfig:
             "core": "teensy3",
             "variant": "teensy36",
         },
+        "teensylc": {
+            "name": "Teensy LC",
+            "mcu": "mkl26z64",
+            "f_cpu": "48000000L",
+            "board": "TEENSYLC",
+            "core": "teensy3",
+            "variant": "teensylc",
+        },
         "teensy40": {
             "name": "Teensy 4.0",
             "mcu": "imxrt1062",

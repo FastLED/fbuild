@@ -168,11 +168,12 @@ class PlatformTeensy(IPackage):
             raise PlatformErrorTeensy(f"Unsupported board: {board_id}. Available: {', '.join(available)}")
 
         # Transform to expected format for ConfigurableCompiler/Linker
+        # All configuration is now data-driven from the JSON files
         return {
             "build": {
                 "mcu": config.get("mcu", ""),
                 "f_cpu": config.get("f_cpu", "600000000L"),
-                "core": "teensy4",
+                "core": config.get("core", "teensy4"),
                 "variant": config.get("variant", board_id),
                 "board": config.get("board", board_id.upper()),
             },

@@ -1,56 +1,58 @@
 {
-  "name": "Teensy 4.0",
-  "description": "Configuration for Teensy 4.0 board - NXP i.MX RT1062 ARM Cortex-M7 @ 600MHz",
-  "board": "teensy40",
-  "mcu": "imxrt1062",
-  "f_cpu": "600000000L",
-  "core": "teensy4",
-  "variant": "teensy40",
+  "name": "Teensy 3.6",
+  "description": "Configuration for Teensy 3.6 board - NXP MK66FX1M0 ARM Cortex-M4F @ 180MHz",
+  "board": "teensy36",
+  "mcu": "mk66fx1m0",
+  "f_cpu": "180000000L",
+  "core": "teensy3",
+  "variant": "teensy36",
   "architecture": "arm",
 
   "compiler_flags": {
     "common": [
-      "-mcpu=cortex-m7",
+      "-mcpu=cortex-m4",
       "-mthumb",
       "-mfloat-abi=hard",
-      "-mfpu=fpv5-d16",
+      "-mfpu=fpv4-sp-d16",
       "-Wall",
-      "-Wextra",
-      "-Wno-unused-parameter",
       "-ffunction-sections",
       "-fdata-sections",
+      "-fsingle-precision-constant",
       "-MMD"
     ],
     "c": [
       "-std=gnu11"
     ],
     "cxx": [
-      "-std=gnu++17",
+      "-std=gnu++14",
       "-fno-exceptions",
       "-fno-rtti",
       "-felide-constructors",
-      "-fno-threadsafe-statics"
+      "-Wno-error=narrowing"
     ]
   },
 
   "linker_flags": [
-    "-mcpu=cortex-m7",
+    "-mcpu=cortex-m4",
     "-mthumb",
     "-mfloat-abi=hard",
-    "-mfpu=fpv5-d16",
+    "-mfpu=fpv4-sp-d16",
     "-Wl,--gc-sections",
-    "-Wl,--print-memory-usage"
+    "-Wl,--relax",
+    "-Wl,--print-memory-usage",
+    "-Wl,--defsym=__rtc_localtime=0",
+    "--specs=nano.specs"
   ],
 
   "linker_scripts": [
-    "imxrt1062.ld"
+    "mk66fx1m0.ld"
   ],
 
   "linker_libs": [
-    "-lgcc",
-    "-lstdc++",
     "-lm",
-    "-lc"
+    "-lstdc++",
+    "-lc",
+    "-lgcc"
   ],
 
   "profiles": {
@@ -65,11 +67,12 @@
   },
 
   "defines": [
-    "__IMXRT1062__",
+    "__MK66FX1M0__",
     "ARDUINO_ARCH_TEENSY",
-    "ARDUINO_TEENSY40",
+    "ARDUINO_TEENSY36",
     ["ARDUINO", "10819"],
     ["TEENSYDUINO", "159"],
+    ["F_BUS", "60000000"],
     "USB_SERIAL",
     "LAYOUT_US_ENGLISH"
   ]
