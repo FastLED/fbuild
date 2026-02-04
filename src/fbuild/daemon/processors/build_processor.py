@@ -24,6 +24,7 @@ if TYPE_CHECKING:
 # Each key is the normalized platform name, values are patterns to match
 _PLATFORM_PATTERNS: dict[str, list[str]] = {
     "espressif32": ["platform-espressif32", "platformio/espressif32", "espressif32"],
+    "espressif8266": ["platform-espressif8266", "platformio/espressif8266", "espressif8266"],
     "atmelavr": ["platform-atmelavr", "platformio/atmelavr", "atmelavr"],
     "raspberrypi": ["platform-raspberrypi", "platformio/raspberrypi", "raspberrypi"],
     "ststm32": ["platform-ststm32", "platformio/ststm32", "ststm32"],
@@ -33,6 +34,7 @@ _PLATFORM_PATTERNS: dict[str, list[str]] = {
 _PLATFORM_ORCHESTRATORS: dict[str, tuple[str, str]] = {
     "atmelavr": ("fbuild.build.orchestrator_avr", "BuildOrchestratorAVR"),
     "espressif32": ("fbuild.build.orchestrator_esp32", "OrchestratorESP32"),
+    "espressif8266": ("fbuild.build.orchestrator_esp8266", "OrchestratorESP8266"),
     "raspberrypi": ("fbuild.build.orchestrator_rp2040", "OrchestratorRP2040"),
     "ststm32": ("fbuild.build.orchestrator_stm32", "OrchestratorSTM32"),
     "teensy": ("fbuild.build.orchestrator_teensy", "OrchestratorTeensy"),
@@ -311,15 +313,18 @@ class BuildRequestProcessor(RequestProcessor):
             "fbuild.packages.platformio_registry",
             "fbuild.packages.toolchain",
             "fbuild.packages.toolchain_esp32",
+            "fbuild.packages.toolchain_esp8266",
             "fbuild.packages.toolchain_teensy",
             "fbuild.packages.toolchain_rp2040",
             "fbuild.packages.toolchain_stm32",
             "fbuild.packages.arduino_core",
             "fbuild.packages.framework_esp32",
+            "fbuild.packages.framework_esp8266",
             "fbuild.packages.framework_teensy",
             "fbuild.packages.framework_rp2040",
             "fbuild.packages.framework_stm32",
             "fbuild.packages.platform_esp32",
+            "fbuild.packages.platform_esp8266",
             "fbuild.packages.platform_teensy",
             "fbuild.packages.platform_rp2040",
             "fbuild.packages.platform_stm32",
@@ -348,6 +353,7 @@ class BuildRequestProcessor(RequestProcessor):
             "fbuild.build.orchestrator",
             "fbuild.build.orchestrator_avr",
             "fbuild.build.orchestrator_esp32",
+            "fbuild.build.orchestrator_esp8266",
             "fbuild.build.orchestrator_teensy",
             "fbuild.build.orchestrator_rp2040",
             "fbuild.build.orchestrator_stm32",
@@ -356,6 +362,7 @@ class BuildRequestProcessor(RequestProcessor):
             # Deploy and monitor (reload with build system)
             "fbuild.deploy.deployer",
             "fbuild.deploy.deployer_esp32",
+            "fbuild.deploy.deployer_esp8266",
             "fbuild.deploy.monitor",
             # Top-level module packages (reload last to update __init__.py imports)
             "fbuild.build",

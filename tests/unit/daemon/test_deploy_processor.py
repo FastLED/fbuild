@@ -234,9 +234,15 @@ def test_deploy_firmware_success(processor, deploy_request, mock_context):
 
     mock_deployer_class = MagicMock(return_value=mock_deployer)
 
+    # Mock PlatformIOConfig
+    mock_config = MagicMock()
+    mock_env_config = {"platform": "espressif32"}
+    mock_config.get_env_config.return_value = mock_env_config
+
     with patch("fbuild.deploy.deployer_esp32.ESP32Deployer", mock_deployer_class):
-        with patch.object(processor, "_update_status"):
-            result = processor._deploy_firmware(deploy_request, mock_context)
+        with patch("fbuild.config.ini_parser.PlatformIOConfig", return_value=mock_config):
+            with patch.object(processor, "_update_status"):
+                result = processor._deploy_firmware(deploy_request, mock_context)
 
     assert result == "/dev/ttyUSB0"
 
@@ -252,9 +258,15 @@ def test_deploy_firmware_failure(processor, deploy_request, mock_context):
 
     mock_deployer_class = MagicMock(return_value=mock_deployer)
 
+    # Mock PlatformIOConfig
+    mock_config = MagicMock()
+    mock_env_config = {"platform": "espressif32"}
+    mock_config.get_env_config.return_value = mock_env_config
+
     with patch.object(sys, "modules", {"fbuild.deploy.deployer_esp32": MagicMock(ESP32Deployer=mock_deployer_class), **sys.modules}):
-        with patch.object(processor, "_update_status"):
-            result = processor._deploy_firmware(deploy_request, mock_context)
+        with patch("fbuild.config.ini_parser.PlatformIOConfig", return_value=mock_config):
+            with patch.object(processor, "_update_status"):
+                result = processor._deploy_firmware(deploy_request, mock_context)
 
     assert result is None
 

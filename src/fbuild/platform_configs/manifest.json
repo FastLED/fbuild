@@ -11,7 +11,7 @@
     },
     "esp": {
       "name": "Espressif",
-      "description": "ESP32 series microcontrollers",
+      "description": "ESP32 and ESP8266 series microcontrollers",
       "configs": [
         "esp32",
         "esp32c2",
@@ -19,7 +19,8 @@
         "esp32c5",
         "esp32c6",
         "esp32p4",
-        "esp32s3"
+        "esp32s3",
+        "esp8266"
       ]
     },
     "rp": {

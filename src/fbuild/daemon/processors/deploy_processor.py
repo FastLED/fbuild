@@ -451,11 +451,14 @@ class DeployRequestProcessor(RequestProcessor):
 
         # Normalize platform name (handle both direct names and URLs)
         # URLs like "https://.../platform-espressif32.zip" -> "espressif32"
+        # URLs like "https://.../platform-espressif8266.zip" -> "espressif8266"
         # URLs like "https://.../platform-atmelavr.zip" -> "atmelavr"
         # "raspberrypi" or "platform-raspberrypi" -> "raspberrypi"
         platform_name = platform
         if "platform-espressif32" in platform:
             platform_name = "espressif32"
+        elif "platform-espressif8266" in platform or platform == "espressif8266":
+            platform_name = "espressif8266"
         elif "platform-atmelavr" in platform or platform == "atmelavr":
             platform_name = "atmelavr"
         elif "platform-raspberrypi" in platform or platform == "raspberrypi":
@@ -470,6 +473,9 @@ class DeployRequestProcessor(RequestProcessor):
         elif platform_name == "espressif32":
             module_name = "fbuild.build.orchestrator_esp32"
             class_name = "OrchestratorESP32"
+        elif platform_name == "espressif8266":
+            module_name = "fbuild.build.orchestrator_esp8266"
+            class_name = "OrchestratorESP8266"
         elif platform_name == "raspberrypi":
             module_name = "fbuild.build.orchestrator_rp2040"
             class_name = "OrchestratorRP2040"
@@ -535,14 +541,33 @@ class DeployRequestProcessor(RequestProcessor):
             operation_type=OperationType.DEPLOY,
         )
 
-        # Import and get deployer class (explicit import ensures module is loaded)
-        try:
-            from fbuild.deploy.deployer_esp32 import ESP32Deployer
+        # Import and get deployer class based on platform (explicit import ensures module is loaded)
+        # Detect platform from platformio.ini
+        from fbuild.config.ini_parser import PlatformIOConfig
 
-            deployer_class = ESP32Deployer
-        except ImportError as e:
-            logging.error(f"Failed to import ESP32Deployer: {e}")
-            return None
+        ini_path = Path(request.project_dir) / "platformio.ini"
+        config = PlatformIOConfig(ini_path)
+        env_config = config.get_env_config(request.environment)
+        platform = env_config.get("platform", "")
+
+        # Normalize platform for deployer selection
+        if "espressif8266" in platform or platform == "espressif8266":
+            try:
+                from fbuild.deploy.deployer_esp8266 import ESP8266Deployer
+
+                deployer_class = ESP8266Deployer
+            except ImportError as e:
+                logging.error(f"Failed to import ESP8266Deployer: {e}")
+                return None
+        else:
+            # Default to ESP32 deployer for espressif32 and other platforms
+            try:
+                from fbuild.deploy.deployer_esp32 import ESP32Deployer
+
+                deployer_class = ESP32Deployer
+            except ImportError as e:
+                logging.error(f"Failed to import ESP32Deployer: {e}")
+                return None
 
         # Track port state as UPLOADING before deployment starts
         used_port = request.port

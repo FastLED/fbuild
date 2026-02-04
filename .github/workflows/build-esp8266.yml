@@ -1,0 +1,16 @@
+name: Build ESP8266
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "ESP8266"
+      test-dir: "tests/esp8266"
+      env-name: "esp8266"
+      firmware-ext: "bin"
