@@ -639,29 +639,27 @@ class OrchestratorESP8266(IBuildOrchestrator):
         """
         Resolve platform specification to actual download URL.
 
-        PlatformIO supports several formats for specifying platforms:
-        - Full URL: "https://github.com/.../platform-espressif8266.zip" -> used as-is
-        - Shorthand: "platformio/espressif8266" -> resolved to stable release
-        - Name only: "espressif8266" -> resolved to stable release
+        Uses the generic PlatformIO platform URL resolver to handle various formats:
+        - Abbreviated: "espressif8266@4.2.1" -> canonical GitHub archive URL
+        - With owner: "platformio/espressif8266@4.2.1" -> canonical GitHub archive URL
+        - Full URL: "https://github.com/.../file.zip" -> transformed to archive URL
+        - Git URL: "https://github.com/.../.git" -> transformed to archive URL
 
         Args:
             platform_spec: Platform specification from platformio.ini
 
         Returns:
-            Actual download URL for the platform
+            Canonical GitHub archive download URL
         """
-        # Default stable release URL for espressif8266
-        DEFAULT_ESP8266_URL = "https://github.com/platformio/platform-espressif8266/releases/download/v4.2.1/platform-espressif8266.zip"
+        from ..packages.github_url_utils import resolve_platformio_platform_url
 
-        # If it's already a proper URL, use it as-is
-        if platform_spec.startswith("http://") or platform_spec.startswith("https://"):
+        try:
+            resolved_url = resolve_platformio_platform_url(platform_spec, prefer_zip=True)
+            log_detail(f"Resolved platform '{platform_spec}' to: {resolved_url}", verbose_only=True)
+            return resolved_url
+        except KeyboardInterrupt:
+            raise
+        except Exception as e:
+            # If resolution fails, try using the spec as-is (fallback for custom URLs)
+            log_warning(f"Failed to resolve platform '{platform_spec}': {e}, using as-is")
             return platform_spec
-
-        # Handle PlatformIO shorthand formats
-        if platform_spec in ("platformio/espressif8266", "espressif8266"):
-            log_detail(f"Resolving platform shorthand '{platform_spec}' to stable release")
-            return DEFAULT_ESP8266_URL
-
-        # For unknown formats, return as-is and let the download fail with a clear error
-        log_warning(f"Unknown platform format: {platform_spec}, attempting to use as URL")
-        return platform_spec

@@ -446,8 +446,21 @@ class PackageDownloader:
             archive_path: Path to tar archive
             dest_dir: Destination directory
         """
+        import shutil
+
         with tarfile.open(archive_path, "r:*") as tar:
             tar.extractall(dest_dir)
+
+        # Handle GitHub archive format: strip single top-level directory if present
+        # GitHub archives like /archive/refs/tags/v1.0.0.tar.gz contain a single
+        # top-level directory (e.g., "repo-name-1.0.0/") that we need to strip
+        contents = list(dest_dir.iterdir())
+        if len(contents) == 1 and contents[0].is_dir():
+            # Single directory found - move its contents up one level
+            single_dir = contents[0]
+            for item in single_dir.iterdir():
+                shutil.move(str(item), str(dest_dir / item.name))
+            single_dir.rmdir()
 
     def _extract_zip(self, archive_path: Path, dest_dir: Path) -> None:
         """Extract a zip archive.
@@ -456,8 +469,21 @@ class PackageDownloader:
             archive_path: Path to zip archive
             dest_dir: Destination directory
         """
+        import shutil
+
         with zipfile.ZipFile(archive_path, "r") as zip_file:
             zip_file.extractall(dest_dir)
+
+        # Handle GitHub archive format: strip single top-level directory if present
+        # GitHub archives like /archive/refs/tags/v1.0.0.zip contain a single
+        # top-level directory (e.g., "repo-name-1.0.0/") that we need to strip
+        contents = list(dest_dir.iterdir())
+        if len(contents) == 1 and contents[0].is_dir():
+            # Single directory found - move its contents up one level
+            single_dir = contents[0]
+            for item in single_dir.iterdir():
+                shutil.move(str(item), str(dest_dir / item.name))
+            single_dir.rmdir()
 
     def download_and_extract(
         self,

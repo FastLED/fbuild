@@ -159,24 +159,16 @@ class PlatformESP8266(IPackage):
         Returns:
             Dictionary mapping package names to download URLs
         """
-        # Parse platform.json to get package URLs
-        platform_json = self.platform_path / "platform.json"
-
-        if not platform_json.exists():
-            raise PlatformErrorESP8266("platform.json not found in platform package")
-
-        try:
-            with open(platform_json, encoding="utf-8") as f:
-                platform_data = json.load(f)
-
-            packages = platform_data.get("packages", {})
-            return {
-                "framework": packages.get("framework-arduinoespressif8266", {}).get("url", ""),
-                "toolchain": packages.get("toolchain-xtensa", {}).get("url", ""),
-            }
-
-        except (OSError, json.JSONDecodeError) as e:
-            raise PlatformErrorESP8266(f"Failed to parse platform.json: {e}") from e
+        # For ESP8266, we use hardcoded package URLs from the PlatformIO registry
+        # TODO: Implement proper package registry resolution for full PlatformIO compatibility
+        #
+        # These URLs match the package versions specified in platform.json:
+        # - toolchain-xtensa: version ~2.100300.220621
+        # - framework-arduinoespressif8266: version ~3.30102.0
+        return {
+            "framework": "https://github.com/esp8266/Arduino/archive/refs/tags/3.1.2.zip",
+            "toolchain": "https://dl.registry.platformio.org/download/platformio/tool/toolchain-xtensa/2.100300.220621/toolchain-xtensa-windows_amd64-2.100300.220621.tar.gz",
+        }
 
     def is_installed(self) -> bool:
         """Check if platform is already installed.
