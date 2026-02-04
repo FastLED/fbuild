@@ -167,34 +167,23 @@ def spawn_daemon_process(launcher_pid: int) -> int:
     # Ensure environment is passed (especially FBUILD_DEV_MODE)
     env = os.environ.copy()
 
-    # Open stderr log file in APPEND mode to preserve all spawn attempts
-    # This is critical for debugging race conditions - if the first spawn crashes,
-    # we need to see its output even though a concurrent spawn may succeed.
-    stderr_log = DAEMON_DIR / "daemon_spawn.log"
-    stderr_file = open(str(stderr_log), "a", buffering=1)  # Line buffered for real-time output
-
-    # Write timestamp header for this spawn attempt
-    stderr_file.write(f"\n{'='*70}\n")
-    stderr_file.write(f"Spawn attempt at {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
-    stderr_file.write(f"Launcher PID: {launcher_pid}\n")
-    stderr_file.write(f"{'='*70}\n")
-    stderr_file.flush()
+    # On Windows, passing file handles to subprocess can cause issues with append mode.
+    # Instead, we let the daemon itself handle logging by redirecting stderr to DEVNULL
+    # and having the daemon write its startup info to the log file.
+    #
+    # This approach is more reliable because:
+    # 1. Each daemon process explicitly opens the file in append mode
+    # 2. No file handle inheritance issues on Windows
+    # 3. Clean separation between parent and child file handles
 
     # Use safe_popen to avoid console window issues on Windows
     proc = safe_popen(
         cmd,
         stdout=subprocess.DEVNULL,
-        stderr=stderr_file,  # Capture stderr for debugging
+        stderr=subprocess.DEVNULL,  # Daemon will handle its own stderr logging
         stdin=subprocess.DEVNULL,
         env=env,  # Explicitly pass environment
     )
-
-    # Log the spawned PID
-    stderr_file.write(f"Spawned daemon PID: {proc.pid}\n")
-    stderr_file.flush()
-
-    # Don't close stderr_file - daemon needs it
-    # It will be closed when daemon exits
 
     return proc.pid
 

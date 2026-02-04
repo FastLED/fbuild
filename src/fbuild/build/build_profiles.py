@@ -56,16 +56,16 @@ class ProfileFlags:
     controlled_patterns: tuple[str, ...]  # DEPRECATED - always empty
 
 
-# Profile configurations - keyed by BuildProfile enum
-PROFILES: dict[BuildProfile, ProfileFlags] = {
-    BuildProfile.RELEASE: ProfileFlags(
+# Profile configurations - keyed by BuildProfile enum string value
+PROFILES: dict[str, ProfileFlags] = {
+    "release": ProfileFlags(
         name="release",
         description="Optimized release build with LTO",
         compile_flags=(),  # Loaded from JSON config profiles.release.compile_flags
         link_flags=(),  # Loaded from JSON config profiles.release.link_flags
         controlled_patterns=(),  # DEPRECATED
     ),
-    BuildProfile.QUICK: ProfileFlags(
+    "quick": ProfileFlags(
         name="quick",
         description="Fast development build (no LTO, -O2)",
         compile_flags=(),  # Loaded from JSON config profiles.quick.compile_flags
@@ -84,7 +84,7 @@ def get_profile(profile: BuildProfile) -> ProfileFlags:
     Returns:
         ProfileFlags for the requested profile
     """
-    return PROFILES[profile]
+    return PROFILES[profile.value]
 
 
 def get_profile_flags_from_config(

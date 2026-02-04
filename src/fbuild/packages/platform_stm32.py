@@ -257,7 +257,7 @@ class PlatformSTM32(IPackage):
                 "core": "arduino",
                 "cpu": config.get("architecture", "").replace("arm-", ""),
                 "variant": config.get("variant", ""),
-                "extra_flags": " ".join(f"-D{d}" if isinstance(d, str) else f"-D{d[0]}={d[1]}" for d in config.get("defines", []) if isinstance(d, str) and d.startswith("STM32")),
+                "extra_flags": " ".join(f"-D{d}" for d in config.get("defines", []) if isinstance(d, str) and d.startswith("STM32")),
                 "product_line": config.get("product_line", ""),
             },
             "name": config.get("name", board_id),

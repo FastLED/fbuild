@@ -49,8 +49,8 @@
 
   "profiles": {
     "release": {
-      "compile_flags": ["-Os", "-flto", "-fno-fat-lto-objects"],
-      "link_flags": ["-Os", "-flto", "-fuse-linker-plugin"]
+      "compile_flags": ["-Os", "-flto=auto", "-fno-fat-lto-objects"],
+      "link_flags": ["-Os", "-flto=auto", "-fuse-linker-plugin"]
     },
     "quick": {
       "compile_flags": ["-O1"],

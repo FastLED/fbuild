@@ -65,12 +65,12 @@
 
   "profiles": {
     "release": {
-      "compile_flags": ["-Os"],
-      "link_flags": []
+      "compile_flags": ["-Os", "-flto=auto", "-fno-fat-lto-objects"],
+      "link_flags": ["-flto=auto", "-fuse-linker-plugin"]
     },
     "quick": {
       "compile_flags": ["-O1"],
-      "link_flags": []
+      "link_flags": ["-flto=auto", "-fuse-linker-plugin"]
     }
   },
 

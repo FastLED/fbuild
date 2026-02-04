@@ -583,6 +583,29 @@ def main() -> int:
         PID_FILE.write_text(f"{os.getpid()},{launcher_pid}\n")
         logging.info(f"PID file written: {PID_FILE}")
 
+        # Write to spawn log (append mode) to track daemon startups
+        # This helps debug spawn race conditions and crashes
+        spawn_log = DAEMON_DIR / "daemon_spawn.log"
+        try:
+            # On Windows, we need to be extra careful with append mode
+            # Open in binary append mode first, then wrap in TextIOWrapper
+            # This ensures proper append behavior even if file was recently closed
+            import io
+
+            with open(str(spawn_log), "ab", buffering=0) as binary_file:
+                # Wrap in text mode with explicit line buffering
+                with io.TextIOWrapper(binary_file, encoding="utf-8", line_buffering=True) as f:
+                    f.write(f"\n{'='*70}\n")
+                    f.write(f"Spawn attempt at {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
+                    f.write(f"Launcher PID: {launcher_pid}\n")
+                    f.write(f"Daemon PID: {os.getpid()}\n")
+                    f.write(f"{'='*70}\n")
+        except KeyboardInterrupt:
+            raise
+        except Exception as e:
+            # Don't fail startup if spawn log can't be written
+            logging.warning(f"Failed to write to spawn log: {e}")
+
         # Register cleanup handlers for graceful PID file removal
         # This ensures PID file is cleaned up on SIGTERM, SIGINT, and normal exit
         signal.signal(signal.SIGTERM, cleanup_pid_file)

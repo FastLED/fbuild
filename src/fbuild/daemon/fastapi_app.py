@@ -41,6 +41,7 @@ from pydantic import BaseModel
 
 from fbuild import __version__ as APP_VERSION
 from fbuild.daemon.client.http_utils import get_daemon_port
+from fbuild.daemon.endpoints.management import ShutdownResponse
 
 if TYPE_CHECKING:
     from fbuild.daemon.daemon_context import DaemonContext
@@ -287,7 +288,7 @@ def register_daemon_endpoints(app: FastAPI) -> None:
         )
 
     @app.post("/api/daemon/shutdown", tags=["Daemon"])
-    async def shutdown_daemon(context: DaemonContext = Depends(get_daemon_context)) -> dict[str, str]:  # type: ignore[reportUnusedFunction]
+    async def shutdown_daemon(context: DaemonContext = Depends(get_daemon_context)) -> ShutdownResponse:  # type: ignore[reportUnusedFunction]
         """Gracefully shutdown the daemon.
 
         This endpoint triggers a graceful shutdown of the daemon.
@@ -309,7 +310,7 @@ def register_daemon_endpoints(app: FastAPI) -> None:
         from fbuild.daemon.endpoints.management import shutdown_daemon as shutdown_impl
 
         response = await shutdown_impl()
-        return response.model_dump()
+        return response
 
 
 def create_app() -> FastAPI:
