@@ -69,16 +69,7 @@ class CompilationExecutor:
         self.show_progress = show_progress
         self.mcu = mcu
         self.framework_version = framework_version
-
-        # Disable sccache on Windows due to file locking issues
-        # See: https://github.com/anthropics/claude-code/issues/...
-        if platform.system() == "Windows":
-            if use_sccache and show_progress:
-                print("[sccache] Disabled on Windows due to file locking issues")
-            self.use_sccache = False
-        else:
-            self.use_sccache = use_sccache
-
+        self.use_sccache = use_sccache
         self.use_trampolines = use_trampolines
         self.sccache_path: Optional[Path] = None
         self.trampoline_cache: Optional[HeaderTrampolineCache] = None

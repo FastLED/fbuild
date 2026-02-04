@@ -447,6 +447,7 @@ class PackageDownloader:
             dest_dir: Destination directory
         """
         import shutil
+        import tempfile
 
         with tarfile.open(archive_path, "r:*") as tar:
             tar.extractall(dest_dir)
@@ -458,9 +459,17 @@ class PackageDownloader:
         if len(contents) == 1 and contents[0].is_dir():
             # Single directory found - move its contents up one level
             single_dir = contents[0]
-            for item in single_dir.iterdir():
-                shutil.move(str(item), str(dest_dir / item.name))
-            single_dir.rmdir()
+
+            # Move to temp location first to avoid name collisions
+            with tempfile.TemporaryDirectory(dir=dest_dir.parent) as temp_move_dir:
+                temp_path = Path(temp_move_dir)
+                for item in single_dir.iterdir():
+                    shutil.move(str(item), str(temp_path / item.name))
+                single_dir.rmdir()
+
+                # Now move from temp to final destination
+                for item in temp_path.iterdir():
+                    shutil.move(str(item), str(dest_dir / item.name))
 
     def _extract_zip(self, archive_path: Path, dest_dir: Path) -> None:
         """Extract a zip archive.
@@ -470,6 +479,7 @@ class PackageDownloader:
             dest_dir: Destination directory
         """
         import shutil
+        import tempfile
 
         with zipfile.ZipFile(archive_path, "r") as zip_file:
             zip_file.extractall(dest_dir)
@@ -481,9 +491,17 @@ class PackageDownloader:
         if len(contents) == 1 and contents[0].is_dir():
             # Single directory found - move its contents up one level
             single_dir = contents[0]
-            for item in single_dir.iterdir():
-                shutil.move(str(item), str(dest_dir / item.name))
-            single_dir.rmdir()
+
+            # Move to temp location first to avoid name collisions
+            with tempfile.TemporaryDirectory(dir=dest_dir.parent) as temp_move_dir:
+                temp_path = Path(temp_move_dir)
+                for item in single_dir.iterdir():
+                    shutil.move(str(item), str(temp_path / item.name))
+                single_dir.rmdir()
+
+                # Now move from temp to final destination
+                for item in temp_path.iterdir():
+                    shutil.move(str(item), str(dest_dir / item.name))
 
     def download_and_extract(
         self,
