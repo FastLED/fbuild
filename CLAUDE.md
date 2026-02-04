@@ -316,6 +316,103 @@ def compile(source: Path, flags: List[str], output: Path | None = None):
     ...
 ```
 
+### Type-Safe Configuration with Dataclasses
+
+**Use @dataclass structures instead of dict.get() for configuration objects.** This provides type safety, IDE autocomplete, and validation.
+
+**Why:**
+- Type safety: IDE autocomplete and compile-time type checking
+- Validation: Errors caught at load time, not runtime
+- Clarity: Explicit structure vs implicit dict keys
+- Maintainability: Easier refactoring with strong types
+- Self-documenting: Dataclass fields serve as documentation
+
+**Pattern:**
+
+```python
+# BAD - dict-based configuration with runtime errors
+config = load_config("teensy41")
+mcu = config.get("mcu", "")  # What if key is misspelled?
+f_cpu = config.get("f_cpu", "")  # What's the correct default?
+variant = config.get("variant", "")  # No IDE autocomplete
+
+# GOOD - dataclass-based configuration with type safety
+@dataclass(frozen=True)
+class BoardConfigModel:
+    """Type-safe board configuration."""
+    name: str
+    mcu: str
+    f_cpu: str = "16000000L"
+    variant: str = ""
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> "BoardConfigModel":
+        """Parse and validate configuration from dict."""
+        try:
+            return cls(
+                name=data["name"],  # Required - will raise if missing
+                mcu=data["mcu"],
+                f_cpu=data.get("f_cpu", "16000000L"),  # Optional with default
+                variant=data.get("variant", ""),
+            )
+        except KeyError as e:
+            raise ValueError(f"Missing required field: {e}")
+
+# Usage - type-safe access with IDE support
+config = load_config("teensy41")  # Returns BoardConfigModel
+mcu = config.mcu  # IDE knows this is a str
+f_cpu = config.f_cpu  # Autocomplete works
+variant = config.variant  # Typos caught by type checker
+```
+
+**Implementation Guidelines:**
+
+1. **Define dataclass models in dedicated files**: `src/fbuild/platform_configs/board_config_model.py`
+2. **Use `frozen=True` for immutable configs**: Prevents accidental modification
+3. **Provide `from_dict()` class method**: Parses JSON data with validation
+4. **Validate required fields**: Raise `ValueError` with clear error messages
+5. **Use nested dataclasses for complex structures**: e.g., `CompilerFlags`, `BuildProfile`
+6. **Support backward compatibility when needed**: Accept both dataclass and dict in transitions
+
+**Example - Nested Dataclasses:**
+
+```python
+@dataclass(frozen=True)
+class CompilerFlags:
+    """Compiler flag configuration."""
+    common: List[str] = field(default_factory=list)
+    c: List[str] = field(default_factory=list)
+    cxx: List[str] = field(default_factory=list)
+
+@dataclass(frozen=True)
+class BoardConfigModel:
+    """Type-safe board configuration."""
+    name: str
+    mcu: str
+    compiler_flags: CompilerFlags = field(default_factory=CompilerFlags)
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> "BoardConfigModel":
+        flags_data = data.get("compiler_flags", {})
+        compiler_flags = CompilerFlags(
+            common=flags_data.get("common", []),
+            c=flags_data.get("c", []),
+            cxx=flags_data.get("cxx", []),
+        )
+        return cls(
+            name=data["name"],
+            mcu=data["mcu"],
+            compiler_flags=compiler_flags,
+        )
+
+# Usage - deeply nested type-safe access
+config = load_config("teensy41")
+common_flags = config.compiler_flags.common  # Type: List[str]
+c_flags = config.compiler_flags.c  # IDE autocomplete works
+```
+
+**See:** `src/fbuild/platform_configs/board_config_model.py` for the full implementation example.
+
 ### Development Mode
 
 Always set `FBUILD_DEV_MODE=1` when developing. This isolates:
