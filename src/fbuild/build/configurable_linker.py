@@ -137,8 +137,8 @@ class ConfigurableLinker(ILinker):
             if not sdk_ld_dir.exists():
                 raise ConfigurableLinkerError(f"Linker script directory not found: {sdk_ld_dir}")
 
-            # Get linker scripts from config
-            config_scripts = self.config.get('linker_scripts', [])
+            # Get linker scripts from config (type-safe field access)
+            config_scripts = self.config.linker_scripts
 
             for script_name in config_scripts:
                 script_path = sdk_ld_dir / script_name
@@ -194,8 +194,8 @@ class ConfigurableLinker(ILinker):
         Returns:
             List of linker flags
         """
-        # Get base flags from config (no LTO flags)
-        flags = self.config.get('linker_flags', []).copy()
+        # Get base flags from config (no LTO flags) - type-safe field access
+        flags = self.config.linker_flags.copy()
 
         # Add profile-specific flags from JSON config (e.g., LTO flags)
         flags.extend(self._json_link_flags)
@@ -325,9 +325,9 @@ class ConfigurableLinker(ILinker):
         for lib in sdk_libs:
             cmd.append(_path_to_string(lib))
 
-        # Add standard libraries from config
+        # Add standard libraries from config (type-safe field access)
         # All platform JSON configs should have linker_libs defined
-        linker_libs = self.config.get('linker_libs', [])
+        linker_libs = self.config.linker_libs
         if not linker_libs:
             # Fallback for compatibility - platforms should define linker_libs in JSON
             linker_libs = ["-lgcc", "-lstdc++", "-lm", "-lc"]

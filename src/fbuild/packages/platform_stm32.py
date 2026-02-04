@@ -249,19 +249,19 @@ class PlatformSTM32(IPackage):
             available = [c for c in platform_configs.list_available_configs() if "stm32" in c.lower() or "nucleo" in c or "bluepill" in c or "blackpill" in c]
             raise PlatformErrorSTM32(f"Unsupported board: {board_id}. Available: {', '.join(available)}")
 
-        # Transform to expected format for ConfigurableCompiler/Linker
+        # Transform to expected format for ConfigurableCompiler/Linker - type-safe access
         return {
             "build": {
-                "mcu": config.get("mcu", ""),
-                "f_cpu": config.get("f_cpu", ""),
+                "mcu": config.mcu,
+                "f_cpu": config.f_cpu,
                 "core": "arduino",
-                "cpu": config.get("architecture", "").replace("arm-", ""),
-                "variant": config.get("variant", ""),
-                "extra_flags": " ".join(f"-D{d}" for d in config.get("defines", []) if isinstance(d, str) and d.startswith("STM32")),
-                "product_line": config.get("product_line", ""),
+                "cpu": config.architecture.replace("arm-", ""),
+                "variant": config.variant,
+                "extra_flags": " ".join(f"-D{d}" for d in config.defines if isinstance(d, str) and d.startswith("STM32")),
+                "product_line": config.product_line,
             },
-            "name": config.get("name", board_id),
-            "upload": config.get("upload", {}),
+            "name": config.name,
+            "upload": config.upload,
         }
 
     def get_platform_info(self) -> Dict[str, Any]:

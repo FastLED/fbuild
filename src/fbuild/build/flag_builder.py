@@ -88,26 +88,26 @@ class FlagBuilder:
             'cxxflags': []  # C++-specific flags
         }
 
-        # Get flags from config
-        config_flags = self.config.get('compiler_flags', {})
+        # Get flags from config (type-safe field access)
+        config_flags = self.config.compiler_flags
 
         # Common flags (CCFLAGS in PlatformIO)
-        if 'common' in config_flags:
-            flags['common'] = config_flags['common'].copy()
+        if config_flags.common:
+            flags['common'] = config_flags.common.copy()
 
         # C-specific flags (CFLAGS in PlatformIO)
-        if 'c' in config_flags:
-            flags['cflags'] = config_flags['c'].copy()
+        if config_flags.c:
+            flags['cflags'] = config_flags.c.copy()
 
         # C++-specific flags (CXXFLAGS in PlatformIO)
-        if 'cxx' in config_flags:
-            flags['cxxflags'] = config_flags['cxx'].copy()
+        if config_flags.cxx:
+            flags['cxxflags'] = config_flags.cxx.copy()
 
         # Apply profile-based flags to common (replaces existing optimization and LTO flags)
         self._apply_profile_flags(flags)
 
-        # Add defines from config (CPPDEFINES in PlatformIO)
-        defines = self.config.get('defines', [])
+        # Add defines from config (CPPDEFINES in PlatformIO) - type-safe field access
+        defines = self.config.defines
         for define in defines:
             if isinstance(define, str):
                 flags['common'].append(f'-D{define}')

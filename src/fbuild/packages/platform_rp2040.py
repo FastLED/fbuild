@@ -175,17 +175,17 @@ class PlatformRP2040(IPackage):
             available = [c for c in platform_configs.list_available_configs() if c.startswith("rpi")]
             raise PlatformErrorRP2040(f"Unsupported board: {board_id}. Available: {', '.join(available)}")
 
-        # Transform to expected format for ConfigurableCompiler/Linker
+        # Transform to expected format for ConfigurableCompiler/Linker - type-safe access
         return {
             "build": {
-                "mcu": config.get("mcu", ""),
-                "f_cpu": config.get("f_cpu", ""),
+                "mcu": config.mcu,
+                "f_cpu": config.f_cpu,
                 "core": "rp2040",
-                "variant": config.get("variant", ""),
-                "board": config.get("defines", [""])[-1] if config.get("defines") else "",
+                "variant": config.variant,
+                "board": config.defines[-1] if config.defines else "",
             },
-            "name": config.get("name", board_id),
-            "upload": config.get("upload", {}),
+            "name": config.name,
+            "upload": config.upload,
         }
 
     def get_platform_info(self) -> Dict[str, Any]:

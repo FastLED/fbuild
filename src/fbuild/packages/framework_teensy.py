@@ -244,17 +244,16 @@ class FrameworkTeensy(IFramework):
         if not config:
             return None
 
-        # Get core directory from config
-        core_name = config.get("core", "teensy4")
+        # Get core directory from config (type-safe field access)
+        core_name = config.core or "teensy4"
         core_dir = self.get_core_dir(core_name)
 
-        # Get linker script name(s) from config
-        linker_scripts = config.get("linker_scripts", [])
+        # Get linker script name(s) from config (type-safe field access)
+        linker_scripts = config.linker_scripts
         if not linker_scripts:
             # Fallback: use MCU name for linker script (e.g., mkl26z64.ld)
-            mcu = config.get("mcu", "")
-            if mcu:
-                linker_scripts = [f"{mcu}.ld"]
+            if config.mcu:
+                linker_scripts = [f"{config.mcu}.ld"]
 
         # Return first linker script that exists
         for script_name in linker_scripts:

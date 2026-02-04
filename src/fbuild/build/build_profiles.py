@@ -89,7 +89,7 @@ def get_profile(profile: BuildProfile) -> ProfileFlags:
 
 def get_profile_flags_from_config(
     profile: BuildProfile,
-    platform_config: dict
+    platform_config: Any  # BoardConfigModel or dict for backward compatibility
 ) -> tuple[tuple[str, ...], tuple[str, ...]]:
     """Load profile-specific flags from platform JSON config.
 
@@ -98,15 +98,29 @@ def get_profile_flags_from_config(
 
     Args:
         profile: BuildProfile enum value
-        platform_config: Platform configuration dictionary (loaded from JSON)
+        platform_config: Platform configuration (BoardConfigModel or dict for compatibility)
 
     Returns:
         Tuple of (compile_flags, link_flags) as tuples of strings
     """
-    profiles = platform_config.get("profiles", {})
-    profile_data = profiles.get(profile.value, {})
-    compile_flags = tuple(profile_data.get("compile_flags", []))
-    link_flags = tuple(profile_data.get("link_flags", []))
+    # Support both BoardConfigModel and dict for compatibility
+    from ..platform_configs import BoardConfigModel
+
+    if isinstance(platform_config, BoardConfigModel):
+        # Type-safe BoardConfigModel access
+        profile_obj = platform_config.profiles.get(profile.value)
+        if profile_obj:
+            compile_flags = tuple(profile_obj.compile_flags)
+            link_flags = tuple(profile_obj.link_flags)
+        else:
+            compile_flags = ()
+            link_flags = ()
+    else:
+        # Legacy dict access
+        profiles = platform_config.get("profiles", {})
+        profile_data = profiles.get(profile.value, {})
+        compile_flags = tuple(profile_data.get("compile_flags", []))
+        link_flags = tuple(profile_data.get("link_flags", []))
     return compile_flags, link_flags
 
 

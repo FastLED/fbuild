@@ -18,6 +18,8 @@ import json
 from importlib import resources
 from typing import Any
 
+from .board_config_model import BoardConfigModel
+
 # Vendor directories to search
 VENDOR_DIRS = ["avr", "esp", "teensy", "rp", "stm32"]
 
@@ -41,7 +43,7 @@ def load_manifest() -> dict[str, Any] | None:
     return None
 
 
-def load_config(mcu: str) -> dict[str, Any] | None:
+def load_config(mcu: str) -> BoardConfigModel | None:
     """Load platform configuration for the specified MCU.
 
     Searches all vendor subdirectories for the matching config file.
@@ -50,7 +52,7 @@ def load_config(mcu: str) -> dict[str, Any] | None:
         mcu: The MCU identifier (e.g., 'esp32', 'esp32c6', 'rp2040', 'stm32f4', 'imxrt1062')
 
     Returns:
-        The configuration dictionary if found, None otherwise.
+        BoardConfigModel instance if found, None otherwise.
     """
     config_name = f"{mcu}.json"
 
@@ -64,7 +66,8 @@ def load_config(mcu: str) -> dict[str, Any] | None:
                 config_file = vendor_dir.joinpath(config_name)
                 if config_file.is_file():
                     with config_file.open("r", encoding="utf-8") as f:
-                        return json.load(f)
+                        data = json.load(f)
+                        return BoardConfigModel.from_dict(data)
             except (FileNotFoundError, TypeError, AttributeError):
                 continue
 
@@ -74,7 +77,7 @@ def load_config(mcu: str) -> dict[str, Any] | None:
     return None
 
 
-def load_board_config(board_id: str) -> dict[str, Any] | None:
+def load_board_config(board_id: str) -> BoardConfigModel | None:
     """Load board configuration for the specified board.
 
     Searches all vendor subdirectories for the matching board config file.
@@ -85,7 +88,7 @@ def load_board_config(board_id: str) -> dict[str, Any] | None:
         board_id: The board identifier (e.g., 'rpipico', 'teensy41', 'bluepill_f103c8')
 
     Returns:
-        The configuration dictionary if found, None otherwise.
+        BoardConfigModel instance if found, None otherwise.
     """
     config_name = f"{board_id}.json"
 
@@ -99,7 +102,8 @@ def load_board_config(board_id: str) -> dict[str, Any] | None:
                 config_file = vendor_dir.joinpath(config_name)
                 if config_file.is_file():
                     with config_file.open("r", encoding="utf-8") as f:
-                        return json.load(f)
+                        data = json.load(f)
+                        return BoardConfigModel.from_dict(data)
             except (FileNotFoundError, TypeError, AttributeError):
                 continue
 

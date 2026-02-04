@@ -16,6 +16,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 from .build_profiles import BuildProfile, ProfileFlags, get_profile
+from ..platform_configs import BoardConfigModel
 
 if TYPE_CHECKING:
     from fbuild.daemon.compilation_queue import CompilationJobQueue
@@ -132,7 +133,7 @@ class BuildContext:
     framework: "IFramework"
     board_id: str
     board_config: Dict[str, Any]
-    platform_config: Dict[str, Any]
+    platform_config: "BoardConfigModel"  # Type-safe board configuration
     variant: str
     core: str
     user_build_flags: List[str]
@@ -152,7 +153,7 @@ class BuildContext:
         framework: "IFramework",
         board_id: str,
         board_config: Dict[str, Any],
-        platform_config: Dict[str, Any],
+        platform_config: "BoardConfigModel",  # Type-safe board configuration
         variant: str,
         core: str,
         user_build_flags: List[str],
