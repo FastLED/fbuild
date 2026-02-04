@@ -24,16 +24,30 @@
 
 # fbuild
 
-Fbuild is a next-generation embedded development tool featuring a clean, transparent architecture. It provides fast incremental builds, URL-based package management, and soon to be comprehensive multi-platform support for Arduino and ESP32 development.
+Fbuild is a next-generation embedded development tool featuring a clean extensible data driven architecture. It provides fast incremental builds, URL-based package management, and soon to be comprehensive multi-platform support for Arduino and ESP32 development.
 
 **platformio.ini compatible**
 
-fbuiold uses the same `platformio.ini` already used in platformio sketches.
+fbuild uses the same `platformio.ini` already used in platformio sketches.
+
+# Why
+
+Arduino CLI and PlatformIO build chains have lagged in their developement. Although Platformio was a leap forward from the Arduino build system it still has major problems that it's team has refused to address, for example PlatformIO has a tendency to self poison it's install folder and not recover until `rm -rf ~/.platform/packages` is invoked, this is fatal to new developers. Platformio's installer is also incredibly slow to download packages and perform installs and has a tendency to just invalidate it's install packages and randomly re-download gigantic multi gigabyte install packages for the newer boards like Raspberri PI, ESP, STM, etc... Interrupting by changing a field in platformio.ini. Literaly changing a comment in platformio.ini with the VSCode Plugin + Autosave is russian roulette as the install will update itself on save, directly self poisoning install.
+
+Additionally both these legacy build chains do not support critically important compile and linker settings for embedded such as `-gc-sections` and `LTO` - which crunches the deployed binary down to it's smallest possible size with cross translation unit optimization. This causss huge bloat for these memory constrained devices with dead code that can't be removed. FastLED has struggled with this for years and attempted to get around this by aggressively inlining everything, simply because LTO was not install. Additionally, drama between PlatformIO and espressif meant that esp boards simply were explictly not supported by the project, leading to work around repos to get esp32c2/c5/c6 up and working with the IDF v5 toolchain.
+
+Collectively FastLED has lost literally months of developement time waiting around for PlatformIO (our testing infrustructure) to finish builds and recovering from PlatformIO's self poisoning. For example, to enable concurrent PlatformIO builds during development FastLED has resorted to hoisting the entire build chain into a Docker containers simply to containerize the global install directory and enable parallel feature developement and avoid PlatformIO's self poisoning.
+
+Fastled has attempted to submit feature requests and PR's to address these problems for PlatformIO - all of them refused. Additionally extremely cheap boards like the CHXXX riscv boards that are even cheaper yet more powerful than the Attiny85 series has no path for FastLED if we are stuck on these legacy build chains.
+
+The calculus pointed to the conclusion that the FastLED developer cost was so high that it was more time efficient to just rebuild the entire compile + deploy stack from scratch. The result is `fbuild`, the FastLED builder. Now, not only are builds correct and fast, but advanced compile & linking features like LTO can finally be backported to legacy build chains, which have been available but unused for over a decade.
+
+**TODO: firmware.bin size comparisons between Arduino/PlatformIO vs fbuild**
 
 **Design Goals**
 
   * Replaces `platformio` in `FastLED` repo builders
-  * Correct and parallel package management system
+  * Correct and blazing parallel package management system
     * locking is done through a daemon process
     * packages are fingerprinted to their version and cached, download only once
     * sccache for caching compiles
