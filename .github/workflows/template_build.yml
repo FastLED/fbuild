@@ -1,0 +1,45 @@
+name: Build Template
+
+on:
+  workflow_call:
+    inputs:
+      workflow-name:
+        required: true
+        type: string
+        description: "Display name for the workflow"
+      test-dir:
+        required: true
+        type: string
+        description: "Test directory path (e.g., tests/esp32c6)"
+      env-name:
+        required: true
+        type: string
+        description: "Environment name (e.g., esp32c6)"
+      firmware-ext:
+        required: true
+        type: string
+        description: "Firmware file extension (bin or hex)"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install fbuild
+        run: pip install -e .
+
+      - name: Build ${{ inputs.workflow-name }}
+        run: fbuild build ${{ inputs.test-dir }} -e ${{ inputs.env-name }}
+
+      - name: Verify firmware output
+        run: |
+          test -f ${{ inputs.test-dir }}/.fbuild/build/${{ inputs.env-name }}/release/firmware.${{ inputs.firmware-ext }}
+          echo "Build successful - firmware.${{ inputs.firmware-ext }} generated"

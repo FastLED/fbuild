@@ -8,24 +8,9 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
-
-      - name: Install fbuild
-        run: pip install -e .
-
-      - name: Build ESP32-C6
-        run: fbuild build tests/esp32c6 -e esp32c6
-
-      - name: Verify firmware output
-        run: |
-          test -f tests/esp32c6/.fbuild/build/esp32c6/release/firmware.bin
-          echo "Build successful - firmware.bin generated"
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "ESP32-C6"
+      test-dir: "tests/esp32c6"
+      env-name: "esp32c6"
+      firmware-ext: "bin"

@@ -8,24 +8,9 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
-
-      - name: Install fbuild
-        run: pip install -e .
-
-      - name: Build Teensy LC
-        run: fbuild build tests/teensylc -e teensylc
-
-      - name: Verify firmware output
-        run: |
-          test -f tests/teensylc/.fbuild/build/teensylc/release/firmware.hex
-          echo "Build successful - firmware.hex generated"
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "Teensy LC"
+      test-dir: "tests/teensylc"
+      env-name: "teensylc"
+      firmware-ext: "hex"
