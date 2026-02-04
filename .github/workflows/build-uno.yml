@@ -27,5 +27,5 @@ jobs:
 
       - name: Verify firmware output
         run: |
-          test -f tests/uno/.fbuild/build/uno/firmware.hex
+          test -f tests/uno/.fbuild/build/uno/release/firmware.hex
           echo "Build successful - firmware.hex generated"

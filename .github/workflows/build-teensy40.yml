@@ -27,5 +27,5 @@ jobs:
 
       - name: Verify firmware output
         run: |
-          test -f tests/teensy40/.fbuild/build/teensy40/firmware.hex
+          test -f tests/teensy40/.fbuild/build/teensy40/release/firmware.hex
           echo "Build successful - firmware.hex generated"

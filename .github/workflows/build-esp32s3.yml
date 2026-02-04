@@ -27,5 +27,5 @@ jobs:
 
       - name: Verify firmware output
         run: |
-          test -f tests/esp32s3/.fbuild/build/esp32s3/firmware.bin
+          test -f tests/esp32s3/.fbuild/build/esp32s3/release/firmware.bin
           echo "Build successful - firmware.bin generated"
