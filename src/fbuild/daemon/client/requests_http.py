@@ -23,13 +23,14 @@ Usage:
 import os
 from pathlib import Path
 
-import httpx
-
 from fbuild.build.build_profiles import BuildProfile
 from fbuild.daemon.client.http_utils import (
     get_daemon_url,
-    http_client,
     serialize_request,
+)
+from fbuild.daemon.client.interruptible_http import (
+    InterruptibleHTTPError,
+    interruptible_post,
 )
 from fbuild.daemon.client.lifecycle import ensure_daemon_running
 from fbuild.daemon.messages import (
@@ -100,36 +101,41 @@ def request_build_http(
         print("   Clean build: Yes")
     print("   ✅ Submitted\n")
 
-    # Submit HTTP request
+    # Submit HTTP request (using interruptible wrapper for proper CTRL-C handling)
     try:
-        with http_client(timeout=timeout) as client:
-            response = client.post(
-                get_daemon_url("/api/build"),
-                json=serialize_request(request),
-            )
+        response = interruptible_post(
+            url=get_daemon_url("/api/build"),
+            json=serialize_request(request),
+            timeout=timeout,
+        )
 
-            if response.status_code == 200:
-                result = response.json()
-                print("🔨 Build Progress:")
-                print(f"   Status: {result.get('message', 'Success')}")
-                if result.get("success"):
-                    print("✅ Build completed")
-                    return True
-                else:
-                    print(f"❌ Build failed: {result.get('message', 'Unknown error')}")
-                    return False
+        if response.status_code == 200:
+            result = response.json()
+            print("🔨 Build Progress:")
+            print(f"   Status: {result.get('message', 'Success')}")
+            if result.get("success"):
+                print("✅ Build completed")
+                return True
             else:
-                print(f"❌ HTTP request failed with status {response.status_code}")
-                print(f"   {response.text}")
+                print(f"❌ Build failed: {result.get('message', 'Unknown error')}")
                 return False
+        else:
+            print(f"❌ HTTP request failed with status {response.status_code}")
+            print(f"   {response.text}")
+            return False
 
-    except httpx.TimeoutException:
-        print(f"❌ Build timeout ({timeout}s)")
-        return False
-    except httpx.ConnectError:
-        print("❌ Failed to connect to daemon")
+    except InterruptibleHTTPError as e:
+        # Check if it's a timeout or connection error
+        error_msg = str(e).lower()
+        if "timeout" in error_msg:
+            print(f"❌ Build timeout ({timeout}s)")
+        elif "connect" in error_msg or "connection" in error_msg:
+            print("❌ Failed to connect to daemon")
+        else:
+            print(f"❌ Build request failed: {e}")
         return False
     except KeyboardInterrupt:
+        print("\n⚠️  Build cancelled by user (CTRL-C)")
         raise
     except Exception as e:
         print(f"❌ Build request failed: {e}")
@@ -204,36 +210,41 @@ def request_deploy_http(
         print("   Skip build: Yes")
     print("   ✅ Submitted\n")
 
-    # Submit HTTP request
+    # Submit HTTP request (using interruptible wrapper for proper CTRL-C handling)
     try:
-        with http_client(timeout=timeout) as client:
-            response = client.post(
-                get_daemon_url("/api/deploy"),
-                json=serialize_request(request),
-            )
+        response = interruptible_post(
+            url=get_daemon_url("/api/deploy"),
+            json=serialize_request(request),
+            timeout=timeout,
+        )
 
-            if response.status_code == 200:
-                result = response.json()
-                print("📦 Deploy Progress:")
-                print(f"   Status: {result.get('message', 'Success')}")
-                if result.get("success"):
-                    print("✅ Deploy completed")
-                    return True
-                else:
-                    print(f"❌ Deploy failed: {result.get('message', 'Unknown error')}")
-                    return False
+        if response.status_code == 200:
+            result = response.json()
+            print("📦 Deploy Progress:")
+            print(f"   Status: {result.get('message', 'Success')}")
+            if result.get("success"):
+                print("✅ Deploy completed")
+                return True
             else:
-                print(f"❌ HTTP request failed with status {response.status_code}")
-                print(f"   {response.text}")
+                print(f"❌ Deploy failed: {result.get('message', 'Unknown error')}")
                 return False
+        else:
+            print(f"❌ HTTP request failed with status {response.status_code}")
+            print(f"   {response.text}")
+            return False
 
-    except httpx.TimeoutException:
-        print(f"❌ Deploy timeout ({timeout}s)")
-        return False
-    except httpx.ConnectError:
-        print("❌ Failed to connect to daemon")
+    except InterruptibleHTTPError as e:
+        # Check if it's a timeout or connection error
+        error_msg = str(e).lower()
+        if "timeout" in error_msg:
+            print(f"❌ Deploy timeout ({timeout}s)")
+        elif "connect" in error_msg or "connection" in error_msg:
+            print("❌ Failed to connect to daemon")
+        else:
+            print(f"❌ Deploy request failed: {e}")
         return False
     except KeyboardInterrupt:
+        print("\n⚠️  Deploy cancelled by user (CTRL-C)")
         raise
     except Exception as e:
         print(f"❌ Deploy request failed: {e}")
@@ -300,36 +311,41 @@ def request_monitor_http(
         print(f"   Port: {port}")
     print("   ✅ Submitted\n")
 
-    # Submit HTTP request
+    # Submit HTTP request (using interruptible wrapper for proper CTRL-C handling)
     try:
-        with http_client(timeout=request_timeout) as client:
-            response = client.post(
-                get_daemon_url("/api/monitor"),
-                json=serialize_request(request),
-            )
+        response = interruptible_post(
+            url=get_daemon_url("/api/monitor"),
+            json=serialize_request(request),
+            timeout=request_timeout,
+        )
 
-            if response.status_code == 200:
-                result = response.json()
-                print("👁️  Monitor Progress:")
-                print(f"   Status: {result.get('message', 'Success')}")
-                if result.get("success"):
-                    print("✅ Monitor completed")
-                    return True
-                else:
-                    print(f"❌ Monitor failed: {result.get('message', 'Unknown error')}")
-                    return False
+        if response.status_code == 200:
+            result = response.json()
+            print("👁️  Monitor Progress:")
+            print(f"   Status: {result.get('message', 'Success')}")
+            if result.get("success"):
+                print("✅ Monitor completed")
+                return True
             else:
-                print(f"❌ HTTP request failed with status {response.status_code}")
-                print(f"   {response.text}")
+                print(f"❌ Monitor failed: {result.get('message', 'Unknown error')}")
                 return False
+        else:
+            print(f"❌ HTTP request failed with status {response.status_code}")
+            print(f"   {response.text}")
+            return False
 
-    except httpx.TimeoutException:
-        print(f"❌ Monitor timeout ({request_timeout}s)")
-        return False
-    except httpx.ConnectError:
-        print("❌ Failed to connect to daemon")
+    except InterruptibleHTTPError as e:
+        # Check if it's a timeout or connection error
+        error_msg = str(e).lower()
+        if "timeout" in error_msg:
+            print(f"❌ Monitor timeout ({request_timeout}s)")
+        elif "connect" in error_msg or "connection" in error_msg:
+            print("❌ Failed to connect to daemon")
+        else:
+            print(f"❌ Monitor request failed: {e}")
         return False
     except KeyboardInterrupt:
+        print("\n⚠️  Monitor cancelled by user (CTRL-C)")
         raise
     except Exception as e:
         print(f"❌ Monitor request failed: {e}")
@@ -376,36 +392,41 @@ def request_install_dependencies_http(
     print(f"   Request ID: {request.request_id}")
     print("   ✅ Submitted\n")
 
-    # Submit HTTP request
+    # Submit HTTP request (using interruptible wrapper for proper CTRL-C handling)
     try:
-        with http_client(timeout=timeout) as client:
-            response = client.post(
-                get_daemon_url("/api/install-deps"),
-                json=serialize_request(request),
-            )
+        response = interruptible_post(
+            url=get_daemon_url("/api/install-deps"),
+            json=serialize_request(request),
+            timeout=timeout,
+        )
 
-            if response.status_code == 200:
-                result = response.json()
-                print("📦 Install Dependencies Progress:")
-                print(f"   Status: {result.get('message', 'Success')}")
-                if result.get("success"):
-                    print("✅ Install dependencies completed")
-                    return True
-                else:
-                    print(f"❌ Install dependencies failed: {result.get('message', 'Unknown error')}")
-                    return False
+        if response.status_code == 200:
+            result = response.json()
+            print("📦 Install Dependencies Progress:")
+            print(f"   Status: {result.get('message', 'Success')}")
+            if result.get("success"):
+                print("✅ Install dependencies completed")
+                return True
             else:
-                print(f"❌ HTTP request failed with status {response.status_code}")
-                print(f"   {response.text}")
+                print(f"❌ Install dependencies failed: {result.get('message', 'Unknown error')}")
                 return False
+        else:
+            print(f"❌ HTTP request failed with status {response.status_code}")
+            print(f"   {response.text}")
+            return False
 
-    except httpx.TimeoutException:
-        print(f"❌ Install dependencies timeout ({timeout}s)")
-        return False
-    except httpx.ConnectError:
-        print("❌ Failed to connect to daemon")
+    except InterruptibleHTTPError as e:
+        # Check if it's a timeout or connection error
+        error_msg = str(e).lower()
+        if "timeout" in error_msg:
+            print(f"❌ Install dependencies timeout ({timeout}s)")
+        elif "connect" in error_msg or "connection" in error_msg:
+            print("❌ Failed to connect to daemon")
+        else:
+            print(f"❌ Install dependencies request failed: {e}")
         return False
     except KeyboardInterrupt:
+        print("\n⚠️  Install dependencies cancelled by user (CTRL-C)")
         raise
     except Exception as e:
         print(f"❌ Install dependencies request failed: {e}")

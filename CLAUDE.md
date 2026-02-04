@@ -6,7 +6,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 fbuild is a PlatformIO-compatible embedded development tool providing build, deploy, and monitor functionality for Arduino/ESP32 platforms. It uses URL-based package management and a daemon for cross-process coordination.
 
-**Current Version:** v1.4.2 (update in `src/fbuild/__init__.py`, `pyproject.toml`, and this file)
+**Current Version:** v1.4.3 (update in `src/fbuild/__init__.py`, `pyproject.toml`, and this file)
+
+**Recent Changes (v1.4.3):**
+- Fixed CTRL-C deadlock in HTTP client - client now responds to keyboard interrupt within 0.5 seconds
+- Replaced blocking `httpx.Client.post()` with interruptible wrapper using background threads
+- See `docs/fix_ctrl_c_deadlock.md` for technical details
 
 ## Development Commands
 
