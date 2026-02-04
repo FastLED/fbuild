@@ -633,4 +633,6 @@ Given this landscape, the cost to FastLED developers became untenable. It proved
 
 ## License
 
+In the spirit of Dan Garcia's permissively licensed software, `fbuild` is presented as free software.
+
 BSD 3-Clause License
