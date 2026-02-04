@@ -1,5 +1,7 @@
 ![fbuild](https://github.com/user-attachments/assets/7db78eba-b10f-44c7-ae32-7fc0b5e46642)
 
+*A fast, next-generation multi-platform compiler, deployer, and monitor for embedded development, directly compatible with platformio.ini*
+
 ## Build Status
 
 ### AVR
@@ -20,7 +22,7 @@
 [![Build Teensy 3.6](https://github.com/fastled/fbuild/actions/workflows/build-teensy36.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-teensy36.yml)
 [![Build Teensy LC](https://github.com/fastled/fbuild/actions/workflows/build-teensylc.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-teensylc.yml)
 
-*A fast, next-generation multi-platform compiler, deployer, and monitor for embedded development, directly compatible with platformio.ini*
+
 
 # fbuild
 
