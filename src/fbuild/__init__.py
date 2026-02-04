@@ -6,7 +6,7 @@ from typing import Any
 
 from fbuild.daemon.connection import DaemonConnection, connect_daemon
 
-__version__ = "1.4.0"
+__version__ = "1.4.1"
 
 
 def is_available() -> bool:
