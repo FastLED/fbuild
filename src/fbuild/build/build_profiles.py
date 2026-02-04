@@ -23,7 +23,7 @@ Design:
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import List
+from typing import Any, List
 
 
 class BuildProfile(Enum):
