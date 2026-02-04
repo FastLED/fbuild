@@ -156,12 +156,17 @@ class FlagBuilder:
         is_esp32 = mcu.lower().startswith("esp32")
 
         # Common Arduino defines
-        flags['common'].extend([
+        arduino_defines = [
             f'-DF_CPU={f_cpu}',
-            '-DARDUINO=10812',  # Arduino version
             f'-DARDUINO_BOARD="{board}"',
             f'-DARDUINO_VARIANT="{self.variant}"',
-        ])
+        ]
+
+        # Only add ARDUINO version if not already defined in platform config
+        if not any(flag.startswith('-DARDUINO=') for flag in flags['common']):
+            arduino_defines.insert(1, '-DARDUINO=10812')  # Arduino version
+
+        flags['common'].extend(arduino_defines)
 
         if is_stm32:
             # STM32-specific defines

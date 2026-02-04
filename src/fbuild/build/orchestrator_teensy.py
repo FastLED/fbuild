@@ -232,11 +232,13 @@ class OrchestratorTeensy(IBuildOrchestrator):
             # Load board JSON and platform config ONCE (not redundantly in compiler/linker)
             board_json = platform.get_board_json(board_id)
             from .. import platform_configs
-            platform_config = platform_configs.load_config(board_config.mcu)
+            # Load board-specific config (teensy41.json) instead of MCU config (imxrt1062.json)
+            # Board configs have board-specific defines like ARDUINO_TEENSY41
+            platform_config = platform_configs.load_board_config(board_id)
             if platform_config is None:
                 return self._error_result(
                     start_time,
-                    f"No platform configuration found for {board_config.mcu}. Available: {platform_configs.list_available_configs()}"
+                    f"No platform configuration found for {board_id}. Available: {platform_configs.list_available_configs()}"
                 )
 
             # Extract variant and core from board config
