@@ -41,8 +41,10 @@ fbuild uses the same `platformio.ini` already used in platformio sketches.
     * locking is done through a daemon process
     * packages are fingerprinted to their version and cached, download only once
     * sccache for caching compiles
-  * Eesily add features via AI
+  * Easily add features via AI
     * This codebase is designed and implemented by AI, just fork it and ask ai to make your change Please send us a PR!
+  * Supports new build chains easily
+  * Supports wasm builds natively
     
 **Current Status**: v1.1.0 - Full Arduino Uno / esp32c6 support with working build system
 
