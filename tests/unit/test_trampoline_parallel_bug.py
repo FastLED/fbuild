@@ -21,6 +21,7 @@ from fbuild.build.build_context import BuildContext
 from fbuild.build.build_profiles import BuildProfile, get_profile
 from fbuild.build.compilation_executor import CompilationExecutor
 from fbuild.build.configurable_compiler import ConfigurableCompiler
+from fbuild.platform_configs.board_config_model import BoardConfigModel
 
 
 @pytest.mark.skipif(platform.system() != "Windows", reason="Windows-specific command-line length issue")
@@ -76,13 +77,20 @@ def test_parallel_compilation_uses_trampolines():
     mock_queue = Mock()
     mock_queue.submit_job = Mock()
 
-    # Mock platform config to avoid file loading
-    platform_config = {
+    # Mock platform config to avoid file loading (use BoardConfigModel for type safety)
+    platform_config_dict = {
+        "name": "ESP32-S3-DevKitC-1",
+        "mcu": "esp32s3",
+        "architecture": "xtensa",
+        "board": "ESP32S3",
+        "core": "esp32",
+        "variant": "esp32s3",
         "compiler_flags": {"common": ["-Os", "-Wall"], "c": ["-std=gnu11"], "cxx": ["-std=gnu++17"]},
         "defines": [],
         "linker_flags": [],
         "linker_scripts": [],
     }
+    platform_config = BoardConfigModel.from_dict(platform_config_dict)
     board_config = {"build": {"mcu": "esp32s3", "variant": "esp32s3", "core": "esp32"}}
 
     # Create mock BuildContext with all required fields

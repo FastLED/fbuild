@@ -108,7 +108,7 @@ class BinaryGenerator:
         flash_freq = self._normalize_flash_freq(flash_freq)
 
         # Get esptool config from platform JSON (with fallback defaults)
-        esptool_config = self.platform_config.get("esptool", {})
+        esptool_config = self.platform_config.esptool
         elf_sha256_offset = esptool_config.get("elf_sha256_offset", "0xb0")
 
         # Build esptool.py elf2image command
@@ -554,7 +554,7 @@ class BinaryGenerator:
             Dictionary with 'bootloader', 'partitions', and 'firmware' offset strings
         """
         # Get offsets from platform JSON config
-        esptool_config = self.platform_config.get("esptool", {})
+        esptool_config = self.platform_config.esptool
         flash_offsets = esptool_config.get("flash_offsets", {})
 
         # Use JSON values or fallback to defaults

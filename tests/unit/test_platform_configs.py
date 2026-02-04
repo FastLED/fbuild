@@ -15,52 +15,74 @@ class TestLoadConfig:
         """Load ESP32 config from esp/ subdirectory."""
         config = platform_configs.load_config("esp32")
         assert config is not None
-        assert config["name"] == "ESP32"
-        assert config["mcu"] == "esp32"
-        assert "compiler_flags" in config
-        assert "linker_flags" in config
+        assert config.name == "ESP32"
+        assert config.mcu == "esp32"
+        assert hasattr(config, "compiler_flags")
+        assert hasattr(config, "linker_flags")
 
     def test_load_esp32c6_config(self):
         """Load ESP32-C6 config from esp/ subdirectory."""
         config = platform_configs.load_config("esp32c6")
         assert config is not None
-        assert config["mcu"] == "esp32c6"
+        assert config.mcu == "esp32c6"
 
     def test_load_esp32s3_config(self):
         """Load ESP32-S3 config from esp/ subdirectory."""
         config = platform_configs.load_config("esp32s3")
         assert config is not None
-        assert config["mcu"] == "esp32s3"
+        assert config.mcu == "esp32s3"
 
     def test_load_rp2040_config(self):
         """Load RP2040 config from rp/ subdirectory."""
         config = platform_configs.load_config("rp2040")
         assert config is not None
-        assert config["mcu"] == "rp2040"
+        assert config.mcu == "rp2040"
 
     def test_load_rp2350_config(self):
         """Load RP2350 config from rp/ subdirectory."""
         config = platform_configs.load_config("rp2350")
         assert config is not None
-        assert config["mcu"] == "rp2350"
+        assert config.mcu == "rp2350"
 
     def test_load_stm32f1_config(self):
         """Load STM32F1 config from stm32/ subdirectory."""
         config = platform_configs.load_config("stm32f1")
         assert config is not None
-        assert config["mcu"] == "stm32f1"
+        assert config.mcu == "stm32f1"
 
     def test_load_stm32f4_config(self):
         """Load STM32F4 config from stm32/ subdirectory."""
         config = platform_configs.load_config("stm32f4")
         assert config is not None
-        assert config["mcu"] == "stm32f4"
+        assert config.mcu == "stm32f4"
 
-    def test_load_imxrt1062_config(self):
-        """Load imxrt1062 (Teensy 4.x) config from teensy/ subdirectory."""
-        config = platform_configs.load_config("imxrt1062")
+    def test_load_teensy41_config(self):
+        """Load Teensy 4.1 config from teensy/ subdirectory."""
+        config = platform_configs.load_config("teensy41")
         assert config is not None
-        assert config["mcu"] == "imxrt1062"
+        assert config.mcu == "imxrt1062"
+        assert config.board == "teensy41"
+
+    def test_load_teensy40_config(self):
+        """Load Teensy 4.0 config from teensy/ subdirectory."""
+        config = platform_configs.load_config("teensy40")
+        assert config is not None
+        assert config.mcu == "imxrt1062"
+        assert config.board == "teensy40"
+
+    def test_load_teensy36_config(self):
+        """Load Teensy 3.6 config from teensy/ subdirectory."""
+        config = platform_configs.load_config("teensy36")
+        assert config is not None
+        assert config.mcu == "mk66fx1m0"
+        assert config.board == "teensy36"
+
+    def test_load_teensylc_config(self):
+        """Load Teensy LC config from teensy/ subdirectory."""
+        config = platform_configs.load_config("teensylc")
+        assert config is not None
+        assert config.mcu == "mkl26z64"
+        assert config.board == "teensylc"
 
     def test_load_nonexistent_config_returns_none(self):
         """Loading a non-existent MCU config returns None."""
@@ -80,7 +102,7 @@ class TestLoadConfig:
             config = platform_configs.load_config(mcu)
             assert config is not None, f"Failed to load config for {mcu}"
             for field in required_fields:
-                assert field in config, f"Config for {mcu} missing required field: {field}"
+                assert hasattr(config, field), f"Config for {mcu} missing required field: {field}"
 
 
 class TestListAvailableConfigs:
@@ -107,7 +129,10 @@ class TestListAvailableConfigs:
             "rp2350",
             "stm32f1",
             "stm32f4",
-            "imxrt1062",
+            "teensy36",
+            "teensy40",
+            "teensy41",
+            "teensylc",
         ]
 
         for mcu in expected_mcus:
@@ -151,11 +176,13 @@ class TestListConfigsByVendor:
             assert mcu in esp_configs, f"Expected {mcu} in esp vendor"
 
     def test_teensy_vendor_configs(self):
-        """Teensy vendor should contain imxrt1062."""
+        """Teensy vendor should contain all Teensy board configs."""
         by_vendor = platform_configs.list_configs_by_vendor()
         teensy_configs = by_vendor.get("teensy", [])
 
-        assert "imxrt1062" in teensy_configs
+        expected = ["teensy36", "teensy40", "teensy41", "teensylc"]
+        for board in expected:
+            assert board in teensy_configs, f"Expected {board} in teensy vendor"
 
     def test_rp_vendor_configs(self):
         """RP vendor should contain RP2040 and RP2350."""

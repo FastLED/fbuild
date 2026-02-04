@@ -46,9 +46,10 @@
       "name": "PJRC Teensy",
       "description": "Teensy development boards",
       "configs": [
-        "imxrt1062",
+        "teensy36",
         "teensy40",
-        "teensy41"
+        "teensy41",
+        "teensylc"
       ]
     }
   }
