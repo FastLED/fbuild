@@ -26,7 +26,7 @@
 
 # fbuild
 
-Fbuild is a next-generation embedded development tool featuring a clean extensible data driven architecture. It provides fast incremental builds, URL-based package management, and soon to be comprehensive multi-platform support for Arduino and ESP32 development.
+`fbuild` is a next-generation embedded development tool featuring a clean extensible data driven architecture. It provides fast incremental builds, URL-based package management, and soon to be comprehensive multi-platform support for Arduino and ESP32 development.
 
 **platformio.ini compatible**
 
