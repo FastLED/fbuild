@@ -106,20 +106,30 @@ class ArduinoCore(IFramework):
                 temp_path = Path(temp_dir)
                 self.downloader.extract_archive(package_path, temp_path, show_progress=False)
 
-                # The archive extracts to avr/ subdirectory
-                extracted_dir = temp_path / "avr"
-                if not extracted_dir.exists():
-                    # If not in avr/ subdirectory, use first directory found
-                    extracted_dirs = [d for d in temp_path.iterdir() if d.is_dir()]
-                    if extracted_dirs:
-                        extracted_dir = extracted_dirs[0]
-                    else:
-                        raise ArduinoCoreError("No directory found in extracted archive")
+                # After extraction, check if temp_path contains the core files directly
+                # (downloader.extract_archive strips the top-level GitHub directory)
+                if (temp_path / "boards.txt").exists() and (temp_path / "cores").exists():
+                    # Core files are directly in temp_path, move all contents to core_path
+                    if core_path.exists():
+                        shutil.rmtree(core_path)
+                    core_path.mkdir(parents=True, exist_ok=True)
+                    for item in temp_path.iterdir():
+                        shutil.move(str(item), str(core_path / item.name))
+                else:
+                    # Legacy fallback: look for subdirectory (e.g., avr/)
+                    extracted_dir = temp_path / "avr"
+                    if not extracted_dir.exists():
+                        # If not in avr/ subdirectory, use first directory found
+                        extracted_dirs = [d for d in temp_path.iterdir() if d.is_dir()]
+                        if extracted_dirs:
+                            extracted_dir = extracted_dirs[0]
+                        else:
+                            raise ArduinoCoreError("No directory found in extracted archive")
 
-                # Move to final location
-                if core_path.exists():
-                    shutil.rmtree(core_path)
-                shutil.move(str(extracted_dir), str(core_path))
+                    # Move to final location
+                    if core_path.exists():
+                        shutil.rmtree(core_path)
+                    shutil.move(str(extracted_dir), str(core_path))
 
             # Verify installation
             if not self._verify_core(core_path):
