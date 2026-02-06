@@ -183,3 +183,48 @@ class ToolchainMetadataParser:
         # Parse tools.json
         tools_json_path = extracted_path / "tools.json"
         return self.parse_tools_json(tools_json_path, toolchain_name, platform)
+
+    def get_expected_binary_name(
+        self,
+        tools_json_path: Path,
+        toolchain_name: str,
+    ) -> Optional[str]:
+        """Extract the expected GCC binary name from tools.json version_cmd field.
+
+        Args:
+            tools_json_path: Path to tools.json file
+            toolchain_name: Name of the toolchain (e.g., "toolchain-riscv32-esp")
+
+        Returns:
+            Expected GCC binary name (e.g., "xtensa-esp-elf-gcc"), or None if not found
+
+        Example tools.json structure:
+            {
+                "tools": [{
+                    "name": "toolchain-xtensa-esp-elf",
+                    "version_cmd": ["xtensa-esp-elf-gcc", "--version"]
+                }]
+            }
+        """
+        if not tools_json_path.exists():
+            return None
+
+        try:
+            with open(tools_json_path, "r") as f:
+                tools_data = json.load(f)
+
+            # Find the toolchain tool
+            tools = tools_data.get("tools", [])
+            for tool in tools:
+                if tool.get("name") == toolchain_name:
+                    version_cmd = tool.get("version_cmd", [])
+                    if version_cmd and len(version_cmd) > 0:
+                        # version_cmd is like ["xtensa-esp-elf-gcc", "--version"]
+                        # Extract just the binary name (first element)
+                        binary_name = version_cmd[0]
+                        return binary_name
+
+            return None
+
+        except (json.JSONDecodeError, KeyError, IndexError):
+            return None

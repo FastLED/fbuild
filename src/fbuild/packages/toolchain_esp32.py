@@ -65,10 +65,11 @@ class ToolchainESP32(IToolchain):
     - Xtensa GCC for ESP32, S2, S3 chips
     """
 
-    # Toolchain name mappings
+    # Toolchain name mappings (FALLBACK ONLY - used when binary discovery fails)
+    # These values are overridden by actual binary discovery after installation
     TOOLCHAIN_NAMES = {
         "riscv32-esp": "riscv32-esp-elf",
-        "xtensa-esp-elf": "xtensa-esp32-elf",  # Note: xtensa uses esp32 in binary names
+        "xtensa-esp-elf": "xtensa-esp32-elf",  # NOTE: tools.json says "xtensa-esp-elf" but binaries are "xtensa-esp32-elf"
     }
 
     # MCU to toolchain type mapping
@@ -111,12 +112,18 @@ class ToolchainESP32(IToolchain):
         # Get toolchain path from cache
         self.toolchain_path = cache.get_toolchain_path(toolchain_url, self.version)
 
-        # Get binary prefix for this toolchain type
-        self.binary_prefix = self.TOOLCHAIN_NAMES.get(toolchain_type, toolchain_type)
+        # Initialize binary finder with fallback prefix
+        fallback_prefix = self.TOOLCHAIN_NAMES.get(toolchain_type, toolchain_type)
 
         # Initialize utilities
         self.metadata_parser = ToolchainMetadataParser(self.downloader)
-        self.binary_finder = ToolchainBinaryFinder(self.toolchain_path, self.binary_prefix)
+        self.binary_finder = ToolchainBinaryFinder(self.toolchain_path, fallback_prefix)
+
+        # Cache for discovered binary prefix (set after ensure_toolchain)
+        self._discovered_prefix: Optional[str] = None
+
+        # Set the actual binary prefix (will use discovery if toolchain is installed)
+        self.binary_prefix = self._get_binary_prefix()
 
     @staticmethod
     def _extract_version_from_url(url: str) -> str:
@@ -143,6 +150,63 @@ class ToolchainESP32(IToolchain):
         from .cache import Cache
 
         return Cache.hash_url(url)[:8]
+
+    def _get_expected_binary_name(self) -> Optional[str]:
+        """Get the expected GCC binary name from tools.json manifest.
+
+        Returns:
+            Expected binary name (e.g., "xtensa-esp-elf-gcc"), or None if not found
+        """
+        tools_json_path = self.toolchain_path / "tools.json"
+        if not tools_json_path.exists():
+            return None
+
+        toolchain_name = f"toolchain-{self.toolchain_type}"
+        return self.metadata_parser.get_expected_binary_name(tools_json_path, toolchain_name)
+
+    def _get_binary_prefix(self) -> str:
+        """Get the binary prefix, using discovery if toolchain is installed.
+
+        Returns:
+            Binary prefix string (e.g., "xtensa-esp-elf", "riscv32-esp-elf")
+        """
+        # Return cached discovered prefix if available
+        if self._discovered_prefix is not None:
+            return self._discovered_prefix
+
+        # Try to discover from installed binaries (check toolchain_path exists)
+        if self.toolchain_path.exists():
+            expected_binary = self._get_expected_binary_name()
+            discovered = self.binary_finder.discover_binary_prefix(
+                verbose=self.show_progress,
+                expected_binary_name=expected_binary,
+            )
+            if discovered:
+                self._discovered_prefix = discovered
+                # Update binary_finder with correct prefix
+                self.binary_finder.binary_prefix = discovered
+                return discovered
+
+        # Fallback to hardcoded mapping
+        return self.TOOLCHAIN_NAMES.get(self.toolchain_type, self.toolchain_type)
+
+    def _update_binary_prefix_after_install(self) -> None:
+        """Update binary prefix after toolchain installation.
+
+        Called by ensure_toolchain() after successful installation.
+        Uses tools.json manifest to determine the correct binary naming.
+        """
+        expected_binary = self._get_expected_binary_name()
+        discovered = self.binary_finder.discover_binary_prefix(
+            verbose=self.show_progress,
+            expected_binary_name=expected_binary,
+        )
+        if discovered:
+            self._discovered_prefix = discovered
+            self.binary_finder.binary_prefix = discovered
+            self.binary_prefix = discovered
+            if self.show_progress:
+                print(f"Discovered toolchain binary prefix: {discovered}")
 
     @staticmethod
     def get_toolchain_type_for_mcu(mcu: str) -> ToolchainType:
@@ -213,6 +277,10 @@ class ToolchainESP32(IToolchain):
             ToolchainErrorESP32: If download or extraction fails
         """
         if self.is_installed():
+            # Update binary prefix if not already discovered
+            if self._discovered_prefix is None:
+                self._update_binary_prefix_after_install()
+
             if self.show_progress:
                 print(f"Using cached {self.toolchain_type} toolchain {self.version}")
             return self.toolchain_path
@@ -300,6 +368,9 @@ class ToolchainESP32(IToolchain):
 
             if self.show_progress:
                 print(f"{self.toolchain_type} toolchain installed successfully")
+
+            # Discover actual binary prefix from installed files
+            self._update_binary_prefix_after_install()
 
             return self.toolchain_path
 

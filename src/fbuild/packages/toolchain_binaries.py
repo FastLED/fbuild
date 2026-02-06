@@ -211,3 +211,77 @@ class ToolchainBinaryFinder:
         It updates the symbol table of archives containing LTO objects.
         """
         return self.find_binary("gcc-ranlib")
+
+    def discover_binary_prefix(
+        self,
+        verbose: bool = False,
+        expected_binary_name: Optional[str] = None,
+    ) -> Optional[str]:
+        """Discover the actual binary prefix by scanning the bin directory.
+
+        Strategy:
+        1. If expected_binary_name is provided (from tools.json), look for that specific binary first
+        2. If found, extract and return its prefix
+        3. If not found or expected_binary_name not provided, scan for any *-gcc binary
+
+        Args:
+            verbose: Whether to print discovery progress
+            expected_binary_name: Expected gcc binary name from tools.json (e.g., "xtensa-esp-elf-gcc")
+
+        Returns:
+            Discovered binary prefix, or None if not found
+
+        Example:
+            >>> finder.discover_binary_prefix(expected_binary_name="xtensa-esp-elf-gcc")
+            "xtensa-esp-elf"  # Extracted from "xtensa-esp-elf-gcc.exe"
+        """
+        bin_dir = self.find_bin_dir()
+        if not bin_dir or not bin_dir.exists():
+            if verbose:
+                print("Binary discovery failed: bin directory not found")
+            return None
+
+        if verbose:
+            print(f"Scanning for binaries in {bin_dir}")
+
+        import re
+
+        # Strategy 1: Look for expected binary name from tools.json (if provided)
+        if expected_binary_name:
+            if verbose:
+                print(f"Looking for expected binary: {expected_binary_name}")
+
+            for ext in [".exe", ""]:
+                expected_path = bin_dir / f"{expected_binary_name}{ext}"
+                if expected_path.exists() and expected_path.is_file():
+                    # Extract prefix from expected binary name
+                    # Pattern: {prefix}-gcc → extract {prefix}
+                    if expected_binary_name.endswith("-gcc"):
+                        discovered_prefix = expected_binary_name[:-4]  # Remove "-gcc" suffix
+                        if verbose:
+                            print(f"Discovered binary prefix: {discovered_prefix} (from expected binary {expected_path.name})")
+                        return discovered_prefix
+
+            if verbose:
+                print(f"Expected binary {expected_binary_name} not found, falling back to scan")
+
+        # Strategy 2: Fallback - scan for any *-gcc binary
+        if verbose:
+            print("Scanning for any gcc binary...")
+
+        for ext in [".exe", ""]:
+            pattern = re.compile(rf"^(.+)-gcc{re.escape(ext)}$")
+            for binary_file in bin_dir.iterdir():
+                if not binary_file.is_file():
+                    continue
+                match = pattern.match(binary_file.name)
+                if match:
+                    discovered_prefix = match.group(1)
+                    if verbose:
+                        print(f"Discovered binary prefix: {discovered_prefix} (from scanned binary {binary_file.name})")
+                    return discovered_prefix
+
+        if verbose:
+            print(f"Binary discovery failed: no gcc binary found in {bin_dir}")
+
+        return None
