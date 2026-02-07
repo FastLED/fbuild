@@ -275,8 +275,8 @@ class OrchestratorESP32(IBuildOrchestrator):
             # Get required packages
             packages = platform.get_required_packages(mcu)
 
-            # Initialize toolchain
-            toolchain = self._setup_toolchain(packages, start_time, verbose)
+            # Initialize toolchain (pass MCU for Xtensa wrapper binary selection)
+            toolchain = self._setup_toolchain(packages, start_time, verbose, mcu=mcu)
             if toolchain is None:
                 return self._error_result(
                     start_time,
@@ -577,7 +577,8 @@ class OrchestratorESP32(IBuildOrchestrator):
         self,
         packages: dict,
         start_time: float,
-        verbose: bool
+        verbose: bool,
+        mcu: Optional[str] = None,
     ) -> Optional['ToolchainESP32']:
         """
         Initialize ESP32 toolchain.
@@ -586,6 +587,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             packages: Package URLs dictionary
             start_time: Build start time for error reporting
             verbose: Verbose output mode
+            mcu: Target MCU for selecting MCU-specific wrapper binaries
 
         Returns:
             ToolchainESP32 instance or None on failure
@@ -602,7 +604,8 @@ class OrchestratorESP32(IBuildOrchestrator):
             self.cache,
             toolchain_url,
             toolchain_type,
-            show_progress=True
+            show_progress=True,
+            mcu=mcu,
         )
         toolchain.ensure_toolchain()
         return toolchain

@@ -85,12 +85,19 @@ class ToolchainESP32(IToolchain):
         "esp32p4": "riscv32-esp",
     }
 
+    # Xtensa MCUs that have MCU-specific wrapper binaries in the unified toolchain.
+    # The wrapper binaries (e.g., xtensa-esp32-elf-gcc) automatically handle
+    # -mdynconfig for correct endianness. Without them, the generic xtensa-esp-elf-gcc
+    # defaults to big-endian and linking fails with "failed to merge target specific data".
+    XTENSA_MCUS = frozenset({"esp32", "esp32s2", "esp32s3"})
+
     def __init__(
         self,
         cache: Cache,
         toolchain_url: str,
         toolchain_type: ToolchainType,
         show_progress: bool = True,
+        mcu: Optional[str] = None,
     ):
         """Initialize ESP32 toolchain manager.
 
@@ -99,11 +106,15 @@ class ToolchainESP32(IToolchain):
             toolchain_url: URL to toolchain package (e.g., GitHub release ZIP)
             toolchain_type: Type of toolchain ("riscv32-esp" or "xtensa-esp-elf")
             show_progress: Whether to show download/extraction progress
+            mcu: Target MCU (e.g., "esp32", "esp32s3"). For Xtensa toolchains,
+                 this selects the MCU-specific wrapper binaries that auto-handle
+                 endianness configuration.
         """
         self.cache = cache
         self.toolchain_url = toolchain_url
         self.toolchain_type = toolchain_type
         self.show_progress = show_progress
+        self.mcu = mcu
         self.downloader = PackageDownloader()
 
         # Extract version from URL
@@ -165,14 +176,33 @@ class ToolchainESP32(IToolchain):
         return self.metadata_parser.get_expected_binary_name(tools_json_path, toolchain_name)
 
     def _get_binary_prefix(self) -> str:
-        """Get the binary prefix, using discovery if toolchain is installed.
+        """Get the binary prefix, using MCU-specific wrapper for Xtensa toolchains.
+
+        For Xtensa toolchains (esp32, esp32s2, esp32s3), the unified toolchain
+        provides MCU-specific wrapper binaries (e.g., xtensa-esp32-elf-gcc) that
+        automatically handle the -mdynconfig flag for correct endianness. Using the
+        generic xtensa-esp-elf-gcc would default to big-endian, causing link failures.
 
         Returns:
-            Binary prefix string (e.g., "xtensa-esp-elf", "riscv32-esp-elf")
+            Binary prefix string (e.g., "xtensa-esp32-elf", "riscv32-esp-elf")
         """
         # Return cached discovered prefix if available
         if self._discovered_prefix is not None:
             return self._discovered_prefix
+
+        # For Xtensa toolchains with a known MCU, use the MCU-specific wrapper prefix.
+        # These wrappers auto-add -mdynconfig for correct endianness and multilib selection.
+        if self.mcu and self.toolchain_type == "xtensa-esp-elf" and self.mcu in self.XTENSA_MCUS:
+            mcu_prefix = f"xtensa-{self.mcu}-elf"
+            # Verify the MCU-specific binary exists before committing
+            if self.toolchain_path.exists():
+                temp_finder = ToolchainBinaryFinder(self.toolchain_path, mcu_prefix)
+                if temp_finder.verify_binary_exists("gcc"):
+                    self._discovered_prefix = mcu_prefix
+                    self.binary_finder.binary_prefix = mcu_prefix
+                    if self.show_progress:
+                        print(f"Using MCU-specific toolchain prefix: {mcu_prefix}")
+                    return mcu_prefix
 
         # Try to discover from installed binaries (check toolchain_path exists)
         if self.toolchain_path.exists():
@@ -194,8 +224,21 @@ class ToolchainESP32(IToolchain):
         """Update binary prefix after toolchain installation.
 
         Called by ensure_toolchain() after successful installation.
-        Uses tools.json manifest to determine the correct binary naming.
+        For Xtensa toolchains with a known MCU, uses MCU-specific wrapper prefix.
+        Falls back to tools.json manifest discovery.
         """
+        # For Xtensa toolchains with a known MCU, prefer MCU-specific wrapper binaries
+        if self.mcu and self.toolchain_type == "xtensa-esp-elf" and self.mcu in self.XTENSA_MCUS:
+            mcu_prefix = f"xtensa-{self.mcu}-elf"
+            temp_finder = ToolchainBinaryFinder(self.toolchain_path, mcu_prefix)
+            if temp_finder.verify_binary_exists("gcc"):
+                self._discovered_prefix = mcu_prefix
+                self.binary_finder.binary_prefix = mcu_prefix
+                self.binary_prefix = mcu_prefix
+                if self.show_progress:
+                    print(f"Using MCU-specific toolchain prefix: {mcu_prefix}")
+                return
+
         expected_binary = self._get_expected_binary_name()
         discovered = self.binary_finder.discover_binary_prefix(
             verbose=self.show_progress,

@@ -238,7 +238,7 @@ class InstallDependenciesProcessor(RequestProcessor):
             toolchain_type = "xtensa-esp-elf"
 
         if toolchain_url and toolchain_type:
-            toolchain = ToolchainESP32(cache, toolchain_url, toolchain_type, show_progress=True)
+            toolchain = ToolchainESP32(cache, toolchain_url, toolchain_type, show_progress=True, mcu=mcu)
             toolchain.ensure_toolchain()
             logging.info(f"Toolchain installed: version {toolchain.version}")
         else:
