@@ -319,14 +319,14 @@ class ToolchainESP32(IToolchain):
 
             self.downloader.extract_archive(archive_path, temp_extract, show_progress=self.show_progress)
 
-            # Find the toolchain directory in the extracted content
-            # Usually it's a subdirectory like "riscv32-esp-elf/" or "xtensa-esp32-elf/"
-            extracted_dirs = list(temp_extract.glob("*esp*"))
-            if not extracted_dirs:
-                # Maybe it extracted directly
-                extracted_dirs = [temp_extract]
-
-            source_dir = extracted_dirs[0]
+            # Use temp_extract directly as the source directory.
+            # The downloader's extract_archive() already strips single top-level
+            # directories (e.g., xtensa-esp-elf/ → contents moved to temp_extract/).
+            # After stripping, temp_extract contains bin/, lib/, include/, etc. directly.
+            # NOTE: Do NOT use glob("*esp*") here - it matches the target sysroot
+            # subdirectory (xtensa-esp-elf/) instead of the full toolchain contents,
+            # causing only unprefixed binutils to be installed (no gcc/g++/ar).
+            source_dir = temp_extract
 
             # Move to final location (toolchain_path/bin)
             final_bin_path = toolchain_cache_dir
