@@ -35,7 +35,8 @@ def main() -> int:
 
     # Also skip the standalone checker scripts themselves (they need sys.path for fbuild_lint import)
     checker_scripts = {"check_keyboard_interrupt.py", "check_sys_path.py", "check_subprocess_safety.py",
-                      "check_orchestrator_signatures.py", "check_message_serialization.py"}
+                      "check_orchestrator_signatures.py", "check_message_serialization.py",
+                      "demo_parallel_install.py"}
 
     total_errors = 0
 

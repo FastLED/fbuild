@@ -6,9 +6,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 fbuild is a PlatformIO-compatible embedded development tool providing build, deploy, and monitor functionality for Arduino/ESP32 platforms. It uses URL-based package management and a daemon for cross-process coordination.
 
-**Current Version:** v1.4.3 (update in `src/fbuild/__init__.py`, `pyproject.toml`, and this file)
+**Current Version:** v1.4.4 (update in `src/fbuild/__init__.py`, `pyproject.toml`, and this file)
 
-**Recent Changes (v1.4.3):**
+**Recent Changes (v1.4.4):**
+- Added parallel package installation pipeline with Docker pull-style TUI
+- Three-stage pipeline: Download (4 workers) → Unpack (2 workers) → Install (2 workers)
+- DAG-based dependency scheduler respects platform → toolchain → framework → library ordering
+- Rich-based progress display with live-updating progress bars, spinners, and status lines
+- Download retry with exponential backoff, extraction retry for Windows AV, Ctrl-C cleanup
+
+**Previous Changes (v1.4.3):**
 - Fixed CTRL-C deadlock in HTTP client - client now responds to keyboard interrupt within 0.5 seconds
 - Replaced blocking `httpx.Client.post()` with interruptible wrapper using background threads
 - See `docs/fix_ctrl_c_deadlock.md` for technical details
@@ -464,6 +471,104 @@ def execute_operation(self, request, context):
 - Mark concurrent safety tests with `@pytest.mark.concurrent_safety`
 
 **⚠️ DEPRECATED:** Module-level globals (`_start_time`, `_output_stream`, `_verbose`, `_output_file`) are kept for backward compatibility but will be removed in a future version. Always use the context API (`get_context()`, `set_output_file()`, etc.).
+
+## Parallel Package Pipeline
+
+The parallel package pipeline (`src/fbuild/packages/pipeline/`) provides concurrent package installation with a Docker pull-style TUI display.
+
+### Architecture
+
+```
+src/fbuild/packages/pipeline/
+├── __init__.py              # Public API: ParallelInstaller
+├── models.py                # PackageTask, TaskPhase, PipelineResult dataclasses
+├── scheduler.py             # DAG-based dependency scheduler with cycle detection
+├── pools.py                 # Static thread pools: DownloadPool, UnpackPool, InstallPool
+├── pipeline.py              # Pipeline orchestrator connecting pools + scheduler
+├── progress_display.py      # Rich-based Docker pull-style TUI renderer
+├── callbacks.py             # ProgressCallback protocol + NullCallback
+└── adapters.py              # Platform-specific task graph builders (AVR, etc.)
+```
+
+### Thread Pool Design
+
+| Pool | Resource | Default Workers | Purpose |
+|------|----------|-----------------|---------|
+| `DownloadPool` | Network I/O | 4 | HTTP downloads with progress tracking |
+| `UnpackPool` | Disk I/O | 2 | Archive extraction (.tar.gz, .tar.xz, .zip) |
+| `InstallPool` | CPU | 2 | Verification, fingerprinting, post-install hooks |
+
+### Data Flow
+
+```
+PackageTask(name, url, version, deps=[])
+    │
+    ▼
+DependencyScheduler (resolves DAG, emits ready tasks)
+    │
+    ▼
+DownloadPool ──progress──► PipelineProgressDisplay ("Downloading [=====>   ] 62%")
+    │
+    ▼
+UnpackPool ──progress──► PipelineProgressDisplay ("Unpacking [========> ] 85%")
+    │
+    ▼
+InstallPool ──status──► PipelineProgressDisplay ("Installing ⠸ Verifying...")
+    │
+    ▼
+Done ──► PipelineProgressDisplay ("Done ✓ 3.2s")
+```
+
+### TUI Display
+
+The Rich-based progress display shows a Docker pull-style multi-line live view:
+
+```
+Installing dependencies for env:uno...
+
+  atmelavr 5.0.0           Downloading   [=========>          ]  45%  2.1 MB/s
+  toolchain-atmelavr 3.1   Unpacking     [===============>    ]  78%
+  framework-arduino 4.2.0  Installing    ⠸ Verifying toolchain binaries...
+  Wire 1.0                 Done          ✓ 1.2s
+  SPI 1.0                  Done          ✓ 0.8s
+  Servo 1.1.8              Waiting
+
+  6 packages, 3 active, 2 done
+```
+
+### Error Handling
+
+- **Download retry**: Exponential backoff (3 attempts, 1s/2s/4s delays) for `ConnectionError`, `Timeout`, `OSError`
+- **Extraction retry**: 3 attempts with 2s delay for `PermissionError` (Windows antivirus)
+- **HTTP errors** (404, etc.): Not retried (permanent failures)
+- **Ctrl-C cleanup**: Removes `.download` temp files and `temp_extract_*` directories
+- **Dependency failure propagation**: Failed tasks cause dependent tasks to fail with descriptive messages
+
+### Usage
+
+```python
+from fbuild.packages.pipeline import ParallelInstaller
+
+installer = ParallelInstaller(
+    download_workers=4,
+    unpack_workers=2,
+    install_workers=2,
+)
+
+result = installer.install_dependencies(
+    project_path=Path("my_project"),
+    env_name="uno",
+    verbose=True,
+    use_tui=None,  # Auto-detect TTY
+)
+
+print(f"Success: {result.success}, {result.completed_count} installed in {result.total_elapsed:.1f}s")
+```
+
+### Test Coverage
+
+- `tests/unit/packages/pipeline/` - 264 unit tests covering models, scheduler, pools, pipeline, display, adapters, error handling
+- Tests use mock downloads and run with `-n auto` for parallel execution
 
 ## Test Organization
 
