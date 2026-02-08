@@ -564,12 +564,14 @@ class OrchestratorESP8266(IBuildOrchestrator):
         """
         log_phase(7, 11, "Compiling sketch...")
 
-        # Determine source directory
+        # Determine source directory (PlatformIO defaults to "src")
         if src_dir_override:
             src_dir = project_dir / src_dir_override
             log_detail(f"Using source directory override: {src_dir_override}", verbose_only=True)
         else:
-            src_dir = project_dir
+            src_dir = project_dir / "src"
+            if not src_dir.exists():
+                src_dir = project_dir
 
         # Look for .ino files in the source directory
         sketch_files = list(src_dir.glob("*.ino"))
