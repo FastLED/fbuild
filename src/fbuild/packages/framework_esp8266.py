@@ -315,22 +315,33 @@ class FrameworkESP8266(IFramework):
 
         return ld_dir
 
-    def get_sdk_lib_dir(self) -> Path:
-        """Get the path to the SDK lib directory.
+    def get_sdk_lib_dirs(self) -> List[Path]:
+        """Get all SDK library directories.
+
+        ESP8266 SDK libraries are split across multiple directories:
+        - tools/sdk/lib/ - common libraries (libbearssl, libhal, liblwip2, libstdc++)
+        - tools/sdk/lib/NONOSDK305/ - NONOS SDK 3.0.5 specific libraries (libphy, libpp, etc.)
 
         Returns:
-            Path to SDK lib directory
+            List of SDK library directory paths
 
         Raises:
-            FrameworkErrorESP8266: If SDK lib directory not found
+            FrameworkErrorESP8266: If base SDK lib directory not found
         """
         framework_path = self.get_framework_path()
-        sdk_lib_dir = framework_path / "tools" / "sdk" / "lib"
+        sdk_lib_base = framework_path / "tools" / "sdk" / "lib"
 
-        if not sdk_lib_dir.exists():
-            raise FrameworkErrorESP8266(f"SDK lib directory not found: {sdk_lib_dir}")
+        if not sdk_lib_base.exists():
+            raise FrameworkErrorESP8266(f"SDK lib directory not found: {sdk_lib_base}")
 
-        return sdk_lib_dir
+        dirs = [sdk_lib_base]
+
+        # Add NONOSDK305 subdirectory (default SDK for ESP8266 Arduino 3.x)
+        nonosdk_dir = sdk_lib_base / "NONOSDK305"
+        if nonosdk_dir.exists():
+            dirs.append(nonosdk_dir)
+
+        return dirs
 
     def is_installed(self) -> bool:
         """Check if framework is already installed.

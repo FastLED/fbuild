@@ -325,9 +325,9 @@ class ConfigurableLinker(ILinker):
             if sdk_lib_dir.exists():
                 # SDK directories stay absolute (outside build dir)
                 cmd.append(f"-L{_path_to_string(sdk_lib_dir)}")
-        elif hasattr(self.framework, 'get_sdk_lib_dir'):
-            sdk_lib_dir = self.framework.get_sdk_lib_dir()  # type: ignore[attr-defined]
-            cmd.append(f"-L{_path_to_string(sdk_lib_dir)}")
+        elif hasattr(self.framework, 'get_sdk_lib_dirs'):
+            for sdk_lib_dir in self.framework.get_sdk_lib_dirs():  # type: ignore[attr-defined]
+                cmd.append(f"-L{_path_to_string(sdk_lib_dir)}")
 
         # Group libraries to resolve circular dependencies
         cmd.append("-Wl,--start-group")
