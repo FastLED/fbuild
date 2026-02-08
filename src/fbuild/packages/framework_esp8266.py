@@ -193,15 +193,17 @@ class FrameworkESP8266(IFramework):
             core_name: Core name (e.g., "esp8266")
 
         Returns:
-            List of .c and .cpp source file paths
+            List of .c, .cpp, and .S source file paths
         """
         core_dir = self.get_core_dir(core_name)
         sources: List[Path] = []
         sources.extend(core_dir.glob("*.c"))
         sources.extend(core_dir.glob("*.cpp"))
+        sources.extend(core_dir.glob("*.S"))
         # Also search in subdirectories
         sources.extend(core_dir.glob("**/*.c"))
         sources.extend(core_dir.glob("**/*.cpp"))
+        sources.extend(core_dir.glob("**/*.S"))
         # Remove duplicates
         return list(set(sources))
 

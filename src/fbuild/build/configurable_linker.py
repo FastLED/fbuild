@@ -313,11 +313,14 @@ class ConfigurableLinker(ILinker):
         # Add object files using relative paths (they're in build_dir)
         cmd.extend([_path_to_string(obj, relative_to=self.build_dir) for obj in object_files])
 
-        # Add core archive with --whole-archive for proper symbol visibility
-        # This ensures LTO can see all symbols for cross-TU optimization
-        cmd.append("-Wl,--whole-archive")
+        # Add core archive - use --whole-archive for platforms with LTO (ESP32, etc.)
+        # but NOT for ESP8266 which has very limited IRAM and doesn't use LTO
+        use_whole_archive = self.mcu != "esp8266"
+        if use_whole_archive:
+            cmd.append("-Wl,--whole-archive")
         cmd.append(_path_to_string(core_archive, relative_to=self.build_dir))
-        cmd.append("-Wl,--no-whole-archive")
+        if use_whole_archive:
+            cmd.append("-Wl,--no-whole-archive")
 
         # Add SDK library directory to search path
         if hasattr(self.framework, 'get_sdk_dir'):
