@@ -295,6 +295,14 @@ class ConfigurableLinker(ILinker):
                 else:
                     # SDK scripts stay absolute (outside build dir)
                     cmd.append(f"-T{_path_to_string(script)}")
+
+        elif hasattr(self.framework, 'get_linker_script_dir'):
+            # ESP8266-style: linker script directory provided by framework
+            ld_dir = self.framework.get_linker_script_dir()  # type: ignore[attr-defined]
+            cmd.append(f"-L{_path_to_string(ld_dir)}")
+            for script in linker_scripts:
+                cmd.append(f"-T{script.name}")
+
         else:
             # For non-ESP32 platforms (e.g., Teensy), use absolute paths
             for script in linker_scripts:
@@ -309,12 +317,15 @@ class ConfigurableLinker(ILinker):
         cmd.append(_path_to_string(core_archive, relative_to=self.build_dir))
         cmd.append("-Wl,--no-whole-archive")
 
-        # Add SDK library directory to search path (ESP32-specific)
+        # Add SDK library directory to search path
         if hasattr(self.framework, 'get_sdk_dir'):
             sdk_lib_dir = self.framework.get_sdk_dir() / self.mcu / "lib"  # type: ignore[attr-defined]
             if sdk_lib_dir.exists():
                 # SDK directories stay absolute (outside build dir)
                 cmd.append(f"-L{_path_to_string(sdk_lib_dir)}")
+        elif hasattr(self.framework, 'get_sdk_lib_dir'):
+            sdk_lib_dir = self.framework.get_sdk_lib_dir()  # type: ignore[attr-defined]
+            cmd.append(f"-L{_path_to_string(sdk_lib_dir)}")
 
         # Group libraries to resolve circular dependencies
         cmd.append("-Wl,--start-group")
