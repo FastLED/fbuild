@@ -225,6 +225,20 @@ class FrameworkESP8266(IFramework):
 
         return variant_dir
 
+    def get_variant_dir(self, variant: str) -> Path:
+        """Get the path to a specific variant directory.
+
+        Alias for get_variants_dir() - matches the interface expected by
+        configurable_compiler.py.
+
+        Args:
+            variant: Variant name (e.g., "nodemcu")
+
+        Returns:
+            Path to variant directory
+        """
+        return self.get_variants_dir(variant)
+
     def get_libraries_dir(self) -> Path:
         """Get the path to the libraries directory.
 
