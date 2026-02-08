@@ -177,10 +177,7 @@ class PlatformESP8266(IPackage):
         """
         current_platform = PlatformDetector.detect_esp32_platform()
         asset = self._TOOLCHAIN_ASSET_MAP.get(current_platform, self._TOOLCHAIN_ASSET_MAP["linux-amd64"])
-        toolchain_url = (
-            f"https://github.com/{self._TOOLCHAIN_REPO}/releases/download/"
-            f"{self._TOOLCHAIN_RELEASE_TAG}/{asset}"
-        )
+        toolchain_url = f"https://github.com/{self._TOOLCHAIN_REPO}/releases/download/{self._TOOLCHAIN_RELEASE_TAG}/{asset}"
 
         return {
             "framework": "https://github.com/esp8266/Arduino/archive/refs/tags/3.1.2.zip",

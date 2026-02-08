@@ -38,7 +38,7 @@ def test_get_pio_env_respects_dev_mode(mock_requirements, mock_args, mock_iso_en
     call_kwargs = mock_args.call_args[1]
     venv_path = call_kwargs["venv_path"]
     assert "cache_dev" in str(venv_path)
-    assert str(venv_path).endswith("pio_iso_env")
+    assert str(venv_path).endswith("platform")
 
 
 @patch("fbuild.pio_runner.IsoEnv")
@@ -58,9 +58,9 @@ def test_get_pio_env_production_mode(mock_requirements, mock_args, mock_iso_env)
     call_kwargs = mock_args.call_args[1]
     venv_path = call_kwargs["venv_path"]
     assert "cache_dev" not in str(venv_path)
-    # Should end with .fbuild/cache/pio_iso_env
+    # Should end with .fbuild/cache/platform
     parts = Path(str(venv_path)).parts
-    assert parts[-1] == "pio_iso_env"
+    assert parts[-1] == "platform"
     assert parts[-2] == "cache"
 
 

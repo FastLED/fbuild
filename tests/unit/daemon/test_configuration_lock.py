@@ -977,13 +977,14 @@ class TestConcurrentAccessPatterns(unittest.TestCase):
         acquired_at_once = [0]
         max_concurrent = [0]
         lock = threading.Lock()
+        barrier = threading.Barrier(5, timeout=5)
 
         def acquire_and_hold():
             self.manager.acquire_shared_read(config, f"client_{threading.get_ident()}")
             with lock:
                 acquired_at_once[0] += 1
                 max_concurrent[0] = max(max_concurrent[0], acquired_at_once[0])
-            time.sleep(0.1)
+            barrier.wait()
             with lock:
                 acquired_at_once[0] -= 1
             self.manager.release(config, f"client_{threading.get_ident()}")

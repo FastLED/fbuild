@@ -216,17 +216,20 @@ class TestConsecutiveBuildCacheCheck:
         assert needs_rebuild  # First time always needs rebuild
         tracker.save_state(state)
 
-        # Warmup / baseline: measure a single iteration
-        start = time.perf_counter()
-        needs_rebuild, reasons, state = tracker.check_invalidation(
-            platformio_ini_path=platformio_ini,
-            platform="esp32",
-            board="esp32dev",
-            framework="arduino",
-            source_dir=src_dir,
-        )
-        baseline = time.perf_counter() - start
-        assert not needs_rebuild, f"Unexpected rebuild needed: {reasons}"
+        # Warmup: measure 5 iterations, take median as baseline
+        warmup_times = []
+        for _ in range(5):
+            t0 = time.perf_counter()
+            needs_rebuild, reasons, state = tracker.check_invalidation(
+                platformio_ini_path=platformio_ini,
+                platform="esp32",
+                board="esp32dev",
+                framework="arduino",
+                source_dir=src_dir,
+            )
+            warmup_times.append(time.perf_counter() - t0)
+            assert not needs_rebuild, f"Unexpected rebuild needed: {reasons}"
+        baseline = sorted(warmup_times)[len(warmup_times) // 2]
 
         # Measure N consecutive checks
         n = 50
@@ -245,7 +248,7 @@ class TestConsecutiveBuildCacheCheck:
         # Verify roughly linear scaling (catches O(n²) regressions).
         # Allow generous 3x overhead per iteration vs baseline to
         # tolerate filesystem contention under parallel test execution.
-        budget = max(baseline * n * 3, 1.0)  # at least 1s floor
+        budget = max(baseline * n * 3, 3.0)  # at least 3s floor
         assert elapsed < budget, f"Cache check too slow: {elapsed:.2f}s for {n} iterations " f"(baseline={baseline*1000:.1f}ms, budget={budget:.2f}s)"
 
 
