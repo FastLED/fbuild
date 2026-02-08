@@ -168,6 +168,43 @@ class FrameworkESP8266(IFramework):
 
         return cores_dir
 
+    def get_core_dir(self, core_name: str) -> Path:
+        """Get path to specific core directory.
+
+        Args:
+            core_name: Core name (e.g., "esp8266")
+
+        Returns:
+            Path to the core directory
+
+        Raises:
+            FrameworkErrorESP8266: If core directory doesn't exist
+        """
+        framework_path = self.get_framework_path()
+        core_path = framework_path / "cores" / core_name
+        if not core_path.exists():
+            raise FrameworkErrorESP8266(f"Core '{core_name}' not found at {core_path}")
+        return core_path
+
+    def get_core_sources(self, core_name: str) -> List[Path]:
+        """Get all source files in a core.
+
+        Args:
+            core_name: Core name (e.g., "esp8266")
+
+        Returns:
+            List of .c and .cpp source file paths
+        """
+        core_dir = self.get_core_dir(core_name)
+        sources: List[Path] = []
+        sources.extend(core_dir.glob("*.c"))
+        sources.extend(core_dir.glob("*.cpp"))
+        # Also search in subdirectories
+        sources.extend(core_dir.glob("**/*.c"))
+        sources.extend(core_dir.glob("**/*.cpp"))
+        # Remove duplicates
+        return list(set(sources))
+
     def get_variants_dir(self, variant: str) -> Path:
         """Get the path to a specific variant directory.
 
