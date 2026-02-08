@@ -252,14 +252,37 @@ class FrameworkESP8266(IFramework):
             FrameworkErrorESP8266: If SDK directories not found
         """
         framework_path = self.get_framework_path()
-        include_dirs = []
+        include_dirs: List[Path] = []
 
-        # Add tools/sdk/include directory
-        sdk_include = framework_path / "tools" / "sdk" / "include"
+        sdk_base = framework_path / "tools" / "sdk"
+
+        # Add tools/sdk/include directory (c_types.h, ets_sys.h, etc.)
+        sdk_include = sdk_base / "include"
         if sdk_include.exists():
             include_dirs.append(sdk_include)
 
+        # Add tools/sdk/lwip2/include (network stack headers)
+        lwip2_include = sdk_base / "lwip2" / "include"
+        if lwip2_include.exists():
+            include_dirs.append(lwip2_include)
+
+        # Add tools/sdk/libb64/include
+        libb64_include = sdk_base / "libb64" / "include"
+        if libb64_include.exists():
+            include_dirs.append(libb64_include)
+
         return include_dirs
+
+    def get_sdk_includes(self, mcu: str) -> List[Path]:
+        """Get SDK include directories (interface compatible with configurable_compiler).
+
+        Args:
+            mcu: MCU name (unused for ESP8266, present for interface compatibility)
+
+        Returns:
+            List of SDK include directory paths
+        """
+        return self.get_sdk_include_dirs()
 
     def get_sdk_lib_dir(self) -> Path:
         """Get the path to the SDK lib directory.
