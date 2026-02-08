@@ -102,55 +102,66 @@ class TestResourceLockManager(unittest.TestCase):
         self.assertIn(port2, status["port_locks"])
 
     def test_concurrent_access_different_resources(self):
-        """Test that different resources can be locked concurrently."""
+        """Test that different resources can be locked concurrently.
+
+        Uses a threading.Barrier to deterministically prove both threads
+        hold their locks at the same time.  If the locks were serialized
+        (e.g. a single global lock), one thread would block on acquire
+        while the other waits at the barrier → deadlock → BrokenBarrierError.
+        """
+        barrier = threading.Barrier(2, timeout=5)
         results = []
+        errors = []
 
-        def lock_port(port, delay):
-            with self.manager.acquire_port_lock(port):
-                time.sleep(delay)
-                results.append(port)
+        def lock_port(port):
+            try:
+                with self.manager.acquire_port_lock(port):
+                    barrier.wait()  # both threads must reach here while holding their lock
+                    results.append(port)
+            except threading.BrokenBarrierError:
+                errors.append(port)
 
-        # Start two threads with different ports
-        t1 = threading.Thread(target=lock_port, args=("COM3", 0.1))
-        t2 = threading.Thread(target=lock_port, args=("COM4", 0.1))
-
-        start = time.time()
+        t1 = threading.Thread(target=lock_port, args=("COM3",))
+        t2 = threading.Thread(target=lock_port, args=("COM4",))
         t1.start()
         t2.start()
-        t1.join()
-        t2.join()
-        elapsed = time.time() - start
+        t1.join(timeout=10)
+        t2.join(timeout=10)
 
-        # Both threads should complete in parallel (~0.1s, not 0.2s)
-        # Use 0.18s threshold to account for system variance on Windows
-        self.assertLess(elapsed, 0.18)
+        self.assertEqual(errors, [], "Barrier timed out — locks appear serialized")
         self.assertEqual(len(results), 2)
 
     def test_concurrent_access_same_resource(self):
-        """Test that same resource is serialized across threads."""
-        results = []
-        lock = threading.Lock()
+        """Test that same resource is serialized across threads.
 
-        def lock_port(port, delay, thread_id):
+        Proves serialization without wall-clock timing: both threads
+        record whether the other was already inside the critical section.
+        If truly serialized, neither thread should observe the other.
+        """
+        inside = threading.Event()
+        overlap_detected = []
+        results = []
+        results_lock = threading.Lock()
+
+        def lock_port(port, thread_id):
             with self.manager.acquire_port_lock(port):
-                time.sleep(delay)
-                with lock:
+                if inside.is_set():
+                    overlap_detected.append(thread_id)
+                inside.set()
+                time.sleep(0.02)  # brief hold to give other thread a chance
+                inside.clear()
+                with results_lock:
                     results.append(thread_id)
 
-        # Start two threads with same port
-        t1 = threading.Thread(target=lock_port, args=("COM3", 0.05, 1))
-        t2 = threading.Thread(target=lock_port, args=("COM3", 0.05, 2))
-
-        start = time.time()
+        t1 = threading.Thread(target=lock_port, args=("COM3", 1))
+        t2 = threading.Thread(target=lock_port, args=("COM3", 2))
         t1.start()
         t2.start()
-        t1.join()
-        t2.join()
-        elapsed = time.time() - start
+        t1.join(timeout=10)
+        t2.join(timeout=10)
 
-        # Threads should be serialized (~0.1s total)
-        self.assertGreater(elapsed, 0.08)
         self.assertEqual(len(results), 2)
+        self.assertEqual(overlap_detected, [], "Threads overlapped — lock is not serializing")
 
     def test_get_lock_count(self):
         """Test lock count tracking."""

@@ -23,6 +23,7 @@ dependencies = [
     "httpx>=0.26.0",
     "pydantic>=2.0.0",
     "rich>=13.0.0",
+    "uv-iso-env>=1.0.0",
 ]
 # Version is centralized in src/fbuild/__init__.py - keep in sync
 version = "1.4.4"

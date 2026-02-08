@@ -49,6 +49,9 @@ class BuildArgs:
     verbose: bool = False
     jobs: Optional[int] = None
     profile: BuildProfile = BuildProfile.RELEASE
+    platformio: bool = False
+    explicit_release: bool = False
+    explicit_quick: bool = False
 
 
 @dataclass
@@ -63,6 +66,7 @@ class DeployArgs:
     verbose: bool = False
     qemu: bool = False
     qemu_timeout: int = 30
+    platformio: bool = False
 
 
 @dataclass
@@ -79,6 +83,7 @@ class MonitorArgs:
     expect: Optional[str] = None
     verbose: bool = False
     timestamp: bool = True
+    platformio: bool = False
 
 
 def build_command(args: BuildArgs) -> None:
@@ -101,6 +106,21 @@ def build_command(args: BuildArgs) -> None:
     try:
         # Determine environment name
         env_name = EnvironmentDetector.detect_environment(args.project_dir, args.environment)
+
+        # PlatformIO mode: bypass daemon, run pio directly
+        if args.platformio:
+            from fbuild.pio_runner import pio_build
+
+            success = pio_build(
+                project_dir=args.project_dir,
+                environment=env_name,
+                clean=args.clean,
+                verbose=args.verbose,
+                jobs=args.jobs,
+                has_release=args.explicit_release,
+                has_quick=args.explicit_quick,
+            )
+            sys.exit(0 if success else 1)
 
         # Show build start message
         if args.verbose:
@@ -161,6 +181,20 @@ def deploy_command(args: DeployArgs) -> None:
     try:
         # Determine environment name
         env_name = EnvironmentDetector.detect_environment(args.project_dir, args.environment)
+
+        # PlatformIO mode: bypass daemon, run pio directly (QEMU takes precedence)
+        if args.platformio and not args.qemu:
+            from fbuild.pio_runner import pio_deploy
+
+            success = pio_deploy(
+                project_dir=args.project_dir,
+                environment=env_name,
+                port=args.port,
+                clean=args.clean,
+                verbose=args.verbose,
+                monitor_flags=args.monitor,
+            )
+            sys.exit(0 if success else 1)
 
         # Handle QEMU deployment
         if args.qemu:
@@ -269,6 +303,35 @@ def monitor_command(args: MonitorArgs) -> None:
     try:
         # Determine environment name
         env_name = EnvironmentDetector.detect_environment(args.project_dir, args.environment)
+
+        # PlatformIO mode: bypass daemon, run pio directly
+        if args.platformio:
+            has_wrapping = args.timeout is not None or args.halt_on_error is not None or args.halt_on_success is not None or args.expect is not None
+            if has_wrapping:
+                from fbuild.pio_runner import pio_monitor_wrapped
+
+                success = pio_monitor_wrapped(
+                    project_dir=args.project_dir,
+                    environment=env_name,
+                    port=args.port,
+                    baud=args.baud,
+                    verbose=args.verbose,
+                    timeout=args.timeout,
+                    halt_on_error=args.halt_on_error,
+                    halt_on_success=args.halt_on_success,
+                    expect=args.expect,
+                )
+            else:
+                from fbuild.pio_runner import pio_monitor
+
+                success = pio_monitor(
+                    project_dir=args.project_dir,
+                    environment=env_name,
+                    port=args.port,
+                    baud=args.baud,
+                    verbose=args.verbose,
+                )
+            sys.exit(0 if success else 1)
 
         # Use daemon for concurrent monitor management (HTTP-based)
         success = request_monitor_http(
@@ -634,6 +697,7 @@ def parse_default_action_args(argv: list[str]) -> DeployArgs:
     environment: Optional[str] = None
     clean = False
     verbose = False
+    platformio = False
 
     i = 2
     while i < len(argv):
@@ -671,6 +735,10 @@ def parse_default_action_args(argv: list[str]) -> DeployArgs:
         elif arg in ("-v", "--verbose"):
             verbose = True
             i += 1
+        # Handle --platformio flag
+        elif arg == "--platformio":
+            platformio = True
+            i += 1
         else:
             # Unknown flag - warn and skip
             ErrorFormatter.print_error(f"Unknown flag in default action: {arg}", "")
@@ -684,6 +752,7 @@ def parse_default_action_args(argv: list[str]) -> DeployArgs:
         clean=clean,
         monitor=monitor if monitor is not None else "",  # Empty string means monitor with default settings
         verbose=verbose,
+        platformio=platformio,
     )
 
 
@@ -794,6 +863,11 @@ def main() -> None:
         action="store_true",
         help="Fast development build (no LTO, -O2, section GC)",
     )
+    build_parser.add_argument(
+        "--platformio",
+        action="store_true",
+        help="Delegate build to PlatformIO CLI instead of fbuild's native build system",
+    )
 
     # Deploy command
     deploy_parser = subparsers.add_parser(
@@ -846,6 +920,11 @@ def main() -> None:
         "--verbose",
         action="store_true",
         help="Show verbose output",
+    )
+    deploy_parser.add_argument(
+        "--platformio",
+        action="store_true",
+        help="Delegate deploy to PlatformIO CLI instead of fbuild's native deploy system",
     )
 
     # Monitor command
@@ -912,6 +991,11 @@ def main() -> None:
         "--verbose",
         action="store_true",
         help="Show verbose output",
+    )
+    monitor_parser.add_argument(
+        "--platformio",
+        action="store_true",
+        help="Delegate monitor to PlatformIO CLI instead of fbuild's native monitor",
     )
 
     # Show command
@@ -1038,6 +1122,9 @@ def main() -> None:
             verbose=parsed_args.verbose,
             jobs=parsed_args.jobs,
             profile=profile,
+            platformio=parsed_args.platformio,
+            explicit_release=parsed_args.release,
+            explicit_quick=parsed_args.quick,
         )
         build_command(build_args)
     elif parsed_args.command == "deploy":
@@ -1050,6 +1137,7 @@ def main() -> None:
             verbose=parsed_args.verbose,
             qemu=parsed_args.qemu,
             qemu_timeout=parsed_args.qemu_timeout,
+            platformio=parsed_args.platformio,
         )
         deploy_command(deploy_args)
     elif parsed_args.command == "monitor":
@@ -1064,6 +1152,7 @@ def main() -> None:
             expect=parsed_args.expect,
             verbose=parsed_args.verbose,
             timestamp=not parsed_args.no_timestamp,
+            platformio=parsed_args.platformio,
         )
         monitor_command(monitor_args)
     elif parsed_args.command == "daemon":

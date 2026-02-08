@@ -56,6 +56,12 @@ fbuild build tests/uno -e uno --quick      # quick build (no LTO, faster compile
 
 # Deploy and monitor
 fbuild deploy tests/esp32c6 --monitor
+
+# PlatformIO compatibility mode (bypasses daemon, runs pio directly)
+fbuild build tests/uno -e uno --platformio          # build via pio
+fbuild deploy tests/esp32c6 -e esp32c6 --platformio # upload via pio
+fbuild monitor tests/esp32c6 -e esp32c6 --platformio # monitor via pio
+fbuild tests/esp32c6 --platformio                    # default action via pio
 ```
 
 ## Architecture
