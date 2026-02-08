@@ -110,8 +110,13 @@
     "TCP_MSS=536",
     "LWIP_FEATURES=1",
     "LWIP_IPV6=0",
-    "ARDUINO=10607",
-    ["__ets__"],
-    ["ICACHE_FLASH"]
+    "ARDUINO=10805",
+    "__ets__",
+    "ICACHE_FLASH",
+    "_GNU_SOURCE",
+    "NONOSDK305=1",
+    "VTABLES_IN_FLASH",
+    ["MMU_IRAM_SIZE", "0xC000"],
+    ["MMU_ICACHE_SIZE", "0x8000"]
   ]
 }
