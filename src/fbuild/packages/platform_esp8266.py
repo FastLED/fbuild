@@ -151,17 +151,20 @@ class PlatformESP8266(IPackage):
         except (OSError, json.JSONDecodeError) as e:
             raise PlatformErrorESP8266(f"Failed to load board JSON: {e}") from e
 
-    # PlatformIO registry platform identifiers for toolchain-xtensa
-    _PLATFORMIO_PLATFORM_MAP: Dict[str, str] = {
-        "win32": "windows_x86",
-        "win64": "windows_amd64",
-        "linux-amd64": "linux_x86_64",
-        "linux-arm64": "linux_aarch64",
-        "linux-armhf": "linux_armv7l",
-        "linux-i686": "linux_i686",
-        "macos": "darwin_x86_64",
-        "macos-arm64": "darwin_arm64",
+    # GitHub release asset names per platform (earlephilhower/esp-quick-toolchain)
+    _TOOLCHAIN_ASSET_MAP: Dict[str, str] = {
+        "win32": "i686-w64-mingw32.xtensa-lx106-elf-c791b74.230224.zip",
+        "win64": "x86_64-w64-mingw32.xtensa-lx106-elf-c791b74.230224.zip",
+        "linux-amd64": "x86_64-linux-gnu.xtensa-lx106-elf-c791b74.230224.tar.gz",
+        "linux-arm64": "aarch64-linux-gnu.xtensa-lx106-elf-c791b74.230224.tar.gz",
+        "linux-armhf": "arm-linux-gnueabihf.xtensa-lx106-elf-c791b74.230224.tar.gz",
+        "linux-i686": "i686-linux-gnu.xtensa-lx106-elf-c791b74.230224.tar.gz",
+        "macos": "x86_64-apple-darwin14.xtensa-lx106-elf-c791b74.230224.tar.gz",
+        "macos-arm64": "x86_64-apple-darwin14.xtensa-lx106-elf-c791b74.230224.tar.gz",
     }
+
+    _TOOLCHAIN_RELEASE_TAG = "3.2.0-gcc10.3"
+    _TOOLCHAIN_REPO = "earlephilhower/esp-quick-toolchain"
 
     def get_required_packages(self, mcu: str) -> Dict[str, str]:
         """Get required package URLs for the given MCU.
@@ -172,14 +175,11 @@ class PlatformESP8266(IPackage):
         Returns:
             Dictionary mapping package names to download URLs
         """
-        # Detect current platform for toolchain selection
         current_platform = PlatformDetector.detect_esp32_platform()
-        pio_platform = self._PLATFORMIO_PLATFORM_MAP.get(current_platform, "linux_x86_64")
-
-        version = "2.100300.220621"
+        asset = self._TOOLCHAIN_ASSET_MAP.get(current_platform, self._TOOLCHAIN_ASSET_MAP["linux-amd64"])
         toolchain_url = (
-            f"https://dl.registry.platformio.org/download/platformio/tool/"
-            f"toolchain-xtensa/{version}/toolchain-xtensa-{pio_platform}-{version}.tar.gz"
+            f"https://github.com/{self._TOOLCHAIN_REPO}/releases/download/"
+            f"{self._TOOLCHAIN_RELEASE_TAG}/{asset}"
         )
 
         return {
