@@ -57,9 +57,7 @@
   ],
 
   "linker_scripts": [
-    "eagle.app.v6.common.ld",
-    "eagle.flash.4m1m.ld",
-    "eagle.rom.addr.v6.ld"
+    "eagle.flash.4m1m.ld"
   ],
 
   "linker_libs": [

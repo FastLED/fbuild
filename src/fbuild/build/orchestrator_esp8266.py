@@ -360,6 +360,9 @@ class OrchestratorESP8266(IBuildOrchestrator):
                     f"No .ino sketch file found in {search_dir}"
                 )
 
+            # Generate preprocessed linker scripts (ESP8266 requires this)
+            self._generate_linker_scripts(toolchain, framework, build_dir)
+
             # Initialize linker
             log_phase(8, 11, "Linking firmware...")
 
@@ -584,6 +587,59 @@ class OrchestratorESP8266(IBuildOrchestrator):
         log_detail(f"Compiled {len(sketch_obj_files)} sketch file(s)", verbose_only=True)
 
         return sketch_obj_files
+
+    def _generate_linker_scripts(
+        self,
+        toolchain: ToolchainESP8266,
+        framework: FrameworkESP8266,
+        build_dir: Path,
+    ) -> None:
+        """Generate preprocessed linker scripts required by ESP8266.
+
+        The ESP8266 Arduino framework ships linker script templates (.ld.h files)
+        that must be preprocessed with GCC to resolve #ifdef directives for
+        VTABLES_IN_FLASH, FP_IN_IROM, and MMU configuration.
+
+        The main flash linker script (eagle.flash.4m1m.ld) INCLUDEs
+        ``local.eagle.app.v6.common.ld`` which is generated here.
+
+        Args:
+            toolchain: ESP8266 toolchain instance
+            framework: ESP8266 framework instance
+            build_dir: Build output directory (where generated scripts go)
+        """
+        from ..subprocess_utils import safe_run
+
+        output_file = build_dir / "local.eagle.app.v6.common.ld"
+        if output_file.exists():
+            return
+
+        ld_dir = framework.get_linker_script_dir()
+        template = ld_dir / "eagle.app.v6.common.ld.h"
+
+        if not template.exists():
+            log_warning(f"Linker script template not found: {template}")
+            return
+
+        gcc_path = toolchain.get_gcc_path()
+        log_detail("Generating preprocessed linker scripts...", verbose_only=True)
+
+        cmd = [
+            str(gcc_path),
+            "-CC", "-E", "-P",
+            "-DVTABLES_IN_FLASH",
+            "-DFP_IN_IROM",
+            "-DMMU_IRAM_SIZE=0xC000",
+            "-DMMU_ICACHE_SIZE=0x8000",
+            str(template),
+            "-o", str(output_file),
+        ]
+
+        result = safe_run(cmd, capture_output=True, text=True, timeout=30)
+        if result.returncode != 0:
+            log_warning(f"Failed to preprocess linker script: {result.stderr}")
+        else:
+            log_detail(f"Generated {output_file.name}", verbose_only=True)
 
     def _print_success(
         self,

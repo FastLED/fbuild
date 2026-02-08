@@ -300,6 +300,8 @@ class ConfigurableLinker(ILinker):
             # ESP8266-style: linker script directory provided by framework
             ld_dir = self.framework.get_linker_script_dir()  # type: ignore[attr-defined]
             cmd.append(f"-L{_path_to_string(ld_dir)}")
+            # Also add build_dir so linker can find generated scripts (e.g., local.eagle.app.v6.common.ld)
+            cmd.append(f"-L{_path_to_string(self.build_dir)}")
             for script in linker_scripts:
                 cmd.append(f"-T{script.name}")
 
