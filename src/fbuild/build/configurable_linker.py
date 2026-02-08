@@ -154,6 +154,15 @@ class ConfigurableLinker(ILinker):
                     if alt_script_path.exists():
                         scripts.append(alt_script_path)
 
+        # Check for framework-provided linker script directory (ESP8266-style)
+        if not scripts and hasattr(self.framework, 'get_linker_script_dir'):
+            ld_dir = self.framework.get_linker_script_dir()  # type: ignore[attr-defined]
+            config_scripts = self.config.linker_scripts
+            for script_name in config_scripts:
+                script_path = ld_dir / script_name
+                if script_path.exists():
+                    scripts.append(script_path)
+
         if not scripts:
             raise ConfigurableLinkerError(
                 f"No linker scripts found for {self.mcu}"

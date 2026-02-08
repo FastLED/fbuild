@@ -298,6 +298,23 @@ class FrameworkESP8266(IFramework):
         """
         return self.get_sdk_include_dirs()
 
+    def get_linker_script_dir(self) -> Path:
+        """Get the path to the linker script directory.
+
+        Returns:
+            Path to the directory containing .ld linker scripts
+
+        Raises:
+            FrameworkErrorESP8266: If linker script directory not found
+        """
+        framework_path = self.get_framework_path()
+        ld_dir = framework_path / "tools" / "sdk" / "ld"
+
+        if not ld_dir.exists():
+            raise FrameworkErrorESP8266(f"Linker script directory not found: {ld_dir}")
+
+        return ld_dir
+
     def get_sdk_lib_dir(self) -> Path:
         """Get the path to the SDK lib directory.
 
