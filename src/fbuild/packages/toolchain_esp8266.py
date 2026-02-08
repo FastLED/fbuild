@@ -73,14 +73,25 @@ class ToolchainESP8266(IToolchain):
     def _extract_version_from_url(url: str) -> str:
         """Extract version string from toolchain URL.
 
+        Handles both GitHub release URLs and PlatformIO registry URLs:
+        - GitHub: .../releases/download/{version}/filename
+        - PlatformIO: .../download/{owner}/{type}/{name}/{version}/filename
+
         Args:
             url: Toolchain URL
 
         Returns:
             Version string
         """
-        # Try to extract version from URL
         parts = url.split("/")
+
+        # PlatformIO registry format:
+        # .../download/platformio/tool/toolchain-xtensa/{version}/{filename}
+        # The version is the second-to-last path segment (last is the filename)
+        if "registry.platformio.org" in url and len(parts) >= 2:
+            return parts[-2]
+
+        # GitHub release format: .../releases/download/{version}/{filename}
         for i, part in enumerate(parts):
             if part == "download" and i + 1 < len(parts):
                 return parts[i + 1].lstrip("v")
@@ -104,6 +115,10 @@ class ToolchainESP8266(IToolchain):
     def ensure_toolchain(self) -> Path:
         """Ensure ESP8266 toolchain is downloaded and extracted.
 
+        The toolchain is extracted so that binaries end up at
+        ``toolchain_cache_path.parent / "bin" / bin / ...`` which is where
+        ``ToolchainBinaryFinder.find_bin_dir()`` looks (``self.toolchain_path.parent / "bin"``).
+
         Returns:
             Path to the extracted toolchain directory
 
@@ -111,21 +126,70 @@ class ToolchainESP8266(IToolchain):
             ToolchainErrorESP8266: If download or extraction fails
         """
         if self._toolchain_path and self._toolchain_path.exists():
-            return self._toolchain_path
+            # Verify bin dir actually exists before returning cached path
+            bin_finder = ToolchainBinaryFinder(self._toolchain_path, self.TOOLCHAIN_PREFIX)
+            if bin_finder.find_bin_dir() is not None:
+                return self._toolchain_path
 
         try:
+            import shutil
+            from urllib.parse import urlparse
+
             # Get cache path for this toolchain
             toolchain_cache_path = self.cache.get_toolchain_path(self.toolchain_url, self.version)
 
-            if not toolchain_cache_path.exists():
-                # Download and extract toolchain
-                cache_dir = toolchain_cache_path.parent
-                self.downloader.download_and_extract(
-                    url=self.toolchain_url,
-                    cache_dir=cache_dir,
-                    extract_dir=toolchain_cache_path,
-                    show_progress=self.show_progress,
-                )
+            # The bin directory where find_bin_dir() looks: toolchain_path.parent / "bin"
+            bin_dir = toolchain_cache_path.parent / "bin"
+
+            # Check if already extracted correctly
+            if bin_dir.exists():
+                bin_finder = ToolchainBinaryFinder(toolchain_cache_path, self.TOOLCHAIN_PREFIX)
+                if bin_finder.find_bin_dir() is not None:
+                    self._toolchain_path = toolchain_cache_path
+                    return toolchain_cache_path
+
+            # Download archive
+            bin_dir.mkdir(parents=True, exist_ok=True)
+            toolchain_cache_path.mkdir(parents=True, exist_ok=True)
+
+            archive_name = Path(urlparse(self.toolchain_url).path).name
+            archive_path = bin_dir / archive_name
+
+            if not archive_path.exists():
+                self.downloader.download(self.toolchain_url, archive_path, show_progress=self.show_progress)
+
+            # Extract to temp dir
+            temp_extract = bin_dir / "temp_extract"
+            temp_extract.mkdir(parents=True, exist_ok=True)
+
+            self.downloader.extract_archive(archive_path, temp_extract, show_progress=self.show_progress)
+
+            # extract_archive strips one top-level dir (e.g., toolchain-xtensa/).
+            # If a second wrapper dir remains (e.g., xtensa-lx106-elf/), strip it
+            # too so bin/, lib/ end up directly in temp_extract.
+            contents = list(temp_extract.iterdir())
+            if len(contents) == 1 and contents[0].is_dir():
+                single_dir = contents[0]
+                for child in list(single_dir.iterdir()):
+                    shutil.move(str(child), str(temp_extract / child.name))
+                single_dir.rmdir()
+
+            # Now temp_extract contains bin/, lib/, include/, etc. directly.
+            # Copy to bin_dir (the location that find_bin_dir() searches).
+            for item in temp_extract.iterdir():
+                dest = bin_dir / item.name
+                if item.is_dir():
+                    if dest.exists():
+                        shutil.rmtree(dest)
+                    shutil.copytree(item, dest)
+                else:
+                    if dest.exists():
+                        dest.unlink()
+                    shutil.copy2(item, dest)
+
+            # Clean up temp directory
+            if temp_extract.exists():
+                shutil.rmtree(temp_extract, ignore_errors=True)
 
             self._toolchain_path = toolchain_cache_path
             return toolchain_cache_path

@@ -27,6 +27,7 @@ from typing import Any, Dict
 from .cache import Cache
 from .downloader import DownloadError, ExtractionError, PackageDownloader
 from .package import IPackage, PackageError
+from .platform_utils import PlatformDetector
 
 
 class PlatformErrorESP8266(PackageError):
@@ -150,6 +151,18 @@ class PlatformESP8266(IPackage):
         except (OSError, json.JSONDecodeError) as e:
             raise PlatformErrorESP8266(f"Failed to load board JSON: {e}") from e
 
+    # PlatformIO registry platform identifiers for toolchain-xtensa
+    _PLATFORMIO_PLATFORM_MAP: Dict[str, str] = {
+        "win32": "windows_x86",
+        "win64": "windows_amd64",
+        "linux-amd64": "linux_x86_64",
+        "linux-arm64": "linux_aarch64",
+        "linux-armhf": "linux_armv7l",
+        "linux-i686": "linux_i686",
+        "macos": "darwin_x86_64",
+        "macos-arm64": "darwin_arm64",
+    }
+
     def get_required_packages(self, mcu: str) -> Dict[str, str]:
         """Get required package URLs for the given MCU.
 
@@ -159,15 +172,19 @@ class PlatformESP8266(IPackage):
         Returns:
             Dictionary mapping package names to download URLs
         """
-        # For ESP8266, we use hardcoded package URLs from the PlatformIO registry
-        # TODO: Implement proper package registry resolution for full PlatformIO compatibility
-        #
-        # These URLs match the package versions specified in platform.json:
-        # - toolchain-xtensa: version ~2.100300.220621
-        # - framework-arduinoespressif8266: version ~3.30102.0
+        # Detect current platform for toolchain selection
+        current_platform = PlatformDetector.detect_esp32_platform()
+        pio_platform = self._PLATFORMIO_PLATFORM_MAP.get(current_platform, "linux_x86_64")
+
+        version = "2.100300.220621"
+        toolchain_url = (
+            f"https://dl.registry.platformio.org/download/platformio/tool/"
+            f"toolchain-xtensa/{version}/toolchain-xtensa-{pio_platform}-{version}.tar.gz"
+        )
+
         return {
             "framework": "https://github.com/esp8266/Arduino/archive/refs/tags/3.1.2.zip",
-            "toolchain": "https://dl.registry.platformio.org/download/platformio/tool/toolchain-xtensa/2.100300.220621/toolchain-xtensa-windows_amd64-2.100300.220621.tar.gz",
+            "toolchain": toolchain_url,
         }
 
     def is_installed(self) -> bool:

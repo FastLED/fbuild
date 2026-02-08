@@ -49,7 +49,7 @@ def _get_pio_env() -> IsoEnv:
     Returns:
         An IsoEnv configured to run PlatformIO commands.
     """
-    venv_path = _get_cache_root() / "pio_iso_env"
+    venv_path = _get_cache_root() / "platform"
     first_install = not venv_path.exists()
     if first_install:
         log("Installing PlatformIO into isolated environment...")
