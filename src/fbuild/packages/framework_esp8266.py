@@ -186,6 +186,11 @@ class FrameworkESP8266(IFramework):
             raise FrameworkErrorESP8266(f"Core '{core_name}' not found at {core_path}")
         return core_path
 
+    # Assembly files that are safe to compile without Xtensa HAL headers.
+    # exc-c-wrapper-handler.S requires <xtensa/coreasm.h> which may not be
+    # present in all toolchain distributions (e.g., earlephilhower quick toolchain).
+    _SAFE_ASM_FILES = {"cont.S"}
+
     def get_core_sources(self, core_name: str) -> List[Path]:
         """Get all source files in a core.
 
@@ -193,17 +198,20 @@ class FrameworkESP8266(IFramework):
             core_name: Core name (e.g., "esp8266")
 
         Returns:
-            List of .c, .cpp, and .S source file paths
+            List of .c, .cpp, and essential .S source file paths
         """
         core_dir = self.get_core_dir(core_name)
         sources: List[Path] = []
         sources.extend(core_dir.glob("*.c"))
         sources.extend(core_dir.glob("*.cpp"))
-        sources.extend(core_dir.glob("*.S"))
         # Also search in subdirectories
         sources.extend(core_dir.glob("**/*.c"))
         sources.extend(core_dir.glob("**/*.cpp"))
-        sources.extend(core_dir.glob("**/*.S"))
+        # Only include known-safe assembly files (cont.S for context switching)
+        for asm_name in self._SAFE_ASM_FILES:
+            asm_path = core_dir / asm_name
+            if asm_path.exists():
+                sources.append(asm_path)
         # Remove duplicates
         return list(set(sources))
 
