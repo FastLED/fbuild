@@ -313,13 +313,16 @@ class ConfigurableLinker(ILinker):
         # Add object files using relative paths (they're in build_dir)
         cmd.extend([_path_to_string(obj, relative_to=self.build_dir) for obj in object_files])
 
-        # Add core archive - use --whole-archive for platforms with LTO (ESP32, etc.)
-        # but NOT for ESP8266 which has very limited IRAM and doesn't use LTO
-        use_whole_archive = self.mcu != "esp8266"
-        if use_whole_archive:
+        # ESP8266 needs core.a inside --start-group to resolve circular dependencies
+        # between core and SDK libraries (e.g., libmain.a references dhcps_stop from core).
+        # ESP32/other platforms use --whole-archive outside the group for LTO visibility.
+        is_esp8266 = self.mcu == "esp8266"
+
+        if not is_esp8266:
+            # Add core archive with --whole-archive for proper symbol visibility
+            # This ensures LTO can see all symbols for cross-TU optimization
             cmd.append("-Wl,--whole-archive")
-        cmd.append(_path_to_string(core_archive, relative_to=self.build_dir))
-        if use_whole_archive:
+            cmd.append(_path_to_string(core_archive, relative_to=self.build_dir))
             cmd.append("-Wl,--no-whole-archive")
 
         # Add SDK library directory to search path
@@ -334,6 +337,10 @@ class ConfigurableLinker(ILinker):
 
         # Group libraries to resolve circular dependencies
         cmd.append("-Wl,--start-group")
+
+        # For ESP8266, core.a goes inside the group (circular deps with SDK libs)
+        if is_esp8266:
+            cmd.append(_path_to_string(core_archive, relative_to=self.build_dir))
 
         # Add user library archives with --whole-archive for proper symbol visibility
         if library_archives:
