@@ -20,13 +20,11 @@ fbuild is a PlatformIO-compatible embedded development tool providing build, dep
 
 ## Development Commands
 
-```bash
-# Install in development mode
-pip install -e .
+**IMPORTANT FOR AGENTS:** When running fbuild commands in this repository, you MUST use `uv run fbuild ...` (NOT just `fbuild` or `uv run python ...`). This ensures you're running the development version from source, not a system-installed version. FBUILD_DEV_MODE=1 is automatically set when running from this repository.
 
-# IMPORTANT: Enable dev mode to isolate from production
-export FBUILD_DEV_MODE=1  # Linux/macOS
-set FBUILD_DEV_MODE=1     # Windows CMD
+```bash
+# Install in development mode (optional - uv run works without this)
+pip install -e .
 
 # Run unit tests (fast, parallel)
 uv run --group test pytest -n auto tests/unit -v
@@ -41,27 +39,27 @@ uv run --group test pytest tests/unit/test_foo.py -v
 ./lint  # Runs: ruff, black, isort, pyright, flake8
 
 # Build a test project
-fbuild build tests/uno -e uno
-fbuild build tests/esp32c6 -e esp32c6 -v  # verbose
+uv run fbuild build tests/uno -e uno
+uv run fbuild build tests/esp32c6 -e esp32c6 -v  # verbose
 
 # Parallel compilation (default: uses all CPU cores)
-fbuild build tests/esp32c6 -e esp32c6     # automatic parallel
-fbuild build tests/uno -e uno --jobs 4    # use 4 workers
-fbuild build tests/uno -e uno --jobs 1    # serial (debugging)
+uv run fbuild build tests/esp32c6 -e esp32c6     # automatic parallel
+uv run fbuild build tests/uno -e uno --jobs 4    # use 4 workers
+uv run fbuild build tests/uno -e uno --jobs 1    # serial (debugging)
 
 # Build profiles (default: release with LTO)
-fbuild build tests/uno -e uno              # release build (default, LTO enabled)
-fbuild build tests/uno -e uno --release    # explicit release build
-fbuild build tests/uno -e uno --quick      # quick build (no LTO, faster compile)
+uv run fbuild build tests/uno -e uno              # release build (default, LTO enabled)
+uv run fbuild build tests/uno -e uno --release    # explicit release build
+uv run fbuild build tests/uno -e uno --quick      # quick build (no LTO, faster compile)
 
 # Deploy and monitor
-fbuild deploy tests/esp32c6 --monitor
+uv run fbuild deploy tests/esp32c6 --monitor
 
 # PlatformIO compatibility mode (bypasses daemon, runs pio directly)
-fbuild build tests/uno -e uno --platformio          # build via pio
-fbuild deploy tests/esp32c6 -e esp32c6 --platformio # upload via pio
-fbuild monitor tests/esp32c6 -e esp32c6 --platformio # monitor via pio
-fbuild tests/esp32c6 --platformio                    # default action via pio
+uv run fbuild build tests/uno -e uno --platformio          # build via pio
+uv run fbuild deploy tests/esp32c6 -e esp32c6 --platformio # upload via pio
+uv run fbuild monitor tests/esp32c6 -e esp32c6 --platformio # monitor via pio
+uv run fbuild tests/esp32c6 --platformio                    # default action via pio
 ```
 
 ## Architecture

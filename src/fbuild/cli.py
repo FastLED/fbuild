@@ -11,6 +11,33 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 
+# Auto-detect development mode BEFORE any fbuild imports
+# This must happen before importing anything from fbuild because paths.py reads FBUILD_DEV_MODE at import time
+_dev_mode_auto_detected = False
+if "FBUILD_DEV_MODE" not in os.environ:
+    try:
+        cwd = Path.cwd()
+        pyproject_path = cwd / "pyproject.toml"
+        if pyproject_path.exists():
+            # Try tomllib (Python 3.11+) or tomli (fallback)
+            try:
+                import tomllib
+            except ImportError:
+                try:
+                    import tomli as tomllib  # type: ignore
+                except ImportError:
+                    tomllib = None  # type: ignore
+
+            if tomllib is not None:
+                with open(pyproject_path, "rb") as f:
+                    pyproject = tomllib.load(f)
+                    package_name = pyproject.get("project", {}).get("name", "")
+                    if package_name == "fbuild":
+                        os.environ["FBUILD_DEV_MODE"] = "1"
+                        _dev_mode_auto_detected = True
+    except Exception:
+        pass
+
 from fbuild import __version__
 from fbuild.build.build_profiles import BuildProfile
 from fbuild.cli_utils import (
@@ -761,6 +788,11 @@ def main() -> None:
 
     Replace PlatformIO with URL-based platform/toolchain management.
     """
+    # Print dev mode notification if it was auto-detected (set before imports)
+    if _dev_mode_auto_detected:
+        print("🔧 FBUILD_DEV_MODE=1 (auto-detected from pyproject.toml)")
+        print()
+
     # Configure UTF-8 encoding for stdout/stderr to support emojis on Windows
     # This prevents UnicodeEncodeError when printing emojis on Windows (cp1252 encoding)
     # Skip reconfiguration in test environments (pytest capture, redirected streams)

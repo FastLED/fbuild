@@ -29,7 +29,6 @@ import sys
 import threading
 import time
 from dataclasses import dataclass
-from logging.handlers import TimedRotatingFileHandler
 from pathlib import Path
 from typing import Any, Callable
 
@@ -115,6 +114,33 @@ class PeriodicTask:
             logging.error(f"Error in periodic task '{self.name}': {e}", exc_info=True)
 
 
+class NonLockingFileHandler(logging.Handler):
+    """
+    File handler that doesn't hold file lock between writes.
+
+    Opens the file in append mode for each write and immediately closes it.
+    This allows the log file to be deleted or moved while the daemon is running.
+    """
+
+    def __init__(self, filename: str, mode: str = 'a', encoding: str = 'utf-8'):
+        super().__init__()
+        self.filename = filename
+        self.mode = mode
+        self.encoding = encoding
+
+    def emit(self, record: logging.LogRecord) -> None:
+        """Write log record to file without holding lock."""
+        try:
+            msg = self.format(record)
+            # Open file, write, and immediately close
+            with open(self.filename, self.mode, encoding=self.encoding) as f:
+                f.write(msg + '\n')
+        except KeyboardInterrupt:
+            raise
+        except Exception:
+            self.handleError(record)
+
+
 def setup_logging(foreground: bool = False) -> None:
     """Setup logging for daemon."""
     DAEMON_DIR.mkdir(parents=True, exist_ok=True)
@@ -135,15 +161,9 @@ def setup_logging(foreground: bool = False) -> None:
         console_handler.setFormatter(console_formatter)
         logger.addHandler(console_handler)
 
-    # Timed rotating file handler (always) - rotates daily at midnight
-    file_handler = TimedRotatingFileHandler(
-        str(LOG_FILE),
-        when="midnight",  # Rotate at midnight
-        interval=1,  # Daily rotation
-        backupCount=2,  # Keep 2 days of backups (total 3 files)
-        utc=False,  # Use local time
-        atTime=None,  # Rotate exactly at midnight
-    )
+    # Use NonLockingFileHandler instead of TimedRotatingFileHandler
+    # This allows the log file to be deleted while the daemon is running
+    file_handler = NonLockingFileHandler(str(LOG_FILE))
     file_handler.setLevel(logging.DEBUG)  # CHANGED: Enable DEBUG logging
     file_formatter = logging.Formatter(fmt=LOG_FORMAT, datefmt=LOG_DATEFMT)
     file_handler.setFormatter(file_formatter)
@@ -318,17 +338,35 @@ def start_fastapi_server(context: DaemonContext) -> threading.Thread | None:
 
         # Run server in background thread
         def run_server():
+            # Create new event loop for this thread (uvicorn requires it)
+            import asyncio
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+
             try:
-                server.run()
+                logging.info("=" * 80)
+                logging.info(f"uvicorn.Server.serve() STARTING (thread: {threading.current_thread().name})")
+                logging.info("Event loop created for FastAPI thread")
+                logging.info("=" * 80)
+                # Use loop.run_until_complete(server.serve()) instead of server.run()
+                # server.run() calls asyncio.run() which creates another event loop and exits when done
+                # We want to use our own event loop and keep it running
+                loop.run_until_complete(server.serve())
+                logging.info("=" * 80)
+                logging.info("uvicorn.Server.serve() RETURNED (server stopped)")
+                logging.info("=" * 80)
             except KeyboardInterrupt:
                 raise
             except Exception as e:
                 logging.error(f"FastAPI server error: {e}", exc_info=True)
+            finally:
+                loop.close()
+                logging.info("FastAPI event loop closed")
 
         thread = threading.Thread(target=run_server, daemon=True, name="FastAPI-Server")
         thread.start()
 
-        logging.info(f"FastAPI HTTP server started on http://127.0.0.1:{port}")
+        logging.info(f"FastAPI HTTP server thread started on http://127.0.0.1:{port}")
         return thread
 
     except ImportError as e:

@@ -134,6 +134,93 @@ def atomic_singleton_lock() -> Generator[int, None, None]:
                     pass  # Ignore cleanup errors
 
 
+def cleanup_zombie_daemons() -> None:
+    """Clean up zombie daemon processes that are holding ports but not responding via HTTP.
+
+    This function:
+    1. Checks if a daemon is HTTP-available - if so, does nothing
+    2. Otherwise, kills any processes holding daemon ports
+    3. Removes stale PID files
+
+    This prevents port conflicts when spawning new daemons while preserving healthy ones.
+    """
+    import logging
+
+    # First check if there's a healthy daemon - if so, don't clean anything
+    from fbuild.daemon.client.http_utils import is_daemon_http_available
+
+    if is_daemon_http_available():
+        logging.debug("Daemon is HTTP-available, skipping zombie cleanup")
+        return
+
+    # Determine ports based on dev mode
+    is_dev = os.environ.get("FBUILD_DEV_MODE") == "1"
+    http_port = 8865 if is_dev else 8765
+    ws_port = 9876  # Same for both modes
+
+    killed_any = False
+
+    # Find and kill processes holding the HTTP port
+    if sys.platform == "win32":
+        try:
+            result = subprocess.run(
+                ["netstat", "-ano"],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            for line in result.stdout.splitlines():
+                if f":{http_port}" in line or f":{ws_port}" in line:
+                    if "LISTENING" in line:
+                        parts = line.split()
+                        if parts:
+                            try:
+                                pid = int(parts[-1])
+                                logging.warning(f"Killing zombie daemon PID {pid} holding port")
+                                subprocess.run(
+                                    ["taskkill", "/F", "/PID", str(pid)],
+                                    capture_output=True,
+                                    check=False,
+                                )
+                                killed_any = True
+                            except (ValueError, IndexError):
+                                pass
+        except Exception as e:
+            logging.debug(f"Error during zombie cleanup: {e}")
+    else:
+        # Unix-like systems
+        for port in [http_port, ws_port]:
+            try:
+                result = subprocess.run(
+                    ["lsof", "-ti", f":{port}"],
+                    capture_output=True,
+                    text=True,
+                    check=False,
+                )
+                for pid_str in result.stdout.strip().split():
+                    try:
+                        pid = int(pid_str)
+                        logging.warning(f"Killing zombie daemon PID {pid} holding port {port}")
+                        os.kill(pid, 9)
+                        killed_any = True
+                    except (ValueError, ProcessLookupError):
+                        pass
+            except Exception as e:
+                logging.debug(f"Error during zombie cleanup for port {port}: {e}")
+
+    # Clean stale PID file if we killed anything
+    if killed_any and PID_FILE.exists():
+        try:
+            PID_FILE.unlink()
+            logging.info("Removed stale PID file after zombie cleanup")
+        except Exception:
+            pass
+
+    # Give killed processes time to release ports
+    if killed_any:
+        time.sleep(0.5)
+
+
 def spawn_daemon_process(launcher_pid: int) -> int:
     """
     Spawn daemon process and return its PID.
@@ -147,6 +234,9 @@ def spawn_daemon_process(launcher_pid: int) -> int:
     Raises:
         RuntimeError: If spawn fails
     """
+    # Clean up any zombie daemons before spawning
+    cleanup_zombie_daemons()
+
     # Construct daemon command
     # TEMPORARY: Use sys.executable for debugging (will show console)
     # TODO: Switch back to get_python_executable() once daemon spawn is working

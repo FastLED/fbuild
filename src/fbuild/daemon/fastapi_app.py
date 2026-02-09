@@ -152,17 +152,25 @@ async def lifespan(app: FastAPI):
         Control to FastAPI application
     """
     # Startup
-    logging.info("FastAPI daemon starting up...")
+    logging.info("=" * 80)
+    logging.info("FastAPI lifespan: ENTERING startup phase")
     logging.info(f"Daemon context: {'initialized' if _daemon_context else 'NOT INITIALIZED'}")
 
     if _daemon_context:
         logging.info(f"Daemon PID: {_daemon_context.daemon_pid}")
         logging.info(f"Started at: {_daemon_context.daemon_started_at}")
 
+    logging.info("FastAPI lifespan: About to YIELD (server will start serving)")
+    logging.info("=" * 80)
+
     yield
 
     # Shutdown
-    logging.info("FastAPI daemon shutting down...")
+    logging.info("=" * 80)
+    logging.info("FastAPI lifespan: EXITING (shutdown triggered)")
+    import traceback
+    logging.info(f"Shutdown stack trace:\n{''.join(traceback.format_stack())}")
+    logging.info("=" * 80)
     if _daemon_context:
         from fbuild.daemon.daemon_context import cleanup_daemon_context
 

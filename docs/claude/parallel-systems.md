@@ -110,9 +110,9 @@ fbuild uses parallel compilation to speed up builds by compiling multiple source
 
 **Examples:**
 ```bash
-fbuild build tests/esp32c6 -e esp32c6 --jobs 4  # Use 4 workers
-fbuild build tests/uno -e uno --jobs 2          # Use 2 workers
-fbuild build tests/esp32c6 -e esp32c6 --jobs 1  # Serial (debugging)
+uv run fbuild build tests/esp32c6 -e esp32c6 --jobs 4  # Use 4 workers
+uv run fbuild build tests/uno -e uno --jobs 2          # Use 2 workers
+uv run fbuild build tests/esp32c6 -e esp32c6 --jobs 1  # Serial (debugging)
 ```
 
 ### Platform Support

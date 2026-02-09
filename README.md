@@ -84,7 +84,7 @@ fbuild deploy tests/esp32c6 --monitor="--timeout 60 --halt-on-error \"TEST FAILE
 
 ```bash
 # Monitor serial output with pattern matching
-uv run fbuild monitor --timeout 60 --halt-on-error "TEST FAILED" --halt-on-success "TEST PASSED"
+fbuild monitor --timeout 60 --halt-on-error "TEST FAILED" --halt-on-success "TEST PASSED"
 ```
 
   * Serial monitoring requires pyserial to attach to the USB device

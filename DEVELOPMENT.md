@@ -46,13 +46,13 @@ When `FBUILD_DEV_MODE=1` is set:
 
 3. **Run fbuild commands:**
    ```bash
-   fbuild build tests/uno -e uno
-   fbuild deploy tests/esp32c6 -e esp32c6
+   uv run fbuild build tests/uno -e uno
+   uv run fbuild deploy tests/esp32c6 -e esp32c6
    ```
 
 4. **Check daemon status:**
    ```bash
-   fbuild daemon status
+   uv run fbuild daemon status
    ```
 
    The daemon will be running from `.fbuild/daemon_dev/` in the current directory.
@@ -141,7 +141,7 @@ When testing daemon functionality:
 1. **Always use development mode** to avoid interfering with production
 2. **Stop the development daemon** between test runs:
    ```bash
-   fbuild daemon stop
+   uv run fbuild daemon stop
    ```
 3. **Clear daemon files** if needed:
    ```bash
@@ -159,7 +159,7 @@ Ensure:
 
 Check daemon location:
 ```bash
-fbuild daemon status
+uv run fbuild daemon status
 # Look for daemon files in .fbuild/daemon_dev/
 ```
 
@@ -176,7 +176,7 @@ Stop the production daemon:
 ```bash
 # Temporarily unset dev mode
 unset FBUILD_DEV_MODE
-fbuild daemon stop
+uv run fbuild daemon stop
 
 # Re-enable dev mode
 export FBUILD_DEV_MODE=1
