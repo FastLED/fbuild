@@ -54,6 +54,7 @@ from typing import Any, Dict, List, Optional
 from .archive_utils import ArchiveExtractor, URLVersionExtractor
 from .cache import Cache
 from .downloader import DownloadError, ExtractionError
+from .framework_patches import ESP32_FRAMEWORK_PATCHES, apply_framework_patches
 from .header_trampoline_cache import HeaderTrampolineCache
 from .package import IFramework, PackageError
 from .sdk_utils import SDKPathResolver
@@ -166,6 +167,9 @@ class FrameworkESP32(IFramework):
             if self.show_progress:
                 print(f"ESP32 framework installed to {self.framework_path}")
 
+            # Post-install: Apply framework patches to fix known upstream bugs
+            self._post_install_apply_patches()
+
             # Post-install: Generate header trampolines for all MCU variants
             # This pre-generates trampoline caches to avoid Windows command-line length issues
             self._post_install_generate_trampolines()
@@ -181,6 +185,29 @@ class FrameworkESP32(IFramework):
             raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise FrameworkErrorESP32(f"Unexpected error installing framework: {e}")
+
+    def _post_install_apply_patches(self) -> None:
+        """Apply framework patches to fix known upstream bugs after installation.
+
+        This post-install step applies patches to fix bugs in the Arduino ESP32 framework
+        that come from upstream ESP-IDF. Patches are version-specific and only applied
+        if the framework version matches the patch constraints.
+
+        The patches are permanent (survive across builds) and self-documenting.
+        """
+        try:
+            if self.show_progress:
+                print("[patches] Checking for required framework patches...")
+
+            apply_framework_patches(self.framework_path, ESP32_FRAMEWORK_PATCHES, self.version, self.show_progress)
+
+        except KeyboardInterrupt:
+            _thread.interrupt_main()
+            raise
+        except Exception as e:
+            # Don't fail the entire installation if patching fails
+            if self.show_progress:
+                print(f"[patches] Warning: Post-install patching failed: {e}")
 
     def _post_install_generate_trampolines(self) -> None:
         """Generate header trampolines for all MCU variants after framework installation.

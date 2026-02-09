@@ -37,8 +37,7 @@ def clean_daemon_state():
 
             # Kill daemon gracefully
             if sys.platform == "win32":
-                subprocess.run(["taskkill", "/PID", str(daemon_pid), "/F"],
-                             capture_output=True, check=False)
+                subprocess.run(["taskkill", "/PID", str(daemon_pid), "/F"], capture_output=True, check=False)
             else:
                 os.kill(daemon_pid, 9)
         except Exception:
@@ -82,17 +81,15 @@ def test_spawn_pid_matches_daemon_pid(clean_daemon_state):  # noqa: ARG001
         pid_str = PID_FILE.read_text().strip()
         daemon_pid_from_file = int(pid_str.split(",")[0])
 
-        assert actual_pid == daemon_pid_from_file, (
-            f"wait_for_pid_file returned {actual_pid} but file contains {daemon_pid_from_file}"
-        )
+        assert actual_pid == daemon_pid_from_file, f"wait_for_pid_file returned {actual_pid} but file contains {daemon_pid_from_file}"
 
         # Document whether PID mismatch occurred (expected under uv run)
         if spawned_pid != actual_pid:
-            print(f"✓ PID mismatch detected and handled correctly:")
+            print("✓ PID mismatch detected and handled correctly:")
             print(f"  Spawned PID: {spawned_pid} (wrapper process)")
             print(f"  Actual daemon PID: {actual_pid}")
         else:
-            print(f"✓ No PID mismatch (direct Python execution)")
+            print("✓ No PID mismatch (direct Python execution)")
 
         # The test passes regardless of PID mismatch - what matters is that
         # wait_for_pid_file returns a valid, alive daemon PID

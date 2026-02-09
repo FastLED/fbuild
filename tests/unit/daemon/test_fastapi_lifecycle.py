@@ -93,7 +93,9 @@ def test_fastapi_server_lifecycle():
 
         # Import FastAPI components
         import asyncio
+
         import uvicorn
+
         from fbuild.daemon.fastapi_app import create_app, set_daemon_context
 
         # Set daemon context for FastAPI dependency injection
@@ -136,11 +138,7 @@ def test_fastapi_server_lifecycle():
                 loop.close()
 
         # Start server thread
-        server_thread = threading.Thread(
-            target=run_server,
-            daemon=True,
-            name=f"TestFastAPI-{port}"
-        )
+        server_thread = threading.Thread(target=run_server, daemon=True, name=f"TestFastAPI-{port}")
         server_thread.start()
 
         # Wait for thread to start
@@ -157,10 +155,7 @@ def test_fastapi_server_lifecycle():
         if server_error:
             pytest.fail(f"Server error during startup: {server_error}")
 
-        assert server_available, (
-            f"Server failed to become available within 10s. "
-            f"Thread alive: {server_thread.is_alive()}"
-        )
+        assert server_available, f"Server failed to become available within 10s. " f"Thread alive: {server_thread.is_alive()}"
 
         print("✓ Server is available")
 
@@ -203,7 +198,7 @@ def test_fastapi_server_lifecycle():
 
         # Shutdown server by calling shutdown on the uvicorn server
         # This will cause server.serve() to return
-        if hasattr(server, 'should_exit'):
+        if hasattr(server, "should_exit"):
             server.should_exit = True
 
         # Wait for server thread to exit
@@ -228,6 +223,7 @@ def test_fastapi_server_lifecycle():
     finally:
         # Cleanup test directories
         import shutil
+
         if test_daemon_dir.exists():
             shutil.rmtree(test_daemon_dir, ignore_errors=True)
 
@@ -264,7 +260,9 @@ def test_fastapi_immediate_shutdown_regression():
         )
 
         import asyncio
+
         import uvicorn
+
         from fbuild.daemon.fastapi_app import create_app, set_daemon_context
 
         set_daemon_context(context)
@@ -295,28 +293,25 @@ def test_fastapi_immediate_shutdown_regression():
         base_url = f"http://127.0.0.1:{port}"
         health_url = f"{base_url}/health"
 
-        assert wait_for_server(health_url, timeout=10.0), (
-            "Server with FIXED pattern failed to start - regression detected!"
-        )
+        assert wait_for_server(health_url, timeout=10.0), "Server with FIXED pattern failed to start - regression detected!"
 
         # Verify it stays running for at least 3 seconds
         for i in range(3):
             time.sleep(1.0)
             response = requests.get(health_url, timeout=2.0)
-            assert response.status_code == 200, (
-                f"Server stopped responding after {i+1}s - regression detected!"
-            )
+            assert response.status_code == 200, f"Server stopped responding after {i+1}s - regression detected!"
             print(f"✓ Still running after {i+1}s")
 
         print("✓ Regression test passed - server stays running")
 
         # Shutdown
-        if hasattr(server, 'should_exit'):
+        if hasattr(server, "should_exit"):
             server.should_exit = True
         server_thread.join(timeout=5.0)
 
     finally:
         import shutil
+
         if test_daemon_dir.exists():
             shutil.rmtree(test_daemon_dir, ignore_errors=True)
 
@@ -325,6 +320,6 @@ if __name__ == "__main__":
     # Allow running test directly for debugging
     print("Running FastAPI lifecycle tests...")
     test_fastapi_server_lifecycle()
-    print("\n" + "="*80 + "\n")
+    print("\n" + "=" * 80 + "\n")
     test_fastapi_immediate_shutdown_regression()
     print("\n✅ All tests passed!")

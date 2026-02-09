@@ -122,7 +122,7 @@ class NonLockingFileHandler(logging.Handler):
     This allows the log file to be deleted or moved while the daemon is running.
     """
 
-    def __init__(self, filename: str, mode: str = 'a', encoding: str = 'utf-8'):
+    def __init__(self, filename: str, mode: str = "a", encoding: str = "utf-8"):
         super().__init__()
         self.filename = filename
         self.mode = mode
@@ -134,7 +134,7 @@ class NonLockingFileHandler(logging.Handler):
             msg = self.format(record)
             # Open file, write, and immediately close
             with open(self.filename, self.mode, encoding=self.encoding) as f:
-                f.write(msg + '\n')
+                f.write(msg + "\n")
         except KeyboardInterrupt:
             raise
         except Exception:
@@ -340,6 +340,7 @@ def start_fastapi_server(context: DaemonContext) -> threading.Thread | None:
         def run_server():
             # Create new event loop for this thread (uvicorn requires it)
             import asyncio
+
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
 

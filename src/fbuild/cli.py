@@ -24,9 +24,9 @@ if "FBUILD_DEV_MODE" not in os.environ:
                 import tomllib
             except ImportError:
                 try:
-                    import tomli as tomllib  # type: ignore
+                    import tomli as tomllib
                 except ImportError:
-                    tomllib = None  # type: ignore
+                    tomllib = None
 
             if tomllib is not None:
                 with open(pyproject_path, "rb") as f:
@@ -35,9 +35,13 @@ if "FBUILD_DEV_MODE" not in os.environ:
                     if package_name == "fbuild":
                         os.environ["FBUILD_DEV_MODE"] = "1"
                         _dev_mode_auto_detected = True
+    except KeyboardInterrupt:
+        raise
     except Exception:
         pass
 
+# ruff: noqa: E402
+# The following imports come after dev mode detection because paths.py reads FBUILD_DEV_MODE at import time
 from fbuild import __version__
 from fbuild.build.build_profiles import BuildProfile
 from fbuild.cli_utils import (

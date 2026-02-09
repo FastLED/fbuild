@@ -163,7 +163,7 @@ def cleanup_zombie_daemons() -> None:
     # Find and kill processes holding the HTTP port
     if sys.platform == "win32":
         try:
-            result = subprocess.run(
+            result = safe_run(
                 ["netstat", "-ano"],
                 capture_output=True,
                 text=True,
@@ -177,7 +177,7 @@ def cleanup_zombie_daemons() -> None:
                             try:
                                 pid = int(parts[-1])
                                 logging.warning(f"Killing zombie daemon PID {pid} holding port")
-                                subprocess.run(
+                                safe_run(
                                     ["taskkill", "/F", "/PID", str(pid)],
                                     capture_output=True,
                                     check=False,
@@ -185,13 +185,15 @@ def cleanup_zombie_daemons() -> None:
                                 killed_any = True
                             except (ValueError, IndexError):
                                 pass
+        except KeyboardInterrupt:
+            raise
         except Exception as e:
             logging.debug(f"Error during zombie cleanup: {e}")
     else:
         # Unix-like systems
         for port in [http_port, ws_port]:
             try:
-                result = subprocess.run(
+                result = safe_run(
                     ["lsof", "-ti", f":{port}"],
                     capture_output=True,
                     text=True,
@@ -205,6 +207,8 @@ def cleanup_zombie_daemons() -> None:
                         killed_any = True
                     except (ValueError, ProcessLookupError):
                         pass
+            except KeyboardInterrupt:
+                raise
             except Exception as e:
                 logging.debug(f"Error during zombie cleanup for port {port}: {e}")
 
@@ -213,6 +217,8 @@ def cleanup_zombie_daemons() -> None:
         try:
             PID_FILE.unlink()
             logging.info("Removed stale PID file after zombie cleanup")
+        except KeyboardInterrupt:
+            raise
         except Exception:
             pass
 

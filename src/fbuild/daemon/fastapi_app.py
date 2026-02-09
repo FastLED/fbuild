@@ -169,6 +169,7 @@ async def lifespan(app: FastAPI):
     logging.info("=" * 80)
     logging.info("FastAPI lifespan: EXITING (shutdown triggered)")
     import traceback
+
     logging.info(f"Shutdown stack trace:\n{''.join(traceback.format_stack())}")
     logging.info("=" * 80)
     if _daemon_context:

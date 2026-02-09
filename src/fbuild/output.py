@@ -377,12 +377,13 @@ def log_error(message: str) -> None:
 
 def log_warning(message: str) -> None:
     """
-    Log a warning message.
+    Log a warning message in yellow.
 
     Args:
         message: Warning message
     """
-    _print(f"WARNING: {message}")
+    # ANSI color codes: \033[33m = yellow, \033[0m = reset
+    _print(f"\033[33mWARNING: {message}\033[0m")
 
 
 def log_success(message: str) -> None:
