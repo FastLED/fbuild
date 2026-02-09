@@ -235,7 +235,8 @@ def spawn_daemon_process(launcher_pid: int) -> int:
         RuntimeError: If spawn fails
     """
     # Clean up any zombie daemons before spawning
-    cleanup_zombie_daemons()
+    # TEMPORARILY DISABLED: cleanup is too aggressive and kills starting daemons
+    # cleanup_zombie_daemons()
 
     # Construct daemon command
     # TEMPORARY: Use sys.executable for debugging (will show console)
