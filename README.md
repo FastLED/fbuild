@@ -94,7 +94,7 @@ fbuild monitor --timeout 60 --halt-on-error "TEST FAILED" --halt-on-success "TES
 
 fbuild supports deploying to QEMU for testing ESP32 firmware without physical hardware.
 
-### Supported Platforms
+### QEMU Supported Platforms
 
 | Platform | QEMU Status | Notes |
 |----------|-------------|-------|
