@@ -167,6 +167,18 @@ class PlatformESP32(IPackage):
             if self.show_progress:
                 print(f"ESP32 platform installed to {self.platform_path}")
 
+            # Create manifest for cache management
+            from fbuild.packages.downloader import create_package_manifest
+
+            create_package_manifest(
+                install_path=self.platform_path,
+                name=f"ESP32 Platform {self.version}",
+                package_type="platforms",
+                version=self.version,
+                url=self.platform_url,
+                metadata={"platform": "espressif32"},
+            )
+
             return self.platform_path
 
         except (DownloadError, ExtractionError) as e:

@@ -560,3 +560,38 @@ class PackageDownloader:
             raise ChecksumError(f"Checksum mismatch for {file_path}\n" + f"Expected: {expected}\n" + f"Got: {actual}")
 
         return True
+
+
+def create_package_manifest(
+    install_path: Path,
+    name: str,
+    package_type: str,
+    version: str,
+    url: str,
+    metadata: dict[str, str],
+) -> None:
+    """Create manifest.json at package root for cache management.
+
+    Args:
+        install_path: Package installation directory
+        name: Human-readable package name (e.g., "Xtensa ESP32 Toolchain")
+        package_type: Package type (toolchain, platform, framework, library)
+        version: Package version string
+        url: Source URL
+        metadata: Additional metadata (architecture, mcu, platform, etc.)
+    """
+    import json
+    from datetime import datetime, timezone
+
+    manifest = {
+        "name": name,
+        "type": package_type,
+        "version": version,
+        "url": url,
+        "install_date": datetime.now(timezone.utc).isoformat(),
+        "metadata": metadata,
+    }
+
+    manifest_path = install_path / "manifest.json"
+    with open(manifest_path, "w", encoding="utf-8") as f:
+        json.dump(manifest, f, indent=2)

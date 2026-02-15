@@ -117,6 +117,15 @@ class MonitorArgs:
     platformio: bool = False
 
 
+@dataclass
+class PurgeArgs:
+    """Arguments for the purge command."""
+
+    target: Optional[str]
+    dry_run: bool
+    project_dir: Path
+
+
 def build_command(args: BuildArgs) -> None:
     """Build firmware for embedded target.
 
@@ -390,6 +399,37 @@ def monitor_command(args: MonitorArgs) -> None:
         handle_keyboard_interrupt_properly(ke)
     except Exception as e:
         ErrorFormatter.handle_unexpected_error(e, args.verbose)
+
+
+def purge_command(args: PurgeArgs) -> None:
+    """Manage cached packages.
+
+    Examples:
+        fbuild purge                # List all packages
+        fbuild purge all            # Delete all packages
+        fbuild purge all --dry-run  # Preview deletion
+        fbuild purge esp32c6        # Delete esp32c6 packages
+    """
+    init_timer()
+    log_header("fbuild Cache Management", __version__)
+
+    try:
+        from fbuild.commands.purge import purge_packages
+
+        success = purge_packages(
+            target=args.target,
+            dry_run=args.dry_run,
+            project_dir=args.project_dir,
+        )
+
+        sys.exit(0 if success else 1)
+
+    except KeyboardInterrupt as ke:
+        from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+        handle_keyboard_interrupt_properly(ke)
+    except Exception as e:
+        ErrorFormatter.handle_unexpected_error(e, verbose=False)
 
 
 def device_command(
@@ -832,7 +872,7 @@ def main() -> None:
 
     # Handle default action: fbuild <project_dir> [flags] → deploy with monitor
     # This check must happen before argparse to avoid conflicts
-    if len(sys.argv) >= 2 and not sys.argv[1].startswith("-") and sys.argv[1] not in ["build", "deploy", "monitor", "daemon", "device", "show"]:
+    if len(sys.argv) >= 2 and not sys.argv[1].startswith("-") and sys.argv[1] not in ["build", "deploy", "monitor", "purge", "daemon", "device", "show"]:
         # User provided a path without a subcommand - use default action
         deploy_args = parse_default_action_args(sys.argv)
         deploy_command(deploy_args)
@@ -1034,6 +1074,29 @@ def main() -> None:
         help="Delegate monitor to PlatformIO CLI instead of fbuild's native monitor",
     )
 
+    # Purge command
+    purge_parser = subparsers.add_parser(
+        "purge",
+        help="Manage cached packages (list, delete)",
+    )
+    purge_parser.add_argument(
+        "target",
+        nargs="?",
+        default=None,
+        help="Target: 'all' for all packages, environment name, or omit to list",
+    )
+    purge_parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Show what would be deleted without deleting",
+    )
+    purge_parser.add_argument(
+        "--project-dir",
+        type=Path,
+        default=Path.cwd(),
+        help="Project directory (for environment-specific purge)",
+    )
+
     # Show command
     show_parser = subparsers.add_parser(
         "show",
@@ -1191,6 +1254,13 @@ def main() -> None:
             platformio=parsed_args.platformio,
         )
         monitor_command(monitor_args)
+    elif parsed_args.command == "purge":
+        purge_args = PurgeArgs(
+            target=parsed_args.target,
+            dry_run=parsed_args.dry_run,
+            project_dir=parsed_args.project_dir,
+        )
+        purge_command(purge_args)
     elif parsed_args.command == "daemon":
         daemon_command(
             parsed_args.action,

@@ -233,6 +233,19 @@ class ToolchainAVR(IToolchain):
 
             self._toolchain_path = toolchain_path
             _safe_print(f"Toolchain ready at {toolchain_path}")
+
+            # Create manifest for cache management
+            from fbuild.packages.downloader import create_package_manifest
+
+            create_package_manifest(
+                install_path=toolchain_path,
+                name=f"AVR-GCC {self.VERSION}",
+                package_type="toolchains",
+                version=self.VERSION,
+                url=url,
+                metadata={"architecture": "avr"},
+            )
+
             return toolchain_path
 
         except KeyboardInterrupt as ke:

@@ -415,6 +415,22 @@ class ToolchainESP32(IToolchain):
             # Discover actual binary prefix from installed files
             self._update_binary_prefix_after_install()
 
+            # Create manifest for cache management
+            from fbuild.packages.downloader import create_package_manifest
+
+            metadata_dict: dict[str, str] = {"architecture": self.toolchain_type}
+            if self.mcu:
+                metadata_dict["mcu"] = self.mcu
+
+            create_package_manifest(
+                install_path=toolchain_cache_dir,
+                name=f"{self.toolchain_type.upper()} Toolchain",
+                package_type="toolchains",
+                version=self.version,
+                url=self.toolchain_url,
+                metadata=metadata_dict,
+            )
+
             return self.toolchain_path
 
         except (DownloadError, ExtractionError) as e:
