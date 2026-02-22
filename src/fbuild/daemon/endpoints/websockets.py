@@ -583,6 +583,7 @@ def create_websockets_router(get_daemon_context_dep: Callable[[], DaemonContext]
         client_id: str | None = None
         port: str | None = None
         attached = False
+        writer_pre_acquired = False
         last_index = 0
 
         # Message queue for incoming messages
@@ -622,7 +623,7 @@ def create_websockets_router(get_daemon_context_dep: Callable[[], DaemonContext]
         # Background task for processing messages from queue
         async def message_processor():
             """Background task that processes messages from queue."""
-            nonlocal client_id, port, attached, last_index, running
+            nonlocal client_id, port, attached, writer_pre_acquired, last_index, running
 
             while running:
                 try:
@@ -681,12 +682,26 @@ def create_websockets_router(get_daemon_context_dep: Callable[[], DaemonContext]
                             attached = True
                             last_index = 0
 
+                        # Pre-acquire writer if requested (eliminates first-write latency)
+                        writer_pre_acquired = False
+                        pre_acquire = msg.get("pre_acquire_writer", False)
+                        if response.success and pre_acquire and context.shared_serial_manager:
+                            acquire_ok = await loop.run_in_executor(
+                                None,
+                                context.shared_serial_manager.acquire_writer,
+                                port,
+                                client_id,
+                                25.0,
+                            )
+                            writer_pre_acquired = acquire_ok
+
                         # Send response immediately
                         await websocket.send_json(
                             {
                                 "type": "attached",
                                 "success": response.success,
                                 "message": response.message,
+                                "writer_pre_acquired": writer_pre_acquired,
                             }
                         )
 
@@ -708,7 +723,7 @@ def create_websockets_router(get_daemon_context_dep: Callable[[], DaemonContext]
                             client_id=client_id or "",
                             port=port or "",
                             data=data_b64,
-                            acquire_writer=True,
+                            acquire_writer=not writer_pre_acquired,
                         )
 
                         # Use thread pool with timeout to prevent blocking forever
@@ -779,6 +794,7 @@ def create_websockets_router(get_daemon_context_dep: Callable[[], DaemonContext]
                             )
 
                             attached = False
+                            writer_pre_acquired = False
 
                             await websocket.send_json(
                                 {
