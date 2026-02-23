@@ -118,6 +118,16 @@ class MonitorArgs:
 
 
 @dataclass
+class ResetArgs:
+    """Arguments for the reset command."""
+
+    project_dir: Path
+    environment: Optional[str] = None
+    port: Optional[str] = None
+    verbose: bool = False
+
+
+@dataclass
 class PurgeArgs:
     """Arguments for the purge command."""
 
@@ -430,6 +440,78 @@ def purge_command(args: PurgeArgs) -> None:
         handle_keyboard_interrupt_properly(ke)
     except Exception as e:
         ErrorFormatter.handle_unexpected_error(e, verbose=False)
+
+
+def reset_command(args: ResetArgs) -> None:
+    """Reset an embedded device via serial port.
+
+    Examples:
+        fbuild reset                              # Reset device in current project
+        fbuild reset tests/teensy41 -e teensy41   # Reset Teensy
+        fbuild reset tests/esp32c6 -e esp32c6     # Reset ESP32
+        fbuild reset -p COM5                      # Reset device on specific port
+    """
+    init_timer()
+    set_verbose(args.verbose)
+
+    log_header("fbuild Device Reset", __version__)
+
+    try:
+        from fbuild.config import PlatformIOConfig
+        from fbuild.deploy.reset import reset_device
+        from fbuild.deploy.serial_utils import detect_serial_port
+
+        # Determine environment name
+        env_name = EnvironmentDetector.detect_environment(args.project_dir, args.environment)
+
+        # Load platformio.ini to detect platform
+        ini_path = args.project_dir / "platformio.ini"
+        if not ini_path.exists():
+            ErrorFormatter.print_error("platformio.ini not found", str(ini_path))
+            sys.exit(1)
+
+        config = PlatformIOConfig(ini_path)
+        env_config = config.get_env_config(env_name)
+        board_id = env_config.get("board", "")
+
+        # Detect platform from board ID
+        if board_id.startswith("teensy"):
+            platform = "teensy"
+        elif board_id.startswith("esp32") or "esp32" in board_id:
+            platform = "esp32"
+        elif board_id in ("uno", "nano", "mega") or board_id.startswith("atmega"):
+            platform = "avr"
+        else:
+            platform = "generic"
+
+        if args.verbose:
+            log(f"Environment: {env_name}")
+            log(f"Board: {board_id}")
+            log(f"Platform: {platform}")
+
+        # Detect port if not specified
+        port = args.port
+        if port is None:
+            port = detect_serial_port(verbose=args.verbose)
+            if port is None:
+                ErrorFormatter.print_error("No serial port detected", "Use -p/--port to specify manually")
+                sys.exit(1)
+            log(f"Auto-detected port: {port}")
+
+        # Send reset signal
+        log(f"Resetting {platform} device on {port}...")
+        success = reset_device(platform=platform, port=port, verbose=args.verbose)
+
+        sys.exit(0 if success else 1)
+
+    except FileNotFoundError as e:
+        ErrorFormatter.handle_file_not_found(e)
+    except KeyboardInterrupt as ke:
+        from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+        handle_keyboard_interrupt_properly(ke)
+    except Exception as e:
+        ErrorFormatter.handle_unexpected_error(e, args.verbose)
 
 
 def device_command(
@@ -872,7 +954,7 @@ def main() -> None:
 
     # Handle default action: fbuild <project_dir> [flags] → deploy with monitor
     # This check must happen before argparse to avoid conflicts
-    if len(sys.argv) >= 2 and not sys.argv[1].startswith("-") and sys.argv[1] not in ["build", "deploy", "monitor", "purge", "daemon", "device", "show"]:
+    if len(sys.argv) >= 2 and not sys.argv[1].startswith("-") and sys.argv[1] not in ["build", "deploy", "monitor", "reset", "purge", "daemon", "device", "show"]:
         # User provided a path without a subcommand - use default action
         deploy_args = parse_default_action_args(sys.argv)
         deploy_command(deploy_args)
@@ -1074,6 +1156,37 @@ def main() -> None:
         help="Delegate monitor to PlatformIO CLI instead of fbuild's native monitor",
     )
 
+    # Reset command
+    reset_parser = subparsers.add_parser(
+        "reset",
+        help="Reset an embedded device via serial port",
+    )
+    reset_parser.add_argument(
+        "project_dir",
+        nargs="?",
+        type=Path,
+        default=Path.cwd(),
+        help="Project directory (default: current directory)",
+    )
+    reset_parser.add_argument(
+        "-e",
+        "--environment",
+        default=None,
+        help="Build environment (default: auto-detect from platformio.ini)",
+    )
+    reset_parser.add_argument(
+        "-p",
+        "--port",
+        default=None,
+        help="Serial port (default: auto-detect)",
+    )
+    reset_parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        help="Show verbose output",
+    )
+
     # Purge command
     purge_parser = subparsers.add_parser(
         "purge",
@@ -1261,6 +1374,14 @@ def main() -> None:
             project_dir=parsed_args.project_dir,
         )
         purge_command(purge_args)
+    elif parsed_args.command == "reset":
+        reset_args = ResetArgs(
+            project_dir=parsed_args.project_dir,
+            environment=parsed_args.environment,
+            port=parsed_args.port,
+            verbose=parsed_args.verbose,
+        )
+        reset_command(reset_args)
     elif parsed_args.command == "daemon":
         daemon_command(
             parsed_args.action,

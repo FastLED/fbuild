@@ -41,6 +41,7 @@ def detect_serial_port(verbose: bool = False) -> Optional[str]:
                     "esp32",  # ESP32 devices
                     "arduino",  # Arduino devices
                     "ftdi",  # FTDI chips
+                    "teensy",  # Teensy devices
                 ]
             ):
                 return port.device
