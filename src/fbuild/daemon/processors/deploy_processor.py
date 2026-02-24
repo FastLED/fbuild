@@ -386,18 +386,22 @@ class DeployRequestProcessor(RequestProcessor):
         Returns:
             Path to firmware file, or None if not found
         """
-        # Check common firmware locations
-        build_dir = project_path / ".pio" / "build" / environment
-        if not build_dir.exists():
-            build_dir = project_path / ".fbuild" / "build" / environment
+        # Check common firmware locations (ordered by preference)
+        candidate_dirs = [
+            project_path / ".pio" / "build" / environment,
+            project_path / ".fbuild" / "build" / environment / "release",
+            project_path / ".fbuild" / "build" / environment / "quick",
+            project_path / ".fbuild" / "build" / environment,
+        ]
 
-        if not build_dir.exists():
-            return None
-
-        # Look for firmware files (prefer .bin, then .hex, then .elf)
-        for ext in [".bin", ".hex", ".elf"]:
-            for firmware_file in build_dir.glob(f"*{ext}"):
-                return firmware_file
+        for build_dir in candidate_dirs:
+            if not build_dir.exists():
+                continue
+            # Look for firmware files (prefer .bin, then .hex, then .elf)
+            for name in ["firmware.bin", "firmware.hex", "firmware.elf"]:
+                firmware_file = build_dir / name
+                if firmware_file.exists():
+                    return firmware_file
 
         return None
 
@@ -492,18 +496,35 @@ class DeployRequestProcessor(RequestProcessor):
 
         # Create orchestrator and execute build
         # Create a Cache instance for package management
+        from fbuild.build.build_context import BuildParams
+        from fbuild.build.build_profiles import BuildProfile
         from fbuild.packages.cache import Cache
 
         cache = Cache(project_dir=Path(request.project_dir))
 
-        # Initialize orchestrator with cache (ESP32 requires it, AVR accepts it)
-        orchestrator = orchestrator_class(cache=cache, verbose=False)
-        build_result = orchestrator.build(
+        # Get compilation queue from daemon context
+        compilation_queue = context.compilation_queue
+
+        # Deploy always uses release profile
+        profile = BuildProfile.RELEASE
+
+        # Calculate build_dir (incorporates profile name for separation)
+        build_dir = cache.get_build_dir(request.environment, str(profile))
+
+        # Create BuildParams matching the orchestrator's expected interface
+        build_params = BuildParams.create(
             project_dir=Path(request.project_dir),
             env_name=request.environment,
             clean=request.clean_build,
+            profile=profile,
+            queue=compilation_queue,
+            build_dir=build_dir,
             verbose=False,
         )
+
+        # Initialize orchestrator with cache (ESP32 requires it, AVR accepts it)
+        orchestrator = orchestrator_class(cache=cache, verbose=False)
+        build_result = orchestrator.build(request=build_params)
 
         if not build_result.success:
             logging.error(f"Build failed: {build_result.message}")

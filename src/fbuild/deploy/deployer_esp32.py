@@ -332,8 +332,15 @@ class ESP32Deployer(IDeployer):
         Returns:
             DeploymentResult with success status
         """
-        # Get build directory
-        build_dir = project_dir / ".fbuild" / "build" / env_name
+        # Get build directory (check profile subdirectories first)
+        base_build_dir = project_dir / ".fbuild" / "build" / env_name
+        build_dir = base_build_dir
+        for profile_name in ["release", "quick"]:
+            candidate = base_build_dir / profile_name
+            if (candidate / "firmware.bin").exists():
+                build_dir = candidate
+                break
+
         firmware_bin = (build_dir / "firmware.bin").absolute()
         bootloader_bin = (build_dir / "bootloader.bin").absolute()
         partitions_bin = (build_dir / "partitions.bin").absolute()

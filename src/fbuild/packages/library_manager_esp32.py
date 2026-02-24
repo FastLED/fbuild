@@ -319,7 +319,38 @@ class LibraryManagerESP32:
         library = self.get_library(spec)
         logger.debug(f"[LOCAL_LIB] Step 3: Created library instance, lib_dir = {library.lib_dir}")
 
-        # Skip if already set up
+        # On Windows, local libraries are copies (not symlinks) due to MSYS cross-compiler
+        # issues. When the library already exists, we smart-sync to pick up source changes
+        # without modifying timestamps on unchanged files (avoids unnecessary recompilation).
+        # On Unix, symlinks point to the original source so changes are visible automatically.
+        if library.exists and platform.system() == "Windows":
+            logger.debug("[LOCAL_LIB] Step 4: Library exists on Windows, running smart sync")
+            local_path = spec.local_path
+            if local_path and not local_path.is_absolute():
+                base_dir = self.project_dir if self.project_dir else Path.cwd()
+                local_path = base_dir / local_path
+            if local_path:
+                local_path = local_path.resolve()
+                source_path = local_path / "src" if (local_path / "src").is_dir() else local_path
+                from fbuild.packages.dirsync import sync_directory
+
+                files_changed = sync_directory(source_path, library.src_dir)
+                if files_changed:
+                    logger.debug("[LOCAL_LIB] Smart sync detected changes, invalidating compiled archive")
+                    if show_progress:
+                        log_detail(f"Local library '{spec.name}' sources updated")
+                    # Invalidate compiled archive so needs_rebuild() triggers recompilation
+                    if library.archive_file.exists():
+                        library.archive_file.unlink()
+                    if library.build_info_file.exists():
+                        library.build_info_file.unlink()
+                else:
+                    logger.debug("[LOCAL_LIB] Smart sync: no changes detected")
+                    if show_progress:
+                        log_detail(f"Local library '{spec.name}' already set up")
+            return library
+
+        # Skip if already set up (Unix with symlinks, or remote libraries)
         if library.exists:
             logger.debug("[LOCAL_LIB] Step 4: Library already exists, returning early")
             if show_progress:
