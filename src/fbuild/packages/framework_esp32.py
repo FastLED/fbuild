@@ -131,6 +131,7 @@ class FrameworkESP32(IFramework):
         if self.is_installed():
             if self.show_progress:
                 print(f"Using cached ESP32 framework {self.version}")
+            self._post_install_apply_patches()  # idempotent, fixes existing caches
             return self.framework_path
 
         try:

@@ -614,7 +614,7 @@ class ConfigurableCompiler(ICompiler):
                 continue
 
             if job.state.value != "completed":
-                failed_jobs.append(f"{job.source_path.name}: {job.stderr[:1000]}")
+                failed_jobs.append(f"{job.source_path.name}: {job.stderr[:4000]}")
 
         # Clear pending jobs
         self.pending_jobs.clear()
