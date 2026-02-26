@@ -9,6 +9,8 @@ file-based IPC. The daemon is detected via HTTP health checks rather than PID fi
 """
 
 import os
+import platform
+import time
 from dataclasses import dataclass
 from enum import Enum
 
@@ -16,6 +18,7 @@ from fbuild.daemon.client.http_utils import (
     is_daemon_http_available,
     wait_for_daemon_http,
 )
+from fbuild.daemon.paths import PID_FILE
 from fbuild.daemon.singleton_manager import (
     atomic_singleton_lock,
     get_launcher_pid,
@@ -24,6 +27,7 @@ from fbuild.daemon.singleton_manager import (
     spawn_daemon_process,
     wait_for_pid_file,
 )
+from fbuild.subprocess_utils import safe_run
 
 
 class DaemonStatus(Enum):
@@ -42,6 +46,42 @@ class DaemonResponse:
     pid: int | None
     launched_by: int | None
     message: str = ""
+
+
+def _kill_stuck_daemon(pid: int) -> None:
+    """Kill a stuck daemon process and clean up its PID file.
+
+    Called when a daemon process is alive but its HTTP server is unresponsive,
+    indicating it's stuck and needs to be replaced with a fresh instance.
+
+    Args:
+        pid: Process ID of the stuck daemon to kill
+    """
+    import logging
+
+    try:
+        if platform.system() == "Windows":
+            safe_run(
+                ["taskkill", "/F", "/PID", str(pid)],
+                capture_output=True,
+                check=False,
+            )
+        else:
+            os.kill(pid, 9)
+    except (ProcessLookupError, PermissionError, OSError) as e:
+        logging.warning(f"Failed to kill stuck daemon PID {pid}: {e}")
+
+    # Remove stale PID file so spawn_daemon_process starts clean
+    if PID_FILE.exists():
+        try:
+            PID_FILE.unlink()
+        except KeyboardInterrupt:
+            raise
+        except Exception:
+            pass
+
+    # Brief pause for port release
+    time.sleep(0.5)
 
 
 def request_daemon() -> DaemonResponse:
@@ -66,7 +106,6 @@ def request_daemon() -> DaemonResponse:
         DaemonResponse with status, PID, and launcher info
     """
     import logging
-    import time
 
     # Retry configuration for daemon spawn
     # This handles Windows process creation race conditions where Popen() returns a PID
@@ -85,6 +124,22 @@ def request_daemon() -> DaemonResponse:
             pid = read_pid_file()
             launcher = get_launcher_pid()
             return DaemonResponse(status=DaemonStatus.ALREADY_RUNNING, pid=pid, launched_by=launcher, message=f"Daemon already running (HTTP available, PID {pid})")
+
+        # HTTP check failed, but daemon process may still be alive (just busy/slow).
+        # If PID is alive, wait longer for HTTP before spawning a new (orphaned) process.
+        existing_pid = read_pid_file()
+        if existing_pid is not None and is_daemon_alive():
+            logging.info(f"Daemon PID {existing_pid} is alive but HTTP not responding yet. Waiting longer before spawning...")
+            if wait_for_daemon_http(timeout=10.0):
+                launcher = get_launcher_pid()
+                return DaemonResponse(
+                    status=DaemonStatus.ALREADY_RUNNING, pid=existing_pid, launched_by=launcher, message=f"Daemon already running (PID {existing_pid} alive, HTTP became available after extended wait)"
+                )
+            else:
+                # Daemon process is alive but HTTP never responded — it's stuck.
+                # Kill it so we can spawn a fresh one.
+                logging.warning(f"Daemon PID {existing_pid} is alive but HTTP unresponsive after 10s. Killing stuck daemon.")
+                _kill_stuck_daemon(existing_pid)
 
         launcher_pid = os.getpid()
         last_error = None
