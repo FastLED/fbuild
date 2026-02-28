@@ -209,6 +209,15 @@ class SDKPathResolver:
         if sdk_lib_dir.exists():
             libs.extend(sdk_lib_dir.glob("*.a"))
 
+        # Get libraries from the ld/ directory (e.g., libphy.a, libbtbb.a)
+        # These are referenced by linker scripts but stored separately from lib/
+        sdk_ld_dir = self.sdk_base_dir / resolved_mcu / "ld"
+        if sdk_ld_dir.exists():
+            ld_libs = list(sdk_ld_dir.glob("*.a"))
+            libs.extend(ld_libs)
+            if ld_libs:
+                logger.debug(f"SDK_LIBS: Found {len(ld_libs)} libraries in ld/ directory: {sdk_ld_dir}")
+
         # Get flash/psram mode-specific libraries (e.g., qio_qspi or qio_opi)
         # For ESP32-C6: Only libspi_flash.a
         # For ESP32-S3: Multiple libraries including libfreertos.a, libesp_system.a, etc.

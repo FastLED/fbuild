@@ -25,6 +25,11 @@ from typing import List
 # All patterns use forward slashes - paths are normalized before matching
 INCLUDE_NEXT_PATTERNS: list[str] = [
     "newlib/platform_include",
+    # ESP-IDF lwip wrapper headers (sockets.h, netdb.h) use #include_next to
+    # chain to the real lwip implementation headers. Both the wrapper path
+    # (include/lwip/include/) and the real lwip path (include/lwip/lwip/src/include/)
+    # must be in the -I list for #include_next resolution to work.
+    "include/lwip",
 ]
 
 
