@@ -1,0 +1,12 @@
+{
+  "id": "wasm",
+  "name": "WebAssembly (Emscripten)",
+  "platform": "wasm",
+  "mcu": "WASM32",
+  "fcpu": 0,
+  "ram": 134217728,
+  "rom": 0,
+  "frameworks": ["arduino"],
+  "vendor": "Emscripten",
+  "url": "https://emscripten.org/"
+}

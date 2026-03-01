@@ -110,6 +110,7 @@ digraph fbuild_architecture {
             orchestrator_rp2040 [label="orchestrator_rp2040.py", fillcolor="#a5d6a7"];
             orchestrator_stm32 [label="orchestrator_stm32.py", fillcolor="#a5d6a7"];
             orchestrator_teensy [label="orchestrator_teensy.py", fillcolor="#a5d6a7"];
+            orchestrator_wasm [label="orchestrator_wasm.py", fillcolor="#a5d6a7"];
         }
 
         subgraph cluster_compile {
@@ -264,6 +265,7 @@ digraph fbuild_architecture {
     orchestrator -> orchestrator_rp2040 [style=dashed];
     orchestrator -> orchestrator_stm32 [style=dashed];
     orchestrator -> orchestrator_teensy [style=dashed];
+    orchestrator -> orchestrator_wasm [style=dashed];
 
     // Orchestrators use config
     orchestrator_esp32 -> ini_parser;

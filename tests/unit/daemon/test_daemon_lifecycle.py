@@ -23,6 +23,7 @@ from pathlib import Path
 import pytest
 
 from fbuild.daemon.api import DaemonStatus, get_daemon_info, request_daemon
+from fbuild.daemon.client.http_utils import is_daemon_http_available
 from fbuild.daemon.client.lifecycle import stop_daemon
 from fbuild.daemon.paths import DAEMON_DIR, LOCK_FILE, PID_FILE
 from fbuild.daemon.singleton_manager import is_daemon_alive, read_pid_file
@@ -62,8 +63,11 @@ def spawn_worker(worker_id: int) -> dict:
 
 def spawn_client(_worker_id: int) -> int | None:
     """Simulate client requesting daemon. Returns daemon PID."""
-    response = request_daemon()
-    return response.pid
+    try:
+        response = request_daemon()
+        return response.pid
+    except Exception:
+        return None
 
 
 # ---------------------------------------------------------------------------
@@ -86,43 +90,67 @@ def _stop_and_clean() -> None:
 
     # 2 – Wait for graceful shutdown (up to 5 s)
     for _ in range(10):
-        if not PID_FILE.exists():
+        if not PID_FILE.exists() and not is_daemon_http_available():
             break
         time.sleep(0.5)
     else:
         time.sleep(0.5)
 
     # 3 – Force-kill only if process is still alive
+    daemon_pid = None
     if PID_FILE.exists():
         try:
             pid_str = PID_FILE.read_text().strip()
             daemon_pid = int(pid_str.split(",")[0])
-            if _check_pid_alive_simple(daemon_pid):
-                if platform.system() == "Windows":
-                    subprocess.run(
-                        ["taskkill", "/F", "/PID", str(daemon_pid)],
-                        capture_output=True,
-                        timeout=5,
-                    )
-                else:
-                    try:
-                        os.kill(daemon_pid, 9)
-                    except ProcessLookupError:
-                        pass
-                time.sleep(0.5)
         except Exception:
             pass
 
-    # 4 – Scrub state files
+    # If no PID from file but HTTP still responds, try to get PID from HTTP info endpoint
+    if daemon_pid is None and is_daemon_http_available():
+        try:
+            import httpx
+
+            from fbuild.daemon.client.http_utils import get_daemon_url
+
+            with httpx.Client(timeout=3.0) as client:
+                resp = client.get(get_daemon_url("/api/daemon/info"))
+                if resp.status_code == 200:
+                    data = resp.json()
+                    daemon_pid = data.get("pid")
+        except Exception:
+            pass
+
+    if daemon_pid is not None and _check_pid_alive_simple(daemon_pid):
+        if platform.system() == "Windows":
+            subprocess.run(
+                ["taskkill", "/F", "/PID", str(daemon_pid)],
+                capture_output=True,
+                timeout=5,
+            )
+        else:
+            try:
+                os.kill(daemon_pid, 9)
+            except ProcessLookupError:
+                pass
+        time.sleep(0.5)
+
+    # 4 – Scrub state files (including port file)
     shutdown_file = DAEMON_DIR / "shutdown.signal"
-    for f in (PID_FILE, LOCK_FILE, shutdown_file):
+    port_file = DAEMON_DIR / "daemon.port"
+    for f in (PID_FILE, LOCK_FILE, shutdown_file, port_file):
         try:
             if f.exists():
                 f.unlink()
         except Exception:
             pass
 
-    # 5 – Let the OS release the port
+    # 5 – Wait for HTTP to go down (up to 5s)
+    for _ in range(10):
+        if not is_daemon_http_available():
+            break
+        time.sleep(0.5)
+
+    # 6 – Let the OS release the port
     time.sleep(0.5)
 
 

@@ -99,6 +99,7 @@ This document tracks the implementation of client cancellation detection for the
   - `src/fbuild/build/orchestrator_teensy.py`
   - `src/fbuild/build/orchestrator_rp2040.py`
   - `src/fbuild/build/orchestrator_stm32.py`
+  - `src/fbuild/build/orchestrator_wasm.py`
 - **Status**: Not implemented
 - **What's needed**:
   - Add `request_id` and `caller_pid` parameters to `build()` method

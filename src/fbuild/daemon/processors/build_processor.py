@@ -28,6 +28,7 @@ _PLATFORM_PATTERNS: dict[str, list[str]] = {
     "atmelavr": ["platform-atmelavr", "platformio/atmelavr", "atmelavr"],
     "raspberrypi": ["platform-raspberrypi", "platformio/raspberrypi", "raspberrypi"],
     "ststm32": ["platform-ststm32", "platformio/ststm32", "ststm32"],
+    "wasm": ["wasm"],
 }
 
 # Mapping from normalized platform name to orchestrator info
@@ -38,6 +39,7 @@ _PLATFORM_ORCHESTRATORS: dict[str, tuple[str, str]] = {
     "raspberrypi": ("fbuild.build.orchestrator_rp2040", "OrchestratorRP2040"),
     "ststm32": ("fbuild.build.orchestrator_stm32", "OrchestratorSTM32"),
     "teensy": ("fbuild.build.orchestrator_teensy", "OrchestratorTeensy"),
+    "wasm": ("fbuild.build.orchestrator_wasm", "OrchestratorWASM"),
 }
 
 
@@ -387,6 +389,7 @@ class BuildRequestProcessor(RequestProcessor):
             "fbuild.build.orchestrator_teensy",
             "fbuild.build.orchestrator_rp2040",
             "fbuild.build.orchestrator_stm32",
+            "fbuild.build.orchestrator_wasm",
             # Daemon processors (reload to pick up processor code changes)
             "fbuild.daemon.processors.build_processor",
             # Deploy and monitor (reload with build system)

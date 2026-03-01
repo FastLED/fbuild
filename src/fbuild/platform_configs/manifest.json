@@ -52,6 +52,13 @@
         "teensy41",
         "teensylc"
       ]
+    },
+    "wasm": {
+      "name": "WebAssembly",
+      "description": "WebAssembly target via Emscripten (clang-tool-chain)",
+      "configs": [
+        "wasm"
+      ]
     }
   }
 }

@@ -48,7 +48,7 @@ fbuild uses the same `platformio.ini` already used in platformio sketches.
   * Supports new build chains easily
   * Supports wasm builds natively
     
-**Current Status**: v1.1.0 - Full Arduino Uno / esp32c6 support with working build system
+**Current Status**: v1.4.12 - Full Arduino Uno / ESP32 / Teensy / WASM support with working build system
 
 ## Examples
 
@@ -331,12 +331,16 @@ Build time: 78.59 seconds
   - Full Arduino framework support
   - 220KB firmware size typical
 
+**WASM / WebAssembly Platform** - Supported ✓
+- Compiles Arduino/FastLED sketches to WebAssembly via Emscripten (`clang-tool-chain-emcc`)
+- Outputs `firmware.js` + `firmware.wasm`
+- Library dependencies from `lib_deps` compiled and linked automatically
+
 **Planned Support**:
 - Arduino Mega
 - Arduino Nano
 - Arduino Leonardo
 - More AVR boards
-- Teensy 3.x/4.x platforms
 ## Performance
 
 **Benchmarks** (Arduino Uno Blink sketch):

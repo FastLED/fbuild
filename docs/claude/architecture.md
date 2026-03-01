@@ -34,7 +34,8 @@ See `docs/architecture.dot` for Graphviz diagram. Render with: `dot -Tpng docs/a
 │     │           │  │ downloader.py   │  │ ├── orchestrator_esp32.py         │
 │     ▼           │  │     │           │  │ ├── orchestrator_rp2040.py        │
 │ board_config.py │  │     ▼           │  │ ├── orchestrator_stm32.py         │
-│     │           │  │ Toolchains:     │  │ └── orchestrator_teensy.py        │
+│     │           │  │ Toolchains:     │  │ ├── orchestrator_teensy.py        │
+│     │           │  │                 │  │ └── orchestrator_wasm.py          │
 │     ▼           │  │ toolchain.py    │  │            │                      │
 │ board_loader.py │  │ toolchain_      │  │            ▼                      │
 │     │           │  │   esp32.py      │  │ Compilation:                      │

@@ -1,0 +1,101 @@
+{
+  "name": "WASM",
+  "description": "WebAssembly target via Emscripten (clang-tool-chain)",
+  "mcu": "wasm32",
+  "architecture": "wasm32",
+  "board": "WASM",
+  "f_cpu": "0L",
+  "core": "emscripten",
+  "variant": "wasm",
+
+  "compiler_flags": {
+    "common": [
+      "-std=gnu++17",
+      "-fpermissive",
+      "-fno-exceptions",
+      "-fno-rtti",
+      "-fno-threadsafe-statics",
+      "-pthread",
+      "-fpch-instantiate-templates",
+      "-Wno-constant-logical-operand",
+      "-Wnon-c-typedef-for-linkage",
+      "-Werror=bad-function-cast",
+      "-Werror=cast-function-type",
+      "-ffunction-sections",
+      "-fdata-sections"
+    ],
+    "c": [
+      "-std=gnu17"
+    ],
+    "cxx": [
+      "-std=gnu++17",
+      "-fpermissive",
+      "-fno-exceptions",
+      "-fno-rtti"
+    ]
+  },
+
+  "linker_flags": [
+    "-sWASM=1",
+    "-fuse-ld=wasm-ld",
+    "-pthread",
+    "-sUSE_PTHREADS=1",
+    "-sPROXY_TO_PTHREAD",
+    "-sMODULARIZE=1",
+    "-sEXPORT_NAME=fastled",
+    "-sALLOW_MEMORY_GROWTH=1",
+    "-sINITIAL_MEMORY=134217728",
+    "-sAUTO_NATIVE_LIBRARIES=0",
+    "-sEXIT_RUNTIME=0",
+    "-sFILESYSTEM=0",
+    "-Wl,--strip-debug",
+    "-Wl,--no-export-dynamic",
+    "-sEXPORTED_RUNTIME_METHODS=['ccall','cwrap','stringToUTF8','UTF8ToString','lengthBytesUTF8','HEAPU8','getValue']",
+    "-sEXPORTED_FUNCTIONS=['_malloc','_free','_main','_extern_setup','_extern_loop','_fastled_declare_files','_getStripPixelData','_getFrameData','_getScreenMapData','_freeFrameData','_getFrameVersion','_hasNewFrameData','_js_fetch_success_callback','_js_fetch_error_callback','_pushAudioSamples']"
+  ],
+
+  "linker_libs": [],
+
+  "defines": [
+    "FASTLED_ENGINE_EVENTS_MAX_LISTENERS=50",
+    "FASTLED_FORCE_NAMESPACE=1",
+    "FASTLED_USE_PROGMEM=0",
+    "USE_OFFSET_CONVERTER=0",
+    "GL_ENABLE_GET_PROC_ADDRESS=0",
+    "_REENTRANT=1",
+    "EMSCRIPTEN_HAS_UNBOUND_TYPE_NAMES=0"
+  ],
+
+  "profiles": {
+    "release": {
+      "compile_flags": ["-Oz", "-flto=thin"],
+      "link_flags": ["-Oz", "-flto=thin"]
+    },
+    "quick": {
+      "compile_flags": [
+        "-O1",
+        "-flto=thin",
+        "-g0",
+        "-fno-inline-functions",
+        "-fno-vectorize",
+        "-fno-unroll-loops",
+        "-fno-strict-aliasing",
+        "-fno-delayed-template-parsing",
+        "-ffast-math",
+        "-fno-finite-math-only",
+        "-fno-math-errno"
+      ],
+      "link_flags": [
+        "-O1",
+        "-flto=thin",
+        "--profiling-funcs",
+        "--emit-symbol-map",
+        "-sINITIAL_MEMORY=67108864",
+        "-sASSERTIONS=0",
+        "-sSTACK_OVERFLOW_CHECK=0",
+        "-sWASM_BIGINT=0",
+        "-sERROR_ON_UNDEFINED_SYMBOLS=1"
+      ]
+    }
+  }
+}

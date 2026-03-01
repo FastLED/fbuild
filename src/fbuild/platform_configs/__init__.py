@@ -21,7 +21,7 @@ from typing import Any
 from fbuild.platform_configs.board_config_model import BoardConfigModel
 
 # Vendor directories to search
-VENDOR_DIRS = ["avr", "esp", "teensy", "rp", "stm32"]
+VENDOR_DIRS = ["avr", "esp", "teensy", "rp", "stm32", "wasm"]
 
 
 def load_manifest() -> dict[str, Any] | None:

@@ -8,15 +8,15 @@ fbuild is a PlatformIO-compatible embedded development tool providing build, dep
 
 **Current Version:** v1.4.12 (update in `src/fbuild/__init__.py`, `pyproject.toml`, and this file)
 
-**Recent Changes (v1.4.4):**
-- Added parallel package installation pipeline with Docker pull-style TUI
-- Three-stage pipeline: Download (4 workers) → Unpack (2 workers) → Install (2 workers)
-- DAG-based dependency scheduler respects platform → toolchain → framework → library ordering
-- Rich-based progress display with live-updating progress bars, spinners, and status lines
-- Download retry with exponential backoff, extraction retry for Windows AV, Ctrl-C cleanup
+**Recent Changes (v1.4.12):**
+- Added WASM/WebAssembly build support via Emscripten toolchain
+- New `OrchestratorWASM` compiles Arduino/FastLED sketches to `firmware.js` + `firmware.wasm`
+- Library dependency support (download, compile with emcc, archive with emar, link)
+- Platform config (`wasm.json`), board definition, and build processor registration
+- 43 unit tests covering interface compliance, config, source scanning, library processing, and e2e
 
-**Previous Changes (v1.4.3):**
-- Fixed CTRL-C deadlock in HTTP client - see `docs/fix_ctrl_c_deadlock.md`
+**Previous Changes (v1.4.4):**
+- Added parallel package installation pipeline with Docker pull-style TUI
 
 ## Development Commands
 

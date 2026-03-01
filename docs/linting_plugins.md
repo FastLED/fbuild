@@ -78,6 +78,7 @@ python scripts/check_orchestrator_signatures.py
 - `src/fbuild/build/orchestrator_rp2040.py`
 - `src/fbuild/build/orchestrator_stm32.py`
 - `src/fbuild/build/orchestrator_teensy.py`
+- `src/fbuild/build/orchestrator_wasm.py`
 
 ## 3. Message Serialization Checker (MSC)
 
