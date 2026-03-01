@@ -15,11 +15,12 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
-from fbuild.platform_configs import BoardConfigModel
 from fbuild.build.build_profiles import BuildProfile, ProfileFlags, get_profile
+from fbuild.platform_configs import BoardConfigModel
 
 if TYPE_CHECKING:
     from fbuild.build.compilation_executor import CompilationExecutor
+    from fbuild.build.compile_database import CompileDatabase
     from fbuild.daemon.compilation_queue import CompilationJobQueue
     from fbuild.packages.package import IFramework, IPackage, IToolchain
 
@@ -51,6 +52,8 @@ class BuildParams:
     queue: "CompilationJobQueue"
     build_dir: Path
     verbose: bool
+    compile_database: Optional["CompileDatabase"]
+    generate_compiledb: bool
 
     @classmethod
     def create(
@@ -62,6 +65,8 @@ class BuildParams:
         queue: "CompilationJobQueue",
         build_dir: Path,
         verbose: bool,
+        compile_database: Optional["CompileDatabase"] = None,
+        generate_compiledb: bool = False,
     ) -> "BuildParams":
         """Create a BuildParams with resolved profile flags."""
         return cls(
@@ -73,6 +78,8 @@ class BuildParams:
             queue=queue,
             build_dir=build_dir,
             verbose=verbose,
+            compile_database=compile_database,
+            generate_compiledb=generate_compiledb,
         )
 
 
@@ -120,6 +127,8 @@ class BuildContext:
     queue: "CompilationJobQueue"
     build_dir: Path
     verbose: bool
+    compile_database: Optional["CompileDatabase"]
+    generate_compiledb: bool
 
     # Platform and toolchain
     platform: "IPackage"
@@ -193,6 +202,8 @@ class BuildContext:
             queue=request.queue,
             build_dir=request.build_dir,
             verbose=request.verbose,
+            compile_database=request.compile_database,
+            generate_compiledb=request.generate_compiledb,
             platform=platform,
             toolchain=toolchain,
             mcu=mcu,

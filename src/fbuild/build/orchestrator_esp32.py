@@ -15,13 +15,6 @@ from typing import TYPE_CHECKING, List, Optional
 if TYPE_CHECKING:
     from fbuild.build.build_context import BuildParams
 
-from fbuild.cli_utils import BannerFormatter
-from fbuild.output import DefaultProgressCallback, log_detail, log_phase, log_warning
-from fbuild.packages import Cache
-from fbuild.packages.framework_esp32 import FrameworkESP32
-from fbuild.packages.library_manager_esp32 import LibraryManagerESP32
-from fbuild.packages.platform_esp32 import PlatformESP32
-from fbuild.packages.toolchain_esp32 import ToolchainESP32
 from fbuild.build.build_info_generator import BuildInfoGenerator
 from fbuild.build.build_state import BuildStateTracker
 from fbuild.build.configurable_compiler import ConfigurableCompiler
@@ -29,6 +22,13 @@ from fbuild.build.configurable_linker import ConfigurableLinker
 from fbuild.build.linker import SizeInfo
 from fbuild.build.orchestrator import BuildResult, IBuildOrchestrator
 from fbuild.build.psram_utils import board_has_psram, get_psram_mode
+from fbuild.cli_utils import BannerFormatter
+from fbuild.output import DefaultProgressCallback, log_detail, log_phase, log_warning
+from fbuild.packages import Cache
+from fbuild.packages.framework_esp32 import FrameworkESP32
+from fbuild.packages.library_manager_esp32 import LibraryManagerESP32
+from fbuild.packages.platform_esp32 import PlatformESP32
+from fbuild.packages.toolchain_esp32 import ToolchainESP32
 
 # Module-level logger
 logger = logging.getLogger(__name__)
@@ -319,6 +319,8 @@ class OrchestratorESP32(IBuildOrchestrator):
                 cache=self.cache,
                 mcu=mcu,
                 framework_version=framework.version,
+                compile_database=request.compile_database,
+                execute_compilations=not request.generate_compiledb,
             )
 
             # Load platform configuration ONCE (not redundantly in compiler/linker)
@@ -408,6 +410,21 @@ class OrchestratorESP32(IBuildOrchestrator):
             if sketch_obj_files is None:
                 search_dir = project_dir / src_dir_override if src_dir_override else project_dir
                 return self._error_result(start_time, f"No .ino sketch file found in {search_dir}")
+
+            # In compiledb-only mode, skip linking — we only need compile commands
+            if request.generate_compiledb:
+                build_time = time.time() - start_time
+                return BuildResultESP32(
+                    success=True,
+                    firmware_bin=None,
+                    firmware_elf=None,
+                    bootloader_bin=None,
+                    partitions_bin=None,
+                    merged_bin=None,
+                    size_info=None,
+                    build_time=build_time,
+                    message="compile_commands.json generated (compiledb mode)",
+                )
 
             # Initialize linker
             log_phase(10, 13, "Linking firmware...")

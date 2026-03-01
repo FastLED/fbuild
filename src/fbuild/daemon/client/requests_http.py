@@ -48,6 +48,7 @@ def request_build_http(
     verbose: bool = False,
     jobs: int | None = None,
     profile: BuildProfile = BuildProfile.RELEASE,
+    generate_compiledb: bool = False,
     timeout: float = 1800,
 ) -> bool:
     """Submit a build request to the daemon via HTTP.
@@ -59,6 +60,7 @@ def request_build_http(
         verbose: Enable verbose build output
         jobs: Number of parallel compilation jobs
         profile: Build profile
+        generate_compiledb: Generate compile_commands.json without compiling
         timeout: Request timeout in seconds
 
     Returns:
@@ -90,6 +92,7 @@ def request_build_http(
         caller_cwd=os.getcwd(),
         jobs=jobs,
         profile=profile,
+        generate_compiledb=generate_compiledb,
     )
 
     # Print submission info

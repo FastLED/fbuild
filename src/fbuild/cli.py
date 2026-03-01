@@ -83,6 +83,7 @@ class BuildArgs:
     platformio: bool = False
     explicit_release: bool = False
     explicit_quick: bool = False
+    target: Optional[str] = None
 
 
 @dataclass
@@ -172,8 +173,13 @@ def build_command(args: BuildArgs) -> None:
             )
             sys.exit(0 if success else 1)
 
+        # Determine if we're generating compiledb
+        generate_compiledb = args.target == "compiledb"
+
         # Show build start message
-        if args.verbose:
+        if generate_compiledb:
+            log(f"Generating compile_commands.json for environment: {env_name}...")
+        elif args.verbose:
             log(f"Building project: {args.project_dir}")
             log(f"Environment: {env_name}")
             log("")
@@ -188,7 +194,13 @@ def build_command(args: BuildArgs) -> None:
             verbose=args.verbose,
             jobs=args.jobs,
             profile=args.profile,
+            generate_compiledb=generate_compiledb,
         )
+
+        if generate_compiledb and success:
+            db_path = args.project_dir / "compile_commands.json"
+            if db_path.exists():
+                log(f"compile_commands.json written to {db_path}")
 
         # Exit with appropriate code
         sys.exit(0 if success else 1)
@@ -1026,6 +1038,13 @@ def main() -> None:
         action="store_true",
         help="Delegate build to PlatformIO CLI instead of fbuild's native build system",
     )
+    build_parser.add_argument(
+        "-t",
+        "--target",
+        default=None,
+        choices=["compiledb"],
+        help="Build target: 'compiledb' generates compile_commands.json without compiling",
+    )
 
     # Deploy command
     deploy_parser = subparsers.add_parser(
@@ -1337,6 +1356,7 @@ def main() -> None:
             platformio=parsed_args.platformio,
             explicit_release=parsed_args.release,
             explicit_quick=parsed_args.quick,
+            target=parsed_args.target,
         )
         build_command(build_args)
     elif parsed_args.command == "deploy":

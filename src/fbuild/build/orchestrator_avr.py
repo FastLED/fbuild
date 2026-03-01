@@ -18,14 +18,6 @@ from typing import TYPE_CHECKING, Optional
 if TYPE_CHECKING:
     from fbuild.build.build_context import BuildParams
 
-from fbuild.config import BoardConfig, BoardConfigLoader, PlatformIOConfig
-from fbuild.config.board_config import BoardConfigError
-from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
-from fbuild.output import log, log_build_complete, log_detail, log_firmware_path, log_phase, set_verbose
-from fbuild.packages import ArduinoCore, Cache, Toolchain
-from fbuild.packages.arduino_core import ArduinoCoreError
-from fbuild.packages.library_manager import LibraryError
-from fbuild.packages.toolchain import ToolchainError
 from fbuild.build.build_component_factory import BuildComponentFactory
 from fbuild.build.build_info_generator import BuildInfoGenerator
 from fbuild.build.build_state import BuildStateTracker
@@ -37,6 +29,14 @@ from fbuild.build.orchestrator import BuildOrchestratorError, BuildResult, IBuil
 from fbuild.build.orchestrator_esp32 import OrchestratorESP32
 from fbuild.build.source_compilation_orchestrator import SourceCompilationOrchestrator, SourceCompilationOrchestratorError
 from fbuild.build.source_scanner import SourceCollection, SourceScanner
+from fbuild.config import BoardConfig, BoardConfigLoader, PlatformIOConfig
+from fbuild.config.board_config import BoardConfigError
+from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+from fbuild.output import log, log_build_complete, log_detail, log_firmware_path, log_phase, set_verbose
+from fbuild.packages import ArduinoCore, Cache, Toolchain
+from fbuild.packages.arduino_core import ArduinoCoreError
+from fbuild.packages.library_manager import LibraryError
+from fbuild.packages.toolchain import ToolchainError
 
 # Note: Daemon queue access is handled via dynamic import in build method
 # to avoid circular dependencies and hard daemon requirement
@@ -265,6 +265,8 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                 cache=self.cache,
                 mcu=board_config.mcu,
                 framework_version=arduino_core.AVR_VERSION,
+                compile_database=request.compile_database,
+                execute_compilations=not request.generate_compiledb,
             )
 
             # Load platform config from JSON
@@ -309,6 +311,18 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
 
             sketch_objects = compilation_result.sketch_objects
             all_core_objects = compilation_result.all_core_objects
+
+            # In compiledb-only mode, skip linking — we only need compile commands
+            if request.generate_compiledb:
+                build_time = time.time() - start_time
+                return BuildResult(
+                    success=True,
+                    hex_path=None,
+                    elf_path=None,
+                    size_info=None,
+                    build_time=build_time,
+                    message="compile_commands.json generated (compiledb mode)",
+                )
 
             # Phase 9: Link firmware
             log_phase(9, 11, "Linking firmware...", verbose_only=not verbose_mode)

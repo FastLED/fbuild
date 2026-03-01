@@ -13,11 +13,11 @@ import logging
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
-from fbuild.output import ProgressCallback, log_detail
-from fbuild.packages.trampoline_excludes import get_exclude_patterns
 from fbuild.build.archive_creator import ArchiveCreator
 from fbuild.build.compiler import CompilerError, ICompiler
 from fbuild.build.flag_builder import FlagBuilder
+from fbuild.output import ProgressCallback, log_detail
+from fbuild.packages.trampoline_excludes import get_exclude_patterns
 
 logger = logging.getLogger(__name__)
 
@@ -307,6 +307,22 @@ class ConfigurableCompiler(ICompiler):
         logging.warning(f"[TRAMPOLINE_DEBUG] Command line length: {len(cmd_preview)} chars")
         # Build command that would be executed
         cmd = self.compilation_executor._build_compile_command(compiler_path, source_path, output_path, compile_flags, include_flags)
+
+        # Record entry in compile database (strip sccache wrapper)
+        if self.compilation_executor.compile_database is not None:
+            from fbuild.build.compile_database import CompileDatabase
+
+            db_args = CompileDatabase.strip_sccache(cmd)
+            self.compilation_executor.compile_database.add_entry(
+                directory=str(self.context.project_dir),
+                file=str(source_path),
+                arguments=db_args,
+                output=str(output_path),
+            )
+
+        # In compiledb-only mode, skip actual compilation
+        if not self.compilation_executor.execute_compilations:
+            return output_path
 
         # Submit to async compilation queue
         job_id = self._submit_async_compilation(source_path, output_path, cmd)

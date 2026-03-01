@@ -15,18 +15,18 @@ from typing import TYPE_CHECKING, List, Optional
 if TYPE_CHECKING:
     from fbuild.build.build_context import BuildParams
 
-from fbuild.cli_utils import BannerFormatter
-from fbuild.output import DefaultProgressCallback, log_detail, log_phase, log_warning
-from fbuild.packages import Cache
-from fbuild.packages.framework_esp8266 import FrameworkESP8266
-from fbuild.packages.platform_esp8266 import PlatformESP8266
-from fbuild.packages.toolchain_esp8266 import ToolchainESP8266
 from fbuild.build.build_info_generator import BuildInfoGenerator
 from fbuild.build.build_state import BuildStateTracker
 from fbuild.build.configurable_compiler import ConfigurableCompiler
 from fbuild.build.configurable_linker import ConfigurableLinker
 from fbuild.build.linker import SizeInfo
 from fbuild.build.orchestrator import BuildResult, IBuildOrchestrator
+from fbuild.cli_utils import BannerFormatter
+from fbuild.output import DefaultProgressCallback, log_detail, log_phase, log_warning
+from fbuild.packages import Cache
+from fbuild.packages.framework_esp8266 import FrameworkESP8266
+from fbuild.packages.platform_esp8266 import PlatformESP8266
+from fbuild.packages.toolchain_esp8266 import ToolchainESP8266
 
 # Module-level logger
 logger = logging.getLogger(__name__)
@@ -243,6 +243,8 @@ class OrchestratorESP8266(IBuildOrchestrator):
                 cache=self.cache,
                 mcu=mcu,
                 framework_version=framework.version,
+                compile_database=request.compile_database,
+                execute_compilations=not request.generate_compiledb,
             )
 
             # Load platform configuration ONCE
@@ -328,6 +330,18 @@ class OrchestratorESP8266(IBuildOrchestrator):
             if sketch_obj_files is None:
                 search_dir = project_dir / src_dir_override if src_dir_override else project_dir
                 return self._error_result(start_time, f"No .ino sketch file found in {search_dir}")
+
+            # In compiledb-only mode, skip linking — we only need compile commands
+            if request.generate_compiledb:
+                build_time = time.time() - start_time
+                return BuildResultESP8266(
+                    success=True,
+                    firmware_bin=None,
+                    firmware_elf=None,
+                    size_info=None,
+                    build_time=build_time,
+                    message="compile_commands.json generated (compiledb mode)",
+                )
 
             # Generate preprocessed linker scripts (ESP8266 requires this)
             self._generate_linker_scripts(toolchain, framework, build_dir)

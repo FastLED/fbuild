@@ -259,6 +259,7 @@ class BuildRequestProcessor(RequestProcessor):
         # Create orchestrator and execute build
         # Create a Cache instance for package management
         from fbuild.build.build_context import BuildParams
+        from fbuild.build.compile_database import CompileDatabase
         from fbuild.packages.cache import Cache
 
         cache = Cache(project_dir=Path(request.project_dir))
@@ -268,6 +269,16 @@ class BuildRequestProcessor(RequestProcessor):
 
         # Calculate build_dir (incorporates profile name for separation)
         build_dir = cache.get_build_dir(request.environment, str(request.profile))
+
+        # Create compile database for capturing compilation commands
+        # Always-on by default (FBUILD_COMPILEDB=0 to disable)
+        import os
+
+        generate_db = os.environ.get("FBUILD_COMPILEDB", "1") != "0"
+        generate_compiledb = getattr(request, "generate_compiledb", False)
+        compile_database: CompileDatabase | None = None
+        if generate_db or generate_compiledb:
+            compile_database = CompileDatabase()
 
         # Create BuildParams with basic build parameters
         # The orchestrator will create the full BuildContext after platform init
@@ -279,6 +290,8 @@ class BuildRequestProcessor(RequestProcessor):
             queue=compilation_queue,
             build_dir=build_dir,
             verbose=request.verbose,
+            compile_database=compile_database,
+            generate_compiledb=generate_compiledb,
         )
 
         # Initialize orchestrator with cache (ESP32 requires it, AVR accepts it)
@@ -292,6 +305,21 @@ class BuildRequestProcessor(RequestProcessor):
             logging.error(f"Build failed: {build_result.message}")
             self._last_error_message = build_result.message
             return False
+
+        # Write compile_commands.json after successful build
+        project_path = Path(request.project_dir)
+        if compile_database is not None and compile_database.has_entries():
+            import shutil
+
+            # Write to build dir
+            db_path = build_dir / "compile_commands.json"
+            compile_database.write(db_path)
+            logging.info(f"Wrote compile_commands.json ({compile_database.entry_count()} entries) to {db_path}")
+
+            # Copy to project root for clangd discovery
+            project_db = project_path / "compile_commands.json"
+            shutil.copy2(str(db_path), str(project_db))
+            logging.info(f"Copied compile_commands.json to {project_db}")
 
         logging.info("Build completed successfully")
         return True
@@ -335,6 +363,8 @@ class BuildRequestProcessor(RequestProcessor):
             "fbuild.config.board_config",
             "fbuild.config.board_loader",
             # Build system (reload second - depends on packages)
+            "fbuild.build.compile_database",
+            "fbuild.build.clang_flag_translator",
             "fbuild.build.archive_creator",
             "fbuild.build.flag_builder",
             "fbuild.build.compiler",

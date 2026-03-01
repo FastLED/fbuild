@@ -37,6 +37,7 @@ class BuildRequest:
     caller_cwd: str
     jobs: int | None = None
     profile: BuildProfile = BuildProfile.RELEASE
+    generate_compiledb: bool = False
     timestamp: float = field(default_factory=time.time)
     request_id: str = field(default_factory=lambda: f"build_{int(time.time() * 1000)}")
 

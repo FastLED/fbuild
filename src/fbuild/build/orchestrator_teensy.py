@@ -14,12 +14,6 @@ from typing import TYPE_CHECKING, List, Optional
 if TYPE_CHECKING:
     from fbuild.build.build_context import BuildParams
 
-from fbuild.cli_utils import BannerFormatter
-from fbuild.config.board_config import BoardConfig
-from fbuild.packages import Cache
-from fbuild.packages.library_manager import LibraryError, LibraryManager
-from fbuild.packages.platform_teensy import PlatformTeensy
-from fbuild.packages.toolchain_teensy import ToolchainTeensy
 from fbuild.build.build_info_generator import BuildInfoGenerator
 from fbuild.build.build_state import BuildStateTracker
 from fbuild.build.build_utils import safe_rmtree
@@ -27,6 +21,12 @@ from fbuild.build.configurable_compiler import ConfigurableCompiler
 from fbuild.build.configurable_linker import ConfigurableLinker
 from fbuild.build.linker import SizeInfo
 from fbuild.build.orchestrator import BuildResult, IBuildOrchestrator
+from fbuild.cli_utils import BannerFormatter
+from fbuild.config.board_config import BoardConfig
+from fbuild.packages import Cache
+from fbuild.packages.library_manager import LibraryError, LibraryManager
+from fbuild.packages.platform_teensy import PlatformTeensy
+from fbuild.packages.toolchain_teensy import ToolchainTeensy
 
 
 @dataclass
@@ -209,6 +209,8 @@ class OrchestratorTeensy(IBuildOrchestrator):
                 cache=self.cache,
                 mcu=board_config.mcu,
                 framework_version=platform.framework.version,
+                compile_database=request.compile_database,
+                execute_compilations=not request.generate_compiledb,
             )
 
             # Load board JSON and platform config ONCE (not redundantly in compiler/linker)
@@ -278,6 +280,18 @@ class OrchestratorTeensy(IBuildOrchestrator):
             if sketch_obj_files is None:
                 search_dir = project_dir / src_dir_override if src_dir_override else project_dir
                 return self._error_result(start_time, f"No .ino sketch file found in {search_dir}")
+
+            # In compiledb-only mode, skip linking — we only need compile commands
+            if request.generate_compiledb:
+                build_time = time.time() - start_time
+                return BuildResultTeensy(
+                    success=True,
+                    firmware_hex=None,
+                    firmware_elf=None,
+                    size_info=None,
+                    build_time=build_time,
+                    message="compile_commands.json generated (compiledb mode)",
+                )
 
             # Initialize linker
             if verbose:

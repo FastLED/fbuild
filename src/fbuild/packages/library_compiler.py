@@ -13,6 +13,7 @@ from fbuild.output import ProgressCallback, log_detail
 from fbuild.subprocess_utils import safe_run
 
 if TYPE_CHECKING:
+    from fbuild.build.compile_database import CompileDatabase
     from fbuild.packages.library_manager import LibraryInfo
 
 
@@ -76,6 +77,8 @@ class LibraryCompiler:
         show_progress: bool = True,
         progress_callback: ProgressCallback | None = None,
         profile: BuildProfile = BuildProfile.RELEASE,
+        compile_database: Optional["CompileDatabase"] = None,
+        execute_compilations: bool = True,
     ) -> Tuple[Path, List[Path], List[str]]:
         """Compile a library into a static archive (.a file).
 
@@ -95,6 +98,8 @@ class LibraryCompiler:
             show_progress: Whether to show progress
             progress_callback: Optional progress callback for UI feedback
             profile: Build profile
+            compile_database: Optional CompileDatabase to capture compilation entries
+            execute_compilations: Whether to actually run compilations (False for compiledb-only mode)
 
         Returns:
             Tuple of (archive_path, object_files, compile_commands)
@@ -214,12 +219,26 @@ class LibraryCompiler:
                 # Store command for rebuild detection
                 compile_commands.append(" ".join(cmd))
 
+                # Record entry in compile database
+                if compile_database is not None:
+                    compile_database.add_entry(
+                        directory=str(lib_dir),
+                        file=str(source),
+                        arguments=list(cmd),
+                        output=str(obj_file),
+                    )
+
                 # Compute relative path for display (especially useful for unity builds)
                 try:
                     rel_path_str = str(source.relative_to(base_dir))
                 except ValueError:
                     # Fallback to filename if relative path fails
                     rel_path_str = source.name
+
+                # In compiledb-only mode, skip actual compilation
+                if not execute_compilations:
+                    object_files.append(obj_file)
+                    continue
 
                 # Compile
                 file_index = source_files.index(source) + 1  # 1-based indexing
@@ -238,6 +257,11 @@ class LibraryCompiler:
                     progress_callback.on_file_complete(rel_path_str, file_index, total_files)
 
                 object_files.append(obj_file)
+
+            # In compiledb-only mode, skip archive creation
+            if not execute_compilations:
+                archive_file = lib_dir / f"lib{library_name}.a"
+                return archive_file, object_files, compile_commands
 
             # Create static archive using gcc-ar for LTO support
             # gcc-ar is an LTO-aware wrapper that creates proper symbol indices

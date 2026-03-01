@@ -24,6 +24,7 @@ from fbuild.packages.trampoline_excludes import get_exclude_patterns
 from fbuild.subprocess_utils import safe_run
 
 if TYPE_CHECKING:
+    from fbuild.build.compile_database import CompileDatabase
     from fbuild.daemon.compilation_queue import CompilationJobQueue
     from fbuild.packages.cache import Cache
 
@@ -53,6 +54,8 @@ class CompilationExecutor:
         cache: Optional["Cache"] = None,
         mcu: Optional[str] = None,
         framework_version: Optional[str] = None,
+        compile_database: Optional["CompileDatabase"] = None,
+        execute_compilations: bool = True,
     ):
         """Initialize compilation executor.
 
@@ -64,6 +67,8 @@ class CompilationExecutor:
             cache: Cache object for accessing trampoline directory (optional)
             mcu: MCU variant identifier (e.g., 'esp32c6', 'esp32c3') for MCU-specific caching
             framework_version: Framework version string for cache invalidation
+            compile_database: Optional CompileDatabase to capture compilation entries
+            execute_compilations: Whether to actually run compilations (False for compiledb-only mode)
         """
         self.build_dir = build_dir
         self.show_progress = show_progress
@@ -71,6 +76,8 @@ class CompilationExecutor:
         self.framework_version = framework_version
         self.use_sccache = use_sccache
         self.use_trampolines = use_trampolines
+        self.compile_database = compile_database
+        self.execute_compilations = execute_compilations
         self.sccache_path: Optional[Path] = None
         self.trampoline_cache: Optional[HeaderTrampolineCache] = None
 
@@ -160,6 +167,23 @@ class CompilationExecutor:
 
         # Build compiler command
         cmd = self._build_compile_command(compiler_path, source_path, output_path, compile_flags, include_flags)
+
+        # Record entry in compile database (strip sccache wrapper)
+        if self.compile_database is not None:
+            from fbuild.build.compile_database import CompileDatabase
+
+            db_args = CompileDatabase.strip_sccache(cmd)
+            self.compile_database.add_entry(
+                directory=str(self.build_dir),
+                file=str(source_path),
+                arguments=db_args,
+                output=str(output_path),
+            )
+
+        # In compiledb-only mode, skip actual compilation
+        if not self.execute_compilations:
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            return output_path
 
         # Execute compilation
         if self.show_progress:
@@ -348,6 +372,22 @@ class CompilationExecutor:
         cmd.extend(include_flags)  # Trampolines ensure command line stays under 32K limit
         cmd.extend(["-c", str(source_path)])
         cmd.extend(["-o", str(output_path)])
+
+        # Record entry in compile database (strip sccache wrapper)
+        if self.compile_database is not None:
+            from fbuild.build.compile_database import CompileDatabase
+
+            db_args = CompileDatabase.strip_sccache(cmd)
+            self.compile_database.add_entry(
+                directory=str(self.build_dir),
+                file=str(source_path),
+                arguments=db_args,
+                output=str(output_path),
+            )
+
+        # In compiledb-only mode, skip actual compilation
+        if not self.execute_compilations:
+            return f"compiledb_skip_{source_path.stem}_{int(time.time() * 1000000)}"
 
         # Create and submit compilation job
         job_id = f"compile_{source_path.stem}_{int(time.time() * 1000000)}"
