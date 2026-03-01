@@ -8,26 +8,26 @@ providing cleaner separation of concerns and better maintainability.
 import _thread
 import logging
 import time
+from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, List, Optional
-from dataclasses import dataclass
 
 if TYPE_CHECKING:
     from .build_context import BuildParams
 
+from ..cli_utils import BannerFormatter
+from ..output import DefaultProgressCallback, log_detail, log_phase, log_warning
 from ..packages import Cache
-from ..packages.platform_esp32 import PlatformESP32
-from ..packages.toolchain_esp32 import ToolchainESP32
 from ..packages.framework_esp32 import FrameworkESP32
 from ..packages.library_manager_esp32 import LibraryManagerESP32
-from ..cli_utils import BannerFormatter
+from ..packages.platform_esp32 import PlatformESP32
+from ..packages.toolchain_esp32 import ToolchainESP32
+from .build_info_generator import BuildInfoGenerator
+from .build_state import BuildStateTracker
 from .configurable_compiler import ConfigurableCompiler
 from .configurable_linker import ConfigurableLinker
 from .linker import SizeInfo
-from .orchestrator import IBuildOrchestrator, BuildResult
-from .build_state import BuildStateTracker
-from .build_info_generator import BuildInfoGenerator
-from ..output import log_phase, log_detail, log_warning, DefaultProgressCallback
+from .orchestrator import BuildResult, IBuildOrchestrator
 from .psram_utils import board_has_psram, get_psram_mode
 
 # Module-level logger
@@ -159,14 +159,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         # Parse platformio.ini to get environment configuration
         ini_path = project_dir / "platformio.ini"
         if not ini_path.exists():
-            return BuildResult(
-                success=False,
-                hex_path=None,
-                elf_path=None,
-                size_info=None,
-                build_time=0.0,
-                message=f"platformio.ini not found in {project_dir}"
-            )
+            return BuildResult(success=False, hex_path=None, elf_path=None, size_info=None, build_time=0.0, message=f"platformio.ini not found in {project_dir}")
 
         try:
             config = PlatformIOConfig(ini_path)
@@ -181,9 +174,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             logger.debug(f"[ORCHESTRATOR] get_lib_deps returned: {lib_deps}")
 
             # Call internal build method
-            esp32_result = self._build_esp32(
-                board_id, env_config, build_flags, lib_deps, request
-            )
+            esp32_result = self._build_esp32(board_id, env_config, build_flags, lib_deps, request)
 
             # Convert BuildResultESP32 to BuildResult
             return BuildResult(
@@ -192,21 +183,14 @@ class OrchestratorESP32(IBuildOrchestrator):
                 elf_path=esp32_result.firmware_elf,
                 size_info=esp32_result.size_info,
                 build_time=esp32_result.build_time,
-                message=esp32_result.message
+                message=esp32_result.message,
             )
 
         except KeyboardInterrupt:
             _thread.interrupt_main()
             raise
         except Exception as e:
-            return BuildResult(
-                success=False,
-                hex_path=None,
-                elf_path=None,
-                size_info=None,
-                build_time=0.0,
-                message=f"Failed to parse configuration: {e}"
-            )
+            return BuildResult(success=False, hex_path=None, elf_path=None, size_info=None, build_time=0.0, message=f"Failed to parse configuration: {e}")
 
     def _build_esp32(
         self,
@@ -239,12 +223,9 @@ class OrchestratorESP32(IBuildOrchestrator):
 
         try:
             # Get platform URL from env_config
-            platform_url = env_config.get('platform')
+            platform_url = env_config.get("platform")
             if not platform_url:
-                return self._error_result(
-                    start_time,
-                    "No platform URL specified in platformio.ini"
-                )
+                return self._error_result(start_time, "No platform URL specified in platformio.ini")
 
             # Resolve platform shorthand to actual download URL
             # PlatformIO supports formats like "platformio/espressif32" which need
@@ -253,6 +234,7 @@ class OrchestratorESP32(IBuildOrchestrator):
 
             # Print build profile banner
             from .build_profiles import print_profile_banner
+
             print_profile_banner(request.profile)
 
             # Initialize platform
@@ -278,18 +260,12 @@ class OrchestratorESP32(IBuildOrchestrator):
             # Initialize toolchain (pass MCU for Xtensa wrapper binary selection)
             toolchain = self._setup_toolchain(packages, start_time, verbose, mcu=mcu)
             if toolchain is None:
-                return self._error_result(
-                    start_time,
-                    "Failed to initialize toolchain"
-                )
+                return self._error_result(start_time, "Failed to initialize toolchain")
 
             # Initialize framework
             framework = self._setup_framework(packages, start_time, verbose)
             if framework is None:
-                return self._error_result(
-                    start_time,
-                    "Failed to initialize framework"
-                )
+                return self._error_result(start_time, "Failed to initialize framework")
 
             # Ensure build directory exists
             build_dir.mkdir(parents=True, exist_ok=True)
@@ -297,6 +273,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             # Determine source directory for cache invalidation
             # This is computed early to include source file changes in cache key
             from ..config import PlatformIOConfig
+
             config_for_src_dir = PlatformIOConfig(project_dir / "platformio.ini")
             src_dir_override = config_for_src_dir.get_src_dir()
             source_dir = project_dir / src_dir_override if src_dir_override else project_dir
@@ -309,7 +286,7 @@ class OrchestratorESP32(IBuildOrchestrator):
                 platformio_ini_path=project_dir / "platformio.ini",
                 platform="esp32",
                 board=board_id,
-                framework=env_config.get('framework', 'arduino'),
+                framework=env_config.get("framework", "arduino"),
                 toolchain_version=toolchain.version,
                 framework_version=framework.version,
                 platform_version=platform.version,
@@ -325,6 +302,7 @@ class OrchestratorESP32(IBuildOrchestrator):
                 log_detail("Cleaning build artifacts...", verbose_only=True)
                 # Clean build artifacts to force rebuild
                 from .build_utils import safe_rmtree
+
                 if build_dir.exists():
                     safe_rmtree(build_dir)
                 # Recreate build directory
@@ -334,6 +312,7 @@ class OrchestratorESP32(IBuildOrchestrator):
 
             # Initialize compilation executor early to show sccache status
             from .compilation_executor import CompilationExecutor
+
             compilation_executor = CompilationExecutor(
                 build_dir=build_dir,
                 show_progress=verbose,
@@ -344,12 +323,10 @@ class OrchestratorESP32(IBuildOrchestrator):
 
             # Load platform configuration ONCE (not redundantly in compiler/linker)
             from .. import platform_configs
+
             platform_config = platform_configs.load_config(mcu)
             if platform_config is None:
-                return self._error_result(
-                    start_time,
-                    f"No platform configuration found for {mcu}. Available: {platform_configs.list_available_configs()}"
-                )
+                return self._error_result(start_time, f"No platform configuration found for {mcu}. Available: {platform_configs.list_available_configs()}")
 
             # Extract variant and core from board config
             variant = board_json.get("build", {}).get("variant", "")
@@ -357,6 +334,7 @@ class OrchestratorESP32(IBuildOrchestrator):
 
             # Create full BuildContext with all configuration loaded once
             from .build_context import BuildContext
+
             context = BuildContext.from_request(
                 request=request,
                 platform=platform,
@@ -396,13 +374,7 @@ class OrchestratorESP32(IBuildOrchestrator):
                 total_files = len(core_sources)
 
                 # Create progress bar
-                with tqdm(
-                    total=total_files,
-                    desc='Compiling Arduino core',
-                    unit='file',
-                    ncols=80,
-                    leave=False
-                ) as pbar:
+                with tqdm(total=total_files, desc="Compiling Arduino core", unit="file", ncols=80, leave=False) as pbar:
                     core_obj_files = compiler.compile_core(progress_bar=pbar, progress_callback=progress_callback)
 
                 # Print completion message
@@ -423,9 +395,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             log_detail(f"Compiled {len(core_obj_files)} core source files", verbose_only=True)
 
             # Handle library dependencies
-            library_archives, library_include_paths = self._process_libraries(
-                env_config, build_dir, compiler, toolchain, verbose, project_dir=project_dir
-            )
+            library_archives, library_include_paths = self._process_libraries(env_config, build_dir, compiler, toolchain, verbose, project_dir=project_dir)
 
             # Add library include paths to compiler
             if library_include_paths:
@@ -437,10 +407,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             sketch_obj_files = self._compile_sketch(project_dir, compiler, start_time, verbose, src_dir_override)
             if sketch_obj_files is None:
                 search_dir = project_dir / src_dir_override if src_dir_override else project_dir
-                return self._error_result(
-                    start_time,
-                    f"No .ino sketch file found in {search_dir}"
-                )
+                return self._error_result(start_time, f"No .ino sketch file found in {search_dir}")
 
             # Initialize linker
             log_phase(10, 13, "Linking firmware...")
@@ -459,9 +426,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             firmware_bin = linker.generate_bin(firmware_elf)
 
             # Generate bootloader and partition table
-            bootloader_bin, partitions_bin = self._generate_boot_components(
-                linker, mcu, verbose
-            )
+            bootloader_bin, partitions_bin = self._generate_boot_components(linker, mcu, verbose)
 
             # Generate merged bin if all components are available
             merged_bin = None
@@ -470,6 +435,7 @@ class OrchestratorESP32(IBuildOrchestrator):
                     merged_bin = linker.generate_merged_bin()
                 except KeyboardInterrupt as ke:
                     from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
                     handle_keyboard_interrupt_properly(ke)
                     raise  # Never reached, but satisfies type checker
                 except Exception as e:
@@ -481,10 +447,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             build_time = time.time() - start_time
 
             if verbose:
-                self._print_success(
-                    build_time, firmware_elf, firmware_bin,
-                    bootloader_bin, partitions_bin, merged_bin, size_info
-                )
+                self._print_success(build_time, firmware_elf, firmware_bin, bootloader_bin, partitions_bin, merged_bin, size_info)
 
             # Save build state for future cache validation
             log_detail("Saving build state...", verbose_only=True)
@@ -550,16 +513,18 @@ class OrchestratorESP32(IBuildOrchestrator):
                 merged_bin=merged_bin,
                 size_info=size_info,
                 build_time=build_time,
-                message="Build successful (native ESP32 build)"
+                message="Build successful (native ESP32 build)",
             )
 
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
             build_time = time.time() - start_time
             import traceback
+
             error_trace = traceback.format_exc()
             return BuildResultESP32(
                 success=False,
@@ -570,7 +535,7 @@ class OrchestratorESP32(IBuildOrchestrator):
                 merged_bin=None,
                 size_info=None,
                 build_time=build_time,
-                message=f"ESP32 native build failed: {e}\n\n{error_trace}"
+                message=f"ESP32 native build failed: {e}\n\n{error_trace}",
             )
 
     def _setup_toolchain(
@@ -579,7 +544,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         start_time: float,
         verbose: bool,
         mcu: Optional[str] = None,
-    ) -> Optional['ToolchainESP32']:
+    ) -> Optional["ToolchainESP32"]:
         """
         Initialize ESP32 toolchain.
 
@@ -610,12 +575,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         toolchain.ensure_toolchain()
         return toolchain
 
-    def _setup_framework(
-        self,
-        packages: dict,
-        start_time: float,
-        verbose: bool
-    ) -> Optional[FrameworkESP32]:
+    def _setup_framework(self, packages: dict, start_time: float, verbose: bool) -> Optional[FrameworkESP32]:
         """
         Initialize ESP32 framework.
 
@@ -642,24 +602,12 @@ class OrchestratorESP32(IBuildOrchestrator):
                 skeleton_lib_url = package_url
                 break
 
-        framework = FrameworkESP32(
-            self.cache,
-            framework_url,
-            libs_url,
-            skeleton_lib_url=skeleton_lib_url,
-            show_progress=True
-        )
+        framework = FrameworkESP32(self.cache, framework_url, libs_url, skeleton_lib_url=skeleton_lib_url, show_progress=True)
         framework.ensure_framework()
         return framework
 
     def _process_libraries(
-        self,
-        env_config: dict,
-        build_dir: Path,
-        compiler: ConfigurableCompiler,
-        toolchain: ToolchainESP32,
-        verbose: bool,
-        project_dir: Optional[Path] = None
+        self, env_config: dict, build_dir: Path, compiler: ConfigurableCompiler, toolchain: ToolchainESP32, verbose: bool, project_dir: Optional[Path] = None
     ) -> tuple[List[Path], List[Path]]:
         """
         Process and compile library dependencies.
@@ -675,7 +623,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         Returns:
             Tuple of (library_archives, library_include_paths)
         """
-        lib_deps = env_config.get('lib_deps', '')
+        lib_deps = env_config.get("lib_deps", "")
         library_archives = []
         library_include_paths = []
 
@@ -686,7 +634,7 @@ class OrchestratorESP32(IBuildOrchestrator):
 
         # Parse lib_deps (can be string or list)
         if isinstance(lib_deps, str):
-            lib_specs = [dep.strip() for dep in lib_deps.split('\n') if dep.strip()]
+            lib_specs = [dep.strip() for dep in lib_deps.split("\n") if dep.strip()]
         else:
             lib_specs = lib_deps
 
@@ -710,8 +658,8 @@ class OrchestratorESP32(IBuildOrchestrator):
 
         # Extract trampoline cache from compilation executor
         trampoline_cache = None
-        if hasattr(compiler, 'compilation_executor') and compiler.compilation_executor:
-            trampoline_cache = getattr(compiler.compilation_executor, 'trampoline_cache', None)
+        if hasattr(compiler, "compilation_executor") and compiler.compilation_executor:
+            trampoline_cache = getattr(compiler.compilation_executor, "trampoline_cache", None)
 
         # Ensure libraries are downloaded and compiled
         # Always show progress for library compilation - compiling 300+ files
@@ -735,14 +683,7 @@ class OrchestratorESP32(IBuildOrchestrator):
 
         return library_archives, library_include_paths
 
-    def _compile_sketch(
-        self,
-        project_dir: Path,
-        compiler: ConfigurableCompiler,
-        start_time: float,
-        verbose: bool,
-        src_dir_override: Optional[str] = None
-    ) -> Optional[List[Path]]:
+    def _compile_sketch(self, project_dir: Path, compiler: ConfigurableCompiler, start_time: float, verbose: bool, src_dir_override: Optional[str] = None) -> Optional[List[Path]]:
         """
         Find and compile sketch files.
 
@@ -777,12 +718,7 @@ class OrchestratorESP32(IBuildOrchestrator):
 
         return sketch_obj_files
 
-    def _create_bt_stub(
-        self,
-        build_dir: Path,
-        compiler: ConfigurableCompiler,
-        verbose: bool
-    ) -> Optional[Path]:
+    def _create_bt_stub(self, build_dir: Path, compiler: ConfigurableCompiler, verbose: bool) -> Optional[Path]:
         """
         Create a Bluetooth stub for ESP32 targets where esp32-hal-bt.c fails to compile.
 
@@ -834,12 +770,7 @@ __attribute__((weak)) bool btInUse(void) {
             log_warning(f"Failed to create Bluetooth stub: {e}")
             return None
 
-    def _generate_boot_components(
-        self,
-        linker: ConfigurableLinker,
-        mcu: str,
-        verbose: bool
-    ) -> tuple[Optional[Path], Optional[Path]]:
+    def _generate_boot_components(self, linker: ConfigurableLinker, mcu: str, verbose: bool) -> tuple[Optional[Path], Optional[Path]]:
         """
         Generate bootloader and partition table for ESP32.
 
@@ -862,6 +793,7 @@ __attribute__((weak)) bool btInUse(void) {
             bootloader_bin = linker.generate_bootloader()
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
@@ -872,6 +804,7 @@ __attribute__((weak)) bool btInUse(void) {
             partitions_bin = linker.generate_partition_table()
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
@@ -887,7 +820,7 @@ __attribute__((weak)) bool btInUse(void) {
         bootloader_bin: Optional[Path],
         partitions_bin: Optional[Path],
         merged_bin: Optional[Path],
-        size_info: Optional[SizeInfo] = None
+        size_info: Optional[SizeInfo] = None,
     ) -> None:
         """
         Print build success message.
@@ -919,6 +852,7 @@ __attribute__((weak)) bool btInUse(void) {
         if size_info:
             print()
             from .build_utils import SizeInfoPrinter
+
             SizeInfoPrinter.print_size_info(size_info)
             print()
 
@@ -934,15 +868,7 @@ __attribute__((weak)) bool btInUse(void) {
             BuildResultESP32 indicating failure
         """
         return BuildResultESP32(
-            success=False,
-            firmware_bin=None,
-            firmware_elf=None,
-            bootloader_bin=None,
-            partitions_bin=None,
-            merged_bin=None,
-            size_info=None,
-            build_time=time.time() - start_time,
-            message=message
+            success=False, firmware_bin=None, firmware_elf=None, bootloader_bin=None, partitions_bin=None, merged_bin=None, size_info=None, build_time=time.time() - start_time, message=message
         )
 
     @staticmethod

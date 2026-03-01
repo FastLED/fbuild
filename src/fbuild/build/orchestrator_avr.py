@@ -18,30 +18,25 @@ from typing import TYPE_CHECKING, Optional
 if TYPE_CHECKING:
     from .build_context import BuildParams
 
-from ..interrupt_utils import handle_keyboard_interrupt_properly
-from ..config import PlatformIOConfig, BoardConfig, BoardConfigLoader
+from ..config import BoardConfig, BoardConfigLoader, PlatformIOConfig
 from ..config.board_config import BoardConfigError
-from ..packages import Cache, Toolchain, ArduinoCore
-from ..packages.toolchain import ToolchainError
+from ..interrupt_utils import handle_keyboard_interrupt_properly
+from ..output import log, log_build_complete, log_detail, log_firmware_path, log_phase, set_verbose
+from ..packages import ArduinoCore, Cache, Toolchain
 from ..packages.arduino_core import ArduinoCoreError
 from ..packages.library_manager import LibraryError
-from .source_scanner import SourceScanner, SourceCollection
-from .compiler import CompilerError as CompilerImportError
-from .linker import LinkerError as LinkerImportError
-from .orchestrator_esp32 import OrchestratorESP32
-from .build_utils import SizeInfoPrinter
-from .library_dependency_processor import LibraryDependencyProcessor
-from .source_compilation_orchestrator import (
-    SourceCompilationOrchestrator,
-    SourceCompilationOrchestratorError
-)
+from ..packages.toolchain import ToolchainError
 from .build_component_factory import BuildComponentFactory
-from .orchestrator import IBuildOrchestrator, BuildResult, BuildOrchestratorError
-from .build_state import BuildStateTracker
 from .build_info_generator import BuildInfoGenerator
-from ..output import (
-    log, log_phase, log_detail, log_build_complete, log_firmware_path, set_verbose
-)
+from .build_state import BuildStateTracker
+from .build_utils import SizeInfoPrinter
+from .compiler import CompilerError as CompilerImportError
+from .library_dependency_processor import LibraryDependencyProcessor
+from .linker import LinkerError as LinkerImportError
+from .orchestrator import BuildOrchestratorError, BuildResult, IBuildOrchestrator
+from .orchestrator_esp32 import OrchestratorESP32
+from .source_compilation_orchestrator import SourceCompilationOrchestrator, SourceCompilationOrchestratorError
+from .source_scanner import SourceCollection, SourceScanner
 
 # Note: Daemon queue access is handled via dynamic import in build method
 # to avoid circular dependencies and hard daemon requirement
@@ -77,11 +72,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             print(f"Flash: {result.size_info.total_flash} bytes")
     """
 
-    def __init__(
-        self,
-        cache: Optional[Cache] = None,
-        verbose: bool = False
-    ):
+    def __init__(self, cache: Optional[Cache] = None, verbose: bool = False):
         """
         Initialize build orchestrator.
 
@@ -139,6 +130,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
 
             # Print build profile banner
             from .build_profiles import print_profile_banner
+
             print_profile_banner(request.profile)
 
             env_config = config.get_env_config(env_name)
@@ -146,7 +138,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             # Phase 2: Load board configuration
             log_phase(2, 9, "Loading board configuration...", verbose_only=not verbose_mode)
 
-            board_id = env_config['board']
+            board_id = env_config["board"]
             board_config = BoardConfigLoader.load_board_config(board_id, env_config)
 
             log_detail(f"Board: {board_config.name}", verbose_only=not verbose_mode)
@@ -168,8 +160,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                     elf_path=None,
                     size_info=None,
                     build_time=time.time() - start_time,
-                    message=f"Platform '{board_config.platform}' is not supported. " +
-                           "Fbuild currently supports 'avr', 'esp32', and 'teensy' platforms natively."
+                    message=f"Platform '{board_config.platform}' is not supported. " + "Fbuild currently supports 'avr', 'esp32', and 'teensy' platforms natively.",
                 )
 
             # Phase 3: Ensure toolchain
@@ -211,7 +202,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                 platformio_ini_path=project_dir / "platformio.ini",
                 platform=board_config.platform,
                 board=board_id,
-                framework=env_config.get('framework', 'arduino'),
+                framework=env_config.get("framework", "arduino"),
                 toolchain_version=toolchain.VERSION,
                 framework_version=arduino_core.AVR_VERSION,
                 platform_version=arduino_core.AVR_VERSION,  # Using core version as platform version
@@ -236,43 +227,25 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
 
             lib_deps = config.get_lib_deps(env_name)
 
-            lib_processor = LibraryDependencyProcessor(
-                build_dir=build_dir,
-                mode="release",
-                verbose=verbose_mode
-            )
+            lib_processor = LibraryDependencyProcessor(build_dir=build_dir, mode="release", verbose=verbose_mode)
 
-            lib_result = lib_processor.process_dependencies(
-                lib_deps=lib_deps,
-                toolchain=toolchain,
-                board_config=board_config,
-                core_path=core_path
-            )
+            lib_result = lib_processor.process_dependencies(lib_deps=lib_deps, toolchain=toolchain, board_config=board_config, core_path=core_path)
 
             lib_include_paths = lib_result.include_paths
             lib_archives = lib_result.archive_files
 
             # Get src_dir override from platformio.ini
             from ..config import PlatformIOConfig
+
             config_for_src_dir = PlatformIOConfig(project_dir / "platformio.ini")
             src_dir_override = config_for_src_dir.get_src_dir()
 
             # Phase 7: Scan source files
             log_phase(7, 11, "Scanning source files...", verbose_only=not verbose_mode)
 
-            sources = self._scan_sources(
-                project_dir,
-                build_dir,
-                board_config,
-                core_path,
-                src_dir_override
-            )
+            sources = self._scan_sources(project_dir, build_dir, board_config, core_path, src_dir_override)
 
-            total_sources = (
-                len(sources.sketch_sources)
-                + len(sources.core_sources)
-                + len(sources.variant_sources)
-            )
+            total_sources = len(sources.sketch_sources) + len(sources.core_sources) + len(sources.variant_sources)
 
             log_detail(f"Sketch: {len(sources.sketch_sources)} files", verbose_only=not verbose_mode)
             log_detail(f"Core: {len(sources.core_sources)} files", verbose_only=not verbose_mode)
@@ -296,6 +269,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
 
             # Load platform config from JSON
             from ..platform_configs import load_config as load_platform_config
+
             platform_config = load_platform_config("avr")
             if platform_config is None:
                 raise RuntimeError("Failed to load AVR platform configuration from avr.json")
@@ -321,9 +295,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             )
 
             # Queue is provided in context (mandatory)
-            compiler = BuildComponentFactory.create_compiler(
-                toolchain, board_config, core_path, context, lib_include_paths
-            )
+            compiler = BuildComponentFactory.create_compiler(toolchain, board_config, core_path, context, lib_include_paths)
 
             compilation_orchestrator = SourceCompilationOrchestrator(verbose=verbose_mode)
             compilation_result = compilation_orchestrator.compile_multiple_groups(
@@ -332,7 +304,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                 core_sources=sources.core_sources,
                 variant_sources=sources.variant_sources,
                 src_build_dir=src_build_dir,
-                core_build_dir=core_build_dir
+                core_build_dir=core_build_dir,
             )
 
             sketch_objects = compilation_result.sketch_objects
@@ -341,8 +313,8 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             # Phase 9: Link firmware
             log_phase(9, 11, "Linking firmware...", verbose_only=not verbose_mode)
 
-            elf_path = build_dir / 'firmware.elf'
-            hex_path = build_dir / 'firmware.hex'
+            elf_path = build_dir / "firmware.elf"
+            hex_path = build_dir / "firmware.hex"
 
             linker = BuildComponentFactory.create_linker(toolchain, board_config, context)
             # Now using avr-gcc-ar for archive creation, which properly handles LTO
@@ -355,13 +327,11 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                 hex_path,
                 lib_archives,  # Library archives (created with gcc-ar for LTO support)
                 None,  # No extra flags
-                None  # No additional objects needed when using archives
+                None,  # No additional objects needed when using archives
             )
 
             if not link_result.success:
-                raise BuildOrchestratorError(
-                    f"Linking failed:\n{link_result.stderr}"
-                )
+                raise BuildOrchestratorError(f"Linking failed:\n{link_result.stderr}")
 
             log_firmware_path(hex_path, verbose_only=not verbose_mode)
 
@@ -411,46 +381,16 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             SizeInfoPrinter.print_size_info(link_result.size_info)
             log_build_complete(build_time, verbose_only=not verbose_mode)
 
-            return BuildResult(
-                success=True,
-                hex_path=hex_path,
-                elf_path=elf_path,
-                size_info=link_result.size_info,
-                build_time=build_time,
-                message="Build successful"
-            )
+            return BuildResult(success=True, hex_path=hex_path, elf_path=elf_path, size_info=link_result.size_info, build_time=build_time, message="Build successful")
 
-        except (
-            BuildOrchestratorError,
-            ToolchainError,
-            ArduinoCoreError,
-            CompilerImportError,
-            LinkerImportError,
-            BoardConfigError,
-            LibraryError,
-            SourceCompilationOrchestratorError
-        ) as e:
+        except (BuildOrchestratorError, ToolchainError, ArduinoCoreError, CompilerImportError, LinkerImportError, BoardConfigError, LibraryError, SourceCompilationOrchestratorError) as e:
             build_time = time.time() - start_time
-            return BuildResult(
-                success=False,
-                hex_path=None,
-                elf_path=None,
-                size_info=None,
-                build_time=build_time,
-                message=str(e)
-            )
+            return BuildResult(success=False, hex_path=None, elf_path=None, size_info=None, build_time=build_time, message=str(e))
         except KeyboardInterrupt as ke:
             handle_keyboard_interrupt_properly(ke)
         except Exception as e:
             build_time = time.time() - start_time
-            return BuildResult(
-                success=False,
-                hex_path=None,
-                elf_path=None,
-                size_info=None,
-                build_time=build_time,
-                message=f"Unexpected error: {e}"
-            )
+            return BuildResult(success=False, hex_path=None, elf_path=None, size_info=None, build_time=build_time, message=f"Unexpected error: {e}")
 
     def _build_esp32(self, request: "BuildParams") -> BuildResult:
         """
@@ -465,14 +405,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             BuildResult
         """
         if self.cache is None:
-            return BuildResult(
-                success=False,
-                hex_path=None,
-                elf_path=None,
-                size_info=None,
-                build_time=0.0,
-                message="Cache is required for ESP32 builds"
-            )
+            return BuildResult(success=False, hex_path=None, elf_path=None, size_info=None, build_time=0.0, message="Cache is required for ESP32 builds")
 
         esp32_orchestrator = OrchestratorESP32(self.cache, request.verbose)
         return esp32_orchestrator.build(request)
@@ -488,14 +421,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             BuildResult
         """
         if self.cache is None:
-            return BuildResult(
-                success=False,
-                hex_path=None,
-                elf_path=None,
-                size_info=None,
-                build_time=0.0,
-                message="Cache not initialized"
-            )
+            return BuildResult(success=False, hex_path=None, elf_path=None, size_info=None, build_time=0.0, message="Cache not initialized")
 
         # Delegate to OrchestratorTeensy for native Teensy build
         from .orchestrator_teensy import OrchestratorTeensy
@@ -516,22 +442,17 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
         Raises:
             BuildOrchestratorError: If platformio.ini not found or invalid
         """
-        ini_path = project_dir / 'platformio.ini'
+        ini_path = project_dir / "platformio.ini"
 
         if not ini_path.exists():
-            raise BuildOrchestratorError(
-                f"platformio.ini not found in {project_dir}\n" +
-                "Make sure you're in a valid project directory."
-            )
+            raise BuildOrchestratorError(f"platformio.ini not found in {project_dir}\n" + "Make sure you're in a valid project directory.")
 
         try:
             return PlatformIOConfig(ini_path)
         except KeyboardInterrupt as ke:
             handle_keyboard_interrupt_properly(ke)
         except Exception as e:
-            raise BuildOrchestratorError(
-                f"Failed to parse platformio.ini: {e}"
-            )
+            raise BuildOrchestratorError(f"Failed to parse platformio.ini: {e}")
 
     def _ensure_toolchain(self) -> Toolchain:
         """
@@ -551,9 +472,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
         except KeyboardInterrupt as ke:
             handle_keyboard_interrupt_properly(ke)
         except Exception as e:
-            raise BuildOrchestratorError(
-                f"Failed to setup toolchain: {e}"
-            )
+            raise BuildOrchestratorError(f"Failed to setup toolchain: {e}")
 
     def _ensure_arduino_core(self) -> ArduinoCore:
         """
@@ -573,18 +492,9 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
         except KeyboardInterrupt as ke:
             handle_keyboard_interrupt_properly(ke)
         except Exception as e:
-            raise BuildOrchestratorError(
-                f"Failed to setup Arduino core: {e}"
-            )
+            raise BuildOrchestratorError(f"Failed to setup Arduino core: {e}")
 
-    def _scan_sources(
-        self,
-        project_dir: Path,
-        build_dir: Path,
-        board_config: BoardConfig,
-        core_path: Path,
-        src_dir_override: Optional[str] = None
-    ) -> "SourceCollection":
+    def _scan_sources(self, project_dir: Path, build_dir: Path, board_config: BoardConfig, core_path: Path, src_dir_override: Optional[str] = None) -> "SourceCollection":
         """
         Scan for all source files.
 
@@ -606,16 +516,11 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             src_dir = project_dir / src_dir_override
         else:
             # Check if 'src' directory exists, otherwise use project root
-            src_dir = project_dir / 'src'
+            src_dir = project_dir / "src"
             if not src_dir.exists():
                 src_dir = project_dir
 
         core_dir = board_config.get_core_sources_dir(core_path)
         variant_dir = board_config.get_variant_dir(core_path)
 
-        return scanner.scan(
-            src_dir=src_dir,
-            core_dir=core_dir,
-            variant_dir=variant_dir
-        )
-
+        return scanner.scan(src_dir=src_dir, core_dir=core_dir, variant_dir=variant_dir)

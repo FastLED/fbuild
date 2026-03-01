@@ -129,7 +129,7 @@ except Exception as e:
         # CRITICAL TEST: Verify port is still accessible
         # If Root Cause #1 fix is working, the port should be unlocked
         assert verify_port_accessible(esp32s3_port, timeout=2.0), (
-            f"Port {esp32s3_port} should be accessible after client crash. " "This indicates Root Cause #1 fix may not be working. " "Check src/fbuild/daemon/shared_serial.py lines 391-394."
+            f"Port {esp32s3_port} should be accessible after client crash. This indicates Root Cause #1 fix may not be working. Check src/fbuild/daemon/shared_serial.py lines 391-394."
         )
 
         # Double-check with direct serial access
@@ -201,7 +201,7 @@ def test_serial_handle_cleanup_on_timeout(esp32s3_port: str, clean_daemon: None)
     # Use shorter timeout to avoid hanging
     accessible = verify_port_accessible(esp32s3_port, timeout=1.0)
 
-    assert accessible, f"Port {esp32s3_port} should be accessible after timeout operation. " "Context manager should clean up serial handle properly."
+    assert accessible, f"Port {esp32s3_port} should be accessible after timeout operation. Context manager should clean up serial handle properly."
 
 
 @pytest.mark.hardware
@@ -256,11 +256,9 @@ def test_rapid_connect_disconnect(esp32s3_port: str, clean_daemon: None) -> None
             time.sleep(0.1)
 
         except serial.SerialException as e:
-            pytest.fail(
-                f"Serial exception on cycle {cycle_num}/{num_cycles}: {e}. " f"Completed {successful_cycles} cycles before failure. " "This indicates handle cleanup issue during rapid access."
-            )
+            pytest.fail(f"Serial exception on cycle {cycle_num}/{num_cycles}: {e}. Completed {successful_cycles} cycles before failure. This indicates handle cleanup issue during rapid access.")
         except Exception as e:
-            pytest.fail(f"Unexpected exception on cycle {cycle_num}/{num_cycles}: {e}. " f"Completed {successful_cycles} cycles before failure.")
+            pytest.fail(f"Unexpected exception on cycle {cycle_num}/{num_cycles}: {e}. Completed {successful_cycles} cycles before failure.")
 
     print(f"All {num_cycles} cycles completed successfully")
 
@@ -271,9 +269,7 @@ def test_rapid_connect_disconnect(esp32s3_port: str, clean_daemon: None) -> None
     time.sleep(0.5)
 
     # CRITICAL TEST: Verify port is still accessible after stress test
-    assert verify_port_accessible(esp32s3_port, timeout=2.0), (
-        f"Port {esp32s3_port} should be accessible after {num_cycles} rapid cycles. " "This indicates handle leak during rapid connect/disconnect."
-    )
+    assert verify_port_accessible(esp32s3_port, timeout=2.0), f"Port {esp32s3_port} should be accessible after {num_cycles} rapid cycles. This indicates handle leak during rapid connect/disconnect."
 
     # Final verification with direct access
     with serial.Serial(esp32s3_port, 115200, timeout=1) as ser:

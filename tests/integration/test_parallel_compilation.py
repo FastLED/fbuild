@@ -146,9 +146,7 @@ class TestParallelCompilationBinaryIdentity:
         hash2 = get_file_hash(bin_path2)
 
         # CRITICAL: Binaries must be identical
-        assert hash1 == hash2, (
-            f"Serial and parallel builds produced different binaries!\n" f"Serial hash:   {hash1}\n" f"Parallel hash: {hash2}\n" f"This indicates non-deterministic compilation behavior."
-        )
+        assert hash1 == hash2, f"Serial and parallel builds produced different binaries!\nSerial hash:   {hash1}\nParallel hash: {hash2}\nThis indicates non-deterministic compilation behavior."
 
         print(f"\n✓ ESP32C6 binary identity verified (hash: {hash1[:16]}...)")
         print(f"  Serial build time:   {time1:.2f}s")
@@ -178,9 +176,7 @@ class TestParallelCompilationBinaryIdentity:
         hash2 = get_file_hash(hex_path2)
 
         # CRITICAL: Binaries must be identical
-        assert hash1 == hash2, (
-            f"Serial and parallel builds produced different binaries!\n" f"Serial hash:   {hash1}\n" f"Parallel hash: {hash2}\n" f"This indicates non-deterministic compilation behavior."
-        )
+        assert hash1 == hash2, f"Serial and parallel builds produced different binaries!\nSerial hash:   {hash1}\nParallel hash: {hash2}\nThis indicates non-deterministic compilation behavior."
 
         print(f"\n✓ Uno binary identity verified (hash: {hash1[:16]}...)")
         print(f"  Serial build time:   {time1:.2f}s")
@@ -210,9 +206,7 @@ class TestParallelCompilationBinaryIdentity:
         hash2 = get_file_hash(hex_path2)
 
         # CRITICAL: Binaries must be identical
-        assert hash1 == hash2, (
-            f"Serial and parallel builds produced different binaries!\n" f"Serial hash:   {hash1}\n" f"Parallel hash: {hash2}\n" f"This indicates non-deterministic compilation behavior."
-        )
+        assert hash1 == hash2, f"Serial and parallel builds produced different binaries!\nSerial hash:   {hash1}\nParallel hash: {hash2}\nThis indicates non-deterministic compilation behavior."
 
         print(f"\n✓ Teensy 4.0 binary identity verified (hash: {hash1[:16]}...)")
         print(f"  Serial build time:   {time1:.2f}s")
@@ -253,9 +247,7 @@ class TestParallelCompilationBinaryIdentity:
         hash2 = get_file_hash(firmware_path2)
 
         # CRITICAL: Binaries must be identical
-        assert hash1 == hash2, (
-            f"Serial and parallel builds produced different binaries!\n" f"Serial hash:   {hash1}\n" f"Parallel hash: {hash2}\n" f"This indicates non-deterministic compilation behavior."
-        )
+        assert hash1 == hash2, f"Serial and parallel builds produced different binaries!\nSerial hash:   {hash1}\nParallel hash: {hash2}\nThis indicates non-deterministic compilation behavior."
 
         print(f"\n✓ RP2040 binary identity verified (hash: {hash1[:16]}...)")
         print(f"  Serial build time:   {time1:.2f}s")
@@ -285,9 +277,7 @@ class TestParallelCompilationBinaryIdentity:
         hash2 = get_file_hash(bin_path2)
 
         # CRITICAL: Binaries must be identical
-        assert hash1 == hash2, (
-            f"Serial and parallel builds produced different binaries!\n" f"Serial hash:   {hash1}\n" f"Parallel hash: {hash2}\n" f"This indicates non-deterministic compilation behavior."
-        )
+        assert hash1 == hash2, f"Serial and parallel builds produced different binaries!\nSerial hash:   {hash1}\nParallel hash: {hash2}\nThis indicates non-deterministic compilation behavior."
 
         print(f"\n✓ STM32 binary identity verified (hash: {hash1[:16]}...)")
         print(f"  Serial build time:   {time1:.2f}s")
@@ -395,13 +385,13 @@ class TestIncrementalBuildsWithParallelCompilation:
 
         # Incremental build should be much faster than full build
         assert time2 < time1 / 2, (
-            f"Incremental build not significantly faster than full build\n" f"Full build time:        {time1:.2f}s\n" f"Incremental build time: {time2:.2f}s\n" f"Expected incremental < {time1/2:.2f}s"
+            f"Incremental build not significantly faster than full build\nFull build time:        {time1:.2f}s\nIncremental build time: {time2:.2f}s\nExpected incremental < {time1 / 2:.2f}s"
         )
 
         print("\n✓ Incremental build with parallel compilation verified")
         print(f"  Full build time:        {time1:.2f}s")
         print(f"  Incremental build time: {time2:.2f}s")
-        print(f"  Speedup factor:         {time1/time2:.1f}x")
+        print(f"  Speedup factor:         {time1 / time2:.1f}x")
 
     def test_incremental_build_recompiles_changed_files_only(self, uno_project: Path):
         """

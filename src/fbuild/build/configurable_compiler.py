@@ -11,13 +11,13 @@ Design:
 
 import logging
 from pathlib import Path
-from typing import Any, List, Dict, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
-from ..packages.trampoline_excludes import get_exclude_patterns
 from ..output import ProgressCallback, log_detail
-from .flag_builder import FlagBuilder
+from ..packages.trampoline_excludes import get_exclude_patterns
 from .archive_creator import ArchiveCreator
-from .compiler import ICompiler, CompilerError
+from .compiler import CompilerError, ICompiler
+from .flag_builder import FlagBuilder
 
 logger = logging.getLogger(__name__)
 
@@ -177,11 +177,13 @@ class ConfigurableCompiler(ICompiler):
             # OPI variants (dio_opi, qio_opi, opi_opi) have CONFIG_SPIRAM_IGNORE_NOTFOUND=1
             # which allows booting without PSRAM hardware. QSPI variants crash.
             from .psram_utils import get_psram_mode
+
             psram_mode = get_psram_mode(self.board_id, self.board_config)
 
             # Convert MSYS/MinGW path format (\c\...) to Windows format (C:\...) if needed
             # Python's Path() converts /c/... to \c\... on Windows
             import platform
+
             sdk_dir_str = str(sdk_dir)
             if platform.system() == "Windows" and len(sdk_dir_str) >= 3:
                 # Check for \c\ pattern (MSYS style path converted by Python)
@@ -273,14 +275,16 @@ class ConfigurableCompiler(ICompiler):
         includes = self.get_include_paths()
 
         # Parallel mode: submit to queue and return immediately
-        import platform
         import _thread
         import logging
+        import platform
 
         # Apply header trampoline cache on Windows when enabled (same as compilation_executor.py:149-169)
         # This resolves Windows CreateProcess 32K limit issues
         effective_includes = includes
-        logging.warning(f"[TRAMPOLINE_DEBUG] compilation_executor={self.compilation_executor}, trampoline_cache={self.compilation_executor.trampoline_cache}, is_windows={platform.system() == 'Windows'}")
+        logging.warning(
+            f"[TRAMPOLINE_DEBUG] compilation_executor={self.compilation_executor}, trampoline_cache={self.compilation_executor.trampoline_cache}, is_windows={platform.system() == 'Windows'}"
+        )
         if self.compilation_executor.trampoline_cache is not None and platform.system() == "Windows":
             logging.warning("[TRAMPOLINE_DEBUG] ENTERING trampoline generation block")
             try:
@@ -568,6 +572,7 @@ class ConfigurableCompiler(ICompiler):
             Job ID for tracking
         """
         import time
+
         from ..daemon.compilation_queue import CompilationJob
 
         job_id = f"compile_{source.stem}_{int(time.time() * 1000000)}"

@@ -65,7 +65,7 @@ class TestLoggingCompliance:
         # Report violations
         if violations:
             violation_report = "\n".join(violations)
-            pytest.fail(f"Found {len(violations)} DEBUG print() statements in production code:\n" f"{violation_report}\n\n" "Use logging.debug() instead of print() for debug output.")
+            pytest.fail(f"Found {len(violations)} DEBUG print() statements in production code:\n{violation_report}\n\nUse logging.debug() instead of print() for debug output.")
 
     def test_debug_output_uses_logging_module(self):
         """Verify DEBUG output uses logging.debug() instead of print().
@@ -95,7 +95,7 @@ class TestLoggingCompliance:
 
         if violations:
             violation_report = "\n".join(violations)
-            pytest.fail(f"Found {len(violations)} DEBUG print() statements:\n" f"{violation_report}\n\n" "Convert to logging.debug() format.")
+            pytest.fail(f"Found {len(violations)} DEBUG print() statements:\n{violation_report}\n\nConvert to logging.debug() format.")
 
     def test_no_direct_stdout_writes(self):
         """Verify production code doesn't write DEBUG output to stdout directly.
@@ -134,7 +134,7 @@ class TestLoggingCompliance:
 
         if violations:
             violation_report = "\n".join(violations)
-            pytest.fail(f"Found {len(violations)} DEBUG stdout writes:\n{violation_report}\n\n" "Use logging.debug() instead.")
+            pytest.fail(f"Found {len(violations)} DEBUG stdout writes:\n{violation_report}\n\nUse logging.debug() instead.")
 
     def test_logging_imports_present(self):
         """Verify files with logging calls have proper logging imports.

@@ -89,7 +89,7 @@ def get_profile(profile: BuildProfile) -> ProfileFlags:
 
 def get_profile_flags_from_config(
     profile: BuildProfile,
-    platform_config: Any  # BoardConfigModel or dict for backward compatibility
+    platform_config: Any,  # BoardConfigModel or dict for backward compatibility
 ) -> tuple[tuple[str, ...], tuple[str, ...]]:
     """Load profile-specific flags from platform JSON config.
 

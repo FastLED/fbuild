@@ -22,6 +22,7 @@ if TYPE_CHECKING:
 
 class BinaryGeneratorError(Exception):
     """Raised when binary generation operations fail."""
+
     pass
 
 
@@ -129,7 +130,7 @@ class BinaryGenerator:
             elf_sha256_offset,
             "-o",
             str(output_bin),
-            str(elf_path)
+            str(elf_path),
         ]
 
         if self.show_progress:
@@ -140,13 +141,13 @@ class BinaryGenerator:
                 cmd,
                 capture_output=True,
                 text=False,  # Don't decode as text - esptool may output binary data
-                timeout=60
+                timeout=60,
             )
 
             if result.returncode != 0:
                 error_msg = "Binary generation failed\n"
-                stderr = result.stderr.decode('utf-8', errors='replace') if result.stderr else ""
-                stdout = result.stdout.decode('utf-8', errors='replace') if result.stdout else ""
+                stderr = result.stderr.decode("utf-8", errors="replace") if result.stderr else ""
+                stdout = result.stdout.decode("utf-8", errors="replace") if result.stdout else ""
                 error_msg += f"stderr: {stderr}\n"
                 error_msg += f"stdout: {stdout}"
                 raise BinaryGeneratorError(error_msg)
@@ -164,6 +165,7 @@ class BinaryGenerator:
             raise BinaryGeneratorError("Binary generation timeout") from e
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
@@ -185,30 +187,17 @@ class BinaryGenerator:
         # Get objcopy tool
         objcopy_path = self.toolchain.get_objcopy_path()
         if objcopy_path is None or not objcopy_path.exists():
-            raise BinaryGeneratorError(
-                f"objcopy not found: {objcopy_path}. " +
-                "Ensure toolchain is installed."
-            )
+            raise BinaryGeneratorError(f"objcopy not found: {objcopy_path}. " + "Ensure toolchain is installed.")
 
         # Build objcopy command
-        cmd = [
-            str(objcopy_path),
-            "-O", "binary",
-            str(elf_path),
-            str(output_bin)
-        ]
+        cmd = [str(objcopy_path), "-O", "binary", str(elf_path), str(output_bin)]
 
         # Execute objcopy
         if self.show_progress:
             print("Generating firmware.bin...")
 
         try:
-            result = safe_run(
-                cmd,
-                capture_output=True,
-                text=True,
-                timeout=30
-            )
+            result = safe_run(cmd, capture_output=True, text=True, timeout=30)
 
             if result.returncode != 0:
                 error_msg = "Binary generation failed\n"
@@ -229,6 +218,7 @@ class BinaryGenerator:
             raise BinaryGeneratorError("Binary generation timeout") from e
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
@@ -247,9 +237,7 @@ class BinaryGenerator:
             BinaryGeneratorError: If generation fails
         """
         if not self.mcu.startswith("esp32"):
-            raise BinaryGeneratorError(
-                f"Bootloader generation only supported for ESP32 platforms, not {self.mcu}"
-            )
+            raise BinaryGeneratorError(f"Bootloader generation only supported for ESP32 platforms, not {self.mcu}")
 
         # Generate output path if not provided
         resolved_output: Path = output_bin if output_bin is not None else self.build_dir / "bootloader.bin"
@@ -275,7 +263,7 @@ class BinaryGenerator:
         # Find bootloader ELF file in framework SDK (use bootloader_flash_mode, not flash_mode)
         bootloader_name = f"bootloader_{bootloader_flash_mode}_{flash_freq.replace('m', 'm')}.elf"
         # get_sdk_dir() is ESP32-specific, access via getattr for type safety
-        sdk_dir = getattr(self.framework, 'get_sdk_dir', lambda: None)()
+        sdk_dir = getattr(self.framework, "get_sdk_dir", lambda: None)()
         if sdk_dir is None:
             raise BinaryGeneratorError("Framework does not support get_sdk_dir() method")
         sdk_bin_dir = sdk_dir / self.mcu / "bin"
@@ -283,9 +271,7 @@ class BinaryGenerator:
         logging.debug(f"BOOTLOADER: MCU={self.mcu}, flash_mode={flash_mode}, bootloader_flash_mode={bootloader_flash_mode}, freq={flash_freq}, name={bootloader_name}")
 
         if not bootloader_elf.exists():
-            raise BinaryGeneratorError(
-                f"Bootloader ELF not found: {bootloader_elf}"
-            )
+            raise BinaryGeneratorError(f"Bootloader ELF not found: {bootloader_elf}")
 
         # Generate bootloader.bin using esptool.py elf2image
         cmd = [
@@ -303,24 +289,19 @@ class BinaryGenerator:
             flash_size,
             "-o",
             str(resolved_output),
-            str(bootloader_elf)
+            str(bootloader_elf),
         ]
 
         if self.show_progress:
             print("Generating bootloader.bin...")
 
         try:
-            result = safe_run(
-                cmd,
-                capture_output=True,
-                text=False,
-                timeout=60
-            )
+            result = safe_run(cmd, capture_output=True, text=False, timeout=60)
 
             if result.returncode != 0:
                 error_msg = "Bootloader generation failed\n"
-                stderr = result.stderr.decode('utf-8', errors='replace') if result.stderr else ""
-                stdout = result.stdout.decode('utf-8', errors='replace') if result.stdout else ""
+                stderr = result.stderr.decode("utf-8", errors="replace") if result.stderr else ""
+                stdout = result.stdout.decode("utf-8", errors="replace") if result.stdout else ""
                 error_msg += f"stderr: {stderr}\n"
                 error_msg += f"stdout: {stdout}"
                 raise BinaryGeneratorError(error_msg)
@@ -338,6 +319,7 @@ class BinaryGenerator:
             raise BinaryGeneratorError("Bootloader generation timeout") from e
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
@@ -356,9 +338,7 @@ class BinaryGenerator:
             BinaryGeneratorError: If generation fails
         """
         if not self.mcu.startswith("esp32"):
-            raise BinaryGeneratorError(
-                f"Partition table generation only supported for ESP32 platforms, not {self.mcu}"
-            )
+            raise BinaryGeneratorError(f"Partition table generation only supported for ESP32 platforms, not {self.mcu}")
 
         # Generate output path if not provided
         resolved_output: Path = output_bin if output_bin is not None else self.build_dir / "partitions.bin"
@@ -372,44 +352,28 @@ class BinaryGenerator:
             partition_table += ".csv"
 
         # Find partition CSV file in framework (framework_path is ESP32-specific)
-        framework_path = getattr(self.framework, 'framework_path', None)
+        framework_path = getattr(self.framework, "framework_path", None)
         if framework_path is None:
             raise BinaryGeneratorError("Framework does not have framework_path attribute")
         partitions_csv = framework_path / "tools" / "partitions" / partition_table
 
         if not partitions_csv.exists():
-            raise BinaryGeneratorError(
-                f"Partition CSV not found: {partitions_csv}\n" +
-                f"Requested partition table: {partition_table}"
-            )
+            raise BinaryGeneratorError(f"Partition CSV not found: {partitions_csv}\n" + f"Requested partition table: {partition_table}")
 
         # Find gen_esp32part.py tool - also in framework
         gen_tool = framework_path / "tools" / "gen_esp32part.py"
 
         if not gen_tool.exists():
-            raise BinaryGeneratorError(
-                f"Partition generation tool not found: {gen_tool}"
-            )
+            raise BinaryGeneratorError(f"Partition generation tool not found: {gen_tool}")
 
         # Generate partition table using gen_esp32part.py
-        cmd = [
-            get_python_executable(),
-            str(gen_tool),
-            "-q",
-            str(partitions_csv),
-            str(resolved_output)
-        ]
+        cmd = [get_python_executable(), str(gen_tool), "-q", str(partitions_csv), str(resolved_output)]
 
         if self.show_progress:
             print("Generating partitions.bin...")
 
         try:
-            result = safe_run(
-                cmd,
-                capture_output=True,
-                text=True,
-                timeout=30
-            )
+            result = safe_run(cmd, capture_output=True, text=True, timeout=30)
 
             if result.returncode != 0:
                 error_msg = "Partition table generation failed\n"
@@ -430,6 +394,7 @@ class BinaryGenerator:
             raise BinaryGeneratorError("Partition table generation timeout") from e
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
@@ -451,9 +416,7 @@ class BinaryGenerator:
             BinaryGeneratorError: If generation fails
         """
         if not self.mcu.startswith("esp32"):
-            raise BinaryGeneratorError(
-                f"Merged bin generation only supported for ESP32 platforms, not {self.mcu}"
-            )
+            raise BinaryGeneratorError(f"Merged bin generation only supported for ESP32 platforms, not {self.mcu}")
 
         # Generate output path if not provided
         resolved_output: Path = output_bin if output_bin is not None else self.build_dir / "merged.bin"
@@ -503,24 +466,19 @@ class BinaryGenerator:
             str(offsets["partitions"]),
             str(partitions_bin),
             str(offsets["firmware"]),
-            str(firmware_bin)
+            str(firmware_bin),
         ]
 
         if self.show_progress:
             print("Generating merged.bin...")
 
         try:
-            result = safe_run(
-                cmd,
-                capture_output=True,
-                text=False,
-                timeout=60
-            )
+            result = safe_run(cmd, capture_output=True, text=False, timeout=60)
 
             if result.returncode != 0:
                 error_msg = "Merged bin generation failed\n"
-                stderr = result.stderr.decode('utf-8', errors='replace') if result.stderr else ""
-                stdout = result.stdout.decode('utf-8', errors='replace') if result.stdout else ""
+                stderr = result.stderr.decode("utf-8", errors="replace") if result.stderr else ""
+                stdout = result.stdout.decode("utf-8", errors="replace") if result.stdout else ""
                 error_msg += f"stderr: {stderr}\n"
                 error_msg += f"stdout: {stdout}"
                 raise BinaryGeneratorError(error_msg)
@@ -542,6 +500,7 @@ class BinaryGenerator:
             raise BinaryGeneratorError("Merged bin generation timeout") from e
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
@@ -558,11 +517,7 @@ class BinaryGenerator:
         flash_offsets = esptool_config.get("flash_offsets", {})
 
         # Use JSON values or fallback to defaults
-        offsets = {
-            "bootloader": flash_offsets.get("bootloader", "0x0"),
-            "partitions": flash_offsets.get("partitions", "0x8000"),
-            "firmware": flash_offsets.get("firmware", "0x10000")
-        }
+        offsets = {"bootloader": flash_offsets.get("bootloader", "0x0"), "partitions": flash_offsets.get("partitions", "0x8000"), "firmware": flash_offsets.get("firmware", "0x10000")}
 
         return offsets
 
@@ -579,9 +534,9 @@ class BinaryGenerator:
         if isinstance(flash_freq, (int, float)):
             # Convert Hz to MHz format like "80m"
             return f"{int(flash_freq // 1000000)}m"
-        elif isinstance(flash_freq, str) and flash_freq.endswith('L'):
+        elif isinstance(flash_freq, str) and flash_freq.endswith("L"):
             # Handle string representation of long integers like "80000000L"
-            freq_value = int(flash_freq.rstrip('L'))
+            freq_value = int(flash_freq.rstrip("L"))
             return f"{freq_value // 1000000}m"
         else:
             return str(flash_freq)

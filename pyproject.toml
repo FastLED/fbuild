@@ -54,15 +54,11 @@ fbuild = ["py.typed", "platform_configs/**/*.json", "platform_configs/manifest.j
 line-length = 200
 extend-exclude = ["**/.zap/**", "**/.fbuild/**", "**/.build/**"]
 
-[tool.black]
-line-length = 200
-extend-exclude = '''
-/(
-    \.zap
-  | \.fbuild
-  | \.build
-)/
-'''
+[tool.ruff.lint]
+select = ["I"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["fbuild"]
 
 [tool.pylint."MESSAGES CONTROL"]
 good-names = [
@@ -76,22 +72,6 @@ good-names = [
 disable = [
     "missing-function-docstring",
     "missing-module-docstring"
-]
-
-[tool.isort]
-profile = "black"
-skip_glob = [
-    "*/.fbuild/**",
-    "*/.build/**",
-    "*/.zap/**",
-    "*/build/**",
-    "*/__pycache__/**",
-    "*/.venv/**",
-    "*/.git/**",
-    "*/.pytest_cache/**",
-    "*/.mypy_cache/**",
-    "*/.ruff_cache/**",
-    "*.egg-info/**",
 ]
 
 [tool.mypy]

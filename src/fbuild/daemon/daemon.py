@@ -634,11 +634,11 @@ def main() -> int:
             with open(str(spawn_log), "ab", buffering=0) as binary_file:
                 # Wrap in text mode with explicit line buffering
                 with io.TextIOWrapper(binary_file, encoding="utf-8", line_buffering=True) as f:
-                    f.write(f"\n{'='*70}\n")
+                    f.write(f"\n{'=' * 70}\n")
                     f.write(f"Spawn attempt at {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
                     f.write(f"Launcher PID: {launcher_pid}\n")
                     f.write(f"Daemon PID: {os.getpid()}\n")
-                    f.write(f"{'='*70}\n")
+                    f.write(f"{'=' * 70}\n")
         except KeyboardInterrupt:
             raise
         except Exception as e:

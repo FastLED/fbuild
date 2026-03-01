@@ -167,7 +167,7 @@ def test_ensure_toolchain_installs_compiler_binaries(tmp_path, monkeypatch):
 
         # The key assertion: prefixed gcc must be present
         has_prefixed_gcc = any("gcc" in b and ("xtensa-esp-elf-" in b or "xtensa-esp32-elf-" in b) for b in binaries)
-        assert has_prefixed_gcc, f"Expected prefixed gcc binary (xtensa-esp-elf-gcc or xtensa-esp32-elf-gcc) " f"in bin directory, but found: {binaries}"
+        assert has_prefixed_gcc, f"Expected prefixed gcc binary (xtensa-esp-elf-gcc or xtensa-esp32-elf-gcc) in bin directory, but found: {binaries}"
 
         has_prefixed_ar = any("xtensa-esp-elf-ar" in b or "xtensa-esp32-elf-ar" in b for b in binaries)
         assert has_prefixed_ar, f"Expected prefixed ar binary in bin directory, but found: {binaries}"

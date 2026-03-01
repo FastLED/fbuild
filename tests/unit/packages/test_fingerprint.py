@@ -249,7 +249,7 @@ class TestConsecutiveBuildCacheCheck:
         # Allow generous 3x overhead per iteration vs baseline to
         # tolerate filesystem contention under parallel test execution.
         budget = max(baseline * n * 3, 3.0)  # at least 3s floor
-        assert elapsed < budget, f"Cache check too slow: {elapsed:.2f}s for {n} iterations " f"(baseline={baseline*1000:.1f}ms, budget={budget:.2f}s)"
+        assert elapsed < budget, f"Cache check too slow: {elapsed:.2f}s for {n} iterations (baseline={baseline * 1000:.1f}ms, budget={budget:.2f}s)"
 
 
 class TestSizeInfoParsing:

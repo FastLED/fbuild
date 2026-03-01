@@ -5,8 +5,8 @@ printing size information and formatting build output.
 """
 
 import os
-import stat
 import shutil
+import stat
 from pathlib import Path
 from typing import Any, Callable, Optional
 
@@ -36,7 +36,7 @@ class SizeInfoPrinter:
             bss_bytes=size_info.bss,
             ram_bytes=size_info.total_ram,
             ram_percent=size_info.ram_percent,
-            max_ram=size_info.max_ram
+            max_ram=size_info.max_ram,
         )
 
 
@@ -88,6 +88,4 @@ def safe_rmtree(path: Path, max_retries: int = 3) -> None:
                 time.sleep(0.5)
             else:
                 # Last attempt failed, raise the error
-                raise OSError(
-                    f"Failed to remove directory {path} after {max_retries} attempts: {e}"
-                ) from e
+                raise OSError(f"Failed to remove directory {path} after {max_retries} attempts: {e}") from e

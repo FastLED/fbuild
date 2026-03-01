@@ -167,18 +167,18 @@ def test_rapid_start_stop_cycles() -> StressTestResult:
                 # Verify it stopped
                 if not is_daemon_running():
                     passed += 1
-                    messages.append(f"  Cycle {i+1}: OK")
+                    messages.append(f"  Cycle {i + 1}: OK")
                 else:
-                    messages.append(f"  Cycle {i+1}: FAIL - didn't stop")
+                    messages.append(f"  Cycle {i + 1}: FAIL - didn't stop")
                     kill_daemon_forcefully()
             else:
-                messages.append(f"  Cycle {i+1}: FAIL - didn't start")
+                messages.append(f"  Cycle {i + 1}: FAIL - didn't start")
                 kill_daemon_forcefully()
 
             time.sleep(0.5)
 
         except Exception as e:
-            messages.append(f"  Cycle {i+1}: FAIL - {e}")
+            messages.append(f"  Cycle {i + 1}: FAIL - {e}")
             kill_daemon_forcefully()
 
     result.passed = passed == cycles
@@ -474,7 +474,7 @@ def main() -> int:
     results: list[StressTestResult] = []
 
     for test_func in tests:
-        print(f"\n{'='*60}")
+        print(f"\n{'=' * 60}")
         print(f"Running: {test_func.__name__}")
         print("=" * 60)
 

@@ -88,7 +88,7 @@ def test_concurrent_daemon_spawn_five_processes():
 
     # CRITICAL: No spurious failures - all workers should succeed
     # This is the main test for the race condition fix
-    assert len(failures) == 0, f"Spurious failures detected: {len(failures)}/{num_workers} workers failed " f"despite daemon running. This indicates race condition not fixed. Failures: {failures}"
+    assert len(failures) == 0, f"Spurious failures detected: {len(failures)}/{num_workers} workers failed despite daemon running. This indicates race condition not fixed. Failures: {failures}"
 
     # Check that daemon is actually running
     daemon_info = get_daemon_info()

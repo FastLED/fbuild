@@ -22,6 +22,7 @@ from ..subprocess_utils import safe_run
 
 class ArchiveError(Exception):
     """Raised when archive creation operations fail."""
+
     pass
 
 
@@ -43,12 +44,7 @@ class ArchiveCreator:
         """
         self.show_progress = show_progress
 
-    def create_archive(
-        self,
-        ar_path: Path,
-        archive_path: Path,
-        object_files: List[Path]
-    ) -> Path:
+    def create_archive(self, ar_path: Path, archive_path: Path, object_files: List[Path]) -> Path:
         """Create static library archive from object files.
 
         Args:
@@ -66,9 +62,7 @@ class ArchiveCreator:
             raise ArchiveError("No object files provided for archive")
 
         if not ar_path.exists():
-            raise ArchiveError(
-                f"Archiver not found: {ar_path}. Ensure toolchain is installed."
-            )
+            raise ArchiveError(f"Archiver not found: {ar_path}. Ensure toolchain is installed.")
 
         # Ensure archive directory exists
         archive_path.parent.mkdir(parents=True, exist_ok=True)
@@ -98,22 +92,13 @@ class ArchiveCreator:
                     if self.show_progress:
                         print(f"  Retrying archive creation (attempt {attempt + 1}/{max_retries})...")
 
-                result = safe_run(
-                    cmd,
-                    capture_output=True,
-                    text=True,
-                    timeout=60
-                )
+                result = safe_run(cmd, capture_output=True, text=True, timeout=60)
 
                 if result.returncode != 0:
                     # Check if error is due to file truncation/locking (Windows-specific)
                     # Windows file locking manifests as: "file truncated", "error reading", or "No such file"
                     stderr_lower = result.stderr.lower()
-                    is_file_locking_error = (
-                        "file truncated" in stderr_lower or
-                        "error reading" in stderr_lower or
-                        "no such file" in stderr_lower
-                    )
+                    is_file_locking_error = "file truncated" in stderr_lower or "error reading" in stderr_lower or "no such file" in stderr_lower
                     if is_windows and is_file_locking_error:
                         last_error = result.stderr
                         if attempt < max_retries - 1:
@@ -146,6 +131,7 @@ class ArchiveCreator:
                 raise ArchiveError(f"Archive creation timeout for {archive_path.name}") from e
             except KeyboardInterrupt as ke:
                 from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
                 handle_keyboard_interrupt_properly(ke)
                 raise  # Never reached, but satisfies type checker
             except Exception as e:
@@ -163,12 +149,7 @@ class ArchiveCreator:
             raise ArchiveError(f"Archive creation failed after {max_retries} attempts: {last_error}")
         raise ArchiveError(f"Archive creation failed after {max_retries} attempts")
 
-    def create_core_archive(
-        self,
-        ar_path: Path,
-        build_dir: Path,
-        object_files: List[Path]
-    ) -> Path:
+    def create_core_archive(self, ar_path: Path, build_dir: Path, object_files: List[Path]) -> Path:
         """Create core.a archive from core object files.
 
         Convenience method for creating the standard core.a archive.

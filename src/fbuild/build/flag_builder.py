@@ -12,7 +12,7 @@ Design:
 """
 
 import shlex
-from typing import TYPE_CHECKING, List, Dict
+from typing import TYPE_CHECKING, Dict, List
 
 from .build_profiles import get_profile_flags_from_config
 
@@ -22,6 +22,7 @@ if TYPE_CHECKING:
 
 class FlagBuilderError(Exception):
     """Raised when flag building operations fail."""
+
     pass
 
 
@@ -71,6 +72,7 @@ class FlagBuilder:
             return shlex.split(flag_string)
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception:
@@ -83,9 +85,9 @@ class FlagBuilder:
             Dictionary with 'cflags', 'cxxflags', and 'common' keys
         """
         flags = {
-            'common': [],  # Common flags for both C and C++
-            'cflags': [],  # C-specific flags
-            'cxxflags': []  # C++-specific flags
+            "common": [],  # Common flags for both C and C++
+            "cflags": [],  # C-specific flags
+            "cxxflags": [],  # C++-specific flags
         }
 
         # Get flags from config (type-safe field access)
@@ -93,15 +95,15 @@ class FlagBuilder:
 
         # Common flags (CCFLAGS in PlatformIO)
         if config_flags.common:
-            flags['common'] = config_flags.common.copy()
+            flags["common"] = config_flags.common.copy()
 
         # C-specific flags (CFLAGS in PlatformIO)
         if config_flags.c:
-            flags['cflags'] = config_flags.c.copy()
+            flags["cflags"] = config_flags.c.copy()
 
         # C++-specific flags (CXXFLAGS in PlatformIO)
         if config_flags.cxx:
-            flags['cxxflags'] = config_flags.cxx.copy()
+            flags["cxxflags"] = config_flags.cxx.copy()
 
         # Apply profile-based flags to common (replaces existing optimization and LTO flags)
         self._apply_profile_flags(flags)
@@ -110,9 +112,9 @@ class FlagBuilder:
         defines = self.config.defines
         for define in defines:
             if isinstance(define, str):
-                flags['common'].append(f'-D{define}')
+                flags["common"].append(f"-D{define}")
             elif isinstance(define, list) and len(define) == 2:
-                flags['common'].append(f'-D{define[0]}={define[1]}')
+                flags["common"].append(f"-D{define[0]}={define[1]}")
 
         # Add Arduino-specific defines
         self._add_arduino_defines(flags)
@@ -138,7 +140,7 @@ class FlagBuilder:
 
         # Add profile-specific flags from JSON config (e.g., -Os/-O2, LTO flags)
         json_compile_flags, _ = get_profile_flags_from_config(profile, self.config)
-        flags['common'].extend(json_compile_flags)
+        flags["common"].extend(json_compile_flags)
 
     def _add_arduino_defines(self, flags: Dict[str, List[str]]) -> None:
         """Add Arduino-specific defines to flags.
@@ -157,41 +159,45 @@ class FlagBuilder:
 
         # Common Arduino defines
         arduino_defines = [
-            f'-DF_CPU={f_cpu}',
+            f"-DF_CPU={f_cpu}",
             f'-DARDUINO_BOARD="{board}"',
             f'-DARDUINO_VARIANT="{self.variant}"',
         ]
 
         # Only add ARDUINO version if not already defined in platform config
-        if not any(flag.startswith('-DARDUINO=') for flag in flags['common']):
-            arduino_defines.insert(1, '-DARDUINO=10812')  # Arduino version
+        if not any(flag.startswith("-DARDUINO=") for flag in flags["common"]):
+            arduino_defines.insert(1, "-DARDUINO=10812")  # Arduino version
 
-        flags['common'].extend(arduino_defines)
+        flags["common"].extend(arduino_defines)
 
         if is_stm32:
             # STM32-specific defines
-            flags['common'].extend([
-                f'-DARDUINO_{board}',
-                '-DARDUINO_ARCH_STM32',
-            ])
+            flags["common"].extend(
+                [
+                    f"-DARDUINO_{board}",
+                    "-DARDUINO_ARCH_STM32",
+                ]
+            )
             # Add product line define (e.g., STM32F103xB, STM32F446xx)
             product_line = build_config.get("product_line", "")
             if product_line:
-                flags['common'].append(f'-D{product_line}')
+                flags["common"].append(f"-D{product_line}")
             # Add VARIANT_H pointing to correct variant header
             if self.variant:
                 # Variant header path relative to variants directory
-                flags['common'].append(f'-DVARIANT_H="{self.variant}/variant.h"')
+                flags["common"].append(f'-DVARIANT_H="{self.variant}/variant.h"')
         elif is_esp32:
             # ESP32-specific defines
-            flags['common'].extend([
-                # '-DESP32',  # REMOVED: Redundant with ESP32 framework headers (causes "ESP32 redefined" error)
-                f'-DARDUINO_{board}',
-                '-DARDUINO_ARCH_ESP32',
-            ])
+            flags["common"].extend(
+                [
+                    # '-DESP32',  # REMOVED: Redundant with ESP32 framework headers (causes "ESP32 redefined" error)
+                    f"-DARDUINO_{board}",
+                    "-DARDUINO_ARCH_ESP32",
+                ]
+            )
         else:
             # Generic Arduino defines
-            flags['common'].append(f'-DARDUINO_{board}')
+            flags["common"].append(f"-DARDUINO_{board}")
 
     def _add_board_extra_flags(self, flags: Dict[str, List[str]]) -> None:
         """Add board-specific extra flags.
@@ -212,8 +218,8 @@ class FlagBuilder:
                 flag_list = extra_flags
 
             for flag in flag_list:
-                if flag.startswith('-D'):
-                    flags['common'].append(flag)
+                if flag.startswith("-D"):
+                    flags["common"].append(flag)
 
     def _add_user_flags(self, flags: Dict[str, List[str]]) -> None:
         """Add user build flags from platformio.ini.
@@ -224,9 +230,9 @@ class FlagBuilder:
             flags: Flags dictionary to update
         """
         for flag in self.user_build_flags:
-            if flag.startswith('-D'):
+            if flag.startswith("-D"):
                 # Add defines to common flags
-                flags['common'].append(flag)
+                flags["common"].append(flag)
             # Could extend to handle other flag types if needed
 
     def get_base_flags_for_library(self) -> List[str]:
@@ -236,6 +242,6 @@ class FlagBuilder:
             List of compiler flags suitable for library compilation
         """
         flags = self.build_flags()
-        base_flags = flags['common'].copy()
-        base_flags.extend(flags['cxxflags'])
+        base_flags = flags["common"].copy()
+        base_flags.extend(flags["cxxflags"])
         return base_flags

@@ -1,7 +1,5 @@
 """Tests for build state tracking and cache invalidation."""
 
-
-
 from fbuild.build.build_state import BuildState, BuildStateTracker
 
 

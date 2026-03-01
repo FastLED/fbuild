@@ -40,12 +40,7 @@ class LibraryDependencyProcessor:
         object_files = result.object_files
     """
 
-    def __init__(
-        self,
-        build_dir: Path,
-        mode: str = "release",
-        verbose: bool = False
-    ):
+    def __init__(self, build_dir: Path, mode: str = "release", verbose: bool = False):
         """
         Initialize library dependency processor.
 
@@ -59,13 +54,7 @@ class LibraryDependencyProcessor:
         self.verbose = verbose
         self.library_manager: Optional[LibraryManager] = None
 
-    def process_dependencies(
-        self,
-        lib_deps: List[str],
-        toolchain: ToolchainAVR,
-        board_config: BoardConfig,
-        core_path: Path
-    ) -> 'LibraryProcessingResult':
+    def process_dependencies(self, lib_deps: List[str], toolchain: ToolchainAVR, board_config: BoardConfig, core_path: Path) -> "LibraryProcessingResult":
         """
         Process all library dependencies.
 
@@ -86,12 +75,7 @@ class LibraryDependencyProcessor:
         if not lib_deps:
             if self.verbose:
                 print("      No library dependencies")
-            return LibraryProcessingResult(
-                libraries=[],
-                include_paths=[],
-                object_files=[],
-                archive_files=[]
-            )
+            return LibraryProcessingResult(libraries=[], include_paths=[], object_files=[], archive_files=[])
 
         if self.verbose:
             print(f"      Found {len(lib_deps)} library dependencies")
@@ -109,13 +93,13 @@ class LibraryDependencyProcessor:
         # Ensure all libraries are downloaded and compiled
         libraries = self.library_manager.ensure_libraries(
             lib_deps=lib_deps,
-            compiler_path=tools['avr-gcc'],
+            compiler_path=tools["avr-gcc"],
             mcu=board_config.mcu,
             f_cpu=board_config.f_cpu,
             defines=lib_defines,
             include_paths=lib_includes,
             extra_flags=[],
-            show_progress=self.verbose
+            show_progress=self.verbose,
         )
 
         # Get library artifacts
@@ -131,12 +115,7 @@ class LibraryDependencyProcessor:
         # Extract library directory paths from Library objects
         library_paths = [lib.lib_dir for lib in libraries]
 
-        return LibraryProcessingResult(
-            libraries=library_paths,
-            include_paths=lib_include_paths,
-            object_files=lib_objects,
-            archive_files=lib_archives
-        )
+        return LibraryProcessingResult(libraries=library_paths, include_paths=lib_include_paths, object_files=lib_objects, archive_files=lib_archives)
 
     def _prepare_defines(self, board_config: BoardConfig) -> List[str]:
         """
@@ -170,13 +149,7 @@ class LibraryProcessingResult:
     Contains all information needed by the build system about processed libraries.
     """
 
-    def __init__(
-        self,
-        libraries: List[Path],
-        include_paths: List[Path],
-        object_files: List[Path],
-        archive_files: Optional[List[Path]] = None
-    ):
+    def __init__(self, libraries: List[Path], include_paths: List[Path], object_files: List[Path], archive_files: Optional[List[Path]] = None):
         """
         Initialize library processing result.
 

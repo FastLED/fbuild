@@ -14,15 +14,15 @@ Tests cover:
 
 import inspect
 from pathlib import Path
+
 import pytest
 
-from fbuild.build.orchestrator import IBuildOrchestrator, BuildResult
+from fbuild.build.orchestrator import BuildResult, IBuildOrchestrator
 from fbuild.build.orchestrator_avr import BuildOrchestratorAVR
 from fbuild.build.orchestrator_esp32 import OrchestratorESP32
-from fbuild.build.orchestrator_teensy import OrchestratorTeensy
 from fbuild.build.orchestrator_rp2040 import OrchestratorRP2040
 from fbuild.build.orchestrator_stm32 import OrchestratorSTM32
-
+from fbuild.build.orchestrator_teensy import OrchestratorTeensy
 
 # List of all orchestrator classes to test
 ALL_ORCHESTRATORS = [
@@ -64,9 +64,7 @@ class TestOrchestratorInterface:
         # Optional parameters with defaults
         assert "env_name" in params, f"{orchestrator_class.__name__}.build() missing 'env_name' parameter"
         env_name_param = params["env_name"]
-        assert env_name_param.default is not inspect.Parameter.empty or env_name_param.default is None, (
-            f"{orchestrator_class.__name__}.build() env_name should have default value"
-        )
+        assert env_name_param.default is not inspect.Parameter.empty or env_name_param.default is None, f"{orchestrator_class.__name__}.build() env_name should have default value"
 
         assert "clean" in params, f"{orchestrator_class.__name__}.build() missing 'clean' parameter"
         clean_param = params["clean"]
@@ -79,24 +77,16 @@ class TestOrchestratorInterface:
         # Critical: jobs parameter for parallel compilation
         assert "jobs" in params, f"{orchestrator_class.__name__}.build() missing 'jobs' parameter"
         jobs_param = params["jobs"]
-        assert jobs_param.default is None or jobs_param.default is inspect.Parameter.empty, (
-            f"{orchestrator_class.__name__}.build() jobs default should be None, got {jobs_param.default}"
-        )
+        assert jobs_param.default is None or jobs_param.default is inspect.Parameter.empty, f"{orchestrator_class.__name__}.build() jobs default should be None, got {jobs_param.default}"
 
         # Verify return type is BuildResult
-        assert sig.return_annotation in [BuildResult, "BuildResult"], (
-            f"{orchestrator_class.__name__}.build() should return BuildResult, got {sig.return_annotation}"
-        )
+        assert sig.return_annotation in [BuildResult, "BuildResult"], f"{orchestrator_class.__name__}.build() should return BuildResult, got {sig.return_annotation}"
 
     @pytest.mark.parametrize("orchestrator_class", ALL_ORCHESTRATORS, ids=lambda cls: cls.__name__)
     def test_internal_build_methods_have_jobs_parameter(self, orchestrator_class):
         """Verify internal _build_XXX() methods accept jobs parameter."""
         # Find all internal build methods (_build_*)
-        internal_build_methods = [
-            name
-            for name in dir(orchestrator_class)
-            if name.startswith("_build_") and callable(getattr(orchestrator_class, name))
-        ]
+        internal_build_methods = [name for name in dir(orchestrator_class) if name.startswith("_build_") and callable(getattr(orchestrator_class, name))]
 
         # Should have at least one internal build method
         if internal_build_methods:
@@ -106,16 +96,12 @@ class TestOrchestratorInterface:
                 params = sig.parameters
 
                 # Check if jobs parameter exists
-                assert "jobs" in params, (
-                    f"{orchestrator_class.__name__}.{method_name}() missing 'jobs' parameter. "
-                    f"Internal build methods should accept jobs parameter for parallel compilation."
-                )
+                assert "jobs" in params, f"{orchestrator_class.__name__}.{method_name}() missing 'jobs' parameter. Internal build methods should accept jobs parameter for parallel compilation."
 
                 # Verify jobs parameter has correct default (None)
                 jobs_param = params["jobs"]
                 assert jobs_param.default is None or jobs_param.default is inspect.Parameter.empty, (
-                    f"{orchestrator_class.__name__}.{method_name}() jobs default should be None, "
-                    f"got {jobs_param.default}"
+                    f"{orchestrator_class.__name__}.{method_name}() jobs default should be None, got {jobs_param.default}"
                 )
 
     @pytest.mark.parametrize("orchestrator_class", ALL_ORCHESTRATORS, ids=lambda cls: cls.__name__)
@@ -124,12 +110,7 @@ class TestOrchestratorInterface:
         import textwrap
 
         # Get all methods in the orchestrator
-        all_methods = [
-            (name, getattr(orchestrator_class, name))
-            for name in dir(orchestrator_class)
-            if callable(getattr(orchestrator_class, name))
-            and (name == "build" or name.startswith("_build_"))
-        ]
+        all_methods = [(name, getattr(orchestrator_class, name)) for name in dir(orchestrator_class) if callable(getattr(orchestrator_class, name)) and (name == "build" or name.startswith("_build_"))]
 
         # Check if any of the build methods use managed_compilation_queue
         uses_context_manager = False
@@ -146,9 +127,7 @@ class TestOrchestratorInterface:
 
                     # Verify it's used as a context manager (with statement)
                     assert "with managed_compilation_queue" in source, (
-                        f"{orchestrator_class.__name__}.{method_name}() should use "
-                        f"'with managed_compilation_queue' pattern. "
-                        f"Found managed_compilation_queue but not used as context manager."
+                        f"{orchestrator_class.__name__}.{method_name}() should use 'with managed_compilation_queue' pattern. Found managed_compilation_queue but not used as context manager."
                     )
 
                 # Check for manual cleanup code
@@ -167,15 +146,11 @@ class TestOrchestratorInterface:
 
         # At least one method should use managed_compilation_queue
         assert uses_context_manager, (
-            f"{orchestrator_class.__name__} should use managed_compilation_queue context manager "
-            f"in build() or _build_XXX() methods. This ensures proper cleanup of temporary compilation queues."
+            f"{orchestrator_class.__name__} should use managed_compilation_queue context manager in build() or _build_XXX() methods. This ensures proper cleanup of temporary compilation queues."
         )
 
         # No method should have manual cleanup
-        assert not has_manual_cleanup, (
-            f"{orchestrator_class.__name__} contains manual cleanup code: {has_manual_cleanup}. "
-            f"Use managed_compilation_queue context manager instead for automatic cleanup."
-        )
+        assert not has_manual_cleanup, f"{orchestrator_class.__name__} contains manual cleanup code: {has_manual_cleanup}. Use managed_compilation_queue context manager instead for automatic cleanup."
 
     @pytest.mark.parametrize("orchestrator_class", ALL_ORCHESTRATORS, ids=lambda cls: cls.__name__)
     def test_runtime_parameter_acceptance(self, orchestrator_class):
@@ -209,10 +184,7 @@ class TestOrchestratorInterface:
             # If we get here, binding succeeded - jobs parameter is accepted
             assert "jobs" in bound_args.arguments, "jobs parameter not bound correctly"
         except TypeError as e:
-            pytest.fail(
-                f"{orchestrator_class.__name__}.build() failed to bind jobs parameter: {e}. "
-                f"Signature: {sig}"
-            )
+            pytest.fail(f"{orchestrator_class.__name__}.build() failed to bind jobs parameter: {e}. Signature: {sig}")
 
 
 class TestOrchestratorInheritance:
@@ -221,32 +193,22 @@ class TestOrchestratorInheritance:
     @pytest.mark.parametrize("orchestrator_class", ALL_ORCHESTRATORS, ids=lambda cls: cls.__name__)
     def test_orchestrator_inherits_interface(self, orchestrator_class):
         """Verify orchestrator inherits from IBuildOrchestrator."""
-        assert issubclass(orchestrator_class, IBuildOrchestrator), (
-            f"{orchestrator_class.__name__} must inherit from IBuildOrchestrator"
-        )
+        assert issubclass(orchestrator_class, IBuildOrchestrator), f"{orchestrator_class.__name__} must inherit from IBuildOrchestrator"
 
     @pytest.mark.parametrize("orchestrator_class", ALL_ORCHESTRATORS, ids=lambda cls: cls.__name__)
     def test_orchestrator_implements_abstract_methods(self, orchestrator_class):
         """Verify orchestrator implements all abstract methods from interface."""
         # Get all abstract methods from the interface
-        abstract_methods = {
-            name
-            for name, method in inspect.getmembers(IBuildOrchestrator, predicate=inspect.isfunction)
-            if getattr(method, "__isabstractmethod__", False)
-        }
+        abstract_methods = {name for name, method in inspect.getmembers(IBuildOrchestrator, predicate=inspect.isfunction) if getattr(method, "__isabstractmethod__", False)}
 
         # Verify the orchestrator implements all of them
         for method_name in abstract_methods:
-            assert hasattr(orchestrator_class, method_name), (
-                f"{orchestrator_class.__name__} missing implementation of abstract method {method_name}"
-            )
+            assert hasattr(orchestrator_class, method_name), f"{orchestrator_class.__name__} missing implementation of abstract method {method_name}"
             method = getattr(orchestrator_class, method_name)
             assert callable(method), f"{orchestrator_class.__name__}.{method_name} is not callable"
 
             # Verify it's not still abstract
-            assert not getattr(method, "__isabstractmethod__", False), (
-                f"{orchestrator_class.__name__}.{method_name} is still abstract (not implemented)"
-            )
+            assert not getattr(method, "__isabstractmethod__", False), f"{orchestrator_class.__name__}.{method_name} is still abstract (not implemented)"
 
 
 class TestOrchestratorConsistency:
@@ -266,10 +228,7 @@ class TestOrchestratorConsistency:
         # All should have the same order
         reference_order = param_orders[ALL_ORCHESTRATORS[0].__name__]
         for orchestrator_name, param_names in param_orders.items():
-            assert param_names == reference_order, (
-                f"{orchestrator_name}.build() has inconsistent parameter order. "
-                f"Expected: {reference_order}, Got: {param_names}"
-            )
+            assert param_names == reference_order, f"{orchestrator_name}.build() has inconsistent parameter order. Expected: {reference_order}, Got: {param_names}"
 
     def test_all_orchestrators_have_consistent_defaults(self):
         """Verify all orchestrators have the same default values."""
@@ -291,10 +250,7 @@ class TestOrchestratorConsistency:
                 assert param is not None, f"{orchestrator_class.__name__}.build() missing parameter {param_name}"
 
                 actual_default = param.default
-                assert actual_default == expected_default, (
-                    f"{orchestrator_class.__name__}.build() parameter '{param_name}' has wrong default. "
-                    f"Expected: {expected_default}, Got: {actual_default}"
-                )
+                assert actual_default == expected_default, f"{orchestrator_class.__name__}.build() parameter '{param_name}' has wrong default. Expected: {expected_default}, Got: {actual_default}"
 
 
 class TestOrchestratorDocumentation:

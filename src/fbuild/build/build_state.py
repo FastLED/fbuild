@@ -27,6 +27,7 @@ from fbuild import __version__ as FBUILD_VERSION  # noqa: E402
 
 class BuildStateError(Exception):
     """Raised when build state operations fail."""
+
     pass
 
 
@@ -114,6 +115,7 @@ class BuildState:
             path: Path to build_state.json file
         """
         import logging
+
         path.parent.mkdir(parents=True, exist_ok=True)
         logging.debug(f"[BUILD_STATE] Saving build state to {path}")
         try:
@@ -122,6 +124,7 @@ class BuildState:
             logging.debug(f"[BUILD_STATE] Build state saved successfully (fbuild_version={self.fbuild_version})")
         except KeyboardInterrupt:
             import _thread
+
             _thread.interrupt_main()
             raise
         except Exception as e:
@@ -139,6 +142,7 @@ class BuildState:
             BuildState instance or None if file doesn't exist
         """
         import logging
+
         if not path.exists():
             logging.debug(f"[BUILD_STATE] State file does not exist: {path}")
             return None
@@ -172,9 +176,7 @@ class BuildState:
 
         # Check fbuild version changes (first - most important for cache invalidation)
         if self.fbuild_version != other.fbuild_version:
-            reasons.append(
-                f"fbuild version changed: {other.fbuild_version} -> {self.fbuild_version}"
-            )
+            reasons.append(f"fbuild version changed: {other.fbuild_version} -> {self.fbuild_version}")
 
         # Check platformio.ini changes
         if self.platformio_ini_hash != other.platformio_ini_hash:
@@ -194,21 +196,15 @@ class BuildState:
 
         # Check toolchain version changes
         if self.toolchain_version != other.toolchain_version:
-            reasons.append(
-                f"Toolchain version changed: {other.toolchain_version} -> {self.toolchain_version}"
-            )
+            reasons.append(f"Toolchain version changed: {other.toolchain_version} -> {self.toolchain_version}")
 
         # Check framework version changes
         if self.framework_version != other.framework_version:
-            reasons.append(
-                f"Framework version changed: {other.framework_version} -> {self.framework_version}"
-            )
+            reasons.append(f"Framework version changed: {other.framework_version} -> {self.framework_version}")
 
         # Check platform version changes
         if self.platform_version != other.platform_version:
-            reasons.append(
-                f"Platform version changed: {other.platform_version} -> {self.platform_version}"
-            )
+            reasons.append(f"Platform version changed: {other.platform_version} -> {self.platform_version}")
 
         # Check build flags changes
         if set(self.build_flags) != set(other.build_flags):

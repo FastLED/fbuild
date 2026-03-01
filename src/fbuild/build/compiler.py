@@ -5,14 +5,15 @@ to ensure consistent behavior across different platforms (AVR, ESP32, etc.).
 """
 
 from abc import ABC, abstractmethod
-from pathlib import Path
-from typing import List, Dict, Optional
 from dataclasses import dataclass
+from pathlib import Path
+from typing import Dict, List, Optional
 
 
 @dataclass
 class CompileResult:
     """Result of a compilation operation."""
+
     success: bool
     object_file: Optional[Path]
     stdout: str
@@ -22,6 +23,7 @@ class CompileResult:
 
 class CompilerError(Exception):
     """Base exception for compilation errors."""
+
     pass
 
 
@@ -35,11 +37,7 @@ class ICompiler(ABC):
     """
 
     @abstractmethod
-    def compile_source(
-        self,
-        source_path: Path,
-        output_path: Optional[Path] = None
-    ) -> Path:
+    def compile_source(self, source_path: Path, output_path: Optional[Path] = None) -> Path:
         """Compile a single source file to object file.
 
         Args:
@@ -86,12 +84,7 @@ class ICompiler(ABC):
         pass
 
     @abstractmethod
-    def compile(
-        self,
-        source: Path,
-        output: Path,
-        extra_flags: Optional[List[str]] = None
-    ) -> CompileResult:
+    def compile(self, source: Path, output: Path, extra_flags: Optional[List[str]] = None) -> CompileResult:
         """Compile source file (auto-detects C vs C++).
 
         Args:
@@ -118,13 +111,7 @@ class ILinker(ABC):
     """
 
     @abstractmethod
-    def link(
-        self,
-        sketch_objects: List[Path],
-        core_archive: Path,
-        output_elf: Optional[Path] = None,
-        library_archives: Optional[List[Path]] = None
-    ) -> Path:
+    def link(self, sketch_objects: List[Path], core_archive: Path, output_elf: Optional[Path] = None, library_archives: Optional[List[Path]] = None) -> Path:
         """Link object files into firmware ELF.
 
         Args:
@@ -162,4 +149,5 @@ class ILinker(ABC):
 
 class LinkerError(Exception):
     """Base exception for linking errors."""
+
     pass

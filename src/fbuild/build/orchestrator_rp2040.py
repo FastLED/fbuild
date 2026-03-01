@@ -9,27 +9,27 @@ import _thread
 import logging
 import struct
 import time
+from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, List, Optional
-from dataclasses import dataclass
 
 if TYPE_CHECKING:
     from .build_context import BuildParams
 
+from ..cli_utils import BannerFormatter
+from ..config.board_config import BoardConfig
+from ..output import DefaultProgressCallback
 from ..packages import Cache
+from ..packages.library_manager import LibraryError, LibraryManager
 from ..packages.platform_rp2040 import PlatformRP2040
 from ..packages.toolchain_rp2040 import ToolchainRP2040
-from ..packages.library_manager import LibraryManager, LibraryError
-from ..config.board_config import BoardConfig
-from ..cli_utils import BannerFormatter
-from ..output import DefaultProgressCallback
+from .build_info_generator import BuildInfoGenerator
+from .build_state import BuildStateTracker
+from .build_utils import safe_rmtree
 from .configurable_compiler import ConfigurableCompiler
 from .configurable_linker import ConfigurableLinker
 from .linker import SizeInfo
-from .orchestrator import IBuildOrchestrator, BuildResult
-from .build_utils import safe_rmtree
-from .build_state import BuildStateTracker
-from .build_info_generator import BuildInfoGenerator
+from .orchestrator import BuildResult, IBuildOrchestrator
 
 # Module-level logger
 logger = logging.getLogger(__name__)
@@ -59,7 +59,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
     # UF2 magic numbers and constants
     UF2_MAGIC_START0 = 0x0A324655  # "UF2\n"
     UF2_MAGIC_START1 = 0x9E5D5157  # Randomly selected
-    UF2_MAGIC_END = 0x0AB16F30     # Final magic
+    UF2_MAGIC_END = 0x0AB16F30  # Final magic
     UF2_FLAG_FAMILY_ID_PRESENT = 0x00002000
     RP2040_FAMILY_ID = 0xE48BFF56
     RP2350_FAMILY_ID = 0xE48BFF59  # Different family ID for RP2350
@@ -96,14 +96,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
         # Parse platformio.ini to get environment configuration
         ini_path = project_dir / "platformio.ini"
         if not ini_path.exists():
-            return BuildResult(
-                success=False,
-                hex_path=None,
-                elf_path=None,
-                size_info=None,
-                build_time=0.0,
-                message=f"platformio.ini not found in {project_dir}"
-            )
+            return BuildResult(success=False, hex_path=None, elf_path=None, size_info=None, build_time=0.0, message=f"platformio.ini not found in {project_dir}")
 
         try:
             config = PlatformIOConfig(ini_path)
@@ -114,9 +107,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
             lib_deps = config.get_lib_deps(env_name)
 
             # Call internal build method
-            rp2040_result = self._build_rp2040(
-                board_id, env_config, build_flags, lib_deps, request
-            )
+            rp2040_result = self._build_rp2040(board_id, env_config, build_flags, lib_deps, request)
 
             # Convert BuildResultRP2040 to BuildResult
             # Note: hex_path maps to uf2_path for RP2040/RP2350
@@ -126,21 +117,14 @@ class OrchestratorRP2040(IBuildOrchestrator):
                 elf_path=rp2040_result.firmware_elf,
                 size_info=rp2040_result.size_info,
                 build_time=rp2040_result.build_time,
-                message=rp2040_result.message
+                message=rp2040_result.message,
             )
 
         except KeyboardInterrupt:
             _thread.interrupt_main()
             raise
         except Exception as e:
-            return BuildResult(
-                success=False,
-                hex_path=None,
-                elf_path=None,
-                size_info=None,
-                build_time=0.0,
-                message=f"Failed to parse configuration: {e}"
-            )
+            return BuildResult(success=False, hex_path=None, elf_path=None, size_info=None, build_time=0.0, message=f"Failed to parse configuration: {e}")
 
     def _build_rp2040(
         self,
@@ -184,6 +168,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
 
             # Print build profile banner
             from .build_profiles import print_profile_banner
+
             print_profile_banner(request.profile)
 
             # Initialize platform
@@ -192,11 +177,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
             else:
                 logger.info("Initializing RP2040/RP2350 platform...")
 
-            platform = PlatformRP2040(
-                self.cache,
-                board_config.mcu,
-                show_progress=True
-            )
+            platform = PlatformRP2040(self.cache, board_config.mcu, show_progress=True)
             platform.ensure_package()
 
             if verbose:
@@ -216,7 +197,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
                 platformio_ini_path=project_dir / "platformio.ini",
                 platform="raspberrypi",
                 board=board_id,
-                framework=env_config.get('framework', 'arduino'),
+                framework=env_config.get("framework", "arduino"),
                 toolchain_version=platform.toolchain.version,
                 framework_version=platform.framework.version,
                 platform_version=f"rp2040-{platform.framework.version}",
@@ -241,6 +222,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
 
             # Initialize compilation executor
             from .compilation_executor import CompilationExecutor
+
             compilation_executor = CompilationExecutor(
                 build_dir=build_dir,
                 show_progress=verbose,
@@ -252,12 +234,10 @@ class OrchestratorRP2040(IBuildOrchestrator):
             # Load board JSON and platform config ONCE (not redundantly in compiler/linker)
             board_json = platform.get_board_json(board_id)
             from .. import platform_configs
+
             platform_config = platform_configs.load_config(board_config.mcu)
             if platform_config is None:
-                return self._error_result(
-                    start_time,
-                    f"No platform configuration found for {board_config.mcu}. Available: {platform_configs.list_available_configs()}"
-                )
+                return self._error_result(start_time, f"No platform configuration found for {board_config.mcu}. Available: {platform_configs.list_available_configs()}")
 
             # Extract variant and core from board config
             variant = board_json.get("build", {}).get("variant", "")
@@ -265,6 +245,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
 
             # Create full BuildContext with all configuration loaded once
             from .build_context import BuildContext
+
             context = BuildContext.from_request(
                 request=request,
                 platform=platform,
@@ -307,13 +288,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
                 total_files = len(core_sources)
 
                 # Create progress bar
-                with tqdm(
-                    total=total_files,
-                    desc='Compiling Arduino core',
-                    unit='file',
-                    ncols=80,
-                    leave=False
-                ) as pbar:
+                with tqdm(total=total_files, desc="Compiling Arduino core", unit="file", ncols=80, leave=False) as pbar:
                     core_obj_files = compiler.compile_core(progress_bar=pbar, progress_callback=progress_callback)
 
                 # Print completion message
@@ -325,9 +300,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
                 logger.info(f"      Compiled {len(core_obj_files)} core source files")
 
             # Handle library dependencies (if any)
-            library_archives, library_include_paths = self._process_libraries(
-                env_config, build_dir, compiler, platform.toolchain, board_config, verbose, project_dir=project_dir
-            )
+            library_archives, library_include_paths = self._process_libraries(env_config, build_dir, compiler, platform.toolchain, board_config, verbose, project_dir=project_dir)
 
             # Add library include paths to compiler
             if library_include_paths:
@@ -335,6 +308,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
 
             # Get src_dir override from platformio.ini
             from ..config import PlatformIOConfig
+
             config_for_src_dir = PlatformIOConfig(project_dir / "platformio.ini")
             src_dir_override = config_for_src_dir.get_src_dir()
 
@@ -342,10 +316,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
             sketch_obj_files = self._compile_sketch(project_dir, compiler, start_time, verbose, src_dir_override)
             if sketch_obj_files is None:
                 search_dir = project_dir / src_dir_override if src_dir_override else project_dir
-                return self._error_result(
-                    start_time,
-                    f"No .ino sketch file found in {search_dir}"
-                )
+                return self._error_result(start_time, f"No .ino sketch file found in {search_dir}")
 
             # Initialize linker
             if verbose:
@@ -375,9 +346,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
             build_time = time.time() - start_time
 
             if verbose:
-                self._print_success(
-                    build_time, firmware_elf, firmware_uf2, size_info
-                )
+                self._print_success(build_time, firmware_elf, firmware_uf2, size_info)
 
             # Save build state for future cache validation
             if verbose:
@@ -427,25 +396,21 @@ class OrchestratorRP2040(IBuildOrchestrator):
                 firmware_elf=firmware_elf,
                 size_info=size_info,
                 build_time=build_time,
-                message="Build successful (native RP2040/RP2350 build)"
+                message="Build successful (native RP2040/RP2350 build)",
             )
 
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
             build_time = time.time() - start_time
             import traceback
+
             error_trace = traceback.format_exc()
             return BuildResultRP2040(
-                success=False,
-                firmware_uf2=None,
-                firmware_bin=None,
-                firmware_elf=None,
-                size_info=None,
-                build_time=build_time,
-                message=f"RP2040/RP2350 native build failed: {e}\n\n{error_trace}"
+                success=False, firmware_uf2=None, firmware_bin=None, firmware_elf=None, size_info=None, build_time=build_time, message=f"RP2040/RP2350 native build failed: {e}\n\n{error_trace}"
             )
 
     def _generate_uf2(self, bin_path: Path, mcu: str, verbose: bool = False) -> Path:
@@ -473,7 +438,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
         family_id = self.RP2350_FAMILY_ID if mcu.lower() == "rp2350" else self.RP2040_FAMILY_ID
 
         # Read binary data
-        with open(bin_path, 'rb') as f:
+        with open(bin_path, "rb") as f:
             bin_data = f.read()
 
         # UF2 block size is 256 bytes of data per block
@@ -483,31 +448,31 @@ class OrchestratorRP2040(IBuildOrchestrator):
         # RP2040/RP2350 flash starts at 0x10000000
         base_address = 0x10000000
 
-        with open(uf2_path, 'wb') as f:
+        with open(uf2_path, "wb") as f:
             for block_num in range(num_blocks):
                 # Get data for this block (pad if needed)
                 offset = block_num * block_size
-                block_data = bin_data[offset:offset + block_size]
+                block_data = bin_data[offset : offset + block_size]
                 if len(block_data) < block_size:
-                    block_data += b'\x00' * (block_size - len(block_data))
+                    block_data += b"\x00" * (block_size - len(block_data))
 
                 # Calculate target address
                 target_addr = base_address + offset
 
                 # Build UF2 block (512 bytes total)
-                uf2_block = struct.pack('<I', self.UF2_MAGIC_START0)      # Magic start 0
-                uf2_block += struct.pack('<I', self.UF2_MAGIC_START1)     # Magic start 1
-                uf2_block += struct.pack('<I', self.UF2_FLAG_FAMILY_ID_PRESENT)  # Flags
-                uf2_block += struct.pack('<I', target_addr)               # Target address
-                uf2_block += struct.pack('<I', block_size)                # Payload size
-                uf2_block += struct.pack('<I', block_num)                 # Block number
-                uf2_block += struct.pack('<I', num_blocks)                # Total blocks
-                uf2_block += struct.pack('<I', family_id)                 # Family ID
-                uf2_block += block_data                                   # Data (256 bytes)
-                uf2_block += struct.pack('<I', self.UF2_MAGIC_END)        # Magic end
+                uf2_block = struct.pack("<I", self.UF2_MAGIC_START0)  # Magic start 0
+                uf2_block += struct.pack("<I", self.UF2_MAGIC_START1)  # Magic start 1
+                uf2_block += struct.pack("<I", self.UF2_FLAG_FAMILY_ID_PRESENT)  # Flags
+                uf2_block += struct.pack("<I", target_addr)  # Target address
+                uf2_block += struct.pack("<I", block_size)  # Payload size
+                uf2_block += struct.pack("<I", block_num)  # Block number
+                uf2_block += struct.pack("<I", num_blocks)  # Total blocks
+                uf2_block += struct.pack("<I", family_id)  # Family ID
+                uf2_block += block_data  # Data (256 bytes)
+                uf2_block += struct.pack("<I", self.UF2_MAGIC_END)  # Magic end
 
                 # Pad to 512 bytes (476 bytes already written, need 36 more)
-                uf2_block += b'\x00' * (512 - len(uf2_block))
+                uf2_block += b"\x00" * (512 - len(uf2_block))
 
                 f.write(uf2_block)
 
@@ -517,14 +482,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
         return uf2_path
 
     def _process_libraries(
-        self,
-        env_config: dict,
-        build_dir: Path,
-        compiler: ConfigurableCompiler,
-        toolchain: ToolchainRP2040,
-        board_config: BoardConfig,
-        verbose: bool,
-        project_dir: Optional[Path] = None
+        self, env_config: dict, build_dir: Path, compiler: ConfigurableCompiler, toolchain: ToolchainRP2040, board_config: BoardConfig, verbose: bool, project_dir: Optional[Path] = None
     ) -> tuple[List[Path], List[Path]]:
         """
         Process and compile library dependencies.
@@ -541,7 +499,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
         Returns:
             Tuple of (library_archives, library_include_paths)
         """
-        lib_deps = env_config.get('lib_deps', '')
+        lib_deps = env_config.get("lib_deps", "")
         library_archives = []
         library_include_paths = []
 
@@ -553,7 +511,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
 
         # Parse lib_deps (can be string or list)
         if isinstance(lib_deps, str):
-            lib_specs = [dep.strip() for dep in lib_deps.split('\n') if dep.strip()]
+            lib_specs = [dep.strip() for dep in lib_deps.split("\n") if dep.strip()]
         else:
             lib_specs = lib_deps
 
@@ -586,14 +544,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
 
             # Ensure all libraries are downloaded and compiled
             libraries = library_manager.ensure_libraries(
-                lib_deps=lib_specs,
-                compiler_path=compiler_path,
-                mcu=board_config.mcu,
-                f_cpu=board_config.f_cpu,
-                defines=lib_defines,
-                include_paths=lib_includes,
-                extra_flags=[],
-                show_progress=verbose
+                lib_deps=lib_specs, compiler_path=compiler_path, mcu=board_config.mcu, f_cpu=board_config.f_cpu, defines=lib_defines, include_paths=lib_includes, extra_flags=[], show_progress=verbose
             )
 
             # Get library artifacts
@@ -611,14 +562,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
 
         return library_archives, library_include_paths
 
-    def _compile_sketch(
-        self,
-        project_dir: Path,
-        compiler: ConfigurableCompiler,
-        start_time: float,
-        verbose: bool,
-        src_dir_override: Optional[str] = None
-    ) -> Optional[List[Path]]:
+    def _compile_sketch(self, project_dir: Path, compiler: ConfigurableCompiler, start_time: float, verbose: bool, src_dir_override: Optional[str] = None) -> Optional[List[Path]]:
         """
         Find and compile sketch files.
 
@@ -664,23 +608,9 @@ class OrchestratorRP2040(IBuildOrchestrator):
 
     def _error_result(self, start_time: float, message: str) -> BuildResultRP2040:
         """Create error result."""
-        return BuildResultRP2040(
-            success=False,
-            firmware_uf2=None,
-            firmware_bin=None,
-            firmware_elf=None,
-            size_info=None,
-            build_time=time.time() - start_time,
-            message=message
-        )
+        return BuildResultRP2040(success=False, firmware_uf2=None, firmware_bin=None, firmware_elf=None, size_info=None, build_time=time.time() - start_time, message=message)
 
-    def _print_success(
-        self,
-        build_time: float,
-        firmware_elf: Path,
-        firmware_uf2: Path,
-        size_info: Optional[SizeInfo]
-    ) -> None:
+    def _print_success(self, build_time: float, firmware_elf: Path, firmware_uf2: Path, size_info: Optional[SizeInfo]) -> None:
         """
         Print build success message.
 
@@ -702,5 +632,6 @@ class OrchestratorRP2040(IBuildOrchestrator):
         if size_info:
             print()
             from .build_utils import SizeInfoPrinter
+
             SizeInfoPrinter.print_size_info(size_info)
             print()

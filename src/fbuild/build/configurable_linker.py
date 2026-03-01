@@ -14,12 +14,12 @@ import platform
 import subprocess
 import time
 from pathlib import Path
-from typing import List, Dict, Any, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
-from ..output import log_detail, format_size
+from ..output import format_size, log_detail
+from ..subprocess_utils import safe_run
 from .binary_generator import BinaryGenerator
 from .compiler import ILinker, LinkerError
-from ..subprocess_utils import safe_run
 from .psram_utils import get_psram_mode
 
 if TYPE_CHECKING:
@@ -28,6 +28,7 @@ if TYPE_CHECKING:
 
 class ConfigurableLinkerError(LinkerError):
     """Raised when configurable linking operations fail."""
+
     pass
 
 
@@ -90,9 +91,8 @@ class ConfigurableLinker(ILinker):
 
         # Load profile-specific flags from JSON config
         from .build_profiles import get_profile_flags_from_config
-        _, self._json_link_flags = get_profile_flags_from_config(
-            context.profile, context.platform_config
-        )
+
+        _, self._json_link_flags = get_profile_flags_from_config(context.profile, context.platform_config)
 
         # Pre-loaded configuration from context (no redundant loading!)
         self.board_config = context.board_config
@@ -117,16 +117,17 @@ class ConfigurableLinker(ILinker):
         scripts = []
 
         # Check if framework has a get_linker_script method (Teensy-style)
-        if hasattr(self.framework, 'get_linker_script'):
+        if hasattr(self.framework, "get_linker_script"):
             linker_script = self.framework.get_linker_script(self.board_id)  # type: ignore[attr-defined]
             if linker_script and linker_script.exists():
                 scripts.append(linker_script)
 
         # Otherwise use ESP32-style SDK directory approach
-        elif hasattr(self.framework, 'get_sdk_dir'):
+        elif hasattr(self.framework, "get_sdk_dir"):
             # Apply SDK fallback for MCUs not fully supported in the platform
             # (e.g., esp32c2 can use esp32c3 SDK)
             from ..packages.sdk_utils import SDKPathResolver
+
             sdk_dir = self.framework.get_sdk_dir()  # type: ignore[attr-defined]
             resolver = SDKPathResolver(sdk_dir, show_progress=False)
             resolved_mcu = resolver._resolve_mcu(self.mcu)
@@ -155,7 +156,7 @@ class ConfigurableLinker(ILinker):
                         scripts.append(alt_script_path)
 
         # Check for framework-provided linker script directory (ESP8266-style)
-        if not scripts and hasattr(self.framework, 'get_linker_script_dir'):
+        if not scripts and hasattr(self.framework, "get_linker_script_dir"):
             ld_dir = self.framework.get_linker_script_dir()  # type: ignore[attr-defined]
             config_scripts = self.config.linker_scripts
             for script_name in config_scripts:
@@ -164,9 +165,7 @@ class ConfigurableLinker(ILinker):
                     scripts.append(script_path)
 
         if not scripts:
-            raise ConfigurableLinkerError(
-                f"No linker scripts found for {self.mcu}"
-            )
+            raise ConfigurableLinkerError(f"No linker scripts found for {self.mcu}")
 
         self._linker_scripts_cache = scripts
         return scripts
@@ -181,7 +180,7 @@ class ConfigurableLinker(ILinker):
             return self._sdk_libs_cache
 
         # Only ESP32 frameworks have SDK libraries
-        if hasattr(self.framework, 'get_sdk_libs'):
+        if hasattr(self.framework, "get_sdk_libs"):
             # Get flash mode from board configuration
             flash_mode = self.board_config.get("build", {}).get("flash_mode", "qio")
             # Use get_psram_mode for correct handling of NO_PSRAM_BOARDS
@@ -212,17 +211,11 @@ class ConfigurableLinker(ILinker):
         # Add map file flag with forward slashes for GCC compatibility
         map_file = self.build_dir / "firmware.map"
         map_file_str = str(map_file).replace("\\", "/")
-        flags.append(f'-Wl,-Map={map_file_str}')
+        flags.append(f"-Wl,-Map={map_file_str}")
 
         return flags
 
-    def link(
-        self,
-        object_files: List[Path],
-        core_archive: Path,
-        output_elf: Optional[Path] = None,
-        library_archives: Optional[List[Path]] = None
-    ) -> Path:
+    def link(self, object_files: List[Path], core_archive: Path, output_elf: Optional[Path] = None, library_archives: Optional[List[Path]] = None) -> Path:
         """Link object files and libraries into firmware.elf.
 
         Args:
@@ -250,10 +243,7 @@ class ConfigurableLinker(ILinker):
         # Get linker tool (use g++ for C++ support)
         linker_path = self.toolchain.get_gxx_path()
         if linker_path is None or not linker_path.exists():
-            raise ConfigurableLinkerError(
-                f"Linker not found: {linker_path}. " +
-                "Ensure toolchain is installed."
-            )
+            raise ConfigurableLinkerError(f"Linker not found: {linker_path}. " + "Ensure toolchain is installed.")
 
         # Generate output path if not provided
         if output_elf is None:
@@ -274,7 +264,7 @@ class ConfigurableLinker(ILinker):
         cmd.extend(linker_flags)
 
         # Add linker script directory to library search path (ESP32-specific)
-        if hasattr(self.framework, 'get_sdk_dir'):
+        if hasattr(self.framework, "get_sdk_dir"):
             ld_dir = self.framework.get_sdk_dir() / self.mcu / "ld"  # type: ignore[attr-defined]
             # SDK directories stay absolute (outside build dir)
             cmd.append(f"-L{_path_to_string(ld_dir)}")
@@ -296,7 +286,7 @@ class ConfigurableLinker(ILinker):
                     # SDK scripts stay absolute (outside build dir)
                     cmd.append(f"-T{_path_to_string(script)}")
 
-        elif hasattr(self.framework, 'get_linker_script_dir'):
+        elif hasattr(self.framework, "get_linker_script_dir"):
             # ESP8266-style: linker script directory provided by framework
             ld_dir = self.framework.get_linker_script_dir()  # type: ignore[attr-defined]
             cmd.append(f"-L{_path_to_string(ld_dir)}")
@@ -326,12 +316,12 @@ class ConfigurableLinker(ILinker):
             cmd.append("-Wl,--no-whole-archive")
 
         # Add SDK library directory to search path
-        if hasattr(self.framework, 'get_sdk_dir'):
+        if hasattr(self.framework, "get_sdk_dir"):
             sdk_lib_dir = self.framework.get_sdk_dir() / self.mcu / "lib"  # type: ignore[attr-defined]
             if sdk_lib_dir.exists():
                 # SDK directories stay absolute (outside build dir)
                 cmd.append(f"-L{_path_to_string(sdk_lib_dir)}")
-        elif hasattr(self.framework, 'get_sdk_lib_dirs'):
+        elif hasattr(self.framework, "get_sdk_lib_dirs"):
             for sdk_lib_dir in self.framework.get_sdk_lib_dirs():  # type: ignore[attr-defined]
                 cmd.append(f"-L{_path_to_string(sdk_lib_dir)}")
 
@@ -424,13 +414,7 @@ class ConfigurableLinker(ILinker):
                             log_detail(f"DEBUG: File size: {test_file.stat().st_size} bytes")
                             # Try to access it with a simple command
                             try:
-                                test_result = safe_run(
-                                    ["cmd.exe", "/c", "dir", "obj\\Blink.ino.o"],
-                                    cwd=str(self.build_dir),
-                                    capture_output=True,
-                                    text=True,
-                                    timeout=5
-                                )
+                                test_result = safe_run(["cmd.exe", "/c", "dir", "obj\\Blink.ino.o"], cwd=str(self.build_dir), capture_output=True, text=True, timeout=5)
                                 if test_result.returncode == 0:
                                     log_detail("DEBUG: File accessible via subprocess dir command")
                                 else:
@@ -447,7 +431,7 @@ class ConfigurableLinker(ILinker):
                         capture_output=True,
                         text=True,
                         timeout=120,
-                        cwd=str(self.build_dir)  # Run from build directory (must be string)
+                        cwd=str(self.build_dir),  # Run from build directory (must be string)
                     )
                 except subprocess.TimeoutExpired:
                     if attempt < max_retries - 1:
@@ -462,12 +446,7 @@ class ConfigurableLinker(ILinker):
                     # Check if error is due to file truncation/locking (Windows-specific)
                     # Windows file locking manifests as: "file truncated", "error reading", "No such file", or "no more archived files"
                     stderr_lower = result.stderr.lower()
-                    is_file_locking_error = (
-                        "file truncated" in stderr_lower or
-                        "error reading" in stderr_lower or
-                        "no such file" in stderr_lower or
-                        "no more archived files" in stderr_lower
-                    )
+                    is_file_locking_error = "file truncated" in stderr_lower or "error reading" in stderr_lower or "no such file" in stderr_lower or "no more archived files" in stderr_lower
                     if is_windows and is_file_locking_error:
                         if attempt < max_retries - 1:
                             if self.show_progress:
@@ -504,6 +483,7 @@ class ConfigurableLinker(ILinker):
 
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
@@ -526,6 +506,7 @@ class ConfigurableLinker(ILinker):
             return self.binary_generator.generate_bin(elf_path, output_bin)
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
@@ -554,27 +535,13 @@ class ConfigurableLinker(ILinker):
         # Get objcopy tool from toolchain
         objcopy_path = self.toolchain.get_objcopy_path()
         if objcopy_path is None or not objcopy_path.exists():
-            raise ConfigurableLinkerError(
-                f"objcopy not found: {objcopy_path}. " +
-                "Ensure toolchain is installed."
-            )
+            raise ConfigurableLinkerError(f"objcopy not found: {objcopy_path}. " + "Ensure toolchain is installed.")
 
         # Build objcopy command: convert ELF to Intel HEX format
-        cmd = [
-            str(objcopy_path),
-            "-O", "ihex",
-            "-R", ".eeprom",
-            str(elf_path),
-            str(output_hex)
-        ]
+        cmd = [str(objcopy_path), "-O", "ihex", "-R", ".eeprom", str(elf_path), str(output_hex)]
 
         try:
-            result = safe_run(
-                cmd,
-                capture_output=True,
-                text=True,
-                timeout=30
-            )
+            result = safe_run(cmd, capture_output=True, text=True, timeout=30)
 
             if result.returncode != 0:
                 error_msg = "HEX generation failed\n"
@@ -595,6 +562,7 @@ class ConfigurableLinker(ILinker):
             raise ConfigurableLinkerError("HEX generation timeout")
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
@@ -619,7 +587,7 @@ class ConfigurableLinker(ILinker):
 
         # Get arm-none-eabi-size or appropriate size tool from toolchain
         # Check if toolchain has a get_size_path method
-        if hasattr(self.toolchain, 'get_size_path'):
+        if hasattr(self.toolchain, "get_size_path"):
             size_tool = self.toolchain.get_size_path()
         else:
             # Fall back to looking for size tool in toolchain bin directory
@@ -636,28 +604,20 @@ class ConfigurableLinker(ILinker):
             return None
 
         try:
-            result = safe_run(
-                [str(size_tool), str(elf_path)],
-                capture_output=True,
-                text=True,
-                timeout=10
-            )
+            result = safe_run([str(size_tool), str(elf_path)], capture_output=True, text=True, timeout=10)
 
             if result.returncode == 0:
                 # Get max flash and RAM from board config
                 max_flash = self.board_config.get("upload", {}).get("maximum_size")
                 max_ram = self.board_config.get("upload", {}).get("maximum_ram_size")
 
-                return SizeInfo.parse(
-                    result.stdout,
-                    max_flash=max_flash,
-                    max_ram=max_ram
-                )
+                return SizeInfo.parse(result.stdout, max_flash=max_flash, max_ram=max_ram)
             else:
                 return None
 
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception:
@@ -679,6 +639,7 @@ class ConfigurableLinker(ILinker):
             return self.binary_generator.generate_bootloader(output_bin)
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
@@ -700,6 +661,7 @@ class ConfigurableLinker(ILinker):
             return self.binary_generator.generate_partition_table(output_bin)
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
@@ -721,6 +683,7 @@ class ConfigurableLinker(ILinker):
             return self.binary_generator.generate_merged_bin(output_bin)
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
@@ -733,36 +696,38 @@ class ConfigurableLinker(ILinker):
             Dictionary with linker information
         """
         info = {
-            'board_id': self.board_id,
-            'mcu': self.mcu,
-            'build_dir': str(self.build_dir),
-            'toolchain_type': self.toolchain.toolchain_type,  # type: ignore[attr-defined]
-            'linker_path': str(self.toolchain.get_gxx_path()),
-            'objcopy_path': str(self.toolchain.get_objcopy_path()),
+            "board_id": self.board_id,
+            "mcu": self.mcu,
+            "build_dir": str(self.build_dir),
+            "toolchain_type": self.toolchain.toolchain_type,  # type: ignore[attr-defined]
+            "linker_path": str(self.toolchain.get_gxx_path()),
+            "objcopy_path": str(self.toolchain.get_objcopy_path()),
         }
 
         # Add linker scripts
         try:
             scripts = self.get_linker_scripts()
-            info['linker_scripts'] = [s.name for s in scripts]
-            info['linker_script_count'] = len(scripts)
+            info["linker_scripts"] = [s.name for s in scripts]
+            info["linker_script_count"] = len(scripts)
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
-            info['linker_scripts_error'] = str(e)
+            info["linker_scripts_error"] = str(e)
 
         # Add SDK libraries
         try:
             libs = self.get_sdk_libraries()
-            info['sdk_library_count'] = len(libs)
-            info['sdk_libraries_sample'] = [lib.name for lib in libs[:10]]
+            info["sdk_library_count"] = len(libs)
+            info["sdk_libraries_sample"] = [lib.name for lib in libs[:10]]
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
-            info['sdk_libraries_error'] = str(e)
+            info["sdk_libraries_error"] = str(e)
 
         return info

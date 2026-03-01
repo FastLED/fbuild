@@ -7,7 +7,7 @@ the logic for setting up these components with correct parameters.
 """
 
 from pathlib import Path
-from typing import List, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, List, Optional
 
 from ..config.board_config import BoardConfig
 from ..config.mcu_specs import get_max_flash, get_max_ram
@@ -83,8 +83,8 @@ class BuildComponentFactory:
 
         # Create and return compiler
         return CompilerAVR(
-            avr_gcc=tools['avr-gcc'],
-            avr_gpp=tools['avr-g++'],
+            avr_gcc=tools["avr-gcc"],
+            avr_gpp=tools["avr-g++"],
             mcu=board_config.mcu,
             f_cpu=board_config.f_cpu,
             includes=include_paths,
@@ -125,10 +125,10 @@ class BuildComponentFactory:
 
         # Create and return linker
         return LinkerAVR(
-            avr_gcc=tools['avr-gcc'],
-            avr_ar=tools['avr-ar'],
-            avr_objcopy=tools['avr-objcopy'],
-            avr_size=tools['avr-size'],
+            avr_gcc=tools["avr-gcc"],
+            avr_ar=tools["avr-ar"],
+            avr_objcopy=tools["avr-objcopy"],
+            avr_size=tools["avr-size"],
             mcu=board_config.mcu,
             context=context,
             max_flash=max_flash,

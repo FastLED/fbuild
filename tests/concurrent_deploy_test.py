@@ -58,7 +58,7 @@ def check_prerequisites() -> Tuple[bool, List[str]]:
 
         ports = list(serial.tools.list_ports.comports())
         if len(ports) < 2:
-            errors.append(f"Need at least 2 serial ports, found {len(ports)}. " "Connect 2 ESP32-C6 devices.")
+            errors.append(f"Need at least 2 serial ports, found {len(ports)}. Connect 2 ESP32-C6 devices.")
     except ImportError:
         errors.append("pyserial not installed: pip install pyserial")
 

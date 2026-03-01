@@ -114,7 +114,7 @@ class TestDeployThenMonitorWorkflow:
 
         from fbuild.daemon.daemon import SELF_EVICTION_TIMEOUT
 
-        assert time_since_deploy_end < SELF_EVICTION_TIMEOUT, f"Attach attempt at {time_since_deploy_end:.1f}s should be within " f"daemon timeout ({SELF_EVICTION_TIMEOUT}s)"
+        assert time_since_deploy_end < SELF_EVICTION_TIMEOUT, f"Attach attempt at {time_since_deploy_end:.1f}s should be within daemon timeout ({SELF_EVICTION_TIMEOUT}s)"
 
         # For hardware tests, we would actually attach and verify success
         # For now, just verify timing constraints
@@ -216,7 +216,7 @@ class TestDeployThenMonitorWorkflow:
         time_since_deploy_end = pin_discovery_start - deploy_end
         from fbuild.daemon.daemon import SELF_EVICTION_TIMEOUT
 
-        assert time_since_deploy_end < SELF_EVICTION_TIMEOUT, f"Pin discovery at t={time_since_deploy_end:.1f}s should be within " f"daemon timeout ({SELF_EVICTION_TIMEOUT}s)"
+        assert time_since_deploy_end < SELF_EVICTION_TIMEOUT, f"Pin discovery at t={time_since_deploy_end:.1f}s should be within daemon timeout ({SELF_EVICTION_TIMEOUT}s)"
 
         # Simulate pin discovery
         time.sleep(1.0)
@@ -228,7 +228,7 @@ class TestDeployThenMonitorWorkflow:
 
         # Verify daemon still alive
         time_since_deploy_end = gpio_test_start - deploy_end
-        assert time_since_deploy_end < SELF_EVICTION_TIMEOUT, f"GPIO test at t={time_since_deploy_end:.1f}s should be within " f"daemon timeout ({SELF_EVICTION_TIMEOUT}s)"
+        assert time_since_deploy_end < SELF_EVICTION_TIMEOUT, f"GPIO test at t={time_since_deploy_end:.1f}s should be within daemon timeout ({SELF_EVICTION_TIMEOUT}s)"
 
         # Simulate GPIO test
         time.sleep(1.0)

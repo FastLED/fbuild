@@ -6,12 +6,12 @@ and avr-size for linking object files into firmware.
 """
 
 import time
-from pathlib import Path
-from typing import List, Optional, TYPE_CHECKING
 from dataclasses import dataclass
+from pathlib import Path
+from typing import TYPE_CHECKING, List, Optional
 
-from .compiler import ILinker, LinkerError
 from ..subprocess_utils import safe_run
+from .compiler import ILinker, LinkerError
 
 if TYPE_CHECKING:
     from .build_context import BuildContext
@@ -23,11 +23,11 @@ class SizeInfo:
 
     text: int  # Program memory (flash) usage in bytes
     data: int  # Initialized data in RAM
-    bss: int   # Uninitialized data in RAM
+    bss: int  # Uninitialized data in RAM
     total_flash: int  # Total flash used (text + data)
-    total_ram: int    # Total RAM used (data + bss)
+    total_ram: int  # Total RAM used (data + bss)
     max_flash: Optional[int] = None  # Maximum flash available
-    max_ram: Optional[int] = None    # Maximum RAM available
+    max_ram: Optional[int] = None  # Maximum RAM available
 
     @property
     def flash_percent(self) -> Optional[float]:
@@ -44,8 +44,7 @@ class SizeInfo:
         return None
 
     @staticmethod
-    def parse(size_output: str, max_flash: Optional[int] = None,
-              max_ram: Optional[int] = None) -> 'SizeInfo':
+    def parse(size_output: str, max_flash: Optional[int] = None, max_ram: Optional[int] = None) -> "SizeInfo":
         """
         Parse size tool output in either Berkeley or AVR format.
 
@@ -71,7 +70,7 @@ class SizeInfo:
         data = 0
         bss = 0
 
-        lines = size_output.strip().split('\n')
+        lines = size_output.strip().split("\n")
 
         # Try Berkeley format first (ESP32, ARM, etc.)
         # Format: "   text    data     bss     dec     hex filename"
@@ -79,7 +78,7 @@ class SizeInfo:
         for line in lines:
             # Skip header line that contains column names
             stripped = line.strip()
-            if stripped.startswith('text') or not stripped:
+            if stripped.startswith("text") or not stripped:
                 continue
 
             # Try to parse as Berkeley format (6 columns: text, data, bss, dec, hex, filename)
@@ -106,11 +105,11 @@ class SizeInfo:
                 section = parts[0]
                 try:
                     size = int(parts[1])
-                    if section == '.text':
+                    if section == ".text":
                         text = size
-                    elif section == '.data':
+                    elif section == ".data":
                         data = size
-                    elif section == '.bss':
+                    elif section == ".bss":
                         bss = size
                 except (ValueError, IndexError):
                     continue
@@ -118,15 +117,7 @@ class SizeInfo:
         total_flash = text + data
         total_ram = data + bss
 
-        return SizeInfo(
-            text=text,
-            data=data,
-            bss=bss,
-            total_flash=total_flash,
-            total_ram=total_ram,
-            max_flash=max_flash,
-            max_ram=max_ram
-        )
+        return SizeInfo(text=text, data=data, bss=bss, total_flash=total_flash, total_ram=total_ram, max_flash=max_flash, max_ram=max_ram)
 
 
 @dataclass
@@ -187,9 +178,8 @@ class LinkerAVR(ILinker):
 
         # Load profile-specific flags from JSON config
         from .build_profiles import get_profile_flags_from_config
-        _, self._json_link_flags = get_profile_flags_from_config(
-            context.profile, context.platform_config
-        )
+
+        _, self._json_link_flags = get_profile_flags_from_config(context.profile, context.platform_config)
 
         # Verify tools exist
         if not self.avr_gcc.exists():
@@ -209,7 +199,7 @@ class LinkerAVR(ILinker):
         output_hex: Path,
         lib_archives: Optional[List[Path]] = None,
         extra_flags: Optional[List[str]] = None,
-        additional_objects: Optional[List[Path]] = None
+        additional_objects: Optional[List[Path]] = None,
     ) -> LinkResult:
         """
         Link object files into firmware (LEGACY method - use link() instead).
@@ -240,35 +230,16 @@ class LinkerAVR(ILinker):
             output_elf.parent.mkdir(parents=True, exist_ok=True)
 
             # Link to .elf - pass core objects directly instead of archiving
-            link_result = self._link_elf(
-                sketch_objects,
-                core_objects,
-                output_elf,
-                lib_archives or [],
-                extra_flags or [],
-                additional_objects
-            )
+            link_result = self._link_elf(sketch_objects, core_objects, output_elf, lib_archives or [], extra_flags or [], additional_objects)
 
             if not link_result or link_result.returncode != 0:
                 return LinkResult(
-                    success=False,
-                    elf_path=None,
-                    hex_path=None,
-                    size_info=None,
-                    stdout=link_result.stdout if link_result else '',
-                    stderr=link_result.stderr if link_result else 'Linking failed'
+                    success=False, elf_path=None, hex_path=None, size_info=None, stdout=link_result.stdout if link_result else "", stderr=link_result.stderr if link_result else "Linking failed"
                 )
 
             # Step 3: Convert to .hex
             if not self._objcopy_hex(output_elf, output_hex):
-                return LinkResult(
-                    success=False,
-                    elf_path=output_elf if output_elf.exists() else None,
-                    hex_path=None,
-                    size_info=None,
-                    stdout=link_result.stdout,
-                    stderr='Failed to convert ELF to HEX'
-                )
+                return LinkResult(success=False, elf_path=output_elf if output_elf.exists() else None, hex_path=None, size_info=None, stdout=link_result.stdout, stderr="Failed to convert ELF to HEX")
 
             # Step 4: Get size info
             size_info = self._get_size(output_elf)
@@ -281,37 +252,20 @@ class LinkerAVR(ILinker):
                     hex_path=output_hex,
                     size_info=size_info,
                     stdout=link_result.stdout,
-                    stderr=f'Sketch too large: {size_info.total_flash} bytes (maximum is {self.max_flash} bytes)'
+                    stderr=f"Sketch too large: {size_info.total_flash} bytes (maximum is {self.max_flash} bytes)",
                 )
 
-            return LinkResult(
-                success=True,
-                elf_path=output_elf,
-                hex_path=output_hex,
-                size_info=size_info,
-                stdout=link_result.stdout,
-                stderr=link_result.stderr
-            )
+            return LinkResult(success=True, elf_path=output_elf, hex_path=output_hex, size_info=size_info, stdout=link_result.stdout, stderr=link_result.stderr)
 
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
-            return LinkResult(
-                success=False,
-                elf_path=None,
-                hex_path=None,
-                size_info=None,
-                stdout='',
-                stderr=f'Linking exception: {str(e)}'
-            )
+            return LinkResult(success=False, elf_path=None, hex_path=None, size_info=None, stdout="", stderr=f"Linking exception: {str(e)}")
 
-    def _create_core_archive(
-        self,
-        core_objects: List[Path],
-        archive_path: Path
-    ) -> bool:
+    def _create_core_archive(self, core_objects: List[Path], archive_path: Path) -> bool:
         """
         Create core.a archive from core object files.
 
@@ -337,6 +291,7 @@ class LinkerAVR(ILinker):
                     time.sleep(0.05)
                 except KeyboardInterrupt as ke:
                     from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
                     handle_keyboard_interrupt_properly(ke)
                 except Exception:
                     # Other error, just continue
@@ -344,18 +299,13 @@ class LinkerAVR(ILinker):
 
         cmd = [
             str(self.avr_ar),
-            'rcs',  # r=replace, c=create, s=index
-            str(archive_path)
+            "rcs",  # r=replace, c=create, s=index
+            str(archive_path),
         ]
         cmd.extend(str(obj) for obj in core_objects)
 
         try:
-            result = safe_run(
-                cmd,
-                capture_output=True,
-                text=True,
-                check=False
-            )
+            result = safe_run(cmd, capture_output=True, text=True, check=False)
 
             # Check if command succeeded
             if result.returncode != 0:
@@ -371,20 +321,13 @@ class LinkerAVR(ILinker):
             return False
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception:
             return False
 
-    def _link_elf(
-        self,
-        sketch_objects: List[Path],
-        core_objects: List[Path],
-        output_elf: Path,
-        lib_archives: List[Path],
-        extra_flags: List[str],
-        additional_objects: Optional[List[Path]] = None
-    ):
+    def _link_elf(self, sketch_objects: List[Path], core_objects: List[Path], output_elf: Path, lib_archives: List[Path], extra_flags: List[str], additional_objects: Optional[List[Path]] = None):
         """
         Link objects and archives to create .elf file.
 
@@ -401,8 +344,8 @@ class LinkerAVR(ILinker):
         """
         cmd = [
             str(self.avr_gcc),
-            '-w',              # Suppress warnings
-            '-g',              # Include debug info
+            "-w",  # Suppress warnings
+            "-g",  # Include debug info
         ]
 
         # Add profile flags from built-in ProfileFlags (for filtering)
@@ -411,12 +354,15 @@ class LinkerAVR(ILinker):
         cmd.extend(self._json_link_flags)
 
         # Allow multiple definitions (needed for some libraries like FastLED)
-        cmd.append('-Wl,--allow-multiple-definition')
+        cmd.append("-Wl,--allow-multiple-definition")
 
-        cmd.extend([
-            f'-mmcu={self.mcu}',    # Target MCU
-            '-o', str(output_elf)
-        ])
+        cmd.extend(
+            [
+                f"-mmcu={self.mcu}",  # Target MCU
+                "-o",
+                str(output_elf),
+            ]
+        )
 
         # Add sketch objects
         cmd.extend(str(obj) for obj in sketch_objects)
@@ -429,48 +375,41 @@ class LinkerAVR(ILinker):
             cmd.extend(str(obj) for obj in additional_objects)
 
         # Start group for circular dependencies
-        cmd.append('-Wl,--start-group')
+        cmd.append("-Wl,--start-group")
 
         # Add library archives with --whole-archive for proper symbol visibility
         # This ensures LTO can see all symbols for cross-TU optimization
         if lib_archives:
-            cmd.append('-Wl,--whole-archive')
+            cmd.append("-Wl,--whole-archive")
             for lib_archive in lib_archives:
                 if lib_archive.exists():
                     cmd.append(str(lib_archive))
-            cmd.append('-Wl,--no-whole-archive')
+            cmd.append("-Wl,--no-whole-archive")
 
         # Add math library
-        cmd.append('-lm')
+        cmd.append("-lm")
 
         # End group
-        cmd.append('-Wl,--end-group')
+        cmd.append("-Wl,--end-group")
 
         # Add library path
-        cmd.append(f'-L{output_elf.parent}')
+        cmd.append(f"-L{output_elf.parent}")
 
         # Add extra flags
         cmd.extend(extra_flags)
 
         try:
-            result = safe_run(
-                cmd,
-                capture_output=True,
-                text=True,
-                check=False
-            )
+            result = safe_run(cmd, capture_output=True, text=True, check=False)
             return result
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
             from types import SimpleNamespace
-            return SimpleNamespace(
-                returncode=-1,
-                stdout='',
-                stderr=str(e)
-            )
+
+            return SimpleNamespace(returncode=-1, stdout="", stderr=str(e))
 
     def _objcopy_hex(self, elf_path: Path, hex_path: Path) -> bool:
         """
@@ -485,22 +424,20 @@ class LinkerAVR(ILinker):
         """
         cmd = [
             str(self.avr_objcopy),
-            '-O', 'ihex',      # Intel HEX format
-            '-R', '.eeprom',   # Remove EEPROM section
+            "-O",
+            "ihex",  # Intel HEX format
+            "-R",
+            ".eeprom",  # Remove EEPROM section
             str(elf_path),
-            str(hex_path)
+            str(hex_path),
         ]
 
         try:
-            result = safe_run(
-                cmd,
-                capture_output=True,
-                text=True,
-                check=False
-            )
+            result = safe_run(cmd, capture_output=True, text=True, check=False)
             return result.returncode == 0 and hex_path.exists()
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception:
@@ -518,27 +455,19 @@ class LinkerAVR(ILinker):
         """
         cmd = [
             str(self.avr_size),
-            '-A',  # Berkeley format with section details
-            str(elf_path)
+            "-A",  # Berkeley format with section details
+            str(elf_path),
         ]
 
         try:
-            result = safe_run(
-                cmd,
-                capture_output=True,
-                text=True,
-                check=False
-            )
+            result = safe_run(cmd, capture_output=True, text=True, check=False)
 
             if result.returncode == 0:
-                return SizeInfo.parse(
-                    result.stdout,
-                    self.max_flash,
-                    self.max_ram
-                )
+                return SizeInfo.parse(result.stdout, self.max_flash, self.max_ram)
             return None
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception:
@@ -557,38 +486,31 @@ class LinkerAVR(ILinker):
         """
         cmd = [
             str(self.avr_objcopy),
-            '-O', 'ihex',
-            '-j', '.eeprom',
-            '--set-section-flags=.eeprom=alloc,load',
-            '--no-change-warnings',
-            '--change-section-lma', '.eeprom=0',
+            "-O",
+            "ihex",
+            "-j",
+            ".eeprom",
+            "--set-section-flags=.eeprom=alloc,load",
+            "--no-change-warnings",
+            "--change-section-lma",
+            ".eeprom=0",
             str(elf_path),
-            str(eep_path)
+            str(eep_path),
         ]
 
         try:
-            result = safe_run(
-                cmd,
-                capture_output=True,
-                text=True,
-                check=False
-            )
+            result = safe_run(cmd, capture_output=True, text=True, check=False)
             return result.returncode == 0
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception:
             return False
 
     # BaseLinker interface implementation
-    def link(
-        self,
-        sketch_objects: List[Path],
-        core_archive: Path,
-        output_elf: Optional[Path] = None,
-        library_archives: Optional[List[Path]] = None
-    ) -> Path:
+    def link(self, sketch_objects: List[Path], core_archive: Path, output_elf: Optional[Path] = None, library_archives: Optional[List[Path]] = None) -> Path:
         """Link object files into firmware ELF (BaseLinker interface).
 
         This is the BaseLinker interface method. For the legacy method with more
@@ -610,12 +532,12 @@ class LinkerAVR(ILinker):
         if output_elf is None:
             output_elf = Path.cwd() / "build" / "firmware.elf"
 
-        output_hex = output_elf.with_suffix('.hex')
+        output_hex = output_elf.with_suffix(".hex")
 
         # For AVR with LTO, we don't use core.a directly.
         # Instead, extract object files from the archive if it exists
         core_objects = []
-        if core_archive.exists() and core_archive.suffix == '.a':
+        if core_archive.exists() and core_archive.suffix == ".a":
             # For now, we'll assume core objects are in the same directory
             # This is a simplification; in practice, the orchestrator should
             # pass core objects directly
@@ -625,13 +547,7 @@ class LinkerAVR(ILinker):
 
         # Use the legacy link method
         result = self.link_with_options(
-            sketch_objects=sketch_objects,
-            core_objects=core_objects,
-            output_elf=output_elf,
-            output_hex=output_hex,
-            lib_archives=library_archives,
-            extra_flags=None,
-            additional_objects=None
+            sketch_objects=sketch_objects, core_objects=core_objects, output_elf=output_elf, output_hex=output_hex, lib_archives=library_archives, extra_flags=None, additional_objects=None
         )
 
         if not result.success:
@@ -656,7 +572,7 @@ class LinkerAVR(ILinker):
         Raises:
             LinkerError: If binary generation fails
         """
-        hex_path = elf_path.with_suffix('.hex')
+        hex_path = elf_path.with_suffix(".hex")
 
         if not self._objcopy_hex(elf_path, hex_path):
             raise LinkerError(f"Failed to generate HEX from {elf_path}")
@@ -671,7 +587,7 @@ class LinkerAVR(ILinker):
         output_hex: Path,
         lib_archives: Optional[List[Path]] = None,
         extra_flags: Optional[List[str]] = None,
-        additional_objects: Optional[List[Path]] = None
+        additional_objects: Optional[List[Path]] = None,
     ) -> LinkResult:
         """Link object files into firmware (legacy method with full options).
 
@@ -702,35 +618,16 @@ class LinkerAVR(ILinker):
             output_elf.parent.mkdir(parents=True, exist_ok=True)
 
             # Link to .elf - pass core objects directly instead of archiving
-            link_result = self._link_elf(
-                sketch_objects,
-                core_objects,
-                output_elf,
-                lib_archives or [],
-                extra_flags or [],
-                additional_objects
-            )
+            link_result = self._link_elf(sketch_objects, core_objects, output_elf, lib_archives or [], extra_flags or [], additional_objects)
 
             if not link_result or link_result.returncode != 0:
                 return LinkResult(
-                    success=False,
-                    elf_path=None,
-                    hex_path=None,
-                    size_info=None,
-                    stdout=link_result.stdout if link_result else '',
-                    stderr=link_result.stderr if link_result else 'Linking failed'
+                    success=False, elf_path=None, hex_path=None, size_info=None, stdout=link_result.stdout if link_result else "", stderr=link_result.stderr if link_result else "Linking failed"
                 )
 
             # Step 3: Convert to .hex
             if not self._objcopy_hex(output_elf, output_hex):
-                return LinkResult(
-                    success=False,
-                    elf_path=output_elf if output_elf.exists() else None,
-                    hex_path=None,
-                    size_info=None,
-                    stdout=link_result.stdout,
-                    stderr='Failed to convert ELF to HEX'
-                )
+                return LinkResult(success=False, elf_path=output_elf if output_elf.exists() else None, hex_path=None, size_info=None, stdout=link_result.stdout, stderr="Failed to convert ELF to HEX")
 
             # Step 4: Get size info
             size_info = self._get_size(output_elf)
@@ -743,30 +640,15 @@ class LinkerAVR(ILinker):
                     hex_path=output_hex,
                     size_info=size_info,
                     stdout=link_result.stdout,
-                    stderr=f'Sketch too large: {size_info.total_flash} bytes (maximum is {self.max_flash} bytes)'
+                    stderr=f"Sketch too large: {size_info.total_flash} bytes (maximum is {self.max_flash} bytes)",
                 )
 
-            return LinkResult(
-                success=True,
-                elf_path=output_elf,
-                hex_path=output_hex,
-                size_info=size_info,
-                stdout=link_result.stdout,
-                stderr=link_result.stderr
-            )
+            return LinkResult(success=True, elf_path=output_elf, hex_path=output_hex, size_info=size_info, stdout=link_result.stdout, stderr=link_result.stderr)
 
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
-            return LinkResult(
-                success=False,
-                elf_path=None,
-                hex_path=None,
-                size_info=None,
-                stdout='',
-                stderr=f'Linking exception: {str(e)}'
-            )
-
-
+            return LinkResult(success=False, elf_path=None, hex_path=None, size_info=None, stdout="", stderr=f"Linking exception: {str(e)}")

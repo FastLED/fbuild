@@ -7,26 +7,26 @@ providing cleaner separation of concerns and better maintainability.
 
 import _thread
 import time
+from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, List, Optional
-from dataclasses import dataclass
 
 if TYPE_CHECKING:
     from .build_context import BuildParams
 
+from ..cli_utils import BannerFormatter
+from ..config.board_config import BoardConfig
 from ..packages import Cache
+from ..packages.library_manager import LibraryError, LibraryManager
 from ..packages.platform_teensy import PlatformTeensy
 from ..packages.toolchain_teensy import ToolchainTeensy
-from ..packages.library_manager import LibraryManager, LibraryError
-from ..config.board_config import BoardConfig
-from ..cli_utils import BannerFormatter
+from .build_info_generator import BuildInfoGenerator
+from .build_state import BuildStateTracker
+from .build_utils import safe_rmtree
 from .configurable_compiler import ConfigurableCompiler
 from .configurable_linker import ConfigurableLinker
 from .linker import SizeInfo
-from .orchestrator import IBuildOrchestrator, BuildResult
-from .build_utils import safe_rmtree
-from .build_state import BuildStateTracker
-from .build_info_generator import BuildInfoGenerator
+from .orchestrator import BuildResult, IBuildOrchestrator
 
 
 @dataclass
@@ -81,14 +81,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
         # Parse platformio.ini to get environment configuration
         ini_path = project_dir / "platformio.ini"
         if not ini_path.exists():
-            return BuildResult(
-                success=False,
-                hex_path=None,
-                elf_path=None,
-                size_info=None,
-                build_time=0.0,
-                message=f"platformio.ini not found in {project_dir}"
-            )
+            return BuildResult(success=False, hex_path=None, elf_path=None, size_info=None, build_time=0.0, message=f"platformio.ini not found in {project_dir}")
 
         try:
             config = PlatformIOConfig(ini_path)
@@ -99,9 +92,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
             lib_deps = config.get_lib_deps(env_name)
 
             # Call internal build method
-            teensy_result = self._build_teensy(
-                board_id, env_config, build_flags, lib_deps, request
-            )
+            teensy_result = self._build_teensy(board_id, env_config, build_flags, lib_deps, request)
 
             # Convert BuildResultTeensy to BuildResult
             return BuildResult(
@@ -110,21 +101,14 @@ class OrchestratorTeensy(IBuildOrchestrator):
                 elf_path=teensy_result.firmware_elf,
                 size_info=teensy_result.size_info,
                 build_time=teensy_result.build_time,
-                message=teensy_result.message
+                message=teensy_result.message,
             )
 
         except KeyboardInterrupt:
             _thread.interrupt_main()
             raise
         except Exception as e:
-            return BuildResult(
-                success=False,
-                hex_path=None,
-                elf_path=None,
-                size_info=None,
-                build_time=0.0,
-                message=f"Failed to parse configuration: {e}"
-            )
+            return BuildResult(success=False, hex_path=None, elf_path=None, size_info=None, build_time=0.0, message=f"Failed to parse configuration: {e}")
 
     def _build_teensy(
         self,
@@ -166,17 +150,14 @@ class OrchestratorTeensy(IBuildOrchestrator):
 
             # Print build profile banner
             from .build_profiles import print_profile_banner
+
             print_profile_banner(request.profile)
 
             # Initialize platform
             if verbose:
                 print("[3/7] Initializing Teensy platform...")
 
-            platform = PlatformTeensy(
-                self.cache,
-                board_config.mcu,
-                show_progress=verbose
-            )
+            platform = PlatformTeensy(self.cache, board_config.mcu, show_progress=verbose)
             platform.ensure_package()
 
             if verbose:
@@ -196,7 +177,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
                 platformio_ini_path=project_dir / "platformio.ini",
                 platform="teensy",
                 board=board_id,
-                framework=env_config.get('framework', 'arduino'),
+                framework=env_config.get("framework", "arduino"),
                 toolchain_version=platform.toolchain.version,
                 framework_version=platform.framework.version,
                 platform_version=f"teensy-{platform.framework.version}",
@@ -221,6 +202,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
 
             # Initialize compilation executor
             from .compilation_executor import CompilationExecutor
+
             compilation_executor = CompilationExecutor(
                 build_dir=build_dir,
                 show_progress=verbose,
@@ -232,14 +214,12 @@ class OrchestratorTeensy(IBuildOrchestrator):
             # Load board JSON and platform config ONCE (not redundantly in compiler/linker)
             board_json = platform.get_board_json(board_id)
             from .. import platform_configs
+
             # Load board-specific config (teensy41.json) instead of MCU config (imxrt1062.json)
             # Board configs have board-specific defines like ARDUINO_TEENSY41
             platform_config = platform_configs.load_board_config(board_id)
             if platform_config is None:
-                return self._error_result(
-                    start_time,
-                    f"No platform configuration found for {board_id}. Available: {platform_configs.list_available_configs()}"
-                )
+                return self._error_result(start_time, f"No platform configuration found for {board_id}. Available: {platform_configs.list_available_configs()}")
 
             # Extract variant and core from board config
             variant = board_json.get("build", {}).get("variant", "")
@@ -247,6 +227,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
 
             # Create full BuildContext with all configuration loaded once
             from .build_context import BuildContext
+
             context = BuildContext.from_request(
                 request=request,
                 platform=platform,
@@ -280,9 +261,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
                 print(f"      Compiled {len(core_obj_files)} core source files")
 
             # Handle library dependencies (if any)
-            library_archives, library_include_paths = self._process_libraries(
-                env_config, build_dir, compiler, platform.toolchain, board_config, verbose
-            )
+            library_archives, library_include_paths = self._process_libraries(env_config, build_dir, compiler, platform.toolchain, board_config, verbose)
 
             # Add library include paths to compiler
             if library_include_paths:
@@ -290,6 +269,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
 
             # Get src_dir override from platformio.ini
             from ..config import PlatformIOConfig
+
             config_for_src_dir = PlatformIOConfig(project_dir / "platformio.ini")
             src_dir_override = config_for_src_dir.get_src_dir()
 
@@ -297,10 +277,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
             sketch_obj_files = self._compile_sketch(project_dir, compiler, start_time, verbose, src_dir_override)
             if sketch_obj_files is None:
                 search_dir = project_dir / src_dir_override if src_dir_override else project_dir
-                return self._error_result(
-                    start_time,
-                    f"No .ino sketch file found in {search_dir}"
-                )
+                return self._error_result(start_time, f"No .ino sketch file found in {search_dir}")
 
             # Initialize linker
             if verbose:
@@ -323,9 +300,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
             build_time = time.time() - start_time
 
             if verbose:
-                self._print_success(
-                    build_time, firmware_elf, firmware_hex, size_info
-                )
+                self._print_success(build_time, firmware_elf, firmware_hex, size_info)
 
             # Save build state for future cache validation
             if verbose:
@@ -368,40 +343,22 @@ class OrchestratorTeensy(IBuildOrchestrator):
             if verbose:
                 print(f"      Build info saved to {build_info_generator.build_info_path}")
 
-            return BuildResultTeensy(
-                success=True,
-                firmware_hex=firmware_hex,
-                firmware_elf=firmware_elf,
-                size_info=size_info,
-                build_time=build_time,
-                message="Build successful (native Teensy build)"
-            )
+            return BuildResultTeensy(success=True, firmware_hex=firmware_hex, firmware_elf=firmware_elf, size_info=size_info, build_time=build_time, message="Build successful (native Teensy build)")
 
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
             build_time = time.time() - start_time
             import traceback
+
             error_trace = traceback.format_exc()
-            return BuildResultTeensy(
-                success=False,
-                firmware_hex=None,
-                firmware_elf=None,
-                size_info=None,
-                build_time=build_time,
-                message=f"Teensy native build failed: {e}\n\n{error_trace}"
-            )
+            return BuildResultTeensy(success=False, firmware_hex=None, firmware_elf=None, size_info=None, build_time=build_time, message=f"Teensy native build failed: {e}\n\n{error_trace}")
 
     def _process_libraries(
-        self,
-        env_config: dict,
-        build_dir: Path,
-        compiler: ConfigurableCompiler,
-        toolchain: ToolchainTeensy,
-        board_config: BoardConfig,
-        verbose: bool
+        self, env_config: dict, build_dir: Path, compiler: ConfigurableCompiler, toolchain: ToolchainTeensy, board_config: BoardConfig, verbose: bool
     ) -> tuple[List[Path], List[Path]]:
         """
         Process and compile library dependencies.
@@ -417,7 +374,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
         Returns:
             Tuple of (library_archives, library_include_paths)
         """
-        lib_deps = env_config.get('lib_deps', '')
+        lib_deps = env_config.get("lib_deps", "")
         library_archives = []
         library_include_paths = []
 
@@ -429,7 +386,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
 
         # Parse lib_deps (can be string or list)
         if isinstance(lib_deps, str):
-            lib_specs = [dep.strip() for dep in lib_deps.split('\n') if dep.strip()]
+            lib_specs = [dep.strip() for dep in lib_deps.split("\n") if dep.strip()]
         else:
             lib_specs = lib_deps
 
@@ -463,14 +420,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
 
             # Ensure all libraries are downloaded and compiled
             libraries = library_manager.ensure_libraries(
-                lib_deps=lib_specs,
-                compiler_path=compiler_path,
-                mcu=board_config.mcu,
-                f_cpu=board_config.f_cpu,
-                defines=lib_defines,
-                include_paths=lib_includes,
-                extra_flags=[],
-                show_progress=verbose
+                lib_deps=lib_specs, compiler_path=compiler_path, mcu=board_config.mcu, f_cpu=board_config.f_cpu, defines=lib_defines, include_paths=lib_includes, extra_flags=[], show_progress=verbose
             )
 
             # Get library artifacts
@@ -489,14 +439,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
 
         return library_archives, library_include_paths
 
-    def _compile_sketch(
-        self,
-        project_dir: Path,
-        compiler: ConfigurableCompiler,
-        start_time: float,
-        verbose: bool,
-        src_dir_override: Optional[str] = None
-    ) -> Optional[List[Path]]:
+    def _compile_sketch(self, project_dir: Path, compiler: ConfigurableCompiler, start_time: float, verbose: bool, src_dir_override: Optional[str] = None) -> Optional[List[Path]]:
         """
         Find and compile sketch files.
 
@@ -540,13 +483,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
 
         return sketch_obj_files
 
-    def _print_success(
-        self,
-        build_time: float,
-        firmware_elf: Path,
-        firmware_hex: Path,
-        size_info: Optional[SizeInfo]
-    ) -> None:
+    def _print_success(self, build_time: float, firmware_elf: Path, firmware_hex: Path, size_info: Optional[SizeInfo]) -> None:
         """
         Print build success message.
 
@@ -563,9 +500,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
         message_lines.append(f"Firmware HEX: {firmware_hex}")
 
         if size_info:
-            message_lines.append(
-                f"Program size: {size_info.text + size_info.data} bytes"
-            )
+            message_lines.append(f"Program size: {size_info.text + size_info.data} bytes")
             message_lines.append(f"Data size: {size_info.bss + size_info.data} bytes")
 
         BannerFormatter.print_banner("\n".join(message_lines), width=60, center=False)
@@ -581,11 +516,4 @@ class OrchestratorTeensy(IBuildOrchestrator):
         Returns:
             BuildResultTeensy indicating failure
         """
-        return BuildResultTeensy(
-            success=False,
-            firmware_hex=None,
-            firmware_elf=None,
-            size_info=None,
-            build_time=time.time() - start_time,
-            message=message
-        )
+        return BuildResultTeensy(success=False, firmware_hex=None, firmware_elf=None, size_info=None, build_time=time.time() - start_time, message=message)

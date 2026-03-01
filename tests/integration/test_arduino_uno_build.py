@@ -61,7 +61,7 @@ class TestArduinoUnoBuild:
         build_time = time.time() - start_time
 
         # Assert successful build
-        assert result.returncode == 0, f"Build failed with exit code {result.returncode}\n" f"STDOUT:\n{result.stdout}\n" f"STDERR:\n{result.stderr}"
+        assert result.returncode == 0, f"Build failed with exit code {result.returncode}\nSTDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}"
 
         # Verify firmware.hex was created
         hex_path = project_dir / ".fbuild" / "build" / "uno" / "firmware.hex"
@@ -80,7 +80,7 @@ class TestArduinoUnoBuild:
 
         # Verify reasonable size (typical Blink sketch is ~1-5 KB)
         hex_size = hex_path.stat().st_size
-        assert 100 < hex_size < 50000, f"Unexpected hex size: {hex_size} bytes. " f"Expected between 100 and 50000 bytes."
+        assert 100 < hex_size < 50000, f"Unexpected hex size: {hex_size} bytes. Expected between 100 and 50000 bytes."
 
         # Performance check - first build should complete in reasonable time
         # (Including potential downloads, should be < 60s on reasonable connection)
@@ -119,7 +119,7 @@ class TestArduinoUnoBuild:
         assert result2.returncode == 0, "Incremental build failed"
 
         # Incremental build should be very fast (< 5s as per success criteria)
-        assert incremental_time < 5.0, f"Incremental build too slow: {incremental_time:.2f}s. " f"Expected < 5s."
+        assert incremental_time < 5.0, f"Incremental build too slow: {incremental_time:.2f}s. Expected < 5s."
 
         print(f"\n✓ Incremental build completed in {incremental_time:.2f}s")
 
@@ -195,7 +195,7 @@ class TestArduinoUnoBuild:
 
         # For standard Blink sketch, expect 1-5 KB hex file
         # (Hex files are larger than binary due to ASCII encoding)
-        assert 500 < hex_size < 10000, f"Unexpected firmware size: {hex_size} bytes. " f"Expected 500-10000 bytes for Blink sketch."
+        assert 500 < hex_size < 10000, f"Unexpected firmware size: {hex_size} bytes. Expected 500-10000 bytes for Blink sketch."
 
         print(f"\n✓ Firmware size: {hex_size} bytes (within expected range)")
 
@@ -254,7 +254,7 @@ class TestArduinoUnoBuild:
                 capture_output=True,
                 timeout=120,
             )
-            assert result.returncode == 0, f"Build {i+1} failed"
+            assert result.returncode == 0, f"Build {i + 1} failed"
 
         # Both builds should succeed
         hex_path = project_dir / ".fbuild" / "build" / "uno" / "firmware.hex"

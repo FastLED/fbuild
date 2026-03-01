@@ -308,11 +308,11 @@ class TestManifest:
 
             # Check for configs in manifest but not on disk
             missing_on_disk = manifest_set - actual_set
-            assert not missing_on_disk, f"Vendor '{vendor}': manifest.json lists configs that don't exist on disk: {missing_on_disk}. " f"Remove them from manifest.json."
+            assert not missing_on_disk, f"Vendor '{vendor}': manifest.json lists configs that don't exist on disk: {missing_on_disk}. Remove them from manifest.json."
 
             # Check for configs on disk but not in manifest
             missing_in_manifest = actual_set - manifest_set
-            assert not missing_in_manifest, f"Vendor '{vendor}': config files exist on disk but not in manifest.json: {missing_in_manifest}. " f"Add them to manifest.json."
+            assert not missing_in_manifest, f"Vendor '{vendor}': config files exist on disk but not in manifest.json: {missing_in_manifest}. Add them to manifest.json."
 
     def test_manifest_all_configs_loadable(self):
         """Every config listed in manifest should be loadable."""
@@ -331,7 +331,7 @@ class TestManifest:
 
         for vendor, vendor_data in manifest["vendors"].items():
             configs = vendor_data["configs"]
-            assert configs == sorted(configs), f"Vendor '{vendor}' configs are not sorted in manifest.json. " f"Expected: {sorted(configs)}"
+            assert configs == sorted(configs), f"Vendor '{vendor}' configs are not sorted in manifest.json. Expected: {sorted(configs)}"
 
     def test_manifest_total_config_count(self):
         """Manifest should have same total config count as actual files."""

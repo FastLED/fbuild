@@ -6,12 +6,12 @@ C and C++ source files to object files with sccache support.
 """
 
 import shutil
-from pathlib import Path
-from typing import List, Dict, Optional, TYPE_CHECKING
 from dataclasses import dataclass
+from pathlib import Path
+from typing import TYPE_CHECKING, Dict, List, Optional
 
-from .compiler import ICompiler, CompilerError
 from ..subprocess_utils import safe_run
+from .compiler import CompilerError, ICompiler
 
 if TYPE_CHECKING:
     from .build_context import BuildContext
@@ -20,6 +20,7 @@ if TYPE_CHECKING:
 @dataclass
 class CompileResult:
     """Result of a compilation operation."""
+
     success: bool
     object_file: Optional[Path]
     stdout: str
@@ -76,9 +77,8 @@ class CompilerAVR(ICompiler):
 
         # Load profile-specific flags from JSON config
         from .build_profiles import get_profile_flags_from_config
-        self._json_compile_flags, _ = get_profile_flags_from_config(
-            context.profile, context.platform_config
-        )
+
+        self._json_compile_flags, _ = get_profile_flags_from_config(context.profile, context.platform_config)
 
         # Check if sccache is available
         if self.use_sccache:
@@ -95,12 +95,7 @@ class CompilerAVR(ICompiler):
         if not self.avr_gpp.exists():
             raise CompilerError(f"avr-g++ not found: {self.avr_gpp}")
 
-    def compile_c(
-        self,
-        source: Path,
-        output: Path,
-        extra_flags: Optional[List[str]] = None
-    ) -> CompileResult:
+    def compile_c(self, source: Path, output: Path, extra_flags: Optional[List[str]] = None) -> CompileResult:
         """
         Compile C source file.
 
@@ -115,12 +110,7 @@ class CompilerAVR(ICompiler):
         cmd = self._build_c_command(source, output, extra_flags or [])
         return self._execute_compiler(cmd, output)
 
-    def compile_cpp(
-        self,
-        source: Path,
-        output: Path,
-        extra_flags: Optional[List[str]] = None
-    ) -> CompileResult:
+    def compile_cpp(self, source: Path, output: Path, extra_flags: Optional[List[str]] = None) -> CompileResult:
         """
         Compile C++ source file.
 
@@ -135,12 +125,7 @@ class CompilerAVR(ICompiler):
         cmd = self._build_cpp_command(source, output, extra_flags or [])
         return self._execute_compiler(cmd, output)
 
-    def compile(
-        self,
-        source: Path,
-        output: Path,
-        extra_flags: Optional[List[str]] = None
-    ) -> CompileResult:
+    def compile(self, source: Path, output: Path, extra_flags: Optional[List[str]] = None) -> CompileResult:
         """
         Compile source file (auto-detects C vs C++).
 
@@ -161,9 +146,9 @@ class CompilerAVR(ICompiler):
         source = Path(source)
 
         # Build the command based on file type
-        if source.suffix == '.c':
+        if source.suffix == ".c":
             cmd = self._build_c_command(source, output, extra_flags or [])
-        elif source.suffix in ['.cpp', '.cxx', '.cc']:
+        elif source.suffix in [".cpp", ".cxx", ".cc"]:
             cmd = self._build_cpp_command(source, output, extra_flags or [])
         else:
             raise CompilerError(f"Unknown source file type: {source.suffix}")
@@ -178,15 +163,10 @@ class CompilerAVR(ICompiler):
             object_file=output,  # Optimistic - will be validated in wait_all_jobs()
             stdout="",
             stderr="",
-            returncode=0
+            returncode=0,
         )
 
-    def compile_sources(
-        self,
-        sources: List[Path],
-        output_dir: Path,
-        extra_flags: Optional[List[str]] = None
-    ) -> List[Path]:
+    def compile_sources(self, sources: List[Path], output_dir: Path, extra_flags: Optional[List[str]] = None) -> List[Path]:
         """
         Compile multiple source files.
 
@@ -209,16 +189,14 @@ class CompilerAVR(ICompiler):
         for source in sources:
             source = Path(source)
             # Generate object file name
-            obj_name = source.stem + '.o'
+            obj_name = source.stem + ".o"
             obj_path = output_dir / obj_name
 
             # Compile
             result = self.compile(source, obj_path, extra_flags)
 
             if not result.success:
-                raise CompilerError(
-                    f"Failed to compile {source}:\n{result.stderr}"
-                )
+                raise CompilerError(f"Failed to compile {source}:\n{result.stderr}")
 
             object_files.append(obj_path)
 
@@ -243,151 +221,120 @@ class CompilerAVR(ICompiler):
 
         return source_mtime > obj_mtime
 
-    def _build_c_command(
-        self,
-        source: Path,
-        output: Path,
-        extra_flags: List[str]
-    ) -> List[str]:
+    def _build_c_command(self, source: Path, output: Path, extra_flags: List[str]) -> List[str]:
         """Build avr-gcc command for C compilation."""
         cmd = []
         # Prepend sccache if available
         if self.sccache_path:
             cmd.append(str(self.sccache_path))
-        cmd.extend([
-            str(self.avr_gcc),
-            '-c',              # Compile only, don't link
-            '-g',              # Include debug symbols
-            '-w',              # Suppress warnings (matches Arduino)
-            '-std=gnu11',      # C11 with GNU extensions
-        ])
+        cmd.extend(
+            [
+                str(self.avr_gcc),
+                "-c",  # Compile only, don't link
+                "-g",  # Include debug symbols
+                "-w",  # Suppress warnings (matches Arduino)
+                "-std=gnu11",  # C11 with GNU extensions
+            ]
+        )
 
         # Add profile flags from built-in ProfileFlags (for filtering)
         cmd.extend(self._profile_flags.compile_flags)
         # Add profile flags from JSON config (e.g., -O2 for quick)
         cmd.extend(self._json_compile_flags)
 
-        cmd.append(f'-mmcu={self.mcu}')  # Target MCU
+        cmd.append(f"-mmcu={self.mcu}")  # Target MCU
 
         # Add defines
         for key, value in self.defines.items():
             if value:
-                cmd.append(f'-D{key}={value}')
+                cmd.append(f"-D{key}={value}")
             else:
-                cmd.append(f'-D{key}')
+                cmd.append(f"-D{key}")
 
         # Add F_CPU explicitly
-        if 'F_CPU' not in self.defines:
-            cmd.append(f'-DF_CPU={self.f_cpu}')
+        if "F_CPU" not in self.defines:
+            cmd.append(f"-DF_CPU={self.f_cpu}")
 
         # Add include paths
         for include in self.includes:
-            cmd.append(f'-I{include}')
+            cmd.append(f"-I{include}")
 
         # Add extra flags
         cmd.extend(extra_flags)
 
         # Add source and output
-        cmd.extend([str(source), '-o', str(output)])
+        cmd.extend([str(source), "-o", str(output)])
 
         return cmd
 
-    def _build_cpp_command(
-        self,
-        source: Path,
-        output: Path,
-        extra_flags: List[str]
-    ) -> List[str]:
+    def _build_cpp_command(self, source: Path, output: Path, extra_flags: List[str]) -> List[str]:
         """Build avr-g++ command for C++ compilation."""
         cmd = []
         # Prepend sccache if available
         if self.sccache_path:
             cmd.append(str(self.sccache_path))
-        cmd.extend([
-            str(self.avr_gpp),
-            '-c',              # Compile only, don't link
-            '-g',              # Include debug symbols
-            '-w',              # Suppress warnings (matches Arduino)
-            '-std=gnu++11',    # C++11 with GNU extensions
-            '-fpermissive',    # Allow some non-standard code
-            '-fno-exceptions',  # Disable exceptions (no room on AVR)
-            '-fno-threadsafe-statics',  # No thread safety needed
-        ])
+        cmd.extend(
+            [
+                str(self.avr_gpp),
+                "-c",  # Compile only, don't link
+                "-g",  # Include debug symbols
+                "-w",  # Suppress warnings (matches Arduino)
+                "-std=gnu++11",  # C++11 with GNU extensions
+                "-fpermissive",  # Allow some non-standard code
+                "-fno-exceptions",  # Disable exceptions (no room on AVR)
+                "-fno-threadsafe-statics",  # No thread safety needed
+            ]
+        )
 
         # Add profile flags from built-in ProfileFlags (for filtering)
         cmd.extend(self._profile_flags.compile_flags)
         # Add profile flags from JSON config (e.g., -O2 for quick)
         cmd.extend(self._json_compile_flags)
 
-        cmd.append(f'-mmcu={self.mcu}')  # Target MCU
+        cmd.append(f"-mmcu={self.mcu}")  # Target MCU
 
         # Add defines
         for key, value in self.defines.items():
             if value:
-                cmd.append(f'-D{key}={value}')
+                cmd.append(f"-D{key}={value}")
             else:
-                cmd.append(f'-D{key}')
+                cmd.append(f"-D{key}")
 
         # Add F_CPU explicitly
-        if 'F_CPU' not in self.defines:
-            cmd.append(f'-DF_CPU={self.f_cpu}')
+        if "F_CPU" not in self.defines:
+            cmd.append(f"-DF_CPU={self.f_cpu}")
 
         # Add include paths
         for include in self.includes:
-            cmd.append(f'-I{include}')
+            cmd.append(f"-I{include}")
 
         # Add extra flags
         cmd.extend(extra_flags)
 
         # Add source and output
-        cmd.extend([str(source), '-o', str(output)])
+        cmd.extend([str(source), "-o", str(output)])
 
         return cmd
 
-    def _execute_compiler(
-        self,
-        cmd: List[str],
-        output: Path
-    ) -> CompileResult:
+    def _execute_compiler(self, cmd: List[str], output: Path) -> CompileResult:
         """Execute compiler command."""
         try:
-            result = safe_run(
-                cmd,
-                capture_output=True,
-                text=True,
-                check=False
-            )
+            result = safe_run(cmd, capture_output=True, text=True, check=False)
 
             success = result.returncode == 0
             obj_file = output if success and output.exists() else None
 
-            return CompileResult(
-                success=success,
-                object_file=obj_file,
-                stdout=result.stdout,
-                stderr=result.stderr,
-                returncode=result.returncode
-            )
+            return CompileResult(success=success, object_file=obj_file, stdout=result.stdout, stderr=result.stderr, returncode=result.returncode)
 
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
-            return CompileResult(
-                success=False,
-                object_file=None,
-                stdout='',
-                stderr=str(e),
-                returncode=-1
-            )
+            return CompileResult(success=False, object_file=None, stdout="", stderr=str(e), returncode=-1)
 
-    def _submit_async_compilation(
-        self,
-        source: Path,
-        output: Path,
-        cmd: List[str]
-    ) -> str:
+    def _submit_async_compilation(self, source: Path, output: Path, cmd: List[str]) -> str:
         """
         Submit compilation job to async queue.
 
@@ -400,6 +347,7 @@ class CompilerAVR(ICompiler):
             Job ID for tracking
         """
         import time
+
         from ..daemon.compilation_queue import CompilationJob
 
         job_id = f"compile_{source.stem}_{int(time.time() * 1000000)}"
@@ -409,7 +357,7 @@ class CompilerAVR(ICompiler):
             source_path=source,
             output_path=output,
             compiler_cmd=cmd,
-            response_file=None  # AVR doesn't use response files for includes
+            response_file=None,  # AVR doesn't use response files for includes
         )
 
         self.compilation_queue.submit_job(job)
@@ -451,7 +399,7 @@ class CompilerAVR(ICompiler):
                 object_file=job.output_path if job.state.value == "completed" else None,
                 stdout=job.stdout,
                 stderr=job.stderr,
-                returncode=job.result_code or -1
+                returncode=job.result_code or -1,
             )
 
             results.append(result)
@@ -480,22 +428,12 @@ class CompilerAVR(ICompiler):
             Dictionary with compilation statistics
         """
         if not self.compilation_queue:
-            return {
-                "total_jobs": 0,
-                "pending": 0,
-                "running": 0,
-                "completed": 0,
-                "failed": 0
-            }
+            return {"total_jobs": 0, "pending": 0, "running": 0, "completed": 0, "failed": 0}
 
         return self.compilation_queue.get_statistics()
 
     # BaseCompiler interface implementation
-    def compile_source(
-        self,
-        source_path: Path,
-        output_path: Optional[Path] = None
-    ) -> Path:
+    def compile_source(self, source_path: Path, output_path: Optional[Path] = None) -> Path:
         """Compile a single source file to object file.
 
         Args:
@@ -518,9 +456,7 @@ class CompilerAVR(ICompiler):
         result = self.compile(source_path, output_path)
 
         if not result.success:
-            raise CompilerError(
-                f"Failed to compile {source_path}:\n{result.stderr}"
-            )
+            raise CompilerError(f"Failed to compile {source_path}:\n{result.stderr}")
 
         return output_path
 
@@ -540,9 +476,9 @@ class CompilerAVR(ICompiler):
         """
         # Common flags for both C and C++
         common = [
-            '-c',
-            '-g',
-            '-w',
+            "-c",
+            "-g",
+            "-w",
         ]
 
         # Add profile flags from built-in ProfileFlags (for filtering)
@@ -550,23 +486,23 @@ class CompilerAVR(ICompiler):
         # Add profile flags from JSON config (e.g., -O2 for quick)
         common.extend(self._json_compile_flags)
 
-        common.append(f'-mmcu={self.mcu}')
+        common.append(f"-mmcu={self.mcu}")
 
         # C-specific flags
         cflags = [
-            '-std=gnu11',
+            "-std=gnu11",
         ]
 
         # C++-specific flags
         cxxflags = [
-            '-std=gnu++11',
-            '-fpermissive',
-            '-fno-exceptions',
-            '-fno-threadsafe-statics',
+            "-std=gnu++11",
+            "-fpermissive",
+            "-fno-exceptions",
+            "-fno-threadsafe-statics",
         ]
 
         return {
-            'common': common,
-            'cflags': cflags,
-            'cxxflags': cxxflags,
+            "common": common,
+            "cflags": cflags,
+            "cxxflags": cxxflags,
         }

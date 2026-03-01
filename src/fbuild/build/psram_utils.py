@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 # These boards MUST use SDK variants that do NOT try to init PSRAM at boot
 # (which is the "qspi" variants: dio_qspi, qio_qspi)
 NO_PSRAM_BOARDS: List[str] = [
-    "adafruit_qtpy_esp32s3_nopsram", # Adafruit QT Py ESP32-S3 No PSRAM
+    "adafruit_qtpy_esp32s3_nopsram",  # Adafruit QT Py ESP32-S3 No PSRAM
     "adafruit_feather_esp32s3_nopsram",  # Adafruit Feather ESP32-S3 No PSRAM
     # Add other no-PSRAM ESP32-S3 boards here as needed
 ]

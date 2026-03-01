@@ -65,7 +65,7 @@ class TestBoardManifest:
         boards = manifest["boards"]
         sorted_boards = sorted(boards)
 
-        assert boards == sorted_boards, "Boards in manifest are not sorted alphabetically.\n" "Run: python scripts/update_board_manifest.py"
+        assert boards == sorted_boards, "Boards in manifest are not sorted alphabetically.\nRun: python scripts/update_board_manifest.py"
 
     def test_no_duplicate_boards_in_manifest(self) -> None:
         """Verify there are no duplicate board entries in manifest."""
@@ -99,7 +99,7 @@ class TestBoardManifest:
         manifest_count = len(manifest["boards"])
         actual_count = len(list(BOARDS_DIR.glob("*.json")))
 
-        assert manifest_count == actual_count, f"Board count mismatch: manifest has {manifest_count}, " f"directory has {actual_count} files"
+        assert manifest_count == actual_count, f"Board count mismatch: manifest has {manifest_count}, directory has {actual_count} files"
 
     def test_all_boards_have_required_fields(self) -> None:
         """Verify all board JSON files have required PlatformIO fields.

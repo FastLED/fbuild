@@ -76,7 +76,7 @@ class TestTeensy41ParallelCompilation:
         result = self._build_project(teensy_project, jobs=1, clean=True)
 
         if result.returncode != 0:
-            pytest.fail(f"Serial compilation failed with exit code {result.returncode}.\n" f"STDOUT:\n{result.stdout}\n" f"STDERR:\n{result.stderr}")
+            pytest.fail(f"Serial compilation failed with exit code {result.returncode}.\nSTDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}")
 
         # Verify firmware was created
         firmware_path = teensy_project / ".fbuild" / "build" / "teensy41" / "firmware.hex"
@@ -87,7 +87,7 @@ class TestTeensy41ParallelCompilation:
         result = self._build_project(teensy_project, jobs=2, clean=True)
 
         if result.returncode != 0:
-            pytest.fail(f"Parallel compilation failed with exit code {result.returncode}.\n" f"STDOUT:\n{result.stdout}\n" f"STDERR:\n{result.stderr}")
+            pytest.fail(f"Parallel compilation failed with exit code {result.returncode}.\nSTDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}")
 
         # Verify firmware was created
         firmware_path = teensy_project / ".fbuild" / "build" / "teensy41" / "firmware.hex"
@@ -102,7 +102,7 @@ class TestTeensy41ParallelCompilation:
         result = self._build_project(teensy_project, jobs=None, clean=True)
 
         if result.returncode != 0:
-            pytest.fail(f"Auto parallel compilation failed with exit code {result.returncode}.\n" f"STDOUT:\n{result.stdout}\n" f"STDERR:\n{result.stderr}")
+            pytest.fail(f"Auto parallel compilation failed with exit code {result.returncode}.\nSTDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}")
 
         # Verify firmware was created
         firmware_path = teensy_project / ".fbuild" / "build" / "teensy41" / "firmware.hex"
@@ -125,7 +125,7 @@ class TestTeensy41ParallelCompilation:
 
         # Hashes must be identical
         assert hash_serial == hash_parallel, (
-            f"Firmware binaries differ between serial and parallel builds!\n" f"Serial hash:   {hash_serial}\n" f"Parallel hash: {hash_parallel}\n" f"This indicates a bug in parallel compilation."
+            f"Firmware binaries differ between serial and parallel builds!\nSerial hash:   {hash_serial}\nParallel hash: {hash_parallel}\nThis indicates a bug in parallel compilation."
         )
 
     def test_incremental_build_with_parallel_compilation(self, teensy_project: Path):
@@ -147,7 +147,7 @@ class TestTeensy41ParallelCompilation:
         hash_incremental = self._get_firmware_hash(teensy_project)
 
         # Hash should be identical
-        assert hash_full == hash_incremental, "Firmware changed after incremental build with no source changes. " "This indicates non-deterministic compilation."
+        assert hash_full == hash_incremental, "Firmware changed after incremental build with no source changes. This indicates non-deterministic compilation."
 
         # Touch source file to trigger recompilation
         source_file = teensy_project / "src" / "main.ino"

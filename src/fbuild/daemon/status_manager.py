@@ -104,7 +104,6 @@ class StatusManager:
             ... )
         """
         with self._lock:
-
             # Update internal operation state if provided
             if operation_in_progress is not None:
                 self._operation_in_progress = operation_in_progress

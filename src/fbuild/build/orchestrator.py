@@ -8,13 +8,13 @@ import contextlib
 import logging
 import multiprocessing
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, Optional
-from dataclasses import dataclass
 
 if TYPE_CHECKING:
-    from fbuild.build.linker import SizeInfo
     from fbuild.build.build_context import BuildParams
+    from fbuild.build.linker import SizeInfo
     from fbuild.daemon.compilation_queue import CompilationJobQueue
 
 
@@ -32,9 +32,8 @@ class BuildResult:
 
 class BuildOrchestratorError(Exception):
     """Base exception for build orchestration errors."""
+
     pass
-
-
 
 
 class IBuildOrchestrator(ABC):

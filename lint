@@ -1,14 +1,12 @@
 #!/bin/bash
 set -e
 
-echo Running ruff src
+echo Running ruff check src
 uv run ruff check --fix src
-echo Running ruff tests
+echo Running ruff check tests
 uv run ruff check --fix tests
-echo Running black src tests
-uv run black src tests
-echo Running isort src tests
-uv run isort --profile black src tests
+echo Running ruff format src tests
+uv run ruff format src tests
 echo Running pyright src tests
 uv run pyright src tests
 echo Running KeyboardInterrupt checks

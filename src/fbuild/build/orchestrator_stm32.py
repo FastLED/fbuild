@@ -8,26 +8,26 @@ providing cleaner separation of concerns and better maintainability.
 import _thread
 import logging
 import time
+from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, List, Optional
-from dataclasses import dataclass
 
 if TYPE_CHECKING:
     from .build_context import BuildParams
 
+from ..config.board_config import BoardConfig
 from ..packages import Cache
+from ..packages.library_manager import LibraryError, LibraryManager
 from ..packages.platform_stm32 import PlatformSTM32
 from ..packages.toolchain_stm32 import ToolchainSTM32
-from ..packages.library_manager import LibraryManager, LibraryError
-from ..config.board_config import BoardConfig
+from ..subprocess_utils import safe_run
+from .build_info_generator import BuildInfoGenerator
+from .build_state import BuildStateTracker
+from .build_utils import safe_rmtree
 from .configurable_compiler import ConfigurableCompiler
 from .configurable_linker import ConfigurableLinker
 from .linker import SizeInfo
-from .orchestrator import IBuildOrchestrator, BuildResult
-from .build_utils import safe_rmtree
-from .build_state import BuildStateTracker
-from .build_info_generator import BuildInfoGenerator
-from ..subprocess_utils import safe_run
+from .orchestrator import BuildResult, IBuildOrchestrator
 
 # Module-level logger
 logger = logging.getLogger(__name__)
@@ -86,14 +86,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
         # Parse platformio.ini to get environment configuration
         ini_path = project_dir / "platformio.ini"
         if not ini_path.exists():
-            return BuildResult(
-                success=False,
-                hex_path=None,
-                elf_path=None,
-                size_info=None,
-                build_time=0.0,
-                message=f"platformio.ini not found in {project_dir}"
-            )
+            return BuildResult(success=False, hex_path=None, elf_path=None, size_info=None, build_time=0.0, message=f"platformio.ini not found in {project_dir}")
 
         try:
             config = PlatformIOConfig(ini_path)
@@ -104,9 +97,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
             lib_deps = config.get_lib_deps(env_name)
 
             # Call internal build method
-            stm32_result = self._build_stm32(
-                board_id, env_config, build_flags, lib_deps, request
-            )
+            stm32_result = self._build_stm32(board_id, env_config, build_flags, lib_deps, request)
 
             # Convert BuildResultSTM32 to BuildResult
             return BuildResult(
@@ -115,21 +106,14 @@ class OrchestratorSTM32(IBuildOrchestrator):
                 elf_path=stm32_result.firmware_elf,
                 size_info=stm32_result.size_info,
                 build_time=stm32_result.build_time,
-                message=stm32_result.message
+                message=stm32_result.message,
             )
 
         except KeyboardInterrupt:
             _thread.interrupt_main()
             raise
         except Exception as e:
-            return BuildResult(
-                success=False,
-                hex_path=None,
-                elf_path=None,
-                size_info=None,
-                build_time=0.0,
-                message=f"Failed to parse configuration: {e}"
-            )
+            return BuildResult(success=False, hex_path=None, elf_path=None, size_info=None, build_time=0.0, message=f"Failed to parse configuration: {e}")
 
     def _build_stm32(
         self,
@@ -173,6 +157,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
 
             # Print build profile banner
             from .build_profiles import print_profile_banner
+
             print_profile_banner(request.profile)
 
             # Initialize platform
@@ -181,11 +166,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
             else:
                 logger.info("Initializing STM32 platform...")
 
-            platform = PlatformSTM32(
-                self.cache,
-                board_config.mcu,
-                show_progress=True
-            )
+            platform = PlatformSTM32(self.cache, board_config.mcu, show_progress=True)
             platform.ensure_package()
 
             if verbose:
@@ -205,7 +186,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
                 platformio_ini_path=project_dir / "platformio.ini",
                 platform="ststm32",
                 board=board_id,
-                framework=env_config.get('framework', 'arduino'),
+                framework=env_config.get("framework", "arduino"),
                 toolchain_version=platform.toolchain.version,
                 framework_version=platform.framework.version,
                 platform_version=f"stm32-{platform.framework.version}",
@@ -230,6 +211,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
 
             # Initialize compilation executor
             from .compilation_executor import CompilationExecutor
+
             compilation_executor = CompilationExecutor(
                 build_dir=build_dir,
                 show_progress=verbose,
@@ -241,12 +223,10 @@ class OrchestratorSTM32(IBuildOrchestrator):
             # Load board JSON and platform config ONCE (not redundantly in compiler/linker)
             board_json = platform.get_board_json(board_id)
             from .. import platform_configs
+
             platform_config = platform_configs.load_config(board_config.mcu)
             if platform_config is None:
-                return self._error_result(
-                    start_time,
-                    f"No platform configuration found for {board_config.mcu}. Available: {platform_configs.list_available_configs()}"
-                )
+                return self._error_result(start_time, f"No platform configuration found for {board_config.mcu}. Available: {platform_configs.list_available_configs()}")
 
             # Extract variant and core from board config
             variant = board_json.get("build", {}).get("variant", "")
@@ -254,6 +234,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
 
             # Create full BuildContext with all configuration loaded once
             from .build_context import BuildContext
+
             context = BuildContext.from_request(
                 request=request,
                 platform=platform,
@@ -293,13 +274,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
                 total_files = len(core_sources)
 
                 # Create progress bar
-                with tqdm(
-                    total=total_files,
-                    desc='Compiling Arduino core',
-                    unit='file',
-                    ncols=80,
-                    leave=False
-                ) as pbar:
+                with tqdm(total=total_files, desc="Compiling Arduino core", unit="file", ncols=80, leave=False) as pbar:
                     core_obj_files = compiler.compile_core(progress_bar=pbar)
 
                 # Print completion message
@@ -311,9 +286,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
                 logger.info(f"      Compiled {len(core_obj_files)} core source files")
 
             # Handle library dependencies (if any)
-            library_archives, library_include_paths = self._process_libraries(
-                env_config, build_dir, compiler, platform.toolchain, board_config, verbose, project_dir=project_dir
-            )
+            library_archives, library_include_paths = self._process_libraries(env_config, build_dir, compiler, platform.toolchain, board_config, verbose, project_dir=project_dir)
 
             # Add library include paths to compiler
             if library_include_paths:
@@ -321,6 +294,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
 
             # Get src_dir override from platformio.ini
             from ..config import PlatformIOConfig
+
             config_for_src_dir = PlatformIOConfig(project_dir / "platformio.ini")
             src_dir_override = config_for_src_dir.get_src_dir()
 
@@ -328,10 +302,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
             sketch_obj_files = self._compile_sketch(project_dir, compiler, start_time, verbose, src_dir_override)
             if sketch_obj_files is None:
                 search_dir = project_dir / src_dir_override if src_dir_override else project_dir
-                return self._error_result(
-                    start_time,
-                    f"No .ino sketch file found in {search_dir}"
-                )
+                return self._error_result(start_time, f"No .ino sketch file found in {search_dir}")
 
             # Initialize linker
             if verbose:
@@ -359,9 +330,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
             build_time = time.time() - start_time
 
             if verbose:
-                self._print_success(
-                    build_time, firmware_elf, firmware_hex, size_info
-                )
+                self._print_success(build_time, firmware_elf, firmware_hex, size_info)
 
             # Save build state for future cache validation
             if verbose:
@@ -412,25 +381,21 @@ class OrchestratorSTM32(IBuildOrchestrator):
                 firmware_elf=firmware_elf,
                 size_info=size_info,
                 build_time=build_time,
-                message="Build successful (native STM32 build)"
+                message="Build successful (native STM32 build)",
             )
 
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
             build_time = time.time() - start_time
             import traceback
+
             error_trace = traceback.format_exc()
             return BuildResultSTM32(
-                success=False,
-                firmware_hex=None,
-                firmware_bin=None,
-                firmware_elf=None,
-                size_info=None,
-                build_time=build_time,
-                message=f"STM32 native build failed: {e}\n\n{error_trace}"
+                success=False, firmware_hex=None, firmware_bin=None, firmware_elf=None, size_info=None, build_time=build_time, message=f"STM32 native build failed: {e}\n\n{error_trace}"
             )
 
     def _generate_hex(self, elf_path: Path, toolchain: ToolchainSTM32, verbose: bool = False) -> Path:
@@ -457,12 +422,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
         if objcopy is None:
             raise Exception("objcopy not found in toolchain")
 
-        cmd = [
-            str(objcopy),
-            "-O", "ihex",
-            str(elf_path),
-            str(hex_path)
-        ]
+        cmd = [str(objcopy), "-O", "ihex", str(elf_path), str(hex_path)]
 
         result = safe_run(cmd, capture_output=True, text=True)
         if result.returncode != 0:
@@ -474,14 +434,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
         return hex_path
 
     def _process_libraries(
-        self,
-        env_config: dict,
-        build_dir: Path,
-        compiler: ConfigurableCompiler,
-        toolchain: ToolchainSTM32,
-        board_config: BoardConfig,
-        verbose: bool,
-        project_dir: Optional[Path] = None
+        self, env_config: dict, build_dir: Path, compiler: ConfigurableCompiler, toolchain: ToolchainSTM32, board_config: BoardConfig, verbose: bool, project_dir: Optional[Path] = None
     ) -> tuple[List[Path], List[Path]]:
         """
         Process and compile library dependencies.
@@ -498,7 +451,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
         Returns:
             Tuple of (library_archives, library_include_paths)
         """
-        lib_deps = env_config.get('lib_deps', '')
+        lib_deps = env_config.get("lib_deps", "")
         library_archives = []
         library_include_paths = []
 
@@ -510,7 +463,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
 
         # Parse lib_deps (can be string or list)
         if isinstance(lib_deps, str):
-            lib_specs = [dep.strip() for dep in lib_deps.split('\n') if dep.strip()]
+            lib_specs = [dep.strip() for dep in lib_deps.split("\n") if dep.strip()]
         else:
             lib_specs = lib_deps
 
@@ -543,14 +496,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
 
             # Ensure all libraries are downloaded and compiled
             libraries = library_manager.ensure_libraries(
-                lib_deps=lib_specs,
-                compiler_path=compiler_path,
-                mcu=board_config.mcu,
-                f_cpu=board_config.f_cpu,
-                defines=lib_defines,
-                include_paths=lib_includes,
-                extra_flags=[],
-                show_progress=verbose
+                lib_deps=lib_specs, compiler_path=compiler_path, mcu=board_config.mcu, f_cpu=board_config.f_cpu, defines=lib_defines, include_paths=lib_includes, extra_flags=[], show_progress=verbose
             )
 
             # Get library artifacts
@@ -568,14 +514,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
 
         return library_archives, library_include_paths
 
-    def _compile_sketch(
-        self,
-        project_dir: Path,
-        compiler: ConfigurableCompiler,
-        start_time: float,
-        verbose: bool,
-        src_dir_override: Optional[str] = None
-    ) -> Optional[List[Path]]:
+    def _compile_sketch(self, project_dir: Path, compiler: ConfigurableCompiler, start_time: float, verbose: bool, src_dir_override: Optional[str] = None) -> Optional[List[Path]]:
         """
         Find and compile sketch files.
 
@@ -621,7 +560,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
         # Compile sketch files - compile each file individually
         obj_files = []
         for source_file in all_source_files:
-            if source_file.suffix == '.ino':
+            if source_file.suffix == ".ino":
                 # .ino files need preprocessing
                 compiled = compiler.compile_sketch(source_file)
                 obj_files.extend(compiled)
@@ -646,23 +585,9 @@ class OrchestratorSTM32(IBuildOrchestrator):
 
     def _error_result(self, start_time: float, message: str) -> BuildResultSTM32:
         """Create an error result."""
-        return BuildResultSTM32(
-            success=False,
-            firmware_hex=None,
-            firmware_bin=None,
-            firmware_elf=None,
-            size_info=None,
-            build_time=time.time() - start_time,
-            message=message
-        )
+        return BuildResultSTM32(success=False, firmware_hex=None, firmware_bin=None, firmware_elf=None, size_info=None, build_time=time.time() - start_time, message=message)
 
-    def _print_success(
-        self,
-        build_time: float,
-        firmware_elf: Path,
-        firmware_hex: Path,
-        size_info: Optional[SizeInfo]
-    ) -> None:
+    def _print_success(self, build_time: float, firmware_elf: Path, firmware_hex: Path, size_info: Optional[SizeInfo]) -> None:
         """Print success message with build details."""
         logger.info("")
         logger.info("=" * 60)

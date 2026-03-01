@@ -390,14 +390,14 @@ class BuildInfoGenerator:
         memory = None
         if size_info:
             flash_usage = MemoryUsage(
-                used_bytes=getattr(size_info, 'total_flash', 0),
-                max_bytes=getattr(size_info, 'max_flash', None),
-                percent=getattr(size_info, 'flash_percent', None),
+                used_bytes=getattr(size_info, "total_flash", 0),
+                max_bytes=getattr(size_info, "max_flash", None),
+                percent=getattr(size_info, "flash_percent", None),
             )
             ram_usage = MemoryUsage(
-                used_bytes=getattr(size_info, 'total_ram', 0),
-                max_bytes=getattr(size_info, 'max_ram', None),
-                percent=getattr(size_info, 'ram_percent', None),
+                used_bytes=getattr(size_info, "total_ram", 0),
+                max_bytes=getattr(size_info, "max_ram", None),
+                percent=getattr(size_info, "ram_percent", None),
             )
             memory = MemoryInfo(flash=flash_usage, ram=ram_usage)
 
@@ -535,14 +535,14 @@ class BuildInfoGenerator:
         memory = None
         if size_info:
             flash_usage = MemoryUsage(
-                used_bytes=getattr(size_info, 'total_flash', 0),
-                max_bytes=getattr(size_info, 'max_flash', None),
-                percent=getattr(size_info, 'flash_percent', None),
+                used_bytes=getattr(size_info, "total_flash", 0),
+                max_bytes=getattr(size_info, "max_flash", None),
+                percent=getattr(size_info, "flash_percent", None),
             )
             ram_usage = MemoryUsage(
-                used_bytes=getattr(size_info, 'total_ram', 0),
-                max_bytes=getattr(size_info, 'max_ram', None),
-                percent=getattr(size_info, 'ram_percent', None),
+                used_bytes=getattr(size_info, "total_ram", 0),
+                max_bytes=getattr(size_info, "max_ram", None),
+                percent=getattr(size_info, "ram_percent", None),
             )
             memory = MemoryInfo(flash=flash_usage, ram=ram_usage)
 

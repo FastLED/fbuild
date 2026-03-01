@@ -62,15 +62,15 @@ def spawn_worker(worker_id: int) -> dict:
 
 def test_rapid_start_stop_cycles(cycles: int = 10):
     """Test rapid daemon start/stop cycles."""
-    print(f"\n{'='*70}")
+    print(f"\n{'=' * 70}")
     print(f"Rapid Start/Stop Cycles Test ({cycles} cycles)")
-    print(f"{'='*70}")
+    print(f"{'=' * 70}")
 
     timings = []
     errors = []
 
     for i in range(cycles):
-        print(f"\nCycle {i+1}/{cycles}:")
+        print(f"\nCycle {i + 1}/{cycles}:")
 
         # Start daemon
         start_time = time.time()
@@ -79,7 +79,7 @@ def test_rapid_start_stop_cycles(cycles: int = 10):
             start_elapsed = time.time() - start_time
 
             if response.status not in (DaemonStatus.STARTED, DaemonStatus.ALREADY_RUNNING):
-                errors.append(f"Cycle {i+1}: Start failed - {response.message}")
+                errors.append(f"Cycle {i + 1}: Start failed - {response.message}")
                 print(f"  ❌ Start failed: {response.message}")
                 continue
 
@@ -88,7 +88,7 @@ def test_rapid_start_stop_cycles(cycles: int = 10):
             # Verify daemon is running
             daemon_info = get_daemon_info()
             if daemon_info.status != DaemonStatus.ALREADY_RUNNING:
-                errors.append(f"Cycle {i+1}: Daemon not running after start")
+                errors.append(f"Cycle {i + 1}: Daemon not running after start")
                 print("  ❌ Daemon not running after start")
                 continue
 
@@ -103,7 +103,7 @@ def test_rapid_start_stop_cycles(cycles: int = 10):
             # Verify daemon stopped
             daemon_info = get_daemon_info()
             if daemon_info.status != DaemonStatus.FAILED:
-                errors.append(f"Cycle {i+1}: Daemon still running after stop")
+                errors.append(f"Cycle {i + 1}: Daemon still running after stop")
                 print("  ⚠ Daemon still running after stop")
             else:
                 print(f"  ✓ Stopped in {stop_elapsed:.3f}s")
@@ -118,7 +118,7 @@ def test_rapid_start_stop_cycles(cycles: int = 10):
             )
 
         except Exception as e:
-            errors.append(f"Cycle {i+1}: Exception - {e}")
+            errors.append(f"Cycle {i + 1}: Exception - {e}")
             print(f"  ❌ Exception: {e}")
             # Try to stop daemon anyway
             try:
@@ -127,9 +127,9 @@ def test_rapid_start_stop_cycles(cycles: int = 10):
                 pass
 
     # Report results
-    print(f"\n{'='*70}")
+    print(f"\n{'=' * 70}")
     print("Rapid Start/Stop Results:")
-    print(f"{'='*70}")
+    print(f"{'=' * 70}")
     print(f"Total cycles: {cycles}")
     print(f"Successful: {len(timings)}/{cycles}")
     print(f"Errors: {len(errors)}/{cycles}")
@@ -158,15 +158,15 @@ def test_rapid_start_stop_cycles(cycles: int = 10):
 
 def test_concurrent_spawn(num_workers: int = 5, iterations: int = 3):
     """Test concurrent spawn from multiple processes."""
-    print(f"\n{'='*70}")
+    print(f"\n{'=' * 70}")
     print(f"Concurrent Spawn Test ({num_workers} workers, {iterations} iterations)")
-    print(f"{'='*70}")
+    print(f"{'=' * 70}")
 
     all_results = []
     errors_by_iteration = []
 
     for iteration in range(iterations):
-        print(f"\nIteration {iteration+1}/{iterations}:")
+        print(f"\nIteration {iteration + 1}/{iterations}:")
 
         # Clean state
         try:
@@ -204,11 +204,11 @@ def test_concurrent_spawn(num_workers: int = 5, iterations: int = 3):
         # Record iteration results
         iteration_errors = []
         if len(failures) > 0:
-            iteration_errors.append(f"Iteration {iteration+1}: {len(failures)} spurious failures")
+            iteration_errors.append(f"Iteration {iteration + 1}: {len(failures)} spurious failures")
         if len(errors) > 0:
-            iteration_errors.append(f"Iteration {iteration+1}: {len(errors)} worker errors")
+            iteration_errors.append(f"Iteration {iteration + 1}: {len(errors)} worker errors")
         if daemon_info.status != DaemonStatus.ALREADY_RUNNING:
-            iteration_errors.append(f"Iteration {iteration+1}: Daemon not running")
+            iteration_errors.append(f"Iteration {iteration + 1}: Daemon not running")
 
         errors_by_iteration.extend(iteration_errors)
         all_results.append(
@@ -230,9 +230,9 @@ def test_concurrent_spawn(num_workers: int = 5, iterations: int = 3):
         time.sleep(0.5)
 
     # Report results
-    print(f"\n{'='*70}")
+    print(f"\n{'=' * 70}")
     print("Concurrent Spawn Results:")
-    print(f"{'='*70}")
+    print(f"{'=' * 70}")
     print(f"Total iterations: {iterations}")
 
     total_successes = sum(r["successes"] for r in all_results)
@@ -265,9 +265,9 @@ def test_concurrent_spawn(num_workers: int = 5, iterations: int = 3):
 
 def check_spawn_logs():
     """Check spawn logs for issues."""
-    print(f"\n{'='*70}")
+    print(f"\n{'=' * 70}")
     print("Spawn Log Analysis")
-    print(f"{'='*70}")
+    print(f"{'=' * 70}")
 
     spawn_log = DAEMON_DIR / "daemon_spawn.log"
 
@@ -321,9 +321,9 @@ def main():
 
     args = parser.parse_args()
 
-    print(f"\n{'='*70}")
+    print(f"\n{'=' * 70}")
     print("Daemon Spawn Stress Test")
-    print(f"{'='*70}")
+    print(f"{'=' * 70}")
     print("Configuration:")
     print(f"  Start/stop cycles: {args.cycles}")
     print(f"  Concurrent workers: {args.workers}")
@@ -348,9 +348,9 @@ def main():
         results.append(("Spawn log analysis", success))
 
     # Final summary
-    print(f"\n{'='*70}")
+    print(f"\n{'=' * 70}")
     print("FINAL SUMMARY")
-    print(f"{'='*70}")
+    print(f"{'=' * 70}")
 
     for test_name, success in results:
         status = "✓ PASSED" if success else "❌ FAILED"

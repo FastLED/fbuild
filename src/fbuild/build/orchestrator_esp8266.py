@@ -8,25 +8,25 @@ generation compared to ESP32 (no bootloader or partition table needed).
 import _thread
 import logging
 import time
+from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, List, Optional
-from dataclasses import dataclass
 
 if TYPE_CHECKING:
     from .build_context import BuildParams
 
+from ..cli_utils import BannerFormatter
+from ..output import DefaultProgressCallback, log_detail, log_phase, log_warning
 from ..packages import Cache
+from ..packages.framework_esp8266 import FrameworkESP8266
 from ..packages.platform_esp8266 import PlatformESP8266
 from ..packages.toolchain_esp8266 import ToolchainESP8266
-from ..packages.framework_esp8266 import FrameworkESP8266
-from ..cli_utils import BannerFormatter
+from .build_info_generator import BuildInfoGenerator
+from .build_state import BuildStateTracker
 from .configurable_compiler import ConfigurableCompiler
 from .configurable_linker import ConfigurableLinker
 from .linker import SizeInfo
-from .orchestrator import IBuildOrchestrator, BuildResult
-from .build_state import BuildStateTracker
-from .build_info_generator import BuildInfoGenerator
-from ..output import log_phase, log_detail, log_warning, DefaultProgressCallback
+from .orchestrator import BuildResult, IBuildOrchestrator
 
 # Module-level logger
 logger = logging.getLogger(__name__)
@@ -90,14 +90,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
         # Parse platformio.ini to get environment configuration
         ini_path = project_dir / "platformio.ini"
         if not ini_path.exists():
-            return BuildResult(
-                success=False,
-                hex_path=None,
-                elf_path=None,
-                size_info=None,
-                build_time=0.0,
-                message=f"platformio.ini not found in {project_dir}"
-            )
+            return BuildResult(success=False, hex_path=None, elf_path=None, size_info=None, build_time=0.0, message=f"platformio.ini not found in {project_dir}")
 
         try:
             config = PlatformIOConfig(ini_path)
@@ -112,9 +105,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
             logger.debug(f"[ORCHESTRATOR] get_lib_deps returned: {lib_deps}")
 
             # Call internal build method
-            esp8266_result = self._build_esp8266(
-                board_id, env_config, build_flags, lib_deps, request
-            )
+            esp8266_result = self._build_esp8266(board_id, env_config, build_flags, lib_deps, request)
 
             # Convert BuildResultESP8266 to BuildResult
             return BuildResult(
@@ -123,21 +114,14 @@ class OrchestratorESP8266(IBuildOrchestrator):
                 elf_path=esp8266_result.firmware_elf,
                 size_info=esp8266_result.size_info,
                 build_time=esp8266_result.build_time,
-                message=esp8266_result.message
+                message=esp8266_result.message,
             )
 
         except KeyboardInterrupt:
             _thread.interrupt_main()
             raise
         except Exception as e:
-            return BuildResult(
-                success=False,
-                hex_path=None,
-                elf_path=None,
-                size_info=None,
-                build_time=0.0,
-                message=f"Failed to parse configuration: {e}"
-            )
+            return BuildResult(success=False, hex_path=None, elf_path=None, size_info=None, build_time=0.0, message=f"Failed to parse configuration: {e}")
 
     def _build_esp8266(
         self,
@@ -170,18 +154,16 @@ class OrchestratorESP8266(IBuildOrchestrator):
 
         try:
             # Get platform URL from env_config
-            platform_url = env_config.get('platform')
+            platform_url = env_config.get("platform")
             if not platform_url:
-                return self._error_result(
-                    start_time,
-                    "No platform URL specified in platformio.ini"
-                )
+                return self._error_result(start_time, "No platform URL specified in platformio.ini")
 
             # Resolve platform shorthand to actual download URL
             platform_url = self._resolve_platform_url(platform_url)
 
             # Print build profile banner
             from .build_profiles import print_profile_banner
+
             print_profile_banner(request.profile)
 
             # Initialize platform
@@ -203,24 +185,19 @@ class OrchestratorESP8266(IBuildOrchestrator):
             # Initialize toolchain
             toolchain = self._setup_toolchain(packages, start_time, verbose)
             if toolchain is None:
-                return self._error_result(
-                    start_time,
-                    "Failed to initialize toolchain"
-                )
+                return self._error_result(start_time, "Failed to initialize toolchain")
 
             # Initialize framework
             framework = self._setup_framework(packages, start_time, verbose)
             if framework is None:
-                return self._error_result(
-                    start_time,
-                    "Failed to initialize framework"
-                )
+                return self._error_result(start_time, "Failed to initialize framework")
 
             # Ensure build directory exists
             build_dir.mkdir(parents=True, exist_ok=True)
 
             # Determine source directory for cache invalidation
             from ..config import PlatformIOConfig
+
             config_for_src_dir = PlatformIOConfig(project_dir / "platformio.ini")
             src_dir_override = config_for_src_dir.get_src_dir()
             source_dir = project_dir / src_dir_override if src_dir_override else project_dir
@@ -233,7 +210,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
                 platformio_ini_path=project_dir / "platformio.ini",
                 platform="esp8266",
                 board=board_id,
-                framework=env_config.get('framework', 'arduino'),
+                framework=env_config.get("framework", "arduino"),
                 toolchain_version=toolchain.version,
                 framework_version=framework.version,
                 platform_version=platform.version,
@@ -249,6 +226,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
                 log_detail("Cleaning build artifacts...", verbose_only=True)
                 # Clean build artifacts to force rebuild
                 from .build_utils import safe_rmtree
+
                 if build_dir.exists():
                     safe_rmtree(build_dir)
                 # Recreate build directory
@@ -258,6 +236,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
 
             # Initialize compilation executor
             from .compilation_executor import CompilationExecutor
+
             compilation_executor = CompilationExecutor(
                 build_dir=build_dir,
                 show_progress=verbose,
@@ -268,12 +247,10 @@ class OrchestratorESP8266(IBuildOrchestrator):
 
             # Load platform configuration ONCE
             from .. import platform_configs
+
             platform_config = platform_configs.load_config(mcu)
             if platform_config is None:
-                return self._error_result(
-                    start_time,
-                    f"No platform configuration found for {mcu}. Available: {platform_configs.list_available_configs()}"
-                )
+                return self._error_result(start_time, f"No platform configuration found for {mcu}. Available: {platform_configs.list_available_configs()}")
 
             # Extract variant and core from board config
             variant = board_json.get("build", {}).get("variant", "")
@@ -281,6 +258,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
 
             # Create full BuildContext with all configuration loaded once
             from .build_context import BuildContext
+
             context = BuildContext.from_request(
                 request=request,
                 platform=platform,
@@ -320,13 +298,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
                 total_files = len(core_sources)
 
                 # Create progress bar
-                with tqdm(
-                    total=total_files,
-                    desc='Compiling Arduino core',
-                    unit='file',
-                    ncols=80,
-                    leave=False
-                ) as pbar:
+                with tqdm(total=total_files, desc="Compiling Arduino core", unit="file", ncols=80, leave=False) as pbar:
                     core_obj_files = compiler.compile_core(progress_bar=pbar, progress_callback=progress_callback)
 
                 # Print completion message
@@ -355,10 +327,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
             sketch_obj_files = self._compile_sketch(project_dir, compiler, start_time, verbose, src_dir_override)
             if sketch_obj_files is None:
                 search_dir = project_dir / src_dir_override if src_dir_override else project_dir
-                return self._error_result(
-                    start_time,
-                    f"No .ino sketch file found in {search_dir}"
-                )
+                return self._error_result(start_time, f"No .ino sketch file found in {search_dir}")
 
             # Generate preprocessed linker scripts (ESP8266 requires this)
             self._generate_linker_scripts(toolchain, framework, build_dir)
@@ -382,9 +351,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
             build_time = time.time() - start_time
 
             if verbose:
-                self._print_success(
-                    build_time, firmware_elf, firmware_bin, size_info
-                )
+                self._print_success(build_time, firmware_elf, firmware_bin, size_info)
 
             # Save build state for future cache validation
             log_detail("Saving build state...", verbose_only=True)
@@ -436,38 +403,21 @@ class OrchestratorESP8266(IBuildOrchestrator):
             build_info_generator.save(build_info)
             log_detail(f"Build info saved to {build_info_generator.build_info_path}", verbose_only=True)
 
-            return BuildResultESP8266(
-                success=True,
-                firmware_bin=firmware_bin,
-                firmware_elf=firmware_elf,
-                size_info=size_info,
-                build_time=build_time,
-                message="Build successful (native ESP8266 build)"
-            )
+            return BuildResultESP8266(success=True, firmware_bin=firmware_bin, firmware_elf=firmware_elf, size_info=size_info, build_time=build_time, message="Build successful (native ESP8266 build)")
 
         except KeyboardInterrupt as ke:
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
             handle_keyboard_interrupt_properly(ke)
             raise  # Never reached, but satisfies type checker
         except Exception as e:
             build_time = time.time() - start_time
             import traceback
-            error_trace = traceback.format_exc()
-            return BuildResultESP8266(
-                success=False,
-                firmware_bin=None,
-                firmware_elf=None,
-                size_info=None,
-                build_time=build_time,
-                message=f"ESP8266 native build failed: {e}\n\n{error_trace}"
-            )
 
-    def _setup_toolchain(
-        self,
-        packages: dict,
-        start_time: float,
-        verbose: bool
-    ) -> Optional['ToolchainESP8266']:
+            error_trace = traceback.format_exc()
+            return BuildResultESP8266(success=False, firmware_bin=None, firmware_elf=None, size_info=None, build_time=build_time, message=f"ESP8266 native build failed: {e}\n\n{error_trace}")
+
+    def _setup_toolchain(self, packages: dict, start_time: float, verbose: bool) -> Optional["ToolchainESP8266"]:
         """
         Initialize ESP8266 toolchain.
 
@@ -485,20 +435,11 @@ class OrchestratorESP8266(IBuildOrchestrator):
         if not toolchain_url:
             return None
 
-        toolchain = ToolchainESP8266(
-            self.cache,
-            toolchain_url,
-            show_progress=True
-        )
+        toolchain = ToolchainESP8266(self.cache, toolchain_url, show_progress=True)
         toolchain.ensure_toolchain()
         return toolchain
 
-    def _setup_framework(
-        self,
-        packages: dict,
-        start_time: float,
-        verbose: bool
-    ) -> Optional[FrameworkESP8266]:
+    def _setup_framework(self, packages: dict, start_time: float, verbose: bool) -> Optional[FrameworkESP8266]:
         """
         Initialize ESP8266 framework.
 
@@ -517,11 +458,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
         if not framework_url:
             return None
 
-        framework = FrameworkESP8266(
-            self.cache,
-            framework_url,
-            show_progress=True
-        )
+        framework = FrameworkESP8266(self.cache, framework_url, show_progress=True)
         framework.ensure_framework()
         return framework
 
@@ -544,14 +481,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
 
         return c_files + cpp_files
 
-    def _compile_sketch(
-        self,
-        project_dir: Path,
-        compiler: ConfigurableCompiler,
-        start_time: float,
-        verbose: bool,
-        src_dir_override: Optional[str] = None
-    ) -> Optional[List[Path]]:
+    def _compile_sketch(self, project_dir: Path, compiler: ConfigurableCompiler, start_time: float, verbose: bool, src_dir_override: Optional[str] = None) -> Optional[List[Path]]:
         """
         Find and compile sketch files.
 
@@ -626,13 +556,16 @@ class OrchestratorESP8266(IBuildOrchestrator):
 
         cmd = [
             str(gcc_path),
-            "-CC", "-E", "-P",
+            "-CC",
+            "-E",
+            "-P",
             "-DVTABLES_IN_FLASH",
             "-DFP_IN_IROM",
             "-DMMU_IRAM_SIZE=0xC000",
             "-DMMU_ICACHE_SIZE=0x8000",
             str(template),
-            "-o", str(output_file),
+            "-o",
+            str(output_file),
         ]
 
         result = safe_run(cmd, capture_output=True, text=True, timeout=30)
@@ -641,13 +574,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
         else:
             log_detail(f"Generated {output_file.name}", verbose_only=True)
 
-    def _print_success(
-        self,
-        build_time: float,
-        firmware_elf: Path,
-        firmware_bin: Path,
-        size_info: Optional[SizeInfo] = None
-    ) -> None:
+    def _print_success(self, build_time: float, firmware_elf: Path, firmware_bin: Path, size_info: Optional[SizeInfo] = None) -> None:
         """
         Print build success message.
 
@@ -669,6 +596,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
         if size_info:
             print()
             from .build_utils import SizeInfoPrinter
+
             SizeInfoPrinter.print_size_info(size_info)
             print()
 
@@ -683,14 +611,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
         Returns:
             BuildResultESP8266 indicating failure
         """
-        return BuildResultESP8266(
-            success=False,
-            firmware_bin=None,
-            firmware_elf=None,
-            size_info=None,
-            build_time=time.time() - start_time,
-            message=message
-        )
+        return BuildResultESP8266(success=False, firmware_bin=None, firmware_elf=None, size_info=None, build_time=time.time() - start_time, message=message)
 
     @staticmethod
     def _resolve_platform_url(platform_spec: str) -> str:

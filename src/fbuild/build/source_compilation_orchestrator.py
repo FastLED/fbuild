@@ -9,12 +9,13 @@ higher-level interface over the low-level ICompiler interface.
 from pathlib import Path
 from typing import List
 
-from .compiler import ICompiler, CompilerError
-from ..output import log_file, log_detail
+from ..output import log_detail, log_file
+from .compiler import CompilerError, ICompiler
 
 
 class SourceCompilationOrchestratorError(Exception):
     """Exception raised for source compilation orchestration errors."""
+
     pass
 
 
@@ -48,13 +49,7 @@ class SourceCompilationOrchestrator:
         """
         self.verbose = verbose
 
-    def compile_sources(
-        self,
-        compiler: ICompiler,
-        sources: List[Path],
-        output_dir: Path,
-        source_type: str
-    ) -> List[Path]:
+    def compile_sources(self, compiler: ICompiler, sources: List[Path], output_dir: Path, source_type: str) -> List[Path]:
         """
         Compile list of source files.
 
@@ -84,7 +79,7 @@ class SourceCompilationOrchestrator:
 
         for source in sources:
             # Generate output object filename
-            obj_name = source.stem + '.o'
+            obj_name = source.stem + ".o"
             obj_path = output_dir / obj_name
 
             # Check if rebuild needed (incremental compilation)
@@ -100,38 +95,26 @@ class SourceCompilationOrchestrator:
                 result = compiler.compile(source, obj_path)
 
                 if not result.success:
-                    raise SourceCompilationOrchestratorError(
-                        f"Compilation failed for {source}:\n{result.stderr}"
-                    )
+                    raise SourceCompilationOrchestratorError(f"Compilation failed for {source}:\n{result.stderr}")
 
                 objects.append(obj_path)
 
             except CompilerError as e:
-                raise SourceCompilationOrchestratorError(
-                    f"Compilation failed for {source}: {e}"
-                )
+                raise SourceCompilationOrchestratorError(f"Compilation failed for {source}: {e}")
 
         # Wait for all async jobs to complete (if using async mode)
         # This is a no-op for sync compilation
         try:
-            if hasattr(compiler, 'wait_all_jobs') and callable(getattr(compiler, 'wait_all_jobs')):
-                getattr(compiler, 'wait_all_jobs')()
+            if hasattr(compiler, "wait_all_jobs") and callable(getattr(compiler, "wait_all_jobs")):
+                getattr(compiler, "wait_all_jobs")()
         except CompilerError as e:
-            raise SourceCompilationOrchestratorError(
-                f"Async compilation failed: {e}"
-            )
+            raise SourceCompilationOrchestratorError(f"Async compilation failed: {e}")
 
         return objects
 
     def compile_multiple_groups(
-        self,
-        compiler: ICompiler,
-        sketch_sources: List[Path],
-        core_sources: List[Path],
-        variant_sources: List[Path],
-        src_build_dir: Path,
-        core_build_dir: Path
-    ) -> 'MultiGroupCompilationResult':
+        self, compiler: ICompiler, sketch_sources: List[Path], core_sources: List[Path], variant_sources: List[Path], src_build_dir: Path, core_build_dir: Path
+    ) -> "MultiGroupCompilationResult":
         """
         Compile multiple groups of sources (sketch, core, variant).
 
@@ -152,28 +135,13 @@ class SourceCompilationOrchestrator:
             SourceCompilationOrchestratorError: If any compilation fails
         """
         # Compile sketch sources
-        sketch_objects = self.compile_sources(
-            compiler,
-            sketch_sources,
-            src_build_dir,
-            "sketch"
-        )
+        sketch_objects = self.compile_sources(compiler, sketch_sources, src_build_dir, "sketch")
 
         # Compile core sources
-        core_objects = self.compile_sources(
-            compiler,
-            core_sources,
-            core_build_dir,
-            "core"
-        )
+        core_objects = self.compile_sources(compiler, core_sources, core_build_dir, "core")
 
         # Compile variant sources
-        variant_objects = self.compile_sources(
-            compiler,
-            variant_sources,
-            core_build_dir,
-            "variant"
-        )
+        variant_objects = self.compile_sources(compiler, variant_sources, core_build_dir, "variant")
 
         # Combine core and variant objects
         all_core_objects = core_objects + variant_objects
@@ -181,12 +149,7 @@ class SourceCompilationOrchestrator:
         total_objects = len(sketch_objects) + len(all_core_objects)
         log_detail(f"Compiled {total_objects} objects", verbose_only=not self.verbose)
 
-        return MultiGroupCompilationResult(
-            sketch_objects=sketch_objects,
-            core_objects=core_objects,
-            variant_objects=variant_objects,
-            all_core_objects=all_core_objects
-        )
+        return MultiGroupCompilationResult(sketch_objects=sketch_objects, core_objects=core_objects, variant_objects=variant_objects, all_core_objects=all_core_objects)
 
 
 class MultiGroupCompilationResult:
@@ -196,13 +159,7 @@ class MultiGroupCompilationResult:
     Contains object files organized by source type.
     """
 
-    def __init__(
-        self,
-        sketch_objects: List[Path],
-        core_objects: List[Path],
-        variant_objects: List[Path],
-        all_core_objects: List[Path]
-    ):
+    def __init__(self, sketch_objects: List[Path], core_objects: List[Path], variant_objects: List[Path], all_core_objects: List[Path]):
         """
         Initialize multi-group compilation result.
 

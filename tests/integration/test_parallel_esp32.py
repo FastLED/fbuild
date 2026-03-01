@@ -76,7 +76,7 @@ class TestESP32DevParallelCompilation:
         result = self._build_project(esp32dev_project, jobs=1, clean=True)
 
         if result.returncode != 0:
-            pytest.fail(f"Serial compilation failed with exit code {result.returncode}.\n" f"STDOUT:\n{result.stdout}\n" f"STDERR:\n{result.stderr}")
+            pytest.fail(f"Serial compilation failed with exit code {result.returncode}.\nSTDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}")
 
         # Verify firmware was created
         firmware_path = esp32dev_project / ".fbuild" / "build" / "esp32dev" / "firmware.bin"
@@ -87,7 +87,7 @@ class TestESP32DevParallelCompilation:
         result = self._build_project(esp32dev_project, jobs=2, clean=True)
 
         if result.returncode != 0:
-            pytest.fail(f"Parallel compilation failed with exit code {result.returncode}.\n" f"STDOUT:\n{result.stdout}\n" f"STDERR:\n{result.stderr}")
+            pytest.fail(f"Parallel compilation failed with exit code {result.returncode}.\nSTDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}")
 
         # Verify firmware was created
         firmware_path = esp32dev_project / ".fbuild" / "build" / "esp32dev" / "firmware.bin"
@@ -112,7 +112,7 @@ class TestESP32DevParallelCompilation:
         hash_incremental = self._get_firmware_hash(esp32dev_project)
 
         # Hash should be identical
-        assert hash_full == hash_incremental, "Firmware changed after incremental build with no source changes. " "This indicates non-deterministic compilation."
+        assert hash_full == hash_incremental, "Firmware changed after incremental build with no source changes. This indicates non-deterministic compilation."
 
         # Touch source file to trigger recompilation
         source_file = esp32dev_project / "esp32dev.ino"
@@ -186,7 +186,7 @@ class TestESP32C6ParallelCompilation:
         result = self._build_project(esp32c6_project, jobs=1, clean=True)
 
         if result.returncode != 0:
-            pytest.fail(f"Serial compilation failed with exit code {result.returncode}.\n" f"STDOUT:\n{result.stdout}\n" f"STDERR:\n{result.stderr}")
+            pytest.fail(f"Serial compilation failed with exit code {result.returncode}.\nSTDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}")
 
         # Verify firmware was created
         firmware_path = esp32c6_project / ".fbuild" / "build" / "esp32c6" / "firmware.bin"
@@ -197,7 +197,7 @@ class TestESP32C6ParallelCompilation:
         result = self._build_project(esp32c6_project, jobs=2, clean=True)
 
         if result.returncode != 0:
-            pytest.fail(f"Parallel compilation failed with exit code {result.returncode}.\n" f"STDOUT:\n{result.stdout}\n" f"STDERR:\n{result.stderr}")
+            pytest.fail(f"Parallel compilation failed with exit code {result.returncode}.\nSTDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}")
 
         # Verify firmware was created
         firmware_path = esp32c6_project / ".fbuild" / "build" / "esp32c6" / "firmware.bin"
@@ -223,7 +223,7 @@ class TestESP32C6ParallelCompilation:
         hash_incremental = self._get_firmware_hash(esp32c6_project)
 
         # Hash should be identical
-        assert hash_full == hash_incremental, "Firmware changed after incremental build with no source changes. " "This indicates non-deterministic compilation."
+        assert hash_full == hash_incremental, "Firmware changed after incremental build with no source changes. This indicates non-deterministic compilation."
 
         # Touch source file to trigger recompilation
         source_file = esp32c6_project / "esp32c6.ino"

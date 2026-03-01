@@ -155,7 +155,7 @@ def test_fastapi_server_lifecycle():
         if server_error:
             pytest.fail(f"Server error during startup: {server_error}")
 
-        assert server_available, f"Server failed to become available within 10s. " f"Thread alive: {server_thread.is_alive()}"
+        assert server_available, f"Server failed to become available within 10s. Thread alive: {server_thread.is_alive()}"
 
         print("✓ Server is available")
 
@@ -299,8 +299,8 @@ def test_fastapi_immediate_shutdown_regression():
         for i in range(3):
             time.sleep(1.0)
             response = requests.get(health_url, timeout=2.0)
-            assert response.status_code == 200, f"Server stopped responding after {i+1}s - regression detected!"
-            print(f"✓ Still running after {i+1}s")
+            assert response.status_code == 200, f"Server stopped responding after {i + 1}s - regression detected!"
+            print(f"✓ Still running after {i + 1}s")
 
         print("✓ Regression test passed - server stays running")
 

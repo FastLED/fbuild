@@ -15,13 +15,13 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
-from .build_profiles import BuildProfile, ProfileFlags, get_profile
 from ..platform_configs import BoardConfigModel
+from .build_profiles import BuildProfile, ProfileFlags, get_profile
 
 if TYPE_CHECKING:
-    from fbuild.daemon.compilation_queue import CompilationJobQueue
-    from fbuild.packages.package import IPackage, IToolchain, IFramework
     from fbuild.build.compilation_executor import CompilationExecutor
+    from fbuild.daemon.compilation_queue import CompilationJobQueue
+    from fbuild.packages.package import IFramework, IPackage, IToolchain
 
 
 @dataclass(frozen=True)

@@ -1245,7 +1245,7 @@ class TestFirmwareLedgerConcurrentAccess(unittest.TestCase):
             try:
                 for i in range(10):
                     self.ledger.record_deployment(
-                        port=f"COM{10+i}",
+                        port=f"COM{10 + i}",
                         firmware_hash=f"newhash{i}",
                         source_hash=f"newsrc{i}",
                         project_dir=f"/newpath{i}",

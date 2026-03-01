@@ -303,7 +303,7 @@ class TestESP32S3HTTPReliability:
 
         # Run 3 sequential builds
         for i in range(3):
-            print(f"\n=== Build {i+1}/3 ===")
+            print(f"\n=== Build {i + 1}/3 ===")
             success = request_build_http(
                 project_dir=ESP32S3_PROJECT,
                 environment="esp32-s3-devkitc-1",
@@ -312,7 +312,7 @@ class TestESP32S3HTTPReliability:
                 jobs=4,
                 timeout=600,
             )
-            assert success is True, f"Build {i+1} failed"
+            assert success is True, f"Build {i + 1} failed"
             time.sleep(1)  # Brief pause between builds
 
     def test_build_with_different_job_counts(self, daemon):

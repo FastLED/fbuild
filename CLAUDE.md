@@ -36,7 +36,7 @@ uv run --group test pytest tests/unit/test_foo.py -v
 ./test --full
 
 # Lint and format
-./lint  # Runs: ruff, black, isort, pyright, flake8
+./lint  # Runs: ruff (linting + formatting + import sorting), pyright, custom checks
 
 # Build a test project
 uv run fbuild build tests/uno -e uno

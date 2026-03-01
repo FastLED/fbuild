@@ -11,16 +11,16 @@ Design:
 """
 
 import _thread
-import subprocess
-import shutil
 import platform
+import shutil
+import subprocess
 import time
 from pathlib import Path
-from typing import List, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, List, Optional
 
+from ..output import log_detail
 from ..packages.header_trampoline_cache import HeaderTrampolineCache
 from ..packages.trampoline_excludes import get_exclude_patterns
-from ..output import log_detail
 from ..subprocess_utils import safe_run
 
 if TYPE_CHECKING:
@@ -191,7 +191,6 @@ class CompilationExecutor:
                 raise
             raise CompilationError(f"Failed to compile {source_path.name}: {e}") from e
 
-
     def _build_compile_command(self, compiler_path: Path, source_path: Path, output_path: Path, compile_flags: List[str], include_paths: List[str]) -> List[str]:
         """Build compilation command with optional sccache wrapper.
 
@@ -230,7 +229,6 @@ class CompilationExecutor:
         cmd.extend(["-o", str(output_path)])
 
         return cmd
-
 
     def preprocess_ino(self, ino_path: Path, output_dir: Path) -> Path:
         """Preprocess .ino file to .cpp file.
