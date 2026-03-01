@@ -130,7 +130,7 @@
       "link_flags": ["-flto=auto", "-fuse-linker-plugin"]
     },
     "quick": {
-      "compile_flags": ["-O1"],
+      "compile_flags": ["-O1", "-g1"],
       "link_flags": []
     }
   },

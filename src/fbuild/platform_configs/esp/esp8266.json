@@ -87,7 +87,7 @@
       "link_flags": []
     },
     "quick": {
-      "compile_flags": ["-O1"],
+      "compile_flags": ["-O1", "-g1"],
       "link_flags": []
     }
   },
