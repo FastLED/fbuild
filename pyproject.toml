@@ -117,5 +117,6 @@ markers = [
     "diagnostic: marks tests as diagnostic/utility tests (always run, provide debugging info)",
 ]
 # By default, skip integration and concurrent_safety tests
-addopts = "-m 'not integration and not concurrent_safety'"
+# --dist loadgroup: respect xdist_group markers (keeps grouped tests on one worker)
+addopts = "-m 'not integration and not concurrent_safety' --dist loadgroup"
 testpaths = ["tests"]

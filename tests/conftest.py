@@ -5,8 +5,13 @@ Python 3.13 changed how stdout/stderr are handled, causing "I/O operation on clo
 errors during test teardown. This is a known issue: https://github.com/pytest-dev/pytest/issues/11439
 """
 
+import os
 import sys
 import warnings
+
+# Isolate tests from the production daemon: use daemon_dev directory, port 8865.
+# Must be set BEFORE any fbuild imports because paths.py reads it at import time.
+os.environ.setdefault("FBUILD_DEV_MODE", "1")
 
 import pytest
 
