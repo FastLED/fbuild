@@ -13,16 +13,16 @@ import logging
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
-from ..output import ProgressCallback, log_detail
-from ..packages.trampoline_excludes import get_exclude_patterns
-from .archive_creator import ArchiveCreator
-from .compiler import CompilerError, ICompiler
-from .flag_builder import FlagBuilder
+from fbuild.output import ProgressCallback, log_detail
+from fbuild.packages.trampoline_excludes import get_exclude_patterns
+from fbuild.build.archive_creator import ArchiveCreator
+from fbuild.build.compiler import CompilerError, ICompiler
+from fbuild.build.flag_builder import FlagBuilder
 
 logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
-    from .build_context import BuildContext
+    from fbuild.build.build_context import BuildContext
 
 
 class ConfigurableCompilerError(CompilerError):
@@ -168,7 +168,7 @@ class ConfigurableCompiler(ICompiler):
 
             # Apply SDK fallback for MCUs not fully supported in the platform
             # (e.g., esp32c2 can use esp32c3 SDK)
-            from ..packages.sdk_utils import SDKPathResolver
+            from fbuild.packages.sdk_utils import SDKPathResolver
 
             resolver = SDKPathResolver(sdk_dir, show_progress=False)
             resolved_mcu = resolver._resolve_mcu(self.mcu)
@@ -176,7 +176,7 @@ class ConfigurableCompiler(ICompiler):
             # Use get_psram_mode to select correct SDK variant for boards without PSRAM
             # OPI variants (dio_opi, qio_opi, opi_opi) have CONFIG_SPIRAM_IGNORE_NOTFOUND=1
             # which allows booting without PSRAM hardware. QSPI variants crash.
-            from .psram_utils import get_psram_mode
+            from fbuild.build.psram_utils import get_psram_mode
 
             psram_mode = get_psram_mode(self.board_id, self.board_config)
 
@@ -573,7 +573,7 @@ class ConfigurableCompiler(ICompiler):
         """
         import time
 
-        from ..daemon.compilation_queue import CompilationJob
+        from fbuild.daemon.compilation_queue import CompilationJob
 
         job_id = f"compile_{source.stem}_{int(time.time() * 1000000)}"
 
@@ -658,7 +658,7 @@ class ConfigurableCompiler(ICompiler):
         Raises:
             ConfigurableCompilerError: If compilation fails
         """
-        from .compiler import CompileResult  # Import here to avoid circular dependency
+        from fbuild.build.compiler import CompileResult  # Import here to avoid circular dependency
 
         try:
             obj_path = self.compile_source(source, output)

@@ -15,8 +15,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
-from ..platform_configs import BoardConfigModel
-from .build_profiles import BuildProfile, ProfileFlags, get_profile
+from fbuild.platform_configs import BoardConfigModel
+from fbuild.build.build_profiles import BuildProfile, ProfileFlags, get_profile
 
 if TYPE_CHECKING:
     from fbuild.build.compilation_executor import CompilationExecutor

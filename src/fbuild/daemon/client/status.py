@@ -116,7 +116,7 @@ def get_daemon_status() -> dict[str, Any]:
     Returns:
         Dictionary with daemon status information
     """
-    from .lifecycle import is_daemon_running
+    from fbuild.daemon.client.lifecycle import is_daemon_running
 
     status: dict[str, Any] = {
         "running": is_daemon_running(),
@@ -150,7 +150,7 @@ def display_daemon_stats_compact() -> None:
     This function is called immediately when the client starts to show
     the current daemon status. It's designed to be non-intrusive.
     """
-    from .lifecycle import is_daemon_running
+    from fbuild.daemon.client.lifecycle import is_daemon_running
 
     if not is_daemon_running():
         print("🔴 Daemon: not running")

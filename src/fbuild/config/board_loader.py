@@ -6,7 +6,7 @@ for both built-in boards and platform-specific boards (ESP32, etc.).
 
 from typing import Dict
 
-from .board_config import BoardConfig, BoardConfigError
+from fbuild.config.board_config import BoardConfig, BoardConfigError
 
 
 class BoardConfigLoader:

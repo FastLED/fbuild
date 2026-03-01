@@ -18,7 +18,7 @@ from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, Iterator
 
 if TYPE_CHECKING:
-    from .lock_types import HeldLocksSummary, LockStatusSummary, StaleLocksSummary
+    from fbuild.daemon.lock_types import HeldLocksSummary, LockStatusSummary, StaleLocksSummary
 
 # Default lock timeout: 30 minutes (for long builds)
 DEFAULT_LOCK_TIMEOUT = 1800.0
@@ -296,7 +296,7 @@ class ResourceLockManager:
         Returns:
             StaleLocksSummary with lists of stale port and project locks
         """
-        from .lock_types import ResourceLock, StaleLocksSummary
+        from fbuild.daemon.lock_types import ResourceLock, StaleLocksSummary
 
         with self._master_lock:
             stale_ports = [ResourceLock(resource_id=port, lock_info=info) for port, info in self._port_locks.items() if info.is_stale()]
@@ -309,7 +309,7 @@ class ResourceLockManager:
         Returns:
             HeldLocksSummary with lists of held port and project locks
         """
-        from .lock_types import HeldLocksSummary, ResourceLock
+        from fbuild.daemon.lock_types import HeldLocksSummary, ResourceLock
 
         with self._master_lock:
             held_ports = [ResourceLock(resource_id=port, lock_info=info) for port, info in self._port_locks.items() if info.is_held()]
@@ -460,7 +460,7 @@ class ResourceLockManager:
         Returns:
             LockStatusSummary with mappings of resource identifiers to lock info
         """
-        from .lock_types import LockStatusSummary
+        from fbuild.daemon.lock_types import LockStatusSummary
 
         with self._master_lock:
             return LockStatusSummary(

@@ -16,27 +16,27 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
-    from .build_context import BuildParams
+    from fbuild.build.build_context import BuildParams
 
-from ..config import BoardConfig, BoardConfigLoader, PlatformIOConfig
-from ..config.board_config import BoardConfigError
-from ..interrupt_utils import handle_keyboard_interrupt_properly
-from ..output import log, log_build_complete, log_detail, log_firmware_path, log_phase, set_verbose
-from ..packages import ArduinoCore, Cache, Toolchain
-from ..packages.arduino_core import ArduinoCoreError
-from ..packages.library_manager import LibraryError
-from ..packages.toolchain import ToolchainError
-from .build_component_factory import BuildComponentFactory
-from .build_info_generator import BuildInfoGenerator
-from .build_state import BuildStateTracker
-from .build_utils import SizeInfoPrinter
-from .compiler import CompilerError as CompilerImportError
-from .library_dependency_processor import LibraryDependencyProcessor
-from .linker import LinkerError as LinkerImportError
-from .orchestrator import BuildOrchestratorError, BuildResult, IBuildOrchestrator
-from .orchestrator_esp32 import OrchestratorESP32
-from .source_compilation_orchestrator import SourceCompilationOrchestrator, SourceCompilationOrchestratorError
-from .source_scanner import SourceCollection, SourceScanner
+from fbuild.config import BoardConfig, BoardConfigLoader, PlatformIOConfig
+from fbuild.config.board_config import BoardConfigError
+from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+from fbuild.output import log, log_build_complete, log_detail, log_firmware_path, log_phase, set_verbose
+from fbuild.packages import ArduinoCore, Cache, Toolchain
+from fbuild.packages.arduino_core import ArduinoCoreError
+from fbuild.packages.library_manager import LibraryError
+from fbuild.packages.toolchain import ToolchainError
+from fbuild.build.build_component_factory import BuildComponentFactory
+from fbuild.build.build_info_generator import BuildInfoGenerator
+from fbuild.build.build_state import BuildStateTracker
+from fbuild.build.build_utils import SizeInfoPrinter
+from fbuild.build.compiler import CompilerError as CompilerImportError
+from fbuild.build.library_dependency_processor import LibraryDependencyProcessor
+from fbuild.build.linker import LinkerError as LinkerImportError
+from fbuild.build.orchestrator import BuildOrchestratorError, BuildResult, IBuildOrchestrator
+from fbuild.build.orchestrator_esp32 import OrchestratorESP32
+from fbuild.build.source_compilation_orchestrator import SourceCompilationOrchestrator, SourceCompilationOrchestratorError
+from fbuild.build.source_scanner import SourceCollection, SourceScanner
 
 # Note: Daemon queue access is handled via dynamic import in build method
 # to avoid circular dependencies and hard daemon requirement
@@ -129,7 +129,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             log_detail(f"Building environment: {env_name}", verbose_only=not verbose_mode)
 
             # Print build profile banner
-            from .build_profiles import print_profile_banner
+            from fbuild.build.build_profiles import print_profile_banner
 
             print_profile_banner(request.profile)
 
@@ -235,7 +235,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             lib_archives = lib_result.archive_files
 
             # Get src_dir override from platformio.ini
-            from ..config import PlatformIOConfig
+            from fbuild.config import PlatformIOConfig
 
             config_for_src_dir = PlatformIOConfig(project_dir / "platformio.ini")
             src_dir_override = config_for_src_dir.get_src_dir()
@@ -256,8 +256,8 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             log_phase(8, 11, "Compiling sources...", verbose_only=not verbose_mode)
 
             # Create BuildContext for compiler and linker
-            from .build_context import BuildContext
-            from .compilation_executor import CompilationExecutor
+            from fbuild.build.build_context import BuildContext
+            from fbuild.build.compilation_executor import CompilationExecutor
 
             compilation_executor = CompilationExecutor(
                 build_dir=build_dir,
@@ -268,7 +268,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             )
 
             # Load platform config from JSON
-            from ..platform_configs import load_config as load_platform_config
+            from fbuild.platform_configs import load_config as load_platform_config
 
             platform_config = load_platform_config("avr")
             if platform_config is None:
@@ -424,7 +424,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             return BuildResult(success=False, hex_path=None, elf_path=None, size_info=None, build_time=0.0, message="Cache not initialized")
 
         # Delegate to OrchestratorTeensy for native Teensy build
-        from .orchestrator_teensy import OrchestratorTeensy
+        from fbuild.build.orchestrator_teensy import OrchestratorTeensy
 
         teensy_orchestrator = OrchestratorTeensy(self.cache, request.verbose)
         return teensy_orchestrator.build(request)

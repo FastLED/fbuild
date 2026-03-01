@@ -21,7 +21,7 @@ from typing import Optional
 
 from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
 
-from ..subprocess_utils import safe_popen, safe_run
+from fbuild.subprocess_utils import safe_popen, safe_run
 
 
 def get_docker_env() -> dict[str, str]:

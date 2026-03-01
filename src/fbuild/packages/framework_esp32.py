@@ -51,13 +51,13 @@ import json
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from .archive_utils import ArchiveExtractor, URLVersionExtractor
-from .cache import Cache
-from .downloader import DownloadError, ExtractionError
-from .framework_patches import ESP32_FRAMEWORK_PATCHES, apply_framework_patches
-from .header_trampoline_cache import HeaderTrampolineCache
-from .package import IFramework, PackageError
-from .sdk_utils import SDKPathResolver
+from fbuild.packages.archive_utils import ArchiveExtractor, URLVersionExtractor
+from fbuild.packages.cache import Cache
+from fbuild.packages.downloader import DownloadError, ExtractionError
+from fbuild.packages.framework_patches import ESP32_FRAMEWORK_PATCHES, apply_framework_patches
+from fbuild.packages.header_trampoline_cache import HeaderTrampolineCache
+from fbuild.packages.package import IFramework, PackageError
+from fbuild.packages.sdk_utils import SDKPathResolver
 
 
 class FrameworkErrorESP32(PackageError):

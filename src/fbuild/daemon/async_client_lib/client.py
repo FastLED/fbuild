@@ -14,21 +14,9 @@ import time
 import uuid
 from typing import Any, Callable, Coroutine
 
-from .connection import ConnectionManager
-from .handlers import (
-    FirmwareProtocolHandler,
-    LockProtocolHandler,
-    SerialProtocolHandler,
-    SubscriptionProtocolHandler,
-)
-from .types import (
-    ConnectionError,
-    ConnectionState,
-    DaemonClientError,
-    MessageType,
-    PendingRequest,
-    TimeoutError,
-)
+from fbuild.daemon.async_client_lib.connection import ConnectionManager
+from fbuild.daemon.async_client_lib.handlers import FirmwareProtocolHandler, LockProtocolHandler, SerialProtocolHandler, SubscriptionProtocolHandler
+from fbuild.daemon.async_client_lib.types import ConnectionError, ConnectionState, DaemonClientError, MessageType, PendingRequest, TimeoutError
 
 # Default configuration
 DEFAULT_HOST = "localhost"

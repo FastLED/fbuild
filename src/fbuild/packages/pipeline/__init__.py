@@ -12,18 +12,12 @@ Public API:
 import sys
 from pathlib import Path
 
-from .adapters import (
-    TaskGraphError,
-    build_avr_task_graph,
-    build_task_graph,
-    filter_uncached_tasks,
-    is_task_cached,
-)
-from .callbacks import NullCallback, ProgressCallback
-from .models import PackageTask, PipelineResult, TaskPhase
-from .pipeline import ParallelPipeline, PipelineCancelledError
-from .pools import DownloadPool, InstallPool, UnpackPool
-from .progress_display import PipelineProgressDisplay
+from fbuild.packages.pipeline.adapters import TaskGraphError, build_avr_task_graph, build_task_graph, filter_uncached_tasks, is_task_cached
+from fbuild.packages.pipeline.callbacks import NullCallback, ProgressCallback
+from fbuild.packages.pipeline.models import PackageTask, PipelineResult, TaskPhase
+from fbuild.packages.pipeline.pipeline import ParallelPipeline, PipelineCancelledError
+from fbuild.packages.pipeline.pools import DownloadPool, InstallPool, UnpackPool
+from fbuild.packages.pipeline.progress_display import PipelineProgressDisplay
 
 
 class ParallelInstaller:

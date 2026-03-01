@@ -8,8 +8,8 @@ from __future__ import annotations
 
 import base64
 
-from ..types import MessageType
-from .base import BaseProtocolHandler
+from fbuild.daemon.async_client_lib.types import MessageType
+from fbuild.daemon.async_client_lib.handlers.base import BaseProtocolHandler
 
 
 class SerialProtocolHandler(BaseProtocolHandler):

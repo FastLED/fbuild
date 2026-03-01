@@ -40,7 +40,7 @@ async def get_daemon_info() -> DaemonInfoResponse:
     Returns:
         Daemon info including PID, uptime, version, and paths.
     """
-    from ..fastapi_app import get_daemon_context
+    from fbuild.daemon.fastapi_app import get_daemon_context
 
     context = get_daemon_context()
     uptime = time.time() - context.daemon_started_at
@@ -77,7 +77,7 @@ async def shutdown_daemon() -> ShutdownResponse:
     Returns:
         Response with success status.
     """
-    from ..fastapi_app import get_daemon_context
+    from fbuild.daemon.fastapi_app import get_daemon_context
 
     # Verify daemon context is initialized (raises HTTPException if not)
     get_daemon_context()

@@ -10,8 +10,8 @@ import stat
 from pathlib import Path
 from typing import Any, Callable, Optional
 
-from ..build.linker import SizeInfo
-from ..output import log_size_info
+from fbuild.build.linker import SizeInfo
+from fbuild.output import log_size_info
 
 
 class SizeInfoPrinter:

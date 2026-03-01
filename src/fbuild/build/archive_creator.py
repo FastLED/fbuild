@@ -17,7 +17,7 @@ import time
 from pathlib import Path
 from typing import List
 
-from ..subprocess_utils import safe_run
+from fbuild.subprocess_utils import safe_run
 
 
 class ArchiveError(Exception):

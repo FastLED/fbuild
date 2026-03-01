@@ -8,14 +8,9 @@ import platform
 from pathlib import Path
 from typing import Optional
 
-from .archive_extractors import ArchiveExtractorFactory
-from .archive_strategies import (
-    DirectoryMover,
-    FileOperations,
-    UnixRetryStrategy,
-    WindowsRetryStrategy,
-)
-from .downloader import DownloadError, ExtractionError, PackageDownloader
+from fbuild.packages.archive_extractors import ArchiveExtractorFactory
+from fbuild.packages.archive_strategies import DirectoryMover, FileOperations, UnixRetryStrategy, WindowsRetryStrategy
+from fbuild.packages.downloader import DownloadError, ExtractionError, PackageDownloader
 
 
 class ArchiveExtractionError(Exception):
@@ -160,6 +155,6 @@ class URLVersionExtractor:
             return version_match.group(1)
 
         # Last resort: use URL hash
-        from .cache import Cache
+        from fbuild.packages.cache import Cache
 
         return Cache.hash_url(url)[:8]

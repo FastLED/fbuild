@@ -13,22 +13,22 @@ from pathlib import Path
 from typing import TYPE_CHECKING, List, Optional
 
 if TYPE_CHECKING:
-    from .build_context import BuildParams
+    from fbuild.build.build_context import BuildParams
 
-from ..cli_utils import BannerFormatter
-from ..output import DefaultProgressCallback, log_detail, log_phase, log_warning
-from ..packages import Cache
-from ..packages.framework_esp32 import FrameworkESP32
-from ..packages.library_manager_esp32 import LibraryManagerESP32
-from ..packages.platform_esp32 import PlatformESP32
-from ..packages.toolchain_esp32 import ToolchainESP32
-from .build_info_generator import BuildInfoGenerator
-from .build_state import BuildStateTracker
-from .configurable_compiler import ConfigurableCompiler
-from .configurable_linker import ConfigurableLinker
-from .linker import SizeInfo
-from .orchestrator import BuildResult, IBuildOrchestrator
-from .psram_utils import board_has_psram, get_psram_mode
+from fbuild.cli_utils import BannerFormatter
+from fbuild.output import DefaultProgressCallback, log_detail, log_phase, log_warning
+from fbuild.packages import Cache
+from fbuild.packages.framework_esp32 import FrameworkESP32
+from fbuild.packages.library_manager_esp32 import LibraryManagerESP32
+from fbuild.packages.platform_esp32 import PlatformESP32
+from fbuild.packages.toolchain_esp32 import ToolchainESP32
+from fbuild.build.build_info_generator import BuildInfoGenerator
+from fbuild.build.build_state import BuildStateTracker
+from fbuild.build.configurable_compiler import ConfigurableCompiler
+from fbuild.build.configurable_linker import ConfigurableLinker
+from fbuild.build.linker import SizeInfo
+from fbuild.build.orchestrator import BuildResult, IBuildOrchestrator
+from fbuild.build.psram_utils import board_has_psram, get_psram_mode
 
 # Module-level logger
 logger = logging.getLogger(__name__)
@@ -150,7 +150,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         Raises:
             BuildOrchestratorError: If build fails at any phase
         """
-        from ..config import PlatformIOConfig
+        from fbuild.config import PlatformIOConfig
 
         # Extract from request
         project_dir = request.project_dir
@@ -233,7 +233,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             platform_url = self._resolve_platform_url(platform_url)
 
             # Print build profile banner
-            from .build_profiles import print_profile_banner
+            from fbuild.build.build_profiles import print_profile_banner
 
             print_profile_banner(request.profile)
 
@@ -272,7 +272,7 @@ class OrchestratorESP32(IBuildOrchestrator):
 
             # Determine source directory for cache invalidation
             # This is computed early to include source file changes in cache key
-            from ..config import PlatformIOConfig
+            from fbuild.config import PlatformIOConfig
 
             config_for_src_dir = PlatformIOConfig(project_dir / "platformio.ini")
             src_dir_override = config_for_src_dir.get_src_dir()
@@ -301,7 +301,7 @@ class OrchestratorESP32(IBuildOrchestrator):
                     log_detail(f"  - {reason}", indent=8, verbose_only=True)
                 log_detail("Cleaning build artifacts...", verbose_only=True)
                 # Clean build artifacts to force rebuild
-                from .build_utils import safe_rmtree
+                from fbuild.build.build_utils import safe_rmtree
 
                 if build_dir.exists():
                     safe_rmtree(build_dir)
@@ -311,7 +311,7 @@ class OrchestratorESP32(IBuildOrchestrator):
                 log_detail("Build configuration unchanged, using cached artifacts", verbose_only=True)
 
             # Initialize compilation executor early to show sccache status
-            from .compilation_executor import CompilationExecutor
+            from fbuild.build.compilation_executor import CompilationExecutor
 
             compilation_executor = CompilationExecutor(
                 build_dir=build_dir,
@@ -322,7 +322,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             )
 
             # Load platform configuration ONCE (not redundantly in compiler/linker)
-            from .. import platform_configs
+            from fbuild import platform_configs
 
             platform_config = platform_configs.load_config(mcu)
             if platform_config is None:
@@ -333,7 +333,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             core = board_json.get("build", {}).get("core", "arduino")
 
             # Create full BuildContext with all configuration loaded once
-            from .build_context import BuildContext
+            from fbuild.build.build_context import BuildContext
 
             context = BuildContext.from_request(
                 request=request,
@@ -851,7 +851,7 @@ __attribute__((weak)) bool btInUse(void) {
         # Print size information if available
         if size_info:
             print()
-            from .build_utils import SizeInfoPrinter
+            from fbuild.build.build_utils import SizeInfoPrinter
 
             SizeInfoPrinter.print_size_info(size_info)
             print()

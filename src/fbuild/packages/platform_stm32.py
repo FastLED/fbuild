@@ -18,10 +18,10 @@ Supported Boards:
 from pathlib import Path
 from typing import Any, Dict, List
 
-from .cache import Cache
-from .framework_stm32 import FrameworkErrorSTM32, FrameworkSTM32
-from .package import IPackage, PackageError
-from .toolchain_stm32 import ToolchainErrorSTM32, ToolchainSTM32
+from fbuild.packages.cache import Cache
+from fbuild.packages.framework_stm32 import FrameworkErrorSTM32, FrameworkSTM32
+from fbuild.packages.package import IPackage, PackageError
+from fbuild.packages.toolchain_stm32 import ToolchainErrorSTM32, ToolchainSTM32
 
 
 class PlatformErrorSTM32(PackageError):
@@ -242,7 +242,7 @@ class PlatformSTM32(IPackage):
         Raises:
             PlatformErrorSTM32: If board is not supported
         """
-        from .. import platform_configs
+        from fbuild import platform_configs
 
         config = platform_configs.load_board_config(board_id)
         if config is None:

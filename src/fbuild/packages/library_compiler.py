@@ -13,7 +13,7 @@ from fbuild.output import ProgressCallback, log_detail
 from fbuild.subprocess_utils import safe_run
 
 if TYPE_CHECKING:
-    from .library_manager import LibraryInfo
+    from fbuild.packages.library_manager import LibraryInfo
 
 
 class LibraryCompilationError(Exception):

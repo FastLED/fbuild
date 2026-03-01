@@ -30,24 +30,9 @@ Example usage (sync):
 # Convenience function to create a client
 from typing import Any
 
-from .client import (
-    DEFAULT_HEARTBEAT_INTERVAL,
-    DEFAULT_HOST,
-    DEFAULT_PORT,
-    DEFAULT_REQUEST_TIMEOUT,
-    AsyncDaemonClient,
-)
-from .sync_client import SyncDaemonClient
-from .types import (
-    ConnectionError,
-    ConnectionState,
-    DaemonClientError,
-    MessageType,
-    PendingRequest,
-    ProtocolError,
-    Subscription,
-    TimeoutError,
-)
+from fbuild.daemon.async_client_lib.client import DEFAULT_HEARTBEAT_INTERVAL, DEFAULT_HOST, DEFAULT_PORT, DEFAULT_REQUEST_TIMEOUT, AsyncDaemonClient
+from fbuild.daemon.async_client_lib.sync_client import SyncDaemonClient
+from fbuild.daemon.async_client_lib.types import ConnectionError, ConnectionState, DaemonClientError, MessageType, PendingRequest, ProtocolError, Subscription, TimeoutError
 
 
 def create_client(

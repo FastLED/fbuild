@@ -19,8 +19,8 @@ from concurrent.futures import Future, ThreadPoolExecutor
 from pathlib import Path
 from typing import Any
 
-from .callbacks import ProgressCallback
-from .models import PackageTask, TaskPhase
+from fbuild.packages.pipeline.callbacks import ProgressCallback
+from fbuild.packages.pipeline.models import PackageTask, TaskPhase
 
 logger = logging.getLogger(__name__)
 

@@ -20,7 +20,7 @@ from rich.live import Live
 from rich.table import Table
 from rich.text import Text
 
-from .models import TaskPhase
+from fbuild.packages.pipeline.models import TaskPhase
 
 # Braille spinner frames for the INSTALLING phase animation
 _SPINNER_FRAMES = ("⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏")

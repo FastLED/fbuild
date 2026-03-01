@@ -8,10 +8,10 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-from .cache import Cache
-from .downloader import PackageDownloader
-from .package import IToolchain, PackageError
-from .platform_utils import PlatformDetector, PlatformError
+from fbuild.packages.cache import Cache
+from fbuild.packages.downloader import PackageDownloader
+from fbuild.packages.package import IToolchain, PackageError
+from fbuild.packages.platform_utils import PlatformDetector, PlatformError
 
 
 def _safe_print(message: str) -> None:

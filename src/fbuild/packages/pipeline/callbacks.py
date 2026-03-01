@@ -6,7 +6,7 @@ to report progress to the TUI display layer.
 
 from typing import Protocol, runtime_checkable
 
-from .models import TaskPhase
+from fbuild.packages.pipeline.models import TaskPhase
 
 
 @runtime_checkable

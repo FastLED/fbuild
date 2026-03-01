@@ -17,11 +17,11 @@ from typing import IO, Any, Optional
 from fbuild.config import PlatformIOConfig
 from fbuild.packages import Cache
 
-from ..subprocess_utils import get_python_executable, safe_popen
-from .deployer import DeploymentError, DeploymentResult, IDeployer
-from .esptool_utils import is_crash_loop_error
-from .platform_utils import get_filtered_env
-from .serial_utils import detect_serial_port
+from fbuild.subprocess_utils import get_python_executable, safe_popen
+from fbuild.deploy.deployer import DeploymentError, DeploymentResult, IDeployer
+from fbuild.deploy.esptool_utils import is_crash_loop_error
+from fbuild.deploy.platform_utils import get_filtered_env
+from fbuild.deploy.serial_utils import detect_serial_port
 
 
 def run_with_watchdog_timeout(

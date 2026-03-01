@@ -14,10 +14,10 @@ import subprocess
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, Optional
 
-from ..subprocess_utils import get_python_executable, safe_run
+from fbuild.subprocess_utils import get_python_executable, safe_run
 
 if TYPE_CHECKING:
-    from .build_context import BuildContext
+    from fbuild.build.build_context import BuildContext
 
 
 class BinaryGeneratorError(Exception):

@@ -18,7 +18,7 @@ import json
 from importlib import resources
 from typing import Any
 
-from .board_config_model import BoardConfigModel
+from fbuild.platform_configs.board_config_model import BoardConfigModel
 
 # Vendor directories to search
 VENDOR_DIRS = ["avr", "esp", "teensy", "rp", "stm32"]

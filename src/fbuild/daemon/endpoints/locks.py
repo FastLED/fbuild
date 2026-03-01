@@ -46,7 +46,7 @@ async def get_lock_status() -> LockStatusResponse:
         - project_locks: Dict of project -> lock info
         - stale_locks: List of locks that appear to be stale
     """
-    from ..fastapi_app import get_daemon_context
+    from fbuild.daemon.fastapi_app import get_daemon_context
 
     context = get_daemon_context()
     lock_manager = context.lock_manager
@@ -77,7 +77,7 @@ async def clear_stale_locks() -> ClearLocksResponse:
     Returns:
         Response with success status and count of cleared locks.
     """
-    from ..fastapi_app import get_daemon_context
+    from fbuild.daemon.fastapi_app import get_daemon_context
 
     context = get_daemon_context()
     lock_manager = context.lock_manager

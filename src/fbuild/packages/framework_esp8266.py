@@ -29,9 +29,9 @@ Framework Structure (after extraction):
 from pathlib import Path
 from typing import Any, Dict, List
 
-from .cache import Cache
-from .downloader import DownloadError, ExtractionError, PackageDownloader
-from .package import IFramework, PackageError
+from fbuild.packages.cache import Cache
+from fbuild.packages.downloader import DownloadError, ExtractionError, PackageDownloader
+from fbuild.packages.package import IFramework, PackageError
 
 
 class FrameworkErrorESP8266(PackageError):
@@ -90,7 +90,7 @@ class FrameworkESP8266(IFramework):
                 return parts[i + 1].lstrip("v")
 
         # Fallback: use URL hash
-        from .cache import Cache
+        from fbuild.packages.cache import Cache
 
         return Cache.hash_url(url)[:8]
 

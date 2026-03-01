@@ -8,7 +8,7 @@ have completed successfully.
 import threading
 from typing import Any
 
-from .models import PackageTask, TaskPhase
+from fbuild.packages.pipeline.models import PackageTask, TaskPhase
 
 
 class CyclicDependencyError(ValueError):

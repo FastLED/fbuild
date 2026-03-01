@@ -17,8 +17,8 @@ from queue import Empty, Queue
 from threading import Lock, Thread
 from typing import Callable, Optional
 
-from ..interrupt_utils import handle_keyboard_interrupt_properly
-from ..subprocess_utils import safe_run
+from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+from fbuild.subprocess_utils import safe_run
 
 
 class JobState(Enum):

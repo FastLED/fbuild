@@ -28,9 +28,9 @@ import platform
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-from .cache import Cache
-from .downloader import DownloadError, ExtractionError, PackageDownloader
-from .package import IToolchain, PackageError
+from fbuild.packages.cache import Cache
+from fbuild.packages.downloader import DownloadError, ExtractionError, PackageDownloader
+from fbuild.packages.package import IToolchain, PackageError
 
 
 class ToolchainErrorTeensy(PackageError):
@@ -114,7 +114,7 @@ class ToolchainTeensy(IToolchain):
                 return part
 
         # Fallback: use URL hash if version extraction fails
-        from .cache import Cache
+        from fbuild.packages.cache import Cache
 
         return Cache.hash_url(url)[:8]
 

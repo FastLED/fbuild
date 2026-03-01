@@ -14,10 +14,10 @@ Design:
 import shlex
 from typing import TYPE_CHECKING, Dict, List
 
-from .build_profiles import get_profile_flags_from_config
+from fbuild.build.build_profiles import get_profile_flags_from_config
 
 if TYPE_CHECKING:
-    from .build_context import BuildContext
+    from fbuild.build.build_context import BuildContext
 
 
 class FlagBuilderError(Exception):

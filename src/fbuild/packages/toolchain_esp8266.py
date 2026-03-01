@@ -19,12 +19,12 @@ Toolchain Structure (after extraction):
 from pathlib import Path
 from typing import Any, Dict
 
-from .cache import Cache
-from .downloader import DownloadError, ExtractionError, PackageDownloader
-from .package import IToolchain, PackageError
-from .platform_utils import PlatformDetector
-from .toolchain_binaries import ToolchainBinaryFinder
-from .toolchain_metadata import ToolchainMetadataParser
+from fbuild.packages.cache import Cache
+from fbuild.packages.downloader import DownloadError, ExtractionError, PackageDownloader
+from fbuild.packages.package import IToolchain, PackageError
+from fbuild.packages.platform_utils import PlatformDetector
+from fbuild.packages.toolchain_binaries import ToolchainBinaryFinder
+from fbuild.packages.toolchain_metadata import ToolchainMetadataParser
 
 
 class ToolchainErrorESP8266(PackageError):
@@ -97,7 +97,7 @@ class ToolchainESP8266(IToolchain):
                 return parts[i + 1].lstrip("v")
 
         # Fallback: use URL hash
-        from .cache import Cache
+        from fbuild.packages.cache import Cache
 
         return Cache.hash_url(url)[:8]
 

@@ -24,7 +24,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from ..subprocess_utils import get_python_executable, safe_run
+from fbuild.subprocess_utils import get_python_executable, safe_run
 
 # Stale entry threshold: 24 hours
 STALE_THRESHOLD_SECONDS = 24 * 60 * 60

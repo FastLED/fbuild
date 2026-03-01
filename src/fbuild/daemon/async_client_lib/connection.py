@@ -14,7 +14,7 @@ import socket
 import time
 from typing import Any
 
-from .types import ConnectionError, ConnectionState, MessageType
+from fbuild.daemon.async_client_lib.types import ConnectionError, ConnectionState, MessageType
 
 # Default configuration
 DEFAULT_RECONNECT_DELAY = 1.0

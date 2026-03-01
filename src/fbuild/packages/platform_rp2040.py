@@ -17,10 +17,10 @@ Supported Boards:
 from pathlib import Path
 from typing import Any, Dict, List
 
-from .cache import Cache
-from .framework_rp2040 import FrameworkErrorRP2040, FrameworkRP2040
-from .package import IPackage, PackageError
-from .toolchain_rp2040 import ToolchainErrorRP2040, ToolchainRP2040
+from fbuild.packages.cache import Cache
+from fbuild.packages.framework_rp2040 import FrameworkErrorRP2040, FrameworkRP2040
+from fbuild.packages.package import IPackage, PackageError
+from fbuild.packages.toolchain_rp2040 import ToolchainErrorRP2040, ToolchainRP2040
 
 
 class PlatformErrorRP2040(PackageError):
@@ -168,7 +168,7 @@ class PlatformRP2040(IPackage):
         Raises:
             PlatformErrorRP2040: If board is not supported
         """
-        from .. import platform_configs
+        from fbuild import platform_configs
 
         config = platform_configs.load_board_config(board_id)
         if config is None:

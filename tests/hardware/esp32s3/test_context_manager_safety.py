@@ -20,7 +20,7 @@ import pytest
 import serial
 
 # Import helpers from conftest
-from .conftest import verify_port_accessible
+from hardware.esp32s3.conftest import verify_port_accessible
 
 # Fixtures imported via pytest auto-discovery:
 # - esp32s3_port: Session-scoped fixture providing port name

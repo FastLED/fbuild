@@ -15,10 +15,10 @@ Supported Boards:
 from pathlib import Path
 from typing import Any, Dict, List
 
-from .cache import Cache
-from .framework_teensy import FrameworkErrorTeensy, FrameworkTeensy
-from .package import IPackage, PackageError
-from .toolchain_teensy import ToolchainErrorTeensy, ToolchainTeensy
+from fbuild.packages.cache import Cache
+from fbuild.packages.framework_teensy import FrameworkErrorTeensy, FrameworkTeensy
+from fbuild.packages.package import IPackage, PackageError
+from fbuild.packages.toolchain_teensy import ToolchainErrorTeensy, ToolchainTeensy
 
 
 class PlatformErrorTeensy(PackageError):
@@ -160,7 +160,7 @@ class PlatformTeensy(IPackage):
         Raises:
             PlatformErrorTeensy: If board is not supported
         """
-        from .. import platform_configs
+        from fbuild import platform_configs
 
         config = platform_configs.load_board_config(board_id)
         if config is None:

@@ -13,20 +13,20 @@ from pathlib import Path
 from typing import TYPE_CHECKING, List, Optional
 
 if TYPE_CHECKING:
-    from .build_context import BuildParams
+    from fbuild.build.build_context import BuildParams
 
-from ..cli_utils import BannerFormatter
-from ..output import DefaultProgressCallback, log_detail, log_phase, log_warning
-from ..packages import Cache
-from ..packages.framework_esp8266 import FrameworkESP8266
-from ..packages.platform_esp8266 import PlatformESP8266
-from ..packages.toolchain_esp8266 import ToolchainESP8266
-from .build_info_generator import BuildInfoGenerator
-from .build_state import BuildStateTracker
-from .configurable_compiler import ConfigurableCompiler
-from .configurable_linker import ConfigurableLinker
-from .linker import SizeInfo
-from .orchestrator import BuildResult, IBuildOrchestrator
+from fbuild.cli_utils import BannerFormatter
+from fbuild.output import DefaultProgressCallback, log_detail, log_phase, log_warning
+from fbuild.packages import Cache
+from fbuild.packages.framework_esp8266 import FrameworkESP8266
+from fbuild.packages.platform_esp8266 import PlatformESP8266
+from fbuild.packages.toolchain_esp8266 import ToolchainESP8266
+from fbuild.build.build_info_generator import BuildInfoGenerator
+from fbuild.build.build_state import BuildStateTracker
+from fbuild.build.configurable_compiler import ConfigurableCompiler
+from fbuild.build.configurable_linker import ConfigurableLinker
+from fbuild.build.linker import SizeInfo
+from fbuild.build.orchestrator import BuildResult, IBuildOrchestrator
 
 # Module-level logger
 logger = logging.getLogger(__name__)
@@ -81,7 +81,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
         Raises:
             BuildOrchestratorError: If build fails at any phase
         """
-        from ..config import PlatformIOConfig
+        from fbuild.config import PlatformIOConfig
 
         # Extract from request
         project_dir = request.project_dir
@@ -162,7 +162,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
             platform_url = self._resolve_platform_url(platform_url)
 
             # Print build profile banner
-            from .build_profiles import print_profile_banner
+            from fbuild.build.build_profiles import print_profile_banner
 
             print_profile_banner(request.profile)
 
@@ -196,7 +196,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
             build_dir.mkdir(parents=True, exist_ok=True)
 
             # Determine source directory for cache invalidation
-            from ..config import PlatformIOConfig
+            from fbuild.config import PlatformIOConfig
 
             config_for_src_dir = PlatformIOConfig(project_dir / "platformio.ini")
             src_dir_override = config_for_src_dir.get_src_dir()
@@ -225,7 +225,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
                     log_detail(f"  - {reason}", indent=8, verbose_only=True)
                 log_detail("Cleaning build artifacts...", verbose_only=True)
                 # Clean build artifacts to force rebuild
-                from .build_utils import safe_rmtree
+                from fbuild.build.build_utils import safe_rmtree
 
                 if build_dir.exists():
                     safe_rmtree(build_dir)
@@ -235,7 +235,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
                 log_detail("Build configuration unchanged, using cached artifacts", verbose_only=True)
 
             # Initialize compilation executor
-            from .compilation_executor import CompilationExecutor
+            from fbuild.build.compilation_executor import CompilationExecutor
 
             compilation_executor = CompilationExecutor(
                 build_dir=build_dir,
@@ -246,7 +246,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
             )
 
             # Load platform configuration ONCE
-            from .. import platform_configs
+            from fbuild import platform_configs
 
             platform_config = platform_configs.load_config(mcu)
             if platform_config is None:
@@ -257,7 +257,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
             core = board_json.get("build", {}).get("core", "esp8266")
 
             # Create full BuildContext with all configuration loaded once
-            from .build_context import BuildContext
+            from fbuild.build.build_context import BuildContext
 
             context = BuildContext.from_request(
                 request=request,
@@ -538,7 +538,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
             framework: ESP8266 framework instance
             build_dir: Build output directory (where generated scripts go)
         """
-        from ..subprocess_utils import safe_run
+        from fbuild.subprocess_utils import safe_run
 
         output_file = build_dir / "local.eagle.app.v6.common.ld"
         if output_file.exists():
@@ -595,7 +595,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
         # Print size information if available
         if size_info:
             print()
-            from .build_utils import SizeInfoPrinter
+            from fbuild.build.build_utils import SizeInfoPrinter
 
             SizeInfoPrinter.print_size_info(size_info)
             print()
@@ -630,7 +630,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
         Returns:
             Canonical GitHub archive download URL
         """
-        from ..packages.github_url_utils import resolve_platformio_platform_url
+        from fbuild.packages.github_url_utils import resolve_platformio_platform_url
 
         try:
             resolved_url = resolve_platformio_platform_url(platform_spec, prefer_zip=True)

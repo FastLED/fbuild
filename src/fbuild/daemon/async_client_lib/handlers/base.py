@@ -11,7 +11,7 @@ import logging
 from typing import TYPE_CHECKING, Any, Callable, Coroutine
 
 if TYPE_CHECKING:
-    from ..types import MessageType
+    from fbuild.daemon.async_client_lib.types import MessageType
 
 
 class BaseProtocolHandler:

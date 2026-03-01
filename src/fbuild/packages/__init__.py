@@ -4,43 +4,25 @@ This module handles downloading, caching, and managing external packages
 including toolchains, platforms, and libraries.
 """
 
-from .archive_extractors import (
-    ArchiveExtractorFactory,
-    BaseArchiveExtractor,
-    IArchiveExtractor,
-    TarGzExtractor,
-    TarXzExtractor,
-    ZipExtractor,
-)
-from .archive_strategies import (
-    DirectoryMover,
-    FileOperations,
-    IRetryStrategy,
-    UnixRetryStrategy,
-    WindowsRetryStrategy,
-)
-from .archive_utils import ArchiveExtractionError, ArchiveExtractor, URLVersionExtractor
-from .arduino_core import ArduinoCore, ArduinoCoreError
-from .cache import Cache
-from .concurrent_manager import (
-    ConcurrentPackageManager,
-    PackageLockError,
-    PackageResult,
-    PackageSpec,
-)
-from .downloader import ChecksumError, DownloadError, ExtractionError, PackageDownloader
-from .fingerprint import FingerprintRegistry, PackageFingerprint
-from .github_utils import GitHubURLOptimizer
-from .library_compiler import LibraryCompilationError, LibraryCompiler
-from .package import IFramework, IPackage, PackageError
-from .package import IToolchain as BaseToolchain
-from .platform_esp32 import PlatformErrorESP32, PlatformESP32
-from .platform_utils import PlatformDetector, PlatformError
-from .sdk_utils import SDKPathResolver
-from .toolchain import ToolchainAVR as Toolchain
-from .toolchain import ToolchainError
-from .toolchain_binaries import BinaryNotFoundError, ToolchainBinaryFinder
-from .toolchain_metadata import MetadataParseError, ToolchainMetadataParser
+from fbuild.packages.archive_extractors import ArchiveExtractorFactory, BaseArchiveExtractor, IArchiveExtractor, TarGzExtractor, TarXzExtractor, ZipExtractor
+from fbuild.packages.archive_strategies import DirectoryMover, FileOperations, IRetryStrategy, UnixRetryStrategy, WindowsRetryStrategy
+from fbuild.packages.archive_utils import ArchiveExtractionError, ArchiveExtractor, URLVersionExtractor
+from fbuild.packages.arduino_core import ArduinoCore, ArduinoCoreError
+from fbuild.packages.cache import Cache
+from fbuild.packages.concurrent_manager import ConcurrentPackageManager, PackageLockError, PackageResult, PackageSpec
+from fbuild.packages.downloader import ChecksumError, DownloadError, ExtractionError, PackageDownloader
+from fbuild.packages.fingerprint import FingerprintRegistry, PackageFingerprint
+from fbuild.packages.github_utils import GitHubURLOptimizer
+from fbuild.packages.library_compiler import LibraryCompilationError, LibraryCompiler
+from fbuild.packages.package import IFramework, IPackage, PackageError
+from fbuild.packages.package import IToolchain as BaseToolchain
+from fbuild.packages.platform_esp32 import PlatformErrorESP32, PlatformESP32
+from fbuild.packages.platform_utils import PlatformDetector, PlatformError
+from fbuild.packages.sdk_utils import SDKPathResolver
+from fbuild.packages.toolchain import ToolchainAVR as Toolchain
+from fbuild.packages.toolchain import ToolchainError
+from fbuild.packages.toolchain_binaries import BinaryNotFoundError, ToolchainBinaryFinder
+from fbuild.packages.toolchain_metadata import MetadataParseError, ToolchainMetadataParser
 
 __all__ = [
     "IPackage",

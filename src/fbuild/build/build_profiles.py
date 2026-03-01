@@ -104,7 +104,7 @@ def get_profile_flags_from_config(
         Tuple of (compile_flags, link_flags) as tuples of strings
     """
     # Support both BoardConfigModel and dict for compatibility
-    from ..platform_configs import BoardConfigModel
+    from fbuild.platform_configs import BoardConfigModel
 
     if isinstance(platform_config, BoardConfigModel):
         # Type-safe BoardConfigModel access
@@ -179,7 +179,7 @@ def print_profile_banner(profile: BuildProfile, compiler: str | None = None) -> 
         profile: BuildProfile enum value
         compiler: Compiler name and version (optional)
     """
-    from ..output import log
+    from fbuild.output import log
 
     banner = format_profile_banner(profile, compiler=compiler)
     log(banner)

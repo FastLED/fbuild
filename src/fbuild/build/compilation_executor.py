@@ -18,14 +18,14 @@ import time
 from pathlib import Path
 from typing import TYPE_CHECKING, List, Optional
 
-from ..output import log_detail
-from ..packages.header_trampoline_cache import HeaderTrampolineCache
-from ..packages.trampoline_excludes import get_exclude_patterns
-from ..subprocess_utils import safe_run
+from fbuild.output import log_detail
+from fbuild.packages.header_trampoline_cache import HeaderTrampolineCache
+from fbuild.packages.trampoline_excludes import get_exclude_patterns
+from fbuild.subprocess_utils import safe_run
 
 if TYPE_CHECKING:
-    from ..daemon.compilation_queue import CompilationJobQueue
-    from ..packages.cache import Cache
+    from fbuild.daemon.compilation_queue import CompilationJobQueue
+    from fbuild.packages.cache import Cache
 
 
 class CompilationError(Exception):
@@ -304,7 +304,7 @@ class CompilationExecutor:
         Raises:
             CompilationError: If job submission fails
         """
-        from ..daemon.compilation_queue import CompilationJob
+        from fbuild.daemon.compilation_queue import CompilationJob
 
         if not compiler_path.exists():
             raise CompilationError(f"Compiler not found: {compiler_path}. Ensure toolchain is installed.")

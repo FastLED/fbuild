@@ -10,8 +10,8 @@ import asyncio
 import uuid
 from typing import Any, Callable, Coroutine
 
-from ..types import MessageType, Subscription
-from .base import BaseProtocolHandler
+from fbuild.daemon.async_client_lib.types import MessageType, Subscription
+from fbuild.daemon.async_client_lib.handlers.base import BaseProtocolHandler
 
 
 class SubscriptionProtocolHandler(BaseProtocolHandler):

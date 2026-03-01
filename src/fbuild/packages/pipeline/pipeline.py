@@ -15,10 +15,10 @@ from concurrent.futures import Future
 from pathlib import Path
 from typing import Any
 
-from .callbacks import ProgressCallback
-from .models import PackageTask, PipelineResult, TaskPhase
-from .pools import DownloadPool, InstallPool, UnpackPool
-from .scheduler import DependencyScheduler
+from fbuild.packages.pipeline.callbacks import ProgressCallback
+from fbuild.packages.pipeline.models import PackageTask, PipelineResult, TaskPhase
+from fbuild.packages.pipeline.pools import DownloadPool, InstallPool, UnpackPool
+from fbuild.packages.pipeline.scheduler import DependencyScheduler
 
 logger = logging.getLogger(__name__)
 

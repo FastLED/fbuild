@@ -203,7 +203,7 @@ class HeaderTrampolineCache:
         """
         # Filter out excluded paths using centralized filter function
         # This normalizes paths to forward slashes for consistent matching
-        from .trampoline_excludes import filter_paths
+        from fbuild.packages.trampoline_excludes import filter_paths
 
         if exclude_patterns:
             # Custom patterns provided - use legacy matching but normalize paths
@@ -320,7 +320,7 @@ class HeaderTrampolineCache:
         headers_skipped = 0
 
         # Import exclusion check for individual header files
-        from .trampoline_excludes import should_exclude_path
+        from fbuild.packages.trampoline_excludes import should_exclude_path
 
         # Generate trampoline for each header
         excluded_by_pattern = 0

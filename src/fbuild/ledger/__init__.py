@@ -18,19 +18,7 @@ Example:
     >>> env = ledger.get_environment("COM4")
 """
 
-from .board_ledger import (
-    CHIP_TO_ENVIRONMENT,
-    STALE_THRESHOLD_SECONDS,
-    VALID_CHIP_TYPES,
-    BoardLedger,
-    BoardLedgerError,
-    ChipDetectionError,
-    DetectionResult,
-    LedgerEntry,
-    detect_and_cache,
-    detect_chip_with_esptool,
-    get_environment_for_chip,
-)
+from fbuild.ledger.board_ledger import CHIP_TO_ENVIRONMENT, STALE_THRESHOLD_SECONDS, VALID_CHIP_TYPES, BoardLedger, BoardLedgerError, ChipDetectionError, DetectionResult, LedgerEntry, detect_and_cache, detect_chip_with_esptool, get_environment_for_chip
 
 __all__ = [
     # Main class

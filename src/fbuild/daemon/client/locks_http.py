@@ -6,7 +6,7 @@ Handles daemon lock status queries and stale lock cleanup via HTTP.
 
 from typing import Any
 
-from .http_utils import get_daemon_url, http_client
+from fbuild.daemon.client.http_utils import get_daemon_url, http_client
 
 
 def daemon_http_request(
@@ -126,7 +126,7 @@ def clear_stale_locks_http(timeout: float = 5.0) -> dict[str, Any]:
 
 def display_lock_status_http() -> None:
     """Display current lock status in a human-readable format via HTTP."""
-    from .lifecycle import is_daemon_running
+    from fbuild.daemon.client.lifecycle import is_daemon_running
 
     if not is_daemon_running():
         print("Daemon is not running - no active locks")

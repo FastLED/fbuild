@@ -10,11 +10,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, Dict, List, Optional
 
-from ..subprocess_utils import safe_run
-from .compiler import CompilerError, ICompiler
+from fbuild.subprocess_utils import safe_run
+from fbuild.build.compiler import CompilerError, ICompiler
 
 if TYPE_CHECKING:
-    from .build_context import BuildContext
+    from fbuild.build.build_context import BuildContext
 
 
 @dataclass
@@ -76,7 +76,7 @@ class CompilerAVR(ICompiler):
         self._profile_flags = context.profile_flags
 
         # Load profile-specific flags from JSON config
-        from .build_profiles import get_profile_flags_from_config
+        from fbuild.build.build_profiles import get_profile_flags_from_config
 
         self._json_compile_flags, _ = get_profile_flags_from_config(context.profile, context.platform_config)
 
@@ -348,7 +348,7 @@ class CompilerAVR(ICompiler):
         """
         import time
 
-        from ..daemon.compilation_queue import CompilationJob
+        from fbuild.daemon.compilation_queue import CompilationJob
 
         job_id = f"compile_{source.stem}_{int(time.time() * 1000000)}"
 

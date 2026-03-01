@@ -26,7 +26,7 @@ import shutil
 from pathlib import Path
 from typing import Optional
 
-from .downloader import PackageDownloader
+from fbuild.packages.downloader import PackageDownloader
 
 
 class MetadataParseError(Exception):

@@ -7,8 +7,8 @@ Uses esptool.py for flashing.
 from pathlib import Path
 from typing import Optional
 
-from ..subprocess_utils import get_python_executable, safe_run
-from .deployer import DeploymentResult, IDeployer
+from fbuild.subprocess_utils import get_python_executable, safe_run
+from fbuild.deploy.deployer import DeploymentResult, IDeployer
 
 
 class ESP8266Deployer(IDeployer):

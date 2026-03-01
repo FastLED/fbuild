@@ -6,7 +6,7 @@ Handles device discovery, leasing, and status queries via HTTP.
 
 from typing import Any
 
-from .http_utils import get_daemon_url, http_client
+from fbuild.daemon.client.http_utils import get_daemon_url, http_client
 
 
 def daemon_http_request(

@@ -89,7 +89,7 @@ async def list_devices(request: DeviceListRequest) -> DeviceListResponse:
         List of device information dictionaries.
     """
     # Get from daemon context
-    from ..fastapi_app import get_daemon_context
+    from fbuild.daemon.fastapi_app import get_daemon_context
 
     context = get_daemon_context()
     device_manager = context.device_manager
@@ -116,7 +116,7 @@ async def get_device_status(device_id: str) -> DeviceStatusResponse:
     Returns:
         Device status information.
     """
-    from ..fastapi_app import get_daemon_context
+    from fbuild.daemon.fastapi_app import get_daemon_context
 
     context = get_daemon_context()
     device_manager = context.device_manager
@@ -144,7 +144,7 @@ async def acquire_device_lease(
     Returns:
         Response with success status and lease_id.
     """
-    from ..fastapi_app import get_daemon_context
+    from fbuild.daemon.fastapi_app import get_daemon_context
 
     context = get_daemon_context()
     device_manager = context.device_manager
@@ -186,7 +186,7 @@ async def release_device_lease(
     Returns:
         Response with success status.
     """
-    from ..fastapi_app import get_daemon_context
+    from fbuild.daemon.fastapi_app import get_daemon_context
 
     context = get_daemon_context()
     device_manager = context.device_manager
@@ -227,7 +227,7 @@ async def preempt_device(
     Returns:
         Response with success status and preempted client info.
     """
-    from ..fastapi_app import get_daemon_context
+    from fbuild.daemon.fastapi_app import get_daemon_context
 
     context = get_daemon_context()
     device_manager = context.device_manager

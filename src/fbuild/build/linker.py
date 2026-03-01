@@ -10,11 +10,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, List, Optional
 
-from ..subprocess_utils import safe_run
-from .compiler import ILinker, LinkerError
+from fbuild.subprocess_utils import safe_run
+from fbuild.build.compiler import ILinker, LinkerError
 
 if TYPE_CHECKING:
-    from .build_context import BuildContext
+    from fbuild.build.build_context import BuildContext
 
 
 @dataclass
@@ -177,7 +177,7 @@ class LinkerAVR(ILinker):
         self._profile_flags = context.profile_flags
 
         # Load profile-specific flags from JSON config
-        from .build_profiles import get_profile_flags_from_config
+        from fbuild.build.build_profiles import get_profile_flags_from_config
 
         _, self._json_link_flags = get_profile_flags_from_config(context.profile, context.platform_config)
 

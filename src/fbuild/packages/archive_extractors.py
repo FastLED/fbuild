@@ -12,8 +12,8 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Protocol, runtime_checkable
 
-from .archive_strategies import DirectoryMover, FileOperations
-from .downloader import ExtractionError
+from fbuild.packages.archive_strategies import DirectoryMover, FileOperations
+from fbuild.packages.downloader import ExtractionError
 
 
 @runtime_checkable

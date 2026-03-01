@@ -14,22 +14,22 @@ from pathlib import Path
 from typing import TYPE_CHECKING, List, Optional
 
 if TYPE_CHECKING:
-    from .build_context import BuildParams
+    from fbuild.build.build_context import BuildParams
 
-from ..cli_utils import BannerFormatter
-from ..config.board_config import BoardConfig
-from ..output import DefaultProgressCallback
-from ..packages import Cache
-from ..packages.library_manager import LibraryError, LibraryManager
-from ..packages.platform_rp2040 import PlatformRP2040
-from ..packages.toolchain_rp2040 import ToolchainRP2040
-from .build_info_generator import BuildInfoGenerator
-from .build_state import BuildStateTracker
-from .build_utils import safe_rmtree
-from .configurable_compiler import ConfigurableCompiler
-from .configurable_linker import ConfigurableLinker
-from .linker import SizeInfo
-from .orchestrator import BuildResult, IBuildOrchestrator
+from fbuild.cli_utils import BannerFormatter
+from fbuild.config.board_config import BoardConfig
+from fbuild.output import DefaultProgressCallback
+from fbuild.packages import Cache
+from fbuild.packages.library_manager import LibraryError, LibraryManager
+from fbuild.packages.platform_rp2040 import PlatformRP2040
+from fbuild.packages.toolchain_rp2040 import ToolchainRP2040
+from fbuild.build.build_info_generator import BuildInfoGenerator
+from fbuild.build.build_state import BuildStateTracker
+from fbuild.build.build_utils import safe_rmtree
+from fbuild.build.configurable_compiler import ConfigurableCompiler
+from fbuild.build.configurable_linker import ConfigurableLinker
+from fbuild.build.linker import SizeInfo
+from fbuild.build.orchestrator import BuildResult, IBuildOrchestrator
 
 # Module-level logger
 logger = logging.getLogger(__name__)
@@ -87,7 +87,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
         Raises:
             BuildOrchestratorError: If build fails at any phase
         """
-        from ..config import PlatformIOConfig
+        from fbuild.config import PlatformIOConfig
 
         # Extract from request
         project_dir = request.project_dir
@@ -157,7 +157,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
 
         try:
             # Get board configuration
-            from ..config.board_config import BoardConfig
+            from fbuild.config.board_config import BoardConfig
 
             if verbose:
                 logger.info("[2/7] Loading board configuration...")
@@ -167,7 +167,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
             board_config = BoardConfig.from_board_id(board_id)
 
             # Print build profile banner
-            from .build_profiles import print_profile_banner
+            from fbuild.build.build_profiles import print_profile_banner
 
             print_profile_banner(request.profile)
 
@@ -221,7 +221,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
                     logger.info("      Build configuration unchanged, using cached artifacts")
 
             # Initialize compilation executor
-            from .compilation_executor import CompilationExecutor
+            from fbuild.build.compilation_executor import CompilationExecutor
 
             compilation_executor = CompilationExecutor(
                 build_dir=build_dir,
@@ -233,7 +233,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
 
             # Load board JSON and platform config ONCE (not redundantly in compiler/linker)
             board_json = platform.get_board_json(board_id)
-            from .. import platform_configs
+            from fbuild import platform_configs
 
             platform_config = platform_configs.load_config(board_config.mcu)
             if platform_config is None:
@@ -244,7 +244,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
             core = board_json.get("build", {}).get("core", "rp2040")
 
             # Create full BuildContext with all configuration loaded once
-            from .build_context import BuildContext
+            from fbuild.build.build_context import BuildContext
 
             context = BuildContext.from_request(
                 request=request,
@@ -307,7 +307,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
                 compiler.add_library_includes(library_include_paths)
 
             # Get src_dir override from platformio.ini
-            from ..config import PlatformIOConfig
+            from fbuild.config import PlatformIOConfig
 
             config_for_src_dir = PlatformIOConfig(project_dir / "platformio.ini")
             src_dir_override = config_for_src_dir.get_src_dir()
@@ -631,7 +631,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
         # Print size information if available
         if size_info:
             print()
-            from .build_utils import SizeInfoPrinter
+            from fbuild.build.build_utils import SizeInfoPrinter
 
             SizeInfoPrinter.print_size_info(size_info)
             print()

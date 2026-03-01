@@ -9,9 +9,9 @@ library manager and the build system to ensure all dependencies are ready.
 from pathlib import Path
 from typing import List, Optional
 
-from ..config.board_config import BoardConfig
-from ..packages.library_manager import LibraryManager
-from ..packages.toolchain import ToolchainAVR
+from fbuild.config.board_config import BoardConfig
+from fbuild.packages.library_manager import LibraryManager
+from fbuild.packages.toolchain import ToolchainAVR
 
 
 class LibraryDependencyProcessor:

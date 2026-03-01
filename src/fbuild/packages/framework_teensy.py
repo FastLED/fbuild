@@ -31,9 +31,9 @@ Key Features:
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from .cache import Cache
-from .downloader import DownloadError, ExtractionError, PackageDownloader
-from .package import IFramework, PackageError
+from fbuild.packages.cache import Cache
+from fbuild.packages.downloader import DownloadError, ExtractionError, PackageDownloader
+from fbuild.packages.package import IFramework, PackageError
 
 
 class FrameworkErrorTeensy(PackageError):
@@ -238,7 +238,7 @@ class FrameworkTeensy(IFramework):
             Path to linker script or None if not found
         """
         # Load board configuration to get core and linker script info
-        from .. import platform_configs
+        from fbuild import platform_configs
 
         config = platform_configs.load_board_config(board)
         if not config:

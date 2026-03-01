@@ -32,9 +32,9 @@ Supported MCU Families:
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from .cache import Cache
-from .downloader import DownloadError, ExtractionError, PackageDownloader
-from .package import IFramework, PackageError
+from fbuild.packages.cache import Cache
+from fbuild.packages.downloader import DownloadError, ExtractionError, PackageDownloader
+from fbuild.packages.package import IFramework, PackageError
 
 
 class FrameworkErrorSTM32(PackageError):

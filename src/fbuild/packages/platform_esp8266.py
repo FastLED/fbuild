@@ -24,10 +24,10 @@ import json
 from pathlib import Path
 from typing import Any, Dict
 
-from .cache import Cache
-from .downloader import DownloadError, ExtractionError, PackageDownloader
-from .package import IPackage, PackageError
-from .platform_utils import PlatformDetector
+from fbuild.packages.cache import Cache
+from fbuild.packages.downloader import DownloadError, ExtractionError, PackageDownloader
+from fbuild.packages.package import IPackage, PackageError
+from fbuild.packages.platform_utils import PlatformDetector
 
 
 class PlatformErrorESP8266(PackageError):
@@ -84,7 +84,7 @@ class PlatformESP8266(IPackage):
                 return version.lstrip("v")
 
         # Fallback: use URL hash if version extraction fails
-        from .cache import Cache
+        from fbuild.packages.cache import Cache
 
         return Cache.hash_url(url)[:8]
 

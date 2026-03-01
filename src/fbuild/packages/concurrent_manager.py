@@ -18,9 +18,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable, Dict, Iterator, List, Optional
 
-from .cache import Cache
-from .downloader import DownloadError, ExtractionError, PackageDownloader
-from .fingerprint import FingerprintRegistry, PackageFingerprint
+from fbuild.packages.cache import Cache
+from fbuild.packages.downloader import DownloadError, ExtractionError, PackageDownloader
+from fbuild.packages.fingerprint import FingerprintRegistry, PackageFingerprint
 
 logger = logging.getLogger(__name__)
 

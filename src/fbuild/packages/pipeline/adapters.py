@@ -23,7 +23,7 @@ from fbuild.packages.arduino_core import ArduinoCore
 from fbuild.packages.cache import Cache
 from fbuild.packages.toolchain import ToolchainAVR
 
-from .models import PackageTask
+from fbuild.packages.pipeline.models import PackageTask
 
 
 class TaskGraphError(Exception):
@@ -374,7 +374,7 @@ def filter_uncached_tasks(
     Returns:
         Tuple of (cached_tasks, uncached_tasks).
     """
-    from .models import TaskPhase
+    from fbuild.packages.pipeline.models import TaskPhase
 
     cached: list[PackageTask] = []
     uncached: list[PackageTask] = []

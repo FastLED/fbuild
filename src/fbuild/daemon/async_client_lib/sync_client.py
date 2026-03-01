@@ -12,13 +12,7 @@ import threading
 from concurrent.futures import ThreadPoolExecutor
 from typing import Any, Callable, Coroutine
 
-from .client import (
-    DEFAULT_HEARTBEAT_INTERVAL,
-    DEFAULT_HOST,
-    DEFAULT_PORT,
-    DEFAULT_REQUEST_TIMEOUT,
-    AsyncDaemonClient,
-)
+from fbuild.daemon.async_client_lib.client import DEFAULT_HEARTBEAT_INTERVAL, DEFAULT_HOST, DEFAULT_PORT, DEFAULT_REQUEST_TIMEOUT, AsyncDaemonClient
 
 
 class SyncDaemonClient:

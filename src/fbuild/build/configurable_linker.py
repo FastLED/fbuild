@@ -16,14 +16,14 @@ import time
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
-from ..output import format_size, log_detail
-from ..subprocess_utils import safe_run
-from .binary_generator import BinaryGenerator
-from .compiler import ILinker, LinkerError
-from .psram_utils import get_psram_mode
+from fbuild.output import format_size, log_detail
+from fbuild.subprocess_utils import safe_run
+from fbuild.build.binary_generator import BinaryGenerator
+from fbuild.build.compiler import ILinker, LinkerError
+from fbuild.build.psram_utils import get_psram_mode
 
 if TYPE_CHECKING:
-    from .build_context import BuildContext
+    from fbuild.build.build_context import BuildContext
 
 
 class ConfigurableLinkerError(LinkerError):
@@ -90,7 +90,7 @@ class ConfigurableLinker(ILinker):
         self._profile_flags = context.profile_flags
 
         # Load profile-specific flags from JSON config
-        from .build_profiles import get_profile_flags_from_config
+        from fbuild.build.build_profiles import get_profile_flags_from_config
 
         _, self._json_link_flags = get_profile_flags_from_config(context.profile, context.platform_config)
 
@@ -126,7 +126,7 @@ class ConfigurableLinker(ILinker):
         elif hasattr(self.framework, "get_sdk_dir"):
             # Apply SDK fallback for MCUs not fully supported in the platform
             # (e.g., esp32c2 can use esp32c3 SDK)
-            from ..packages.sdk_utils import SDKPathResolver
+            from fbuild.packages.sdk_utils import SDKPathResolver
 
             sdk_dir = self.framework.get_sdk_dir()  # type: ignore[attr-defined]
             resolver = SDKPathResolver(sdk_dir, show_progress=False)
@@ -580,7 +580,7 @@ class ConfigurableLinker(ILinker):
         Raises:
             ConfigurableLinkerError: If size calculation fails
         """
-        from .linker import SizeInfo
+        from fbuild.build.linker import SizeInfo
 
         if not elf_path.exists():
             raise ConfigurableLinkerError(f"ELF file not found: {elf_path}")

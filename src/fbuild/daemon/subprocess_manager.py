@@ -15,8 +15,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Optional
 
-from ..interrupt_utils import handle_keyboard_interrupt_properly
-from ..subprocess_utils import safe_run
+from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+from fbuild.subprocess_utils import safe_run
 
 logger = logging.getLogger(__name__)
 
