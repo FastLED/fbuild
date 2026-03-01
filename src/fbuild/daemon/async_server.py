@@ -51,7 +51,23 @@ if TYPE_CHECKING:
 
 # Default server configuration
 DEFAULT_PORT = 9876
+DEFAULT_DEV_PORT = 9977
 DEFAULT_HOST = "127.0.0.1"
+
+
+def get_async_server_port() -> int:
+    """Get the async server port based on dev mode.
+
+    Returns:
+        9977 in dev mode, 9876 in production
+    """
+    import os
+
+    if os.environ.get("FBUILD_DEV_MODE") == "1":
+        return DEFAULT_DEV_PORT
+    return DEFAULT_PORT
+
+
 # Heartbeat timeout: clients must send heartbeat every ~1s; if missed for 4s, disconnect
 # Per TASK.md requirement: "If daemon misses heartbeats for ~3–4s, daemon closes the connection"
 DEFAULT_HEARTBEAT_TIMEOUT = 4.0

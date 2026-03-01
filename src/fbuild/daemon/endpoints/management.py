@@ -79,23 +79,11 @@ async def shutdown_daemon() -> ShutdownResponse:
     """
     from fbuild.daemon.fastapi_app import get_daemon_context
 
-    # Verify daemon context is initialized (raises HTTPException if not)
-    get_daemon_context()
+    context = get_daemon_context()
 
-    # Initiate clean shutdown by calling cleanup_and_exit in a background thread
-    # This allows the HTTP response to be sent before the daemon terminates
-    import sys
-    import threading
-
-    def delayed_shutdown():
-        """Shutdown daemon after a short delay to allow HTTP response."""
-        import time
-
-        time.sleep(0.5)  # Allow time for HTTP response to be sent
-        logging.info("HTTP shutdown request received, terminating daemon")
-        sys.exit(0)
-
-    shutdown_thread = threading.Thread(target=delayed_shutdown, daemon=True)
-    shutdown_thread.start()
+    # Set the shutdown flag so the main loop exits gracefully.
+    # sys.exit() from a daemon thread only terminates that thread, not the process.
+    logging.info("HTTP shutdown request received, setting is_shutting_down flag")
+    context.is_shutting_down = True
 
     return ShutdownResponse(success=True, message="Shutdown initiated")

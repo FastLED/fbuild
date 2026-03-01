@@ -14,7 +14,7 @@ import time
 from typing import Any, Generator
 
 from fbuild.daemon.paths import DAEMON_DIR, LOCK_FILE, PID_FILE
-from fbuild.subprocess_utils import get_python_executable, safe_run
+from fbuild.subprocess_utils import get_python_executable, safe_popen, safe_run
 
 # Platform-specific imports
 fcntl: Any = None
@@ -156,7 +156,7 @@ def cleanup_zombie_daemons() -> None:
     # Determine ports based on dev mode
     is_dev = os.environ.get("FBUILD_DEV_MODE") == "1"
     http_port = 8865 if is_dev else 8765
-    ws_port = 9876  # Same for both modes
+    ws_port = 9977 if is_dev else 9876
 
     killed_any = False
 
@@ -252,7 +252,7 @@ def spawn_daemon_process(launcher_pid: int) -> int:
         f"--launched-by={launcher_pid}",
     ]
 
-    proc = subprocess.Popen(
+    proc = safe_popen(
         cmd,
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,

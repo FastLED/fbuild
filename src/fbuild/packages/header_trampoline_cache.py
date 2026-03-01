@@ -228,6 +228,8 @@ class HeaderTrampolineCache:
 
         # Check if regeneration needed (use filtered paths for cache validation)
         if not self.needs_regeneration(filtered_paths):
+            # Always ensure broken trampolines are removed (even from cached)
+            self._remove_broken_trampolines()
             if self.show_progress:
                 excluded_count = len(excluded_paths)
                 if excluded_count > 0:
@@ -263,12 +265,22 @@ class HeaderTrampolineCache:
                 total_headers += count
                 skipped_duplicates += skipped
 
+            # Post-generation: remove trampolines that break compilation
+            # for the target MCU. esp_bt.h uses relative includes
+            # (../../../../controller/<mcu>/esp_bt_cfg.h) that fail through
+            # the trampoline redirect when other -I paths are present.
+            # Removing the trampoline makes __has_include("esp_bt.h") return
+            # false, cleanly skipping BT init in esp32-hal-misc.c.
+            removed = self._remove_broken_trampolines()
+
             # Save metadata
             self._save_metadata(filtered_paths, [self.cache_root])
 
             if self.show_progress:
                 print(f"[trampolines] Generated UNIFIED cache at {self.cache_root}")
                 print(f"[trampolines] Created {total_headers} trampolines, skipped {skipped_duplicates} duplicates")
+                if removed > 0:
+                    print(f"[trampolines] Removed {removed} trampolines with broken relative includes")
                 print(f"[trampolines] Command line reduced from {len(filtered_paths)} -I directives to 1")
 
             # Return unified trampoline path + excluded paths
@@ -279,6 +291,43 @@ class HeaderTrampolineCache:
             raise
         except Exception as e:
             raise TrampolineCacheError(f"Failed to generate trampoline cache: {e}") from e
+
+    # Headers whose trampolines break compilation due to relative includes
+    # (e.g., #include "../../../../controller/<mcu>/esp_bt_cfg.h") that fail
+    # when additional -I paths are present alongside the trampoline directory.
+    # These headers use __has_include() guards in the Arduino core, so removing
+    # the trampoline cleanly disables the guarded code path.
+    _BROKEN_RELATIVE_INCLUDE_HEADERS = [
+        "esp_bt.h",
+    ]
+
+    def _remove_broken_trampolines(self) -> int:
+        """Remove trampolines that break compilation due to relative includes.
+
+        Some SDK headers (e.g., esp_bt.h) use deep relative includes like
+        "../../../../controller/<mcu>/esp_bt_cfg.h" that fail when GCC resolves
+        them through the trampoline redirect with multiple -I paths.
+
+        The Arduino core guards these includes with __has_include(), so removing
+        the trampoline makes __has_include() return false, cleanly skipping the
+        problematic code.
+
+        Returns:
+            Number of trampolines removed
+        """
+        removed = 0
+        for header_name in self._BROKEN_RELATIVE_INCLUDE_HEADERS:
+            trampoline_file = self.cache_root / header_name
+            if trampoline_file.exists():
+                try:
+                    trampoline_file.unlink()
+                    removed += 1
+                except KeyboardInterrupt:
+                    _thread.interrupt_main()
+                    raise
+                except Exception:
+                    pass  # Best effort
+        return removed
 
     def _generate_unified_trampolines(self, original_path: Path, created_trampolines: set) -> tuple:
         """Generate trampoline headers for a single include path into the unified directory.

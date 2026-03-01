@@ -427,7 +427,9 @@ def run_daemon_loop() -> None:
     if fastapi_thread:
         logging.info("FastAPI HTTP server started successfully")
     else:
-        logging.warning("Failed to start FastAPI HTTP server")
+        logging.error("Failed to start FastAPI HTTP server — exiting")
+        cleanup_daemon_context(context)
+        raise SystemExit(1)
 
     # Initialize process tracker
     process_tracker = ProcessTracker(PROCESS_REGISTRY_FILE)
@@ -490,6 +492,11 @@ def run_daemon_loop() -> None:
             iteration_count += 1
             if iteration_count % 100 == 0:  # Log every 100 iterations to avoid spam
                 logging.debug(f"Daemon main loop iteration {iteration_count}")
+
+            # Check shutdown flag (set by HTTP /api/daemon/shutdown endpoint)
+            if context.is_shutting_down:
+                logging.info("Shutdown flag detected, exiting daemon loop")
+                cleanup_and_exit(context)
 
             # Check idle timeout
             idle_time = time.time() - last_activity
@@ -617,6 +624,22 @@ def main() -> int:
 
         # Ensure daemon directory exists
         DAEMON_DIR.mkdir(parents=True, exist_ok=True)
+
+        # Pre-flight check: verify HTTP port is available BEFORE writing PID file.
+        # This prevents the race condition where a new daemon overwrites an existing
+        # daemon's PID file and then fails to bind the port.
+        from fbuild.daemon.client.http_utils import get_daemon_port as _get_daemon_port
+
+        _preflight_port = _get_daemon_port()
+        try:
+            import socket
+
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as _sock:
+                _sock.bind(("127.0.0.1", _preflight_port))
+        except OSError as e:
+            logging.error(f"HTTP port {_preflight_port} already in use: {e}")
+            logging.error("Another daemon is likely running. Exiting to avoid PID file race.")
+            return 1
 
         # Write PID file with launcher info (format: "daemon_pid,launcher_pid")
         PID_FILE.write_text(f"{os.getpid()},{launcher_pid}\n")

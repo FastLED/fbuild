@@ -11,6 +11,7 @@ Design:
 """
 
 import json
+import sys
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -103,6 +104,7 @@ class ToolchainInfo:
     ar_path: Optional[str] = None
     objcopy_path: Optional[str] = None
     size_path: Optional[str] = None
+    addr2line_path: Optional[str] = None
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
@@ -113,6 +115,7 @@ class ToolchainInfo:
             "ar_path": self.ar_path,
             "objcopy_path": self.objcopy_path,
             "size_path": self.size_path,
+            "addr2line_path": self.addr2line_path,
         }
 
 
@@ -204,6 +207,35 @@ class BuildInfoGenerator:
         self.build_dir = Path(build_dir)
         self.build_info_path = self.build_dir / self.BUILD_INFO_FILENAME
 
+    @staticmethod
+    def _derive_addr2line(toolchain_paths: Dict[str, Path]) -> Optional[str]:
+        """Derive addr2line path from the gcc path in toolchain_paths.
+
+        Replaces 'gcc' suffix with 'addr2line' (and appends .exe on Windows).
+
+        Args:
+            toolchain_paths: Dict of toolchain binary paths (must contain "gcc" key)
+
+        Returns:
+            String path to addr2line if found on disk, else None
+        """
+        gcc_path = toolchain_paths.get("gcc")
+        if gcc_path is None:
+            return None
+
+        gcc = Path(gcc_path)
+        stem = gcc.name.replace(".exe", "")
+        if not stem.endswith("gcc"):
+            return None
+
+        prefix = stem[: -len("gcc")]
+        suffix = ".exe" if sys.platform == "win32" else ""
+        candidate = gcc.parent / f"{prefix}addr2line{suffix}"
+
+        if candidate.exists():
+            return str(candidate)
+        return None
+
     def generate_avr(
         self,
         env_name: str,
@@ -285,6 +317,7 @@ class BuildInfoGenerator:
             ar_path=str(toolchain_paths.get("ar")) if toolchain_paths.get("ar") else None,
             objcopy_path=str(toolchain_paths.get("objcopy")) if toolchain_paths.get("objcopy") else None,
             size_path=str(toolchain_paths.get("size")) if toolchain_paths.get("size") else None,
+            addr2line_path=self._derive_addr2line(toolchain_paths),
         )
 
         # Framework info
@@ -409,6 +442,7 @@ class BuildInfoGenerator:
             ar_path=str(toolchain_paths.get("ar")) if toolchain_paths.get("ar") else None,
             objcopy_path=str(toolchain_paths.get("objcopy")) if toolchain_paths.get("objcopy") else None,
             size_path=str(toolchain_paths.get("size")) if toolchain_paths.get("size") else None,
+            addr2line_path=self._derive_addr2line(toolchain_paths),
         )
 
         # Framework info
@@ -556,6 +590,7 @@ class BuildInfoGenerator:
                 ar_path=str(toolchain_paths.get("ar")) if toolchain_paths.get("ar") else None,
                 objcopy_path=str(toolchain_paths.get("objcopy")) if toolchain_paths.get("objcopy") else None,
                 size_path=str(toolchain_paths.get("size")) if toolchain_paths.get("size") else None,
+                addr2line_path=self._derive_addr2line(toolchain_paths),
             )
 
         # Framework info

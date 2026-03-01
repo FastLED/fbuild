@@ -13,7 +13,6 @@ Enhanced in Iteration 2 with:
 
 import _thread
 import logging
-import sys
 import uuid
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -127,6 +126,21 @@ class MonitorRequestProcessor(RequestProcessor):
                 environment=request.environment,
                 operation_id=request.request_id,
             )
+
+        # Attach crash decoder if project info is available
+        if port and request.project_dir and request.environment:
+            try:
+                from fbuild.daemon.crash_decoder import create_crash_decoder
+
+                decoder = create_crash_decoder(
+                    Path(request.project_dir),
+                    request.environment,
+                )
+                context.shared_serial_manager.set_crash_decoder(port, decoder)
+            except KeyboardInterrupt:  # noqa: KBI002
+                raise
+            except Exception as e:
+                logging.warning(f"Failed to initialize crash decoder for {port}: {e}")
 
         # Generate a client ID for shared serial manager
         client_id = f"monitor_{request.request_id}_{uuid.uuid4().hex[:8]}"
@@ -256,12 +270,29 @@ class MonitorRequestProcessor(RequestProcessor):
             summary_file.unlink()
 
         try:
-            # Get fresh monitor class after module reload
-            # Using direct import would use cached version
-            monitor_class = getattr(sys.modules["fbuild.deploy.monitor"], "SerialMonitor")
-        except (KeyError, AttributeError) as e:
+            # Import monitor module (may not be in sys.modules on first use)
+            import importlib
+
+            monitor_module = importlib.import_module("fbuild.deploy.monitor")
+            monitor_class = monitor_module.SerialMonitor
+        except (ImportError, AttributeError) as e:
             logging.error(f"Failed to get SerialMonitor class: {e}")
             return False
+
+        # Create crash decoder callback for inline stack trace decoding
+        line_cb = None
+        if port and request.project_dir and request.environment:
+            try:
+                from fbuild.daemon.crash_decoder import create_crash_decoder
+
+                decoder = create_crash_decoder(Path(request.project_dir), request.environment)
+                if decoder.can_decode:
+                    line_cb = decoder.process_line
+                    logging.info("Crash decoder enabled for direct monitor")
+            except KeyboardInterrupt:  # noqa: KBI002
+                raise
+            except Exception as e:
+                logging.warning(f"Failed to create crash decoder for direct monitor: {e}")
 
         # Create monitor and execute
         monitor = monitor_class(verbose=False)
@@ -277,6 +308,7 @@ class MonitorRequestProcessor(RequestProcessor):
             output_file=output_file,
             summary_file=summary_file,
             timestamp=request.show_timestamp,
+            line_callback=line_cb,
         )
 
         if exit_code == 0:

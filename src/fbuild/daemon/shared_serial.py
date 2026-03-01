@@ -27,6 +27,8 @@ Example:
     >>> lines = manager.read_buffer("COM3", "client_1")
 """
 
+from __future__ import annotations
+
 import _thread
 import logging
 import platform
@@ -34,7 +36,10 @@ import threading
 import time
 from collections import deque
 from dataclasses import dataclass, field
-from typing import Any, Callable
+from typing import TYPE_CHECKING, Any, Callable
+
+if TYPE_CHECKING:
+    from fbuild.daemon.crash_decoder import CrashDecoder
 
 # Default buffer size (number of lines)
 DEFAULT_BUFFER_SIZE = 10000
@@ -161,6 +166,8 @@ class SharedSerialManager:
         self._reader_callbacks: dict[str, dict[str, Callable[[str, str], None]]] = {}  # port -> {client_id -> callback}
         # Port open queuing (Fix #4) - serialize concurrent open attempts per port
         self._port_open_locks: dict[str, threading.Lock] = {}  # port -> open lock
+        # Crash decoders per port (set externally after port open)
+        self._crash_decoders: dict[str, CrashDecoder] = {}  # port -> decoder
 
     def _detect_boot_crash(self, buffer: bytes) -> bool:
         """Detect if device has crashed during boot from serial buffer.
@@ -172,6 +179,20 @@ class SharedSerialManager:
             True if crash pattern detected, False otherwise
         """
         return any(pattern in buffer for pattern in BOOT_CRASH_PATTERNS)
+
+    def set_crash_decoder(self, port: str, decoder: CrashDecoder) -> None:
+        """Attach a crash decoder to a port for real-time crash decoding.
+
+        The decoder will intercept crash output in the serial reader loop and
+        append decoded stack traces to the serial stream.
+
+        Args:
+            port: Serial port identifier
+            decoder: Configured CrashDecoder instance
+        """
+        with self._lock:
+            self._crash_decoders[port] = decoder
+            logging.info(f"Crash decoder attached to {port} (can_decode={decoder.can_decode})")
 
     def open_port(self, port: str, baud_rate: int, client_id: str, progress_callback: Callable[[int, int, float], None] | None = None) -> bool:
         """Open a serial port if not already open.
@@ -395,6 +416,8 @@ class SharedSerialManager:
             del self._writer_conditions[port]
         if port in self._reader_callbacks:
             del self._reader_callbacks[port]
+        if port in self._crash_decoders:
+            del self._crash_decoders[port]
 
         # Mark session as closed and remove
         session.is_open = False
@@ -915,6 +938,8 @@ class SharedSerialManager:
 
         This method runs in a dedicated thread per port and continuously reads
         data from the serial port, broadcasting it to all attached readers.
+        When a crash decoder is attached, it intercepts crash dumps, decodes
+        them, and appends the decoded trace to the serial stream.
 
         Args:
             port: Serial port identifier
@@ -936,9 +961,21 @@ class SharedSerialManager:
                             if not crash_detected and self._detect_boot_crash(data):
                                 crash_detected = True
                                 logging.error(f"Boot crash detected on {port} in serial output")
-                                # Notify that device needs reset (logged for diagnostic purposes)
 
+                            # Always broadcast raw output first
                             self.broadcast_output(port, data)
+
+                            # Crash decoding: accumulate and decode crash dumps
+                            decoder = self._crash_decoders.get(port)
+                            if decoder is not None:
+                                try:
+                                    line_text = data.decode("utf-8", errors="replace").rstrip()
+                                except KeyboardInterrupt:  # noqa: KBI002
+                                    raise
+                                except Exception:
+                                    line_text = str(data)
+
+                                self._process_crash_line(port, decoder, line_text)
                     else:
                         # Small sleep to avoid busy-waiting
                         time.sleep(0.01)
@@ -957,6 +994,32 @@ class SharedSerialManager:
             logging.error(f"Fatal error in reader thread for {port}: {e}")
         finally:
             logging.debug(f"Serial reader thread stopped for {port}")
+
+    def _process_crash_line(self, port: str, decoder: CrashDecoder, line: str) -> None:
+        """Process a single serial line through the crash decoder.
+
+        Handles the state machine: detect start → accumulate → detect end → decode.
+
+        Args:
+            port: Serial port identifier
+            decoder: CrashDecoder instance for this port
+            line: Decoded text line from serial
+        """
+        if not decoder.is_accumulating:
+            # Look for crash start
+            if decoder.detect_crash_start(line):
+                decoder.accumulate(line)
+        else:
+            # Already accumulating — check for end or keep buffering
+            if decoder.detect_crash_end(line):
+                decoded_lines = decoder.decode()
+                if decoded_lines:
+                    # Broadcast decoded trace as synthetic serial output
+                    for decoded_line in decoded_lines:
+                        self.broadcast_output(port, (decoded_line + "\n").encode("utf-8"))
+                decoder.reset()
+            else:
+                decoder.accumulate(line)
 
     def get_session_count(self) -> int:
         """Get the number of active serial sessions.

@@ -10,7 +10,7 @@ import re
 import sys
 import time
 from pathlib import Path
-from typing import Optional
+from typing import Callable, Optional
 
 from fbuild.cli_utils import safe_print
 from fbuild.config import PlatformIOConfig
@@ -113,6 +113,7 @@ class SerialMonitor:
         output_file: Optional[Path] = None,
         summary_file: Optional[Path] = None,
         timestamp: bool = False,
+        line_callback: Optional[Callable[[str], Optional[str]]] = None,
     ) -> int:
         """Monitor serial output from device.
 
@@ -308,6 +309,20 @@ class SerialMonitor:
                                 raise
                             except Exception:
                                 pass  # Ignore write errors
+
+                        # Process line through optional callback (e.g., crash decoder)
+                        if line_callback:
+                            try:
+                                extra = line_callback(text)
+                                if extra:
+                                    safe_print(extra)
+                                    if output_fp:
+                                        output_fp.write(extra + "\n")
+                                        output_fp.flush()
+                            except KeyboardInterrupt:  # noqa: KBI002
+                                raise
+                            except Exception:
+                                pass  # Don't let callback errors affect monitoring
 
                         # Increment line counter
                         lines_processed += 1

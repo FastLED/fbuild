@@ -20,7 +20,23 @@ from fbuild.daemon.async_client_lib.types import ConnectionError, ConnectionStat
 
 # Default configuration
 DEFAULT_HOST = "localhost"
-DEFAULT_PORT = 9876  # Must match async_server.py DEFAULT_PORT
+DEFAULT_PORT = 9876  # Production port; must match async_server.py DEFAULT_PORT
+DEFAULT_DEV_PORT = 9977  # Dev mode port; must match async_server.py DEFAULT_DEV_PORT
+
+
+def get_async_client_port() -> int:
+    """Get the async client port based on dev mode.
+
+    Returns:
+        9977 in dev mode, 9876 in production
+    """
+    import os
+
+    if os.environ.get("FBUILD_DEV_MODE") == "1":
+        return DEFAULT_DEV_PORT
+    return DEFAULT_PORT
+
+
 DEFAULT_REQUEST_TIMEOUT = 30.0
 DEFAULT_HEARTBEAT_INTERVAL = 10.0
 

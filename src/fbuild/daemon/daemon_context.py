@@ -104,7 +104,7 @@ def create_daemon_context(
     status_file_path: Path,
     daemon_dir: Path,
     enable_async_server: bool = True,
-    async_server_port: int = 9876,
+    async_server_port: int | None = None,
 ) -> DaemonContext:
     """Factory function to create and initialize a DaemonContext.
 
@@ -120,7 +120,8 @@ def create_daemon_context(
         daemon_dir: Path to the daemon directory (for cancel signals)
         enable_async_server: Whether to start the async TCP server for real-time
             client communication. Defaults to True.
-        async_server_port: Port for async server to listen on. Defaults to 9876.
+        async_server_port: Port for async server to listen on. None = auto-detect
+            based on dev mode (9977 dev, 9876 prod).
 
     Returns:
         Fully initialized DaemonContext
@@ -229,18 +230,19 @@ def create_daemon_context(
     async_server = None
     if enable_async_server:
         try:
-            from fbuild.daemon.async_server import AsyncDaemonServer
+            from fbuild.daemon.async_server import AsyncDaemonServer, get_async_server_port
 
+            resolved_port = async_server_port if async_server_port is not None else get_async_server_port()
             async_server = AsyncDaemonServer(
                 host="localhost",
-                port=async_server_port,
+                port=resolved_port,
                 configuration_lock_manager=configuration_lock_manager,
                 firmware_ledger=firmware_ledger,
                 shared_serial_manager=shared_serial_manager,
                 client_manager=client_manager,
                 device_manager=device_manager,
             )
-            logging.info(f"Async server initialized on port {async_server_port}")
+            logging.info(f"Async server initialized on port {resolved_port}")
         except KeyboardInterrupt:  # noqa: KBI002
             raise
         except Exception as e:

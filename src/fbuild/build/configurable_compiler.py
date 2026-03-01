@@ -414,6 +414,14 @@ class ConfigurableCompiler(ICompiler):
         core_sources = self.framework.get_core_sources(self.core)  # type: ignore[attr-defined]
         core_dir = self.framework.get_core_dir(self.core)  # type: ignore[attr-defined]
 
+        # Exclude sources that are incompatible with the target MCU.
+        # esp32-hal-bt.c requires Classic Bluetooth headers that only exist for
+        # the original ESP32. On ESP32-C3/C6/S3/etc. the SDK header esp_bt.h
+        # uses relative includes that break under the trampoline include system,
+        # and the file is functionally guarded with #if CONFIG_IDF_TARGET_ESP32.
+        if self.mcu != "esp32":
+            core_sources = [s for s in core_sources if s.name != "esp32-hal-bt.c"]
+
         if self.show_progress:
             log_detail(f"Compiling {len(core_sources)} core source files...")
 
