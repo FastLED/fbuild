@@ -103,6 +103,8 @@ def test_parallel_compilation_uses_trampolines():
         queue=mock_queue,
         build_dir=build_dir,
         verbose=False,
+        compile_database=None,
+        generate_compiledb=False,
         platform=mock_platform,
         toolchain=mock_toolchain,
         mcu="esp32s3",
