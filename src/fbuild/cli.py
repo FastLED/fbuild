@@ -84,6 +84,7 @@ class BuildArgs:
     explicit_release: bool = False
     explicit_quick: bool = False
     target: Optional[str] = None
+    dry_run: bool = False
 
 
 @dataclass
@@ -157,6 +158,15 @@ def build_command(args: BuildArgs) -> None:
     try:
         # Determine environment name
         env_name = EnvironmentDetector.detect_environment(args.project_dir, args.environment)
+
+        # Dry-run: verify daemon starts and environment resolves, then exit
+        if args.dry_run:
+            from fbuild.daemon.client.lifecycle import ensure_daemon_running
+
+            ensure_daemon_running()
+            log(f"Environment: {env_name}")
+            log("Daemon is running. Dry-run complete.")
+            sys.exit(0)
 
         # PlatformIO mode: bypass daemon, run pio directly
         if args.platformio:
@@ -1047,6 +1057,11 @@ def main() -> None:
         choices=["compiledb"],
         help="Build target: 'compiledb' generates compile_commands.json without compiling",
     )
+    build_parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Verify daemon starts and environment resolves, but skip the actual build",
+    )
 
     # Deploy command
     deploy_parser = subparsers.add_parser(
@@ -1359,6 +1374,7 @@ def main() -> None:
             explicit_release=parsed_args.release,
             explicit_quick=parsed_args.quick,
             target=parsed_args.target,
+            dry_run=parsed_args.dry_run,
         )
         build_command(build_args)
     elif parsed_args.command == "deploy":

@@ -14,7 +14,7 @@ import time
 from typing import Any, Generator
 
 from fbuild.daemon.paths import DAEMON_DIR, LOCK_FILE, PID_FILE
-from fbuild.subprocess_utils import safe_popen, safe_run
+from fbuild.subprocess_utils import get_python_executable, safe_run
 
 # Platform-specific imports
 fcntl: Any = None
@@ -231,6 +231,11 @@ def spawn_daemon_process(launcher_pid: int) -> int:
     """
     Spawn daemon process and return its PID.
 
+    On Windows, uses pythonw.exe (the windowless Python interpreter) so the
+    daemon never creates a console window and never hangs in MSYS2/git-bash.
+    CREATE_NO_WINDOW and DETACHED_PROCESS both have edge-case issues in
+    non-native terminals; pythonw.exe avoids them entirely.
+
     Args:
         launcher_pid: PID of the client that requested daemon
 
@@ -240,46 +245,19 @@ def spawn_daemon_process(launcher_pid: int) -> int:
     Raises:
         RuntimeError: If spawn fails
     """
-    # Clean up any zombie daemons before spawning
-    # TEMPORARILY DISABLED: cleanup is too aggressive and kills starting daemons
-    # cleanup_zombie_daemons()
-
-    # Construct daemon command
-    # TEMPORARY: Use sys.executable for debugging (will show console)
-    # TODO: Switch back to get_python_executable() once daemon spawn is working
     cmd = [
-        sys.executable,  # python.exe for debugging
+        get_python_executable(),  # pythonw.exe on Windows, python elsewhere
         "-m",
         "fbuild.daemon.daemon",
-        f"--launched-by={launcher_pid}",  # Must use = form, not separate args
+        f"--launched-by={launcher_pid}",
     ]
 
-    # Spawn daemon
-    # safe_popen() automatically handles:
-    # - CREATE_NO_WINDOW on Windows (prevents console window)
-    # - stdin=DEVNULL (prevents console input handle inheritance)
-    # TEMPORARY: Capture stderr for debugging
-    # NOTE: We don't change cwd - daemon determines its own paths based on FBUILD_DEV_MODE
-
-    # Ensure environment is passed (especially FBUILD_DEV_MODE)
-    env = os.environ.copy()
-
-    # On Windows, passing file handles to subprocess can cause issues with append mode.
-    # Instead, we let the daemon itself handle logging by redirecting stderr to DEVNULL
-    # and having the daemon write its startup info to the log file.
-    #
-    # This approach is more reliable because:
-    # 1. Each daemon process explicitly opens the file in append mode
-    # 2. No file handle inheritance issues on Windows
-    # 3. Clean separation between parent and child file handles
-
-    # Use safe_popen to avoid console window issues on Windows
-    proc = safe_popen(
+    proc = subprocess.Popen(
         cmd,
         stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,  # Daemon will handle its own stderr logging
+        stderr=subprocess.DEVNULL,
         stdin=subprocess.DEVNULL,
-        env=env,  # Explicitly pass environment
+        env=os.environ.copy(),
     )
 
     return proc.pid
