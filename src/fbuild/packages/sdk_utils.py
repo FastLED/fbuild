@@ -235,6 +235,16 @@ class SDKPathResolver:
         else:
             logger.warning(f"SDK_LIBS: Flash/PSRAM lib directory does not exist: {flash_lib_dir}")
 
+        # Get PHY/Bluetooth libraries from ld/ directory
+        # libphy.a and libbtbb.a are stored separately in the ld/ directory
+        # alongside linker scripts, required for WiFi/BLE functionality
+        ld_lib_dir = self.sdk_base_dir / resolved_mcu / "ld"
+        if ld_lib_dir.exists():
+            ld_libs = list(ld_lib_dir.glob("*.a"))
+            libs.extend(ld_libs)
+            if ld_libs:
+                logger.debug(f"SDK_LIBS: Found {len(ld_libs)} libraries in {ld_lib_dir}")
+
         return libs
 
     def get_sdk_flags_dir(self, mcu: str) -> Path:
