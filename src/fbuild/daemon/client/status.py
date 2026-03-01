@@ -141,6 +141,22 @@ def get_daemon_status() -> dict[str, Any]:
         # Convert DaemonStatus to dict for JSON serialization
         status["current_status"] = daemon_status.to_dict()
 
+    # Fetch mcp_url from daemon HTTP API when running
+    if status["running"]:
+        try:
+            from fbuild.daemon.client.http_utils import get_daemon_url, http_client
+
+            with http_client(timeout=2.0, connect_timeout=1.0) as client:
+                resp = client.get(get_daemon_url("/api/daemon/info"))
+                if resp.status_code == 200:
+                    info = resp.json()
+                    if info.get("mcp_url"):
+                        status["mcp_url"] = info["mcp_url"]
+        except KeyboardInterrupt:
+            raise
+        except Exception:
+            pass
+
     return status
 
 

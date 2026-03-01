@@ -20,7 +20,6 @@ from pathlib import Path
 from typing import Optional
 
 from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
-
 from fbuild.subprocess_utils import safe_popen, safe_run
 
 

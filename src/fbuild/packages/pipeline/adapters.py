@@ -21,9 +21,8 @@ from typing import Optional
 from fbuild.config.ini_parser import PlatformIOConfig
 from fbuild.packages.arduino_core import ArduinoCore
 from fbuild.packages.cache import Cache
-from fbuild.packages.toolchain import ToolchainAVR
-
 from fbuild.packages.pipeline.models import PackageTask
+from fbuild.packages.toolchain import ToolchainAVR
 
 
 class TaskGraphError(Exception):

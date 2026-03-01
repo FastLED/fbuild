@@ -10,8 +10,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, Dict, List, Optional
 
-from fbuild.subprocess_utils import safe_run
 from fbuild.build.compiler import CompilerError, ICompiler
+from fbuild.subprocess_utils import safe_run
 
 if TYPE_CHECKING:
     from fbuild.build.build_context import BuildContext

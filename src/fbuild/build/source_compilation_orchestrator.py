@@ -9,8 +9,8 @@ higher-level interface over the low-level ICompiler interface.
 from pathlib import Path
 from typing import List
 
-from fbuild.output import log_detail, log_file
 from fbuild.build.compiler import CompilerError, ICompiler
+from fbuild.output import log_detail, log_file
 
 
 class SourceCompilationOrchestratorError(Exception):

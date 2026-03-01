@@ -16,11 +16,11 @@ import time
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
-from fbuild.output import format_size, log_detail
-from fbuild.subprocess_utils import safe_run
 from fbuild.build.binary_generator import BinaryGenerator
 from fbuild.build.compiler import ILinker, LinkerError
 from fbuild.build.psram_utils import get_psram_mode
+from fbuild.output import format_size, log_detail
+from fbuild.subprocess_utils import safe_run
 
 if TYPE_CHECKING:
     from fbuild.build.build_context import BuildContext

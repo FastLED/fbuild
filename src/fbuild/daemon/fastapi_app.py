@@ -28,6 +28,7 @@ Usage:
 
 from __future__ import annotations
 
+import contextlib
 import logging
 import os
 import time
@@ -129,6 +130,7 @@ class DaemonInfoResponse(BaseModel):
     dev_mode: bool
     client_count: int
     operation_in_progress: bool
+    mcp_url: str
 
 
 class ErrorResponse(BaseModel):
@@ -146,7 +148,8 @@ async def lifespan(app: FastAPI):
     """FastAPI lifespan context manager for startup and shutdown.
 
     This replaces the deprecated @app.on_event("startup") and
-    @app.on_event("shutdown") decorators.
+    @app.on_event("shutdown") decorators. Also initialises the MCP
+    session manager when the ``mcp`` package is installed.
 
     Yields:
         Control to FastAPI application
@@ -163,7 +166,21 @@ async def lifespan(app: FastAPI):
     logging.info("FastAPI lifespan: About to YIELD (server will start serving)")
     logging.info("=" * 80)
 
-    yield
+    async with contextlib.AsyncExitStack() as stack:
+        # Initialise MCP session manager if available
+        try:
+            from fbuild.daemon.mcp_server import mcp
+
+            mcp_app = mcp.streamable_http_app()
+            if hasattr(mcp_app, "router") and hasattr(mcp_app.router, "lifespan_context"):
+                await stack.enter_async_context(mcp_app.router.lifespan_context(mcp_app))
+                logging.info("MCP session manager initialised")
+        except KeyboardInterrupt:
+            raise
+        except Exception as exc:
+            logging.info(f"MCP session manager not available: {exc}")
+
+        yield
 
     # Shutdown
     logging.info("=" * 80)
@@ -245,6 +262,27 @@ def register_lock_endpoints(app: FastAPI) -> None:
     app.include_router(locks_router)
 
 
+def register_mcp_endpoint(app: FastAPI) -> None:
+    """Mount the MCP (Model Context Protocol) endpoint at /mcp.
+
+    This allows AI assistants to interact with the daemon via MCP.
+    Silently skipped if the ``mcp`` package is not installed.
+
+    Args:
+        app: FastAPI application instance
+    """
+    try:
+        from fbuild.daemon.mcp_server import mcp
+
+        mcp_app = mcp.streamable_http_app()
+        app.mount("/mcp", mcp_app)
+        logging.info("MCP endpoint mounted at /mcp")
+    except KeyboardInterrupt:
+        raise
+    except Exception as exc:
+        logging.info(f"MCP endpoint not available (mcp package not installed?): {exc}")
+
+
 def register_websocket_endpoints(app: FastAPI) -> None:
     """Register WebSocket endpoints for real-time communication.
 
@@ -284,16 +322,18 @@ def register_daemon_endpoints(app: FastAPI) -> None:
         if hasattr(context, "async_server") and context.async_server:
             client_count = context.async_server.client_count
 
+        port = get_daemon_port()
         return DaemonInfoResponse(
             pid=context.daemon_pid,
             started_at=context.daemon_started_at,
             uptime_seconds=uptime,
             version=APP_VERSION,
-            port=get_daemon_port(),
+            port=port,
             host=DEFAULT_HOST,
             dev_mode=dev_mode,
             client_count=client_count,
             operation_in_progress=context.status_manager.get_operation_in_progress(),
+            mcp_url=f"http://{DEFAULT_HOST}:{port}/mcp",
         )
 
     @app.post("/api/daemon/shutdown", tags=["Daemon"])
@@ -354,6 +394,7 @@ def create_app() -> FastAPI:
     register_device_endpoints(app)
     register_lock_endpoints(app)
     register_websocket_endpoints(app)
+    register_mcp_endpoint(app)
 
     return app
 

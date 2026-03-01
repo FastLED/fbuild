@@ -67,6 +67,7 @@ def ensure_daemon_running(timeout: int = 10, verbose: bool = False) -> None:
             raise RuntimeError(f"Daemon started but HTTP server became unavailable. Check daemon logs at: {DAEMON_DIR / 'daemon.log'}")
         if verbose:
             print("✅ Daemon HTTP server is ready")
+        _print_mcp_url()
         return
 
     elif response.status == DaemonStatus.ALREADY_RUNNING:
@@ -116,3 +117,37 @@ def stop_daemon() -> bool:
 
     print("⚠️  Daemon did not stop gracefully")
     return False
+
+
+def _print_mcp_url() -> None:
+    """Print the MCP server URL in eye-catching colours after a fresh daemon start.
+
+    Silently does nothing if the ``mcp`` package is not installed.
+    """
+    try:
+        import mcp as _mcp  # noqa: F811
+
+        del _mcp  # only needed to confirm the package is installed
+    except ImportError:
+        return
+
+    from fbuild.daemon.client.http_utils import get_daemon_port
+
+    port = get_daemon_port()
+    url = f"http://127.0.0.1:{port}/mcp"
+
+    # ANSI escape codes
+    BOLD = "\033[1m"
+    CYAN = "\033[36m"
+    DIM = "\033[2m"
+    YELLOW = "\033[33m"
+    BRIGHT_WHITE = "\033[97m"
+    RESET = "\033[0m"
+
+    print()
+    print(f"  {DIM}{CYAN}{'─' * 44}{RESET}")
+    print(f"  {BOLD}{CYAN}  MCP Server Ready{RESET}")
+    print(f"  {BOLD}{BRIGHT_WHITE}  {url}{RESET}")
+    print(f"  {DIM}{YELLOW}  Add to Claude Desktop / Cursor / VS Code{RESET}")
+    print(f"  {DIM}{CYAN}{'─' * 44}{RESET}")
+    print()

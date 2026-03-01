@@ -736,6 +736,8 @@ def daemon_command(action: str, pid: Optional[int] = None, force: bool = False, 
             if status["running"]:
                 print("✅ Daemon is running")
                 print(f"   PID: {status.get('pid', 'unknown')}")
+                if status.get("mcp_url"):
+                    print(f"   MCP: {status['mcp_url']}")
 
                 if "current_status" in status:
                     current = status["current_status"]

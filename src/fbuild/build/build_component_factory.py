@@ -9,11 +9,11 @@ the logic for setting up these components with correct parameters.
 from pathlib import Path
 from typing import TYPE_CHECKING, List, Optional
 
+from fbuild.build.compiler_avr import CompilerAVR
+from fbuild.build.linker import LinkerAVR
 from fbuild.config.board_config import BoardConfig
 from fbuild.config.mcu_specs import get_max_flash, get_max_ram
 from fbuild.packages.package import IToolchain
-from fbuild.build.compiler_avr import CompilerAVR
-from fbuild.build.linker import LinkerAVR
 
 if TYPE_CHECKING:
     from fbuild.build.build_context import BuildContext

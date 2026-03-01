@@ -8,8 +8,8 @@ from __future__ import annotations
 
 from typing import Any
 
-from fbuild.daemon.async_client_lib.types import MessageType
 from fbuild.daemon.async_client_lib.handlers.base import BaseProtocolHandler
+from fbuild.daemon.async_client_lib.types import MessageType
 
 
 class FirmwareProtocolHandler(BaseProtocolHandler):
