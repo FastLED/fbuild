@@ -20,13 +20,25 @@ import sys
 import time
 from pathlib import Path
 
+import httpx
 import pytest
 
 from fbuild.daemon.api import DaemonStatus, get_daemon_info, request_daemon
-from fbuild.daemon.client.http_utils import is_daemon_http_available
+from fbuild.daemon.client.http_utils import get_daemon_url, is_daemon_http_available
 from fbuild.daemon.client.lifecycle import stop_daemon
 from fbuild.daemon.paths import DAEMON_DIR, LOCK_FILE, PID_FILE
 from fbuild.daemon.singleton_manager import is_daemon_alive, read_pid_file
+
+
+def _is_daemon_http_available_fast() -> bool:
+    """Fast version of is_daemon_http_available with 0.15s connect timeout."""
+    try:
+        with httpx.Client(timeout=httpx.Timeout(0.3, connect=0.15)) as client:
+            response = client.get(get_daemon_url("/health"))
+            return response.status_code == 200
+    except (httpx.ConnectError, httpx.TimeoutException, httpx.HTTPError):
+        return False
+
 
 pytestmark = [pytest.mark.unit, pytest.mark.xdist_group(name="daemon_lifecycle")]
 
@@ -78,25 +90,10 @@ def spawn_client(_worker_id: int) -> int | None:
 def _stop_and_clean() -> None:
     """Stop any running daemon and clean up state files.
 
-    Uses the lightweight ``stop_daemon()`` HTTP call first, then scrubs
-    leftover files. Only escalates to force-kill when the process is
-    still alive after the graceful attempt.
+    Uses signal file + HTTP shutdown in parallel, then force-kills if needed.
+    Optimised for speed in the test teardown path.
     """
-    # 1 – HTTP graceful shutdown
-    try:
-        stop_daemon()
-    except Exception:
-        pass
-
-    # 2 – Wait for graceful shutdown (up to 5 s)
-    for _ in range(10):
-        if not PID_FILE.exists() and not is_daemon_http_available():
-            break
-        time.sleep(0.5)
-    else:
-        time.sleep(0.5)
-
-    # 3 – Force-kill only if process is still alive
+    # 1 – Read PID before shutdown (for force-kill later)
     daemon_pid = None
     if PID_FILE.exists():
         try:
@@ -105,37 +102,42 @@ def _stop_and_clean() -> None:
         except Exception:
             pass
 
-    # If no PID from file but HTTP still responds, try to get PID from HTTP info endpoint
-    if daemon_pid is None and is_daemon_http_available():
-        try:
-            import httpx
+    # 2 – Drop shutdown signal file (instant, no network)
+    shutdown_file = DAEMON_DIR / "shutdown.signal"
+    try:
+        shutdown_file.touch()
+    except Exception:
+        pass
 
-            from fbuild.daemon.client.http_utils import get_daemon_url
+    # 3 – HTTP graceful shutdown (short timeout, fire-and-forget style)
+    try:
+        with httpx.Client(timeout=httpx.Timeout(1.0, connect=0.2)) as client:
+            client.post(get_daemon_url("/api/daemon/shutdown"))
+    except Exception:
+        pass
 
-            with httpx.Client(timeout=3.0) as client:
-                resp = client.get(get_daemon_url("/api/daemon/info"))
-                if resp.status_code == 200:
-                    data = resp.json()
-                    daemon_pid = data.get("pid")
-        except Exception:
-            pass
+    # 4 – Wait for PID file to disappear (50ms intervals, 1s max)
+    for _ in range(20):
+        if not PID_FILE.exists():
+            break
+        time.sleep(0.05)
 
+    # 5 – Force-kill only if process is still alive
     if daemon_pid is not None and _check_pid_alive_simple(daemon_pid):
         if platform.system() == "Windows":
             subprocess.run(
                 ["taskkill", "/F", "/PID", str(daemon_pid)],
                 capture_output=True,
-                timeout=5,
+                timeout=3,
             )
         else:
             try:
                 os.kill(daemon_pid, 9)
             except ProcessLookupError:
                 pass
-        time.sleep(0.5)
+        time.sleep(0.1)
 
-    # 4 – Scrub state files (including port file)
-    shutdown_file = DAEMON_DIR / "shutdown.signal"
+    # 6 – Scrub state files
     port_file = DAEMON_DIR / "daemon.port"
     for f in (PID_FILE, LOCK_FILE, shutdown_file, port_file):
         try:
@@ -144,14 +146,11 @@ def _stop_and_clean() -> None:
         except Exception:
             pass
 
-    # 5 – Wait for HTTP to go down (up to 5s)
-    for _ in range(10):
-        if not is_daemon_http_available():
+    # 7 – Quick HTTP-down check (skip if PID file already gone)
+    for _ in range(5):
+        if not _is_daemon_http_available_fast():
             break
-        time.sleep(0.5)
-
-    # 6 – Let the OS release the port
-    time.sleep(0.5)
+        time.sleep(0.05)
 
 
 def _check_pid_alive_simple(pid: int) -> bool:
@@ -162,7 +161,7 @@ def _check_pid_alive_simple(pid: int) -> bool:
                 ["tasklist", "/FI", f"PID eq {pid}"],
                 capture_output=True,
                 text=True,
-                timeout=5,
+                timeout=3,
             )
             return str(pid) in result.stdout
         else:
@@ -187,8 +186,7 @@ def daemon_guard():
 
 @pytest.fixture()
 def clean_daemon(daemon_guard):  # noqa: ARG001
-    """Clean daemon state before *and* after each test."""
-    _stop_and_clean()
+    """Clean daemon state after each test (module guard handles initial cleanup)."""
     yield
     _stop_and_clean()
 
@@ -298,7 +296,7 @@ class TestDaemonMultiCall:
         assert response1.status == DaemonStatus.STARTED
         pid1 = response1.pid
 
-        time.sleep(1)
+        time.sleep(0.3)
 
         response2 = request_daemon()
         assert response2.status == DaemonStatus.ALREADY_RUNNING

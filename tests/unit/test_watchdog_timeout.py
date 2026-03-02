@@ -39,19 +39,19 @@ def test_watchdog_timeout_total_timeout():
     with pytest.raises(subprocess.TimeoutExpired) as exc_info:
         run_with_watchdog_timeout(
             [sys.executable, "-c", "import time; time.sleep(10)"],
-            timeout=2,  # Total timeout: 2 seconds
+            timeout=1,  # Total timeout: 1 second
             inactivity_timeout=5,  # Inactivity timeout: 5 seconds
             verbose=False,
         )
 
     elapsed = time.time() - start
 
-    # Should timeout after ~2 seconds (total timeout)
-    assert elapsed < 4, f"Expected ~2s timeout, got {elapsed:.1f}s"
-    assert elapsed > 1.5, f"Timeout too fast: {elapsed:.1f}s"
+    # Should timeout after ~1 second (total timeout)
+    assert elapsed < 3, f"Expected ~1s timeout, got {elapsed:.1f}s"
+    assert elapsed > 0.5, f"Timeout too fast: {elapsed:.1f}s"
 
     # Check that TimeoutExpired has the correct timeout value
-    assert exc_info.value.timeout == 2
+    assert exc_info.value.timeout == 1
 
 
 def test_watchdog_timeout_inactivity_timeout():
@@ -71,16 +71,16 @@ print('Done', flush=True)
         run_with_watchdog_timeout(
             [sys.executable, "-c", script],
             timeout=20,  # Total timeout: 20 seconds
-            inactivity_timeout=2,  # Inactivity timeout: 2 seconds
+            inactivity_timeout=1,  # Inactivity timeout: 1 second
             verbose=False,
         )
 
     elapsed = time.time() - start
 
-    # Should timeout after ~2 seconds (inactivity timeout)
+    # Should timeout after ~1 second (inactivity timeout)
     # Add some buffer for thread scheduling and I/O
-    assert elapsed < 5, f"Expected ~2s inactivity timeout, got {elapsed:.1f}s"
-    assert elapsed > 1.5, f"Timeout too fast: {elapsed:.1f}s"
+    assert elapsed < 4, f"Expected ~1s inactivity timeout, got {elapsed:.1f}s"
+    assert elapsed > 0.5, f"Timeout too fast: {elapsed:.1f}s"
 
     # Check that output was captured before timeout
     assert b"Starting..." in exc_info.value.output
@@ -132,7 +132,7 @@ print('stderr message', file=sys.stderr, flush=True)
     result = run_with_watchdog_timeout(
         [sys.executable, "-c", script],
         timeout=5,
-        inactivity_timeout=2,
+        inactivity_timeout=1,
         verbose=False,
     )
 
@@ -179,14 +179,14 @@ time.sleep(30)  # Long sleep to trigger timeout
         run_with_watchdog_timeout(
             [sys.executable, "-c", script],
             timeout=10,
-            inactivity_timeout=2,
+            inactivity_timeout=1,
             verbose=False,
         )
 
     elapsed = time.time() - start
 
-    # Should timeout and force kill in ~2s (inactivity) + 5s (grace period) = ~7s
-    assert elapsed < 10, f"Expected ~7s timeout+kill, got {elapsed:.1f}s"
+    # Should timeout and force kill in ~1s (inactivity) + 5s (grace period) = ~6s
+    assert elapsed < 10, f"Expected ~6s timeout+kill, got {elapsed:.1f}s"
 
 
 @pytest.mark.skipif(sys.platform != "win32", reason="TerminateProcess() is Windows-specific")
@@ -213,14 +213,14 @@ time.sleep(30)
         run_with_watchdog_timeout(
             [sys.executable, "-c", script],
             timeout=10,
-            inactivity_timeout=2,
+            inactivity_timeout=1,
             verbose=False,
         )
 
     elapsed = time.time() - start
 
     # Verify TerminateProcess() killed the process
-    assert elapsed < 10, f"Expected ~7s timeout+kill, got {elapsed:.1f}s"
+    assert elapsed < 10, f"Expected ~6s timeout+kill, got {elapsed:.1f}s"
 
 
 if __name__ == "__main__":

@@ -616,7 +616,7 @@ class TestUpgradeFromSharedToExclusive(unittest.TestCase):
         upgrade_result = [None]
 
         def upgrade_thread():
-            upgrade_result[0] = self.manager.acquire_exclusive(self.config, "client1", blocking=True, timeout=5.0)
+            upgrade_result[0] = self.manager.acquire_exclusive(self.config, "client1", blocking=True, timeout=2.0)
 
         thread = threading.Thread(target=upgrade_thread)
         thread.start()
@@ -624,7 +624,7 @@ class TestUpgradeFromSharedToExclusive(unittest.TestCase):
         time.sleep(0.1)
         self.manager.release(self.config, "client2")
 
-        thread.join(timeout=5.0)
+        thread.join(timeout=2.0)
 
         self.assertTrue(upgrade_result[0])
         self.assertEqual(self.manager.get_lock_state(self.config), LockState.LOCKED_EXCLUSIVE)
@@ -707,7 +707,7 @@ class TestWaitingQueueForExclusive(unittest.TestCase):
         self.manager.release(self.config, "holder")
 
         for t in threads:
-            t.join(timeout=5.0)
+            t.join(timeout=2.0)
 
         # Verify FIFO order
         self.assertEqual(acquired_order, ["waiter0", "waiter1", "waiter2"])
@@ -717,7 +717,9 @@ class TestWaitingQueueForExclusive(unittest.TestCase):
         self.manager.acquire_exclusive(self.config, "holder")
 
         def wait_for_lock(client_id):
-            self.manager.acquire_exclusive(self.config, client_id, blocking=True, timeout=5.0)
+            result = self.manager.acquire_exclusive(self.config, client_id, blocking=True, timeout=1.0)
+            if result:
+                self.manager.release(self.config, client_id)
 
         threads = []
         for i in range(2):
@@ -735,7 +737,7 @@ class TestWaitingQueueForExclusive(unittest.TestCase):
 
         self.manager.release(self.config, "holder")
         for t in threads:
-            t.join(timeout=5.0)
+            t.join(timeout=2.0)
 
     def test_waiter_removed_from_queue_on_timeout(self):
         """Waiters should be removed from queue when they timeout."""
@@ -825,7 +827,7 @@ class TestAutoReleaseOnClientDisconnect(unittest.TestCase):
         def wait_for_lock():
             waiter_started.set()
             try:
-                self.manager.acquire_exclusive(config, "waiter", blocking=True, timeout=5.0)
+                self.manager.acquire_exclusive(config, "waiter", blocking=True, timeout=1.0)
             except ValueError:
                 # Expected: waiter was manually removed from queue before timeout cleanup
                 pass
@@ -863,7 +865,7 @@ class TestAutoReleaseOnClientDisconnect(unittest.TestCase):
         acquired = [False]
 
         def wait_for_lock():
-            result = self.manager.acquire_exclusive(config, "waiter", blocking=True, timeout=5.0)
+            result = self.manager.acquire_exclusive(config, "waiter", blocking=True, timeout=2.0)
             acquired[0] = result
 
         thread = threading.Thread(target=wait_for_lock)
@@ -874,7 +876,7 @@ class TestAutoReleaseOnClientDisconnect(unittest.TestCase):
         # Disconnect the holder - should notify waiter
         self.manager.release_all_client_locks("holder")
 
-        thread.join(timeout=5.0)
+        thread.join(timeout=2.0)
 
         self.assertTrue(acquired[0])
 
@@ -905,7 +907,7 @@ class TestTimeoutOnExclusiveAcquire(unittest.TestCase):
         result = [None]
 
         def wait_and_acquire():
-            result[0] = self.manager.acquire_exclusive(self.config, "waiter", blocking=True, timeout=5.0)
+            result[0] = self.manager.acquire_exclusive(self.config, "waiter", blocking=True, timeout=2.0)
 
         def release_later():
             time.sleep(0.1)
@@ -916,8 +918,8 @@ class TestTimeoutOnExclusiveAcquire(unittest.TestCase):
 
         t1.start()
         t2.start()
-        t1.join(timeout=5.0)
-        t2.join(timeout=5.0)
+        t1.join(timeout=2.0)
+        t2.join(timeout=2.0)
 
         self.assertTrue(result[0])
 
@@ -957,7 +959,7 @@ class TestConcurrentAccessPatterns(unittest.TestCase):
         lock = threading.Lock()
 
         def acquire_and_count():
-            result = self.manager.acquire_exclusive(config, f"client_{threading.get_ident()}", blocking=True, timeout=5.0)
+            result = self.manager.acquire_exclusive(config, f"client_{threading.get_ident()}", blocking=True, timeout=2.0)
             if result:
                 with lock:
                     acquired_count[0] += 1

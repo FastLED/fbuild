@@ -122,8 +122,8 @@ def test_interruptible_post_with_keyboard_interrupt(http_server: Any) -> None:
     """Test that interruptible_post can be interrupted by KeyboardInterrupt."""
     server, port = http_server
 
-    # Configure server to delay for a long time
-    SlowHTTPRequestHandler.delay_seconds = 10.0
+    # Configure server to delay (longer than the interrupt)
+    SlowHTTPRequestHandler.delay_seconds = 3.0
 
     # Schedule a KeyboardInterrupt to be raised after 0.5 seconds
     def send_interrupt() -> None:
@@ -157,7 +157,7 @@ def test_interruptible_post_timeout(http_server: Any) -> None:
     server, port = http_server
 
     # Configure server to delay longer than timeout
-    SlowHTTPRequestHandler.delay_seconds = 5.0
+    SlowHTTPRequestHandler.delay_seconds = 2.0
 
     # Make request with short timeout
     start_time = time.time()

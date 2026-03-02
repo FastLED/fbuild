@@ -41,7 +41,7 @@ sys.exit(0)
 
     try:
         start = time.time()
-        timeout_seconds = 2  # Short timeout for test
+        timeout_seconds = 1  # Short timeout for test
 
         with pytest.raises(subprocess.TimeoutExpired):
             subprocess.run(

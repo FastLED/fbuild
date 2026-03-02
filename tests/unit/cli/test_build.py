@@ -12,6 +12,12 @@ from fbuild.cli import main
 class TestCLIBuild:
     """Tests for the 'fbuild build' command."""
 
+    @pytest.fixture(autouse=True)
+    def _skip_daemon_stats(self):
+        """Skip the daemon HTTP health check that adds ~1.5s per test."""
+        with patch("fbuild.daemon.client.display_daemon_stats_compact"):
+            yield
+
     @pytest.fixture
     def project_dir(self, tmp_path):
         """Return the temp project directory with platformio.ini."""

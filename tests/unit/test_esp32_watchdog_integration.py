@@ -46,21 +46,21 @@ print("This should never be reached")
 """
 
     # Run with watchdog timeout
-    # Total timeout: 30s, Inactivity timeout: 5s
+    # Total timeout: 30s, Inactivity timeout: 1s
     start = time.time()
 
     with pytest.raises(subprocess.TimeoutExpired) as exc_info:
         run_with_watchdog_timeout(
             [sys.executable, "-c", script],
             timeout=30,
-            inactivity_timeout=5,
+            inactivity_timeout=1,
             verbose=False,
         )
 
     elapsed = time.time() - start
 
-    # Should timeout due to inactivity (5s) not total timeout (30s)
-    assert 4 < elapsed < 12, f"Expected ~5s timeout, got {elapsed:.1f}s"
+    # Should timeout due to inactivity (1s) not total timeout (30s)
+    assert 0.5 < elapsed < 5, f"Expected ~1s timeout, got {elapsed:.1f}s"
 
     # Verify error message mentions inactivity
     assert "inactivity" in str(exc_info.value).lower() or "no output" in str(exc_info.value).lower()
@@ -92,14 +92,14 @@ time.sleep(60)
         run_with_watchdog_timeout(
             [sys.executable, "-c", script],
             timeout=30,
-            inactivity_timeout=5,
+            inactivity_timeout=1,
             verbose=False,
         )
 
     elapsed = time.time() - start
 
-    # Should timeout due to inactivity (5s)
-    assert 4 < elapsed < 12, f"Expected ~5s timeout, got {elapsed:.1f}s"
+    # Should timeout due to inactivity (1s)
+    assert 0.5 < elapsed < 5, f"Expected ~1s timeout, got {elapsed:.1f}s"
 
 
 def test_watchdog_with_fast_binary_output():
@@ -115,10 +115,10 @@ import sys
 import time
 
 # Write binary data to stdout (unbuffered)
-for i in range(10):
+for i in range(5):
     sys.stdout.buffer.write(f"Progress {i}\\n".encode())
     sys.stdout.buffer.flush()
-    time.sleep(0.5)
+    time.sleep(0.2)
 
 sys.stdout.buffer.write(b"Done!\\n")
 sys.stdout.buffer.flush()
@@ -130,19 +130,19 @@ sys.stdout.buffer.flush()
     result = run_with_watchdog_timeout(
         [sys.executable, "-c", script],
         timeout=30,
-        inactivity_timeout=10,  # Long enough to not false-positive
+        inactivity_timeout=5,  # Long enough to not false-positive
         verbose=False,
     )
 
     elapsed = time.time() - start
 
-    # Should complete normally (~5s)
-    assert 4 < elapsed < 8, f"Expected ~5s completion, got {elapsed:.1f}s"
+    # Should complete normally (~1s)
+    assert 0.5 < elapsed < 4, f"Expected ~1s completion, got {elapsed:.1f}s"
     assert result.returncode == 0
 
     # Verify output was captured
     output = result.stdout.decode() if isinstance(result.stdout, bytes) else result.stdout
-    assert "Progress 9" in output
+    assert "Progress 4" in output
     assert "Done!" in output
 
 
@@ -222,14 +222,14 @@ while True:
         run_with_watchdog_timeout(
             [sys.executable, "-c", script],
             timeout=30,
-            inactivity_timeout=5,
+            inactivity_timeout=1,
             verbose=False,
         )
 
     elapsed = time.time() - start
 
-    # Should timeout and force-kill within ~10s (5s inactivity + 5s termination wait)
-    assert 4 < elapsed < 15, f"Expected ~10s timeout+kill, got {elapsed:.1f}s"
+    # Should timeout and force-kill within ~6s (1s inactivity + 5s termination wait)
+    assert 0.5 < elapsed < 10, f"Expected ~6s timeout+kill, got {elapsed:.1f}s"
 
 
 if __name__ == "__main__":

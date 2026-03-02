@@ -15,8 +15,9 @@ from fbuild.daemon.shared_serial import SharedSerialManager
 class TestSerialPortRetryExhaustion:
     """Test cases for serial port retry logic exhaustion."""
 
+    @patch("fbuild.deploy.esptool_utils.reset_esp32_device", return_value=False)
     @patch("time.sleep")
-    def test_port_open_fails_after_max_retries(self, mock_sleep):
+    def test_port_open_fails_after_max_retries(self, mock_sleep, mock_reset):
         """Verify port open fails with PermissionError after exhausting retries.
 
         This test simulates Windows USB-CDC driver not releasing port handle,
@@ -106,8 +107,9 @@ class TestSerialPortRetryExhaustion:
                 assert result2 is True
                 assert retry_count >= 3, "Should have required multiple retries"
 
+    @patch("fbuild.deploy.esptool_utils.reset_esp32_device", return_value=False)
     @patch("time.sleep")
-    def test_usb_cdc_re_enumeration_delay_simulation(self, mock_sleep):
+    def test_usb_cdc_re_enumeration_delay_simulation(self, mock_sleep, mock_reset):
         """Simulate USB-CDC device re-enumeration delay (ESP32 reset).
 
         When ESP32 is reset during deploy, USB-CDC device may disappear then
@@ -146,8 +148,9 @@ class TestSerialPortRetryExhaustion:
 class TestSerialPortRetryTiming:
     """Test cases for retry timing behavior."""
 
+    @patch("fbuild.deploy.esptool_utils.reset_esp32_device", return_value=False)
     @patch("time.sleep")
-    def test_retry_delay_increases_exponentially(self, mock_sleep):
+    def test_retry_delay_increases_exponentially(self, mock_sleep, mock_reset):
         """Verify retry delay uses exponential backoff."""
         manager = SharedSerialManager()
 
@@ -185,8 +188,9 @@ class TestSerialPortRetryTiming:
 class TestSerialPortEdgeCases:
     """Test edge cases in serial port handling."""
 
+    @patch("fbuild.deploy.esptool_utils.reset_esp32_device", return_value=False)
     @patch("time.sleep")
-    def test_port_not_found_vs_permission_denied(self, mock_sleep):
+    def test_port_not_found_vs_permission_denied(self, mock_sleep, mock_reset):
         """Verify manager distinguishes between port not found vs permission denied."""
         manager = SharedSerialManager()
 
@@ -200,8 +204,9 @@ class TestSerialPortEdgeCases:
             result = manager.open_port("COM3", baud_rate=115200, client_id="test_client")
             assert result is False, "Permission denied should fail after retries"
 
+    @patch("fbuild.deploy.esptool_utils.reset_esp32_device", return_value=False)
     @patch("time.sleep")
-    def test_manager_state_after_failed_open_attempt(self, mock_sleep):
+    def test_manager_state_after_failed_open_attempt(self, mock_sleep, mock_reset):
         """Verify manager state is clean after failed open attempt."""
         manager = SharedSerialManager()
         port_name = "COM3"

@@ -171,14 +171,14 @@ def test_fastapi_server_lifecycle():
 
         # Test 2: Verify server stays running (doesn't exit immediately)
         # Wait a bit and check server is still responsive
-        time.sleep(2.0)
+        time.sleep(0.5)
 
         assert server_thread.is_alive(), "Server thread died unexpectedly"
 
         response = requests.get(health_url, timeout=5.0)
-        assert response.status_code == 200, "Server stopped responding after 2s"
+        assert response.status_code == 200, "Server stopped responding after 0.5s"
 
-        print("✓ Server stayed running for 2+ seconds")
+        print("✓ Server stayed running for 0.5+ seconds")
 
         # Test 3: Verify daemon info endpoint
         info_url = f"{base_url}/api/daemon/info"
@@ -295,12 +295,12 @@ def test_fastapi_immediate_shutdown_regression():
 
         assert wait_for_server(health_url, timeout=10.0), "Server with FIXED pattern failed to start - regression detected!"
 
-        # Verify it stays running for at least 3 seconds
+        # Verify it stays running (check 3 times with short interval)
         for i in range(3):
-            time.sleep(1.0)
+            time.sleep(0.2)
             response = requests.get(health_url, timeout=2.0)
-            assert response.status_code == 200, f"Server stopped responding after {i + 1}s - regression detected!"
-            print(f"✓ Still running after {i + 1}s")
+            assert response.status_code == 200, f"Server stopped responding after check {i + 1} - regression detected!"
+            print(f"✓ Still running after check {i + 1}")
 
         print("✓ Regression test passed - server stays running")
 

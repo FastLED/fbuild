@@ -132,6 +132,12 @@ class TestSerialMonitorMessages:
 class TestSerialMonitorAPI:
     """Test SerialMonitor API class."""
 
+    @pytest.fixture(autouse=True)
+    def _fast_detach_timeout(self):
+        """Reduce the 5s detach timeout to 0.1s for fast tests."""
+        with patch("fbuild.api.serial_monitor.DETACH_TIMEOUT", 0.1):
+            yield
+
     def test_serial_monitor_initialization(self):
         """Test SerialMonitor __init__ with WebSocket fields."""
         from fbuild.api import SerialMonitor

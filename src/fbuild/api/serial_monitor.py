@@ -69,6 +69,7 @@ MonitorHook = Callable[[str], None]
 
 # Default timeout for attach/detach operations
 OPERATION_TIMEOUT = 60.0
+DETACH_TIMEOUT = 5.0
 
 
 class MonitorPreemptedException(Exception):
@@ -290,7 +291,7 @@ class SerialMonitor:
 
                 # Wait for detach confirmation (with timeout)
                 try:
-                    response_text = await asyncio.wait_for(self._ws.recv(), timeout=5.0)  # type: ignore
+                    response_text = await asyncio.wait_for(self._ws.recv(), timeout=DETACH_TIMEOUT)  # type: ignore
                     response = json.loads(response_text)
                     if self.verbose:
                         if response.get("type") == "detached" and response.get("success"):

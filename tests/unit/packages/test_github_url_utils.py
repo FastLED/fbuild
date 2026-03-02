@@ -1,5 +1,7 @@
 """Unit tests for GitHub URL transformation utilities."""
 
+from unittest.mock import MagicMock, patch
+
 import pytest
 
 from fbuild.packages.github_url_utils import (
@@ -11,6 +13,28 @@ from fbuild.packages.github_url_utils import (
     transform_github_url,
     verify_github_url,
 )
+
+
+def _mock_head(url: str, allow_redirects: bool = True, timeout: int = 10) -> MagicMock:
+    """Mock requests.head to avoid real HTTP calls in unit tests."""
+    response = MagicMock()
+    # URLs with v999.999.999 or non-existent domains should return 404/fail
+    if "v999.999.999" in url:
+        response.status_code = 404
+        response.url = url
+        return response
+    if "invalid-domain-that-does-not-exist" in url:
+        import requests as req
+
+        raise req.ConnectionError("Mocked connection error")
+    # Known valid URLs
+    if "github.com" in url and ("v4.2.1" in url or "v3.1.2" in url):
+        response.status_code = 200
+        response.url = url.replace("github.com", "codeload.github.com")
+        return response
+    response.status_code = 404
+    response.url = url
+    return response
 
 
 class TestTransformGitHubURL:
@@ -101,12 +125,12 @@ class TestTransformGitHubURL:
             transform_github_url(url)
 
 
+@patch("fbuild.packages.github_url_utils.requests.head", side_effect=_mock_head)
 class TestVerifyGitHubURL:
     """Tests for verify_github_url() function."""
 
-    def test_verify_valid_url(self):
+    def test_verify_valid_url(self, mock_head):
         """Test verification of a valid GitHub archive URL."""
-        # This is a real URL that should exist
         url = "https://github.com/platformio/platform-espressif8266/archive/refs/tags/v4.2.1.zip"
         exists, final_url = verify_github_url(url, timeout=10)
         assert exists is True
@@ -114,15 +138,14 @@ class TestVerifyGitHubURL:
         # GitHub redirects to codeload.github.com
         assert "codeload.github.com" in final_url or "github.com" in final_url
 
-    def test_verify_invalid_url(self):
+    def test_verify_invalid_url(self, mock_head):
         """Test verification of an invalid GitHub archive URL."""
-        # This URL should not exist (fake version)
         url = "https://github.com/platformio/platform-espressif8266/archive/refs/tags/v999.999.999.zip"
         exists, final_url = verify_github_url(url, timeout=10)
         assert exists is False
         assert final_url is None
 
-    def test_verify_invalid_domain(self):
+    def test_verify_invalid_domain(self, mock_head):
         """Test verification of an invalid domain."""
         url = "https://invalid-domain-that-does-not-exist-12345.com/file.zip"
         exists, final_url = verify_github_url(url, timeout=5)
@@ -130,25 +153,25 @@ class TestVerifyGitHubURL:
         assert final_url is None
 
 
+@patch("fbuild.packages.github_url_utils.requests.head", side_effect=_mock_head)
 class TestTransformAndVerifyGitHubURL:
     """Tests for transform_and_verify_github_url() function."""
 
-    def test_transform_and_verify_valid_repo(self):
+    def test_transform_and_verify_valid_repo(self, mock_head):
         """Test transformation and verification of a valid repository."""
-        # Use a real repository that should exist
         url = "https://github.com/platformio/platform-espressif8266/tree/v4.2.1"
         transformed, exists, final = transform_and_verify_github_url(url, timeout=10)
         assert transformed == "https://github.com/platformio/platform-espressif8266/archive/refs/tags/v4.2.1.zip"
         assert exists is True
         assert final is not None
 
-    def test_transform_and_verify_invalid_url(self):
+    def test_transform_and_verify_invalid_url(self, mock_head):
         """Test transformation and verification of an invalid URL."""
         url = "https://gitlab.com/owner/repo"
         with pytest.raises(GitHubURLError):
             transform_and_verify_github_url(url)
 
-    def test_transform_and_verify_nonexistent_version(self):
+    def test_transform_and_verify_nonexistent_version(self, mock_head):
         """Test transformation and verification of a non-existent version."""
         url = "https://github.com/platformio/platform-espressif8266/tree/v999.999.999"
         transformed, exists, final = transform_and_verify_github_url(url, timeout=10)
@@ -157,10 +180,11 @@ class TestTransformAndVerifyGitHubURL:
         assert final is None
 
 
+@patch("fbuild.packages.github_url_utils.requests.head", side_effect=_mock_head)
 class TestRealWorldExamples:
     """Tests using real-world GitHub URLs from the ESP8266 issue."""
 
-    def test_platformio_esp8266_release_url(self):
+    def test_platformio_esp8266_release_url(self, mock_head):
         """Test the problematic ESP8266 release URL from the issue."""
         # The old format that was failing
         old_url = "https://github.com/platformio/platform-espressif8266/releases/download/v4.2.1/platform-espressif8266.zip"
@@ -172,14 +196,14 @@ class TestRealWorldExamples:
         exists, _ = verify_github_url(result, timeout=10)
         assert exists is True
 
-    def test_esp8266_arduino_framework(self):
+    def test_esp8266_arduino_framework(self, mock_head):
         """Test ESP8266 Arduino framework URL."""
         url = "https://github.com/esp8266/Arduino/tree/3.1.2"
         result = transform_github_url(url)
         # 3.1.2 starts with a digit, so it's treated as a branch (not starting with 'v')
         assert result == "https://github.com/esp8266/Arduino/archive/refs/heads/3.1.2.zip"
 
-    def test_esp8266_arduino_tag_with_v(self):
+    def test_esp8266_arduino_tag_with_v(self, mock_head):
         """Test ESP8266 Arduino framework URL with 'v' prefix."""
         # If we had used v3.1.2 instead
         url = "https://github.com/esp8266/Arduino/tree/v3.1.2"
@@ -281,10 +305,11 @@ class TestResolvePlatformIOPlatformURL:
         assert result == "https://github.com/platformio/platform-espressif8266/archive/refs/tags/v4.2.1-rc.1.zip"
 
 
+@patch("fbuild.packages.github_url_utils.requests.head", side_effect=_mock_head)
 class TestResolveAndVerifyPlatformIOURL:
     """Tests for resolve_and_verify_platformio_url() function."""
 
-    def test_resolve_and_verify_valid_platform(self):
+    def test_resolve_and_verify_valid_platform(self, mock_head):
         """Test resolution and verification of a valid platform."""
         spec = "espressif8266@4.2.1"
         resolved, exists, final = resolve_and_verify_platformio_url(spec, timeout=10)
@@ -292,7 +317,7 @@ class TestResolveAndVerifyPlatformIOURL:
         assert exists is True
         assert final is not None
 
-    def test_resolve_and_verify_invalid_version(self):
+    def test_resolve_and_verify_invalid_version(self, mock_head):
         """Test resolution of an invalid version."""
         spec = "espressif8266@999.999.999"
         resolved, exists, final = resolve_and_verify_platformio_url(spec, timeout=10)
@@ -300,7 +325,7 @@ class TestResolveAndVerifyPlatformIOURL:
         assert exists is False
         assert final is None
 
-    def test_resolve_and_verify_invalid_spec(self):
+    def test_resolve_and_verify_invalid_spec(self, mock_head):
         """Test that invalid specification raises error."""
         spec = "invalid spec"
         with pytest.raises(PlatformIOURLError):
