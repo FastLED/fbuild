@@ -26,7 +26,7 @@ from fbuild.cli_utils import BannerFormatter
 from fbuild.output import DefaultProgressCallback, log_detail, log_phase, log_warning
 from fbuild.packages import Cache
 from fbuild.packages.framework_esp32 import FrameworkESP32
-from fbuild.packages.library_manager_esp32 import LibraryManagerESP32
+from fbuild.packages.library_manager_esp32 import LibraryESP32, LibraryManagerESP32
 from fbuild.packages.platform_esp32 import PlatformESP32
 from fbuild.packages.toolchain_esp32 import ToolchainESP32
 
@@ -411,6 +411,21 @@ class OrchestratorESP32(IBuildOrchestrator):
                 search_dir = project_dir / src_dir_override if src_dir_override else project_dir
                 return self._error_result(start_time, f"No .ino sketch file found in {search_dir}")
 
+            # Compile ALL framework built-in libraries (BLE, WiFi, SPI, Wire, etc.)
+            # instead of trying to detect which ones are needed via #include scanning.
+            # The linker with --gc-sections strips all unreferenced code from the final binary.
+            fw_archives, fw_includes = self._compile_all_framework_libraries(
+                framework,
+                build_dir,
+                library_archives,
+                toolchain,
+                compiler,
+                verbose,
+            )
+            library_archives.extend(fw_archives)
+            if fw_includes:
+                library_include_paths.extend(fw_includes)
+
             # In compiledb-only mode, skip linking — we only need compile commands
             if request.generate_compiledb:
                 build_time = time.time() - start_time
@@ -699,6 +714,170 @@ class OrchestratorESP32(IBuildOrchestrator):
         log_detail(f"Compiled {len(libraries)} library dependencies", verbose_only=True)
 
         return library_archives, library_include_paths
+
+    def _compile_all_framework_libraries(
+        self,
+        framework: FrameworkESP32,
+        build_dir: Path,
+        existing_archives: List[Path],
+        toolchain: ToolchainESP32,
+        compiler: ConfigurableCompiler,
+        verbose: bool,
+    ) -> tuple[List[Path], List[Path]]:
+        """
+        Compile ALL framework built-in libraries (BLE, WiFi, SPI, Wire, etc.).
+
+        Instead of scanning #include directives to detect which libraries are needed,
+        we compile every library in the framework's libraries/ directory. The linker
+        with --gc-sections strips all unreferenced code, so final binary size is identical.
+
+        This approach is simpler, more correct (never misses a library regardless of
+        conditional compilation or #ifdef guards), and cacheable (compile once, reuse).
+
+        Args:
+            framework: ESP32 framework instance
+            build_dir: Build directory
+            existing_archives: Already-compiled library archives (to avoid re-compilation)
+            toolchain: ESP32 toolchain instance
+            compiler: Configured compiler instance
+            verbose: Verbose output mode
+
+        Returns:
+            Tuple of (additional_archives, additional_include_paths)
+        """
+        libraries_dir = framework.get_libraries_dir()
+        if not libraries_dir.exists():
+            return [], []
+
+        # Build set of already-compiled library names from existing archives
+        # Archive names are lib<name>.a where <name> is the sanitized library name
+        already_compiled: set[str] = set()
+        for archive in existing_archives:
+            archive_name = archive.stem  # e.g., "libfastled" -> stem is "libfastled"
+            if archive_name.startswith("lib"):
+                already_compiled.add(archive_name[3:])  # strip "lib" prefix
+
+        # Enumerate ALL framework libraries
+        all_libs: List[tuple[str, Path]] = []
+        for lib_dir in sorted(libraries_dir.iterdir()):
+            if not lib_dir.is_dir() or lib_dir.name.startswith("."):
+                continue
+            src_dir = lib_dir / "src"
+            if not src_dir.exists():
+                continue
+            sanitized = lib_dir.name.lower().replace("/", "_").replace("@", "_")
+            if sanitized in already_compiled:
+                continue
+            all_libs.append((lib_dir.name, lib_dir))
+
+        if not all_libs:
+            return [], []
+
+        log_detail(f"Compiling {len(all_libs)} framework libraries (linker will strip unused code)")
+
+        # Compile framework libraries using LibraryManagerESP32
+        lib_manager = LibraryManagerESP32(build_dir, project_dir=build_dir)
+
+        toolchain_bin_path = toolchain.get_bin_path()
+        if toolchain_bin_path is None:
+            log_warning("Toolchain bin directory not found, skipping framework libraries")
+            return [], []
+
+        lib_compiler_flags = compiler.get_base_flags()
+        lib_include_paths = list(compiler.get_include_paths())
+
+        # Add ALL framework library include paths upfront so that inter-library
+        # dependencies resolve (e.g., BLE includes <NetworkClient.h> from Network).
+        # Without this, compilation fails for libraries that reference sibling headers.
+        for _lib_name, fw_lib_root in all_libs:
+            fw_src = fw_lib_root / "src"
+            if fw_src.is_dir():
+                lib_include_paths.append(fw_src)
+
+        # Extract trampoline cache
+        trampoline_cache = None
+        if hasattr(compiler, "compilation_executor") and compiler.compilation_executor:
+            trampoline_cache = getattr(compiler.compilation_executor, "trampoline_cache", None)
+
+        additional_archives: List[Path] = []
+        additional_includes: List[Path] = []
+
+        for lib_name, fw_lib_root in all_libs:
+            try:
+                sanitized_name = lib_name.lower().replace("/", "_").replace("@", "_")
+                lib_dir = lib_manager.libs_dir / sanitized_name
+                library = LibraryESP32(lib_dir, sanitized_name)
+
+                # Set up the library directory by copying/symlinking from framework
+                if not library.exists:
+                    self._setup_framework_library(library, fw_lib_root)
+
+                # Check if rebuild needed
+                needs_rebuild_flag, reason = lib_manager.needs_rebuild(library, lib_compiler_flags)
+
+                if needs_rebuild_flag:
+                    # Check for source files before compiling (skip header-only libraries)
+                    source_files = library.get_source_files()
+                    if not source_files:
+                        log_detail(f"Framework library '{lib_name}' is header-only, skipping compilation", verbose_only=True)
+                        # Still add include paths for header-only libs
+                        additional_includes.extend(library.get_include_dirs())
+                        continue
+
+                    log_detail(f"Compiling framework library: {lib_name} ({len(source_files)} files)")
+                    lib_manager.compile_library(
+                        library,
+                        toolchain_bin_path,
+                        lib_compiler_flags,
+                        lib_include_paths,
+                        show_progress=True,
+                        trampoline_cache=trampoline_cache,
+                    )
+
+                if library.is_compiled:
+                    additional_archives.append(library.archive_file)
+                additional_includes.extend(library.get_include_dirs())
+
+            except KeyboardInterrupt as ke:
+                from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+                handle_keyboard_interrupt_properly(ke)
+                raise  # Never reached, but satisfies type checker
+            except Exception as e:
+                log_warning(f"Failed to compile framework library '{lib_name}': {e}")
+
+        return additional_archives, additional_includes
+
+    @staticmethod
+    def _setup_framework_library(library: LibraryESP32, fw_lib_root: Path) -> None:
+        """
+        Set up a framework library in the build directory.
+
+        Copies the framework library source into the build directory's libs/ folder
+        so it can be compiled by LibraryManagerESP32.
+
+        Args:
+            library: LibraryESP32 instance to set up
+            fw_lib_root: Root directory of the framework library (e.g., libraries/BLE/)
+        """
+        import shutil
+
+        library.lib_dir.mkdir(parents=True, exist_ok=True)
+
+        # Copy source directory
+        fw_src = fw_lib_root / "src"
+        source_path = fw_src if fw_src.is_dir() else fw_lib_root
+
+        if library.src_dir.exists():
+            shutil.rmtree(library.src_dir)
+        shutil.copytree(source_path, library.src_dir)
+
+        # Create minimal library.json metadata
+        import json
+
+        metadata = {"name": library.name, "version": "0.0.0", "frameworks": ["arduino"], "source": "framework-builtin"}
+        with open(library.info_file, "w", encoding="utf-8") as f:
+            json.dump(metadata, f, indent=2)
 
     def _compile_sketch(self, project_dir: Path, compiler: ConfigurableCompiler, start_time: float, verbose: bool, src_dir_override: Optional[str] = None) -> Optional[List[Path]]:
         """
