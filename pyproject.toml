@@ -27,7 +27,7 @@ dependencies = [
     "mcp>=1.20.0",
 ]
 # Version is centralized in src/fbuild/__init__.py - keep in sync
-version = "1.4.12"
+version = "1.4.14"
 
 [project.optional-dependencies]
 dev = [

@@ -230,14 +230,17 @@ class HeaderTrampolineCache:
         if not self.needs_regeneration(filtered_paths):
             # Always ensure broken trampolines are removed (even from cached)
             self._remove_broken_trampolines()
+            # Find original paths for headers whose trampolines were removed,
+            # so user libraries (e.g., FastLED with BLE) can still find them
+            preserved_paths = self._find_original_paths_for_broken_headers(filtered_paths)
             if self.show_progress:
                 excluded_count = len(excluded_paths)
                 if excluded_count > 0:
                     print(f"[trampolines] Using existing UNIFIED cache at {self.cache_root} " + f"(excluding {excluded_count} paths)")
                 else:
                     print(f"[trampolines] Using existing UNIFIED cache at {self.cache_root}")
-            # Return unified trampoline path + excluded paths
-            return [self.cache_root] + excluded_paths
+            # Return unified trampoline path + excluded paths + preserved paths for broken trampolines
+            return [self.cache_root] + excluded_paths + preserved_paths
 
         if self.show_progress:
             excluded_count = len(excluded_paths)
@@ -272,6 +275,9 @@ class HeaderTrampolineCache:
             # Removing the trampoline makes __has_include("esp_bt.h") return
             # false, cleanly skipping BT init in esp32-hal-misc.c.
             removed = self._remove_broken_trampolines()
+            # Find original paths for headers whose trampolines were removed,
+            # so user libraries (e.g., FastLED with BLE) can still find them
+            preserved_paths = self._find_original_paths_for_broken_headers(filtered_paths)
 
             # Save metadata
             self._save_metadata(filtered_paths, [self.cache_root])
@@ -281,10 +287,12 @@ class HeaderTrampolineCache:
                 print(f"[trampolines] Created {total_headers} trampolines, skipped {skipped_duplicates} duplicates")
                 if removed > 0:
                     print(f"[trampolines] Removed {removed} trampolines with broken relative includes")
+                    if preserved_paths:
+                        print(f"[trampolines] Preserved {len(preserved_paths)} original SDK paths for direct include")
                 print(f"[trampolines] Command line reduced from {len(filtered_paths)} -I directives to 1")
 
-            # Return unified trampoline path + excluded paths
-            return [self.cache_root] + excluded_paths
+            # Return unified trampoline path + excluded paths + preserved paths for broken trampolines
+            return [self.cache_root] + excluded_paths + preserved_paths
 
         except KeyboardInterrupt:
             _thread.interrupt_main()
@@ -328,6 +336,31 @@ class HeaderTrampolineCache:
                 except Exception:
                     pass  # Best effort
         return removed
+
+    def _find_original_paths_for_broken_headers(self, include_paths: List[Path]) -> List[Path]:
+        """Find original include directories that contain broken-trampoline headers.
+
+        When a trampoline is removed (because its relative includes break through
+        the trampoline), user code that explicitly needs that header (e.g., BLE
+        libraries needing esp_bt.h) must still be able to find it. This method
+        searches the original include paths to find which directories contain
+        the broken headers, so they can be added as direct -I paths.
+
+        Args:
+            include_paths: Original include directories before trampolining
+
+        Returns:
+            List of original include directories containing broken-trampoline headers
+        """
+        preserved: List[Path] = []
+        for header_name in self._BROKEN_RELATIVE_INCLUDE_HEADERS:
+            for inc_path in include_paths:
+                header_file = inc_path / header_name
+                if header_file.exists():
+                    if inc_path not in preserved:
+                        preserved.append(inc_path)
+                    break  # First match wins (matches GCC -I precedence)
+        return preserved
 
     def _generate_unified_trampolines(self, original_path: Path, created_trampolines: set) -> tuple:
         """Generate trampoline headers for a single include path into the unified directory.
