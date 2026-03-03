@@ -11,6 +11,16 @@ from typing import List
 logger = logging.getLogger(__name__)
 
 
+def _is_excluded_sdk_lib(lib: Path) -> bool:
+    """Check if a library should be excluded from linking.
+
+    Excludes debug variant libraries (e.g., "libzboss_stack.ed.debug.a").
+    These are larger debug builds that conflict with their release counterparts.
+    """
+    stem = lib.stem  # e.g., "libzboss_stack.ed.debug" from "libzboss_stack.ed.debug.a"
+    return ".debug" in stem
+
+
 class SDKPathResolver:
     """Resolves SDK paths for ESP-IDF frameworks.
 
@@ -202,7 +212,7 @@ class SDKPathResolver:
         # Resolve MCU with fallback if needed
         resolved_mcu = self._resolve_mcu(mcu)
 
-        libs = []
+        libs: List[Path] = []
 
         # Get main SDK libraries
         sdk_lib_dir = self.sdk_base_dir / resolved_mcu / "lib"
@@ -235,15 +245,29 @@ class SDKPathResolver:
         else:
             logger.warning(f"SDK_LIBS: Flash/PSRAM lib directory does not exist: {flash_lib_dir}")
 
-        # Get PHY/Bluetooth libraries from ld/ directory
-        # libphy.a and libbtbb.a are stored separately in the ld/ directory
-        # alongside linker scripts, required for WiFi/BLE functionality
-        ld_lib_dir = self.sdk_base_dir / resolved_mcu / "ld"
-        if ld_lib_dir.exists():
-            ld_libs = list(ld_lib_dir.glob("*.a"))
-            libs.extend(ld_libs)
-            if ld_libs:
-                logger.debug(f"SDK_LIBS: Found {len(ld_libs)} libraries in {ld_lib_dir}")
+        # Deduplicate: remove exact path duplicates (e.g., ld/ scanned twice)
+        seen: set[str] = set()
+        deduped: List[Path] = []
+        for lib in libs:
+            key = str(lib)
+            if key not in seen:
+                seen.add(key)
+                deduped.append(lib)
+        if len(deduped) < len(libs):
+            logger.debug(f"SDK_LIBS: Removed {len(libs) - len(deduped)} duplicate library entries")
+        libs = deduped
+
+        # Exclude debug variant libraries (e.g., libzboss_stack.ed.debug.a).
+        # The ESP-IDF SDK ships debug builds alongside release builds; linking
+        # both causes duplicate symbols. The platform config's linker flags
+        # include --allow-multiple-definition to handle the remaining
+        # mutually-exclusive Zigbee/Thread variants (zczr vs ed, zboss_port
+        # vs openthread) that the Arduino core depends on.
+        before = len(libs)
+        libs = [lib for lib in libs if not _is_excluded_sdk_lib(lib)]
+        excluded = before - len(libs)
+        if excluded > 0:
+            logger.info(f"SDK_LIBS: Excluded {excluded} conflicting Zigbee/Thread/Matter libraries")
 
         return libs
 

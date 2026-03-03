@@ -399,6 +399,8 @@ class DaemonConnection:
             monitor_halt_on_error=monitor_halt_on_error,
             monitor_halt_on_success=monitor_halt_on_success,
             monitor_expect=monitor_expect,
+            monitor_show_timestamp=monitor_show_timestamp,
+            skip_build=skip_build,
             timeout=timeout,
         )
 

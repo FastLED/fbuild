@@ -49,6 +49,7 @@
     "-Wl,--orphan-handling=warn",
     "-fno-rtti",
     "-Wl,--gc-sections",
+    "-Wl,--allow-multiple-definition",
     "-Wl,--warn-common",
     "-Wl,--wrap=log_printf",
     "-Wl,--undefined=FreeRTOS_openocd_params",
