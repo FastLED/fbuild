@@ -190,7 +190,7 @@ class SerialMonitor:
         self._attach()
         return self
 
-    def __exit__(self, exc_type: type[BaseException] | None, exc_val: BaseException | None, exc_tb: Any) -> None:
+    def __exit__(self, _exc_type: type[BaseException] | None, _exc_val: BaseException | None, _exc_tb: Any) -> None:
         """Detach from daemon serial session (context manager exit).
 
         Args:
@@ -220,9 +220,9 @@ class SerialMonitor:
 
         # Create event loop for async operations
         try:
-            self._event_loop = asyncio.get_event_loop()
+            self._event_loop = asyncio.get_running_loop()
         except RuntimeError:
-            # No event loop in current thread, create one
+            # No running event loop in current thread, create one
             self._event_loop = asyncio.new_event_loop()
             asyncio.set_event_loop(self._event_loop)
 

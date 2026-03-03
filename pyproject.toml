@@ -27,7 +27,7 @@ dependencies = [
     "mcp>=1.20.0",
 ]
 # Version is centralized in src/fbuild/__init__.py - keep in sync
-version = "1.4.14"
+version = "1.4.15"
 
 [project.optional-dependencies]
 dev = [
@@ -120,3 +120,8 @@ markers = [
 # --dist loadgroup: respect xdist_group markers (keeps grouped tests on one worker)
 addopts = "-m 'not integration and not concurrent_safety' --dist loadgroup"
 testpaths = ["tests"]
+filterwarnings = [
+    "ignore::DeprecationWarning:websockets.legacy",
+    "ignore:websockets.server.WebSocketServerProtocol is deprecated:DeprecationWarning:uvicorn",
+    "ignore:There is no current event loop:DeprecationWarning",
+]
