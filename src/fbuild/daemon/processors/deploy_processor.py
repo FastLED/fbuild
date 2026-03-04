@@ -467,6 +467,8 @@ class DeployRequestProcessor(RequestProcessor):
             platform_name = "atmelavr"
         elif "platform-raspberrypi" in platform or platform == "raspberrypi":
             platform_name = "raspberrypi"
+        elif platform == "teensy":
+            platform_name = "teensy"
 
         logging.info(f"Normalized platform: {platform_name}")
 
@@ -483,6 +485,9 @@ class DeployRequestProcessor(RequestProcessor):
         elif platform_name == "raspberrypi":
             module_name = "fbuild.build.orchestrator_rp2040"
             class_name = "OrchestratorRP2040"
+        elif platform_name == "teensy":
+            module_name = "fbuild.build.orchestrator_teensy"
+            class_name = "OrchestratorTeensy"
         else:
             logging.error(f"Unsupported platform: {platform_name}")
             return False
@@ -579,6 +584,14 @@ class DeployRequestProcessor(RequestProcessor):
                 deployer_class = ESP8266Deployer
             except ImportError as e:
                 logging.error(f"Failed to import ESP8266Deployer: {e}")
+                return None
+        elif platform == "teensy":
+            try:
+                from fbuild.deploy.deployer_teensy import TeensyDeployer
+
+                deployer_class = TeensyDeployer
+            except ImportError as e:
+                logging.error(f"Failed to import TeensyDeployer: {e}")
                 return None
         else:
             # Default to ESP32 deployer for espressif32 and other platforms
@@ -764,6 +777,7 @@ class DeployRequestProcessor(RequestProcessor):
             "fbuild.build.orchestrator",
             "fbuild.build.orchestrator_avr",
             "fbuild.build.orchestrator_esp32",
+            "fbuild.build.orchestrator_teensy",
             # Deploy utilities (reload with build system)
             "fbuild.deploy.esptool_utils",
             "fbuild.deploy.serial_utils",
@@ -772,6 +786,7 @@ class DeployRequestProcessor(RequestProcessor):
             # Deploy core (reload after utilities)
             "fbuild.deploy.deployer",
             "fbuild.deploy.deployer_esp32",
+            "fbuild.deploy.deployer_teensy",
             "fbuild.deploy.monitor",
             "fbuild.deploy.qemu_runner",
             # Top-level module packages (reload last to update __init__.py imports)

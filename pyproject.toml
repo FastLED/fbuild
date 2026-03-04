@@ -25,6 +25,8 @@ dependencies = [
     "rich>=13.0.0",
     "uv-iso-env>=1.0.0",
     "mcp>=1.20.0",
+    "hidapi>=0.14.0",
+    "bleak>=0.22.3",
 ]
 # Version is centralized in src/fbuild/__init__.py - keep in sync
 version = "1.4.15"

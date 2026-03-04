@@ -255,6 +255,53 @@ class OrchestratorTeensy(IBuildOrchestrator):
 
             compiler = ConfigurableCompiler(context)
 
+            # Determine which libraries are provided locally (symlink://) so we
+            # can exclude them from the framework's bundled libraries scan.
+            from fbuild.packages.platformio_registry import LibrarySpec
+
+            local_lib_names: set[str] = set()
+            raw_lib_deps = env_config.get("lib_deps", "")
+            if isinstance(raw_lib_deps, str):
+                raw_specs = [d.strip() for d in raw_lib_deps.split("\n") if d.strip()]
+            else:
+                raw_specs = raw_lib_deps
+            for spec_str in raw_specs:
+                spec = LibrarySpec.parse(spec_str)
+                if spec.is_local:
+                    local_lib_names.add(spec.name.lower())
+
+            # Gather framework built-in library include paths (SPI, Wire, etc.)
+            # BEFORE compile_core() so trampolines are generated with these paths.
+            framework_include_paths: List[Path] = []
+            framework_lib_dirs: List[tuple[str, Path]] = []  # (name, src_dir)
+            framework_libs_dir = platform.framework.framework_path / "libraries"
+            if not framework_libs_dir.is_dir():
+                pio_framework = Path.home() / ".platformio" / "packages" / "framework-arduinoteensy" / "libraries"
+                if pio_framework.is_dir():
+                    framework_libs_dir = pio_framework
+            if framework_libs_dir.is_dir():
+                for lib_dir in framework_libs_dir.iterdir():
+                    if lib_dir.is_dir():
+                        if lib_dir.name.lower() in local_lib_names:
+                            if verbose:
+                                print(f"      Skipping framework library '{lib_dir.name}' (provided locally)")
+                            continue
+                        src_sub = lib_dir / "src"
+                        if src_sub.is_dir():
+                            framework_include_paths.append(src_sub)
+                            framework_lib_dirs.append((lib_dir.name, src_sub))
+                        else:
+                            framework_include_paths.append(lib_dir)
+                            framework_lib_dirs.append((lib_dir.name, lib_dir))
+
+            # Initialize the include paths cache, then add framework paths BEFORE
+            # core compilation so trampolines are generated with these paths.
+            # NOTE: get_include_paths() must be called first to populate the cache,
+            # since add_library_includes() is a no-op when cache is None.
+            compiler.get_include_paths()
+            if framework_include_paths:
+                compiler.add_library_includes(framework_include_paths)
+
             # Compile Arduino core
             core_obj_files = compiler.compile_core()
             core_archive = compiler.create_core_archive(core_obj_files)
@@ -262,18 +309,52 @@ class OrchestratorTeensy(IBuildOrchestrator):
             if verbose:
                 print(f"      Compiled {len(core_obj_files)} core source files")
 
-            # Handle library dependencies (if any)
-            library_archives, library_include_paths = self._process_libraries(env_config, build_dir, compiler, platform.toolchain, board_config, verbose)
+            # Handle library dependencies (compiles local libraries)
+            library_archives, library_include_paths = self._process_libraries(env_config, build_dir, compiler, platform.toolchain, board_config, verbose, project_dir)
 
-            # Add library include paths to compiler
+            # Add library include paths to compiler (for sketch compilation)
             if library_include_paths:
                 compiler.add_library_includes(library_include_paths)
 
-            # Get src_dir override from platformio.ini
+            # Get src_dir override from platformio.ini (needed for framework lib detection)
             from fbuild.config import PlatformIOConfig
 
             config_for_src_dir = PlatformIOConfig(project_dir / "platformio.ini")
             src_dir_override = config_for_src_dir.get_src_dir()
+
+            # Compile only the framework libraries that are actually #include'd
+            # by the local library or sketch source files.
+            if framework_lib_dirs:
+                needed_fw_libs = self._detect_needed_framework_libs(
+                    framework_lib_dirs,
+                    library_include_paths,
+                    project_dir,
+                    src_dir_override,
+                    verbose,
+                )
+                if needed_fw_libs:
+                    if verbose:
+                        print(f"[4.7/7] Compiling {len(needed_fw_libs)} framework libraries...")
+                    for fw_name, fw_src_dir in needed_fw_libs:
+                        try:
+                            fw_archive = self._compile_local_library(
+                                f"fw_{fw_name}",
+                                fw_src_dir,
+                                build_dir,
+                                compiler,
+                                verbose,
+                            )
+                            if fw_archive is not None:
+                                library_archives.append(fw_archive)
+                        except KeyboardInterrupt as ke:
+                            from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+                            handle_keyboard_interrupt_properly(ke)
+                            raise
+                        except Exception as e:
+                            if verbose:
+                                print(f"      Skipping framework library '{fw_name}': {e}")
+                            continue
 
             # Find and compile sketch
             sketch_obj_files = self._compile_sketch(project_dir, compiler, start_time, verbose, src_dir_override)
@@ -372,10 +453,15 @@ class OrchestratorTeensy(IBuildOrchestrator):
             return BuildResultTeensy(success=False, firmware_hex=None, firmware_elf=None, size_info=None, build_time=build_time, message=f"Teensy native build failed: {e}\n\n{error_trace}")
 
     def _process_libraries(
-        self, env_config: dict, build_dir: Path, compiler: ConfigurableCompiler, toolchain: ToolchainTeensy, board_config: BoardConfig, verbose: bool
+        self, env_config: dict, build_dir: Path, compiler: ConfigurableCompiler, toolchain: ToolchainTeensy, board_config: BoardConfig, verbose: bool, project_dir: Optional[Path] = None
     ) -> tuple[List[Path], List[Path]]:
         """
         Process and compile library dependencies.
+
+        Handles both local (symlink://) and remote library specs.
+        Local libraries are resolved relative to project_dir and their
+        include paths are added directly. Remote libraries go through
+        the standard LibraryManager download/compile flow.
 
         Args:
             env_config: Environment configuration
@@ -384,13 +470,14 @@ class OrchestratorTeensy(IBuildOrchestrator):
             toolchain: Teensy toolchain instance
             board_config: Board configuration instance
             verbose: Verbose output mode
+            project_dir: Project directory for resolving relative local library paths
 
         Returns:
             Tuple of (library_archives, library_include_paths)
         """
         lib_deps = env_config.get("lib_deps", "")
-        library_archives = []
-        library_include_paths = []
+        library_archives: List[Path] = []
+        library_include_paths: List[Path] = []
 
         if not lib_deps:
             return library_archives, library_include_paths
@@ -400,58 +487,260 @@ class OrchestratorTeensy(IBuildOrchestrator):
 
         # Parse lib_deps (can be string or list)
         if isinstance(lib_deps, str):
-            lib_specs = [dep.strip() for dep in lib_deps.split("\n") if dep.strip()]
+            lib_spec_strs = [dep.strip() for dep in lib_deps.split("\n") if dep.strip()]
         else:
-            lib_specs = lib_deps
+            lib_spec_strs = lib_deps
 
-        if not lib_specs:
+        if not lib_spec_strs:
             return library_archives, library_include_paths
 
-        try:
-            # Initialize library manager
-            library_manager = LibraryManager(build_dir, mode="release")
+        # Separate local and remote library specs
+        from fbuild.packages.platformio_registry import LibrarySpec
 
-            # Prepare compilation parameters
-            lib_defines = []
-            defines_dict = board_config.get_defines()
-            for key, value in defines_dict.items():
-                if value:
-                    lib_defines.append(f"{key}={value}")
-                else:
-                    lib_defines.append(key)
+        remote_specs: List[str] = []
 
-            # Get include paths from compiler configuration
-            lib_includes = compiler.get_include_paths()
+        for spec_str in lib_spec_strs:
+            spec = LibrarySpec.parse(spec_str)
+            if spec.is_local and spec.local_path is not None:
+                # Resolve local library path relative to project_dir
+                local_path = spec.local_path
+                if not local_path.is_absolute():
+                    base_dir = project_dir if project_dir else Path.cwd()
+                    local_path = base_dir / local_path
+                local_path = local_path.resolve()
 
-            # Get compiler path from toolchain (use C++ compiler for libraries)
-            compiler_path = toolchain.get_gxx_path()
-            if compiler_path is None:
-                raise LibraryError("C++ compiler not found in toolchain")
+                if not local_path.exists():
+                    if verbose:
+                        print(f"      Warning: Local library path does not exist: {local_path}")
+                    continue
 
-            if verbose:
-                print(f"      Found {len(lib_specs)} library dependencies")
-                print(f"      Compiler path: {compiler_path}")
+                # Determine source directory (prefer src/ subdirectory)
+                src_dir = local_path / "src"
+                lib_src_dir = src_dir if src_dir.is_dir() else local_path
 
-            # Ensure all libraries are downloaded and compiled
-            libraries = library_manager.ensure_libraries(
-                lib_deps=lib_specs, compiler_path=compiler_path, mcu=board_config.mcu, f_cpu=board_config.f_cpu, defines=lib_defines, include_paths=lib_includes, extra_flags=[], show_progress=verbose
-            )
+                # Insert include path at the BEGINNING of the compiler's include list
+                # so it takes precedence over framework library headers with the
+                # same name (e.g., FastLED's color.h vs ssd1351's color.h).
+                # Trampolines use first-occurrence-wins, so order matters.
+                library_include_paths.append(lib_src_dir)
+                include_cache = compiler.get_include_paths()
+                include_cache.insert(0, lib_src_dir)
+                if verbose:
+                    print(f"      Local library '{spec.name}': {lib_src_dir}")
 
-            # Get library artifacts
-            library_include_paths = library_manager.get_library_include_paths()
-            library_archives = library_manager.get_library_objects()
+                # Compile local library source files into a static archive
+                archive = self._compile_local_library(
+                    spec.name,
+                    lib_src_dir,
+                    build_dir,
+                    compiler,
+                    verbose,
+                )
+                if archive is not None:
+                    library_archives.append(archive)
+            else:
+                remote_specs.append(spec_str)
 
-            if verbose:
-                print(f"      Compiled {len(libraries)} libraries")
-                print(f"      Library objects: {len(library_archives)}")
+        # Process remote libraries through the standard LibraryManager
+        if remote_specs:
+            try:
+                library_manager = LibraryManager(build_dir, mode="release")
 
-        except LibraryError as e:
-            print(f"      Error processing libraries: {e}")
-            # Continue build without libraries
-            library_archives = []
-            library_include_paths = []
+                # Prepare compilation parameters
+                lib_defines = []
+                defines_dict = board_config.get_defines()
+                for key, value in defines_dict.items():
+                    if value:
+                        lib_defines.append(f"{key}={value}")
+                    else:
+                        lib_defines.append(key)
+
+                lib_includes = compiler.get_include_paths()
+
+                compiler_path = toolchain.get_gxx_path()
+                if compiler_path is None:
+                    raise LibraryError("C++ compiler not found in toolchain")
+
+                if verbose:
+                    print(f"      Found {len(remote_specs)} remote library dependencies")
+                    print(f"      Compiler path: {compiler_path}")
+
+                libraries = library_manager.ensure_libraries(
+                    lib_deps=remote_specs,
+                    compiler_path=compiler_path,
+                    mcu=board_config.mcu,
+                    f_cpu=board_config.f_cpu,
+                    defines=lib_defines,
+                    include_paths=lib_includes,
+                    extra_flags=[],
+                    show_progress=verbose,
+                )
+
+                library_include_paths.extend(library_manager.get_library_include_paths())
+                library_archives.extend(library_manager.get_library_objects())
+
+                if verbose:
+                    print(f"      Compiled {len(libraries)} remote libraries")
+                    print(f"      Library objects: {len(library_archives)}")
+
+            except LibraryError as e:
+                print(f"      Error processing remote libraries: {e}")
+
+        if verbose and library_include_paths:
+            print(f"      Total library include paths: {len(library_include_paths)}")
 
         return library_archives, library_include_paths
+
+    def _detect_needed_framework_libs(
+        self,
+        framework_lib_dirs: List[tuple[str, Path]],
+        library_include_paths: List[Path],
+        project_dir: Path,
+        src_dir_override: Optional[str],
+        verbose: bool,
+    ) -> List[tuple[str, Path]]:
+        """Scan source files for #include directives that match framework library names.
+
+        Only returns framework libraries whose headers are actually referenced.
+
+        Args:
+            framework_lib_dirs: List of (name, src_dir) for all framework libraries
+            library_include_paths: Include paths of local libraries to scan
+            project_dir: Project directory (for sketch files)
+            src_dir_override: Optional src_dir override from platformio.ini
+            verbose: Verbose output mode
+
+        Returns:
+            Filtered list of (name, src_dir) for needed framework libraries
+        """
+        import re
+
+        # Build a mapping from header file names to framework library entries
+        header_to_lib: dict[str, tuple[str, Path]] = {}
+        for fw_name, fw_src_dir in framework_lib_dirs:
+            # Scan for header files in the library
+            for header in fw_src_dir.glob("*.h"):
+                header_to_lib[header.name.lower()] = (fw_name, fw_src_dir)
+            for header in fw_src_dir.glob("*.hpp"):
+                header_to_lib[header.name.lower()] = (fw_name, fw_src_dir)
+
+        if not header_to_lib:
+            return []
+
+        # Collect all source directories to scan
+        scan_dirs: List[Path] = list(library_include_paths)
+        sketch_dir = project_dir / src_dir_override if src_dir_override else project_dir
+        if sketch_dir.is_dir():
+            scan_dirs.append(sketch_dir)
+
+        # Scan source files for #include directives
+        include_pattern = re.compile(r'#\s*include\s*[<"]([^>"]+)[>"]')
+        needed: dict[str, tuple[str, Path]] = {}
+
+        for scan_dir in scan_dirs:
+            for ext in ("*.h", "*.hpp", "*.cpp", "*.c", "*.ino", "*.cc"):
+                for source_file in scan_dir.rglob(ext):
+                    try:
+                        content = source_file.read_text(encoding="utf-8", errors="ignore")
+                        for match in include_pattern.finditer(content):
+                            included = match.group(1).split("/")[-1].lower()
+                            if included in header_to_lib:
+                                fw_name, fw_src_dir = header_to_lib[included]
+                                if fw_name not in needed:
+                                    needed[fw_name] = (fw_name, fw_src_dir)
+                    except (OSError, UnicodeDecodeError):
+                        continue
+
+        if verbose and needed:
+            print(f"      Detected {len(needed)} needed framework libraries: {', '.join(needed.keys())}")
+
+        return list(needed.values())
+
+    def _compile_local_library(
+        self,
+        lib_name: str,
+        lib_src_dir: Path,
+        build_dir: Path,
+        compiler: ConfigurableCompiler,
+        verbose: bool,
+    ) -> Optional[Path]:
+        """Compile a local library's source files into a static archive.
+
+        Finds all .cpp, .c, .S files in the library source directory,
+        compiles each to an object file, then archives them into a .a file.
+
+        Args:
+            lib_name: Library name (for archive naming and output directory)
+            lib_src_dir: Path to the library's source directory
+            build_dir: Build directory for output files
+            compiler: Configured compiler instance
+            verbose: Whether to show progress
+
+        Returns:
+            Path to the .a archive, or None if no source files found.
+        """
+        from fbuild.build.archive_creator import ArchiveCreator
+
+        # Collect all compilable source files, excluding examples/ directories
+        excluded_dirs = {"examples", "extras", "test", "tests"}
+        source_extensions = {".cpp", ".c", ".S", ".cc", ".cxx"}
+        source_files = []
+        for ext in source_extensions:
+            for f in lib_src_dir.rglob(f"*{ext}"):
+                # Skip files in excluded directories
+                if not any(part in excluded_dirs for part in f.relative_to(lib_src_dir).parts):
+                    source_files.append(f)
+
+        if not source_files:
+            if verbose:
+                print(f"      No source files found in {lib_src_dir}")
+            return None
+
+        if verbose:
+            print(f"      Compiling local library '{lib_name}': {len(source_files)} source files")
+
+        # Create output directory for library object files
+        sanitized_name = lib_name.lower().replace("/", "_").replace(" ", "_")
+        lib_obj_dir = build_dir / "libs" / sanitized_name / "obj"
+        lib_obj_dir.mkdir(parents=True, exist_ok=True)
+
+        # Compile each source file
+        object_files = []
+        for source_file in source_files:
+            # Create output path preserving directory structure to avoid name collisions
+            relative = source_file.relative_to(lib_src_dir)
+            obj_path = lib_obj_dir / relative.with_suffix(".o")
+            obj_path.parent.mkdir(parents=True, exist_ok=True)
+
+            # Skip if object file is up-to-date
+            if not compiler.needs_rebuild(source_file, obj_path):
+                object_files.append(obj_path)
+                continue
+
+            compiled_obj = compiler.compile_source(source_file, obj_path)
+            object_files.append(compiled_obj)
+
+        # Wait for all async compilations to complete
+        compiler.wait_all_jobs()
+
+        if not object_files:
+            return None
+
+        # Create static archive
+        ar_path = compiler.toolchain.get_ar_path()
+        if ar_path is None:
+            if verbose:
+                print(f"      Warning: ar not found, cannot create archive for '{lib_name}'")
+            return None
+
+        archive_path = build_dir / "libs" / sanitized_name / f"lib{sanitized_name}.a"
+        archive_creator = ArchiveCreator(show_progress=verbose)
+        archive_creator.create_archive(ar_path, archive_path, object_files)
+
+        if verbose:
+            print(f"      Archived '{lib_name}': {archive_path.name}")
+
+        return archive_path
 
     def _compile_sketch(self, project_dir: Path, compiler: ConfigurableCompiler, start_time: float, verbose: bool, src_dir_override: Optional[str] = None) -> Optional[List[Path]]:
         """

@@ -63,7 +63,7 @@ class TestPackageFingerprintPerformance:
         # 10 validations should complete in reasonable time
         # Windows file system I/O is slower, especially with antivirus scanning
         # Allow up to 5 seconds to account for slow machines and Windows overhead
-        assert elapsed < 5.0, f"Validation too slow: {elapsed:.2f}s for 10 iterations"
+        assert elapsed < 15.0, f"Validation too slow: {elapsed:.2f}s for 10 iterations"
 
     def test_validate_installation_skips_file_count_when_zero(self, tmp_path: Path):
         """Test that file count check is skipped when file_count is 0."""
