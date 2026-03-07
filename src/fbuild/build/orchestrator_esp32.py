@@ -938,7 +938,7 @@ class OrchestratorESP32(IBuildOrchestrator):
                     self._setup_framework_library(library, fw_lib_root)
 
                 # Check if rebuild needed
-                needs_rebuild_flag, reason = lib_manager.needs_rebuild(library, lib_compiler_flags)
+                needs_rebuild_flag, _reason = lib_manager.needs_rebuild(library, lib_compiler_flags)
 
                 if needs_rebuild_flag:
                     # Check for source files before compiling (skip header-only libraries)
