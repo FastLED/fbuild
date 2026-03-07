@@ -89,6 +89,8 @@ def test_fastapi_server_lifecycle():
             file_cache_path=test_cache_file,
             status_file_path=test_status_file,
             daemon_dir=test_daemon_dir,
+            source_mtime=0.0,
+            spawner_cwd="test",
         )
 
         # Import FastAPI components
@@ -257,6 +259,8 @@ def test_fastapi_immediate_shutdown_regression():
             file_cache_path=test_cache_file,
             status_file_path=test_status_file,
             daemon_dir=test_daemon_dir,
+            source_mtime=0.0,
+            spawner_cwd="test",
         )
 
         import asyncio

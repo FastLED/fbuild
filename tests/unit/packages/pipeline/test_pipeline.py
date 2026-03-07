@@ -85,16 +85,23 @@ def make_mock_download_pool(delay: float = 0.0, fail_tasks: set[str] | None = No
     def mock_submit(task: PackageTask, callback: Any) -> MagicMock:
         future = MagicMock()
         archive_path = Path(task.dest_path).parent / "archive.tar.gz"
+        submit_time = time.monotonic()
+
+        def is_done() -> bool:
+            if delay > 0:
+                return time.monotonic() - submit_time >= delay
+            return True
 
         def get_result(timeout: float | None = None) -> Path:
-            if delay > 0:
-                time.sleep(delay)
+            remaining = delay - (time.monotonic() - submit_time)
+            if remaining > 0:
+                time.sleep(remaining)
             if task.name in fail_set:
                 raise ConnectionError(f"Download failed for {task.name}")
             return archive_path
 
         future.result = get_result
-        future.done.return_value = True
+        future.done = is_done
         future.cancel.return_value = True
         # Store for verification
         future._task_name = task.name
@@ -114,16 +121,23 @@ def make_mock_unpack_pool(delay: float = 0.0, fail_tasks: set[str] | None = None
     def mock_submit(task: PackageTask, archive_path: Path, callback: Any) -> MagicMock:
         future = MagicMock()
         extracted_path = Path(task.dest_path)
+        submit_time = time.monotonic()
+
+        def is_done() -> bool:
+            if delay > 0:
+                return time.monotonic() - submit_time >= delay
+            return True
 
         def get_result(timeout: float | None = None) -> Path:
-            if delay > 0:
-                time.sleep(delay)
+            remaining = delay - (time.monotonic() - submit_time)
+            if remaining > 0:
+                time.sleep(remaining)
             if task.name in fail_set:
                 raise OSError(f"Unpack failed for {task.name}")
             return extracted_path
 
         future.result = get_result
-        future.done.return_value = True
+        future.done = is_done
         future.cancel.return_value = True
         return future
 
@@ -140,16 +154,23 @@ def make_mock_install_pool(delay: float = 0.0, fail_tasks: set[str] | None = Non
 
     def mock_submit(task: PackageTask, extracted_path: Path, callback: Any) -> MagicMock:
         future = MagicMock()
+        submit_time = time.monotonic()
+
+        def is_done() -> bool:
+            if delay > 0:
+                return time.monotonic() - submit_time >= delay
+            return True
 
         def get_result(timeout: float | None = None) -> Path:
-            if delay > 0:
-                time.sleep(delay)
+            remaining = delay - (time.monotonic() - submit_time)
+            if remaining > 0:
+                time.sleep(remaining)
             if task.name in fail_set:
                 raise RuntimeError(f"Install failed for {task.name}")
             return extracted_path
 
         future.result = get_result
-        future.done.return_value = True
+        future.done = is_done
         future.cancel.return_value = True
         return future
 

@@ -250,6 +250,7 @@ def spawn_daemon_process(launcher_pid: int) -> int:
         "-m",
         "fbuild.daemon.daemon",
         f"--launched-by={launcher_pid}",
+        f"--spawner-cwd={os.getcwd()}",
     ]
 
     proc = safe_popen(

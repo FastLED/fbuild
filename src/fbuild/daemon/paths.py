@@ -60,3 +60,27 @@ SERIAL_MONITOR_ATTACH_REQUEST_FILE = DAEMON_DIR / "serial_monitor_attach_request
 SERIAL_MONITOR_DETACH_REQUEST_FILE = DAEMON_DIR / "serial_monitor_detach_request.json"
 SERIAL_MONITOR_POLL_REQUEST_FILE = DAEMON_DIR / "serial_monitor_poll_request.json"
 SERIAL_MONITOR_RESPONSE_FILE = DAEMON_DIR / "serial_monitor_response.json"
+
+
+def compute_source_mtime() -> float:
+    """Compute the max modification time of all fbuild source files.
+
+    Scans all .py files under the fbuild package directory and returns the
+    most recent mtime. Used to detect when source code has changed since
+    the daemon was started (stale daemon detection).
+
+    Returns:
+        Max mtime as a float (Unix timestamp), or 0.0 if no files found.
+    """
+    import fbuild as _fbuild
+
+    source_dir = Path(_fbuild.__file__).parent
+    max_mtime = 0.0
+    for py_file in source_dir.rglob("*.py"):
+        try:
+            mtime = py_file.stat().st_mtime
+            if mtime > max_mtime:
+                max_mtime = mtime
+        except OSError:
+            pass
+    return max_mtime

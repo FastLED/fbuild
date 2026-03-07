@@ -18,7 +18,7 @@ from fbuild.daemon.client.http_utils import (
     is_daemon_http_available,
     wait_for_daemon_http,
 )
-from fbuild.daemon.paths import PID_FILE
+from fbuild.daemon.paths import PID_FILE, compute_source_mtime
 from fbuild.daemon.singleton_manager import (
     atomic_singleton_lock,
     get_launcher_pid,
@@ -84,6 +84,59 @@ def _kill_stuck_daemon(pid: int) -> None:
     time.sleep(0.5)
 
 
+def _check_daemon_stale() -> bool:
+    """Check if the running daemon has stale source code.
+
+    Compares the daemon's source_mtime (from /health) against the current
+    source file mtimes. If different, the daemon is running old code.
+
+    Returns:
+        True if daemon is stale and should be restarted, False otherwise.
+    """
+    import logging
+
+    try:
+        from fbuild.daemon.client.http_utils import get_daemon_url, http_client
+
+        with http_client(timeout=2.0, connect_timeout=1.0) as client:
+            response = client.get(get_daemon_url("/health"))
+            if response.status_code != 200:
+                return False
+            data = response.json()
+            daemon_source_mtime = data.get("source_mtime", 0.0)
+            current_source_mtime = compute_source_mtime()
+            if current_source_mtime > daemon_source_mtime:
+                logging.info(f"Daemon source is stale (daemon={daemon_source_mtime}, current={current_source_mtime})")
+                return True
+            return False
+    except KeyboardInterrupt:
+        raise
+    except Exception:
+        return False
+
+
+def _restart_stale_daemon() -> None:
+    """Shutdown a stale daemon so it can be respawned with fresh code."""
+    import logging
+
+    logging.info("Restarting stale daemon (source code changed)...")
+    try:
+        from fbuild.daemon.client.http_utils import get_daemon_url, http_client
+
+        with http_client(timeout=5.0, connect_timeout=2.0) as client:
+            client.post(get_daemon_url("/api/daemon/shutdown"))
+        # Wait for the daemon to actually stop
+        for _ in range(20):
+            if not is_daemon_http_available():
+                break
+            time.sleep(0.25)
+    except KeyboardInterrupt:
+        raise
+    except Exception as e:
+        logging.warning(f"Failed to gracefully shutdown stale daemon: {e}")
+        # Fall through — spawn logic will handle stuck daemon
+
+
 def request_daemon() -> DaemonResponse:
     """
     Request daemon to be running. Idempotent and thread-safe.
@@ -91,6 +144,7 @@ def request_daemon() -> DaemonResponse:
     This is the ONLY function clients should call to ensure daemon is running.
     It handles:
     - Checking if daemon is already running (via HTTP health check)
+    - Auto-restarting daemon when source code has changed (dev mode)
     - Spawning daemon if needed (with retry logic and exponential backoff)
     - Waiting for daemon to be ready (HTTP available)
     - Preventing race conditions with atomic locking
@@ -117,13 +171,15 @@ def request_daemon() -> DaemonResponse:
     with atomic_singleton_lock():
         # Check if daemon already running (HTTP health check)
         if is_daemon_http_available():
-            # Daemon is running and HTTP server is responding
-            # Read PID file for metadata (may not exist in dev mode)
-            # Note: Don't guard with is_daemon_alive() - we already know daemon is alive via HTTP
-            # The is_daemon_alive() check can fail due to PID file timing issues
-            pid = read_pid_file()
-            launcher = get_launcher_pid()
-            return DaemonResponse(status=DaemonStatus.ALREADY_RUNNING, pid=pid, launched_by=launcher, message=f"Daemon already running (HTTP available, PID {pid})")
+            # Auto-restart if source code has changed (stale daemon detection)
+            if _check_daemon_stale():
+                _restart_stale_daemon()
+                # Fall through to spawn a fresh daemon below
+            else:
+                # Daemon is running with current code
+                pid = read_pid_file()
+                launcher = get_launcher_pid()
+                return DaemonResponse(status=DaemonStatus.ALREADY_RUNNING, pid=pid, launched_by=launcher, message=f"Daemon already running (HTTP available, PID {pid})")
 
         # HTTP check failed, but daemon process may still be alive (just busy/slow).
         # If PID is alive, wait longer for HTTP before spawning a new (orphaned) process.

@@ -116,6 +116,7 @@ class HealthResponse(BaseModel):
     status: str
     uptime_seconds: float
     version: str
+    source_mtime: float
 
 
 class DaemonInfoResponse(BaseModel):
@@ -131,6 +132,8 @@ class DaemonInfoResponse(BaseModel):
     client_count: int
     operation_in_progress: bool
     mcp_url: str
+    source_mtime: float
+    spawner_cwd: str
 
 
 class ErrorResponse(BaseModel):
@@ -215,6 +218,7 @@ def register_health_endpoints(app: FastAPI) -> None:
             status="healthy",
             uptime_seconds=uptime,
             version=APP_VERSION,
+            source_mtime=context.source_mtime,
         )
 
     @app.get("/", tags=["Health"])
@@ -334,6 +338,8 @@ def register_daemon_endpoints(app: FastAPI) -> None:
             client_count=client_count,
             operation_in_progress=context.status_manager.get_operation_in_progress(),
             mcp_url=f"http://{DEFAULT_HOST}:{port}/mcp",
+            source_mtime=context.source_mtime,
+            spawner_cwd=context.spawner_cwd,
         )
 
     @app.post("/api/daemon/shutdown", tags=["Daemon"])

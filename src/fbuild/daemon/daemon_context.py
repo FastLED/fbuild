@@ -64,6 +64,8 @@ class DaemonContext:
     # Daemon identity
     daemon_pid: int
     daemon_started_at: float
+    source_mtime: float  # Max mtime of fbuild source .py files at startup
+    spawner_cwd: str  # Working directory of the client that spawned this daemon
 
     # Subsystems
     compilation_queue: CompilationJobQueue
@@ -103,6 +105,8 @@ def create_daemon_context(
     file_cache_path: Path,
     status_file_path: Path,
     daemon_dir: Path,
+    source_mtime: float,
+    spawner_cwd: str,
     enable_async_server: bool = True,
     async_server_port: int | None = None,
 ) -> DaemonContext:
@@ -118,6 +122,8 @@ def create_daemon_context(
         file_cache_path: Path to the file cache JSON file
         status_file_path: Path to the status file
         daemon_dir: Path to the daemon directory (for cancel signals)
+        source_mtime: Max mtime of fbuild source files at daemon startup
+        spawner_cwd: Working directory of the client that spawned the daemon
         enable_async_server: Whether to start the async TCP server for real-time
             client communication. Defaults to True.
         async_server_port: Port for async server to listen on. None = auto-detect
@@ -253,6 +259,8 @@ def create_daemon_context(
     context = DaemonContext(
         daemon_pid=daemon_pid,
         daemon_started_at=daemon_started_at,
+        source_mtime=source_mtime,
+        spawner_cwd=spawner_cwd,
         compilation_queue=compilation_queue,
         operation_registry=operation_registry,
         subprocess_manager=subprocess_manager,

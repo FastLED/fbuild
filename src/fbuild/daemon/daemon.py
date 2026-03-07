@@ -380,12 +380,22 @@ def start_fastapi_server(context: DaemonContext) -> threading.Thread | None:
         return None
 
 
-def run_daemon_loop() -> None:
-    """Main daemon loop: process build, deploy and monitor requests."""
+def run_daemon_loop(spawner_cwd: str = "unknown") -> None:
+    """Main daemon loop: process build, deploy and monitor requests.
+
+    Args:
+        spawner_cwd: Working directory of the client that spawned this daemon.
+    """
     daemon_pid = os.getpid()
     daemon_started_at = time.time()
 
     logging.info("Starting daemon loop...")
+
+    # Compute source fingerprint for stale daemon detection
+    from fbuild.daemon.paths import compute_source_mtime
+
+    source_mtime = compute_source_mtime()
+    logging.info(f"Source mtime fingerprint: {source_mtime}")
 
     # Determine optimal worker pool size
     try:
@@ -402,6 +412,8 @@ def run_daemon_loop() -> None:
         file_cache_path=FILE_CACHE_FILE,
         status_file_path=STATUS_FILE,
         daemon_dir=DAEMON_DIR,
+        source_mtime=source_mtime,
+        spawner_cwd=spawner_cwd,
     )
 
     # Set module-level context for cross-module access (enables get_compilation_queue())
@@ -598,6 +610,19 @@ def parse_launcher_pid() -> int:
     raise ValueError("Missing required --launched-by argument")
 
 
+def parse_spawner_cwd() -> str:
+    """Parse --spawner-cwd argument from command line.
+
+    Returns:
+        The working directory of the client that spawned this daemon,
+        or "unknown" if not provided (backwards compatibility).
+    """
+    for arg in sys.argv:
+        if arg.startswith("--spawner-cwd="):
+            return arg.split("=", 1)[1]
+    return "unknown"
+
+
 def main() -> int:
     """
     Daemon main entry point.
@@ -607,13 +632,14 @@ def main() -> int:
 
     The daemon is always launched with --launched-by=<PID> by the singleton manager.
     """
-    # Parse arguments - launcher_pid is REQUIRED
+    # Parse arguments - launcher_pid is REQUIRED, spawner_cwd is optional
     try:
         launcher_pid = parse_launcher_pid()
     except ValueError as e:
         print(f"Error: {e}", file=sys.stderr)
-        print("Usage: python -m fbuild.daemon.daemon --launched-by=<PID>", file=sys.stderr)
+        print("Usage: python -m fbuild.daemon.daemon --launched-by=<PID> [--spawner-cwd=<DIR>]", file=sys.stderr)
         return 1
+    spawner_cwd = parse_spawner_cwd()
 
     # Wrap early initialization in try/except to handle startup failures gracefully
     # This prevents daemon from crashing before writing PID file
@@ -696,7 +722,7 @@ def main() -> int:
 
     # Run daemon loop
     try:
-        run_daemon_loop()
+        run_daemon_loop(spawner_cwd=spawner_cwd)
     finally:
         # Cleanup (also called by signal handlers and atexit)
         if PID_FILE.exists():

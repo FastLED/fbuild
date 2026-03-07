@@ -28,35 +28,43 @@ class SlowHTTPRequestHandler(BaseHTTPRequestHandler):
 
     def do_GET(self) -> None:
         """Handle GET request with configurable delay."""
-        if self.hang_forever:
-            # Hang forever (simulates unresponsive daemon)
-            while True:
-                time.sleep(1)
+        try:
+            if self.hang_forever:
+                # Hang forever (simulates unresponsive daemon)
+                while True:
+                    time.sleep(1)
 
-        # Delay before responding
-        time.sleep(self.delay_seconds)
+            # Delay before responding
+            time.sleep(self.delay_seconds)
 
-        # Send successful response
-        self.send_response(200)
-        self.send_header("Content-Type", "application/json")
-        self.end_headers()
-        self.wfile.write(b'{"status": "ok"}')
+            # Send successful response
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(b'{"status": "ok"}')
+        except (ConnectionAbortedError, ConnectionResetError, BrokenPipeError, OSError):
+            # Client disconnected (e.g. KeyboardInterrupt aborted the connection)
+            pass
 
     def do_POST(self) -> None:
         """Handle POST request with configurable delay."""
-        if self.hang_forever:
-            # Hang forever (simulates unresponsive daemon)
-            while True:
-                time.sleep(1)
+        try:
+            if self.hang_forever:
+                # Hang forever (simulates unresponsive daemon)
+                while True:
+                    time.sleep(1)
 
-        # Delay before responding
-        time.sleep(self.delay_seconds)
+            # Delay before responding
+            time.sleep(self.delay_seconds)
 
-        # Send successful response
-        self.send_response(200)
-        self.send_header("Content-Type", "application/json")
-        self.end_headers()
-        self.wfile.write(b'{"success": true}')
+            # Send successful response
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(b'{"success": true}')
+        except (ConnectionAbortedError, ConnectionResetError, BrokenPipeError, OSError):
+            # Client disconnected (e.g. KeyboardInterrupt aborted the connection)
+            pass
 
     def log_message(self, format: str, *args: Any) -> None:
         """Suppress request logging."""
@@ -66,19 +74,13 @@ class SlowHTTPRequestHandler(BaseHTTPRequestHandler):
 @pytest.fixture
 def http_server() -> Any:
     """Start a test HTTP server on a random port."""
-    # Find available port
-    import socket
-
-    with socket.socket() as s:
-        s.bind(("127.0.0.1", 0))
-        port = s.getsockname()[1]
-
     # Reset class variables
     SlowHTTPRequestHandler.delay_seconds = 0.0
     SlowHTTPRequestHandler.hang_forever = False
 
-    # Start server in background thread
-    server = HTTPServer(("127.0.0.1", port), SlowHTTPRequestHandler)
+    # Let the OS assign a free port directly (avoids TOCTOU race)
+    server = HTTPServer(("127.0.0.1", 0), SlowHTTPRequestHandler)
+    port = server.server_address[1]
     server_thread = threading.Thread(target=server.serve_forever, daemon=True)
     server_thread.start()
 
