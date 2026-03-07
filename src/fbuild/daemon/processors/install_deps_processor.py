@@ -225,39 +225,63 @@ class InstallDependenciesProcessor(RequestProcessor):
         # Get required packages (returns Dict[str, str] of package_name -> url)
         packages = platform.get_required_packages(mcu)
 
-        # 2. Initialize toolchain
-        logging.info("Installing ESP32 toolchain...")
-        # Determine toolchain type based on MCU
-        toolchain_type: str | None = None
-        toolchain_url: str | None = None
-        if "toolchain-riscv32-esp" in packages:
-            toolchain_url = packages["toolchain-riscv32-esp"]
-            toolchain_type = "riscv32-esp"
-        elif "toolchain-xtensa-esp-elf" in packages:
-            toolchain_url = packages["toolchain-xtensa-esp-elf"]
-            toolchain_type = "xtensa-esp-elf"
+        # 2+3. Initialize toolchain and framework in parallel (they are independent)
+        logging.info("Installing ESP32 toolchain + framework (parallel)...")
+        from concurrent.futures import ThreadPoolExecutor
 
-        if toolchain_url and toolchain_type:
-            toolchain = ToolchainESP32(cache, toolchain_url, toolchain_type, show_progress=True, mcu=mcu)
-            toolchain.ensure_toolchain()
-            logging.info(f"Toolchain installed: version {toolchain.version}")
-        else:
-            logging.warning("No toolchain package found for MCU")
+        toolchain_error: Exception | None = None
+        framework_error: Exception | None = None
 
-        # 3. Initialize framework
-        logging.info("Installing Arduino framework...")
-        framework_url = packages.get("framework-arduinoespressif32")
-        libs_url = packages.get("framework-arduinoespressif32-libs")
-        if framework_url and libs_url:
-            # Check for MCU-specific skeleton library
-            mcu_suffix = mcu.replace("esp32", "")
-            skeleton_lib_name = f"framework-arduino-{mcu_suffix}-skeleton-lib"
-            skeleton_lib_url = packages.get(skeleton_lib_name)
-            framework = FrameworkESP32(cache, framework_url, libs_url, skeleton_lib_url=skeleton_lib_url, show_progress=True)
-            framework.ensure_framework()
-            logging.info(f"Framework installed: version {framework.version}")
-        else:
-            logging.warning("No framework package found or missing libs URL")
+        def install_toolchain() -> None:
+            nonlocal toolchain_error
+            try:
+                toolchain_type_val: str | None = None
+                toolchain_url_val: str | None = None
+                if "toolchain-riscv32-esp" in packages:
+                    toolchain_url_val = packages["toolchain-riscv32-esp"]
+                    toolchain_type_val = "riscv32-esp"
+                elif "toolchain-xtensa-esp-elf" in packages:
+                    toolchain_url_val = packages["toolchain-xtensa-esp-elf"]
+                    toolchain_type_val = "xtensa-esp-elf"
+
+                if toolchain_url_val and toolchain_type_val:
+                    toolchain = ToolchainESP32(cache, toolchain_url_val, toolchain_type_val, show_progress=True, mcu=mcu)
+                    toolchain.ensure_toolchain()
+                    logging.info(f"Toolchain installed: version {toolchain.version}")
+                else:
+                    logging.warning("No toolchain package found for MCU")
+            except KeyboardInterrupt:
+                raise
+            except Exception as e:
+                toolchain_error = e
+
+        def install_framework() -> None:
+            nonlocal framework_error
+            try:
+                framework_url = packages.get("framework-arduinoespressif32")
+                libs_url = packages.get("framework-arduinoespressif32-libs")
+                if framework_url and libs_url:
+                    mcu_suffix = mcu.replace("esp32", "")
+                    skeleton_lib_name = f"framework-arduino-{mcu_suffix}-skeleton-lib"
+                    skeleton_lib_url = packages.get(skeleton_lib_name)
+                    framework = FrameworkESP32(cache, framework_url, libs_url, skeleton_lib_url=skeleton_lib_url, show_progress=True)
+                    framework.ensure_framework()
+                    logging.info(f"Framework installed: version {framework.version}")
+                else:
+                    logging.warning("No framework package found or missing libs URL")
+            except KeyboardInterrupt:
+                raise
+            except Exception as e:
+                framework_error = e
+
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            executor.submit(install_toolchain)
+            executor.submit(install_framework)
+
+        if toolchain_error:
+            raise toolchain_error
+        if framework_error:
+            raise framework_error
 
         # 4. Install library dependencies
         if lib_deps:

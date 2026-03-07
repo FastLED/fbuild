@@ -257,13 +257,19 @@ class OrchestratorESP32(IBuildOrchestrator):
             # Get required packages
             packages = platform.get_required_packages(mcu)
 
-            # Initialize toolchain (pass MCU for Xtensa wrapper binary selection)
-            toolchain = self._setup_toolchain(packages, start_time, verbose, mcu=mcu)
+            # Initialize toolchain and framework in parallel (they are independent)
+            # Also pre-fetch library downloads during this phase to overlap network I/O
+            toolchain, framework = self._setup_toolchain_and_framework_parallel(
+                packages,
+                start_time,
+                verbose,
+                mcu,
+                lib_deps=lib_deps,
+                build_dir=build_dir,
+                project_dir=project_dir,
+            )
             if toolchain is None:
                 return self._error_result(start_time, "Failed to initialize toolchain")
-
-            # Initialize framework
-            framework = self._setup_framework(packages, start_time, verbose)
             if framework is None:
                 return self._error_result(start_time, "Failed to initialize framework")
 
@@ -637,6 +643,125 @@ class OrchestratorESP32(IBuildOrchestrator):
         framework = FrameworkESP32(self.cache, framework_url, libs_url, skeleton_lib_url=skeleton_lib_url, show_progress=True)
         framework.ensure_framework()
         return framework
+
+    def _setup_toolchain_and_framework_parallel(
+        self,
+        packages: dict,
+        start_time: float,
+        verbose: bool,
+        mcu: str,
+        lib_deps: Optional[List[str]] = None,
+        build_dir: Optional[Path] = None,
+        project_dir: Optional[Path] = None,
+    ) -> tuple[Optional["ToolchainESP32"], Optional[FrameworkESP32]]:
+        """
+        Initialize toolchain, framework, and pre-fetch libraries in parallel.
+
+        Platform must already be initialized. Toolchain, framework, and library
+        downloads are independent and can happen simultaneously, saving significant
+        time on cold cache builds.
+
+        Args:
+            packages: Package URLs dictionary from platform
+            start_time: Build start time for error reporting
+            verbose: Verbose output mode
+            mcu: Target MCU identifier
+            lib_deps: Optional library dependencies to pre-fetch during download
+            build_dir: Optional build directory for library manager
+            project_dir: Optional project directory for library manager
+
+        Returns:
+            Tuple of (toolchain, framework), either can be None on failure
+        """
+        from concurrent.futures import Future, ThreadPoolExecutor
+
+        log_phase(4, 13, "Initializing toolchain + framework (parallel)...")
+
+        toolchain_result: Optional["ToolchainESP32"] = None
+        framework_result: Optional[FrameworkESP32] = None
+        toolchain_error: Optional[Exception] = None
+        framework_error: Optional[Exception] = None
+
+        def setup_toolchain() -> Optional["ToolchainESP32"]:
+            toolchain_url = packages.get("toolchain-riscv32-esp") or packages.get("toolchain-xtensa-esp-elf")
+            if not toolchain_url:
+                return None
+            toolchain_type = "riscv32-esp" if "riscv32" in toolchain_url else "xtensa-esp-elf"
+            toolchain = ToolchainESP32(
+                self.cache,
+                toolchain_url,
+                toolchain_type,
+                show_progress=True,
+                mcu=mcu,
+            )
+            toolchain.ensure_toolchain()
+            return toolchain
+
+        def setup_framework() -> Optional[FrameworkESP32]:
+            framework_url = packages.get("framework-arduinoespressif32")
+            libs_url = packages.get("framework-arduinoespressif32-libs", "")
+            if not framework_url:
+                return None
+            skeleton_lib_url = None
+            for package_name, package_url in packages.items():
+                if package_name.startswith("framework-arduino-") and package_name.endswith("-skeleton-lib"):
+                    skeleton_lib_url = package_url
+                    break
+            framework = FrameworkESP32(self.cache, framework_url, libs_url, skeleton_lib_url=skeleton_lib_url, show_progress=True)
+            framework.ensure_framework()
+            return framework
+
+        def prefetch_libraries() -> None:
+            """Pre-fetch library downloads so they're cached when compilation starts."""
+            if not lib_deps or not build_dir or not project_dir:
+                return
+            try:
+                from fbuild.packages.platformio_registry import LibrarySpec
+
+                lib_manager = LibraryManagerESP32(build_dir, project_dir=project_dir)
+                for lib_dep in lib_deps:
+                    spec = LibrarySpec.parse(lib_dep)
+                    lib_manager.download_library(spec, show_progress=True)
+            except KeyboardInterrupt:
+                raise
+            except Exception as e:
+                # Non-fatal: libraries will be downloaded later if pre-fetch fails
+                log_detail(f"Library pre-fetch warning: {e}")
+
+        # Determine number of workers: 2 for toolchain+framework, +1 if libraries to prefetch
+        has_libs = bool(lib_deps and build_dir and project_dir)
+        num_workers = 3 if has_libs else 2
+
+        with ThreadPoolExecutor(max_workers=num_workers) as executor:
+            toolchain_future: Future[Optional["ToolchainESP32"]] = executor.submit(setup_toolchain)
+            framework_future: Future[Optional[FrameworkESP32]] = executor.submit(setup_framework)
+
+            # Pre-fetch library downloads in parallel (non-blocking, non-fatal)
+            if has_libs:
+                executor.submit(prefetch_libraries)
+
+            try:
+                toolchain_result = toolchain_future.result()
+            except KeyboardInterrupt:
+                raise
+            except Exception as e:
+                toolchain_error = e
+                log_warning(f"Toolchain setup failed: {e}")
+
+            try:
+                framework_result = framework_future.result()
+            except KeyboardInterrupt:
+                raise
+            except Exception as e:
+                framework_error = e
+                log_warning(f"Framework setup failed: {e}")
+
+        if toolchain_error:
+            raise toolchain_error
+        if framework_error:
+            raise framework_error
+
+        return toolchain_result, framework_result
 
     def _process_libraries(
         self, env_config: dict, build_dir: Path, compiler: ConfigurableCompiler, toolchain: ToolchainESP32, verbose: bool, project_dir: Optional[Path] = None

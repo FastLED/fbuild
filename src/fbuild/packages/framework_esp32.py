@@ -144,26 +144,9 @@ class FrameworkESP32(IFramework):
             # Create framework directory
             self.framework_path.mkdir(parents=True, exist_ok=True)
 
-            # Download and extract Arduino core
-            self.archive_extractor.download_and_extract(self.framework_url, self.framework_path, "Arduino-ESP32 core")
-
-            # Download and extract ESP-IDF libraries (if URL is not empty)
-            if self.libs_url:
-                self.archive_extractor.download_and_extract(
-                    self.libs_url,
-                    self.framework_path / "tools" / "sdk",
-                    "ESP-IDF libraries",
-                )
-
-            # Download and extract skeleton library if provided
-            if self.skeleton_lib_url:
-                if self.show_progress:
-                    print("Downloading skeleton library...")
-                self.archive_extractor.download_and_extract(
-                    self.skeleton_lib_url,
-                    self.framework_path / "tools" / "sdk",
-                    "Skeleton library",
-                )
+            # Download and extract framework components in parallel
+            # Arduino core, ESP-IDF libs, and skeleton lib are independent downloads
+            self._download_framework_components_parallel()
 
             if self.show_progress:
                 print(f"ESP32 framework installed to {self.framework_path}")
@@ -186,6 +169,68 @@ class FrameworkESP32(IFramework):
             raise  # Never reached, but satisfies type checker
         except Exception as e:
             raise FrameworkErrorESP32(f"Unexpected error installing framework: {e}")
+
+    def _download_framework_components_parallel(self) -> None:
+        """Download and extract Arduino core, ESP-IDF libs, and skeleton lib in parallel.
+
+        Each component is downloaded and extracted in its own thread. The Arduino core
+        goes to framework_path, while libs and skeleton go to framework_path/tools/sdk.
+        These are independent operations that benefit from parallel I/O.
+
+        Raises:
+            DownloadError: If any download fails
+            ExtractionError: If any extraction fails
+        """
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+
+        tasks: list[tuple[str, str, "Path", str]] = []
+
+        # Always download Arduino core
+        tasks.append(("core", self.framework_url, self.framework_path, "Arduino-ESP32 core"))
+
+        # ESP-IDF libraries (if URL provided)
+        if self.libs_url:
+            sdk_dir = self.framework_path / "tools" / "sdk"
+            tasks.append(("libs", self.libs_url, sdk_dir, "ESP-IDF libraries"))
+
+        # Skeleton library (if URL provided)
+        if self.skeleton_lib_url:
+            sdk_dir = self.framework_path / "tools" / "sdk"
+            tasks.append(("skeleton", self.skeleton_lib_url, sdk_dir, "Skeleton library"))
+
+        if len(tasks) <= 1:
+            # Only core, no benefit from threading
+            for _, url, target, desc in tasks:
+                self.archive_extractor.download_and_extract(url, target, desc)
+            return
+
+        # Each task needs its own ArchiveExtractor to avoid shared state issues
+        errors: list[Exception] = []
+
+        def download_component(url: str, target: "Path", desc: str) -> None:
+            extractor = ArchiveExtractor(show_progress=self.show_progress)
+            extractor.download_and_extract(url, target, desc)
+
+        with ThreadPoolExecutor(max_workers=len(tasks)) as executor:
+            future_to_name = {}
+            for name, url, target, desc in tasks:
+                target.mkdir(parents=True, exist_ok=True)
+                future = executor.submit(download_component, url, target, desc)
+                future_to_name[future] = name
+
+            for future in as_completed(future_to_name):
+                name = future_to_name[future]
+                try:
+                    future.result()
+                except KeyboardInterrupt:
+                    raise
+                except Exception as e:
+                    errors.append(e)
+                    if self.show_progress:
+                        print(f"Failed to download {name}: {e}")
+
+        if errors:
+            raise errors[0]
 
     def _post_install_apply_patches(self) -> None:
         """Apply framework patches to fix known upstream bugs after installation.
@@ -258,35 +303,36 @@ class FrameworkESP32(IFramework):
 
             exclude_patterns = get_exclude_patterns()
 
-            for mcu in mcu_variants:
-                try:
-                    # Get SDK include paths for this MCU
-                    include_paths = self.get_sdk_includes(mcu)
+            # Generate trampolines for all MCU variants in parallel
+            from concurrent.futures import ThreadPoolExecutor, as_completed
 
-                    if self.show_progress:
-                        print(f"[trampolines] Generating cache for {mcu} ({len(include_paths)} include paths)...")
+            def generate_for_mcu(mcu_name: str) -> None:
+                include_paths = self.get_sdk_includes(mcu_name)
+                if self.show_progress:
+                    print(f"[trampolines] Generating cache for {mcu_name} ({len(include_paths)} include paths)...")
+                self.cache.ensure_directories()
+                trampoline_cache = HeaderTrampolineCache(
+                    cache_root=self.cache.trampolines_dir,
+                    show_progress=self.show_progress,
+                    mcu_variant=mcu_name,
+                    framework_version=self.version,
+                    platform_name="esp32",
+                )
+                trampoline_cache.generate_trampolines(include_paths, exclude_patterns=exclude_patterns)
 
-                    # Use new cache location: .fbuild/cache/trampolines/{mcu}/{hash}/
-                    self.cache.ensure_directories()
-                    trampoline_cache = HeaderTrampolineCache(
-                        cache_root=self.cache.trampolines_dir,
-                        show_progress=self.show_progress,
-                        mcu_variant=mcu,
-                        framework_version=self.version,
-                        platform_name="esp32",
-                    )
-
-                    # Generate trampolines with exclusions (v3.0 unified design)
-                    trampoline_cache.generate_trampolines(include_paths, exclude_patterns=exclude_patterns)
-                    # Note: The generate_trampolines method now prints its own progress messages
-
-                except KeyboardInterrupt:
-                    _thread.interrupt_main()
-                    raise
-                except Exception as e:
-                    if self.show_progress:
-                        print(f"[trampolines] Warning: Failed to generate trampolines for {mcu}: {e}")
-                    continue
+            with ThreadPoolExecutor(max_workers=min(len(mcu_variants), 4)) as executor:
+                futures = {executor.submit(generate_for_mcu, mcu): mcu for mcu in mcu_variants}
+                for future in as_completed(futures):
+                    mcu_name = futures[future]
+                    try:
+                        future.result()
+                    except KeyboardInterrupt:
+                        _thread.interrupt_main()
+                        raise
+                    except Exception as e:
+                        if self.show_progress:
+                            print(f"[trampolines] Warning: Failed to generate trampolines for {mcu_name}: {e}")
+                        continue
 
             if self.show_progress:
                 print("[trampolines] Post-install generation complete")
