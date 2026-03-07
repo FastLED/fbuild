@@ -125,8 +125,8 @@ See `docs/claude/coding-conventions.md` for full rationale and examples.
 ### Development Mode
 
 Always set `FBUILD_DEV_MODE=1` when developing. This isolates:
-- Daemon files → `~/.fbuild/daemon_dev/` (instead of `~/.fbuild/daemon/`)
-- Cache files → `~/.fbuild/cache_dev/` (isolated from `~/.fbuild/cache/`)
+- Daemon files → `~/.fbuild/dev/daemon/` (instead of `~/.fbuild/daemon/`)
+- Cache files → `~/.fbuild/dev/cache/` (isolated from `~/.fbuild/cache/`)
 - Port → 8865 (instead of 8765)
 
 ### Platform Requirements

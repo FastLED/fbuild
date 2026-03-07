@@ -4,7 +4,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from fbuild.daemon.connection import DaemonConnection, connect_daemon
+# IMPORTANT: Do NOT import fbuild.daemon.connection at module level.
+# That triggers fbuild.daemon.paths which evaluates DAEMON_DIR based on
+# FBUILD_DEV_MODE. But cli.py sets FBUILD_DEV_MODE *after* this __init__.py
+# is loaded (since importing cli.py triggers importing this package first).
+# Use __getattr__ for lazy access to DaemonConnection and connect_daemon.
 
 __version__ = "1.4.15"
 
@@ -383,6 +387,21 @@ class Daemon:
                 expect=expect,
                 timeout=timeout,
             )
+
+
+def __getattr__(name: str) -> Any:
+    """Lazy imports for DaemonConnection and connect_daemon.
+
+    These must not be imported at module level because that triggers
+    fbuild.daemon.paths evaluation before FBUILD_DEV_MODE is set by cli.py.
+    """
+    if name in ("DaemonConnection", "connect_daemon"):
+        from fbuild.daemon.connection import DaemonConnection, connect_daemon
+
+        globals()["DaemonConnection"] = DaemonConnection
+        globals()["connect_daemon"] = connect_daemon
+        return globals()[name]
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 
 __all__ = [

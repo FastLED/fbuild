@@ -6,7 +6,12 @@ to isolate daemon instances.
 
 Modes:
 - Production (default): ~/.fbuild/daemon/
-- Development (FBUILD_DEV_MODE=1): ~/.fbuild/daemon_dev/ (isolated from prod)
+- Development (FBUILD_DEV_MODE=1): ~/.fbuild/dev/daemon/ (isolated from prod)
+
+IMPORTANT: All path constants (DAEMON_DIR, PID_FILE, etc.) are evaluated lazily
+via __getattr__. This is necessary because cli.py sets FBUILD_DEV_MODE=1 AFTER
+fbuild/__init__.py triggers the import of this module. Module-level constants
+would capture the wrong mode.
 """
 
 import os
@@ -21,45 +26,60 @@ def is_dev_mode() -> bool:
     return os.environ.get("FBUILD_DEV_MODE") == "1"
 
 
-# Determine daemon directory based on mode
-if is_dev_mode():
-    # Development mode: use ~/.fbuild/daemon_dev/ (isolated from prod daemon)
-    DAEMON_DIR = Path.home() / ".fbuild" / "daemon_dev"
-else:
-    # Production: use home directory
-    DAEMON_DIR = Path.home() / ".fbuild" / "daemon"
+def get_daemon_dir() -> Path:
+    """Get the daemon directory, respecting current FBUILD_DEV_MODE.
 
-# Core daemon files
-PID_FILE = DAEMON_DIR / f"{DAEMON_NAME}.pid"
-LOCK_FILE = DAEMON_DIR / f"{DAEMON_NAME}.lock"
-STATUS_FILE = DAEMON_DIR / "daemon_status.json"
-LOG_FILE = DAEMON_DIR / "daemon.log"
+    This is evaluated on every call (not cached) because FBUILD_DEV_MODE
+    may be set after this module is first imported.
+    """
+    if is_dev_mode():
+        return Path.home() / ".fbuild" / "dev" / "daemon"
+    return Path.home() / ".fbuild" / "daemon"
 
-# Request/response files
-BUILD_REQUEST_FILE = DAEMON_DIR / "build_request.json"
-DEPLOY_REQUEST_FILE = DAEMON_DIR / "deploy_request.json"
-MONITOR_REQUEST_FILE = DAEMON_DIR / "monitor_request.json"
-INSTALL_DEPS_REQUEST_FILE = DAEMON_DIR / "install_deps_request.json"
 
-# Device management request/response files
-DEVICE_LIST_REQUEST_FILE = DAEMON_DIR / "device_list_request.json"
-DEVICE_LIST_RESPONSE_FILE = DAEMON_DIR / "device_list_response.json"
-DEVICE_STATUS_REQUEST_FILE = DAEMON_DIR / "device_status_request.json"
-DEVICE_STATUS_RESPONSE_FILE = DAEMON_DIR / "device_status_response.json"
-DEVICE_LEASE_REQUEST_FILE = DAEMON_DIR / "device_lease_request.json"
-DEVICE_LEASE_RESPONSE_FILE = DAEMON_DIR / "device_lease_response.json"
-DEVICE_RELEASE_REQUEST_FILE = DAEMON_DIR / "device_release_request.json"
-DEVICE_RELEASE_RESPONSE_FILE = DAEMON_DIR / "device_release_response.json"
+# Map of lazy attribute names to how they derive from DAEMON_DIR
+_DERIVED_PATHS = {
+    # Core daemon files
+    "PID_FILE": lambda d: d / f"{DAEMON_NAME}.pid",
+    "LOCK_FILE": lambda d: d / f"{DAEMON_NAME}.lock",
+    "STATUS_FILE": lambda d: d / "daemon_status.json",
+    "LOG_FILE": lambda d: d / "daemon.log",
+    # Request/response files
+    "BUILD_REQUEST_FILE": lambda d: d / "build_request.json",
+    "DEPLOY_REQUEST_FILE": lambda d: d / "deploy_request.json",
+    "MONITOR_REQUEST_FILE": lambda d: d / "monitor_request.json",
+    "INSTALL_DEPS_REQUEST_FILE": lambda d: d / "install_deps_request.json",
+    # Device management request/response files
+    "DEVICE_LIST_REQUEST_FILE": lambda d: d / "device_list_request.json",
+    "DEVICE_LIST_RESPONSE_FILE": lambda d: d / "device_list_response.json",
+    "DEVICE_STATUS_REQUEST_FILE": lambda d: d / "device_status_request.json",
+    "DEVICE_STATUS_RESPONSE_FILE": lambda d: d / "device_status_response.json",
+    "DEVICE_LEASE_REQUEST_FILE": lambda d: d / "device_lease_request.json",
+    "DEVICE_LEASE_RESPONSE_FILE": lambda d: d / "device_lease_response.json",
+    "DEVICE_RELEASE_REQUEST_FILE": lambda d: d / "device_release_request.json",
+    "DEVICE_RELEASE_RESPONSE_FILE": lambda d: d / "device_release_response.json",
+    # Other daemon files
+    "PROCESS_REGISTRY_FILE": lambda d: d / "process_registry.json",
+    "FILE_CACHE_FILE": lambda d: d / "file_cache.json",
+    # Serial Monitor API files (used by fbuild.api.SerialMonitor)
+    "SERIAL_MONITOR_ATTACH_REQUEST_FILE": lambda d: d / "serial_monitor_attach_request.json",
+    "SERIAL_MONITOR_DETACH_REQUEST_FILE": lambda d: d / "serial_monitor_detach_request.json",
+    "SERIAL_MONITOR_POLL_REQUEST_FILE": lambda d: d / "serial_monitor_poll_request.json",
+    "SERIAL_MONITOR_RESPONSE_FILE": lambda d: d / "serial_monitor_response.json",
+}
 
-# Other daemon files
-PROCESS_REGISTRY_FILE = DAEMON_DIR / "process_registry.json"
-FILE_CACHE_FILE = DAEMON_DIR / "file_cache.json"
 
-# Serial Monitor API files (used by fbuild.api.SerialMonitor)
-SERIAL_MONITOR_ATTACH_REQUEST_FILE = DAEMON_DIR / "serial_monitor_attach_request.json"
-SERIAL_MONITOR_DETACH_REQUEST_FILE = DAEMON_DIR / "serial_monitor_detach_request.json"
-SERIAL_MONITOR_POLL_REQUEST_FILE = DAEMON_DIR / "serial_monitor_poll_request.json"
-SERIAL_MONITOR_RESPONSE_FILE = DAEMON_DIR / "serial_monitor_response.json"
+def __getattr__(name: str) -> Path:
+    """Lazy evaluation of path constants.
+
+    Every access re-evaluates is_dev_mode() so that FBUILD_DEV_MODE changes
+    (e.g. set by cli.py after initial import) are always respected.
+    """
+    if name == "DAEMON_DIR":
+        return get_daemon_dir()
+    if name in _DERIVED_PATHS:
+        return _DERIVED_PATHS[name](get_daemon_dir())
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 
 def compute_source_mtime() -> float:

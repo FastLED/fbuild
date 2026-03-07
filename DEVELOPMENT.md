@@ -28,8 +28,8 @@ When `FBUILD_DEV_MODE=1` is set:
 
 | Component | Production Location | Development Location |
 |-----------|-------------------|---------------------|
-| Daemon files | `~/.fbuild/daemon/` | `<repo>/.fbuild/daemon_dev/` |
-| Cache files | `<project>/.fbuild/cache/` | `<project>/.fbuild/cache_dev/` |
+| Daemon files | `~/.fbuild/daemon/` | `~/.fbuild/dev/daemon/` |
+| Cache files | `~/.fbuild/cache/` | `~/.fbuild/dev/cache/` |
 | Build artifacts | `<project>/.fbuild/build/` | `<project>/.fbuild/build/` (unchanged) |
 
 ### Development Workflow
@@ -55,7 +55,7 @@ When `FBUILD_DEV_MODE=1` is set:
    uv run fbuild daemon status
    ```
 
-   The daemon will be running from `.fbuild/daemon_dev/` in the current directory.
+   The daemon will be running from `.fbuild/dev/daemon/` in the current directory.
 
 ### Why Development Mode is Needed
 
@@ -67,8 +67,8 @@ Without development mode, running fbuild from the repository would:
 
 With development mode:
 
-- Development daemon runs independently in `.fbuild/daemon_dev/`
-- Development cache is isolated in `.fbuild/cache_dev/`
+- Development daemon runs independently in `.fbuild/dev/daemon/`
+- Development cache is isolated in `.fbuild/dev/cache/`
 - Production fbuild installation remains unaffected
 - Multiple developers can work on different branches without conflicts
 
@@ -78,10 +78,10 @@ Development files are ignored by git (via `.gitignore`). To clean them manually:
 
 ```bash
 # Remove development daemon files
-rm -rf .fbuild/daemon_dev/
+rm -rf .fbuild/dev/daemon/
 
 # Remove development cache
-rm -rf .fbuild/cache_dev/
+rm -rf .fbuild/dev/cache/
 
 # Or remove all .fbuild directories
 rm -rf .fbuild/
@@ -145,7 +145,7 @@ When testing daemon functionality:
    ```
 3. **Clear daemon files** if needed:
    ```bash
-   rm -rf .fbuild/daemon_dev/
+   rm -rf .fbuild/dev/daemon/
    ```
 
 ## Troubleshooting
@@ -160,7 +160,7 @@ Ensure:
 Check daemon location:
 ```bash
 uv run fbuild daemon status
-# Look for daemon files in .fbuild/daemon_dev/
+# Look for daemon files in .fbuild/dev/daemon/
 ```
 
 ### Cache not isolated
@@ -196,7 +196,7 @@ When contributing to fbuild:
 | Variable | Purpose | Default | Dev Mode |
 |----------|---------|---------|----------|
 | `FBUILD_DEV_MODE` | Enable development isolation | Not set (production) | `1` |
-| `FBUILD_CACHE_DIR` | Override cache location | `<project>/.fbuild/cache/` | `<project>/.fbuild/cache_dev/` |
+| `FBUILD_CACHE_DIR` | Override cache location | `<project>/.fbuild/cache/` | `<project>/.fbuild/dev/cache/` |
 | `FBUILD_BUILD_DIR` | Override build output location | `<project>/.fbuild/build/` | `<project>/.fbuild/build/` |
 
 Setting `FBUILD_CACHE_DIR` or `FBUILD_BUILD_DIR` overrides the dev mode locations.

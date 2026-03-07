@@ -116,7 +116,7 @@ def start_fbuild_daemon() -> subprocess.Popen:
     for _ in range(50):
         time.sleep(0.1)
         # Check if daemon is running by looking for status file
-        status_file = Path(".fbuild/daemon_dev/daemon_status.json")
+        status_file = Path(".fbuild/dev/daemon/daemon_status.json")
         if status_file.exists():
             return proc
 
@@ -175,7 +175,7 @@ def _kill_fbuild_daemon() -> None:
 def _cleanup_daemon_files() -> None:
     """Remove daemon state files."""
     try:
-        daemon_dir = Path(".fbuild/daemon_dev")
+        daemon_dir = Path(".fbuild/dev/daemon")
         if daemon_dir.exists():
             for file in daemon_dir.iterdir():
                 try:

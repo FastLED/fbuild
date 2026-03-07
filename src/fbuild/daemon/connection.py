@@ -50,7 +50,7 @@ def _get_daemon_dir(dev_mode: bool) -> Path:
         Path to daemon directory.
     """
     if dev_mode:
-        return Path.home() / ".fbuild" / "daemon_dev"
+        return Path.home() / ".fbuild" / "dev" / "daemon"
     else:
         return Path.home() / ".fbuild" / "daemon"
 

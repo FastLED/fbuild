@@ -48,8 +48,8 @@ def _get_ledger_path() -> Path:
         Path to firmware_ledger.json, respecting FBUILD_DEV_MODE
     """
     if os.environ.get("FBUILD_DEV_MODE") == "1":
-        # Use global ~/.fbuild/daemon_dev/ for development
-        return Path.home() / ".fbuild" / "daemon_dev" / "firmware_ledger.json"
+        # Use global ~/.fbuild/dev/daemon/ for development
+        return Path.home() / ".fbuild" / "dev" / "daemon" / "firmware_ledger.json"
     else:
         # Use global ~/.fbuild/daemon/ for production
         return Path.home() / ".fbuild" / "daemon" / "firmware_ledger.json"

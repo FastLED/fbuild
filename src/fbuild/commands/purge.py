@@ -27,7 +27,7 @@ def get_cache_root() -> Path:
     if cache_env:
         return Path(cache_env).resolve()
     elif dev_mode:
-        return Path.home() / ".fbuild" / "cache_dev"
+        return Path.home() / ".fbuild" / "dev" / "cache"
     else:
         return Path.home() / ".fbuild" / "cache"
 

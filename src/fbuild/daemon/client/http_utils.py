@@ -19,6 +19,7 @@ Usage:
 
 import logging
 import os
+from pathlib import Path
 from typing import Any
 
 import httpx
@@ -38,15 +39,43 @@ PORT_FILE = DAEMON_DIR / "daemon.port"
 logger = logging.getLogger(__name__)
 
 
+def _read_port_from_file(port_file: Path) -> int | None:
+    """Read and validate a port number from a port file.
+
+    Args:
+        port_file: Path to the port file
+
+    Returns:
+        Valid port number, or None if file doesn't exist or is invalid
+    """
+    if not port_file.exists():
+        return None
+    try:
+        port_str = port_file.read_text().strip()
+        port = int(port_str)
+        if 1 <= port <= 65535:
+            return port
+        logger.warning(f"Invalid port in {port_file}: {port_str}")
+    except (ValueError, OSError) as e:
+        logger.warning(f"Failed to read port file {port_file}: {e}")
+    return None
+
+
 def get_daemon_port() -> int:
     """Get the daemon port based on environment variables, port file, and mode.
 
     Priority:
     1. FBUILD_DAEMON_PORT environment variable (if set and valid)
-    2. Port file (if exists and valid)
-    3. Mode-based default:
+    2. Port file in current mode's daemon dir (if exists and valid)
+    3. Port file in OTHER mode's daemon dir (cross-mode fallback)
+    4. Mode-based default:
        - Dev mode (FBUILD_DEV_MODE=1): 8865
        - Production: 8765
+
+    The cross-mode fallback (priority 3) handles the case where a daemon is
+    running in dev mode but the client doesn't have FBUILD_DEV_MODE set, or
+    vice versa. This prevents spawn failures when the daemon is already alive
+    on the other mode's port.
 
     Returns:
         Port number for daemon HTTP server
@@ -70,19 +99,26 @@ def get_daemon_port() -> int:
         except ValueError:
             logger.warning(f"Invalid port format in FBUILD_DAEMON_PORT: {env_port}")
 
-    # Priority 2: Try to read port from file (written by daemon on startup)
-    if PORT_FILE.exists():
-        try:
-            port_str = PORT_FILE.read_text().strip()
-            port = int(port_str)
-            if 1 <= port <= 65535:
-                return port
-            logger.warning(f"Invalid port in {PORT_FILE}: {port_str}")
-        except (ValueError, OSError) as e:
-            logger.warning(f"Failed to read port file {PORT_FILE}: {e}")
+    # Priority 2: Try to read port from file in current mode's daemon dir
+    port = _read_port_from_file(PORT_FILE)
+    if port is not None:
+        return port
 
-    # Priority 3: Fall back to default based on mode
-    if os.getenv("FBUILD_DEV_MODE") == "1":
+    # Priority 3: Cross-mode fallback — check the OTHER mode's port file
+    # This handles dev daemon running but client not in dev mode (or vice versa)
+    home = Path.home()
+    is_dev = os.getenv("FBUILD_DEV_MODE") == "1"
+    if is_dev:
+        other_port_file = home / ".fbuild" / "daemon" / "daemon.port"
+    else:
+        other_port_file = home / ".fbuild" / "dev" / "daemon" / "daemon.port"
+    other_port = _read_port_from_file(other_port_file)
+    if other_port is not None:
+        logger.info(f"Found daemon port {other_port} via cross-mode fallback ({other_port_file})")
+        return other_port
+
+    # Priority 4: Fall back to default based on mode
+    if is_dev:
         return DEFAULT_DEV_PORT
     return DEFAULT_PORT
 

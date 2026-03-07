@@ -108,11 +108,11 @@ class HeaderTrampolineCache:
                 else:
                     self.cache_root = cache_root / "generic"
             else:
-                # Fallback: use ~/.fbuild/cache/trampolines (or cache_dev in dev mode)
+                # Fallback: use ~/.fbuild/cache/trampolines (or dev/cache in dev mode)
                 import os
 
                 if os.environ.get("FBUILD_DEV_MODE") == "1":
-                    global_root = Path.home() / ".fbuild" / "cache_dev" / "trampolines"
+                    global_root = Path.home() / ".fbuild" / "dev" / "cache" / "trampolines"
                 else:
                     global_root = Path.home() / ".fbuild" / "cache" / "trampolines"
                 if mcu_variant:

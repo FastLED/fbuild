@@ -36,7 +36,7 @@ def _get_cache_root() -> Path:
         return Path(cache_env).resolve()
     dev_mode = os.environ.get("FBUILD_DEV_MODE")
     if dev_mode:
-        return Path.home() / ".fbuild" / "cache_dev"
+        return Path.home() / ".fbuild" / "dev" / "cache"
     return Path.home() / ".fbuild" / "cache"
 
 

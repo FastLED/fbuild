@@ -9,7 +9,7 @@ import os
 import sys
 import warnings
 
-# Isolate tests from the production daemon: use daemon_dev directory, port 8865.
+# Isolate tests from the production daemon: use ~/.fbuild/dev/daemon/ directory, port 8865.
 # Must be set BEFORE any fbuild imports because paths.py reads it at import time.
 os.environ.setdefault("FBUILD_DEV_MODE", "1")
 
