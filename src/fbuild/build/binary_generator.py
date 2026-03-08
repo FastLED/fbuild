@@ -50,6 +50,7 @@ class BinaryGenerator:
         self.show_progress = context.verbose
         self.env_config = context.env_config
         self.platform_config = context.platform_config
+        self.project_dir = context.project_dir
 
     def generate_bin(self, elf_path: Path, output_bin: Optional[Path] = None) -> Path:
         """Generate firmware.bin from firmware.elf.
@@ -351,11 +352,15 @@ class BinaryGenerator:
         if not partition_table.endswith(".csv"):
             partition_table += ".csv"
 
-        # Find partition CSV file in framework (framework_path is ESP32-specific)
+        # Resolve framework path (needed for gen_esp32part.py tool)
         framework_path = getattr(self.framework, "framework_path", None)
         if framework_path is None:
             raise BinaryGeneratorError("Framework does not have framework_path attribute")
-        partitions_csv = framework_path / "tools" / "partitions" / partition_table
+
+        # Check project directory first (custom partition tables), then framework
+        partitions_csv = self.project_dir / partition_table
+        if not partitions_csv.exists():
+            partitions_csv = framework_path / "tools" / "partitions" / partition_table
 
         if not partitions_csv.exists():
             raise BinaryGeneratorError(f"Partition CSV not found: {partitions_csv}\n" + f"Requested partition table: {partition_table}")

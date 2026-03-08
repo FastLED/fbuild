@@ -410,25 +410,6 @@ class ConfigurableLinker(ILinker):
                             log_detail(f"Linker command saved to: {debug_cmd_file}")
                             log_detail(f"Working directory: {self.build_dir}")
 
-                        # Debug: Test if the file is accessible with a simple subprocess call
-                        test_file = self.build_dir / "obj" / "Blink.ino.o"
-                        if test_file.exists():
-                            log_detail(f"DEBUG: Object file exists: {test_file}")
-                            log_detail(f"DEBUG: File size: {test_file.stat().st_size} bytes")
-                            # Try to access it with a simple command
-                            try:
-                                test_result = safe_run(["cmd.exe", "/c", "dir", "obj\\Blink.ino.o"], cwd=str(self.build_dir), capture_output=True, text=True, timeout=5)
-                                if test_result.returncode == 0:
-                                    log_detail("DEBUG: File accessible via subprocess dir command")
-                                else:
-                                    log_detail(f"DEBUG: dir command failed: {test_result.stderr}")
-                            except KeyboardInterrupt:
-                                raise
-                            except Exception as e:
-                                log_detail(f"DEBUG: Test access failed: {e}")
-                        else:
-                            log_detail(f"DEBUG: Object file DOES NOT EXIST: {test_file}")
-
                     result = safe_run(
                         cmd,
                         capture_output=True,
