@@ -287,8 +287,9 @@ class InstallDependenciesProcessor(RequestProcessor):
         if lib_deps:
             logging.info(f"Installing {len(lib_deps)} library dependencies...")
             from fbuild.packages.platformio_registry import LibrarySpec
+            from fbuild.paths import get_project_build_root
 
-            build_dir = cache.project_dir / ".fbuild" / "build" / board_id
+            build_dir = get_project_build_root(cache.project_dir) / board_id
             lib_manager = LibraryManagerESP32(build_dir, project_dir=project_dir)
             for lib_dep in lib_deps:
                 logging.info(f"  Installing: {lib_dep}")

@@ -340,9 +340,6 @@ class OrchestratorESP32(IBuildOrchestrator):
             compilation_executor = CompilationExecutor(
                 build_dir=build_dir,
                 show_progress=verbose,
-                cache=self.cache,
-                mcu=mcu,
-                framework_version=framework.version,
                 compile_database=request.compile_database,
                 execute_compilations=not request.generate_compiledb,
             )
@@ -836,11 +833,6 @@ class OrchestratorESP32(IBuildOrchestrator):
             log_warning("Toolchain bin directory not found, skipping libraries")
             return library_archives, library_include_paths
 
-        # Extract trampoline cache from compilation executor
-        trampoline_cache = None
-        if hasattr(compiler, "compilation_executor") and compiler.compilation_executor:
-            trampoline_cache = getattr(compiler.compilation_executor, "trampoline_cache", None)
-
         # Parse lib_ignore for transitive dependency filtering
         lib_ignore_str = env_config.get("lib_ignore", "")
         lib_ignore_set: Optional[set[str]] = None
@@ -857,7 +849,6 @@ class OrchestratorESP32(IBuildOrchestrator):
             lib_compiler_flags,
             lib_include_paths,
             show_progress=True,
-            trampoline_cache=trampoline_cache,
             lib_ignore=lib_ignore_set,
         )
         logger.debug(f"[ORCHESTRATOR] ensure_libraries returned {len(libraries)} libraries")
@@ -949,11 +940,6 @@ class OrchestratorESP32(IBuildOrchestrator):
             if fw_src.is_dir():
                 lib_include_paths.append(fw_src)
 
-        # Extract trampoline cache
-        trampoline_cache = None
-        if hasattr(compiler, "compilation_executor") and compiler.compilation_executor:
-            trampoline_cache = getattr(compiler.compilation_executor, "trampoline_cache", None)
-
         additional_archives: List[Path] = []
         additional_includes: List[Path] = []
 
@@ -986,7 +972,6 @@ class OrchestratorESP32(IBuildOrchestrator):
                         lib_compiler_flags,
                         lib_include_paths,
                         show_progress=True,
-                        trampoline_cache=trampoline_cache,
                     )
 
                 if library.is_compiled:

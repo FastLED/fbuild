@@ -21,15 +21,9 @@ Cache Structure:
     │   │           ├── variants/
     │   │           ├── boards.txt
     │   │           └── platform.txt
-    │   ├── libraries/
-    │   │   └── {url_hash}/         # SHA256 hash of base URL
-    │   │       └── {version}/      # Version string
-    │   └── trampolines/
-    │       └── {mcu}/              # MCU variant (esp32c6, esp32c3, etc.)
-    │           └── {hash}/         # SHA256 hash of paths+version+mcu
-    │               ├── 000/
-    │               ├── 001/
-    │               └── .metadata.json
+    │   └── libraries/
+    │       └── {url_hash}/         # SHA256 hash of base URL
+    │           └── {version}/      # Version string
     └── build/
         └── {env_name}/             # Build output per environment
             └── {profile}/          # Build profile (release or quick)
@@ -72,27 +66,19 @@ class Cache:
 
         self.project_dir = Path(project_dir).resolve()
 
-        # Check for environment variable override
-        cache_env = os.environ.get("FBUILD_CACHE_DIR")
-        build_env = os.environ.get("FBUILD_BUILD_DIR")
-        dev_mode = os.environ.get("FBUILD_DEV_MODE") == "1"
+        from fbuild.paths import get_cache_root, get_project_build_root
 
-        if cache_env:
-            # Explicit cache directory override
-            self.cache_root = Path(cache_env).resolve()
-        elif dev_mode:
-            # Development mode: use global ~/.fbuild/dev/cache/ (isolated from prod cache)
-            self.cache_root = Path.home() / ".fbuild" / "dev" / "cache"
-        else:
-            # Production: use global ~/.fbuild/cache/
-            self.cache_root = Path.home() / ".fbuild" / "cache"
+        # Check for environment variable override
+        build_env = os.environ.get("FBUILD_BUILD_DIR")
+
+        self.cache_root = get_cache_root()
 
         if build_env:
             # Explicit build directory override (useful for Windows path length limits)
             self.build_root = Path(build_env).resolve()
         else:
             # Default: project-local build directory
-            self.build_root = self.project_dir / ".fbuild" / "build"
+            self.build_root = get_project_build_root(self.project_dir)
 
     @staticmethod
     def hash_url(url: str) -> str:
@@ -125,11 +111,6 @@ class Cache:
     def libraries_dir(self) -> Path:
         """Directory for downloaded libraries."""
         return self.cache_root / "libraries"
-
-    @property
-    def trampolines_dir(self) -> Path:
-        """Directory for header trampoline caches."""
-        return self.cache_root / "trampolines"
 
     def get_build_dir(self, env_name: str, profile: str = "release") -> Path:
         """Get build directory for a specific environment and profile.
@@ -174,7 +155,6 @@ class Cache:
             self.toolchains_dir,
             self.platforms_dir,
             self.libraries_dir,
-            self.trampolines_dir,
         ]:
             directory.mkdir(parents=True, exist_ok=True)
 

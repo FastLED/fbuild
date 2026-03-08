@@ -34,11 +34,11 @@ def test_get_pio_env_respects_dev_mode(mock_requirements, mock_args, mock_iso_en
     """_get_pio_env uses cache_dev when FBUILD_DEV_MODE=1."""
     mock_iso_env.return_value = MagicMock()
     _get_pio_env()
-    # Verify the venv_path ends with cache_dev/pio_iso_env
     call_kwargs = mock_args.call_args[1]
     venv_path = call_kwargs["venv_path"]
-    assert "cache_dev" in str(venv_path)
-    assert str(venv_path).endswith("platform")
+    from fbuild.paths import get_cache_root
+
+    assert venv_path == get_cache_root() / "platform"
 
 
 @patch("fbuild.pio_runner.IsoEnv")

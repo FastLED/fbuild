@@ -28,8 +28,8 @@ When `FBUILD_DEV_MODE=1` is set:
 
 | Component | Production Location | Development Location |
 |-----------|-------------------|---------------------|
-| Daemon files | `~/.fbuild/daemon/` | `~/.fbuild/dev/daemon/` |
-| Cache files | `~/.fbuild/cache/` | `~/.fbuild/dev/cache/` |
+| Daemon files | `~/.fbuild/prod/daemon/` | `~/.fbuild/dev/daemon/` |
+| Cache files | `~/.fbuild/prod/cache/` | `~/.fbuild/dev/cache/` |
 | Build artifacts | `<project>/.fbuild/build/` | `<project>/.fbuild/build/` (unchanged) |
 
 ### Development Workflow
@@ -61,7 +61,7 @@ When `FBUILD_DEV_MODE=1` is set:
 
 Without development mode, running fbuild from the repository would:
 
-- Interfere with the production daemon in `~/.fbuild/daemon/`
+- Interfere with the production daemon in `~/.fbuild/prod/daemon/`
 - Potentially corrupt production cache in user projects
 - Make it difficult to test daemon changes without affecting production
 

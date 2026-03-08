@@ -42,7 +42,9 @@ class ESP8266Deployer(IDeployer):
             DeploymentResult with success status and message
         """
         # Find firmware binary in build directory
-        build_dir = project_dir / ".fbuild" / env_name
+        from fbuild.paths import get_project_fbuild_dir
+
+        build_dir = get_project_fbuild_dir(project_dir) / env_name
         firmware_bin = build_dir / "firmware.bin"
 
         if not firmware_bin.exists():

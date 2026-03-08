@@ -145,3 +145,4 @@ activate
 uv.lock
 .loop
 **/.pio
+compile_commands.json

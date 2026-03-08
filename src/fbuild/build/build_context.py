@@ -104,7 +104,7 @@ class BuildContext:
         toolchain: Toolchain instance for compiler/linker paths
         mcu: MCU type string (e.g., "esp32c6", "atmega328p")
         framework_version: Framework version string (e.g., "3.0.7")
-        cache: Optional cache for trampoline support on Windows
+        cache: Optional cache for package management
         compilation_executor: Executor for running compilation jobs
 
         # New fields for consolidated build configuration (Phase 1 of BuildContext consolidation)
@@ -180,7 +180,7 @@ class BuildContext:
             mcu: MCU type string
             framework_version: Framework version string
             compilation_executor: Executor for running compilation jobs
-            cache: Cache for trampoline support
+            cache: Cache for package management
             framework: Framework instance (for core sources, includes, etc.)
             board_id: Board identifier (e.g., "esp32-c6-devkitm-1")
             board_config: Board configuration dictionary (loaded once)

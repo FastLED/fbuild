@@ -387,11 +387,13 @@ class DeployRequestProcessor(RequestProcessor):
             Path to firmware file, or None if not found
         """
         # Check common firmware locations (ordered by preference)
+        from fbuild.paths import get_project_build_root
+
         candidate_dirs = [
             project_path / ".pio" / "build" / environment,
-            project_path / ".fbuild" / "build" / environment / "release",
-            project_path / ".fbuild" / "build" / environment / "quick",
-            project_path / ".fbuild" / "build" / environment,
+            get_project_build_root(project_path) / environment / "release",
+            get_project_build_root(project_path) / environment / "quick",
+            get_project_build_root(project_path) / environment,
         ]
 
         for build_dir in candidate_dirs:

@@ -174,8 +174,9 @@ class BuildRequestProcessor(RequestProcessor):
         # Set up output file for streaming to client
         # Now safe to do after reload because context survives reload
         from fbuild.output import reset_timer, set_output_broadcast, set_output_file
+        from fbuild.paths import get_project_fbuild_dir
 
-        output_file_path = Path(request.project_dir) / ".fbuild" / "build_output.txt"
+        output_file_path = get_project_fbuild_dir(Path(request.project_dir)) / "build_output.txt"
         output_file_path.parent.mkdir(parents=True, exist_ok=True)
 
         # Clear output file at start to prevent stale output from previous builds
@@ -342,7 +343,6 @@ class BuildRequestProcessor(RequestProcessor):
         """
         modules_to_reload = [
             # Core utilities and packages (reload first - no dependencies)
-            "fbuild.packages.header_trampoline_cache",  # CRITICAL: Must reload trampoline cache
             "fbuild.packages.cache",
             "fbuild.packages.downloader",
             "fbuild.packages.archive_utils",

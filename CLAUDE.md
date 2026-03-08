@@ -94,7 +94,7 @@ The daemon is shared across projects and killing it blindly will interrupt build
 
 3. **Signal file (fallback):**
    ```bash
-   touch ~/.fbuild/daemon/shutdown.signal
+   touch ~/.fbuild/prod/daemon/shutdown.signal
    ```
 
 **NEVER run** `pkill python`, `taskkill /IM python.exe /F`, or any command that kills all Python processes.
@@ -125,9 +125,11 @@ See `docs/claude/coding-conventions.md` for full rationale and examples.
 ### Development Mode
 
 Always set `FBUILD_DEV_MODE=1` when developing. This isolates:
-- Daemon files → `~/.fbuild/dev/daemon/` (instead of `~/.fbuild/daemon/`)
-- Cache files → `~/.fbuild/dev/cache/` (isolated from `~/.fbuild/cache/`)
+- Daemon files → `~/.fbuild/dev/daemon/` (instead of `~/.fbuild/prod/daemon/`)
+- Cache files → `~/.fbuild/dev/cache/` (isolated from `~/.fbuild/prod/cache/`)
 - Port → 8865 (instead of 8765)
+
+All `.fbuild` paths are resolved through `src/fbuild/paths.py` — the single source of truth.
 
 ### Platform Requirements
 

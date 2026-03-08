@@ -76,8 +76,10 @@ class TestPortDiscovery:
         port_file = tmp_path / "daemon.port"
         port_file.write_text("invalid")
 
+        # Preserve home directory vars so Path("~").expanduser() works
+        home_vars = {k: v for k, v in os.environ.items() if k in ("HOME", "USERPROFILE", "HOMEDRIVE", "HOMEPATH")}
         with patch("fbuild.daemon.client.http_utils.PORT_FILE", port_file):
-            with patch.dict(os.environ, {}, clear=True):
+            with patch.dict(os.environ, home_vars, clear=True):
                 port = get_daemon_port()
                 # Should fall back to default
                 assert port in [DEFAULT_PORT, DEFAULT_DEV_PORT]
@@ -87,8 +89,10 @@ class TestPortDiscovery:
         # Create a non-existent port file to ensure we test fallback to dev mode default
         port_file = tmp_path / "daemon.port"
 
+        # Preserve home directory vars so Path("~").expanduser() works
+        home_vars = {k: v for k, v in os.environ.items() if k in ("HOME", "USERPROFILE", "HOMEDRIVE", "HOMEPATH")}
         with patch("fbuild.daemon.client.http_utils.PORT_FILE", port_file):
-            with patch.dict(os.environ, {"FBUILD_DEV_MODE": "1"}, clear=True):
+            with patch.dict(os.environ, {**home_vars, "FBUILD_DEV_MODE": "1"}, clear=True):
                 port = get_daemon_port()
                 assert port == DEFAULT_DEV_PORT
 
@@ -139,8 +143,10 @@ class TestURLGeneration:
         # Create a non-existent port file to ensure we test fallback to dev mode default
         port_file = tmp_path / "daemon.port"
 
+        # Preserve home directory vars so Path("~").expanduser() works
+        home_vars = {k: v for k, v in os.environ.items() if k in ("HOME", "USERPROFILE", "HOMEDRIVE", "HOMEPATH")}
         with patch("fbuild.daemon.client.http_utils.PORT_FILE", port_file):
-            with patch.dict(os.environ, {"FBUILD_DEV_MODE": "1"}, clear=True):
+            with patch.dict(os.environ, {**home_vars, "FBUILD_DEV_MODE": "1"}, clear=True):
                 url = get_daemon_base_url()
                 assert url == f"http://127.0.0.1:{DEFAULT_DEV_PORT}"
 

@@ -12,7 +12,6 @@ Environment is sanitized via pio_env.get_pio_safe_env() on Windows/MSYS.
 
 from __future__ import annotations
 
-import os
 import subprocess
 import sys
 import threading
@@ -31,13 +30,9 @@ def _get_cache_root() -> Path:
 
     Priority: FBUILD_CACHE_DIR > FBUILD_DEV_MODE > default.
     """
-    cache_env = os.environ.get("FBUILD_CACHE_DIR")
-    if cache_env:
-        return Path(cache_env).resolve()
-    dev_mode = os.environ.get("FBUILD_DEV_MODE")
-    if dev_mode:
-        return Path.home() / ".fbuild" / "dev" / "cache"
-    return Path.home() / ".fbuild" / "cache"
+    from fbuild.paths import get_cache_root
+
+    return get_cache_root()
 
 
 def _get_pio_env() -> IsoEnv:

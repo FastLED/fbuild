@@ -300,7 +300,9 @@ def deploy_command(args: DeployArgs) -> None:
             machine = map_board_to_machine(board_id)
 
             # Find firmware
-            build_dir = args.project_dir / ".fbuild" / "build" / env_name
+            from fbuild.paths import get_project_build_root
+
+            build_dir = get_project_build_root(args.project_dir) / env_name
             firmware_bin = build_dir / "firmware.bin"
 
             if not firmware_bin.exists():

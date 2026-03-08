@@ -262,9 +262,6 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             compilation_executor = CompilationExecutor(
                 build_dir=build_dir,
                 show_progress=verbose_mode,
-                cache=self.cache,
-                mcu=board_config.mcu,
-                framework_version=arduino_core.AVR_VERSION,
                 compile_database=request.compile_database,
                 execute_compilations=not request.generate_compiledb,
             )

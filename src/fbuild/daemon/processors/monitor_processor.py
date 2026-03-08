@@ -197,7 +197,9 @@ class MonitorRequestProcessor(RequestProcessor):
             return False
 
         # Create output file path for streaming
-        output_file = Path(request.project_dir) / ".fbuild" / "monitor_output.txt"
+        from fbuild.paths import get_project_fbuild_dir
+
+        output_file = get_project_fbuild_dir(Path(request.project_dir)) / "monitor_output.txt"
         output_file.parent.mkdir(parents=True, exist_ok=True)
         output_file.write_text("", encoding="utf-8")
 
@@ -258,13 +260,16 @@ class MonitorRequestProcessor(RequestProcessor):
             True if monitoring completed successfully
         """
         # Create output file path for streaming
-        output_file = Path(request.project_dir) / ".fbuild" / "monitor_output.txt"
+        from fbuild.paths import get_project_fbuild_dir
+
+        fbuild_dir = get_project_fbuild_dir(Path(request.project_dir))
+        output_file = fbuild_dir / "monitor_output.txt"
         output_file.parent.mkdir(parents=True, exist_ok=True)
         # Clear/truncate output file before starting
         output_file.write_text("", encoding="utf-8")
 
         # Create summary file path
-        summary_file = Path(request.project_dir) / ".fbuild" / "monitor_summary.json"
+        summary_file = fbuild_dir / "monitor_summary.json"
         # Clear old summary file
         if summary_file.exists():
             summary_file.unlink()

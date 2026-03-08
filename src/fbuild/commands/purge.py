@@ -21,15 +21,9 @@ def get_cache_root() -> Path:
     Returns:
         Path to cache root directory
     """
-    cache_env = os.environ.get("FBUILD_CACHE_DIR")
-    dev_mode = os.environ.get("FBUILD_DEV_MODE") == "1"
+    from fbuild.paths import get_cache_root as _get_cache_root
 
-    if cache_env:
-        return Path(cache_env).resolve()
-    elif dev_mode:
-        return Path.home() / ".fbuild" / "dev" / "cache"
-    else:
-        return Path.home() / ".fbuild" / "cache"
+    return _get_cache_root()
 
 
 @dataclass

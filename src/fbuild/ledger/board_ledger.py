@@ -154,10 +154,9 @@ class BoardLedger:
                         (or dev/daemon/ in dev mode)
         """
         if ledger_path is None:
-            if os.environ.get("FBUILD_DEV_MODE") == "1":
-                self._ledger_path = Path.home() / ".fbuild" / "dev" / "daemon" / "board_ledger.json"
-            else:
-                self._ledger_path = Path.home() / ".fbuild" / "daemon" / "board_ledger.json"
+            from fbuild.paths import get_daemon_dir
+
+            self._ledger_path = get_daemon_dir() / "board_ledger.json"
         else:
             self._ledger_path = ledger_path
 

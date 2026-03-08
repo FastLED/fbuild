@@ -49,10 +49,9 @@ def _get_daemon_dir(dev_mode: bool) -> Path:
     Returns:
         Path to daemon directory.
     """
-    if dev_mode:
-        return Path.home() / ".fbuild" / "dev" / "daemon"
-    else:
-        return Path.home() / ".fbuild" / "daemon"
+    from fbuild.paths import get_daemon_dir
+
+    return get_daemon_dir()
 
 
 class DaemonConnection:

@@ -19,6 +19,7 @@ from typing import TYPE_CHECKING, Any, Dict, List, Optional
 from fbuild.build.binary_generator import BinaryGenerator
 from fbuild.build.compiler import ILinker, LinkerError
 from fbuild.build.psram_utils import get_psram_mode
+from fbuild.build.response_file import write_response_file
 from fbuild.output import format_size, log_detail
 from fbuild.subprocess_utils import safe_run
 
@@ -363,6 +364,12 @@ class ConfigurableLinker(ILinker):
         # Add output using relative path (it's in build_dir)
         cmd.extend(["-o", _path_to_string(output_elf, relative_to=self.build_dir)])
 
+        # Write linker flags (everything after the linker executable) to a response file
+        # to avoid Windows 32K command-line limit on complex projects
+        rsp_dir = self.build_dir / "rsp"
+        rsp_arg = write_response_file(rsp_dir, cmd[1:], "linker")
+        cmd_with_rsp = [cmd[0], rsp_arg]
+
         # Execute linker
         if self.show_progress:
             log_detail("Linking firmware.elf...")
@@ -375,7 +382,7 @@ class ConfigurableLinker(ILinker):
             obj_size = sum(o.stat().st_size for o in object_files if o.exists())
             log_detail(f"Inputs: core ({format_size(core_size)}) + {len(library_archives)} libs ({format_size(lib_size)}) + {len(object_files)} objects ({format_size(obj_size)})")
             # Log the actual linker command for debugging
-            log_detail(f"Linker command: {cmd[0]} ... ({len(cmd)} args total)")
+            log_detail(f"Linker command: {cmd[0]} @linker.rsp ({len(cmd)} args total)")
             # Debug: show object file paths and conversion to relative
             if object_files:
                 log_detail("Object file paths (first 3, converted to relative):")
@@ -411,7 +418,7 @@ class ConfigurableLinker(ILinker):
                             log_detail(f"Working directory: {self.build_dir}")
 
                     result = safe_run(
-                        cmd,
+                        cmd_with_rsp,
                         capture_output=True,
                         text=True,
                         timeout=120,
@@ -428,9 +435,11 @@ class ConfigurableLinker(ILinker):
 
                 if result.returncode != 0:
                     # Check if error is due to file truncation/locking (Windows-specific)
-                    # Windows file locking manifests as: "file truncated", "error reading", "No such file", or "no more archived files"
+                    # Windows file locking manifests as: "file truncated", "error reading", or "no more archived files"
+                    # Note: "no such file" is NOT included — it's usually a permanent path error,
+                    # not transient locking. Including it masks real errors (e.g., missing linker scripts).
                     stderr_lower = result.stderr.lower()
-                    is_file_locking_error = "file truncated" in stderr_lower or "error reading" in stderr_lower or "no such file" in stderr_lower or "no more archived files" in stderr_lower
+                    is_file_locking_error = "file truncated" in stderr_lower or "error reading" in stderr_lower or "no more archived files" in stderr_lower
                     if is_windows and is_file_locking_error:
                         if attempt < max_retries - 1:
                             if self.show_progress:

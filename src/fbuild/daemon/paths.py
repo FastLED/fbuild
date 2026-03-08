@@ -1,40 +1,20 @@
 """
 Daemon paths configuration.
 
-Centralized path definitions for daemon files. Supports development mode
-to isolate daemon instances.
+Delegates to fbuild.paths for base directory resolution, then derives
+daemon-specific file paths (PID, lock, status, request/response files).
 
-Modes:
-- Production (default): ~/.fbuild/daemon/
-- Development (FBUILD_DEV_MODE=1): ~/.fbuild/dev/daemon/ (isolated from prod)
-
-IMPORTANT: All path constants (DAEMON_DIR, PID_FILE, etc.) are evaluated lazily
+All path constants (DAEMON_DIR, PID_FILE, etc.) are evaluated lazily
 via __getattr__. This is necessary because cli.py sets FBUILD_DEV_MODE=1 AFTER
-fbuild/__init__.py triggers the import of this module. Module-level constants
-would capture the wrong mode.
+fbuild/__init__.py triggers the import of this module.
 """
 
-import os
 from pathlib import Path
+
+from fbuild.paths import get_daemon_dir
 
 # Daemon configuration
 DAEMON_NAME = "fbuild_daemon"  # Exported for backward compatibility
-
-
-def is_dev_mode() -> bool:
-    """Check if development mode is enabled."""
-    return os.environ.get("FBUILD_DEV_MODE") == "1"
-
-
-def get_daemon_dir() -> Path:
-    """Get the daemon directory, respecting current FBUILD_DEV_MODE.
-
-    This is evaluated on every call (not cached) because FBUILD_DEV_MODE
-    may be set after this module is first imported.
-    """
-    if is_dev_mode():
-        return Path.home() / ".fbuild" / "dev" / "daemon"
-    return Path.home() / ".fbuild" / "daemon"
 
 
 # Map of lazy attribute names to how they derive from DAEMON_DIR
@@ -72,7 +52,7 @@ _DERIVED_PATHS = {
 def __getattr__(name: str) -> Path:
     """Lazy evaluation of path constants.
 
-    Every access re-evaluates is_dev_mode() so that FBUILD_DEV_MODE changes
+    Every access re-evaluates get_daemon_dir() so that FBUILD_DEV_MODE changes
     (e.g. set by cli.py after initial import) are always respected.
     """
     if name == "DAEMON_DIR":

@@ -229,7 +229,9 @@ def create_operations_router(get_daemon_context_func: Any) -> APIRouter:
         # Get output file path
         from pathlib import Path
 
-        output_file = str(Path(request.project_dir) / ".fbuild" / "build_output.txt")
+        from fbuild.paths import get_project_fbuild_dir
+
+        output_file = str(get_project_fbuild_dir(Path(request.project_dir)) / "build_output.txt")
 
         return OperationResponse(
             success=success,

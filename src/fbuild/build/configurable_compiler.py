@@ -16,8 +16,8 @@ from typing import TYPE_CHECKING, Any, Dict, List, Optional
 from fbuild.build.archive_creator import ArchiveCreator
 from fbuild.build.compiler import CompilerError, ICompiler
 from fbuild.build.flag_builder import FlagBuilder
+from fbuild.build.response_file import write_response_file
 from fbuild.output import ProgressCallback, log_detail
-from fbuild.packages.trampoline_excludes import get_exclude_patterns
 
 logger = logging.getLogger(__name__)
 
@@ -274,45 +274,22 @@ class ConfigurableCompiler(ICompiler):
         # Get include paths
         includes = self.get_include_paths()
 
-        # Parallel mode: submit to queue and return immediately
-        import _thread
-        import logging
-        import platform
-
-        # Apply header trampoline cache on Windows when enabled (same as compilation_executor.py:149-169)
-        # This resolves Windows CreateProcess 32K limit issues
-        effective_includes = includes
-        logging.warning(
-            f"[TRAMPOLINE_DEBUG] compilation_executor={self.compilation_executor}, trampoline_cache={self.compilation_executor.trampoline_cache}, is_windows={platform.system() == 'Windows'}"
-        )
-        if self.compilation_executor.trampoline_cache is not None and platform.system() == "Windows":
-            logging.warning("[TRAMPOLINE_DEBUG] ENTERING trampoline generation block")
-            try:
-                logging.warning(f"[TRAMPOLINE_DEBUG] Calling generate_trampolines with {len(includes)} includes")
-                effective_includes = self.compilation_executor.trampoline_cache.generate_trampolines(includes, exclude_patterns=get_exclude_patterns())
-                logging.warning(f"[TRAMPOLINE_DEBUG] After generate_trampolines, got {len(effective_includes)} effective includes")
-            except KeyboardInterrupt:
-                _thread.interrupt_main()
-                raise
-            except Exception as e:
-                if self.show_progress:
-                    print(f"[trampolines] Warning: Failed to generate trampolines, using original paths: {e}")
-                effective_includes = includes
-
         # Convert include paths to flags
-        include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in effective_includes]
-        logging.warning(f"[TRAMPOLINE_DEBUG] First include flag: {include_flags[0] if include_flags else 'EMPTY'}")
-        # Calculate total command line length
-        cmd_preview = " ".join(include_flags)
-        logging.warning(f"[TRAMPOLINE_DEBUG] Command line length: {len(cmd_preview)} chars")
-        # Build command that would be executed
-        cmd = self.compilation_executor._build_compile_command(compiler_path, source_path, output_path, compile_flags, include_flags)
+        include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in includes]
 
-        # Record entry in compile database (strip sccache wrapper)
+        # Write include flags to a response file to avoid Windows 32K command-line limit
+        rsp_dir = self.build_dir / "rsp"
+        rsp_arg = write_response_file(rsp_dir, include_flags, source_path.stem)
+
+        # Build command with response file instead of inline includes
+        cmd = self.compilation_executor._build_compile_command(compiler_path, source_path, output_path, compile_flags, [rsp_arg])
+
+        # Record entry in compile database with expanded flags (not @file)
         if self.compilation_executor.compile_database is not None:
             from fbuild.build.compile_database import CompileDatabase
 
-            db_args = CompileDatabase.strip_sccache(cmd)
+            db_cmd = self.compilation_executor._build_compile_command(compiler_path, source_path, output_path, compile_flags, include_flags)
+            db_args = CompileDatabase.strip_sccache(db_cmd)
             self.compilation_executor.compile_database.add_entry(
                 directory=str(self.context.project_dir),
                 file=str(source_path),
@@ -417,8 +394,8 @@ class ConfigurableCompiler(ICompiler):
         # Exclude sources that are incompatible with the target MCU.
         # esp32-hal-bt.c requires Classic Bluetooth headers that only exist for
         # the original ESP32. On ESP32-C3/C6/S3/etc. the SDK header esp_bt.h
-        # uses relative includes that break under the trampoline include system,
-        # and the file is functionally guarded with #if CONFIG_IDF_TARGET_ESP32.
+        # uses relative includes, and the file is functionally guarded with
+        # #if CONFIG_IDF_TARGET_ESP32.
         if self.mcu != "esp32":
             core_sources = [s for s in core_sources if s.name != "esp32-hal-bt.c"]
 

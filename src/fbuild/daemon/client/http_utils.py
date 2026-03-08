@@ -106,19 +106,16 @@ def get_daemon_port() -> int:
 
     # Priority 3: Cross-mode fallback — check the OTHER mode's port file
     # This handles dev daemon running but client not in dev mode (or vice versa)
-    home = Path.home()
-    is_dev = os.getenv("FBUILD_DEV_MODE") == "1"
-    if is_dev:
-        other_port_file = home / ".fbuild" / "daemon" / "daemon.port"
-    else:
-        other_port_file = home / ".fbuild" / "dev" / "daemon" / "daemon.port"
+    from fbuild.paths import get_other_fbuild_root, is_dev_mode
+
+    other_port_file = get_other_fbuild_root() / "daemon" / "daemon.port"
     other_port = _read_port_from_file(other_port_file)
     if other_port is not None:
         logger.info(f"Found daemon port {other_port} via cross-mode fallback ({other_port_file})")
         return other_port
 
     # Priority 4: Fall back to default based on mode
-    if is_dev:
+    if is_dev_mode():
         return DEFAULT_DEV_PORT
     return DEFAULT_PORT
 

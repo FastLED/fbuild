@@ -19,5 +19,7 @@ echo Running orchestrator signature checks
 uv run python scripts/check_orchestrator_signatures.py
 echo Running message serialization checks
 uv run python scripts/check_message_serialization.py
+echo Running .fbuild path checks
+uv run python scripts/check_fbuild_paths.py
 echo Linting complete!
 exit 0

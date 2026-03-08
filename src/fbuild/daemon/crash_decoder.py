@@ -102,7 +102,9 @@ def _load_build_info(project_dir: Path, env_name: str) -> tuple[Optional[Path], 
     """
     # Build info may be directly under env_name or under a build profile subdir
     # (e.g., .fbuild/build/{env}/release/build_info.json)
-    env_build_dir = project_dir / ".fbuild" / "build" / env_name
+    from fbuild.paths import get_project_build_root
+
+    env_build_dir = get_project_build_root(project_dir) / env_name
     build_info_path = env_build_dir / "build_info.json"
     if not build_info_path.exists():
         # Search under build profile subdirectories (release, quick, etc.)
@@ -127,7 +129,9 @@ def _load_build_info(project_dir: Path, env_name: str) -> tuple[Optional[Path], 
         candidate = Path(firmware["elf_path"])
         if not candidate.is_absolute():
             # Try relative to .fbuild/ first, then project root
-            fbuild_relative = project_dir / ".fbuild" / candidate
+            from fbuild.paths import get_project_fbuild_dir
+
+            fbuild_relative = get_project_fbuild_dir(project_dir) / candidate
             if fbuild_relative.exists():
                 candidate = fbuild_relative
             else:

@@ -30,7 +30,6 @@ Example:
 
 import hashlib
 import json
-import os
 import threading
 import time
 from dataclasses import dataclass
@@ -47,12 +46,9 @@ def _get_ledger_path() -> Path:
     Returns:
         Path to firmware_ledger.json, respecting FBUILD_DEV_MODE
     """
-    if os.environ.get("FBUILD_DEV_MODE") == "1":
-        # Use global ~/.fbuild/dev/daemon/ for development
-        return Path.home() / ".fbuild" / "dev" / "daemon" / "firmware_ledger.json"
-    else:
-        # Use global ~/.fbuild/daemon/ for production
-        return Path.home() / ".fbuild" / "daemon" / "firmware_ledger.json"
+    from fbuild.paths import get_daemon_dir
+
+    return get_daemon_dir() / "firmware_ledger.json"
 
 
 class FirmwareLedgerError(Exception):

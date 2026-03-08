@@ -5,6 +5,7 @@ import tempfile
 from pathlib import Path
 
 from fbuild.packages.cache import Cache
+from fbuild.paths import get_cache_root
 
 
 class TestCache:
@@ -14,9 +15,7 @@ class TestCache:
         """Test initialization with default directory."""
         cache = Cache()
         assert cache.project_dir == Path.cwd().resolve()
-        # Dev mode uses cache_dev, production uses cache (in home directory, not project)
-        expected_cache_name = "cache_dev" if os.environ.get("FBUILD_DEV_MODE") == "1" else "cache"
-        assert cache.cache_root == Path.home() / ".fbuild" / expected_cache_name
+        assert cache.cache_root == get_cache_root()
         assert cache.build_root == cache.project_dir / ".fbuild" / "build"
 
     def test_init_custom_directory(self):
@@ -25,9 +24,7 @@ class TestCache:
             project_dir = Path(temp_dir)
             cache = Cache(project_dir)
             assert cache.project_dir == project_dir.resolve()
-            # Dev mode uses cache_dev, production uses cache (in home directory, not project)
-            expected_cache_name = "cache_dev" if os.environ.get("FBUILD_DEV_MODE") == "1" else "cache"
-            assert cache.cache_root == Path.home() / ".fbuild" / expected_cache_name
+            assert cache.cache_root == get_cache_root()
 
     def test_init_with_env_override(self):
         """Test cache directory override via environment variable."""

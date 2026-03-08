@@ -215,9 +215,6 @@ class OrchestratorSTM32(IBuildOrchestrator):
             compilation_executor = CompilationExecutor(
                 build_dir=build_dir,
                 show_progress=verbose,
-                cache=self.cache,
-                mcu=board_config.mcu,
-                framework_version=platform.framework.version,
                 compile_database=request.compile_database,
                 execute_compilations=not request.generate_compiledb,
             )

@@ -4,13 +4,12 @@ This module handles executing compilation commands via subprocess with proper er
 
 Design:
     - Wraps subprocess.run for compilation commands
-    - Uses header trampoline cache to avoid Windows command-line length limits
+    - Uses GCC response files (@file) to avoid Windows command-line length limits
     - Provides clear error messages for compilation failures
     - Supports both C and C++ compilation
     - Integrates sccache for compilation caching
 """
 
-import _thread
 import platform
 import shutil
 import subprocess
@@ -18,15 +17,13 @@ import time
 from pathlib import Path
 from typing import TYPE_CHECKING, List, Optional
 
+from fbuild.build.response_file import write_response_file
 from fbuild.output import log_detail
-from fbuild.packages.header_trampoline_cache import HeaderTrampolineCache
-from fbuild.packages.trampoline_excludes import get_exclude_patterns
 from fbuild.subprocess_utils import safe_run
 
 if TYPE_CHECKING:
     from fbuild.build.compile_database import CompileDatabase
     from fbuild.daemon.compilation_queue import CompilationJobQueue
-    from fbuild.packages.cache import Cache
 
 
 class CompilationError(Exception):
@@ -50,10 +47,6 @@ class CompilationExecutor:
         build_dir: Path,
         show_progress: bool = True,
         use_sccache: bool = True,
-        use_trampolines: bool = True,
-        cache: Optional["Cache"] = None,
-        mcu: Optional[str] = None,
-        framework_version: Optional[str] = None,
         compile_database: Optional["CompileDatabase"] = None,
         execute_compilations: bool = True,
     ):
@@ -63,23 +56,15 @@ class CompilationExecutor:
             build_dir: Build directory for response files
             show_progress: Whether to show compilation progress
             use_sccache: Whether to use sccache for caching (default: True)
-            use_trampolines: Whether to use header trampolines on Windows (default: True)
-            cache: Cache object for accessing trampoline directory (optional)
-            mcu: MCU variant identifier (e.g., 'esp32c6', 'esp32c3') for MCU-specific caching
-            framework_version: Framework version string for cache invalidation
             compile_database: Optional CompileDatabase to capture compilation entries
             execute_compilations: Whether to actually run compilations (False for compiledb-only mode)
         """
         self.build_dir = build_dir
         self.show_progress = show_progress
-        self.mcu = mcu
-        self.framework_version = framework_version
         self.use_sccache = use_sccache
-        self.use_trampolines = use_trampolines
         self.compile_database = compile_database
         self.execute_compilations = execute_compilations
         self.sccache_path: Optional[Path] = None
-        self.trampoline_cache: Optional[HeaderTrampolineCache] = None
 
         # Check if sccache is available
         if self.use_sccache:
@@ -103,22 +88,6 @@ class CompilationExecutor:
                 else:
                     # Always warn if sccache not found
                     print("[sccache] Warning: not found in PATH, proceeding without cache")
-
-        # Initialize trampoline cache if enabled and on Windows
-        if self.use_trampolines and platform.system() == "Windows":
-            if cache is not None:
-                # Pass cache_root (trampolines_dir), respects dev mode
-                cache.ensure_directories()
-                self.trampoline_cache = HeaderTrampolineCache(
-                    cache_root=cache.trampolines_dir,
-                    show_progress=show_progress,
-                    mcu_variant=mcu,
-                    framework_version=framework_version,
-                    platform_name="esp32",
-                )
-            else:
-                # Legacy fallback
-                self.trampoline_cache = HeaderTrampolineCache(show_progress=show_progress)
 
     def compile_source(self, compiler_path: Path, source_path: Path, output_path: Path, compile_flags: List[str], include_paths: List[Path]) -> Path:
         """Compile a single source file.
@@ -145,34 +114,23 @@ class CompilationExecutor:
         # Ensure output directory exists
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
-        # Apply header trampoline cache on Windows when enabled
-        # This resolves Windows CreateProcess 32K limit issues with sccache
-        effective_include_paths = include_paths
-        if self.trampoline_cache is not None and platform.system() == "Windows":
-            # Use trampolines to shorten include paths
-            # Exclude ESP-IDF headers that use #include_next (breaks trampolines)
-            try:
-                effective_include_paths = self.trampoline_cache.generate_trampolines(include_paths, exclude_patterns=get_exclude_patterns())
-            except KeyboardInterrupt:
-                _thread.interrupt_main()
-                raise
-            except Exception as e:
-                if self.show_progress:
-                    print(f"[trampolines] Warning: Failed to generate trampolines, using original paths: {e}")
-                effective_include_paths = include_paths
+        # Convert include paths to flags
+        include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in include_paths]
 
-        # Convert include paths to flags - ensure no quotes for sccache compatibility
-        # GCC response files with quotes cause sccache to treat @file literally
-        include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in effective_include_paths]
+        # Write include flags to a response file to avoid Windows 32K command-line limit
+        rsp_dir = self.build_dir / "rsp"
+        rsp_arg = write_response_file(rsp_dir, include_flags, source_path.stem)
 
-        # Build compiler command
-        cmd = self._build_compile_command(compiler_path, source_path, output_path, compile_flags, include_flags)
+        # Build compiler command with response file instead of inline includes
+        cmd = self._build_compile_command(compiler_path, source_path, output_path, compile_flags, [rsp_arg])
 
-        # Record entry in compile database (strip sccache wrapper)
+        # Record entry in compile database with expanded flags (not @file)
         if self.compile_database is not None:
             from fbuild.build.compile_database import CompileDatabase
 
-            db_args = CompileDatabase.strip_sccache(cmd)
+            # For compile_commands.json, expand the response file to actual flags
+            db_cmd = self._build_compile_command(compiler_path, source_path, output_path, compile_flags, include_flags)
+            db_args = CompileDatabase.strip_sccache(db_cmd)
             self.compile_database.add_entry(
                 directory=str(self.build_dir),
                 file=str(source_path),
@@ -218,6 +176,11 @@ class CompilationExecutor:
     def _build_compile_command(self, compiler_path: Path, source_path: Path, output_path: Path, compile_flags: List[str], include_paths: List[str]) -> List[str]:
         """Build compilation command with optional sccache wrapper.
 
+        On Windows, sccache expands @file arguments before spawning the preprocessor,
+        which can re-create the 32K command-line limit problem. When include_paths
+        contains a response file (@path), sccache is skipped so the compiler reads
+        the @file directly without expansion.
+
         Args:
             compiler_path: Path to compiler executable
             source_path: Path to source file
@@ -231,8 +194,11 @@ class CompilationExecutor:
         # Include paths are already converted to flags (List[str])
         include_flags = include_paths
 
-        # Build compiler command with optional sccache wrapper
-        use_sccache = self.sccache_path is not None
+        # sccache expands @file before spawning the preprocessor, re-creating the
+        # 32K limit on Windows.  When we are using a response file, bypass sccache
+        # so the compiler reads the @file natively.
+        has_response_file = any(f.startswith("@") for f in include_flags)
+        use_sccache = self.sccache_path is not None and not has_response_file
 
         cmd = []
         if use_sccache:
@@ -248,7 +214,7 @@ class CompilationExecutor:
         else:
             cmd.append(str(compiler_path))
         cmd.extend(compile_flags)
-        cmd.extend(include_flags)  # Trampolines ensure command line stays under 32K limit
+        cmd.extend(include_flags)  # Response file (@file) keeps command line under 32K limit
         cmd.extend(["-c", str(source_path)])
         cmd.extend(["-o", str(output_path)])
 
@@ -339,45 +305,22 @@ class CompilationExecutor:
         # Ensure output directory exists
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
-        # Apply header trampoline cache on Windows when enabled
-        effective_include_paths = include_paths
-        if self.trampoline_cache is not None and platform.system() == "Windows":
-            try:
-                effective_include_paths = self.trampoline_cache.generate_trampolines(include_paths, exclude_patterns=get_exclude_patterns())
-            except KeyboardInterrupt:
-                _thread.interrupt_main()
-                raise
-            except Exception as e:
-                if self.show_progress:
-                    print(f"[trampolines] Warning: Failed to generate trampolines, using original paths: {e}")
-                effective_include_paths = include_paths
-
         # Convert include paths to flags
-        include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in effective_include_paths]
+        include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in include_paths]
 
-        # Build compiler command with optional sccache wrapper
-        use_sccache = self.sccache_path is not None
+        # Write include flags to a response file to avoid Windows 32K command-line limit
+        rsp_dir = self.build_dir / "rsp"
+        rsp_arg = write_response_file(rsp_dir, include_flags, f"{source_path.stem}_{int(time.time() * 1000000)}")
 
-        cmd = []
-        if use_sccache:
-            cmd.append(str(self.sccache_path))
-            resolved_compiler = compiler_path.resolve()
-            compiler_str = str(resolved_compiler)
-            if platform.system() == "Windows":
-                compiler_str = compiler_str.replace("/", "\\")
-            cmd.append(compiler_str)
-        else:
-            cmd.append(str(compiler_path))
-        cmd.extend(compile_flags)
-        cmd.extend(include_flags)  # Trampolines ensure command line stays under 32K limit
-        cmd.extend(["-c", str(source_path)])
-        cmd.extend(["-o", str(output_path)])
+        # Build compiler command with response file
+        cmd = self._build_compile_command(compiler_path, source_path, output_path, compile_flags, [rsp_arg])
 
-        # Record entry in compile database (strip sccache wrapper)
+        # Record entry in compile database with expanded flags
         if self.compile_database is not None:
             from fbuild.build.compile_database import CompileDatabase
 
-            db_args = CompileDatabase.strip_sccache(cmd)
+            db_cmd = self._build_compile_command(compiler_path, source_path, output_path, compile_flags, include_flags)
+            db_args = CompileDatabase.strip_sccache(db_cmd)
             self.compile_database.add_entry(
                 directory=str(self.build_dir),
                 file=str(source_path),
@@ -392,7 +335,8 @@ class CompilationExecutor:
         # Create and submit compilation job
         job_id = f"compile_{source_path.stem}_{int(time.time() * 1000000)}"
 
-        job = CompilationJob(job_id=job_id, source_path=source_path, output_path=output_path, compiler_cmd=cmd, response_file=None)
+        rsp_path = Path(rsp_arg[1:])  # Strip leading '@'
+        job = CompilationJob(job_id=job_id, source_path=source_path, output_path=output_path, compiler_cmd=cmd, response_file=rsp_path)
 
         # Submit to queue
         job_queue.submit_job(job)

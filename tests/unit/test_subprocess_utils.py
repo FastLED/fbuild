@@ -5,12 +5,15 @@ from unittest.mock import patch
 
 from fbuild.subprocess_utils import get_subprocess_creation_flags, safe_popen, safe_run
 
+# Expected Windows flags: no console window + low priority
+_EXPECTED_WIN_FLAGS = subprocess.CREATE_NO_WINDOW | subprocess.BELOW_NORMAL_PRIORITY_CLASS
+
 
 def test_get_subprocess_creation_flags_windows():
     """Test that Windows returns CREATE_NO_WINDOW flag."""
     with patch("sys.platform", "win32"):
         flags = get_subprocess_creation_flags()
-        assert flags == subprocess.CREATE_NO_WINDOW
+        assert flags == _EXPECTED_WIN_FLAGS
 
 
 def test_get_subprocess_creation_flags_linux():
@@ -29,7 +32,7 @@ def test_safe_run_applies_flags_on_windows(mock_run):
         mock_run.assert_called_once()
         call_kwargs = mock_run.call_args[1]
         assert "creationflags" in call_kwargs
-        assert call_kwargs["creationflags"] == subprocess.CREATE_NO_WINDOW
+        assert call_kwargs["creationflags"] == _EXPECTED_WIN_FLAGS
 
 
 @patch("subprocess.run")
@@ -52,7 +55,7 @@ def test_safe_run_merges_custom_creationflags(mock_run):
 
         mock_run.assert_called_once()
         call_kwargs = mock_run.call_args[1]
-        expected = custom_flag | subprocess.CREATE_NO_WINDOW
+        expected = custom_flag | _EXPECTED_WIN_FLAGS
         assert call_kwargs["creationflags"] == expected
 
 
@@ -65,7 +68,7 @@ def test_safe_popen_applies_flags_on_windows(mock_popen):
         mock_popen.assert_called_once()
         call_kwargs = mock_popen.call_args[1]
         assert "creationflags" in call_kwargs
-        assert call_kwargs["creationflags"] == subprocess.CREATE_NO_WINDOW
+        assert call_kwargs["creationflags"] == _EXPECTED_WIN_FLAGS
 
 
 @patch("subprocess.Popen")
@@ -88,7 +91,7 @@ def test_safe_popen_merges_custom_creationflags(mock_popen):
 
         mock_popen.assert_called_once()
         call_kwargs = mock_popen.call_args[1]
-        expected = custom_flag | subprocess.CREATE_NO_WINDOW
+        expected = custom_flag | _EXPECTED_WIN_FLAGS
         assert call_kwargs["creationflags"] == expected
 
 
@@ -156,7 +159,7 @@ def test_safe_run_combines_flags_and_stdin_on_windows(mock_run):
         mock_run.assert_called_once()
         call_kwargs = mock_run.call_args[1]
         assert "creationflags" in call_kwargs
-        assert call_kwargs["creationflags"] == subprocess.CREATE_NO_WINDOW
+        assert call_kwargs["creationflags"] == _EXPECTED_WIN_FLAGS
         assert "stdin" in call_kwargs
         assert call_kwargs["stdin"] == subprocess.DEVNULL
 

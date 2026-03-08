@@ -332,7 +332,9 @@ class ESP32Deployer(IDeployer):
             DeploymentResult with success status
         """
         # Get build directory (check profile subdirectories first)
-        base_build_dir = project_dir / ".fbuild" / "build" / env_name
+        from fbuild.paths import get_project_build_root
+
+        base_build_dir = get_project_build_root(project_dir) / env_name
         build_dir = base_build_dir
         for profile_name in ["release", "quick"]:
             candidate = base_build_dir / profile_name

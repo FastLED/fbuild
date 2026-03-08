@@ -206,9 +206,6 @@ class OrchestratorTeensy(IBuildOrchestrator):
             compilation_executor = CompilationExecutor(
                 build_dir=build_dir,
                 show_progress=verbose,
-                cache=self.cache,
-                mcu=board_config.mcu,
-                framework_version=platform.framework.version,
                 compile_database=request.compile_database,
                 execute_compilations=not request.generate_compiledb,
             )
@@ -271,7 +268,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
                     local_lib_names.add(spec.name.lower())
 
             # Gather framework built-in library include paths (SPI, Wire, etc.)
-            # BEFORE compile_core() so trampolines are generated with these paths.
+            # BEFORE compile_core() so all includes are available for compilation.
             framework_include_paths: List[Path] = []
             framework_lib_dirs: List[tuple[str, Path]] = []  # (name, src_dir)
             framework_libs_dir = platform.framework.framework_path / "libraries"
@@ -295,7 +292,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
                             framework_lib_dirs.append((lib_dir.name, lib_dir))
 
             # Initialize the include paths cache, then add framework paths BEFORE
-            # core compilation so trampolines are generated with these paths.
+            # core compilation so all includes are available.
             # NOTE: get_include_paths() must be called first to populate the cache,
             # since add_library_includes() is a no-op when cache is None.
             compiler.get_include_paths()

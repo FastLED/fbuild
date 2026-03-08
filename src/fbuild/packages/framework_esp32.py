@@ -55,7 +55,6 @@ from fbuild.packages.archive_utils import ArchiveExtractor, URLVersionExtractor
 from fbuild.packages.cache import Cache
 from fbuild.packages.downloader import DownloadError, ExtractionError
 from fbuild.packages.framework_patches import ESP32_FRAMEWORK_PATCHES, apply_framework_patches
-from fbuild.packages.header_trampoline_cache import HeaderTrampolineCache
 from fbuild.packages.package import IFramework, PackageError
 from fbuild.packages.sdk_utils import SDKPathResolver
 
@@ -154,10 +153,6 @@ class FrameworkESP32(IFramework):
             # Post-install: Apply framework patches to fix known upstream bugs
             self._post_install_apply_patches()
 
-            # Post-install: Generate header trampolines for all MCU variants
-            # This pre-generates trampoline caches to avoid Windows command-line length issues
-            self._post_install_generate_trampolines()
-
             return self.framework_path
 
         except (DownloadError, ExtractionError) as e:
@@ -254,96 +249,6 @@ class FrameworkESP32(IFramework):
             # Don't fail the entire installation if patching fails
             if self.show_progress:
                 print(f"[patches] Warning: Post-install patching failed: {e}")
-
-    def _post_install_generate_trampolines(self) -> None:
-        """Generate header trampolines for all MCU variants after framework installation.
-
-        This post-install step pre-generates trampoline caches for all ESP32 MCU variants
-        found in the SDK. This ensures that Windows builds with sccache don't hit the
-        32K command-line length limit due to excessive -I arguments.
-
-        The trampolines are generated once at framework install time rather than at
-        every compile time, improving build performance.
-        """
-        import platform as platform_module
-
-        # Only generate trampolines on Windows
-        if platform_module.system() != "Windows":
-            if self.show_progress:
-                print("[trampolines] Skipping post-install generation (not Windows)")
-            return
-
-        try:
-            if self.show_progress:
-                print("[trampolines] Post-install: Generating header trampoline caches...")
-
-            # Find all MCU variants in the SDK
-            sdk_dir = self.get_sdk_dir()
-            if not sdk_dir.exists():
-                if self.show_progress:
-                    print("[trampolines] Warning: SDK directory not found, skipping")
-                return
-
-            # Look for MCU-specific directories
-            mcu_variants = []
-            for item in sdk_dir.iterdir():
-                if item.is_dir() and item.name.startswith("esp32"):
-                    mcu_variants.append(item.name)
-
-            if not mcu_variants:
-                if self.show_progress:
-                    print("[trampolines] Warning: No MCU variants found in SDK")
-                return
-
-            if self.show_progress:
-                print(f"[trampolines] Found {len(mcu_variants)} MCU variant(s): {', '.join(mcu_variants)}")
-
-            # Exclude ESP-IDF headers that use relative paths or #include_next that break trampolines
-            from fbuild.packages.trampoline_excludes import get_exclude_patterns
-
-            exclude_patterns = get_exclude_patterns()
-
-            # Generate trampolines for all MCU variants in parallel
-            from concurrent.futures import ThreadPoolExecutor, as_completed
-
-            def generate_for_mcu(mcu_name: str) -> None:
-                include_paths = self.get_sdk_includes(mcu_name)
-                if self.show_progress:
-                    print(f"[trampolines] Generating cache for {mcu_name} ({len(include_paths)} include paths)...")
-                self.cache.ensure_directories()
-                trampoline_cache = HeaderTrampolineCache(
-                    cache_root=self.cache.trampolines_dir,
-                    show_progress=self.show_progress,
-                    mcu_variant=mcu_name,
-                    framework_version=self.version,
-                    platform_name="esp32",
-                )
-                trampoline_cache.generate_trampolines(include_paths, exclude_patterns=exclude_patterns)
-
-            with ThreadPoolExecutor(max_workers=min(len(mcu_variants), 4)) as executor:
-                futures = {executor.submit(generate_for_mcu, mcu): mcu for mcu in mcu_variants}
-                for future in as_completed(futures):
-                    mcu_name = futures[future]
-                    try:
-                        future.result()
-                    except KeyboardInterrupt:
-                        _thread.interrupt_main()
-                        raise
-                    except Exception as e:
-                        if self.show_progress:
-                            print(f"[trampolines] Warning: Failed to generate trampolines for {mcu_name}: {e}")
-                        continue
-
-            if self.show_progress:
-                print("[trampolines] Post-install generation complete")
-
-        except KeyboardInterrupt:
-            _thread.interrupt_main()
-            raise
-        except Exception as e:
-            # Don't fail the entire installation if trampoline generation fails
-            if self.show_progress:
-                print(f"[trampolines] Warning: Post-install generation failed: {e}")
 
     def is_installed(self) -> bool:
         """Check if framework is already installed.
