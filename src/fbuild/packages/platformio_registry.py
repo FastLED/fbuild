@@ -30,6 +30,7 @@ class LibrarySpec:
     version: Optional[str] = None
     is_local: bool = False
     local_path: Optional[Path] = None
+    github_url: Optional[str] = None
 
     @classmethod
     def parse(cls, spec: str) -> "LibrarySpec":
@@ -84,7 +85,7 @@ class LibrarySpec:
             match = re.search(r"github\.com/([^/]+)/([^/]+?)(?:\.git)?/?$", spec)
             if match:
                 owner, name = match.groups()
-                return cls(owner=owner, name=name, version=None)
+                return cls(owner=owner, name=name, version=None, github_url=spec)
             raise RegistryError(f"Cannot parse URL as library spec: {spec}")
 
         # Handle relative/absolute paths (../foo, ./foo, /abs/path, C:/path)
@@ -105,17 +106,22 @@ class LibrarySpec:
         # This must come AFTER path checking to avoid treating "owner/name" as a path
         if "@" in spec:
             lib_part, version = spec.rsplit("@", 1)
+            version = version.strip()
         else:
             lib_part = spec
             version = None
 
+        lib_part = lib_part.strip()
+
         # Split owner/name
         if "/" in lib_part:
             owner, name = lib_part.split("/", 1)
+            owner = owner.strip()
+            name = name.strip()
         else:
             # If no owner specified, we'll need to search registry
             owner = ""
-            name = lib_part
+            name = lib_part.strip()
 
         return cls(owner=owner, name=name, version=version)
 

@@ -21,7 +21,7 @@ import logging
 import queue
 import threading
 import time
-from typing import Any
+from typing import Any, Callable
 
 import httpx
 
@@ -43,6 +43,7 @@ def interruptible_post(
     timeout: float = 30.0,
     connect_timeout: float = 5.0,
     check_interval: float = INTERRUPT_CHECK_INTERVAL,
+    on_poll: Callable[[], None] | None = None,
 ) -> httpx.Response:
     """Make an interruptible HTTP POST request.
 
@@ -127,6 +128,15 @@ def interruptible_post(
                         return result
                     except queue.Empty:
                         raise InterruptibleHTTPError("HTTP worker thread died unexpectedly")
+
+                # Call poll callback (e.g. to display build progress)
+                if on_poll is not None:
+                    try:
+                        on_poll()
+                    except KeyboardInterrupt:
+                        raise
+                    except Exception:
+                        pass  # Don't let poll callback errors kill the request
 
                 # Continue polling
                 continue

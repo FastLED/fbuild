@@ -173,6 +173,24 @@ class OrchestratorESP32(IBuildOrchestrator):
             lib_deps = config.get_lib_deps(env_name)
             logger.debug(f"[ORCHESTRATOR] get_lib_deps returned: {lib_deps}")
 
+            # Filter out ignored libraries (lib_ignore from platformio.ini)
+            lib_ignore_str = env_config.get("lib_ignore", "")
+            if lib_ignore_str:
+                ignored_names = {name.strip().lower() for name in lib_ignore_str.replace("\n", ",").split(",") if name.strip()}
+                original_count = len(lib_deps)
+                lib_deps = [dep for dep in lib_deps if not any(ignored in dep.lower() for ignored in ignored_names)]
+                if len(lib_deps) < original_count:
+                    logger.debug(f"[ORCHESTRATOR] lib_ignore filtered {original_count - len(lib_deps)} deps: {ignored_names}")
+
+            # Parse and apply build_unflags (removes matching flags from build_flags)
+            build_unflags_str = env_config.get("build_unflags", "")
+            if build_unflags_str:
+                unflags = {f.strip() for f in build_unflags_str.split() if f.strip()}
+                original_count = len(build_flags)
+                build_flags = [f for f in build_flags if f not in unflags]
+                if len(build_flags) < original_count:
+                    logger.debug(f"[ORCHESTRATOR] build_unflags removed {original_count - len(build_flags)} flags: {unflags}")
+
             # Call internal build method
             esp32_result = self._build_esp32(board_id, env_config, build_flags, lib_deps, request)
 
@@ -446,6 +464,11 @@ class OrchestratorESP32(IBuildOrchestrator):
                     build_time=build_time,
                     message="compile_commands.json generated (compiledb mode)",
                 )
+
+            # Process embedded files (board_build.embed_files / board_build.embed_txtfiles)
+            embed_obj_files = self._process_embed_files(env_config, project_dir, build_dir, toolchain, mcu, verbose)
+            if embed_obj_files:
+                sketch_obj_files.extend(embed_obj_files)
 
             # Initialize linker
             log_phase(10, 13, "Linking firmware...")
@@ -818,6 +841,12 @@ class OrchestratorESP32(IBuildOrchestrator):
         if hasattr(compiler, "compilation_executor") and compiler.compilation_executor:
             trampoline_cache = getattr(compiler.compilation_executor, "trampoline_cache", None)
 
+        # Parse lib_ignore for transitive dependency filtering
+        lib_ignore_str = env_config.get("lib_ignore", "")
+        lib_ignore_set: Optional[set[str]] = None
+        if lib_ignore_str:
+            lib_ignore_set = {name.strip().lower() for name in lib_ignore_str.replace("\n", ",").split(",") if name.strip()}
+
         # Ensure libraries are downloaded and compiled
         # Always show progress for library compilation - compiling 300+ files
         # without feedback is confusing UX, even in non-verbose mode
@@ -829,6 +858,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             lib_include_paths,
             show_progress=True,
             trampoline_cache=trampoline_cache,
+            lib_ignore=lib_ignore_set,
         )
         logger.debug(f"[ORCHESTRATOR] ensure_libraries returned {len(libraries)} libraries")
 
@@ -1029,15 +1059,59 @@ class OrchestratorESP32(IBuildOrchestrator):
 
         # Look for .ino files in the source directory
         sketch_files = list(src_dir.glob("*.ino"))
-        if not sketch_files:
+        if sketch_files:
+            sketch_path = sketch_files[0]
+            sketch_obj_files = compiler.compile_sketch(sketch_path)
+            log_detail(f"Compiled {len(sketch_obj_files)} sketch file(s)", verbose_only=True)
+            return sketch_obj_files
+
+        # No .ino file found — look for .cpp/.c files in src/ directory
+        # PlatformIO projects can use main.cpp with setup()/loop() instead of .ino
+        cpp_src_dir = src_dir / "src" if (src_dir / "src").is_dir() else src_dir
+        source_files = []
+        for pattern in ["**/*.cpp", "**/*.c", "**/*.cc", "**/*.cxx"]:
+            source_files.extend(cpp_src_dir.glob(pattern))
+
+        if not source_files:
             return None
 
-        sketch_path = sketch_files[0]
-        sketch_obj_files = compiler.compile_sketch(sketch_path)
+        log_detail(f"No .ino found, compiling {len(source_files)} source file(s) from {cpp_src_dir.relative_to(project_dir)}", verbose_only=True)
 
-        log_detail(f"Compiled {len(sketch_obj_files)} sketch file(s)", verbose_only=True)
+        # Add src directory to include paths
+        include_paths = compiler.get_include_paths()
+        if cpp_src_dir not in include_paths:
+            include_paths.insert(0, cpp_src_dir)
+        # Also add the include/ dir if it exists (common PlatformIO convention)
+        include_dir = src_dir / "include"
+        if include_dir.is_dir() and include_dir not in include_paths:
+            include_paths.insert(0, include_dir)
 
-        return sketch_obj_files
+        obj_dir = compiler.build_dir / "obj"
+        obj_dir.mkdir(parents=True, exist_ok=True)
+
+        object_files = []
+        for source_file in source_files:
+            rel_path = source_file.relative_to(cpp_src_dir)
+            obj_path = obj_dir / rel_path.with_suffix(".o")
+            obj_path.parent.mkdir(parents=True, exist_ok=True)
+
+            if not compiler.needs_rebuild(source_file, obj_path):
+                object_files.append(obj_path)
+                continue
+
+            try:
+                compiled_obj = compiler.compile_source(source_file, obj_path)
+                object_files.append(compiled_obj)
+            except KeyboardInterrupt:
+                raise
+            except Exception as e:
+                from fbuild.build.configurable_compiler import ConfigurableCompilerError
+
+                raise ConfigurableCompilerError(f"Failed to compile {source_file.name}: {e}")
+
+        compiler.wait_all_jobs()
+        log_detail(f"Compiled {len(object_files)} source file(s)", verbose_only=True)
+        return object_files
 
     def _create_bt_stub(self, build_dir: Path, compiler: ConfigurableCompiler, verbose: bool) -> Optional[Path]:
         """
@@ -1090,6 +1164,134 @@ __attribute__((weak)) bool btInUse(void) {
         except Exception as e:
             log_warning(f"Failed to create Bluetooth stub: {e}")
             return None
+
+    def _process_embed_files(
+        self,
+        env_config: dict,
+        project_dir: Path,
+        build_dir: Path,
+        toolchain: ToolchainESP32,
+        mcu: str,
+        verbose: bool,
+    ) -> List[Path]:
+        """Convert board_build.embed_files and board_build.embed_txtfiles to linkable object files.
+
+        PlatformIO's embed_files/embed_txtfiles feature converts arbitrary files into
+        linkable objects with _binary_<name>_start/_end/_size symbols. embed_txtfiles
+        additionally appends a null terminator so the data can be used as a C string.
+
+        Args:
+            env_config: Environment configuration dict
+            project_dir: Project root directory (files are relative to this)
+            build_dir: Build output directory
+            toolchain: ESP32 toolchain (provides objcopy)
+            mcu: MCU identifier (e.g., "esp32", "esp32c6")
+            verbose: Verbose output mode
+
+        Returns:
+            List of object file paths to include in linking
+        """
+        from fbuild.subprocess_utils import safe_run
+
+        embed_files_str = env_config.get("board_build.embed_files", "")
+        embed_txtfiles_str = env_config.get("board_build.embed_txtfiles", "")
+
+        logging.debug(f"[EMBED] embed_files='{embed_files_str}', embed_txtfiles='{embed_txtfiles_str}'")
+
+        if not embed_files_str and not embed_txtfiles_str:
+            logging.debug("[EMBED] No embed files configured, skipping")
+            return []
+
+        objcopy_path = toolchain.get_objcopy_path()
+        if objcopy_path is None:
+            log_warning("objcopy not found, skipping embedded files")
+            return []
+
+        # Determine architecture-specific objcopy flags
+        is_riscv = mcu in ("esp32c2", "esp32c3", "esp32c6", "esp32h2")
+        if is_riscv:
+            output_target = "elf32-littleriscv"
+            binary_arch = "riscv"
+        else:
+            output_target = "elf32-xtensa-le"
+            binary_arch = "xtensa"
+
+        embed_dir = build_dir / "embed"
+        embed_dir.mkdir(parents=True, exist_ok=True)
+
+        object_files: List[Path] = []
+
+        # Process both embed types
+        all_entries: List[tuple[str, bool]] = []  # (path, is_txtfile)
+        for path_str in embed_files_str.split():
+            path_str = path_str.strip()
+            if path_str:
+                all_entries.append((path_str, False))
+        for path_str in embed_txtfiles_str.split():
+            path_str = path_str.strip()
+            if path_str:
+                all_entries.append((path_str, True))
+
+        logging.debug(f"[EMBED] Processing {len(all_entries)} embed entries: {all_entries}")
+
+        for file_path_str, is_txtfile in all_entries:
+            source_file = project_dir / file_path_str
+            if not source_file.exists():
+                logging.warning(f"[EMBED] Embedded file not found: {source_file}")
+                continue
+
+            # objcopy derives symbol names from the input file path.
+            # To get _binary_config_timezones_json_start from "config/timezones.json",
+            # we must run objcopy with the relative path as input, using cwd=project_dir.
+            # For txtfiles, we create a null-terminated copy at the same relative path
+            # inside the embed directory, then use cwd=embed_dir.
+            if is_txtfile:
+                # Create null-terminated copy at same relative path inside embed_dir
+                txt_copy = embed_dir / file_path_str
+                txt_copy.parent.mkdir(parents=True, exist_ok=True)
+                data = source_file.read_bytes()
+                txt_copy.write_bytes(data + b"\x00")
+                objcopy_cwd = embed_dir
+            else:
+                objcopy_cwd = project_dir
+
+            # Output object file path
+            safe_name = file_path_str.replace("/", "_").replace("\\", "_").replace(".", "_").replace("-", "_")
+            obj_file = embed_dir / f"{safe_name}.o"
+
+            # Run objcopy from the correct working directory so the relative path
+            # becomes the symbol name prefix (e.g., config/timezones.json -> _binary_config_timezones_json_*)
+            cmd = [
+                str(objcopy_path),
+                "--input-target",
+                "binary",
+                "--output-target",
+                output_target,
+                "--binary-architecture",
+                binary_arch,
+                "--rename-section",
+                ".data=.rodata.embedded",
+                file_path_str.replace("\\", "/"),
+                str(obj_file),
+            ]
+
+            if verbose:
+                log_detail(f"Embedding file: {file_path_str}")
+
+            logging.debug(f"[EMBED] Running objcopy (cwd={objcopy_cwd}): {' '.join(cmd)}")
+            result = safe_run(cmd, capture_output=True, text=True, cwd=str(objcopy_cwd))
+            if result.returncode != 0:
+                logging.error(f"[EMBED] objcopy failed for {file_path_str}: {result.stderr}")
+                continue
+
+            logging.debug(f"[EMBED] Successfully embedded {file_path_str} -> {obj_file}")
+            object_files.append(obj_file)
+
+        if object_files:
+            logging.info(f"[EMBED] Embedded {len(object_files)} file(s) into firmware")
+            log_detail(f"Embedded {len(object_files)} file(s) into firmware")
+
+        return object_files
 
     def _generate_boot_components(self, linker: ConfigurableLinker, mcu: str, verbose: bool) -> tuple[Optional[Path], Optional[Path]]:
         """
@@ -1216,8 +1418,11 @@ __attribute__((weak)) bool btInUse(void) {
         if platform_spec.startswith("http://") or platform_spec.startswith("https://"):
             return platform_spec
 
+        # Strip version constraint (e.g., "platformio/espressif32 @ ^6.12.0" -> "platformio/espressif32")
+        spec_base = platform_spec.split("@")[0].strip() if "@" in platform_spec else platform_spec
+
         # Handle PlatformIO shorthand formats
-        if platform_spec in ("platformio/espressif32", "espressif32"):
+        if spec_base in ("platformio/espressif32", "espressif32"):
             log_detail(f"Resolving platform shorthand '{platform_spec}' to pioarduino stable release")
             return DEFAULT_ESP32_URL
 

@@ -80,12 +80,50 @@ class PlatformIOConfig:
                 envs.append(env_name)
         return envs
 
+    def _resolve_section(self, section_name: str) -> str:
+        """
+        Resolve a section name to its actual configparser section key.
+
+        PlatformIO has two kinds of sections:
+        - env sections: [env:demo], [env:uno] -> stored as "env:demo", "env:uno"
+        - non-env sections: [base], [dev_esp32], [psram_flags] -> stored as "base", "dev_esp32"
+
+        Args:
+            section_name: Name as referenced (e.g., "demo", "dev_esp32", "base", "env:demo")
+
+        Returns:
+            The configparser section key if found
+
+        Raises:
+            PlatformIOConfigError: If section not found
+        """
+        # If it already has "env:" prefix, use as-is
+        if section_name.startswith("env:"):
+            if section_name in self.config:
+                return section_name
+            raise PlatformIOConfigError(f"Section '{section_name}' not found.")
+
+        # Try env:name first (PlatformIO environments take priority)
+        env_section = f"env:{section_name}"
+        if env_section in self.config:
+            return env_section
+
+        # Try as a bare section name (non-env sections like [base], [dev_esp32], [psram_flags])
+        if section_name in self.config:
+            return section_name
+
+        available = ", ".join(self.get_environments())
+        raise PlatformIOConfigError(f"Environment '{section_name}' not found. " + f"Available environments: {available or 'none'}")
+
     def get_env_config(self, env_name: str, _visited: Optional[set] = None, _validate: bool = True) -> Dict[str, str]:
         """
         Get configuration for a specific environment with inheritance support.
 
+        Supports both env sections ([env:demo]) and non-env sections ([base], [dev_esp32])
+        which PlatformIO uses for configuration inheritance.
+
         Args:
-            env_name: Name of the environment (e.g., 'uno')
+            env_name: Name of the environment (e.g., 'uno') or section (e.g., 'dev_esp32')
             _visited: Internal parameter for circular dependency detection
             _validate: Internal parameter to control validation (default: True)
 
@@ -111,13 +149,9 @@ class PlatformIOConfig:
 
         _visited.add(env_name)
 
-        section = f"env:{env_name}"
+        section = self._resolve_section(env_name)
 
-        if section not in self.config:
-            available = ", ".join(self.get_environments())
-            raise PlatformIOConfigError(f"Environment '{env_name}' not found. " + f"Available environments: {available or 'none'}")
-
-        # Collect all key-value pairs from the environment section
+        # Collect all key-value pairs from the section
         # Use raw=True to avoid interpolation errors when referencing parent environments
         env_config = {}
         for key in self.config[section]:
@@ -125,8 +159,8 @@ class PlatformIOConfig:
             # Handle multi-line values (like lib_deps)
             env_config[key] = value.strip() if value else ""
 
-        # Also check if there's a base [env] section to inherit from
-        if "env" in self.config:
+        # For env: sections, also inherit from the base [env] section
+        if section.startswith("env:") and "env" in self.config:
             base_config = {}
             for key in self.config["env"]:
                 value = self.config["env"].get(key, raw=True)
@@ -153,33 +187,11 @@ class PlatformIOConfig:
 
             env_config = merged_config
 
-        # Now perform manual variable interpolation for cross-environment references
-        # This handles ${env:parent.key} syntax
-        import re
-
+        # Now perform manual variable interpolation for cross-section references
+        # This handles both ${env:section.key} and ${section.key} syntax
         interpolated_config = {}
         for key, value in env_config.items():
-            # Look for ${env:name.key} patterns
-            pattern = r"\$\{env:([^}]+)\}"
-            matches = re.findall(pattern, value)
-
-            interpolated_value = value
-            for match in matches:
-                # Parse the reference: "env:parent.build_flags"
-                parts = match.split(".")
-                if len(parts) == 2:
-                    ref_env = parts[0]
-                    ref_key = parts[1]
-
-                    # Get the referenced environment's config
-                    # Create a new visited set to avoid false circular dependency detection
-                    # Don't validate the referenced environment (it might be an abstract base)
-                    ref_config = self.get_env_config(ref_env, set(), _validate=False)
-
-                    if ref_key in ref_config:
-                        # Replace the variable reference with the actual value
-                        interpolated_value = interpolated_value.replace(f"${{env:{match}}}", ref_config[ref_key])
-
+            interpolated_value = self._interpolate_value(value)
             interpolated_config[key] = interpolated_value
 
         env_config = interpolated_config
@@ -191,6 +203,48 @@ class PlatformIOConfig:
                 raise PlatformIOConfigError(f"Environment '{env_name}' is missing required fields: " + f"{', '.join(sorted(missing_fields))}")
 
         return env_config
+
+    def _interpolate_value(self, value: str, _depth: int = 0) -> str:
+        """
+        Perform variable interpolation on a config value.
+
+        Handles both PlatformIO syntaxes:
+        - ${env:section.key} (legacy/explicit)
+        - ${section.key} (standard PlatformIO syntax)
+        - ${PROJECT_DIR} and other built-in variables
+
+        Args:
+            value: The raw config value string
+            _depth: Recursion depth guard
+
+        Returns:
+            The interpolated value string
+        """
+        import re
+
+        if _depth > 10:
+            return value  # Prevent infinite recursion
+
+        # Combined pattern: match ${env:section.key} or ${section.key}
+        # but NOT ${PROJECT_DIR} (single-part, no dot — built-in PlatformIO variable)
+        pattern = r"\$\{(?:env:)?([^}.]+)\.([^}]+)\}"
+
+        def replacer(m: re.Match) -> str:
+            ref_section = m.group(1)
+            ref_key = m.group(2)
+
+            try:
+                ref_config = self.get_env_config(ref_section, set(), _validate=False)
+            except PlatformIOConfigError:
+                return m.group(0)  # Leave unresolved references as-is
+
+            if ref_key in ref_config:
+                # Recursively interpolate the referenced value
+                return self._interpolate_value(ref_config[ref_key], _depth + 1)
+            return m.group(0)
+
+        result = re.sub(pattern, replacer, value)
+        return result
 
     def get_build_flags(self, env_name: str) -> List[str]:
         """
@@ -216,8 +270,12 @@ class PlatformIOConfig:
         raw_flags = build_flags_str.split()
         flags = []
 
-        # Handle cases like "-D FLAG" which should become "-DFLAG"
-        # PlatformIO allows "-D FLAG=value" format (space after -D)
+        # Handle multi-token flags:
+        # - "-D FLAG" becomes "-DFLAG" (PlatformIO allows space after -D)
+        # - "-include file.h" stays as two separate args (gcc requires this)
+        # - "-I path" stays as two separate args
+        # Flags that take a separate argument (keep as two tokens in output):
+        _FLAGS_WITH_ARGS = {"-include", "-isystem", "-I", "-L", "-MF", "-MQ", "-MT", "-o", "-x"}
         i = 0
         while i < len(raw_flags):
             flag = raw_flags[i]
@@ -229,6 +287,12 @@ class PlatformIOConfig:
                     flags.append(f"-D{next_token}")
                     i += 2
                     continue
+            elif flag in _FLAGS_WITH_ARGS and i + 1 < len(raw_flags):
+                # These flags take a separate argument — keep both tokens
+                flags.append(flag)
+                flags.append(raw_flags[i + 1])
+                i += 2
+                continue
             if flag:
                 flags.append(flag)
             i += 1

@@ -157,7 +157,13 @@ async def lifespan(app: FastAPI):
     Yields:
         Control to FastAPI application
     """
-    # Startup
+    # Startup — capture event loop for thread-safe WebSocket broadcasting
+    import asyncio
+
+    from fbuild.daemon.endpoints.websockets import set_event_loop
+
+    set_event_loop(asyncio.get_running_loop())
+
     logging.info("=" * 80)
     logging.info("FastAPI lifespan: ENTERING startup phase")
     logging.info(f"Daemon context: {'initialized' if _daemon_context else 'NOT INITIALIZED'}")
@@ -343,23 +349,27 @@ def register_daemon_endpoints(app: FastAPI) -> None:
         )
 
     @app.post("/api/daemon/shutdown", tags=["Daemon"])
-    async def shutdown_daemon(context: DaemonContext = Depends(get_daemon_context)) -> ShutdownResponse:  # type: ignore[reportUnusedFunction]
+    async def shutdown_daemon(force: bool = False, context: DaemonContext = Depends(get_daemon_context)) -> ShutdownResponse:  # type: ignore[reportUnusedFunction]
         """Gracefully shutdown the daemon.
 
         This endpoint triggers a graceful shutdown of the daemon.
-        If an operation is in progress, the shutdown will be refused.
+        If an operation is in progress, the shutdown will be refused unless force=True.
+
+        Args:
+            force: If True, shutdown even if an operation is in progress
 
         Returns:
             Shutdown confirmation message
         """
-        # Use context.operation_in_progress (set by request_processor) instead of status_manager
-        with context.operation_lock:
-            operation_running = context.operation_in_progress
-        if operation_running:
-            raise HTTPException(
-                status_code=409,
-                detail="Cannot shutdown while operation is in progress",
-            )
+        if not force:
+            # Use context.operation_in_progress (set by request_processor) instead of status_manager
+            with context.operation_lock:
+                operation_running = context.operation_in_progress
+            if operation_running:
+                raise HTTPException(
+                    status_code=409,
+                    detail="Cannot shutdown while operation is in progress. Use ?force=true to override.",
+                )
 
         # Delegate to management endpoint (uses sys.exit via delayed thread)
         from fbuild.daemon.endpoints.management import shutdown_daemon as shutdown_impl

@@ -16,13 +16,14 @@ def get_python_executable() -> str:
     On Windows, pythonw.exe runs Python scripts without showing a console window,
     which is more effective than CREATE_NO_WINDOW for preventing window flashing.
 
+    Note: In a venv, pythonw.exe is a launcher stub that re-execs the real
+    interpreter. This causes Popen to return the stub's PID while os.getpid()
+    inside the child returns the real interpreter's PID. This PID mismatch is
+    expected and handled by wait_for_pid_file() accepting any alive daemon PID.
+
     Returns:
         - Windows: Path to pythonw.exe if it exists, otherwise sys.executable
         - Other platforms: sys.executable
-
-    Note:
-        pythonw.exe is typically installed alongside python.exe in virtual
-        environments and standard Python installations on Windows.
     """
     if sys.platform != "win32":
         return sys.executable

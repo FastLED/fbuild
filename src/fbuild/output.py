@@ -30,6 +30,7 @@ Usage:
 
 import sys
 import time
+from collections.abc import Callable
 from contextvars import ContextVar
 from dataclasses import dataclass, replace
 from pathlib import Path
@@ -66,6 +67,26 @@ _output_context: ContextVar[OutputContext] = ContextVar(
         output_file=None,
     ),
 )
+
+
+# Callback for broadcasting output lines to WebSocket clients.
+# Set per-build via contextvars so concurrent builds don't interfere.
+_output_broadcast: ContextVar[Callable[[str], None] | None] = ContextVar(
+    "_output_broadcast",
+    default=None,
+)
+
+
+def set_output_broadcast(callback: Callable[[str], None] | None) -> None:
+    """Set the output broadcast callback for the current context.
+
+    When set, every line written by _print() is also passed to this callback,
+    enabling real-time streaming to WebSocket clients.
+
+    Args:
+        callback: Function that receives each output line, or None to disable
+    """
+    _output_broadcast.set(callback)
 
 
 def get_context() -> OutputContext:
@@ -224,6 +245,16 @@ def _print(message: str, end: str = "\n") -> None:
             ctx.output_file.flush()
         except (ValueError, OSError):
             # Ignore if file is closed
+            pass
+
+    # Broadcast to WebSocket clients if callback is set
+    broadcast = _output_broadcast.get(None)
+    if broadcast is not None:
+        try:
+            broadcast(line)
+        except KeyboardInterrupt:
+            raise
+        except Exception:
             pass
 
 

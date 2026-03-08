@@ -173,13 +173,18 @@ class BuildRequestProcessor(RequestProcessor):
 
         # Set up output file for streaming to client
         # Now safe to do after reload because context survives reload
-        from fbuild.output import reset_timer, set_output_file
+        from fbuild.output import reset_timer, set_output_broadcast, set_output_file
 
         output_file_path = Path(request.project_dir) / ".fbuild" / "build_output.txt"
         output_file_path.parent.mkdir(parents=True, exist_ok=True)
 
         # Clear output file at start to prevent stale output from previous builds
         output_file_path.write_text("", encoding="utf-8")
+
+        # Set up WebSocket broadcast for real-time CLI output
+        from fbuild.daemon.endpoints.websockets import broadcast_output_line_threadsafe
+
+        set_output_broadcast(broadcast_output_line_threadsafe)
 
         output_file = None
         try:
@@ -192,6 +197,7 @@ class BuildRequestProcessor(RequestProcessor):
             logging.debug(f"Build execution completed with result={result}")
             return result
         finally:
+            set_output_broadcast(None)  # Stop broadcasting
             set_output_file(None)  # Always clean up
             if output_file is not None:
                 output_file.close()

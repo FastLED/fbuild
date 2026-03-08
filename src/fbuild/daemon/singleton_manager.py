@@ -297,7 +297,9 @@ def wait_for_pid_file(expected_pid: int, timeout: float = 10.0) -> int:
                 # Check if this daemon is alive
                 if _check_pid_alive(pid):
                     if pid != expected_pid:
-                        logging.warning(f"Expected PID {expected_pid}, but PID {pid} started successfully (concurrent spawn or immediate crash + retry). Accepting alive daemon.")
+                        # PID mismatch is expected when using venv pythonw.exe on Windows:
+                        # the venv stub re-execs the real interpreter with a new PID.
+                        logging.debug(f"Expected PID {expected_pid}, but PID {pid} started successfully (venv re-exec or concurrent spawn). Accepting alive daemon.")
                     return pid  # ✅ Accept any alive daemon
                 else:
                     # PID file contains dead process - keep waiting

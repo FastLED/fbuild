@@ -332,14 +332,17 @@ class ConfigurableLinker(ILinker):
         if is_esp8266:
             cmd.append(_path_to_string(core_archive, relative_to=self.build_dir))
 
-        # Add user library archives with --whole-archive for proper symbol visibility
+        # Add library archives (user libraries + framework libraries).
+        # NOT using --whole-archive here: the linker pulls in only the .o members
+        # that define referenced symbols, then --gc-sections strips unused sections.
+        # This is critical for large projects — --whole-archive forces ALL members
+        # from ALL archives (BLE, WiFi, etc.) which can overflow DRAM even when
+        # those libraries aren't actually used.
         if library_archives:
-            cmd.append("-Wl,--whole-archive")
             for lib_archive in library_archives:
                 if lib_archive.exists():
                     # Library archives may be in build_dir or outside, try relative first
                     cmd.append(_path_to_string(lib_archive, relative_to=self.build_dir))
-            cmd.append("-Wl,--no-whole-archive")
 
         # Add SDK libraries (these stay absolute - outside build dir)
         # NOTE: SDK libraries are NOT wrapped with --whole-archive because they are

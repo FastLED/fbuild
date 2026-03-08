@@ -111,6 +111,35 @@ class ConnectionManager:
                 self._log_connections.remove(websocket)
         logging.info(f"Logs WebSocket disconnected (remaining: {len(self._log_connections)})")
 
+    async def broadcast_build_output(self, line: str) -> None:
+        """Broadcast a build output line to all connected status WebSockets.
+
+        Args:
+            line: Output line from the build process
+        """
+        if not self._status_connections:
+            return
+
+        message = {"type": "build_output", "line": line}
+        disconnected: list[WebSocket] = []
+
+        async with self._lock:
+            connections = list(self._status_connections)
+
+        for websocket in connections:
+            try:
+                await websocket.send_json(message)
+            except KeyboardInterrupt:
+                raise
+            except Exception:
+                disconnected.append(websocket)
+
+        if disconnected:
+            async with self._lock:
+                for ws in disconnected:
+                    if ws in self._status_connections:
+                        self._status_connections.remove(ws)
+
     async def broadcast_status(self, message: dict[str, Any]) -> int:
         """Broadcast a status update to all connected status WebSockets.
 
@@ -225,6 +254,21 @@ class ConnectionManager:
 # Global connection manager (initialized when router is created)
 _connection_manager: ConnectionManager | None = None
 
+# Event loop reference for thread-safe broadcasting from sync build threads
+_event_loop: asyncio.AbstractEventLoop | None = None
+
+
+def set_event_loop(loop: asyncio.AbstractEventLoop) -> None:
+    """Store the main event loop for thread-safe WebSocket broadcasting.
+
+    Called during FastAPI lifespan startup.
+
+    Args:
+        loop: The asyncio event loop running the FastAPI server
+    """
+    global _event_loop
+    _event_loop = loop
+
 
 def get_connection_manager() -> ConnectionManager:
     """Get the global WebSocket connection manager.
@@ -239,6 +283,27 @@ def get_connection_manager() -> ConnectionManager:
     if _connection_manager is None:
         _connection_manager = ConnectionManager()
     return _connection_manager
+
+
+def broadcast_output_line_threadsafe(line: str) -> None:
+    """Broadcast an output line from a sync thread to WebSocket clients.
+
+    This is the bridge between the sync build thread and the async WebSocket
+    broadcast. Safe to call from any thread.
+
+    Args:
+        line: Output line to broadcast
+    """
+    if _event_loop is None or _event_loop.is_closed():
+        return
+    manager = get_connection_manager()
+    try:
+        _event_loop.call_soon_threadsafe(
+            asyncio.ensure_future,
+            manager.broadcast_build_output(line),
+        )
+    except RuntimeError:
+        pass  # Event loop closed during shutdown
 
 
 # Pydantic models for WebSocket messages

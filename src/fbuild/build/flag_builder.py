@@ -224,16 +224,40 @@ class FlagBuilder:
     def _add_user_flags(self, flags: Dict[str, List[str]]) -> None:
         """Add user build flags from platformio.ini.
 
-        These override/extend board defaults.
+        These override/extend board defaults. All flags are passed through:
+        - -D defines → common flags
+        - -std=gnu++* / -std=c++* → cxxflags (C++ standard, replaces existing)
+        - -std=gnu* / -std=c* (without ++) → cflags (C standard, replaces existing)
+        - Everything else → common flags (-O*, -f*, -W*, -include, etc.)
 
         Args:
             flags: Flags dictionary to update
         """
-        for flag in self.user_build_flags:
-            if flag.startswith("-D"):
-                # Add defines to common flags
+        i = 0
+        user_flags = self.user_build_flags
+        while i < len(user_flags):
+            flag = user_flags[i]
+
+            if flag.startswith("-std="):
+                # C++ standards go to cxxflags, C standards go to cflags
+                if "++" in flag:
+                    # Remove any existing -std= from cxxflags before adding
+                    flags["cxxflags"] = [f for f in flags["cxxflags"] if not f.startswith("-std=")]
+                    flags["cxxflags"].append(flag)
+                else:
+                    flags["cflags"] = [f for f in flags["cflags"] if not f.startswith("-std=")]
+                    flags["cflags"].append(flag)
+            elif flag == "-include" and i + 1 < len(user_flags):
+                # -include takes a separate argument — add both to common
                 flags["common"].append(flag)
-            # Could extend to handle other flag types if needed
+                flags["common"].append(user_flags[i + 1])
+                i += 2
+                continue
+            else:
+                # All other flags (-D, -O, -f, -W, etc.) go to common
+                flags["common"].append(flag)
+
+            i += 1
 
     def get_base_flags_for_library(self) -> List[str]:
         """Get base compiler flags for library compilation.

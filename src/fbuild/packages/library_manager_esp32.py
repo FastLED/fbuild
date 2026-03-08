@@ -32,6 +32,14 @@ from fbuild.subprocess_utils import safe_run
 
 logger = logging.getLogger(__name__)
 
+# C++-only flags that must not be passed to gcc when compiling .c files
+_CXX_ONLY_PREFIXES = ("-std=gnu++", "-std=c++", "-fno-rtti", "-fuse-cxa-atexit")
+
+
+def _is_cxx_only_flag(flag: str) -> bool:
+    """Check if a compiler flag is only valid for C++ (not C)."""
+    return any(flag.startswith(p) for p in _CXX_ONLY_PREFIXES)
+
 
 def _compile_single_file(job: tuple) -> tuple[Path, str]:
     """Compile a single source file (module-level function for thread pool execution).
@@ -534,6 +542,193 @@ class LibraryManagerESP32:
 
         return library
 
+    def _resolve_transitive_deps(
+        self,
+        libraries: List[LibraryESP32],
+        already_downloaded: set,
+        show_progress: bool,
+        lib_ignore: Optional[set[str]] = None,
+    ) -> List[LibraryESP32]:
+        """Resolve and download transitive dependencies from library.json files.
+
+        Scans each downloaded library for a library.json with a 'dependencies'
+        section and downloads any that aren't already present.
+
+        For registry-downloaded libraries, the original library.json (with dependencies)
+        ends up at lib_dir/src/library.json, while lib_dir/library.json is build metadata.
+        For GitHub-downloaded libraries, the original is at lib_dir/library.json directly.
+        We check both locations.
+
+        Args:
+            libraries: Already-downloaded libraries to scan for dependencies
+            already_downloaded: Set of lowercase library names already downloaded
+            show_progress: Whether to show progress
+            lib_ignore: Optional set of lowercase library names to skip
+
+        Returns:
+            List of newly downloaded transitive dependency libraries
+        """
+        new_libs: List[LibraryESP32] = []
+        queue = list(libraries)
+
+        while queue:
+            lib = queue.pop(0)
+
+            # Look for library.json in multiple locations:
+            # 1. lib_dir/library.json (GitHub downloads, or build metadata for registry)
+            # 2. lib_dir/src/library.json (original library.json for registry downloads)
+            deps: list = []
+            for candidate in [lib.src_dir / "library.json", lib.lib_dir / "library.json"]:
+                if not candidate.exists():
+                    continue
+                try:
+                    data = json.loads(candidate.read_text(encoding="utf-8"))
+                except KeyboardInterrupt:
+                    raise
+                except Exception:
+                    continue
+                candidate_deps = data.get("dependencies", [])
+                if candidate_deps:
+                    deps = candidate_deps
+                    break  # Found deps, use this file
+
+            if isinstance(deps, dict):
+                deps = [deps]
+
+            for dep in deps:
+                if not isinstance(dep, dict):
+                    continue
+
+                # Filter by platform — only download dependencies compatible with ESP32
+                dep_platforms = dep.get("platforms")
+                if dep_platforms:
+                    if isinstance(dep_platforms, str):
+                        dep_platforms = [dep_platforms]
+                    # Skip if dep declares platforms and none match espressif32
+                    if not any(p in ("espressif32", "*") for p in dep_platforms):
+                        continue
+
+                dep_name = dep.get("name", "")
+                dep_owner = dep.get("owner", "")
+                dep_version = dep.get("version")
+
+                if not dep_name or dep_name.lower() in already_downloaded:
+                    continue
+
+                # Skip libraries in the lib_ignore list
+                if lib_ignore and dep_name.lower() in lib_ignore:
+                    if show_progress:
+                        log_detail(f"Skipping ignored transitive dependency: {dep_name}")
+                    continue
+
+                # Build spec string
+                spec_str = f"{dep_owner}/{dep_name}" if dep_owner else dep_name
+                if dep_version:
+                    spec_str += f" @ {dep_version}"
+
+                if show_progress:
+                    log_detail(f"Resolving transitive dependency: {spec_str}")
+
+                try:
+                    spec = LibrarySpec.parse(spec_str)
+                    dep_lib = self.download_library(spec, show_progress)
+                    new_libs.append(dep_lib)
+                    already_downloaded.add(dep_name.lower())
+                    queue.append(dep_lib)  # Scan this lib for its deps too
+                except KeyboardInterrupt:
+                    raise
+                except Exception as e:
+                    if show_progress:
+                        log_detail(f"Warning: Could not resolve transitive dependency '{spec_str}': {e}")
+
+        return new_libs
+
+    def _download_github_library(self, spec: LibrarySpec, library: LibraryESP32, show_progress: bool) -> None:
+        """Download a library directly from a GitHub repository URL.
+
+        Downloads the repository as a zip archive from GitHub's archive endpoint
+        and extracts it into library.src_dir (lib_dir/src/) to match the
+        structure used by registry downloads.
+
+        Args:
+            spec: Library specification with github_url set
+            library: Target library instance
+            show_progress: Whether to show progress
+        """
+        import shutil
+        import tempfile
+
+        url = spec.github_url
+        if not url:
+            raise LibraryErrorESP32(f"No GitHub URL for library {spec.name}")
+
+        # GitHub provides zip archives at /archive/refs/heads/main.zip
+        archive_url = url.rstrip("/")
+        if archive_url.endswith(".git"):
+            archive_url = archive_url[:-4]
+
+        if show_progress:
+            log_detail(f"Downloading {spec.name} from GitHub: {url}")
+
+        from fbuild.packages.downloader import PackageDownloader
+
+        downloader = PackageDownloader()
+        library.lib_dir.mkdir(parents=True, exist_ok=True)
+
+        for branch in ["main", "master"]:
+            zip_url = f"{archive_url}/archive/refs/heads/{branch}.zip"
+            archive_path = library.lib_dir / "library.zip"
+            try:
+                downloader.download(zip_url, archive_path, show_progress=show_progress)
+                with tempfile.TemporaryDirectory() as temp_dir:
+                    import zipfile
+
+                    temp_path = Path(temp_dir)
+                    with zipfile.ZipFile(archive_path) as zf:
+                        zf.extractall(temp_path)
+
+                    # Strip single top-level directory (e.g., RemoteDebug-main/)
+                    entries = list(temp_path.iterdir())
+                    if len(entries) == 1 and entries[0].is_dir():
+                        source_dir = entries[0]
+                    else:
+                        source_dir = temp_path
+
+                    # Move extracted contents into lib_dir/src/ to match registry structure
+                    if library.src_dir.exists():
+                        shutil.rmtree(library.src_dir)
+                    shutil.move(str(source_dir), str(library.src_dir))
+
+                # Clean up archive
+                archive_path.unlink(missing_ok=True)
+
+                # Create build metadata library.json (like registry downloads do)
+                info_file = library.lib_dir / "library.json"
+                if not info_file.exists():
+                    # No library.json from repo — create minimal metadata
+                    with open(info_file, "w", encoding="utf-8") as f:
+                        json.dump(
+                            {
+                                "name": spec.name,
+                                "owner": spec.owner,
+                                "version": "github",
+                                "github_url": url,
+                            },
+                            f,
+                            indent=2,
+                        )
+
+                if show_progress:
+                    log_detail(f"Library '{spec.name}' downloaded from GitHub")
+                return
+            except KeyboardInterrupt:
+                raise
+            except Exception:
+                archive_path.unlink(missing_ok=True)
+                continue
+
+        raise LibraryErrorESP32(f"Failed to download {spec.name} from GitHub: {url} (tried main and master branches)")
+
     def download_library(self, spec: LibrarySpec, show_progress: bool = True) -> LibraryESP32:
         """Download a library from PlatformIO registry or set up local library.
 
@@ -559,6 +754,11 @@ class LibraryManagerESP32:
             if library.exists:
                 if show_progress:
                     log_detail(f"Library '{spec.name}' already downloaded (cached)")
+                return library
+
+            # GitHub URL libraries — clone directly instead of using PlatformIO registry
+            if spec.github_url:
+                self._download_github_library(spec, library, show_progress)
                 return library
 
             # Download from registry
@@ -635,7 +835,13 @@ class LibraryManagerESP32:
             # Get source files
             sources = library.get_source_files()
             if not sources:
-                raise LibraryErrorESP32(f"No source files found in library '{library.name}'")
+                # Header-only library (e.g., ArduinoJson) — no compilation needed
+                log_detail(f"Library '{library.name}' is header-only (no source files), skipping compilation")
+                # Save build info so needs_rebuild() returns False next time
+                build_info = {"compiler_flags": compiler_flags, "source_count": 0, "object_files": [], "header_only": True}
+                with open(library.build_info_file, "w", encoding="utf-8") as f:
+                    json.dump(build_info, f, indent=2)
+                return library.archive_file
 
             log_detail(f"Found {len(sources)} source file(s)", indent=8)
 
@@ -667,12 +873,16 @@ class LibraryManagerESP32:
 
             # Prepare compilation jobs
             compile_jobs = []
+            # C++-only flags that must not be passed to gcc for .c files
+            c_flags = [f for f in compiler_flags if not _is_cxx_only_flag(f)]
             for source in sources:
-                # Determine compiler based on extension
+                # Determine compiler and flags based on extension
                 if source.suffix in [".cpp", ".cc", ".cxx"]:
                     compiler = gxx_path
+                    flags_for_file = compiler_flags
                 else:
                     compiler = gcc_path
+                    flags_for_file = c_flags
 
                 # Output object file - maintain directory structure relative to src_dir
                 # This prevents name collisions and keeps .d files organized
@@ -684,7 +894,7 @@ class LibraryManagerESP32:
 
                 # Build compile command (trampolines ensure command line stays under 32K limit)
                 cmd = [str(compiler), "-c"]
-                cmd.extend(compiler_flags)
+                cmd.extend(flags_for_file)
                 cmd.extend(include_flags)
                 cmd.extend(["-o", str(obj_file), str(source)])
 
@@ -784,6 +994,7 @@ class LibraryManagerESP32:
         include_paths: List[Path],
         show_progress: bool = True,
         trampoline_cache: Optional["HeaderTrampolineCache"] = None,
+        lib_ignore: Optional[set[str]] = None,
     ) -> List[LibraryESP32]:
         """Ensure all library dependencies are downloaded and compiled.
 
@@ -794,20 +1005,34 @@ class LibraryManagerESP32:
             include_paths: Include directories
             show_progress: Whether to show progress
             trampoline_cache: Optional header trampoline cache for Windows (reduces command-line length)
+            lib_ignore: Optional set of lowercase library names to skip during transitive resolution
 
         Returns:
             List of compiled LibraryESP32 instances
         """
         libraries = []
+        downloaded_names: set[str] = set()
 
+        # Download all libraries first so cross-library includes are available
         for spec_str in lib_specs:
-            # Parse library specification
             spec = LibrarySpec.parse(spec_str)
-
-            # Download library
             library = self.download_library(spec, show_progress)
+            libraries.append(library)
+            downloaded_names.add(library.name.lower())
 
-            # Check if rebuild needed
+        # Resolve transitive dependencies from library.json files
+        transitive_libs = self._resolve_transitive_deps(libraries, downloaded_names, show_progress, lib_ignore=lib_ignore)
+        libraries.extend(transitive_libs)
+
+        # Build augmented include paths with all library includes upfront
+        # so that inter-library dependencies resolve (e.g., Adafruit GFX -> Adafruit BusIO)
+        all_lib_includes: List[Path] = []
+        for library in libraries:
+            all_lib_includes.extend(library.get_include_dirs())
+        augmented_includes = list(include_paths) + all_lib_includes
+
+        # Compile all libraries (now each can see sibling library headers)
+        for library in libraries:
             needs_rebuild, reason = self.needs_rebuild(library, compiler_flags)
 
             if needs_rebuild:
@@ -818,14 +1043,12 @@ class LibraryManagerESP32:
                     library,
                     toolchain_path,
                     compiler_flags,
-                    include_paths,
+                    augmented_includes,
                     show_progress,
                     trampoline_cache=trampoline_cache,
                 )
             else:
                 log_detail(f"Library '{library.name}' is up to date (cached)")
-
-            libraries.append(library)
 
         return libraries
 

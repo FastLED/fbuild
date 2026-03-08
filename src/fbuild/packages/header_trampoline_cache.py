@@ -425,6 +425,19 @@ class HeaderTrampolineCache:
                     headers_skipped += 1
                     continue
 
+                # Skip headers that use #include_next — trampolining breaks them
+                # because the original directory context is lost (we use absolute paths).
+                # The next occurrence of this header (from a later -I dir) will be used instead.
+                try:
+                    content = header_file.read_text(encoding="utf-8", errors="replace")
+                    if "#include_next" in content:
+                        headers_skipped += 1
+                        continue
+                except KeyboardInterrupt:
+                    raise
+                except Exception:
+                    pass  # If we can't read it, try to trampoline anyway
+
                 # Create trampoline path in the unified directory root
                 trampoline_file = self.cache_root / rel_path
                 trampoline_file.parent.mkdir(parents=True, exist_ok=True)
