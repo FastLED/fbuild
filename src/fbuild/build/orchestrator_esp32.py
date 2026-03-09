@@ -168,6 +168,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             env_config = config.get_env_config(env_name)
             board_id = env_config.get("board", "")
             build_flags = config.get_build_flags(env_name)
+            build_src_flags = config.get_build_src_flags(env_name)
 
             # Add debug logging for lib_deps
             logger.debug(f"[ORCHESTRATOR] About to call config.get_lib_deps('{env_name}')")
@@ -193,7 +194,7 @@ class OrchestratorESP32(IBuildOrchestrator):
                     logger.debug(f"[ORCHESTRATOR] build_unflags removed {original_count - len(build_flags)} flags: {unflags}")
 
             # Call internal build method
-            esp32_result = self._build_esp32(board_id, env_config, build_flags, lib_deps, request)
+            esp32_result = self._build_esp32(board_id, env_config, build_flags, build_src_flags, lib_deps, request)
 
             # Convert BuildResultESP32 to BuildResult
             return BuildResult(
@@ -216,6 +217,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         board_id: str,
         env_config: dict,
         build_flags: List[str],
+        build_src_flags: List[str],
         lib_deps: List[str],
         request: "BuildParams",
     ) -> BuildResultESP32:
@@ -225,7 +227,8 @@ class OrchestratorESP32(IBuildOrchestrator):
         Args:
             board_id: Board ID (e.g., esp32-c6-devkitm-1)
             env_config: Environment configuration dict
-            build_flags: User build flags from platformio.ini
+            build_flags: User build flags from platformio.ini (global)
+            build_src_flags: User build_src_flags from platformio.ini (sketch-only)
             lib_deps: Library dependencies from platformio.ini
             request: Build request with basic parameters
 
@@ -419,6 +422,7 @@ class OrchestratorESP32(IBuildOrchestrator):
                 variant=variant,
                 core=core,
                 user_build_flags=build_flags,
+                user_build_src_flags=build_src_flags,
                 env_config=env_config,
             )
 
@@ -561,6 +565,28 @@ class OrchestratorESP32(IBuildOrchestrator):
             embed_obj_files = self._process_embed_files(env_config, project_dir, build_dir, toolchain, mcu, verbose)
             if embed_obj_files:
                 sketch_obj_files.extend(embed_obj_files)
+
+            # Merge all library archives into a single aggregate archive.
+            # This reduces the linker input from N separate .a files to one,
+            # giving ld.bfd fewer archive indices to scan during symbol resolution.
+            # The merged archive is cached — only rebuilt when inputs change.
+            if library_archives:
+                merged_libs_archive = build_dir / "libs.a"
+                # Check if merged archive is up-to-date (newer than all inputs)
+                needs_merge = not merged_libs_archive.exists()
+                if not needs_merge:
+                    merged_mtime = merged_libs_archive.stat().st_mtime
+                    needs_merge = any(a.exists() and a.stat().st_mtime > merged_mtime for a in library_archives)
+
+                if needs_merge:
+                    from fbuild.build.archive_creator import ArchiveCreator
+
+                    archive_creator = ArchiveCreator(show_progress=verbose)
+                    ar_path = toolchain.get_ar_path()
+                    if ar_path is not None:
+                        archive_creator.merge_archives(ar_path, merged_libs_archive, library_archives)
+
+                library_archives = [merged_libs_archive]
 
             # Initialize linker
             log_phase(10, 13, "Linking firmware...")

@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "./lint",
+            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run python lint",
             "timeout": 600
           }
         ]

@@ -6,14 +6,18 @@ object files using the archiver tool (ar).
 Design:
     - Wraps ar command execution
     - Creates .a archives from object files
+    - Merges multiple archives into a single aggregate archive
     - Provides clear error messages
     - Shows archive size information
 """
 
 import gc
+import os
 import platform
+import shutil
 import subprocess
 import time
+from collections import Counter
 from pathlib import Path
 from typing import List
 
@@ -167,3 +171,129 @@ class ArchiveCreator:
         """
         archive_path = build_dir / "core.a"
         return self.create_archive(ar_path, archive_path, object_files)
+
+    def merge_archives(self, ar_path: Path, output_path: Path, archives: List[Path]) -> Path:
+        """Merge multiple archives into a single aggregate archive.
+
+        Extracts all .o/.obj members from each input archive and repacks them
+        into one output archive. Handles duplicate member names across archives
+        (e.g., ESP-IDF's libhal.a has two efuse_hal.c.obj members).
+
+        Args:
+            ar_path: Path to archiver tool (ar)
+            output_path: Path for the merged output archive
+            archives: List of archive paths to merge
+
+        Returns:
+            Path to the merged archive
+
+        Raises:
+            ArchiveError: If merge fails
+        """
+        if not archives:
+            raise ArchiveError("No archives provided for merging")
+
+        from fbuild.output import log_detail
+
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        ar = str(ar_path)
+
+        # Temporary directory for extracted .o files
+        extract_base = output_path.parent / "_merge_tmp"
+        if extract_base.exists():
+            shutil.rmtree(extract_base)
+        extract_base.mkdir()
+
+        all_objs: List[Path] = []
+
+        try:
+            for i, archive in enumerate(archives):
+                if not archive.exists():
+                    continue
+
+                extract_dir = extract_base / f"ar_{i}"
+                extract_dir.mkdir()
+
+                abs_archive = str(archive.resolve())
+
+                # List members to detect duplicates
+                result = safe_run([ar, "t", abs_archive], capture_output=True, text=True, timeout=10)
+                members = result.stdout.strip().split("\n") if result.stdout.strip() else []
+
+                counts = Counter(members)
+                has_dupes = any(v > 1 for v in counts.values())
+
+                if has_dupes:
+                    # Extract each member individually, handling duplicates with xN
+                    occurrence: dict[str, int] = {}
+                    for member in members:
+                        occurrence[member] = occurrence.get(member, 0) + 1
+                        n = occurrence[member]
+                        safe_run(
+                            [ar, "xN", str(n), abs_archive, member],
+                            capture_output=True,
+                            text=True,
+                            timeout=10,
+                            cwd=str(extract_dir),
+                        )
+                        base, ext = os.path.splitext(member)
+                        new_name = f"ar{i}_{base}_n{n}{ext}"
+                        src = extract_dir / member
+                        dst = extract_dir / new_name
+                        if src.exists():
+                            src.rename(dst)
+                            all_objs.append(dst)
+                else:
+                    # No duplicates — extract all at once (faster)
+                    safe_run(
+                        [ar, "x", abs_archive],
+                        capture_output=True,
+                        text=True,
+                        timeout=30,
+                        cwd=str(extract_dir),
+                    )
+                    for fname in os.listdir(extract_dir):
+                        if fname.endswith(".o") or fname.endswith(".obj"):
+                            new_name = f"ar{i}_{fname}"
+                            src = extract_dir / fname
+                            dst = extract_dir / new_name
+                            src.rename(dst)
+                            all_objs.append(dst)
+
+            if not all_objs:
+                raise ArchiveError("No object files extracted from archives")
+
+            # Create merged archive in batches (avoid command-line length limits)
+            batch_size = 200
+            for batch_start in range(0, len(all_objs), batch_size):
+                batch = all_objs[batch_start : batch_start + batch_size]
+                mode = "rcs" if batch_start == 0 else "rs"
+                result = safe_run(
+                    [ar, mode, str(output_path)] + [str(o) for o in batch],
+                    capture_output=True,
+                    text=True,
+                    timeout=60,
+                )
+                if result.returncode != 0:
+                    raise ArchiveError(f"Archive merge failed: {result.stderr}")
+
+            if not output_path.exists():
+                raise ArchiveError(f"Merged archive was not created: {output_path}")
+
+            if self.show_progress:
+                from fbuild.output import format_size
+
+                size = output_path.stat().st_size
+                log_detail(f"Merged {len(archives)} archives ({len(all_objs)} objects) → {output_path.name} ({format_size(size)})")
+
+            return output_path
+
+        except KeyboardInterrupt as ke:
+            from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
+        finally:
+            # Clean up temp directory
+            if extract_base.exists():
+                shutil.rmtree(extract_base, ignore_errors=True)

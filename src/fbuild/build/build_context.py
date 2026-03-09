@@ -146,6 +146,7 @@ class BuildContext:
     variant: str
     core: str
     user_build_flags: List[str]
+    user_build_src_flags: List[str]  # build_src_flags from platformio.ini (sketch-only)
     env_config: Dict[str, Any]
 
     @classmethod
@@ -166,6 +167,7 @@ class BuildContext:
         variant: str,
         core: str,
         user_build_flags: List[str],
+        user_build_src_flags: List[str],
         env_config: Dict[str, Any],
     ) -> "BuildContext":
         """Create a BuildContext from a BuildParams plus platform-specific info.
@@ -187,7 +189,8 @@ class BuildContext:
             platform_config: Platform configuration dictionary (loaded once)
             variant: Board variant name
             core: Arduino core name
-            user_build_flags: Build flags from platformio.ini
+            user_build_flags: Build flags from platformio.ini (global, all targets)
+            user_build_src_flags: Build src flags from platformio.ini (sketch-only)
             env_config: Environment configuration from platformio.ini
 
         Returns:
@@ -217,6 +220,7 @@ class BuildContext:
             variant=variant,
             core=core,
             user_build_flags=user_build_flags,
+            user_build_src_flags=user_build_src_flags,
             env_config=env_config,
         )
 

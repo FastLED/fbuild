@@ -1,38 +1,47 @@
 #!/bin/bash
+""":"
+exec uv run python "$0" "$@"
+"""
 
-set -e
+import os
+import subprocess
+import sys
 
-# Enable dev mode to isolate from production
-export FBUILD_DEV_MODE=1
 
-# Check for --full flag
-FULL_MODE=false
-for arg in "$@"; do
-    if [ "$arg" == "--full" ]; then
-        FULL_MODE=true
-        break
-    fi
-done
+def run(cmd: list[str]) -> None:
+    result = subprocess.run(cmd)
+    if result.returncode != 0:
+        sys.exit(result.returncode)
 
-echo "========================================"
-echo "Running unit tests (parallel)"
-echo "========================================"
-uv run --group test pytest -n auto tests/unit -v --durations=0
 
-if [ "$FULL_MODE" == "true" ]; then
-    echo ""
-    echo "========================================"
-    echo "Running integration tests (serial)"
-    echo "========================================"
-    uv run --group test pytest tests/integration -v --durations=0
-else
-    echo ""
-    echo "========================================"
-    echo "Skipping integration tests (use --full to run them)"
-    echo "========================================"
-fi
+def main() -> int:
+    os.environ["FBUILD_DEV_MODE"] = "1"
 
-echo ""
-echo "========================================"
-echo "All tests completed successfully!"
-echo "========================================"
+    full_mode = "--full" in sys.argv
+
+    print("========================================")
+    print("Running unit tests (parallel)")
+    print("========================================")
+    run(["uv", "run", "--group", "test", "pytest", "-n", "auto", "tests/unit", "-v", "--durations=0"])
+
+    if full_mode:
+        print()
+        print("========================================")
+        print("Running integration tests (serial)")
+        print("========================================")
+        run(["uv", "run", "--group", "test", "pytest", "tests/integration", "-v", "--durations=0"])
+    else:
+        print()
+        print("========================================")
+        print("Skipping integration tests (use --full to run them)")
+        print("========================================")
+
+    print()
+    print("========================================")
+    print("All tests completed successfully!")
+    print("========================================")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

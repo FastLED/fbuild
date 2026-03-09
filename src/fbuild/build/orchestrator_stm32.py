@@ -94,10 +94,11 @@ class OrchestratorSTM32(IBuildOrchestrator):
             env_config = config.get_env_config(env_name)
             board_id = env_config.get("board", "nucleo_f446re")
             build_flags = config.get_build_flags(env_name)
+            build_src_flags = config.get_build_src_flags(env_name)
             lib_deps = config.get_lib_deps(env_name)
 
             # Call internal build method
-            stm32_result = self._build_stm32(board_id, env_config, build_flags, lib_deps, request)
+            stm32_result = self._build_stm32(board_id, env_config, build_flags, build_src_flags, lib_deps, request)
 
             # Convert BuildResultSTM32 to BuildResult
             return BuildResult(
@@ -120,6 +121,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
         board_id: str,
         env_config: dict,
         build_flags: List[str],
+        build_src_flags: List[str],
         lib_deps: List[str],
         request: "BuildParams",
     ) -> BuildResultSTM32:
@@ -129,7 +131,8 @@ class OrchestratorSTM32(IBuildOrchestrator):
         Args:
             board_id: Board ID (e.g., nucleo_f446re, bluepill_f103c8)
             env_config: Environment configuration dict
-            build_flags: User build flags from platformio.ini
+            build_flags: User build flags from platformio.ini (global)
+            build_src_flags: User build_src_flags from platformio.ini (sketch-only)
             lib_deps: Library dependencies from platformio.ini
             request: Build request with basic parameters
 
@@ -250,6 +253,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
                 variant=variant,
                 core=core,
                 user_build_flags=build_flags,
+                user_build_src_flags=build_src_flags,
                 env_config=env_config,
             )
 

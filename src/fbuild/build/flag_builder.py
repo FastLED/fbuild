@@ -53,6 +53,7 @@ class FlagBuilder:
 
         # Profile flags are pre-resolved in context
         self._profile_flags = context.profile_flags
+        self._debug_flag_warning_shown = False
 
     @staticmethod
     def parse_flag_string(flag_string: str) -> List[str]:
@@ -221,6 +222,37 @@ class FlagBuilder:
                 if flag.startswith("-D"):
                     flags["common"].append(flag)
 
+    def _warn_debug_flags_in_quick_profile(self) -> None:
+        """Warn if user has debug flags (-g*) in global build_flags during quick profile.
+
+        In quick profile, fbuild defaults to -g0 (no debug info) for fast builds.
+        If the user puts -g/-g1/-g2/-g3 in build_flags, it overrides -g0 and applies
+        to ALL compilation (sketch, core, and libraries), massively inflating .o files
+        and slowing linking.  The user likely intended debug info for their sketch only.
+        """
+        if self._debug_flag_warning_shown:
+            return
+
+        from fbuild.build.build_profiles import BuildProfile
+
+        if self.context.profile != BuildProfile.QUICK:
+            return
+
+        debug_flags = [f for f in self.user_build_flags if f == "-g" or (f.startswith("-g") and f[2:3] in ("0", "1", "2", "3", "g", "d") and not f.startswith("-gnone") and f != "-g0")]
+        if not debug_flags:
+            return
+
+        self._debug_flag_warning_shown = True
+
+        from fbuild.output import log_warning
+
+        flag_str = " ".join(debug_flags)
+        log_warning(
+            f"build_flags contains '{flag_str}' which applies to ALL files (sketch, core, libraries).\n"
+            f"  In quick profile this overrides the default -g0, inflating object files ~30x and slowing linking.\n"
+            f"  Recommendation: move '{flag_str}' from build_flags to build_src_flags so it only applies to your sketch code."
+        )
+
     def _add_user_flags(self, flags: Dict[str, List[str]]) -> None:
         """Add user build flags from platformio.ini.
 
@@ -233,6 +265,8 @@ class FlagBuilder:
         Args:
             flags: Flags dictionary to update
         """
+        self._warn_debug_flags_in_quick_profile()
+
         i = 0
         user_flags = self.user_build_flags
         while i < len(user_flags):

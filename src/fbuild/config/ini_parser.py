@@ -299,6 +299,26 @@ class PlatformIOConfig:
 
         return flags
 
+    def get_build_src_flags(self, env_name: str) -> List[str]:
+        """Parse and return build_src_flags for an environment.
+
+        These flags apply only to project source files (sketch), not to
+        libraries or core.  Mirrors PlatformIO's build_src_flags semantics.
+
+        Args:
+            env_name: Name of the environment
+
+        Returns:
+            List of build_src_flags (empty if not set)
+        """
+        env_config = self.get_env_config(env_name)
+        src_flags_str = env_config.get("build_src_flags", "")
+
+        if not src_flags_str:
+            return []
+
+        return [f for f in src_flags_str.split() if f]
+
     def get_lib_deps(self, env_name: str) -> List[str]:
         """
         Parse and return library dependencies for an environment.

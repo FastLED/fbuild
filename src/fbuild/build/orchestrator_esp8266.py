@@ -98,6 +98,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
             env_config = config.get_env_config(env_name)
             board_id = env_config.get("board", "")
             build_flags = config.get_build_flags(env_name)
+            build_src_flags = config.get_build_src_flags(env_name)
 
             # Add debug logging for lib_deps
             logger.debug(f"[ORCHESTRATOR] About to call config.get_lib_deps('{env_name}')")
@@ -105,7 +106,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
             logger.debug(f"[ORCHESTRATOR] get_lib_deps returned: {lib_deps}")
 
             # Call internal build method
-            esp8266_result = self._build_esp8266(board_id, env_config, build_flags, lib_deps, request)
+            esp8266_result = self._build_esp8266(board_id, env_config, build_flags, build_src_flags, lib_deps, request)
 
             # Convert BuildResultESP8266 to BuildResult
             return BuildResult(
@@ -128,6 +129,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
         board_id: str,
         env_config: dict,
         build_flags: List[str],
+        build_src_flags: List[str],
         lib_deps: List[str],
         request: "BuildParams",
     ) -> BuildResultESP8266:
@@ -137,7 +139,8 @@ class OrchestratorESP8266(IBuildOrchestrator):
         Args:
             board_id: Board ID (e.g., nodemcuv2, d1_mini)
             env_config: Environment configuration dict
-            build_flags: User build flags from platformio.ini
+            build_flags: User build flags from platformio.ini (global)
+            build_src_flags: User build_src_flags from platformio.ini (sketch-only)
             lib_deps: Library dependencies from platformio.ini
             request: Build request with basic parameters
 
@@ -274,6 +277,7 @@ class OrchestratorESP8266(IBuildOrchestrator):
                 variant=variant,
                 core=core,
                 user_build_flags=build_flags,
+                user_build_src_flags=build_src_flags,
                 env_config=env_config,
             )
 

@@ -104,10 +104,11 @@ class OrchestratorRP2040(IBuildOrchestrator):
             env_config = config.get_env_config(env_name)
             board_id = env_config.get("board", "rpipico")
             build_flags = config.get_build_flags(env_name)
+            build_src_flags = config.get_build_src_flags(env_name)
             lib_deps = config.get_lib_deps(env_name)
 
             # Call internal build method
-            rp2040_result = self._build_rp2040(board_id, env_config, build_flags, lib_deps, request)
+            rp2040_result = self._build_rp2040(board_id, env_config, build_flags, build_src_flags, lib_deps, request)
 
             # Convert BuildResultRP2040 to BuildResult
             # Note: hex_path maps to uf2_path for RP2040/RP2350
@@ -131,6 +132,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
         board_id: str,
         env_config: dict,
         build_flags: List[str],
+        build_src_flags: List[str],
         lib_deps: List[str],
         request: "BuildParams",
     ) -> BuildResultRP2040:
@@ -140,7 +142,8 @@ class OrchestratorRP2040(IBuildOrchestrator):
         Args:
             board_id: Board ID (e.g., rpipico, rpipico2)
             env_config: Environment configuration dict
-            build_flags: User build flags from platformio.ini
+            build_flags: User build flags from platformio.ini (global)
+            build_src_flags: User build_src_flags from platformio.ini (sketch-only)
             lib_deps: Library dependencies from platformio.ini
             request: Build request with basic parameters
 
@@ -261,6 +264,7 @@ class OrchestratorRP2040(IBuildOrchestrator):
                 variant=variant,
                 core=core,
                 user_build_flags=build_flags,
+                user_build_src_flags=build_src_flags,
                 env_config=env_config,
             )
 

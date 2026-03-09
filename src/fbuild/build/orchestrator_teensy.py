@@ -89,10 +89,11 @@ class OrchestratorTeensy(IBuildOrchestrator):
             env_config = config.get_env_config(env_name)
             board_id = env_config.get("board", "teensy41")
             build_flags = config.get_build_flags(env_name)
+            build_src_flags = config.get_build_src_flags(env_name)
             lib_deps = config.get_lib_deps(env_name)
 
             # Call internal build method
-            teensy_result = self._build_teensy(board_id, env_config, build_flags, lib_deps, request)
+            teensy_result = self._build_teensy(board_id, env_config, build_flags, build_src_flags, lib_deps, request)
 
             # Convert BuildResultTeensy to BuildResult
             return BuildResult(
@@ -115,6 +116,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
         board_id: str,
         env_config: dict,
         build_flags: List[str],
+        build_src_flags: List[str],
         lib_deps: List[str],
         request: "BuildParams",
     ) -> BuildResultTeensy:
@@ -124,7 +126,8 @@ class OrchestratorTeensy(IBuildOrchestrator):
         Args:
             board_id: Board ID (e.g., teensy41)
             env_config: Environment configuration dict
-            build_flags: User build flags from platformio.ini
+            build_flags: User build flags from platformio.ini (global)
+            build_src_flags: User build_src_flags from platformio.ini (sketch-only)
             lib_deps: Library dependencies from platformio.ini
             request: Build request with basic parameters
 
@@ -243,6 +246,7 @@ class OrchestratorTeensy(IBuildOrchestrator):
                 variant=variant,
                 core=core,
                 user_build_flags=build_flags,
+                user_build_src_flags=build_src_flags,
                 env_config=env_config,
             )
 

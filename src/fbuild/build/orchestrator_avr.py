@@ -196,6 +196,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
 
             state_tracker = BuildStateTracker(build_dir)
             build_flags = config.get_build_flags(env_name)
+            build_src_flags = config.get_build_src_flags(env_name)
             lib_deps = config.get_lib_deps(env_name)
 
             needs_rebuild, reasons, current_state = state_tracker.check_invalidation(
@@ -290,6 +291,7 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
                 variant=board_config.variant,
                 core=board_config.core,
                 user_build_flags=build_flags,
+                user_build_src_flags=build_src_flags,
                 env_config=env_config,
             )
 

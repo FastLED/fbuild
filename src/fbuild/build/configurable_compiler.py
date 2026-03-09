@@ -56,6 +56,7 @@ class ConfigurableCompiler(ICompiler):
         self.build_dir = context.build_dir
         self.show_progress = context.verbose
         self.user_build_flags = context.user_build_flags
+        self.user_build_src_flags = context.user_build_src_flags
         self.cache = context.cache
         self.mcu = context.mcu
         self.pending_jobs: List[str] = []  # Track async job IDs
@@ -241,7 +242,7 @@ class ConfigurableCompiler(ICompiler):
         except Exception as e:
             raise ConfigurableCompilerError(str(e))
 
-    def compile_source(self, source_path: Path, output_path: Optional[Path] = None) -> Path:
+    def compile_source(self, source_path: Path, output_path: Optional[Path] = None, extra_flags: Optional[List[str]] = None) -> Path:
         """Compile a single source file to object file.
 
         Uses parallel compilation if queue available (jobs != 1),
@@ -250,6 +251,7 @@ class ConfigurableCompiler(ICompiler):
         Args:
             source_path: Path to .c or .cpp source file
             output_path: Optional path for output .o file
+            extra_flags: Additional flags appended after all other flags (e.g. build_src_flags for sketch files)
 
         Returns:
             Path to generated .o file
@@ -277,6 +279,10 @@ class ConfigurableCompiler(ICompiler):
             compile_flags.extend(flags["cxxflags"])
         else:
             compile_flags.extend(flags["cflags"])
+
+        # Append extra flags (e.g. build_src_flags for sketch-only compilation)
+        if extra_flags:
+            compile_flags.extend(extra_flags)
 
         # Get include paths
         includes = self.get_include_paths()
@@ -329,6 +335,7 @@ class ConfigurableCompiler(ICompiler):
         - The main .ino file is preprocessed and compiled
         - Additional .cpp files in the sketch directory are also compiled
         - The sketch directory is added to include paths for header file resolution
+        - build_src_flags from platformio.ini are applied (sketch-only flags)
 
         Args:
             sketch_path: Path to .ino file
@@ -340,6 +347,9 @@ class ConfigurableCompiler(ICompiler):
             ConfigurableCompilerError: If compilation fails
         """
         object_files = []
+
+        # build_src_flags apply only to sketch source files, not core or libraries
+        src_flags = self.user_build_src_flags if self.user_build_src_flags else None
 
         # Add sketch directory as a sketch include (after framework includes)
         # so project headers don't shadow framework headers with the same name.
@@ -359,7 +369,7 @@ class ConfigurableCompiler(ICompiler):
             object_files.append(obj_path)
         else:
             # Compile preprocessed .cpp
-            compiled_obj = self.compile_source(cpp_path, obj_path)
+            compiled_obj = self.compile_source(cpp_path, obj_path, extra_flags=src_flags)
             object_files.append(compiled_obj)
 
         # Find and compile additional .cpp files in the sketch directory
@@ -373,7 +383,7 @@ class ConfigurableCompiler(ICompiler):
                 continue
 
             try:
-                compiled_obj = self.compile_source(cpp_file, cpp_obj_path)
+                compiled_obj = self.compile_source(cpp_file, cpp_obj_path, extra_flags=src_flags)
                 object_files.append(compiled_obj)
             except ConfigurableCompilerError as e:
                 # Re-raise with more context about which file failed

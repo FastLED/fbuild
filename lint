@@ -1,25 +1,37 @@
 #!/bin/bash
-set -e
+""":"
+exec uv run python "$0" "$@"
+"""
 
-echo Running ruff check src
-uv run ruff check --fix src
-echo Running ruff check tests
-uv run ruff check --fix tests
-echo Running ruff format src tests
-uv run ruff format src tests
-echo Running pyright src tests
-uv run pyright src tests
-echo Running KeyboardInterrupt checks
-uv run python scripts/check_keyboard_interrupt.py
-echo Running sys.path.insert checks
-uv run python scripts/check_sys_path.py
-echo Running subprocess safety checks
-uv run python scripts/check_subprocess_safety.py
-echo Running orchestrator signature checks
-uv run python scripts/check_orchestrator_signatures.py
-echo Running message serialization checks
-uv run python scripts/check_message_serialization.py
-echo Running .fbuild path checks
-uv run python scripts/check_fbuild_paths.py
-echo Linting complete!
-exit 0
+import subprocess
+import sys
+
+
+def run(cmd: str) -> None:
+    print(f"Running {cmd}")
+    result = subprocess.run(cmd.split())
+    if result.returncode != 0:
+        sys.exit(result.returncode)
+
+
+def run_uv(cmd: str) -> None:
+    run(f"uv run {cmd}")
+
+
+def main() -> int:
+    run_uv("ruff check --fix src")
+    run_uv("ruff check --fix tests")
+    run_uv("ruff format src tests")
+    run_uv("pyright src tests")
+    run_uv("python scripts/check_keyboard_interrupt.py")
+    run_uv("python scripts/check_sys_path.py")
+    run_uv("python scripts/check_subprocess_safety.py")
+    run_uv("python scripts/check_orchestrator_signatures.py")
+    run_uv("python scripts/check_message_serialization.py")
+    run_uv("python scripts/check_fbuild_paths.py")
+    print("Linting complete!")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

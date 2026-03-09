@@ -19,6 +19,7 @@ Design:
 
 import hashlib
 import json
+import os
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
@@ -250,6 +251,11 @@ class BuildStateTracker:
                 sha256.update(chunk)
         return sha256.hexdigest()
 
+    # Directories to skip when hashing source files.
+    # These contain build artifacts, caches, and other non-source content
+    # that would waste time hashing and never affect build correctness.
+    _SKIP_DIRS = frozenset({".fbuild", ".pio", ".git", "node_modules", "build", "__pycache__", ".venv"})
+
     @staticmethod
     def hash_source_files(source_dir: Path) -> str:
         """Calculate combined SHA256 hash of all source files in a directory.
@@ -266,12 +272,19 @@ class BuildStateTracker:
         """
         sha256 = hashlib.sha256()
         source_extensions = {".ino", ".cpp", ".c", ".h", ".hpp", ".cc", ".cxx"}
+        skip_dirs = BuildStateTracker._SKIP_DIRS
 
-        # Find all source files recursively
+        # Walk directory tree manually to skip build artifact directories.
+        # Using rglob("*{ext}") would descend into .fbuild/, .pio/, etc.
+        # and hash thousands of build artifacts (6000+ files in NightDriverStrip).
         source_files = []
         if source_dir.exists():
-            for ext in source_extensions:
-                source_files.extend(source_dir.rglob(f"*{ext}"))
+            for root, dirs, files in os.walk(source_dir):
+                # Prune skipped directories in-place so os.walk doesn't descend
+                dirs[:] = [d for d in dirs if d not in skip_dirs]
+                for fname in files:
+                    if any(fname.endswith(ext) for ext in source_extensions):
+                        source_files.append(Path(root) / fname)
 
         # Sort by path for deterministic ordering
         source_files = sorted(source_files)
