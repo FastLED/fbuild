@@ -36,10 +36,18 @@ jobs:
       - name: Install fbuild
         run: pip install -e .
 
-      - name: Build ${{ inputs.workflow-name }}
-        run: fbuild build ${{ inputs.test-dir }} -e ${{ inputs.env-name }}
+      - name: Build ${{ inputs.workflow-name }} (quick)
+        run: fbuild build ${{ inputs.test-dir }} -e ${{ inputs.env-name }} --quick
 
-      - name: Verify firmware output
+      - name: Verify quick firmware output
+        run: |
+          test -f ${{ inputs.test-dir }}/.fbuild/build/${{ inputs.env-name }}/quick/firmware.${{ inputs.firmware-ext }}
+          echo "Quick build successful - firmware.${{ inputs.firmware-ext }} generated"
+
+      - name: Build ${{ inputs.workflow-name }} (release)
+        run: fbuild build ${{ inputs.test-dir }} -e ${{ inputs.env-name }} --release
+
+      - name: Verify release firmware output
         run: |
           test -f ${{ inputs.test-dir }}/.fbuild/build/${{ inputs.env-name }}/release/firmware.${{ inputs.firmware-ext }}
-          echo "Build successful - firmware.${{ inputs.firmware-ext }} generated"
+          echo "Release build successful - firmware.${{ inputs.firmware-ext }} generated"
