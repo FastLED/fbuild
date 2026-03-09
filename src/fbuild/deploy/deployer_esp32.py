@@ -331,23 +331,17 @@ class ESP32Deployer(IDeployer):
         Returns:
             DeploymentResult with success status
         """
-        # Get build directory (check profile subdirectories first)
-        from fbuild.paths import get_project_build_root
+        # Get build directory containing firmware
+        from fbuild.paths import find_firmware_dir
 
-        base_build_dir = get_project_build_root(project_dir) / env_name
-        build_dir = base_build_dir
-        for profile_name in ["release", "quick"]:
-            candidate = base_build_dir / profile_name
-            if (candidate / "firmware.bin").exists():
-                build_dir = candidate
-                break
+        build_dir_result = find_firmware_dir(project_dir, env_name)
+        if build_dir_result is None:
+            raise DeploymentError(f"Firmware not found for environment '{env_name}'. Run 'fbuild build' first.")
+        build_dir = build_dir_result
 
         firmware_bin = (build_dir / "firmware.bin").absolute()
         bootloader_bin = (build_dir / "bootloader.bin").absolute()
         partitions_bin = (build_dir / "partitions.bin").absolute()
-
-        if not firmware_bin.exists():
-            raise DeploymentError(f"Firmware not found at {firmware_bin}. Run 'fbuild build' first.")
 
         # Get cache and ensure platform/toolchain packages
         cache = Cache(project_dir)

@@ -42,31 +42,19 @@ class ESP8266Deployer(IDeployer):
             DeploymentResult with success status and message
         """
         # Find firmware binary in build directory
-        from fbuild.paths import get_project_fbuild_dir
+        from fbuild.paths import find_firmware
 
-        build_dir = get_project_fbuild_dir(project_dir) / env_name
-        firmware_bin = build_dir / "firmware.bin"
+        firmware_path = find_firmware(project_dir, env_name, "firmware.bin")
 
-        if not firmware_bin.exists():
+        if firmware_path is None:
+            from fbuild.paths import get_project_build_root
+
             return DeploymentResult(
                 success=False,
-                message=f"Firmware binary not found: {firmware_bin}",
+                message=f"Firmware binary not found in {get_project_build_root(project_dir) / env_name}. Run 'fbuild build' first.",
             )
 
-        if not port:
-            return DeploymentResult(
-                success=False,
-                message="Serial port not specified for ESP8266 deployment",
-            )
-
-        firmware_path = firmware_bin
         baud_rate = 115200  # Default baud rate for ESP8266
-
-        if not firmware_path.exists():
-            return DeploymentResult(
-                success=False,
-                message=f"Firmware not found: {firmware_path}",
-            )
 
         if not port:
             return DeploymentResult(

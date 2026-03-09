@@ -386,26 +386,9 @@ class DeployRequestProcessor(RequestProcessor):
         Returns:
             Path to firmware file, or None if not found
         """
-        # Check common firmware locations (ordered by preference)
-        from fbuild.paths import get_project_build_root
+        from fbuild.paths import find_firmware
 
-        candidate_dirs = [
-            project_path / ".pio" / "build" / environment,
-            get_project_build_root(project_path) / environment / "release",
-            get_project_build_root(project_path) / environment / "quick",
-            get_project_build_root(project_path) / environment,
-        ]
-
-        for build_dir in candidate_dirs:
-            if not build_dir.exists():
-                continue
-            # Look for firmware files (prefer .bin, then .hex, then .elf)
-            for name in ["firmware.bin", "firmware.hex", "firmware.elf"]:
-                firmware_file = build_dir / name
-                if firmware_file.exists():
-                    return firmware_file
-
-        return None
+        return find_firmware(project_path, environment)
 
     def _build_firmware(self, request: "DeployRequest", context: "DaemonContext") -> bool:
         """Build the firmware.

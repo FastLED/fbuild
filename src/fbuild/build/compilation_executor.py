@@ -74,17 +74,11 @@ class CompilationExecutor:
                 # Always print sccache status for visibility
                 print(f"[sccache] Enabled: {self.sccache_path}")
             else:
-                # Try common Windows locations (Git Bash uses /c/ paths)
-                common_locations = [
-                    Path("/c/tools/python13/Scripts/sccache.exe"),
-                    Path("C:/tools/python13/Scripts/sccache.exe"),
-                    Path.home() / ".cargo" / "bin" / "sccache.exe",
-                ]
-                for loc in common_locations:
-                    if loc.exists():
-                        self.sccache_path = loc
-                        print(f"[sccache] Enabled: {self.sccache_path}")
-                        break
+                # Try common fallback location (cargo installs)
+                cargo_sccache = Path.home() / ".cargo" / "bin" / "sccache.exe"
+                if cargo_sccache.exists():
+                    self.sccache_path = cargo_sccache
+                    print(f"[sccache] Enabled: {self.sccache_path}")
                 else:
                     # Always warn if sccache not found
                     print("[sccache] Warning: not found in PATH, proceeding without cache")

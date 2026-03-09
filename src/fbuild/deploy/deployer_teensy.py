@@ -83,7 +83,9 @@ logger = logging.getLogger(__name__)
 
 def _find_tool(name: str) -> Path | None:
     """Find a tool executable in PlatformIO's tool-teensy package."""
-    base = Path.home() / ".platformio" / "packages" / "tool-teensy"
+    from fbuild.paths import get_platformio_package
+
+    base = get_platformio_package("tool-teensy")
     for suffix in (".exe", ""):
         candidate = base / f"{name}{suffix}"
         if candidate.exists():
@@ -329,23 +331,13 @@ class TeensyDeployer(IDeployer):
             if not mcu:
                 raise DeploymentError(f"Unknown Teensy environment: {env_name}. Known environments: {', '.join(sorted(_ENV_TO_MCU.keys()))}")
 
-            # Find firmware.hex - check profile subdirectories first, then base
-            from fbuild.paths import get_project_build_root
+            # Find firmware.hex
+            from fbuild.paths import find_firmware, get_project_build_root
 
-            base_build_dir = get_project_build_root(project_dir) / env_name
-            hex_path: Path | None = None
-            for profile_name in ["release", "quick"]:
-                candidate = base_build_dir / profile_name / "firmware.hex"
-                if candidate.exists():
-                    hex_path = candidate
-                    break
-            if hex_path is None:
-                candidate = base_build_dir / "firmware.hex"
-                if candidate.exists():
-                    hex_path = candidate
+            hex_path = find_firmware(project_dir, env_name, "firmware.hex")
 
             if hex_path is None:
-                raise DeploymentError(f"firmware.hex not found in {base_build_dir}. Run 'fbuild build' first.")
+                raise DeploymentError(f"firmware.hex not found in {get_project_build_root(project_dir) / env_name}. Run 'fbuild build' first.")
 
             if self.verbose:
                 print(f"Teensy MCU: {mcu}")

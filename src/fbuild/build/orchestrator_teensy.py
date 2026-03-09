@@ -277,7 +277,9 @@ class OrchestratorTeensy(IBuildOrchestrator):
             framework_lib_dirs: List[tuple[str, Path]] = []  # (name, src_dir)
             framework_libs_dir = platform.framework.framework_path / "libraries"
             if not framework_libs_dir.is_dir():
-                pio_framework = Path.home() / ".platformio" / "packages" / "framework-arduinoteensy" / "libraries"
+                from fbuild.paths import get_platformio_package
+
+                pio_framework = get_platformio_package("framework-arduinoteensy") / "libraries"
                 if pio_framework.is_dir():
                     framework_libs_dir = pio_framework
             if framework_libs_dir.is_dir():
