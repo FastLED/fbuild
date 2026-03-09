@@ -78,6 +78,13 @@ class ConfigurableCompiler(ICompiler):
         # Cache for include paths
         self._include_paths_cache: Optional[List[Path]] = None
 
+        # Sketch/project include paths: appended AFTER framework/SDK/library
+        # includes so framework cross-library #include "Foo.h" resolves to
+        # framework headers, not sketch headers with the same name.  Sketch
+        # .h files still find siblings via GCC's current-directory rule.
+        # Library/framework code is compiled separately (no sketch paths).
+        self._sketch_include_paths: List[Path] = []
+
     def get_compile_flags(self) -> Dict[str, List[str]]:
         """Get compilation flags from configuration.
 
@@ -274,8 +281,15 @@ class ConfigurableCompiler(ICompiler):
         # Get include paths
         includes = self.get_include_paths()
 
-        # Convert include paths to flags
+        # Convert include paths to flags.
+        # Framework/SDK/library includes come FIRST so that framework headers'
+        # cross-library #include "Foo.h" references resolve to framework headers,
+        # not sketch headers with the same name.  Sketch .h files in include/
+        # still find each other via GCC's current-directory lookup rule (searched
+        # before any -I path), so sketch headers effectively have priority when
+        # included from other sketch headers in the same directory.
         include_flags = [f"-I{str(inc).replace(chr(92), '/')}" for inc in includes]
+        include_flags += [f"-I{str(inc).replace(chr(92), '/')}" for inc in self._sketch_include_paths]
 
         # Write include flags to a response file to avoid Windows 32K command-line limit
         rsp_dir = self.build_dir / "rsp"
@@ -327,11 +341,10 @@ class ConfigurableCompiler(ICompiler):
         """
         object_files = []
 
-        # Add sketch directory to include paths so headers like ValidationConfig.h can be found
+        # Add sketch directory as a sketch include (after framework includes)
+        # so project headers don't shadow framework headers with the same name.
         sketch_dir = sketch_path.parent
-        include_paths = self.get_include_paths()
-        if sketch_dir not in include_paths:
-            include_paths.insert(0, sketch_dir)  # Add at front for priority
+        self.add_sketch_include(sketch_dir)
 
         # Preprocess .ino to .cpp
         cpp_path = self.preprocess_ino(sketch_path)
@@ -532,6 +545,27 @@ class ConfigurableCompiler(ICompiler):
             List of compiler flags
         """
         return self.flag_builder.get_base_flags_for_library()
+
+    def add_sketch_include(self, path: Path) -> None:
+        """Add a sketch/project include path.
+
+        These paths are appended AFTER framework/SDK/library includes so
+        that framework headers' cross-library ``#include "Foo.h"`` directives
+        resolve to framework headers, not sketch headers with the same name.
+
+        Sketch ``.h`` files in ``include/`` still find each other via GCC's
+        current-directory lookup rule (always searched before any ``-I``
+        path), so sketch headers effectively have priority when included
+        from sibling headers in the same directory.
+
+        Library/framework code is compiled separately with its own include
+        paths (no sketch paths), so there is no cross-contamination.
+
+        Args:
+            path: Directory path to add as a sketch include
+        """
+        if path not in self._sketch_include_paths:
+            self._sketch_include_paths.append(path)
 
     def add_library_includes(self, library_includes: List[Path]) -> None:
         """Add library include paths to the compiler.

@@ -31,6 +31,11 @@ from fbuild.daemon.client.http_utils import (
 from fbuild.daemon.messages import BuildRequest
 
 
+def _patch_port_file(port_file: Path):
+    """Patch _get_port_file() to return a custom port file path."""
+    return patch("fbuild.daemon.client.http_utils._get_port_file", return_value=port_file)
+
+
 class TestPortDiscovery:
     """Test port discovery from environment variables, port file, and defaults."""
 
@@ -42,9 +47,8 @@ class TestPortDiscovery:
 
     def test_port_from_env_variable_invalid(self, tmp_path: Path):
         """Test that invalid FBUILD_DAEMON_PORT is ignored and fallback is used."""
-        # Mock PORT_FILE to not exist so it doesn't override the default
         non_existent_port_file = tmp_path / "nonexistent.port"
-        with patch("fbuild.daemon.client.http_utils.PORT_FILE", non_existent_port_file):
+        with _patch_port_file(non_existent_port_file):
             with patch.dict(os.environ, {"FBUILD_DAEMON_PORT": "invalid"}):
                 port = get_daemon_port()
                 # Should fall back to default
@@ -52,9 +56,8 @@ class TestPortDiscovery:
 
     def test_port_from_env_variable_out_of_range(self, tmp_path: Path):
         """Test that out-of-range FBUILD_DAEMON_PORT is ignored."""
-        # Mock PORT_FILE to not exist so it doesn't override the default
         non_existent_port_file = tmp_path / "nonexistent.port"
-        with patch("fbuild.daemon.client.http_utils.PORT_FILE", non_existent_port_file):
+        with _patch_port_file(non_existent_port_file):
             with patch.dict(os.environ, {"FBUILD_DAEMON_PORT": "99999"}):
                 port = get_daemon_port()
                 # Should fall back to default
@@ -65,7 +68,7 @@ class TestPortDiscovery:
         port_file = tmp_path / "daemon.port"
         port_file.write_text("9176")
 
-        with patch("fbuild.daemon.client.http_utils.PORT_FILE", port_file):
+        with _patch_port_file(port_file):
             # Clear environment variable to test port file priority
             with patch.dict(os.environ, {}, clear=True):
                 port = get_daemon_port()
@@ -78,7 +81,7 @@ class TestPortDiscovery:
 
         # Preserve home directory vars so Path("~").expanduser() works
         home_vars = {k: v for k, v in os.environ.items() if k in ("HOME", "USERPROFILE", "HOMEDRIVE", "HOMEPATH")}
-        with patch("fbuild.daemon.client.http_utils.PORT_FILE", port_file):
+        with _patch_port_file(port_file):
             with patch.dict(os.environ, home_vars, clear=True):
                 port = get_daemon_port()
                 # Should fall back to default
@@ -91,29 +94,32 @@ class TestPortDiscovery:
 
         # Preserve home directory vars so Path("~").expanduser() works
         home_vars = {k: v for k, v in os.environ.items() if k in ("HOME", "USERPROFILE", "HOMEDRIVE", "HOMEPATH")}
-        with patch("fbuild.daemon.client.http_utils.PORT_FILE", port_file):
+        with _patch_port_file(port_file):
             with patch.dict(os.environ, {**home_vars, "FBUILD_DEV_MODE": "1"}, clear=True):
                 port = get_daemon_port()
                 assert port == DEFAULT_DEV_PORT
 
     def test_port_production_mode(self, tmp_path: Path):
         """Test port discovery in production mode."""
-        # Create a non-existent port file path
         port_file = tmp_path / "daemon.port"
 
-        # Remove FBUILD_DEV_MODE and FBUILD_DAEMON_PORT to test production mode
-        env_vars = {k: v for k, v in os.environ.items() if k not in ["FBUILD_DEV_MODE", "FBUILD_DAEMON_PORT"]}
-        with patch("fbuild.daemon.client.http_utils.PORT_FILE", port_file):
-            with patch.dict(os.environ, env_vars, clear=True):
-                port = get_daemon_port()
-                assert port == DEFAULT_PORT
+        # Remove FBUILD_DEV_MODE and FBUILD_DAEMON_PORT to test production mode.
+        # Also patch the cross-mode fallback port file so an existing dev daemon
+        # port file doesn't leak into the test.
+        home_vars = {k: v for k, v in os.environ.items() if k in ("HOME", "USERPROFILE", "HOMEDRIVE", "HOMEPATH")}
+        other_port_file = tmp_path / "other_daemon.port"
+        with _patch_port_file(port_file):
+            with patch("fbuild.paths.get_other_fbuild_root", return_value=tmp_path):
+                with patch.dict(os.environ, home_vars, clear=True):
+                    port = get_daemon_port()
+                    assert port == DEFAULT_PORT
 
     def test_port_priority_env_over_file(self, tmp_path: Path):
         """Test that FBUILD_DAEMON_PORT takes priority over port file."""
         port_file = tmp_path / "daemon.port"
         port_file.write_text("8888")
 
-        with patch("fbuild.daemon.client.http_utils.PORT_FILE", port_file):
+        with _patch_port_file(port_file):
             with patch.dict(os.environ, {"FBUILD_DAEMON_PORT": "9176"}):
                 port = get_daemon_port()
                 assert port == 9176  # Environment variable takes priority
@@ -123,7 +129,7 @@ class TestPortDiscovery:
         port_file = tmp_path / "daemon.port"
         port_file.write_text("9176")
 
-        with patch("fbuild.daemon.client.http_utils.PORT_FILE", port_file):
+        with _patch_port_file(port_file):
             with patch.dict(os.environ, {"FBUILD_DEV_MODE": "1"}, clear=True):
                 port = get_daemon_port()
                 assert port == 9176  # Port file takes priority
@@ -145,22 +151,23 @@ class TestURLGeneration:
 
         # Preserve home directory vars so Path("~").expanduser() works
         home_vars = {k: v for k, v in os.environ.items() if k in ("HOME", "USERPROFILE", "HOMEDRIVE", "HOMEPATH")}
-        with patch("fbuild.daemon.client.http_utils.PORT_FILE", port_file):
+        with _patch_port_file(port_file):
             with patch.dict(os.environ, {**home_vars, "FBUILD_DEV_MODE": "1"}, clear=True):
                 url = get_daemon_base_url()
                 assert url == f"http://127.0.0.1:{DEFAULT_DEV_PORT}"
 
     def test_get_daemon_base_url_production(self, tmp_path: Path):
         """Test base URL generation in production mode."""
-        # Create a non-existent port file path
         port_file = tmp_path / "daemon.port"
 
-        # Remove FBUILD_DEV_MODE and FBUILD_DAEMON_PORT to test production mode
-        env_vars = {k: v for k, v in os.environ.items() if k not in ["FBUILD_DEV_MODE", "FBUILD_DAEMON_PORT"]}
-        with patch("fbuild.daemon.client.http_utils.PORT_FILE", port_file):
-            with patch.dict(os.environ, env_vars, clear=True):
-                url = get_daemon_base_url()
-                assert url == f"http://127.0.0.1:{DEFAULT_PORT}"
+        # Patch both the port file and the cross-mode fallback to isolate from
+        # any real daemon port files on disk.
+        home_vars = {k: v for k, v in os.environ.items() if k in ("HOME", "USERPROFILE", "HOMEDRIVE", "HOMEPATH")}
+        with _patch_port_file(port_file):
+            with patch("fbuild.paths.get_other_fbuild_root", return_value=tmp_path):
+                with patch.dict(os.environ, home_vars, clear=True):
+                    url = get_daemon_base_url()
+                    assert url == f"http://127.0.0.1:{DEFAULT_PORT}"
 
     def test_get_daemon_url_with_path(self):
         """Test URL generation with endpoint path."""

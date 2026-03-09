@@ -33,8 +33,16 @@ DEFAULT_DEV_PORT = 8865  # Dev mode uses prod + 100 for isolation
 DEFAULT_TIMEOUT = 30.0  # seconds
 DEFAULT_CONNECT_TIMEOUT = 5.0  # seconds
 
-# Port file for discovery
-PORT_FILE = DAEMON_DIR / "daemon.port"
+
+def _get_port_file() -> Path:
+    """Get the port file path, re-evaluating DAEMON_DIR each time.
+
+    DAEMON_DIR is lazy (via __getattr__) so it reflects the current
+    FBUILD_DEV_MODE. We must NOT cache it at module level or it freezes
+    to whatever mode was active at import time.
+    """
+    return DAEMON_DIR / "daemon.port"
+
 
 logger = logging.getLogger(__name__)
 
@@ -100,7 +108,7 @@ def get_daemon_port() -> int:
             logger.warning(f"Invalid port format in FBUILD_DAEMON_PORT: {env_port}")
 
     # Priority 2: Try to read port from file in current mode's daemon dir
-    port = _read_port_from_file(PORT_FILE)
+    port = _read_port_from_file(_get_port_file())
     if port is not None:
         return port
 
@@ -290,5 +298,6 @@ def write_port_file(port: int) -> None:
         >>> write_port_file(8765)
     """
     DAEMON_DIR.mkdir(parents=True, exist_ok=True)
-    PORT_FILE.write_text(str(port))
-    logger.info(f"Wrote daemon port {port} to {PORT_FILE}")
+    port_file = _get_port_file()
+    port_file.write_text(str(port))
+    logger.info(f"Wrote daemon port {port} to {port_file}")

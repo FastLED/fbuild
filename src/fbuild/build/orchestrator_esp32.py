@@ -1062,14 +1062,14 @@ class OrchestratorESP32(IBuildOrchestrator):
 
         log_detail(f"No .ino found, compiling {len(source_files)} source file(s) from {cpp_src_dir.relative_to(project_dir)}", verbose_only=True)
 
-        # Add src directory to include paths
-        include_paths = compiler.get_include_paths()
-        if cpp_src_dir not in include_paths:
-            include_paths.insert(0, cpp_src_dir)
-        # Also add the include/ dir if it exists (common PlatformIO convention)
+        # Add project src/ and include/ dirs as sketch includes (prepended
+        # before framework/SDK paths) so the sketch's own headers take priority.
+        # Library/framework code is compiled separately with its own include
+        # paths and never sees these sketch directories.
+        compiler.add_sketch_include(cpp_src_dir)
         include_dir = src_dir / "include"
-        if include_dir.is_dir() and include_dir not in include_paths:
-            include_paths.insert(0, include_dir)
+        if include_dir.is_dir():
+            compiler.add_sketch_include(include_dir)
 
         obj_dir = compiler.build_dir / "obj"
         obj_dir.mkdir(parents=True, exist_ok=True)
