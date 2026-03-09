@@ -146,7 +146,7 @@ class CompilationJobQueue:
 
         try:
             # Execute compiler subprocess
-            result = safe_run(job.compiler_cmd, capture_output=True, text=True, timeout=60)
+            result = safe_run(job.compiler_cmd, capture_output=True, text=True, timeout=300)
 
             with self.jobs_lock:
                 job.result_code = result.returncode
@@ -163,9 +163,9 @@ class CompilationJobQueue:
         except subprocess.TimeoutExpired:
             with self.jobs_lock:
                 job.state = JobState.FAILED
-                job.stderr = "Compilation timeout (60s exceeded)"
+                job.stderr = "Compilation timeout (300s exceeded)"
                 job.end_time = time.time()
-            logging.error(f"Job {job.job_id} timed out after 60s: {job.source_path.name}")
+            logging.error(f"Job {job.job_id} timed out after 300s: {job.source_path.name}")
 
         except KeyboardInterrupt as ke:
             handle_keyboard_interrupt_properly(ke)

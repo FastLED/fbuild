@@ -67,7 +67,7 @@ PROFILES: dict[str, ProfileFlags] = {
     ),
     "quick": ProfileFlags(
         name="quick",
-        description="Fast development build (no LTO, -O2)",
+        description="Fast development build (no LTO, -Os)",
         compile_flags=(),  # Loaded from JSON config profiles.quick.compile_flags
         link_flags=(),  # Loaded from JSON config profiles.quick.link_flags
         controlled_patterns=(),  # DEPRECATED

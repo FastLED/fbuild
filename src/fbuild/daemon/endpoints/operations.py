@@ -63,11 +63,20 @@ class BuildRequestModel(BaseModel):
     caller_pid: int = Field(..., description="Process ID of requesting client")
     caller_cwd: str = Field(..., description="Working directory of requesting client")
     jobs: int | None = Field(None, description="Number of parallel compilation jobs (None = CPU count)")
+    profile: str = Field("release", description="Build profile: 'release' or 'quick'")
     generate_compiledb: bool = Field(False, description="Generate compile_commands.json without compiling")
     request_id: str | None = Field(None, description="Unique identifier for this request")
 
     def to_build_request(self) -> BuildRequest:
         """Convert to BuildRequest message."""
+        from fbuild.build.build_profiles import BuildProfile
+
+        # Convert string profile to BuildProfile enum
+        try:
+            build_profile = BuildProfile(self.profile)
+        except ValueError:
+            build_profile = BuildProfile.RELEASE
+
         return BuildRequest(
             project_dir=self.project_dir,
             environment=self.environment,
@@ -76,6 +85,7 @@ class BuildRequestModel(BaseModel):
             caller_pid=self.caller_pid,
             caller_cwd=self.caller_cwd,
             jobs=self.jobs,
+            profile=build_profile,
             generate_compiledb=self.generate_compiledb,
             request_id=self.request_id or f"build_{int(asyncio.get_event_loop().time() * 1000)}",
         )

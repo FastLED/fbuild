@@ -486,23 +486,58 @@ class OrchestratorESP32(IBuildOrchestrator):
 
             # src_dir_override was computed earlier for cache invalidation
 
-            # Find and compile sketch
-            sketch_obj_files = self._compile_sketch(project_dir, compiler, start_time, verbose, src_dir_override)
-            if sketch_obj_files is None:
-                search_dir = project_dir / src_dir_override if src_dir_override else project_dir
-                return self._error_result(start_time, f"No .ino sketch file found in {search_dir}")
+            # Compile sketch and framework libraries IN PARALLEL.
+            # These are independent: sketch needs only header include paths (already set),
+            # framework libs need only the toolchain + framework source.
+            # Pre-capture compiler state BEFORE spawning threads to avoid race condition
+            # with sketch's add_sketch_include() — framework code must NOT see sketch paths.
+            from concurrent.futures import Future
+            from concurrent.futures import ThreadPoolExecutor as SketchFwExecutor
 
-            # Compile ALL framework built-in libraries (BLE, WiFi, SPI, Wire, etc.)
-            # instead of trying to detect which ones are needed via #include scanning.
-            # The linker with --gc-sections strips all unreferenced code from the final binary.
-            fw_archives, fw_includes = self._compile_all_framework_libraries(
-                framework,
-                build_dir,
-                library_archives,
-                toolchain,
-                compiler,
-                verbose,
-            )
+            fw_pre_flags = compiler.get_base_flags()
+            fw_pre_includes = list(compiler.get_include_paths())
+
+            def _compile_sketch_phase() -> Optional[List[Path]]:
+                return self._compile_sketch(project_dir, compiler, start_time, verbose, src_dir_override)
+
+            def _compile_fw_libs_phase() -> tuple[List[Path], List[Path]]:
+                return self._compile_all_framework_libraries(
+                    framework,
+                    build_dir,
+                    library_archives,
+                    toolchain,
+                    compiler,
+                    verbose,
+                    pre_captured_flags=fw_pre_flags,
+                    pre_captured_includes=fw_pre_includes,
+                )
+
+            sketch_fw_executor = SketchFwExecutor(max_workers=2)
+            try:
+                # Launch framework libs FIRST so it captures compiler state before
+                # sketch's add_sketch_include() modifies include paths
+                fw_future: Future[tuple[List[Path], List[Path]]] = sketch_fw_executor.submit(_compile_fw_libs_phase)
+                sketch_future: Future[Optional[List[Path]]] = sketch_fw_executor.submit(_compile_sketch_phase)
+
+                sketch_obj_files = sketch_future.result()
+                if sketch_obj_files is None:
+                    fw_future.cancel()
+                    search_dir = project_dir / src_dir_override if src_dir_override else project_dir
+                    return self._error_result(start_time, f"No .ino sketch file found in {search_dir}")
+
+                fw_archives, fw_includes = fw_future.result()
+            except KeyboardInterrupt as ke:
+                sketch_fw_executor.shutdown(wait=False, cancel_futures=True)
+                from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+                handle_keyboard_interrupt_properly(ke)
+                raise  # Never reached
+            except Exception:
+                sketch_fw_executor.shutdown(wait=False, cancel_futures=True)
+                raise
+            finally:
+                sketch_fw_executor.shutdown(wait=False)
+
             library_archives.extend(fw_archives)
             if fw_includes:
                 library_include_paths.extend(fw_includes)
@@ -906,6 +941,8 @@ class OrchestratorESP32(IBuildOrchestrator):
         toolchain: ToolchainESP32,
         compiler: ConfigurableCompiler,
         verbose: bool,
+        pre_captured_flags: List[str] | None = None,
+        pre_captured_includes: List[Path] | None = None,
     ) -> tuple[List[Path], List[Path]]:
         """
         Compile ALL framework built-in libraries (BLE, WiFi, SPI, Wire, etc.).
@@ -966,8 +1003,8 @@ class OrchestratorESP32(IBuildOrchestrator):
             log_warning("Toolchain bin directory not found, skipping framework libraries")
             return [], []
 
-        lib_compiler_flags = compiler.get_base_flags()
-        lib_include_paths = list(compiler.get_include_paths())
+        lib_compiler_flags = pre_captured_flags if pre_captured_flags is not None else compiler.get_base_flags()
+        lib_include_paths = list(pre_captured_includes) if pre_captured_includes is not None else list(compiler.get_include_paths())
 
         # Add ALL framework library include paths upfront so that inter-library
         # dependencies resolve (e.g., BLE includes <NetworkClient.h> from Network).
@@ -1025,57 +1062,56 @@ class OrchestratorESP32(IBuildOrchestrator):
             except Exception as e:
                 log_warning(f"Failed to set up framework library '{lib_name}': {e}")
 
-        # Phase 2: Compile ALL source files across ALL framework libraries in one pool
-        import multiprocessing
-        from concurrent.futures import Future, ThreadPoolExecutor
-
-        from fbuild.packages.library_manager_esp32 import (
-            _compile_single_file,
-            cleanup_stderr_dir,
-            create_stderr_dir,
-        )
-
-        if all_compile_jobs:
-            num_workers = multiprocessing.cpu_count()
+        # Phase 2: Compile ALL framework library files through the compiler's daemon
+        # queue — the SAME pool used by sketch and core compilation. This avoids
+        # CPU contention from running separate thread pools in parallel.
+        if all_compile_jobs and compiler.compilation_queue:
             total = len(all_compile_jobs)
-            completed = 0
+            num_workers = compiler.compilation_queue.num_workers
 
             log_detail(f"Compiling {total} framework source files across {len(lib_info)} libraries ({num_workers} workers)")
 
-            # Create per-build stderr directory for compiler output
-            stderr_dir = create_stderr_dir(build_dir)
+            # Submit all jobs directly to the daemon queue (bypassing compiler's
+            # pending_jobs list to avoid race with sketch compilation thread)
+            import time as _time
 
-            executor = ThreadPoolExecutor(max_workers=num_workers)
-            try:
-                # Submit all jobs, keep ordered list for deterministic stdout
-                ordered_futures: list[tuple[Future[tuple[Path, str]], str, Path]] = []
-                for sanitized_name, source, obj_file, cmd in all_compile_jobs:
-                    future = executor.submit(_compile_single_file, (source, obj_file, cmd, stderr_dir))
-                    ordered_futures.append((future, sanitized_name, source))
+            from fbuild.daemon.compilation_queue import CompilationJob
 
-                # Iterate in submission order
-                for future, sanitized_name, source in ordered_futures:
-                    completed += 1
-                    try:
-                        result_obj, _stderr = future.result()
-                        lib_info[sanitized_name][2].append(result_obj)
-                        log_detail(f"[{completed}/{total}] {source.name}", indent=8)
-                    except KeyboardInterrupt:
-                        raise
-                    except Exception as e:
-                        executor.shutdown(wait=False, cancel_futures=True)
-                        log_warning(f"Framework compilation failed: {e}")
-                        raise
+            fw_job_ids: list[tuple[str, str, Path]] = []  # (job_id, sanitized_name, source)
+            for sanitized_name, source, obj_file, cmd in all_compile_jobs:
+                job_id = f"fw_{source.stem}_{int(_time.time() * 1000000)}"
+                job = CompilationJob(
+                    job_id=job_id,
+                    source_path=source,
+                    output_path=obj_file,
+                    compiler_cmd=cmd,
+                )
+                compiler.compilation_queue.submit_job(job)
+                fw_job_ids.append((job_id, sanitized_name, source))
 
-            except KeyboardInterrupt as ke:
-                executor.shutdown(wait=False, cancel_futures=True)
-                from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+            # Wait for all framework jobs to complete
+            all_fw_ids = [jid for jid, _, _ in fw_job_ids]
+            compiler.compilation_queue.wait_for_completion(all_fw_ids)
 
-                handle_keyboard_interrupt_properly(ke)
-                raise  # Never reached
-            finally:
-                executor.shutdown(wait=False)
-                cleanup_stderr_dir(stderr_dir)
+            # Collect results and report progress
+            completed = 0
+            failed_jobs: list[str] = []
+            for job_id, sanitized_name, source in fw_job_ids:
+                completed += 1
+                job = compiler.compilation_queue.get_job_status(job_id)
+                if job is not None and job.state.value == "completed":
+                    lib_info[sanitized_name][2].append(job.output_path)
+                    log_detail(f"[{completed}/{total}] {source.name}", indent=8)
+                elif job is not None:
+                    failed_jobs.append(f"{source.name}: {job.stderr[:4000]}")
+                    log_detail(f"[{completed}/{total}] {source.name} FAILED", indent=8)
+
+            if failed_jobs:
+                from fbuild.build.configurable_compiler import ConfigurableCompilerError
+
+                error_msg = f"Framework compilation failed for {len(failed_jobs)} file(s):\n"
+                error_msg += "\n".join(f"  - {err}" for err in failed_jobs[:10])
+                raise ConfigurableCompilerError(error_msg)
 
         # Phase 3: Archive each library from its compiled object files (parallel)
         archive_tasks = [(sanitized_name, lib_name, library, object_files) for sanitized_name, (lib_name, library, object_files) in lib_info.items() if object_files]
@@ -1107,7 +1143,9 @@ class OrchestratorESP32(IBuildOrchestrator):
                 lib_manager.archive_library(lib, toolchain_bin_path, objs, lib_compiler_flags)
                 return s_name, l_name, lib
 
-            ar_executor = ThreadPoolExecutor(max_workers=min(len(archive_tasks), 4))
+            from concurrent.futures import ThreadPoolExecutor as ArExecutorPool
+
+            ar_executor = ArExecutorPool(max_workers=min(len(archive_tasks), 4))
             try:
                 # Submit all, keep ordered list for deterministic output
                 ar_ordered = [(ar_executor.submit(_do_archive, s_name, l_name, lib, objs), s_name, l_name, lib) for s_name, l_name, lib, objs in archive_tasks]

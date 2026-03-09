@@ -73,7 +73,7 @@
     },
     "quick": {
       "compile_flags": [
-        "-O1",
+        "-Os",
         "-flto=thin",
         "-g0",
         "-fno-inline-functions",
@@ -86,7 +86,7 @@
         "-fno-math-errno"
       ],
       "link_flags": [
-        "-O1",
+        "-Os",
         "-flto=thin",
         "--profiling-funcs",
         "--emit-symbol-map",

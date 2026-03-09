@@ -67,7 +67,7 @@
       "link_flags": ["-flto=auto", "-fuse-linker-plugin"]
     },
     "quick": {
-      "compile_flags": ["-O1"],
+      "compile_flags": ["-Os", "-fno-omit-frame-pointer"],
       "link_flags": ["-flto=auto", "-fuse-linker-plugin"]
     }
   },
