@@ -79,7 +79,7 @@ class BuildArgs:
     clean: bool = False
     verbose: bool = False
     jobs: Optional[int] = None
-    profile: BuildProfile = BuildProfile.RELEASE
+    profile: BuildProfile = BuildProfile.QUICK
     platformio: bool = False
     explicit_release: bool = False
     explicit_quick: bool = False
@@ -1042,12 +1042,12 @@ def main() -> None:
     profile_group.add_argument(
         "--release",
         action="store_true",
-        help="Optimized release build with LTO and -O3 (default)",
+        help="Optimized release build with LTO (slower link)",
     )
     profile_group.add_argument(
         "--quick",
         action="store_true",
-        help="Fast development build (no LTO, -O2, section GC)",
+        help="Fast development build, no LTO (default)",
     )
     build_parser.add_argument(
         "--platformio",
@@ -1365,8 +1365,8 @@ def main() -> None:
 
     # Execute command
     if parsed_args.command == "build":
-        # Determine profile: --quick sets quick, otherwise release (default)
-        profile = BuildProfile.QUICK if parsed_args.quick else BuildProfile.RELEASE
+        # Determine profile: --release sets release, otherwise quick (default)
+        profile = BuildProfile.RELEASE if parsed_args.release else BuildProfile.QUICK
         build_args = BuildArgs(
             project_dir=parsed_args.project_dir,
             environment=parsed_args.environment,
