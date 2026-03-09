@@ -7,6 +7,7 @@ providing cleaner separation of concerns and better maintainability.
 
 import _thread
 import logging
+import threading
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -240,6 +241,11 @@ class OrchestratorESP32(IBuildOrchestrator):
         build_dir = request.build_dir
 
         try:
+            # Garbage-collect old stderr dirs from force-killed builds (best-effort, 24h cutoff)
+            from fbuild.packages.library_manager_esp32 import garbage_collect_stderr_dirs
+
+            garbage_collect_stderr_dirs(build_dir.parent, max_age_hours=24)
+
             # Get platform URL from env_config
             platform_url = env_config.get("platform")
             if not platform_url:
@@ -254,6 +260,43 @@ class OrchestratorESP32(IBuildOrchestrator):
             from fbuild.build.build_profiles import print_profile_banner
 
             print_profile_banner(request.profile)
+
+            # Start library pre-fetch immediately - lib_deps from platformio.ini
+            # need no platform/toolchain info, so downloads overlap with everything
+            lib_prefetch_thread = None
+            if lib_deps:
+
+                def _prefetch_libs_early() -> None:
+                    try:
+                        from fbuild.packages.platformio_registry import LibrarySpec
+
+                        build_dir.mkdir(parents=True, exist_ok=True)
+                        lib_mgr = LibraryManagerESP32(build_dir, project_dir=project_dir)
+                        parsed = [LibrarySpec.parse(s) for s in lib_deps]
+                        max_w = min(len(parsed), 8)
+                        if max_w <= 1:
+                            for spec in parsed:
+                                lib_mgr.download_library(spec, True)
+                        else:
+                            from concurrent.futures import ThreadPoolExecutor, as_completed
+
+                            with ThreadPoolExecutor(max_workers=max_w) as dl_exec:
+                                futs = {dl_exec.submit(lib_mgr.download_library, spec, True): spec for spec in parsed}
+                                for fut in as_completed(futs):
+                                    try:
+                                        fut.result()
+                                    except KeyboardInterrupt:
+                                        raise
+                                    except Exception:
+                                        pass  # Non-fatal: will retry in ensure_libraries
+                    except KeyboardInterrupt:
+                        raise
+                    except Exception as e:
+                        log_detail(f"Library pre-fetch warning: {e}")
+
+                lib_prefetch_thread = threading.Thread(target=_prefetch_libs_early, daemon=True)
+                lib_prefetch_thread.start()
+                log_detail("Started library pre-fetch in background")
 
             # Initialize platform
             log_phase(3, 13, "Initializing ESP32 platform...")
@@ -276,15 +319,12 @@ class OrchestratorESP32(IBuildOrchestrator):
             packages = platform.get_required_packages(mcu)
 
             # Initialize toolchain and framework in parallel (they are independent)
-            # Also pre-fetch library downloads during this phase to overlap network I/O
+            # Library pre-fetch already started above, overlapping with platform download
             toolchain, framework = self._setup_toolchain_and_framework_parallel(
                 packages,
                 start_time,
                 verbose,
                 mcu,
-                lib_deps=lib_deps,
-                build_dir=build_dir,
-                project_dir=project_dir,
             )
             if toolchain is None:
                 return self._error_result(start_time, "Failed to initialize toolchain")
@@ -293,6 +333,11 @@ class OrchestratorESP32(IBuildOrchestrator):
 
             # Ensure build directory exists
             build_dir.mkdir(parents=True, exist_ok=True)
+
+            # Wait for library pre-fetch to complete before build state check
+            # (build state check may wipe build_dir, so prefetch must finish first)
+            if lib_prefetch_thread is not None:
+                lib_prefetch_thread.join(timeout=300)
 
             # Determine source directory for cache invalidation
             # This is computed early to include source file changes in cache key
@@ -378,47 +423,62 @@ class OrchestratorESP32(IBuildOrchestrator):
             )
 
             # Initialize compiler (uses BuildContext for all configuration)
-            log_phase(7, 13, "Compiling Arduino core...")
+            log_phase(7, 13, "Compiling core + libraries (parallel)...")
 
             compiler = ConfigurableCompiler(context)
 
-            # Create progress callback for detailed file-by-file tracking
-            progress_callback = DefaultProgressCallback(verbose_only=not verbose)
+            # Core and user libraries compile in parallel - they use independent
+            # compilation mechanisms and write to separate directories:
+            #   Core: compiler's async queue -> build_dir/core/
+            #   Libraries: flat ThreadPoolExecutor -> build_dir/libs/
 
-            # Compile Arduino core with progress bar
-            if verbose:
-                core_obj_files = compiler.compile_core(progress_callback=progress_callback)
-            else:
-                # Use tqdm progress bar for non-verbose mode
-                from tqdm import tqdm
+            def _compile_core_phase() -> Path:
+                progress_callback = DefaultProgressCallback(verbose_only=not verbose)
+                if verbose:
+                    core_obj_files = compiler.compile_core(progress_callback=progress_callback)
+                else:
+                    from tqdm import tqdm
 
-                # Get number of core source files for progress tracking
-                core_sources = framework.get_core_sources(compiler.core)
-                total_files = len(core_sources)
+                    core_sources = framework.get_core_sources(compiler.core)
+                    total_files = len(core_sources)
+                    with tqdm(total=total_files, desc="Compiling Arduino core", unit="file", ncols=80, leave=False) as pbar:
+                        core_obj_files = compiler.compile_core(progress_bar=pbar, progress_callback=progress_callback)
+                    log_detail(f"Compiled {len(core_obj_files)} core files")
 
-                # Create progress bar
-                with tqdm(total=total_files, desc="Compiling Arduino core", unit="file", ncols=80, leave=False) as pbar:
-                    core_obj_files = compiler.compile_core(progress_bar=pbar, progress_callback=progress_callback)
+                bt_stub_obj = self._create_bt_stub(build_dir, compiler, verbose)
+                if bt_stub_obj:
+                    core_obj_files.append(bt_stub_obj)
 
-                # Print completion message
-                log_detail(f"Compiled {len(core_obj_files)} core files")
+                if hasattr(compiler, "wait_all_jobs"):
+                    compiler.wait_all_jobs()
 
-            # Add Bluetooth stub for non-ESP32 targets (ESP32-C6, ESP32-S3, etc.)
-            # where esp32-hal-bt.c fails to compile but btInUse() is still referenced
-            bt_stub_obj = self._create_bt_stub(build_dir, compiler, verbose)
-            if bt_stub_obj:
-                core_obj_files.append(bt_stub_obj)
+                return compiler.create_core_archive(core_obj_files)
 
-            # Wait for all pending async compilation jobs (including bt_stub) to complete
-            if hasattr(compiler, "wait_all_jobs"):
-                compiler.wait_all_jobs()
+            def _process_libs_phase() -> tuple[List[Path], List[Path]]:
+                return self._process_libraries(env_config, build_dir, compiler, toolchain, verbose, project_dir=project_dir)
 
-            core_archive = compiler.create_core_archive(core_obj_files)
+            from concurrent.futures import Future, ThreadPoolExecutor
 
-            log_detail(f"Compiled {len(core_obj_files)} core source files", verbose_only=True)
+            phase_executor = ThreadPoolExecutor(max_workers=2)
+            try:
+                core_future: Future[Path] = phase_executor.submit(_compile_core_phase)
+                libs_future: Future[tuple[List[Path], List[Path]]] = phase_executor.submit(_process_libs_phase)
 
-            # Handle library dependencies
-            library_archives, library_include_paths = self._process_libraries(env_config, build_dir, compiler, toolchain, verbose, project_dir=project_dir)
+                core_archive = core_future.result()
+                library_archives, library_include_paths = libs_future.result()
+            except KeyboardInterrupt as ke:
+                phase_executor.shutdown(wait=False, cancel_futures=True)
+                from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+                handle_keyboard_interrupt_properly(ke)
+                raise  # Never reached
+            except Exception:
+                phase_executor.shutdown(wait=False, cancel_futures=True)
+                raise
+            finally:
+                phase_executor.shutdown(wait=False)
+
+            log_detail("Core + library compilation complete", verbose_only=True)
 
             # Add library include paths to compiler
             if library_include_paths:
@@ -670,25 +730,18 @@ class OrchestratorESP32(IBuildOrchestrator):
         start_time: float,
         verbose: bool,
         mcu: str,
-        lib_deps: Optional[List[str]] = None,
-        build_dir: Optional[Path] = None,
-        project_dir: Optional[Path] = None,
     ) -> tuple[Optional["ToolchainESP32"], Optional[FrameworkESP32]]:
         """
-        Initialize toolchain, framework, and pre-fetch libraries in parallel.
+        Initialize toolchain and framework in parallel.
 
-        Platform must already be initialized. Toolchain, framework, and library
-        downloads are independent and can happen simultaneously, saving significant
-        time on cold cache builds.
+        Platform must already be initialized. Library pre-fetch is handled
+        separately in _build_esp32 (starts before platform download).
 
         Args:
             packages: Package URLs dictionary from platform
             start_time: Build start time for error reporting
             verbose: Verbose output mode
             mcu: Target MCU identifier
-            lib_deps: Optional library dependencies to pre-fetch during download
-            build_dir: Optional build directory for library manager
-            project_dir: Optional project directory for library manager
 
         Returns:
             Tuple of (toolchain, framework), either can be None on failure
@@ -731,34 +784,10 @@ class OrchestratorESP32(IBuildOrchestrator):
             framework.ensure_framework()
             return framework
 
-        def prefetch_libraries() -> None:
-            """Pre-fetch library downloads so they're cached when compilation starts."""
-            if not lib_deps or not build_dir or not project_dir:
-                return
-            try:
-                from fbuild.packages.platformio_registry import LibrarySpec
-
-                lib_manager = LibraryManagerESP32(build_dir, project_dir=project_dir)
-                for lib_dep in lib_deps:
-                    spec = LibrarySpec.parse(lib_dep)
-                    lib_manager.download_library(spec, show_progress=True)
-            except KeyboardInterrupt:
-                raise
-            except Exception as e:
-                # Non-fatal: libraries will be downloaded later if pre-fetch fails
-                log_detail(f"Library pre-fetch warning: {e}")
-
-        # Determine number of workers: 2 for toolchain+framework, +1 if libraries to prefetch
-        has_libs = bool(lib_deps and build_dir and project_dir)
-        num_workers = 3 if has_libs else 2
-
-        with ThreadPoolExecutor(max_workers=num_workers) as executor:
+        executor = ThreadPoolExecutor(max_workers=2)
+        try:
             toolchain_future: Future[Optional["ToolchainESP32"]] = executor.submit(setup_toolchain)
             framework_future: Future[Optional[FrameworkESP32]] = executor.submit(setup_framework)
-
-            # Pre-fetch library downloads in parallel (non-blocking, non-fatal)
-            if has_libs:
-                executor.submit(prefetch_libraries)
 
             try:
                 toolchain_result = toolchain_future.result()
@@ -775,6 +804,14 @@ class OrchestratorESP32(IBuildOrchestrator):
             except Exception as e:
                 framework_error = e
                 log_warning(f"Framework setup failed: {e}")
+        except KeyboardInterrupt as ke:
+            executor.shutdown(wait=False, cancel_futures=True)
+            from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached
+        finally:
+            executor.shutdown(wait=False)
 
         if toolchain_error:
             raise toolchain_error
@@ -943,6 +980,12 @@ class OrchestratorESP32(IBuildOrchestrator):
         additional_archives: List[Path] = []
         additional_includes: List[Path] = []
 
+        # Phase 1: Setup all libraries, collect compile jobs into a single flat pool
+        # This replaces per-library sequential compilation with one big parallel pool
+        # mapping: sanitized_name -> (lib_name, LibraryESP32, expected obj files)
+        lib_info: dict[str, tuple[str, LibraryESP32, list[Path]]] = {}
+        all_compile_jobs: list[tuple[str, Path, Path, list[str]]] = []  # (sanitized_name, source, obj, cmd)
+
         for lib_name, fw_lib_root in all_libs:
             try:
                 sanitized_name = lib_name.lower().replace("/", "_").replace("@", "_")
@@ -956,27 +999,23 @@ class OrchestratorESP32(IBuildOrchestrator):
                 # Check if rebuild needed
                 needs_rebuild_flag, _reason = lib_manager.needs_rebuild(library, lib_compiler_flags)
 
-                if needs_rebuild_flag:
-                    # Check for source files before compiling (skip header-only libraries)
-                    source_files = library.get_source_files()
-                    if not source_files:
-                        log_detail(f"Framework library '{lib_name}' is header-only, skipping compilation", verbose_only=True)
-                        # Still add include paths for header-only libs
-                        additional_includes.extend(library.get_include_dirs())
-                        continue
+                if not needs_rebuild_flag:
+                    if library.is_compiled:
+                        additional_archives.append(library.archive_file)
+                    additional_includes.extend(library.get_include_dirs())
+                    continue
 
-                    log_detail(f"Compiling framework library: {lib_name} ({len(source_files)} files)")
-                    lib_manager.compile_library(
-                        library,
-                        toolchain_bin_path,
-                        lib_compiler_flags,
-                        lib_include_paths,
-                        show_progress=True,
-                    )
+                # Prepare compile jobs (returns empty list for header-only libs)
+                jobs = lib_manager.prepare_compile_jobs(library, toolchain_bin_path, lib_compiler_flags, lib_include_paths)
+                if not jobs:
+                    log_detail(f"Framework library '{lib_name}' is header-only, skipping compilation", verbose_only=True)
+                    additional_includes.extend(library.get_include_dirs())
+                    continue
 
-                if library.is_compiled:
-                    additional_archives.append(library.archive_file)
-                additional_includes.extend(library.get_include_dirs())
+                log_detail(f"Compiling framework library: {lib_name} ({len(jobs)} files)")
+                lib_info[sanitized_name] = (lib_name, library, [])
+                for source, obj_file, cmd in jobs:
+                    all_compile_jobs.append((sanitized_name, source, obj_file, cmd))
 
             except KeyboardInterrupt as ke:
                 from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
@@ -984,7 +1023,112 @@ class OrchestratorESP32(IBuildOrchestrator):
                 handle_keyboard_interrupt_properly(ke)
                 raise  # Never reached, but satisfies type checker
             except Exception as e:
-                log_warning(f"Failed to compile framework library '{lib_name}': {e}")
+                log_warning(f"Failed to set up framework library '{lib_name}': {e}")
+
+        # Phase 2: Compile ALL source files across ALL framework libraries in one pool
+        import multiprocessing
+        from concurrent.futures import Future, ThreadPoolExecutor
+
+        from fbuild.packages.library_manager_esp32 import (
+            _compile_single_file,
+            cleanup_stderr_dir,
+            create_stderr_dir,
+        )
+
+        if all_compile_jobs:
+            num_workers = multiprocessing.cpu_count()
+            total = len(all_compile_jobs)
+            completed = 0
+
+            log_detail(f"Compiling {total} framework source files across {len(lib_info)} libraries ({num_workers} workers)")
+
+            # Create per-build stderr directory for compiler output
+            stderr_dir = create_stderr_dir(build_dir)
+
+            executor = ThreadPoolExecutor(max_workers=num_workers)
+            try:
+                # Submit all jobs, keep ordered list for deterministic stdout
+                ordered_futures: list[tuple[Future[tuple[Path, str]], str, Path]] = []
+                for sanitized_name, source, obj_file, cmd in all_compile_jobs:
+                    future = executor.submit(_compile_single_file, (source, obj_file, cmd, stderr_dir))
+                    ordered_futures.append((future, sanitized_name, source))
+
+                # Iterate in submission order
+                for future, sanitized_name, source in ordered_futures:
+                    completed += 1
+                    try:
+                        result_obj, _stderr = future.result()
+                        lib_info[sanitized_name][2].append(result_obj)
+                        log_detail(f"[{completed}/{total}] {source.name}", indent=8)
+                    except KeyboardInterrupt:
+                        raise
+                    except Exception as e:
+                        executor.shutdown(wait=False, cancel_futures=True)
+                        log_warning(f"Framework compilation failed: {e}")
+                        raise
+
+            except KeyboardInterrupt as ke:
+                executor.shutdown(wait=False, cancel_futures=True)
+                from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+                handle_keyboard_interrupt_properly(ke)
+                raise  # Never reached
+            finally:
+                executor.shutdown(wait=False)
+                cleanup_stderr_dir(stderr_dir)
+
+        # Phase 3: Archive each library from its compiled object files (parallel)
+        archive_tasks = [(sanitized_name, lib_name, library, object_files) for sanitized_name, (lib_name, library, object_files) in lib_info.items() if object_files]
+
+        # Include dirs from libraries with no object files (header-only after job prep)
+        for sanitized_name, (lib_name, library, object_files) in lib_info.items():
+            if not object_files:
+                additional_includes.extend(library.get_include_dirs())
+
+        if len(archive_tasks) <= 1:
+            for sanitized_name, lib_name, library, object_files in archive_tasks:
+                try:
+                    log_detail(f"Creating archive: lib{sanitized_name}.a", indent=8)
+                    lib_manager.archive_library(library, toolchain_bin_path, object_files, lib_compiler_flags)
+                    if library.is_compiled:
+                        additional_archives.append(library.archive_file)
+                    additional_includes.extend(library.get_include_dirs())
+                except KeyboardInterrupt as ke:
+                    from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+                    handle_keyboard_interrupt_properly(ke)
+                    raise  # Never reached
+                except Exception as e:
+                    log_warning(f"Failed to archive framework library '{lib_name}': {e}")
+        elif archive_tasks:
+
+            def _do_archive(s_name: str, l_name: str, lib: LibraryESP32, objs: list) -> tuple[str, str, LibraryESP32]:
+                log_detail(f"Creating archive: lib{s_name}.a", indent=8)
+                lib_manager.archive_library(lib, toolchain_bin_path, objs, lib_compiler_flags)
+                return s_name, l_name, lib
+
+            ar_executor = ThreadPoolExecutor(max_workers=min(len(archive_tasks), 4))
+            try:
+                # Submit all, keep ordered list for deterministic output
+                ar_ordered = [(ar_executor.submit(_do_archive, s_name, l_name, lib, objs), s_name, l_name, lib) for s_name, l_name, lib, objs in archive_tasks]
+                for future, _s_name, l_name, lib in ar_ordered:
+                    try:
+                        future.result()
+                        if lib.is_compiled:
+                            additional_archives.append(lib.archive_file)
+                        additional_includes.extend(lib.get_include_dirs())
+                    except KeyboardInterrupt:
+                        raise
+                    except Exception as e:
+                        log_warning(f"Failed to archive framework library '{l_name}': {e}")
+            except KeyboardInterrupt as ke:
+                ar_executor.shutdown(wait=False, cancel_futures=True)
+                from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+                handle_keyboard_interrupt_properly(ke)
+                raise  # Never reached
+            finally:
+                ar_executor.shutdown(wait=False)
 
         return additional_archives, additional_includes
 
@@ -1280,7 +1424,10 @@ __attribute__((weak)) bool btInUse(void) {
 
     def _generate_boot_components(self, linker: ConfigurableLinker, mcu: str, verbose: bool) -> tuple[Optional[Path], Optional[Path]]:
         """
-        Generate bootloader and partition table for ESP32.
+        Generate bootloader and partition table for ESP32 (parallel).
+
+        Bootloader and partition table are independent - they come from the SDK
+        and don't depend on each other, so they can be generated simultaneously.
 
         Args:
             linker: Configured linker instance
@@ -1290,33 +1437,46 @@ __attribute__((weak)) bool btInUse(void) {
         Returns:
             Tuple of (bootloader_bin, partitions_bin)
         """
-        bootloader_bin = None
-        partitions_bin = None
-
         if not mcu.startswith("esp32"):
-            return bootloader_bin, partitions_bin
+            return None, None
 
-        log_phase(12, 13, "Generating bootloader...")
+        log_phase(12, 13, "Generating boot components (parallel)...")
+
+        def _gen_bootloader() -> Optional[Path]:
+            try:
+                return linker.generate_bootloader()
+            except KeyboardInterrupt:
+                raise
+            except Exception as e:
+                log_warning(f"Could not generate bootloader: {e}")
+                return None
+
+        def _gen_partitions() -> Optional[Path]:
+            try:
+                return linker.generate_partition_table()
+            except KeyboardInterrupt:
+                raise
+            except Exception as e:
+                log_warning(f"Could not generate partition table: {e}")
+                return None
+
+        from concurrent.futures import ThreadPoolExecutor
+
+        boot_executor = ThreadPoolExecutor(max_workers=2)
         try:
-            bootloader_bin = linker.generate_bootloader()
+            boot_future = boot_executor.submit(_gen_bootloader)
+            part_future = boot_executor.submit(_gen_partitions)
+
+            bootloader_bin = boot_future.result()
+            partitions_bin = part_future.result()
         except KeyboardInterrupt as ke:
+            boot_executor.shutdown(wait=False, cancel_futures=True)
             from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
 
             handle_keyboard_interrupt_properly(ke)
-            raise  # Never reached, but satisfies type checker
-        except Exception as e:
-            log_warning(f"Could not generate bootloader: {e}")
-
-        log_phase(13, 13, "Generating partition table...")
-        try:
-            partitions_bin = linker.generate_partition_table()
-        except KeyboardInterrupt as ke:
-            from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
-
-            handle_keyboard_interrupt_properly(ke)
-            raise  # Never reached, but satisfies type checker
-        except Exception as e:
-            log_warning(f"Could not generate partition table: {e}")
+            raise  # Never reached
+        finally:
+            boot_executor.shutdown(wait=False)
 
         return bootloader_bin, partitions_bin
 

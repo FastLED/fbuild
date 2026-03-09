@@ -436,13 +436,15 @@ def monitor_command(args: MonitorArgs) -> None:
 
 
 def purge_command(args: PurgeArgs) -> None:
-    """Manage cached packages.
+    """Manage cached packages and project build artifacts.
 
     Examples:
-        fbuild purge                # List all packages
-        fbuild purge all            # Delete all packages
-        fbuild purge all --dry-run  # Preview deletion
-        fbuild purge esp32c6        # Delete esp32c6 packages
+        fbuild purge                    # List all cached packages
+        fbuild purge all                # Delete all global cached packages
+        fbuild purge all --dry-run      # Preview deletion
+        fbuild purge project            # Delete project .fbuild/ build artifacts
+        fbuild purge project --project-dir path/to/project  # Specify project
+        fbuild purge esp32c6            # Delete esp32c6 packages
     """
     init_timer()
     log_header("fbuild Cache Management", __version__)
@@ -1228,13 +1230,13 @@ def main() -> None:
     # Purge command
     purge_parser = subparsers.add_parser(
         "purge",
-        help="Manage cached packages (list, delete)",
+        help="Manage cached packages and project build artifacts",
     )
     purge_parser.add_argument(
         "target",
         nargs="?",
         default=None,
-        help="Target: 'all' for all packages, environment name, or omit to list",
+        help="Target: 'all' (global cache), 'project' (project .fbuild/), environment name, or omit to list",
     )
     purge_parser.add_argument(
         "--dry-run",

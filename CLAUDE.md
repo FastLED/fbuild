@@ -52,6 +52,14 @@ uv run fbuild build tests/uno -e uno              # release build (default, LTO 
 uv run fbuild build tests/uno -e uno --release    # explicit release build
 uv run fbuild build tests/uno -e uno --quick      # quick build (no LTO, faster compile)
 
+# Cache management
+uv run fbuild purge                          # list all cached packages with sizes
+uv run fbuild purge all                      # delete all global cached packages
+uv run fbuild purge all --dry-run            # show what would be deleted without deleting
+uv run fbuild purge project                  # delete project .fbuild/ build artifacts
+uv run fbuild purge project --project-dir path/to/project  # specify project path
+uv run fbuild purge demo --project-dir .     # purge packages for a specific environment
+
 # Deploy and monitor
 uv run fbuild deploy tests/esp32c6 --monitor
 

@@ -222,8 +222,8 @@ class TestFrameworkLibraryEnumeration:
             mock_mgr.libs_dir.mkdir(parents=True, exist_ok=True)
             # Always say rebuild needed so we exercise the full path
             mock_mgr.needs_rebuild.return_value = (True, "no archive")
-            # compile_library is a no-op in tests
-            mock_mgr.compile_library.return_value = Path("/mock/archive.a")
+            # prepare_compile_jobs returns a fake job list (non-empty = has sources)
+            mock_mgr.prepare_compile_jobs.return_value = []
 
             return orchestrator._compile_all_framework_libraries(
                 framework,
@@ -254,6 +254,8 @@ class TestFrameworkLibraryEnumeration:
             mock_mgr.libs_dir = build_dir / "libs"
             mock_mgr.libs_dir.mkdir(parents=True, exist_ok=True)
             mock_mgr.needs_rebuild.return_value = (True, "no archive")
+            # Return empty list (no actual compilation needed for enumeration test)
+            mock_mgr.prepare_compile_jobs.return_value = []
 
             orchestrator._compile_all_framework_libraries(
                 _make_framework_mock(libs_dir),
@@ -264,8 +266,8 @@ class TestFrameworkLibraryEnumeration:
                 False,
             )
 
-            # All 3 libraries should have compile_library called
-            assert mock_mgr.compile_library.call_count == 3
+            # All 3 libraries should have prepare_compile_jobs called
+            assert mock_mgr.prepare_compile_jobs.call_count == 3
 
     def test_skips_libraries_without_src(self, tmp_path: Path) -> None:
         """Library directories without src/ subdirectory are skipped."""
@@ -289,6 +291,7 @@ class TestFrameworkLibraryEnumeration:
             mock_mgr.libs_dir = build_dir / "libs"
             mock_mgr.libs_dir.mkdir(parents=True, exist_ok=True)
             mock_mgr.needs_rebuild.return_value = (True, "no archive")
+            mock_mgr.prepare_compile_jobs.return_value = []
 
             orchestrator._compile_all_framework_libraries(
                 _make_framework_mock(libs_dir),
@@ -299,8 +302,8 @@ class TestFrameworkLibraryEnumeration:
                 False,
             )
 
-            # Only "Good" should be compiled
-            assert mock_mgr.compile_library.call_count == 1
+            # Only "Good" should have prepare_compile_jobs called
+            assert mock_mgr.prepare_compile_jobs.call_count == 1
 
     def test_skips_dot_prefixed_directories(self, tmp_path: Path) -> None:
         """Directories starting with '.' are skipped."""
@@ -322,6 +325,7 @@ class TestFrameworkLibraryEnumeration:
             mock_mgr.libs_dir = build_dir / "libs"
             mock_mgr.libs_dir.mkdir(parents=True, exist_ok=True)
             mock_mgr.needs_rebuild.return_value = (True, "no archive")
+            mock_mgr.prepare_compile_jobs.return_value = []
 
             orchestrator._compile_all_framework_libraries(
                 _make_framework_mock(libs_dir),
@@ -332,7 +336,7 @@ class TestFrameworkLibraryEnumeration:
                 False,
             )
 
-            assert mock_mgr.compile_library.call_count == 1
+            assert mock_mgr.prepare_compile_jobs.call_count == 1
 
     def test_nonexistent_libraries_dir_returns_empty(self, tmp_path: Path) -> None:
         """If framework libraries dir doesn't exist, returns empty lists."""
@@ -405,6 +409,7 @@ class TestDeduplicationAgainstExistingArchives:
             mock_mgr.libs_dir = build_dir / "libs"
             mock_mgr.libs_dir.mkdir(parents=True, exist_ok=True)
             mock_mgr.needs_rebuild.return_value = (True, "no archive")
+            mock_mgr.prepare_compile_jobs.return_value = []
 
             orchestrator._compile_all_framework_libraries(
                 _make_framework_mock(libs_dir),
@@ -415,8 +420,8 @@ class TestDeduplicationAgainstExistingArchives:
                 False,
             )
 
-            # Only BLE should be compiled (WiFi matches existing "libwifi.a")
-            assert mock_mgr.compile_library.call_count == 1
+            # Only BLE should have prepare_compile_jobs called (WiFi matches existing "libwifi.a")
+            assert mock_mgr.prepare_compile_jobs.call_count == 1
 
     def test_deduplication_is_case_insensitive(self, tmp_path: Path) -> None:
         """Deduplication normalizes to lowercase: 'BLE' matches 'libble.a'."""
@@ -444,7 +449,7 @@ class TestDeduplicationAgainstExistingArchives:
             )
 
             # BLE should be skipped (matches "libble.a")
-            assert mock_mgr.compile_library.call_count == 0
+            assert mock_mgr.prepare_compile_jobs.call_count == 0
 
     def test_no_dedup_when_archive_name_doesnt_start_with_lib(self, tmp_path: Path) -> None:
         """Archives not starting with 'lib' prefix are ignored for dedup."""
@@ -462,6 +467,7 @@ class TestDeduplicationAgainstExistingArchives:
             mock_mgr.libs_dir = build_dir / "libs"
             mock_mgr.libs_dir.mkdir(parents=True, exist_ok=True)
             mock_mgr.needs_rebuild.return_value = (True, "no archive")
+            mock_mgr.prepare_compile_jobs.return_value = []
 
             orchestrator._compile_all_framework_libraries(
                 _make_framework_mock(libs_dir),
@@ -472,8 +478,8 @@ class TestDeduplicationAgainstExistingArchives:
                 False,
             )
 
-            # WiFi should still be compiled
-            assert mock_mgr.compile_library.call_count == 1
+            # WiFi should still have prepare_compile_jobs called
+            assert mock_mgr.prepare_compile_jobs.call_count == 1
 
 
 # =============================================================================
@@ -503,6 +509,8 @@ class TestHeaderOnlyLibraries:
             mock_mgr.libs_dir = build_dir / "libs"
             mock_mgr.libs_dir.mkdir(parents=True, exist_ok=True)
             mock_mgr.needs_rebuild.return_value = (True, "no archive")
+            # Header-only: prepare_compile_jobs returns empty list
+            mock_mgr.prepare_compile_jobs.return_value = []
 
             orchestrator._compile_all_framework_libraries(
                 _make_framework_mock(libs_dir),
@@ -513,8 +521,10 @@ class TestHeaderOnlyLibraries:
                 False,
             )
 
-            # compile_library should NOT be called (no source files)
-            mock_mgr.compile_library.assert_not_called()
+            # prepare_compile_jobs is called but returns empty (header-only)
+            mock_mgr.prepare_compile_jobs.assert_called_once()
+            # archive_library should NOT be called (no objects to archive)
+            mock_mgr.archive_library.assert_not_called()
 
     def test_header_only_lib_still_adds_include_paths(self, tmp_path: Path) -> None:
         """Header-only libraries still contribute include paths."""
@@ -537,6 +547,8 @@ class TestHeaderOnlyLibraries:
             mock_mgr.libs_dir = build_dir / "libs"
             mock_mgr.libs_dir.mkdir(parents=True, exist_ok=True)
             mock_mgr.needs_rebuild.return_value = (True, "no archive")
+            # Header-only: prepare_compile_jobs returns empty list
+            mock_mgr.prepare_compile_jobs.return_value = []
 
             _archives, includes = orchestrator._compile_all_framework_libraries(
                 framework,
@@ -565,7 +577,7 @@ class TestInterLibraryIncludePaths:
     """
 
     def test_all_framework_src_dirs_in_include_paths(self, tmp_path: Path) -> None:
-        """compile_library receives include paths containing all framework library src/ dirs."""
+        """prepare_compile_jobs receives include paths containing all framework library src/ dirs."""
         libs_dir = _create_framework_libraries(
             tmp_path,
             {
@@ -587,6 +599,7 @@ class TestInterLibraryIncludePaths:
             mock_mgr.libs_dir = build_dir / "libs"
             mock_mgr.libs_dir.mkdir(parents=True, exist_ok=True)
             mock_mgr.needs_rebuild.return_value = (True, "no archive")
+            mock_mgr.prepare_compile_jobs.return_value = []
 
             orchestrator._compile_all_framework_libraries(
                 framework,
@@ -597,7 +610,7 @@ class TestInterLibraryIncludePaths:
                 False,
             )
 
-            # Every compile_library call should have include_paths containing
+            # Every prepare_compile_jobs call should have include_paths containing
             # all three framework library src/ directories
             expected_src_dirs = {
                 libs_dir / "BLE" / "src",
@@ -605,12 +618,12 @@ class TestInterLibraryIncludePaths:
                 libs_dir / "WiFi" / "src",
             }
 
-            for call_args in mock_mgr.compile_library.call_args_list:
+            for call_args in mock_mgr.prepare_compile_jobs.call_args_list:
                 # include_paths is the 4th positional arg (index 3)
                 include_paths = call_args[0][3] if len(call_args[0]) > 3 else call_args[1].get("include_paths", [])
                 include_paths_set = set(include_paths)
                 for expected_dir in expected_src_dirs:
-                    assert expected_dir in include_paths_set, f"Expected {expected_dir} in include_paths for compile_library call, but got: {include_paths}"
+                    assert expected_dir in include_paths_set, f"Expected {expected_dir} in include_paths for prepare_compile_jobs call, but got: {include_paths}"
 
     def test_compiler_include_paths_preserved(self, tmp_path: Path) -> None:
         """Original compiler include paths are preserved alongside framework lib paths."""
@@ -630,6 +643,7 @@ class TestInterLibraryIncludePaths:
             mock_mgr.libs_dir = build_dir / "libs"
             mock_mgr.libs_dir.mkdir(parents=True, exist_ok=True)
             mock_mgr.needs_rebuild.return_value = (True, "no archive")
+            mock_mgr.prepare_compile_jobs.return_value = []
 
             orchestrator._compile_all_framework_libraries(
                 framework,
@@ -640,8 +654,8 @@ class TestInterLibraryIncludePaths:
                 False,
             )
 
-            # include_paths passed to compile_library should contain the original SDK include
-            call_args = mock_mgr.compile_library.call_args
+            # include_paths passed to prepare_compile_jobs should contain the original SDK include
+            call_args = mock_mgr.prepare_compile_jobs.call_args
             include_paths = call_args[0][3] if len(call_args[0]) > 3 else call_args[1].get("include_paths", [])
             assert original_include in include_paths
 
@@ -655,7 +669,7 @@ class TestCachedLibraryPath:
     """Tests behavior when libraries are already compiled (needs_rebuild=False)."""
 
     def test_cached_library_not_recompiled(self, tmp_path: Path) -> None:
-        """When needs_rebuild returns False, compile_library is not called."""
+        """When needs_rebuild returns False, prepare_compile_jobs is not called."""
         libs_dir = _create_framework_libraries(tmp_path, {"WiFi": ["WiFi.cpp", "WiFi.h"]})
         build_dir = tmp_path / "build"
         build_dir.mkdir()
@@ -678,7 +692,7 @@ class TestCachedLibraryPath:
                 False,
             )
 
-            mock_mgr.compile_library.assert_not_called()
+            mock_mgr.prepare_compile_jobs.assert_not_called()
 
 
 # =============================================================================
@@ -687,10 +701,10 @@ class TestCachedLibraryPath:
 
 
 class TestCompilationFailureResilience:
-    """Tests that a single library failing doesn't block other libraries."""
+    """Tests that prepare_compile_jobs is called for all libraries even if compilation fails."""
 
-    def test_failure_in_one_library_doesnt_stop_others(self, tmp_path: Path) -> None:
-        """If compiling library A throws, library B is still attempted."""
+    def test_all_libraries_prepared_even_when_setup_fails(self, tmp_path: Path) -> None:
+        """prepare_compile_jobs is called for both libs; setup failure is caught."""
         libs_dir = _create_framework_libraries(
             tmp_path,
             {
@@ -703,20 +717,18 @@ class TestCompilationFailureResilience:
 
         orchestrator = _make_orchestrator()
 
-        compile_calls = []
+        prepare_calls: list[str] = []
 
-        def mock_compile(library, *args, **kwargs):
-            compile_calls.append(library.name)
-            if "aaa_broken" in library.name:
-                raise RuntimeError("Simulated compilation failure")
-            return library.archive_file
+        def mock_prepare(library, *_args, **_kwargs):
+            prepare_calls.append(library.name)
+            return []  # Return empty (no actual compilation needed for this test)
 
         with patch("fbuild.build.orchestrator_esp32.LibraryManagerESP32") as MockLibMgr:
             mock_mgr = MockLibMgr.return_value
             mock_mgr.libs_dir = build_dir / "libs"
             mock_mgr.libs_dir.mkdir(parents=True, exist_ok=True)
             mock_mgr.needs_rebuild.return_value = (True, "no archive")
-            mock_mgr.compile_library.side_effect = mock_compile
+            mock_mgr.prepare_compile_jobs.side_effect = mock_prepare
 
             orchestrator._compile_all_framework_libraries(
                 _make_framework_mock(libs_dir),
@@ -727,10 +739,10 @@ class TestCompilationFailureResilience:
                 False,
             )
 
-            # Both libraries should have been attempted
-            assert len(compile_calls) == 2
-            assert "aaa_broken" in compile_calls
-            assert "zzz_good" in compile_calls
+            # Both libraries should have prepare_compile_jobs called
+            assert len(prepare_calls) == 2
+            assert "aaa_broken" in prepare_calls
+            assert "zzz_good" in prepare_calls
 
 
 # =============================================================================
@@ -741,8 +753,8 @@ class TestCompilationFailureResilience:
 class TestEnumerationOrder:
     """Tests that libraries are enumerated in sorted order for deterministic builds."""
 
-    def test_libraries_compiled_in_sorted_order(self, tmp_path: Path) -> None:
-        """Libraries are compiled in alphabetical order."""
+    def test_libraries_prepared_in_sorted_order(self, tmp_path: Path) -> None:
+        """Libraries have prepare_compile_jobs called in alphabetical order."""
         libs_dir = _create_framework_libraries(
             tmp_path,
             {
@@ -755,18 +767,18 @@ class TestEnumerationOrder:
         build_dir.mkdir()
 
         orchestrator = _make_orchestrator()
-        compile_order: list[str] = []
+        prepare_order: list[str] = []
 
-        def track_compile(library, *args, **kwargs):
-            compile_order.append(library.name)
-            return library.archive_file
+        def track_prepare(library, *_args, **_kwargs):
+            prepare_order.append(library.name)
+            return []  # Return empty (no actual compilation needed for order test)
 
         with patch("fbuild.build.orchestrator_esp32.LibraryManagerESP32") as MockLibMgr:
             mock_mgr = MockLibMgr.return_value
             mock_mgr.libs_dir = build_dir / "libs"
             mock_mgr.libs_dir.mkdir(parents=True, exist_ok=True)
             mock_mgr.needs_rebuild.return_value = (True, "no archive")
-            mock_mgr.compile_library.side_effect = track_compile
+            mock_mgr.prepare_compile_jobs.side_effect = track_prepare
 
             orchestrator._compile_all_framework_libraries(
                 _make_framework_mock(libs_dir),
@@ -777,4 +789,4 @@ class TestEnumerationOrder:
                 False,
             )
 
-            assert compile_order == ["ble", "spi", "wire"]
+            assert prepare_order == ["ble", "spi", "wire"]

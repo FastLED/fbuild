@@ -12,8 +12,8 @@ import logging
 import multiprocessing
 import platform
 import subprocess
-import threading
-from concurrent.futures import ThreadPoolExecutor, as_completed
+import time
+from concurrent.futures import Future, ThreadPoolExecutor
 from pathlib import Path
 from typing import List, Optional
 
@@ -24,7 +24,7 @@ from fbuild.packages.platformio_registry import (
     PlatformIORegistry,
     RegistryError,
 )
-from fbuild.subprocess_utils import safe_run
+from fbuild.subprocess_utils import safe_popen, safe_run
 
 logger = logging.getLogger(__name__)
 
@@ -40,23 +40,106 @@ def _is_cxx_only_flag(flag: str) -> bool:
 def _compile_single_file(job: tuple) -> tuple[Path, str]:
     """Compile a single source file (module-level function for thread pool execution).
 
+    Uses Popen with stdout=PIPE and stderr redirected to a file to avoid the
+    double-pump deadlock problem (reading two pipes from one process can deadlock
+    when one pipe's buffer fills while the reader is blocked on the other).
+
+    On success the stderr file is deleted. On failure it is kept for debugging.
+
     Args:
-        job: Tuple of (source_path, obj_file, cmd)
+        job: Tuple of (source_path, obj_file, cmd, stderr_dir)
+              stderr_dir is the directory where per-file stderr logs are written.
 
     Returns:
-        Tuple of (obj_file, stderr)
+        Tuple of (obj_file, stderr_text)
 
     Raises:
         LibraryErrorESP32: If compilation fails
     """
-    source, obj_file, cmd = job
+    source, obj_file, cmd, stderr_dir = job
 
-    result = safe_run(cmd, capture_output=True, text=True, encoding="utf-8")
+    # Create a per-file stderr log named after the object file to avoid collisions
+    stderr_file = stderr_dir / f"{obj_file.stem}.stderr"
+    stderr_file.parent.mkdir(parents=True, exist_ok=True)
 
-    if result.returncode != 0:
-        raise LibraryErrorESP32(f"Failed to compile {source.name}:\n{result.stderr}")
+    with open(stderr_file, "wb") as stderr_fh:
+        proc = safe_popen(cmd, stdout=subprocess.PIPE, stderr=stderr_fh)
+        stdout_bytes, _ = proc.communicate()
 
-    return obj_file, result.stderr
+    # Read stderr from file (UTF-8 with replacement for malformed sequences)
+    stderr_text = ""
+    if stderr_file.exists() and stderr_file.stat().st_size > 0:
+        stderr_text = stderr_file.read_text(encoding="utf-8", errors="replace")
+
+    stdout_text = stdout_bytes.decode("utf-8", errors="replace") if stdout_bytes else ""
+
+    if proc.returncode != 0:
+        # Keep stderr file for debugging
+        raise LibraryErrorESP32(f"Failed to compile {source.name}:\n{stderr_text}{stdout_text}")
+
+    # Success — clean up stderr file
+    try:
+        stderr_file.unlink(missing_ok=True)
+    except OSError:
+        pass  # Best-effort cleanup
+
+    return obj_file, stderr_text
+
+
+def create_stderr_dir(build_dir: Path) -> Path:
+    """Create a per-build-run stderr directory for compiler stderr output.
+
+    Args:
+        build_dir: The build directory for this run
+
+    Returns:
+        Path to the stderr directory (created and ready to use)
+    """
+    stderr_dir = build_dir / ".compile_stderr"
+    stderr_dir.mkdir(parents=True, exist_ok=True)
+    return stderr_dir
+
+
+def cleanup_stderr_dir(stderr_dir: Path) -> None:
+    """Best-effort cleanup of a stderr directory.
+
+    Removes the directory and all contents. Silently ignores errors
+    (e.g., files locked by another process, force-killed build).
+
+    Args:
+        stderr_dir: Path to the stderr directory to clean up
+    """
+    import shutil
+
+    try:
+        if stderr_dir.exists():
+            shutil.rmtree(stderr_dir, ignore_errors=True)
+    except OSError:
+        pass
+
+
+def garbage_collect_stderr_dirs(build_root: Path, max_age_hours: int) -> None:
+    """Remove old stderr directories that are older than max_age_hours.
+
+    Called periodically to clean up stderr dirs from builds that were
+    force-killed and couldn't clean up after themselves.
+
+    Args:
+        build_root: Root directory containing build dirs to scan
+        max_age_hours: Maximum age in hours before a stderr dir is removed
+    """
+    import shutil
+
+    cutoff = time.time() - (max_age_hours * 3600)
+    try:
+        for stderr_dir in build_root.glob("**/.compile_stderr"):
+            try:
+                if stderr_dir.stat().st_mtime < cutoff:
+                    shutil.rmtree(stderr_dir, ignore_errors=True)
+            except OSError:
+                pass
+    except OSError:
+        pass
 
 
 class LibraryErrorESP32(Exception):
@@ -886,45 +969,44 @@ class LibraryManagerESP32:
             num_workers = multiprocessing.cpu_count()
             completed_count = 0
             total_count = len(compile_jobs)
-            shutdown_requested = threading.Event()
 
-            with ThreadPoolExecutor(max_workers=num_workers) as executor:
-                # Submit all compilation jobs
-                future_to_job = {executor.submit(_compile_single_file, job): job for job in compile_jobs}
+            # Create per-build stderr directory for compiler output
+            stderr_dir = create_stderr_dir(library.lib_dir)
 
-                # Process results as they complete
-                try:
-                    for future in as_completed(future_to_job):
-                        if shutdown_requested.is_set():
-                            break  # Exit early on interrupt
+            executor = ThreadPoolExecutor(max_workers=num_workers)
+            try:
+                # Submit all jobs with stderr_dir, keep ordered list
+                ordered_futures: list[tuple[Future[tuple[Path, str]], Path]] = []
+                for source, obj_file, cmd in compile_jobs:
+                    job = (source, obj_file, cmd, stderr_dir)
+                    future = executor.submit(_compile_single_file, job)
+                    ordered_futures.append((future, source))
 
-                        source, obj_file, _ = future_to_job[future]
-                        completed_count += 1
+                # Iterate in submission order for deterministic stdout
+                for future, source in ordered_futures:
+                    completed_count += 1
+                    try:
+                        result_obj_file, _stderr = future.result()
+                        object_files.append(result_obj_file)
 
-                        try:
-                            result_obj_file, _stderr = future.result()
-                            object_files.append(result_obj_file)
+                        if show_progress:
+                            rel_path = source.relative_to(library.src_dir)
+                            log_detail(f"[{completed_count}/{total_count}] {rel_path}", indent=8)
+                    except KeyboardInterrupt:
+                        raise
+                    except Exception as e:
+                        executor.shutdown(wait=False, cancel_futures=True)
+                        raise LibraryErrorESP32(f"Failed to compile {source.name}: {e}")
 
-                            if show_progress:
-                                # Show relative path from library src_dir for clarity (especially for unity builds)
-                                rel_path = source.relative_to(library.src_dir)
-                                log_detail(f"[{completed_count}/{total_count}] {rel_path}", indent=8)
+            except KeyboardInterrupt as ke:
+                executor.shutdown(wait=False, cancel_futures=True)
+                from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
 
-                        except LibraryErrorESP32 as e:
-                            # Signal shutdown and cancel remaining jobs
-                            shutdown_requested.set()
-                            executor.shutdown(wait=False, cancel_futures=True)
-                            raise e
-
-                except KeyboardInterrupt as ke:
-                    # On Ctrl-C: cancel pending jobs and exit immediately
-                    shutdown_requested.set()
-                    executor.shutdown(wait=False, cancel_futures=True)
-                    from fbuild.interrupt_utils import (
-                        handle_keyboard_interrupt_properly,
-                    )
-
-                    handle_keyboard_interrupt_properly(ke)
+                handle_keyboard_interrupt_properly(ke)
+                raise  # Never reached
+            finally:
+                executor.shutdown(wait=False)
+                cleanup_stderr_dir(stderr_dir)
 
             # Create static archive using ar
             ar_path = self._find_toolchain_ar(toolchain_path)
@@ -967,6 +1049,113 @@ class LibraryManagerESP32:
         except Exception as e:
             raise LibraryErrorESP32(f"Failed to compile library '{library.name}': {e}") from e
 
+    def prepare_compile_jobs(
+        self,
+        library: LibraryESP32,
+        toolchain_path: Path,
+        compiler_flags: List[str],
+        include_paths: List[Path],
+    ) -> List[tuple[Path, Path, list[str]]]:
+        """Prepare compilation jobs for a library without executing them.
+
+        Used by parallel compilation to flatten all source files across
+        multiple libraries into a single thread pool.
+
+        Args:
+            library: Library to prepare jobs for
+            toolchain_path: Path to toolchain bin directory
+            compiler_flags: Compiler flags
+            include_paths: Include directories
+
+        Returns:
+            List of (source_path, obj_file_path, compile_command) tuples.
+            Returns empty list for header-only libraries.
+        """
+        sources = library.get_source_files()
+        if not sources:
+            # Header-only library — save build info so needs_rebuild() returns False
+            build_info = {"compiler_flags": compiler_flags, "source_count": 0, "object_files": [], "header_only": True}
+            with open(library.build_info_file, "w", encoding="utf-8") as f:
+                json.dump(build_info, f, indent=2)
+            return []
+
+        lib_includes = library.get_include_dirs()
+        all_includes = list(include_paths) + lib_includes
+
+        gcc_path, gxx_path = self._find_toolchain_compilers(toolchain_path)
+
+        include_flags_list = [f"-I{str(inc).replace(chr(92), '/')}" for inc in all_includes]
+        rsp_dir = library.src_dir / ".rsp"
+        rsp_arg = write_response_file(rsp_dir, include_flags_list, library.name)
+
+        c_flags = [f for f in compiler_flags if not _is_cxx_only_flag(f)]
+        compile_jobs: List[tuple[Path, Path, list[str]]] = []
+
+        for source in sources:
+            if source.suffix in [".cpp", ".cc", ".cxx"]:
+                compiler_bin = gxx_path
+                flags_for_file = compiler_flags
+            else:
+                compiler_bin = gcc_path
+                flags_for_file = c_flags
+
+            rel_path = source.relative_to(library.src_dir)
+            obj_file = library.src_dir / rel_path.with_suffix(".o")
+            obj_file.parent.mkdir(parents=True, exist_ok=True)
+
+            cmd = [str(compiler_bin), "-c"]
+            cmd.extend(flags_for_file)
+            cmd.append(rsp_arg)
+            cmd.extend(["-o", str(obj_file), str(source)])
+            compile_jobs.append((source, obj_file, cmd))
+
+        return compile_jobs
+
+    def archive_library(
+        self,
+        library: LibraryESP32,
+        toolchain_path: Path,
+        object_files: List[Path],
+        compiler_flags: List[str],
+    ) -> Path:
+        """Create a static archive from pre-compiled object files.
+
+        Used by parallel compilation after all source files have been compiled.
+
+        Args:
+            library: Library to archive
+            toolchain_path: Path to toolchain bin directory
+            object_files: List of compiled .o files
+            compiler_flags: Compiler flags (saved to build info for cache invalidation)
+
+        Returns:
+            Path to the created archive file
+
+        Raises:
+            LibraryErrorESP32: If archiving fails
+        """
+        ar_path = self._find_toolchain_ar(toolchain_path)
+
+        if library.archive_file.exists():
+            library.archive_file.unlink()
+
+        cmd = [str(ar_path), "rcs", str(library.archive_file)]
+        cmd.extend([str(obj) for obj in object_files])
+
+        result = safe_run(cmd, capture_output=True, text=True, encoding="utf-8")
+        if result.returncode != 0:
+            raise LibraryErrorESP32(f"Failed to create archive for {library.name}:\n{result.stderr}")
+
+        build_info = {
+            "compiler_flags": compiler_flags,
+            "source_count": len(object_files),
+            "object_files": [str(obj) for obj in object_files],
+        }
+        with open(library.build_info_file, "w", encoding="utf-8") as f:
+            json.dump(build_info, f, indent=2)
+
+        return library.archive_file
+
     def ensure_libraries(
         self,
         lib_specs: List[str],
@@ -989,15 +1178,58 @@ class LibraryManagerESP32:
         Returns:
             List of compiled LibraryESP32 instances
         """
-        libraries = []
+        libraries: List[LibraryESP32] = []
         downloaded_names: set[str] = set()
 
-        # Download all libraries first so cross-library includes are available
-        for spec_str in lib_specs:
-            spec = LibrarySpec.parse(spec_str)
-            library = self.download_library(spec, show_progress)
-            libraries.append(library)
-            downloaded_names.add(library.name.lower())
+        # Parse all library specs upfront
+        parsed_specs = [LibrarySpec.parse(spec_str) for spec_str in lib_specs]
+
+        # Download all libraries in parallel (network I/O bound)
+        max_download_workers = min(len(parsed_specs), 8)
+
+        if max_download_workers <= 1:
+            # Single library, no threading overhead needed
+            for spec in parsed_specs:
+                library = self.download_library(spec, show_progress)
+                libraries.append(library)
+                downloaded_names.add(library.name.lower())
+        else:
+            from concurrent.futures import Future
+
+            if show_progress:
+                log_detail(f"Downloading {len(parsed_specs)} libraries in parallel ({max_download_workers} workers)...")
+
+            download_errors: list[Exception] = []
+
+            dl_executor = ThreadPoolExecutor(max_workers=max_download_workers)
+            try:
+                # Submit all downloads, keep ordered list
+                ordered_dl: list[tuple[Future[LibraryESP32], LibrarySpec]] = []
+                for spec in parsed_specs:
+                    future = dl_executor.submit(self.download_library, spec, show_progress)
+                    ordered_dl.append((future, spec))
+
+                # Iterate in order for deterministic output
+                for future, spec in ordered_dl:
+                    try:
+                        lib = future.result()
+                        libraries.append(lib)
+                        downloaded_names.add(lib.name.lower())
+                    except KeyboardInterrupt:
+                        raise
+                    except Exception as e:
+                        download_errors.append(e)
+            except KeyboardInterrupt as ke:
+                dl_executor.shutdown(wait=False, cancel_futures=True)
+                from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+                handle_keyboard_interrupt_properly(ke)
+                raise  # Never reached
+            finally:
+                dl_executor.shutdown(wait=False)
+
+            if download_errors:
+                raise download_errors[0]
 
         # Resolve transitive dependencies from library.json files
         transitive_libs = self._resolve_transitive_deps(libraries, downloaded_names, show_progress, lib_ignore=lib_ignore)
@@ -1010,23 +1242,94 @@ class LibraryManagerESP32:
             all_lib_includes.extend(library.get_include_dirs())
         augmented_includes = list(include_paths) + all_lib_includes
 
-        # Compile all libraries (now each can see sibling library headers)
+        # Compile all libraries using flat pool - all source files across all
+        # libraries in one ThreadPoolExecutor for optimal CPU utilization
+        libs_needing_compile: list[LibraryESP32] = []
         for library in libraries:
-            needs_rebuild, reason = self.needs_rebuild(library, compiler_flags)
-
-            if needs_rebuild:
+            needs_rebuild_flag, reason = self.needs_rebuild(library, compiler_flags)
+            if needs_rebuild_flag:
                 if reason:
                     log_detail(f"Rebuilding library '{library.name}': {reason}")
-
-                self.compile_library(
-                    library,
-                    toolchain_path,
-                    compiler_flags,
-                    augmented_includes,
-                    show_progress,
-                )
+                libs_needing_compile.append(library)
             else:
                 log_detail(f"Library '{library.name}' is up to date (cached)")
+
+        if libs_needing_compile:
+            # Phase 1: Prepare compile jobs for all libraries
+            lib_compile_info: dict[str, tuple[LibraryESP32, list[Path]]] = {}
+            all_jobs: list[tuple[str, Path, Path, list[str]]] = []
+
+            for library in libs_needing_compile:
+                jobs = self.prepare_compile_jobs(library, toolchain_path, compiler_flags, augmented_includes)
+                if not jobs:
+                    log_detail(f"Library '{library.name}' is header-only, skipping compilation")
+                    continue
+                lib_compile_info[library.name] = (library, [])
+                for source, obj_file, cmd in jobs:
+                    all_jobs.append((library.name, source, obj_file, cmd))
+
+            # Phase 2: Compile ALL source files in one flat pool
+            if all_jobs:
+                num_workers = multiprocessing.cpu_count()
+                total = len(all_jobs)
+                completed_count = 0
+
+                if show_progress:
+                    log_detail(f"Compiling {total} source files across {len(lib_compile_info)} libraries ({num_workers} workers)")
+
+                # Create per-build stderr directory for compiler output
+                stderr_dir = create_stderr_dir(self.libs_dir)
+
+                executor = ThreadPoolExecutor(max_workers=num_workers)
+                try:
+                    ordered_futures: list[tuple[Future[tuple[Path, str]], str, Path]] = []
+                    for lib_name, source, obj_file, cmd in all_jobs:
+                        future = executor.submit(_compile_single_file, (source, obj_file, cmd, stderr_dir))
+                        ordered_futures.append((future, lib_name, source))
+
+                    # Iterate in submission order for deterministic stdout
+                    for future, lib_name, source in ordered_futures:
+                        completed_count += 1
+                        try:
+                            result_obj, _stderr = future.result()
+                            lib_compile_info[lib_name][1].append(result_obj)
+                            if show_progress:
+                                log_detail(f"[{completed_count}/{total}] {lib_name}/{source.name}", indent=8)
+                        except KeyboardInterrupt:
+                            raise
+                        except Exception as e:
+                            executor.shutdown(wait=False, cancel_futures=True)
+                            raise LibraryErrorESP32(f"Failed to compile {source.name} in {lib_name}: {e}")
+
+                except KeyboardInterrupt as ke:
+                    executor.shutdown(wait=False, cancel_futures=True)
+                    from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+                    handle_keyboard_interrupt_properly(ke)
+                    raise  # Never reached
+                finally:
+                    executor.shutdown(wait=False)
+                    cleanup_stderr_dir(stderr_dir)
+
+            # Phase 3: Archive each library in parallel
+            archive_tasks = [(name, lib, objs) for name, (lib, objs) in lib_compile_info.items() if objs]
+            if len(archive_tasks) <= 1:
+                for _name, lib, objs in archive_tasks:
+                    self.archive_library(lib, toolchain_path, objs, compiler_flags)
+            elif archive_tasks:
+                ar_executor = ThreadPoolExecutor(max_workers=min(len(archive_tasks), 4))
+                try:
+                    ar_ordered = [(ar_executor.submit(self.archive_library, lib, toolchain_path, objs, compiler_flags), name) for name, lib, objs in archive_tasks]
+                    for future, _name in ar_ordered:
+                        future.result()
+                except KeyboardInterrupt as ke:
+                    ar_executor.shutdown(wait=False, cancel_futures=True)
+                    from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+                    handle_keyboard_interrupt_properly(ke)
+                    raise  # Never reached
+                finally:
+                    ar_executor.shutdown(wait=False)
 
         return libraries
 
