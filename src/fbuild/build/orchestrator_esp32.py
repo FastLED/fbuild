@@ -382,7 +382,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             else:
                 log_detail("Build configuration unchanged, using cached artifacts", verbose_only=True)
 
-            # Initialize compilation executor early to show sccache status
+            # Initialize compilation executor early to show zccache status
             from fbuild.build.compilation_executor import CompilationExecutor
 
             compilation_executor = CompilationExecutor(
@@ -391,6 +391,11 @@ class OrchestratorESP32(IBuildOrchestrator):
                 compile_database=request.compile_database,
                 execute_compilations=not request.generate_compiledb,
             )
+
+            # Start zccache session with the C++ compiler (most files are C++)
+            gxx_path = toolchain.get_gxx_path()
+            if gxx_path is not None:
+                compilation_executor.start_zccache_session(gxx_path)
 
             # Load platform configuration ONCE (not redundantly in compiler/linker)
             from fbuild import platform_configs
@@ -716,6 +721,12 @@ class OrchestratorESP32(IBuildOrchestrator):
                 build_time=build_time,
                 message=f"ESP32 native build failed: {e}\n\n{error_trace}",
             )
+        finally:
+            # End zccache session if one was started
+            try:
+                compilation_executor.end_zccache_session()
+            except NameError:
+                pass
 
     def _setup_toolchain(
         self,

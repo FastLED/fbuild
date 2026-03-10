@@ -4,7 +4,8 @@ GCC supports response files (@filename): all flags are written to a file,
 and the compiler is invoked with @path instead of the flags inline. This
 avoids Windows' 32K character CreateProcess limit.
 
-sccache handles @file arguments correctly — it expands them before hashing.
+zccache handles @file arguments natively — it expands them internally for cache key
+computation but passes them through unchanged to the compiler.
 """
 
 from pathlib import Path

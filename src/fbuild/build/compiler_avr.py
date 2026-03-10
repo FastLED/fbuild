@@ -2,9 +2,10 @@
 AVR compiler wrapper for building Arduino sketches.
 
 This module provides a wrapper around avr-gcc and avr-g++ for compiling
-C and C++ source files to object files with sccache support.
+C and C++ source files to object files with zccache support.
 """
 
+import os
 import shutil
 from dataclasses import dataclass
 from pathlib import Path
@@ -45,7 +46,7 @@ class CompilerAVR(ICompiler):
         includes: List[Path],
         defines: Dict[str, str],
         context: "BuildContext",
-        use_sccache: bool,
+        use_zccache: bool,
     ):
         """
         Initialize compiler.
@@ -58,7 +59,7 @@ class CompilerAVR(ICompiler):
             includes: List of include directories
             defines: Dictionary of preprocessor defines
             context: Build context containing profile flags, queue, and verbose settings
-            use_sccache: Whether to use sccache for caching
+            use_zccache: Whether to use zccache for caching
         """
         self.avr_gcc = Path(avr_gcc)
         self.avr_gpp = Path(avr_gpp)
@@ -66,8 +67,8 @@ class CompilerAVR(ICompiler):
         self.f_cpu = f_cpu
         self.includes = [Path(p) for p in includes]
         self.defines = defines
-        self.use_sccache = use_sccache
-        self.sccache_path: Optional[Path] = None
+        self.use_zccache = use_zccache
+        self.zccache_path: Optional[str] = None
         self.pending_jobs: List[str] = []  # Track async job IDs
 
         # Store context and extract pre-resolved profile flags
@@ -80,20 +81,77 @@ class CompilerAVR(ICompiler):
 
         self._json_compile_flags, _ = get_profile_flags_from_config(context.profile, context.platform_config)
 
-        # Check if sccache is available
-        if self.use_sccache:
-            sccache_exe = shutil.which("sccache")
-            if sccache_exe:
-                self.sccache_path = Path(sccache_exe)
-                print(f"[sccache] Enabled for AVR compiler: {self.sccache_path}")
+        self._zccache_session_id: Optional[str] = None
+
+        # Check if zccache is available
+        if self.use_zccache:
+            zccache_exe = shutil.which("zccache")
+            if zccache_exe:
+                self.zccache_path = zccache_exe
+                print(f"[zccache] Enabled for AVR compiler: {self.zccache_path}")
             else:
-                print("[sccache] Warning: not found in PATH, proceeding without cache")
+                print("[zccache] Warning: not found in PATH, proceeding without cache")
 
         # Verify tools exist
         if not self.avr_gcc.exists():
             raise CompilerError(f"avr-gcc not found: {self.avr_gcc}")
         if not self.avr_gpp.exists():
             raise CompilerError(f"avr-g++ not found: {self.avr_gpp}")
+
+    def start_zccache_session(self) -> None:
+        """Start a zccache build session for the AVR compiler."""
+        if self.zccache_path is None:
+            return
+
+        from fbuild.subprocess_utils import safe_run
+
+        try:
+            result = safe_run(
+                [self.zccache_path, "session-start", "--compiler", str(self.avr_gpp)],
+                capture_output=True,
+                text=True,
+                timeout=10,
+            )
+            session_id = result.stdout.strip()
+            if result.returncode == 0 and session_id:
+                self._zccache_session_id = session_id
+                os.environ["ZCCACHE_SESSION_ID"] = session_id
+                print(f"[zccache] AVR session started: {session_id[:16]}...")
+            else:
+                print(f"[zccache] Warning: session-start failed: {result.stderr.strip()}")
+        except KeyboardInterrupt as ke:
+            from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
+        except Exception as e:
+            print(f"[zccache] Warning: session-start failed: {e}")
+
+    def end_zccache_session(self) -> None:
+        """End the current zccache build session."""
+        session_id = self._zccache_session_id
+        if session_id is None or self.zccache_path is None:
+            return
+
+        from fbuild.subprocess_utils import safe_run
+
+        self._zccache_session_id = None
+        os.environ.pop("ZCCACHE_SESSION_ID", None)
+
+        try:
+            safe_run(
+                [self.zccache_path, "session-end", session_id],
+                capture_output=True,
+                text=True,
+                timeout=10,
+            )
+        except KeyboardInterrupt as ke:
+            from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
+        except Exception:
+            pass  # Best-effort cleanup
 
     def compile_c(self, source: Path, output: Path, extra_flags: Optional[List[str]] = None) -> CompileResult:
         """
@@ -224,9 +282,9 @@ class CompilerAVR(ICompiler):
     def _build_c_command(self, source: Path, output: Path, extra_flags: List[str]) -> List[str]:
         """Build avr-gcc command for C compilation."""
         cmd = []
-        # Prepend sccache if available
-        if self.sccache_path:
-            cmd.append(str(self.sccache_path))
+        # Prepend zccache if available
+        if self.zccache_path:
+            cmd.append(self.zccache_path)
         cmd.extend(
             [
                 str(self.avr_gcc),
@@ -270,9 +328,9 @@ class CompilerAVR(ICompiler):
     def _build_cpp_command(self, source: Path, output: Path, extra_flags: List[str]) -> List[str]:
         """Build avr-g++ command for C++ compilation."""
         cmd = []
-        # Prepend sccache if available
-        if self.sccache_path:
-            cmd.append(str(self.sccache_path))
+        # Prepend zccache if available
+        if self.zccache_path:
+            cmd.append(self.zccache_path)
         cmd.extend(
             [
                 str(self.avr_gpp),

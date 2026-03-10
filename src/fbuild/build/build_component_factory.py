@@ -90,7 +90,7 @@ class BuildComponentFactory:
             includes=include_paths,
             defines=defines,
             context=context,
-            use_sccache=True,
+            use_zccache=True,
         )
 
     @staticmethod

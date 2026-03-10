@@ -309,7 +309,7 @@ class ConfigurableCompiler(ICompiler):
             from fbuild.build.compile_database import CompileDatabase
 
             db_cmd = self.compilation_executor._build_compile_command(compiler_path, source_path, output_path, compile_flags, include_flags)
-            db_args = CompileDatabase.strip_sccache(db_cmd)
+            db_args = CompileDatabase.strip_cache_wrapper(db_cmd)
             self.compilation_executor.compile_database.add_entry(
                 directory=str(self.context.project_dir),
                 file=str(source_path),

@@ -96,23 +96,33 @@ class TestCompileDatabase:
         # Latest wins
         assert db1.get_entries()[0].arguments == ["g++", "-O2", "a.cpp"]
 
-    def test_strip_sccache(self) -> None:
+    def test_strip_cache_wrapper_zccache(self) -> None:
+        cmd = ["/usr/bin/zccache", "g++", "-c", "main.cpp"]
+        result = CompileDatabase.strip_cache_wrapper(cmd)
+        assert result == ["g++", "-c", "main.cpp"]
+
+    def test_strip_cache_wrapper_zccache_windows(self) -> None:
+        cmd = ["C:\\Scripts\\zccache.exe", "g++", "-c", "main.cpp"]
+        result = CompileDatabase.strip_cache_wrapper(cmd)
+        assert result == ["g++", "-c", "main.cpp"]
+
+    def test_strip_cache_wrapper_sccache(self) -> None:
         cmd = ["/usr/bin/sccache", "g++", "-c", "main.cpp"]
-        result = CompileDatabase.strip_sccache(cmd)
+        result = CompileDatabase.strip_cache_wrapper(cmd)
         assert result == ["g++", "-c", "main.cpp"]
 
-    def test_strip_sccache_windows(self) -> None:
+    def test_strip_cache_wrapper_sccache_windows(self) -> None:
         cmd = ["C:\\tools\\sccache.exe", "g++", "-c", "main.cpp"]
-        result = CompileDatabase.strip_sccache(cmd)
+        result = CompileDatabase.strip_cache_wrapper(cmd)
         assert result == ["g++", "-c", "main.cpp"]
 
-    def test_strip_sccache_no_sccache(self) -> None:
+    def test_strip_cache_wrapper_no_wrapper(self) -> None:
         cmd = ["g++", "-c", "main.cpp"]
-        result = CompileDatabase.strip_sccache(cmd)
+        result = CompileDatabase.strip_cache_wrapper(cmd)
         assert result == ["g++", "-c", "main.cpp"]
 
-    def test_strip_sccache_empty(self) -> None:
-        assert CompileDatabase.strip_sccache([]) == []
+    def test_strip_cache_wrapper_empty(self) -> None:
+        assert CompileDatabase.strip_cache_wrapper([]) == []
 
     def test_thread_safety(self) -> None:
         db = CompileDatabase()

@@ -6,7 +6,7 @@ during builds and writes them in the JSON Compilation Database Format
 
 Design:
     - Uses 'arguments' array format (not 'command' string) per the spec — clangd prefers this
-    - Strips sccache wrapper from commands (clangd doesn't need it)
+    - Strips cache wrapper (zccache/sccache) from commands (clangd doesn't need it)
     - Thread-safe via threading.Lock since compilation is parallel
     - translate_for_clang() returns a new database with translated flags
 """
@@ -28,7 +28,7 @@ class CompileEntry:
     Attributes:
         directory: Working directory for the compilation (project_dir)
         file: Absolute path to the source file
-        arguments: Full compiler command as a list (no sccache wrapper)
+        arguments: Full compiler command as a list (no cache wrapper)
         output: Object file path
     """
 
@@ -73,7 +73,7 @@ class CompileDatabase:
         Args:
             directory: Working directory (project_dir)
             file: Source file path (absolute)
-            arguments: Full compiler command as list (should not include sccache)
+            arguments: Full compiler command as list (should not include cache wrapper)
             output: Object file path
         """
         entry = CompileEntry(
@@ -212,22 +212,22 @@ class CompileDatabase:
         return db
 
     @staticmethod
-    def strip_sccache(cmd: list[str]) -> list[str]:
-        """Remove sccache wrapper from a compiler command.
+    def strip_cache_wrapper(cmd: list[str]) -> list[str]:
+        """Remove cache wrapper (zccache/sccache) from a compiler command.
 
-        If the first element looks like an sccache binary, remove it
+        If the first element looks like a cache wrapper binary, remove it
         so clangd sees the actual compiler path.
 
         Args:
             cmd: Full compiler command list
 
         Returns:
-            Command list without sccache prefix
+            Command list without cache wrapper prefix
         """
         if not cmd:
             return cmd
 
         first = cmd[0].lower().replace("\\", "/")
-        if "sccache" in first:
+        if "zccache" in first or "sccache" in first:
             return cmd[1:]
         return list(cmd)

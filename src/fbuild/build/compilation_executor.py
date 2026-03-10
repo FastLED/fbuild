@@ -7,9 +7,10 @@ Design:
     - Uses GCC response files (@file) to avoid Windows command-line length limits
     - Provides clear error messages for compilation failures
     - Supports both C and C++ compilation
-    - Integrates sccache for compilation caching
+    - Integrates zccache for compilation caching (handles @file natively)
 """
 
+import os
 import platform
 import shutil
 import subprocess
@@ -46,7 +47,7 @@ class CompilationExecutor:
         self,
         build_dir: Path,
         show_progress: bool = True,
-        use_sccache: bool = True,
+        use_zccache: bool = True,
         compile_database: Optional["CompileDatabase"] = None,
         execute_compilations: bool = True,
     ):
@@ -55,33 +56,93 @@ class CompilationExecutor:
         Args:
             build_dir: Build directory for response files
             show_progress: Whether to show compilation progress
-            use_sccache: Whether to use sccache for caching (default: True)
+            use_zccache: Whether to use zccache for caching (default: True)
             compile_database: Optional CompileDatabase to capture compilation entries
             execute_compilations: Whether to actually run compilations (False for compiledb-only mode)
         """
         self.build_dir = build_dir
         self.show_progress = show_progress
-        self.use_sccache = use_sccache
+        self.use_zccache = use_zccache
         self.compile_database = compile_database
         self.execute_compilations = execute_compilations
-        self.sccache_path: Optional[Path] = None
+        self.zccache_path: Optional[str] = None
+        self._zccache_session_id: Optional[str] = None
 
-        # Check if sccache is available
-        if self.use_sccache:
-            sccache_exe = shutil.which("sccache")
-            if sccache_exe:
-                self.sccache_path = Path(sccache_exe)
-                # Always print sccache status for visibility
-                print(f"[sccache] Enabled: {self.sccache_path}")
+        # Check if zccache is available
+        if self.use_zccache:
+            zccache_exe = shutil.which("zccache")
+            if zccache_exe:
+                self.zccache_path = zccache_exe
+                print(f"[zccache] Enabled: {self.zccache_path}")
             else:
-                # Try common fallback location (cargo installs)
-                cargo_sccache = Path.home() / ".cargo" / "bin" / "sccache.exe"
-                if cargo_sccache.exists():
-                    self.sccache_path = cargo_sccache
-                    print(f"[sccache] Enabled: {self.sccache_path}")
-                else:
-                    # Always warn if sccache not found
-                    print("[sccache] Warning: not found in PATH, proceeding without cache")
+                print("[zccache] Warning: not found in PATH, proceeding without cache")
+
+    def start_zccache_session(self, compiler_path: Path) -> None:
+        """Start a zccache build session for the given compiler.
+
+        Must be called before compilation begins. Sets ZCCACHE_SESSION_ID
+        in the process environment so all subprocess calls pick it up.
+
+        Args:
+            compiler_path: Path to the compiler executable (gcc/g++)
+        """
+        if self.zccache_path is None:
+            return
+
+        try:
+            # Resolve to absolute path — zccache is a native Windows binary
+            # and needs Windows-style paths (not MSYS /c/ paths)
+            compiler_str = str(compiler_path.resolve())
+
+            result = safe_run(
+                [self.zccache_path, "session-start", "--compiler", compiler_str],
+                capture_output=True,
+                text=True,
+                timeout=10,
+            )
+            session_id = result.stdout.strip()
+            if result.returncode == 0 and session_id:
+                self._zccache_session_id = session_id
+                os.environ["ZCCACHE_SESSION_ID"] = session_id
+                print(f"[zccache] Session started: {session_id[:16]}...")
+            else:
+                print(f"[zccache] Warning: session-start failed: {result.stderr.strip()}")
+        except KeyboardInterrupt as ke:
+            from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
+        except Exception as e:
+            print(f"[zccache] Warning: session-start failed: {e}")
+
+    def end_zccache_session(self) -> None:
+        """End the current zccache build session.
+
+        Cleans up ZCCACHE_SESSION_ID from the process environment.
+        Should be called after all compilations are complete (typically in a finally block).
+        """
+        session_id = self._zccache_session_id
+        if session_id is None or self.zccache_path is None:
+            return
+
+        # Clean up env first regardless of session-end result
+        self._zccache_session_id = None
+        os.environ.pop("ZCCACHE_SESSION_ID", None)
+
+        try:
+            safe_run(
+                [self.zccache_path, "session-end", session_id],
+                capture_output=True,
+                text=True,
+                timeout=10,
+            )
+        except KeyboardInterrupt as ke:
+            from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
+
+            handle_keyboard_interrupt_properly(ke)
+            raise  # Never reached, but satisfies type checker
+        except Exception:
+            pass  # Best-effort cleanup
 
     def compile_source(self, compiler_path: Path, source_path: Path, output_path: Path, compile_flags: List[str], include_paths: List[Path]) -> Path:
         """Compile a single source file.
@@ -124,7 +185,7 @@ class CompilationExecutor:
 
             # For compile_commands.json, expand the response file to actual flags
             db_cmd = self._build_compile_command(compiler_path, source_path, output_path, compile_flags, include_flags)
-            db_args = CompileDatabase.strip_sccache(db_cmd)
+            db_args = CompileDatabase.strip_cache_wrapper(db_cmd)
             self.compile_database.add_entry(
                 directory=str(self.build_dir),
                 file=str(source_path),
@@ -168,12 +229,9 @@ class CompilationExecutor:
             raise CompilationError(f"Failed to compile {source_path.name}: {e}") from e
 
     def _build_compile_command(self, compiler_path: Path, source_path: Path, output_path: Path, compile_flags: List[str], include_paths: List[str]) -> List[str]:
-        """Build compilation command with optional sccache wrapper.
+        """Build compilation command with optional zccache wrapper.
 
-        On Windows, sccache expands @file arguments before spawning the preprocessor,
-        which can re-create the 32K command-line limit problem. When include_paths
-        contains a response file (@path), sccache is skipped so the compiler reads
-        the @file directly without expansion.
+        zccache handles @file arguments natively — no need to bypass for response files.
 
         Args:
             compiler_path: Path to compiler executable
@@ -188,20 +246,16 @@ class CompilationExecutor:
         # Include paths are already converted to flags (List[str])
         include_flags = include_paths
 
-        # sccache expands @file before spawning the preprocessor, re-creating the
-        # 32K limit on Windows.  When we are using a response file, bypass sccache
-        # so the compiler reads the @file natively.
-        has_response_file = any(f.startswith("@") for f in include_flags)
-        use_sccache = self.sccache_path is not None and not has_response_file
+        # zccache handles @file natively, so no response file bypass needed
+        use_cache = self.zccache_path is not None
 
         cmd = []
-        if use_sccache:
-            cmd.append(str(self.sccache_path))
-            # Use absolute resolved path for sccache
-            # On Windows, sccache needs consistent path format (all backslashes)
+        if use_cache:
+            cmd.append(self.zccache_path)
+            # Use absolute resolved path for the compiler
+            # On Windows, ensure consistent path format (all backslashes)
             resolved_compiler = compiler_path.resolve()
             compiler_str = str(resolved_compiler)
-            # Normalize to Windows backslashes on Windows
             if platform.system() == "Windows":
                 compiler_str = compiler_str.replace("/", "\\")
             cmd.append(compiler_str)
@@ -314,7 +368,7 @@ class CompilationExecutor:
             from fbuild.build.compile_database import CompileDatabase
 
             db_cmd = self._build_compile_command(compiler_path, source_path, output_path, compile_flags, include_flags)
-            db_args = CompileDatabase.strip_sccache(db_cmd)
+            db_args = CompileDatabase.strip_cache_wrapper(db_cmd)
             self.compile_database.add_entry(
                 directory=str(self.build_dir),
                 file=str(source_path),
