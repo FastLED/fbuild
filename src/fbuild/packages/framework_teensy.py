@@ -34,6 +34,7 @@ from typing import Any, Dict, List, Optional
 from fbuild.packages.cache import Cache
 from fbuild.packages.downloader import DownloadError, ExtractionError, PackageDownloader
 from fbuild.packages.package import IFramework, PackageError
+from fbuild.packages.staged_install import cleanup_stale_staging_dirs, staged_install
 
 
 class FrameworkErrorTeensy(PackageError):
@@ -98,6 +99,9 @@ class FrameworkTeensy(IFramework):
             # Download and extract framework package
             self.cache.ensure_directories()
 
+            # Clean up stale staging directories
+            cleanup_stale_staging_dirs(self.cache.platforms_dir)
+
             # Use downloader to handle download and extraction
             archive_name = "teensy-cores-master.zip"
             archive_path = self.framework_path.parent / archive_name
@@ -114,34 +118,31 @@ class FrameworkTeensy(IFramework):
             if self.show_progress:
                 print("Extracting Teensy cores...")
 
-            # Create temp extraction directory
-            temp_extract = self.framework_path.parent / "temp_extract"
-            temp_extract.mkdir(parents=True, exist_ok=True)
+            with staged_install(self.framework_path, self.cache.platforms_dir) as install_dir:
+                # Create temp extraction directory outside install_dir
+                temp_extract = install_dir.parent / "temp_extract"
+                temp_extract.mkdir(parents=True, exist_ok=True)
 
-            self.downloader.extract_archive(archive_path, temp_extract, show_progress=self.show_progress)
+                self.downloader.extract_archive(archive_path, temp_extract, show_progress=self.show_progress)
 
-            # Find the cores directory in the extracted content
-            # Usually it's a subdirectory like "cores-master/"
-            extracted_dirs = list(temp_extract.glob("cores-*"))
-            if not extracted_dirs:
-                # Maybe it extracted directly
-                extracted_dirs = [temp_extract]
+                # Find the cores directory in the extracted content
+                # Usually it's a subdirectory like "cores-master/"
+                extracted_dirs = list(temp_extract.glob("cores-*"))
+                if not extracted_dirs:
+                    # Maybe it extracted directly
+                    extracted_dirs = [temp_extract]
 
-            source_dir = extracted_dirs[0]
+                source_dir = extracted_dirs[0]
 
-            # Move to final location
-            if self.framework_path.exists():
+                # Move to install directory
                 import shutil
 
-                shutil.rmtree(self.framework_path)
+                shutil.rmtree(install_dir)
+                source_dir.rename(install_dir)
 
-            source_dir.rename(self.framework_path)
-
-            # Clean up temp directory
-            if temp_extract.exists() and temp_extract != self.framework_path:
-                import shutil
-
-                shutil.rmtree(temp_extract, ignore_errors=True)
+                # Clean up temp directory
+                if temp_extract.exists() and temp_extract != install_dir:
+                    shutil.rmtree(temp_extract, ignore_errors=True)
 
             if self.show_progress:
                 print(f"Teensy cores installed to {self.framework_path}")

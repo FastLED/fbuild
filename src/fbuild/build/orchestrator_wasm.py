@@ -226,7 +226,7 @@ class OrchestratorWASM(IBuildOrchestrator):
 
         object_files: List[Path] = []
         for source in source_files:
-            obj_path = src_build_dir / (source.stem + ".o")
+            obj_path = src_build_dir / f"{source.parent.name}_{source.name}.o"
             success = self._compile_source(
                 emcc=emcc,
                 source=source,

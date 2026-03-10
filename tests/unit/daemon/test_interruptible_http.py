@@ -5,6 +5,7 @@ This module tests that HTTP requests can be properly interrupted by CTRL-C,
 fixing the Windows blocking I/O issue where KeyboardInterrupt doesn't work.
 """
 
+import socket
 import threading
 import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -83,6 +84,14 @@ def http_server() -> Any:
     port = server.server_address[1]
     server_thread = threading.Thread(target=server.serve_forever, daemon=True)
     server_thread.start()
+
+    # Wait for server to be ready (avoids race under heavy parallel load)
+    for _ in range(50):
+        try:
+            with socket.create_connection(("127.0.0.1", port), timeout=0.1):
+                break
+        except OSError:
+            time.sleep(0.05)
 
     yield server, port
 

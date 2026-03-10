@@ -253,6 +253,16 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
             log_detail(f"Variant: {len(sources.variant_sources)} files", verbose_only=not verbose_mode)
             log_detail(f"Total: {total_sources} files", verbose_only=not verbose_mode)
 
+            if not sources.sketch_sources:
+                return BuildResult(
+                    success=False,
+                    hex_path=None,
+                    elf_path=None,
+                    size_info=None,
+                    build_time=time.time() - start_time,
+                    message="No source files found. Create a sketch file (.ino, .cpp, or .c) in the src/ directory.",
+                )
+
             # Phase 8: Compile sources
             log_phase(8, 11, "Compiling sources...", verbose_only=not verbose_mode)
 

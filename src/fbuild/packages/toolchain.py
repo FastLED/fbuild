@@ -4,6 +4,7 @@ This module handles downloading, extracting, and managing the AVR-GCC
 toolchain required for building Arduino sketches.
 """
 
+import shutil
 import sys
 from pathlib import Path
 from typing import Any, Dict, Optional
@@ -12,6 +13,7 @@ from fbuild.packages.cache import Cache
 from fbuild.packages.downloader import PackageDownloader
 from fbuild.packages.package import IToolchain, PackageError
 from fbuild.packages.platform_utils import PlatformDetector, PlatformError
+from fbuild.packages.staged_install import cleanup_stale_staging_dirs, staged_install
 
 
 def _safe_print(message: str) -> None:
@@ -205,46 +207,47 @@ class ToolchainAVR(IToolchain):
             _safe_print("Extracting toolchain...")
             toolchain_path.parent.mkdir(parents=True, exist_ok=True)
 
-            # Extract to a temporary location first
-            import shutil
-            import tempfile
+            cleanup_stale_staging_dirs(self.cache.toolchains_dir)
 
-            with tempfile.TemporaryDirectory() as temp_dir:
-                temp_path = Path(temp_dir)
-                self.downloader.extract_archive(package_path, temp_path, show_progress=False)
+            with staged_install(toolchain_path, self.cache.toolchains_dir) as install_dir:
+                # Extract to a temp dir (outside install_dir)
+                temp_extract = install_dir.parent / "temp_extract_avr"
+                temp_extract.mkdir(parents=True, exist_ok=True)
+                try:
+                    self.downloader.extract_archive(package_path, temp_extract, show_progress=False)
 
-                # Find the actual toolchain directory (may be nested)
-                extracted_dirs = list(temp_path.iterdir())
-                if len(extracted_dirs) == 1 and extracted_dirs[0].is_dir():
-                    # Single directory extracted, use it
-                    src_dir = extracted_dirs[0]
-                else:
-                    # Multiple items extracted, use the temp dir itself
-                    src_dir = temp_path
+                    # Find the actual toolchain directory (may be nested)
+                    extracted_dirs = list(temp_extract.iterdir())
+                    if len(extracted_dirs) == 1 and extracted_dirs[0].is_dir():
+                        src_dir = extracted_dirs[0]
+                    else:
+                        src_dir = temp_extract
 
-                # Move to final location
-                if toolchain_path.exists():
-                    shutil.rmtree(toolchain_path)
-                shutil.move(str(src_dir), str(toolchain_path))
+                    # Move to install_dir (staging)
+                    shutil.rmtree(install_dir)
+                    shutil.move(str(src_dir), str(install_dir))
 
-            # Comprehensive verification
-            if not self._verify_toolchain(toolchain_path):
-                raise ToolchainError("Toolchain verification failed after extraction")
+                    # Comprehensive verification
+                    if not self._verify_toolchain(install_dir):
+                        raise ToolchainError("Toolchain verification failed after extraction")
+
+                    # Create manifest for cache management
+                    from fbuild.packages.downloader import create_package_manifest
+
+                    create_package_manifest(
+                        install_path=install_dir,
+                        name=f"AVR-GCC {self.VERSION}",
+                        package_type="toolchains",
+                        version=self.VERSION,
+                        url=url,
+                        metadata={"architecture": "avr"},
+                    )
+                finally:
+                    if temp_extract.exists():
+                        shutil.rmtree(temp_extract, ignore_errors=True)
 
             self._toolchain_path = toolchain_path
             _safe_print(f"Toolchain ready at {toolchain_path}")
-
-            # Create manifest for cache management
-            from fbuild.packages.downloader import create_package_manifest
-
-            create_package_manifest(
-                install_path=toolchain_path,
-                name=f"AVR-GCC {self.VERSION}",
-                package_type="toolchains",
-                version=self.VERSION,
-                url=url,
-                metadata={"architecture": "avr"},
-            )
 
             return toolchain_path
 

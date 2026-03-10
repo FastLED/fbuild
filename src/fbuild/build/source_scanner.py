@@ -115,14 +115,14 @@ class SourceScanner:
             cpp_file = self._preprocess_ino_files(ino_files)
             sources.append(cpp_file)
 
-        # Find existing .cpp and .c files in the root directory only
-        for pattern in ["*.cpp", "*.c"]:
+        # Find existing .cpp, .c, and .S (assembly) files in the root directory only
+        for pattern in ["*.cpp", "*.c", "*.S"]:
             sources.extend(sorted(src_dir.glob(pattern)))
 
         # Recursively find sources in subdirectories (excluding certain directories)
         for subdir in src_dir.iterdir():
             if subdir.is_dir() and subdir.name not in excluded_dirs:
-                for pattern in ["**/*.cpp", "**/*.c"]:
+                for pattern in ["**/*.cpp", "**/*.c", "**/*.S"]:
                     sources.extend(sorted(subdir.glob(pattern)))
 
         return sources
@@ -141,7 +141,7 @@ class SourceScanner:
             return []
 
         sources = []
-        for pattern in ["*.cpp", "*.c"]:
+        for pattern in ["*.cpp", "*.c", "*.S"]:
             sources.extend(sorted(core_dir.glob(pattern)))
 
         return sources
@@ -160,7 +160,7 @@ class SourceScanner:
             return []
 
         sources = []
-        for pattern in ["*.cpp", "*.c"]:
+        for pattern in ["*.cpp", "*.c", "*.S"]:
             sources.extend(sorted(variant_dir.glob(pattern)))
 
         return sources

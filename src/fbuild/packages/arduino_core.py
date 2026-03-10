@@ -10,6 +10,7 @@ from typing import Any, Dict, Optional
 from fbuild.packages.cache import Cache
 from fbuild.packages.downloader import PackageDownloader
 from fbuild.packages.package import IFramework, PackageError
+from fbuild.packages.staged_install import cleanup_stale_staging_dirs, staged_install
 
 
 class ArduinoCoreError(PackageError):
@@ -98,43 +99,42 @@ class ArduinoCore(IFramework):
             print("Extracting Arduino core...")
             core_path.parent.mkdir(parents=True, exist_ok=True)
 
-            # Extract to temporary location first
             import shutil
-            import tempfile
 
-            with tempfile.TemporaryDirectory() as temp_dir:
-                temp_path = Path(temp_dir)
-                self.downloader.extract_archive(package_path, temp_path, show_progress=False)
+            cleanup_stale_staging_dirs(self.cache.platforms_dir)
 
-                # After extraction, check if temp_path contains the core files directly
-                # (downloader.extract_archive strips the top-level GitHub directory)
-                if (temp_path / "boards.txt").exists() and (temp_path / "cores").exists():
-                    # Core files are directly in temp_path, move all contents to core_path
-                    if core_path.exists():
-                        shutil.rmtree(core_path)
-                    core_path.mkdir(parents=True, exist_ok=True)
-                    for item in temp_path.iterdir():
-                        shutil.move(str(item), str(core_path / item.name))
-                else:
-                    # Legacy fallback: look for subdirectory (e.g., avr/)
-                    extracted_dir = temp_path / "avr"
-                    if not extracted_dir.exists():
-                        # If not in avr/ subdirectory, use first directory found
-                        extracted_dirs = [d for d in temp_path.iterdir() if d.is_dir()]
-                        if extracted_dirs:
-                            extracted_dir = extracted_dirs[0]
-                        else:
-                            raise ArduinoCoreError("No directory found in extracted archive")
+            with staged_install(core_path, self.cache.platforms_dir) as install_dir:
+                # Extract to a temp dir (outside install_dir)
+                temp_extract = install_dir.parent / "temp_extract_avr_core"
+                temp_extract.mkdir(parents=True, exist_ok=True)
+                try:
+                    self.downloader.extract_archive(package_path, temp_extract, show_progress=False)
 
-                    # Move to final location
-                    if core_path.exists():
-                        shutil.rmtree(core_path)
-                    shutil.move(str(extracted_dir), str(core_path))
+                    if (temp_extract / "boards.txt").exists() and (temp_extract / "cores").exists():
+                        # Core files directly in temp_extract — move all into install_dir
+                        # install_dir already exists (staging), so move items individually
+                        for item in temp_extract.iterdir():
+                            shutil.move(str(item), str(install_dir / item.name))
+                    else:
+                        # Legacy: look for subdirectory
+                        extracted_dir = temp_extract / "avr"
+                        if not extracted_dir.exists():
+                            extracted_dirs = [d for d in temp_extract.iterdir() if d.is_dir()]
+                            if extracted_dirs:
+                                extracted_dir = extracted_dirs[0]
+                            else:
+                                raise ArduinoCoreError("No directory found in extracted archive")
+                        shutil.rmtree(install_dir)
+                        shutil.move(str(extracted_dir), str(install_dir))
+                finally:
+                    if temp_extract.exists():
+                        shutil.rmtree(temp_extract, ignore_errors=True)
 
-            # Verify installation
-            if not self._verify_core(core_path):
-                raise ArduinoCoreError("Core verification failed after extraction")
+                # Verification happens inside `with` so staging is only committed if it passes
+                if not self._verify_core(install_dir):
+                    raise ArduinoCoreError("Core verification failed after extraction")
 
+            # After the `with` block succeeds, set the core path
             self._core_path = core_path
             print(f"Arduino core ready at {core_path}")
             return core_path

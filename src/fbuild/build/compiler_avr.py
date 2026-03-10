@@ -208,6 +208,8 @@ class CompilerAVR(ICompiler):
             cmd = self._build_c_command(source, output, extra_flags or [])
         elif source.suffix in [".cpp", ".cxx", ".cc"]:
             cmd = self._build_cpp_command(source, output, extra_flags or [])
+        elif source.suffix == ".S":
+            cmd = self._build_asm_command(source, output, extra_flags or [])
         else:
             raise CompilerError(f"Unknown source file type: {source.suffix}")
 
@@ -246,8 +248,9 @@ class CompilerAVR(ICompiler):
 
         for source in sources:
             source = Path(source)
-            # Generate object file name
-            obj_name = source.stem + ".o"
+            # Generate object file name including parent dir and extension
+            # to avoid collisions (e.g., arduino_wiring_pulse.c.o vs arduino_wiring_pulse.S.o)
+            obj_name = f"{source.parent.name}_{source.name}.o"
             obj_path = output_dir / obj_name
 
             # Compile
@@ -310,6 +313,46 @@ class CompilerAVR(ICompiler):
                 cmd.append(f"-D{key}")
 
         # Add F_CPU explicitly
+        if "F_CPU" not in self.defines:
+            cmd.append(f"-DF_CPU={self.f_cpu}")
+
+        # Add include paths
+        for include in self.includes:
+            cmd.append(f"-I{include}")
+
+        # Add extra flags
+        cmd.extend(extra_flags)
+
+        # Add source and output
+        cmd.extend([str(source), "-o", str(output)])
+
+        return cmd
+
+    def _build_asm_command(self, source: Path, output: Path, extra_flags: List[str]) -> List[str]:
+        """Build avr-gcc command for assembly (.S) compilation."""
+        cmd = []
+        # Prepend zccache if available
+        if self.zccache_path:
+            cmd.append(self.zccache_path)
+        cmd.extend(
+            [
+                str(self.avr_gcc),
+                "-c",  # Compile only, don't link
+                "-g",  # Include debug symbols
+                "-x",
+                "assembler-with-cpp",  # Preprocess assembly with C preprocessor
+            ]
+        )
+
+        cmd.append(f"-mmcu={self.mcu}")  # Target MCU
+
+        # Add defines (assembly may use preprocessor macros)
+        for key, value in self.defines.items():
+            if value:
+                cmd.append(f"-D{key}={value}")
+            else:
+                cmd.append(f"-D{key}")
+
         if "F_CPU" not in self.defines:
             cmd.append(f"-DF_CPU={self.f_cpu}")
 
@@ -508,7 +551,7 @@ class CompilerAVR(ICompiler):
 
         # Generate output path if not provided
         if output_path is None:
-            output_path = source_path.parent / f"{source_path.stem}.o"
+            output_path = source_path.parent / f"{source_path.parent.name}_{source_path.name}.o"
 
         # Compile the source
         result = self.compile(source_path, output_path)

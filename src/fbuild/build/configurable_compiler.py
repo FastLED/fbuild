@@ -261,6 +261,7 @@ class ConfigurableCompiler(ICompiler):
         """
         # Determine compiler based on file extension
         is_cpp = source_path.suffix in [".cpp", ".cxx", ".cc"]
+        is_asm = source_path.suffix in [".S"]
         compiler_path = self.toolchain.get_gxx_path() if is_cpp else self.toolchain.get_gcc_path()
 
         if compiler_path is None:
@@ -270,12 +271,16 @@ class ConfigurableCompiler(ICompiler):
         if output_path is None:
             obj_dir = self.build_dir / "obj"
             obj_dir.mkdir(parents=True, exist_ok=True)
-            output_path = obj_dir / f"{source_path.stem}.o"
+            output_path = obj_dir / f"{source_path.parent.name}_{source_path.name}.o"
 
         # Get compilation flags
         flags = self.get_compile_flags()
         compile_flags = flags["common"].copy()
-        if is_cpp:
+        if is_asm:
+            # Assembly files: use -x assembler-with-cpp for GCC preprocessing
+            compile_flags.append("-x")
+            compile_flags.append("assembler-with-cpp")
+        elif is_cpp:
             compile_flags.extend(flags["cxxflags"])
         else:
             compile_flags.extend(flags["cflags"])
@@ -362,7 +367,7 @@ class ConfigurableCompiler(ICompiler):
         # Determine object file path
         obj_dir = self.build_dir / "obj"
         obj_dir.mkdir(parents=True, exist_ok=True)
-        obj_path = obj_dir / f"{cpp_path.stem}.o"
+        obj_path = obj_dir / f"{cpp_path.parent.name}_{cpp_path.name}.o"
 
         # Skip compilation if object file is up-to-date
         if not self.needs_rebuild(cpp_path, obj_path):
@@ -375,7 +380,7 @@ class ConfigurableCompiler(ICompiler):
         # Find and compile additional .cpp files in the sketch directory
         # (Arduino IDE compiles all .cpp files in the sketch folder)
         for cpp_file in sketch_dir.glob("*.cpp"):
-            cpp_obj_path = obj_dir / f"{cpp_file.stem}.o"
+            cpp_obj_path = obj_dir / f"{cpp_file.parent.name}_{cpp_file.name}.o"
 
             # Skip compilation if object file is up-to-date
             if not self.needs_rebuild(cpp_file, cpp_obj_path):
@@ -455,7 +460,7 @@ class ConfigurableCompiler(ICompiler):
                     progress_bar.set_description(f"Compiling {rel_path_str[:30]}")
 
                 try:
-                    obj_path = core_obj_dir / f"{source.stem}.o"
+                    obj_path = core_obj_dir / f"{source.parent.name}_{source.name}.o"
 
                     # Skip compilation if object file is up-to-date
                     if not self.needs_rebuild(source, obj_path):

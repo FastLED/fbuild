@@ -32,6 +32,7 @@ from typing import Any, Dict, List
 from fbuild.packages.cache import Cache
 from fbuild.packages.downloader import DownloadError, ExtractionError, PackageDownloader
 from fbuild.packages.package import IFramework, PackageError
+from fbuild.packages.staged_install import cleanup_stale_staging_dirs, staged_install
 
 
 class FrameworkErrorESP8266(PackageError):
@@ -124,12 +125,15 @@ class FrameworkESP8266(IFramework):
             if not framework_cache_path.exists():
                 # Download and extract framework
                 cache_dir = framework_cache_path.parent
-                self.downloader.download_and_extract(
-                    url=self.framework_url,
-                    cache_dir=cache_dir,
-                    extract_dir=framework_cache_path,
-                    show_progress=self.show_progress,
-                )
+                cleanup_stale_staging_dirs(self.cache.platforms_dir)
+
+                with staged_install(framework_cache_path, self.cache.platforms_dir) as install_dir:
+                    self.downloader.download_and_extract(
+                        url=self.framework_url,
+                        cache_dir=cache_dir,
+                        extract_dir=install_dir,
+                        show_progress=self.show_progress,
+                    )
 
             self._framework_path = framework_cache_path
             return framework_cache_path

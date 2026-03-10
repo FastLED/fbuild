@@ -78,13 +78,20 @@ class EnvironmentDetector:
 
         Raises:
             FileNotFoundError: If platformio.ini doesn't exist
-            ValueError: If no environments found in platformio.ini
+            ValueError: If no environments found or env_name not found in platformio.ini
         """
+        ini_path = project_dir / "platformio.ini"
+
         if env_name:
+            # Validate the environment exists in platformio.ini (if the file exists)
+            if ini_path.exists():
+                config = PlatformIOConfig(ini_path)
+                available_envs = config.get_environments()
+                if available_envs and env_name not in available_envs:
+                    raise ValueError(f"Environment '{env_name}' not found in platformio.ini. Available environments: {', '.join(available_envs)}")
             return env_name
 
         # Auto-detect environment from platformio.ini
-        ini_path = project_dir / "platformio.ini"
         if not ini_path.exists():
             raise FileNotFoundError(f"platformio.ini not found in {project_dir}")
 

@@ -53,10 +53,11 @@ from typing import Any, Dict, List, Optional
 
 from fbuild.packages.archive_utils import ArchiveExtractor, URLVersionExtractor
 from fbuild.packages.cache import Cache
-from fbuild.packages.downloader import DownloadError, ExtractionError
+from fbuild.packages.downloader import DownloadError, ExtractionError, PackageDownloader
 from fbuild.packages.framework_patches import ESP32_FRAMEWORK_PATCHES, apply_framework_patches
 from fbuild.packages.package import IFramework, PackageError
 from fbuild.packages.sdk_utils import SDKPathResolver
+from fbuild.packages.staged_install import cleanup_stale_staging_dirs, staged_install
 
 
 class FrameworkErrorESP32(PackageError):
@@ -121,6 +122,10 @@ class FrameworkESP32(IFramework):
     def ensure_framework(self) -> Path:
         """Ensure framework is downloaded and extracted.
 
+        Uses staged_install: all work is done in a temp dir, and only the final
+        step renames it to the real location. If cancelled mid-install, the staging
+        dir is left as an orphan that can be garbage-collected later.
+
         Returns:
             Path to the extracted framework directory
 
@@ -137,21 +142,15 @@ class FrameworkESP32(IFramework):
             if self.show_progress:
                 print(f"Downloading ESP32 framework {self.version}...")
 
-            # Download and extract framework package
             self.cache.ensure_directories()
+            cleanup_stale_staging_dirs(self.cache.platforms_dir)
 
-            # Create framework directory
-            self.framework_path.mkdir(parents=True, exist_ok=True)
-
-            # Download and extract framework components in parallel
-            # Arduino core, ESP-IDF libs, and skeleton lib are independent downloads
-            self._download_framework_components_parallel()
+            with staged_install(self.framework_path, self.cache.platforms_dir) as install_dir:
+                self._download_framework_components_parallel(install_dir)
+                self._post_install_apply_patches(install_dir)
 
             if self.show_progress:
                 print(f"ESP32 framework installed to {self.framework_path}")
-
-            # Post-install: Apply framework patches to fix known upstream bugs
-            self._post_install_apply_patches()
 
             return self.framework_path
 
@@ -165,69 +164,119 @@ class FrameworkESP32(IFramework):
         except Exception as e:
             raise FrameworkErrorESP32(f"Unexpected error installing framework: {e}")
 
-    def _download_framework_components_parallel(self) -> None:
-        """Download and extract Arduino core, ESP-IDF libs, and skeleton lib in parallel.
+    def _download_framework_components_parallel(self, install_dir: "Path") -> None:
+        """Download all archives in parallel, extract to temp dirs, then copytree-merge.
 
-        Each component is downloaded and extracted in its own thread. The Arduino core
-        goes to framework_path, while libs and skeleton go to framework_path/tools/sdk.
-        These are independent operations that benefit from parallel I/O.
+        All work targets install_dir (a staging directory). Downloads are cached in
+        install_dir's parent so they survive across attempts. Each archive is extracted
+        to its own temp dir in parallel, then merged into install_dir via copytree
+        (dirs_exist_ok=True) which never deletes — no race conditions.
+
+        Args:
+            install_dir: Staging directory to install into (will be renamed to
+                        framework_path by the caller after success)
 
         Raises:
             DownloadError: If any download fails
             ExtractionError: If any extraction fails
         """
+        import shutil
+        import tarfile
         from concurrent.futures import ThreadPoolExecutor, as_completed
 
+        # Cache downloaded archives in parent dir (outside install_dir) so they
+        # persist across retries and don't get cleaned up with staging dirs
+        cache_dir = install_dir.parent
+
+        # Build task list: (name, url, target_subdir_within_install, description)
         tasks: list[tuple[str, str, "Path", str]] = []
+        tasks.append(("core", self.framework_url, install_dir, "Arduino-ESP32 core"))
 
-        # Always download Arduino core
-        tasks.append(("core", self.framework_url, self.framework_path, "Arduino-ESP32 core"))
-
-        # ESP-IDF libraries (if URL provided)
         if self.libs_url:
-            sdk_dir = self.framework_path / "tools" / "sdk"
+            sdk_dir = install_dir / "tools" / "sdk"
             tasks.append(("libs", self.libs_url, sdk_dir, "ESP-IDF libraries"))
 
-        # Skeleton library (if URL provided)
         if self.skeleton_lib_url:
-            sdk_dir = self.framework_path / "tools" / "sdk"
+            sdk_dir = install_dir / "tools" / "sdk"
             tasks.append(("skeleton", self.skeleton_lib_url, sdk_dir, "Skeleton library"))
 
-        if len(tasks) <= 1:
-            # Only core, no benefit from threading
-            for _, url, target, desc in tasks:
-                self.archive_extractor.download_and_extract(url, target, desc)
-            return
+        def _download_and_extract_to_temp(name: str, url: str, desc: str) -> tuple[str, "Path"]:
+            """Download archive (if not cached) and extract to a temp dir. Returns (name, source_dir)."""
+            archive_name = Path(url).name
+            archive_path = cache_dir / archive_name
 
-        # Each task needs its own ArchiveExtractor to avoid shared state issues
-        errors: list[Exception] = []
+            # Download if not cached
+            if not archive_path.exists():
+                if self.show_progress:
+                    print(f"Downloading {desc}...")
+                archive_path.parent.mkdir(parents=True, exist_ok=True)
+                downloader = PackageDownloader()
+                downloader.download(url, archive_path, show_progress=self.show_progress)
+            else:
+                if self.show_progress:
+                    print(f"Using cached {desc} archive")
 
-        def download_component(url: str, target: "Path", desc: str) -> None:
-            extractor = ArchiveExtractor(show_progress=self.show_progress)
-            extractor.download_and_extract(url, target, desc)
+            # Extract to a temp dir (in cache_dir, outside install_dir)
+            temp_dir = cache_dir / f"_temp_extract_{name}"
+            if temp_dir.exists():
+                shutil.rmtree(temp_dir)
+            temp_dir.mkdir(parents=True)
 
-        with ThreadPoolExecutor(max_workers=len(tasks)) as executor:
-            future_to_name = {}
-            for name, url, target, desc in tasks:
-                target.mkdir(parents=True, exist_ok=True)
-                future = executor.submit(download_component, url, target, desc)
-                future_to_name[future] = name
+            if self.show_progress:
+                print(f"Extracting {desc}...")
+            with tarfile.open(archive_path, "r:xz") as tar:
+                tar.extractall(temp_dir)
 
-            for future in as_completed(future_to_name):
-                name = future_to_name[future]
-                try:
-                    future.result()
-                except KeyboardInterrupt:
-                    raise
-                except Exception as e:
-                    errors.append(e)
-                    if self.show_progress:
-                        print(f"Failed to download {name}: {e}")
+            # Strip single top-level directory (archives typically have one)
+            items = list(temp_dir.iterdir())
+            if len(items) == 1 and items[0].is_dir():
+                return (name, items[0])
+            return (name, temp_dir)
 
-        if errors:
-            raise errors[0]
+        # Phase 1: Download + extract all archives in parallel
+        extracted: dict[str, "Path"] = {}
 
-    def _post_install_apply_patches(self) -> None:
+        if len(tasks) == 1:
+            rname, rpath = _download_and_extract_to_temp(tasks[0][0], tasks[0][1], tasks[0][3])
+            extracted[rname] = rpath
+        else:
+            errors: list[Exception] = []
+            with ThreadPoolExecutor(max_workers=len(tasks)) as executor:
+                future_to_name = {}
+                for name, url, _target, desc in tasks:
+                    future = executor.submit(_download_and_extract_to_temp, name, url, desc)
+                    future_to_name[future] = name
+
+                for future in as_completed(future_to_name):
+                    fname = future_to_name[future]
+                    try:
+                        rname, rpath = future.result()
+                        extracted[rname] = rpath
+                    except KeyboardInterrupt:
+                        raise
+                    except Exception as e:
+                        errors.append(e)
+                        if self.show_progress:
+                            print(f"Failed to download/extract {fname}: {e}")
+
+            if errors:
+                raise errors[0]
+
+        # Phase 2: Merge each extracted tree into install_dir via copytree.
+        # copytree with dirs_exist_ok=True merges without deleting — no conflicts.
+        try:
+            for name, _url, target_dir, _desc in tasks:
+                source = extracted[name]
+                target_dir.mkdir(parents=True, exist_ok=True)
+                shutil.copytree(str(source), str(target_dir), dirs_exist_ok=True)
+        finally:
+            # Clean up extraction temp dirs
+            for name in extracted:
+                temp_root = cache_dir / f"_temp_extract_{name}"
+                if temp_root.exists():
+                    shutil.rmtree(temp_root, ignore_errors=True)
+
+    def _post_install_apply_patches(self, target_path: "Path | None" = None) -> None:
         """Apply framework patches to fix known upstream bugs after installation.
 
         This post-install step applies patches to fix bugs in the Arduino ESP32 framework
@@ -235,12 +284,16 @@ class FrameworkESP32(IFramework):
         if the framework version matches the patch constraints.
 
         The patches are permanent (survive across builds) and self-documenting.
+
+        Args:
+            target_path: Path to apply patches to (defaults to self.framework_path)
         """
+        patch_dir = target_path or self.framework_path
         try:
             if self.show_progress:
                 print("[patches] Checking for required framework patches...")
 
-            apply_framework_patches(self.framework_path, ESP32_FRAMEWORK_PATCHES, self.version, self.show_progress)
+            apply_framework_patches(patch_dir, ESP32_FRAMEWORK_PATCHES, self.version, self.show_progress)
 
         except KeyboardInterrupt:
             _thread.interrupt_main()

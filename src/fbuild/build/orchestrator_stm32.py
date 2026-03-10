@@ -584,7 +584,7 @@ class OrchestratorSTM32(IBuildOrchestrator):
                 # .c and .cpp files can be compiled directly
                 obj_dir = compiler.build_dir / "obj"
                 obj_dir.mkdir(parents=True, exist_ok=True)
-                obj_path = obj_dir / f"{source_file.stem}.o"
+                obj_path = obj_dir / f"{source_file.parent.name}_{source_file.name}.o"
 
                 # Skip if up-to-date
                 if not compiler.needs_rebuild(source_file, obj_path):

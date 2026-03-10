@@ -78,8 +78,12 @@ class SourceCompilationOrchestrator:
         objects = []
 
         for source in sources:
-            # Generate output object filename
-            obj_name = source.stem + ".o"
+            # Generate output object filename including parent dir name and extension
+            # to avoid collisions when:
+            # 1. Files share the same stem but different extensions
+            #    (e.g., wiring_pulse.c and wiring_pulse.S in Arduino core)
+            # 2. Files have the same name in different subdirectories
+            obj_name = f"{source.parent.name}_{source.name}.o"
             obj_path = output_dir / obj_name
 
             # Check if rebuild needed (incremental compilation)

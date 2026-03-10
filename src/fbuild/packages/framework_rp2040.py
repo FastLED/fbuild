@@ -36,6 +36,7 @@ from typing import Any, Dict, List, Optional
 from fbuild.packages.cache import Cache
 from fbuild.packages.downloader import DownloadError, ExtractionError, PackageDownloader
 from fbuild.packages.package import IFramework, PackageError
+from fbuild.packages.staged_install import cleanup_stale_staging_dirs, staged_install
 
 
 class FrameworkErrorRP2040(PackageError):
@@ -99,54 +100,52 @@ class FrameworkRP2040(IFramework):
 
             # Download and extract framework package
             self.cache.ensure_directories()
+            cleanup_stale_staging_dirs(self.cache.platforms_dir)
 
-            # Use downloader to handle download and extraction
-            archive_name = "arduino-pico-master.zip"
-            archive_path = self.framework_path.parent / archive_name
+            with staged_install(self.framework_path, self.cache.platforms_dir) as install_dir:
+                # Download archive (keep downloading to self.framework_path.parent as cache)
+                archive_name = "arduino-pico-master.zip"
+                archive_path = self.framework_path.parent / archive_name
 
-            # Download if not cached
-            if not archive_path.exists():
-                archive_path.parent.mkdir(parents=True, exist_ok=True)
-                self.downloader.download(self.framework_url, archive_path, show_progress=self.show_progress)
-            else:
+                # Download if not cached
+                if not archive_path.exists():
+                    archive_path.parent.mkdir(parents=True, exist_ok=True)
+                    self.downloader.download(self.framework_url, archive_path, show_progress=self.show_progress)
+                else:
+                    if self.show_progress:
+                        print("Using cached arduino-pico archive")
+
+                # Extract to framework directory
                 if self.show_progress:
-                    print("Using cached arduino-pico archive")
+                    print("Extracting arduino-pico...")
 
-            # Extract to framework directory
-            if self.show_progress:
-                print("Extracting arduino-pico...")
+                # Create temp extraction directory
+                temp_extract = install_dir.parent / "temp_extract"
+                temp_extract.mkdir(parents=True, exist_ok=True)
 
-            # Create temp extraction directory
-            temp_extract = self.framework_path.parent / "temp_extract"
-            temp_extract.mkdir(parents=True, exist_ok=True)
+                self.downloader.extract_archive(archive_path, temp_extract, show_progress=self.show_progress)
 
-            self.downloader.extract_archive(archive_path, temp_extract, show_progress=self.show_progress)
+                # Find the arduino-pico directory in the extracted content
+                # Usually it's a subdirectory like "arduino-pico-master/"
+                extracted_dirs = list(temp_extract.glob("arduino-pico-*"))
+                if not extracted_dirs:
+                    # Maybe it extracted directly
+                    extracted_dirs = [temp_extract]
 
-            # Find the arduino-pico directory in the extracted content
-            # Usually it's a subdirectory like "arduino-pico-master/"
-            extracted_dirs = list(temp_extract.glob("arduino-pico-*"))
-            if not extracted_dirs:
-                # Maybe it extracted directly
-                extracted_dirs = [temp_extract]
+                source_dir = extracted_dirs[0]
 
-            source_dir = extracted_dirs[0]
-
-            # Move to final location
-            if self.framework_path.exists():
+                # Move to install_dir (staging dir) instead of self.framework_path
                 import shutil
 
-                shutil.rmtree(self.framework_path)
+                shutil.rmtree(install_dir)
+                source_dir.rename(install_dir)
 
-            source_dir.rename(self.framework_path)
+                # Clean up temp
+                if temp_extract.exists() and temp_extract != install_dir:
+                    shutil.rmtree(temp_extract, ignore_errors=True)
 
-            # Clean up temp directory
-            if temp_extract.exists() and temp_extract != self.framework_path:
-                import shutil
-
-                shutil.rmtree(temp_extract, ignore_errors=True)
-
-            if self.show_progress:
-                print(f"arduino-pico installed to {self.framework_path}")
+                if self.show_progress:
+                    print(f"arduino-pico installed to {self.framework_path}")
 
             return self.framework_path
 

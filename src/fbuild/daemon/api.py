@@ -125,7 +125,7 @@ def _restart_stale_daemon() -> None:
 
         with http_client(timeout=5.0, connect_timeout=2.0) as client:
             client.post(get_daemon_url("/api/daemon/shutdown"))
-        # Wait for the daemon to actually stop
+        # Wait for the daemon HTTP server to stop
         for _ in range(20):
             if not is_daemon_http_available():
                 break
@@ -135,6 +135,23 @@ def _restart_stale_daemon() -> None:
     except Exception as e:
         logging.warning(f"Failed to gracefully shutdown stale daemon: {e}")
         # Fall through — spawn logic will handle stuck daemon
+
+    # Wait for daemon process to fully exit and release its port.
+    # HTTP becoming unavailable doesn't mean the process has exited —
+    # it may still be running cleanup code and holding the port.
+    for _ in range(20):
+        if not is_daemon_alive():
+            break
+        time.sleep(0.25)
+
+    # Remove stale PID file so spawn_daemon_process starts clean
+    if PID_FILE.exists():
+        try:
+            PID_FILE.unlink()
+        except KeyboardInterrupt:
+            raise
+        except Exception:
+            pass
 
 
 def request_daemon() -> DaemonResponse:

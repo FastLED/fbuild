@@ -215,6 +215,10 @@ def build_command(args: BuildArgs) -> None:
         # Exit with appropriate code
         sys.exit(0 if success else 1)
 
+    except ValueError as e:
+        # Invalid environment name or configuration error
+        ErrorFormatter.print_error("Configuration error", str(e))
+        sys.exit(1)
     except RuntimeError as e:
         # Daemon startup failure
         ErrorFormatter.handle_unexpected_error(e, args.verbose)
@@ -354,6 +358,10 @@ def deploy_command(args: DeployArgs) -> None:
         else:
             sys.exit(1)
 
+    except ValueError as e:
+        # Invalid environment name or configuration error
+        ErrorFormatter.print_error("Configuration error", str(e))
+        sys.exit(1)
     except FileNotFoundError as e:
         ErrorFormatter.handle_file_not_found(e)
     except KeyboardInterrupt as ke:
