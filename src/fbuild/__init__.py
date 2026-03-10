@@ -10,7 +10,7 @@ from typing import Any
 # is loaded (since importing cli.py triggers importing this package first).
 # Use __getattr__ for lazy access to DaemonConnection and connect_daemon.
 
-__version__ = "1.5.1"
+__version__ = "1.5.2"
 
 
 def is_available() -> bool:
