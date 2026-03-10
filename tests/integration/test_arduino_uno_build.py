@@ -419,6 +419,7 @@ void loop() {
         print("\n✓ Syntax error detected and reported by compiler")
 
 
+@pytest.mark.integration
 @pytest.mark.xdist_group(name="arduino_uno")
 class TestBuildConfiguration:
     """Tests for different build configurations"""
@@ -464,14 +465,11 @@ void loop() {}
         )
 
         # Should succeed by auto-selecting "uno" environment
-        if result.returncode != 0:
-            stdout = result.stdout or ""
-            stderr = result.stderr or ""
-            output = stdout + stderr
-            print(f"\n⚠ Auto-detection failed. Output:\n{output}")
-            assert False, f"Build should auto-select first environment. Exit code: {result.returncode}"
-        else:
-            print("\n✓ Default environment auto-selected successfully")
+        stdout = result.stdout or ""
+        stderr = result.stderr or ""
+        assert result.returncode == 0, f"Build should auto-select first environment. Exit code: {result.returncode}\nSTDOUT:\n{stdout}\nSTDERR:\n{stderr}"
+
+        print("\n✓ Default environment auto-selected successfully")
 
 
 if __name__ == "__main__":

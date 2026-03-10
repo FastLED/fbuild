@@ -5,7 +5,6 @@ This module tests that HTTP requests can be properly interrupted by CTRL-C,
 fixing the Windows blocking I/O issue where KeyboardInterrupt doesn't work.
 """
 
-import socket
 import threading
 import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -85,12 +84,17 @@ def http_server() -> Any:
     server_thread = threading.Thread(target=server.serve_forever, daemon=True)
     server_thread.start()
 
-    # Wait for server to be ready (avoids race under heavy parallel load)
+    # Wait for server to be ready by making a real HTTP request (not just TCP connect).
+    # TCP connect can succeed before the server thread is actually handling requests,
+    # leading to flaky failures under heavy parallel load.
+    import urllib.error
+    import urllib.request
+
     for _ in range(50):
         try:
-            with socket.create_connection(("127.0.0.1", port), timeout=0.1):
-                break
-        except OSError:
+            urllib.request.urlopen(f"http://127.0.0.1:{port}/ready", timeout=0.5)
+            break
+        except (urllib.error.URLError, OSError, ConnectionError):
             time.sleep(0.05)
 
     yield server, port
@@ -136,11 +140,15 @@ def test_interruptible_post_with_keyboard_interrupt(http_server: Any) -> None:
     # Configure server to delay (longer than the interrupt)
     SlowHTTPRequestHandler.delay_seconds = 3.0
 
-    # Schedule a KeyboardInterrupt to be raised after 0.5 seconds
+    # Schedule a KeyboardInterrupt to be raised after 0.5 seconds.
+    # Use a cancellable event so the interrupt thread doesn't fire after the test exits
+    # (which could leak a KeyboardInterrupt into the next test).
+    cancel_event = threading.Event()
+
     def send_interrupt() -> None:
-        """Send KeyboardInterrupt after short delay."""
-        time.sleep(0.5)
-        # Simulate CTRL-C by raising KeyboardInterrupt in the main thread
+        """Send KeyboardInterrupt after short delay, unless cancelled."""
+        if cancel_event.wait(timeout=0.5):
+            return  # Cancelled before firing
         import _thread
 
         _thread.interrupt_main()
@@ -150,17 +158,22 @@ def test_interruptible_post_with_keyboard_interrupt(http_server: Any) -> None:
 
     # Make request that should be interrupted
     start_time = time.time()
-    with pytest.raises(KeyboardInterrupt):
-        interruptible_post(
-            url=f"http://127.0.0.1:{port}/test",
-            json={"data": "test"},
-            timeout=15.0,
-        )
+    try:
+        with pytest.raises(KeyboardInterrupt):
+            interruptible_post(
+                url=f"http://127.0.0.1:{port}/test",
+                json={"data": "test"},
+                timeout=15.0,
+            )
 
-    elapsed = time.time() - start_time
+        elapsed = time.time() - start_time
 
-    # Should be interrupted quickly (within 1 second), not after the full delay
-    assert elapsed < 2.0, f"Request took {elapsed:.1f}s to interrupt (should be < 2s)"
+        # Should be interrupted quickly (within 1 second), not after the full delay
+        assert elapsed < 2.0, f"Request took {elapsed:.1f}s to interrupt (should be < 2s)"
+    finally:
+        # Cancel the interrupt thread if it hasn't fired yet, and wait for it to exit
+        cancel_event.set()
+        interrupt_thread.join(timeout=2.0)
 
 
 def test_interruptible_post_timeout(http_server: Any) -> None:
