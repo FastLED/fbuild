@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import List, Optional
 from unittest.mock import MagicMock, patch
 
-from fbuild.build.orchestrator_esp32 import OrchestratorESP32
+from fbuild.build.orchestrator_esp32 import FrameworkLibraryResult, OrchestratorESP32
 from fbuild.packages.library_manager_esp32 import LibraryESP32
 
 # =============================================================================
@@ -206,11 +206,11 @@ class TestFrameworkLibraryEnumeration:
         libraries_dir: Path,
         build_dir: Path,
         existing_archives: Optional[List[Path]] = None,
-    ) -> tuple[List[Path], List[Path]]:
+    ) -> FrameworkLibraryResult:
         """Call _compile_all_framework_libraries with mocked compilation layer.
 
         Mocks LibraryManagerESP32 and toolchain so no real compilation happens.
-        Returns the (archives, includes) tuple.
+        Returns a FrameworkLibraryResult.
         """
         framework = _make_framework_mock(libraries_dir)
         toolchain = _make_toolchain_mock()
@@ -343,7 +343,7 @@ class TestFrameworkLibraryEnumeration:
         orchestrator = _make_orchestrator()
         framework = _make_framework_mock(tmp_path / "nonexistent")
 
-        archives, includes = orchestrator._compile_all_framework_libraries(
+        result = orchestrator._compile_all_framework_libraries(
             framework,
             tmp_path / "build",
             [],
@@ -352,8 +352,8 @@ class TestFrameworkLibraryEnumeration:
             False,
         )
 
-        assert archives == []
-        assert includes == []
+        assert result.archives == []
+        assert result.include_paths == []
 
     def test_toolchain_bin_none_returns_empty(self, tmp_path: Path) -> None:
         """If toolchain.get_bin_path() returns None, returns empty lists."""
@@ -366,7 +366,7 @@ class TestFrameworkLibraryEnumeration:
         toolchain.get_bin_path.return_value = None
 
         with patch("fbuild.build.orchestrator_esp32.LibraryManagerESP32"):
-            archives, includes = orchestrator._compile_all_framework_libraries(
+            result = orchestrator._compile_all_framework_libraries(
                 _make_framework_mock(libs_dir),
                 build_dir,
                 [],
@@ -375,8 +375,8 @@ class TestFrameworkLibraryEnumeration:
                 False,
             )
 
-        assert archives == []
-        assert includes == []
+        assert result.archives == []
+        assert result.include_paths == []
 
 
 # =============================================================================
@@ -550,7 +550,7 @@ class TestHeaderOnlyLibraries:
             # Header-only: prepare_compile_jobs returns empty list
             mock_mgr.prepare_compile_jobs.return_value = []
 
-            _archives, includes = orchestrator._compile_all_framework_libraries(
+            result = orchestrator._compile_all_framework_libraries(
                 framework,
                 build_dir,
                 [],
@@ -560,7 +560,7 @@ class TestHeaderOnlyLibraries:
             )
 
             # Include paths should be non-empty (from the header-only lib)
-            assert len(includes) > 0
+            assert len(result.include_paths) > 0
 
 
 # =============================================================================

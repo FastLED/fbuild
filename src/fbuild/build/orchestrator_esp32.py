@@ -36,6 +36,23 @@ logger = logging.getLogger(__name__)
 
 
 @dataclass
+class FrameworkCompileWarning:
+    """Warning info for framework libraries that failed to compile."""
+
+    failed_library_names: list[str]
+    error_lines: list[str]
+
+
+@dataclass
+class FrameworkLibraryResult:
+    """Result of compiling all framework built-in libraries."""
+
+    archives: List[Path]
+    include_paths: List[Path]
+    warning: FrameworkCompileWarning | None
+
+
+@dataclass
 class BuildResultESP32:
     """Result of an ESP32 build operation (internal use)."""
 
@@ -509,7 +526,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             def _compile_sketch_phase() -> Optional[List[Path]]:
                 return self._compile_sketch(project_dir, compiler, start_time, verbose, src_dir_override)
 
-            def _compile_fw_libs_phase() -> tuple[List[Path], List[Path]]:
+            def _compile_fw_libs_phase() -> FrameworkLibraryResult:
                 return self._compile_all_framework_libraries(
                     framework,
                     build_dir,
@@ -525,7 +542,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             try:
                 # Launch framework libs FIRST so it captures compiler state before
                 # sketch's add_sketch_include() modifies include paths
-                fw_future: Future[tuple[List[Path], List[Path]]] = sketch_fw_executor.submit(_compile_fw_libs_phase)
+                fw_future: Future[FrameworkLibraryResult] = sketch_fw_executor.submit(_compile_fw_libs_phase)
                 sketch_future: Future[Optional[List[Path]]] = sketch_fw_executor.submit(_compile_sketch_phase)
 
                 sketch_obj_files = sketch_future.result()
@@ -534,7 +551,7 @@ class OrchestratorESP32(IBuildOrchestrator):
                     search_dir = project_dir / src_dir_override if src_dir_override else project_dir
                     return self._error_result(start_time, f"No .ino sketch file found in {search_dir}")
 
-                fw_archives, fw_includes = fw_future.result()
+                fw_result = fw_future.result()
             except KeyboardInterrupt as ke:
                 sketch_fw_executor.shutdown(wait=False, cancel_futures=True)
                 from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
@@ -547,9 +564,28 @@ class OrchestratorESP32(IBuildOrchestrator):
             finally:
                 sketch_fw_executor.shutdown(wait=False)
 
-            library_archives.extend(fw_archives)
-            if fw_includes:
-                library_include_paths.extend(fw_includes)
+            library_archives.extend(fw_result.archives)
+            if fw_result.include_paths:
+                library_include_paths.extend(fw_result.include_paths)
+
+            # Emit framework compile warnings from the main thread (so output
+            # goes through the correct contextvars-based output stream).
+            # Only print once per cache lifetime -- marker file suppresses repeats.
+            if fw_result.warning is not None:
+                marker = build_dir / ".fw_compile_warnings_shown"
+                if not marker.exists():
+                    w = fw_result.warning
+                    log_warning("One or more framework libraries failed to compile. This is likely a bug with the framework/SDK author. To keep your build running we've made this error non-fatal.")
+                    log_warning(f"Affected libraries: {', '.join(w.failed_library_names)}")
+                    for line in w.error_lines[:20]:
+                        log_warning(f"  {line}")
+                    if len(w.error_lines) > 20:
+                        log_warning(f"  ... ({len(w.error_lines) - 20} more lines omitted)")
+                    try:
+                        marker.parent.mkdir(parents=True, exist_ok=True)
+                        marker.write_text("\n".join(w.failed_library_names), encoding="utf-8")
+                    except OSError:
+                        pass
 
             # In compiledb-only mode, skip linking — we only need compile commands
             if request.generate_compiledb:
@@ -980,7 +1016,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         verbose: bool,
         pre_captured_flags: List[str] | None = None,
         pre_captured_includes: List[Path] | None = None,
-    ) -> tuple[List[Path], List[Path]]:
+    ) -> FrameworkLibraryResult:
         """
         Compile ALL framework built-in libraries (BLE, WiFi, SPI, Wire, etc.).
 
@@ -1000,11 +1036,13 @@ class OrchestratorESP32(IBuildOrchestrator):
             verbose: Verbose output mode
 
         Returns:
-            Tuple of (additional_archives, additional_include_paths)
+            FrameworkLibraryResult with archives, include paths, and optional warning
         """
+        _empty = FrameworkLibraryResult(archives=[], include_paths=[], warning=None)
+
         libraries_dir = framework.get_libraries_dir()
         if not libraries_dir.exists():
-            return [], []
+            return _empty
 
         # Build set of already-compiled library names from existing archives
         # Archive names are lib<name>.a where <name> is the sanitized library name
@@ -1028,7 +1066,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             all_libs.append((lib_dir.name, lib_dir))
 
         if not all_libs:
-            return [], []
+            return _empty
 
         log_detail(f"Compiling {len(all_libs)} framework libraries (linker will strip unused code)")
 
@@ -1038,7 +1076,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         toolchain_bin_path = toolchain.get_bin_path()
         if toolchain_bin_path is None:
             log_warning("Toolchain bin directory not found, skipping framework libraries")
-            return [], []
+            return _empty
 
         lib_compiler_flags = pre_captured_flags if pre_captured_flags is not None else compiler.get_base_flags()
         lib_include_paths = list(pre_captured_includes) if pre_captured_includes is not None else list(compiler.get_include_paths())
@@ -1102,6 +1140,7 @@ class OrchestratorESP32(IBuildOrchestrator):
         # Phase 2: Compile ALL framework library files through the compiler's daemon
         # queue — the SAME pool used by sketch and core compilation. This avoids
         # CPU contention from running separate thread pools in parallel.
+        fw_warning: FrameworkCompileWarning | None = None
         if all_compile_jobs and compiler.compilation_queue:
             total = len(all_compile_jobs)
             num_workers = compiler.compilation_queue.num_workers
@@ -1130,9 +1169,14 @@ class OrchestratorESP32(IBuildOrchestrator):
             all_fw_ids = [jid for jid, _, _ in fw_job_ids]
             compiler.compilation_queue.wait_for_completion(all_fw_ids)
 
-            # Collect results and report progress
+            # Collect results and report progress — failed libraries are
+            # skipped (non-fatal) because we compile ALL framework libraries
+            # and let the linker strip unused code.  Some SDK libraries
+            # (e.g. Matter) ship with known compilation bugs that are harmless
+            # when the project doesn't actually use them.
             completed = 0
-            failed_jobs: list[str] = []
+            failed_libs: set[str] = set()
+            failed_stderr: dict[str, list[str]] = {}  # sanitized_name -> list of stderr snippets
             for job_id, sanitized_name, source in fw_job_ids:
                 completed += 1
                 job = compiler.compilation_queue.get_job_status(job_id)
@@ -1140,15 +1184,19 @@ class OrchestratorESP32(IBuildOrchestrator):
                     lib_info[sanitized_name][2].append(job.output_path)
                     log_detail(f"[{completed}/{total}] {source.name}", indent=8)
                 elif job is not None:
-                    failed_jobs.append(f"{source.name}: {job.stderr[:4000]}")
+                    failed_libs.add(sanitized_name)
+                    failed_stderr.setdefault(sanitized_name, []).append(job.stderr)
                     log_detail(f"[{completed}/{total}] {source.name} FAILED", indent=8)
 
-            if failed_jobs:
-                from fbuild.build.configurable_compiler import ConfigurableCompilerError
-
-                error_msg = f"Framework compilation failed for {len(failed_jobs)} file(s):\n"
-                error_msg += "\n".join(f"  - {err}" for err in failed_jobs[:10])
-                raise ConfigurableCompilerError(error_msg)
+            if failed_libs:
+                failed_names = sorted(lib_info[s][0] for s in failed_libs)
+                all_errors = "\n".join(stderr for sn in sorted(failed_libs) for stderr in failed_stderr.get(sn, []) if stderr.strip())
+                fw_warning = FrameworkCompileWarning(
+                    failed_library_names=failed_names,
+                    error_lines=all_errors.splitlines(),
+                )
+                for s in failed_libs:
+                    del lib_info[s]
 
         # Phase 3: Archive each library from its compiled object files (parallel)
         archive_tasks = [(sanitized_name, lib_name, library, object_files) for sanitized_name, (lib_name, library, object_files) in lib_info.items() if object_files]
@@ -1205,7 +1253,7 @@ class OrchestratorESP32(IBuildOrchestrator):
             finally:
                 ar_executor.shutdown(wait=False)
 
-        return additional_archives, additional_includes
+        return FrameworkLibraryResult(archives=additional_archives, include_paths=additional_includes, warning=fw_warning)
 
     @staticmethod
     def _setup_framework_library(library: LibraryESP32, fw_lib_root: Path) -> None:
