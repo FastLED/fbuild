@@ -201,37 +201,78 @@ class FrameworkESP32(IFramework):
             tasks.append(("skeleton", self.skeleton_lib_url, sdk_dir, "Skeleton library"))
 
         def _download_and_extract_to_temp(name: str, url: str, desc: str) -> tuple[str, "Path"]:
-            """Download archive (if not cached) and extract to a temp dir. Returns (name, source_dir)."""
+            """Download archive (if not cached) and extract to a temp dir. Returns (name, source_dir).
+
+            If extraction fails (e.g. corrupted download), deletes the cached archive and
+            retries once with a fresh download.
+            """
             archive_name = Path(url).name
             archive_path = cache_dir / archive_name
+            max_attempts = 2
 
-            # Download if not cached
-            if not archive_path.exists():
-                if self.show_progress:
-                    print(f"Downloading {desc}...")
-                archive_path.parent.mkdir(parents=True, exist_ok=True)
-                downloader = PackageDownloader()
-                downloader.download(url, archive_path, show_progress=self.show_progress)
-            else:
-                if self.show_progress:
-                    print(f"Using cached {desc} archive")
+            for attempt in range(max_attempts):
+                # Download if not cached
+                if not archive_path.exists():
+                    if self.show_progress:
+                        print(f"Downloading {desc}...")
+                    archive_path.parent.mkdir(parents=True, exist_ok=True)
+                    downloader = PackageDownloader()
+                    downloader.download(url, archive_path, show_progress=self.show_progress)
+                else:
+                    if self.show_progress:
+                        print(f"Using cached {desc} archive")
 
-            # Extract to a temp dir (in cache_dir, outside install_dir)
-            temp_dir = cache_dir / f"_temp_extract_{name}"
-            if temp_dir.exists():
-                shutil.rmtree(temp_dir)
-            temp_dir.mkdir(parents=True)
+                # Validate the archive is not obviously corrupt (e.g. HTML error page or truncated)
+                try:
+                    file_size = archive_path.stat().st_size
+                    if file_size < 1024:
+                        raise ValueError(f"Archive too small ({file_size} bytes), likely a failed download")
+                    # Check magic bytes: XZ files start with 0xFD377A585A00
+                    if archive_name.endswith((".tar.xz", ".txz")):
+                        with open(archive_path, "rb") as f:
+                            magic = f.read(6)
+                        if magic != b"\xfd7zXZ\x00":
+                            raise ValueError(f"Not a valid XZ file (magic bytes: {magic[:6]!r})")
+                except (ValueError, OSError) as e:
+                    if attempt < max_attempts - 1:
+                        if self.show_progress:
+                            print(f"WARNING: {desc} archive is corrupt ({e}), re-downloading...")
+                        archive_path.unlink(missing_ok=True)
+                        continue
+                    raise
 
-            if self.show_progress:
-                print(f"Extracting {desc}...")
-            with tarfile.open(archive_path, "r:xz") as tar:
-                tar.extractall(temp_dir)
+                # Extract to a temp dir (in cache_dir, outside install_dir)
+                temp_dir = cache_dir / f"_temp_extract_{name}"
+                if temp_dir.exists():
+                    shutil.rmtree(temp_dir)
+                temp_dir.mkdir(parents=True)
 
-            # Strip single top-level directory (archives typically have one)
-            items = list(temp_dir.iterdir())
-            if len(items) == 1 and items[0].is_dir():
-                return (name, items[0])
-            return (name, temp_dir)
+                try:
+                    if self.show_progress:
+                        print(f"Extracting {desc}...")
+                    with tarfile.open(archive_path, "r:xz") as tar:
+                        tar.extractall(temp_dir)
+                except KeyboardInterrupt:
+                    raise
+                except Exception as e:
+                    # Extraction failed — likely a corrupted download
+                    if temp_dir.exists():
+                        shutil.rmtree(temp_dir, ignore_errors=True)
+                    if attempt < max_attempts - 1:
+                        if self.show_progress:
+                            print(f"WARNING: Extraction of {desc} failed ({e}), deleting cached archive and retrying...")
+                        archive_path.unlink(missing_ok=True)
+                        continue
+                    raise
+
+                # Strip single top-level directory (archives typically have one)
+                items = list(temp_dir.iterdir())
+                if len(items) == 1 and items[0].is_dir():
+                    return (name, items[0])
+                return (name, temp_dir)
+
+            # Should never reach here, but satisfy type checker
+            raise FrameworkErrorESP32(f"Failed to download and extract {desc} after {max_attempts} attempts")
 
         # Phase 1: Download + extract all archives in parallel
         extracted: dict[str, "Path"] = {}

@@ -345,22 +345,41 @@ class ToolchainESP32(IToolchain):
             toolchain_cache_dir.mkdir(parents=True, exist_ok=True)
             archive_path = toolchain_cache_dir / archive_name
 
-            # Download if not cached
-            if not archive_path.exists():
-                self.downloader.download(platform_url, archive_path, show_progress=self.show_progress)
-            else:
-                if self.show_progress:
-                    print("Using cached toolchain archive")
-
-            # Extract to toolchain directory
-            if self.show_progress:
-                print("Extracting toolchain...")
-
-            # Create temp extraction directory
+            # Download and extract with retry on corruption.
+            # If extraction fails (e.g. corrupted/truncated download), delete cached
+            # archive and retry once with a fresh download.
+            max_attempts = 2
             temp_extract = toolchain_cache_dir / "temp_extract"
-            temp_extract.mkdir(parents=True, exist_ok=True)
+            for attempt in range(max_attempts):
+                # Download if not cached
+                if not archive_path.exists():
+                    self.downloader.download(platform_url, archive_path, show_progress=self.show_progress)
+                else:
+                    if self.show_progress:
+                        print("Using cached toolchain archive")
 
-            self.downloader.extract_archive(archive_path, temp_extract, show_progress=self.show_progress)
+                # Extract to toolchain directory
+                if self.show_progress:
+                    print("Extracting toolchain...")
+                temp_extract.mkdir(parents=True, exist_ok=True)
+
+                try:
+                    self.downloader.extract_archive(archive_path, temp_extract, show_progress=self.show_progress)
+                    break  # Success
+                except KeyboardInterrupt:
+                    raise
+                except Exception as e:
+                    # Clean up failed extraction
+                    import shutil as _shutil
+
+                    if temp_extract.exists():
+                        _shutil.rmtree(temp_extract, ignore_errors=True)
+                    if attempt < max_attempts - 1:
+                        if self.show_progress:
+                            print(f"WARNING: Toolchain extraction failed ({e}), deleting cached archive and retrying...")
+                        archive_path.unlink(missing_ok=True)
+                        continue
+                    raise
 
             # Use temp_extract directly as the source directory.
             # The downloader's extract_archive() already strips single top-level
