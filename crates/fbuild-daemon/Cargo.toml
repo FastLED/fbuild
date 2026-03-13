@@ -1,0 +1,38 @@
+[package]
+name = "fbuild-daemon"
+description = "HTTP/WebSocket daemon server for fbuild (axum-based, replaces FastAPI)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "fbuild-daemon"
+path = "src/main.rs"
+
+[lib]
+name = "fbuild_daemon"
+path = "src/lib.rs"
+
+[dependencies]
+fbuild-core = { path = "../fbuild-core" }
+fbuild-config = { path = "../fbuild-config" }
+fbuild-paths = { path = "../fbuild-paths" }
+fbuild-packages = { path = "../fbuild-packages" }
+fbuild-serial = { path = "../fbuild-serial" }
+fbuild-build = { path = "../fbuild-build" }
+fbuild-deploy = { path = "../fbuild-deploy" }
+tokio = { workspace = true }
+axum = { workspace = true }
+tower-http = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+clap = { workspace = true }
+dashmap = { workspace = true }
+uuid = { workspace = true }
+
+[dev-dependencies]
+fbuild-test-support = { path = "../fbuild-test-support" }

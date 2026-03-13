@@ -1,0 +1,19 @@
+[package]
+name = "fbuild-build"
+description = "Build orchestration, compilation, linking for all platforms (AVR, ESP32, RP2040, STM32, Teensy, WASM)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+fbuild-core = { path = "../fbuild-core" }
+fbuild-config = { path = "../fbuild-config" }
+fbuild-paths = { path = "../fbuild-paths" }
+fbuild-packages = { path = "../fbuild-packages" }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+async-trait = { workspace = true }

@@ -1,0 +1,308 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.9"
+# ///
+"""Install uv and the pinned Rust toolchain for fbuild development.
+
+Usage:
+    python3 install          # bootstrap (before uv is installed)
+    uv run --script install  # after uv is available
+
+Downloads use Python's urllib for maximum OS compatibility (avoids
+MSYS2 curl issues with .exe files on Windows).
+"""
+
+import os
+import platform
+import shutil
+import subprocess
+import sys
+import tempfile
+import urllib.request
+
+RUST_TOOLCHAIN = "1.85.1"
+RUSTUP_WIN_URL = "https://static.rust-lang.org/rustup/dist/x86_64-pc-windows-msvc/rustup-init.exe"
+RUSTUP_UNIX_URL = "https://sh.rustup.rs"
+
+GREEN = "\033[1;32m"
+YELLOW = "\033[1;33m"
+RED = "\033[1;31m"
+RESET = "\033[0m"
+
+
+def log(msg):
+    print(f"{GREEN}[install]{RESET} {msg}")
+
+
+def warn(msg):
+    print(f"{YELLOW}[install]{RESET} {msg}")
+
+
+def err(msg):
+    print(f"{RED}[install]{RESET} {msg}", file=sys.stderr)
+
+
+def die(msg):
+    err(msg)
+    sys.exit(1)
+
+
+def detect_platform():
+    system = platform.system()
+    if system == "Linux":
+        return "linux"
+    if system == "Darwin":
+        return "macos"
+    if system == "Windows":
+        return "windows"
+    # Check uname for MSYS/MINGW
+    try:
+        uname = subprocess.check_output(["uname", "-s"], text=True).strip()
+        if any(x in uname for x in ("MINGW", "MSYS", "CYGWIN", "_NT")):
+            return "windows"
+    except Exception:
+        pass
+    die(f"Unsupported platform: {system}")
+
+
+def download(url, dest):
+    """Download a file using Python's urllib (most portable)."""
+    log(f"Downloading {url} ...")
+    try:
+        urllib.request.urlretrieve(url, dest)
+        return True
+    except Exception as e:
+        err(f"Download failed: {e}")
+        return False
+
+
+def native_path(path, plat):
+    """Convert to native Windows path if on Windows/MSYS."""
+    if plat == "windows":
+        try:
+            return subprocess.check_output(
+                ["cygpath", "-w", path], text=True
+            ).strip()
+        except Exception:
+            pass
+    return path
+
+
+def make_tempfile(filename, plat):
+    """Create a temp file path that works on MSYS2."""
+    if plat == "windows":
+        try:
+            wintemp = subprocess.check_output(
+                ["cygpath", "-u", os.environ.get("TEMP", os.environ.get("USERPROFILE", "/tmp"))],
+                text=True,
+            ).strip()
+            return os.path.join(wintemp, filename)
+        except Exception:
+            pass
+    return os.path.join(tempfile.gettempdir(), filename)
+
+
+def install_uv(plat):
+    """Install uv if not already present."""
+    if shutil.which("uv"):
+        log(f"uv already installed: {shutil.which('uv')}")
+        return
+
+    log("Installing uv ...")
+    if plat == "windows":
+        if shutil.which("powershell"):
+            subprocess.run(
+                ["powershell", "-NoProfile", "-Command",
+                 "irm https://astral.sh/uv/install.ps1 | iex"],
+                check=True,
+            )
+        else:
+            die("Cannot install uv: powershell not found.")
+    else:
+        tmp = make_tempfile("uv-install.sh", plat)
+        if download("https://astral.sh/uv/install.sh", tmp):
+            os.chmod(tmp, 0o755)
+            subprocess.run(["sh", tmp], check=True)
+            os.unlink(tmp)
+        elif shutil.which("curl"):
+            subprocess.run(
+                ["sh", "-c", "curl -LsSf https://astral.sh/uv/install.sh | sh"],
+                check=True,
+            )
+        else:
+            die("No download method for uv. Install curl or fix python urllib.")
+
+    # Add common install locations to PATH
+    for d in [
+        os.path.expanduser("~/.cargo/bin"),
+        os.path.expanduser("~/.local/bin"),
+    ]:
+        if os.path.isdir(d) and d not in os.environ.get("PATH", ""):
+            os.environ["PATH"] = d + os.pathsep + os.environ["PATH"]
+
+    if not shutil.which("uv"):
+        warn("uv installed but not on PATH. Restart your terminal.")
+
+
+def uv_sync():
+    """Initialize the uv project environment."""
+    if shutil.which("uv"):
+        log("Running uv sync ...")
+        subprocess.run(["uv", "sync"], check=False)
+
+
+def source_cargo_env():
+    """Add .cargo/bin to PATH."""
+    for candidate in [
+        os.environ.get("CARGO_HOME", ""),
+        os.path.expanduser("~/.cargo"),
+    ]:
+        if candidate:
+            bin_dir = os.path.join(candidate, "bin")
+            if os.path.isdir(bin_dir) and bin_dir not in os.environ.get("PATH", ""):
+                os.environ["PATH"] = bin_dir + os.pathsep + os.environ["PATH"]
+
+    userprofile = os.environ.get("USERPROFILE")
+    if userprofile:
+        bin_dir = os.path.join(userprofile, ".cargo", "bin")
+        if os.path.isdir(bin_dir) and bin_dir not in os.environ.get("PATH", ""):
+            os.environ["PATH"] = bin_dir + os.pathsep + os.environ["PATH"]
+
+
+def current_rust_version():
+    """Get the current rustc version, or None."""
+    source_cargo_env()
+    try:
+        out = subprocess.check_output(["rustc", "--version"], text=True).strip()
+        parts = out.split()
+        if len(parts) >= 2:
+            return parts[1].split("-")[0]
+    except Exception:
+        pass
+    return None
+
+
+def install_rustup(plat):
+    """Install rustup and the pinned toolchain using Python urllib for downloads."""
+    rustup_args = [
+        "-y",
+        "--default-toolchain", RUST_TOOLCHAIN,
+        "--profile", "default",
+        "-c", "clippy",
+        "-c", "rustfmt",
+    ]
+    env = os.environ.copy()
+    env["RUSTUP_INIT_SKIP_PATH_CHECK"] = "yes"
+
+    if plat in ("linux", "macos"):
+        log("Installing rustup via sh.rustup.rs ...")
+        tmp = make_tempfile("rustup-init.sh", plat)
+        if not download(RUSTUP_UNIX_URL, tmp):
+            die("Failed to download rustup installer.")
+        os.chmod(tmp, 0o755)
+        subprocess.run([tmp] + rustup_args, env=env, check=True)
+        os.unlink(tmp)
+    else:
+        log("Installing rustup via rustup-init.exe ...")
+        tmp = make_tempfile("rustup-init.exe", plat)
+        native = native_path(tmp, plat)
+        if not download(RUSTUP_WIN_URL, native):
+            die("Failed to download rustup-init.exe.")
+        log("Running rustup-init.exe ...")
+        subprocess.run([tmp] + rustup_args, env=env, check=True)
+        try:
+            os.unlink(tmp)
+        except Exception:
+            pass
+
+
+def verify(plat):
+    """Verify the installation."""
+    source_cargo_env()
+
+    if not shutil.which("rustc"):
+        err("rustc not found on PATH after installation.")
+        err("Restart your terminal, then run: rustc --version")
+        return False
+
+    log("")
+    log(f"rustc:   {subprocess.check_output(['rustc', '--version'], text=True).strip()}")
+    log(f"cargo:   {subprocess.check_output(['cargo', '--version'], text=True).strip()}")
+
+    if shutil.which("clippy-driver"):
+        log("clippy:  available")
+    else:
+        warn("clippy: not found")
+
+    if shutil.which("rustfmt"):
+        log("rustfmt: available")
+    else:
+        warn("rustfmt: not found")
+
+    if shutil.which("uv"):
+        log(f"uv:      {subprocess.check_output(['uv', '--version'], text=True).strip()}")
+    else:
+        warn("uv: not found on PATH")
+
+    # Check for PATH shadowing
+    rustc_path = shutil.which("rustc") or ""
+    if ".cargo" not in rustc_path and "cargo" not in rustc_path:
+        warn("")
+        warn(f"WARNING: rustc at '{rustc_path}' is NOT from rustup.")
+        warn("An old system Rust may shadow the rustup toolchain.")
+        if plat == "windows":
+            username = os.environ.get("USERNAME", os.environ.get("USER", "user"))
+            warn(f'  export PATH="/c/Users/{username}/.cargo/bin:$PATH"')
+        else:
+            warn('  export PATH="$HOME/.cargo/bin:$PATH"')
+
+    log("")
+    log("Done. Run: uv run cargo check --workspace")
+    return True
+
+
+def main():
+    log("fbuild — toolchain installer (uv + Rust)")
+    log(f"Pinned: Rust {RUST_TOOLCHAIN}")
+    log("")
+
+    plat = detect_platform()
+    log(f"Platform: {plat}")
+
+    # Step 1: Install uv
+    install_uv(plat)
+
+    # Step 2: Initialize uv project
+    uv_sync()
+
+    # Step 3: Install Rust
+    current = current_rust_version()
+    if current == RUST_TOOLCHAIN:
+        log(f"Rust {RUST_TOOLCHAIN} already installed.")
+    else:
+        if current:
+            warn(f"Current rustc: {current} (need {RUST_TOOLCHAIN})")
+
+        source_cargo_env()
+        if shutil.which("rustup"):
+            log(f"rustup found. Installing toolchain {RUST_TOOLCHAIN} ...")
+            subprocess.run(
+                ["rustup", "toolchain", "install", RUST_TOOLCHAIN,
+                 "--profile", "default", "-c", "clippy", "-c", "rustfmt"],
+                check=True,
+            )
+            subprocess.run(["rustup", "default", RUST_TOOLCHAIN], check=True)
+        else:
+            log("rustup not found. Installing from scratch ...")
+            install_rustup(plat)
+
+    source_cargo_env()
+    if not verify(plat):
+        warn("")
+        warn("Restart your terminal, then run:")
+        warn("  rustc --version")
+        warn("  uv run cargo check --workspace")
+
+
+if __name__ == "__main__":
+    main()

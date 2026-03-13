@@ -1,0 +1,19 @@
+[package]
+name = "fbuild-packages"
+description = "Package management, toolchain resolution, library downloads for fbuild"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+fbuild-core = { path = "../fbuild-core" }
+fbuild-paths = { path = "../fbuild-paths" }
+fbuild-config = { path = "../fbuild-config" }
+tokio = { workspace = true }
+reqwest = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+tempfile = { workspace = true }

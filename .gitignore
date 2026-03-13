@@ -1,0 +1,30 @@
+# Build artifacts
+/target/
+**/*.rs.bk
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Session cache (hook fingerprints)
+.cache/
+
+# Cargo lock is checked in for binaries
+# (workspace contains binary crates)
+.loop
+
+# Python / uv
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+*.egg-info/
+dist/
+build/

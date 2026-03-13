@@ -1,0 +1,13 @@
+[package]
+name = "fbuild-test-support"
+description = "Test utilities and fixtures for fbuild"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+tempfile = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+tokio = { workspace = true }

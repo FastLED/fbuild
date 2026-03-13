@@ -1,0 +1,21 @@
+[project]
+name = "fbuild"
+version = "2.0.0"
+description = "PlatformIO-compatible embedded build tool (Rust implementation)"
+requires-python = ">=3.9"
+dependencies = []
+
+[project.scripts]
+cargo = "ci.trampoline:cargo"
+rustc = "ci.trampoline:rustc"
+rustfmt = "ci.trampoline:rustfmt"
+clippy-driver = "ci.trampoline:clippy_driver"
+run_fbuild = "ci.trampoline:run_fbuild"
+run_fbuild_daemon = "ci.trampoline:run_fbuild_daemon"
+
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["ci"]

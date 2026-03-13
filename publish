@@ -1,0 +1,417 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.11"
+# dependencies = []
+# ///
+"""Build and publish fbuild to PyPI.
+
+Zero-argument release pipeline:
+  1. Pre-check: fail fast if version already exists on PyPI
+  2. Trigger GitHub Actions to build native binaries for all platforms
+  3. Wait for builds to complete, download artifacts
+  4. Assemble platform-specific wheels (native binaries, no Python runtime)
+  5. Upload to PyPI
+
+Usage:
+    ./publish              # full pipeline
+    ./publish --dry-run    # everything except upload
+"""
+
+from __future__ import annotations
+
+import argparse
+import base64
+import csv
+import hashlib
+import io
+import json
+import shutil
+import stat
+import subprocess
+import sys
+import time
+import tomllib
+import urllib.error
+import urllib.request
+import zipfile
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+DIST_DIR = ROOT / "dist"
+WHEEL_DIR = DIST_DIR / "wheels"
+WORKFLOW_FILE = "build.yml"
+
+# GitHub artifact name -> dist/ subdir
+ARTIFACT_MAP: dict[str, str] = {
+    "binaries-x86_64-unknown-linux-gnu": "linux-x86_64",
+    "binaries-aarch64-unknown-linux-gnu": "linux-aarch64",
+    "binaries-x86_64-apple-darwin": "macos-x86_64",
+    "binaries-aarch64-apple-darwin": "macos-aarch64",
+    "binaries-x86_64-pc-windows-msvc": "windows-x86_64",
+}
+
+# dist/ subdir -> wheel platform tags
+PLATFORMS: dict[str, list[str]] = {
+    "linux-x86_64": ["manylinux_2_17_x86_64", "manylinux2014_x86_64"],
+    "linux-aarch64": ["manylinux_2_17_aarch64", "manylinux2014_aarch64"],
+    "macos-x86_64": ["macosx_10_12_x86_64"],
+    "macos-aarch64": ["macosx_11_0_arm64"],
+    "windows-x86_64": ["win_amd64"],
+}
+
+
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+
+def log(msg: str) -> None:
+    print(msg, file=sys.stderr, flush=True)
+
+
+def run(cmd: list[str], **kwargs) -> subprocess.CompletedProcess:
+    log(f"  $ {' '.join(cmd)}")
+    return subprocess.run(cmd, check=True, **kwargs)
+
+
+def run_capture(cmd: list[str]) -> str:
+    result = run(cmd, capture_output=True, text=True)
+    return result.stdout.strip()
+
+
+def read_project_meta() -> tuple[str, str, str, str]:
+    """Return (name, version, summary, requires_python) from pyproject.toml."""
+    with open(ROOT / "pyproject.toml", "rb") as f:
+        data = tomllib.load(f)
+    proj = data["project"]
+    return (
+        proj["name"],
+        proj["version"],
+        proj.get("description", ""),
+        proj.get("requires-python", ">=3.9"),
+    )
+
+
+def detect_repo() -> str:
+    """Detect owner/repo from git remote origin."""
+    url = run_capture(["git", "remote", "get-url", "origin"])
+    if url.startswith("git@"):
+        url = url.split(":", 1)[1]
+    elif "github.com" in url:
+        url = url.split("github.com/", 1)[1]
+    return url.removesuffix(".git")
+
+
+def record_hash(data: bytes) -> str:
+    digest = hashlib.sha256(data).digest()
+    return "sha256=" + base64.urlsafe_b64encode(digest).rstrip(b"=").decode()
+
+
+# ---------------------------------------------------------------------------
+# Step 1: PyPI version pre-check
+# ---------------------------------------------------------------------------
+
+def check_pypi_version(name: str, version: str) -> None:
+    """Fail fast if this version already exists on PyPI."""
+    log(f"\n=== Step 1: Pre-check PyPI for {name} {version} ===")
+    url = f"https://pypi.org/pypi/{name}/json"
+    try:
+        with urllib.request.urlopen(url, timeout=10) as resp:
+            data = json.loads(resp.read())
+        existing = set(data.get("releases", {}).keys())
+        if version in existing:
+            log(f"  ERROR: {name} {version} already exists on PyPI.")
+            log(f"  Bump the version in pyproject.toml before publishing.")
+            sys.exit(1)
+        log(f"  {name} {version} is available (existing: {', '.join(sorted(existing)) or 'none'})")
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            log(f"  {name} not yet on PyPI (first publish)")
+        else:
+            log(f"  WARNING: PyPI check failed (HTTP {e.code}), continuing anyway")
+    except (urllib.error.URLError, TimeoutError):
+        log(f"  WARNING: Could not reach PyPI, continuing anyway")
+
+
+# ---------------------------------------------------------------------------
+# Step 2: Trigger GitHub Actions build
+# ---------------------------------------------------------------------------
+
+def trigger_and_wait(repo: str) -> int:
+    """Trigger build workflow on HEAD, wait for completion, return run ID."""
+    log(f"\n=== Step 2: Build native binaries ({repo}) ===")
+
+    head_sha = run_capture(["git", "rev-parse", "HEAD"])
+    branch = run_capture(["git", "rev-parse", "--abbrev-ref", "HEAD"])
+    log(f"  Branch: {branch} ({head_sha[:12]})")
+
+    # Snapshot existing runs to detect the new one
+    existing_raw = run_capture([
+        "gh", "run", "list",
+        "--repo", repo,
+        "--workflow", WORKFLOW_FILE,
+        "--limit", "1",
+        "--json", "databaseId",
+    ])
+    existing_ids = {r["databaseId"] for r in json.loads(existing_raw)} if existing_raw else set()
+
+    # Trigger
+    log(f"  Triggering {WORKFLOW_FILE} on {branch}...")
+    run(["gh", "workflow", "run", WORKFLOW_FILE, "--repo", repo, "--ref", branch])
+
+    # Wait for run to appear
+    log("  Waiting for run to start...")
+    run_id = None
+    for _ in range(30):
+        time.sleep(2)
+        result = run_capture([
+            "gh", "run", "list",
+            "--repo", repo,
+            "--workflow", WORKFLOW_FILE,
+            "--limit", "5",
+            "--json", "databaseId,status",
+        ])
+        for r in json.loads(result):
+            if r["databaseId"] not in existing_ids:
+                run_id = r["databaseId"]
+                break
+        if run_id:
+            break
+
+    if not run_id:
+        log("  ERROR: Timed out waiting for workflow run to appear.")
+        sys.exit(1)
+
+    log(f"  Run {run_id} started")
+    log(f"  https://github.com/{repo}/actions/runs/{run_id}")
+
+    # Wait for completion (30 min timeout)
+    timeout = 1800
+    start = time.time()
+    while time.time() - start < timeout:
+        result = run_capture([
+            "gh", "run", "view", str(run_id),
+            "--repo", repo,
+            "--json", "status,conclusion",
+        ])
+        data = json.loads(result)
+
+        if data["status"] == "completed":
+            if data.get("conclusion") == "success":
+                elapsed = int(time.time() - start)
+                log(f"  Build completed in {elapsed}s")
+                return run_id
+            log(f"  ERROR: Build failed: {data.get('conclusion')}")
+            log(f"  https://github.com/{repo}/actions/runs/{run_id}")
+            sys.exit(1)
+
+        elapsed = int(time.time() - start)
+        log(f"  [{elapsed}s] {data['status']}...")
+        time.sleep(15)
+
+    log(f"  ERROR: Build timed out after {timeout}s")
+    sys.exit(1)
+
+
+# ---------------------------------------------------------------------------
+# Step 3: Download artifacts
+# ---------------------------------------------------------------------------
+
+def download_artifacts(repo: str, run_id: int) -> None:
+    """Download build artifacts and organize into dist/."""
+    log(f"\n=== Step 3: Download artifacts from run {run_id} ===")
+
+    if DIST_DIR.exists():
+        shutil.rmtree(DIST_DIR)
+    DIST_DIR.mkdir()
+
+    tmp = DIST_DIR / "_tmp"
+    tmp.mkdir()
+    run(["gh", "run", "download", str(run_id), "--repo", repo, "--dir", str(tmp)])
+
+    found = 0
+    for artifact_name, subdir in ARTIFACT_MAP.items():
+        src = tmp / artifact_name
+        if not src.exists():
+            log(f"  WARNING: Missing {artifact_name}")
+            continue
+
+        dest = DIST_DIR / subdir
+        dest.mkdir(parents=True, exist_ok=True)
+
+        for f in src.iterdir():
+            target = dest / f.name
+            shutil.copy2(f, target)
+            if not f.name.endswith(".exe"):
+                target.chmod(0o755)
+            size_mb = target.stat().st_size / (1024 * 1024)
+            log(f"  {subdir}/{f.name} ({size_mb:.1f} MB)")
+
+        found += 1
+
+    shutil.rmtree(tmp)
+    log(f"  {found}/{len(ARTIFACT_MAP)} platforms downloaded")
+
+    if found == 0:
+        log("  ERROR: No artifacts downloaded.")
+        sys.exit(1)
+
+
+# ---------------------------------------------------------------------------
+# Step 4: Build wheels
+# ---------------------------------------------------------------------------
+
+def build_wheel(
+    name: str,
+    version: str,
+    summary: str,
+    requires_python: str,
+    platform_subdir: str,
+    plat_tags: list[str],
+) -> Path | None:
+    bin_dir = DIST_DIR / platform_subdir
+    if not bin_dir.exists():
+        return None
+
+    binaries = sorted(bin_dir.iterdir())
+    if not binaries:
+        return None
+
+    name_norm = name.replace("-", "_")
+    tag_plat = ".".join(plat_tags)
+    wheel_filename = f"{name_norm}-{version}-py3-none-{tag_plat}.whl"
+    data_dir = f"{name_norm}-{version}.data"
+    dist_info = f"{name_norm}-{version}.dist-info"
+
+    metadata = (
+        f"Metadata-Version: 2.1\n"
+        f"Name: {name}\n"
+        f"Version: {version}\n"
+        f"Summary: {summary}\n"
+        f"Requires-Python: {requires_python}\n"
+    )
+
+    wheel_meta = (
+        f"Wheel-Version: 1.0\n"
+        f"Generator: fbuild-publish\n"
+        f"Root-Is-Purelib: false\n"
+    )
+    for pt in plat_tags:
+        wheel_meta += f"Tag: py3-none-{pt}\n"
+
+    exec_perms = (
+        stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR
+        | stat.S_IRGRP | stat.S_IXGRP
+        | stat.S_IROTH | stat.S_IXOTH
+    )
+
+    WHEEL_DIR.mkdir(parents=True, exist_ok=True)
+    wheel_path = WHEEL_DIR / wheel_filename
+    record_rows: list[tuple[str, str, int]] = []
+
+    with zipfile.ZipFile(wheel_path, "w", zipfile.ZIP_DEFLATED) as whl:
+        for binary in binaries:
+            data = binary.read_bytes()
+            arcname = f"{data_dir}/scripts/{binary.name}"
+            info = zipfile.ZipInfo(arcname)
+            info.external_attr = exec_perms << 16
+            info.compress_type = zipfile.ZIP_DEFLATED
+            whl.writestr(info, data)
+            record_rows.append((arcname, record_hash(data), len(data)))
+
+        meta_bytes = metadata.encode()
+        whl.writestr(f"{dist_info}/METADATA", meta_bytes)
+        record_rows.append((f"{dist_info}/METADATA", record_hash(meta_bytes), len(meta_bytes)))
+
+        wheel_bytes = wheel_meta.encode()
+        whl.writestr(f"{dist_info}/WHEEL", wheel_bytes)
+        record_rows.append((f"{dist_info}/WHEEL", record_hash(wheel_bytes), len(wheel_bytes)))
+
+        buf = io.StringIO()
+        writer = csv.writer(buf, lineterminator="\n")
+        for row in record_rows:
+            writer.writerow(row)
+        writer.writerow((f"{dist_info}/RECORD", "", ""))
+        whl.writestr(f"{dist_info}/RECORD", buf.getvalue().encode())
+
+    size_mb = wheel_path.stat().st_size / (1024 * 1024)
+    log(f"  {wheel_filename} ({size_mb:.1f} MB)")
+    return wheel_path
+
+
+def build_all_wheels(name: str, version: str, summary: str, requires_python: str) -> list[Path]:
+    log(f"\n=== Step 4: Build wheels ({name} {version}) ===")
+
+    if WHEEL_DIR.exists():
+        shutil.rmtree(WHEEL_DIR)
+
+    wheels: list[Path] = []
+    for subdir, plat_tags in PLATFORMS.items():
+        whl = build_wheel(name, version, summary, requires_python, subdir, plat_tags)
+        if whl:
+            wheels.append(whl)
+
+    if not wheels:
+        log("  ERROR: No wheels were built.")
+        sys.exit(1)
+
+    log(f"  {len(wheels)} wheel(s) ready")
+    return wheels
+
+
+# ---------------------------------------------------------------------------
+# Step 5: Upload
+# ---------------------------------------------------------------------------
+
+def upload_wheels(wheels: list[Path], name: str, version: str) -> None:
+    log(f"\n=== Step 5: Upload to PyPI ===")
+    upload_cmd = ["uv", "publish"]
+    upload_cmd.extend(str(w) for w in sorted(wheels))
+    run(upload_cmd)
+    log(f"\n  Published: https://pypi.org/project/{name}/{version}/")
+
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Build and publish fbuild to PyPI")
+    parser.add_argument("--dry-run", action="store_true", help="Build wheels but do not upload.")
+    args = parser.parse_args()
+
+    # Verify prerequisites
+    try:
+        run_capture(["gh", "--version"])
+    except FileNotFoundError:
+        log("ERROR: 'gh' (GitHub CLI) is not installed.")
+        sys.exit(1)
+
+    name, version, summary, requires_python = read_project_meta()
+    repo = detect_repo()
+    log(f"Publishing {name} {version} from {repo}")
+
+    # Step 1: Fail fast if version exists
+    check_pypi_version(name, version)
+
+    # Step 2: Build native binaries on all platforms
+    run_id = trigger_and_wait(repo)
+
+    # Step 3: Download artifacts
+    download_artifacts(repo, run_id)
+
+    # Step 4: Build platform wheels
+    wheels = build_all_wheels(name, version, summary, requires_python)
+
+    # Step 5: Upload
+    if args.dry_run:
+        log(f"\n=== Step 5: Upload (skipped — dry run) ===")
+        for w in wheels:
+            log(f"  {w.name}")
+    else:
+        upload_wheels(wheels, name, version)
+
+    log("\n=== Done ===")
+
+
+if __name__ == "__main__":
+    main()

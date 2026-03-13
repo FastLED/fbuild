@@ -1,0 +1,40 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.10"
+# ///
+"""Run the performance benchmark (fbuild-rust vs fbuild-python vs platformio).
+
+Usage:
+    uv run perf               # run the benchmark
+    uv run perf --nocapture   # (default) show output as it runs
+"""
+
+import subprocess
+import sys
+from pathlib import Path
+
+SCRIPT_DIR = Path(__file__).parent.resolve()
+
+
+def main():
+    cmd = [
+        "uv", "run", "cargo", "test",
+        "-p", "fbuild-daemon",
+        "--test", "perf_bench_test",
+        "--",
+        "--nocapture",
+        "--ignored",
+    ]
+
+    result = subprocess.run(
+        cmd,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        cwd=str(SCRIPT_DIR),
+    )
+    return result.returncode
+
+
+if __name__ == "__main__":
+    sys.exit(main())

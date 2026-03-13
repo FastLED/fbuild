@@ -1,0 +1,10 @@
+[package]
+name = "fbuild-paths"
+description = "Path resolution for fbuild (dev/prod isolation, cache, daemon dirs)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+fbuild-core = { path = "../fbuild-core" }

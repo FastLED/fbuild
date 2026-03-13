@@ -1,0 +1,20 @@
+[package]
+name = "fbuild-python"
+description = "PyO3 Python bindings for fbuild (SerialMonitor, Daemon, BuildContext)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[lib]
+name = "fbuild"
+crate-type = ["cdylib"]
+
+[dependencies]
+fbuild-core = { path = "../fbuild-core" }
+fbuild-serial = { path = "../fbuild-serial" }
+fbuild-paths = { path = "../fbuild-paths" }
+pyo3 = { workspace = true }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }

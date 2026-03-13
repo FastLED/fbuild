@@ -1,0 +1,23 @@
+[package]
+name = "fbuild-cli"
+description = "Command-line interface for fbuild"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "fbuild"
+path = "src/main.rs"
+
+[dependencies]
+fbuild-core = { path = "../fbuild-core" }
+fbuild-config = { path = "../fbuild-config" }
+fbuild-paths = { path = "../fbuild-paths" }
+tokio = { workspace = true }
+reqwest = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+clap = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
