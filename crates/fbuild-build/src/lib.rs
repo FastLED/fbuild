@@ -3,6 +3,13 @@
 //! Each platform has its own orchestrator implementing the `BuildOrchestrator` trait.
 //! Orchestrators handle: source scanning, compilation, linking, size reporting.
 
+pub mod avr;
+pub mod compiler;
+pub mod linker;
+pub mod source_scanner;
+
+pub use source_scanner::SourceScanner;
+
 use fbuild_core::{BuildProfile, Platform, Result, SizeInfo};
 use std::path::PathBuf;
 
@@ -34,6 +41,12 @@ pub trait BuildOrchestrator: Send + Sync {
 }
 
 /// Select the appropriate orchestrator for a platform.
-pub fn get_orchestrator(platform: Platform) -> Box<dyn BuildOrchestrator> {
-    unimplemented!("orchestrator for {:?} not yet implemented", platform)
+pub fn get_orchestrator(platform: Platform) -> Result<Box<dyn BuildOrchestrator>> {
+    match platform {
+        Platform::AtmelAvr => Ok(avr::orchestrator::create()),
+        _ => Err(fbuild_core::FbuildError::BuildFailed(format!(
+            "orchestrator for {:?} not yet implemented",
+            platform
+        ))),
+    }
 }

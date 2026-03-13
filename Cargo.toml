@@ -32,11 +32,17 @@ clap = { version = "4", features = ["derive"] }
 axum = { version = "0.7", features = ["ws"] }
 tower-http = { version = "0.5", features = ["cors", "trace"] }
 hyper = { version = "1", features = ["full"] }
-reqwest = { version = "0.12", features = ["json"] }
+reqwest = { version = "0.12", features = ["json", "blocking"] }
 tokio-serial = "5"
 serialport = "4"
 pyo3 = { version = "0.22", features = ["extension-module"] }
 tempfile = "3"
+sha2 = "0.10"
+regex = "1"
+walkdir = "2"
+flate2 = "1"
+tar = "0.4"
+zip = "2"
 bytes = "1"
 uuid = { version = "1", features = ["v4"] }
 base64 = "0.22"

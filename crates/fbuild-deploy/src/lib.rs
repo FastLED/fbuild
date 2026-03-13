@@ -1,14 +1,17 @@
 //! Firmware deployment via platform-specific upload tools.
 //!
-//! - ESP32: esptool
 //! - AVR: avrdude
+//! - ESP32: esptool
 //! - RP2040: picotool
 //! - STM32: st-flash / dfu-util
 //! - Teensy: teensy_loader_cli
 
+pub mod avr;
+
 use fbuild_core::Result;
 use std::path::Path;
 
+#[derive(Debug)]
 pub struct DeploymentResult {
     pub success: bool,
     pub message: String,
