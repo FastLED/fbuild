@@ -7,6 +7,7 @@
 //! - Teensy: teensy_loader_cli
 
 pub mod avr;
+pub mod esp32;
 pub mod teensy;
 
 use fbuild_core::Result;

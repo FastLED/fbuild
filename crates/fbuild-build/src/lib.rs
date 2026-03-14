@@ -5,6 +5,7 @@
 
 pub mod avr;
 pub mod compiler;
+pub mod esp32;
 pub mod linker;
 pub mod source_scanner;
 pub mod teensy;
@@ -45,6 +46,7 @@ pub trait BuildOrchestrator: Send + Sync {
 pub fn get_orchestrator(platform: Platform) -> Result<Box<dyn BuildOrchestrator>> {
     match platform {
         Platform::AtmelAvr => Ok(avr::orchestrator::create()),
+        Platform::Espressif32 => Ok(esp32::orchestrator::create()),
         Platform::Teensy => Ok(teensy::orchestrator::create()),
         _ => Err(fbuild_core::FbuildError::BuildFailed(format!(
             "orchestrator for {:?} not yet implemented",

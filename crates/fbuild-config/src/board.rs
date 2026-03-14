@@ -224,6 +224,13 @@ impl BoardConfig {
             defines.insert("LAYOUT_US_ENGLISH".to_string(), "1".to_string());
         }
 
+        // ESP32-specific defines
+        let is_esp32 = matches!(self.platform(), Some(fbuild_core::Platform::Espressif32));
+        if is_esp32 {
+            defines.insert("ESP_PLATFORM".to_string(), "1".to_string());
+            defines.insert("ESP32".to_string(), "ESP32".to_string());
+        }
+
         // Extra flags
         if let Some(ref flags) = self.extra_flags {
             for flag in flags.split_whitespace() {
@@ -383,6 +390,8 @@ fn get_board_defaults(board_id: &str) -> Option<HashMap<String, String>> {
             d.insert("variant".into(), "esp32c3".into());
             d.insert("maximum_size".into(), "3145728".into());
             d.insert("maximum_data_size".into(), "327680".into());
+            d.insert("upload.protocol".into(), "esptool".into());
+            d.insert("upload.speed".into(), "460800".into());
         }
         "esp32-c6" | "esp32c6" => {
             d.insert("name".into(), "ESP32-C6".into());
@@ -393,6 +402,8 @@ fn get_board_defaults(board_id: &str) -> Option<HashMap<String, String>> {
             d.insert("variant".into(), "esp32c6".into());
             d.insert("maximum_size".into(), "3145728".into());
             d.insert("maximum_data_size".into(), "327680".into());
+            d.insert("upload.protocol".into(), "esptool".into());
+            d.insert("upload.speed".into(), "460800".into());
         }
         "esp32-s3" | "esp32s3" => {
             d.insert("name".into(), "ESP32-S3".into());
@@ -403,6 +414,8 @@ fn get_board_defaults(board_id: &str) -> Option<HashMap<String, String>> {
             d.insert("variant".into(), "esp32s3".into());
             d.insert("maximum_size".into(), "3145728".into());
             d.insert("maximum_data_size".into(), "327680".into());
+            d.insert("upload.protocol".into(), "esptool".into());
+            d.insert("upload.speed".into(), "460800".into());
         }
         "teensy40" => {
             d.insert("name".into(), "Teensy 4.0".into());
