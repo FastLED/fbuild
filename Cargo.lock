@@ -642,6 +642,7 @@ dependencies = [
  "dashmap",
  "fbuild-core",
  "futures",
+ "regex",
  "serde",
  "serde_json",
  "serialport",

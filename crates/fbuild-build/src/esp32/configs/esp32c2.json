@@ -119,7 +119,7 @@
 
   "profiles": {
     "release": {
-      "compile_flags": ["-Os", "-flto=auto", "-fno-fat-lto-objects"],
+      "compile_flags": ["-Os", "-flto=auto", "-fno-fat-lto-objects", "-fno-omit-frame-pointer"],
       "link_flags": ["-flto=auto", "-fuse-linker-plugin"]
     },
     "quick": {

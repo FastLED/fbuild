@@ -18,6 +18,7 @@
 //! 4. 200 max attempts in 20 seconds
 //! 5. Toggle DTR/RTS for flow control
 
+use crate::crash_decoder::CrashDecoder;
 use crate::preemption::PreemptionTracker;
 use crate::session::SerialSession;
 use dashmap::DashMap;
@@ -30,6 +31,8 @@ pub struct SharedSerialManager {
     /// Broadcast channels per port for output distribution.
     broadcasters: DashMap<String, broadcast::Sender<String>>,
     preemption: Arc<PreemptionTracker>,
+    /// Per-port crash decoders for translating crash addresses to source locations.
+    crash_decoders: DashMap<String, CrashDecoder>,
 }
 
 impl SharedSerialManager {
@@ -38,6 +41,7 @@ impl SharedSerialManager {
             sessions: DashMap::new(),
             broadcasters: DashMap::new(),
             preemption: Arc::new(PreemptionTracker::new()),
+            crash_decoders: DashMap::new(),
         }
     }
 
@@ -142,6 +146,25 @@ impl SharedSerialManager {
     /// Get the preemption tracker for external use.
     pub fn preemption_tracker(&self) -> &Arc<PreemptionTracker> {
         &self.preemption
+    }
+
+    /// Attach a crash decoder to a port for decoding crash stack traces.
+    pub fn set_crash_decoder(&self, port: &str, decoder: CrashDecoder) {
+        self.crash_decoders.insert(port.to_string(), decoder);
+    }
+
+    /// Remove crash decoder from a port.
+    pub fn remove_crash_decoder(&self, port: &str) {
+        self.crash_decoders.remove(port);
+    }
+
+    /// Process a serial line through the crash decoder for a port.
+    ///
+    /// Returns decoded crash trace lines if a crash dump just completed.
+    pub fn process_crash_line(&self, port: &str, line: &str) -> Option<Vec<String>> {
+        self.crash_decoders
+            .get_mut(port)
+            .and_then(|mut decoder| decoder.process_line(line))
     }
 }
 

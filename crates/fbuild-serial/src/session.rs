@@ -2,6 +2,7 @@
 
 use std::collections::HashSet;
 use std::collections::VecDeque;
+use std::path::PathBuf;
 
 /// State for a single managed serial port.
 pub struct SerialSession {
@@ -19,6 +20,8 @@ pub struct SerialSession {
     pub started_at: f64,
     /// Client that opened the port.
     pub owner_client_id: Option<String>,
+    /// Path to firmware ELF for crash decoding.
+    pub elf_path: Option<PathBuf>,
 }
 
 impl SerialSession {
@@ -34,6 +37,7 @@ impl SerialSession {
             total_bytes_written: 0,
             started_at: 0.0,
             owner_client_id: None,
+            elf_path: None,
         }
     }
 }
