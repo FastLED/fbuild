@@ -22,6 +22,7 @@ use std::path::Path;
 use std::time::Instant;
 
 use fbuild_core::{Platform, Result};
+use fbuild_packages::Framework;
 
 use crate::compiler::{Compiler, CompilerBase};
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
@@ -126,7 +127,40 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // Add SDK include paths (294+ paths from ESP-IDF)
         include_dirs.extend(framework.get_sdk_include_dirs(&board.mcu));
 
+        // Add built-in Arduino library includes (Wire, SPI, WiFi, etc.)
+        let builtin_libs_dir = framework.get_libraries_dir();
+        if builtin_libs_dir.is_dir() {
+            if let Ok(entries) = std::fs::read_dir(&builtin_libs_dir) {
+                for entry in entries.flatten() {
+                    let path = entry.path();
+                    if path.is_dir() {
+                        let lib_src = path.join("src");
+                        if lib_src.is_dir() {
+                            include_dirs.push(lib_src);
+                        }
+                    }
+                }
+            }
+        }
+
         include_dirs.push(src_dir.clone());
+
+        // PlatformIO automatically includes the project's include/ directory
+        let include_dir = params.project_dir.join("include");
+        if include_dir.is_dir() {
+            include_dirs.push(include_dir);
+        }
+
+        // Read SDK linker flags early — needed to check LTO before compiling.
+        let sdk_ld_flags = framework.get_sdk_ld_flags(&board.mcu);
+        let sdk_lib_flags = framework.get_sdk_lib_flags(&board.mcu);
+        let sdk_ld_scripts = framework.get_sdk_ld_scripts(&board.mcu);
+
+        // If SDK specifies -fno-lto, disable LTO in MCU config profiles to avoid
+        // compiling objects with LTO that the linker can't handle.
+        if sdk_ld_flags.iter().any(|f| f == "-fno-lto") {
+            mcu_config.disable_lto();
+        }
 
         // 8.5. Library dependencies
         let lib_deps = config.get_lib_deps(&params.env_name)?;
@@ -182,6 +216,116 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
         tracing::info!("include paths: {} total", include_dirs.len());
 
+        // 8.6. Compile framework built-in libraries (WiFi, FS, SPIFFS, Network, etc.)
+        // The linker's --gc-sections will strip any unused code.
+        {
+            let builtin_libs_dir = framework.get_libraries_dir();
+            if builtin_libs_dir.is_dir() {
+                let fw_libs_build_dir = build_dir.join("fw_libs");
+                std::fs::create_dir_all(&fw_libs_build_dir)?;
+
+                // Build set of already-compiled library names
+                let already_compiled: std::collections::HashSet<String> = library_archives
+                    .iter()
+                    .filter_map(|p| p.file_stem())
+                    .filter_map(|s| s.to_str())
+                    .filter_map(|s| s.strip_prefix("lib"))
+                    .map(|s| s.to_string())
+                    .collect();
+
+                // Get compiler flags for framework library compilation
+                let mut fw_defines = board.get_defines();
+                fw_defines.extend(mcu_config.defines_map());
+
+                let fw_compiler = Esp32Compiler::new(
+                    toolchain.get_gcc_path(),
+                    toolchain.get_gxx_path(),
+                    mcu_config.clone(),
+                    &board.f_cpu,
+                    fw_defines,
+                    include_dirs.clone(),
+                    params.profile,
+                    params.verbose,
+                );
+                let fw_c_flags = fw_compiler.c_flags();
+                let fw_cpp_flags = fw_compiler.cpp_flags();
+
+                let mut fw_lib_count = 0;
+                if let Ok(entries) = std::fs::read_dir(&builtin_libs_dir) {
+                    for entry in entries.flatten() {
+                        let path = entry.path();
+                        if !path.is_dir() {
+                            continue;
+                        }
+                        let lib_name = path
+                            .file_name()
+                            .unwrap_or_default()
+                            .to_string_lossy()
+                            .to_lowercase();
+                        if lib_name.starts_with('.') || already_compiled.contains(&lib_name) {
+                            continue;
+                        }
+
+                        let lib_src = path.join("src");
+                        if !lib_src.is_dir() {
+                            continue;
+                        }
+
+                        // Check if archive already exists
+                        let archive_path = fw_libs_build_dir.join(format!("lib{}.a", lib_name));
+                        if archive_path.exists() {
+                            library_archives.push(archive_path);
+                            fw_lib_count += 1;
+                            continue;
+                        }
+
+                        // Collect source files
+                        let lib_info =
+                            fbuild_packages::library::library_info::InstalledLibrary::new(
+                                &path, &lib_name,
+                            );
+                        let sources = lib_info.get_source_files();
+                        if sources.is_empty() {
+                            continue;
+                        }
+
+                        match fbuild_packages::library::library_compiler::compile_library(
+                            &lib_name,
+                            &sources,
+                            &include_dirs,
+                            &toolchain.get_gcc_path(),
+                            &toolchain.get_gxx_path(),
+                            &toolchain.get_ar_path(),
+                            &fw_c_flags,
+                            &fw_cpp_flags,
+                            &fw_libs_build_dir,
+                            params.verbose,
+                        ) {
+                            Ok(Some(archive)) => {
+                                library_archives.push(archive);
+                                fw_lib_count += 1;
+                            }
+                            Ok(None) => {} // header-only
+                            Err(e) => {
+                                // Non-fatal: some framework libs may fail to compile
+                                // (e.g., platform-specific ones). The linker will report
+                                // if any actually-needed symbols are missing.
+                                tracing::debug!(
+                                    "framework library {} failed to compile: {}",
+                                    lib_name,
+                                    e
+                                );
+                            }
+                        }
+                    }
+                }
+
+                if fw_lib_count > 0 {
+                    tracing::info!("compiled {} framework built-in libraries", fw_lib_count);
+                }
+            }
+        }
+
         // 9. Scan sources
         let scanner = SourceScanner::new(&src_dir, &src_build_dir);
         let variant_dir_opt = if variant_dir.exists() {
@@ -197,17 +341,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
             sources.core_sources.len(),
             sources.variant_sources.len(),
         );
-
-        // Read SDK linker flags early — needed to check LTO before compiling.
-        let sdk_ld_flags = framework.get_sdk_ld_flags(&board.mcu);
-        let sdk_lib_flags = framework.get_sdk_lib_flags(&board.mcu);
-        let sdk_ld_scripts = framework.get_sdk_ld_scripts(&board.mcu);
-
-        // If SDK specifies -fno-lto, disable LTO in MCU config profiles to avoid
-        // compiling objects with LTO that the linker can't handle.
-        if sdk_ld_flags.iter().any(|f| f == "-fno-lto") {
-            mcu_config.disable_lto();
-        }
 
         // 10-11. Compile
         let mut defines = board.get_defines();
@@ -286,6 +419,35 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 }
             }
             sketch_objects.push(obj);
+        }
+
+        // 11.5. Process embedded files (board_build.embed_files + embed_txtfiles)
+        let embed_files = config.get_embed_files(&params.env_name)?;
+        let embed_txtfiles = config.get_embed_txtfiles(&params.env_name)?;
+
+        if !embed_files.is_empty() || !embed_txtfiles.is_empty() {
+            let embed_dir = build_dir.join("embed");
+            std::fs::create_dir_all(&embed_dir)?;
+
+            let objcopy_path = toolchain.get_objcopy_path();
+            let (output_target, binary_arch) = if mcu_config.is_riscv() {
+                ("elf32-littleriscv", "riscv")
+            } else {
+                ("elf32-xtensa-le", "xtensa")
+            };
+
+            let embed_objects = process_embed_files(
+                &embed_files,
+                &embed_txtfiles,
+                &params.project_dir,
+                &embed_dir,
+                &objcopy_path,
+                output_target,
+                binary_arch,
+                params.verbose,
+            )?;
+
+            sketch_objects.extend(embed_objects);
         }
 
         // 12-13. Link + convert
@@ -418,6 +580,151 @@ fn resolve_and_create_toolchain(
             ))
         }
     }
+}
+
+/// Process `board_build.embed_files` and `board_build.embed_txtfiles`.
+///
+/// Converts data files into linkable ELF objects using `objcopy --input-target binary`.
+/// This generates `_binary_<name>_start`, `_binary_<name>_end`, and `_binary_<name>_size`
+/// symbols that the firmware can reference.
+///
+/// - `embed_files`: embedded as-is (binary)
+/// - `embed_txtfiles`: a null-terminated copy is created first, then embedded
+#[allow(clippy::too_many_arguments)]
+fn process_embed_files(
+    embed_files: &[String],
+    embed_txtfiles: &[String],
+    project_dir: &Path,
+    embed_dir: &Path,
+    objcopy_path: &Path,
+    output_target: &str,
+    binary_arch: &str,
+    verbose: bool,
+) -> Result<Vec<std::path::PathBuf>> {
+    use fbuild_core::subprocess::run_command;
+
+    let mut objects = Vec::new();
+
+    // Helper: convert a relative file path to the object file name.
+    // e.g. "config/timezones.json" → "config_timezones_json.o"
+    let to_obj_name = |path: &str| -> String {
+        let sanitized = path.replace(['/', '\\', '.', '-'], "_");
+        format!("{}.o", sanitized)
+    };
+
+    // Process binary embed files (embed as-is, cwd=project_dir)
+    for file in embed_files {
+        let src_path = project_dir.join(file);
+        if !src_path.exists() {
+            tracing::warn!("embed_files: {} not found, skipping", src_path.display());
+            continue;
+        }
+
+        let obj_name = to_obj_name(file);
+        let obj_path = embed_dir.join(&obj_name);
+
+        if obj_path.exists() {
+            objects.push(obj_path);
+            continue;
+        }
+
+        let args = [
+            objcopy_path.to_string_lossy().to_string(),
+            "--input-target".to_string(),
+            "binary".to_string(),
+            "--output-target".to_string(),
+            output_target.to_string(),
+            "--binary-architecture".to_string(),
+            binary_arch.to_string(),
+            "--rename-section".to_string(),
+            ".data=.rodata.embedded".to_string(),
+            file.replace('\\', "/"),
+            obj_path.to_string_lossy().to_string(),
+        ];
+
+        if verbose {
+            tracing::info!("embed: {}", args.join(" "));
+        }
+
+        let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
+        let result = run_command(&args_ref, Some(project_dir), None, None)?;
+
+        if !result.success() {
+            return Err(fbuild_core::FbuildError::BuildFailed(format!(
+                "objcopy failed for embed file {}:\n{}",
+                file, result.stderr
+            )));
+        }
+
+        tracing::info!("embedded binary file: {}", file);
+        objects.push(obj_path);
+    }
+
+    // Process text embed files (null-terminated copy, then objcopy from embed_dir)
+    for file in embed_txtfiles {
+        let src_path = project_dir.join(file);
+        if !src_path.exists() {
+            tracing::warn!("embed_txtfiles: {} not found, skipping", src_path.display());
+            continue;
+        }
+
+        let obj_name = to_obj_name(file);
+        let obj_path = embed_dir.join(&obj_name);
+
+        if obj_path.exists() {
+            objects.push(obj_path);
+            continue;
+        }
+
+        // Create null-terminated copy in embed_dir preserving relative path
+        let rel_dest = embed_dir.join(file);
+        if let Some(parent) = rel_dest.parent() {
+            std::fs::create_dir_all(parent)?;
+        }
+        let mut content = std::fs::read(&src_path)?;
+        if content.last() != Some(&0) {
+            content.push(0);
+        }
+        std::fs::write(&rel_dest, &content)?;
+
+        let args = [
+            objcopy_path.to_string_lossy().to_string(),
+            "--input-target".to_string(),
+            "binary".to_string(),
+            "--output-target".to_string(),
+            output_target.to_string(),
+            "--binary-architecture".to_string(),
+            binary_arch.to_string(),
+            "--rename-section".to_string(),
+            ".data=.rodata.embedded".to_string(),
+            file.replace('\\', "/"),
+            obj_path.to_string_lossy().to_string(),
+        ];
+
+        if verbose {
+            tracing::info!("embed txt: {}", args.join(" "));
+        }
+
+        // Run from embed_dir so objcopy generates symbols from the relative path
+        let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
+        let result = run_command(&args_ref, Some(embed_dir), None, None)?;
+
+        if !result.success() {
+            return Err(fbuild_core::FbuildError::BuildFailed(format!(
+                "objcopy failed for embed txtfile {}:\n{}",
+                file, result.stderr
+            )));
+        }
+
+        tracing::info!("embedded text file: {}", file);
+        objects.push(obj_path);
+    }
+
+    if !objects.is_empty() {
+        tracing::info!("processed {} embedded files", objects.len());
+    }
+
+    Ok(objects)
 }
 
 /// Create an ESP32 orchestrator (convenience for get_orchestrator dispatch).

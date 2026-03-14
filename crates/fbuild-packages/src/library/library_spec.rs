@@ -93,7 +93,7 @@ impl LibrarySpec {
 
     /// Sanitize library name for filesystem use.
     pub fn sanitized_name(&self) -> String {
-        self.name.to_lowercase().replace(['/', '@'], "_")
+        self.name.to_lowercase().replace(['/', '@', ' '], "_")
     }
 }
 

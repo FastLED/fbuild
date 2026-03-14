@@ -98,6 +98,12 @@ impl BuildOrchestrator for TeensyOrchestrator {
         let mut include_dirs = vec![core_dir.clone()];
         include_dirs.push(src_dir.clone());
 
+        // PlatformIO automatically includes the project's include/ directory
+        let include_dir = params.project_dir.join("include");
+        if include_dir.is_dir() {
+            include_dirs.push(include_dir);
+        }
+
         let user_flags = config.get_build_flags(&params.env_name)?;
 
         use fbuild_packages::Toolchain;

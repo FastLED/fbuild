@@ -183,7 +183,14 @@ fn write_response_file(flags: &[String]) -> Result<PathBuf> {
     // \f = formfeed, etc.). Convert to forward slashes for Windows compatibility.
     let content = flags
         .iter()
-        .map(|f| f.replace('\\', "/"))
+        .map(|f| {
+            let fwd = f.replace('\\', "/");
+            if fwd.contains(' ') {
+                format!("\"{}\"", fwd)
+            } else {
+                fwd
+            }
+        })
         .collect::<Vec<_>>()
         .join("\n");
     std::fs::write(&path, content).map_err(|e| {

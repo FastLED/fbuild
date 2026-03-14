@@ -160,40 +160,61 @@ impl Linker for Esp32Linker {
             link_args.push(obj.to_string_lossy().to_string());
         }
 
-        // Core objects / archives
+        // Core objects, library archives, and SDK libs wrapped in --start-group
+        // so the linker resolves circular dependencies between them.
+        link_args.push("-Wl,--start-group".to_string());
+
         for archive in archives {
             link_args.push(archive.to_string_lossy().to_string());
         }
 
         // SDK precompiled libraries (ordered flags from flags/ld_libs)
-        if !self.sdk_lib_flags.is_empty() {
-            link_args.push("-Wl,--start-group".to_string());
-            link_args.extend(self.sdk_lib_flags.clone());
-            link_args.push("-Wl,--end-group".to_string());
-        }
+        link_args.extend(self.sdk_lib_flags.clone());
+
+        link_args.push("-Wl,--end-group".to_string());
 
         if self.verbose {
             tracing::info!("link: {}", link_args.join(" "));
         }
 
-        // On Windows, use a response file if the command is too long
-        let result =
-            if cfg!(windows) && link_args.iter().map(|s| s.len() + 1).sum::<usize>() > 30000 {
-                let response_content = link_args[1..].join("\n");
-                let rsp_path = std::env::temp_dir()
-                    .join(format!("fbuild_esp32_link_{}.rsp", std::process::id()));
-                std::fs::write(&rsp_path, &response_content).map_err(|e| {
-                    fbuild_core::FbuildError::BuildFailed(format!(
-                        "failed to write linker response file: {}",
-                        e
-                    ))
-                })?;
-                let rsp_args = [link_args[0].as_str(), &format!("@{}", rsp_path.display())];
-                run_command(&rsp_args, None, None, None)?
+        // On Windows, always use a response file to normalize paths
+        // (forward slashes, quoting) and avoid command-line length issues.
+        let result = if cfg!(windows) {
+            // GCC treats backslashes as escape characters in response files.
+            let response_content = link_args[1..]
+                .iter()
+                .map(|f| {
+                    let fwd = f.replace('\\', "/");
+                    if fwd.contains(' ') {
+                        format!("\"{}\"", fwd)
+                    } else {
+                        fwd
+                    }
+                })
+                .collect::<Vec<_>>()
+                .join("\n");
+            // On MSYS, std::env::temp_dir() returns "/tmp/" which native
+            // Windows binaries treat as "C:\tmp\". Use LOCALAPPDATA\Temp.
+            let temp_dir = if cfg!(windows) {
+                std::env::var("LOCALAPPDATA")
+                    .map(|la| std::path::PathBuf::from(la).join("Temp"))
+                    .unwrap_or_else(|_| std::env::temp_dir())
             } else {
-                let args_ref: Vec<&str> = link_args.iter().map(|s| s.as_str()).collect();
-                run_command(&args_ref, None, None, None)?
+                std::env::temp_dir()
             };
+            let rsp_path = temp_dir.join(format!("fbuild_esp32_link_{}.rsp", std::process::id()));
+            std::fs::write(&rsp_path, &response_content).map_err(|e| {
+                fbuild_core::FbuildError::BuildFailed(format!(
+                    "failed to write linker response file: {}",
+                    e
+                ))
+            })?;
+            let rsp_args = [link_args[0].as_str(), &format!("@{}", rsp_path.display())];
+            run_command(&rsp_args, None, None, None)?
+        } else {
+            let args_ref: Vec<&str> = link_args.iter().map(|s| s.as_str()).collect();
+            run_command(&args_ref, None, None, None)?
+        };
 
         if !result.success() {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(

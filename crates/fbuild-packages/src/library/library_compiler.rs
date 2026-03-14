@@ -132,7 +132,20 @@ fn build_include_flags(include_dirs: &[PathBuf]) -> Result<Vec<String>> {
             std::env::temp_dir()
         };
         let rsp_path = temp_dir.join(format!("fbuild_lib_includes_{}.rsp", std::process::id()));
-        let content = flags.join("\n");
+        // GCC treats backslashes in response files as escape characters.
+        // Convert to forward slashes and quote paths with spaces.
+        let content = flags
+            .iter()
+            .map(|f| {
+                let fwd = f.replace('\\', "/");
+                if fwd.contains(' ') {
+                    format!("\"{}\"", fwd)
+                } else {
+                    fwd
+                }
+            })
+            .collect::<Vec<_>>()
+            .join("\n");
         std::fs::write(&rsp_path, content).map_err(|e| {
             FbuildError::BuildFailed(format!(
                 "failed to write response file {}: {}",

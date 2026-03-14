@@ -133,6 +133,24 @@ impl PlatformIOConfig {
         }
     }
 
+    /// Get `board_build.embed_files` for an environment (binary files to embed).
+    pub fn get_embed_files(&self, env_name: &str) -> fbuild_core::Result<Vec<String>> {
+        let overrides = self.get_board_overrides(env_name)?;
+        match overrides.get("embed_files") {
+            Some(files) => Ok(parse_lib_deps(files)),
+            None => Ok(Vec::new()),
+        }
+    }
+
+    /// Get `board_build.embed_txtfiles` for an environment (text files to embed with null terminator).
+    pub fn get_embed_txtfiles(&self, env_name: &str) -> fbuild_core::Result<Vec<String>> {
+        let overrides = self.get_board_overrides(env_name)?;
+        match overrides.get("embed_txtfiles") {
+            Some(files) => Ok(parse_lib_deps(files)),
+            None => Ok(Vec::new()),
+        }
+    }
+
     /// Get src_dir setting, checking env var override and ini config.
     pub fn get_src_dir(&self, env_name: &str) -> fbuild_core::Result<Option<String>> {
         // PLATFORMIO_SRC_DIR env var takes precedence
@@ -324,10 +342,12 @@ impl PlatformIOConfig {
                     for (k, v) in parent_config {
                         config.insert(k, v);
                     }
-                } else if let Some(parent_section) = sections.get(parent_name) {
-                    // Direct section reference (non-env section)
-                    for (k, v) in parent_section {
-                        config.insert(k.clone(), v.clone());
+                } else if sections.contains_key(parent_name) {
+                    // Direct section reference (non-env section) — resolve its
+                    // extends chain so inherited keys like lib_deps propagate.
+                    let parent_config = Self::resolve_section(sections, parent_name, visited)?;
+                    for (k, v) in parent_config {
+                        config.insert(k, v);
                     }
                 }
             }
@@ -335,6 +355,50 @@ impl PlatformIOConfig {
 
         // Apply this environment's values (override parents)
         for (k, v) in section {
+            if k != "extends" {
+                config.insert(k.clone(), v.clone());
+            }
+        }
+
+        Ok(config)
+    }
+
+    /// Resolve a non-env section's config, following `extends` chains.
+    fn resolve_section(
+        sections: &HashMap<String, HashMap<String, String>>,
+        section_name: &str,
+        visited: &mut HashSet<String>,
+    ) -> fbuild_core::Result<HashMap<String, String>> {
+        if !visited.insert(format!("section:{}", section_name)) {
+            return Err(fbuild_core::FbuildError::ConfigError(format!(
+                "circular extends dependency for section '{}'",
+                section_name
+            )));
+        }
+
+        let section = sections.get(section_name).cloned().unwrap_or_default();
+        let mut config = HashMap::new();
+
+        // Follow extends chain
+        if let Some(extends) = section.get("extends") {
+            for parent_ref in extends.split(',') {
+                let parent_ref = parent_ref.trim();
+                if sections.contains_key(&format!("env:{}", parent_ref)) {
+                    let parent_config = Self::resolve_env(sections, parent_ref, visited)?;
+                    for (k, v) in parent_config {
+                        config.insert(k, v);
+                    }
+                } else if sections.contains_key(parent_ref) {
+                    let parent_config = Self::resolve_section(sections, parent_ref, visited)?;
+                    for (k, v) in parent_config {
+                        config.insert(k, v);
+                    }
+                }
+            }
+        }
+
+        // Apply this section's own values (override parents)
+        for (k, v) in &section {
             if k != "extends" {
                 config.insert(k.clone(), v.clone());
             }
@@ -398,10 +462,9 @@ fn resolve_variable(
             }
         };
 
-        if let Some(section) = sections.get(&section_name) {
-            if let Some(val) = section.get(key) {
-                return val.clone();
-            }
+        // Look up the key, following the `extends` chain if needed
+        if let Some(val) = resolve_section_key(sections, &section_name, key, &mut HashSet::new()) {
+            return val;
         }
     }
 
@@ -412,6 +475,50 @@ fn resolve_variable(
 
     // Unresolved — return as-is
     format!("${{{}}}", reference)
+}
+
+/// Look up a key in a section, following `extends` chains.
+fn resolve_section_key(
+    sections: &HashMap<String, HashMap<String, String>>,
+    section_name: &str,
+    key: &str,
+    visited: &mut HashSet<String>,
+) -> Option<String> {
+    if !visited.insert(section_name.to_string()) {
+        return None; // circular extends
+    }
+
+    let section = sections.get(section_name)?;
+
+    // Direct lookup
+    if let Some(val) = section.get(key) {
+        return Some(val.clone());
+    }
+
+    // Follow extends chain
+    if let Some(extends) = section.get("extends") {
+        for parent_ref in extends.split(',') {
+            let parent_ref = parent_ref.trim();
+            // Resolve parent section name (could be "env:name" or bare name)
+            let parent_name = if parent_ref.starts_with("env:") || sections.contains_key(parent_ref)
+            {
+                parent_ref.to_string()
+            } else {
+                let as_env = format!("env:{}", parent_ref);
+                if sections.contains_key(&as_env) {
+                    as_env
+                } else {
+                    parent_ref.to_string()
+                }
+            };
+
+            if let Some(val) = resolve_section_key(sections, &parent_name, key, visited) {
+                return Some(val);
+            }
+        }
+    }
+
+    None
 }
 
 /// Strip inline comments (` ; comment` or ` # comment`).
@@ -946,5 +1053,121 @@ lib_ignore =
         let config = PlatformIOConfig::from_path(f.path()).unwrap();
         let ignore = config.get_lib_ignore("uno").unwrap();
         assert!(ignore.is_empty());
+    }
+
+    #[test]
+    fn test_variable_substitution_follows_extends_chain() {
+        // Mirrors NightDriverStrip pattern: [base] defines build_flags,
+        // [dev_esp32] extends base (no build_flags), [env:demo] references
+        // ${dev_esp32.build_flags} — must resolve through the extends chain.
+        let f = write_ini(
+            "\
+[base]
+build_flags = -std=gnu++2a
+              -Ofast
+
+[dev_esp32]
+extends = base
+board = esp32dev
+
+[env:demo]
+extends = dev_esp32
+platform = espressif32
+framework = arduino
+build_flags = -DDEMO=1
+              ${dev_esp32.build_flags}
+",
+        );
+        let config = PlatformIOConfig::from_path(f.path()).unwrap();
+        let flags = config.get_build_flags("demo").unwrap();
+        assert!(
+            flags.contains(&"-DDEMO=1".to_string()),
+            "should contain -DDEMO=1, got: {:?}",
+            flags
+        );
+        assert!(
+            flags.contains(&"-std=gnu++2a".to_string()),
+            "should resolve ${{dev_esp32.build_flags}} through extends chain to [base], got: {:?}",
+            flags
+        );
+        assert!(
+            flags.contains(&"-Ofast".to_string()),
+            "should contain -Ofast from [base], got: {:?}",
+            flags
+        );
+        // Must NOT contain the literal unresolved variable
+        let raw = config.get_env_config("demo").unwrap();
+        let raw_flags = raw.get("build_flags").unwrap();
+        assert!(
+            !raw_flags.contains("${"),
+            "build_flags should not contain unresolved variables, got: {}",
+            raw_flags
+        );
+    }
+
+    #[test]
+    fn test_non_env_extends_inherits_lib_deps() {
+        // [env:demo] extends [dev_esp32] extends [base].
+        // lib_deps is only on [base] — must propagate through.
+        let f = write_ini(
+            "\
+[base]
+lib_deps = fastled/FastLED@^3.7.8
+           bblanchon/ArduinoJson@^7.0.0
+
+[dev_esp32]
+extends = base
+board = esp32dev
+
+[env:demo]
+extends = dev_esp32
+platform = espressif32
+framework = arduino
+",
+        );
+        let config = PlatformIOConfig::from_path(f.path()).unwrap();
+        let deps = config.get_lib_deps("demo").unwrap();
+        assert!(
+            deps.iter().any(|d| d.contains("FastLED")),
+            "should inherit lib_deps from [base] via [dev_esp32], got: {:?}",
+            deps
+        );
+        assert!(
+            deps.iter().any(|d| d.contains("ArduinoJson")),
+            "should inherit ArduinoJson from [base], got: {:?}",
+            deps
+        );
+    }
+
+    #[test]
+    fn test_get_embed_files() {
+        let f = write_ini(
+            "\
+[env:demo]
+platform = espressif32
+board = esp32dev
+framework = arduino
+board_build.embed_files = site/dist/index.html.gz
+                          site/dist/favicon.ico.gz
+board_build.embed_txtfiles = config/timezones.json
+",
+        );
+        let config = PlatformIOConfig::from_path(f.path()).unwrap();
+        let embed = config.get_embed_files("demo").unwrap();
+        assert_eq!(embed.len(), 2);
+        assert!(embed.contains(&"site/dist/index.html.gz".to_string()));
+        assert!(embed.contains(&"site/dist/favicon.ico.gz".to_string()));
+
+        let txt = config.get_embed_txtfiles("demo").unwrap();
+        assert_eq!(txt.len(), 1);
+        assert_eq!(txt[0], "config/timezones.json");
+    }
+
+    #[test]
+    fn test_get_embed_files_empty() {
+        let f = write_ini("[env:uno]\nplatform = atmelavr\nboard = uno\nframework = arduino\n");
+        let config = PlatformIOConfig::from_path(f.path()).unwrap();
+        assert!(config.get_embed_files("uno").unwrap().is_empty());
+        assert!(config.get_embed_txtfiles("uno").unwrap().is_empty());
     }
 }

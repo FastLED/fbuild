@@ -92,6 +92,12 @@ impl BuildOrchestrator for AvrOrchestrator {
         let mut include_dirs = board.get_include_paths(&framework_dir);
         include_dirs.push(src_dir.clone());
 
+        // PlatformIO automatically includes the project's include/ directory
+        let include_dir = params.project_dir.join("include");
+        if include_dir.is_dir() {
+            include_dirs.push(include_dir);
+        }
+
         // Add user build flags to defines
         let user_flags = config.get_build_flags(&params.env_name)?;
 
