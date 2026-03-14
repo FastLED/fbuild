@@ -191,7 +191,12 @@ impl BoardConfig {
 
         defines.insert("PLATFORMIO".to_string(), "1".to_string());
         defines.insert("F_CPU".to_string(), self.f_cpu.clone());
-        defines.insert("ARDUINO".to_string(), "10808".to_string());
+
+        // Arduino version: Teensy boards use 10819, others use 10808
+        let is_teensy = matches!(self.platform(), Some(fbuild_core::Platform::Teensy));
+        let arduino_version = if is_teensy { "10819" } else { "10808" };
+        defines.insert("ARDUINO".to_string(), arduino_version.to_string());
+
         defines.insert(
             format!("ARDUINO_{}", self.board.to_uppercase()),
             "1".to_string(),
@@ -207,6 +212,16 @@ impl BoardConfig {
         let mcu_upper = self.mcu.to_uppercase();
         if mcu_upper.starts_with("ATMEGA") || mcu_upper.starts_with("ATTINY") {
             defines.insert(format!("__AVR_{}__", mcu_upper), "1".to_string());
+        }
+
+        // Teensy-specific defines
+        if is_teensy {
+            if mcu_upper.starts_with("IMXRT") {
+                defines.insert(format!("__{}__", mcu_upper), "1".to_string());
+            }
+            defines.insert("TEENSYDUINO".to_string(), "159".to_string());
+            defines.insert("USB_SERIAL".to_string(), "1".to_string());
+            defines.insert("LAYOUT_US_ENGLISH".to_string(), "1".to_string());
         }
 
         // Extra flags
@@ -398,6 +413,8 @@ fn get_board_defaults(board_id: &str) -> Option<HashMap<String, String>> {
             d.insert("variant".into(), "teensy40".into());
             d.insert("maximum_size".into(), "2031616".into());
             d.insert("maximum_data_size".into(), "1048576".into());
+            d.insert("upload.protocol".into(), "teensy-gui".into());
+            d.insert("upload.speed".into(), "0".into());
         }
         "teensy41" => {
             d.insert("name".into(), "Teensy 4.1".into());
@@ -408,6 +425,8 @@ fn get_board_defaults(board_id: &str) -> Option<HashMap<String, String>> {
             d.insert("variant".into(), "teensy41".into());
             d.insert("maximum_size".into(), "8126464".into());
             d.insert("maximum_data_size".into(), "1048576".into());
+            d.insert("upload.protocol".into(), "teensy-gui".into());
+            d.insert("upload.speed".into(), "0".into());
         }
         "rpipico" | "pico" => {
             d.insert("name".into(), "Raspberry Pi Pico".into());
