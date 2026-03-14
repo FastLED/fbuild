@@ -4,18 +4,19 @@
 //! 1. Parse platformio.ini
 //! 2. Load board config (esp32dev/esp32c6/etc.)
 //! 3. Load MCU config from embedded JSON
-//! 4. Determine toolchain type (RISC-V vs Xtensa)
-//! 5. Ensure ESP32 toolchain
+//! 4. Ensure ESP32 platform (pioarduino)
+//! 5. Resolve + ensure ESP32 toolchain via metadata
 //! 6. Ensure ESP32 framework (Arduino core + ESP-IDF SDK libs)
 //! 7. Setup build directories
 //! 8. Collect include paths: core + variant + SDK (305+) + user src
-//! 9. Scan sources (sketch + core)
-//! 10. Compile core sources
-//! 11. Compile sketch sources
-//! 12. Link (with linker scripts + SDK libs)
-//! 13. Convert to .bin
-//! 14. Copy bootloader.bin + partitions.bin
-//! 15. Size reporting
+//! 9. Download + compile library dependencies
+//! 10. Scan sources (sketch + core)
+//! 11. Compile core sources
+//! 12. Compile sketch sources
+//! 13. Link (with linker scripts + SDK libs + library archives)
+//! 14. Convert to .bin
+//! 15. Copy bootloader.bin + partitions.bin
+//! 16. Size reporting
 
 use std::path::Path;
 use std::time::Instant;
@@ -53,7 +54,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let board = fbuild_config::BoardConfig::from_board_id(board_id, &overrides)?;
 
         // 3. Load MCU config from embedded JSON
-        let mcu_config = get_mcu_config(&board.mcu)?;
+        let mut mcu_config = get_mcu_config(&board.mcu)?;
         tracing::info!(
             "ESP32 build: {} ({}, {})",
             board.name,
@@ -61,12 +62,12 @@ impl BuildOrchestrator for Esp32Orchestrator {
             mcu_config.architecture
         );
 
-        // 4-5. Ensure ESP32 toolchain (RISC-V or Xtensa based on architecture)
-        let toolchain = fbuild_packages::toolchain::Esp32Toolchain::new(
-            &params.project_dir,
-            mcu_config.is_riscv(),
-            mcu_config.toolchain_prefix(),
-        );
+        // 4. Ensure ESP32 platform (pioarduino — contains platform.json with metadata URLs)
+        let platform = fbuild_packages::library::Esp32Platform::new(&params.project_dir);
+        fbuild_packages::Package::ensure_installed(&platform)?;
+
+        // 5. Resolve + ensure ESP32 toolchain via metadata
+        let toolchain = resolve_and_create_toolchain(&platform, &params.project_dir, &mcu_config)?;
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
         tracing::info!(
             "ESP32 {} toolchain at {}",
@@ -79,10 +80,23 @@ impl BuildOrchestrator for Esp32Orchestrator {
         );
 
         // 6. Ensure ESP32 framework (Arduino core + ESP-IDF SDK)
-        let framework =
-            fbuild_packages::library::Esp32Framework::new(&params.project_dir, &board.mcu);
+        let framework = match platform.get_package_url("framework-arduinoespressif32") {
+            Ok(url) => {
+                tracing::info!("resolved framework URL from platform.json");
+                fbuild_packages::library::Esp32Framework::from_url(&params.project_dir, &url)
+            }
+            Err(e) => {
+                tracing::warn!("could not resolve framework URL, using legacy: {}", e);
+                fbuild_packages::library::Esp32Framework::new(&params.project_dir, &board.mcu)
+            }
+        };
         let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
         tracing::info!("ESP32 framework at {}", framework_dir.display());
+
+        // 6b. Ensure SDK libs (split package in pioarduino 3.3.7+)
+        if let Ok(libs_url) = platform.get_package_url("framework-arduinoespressif32-libs") {
+            framework.ensure_libs(&libs_url)?;
+        }
 
         // 7. Setup build directories
         let cache = fbuild_packages::Cache::new(&params.project_dir);
@@ -109,9 +123,62 @@ impl BuildOrchestrator for Esp32Orchestrator {
         if variant_dir.exists() {
             include_dirs.push(variant_dir.clone());
         }
-        // Add SDK include paths (305+ paths from ESP-IDF)
+        // Add SDK include paths (294+ paths from ESP-IDF)
         include_dirs.extend(framework.get_sdk_include_dirs(&board.mcu));
+
         include_dirs.push(src_dir.clone());
+
+        // 8.5. Library dependencies
+        let lib_deps = config.get_lib_deps(&params.env_name)?;
+        let lib_ignore = config.get_lib_ignore(&params.env_name)?;
+
+        use fbuild_packages::Toolchain;
+        let mut library_archives = Vec::new();
+
+        if !lib_deps.is_empty() {
+            let libs_dir = build_dir.join("libs");
+
+            // Build compiler to get flags for library compilation
+            let mut defines = board.get_defines();
+            defines.extend(mcu_config.defines_map());
+
+            let temp_compiler = Esp32Compiler::new(
+                toolchain.get_gcc_path(),
+                toolchain.get_gxx_path(),
+                mcu_config.clone(),
+                &board.f_cpu,
+                defines.clone(),
+                include_dirs.clone(),
+                params.profile,
+                params.verbose,
+            );
+
+            let c_flags = temp_compiler.c_flags();
+            let cpp_flags = temp_compiler.cpp_flags();
+
+            let lib_result = fbuild_packages::library::library_manager::ensure_libraries_sync(
+                &lib_deps,
+                &lib_ignore,
+                &toolchain.get_gcc_path(),
+                &toolchain.get_gxx_path(),
+                &toolchain.get_ar_path(),
+                &c_flags,
+                &cpp_flags,
+                &include_dirs,
+                &libs_dir,
+                params.verbose,
+            )?;
+
+            // Add library include dirs to the main include list
+            include_dirs.extend(lib_result.include_dirs);
+            library_archives = lib_result.archives;
+
+            tracing::info!(
+                "libraries: {} archives, {} new include dirs",
+                library_archives.len(),
+                include_dirs.len()
+            );
+        }
 
         tracing::info!("include paths: {} total", include_dirs.len());
 
@@ -131,14 +198,31 @@ impl BuildOrchestrator for Esp32Orchestrator {
             sources.variant_sources.len(),
         );
 
+        // Read SDK linker flags early — needed to check LTO before compiling.
+        let sdk_ld_flags = framework.get_sdk_ld_flags(&board.mcu);
+        let sdk_lib_flags = framework.get_sdk_lib_flags(&board.mcu);
+        let sdk_ld_scripts = framework.get_sdk_ld_scripts(&board.mcu);
+
+        // If SDK specifies -fno-lto, disable LTO in MCU config profiles to avoid
+        // compiling objects with LTO that the linker can't handle.
+        if sdk_ld_flags.iter().any(|f| f == "-fno-lto") {
+            mcu_config.disable_lto();
+        }
+
         // 10-11. Compile
         let mut defines = board.get_defines();
-        // Merge MCU config defines
         defines.extend(mcu_config.defines_map());
+
+        // Defines required by the new framework (3.3.7+)
+        defines
+            .entry("ARDUINO_BOARD".to_string())
+            .or_insert_with(|| format!("\"{}\"", board.name));
+        defines
+            .entry("ARDUINO_VARIANT".to_string())
+            .or_insert_with(|| format!("\"{}\"", board.variant));
 
         let user_flags = config.get_build_flags(&params.env_name)?;
 
-        use fbuild_packages::Toolchain;
         let compiler = Esp32Compiler::new(
             toolchain.get_gcc_path(),
             toolchain.get_gxx_path(),
@@ -205,8 +289,9 @@ impl BuildOrchestrator for Esp32Orchestrator {
         }
 
         // 12-13. Link + convert
-        let linker_scripts_dir = framework.get_linker_scripts_dir(&board.mcu);
-        let sdk_libs = framework.get_sdk_libs(&board.mcu);
+        // Library archives join core_objects in the archives parameter
+        let mut all_archives: Vec<std::path::PathBuf> = core_objects;
+        all_archives.extend(library_archives);
 
         let linker = Esp32Linker::new(
             toolchain.get_gcc_path(),
@@ -214,8 +299,9 @@ impl BuildOrchestrator for Esp32Orchestrator {
             toolchain.get_objcopy_path(),
             toolchain.get_size_path(),
             mcu_config.clone(),
-            linker_scripts_dir,
-            sdk_libs,
+            sdk_ld_flags,
+            sdk_lib_flags,
+            sdk_ld_scripts,
             params.profile,
             board.max_flash,
             board.max_ram,
@@ -223,7 +309,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         );
 
         let link_result =
-            crate::linker::Linker::link_all(&linker, &sketch_objects, &core_objects, &build_dir)?;
+            crate::linker::Linker::link_all(&linker, &sketch_objects, &all_archives, &build_dir)?;
 
         // 14. Copy bootloader.bin + partitions.bin
         let boot_src = framework.get_bootloader_bin(&board.mcu);
@@ -269,6 +355,68 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 params.env_name, board.mcu
             ),
         })
+    }
+}
+
+/// Resolve toolchain URL via platform metadata and create the toolchain instance.
+///
+/// Falls back to the legacy hardcoded URL constructor if metadata resolution fails.
+fn resolve_and_create_toolchain(
+    platform: &fbuild_packages::library::Esp32Platform,
+    project_dir: &Path,
+    mcu_config: &super::mcu_config::Esp32McuConfig,
+) -> Result<fbuild_packages::toolchain::Esp32Toolchain> {
+    let is_riscv = mcu_config.is_riscv();
+    let prefix = mcu_config.toolchain_prefix();
+
+    // Try metadata-based resolution
+    match platform.get_toolchain_metadata_url(is_riscv) {
+        Ok(metadata_url) => {
+            let toolchain_name = if is_riscv {
+                "toolchain-riscv32-esp"
+            } else {
+                "toolchain-xtensa-esp-elf"
+            };
+
+            let cache = fbuild_packages::Cache::new(project_dir);
+            let cache_dir = cache.toolchains_dir().join(toolchain_name);
+
+            match fbuild_packages::toolchain::esp32_metadata::resolve_toolchain_url_sync(
+                &metadata_url,
+                toolchain_name,
+                &cache_dir,
+            ) {
+                Ok(resolved) => {
+                    tracing::info!("resolved {} toolchain URL from metadata", toolchain_name);
+                    Ok(fbuild_packages::toolchain::Esp32Toolchain::from_resolved(
+                        project_dir,
+                        &resolved.url,
+                        resolved.sha256.as_deref(),
+                        is_riscv,
+                        &prefix,
+                    ))
+                }
+                Err(e) => {
+                    tracing::warn!("metadata resolution failed, using legacy URLs: {}", e);
+                    Ok(fbuild_packages::toolchain::Esp32Toolchain::new(
+                        project_dir,
+                        is_riscv,
+                        &prefix,
+                    ))
+                }
+            }
+        }
+        Err(e) => {
+            tracing::warn!(
+                "could not read platform.json, using legacy toolchain URLs: {}",
+                e
+            );
+            Ok(fbuild_packages::toolchain::Esp32Toolchain::new(
+                project_dir,
+                is_riscv,
+                &prefix,
+            ))
+        }
     }
 }
 

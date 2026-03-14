@@ -70,14 +70,14 @@ impl Esp32Compiler {
     }
 
     /// C-specific flags: common + MCU config C flags.
-    fn c_flags(&self) -> Vec<String> {
+    pub fn c_flags(&self) -> Vec<String> {
         let mut flags = self.common_flags();
         flags.extend(self.mcu_config.compiler_flags.c.clone());
         flags
     }
 
     /// C++-specific flags: common + MCU config C++ flags.
-    fn cpp_flags(&self) -> Vec<String> {
+    pub fn cpp_flags(&self) -> Vec<String> {
         let mut flags = self.common_flags();
         flags.extend(self.mcu_config.compiler_flags.cxx.clone());
         flags
@@ -168,8 +168,24 @@ impl Compiler for Esp32Compiler {
 /// Returns the path to the response file. The file is written to the system
 /// temp directory and will persist for the duration of the build.
 fn write_response_file(flags: &[String]) -> Result<PathBuf> {
-    let path = std::env::temp_dir().join(format!("fbuild_esp32_{}.rsp", std::process::id()));
-    let content = flags.join("\n");
+    // On MSYS, std::env::temp_dir() returns "/tmp/" which native Windows
+    // binaries (like the ESP32 cross-compiler) treat as "C:\tmp\", not the
+    // real temp dir. Use LOCALAPPDATA\Temp for a Windows-native path.
+    let temp_dir = if cfg!(windows) {
+        std::env::var("LOCALAPPDATA")
+            .map(|la| std::path::PathBuf::from(la).join("Temp"))
+            .unwrap_or_else(|_| std::env::temp_dir())
+    } else {
+        std::env::temp_dir()
+    };
+    let path = temp_dir.join(format!("fbuild_esp32_{}.rsp", std::process::id()));
+    // GCC treats backslashes in response files as escape characters (\n = newline,
+    // \f = formfeed, etc.). Convert to forward slashes for Windows compatibility.
+    let content = flags
+        .iter()
+        .map(|f| f.replace('\\', "/"))
+        .collect::<Vec<_>>()
+        .join("\n");
     std::fs::write(&path, content).map_err(|e| {
         fbuild_core::FbuildError::BuildFailed(format!(
             "failed to write response file {}: {}",

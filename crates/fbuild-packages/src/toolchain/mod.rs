@@ -3,6 +3,7 @@
 pub mod arm;
 pub mod avr;
 pub mod esp32;
+pub mod esp32_metadata;
 
 pub use arm::ArmToolchain;
 pub use avr::AvrToolchain;

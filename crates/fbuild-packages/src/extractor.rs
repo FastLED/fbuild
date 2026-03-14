@@ -1,6 +1,6 @@
-//! Archive extraction: tar.gz, tar.bz2, zip.
+//! Archive extraction: tar.gz, tar.bz2, tar.xz, zip.
 //!
-//! Dispatches based on file extension.
+//! All extraction is pure Rust — no subprocess calls.
 
 use std::path::Path;
 
@@ -8,7 +8,7 @@ use fbuild_core::{FbuildError, Result};
 
 /// Extract an archive into the given directory.
 ///
-/// Supported formats: .tar.gz, .tgz, .tar.bz2, .zip
+/// Supported formats: .tar.gz, .tgz, .tar.bz2, .tar.xz, .txz, .zip
 pub fn extract(archive_path: &Path, dest_dir: &Path) -> Result<()> {
     let name = archive_path
         .file_name()
@@ -20,6 +20,8 @@ pub fn extract(archive_path: &Path, dest_dir: &Path) -> Result<()> {
         extract_tar_gz(archive_path, dest_dir)
     } else if name.ends_with(".tar.bz2") {
         extract_tar_bz2(archive_path, dest_dir)
+    } else if name.ends_with(".tar.xz") || name.ends_with(".txz") {
+        extract_tar_xz(archive_path, dest_dir)
     } else if name.ends_with(".zip") {
         extract_zip(archive_path, dest_dir)
     } else {
@@ -45,27 +47,30 @@ fn extract_tar_gz(archive_path: &Path, dest_dir: &Path) -> Result<()> {
 }
 
 fn extract_tar_bz2(archive_path: &Path, dest_dir: &Path) -> Result<()> {
-    // Use subprocess for bz2 since we don't have a bz2 crate in workspace deps.
-    // Fall back to tar command which is available on all supported platforms.
-    let result = fbuild_core::subprocess::run_command(
-        &[
-            "tar",
-            "xjf",
-            &archive_path.to_string_lossy(),
-            "-C",
-            &dest_dir.to_string_lossy(),
-        ],
-        None,
-        None,
-        None,
-    )?;
+    let file = std::fs::File::open(archive_path)?;
+    let decoder = bzip2::read::BzDecoder::new(file);
+    let mut archive = tar::Archive::new(decoder);
+    archive.unpack(dest_dir).map_err(|e| {
+        FbuildError::PackageError(format!(
+            "failed to extract {}: {}",
+            archive_path.display(),
+            e
+        ))
+    })?;
+    Ok(())
+}
 
-    if !result.success() {
-        return Err(FbuildError::PackageError(format!(
-            "failed to extract bz2 archive: {}",
-            result.stderr
-        )));
-    }
+fn extract_tar_xz(archive_path: &Path, dest_dir: &Path) -> Result<()> {
+    let file = std::fs::File::open(archive_path)?;
+    let decoder = xz2::read::XzDecoder::new(file);
+    let mut archive = tar::Archive::new(decoder);
+    archive.unpack(dest_dir).map_err(|e| {
+        FbuildError::PackageError(format!(
+            "failed to extract {}: {}",
+            archive_path.display(),
+            e
+        ))
+    })?;
     Ok(())
 }
 

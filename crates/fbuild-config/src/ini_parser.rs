@@ -124,6 +124,15 @@ impl PlatformIOConfig {
         }
     }
 
+    /// Get lib_ignore for an environment (libraries to skip).
+    pub fn get_lib_ignore(&self, env_name: &str) -> fbuild_core::Result<Vec<String>> {
+        let config = self.get_env_config(env_name)?;
+        match config.get("lib_ignore") {
+            Some(deps) => Ok(parse_lib_deps(deps)),
+            None => Ok(Vec::new()),
+        }
+    }
+
     /// Get src_dir setting, checking env var override and ini config.
     pub fn get_src_dir(&self, env_name: &str) -> fbuild_core::Result<Option<String>> {
         // PLATFORMIO_SRC_DIR env var takes precedence
@@ -911,5 +920,31 @@ build_flags = -DFASTLED_AVR
             parse_lib_deps("FastLED\nArduinoJson"),
             vec!["FastLED", "ArduinoJson"]
         );
+    }
+
+    #[test]
+    fn test_get_lib_ignore_present() {
+        let f = write_ini(
+            "\
+[env:esp32dev]
+platform = espressif32
+board = esp32dev
+framework = arduino
+lib_ignore =
+    WiFi
+    FS
+",
+        );
+        let config = PlatformIOConfig::from_path(f.path()).unwrap();
+        let ignore = config.get_lib_ignore("esp32dev").unwrap();
+        assert_eq!(ignore, vec!["WiFi", "FS"]);
+    }
+
+    #[test]
+    fn test_get_lib_ignore_absent() {
+        let f = write_ini("[env:uno]\nplatform = atmelavr\nboard = uno\nframework = arduino\n");
+        let config = PlatformIOConfig::from_path(f.path()).unwrap();
+        let ignore = config.get_lib_ignore("uno").unwrap();
+        assert!(ignore.is_empty());
     }
 }

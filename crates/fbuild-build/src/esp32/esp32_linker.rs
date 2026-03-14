@@ -21,14 +21,17 @@ use super::mcu_config::Esp32McuConfig;
 pub struct Esp32Linker {
     gcc_path: PathBuf,
     ar_path: PathBuf,
+    #[allow(dead_code)] // Used later for esptool elf2image
     objcopy_path: PathBuf,
     size_path: PathBuf,
-    /// MCU config drives linker flags, scripts, and undefined symbols.
+    /// MCU config (used for profile-specific flags as fallback).
     mcu_config: Esp32McuConfig,
-    /// Directory containing linker scripts (tools/sdk/{mcu}/ld/).
-    linker_scripts_dir: PathBuf,
-    /// Precompiled `.a` libraries from ESP-IDF SDK.
-    sdk_libs: Vec<PathBuf>,
+    /// SDK linker flags from `flags/ld_flags` (undefined symbols, wrap directives, etc.).
+    sdk_ld_flags: Vec<String>,
+    /// SDK library flags from `flags/ld_libs` (ordered `-L`/`-l` flags).
+    sdk_lib_flags: Vec<String>,
+    /// SDK linker script flags from `flags/ld_scripts` (`-L`/`-T` flags).
+    sdk_ld_scripts: Vec<String>,
     /// Build profile.
     profile: BuildProfile,
     max_flash: Option<u64>,
@@ -44,8 +47,9 @@ impl Esp32Linker {
         objcopy_path: PathBuf,
         size_path: PathBuf,
         mcu_config: Esp32McuConfig,
-        linker_scripts_dir: PathBuf,
-        sdk_libs: Vec<PathBuf>,
+        sdk_ld_flags: Vec<String>,
+        sdk_lib_flags: Vec<String>,
+        sdk_ld_scripts: Vec<String>,
         profile: BuildProfile,
         max_flash: Option<u64>,
         max_ram: Option<u64>,
@@ -57,8 +61,9 @@ impl Esp32Linker {
             objcopy_path,
             size_path,
             mcu_config,
-            linker_scripts_dir,
-            sdk_libs,
+            sdk_ld_flags,
+            sdk_lib_flags,
+            sdk_ld_scripts,
             profile,
             max_flash,
             max_ram,
@@ -66,55 +71,24 @@ impl Esp32Linker {
         }
     }
 
-    /// Build all linker flags from the MCU config.
+    /// Build all linker flags: SDK flags + profile-specific flags.
     fn linker_flags(&self) -> Vec<String> {
-        let mut flags = self.mcu_config.linker_flags.clone();
-
-        // Add profile-specific link flags
-        let profile_name = match self.profile {
-            BuildProfile::Release => "release",
-            BuildProfile::Quick => "quick",
-        };
-        if let Some(profile) = self.mcu_config.get_profile(profile_name) {
-            flags.extend(profile.link_flags.clone());
-        }
-
-        flags
-    }
-
-    /// Build linker script flags (`-T{script}`).
-    fn linker_script_flags(&self) -> Vec<String> {
-        let mut flags = vec![format!("-L{}", self.linker_scripts_dir.display())];
-        for script in &self.mcu_config.linker_scripts {
-            flags.push(format!("-T{}", script));
-        }
-        flags
-    }
-
-    /// Build SDK library flags.
-    fn sdk_lib_flags(&self) -> Vec<String> {
         let mut flags = Vec::new();
 
-        // Add library search paths (unique parent directories of .a files)
-        let mut lib_dirs = std::collections::HashSet::new();
-        for lib in &self.sdk_libs {
-            if let Some(parent) = lib.parent() {
-                if lib_dirs.insert(parent.to_path_buf()) {
-                    flags.push(format!("-L{}", parent.display()));
-                }
-            }
-        }
-
-        // Add each library as -l{name} (strip lib prefix and .a suffix)
-        for lib in &self.sdk_libs {
-            if let Some(stem) = lib.file_stem() {
-                let name = stem.to_string_lossy();
-                if let Some(stripped) = name.strip_prefix("lib") {
-                    flags.push(format!("-l{}", stripped));
-                } else {
-                    // If not prefixed with lib, pass the full path
-                    flags.push(lib.to_string_lossy().to_string());
-                }
+        // SDK linker flags take priority (from flags/ld_flags).
+        // When SDK flags are present, skip profile link flags — the SDK already
+        // includes the correct optimization settings (e.g., -fno-lto).
+        if !self.sdk_ld_flags.is_empty() {
+            flags.extend(self.sdk_ld_flags.clone());
+        } else {
+            // Fallback to MCU config JSON + profile link flags
+            flags.extend(self.mcu_config.linker_flags.clone());
+            let profile_name = match self.profile {
+                BuildProfile::Release => "release",
+                BuildProfile::Quick => "quick",
+            };
+            if let Some(profile) = self.mcu_config.get_profile(profile_name) {
+                flags.extend(profile.link_flags.clone());
             }
         }
 
@@ -169,11 +143,11 @@ impl Linker for Esp32Linker {
         // Compiler/driver
         link_args.push(self.gcc_path.to_string_lossy().to_string());
 
-        // Linker flags from MCU config (includes -nostartfiles, -march, -u symbols, etc.)
+        // Linker flags (from SDK flags/ld_flags or MCU config fallback)
         link_args.extend(self.linker_flags());
 
-        // Linker scripts
-        link_args.extend(self.linker_script_flags());
+        // Linker scripts (from SDK flags/ld_scripts)
+        link_args.extend(self.sdk_ld_scripts.clone());
 
         // Memory usage reporting
         link_args.push("-Wl,--print-memory-usage".to_string());
@@ -191,16 +165,12 @@ impl Linker for Esp32Linker {
             link_args.push(archive.to_string_lossy().to_string());
         }
 
-        // SDK precompiled libraries (wrap in --start-group/--end-group for circular deps)
-        let sdk_flags = self.sdk_lib_flags();
-        if !sdk_flags.is_empty() {
+        // SDK precompiled libraries (ordered flags from flags/ld_libs)
+        if !self.sdk_lib_flags.is_empty() {
             link_args.push("-Wl,--start-group".to_string());
-            link_args.extend(sdk_flags);
+            link_args.extend(self.sdk_lib_flags.clone());
             link_args.push("-Wl,--end-group".to_string());
         }
-
-        // Standard linker libraries from config
-        link_args.extend(self.mcu_config.linker_libs.clone());
 
         if self.verbose {
             tracing::info!("link: {}", link_args.join(" "));
@@ -236,28 +206,15 @@ impl Linker for Esp32Linker {
     }
 
     fn convert_firmware(&self, elf_path: &Path, output_dir: &Path) -> Result<PathBuf> {
-        // ESP32 uses binary output, not ihex
-        let bin_path = output_dir.join("firmware.bin");
-
-        let args = [
-            self.objcopy_path.to_string_lossy().to_string(),
-            "-O".to_string(),
-            "binary".to_string(),
-            elf_path.to_string_lossy().to_string(),
-            bin_path.to_string_lossy().to_string(),
-        ];
-
-        let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, None, None)?;
-
-        if !result.success() {
-            return Err(fbuild_core::FbuildError::BuildFailed(format!(
-                "objcopy to binary failed: {}",
-                result.stderr
-            )));
+        // ESP32 firmware is flashed from the ELF directly via esptool.py elf2image.
+        // Raw `objcopy -O binary` produces a bloated file because the ELF has segments
+        // at high addresses (IRAM 0x400xxxxx, DRAM 0x3FFxxxxx).
+        // Copy the ELF to the output directory as the build artifact.
+        let elf_out = output_dir.join("firmware.elf");
+        if elf_path != elf_out {
+            std::fs::copy(elf_path, &elf_out)?;
         }
-
-        Ok(bin_path)
+        Ok(elf_out)
     }
 
     fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
@@ -299,10 +256,20 @@ mod tests {
             PathBuf::from(format!("/usr/bin/{}objcopy", prefix)),
             PathBuf::from(format!("/usr/bin/{}size", prefix)),
             config,
-            PathBuf::from("/sdk/esp32c6/ld"),
             vec![
-                PathBuf::from("/sdk/lib/libfreertos.a"),
-                PathBuf::from("/sdk/lib/libesp_system.a"),
+                "-nostartfiles".to_string(),
+                "-u".to_string(),
+                "app_main".to_string(),
+            ],
+            vec![
+                "-L/sdk/lib".to_string(),
+                "-lfreertos".to_string(),
+                "-lesp_system".to_string(),
+            ],
+            vec![
+                "-L/sdk/ld".to_string(),
+                "-Tmemory.ld".to_string(),
+                "-Tsections.ld".to_string(),
             ],
             BuildProfile::Release,
             Some(3145728),
@@ -319,50 +286,76 @@ mod tests {
     }
 
     #[test]
-    fn test_linker_flags_contain_config_flags() {
+    fn test_linker_flags_use_sdk_ld_flags() {
         let linker = test_linker("esp32c6");
         let flags = linker.linker_flags();
+        // SDK ld_flags take priority — profile link flags are skipped
         assert!(flags.contains(&"-nostartfiles".to_string()));
-        assert!(flags.iter().any(|f| f.contains("IDF_TARGET_ESP32C6")));
-        assert!(flags.contains(&"-fno-rtti".to_string()));
-        assert!(flags.contains(&"-Wl,--gc-sections".to_string()));
-        // Profile flags (release)
-        assert!(flags.contains(&"-flto=auto".to_string()));
-    }
-
-    #[test]
-    fn test_linker_script_flags() {
-        let linker = test_linker("esp32c6");
-        let flags = linker.linker_script_flags();
-        assert!(flags.iter().any(|f| f.starts_with("-L")));
-        assert!(flags.iter().any(|f| f == "-Tmemory.ld"));
-        assert!(flags.iter().any(|f| f == "-Tsections.ld"));
-        assert!(flags.iter().any(|f| f.contains("esp32c6.rom")));
-    }
-
-    #[test]
-    fn test_sdk_lib_flags() {
-        let linker = test_linker("esp32c6");
-        let flags = linker.sdk_lib_flags();
-        assert!(flags.iter().any(|f| f == "-lfreertos"));
-        assert!(flags.iter().any(|f| f == "-lesp_system"));
-        assert!(flags.iter().any(|f| f.starts_with("-L")));
-    }
-
-    #[test]
-    fn test_linker_undefined_symbols() {
-        let linker = test_linker("esp32c6");
-        let flags = linker.linker_flags();
-        // Should have force-linked symbols
         assert!(flags.contains(&"-u".to_string()));
         assert!(flags.contains(&"app_main".to_string()));
-        assert!(flags.contains(&"_Z5setupv".to_string()));
-        assert!(flags.contains(&"_Z4loopv".to_string()));
+        // Profile link flags should NOT be present when SDK flags are used
+        assert!(!flags.contains(&"-flto=auto".to_string()));
+    }
+
+    #[test]
+    fn test_linker_flags_fallback_to_config() {
+        let config = get_mcu_config("esp32c6").unwrap();
+        let prefix = config.toolchain_prefix();
+        // Empty sdk_ld_flags → falls back to MCU config
+        let linker = Esp32Linker::new(
+            PathBuf::from(format!("/usr/bin/{}gcc", prefix)),
+            PathBuf::from(format!("/usr/bin/{}ar", prefix)),
+            PathBuf::from(format!("/usr/bin/{}objcopy", prefix)),
+            PathBuf::from(format!("/usr/bin/{}size", prefix)),
+            config,
+            vec![],
+            vec!["-lfreertos".to_string()],
+            vec!["-Tmemory.ld".to_string()],
+            BuildProfile::Release,
+            Some(3145728),
+            Some(327680),
+            false,
+        );
+        let flags = linker.linker_flags();
+        assert!(flags.iter().any(|f| f.contains("IDF_TARGET_ESP32C6")));
+        assert!(flags.contains(&"-fno-rtti".to_string()));
+    }
+
+    #[test]
+    fn test_sdk_script_flags() {
+        let linker = test_linker("esp32c6");
+        assert!(linker.sdk_ld_scripts.iter().any(|f| f.starts_with("-L")));
+        assert!(linker.sdk_ld_scripts.iter().any(|f| f == "-Tmemory.ld"));
+        assert!(linker.sdk_ld_scripts.iter().any(|f| f == "-Tsections.ld"));
+    }
+
+    #[test]
+    fn test_sdk_lib_flags_stored() {
+        let linker = test_linker("esp32c6");
+        assert!(linker.sdk_lib_flags.iter().any(|f| f == "-lfreertos"));
+        assert!(linker.sdk_lib_flags.iter().any(|f| f == "-lesp_system"));
+        assert!(linker.sdk_lib_flags.iter().any(|f| f.starts_with("-L")));
     }
 
     #[test]
     fn test_xtensa_linker_flags() {
-        let linker = test_linker("esp32");
+        // Xtensa with SDK flags that include -mlongcalls
+        let config = get_mcu_config("esp32").unwrap();
+        let prefix = config.toolchain_prefix();
+        let linker = Esp32Linker::new(
+            PathBuf::from(format!("/usr/bin/{}gcc", prefix)),
+            PathBuf::from(format!("/usr/bin/{}ar", prefix)),
+            PathBuf::from(format!("/usr/bin/{}objcopy", prefix)),
+            PathBuf::from(format!("/usr/bin/{}size", prefix)),
+            config,
+            vec!["-mlongcalls".to_string()],
+            vec![],
+            vec![],
+            BuildProfile::Release,
+            Some(3145728),
+            Some(327680),
+            false,
+        );
         let flags = linker.linker_flags();
         assert!(flags.contains(&"-mlongcalls".to_string()));
     }

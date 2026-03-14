@@ -45,7 +45,7 @@ const EXCLUDE_DIRS: &[&str] = &[
 
 /// Scans project directories for source files and preprocesses .ino files.
 pub struct SourceScanner {
-    /// Project source directory (usually <project>/src)
+    /// Project source directory (usually `<project>/src`)
     src_dir: PathBuf,
     /// Build output directory (for preprocessed .ino → .cpp)
     build_dir: PathBuf,

@@ -86,13 +86,14 @@ impl Esp32McuConfig {
 
     /// Get the toolchain binary prefix for this MCU.
     ///
-    /// - RISC-V: `riscv32-esp-elf-`
-    /// - Xtensa: `xtensa-esp-elf-`
-    pub fn toolchain_prefix(&self) -> &str {
+    /// For Xtensa MCUs, uses the MCU-specific wrapper prefix (e.g., `xtensa-esp32-elf-`)
+    /// because the generic `xtensa-esp-elf-` defaults to big-endian. The MCU-specific
+    /// wrappers automatically add `-mdynconfig` for correct endianness.
+    pub fn toolchain_prefix(&self) -> String {
         if self.is_riscv() {
-            "riscv32-esp-elf-"
+            "riscv32-esp-elf-".to_string()
         } else {
-            "xtensa-esp-elf-"
+            format!("xtensa-{}-elf-", self.mcu)
         }
     }
 
@@ -130,6 +131,21 @@ impl Esp32McuConfig {
     /// Get profile flags for a given profile name.
     pub fn get_profile(&self, name: &str) -> Option<&ProfileFlags> {
         self.profiles.get(name)
+    }
+
+    /// Remove LTO-related flags from all profiles.
+    ///
+    /// Called when the SDK specifies `-fno-lto` in its linker flags, meaning
+    /// objects must not be compiled with LTO.
+    pub fn disable_lto(&mut self) {
+        for profile in self.profiles.values_mut() {
+            profile
+                .compile_flags
+                .retain(|f| !f.contains("lto") && f != "-fuse-linker-plugin");
+            profile
+                .link_flags
+                .retain(|f| !f.contains("lto") && f != "-fuse-linker-plugin");
+        }
     }
 }
 
@@ -207,7 +223,7 @@ mod tests {
     #[test]
     fn test_toolchain_prefix() {
         let esp32 = get_mcu_config("esp32").unwrap();
-        assert_eq!(esp32.toolchain_prefix(), "xtensa-esp-elf-");
+        assert_eq!(esp32.toolchain_prefix(), "xtensa-esp32-elf-");
 
         let esp32c6 = get_mcu_config("esp32c6").unwrap();
         assert_eq!(esp32c6.toolchain_prefix(), "riscv32-esp-elf-");

@@ -596,6 +596,7 @@ dependencies = [
 name = "fbuild-packages"
 version = "2.0.0"
 dependencies = [
+ "bzip2",
  "fbuild-config",
  "fbuild-core",
  "fbuild-paths",
@@ -609,6 +610,7 @@ dependencies = [
  "thiserror 2.0.18",
  "tokio",
  "tracing",
+ "xz2",
  "zip",
 ]
 

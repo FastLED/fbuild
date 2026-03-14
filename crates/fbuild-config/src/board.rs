@@ -185,7 +185,7 @@ impl BoardConfig {
 
     /// Generate preprocessor defines for this board.
     ///
-    /// Returns defines like: PLATFORMIO, F_CPU, ARDUINO, ARDUINO_<BOARD>, ARDUINO_ARCH_<ARCH>
+    /// Returns defines like: PLATFORMIO, F_CPU, ARDUINO, `ARDUINO_<BOARD>`, `ARDUINO_ARCH_<ARCH>`
     pub fn get_defines(&self) -> HashMap<String, String> {
         let mut defines = HashMap::new();
 
@@ -200,6 +200,12 @@ impl BoardConfig {
         defines.insert(
             format!("ARDUINO_{}", self.board.to_uppercase()),
             "1".to_string(),
+        );
+        // ARDUINO_BOARD and ARDUINO_VARIANT as quoted string defines
+        defines.insert("ARDUINO_BOARD".to_string(), format!("\"{}\"", self.board));
+        defines.insert(
+            "ARDUINO_VARIANT".to_string(),
+            format!("\"{}\"", self.variant),
         );
 
         // Architecture define
@@ -233,7 +239,7 @@ impl BoardConfig {
 
         // Extra flags
         if let Some(ref flags) = self.extra_flags {
-            for flag in flags.split_whitespace() {
+            for flag in fbuild_core::shell_split::split(flags) {
                 if let Some(define) = flag.strip_prefix("-D") {
                     if let Some(eq_pos) = define.find('=') {
                         defines.insert(

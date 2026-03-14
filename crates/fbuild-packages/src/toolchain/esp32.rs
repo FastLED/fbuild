@@ -24,7 +24,7 @@ pub struct Esp32Toolchain {
 }
 
 impl Esp32Toolchain {
-    /// Create a new ESP32 toolchain.
+    /// Create a new ESP32 toolchain (legacy, hardcoded URLs — used by tests).
     ///
     /// - `is_riscv`: true for C2/C3/C5/C6/P4, false for ESP32/S3
     /// - `prefix`: "riscv32-esp-elf-" or "xtensa-esp-elf-"
@@ -43,6 +43,49 @@ impl Esp32Toolchain {
                 &url,
                 &url,
                 Some(&checksum),
+                CacheSubdir::Toolchains,
+                project_dir,
+            ),
+            install_dir: None,
+            prefix: prefix.to_string(),
+        }
+    }
+
+    /// Create an ESP32 toolchain from a metadata-resolved URL.
+    ///
+    /// This is the preferred constructor — the orchestrator resolves the
+    /// actual download URL from platform.json → tools.json, then passes
+    /// the resolved URL and SHA256 here.
+    pub fn from_resolved(
+        project_dir: &Path,
+        url: &str,
+        checksum: Option<&str>,
+        is_riscv: bool,
+        prefix: &str,
+    ) -> Self {
+        let name = if is_riscv {
+            "esp32-riscv-gcc"
+        } else {
+            "esp32-xtensa-gcc"
+        };
+
+        // Use the toolchain name as cache key for stability across URL changes
+        let cache_key = if is_riscv {
+            "toolchain-riscv32-esp"
+        } else {
+            "toolchain-xtensa-esp-elf"
+        };
+
+        // Extract a version string from the URL (e.g., "14.2.0_20241119")
+        let version = extract_version_from_url(url);
+
+        Self {
+            base: PackageBase::new(
+                name,
+                &version,
+                url,
+                cache_key,
+                checksum,
                 CacheSubdir::Toolchains,
                 project_dir,
             ),
@@ -220,6 +263,30 @@ fn platform_package(is_riscv: bool) -> (String, String) {
     );
 
     (url, checksum.to_string())
+}
+
+/// Extract a version-like string from a toolchain URL.
+///
+/// Looks for patterns like `14.2.0_20241119` in the URL path segments.
+/// Falls back to a URL hash if no version pattern is found.
+fn extract_version_from_url(url: &str) -> String {
+    // Try to find a segment that looks like a version (contains digits and dots/underscores)
+    for segment in url.rsplit('/') {
+        let segment = segment
+            .trim_end_matches(".zip")
+            .trim_end_matches(".tar.xz")
+            .trim_end_matches(".tar.gz")
+            .trim_end_matches(".tar.bz2");
+        // Look for version-like patterns: digits with dots, dashes, or underscores
+        if segment.contains('.')
+            && segment.chars().any(|c| c.is_ascii_digit())
+            && segment.len() < 80
+        {
+            return segment.to_string();
+        }
+    }
+    // Fallback: hash the URL
+    crate::cache::hash_url(url)
 }
 
 /// Find the actual root directory containing bin/ inside an extracted archive.
