@@ -11,16 +11,16 @@ dependencies = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "zccache", specifier = ">=1.0.16" }]
+requires-dist = [{ name = "zccache", specifier = ">=1.0.17" }]
 
 [[package]]
 name = "zccache"
-version = "1.0.16"
+version = "1.0.17"
 source = { registry = "https://pypi.org/simple" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/17/ef/c5a9e3e6a7a991006d1f969e7de6c8c0263655127183813103facc2e10ee/zccache-1.0.16-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:37d8b0d4e6ba20cccda58cf5aec1d5d2cf462e5385aa13a66908bdf3d145a2bd", size = 2228760, upload-time = "2026-03-15T17:03:13.521Z" },
-    { url = "https://files.pythonhosted.org/packages/00/65/cc86972c6402f4ae6362bc34f03a5f2db7017209c50587c289ea9f92fbca/zccache-1.0.16-py3-none-macosx_11_0_arm64.whl", hash = "sha256:9be4dcdc2e47115152bb4ab0ac59e3d3d6e8b2d238d406d3201bfb6fb580f435", size = 2192009, upload-time = "2026-03-15T17:03:18.46Z" },
-    { url = "https://files.pythonhosted.org/packages/b8/51/e794e2a8168be2aa3e81d74351d1f89cd4d4f510e4a9ae0b02f0dccb7adc/zccache-1.0.16-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:ac4f94e354c972ecad7945a9f5908b4dc6ddaaa51335a51b7db95e2dab1d6e5a", size = 2257076, upload-time = "2026-03-15T17:03:23.192Z" },
-    { url = "https://files.pythonhosted.org/packages/92/8a/9416ff955f26d9ae0b040d72db8c5483a16f38459dd513a167a94594b2bb/zccache-1.0.16-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:a460bd9a4b4846d7c94f216e832fa3047ff4f00a4da44e12a23142d49585a0ea", size = 2437077, upload-time = "2026-03-15T17:03:28.662Z" },
-    { url = "https://files.pythonhosted.org/packages/25/07/141181b38bb7de7eadff65ef0117ad70a8316b544b8d55c4e257eadb3b6b/zccache-1.0.16-py3-none-win_amd64.whl", hash = "sha256:037c73158d2a41316abbcfe8dbe2ef2330d5ca9d7e67bc6e25e34a3cf0eea39a", size = 2251019, upload-time = "2026-03-15T17:03:35.002Z" },
+    { url = "https://files.pythonhosted.org/packages/5c/38/d47d4976b906d239bba26099e7c772d682e251dae1be6be2e431255b2c4e/zccache-1.0.17-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:112462b15fb055ecd3edac86ce59d351ac1ed09d1d401cd2bd99a8259b9aa793", size = 2254305, upload-time = "2026-03-15T18:22:05.884Z" },
+    { url = "https://files.pythonhosted.org/packages/72/c6/1e52316e995c07470408666f4ae8449d5b519888d3b4ff1bc0713dc261d5/zccache-1.0.17-py3-none-macosx_11_0_arm64.whl", hash = "sha256:efeab4314c28bb3d876f78195dde26a0bb8c700425128f4d5e4ff135988fbefb", size = 2216642, upload-time = "2026-03-15T18:22:10.374Z" },
+    { url = "https://files.pythonhosted.org/packages/eb/08/c835e1748b528a9aacb10a391949e2f5527986af7a8ff7db5fa6d623c08d/zccache-1.0.17-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:3a9b1939a76ff059b9212fc93cfe16fccb67f40f2086ada9721dac9124dee35c", size = 2277943, upload-time = "2026-03-15T18:22:15.441Z" },
+    { url = "https://files.pythonhosted.org/packages/80/70/14068a40d61b3ec130f075801c8c09873e70492f755593bc16f157eb8467/zccache-1.0.17-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:59b2e5f4da3b715ae1af38595087e41773472f1436a46e36ff03fbe7a246480b", size = 2461083, upload-time = "2026-03-15T18:22:21.116Z" },
+    { url = "https://files.pythonhosted.org/packages/eb/68/d1639a757aa5a39bbfd419cd00ed6a42a79c8f8f3cc9fb2e2cd3dceb5d6d/zccache-1.0.17-py3-none-win_amd64.whl", hash = "sha256:2df0367ff00ad26563e0a41377c3dae4ca2a3eda50422de938751e7095df257d", size = 2277423, upload-time = "2026-03-15T18:22:26.142Z" },
 ]
