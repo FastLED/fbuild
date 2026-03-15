@@ -3,7 +3,7 @@ name = "fbuild"
 version = "2.0.0"
 description = "PlatformIO-compatible embedded build tool (Rust implementation)"
 requires-python = ">=3.9"
-dependencies = ["zccache>=1.0.10"]
+dependencies = ["zccache>=1.0.16"]
 
 [project.scripts]
 cargo = "ci.trampoline:cargo"
