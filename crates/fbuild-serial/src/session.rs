@@ -3,6 +3,10 @@
 use std::collections::HashSet;
 use std::collections::VecDeque;
 use std::path::PathBuf;
+use std::sync::atomic::AtomicBool;
+use std::sync::Arc;
+use tokio::sync::Mutex;
+use tokio::task::JoinHandle;
 
 /// State for a single managed serial port.
 pub struct SerialSession {
@@ -22,6 +26,12 @@ pub struct SerialSession {
     pub owner_client_id: Option<String>,
     /// Path to firmware ELF for crash decoding.
     pub elf_path: Option<PathBuf>,
+    /// The underlying serial port handle.
+    pub serial_handle: Option<Arc<Mutex<Box<dyn serialport::SerialPort>>>>,
+    /// Background reader task handle.
+    pub reader_handle: Option<JoinHandle<()>>,
+    /// Flag to signal the background reader to stop.
+    pub stop_flag: Arc<AtomicBool>,
 }
 
 impl SerialSession {
@@ -38,6 +48,9 @@ impl SerialSession {
             started_at: 0.0,
             owner_client_id: None,
             elf_path: None,
+            serial_handle: None,
+            reader_handle: None,
+            stop_flag: Arc::new(AtomicBool::new(false)),
         }
     }
 }

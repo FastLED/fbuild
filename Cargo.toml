@@ -22,12 +22,12 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/fastled/fbuild"
 
 [workspace.dependencies]
-tokio = { version = "1", features = ["full"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "sync", "time", "process", "io-util", "fs"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 thiserror = "2"
 tracing = "0.1"
-tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 clap = { version = "4", features = ["derive"] }
 axum = { version = "0.7", features = ["ws"] }
 tower-http = { version = "0.5", features = ["cors", "trace"] }
@@ -42,7 +42,7 @@ regex = "1"
 walkdir = "2"
 flate2 = "1"
 tar = "0.4"
-zip = "2"
+zip = { version = "2", default-features = false, features = ["deflate"] }
 xz2 = "0.1"
 bzip2 = "0.5"
 bytes = "1"
