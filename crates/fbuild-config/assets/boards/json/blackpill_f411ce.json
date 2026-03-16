@@ -1,0 +1,26 @@
+{
+  "id": "blackpill_f411ce",
+  "name": "WeAct Studio BlackPill V2.0 (STM32F411CE)",
+  "platform": "ststm32",
+  "mcu": "STM32F411CEU6",
+  "fcpu": 100000000,
+  "ram": 131072,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "WeAct Studio",
+  "url": "https://github.com/WeActStudio/WeActStudio.MiniSTM32F4x1",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

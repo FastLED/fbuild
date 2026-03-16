@@ -1,0 +1,19 @@
+{
+  "id": "ATmega168",
+  "name": "ATmega168/A",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA168",
+  "fcpu": 16000000,
+  "ram": 1024,
+  "rom": 16384,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Microchip",
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega168",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

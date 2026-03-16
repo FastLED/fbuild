@@ -1,0 +1,14 @@
+{
+  "fcpu": 96000000,
+  "frameworks": [
+    "mbed"
+  ],
+  "id": "max32630fthr",
+  "mcu": "MAX32630",
+  "name": "Maxim MAX32630FTHR Application Platform",
+  "platform": "maxim32",
+  "ram": 524288,
+  "rom": 2097152,
+  "url": "https://developer.mbed.org/platforms/MAX32630FTHR/",
+  "vendor": "Maxim"
+}

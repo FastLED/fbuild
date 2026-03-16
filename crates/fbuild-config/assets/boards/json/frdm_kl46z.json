@@ -1,0 +1,22 @@
+{
+  "debug": {
+    "tools": {
+      "cmsis-dap": {
+        "onboard": true
+      },
+      "jlink": {}
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "mbed"
+  ],
+  "id": "frdm_kl46z",
+  "mcu": "MKL46Z256VLL4",
+  "name": "Freescale Kinetis FRDM-KL46Z",
+  "platform": "freescalekinetis",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://developer.mbed.org/platforms/FRDM-KL46Z/",
+  "vendor": "Freescale"
+}

@@ -1,0 +1,20 @@
+{
+  "id": "nanoatmega328",
+  "name": "Arduino Nano ATmega328",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 30720,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Arduino",
+  "url": "https://www.arduino.cc/en/Main/ArduinoBoardNano",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

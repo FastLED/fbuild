@@ -1,0 +1,14 @@
+{
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "clicker2",
+  "mcu": "32MX460F512L",
+  "name": "MikroElektronika Clicker 2",
+  "platform": "microchippic32",
+  "ram": 32768,
+  "rom": 520192,
+  "url": "http://www.mikroe.com/pic/clicker/",
+  "vendor": "MikroElektronika"
+}

@@ -1,0 +1,17 @@
+{
+  "connectivity": [
+    "can"
+  ],
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "mega_pic32",
+  "mcu": "32MX795F512L",
+  "name": "Digilent chipKIT MAX32",
+  "platform": "microchippic32",
+  "ram": 131072,
+  "rom": 520192,
+  "url": "http://store.digilentinc.com/chipkit-max32-microcontroller-board-with-mega-r3-headers/",
+  "vendor": "Digilent"
+}

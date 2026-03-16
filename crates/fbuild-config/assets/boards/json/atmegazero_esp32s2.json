@@ -1,0 +1,32 @@
+{
+  "id": "atmegazero_esp32s2",
+  "name": "EspinalLab ATMegaZero ESP32-S2",
+  "platform": "espressif32",
+  "mcu": "ESP32S2",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 16777216,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "EspinalLab",
+  "url": "https://shop.atmegazero.com/",
+  "connectivity": [
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "esp-prog": {},
+      "iot-bus-jtag": {},
+      "jlink": {},
+      "minimodule": {},
+      "olimex-arm-usb-tiny-h": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-ocd": {},
+      "olimex-jtag-tiny": {},
+      "tumpa": {}
+    }
+  }
+}

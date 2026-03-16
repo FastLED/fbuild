@@ -1,0 +1,25 @@
+{
+  "id": "waveshare_open103z",
+  "name": "Waveshare Open103Z",
+  "platform": "ststm32",
+  "mcu": "STM32F103ZET6",
+  "fcpu": 72000000,
+  "ram": 65536,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "libopencm3",
+    "stm32cube"
+  ],
+  "vendor": "Waveshare",
+  "url": "https://www.waveshare.com/open103z-standard.htm",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "connectivity": [
+    "bluetooth",
+    "nfc"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {
+        "onboard": true,
+        "default": true
+      },
+      "stlink": {},
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "zephyr"
+  ],
+  "id": "ublox_bmd345eval_nrf52840",
+  "mcu": "NRF52840",
+  "name": "u-blox BMD-345-EVAL",
+  "platform": "nordicnrf52",
+  "ram": 262144,
+  "rom": 1048576,
+  "url": "https://www.u-blox.com/en/product/bmd-34-series-open-cpu",
+  "vendor": "u-blox"
+}

@@ -1,0 +1,28 @@
+{
+  "id": "nucleo_l412rb_p",
+  "name": "ST Nucleo L412RB-P",
+  "platform": "ststm32",
+  "mcu": "STM32L412RBT6P",
+  "fcpu": 80000000,
+  "ram": 40960,
+  "rom": 131072,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-l412rb-p.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "connectivity": [
+    "ethernet"
+  ],
+  "debug": {
+    "tools": {
+      "jlink": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 150000000,
+  "frameworks": [
+    "zephyr"
+  ],
+  "id": "lpcxpresso55s16",
+  "mcu": "LPC55S16",
+  "name": "NXP LPCXpresso55S16",
+  "platform": "nxplpc",
+  "ram": 98304,
+  "rom": 262144,
+  "url": "https://www.nxp.com/design/development-boards/lpcxpresso-boards/lpcxpresso55s16-development-board:LPC55S16-EVK",
+  "vendor": "NXP"
+}

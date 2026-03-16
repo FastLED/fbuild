@@ -1,0 +1,19 @@
+{
+  "connectivity": [
+    "wifi"
+  ],
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino",
+    "esp8266-rtos-sdk",
+    "esp8266-nonos-sdk"
+  ],
+  "id": "gen4iod",
+  "mcu": "ESP8266",
+  "name": "4D Systems gen4 IoD Range",
+  "platform": "espressif8266",
+  "ram": 81920,
+  "rom": 524288,
+  "url": "http://www.4dsystems.com.au/product/gen4_IoD/",
+  "vendor": "4D Systems"
+}

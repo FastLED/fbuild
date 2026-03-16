@@ -1,0 +1,22 @@
+{
+  "debug": {
+    "tools": {
+      "cmsis-dap": {
+        "onboard": true
+      },
+      "jlink": {}
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "mbed"
+  ],
+  "id": "frdm_kl43z",
+  "mcu": "MKL43Z256VLH4",
+  "name": "Freescale Kinetis FRDM-KL43Z",
+  "platform": "freescalekinetis",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://os.mbed.com/platforms/FRDM-KL43Z/",
+  "vendor": "Freescale"
+}

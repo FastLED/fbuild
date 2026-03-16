@@ -1,0 +1,24 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "zephyr"
+  ],
+  "id": "vbluno51",
+  "mcu": "NRF51822",
+  "name": "VNG VBLUNO51",
+  "platform": "nordicnrf51",
+  "ram": 32768,
+  "rom": 131072,
+  "url": "https://vngiotlab.github.io/vbluno/mydoc_introduction.html",
+  "vendor": "VNG"
+}

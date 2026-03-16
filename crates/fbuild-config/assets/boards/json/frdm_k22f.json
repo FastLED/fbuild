@@ -1,0 +1,26 @@
+{
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {
+        "onboard": true
+      },
+      "jlink": {}
+    }
+  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "mbed",
+    "zephyr"
+  ],
+  "id": "frdm_k22f",
+  "mcu": "MK22FN512VLH12",
+  "name": "Freescale Kinetis FRDM-K22F",
+  "platform": "freescalekinetis",
+  "ram": 131072,
+  "rom": 524288,
+  "url": "https://developer.mbed.org/platforms/FRDM-K22F/",
+  "vendor": "Freescale"
+}

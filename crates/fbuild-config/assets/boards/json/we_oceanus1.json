@@ -1,0 +1,21 @@
+{
+  "id": "we_oceanus1",
+  "name": "WE Oceanus-I Module",
+  "platform": "ststm32",
+  "mcu": "STM32WLE5CCU6 ",
+  "fcpu": 48000000,
+  "ram": 65536,
+  "rom": 262144,
+  "frameworks": [
+    "arduino",
+    "zephyr"
+  ],
+  "vendor": "WE",
+  "url": "https://www.we-online.com/en/components/products/OCEANUS-I",
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "fcpu": 24000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "curiosity_nano_da",
+  "mcu": "AVR128DA48",
+  "name": "Curiosity Nano AVR128DA48",
+  "platform": "atmelmegaavr",
+  "ram": 16384,
+  "rom": 131072,
+  "url": "https://www.microchip.com/developmenttools/ProductDetails/DM164151",
+  "vendor": "Microchip"
+}

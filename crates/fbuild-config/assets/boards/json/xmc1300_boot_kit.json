@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "jlink": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 32000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "xmc1300_boot_kit",
+  "mcu": "XMC1300",
+  "name": "XMC1300 Boot Kit",
+  "platform": "infineonxmc",
+  "ram": 16384,
+  "rom": 65536,
+  "url": "https://www.infineon.com",
+  "vendor": "Infineon"
+}

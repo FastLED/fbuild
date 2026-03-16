@@ -1,0 +1,31 @@
+{
+  "id": "disco_f750n8",
+  "name": "STM32F7508-DK",
+  "platform": "ststm32",
+  "mcu": "STM32F750N8H6",
+  "fcpu": 216000000,
+  "ram": 348160,
+  "rom": 65536,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/mcu-mpu-eval-tools/stm32-mcu-mpu-eval-tools/stm32-discovery-kits/stm32f7508-dk.html",
+  "connectivity": [
+    "can",
+    "ethernet"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

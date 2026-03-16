@@ -1,0 +1,25 @@
+{
+  "id": "steval_fcu001v1",
+  "name": "STEVAL-FCU001V1 Flight controller unit evaluation board",
+  "platform": "ststm32",
+  "mcu": "STM32F401CCU6",
+  "fcpu": 84000000,
+  "ram": 65536,
+  "rom": 262144,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/steval-fcu001v1.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

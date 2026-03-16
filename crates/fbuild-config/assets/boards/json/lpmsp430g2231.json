@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "mspdebug": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 1000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "lpmsp430g2231",
+  "mcu": "MSP430G2231",
+  "name": "TI LaunchPad MSP-EXP430G2 w/ MSP430G2231",
+  "platform": "timsp430",
+  "ram": 256,
+  "rom": 2048,
+  "url": "http://www.ti.com/product/MSP430G2231",
+  "vendor": "TI"
+}

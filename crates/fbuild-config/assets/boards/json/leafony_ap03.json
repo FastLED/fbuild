@@ -1,0 +1,30 @@
+{
+  "id": "leafony_ap03",
+  "name": "Leafony Systems AP03",
+  "platform": "ststm32",
+  "mcu": "STM32L452RET6",
+  "fcpu": 80000000,
+  "ram": 163840,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Leafony Systems",
+  "url": "https://shop.leafony.com/",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

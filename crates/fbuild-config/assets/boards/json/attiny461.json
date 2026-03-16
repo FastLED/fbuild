@@ -1,0 +1,14 @@
+{
+  "id": "attiny461",
+  "name": "Generic ATtiny461",
+  "platform": "atmelavr",
+  "mcu": "ATTINY461",
+  "fcpu": 8000000,
+  "ram": 256,
+  "rom": 4096,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Atmel",
+  "url": "http://www.atmel.com/devices/ATTINY461.aspx"
+}

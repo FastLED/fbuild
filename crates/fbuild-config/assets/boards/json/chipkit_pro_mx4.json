@@ -1,0 +1,14 @@
+{
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "chipkit_pro_mx4",
+  "mcu": "32MX460F512L",
+  "name": "Digilent chipKIT Pro MX4",
+  "platform": "microchippic32",
+  "ram": 32768,
+  "rom": 520192,
+  "url": "http://store.digilentinc.com/chipkit-pro-mx4-embedded-systems-trainer-board/",
+  "vendor": "Digilent"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "attiny88",
+  "name": "Generic ATtiny88",
+  "platform": "atmelavr",
+  "mcu": "ATTINY88",
+  "fcpu": 8000000,
+  "ram": 512,
+  "rom": 8192,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Atmel",
+  "url": "http://www.atmel.com/devices/ATTINY88.aspx"
+}

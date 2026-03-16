@@ -1,0 +1,28 @@
+{
+  "id": "coreboard_f401rc",
+  "name": "Core board F401RCT6",
+  "platform": "ststm32",
+  "mcu": "STM32F401RCT6",
+  "fcpu": 84000000,
+  "ram": 65536,
+  "rom": 262144,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f401rc.html",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

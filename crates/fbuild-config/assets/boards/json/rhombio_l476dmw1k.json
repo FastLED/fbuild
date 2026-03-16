@@ -1,0 +1,31 @@
+{
+  "id": "rhombio_l476dmw1k",
+  "name": "L476DMW1K",
+  "platform": "ststm32",
+  "mcu": "STM32L476VGT6",
+  "fcpu": 80000000,
+  "ram": 131072,
+  "rom": 1048576,
+  "frameworks": [
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "rhomb.io",
+  "url": "https://os.mbed.com/platforms/RHOMBIO-L476DMW1K/",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {
+        "onboard": true,
+        "default": true
+      }
+    }
+  }
+}

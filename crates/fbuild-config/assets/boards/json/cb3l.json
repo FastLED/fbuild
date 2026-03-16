@@ -1,0 +1,27 @@
+{
+  "connectivity": [
+    "wifi",
+    "ble"
+  ],
+  "debug": {
+    "tools": {
+      "custom": {},
+      "openocd": {
+        "default": true
+      }
+    }
+  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "base",
+    "arduino"
+  ],
+  "id": "cb3l",
+  "mcu": "BK7231N",
+  "name": "CB3L Wi-Fi Module",
+  "platform": "libretiny",
+  "ram": 262144,
+  "rom": 1083136,
+  "url": "https://developer.tuya.com/en/docs/iot/cb3l-module-datasheet?id=Kai51ngmrh3qm",
+  "vendor": "Tuya Inc."
+}

@@ -1,0 +1,31 @@
+{
+  "id": "mbed_connect_odin",
+  "name": "Mbed Connect Cloud",
+  "platform": "ststm32",
+  "mcu": "STM32F439ZIY6",
+  "fcpu": 168000000,
+  "ram": 262144,
+  "rom": 2097152,
+  "frameworks": [
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "u-blox",
+  "url": "https://os.mbed.com/platforms/mbed-Connect-Cloud/",
+  "connectivity": [
+    "bluetooth",
+    "can",
+    "ethernet",
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  }
+}

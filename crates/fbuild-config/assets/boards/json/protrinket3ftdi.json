@@ -1,0 +1,20 @@
+{
+  "id": "protrinket3ftdi",
+  "name": "Adafruit Pro Trinket 3V/12MHz (FTDI)",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 12000000,
+  "ram": 2048,
+  "rom": 28672,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Adafruit",
+  "url": "http://www.adafruit.com/products/2010",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

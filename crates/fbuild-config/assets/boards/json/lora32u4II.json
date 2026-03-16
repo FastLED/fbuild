@@ -1,0 +1,19 @@
+{
+  "id": "lora32u4II",
+  "name": "LoRa32u4II (868-915MHz)",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA32U4",
+  "fcpu": 8000000,
+  "ram": 2560,
+  "rom": 28672,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "BSFrance",
+  "url": "https://bsfrance.fr/lora-long-range/1345-LoRa32u4-II-Lora-LiPo-Atmega32u4-SX1276-HPD13-868MHZ-EU-Antenna.html",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

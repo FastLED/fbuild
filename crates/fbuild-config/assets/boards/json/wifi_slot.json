@@ -1,0 +1,19 @@
+{
+  "connectivity": [
+    "wifi"
+  ],
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino",
+    "esp8266-rtos-sdk",
+    "esp8266-nonos-sdk"
+  ],
+  "id": "wifi_slot",
+  "mcu": "ESP8266",
+  "name": "WiFi Slot",
+  "platform": "espressif8266",
+  "ram": 81920,
+  "rom": 4194304,
+  "url": "https://amperka.ru/product/wifi-slot",
+  "vendor": "Amperka"
+}

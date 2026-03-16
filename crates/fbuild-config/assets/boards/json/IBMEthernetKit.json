@@ -1,0 +1,25 @@
+{
+  "connectivity": [
+    "ethernet"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {
+        "onboard": true
+      },
+      "jlink": {}
+    }
+  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "mbed"
+  ],
+  "id": "IBMEthernetKit",
+  "mcu": "MK64FN1M0VLL12",
+  "name": "Ethernet IoT Starter Kit",
+  "platform": "freescalekinetis",
+  "ram": 262144,
+  "rom": 1048576,
+  "url": "http://developer.mbed.org/platforms/IBMEthernetKit/",
+  "vendor": "Freescale"
+}

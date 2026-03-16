@@ -1,0 +1,19 @@
+{
+  "connectivity": [
+    "wifi"
+  ],
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino",
+    "esp8266-rtos-sdk",
+    "esp8266-nonos-sdk"
+  ],
+  "id": "wio_link",
+  "mcu": "ESP8266",
+  "name": "Wio Link",
+  "platform": "espressif8266",
+  "ram": 81920,
+  "rom": 4194304,
+  "url": "https://www.seeedstudio.com/Wio-Link-p-2604.html",
+  "vendor": "SeeedStudio"
+}

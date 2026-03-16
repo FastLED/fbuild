@@ -1,0 +1,26 @@
+{
+  "connectivity": [
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "custom": {},
+      "openocd": {
+        "default": true
+      }
+    }
+  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "base",
+    "arduino"
+  ],
+  "id": "wa2",
+  "mcu": "BK7231Q",
+  "name": "WA2 Wi-Fi Module",
+  "platform": "libretiny",
+  "ram": 262144,
+  "rom": 1083136,
+  "url": "https://docs.libretiny.eu/boards/wa2/",
+  "vendor": "Tuya Inc."
+}

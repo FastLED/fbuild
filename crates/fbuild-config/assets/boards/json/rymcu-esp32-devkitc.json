@@ -1,0 +1,36 @@
+{
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "esp-prog": {},
+      "esp-bridge": {},
+      "iot-bus-jtag": {},
+      "jlink": {},
+      "minimodule": {},
+      "olimex-arm-usb-tiny-h": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-ocd": {},
+      "olimex-jtag-tiny": {},
+      "tumpa": {}
+    }
+  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "rymcu-esp32-devkitc",
+  "mcu": "ESP32",
+  "name": "RYMCU ESP32-DevKitC",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 4194304,
+  "url": "https://rymcu.com/products",
+  "vendor": "RYMCU"
+}

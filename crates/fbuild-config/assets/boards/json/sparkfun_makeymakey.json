@@ -1,0 +1,19 @@
+{
+  "id": "sparkfun_makeymakey",
+  "name": "SparkFun Makey Makey",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA32U4",
+  "fcpu": 16000000,
+  "ram": 2560,
+  "rom": 28672,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "SparkFun",
+  "url": "https://www.sparkfun.com/products/11511",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

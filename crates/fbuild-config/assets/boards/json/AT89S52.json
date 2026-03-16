@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "AT89S52",
+  "mcu": "AT89S52",
+  "name": "Generic AT89S52",
+  "platform": "intel_mcs51",
+  "ram": 256,
+  "rom": 8192,
+  "url": "https://www.microchip.com/wwwproducts/en/AT89S52",
+  "vendor": "Microchip & Atmel"
+}

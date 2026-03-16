@@ -1,0 +1,25 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "calliope_mini",
+  "mcu": "NRF51822",
+  "name": "Calliope mini",
+  "platform": "nordicnrf51",
+  "ram": 16384,
+  "rom": 262144,
+  "url": "https://calliope.cc",
+  "vendor": "Calliope"
+}

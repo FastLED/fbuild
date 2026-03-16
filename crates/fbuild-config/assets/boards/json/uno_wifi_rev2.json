@@ -1,0 +1,14 @@
+{
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "uno_wifi_rev2",
+  "mcu": "ATMEGA4809",
+  "name": "Arduino Uno WiFi Rev2",
+  "platform": "atmelmegaavr",
+  "ram": 6144,
+  "rom": 48640,
+  "url": "https://www.arduino.cc/en/Guide/ArduinoUnoWiFiRev2",
+  "vendor": "Arduino"
+}

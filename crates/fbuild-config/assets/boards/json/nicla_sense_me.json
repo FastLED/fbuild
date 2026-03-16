@@ -1,0 +1,27 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "cmsis-dap": {
+        "onboard": true,
+        "default": true
+      }
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "nicla_sense_me",
+  "mcu": "NRF52832",
+  "name": "Arduino Nicla Sense ME",
+  "platform": "nordicnrf52",
+  "ram": 64288,
+  "rom": 527616,
+  "url": "https://docs.arduino.cc/hardware/nicla-sense-me",
+  "vendor": "Arduino"
+}

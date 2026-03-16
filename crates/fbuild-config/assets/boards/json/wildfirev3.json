@@ -1,0 +1,19 @@
+{
+  "id": "wildfirev3",
+  "name": "Wicked Device WildFire V3",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA1284P",
+  "fcpu": 16000000,
+  "ram": 16384,
+  "rom": 130048,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Wicked Device",
+  "url": "http://shop.wickeddevice.com/resources/wildfire/",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

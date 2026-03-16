@@ -1,0 +1,33 @@
+{
+  "debug": {
+    "tools": {
+      "digilent-hs1": {
+        "onboard": true
+      },
+      "digilent-hs2": {},
+      "olimex-arm-usb-tiny-h": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-ocd": {},
+      "olimex-jtag-tiny": {},
+      "ovpsim": {
+        "onboard": true
+      },
+      "renode": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 320000000,
+  "frameworks": [
+    "pulp-sdk",
+    "pulp-runtime"
+  ],
+  "id": "nexys_a7",
+  "mcu": "",
+  "name": "Digilent Nexys A7",
+  "platform": "openhw",
+  "ram": 1216512,
+  "rom": 16777216,
+  "url": "https://reference.digilentinc.com/reference/programmable-logic/nexys-a7/start",
+  "vendor": "Digilent"
+}

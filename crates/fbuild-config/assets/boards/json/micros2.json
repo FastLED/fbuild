@@ -1,0 +1,32 @@
+{
+  "id": "micros2",
+  "name": "microS2",
+  "platform": "espressif32",
+  "mcu": "ESP32S2",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 16777216,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "microS2",
+  "url": "https://github.com/MicroDev1/microS2",
+  "connectivity": [
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "esp-prog": {},
+      "iot-bus-jtag": {},
+      "jlink": {},
+      "minimodule": {},
+      "olimex-arm-usb-tiny-h": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-ocd": {},
+      "olimex-jtag-tiny": {},
+      "tumpa": {}
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "at90pwm216",
+  "name": "Atmel AT90PWM216",
+  "platform": "atmelavr",
+  "mcu": "AT90PWM216",
+  "fcpu": 16000000,
+  "ram": 1024,
+  "rom": 16384,
+  "frameworks": [],
+  "vendor": "Microchip",
+  "url": "http://www.microchip.com/wwwproducts/en/AT90PWM216"
+}

@@ -1,0 +1,28 @@
+{
+  "id": "disco_f411ve",
+  "name": "ST 32F411EDISCOVERY",
+  "platform": "ststm32",
+  "mcu": "STM32F411VET6",
+  "fcpu": 100000000,
+  "ram": 131072,
+  "rom": 524288,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "http://www.st.com/en/evaluation-tools/32f411ediscovery.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

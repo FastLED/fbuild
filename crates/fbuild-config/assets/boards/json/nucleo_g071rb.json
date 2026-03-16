@@ -1,0 +1,29 @@
+{
+  "id": "nucleo_g071rb",
+  "name": "Nucleo G071RB",
+  "platform": "ststm32",
+  "mcu": "STM32G071RBT6",
+  "fcpu": 64000000,
+  "ram": 36864,
+  "rom": 131072,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "libopencm3",
+    "stm32cube",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-g071rb.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

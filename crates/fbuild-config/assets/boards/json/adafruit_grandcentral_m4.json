@@ -1,0 +1,20 @@
+{
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "atmel-ice": {}
+    }
+  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "adafruit_grandcentral_m4",
+  "mcu": "SAMD51P20A",
+  "name": "Adafruit Grand Central M4",
+  "platform": "atmelsam",
+  "ram": 262144,
+  "rom": 1048576,
+  "url": "https://www.adafruit.com/product/4064",
+  "vendor": "Adafruit"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "nucleo_l053r8",
+  "name": "ST Nucleo L053R8",
+  "platform": "ststm32",
+  "mcu": "STM32L053R8T6",
+  "fcpu": 32000000,
+  "ram": 8192,
+  "rom": 65536,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-L053R8/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

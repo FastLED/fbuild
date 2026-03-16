@@ -1,0 +1,20 @@
+{
+  "id": "328p16m",
+  "name": "Microduino Core (Atmega328P@16M,5V)",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 32256,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Microduino",
+  "url": "http://wiki.microduinoinc.com/Microduino-Module_Core",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

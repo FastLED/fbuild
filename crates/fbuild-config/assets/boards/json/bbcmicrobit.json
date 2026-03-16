@@ -1,0 +1,26 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino",
+    "zephyr"
+  ],
+  "id": "bbcmicrobit",
+  "mcu": "NRF51822",
+  "name": "BBC micro:bit",
+  "platform": "nordicnrf51",
+  "ram": 16384,
+  "rom": 262144,
+  "url": "https://microbit.org/",
+  "vendor": "BBC"
+}

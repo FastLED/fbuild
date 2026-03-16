@@ -1,0 +1,28 @@
+{
+  "debug": {
+    "tools": {
+      "qemu": {
+        "onboard": true
+      },
+      "renode": {
+        "onboard": true
+      },
+      "ftdi": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 1500000000,
+  "frameworks": [
+    "freedom-e-sdk",
+    "freertos"
+  ],
+  "id": "hifive-unleashed",
+  "mcu": "FU540",
+  "name": "HiFive Unleashed",
+  "platform": "sifive",
+  "ram": 8589934592,
+  "rom": 33554432,
+  "url": "https://www.sifive.com/boards/hifive-unleashed",
+  "vendor": "SiFive"
+}

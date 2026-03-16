@@ -1,0 +1,22 @@
+{
+  "debug": {
+    "tools": {
+      "stlink": {
+        "onboard": true,
+        "default": true
+      }
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "spl"
+  ],
+  "id": "nucleo_8s207k8",
+  "mcu": "STM8S207K8T6",
+  "name": "NUCLEO-8S207K8",
+  "platform": "ststm8",
+  "ram": 6144,
+  "rom": 65536,
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-8s207k8.html",
+  "vendor": "STMicroelectronics"
+}

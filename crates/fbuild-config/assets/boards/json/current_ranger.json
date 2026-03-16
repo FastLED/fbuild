@@ -1,0 +1,14 @@
+{
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "current_ranger",
+  "mcu": "SAMD21G18A",
+  "name": "LowPowerLab CurrentRanger",
+  "platform": "atmelsam",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://lowpowerlab.com/shop/product/152?search=CurrentRanger",
+  "vendor": "LowPowerLab"
+}

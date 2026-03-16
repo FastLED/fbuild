@@ -1,0 +1,21 @@
+{
+  "id": "esp32-pico-devkitm-2",
+  "name": "Espressif ESP32-PICO-DevKitM-2",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 8388608,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "Espressif Systems",
+  "url": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32/hw-reference/esp32/get-started-pico-devkitm-2.html",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

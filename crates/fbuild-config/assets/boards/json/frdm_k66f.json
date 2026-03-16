@@ -1,0 +1,26 @@
+{
+  "connectivity": [
+    "ethernet",
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {
+        "onboard": true
+      },
+      "jlink": {}
+    }
+  },
+  "fcpu": 180000000,
+  "frameworks": [
+    "mbed"
+  ],
+  "id": "frdm_k66f",
+  "mcu": "MK66FN2M0VMD18",
+  "name": "Freescale Kinetis FRDM-K66F",
+  "platform": "freescalekinetis",
+  "ram": 262144,
+  "rom": 2097152,
+  "url": "https://developer.mbed.org/platforms/FRDM-K66F/",
+  "vendor": "Freescale"
+}

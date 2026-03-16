@@ -1,0 +1,14 @@
+{
+  "fcpu": 40000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "dsmini",
+  "mcu": "32MX150F128C",
+  "name": "DataStation Mini",
+  "platform": "microchippic32",
+  "ram": 32768,
+  "rom": 122880,
+  "url": "http://www.makerologist.com/",
+  "vendor": "Makerology"
+}

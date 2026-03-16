@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "STC15W4K56S4",
+  "mcu": "STC15W4K56S4",
+  "name": "Generic STC15W4K56S4",
+  "platform": "intel_mcs51",
+  "ram": 4096,
+  "rom": 57344,
+  "url": "http://www.stcmicro.com/STC/STC15W4K32S4.html",
+  "vendor": "STC"
+}

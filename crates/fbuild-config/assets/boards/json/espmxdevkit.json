@@ -1,0 +1,19 @@
+{
+  "connectivity": [
+    "wifi"
+  ],
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino",
+    "esp8266-rtos-sdk",
+    "esp8266-nonos-sdk"
+  ],
+  "id": "espmxdevkit",
+  "mcu": "ESP8266",
+  "name": "ESP-Mx DevKit (ESP8285)",
+  "platform": "espressif8266",
+  "ram": 81920,
+  "rom": 1048576,
+  "url": "https://arduino-esp8266.readthedocs.io/en/latest/boards.html#doit-esp-mx-devkit-esp8285",
+  "vendor": "Doit"
+}

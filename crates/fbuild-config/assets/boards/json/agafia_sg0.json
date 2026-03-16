@@ -1,0 +1,25 @@
+{
+  "id": "agafia_sg0",
+  "name": "Sigma IC AGAFIA SG0",
+  "platform": "ststm32",
+  "mcu": "STM32G071RBT6",
+  "fcpu": 64000000,
+  "ram": 36864,
+  "rom": 131072,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "libopencm3",
+    "stm32cube"
+  ],
+  "vendor": "Sigma IC",
+  "url": "https://www.sigmaic.com/store/p7/agafia-sgo.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

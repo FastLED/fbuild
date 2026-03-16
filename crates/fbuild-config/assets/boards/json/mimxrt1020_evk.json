@@ -1,0 +1,22 @@
+{
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 500000000,
+  "frameworks": [
+    "zephyr"
+  ],
+  "id": "mimxrt1020_evk",
+  "mcu": "MIMXRT1021DAG5A",
+  "name": "NXP i.MX RT1020 Evaluation Kit",
+  "platform": "nxpimxrt",
+  "ram": 33554432,
+  "rom": 8388608,
+  "url": "https://www.nxp.com/design/development-boards/i.mx-evaluation-and-development-boards/i.mx-rt1020-evaluation-kit:MIMXRT1020-EVK",
+  "vendor": "NXP"
+}

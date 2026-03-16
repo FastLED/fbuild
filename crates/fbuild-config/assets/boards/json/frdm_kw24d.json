@@ -1,0 +1,19 @@
+{
+  "debug": {
+    "tools": {
+      "jlink": {}
+    }
+  },
+  "fcpu": 50000000,
+  "frameworks": [
+    "zephyr"
+  ],
+  "id": "frdm_kw24d",
+  "mcu": "MKW24D512",
+  "name": "Freescale Kinetis FRDM-KW24D512",
+  "platform": "freescalekinetis",
+  "ram": 65536,
+  "rom": 524288,
+  "url": "https://www.nxp.com/products/processors-and-microcontrollers/arm-based-processors-and-mcus/kinetis-cortex-m-mcus/w-serieswireless-conn.m0-plus-m4/freedom-development-platform-for-kinetis-kw2x-mcus:FRDM-KW24D512",
+  "vendor": "Freescale"
+}

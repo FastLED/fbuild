@@ -1,0 +1,24 @@
+{
+  "id": "genericSTM32F401CE",
+  "name": "STM32F401CE (96k RAM. 512k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F401CEU6",
+  "fcpu": 84000000,
+  "ram": 98304,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Generic",
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f401ce.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

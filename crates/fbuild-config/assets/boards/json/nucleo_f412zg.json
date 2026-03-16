@@ -1,0 +1,29 @@
+{
+  "id": "nucleo_f412zg",
+  "name": "ST Nucleo F412ZG",
+  "platform": "ststm32",
+  "mcu": "STM32F412ZGT6",
+  "fcpu": 100000000,
+  "ram": 262144,
+  "rom": 1048576,
+  "frameworks": [
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F411RE/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

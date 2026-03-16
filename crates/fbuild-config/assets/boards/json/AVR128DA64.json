@@ -1,0 +1,14 @@
+{
+  "fcpu": 24000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "AVR128DA64",
+  "mcu": "AVR128DA64",
+  "name": "AVR128DA64",
+  "platform": "atmelmegaavr",
+  "ram": 16384,
+  "rom": 131072,
+  "url": "https://www.microchip.com/wwwproducts/en/AVR128DA64",
+  "vendor": "Microchip"
+}

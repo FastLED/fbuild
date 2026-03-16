@@ -1,0 +1,22 @@
+{
+  "id": "bluefruitmicro",
+  "name": "Adafruit Bluefruit Micro",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA32U4",
+  "fcpu": 8000000,
+  "ram": 2560,
+  "rom": 28672,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Adafruit",
+  "url": "https://www.adafruit.com/products/2661",
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

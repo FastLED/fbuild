@@ -1,0 +1,20 @@
+{
+  "id": "prusa_rambo",
+  "name": "Prusa RAMBo",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA2560",
+  "fcpu": 16000000,
+  "ram": 8192,
+  "rom": 258048,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Prusa 3D",
+  "url": "http://www.prusa3d.com",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

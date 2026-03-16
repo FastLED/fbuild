@@ -1,0 +1,33 @@
+{
+  "id": "nucleo_l496zg",
+  "name": "ST Nucleo L496ZG",
+  "platform": "ststm32",
+  "mcu": "STM32L496ZGT6",
+  "fcpu": 80000000,
+  "ram": 327680,
+  "rom": 1048576,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-L476RG/",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

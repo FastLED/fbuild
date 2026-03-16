@@ -1,0 +1,27 @@
+{
+  "connectivity": [
+    "wifi",
+    "ble"
+  ],
+  "debug": {
+    "tools": {
+      "custom": {},
+      "openocd": {
+        "default": true
+      }
+    }
+  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "base",
+    "arduino"
+  ],
+  "id": "wb3l",
+  "mcu": "BK7231T",
+  "name": "WB3L Wi-Fi Module",
+  "platform": "libretiny",
+  "ram": 262144,
+  "rom": 1083136,
+  "url": "https://developer.tuya.com/en/docs/iot/wb3l-module-datasheet?id=K9duiggw2v8sp",
+  "vendor": "Tuya Inc."
+}

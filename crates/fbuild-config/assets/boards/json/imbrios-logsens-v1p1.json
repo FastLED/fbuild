@@ -1,0 +1,21 @@
+{
+  "id": "imbrios-logsens-v1p1",
+  "name": "Imbrios LogSens V1P1",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "Imbrios",
+  "url": "https://www.imbrios.com/products/logsens",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

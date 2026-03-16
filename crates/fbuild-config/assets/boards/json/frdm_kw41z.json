@@ -1,0 +1,26 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {
+        "onboard": true
+      },
+      "jlink": {}
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "mbed",
+    "zephyr"
+  ],
+  "id": "frdm_kw41z",
+  "mcu": "MKW41Z512VHT4",
+  "name": "Freescale Kinetis FRDM-KW41Z",
+  "platform": "freescalekinetis",
+  "ram": 131072,
+  "rom": 524288,
+  "url": "https://os.mbed.com/platforms/FRDM-KW41Z/",
+  "vendor": "Freescale"
+}

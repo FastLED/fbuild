@@ -1,0 +1,27 @@
+{
+  "connectivity": [
+    "wifi",
+    "ble"
+  ],
+  "debug": {
+    "tools": {
+      "custom": {},
+      "openocd": {
+        "default": true
+      }
+    }
+  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "base",
+    "arduino"
+  ],
+  "id": "wb2l",
+  "mcu": "BK7231T",
+  "name": "WB2L Wi-Fi Module",
+  "platform": "libretiny",
+  "ram": 262144,
+  "rom": 1083136,
+  "url": "https://developer.tuya.com/en/docs/iot/wb2l-datasheet?id=K9duegc9bualu",
+  "vendor": "Tuya Inc."
+}

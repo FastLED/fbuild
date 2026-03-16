@@ -1,0 +1,12 @@
+{
+  "fcpu": 22118400,
+  "frameworks": [],
+  "id": "N78E059",
+  "mcu": "N78E059",
+  "name": "Generic N78E059",
+  "platform": "intel_mcs51",
+  "ram": 1280,
+  "rom": 32768,
+  "url": "https://www.nuvoton.com/products/microcontrollers/8bit-8051-mcus/standard-8051-series/n78e059a/",
+  "vendor": "Nuvoton"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "nucleo_f410rb",
+  "name": "ST Nucleo F410RB",
+  "platform": "ststm32",
+  "mcu": "STM32F410RBT6",
+  "fcpu": 100000000,
+  "ram": 32768,
+  "rom": 131072,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F410RB/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

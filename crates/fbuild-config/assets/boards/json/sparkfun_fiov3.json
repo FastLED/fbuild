@@ -1,0 +1,19 @@
+{
+  "id": "sparkfun_fiov3",
+  "name": "SparkFun Fio V3 3.3V/8MHz",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA32U4",
+  "fcpu": 8000000,
+  "ram": 2560,
+  "rom": 28672,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "SparkFun",
+  "url": "https://www.sparkfun.com/products/11520",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

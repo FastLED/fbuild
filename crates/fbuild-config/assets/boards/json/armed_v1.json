@@ -1,0 +1,28 @@
+{
+  "id": "armed_v1",
+  "name": "3D Printer Controller",
+  "platform": "ststm32",
+  "mcu": "STM32F407VET6",
+  "fcpu": 168000000,
+  "ram": 131072,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Armed",
+  "url": "https://github.com/ktand/Armed",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

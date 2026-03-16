@@ -1,0 +1,23 @@
+{
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "jlink": {}
+    }
+  },
+  "fcpu": 600000000,
+  "frameworks": [
+    "arduino",
+    "zephyr"
+  ],
+  "id": "teensy40",
+  "mcu": "IMXRT1062",
+  "name": "Teensy 4.0",
+  "platform": "teensy",
+  "ram": 524288,
+  "rom": 2031616,
+  "url": "https://www.pjrc.com/store/teensy40.html",
+  "vendor": "Teensy"
+}

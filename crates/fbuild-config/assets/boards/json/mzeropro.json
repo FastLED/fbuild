@@ -1,0 +1,24 @@
+{
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "atmel-ice": {},
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "mzeropro",
+  "mcu": "SAMD21G18A",
+  "name": "Arduino M0 Pro (Programming/Debug Port)",
+  "platform": "atmelsam",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://www.arduino.cc/en/Main/ArduinoBoardM0PRO",
+  "vendor": "Arduino"
+}

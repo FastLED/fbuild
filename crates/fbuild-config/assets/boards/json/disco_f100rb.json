@@ -1,0 +1,28 @@
+{
+  "id": "disco_f100rb",
+  "name": "ST STM32VLDISCOVERY",
+  "platform": "ststm32",
+  "mcu": "STM32F100RBT6",
+  "fcpu": 24000000,
+  "ram": 8192,
+  "rom": 131072,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "libopencm3",
+    "stm32cube"
+  ],
+  "vendor": "ST",
+  "url": "http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1848/PF250863",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

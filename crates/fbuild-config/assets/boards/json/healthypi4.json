@@ -1,0 +1,21 @@
+{
+  "id": "healthypi4",
+  "name": "ProtoCentral HealthyPi 4",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "ProtoCentral",
+  "url": "https://healthypi.protocentral.com",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

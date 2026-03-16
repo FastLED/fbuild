@@ -1,0 +1,14 @@
+{
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "cubecell_capsule_solar_sensor",
+  "mcu": "ASR6051",
+  "name": "Heltec CubeCell Capsule Solar Sensor (HTCC-AC02)",
+  "platform": "heltec-cubecell",
+  "ram": 16384,
+  "rom": 131072,
+  "url": "https://heltec.org/project/htcc-ac02/",
+  "vendor": "Heltec"
+}

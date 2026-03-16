@@ -1,0 +1,19 @@
+{
+  "id": "sparkfun_satmega128rfa1",
+  "name": "SparkFun ATmega128RFA1 Dev Board",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA128RFA1",
+  "fcpu": 16000000,
+  "ram": 16384,
+  "rom": 126976,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "SparkFun",
+  "url": "https://www.sparkfun.com/products/11197",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

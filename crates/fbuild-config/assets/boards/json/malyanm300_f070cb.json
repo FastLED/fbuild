@@ -1,0 +1,24 @@
+{
+  "id": "malyanm300_f070cb",
+  "name": "M300",
+  "platform": "ststm32",
+  "mcu": "STM32F070CBT6",
+  "fcpu": 48000000,
+  "ram": 15168,
+  "rom": 122880,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Malyan",
+  "url": "http://malyansys.com/product/m300/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

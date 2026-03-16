@@ -1,0 +1,20 @@
+{
+  "connectivity": [
+    "cellular",
+    "bluetooth",
+    "gps"
+  ],
+  "fcpu": 260000000,
+  "frameworks": [
+    "arduino",
+    "logicromsdk"
+  ],
+  "id": "quectelmc60",
+  "mcu": "MT2503",
+  "name": "Quectel MC60",
+  "platform": "logicrom",
+  "ram": 96256,
+  "rom": 262144,
+  "url": "https://www.quectel.com/product/mc60.htm",
+  "vendor": "Quectel Wireless Solutions Co., Ltd."
+}

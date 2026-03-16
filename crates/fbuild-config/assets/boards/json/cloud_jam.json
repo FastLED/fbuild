@@ -1,0 +1,29 @@
+{
+  "id": "cloud_jam",
+  "name": "RushUp Cloud-JAM",
+  "platform": "ststm32",
+  "mcu": "STM32F401RET6",
+  "fcpu": 84000000,
+  "ram": 98304,
+  "rom": 524288,
+  "frameworks": [
+    "mbed",
+    "cmsis",
+    "spl",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "RushUp",
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F401RE/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

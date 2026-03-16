@@ -1,0 +1,21 @@
+{
+  "id": "esp320",
+  "name": "Electronic SweetPeas ESP320",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "Electronic SweetPeas",
+  "url": "http://www.sweetpeas.se/controller-modules/10-esp210.html",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

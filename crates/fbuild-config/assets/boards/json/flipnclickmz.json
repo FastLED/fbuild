@@ -1,0 +1,14 @@
+{
+  "fcpu": 252000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "flipnclickmz",
+  "mcu": "32MZ2048EFH100",
+  "name": "MikroElektronika Flip N Click MZ",
+  "platform": "microchippic32",
+  "ram": 524288,
+  "rom": 2080768,
+  "url": "https://shop.mikroe.com/flipclick-pic32mz",
+  "vendor": "MikroElektronika"
+}

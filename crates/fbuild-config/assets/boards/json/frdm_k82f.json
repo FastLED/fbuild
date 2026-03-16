@@ -1,0 +1,23 @@
+{
+  "debug": {
+    "tools": {
+      "cmsis-dap": {
+        "onboard": true
+      },
+      "jlink": {}
+    }
+  },
+  "fcpu": 150000000,
+  "frameworks": [
+    "mbed",
+    "zephyr"
+  ],
+  "id": "frdm_k82f",
+  "mcu": "MK82FN256VLL15",
+  "name": "Freescale Kinetis FRDM-K82F",
+  "platform": "freescalekinetis",
+  "ram": 262144,
+  "rom": 262144,
+  "url": "https://www.nxp.com/products/processors-and-microcontrollers/arm-based-processors-and-mcus/kinetis-cortex-m-mcus/k-seriesperformancem4/k8x-secure/freedom-development-platform-for-kinetis-k82-k81-and-k80-mcus:FRDM-K82F",
+  "vendor": "Freescale"
+}

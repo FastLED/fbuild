@@ -1,0 +1,27 @@
+{
+  "connectivity": [
+    "wifi",
+    "ble"
+  ],
+  "debug": {
+    "tools": {
+      "custom": {},
+      "openocd": {
+        "default": true
+      }
+    }
+  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "base",
+    "arduino"
+  ],
+  "id": "lsc-lma35-t",
+  "mcu": "BK7231T",
+  "name": "LSC LMA35 BK7231T",
+  "platform": "libretiny",
+  "ram": 262144,
+  "rom": 1083136,
+  "url": "https://www.action.com/de-at/p/lsc-smart-connect-outdoor-led-streifen/",
+  "vendor": "Unknown"
+}

@@ -1,0 +1,25 @@
+{
+  "id": "maple_ret6",
+  "name": "Maple (RET6)",
+  "platform": "ststm32",
+  "mcu": "STM32F103RET6",
+  "fcpu": 72000000,
+  "ram": 49152,
+  "rom": 262144,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "libopencm3",
+    "stm32cube"
+  ],
+  "vendor": "LeafLabs",
+  "url": "http://www.leaflabs.com/maple/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

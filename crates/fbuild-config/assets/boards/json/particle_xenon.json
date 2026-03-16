@@ -1,0 +1,26 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "arduino",
+    "zephyr"
+  ],
+  "id": "particle_xenon",
+  "mcu": "NRF52840",
+  "name": "Particle Xenon",
+  "platform": "nordicnrf52",
+  "ram": 248832,
+  "rom": 815104,
+  "url": "https://docs.particle.io/xenon",
+  "vendor": "Particle"
+}

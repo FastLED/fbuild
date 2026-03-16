@@ -1,0 +1,19 @@
+{
+  "id": "smart7688",
+  "name": "LinkIt Smart 7688 Duo",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA32U4",
+  "fcpu": 8000000,
+  "ram": 2560,
+  "rom": 28672,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "MediaTek Labs",
+  "url": "https://www.seeedstudio.com/LinkIt-Smart-7688-Duo-p-2574.html",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

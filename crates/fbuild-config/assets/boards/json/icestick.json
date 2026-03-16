@@ -1,0 +1,12 @@
+{
+  "fcpu": 12000000,
+  "frameworks": [],
+  "id": "icestick",
+  "mcu": "ICE40-HX1K-TQ144",
+  "name": "Lattice iCEstick FPGA Evaluation Kit",
+  "platform": "lattice_ice40",
+  "ram": 32768,
+  "rom": 32768,
+  "url": "http://www.latticesemi.com/icestick",
+  "vendor": "Lattice"
+}

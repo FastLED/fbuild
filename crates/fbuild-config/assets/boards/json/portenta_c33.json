@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "jlink": {}
+    }
+  },
+  "fcpu": 200000000,
+  "frameworks": [
+    "arduino",
+    "fsp",
+    "cmsis"
+  ],
+  "id": "portenta_c33",
+  "mcu": "R7FA6M5BH2CBG",
+  "name": "Arduino Portenta C33",
+  "platform": "renesas-ra",
+  "ram": 523624,
+  "rom": 2097152,
+  "url": "https://www.arduino.cc/pro/hardware-product-portenta-c33",
+  "vendor": "Arduino"
+}

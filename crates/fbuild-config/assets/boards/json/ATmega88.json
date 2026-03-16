@@ -1,0 +1,19 @@
+{
+  "id": "ATmega88",
+  "name": "ATmega88/A",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA88",
+  "fcpu": 16000000,
+  "ram": 1024,
+  "rom": 8192,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Microchip",
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega88",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

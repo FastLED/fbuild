@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "STC89C52RC",
+  "mcu": "STC89C52RC",
+  "name": "Generic STC89C52RC",
+  "platform": "intel_mcs51",
+  "ram": 512,
+  "rom": 8192,
+  "url": "https://www.stcmicro.com/STC/STC89C52RC.html",
+  "vendor": "STC"
+}

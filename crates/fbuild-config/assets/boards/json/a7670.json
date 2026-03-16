@@ -1,0 +1,18 @@
+{
+  "connectivity": [
+    "cellular"
+  ],
+  "fcpu": 416000000,
+  "frameworks": [
+    "arduino",
+    "logicromsdk"
+  ],
+  "id": "a7670",
+  "mcu": "ASR1601",
+  "name": "SIMCOM A7670X LTE Cat.1 Module",
+  "platform": "logicrom",
+  "ram": 524288,
+  "rom": 1048576,
+  "url": "",
+  "vendor": "SIMCom"
+}

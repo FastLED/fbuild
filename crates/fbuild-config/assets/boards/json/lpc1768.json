@@ -1,0 +1,27 @@
+{
+  "connectivity": [
+    "can",
+    "ethernet"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {
+        "onboard": true
+      },
+      "jlink": {}
+    }
+  },
+  "fcpu": 96000000,
+  "frameworks": [
+    "mbed"
+  ],
+  "id": "lpc1768",
+  "mcu": "LPC1768",
+  "name": "NXP mbed LPC1768",
+  "platform": "nxplpc",
+  "ram": 65536,
+  "rom": 524288,
+  "url": "http://developer.mbed.org/platforms/mbed-LPC1768/",
+  "vendor": "NXP"
+}

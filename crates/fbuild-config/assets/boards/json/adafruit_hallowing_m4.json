@@ -1,0 +1,20 @@
+{
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "atmel-ice": {}
+    }
+  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "adafruit_hallowing_m4",
+  "mcu": "SAMD51J19A",
+  "name": "Adafruit Hallowing M4",
+  "platform": "atmelsam",
+  "ram": 196608,
+  "rom": 507904,
+  "url": "https://www.adafruit.com/product/4300",
+  "vendor": "Adafruit"
+}

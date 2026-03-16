@@ -1,0 +1,27 @@
+{
+  "id": "st3dp001_eval",
+  "name": "3DP001V1 Evaluation board for 3D printer",
+  "platform": "ststm32",
+  "mcu": "STM32F401VET6",
+  "fcpu": 84000000,
+  "ram": 98304,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/steval-3dp001v1.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

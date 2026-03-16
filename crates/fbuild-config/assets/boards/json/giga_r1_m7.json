@@ -1,0 +1,25 @@
+{
+  "id": "giga_r1_m7",
+  "name": "Arduino Giga R1 (M7 core)",
+  "platform": "ststm32",
+  "mcu": "STM32H747XIH6",
+  "fcpu": 480000000,
+  "ram": 523624,
+  "rom": 786432,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Arduino",
+  "url": "https://docs.arduino.cc/hardware/giga-r1-wifi",
+  "connectivity": [
+    "bluetooth",
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

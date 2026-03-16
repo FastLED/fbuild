@@ -1,0 +1,30 @@
+{
+  "id": "disco_b_g431b_esc1",
+  "name": "ST B-G431B-ESC1 Discovery",
+  "platform": "ststm32",
+  "mcu": "STM32G431CBU6",
+  "fcpu": 170000000,
+  "ram": 32768,
+  "rom": 131072,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/b-g431b-esc1.html",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

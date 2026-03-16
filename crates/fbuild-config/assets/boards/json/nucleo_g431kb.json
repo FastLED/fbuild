@@ -1,0 +1,31 @@
+{
+  "id": "nucleo_g431kb",
+  "name": "Nucleo G431KB",
+  "platform": "ststm32",
+  "mcu": "STM32G431KBT6",
+  "fcpu": 170000000,
+  "ram": 32768,
+  "rom": 131072,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "libopencm3",
+    "stm32cube"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-g431kb.html",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

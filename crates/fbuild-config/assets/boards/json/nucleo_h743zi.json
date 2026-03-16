@@ -1,0 +1,33 @@
+{
+  "id": "nucleo_h743zi",
+  "name": "ST Nucleo H743ZI",
+  "platform": "ststm32",
+  "mcu": "STM32H743ZIT6",
+  "fcpu": 400000000,
+  "ram": 524288,
+  "rom": 2097152,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "mbed",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-h743zi.html",
+  "connectivity": [
+    "can",
+    "ethernet"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "id": "reprap_rambo",
+  "name": "RepRap RAMBo",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA2560",
+  "fcpu": 16000000,
+  "ram": 8192,
+  "rom": 258048,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "RepRap",
+  "url": "http://reprap.org/wiki/Rambo",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

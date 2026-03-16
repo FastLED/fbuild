@@ -1,0 +1,22 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "jlink": {}
+    }
+  },
+  "fcpu": 96000000,
+  "frameworks": [
+    "mbed"
+  ],
+  "id": "max32620hsp",
+  "mcu": "MAX32620",
+  "name": "Maxim Health Sensor Platform",
+  "platform": "maxim32",
+  "ram": 262144,
+  "rom": 2097152,
+  "url": "https://developer.mbed.org/platforms/MAX32620HSP/",
+  "vendor": "Maxim"
+}

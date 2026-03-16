@@ -1,0 +1,32 @@
+{
+  "id": "nucleo_f302r8",
+  "name": "ST Nucleo F302R8",
+  "platform": "ststm32",
+  "mcu": "STM32F302R8T6",
+  "fcpu": 72000000,
+  "ram": 16384,
+  "rom": 65536,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F302R8/",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "ATmega48PB",
+  "name": "ATmega48PB",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA48PB",
+  "fcpu": 16000000,
+  "ram": 512,
+  "rom": 4096,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Microchip",
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega48PB"
+}

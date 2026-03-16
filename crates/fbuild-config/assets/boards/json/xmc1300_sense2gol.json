@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "jlink": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 32000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "xmc1300_sense2gol",
+  "mcu": "XMC1300",
+  "name": "XMC1300 Sense2GoL",
+  "platform": "infineonxmc",
+  "ram": 16384,
+  "rom": 32768,
+  "url": "https://www.infineon.com",
+  "vendor": "Infineon"
+}

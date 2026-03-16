@@ -1,0 +1,19 @@
+{
+  "id": "moteinomega",
+  "name": "LowPowerLab MoteinoMEGA",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA1284P",
+  "fcpu": 16000000,
+  "ram": 16384,
+  "rom": 130048,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "LowPowerLab",
+  "url": "https://lowpowerlab.com/shop/product/119",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

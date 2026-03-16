@@ -1,0 +1,14 @@
+{
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "helvepic32_breadboardside",
+  "mcu": "32MX250F128B",
+  "name": "HelvePic32",
+  "platform": "microchippic32",
+  "ram": 32768,
+  "rom": 122880,
+  "url": "https://www.helvepic32.org/shop-1/",
+  "vendor": "BOXTEC"
+}

@@ -1,0 +1,14 @@
+{
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "chipkit_uc32",
+  "mcu": "32MX340F512H",
+  "name": "Digilent chipKIT uC32",
+  "platform": "microchippic32",
+  "ram": 32768,
+  "rom": 520192,
+  "url": "http://store.digilentinc.com/chipkit-uc32-basic-microcontroller-board-with-uno-r3-headers/",
+  "vendor": "Digilent"
+}

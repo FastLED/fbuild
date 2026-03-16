@@ -1,0 +1,20 @@
+{
+  "id": "tinylily",
+  "name": "TinyCircuits TinyLily Mini Processor",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 8000000,
+  "ram": 2048,
+  "rom": 30720,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "TinyCircuits",
+  "url": "https://tiny-circuits.com/tiny-lily-mini-processor.html",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {}
+    }
+  },
+  "fcpu": 24000000,
+  "frameworks": [
+    "mbed"
+  ],
+  "id": "maxwsnenv",
+  "mcu": "MAX32610",
+  "name": "Maxim Wireless Sensor Node Demonstrator",
+  "platform": "maxim32",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://developer.mbed.org/platforms/MAXWSNENV/",
+  "vendor": "Maxim"
+}

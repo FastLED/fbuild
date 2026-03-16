@@ -1,0 +1,28 @@
+{
+  "id": "vake_v1",
+  "name": "VAkE v1.0",
+  "platform": "ststm32",
+  "mcu": "STM32F446RET6",
+  "fcpu": 180000000,
+  "ram": 131072,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "VAE",
+  "url": "http://www.vaengineering.be",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "stlink": {}
+    }
+  },
+  "fcpu": 100000000,
+  "frameworks": [
+    "k1921vk_sdk",
+    "arduino",
+    "freertos"
+  ],
+  "id": "vostok_mega_vn01t",
+  "mcu": "K1921VK01T",
+  "name": "Vostok MEGA-VN01T",
+  "platform": "k1921vk",
+  "ram": 196608,
+  "rom": 1048576,
+  "url": "https://niiet.ru/product/%D0%BA1921%D0%B2%D0%BA01%D1%821/",
+  "vendor": "Vostok"
+}

@@ -1,0 +1,25 @@
+{
+  "id": "genericSTM32F103C8",
+  "name": "STM32F103C8 (20k RAM. 64k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F103C8T6",
+  "fcpu": 72000000,
+  "ram": 20480,
+  "rom": 65536,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "libopencm3",
+    "stm32cube"
+  ],
+  "vendor": "Generic",
+  "url": "http://www.st.com/content/st_com/en/products/microcontrollers/stm32-32-bit-arm-cortex-mcus/stm32f1-series/stm32f103/stm32f103c8.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

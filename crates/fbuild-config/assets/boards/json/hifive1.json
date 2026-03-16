@@ -1,0 +1,29 @@
+{
+  "debug": {
+    "tools": {
+      "qemu": {
+        "onboard": true
+      },
+      "renode": {
+        "onboard": true
+      },
+      "ftdi": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 320000000,
+  "frameworks": [
+    "freedom-e-sdk",
+    "freertos",
+    "zephyr"
+  ],
+  "id": "hifive1",
+  "mcu": "FE310",
+  "name": "HiFive1",
+  "platform": "sifive",
+  "ram": 16384,
+  "rom": 16777216,
+  "url": "https://www.sifive.com/products/hifive1/",
+  "vendor": "SiFive"
+}

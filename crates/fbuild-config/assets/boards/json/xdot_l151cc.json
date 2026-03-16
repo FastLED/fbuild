@@ -1,0 +1,25 @@
+{
+  "id": "xdot_l151cc",
+  "name": "MultiTech xDot",
+  "platform": "ststm32",
+  "mcu": "STM32L151CCU6",
+  "fcpu": 32000000,
+  "ram": 32768,
+  "rom": 262144,
+  "frameworks": [
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "MultiTech",
+  "url": "https://developer.mbed.org/platforms/MTS-xDot-L151CC/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

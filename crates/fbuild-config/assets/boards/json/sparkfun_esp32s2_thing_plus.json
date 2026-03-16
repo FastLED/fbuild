@@ -1,0 +1,32 @@
+{
+  "id": "sparkfun_esp32s2_thing_plus",
+  "name": "SparkFun ESP32-S2 Thing Plus",
+  "platform": "espressif32",
+  "mcu": "ESP32S2",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "SparkFun",
+  "url": "https://www.sparkfun.com/products/17743",
+  "connectivity": [
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "esp-prog": {},
+      "iot-bus-jtag": {},
+      "jlink": {},
+      "minimodule": {},
+      "olimex-arm-usb-tiny-h": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-ocd": {},
+      "olimex-jtag-tiny": {},
+      "tumpa": {}
+    }
+  }
+}

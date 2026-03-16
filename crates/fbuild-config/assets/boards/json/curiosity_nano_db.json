@@ -1,0 +1,14 @@
+{
+  "fcpu": 24000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "curiosity_nano_db",
+  "mcu": "AVR128DB48",
+  "name": "Curiosity Nano AVR128DB48",
+  "platform": "atmelmegaavr",
+  "ram": 16384,
+  "rom": 131072,
+  "url": "https://www.microchip.com/developmenttools/ProductDetails/EV35L43A",
+  "vendor": "Microchip"
+}

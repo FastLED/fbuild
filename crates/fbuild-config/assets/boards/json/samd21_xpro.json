@@ -1,0 +1,24 @@
+{
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "atmel-ice": {},
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "zephyr"
+  ],
+  "id": "samd21_xpro",
+  "mcu": "SAMD21J18A",
+  "name": "Atmel SAMD21-XPRO",
+  "platform": "atmelsam",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://www.microchip.com/en-us/development-tool/atsamd21-xpro",
+  "vendor": "Atmel"
+}

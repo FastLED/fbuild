@@ -1,0 +1,28 @@
+{
+  "id": "weact_mini_h750vbtx",
+  "name": "WeAct Studio MiniSTM32H750VBTX",
+  "platform": "ststm32",
+  "mcu": "STM32H750VBT6",
+  "fcpu": 480000000,
+  "ram": 131072,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube"
+  ],
+  "vendor": "WeAct Studio",
+  "url": "https://github.com/WeActStudio/MiniSTM32H7xx",
+  "connectivity": [
+    "can",
+    "ethernet"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

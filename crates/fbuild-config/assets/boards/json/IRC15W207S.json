@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "IRC15W207S",
+  "mcu": "IRC15W207S",
+  "name": "Generic IRC15W207S",
+  "platform": "intel_mcs51",
+  "ram": 256,
+  "rom": 7680,
+  "url": "https://www.stcmicro.com/STC/STC15W204S.html",
+  "vendor": "STC"
+}

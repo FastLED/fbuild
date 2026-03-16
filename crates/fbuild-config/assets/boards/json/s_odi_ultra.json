@@ -1,0 +1,21 @@
+{
+  "id": "s_odi_ultra",
+  "name": "S.ODI Ultra v1",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "S.ODI",
+  "url": "https://www.espressif.com/en/products/socs/esp32",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

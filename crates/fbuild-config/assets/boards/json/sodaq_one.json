@@ -1,0 +1,25 @@
+{
+  "connectivity": [
+    "LoRa",
+    "GPS"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "atmel-ice": {}
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "sodaq_one",
+  "mcu": "SAMD21G18A",
+  "name": "SODAQ ONE",
+  "platform": "atmelsam",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "http://support.sodaq.com/sodaq-one/",
+  "vendor": "SODAQ"
+}

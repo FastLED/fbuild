@@ -1,0 +1,21 @@
+{
+  "id": "inex_openkb",
+  "name": "INEX OpenKB",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "INEX",
+  "url": "https://inex.co.th/home/product/openkb/",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

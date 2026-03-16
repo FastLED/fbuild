@@ -1,0 +1,28 @@
+{
+  "id": "sparkfun_thingplusmatter",
+  "name": "Sparkfun Thing Plus Matter",
+  "platform": "siliconlabsefm32",
+  "mcu": "CORTEX-M33",
+  "fcpu": 39000000,
+  "ram": 262144,
+  "rom": 1572864,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Sparkfun",
+  "url": "https://www.sparkfun.com/products/20270",
+  "connectivity": [
+    "bluetooth",
+    "thread",
+    "wifi",
+    "zigbee"
+  ],
+  "debug": {
+    "tools": {
+      "jlink": {
+        "onboard": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

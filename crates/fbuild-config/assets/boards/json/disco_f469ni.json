@@ -1,0 +1,32 @@
+{
+  "id": "disco_f469ni",
+  "name": "ST 32F469IDISCOVERY",
+  "platform": "ststm32",
+  "mcu": "STM32F469NIH6",
+  "fcpu": 180000000,
+  "ram": 393216,
+  "rom": 2097152,
+  "frameworks": [
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "http://www.st.com/web/catalog/tools/FM116/CL1620/SC959/SS1532/LN1848/PF262395",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

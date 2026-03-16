@@ -1,0 +1,14 @@
+{
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "pinguino32",
+  "mcu": "32MX440F256H",
+  "name": "Olimex PIC32-PINGUINO",
+  "platform": "microchippic32",
+  "ram": 32768,
+  "rom": 258048,
+  "url": "https://www.olimex.com/Products/Duino/PIC32/PIC32-PINGUINO/open-source-hardware",
+  "vendor": "Olimex"
+}

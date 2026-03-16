@@ -1,0 +1,32 @@
+{
+  "id": "esp32s3camlcd",
+  "name": "ESP32S3 CAM LCD",
+  "platform": "espressif32",
+  "mcu": "ESP32S3",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 16777216,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Espressif",
+  "url": "https://www.espressif.com/en/news/Maple_Eye_ESP32-S3",
+  "connectivity": [
+    "wifi",
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "esp-prog": {},
+      "iot-bus-jtag": {},
+      "jlink": {},
+      "minimodule": {},
+      "olimex-arm-usb-tiny-h": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-ocd": {},
+      "olimex-jtag-tiny": {},
+      "tumpa": {}
+    }
+  }
+}

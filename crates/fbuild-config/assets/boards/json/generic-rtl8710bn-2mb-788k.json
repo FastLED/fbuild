@@ -1,0 +1,26 @@
+{
+  "connectivity": [
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "custom": {},
+      "openocd": {
+        "default": true
+      }
+    }
+  },
+  "fcpu": 125000000,
+  "frameworks": [
+    "base",
+    "arduino"
+  ],
+  "id": "generic-rtl8710bn-2mb-788k",
+  "mcu": "RTL8710BN",
+  "name": "Generic - RTL8710BN (2M/788k)",
+  "platform": "libretiny",
+  "ram": 262144,
+  "rom": 806912,
+  "url": "https://docs.libretiny.eu/boards/generic-rtl8710bn-2mb-788k/",
+  "vendor": "Generic"
+}

@@ -1,0 +1,17 @@
+{
+  "connectivity": [
+    "wifi"
+  ],
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "chipkit_wf32",
+  "mcu": "32MX695F512L",
+  "name": "Digilent chipKIT WF32",
+  "platform": "microchippic32",
+  "ram": 131072,
+  "rom": 520192,
+  "url": "http://store.digilentinc.com/chipkit-wf32-wifi-enabled-microntroller-board-with-uno-r3-headers/",
+  "vendor": "Digilent"
+}

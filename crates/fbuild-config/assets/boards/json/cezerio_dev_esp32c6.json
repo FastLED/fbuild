@@ -1,0 +1,36 @@
+{
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "zigbee",
+    "thread"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "esp-prog": {},
+      "esp-bridge": {},
+      "iot-bus-jtag": {},
+      "jlink": {},
+      "minimodule": {},
+      "olimex-arm-usb-tiny-h": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-ocd": {},
+      "olimex-jtag-tiny": {},
+      "tumpa": {},
+      "esp-builtin": {}
+    }
+  },
+  "fcpu": 160000000,
+  "frameworks": [
+    "espidf"
+  ],
+  "id": "cezerio_dev_esp32c6",
+  "mcu": "ESP32C6",
+  "name": "cezerio dev ESP32C6",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 4194304,
+  "url": "https://cezerio.com/cezerio_dev_esp32c6",
+  "vendor": "cezerio"
+}

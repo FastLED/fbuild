@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "IAP15F206A",
+  "mcu": "IAP15F206A",
+  "name": "Generic IAP15F206A",
+  "platform": "intel_mcs51",
+  "ram": 256,
+  "rom": 6144,
+  "url": "https://www.stcmicro.com/STC/STC15F204EA.html",
+  "vendor": "STC"
+}

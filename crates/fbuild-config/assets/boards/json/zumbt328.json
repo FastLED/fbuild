@@ -1,0 +1,20 @@
+{
+  "id": "zumbt328",
+  "name": "BQ ZUM BT-328",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 28672,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "BQ",
+  "url": "http://www.bq.com/gb/products/zum.html",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

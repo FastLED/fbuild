@@ -1,0 +1,19 @@
+{
+  "id": "mayfly",
+  "name": "EnviroDIY Mayfly",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA1284P",
+  "fcpu": 8000000,
+  "ram": 16384,
+  "rom": 130048,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "EnviroDIY",
+  "url": "http://envirodiy.org/forums/",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

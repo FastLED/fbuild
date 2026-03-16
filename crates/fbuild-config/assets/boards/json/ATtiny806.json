@@ -1,0 +1,14 @@
+{
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATtiny806",
+  "mcu": "ATTINY806",
+  "name": "ATtiny806",
+  "platform": "atmelmegaavr",
+  "ram": 512,
+  "rom": 8192,
+  "url": "https://www.microchip.com/wwwproducts/en/ATTINY806",
+  "vendor": "Microchip"
+}

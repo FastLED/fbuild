@@ -1,0 +1,25 @@
+{
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "atmel-ice": {},
+      "stlink": {}
+    }
+  },
+  "fcpu": 84000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "sainSmartDueUSB",
+  "mcu": "AT91SAM3X8E",
+  "name": "SainSmart Due (USB Native Port)",
+  "platform": "atmelsam",
+  "ram": 98304,
+  "rom": 524288,
+  "url": "http://www.sainsmart.com/arduino/control-boards/sainsmart-due-atmel-sam3x8e-arm-cortex-m3-board-black.html",
+  "vendor": "SainSmart"
+}

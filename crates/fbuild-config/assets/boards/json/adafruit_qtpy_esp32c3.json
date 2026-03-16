@@ -1,0 +1,32 @@
+{
+  "id": "adafruit_qtpy_esp32c3",
+  "name": "Adafruit QT Py ESP32-C3",
+  "platform": "espressif32",
+  "mcu": "ESP32C3",
+  "fcpu": 160000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "Adafruit",
+  "url": "https://www.adafruit.com/product/5405",
+  "connectivity": [
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "esp-prog": {},
+      "iot-bus-jtag": {},
+      "jlink": {},
+      "minimodule": {},
+      "olimex-arm-usb-tiny-h": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-ocd": {},
+      "olimex-jtag-tiny": {},
+      "tumpa": {}
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "pico",
+  "name": "Raspberry Pi Pico",
+  "platform": "raspberrypi",
+  "mcu": "RP2040",
+  "fcpu": 133000000,
+  "ram": 270336,
+  "rom": 2097152,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Raspberry Pi",
+  "url": "https://www.raspberrypi.org/products/raspberry-pi-pico/",
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "jlink": {},
+      "raspberrypi-swd": {}
+    }
+  }
+}

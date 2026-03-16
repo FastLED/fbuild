@@ -1,0 +1,21 @@
+{
+  "id": "denky_d4",
+  "name": "Denky D4 (PICO-V3-02)",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "Denky",
+  "url": "https://en.wikipedia.org/wiki/ESP32",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

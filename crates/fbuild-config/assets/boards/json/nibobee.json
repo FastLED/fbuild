@@ -1,0 +1,19 @@
+{
+  "id": "nibobee",
+  "name": "nicai-systems NIBObee robot",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA16",
+  "fcpu": 15000000,
+  "ram": 1024,
+  "rom": 16384,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "nicai-systems",
+  "url": "http://www.nicai-systems.com/en/nibobee",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

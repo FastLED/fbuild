@@ -1,0 +1,14 @@
+{
+  "id": "ATmega169P",
+  "name": "ATmega169/P/PA",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA169P",
+  "fcpu": 16000000,
+  "ram": 1024,
+  "rom": 16384,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Microchip",
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega169P"
+}

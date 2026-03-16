@@ -1,0 +1,18 @@
+{
+  "connectivity": [
+    "cellular"
+  ],
+  "fcpu": 178000000,
+  "frameworks": [
+    "arduino",
+    "logicromsdk"
+  ],
+  "id": "a9",
+  "mcu": "RDA8955",
+  "name": "AI-Thinker A9 GSM Module",
+  "platform": "logicrom",
+  "ram": 1040384,
+  "rom": 589824,
+  "url": "http://www.ai-thinker.com/pro_view-9.html",
+  "vendor": "Ai-Thinker Co., Ltd."
+}

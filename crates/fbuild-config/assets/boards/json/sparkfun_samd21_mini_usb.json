@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "atmel-ice": {}
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "sparkfun_samd21_mini_usb",
+  "mcu": "SAMD21G18A",
+  "name": "SparkFun SAMD21 Mini Breakout",
+  "platform": "atmelsam",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://www.sparkfun.com/products/13664",
+  "vendor": "SparkFun"
+}

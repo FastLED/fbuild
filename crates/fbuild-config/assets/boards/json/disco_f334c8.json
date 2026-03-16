@@ -1,0 +1,27 @@
+{
+  "id": "disco_f334c8",
+  "name": "ST 32F3348DISCOVERY",
+  "platform": "ststm32",
+  "mcu": "STM32F334C8T6",
+  "fcpu": 72000000,
+  "ram": 12288,
+  "rom": 65536,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "ST",
+  "url": "http://www.st.com/web/en/catalog/tools/PF260318",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

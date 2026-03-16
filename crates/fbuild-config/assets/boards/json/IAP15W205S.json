@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "IAP15W205S",
+  "mcu": "IAP15W205S",
+  "name": "Generic IAP15W205S",
+  "platform": "intel_mcs51",
+  "ram": 256,
+  "rom": 5120,
+  "url": "https://www.stcmicro.com/STC/STC15W204S.html",
+  "vendor": "STC"
+}

@@ -1,0 +1,28 @@
+{
+  "id": "sparky_v1",
+  "name": "Sparky V1 F303",
+  "platform": "ststm32",
+  "mcu": "STM32F303CCT6",
+  "fcpu": 72000000,
+  "ram": 40960,
+  "rom": 262144,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "TauLabs",
+  "url": "https://github.com/TauLabs/TauLabs/wiki/Sparky",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATtiny427",
+  "mcu": "ATTINY427",
+  "name": "ATtiny427",
+  "platform": "atmelmegaavr",
+  "ram": 512,
+  "rom": 4096,
+  "url": "https://www.microchip.com/wwwproducts/en/ATTINY427",
+  "vendor": "Microchip"
+}

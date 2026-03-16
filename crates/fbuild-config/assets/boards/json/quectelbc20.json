@@ -1,0 +1,19 @@
+{
+  "connectivity": [
+    "cellular",
+    "gps"
+  ],
+  "fcpu": 78000000,
+  "frameworks": [
+    "arduino",
+    "logicromsdk"
+  ],
+  "id": "quectelbc20",
+  "mcu": "MT2625",
+  "name": "Quectel BC20",
+  "platform": "logicrom",
+  "ram": 98304,
+  "rom": 204800,
+  "url": "https://www.quectel.com/cn/product/bc20.htm",
+  "vendor": "Quectel Wireless Solutions Co., Ltd."
+}

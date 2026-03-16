@@ -1,0 +1,14 @@
+{
+  "fcpu": 1200000000,
+  "frameworks": [
+    "wiringpi"
+  ],
+  "id": "raspberrypi_3b",
+  "mcu": "BCM2837",
+  "name": "Raspberry Pi 3 Model B",
+  "platform": "linux_arm",
+  "ram": 1073741824,
+  "rom": 1073741824,
+  "url": "https://www.raspberrypi.org",
+  "vendor": "Raspberry Pi"
+}

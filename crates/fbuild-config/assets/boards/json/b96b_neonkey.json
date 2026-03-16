@@ -1,0 +1,28 @@
+{
+  "id": "b96b_neonkey",
+  "name": "96Boards Neonkey",
+  "platform": "ststm32",
+  "mcu": "STM32F411CE",
+  "fcpu": 100000000,
+  "ram": 131072,
+  "rom": 524288,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "96Boards",
+  "url": "https://www.96boards.org/product/neonkey/",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

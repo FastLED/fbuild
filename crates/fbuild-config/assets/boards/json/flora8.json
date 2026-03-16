@@ -1,0 +1,19 @@
+{
+  "id": "flora8",
+  "name": "Adafruit Flora",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA32U4",
+  "fcpu": 8000000,
+  "ram": 2560,
+  "rom": 28672,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Adafruit",
+  "url": "http://www.adafruit.com/product/659",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

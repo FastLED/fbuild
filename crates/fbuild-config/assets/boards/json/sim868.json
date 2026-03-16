@@ -1,0 +1,20 @@
+{
+  "connectivity": [
+    "cellular",
+    "bluetooth",
+    "gps"
+  ],
+  "fcpu": 260000000,
+  "frameworks": [
+    "arduino",
+    "logicromsdk"
+  ],
+  "id": "sim868",
+  "mcu": "MT2503",
+  "name": "SIMCOM SIM868 GSM Module",
+  "platform": "logicrom",
+  "ram": 96256,
+  "rom": 262144,
+  "url": "https://www.simcom.com/product/SIM868.html",
+  "vendor": "SIMCom"
+}

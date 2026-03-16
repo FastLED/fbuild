@@ -1,0 +1,31 @@
+{
+  "id": "b96b_f446ve",
+  "name": "96Boards B96B-F446VE",
+  "platform": "ststm32",
+  "mcu": "STM32F446VET6",
+  "fcpu": 168000000,
+  "ram": 131072,
+  "rom": 524288,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "96Boards",
+  "url": "https://developer.mbed.org/platforms/ST-B96B-F446VE/",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

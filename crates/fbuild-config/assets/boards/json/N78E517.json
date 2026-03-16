@@ -1,0 +1,12 @@
+{
+  "fcpu": 22118400,
+  "frameworks": [],
+  "id": "N78E517",
+  "mcu": "N78E517",
+  "name": "Generic N78E517",
+  "platform": "intel_mcs51",
+  "ram": 1280,
+  "rom": 65536,
+  "url": "https://www.nuvoton.com/products/microcontrollers/8bit-8051-mcus/standard-8051-series/n78e517a/",
+  "vendor": "Nuvoton"
+}

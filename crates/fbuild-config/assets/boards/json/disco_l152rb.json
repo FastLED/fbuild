@@ -1,0 +1,28 @@
+{
+  "id": "disco_l152rb",
+  "name": "ST STM32LDISCOVERY",
+  "platform": "ststm32",
+  "mcu": "STM32L152RBT6",
+  "fcpu": 32000000,
+  "ram": 16384,
+  "rom": 131072,
+  "frameworks": [
+    "cmsis",
+    "spl",
+    "libopencm3",
+    "stm32cube"
+  ],
+  "vendor": "ST",
+  "url": "http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1848/PF258515",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

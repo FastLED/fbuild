@@ -1,0 +1,26 @@
+{
+  "id": "olimex_f103",
+  "name": "Olimex STM32-H103",
+  "platform": "ststm32",
+  "mcu": "STM32F103RBT6",
+  "fcpu": 72000000,
+  "ram": 20480,
+  "rom": 131072,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "mbed",
+    "libopencm3",
+    "stm32cube"
+  ],
+  "vendor": "Olimex",
+  "url": "https://www.olimex.com/Products/ARM/ST/STM32-H103/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

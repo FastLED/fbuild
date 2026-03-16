@@ -1,0 +1,24 @@
+{
+  "id": "genericSTM32H750VB",
+  "name": "STM32H750VBT6 (1024k RAM. 128k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32H750VBT6",
+  "fcpu": 480000000,
+  "ram": 524288,
+  "rom": 131072,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Generic",
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32h750vb.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

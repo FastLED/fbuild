@@ -1,0 +1,22 @@
+{
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "jlink": {}
+    }
+  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "teensy35",
+  "mcu": "MK64FX512",
+  "name": "Teensy 3.5",
+  "platform": "teensy",
+  "ram": 262136,
+  "rom": 524288,
+  "url": "https://www.pjrc.com/store/teensy35.html",
+  "vendor": "Teensy"
+}

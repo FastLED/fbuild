@@ -1,0 +1,28 @@
+{
+  "id": "disco_b_u585i_iot02a",
+  "name": "ST B-U585I-IOT02A Discovery",
+  "platform": "ststm32",
+  "mcu": "STM32U585AII6Q",
+  "fcpu": 160000000,
+  "ram": 262144,
+  "rom": 2097152,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/b-u585i-iot02a.html",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

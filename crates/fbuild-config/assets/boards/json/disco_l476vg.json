@@ -1,0 +1,32 @@
+{
+  "id": "disco_l476vg",
+  "name": "ST 32L476GDISCOVERY",
+  "platform": "ststm32",
+  "mcu": "STM32L476VGT6",
+  "fcpu": 80000000,
+  "ram": 131072,
+  "rom": 1048576,
+  "frameworks": [
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "http://www.st.com/web/catalog/tools/FM116/CL1620/SC959/SS1532/LN1848/PF261635",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

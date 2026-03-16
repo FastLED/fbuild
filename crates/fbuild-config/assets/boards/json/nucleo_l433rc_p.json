@@ -1,0 +1,30 @@
+{
+  "id": "nucleo_l433rc_p",
+  "name": "ST Nucleo L433RC-P",
+  "platform": "ststm32",
+  "mcu": "STM32L433RC",
+  "fcpu": 80000000,
+  "ram": 65536,
+  "rom": 262144,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-l433rc-p.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

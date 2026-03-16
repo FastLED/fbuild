@@ -1,0 +1,28 @@
+{
+  "id": "armstrap_eagle1024",
+  "name": "Armstrap Eagle 1024",
+  "platform": "ststm32",
+  "mcu": "STM32F417VGT6",
+  "fcpu": 168000000,
+  "ram": 196608,
+  "rom": 1048576,
+  "frameworks": [
+    "cmsis",
+    "spl",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Armstrap",
+  "url": "http://docs.armstrap.org/en/latest/hardware-overview.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {
+        "onboard": true,
+        "default": true
+      },
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

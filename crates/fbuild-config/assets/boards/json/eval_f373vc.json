@@ -1,0 +1,28 @@
+{
+  "id": "eval_f373vc",
+  "name": "STM32373C-EVAL",
+  "platform": "ststm32",
+  "mcu": "STM32F373VCT6",
+  "fcpu": 72000000,
+  "ram": 32768,
+  "rom": 262144,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/stm32373c-eval.html",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

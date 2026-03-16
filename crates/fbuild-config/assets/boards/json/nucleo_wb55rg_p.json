@@ -1,0 +1,28 @@
+{
+  "id": "nucleo_wb55rg_p",
+  "name": "P-Nucleo WB55RG",
+  "platform": "ststm32",
+  "mcu": "STM32WB55RG",
+  "fcpu": 64000000,
+  "ram": 196608,
+  "rom": 524288,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/p-nucleo-wb55.html",
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

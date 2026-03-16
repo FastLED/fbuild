@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "stlink": {}
+    }
+  },
+  "fcpu": 100000000,
+  "frameworks": [
+    "k1921vk_sdk",
+    "arduino",
+    "freertos"
+  ],
+  "id": "vostok_uno_vn035_revC",
+  "mcu": "K1921VK035",
+  "name": "Vostok UNO-VN035-revC",
+  "platform": "k1921vk",
+  "ram": 16384,
+  "rom": 65536,
+  "url": "https://niiet.ru/product/1921%D0%B2%D0%BA035/",
+  "vendor": "Vostok"
+}

@@ -1,0 +1,25 @@
+{
+  "id": "elektor_f072c8",
+  "name": "Elektor LoRa Node Core F072C8 (64 kB)",
+  "platform": "ststm32",
+  "mcu": "STM32F072C8T6",
+  "fcpu": 48000000,
+  "ram": 16384,
+  "rom": 65536,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "libopencm3",
+    "stm32cube"
+  ],
+  "vendor": "Elektor",
+  "url": "https://www.elektormagazine.com/labs/lorawan-node-experimental-platform",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

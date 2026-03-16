@@ -1,0 +1,20 @@
+{
+  "id": "alorium_xlr8",
+  "name": "Alorium XLR8",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 32256,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Alorium Technology",
+  "url": "http://www.aloriumtech.com/xlr8/",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

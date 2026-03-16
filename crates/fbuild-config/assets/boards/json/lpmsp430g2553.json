@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "mspdebug": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "lpmsp430g2553",
+  "mcu": "MSP430G2553",
+  "name": "TI LaunchPad MSP-EXP430G2553LP",
+  "platform": "timsp430",
+  "ram": 512,
+  "rom": 16384,
+  "url": "http://www.ti.com/ww/en/launchpad/launchpads-msp430-msp-exp430g2.html",
+  "vendor": "TI"
+}

@@ -1,0 +1,30 @@
+{
+  "id": "disco_h735ig",
+  "name": "STM32H735G-DK Discovery kit",
+  "platform": "ststm32",
+  "mcu": "STM32H735IGK6",
+  "fcpu": 550000000,
+  "ram": 442368,
+  "rom": 1048576,
+  "frameworks": [
+    "stm32cube",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/stm32h735g-dk.html",
+  "connectivity": [
+    "can",
+    "ethernet"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

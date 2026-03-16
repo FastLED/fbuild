@@ -1,0 +1,21 @@
+{
+  "id": "lolin32_lite",
+  "name": "WEMOS LOLIN32 Lite",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "WEMOS",
+  "url": "https://diyprojects.io/wemos-lolin32-lite-compact-revision-lolin32-4-90/",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "connectivity": [
+    "wifi"
+  ],
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino",
+    "esp8266-rtos-sdk",
+    "esp8266-nonos-sdk"
+  ],
+  "id": "agruminolemon",
+  "mcu": "ESP8266",
+  "name": "Lifely Agrumino Lemon v4",
+  "platform": "espressif8266",
+  "ram": 81920,
+  "rom": 2097152,
+  "url": "https://www.lifely.cc/",
+  "vendor": "Lifely.cc"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "ATmega165P",
+  "name": "ATmega165P/PA",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA165P",
+  "fcpu": 16000000,
+  "ram": 1024,
+  "rom": 16384,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Microchip",
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega165P"
+}

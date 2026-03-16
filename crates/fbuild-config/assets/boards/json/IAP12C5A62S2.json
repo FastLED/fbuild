@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "IAP12C5A62S2",
+  "mcu": "IAP12C5A62S2",
+  "name": "Generic IAP12C5A62S2",
+  "platform": "intel_mcs51",
+  "ram": 1280,
+  "rom": 63488,
+  "url": "http://www.stcmicro.com/stc/stc12c5a32s2.html",
+  "vendor": "STC"
+}

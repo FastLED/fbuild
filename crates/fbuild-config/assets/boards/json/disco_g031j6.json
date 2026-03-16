@@ -1,0 +1,24 @@
+{
+  "id": "disco_g031j6",
+  "name": "ST STM32G0316-DISCO",
+  "platform": "ststm32",
+  "mcu": "STM32G031J6",
+  "fcpu": 64000000,
+  "ram": 8192,
+  "rom": 32768,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "libopencm3",
+    "stm32cube"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/stm32g0316-disco.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

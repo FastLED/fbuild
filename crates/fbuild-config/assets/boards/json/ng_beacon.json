@@ -1,0 +1,24 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ng_beacon",
+  "mcu": "NRF51822",
+  "name": "ng-beacon",
+  "platform": "nordicnrf51",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://github.com/urish/ng-beacon",
+  "vendor": "ng-beacon"
+}

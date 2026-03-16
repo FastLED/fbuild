@@ -1,0 +1,25 @@
+{
+  "id": "microduino32_flash",
+  "name": "Microduino Core STM32 to Flash",
+  "platform": "ststm32",
+  "mcu": "STM32F103CBT6",
+  "fcpu": 72000000,
+  "ram": 20480,
+  "rom": 108000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Microduino",
+  "url": "http://wiki.microduinoinc.com/Microduino-Module_CoreSTM32",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

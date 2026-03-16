@@ -1,0 +1,14 @@
+{
+  "id": "attiny43",
+  "name": "Generic ATtiny43U",
+  "platform": "atmelavr",
+  "mcu": "ATTINY43U",
+  "fcpu": 8000000,
+  "ram": 256,
+  "rom": 4096,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Atmel",
+  "url": "https://www.microchip.com/wwwproducts/en/ATtiny43U"
+}

@@ -1,0 +1,25 @@
+{
+  "id": "genericSTM32F401RC",
+  "name": "STM32F401RC (64k RAM. 256k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F401RCT6",
+  "fcpu": 84000000,
+  "ram": 65536,
+  "rom": 262144,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "spl",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Generic",
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f401rc.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

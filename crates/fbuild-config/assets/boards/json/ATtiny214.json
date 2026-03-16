@@ -1,0 +1,14 @@
+{
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATtiny214",
+  "mcu": "ATTINY214",
+  "name": "ATtiny214",
+  "platform": "atmelmegaavr",
+  "ram": 128,
+  "rom": 2048,
+  "url": "https://www.microchip.com/wwwproducts/en/ATTINY214",
+  "vendor": "Microchip"
+}

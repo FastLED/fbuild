@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "IAP15F413AD",
+  "mcu": "IAP15F413AD",
+  "name": "Generic IAP15F413AD",
+  "platform": "intel_mcs51",
+  "ram": 512,
+  "rom": 13312,
+  "url": "http://www.stcmicro.com/STC/STC15F408AD.html",
+  "vendor": "STC"
+}

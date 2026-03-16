@@ -1,0 +1,14 @@
+{
+  "id": "attiny861",
+  "name": "Generic ATtiny861",
+  "platform": "atmelavr",
+  "mcu": "ATTINY861",
+  "fcpu": 8000000,
+  "ram": 512,
+  "rom": 8192,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Atmel",
+  "url": "http://www.atmel.com/devices/ATTINY861.aspx"
+}

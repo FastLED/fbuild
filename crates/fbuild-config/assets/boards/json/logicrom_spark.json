@@ -1,0 +1,20 @@
+{
+  "connectivity": [
+    "cellular",
+    "bluetooth",
+    "gps"
+  ],
+  "fcpu": 500000000,
+  "frameworks": [
+    "arduino",
+    "logicromsdk"
+  ],
+  "id": "logicrom_spark",
+  "mcu": "RDA8910",
+  "name": "logicrom Spark LTE-G (EC200U)",
+  "platform": "logicrom",
+  "ram": 524288,
+  "rom": 1048576,
+  "url": "https://logicrom.com",
+  "vendor": "Waybyte Solutions"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "genericSTM32F413CH",
+  "name": "STM32F413CH (320k RAM. 1536k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F413CHU6",
+  "fcpu": 100000000,
+  "ram": 327680,
+  "rom": 1572864,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Generic",
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f413ch.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

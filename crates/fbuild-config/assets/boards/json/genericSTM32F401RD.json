@@ -1,0 +1,24 @@
+{
+  "id": "genericSTM32F401RD",
+  "name": "STM32F401RD (96k RAM. 384k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F401RDT6",
+  "fcpu": 84000000,
+  "ram": 98304,
+  "rom": 393216,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Generic",
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f401rd.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

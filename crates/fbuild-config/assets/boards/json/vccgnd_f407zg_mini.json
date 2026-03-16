@@ -1,0 +1,25 @@
+{
+  "id": "vccgnd_f407zg_mini",
+  "name": "VCCGND F407ZGT6 Mini",
+  "platform": "ststm32",
+  "mcu": "STM32F407ZGT6",
+  "fcpu": 168000000,
+  "ram": 131072,
+  "rom": 1048576,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "VCCGND",
+  "url": "https://stm32-base.org/boards/STM32F407ZGT6-VCC-GND-Large",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "devebox_h750vbtx",
+  "name": "DevEBox H750VBTX",
+  "platform": "ststm32",
+  "mcu": "STM32H750VBT6",
+  "fcpu": 480000000,
+  "ram": 131072,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube"
+  ],
+  "vendor": "DevEBox",
+  "url": "https://github.com/mcauser/MCUDEV_DEVEBOX_H7XX_M",
+  "connectivity": [
+    "can",
+    "ethernet"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

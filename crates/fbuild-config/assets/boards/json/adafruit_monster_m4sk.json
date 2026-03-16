@@ -1,0 +1,20 @@
+{
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "atmel-ice": {}
+    }
+  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "adafruit_monster_m4sk",
+  "mcu": "SAMD51G19A",
+  "name": "Adafruit MONSTER M4SK",
+  "platform": "atmelsam",
+  "ram": 196608,
+  "rom": 507904,
+  "url": "https://www.adafruit.com/product/4343",
+  "vendor": "Adafruit"
+}

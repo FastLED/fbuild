@@ -1,0 +1,28 @@
+{
+  "connectivity": [
+    "bluetooth",
+    "nfc"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {
+        "onboard": true
+      },
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ublox_evk_nina_b1",
+  "mcu": "NRF52832",
+  "name": "u-blox EVK-NINA-B1",
+  "platform": "nordicnrf52",
+  "ram": 65536,
+  "rom": 524288,
+  "url": "https://os.mbed.com/platforms/u-blox-EVK-NINA-B1/",
+  "vendor": "u-blox"
+}

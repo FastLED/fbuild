@@ -1,0 +1,29 @@
+{
+  "id": "olimex_e407",
+  "name": "STM32-E407",
+  "platform": "ststm32",
+  "mcu": "STM32F407ZGT6",
+  "fcpu": 168000000,
+  "ram": 131072,
+  "rom": 1048576,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "Olimex",
+  "url": "https://docs.zephyrproject.org/latest/boards/arm/olimex_stm32_e407/doc/index.html",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

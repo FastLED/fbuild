@@ -1,0 +1,31 @@
+{
+  "id": "nucleo_l552ze_q",
+  "name": "ST Nucleo L552ZE-Q",
+  "platform": "ststm32",
+  "mcu": "STM32L552ZET6",
+  "fcpu": 80000000,
+  "ram": 196608,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-l552ze-q.html",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

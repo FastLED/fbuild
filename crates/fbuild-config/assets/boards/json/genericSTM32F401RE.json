@@ -1,0 +1,25 @@
+{
+  "id": "genericSTM32F401RE",
+  "name": "STM32F401RE (96k RAM. 512k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F401RET6",
+  "fcpu": 84000000,
+  "ram": 98304,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "spl",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Generic",
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f401re.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

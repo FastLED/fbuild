@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "IAP15W105",
+  "mcu": "IAP15W105",
+  "name": "Generic IAP15W105",
+  "platform": "intel_mcs51",
+  "ram": 128,
+  "rom": 5120,
+  "url": "https://www.stcmicro.com/STC/STC15W104.html",
+  "vendor": "STC"
+}

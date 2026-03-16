@@ -1,0 +1,24 @@
+{
+  "id": "genericSTM32F103VF",
+  "name": "STM32F103VF (96k RAM. 768k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F103VFT6",
+  "fcpu": 72000000,
+  "ram": 98304,
+  "rom": 786432,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Generic",
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103vf.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

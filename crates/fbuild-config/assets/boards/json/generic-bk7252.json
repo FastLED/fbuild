@@ -1,0 +1,27 @@
+{
+  "connectivity": [
+    "wifi",
+    "ble"
+  ],
+  "debug": {
+    "tools": {
+      "custom": {},
+      "openocd": {
+        "default": true
+      }
+    }
+  },
+  "fcpu": 180000000,
+  "frameworks": [
+    "base",
+    "arduino"
+  ],
+  "id": "generic-bk7252",
+  "mcu": "BK7252",
+  "name": "Generic - BK7252",
+  "platform": "libretiny",
+  "ram": 524288,
+  "rom": 1703936,
+  "url": "https://docs.libretiny.eu/boards/generic-bk7252/",
+  "vendor": "Generic"
+}

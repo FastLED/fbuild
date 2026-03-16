@@ -1,0 +1,25 @@
+{
+  "id": "olimexino_stm32f3",
+  "name": "Olimex OLIMEXINO-STM32F3",
+  "platform": "ststm32",
+  "mcu": "STM32F303RCT6",
+  "fcpu": 72000000,
+  "ram": 40960,
+  "rom": 262144,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "libopencm3",
+    "stm32cube"
+  ],
+  "vendor": "Olimex",
+  "url": "https://www.olimex.com/Products/Duino/STM32/OLIMEXINO-STM32F3/open-source-hardware",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

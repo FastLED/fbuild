@@ -1,0 +1,25 @@
+{
+  "id": "hy_tinystm103tb",
+  "name": "Tiny STM103T",
+  "platform": "ststm32",
+  "mcu": "STM32F103TBU6",
+  "fcpu": 72000000,
+  "ram": 20480,
+  "rom": 131072,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "HY",
+  "url": "http://www.hotmcu.com/stm32f103tb-arm-cortex-m3-development-board-p-222.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

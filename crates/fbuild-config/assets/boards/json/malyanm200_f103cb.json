@@ -1,0 +1,25 @@
+{
+  "id": "malyanm200_f103cb",
+  "name": "Malyan M200 V1",
+  "platform": "ststm32",
+  "mcu": "STM32F103CBT6",
+  "fcpu": 72000000,
+  "ram": 20480,
+  "rom": 122880,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Malyan",
+  "url": "http://malyansys.com/en/product/fdm-series/m200-v1/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

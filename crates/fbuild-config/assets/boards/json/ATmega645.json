@@ -1,0 +1,14 @@
+{
+  "id": "ATmega645",
+  "name": "ATmega645/A",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA645",
+  "fcpu": 16000000,
+  "ram": 4096,
+  "rom": 65536,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Microchip",
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega645"
+}

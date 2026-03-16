@@ -1,0 +1,22 @@
+{
+  "debug": {
+    "tools": {
+      "ftdi": {
+        "onboard": true
+      },
+      "jlink": {}
+    }
+  },
+  "fcpu": 9000000,
+  "frameworks": [
+    "azadi-sdk"
+  ],
+  "id": "artix7-35t",
+  "mcu": "AM130",
+  "name": "Artix-7 35T",
+  "platform": "azadi",
+  "ram": 131072,
+  "rom": 0,
+  "url": "https://www.xilinx.com/products/boards-and-kits/arty.html",
+  "vendor": "Xilinx"
+}

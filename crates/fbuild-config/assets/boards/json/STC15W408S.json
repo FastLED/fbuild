@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "STC15W408S",
+  "mcu": "STC15W408S",
+  "name": "Generic STC15W408S",
+  "platform": "intel_mcs51",
+  "ram": 512,
+  "rom": 8192,
+  "url": "http://www.stcmicro.com/STC/STC15W408S.html",
+  "vendor": "STC"
+}

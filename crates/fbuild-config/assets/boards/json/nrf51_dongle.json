@@ -1,0 +1,29 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "jlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 32000000,
+  "frameworks": [
+    "arduino",
+    "zephyr"
+  ],
+  "id": "nrf51_dongle",
+  "mcu": "NRF51822",
+  "name": "Nordic nRF51 Dongle (PCA10031)",
+  "platform": "nordicnrf51",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://www.nordicsemi.com/Products/Development-hardware/nRF51-Dongle",
+  "vendor": "Nordic"
+}

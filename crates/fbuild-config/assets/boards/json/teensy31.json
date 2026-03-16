@@ -1,0 +1,19 @@
+{
+  "debug": {
+    "tools": {
+      "jlink": {}
+    }
+  },
+  "fcpu": 72000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "teensy31",
+  "mcu": "MK20DX256",
+  "name": "Teensy 3.1 / 3.2",
+  "platform": "teensy",
+  "ram": 65536,
+  "rom": 262144,
+  "url": "https://www.pjrc.com/store/teensy31.html",
+  "vendor": "Teensy"
+}

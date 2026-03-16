@@ -1,0 +1,14 @@
+{
+  "id": "ATmega649",
+  "name": "ATmega649/A",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA649",
+  "fcpu": 16000000,
+  "ram": 4096,
+  "rom": 65536,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Microchip",
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega649"
+}

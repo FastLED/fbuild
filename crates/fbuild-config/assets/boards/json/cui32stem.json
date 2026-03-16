@@ -1,0 +1,14 @@
+{
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "cui32stem",
+  "mcu": "32MX795F512H",
+  "name": "SeeedStudio CUI32stem",
+  "platform": "microchippic32",
+  "ram": 131072,
+  "rom": 520192,
+  "url": "http://www.seeedstudio.com/wiki/CUI32Stem",
+  "vendor": "SeeedStudio"
+}

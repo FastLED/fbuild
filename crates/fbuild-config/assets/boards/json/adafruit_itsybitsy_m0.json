@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "atmel-ice": {}
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "adafruit_itsybitsy_m0",
+  "mcu": "SAMD21G18A",
+  "name": "Adafruit ItsyBitsy M0",
+  "platform": "atmelsam",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://www.adafruit.com/product/3727",
+  "vendor": "Adafruit"
+}

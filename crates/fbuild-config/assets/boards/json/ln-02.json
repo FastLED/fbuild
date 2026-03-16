@@ -1,0 +1,27 @@
+{
+  "connectivity": [
+    "wifi",
+    "ble"
+  ],
+  "debug": {
+    "tools": {
+      "custom": {},
+      "openocd": {
+        "default": true
+      }
+    }
+  },
+  "fcpu": 160000000,
+  "frameworks": [
+    "base",
+    "arduino"
+  ],
+  "id": "ln-02",
+  "mcu": "LN882HK",
+  "name": "LN-02 Wi-Fi/BLE Module",
+  "platform": "libretiny",
+  "ram": 302080,
+  "rom": 1228800,
+  "url": "https://docs.libretiny.eu/boards/ln-02/",
+  "vendor": "Unknown"
+}

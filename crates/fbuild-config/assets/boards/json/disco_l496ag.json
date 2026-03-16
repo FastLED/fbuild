@@ -1,0 +1,32 @@
+{
+  "id": "disco_l496ag",
+  "name": "ST 32L496GDISCOVERY",
+  "platform": "ststm32",
+  "mcu": "STM32L496AGI6",
+  "fcpu": 80000000,
+  "ram": 327680,
+  "rom": 1048576,
+  "frameworks": [
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/32l496gdiscovery.html",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

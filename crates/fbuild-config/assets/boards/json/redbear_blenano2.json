@@ -1,0 +1,28 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "arduino",
+    "zephyr"
+  ],
+  "id": "redbear_blenano2",
+  "mcu": "NRF52832",
+  "name": "RedBearLab BLE Nano 2",
+  "platform": "nordicnrf52",
+  "ram": 65536,
+  "rom": 524288,
+  "url": "https://redbear.cc/product/ble-nano-2-soldered.html",
+  "vendor": "RedBearLab"
+}

@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "atmel-ice": {}
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "sodaq_autonomo",
+  "mcu": "SAMD21J18A",
+  "name": "SODAQ Autonomo",
+  "platform": "atmelsam",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://support.sodaq.com/autonom%D0%BE/features-autonomo/",
+  "vendor": "SODAQ"
+}

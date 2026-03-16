@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "IAP15W1K29S",
+  "mcu": "IAP15W1K29S",
+  "name": "Generic IAP15W1K29S",
+  "platform": "intel_mcs51",
+  "ram": 1024,
+  "rom": 29696,
+  "url": "http://www.stcmicro.com/STC/STC15W1K24S.html",
+  "vendor": "STC"
+}

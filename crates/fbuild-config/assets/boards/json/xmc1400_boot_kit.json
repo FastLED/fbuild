@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "jlink": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "xmc1400_boot_kit",
+  "mcu": "XMC1400",
+  "name": "XMC1400 Boot Kit",
+  "platform": "infineonxmc",
+  "ram": 16384,
+  "rom": 2048000,
+  "url": "https://www.infineon.com",
+  "vendor": "Infineon"
+}

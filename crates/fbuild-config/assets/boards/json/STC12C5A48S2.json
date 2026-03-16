@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "STC12C5A48S2",
+  "mcu": "STC12C5A48S2",
+  "name": "Generic STC12C5A48S2",
+  "platform": "intel_mcs51",
+  "ram": 1280,
+  "rom": 49152,
+  "url": "http://www.stcmicro.com/stc/stc12c5a32s2.html",
+  "vendor": "STC"
+}

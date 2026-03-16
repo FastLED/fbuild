@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "STC8H04",
+  "mcu": "STC8H04",
+  "name": "Generic STC8H04",
+  "platform": "intel_mcs51",
+  "ram": 256,
+  "rom": 4096,
+  "url": "http://www.stcmicro.com/stc/stc51.html",
+  "vendor": "STC"
+}

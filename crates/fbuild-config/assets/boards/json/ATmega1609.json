@@ -1,0 +1,14 @@
+{
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega1609",
+  "mcu": "ATMEGA1609",
+  "name": "ATmega1609",
+  "platform": "atmelmegaavr",
+  "ram": 2048,
+  "rom": 16384,
+  "url": "https://www.microchip.com/wwwproducts/en/ATMEGA1609",
+  "vendor": "Microchip"
+}

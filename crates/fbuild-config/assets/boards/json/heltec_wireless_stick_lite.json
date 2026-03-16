@@ -1,0 +1,21 @@
+{
+  "id": "heltec_wireless_stick_lite",
+  "name": "Heltec Wireless Stick Lite",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "Heltec Automation",
+  "url": "https://heltec.org/project/wireless-stick-lite/",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

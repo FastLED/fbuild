@@ -1,0 +1,23 @@
+{
+  "debug": {
+    "tools": {
+      "stlink": {
+        "onboard": true,
+        "default": true
+      }
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino",
+    "spl"
+  ],
+  "id": "stm8sdisco",
+  "mcu": "STM8S105C6T6",
+  "name": "ST STM8S-DISCOVERY",
+  "platform": "ststm8",
+  "ram": 2048,
+  "rom": 32768,
+  "url": "https://www.st.com/en/evaluation-tools/stm8s-discovery.html",
+  "vendor": "ST"
+}

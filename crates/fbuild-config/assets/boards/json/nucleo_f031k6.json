@@ -1,0 +1,29 @@
+{
+  "id": "nucleo_f031k6",
+  "name": "ST Nucleo F031K6",
+  "platform": "ststm32",
+  "mcu": "STM32F031K6T6",
+  "fcpu": 48000000,
+  "ram": 4096,
+  "rom": 32768,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F031K6/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "id": "disco_l4s5i_iot01a",
+  "name": "ST STM32L4+ Discovery kit IoT node",
+  "platform": "ststm32",
+  "mcu": "STM32L4S5VIT6",
+  "fcpu": 80000000,
+  "ram": 655360,
+  "rom": 2097152,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/b-l4s5i-iot01a.html",
+  "connectivity": [
+    "bluetooth",
+    "can",
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "rymcu_nebulapi_f103ve",
+  "name": "RYMCU Nebula Pi F103VE (64k RAM. 512k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F103VET6",
+  "fcpu": 72000000,
+  "ram": 65536,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "libopencm3",
+    "stm32cube"
+  ],
+  "vendor": "RYMCU",
+  "url": "https://rymcu.com/products",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

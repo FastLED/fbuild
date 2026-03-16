@@ -1,0 +1,14 @@
+{
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "cubecell_capsule",
+  "mcu": "ASR6501",
+  "name": "Heltec CubeCell-Capsule (HTCC-AC01)",
+  "platform": "heltec-cubecell",
+  "ram": 16384,
+  "rom": 131072,
+  "url": "https://heltec.org/product/htcc-ac01/",
+  "vendor": "Heltec"
+}

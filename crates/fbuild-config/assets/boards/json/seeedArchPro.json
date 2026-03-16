@@ -1,0 +1,24 @@
+{
+  "connectivity": [
+    "ethernet"
+  ],
+  "debug": {
+    "tools": {
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 96000000,
+  "frameworks": [
+    "mbed"
+  ],
+  "id": "seeedArchPro",
+  "mcu": "LPC1768",
+  "name": "Seeed Arch Pro",
+  "platform": "nxplpc",
+  "ram": 65536,
+  "rom": 524288,
+  "url": "https://developer.mbed.org/platforms/Seeeduino-Arch-Pro/",
+  "vendor": "SeeedStudio"
+}

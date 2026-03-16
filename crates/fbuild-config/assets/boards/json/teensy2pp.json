@@ -1,0 +1,14 @@
+{
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "teensy2pp",
+  "mcu": "AT90USB1286",
+  "name": "Teensy++ 2.0",
+  "platform": "teensy",
+  "ram": 8192,
+  "rom": 130048,
+  "url": "https://www.pjrc.com/store/teensypp.html",
+  "vendor": "Teensy"
+}

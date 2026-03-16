@@ -1,0 +1,19 @@
+{
+  "connectivity": [
+    "cellular",
+    "bluetooth"
+  ],
+  "fcpu": 500000000,
+  "frameworks": [
+    "arduino",
+    "logicromsdk"
+  ],
+  "id": "ec600u",
+  "mcu": "RDA8910",
+  "name": "Quectel EC600U LTE Cat.1 Module",
+  "platform": "logicrom",
+  "ram": 524288,
+  "rom": 1048576,
+  "url": "",
+  "vendor": "Quectel Wireless Solutions Co., Ltd."
+}

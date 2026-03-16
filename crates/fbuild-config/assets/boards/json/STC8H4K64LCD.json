@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "STC8H4K64LCD",
+  "mcu": "STC8H4K64LCD",
+  "name": "Generic STC8H4K64LCD",
+  "platform": "intel_mcs51",
+  "ram": 4352,
+  "rom": 65536,
+  "url": "http://www.stcmicro.com/stc/stc51.html",
+  "vendor": "STC"
+}

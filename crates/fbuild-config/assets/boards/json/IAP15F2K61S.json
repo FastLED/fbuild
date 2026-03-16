@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "IAP15F2K61S",
+  "mcu": "IAP15F2K61S",
+  "name": "Generic IAP15F2K61S",
+  "platform": "intel_mcs51",
+  "ram": 2048,
+  "rom": 62464,
+  "url": "http://www.stcmicro.com/STC/STC15F2K32S2.html",
+  "vendor": "STC"
+}

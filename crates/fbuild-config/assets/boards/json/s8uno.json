@@ -1,0 +1,20 @@
+{
+  "debug": {
+    "tools": {
+      "stlink": {}
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino",
+    "spl"
+  ],
+  "id": "s8uno",
+  "mcu": "STM8S105K6T6",
+  "name": "sduino UNO (STM8S105K6)",
+  "platform": "ststm8",
+  "ram": 2048,
+  "rom": 32768,
+  "url": "https://github.com/roybaer/sduino_uno",
+  "vendor": "sduino"
+}

@@ -1,0 +1,30 @@
+{
+  "id": "disco_f303vc",
+  "name": "ST STM32F3DISCOVERY",
+  "platform": "ststm32",
+  "mcu": "STM32F303VCT6",
+  "fcpu": 72000000,
+  "ram": 40960,
+  "rom": 262144,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "spl",
+    "libopencm3",
+    "stm32cube",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1848/PF254044",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

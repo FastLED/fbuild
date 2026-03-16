@@ -1,0 +1,12 @@
+{
+  "fcpu": 12000000,
+  "frameworks": [],
+  "id": "icezum",
+  "mcu": "ICE40-HX1K-TQ144",
+  "name": "IceZUM Alhambra FPGA",
+  "platform": "lattice_ice40",
+  "ram": 32768,
+  "rom": 32768,
+  "url": "https://github.com/FPGAwars/icezum/wiki",
+  "vendor": "FPGAwars"
+}

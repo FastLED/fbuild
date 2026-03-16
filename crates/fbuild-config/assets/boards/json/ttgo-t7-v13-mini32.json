@@ -1,0 +1,21 @@
+{
+  "id": "ttgo-t7-v13-mini32",
+  "name": "TTGO T7 V1.3 Mini32",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 1310720,
+  "rom": 4194304,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "TTGO",
+  "url": "https://github.com/LilyGO/ESP32-MINI-32-V1.3",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "can",
+    "ethernet"
+  ]
+}

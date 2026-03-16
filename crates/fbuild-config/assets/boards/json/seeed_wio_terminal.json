@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "atmel-ice": {}
+    }
+  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "seeed_wio_terminal",
+  "mcu": "SAMD51P19A",
+  "name": "Seeeduino Wio Terminal",
+  "platform": "atmelsam",
+  "ram": 196608,
+  "rom": 507904,
+  "url": "https://www.seeedstudio.com/Wio-Terminal-p-4509.html",
+  "vendor": "Seeed"
+}

@@ -1,0 +1,19 @@
+{
+  "id": "diecimilaatmega168",
+  "name": "Arduino Duemilanove or Diecimila ATmega168",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA168",
+  "fcpu": 16000000,
+  "ram": 1024,
+  "rom": 14336,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Arduino",
+  "url": "http://arduino.cc/en/Main/ArduinoBoardDiecimila",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "STC15F2K24AS",
+  "mcu": "STC15F2K24AS",
+  "name": "Generic STC15F2K24AS",
+  "platform": "intel_mcs51",
+  "ram": 2048,
+  "rom": 24576,
+  "url": "http://www.stcmicro.com/STC/STC15F2K32S2.html",
+  "vendor": "STC"
+}

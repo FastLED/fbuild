@@ -1,0 +1,27 @@
+{
+  "id": "sakuraio_evb_01",
+  "name": "sakura.io Evaluation Board",
+  "platform": "ststm32",
+  "mcu": "STM32F411RET6",
+  "fcpu": 100000000,
+  "ram": 131072,
+  "rom": 1048576,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "sakura.io",
+  "url": "https://os.mbed.com/platforms/SAKURAIO_EVB_01/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {
+        "onboard": true,
+        "default": true
+      }
+    }
+  }
+}

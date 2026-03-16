@@ -1,0 +1,24 @@
+{
+  "id": "genericSTM32F415RG",
+  "name": "STM32F415RG (128k RAM. 1024k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F415RGT6",
+  "fcpu": 168000000,
+  "ram": 131072,
+  "rom": 1048576,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Generic",
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f415rg.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

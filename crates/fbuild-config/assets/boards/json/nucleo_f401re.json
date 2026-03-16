@@ -1,0 +1,31 @@
+{
+  "id": "nucleo_f401re",
+  "name": "ST Nucleo F401RE",
+  "platform": "ststm32",
+  "mcu": "STM32F401RET6",
+  "fcpu": 84000000,
+  "ram": 98304,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "mbed",
+    "cmsis",
+    "spl",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F401RE/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "fcpu": 40000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "openbci",
+  "mcu": "32MX250F128B",
+  "name": "OpenBCI 32bit",
+  "platform": "microchippic32",
+  "ram": 32768,
+  "rom": 122880,
+  "url": "http://shop.openbci.com/",
+  "vendor": "OpenBCI"
+}

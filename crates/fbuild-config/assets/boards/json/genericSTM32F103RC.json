@@ -1,0 +1,25 @@
+{
+  "id": "genericSTM32F103RC",
+  "name": "STM32F103RC (48k RAM. 256k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F103RCT6",
+  "fcpu": 72000000,
+  "ram": 49152,
+  "rom": 262144,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "libopencm3",
+    "stm32cube"
+  ],
+  "vendor": "Generic",
+  "url": "http://www.st.com/content/st_com/en/products/microcontrollers/stm32-32-bit-arm-cortex-mcus/stm32f1-series/stm32f103/stm32f103rc.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

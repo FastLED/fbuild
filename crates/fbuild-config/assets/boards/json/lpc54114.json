@@ -1,0 +1,23 @@
+{
+  "debug": {
+    "tools": {
+      "cmsis-dap": {
+        "onboard": true
+      },
+      "jlink": {}
+    }
+  },
+  "fcpu": 100000000,
+  "frameworks": [
+    "mbed",
+    "zephyr"
+  ],
+  "id": "lpc54114",
+  "mcu": "LPC54114J256BD64",
+  "name": "NXP LPCXpresso54114",
+  "platform": "nxplpc",
+  "ram": 196608,
+  "rom": 262144,
+  "url": "https://os.mbed.com/platforms/LPCXpresso54114/",
+  "vendor": "NXP"
+}

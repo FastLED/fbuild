@@ -1,0 +1,14 @@
+{
+  "id": "altair",
+  "name": "Altair",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA256RFR2",
+  "fcpu": 16000000,
+  "ram": 32768,
+  "rom": 253952,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "makerlab.mx",
+  "url": "http://www.aquila.io/en"
+}

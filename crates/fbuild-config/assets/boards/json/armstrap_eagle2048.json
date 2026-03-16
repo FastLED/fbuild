@@ -1,0 +1,28 @@
+{
+  "id": "armstrap_eagle2048",
+  "name": "Armstrap Eagle 2048",
+  "platform": "ststm32",
+  "mcu": "STM32F427VIT6",
+  "fcpu": 168000000,
+  "ram": 262144,
+  "rom": 2091752,
+  "frameworks": [
+    "cmsis",
+    "spl",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Armstrap",
+  "url": "http://docs.armstrap.org/en/latest/hardware-overview.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {
+        "onboard": true,
+        "default": true
+      },
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

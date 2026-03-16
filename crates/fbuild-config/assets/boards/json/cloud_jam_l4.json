@@ -1,0 +1,28 @@
+{
+  "id": "cloud_jam_l4",
+  "name": "RushUp Cloud-JAM L4",
+  "platform": "ststm32",
+  "mcu": "STM32L476RGT6",
+  "fcpu": 80000000,
+  "ram": 131072,
+  "rom": 1048576,
+  "frameworks": [
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "RushUp",
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-L476RG/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

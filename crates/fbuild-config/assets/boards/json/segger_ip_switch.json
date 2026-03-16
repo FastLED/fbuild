@@ -1,0 +1,23 @@
+{
+  "connectivity": [
+    "ethernet",
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "jlink": {}
+    }
+  },
+  "fcpu": 180000000,
+  "frameworks": [
+    "zephyr"
+  ],
+  "id": "segger_ip_switch",
+  "mcu": "MK66FN2M0VMD18",
+  "name": "SEGGER IP Switch Board",
+  "platform": "freescalekinetis",
+  "ram": 262144,
+  "rom": 2097152,
+  "url": "https://www.segger.com/evaluate-our-software/segger/embosip-switch-board/",
+  "vendor": "SEGGER"
+}

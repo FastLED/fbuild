@@ -1,0 +1,28 @@
+{
+  "id": "genericSTM32G431CB",
+  "name": "STM32G431CB (32k RAM. 128k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32G431CBU6",
+  "fcpu": 170000000,
+  "ram": 32768,
+  "rom": 131072,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "libopencm3",
+    "stm32cube"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32g431cb.html",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

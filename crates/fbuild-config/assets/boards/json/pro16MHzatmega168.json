@@ -1,0 +1,19 @@
+{
+  "id": "pro16MHzatmega168",
+  "name": "Arduino Pro or Pro Mini ATmega168 (5V, 16 MHz)",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA168",
+  "fcpu": 16000000,
+  "ram": 1024,
+  "rom": 14336,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Arduino",
+  "url": "http://arduino.cc/en/Main/ArduinoBoardProMini",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

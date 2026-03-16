@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "IRC15W1K31S",
+  "mcu": "IRC15W1K31S",
+  "name": "Generic IRC15W1K31S",
+  "platform": "intel_mcs51",
+  "ram": 1024,
+  "rom": 32256,
+  "url": "http://www.stcmicro.com/STC/STC15W1K24S.html",
+  "vendor": "STC"
+}

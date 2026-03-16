@@ -1,0 +1,33 @@
+{
+  "id": "nucleo_h723zg",
+  "name": "ST Nucleo H723ZG",
+  "platform": "ststm32",
+  "mcu": "STM32H723ZGT6",
+  "fcpu": 550000000,
+  "ram": 327680,
+  "rom": 1048576,
+  "frameworks": [
+    "arduino",
+    "stm32cube",
+    "mbed",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-h723zg.html",
+  "connectivity": [
+    "can",
+    "ethernet"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

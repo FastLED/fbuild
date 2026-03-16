@@ -1,0 +1,25 @@
+{
+  "id": "genericSTM32F103ZE",
+  "name": "STM32F103ZE (64k RAM. 512k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F103ZET6",
+  "fcpu": 72000000,
+  "ram": 65536,
+  "rom": 524288,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "libopencm3",
+    "stm32cube"
+  ],
+  "vendor": "Generic",
+  "url": "http://www.st.com/en/microcontrollers/stm32f103ze.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

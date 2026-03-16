@@ -1,0 +1,14 @@
+{
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "helvepic32_robot",
+  "mcu": "32MX270F256D",
+  "name": "HelvePic32 Robot",
+  "platform": "microchippic32",
+  "ram": 63488,
+  "rom": 249856,
+  "url": "https://www.helvepic32.org/shop-1/",
+  "vendor": "BOXTEC"
+}

@@ -1,0 +1,24 @@
+{
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {
+        "onboard": true
+      },
+      "jlink": {}
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "mbed",
+    "zephyr"
+  ],
+  "id": "frdm_kl25z",
+  "mcu": "MKL25Z128VLK4",
+  "name": "Freescale Kinetis FRDM-KL25Z",
+  "platform": "freescalekinetis",
+  "ram": 16384,
+  "rom": 131072,
+  "url": "https://developer.mbed.org/platforms/KL25Z/",
+  "vendor": "Freescale"
+}

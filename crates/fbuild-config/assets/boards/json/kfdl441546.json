@@ -1,0 +1,20 @@
+{
+  "debug": {
+    "tools": {
+      "stlink": {}
+    }
+  },
+  "fcpu": 100000000,
+  "frameworks": [
+    "k1921vk_sdk",
+    "freertos"
+  ],
+  "id": "kfdl441546",
+  "mcu": "K1921VK01T",
+  "name": "kfdl441546",
+  "platform": "k1921vk",
+  "ram": 196608,
+  "rom": 1048576,
+  "url": "https://niiet.ru/product/%d0%ba%d1%84%d0%b4%d0%bb-441461-003/",
+  "vendor": "NIIET"
+}

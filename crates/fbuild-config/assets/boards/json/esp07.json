@@ -1,0 +1,19 @@
+{
+  "connectivity": [
+    "wifi"
+  ],
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino",
+    "esp8266-rtos-sdk",
+    "esp8266-nonos-sdk"
+  ],
+  "id": "esp07",
+  "mcu": "ESP8266",
+  "name": "Espressif Generic ESP8266 ESP-07 1MB",
+  "platform": "espressif8266",
+  "ram": 81920,
+  "rom": 1048576,
+  "url": "http://www.esp8266.com/wiki/doku.php?id=esp8266-module-family#esp-07",
+  "vendor": "Espressif"
+}

@@ -1,0 +1,20 @@
+{
+  "id": "controllino_mini",
+  "name": "Controllino Mini",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 32256,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Controllino",
+  "url": "https://www.controllino.com/product/controllino-mini/",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

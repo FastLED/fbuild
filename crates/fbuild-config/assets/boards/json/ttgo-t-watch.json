@@ -1,0 +1,21 @@
+{
+  "id": "ttgo-t-watch",
+  "name": "TTGO T-Watch",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 16777216,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "TTGO",
+  "url": "https://github.com/Xinyuan-LilyGO/TTGO-T-Watch",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

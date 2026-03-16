@@ -1,0 +1,20 @@
+{
+  "id": "miniwireless",
+  "name": "Anarduino MiniWireless",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 32256,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Anarduino",
+  "url": "http://www.anarduino.com/miniwireless/",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

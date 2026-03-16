@@ -1,0 +1,12 @@
+{
+  "fcpu": 11059200,
+  "frameworks": [],
+  "id": "STC15W401AS",
+  "mcu": "STC15W401AS",
+  "name": "Generic STC15W401AS",
+  "platform": "intel_mcs51",
+  "ram": 512,
+  "rom": 1024,
+  "url": "https://www.stcmicro.com/STC/STC15W408AS.html",
+  "vendor": "STC"
+}

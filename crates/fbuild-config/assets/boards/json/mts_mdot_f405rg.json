@@ -1,0 +1,23 @@
+{
+  "id": "mts_mdot_f405rg",
+  "name": "MultiTech mDot",
+  "platform": "ststm32",
+  "mcu": "STM32F411RET6",
+  "fcpu": 100000000,
+  "ram": 131072,
+  "rom": 524288,
+  "frameworks": [
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "MultiTech",
+  "url": "https://developer.mbed.org/platforms/MTS-mDot-F411/",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

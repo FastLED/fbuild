@@ -1,0 +1,22 @@
+{
+  "debug": {
+    "tools": {
+      "ti-icdi": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "arduino",
+    "libopencm3"
+  ],
+  "id": "lptm4c1294ncpdt",
+  "mcu": "LPTM4C1294NCPDT",
+  "name": "TI LaunchPad (Tiva C) w/ tm4c129 (120MHz)",
+  "platform": "titiva",
+  "ram": 262144,
+  "rom": 1048576,
+  "url": "http://www.ti.com/ww/en/launchpad/launchpads-connected-ek-tm4c1294xl.html",
+  "vendor": "TI"
+}

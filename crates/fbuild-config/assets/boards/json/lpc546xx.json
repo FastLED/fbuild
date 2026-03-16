@@ -1,0 +1,24 @@
+{
+  "connectivity": [
+    "ethernet"
+  ],
+  "debug": {
+    "tools": {
+      "jlink": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 180000000,
+  "frameworks": [
+    "mbed"
+  ],
+  "id": "lpc546xx",
+  "mcu": "LPC54608ET512",
+  "name": "NXP LPCXpresso54608",
+  "platform": "nxplpc",
+  "ram": 204800,
+  "rom": 524288,
+  "url": "https://os.mbed.com/platforms/LPCXpresso54608/",
+  "vendor": "NXP"
+}

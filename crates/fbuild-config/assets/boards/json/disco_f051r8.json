@@ -1,0 +1,28 @@
+{
+  "id": "disco_f051r8",
+  "name": "ST STM32F0DISCOVERY",
+  "platform": "ststm32",
+  "mcu": "STM32F051R8T6",
+  "fcpu": 48000000,
+  "ram": 8192,
+  "rom": 65536,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1848/PF253215",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

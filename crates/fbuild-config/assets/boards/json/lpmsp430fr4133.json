@@ -1,0 +1,21 @@
+{
+  "debug": {
+    "tools": {
+      "mspdebug": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "lpmsp430fr4133",
+  "mcu": "MSP430FR4133",
+  "name": "TI LaunchPad MSP-EXP430FR4133LP",
+  "platform": "timsp430",
+  "ram": 2048,
+  "rom": 15360,
+  "url": "http://www.ti.com/tool/msp-exp430fr4133",
+  "vendor": "TI"
+}

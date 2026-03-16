@@ -1,0 +1,19 @@
+{
+  "id": "attiny13a",
+  "name": "ATtiny13A",
+  "platform": "atmelavr",
+  "mcu": "ATTINY13A",
+  "fcpu": 9600000,
+  "ram": 64,
+  "rom": 1024,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Microchip",
+  "url": "https://www.microchip.com/wwwproducts/en/ATtiny13A",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

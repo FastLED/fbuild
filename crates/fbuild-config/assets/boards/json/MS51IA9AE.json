@@ -1,0 +1,12 @@
+{
+  "fcpu": 16000000,
+  "frameworks": [],
+  "id": "MS51IA9AE",
+  "mcu": "MS51IA9AE",
+  "name": "Generic MS51IA9AE",
+  "platform": "intel_mcs51",
+  "ram": 1280,
+  "rom": 8192,
+  "url": "https://www.nuvoton.com/products/microcontrollers/8bit-8051-mcus/industrial-8051-series/",
+  "vendor": "Nuvoton"
+}

@@ -1,0 +1,25 @@
+{
+  "id": "genericSTM32F103ZC",
+  "name": "STM32F103ZC (48k RAM. 256k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F103ZCT6",
+  "fcpu": 72000000,
+  "ram": 49152,
+  "rom": 262144,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "libopencm3",
+    "stm32cube"
+  ],
+  "vendor": "Generic",
+  "url": "http://www.st.com/en/microcontrollers/stm32f103zc.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

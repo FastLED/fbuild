@@ -1,0 +1,22 @@
+{
+  "id": "econode_l082cz",
+  "name": "Econode-L082CZ",
+  "platform": "ststm32",
+  "mcu": "STM32L082CZY6",
+  "fcpu": 32000000,
+  "ram": 20480,
+  "rom": 196608,
+  "frameworks": [
+    "arduino",
+    "stm32cube"
+  ],
+  "vendor": "Econode",
+  "url": "https://www.econode.nz/L082CZ",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

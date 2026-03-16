@@ -1,0 +1,17 @@
+{
+  "connectivity": [
+    "wifi"
+  ],
+  "fcpu": 200000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "chipkit_wifire",
+  "mcu": "32MZ2048ECG100",
+  "name": "Digilent chipKIT WiFire",
+  "platform": "microchippic32",
+  "ram": 524288,
+  "rom": 2080768,
+  "url": "http://store.digilentinc.com/chipkit-wi-fire-wifi-enabled-mz-microcontroller-board/",
+  "vendor": "Digilent"
+}

@@ -1,0 +1,30 @@
+{
+  "id": "blues_cygnet",
+  "name": "Blues Cygnet",
+  "platform": "ststm32",
+  "mcu": "STM32L433CCT6",
+  "fcpu": 80000000,
+  "ram": 65536,
+  "rom": 262144,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Blues",
+  "url": "https://blues.com/feather-mcu/",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

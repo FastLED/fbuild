@@ -1,0 +1,27 @@
+{
+  "connectivity": [
+    "wifi"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "atmel-ice": {},
+      "cmsis-dap": {
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "samd21g18a",
+  "mcu": "SAMD21G18A",
+  "name": "Atmel ATSAMW25-XPRO",
+  "platform": "atmelsam",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://www.microchip.com/en-us/development-tool/atsamw25-xpro",
+  "vendor": "Atmel"
+}

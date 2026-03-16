@@ -1,0 +1,20 @@
+{
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "atmel-ice": {}
+    }
+  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "sparkfun_samd51_thing_plus",
+  "mcu": "SAMD51J20A",
+  "name": "SparkFun SAMD51 Thing Plus",
+  "platform": "atmelsam",
+  "ram": 196608,
+  "rom": 507904,
+  "url": "https://www.sparkfun.com/products/14713",
+  "vendor": "SparkFun"
+}

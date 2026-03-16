@@ -1,0 +1,24 @@
+{
+  "id": "genericSTM32F410CB",
+  "name": "STM32F410CB (32k RAM. 128k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F410CBT6",
+  "fcpu": 100000000,
+  "ram": 32768,
+  "rom": 131072,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Generic",
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f410cb.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

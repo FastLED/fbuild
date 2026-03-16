@@ -1,0 +1,21 @@
+{
+  "id": "m5stack_paper",
+  "name": "M5Stack Paper",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 4521984,
+  "rom": 16777216,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "M5Stack",
+  "url": "http://www.m5stack.com",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

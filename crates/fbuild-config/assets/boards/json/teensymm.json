@@ -1,0 +1,22 @@
+{
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "jlink": {}
+    }
+  },
+  "fcpu": 600000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "teensymm",
+  "mcu": "IMXRT1062",
+  "name": "SparkFun MicroMod Teensy",
+  "platform": "teensy",
+  "ram": 524288,
+  "rom": 8126464,
+  "url": "https://www.sparkfun.com/products/16402",
+  "vendor": "SparkFun"
+}

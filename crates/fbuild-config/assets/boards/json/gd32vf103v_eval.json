@@ -1,0 +1,22 @@
+{
+  "debug": {
+    "tools": {
+      "altera-usb-blaster": {},
+      "gd-link": {},
+      "jlink": {},
+      "rv-link": {}
+    }
+  },
+  "fcpu": 108000000,
+  "frameworks": [
+    "nuclei-sdk"
+  ],
+  "id": "gd32vf103v_eval",
+  "mcu": "GD32VF103VBT6",
+  "name": "GD32VF103V Evaluation Kit",
+  "platform": "nuclei",
+  "ram": 32768,
+  "rom": 131072,
+  "url": "https://www.gigadevice.com/",
+  "vendor": "GigaDevice"
+}

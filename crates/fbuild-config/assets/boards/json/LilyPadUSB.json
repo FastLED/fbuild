@@ -1,0 +1,19 @@
+{
+  "id": "LilyPadUSB",
+  "name": "Arduino LilyPad USB",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA32U4",
+  "fcpu": 8000000,
+  "ram": 2560,
+  "rom": 28672,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Arduino",
+  "url": "http://arduino.cc/en/Main/ArduinoBoardLilyPadUSB",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

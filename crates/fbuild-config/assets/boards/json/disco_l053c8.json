@@ -1,0 +1,27 @@
+{
+  "id": "disco_l053c8",
+  "name": "ST 32L0538DISCOVERY",
+  "platform": "ststm32",
+  "mcu": "STM32L053C8T6",
+  "fcpu": 32000000,
+  "ram": 8192,
+  "rom": 65536,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "ST",
+  "url": "http://www.st.com/web/en/catalog/tools/PF260319",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

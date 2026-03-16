@@ -1,0 +1,24 @@
+{
+  "id": "genericSTM32F411RC",
+  "name": "STM32F411RC (128k RAM. 256k Flash)",
+  "platform": "ststm32",
+  "mcu": "STM32F411RCT6",
+  "fcpu": 100000000,
+  "ram": 131072,
+  "rom": 262144,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "Generic",
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f411rc.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

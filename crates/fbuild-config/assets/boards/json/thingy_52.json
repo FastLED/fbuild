@@ -1,0 +1,25 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "zephyr"
+  ],
+  "id": "thingy_52",
+  "mcu": "NRF52832",
+  "name": "Nordic Thingy:52 (nRF52-PCA20020)",
+  "platform": "nordicnrf52",
+  "ram": 65536,
+  "rom": 524288,
+  "url": "https://www.nordicsemi.com/Software-and-Tools/Prototyping-platforms/Nordic-Thingy-52",
+  "vendor": "Nordic"
+}

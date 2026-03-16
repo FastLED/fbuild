@@ -1,0 +1,19 @@
+{
+  "id": "bob3",
+  "name": "nicai-systems BOB3 coding bot",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA88",
+  "fcpu": 8000000,
+  "ram": 1024,
+  "rom": 8192,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "nicai-systems",
+  "url": "http://www.nicai-systems.com",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

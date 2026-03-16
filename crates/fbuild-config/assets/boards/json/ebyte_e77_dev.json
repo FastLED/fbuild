@@ -1,0 +1,21 @@
+{
+  "id": "ebyte_e77_dev",
+  "name": "Ebyte E77 Dev Board",
+  "platform": "ststm32",
+  "mcu": "STM32WLE5CC",
+  "fcpu": 48000000,
+  "ram": 65536,
+  "rom": 262144,
+  "frameworks": [
+    "arduino",
+    "zephyr"
+  ],
+  "vendor": "Ebyte",
+  "url": "https://www.cdebyte.com/products/E77-400MBL-01",
+  "debug": {
+    "tools": {
+      "jlink": {},
+      "stlink": {}
+    }
+  }
+}

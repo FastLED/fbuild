@@ -1,0 +1,22 @@
+{
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "atmel-ice": {},
+      "cmsis-dap": {}
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "moteino_zero",
+  "mcu": "SAMD21G18A",
+  "name": "Moteino M0",
+  "platform": "atmelsam",
+  "ram": 32768,
+  "rom": 262144,
+  "url": "https://lowpowerlab.com/shop/product/184",
+  "vendor": "LowPowerLab"
+}

@@ -1,0 +1,19 @@
+{
+  "id": "attiny85",
+  "name": "Generic ATtiny85",
+  "platform": "atmelavr",
+  "mcu": "ATTINY85",
+  "fcpu": 8000000,
+  "ram": 512,
+  "rom": 8192,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Atmel",
+  "url": "http://www.atmel.com/devices/ATTINY85.aspx",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

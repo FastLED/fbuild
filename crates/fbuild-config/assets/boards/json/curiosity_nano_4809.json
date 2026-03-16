@@ -1,0 +1,14 @@
+{
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "curiosity_nano_4809",
+  "mcu": "ATMEGA4809",
+  "name": "Curiosity Nano ATmega4809",
+  "platform": "atmelmegaavr",
+  "ram": 6144,
+  "rom": 49152,
+  "url": "https://www.microchip.com/developmenttools/ProductDetails/DM320115",
+  "vendor": "Microchip"
+}

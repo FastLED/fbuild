@@ -1,0 +1,12 @@
+{
+  "fcpu": 22118400,
+  "frameworks": [],
+  "id": "N79E813",
+  "mcu": "N79E813",
+  "name": "Generic N79E813",
+  "platform": "intel_mcs51",
+  "ram": 512,
+  "rom": 4096,
+  "url": "https://www.nuvoton.com/products/microcontrollers/8bit-8051-mcus/",
+  "vendor": "Nuvoton"
+}

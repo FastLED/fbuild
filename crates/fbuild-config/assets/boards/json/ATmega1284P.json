@@ -1,0 +1,19 @@
+{
+  "id": "ATmega1284P",
+  "name": "ATmega1284P",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA1284P",
+  "fcpu": 16000000,
+  "ram": 16384,
+  "rom": 131072,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Microchip",
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega1284p",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "adafruit_metro_nrf52840",
+  "mcu": "NRF52840",
+  "name": "Metro nRF52840 Express",
+  "platform": "nordicnrf52",
+  "ram": 248832,
+  "rom": 815104,
+  "url": "https://www.adafruit.com/product/4062",
+  "vendor": "Adafruit"
+}

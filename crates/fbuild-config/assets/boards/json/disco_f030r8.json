@@ -1,0 +1,28 @@
+{
+  "id": "disco_f030r8",
+  "name": "ST STM32F0308DISCOVERY",
+  "platform": "ststm32",
+  "mcu": "STM32F030R8T6",
+  "fcpu": 48000000,
+  "ram": 8192,
+  "rom": 65536,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "vendor": "ST",
+  "url": "http://www.st.com/en/evaluation-tools/32f0308discovery.html",
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}

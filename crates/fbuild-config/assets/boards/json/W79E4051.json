@@ -1,0 +1,12 @@
+{
+  "fcpu": 22118400,
+  "frameworks": [],
+  "id": "W79E4051",
+  "mcu": "W79E4051",
+  "name": "Generic W79E4051",
+  "platform": "intel_mcs51",
+  "ram": 256,
+  "rom": 4096,
+  "url": "https://www.nuvoton.com/products/microcontrollers/8bit-8051-mcus/low-pin-count-8051-series/w79e4051/",
+  "vendor": "Nuvoton"
+}

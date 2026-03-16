@@ -1,0 +1,20 @@
+{
+  "id": "moteino",
+  "name": "LowPowerLab Moteino",
+  "platform": "atmelavr",
+  "mcu": "ATMEGA328P",
+  "fcpu": 16000000,
+  "ram": 2048,
+  "rom": 32256,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "LowPowerLab",
+  "url": "https://lowpowerlab.com/shop/product/99",
+  "debug": {
+    "tools": {
+      "simavr": {},
+      "avr-stub": {}
+    }
+  }
+}

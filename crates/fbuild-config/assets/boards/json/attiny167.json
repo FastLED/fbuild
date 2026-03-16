@@ -1,0 +1,14 @@
+{
+  "id": "attiny167",
+  "name": "Generic ATtiny167",
+  "platform": "atmelavr",
+  "mcu": "ATTINY167",
+  "fcpu": 8000000,
+  "ram": 512,
+  "rom": 16384,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Atmel",
+  "url": "http://www.atmel.com/devices/ATTINY167.aspx"
+}

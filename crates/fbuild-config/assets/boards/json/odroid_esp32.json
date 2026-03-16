@@ -1,0 +1,21 @@
+{
+  "id": "odroid_esp32",
+  "name": "ODROID-GO",
+  "platform": "espressif32",
+  "mcu": "ESP32",
+  "fcpu": 240000000,
+  "ram": 327680,
+  "rom": 16777216,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "vendor": "Hardkernel",
+  "url": "https://www.hardkernel.com/main/products/prdt_info.php?g_code=G152875062626",
+  "connectivity": [
+    "wifi",
+    "bluetooth",
+    "ethernet",
+    "can"
+  ]
+}

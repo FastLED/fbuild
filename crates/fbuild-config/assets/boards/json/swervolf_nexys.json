@@ -1,0 +1,28 @@
+{
+  "debug": {
+    "tools": {
+      "digilent-hs1": {
+        "onboard": true
+      },
+      "olimex-arm-usb-tiny-h": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-ocd": {},
+      "olimex-jtag-tiny": {},
+      "verilator": {},
+      "whisper": {}
+    }
+  },
+  "fcpu": 320000000,
+  "frameworks": [
+    "wd-riscv-sdk",
+    "freertos"
+  ],
+  "id": "swervolf_nexys",
+  "mcu": "",
+  "name": "RVfpga: Digilent Nexys A7",
+  "platform": "chipsalliance",
+  "ram": 1216512,
+  "rom": 16777216,
+  "url": "https://reference.digilentinc.com/reference/programmable-logic/nexys-a7/start",
+  "vendor": "Digilent"
+}

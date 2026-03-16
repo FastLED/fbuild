@@ -1,0 +1,28 @@
+{
+  "id": "eval_f072vb",
+  "name": "STM32F072-EVAL",
+  "platform": "ststm32",
+  "mcu": "STM32F072VBT6",
+  "fcpu": 48000000,
+  "ram": 16384,
+  "rom": 131072,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/stm32072b-eval.html",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {},
+      "cmsis-dap": {}
+    }
+  }
+}

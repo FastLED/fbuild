@@ -1,0 +1,14 @@
+{
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "helvepic32_smd_mx270",
+  "mcu": "32MX270F256D",
+  "name": "HelvePic32 SMD MX270",
+  "platform": "microchippic32",
+  "ram": 63488,
+  "rom": 249856,
+  "url": "https://www.helvepic32.org/shop-1/",
+  "vendor": "BOXTEC"
+}

@@ -1,0 +1,19 @@
+{
+  "id": "trinket5",
+  "name": "Adafruit Trinket 5V/16MHz",
+  "platform": "atmelavr",
+  "mcu": "ATTINY85",
+  "fcpu": 16000000,
+  "ram": 512,
+  "rom": 8192,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "Adafruit",
+  "url": "http://www.adafruit.com/products/1501",
+  "debug": {
+    "tools": {
+      "simavr": {}
+    }
+  }
+}

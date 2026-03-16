@@ -1,0 +1,21 @@
+{
+  "id": "lora_e5_mini",
+  "name": "SeeedStudio LoRa-E5 mini",
+  "platform": "ststm32",
+  "mcu": "STM32WLE5JC",
+  "fcpu": 48000000,
+  "ram": 65536,
+  "rom": 262144,
+  "frameworks": [
+    "arduino"
+  ],
+  "vendor": "SeeedStudio",
+  "url": "https://www.seeedstudio.com/LoRa-E5-mini-STM32WLE5JC-p-4869.html",
+  "debug": {
+    "tools": {
+      "stlink": {
+        "default": true
+      }
+    }
+  }
+}

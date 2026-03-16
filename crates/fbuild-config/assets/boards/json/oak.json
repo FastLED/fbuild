@@ -1,0 +1,17 @@
+{
+  "connectivity": [
+    "wifi"
+  ],
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "oak",
+  "mcu": "ESP8266",
+  "name": "DigiStump Oak",
+  "platform": "espressif8266",
+  "ram": 81920,
+  "rom": 4194304,
+  "url": "http://digistump.com/category/22",
+  "vendor": "DigiStump"
+}

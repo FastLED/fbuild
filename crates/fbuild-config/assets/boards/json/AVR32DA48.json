@@ -1,0 +1,14 @@
+{
+  "fcpu": 24000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "AVR32DA48",
+  "mcu": "AVR32DA48",
+  "name": "AVR32DA48",
+  "platform": "atmelmegaavr",
+  "ram": 4096,
+  "rom": 32768,
+  "url": "https://www.microchip.com/wwwproducts/en/AVR32DA48",
+  "vendor": "Microchip"
+}

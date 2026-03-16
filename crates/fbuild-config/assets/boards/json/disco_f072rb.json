@@ -1,0 +1,32 @@
+{
+  "id": "disco_f072rb",
+  "name": "ST Discovery F072RB",
+  "platform": "ststm32",
+  "mcu": "STM32F072RBT6",
+  "fcpu": 48000000,
+  "ram": 16384,
+  "rom": 131072,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "vendor": "ST",
+  "url": "https://www.st.com/en/evaluation-tools/32f072bdiscovery.html",
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "stlink": {
+        "onboard": true,
+        "default": true
+      },
+      "cmsis-dap": {}
+    }
+  }
+}
