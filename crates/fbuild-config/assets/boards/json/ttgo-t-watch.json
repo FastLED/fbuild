@@ -1,39 +1,39 @@
 {
-  "id": "ttgo-t-watch",
-  "name": "TTGO T-Watch",
-  "platform": "espressif32",
-  "mcu": "ESP32",
-  "fcpu": 240000000,
-  "ram": 327680,
-  "rom": 16777216,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "TTGO",
-  "url": "https://github.com/Xinyuan-LilyGO/TTGO-T-Watch",
+  "build": {
+    "arduino": {
+      "ldscript": "esp32_out.ld",
+      "partitions": "default_16MB.csv"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_TWATCH_BASE -DBOARD_HAS_PSRAM -mfix-esp32-psram-cache-issue -mfix-esp32-psram-cache-strategy=memw",
+    "f_cpu": "240000000L",
+    "f_flash": "40000000L",
+    "flash_mode": "dio",
+    "mcu": "esp32",
+    "variant": "twatch"
+  },
   "connectivity": [
     "wifi",
     "bluetooth",
     "ethernet",
     "can"
   ],
-  "build": {
-    "extra_flags": "-DARDUINO_TWATCH_BASE -DBOARD_HAS_PSRAM -mfix-esp32-psram-cache-issue -mfix-esp32-psram-cache-strategy=memw",
-    "core": "esp32",
-    "f_cpu": "240000000L",
-    "mcu": "esp32",
-    "f_flash": "40000000L",
-    "flash_mode": "dio",
-    "variant": "twatch",
-    "arduino": {
-      "ldscript": "esp32_out.ld",
-      "partitions": "default_16MB.csv"
-    }
-  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "ttgo-t-watch",
+  "mcu": "ESP32",
+  "name": "TTGO T-Watch",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 16777216,
   "upload": {
     "flash_size": "16MB",
-    "speed": 2000000,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 2000000
+  },
+  "url": "https://github.com/Xinyuan-LilyGO/TTGO-T-Watch",
+  "vendor": "TTGO"
 }

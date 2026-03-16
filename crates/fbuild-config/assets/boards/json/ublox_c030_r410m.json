@@ -1,16 +1,9 @@
 {
-  "id": "ublox_c030_r410m",
-  "name": "u-blox C030-R410M IoT",
-  "platform": "ststm32",
-  "mcu": "STM32F437VG",
-  "fcpu": 180000000,
-  "ram": 262144,
-  "rom": 1048576,
-  "frameworks": [
-    "stm32cube"
-  ],
-  "vendor": "u-blox",
-  "url": "https://os.mbed.com/platforms/ublox-C030-R410M/",
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F437xx",
+    "f_cpu": "180000000L",
+    "mcu": "stm32f437vg"
+  },
   "connectivity": [
     "can",
     "ethernet"
@@ -20,17 +13,24 @@
       "blackmagic": {},
       "jlink": {},
       "stlink": {
-        "onboard": true,
-        "default": true
+        "default": true,
+        "onboard": true
       }
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F437xx",
-    "f_cpu": "180000000L",
-    "mcu": "stm32f437vg"
-  },
+  "fcpu": 180000000,
+  "frameworks": [
+    "stm32cube"
+  ],
+  "id": "ublox_c030_r410m",
+  "mcu": "STM32F437VG",
+  "name": "u-blox C030-R410M IoT",
+  "platform": "ststm32",
+  "ram": 262144,
+  "rom": 1048576,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://os.mbed.com/platforms/ublox-C030-R410M/",
+  "vendor": "u-blox"
 }

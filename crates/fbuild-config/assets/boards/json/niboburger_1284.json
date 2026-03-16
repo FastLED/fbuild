@@ -1,30 +1,30 @@
 {
-  "id": "niboburger_1284",
-  "name": "nicai-systems NIBO burger robot with Tuning Kit",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA1284P",
-  "fcpu": 20000000,
-  "ram": 16384,
-  "rom": 131072,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "nicai-systems",
-  "url": "http://www.nicai-systems.com/en/nibo-burger",
+  "build": {
+    "core": "nicai",
+    "extra_flags": "-DARDUINO_AVR_NIBOBURGER_1284",
+    "f_cpu": "20000000L",
+    "mcu": "atmega1284p",
+    "variant": "niboburger"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_NIBOBURGER_1284",
-    "core": "nicai",
-    "f_cpu": "20000000L",
-    "mcu": "atmega1284p",
-    "variant": "niboburger"
-  },
+  "fcpu": 20000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "niboburger_1284",
+  "mcu": "ATMEGA1284P",
+  "name": "nicai-systems NIBO burger robot with Tuning Kit",
+  "platform": "atmelavr",
+  "ram": 16384,
+  "rom": 131072,
   "upload": {
     "protocol": "usbasp",
     "speed": 115200
-  }
+  },
+  "url": "http://www.nicai-systems.com/en/nibo-burger",
+  "vendor": "nicai-systems"
 }

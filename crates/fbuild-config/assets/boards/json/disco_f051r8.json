@@ -1,36 +1,36 @@
 {
-  "id": "disco_f051r8",
-  "name": "ST STM32F0DISCOVERY",
-  "platform": "ststm32",
-  "mcu": "STM32F051R8T6",
+  "build": {
+    "extra_flags": "-DSTM32F0 -DSTM32F051x8",
+    "f_cpu": "48000000L",
+    "mcu": "stm32f051r8t6"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 48000000,
-  "ram": 8192,
-  "rom": 65536,
   "frameworks": [
     "cmsis",
     "stm32cube",
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1848/PF253215",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F0 -DSTM32F051x8",
-    "f_cpu": "48000000L",
-    "mcu": "stm32f051r8t6"
-  },
+  "id": "disco_f051r8",
+  "mcu": "STM32F051R8T6",
+  "name": "ST STM32F0DISCOVERY",
+  "platform": "ststm32",
+  "ram": 8192,
+  "rom": 65536,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1848/PF253215",
+  "vendor": "ST"
 }

@@ -1,40 +1,40 @@
 {
-  "id": "remram_v1",
-  "name": "3D printer controller",
-  "platform": "ststm32",
-  "mcu": "STM32F765VIT6",
-  "fcpu": 216000000,
-  "ram": 524288,
-  "rom": 2097152,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "RemRam",
-  "url": "https://github.com/hasenbanck/remram",
-  "connectivity": [
-    "can"
-  ],
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
   "build": {
     "extra_flags": "-DSTM32F7 -DSTM32F765xx",
     "f_cpu": "216000000L",
     "mcu": "stm32f765vit6",
     "variant": "STM32F7xx/F765V(G-I)(H-T)_F767V(G-I)(H-T)_F777VI(H-T)"
   },
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 216000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "remram_v1",
+  "mcu": "STM32F765VIT6",
+  "name": "3D printer controller",
+  "platform": "ststm32",
+  "ram": 524288,
+  "rom": 2097152,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://github.com/hasenbanck/remram",
+  "vendor": "RemRam"
 }

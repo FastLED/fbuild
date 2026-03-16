@@ -1,32 +1,32 @@
 {
-  "id": "ATmega328P",
-  "name": "ATmega328P/PA",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA328P",
-  "fcpu": 16000000,
-  "ram": 2048,
-  "rom": 32768,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega328P",
-  "debug": {
-    "tools": {
-      "simavr": {},
-      "avr-stub": {}
-    }
-  },
   "build": {
-    "extra_flags": "-DARDUINO_AVR_ATmega328P",
     "core": "MiniCore",
+    "extra_flags": "-DARDUINO_AVR_ATmega328P",
     "f_cpu": "16000000L",
     "mcu": "atmega328p",
     "variant": "standard"
   },
+  "debug": {
+    "tools": {
+      "avr-stub": {},
+      "simavr": {}
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega328P",
+  "mcu": "ATMEGA328P",
+  "name": "ATmega328P/PA",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 32768,
   "upload": {
     "protocol": "urclock",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega328P",
+  "vendor": "Microchip"
 }

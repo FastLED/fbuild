@@ -1,36 +1,36 @@
 {
-  "id": "b96b_argonkey",
-  "name": "96Boards Argonkey (STEVAL-MKI187V1)",
-  "platform": "ststm32",
-  "mcu": "STM32F412CG",
-  "fcpu": 100000000,
-  "ram": 262144,
-  "rom": 1048576,
-  "frameworks": [
-    "cmsis",
-    "stm32cube",
-    "libopencm3",
-    "zephyr"
-  ],
-  "vendor": "96Boards",
-  "url": "https://www.st.com/en/evaluation-tools/steval-mki187v1.html",
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F412Cx",
+    "f_cpu": "100000000L",
+    "mcu": "stm32f412cg"
+  },
   "connectivity": [
     "can"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
+      "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F412Cx",
-    "f_cpu": "100000000L",
-    "mcu": "stm32f412cg"
-  },
+  "fcpu": 100000000,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "id": "b96b_argonkey",
+  "mcu": "STM32F412CG",
+  "name": "96Boards Argonkey (STEVAL-MKI187V1)",
+  "platform": "ststm32",
+  "ram": 262144,
+  "rom": 1048576,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/steval-mki187v1.html",
+  "vendor": "96Boards"
 }

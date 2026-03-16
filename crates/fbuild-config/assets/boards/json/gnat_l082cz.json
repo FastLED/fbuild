@@ -1,17 +1,11 @@
 {
-  "id": "gnat_l082cz",
-  "name": "Gnat-L082CZ",
-  "platform": "ststm32",
-  "mcu": "STM32L082CZY6",
-  "fcpu": 32000000,
-  "ram": 20480,
-  "rom": 196608,
-  "frameworks": [
-    "arduino",
-    "stm32cube"
-  ],
-  "vendor": "Tlera Corporation",
-  "url": "https://www.tindie.com/products/tleracorp/gnat-loragnss-asset-tracker/",
+  "build": {
+    "core": "stm32l0",
+    "extra_flags": "-DSTM32L0 -DARDUINO_STM32L0_GNAT",
+    "f_cpu": "32000000L",
+    "mcu": "stm32l082czy6",
+    "variant": "Gnat-L082CZ"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
@@ -19,14 +13,20 @@
       "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32L0 -DARDUINO_STM32L0_GNAT",
-    "core": "stm32l0",
-    "f_cpu": "32000000L",
-    "mcu": "stm32l082czy6",
-    "variant": "Gnat-L082CZ"
-  },
+  "fcpu": 32000000,
+  "frameworks": [
+    "arduino",
+    "stm32cube"
+  ],
+  "id": "gnat_l082cz",
+  "mcu": "STM32L082CZY6",
+  "name": "Gnat-L082CZ",
+  "platform": "ststm32",
+  "ram": 20480,
+  "rom": 196608,
   "upload": {
     "protocol": "dfu"
-  }
+  },
+  "url": "https://www.tindie.com/products/tleracorp/gnat-loragnss-asset-tracker/",
+  "vendor": "Tlera Corporation"
 }

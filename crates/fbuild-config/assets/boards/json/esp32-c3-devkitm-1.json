@@ -1,17 +1,16 @@
 {
-  "id": "esp32-c3-devkitm-1",
-  "name": "Espressif ESP32-C3-DevKitM-1",
-  "platform": "espressif32",
-  "mcu": "ESP32C3",
-  "fcpu": 160000000,
-  "ram": 327680,
-  "rom": 4194304,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "Espressif",
-  "url": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32c3/hw-reference/esp32c3/user-guide-devkitm-1.html",
+  "build": {
+    "arduino": {
+      "ldscript": "esp32c3_out.ld"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_ESP32C3_DEV",
+    "f_cpu": "160000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "mcu": "esp32c3",
+    "variant": "esp32c3"
+  },
   "connectivity": [
     "wifi"
   ],
@@ -22,28 +21,29 @@
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
       "tumpa": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_ESP32C3_DEV",
-    "core": "esp32",
-    "f_cpu": "160000000L",
-    "mcu": "esp32c3",
-    "f_flash": "80000000L",
-    "flash_mode": "qio",
-    "variant": "esp32c3",
-    "arduino": {
-      "ldscript": "esp32c3_out.ld"
-    }
-  },
+  "fcpu": 160000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "esp32-c3-devkitm-1",
+  "mcu": "ESP32C3",
+  "name": "Espressif ESP32-C3-DevKitM-1",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 4194304,
   "upload": {
     "flash_size": "4MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32c3/hw-reference/esp32c3/user-guide-devkitm-1.html",
+  "vendor": "Espressif"
 }

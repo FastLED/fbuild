@@ -1,17 +1,11 @@
 {
-  "id": "ws_esp32_s3_matrix",
-  "name": "Waveshare ESP32-S3-Matrix",
-  "platform": "espressif32",
-  "mcu": "ESP32S3",
-  "fcpu": 240000000,
-  "ram": 327680,
-  "rom": 4194304,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "Waveshare",
-  "url": "https://www.waveshare.com/wiki/ESP32-S3-Matrix",
+  "build": {
+    "core": "esp32",
+    "f_cpu": "240000000L",
+    "f_flash": "80000000L",
+    "mcu": "esp32s3",
+    "variant": "ws_esp32_s3_matrix"
+  },
   "connectivity": [
     "bluetooth",
     "wifi"
@@ -19,29 +13,35 @@
   "debug": {
     "tools": {
       "cmsis-dap": {},
-      "esp-prog": {},
       "esp-bridge": {},
+      "esp-builtin": {},
+      "esp-prog": {},
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
-      "tumpa": {},
-      "esp-builtin": {}
+      "tumpa": {}
     }
   },
-  "build": {
-    "core": "esp32",
-    "f_cpu": "240000000L",
-    "mcu": "esp32s3",
-    "f_flash": "80000000L",
-    "variant": "ws_esp32_s3_matrix"
-  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "ws_esp32_s3_matrix",
+  "mcu": "ESP32S3",
+  "name": "Waveshare ESP32-S3-Matrix",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 4194304,
   "upload": {
     "flash_size": "4MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://www.waveshare.com/wiki/ESP32-S3-Matrix",
+  "vendor": "Waveshare"
 }

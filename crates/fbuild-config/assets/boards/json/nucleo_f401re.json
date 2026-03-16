@@ -1,11 +1,23 @@
 {
-  "id": "nucleo_f401re",
-  "name": "ST Nucleo F401RE",
-  "platform": "ststm32",
-  "mcu": "STM32F401RET6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F4 -DSTM32F401xE -DSTM32F40_41xxx",
+    "f_cpu": "84000000L",
+    "mcu": "stm32f401ret6",
+    "variant": "STM32F4xx/F401R(B-C-D-E)T"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 84000000,
-  "ram": 98304,
-  "rom": 524288,
   "frameworks": [
     "arduino",
     "mbed",
@@ -15,27 +27,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F401RE/",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F401xE -DSTM32F40_41xxx",
-    "core": "stm32",
-    "f_cpu": "84000000L",
-    "mcu": "stm32f401ret6",
-    "variant": "STM32F4xx/F401R(B-C-D-E)T"
-  },
+  "id": "nucleo_f401re",
+  "mcu": "STM32F401RET6",
+  "name": "ST Nucleo F401RE",
+  "platform": "ststm32",
+  "ram": 98304,
+  "rom": 524288,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F401RE/",
+  "vendor": "ST"
 }

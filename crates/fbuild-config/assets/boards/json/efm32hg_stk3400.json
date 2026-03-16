@@ -1,16 +1,8 @@
 {
-  "id": "efm32hg_stk3400",
-  "name": "SLSTK3400A USB-enabled Happy Gecko",
-  "platform": "siliconlabsefm32",
-  "mcu": "EFM32HG322F64",
-  "fcpu": 25000000,
-  "ram": 8192,
-  "rom": 65536,
-  "frameworks": [
-    "zephyr"
-  ],
-  "vendor": "Silicon Labs",
-  "url": "https://www.silabs.com/products/development-tools/mcu/32-bit/efm32-happy-gecko-starter-kit",
+  "build": {
+    "f_cpu": "25000000L",
+    "mcu": "efm32hg322f64"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
@@ -19,11 +11,19 @@
       }
     }
   },
-  "build": {
-    "f_cpu": "25000000L",
-    "mcu": "efm32hg322f64"
-  },
+  "fcpu": 25000000,
+  "frameworks": [
+    "zephyr"
+  ],
+  "id": "efm32hg_stk3400",
+  "mcu": "EFM32HG322F64",
+  "name": "SLSTK3400A USB-enabled Happy Gecko",
+  "platform": "siliconlabsefm32",
+  "ram": 8192,
+  "rom": 65536,
   "upload": {
     "protocol": "mbed"
-  }
+  },
+  "url": "https://www.silabs.com/products/development-tools/mcu/32-bit/efm32-happy-gecko-starter-kit",
+  "vendor": "Silicon Labs"
 }

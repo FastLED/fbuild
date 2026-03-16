@@ -1,17 +1,16 @@
 {
-  "id": "trueverit-iot-driver-mk3",
-  "name": "Trueverit ESP32 Universal IoT Driver MK III",
-  "platform": "espressif32",
-  "mcu": "ESP32",
-  "fcpu": 240000000,
-  "ram": 327680,
-  "rom": 4194304,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "Trueverit",
-  "url": "https://trueverit.com/",
+  "build": {
+    "arduino": {
+      "ldscript": "esp32_out.ld"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_Trueverit_ESP32_Universal_IoT_Driver_MK_III",
+    "f_cpu": "240000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "mcu": "esp32",
+    "variant": "esp32-trueverit-iot-driver-mkiii"
+  },
   "connectivity": [
     "wifi",
     "bluetooth",
@@ -25,28 +24,29 @@
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
       "tumpa": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_Trueverit_ESP32_Universal_IoT_Driver_MK_III",
-    "core": "esp32",
-    "f_cpu": "240000000L",
-    "mcu": "esp32",
-    "f_flash": "80000000L",
-    "flash_mode": "qio",
-    "variant": "esp32-trueverit-iot-driver-mkiii",
-    "arduino": {
-      "ldscript": "esp32_out.ld"
-    }
-  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "trueverit-iot-driver-mk3",
+  "mcu": "ESP32",
+  "name": "Trueverit ESP32 Universal IoT Driver MK III",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 4194304,
   "upload": {
     "flash_size": "4MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://trueverit.com/",
+  "vendor": "Trueverit"
 }

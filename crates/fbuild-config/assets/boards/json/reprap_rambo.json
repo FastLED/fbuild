@@ -1,32 +1,32 @@
 {
-  "id": "reprap_rambo",
-  "name": "RepRap RAMBo",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA2560",
-  "fcpu": 16000000,
-  "ram": 8192,
-  "rom": 258048,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "RepRap",
-  "url": "http://reprap.org/wiki/Rambo",
-  "debug": {
-    "tools": {
-      "simavr": {},
-      "avr-stub": {}
-    }
-  },
   "build": {
-    "extra_flags": "-DARDUINO_AVR_RAMBO",
     "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_RAMBO",
     "f_cpu": "16000000L",
     "mcu": "atmega2560",
     "variant": "rambo"
   },
+  "debug": {
+    "tools": {
+      "avr-stub": {},
+      "simavr": {}
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "reprap_rambo",
+  "mcu": "ATMEGA2560",
+  "name": "RepRap RAMBo",
+  "platform": "atmelavr",
+  "ram": 8192,
+  "rom": 258048,
   "upload": {
     "protocol": "wiring",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "http://reprap.org/wiki/Rambo",
+  "vendor": "RepRap"
 }

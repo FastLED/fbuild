@@ -1,34 +1,34 @@
 {
-  "id": "disco_g031j6",
-  "name": "ST STM32G0316-DISCO",
-  "platform": "ststm32",
-  "mcu": "STM32G031J6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32G0 -DSTM32G0xx -DSTM32G031xx",
+    "f_cpu": "64000000L",
+    "mcu": "stm32g031j6",
+    "variant": "STM32G0xx/G031J(4-6)M_G041J6M"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {}
+    }
+  },
   "fcpu": 64000000,
-  "ram": 8192,
-  "rom": 32768,
   "frameworks": [
     "arduino",
     "cmsis",
     "libopencm3",
     "stm32cube"
   ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/evaluation-tools/stm32g0316-disco.html",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32G0 -DSTM32G0xx -DSTM32G031xx",
-    "core": "stm32",
-    "f_cpu": "64000000L",
-    "mcu": "stm32g031j6",
-    "variant": "STM32G0xx/G031J(4-6)M_G041J6M"
-  },
+  "id": "disco_g031j6",
+  "mcu": "STM32G031J6",
+  "name": "ST STM32G0316-DISCO",
+  "platform": "ststm32",
+  "ram": 8192,
+  "rom": 32768,
   "upload": {
     "protocol": "mbed"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/stm32g0316-disco.html",
+  "vendor": "ST"
 }

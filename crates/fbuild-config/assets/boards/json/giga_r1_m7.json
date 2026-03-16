@@ -1,39 +1,39 @@
 {
-  "id": "giga_r1_m7",
-  "name": "Arduino Giga R1 (M7 core)",
-  "platform": "ststm32",
-  "mcu": "STM32H747XIH6",
-  "fcpu": 480000000,
-  "ram": 523624,
-  "rom": 786432,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Arduino",
-  "url": "https://docs.arduino.cc/hardware/giga-r1-wifi",
+  "build": {
+    "arduino": {
+      "ldscript": "linker_script.ld"
+    },
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_GIGA -DARDUINO_GIGA_M7 -DGIGA_PINS",
+    "f_cpu": "480000000L",
+    "mcu": "stm32h747xih6",
+    "variant": "GIGA"
+  },
   "connectivity": [
     "bluetooth",
     "wifi"
   ],
   "debug": {
     "tools": {
+      "cmsis-dap": {},
       "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
+      "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_GIGA -DARDUINO_GIGA_M7 -DGIGA_PINS",
-    "core": "arduino",
-    "f_cpu": "480000000L",
-    "mcu": "stm32h747xih6",
-    "variant": "GIGA",
-    "arduino": {
-      "ldscript": "linker_script.ld"
-    }
-  },
+  "fcpu": 480000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "giga_r1_m7",
+  "mcu": "STM32H747XIH6",
+  "name": "Arduino Giga R1 (M7 core)",
+  "platform": "ststm32",
+  "ram": 523624,
+  "rom": 786432,
   "upload": {
     "protocol": "dfu",
     "require_upload_port": true
-  }
+  },
+  "url": "https://docs.arduino.cc/hardware/giga-r1-wifi",
+  "vendor": "Arduino"
 }

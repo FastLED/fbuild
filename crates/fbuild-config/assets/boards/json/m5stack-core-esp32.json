@@ -1,38 +1,38 @@
 {
-  "id": "m5stack-core-esp32",
-  "name": "M5Stack Core ESP32",
-  "platform": "espressif32",
-  "mcu": "ESP32",
-  "fcpu": 240000000,
-  "ram": 327680,
-  "rom": 4194304,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "M5Stack",
-  "url": "http://www.m5stack.com",
+  "build": {
+    "arduino": {
+      "ldscript": "esp32_out.ld"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_M5Stack_Core_ESP32",
+    "f_cpu": "240000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "mcu": "esp32",
+    "variant": "m5stack_core_esp32"
+  },
   "connectivity": [
     "wifi",
     "bluetooth",
     "ethernet",
     "can"
   ],
-  "build": {
-    "extra_flags": "-DARDUINO_M5Stack_Core_ESP32",
-    "core": "esp32",
-    "f_cpu": "240000000L",
-    "mcu": "esp32",
-    "f_flash": "80000000L",
-    "flash_mode": "qio",
-    "variant": "m5stack_core_esp32",
-    "arduino": {
-      "ldscript": "esp32_out.ld"
-    }
-  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "m5stack-core-esp32",
+  "mcu": "ESP32",
+  "name": "M5Stack Core ESP32",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 4194304,
   "upload": {
     "flash_size": "4MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "http://www.m5stack.com",
+  "vendor": "M5Stack"
 }

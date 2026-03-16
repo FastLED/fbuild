@@ -1,31 +1,31 @@
 {
-  "id": "wildfirev3",
-  "name": "Wicked Device WildFire V3",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA1284P",
-  "fcpu": 16000000,
-  "ram": 16384,
-  "rom": 130048,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Wicked Device",
-  "url": "http://shop.wickeddevice.com/resources/wildfire/",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_MEGA",
+    "f_cpu": "16000000L",
+    "mcu": "atmega1284p",
+    "variant": "wildfirev3"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_MEGA",
-    "core": "arduino",
-    "f_cpu": "16000000L",
-    "mcu": "atmega1284p",
-    "variant": "wildfirev3"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "wildfirev3",
+  "mcu": "ATMEGA1284P",
+  "name": "Wicked Device WildFire V3",
+  "platform": "atmelavr",
+  "ram": 16384,
+  "rom": 130048,
   "upload": {
     "protocol": "arduino",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "http://shop.wickeddevice.com/resources/wildfire/",
+  "vendor": "Wicked Device"
 }

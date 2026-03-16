@@ -1,11 +1,21 @@
 {
-  "id": "nucleo_f070rb",
-  "name": "ST Nucleo F070RB",
-  "platform": "ststm32",
-  "mcu": "STM32F070RBT6",
+  "build": {
+    "extra_flags": "-DSTM32F0 -DSTM32F070xB",
+    "f_cpu": "48000000L",
+    "mcu": "stm32f070rbt6"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 48000000,
-  "ram": 16384,
-  "rom": 131072,
   "frameworks": [
     "cmsis",
     "mbed",
@@ -13,25 +23,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F070RB/",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F0 -DSTM32F070xB",
-    "f_cpu": "48000000L",
-    "mcu": "stm32f070rbt6"
-  },
+  "id": "nucleo_f070rb",
+  "mcu": "STM32F070RBT6",
+  "name": "ST Nucleo F070RB",
+  "platform": "ststm32",
+  "ram": 16384,
+  "rom": 131072,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F070RB/",
+  "vendor": "ST"
 }

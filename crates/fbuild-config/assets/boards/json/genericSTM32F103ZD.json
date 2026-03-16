@@ -1,36 +1,36 @@
 {
-  "id": "genericSTM32F103ZD",
-  "name": "STM32F103ZD (64k RAM. 384k Flash)",
-  "platform": "ststm32",
-  "mcu": "STM32F103ZDT6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F103xE -DSTM32F1",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f103zdt6",
+    "variant": "STM32F1xx/F103Z(C-D-E)(H-T)"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  },
   "fcpu": 72000000,
-  "ram": 65536,
-  "rom": 393216,
   "frameworks": [
     "arduino",
     "cmsis",
     "libopencm3",
     "stm32cube"
   ],
-  "vendor": "Generic",
-  "url": "http://www.st.com/en/microcontrollers/stm32f103zd.html",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F103xE -DSTM32F1",
-    "core": "stm32",
-    "f_cpu": "72000000L",
-    "mcu": "stm32f103zdt6",
-    "variant": "STM32F1xx/F103Z(C-D-E)(H-T)"
-  },
+  "id": "genericSTM32F103ZD",
+  "mcu": "STM32F103ZDT6",
+  "name": "STM32F103ZD (64k RAM. 384k Flash)",
+  "platform": "ststm32",
+  "ram": 65536,
+  "rom": 393216,
   "upload": {
     "protocol": "stlink",
     "require_upload_port": true
-  }
+  },
+  "url": "http://www.st.com/en/microcontrollers/stm32f103zd.html",
+  "vendor": "Generic"
 }

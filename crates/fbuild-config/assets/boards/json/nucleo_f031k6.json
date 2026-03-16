@@ -1,11 +1,23 @@
 {
-  "id": "nucleo_f031k6",
-  "name": "ST Nucleo F031K6",
-  "platform": "ststm32",
-  "mcu": "STM32F031K6T6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F0 -DSTM32F031x6",
+    "f_cpu": "48000000L",
+    "mcu": "stm32f031k6t6",
+    "variant": "STM32F0xx/F031K6T"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 48000000,
-  "ram": 4096,
-  "rom": 32768,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -13,27 +25,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F031K6/",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F0 -DSTM32F031x6",
-    "core": "stm32",
-    "f_cpu": "48000000L",
-    "mcu": "stm32f031k6t6",
-    "variant": "STM32F0xx/F031K6T"
-  },
+  "id": "nucleo_f031k6",
+  "mcu": "STM32F031K6T6",
+  "name": "ST Nucleo F031K6",
+  "platform": "ststm32",
+  "ram": 4096,
+  "rom": 32768,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F031K6/",
+  "vendor": "ST"
 }

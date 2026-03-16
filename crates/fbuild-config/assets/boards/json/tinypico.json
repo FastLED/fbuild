@@ -1,38 +1,38 @@
 {
-  "id": "tinypico",
-  "name": "Unexpected Maker TinyPICO",
-  "platform": "espressif32",
-  "mcu": "ESP32",
-  "fcpu": 240000000,
-  "ram": 327680,
-  "rom": 4194304,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "Unexpected Maker",
-  "url": "https://www.tinypico.com",
+  "build": {
+    "arduino": {
+      "ldscript": "esp32_out.ld"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_TINYPICO -DBOARD_HAS_PSRAM -mfix-esp32-psram-cache-issue -mfix-esp32-psram-cache-strategy=memw",
+    "f_cpu": "240000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "mcu": "esp32",
+    "variant": "um_tinypico"
+  },
   "connectivity": [
     "wifi",
     "bluetooth",
     "ethernet",
     "can"
   ],
-  "build": {
-    "extra_flags": "-DARDUINO_TINYPICO -DBOARD_HAS_PSRAM -mfix-esp32-psram-cache-issue -mfix-esp32-psram-cache-strategy=memw",
-    "core": "esp32",
-    "f_cpu": "240000000L",
-    "mcu": "esp32",
-    "f_flash": "80000000L",
-    "flash_mode": "qio",
-    "variant": "um_tinypico",
-    "arduino": {
-      "ldscript": "esp32_out.ld"
-    }
-  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "tinypico",
+  "mcu": "ESP32",
+  "name": "Unexpected Maker TinyPICO",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 4194304,
   "upload": {
     "flash_size": "4MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://www.tinypico.com",
+  "vendor": "Unexpected Maker"
 }

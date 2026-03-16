@@ -1,19 +1,11 @@
 {
-  "id": "genericSTM32F423RH",
-  "name": "STM32F423RH (320k RAM. 1536k Flash)",
-  "platform": "ststm32",
-  "mcu": "STM32F423RHT6",
-  "fcpu": 100000000,
-  "ram": 327680,
-  "rom": 1572864,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "Generic",
-  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f423rh.html",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F4 -DSTM32F423xx -DSTM32F4xx",
+    "f_cpu": "100000000L",
+    "mcu": "stm32f423rht6",
+    "variant": "STM32F4xx/F413R(G-H)T_F423RHT"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
@@ -21,14 +13,22 @@
       "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F423xx -DSTM32F4xx",
-    "core": "stm32",
-    "f_cpu": "100000000L",
-    "mcu": "stm32f423rht6",
-    "variant": "STM32F4xx/F413R(G-H)T_F423RHT"
-  },
+  "fcpu": 100000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "genericSTM32F423RH",
+  "mcu": "STM32F423RHT6",
+  "name": "STM32F423RH (320k RAM. 1536k Flash)",
+  "platform": "ststm32",
+  "ram": 327680,
+  "rom": 1572864,
   "upload": {
     "protocol": "serial"
-  }
+  },
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f423rh.html",
+  "vendor": "Generic"
 }

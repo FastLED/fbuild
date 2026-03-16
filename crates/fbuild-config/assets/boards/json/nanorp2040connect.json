@@ -1,16 +1,11 @@
 {
-  "id": "nanorp2040connect",
-  "name": "Arduino Nano RP2040 Connect",
-  "platform": "raspberrypi",
-  "mcu": "RP2040",
-  "fcpu": 133000000,
-  "ram": 270336,
-  "rom": 2097152,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Arduino",
-  "url": "https://blog.arduino.cc/2021/01/20/welcome-raspberry-pi-to-the-world-of-microcontrollers/",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-D ARDUINO_NANO_RP2040_CONNECT -DARDUINO_ARCH_RP2040",
+    "f_cpu": "133000000L",
+    "mcu": "rp2040",
+    "variant": "NANO_RP2040_CONNECT"
+  },
   "debug": {
     "tools": {
       "cmsis-dap": {},
@@ -18,15 +13,20 @@
       "raspberrypi-swd": {}
     }
   },
-  "build": {
-    "extra_flags": "-D ARDUINO_NANO_RP2040_CONNECT -DARDUINO_ARCH_RP2040",
-    "core": "arduino",
-    "f_cpu": "133000000L",
-    "mcu": "rp2040",
-    "variant": "NANO_RP2040_CONNECT"
-  },
+  "fcpu": 133000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "nanorp2040connect",
+  "mcu": "RP2040",
+  "name": "Arduino Nano RP2040 Connect",
+  "platform": "raspberrypi",
+  "ram": 270336,
+  "rom": 2097152,
   "upload": {
     "protocol": "picotool",
     "require_upload_port": true
-  }
+  },
+  "url": "https://blog.arduino.cc/2021/01/20/welcome-raspberry-pi-to-the-world-of-microcontrollers/",
+  "vendor": "Arduino"
 }

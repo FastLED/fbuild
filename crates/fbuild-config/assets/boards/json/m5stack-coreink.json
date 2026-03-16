@@ -1,38 +1,38 @@
 {
-  "id": "m5stack-coreink",
-  "name": "M5Stick-Core Ink",
-  "platform": "espressif32",
-  "mcu": "ESP32",
-  "fcpu": 240000000,
-  "ram": 327680,
-  "rom": 4194304,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "M5Stack",
-  "url": "http://www.m5stack.com",
+  "build": {
+    "arduino": {
+      "ldscript": "esp32_out.ld"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_M5Stack_CoreInk",
+    "f_cpu": "240000000L",
+    "f_flash": "40000000L",
+    "flash_mode": "dio",
+    "mcu": "esp32",
+    "variant": "m5stack_coreink"
+  },
   "connectivity": [
     "wifi",
     "bluetooth",
     "ethernet",
     "can"
   ],
-  "build": {
-    "extra_flags": "-DARDUINO_M5Stack_CoreInk",
-    "core": "esp32",
-    "f_cpu": "240000000L",
-    "mcu": "esp32",
-    "f_flash": "40000000L",
-    "flash_mode": "dio",
-    "variant": "m5stack_coreink",
-    "arduino": {
-      "ldscript": "esp32_out.ld"
-    }
-  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "m5stack-coreink",
+  "mcu": "ESP32",
+  "name": "M5Stick-Core Ink",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 4194304,
   "upload": {
     "flash_size": "4MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "http://www.m5stack.com",
+  "vendor": "M5Stack"
 }

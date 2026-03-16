@@ -1,17 +1,11 @@
 {
-  "id": "cricket_l082cz",
-  "name": "Cricket-L082CZ",
-  "platform": "ststm32",
-  "mcu": "STM32L082CZY6",
-  "fcpu": 32000000,
-  "ram": 20480,
-  "rom": 196608,
-  "frameworks": [
-    "arduino",
-    "stm32cube"
-  ],
-  "vendor": "Tlera Corporation",
-  "url": "https://www.tindie.com/products/tleracorp/cricket-loralorawangnss-asset-tracker/",
+  "build": {
+    "core": "stm32l0",
+    "extra_flags": "-DSTM32L0 -DARDUINO_STM32L0_CRICKET",
+    "f_cpu": "32000000L",
+    "mcu": "stm32l082czy6",
+    "variant": "Cricket-L082CZ"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
@@ -19,14 +13,20 @@
       "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32L0 -DARDUINO_STM32L0_CRICKET",
-    "core": "stm32l0",
-    "f_cpu": "32000000L",
-    "mcu": "stm32l082czy6",
-    "variant": "Cricket-L082CZ"
-  },
+  "fcpu": 32000000,
+  "frameworks": [
+    "arduino",
+    "stm32cube"
+  ],
+  "id": "cricket_l082cz",
+  "mcu": "STM32L082CZY6",
+  "name": "Cricket-L082CZ",
+  "platform": "ststm32",
+  "ram": 20480,
+  "rom": 196608,
   "upload": {
     "protocol": "dfu"
-  }
+  },
+  "url": "https://www.tindie.com/products/tleracorp/cricket-loralorawangnss-asset-tracker/",
+  "vendor": "Tlera Corporation"
 }

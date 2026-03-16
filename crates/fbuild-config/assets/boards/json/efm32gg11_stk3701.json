@@ -1,16 +1,8 @@
 {
-  "id": "efm32gg11_stk3701",
-  "name": "SLSTK3701A Giant Gecko S1",
-  "platform": "siliconlabsefm32",
-  "mcu": "EFM32GG11B820F2048GL192",
-  "fcpu": 48000000,
-  "ram": 524288,
-  "rom": 2097152,
-  "frameworks": [
-    "mbed"
-  ],
-  "vendor": "Silicon Labs",
-  "url": "https://www.silabs.com/development-tools/mcu/32-bit/efm32gg11-starter-kit",
+  "build": {
+    "f_cpu": "48000000L",
+    "mcu": "efm32gg11b820f2048gl192"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
@@ -19,11 +11,19 @@
       }
     }
   },
-  "build": {
-    "f_cpu": "48000000L",
-    "mcu": "efm32gg11b820f2048gl192"
-  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "mbed"
+  ],
+  "id": "efm32gg11_stk3701",
+  "mcu": "EFM32GG11B820F2048GL192",
+  "name": "SLSTK3701A Giant Gecko S1",
+  "platform": "siliconlabsefm32",
+  "ram": 524288,
+  "rom": 2097152,
   "upload": {
     "protocol": "mbed"
-  }
+  },
+  "url": "https://www.silabs.com/development-tools/mcu/32-bit/efm32gg11-starter-kit",
+  "vendor": "Silicon Labs"
 }

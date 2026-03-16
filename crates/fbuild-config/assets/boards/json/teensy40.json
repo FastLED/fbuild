@@ -1,4 +1,13 @@
 {
+  "build": {
+    "arduino": {
+      "ldscript": "imxrt1062.ld"
+    },
+    "core": "teensy4",
+    "extra_flags": "-D__IMXRT1062__ -DARDUINO_TEENSY40",
+    "f_cpu": "600000000",
+    "mcu": "imxrt1062"
+  },
   "connectivity": [
     "can"
   ],
@@ -18,18 +27,9 @@
   "platform": "teensy",
   "ram": 524288,
   "rom": 2031616,
-  "url": "https://www.pjrc.com/store/teensy40.html",
-  "vendor": "Teensy",
-  "build": {
-    "extra_flags": "-D__IMXRT1062__ -DARDUINO_TEENSY40",
-    "core": "teensy4",
-    "f_cpu": "600000000",
-    "mcu": "imxrt1062",
-    "arduino": {
-      "ldscript": "imxrt1062.ld"
-    }
-  },
   "upload": {
     "protocol": "teensy-gui"
-  }
+  },
+  "url": "https://www.pjrc.com/store/teensy40.html",
+  "vendor": "Teensy"
 }

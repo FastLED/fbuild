@@ -1,32 +1,32 @@
 {
-  "id": "megaADK",
-  "name": "Arduino Mega ADK",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA2560",
-  "fcpu": 16000000,
-  "ram": 8192,
-  "rom": 253952,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Arduino",
-  "url": "https://www.arduino.cc/en/Main/ArduinoBoardMegaADK",
-  "debug": {
-    "tools": {
-      "simavr": {},
-      "avr-stub": {}
-    }
-  },
   "build": {
-    "extra_flags": "-DARDUINO_AVR_ADK",
     "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_ADK",
     "f_cpu": "16000000L",
     "mcu": "atmega2560",
     "variant": "mega"
   },
+  "debug": {
+    "tools": {
+      "avr-stub": {},
+      "simavr": {}
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "megaADK",
+  "mcu": "ATMEGA2560",
+  "name": "Arduino Mega ADK",
+  "platform": "atmelavr",
+  "ram": 8192,
+  "rom": 253952,
   "upload": {
     "protocol": "wiring",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.arduino.cc/en/Main/ArduinoBoardMegaADK",
+  "vendor": "Arduino"
 }

@@ -1,17 +1,16 @@
 {
-  "id": "ttgo-lora32-v1",
-  "name": "TTGO LoRa32-OLED V1",
-  "platform": "espressif32",
-  "mcu": "ESP32",
-  "fcpu": 240000000,
-  "ram": 327680,
-  "rom": 4194304,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "TTGO",
-  "url": "https://github.com/Xinyuan-LilyGO/TTGO-LoRa-Series",
+  "build": {
+    "arduino": {
+      "ldscript": "esp32_out.ld"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_TTGO_LoRa32_V1",
+    "f_cpu": "240000000L",
+    "f_flash": "40000000L",
+    "flash_mode": "dio",
+    "mcu": "esp32",
+    "variant": "ttgo-lora32-v1"
+  },
   "connectivity": [
     "wifi",
     "bluetooth",
@@ -25,28 +24,29 @@
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
       "tumpa": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_TTGO_LoRa32_V1",
-    "core": "esp32",
-    "f_cpu": "240000000L",
-    "mcu": "esp32",
-    "f_flash": "40000000L",
-    "flash_mode": "dio",
-    "variant": "ttgo-lora32-v1",
-    "arduino": {
-      "ldscript": "esp32_out.ld"
-    }
-  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "ttgo-lora32-v1",
+  "mcu": "ESP32",
+  "name": "TTGO LoRa32-OLED V1",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 4194304,
   "upload": {
     "flash_size": "4MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://github.com/Xinyuan-LilyGO/TTGO-LoRa-Series",
+  "vendor": "TTGO"
 }

@@ -1,37 +1,37 @@
 {
-  "id": "st3dp001_eval",
-  "name": "3DP001V1 Evaluation board for 3D printer",
-  "platform": "ststm32",
-  "mcu": "STM32F401VET6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F4 -DSTM32F401xE -DSTM32F40_41xxx",
+    "f_cpu": "84000000L",
+    "mcu": "stm32f401vet6",
+    "variant": "STM32F4xx/F401V(B-C-D-E)T"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 84000000,
-  "ram": 98304,
-  "rom": 524288,
   "frameworks": [
     "arduino",
     "cmsis",
     "stm32cube"
   ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/evaluation-tools/steval-3dp001v1.html",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F401xE -DSTM32F40_41xxx",
-    "core": "stm32",
-    "f_cpu": "84000000L",
-    "mcu": "stm32f401vet6",
-    "variant": "STM32F4xx/F401V(B-C-D-E)T"
-  },
+  "id": "st3dp001_eval",
+  "mcu": "STM32F401VET6",
+  "name": "3DP001V1 Evaluation board for 3D printer",
+  "platform": "ststm32",
+  "ram": 98304,
+  "rom": 524288,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/steval-3dp001v1.html",
+  "vendor": "ST"
 }

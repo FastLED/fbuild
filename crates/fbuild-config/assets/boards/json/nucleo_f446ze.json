@@ -1,11 +1,26 @@
 {
-  "id": "nucleo_f446ze",
-  "name": "ST Nucleo F446ZE",
-  "platform": "ststm32",
-  "mcu": "STM32F446ZET6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F4 -DSTM32F446xx",
+    "f_cpu": "180000000L",
+    "mcu": "stm32f446zet6",
+    "variant": "STM32F4xx/F446Z(C-E)(H-J-T)"
+  },
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 180000000,
-  "ram": 131072,
-  "rom": 524288,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -14,30 +29,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F446ZE/",
-  "connectivity": [
-    "can"
-  ],
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F446xx",
-    "core": "stm32",
-    "f_cpu": "180000000L",
-    "mcu": "stm32f446zet6",
-    "variant": "STM32F4xx/F446Z(C-E)(H-J-T)"
-  },
+  "id": "nucleo_f446ze",
+  "mcu": "STM32F446ZET6",
+  "name": "ST Nucleo F446ZE",
+  "platform": "ststm32",
+  "ram": 131072,
+  "rom": 524288,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F446ZE/",
+  "vendor": "ST"
 }

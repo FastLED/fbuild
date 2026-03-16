@@ -1,11 +1,24 @@
 {
-  "id": "disco_f429zi",
-  "name": "ST 32F429IDISCOVERY",
-  "platform": "ststm32",
-  "mcu": "STM32F429ZIT6",
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F429xx",
+    "f_cpu": "180000000L",
+    "mcu": "stm32f429zit6"
+  },
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 180000000,
-  "ram": 262144,
-  "rom": 2097152,
   "frameworks": [
     "cmsis",
     "mbed",
@@ -13,28 +26,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1848/PF259090",
-  "connectivity": [
-    "can"
-  ],
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F429xx",
-    "f_cpu": "180000000L",
-    "mcu": "stm32f429zit6"
-  },
+  "id": "disco_f429zi",
+  "mcu": "STM32F429ZIT6",
+  "name": "ST 32F429IDISCOVERY",
+  "platform": "ststm32",
+  "ram": 262144,
+  "rom": 2097152,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1848/PF259090",
+  "vendor": "ST"
 }

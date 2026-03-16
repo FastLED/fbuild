@@ -1,11 +1,23 @@
 {
-  "id": "nucleo_f303re",
-  "name": "ST Nucleo F303RE",
-  "platform": "ststm32",
-  "mcu": "STM32F303RET6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F3 -DSTM32F303xE",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f303ret6",
+    "variant": "STM32F3xx/F303R(D-E)T"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 72000000,
-  "ram": 65536,
-  "rom": 524288,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -14,27 +26,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "http://developer.mbed.org/platforms/ST-Nucleo-F303RE/",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F3 -DSTM32F303xE",
-    "core": "stm32",
-    "f_cpu": "72000000L",
-    "mcu": "stm32f303ret6",
-    "variant": "STM32F3xx/F303R(D-E)T"
-  },
+  "id": "nucleo_f303re",
+  "mcu": "STM32F303RET6",
+  "name": "ST Nucleo F303RE",
+  "platform": "ststm32",
+  "ram": 65536,
+  "rom": 524288,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "http://developer.mbed.org/platforms/ST-Nucleo-F303RE/",
+  "vendor": "ST"
 }

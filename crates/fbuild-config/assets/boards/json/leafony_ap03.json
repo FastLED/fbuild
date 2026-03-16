@@ -1,40 +1,40 @@
 {
-  "id": "leafony_ap03",
-  "name": "Leafony Systems AP03",
-  "platform": "ststm32",
-  "mcu": "STM32L452RET6",
-  "fcpu": 80000000,
-  "ram": 163840,
-  "rom": 524288,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "Leafony Systems",
-  "url": "https://shop.leafony.com/",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32L4 -DSTM32L452xx",
+    "f_cpu": "80000000L",
+    "mcu": "stm32l452ret6",
+    "variant": "STM32L4xx/L452RC(I-T-Y)_L452RE(I-T-Y)x(P)_L462RE(I-T-Y)"
+  },
   "connectivity": [
     "can"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
       "stlink": {
         "onboard": true
-      },
-      "cmsis-dap": {}
+      }
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32L4 -DSTM32L452xx",
-    "core": "stm32",
-    "f_cpu": "80000000L",
-    "mcu": "stm32l452ret6",
-    "variant": "STM32L4xx/L452RC(I-T-Y)_L452RE(I-T-Y)x(P)_L462RE(I-T-Y)"
-  },
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "leafony_ap03",
+  "mcu": "STM32L452RET6",
+  "name": "Leafony Systems AP03",
+  "platform": "ststm32",
+  "ram": 163840,
+  "rom": 524288,
   "upload": {
     "protocol": "serial"
-  }
+  },
+  "url": "https://shop.leafony.com/",
+  "vendor": "Leafony Systems"
 }

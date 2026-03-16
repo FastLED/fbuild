@@ -1,39 +1,39 @@
 {
-  "id": "nicla_vision_m4",
-  "name": "Arduino Nicla Vision (M4 core)",
-  "platform": "ststm32",
-  "mcu": "STM32H747XIH6",
-  "fcpu": 480000000,
-  "ram": 294248,
-  "rom": 1048576,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Arduino",
-  "url": "https://store.arduino.cc/products/nicla-vision",
+  "build": {
+    "arduino": {
+      "ldscript": "linker_script.ld"
+    },
+    "core": "arduino",
+    "extra_flags": "-DSTM32H7 -DARDUINO_PORTENTA_H7_M4 -DNVISION_PINS",
+    "f_cpu": "480000000L",
+    "mcu": "stm32h747xih6",
+    "variant": "GENERIC_STM32H747_M4"
+  },
   "connectivity": [
     "bluetooth",
     "wifi"
   ],
   "debug": {
     "tools": {
+      "cmsis-dap": {},
       "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
+      "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32H7 -DARDUINO_PORTENTA_H7_M4 -DNVISION_PINS",
-    "core": "arduino",
-    "f_cpu": "480000000L",
-    "mcu": "stm32h747xih6",
-    "variant": "GENERIC_STM32H747_M4",
-    "arduino": {
-      "ldscript": "linker_script.ld"
-    }
-  },
+  "fcpu": 480000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "nicla_vision_m4",
+  "mcu": "STM32H747XIH6",
+  "name": "Arduino Nicla Vision (M4 core)",
+  "platform": "ststm32",
+  "ram": 294248,
+  "rom": 1048576,
   "upload": {
     "protocol": "dfu",
     "require_upload_port": true
-  }
+  },
+  "url": "https://store.arduino.cc/products/nicla-vision",
+  "vendor": "Arduino"
 }

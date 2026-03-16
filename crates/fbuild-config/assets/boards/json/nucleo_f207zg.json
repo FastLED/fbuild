@@ -1,11 +1,27 @@
 {
-  "id": "nucleo_f207zg",
-  "name": "ST Nucleo F207ZG",
-  "platform": "ststm32",
-  "mcu": "STM32F207ZGT6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F2 -DSTM32F207xx",
+    "f_cpu": "120000000L",
+    "mcu": "stm32f207zgt6",
+    "variant": "STM32F2xx/F207Z(C-E-F-G)T_F217Z(E-G)T"
+  },
+  "connectivity": [
+    "can",
+    "ethernet"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 120000000,
-  "ram": 131072,
-  "rom": 1048576,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -14,31 +30,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F207ZG/",
-  "connectivity": [
-    "can",
-    "ethernet"
-  ],
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F2 -DSTM32F207xx",
-    "core": "stm32",
-    "f_cpu": "120000000L",
-    "mcu": "stm32f207zgt6",
-    "variant": "STM32F2xx/F207Z(C-E-F-G)T_F217Z(E-G)T"
-  },
+  "id": "nucleo_f207zg",
+  "mcu": "STM32F207ZGT6",
+  "name": "ST Nucleo F207ZG",
+  "platform": "ststm32",
+  "ram": 131072,
+  "rom": 1048576,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F207ZG/",
+  "vendor": "ST"
 }

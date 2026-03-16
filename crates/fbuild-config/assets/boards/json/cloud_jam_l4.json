@@ -1,36 +1,36 @@
 {
-  "id": "cloud_jam_l4",
-  "name": "RushUp Cloud-JAM L4",
-  "platform": "ststm32",
-  "mcu": "STM32L476RGT6",
+  "build": {
+    "extra_flags": "-DSTM32L4 -DSTM32L476xx",
+    "f_cpu": "80000000L",
+    "mcu": "stm32l476rgt6"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 80000000,
-  "ram": 131072,
-  "rom": 1048576,
   "frameworks": [
     "cmsis",
     "mbed",
     "stm32cube",
     "libopencm3"
   ],
-  "vendor": "RushUp",
-  "url": "https://developer.mbed.org/platforms/ST-Nucleo-L476RG/",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32L4 -DSTM32L476xx",
-    "f_cpu": "80000000L",
-    "mcu": "stm32l476rgt6"
-  },
+  "id": "cloud_jam_l4",
+  "mcu": "STM32L476RGT6",
+  "name": "RushUp Cloud-JAM L4",
+  "platform": "ststm32",
+  "ram": 131072,
+  "rom": 1048576,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-L476RG/",
+  "vendor": "RushUp"
 }

@@ -1,26 +1,26 @@
 {
-  "id": "ATmega2561",
-  "name": "ATmega2561",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA2561",
-  "fcpu": 16000000,
-  "ram": 8192,
-  "rom": 262144,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/ATmega2561",
   "build": {
-    "extra_flags": "-DARDUINO_AVR_ATmega2561",
     "core": "MegaCore",
+    "extra_flags": "-DARDUINO_AVR_ATmega2561",
     "f_cpu": "16000000L",
     "mcu": "atmega2561",
     "variant": "64-pin-avr"
   },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega2561",
+  "mcu": "ATMEGA2561",
+  "name": "ATmega2561",
+  "platform": "atmelavr",
+  "ram": 8192,
+  "rom": 262144,
   "upload": {
     "protocol": "urclock",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.microchip.com/wwwproducts/ATmega2561",
+  "vendor": "Microchip"
 }

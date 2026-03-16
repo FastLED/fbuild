@@ -1,31 +1,31 @@
 {
-  "id": "chiwawa",
-  "name": "Arduino Industrial 101",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA32U4",
-  "fcpu": 16000000,
-  "ram": 2560,
-  "rom": 28672,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Arduino",
-  "url": "https://store.arduino.cc/arduino-industrial-101",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_YUN",
+    "f_cpu": "16000000L",
+    "mcu": "atmega32u4",
+    "variant": "yun"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_YUN",
-    "core": "arduino",
-    "f_cpu": "16000000L",
-    "mcu": "atmega32u4",
-    "variant": "yun"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "chiwawa",
+  "mcu": "ATMEGA32U4",
+  "name": "Arduino Industrial 101",
+  "platform": "atmelavr",
+  "ram": 2560,
+  "rom": 28672,
   "upload": {
     "protocol": "avr109",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "https://store.arduino.cc/arduino-industrial-101",
+  "vendor": "Arduino"
 }

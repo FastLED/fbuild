@@ -1,26 +1,26 @@
 {
-  "id": "ATmega6490",
-  "name": "ATmega6490/A",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA6490",
-  "fcpu": 16000000,
-  "ram": 4096,
-  "rom": 65536,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega6490",
   "build": {
-    "extra_flags": "-DARDUINO_AVR_ATmega6490",
     "core": "MegaCore",
+    "extra_flags": "-DARDUINO_AVR_ATmega6490",
     "f_cpu": "16000000L",
     "mcu": "atmega6490",
     "variant": "100-pin-avr"
   },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega6490",
+  "mcu": "ATMEGA6490",
+  "name": "ATmega6490/A",
+  "platform": "atmelavr",
+  "ram": 4096,
+  "rom": 65536,
   "upload": {
     "protocol": "urclock",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega6490",
+  "vendor": "Microchip"
 }

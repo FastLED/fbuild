@@ -1,24 +1,24 @@
 {
-  "id": "attiny261",
-  "name": "Generic ATtiny261",
-  "platform": "atmelavr",
-  "mcu": "ATTINY261",
-  "fcpu": 8000000,
-  "ram": 128,
-  "rom": 2048,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Atmel",
-  "url": "http://www.atmel.com/devices/ATTINY261.aspx",
   "build": {
-    "extra_flags": "-DARDUINO_AVR_ATTINYX61",
     "core": "tiny",
+    "extra_flags": "-DARDUINO_AVR_ATTINYX61",
     "f_cpu": "8000000L",
     "mcu": "attiny261",
     "variant": "tinyX61"
   },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "attiny261",
+  "mcu": "ATTINY261",
+  "name": "Generic ATtiny261",
+  "platform": "atmelavr",
+  "ram": 128,
+  "rom": 2048,
   "upload": {
     "protocol": "usbtiny"
-  }
+  },
+  "url": "http://www.atmel.com/devices/ATTINY261.aspx",
+  "vendor": "Atmel"
 }

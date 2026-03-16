@@ -1,32 +1,32 @@
 {
-  "id": "whispernode",
-  "name": "Talk2 Whisper Node",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA328P",
-  "fcpu": 16000000,
-  "ram": 2048,
-  "rom": 32256,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Wisen",
-  "url": "https://wisen.com.au/store/products/whisper-node-avr/",
-  "debug": {
-    "tools": {
-      "simavr": {},
-      "avr-stub": {}
-    }
-  },
   "build": {
-    "extra_flags": "-DARDUINO_AVR_UNO",
     "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_UNO",
     "f_cpu": "16000000L",
     "mcu": "atmega328p",
     "variant": "eightanaloginputs"
   },
+  "debug": {
+    "tools": {
+      "avr-stub": {},
+      "simavr": {}
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "whispernode",
+  "mcu": "ATMEGA328P",
+  "name": "Talk2 Whisper Node",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 32256,
   "upload": {
     "protocol": "arduino",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://wisen.com.au/store/products/whisper-node-avr/",
+  "vendor": "Wisen"
 }

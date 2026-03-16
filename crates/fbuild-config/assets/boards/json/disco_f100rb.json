@@ -1,37 +1,37 @@
 {
-  "id": "disco_f100rb",
-  "name": "ST STM32VLDISCOVERY",
-  "platform": "ststm32",
-  "mcu": "STM32F100RBT6",
-  "fcpu": 24000000,
-  "ram": 8192,
-  "rom": 131072,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "libopencm3",
-    "stm32cube"
-  ],
-  "vendor": "ST",
-  "url": "http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1848/PF250863",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
   "build": {
     "extra_flags": "-DSTM32F1 -DSTM32F100xB",
     "f_cpu": "24000000L",
     "mcu": "stm32f100rbt6",
     "variant": "STM32F1xx/F100R(8-B)T"
   },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 24000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "libopencm3",
+    "stm32cube"
+  ],
+  "id": "disco_f100rb",
+  "mcu": "STM32F100RBT6",
+  "name": "ST STM32VLDISCOVERY",
+  "platform": "ststm32",
+  "ram": 8192,
+  "rom": 131072,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1848/PF250863",
+  "vendor": "ST"
 }

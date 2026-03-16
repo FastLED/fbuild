@@ -1,38 +1,38 @@
 {
-  "id": "rymcu_f407ve",
-  "name": "RYMCU STM32F407VE (192k RAM. 512k Flash)",
-  "platform": "ststm32",
-  "mcu": "STM32F407VET6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F407xx -DARDUINO_GENERIC_F407VETX -DSTM32F4",
+    "f_cpu": "168000000L",
+    "mcu": "stm32f407vet6",
+    "variant": "STM32F4xx/F407V(E-G)T_F417V(E-G)T"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true
+      }
+    }
+  },
   "fcpu": 168000000,
-  "ram": 131072,
-  "rom": 514288,
   "frameworks": [
     "arduino",
     "cmsis",
     "stm32cube",
     "libopencm3"
   ],
-  "vendor": "RYMCU",
-  "url": "https://rymcu.com/products",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F407xx -DARDUINO_GENERIC_F407VETX -DSTM32F4",
-    "core": "stm32",
-    "f_cpu": "168000000L",
-    "mcu": "stm32f407vet6",
-    "variant": "STM32F4xx/F407V(E-G)T_F417V(E-G)T"
-  },
+  "id": "rymcu_f407ve",
+  "mcu": "STM32F407VET6",
+  "name": "RYMCU STM32F407VE (192k RAM. 512k Flash)",
+  "platform": "ststm32",
+  "ram": 131072,
+  "rom": 514288,
   "upload": {
     "protocol": "stlink",
     "require_upload_port": true
-  }
+  },
+  "url": "https://rymcu.com/products",
+  "vendor": "RYMCU"
 }

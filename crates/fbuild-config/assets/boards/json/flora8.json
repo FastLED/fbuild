@@ -1,31 +1,31 @@
 {
-  "id": "flora8",
-  "name": "Adafruit Flora",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA32U4",
-  "fcpu": 8000000,
-  "ram": 2560,
-  "rom": 28672,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Adafruit",
-  "url": "http://www.adafruit.com/product/659",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_FLORA8",
+    "f_cpu": "8000000L",
+    "mcu": "atmega32u4",
+    "variant": "flora"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_FLORA8",
-    "core": "arduino",
-    "f_cpu": "8000000L",
-    "mcu": "atmega32u4",
-    "variant": "flora"
-  },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "flora8",
+  "mcu": "ATMEGA32U4",
+  "name": "Adafruit Flora",
+  "platform": "atmelavr",
+  "ram": 2560,
+  "rom": 28672,
   "upload": {
     "protocol": "avr109",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "http://www.adafruit.com/product/659",
+  "vendor": "Adafruit"
 }

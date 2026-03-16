@@ -1,19 +1,10 @@
 {
-  "id": "steval_mksboxv1",
-  "name": "SensorTile.box",
-  "platform": "ststm32",
-  "mcu": "STM32L4R9ZI",
-  "fcpu": 120000000,
-  "ram": 655360,
-  "rom": 2097152,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/evaluation-tools/steval-mksbox1v1.html",
+  "build": {
+    "extra_flags": "-DSTM32L4 -DSTM32L4xx -DSTM32L4R9xx",
+    "f_cpu": "120000000L",
+    "mcu": "stm32l4r9zi",
+    "variant": "STM32L4xx/L4R9Z(G-I)J_L4S9ZIJ"
+  },
   "connectivity": [
     "bluetooth",
     "can"
@@ -21,20 +12,29 @@
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
       "stlink": {
         "default": true
-      },
-      "cmsis-dap": {}
+      }
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32L4 -DSTM32L4xx -DSTM32L4R9xx",
-    "f_cpu": "120000000L",
-    "mcu": "stm32l4r9zi",
-    "variant": "STM32L4xx/L4R9Z(G-I)J_L4S9ZIJ"
-  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "steval_mksboxv1",
+  "mcu": "STM32L4R9ZI",
+  "name": "SensorTile.box",
+  "platform": "ststm32",
+  "ram": 655360,
+  "rom": 2097152,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/steval-mksbox1v1.html",
+  "vendor": "ST"
 }

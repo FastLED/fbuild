@@ -1,19 +1,11 @@
 {
-  "id": "genericSTM32F103C4",
-  "name": "STM32F103C4 (6k RAM. 16k Flash)",
-  "platform": "ststm32",
-  "mcu": "STM32F103C4T6",
-  "fcpu": 72000000,
-  "ram": 6144,
-  "rom": 16384,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "Generic",
-  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103c4.html",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F103x6 -DSTM32F1",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f103c4t6",
+    "variant": "STM32F1xx/F103C4T_F103C6(T-U)"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
@@ -21,14 +13,22 @@
       "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F103x6 -DSTM32F1",
-    "core": "stm32",
-    "f_cpu": "72000000L",
-    "mcu": "stm32f103c4t6",
-    "variant": "STM32F1xx/F103C4T_F103C6(T-U)"
-  },
+  "fcpu": 72000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "genericSTM32F103C4",
+  "mcu": "STM32F103C4T6",
+  "name": "STM32F103C4 (6k RAM. 16k Flash)",
+  "platform": "ststm32",
+  "ram": 6144,
+  "rom": 16384,
   "upload": {
     "protocol": "serial"
-  }
+  },
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103c4.html",
+  "vendor": "Generic"
 }

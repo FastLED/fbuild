@@ -1,19 +1,13 @@
 {
-  "id": "malyanm300_f070cb",
-  "name": "M300",
-  "platform": "ststm32",
-  "mcu": "STM32F070CBT6",
-  "fcpu": 48000000,
-  "ram": 15168,
-  "rom": 122880,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "Malyan",
-  "url": "http://malyansys.com/product/m300/",
+  "build": {
+    "arduino": {
+      "ldscript": "MALYANMx00_F070CB.ld"
+    },
+    "extra_flags": "-DSTM32F0 -DSTM32F070xB",
+    "f_cpu": "48000000L",
+    "mcu": "stm32f070cbt6",
+    "variant": "STM32F0xx/F070CBT"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
@@ -21,16 +15,22 @@
       "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F0 -DSTM32F070xB",
-    "f_cpu": "48000000L",
-    "mcu": "stm32f070cbt6",
-    "variant": "STM32F0xx/F070CBT",
-    "arduino": {
-      "ldscript": "MALYANMx00_F070CB.ld"
-    }
-  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "malyanm300_f070cb",
+  "mcu": "STM32F070CBT6",
+  "name": "M300",
+  "platform": "ststm32",
+  "ram": 15168,
+  "rom": 122880,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "http://malyansys.com/product/m300/",
+  "vendor": "Malyan"
 }

@@ -1,29 +1,29 @@
 {
-  "id": "protrinket5",
-  "name": "Adafruit Pro Trinket 5V/16MHz (USB)",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA328P",
-  "fcpu": 16000000,
-  "ram": 2048,
-  "rom": 28672,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Adafruit",
-  "url": "http://www.adafruit.com/products/2000",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_PROTRINKET5",
+    "f_cpu": "16000000L",
+    "mcu": "atmega328p",
+    "variant": "eightanaloginputs"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_PROTRINKET5",
-    "core": "arduino",
-    "f_cpu": "16000000L",
-    "mcu": "atmega328p",
-    "variant": "eightanaloginputs"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "protrinket5",
+  "mcu": "ATMEGA328P",
+  "name": "Adafruit Pro Trinket 5V/16MHz (USB)",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 28672,
   "upload": {
     "protocol": "usbtiny"
-  }
+  },
+  "url": "http://www.adafruit.com/products/2000",
+  "vendor": "Adafruit"
 }

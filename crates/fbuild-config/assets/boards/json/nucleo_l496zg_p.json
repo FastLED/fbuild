@@ -1,11 +1,25 @@
 {
-  "id": "nucleo_l496zg_p",
-  "name": "ST Nucleo L496ZG-P",
-  "platform": "ststm32",
-  "mcu": "STM32L496ZGT6P",
+  "build": {
+    "extra_flags": "-DSTM32L4 -DSTM32L496xx",
+    "f_cpu": "80000000L",
+    "mcu": "stm32l496zgt6p",
+    "variant": "STM32L4xx/L496ZGTxP_L4A6ZGTxP"
+  },
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 80000000,
-  "ram": 327680,
-  "rom": 1048576,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -13,29 +27,15 @@
     "stm32cube",
     "libopencm3"
   ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/evaluation-tools/nucleo-l496zg-p.html",
-  "connectivity": [
-    "can"
-  ],
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32L4 -DSTM32L496xx",
-    "f_cpu": "80000000L",
-    "mcu": "stm32l496zgt6p",
-    "variant": "STM32L4xx/L496ZGTxP_L4A6ZGTxP"
-  },
+  "id": "nucleo_l496zg_p",
+  "mcu": "STM32L496ZGT6P",
+  "name": "ST Nucleo L496ZG-P",
+  "platform": "ststm32",
+  "ram": 327680,
+  "rom": 1048576,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-l496zg-p.html",
+  "vendor": "ST"
 }

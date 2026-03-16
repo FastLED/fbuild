@@ -1,11 +1,23 @@
 {
-  "id": "nucleo_f411re",
-  "name": "ST Nucleo F411RE",
-  "platform": "ststm32",
-  "mcu": "STM32F411RET6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F4 -DSTM32F411xE",
+    "f_cpu": "100000000L",
+    "mcu": "stm32f411ret6",
+    "variant": "STM32F4xx/F411R(C-E)T"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 100000000,
-  "ram": 131072,
-  "rom": 524288,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -14,27 +26,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F411RE/",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F411xE",
-    "core": "stm32",
-    "f_cpu": "100000000L",
-    "mcu": "stm32f411ret6",
-    "variant": "STM32F4xx/F411R(C-E)T"
-  },
+  "id": "nucleo_f411re",
+  "mcu": "STM32F411RET6",
+  "name": "ST Nucleo F411RE",
+  "platform": "ststm32",
+  "ram": 131072,
+  "rom": 524288,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F411RE/",
+  "vendor": "ST"
 }

@@ -1,29 +1,29 @@
 {
-  "id": "protrinket3",
-  "name": "Adafruit Pro Trinket 3V/12MHz (USB)",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA328P",
-  "fcpu": 12000000,
-  "ram": 2048,
-  "rom": 28672,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Adafruit",
-  "url": "http://www.adafruit.com/products/2010",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_PROTRINKET3",
+    "f_cpu": "12000000L",
+    "mcu": "atmega328p",
+    "variant": "eightanaloginputs"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_PROTRINKET3",
-    "core": "arduino",
-    "f_cpu": "12000000L",
-    "mcu": "atmega328p",
-    "variant": "eightanaloginputs"
-  },
+  "fcpu": 12000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "protrinket3",
+  "mcu": "ATMEGA328P",
+  "name": "Adafruit Pro Trinket 3V/12MHz (USB)",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 28672,
   "upload": {
     "protocol": "usbtiny"
-  }
+  },
+  "url": "http://www.adafruit.com/products/2010",
+  "vendor": "Adafruit"
 }

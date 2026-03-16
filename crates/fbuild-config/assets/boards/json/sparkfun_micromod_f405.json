@@ -1,20 +1,11 @@
 {
-  "id": "sparkfun_micromod_f405",
-  "name": "SparkFun MicroMod STM32F405",
-  "platform": "ststm32",
-  "mcu": "STM32F405RGT6",
-  "fcpu": 168000000,
-  "ram": 131072,
-  "rom": 1048576,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3",
-    "zephyr"
-  ],
-  "vendor": "SparkFun",
-  "url": "https://www.sparkfun.com/products/17713",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F4 -DSTM32F405xx",
+    "f_cpu": "168000000L",
+    "mcu": "stm32f405rgt6",
+    "variant": "STM32F4xx/F405RGT_F415RGT"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
@@ -22,14 +13,23 @@
       "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F405xx",
-    "core": "stm32",
-    "f_cpu": "168000000L",
-    "mcu": "stm32f405rgt6",
-    "variant": "STM32F4xx/F405RGT_F415RGT"
-  },
+  "fcpu": 168000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "id": "sparkfun_micromod_f405",
+  "mcu": "STM32F405RGT6",
+  "name": "SparkFun MicroMod STM32F405",
+  "platform": "ststm32",
+  "ram": 131072,
+  "rom": 1048576,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.sparkfun.com/products/17713",
+  "vendor": "SparkFun"
 }

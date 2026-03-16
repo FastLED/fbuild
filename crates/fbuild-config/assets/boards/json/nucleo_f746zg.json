@@ -1,11 +1,27 @@
 {
-  "id": "nucleo_f746zg",
-  "name": "ST Nucleo F746ZG",
-  "platform": "ststm32",
-  "mcu": "STM32F746ZGT6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F7 -DSTM32F746xx",
+    "f_cpu": "216000000L",
+    "mcu": "stm32f746zgt6",
+    "variant": "STM32F7xx/F745Z(E-G)T_F746Z(E-G)(T-Y)_F750Z8T_F756ZG(T-Y)"
+  },
+  "connectivity": [
+    "can",
+    "ethernet"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 216000000,
-  "ram": 327680,
-  "rom": 1048576,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -14,31 +30,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F446ZE/",
-  "connectivity": [
-    "can",
-    "ethernet"
-  ],
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F7 -DSTM32F746xx",
-    "core": "stm32",
-    "f_cpu": "216000000L",
-    "mcu": "stm32f746zgt6",
-    "variant": "STM32F7xx/F745Z(E-G)T_F746Z(E-G)(T-Y)_F750Z8T_F756ZG(T-Y)"
-  },
+  "id": "nucleo_f746zg",
+  "mcu": "STM32F746ZGT6",
+  "name": "ST Nucleo F746ZG",
+  "platform": "ststm32",
+  "ram": 327680,
+  "rom": 1048576,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F446ZE/",
+  "vendor": "ST"
 }

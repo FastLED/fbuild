@@ -1,11 +1,27 @@
 {
-  "id": "nucleo_f756zg",
-  "name": "ST Nucleo F756ZG",
-  "platform": "ststm32",
-  "mcu": "STM32F756ZG",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F7 -DSTM32F756xx",
+    "f_cpu": "216000000L",
+    "mcu": "stm32f756zg",
+    "variant": "STM32F7xx/F745Z(E-G)T_F746Z(E-G)(T-Y)_F750Z8T_F756ZG(T-Y)"
+  },
+  "connectivity": [
+    "can",
+    "ethernet"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 216000000,
-  "ram": 327680,
-  "rom": 1048576,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -14,31 +30,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/evaluation-tools/nucleo-f756zg.html",
-  "connectivity": [
-    "can",
-    "ethernet"
-  ],
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F7 -DSTM32F756xx",
-    "core": "stm32",
-    "f_cpu": "216000000L",
-    "mcu": "stm32f756zg",
-    "variant": "STM32F7xx/F745Z(E-G)T_F746Z(E-G)(T-Y)_F750Z8T_F756ZG(T-Y)"
-  },
+  "id": "nucleo_f756zg",
+  "mcu": "STM32F756ZG",
+  "name": "ST Nucleo F756ZG",
+  "platform": "ststm32",
+  "ram": 327680,
+  "rom": 1048576,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-f756zg.html",
+  "vendor": "ST"
 }

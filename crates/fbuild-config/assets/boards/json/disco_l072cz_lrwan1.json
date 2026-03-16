@@ -1,11 +1,22 @@
 {
-  "id": "disco_l072cz_lrwan1",
-  "name": "ST DISCO-L072CZ-LRWAN1",
-  "platform": "ststm32",
-  "mcu": "STM32L072CZ",
+  "build": {
+    "extra_flags": "-DSTM32L0 -DSTM32L072xx",
+    "f_cpu": "32000000L",
+    "mcu": "stm32l072cz",
+    "variant": "STM32L0xx/L072CBY_L072CZ(E-Y)_L073CZY_L082CZY"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 32000000,
-  "ram": 20480,
-  "rom": 196608,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -14,26 +25,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://developer.mbed.org/platforms/ST-Discovery-LRWAN1/",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32L0 -DSTM32L072xx",
-    "f_cpu": "32000000L",
-    "mcu": "stm32l072cz",
-    "variant": "STM32L0xx/L072CBY_L072CZ(E-Y)_L073CZY_L082CZY"
-  },
+  "id": "disco_l072cz_lrwan1",
+  "mcu": "STM32L072CZ",
+  "name": "ST DISCO-L072CZ-LRWAN1",
+  "platform": "ststm32",
+  "ram": 20480,
+  "rom": 196608,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ST-Discovery-LRWAN1/",
+  "vendor": "ST"
 }

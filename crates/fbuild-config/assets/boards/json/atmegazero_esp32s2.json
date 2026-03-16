@@ -1,17 +1,17 @@
 {
-  "id": "atmegazero_esp32s2",
-  "name": "EspinalLab ATMegaZero ESP32-S2",
-  "platform": "espressif32",
-  "mcu": "ESP32S2",
-  "fcpu": 240000000,
-  "ram": 327680,
-  "rom": 16777216,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "EspinalLab",
-  "url": "https://shop.atmegazero.com/",
+  "build": {
+    "arduino": {
+      "ldscript": "esp32s2_out.ld",
+      "partitions": "partitions-16MB-tinyuf2.csv"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_atmegazero_esp32s2 -DARDUINO_USB_CDC_ON_BOOT=1",
+    "f_cpu": "240000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "mcu": "esp32s2",
+    "variant": "atmegazero_esp32s2"
+  },
   "connectivity": [
     "wifi"
   ],
@@ -22,29 +22,29 @@
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
       "tumpa": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_atmegazero_esp32s2 -DARDUINO_USB_CDC_ON_BOOT=1",
-    "core": "esp32",
-    "f_cpu": "240000000L",
-    "mcu": "esp32s2",
-    "f_flash": "80000000L",
-    "flash_mode": "qio",
-    "variant": "atmegazero_esp32s2",
-    "arduino": {
-      "ldscript": "esp32s2_out.ld",
-      "partitions": "partitions-16MB-tinyuf2.csv"
-    }
-  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "atmegazero_esp32s2",
+  "mcu": "ESP32S2",
+  "name": "EspinalLab ATMegaZero ESP32-S2",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 16777216,
   "upload": {
     "flash_size": "16MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://shop.atmegazero.com/",
+  "vendor": "EspinalLab"
 }

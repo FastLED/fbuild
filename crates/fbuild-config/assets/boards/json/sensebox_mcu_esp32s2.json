@@ -1,52 +1,52 @@
 {
-  "id": "sensebox_mcu_esp32s2",
-  "name": "senseBox MCU-S2 ESP32-S2",
-  "platform": "espressif32",
-  "mcu": "ESP32S2",
-  "fcpu": 240000000,
-  "ram": 327680,
-  "rom": 4194304,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "senseBox",
-  "url": "https://sensebox.de/en/products-home",
+  "build": {
+    "arduino": {
+      "ldscript": "esp32s2_out.ld",
+      "memory_type": "qio_qspi",
+      "partitions": "partitions-4MB-tinyuf2.csv"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_SENSEBOX_MCU_ESP32S2 -DBOARD_HAS_PSRAM -DARDUINO_USB_CDC_ON_BOOT=1 -DARDUINO_USB_MSC_ON_BOOT=1",
+    "f_cpu": "240000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "mcu": "esp32s2",
+    "variant": "sensebox_mcu_esp32s2"
+  },
   "connectivity": [
     "wifi"
   ],
   "debug": {
     "tools": {
       "cmsis-dap": {},
-      "esp-prog": {},
       "esp-bridge": {},
+      "esp-prog": {},
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
       "tumpa": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_SENSEBOX_MCU_ESP32S2 -DBOARD_HAS_PSRAM -DARDUINO_USB_CDC_ON_BOOT=1 -DARDUINO_USB_MSC_ON_BOOT=1",
-    "core": "esp32",
-    "f_cpu": "240000000L",
-    "mcu": "esp32s2",
-    "f_flash": "80000000L",
-    "flash_mode": "qio",
-    "variant": "sensebox_mcu_esp32s2",
-    "arduino": {
-      "ldscript": "esp32s2_out.ld",
-      "partitions": "partitions-4MB-tinyuf2.csv",
-      "memory_type": "qio_qspi"
-    }
-  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "sensebox_mcu_esp32s2",
+  "mcu": "ESP32S2",
+  "name": "senseBox MCU-S2 ESP32-S2",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 4194304,
   "upload": {
     "flash_size": "4MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://sensebox.de/en/products-home",
+  "vendor": "senseBox"
 }

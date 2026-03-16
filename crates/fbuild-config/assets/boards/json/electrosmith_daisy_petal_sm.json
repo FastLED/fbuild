@@ -1,40 +1,40 @@
 {
-  "id": "electrosmith_daisy_petal_sm",
-  "name": "Electrosmith Daisy Petal SM",
-  "platform": "ststm32",
-  "mcu": "STM32H750IBK6",
-  "fcpu": 400000000,
-  "ram": 524288,
-  "rom": 131072,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube"
-  ],
-  "vendor": "Electrosmith",
-  "url": "https://www.electro-smith.com/daisy",
+  "build": {
+    "arduino": {
+      "ldscript": "DAISY_SEED.ld"
+    },
+    "core": "stm32",
+    "extra_flags": "-DSTM32H7 -DSTM32H7xx -DSTM32H750xx",
+    "f_cpu": "400000000L",
+    "mcu": "stm32h750ibk6",
+    "variant": "STM32H7xx/H742I(G-I)(K-T)_H743I(G-I)(K-T)_H750IB(K-T)_H753II(K-T)"
+  },
   "connectivity": [
     "can"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
+      "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32H7 -DSTM32H7xx -DSTM32H750xx",
-    "core": "stm32",
-    "f_cpu": "400000000L",
-    "mcu": "stm32h750ibk6",
-    "variant": "STM32H7xx/H742I(G-I)(K-T)_H743I(G-I)(K-T)_H750IB(K-T)_H753II(K-T)",
-    "arduino": {
-      "ldscript": "DAISY_SEED.ld"
-    }
-  },
+  "fcpu": 400000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube"
+  ],
+  "id": "electrosmith_daisy_petal_sm",
+  "mcu": "STM32H750IBK6",
+  "name": "Electrosmith Daisy Petal SM",
+  "platform": "ststm32",
+  "ram": 524288,
+  "rom": 131072,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.electro-smith.com/daisy",
+  "vendor": "Electrosmith"
 }

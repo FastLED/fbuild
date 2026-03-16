@@ -1,31 +1,31 @@
 {
-  "id": "itsybitsy32u4_5V",
-  "name": "Adafruit ItsyBitsy 5V/16MHz",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA32U4",
-  "fcpu": 16000000,
-  "ram": 2560,
-  "rom": 28672,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Adafruit",
-  "url": "https://www.adafruit.com/product/3677",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_ITSYBITSY32U4_5V",
+    "f_cpu": "16000000L",
+    "mcu": "atmega32u4",
+    "variant": "itsybitsy32u4"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_ITSYBITSY32U4_5V",
-    "core": "arduino",
-    "f_cpu": "16000000L",
-    "mcu": "atmega32u4",
-    "variant": "itsybitsy32u4"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "itsybitsy32u4_5V",
+  "mcu": "ATMEGA32U4",
+  "name": "Adafruit ItsyBitsy 5V/16MHz",
+  "platform": "atmelavr",
+  "ram": 2560,
+  "rom": 28672,
   "upload": {
     "protocol": "avr109",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "https://www.adafruit.com/product/3677",
+  "vendor": "Adafruit"
 }

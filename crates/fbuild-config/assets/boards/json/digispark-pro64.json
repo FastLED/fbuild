@@ -1,24 +1,24 @@
 {
-  "id": "digispark-pro64",
-  "name": "Digispark Pro (16 MHz) (64 byte buffer)",
-  "platform": "atmelavr",
-  "mcu": "ATTINY167",
-  "fcpu": 16000000,
-  "ram": 512,
-  "rom": 14844,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Digistump",
-  "url": "http://digistump.com/products/109",
   "build": {
-    "extra_flags": "-DARDUINO_AVR_DIGISPARKPRO -DSERIAL_BUFFER_SIZE=64",
     "core": "pro",
+    "extra_flags": "-DARDUINO_AVR_DIGISPARKPRO -DSERIAL_BUFFER_SIZE=64",
     "f_cpu": "16000000L",
     "mcu": "attiny167",
     "variant": "pro"
   },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "digispark-pro64",
+  "mcu": "ATTINY167",
+  "name": "Digispark Pro (16 MHz) (64 byte buffer)",
+  "platform": "atmelavr",
+  "ram": 512,
+  "rom": 14844,
   "upload": {
     "protocol": "micronucleus"
-  }
+  },
+  "url": "http://digistump.com/products/109",
+  "vendor": "Digistump"
 }

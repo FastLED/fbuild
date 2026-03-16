@@ -1,31 +1,31 @@
 {
-  "id": "ATmega88P",
-  "name": "ATmega88P/PA",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA88P",
-  "fcpu": 16000000,
-  "ram": 1024,
-  "rom": 8192,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega88P",
+  "build": {
+    "core": "MiniCore",
+    "extra_flags": "-DARDUINO_AVR_ATmega88P",
+    "f_cpu": "16000000L",
+    "mcu": "atmega88p",
+    "variant": "standard"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_ATmega88P",
-    "core": "MiniCore",
-    "f_cpu": "16000000L",
-    "mcu": "atmega88p",
-    "variant": "standard"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega88P",
+  "mcu": "ATMEGA88P",
+  "name": "ATmega88P/PA",
+  "platform": "atmelavr",
+  "ram": 1024,
+  "rom": 8192,
   "upload": {
     "protocol": "urclock",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega88P",
+  "vendor": "Microchip"
 }

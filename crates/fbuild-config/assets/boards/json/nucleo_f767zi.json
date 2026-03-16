@@ -1,11 +1,27 @@
 {
-  "id": "nucleo_f767zi",
-  "name": "ST Nucleo F767ZI",
-  "platform": "ststm32",
-  "mcu": "STM32F767ZIT6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F7 -DSTM32F767xx",
+    "f_cpu": "216000000L",
+    "mcu": "stm32f767zit6",
+    "variant": "STM32F7xx/F765Z(G-I)T_F767Z(G-I)T_F777ZIT"
+  },
+  "connectivity": [
+    "can",
+    "ethernet"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 216000000,
-  "ram": 524288,
-  "rom": 2097152,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -14,31 +30,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F767ZI/",
-  "connectivity": [
-    "can",
-    "ethernet"
-  ],
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F7 -DSTM32F767xx",
-    "core": "stm32",
-    "f_cpu": "216000000L",
-    "mcu": "stm32f767zit6",
-    "variant": "STM32F7xx/F765Z(G-I)T_F767Z(G-I)T_F777ZIT"
-  },
+  "id": "nucleo_f767zi",
+  "mcu": "STM32F767ZIT6",
+  "name": "ST Nucleo F767ZI",
+  "platform": "ststm32",
+  "ram": 524288,
+  "rom": 2097152,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F767ZI/",
+  "vendor": "ST"
 }

@@ -1,11 +1,23 @@
 {
-  "id": "nucleo_f103rb",
-  "name": "ST Nucleo F103RB",
-  "platform": "ststm32",
-  "mcu": "STM32F103RBT6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F1 -DSTM32F103xB",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f103rbt6",
+    "variant": "STM32F1xx/F103R(8-B)T"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 72000000,
-  "ram": 20480,
-  "rom": 131072,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -14,27 +26,15 @@
     "stm32cube",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F103RB/",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F1 -DSTM32F103xB",
-    "core": "stm32",
-    "f_cpu": "72000000L",
-    "mcu": "stm32f103rbt6",
-    "variant": "STM32F1xx/F103R(8-B)T"
-  },
+  "id": "nucleo_f103rb",
+  "mcu": "STM32F103RBT6",
+  "name": "ST Nucleo F103RB",
+  "platform": "ststm32",
+  "ram": 20480,
+  "rom": 131072,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F103RB/",
+  "vendor": "ST"
 }

@@ -1,36 +1,36 @@
 {
-  "id": "genericSTM32F303CB",
-  "name": "STM32F303CB (32k RAM. 128k Flash)",
-  "platform": "ststm32",
-  "mcu": "STM32F303CBT6",
-  "fcpu": 72000000,
-  "ram": 32768,
-  "rom": 131072,
-  "frameworks": [
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "Generic",
-  "url": "https://www.st.com/en/microcontrollers/stm32f303cb.html",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F3 -DSTM32F303xC",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f303cbt6"
+  },
   "connectivity": [
     "can"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
+      "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F3 -DSTM32F303xC",
-    "core": "stm32",
-    "f_cpu": "72000000L",
-    "mcu": "stm32f303cbt6"
-  },
+  "fcpu": 72000000,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "genericSTM32F303CB",
+  "mcu": "STM32F303CBT6",
+  "name": "STM32F303CB (32k RAM. 128k Flash)",
+  "platform": "ststm32",
+  "ram": 32768,
+  "rom": 131072,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/microcontrollers/stm32f303cb.html",
+  "vendor": "Generic"
 }

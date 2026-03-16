@@ -1,11 +1,24 @@
 {
-  "id": "disco_f469ni",
-  "name": "ST 32F469IDISCOVERY",
-  "platform": "ststm32",
-  "mcu": "STM32F469NIH6",
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F469xx",
+    "f_cpu": "180000000L",
+    "mcu": "stm32f469nih6"
+  },
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 180000000,
-  "ram": 393216,
-  "rom": 2097152,
   "frameworks": [
     "cmsis",
     "mbed",
@@ -13,28 +26,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "http://www.st.com/web/catalog/tools/FM116/CL1620/SC959/SS1532/LN1848/PF262395",
-  "connectivity": [
-    "can"
-  ],
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F469xx",
-    "f_cpu": "180000000L",
-    "mcu": "stm32f469nih6"
-  },
+  "id": "disco_f469ni",
+  "mcu": "STM32F469NIH6",
+  "name": "ST 32F469IDISCOVERY",
+  "platform": "ststm32",
+  "ram": 393216,
+  "rom": 2097152,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "http://www.st.com/web/catalog/tools/FM116/CL1620/SC959/SS1532/LN1848/PF262395",
+  "vendor": "ST"
 }

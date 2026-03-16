@@ -1,32 +1,32 @@
 {
-  "id": "feather328p",
-  "name": "Adafruit Feather 328P",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA328P",
-  "fcpu": 8000000,
-  "ram": 2048,
-  "rom": 32256,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Adafruit",
-  "url": "https://www.adafruit.com/product/3458",
-  "debug": {
-    "tools": {
-      "simavr": {},
-      "avr-stub": {}
-    }
-  },
   "build": {
-    "extra_flags": "-DARDUINO_AVR_FEATHER328P",
     "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_FEATHER328P",
     "f_cpu": "8000000L",
     "mcu": "atmega328p",
     "variant": "standard"
   },
+  "debug": {
+    "tools": {
+      "avr-stub": {},
+      "simavr": {}
+    }
+  },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "feather328p",
+  "mcu": "ATMEGA328P",
+  "name": "Adafruit Feather 328P",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 32256,
   "upload": {
     "protocol": "arduino",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "https://www.adafruit.com/product/3458",
+  "vendor": "Adafruit"
 }

@@ -1,32 +1,32 @@
 {
-  "id": "pro8MHzatmega328",
-  "name": "Arduino Pro or Pro Mini ATmega328 (3.3V, 8 MHz)",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA328P",
-  "fcpu": 8000000,
-  "ram": 2048,
-  "rom": 30720,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Arduino",
-  "url": "http://arduino.cc/en/Main/ArduinoBoardProMini",
-  "debug": {
-    "tools": {
-      "simavr": {},
-      "avr-stub": {}
-    }
-  },
   "build": {
-    "extra_flags": "-DARDUINO_AVR_PRO",
     "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_PRO",
     "f_cpu": "8000000L",
     "mcu": "atmega328p",
     "variant": "eightanaloginputs"
   },
+  "debug": {
+    "tools": {
+      "avr-stub": {},
+      "simavr": {}
+    }
+  },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "pro8MHzatmega328",
+  "mcu": "ATMEGA328P",
+  "name": "Arduino Pro or Pro Mini ATmega328 (3.3V, 8 MHz)",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 30720,
   "upload": {
     "protocol": "arduino",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "http://arduino.cc/en/Main/ArduinoBoardProMini",
+  "vendor": "Arduino"
 }

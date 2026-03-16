@@ -1,26 +1,26 @@
 {
-  "id": "dwenguino",
-  "name": "Dwenguino",
-  "platform": "atmelavr",
-  "mcu": "AT90USB646",
-  "fcpu": 16000000,
-  "ram": 2048,
-  "rom": 61440,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Dwengo",
-  "url": "http://www.dwengo.org/",
   "build": {
-    "extra_flags": "-DARDUINO_AVR_DWENGUINO",
     "core": "dwenguino",
+    "extra_flags": "-DARDUINO_AVR_DWENGUINO",
     "f_cpu": "16000000L",
     "mcu": "at90usb646",
     "variant": "dwenguino"
   },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "dwenguino",
+  "mcu": "AT90USB646",
+  "name": "Dwenguino",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 61440,
   "upload": {
     "protocol": "avr109",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "http://www.dwengo.org/",
+  "vendor": "Dwengo"
 }

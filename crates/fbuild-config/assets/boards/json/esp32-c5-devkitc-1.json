@@ -1,17 +1,12 @@
 {
-  "id": "esp32-c5-devkitc-1",
-  "name": "Espressif ESP32-C5-DevKitC-1 4MB no PSRAM",
-  "platform": "espressif32",
-  "mcu": "ESP32C5",
-  "fcpu": 240000000,
-  "ram": 327680,
-  "rom": 4194304,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "Espressif",
-  "url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32c5/esp32-c5-devkitc-1/user_guide.html",
+  "build": {
+    "core": "esp32",
+    "f_cpu": "240000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "mcu": "esp32c5",
+    "variant": "esp32c5"
+  },
   "connectivity": [
     "bluetooth",
     "wifi"
@@ -19,30 +14,35 @@
   "debug": {
     "tools": {
       "cmsis-dap": {},
-      "esp-prog": {},
       "esp-bridge": {},
+      "esp-builtin": {},
+      "esp-prog": {},
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
-      "tumpa": {},
-      "esp-builtin": {}
+      "tumpa": {}
     }
   },
-  "build": {
-    "core": "esp32",
-    "f_cpu": "240000000L",
-    "mcu": "esp32c5",
-    "f_flash": "80000000L",
-    "flash_mode": "qio",
-    "variant": "esp32c5"
-  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "esp32-c5-devkitc-1",
+  "mcu": "ESP32C5",
+  "name": "Espressif ESP32-C5-DevKitC-1 4MB no PSRAM",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 4194304,
   "upload": {
     "flash_size": "4MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32c5/esp32-c5-devkitc-1/user_guide.html",
+  "vendor": "Espressif"
 }

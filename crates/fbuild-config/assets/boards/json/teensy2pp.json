@@ -1,4 +1,10 @@
 {
+  "build": {
+    "core": "teensy",
+    "extra_flags": "-DARDUINO_TEENSY2PP",
+    "f_cpu": "16000000L",
+    "mcu": "at90usb1286"
+  },
   "fcpu": 16000000,
   "frameworks": [
     "arduino"
@@ -9,15 +15,9 @@
   "platform": "teensy",
   "ram": 8192,
   "rom": 130048,
-  "url": "https://www.pjrc.com/store/teensypp.html",
-  "vendor": "Teensy",
-  "build": {
-    "extra_flags": "-DARDUINO_TEENSY2PP",
-    "core": "teensy",
-    "f_cpu": "16000000L",
-    "mcu": "at90usb1286"
-  },
   "upload": {
     "protocol": "teensy-gui"
-  }
+  },
+  "url": "https://www.pjrc.com/store/teensypp.html",
+  "vendor": "Teensy"
 }

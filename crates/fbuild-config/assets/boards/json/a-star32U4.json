@@ -1,31 +1,31 @@
 {
-  "id": "a-star32U4",
-  "name": "Pololu A-Star 32U4",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA32U4",
-  "fcpu": 16000000,
-  "ram": 2560,
-  "rom": 28672,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Pololu Corporation",
-  "url": "https://www.pololu.com/category/149/a-star-programmable-controllers",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_A_STAR_32U4",
+    "f_cpu": "16000000L",
+    "mcu": "atmega32u4",
+    "variant": "leonardo"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_A_STAR_32U4",
-    "core": "arduino",
-    "f_cpu": "16000000L",
-    "mcu": "atmega32u4",
-    "variant": "leonardo"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "a-star32U4",
+  "mcu": "ATMEGA32U4",
+  "name": "Pololu A-Star 32U4",
+  "platform": "atmelavr",
+  "ram": 2560,
+  "rom": 28672,
   "upload": {
     "protocol": "avr109",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "https://www.pololu.com/category/149/a-star-programmable-controllers",
+  "vendor": "Pololu Corporation"
 }

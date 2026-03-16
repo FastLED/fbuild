@@ -1,16 +1,11 @@
 {
-  "id": "lora_e5_mini",
-  "name": "SeeedStudio LoRa-E5 mini",
-  "platform": "ststm32",
-  "mcu": "STM32WLE5JC",
-  "fcpu": 48000000,
-  "ram": 65536,
-  "rom": 262144,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "SeeedStudio",
-  "url": "https://www.seeedstudio.com/LoRa-E5-mini-STM32WLE5JC-p-4869.html",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32WL -DSTM32WLxx -DSTM32WLE5xx",
+    "f_cpu": "48000000L",
+    "mcu": "stm32wle5jc",
+    "variant": "STM32WLxx/WL54JCI_WL55JCI_WLE4J(8-B-C)I_WLE5J(8-B-C)I"
+  },
   "debug": {
     "tools": {
       "stlink": {
@@ -18,14 +13,19 @@
       }
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32WL -DSTM32WLxx -DSTM32WLE5xx",
-    "core": "stm32",
-    "f_cpu": "48000000L",
-    "mcu": "stm32wle5jc",
-    "variant": "STM32WLxx/WL54JCI_WL55JCI_WLE4J(8-B-C)I_WLE5J(8-B-C)I"
-  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "lora_e5_mini",
+  "mcu": "STM32WLE5JC",
+  "name": "SeeedStudio LoRa-E5 mini",
+  "platform": "ststm32",
+  "ram": 65536,
+  "rom": 262144,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.seeedstudio.com/LoRa-E5-mini-STM32WLE5JC-p-4869.html",
+  "vendor": "SeeedStudio"
 }

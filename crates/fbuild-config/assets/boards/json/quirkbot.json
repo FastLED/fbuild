@@ -1,31 +1,31 @@
 {
-  "id": "quirkbot",
-  "name": "Quirkbot",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA32U4",
-  "fcpu": 8000000,
-  "ram": 2560,
-  "rom": 28672,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Quirkbot",
-  "url": "http://quirkbot.com",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DQUIRKBOT",
+    "f_cpu": "8000000L",
+    "mcu": "atmega32u4",
+    "variant": "quirkbot"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DQUIRKBOT",
-    "core": "arduino",
-    "f_cpu": "8000000L",
-    "mcu": "atmega32u4",
-    "variant": "quirkbot"
-  },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "quirkbot",
+  "mcu": "ATMEGA32U4",
+  "name": "Quirkbot",
+  "platform": "atmelavr",
+  "ram": 2560,
+  "rom": 28672,
   "upload": {
     "protocol": "avr109",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "http://quirkbot.com",
+  "vendor": "Quirkbot"
 }

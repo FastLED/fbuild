@@ -1,17 +1,12 @@
 {
-  "id": "esp32-h2-devkitm-1",
-  "name": "Espressif ESP32-H2-DevKit",
-  "platform": "espressif32",
-  "mcu": "ESP32H2",
-  "fcpu": 96000000,
-  "ram": 327680,
-  "rom": 4194304,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "Espressif",
-  "url": "https://docs.espressif.com/projects/espressif-esp-dev-kits/en/latest/esp32h2/esp32-h2-devkitm-1/index.html",
+  "build": {
+    "core": "esp32",
+    "f_cpu": "96000000L",
+    "f_flash": "64000000L",
+    "flash_mode": "qio",
+    "mcu": "esp32h2",
+    "variant": "esp32h2"
+  },
   "connectivity": [
     "bluetooth",
     "zigbee"
@@ -19,30 +14,35 @@
   "debug": {
     "tools": {
       "cmsis-dap": {},
-      "esp-prog": {},
       "esp-bridge": {},
+      "esp-builtin": {},
+      "esp-prog": {},
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
-      "tumpa": {},
-      "esp-builtin": {}
+      "tumpa": {}
     }
   },
-  "build": {
-    "core": "esp32",
-    "f_cpu": "96000000L",
-    "mcu": "esp32h2",
-    "f_flash": "64000000L",
-    "flash_mode": "qio",
-    "variant": "esp32h2"
-  },
+  "fcpu": 96000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "esp32-h2-devkitm-1",
+  "mcu": "ESP32H2",
+  "name": "Espressif ESP32-H2-DevKit",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 4194304,
   "upload": {
     "flash_size": "4MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://docs.espressif.com/projects/espressif-esp-dev-kits/en/latest/esp32h2/esp32-h2-devkitm-1/index.html",
+  "vendor": "Espressif"
 }

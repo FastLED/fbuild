@@ -1,19 +1,10 @@
 {
-  "id": "piconomix_px_her0",
-  "name": "Piconomix PX-HER0",
-  "platform": "ststm32",
-  "mcu": "STM32L072RB",
-  "fcpu": 32000000,
-  "ram": 20480,
-  "rom": 131072,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "Piconomix",
-  "url": "https://piconomix.com/fwlib/_p_i_c_o_n_o_m_i_x__s_t_m32__h_e_r_o__b_o_a_r_d.html",
+  "build": {
+    "extra_flags": "-DSTM32L0 -DSTM32L072xx",
+    "f_cpu": "32000000L",
+    "mcu": "stm32l072rb",
+    "variant": "STM32L0xx/L072R(B-Z)T_L073R(B-Z)T_L083R(B-Z)T"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
@@ -21,13 +12,22 @@
       "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32L0 -DSTM32L072xx",
-    "f_cpu": "32000000L",
-    "mcu": "stm32l072rb",
-    "variant": "STM32L0xx/L072R(B-Z)T_L073R(B-Z)T_L083R(B-Z)T"
-  },
+  "fcpu": 32000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "piconomix_px_her0",
+  "mcu": "STM32L072RB",
+  "name": "Piconomix PX-HER0",
+  "platform": "ststm32",
+  "ram": 20480,
+  "rom": 131072,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://piconomix.com/fwlib/_p_i_c_o_n_o_m_i_x__s_t_m32__h_e_r_o__b_o_a_r_d.html",
+  "vendor": "Piconomix"
 }

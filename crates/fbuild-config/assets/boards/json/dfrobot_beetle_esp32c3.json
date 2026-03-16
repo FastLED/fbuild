@@ -1,51 +1,51 @@
 {
-  "id": "dfrobot_beetle_esp32c3",
-  "name": "DFRobot Beetle ESP32-C3",
-  "platform": "espressif32",
-  "mcu": "ESP32C3",
-  "fcpu": 160000000,
-  "ram": 327680,
-  "rom": 4194304,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "DFRobot",
-  "url": "https://www.dfrobot.com/product-2566.html",
+  "build": {
+    "arduino": {
+      "ldscript": "esp32c3_out.ld"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_ESP32C3_DEV -DARDUINO_USB_MODE=1 -DARDUINO_USB_CDC_ON_BOOT=1",
+    "f_cpu": "160000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "mcu": "esp32c3",
+    "variant": "dfrobot_beetle_esp32c3"
+  },
   "connectivity": [
     "wifi"
   ],
   "debug": {
     "tools": {
       "cmsis-dap": {},
-      "esp-prog": {},
       "esp-bridge": {},
+      "esp-builtin": {},
+      "esp-prog": {},
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
-      "tumpa": {},
-      "esp-builtin": {}
+      "tumpa": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_ESP32C3_DEV -DARDUINO_USB_MODE=1 -DARDUINO_USB_CDC_ON_BOOT=1",
-    "core": "esp32",
-    "f_cpu": "160000000L",
-    "mcu": "esp32c3",
-    "f_flash": "80000000L",
-    "flash_mode": "qio",
-    "variant": "dfrobot_beetle_esp32c3",
-    "arduino": {
-      "ldscript": "esp32c3_out.ld"
-    }
-  },
+  "fcpu": 160000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "dfrobot_beetle_esp32c3",
+  "mcu": "ESP32C3",
+  "name": "DFRobot Beetle ESP32-C3",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 4194304,
   "upload": {
     "flash_size": "4MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://www.dfrobot.com/product-2566.html",
+  "vendor": "DFRobot"
 }

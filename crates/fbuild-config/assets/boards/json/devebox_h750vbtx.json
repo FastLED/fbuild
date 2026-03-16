@@ -1,18 +1,11 @@
 {
-  "id": "devebox_h750vbtx",
-  "name": "DevEBox H750VBTX",
-  "platform": "ststm32",
-  "mcu": "STM32H750VBT6",
-  "fcpu": 480000000,
-  "ram": 131072,
-  "rom": 524288,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube"
-  ],
-  "vendor": "DevEBox",
-  "url": "https://github.com/mcauser/MCUDEV_DEVEBOX_H7XX_M",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32H7 -DSTM32H7xx -DSTM32H750xx",
+    "f_cpu": "480000000L",
+    "mcu": "stm32h750vbt6",
+    "variant": "STM32H7xx/H742V(G-I)(H-T)_H743V(G-I)(H-T)_H750VBT_H753VI(H-T)"
+  },
   "connectivity": [
     "can",
     "ethernet"
@@ -20,19 +13,26 @@
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
+      "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32H7 -DSTM32H7xx -DSTM32H750xx",
-    "core": "stm32",
-    "f_cpu": "480000000L",
-    "mcu": "stm32h750vbt6",
-    "variant": "STM32H7xx/H742V(G-I)(H-T)_H743V(G-I)(H-T)_H750VBT_H753VI(H-T)"
-  },
+  "fcpu": 480000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube"
+  ],
+  "id": "devebox_h750vbtx",
+  "mcu": "STM32H750VBT6",
+  "name": "DevEBox H750VBTX",
+  "platform": "ststm32",
+  "ram": 131072,
+  "rom": 524288,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://github.com/mcauser/MCUDEV_DEVEBOX_H7XX_M",
+  "vendor": "DevEBox"
 }

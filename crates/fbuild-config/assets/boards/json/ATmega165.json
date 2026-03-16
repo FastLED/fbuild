@@ -1,26 +1,26 @@
 {
-  "id": "ATmega165",
-  "name": "ATmega165/A",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA165A",
-  "fcpu": 16000000,
-  "ram": 1024,
-  "rom": 16384,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega165A",
   "build": {
-    "extra_flags": "-DARDUINO_AVR_ATmega165",
     "core": "MegaCore",
+    "extra_flags": "-DARDUINO_AVR_ATmega165",
     "f_cpu": "16000000L",
     "mcu": "atmega165a",
     "variant": "64-pin-avr"
   },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega165",
+  "mcu": "ATMEGA165A",
+  "name": "ATmega165/A",
+  "platform": "atmelavr",
+  "ram": 1024,
+  "rom": 16384,
   "upload": {
     "protocol": "urclock",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega165A",
+  "vendor": "Microchip"
 }

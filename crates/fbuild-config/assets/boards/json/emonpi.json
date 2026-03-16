@@ -1,32 +1,32 @@
 {
-  "id": "emonpi",
-  "name": "OpenEnergyMonitor emonPi",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA328P",
-  "fcpu": 16000000,
-  "ram": 2048,
-  "rom": 30720,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "OpenEnergyMonitor",
-  "url": "https://github.com/openenergymonitor/emonpi",
-  "debug": {
-    "tools": {
-      "simavr": {},
-      "avr-stub": {}
-    }
-  },
   "build": {
-    "extra_flags": "-DARDUINO_AVR_EMONPI",
     "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_EMONPI",
     "f_cpu": "16000000L",
     "mcu": "atmega328p",
     "variant": "standard"
   },
+  "debug": {
+    "tools": {
+      "avr-stub": {},
+      "simavr": {}
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "emonpi",
+  "mcu": "ATMEGA328P",
+  "name": "OpenEnergyMonitor emonPi",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 30720,
   "upload": {
     "protocol": "arduino",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://github.com/openenergymonitor/emonpi",
+  "vendor": "OpenEnergyMonitor"
 }

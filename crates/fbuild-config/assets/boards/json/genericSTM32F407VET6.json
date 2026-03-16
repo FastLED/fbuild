@@ -1,19 +1,11 @@
 {
-  "id": "genericSTM32F407VET6",
-  "name": "STM32F407VE (192k RAM. 512k Flash)",
-  "platform": "ststm32",
-  "mcu": "STM32F407VET6",
-  "fcpu": 168000000,
-  "ram": 131072,
-  "rom": 514288,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "Generic",
-  "url": "http://www.st.com/en/microcontrollers/stm32f407ve.html",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F407xx -DARDUINO_STM32GenericF407VET6 -DSTM32F4",
+    "f_cpu": "168000000L",
+    "mcu": "stm32f407vet6",
+    "variant": "STM32F4xx/F407V(E-G)T_F417V(E-G)T"
+  },
   "debug": {
     "tools": {
       "jlink": {},
@@ -22,15 +14,23 @@
       }
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F407xx -DARDUINO_STM32GenericF407VET6 -DSTM32F4",
-    "core": "stm32",
-    "f_cpu": "168000000L",
-    "mcu": "stm32f407vet6",
-    "variant": "STM32F4xx/F407V(E-G)T_F417V(E-G)T"
-  },
+  "fcpu": 168000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "genericSTM32F407VET6",
+  "mcu": "STM32F407VET6",
+  "name": "STM32F407VE (192k RAM. 512k Flash)",
+  "platform": "ststm32",
+  "ram": 131072,
+  "rom": 514288,
   "upload": {
     "protocol": "stlink",
     "require_upload_port": true
-  }
+  },
+  "url": "http://www.st.com/en/microcontrollers/stm32f407ve.html",
+  "vendor": "Generic"
 }

@@ -1,31 +1,31 @@
 {
-  "id": "ATmega128",
-  "name": "ATmega128/A",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA128",
-  "fcpu": 16000000,
-  "ram": 4096,
-  "rom": 131072,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/ATmega128",
+  "build": {
+    "core": "MegaCore",
+    "extra_flags": "-DARDUINO_AVR_ATmega128",
+    "f_cpu": "16000000L",
+    "mcu": "atmega128",
+    "variant": "64-pin-avr"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_ATmega128",
-    "core": "MegaCore",
-    "f_cpu": "16000000L",
-    "mcu": "atmega128",
-    "variant": "64-pin-avr"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega128",
+  "mcu": "ATMEGA128",
+  "name": "ATmega128/A",
+  "platform": "atmelavr",
+  "ram": 4096,
+  "rom": 131072,
   "upload": {
     "protocol": "urclock",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.microchip.com/wwwproducts/ATmega128",
+  "vendor": "Microchip"
 }

@@ -1,34 +1,34 @@
 {
-  "id": "mkr_sharky",
-  "name": "MKR Sharky",
-  "platform": "ststm32",
-  "mcu": "STM32WB55CG",
-  "fcpu": 64000000,
-  "ram": 196608,
-  "rom": 524288,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Midatronics",
-  "url": "https://midatronics.com/Development_Boards/MKR_Sharky_I",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32WB -DSTM32WBxx -DSTM32WB55xx",
+    "f_cpu": "64000000L",
+    "mcu": "stm32wb55cg",
+    "variant": "STM32WBxx/WB35C(C-E)UxA_WB55C(C-E-G)U"
+  },
   "connectivity": [
     "bluetooth"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
-      "jlink": {},
-      "cmsis-dap": {}
+      "cmsis-dap": {},
+      "jlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32WB -DSTM32WBxx -DSTM32WB55xx",
-    "core": "stm32",
-    "f_cpu": "64000000L",
-    "mcu": "stm32wb55cg",
-    "variant": "STM32WBxx/WB35C(C-E)UxA_WB55C(C-E-G)U"
-  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "mkr_sharky",
+  "mcu": "STM32WB55CG",
+  "name": "MKR Sharky",
+  "platform": "ststm32",
+  "ram": 196608,
+  "rom": 524288,
   "upload": {
     "protocol": "mbed"
-  }
+  },
+  "url": "https://midatronics.com/Development_Boards/MKR_Sharky_I",
+  "vendor": "Midatronics"
 }

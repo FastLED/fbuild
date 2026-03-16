@@ -1,26 +1,26 @@
 {
-  "id": "ATmega88PB",
-  "name": "ATmega88PB",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA88PB",
-  "fcpu": 16000000,
-  "ram": 1024,
-  "rom": 8192,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega88PB",
   "build": {
-    "extra_flags": "-DARDUINO_AVR_ATmega88PB",
     "core": "MiniCore",
+    "extra_flags": "-DARDUINO_AVR_ATmega88PB",
     "f_cpu": "16000000L",
     "mcu": "atmega88pb",
     "variant": "pb-variant"
   },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega88PB",
+  "mcu": "ATMEGA88PB",
+  "name": "ATmega88PB",
+  "platform": "atmelavr",
+  "ram": 1024,
+  "rom": 8192,
   "upload": {
     "protocol": "urclock",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega88PB",
+  "vendor": "Microchip"
 }

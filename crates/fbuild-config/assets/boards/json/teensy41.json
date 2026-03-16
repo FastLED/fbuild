@@ -1,4 +1,13 @@
 {
+  "build": {
+    "arduino": {
+      "ldscript": "imxrt1062_t41.ld"
+    },
+    "core": "teensy4",
+    "extra_flags": "-D__IMXRT1062__ -DARDUINO_TEENSY41",
+    "f_cpu": "600000000",
+    "mcu": "imxrt1062"
+  },
   "connectivity": [
     "can"
   ],
@@ -18,18 +27,9 @@
   "platform": "teensy",
   "ram": 524288,
   "rom": 8126464,
-  "url": "https://www.pjrc.com/store/teensy41.html",
-  "vendor": "Teensy",
-  "build": {
-    "extra_flags": "-D__IMXRT1062__ -DARDUINO_TEENSY41",
-    "core": "teensy4",
-    "f_cpu": "600000000",
-    "mcu": "imxrt1062",
-    "arduino": {
-      "ldscript": "imxrt1062_t41.ld"
-    }
-  },
   "upload": {
     "protocol": "teensy-gui"
-  }
+  },
+  "url": "https://www.pjrc.com/store/teensy41.html",
+  "vendor": "Teensy"
 }

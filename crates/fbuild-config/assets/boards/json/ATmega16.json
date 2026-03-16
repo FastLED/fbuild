@@ -1,31 +1,31 @@
 {
-  "id": "ATmega16",
-  "name": "ATmega16",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA16",
-  "fcpu": 16000000,
-  "ram": 1024,
-  "rom": 16384,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega16",
+  "build": {
+    "core": "MightyCore",
+    "extra_flags": "-DARDUINO_AVR_ATmega16",
+    "f_cpu": "16000000L",
+    "mcu": "atmega16",
+    "variant": "standard"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_ATmega16",
-    "core": "MightyCore",
-    "f_cpu": "16000000L",
-    "mcu": "atmega16",
-    "variant": "standard"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega16",
+  "mcu": "ATMEGA16",
+  "name": "ATmega16",
+  "platform": "atmelavr",
+  "ram": 1024,
+  "rom": 16384,
   "upload": {
     "protocol": "urclock",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega16",
+  "vendor": "Microchip"
 }

@@ -1,32 +1,32 @@
 {
-  "id": "328p16m",
-  "name": "Microduino Core (Atmega328P@16M,5V)",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA328P",
-  "fcpu": 16000000,
-  "ram": 2048,
-  "rom": 32256,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microduino",
-  "url": "http://wiki.microduinoinc.com/Microduino-Module_Core",
-  "debug": {
-    "tools": {
-      "simavr": {},
-      "avr-stub": {}
-    }
-  },
   "build": {
-    "extra_flags": "-DARDUINO_AVR_MICRODUINO_CORE",
     "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_MICRODUINO_CORE",
     "f_cpu": "16000000L",
     "mcu": "atmega328p",
     "variant": "standard"
   },
+  "debug": {
+    "tools": {
+      "avr-stub": {},
+      "simavr": {}
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "328p16m",
+  "mcu": "ATMEGA328P",
+  "name": "Microduino Core (Atmega328P@16M,5V)",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 32256,
   "upload": {
     "protocol": "arduino",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "http://wiki.microduinoinc.com/Microduino-Module_Core",
+  "vendor": "Microduino"
 }

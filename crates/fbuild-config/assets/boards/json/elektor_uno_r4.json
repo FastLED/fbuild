@@ -1,26 +1,26 @@
 {
-  "id": "elektor_uno_r4",
-  "name": "Elektor Uno R4",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA328PB",
-  "fcpu": 16000000,
-  "ram": 2048,
-  "rom": 32256,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Elektor",
-  "url": "https://www.elektor.com/elektor-uno-r4",
   "build": {
-    "extra_flags": "-DARDUINO_AVR_ELEKTOR_UNO_R4",
     "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_ELEKTOR_UNO_R4",
     "f_cpu": "16000000L",
     "mcu": "atmega328pb",
     "variant": "R4"
   },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "elektor_uno_r4",
+  "mcu": "ATMEGA328PB",
+  "name": "Elektor Uno R4",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 32256,
   "upload": {
     "protocol": "arduino",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.elektor.com/elektor-uno-r4",
+  "vendor": "Elektor"
 }

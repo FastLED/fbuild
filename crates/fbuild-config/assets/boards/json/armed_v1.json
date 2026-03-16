@@ -1,38 +1,38 @@
 {
-  "id": "armed_v1",
-  "name": "3D Printer Controller",
-  "platform": "ststm32",
-  "mcu": "STM32F407VET6",
-  "fcpu": 168000000,
-  "ram": 131072,
-  "rom": 524288,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "Armed",
-  "url": "https://github.com/ktand/Armed",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F4 -DSTM32F407xx -DSTM32F40_41xxx",
+    "f_cpu": "168000000L",
+    "mcu": "stm32f407vet6",
+    "variant": "STM32F4xx/F407V(E-G)T_F417V(E-G)T"
+  },
   "connectivity": [
     "can"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
+      "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F407xx -DSTM32F40_41xxx",
-    "core": "stm32",
-    "f_cpu": "168000000L",
-    "mcu": "stm32f407vet6",
-    "variant": "STM32F4xx/F407V(E-G)T_F417V(E-G)T"
-  },
+  "fcpu": 168000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "armed_v1",
+  "mcu": "STM32F407VET6",
+  "name": "3D Printer Controller",
+  "platform": "ststm32",
+  "ram": 131072,
+  "rom": 524288,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://github.com/ktand/Armed",
+  "vendor": "Armed"
 }

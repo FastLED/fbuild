@@ -1,31 +1,31 @@
 {
-  "id": "ATmega324P",
-  "name": "ATmega324P",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA324P",
-  "fcpu": 16000000,
-  "ram": 2048,
-  "rom": 32768,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega324p",
+  "build": {
+    "core": "MightyCore",
+    "extra_flags": "-DARDUINO_AVR_ATmega324",
+    "f_cpu": "16000000L",
+    "mcu": "atmega324p",
+    "variant": "standard"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_ATmega324",
-    "core": "MightyCore",
-    "f_cpu": "16000000L",
-    "mcu": "atmega324p",
-    "variant": "standard"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega324P",
+  "mcu": "ATMEGA324P",
+  "name": "ATmega324P",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 32768,
   "upload": {
     "protocol": "urclock",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega324p",
+  "vendor": "Microchip"
 }

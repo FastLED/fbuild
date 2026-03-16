@@ -1,16 +1,11 @@
 {
-  "id": "yun",
-  "name": "Arduino Yun",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA32U4",
-  "fcpu": 16000000,
-  "ram": 2560,
-  "rom": 28672,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Arduino",
-  "url": "https://www.arduino.cc/en/Main/ArduinoBoardYun",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_YUN",
+    "f_cpu": "16000000L",
+    "mcu": "atmega32u4",
+    "variant": "yun"
+  },
   "connectivity": [
     "ethernet",
     "wifi"
@@ -20,16 +15,21 @@
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_YUN",
-    "core": "arduino",
-    "f_cpu": "16000000L",
-    "mcu": "atmega32u4",
-    "variant": "yun"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "yun",
+  "mcu": "ATMEGA32U4",
+  "name": "Arduino Yun",
+  "platform": "atmelavr",
+  "ram": 2560,
+  "rom": 28672,
   "upload": {
     "protocol": "avr109",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "https://www.arduino.cc/en/Main/ArduinoBoardYun",
+  "vendor": "Arduino"
 }

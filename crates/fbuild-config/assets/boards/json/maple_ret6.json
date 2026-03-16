@@ -1,36 +1,36 @@
 {
-  "id": "maple_ret6",
-  "name": "Maple (RET6)",
-  "platform": "ststm32",
-  "mcu": "STM32F103RET6",
+  "build": {
+    "core": "maple",
+    "extra_flags": "-DSTM32F1 -DSTM32F103xE",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f103ret6",
+    "variant": "stm32f1"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  },
   "fcpu": 72000000,
-  "ram": 49152,
-  "rom": 262144,
   "frameworks": [
     "arduino",
     "cmsis",
     "libopencm3",
     "stm32cube"
   ],
-  "vendor": "LeafLabs",
-  "url": "http://www.leaflabs.com/maple/",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F1 -DSTM32F103xE",
-    "core": "maple",
-    "f_cpu": "72000000L",
-    "mcu": "stm32f103ret6",
-    "variant": "stm32f1"
-  },
+  "id": "maple_ret6",
+  "mcu": "STM32F103RET6",
+  "name": "Maple (RET6)",
+  "platform": "ststm32",
+  "ram": 49152,
+  "rom": 262144,
   "upload": {
     "protocol": "dfu",
     "require_upload_port": true
-  }
+  },
+  "url": "http://www.leaflabs.com/maple/",
+  "vendor": "LeafLabs"
 }

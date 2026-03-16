@@ -1,31 +1,31 @@
 {
-  "id": "sanguino_atmega644",
-  "name": "Sanguino ATmega644 or ATmega644A (16 MHz)",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA644",
-  "fcpu": 16000000,
-  "ram": 4096,
-  "rom": 64512,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Sanguino",
-  "url": "https://github.com/Lauszus/Sanguino",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_SANGUINO",
+    "f_cpu": "16000000L",
+    "mcu": "atmega644",
+    "variant": "sanguino"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_SANGUINO",
-    "core": "arduino",
-    "f_cpu": "16000000L",
-    "mcu": "atmega644",
-    "variant": "sanguino"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "sanguino_atmega644",
+  "mcu": "ATMEGA644",
+  "name": "Sanguino ATmega644 or ATmega644A (16 MHz)",
+  "platform": "atmelavr",
+  "ram": 4096,
+  "rom": 64512,
   "upload": {
     "protocol": "arduino",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://github.com/Lauszus/Sanguino",
+  "vendor": "Sanguino"
 }

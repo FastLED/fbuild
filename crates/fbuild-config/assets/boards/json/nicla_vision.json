@@ -1,39 +1,39 @@
 {
-  "id": "nicla_vision",
-  "name": "Arduino Nicla Vision",
-  "platform": "ststm32",
-  "mcu": "STM32H747XIH6",
-  "fcpu": 480000000,
-  "ram": 523624,
-  "rom": 786432,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Arduino",
-  "url": "https://store.arduino.cc/products/nicla-vision",
+  "build": {
+    "arduino": {
+      "ldscript": "linker_script.ld"
+    },
+    "core": "arduino",
+    "extra_flags": "-DSTM32H7 -DARDUINO_NICLA_VISION",
+    "f_cpu": "480000000L",
+    "mcu": "stm32h747xih6",
+    "variant": "NICLA_VISION"
+  },
   "connectivity": [
     "bluetooth",
     "wifi"
   ],
   "debug": {
     "tools": {
+      "cmsis-dap": {},
       "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
+      "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32H7 -DARDUINO_NICLA_VISION",
-    "core": "arduino",
-    "f_cpu": "480000000L",
-    "mcu": "stm32h747xih6",
-    "variant": "NICLA_VISION",
-    "arduino": {
-      "ldscript": "linker_script.ld"
-    }
-  },
+  "fcpu": 480000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "nicla_vision",
+  "mcu": "STM32H747XIH6",
+  "name": "Arduino Nicla Vision",
+  "platform": "ststm32",
+  "ram": 523624,
+  "rom": 786432,
   "upload": {
     "protocol": "dfu",
     "require_upload_port": true
-  }
+  },
+  "url": "https://store.arduino.cc/products/nicla-vision",
+  "vendor": "Arduino"
 }

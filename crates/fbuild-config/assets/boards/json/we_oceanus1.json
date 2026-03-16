@@ -1,31 +1,31 @@
 {
-  "id": "we_oceanus1",
-  "name": "WE Oceanus-I Module",
-  "platform": "ststm32",
-  "mcu": "STM32WLE5CCU6 ",
-  "fcpu": 48000000,
-  "ram": 65536,
-  "rom": 262144,
-  "frameworks": [
-    "arduino",
-    "zephyr"
-  ],
-  "vendor": "WE",
-  "url": "https://www.we-online.com/en/components/products/OCEANUS-I",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32WL -DSTM32WLxx -DSTM32WLE5xx",
+    "f_cpu": "48000000L",
+    "mcu": "stm32wle5ccu6 ",
+    "variant": "STM32WLxx/WL54CCU_WL55CCU_WLE4C(8-B-C)U_WLE5C(8-B-C)U"
+  },
   "debug": {
     "tools": {
       "jlink": {},
       "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32WL -DSTM32WLxx -DSTM32WLE5xx",
-    "core": "stm32",
-    "f_cpu": "48000000L",
-    "mcu": "stm32wle5ccu6 ",
-    "variant": "STM32WLxx/WL54CCU_WL55CCU_WLE4C(8-B-C)U_WLE5C(8-B-C)U"
-  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino",
+    "zephyr"
+  ],
+  "id": "we_oceanus1",
+  "mcu": "STM32WLE5CCU6 ",
+  "name": "WE Oceanus-I Module",
+  "platform": "ststm32",
+  "ram": 65536,
+  "rom": 262144,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.we-online.com/en/components/products/OCEANUS-I",
+  "vendor": "WE"
 }

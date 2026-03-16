@@ -1,31 +1,31 @@
 {
-  "id": "atmegangatmega8",
-  "name": "Arduino NG or older ATmega8",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA8",
-  "fcpu": 16000000,
-  "ram": 1024,
-  "rom": 7168,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Arduino",
-  "url": "http://arduino.cc/en/main/boards",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_NG",
+    "f_cpu": "16000000L",
+    "mcu": "atmega8",
+    "variant": "standard"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_NG",
-    "core": "arduino",
-    "f_cpu": "16000000L",
-    "mcu": "atmega8",
-    "variant": "standard"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "atmegangatmega8",
+  "mcu": "ATMEGA8",
+  "name": "Arduino NG or older ATmega8",
+  "platform": "atmelavr",
+  "ram": 1024,
+  "rom": 7168,
   "upload": {
     "protocol": "arduino",
-    "speed": 19200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 19200
+  },
+  "url": "http://arduino.cc/en/main/boards",
+  "vendor": "Arduino"
 }

@@ -1,11 +1,26 @@
 {
-  "id": "nucleo_f302r8",
-  "name": "ST Nucleo F302R8",
-  "platform": "ststm32",
-  "mcu": "STM32F302R8T6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F3 -DSTM32F302x8",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f302r8t6",
+    "variant": "STM32F3xx/F302R(6-8)T"
+  },
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 72000000,
-  "ram": 16384,
-  "rom": 65536,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -13,30 +28,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F302R8/",
-  "connectivity": [
-    "can"
-  ],
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F3 -DSTM32F302x8",
-    "core": "stm32",
-    "f_cpu": "72000000L",
-    "mcu": "stm32f302r8t6",
-    "variant": "STM32F3xx/F302R(6-8)T"
-  },
+  "id": "nucleo_f302r8",
+  "mcu": "STM32F302R8T6",
+  "name": "ST Nucleo F302R8",
+  "platform": "ststm32",
+  "ram": 16384,
+  "rom": 65536,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F302R8/",
+  "vendor": "ST"
 }

@@ -1,32 +1,32 @@
 {
-  "id": "sparkfun_serial7seg",
-  "name": "SparkFun Serial 7-Segment Display",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA328P",
-  "fcpu": 8000000,
-  "ram": 2048,
-  "rom": 32256,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "SparkFun",
-  "url": "https://www.sparkfun.com/products/11441",
-  "debug": {
-    "tools": {
-      "simavr": {},
-      "avr-stub": {}
-    }
-  },
   "build": {
-    "extra_flags": "-DARDUINO_AVR_SERIAL_7_SEGMENT",
     "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_SERIAL_7_SEGMENT",
     "f_cpu": "8000000L",
     "mcu": "atmega328p",
     "variant": "sparkfun_ser7seg"
   },
+  "debug": {
+    "tools": {
+      "avr-stub": {},
+      "simavr": {}
+    }
+  },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "sparkfun_serial7seg",
+  "mcu": "ATMEGA328P",
+  "name": "SparkFun Serial 7-Segment Display",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 32256,
   "upload": {
     "protocol": "arduino",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "https://www.sparkfun.com/products/11441",
+  "vendor": "SparkFun"
 }

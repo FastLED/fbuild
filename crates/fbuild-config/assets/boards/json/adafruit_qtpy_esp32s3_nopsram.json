@@ -1,17 +1,17 @@
 {
-  "id": "adafruit_qtpy_esp32s3_nopsram",
-  "name": "Adafruit QT Py ESP32-S3 No PSRAM",
-  "platform": "espressif32",
-  "mcu": "ESP32S3",
-  "fcpu": 240000000,
-  "ram": 327680,
-  "rom": 8388608,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "Adafruit",
-  "url": "https://www.adafruit.com/product/5426",
+  "build": {
+    "arduino": {
+      "ldscript": "esp32s3_out.ld",
+      "partitions": "partitions-8MB-tinyuf2.csv"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_ADAFRUIT_QTPY_ESP32S3_NOPSRAM -DARDUINO_USB_CDC_ON_BOOT=1 -DARDUINO_RUNNING_CORE=1 -DARDUINO_EVENT_RUNNING_CORE=1",
+    "f_cpu": "240000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "mcu": "esp32s3",
+    "variant": "adafruit_qtpy_esp32s3_nopsram"
+  },
   "connectivity": [
     "bluetooth",
     "wifi"
@@ -19,35 +19,35 @@
   "debug": {
     "tools": {
       "cmsis-dap": {},
-      "esp-prog": {},
       "esp-bridge": {},
+      "esp-builtin": {},
+      "esp-prog": {},
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
-      "tumpa": {},
-      "esp-builtin": {}
+      "tumpa": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_ADAFRUIT_QTPY_ESP32S3_NOPSRAM -DARDUINO_USB_CDC_ON_BOOT=1 -DARDUINO_RUNNING_CORE=1 -DARDUINO_EVENT_RUNNING_CORE=1",
-    "core": "esp32",
-    "f_cpu": "240000000L",
-    "mcu": "esp32s3",
-    "f_flash": "80000000L",
-    "flash_mode": "qio",
-    "variant": "adafruit_qtpy_esp32s3_nopsram",
-    "arduino": {
-      "ldscript": "esp32s3_out.ld",
-      "partitions": "partitions-8MB-tinyuf2.csv"
-    }
-  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "adafruit_qtpy_esp32s3_nopsram",
+  "mcu": "ESP32S3",
+  "name": "Adafruit QT Py ESP32-S3 No PSRAM",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 8388608,
   "upload": {
     "flash_size": "8MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://www.adafruit.com/product/5426",
+  "vendor": "Adafruit"
 }

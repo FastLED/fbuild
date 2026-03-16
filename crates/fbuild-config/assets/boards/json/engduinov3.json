@@ -1,31 +1,31 @@
 {
-  "id": "engduinov3",
-  "name": "Engduino 3",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA32U4",
-  "fcpu": 8000000,
-  "ram": 2560,
-  "rom": 28672,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Engduino",
-  "url": "http://www.engduino.org",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_ENGDUINOV3",
+    "f_cpu": "8000000L",
+    "mcu": "atmega32u4",
+    "variant": "engduinov3"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_ENGDUINOV3",
-    "core": "arduino",
-    "f_cpu": "8000000L",
-    "mcu": "atmega32u4",
-    "variant": "engduinov3"
-  },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "engduinov3",
+  "mcu": "ATMEGA32U4",
+  "name": "Engduino 3",
+  "platform": "atmelavr",
+  "ram": 2560,
+  "rom": 28672,
   "upload": {
     "protocol": "avr109",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "http://www.engduino.org",
+  "vendor": "Engduino"
 }

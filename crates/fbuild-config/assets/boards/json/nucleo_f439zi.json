@@ -1,20 +1,10 @@
 {
-  "id": "nucleo_f439zi",
-  "name": "ST Nucleo F439ZI",
-  "platform": "ststm32",
-  "mcu": "STM32F439ZIT6",
-  "fcpu": 180000000,
-  "ram": 196608,
-  "rom": 2097152,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "mbed",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/evaluation-tools/nucleo-f439zi.html",
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F439xx",
+    "f_cpu": "180000000L",
+    "mcu": "stm32f439zit6",
+    "variant": "STM32F4xx/F427Z(G-I)T_F429ZET_F429Z(G-I)(T-Y)_F437Z(G-I)T_F439Z(G-I)(T-Y)"
+  },
   "connectivity": [
     "can",
     "ethernet"
@@ -22,21 +12,31 @@
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
       "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
+        "default": true,
+        "onboard": true
+      }
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F439xx",
-    "f_cpu": "180000000L",
-    "mcu": "stm32f439zit6",
-    "variant": "STM32F4xx/F427Z(G-I)T_F429ZET_F429Z(G-I)(T-Y)_F437Z(G-I)T_F439Z(G-I)(T-Y)"
-  },
+  "fcpu": 180000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "nucleo_f439zi",
+  "mcu": "STM32F439ZIT6",
+  "name": "ST Nucleo F439ZI",
+  "platform": "ststm32",
+  "ram": 196608,
+  "rom": 2097152,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-f439zi.html",
+  "vendor": "ST"
 }

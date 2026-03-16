@@ -1,17 +1,16 @@
 {
-  "id": "deneyapmini",
-  "name": "Deneyap Mini",
-  "platform": "espressif32",
-  "mcu": "ESP32S2",
-  "fcpu": 240000000,
-  "ram": 327680,
-  "rom": 4194304,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "Deneyap",
-  "url": "https://deneyapkart.org/magaza/urun-deneyap-kart-mini.html",
+  "build": {
+    "arduino": {
+      "ldscript": "esp32s2_out.ld"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_DYM -DARDUINO_USB_CDC_ON_BOOT=1",
+    "f_cpu": "240000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "mcu": "esp32s2",
+    "variant": "deneyapmini"
+  },
   "connectivity": [
     "wifi",
     "bluetooth",
@@ -24,28 +23,29 @@
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
       "tumpa": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_DYM -DARDUINO_USB_CDC_ON_BOOT=1",
-    "core": "esp32",
-    "f_cpu": "240000000L",
-    "mcu": "esp32s2",
-    "f_flash": "80000000L",
-    "flash_mode": "qio",
-    "variant": "deneyapmini",
-    "arduino": {
-      "ldscript": "esp32s2_out.ld"
-    }
-  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "deneyapmini",
+  "mcu": "ESP32S2",
+  "name": "Deneyap Mini",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 4194304,
   "upload": {
     "flash_size": "4MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://deneyapkart.org/magaza/urun-deneyap-kart-mini.html",
+  "vendor": "Deneyap"
 }

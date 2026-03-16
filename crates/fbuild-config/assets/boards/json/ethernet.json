@@ -1,35 +1,35 @@
 {
-  "id": "ethernet",
-  "name": "Arduino Ethernet",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA328P",
-  "fcpu": 16000000,
-  "ram": 2048,
-  "rom": 32256,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Arduino",
-  "url": "https://www.arduino.cc/en/Main/ArduinoBoardEthernet",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_ETHERNET",
+    "f_cpu": "16000000L",
+    "mcu": "atmega328p",
+    "variant": "ethernet"
+  },
   "connectivity": [
     "ethernet"
   ],
   "debug": {
     "tools": {
-      "simavr": {},
-      "avr-stub": {}
+      "avr-stub": {},
+      "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_ETHERNET",
-    "core": "arduino",
-    "f_cpu": "16000000L",
-    "mcu": "atmega328p",
-    "variant": "ethernet"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ethernet",
+  "mcu": "ATMEGA328P",
+  "name": "Arduino Ethernet",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 32256,
   "upload": {
     "protocol": "arduino",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.arduino.cc/en/Main/ArduinoBoardEthernet",
+  "vendor": "Arduino"
 }

@@ -1,26 +1,26 @@
 {
-  "id": "ATmega325",
-  "name": "ATmega325/A",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA325",
-  "fcpu": 16000000,
-  "ram": 2048,
-  "rom": 32768,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega325",
   "build": {
-    "extra_flags": "-DARDUINO_AVR_ATmega325",
     "core": "MegaCore",
+    "extra_flags": "-DARDUINO_AVR_ATmega325",
     "f_cpu": "16000000L",
     "mcu": "atmega325",
     "variant": "64-pin-avr"
   },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega325",
+  "mcu": "ATMEGA325",
+  "name": "ATmega325/A",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 32768,
   "upload": {
     "protocol": "urclock",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega325",
+  "vendor": "Microchip"
 }

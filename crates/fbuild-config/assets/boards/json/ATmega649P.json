@@ -1,26 +1,26 @@
 {
-  "id": "ATmega649P",
-  "name": "ATmega649P",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA649P",
-  "fcpu": 16000000,
-  "ram": 4096,
-  "rom": 65536,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega649P",
   "build": {
-    "extra_flags": "-DARDUINO_AVR_ATmega649P",
     "core": "MegaCore",
+    "extra_flags": "-DARDUINO_AVR_ATmega649P",
     "f_cpu": "16000000L",
     "mcu": "atmega649p",
     "variant": "64-pin-avr"
   },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega649P",
+  "mcu": "ATMEGA649P",
+  "name": "ATmega649P",
+  "platform": "atmelavr",
+  "ram": 4096,
+  "rom": 65536,
   "upload": {
     "protocol": "urclock",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega649P",
+  "vendor": "Microchip"
 }

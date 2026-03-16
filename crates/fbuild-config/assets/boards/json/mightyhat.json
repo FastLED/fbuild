@@ -1,32 +1,32 @@
 {
-  "id": "mightyhat",
-  "name": "LowPowerLab MightyHat",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA328P",
-  "fcpu": 16000000,
-  "ram": 2048,
-  "rom": 31744,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "LowPowerLab",
-  "url": "https://lowpowerlab.com/shop/product/130",
-  "debug": {
-    "tools": {
-      "simavr": {},
-      "avr-stub": {}
-    }
-  },
   "build": {
-    "extra_flags": "-DARDUINO_AVR_MOTEINO -DARDUINO_AVR_MIGHTYHAT",
     "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_MOTEINO -DARDUINO_AVR_MIGHTYHAT",
     "f_cpu": "16000000L",
     "mcu": "atmega328p",
     "variant": "MightyHat"
   },
+  "debug": {
+    "tools": {
+      "avr-stub": {},
+      "simavr": {}
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "mightyhat",
+  "mcu": "ATMEGA328P",
+  "name": "LowPowerLab MightyHat",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 31744,
   "upload": {
     "protocol": "arduino",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://lowpowerlab.com/shop/product/130",
+  "vendor": "LowPowerLab"
 }

@@ -1,32 +1,32 @@
 {
-  "id": "prusa_rambo",
-  "name": "Prusa RAMBo",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA2560",
-  "fcpu": 16000000,
-  "ram": 8192,
-  "rom": 258048,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Prusa 3D",
-  "url": "http://www.prusa3d.com",
-  "debug": {
-    "tools": {
-      "simavr": {},
-      "avr-stub": {}
-    }
-  },
   "build": {
-    "extra_flags": "-DARDUINO_AVR_RAMBO",
     "core": "prusa_rambo",
+    "extra_flags": "-DARDUINO_AVR_RAMBO",
     "f_cpu": "16000000L",
     "mcu": "atmega2560",
     "variant": "prusa_einsy_rambo"
   },
+  "debug": {
+    "tools": {
+      "avr-stub": {},
+      "simavr": {}
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "prusa_rambo",
+  "mcu": "ATMEGA2560",
+  "name": "Prusa RAMBo",
+  "platform": "atmelavr",
+  "ram": 8192,
+  "rom": 258048,
   "upload": {
     "protocol": "wiring",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "http://www.prusa3d.com",
+  "vendor": "Prusa 3D"
 }

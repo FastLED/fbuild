@@ -1,19 +1,10 @@
 {
-  "id": "b96b_aerocore2",
-  "name": "96Boards Neonkey",
-  "platform": "ststm32",
-  "mcu": "STM32F427VIT6",
-  "fcpu": 168000000,
-  "ram": 262144,
-  "rom": 2091752,
-  "frameworks": [
-    "cmsis",
-    "stm32cube",
-    "libopencm3",
-    "zephyr"
-  ],
-  "vendor": "96Boards",
-  "url": "https://www.96boards.org/product/aerocore2/",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F4 -DSTM32F427_437xx -DSTM32F427xx",
+    "f_cpu": "168000000L",
+    "mcu": "stm32f427vit6"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
@@ -21,13 +12,22 @@
       "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F427_437xx -DSTM32F427xx",
-    "core": "stm32",
-    "f_cpu": "168000000L",
-    "mcu": "stm32f427vit6"
-  },
+  "fcpu": 168000000,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "id": "b96b_aerocore2",
+  "mcu": "STM32F427VIT6",
+  "name": "96Boards Neonkey",
+  "platform": "ststm32",
+  "ram": 262144,
+  "rom": 2091752,
   "upload": {
     "protocol": "dfu"
-  }
+  },
+  "url": "https://www.96boards.org/product/aerocore2/",
+  "vendor": "96Boards"
 }

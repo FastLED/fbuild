@@ -1,35 +1,35 @@
 {
-  "id": "disco_f334c8",
-  "name": "ST 32F3348DISCOVERY",
-  "platform": "ststm32",
-  "mcu": "STM32F334C8T6",
-  "fcpu": 72000000,
-  "ram": 12288,
-  "rom": 65536,
-  "frameworks": [
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "ST",
-  "url": "http://www.st.com/web/en/catalog/tools/PF260318",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
   "build": {
     "extra_flags": "-DSTM32F3 -DSTM32F334x8",
     "f_cpu": "72000000L",
     "mcu": "stm32f334c8t6"
   },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 72000000,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "disco_f334c8",
+  "mcu": "STM32F334C8T6",
+  "name": "ST 32F3348DISCOVERY",
+  "platform": "ststm32",
+  "ram": 12288,
+  "rom": 65536,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "http://www.st.com/web/en/catalog/tools/PF260318",
+  "vendor": "ST"
 }

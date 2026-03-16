@@ -1,33 +1,33 @@
 {
-  "id": "eval_f107vc",
-  "name": "STM3210C-EVAL",
-  "platform": "ststm32",
-  "mcu": "STM32F107VCT6",
+  "build": {
+    "extra_flags": "-DSTM32F107xC -DSTM32F1",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f107vct6"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  },
   "fcpu": 72000000,
-  "ram": 65536,
-  "rom": 262144,
   "frameworks": [
     "cmsis",
     "stm32cube",
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/evaluation-tools/stm3210c-eval.html",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F107xC -DSTM32F1",
-    "f_cpu": "72000000L",
-    "mcu": "stm32f107vct6"
-  },
+  "id": "eval_f107vc",
+  "mcu": "STM32F107VCT6",
+  "name": "STM3210C-EVAL",
+  "platform": "ststm32",
+  "ram": 65536,
+  "rom": 262144,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/stm3210c-eval.html",
+  "vendor": "ST"
 }

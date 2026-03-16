@@ -1,31 +1,31 @@
 {
-  "id": "one",
-  "name": "Linino One",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA32U4",
-  "fcpu": 16000000,
-  "ram": 2560,
-  "rom": 28672,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Linino",
-  "url": "http://www.linino.org/portfolio/linino-one/",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_YUN",
+    "f_cpu": "16000000L",
+    "mcu": "atmega32u4",
+    "variant": "yun"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_YUN",
-    "core": "arduino",
-    "f_cpu": "16000000L",
-    "mcu": "atmega32u4",
-    "variant": "yun"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "one",
+  "mcu": "ATMEGA32U4",
+  "name": "Linino One",
+  "platform": "atmelavr",
+  "ram": 2560,
+  "rom": 28672,
   "upload": {
     "protocol": "avr109",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "http://www.linino.org/portfolio/linino-one/",
+  "vendor": "Linino"
 }

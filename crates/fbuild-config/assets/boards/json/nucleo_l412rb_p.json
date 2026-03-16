@@ -1,37 +1,37 @@
 {
-  "id": "nucleo_l412rb_p",
-  "name": "ST Nucleo L412RB-P",
-  "platform": "ststm32",
-  "mcu": "STM32L412RBT6P",
-  "fcpu": 80000000,
-  "ram": 40960,
-  "rom": 131072,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "zephyr"
-  ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/evaluation-tools/nucleo-l412rb-p.html",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
   "build": {
     "extra_flags": "-DSTM32L4 -DSTM32L412xx",
     "f_cpu": "80000000L",
     "mcu": "stm32l412rbt6p",
     "variant": "STM32L4xx/L412RB(I-T)xP"
   },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "zephyr"
+  ],
+  "id": "nucleo_l412rb_p",
+  "mcu": "STM32L412RBT6P",
+  "name": "ST Nucleo L412RB-P",
+  "platform": "ststm32",
+  "ram": 40960,
+  "rom": 131072,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-l412rb-p.html",
+  "vendor": "ST"
 }

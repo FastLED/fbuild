@@ -1,11 +1,22 @@
 {
-  "id": "nucleo_l432kc",
-  "name": "ST Nucleo L432KC",
-  "platform": "ststm32",
-  "mcu": "STM32L432KCU6",
+  "build": {
+    "extra_flags": "-DSTM32L4 -DSTM32L432xx",
+    "f_cpu": "80000000L",
+    "mcu": "stm32l432kcu6",
+    "variant": "STM32L4xx/L432K(B-C)U_L442KCU"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 80000000,
-  "ram": 65536,
-  "rom": 262144,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -14,26 +25,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://developer.mbed.org/platforms/ST-Nucleo-L432KC/",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32L4 -DSTM32L432xx",
-    "f_cpu": "80000000L",
-    "mcu": "stm32l432kcu6",
-    "variant": "STM32L4xx/L432K(B-C)U_L442KCU"
-  },
+  "id": "nucleo_l432kc",
+  "mcu": "STM32L432KCU6",
+  "name": "ST Nucleo L432KC",
+  "platform": "ststm32",
+  "ram": 65536,
+  "rom": 262144,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-L432KC/",
+  "vendor": "ST"
 }

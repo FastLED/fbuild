@@ -1,26 +1,26 @@
 {
-  "id": "ATmega162",
-  "name": "ATmega162",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA162",
-  "fcpu": 16000000,
-  "ram": 1024,
-  "rom": 16384,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega162",
   "build": {
-    "extra_flags": "-DARDUINO_AVR_ATmega162",
     "core": "MajorCore",
+    "extra_flags": "-DARDUINO_AVR_ATmega162",
     "f_cpu": "16000000L",
     "mcu": "atmega162",
     "variant": "standard"
   },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega162",
+  "mcu": "ATMEGA162",
+  "name": "ATmega162",
+  "platform": "atmelavr",
+  "ram": 1024,
+  "rom": 16384,
   "upload": {
     "protocol": "urclock",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega162",
+  "vendor": "Microchip"
 }

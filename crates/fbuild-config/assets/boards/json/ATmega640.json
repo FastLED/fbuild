@@ -1,26 +1,26 @@
 {
-  "id": "ATmega640",
-  "name": "ATmega640",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA640",
-  "fcpu": 16000000,
-  "ram": 8192,
-  "rom": 65536,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/ATmega640",
   "build": {
-    "extra_flags": "-DARDUINO_AVR_ATmega640",
     "core": "MegaCore",
+    "extra_flags": "-DARDUINO_AVR_ATmega640",
     "f_cpu": "16000000L",
     "mcu": "atmega640",
     "variant": "100-pin-arduino-mega"
   },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega640",
+  "mcu": "ATMEGA640",
+  "name": "ATmega640",
+  "platform": "atmelavr",
+  "ram": 8192,
+  "rom": 65536,
   "upload": {
     "protocol": "urclock",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.microchip.com/wwwproducts/ATmega640",
+  "vendor": "Microchip"
 }

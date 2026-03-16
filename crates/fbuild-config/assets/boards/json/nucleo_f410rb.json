@@ -1,11 +1,22 @@
 {
-  "id": "nucleo_f410rb",
-  "name": "ST Nucleo F410RB",
-  "platform": "ststm32",
-  "mcu": "STM32F410RBT6",
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F410Rx",
+    "f_cpu": "100000000L",
+    "mcu": "stm32f410rbt6",
+    "variant": "STM32F4xx/F410R(8-B)(I-T)"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 100000000,
-  "ram": 32768,
-  "rom": 131072,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -13,26 +24,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F410RB/",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F410Rx",
-    "f_cpu": "100000000L",
-    "mcu": "stm32f410rbt6",
-    "variant": "STM32F4xx/F410R(8-B)(I-T)"
-  },
+  "id": "nucleo_f410rb",
+  "mcu": "STM32F410RBT6",
+  "name": "ST Nucleo F410RB",
+  "platform": "ststm32",
+  "ram": 32768,
+  "rom": 131072,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F410RB/",
+  "vendor": "ST"
 }

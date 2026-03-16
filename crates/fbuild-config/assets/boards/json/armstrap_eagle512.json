@@ -1,38 +1,38 @@
 {
-  "id": "armstrap_eagle512",
-  "name": "Armstrap Eagle 512",
-  "platform": "ststm32",
-  "mcu": "STM32F407VET6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F4 -DSTM32F40_41xxx -DSTM32F407xx",
+    "f_cpu": "168000000L",
+    "mcu": "stm32f407vet6",
+    "variant": "stm32f4"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {
+        "default": true,
+        "onboard": true
+      },
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  },
   "fcpu": 168000000,
-  "ram": 196608,
-  "rom": 524288,
   "frameworks": [
     "cmsis",
     "spl",
     "stm32cube",
     "libopencm3"
   ],
-  "vendor": "Armstrap",
-  "url": "http://docs.armstrap.org/en/latest/hardware-overview.html",
-  "debug": {
-    "tools": {
-      "blackmagic": {
-        "onboard": true,
-        "default": true
-      },
-      "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F40_41xxx -DSTM32F407xx",
-    "core": "stm32",
-    "f_cpu": "168000000L",
-    "mcu": "stm32f407vet6",
-    "variant": "stm32f4"
-  },
+  "id": "armstrap_eagle512",
+  "mcu": "STM32F407VET6",
+  "name": "Armstrap Eagle 512",
+  "platform": "ststm32",
+  "ram": 196608,
+  "rom": 524288,
   "upload": {
     "protocol": "blackmagic"
-  }
+  },
+  "url": "http://docs.armstrap.org/en/latest/hardware-overview.html",
+  "vendor": "Armstrap"
 }

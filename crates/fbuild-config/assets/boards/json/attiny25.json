@@ -1,29 +1,29 @@
 {
-  "id": "attiny25",
-  "name": "Generic ATtiny25",
-  "platform": "atmelavr",
-  "mcu": "ATTINY25",
-  "fcpu": 8000000,
-  "ram": 128,
-  "rom": 2048,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Atmel",
-  "url": "http://www.atmel.com/devices/ATTINY25.aspx",
+  "build": {
+    "core": "tiny",
+    "extra_flags": "-DARDUINO_AVR_ATTINYX5",
+    "f_cpu": "8000000L",
+    "mcu": "attiny25",
+    "variant": "tinyX5"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_ATTINYX5",
-    "core": "tiny",
-    "f_cpu": "8000000L",
-    "mcu": "attiny25",
-    "variant": "tinyX5"
-  },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "attiny25",
+  "mcu": "ATTINY25",
+  "name": "Generic ATtiny25",
+  "platform": "atmelavr",
+  "ram": 128,
+  "rom": 2048,
   "upload": {
     "protocol": "usbtiny"
-  }
+  },
+  "url": "http://www.atmel.com/devices/ATTINY25.aspx",
+  "vendor": "Atmel"
 }

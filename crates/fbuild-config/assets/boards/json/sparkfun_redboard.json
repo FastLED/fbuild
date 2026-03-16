@@ -1,32 +1,32 @@
 {
-  "id": "sparkfun_redboard",
-  "name": "SparkFun RedBoard",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA328P",
-  "fcpu": 16000000,
-  "ram": 2048,
-  "rom": 32256,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "SparkFun",
-  "url": "https://www.sparkfun.com/products/12757",
-  "debug": {
-    "tools": {
-      "simavr": {},
-      "avr-stub": {}
-    }
-  },
   "build": {
-    "extra_flags": "-DARDUINO_AVR_REDBOARD",
     "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_REDBOARD",
     "f_cpu": "16000000L",
     "mcu": "atmega328p",
     "variant": "standard"
   },
+  "debug": {
+    "tools": {
+      "avr-stub": {},
+      "simavr": {}
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "sparkfun_redboard",
+  "mcu": "ATMEGA328P",
+  "name": "SparkFun RedBoard",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 32256,
   "upload": {
     "protocol": "arduino",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.sparkfun.com/products/12757",
+  "vendor": "SparkFun"
 }

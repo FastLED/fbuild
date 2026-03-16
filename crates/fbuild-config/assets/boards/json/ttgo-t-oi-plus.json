@@ -1,17 +1,16 @@
 {
-  "id": "ttgo-t-oi-plus",
-  "name": "TTGO T-OI PLUS RISC-V ESP32-C3",
-  "platform": "espressif32",
-  "mcu": "ESP32C3",
-  "fcpu": 160000000,
-  "ram": 327680,
-  "rom": 4194304,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "TTGO",
-  "url": "http://www.lilygo.cn/prod_view.aspx?TypeId=50044&Id=1361&FId=t3:50044:3",
+  "build": {
+    "arduino": {
+      "ldscript": "esp32c3_out.ld"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_TTGO_T_OI_PLUS_DEV",
+    "f_cpu": "160000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "mcu": "esp32c3",
+    "variant": "ttgo-t-oi-plus"
+  },
   "connectivity": [
     "wifi"
   ],
@@ -22,28 +21,29 @@
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
       "tumpa": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_TTGO_T_OI_PLUS_DEV",
-    "core": "esp32",
-    "f_cpu": "160000000L",
-    "mcu": "esp32c3",
-    "f_flash": "80000000L",
-    "flash_mode": "qio",
-    "variant": "ttgo-t-oi-plus",
-    "arduino": {
-      "ldscript": "esp32c3_out.ld"
-    }
-  },
+  "fcpu": 160000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "ttgo-t-oi-plus",
+  "mcu": "ESP32C3",
+  "name": "TTGO T-OI PLUS RISC-V ESP32-C3",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 4194304,
   "upload": {
     "flash_size": "4MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "http://www.lilygo.cn/prod_view.aspx?TypeId=50044&Id=1361&FId=t3:50044:3",
+  "vendor": "TTGO"
 }

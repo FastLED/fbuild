@@ -1,17 +1,17 @@
 {
-  "id": "um_tinyc6",
-  "name": "Unexpected Maker TinyC6",
-  "platform": "espressif32",
-  "mcu": "ESP32C6",
-  "fcpu": 240000000,
-  "ram": 327680,
-  "rom": 8388608,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "Unexpected Maker",
-  "url": "https://unexpectedmaker.com/shop/tinyc6",
+  "build": {
+    "arduino": {
+      "memory_type": "qio_qspi",
+      "partitions": "default_8MB.csv"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_TINYC6",
+    "f_cpu": "240000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "mcu": "esp32c6",
+    "variant": "um_tinyc6"
+  },
   "connectivity": [
     "bluetooth",
     "wifi"
@@ -19,35 +19,35 @@
   "debug": {
     "tools": {
       "cmsis-dap": {},
-      "esp-prog": {},
       "esp-bridge": {},
+      "esp-builtin": {},
+      "esp-prog": {},
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
-      "tumpa": {},
-      "esp-builtin": {}
+      "tumpa": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_TINYC6",
-    "core": "esp32",
-    "f_cpu": "240000000L",
-    "mcu": "esp32c6",
-    "f_flash": "80000000L",
-    "flash_mode": "qio",
-    "variant": "um_tinyc6",
-    "arduino": {
-      "partitions": "default_8MB.csv",
-      "memory_type": "qio_qspi"
-    }
-  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "um_tinyc6",
+  "mcu": "ESP32C6",
+  "name": "Unexpected Maker TinyC6",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 8388608,
   "upload": {
     "flash_size": "8MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://unexpectedmaker.com/shop/tinyc6",
+  "vendor": "Unexpected Maker"
 }

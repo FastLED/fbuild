@@ -1,11 +1,20 @@
 {
-  "id": "blackpill_f401ce",
-  "name": "WeAct Studio BlackPill V3.0 (STM32F401CE)",
-  "platform": "ststm32",
-  "mcu": "STM32F401CEU6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F4 -DSTM32F4xx -DSTM32F401xE",
+    "f_cpu": "84000000L",
+    "mcu": "stm32f401ceu6",
+    "variant": "STM32F4xx/F401CC(F-U-Y)_F401C(B-D-E)(U-Y)"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  },
   "fcpu": 84000000,
-  "ram": 98304,
-  "rom": 524288,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -13,24 +22,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "WeAct Studio",
-  "url": "https://github.com/WeActStudio/WeActStudio.MiniSTM32F4x1",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F4xx -DSTM32F401xE",
-    "core": "stm32",
-    "f_cpu": "84000000L",
-    "mcu": "stm32f401ceu6",
-    "variant": "STM32F4xx/F401CC(F-U-Y)_F401C(B-D-E)(U-Y)"
-  },
+  "id": "blackpill_f401ce",
+  "mcu": "STM32F401CEU6",
+  "name": "WeAct Studio BlackPill V3.0 (STM32F401CE)",
+  "platform": "ststm32",
+  "ram": 98304,
+  "rom": 524288,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://github.com/WeActStudio/WeActStudio.MiniSTM32F4x1",
+  "vendor": "WeAct Studio"
 }

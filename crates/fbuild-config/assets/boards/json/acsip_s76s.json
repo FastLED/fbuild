@@ -1,34 +1,34 @@
 {
-  "id": "acsip_s76s",
-  "name": "ACSIP S76S",
-  "platform": "ststm32",
-  "mcu": "STM32L073RZ",
-  "fcpu": 32000000,
-  "ram": 20480,
-  "rom": 196608,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "ACSIP",
-  "url": "https://www.acsip.com.tw/index.php?action=products-detail&fid1=19&fid2=&fid3=&id=79",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
-    }
-  },
   "build": {
     "extra_flags": "-DSTM32L0 -DSTM32L073xx",
     "f_cpu": "32000000L",
     "mcu": "stm32l073rz",
     "variant": "STM32L0xx/L072R(B-Z)T_L073R(B-Z)T_L083R(B-Z)T"
   },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  },
+  "fcpu": 32000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "acsip_s76s",
+  "mcu": "STM32L073RZ",
+  "name": "ACSIP S76S",
+  "platform": "ststm32",
+  "ram": 20480,
+  "rom": 196608,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.acsip.com.tw/index.php?action=products-detail&fid1=19&fid2=&fid3=&id=79",
+  "vendor": "ACSIP"
 }

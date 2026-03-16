@@ -1,11 +1,26 @@
 {
-  "id": "disco_f413zh",
-  "name": "ST 32F413HDISCOVERY",
-  "platform": "ststm32",
-  "mcu": "STM32F413ZHT6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F4 -DSTM32F413xx",
+    "f_cpu": "100000000L",
+    "mcu": "stm32f413zht6",
+    "variant": "STM32F4xx/F413Z(G-H)(J-T)_F423ZH(J-T)"
+  },
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 100000000,
-  "ram": 327680,
-  "rom": 1572864,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -13,30 +28,15 @@
     "libopencm3",
     "mbed"
   ],
-  "vendor": "ST",
-  "url": "https://os.mbed.com/platforms/ST-Discovery-F413H/",
-  "connectivity": [
-    "can"
-  ],
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F413xx",
-    "core": "stm32",
-    "f_cpu": "100000000L",
-    "mcu": "stm32f413zht6",
-    "variant": "STM32F4xx/F413Z(G-H)(J-T)_F423ZH(J-T)"
-  },
+  "id": "disco_f413zh",
+  "mcu": "STM32F413ZHT6",
+  "name": "ST 32F413HDISCOVERY",
+  "platform": "ststm32",
+  "ram": 327680,
+  "rom": 1572864,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://os.mbed.com/platforms/ST-Discovery-F413H/",
+  "vendor": "ST"
 }

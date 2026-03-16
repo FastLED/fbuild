@@ -1,25 +1,25 @@
 {
-  "id": "ATmega48PB",
-  "name": "ATmega48PB",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA48PB",
-  "fcpu": 16000000,
-  "ram": 512,
-  "rom": 4096,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega48PB",
   "build": {
-    "extra_flags": "-DARDUINO_AVR_ATmega48PB",
     "core": "MiniCore",
+    "extra_flags": "-DARDUINO_AVR_ATmega48PB",
     "f_cpu": "16000000L",
     "mcu": "atmega48pb",
     "variant": "pb-variant"
   },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega48PB",
+  "mcu": "ATMEGA48PB",
+  "name": "ATmega48PB",
+  "platform": "atmelavr",
+  "ram": 512,
+  "rom": 4096,
   "upload": {
     "protocol": "urclock",
     "require_upload_port": false
-  }
+  },
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega48PB",
+  "vendor": "Microchip"
 }

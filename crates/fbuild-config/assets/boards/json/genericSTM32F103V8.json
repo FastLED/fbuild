@@ -1,19 +1,11 @@
 {
-  "id": "genericSTM32F103V8",
-  "name": "STM32F103V8 (20k RAM. 64k Flash)",
-  "platform": "ststm32",
-  "mcu": "STM32F103V8T6",
-  "fcpu": 72000000,
-  "ram": 20480,
-  "rom": 65536,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "Generic",
-  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103v8.html",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F103xB -DSTM32F1",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f103v8t6",
+    "variant": "STM32F1xx/F103V8(H-T)_F103VB(H-I-T)"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
@@ -21,14 +13,22 @@
       "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F103xB -DSTM32F1",
-    "core": "stm32",
-    "f_cpu": "72000000L",
-    "mcu": "stm32f103v8t6",
-    "variant": "STM32F1xx/F103V8(H-T)_F103VB(H-I-T)"
-  },
+  "fcpu": 72000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "genericSTM32F103V8",
+  "mcu": "STM32F103V8T6",
+  "name": "STM32F103V8 (20k RAM. 64k Flash)",
+  "platform": "ststm32",
+  "ram": 20480,
+  "rom": 65536,
   "upload": {
     "protocol": "serial"
-  }
+  },
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103v8.html",
+  "vendor": "Generic"
 }

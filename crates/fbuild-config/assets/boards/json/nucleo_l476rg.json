@@ -1,11 +1,26 @@
 {
-  "id": "nucleo_l476rg",
-  "name": "ST Nucleo L476RG",
-  "platform": "ststm32",
-  "mcu": "STM32L476RGT6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32L4 -DSTM32L476xx",
+    "f_cpu": "80000000L",
+    "mcu": "stm32l476rgt6",
+    "variant": "STM32L4xx/L475R(C-E-G)T_L476R(C-E-G)T_L486RGT"
+  },
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 80000000,
-  "ram": 98304,
-  "rom": 1048576,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -14,30 +29,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://developer.mbed.org/platforms/ST-Nucleo-L476RG/",
-  "connectivity": [
-    "can"
-  ],
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32L4 -DSTM32L476xx",
-    "core": "stm32",
-    "f_cpu": "80000000L",
-    "mcu": "stm32l476rgt6",
-    "variant": "STM32L4xx/L475R(C-E-G)T_L476R(C-E-G)T_L486RGT"
-  },
+  "id": "nucleo_l476rg",
+  "mcu": "STM32L476RGT6",
+  "name": "ST Nucleo L476RG",
+  "platform": "ststm32",
+  "ram": 98304,
+  "rom": 1048576,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-L476RG/",
+  "vendor": "ST"
 }

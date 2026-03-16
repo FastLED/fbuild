@@ -1,17 +1,17 @@
 {
-  "id": "waveshare_esp32s3_touch_lcd_128",
-  "name": "Waveshare ESP32-S3-Touch-LCD-1.28 (16 MB QD, 2MB PSRAM)",
-  "platform": "espressif32",
-  "mcu": "ESP32S3",
-  "fcpu": 240000000,
-  "ram": 327680,
-  "rom": 16777216,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "Waveshare",
-  "url": "https://www.waveshare.com/wiki/ESP32-S3-Touch-LCD-1.28",
+  "build": {
+    "arduino": {
+      "memory_type": "qio_qspi",
+      "partitions": "default.csv"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_WAVESHARE_ESP32S3_TOUCH_LCD_128 -DARDUINO_USB_MODE=1 -DARDUINO_RUNNING_CORE=1 -DARDUINO_EVENT_RUNNING_CORE=1 -DBOARD_HAS_PSRAM",
+    "f_cpu": "240000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "mcu": "esp32s3",
+    "variant": "waveshare_esp32s3_touch_lcd_128"
+  },
   "connectivity": [
     "bluetooth",
     "wifi"
@@ -19,38 +19,38 @@
   "debug": {
     "tools": {
       "cmsis-dap": {},
-      "esp-prog": {},
       "esp-bridge": {},
+      "esp-builtin": {
+        "default": true,
+        "onboard": true
+      },
+      "esp-prog": {},
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
-      "tumpa": {},
-      "esp-builtin": {
-        "onboard": true,
-        "default": true
-      }
+      "tumpa": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_WAVESHARE_ESP32S3_TOUCH_LCD_128 -DARDUINO_USB_MODE=1 -DARDUINO_RUNNING_CORE=1 -DARDUINO_EVENT_RUNNING_CORE=1 -DBOARD_HAS_PSRAM",
-    "core": "esp32",
-    "f_cpu": "240000000L",
-    "mcu": "esp32s3",
-    "f_flash": "80000000L",
-    "flash_mode": "qio",
-    "variant": "waveshare_esp32s3_touch_lcd_128",
-    "arduino": {
-      "partitions": "default.csv",
-      "memory_type": "qio_qspi"
-    }
-  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "waveshare_esp32s3_touch_lcd_128",
+  "mcu": "ESP32S3",
+  "name": "Waveshare ESP32-S3-Touch-LCD-1.28 (16 MB QD, 2MB PSRAM)",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 16777216,
   "upload": {
     "flash_size": "16MB",
-    "speed": 921600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 921600
+  },
+  "url": "https://www.waveshare.com/wiki/ESP32-S3-Touch-LCD-1.28",
+  "vendor": "Waveshare"
 }

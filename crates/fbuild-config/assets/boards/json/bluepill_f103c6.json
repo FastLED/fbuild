@@ -1,37 +1,37 @@
 {
-  "id": "bluepill_f103c6",
-  "name": "BluePill F103C6",
-  "platform": "ststm32",
-  "mcu": "STM32F103C6T6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F1 -DSTM32F103x6 -DARDUINO_BLUEPILL_F103C6",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f103c6t6",
+    "variant": "STM32F1xx/F103C4T_F103C6(T-U)"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true
+      }
+    }
+  },
   "fcpu": 72000000,
-  "ram": 10240,
-  "rom": 32768,
   "frameworks": [
     "arduino",
     "cmsis",
     "stm32cube",
     "libopencm3"
   ],
-  "vendor": "Generic",
-  "url": "https://www.st.com/en/microcontrollers/stm32f103c6.html",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F1 -DSTM32F103x6 -DARDUINO_BLUEPILL_F103C6",
-    "core": "stm32",
-    "f_cpu": "72000000L",
-    "mcu": "stm32f103c6t6",
-    "variant": "STM32F1xx/F103C4T_F103C6(T-U)"
-  },
+  "id": "bluepill_f103c6",
+  "mcu": "STM32F103C6T6",
+  "name": "BluePill F103C6",
+  "platform": "ststm32",
+  "ram": 10240,
+  "rom": 32768,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/microcontrollers/stm32f103c6.html",
+  "vendor": "Generic"
 }

@@ -1,11 +1,24 @@
 {
-  "id": "disco_l496ag",
-  "name": "ST 32L496GDISCOVERY",
-  "platform": "ststm32",
-  "mcu": "STM32L496AGI6",
+  "build": {
+    "extra_flags": "-DSTM32L4 -DSTM32L496xx",
+    "f_cpu": "80000000L",
+    "mcu": "stm32l496agi6"
+  },
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 80000000,
-  "ram": 327680,
-  "rom": 1048576,
   "frameworks": [
     "cmsis",
     "mbed",
@@ -13,28 +26,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/evaluation-tools/32l496gdiscovery.html",
-  "connectivity": [
-    "can"
-  ],
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32L4 -DSTM32L496xx",
-    "f_cpu": "80000000L",
-    "mcu": "stm32l496agi6"
-  },
+  "id": "disco_l496ag",
+  "mcu": "STM32L496AGI6",
+  "name": "ST 32L496GDISCOVERY",
+  "platform": "ststm32",
+  "ram": 327680,
+  "rom": 1048576,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/32l496gdiscovery.html",
+  "vendor": "ST"
 }

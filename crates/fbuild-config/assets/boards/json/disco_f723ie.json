@@ -1,19 +1,9 @@
 {
-  "id": "disco_f723ie",
-  "name": "32F723EDISCOVERY",
-  "platform": "ststm32",
-  "mcu": "STM32F723IEK6",
-  "fcpu": 216000000,
-  "ram": 196608,
-  "rom": 524288,
-  "frameworks": [
-    "cmsis",
-    "stm32cube",
-    "libopencm3",
-    "zephyr"
-  ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/evaluation-tools/32f723ediscovery.html",
+  "build": {
+    "extra_flags": "-DSTM32F7 -DSTM32F723xx",
+    "f_cpu": "216000000L",
+    "mcu": "stm32f723iek6"
+  },
   "connectivity": [
     "can",
     "wifi"
@@ -21,20 +11,30 @@
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
       "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
+        "default": true,
+        "onboard": true
+      }
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F7 -DSTM32F723xx",
-    "f_cpu": "216000000L",
-    "mcu": "stm32f723iek6"
-  },
+  "fcpu": 216000000,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "id": "disco_f723ie",
+  "mcu": "STM32F723IEK6",
+  "name": "32F723EDISCOVERY",
+  "platform": "ststm32",
+  "ram": 196608,
+  "rom": 524288,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/32f723ediscovery.html",
+  "vendor": "ST"
 }

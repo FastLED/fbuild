@@ -1,31 +1,31 @@
 {
-  "id": "pro16MHzatmega168",
-  "name": "Arduino Pro or Pro Mini ATmega168 (5V, 16 MHz)",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA168",
-  "fcpu": 16000000,
-  "ram": 1024,
-  "rom": 14336,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Arduino",
-  "url": "http://arduino.cc/en/Main/ArduinoBoardProMini",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_PRO",
+    "f_cpu": "16000000L",
+    "mcu": "atmega168",
+    "variant": "eightanaloginputs"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_PRO",
-    "core": "arduino",
-    "f_cpu": "16000000L",
-    "mcu": "atmega168",
-    "variant": "eightanaloginputs"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "pro16MHzatmega168",
+  "mcu": "ATMEGA168",
+  "name": "Arduino Pro or Pro Mini ATmega168 (5V, 16 MHz)",
+  "platform": "atmelavr",
+  "ram": 1024,
+  "rom": 14336,
   "upload": {
     "protocol": "arduino",
-    "speed": 19200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 19200
+  },
+  "url": "http://arduino.cc/en/Main/ArduinoBoardProMini",
+  "vendor": "Arduino"
 }

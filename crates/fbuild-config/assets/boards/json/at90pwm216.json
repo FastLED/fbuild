@@ -1,18 +1,18 @@
 {
-  "id": "at90pwm216",
-  "name": "Atmel AT90PWM216",
-  "platform": "atmelavr",
-  "mcu": "AT90PWM216",
-  "fcpu": 16000000,
-  "ram": 1024,
-  "rom": 16384,
-  "frameworks": [],
-  "vendor": "Microchip",
-  "url": "http://www.microchip.com/wwwproducts/en/AT90PWM216",
   "build": {
-    "extra_flags": "-D__AVR_AT90PWM216__",
     "core": "arduino",
+    "extra_flags": "-D__AVR_AT90PWM216__",
     "f_cpu": "16000000L",
     "mcu": "at90pwm216"
-  }
+  },
+  "fcpu": 16000000,
+  "frameworks": [],
+  "id": "at90pwm216",
+  "mcu": "AT90PWM216",
+  "name": "Atmel AT90PWM216",
+  "platform": "atmelavr",
+  "ram": 1024,
+  "rom": 16384,
+  "url": "http://www.microchip.com/wwwproducts/en/AT90PWM216",
+  "vendor": "Microchip"
 }

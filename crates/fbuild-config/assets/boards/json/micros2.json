@@ -1,17 +1,17 @@
 {
-  "id": "micros2",
-  "name": "microS2",
-  "platform": "espressif32",
-  "mcu": "ESP32S2",
-  "fcpu": 240000000,
-  "ram": 327680,
-  "rom": 16777216,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "microS2",
-  "url": "https://github.com/MicroDev1/microS2",
+  "build": {
+    "arduino": {
+      "ldscript": "esp32s2_out.ld",
+      "partitions": "ffat.csv"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_MICROS2 -DBOARD_HAS_PSRAM -DARDUINO_USB_CDC_ON_BOOT=1 -DARDUINO_USB_MSC_ON_BOOT=1",
+    "f_cpu": "240000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "dio",
+    "mcu": "esp32s2",
+    "variant": "micro_s2"
+  },
   "connectivity": [
     "wifi"
   ],
@@ -22,29 +22,29 @@
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
       "tumpa": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_MICROS2 -DBOARD_HAS_PSRAM -DARDUINO_USB_CDC_ON_BOOT=1 -DARDUINO_USB_MSC_ON_BOOT=1",
-    "core": "esp32",
-    "f_cpu": "240000000L",
-    "mcu": "esp32s2",
-    "f_flash": "80000000L",
-    "flash_mode": "dio",
-    "variant": "micro_s2",
-    "arduino": {
-      "ldscript": "esp32s2_out.ld",
-      "partitions": "ffat.csv"
-    }
-  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "micros2",
+  "mcu": "ESP32S2",
+  "name": "microS2",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 16777216,
   "upload": {
     "flash_size": "16MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://github.com/MicroDev1/microS2",
+  "vendor": "microS2"
 }

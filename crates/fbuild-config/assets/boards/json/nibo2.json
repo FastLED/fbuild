@@ -1,31 +1,31 @@
 {
-  "id": "nibo2",
-  "name": "nicai-systems NIBO 2 robot",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA128",
-  "fcpu": 16000000,
-  "ram": 4096,
-  "rom": 131072,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "nicai-systems",
-  "url": "http://www.nicai-systems.com/en/nibo2",
+  "build": {
+    "core": "nicai",
+    "extra_flags": "-DARDUINO_AVR_NIBO2",
+    "f_cpu": "16000000L",
+    "mcu": "atmega128",
+    "variant": "nibo2"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_NIBO2",
-    "core": "nicai",
-    "f_cpu": "16000000L",
-    "mcu": "atmega128",
-    "variant": "nibo2"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "nibo2",
+  "mcu": "ATMEGA128",
+  "name": "nicai-systems NIBO 2 robot",
+  "platform": "atmelavr",
+  "ram": 4096,
+  "rom": 131072,
   "upload": {
     "protocol": "stk500v2",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "http://www.nicai-systems.com/en/nibo2",
+  "vendor": "nicai-systems"
 }

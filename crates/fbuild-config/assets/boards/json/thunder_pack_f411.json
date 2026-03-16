@@ -1,38 +1,38 @@
 {
-  "id": "thunder_pack_f411",
-  "name": "ThunderPack v1.1+",
-  "platform": "ststm32",
-  "mcu": "STM32F411CEU6",
-  "fcpu": 100000000,
-  "ram": 131072,
-  "rom": 524288,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "ThunderPack",
-  "url": "https://github.com/jgillick/ThunderPack/tree/STM32F4",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F4 -DSTM32F4xx -DSTM32F411xE",
+    "f_cpu": "100000000L",
+    "mcu": "stm32f411ceu6",
+    "variant": "STM32F4xx/F411C(C-E)(U-Y)"
+  },
   "connectivity": [
     "can"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
+      "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F4xx -DSTM32F411xE",
-    "core": "stm32",
-    "f_cpu": "100000000L",
-    "mcu": "stm32f411ceu6",
-    "variant": "STM32F4xx/F411C(C-E)(U-Y)"
-  },
+  "fcpu": 100000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "thunder_pack_f411",
+  "mcu": "STM32F411CEU6",
+  "name": "ThunderPack v1.1+",
+  "platform": "ststm32",
+  "ram": 131072,
+  "rom": 524288,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://github.com/jgillick/ThunderPack/tree/STM32F4",
+  "vendor": "ThunderPack"
 }

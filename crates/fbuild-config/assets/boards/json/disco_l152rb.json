@@ -1,38 +1,38 @@
 {
-  "id": "disco_l152rb",
-  "name": "ST STM32LDISCOVERY",
-  "platform": "ststm32",
-  "mcu": "STM32L152RBT6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32L1 -DSTM32L152xB -DSTM32L1XX_MD",
+    "f_cpu": "32000000L",
+    "mcu": "stm32l152rbt6",
+    "variant": "stm32l152xb"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 32000000,
-  "ram": 16384,
-  "rom": 131072,
   "frameworks": [
     "cmsis",
     "spl",
     "libopencm3",
     "stm32cube"
   ],
-  "vendor": "ST",
-  "url": "http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1848/PF258515",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32L1 -DSTM32L152xB -DSTM32L1XX_MD",
-    "core": "stm32",
-    "f_cpu": "32000000L",
-    "mcu": "stm32l152rbt6",
-    "variant": "stm32l152xb"
-  },
+  "id": "disco_l152rb",
+  "mcu": "STM32L152RBT6",
+  "name": "ST STM32LDISCOVERY",
+  "platform": "ststm32",
+  "ram": 16384,
+  "rom": 131072,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1848/PF258515",
+  "vendor": "ST"
 }

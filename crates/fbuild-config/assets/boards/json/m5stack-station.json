@@ -1,38 +1,38 @@
 {
-  "id": "m5stack-station",
-  "name": "M5Stack Station",
-  "platform": "espressif32",
-  "mcu": "ESP32",
-  "fcpu": 240000000,
-  "ram": 4521984,
-  "rom": 16777216,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "M5Stack",
-  "url": "http://www.m5stack.com",
+  "build": {
+    "arduino": {
+      "ldscript": "esp32_out.ld"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_M5Stack_Station",
+    "f_cpu": "240000000L",
+    "f_flash": "40000000L",
+    "flash_mode": "dio",
+    "mcu": "esp32",
+    "variant": "m5stack_station"
+  },
   "connectivity": [
     "wifi",
     "bluetooth",
     "ethernet",
     "can"
   ],
-  "build": {
-    "extra_flags": "-DARDUINO_M5Stack_Station",
-    "core": "esp32",
-    "f_cpu": "240000000L",
-    "mcu": "esp32",
-    "f_flash": "40000000L",
-    "flash_mode": "dio",
-    "variant": "m5stack_station",
-    "arduino": {
-      "ldscript": "esp32_out.ld"
-    }
-  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "m5stack-station",
+  "mcu": "ESP32",
+  "name": "M5Stack Station",
+  "platform": "espressif32",
+  "ram": 4521984,
+  "rom": 16777216,
   "upload": {
     "flash_size": "16MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "http://www.m5stack.com",
+  "vendor": "M5Stack"
 }

@@ -1,31 +1,31 @@
 {
-  "id": "644pa8m",
-  "name": "Microduino Core+ (Atmega644PA@8M,3.3V)",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA644P",
-  "fcpu": 8000000,
-  "ram": 4096,
-  "rom": 64512,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microduino",
-  "url": "http://wiki.microduinoinc.com/Microduino-Module_Core%2B",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_MICRODUINO_CORE_PLUS",
+    "f_cpu": "8000000L",
+    "mcu": "atmega644p",
+    "variant": "microduino_plus"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_MICRODUINO_CORE_PLUS",
-    "core": "arduino",
-    "f_cpu": "8000000L",
-    "mcu": "atmega644p",
-    "variant": "microduino_plus"
-  },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "644pa8m",
+  "mcu": "ATMEGA644P",
+  "name": "Microduino Core+ (Atmega644PA@8M,3.3V)",
+  "platform": "atmelavr",
+  "ram": 4096,
+  "rom": 64512,
   "upload": {
     "protocol": "arduino",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "http://wiki.microduinoinc.com/Microduino-Module_Core%2B",
+  "vendor": "Microduino"
 }

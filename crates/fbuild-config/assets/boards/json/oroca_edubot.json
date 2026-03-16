@@ -1,39 +1,39 @@
 {
-  "id": "oroca_edubot",
-  "name": "OROCA EduBot",
-  "platform": "espressif32",
-  "mcu": "ESP32",
-  "fcpu": 240000000,
-  "ram": 327680,
-  "rom": 4194304,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "OROCA",
-  "url": "https://github.com/oroca/OROCA-EduBot",
+  "build": {
+    "arduino": {
+      "ldscript": "esp32_out.ld",
+      "partitions": "huge_app.csv"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_OROCA_EDUBOT",
+    "f_cpu": "240000000L",
+    "f_flash": "40000000L",
+    "flash_mode": "dio",
+    "mcu": "esp32",
+    "variant": "oroca_edubot"
+  },
   "connectivity": [
     "wifi",
     "bluetooth",
     "ethernet",
     "can"
   ],
-  "build": {
-    "extra_flags": "-DARDUINO_OROCA_EDUBOT",
-    "core": "esp32",
-    "f_cpu": "240000000L",
-    "mcu": "esp32",
-    "f_flash": "40000000L",
-    "flash_mode": "dio",
-    "variant": "oroca_edubot",
-    "arduino": {
-      "ldscript": "esp32_out.ld",
-      "partitions": "huge_app.csv"
-    }
-  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "oroca_edubot",
+  "mcu": "ESP32",
+  "name": "OROCA EduBot",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 4194304,
   "upload": {
     "flash_size": "4MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://github.com/oroca/OROCA-EduBot",
+  "vendor": "OROCA"
 }

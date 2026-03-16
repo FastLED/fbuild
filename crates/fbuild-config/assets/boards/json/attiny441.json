@@ -1,23 +1,23 @@
 {
-  "id": "attiny441",
-  "name": "Generic ATtiny441",
-  "platform": "atmelavr",
-  "mcu": "ATTINY441",
-  "fcpu": 8000000,
-  "ram": 256,
-  "rom": 4096,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Atmel",
-  "url": "http://www.atmel.com/devices/ATTINY441.aspx",
   "build": {
-    "extra_flags": "-DARDUINO_AVR_ATTINYX41 -DLOWERCAL -DWIRE_MASTER_ONLY -DNEW_PINOUT",
     "core": "tinymodern",
+    "extra_flags": "-DARDUINO_AVR_ATTINYX41 -DLOWERCAL -DWIRE_MASTER_ONLY -DNEW_PINOUT",
     "f_cpu": "8000000L",
     "mcu": "attiny441"
   },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "attiny441",
+  "mcu": "ATTINY441",
+  "name": "Generic ATtiny441",
+  "platform": "atmelavr",
+  "ram": 256,
+  "rom": 4096,
   "upload": {
     "protocol": "usbtiny"
-  }
+  },
+  "url": "http://www.atmel.com/devices/ATTINY441.aspx",
+  "vendor": "Atmel"
 }

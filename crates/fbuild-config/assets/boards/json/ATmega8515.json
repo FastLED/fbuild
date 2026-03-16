@@ -1,26 +1,26 @@
 {
-  "id": "ATmega8515",
-  "name": "ATmega8515",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA8515",
-  "fcpu": 16000000,
-  "ram": 512,
-  "rom": 8192,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega8515",
   "build": {
-    "extra_flags": "-DARDUINO_AVR_ATmega8515",
     "core": "MajorCore",
+    "extra_flags": "-DARDUINO_AVR_ATmega8515",
     "f_cpu": "16000000L",
     "mcu": "atmega8515",
     "variant": "standard"
   },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega8515",
+  "mcu": "ATMEGA8515",
+  "name": "ATmega8515",
+  "platform": "atmelavr",
+  "ram": 512,
+  "rom": 8192,
   "upload": {
     "protocol": "urclock",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega8515",
+  "vendor": "Microchip"
 }

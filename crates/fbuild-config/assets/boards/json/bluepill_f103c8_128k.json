@@ -1,11 +1,22 @@
 {
-  "id": "bluepill_f103c8_128k",
-  "name": "BluePill F103C8 (128k)",
-  "platform": "ststm32",
-  "mcu": "STM32F103C8T6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F1 -DSTM32F103xB -DARDUINO_BLUEPILL_F103C8",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f103c8t6",
+    "variant": "STM32F1xx/F103C8T_F103CB(T-U)"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true
+      }
+    }
+  },
   "fcpu": 72000000,
-  "ram": 20480,
-  "rom": 131072,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -13,26 +24,15 @@
     "stm32cube",
     "zephyr"
   ],
-  "vendor": "Generic",
-  "url": "http://www.st.com/content/st_com/en/products/microcontrollers/stm32-32-bit-arm-cortex-mcus/stm32f1-series/stm32f103/stm32f103c8.html",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F1 -DSTM32F103xB -DARDUINO_BLUEPILL_F103C8",
-    "core": "stm32",
-    "f_cpu": "72000000L",
-    "mcu": "stm32f103c8t6",
-    "variant": "STM32F1xx/F103C8T_F103CB(T-U)"
-  },
+  "id": "bluepill_f103c8_128k",
+  "mcu": "STM32F103C8T6",
+  "name": "BluePill F103C8 (128k)",
+  "platform": "ststm32",
+  "ram": 20480,
+  "rom": 131072,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "http://www.st.com/content/st_com/en/products/microcontrollers/stm32-32-bit-arm-cortex-mcus/stm32f1-series/stm32f103/stm32f103c8.html",
+  "vendor": "Generic"
 }

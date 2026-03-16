@@ -1,31 +1,31 @@
 {
-  "id": "1284p16m",
-  "name": "Microduino Core+ (ATmega1284P@16M,5V)",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA1284P",
-  "fcpu": 16000000,
-  "ram": 16384,
-  "rom": 130048,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microduino",
-  "url": "http://wiki.microduinoinc.com/Microduino-Module_Core%2B",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_MICRODUINO_CORE_PLUS",
+    "f_cpu": "16000000L",
+    "mcu": "atmega1284p",
+    "variant": "microduino_plus"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_MICRODUINO_CORE_PLUS",
-    "core": "arduino",
-    "f_cpu": "16000000L",
-    "mcu": "atmega1284p",
-    "variant": "microduino_plus"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "1284p16m",
+  "mcu": "ATMEGA1284P",
+  "name": "Microduino Core+ (ATmega1284P@16M,5V)",
+  "platform": "atmelavr",
+  "ram": 16384,
+  "rom": 130048,
   "upload": {
     "protocol": "arduino",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "http://wiki.microduinoinc.com/Microduino-Module_Core%2B",
+  "vendor": "Microduino"
 }

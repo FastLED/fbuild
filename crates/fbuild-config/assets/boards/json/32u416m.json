@@ -1,31 +1,31 @@
 {
-  "id": "32u416m",
-  "name": "Microduino Core USB (ATmega32U4@16M,5V)",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA32U4",
-  "fcpu": 16000000,
-  "ram": 2560,
-  "rom": 28672,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microduino",
-  "url": "http://wiki.microduinoinc.com/Microduino-Module_CoreUSB",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_MICRODUINO_CORE_USB",
+    "f_cpu": "16000000L",
+    "mcu": "atmega32u4",
+    "variant": "microduino_32u4"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_MICRODUINO_CORE_USB",
-    "core": "arduino",
-    "f_cpu": "16000000L",
-    "mcu": "atmega32u4",
-    "variant": "microduino_32u4"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "32u416m",
+  "mcu": "ATMEGA32U4",
+  "name": "Microduino Core USB (ATmega32U4@16M,5V)",
+  "platform": "atmelavr",
+  "ram": 2560,
+  "rom": 28672,
   "upload": {
     "protocol": "avr109",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "http://wiki.microduinoinc.com/Microduino-Module_CoreUSB",
+  "vendor": "Microduino"
 }

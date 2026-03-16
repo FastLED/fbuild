@@ -1,35 +1,35 @@
 {
-  "id": "btatmega328",
-  "name": "Arduino BT ATmega328",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA328P",
-  "fcpu": 16000000,
-  "ram": 2048,
-  "rom": 28672,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Arduino",
-  "url": "http://arduino.cc/en/main/boards",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_BT",
+    "f_cpu": "16000000L",
+    "mcu": "atmega328p",
+    "variant": "eightanaloginputs"
+  },
   "connectivity": [
     "bluetooth"
   ],
   "debug": {
     "tools": {
-      "simavr": {},
-      "avr-stub": {}
+      "avr-stub": {},
+      "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_BT",
-    "core": "arduino",
-    "f_cpu": "16000000L",
-    "mcu": "atmega328p",
-    "variant": "eightanaloginputs"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "btatmega328",
+  "mcu": "ATMEGA328P",
+  "name": "Arduino BT ATmega328",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 28672,
   "upload": {
     "protocol": "arduino",
-    "speed": 19200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 19200
+  },
+  "url": "http://arduino.cc/en/main/boards",
+  "vendor": "Arduino"
 }

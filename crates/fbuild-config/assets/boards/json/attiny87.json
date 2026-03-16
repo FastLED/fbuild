@@ -1,24 +1,24 @@
 {
-  "id": "attiny87",
-  "name": "Generic ATtiny87",
-  "platform": "atmelavr",
-  "mcu": "ATTINY87",
-  "fcpu": 8000000,
-  "ram": 512,
-  "rom": 8192,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Atmel",
-  "url": "http://www.atmel.com/devices/ATTINY87.aspx",
   "build": {
-    "extra_flags": "-DARDUINO_AVR_ATTINYX7",
     "core": "tiny",
+    "extra_flags": "-DARDUINO_AVR_ATTINYX7",
     "f_cpu": "8000000L",
     "mcu": "attiny87",
     "variant": "tinyX7_New"
   },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "attiny87",
+  "mcu": "ATTINY87",
+  "name": "Generic ATtiny87",
+  "platform": "atmelavr",
+  "ram": 512,
+  "rom": 8192,
   "upload": {
     "protocol": "usbtiny"
-  }
+  },
+  "url": "http://www.atmel.com/devices/ATTINY87.aspx",
+  "vendor": "Atmel"
 }

@@ -1,39 +1,39 @@
 {
-  "id": "nucleo_l486rg",
-  "name": "ST Nucleo L486RG",
-  "platform": "ststm32",
-  "mcu": "STM32L486RGT6",
-  "fcpu": 80000000,
-  "ram": 131072,
-  "rom": 1048576,
-  "frameworks": [
-    "cmsis",
-    "mbed",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "ST",
-  "url": "https://developer.mbed.org/platforms/ST-Nucleo-L486RG/",
+  "build": {
+    "extra_flags": "-DSTM32L4 -DSTM32L486xx",
+    "f_cpu": "80000000L",
+    "mcu": "stm32l486rgt6"
+  },
   "connectivity": [
     "can"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
       "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
+        "default": true,
+        "onboard": true
+      }
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32L4 -DSTM32L486xx",
-    "f_cpu": "80000000L",
-    "mcu": "stm32l486rgt6"
-  },
+  "fcpu": 80000000,
+  "frameworks": [
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "nucleo_l486rg",
+  "mcu": "STM32L486RGT6",
+  "name": "ST Nucleo L486RG",
+  "platform": "ststm32",
+  "ram": 131072,
+  "rom": 1048576,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-L486RG/",
+  "vendor": "ST"
 }

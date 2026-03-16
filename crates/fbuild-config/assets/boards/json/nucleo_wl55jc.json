@@ -1,35 +1,35 @@
 {
-  "id": "nucleo_wl55jc",
-  "name": "ST Nucleo WL55JC",
-  "platform": "ststm32",
-  "mcu": "STM32WL55JC",
-  "fcpu": 48000000,
-  "ram": 65536,
-  "rom": 262144,
-  "frameworks": [
-    "arduino",
-    "zephyr"
-  ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/evaluation-tools/nucleo-wl55jc.html",
-  "debug": {
-    "tools": {
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
   "build": {
-    "extra_flags": "-DSTM32WL -DSTM32WLxx -DSTM32WLE5xx",
     "core": "stm32",
+    "extra_flags": "-DSTM32WL -DSTM32WLxx -DSTM32WLE5xx",
     "f_cpu": "48000000L",
     "mcu": "stm32wl55jc",
     "variant": "STM32WLxx/WL54JCI_WL55JCI_WLE4J(8-B-C)I_WLE5J(8-B-C)I"
   },
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino",
+    "zephyr"
+  ],
+  "id": "nucleo_wl55jc",
+  "mcu": "STM32WL55JC",
+  "name": "ST Nucleo WL55JC",
+  "platform": "ststm32",
+  "ram": 65536,
+  "rom": 262144,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-wl55jc.html",
+  "vendor": "ST"
 }

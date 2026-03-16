@@ -1,38 +1,38 @@
 {
-  "id": "nucleo_g491re",
-  "name": "Nucleo G491RE",
-  "platform": "ststm32",
-  "mcu": "STM32G491RET6",
-  "fcpu": 170000000,
-  "ram": 114688,
-  "rom": 524288,
-  "frameworks": [
-    "stm32cube"
-  ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/evaluation-tools/nucleo-g491re.html",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32G4 -DSTM32G4xx -DSTM32G491xx",
+    "f_cpu": "170000000L",
+    "mcu": "stm32g491ret6",
+    "variant": "STM32G491RE"
+  },
   "connectivity": [
     "can"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
       "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
+        "default": true,
+        "onboard": true
+      }
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32G4 -DSTM32G4xx -DSTM32G491xx",
-    "core": "stm32",
-    "f_cpu": "170000000L",
-    "mcu": "stm32g491ret6",
-    "variant": "STM32G491RE"
-  },
+  "fcpu": 170000000,
+  "frameworks": [
+    "stm32cube"
+  ],
+  "id": "nucleo_g491re",
+  "mcu": "STM32G491RET6",
+  "name": "Nucleo G491RE",
+  "platform": "ststm32",
+  "ram": 114688,
+  "rom": 524288,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-g491re.html",
+  "vendor": "ST"
 }

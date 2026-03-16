@@ -1,40 +1,40 @@
 {
-  "id": "blues_swan_r5",
-  "name": "Blues Swan R5",
-  "platform": "ststm32",
-  "mcu": "STM32L4R5ZIY6",
-  "fcpu": 120000000,
-  "ram": 655360,
-  "rom": 2097152,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "Blues",
-  "url": "https://blues.com/products/swan/",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32L4 -DSTM32L4xx -DSTM32L4R5xx",
+    "f_cpu": "120000000L",
+    "mcu": "stm32l4r5ziy6",
+    "variant": "STM32L4xx/L4R5Z(G-I)Y_L4R9Z(G-I)Y_L4S5ZIY_L4S9ZIY"
+  },
   "connectivity": [
     "can"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
       "stlink": {
         "default": true
-      },
-      "cmsis-dap": {}
+      }
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32L4 -DSTM32L4xx -DSTM32L4R5xx",
-    "core": "stm32",
-    "f_cpu": "120000000L",
-    "mcu": "stm32l4r5ziy6",
-    "variant": "STM32L4xx/L4R5Z(G-I)Y_L4R9Z(G-I)Y_L4S5ZIY_L4S9ZIY"
-  },
+  "fcpu": 120000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "blues_swan_r5",
+  "mcu": "STM32L4R5ZIY6",
+  "name": "Blues Swan R5",
+  "platform": "ststm32",
+  "ram": 655360,
+  "rom": 2097152,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://blues.com/products/swan/",
+  "vendor": "Blues"
 }

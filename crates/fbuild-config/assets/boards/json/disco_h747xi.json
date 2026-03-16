@@ -1,20 +1,9 @@
 {
-  "id": "disco_h747xi",
-  "name": "STM32H747I-DISCO",
-  "platform": "ststm32",
-  "mcu": "STM32H747XIH6",
-  "fcpu": 400000000,
-  "ram": 524288,
-  "rom": 2097152,
-  "frameworks": [
-    "cmsis",
-    "stm32cube",
-    "libopencm3",
-    "mbed",
-    "zephyr"
-  ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/evaluation-tools/stm32h747i-disco.html",
+  "build": {
+    "extra_flags": "-DSTM32H7 -DSTM32H7xx -DSTM32H747xx",
+    "f_cpu": "400000000L",
+    "mcu": "stm32h747xih6"
+  },
   "connectivity": [
     "can",
     "ethernet"
@@ -22,20 +11,31 @@
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
       "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
+        "default": true,
+        "onboard": true
+      }
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32H7 -DSTM32H7xx -DSTM32H747xx",
-    "f_cpu": "400000000L",
-    "mcu": "stm32h747xih6"
-  },
+  "fcpu": 400000000,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "mbed",
+    "zephyr"
+  ],
+  "id": "disco_h747xi",
+  "mcu": "STM32H747XIH6",
+  "name": "STM32H747I-DISCO",
+  "platform": "ststm32",
+  "ram": 524288,
+  "rom": 2097152,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/stm32h747i-disco.html",
+  "vendor": "ST"
 }

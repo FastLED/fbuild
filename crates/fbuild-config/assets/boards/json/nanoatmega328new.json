@@ -1,32 +1,32 @@
 {
-  "id": "nanoatmega328new",
-  "name": "Arduino Nano ATmega328 (New Bootloader)",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA328P",
-  "fcpu": 16000000,
-  "ram": 2048,
-  "rom": 30720,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Arduino",
-  "url": "https://www.arduino.cc/en/Main/ArduinoBoardNano",
-  "debug": {
-    "tools": {
-      "simavr": {},
-      "avr-stub": {}
-    }
-  },
   "build": {
-    "extra_flags": "-DARDUINO_AVR_NANO",
     "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_NANO",
     "f_cpu": "16000000L",
     "mcu": "atmega328p",
     "variant": "eightanaloginputs"
   },
+  "debug": {
+    "tools": {
+      "avr-stub": {},
+      "simavr": {}
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "nanoatmega328new",
+  "mcu": "ATMEGA328P",
+  "name": "Arduino Nano ATmega328 (New Bootloader)",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 30720,
   "upload": {
     "protocol": "arduino",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.arduino.cc/en/Main/ArduinoBoardNano",
+  "vendor": "Arduino"
 }

@@ -1,31 +1,31 @@
 {
-  "id": "168pa16m",
-  "name": "Microduino Core (Atmega168PA@16M,5V)",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA168P",
-  "fcpu": 16000000,
-  "ram": 1024,
-  "rom": 15872,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microduino",
-  "url": "http://wiki.microduinoinc.com/Microduino-Module_Core",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_MICRODUINO_CORE",
+    "f_cpu": "16000000L",
+    "mcu": "atmega168p",
+    "variant": "standard"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_MICRODUINO_CORE",
-    "core": "arduino",
-    "f_cpu": "16000000L",
-    "mcu": "atmega168p",
-    "variant": "standard"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "168pa16m",
+  "mcu": "ATMEGA168P",
+  "name": "Microduino Core (Atmega168PA@16M,5V)",
+  "platform": "atmelavr",
+  "ram": 1024,
+  "rom": 15872,
   "upload": {
     "protocol": "arduino",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "http://wiki.microduinoinc.com/Microduino-Module_Core",
+  "vendor": "Microduino"
 }

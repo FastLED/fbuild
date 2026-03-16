@@ -1,17 +1,8 @@
 {
-  "id": "tb_sense_12",
-  "name": "Thunderboard Sense 2 Sensor-to-Cloud Advanced IoT",
-  "platform": "siliconlabsefm32",
-  "mcu": "EFR32MG12P432F1024",
-  "fcpu": 40000000,
-  "ram": 262144,
-  "rom": 1048576,
-  "frameworks": [
-    "mbed",
-    "zephyr"
-  ],
-  "vendor": "Silicon Labs",
-  "url": "https://www.silabs.com/products/development-tools/thunderboard/thunderboard-sense-two-kit",
+  "build": {
+    "f_cpu": "40000000L",
+    "mcu": "EFR32MG12P432F1024"
+  },
   "connectivity": [
     "bluetooth"
   ],
@@ -23,11 +14,20 @@
       }
     }
   },
-  "build": {
-    "f_cpu": "40000000L",
-    "mcu": "EFR32MG12P432F1024"
-  },
+  "fcpu": 40000000,
+  "frameworks": [
+    "mbed",
+    "zephyr"
+  ],
+  "id": "tb_sense_12",
+  "mcu": "EFR32MG12P432F1024",
+  "name": "Thunderboard Sense 2 Sensor-to-Cloud Advanced IoT",
+  "platform": "siliconlabsefm32",
+  "ram": 262144,
+  "rom": 1048576,
   "upload": {
     "protocol": "mbed"
-  }
+  },
+  "url": "https://www.silabs.com/products/development-tools/thunderboard/thunderboard-sense-two-kit",
+  "vendor": "Silicon Labs"
 }

@@ -1,19 +1,11 @@
 {
-  "id": "genericSTM32F446RC",
-  "name": "STM32F446RC (128k RAM. 256k Flash)",
-  "platform": "ststm32",
-  "mcu": "STM32F446RCT6",
-  "fcpu": 180000000,
-  "ram": 131072,
-  "rom": 262144,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "Generic",
-  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f446rc.html",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F4 -DSTM32F446xx -DSTM32F4xx",
+    "f_cpu": "180000000L",
+    "mcu": "stm32f446rct6",
+    "variant": "STM32F4xx/F446R(C-E)T"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
@@ -21,14 +13,22 @@
       "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F446xx -DSTM32F4xx",
-    "core": "stm32",
-    "f_cpu": "180000000L",
-    "mcu": "stm32f446rct6",
-    "variant": "STM32F4xx/F446R(C-E)T"
-  },
+  "fcpu": 180000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "genericSTM32F446RC",
+  "mcu": "STM32F446RCT6",
+  "name": "STM32F446RC (128k RAM. 256k Flash)",
+  "platform": "ststm32",
+  "ram": 131072,
+  "rom": 262144,
   "upload": {
     "protocol": "serial"
-  }
+  },
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f446rc.html",
+  "vendor": "Generic"
 }

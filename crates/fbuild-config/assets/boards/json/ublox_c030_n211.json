@@ -1,16 +1,8 @@
 {
-  "id": "ublox_c030_n211",
-  "name": "u-blox C030-N211 IoT Starter Kit",
-  "platform": "ststm32",
-  "mcu": "STM32F437VG",
-  "fcpu": 180000000,
-  "ram": 262144,
-  "rom": 1048576,
-  "frameworks": [
-    "stm32cube"
-  ],
-  "vendor": "u-blox",
-  "url": "https://os.mbed.com/platforms/ublox-C030-N211/",
+  "build": {
+    "f_cpu": "180000000L",
+    "mcu": "stm32f437vg"
+  },
   "connectivity": [
     "gps",
     "ethernet",
@@ -19,16 +11,24 @@
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
+      "stlink": {}
     }
   },
-  "build": {
-    "f_cpu": "180000000L",
-    "mcu": "stm32f437vg"
-  },
+  "fcpu": 180000000,
+  "frameworks": [
+    "stm32cube"
+  ],
+  "id": "ublox_c030_n211",
+  "mcu": "STM32F437VG",
+  "name": "u-blox C030-N211 IoT Starter Kit",
+  "platform": "ststm32",
+  "ram": 262144,
+  "rom": 1048576,
   "upload": {
     "protocol": "mbed"
-  }
+  },
+  "url": "https://os.mbed.com/platforms/ublox-C030-N211/",
+  "vendor": "u-blox"
 }

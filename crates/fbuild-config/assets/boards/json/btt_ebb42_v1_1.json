@@ -1,36 +1,36 @@
 {
-  "id": "btt_ebb42_v1_1",
-  "name": "Big Tree Tech EBB42 V1.1",
-  "platform": "ststm32",
-  "mcu": "STM32G0B1RET6",
-  "fcpu": 64000000,
-  "ram": 147456,
-  "rom": 131072,
-  "frameworks": [
-    "arduino",
-    "stm32cube"
-  ],
-  "vendor": "Big Tree Tech",
-  "url": "https://github.com/bigtreetech/EBB/tree/master/EBB%20CAN%20V1.1%20(STM32G0B1)/EBB42%20CAN%20V1.1",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
   "build": {
-    "extra_flags": "-DSTM32G0 -DSTM32G0xx -DSTM32G0B1xx",
     "core": "stm32",
+    "extra_flags": "-DSTM32G0 -DSTM32G0xx -DSTM32G0B1xx",
     "f_cpu": "64000000L",
     "mcu": "stm32g0b1ret6",
     "variant": "STM32G0xx/G0B1C(B-C-E)(T-U)_G0C1C(C-E)(T-U)"
   },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "arduino",
+    "stm32cube"
+  ],
+  "id": "btt_ebb42_v1_1",
+  "mcu": "STM32G0B1RET6",
+  "name": "Big Tree Tech EBB42 V1.1",
+  "platform": "ststm32",
+  "ram": 147456,
+  "rom": 131072,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://github.com/bigtreetech/EBB/tree/master/EBB%20CAN%20V1.1%20(STM32G0B1)/EBB42%20CAN%20V1.1",
+  "vendor": "Big Tree Tech"
 }

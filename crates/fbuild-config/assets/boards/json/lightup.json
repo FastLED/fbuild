@@ -1,31 +1,31 @@
 {
-  "id": "lightup",
-  "name": "LightUp",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA32U4",
-  "fcpu": 8000000,
-  "ram": 2560,
-  "rom": 28672,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "LightUp",
-  "url": "https://www.lightup.io/",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_LEONARDO",
+    "f_cpu": "8000000L",
+    "mcu": "atmega32u4",
+    "variant": "leonardo"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_LEONARDO",
-    "core": "arduino",
-    "f_cpu": "8000000L",
-    "mcu": "atmega32u4",
-    "variant": "leonardo"
-  },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "lightup",
+  "mcu": "ATMEGA32U4",
+  "name": "LightUp",
+  "platform": "atmelavr",
+  "ram": 2560,
+  "rom": 28672,
   "upload": {
     "protocol": "avr109",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "https://www.lightup.io/",
+  "vendor": "LightUp"
 }

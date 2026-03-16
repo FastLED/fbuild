@@ -1,17 +1,17 @@
 {
-  "id": "deneyapkart1Av2",
-  "name": "Deneyap Kart 1A v2",
-  "platform": "espressif32",
-  "mcu": "ESP32S3",
-  "fcpu": 240000000,
-  "ram": 327680,
-  "rom": 4194304,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "T3 Foundation",
-  "url": "https://magaza.deneyapkart.org/tr/product/detail/deneyap-kart-1a-v2-type-c",
+  "build": {
+    "arduino": {
+      "ldscript": "esp32s3_out.ld",
+      "memory_type": "qio_opi"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_DYDK1Av2 -DBOARD_HAS_PSRAM -DARDUINO_USB_MODE=1 -DARDUINO_USB_CDC_ON_BOOT=1 -DARDUINO_RUNNING_CORE=1 -DARDUINO_EVENT_RUNNING_CORE=1",
+    "f_cpu": "240000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "mcu": "esp32s3",
+    "variant": "deneyapkart1Av2"
+  },
   "connectivity": [
     "wifi",
     "bluetooth"
@@ -19,35 +19,35 @@
   "debug": {
     "tools": {
       "cmsis-dap": {},
-      "esp-prog": {},
       "esp-bridge": {},
+      "esp-builtin": {},
+      "esp-prog": {},
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
-      "tumpa": {},
-      "esp-builtin": {}
+      "tumpa": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_DYDK1Av2 -DBOARD_HAS_PSRAM -DARDUINO_USB_MODE=1 -DARDUINO_USB_CDC_ON_BOOT=1 -DARDUINO_RUNNING_CORE=1 -DARDUINO_EVENT_RUNNING_CORE=1",
-    "core": "esp32",
-    "f_cpu": "240000000L",
-    "mcu": "esp32s3",
-    "f_flash": "80000000L",
-    "flash_mode": "qio",
-    "variant": "deneyapkart1Av2",
-    "arduino": {
-      "ldscript": "esp32s3_out.ld",
-      "memory_type": "qio_opi"
-    }
-  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "deneyapkart1Av2",
+  "mcu": "ESP32S3",
+  "name": "Deneyap Kart 1A v2",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 4194304,
   "upload": {
     "flash_size": "4MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://magaza.deneyapkart.org/tr/product/detail/deneyap-kart-1a-v2-type-c",
+  "vendor": "T3 Foundation"
 }

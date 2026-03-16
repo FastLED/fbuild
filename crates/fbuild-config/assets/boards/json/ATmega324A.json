@@ -1,31 +1,31 @@
 {
-  "id": "ATmega324A",
-  "name": "ATmega324A",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA324A",
-  "fcpu": 16000000,
-  "ram": 2048,
-  "rom": 32768,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega324a",
+  "build": {
+    "core": "MightyCore",
+    "extra_flags": "-DARDUINO_AVR_ATmega324",
+    "f_cpu": "16000000L",
+    "mcu": "atmega324a",
+    "variant": "standard"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_ATmega324",
-    "core": "MightyCore",
-    "f_cpu": "16000000L",
-    "mcu": "atmega324a",
-    "variant": "standard"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega324A",
+  "mcu": "ATMEGA324A",
+  "name": "ATmega324A",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 32768,
   "upload": {
     "protocol": "urclock",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega324a",
+  "vendor": "Microchip"
 }

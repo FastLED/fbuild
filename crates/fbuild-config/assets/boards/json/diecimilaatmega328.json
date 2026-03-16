@@ -1,32 +1,32 @@
 {
-  "id": "diecimilaatmega328",
-  "name": "Arduino Duemilanove or Diecimila ATmega328",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA328P",
-  "fcpu": 16000000,
-  "ram": 2048,
-  "rom": 30720,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Arduino",
-  "url": "http://arduino.cc/en/Main/ArduinoBoardDiecimila",
-  "debug": {
-    "tools": {
-      "simavr": {},
-      "avr-stub": {}
-    }
-  },
   "build": {
-    "extra_flags": "-DARDUINO_AVR_DUEMILANOVE",
     "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_DUEMILANOVE",
     "f_cpu": "16000000L",
     "mcu": "atmega328p",
     "variant": "standard"
   },
+  "debug": {
+    "tools": {
+      "avr-stub": {},
+      "simavr": {}
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "diecimilaatmega328",
+  "mcu": "ATMEGA328P",
+  "name": "Arduino Duemilanove or Diecimila ATmega328",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 30720,
   "upload": {
     "protocol": "arduino",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "http://arduino.cc/en/Main/ArduinoBoardDiecimila",
+  "vendor": "Arduino"
 }

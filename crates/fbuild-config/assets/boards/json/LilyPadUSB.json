@@ -1,31 +1,31 @@
 {
-  "id": "LilyPadUSB",
-  "name": "Arduino LilyPad USB",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA32U4",
-  "fcpu": 8000000,
-  "ram": 2560,
-  "rom": 28672,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Arduino",
-  "url": "http://arduino.cc/en/Main/ArduinoBoardLilyPadUSB",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_LILYPAD_USB",
+    "f_cpu": "8000000L",
+    "mcu": "atmega32u4",
+    "variant": "leonardo"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_LILYPAD_USB",
-    "core": "arduino",
-    "f_cpu": "8000000L",
-    "mcu": "atmega32u4",
-    "variant": "leonardo"
-  },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "LilyPadUSB",
+  "mcu": "ATMEGA32U4",
+  "name": "Arduino LilyPad USB",
+  "platform": "atmelavr",
+  "ram": 2560,
+  "rom": 28672,
   "upload": {
     "protocol": "avr109",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "http://arduino.cc/en/Main/ArduinoBoardLilyPadUSB",
+  "vendor": "Arduino"
 }

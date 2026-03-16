@@ -1,36 +1,36 @@
 {
-  "id": "disco_f412zg",
-  "name": "32F412GDISCOVERY",
-  "platform": "ststm32",
-  "mcu": "STM32F412ZGT6",
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F412Zx",
+    "f_cpu": "100000000L",
+    "mcu": "stm32f412zgt6"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 100000000,
-  "ram": 262144,
-  "rom": 1048576,
   "frameworks": [
     "cmsis",
     "stm32cube",
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/evaluation-tools/32f412gdiscovery.html",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F412Zx",
-    "f_cpu": "100000000L",
-    "mcu": "stm32f412zgt6"
-  },
+  "id": "disco_f412zg",
+  "mcu": "STM32F412ZGT6",
+  "name": "32F412GDISCOVERY",
+  "platform": "ststm32",
+  "ram": 262144,
+  "rom": 1048576,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/32f412gdiscovery.html",
+  "vendor": "ST"
 }

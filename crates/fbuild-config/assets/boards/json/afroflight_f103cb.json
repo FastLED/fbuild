@@ -1,35 +1,35 @@
 {
-  "id": "afroflight_f103cb",
-  "name": "AfroFlight Rev5 (8MHz)",
-  "platform": "ststm32",
-  "mcu": "STM32F103CBT6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F1 -DSTM32F1xx -DSTM32F103xB",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f103cbt6",
+    "variant": "STM32F1xx/F103C8T_F103CB(T-U)"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  },
   "fcpu": 72000000,
-  "ram": 20480,
-  "rom": 131072,
   "frameworks": [
     "arduino",
     "cmsis",
     "stm32cube",
     "libopencm3"
   ],
-  "vendor": "AfroFlight",
-  "url": "https://www.dronetrest.com/t/naze-32-revision-6-flight-controller-guide/1605",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F1 -DSTM32F1xx -DSTM32F103xB",
-    "core": "stm32",
-    "f_cpu": "72000000L",
-    "mcu": "stm32f103cbt6",
-    "variant": "STM32F1xx/F103C8T_F103CB(T-U)"
-  },
+  "id": "afroflight_f103cb",
+  "mcu": "STM32F103CBT6",
+  "name": "AfroFlight Rev5 (8MHz)",
+  "platform": "ststm32",
+  "ram": 20480,
+  "rom": 131072,
   "upload": {
     "protocol": "serial"
-  }
+  },
+  "url": "https://www.dronetrest.com/t/naze-32-revision-6-flight-controller-guide/1605",
+  "vendor": "AfroFlight"
 }

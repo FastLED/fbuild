@@ -1,32 +1,32 @@
 {
-  "id": "megaatmega2560",
-  "name": "Arduino Mega or Mega 2560 ATmega2560 (Mega 2560)",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA2560",
-  "fcpu": 16000000,
-  "ram": 8192,
-  "rom": 253952,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Arduino",
-  "url": "https://www.arduino.cc/en/Main/ArduinoBoardMega2560",
-  "debug": {
-    "tools": {
-      "simavr": {},
-      "avr-stub": {}
-    }
-  },
   "build": {
-    "extra_flags": "-DARDUINO_AVR_MEGA2560",
     "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_MEGA2560",
     "f_cpu": "16000000L",
     "mcu": "atmega2560",
     "variant": "mega"
   },
+  "debug": {
+    "tools": {
+      "avr-stub": {},
+      "simavr": {}
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "megaatmega2560",
+  "mcu": "ATMEGA2560",
+  "name": "Arduino Mega or Mega 2560 ATmega2560 (Mega 2560)",
+  "platform": "atmelavr",
+  "ram": 8192,
+  "rom": 253952,
   "upload": {
     "protocol": "wiring",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.arduino.cc/en/Main/ArduinoBoardMega2560",
+  "vendor": "Arduino"
 }

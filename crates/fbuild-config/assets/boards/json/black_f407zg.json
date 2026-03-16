@@ -1,11 +1,23 @@
 {
-  "id": "black_f407zg",
-  "name": "Black STM32F407ZG",
-  "platform": "ststm32",
-  "mcu": "STM32F407ZGT6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F4 -DSTM32F407xx -DSTM32F40_41xxx",
+    "f_cpu": "168000000L",
+    "mcu": "stm32f407zgt6",
+    "variant": "STM32F4xx/F407Z(E-G)T_F417Z(E-G)T"
+  },
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  },
   "fcpu": 168000000,
-  "ram": 131072,
-  "rom": 1048576,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -13,27 +25,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/microcontrollers/stm32f407zg.html",
-  "connectivity": [
-    "can"
-  ],
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F407xx -DSTM32F40_41xxx",
-    "core": "stm32",
-    "f_cpu": "168000000L",
-    "mcu": "stm32f407zgt6",
-    "variant": "STM32F4xx/F407Z(E-G)T_F417Z(E-G)T"
-  },
+  "id": "black_f407zg",
+  "mcu": "STM32F407ZGT6",
+  "name": "Black STM32F407ZG",
+  "platform": "ststm32",
+  "ram": 131072,
+  "rom": 1048576,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/microcontrollers/stm32f407zg.html",
+  "vendor": "ST"
 }

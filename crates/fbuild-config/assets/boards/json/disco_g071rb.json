@@ -1,37 +1,37 @@
 {
-  "id": "disco_g071rb",
-  "name": "ST STM32G071B Discovery",
-  "platform": "ststm32",
-  "mcu": "STM32G071RBT6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32G0 -DSTM32G0xx -DSTM32G071xx",
+    "f_cpu": "64000000L",
+    "mcu": "stm32g071rbt6"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 64000000,
-  "ram": 36864,
-  "rom": 131072,
   "frameworks": [
     "cmsis",
     "libopencm3",
     "stm32cube",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/evaluation-tools/stm32g071b-disco.html",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32G0 -DSTM32G0xx -DSTM32G071xx",
-    "core": "stm32",
-    "f_cpu": "64000000L",
-    "mcu": "stm32g071rbt6"
-  },
+  "id": "disco_g071rb",
+  "mcu": "STM32G071RBT6",
+  "name": "ST STM32G071B Discovery",
+  "platform": "ststm32",
+  "ram": 36864,
+  "rom": 131072,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/stm32g071b-disco.html",
+  "vendor": "ST"
 }

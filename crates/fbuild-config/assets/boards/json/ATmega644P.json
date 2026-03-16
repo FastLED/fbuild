@@ -1,31 +1,31 @@
 {
-  "id": "ATmega644P",
-  "name": "ATmega644P/PA",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA644P",
-  "fcpu": 16000000,
-  "ram": 4096,
-  "rom": 65536,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega644p",
+  "build": {
+    "core": "MightyCore",
+    "extra_flags": "-DARDUINO_AVR_ATmega644",
+    "f_cpu": "16000000L",
+    "mcu": "atmega644p",
+    "variant": "standard"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_ATmega644",
-    "core": "MightyCore",
-    "f_cpu": "16000000L",
-    "mcu": "atmega644p",
-    "variant": "standard"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega644P",
+  "mcu": "ATMEGA644P",
+  "name": "ATmega644P/PA",
+  "platform": "atmelavr",
+  "ram": 4096,
+  "rom": 65536,
   "upload": {
     "protocol": "urclock",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega644p",
+  "vendor": "Microchip"
 }

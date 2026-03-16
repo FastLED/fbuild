@@ -1,36 +1,36 @@
 {
-  "id": "genericSTM32F103T8",
-  "name": "STM32F103T8 (20k RAM. 64k Flash)",
-  "platform": "ststm32",
-  "mcu": "STM32F103T8U6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F103xB -DSTM32F1",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f103t8u6",
+    "variant": "STM32F1xx/F103T(8-B)U"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  },
   "fcpu": 72000000,
-  "ram": 20480,
-  "rom": 65536,
   "frameworks": [
     "arduino",
     "cmsis",
     "libopencm3",
     "stm32cube"
   ],
-  "vendor": "Generic",
-  "url": "http://www.st.com/en/microcontrollers/stm32f103t8.html",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F103xB -DSTM32F1",
-    "core": "stm32",
-    "f_cpu": "72000000L",
-    "mcu": "stm32f103t8u6",
-    "variant": "STM32F1xx/F103T(8-B)U"
-  },
+  "id": "genericSTM32F103T8",
+  "mcu": "STM32F103T8U6",
+  "name": "STM32F103T8 (20k RAM. 64k Flash)",
+  "platform": "ststm32",
+  "ram": 20480,
+  "rom": 65536,
   "upload": {
     "protocol": "stlink",
     "require_upload_port": true
-  }
+  },
+  "url": "http://www.st.com/en/microcontrollers/stm32f103t8.html",
+  "vendor": "Generic"
 }

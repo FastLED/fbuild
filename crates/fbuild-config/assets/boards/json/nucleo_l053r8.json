@@ -1,11 +1,22 @@
 {
-  "id": "nucleo_l053r8",
-  "name": "ST Nucleo L053R8",
-  "platform": "ststm32",
-  "mcu": "STM32L053R8T6",
+  "build": {
+    "extra_flags": "-DSTM32L0 -DSTM32L053xx",
+    "f_cpu": "32000000L",
+    "mcu": "stm32l053r8t6",
+    "variant": "STM32L0xx/L052R(6-8)T_L053R(6-8)T_L063R8T"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 32000000,
-  "ram": 8192,
-  "rom": 65536,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -13,26 +24,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://developer.mbed.org/platforms/ST-Nucleo-L053R8/",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32L0 -DSTM32L053xx",
-    "f_cpu": "32000000L",
-    "mcu": "stm32l053r8t6",
-    "variant": "STM32L0xx/L052R(6-8)T_L053R(6-8)T_L063R8T"
-  },
+  "id": "nucleo_l053r8",
+  "mcu": "STM32L053R8T6",
+  "name": "ST Nucleo L053R8",
+  "platform": "ststm32",
+  "ram": 8192,
+  "rom": 65536,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-L053R8/",
+  "vendor": "ST"
 }

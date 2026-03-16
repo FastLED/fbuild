@@ -1,17 +1,17 @@
 {
-  "id": "esp32thing_plus",
-  "name": "SparkFun ESP32 Thing Plus",
-  "platform": "espressif32",
-  "mcu": "ESP32",
-  "fcpu": 240000000,
-  "ram": 327680,
-  "rom": 16777216,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "SparkFun Electronics",
-  "url": "https://www.sparkfun.com/products/15663",
+  "build": {
+    "arduino": {
+      "ldscript": "esp32_out.ld",
+      "partitions": "default_16MB.csv"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_ESP32_THING_PLUS",
+    "f_cpu": "240000000L",
+    "f_flash": "40000000L",
+    "flash_mode": "dio",
+    "mcu": "esp32",
+    "variant": "esp32thing_plus"
+  },
   "connectivity": [
     "wifi",
     "bluetooth",
@@ -25,29 +25,29 @@
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
       "tumpa": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_ESP32_THING_PLUS",
-    "core": "esp32",
-    "f_cpu": "240000000L",
-    "mcu": "esp32",
-    "f_flash": "40000000L",
-    "flash_mode": "dio",
-    "variant": "esp32thing_plus",
-    "arduino": {
-      "ldscript": "esp32_out.ld",
-      "partitions": "default_16MB.csv"
-    }
-  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "esp32thing_plus",
+  "mcu": "ESP32",
+  "name": "SparkFun ESP32 Thing Plus",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 16777216,
   "upload": {
     "flash_size": "16MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://www.sparkfun.com/products/15663",
+  "vendor": "SparkFun Electronics"
 }

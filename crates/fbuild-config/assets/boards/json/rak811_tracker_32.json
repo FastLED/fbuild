@@ -1,34 +1,34 @@
 {
-  "id": "rak811_tracker_32",
-  "name": "RAK811 LoRa Tracker",
-  "platform": "ststm32",
-  "mcu": "STM32L151RBT6",
-  "fcpu": 32000000,
-  "ram": 32768,
-  "rom": 131072,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "RAK",
-  "url": "https://github.com/RAKWireless/RAK811",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
-    }
-  },
   "build": {
     "extra_flags": "-DSTM32L1 -DSTM32L151xB",
     "f_cpu": "32000000L",
     "mcu": "stm32l151rbt6",
     "variant": "STM32L1xx/L100C6Ux(A)_L151C(6-8-B)(T-U)x(A)_L152C(6-8-B)(T-U)x(A)"
   },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  },
+  "fcpu": 32000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "rak811_tracker_32",
+  "mcu": "STM32L151RBT6",
+  "name": "RAK811 LoRa Tracker",
+  "platform": "ststm32",
+  "ram": 32768,
+  "rom": 131072,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://github.com/RAKWireless/RAK811",
+  "vendor": "RAK"
 }

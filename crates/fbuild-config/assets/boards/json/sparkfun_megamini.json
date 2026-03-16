@@ -1,32 +1,32 @@
 {
-  "id": "sparkfun_megamini",
-  "name": "SparkFun Mega Pro Mini 3.3V",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA2560",
-  "fcpu": 8000000,
-  "ram": 8192,
-  "rom": 258048,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "SparkFun",
-  "url": "https://www.sparkfun.com/products/10743",
-  "debug": {
-    "tools": {
-      "simavr": {},
-      "avr-stub": {}
-    }
-  },
   "build": {
-    "extra_flags": "-DARDUINO_AVR_MEGA2560",
     "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_MEGA2560",
     "f_cpu": "8000000L",
     "mcu": "atmega2560",
     "variant": "mega"
   },
+  "debug": {
+    "tools": {
+      "avr-stub": {},
+      "simavr": {}
+    }
+  },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "sparkfun_megamini",
+  "mcu": "ATMEGA2560",
+  "name": "SparkFun Mega Pro Mini 3.3V",
+  "platform": "atmelavr",
+  "ram": 8192,
+  "rom": 258048,
   "upload": {
     "protocol": "stk500v2",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "https://www.sparkfun.com/products/10743",
+  "vendor": "SparkFun"
 }

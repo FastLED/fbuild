@@ -1,17 +1,8 @@
 {
-  "id": "mbed_connect_odin",
-  "name": "Mbed Connect Cloud",
-  "platform": "ststm32",
-  "mcu": "STM32F439ZIY6",
-  "fcpu": 168000000,
-  "ram": 262144,
-  "rom": 2097152,
-  "frameworks": [
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "u-blox",
-  "url": "https://os.mbed.com/platforms/mbed-Connect-Cloud/",
+  "build": {
+    "f_cpu": "168000000L",
+    "mcu": "stm32f439ziy6"
+  },
   "connectivity": [
     "bluetooth",
     "can",
@@ -21,18 +12,27 @@
   "debug": {
     "tools": {
       "blackmagic": {},
-      "jlink": {},
-      "stlink": {},
       "cmsis-dap": {
         "onboard": true
-      }
+      },
+      "jlink": {},
+      "stlink": {}
     }
   },
-  "build": {
-    "f_cpu": "168000000L",
-    "mcu": "stm32f439ziy6"
-  },
+  "fcpu": 168000000,
+  "frameworks": [
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "mbed_connect_odin",
+  "mcu": "STM32F439ZIY6",
+  "name": "Mbed Connect Cloud",
+  "platform": "ststm32",
+  "ram": 262144,
+  "rom": 2097152,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://os.mbed.com/platforms/mbed-Connect-Cloud/",
+  "vendor": "u-blox"
 }

@@ -1,17 +1,12 @@
 {
-  "id": "arduino_nesso_n1",
-  "name": "Arduino Nesso-N1",
-  "platform": "espressif32",
-  "mcu": "ESP32C6",
-  "fcpu": 160000000,
-  "ram": 327680,
-  "rom": 16777216,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "Arduino",
-  "url": "https://store.arduino.cc/products/nesso-n1",
+  "build": {
+    "core": "esp32",
+    "f_cpu": "160000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "mcu": "esp32c6",
+    "variant": "arduino_nesso_n1"
+  },
   "connectivity": [
     "bluetooth",
     "wifi"
@@ -19,30 +14,35 @@
   "debug": {
     "tools": {
       "cmsis-dap": {},
-      "esp-prog": {},
       "esp-bridge": {},
+      "esp-builtin": {},
+      "esp-prog": {},
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
-      "tumpa": {},
-      "esp-builtin": {}
+      "tumpa": {}
     }
   },
-  "build": {
-    "core": "esp32",
-    "f_cpu": "160000000L",
-    "mcu": "esp32c6",
-    "f_flash": "80000000L",
-    "flash_mode": "qio",
-    "variant": "arduino_nesso_n1"
-  },
+  "fcpu": 160000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "arduino_nesso_n1",
+  "mcu": "ESP32C6",
+  "name": "Arduino Nesso-N1",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 16777216,
   "upload": {
     "flash_size": "16MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://store.arduino.cc/products/nesso-n1",
+  "vendor": "Arduino"
 }

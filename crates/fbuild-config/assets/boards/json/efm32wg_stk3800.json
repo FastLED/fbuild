@@ -1,16 +1,8 @@
 {
-  "id": "efm32wg_stk3800",
-  "name": "EFM32WG-STK3800 Wonder Gecko",
-  "platform": "siliconlabsefm32",
-  "mcu": "EFM32WG990F256",
-  "fcpu": 48000000,
-  "ram": 32768,
-  "rom": 262144,
-  "frameworks": [
-    "zephyr"
-  ],
-  "vendor": "Silicon Labs",
-  "url": "https://www.silabs.com/products/development-tools/mcu/32-bit/efm32-wonder-gecko-starter-kit",
+  "build": {
+    "f_cpu": "48000000L",
+    "mcu": "efm32wg990f256"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
@@ -19,11 +11,19 @@
       }
     }
   },
-  "build": {
-    "f_cpu": "48000000L",
-    "mcu": "efm32wg990f256"
-  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "zephyr"
+  ],
+  "id": "efm32wg_stk3800",
+  "mcu": "EFM32WG990F256",
+  "name": "EFM32WG-STK3800 Wonder Gecko",
+  "platform": "siliconlabsefm32",
+  "ram": 32768,
+  "rom": 262144,
   "upload": {
     "protocol": "mbed"
-  }
+  },
+  "url": "https://www.silabs.com/products/development-tools/mcu/32-bit/efm32-wonder-gecko-starter-kit",
+  "vendor": "Silicon Labs"
 }

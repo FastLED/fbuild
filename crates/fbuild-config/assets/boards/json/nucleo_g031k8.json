@@ -1,37 +1,37 @@
 {
-  "id": "nucleo_g031k8",
-  "name": "ST NUCLEO-G031K8",
-  "platform": "ststm32",
-  "mcu": "STM32G031K8",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32G0 -DSTM32G0xx -DSTM32G031xx",
+    "f_cpu": "64000000L",
+    "mcu": "stm32g031k8",
+    "variant": "STM32G0xx/G031K(4-6-8)(T-U)_G041K(6-8)(T-U)"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 64000000,
-  "ram": 8192,
-  "rom": 65536,
   "frameworks": [
     "arduino",
     "cmsis",
     "stm32cube"
   ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/evaluation-tools/nucleo-g031k8.html",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32G0 -DSTM32G0xx -DSTM32G031xx",
-    "core": "stm32",
-    "f_cpu": "64000000L",
-    "mcu": "stm32g031k8",
-    "variant": "STM32G0xx/G031K(4-6-8)(T-U)_G041K(6-8)(T-U)"
-  },
+  "id": "nucleo_g031k8",
+  "mcu": "STM32G031K8",
+  "name": "ST NUCLEO-G031K8",
+  "platform": "ststm32",
+  "ram": 8192,
+  "rom": 65536,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-g031k8.html",
+  "vendor": "ST"
 }

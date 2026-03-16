@@ -1,35 +1,35 @@
 {
-  "id": "disco_l053c8",
-  "name": "ST 32L0538DISCOVERY",
-  "platform": "ststm32",
-  "mcu": "STM32L053C8T6",
-  "fcpu": 32000000,
-  "ram": 8192,
-  "rom": 65536,
-  "frameworks": [
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "ST",
-  "url": "http://www.st.com/web/en/catalog/tools/PF260319",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
   "build": {
     "extra_flags": "-DSTM32L0 -DSTM32L053xx",
     "f_cpu": "32000000L",
     "mcu": "stm32l053c8t6"
   },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 32000000,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "disco_l053c8",
+  "mcu": "STM32L053C8T6",
+  "name": "ST 32L0538DISCOVERY",
+  "platform": "ststm32",
+  "ram": 8192,
+  "rom": 65536,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "http://www.st.com/web/en/catalog/tools/PF260319",
+  "vendor": "ST"
 }

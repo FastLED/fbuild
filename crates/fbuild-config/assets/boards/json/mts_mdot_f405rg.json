@@ -1,30 +1,30 @@
 {
-  "id": "mts_mdot_f405rg",
-  "name": "MultiTech mDot",
-  "platform": "ststm32",
-  "mcu": "STM32F411RET6",
-  "fcpu": 100000000,
-  "ram": 131072,
-  "rom": 524288,
-  "frameworks": [
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "MultiTech",
-  "url": "https://developer.mbed.org/platforms/MTS-mDot-F411/",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
-    }
-  },
   "build": {
     "f_cpu": "100000000L",
     "mcu": "stm32f411ret6"
   },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  },
+  "fcpu": 100000000,
+  "frameworks": [
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "mts_mdot_f405rg",
+  "mcu": "STM32F411RET6",
+  "name": "MultiTech mDot",
+  "platform": "ststm32",
+  "ram": 131072,
+  "rom": 524288,
   "upload": {
     "protocol": "mbed"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/MTS-mDot-F411/",
+  "vendor": "MultiTech"
 }

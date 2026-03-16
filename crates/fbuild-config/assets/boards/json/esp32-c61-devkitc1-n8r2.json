@@ -1,17 +1,17 @@
 {
-  "id": "esp32-c61-devkitc1-n8r2",
-  "name": "Espressif ESP32-C61-DevKitC-1 N8R2 (8 MB Flash Quad, 2 MB PSRAM Quad)",
-  "platform": "espressif32",
-  "mcu": "ESP32C61",
-  "fcpu": 160000000,
-  "ram": 327680,
-  "rom": 8388608,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "Espressif",
-  "url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32c61/esp32-c61-devkitc-1/user_guide.html",
+  "build": {
+    "arduino": {
+      "memory_type": "qio_qspi",
+      "partitions": "default_8MB.csv"
+    },
+    "core": "esp32",
+    "extra_flags": "-DBOARD_HAS_PSRAM",
+    "f_cpu": "160000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "mcu": "esp32c61",
+    "variant": "esp32c61"
+  },
   "connectivity": [
     "bluetooth",
     "wifi"
@@ -19,35 +19,35 @@
   "debug": {
     "tools": {
       "cmsis-dap": {},
-      "esp-prog": {},
       "esp-bridge": {},
+      "esp-builtin": {},
+      "esp-prog": {},
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
-      "tumpa": {},
-      "esp-builtin": {}
+      "tumpa": {}
     }
   },
-  "build": {
-    "extra_flags": "-DBOARD_HAS_PSRAM",
-    "core": "esp32",
-    "f_cpu": "160000000L",
-    "mcu": "esp32c61",
-    "f_flash": "80000000L",
-    "flash_mode": "qio",
-    "variant": "esp32c61",
-    "arduino": {
-      "partitions": "default_8MB.csv",
-      "memory_type": "qio_qspi"
-    }
-  },
+  "fcpu": 160000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "esp32-c61-devkitc1-n8r2",
+  "mcu": "ESP32C61",
+  "name": "Espressif ESP32-C61-DevKitC-1 N8R2 (8 MB Flash Quad, 2 MB PSRAM Quad)",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 8388608,
   "upload": {
     "flash_size": "8MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32c61/esp32-c61-devkitc-1/user_guide.html",
+  "vendor": "Espressif"
 }

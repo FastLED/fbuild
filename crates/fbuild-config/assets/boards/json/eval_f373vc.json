@@ -1,36 +1,36 @@
 {
-  "id": "eval_f373vc",
-  "name": "STM32373C-EVAL",
-  "platform": "ststm32",
-  "mcu": "STM32F373VCT6",
-  "fcpu": 72000000,
-  "ram": 32768,
-  "rom": 262144,
-  "frameworks": [
-    "cmsis",
-    "stm32cube",
-    "libopencm3",
-    "zephyr"
-  ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/evaluation-tools/stm32373c-eval.html",
+  "build": {
+    "extra_flags": "-DSTM32F3 -DSTM32F373xC",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f373vct6"
+  },
   "connectivity": [
     "can"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
+      "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F3 -DSTM32F373xC",
-    "f_cpu": "72000000L",
-    "mcu": "stm32f373vct6"
-  },
+  "fcpu": 72000000,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "id": "eval_f373vc",
+  "mcu": "STM32F373VCT6",
+  "name": "STM32373C-EVAL",
+  "platform": "ststm32",
+  "ram": 32768,
+  "rom": 262144,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/stm32373c-eval.html",
+  "vendor": "ST"
 }

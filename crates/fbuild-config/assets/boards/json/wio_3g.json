@@ -1,19 +1,9 @@
 {
-  "id": "wio_3g",
-  "name": "Seeed Wio 3G",
-  "platform": "ststm32",
-  "mcu": "STM32F439VI",
-  "fcpu": 180000000,
-  "ram": 262144,
-  "rom": 2097152,
-  "frameworks": [
-    "cmsis",
-    "mbed",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "SeeedStudio",
-  "url": "https://os.mbed.com/platforms/Seeed-Wio-3g/",
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F439xx",
+    "f_cpu": "180000000L",
+    "mcu": "stm32f439vi"
+  },
   "connectivity": [
     "can",
     "ethernet"
@@ -23,17 +13,27 @@
       "blackmagic": {},
       "jlink": {},
       "stlink": {
-        "onboard": true,
-        "default": true
+        "default": true,
+        "onboard": true
       }
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F439xx",
-    "f_cpu": "180000000L",
-    "mcu": "stm32f439vi"
-  },
+  "fcpu": 180000000,
+  "frameworks": [
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "wio_3g",
+  "mcu": "STM32F439VI",
+  "name": "Seeed Wio 3G",
+  "platform": "ststm32",
+  "ram": 262144,
+  "rom": 2097152,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://os.mbed.com/platforms/Seeed-Wio-3g/",
+  "vendor": "SeeedStudio"
 }

@@ -1,16 +1,11 @@
 {
-  "id": "bluefruitmicro",
-  "name": "Adafruit Bluefruit Micro",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA32U4",
-  "fcpu": 8000000,
-  "ram": 2560,
-  "rom": 28672,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Adafruit",
-  "url": "https://www.adafruit.com/products/2661",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_BLUEFRUITMICRO",
+    "f_cpu": "8000000L",
+    "mcu": "atmega32u4",
+    "variant": "bluefruitmicro"
+  },
   "connectivity": [
     "bluetooth"
   ],
@@ -19,16 +14,21 @@
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_BLUEFRUITMICRO",
-    "core": "arduino",
-    "f_cpu": "8000000L",
-    "mcu": "atmega32u4",
-    "variant": "bluefruitmicro"
-  },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "bluefruitmicro",
+  "mcu": "ATMEGA32U4",
+  "name": "Adafruit Bluefruit Micro",
+  "platform": "atmelavr",
+  "ram": 2560,
+  "rom": 28672,
   "upload": {
     "protocol": "avr109",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "https://www.adafruit.com/products/2661",
+  "vendor": "Adafruit"
 }

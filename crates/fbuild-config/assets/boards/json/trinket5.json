@@ -1,29 +1,29 @@
 {
-  "id": "trinket5",
-  "name": "Adafruit Trinket 5V/16MHz",
-  "platform": "atmelavr",
-  "mcu": "ATTINY85",
-  "fcpu": 16000000,
-  "ram": 512,
-  "rom": 8192,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Adafruit",
-  "url": "http://www.adafruit.com/products/1501",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_TRINKET5",
+    "f_cpu": "16000000L",
+    "mcu": "attiny85",
+    "variant": "trinket_tiny8"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_TRINKET5",
-    "core": "arduino",
-    "f_cpu": "16000000L",
-    "mcu": "attiny85",
-    "variant": "trinket_tiny8"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "trinket5",
+  "mcu": "ATTINY85",
+  "name": "Adafruit Trinket 5V/16MHz",
+  "platform": "atmelavr",
+  "ram": 512,
+  "rom": 8192,
   "upload": {
     "protocol": "usbtiny"
-  }
+  },
+  "url": "http://www.adafruit.com/products/1501",
+  "vendor": "Adafruit"
 }

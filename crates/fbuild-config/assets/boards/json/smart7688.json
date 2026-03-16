@@ -1,31 +1,31 @@
 {
-  "id": "smart7688",
-  "name": "LinkIt Smart 7688 Duo",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA32U4",
-  "fcpu": 8000000,
-  "ram": 2560,
-  "rom": 28672,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "MediaTek Labs",
-  "url": "https://www.seeedstudio.com/LinkIt-Smart-7688-Duo-p-2574.html",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_LINKITSMART7688",
+    "f_cpu": "8000000L",
+    "mcu": "atmega32u4",
+    "variant": "smart7688"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_LINKITSMART7688",
-    "core": "arduino",
-    "f_cpu": "8000000L",
-    "mcu": "atmega32u4",
-    "variant": "smart7688"
-  },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "smart7688",
+  "mcu": "ATMEGA32U4",
+  "name": "LinkIt Smart 7688 Duo",
+  "platform": "atmelavr",
+  "ram": 2560,
+  "rom": 28672,
   "upload": {
     "protocol": "avr109",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "https://www.seeedstudio.com/LinkIt-Smart-7688-Duo-p-2574.html",
+  "vendor": "MediaTek Labs"
 }

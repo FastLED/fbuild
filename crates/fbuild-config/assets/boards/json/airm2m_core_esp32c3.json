@@ -1,17 +1,16 @@
 {
-  "id": "airm2m_core_esp32c3",
-  "name": "AirM2M CORE ESP32C3",
-  "platform": "espressif32",
-  "mcu": "ESP32C3",
-  "fcpu": 160000000,
-  "ram": 327680,
-  "rom": 4194304,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "AirM2M",
-  "url": "https://wiki.luatos.com/chips/esp32c3/board.html",
+  "build": {
+    "arduino": {
+      "ldscript": "esp32c3_out.ld"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_AirM2M_CORE_ESP32C3 -DARDUINO_USB_MODE=1",
+    "f_cpu": "160000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "dio",
+    "mcu": "esp32c3",
+    "variant": "AirM2M_CORE_ESP32C3"
+  },
   "connectivity": [
     "wifi"
   ],
@@ -22,28 +21,29 @@
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
       "tumpa": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AirM2M_CORE_ESP32C3 -DARDUINO_USB_MODE=1",
-    "core": "esp32",
-    "f_cpu": "160000000L",
-    "mcu": "esp32c3",
-    "f_flash": "80000000L",
-    "flash_mode": "dio",
-    "variant": "AirM2M_CORE_ESP32C3",
-    "arduino": {
-      "ldscript": "esp32c3_out.ld"
-    }
-  },
+  "fcpu": 160000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "airm2m_core_esp32c3",
+  "mcu": "ESP32C3",
+  "name": "AirM2M CORE ESP32C3",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 4194304,
   "upload": {
     "flash_size": "4MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://wiki.luatos.com/chips/esp32c3/board.html",
+  "vendor": "AirM2M"
 }

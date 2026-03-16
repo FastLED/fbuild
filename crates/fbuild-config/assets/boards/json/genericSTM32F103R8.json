@@ -1,36 +1,36 @@
 {
-  "id": "genericSTM32F103R8",
-  "name": "STM32F103R8 (20k RAM. 64 Flash)",
-  "platform": "ststm32",
-  "mcu": "STM32F103R8T6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F103xB -DSTM32F1",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f103r8t6",
+    "variant": "STM32F1xx/F103R(8-B)T"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  },
   "fcpu": 72000000,
-  "ram": 20480,
-  "rom": 65536,
   "frameworks": [
     "arduino",
     "cmsis",
     "libopencm3",
     "stm32cube"
   ],
-  "vendor": "Generic",
-  "url": "http://www.st.com/content/st_com/en/products/microcontrollers/stm32-32-bit-arm-cortex-mcus/stm32f1-series/stm32f103/stm32f103r8.html",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F103xB -DSTM32F1",
-    "core": "stm32",
-    "f_cpu": "72000000L",
-    "mcu": "stm32f103r8t6",
-    "variant": "STM32F1xx/F103R(8-B)T"
-  },
+  "id": "genericSTM32F103R8",
+  "mcu": "STM32F103R8T6",
+  "name": "STM32F103R8 (20k RAM. 64 Flash)",
+  "platform": "ststm32",
+  "ram": 20480,
+  "rom": 65536,
   "upload": {
     "protocol": "stlink",
     "require_upload_port": true
-  }
+  },
+  "url": "http://www.st.com/content/st_com/en/products/microcontrollers/stm32-32-bit-arm-cortex-mcus/stm32f1-series/stm32f103/stm32f103r8.html",
+  "vendor": "Generic"
 }

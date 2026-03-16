@@ -1,39 +1,39 @@
 {
-  "id": "labplus_mpython",
-  "name": "Labplus mPython",
-  "platform": "espressif32",
-  "mcu": "ESP32",
-  "fcpu": 240000000,
-  "ram": 327680,
-  "rom": 4194304,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "Labplus",
-  "url": "https://github.com/labplus-cn/mpython",
+  "build": {
+    "arduino": {
+      "ldscript": "esp32_out.ld",
+      "partitions": "huge_app.csv"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_ESP32_DEV",
+    "f_cpu": "240000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "mcu": "esp32",
+    "variant": "mpython"
+  },
   "connectivity": [
     "wifi",
     "bluetooth",
     "ethernet",
     "can"
   ],
-  "build": {
-    "extra_flags": "-DARDUINO_ESP32_DEV",
-    "core": "esp32",
-    "f_cpu": "240000000L",
-    "mcu": "esp32",
-    "f_flash": "80000000L",
-    "flash_mode": "qio",
-    "variant": "mpython",
-    "arduino": {
-      "ldscript": "esp32_out.ld",
-      "partitions": "huge_app.csv"
-    }
-  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "labplus_mpython",
+  "mcu": "ESP32",
+  "name": "Labplus mPython",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 4194304,
   "upload": {
     "flash_size": "8MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://github.com/labplus-cn/mpython",
+  "vendor": "Labplus"
 }

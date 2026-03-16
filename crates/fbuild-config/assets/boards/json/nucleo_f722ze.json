@@ -1,40 +1,40 @@
 {
-  "id": "nucleo_f722ze",
-  "name": "ST Nucleo F722ZE",
-  "platform": "ststm32",
-  "mcu": "STM32F722ZET6",
-  "fcpu": 216000000,
-  "ram": 262144,
-  "rom": 524288,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/evaluation-tools/nucleo-f722ze.html",
-  "connectivity": [
-    "can"
-  ],
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
   "build": {
     "extra_flags": "-DSTM32F7 -DSTM32F722xx",
     "f_cpu": "216000000L",
     "mcu": "stm32f722zet6",
     "variant": "STM32F7xx/F722Z(C-E)T_F732ZET"
   },
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
+  "fcpu": 216000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "nucleo_f722ze",
+  "mcu": "STM32F722ZET6",
+  "name": "ST Nucleo F722ZE",
+  "platform": "ststm32",
+  "ram": 262144,
+  "rom": 524288,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-f722ze.html",
+  "vendor": "ST"
 }

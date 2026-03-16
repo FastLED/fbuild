@@ -1,17 +1,16 @@
 {
-  "id": "um_feathers2_neo",
-  "name": "Unexpected Maker FeatherS2 Neo",
-  "platform": "espressif32",
-  "mcu": "ESP32S2",
-  "fcpu": 240000000,
-  "ram": 327680,
-  "rom": 4194304,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "Unexpected Maker",
-  "url": "https://unexpectedmaker.com/feathers2-neo",
+  "build": {
+    "arduino": {
+      "ldscript": "esp32s2_out.ld"
+    },
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_FEATHERS2NEO -DBOARD_HAS_PSRAM -DARDUINO_USB_CDC_ON_BOOT=1",
+    "f_cpu": "240000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "dio",
+    "mcu": "esp32s2",
+    "variant": "um_feathers2neo"
+  },
   "connectivity": [
     "wifi"
   ],
@@ -22,28 +21,29 @@
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
       "tumpa": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_FEATHERS2NEO -DBOARD_HAS_PSRAM -DARDUINO_USB_CDC_ON_BOOT=1",
-    "core": "esp32",
-    "f_cpu": "240000000L",
-    "mcu": "esp32s2",
-    "f_flash": "80000000L",
-    "flash_mode": "dio",
-    "variant": "um_feathers2neo",
-    "arduino": {
-      "ldscript": "esp32s2_out.ld"
-    }
-  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "um_feathers2_neo",
+  "mcu": "ESP32S2",
+  "name": "Unexpected Maker FeatherS2 Neo",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 4194304,
   "upload": {
     "flash_size": "4MB",
-    "speed": 921600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 921600
+  },
+  "url": "https://unexpectedmaker.com/feathers2-neo",
+  "vendor": "Unexpected Maker"
 }

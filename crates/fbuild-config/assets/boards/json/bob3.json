@@ -1,31 +1,31 @@
 {
-  "id": "bob3",
-  "name": "nicai-systems BOB3 coding bot",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA88",
-  "fcpu": 8000000,
-  "ram": 1024,
-  "rom": 8192,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "nicai-systems",
-  "url": "http://www.nicai-systems.com",
+  "build": {
+    "core": "nicai",
+    "extra_flags": "-DARDUINO_AVR_BOB3",
+    "f_cpu": "8000000L",
+    "mcu": "atmega88",
+    "variant": "bob3"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_BOB3",
-    "core": "nicai",
-    "f_cpu": "8000000L",
-    "mcu": "atmega88",
-    "variant": "bob3"
-  },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "bob3",
+  "mcu": "ATMEGA88",
+  "name": "nicai-systems BOB3 coding bot",
+  "platform": "atmelavr",
+  "ram": 1024,
+  "rom": 8192,
   "upload": {
     "protocol": "stk500v2",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "http://www.nicai-systems.com",
+  "vendor": "nicai-systems"
 }

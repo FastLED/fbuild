@@ -1,21 +1,10 @@
 {
-  "id": "disco_l475vg_iot01a",
-  "name": "ST B-L475E-IOT01A Discovery kit",
-  "platform": "ststm32",
-  "mcu": "STM32L475VGT6",
-  "fcpu": 80000000,
-  "ram": 98304,
-  "rom": 1048576,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "mbed",
-    "stm32cube",
-    "libopencm3",
-    "zephyr"
-  ],
-  "vendor": "ST",
-  "url": "https://developer.mbed.org/platforms/ST-Discovery-L475E-IOT01A/",
+  "build": {
+    "extra_flags": "-DSTM32L4 -DSTM32L475xx",
+    "f_cpu": "80000000L",
+    "mcu": "stm32l475vgt6",
+    "variant": "STM32L4xx//L475V(C-E-G)T_L476V(C-E-G)T_L486VGT"
+  },
   "connectivity": [
     "bluetooth",
     "can",
@@ -24,21 +13,32 @@
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
       "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
+        "default": true,
+        "onboard": true
+      }
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32L4 -DSTM32L475xx",
-    "f_cpu": "80000000L",
-    "mcu": "stm32l475vgt6",
-    "variant": "STM32L4xx//L475V(C-E-G)T_L476V(C-E-G)T_L486VGT"
-  },
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "mbed",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "id": "disco_l475vg_iot01a",
+  "mcu": "STM32L475VGT6",
+  "name": "ST B-L475E-IOT01A Discovery kit",
+  "platform": "ststm32",
+  "ram": 98304,
+  "rom": 1048576,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ST-Discovery-L475E-IOT01A/",
+  "vendor": "ST"
 }

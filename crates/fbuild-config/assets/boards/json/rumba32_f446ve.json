@@ -1,37 +1,37 @@
 {
-  "id": "rumba32_f446ve",
-  "name": "3D Printer control board",
-  "platform": "ststm32",
-  "mcu": "STM32F446RET6",
-  "fcpu": 180000000,
-  "ram": 131072,
-  "rom": 524288,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "RUMBA",
-  "url": "https://github.com/Aus3D/RUMBA32",
-  "connectivity": [
-    "can"
-  ],
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
-    }
-  },
   "build": {
     "extra_flags": "-DSTM32F4 -DSTM32F446xx",
     "f_cpu": "180000000L",
     "mcu": "stm32f446ret6",
     "variant": "STM32F4xx/F446V(C-E)T"
   },
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  },
+  "fcpu": 180000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "rumba32_f446ve",
+  "mcu": "STM32F446RET6",
+  "name": "3D Printer control board",
+  "platform": "ststm32",
+  "ram": 131072,
+  "rom": 524288,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://github.com/Aus3D/RUMBA32",
+  "vendor": "RUMBA"
 }

@@ -1,19 +1,11 @@
 {
-  "id": "genericSTM32F103RD",
-  "name": "STM32F103RD (64k RAM. 384k Flash)",
-  "platform": "ststm32",
-  "mcu": "STM32F103RDT6",
-  "fcpu": 72000000,
-  "ram": 65536,
-  "rom": 393216,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "Generic",
-  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103rd.html",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F103xE -DSTM32F1",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f103rdt6",
+    "variant": "STM32F1xx/F103R(C-D-E)T"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
@@ -21,14 +13,22 @@
       "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F103xE -DSTM32F1",
-    "core": "stm32",
-    "f_cpu": "72000000L",
-    "mcu": "stm32f103rdt6",
-    "variant": "STM32F1xx/F103R(C-D-E)T"
-  },
+  "fcpu": 72000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "genericSTM32F103RD",
+  "mcu": "STM32F103RDT6",
+  "name": "STM32F103RD (64k RAM. 384k Flash)",
+  "platform": "ststm32",
+  "ram": 65536,
+  "rom": 393216,
   "upload": {
     "protocol": "serial"
-  }
+  },
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103rd.html",
+  "vendor": "Generic"
 }

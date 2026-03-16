@@ -1,16 +1,8 @@
 {
-  "id": "ublox_evk_odin_w2",
-  "name": "u-blox EVK-ODIN-W2",
-  "platform": "ststm32",
-  "mcu": "STM32F439ZIY6",
-  "fcpu": 168000000,
-  "ram": 262144,
-  "rom": 2097152,
-  "frameworks": [
-    "stm32cube"
-  ],
-  "vendor": "u-blox",
-  "url": "https://developer.mbed.org/platforms/ublox-EVK-ODIN-W2/",
+  "build": {
+    "f_cpu": "168000000L",
+    "mcu": "stm32f439ziy6"
+  },
   "connectivity": [
     "bluetooth",
     "can",
@@ -20,16 +12,24 @@
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
+      "stlink": {}
     }
   },
-  "build": {
-    "f_cpu": "168000000L",
-    "mcu": "stm32f439ziy6"
-  },
+  "fcpu": 168000000,
+  "frameworks": [
+    "stm32cube"
+  ],
+  "id": "ublox_evk_odin_w2",
+  "mcu": "STM32F439ZIY6",
+  "name": "u-blox EVK-ODIN-W2",
+  "platform": "ststm32",
+  "ram": 262144,
+  "rom": 2097152,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ublox-EVK-ODIN-W2/",
+  "vendor": "u-blox"
 }

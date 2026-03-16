@@ -1,36 +1,36 @@
 {
-  "id": "nucleo_f303ze",
-  "name": "ST Nucleo F303ZE",
-  "platform": "ststm32",
-  "mcu": "STM32F303ZET6",
+  "build": {
+    "extra_flags": "-DSTM32F3 -DSTM32F303xE",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f303zet6"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 72000000,
-  "ram": 65536,
-  "rom": 524288,
   "frameworks": [
     "cmsis",
     "mbed",
     "stm32cube",
     "libopencm3"
   ],
-  "vendor": "ST",
-  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F303ZE/",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F3 -DSTM32F303xE",
-    "f_cpu": "72000000L",
-    "mcu": "stm32f303zet6"
-  },
+  "id": "nucleo_f303ze",
+  "mcu": "STM32F303ZET6",
+  "name": "ST Nucleo F303ZE",
+  "platform": "ststm32",
+  "ram": 65536,
+  "rom": 524288,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F303ZE/",
+  "vendor": "ST"
 }

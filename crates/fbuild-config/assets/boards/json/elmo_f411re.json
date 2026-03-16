@@ -1,34 +1,34 @@
 {
-  "id": "elmo_f411re",
-  "name": "Espotel LoRa Module",
-  "platform": "ststm32",
-  "mcu": "STM32F411RET6",
-  "fcpu": 100000000,
-  "ram": 131072,
-  "rom": 524288,
-  "frameworks": [
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "Espotel",
-  "url": "https://developer.mbed.org/platforms/Espotel-ELMO/",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
   "build": {
     "extra_flags": "-DSTM32F4 -DSTM32F411xE",
     "f_cpu": "100000000L",
     "mcu": "stm32f411ret6"
   },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true
+      }
+    }
+  },
+  "fcpu": 100000000,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "elmo_f411re",
+  "mcu": "STM32F411RET6",
+  "name": "Espotel LoRa Module",
+  "platform": "ststm32",
+  "ram": 131072,
+  "rom": 524288,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/Espotel-ELMO/",
+  "vendor": "Espotel"
 }

@@ -1,11 +1,22 @@
 {
-  "id": "nucleo_l073rz",
-  "name": "ST Nucleo L073RZ",
-  "platform": "ststm32",
-  "mcu": "STM32L073RZ",
+  "build": {
+    "extra_flags": "-DSTM32L0 -DSTM32L073xx",
+    "f_cpu": "32000000L",
+    "mcu": "stm32l073rz",
+    "variant": "STM32L0xx/L072R(B-Z)T_L073R(B-Z)T_L083R(B-Z)T"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 32000000,
-  "ram": 20480,
-  "rom": 196608,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -14,26 +25,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://developer.mbed.org/platforms/ST-Nucleo-L073RZ/",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32L0 -DSTM32L073xx",
-    "f_cpu": "32000000L",
-    "mcu": "stm32l073rz",
-    "variant": "STM32L0xx/L072R(B-Z)T_L073R(B-Z)T_L083R(B-Z)T"
-  },
+  "id": "nucleo_l073rz",
+  "mcu": "STM32L073RZ",
+  "name": "ST Nucleo L073RZ",
+  "platform": "ststm32",
+  "ram": 20480,
+  "rom": 196608,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-L073RZ/",
+  "vendor": "ST"
 }

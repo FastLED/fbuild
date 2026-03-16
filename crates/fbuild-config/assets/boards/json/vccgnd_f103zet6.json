@@ -1,35 +1,35 @@
 {
-  "id": "vccgnd_f103zet6",
-  "name": "VCCGND F103ZET6 Mini",
-  "platform": "ststm32",
-  "mcu": "STM32F103ZET6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F103xE -DSTM32F1",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f103zet6",
+    "variant": "STM32F1xx/F103Z(C-D-E)(H-T)"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  },
   "fcpu": 72000000,
-  "ram": 65536,
-  "rom": 524288,
   "frameworks": [
     "arduino",
     "cmsis",
     "stm32cube",
     "libopencm3"
   ],
-  "vendor": "VCCGND",
-  "url": "https://stm32-base.org/boards/STM32F103ZET6-VCC-GND-XLarge",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F103xE -DSTM32F1",
-    "core": "stm32",
-    "f_cpu": "72000000L",
-    "mcu": "stm32f103zet6",
-    "variant": "STM32F1xx/F103Z(C-D-E)(H-T)"
-  },
+  "id": "vccgnd_f103zet6",
+  "mcu": "STM32F103ZET6",
+  "name": "VCCGND F103ZET6 Mini",
+  "platform": "ststm32",
+  "ram": 65536,
+  "rom": 524288,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://stm32-base.org/boards/STM32F103ZET6-VCC-GND-XLarge",
+  "vendor": "VCCGND"
 }

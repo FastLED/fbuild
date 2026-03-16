@@ -1,19 +1,11 @@
 {
-  "id": "pybstick26_duino",
-  "name": "PYBSTICK26 Duino",
-  "platform": "ststm32",
-  "mcu": "STM32F072RB",
-  "fcpu": 48000000,
-  "ram": 16384,
-  "rom": 131072,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "PYBStick",
-  "url": "https://shop.mchobby.be/fr/compatibles-arduino/1851-pybstick-duino-arduino-uniquement-3232100018518-garatronic.html",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F0 -DSTM32F072xB",
+    "f_cpu": "48000000L",
+    "mcu": "stm32f072rb",
+    "variant": "STM32F0xx/F072R8T_F072RB(H-I-T)"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
@@ -21,14 +13,22 @@
       "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F0 -DSTM32F072xB",
-    "core": "stm32",
-    "f_cpu": "48000000L",
-    "mcu": "stm32f072rb",
-    "variant": "STM32F0xx/F072R8T_F072RB(H-I-T)"
-  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "pybstick26_duino",
+  "mcu": "STM32F072RB",
+  "name": "PYBSTICK26 Duino",
+  "platform": "ststm32",
+  "ram": 16384,
+  "rom": 131072,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://shop.mchobby.be/fr/compatibles-arduino/1851-pybstick-duino-arduino-uniquement-3232100018518-garatronic.html",
+  "vendor": "PYBStick"
 }

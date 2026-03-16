@@ -1,17 +1,13 @@
 {
-  "id": "esp32-solo1",
-  "name": "Espressif Generic ESP32-solo1 4M Flash",
-  "platform": "espressif32",
-  "mcu": "ESP32",
-  "fcpu": 160000000,
-  "ram": 327680,
-  "rom": 4194304,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "Espressif",
-  "url": "https://en.wikipedia.org/wiki/ESP32",
+  "build": {
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_ESP32_DEV -DARDUINO_USB_CDC_ON_BOOT=0 -DCORE32SOLO1",
+    "f_cpu": "160000000L",
+    "f_flash": "40000000L",
+    "flash_mode": "dio",
+    "mcu": "esp32",
+    "variant": "esp32"
+  },
   "connectivity": [
     "wifi",
     "bluetooth",
@@ -21,30 +17,34 @@
   "debug": {
     "tools": {
       "cmsis-dap": {},
-      "esp-prog": {},
       "esp-bridge": {},
+      "esp-prog": {},
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
       "tumpa": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_ESP32_DEV -DARDUINO_USB_CDC_ON_BOOT=0 -DCORE32SOLO1",
-    "core": "esp32",
-    "f_cpu": "160000000L",
-    "mcu": "esp32",
-    "f_flash": "40000000L",
-    "flash_mode": "dio",
-    "variant": "esp32"
-  },
+  "fcpu": 160000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "esp32-solo1",
+  "mcu": "ESP32",
+  "name": "Espressif Generic ESP32-solo1 4M Flash",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 4194304,
   "upload": {
     "flash_size": "4MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://en.wikipedia.org/wiki/ESP32",
+  "vendor": "Espressif"
 }

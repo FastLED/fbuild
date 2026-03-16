@@ -1,31 +1,31 @@
 {
-  "id": "sodaq_ndogo",
-  "name": "SODAQ Ndogo",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA1284P",
-  "fcpu": 8000000,
-  "ram": 16384,
-  "rom": 130048,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "SODAQ",
-  "url": "http://support.sodaq.com/",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_SODAQ_NDOGO",
+    "f_cpu": "8000000L",
+    "mcu": "atmega1284p",
+    "variant": "ndogo"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_SODAQ_NDOGO",
-    "core": "arduino",
-    "f_cpu": "8000000L",
-    "mcu": "atmega1284p",
-    "variant": "ndogo"
-  },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "sodaq_ndogo",
+  "mcu": "ATMEGA1284P",
+  "name": "SODAQ Ndogo",
+  "platform": "atmelavr",
+  "ram": 16384,
+  "rom": 130048,
   "upload": {
     "protocol": "arduino",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "http://support.sodaq.com/",
+  "vendor": "SODAQ"
 }

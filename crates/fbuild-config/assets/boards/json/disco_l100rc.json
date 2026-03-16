@@ -1,35 +1,35 @@
 {
-  "id": "disco_l100rc",
-  "name": "ST 32L100DISCOVERY",
-  "platform": "ststm32",
-  "mcu": "STM32L100RCT6",
-  "fcpu": 32000000,
-  "ram": 16384,
-  "rom": 262144,
-  "frameworks": [
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/evaluation-tools/32l100cdiscovery.html",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32L1 -DSTM32L100xC",
+    "f_cpu": "32000000L",
+    "mcu": "stm32l100rct6"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
       "jlink": {},
       "stlink": {
-        "onboard": true,
-        "default": true
+        "default": true,
+        "onboard": true
       }
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32L1 -DSTM32L100xC",
-    "core": "stm32",
-    "f_cpu": "32000000L",
-    "mcu": "stm32l100rct6"
-  },
+  "fcpu": 32000000,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "disco_l100rc",
+  "mcu": "STM32L100RCT6",
+  "name": "ST 32L100DISCOVERY",
+  "platform": "ststm32",
+  "ram": 16384,
+  "rom": 262144,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/32l100cdiscovery.html",
+  "vendor": "ST"
 }

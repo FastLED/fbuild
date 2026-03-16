@@ -1,19 +1,11 @@
 {
-  "id": "genericSTM32F417VG",
-  "name": "STM32F417VG (128k RAM. 1024k Flash)",
-  "platform": "ststm32",
-  "mcu": "STM32F417VGT6",
-  "fcpu": 168000000,
-  "ram": 131072,
-  "rom": 1048576,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "Generic",
-  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f417vg.html",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F4 -DSTM32F417xx -DSTM32F4xx",
+    "f_cpu": "168000000L",
+    "mcu": "stm32f417vgt6",
+    "variant": "STM32F4xx/F407V(E-G)T_F417V(E-G)T"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
@@ -21,14 +13,22 @@
       "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F417xx -DSTM32F4xx",
-    "core": "stm32",
-    "f_cpu": "168000000L",
-    "mcu": "stm32f417vgt6",
-    "variant": "STM32F4xx/F407V(E-G)T_F417V(E-G)T"
-  },
+  "fcpu": 168000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "genericSTM32F417VG",
+  "mcu": "STM32F417VGT6",
+  "name": "STM32F417VG (128k RAM. 1024k Flash)",
+  "platform": "ststm32",
+  "ram": 131072,
+  "rom": 1048576,
   "upload": {
     "protocol": "serial"
-  }
+  },
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f417vg.html",
+  "vendor": "Generic"
 }

@@ -1,26 +1,26 @@
 {
-  "id": "ATmega3290",
-  "name": "ATmega3290/A",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA3290",
-  "fcpu": 16000000,
-  "ram": 2048,
-  "rom": 32768,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega3290",
   "build": {
-    "extra_flags": "-DARDUINO_AVR_ATmega3290",
     "core": "MegaCore",
+    "extra_flags": "-DARDUINO_AVR_ATmega3290",
     "f_cpu": "16000000L",
     "mcu": "atmega3290",
     "variant": "100-pin-avr"
   },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega3290",
+  "mcu": "ATMEGA3290",
+  "name": "ATmega3290/A",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 32768,
   "upload": {
     "protocol": "urclock",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega3290",
+  "vendor": "Microchip"
 }

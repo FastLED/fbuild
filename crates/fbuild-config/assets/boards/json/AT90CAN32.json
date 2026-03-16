@@ -1,26 +1,26 @@
 {
-  "id": "AT90CAN32",
-  "name": "AT90CAN32",
-  "platform": "atmelavr",
-  "mcu": "AT90CAN32",
-  "fcpu": 16000000,
-  "ram": 2048,
-  "rom": 32768,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/AT90CAN32",
   "build": {
-    "extra_flags": "-DARDUINO_AVR_AT90CAN32",
     "core": "MegaCore",
+    "extra_flags": "-DARDUINO_AVR_AT90CAN32",
     "f_cpu": "16000000L",
     "mcu": "at90can32",
     "variant": "64-pin-avr"
   },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "AT90CAN32",
+  "mcu": "AT90CAN32",
+  "name": "AT90CAN32",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 32768,
   "upload": {
     "protocol": "urclock",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.microchip.com/wwwproducts/AT90CAN32",
+  "vendor": "Microchip"
 }

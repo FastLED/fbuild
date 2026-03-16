@@ -1,19 +1,11 @@
 {
-  "id": "genericSTM32H750VB",
-  "name": "STM32H750VBT6 (1024k RAM. 128k Flash)",
-  "platform": "ststm32",
-  "mcu": "STM32H750VBT6",
-  "fcpu": 480000000,
-  "ram": 524288,
-  "rom": 131072,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "Generic",
-  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32h750vb.html",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32H7 -DSTM32H7xx -DSTM32H750xx",
+    "f_cpu": "480000000L",
+    "mcu": "stm32h750vbt6",
+    "variant": "STM32H7xx/H742V(G-I)(H-T)_H743V(G-I)(H-T)_H750VBT_H753VI(H-T)"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
@@ -21,14 +13,22 @@
       "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32H7 -DSTM32H7xx -DSTM32H750xx",
-    "core": "stm32",
-    "f_cpu": "480000000L",
-    "mcu": "stm32h750vbt6",
-    "variant": "STM32H7xx/H742V(G-I)(H-T)_H743V(G-I)(H-T)_H750VBT_H753VI(H-T)"
-  },
+  "fcpu": 480000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "genericSTM32H750VB",
+  "mcu": "STM32H750VBT6",
+  "name": "STM32H750VBT6 (1024k RAM. 128k Flash)",
+  "platform": "ststm32",
+  "ram": 524288,
+  "rom": 131072,
   "upload": {
     "protocol": "serial"
-  }
+  },
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32h750vb.html",
+  "vendor": "Generic"
 }

@@ -1,37 +1,37 @@
 {
-  "id": "1bitsy_stm32f415rgt",
-  "name": "1Bitsy",
-  "platform": "ststm32",
-  "mcu": "STM32F415RGT",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F4 -DSTM32F415xx -DSTM32F40_41xxx",
+    "f_cpu": "168000000L",
+    "mcu": "stm32f415rgt",
+    "variant": "stm32f415xx"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {
+        "default": true
+      },
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  },
   "fcpu": 168000000,
-  "ram": 131072,
-  "rom": 1048576,
   "frameworks": [
     "libopencm3",
     "cmsis",
     "spl",
     "stm32cube"
   ],
-  "vendor": "1BitSquared",
-  "url": "http://1bitsy.org",
-  "debug": {
-    "tools": {
-      "blackmagic": {
-        "default": true
-      },
-      "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F415xx -DSTM32F40_41xxx",
-    "core": "stm32",
-    "f_cpu": "168000000L",
-    "mcu": "stm32f415rgt",
-    "variant": "stm32f415xx"
-  },
+  "id": "1bitsy_stm32f415rgt",
+  "mcu": "STM32F415RGT",
+  "name": "1Bitsy",
+  "platform": "ststm32",
+  "ram": 131072,
+  "rom": 1048576,
   "upload": {
     "protocol": "blackmagic"
-  }
+  },
+  "url": "http://1bitsy.org",
+  "vendor": "1BitSquared"
 }

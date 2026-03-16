@@ -1,17 +1,13 @@
 {
-  "id": "nologo_esp32c3_super_mini",
-  "name": "Nologo ESP32C3 SuperMini",
-  "platform": "espressif32",
-  "mcu": "ESP32C3",
-  "fcpu": 160000000,
-  "ram": 327680,
-  "rom": 4194304,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "Nologo",
-  "url": "https://www.nologo.tech/product/esp32/esp32c3/esp32c3supermini/esp32C3SuperMini.html",
+  "build": {
+    "core": "esp32",
+    "extra_flags": "-DARDUINO_ESP32C3_DEV -DARDUINO_USB_MODE=1 -DARDUINO_USB_CDC_ON_BOOT=1",
+    "f_cpu": "160000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "mcu": "esp32c3",
+    "variant": "nologo_esp32c3_super_mini"
+  },
   "connectivity": [
     "wifi",
     "bluetooth"
@@ -19,31 +15,35 @@
   "debug": {
     "tools": {
       "cmsis-dap": {},
-      "esp-prog": {},
       "esp-bridge": {},
+      "esp-builtin": {},
+      "esp-prog": {},
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
-      "tumpa": {},
-      "esp-builtin": {}
+      "tumpa": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_ESP32C3_DEV -DARDUINO_USB_MODE=1 -DARDUINO_USB_CDC_ON_BOOT=1",
-    "core": "esp32",
-    "f_cpu": "160000000L",
-    "mcu": "esp32c3",
-    "f_flash": "80000000L",
-    "flash_mode": "qio",
-    "variant": "nologo_esp32c3_super_mini"
-  },
+  "fcpu": 160000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "nologo_esp32c3_super_mini",
+  "mcu": "ESP32C3",
+  "name": "Nologo ESP32C3 SuperMini",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 4194304,
   "upload": {
     "flash_size": "4MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://www.nologo.tech/product/esp32/esp32c3/esp32c3supermini/esp32C3SuperMini.html",
+  "vendor": "Nologo"
 }

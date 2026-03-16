@@ -1,36 +1,36 @@
 {
-  "id": "b96b_neonkey",
-  "name": "96Boards Neonkey",
-  "platform": "ststm32",
-  "mcu": "STM32F411CE",
-  "fcpu": 100000000,
-  "ram": 131072,
-  "rom": 524288,
-  "frameworks": [
-    "cmsis",
-    "stm32cube",
-    "libopencm3",
-    "zephyr"
-  ],
-  "vendor": "96Boards",
-  "url": "https://www.96boards.org/product/neonkey/",
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F411xE",
+    "f_cpu": "100000000L",
+    "mcu": "stm32f411ce"
+  },
   "connectivity": [
     "can"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
+      "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F411xE",
-    "f_cpu": "100000000L",
-    "mcu": "stm32f411ce"
-  },
+  "fcpu": 100000000,
+  "frameworks": [
+    "cmsis",
+    "stm32cube",
+    "libopencm3",
+    "zephyr"
+  ],
+  "id": "b96b_neonkey",
+  "mcu": "STM32F411CE",
+  "name": "96Boards Neonkey",
+  "platform": "ststm32",
+  "ram": 131072,
+  "rom": 524288,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.96boards.org/product/neonkey/",
+  "vendor": "96Boards"
 }

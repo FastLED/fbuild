@@ -1,18 +1,10 @@
 {
-  "id": "disco_l4s5i_iot01a",
-  "name": "ST STM32L4+ Discovery kit IoT node",
-  "platform": "ststm32",
-  "mcu": "STM32L4S5VIT6",
-  "fcpu": 80000000,
-  "ram": 655360,
-  "rom": 2097152,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube"
-  ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/evaluation-tools/b-l4s5i-iot01a.html",
+  "build": {
+    "extra_flags": "-DSTM32L4 -DSTM32L4xx -DSTM32L4S5xx",
+    "f_cpu": "80000000L",
+    "mcu": "stm32l4s5vit6",
+    "variant": "STM32L4xx/L4R5V(G-I)T_L4R7VIT_L4S5VIT_L4S7VIT"
+  },
   "connectivity": [
     "bluetooth",
     "can",
@@ -21,21 +13,29 @@
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
       "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
+        "default": true,
+        "onboard": true
+      }
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32L4 -DSTM32L4xx -DSTM32L4S5xx",
-    "f_cpu": "80000000L",
-    "mcu": "stm32l4s5vit6",
-    "variant": "STM32L4xx/L4R5V(G-I)T_L4R7VIT_L4S5VIT_L4S7VIT"
-  },
+  "fcpu": 80000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube"
+  ],
+  "id": "disco_l4s5i_iot01a",
+  "mcu": "STM32L4S5VIT6",
+  "name": "ST STM32L4+ Discovery kit IoT node",
+  "platform": "ststm32",
+  "ram": 655360,
+  "rom": 2097152,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/b-l4s5i-iot01a.html",
+  "vendor": "ST"
 }

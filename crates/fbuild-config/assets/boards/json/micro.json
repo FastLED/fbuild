@@ -1,31 +1,31 @@
 {
-  "id": "micro",
-  "name": "Arduino Micro",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA32U4",
-  "fcpu": 16000000,
-  "ram": 2560,
-  "rom": 28672,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Arduino",
-  "url": "https://www.arduino.cc/en/Main/ArduinoBoardMicro",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_MICRO",
+    "f_cpu": "16000000L",
+    "mcu": "atmega32u4",
+    "variant": "micro"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_MICRO",
-    "core": "arduino",
-    "f_cpu": "16000000L",
-    "mcu": "atmega32u4",
-    "variant": "micro"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "micro",
+  "mcu": "ATMEGA32U4",
+  "name": "Arduino Micro",
+  "platform": "atmelavr",
+  "ram": 2560,
+  "rom": 28672,
   "upload": {
     "protocol": "avr109",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "https://www.arduino.cc/en/Main/ArduinoBoardMicro",
+  "vendor": "Arduino"
 }

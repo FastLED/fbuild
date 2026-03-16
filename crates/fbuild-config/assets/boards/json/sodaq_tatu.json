@@ -1,31 +1,31 @@
 {
-  "id": "sodaq_tatu",
-  "name": "SODAQ Tatu",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA1284P",
-  "fcpu": 8000000,
-  "ram": 16384,
-  "rom": 130048,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "SODAQ",
-  "url": "http://support.sodaq.com/",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_SODAQ_TATU",
+    "f_cpu": "8000000L",
+    "mcu": "atmega1284p",
+    "variant": "tatu"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_SODAQ_TATU",
-    "core": "arduino",
-    "f_cpu": "8000000L",
-    "mcu": "atmega1284p",
-    "variant": "tatu"
-  },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "sodaq_tatu",
+  "mcu": "ATMEGA1284P",
+  "name": "SODAQ Tatu",
+  "platform": "atmelavr",
+  "ram": 16384,
+  "rom": 130048,
   "upload": {
     "protocol": "arduino",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "http://support.sodaq.com/",
+  "vendor": "SODAQ"
 }

@@ -1,32 +1,32 @@
 {
-  "id": "zumbt328",
-  "name": "BQ ZUM BT-328",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA328P",
-  "fcpu": 16000000,
-  "ram": 2048,
-  "rom": 28672,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "BQ",
-  "url": "http://www.bq.com/gb/products/zum.html",
-  "debug": {
-    "tools": {
-      "simavr": {},
-      "avr-stub": {}
-    }
-  },
   "build": {
-    "extra_flags": "-DARDUINO_AVR_BT",
     "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_BT",
     "f_cpu": "16000000L",
     "mcu": "atmega328p",
     "variant": "eightanaloginputs"
   },
+  "debug": {
+    "tools": {
+      "avr-stub": {},
+      "simavr": {}
+    }
+  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "zumbt328",
+  "mcu": "ATMEGA328P",
+  "name": "BQ ZUM BT-328",
+  "platform": "atmelavr",
+  "ram": 2048,
+  "rom": 28672,
   "upload": {
     "protocol": "arduino",
-    "speed": 19200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 19200
+  },
+  "url": "http://www.bq.com/gb/products/zum.html",
+  "vendor": "BQ"
 }

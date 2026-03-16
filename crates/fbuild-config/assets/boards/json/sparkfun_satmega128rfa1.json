@@ -1,31 +1,31 @@
 {
-  "id": "sparkfun_satmega128rfa1",
-  "name": "SparkFun ATmega128RFA1 Dev Board",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA128RFA1",
-  "fcpu": 16000000,
-  "ram": 16384,
-  "rom": 126976,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "SparkFun",
-  "url": "https://www.sparkfun.com/products/11197",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_ATMEGA128RFA1_DEV_BOARD",
+    "f_cpu": "16000000L",
+    "mcu": "atmega128rfa1",
+    "variant": "sparkfun_rf128"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_ATMEGA128RFA1_DEV_BOARD",
-    "core": "arduino",
-    "f_cpu": "16000000L",
-    "mcu": "atmega128rfa1",
-    "variant": "sparkfun_rf128"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "sparkfun_satmega128rfa1",
+  "mcu": "ATMEGA128RFA1",
+  "name": "SparkFun ATmega128RFA1 Dev Board",
+  "platform": "atmelavr",
+  "ram": 16384,
+  "rom": 126976,
   "upload": {
     "protocol": "arduino",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "https://www.sparkfun.com/products/11197",
+  "vendor": "SparkFun"
 }

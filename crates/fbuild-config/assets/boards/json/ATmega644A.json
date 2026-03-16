@@ -1,26 +1,26 @@
 {
-  "id": "ATmega644A",
-  "name": "ATmega644/A",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA644A",
-  "fcpu": 16000000,
-  "ram": 4096,
-  "rom": 65536,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega644a",
   "build": {
-    "extra_flags": "-DARDUINO_AVR_ATmega644",
     "core": "MightyCore",
+    "extra_flags": "-DARDUINO_AVR_ATmega644",
     "f_cpu": "16000000L",
     "mcu": "atmega644a",
     "variant": "standard"
   },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega644A",
+  "mcu": "ATMEGA644A",
+  "name": "ATmega644/A",
+  "platform": "atmelavr",
+  "ram": 4096,
+  "rom": 65536,
   "upload": {
     "protocol": "urclock",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega644a",
+  "vendor": "Microchip"
 }

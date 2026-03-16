@@ -1,11 +1,26 @@
 {
-  "id": "nucleo_f091rc",
-  "name": "ST Nucleo F091RC",
-  "platform": "ststm32",
-  "mcu": "STM32F091RCT6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F0 -DSTM32F091xC",
+    "f_cpu": "48000000L",
+    "mcu": "stm32f091rct6",
+    "variant": "STM32F0xx/F091RBT_F091RC(H-T-Y)"
+  },
+  "connectivity": [
+    "can"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 48000000,
-  "ram": 32768,
-  "rom": 262144,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -14,30 +29,15 @@
     "libopencm3",
     "zephyr"
   ],
-  "vendor": "ST",
-  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F091RC/",
-  "connectivity": [
-    "can"
-  ],
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32F0 -DSTM32F091xC",
-    "core": "stm32",
-    "f_cpu": "48000000L",
-    "mcu": "stm32f091rct6",
-    "variant": "STM32F0xx/F091RBT_F091RC(H-T-Y)"
-  },
+  "id": "nucleo_f091rc",
+  "mcu": "STM32F091RCT6",
+  "name": "ST Nucleo F091RC",
+  "platform": "ststm32",
+  "ram": 32768,
+  "rom": 262144,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-F091RC/",
+  "vendor": "ST"
 }

@@ -1,31 +1,31 @@
 {
-  "id": "miniatmega168",
-  "name": "Arduino Mini ATmega168",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA168",
-  "fcpu": 16000000,
-  "ram": 1024,
-  "rom": 14336,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Arduino",
-  "url": "http://arduino.cc/en/Main/ArduinoBoardMini",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_MINI",
+    "f_cpu": "16000000L",
+    "mcu": "atmega168",
+    "variant": "eightanaloginputs"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_MINI",
-    "core": "arduino",
-    "f_cpu": "16000000L",
-    "mcu": "atmega168",
-    "variant": "eightanaloginputs"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "miniatmega168",
+  "mcu": "ATMEGA168",
+  "name": "Arduino Mini ATmega168",
+  "platform": "atmelavr",
+  "ram": 1024,
+  "rom": 14336,
   "upload": {
     "protocol": "arduino",
-    "speed": 19200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 19200
+  },
+  "url": "http://arduino.cc/en/Main/ArduinoBoardMini",
+  "vendor": "Arduino"
 }

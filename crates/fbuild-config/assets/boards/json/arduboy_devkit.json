@@ -1,31 +1,31 @@
 {
-  "id": "arduboy_devkit",
-  "name": "Arduboy DevKit",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA32U4",
-  "fcpu": 16000000,
-  "ram": 2560,
-  "rom": 28672,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Arduboy",
-  "url": "https://www.arduboy.com",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_ARDUBOY_DEVKIT -DAB_DEVKIT",
+    "f_cpu": "16000000L",
+    "mcu": "atmega32u4",
+    "variant": "leonardo"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_ARDUBOY_DEVKIT -DAB_DEVKIT",
-    "core": "arduino",
-    "f_cpu": "16000000L",
-    "mcu": "atmega32u4",
-    "variant": "leonardo"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "arduboy_devkit",
+  "mcu": "ATMEGA32U4",
+  "name": "Arduboy DevKit",
+  "platform": "atmelavr",
+  "ram": 2560,
+  "rom": 28672,
   "upload": {
     "protocol": "avr109",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "https://www.arduboy.com",
+  "vendor": "Arduboy"
 }

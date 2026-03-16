@@ -1,29 +1,29 @@
 {
-  "id": "digispark-tiny",
-  "name": "Digispark USB",
-  "platform": "atmelavr",
-  "mcu": "ATTINY85",
-  "fcpu": 16500000,
-  "ram": 512,
-  "rom": 6012,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Digistump",
-  "url": "http://digistump.com/products/1",
+  "build": {
+    "core": "dtiny",
+    "extra_flags": "-DARDUINO_AVR_DIGISPARK",
+    "f_cpu": "16500000L",
+    "mcu": "attiny85",
+    "variant": "digispark"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_DIGISPARK",
-    "core": "dtiny",
-    "f_cpu": "16500000L",
-    "mcu": "attiny85",
-    "variant": "digispark"
-  },
+  "fcpu": 16500000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "digispark-tiny",
+  "mcu": "ATTINY85",
+  "name": "Digispark USB",
+  "platform": "atmelavr",
+  "ram": 512,
+  "rom": 6012,
   "upload": {
     "protocol": "micronucleus"
-  }
+  },
+  "url": "http://digistump.com/products/1",
+  "vendor": "Digistump"
 }

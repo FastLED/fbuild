@@ -1,19 +1,10 @@
 {
-  "id": "thunder_pack",
-  "name": "ThunderPack v1.0",
-  "platform": "ststm32",
-  "mcu": "STM32L072KZ",
-  "fcpu": 32000000,
-  "ram": 20480,
-  "rom": 196608,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "ThunderPack",
-  "url": "https://github.com/jgillick/ThunderPack",
+  "build": {
+    "extra_flags": "-DSTM32L0 -DSTM32L072xx -DARDUINO_THUNDERPACK_L072",
+    "f_cpu": "32000000L",
+    "mcu": "stm32l072kz",
+    "variant": "STM32L0xx/L072K(B-Z)T_L082K(B-Z)T"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
@@ -21,13 +12,22 @@
       "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32L0 -DSTM32L072xx -DARDUINO_THUNDERPACK_L072",
-    "f_cpu": "32000000L",
-    "mcu": "stm32l072kz",
-    "variant": "STM32L0xx/L072K(B-Z)T_L082K(B-Z)T"
-  },
+  "fcpu": 32000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "thunder_pack",
+  "mcu": "STM32L072KZ",
+  "name": "ThunderPack v1.0",
+  "platform": "ststm32",
+  "ram": 20480,
+  "rom": 196608,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://github.com/jgillick/ThunderPack",
+  "vendor": "ThunderPack"
 }

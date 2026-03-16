@@ -1,30 +1,30 @@
 {
-  "id": "attiny2313",
-  "name": "Generic ATtiny2313",
-  "platform": "atmelavr",
-  "mcu": "ATTINY2313",
-  "fcpu": 8000000,
-  "ram": 128,
-  "rom": 2048,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Atmel",
-  "url": "http://www.microchip.com/wwwproducts/en/ATTINY2313",
+  "build": {
+    "core": "tiny",
+    "extra_flags": "-DARDUINO_AVR_ATTINYX313",
+    "f_cpu": "8000000L",
+    "mcu": "attiny2313",
+    "variant": "tinyX313"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_ATTINYX313",
-    "core": "tiny",
-    "f_cpu": "8000000L",
-    "mcu": "attiny2313",
-    "variant": "tinyX313"
-  },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "attiny2313",
+  "mcu": "ATTINY2313",
+  "name": "Generic ATtiny2313",
+  "platform": "atmelavr",
+  "ram": 128,
+  "rom": 2048,
   "upload": {
     "protocol": "buspirate",
     "require_upload_port": true
-  }
+  },
+  "url": "http://www.microchip.com/wwwproducts/en/ATTINY2313",
+  "vendor": "Atmel"
 }

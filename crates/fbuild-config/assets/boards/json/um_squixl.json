@@ -1,17 +1,17 @@
 {
-  "id": "um_squixl",
-  "name": "Unexpected Maker SQUiXL",
-  "platform": "espressif32",
-  "mcu": "ESP32S3",
-  "fcpu": 240000000,
-  "ram": 327680,
-  "rom": 8388608,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "Unexpected Maker",
-  "url": "https://unexpectedmaker.com/shop/squixl",
+  "build": {
+    "arduino": {
+      "memory_type": "qio_opi",
+      "partitions": "default_16MB.csv"
+    },
+    "core": "esp32",
+    "extra_flags": "-DBOARD_HAS_PSRAM -DARDUINO_SQUIXL -DARDUINO_USB_CDC_ON_BOOT=1 -DARDUINO_USB_MODE=1 -DARDUINO_RUNNING_CORE=1 -DARDUINO_EVENT_RUNNING_CORE=1",
+    "f_cpu": "240000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "mcu": "esp32s3",
+    "variant": "um_squixl"
+  },
   "connectivity": [
     "bluetooth",
     "wifi"
@@ -19,35 +19,35 @@
   "debug": {
     "tools": {
       "cmsis-dap": {},
-      "esp-prog": {},
       "esp-bridge": {},
+      "esp-builtin": {},
+      "esp-prog": {},
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
-      "tumpa": {},
-      "esp-builtin": {}
+      "tumpa": {}
     }
   },
-  "build": {
-    "extra_flags": "-DBOARD_HAS_PSRAM -DARDUINO_SQUIXL -DARDUINO_USB_CDC_ON_BOOT=1 -DARDUINO_USB_MODE=1 -DARDUINO_RUNNING_CORE=1 -DARDUINO_EVENT_RUNNING_CORE=1",
-    "core": "esp32",
-    "f_cpu": "240000000L",
-    "mcu": "esp32s3",
-    "f_flash": "80000000L",
-    "flash_mode": "qio",
-    "variant": "um_squixl",
-    "arduino": {
-      "partitions": "default_16MB.csv",
-      "memory_type": "qio_opi"
-    }
-  },
+  "fcpu": 240000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "um_squixl",
+  "mcu": "ESP32S3",
+  "name": "Unexpected Maker SQUiXL",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 8388608,
   "upload": {
     "flash_size": "16MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://unexpectedmaker.com/shop/squixl",
+  "vendor": "Unexpected Maker"
 }

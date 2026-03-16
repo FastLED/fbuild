@@ -1,38 +1,38 @@
 {
-  "id": "genericSTM32G431CB",
-  "name": "STM32G431CB (32k RAM. 128k Flash)",
-  "platform": "ststm32",
-  "mcu": "STM32G431CBU6",
-  "fcpu": 170000000,
-  "ram": 32768,
-  "rom": 131072,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "libopencm3",
-    "stm32cube"
-  ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32g431cb.html",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32G4 -DSTM32G4xx -DSTM32G431xx",
+    "f_cpu": "170000000L",
+    "mcu": "stm32g431cbu6",
+    "variant": "STM32G4xx/G431C(6-8-B)U_G441CBU"
+  },
   "connectivity": [
     "can"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
+      "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32G4 -DSTM32G4xx -DSTM32G431xx",
-    "core": "stm32",
-    "f_cpu": "170000000L",
-    "mcu": "stm32g431cbu6",
-    "variant": "STM32G4xx/G431C(6-8-B)U_G441CBU"
-  },
+  "fcpu": 170000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "libopencm3",
+    "stm32cube"
+  ],
+  "id": "genericSTM32G431CB",
+  "mcu": "STM32G431CBU6",
+  "name": "STM32G431CB (32k RAM. 128k Flash)",
+  "platform": "ststm32",
+  "ram": 32768,
+  "rom": 131072,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32g431cb.html",
+  "vendor": "ST"
 }

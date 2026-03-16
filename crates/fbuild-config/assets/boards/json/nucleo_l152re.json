@@ -1,11 +1,22 @@
 {
-  "id": "nucleo_l152re",
-  "name": "ST Nucleo L152RE",
-  "platform": "ststm32",
-  "mcu": "STM32L152RET6",
+  "build": {
+    "extra_flags": "-DSTM32L1 -DSTM32L152xE",
+    "f_cpu": "32000000L",
+    "mcu": "stm32l152ret6",
+    "variant": "STM32L1xx/L151RET_L152RET_L162RET"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {
+        "default": true,
+        "onboard": true
+      }
+    }
+  },
   "fcpu": 32000000,
-  "ram": 81920,
-  "rom": 524288,
   "frameworks": [
     "arduino",
     "cmsis",
@@ -13,26 +24,15 @@
     "stm32cube",
     "libopencm3"
   ],
-  "vendor": "ST",
-  "url": "https://developer.mbed.org/platforms/ST-Nucleo-L152RE/",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32L1 -DSTM32L152xE",
-    "f_cpu": "32000000L",
-    "mcu": "stm32l152ret6",
-    "variant": "STM32L1xx/L151RET_L152RET_L162RET"
-  },
+  "id": "nucleo_l152re",
+  "mcu": "STM32L152RET6",
+  "name": "ST Nucleo L152RE",
+  "platform": "ststm32",
+  "ram": 81920,
+  "rom": 524288,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/ST-Nucleo-L152RE/",
+  "vendor": "ST"
 }

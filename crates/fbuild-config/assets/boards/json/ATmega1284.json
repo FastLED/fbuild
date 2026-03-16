@@ -1,31 +1,31 @@
 {
-  "id": "ATmega1284",
-  "name": "ATmega1284",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA1284",
-  "fcpu": 16000000,
-  "ram": 16384,
-  "rom": 131072,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega1284",
+  "build": {
+    "core": "MightyCore",
+    "extra_flags": "-DARDUINO_AVR_ATmega1284",
+    "f_cpu": "16000000L",
+    "mcu": "atmega1284",
+    "variant": "standard"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_ATmega1284",
-    "core": "MightyCore",
-    "f_cpu": "16000000L",
-    "mcu": "atmega1284",
-    "variant": "standard"
-  },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega1284",
+  "mcu": "ATMEGA1284",
+  "name": "ATmega1284",
+  "platform": "atmelavr",
+  "ram": 16384,
+  "rom": 131072,
   "upload": {
     "protocol": "urclock",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega1284",
+  "vendor": "Microchip"
 }

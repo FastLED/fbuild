@@ -1,23 +1,23 @@
 {
-  "id": "attiny1634",
-  "name": "Generic ATtiny1634",
-  "platform": "atmelavr",
-  "mcu": "ATTINY1634",
-  "fcpu": 8000000,
-  "ram": 1024,
-  "rom": 16384,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Atmel",
-  "url": "http://www.atmel.com/devices/ATTINY1634.aspx",
   "build": {
-    "extra_flags": "-DARDUINO_AVR_ATTINY1634 -DLOWERCAL=9",
     "core": "tinymodern",
+    "extra_flags": "-DARDUINO_AVR_ATTINY1634 -DLOWERCAL=9",
     "f_cpu": "8000000L",
     "mcu": "attiny1634"
   },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "attiny1634",
+  "mcu": "ATTINY1634",
+  "name": "Generic ATtiny1634",
+  "platform": "atmelavr",
+  "ram": 1024,
+  "rom": 16384,
   "upload": {
     "protocol": "usbtiny"
-  }
+  },
+  "url": "http://www.atmel.com/devices/ATTINY1634.aspx",
+  "vendor": "Atmel"
 }

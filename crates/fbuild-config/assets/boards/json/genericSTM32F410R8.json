@@ -1,19 +1,11 @@
 {
-  "id": "genericSTM32F410R8",
-  "name": "STM32F410R8 (32k RAM. 64k Flash)",
-  "platform": "ststm32",
-  "mcu": "STM32F410R8T6",
-  "fcpu": 100000000,
-  "ram": 32768,
-  "rom": 65536,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "Generic",
-  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f410r8.html",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F4 -DSTM32F410Rx -DSTM32F4xx",
+    "f_cpu": "100000000L",
+    "mcu": "stm32f410r8t6",
+    "variant": "STM32F4xx/F410R(8-B)(I-T)"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
@@ -21,14 +13,22 @@
       "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F410Rx -DSTM32F4xx",
-    "core": "stm32",
-    "f_cpu": "100000000L",
-    "mcu": "stm32f410r8t6",
-    "variant": "STM32F4xx/F410R(8-B)(I-T)"
-  },
+  "fcpu": 100000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "genericSTM32F410R8",
+  "mcu": "STM32F410R8T6",
+  "name": "STM32F410R8 (32k RAM. 64k Flash)",
+  "platform": "ststm32",
+  "ram": 32768,
+  "rom": 65536,
   "upload": {
     "protocol": "serial"
-  }
+  },
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f410r8.html",
+  "vendor": "Generic"
 }

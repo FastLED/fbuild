@@ -1,19 +1,10 @@
 {
-  "id": "wraith32_v1",
-  "name": "Wraith V1 ESC",
-  "platform": "ststm32",
-  "mcu": "STM32F051K6",
-  "fcpu": 48000000,
-  "ram": 7936,
-  "rom": 32768,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "Airbot",
-  "url": "https://store.myairbot.com/esc/4in1-esc.html",
+  "build": {
+    "extra_flags": "-DSTM32F0 -DSTM32F051x8",
+    "f_cpu": "48000000L",
+    "mcu": "stm32f051k6",
+    "variant": "STM32F0xx/F051K(6-8)U"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
@@ -21,13 +12,22 @@
       "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F0 -DSTM32F051x8",
-    "f_cpu": "48000000L",
-    "mcu": "stm32f051k6",
-    "variant": "STM32F0xx/F051K(6-8)U"
-  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "wraith32_v1",
+  "mcu": "STM32F051K6",
+  "name": "Wraith V1 ESC",
+  "platform": "ststm32",
+  "ram": 7936,
+  "rom": 32768,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://store.myairbot.com/esc/4in1-esc.html",
+  "vendor": "Airbot"
 }

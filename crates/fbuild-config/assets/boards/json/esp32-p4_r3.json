@@ -1,17 +1,13 @@
 {
-  "id": "esp32-p4_r3",
-  "name": "Espressif ESP32-P4 rev.300 generic",
-  "platform": "espressif32",
-  "mcu": "ESP32P4",
-  "fcpu": 400000000,
-  "ram": 327680,
-  "rom": 16777216,
-  "frameworks": [
-    "arduino",
-    "espidf"
-  ],
-  "vendor": "Espressif",
-  "url": "https://docs.espressif.com",
+  "build": {
+    "core": "esp32",
+    "extra_flags": "-DBOARD_HAS_PSRAM",
+    "f_cpu": "400000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "mcu": "esp32p4",
+    "variant": "esp32p4"
+  },
   "connectivity": [
     "bluetooth",
     "openthread"
@@ -19,31 +15,35 @@
   "debug": {
     "tools": {
       "cmsis-dap": {},
-      "esp-prog": {},
       "esp-bridge": {},
+      "esp-builtin": {},
+      "esp-prog": {},
       "iot-bus-jtag": {},
       "jlink": {},
       "minimodule": {},
-      "olimex-arm-usb-tiny-h": {},
-      "olimex-arm-usb-ocd-h": {},
       "olimex-arm-usb-ocd": {},
+      "olimex-arm-usb-ocd-h": {},
+      "olimex-arm-usb-tiny-h": {},
       "olimex-jtag-tiny": {},
-      "tumpa": {},
-      "esp-builtin": {}
+      "tumpa": {}
     }
   },
-  "build": {
-    "extra_flags": "-DBOARD_HAS_PSRAM",
-    "core": "esp32",
-    "f_cpu": "400000000L",
-    "mcu": "esp32p4",
-    "f_flash": "80000000L",
-    "flash_mode": "qio",
-    "variant": "esp32p4"
-  },
+  "fcpu": 400000000,
+  "frameworks": [
+    "arduino",
+    "espidf"
+  ],
+  "id": "esp32-p4_r3",
+  "mcu": "ESP32P4",
+  "name": "Espressif ESP32-P4 rev.300 generic",
+  "platform": "espressif32",
+  "ram": 327680,
+  "rom": 16777216,
   "upload": {
     "flash_size": "16MB",
-    "speed": 460800,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 460800
+  },
+  "url": "https://docs.espressif.com",
+  "vendor": "Espressif"
 }

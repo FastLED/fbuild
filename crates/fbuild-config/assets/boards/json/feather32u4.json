@@ -1,31 +1,31 @@
 {
-  "id": "feather32u4",
-  "name": "Adafruit Feather 32u4",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA32U4",
-  "fcpu": 8000000,
-  "ram": 2560,
-  "rom": 28672,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Adafruit",
-  "url": "https://learn.adafruit.com/adafruit-feather-32u4-bluefruit-le/",
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_FEATHER32U4",
+    "f_cpu": "8000000L",
+    "mcu": "atmega32u4",
+    "variant": "feather32u4"
+  },
   "debug": {
     "tools": {
       "simavr": {}
     }
   },
-  "build": {
-    "extra_flags": "-DARDUINO_AVR_FEATHER32U4",
-    "core": "arduino",
-    "f_cpu": "8000000L",
-    "mcu": "atmega32u4",
-    "variant": "feather32u4"
-  },
+  "fcpu": 8000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "feather32u4",
+  "mcu": "ATMEGA32U4",
+  "name": "Adafruit Feather 32u4",
+  "platform": "atmelavr",
+  "ram": 2560,
+  "rom": 28672,
   "upload": {
     "protocol": "avr109",
-    "speed": 57600,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 57600
+  },
+  "url": "https://learn.adafruit.com/adafruit-feather-32u4-bluefruit-le/",
+  "vendor": "Adafruit"
 }

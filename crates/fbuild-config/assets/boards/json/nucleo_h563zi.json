@@ -1,17 +1,11 @@
 {
-  "id": "nucleo_h563zi",
-  "name": "ST Nucleo H563ZI",
-  "platform": "ststm32",
-  "mcu": "STM32H563ZIT6U",
-  "fcpu": 250000000,
-  "ram": 655360,
-  "rom": 2097152,
-  "frameworks": [
-    "arduino",
-    "zephyr"
-  ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/evaluation-tools/nucleo-h563zi.html",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32H5 -DSTM32H5xx -DSTM32H563xx",
+    "f_cpu": "250000000L",
+    "mcu": "stm32h563zit6u",
+    "variant": "STM32H5xx/H563Z(G-I)T_H573ZIT"
+  },
   "connectivity": [
     "can",
     "ethernet"
@@ -21,14 +15,20 @@
       "jlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32H5 -DSTM32H5xx -DSTM32H563xx",
-    "core": "stm32",
-    "f_cpu": "250000000L",
-    "mcu": "stm32h563zit6u",
-    "variant": "STM32H5xx/H563Z(G-I)T_H573ZIT"
-  },
+  "fcpu": 250000000,
+  "frameworks": [
+    "arduino",
+    "zephyr"
+  ],
+  "id": "nucleo_h563zi",
+  "mcu": "STM32H563ZIT6U",
+  "name": "ST Nucleo H563ZI",
+  "platform": "ststm32",
+  "ram": 655360,
+  "rom": 2097152,
   "upload": {
     "protocol": "mbed"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/nucleo-h563zi.html",
+  "vendor": "ST"
 }

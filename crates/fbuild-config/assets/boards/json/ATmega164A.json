@@ -1,26 +1,26 @@
 {
-  "id": "ATmega164A",
-  "name": "ATmega164A",
-  "platform": "atmelavr",
-  "mcu": "ATMEGA164A",
-  "fcpu": 16000000,
-  "ram": 1024,
-  "rom": 16384,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega164a",
   "build": {
-    "extra_flags": "-DARDUINO_AVR_ATmega164",
     "core": "MightyCore",
+    "extra_flags": "-DARDUINO_AVR_ATmega164",
     "f_cpu": "16000000L",
     "mcu": "atmega164a",
     "variant": "standard"
   },
+  "fcpu": 16000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "ATmega164A",
+  "mcu": "ATMEGA164A",
+  "name": "ATmega164A",
+  "platform": "atmelavr",
+  "ram": 1024,
+  "rom": 16384,
   "upload": {
     "protocol": "urclock",
-    "speed": 115200,
-    "require_upload_port": true
-  }
+    "require_upload_port": true,
+    "speed": 115200
+  },
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega164a",
+  "vendor": "Microchip"
 }

@@ -1,35 +1,35 @@
 {
-  "id": "agafia_sg0",
-  "name": "Sigma IC AGAFIA SG0",
-  "platform": "ststm32",
-  "mcu": "STM32G071RBT6",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32G0 -DSTM32G0xx -DSTM32G071xx",
+    "f_cpu": "64000000L",
+    "mcu": "stm32g071rbt6",
+    "variant": "STM32G0xx/G071C(6-8-B)(T-U)_G081CB(T-U)"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  },
   "fcpu": 64000000,
-  "ram": 36864,
-  "rom": 131072,
   "frameworks": [
     "arduino",
     "cmsis",
     "libopencm3",
     "stm32cube"
   ],
-  "vendor": "Sigma IC",
-  "url": "https://www.sigmaic.com/store/p7/agafia-sgo.html",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32G0 -DSTM32G0xx -DSTM32G071xx",
-    "core": "stm32",
-    "f_cpu": "64000000L",
-    "mcu": "stm32g071rbt6",
-    "variant": "STM32G0xx/G071C(6-8-B)(T-U)_G081CB(T-U)"
-  },
+  "id": "agafia_sg0",
+  "mcu": "STM32G071RBT6",
+  "name": "Sigma IC AGAFIA SG0",
+  "platform": "ststm32",
+  "ram": 36864,
+  "rom": 131072,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.sigmaic.com/store/p7/agafia-sgo.html",
+  "vendor": "Sigma IC"
 }

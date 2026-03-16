@@ -1,33 +1,33 @@
 {
-  "id": "mote_l152rc",
-  "name": "NAMote72",
-  "platform": "ststm32",
-  "mcu": "STM32L152RC",
+  "build": {
+    "extra_flags": "-DSTM32L1 -DSTM32L152xC",
+    "f_cpu": "32000000L",
+    "mcu": "stm32l152rc"
+  },
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "cmsis-dap": {},
+      "jlink": {},
+      "stlink": {}
+    }
+  },
   "fcpu": 32000000,
-  "ram": 32768,
-  "rom": 262144,
   "frameworks": [
     "mbed",
     "cmsis",
     "stm32cube",
     "libopencm3"
   ],
-  "vendor": "Semtech",
-  "url": "https://developer.mbed.org/platforms/NAMote-72/",
-  "debug": {
-    "tools": {
-      "blackmagic": {},
-      "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
-    }
-  },
-  "build": {
-    "extra_flags": "-DSTM32L1 -DSTM32L152xC",
-    "f_cpu": "32000000L",
-    "mcu": "stm32l152rc"
-  },
+  "id": "mote_l152rc",
+  "mcu": "STM32L152RC",
+  "name": "NAMote72",
+  "platform": "ststm32",
+  "ram": 32768,
+  "rom": 262144,
   "upload": {
     "protocol": "mbed"
-  }
+  },
+  "url": "https://developer.mbed.org/platforms/NAMote-72/",
+  "vendor": "Semtech"
 }

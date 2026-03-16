@@ -1,38 +1,38 @@
 {
-  "id": "disco_b_u585i_iot02a",
-  "name": "ST B-U585I-IOT02A Discovery",
-  "platform": "ststm32",
-  "mcu": "STM32U585AII6Q",
-  "fcpu": 160000000,
-  "ram": 262144,
-  "rom": 2097152,
-  "frameworks": [
-    "arduino"
-  ],
-  "vendor": "ST",
-  "url": "https://www.st.com/en/evaluation-tools/b-u585i-iot02a.html",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32U5 -DSTM32U5xx -DSTM32U585xx",
+    "f_cpu": "160000000L",
+    "mcu": "stm32u585aii6q",
+    "variant": "STM32U5xx/U575A(G-I)IxQ_U585AIIxQ"
+  },
   "connectivity": [
     "can"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
       "stlink": {
-        "onboard": true,
-        "default": true
-      },
-      "cmsis-dap": {}
+        "default": true,
+        "onboard": true
+      }
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32U5 -DSTM32U5xx -DSTM32U585xx",
-    "core": "stm32",
-    "f_cpu": "160000000L",
-    "mcu": "stm32u585aii6q",
-    "variant": "STM32U5xx/U575A(G-I)IxQ_U585AIIxQ"
-  },
+  "fcpu": 160000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "disco_b_u585i_iot02a",
+  "mcu": "STM32U585AII6Q",
+  "name": "ST B-U585I-IOT02A Discovery",
+  "platform": "ststm32",
+  "ram": 262144,
+  "rom": 2097152,
   "upload": {
     "protocol": "stlink"
-  }
+  },
+  "url": "https://www.st.com/en/evaluation-tools/b-u585i-iot02a.html",
+  "vendor": "ST"
 }

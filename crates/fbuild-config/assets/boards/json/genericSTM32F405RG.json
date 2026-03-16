@@ -1,19 +1,11 @@
 {
-  "id": "genericSTM32F405RG",
-  "name": "STM32F405RG (128k RAM. 1024k Flash)",
-  "platform": "ststm32",
-  "mcu": "STM32F405RGT6",
-  "fcpu": 168000000,
-  "ram": 131072,
-  "rom": 1048576,
-  "frameworks": [
-    "arduino",
-    "cmsis",
-    "stm32cube",
-    "libopencm3"
-  ],
-  "vendor": "Generic",
-  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f405rg.html",
+  "build": {
+    "core": "stm32",
+    "extra_flags": "-DSTM32F4 -DSTM32F405xx -DSTM32F4xx",
+    "f_cpu": "168000000L",
+    "mcu": "stm32f405rgt6",
+    "variant": "STM32F4xx/F405RGT_F415RGT"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
@@ -21,14 +13,22 @@
       "stlink": {}
     }
   },
-  "build": {
-    "extra_flags": "-DSTM32F4 -DSTM32F405xx -DSTM32F4xx",
-    "core": "stm32",
-    "f_cpu": "168000000L",
-    "mcu": "stm32f405rgt6",
-    "variant": "STM32F4xx/F405RGT_F415RGT"
-  },
+  "fcpu": 168000000,
+  "frameworks": [
+    "arduino",
+    "cmsis",
+    "stm32cube",
+    "libopencm3"
+  ],
+  "id": "genericSTM32F405RG",
+  "mcu": "STM32F405RGT6",
+  "name": "STM32F405RG (128k RAM. 1024k Flash)",
+  "platform": "ststm32",
+  "ram": 131072,
+  "rom": 1048576,
   "upload": {
     "protocol": "serial"
-  }
+  },
+  "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f405rg.html",
+  "vendor": "Generic"
 }
