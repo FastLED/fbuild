@@ -23,6 +23,8 @@ pub struct Esp32Compiler {
     mcu_config: Esp32McuConfig,
     /// Build profile (release, quick).
     profile: BuildProfile,
+    /// Directory for temporary files (response files, etc.).
+    temp_dir: PathBuf,
 }
 
 impl Esp32Compiler {
@@ -37,6 +39,31 @@ impl Esp32Compiler {
         profile: BuildProfile,
         verbose: bool,
     ) -> Self {
+        Self::with_temp_dir(
+            gcc_path,
+            gxx_path,
+            mcu_config,
+            f_cpu,
+            defines,
+            include_dirs,
+            profile,
+            verbose,
+            std::env::temp_dir(),
+        )
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    pub fn with_temp_dir(
+        gcc_path: PathBuf,
+        gxx_path: PathBuf,
+        mcu_config: Esp32McuConfig,
+        f_cpu: &str,
+        defines: HashMap<String, String>,
+        include_dirs: Vec<PathBuf>,
+        profile: BuildProfile,
+        verbose: bool,
+        temp_dir: PathBuf,
+    ) -> Self {
         Self {
             base: CompilerBase {
                 mcu: mcu_config.mcu.clone(),
@@ -49,6 +76,7 @@ impl Esp32Compiler {
             gxx_path,
             mcu_config,
             profile,
+            temp_dir,
         }
     }
 
@@ -64,6 +92,9 @@ impl Esp32Compiler {
         if let Some(profile) = self.mcu_config.get_profile(profile_name) {
             flags.extend(profile.compile_flags.clone());
         }
+
+        // mbedtls and other compat defines from the data-driven JSON config
+        flags.extend(self.mcu_config.compat_define_flags());
 
         flags.extend(self.base.build_define_flags());
         flags
@@ -90,7 +121,7 @@ impl Esp32Compiler {
         // On Windows, if we have many include paths, use a response file
         // to avoid exceeding the 32KB command line limit.
         if cfg!(windows) && include_flags.len() > 100 {
-            let response_file = write_response_file(&include_flags)?;
+            let response_file = write_response_file(&include_flags, &self.temp_dir)?;
             Ok(vec![format!("@{}", response_file.display())])
         } else {
             Ok(include_flags)
@@ -167,18 +198,25 @@ impl Compiler for Esp32Compiler {
 ///
 /// Returns the path to the response file. The file is written to the system
 /// temp directory and will persist for the duration of the build.
-fn write_response_file(flags: &[String]) -> Result<PathBuf> {
-    // On MSYS, std::env::temp_dir() returns "/tmp/" which native Windows
-    // binaries (like the ESP32 cross-compiler) treat as "C:\tmp\", not the
-    // real temp dir. Use LOCALAPPDATA\Temp for a Windows-native path.
-    let temp_dir = if cfg!(windows) {
-        std::env::var("LOCALAPPDATA")
-            .map(|la| std::path::PathBuf::from(la).join("Temp"))
-            .unwrap_or_else(|_| std::env::temp_dir())
-    } else {
-        std::env::temp_dir()
-    };
-    let path = temp_dir.join(format!("fbuild_esp32_{}.rsp", std::process::id()));
+/// Uses an atomic counter for thread-safe unique filenames during parallel compilation.
+fn write_response_file(flags: &[String], temp_dir: &Path) -> Result<PathBuf> {
+    use std::sync::atomic::{AtomicU64, Ordering};
+    static RSP_COUNTER: AtomicU64 = AtomicU64::new(0);
+
+    std::fs::create_dir_all(temp_dir).map_err(|e| {
+        fbuild_core::FbuildError::BuildFailed(format!(
+            "failed to create temp dir {}: {}",
+            temp_dir.display(),
+            e
+        ))
+    })?;
+
+    let counter = RSP_COUNTER.fetch_add(1, Ordering::Relaxed);
+    let path = temp_dir.join(format!(
+        "fbuild_esp32_{}_{}.rsp",
+        std::process::id(),
+        counter
+    ));
     // GCC treats backslashes in response files as escape characters (\n = newline,
     // \f = formfeed, etc.). Convert to forward slashes for Windows compatibility.
     let content = flags
@@ -291,15 +329,26 @@ mod tests {
 
     #[test]
     fn test_response_file_generation() {
+        let tmp = tempfile::TempDir::new().unwrap();
         let flags: Vec<String> = (0..200)
             .map(|i| format!("-I/path/to/include/{}", i))
             .collect();
-        let path = write_response_file(&flags).unwrap();
+        let path = write_response_file(&flags, tmp.path()).unwrap();
         assert!(path.exists());
         let content = std::fs::read_to_string(&path).unwrap();
         assert!(content.contains("-I/path/to/include/0"));
         assert!(content.contains("-I/path/to/include/199"));
-        // Cleanup
-        let _ = std::fs::remove_file(&path);
+    }
+
+    #[test]
+    fn test_mbedtls_compat_defines_in_flags() {
+        let compiler = test_compiler("esp32c6");
+        let flags = compiler.common_flags();
+        assert!(flags
+            .iter()
+            .any(|f| f == "-Dmbedtls_md5_starts_ret=mbedtls_md5_starts"));
+        assert!(flags
+            .iter()
+            .any(|f| f == "-Dmbedtls_sha1_finish_ret=mbedtls_sha1_finish"));
     }
 }

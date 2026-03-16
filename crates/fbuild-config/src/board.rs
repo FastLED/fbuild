@@ -35,6 +35,14 @@ pub struct BoardConfig {
     pub max_flash: Option<u64>,
     /// Maximum RAM size in bytes
     pub max_ram: Option<u64>,
+    /// Flash mode (e.g. "dio", "qio") — ESP32 boards
+    pub flash_mode: Option<String>,
+    /// Flash frequency (e.g. "80000000L") — ESP32 boards
+    pub f_flash: Option<String>,
+    /// Partition table file (e.g. "default_8MB.csv") — ESP32 boards
+    pub partitions: Option<String>,
+    /// Linker script (e.g. "esp32s3_out.ld")
+    pub ldscript: Option<String>,
 }
 
 impl BoardConfig {
@@ -99,6 +107,10 @@ impl BoardConfig {
             max_ram: get("maximum_data_size")
                 .or_else(|| props.get("maximum_data_size").cloned())
                 .and_then(|s| s.parse().ok()),
+            flash_mode: get("flash_mode"),
+            f_flash: get("f_flash"),
+            partitions: get("partitions"),
+            ldscript: get("ldscript"),
         })
     }
 
@@ -160,6 +172,22 @@ impl BoardConfig {
                         .get("maximum_data_size")
                         .and_then(|s| s.parse().ok())
                 }),
+            flash_mode: overrides
+                .get("flash_mode")
+                .cloned()
+                .or_else(|| defaults.get("flash_mode").cloned()),
+            f_flash: overrides
+                .get("f_flash")
+                .cloned()
+                .or_else(|| defaults.get("f_flash").cloned()),
+            partitions: overrides
+                .get("partitions")
+                .cloned()
+                .or_else(|| defaults.get("partitions").cloned()),
+            ldscript: overrides
+                .get("ldscript")
+                .cloned()
+                .or_else(|| defaults.get("ldscript").cloned()),
         })
     }
 
@@ -315,180 +343,138 @@ fn parse_boards_txt(content: &str, board_id: &str) -> HashMap<String, String> {
     props
 }
 
-/// Convert a board_id like "uno" to a board define like "AVR_UNO".
+/// Convert a board_id like "uno" to a board define like "UNO".
 fn board_id_to_board_define(board_id: &str) -> String {
     board_id.to_uppercase().replace('-', "_")
 }
 
-/// Built-in defaults for common boards.
+/// Embedded board database — 1609 boards from PlatformIO registry JSON files.
+///
+/// Loaded once on first access via `OnceLock`. Each entry maps board_id → JSON object
+/// with fields: id, name, mcu, platform, fcpu, ram, rom, etc.
+static BOARD_DB: std::sync::OnceLock<HashMap<String, serde_json::Value>> =
+    std::sync::OnceLock::new();
+
+static BOARDS_DIR: include_dir::Dir =
+    include_dir::include_dir!("$CARGO_MANIFEST_DIR/assets/boards/json");
+
+fn get_board_db() -> &'static HashMap<String, serde_json::Value> {
+    BOARD_DB.get_or_init(|| {
+        let mut db = HashMap::new();
+        for file in BOARDS_DIR.files() {
+            let Some(stem) = file.path().file_stem().and_then(|s| s.to_str()) else {
+                continue;
+            };
+            if file.path().extension().and_then(|e| e.to_str()) != Some("json") {
+                continue;
+            }
+            let Some(contents) = file.contents_utf8() else {
+                continue;
+            };
+            match serde_json::from_str(contents) {
+                Ok(value) => {
+                    db.insert(stem.to_string(), value);
+                }
+                Err(e) => {
+                    tracing::error!("failed to parse board {}: {}", stem, e);
+                }
+            }
+        }
+        db
+    })
+}
+
+/// Common board aliases mapping short names to JSON board_ids.
+fn resolve_board_alias(board_id: &str) -> &str {
+    match board_id {
+        "mega" => "megaatmega2560",
+        "nano" | "nanoatmega328" => "nanoatmega328",
+        "rpipico" => "pico",
+        "rpipico2" => "pico2",
+        "esp32c3" => "esp32-c3-devkitm-1",
+        "esp32c6" => "esp32-c6-devkitm-1",
+        "esp32s3" => "esp32-s3-devkitc-1",
+        other => other,
+    }
+}
+
 fn get_board_defaults(board_id: &str) -> Option<HashMap<String, String>> {
+    let db = get_board_db();
+    let resolved = resolve_board_alias(board_id);
+    let entry = db.get(board_id).or_else(|| db.get(resolved))?;
+
     let mut d = HashMap::new();
 
-    match board_id {
-        "uno" => {
-            d.insert("name".into(), "Arduino Uno".into());
-            d.insert("mcu".into(), "atmega328p".into());
-            d.insert("f_cpu".into(), "16000000L".into());
-            d.insert("board".into(), "AVR_UNO".into());
-            d.insert("core".into(), "arduino".into());
-            d.insert("variant".into(), "standard".into());
-            d.insert("maximum_size".into(), "32256".into());
-            d.insert("maximum_data_size".into(), "2048".into());
-            d.insert("upload.protocol".into(), "arduino".into());
-            d.insert("upload.speed".into(), "115200".into());
-        }
-        "mega" | "megaatmega2560" => {
-            d.insert("name".into(), "Arduino Mega 2560".into());
-            d.insert("mcu".into(), "atmega2560".into());
-            d.insert("f_cpu".into(), "16000000L".into());
-            d.insert("board".into(), "AVR_MEGA2560".into());
-            d.insert("core".into(), "arduino".into());
-            d.insert("variant".into(), "mega".into());
-            d.insert("maximum_size".into(), "253952".into());
-            d.insert("maximum_data_size".into(), "8192".into());
-            d.insert("upload.protocol".into(), "wiring".into());
-            d.insert("upload.speed".into(), "115200".into());
-        }
-        "nano" | "nanoatmega328" => {
-            d.insert("name".into(), "Arduino Nano".into());
-            d.insert("mcu".into(), "atmega328p".into());
-            d.insert("f_cpu".into(), "16000000L".into());
-            d.insert("board".into(), "AVR_NANO".into());
-            d.insert("core".into(), "arduino".into());
-            d.insert("variant".into(), "eightanaloginputs".into());
-            d.insert("maximum_size".into(), "30720".into());
-            d.insert("maximum_data_size".into(), "2048".into());
-            d.insert("upload.protocol".into(), "arduino".into());
-            d.insert("upload.speed".into(), "57600".into());
-        }
-        "leonardo" => {
-            d.insert("name".into(), "Arduino Leonardo".into());
-            d.insert("mcu".into(), "atmega32u4".into());
-            d.insert("f_cpu".into(), "16000000L".into());
-            d.insert("board".into(), "AVR_LEONARDO".into());
-            d.insert("core".into(), "arduino".into());
-            d.insert("variant".into(), "leonardo".into());
-            d.insert("vid".into(), "0x2341".into());
-            d.insert("pid".into(), "0x8036".into());
-            d.insert("maximum_size".into(), "28672".into());
-            d.insert("maximum_data_size".into(), "2560".into());
-            d.insert("upload.protocol".into(), "avr109".into());
-            d.insert("upload.speed".into(), "57600".into());
-        }
-        "esp32dev" => {
-            d.insert("name".into(), "Espressif ESP32 Dev Module".into());
-            d.insert("mcu".into(), "esp32".into());
-            d.insert("f_cpu".into(), "240000000L".into());
-            d.insert("board".into(), "ESP32_DEV".into());
-            d.insert("core".into(), "esp32".into());
-            d.insert("variant".into(), "esp32".into());
-            d.insert("maximum_size".into(), "1310720".into());
-            d.insert("maximum_data_size".into(), "327680".into());
-            d.insert("upload.protocol".into(), "esptool".into());
-            d.insert("upload.speed".into(), "460800".into());
-        }
-        "esp32-c3" | "esp32c3" => {
-            d.insert("name".into(), "ESP32-C3".into());
-            d.insert("mcu".into(), "esp32c3".into());
-            d.insert("f_cpu".into(), "160000000L".into());
-            d.insert("board".into(), "ESP32C3_DEV".into());
-            d.insert("core".into(), "esp32".into());
-            d.insert("variant".into(), "esp32c3".into());
-            d.insert("maximum_size".into(), "3145728".into());
-            d.insert("maximum_data_size".into(), "327680".into());
-            d.insert("upload.protocol".into(), "esptool".into());
-            d.insert("upload.speed".into(), "460800".into());
-        }
-        "esp32-c6" | "esp32c6" => {
-            d.insert("name".into(), "ESP32-C6".into());
-            d.insert("mcu".into(), "esp32c6".into());
-            d.insert("f_cpu".into(), "160000000L".into());
-            d.insert("board".into(), "ESP32C6_DEV".into());
-            d.insert("core".into(), "esp32".into());
-            d.insert("variant".into(), "esp32c6".into());
-            d.insert("maximum_size".into(), "3145728".into());
-            d.insert("maximum_data_size".into(), "327680".into());
-            d.insert("upload.protocol".into(), "esptool".into());
-            d.insert("upload.speed".into(), "460800".into());
-        }
-        "esp32-s3" | "esp32s3" => {
-            d.insert("name".into(), "ESP32-S3".into());
-            d.insert("mcu".into(), "esp32s3".into());
-            d.insert("f_cpu".into(), "240000000L".into());
-            d.insert("board".into(), "ESP32S3_DEV".into());
-            d.insert("core".into(), "esp32".into());
-            d.insert("variant".into(), "esp32s3".into());
-            d.insert("maximum_size".into(), "3145728".into());
-            d.insert("maximum_data_size".into(), "327680".into());
-            d.insert("upload.protocol".into(), "esptool".into());
-            d.insert("upload.speed".into(), "460800".into());
-        }
-        "teensy40" => {
-            d.insert("name".into(), "Teensy 4.0".into());
-            d.insert("mcu".into(), "imxrt1062".into());
-            d.insert("f_cpu".into(), "600000000L".into());
-            d.insert("board".into(), "TEENSY40".into());
-            d.insert("core".into(), "teensy4".into());
-            d.insert("variant".into(), "teensy40".into());
-            d.insert("maximum_size".into(), "2031616".into());
-            d.insert("maximum_data_size".into(), "1048576".into());
-            d.insert("upload.protocol".into(), "teensy-gui".into());
-            d.insert("upload.speed".into(), "0".into());
-        }
-        "teensy41" => {
-            d.insert("name".into(), "Teensy 4.1".into());
-            d.insert("mcu".into(), "imxrt1062".into());
-            d.insert("f_cpu".into(), "600000000L".into());
-            d.insert("board".into(), "TEENSY41".into());
-            d.insert("core".into(), "teensy4".into());
-            d.insert("variant".into(), "teensy41".into());
-            d.insert("maximum_size".into(), "8126464".into());
-            d.insert("maximum_data_size".into(), "1048576".into());
-            d.insert("upload.protocol".into(), "teensy-gui".into());
-            d.insert("upload.speed".into(), "0".into());
-        }
-        "rpipico" | "pico" => {
-            d.insert("name".into(), "Raspberry Pi Pico".into());
-            d.insert("mcu".into(), "rp2040".into());
-            d.insert("f_cpu".into(), "133000000L".into());
-            d.insert("board".into(), "RASPBERRY_PI_PICO".into());
-            d.insert("core".into(), "arduino".into());
-            d.insert("variant".into(), "rpipico".into());
-            d.insert("maximum_size".into(), "2097152".into());
-            d.insert("maximum_data_size".into(), "262144".into());
-        }
-        "rpipico2" | "pico2" => {
-            d.insert("name".into(), "Raspberry Pi Pico 2".into());
-            d.insert("mcu".into(), "rp2350".into());
-            d.insert("f_cpu".into(), "150000000L".into());
-            d.insert("board".into(), "RASPBERRY_PI_PICO2".into());
-            d.insert("core".into(), "arduino".into());
-            d.insert("variant".into(), "rpipico2".into());
-            d.insert("maximum_size".into(), "4194304".into());
-            d.insert("maximum_data_size".into(), "524288".into());
-        }
-        "bluepill_f103c8" => {
-            d.insert("name".into(), "STM32 Blue Pill F103C8".into());
-            d.insert("mcu".into(), "stm32f103c8t6".into());
-            d.insert("f_cpu".into(), "72000000L".into());
-            d.insert("board".into(), "BLUEPILL_F103C8".into());
-            d.insert("core".into(), "stm32".into());
-            d.insert("variant".into(), "STM32F1xx/F103C8T_F103CB(T-U)".into());
-            d.insert("maximum_size".into(), "65536".into());
-            d.insert("maximum_data_size".into(), "20480".into());
-        }
-        "nucleo_f446re" => {
-            d.insert("name".into(), "ST Nucleo F446RE".into());
-            d.insert("mcu".into(), "stm32f446ret6".into());
-            d.insert("f_cpu".into(), "180000000L".into());
-            d.insert("board".into(), "NUCLEO_F446RE".into());
-            d.insert("core".into(), "stm32".into());
-            d.insert("variant".into(), "STM32F4xx/F446R(C-E)T".into());
-            d.insert("maximum_size".into(), "524288".into());
-            d.insert("maximum_data_size".into(), "131072".into());
-        }
-        _ => return None,
+    if let Some(name) = entry.get("name").and_then(|v| v.as_str()) {
+        d.insert("name".into(), name.to_string());
     }
+
+    let mcu = entry
+        .get("mcu")
+        .and_then(|v| v.as_str())
+        .unwrap_or("unknown")
+        .to_lowercase();
+    d.insert("mcu".into(), mcu.clone());
+
+    if let Some(fcpu) = entry.get("fcpu").and_then(|v| v.as_u64()) {
+        d.insert("f_cpu".into(), format!("{}L", fcpu));
+    }
+
+    if let Some(ram) = entry.get("ram").and_then(|v| v.as_u64()) {
+        d.insert("maximum_data_size".into(), ram.to_string());
+    }
+
+    if let Some(rom) = entry.get("rom").and_then(|v| v.as_u64()) {
+        d.insert("maximum_size".into(), rom.to_string());
+    }
+
+    // Data-driven: read build section from enriched JSON
+    if let Some(build) = entry.get("build").and_then(|v| v.as_object()) {
+        if let Some(core) = build.get("core").and_then(|v| v.as_str()) {
+            d.insert("core".into(), core.to_string());
+        }
+        if let Some(variant) = build.get("variant").and_then(|v| v.as_str()) {
+            d.insert("variant".into(), variant.to_string());
+        }
+        if let Some(flags) = build.get("extra_flags").and_then(|v| v.as_str()) {
+            d.insert("extra_flags".into(), flags.to_string());
+        }
+        if let Some(flash_mode) = build.get("flash_mode").and_then(|v| v.as_str()) {
+            d.insert("flash_mode".into(), flash_mode.to_string());
+        }
+        if let Some(f_flash) = build.get("f_flash").and_then(|v| v.as_str()) {
+            d.insert("f_flash".into(), f_flash.to_string());
+        }
+        // Arduino sub-fields
+        if let Some(arduino) = build.get("arduino").and_then(|v| v.as_object()) {
+            if let Some(ldscript) = arduino.get("ldscript").and_then(|v| v.as_str()) {
+                d.insert("ldscript".into(), ldscript.to_string());
+            }
+            if let Some(partitions) = arduino.get("partitions").and_then(|v| v.as_str()) {
+                d.insert("partitions".into(), partitions.to_string());
+            }
+        }
+    }
+
+    // Data-driven: read upload section from enriched JSON
+    if let Some(upload) = entry.get("upload").and_then(|v| v.as_object()) {
+        if let Some(protocol) = upload.get("protocol").and_then(|v| v.as_str()) {
+            d.insert("upload.protocol".into(), protocol.to_string());
+        }
+        if let Some(speed) = upload.get("speed").and_then(|v| v.as_u64()) {
+            d.insert("upload.speed".into(), speed.to_string());
+        }
+    }
+
+    // Fallback for unenriched boards: derive from platform
+    if !d.contains_key("core") {
+        d.insert("core".into(), "arduino".into());
+    }
+    if !d.contains_key("variant") {
+        d.insert("variant".into(), board_id.to_string());
+    }
+    d.entry("board".into())
+        .or_insert_with(|| board_id_to_board_define(board_id));
 
     Some(d)
 }
@@ -512,11 +498,15 @@ mod tests {
         assert_eq!(config.name, "Arduino Uno");
         assert_eq!(config.mcu, "atmega328p");
         assert_eq!(config.f_cpu, "16000000L");
-        assert_eq!(config.board, "AVR_UNO");
+        assert_eq!(config.board, "UNO");
         assert_eq!(config.core, "arduino");
         assert_eq!(config.variant, "standard");
         assert_eq!(config.max_flash, Some(32256));
         assert_eq!(config.max_ram, Some(2048));
+        // extra_flags from enriched JSON
+        assert_eq!(config.extra_flags, Some("-DARDUINO_AVR_UNO".to_string()));
+        assert_eq!(config.upload_protocol, Some("arduino".to_string()));
+        assert_eq!(config.upload_speed, Some("115200".to_string()));
     }
 
     #[test]
@@ -707,5 +697,67 @@ leonardo.upload.speed=57600
         let repr = format!("{:?}", config);
         assert!(repr.contains("Arduino Uno"));
         assert!(repr.contains("atmega328p"));
+    }
+
+    // --- Data-driven enriched JSON tests ---
+
+    #[test]
+    fn test_mega_upload_protocol_wiring() {
+        // Bug fix: mega needs protocol=wiring, not arduino
+        let config = BoardConfig::from_board_id("mega", &HashMap::new()).unwrap();
+        assert_eq!(config.upload_protocol, Some("wiring".to_string()));
+        assert_eq!(config.core, "arduino");
+        assert_eq!(config.variant, "mega");
+    }
+
+    #[test]
+    fn test_nano_upload_speed_57600() {
+        // Bug fix: nano uses 57600, not 115200
+        let config = BoardConfig::from_board_id("nano", &HashMap::new()).unwrap();
+        assert_eq!(config.upload_speed, Some("57600".to_string()));
+        assert_eq!(config.upload_protocol, Some("arduino".to_string()));
+        assert_eq!(config.variant, "eightanaloginputs");
+    }
+
+    #[test]
+    fn test_teensy36_core_teensy3() {
+        // Bug fix: teensy30-36 use core=teensy3, not teensy4
+        let config = BoardConfig::from_board_id("teensy36", &HashMap::new()).unwrap();
+        assert_eq!(config.core, "teensy3");
+        assert_eq!(config.upload_protocol, Some("teensy-gui".to_string()));
+    }
+
+    #[test]
+    fn test_teensy41_core_teensy4() {
+        let config = BoardConfig::from_board_id("teensy41", &HashMap::new()).unwrap();
+        assert_eq!(config.core, "teensy4");
+        assert_eq!(config.upload_protocol, Some("teensy-gui".to_string()));
+    }
+
+    #[test]
+    fn test_esp32dev_enriched_fields() {
+        let config = BoardConfig::from_board_id("esp32dev", &HashMap::new()).unwrap();
+        assert_eq!(config.core, "esp32");
+        assert_eq!(config.variant, "esp32");
+        assert_eq!(config.flash_mode, Some("dio".to_string()));
+        assert_eq!(config.f_flash, Some("40000000L".to_string()));
+        assert_eq!(config.ldscript, Some("esp32_out.ld".to_string()));
+        assert_eq!(config.upload_speed, Some("460800".to_string()));
+    }
+
+    #[test]
+    fn test_pico_enriched_fields() {
+        let config = BoardConfig::from_board_id("rpipico", &HashMap::new()).unwrap();
+        assert_eq!(config.core, "arduino");
+        assert_eq!(config.variant, "RASPBERRY_PI_PICO");
+        assert_eq!(config.upload_protocol, Some("picotool".to_string()));
+    }
+
+    #[test]
+    fn test_extra_flags_produce_defines() {
+        // Enriched extra_flags should produce correct ARDUINO_* defines
+        let config = BoardConfig::from_board_id("uno", &HashMap::new()).unwrap();
+        let defines = config.get_defines();
+        assert_eq!(defines.get("ARDUINO_AVR_UNO"), Some(&"1".to_string()));
     }
 }

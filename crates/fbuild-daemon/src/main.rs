@@ -48,7 +48,7 @@ async fn main() {
         .route("/api/monitor", post(operations::monitor))
         .route("/api/devices/list", post(devices::list_devices))
         .route("/ws/serial-monitor", get(websockets::ws_serial_monitor))
-        .with_state(context);
+        .with_state(context.clone());
 
     let addr = format!("0.0.0.0:{}", port);
     let listener = tokio::net::TcpListener::bind(&addr)
@@ -60,13 +60,28 @@ async fn main() {
 
     tracing::info!("listening on {}", addr);
 
+    // Clone shutdown_tx so we can trigger shutdown from Ctrl+C too
+    let shutdown_tx_signal = context.shutdown_tx.clone();
+
     axum::serve(listener, app)
         .with_graceful_shutdown(async move {
-            let _ = shutdown_rx.changed().await;
+            // Wait for either the HTTP shutdown endpoint or Ctrl+C / SIGTERM
+            tokio::select! {
+                _ = async { let _ = shutdown_rx.changed().await; } => {
+                    tracing::info!("shutdown requested via HTTP");
+                }
+                _ = tokio::signal::ctrl_c() => {
+                    tracing::info!("shutdown requested via Ctrl+C");
+                    let _ = shutdown_tx_signal.send(true);
+                }
+            }
             tracing::info!("graceful shutdown initiated");
         })
         .await
         .unwrap_or_else(|e| {
             tracing::error!("server error: {}", e);
         });
+
+    tracing::info!("daemon exiting");
+    std::process::exit(0);
 }

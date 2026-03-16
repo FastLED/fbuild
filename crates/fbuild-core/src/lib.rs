@@ -66,18 +66,36 @@ pub enum Platform {
 }
 
 impl Platform {
-    /// Parse a platform string from platformio.ini (e.g. "atmelavr", "espressif32").
+    /// Parse a platform string from platformio.ini.
+    ///
+    /// Uses substring matching to handle all PlatformIO platform spec forms:
+    /// bare names, owner-prefixed, versioned, git URLs, git refs, local paths.
     pub fn from_platform_str(s: &str) -> Option<Self> {
-        match s.trim().to_lowercase().as_str() {
-            "atmelavr" => Some(Self::AtmelAvr),
-            "espressif32" => Some(Self::Espressif32),
-            "espressif8266" => Some(Self::Espressif8266),
-            "raspberrypi" | "raspberrypipico" => Some(Self::RaspberryPi),
-            "ststm32" => Some(Self::Ststm32),
-            "teensy" => Some(Self::Teensy),
-            "wasm" | "emscripten" => Some(Self::Wasm),
-            _ => None,
+        let s = s.to_lowercase();
+        // Check espressif8266 before espressif32 to avoid false match
+        // ("espressif8266" does not contain "espressif32", but be explicit).
+        if s.contains("espressif8266") {
+            Some(Self::Espressif8266)
+        } else if s.contains("espressif32") {
+            Some(Self::Espressif32)
+        } else if s.contains("atmelavr") {
+            Some(Self::AtmelAvr)
+        } else if s.contains("ststm32") {
+            Some(Self::Ststm32)
+        } else if s.contains("raspberrypi") {
+            Some(Self::RaspberryPi)
+        } else if s.contains("teensy") {
+            Some(Self::Teensy)
+        } else if s.contains("emscripten") || s.contains("wasm") {
+            Some(Self::Wasm)
+        } else {
+            None
         }
+    }
+
+    /// Check if a raw platform string identifies this platform.
+    pub fn matches_str(&self, s: &str) -> bool {
+        Platform::from_platform_str(s) == Some(*self)
     }
 }
 
@@ -266,7 +284,7 @@ mod tests {
     }
 
     #[test]
-    fn platform_from_str() {
+    fn platform_from_str_bare_names() {
         assert_eq!(
             Platform::from_platform_str("atmelavr"),
             Some(Platform::AtmelAvr)
@@ -275,6 +293,131 @@ mod tests {
             Platform::from_platform_str("espressif32"),
             Some(Platform::Espressif32)
         );
+        assert_eq!(
+            Platform::from_platform_str("espressif8266"),
+            Some(Platform::Espressif8266)
+        );
+        assert_eq!(
+            Platform::from_platform_str("raspberrypi"),
+            Some(Platform::RaspberryPi)
+        );
+        assert_eq!(
+            Platform::from_platform_str("raspberrypipico"),
+            Some(Platform::RaspberryPi)
+        );
+        assert_eq!(
+            Platform::from_platform_str("ststm32"),
+            Some(Platform::Ststm32)
+        );
+        assert_eq!(
+            Platform::from_platform_str("teensy"),
+            Some(Platform::Teensy)
+        );
+        assert_eq!(Platform::from_platform_str("wasm"), Some(Platform::Wasm));
+        assert_eq!(
+            Platform::from_platform_str("emscripten"),
+            Some(Platform::Wasm)
+        );
+    }
+
+    #[test]
+    fn platform_from_str_owner_prefixed() {
+        assert_eq!(
+            Platform::from_platform_str("platformio/espressif32"),
+            Some(Platform::Espressif32)
+        );
+        assert_eq!(
+            Platform::from_platform_str("platformio/atmelavr"),
+            Some(Platform::AtmelAvr)
+        );
+    }
+
+    #[test]
+    fn platform_from_str_versioned() {
+        assert_eq!(
+            Platform::from_platform_str("platformio/espressif32@^6.3.0"),
+            Some(Platform::Espressif32)
+        );
+        assert_eq!(
+            Platform::from_platform_str("espressif32@6.3.0"),
+            Some(Platform::Espressif32)
+        );
+    }
+
+    #[test]
+    fn platform_from_str_git_urls() {
+        assert_eq!(
+            Platform::from_platform_str("https://github.com/platformio/platform-espressif32.git"),
+            Some(Platform::Espressif32)
+        );
+        assert_eq!(
+            Platform::from_platform_str(
+                "https://github.com/platformio/platform-espressif32.git#v6.3.0"
+            ),
+            Some(Platform::Espressif32)
+        );
+        assert_eq!(
+            Platform::from_platform_str(
+                "https://github.com/platformio/platform-atmelavr.git#feature-branch"
+            ),
+            Some(Platform::AtmelAvr)
+        );
+    }
+
+    #[test]
+    fn platform_from_str_local_paths() {
+        assert_eq!(
+            Platform::from_platform_str("/home/user/platform-espressif32"),
+            Some(Platform::Espressif32)
+        );
+        assert_eq!(
+            Platform::from_platform_str("../platform-teensy"),
+            Some(Platform::Teensy)
+        );
+    }
+
+    #[test]
+    fn platform_from_str_case_insensitive() {
+        assert_eq!(
+            Platform::from_platform_str("Espressif32"),
+            Some(Platform::Espressif32)
+        );
+        assert_eq!(
+            Platform::from_platform_str("ATMELAVR"),
+            Some(Platform::AtmelAvr)
+        );
+        assert_eq!(
+            Platform::from_platform_str("TEENSY"),
+            Some(Platform::Teensy)
+        );
+    }
+
+    #[test]
+    fn platform_from_str_unknown() {
         assert_eq!(Platform::from_platform_str("unknown"), None);
+        assert_eq!(Platform::from_platform_str(""), None);
+        assert_eq!(Platform::from_platform_str("nrf52"), None);
+    }
+
+    #[test]
+    fn platform_from_str_no_cross_match() {
+        // espressif8266 must NOT match Espressif32
+        assert_ne!(
+            Platform::from_platform_str("espressif8266"),
+            Some(Platform::Espressif32)
+        );
+        // espressif32 must NOT match Espressif8266
+        assert_ne!(
+            Platform::from_platform_str("espressif32"),
+            Some(Platform::Espressif8266)
+        );
+    }
+
+    #[test]
+    fn platform_matches_str() {
+        assert!(Platform::Espressif32.matches_str("espressif32"));
+        assert!(Platform::Espressif32.matches_str("platformio/espressif32@^6.3.0"));
+        assert!(!Platform::Espressif32.matches_str("espressif8266"));
+        assert!(!Platform::AtmelAvr.matches_str("teensy"));
     }
 }

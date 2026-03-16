@@ -212,7 +212,7 @@ pub fn is_teensy_project(project_dir: &Path, env_name: &str) -> bool {
     if let Ok(config) = fbuild_config::PlatformIOConfig::from_path(&ini_path) {
         if let Ok(env) = config.get_env_config(env_name) {
             if let Some(platform) = env.get("platform") {
-                return platform == "teensy";
+                return fbuild_core::Platform::Teensy.matches_str(platform);
             }
         }
     }

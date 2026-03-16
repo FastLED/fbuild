@@ -209,12 +209,14 @@ impl Esp32Framework {
                 let include_base = sdk_dir.join("include");
                 let mut dirs = parse_include_flags(&content, &include_base, &root);
 
-                // Add flash-mode-specific include dir (contains sdkconfig.h).
-                // Default to dio_qspi (most common for ESP32dev boards).
-                for flash_mode in &["dio_qspi", "qio_qspi"] {
-                    let fm_include = sdk_dir.join(flash_mode).join("include");
-                    if fm_include.exists() {
-                        dirs.push(fm_include);
+                // Add flash/PSRAM variant include dir (contains sdkconfig.h).
+                // Try common variants in preference order; the correct one depends
+                // on board_build.flash_mode and board_build.arduino.memory_type.
+                let variants = ["qio_opi", "dio_opi", "opi_opi", "qio_qspi", "dio_qspi"];
+                for variant in &variants {
+                    let v_include = sdk_dir.join(variant).join("include");
+                    if v_include.exists() {
+                        dirs.push(v_include);
                         break;
                     }
                 }
@@ -223,29 +225,48 @@ impl Esp32Framework {
             }
         }
 
-        // Fallback: scan include/ subdirectories
+        // Fallback: recursively scan include/ subdirectories.
+        // The 2.x framework (PlatformIO-compat) has deeply nested includes
+        // under tools/sdk/{mcu}/include/ (e.g., freertos/include/freertos,
+        // freertos/port/xtensa/include).
         let include_dir = sdk_dir.join("include");
         if !include_dir.exists() {
             return Vec::new();
         }
 
         let mut dirs = Vec::new();
-        if let Ok(entries) = std::fs::read_dir(&include_dir) {
-            for entry in entries.flatten() {
-                let path = entry.path();
-                if path.is_dir() {
-                    dirs.push(path.clone());
-                    // Also add subdirectories (some components have nested includes)
-                    if let Ok(sub_entries) = std::fs::read_dir(&path) {
-                        for sub_entry in sub_entries.flatten() {
-                            if sub_entry.path().is_dir() {
-                                dirs.push(sub_entry.path());
-                            }
-                        }
-                    }
-                }
+
+        // Prepend newlib/platform_include (provides assert.h, errno.h, time.h)
+        // which must come before SDK headers. PlatformIO also puts this first.
+        let newlib_platform = include_dir.join("newlib").join("platform_include");
+        if newlib_platform.exists() {
+            dirs.push(newlib_platform);
+        }
+
+        // Scan 4 levels deep — matches PlatformIO's actual include depth.
+        // ESP-IDF components have nested includes up to 4 levels deep
+        // (e.g., freertos/include/esp_additions/freertos/).
+        scan_include_dirs_recursive(&include_dir, &mut dirs, 0, 4);
+
+        // Add well-known ESP-IDF Xtensa/RISC-V port include paths that the
+        // scanner misses because headers are nested too deeply for detection.
+        for sub_mcu in &["esp32", "esp32s2", "esp32s3"] {
+            let xtensa_inc = include_dir.join("xtensa").join(sub_mcu).join("include");
+            if xtensa_inc.exists() && !dirs.contains(&xtensa_inc) {
+                dirs.push(xtensa_inc);
             }
         }
+
+        // Also add flash/PSRAM variant include dir (contains sdkconfig.h).
+        let variants = ["qio_opi", "dio_opi", "opi_opi", "qio_qspi", "dio_qspi"];
+        for variant in &variants {
+            let v_include = sdk_dir.join(variant).join("include");
+            if v_include.exists() {
+                dirs.push(v_include);
+                break;
+            }
+        }
+
         dirs.sort();
         dirs
     }
@@ -494,6 +515,72 @@ fn find_framework_root(install_dir: &Path) -> PathBuf {
     }
 
     install_dir.to_path_buf()
+}
+
+/// Recursively scan for include paths that are useful for compilation.
+///
+/// A directory is added if it contains headers directly OR has an immediate
+/// child directory with headers (supporting `#include "subdir/header.h"`).
+/// This matches PlatformIO's include strategy without adding every directory.
+///
+/// Used for the 2.x framework layout where `flags/includes` doesn't exist.
+fn scan_include_dirs_recursive(
+    dir: &Path,
+    dirs: &mut Vec<PathBuf>,
+    depth: usize,
+    max_depth: usize,
+) {
+    if depth > max_depth {
+        return;
+    }
+    if let Ok(entries) = std::fs::read_dir(dir) {
+        let mut has_headers = false;
+        let mut child_has_headers = false;
+        let mut subdirs = Vec::new();
+
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                // Check if this child dir has headers (one level peek)
+                if !child_has_headers && dir_contains_headers(&path) {
+                    child_has_headers = true;
+                }
+                subdirs.push(path);
+            } else if !has_headers {
+                if let Some(ext) = path.extension() {
+                    if ext == "h" || ext == "hpp" {
+                        has_headers = true;
+                    }
+                }
+            }
+        }
+
+        // Add if dir has headers or a child dir has headers
+        if has_headers || child_has_headers {
+            dirs.push(dir.to_path_buf());
+        }
+
+        for subdir in subdirs {
+            scan_include_dirs_recursive(&subdir, dirs, depth + 1, max_depth);
+        }
+    }
+}
+
+/// Check if a directory directly contains any header files.
+fn dir_contains_headers(dir: &Path) -> bool {
+    if let Ok(entries) = std::fs::read_dir(dir) {
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_file() {
+                if let Some(ext) = path.extension() {
+                    if ext == "h" || ext == "hpp" {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    false
 }
 
 /// Collect all `.a` archive files from a directory (non-recursive).

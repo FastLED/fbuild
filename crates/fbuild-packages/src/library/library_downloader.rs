@@ -41,7 +41,57 @@ pub async fn download_library(spec: &LibrarySpec, libs_dir: &Path) -> Result<Pat
         download_registry_library(spec, &lib_dir).await?;
     }
 
+    // Apply compat patches for known framework incompatibilities
+    patch_library_sources(&lib_dir);
+
     Ok(lib_dir)
+}
+
+/// Patch library source files for known framework compatibility issues.
+///
+/// On Xtensa (ESP32), `uint32_t` is `unsigned long` not `unsigned int`,
+/// so `IPAddress(0U)` is ambiguous between `uint32_t` and pointer overloads.
+/// We rewrite `IPAddress(0U)` → `IPAddress((uint32_t)0)` in source files.
+fn patch_library_sources(lib_dir: &Path) {
+    let src_dir = lib_dir.join("src");
+    if !src_dir.exists() {
+        return;
+    }
+
+    let patterns: &[(&str, &str)] = &[
+        ("IPAddress(0U)", "IPAddress((uint32_t)0)"),
+        ("IPAddress(0u)", "IPAddress((uint32_t)0)"),
+    ];
+
+    patch_dir_recursive(&src_dir, patterns);
+}
+
+fn patch_dir_recursive(dir: &Path, patterns: &[(&str, &str)]) {
+    let entries = match std::fs::read_dir(dir) {
+        Ok(e) => e,
+        Err(_) => return,
+    };
+
+    for entry in entries.flatten() {
+        let path = entry.path();
+        if path.is_dir() {
+            patch_dir_recursive(&path, patterns);
+        } else if matches!(
+            path.extension().and_then(|e| e.to_str()),
+            Some("cpp" | "c" | "h" | "hpp")
+        ) {
+            if let Ok(content) = std::fs::read_to_string(&path) {
+                let mut patched = content.clone();
+                for (from, to) in patterns {
+                    patched = patched.replace(from, to);
+                }
+                if patched != content {
+                    let _ = std::fs::write(&path, &patched);
+                    tracing::debug!("patched {}", path.display());
+                }
+            }
+        }
+    }
 }
 
 /// Download a library from a GitHub URL.
@@ -98,7 +148,8 @@ async fn download_github_library(url: &str, name: &str, lib_dir: &Path) -> Resul
 async fn download_registry_library(spec: &LibrarySpec, lib_dir: &Path) -> Result<()> {
     tracing::info!("resolving {} from PlatformIO registry", spec.name);
 
-    let resolved = registry::resolve_library(&spec.owner, &spec.name).await?;
+    let resolved =
+        registry::resolve_library(&spec.owner, &spec.name, spec.version.as_deref()).await?;
 
     tracing::info!(
         "downloading {}/{}@{}",

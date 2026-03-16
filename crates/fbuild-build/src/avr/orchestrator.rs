@@ -222,7 +222,7 @@ pub fn is_avr_project(project_dir: &Path, env_name: &str) -> bool {
     if let Ok(config) = fbuild_config::PlatformIOConfig::from_path(&ini_path) {
         if let Ok(env) = config.get_env_config(env_name) {
             if let Some(platform) = env.get("platform") {
-                return platform == "atmelavr";
+                return fbuild_core::Platform::AtmelAvr.matches_str(platform);
             }
         }
     }

@@ -169,5 +169,14 @@
     "ARDUINO_ARCH_ESP32",
     "CHIP_HAVE_CONFIG_H",
     ["ESP32", "ESP32"]
+  ],
+
+  "compat_defines": [
+    ["mbedtls_md5_starts_ret", "mbedtls_md5_starts"],
+    ["mbedtls_md5_update_ret", "mbedtls_md5_update"],
+    ["mbedtls_md5_finish_ret", "mbedtls_md5_finish"],
+    ["mbedtls_sha1_starts_ret", "mbedtls_sha1_starts"],
+    ["mbedtls_sha1_update_ret", "mbedtls_sha1_update"],
+    ["mbedtls_sha1_finish_ret", "mbedtls_sha1_finish"]
   ]
 }

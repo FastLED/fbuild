@@ -71,6 +71,10 @@ pub struct Esp32McuConfig {
     pub profiles: HashMap<String, ProfileFlags>,
     pub esptool: EsptoolConfig,
     pub defines: Vec<DefineEntry>,
+    /// Compatibility defines (e.g. mbedtls `_ret` suffix renames).
+    /// Each entry is a [old_name, new_name] pair emitted as `-Dold_name=new_name`.
+    #[serde(default)]
+    pub compat_defines: Vec<(String, String)>,
 }
 
 impl Esp32McuConfig {
@@ -131,6 +135,14 @@ impl Esp32McuConfig {
     /// Get profile flags for a given profile name.
     pub fn get_profile(&self, name: &str) -> Option<&ProfileFlags> {
         self.profiles.get(name)
+    }
+
+    /// Produce `-Dold=new` flags from the `compat_defines` entries.
+    pub fn compat_define_flags(&self) -> Vec<String> {
+        self.compat_defines
+            .iter()
+            .map(|(old, new)| format!("-D{}={}", old, new))
+            .collect()
     }
 
     /// Remove LTO-related flags from all profiles.
@@ -345,5 +357,26 @@ mod tests {
                 config.linker_flags.len()
             );
         }
+    }
+
+    #[test]
+    fn test_compat_defines_present() {
+        for mcu in supported_mcus() {
+            let config = get_mcu_config(mcu).unwrap();
+            assert!(
+                !config.compat_defines.is_empty(),
+                "{} missing compat_defines",
+                mcu
+            );
+        }
+    }
+
+    #[test]
+    fn test_compat_define_flags() {
+        let config = get_mcu_config("esp32c6").unwrap();
+        let flags = config.compat_define_flags();
+        assert!(flags.contains(&"-Dmbedtls_md5_starts_ret=mbedtls_md5_starts".to_string()));
+        assert!(flags.contains(&"-Dmbedtls_sha1_finish_ret=mbedtls_sha1_finish".to_string()));
+        assert_eq!(flags.len(), 6);
     }
 }

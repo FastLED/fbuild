@@ -24,7 +24,6 @@ use std::time::Instant;
 use fbuild_core::{Platform, Result};
 use fbuild_packages::Framework;
 
-use crate::compiler::{Compiler, CompilerBase};
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
 use super::esp32_compiler::Esp32Compiler;
@@ -56,6 +55,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
         // 3. Load MCU config from embedded JSON
         let mut mcu_config = get_mcu_config(&board.mcu)?;
+
         tracing::info!(
             "ESP32 build: {} ({}, {})",
             board.name,
@@ -63,12 +63,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
             mcu_config.architecture
         );
 
-        // 4. Ensure ESP32 platform (pioarduino — contains platform.json with metadata URLs)
-        let platform = fbuild_packages::library::Esp32Platform::new(&params.project_dir);
-        fbuild_packages::Package::ensure_installed(&platform)?;
+        // 4-6. Resolve platform, toolchain, and framework
+        let (toolchain, framework) =
+            resolve_pioarduino_packages(&params.project_dir, &board.mcu, &mcu_config)?;
 
-        // 5. Resolve + ensure ESP32 toolchain via metadata
-        let toolchain = resolve_and_create_toolchain(&platform, &params.project_dir, &mcu_config)?;
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
         tracing::info!(
             "ESP32 {} toolchain at {}",
@@ -80,24 +78,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
             toolchain_dir.display()
         );
 
-        // 6. Ensure ESP32 framework (Arduino core + ESP-IDF SDK)
-        let framework = match platform.get_package_url("framework-arduinoespressif32") {
-            Ok(url) => {
-                tracing::info!("resolved framework URL from platform.json");
-                fbuild_packages::library::Esp32Framework::from_url(&params.project_dir, &url)
-            }
-            Err(e) => {
-                tracing::warn!("could not resolve framework URL, using legacy: {}", e);
-                fbuild_packages::library::Esp32Framework::new(&params.project_dir, &board.mcu)
-            }
-        };
         let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
         tracing::info!("ESP32 framework at {}", framework_dir.display());
-
-        // 6b. Ensure SDK libs (split package in pioarduino 3.3.7+)
-        if let Ok(libs_url) = platform.get_package_url("framework-arduinoespressif32-libs") {
-            framework.ensure_libs(&libs_url)?;
-        }
 
         // 7. Setup build directories
         let cache = fbuild_packages::Cache::new(&params.project_dir);
@@ -169,6 +151,9 @@ impl BuildOrchestrator for Esp32Orchestrator {
         use fbuild_packages::Toolchain;
         let mut library_archives = Vec::new();
 
+        // Read user build_flags early — needed for both library and sketch compilation.
+        let user_flags = config.get_build_flags(&params.env_name)?;
+
         if !lib_deps.is_empty() {
             let libs_dir = build_dir.join("libs");
 
@@ -176,7 +161,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             let mut defines = board.get_defines();
             defines.extend(mcu_config.defines_map());
 
-            let temp_compiler = Esp32Compiler::new(
+            let temp_compiler = Esp32Compiler::with_temp_dir(
                 toolchain.get_gcc_path(),
                 toolchain.get_gxx_path(),
                 mcu_config.clone(),
@@ -185,11 +170,14 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 include_dirs.clone(),
                 params.profile,
                 params.verbose,
+                build_dir.join("tmp"),
             );
+            // Apply user build_flags to library compilation (matching PlatformIO behavior).
+            // User flags like -std=gnu++2a replace the MCU config's -std=gnu++2b.
+            let c_flags = apply_user_flags(&temp_compiler.c_flags(), &user_flags);
+            let cpp_flags = apply_user_flags(&temp_compiler.cpp_flags(), &user_flags);
 
-            let c_flags = temp_compiler.c_flags();
-            let cpp_flags = temp_compiler.cpp_flags();
-
+            let jobs = crate::parallel::effective_jobs(params.jobs);
             let lib_result = fbuild_packages::library::library_manager::ensure_libraries_sync(
                 &lib_deps,
                 &lib_ignore,
@@ -201,6 +189,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 &include_dirs,
                 &libs_dir,
                 params.verbose,
+                jobs,
             )?;
 
             // Add library include dirs to the main include list
@@ -237,7 +226,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 let mut fw_defines = board.get_defines();
                 fw_defines.extend(mcu_config.defines_map());
 
-                let fw_compiler = Esp32Compiler::new(
+                let fw_compiler = Esp32Compiler::with_temp_dir(
                     toolchain.get_gcc_path(),
                     toolchain.get_gxx_path(),
                     mcu_config.clone(),
@@ -246,9 +235,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
                     include_dirs.clone(),
                     params.profile,
                     params.verbose,
+                    build_dir.join("tmp"),
                 );
-                let fw_c_flags = fw_compiler.c_flags();
-                let fw_cpp_flags = fw_compiler.cpp_flags();
+                let fw_c_flags = apply_user_flags(&fw_compiler.c_flags(), &user_flags);
+                let fw_cpp_flags = apply_user_flags(&fw_compiler.cpp_flags(), &user_flags);
 
                 let mut fw_lib_count = 0;
                 if let Ok(entries) = std::fs::read_dir(&builtin_libs_dir) {
@@ -289,7 +279,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
                             continue;
                         }
 
-                        match fbuild_packages::library::library_compiler::compile_library(
+                        let fw_jobs = crate::parallel::effective_jobs(params.jobs);
+                        match fbuild_packages::library::library_compiler::compile_library_with_jobs(
                             &lib_name,
                             &sources,
                             &include_dirs,
@@ -300,6 +291,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                             &fw_cpp_flags,
                             &fw_libs_build_dir,
                             params.verbose,
+                            fw_jobs,
                         ) {
                             Ok(Some(archive)) => {
                                 library_archives.push(archive);
@@ -354,9 +346,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             .entry("ARDUINO_VARIANT".to_string())
             .or_insert_with(|| format!("\"{}\"", board.variant));
 
-        let user_flags = config.get_build_flags(&params.env_name)?;
-
-        let compiler = Esp32Compiler::new(
+        let compiler = Esp32Compiler::with_temp_dir(
             toolchain.get_gcc_path(),
             toolchain.get_gxx_path(),
             mcu_config.clone(),
@@ -365,61 +355,36 @@ impl BuildOrchestrator for Esp32Orchestrator {
             include_dirs,
             params.profile,
             params.verbose,
+            build_dir.join("tmp"),
         );
+        let jobs = crate::parallel::effective_jobs(params.jobs);
+        tracing::info!("parallel compilation: {} jobs", jobs);
 
-        // Compile core sources
-        let mut core_objects = Vec::new();
-        for source in &sources.core_sources {
-            let obj = CompilerBase::object_path(source, &core_build_dir);
-            if CompilerBase::needs_rebuild(source, &obj) {
-                let result = compiler.compile(source, &obj, &user_flags)?;
-                if !result.success {
-                    return Err(fbuild_core::FbuildError::BuildFailed(format!(
-                        "compilation failed for {}:\n{}",
-                        source.display(),
-                        result.stderr
-                    )));
-                }
-            }
-            core_objects.push(obj);
-        }
+        // Compile core + variant sources in parallel
+        let mut all_core_sources: Vec<std::path::PathBuf> = Vec::new();
+        all_core_sources.extend(sources.core_sources.iter().cloned());
+        all_core_sources.extend(sources.variant_sources.iter().cloned());
 
-        // Compile variant sources
-        for source in &sources.variant_sources {
-            let obj = CompilerBase::object_path(source, &core_build_dir);
-            if CompilerBase::needs_rebuild(source, &obj) {
-                let result = compiler.compile(source, &obj, &user_flags)?;
-                if !result.success {
-                    return Err(fbuild_core::FbuildError::BuildFailed(format!(
-                        "compilation failed for {}:\n{}",
-                        source.display(),
-                        result.stderr
-                    )));
-                }
-            }
-            core_objects.push(obj);
-        }
+        let core_objects = crate::parallel::compile_sources_parallel(
+            &compiler,
+            &all_core_sources,
+            &core_build_dir,
+            &user_flags,
+            jobs,
+        )?;
 
-        // Compile sketch sources
+        // Compile sketch sources in parallel
         let src_flags = config.get_build_src_flags(&params.env_name)?;
         let all_src_flags: Vec<String> =
             user_flags.iter().chain(src_flags.iter()).cloned().collect();
 
-        let mut sketch_objects = Vec::new();
-        for source in &sources.sketch_sources {
-            let obj = CompilerBase::object_path(source, &src_build_dir);
-            if CompilerBase::needs_rebuild(source, &obj) {
-                let result = compiler.compile(source, &obj, &all_src_flags)?;
-                if !result.success {
-                    return Err(fbuild_core::FbuildError::BuildFailed(format!(
-                        "compilation failed for {}:\n{}",
-                        source.display(),
-                        result.stderr
-                    )));
-                }
-            }
-            sketch_objects.push(obj);
-        }
+        let mut sketch_objects = crate::parallel::compile_sources_parallel(
+            &compiler,
+            &sources.sketch_sources,
+            &src_build_dir,
+            &all_src_flags,
+            jobs,
+        )?;
 
         // 11.5. Process embedded files (board_build.embed_files + embed_txtfiles)
         let embed_files = config.get_embed_files(&params.env_name)?;
@@ -520,9 +485,64 @@ impl BuildOrchestrator for Esp32Orchestrator {
     }
 }
 
-/// Resolve toolchain URL via platform metadata and create the toolchain instance.
+/// Apply user build_flags from platformio.ini onto base compiler flags.
 ///
-/// Falls back to the legacy hardcoded URL constructor if metadata resolution fails.
+/// Matches PlatformIO behavior: user flags are appended to common flags,
+/// but `-std=` flags replace the existing standard (not stack).
+fn apply_user_flags(base_flags: &[String], user_flags: &[String]) -> Vec<String> {
+    let mut result = base_flags.to_vec();
+    for flag in user_flags {
+        if flag.starts_with("-std=") {
+            // Replace any existing -std= flag
+            result.retain(|f| !f.starts_with("-std="));
+        }
+        result.push(flag.clone());
+    }
+    result
+}
+
+/// Resolve framework + toolchain for pioarduino mode (GCC 14 + ESP-IDF 5.x).
+///
+/// Downloads pioarduino platform.json, resolves toolchain via metadata,
+/// and downloads the split framework + libs packages.
+fn resolve_pioarduino_packages(
+    project_dir: &Path,
+    mcu: &str,
+    mcu_config: &super::mcu_config::Esp32McuConfig,
+) -> Result<(
+    fbuild_packages::toolchain::Esp32Toolchain,
+    fbuild_packages::library::Esp32Framework,
+)> {
+    // Ensure pioarduino platform (contains platform.json with metadata URLs)
+    let platform = fbuild_packages::library::Esp32Platform::new(project_dir);
+    fbuild_packages::Package::ensure_installed(&platform)?;
+
+    // Resolve toolchain via metadata
+    let toolchain = resolve_and_create_toolchain(&platform, project_dir, mcu_config)?;
+
+    // Resolve framework
+    let framework = match platform.get_package_url("framework-arduinoespressif32") {
+        Ok(url) => {
+            tracing::info!("resolved framework URL from platform.json");
+            fbuild_packages::library::Esp32Framework::from_url(project_dir, &url)
+        }
+        Err(e) => {
+            tracing::warn!("could not resolve framework URL, using legacy: {}", e);
+            fbuild_packages::library::Esp32Framework::new(project_dir, mcu)
+        }
+    };
+
+    // Ensure framework is installed before trying to install libs
+    let _ = fbuild_packages::Package::ensure_installed(&framework)?;
+
+    // Ensure SDK libs (split package in pioarduino 3.3.7+)
+    if let Ok(libs_url) = platform.get_package_url("framework-arduinoespressif32-libs") {
+        framework.ensure_libs(&libs_url)?;
+    }
+
+    Ok((toolchain, framework))
+}
+
 fn resolve_and_create_toolchain(
     platform: &fbuild_packages::library::Esp32Platform,
     project_dir: &Path,
@@ -738,7 +758,7 @@ pub fn is_esp32_project(project_dir: &Path, env_name: &str) -> bool {
     if let Ok(config) = fbuild_config::PlatformIOConfig::from_path(&ini_path) {
         if let Ok(env) = config.get_env_config(env_name) {
             if let Some(platform) = env.get("platform") {
-                return platform == "espressif32";
+                return fbuild_core::Platform::Espressif32.matches_str(platform);
             }
         }
     }

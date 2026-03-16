@@ -115,6 +115,19 @@ enum Commands {
         #[arg(long)]
         project_dir: Option<String>,
     },
+    /// Manage the fbuild daemon
+    Daemon {
+        #[command(subcommand)]
+        action: DaemonAction,
+    },
+}
+
+#[derive(Subcommand)]
+enum DaemonAction {
+    /// Stop the daemon gracefully
+    Stop,
+    /// Show daemon status
+    Status,
 }
 
 #[tokio::main]
@@ -189,6 +202,7 @@ async fn main() {
             dry_run,
             project_dir,
         }) => run_purge(target, dry_run, project_dir),
+        Some(Commands::Daemon { action }) => run_daemon(action).await,
         None => {
             // Default action: deploy with monitor (like Python fbuild)
             let project_dir = cli.project_dir.unwrap_or_else(|| ".".to_string());
@@ -373,6 +387,37 @@ fn run_purge(
                     })?;
                     println!("removed: {}", build_root.display());
                 }
+            }
+        }
+    }
+    Ok(())
+}
+
+async fn run_daemon(action: DaemonAction) -> fbuild_core::Result<()> {
+    let client = DaemonClient::new();
+    match action {
+        DaemonAction::Stop => {
+            if !client.health().await {
+                println!("daemon is not running");
+                return Ok(());
+            }
+            client.shutdown().await?;
+            // Wait for it to actually stop
+            for _ in 0..50 {
+                tokio::time::sleep(std::time::Duration::from_millis(100)).await;
+                if !client.health().await {
+                    println!("daemon stopped");
+                    return Ok(());
+                }
+            }
+            println!("daemon stop requested (may still be shutting down)");
+        }
+        DaemonAction::Status => {
+            if client.health().await {
+                let url = fbuild_paths::get_daemon_url();
+                println!("daemon is running at {}", url);
+            } else {
+                println!("daemon is not running");
             }
         }
     }

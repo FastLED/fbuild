@@ -6,8 +6,13 @@ edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
 
+[[bin]]
+name = "enrich_boards"
+path = "src/bin/enrich_boards.rs"
+
 [dependencies]
 fbuild-core = { path = "../fbuild-core" }
+include_dir = "0.7.4"
 serde = { workspace = true }
 serde_json = { workspace = true }
 thiserror = { workspace = true }

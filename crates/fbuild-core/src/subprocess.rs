@@ -1,7 +1,7 @@
 //! Subprocess runner with timeout support.
 //!
-//! Rust's std::process::Command handles process management correctly —
-//! no need for the Python workarounds (CREATE_NO_WINDOW, priority hacks, stdin stealing).
+//! On Windows, uses CREATE_NO_WINDOW to prevent compiler processes from
+//! spawning visible console windows.
 
 use std::path::Path;
 use std::process::{Command, Output, Stdio};
@@ -35,11 +35,7 @@ pub fn run_command(
         return Err(FbuildError::Other("empty command".to_string()));
     }
 
-    let mut cmd = Command::new(args[0]);
-    cmd.args(&args[1..]);
-    cmd.stdin(Stdio::null());
-    cmd.stdout(Stdio::piped());
-    cmd.stderr(Stdio::piped());
+    let mut cmd = build_command(args);
 
     if let Some(dir) = cwd {
         cmd.current_dir(dir);
@@ -55,6 +51,86 @@ pub fn run_command(
         run_with_timeout(cmd, timeout)
     } else {
         run_no_timeout(cmd)
+    }
+}
+
+/// Build a `Command` with platform-specific settings.
+///
+/// On Windows: adds the executable's directory to PATH so child processes
+/// (like GCC's cc1plus) can find shared libraries (libgcc_s_seh-1.dll, etc.)
+/// that live alongside the main binary. Also strips MSYS/MSYS2 environment
+/// variables when detected, to prevent interference with native Windows
+/// toolchain binaries.
+fn build_command(args: &[&str]) -> Command {
+    let mut cmd = Command::new(args[0]);
+    cmd.args(&args[1..]);
+
+    #[cfg(windows)]
+    {
+        use std::os::windows::process::CommandExt;
+        const CREATE_NO_WINDOW: u32 = 0x08000000;
+        cmd.creation_flags(CREATE_NO_WINDOW);
+
+        // Add the executable's parent directory to PATH so that child processes
+        // (e.g., cc1plus launched by g++) can find DLLs in the same bin/ dir.
+        if let Some(exe_dir) = Path::new(args[0]).parent() {
+            let exe_dir_str = exe_dir.to_string_lossy();
+            if !exe_dir_str.is_empty() {
+                let current_path = std::env::var("PATH").unwrap_or_default();
+                cmd.env("PATH", format!("{};{}", exe_dir_str, current_path));
+            }
+        }
+
+        // Strip MSYS/MSYS2 environment variables that interfere with
+        // native Windows toolchain binaries finding their internal tools.
+        if is_msys_environment() {
+            strip_msys_env(&mut cmd);
+        }
+    }
+
+    cmd.stdin(Stdio::null());
+    cmd.stdout(Stdio::piped());
+    cmd.stderr(Stdio::piped());
+    cmd
+}
+
+/// Check if we're running inside an MSYS/MSYS2 environment.
+#[cfg(windows)]
+fn is_msys_environment() -> bool {
+    std::env::var("MSYSTEM").is_ok() || std::env::var("MSYS").is_ok()
+}
+
+/// Strip MSYS-specific environment variables and rebuild PATH without MSYS dirs.
+#[cfg(windows)]
+fn strip_msys_env(cmd: &mut Command) {
+    // Remove MSYS/MSYS2 environment variables
+    let msys_vars = [
+        "MSYSTEM",
+        "MSYSTEM_CARCH",
+        "MSYSTEM_CHOST",
+        "MSYSTEM_PREFIX",
+        "MINGW_CHOST",
+        "MINGW_PREFIX",
+        "MINGW_PACKAGE_PREFIX",
+        "MSYS",
+        "MSYS2_PATH_TYPE",
+        "CHERE_INVOKING",
+        "CONFIG_SITE",
+    ];
+    for var in &msys_vars {
+        cmd.env_remove(var);
+    }
+
+    // Rebuild PATH: keep only non-MSYS directories
+    if let Ok(path) = std::env::var("PATH") {
+        let filtered: Vec<&str> = path
+            .split(';')
+            .filter(|p| {
+                let lower = p.to_lowercase();
+                !lower.contains("\\msys") && !lower.contains("/msys") && !lower.contains("/usr/")
+            })
+            .collect();
+        cmd.env("PATH", filtered.join(";"));
     }
 }
 

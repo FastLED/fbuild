@@ -164,12 +164,9 @@ pub async fn ensure_daemon_running() -> fbuild_core::Result<()> {
         cmd.arg("--dev");
     }
 
-    // On native Windows (not MSYS), use CREATE_NO_WINDOW + DETACHED_PROCESS
-    // to prevent a console window from appearing.
-    #[allow(unused_imports, unreachable_code, unused_variables)]
-    #[cfg(all(target_os = "windows", not(target_env = "gnu")))]
+    // Prevent a console window from appearing on Windows (including MSYS/MinGW).
+    #[cfg(windows)]
     {
-        use std::os::windows::process::CommandExt;
         const CREATE_NO_WINDOW: u32 = 0x08000000;
         const DETACHED_PROCESS: u32 = 0x00000008;
         cmd.creation_flags(CREATE_NO_WINDOW | DETACHED_PROCESS);

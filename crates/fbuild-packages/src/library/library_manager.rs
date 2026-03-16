@@ -40,6 +40,7 @@ pub async fn ensure_libraries(
     base_includes: &[PathBuf],
     libs_dir: &Path,
     verbose: bool,
+    jobs: usize,
 ) -> Result<LibraryResult> {
     // 1. Parse specs, filter ignored
     let specs: Vec<LibrarySpec> = lib_specs
@@ -61,15 +62,33 @@ pub async fn ensure_libraries(
 
     tracing::info!("resolving {} library dependencies", specs.len());
 
-    // 2. Download all libraries
+    // 2. Download all libraries in parallel
     std::fs::create_dir_all(libs_dir)?;
     let mut installed: Vec<InstalledLibrary> = Vec::new();
     let mut downloaded_names: std::collections::HashSet<String> = std::collections::HashSet::new();
 
+    let libs_dir_owned = libs_dir.to_path_buf();
+    let mut handles = Vec::new();
     for spec in &specs {
-        let lib_dir = library_downloader::download_library(spec, libs_dir).await?;
-        installed.push(InstalledLibrary::new(&lib_dir, &spec.sanitized_name()));
-        downloaded_names.insert(spec.name.to_lowercase());
+        let spec_clone = spec.clone();
+        let dir = libs_dir_owned.clone();
+        handles.push(tokio::spawn(async move {
+            let lib_dir = library_downloader::download_library(&spec_clone, &dir).await?;
+            Ok::<(std::path::PathBuf, String, String), fbuild_core::FbuildError>((
+                lib_dir,
+                spec_clone.sanitized_name(),
+                spec_clone.name.to_lowercase(),
+            ))
+        }));
+    }
+
+    // Collect results (preserving order for determinism)
+    for handle in handles {
+        let (lib_dir, sanitized, name_lower) = handle.await.map_err(|e| {
+            fbuild_core::FbuildError::PackageError(format!("library download task failed: {}", e))
+        })??;
+        installed.push(InstalledLibrary::new(&lib_dir, &sanitized));
+        downloaded_names.insert(name_lower);
     }
 
     // 2b. Resolve transitive dependencies from library.json files
@@ -100,7 +119,7 @@ pub async fn ensure_libraries(
         }
 
         let sources = lib.get_source_files();
-        if let Some(archive_path) = library_compiler::compile_library(
+        if let Some(archive_path) = library_compiler::compile_library_with_jobs(
             &lib.name,
             &sources,
             &all_include_dirs,
@@ -111,6 +130,7 @@ pub async fn ensure_libraries(
             cpp_flags,
             &lib.lib_dir,
             verbose,
+            jobs,
         )? {
             archives.push(archive_path);
         }
@@ -262,6 +282,7 @@ pub fn ensure_libraries_sync(
     base_includes: &[PathBuf],
     libs_dir: &Path,
     verbose: bool,
+    jobs: usize,
 ) -> Result<LibraryResult> {
     let rt = tokio::runtime::Handle::try_current().ok();
     if let Some(handle) = rt {
@@ -276,6 +297,7 @@ pub fn ensure_libraries_sync(
             base_includes,
             libs_dir,
             verbose,
+            jobs,
         ))
     } else {
         let rt = tokio::runtime::Runtime::new().map_err(|e| {
@@ -292,6 +314,7 @@ pub fn ensure_libraries_sync(
             base_includes,
             libs_dir,
             verbose,
+            jobs,
         ))
     }
 }
@@ -313,6 +336,7 @@ mod tests {
             &[],
             Path::new("/libs"),
             false,
+            1,
         )
         .unwrap();
         assert!(result.include_dirs.is_empty());
@@ -332,6 +356,7 @@ mod tests {
             &[],
             Path::new("/libs"),
             false,
+            1,
         )
         .unwrap();
         assert!(result.include_dirs.is_empty());
@@ -351,6 +376,7 @@ mod tests {
             &[],
             Path::new("/libs"),
             false,
+            1,
         )
         .unwrap();
         assert!(result.include_dirs.is_empty());

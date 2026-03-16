@@ -36,6 +36,36 @@ pub fn compile_library(
     output_dir: &Path,
     verbose: bool,
 ) -> Result<Option<PathBuf>> {
+    compile_library_with_jobs(
+        name,
+        source_files,
+        include_dirs,
+        gcc_path,
+        gxx_path,
+        ar_path,
+        c_flags,
+        cpp_flags,
+        output_dir,
+        verbose,
+        1,
+    )
+}
+
+/// Compile all source files in a library with parallel jobs.
+#[allow(clippy::too_many_arguments)]
+pub fn compile_library_with_jobs(
+    name: &str,
+    source_files: &[PathBuf],
+    include_dirs: &[PathBuf],
+    gcc_path: &Path,
+    gxx_path: &Path,
+    ar_path: &Path,
+    c_flags: &[String],
+    cpp_flags: &[String],
+    output_dir: &Path,
+    verbose: bool,
+    jobs: usize,
+) -> Result<Option<PathBuf>> {
     if source_files.is_empty() {
         tracing::debug!("library {} is header-only, skipping compile", name);
         return Ok(None);
@@ -44,94 +74,237 @@ pub fn compile_library(
     let obj_dir = output_dir.join("obj");
     std::fs::create_dir_all(&obj_dir)?;
 
-    // Build include flags
-    let include_flags = build_include_flags(include_dirs)?;
-
-    let mut objects = Vec::new();
-
+    // Pre-create all output directories (must be done before parallel compilation)
     for source in source_files {
         let obj = object_path(source, &obj_dir);
         if let Some(parent) = obj.parent() {
             std::fs::create_dir_all(parent)?;
         }
-
-        let is_c = source.extension().map(|e| e == "c").unwrap_or(false);
-
-        let (compiler, flags) = if is_c {
-            // Filter out C++-only flags for C files
-            let c_safe: Vec<String> = c_flags
-                .iter()
-                .filter(|f| !is_cxx_only_flag(f))
-                .cloned()
-                .collect();
-            (gcc_path, c_safe)
-        } else {
-            (gxx_path, cpp_flags.to_vec())
-        };
-
-        let mut args: Vec<String> = vec![compiler.to_string_lossy().to_string()];
-        args.extend(flags);
-        args.extend(include_flags.clone());
-        args.extend([
-            "-c".to_string(),
-            source.to_string_lossy().to_string(),
-            "-o".to_string(),
-            obj.to_string_lossy().to_string(),
-        ]);
-
-        if verbose {
-            tracing::info!(
-                "compile [{}]: {}",
-                name,
-                source.file_name().unwrap_or_default().to_string_lossy()
-            );
-        }
-
-        let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, None, None)?;
-
-        if !result.success() {
-            return Err(FbuildError::BuildFailed(format!(
-                "failed to compile {} in library {}:\n{}",
-                source.display(),
-                name,
-                result.stderr
-            )));
-        }
-
-        objects.push(obj);
     }
+
+    // Build include flags once (shared across all compilations)
+    let include_flags = build_include_flags(include_dirs, output_dir)?;
+
+    // Pre-compute C-safe flags once
+    let c_safe_flags: Vec<String> = c_flags
+        .iter()
+        .filter(|f| !is_cxx_only_flag(f))
+        .cloned()
+        .collect();
+
+    let cpp_flags = cpp_flags.to_vec();
+
+    let jobs = jobs.max(1);
+
+    if jobs <= 1 || source_files.len() <= 1 {
+        // Sequential path
+        let mut objects = Vec::new();
+        for source in source_files {
+            let obj = compile_one_source(
+                source,
+                &obj_dir,
+                gcc_path,
+                gxx_path,
+                &c_safe_flags,
+                &cpp_flags,
+                &include_flags,
+                name,
+                verbose,
+            )?;
+            objects.push(obj);
+        }
+
+        let archive_path = output_dir.join(format!("lib{}.a", name));
+        archive_objects(ar_path, &objects, &archive_path)?;
+        tracing::info!(
+            "compiled library {}: {} files -> {}",
+            name,
+            objects.len(),
+            archive_path.display()
+        );
+        return Ok(Some(archive_path));
+    }
+
+    // Parallel path
+    let total = source_files.len();
+    let thread_count = jobs.min(total);
+
+    let work_iter = std::sync::Mutex::new(source_files.iter());
+    let first_error: std::sync::Mutex<Option<String>> = std::sync::Mutex::new(None);
+    let compiled_count = std::sync::atomic::AtomicUsize::new(0);
+    let objects: std::sync::Mutex<Vec<(usize, PathBuf)>> = std::sync::Mutex::new(Vec::new());
+
+    std::thread::scope(|scope| {
+        let handles: Vec<_> = (0..thread_count)
+            .map(|_| {
+                scope.spawn(|| {
+                    loop {
+                        if first_error.lock().unwrap().is_some() {
+                            return;
+                        }
+
+                        // Get next work item with its index
+                        let item = {
+                            let mut iter = work_iter.lock().unwrap();
+                            iter.next().cloned()
+                        };
+
+                        let source = match item {
+                            Some(s) => s,
+                            None => return,
+                        };
+
+                        match compile_one_source(
+                            &source,
+                            &obj_dir,
+                            gcc_path,
+                            gxx_path,
+                            &c_safe_flags,
+                            &cpp_flags,
+                            &include_flags,
+                            name,
+                            verbose,
+                        ) {
+                            Ok(obj) => {
+                                let count = compiled_count
+                                    .fetch_add(1, std::sync::atomic::Ordering::Relaxed)
+                                    + 1;
+                                objects.lock().unwrap().push((count, obj));
+                                if count % 20 == 0 || count == total {
+                                    tracing::info!("[{}/{}] compiled [{}]", count, total, name);
+                                }
+                            }
+                            Err(e) => {
+                                let mut err = first_error.lock().unwrap();
+                                if err.is_none() {
+                                    *err = Some(e.to_string());
+                                }
+                            }
+                        }
+                    }
+                })
+            })
+            .collect();
+
+        for handle in handles {
+            handle.join().unwrap();
+        }
+    });
+
+    if let Some(error) = first_error.into_inner().unwrap() {
+        return Err(FbuildError::BuildFailed(error));
+    }
+
+    // Collect objects (order doesn't matter for archiving)
+    let mut all_objects: Vec<PathBuf> = objects
+        .into_inner()
+        .unwrap()
+        .into_iter()
+        .map(|(_, obj)| obj)
+        .collect();
+    all_objects.sort(); // deterministic archive
 
     // Archive
     let archive_path = output_dir.join(format!("lib{}.a", name));
-    archive_objects(ar_path, &objects, &archive_path)?;
+    archive_objects(ar_path, &all_objects, &archive_path)?;
 
     tracing::info!(
-        "compiled library {}: {} files -> {}",
+        "compiled library {}: {} files ({} threads) -> {}",
         name,
-        objects.len(),
+        all_objects.len(),
+        thread_count,
         archive_path.display()
     );
 
     Ok(Some(archive_path))
 }
 
+/// Compile a single source file, returning its object path.
+#[allow(clippy::too_many_arguments)]
+fn compile_one_source(
+    source: &Path,
+    obj_dir: &Path,
+    gcc_path: &Path,
+    gxx_path: &Path,
+    c_safe_flags: &[String],
+    cpp_flags: &[String],
+    include_flags: &[String],
+    lib_name: &str,
+    verbose: bool,
+) -> Result<PathBuf> {
+    let obj = object_path(source, obj_dir);
+
+    let is_c = source.extension().map(|e| e == "c").unwrap_or(false);
+
+    let (compiler, flags): (&Path, &[String]) = if is_c {
+        (gcc_path, c_safe_flags)
+    } else {
+        (gxx_path, cpp_flags)
+    };
+
+    let mut args: Vec<String> = vec![compiler.to_string_lossy().to_string()];
+    args.extend_from_slice(flags);
+    args.extend_from_slice(include_flags);
+    args.extend([
+        "-c".to_string(),
+        source.to_string_lossy().to_string(),
+        "-o".to_string(),
+        obj.to_string_lossy().to_string(),
+    ]);
+
+    if verbose {
+        tracing::info!(
+            "compile [{}]: {}",
+            lib_name,
+            source.file_name().unwrap_or_default().to_string_lossy()
+        );
+    }
+
+    let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
+    let result = run_command(&args_ref, None, None, None)?;
+
+    if !result.success() {
+        return Err(FbuildError::BuildFailed(format!(
+            "failed to compile {} in library {}:\n{}",
+            source.display(),
+            lib_name,
+            result.stderr
+        )));
+    }
+
+    Ok(obj)
+}
+
 /// Build include flags, using a response file on Windows if needed.
-fn build_include_flags(include_dirs: &[PathBuf]) -> Result<Vec<String>> {
+///
+/// When there are many include paths (>100), writes a response file.
+/// Uses `-iprefix` + `-iwithprefixbefore` for paths sharing a common prefix
+/// to keep the total command line under GCC 8.4.0's 32KB CreateProcess limit.
+fn build_include_flags(include_dirs: &[PathBuf], temp_dir: &Path) -> Result<Vec<String>> {
     let flags: Vec<String> = include_dirs
         .iter()
         .map(|d| format!("-I{}", d.display()))
         .collect();
 
     if cfg!(windows) && flags.len() > 100 {
-        let temp_dir = if cfg!(windows) {
-            std::env::var("LOCALAPPDATA")
-                .map(|la| std::path::PathBuf::from(la).join("Temp"))
-                .unwrap_or_else(|_| std::env::temp_dir())
-        } else {
-            std::env::temp_dir()
-        };
-        let rsp_path = temp_dir.join(format!("fbuild_lib_includes_{}.rsp", std::process::id()));
+        use std::sync::atomic::{AtomicU64, Ordering};
+        static LIB_RSP_COUNTER: AtomicU64 = AtomicU64::new(0);
+
+        std::fs::create_dir_all(temp_dir).map_err(|e| {
+            FbuildError::BuildFailed(format!(
+                "failed to create temp dir {}: {}",
+                temp_dir.display(),
+                e
+            ))
+        })?;
+
+        let counter = LIB_RSP_COUNTER.fetch_add(1, Ordering::Relaxed);
+        let rsp_path = temp_dir.join(format!(
+            "fbuild_lib_includes_{}_{}.rsp",
+            std::process::id(),
+            counter
+        ));
+
         // GCC treats backslashes in response files as escape characters.
         // Convert to forward slashes and quote paths with spaces.
         let content = flags
@@ -237,8 +410,9 @@ mod tests {
 
     #[test]
     fn test_build_include_flags_small() {
+        let tmp = tempfile::TempDir::new().unwrap();
         let dirs = vec![PathBuf::from("/a"), PathBuf::from("/b")];
-        let flags = build_include_flags(&dirs).unwrap();
+        let flags = build_include_flags(&dirs, tmp.path()).unwrap();
         assert_eq!(flags.len(), 2);
         assert!(flags[0].starts_with("-I"));
     }
