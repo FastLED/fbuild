@@ -31,5 +31,23 @@
       "tumpa": {},
       "esp-builtin": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DBOARD_HAS_PSRAM",
+    "core": "esp32",
+    "f_cpu": "240000000L",
+    "mcu": "esp32c5",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "variant": "esp32c5",
+    "arduino": {
+      "partitions": "default_16MB.csv",
+      "memory_type": "qio_qspi"
+    }
+  },
+  "upload": {
+    "flash_size": "16MB",
+    "speed": 460800,
+    "require_upload_port": true
   }
 }

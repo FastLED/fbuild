@@ -8,5 +8,11 @@
   "rom": 16384,
   "frameworks": [],
   "vendor": "Microchip",
-  "url": "http://www.microchip.com/wwwproducts/en/AT90PWM216"
+  "url": "http://www.microchip.com/wwwproducts/en/AT90PWM216",
+  "build": {
+    "extra_flags": "-D__AVR_AT90PWM216__",
+    "core": "arduino",
+    "f_cpu": "16000000L",
+    "mcu": "at90pwm216"
+  }
 }

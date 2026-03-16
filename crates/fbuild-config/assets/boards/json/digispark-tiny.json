@@ -15,5 +15,15 @@
     "tools": {
       "simavr": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_DIGISPARK",
+    "core": "dtiny",
+    "f_cpu": "16500000L",
+    "mcu": "attiny85",
+    "variant": "digispark"
+  },
+  "upload": {
+    "protocol": "micronucleus"
   }
 }

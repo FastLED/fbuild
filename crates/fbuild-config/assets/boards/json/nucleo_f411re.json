@@ -26,5 +26,15 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F411xE",
+    "core": "stm32",
+    "f_cpu": "100000000L",
+    "mcu": "stm32f411ret6",
+    "variant": "STM32F4xx/F411R(C-E)T"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

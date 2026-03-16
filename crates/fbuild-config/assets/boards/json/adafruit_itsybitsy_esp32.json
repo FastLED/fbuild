@@ -32,5 +32,23 @@
       "olimex-jtag-tiny": {},
       "tumpa": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_ADAFRUIT_ITSYBITSY_ESP32 -DARDUINO_RUNNING_CORE=1 -DARDUINO_EVENT_RUNNING_CORE=1 -DBOARD_HAS_PSRAM -mfix-esp32-psram-cache-issue -mfix-esp32-psram-cache-strategy=memw",
+    "core": "esp32",
+    "f_cpu": "240000000L",
+    "mcu": "esp32",
+    "f_flash": "80000000L",
+    "flash_mode": "dio",
+    "variant": "adafruit_itsybitsy_esp32",
+    "arduino": {
+      "ldscript": "esp32_out.ld",
+      "partitions": "default_8MB.csv"
+    }
+  },
+  "upload": {
+    "flash_size": "8MB",
+    "speed": 460800,
+    "require_upload_port": true
   }
 }

@@ -24,5 +24,15 @@
       "stlink": {},
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F407xx -DSTM32F40_41xxx",
+    "core": "stm32",
+    "f_cpu": "168000000L",
+    "mcu": "stm32f407vet6",
+    "variant": "STM32F4xx/F407V(E-G)T_F417V(E-G)T"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

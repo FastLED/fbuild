@@ -28,5 +28,15 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F413xx",
+    "core": "stm32",
+    "f_cpu": "100000000L",
+    "mcu": "stm32f413zht6",
+    "variant": "STM32F4xx/F413Z(G-H)(J-T)_F423ZH(J-T)"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

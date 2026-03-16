@@ -16,5 +16,17 @@
       "simavr": {},
       "avr-stub": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_UNO",
+    "core": "arduino",
+    "f_cpu": "16000000L",
+    "mcu": "atmega328p",
+    "variant": "Controllino_mini"
+  },
+  "upload": {
+    "protocol": "arduino",
+    "speed": 115200,
+    "require_upload_port": true
   }
 }

@@ -31,5 +31,23 @@
       "tumpa": {},
       "esp-builtin": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DBOARD_HAS_PSRAM -DARDUINO_AVENTEN_S3_SYNC -DARDUINO_USB_MODE=1 -DARDUINO_RUNNING_CORE=1 -DARDUINO_EVENT_RUNNING_CORE=1",
+    "core": "esp32",
+    "f_cpu": "240000000L",
+    "mcu": "esp32s3",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "variant": "Aventen_S3_Sync",
+    "arduino": {
+      "ldscript": "esp32s3_out.ld",
+      "memory_type": "qio_qspi"
+    }
+  },
+  "upload": {
+    "flash_size": "16MB",
+    "speed": 460800,
+    "require_upload_port": true
   }
 }

@@ -31,5 +31,23 @@
       "olimex-jtag-tiny": {},
       "tumpa": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_HELTEC_WIFI_LORA_32_V2",
+    "core": "esp32",
+    "f_cpu": "240000000L",
+    "mcu": "esp32",
+    "f_flash": "40000000L",
+    "flash_mode": "dio",
+    "variant": "heltec_wifi_lora_32_V2",
+    "arduino": {
+      "ldscript": "esp32_out.ld",
+      "partitions": "default_8MB.csv"
+    }
+  },
+  "upload": {
+    "flash_size": "8MB",
+    "speed": 460800,
+    "require_upload_port": true
   }
 }

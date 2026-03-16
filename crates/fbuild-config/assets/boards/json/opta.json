@@ -21,5 +21,19 @@
       "stlink": {},
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32H7 -DARDUINO_OPTA",
+    "core": "arduino",
+    "f_cpu": "480000000L",
+    "mcu": "stm32h747xih6",
+    "variant": "OPTA",
+    "arduino": {
+      "ldscript": "linker_script.ld"
+    }
+  },
+  "upload": {
+    "protocol": "dfu",
+    "require_upload_port": true
   }
 }

@@ -10,5 +10,14 @@
   "ram": 2560,
   "rom": 32256,
   "url": "https://www.pjrc.com/store/teensy.html",
-  "vendor": "Teensy"
+  "vendor": "Teensy",
+  "build": {
+    "extra_flags": "-DARDUINO_ARCH_AVR -DARDUINO_TEENSY2",
+    "core": "teensy",
+    "f_cpu": "16000000L",
+    "mcu": "atmega32u4"
+  },
+  "upload": {
+    "protocol": "teensy-gui"
+  }
 }

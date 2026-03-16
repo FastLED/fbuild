@@ -21,5 +21,16 @@
       "stlink": {},
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F103xB -DSTM32F1",
+    "core": "stm32",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f103tbu6",
+    "variant": "STM32F1xx/F103T(8-B)U"
+  },
+  "upload": {
+    "protocol": "stlink",
+    "require_upload_port": true
   }
 }

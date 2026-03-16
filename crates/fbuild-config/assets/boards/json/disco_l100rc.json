@@ -22,5 +22,14 @@
         "default": true
       }
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32L1 -DSTM32L100xC",
+    "core": "stm32",
+    "f_cpu": "32000000L",
+    "mcu": "stm32l100rct6"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

@@ -34,5 +34,23 @@
         "default": true
       }
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_WAVESHARE_ESP32S3_TOUCH_LCD_128 -DARDUINO_USB_MODE=1 -DARDUINO_RUNNING_CORE=1 -DARDUINO_EVENT_RUNNING_CORE=1 -DBOARD_HAS_PSRAM",
+    "core": "esp32",
+    "f_cpu": "240000000L",
+    "mcu": "esp32s3",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "variant": "waveshare_esp32s3_touch_lcd_128",
+    "arduino": {
+      "partitions": "default.csv",
+      "memory_type": "qio_qspi"
+    }
+  },
+  "upload": {
+    "flash_size": "16MB",
+    "speed": 921600,
+    "require_upload_port": true
   }
 }

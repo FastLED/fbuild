@@ -28,5 +28,13 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F469xx",
+    "f_cpu": "180000000L",
+    "mcu": "stm32f469nih6"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

@@ -17,5 +17,15 @@
         "default": true
       }
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32WL -DSTM32WLxx -DSTM32WLE5xx",
+    "core": "stm32",
+    "f_cpu": "48000000L",
+    "mcu": "stm32wle5jc",
+    "variant": "STM32WLxx/WL54JCI_WL55JCI_WLE4J(8-B-C)I_WLE5J(8-B-C)I"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

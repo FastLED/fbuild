@@ -31,5 +31,22 @@
       "olimex-jtag-tiny": {},
       "tumpa": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_WT32_ETH01",
+    "core": "esp32",
+    "f_cpu": "240000000L",
+    "mcu": "esp32",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "variant": "wt32-eth01",
+    "arduino": {
+      "ldscript": "esp32_out.ld"
+    }
+  },
+  "upload": {
+    "flash_size": "4MB",
+    "speed": 460800,
+    "require_upload_port": true
   }
 }

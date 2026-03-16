@@ -19,5 +19,13 @@
       "stlink": {},
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F411xE",
+    "f_cpu": "100000000L",
+    "mcu": "stm32f411ret6"
+  },
+  "upload": {
+    "protocol": "mbed"
   }
 }

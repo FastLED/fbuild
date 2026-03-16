@@ -15,5 +15,17 @@
     "tools": {
       "simavr": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_ATmega16",
+    "core": "MightyCore",
+    "f_cpu": "16000000L",
+    "mcu": "atmega16",
+    "variant": "standard"
+  },
+  "upload": {
+    "protocol": "urclock",
+    "speed": 115200,
+    "require_upload_port": true
   }
 }

@@ -10,5 +10,17 @@
     "arduino"
   ],
   "vendor": "Pinoccio",
-  "url": "https://www.crowdsupply.com/pinoccio/mesh-sensor-network"
+  "url": "https://www.crowdsupply.com/pinoccio/mesh-sensor-network",
+  "build": {
+    "extra_flags": "-DARDUINO_PINOCCIO -D__PROG_TYPES_COMPAT__",
+    "core": "arduino",
+    "f_cpu": "16000000L",
+    "mcu": "atmega256rfr2",
+    "variant": "pinoccio"
+  },
+  "upload": {
+    "protocol": "wiring",
+    "speed": 115200,
+    "require_upload_port": true
+  }
 }

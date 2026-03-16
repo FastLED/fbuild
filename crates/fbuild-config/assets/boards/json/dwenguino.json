@@ -10,5 +10,17 @@
     "arduino"
   ],
   "vendor": "Dwengo",
-  "url": "http://www.dwengo.org/"
+  "url": "http://www.dwengo.org/",
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_DWENGUINO",
+    "core": "dwenguino",
+    "f_cpu": "16000000L",
+    "mcu": "at90usb646",
+    "variant": "dwenguino"
+  },
+  "upload": {
+    "protocol": "avr109",
+    "speed": 57600,
+    "require_upload_port": true
+  }
 }

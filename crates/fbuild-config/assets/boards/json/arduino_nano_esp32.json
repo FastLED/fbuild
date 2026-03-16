@@ -32,5 +32,25 @@
       "esp-builtin": {},
       "dfu": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_NANO_ESP32 -DBOARD_HAS_PIN_REMAP -DBOARD_HAS_PSRAM -DUSB_MANUFACTURER=\\\"Arduino\\\" -DUSB_PRODUCT=\\\"NanoESP32\\\" -DARDUINO_USB_CDC_ON_BOOT=1 -DARDUINO_USB_DFU_ON_BOOT=1 -DARDUINO_RUNNING_CORE=1 -DARDUINO_EVENT_RUNNING_CORE=1",
+    "core": "esp32",
+    "f_cpu": "240000000L",
+    "mcu": "esp32s3",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "variant": "arduino_nano_nora",
+    "arduino": {
+      "ldscript": "esp32s3_out.ld",
+      "partitions": "app3M_fat9M_fact512k_16MB.csv",
+      "memory_type": "qio_opi"
+    }
+  },
+  "upload": {
+    "protocol": "dfu",
+    "flash_size": "16MB",
+    "speed": 460800,
+    "require_upload_port": true
   }
 }

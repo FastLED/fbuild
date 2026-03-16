@@ -24,5 +24,15 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32U5 -DSTM32U5xx -DSTM32U585xx",
+    "core": "stm32",
+    "f_cpu": "160000000L",
+    "mcu": "stm32u585aii6q",
+    "variant": "STM32U5xx/U575A(G-I)IxQ_U585AIIxQ"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

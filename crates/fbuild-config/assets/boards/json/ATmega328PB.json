@@ -10,5 +10,17 @@
     "arduino"
   ],
   "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega328PB"
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega328PB",
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_ATmega328PB",
+    "core": "MiniCore",
+    "f_cpu": "16000000L",
+    "mcu": "atmega328pb",
+    "variant": "pb-variant"
+  },
+  "upload": {
+    "protocol": "urclock",
+    "speed": 115200,
+    "require_upload_port": true
+  }
 }

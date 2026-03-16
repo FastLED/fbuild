@@ -31,5 +31,18 @@
       "tumpa": {},
       "esp-builtin": {}
     }
+  },
+  "build": {
+    "core": "esp32",
+    "f_cpu": "96000000L",
+    "mcu": "esp32h2",
+    "f_flash": "64000000L",
+    "flash_mode": "qio",
+    "variant": "esp32h2"
+  },
+  "upload": {
+    "flash_size": "4MB",
+    "speed": 460800,
+    "require_upload_port": true
   }
 }

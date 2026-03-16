@@ -20,5 +20,15 @@
       "jlink": {},
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32G0 -DSTM32G0xx -DSTM32G031xx",
+    "core": "stm32",
+    "f_cpu": "64000000L",
+    "mcu": "stm32g031j6",
+    "variant": "STM32G0xx/G031J(4-6)M_G041J6M"
+  },
+  "upload": {
+    "protocol": "mbed"
   }
 }

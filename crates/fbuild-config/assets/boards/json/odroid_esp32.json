@@ -17,5 +17,22 @@
     "bluetooth",
     "ethernet",
     "can"
-  ]
+  ],
+  "build": {
+    "extra_flags": "-DARDUINO_ODROID_ESP32 -DBOARD_HAS_PSRAM -mfix-esp32-psram-cache-issue",
+    "core": "esp32",
+    "f_cpu": "240000000L",
+    "mcu": "esp32",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "variant": "odroid_esp32",
+    "arduino": {
+      "ldscript": "esp32_out.ld"
+    }
+  },
+  "upload": {
+    "flash_size": "16MB",
+    "speed": 460800,
+    "require_upload_port": true
+  }
 }

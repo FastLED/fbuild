@@ -15,5 +15,17 @@
     "tools": {
       "simavr": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_ATMEGA128RFA1_DEV_BOARD",
+    "core": "arduino",
+    "f_cpu": "16000000L",
+    "mcu": "atmega128rfa1",
+    "variant": "sparkfun_rf128"
+  },
+  "upload": {
+    "protocol": "arduino",
+    "speed": 57600,
+    "require_upload_port": true
   }
 }

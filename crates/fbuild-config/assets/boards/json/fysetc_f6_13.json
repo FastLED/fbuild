@@ -16,5 +16,17 @@
       "simavr": {},
       "avr-stub": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_MEGA2560",
+    "core": "arduino",
+    "f_cpu": "16000000L",
+    "mcu": "atmega2560",
+    "variant": "fysetcf6"
+  },
+  "upload": {
+    "protocol": "wiring",
+    "speed": 115200,
+    "require_upload_port": true
   }
 }

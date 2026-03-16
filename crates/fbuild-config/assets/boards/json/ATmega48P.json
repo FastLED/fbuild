@@ -15,5 +15,16 @@
     "tools": {
       "simavr": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_ATmega48P",
+    "core": "MiniCore",
+    "f_cpu": "16000000L",
+    "mcu": "atmega48p",
+    "variant": "standard"
+  },
+  "upload": {
+    "protocol": "urclock",
+    "require_upload_port": false
   }
 }

@@ -22,5 +22,16 @@
         "default": true
       }
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F407xx -DSTM32F4",
+    "core": "stm32",
+    "f_cpu": "168000000L",
+    "mcu": "stm32f407igt6",
+    "variant": "STM32F4xx/F407I(E-G)(H-T)_F417I(E-G)(H-T)"
+  },
+  "upload": {
+    "protocol": "stlink",
+    "require_upload_port": true
   }
 }

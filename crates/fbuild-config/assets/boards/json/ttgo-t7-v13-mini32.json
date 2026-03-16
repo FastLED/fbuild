@@ -17,5 +17,22 @@
     "bluetooth",
     "can",
     "ethernet"
-  ]
+  ],
+  "build": {
+    "extra_flags": "-DARDUINO_TTGO_T7_V13_Mini32",
+    "core": "esp32",
+    "f_cpu": "240000000L",
+    "mcu": "esp32",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "variant": "ttgo-t7-v13-mini32",
+    "arduino": {
+      "ldscript": "esp32_out.ld"
+    }
+  },
+  "upload": {
+    "flash_size": "4MB",
+    "speed": 460800,
+    "require_upload_port": true
+  }
 }

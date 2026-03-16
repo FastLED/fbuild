@@ -30,5 +30,23 @@
       "olimex-jtag-tiny": {},
       "tumpa": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DBRIKI_MBC_WB_ESP -DBRIKI_MBC_WB -w",
+    "core": "mbcwb",
+    "f_cpu": "240000000L",
+    "mcu": "esp32",
+    "f_flash": "80000000L",
+    "flash_mode": "dio",
+    "variant": "briki_mbcwb_esp32",
+    "arduino": {
+      "ldscript": "esp32_out.ld"
+    }
+  },
+  "upload": {
+    "protocol": "mbctool",
+    "flash_size": "8MB",
+    "speed": 1500000,
+    "require_upload_port": true
   }
 }

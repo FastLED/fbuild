@@ -15,5 +15,15 @@
     "tools": {
       "simavr": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_GEMMA",
+    "core": "arduino",
+    "f_cpu": "8000000L",
+    "mcu": "attiny85",
+    "variant": "trinket_tiny8"
+  },
+  "upload": {
+    "protocol": "usbtiny"
   }
 }

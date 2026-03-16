@@ -15,5 +15,17 @@
     "tools": {
       "simavr": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_ATTINY13",
+    "core": "MicroCore",
+    "f_cpu": "9600000L",
+    "mcu": "attiny13a",
+    "variant": "attiny13a"
+  },
+  "upload": {
+    "protocol": "stk500v1",
+    "speed": 19200,
+    "require_upload_port": true
   }
 }

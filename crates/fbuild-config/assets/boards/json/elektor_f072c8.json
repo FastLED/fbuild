@@ -21,5 +21,15 @@
       "stlink": {},
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F0 -DSTM32F072xB",
+    "core": "stm32",
+    "f_cpu": "48000000L",
+    "mcu": "stm32f072c8t6",
+    "variant": "STM32F0xx/F072C8(T-U)_F072CB(T-U-Y)"
+  },
+  "upload": {
+    "protocol": "serial"
   }
 }

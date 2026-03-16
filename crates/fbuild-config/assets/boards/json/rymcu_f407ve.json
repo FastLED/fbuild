@@ -23,5 +23,16 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F407xx -DARDUINO_GENERIC_F407VETX -DSTM32F4",
+    "core": "stm32",
+    "f_cpu": "168000000L",
+    "mcu": "stm32f407vet6",
+    "variant": "STM32F4xx/F407V(E-G)T_F417V(E-G)T"
+  },
+  "upload": {
+    "protocol": "stlink",
+    "require_upload_port": true
   }
 }

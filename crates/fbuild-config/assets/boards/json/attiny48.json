@@ -10,5 +10,15 @@
     "arduino"
   ],
   "vendor": "Atmel",
-  "url": "http://www.atmel.com/devices/ATTINY48.aspx"
+  "url": "http://www.atmel.com/devices/ATTINY48.aspx",
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_ATTINYX8",
+    "core": "tiny",
+    "f_cpu": "8000000L",
+    "mcu": "attiny48",
+    "variant": "tinyX8"
+  },
+  "upload": {
+    "protocol": "usbtiny"
+  }
 }

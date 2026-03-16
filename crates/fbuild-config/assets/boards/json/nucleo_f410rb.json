@@ -25,5 +25,14 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F410Rx",
+    "f_cpu": "100000000L",
+    "mcu": "stm32f410rbt6",
+    "variant": "STM32F4xx/F410R(8-B)(I-T)"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

@@ -21,5 +21,19 @@
       "stlink": {},
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32H7 -DARDUINO_PORTENTA_H7_M4 -DNVISION_PINS",
+    "core": "arduino",
+    "f_cpu": "480000000L",
+    "mcu": "stm32h747xih6",
+    "variant": "GENERIC_STM32H747_M4",
+    "arduino": {
+      "ldscript": "linker_script.ld"
+    }
+  },
+  "upload": {
+    "protocol": "dfu",
+    "require_upload_port": true
   }
 }

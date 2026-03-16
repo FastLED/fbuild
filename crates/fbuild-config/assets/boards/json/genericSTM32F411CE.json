@@ -20,5 +20,15 @@
       "jlink": {},
       "stlink": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F411xE -DSTM32F4xx",
+    "core": "stm32",
+    "f_cpu": "100000000L",
+    "mcu": "stm32f411ceu6",
+    "variant": "STM32F4xx/F411C(C-E)(U-Y)"
+  },
+  "upload": {
+    "protocol": "serial"
   }
 }

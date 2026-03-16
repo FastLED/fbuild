@@ -17,5 +17,22 @@
     "bluetooth",
     "ethernet",
     "can"
-  ]
+  ],
+  "build": {
+    "extra_flags": "-DARDUINO_ESP32_PICO_DEVKITM_2 -DBOARD_HAS_PSRAM",
+    "core": "esp32",
+    "f_cpu": "240000000L",
+    "mcu": "esp32",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "variant": "esp32",
+    "arduino": {
+      "ldscript": "esp32_out.ld"
+    }
+  },
+  "upload": {
+    "flash_size": "8MB",
+    "speed": 921600,
+    "require_upload_port": true
+  }
 }

@@ -15,5 +15,16 @@
     "tools": {
       "simavr": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_NIBOBEE",
+    "core": "nicai",
+    "f_cpu": "15000000L",
+    "mcu": "atmega16",
+    "variant": "nibobee"
+  },
+  "upload": {
+    "protocol": "usbasp",
+    "speed": 115200
   }
 }

@@ -26,5 +26,14 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32L0 -DSTM32L072xx",
+    "f_cpu": "32000000L",
+    "mcu": "stm32l072cz",
+    "variant": "STM32L0xx/L072CBY_L072CZ(E-Y)_L073CZY_L082CZY"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

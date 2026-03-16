@@ -16,5 +16,17 @@
       "simavr": {},
       "avr-stub": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_PRO",
+    "core": "arduino",
+    "f_cpu": "8000000L",
+    "mcu": "atmega328p",
+    "variant": "eightanaloginputs"
+  },
+  "upload": {
+    "protocol": "arduino",
+    "speed": 57600,
+    "require_upload_port": true
   }
 }

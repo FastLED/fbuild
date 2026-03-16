@@ -23,5 +23,15 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F1 -DSTM32F103x6 -DARDUINO_BLUEPILL_F103C6",
+    "core": "stm32",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f103c6t6",
+    "variant": "STM32F1xx/F103C4T_F103C6(T-U)"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

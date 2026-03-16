@@ -15,5 +15,17 @@
     "tools": {
       "simavr": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_MAKEYMAKEY",
+    "core": "arduino",
+    "f_cpu": "16000000L",
+    "mcu": "atmega32u4",
+    "variant": "sparkfun_promicro"
+  },
+  "upload": {
+    "protocol": "avr109",
+    "speed": 57600,
+    "require_upload_port": true
   }
 }

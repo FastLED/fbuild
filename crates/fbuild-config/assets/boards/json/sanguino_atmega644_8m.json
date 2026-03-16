@@ -15,5 +15,17 @@
     "tools": {
       "simavr": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_SANGUINO",
+    "core": "arduino",
+    "f_cpu": "8000000L",
+    "mcu": "atmega644",
+    "variant": "sanguino"
+  },
+  "upload": {
+    "protocol": "arduino",
+    "speed": 57600,
+    "require_upload_port": true
   }
 }

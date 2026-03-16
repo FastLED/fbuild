@@ -25,5 +25,14 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32L0 -DSTM32L031xx",
+    "f_cpu": "32000000L",
+    "mcu": "stm32l031k6t6",
+    "variant": "STM32L0xx/L031K(4-6)T_L041K6T"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

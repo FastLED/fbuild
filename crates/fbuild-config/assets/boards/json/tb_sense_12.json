@@ -22,5 +22,12 @@
         "onboard": true
       }
     }
+  },
+  "build": {
+    "f_cpu": "40000000L",
+    "mcu": "EFR32MG12P432F1024"
+  },
+  "upload": {
+    "protocol": "mbed"
   }
 }

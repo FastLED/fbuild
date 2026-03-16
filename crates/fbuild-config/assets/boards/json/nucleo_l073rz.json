@@ -26,5 +26,14 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32L0 -DSTM32L073xx",
+    "f_cpu": "32000000L",
+    "mcu": "stm32l073rz",
+    "variant": "STM32L0xx/L072R(B-Z)T_L073R(B-Z)T_L083R(B-Z)T"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

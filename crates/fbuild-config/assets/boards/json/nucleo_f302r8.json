@@ -28,5 +28,15 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F3 -DSTM32F302x8",
+    "core": "stm32",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f302r8t6",
+    "variant": "STM32F3xx/F302R(6-8)T"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

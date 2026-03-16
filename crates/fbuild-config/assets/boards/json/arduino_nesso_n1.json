@@ -31,5 +31,18 @@
       "tumpa": {},
       "esp-builtin": {}
     }
+  },
+  "build": {
+    "core": "esp32",
+    "f_cpu": "160000000L",
+    "mcu": "esp32c6",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "variant": "arduino_nesso_n1"
+  },
+  "upload": {
+    "flash_size": "16MB",
+    "speed": 460800,
+    "require_upload_port": true
   }
 }

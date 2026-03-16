@@ -20,5 +20,15 @@
       "jlink": {},
       "stlink": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F0 -DSTM32F072xB",
+    "core": "stm32",
+    "f_cpu": "48000000L",
+    "mcu": "stm32f072rb",
+    "variant": "STM32F0xx/F072R8T_F072RB(H-I-T)"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

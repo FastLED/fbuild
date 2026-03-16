@@ -18,5 +18,17 @@
   "ram": 524288,
   "rom": 8126464,
   "url": "https://www.sparkfun.com/products/16402",
-  "vendor": "SparkFun"
+  "vendor": "SparkFun",
+  "build": {
+    "extra_flags": "-D__IMXRT1062__ -DARDUINO_TEENSY_MICROMOD",
+    "core": "teensy4",
+    "f_cpu": "600000000",
+    "mcu": "imxrt1062",
+    "arduino": {
+      "ldscript": "imxrt1062_mm.ld"
+    }
+  },
+  "upload": {
+    "protocol": "teensy-gui"
+  }
 }

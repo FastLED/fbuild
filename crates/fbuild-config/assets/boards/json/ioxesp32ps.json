@@ -32,5 +32,22 @@
       "olimex-jtag-tiny": {},
       "tumpa": {}
     }
+  },
+  "build": {
+    "extra_flags": "-mfix-esp32-psram-cache-issue -mfix-esp32-psram-cache-strategy=memw -DBOARD_HAS_PSRAM -DARDUINO_IOXESP32PS",
+    "core": "esp32",
+    "f_cpu": "240000000L",
+    "mcu": "esp32",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "variant": "ioxesp32",
+    "arduino": {
+      "ldscript": "esp32_out.ld"
+    }
+  },
+  "upload": {
+    "flash_size": "4MB",
+    "speed": 460800,
+    "require_upload_port": true
   }
 }

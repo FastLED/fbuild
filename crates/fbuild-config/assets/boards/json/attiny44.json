@@ -15,5 +15,15 @@
     "tools": {
       "simavr": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_ATTINYX4",
+    "core": "tiny",
+    "f_cpu": "8000000L",
+    "mcu": "attiny44",
+    "variant": "tinyX4"
+  },
+  "upload": {
+    "protocol": "usbtiny"
   }
 }

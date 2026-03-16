@@ -20,5 +20,15 @@
       "jlink": {},
       "stlink": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F410Rx -DSTM32F4xx",
+    "core": "stm32",
+    "f_cpu": "100000000L",
+    "mcu": "stm32f410r8t6",
+    "variant": "STM32F4xx/F410R(8-B)(I-T)"
+  },
+  "upload": {
+    "protocol": "serial"
   }
 }

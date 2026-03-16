@@ -27,5 +27,13 @@
         "default": true
       }
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F439xx",
+    "f_cpu": "180000000L",
+    "mcu": "stm32f439vi"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

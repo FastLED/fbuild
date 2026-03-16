@@ -24,5 +24,15 @@
       "stlink": {},
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32H7 -DSTM32H7xx -DSTM32H743xx",
+    "core": "stm32",
+    "f_cpu": "480000000L",
+    "mcu": "stm32h743vit6",
+    "variant": "STM32H7xx/H742V(G-I)(H-T)_H743V(G-I)(H-T)_H750VBT_H753VI(H-T)"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

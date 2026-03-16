@@ -17,5 +17,23 @@
     "bluetooth",
     "ethernet",
     "can"
-  ]
+  ],
+  "build": {
+    "extra_flags": "-DARDUINO_M5STACK_FIRE -DBOARD_HAS_PSRAM -mfix-esp32-psram-cache-issue -mfix-esp32-psram-cache-strategy=memw",
+    "core": "esp32",
+    "f_cpu": "240000000L",
+    "mcu": "esp32",
+    "f_flash": "40000000L",
+    "flash_mode": "dio",
+    "variant": "m5stack_fire",
+    "arduino": {
+      "ldscript": "esp32_out.ld",
+      "partitions": "default_16MB.csv"
+    }
+  },
+  "upload": {
+    "flash_size": "16MB",
+    "speed": 460800,
+    "require_upload_port": true
+  }
 }

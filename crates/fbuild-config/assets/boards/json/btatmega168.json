@@ -18,5 +18,17 @@
     "tools": {
       "simavr": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_BT",
+    "core": "arduino",
+    "f_cpu": "16000000L",
+    "mcu": "atmega168",
+    "variant": "eightanaloginputs"
+  },
+  "upload": {
+    "protocol": "arduino",
+    "speed": 19200,
+    "require_upload_port": true
   }
 }

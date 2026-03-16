@@ -24,5 +24,14 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F1 -DSTM32F100xB",
+    "f_cpu": "24000000L",
+    "mcu": "stm32f100rbt6",
+    "variant": "STM32F1xx/F100R(8-B)T"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

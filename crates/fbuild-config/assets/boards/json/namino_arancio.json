@@ -30,5 +30,23 @@
       "tumpa": {},
       "esp-builtin": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_NAMINO_ARANCIO -DARDUINO_USB_CDC_ON_BOOT=1",
+    "core": "esp32",
+    "f_cpu": "240000000L",
+    "mcu": "esp32s3",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "variant": "namino_arancio",
+    "arduino": {
+      "ldscript": "esp32s3_out.ld",
+      "memory_type": "qio_qspi"
+    }
+  },
+  "upload": {
+    "flash_size": "4MB",
+    "speed": 460800,
+    "require_upload_port": true
   }
 }

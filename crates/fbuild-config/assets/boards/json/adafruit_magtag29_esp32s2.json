@@ -28,5 +28,23 @@
       "olimex-jtag-tiny": {},
       "tumpa": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_MAGTAG29_ESP32S2 -DBOARD_HAS_PSRAM -DARDUINO_USB_CDC_ON_BOOT=1",
+    "core": "esp32",
+    "f_cpu": "240000000L",
+    "mcu": "esp32s2",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "variant": "adafruit_magtag29_esp32s2",
+    "arduino": {
+      "ldscript": "esp32s2_out.ld",
+      "partitions": "partitions-4MB-tinyuf2.csv"
+    }
+  },
+  "upload": {
+    "flash_size": "4MB",
+    "speed": 460800,
+    "require_upload_port": true
   }
 }

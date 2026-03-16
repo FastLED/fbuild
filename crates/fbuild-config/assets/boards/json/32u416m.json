@@ -15,5 +15,17 @@
     "tools": {
       "simavr": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_MICRODUINO_CORE_USB",
+    "core": "arduino",
+    "f_cpu": "16000000L",
+    "mcu": "atmega32u4",
+    "variant": "microduino_32u4"
+  },
+  "upload": {
+    "protocol": "avr109",
+    "speed": 57600,
+    "require_upload_port": true
   }
 }

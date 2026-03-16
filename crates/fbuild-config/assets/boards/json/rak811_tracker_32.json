@@ -21,5 +21,14 @@
       "stlink": {},
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32L1 -DSTM32L151xB",
+    "f_cpu": "32000000L",
+    "mcu": "stm32l151rbt6",
+    "variant": "STM32L1xx/L100C6Ux(A)_L151C(6-8-B)(T-U)x(A)_L152C(6-8-B)(T-U)x(A)"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

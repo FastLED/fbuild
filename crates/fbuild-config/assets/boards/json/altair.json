@@ -10,5 +10,17 @@
     "arduino"
   ],
   "vendor": "makerlab.mx",
-  "url": "http://www.aquila.io/en"
+  "url": "http://www.aquila.io/en",
+  "build": {
+    "extra_flags": "-D__PROG_TYPES_COMPAT__",
+    "core": "arduino",
+    "f_cpu": "16000000L",
+    "mcu": "atmega256rfr2",
+    "variant": "altair"
+  },
+  "upload": {
+    "protocol": "wiring",
+    "speed": 115200,
+    "require_upload_port": true
+  }
 }

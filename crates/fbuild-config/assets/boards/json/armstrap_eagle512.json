@@ -24,5 +24,15 @@
       "stlink": {},
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F40_41xxx -DSTM32F407xx",
+    "core": "stm32",
+    "f_cpu": "168000000L",
+    "mcu": "stm32f407vet6",
+    "variant": "stm32f4"
+  },
+  "upload": {
+    "protocol": "blackmagic"
   }
 }

@@ -24,5 +24,15 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32L1 -DSTM32L152xB -DSTM32L1XX_MD",
+    "core": "stm32",
+    "f_cpu": "32000000L",
+    "mcu": "stm32l152rbt6",
+    "variant": "stm32l152xb"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

@@ -18,5 +18,12 @@
         "onboard": true
       }
     }
+  },
+  "build": {
+    "f_cpu": "48000000L",
+    "mcu": "efm32wg990f256"
+  },
+  "upload": {
+    "protocol": "mbed"
   }
 }

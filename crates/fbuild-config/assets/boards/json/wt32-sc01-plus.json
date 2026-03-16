@@ -31,5 +31,23 @@
       "tumpa": {},
       "esp-builtin": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_WT32_SC01_PLUS -DBOARD_HAS_PSRAM -DARDUINO_USB_CDC_ON_BOOT=1 -DARDUINO_RUNNING_CORE=1 -DARDUINO_EVENT_RUNNING_CORE=1",
+    "core": "esp32",
+    "f_cpu": "240000000L",
+    "mcu": "esp32s3",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "variant": "wt32-sc01-plus",
+    "arduino": {
+      "partitions": "tinyuf2-partitions-16MB.csv",
+      "memory_type": "qio_qspi"
+    }
+  },
+  "upload": {
+    "flash_size": "16MB",
+    "speed": 460800,
+    "require_upload_port": true
   }
 }

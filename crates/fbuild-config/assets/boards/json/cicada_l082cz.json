@@ -18,5 +18,15 @@
       "jlink": {},
       "stlink": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32L0 -DARDUINO_STM32L0_CICADA",
+    "core": "stm32l0",
+    "f_cpu": "32000000L",
+    "mcu": "stm32l082czy6",
+    "variant": "Cicada-L082CZ"
+  },
+  "upload": {
+    "protocol": "dfu"
   }
 }

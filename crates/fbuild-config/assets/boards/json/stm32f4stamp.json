@@ -21,5 +21,16 @@
         "default": true
       }
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F405xx",
+    "core": "stm32",
+    "f_cpu": "168000000L",
+    "mcu": "stm32f405rgt6",
+    "variant": "STM32F4xx/F405RGT_F415RGT"
+  },
+  "upload": {
+    "protocol": "dfu",
+    "require_upload_port": true
   }
 }

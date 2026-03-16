@@ -20,5 +20,15 @@
       "jlink": {},
       "stlink": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F103x6 -DSTM32F1",
+    "core": "stm32",
+    "f_cpu": "72000000L",
+    "mcu": "stm32f103r4t6",
+    "variant": "STM32F1xx/F103R(4-6)T"
+  },
+  "upload": {
+    "protocol": "serial"
   }
 }

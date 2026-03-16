@@ -30,5 +30,15 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F7 -DSTM32F756xx",
+    "core": "stm32",
+    "f_cpu": "216000000L",
+    "mcu": "stm32f756zg",
+    "variant": "STM32F7xx/F745Z(E-G)T_F746Z(E-G)(T-Y)_F750Z8T_F756ZG(T-Y)"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

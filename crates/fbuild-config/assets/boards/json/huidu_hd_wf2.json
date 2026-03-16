@@ -34,5 +34,22 @@
         "default": true
       }
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_HUIDU_HD_WF2 -DARDUINO_USB_MODE=1 -DARDUINO_RUNNING_CORE=1 -DARDUINO_EVENT_RUNNING_CORE=1 -DARDUINO_USB_CDC_ON_BOOT=1",
+    "core": "esp32",
+    "f_cpu": "240000000L",
+    "mcu": "esp32s3",
+    "f_flash": "80000000L",
+    "flash_mode": "dio",
+    "variant": "huidu_hd_wf2",
+    "arduino": {
+      "partitions": "default_8MB.csv"
+    }
+  },
+  "upload": {
+    "flash_size": "8MB",
+    "speed": 460800,
+    "require_upload_port": true
   }
 }

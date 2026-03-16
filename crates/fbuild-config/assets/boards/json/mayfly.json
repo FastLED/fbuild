@@ -15,5 +15,17 @@
     "tools": {
       "simavr": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_ENVIRODIY_MAYFLY",
+    "core": "arduino",
+    "f_cpu": "8000000L",
+    "mcu": "atmega1284p",
+    "variant": "mayfly"
+  },
+  "upload": {
+    "protocol": "arduino",
+    "speed": 57600,
+    "require_upload_port": true
   }
 }

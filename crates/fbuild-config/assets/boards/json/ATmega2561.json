@@ -10,5 +10,17 @@
     "arduino"
   ],
   "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/ATmega2561"
+  "url": "https://www.microchip.com/wwwproducts/ATmega2561",
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_ATmega2561",
+    "core": "MegaCore",
+    "f_cpu": "16000000L",
+    "mcu": "atmega2561",
+    "variant": "64-pin-avr"
+  },
+  "upload": {
+    "protocol": "urclock",
+    "speed": 115200,
+    "require_upload_port": true
+  }
 }

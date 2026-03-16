@@ -15,5 +15,17 @@
     "tools": {
       "simavr": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_MEGA",
+    "core": "arduino",
+    "f_cpu": "16000000L",
+    "mcu": "atmega1284p",
+    "variant": "wildfirev2"
+  },
+  "upload": {
+    "protocol": "wiring",
+    "speed": 38400,
+    "require_upload_port": true
   }
 }

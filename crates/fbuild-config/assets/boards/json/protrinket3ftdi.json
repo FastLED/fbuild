@@ -16,5 +16,17 @@
       "simavr": {},
       "avr-stub": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_PROTRINKET3FTDI",
+    "core": "arduino",
+    "f_cpu": "12000000L",
+    "mcu": "atmega328p",
+    "variant": "eightanaloginputs"
+  },
+  "upload": {
+    "protocol": "arduino",
+    "speed": 115200,
+    "require_upload_port": true
   }
 }

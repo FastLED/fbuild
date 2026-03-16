@@ -28,5 +28,15 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32G4 -DSTM32G4xx -DSTM32G431xx",
+    "core": "stm32",
+    "f_cpu": "170000000L",
+    "mcu": "stm32g431rbt6",
+    "variant": "STM32G4xx/G431R(6-8)(I-T)_G431RB(I-T)x(Z)_G441RB(I-T)"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

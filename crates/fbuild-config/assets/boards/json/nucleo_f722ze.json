@@ -27,5 +27,14 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F7 -DSTM32F722xx",
+    "f_cpu": "216000000L",
+    "mcu": "stm32f722zet6",
+    "variant": "STM32F7xx/F722Z(C-E)T_F732ZET"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

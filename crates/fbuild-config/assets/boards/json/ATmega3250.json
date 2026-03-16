@@ -10,5 +10,17 @@
     "arduino"
   ],
   "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega3250"
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega3250",
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_ATmega3250",
+    "core": "MegaCore",
+    "f_cpu": "16000000L",
+    "mcu": "atmega3250",
+    "variant": "100-pin-avr"
+  },
+  "upload": {
+    "protocol": "urclock",
+    "speed": 115200,
+    "require_upload_port": true
+  }
 }

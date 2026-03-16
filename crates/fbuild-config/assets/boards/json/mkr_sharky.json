@@ -20,5 +20,15 @@
       "jlink": {},
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32WB -DSTM32WBxx -DSTM32WB55xx",
+    "core": "stm32",
+    "f_cpu": "64000000L",
+    "mcu": "stm32wb55cg",
+    "variant": "STM32WBxx/WB35C(C-E)UxA_WB55C(C-E-G)U"
+  },
+  "upload": {
+    "protocol": "mbed"
   }
 }

@@ -22,5 +22,15 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32G0 -DSTM32G0xx -DSTM32G0B1xx",
+    "core": "stm32",
+    "f_cpu": "64000000L",
+    "mcu": "stm32g0b1ret6",
+    "variant": "STM32G0xx/G0B1C(B-C-E)(T-U)_G0C1C(C-E)(T-U)"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

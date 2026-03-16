@@ -17,5 +17,23 @@
     "bluetooth",
     "ethernet",
     "can"
-  ]
+  ],
+  "build": {
+    "extra_flags": "-DARDUINO_UBLOX_NINA_W10",
+    "core": "esp32",
+    "f_cpu": "240000000L",
+    "mcu": "esp32",
+    "f_flash": "40000000L",
+    "flash_mode": "dio",
+    "variant": "nina_w10",
+    "arduino": {
+      "ldscript": "esp32_out.ld",
+      "partitions": "minimal.csv"
+    }
+  },
+  "upload": {
+    "flash_size": "2MB",
+    "speed": 460800,
+    "require_upload_port": true
+  }
 }

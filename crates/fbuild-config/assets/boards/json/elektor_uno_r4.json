@@ -10,5 +10,17 @@
     "arduino"
   ],
   "vendor": "Elektor",
-  "url": "https://www.elektor.com/elektor-uno-r4"
+  "url": "https://www.elektor.com/elektor-uno-r4",
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_ELEKTOR_UNO_R4",
+    "core": "arduino",
+    "f_cpu": "16000000L",
+    "mcu": "atmega328pb",
+    "variant": "R4"
+  },
+  "upload": {
+    "protocol": "arduino",
+    "speed": 115200,
+    "require_upload_port": true
+  }
 }

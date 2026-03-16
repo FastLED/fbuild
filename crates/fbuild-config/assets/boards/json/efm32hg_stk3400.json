@@ -18,5 +18,12 @@
         "onboard": true
       }
     }
+  },
+  "build": {
+    "f_cpu": "25000000L",
+    "mcu": "efm32hg322f64"
+  },
+  "upload": {
+    "protocol": "mbed"
   }
 }

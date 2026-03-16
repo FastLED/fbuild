@@ -25,5 +25,14 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32L1 -DSTM32L152xE",
+    "f_cpu": "32000000L",
+    "mcu": "stm32l152ret6",
+    "variant": "STM32L1xx/L151RET_L152RET_L162RET"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

@@ -24,5 +24,14 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "core": "silabs",
+    "f_cpu": "39000000L",
+    "mcu": "cortex-m33",
+    "variant": "thingplusmatter"
+  },
+  "upload": {
+    "protocol": "simplicitycommander"
   }
 }

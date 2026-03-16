@@ -33,5 +33,19 @@
       "tumpa": {},
       "esp-builtin": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_DFROBOT_FIREBEETLE_2_ESP32C6 -DARDUINO_USB_MODE=1 -DARDUINO_USB_CDC_ON_BOOT=1",
+    "core": "esp32",
+    "f_cpu": "160000000L",
+    "mcu": "esp32c6",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "variant": "dfrobot_firebeetle2_esp32c6"
+  },
+  "upload": {
+    "flash_size": "4MB",
+    "speed": 460800,
+    "require_upload_port": true
   }
 }

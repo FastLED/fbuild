@@ -18,5 +18,17 @@
   "ram": 262136,
   "rom": 524288,
   "url": "https://www.pjrc.com/store/teensy35.html",
-  "vendor": "Teensy"
+  "vendor": "Teensy",
+  "build": {
+    "extra_flags": "-D__MK64FX512__ -DARDUINO_TEENSY35",
+    "core": "teensy3",
+    "f_cpu": "120000000L",
+    "mcu": "mk64fx512",
+    "arduino": {
+      "ldscript": "mk64fx512.ld"
+    }
+  },
+  "upload": {
+    "protocol": "teensy-gui"
+  }
 }

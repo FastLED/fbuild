@@ -27,5 +27,14 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F7 -DSTM32F765xx",
+    "f_cpu": "216000000L",
+    "mcu": "stm32f765vit6",
+    "variant": "STM32F7xx/F765V(G-I)(H-T)_F767V(G-I)(H-T)_F777VI(H-T)"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

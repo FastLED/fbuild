@@ -31,5 +31,19 @@
       "tumpa": {},
       "esp-builtin": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DBOARD_HAS_PSRAM -DARDUINO_USB_CDC_ON_BOOT=1 -DARDUINO_USB_MODE=1",
+    "core": "esp32",
+    "f_cpu": "360000000L",
+    "mcu": "esp32p4",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "variant": "m5stack_tab5"
+  },
+  "upload": {
+    "flash_size": "16MB",
+    "speed": 1500000,
+    "require_upload_port": true
   }
 }

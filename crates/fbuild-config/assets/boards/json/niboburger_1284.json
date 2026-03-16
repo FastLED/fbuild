@@ -15,5 +15,16 @@
     "tools": {
       "simavr": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_NIBOBURGER_1284",
+    "core": "nicai",
+    "f_cpu": "20000000L",
+    "mcu": "atmega1284p",
+    "variant": "niboburger"
+  },
+  "upload": {
+    "protocol": "usbasp",
+    "speed": 115200
   }
 }

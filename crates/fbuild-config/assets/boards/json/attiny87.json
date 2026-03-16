@@ -10,5 +10,15 @@
     "arduino"
   ],
   "vendor": "Atmel",
-  "url": "http://www.atmel.com/devices/ATTINY87.aspx"
+  "url": "http://www.atmel.com/devices/ATTINY87.aspx",
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_ATTINYX7",
+    "core": "tiny",
+    "f_cpu": "8000000L",
+    "mcu": "attiny87",
+    "variant": "tinyX7_New"
+  },
+  "upload": {
+    "protocol": "usbtiny"
+  }
 }

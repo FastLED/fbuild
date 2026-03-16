@@ -19,5 +19,17 @@
       "simavr": {},
       "avr-stub": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_ETHERNET",
+    "core": "arduino",
+    "f_cpu": "16000000L",
+    "mcu": "atmega328p",
+    "variant": "ethernet"
+  },
+  "upload": {
+    "protocol": "arduino",
+    "speed": 115200,
+    "require_upload_port": true
   }
 }

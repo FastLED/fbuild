@@ -15,5 +15,17 @@
     "tools": {
       "simavr": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_FEATHER32U4",
+    "core": "arduino",
+    "f_cpu": "8000000L",
+    "mcu": "atmega32u4",
+    "variant": "feather32u4"
+  },
+  "upload": {
+    "protocol": "avr109",
+    "speed": 57600,
+    "require_upload_port": true
   }
 }

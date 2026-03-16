@@ -10,5 +10,17 @@
     "arduino"
   ],
   "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/ATmega640"
+  "url": "https://www.microchip.com/wwwproducts/ATmega640",
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_ATmega640",
+    "core": "MegaCore",
+    "f_cpu": "16000000L",
+    "mcu": "atmega640",
+    "variant": "100-pin-arduino-mega"
+  },
+  "upload": {
+    "protocol": "urclock",
+    "speed": 115200,
+    "require_upload_port": true
+  }
 }

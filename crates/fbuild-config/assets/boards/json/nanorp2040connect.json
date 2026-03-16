@@ -17,5 +17,16 @@
       "jlink": {},
       "raspberrypi-swd": {}
     }
+  },
+  "build": {
+    "extra_flags": "-D ARDUINO_NANO_RP2040_CONNECT -DARDUINO_ARCH_RP2040",
+    "core": "arduino",
+    "f_cpu": "133000000L",
+    "mcu": "rp2040",
+    "variant": "NANO_RP2040_CONNECT"
+  },
+  "upload": {
+    "protocol": "picotool",
+    "require_upload_port": true
   }
 }

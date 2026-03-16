@@ -28,5 +28,18 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F412Zx -DARDUINO_MXCHIP_AZ3166 -DARDUINO_ARCH_STM32F4",
+    "core": "arduino",
+    "f_cpu": "100000000L",
+    "mcu": "stm32f412zgt6",
+    "variant": "MXChip_AZ3166",
+    "arduino": {
+      "ldscript": "AZ3166.ld"
+    }
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

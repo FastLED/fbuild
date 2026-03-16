@@ -15,5 +15,15 @@
     "tools": {
       "simavr": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_PROTRINKET5",
+    "core": "arduino",
+    "f_cpu": "16000000L",
+    "mcu": "atmega328p",
+    "variant": "eightanaloginputs"
+  },
+  "upload": {
+    "protocol": "usbtiny"
   }
 }

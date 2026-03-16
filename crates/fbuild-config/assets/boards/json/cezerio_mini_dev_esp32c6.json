@@ -32,5 +32,17 @@
   "ram": 327680,
   "rom": 4194304,
   "url": "https://cezerio.com/cezerio_mini_dev_esp32c6",
-  "vendor": "cezerio"
+  "vendor": "cezerio",
+  "build": {
+    "core": "esp32",
+    "f_cpu": "160000000L",
+    "mcu": "esp32c6",
+    "f_flash": "80000000L",
+    "flash_mode": "qio"
+  },
+  "upload": {
+    "flash_size": "4MB",
+    "speed": 460800,
+    "require_upload_port": true
+  }
 }

@@ -15,5 +15,17 @@
     "tools": {
       "simavr": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_NG",
+    "core": "arduino",
+    "f_cpu": "16000000L",
+    "mcu": "atmega8",
+    "variant": "standard"
+  },
+  "upload": {
+    "protocol": "arduino",
+    "speed": 19200,
+    "require_upload_port": true
   }
 }

@@ -18,5 +18,17 @@
   "ram": 262144,
   "rom": 1048576,
   "url": "https://www.pjrc.com/store/teensy36.html",
-  "vendor": "Teensy"
+  "vendor": "Teensy",
+  "build": {
+    "extra_flags": "-D__MK66FX1M0__ -DARDUINO_TEENSY36",
+    "core": "teensy3",
+    "f_cpu": "180000000L",
+    "mcu": "mk66fx1m0",
+    "arduino": {
+      "ldscript": "mk66fx1m0.ld"
+    }
+  },
+  "upload": {
+    "protocol": "teensy-gui"
+  }
 }

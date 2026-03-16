@@ -15,5 +15,16 @@
     "tools": {
       "simavr": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_ATTINYX313",
+    "core": "tiny",
+    "f_cpu": "8000000L",
+    "mcu": "attiny2313",
+    "variant": "tinyX313"
+  },
+  "upload": {
+    "protocol": "buspirate",
+    "require_upload_port": true
   }
 }

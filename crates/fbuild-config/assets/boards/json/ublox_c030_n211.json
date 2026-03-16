@@ -23,5 +23,12 @@
       "stlink": {},
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "f_cpu": "180000000L",
+    "mcu": "stm32f437vg"
+  },
+  "upload": {
+    "protocol": "mbed"
   }
 }

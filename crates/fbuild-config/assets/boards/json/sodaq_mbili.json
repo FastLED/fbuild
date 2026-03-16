@@ -15,5 +15,17 @@
     "tools": {
       "simavr": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_SODAQ_MBILI",
+    "core": "arduino",
+    "f_cpu": "8000000L",
+    "mcu": "atmega1284p",
+    "variant": "mbili"
+  },
+  "upload": {
+    "protocol": "arduino",
+    "speed": 57600,
+    "require_upload_port": true
   }
 }

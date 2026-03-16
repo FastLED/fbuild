@@ -15,5 +15,17 @@
   "ram": 65536,
   "rom": 262144,
   "url": "https://www.pjrc.com/store/teensy31.html",
-  "vendor": "Teensy"
+  "vendor": "Teensy",
+  "build": {
+    "extra_flags": "-D__MK20DX256__ -DARDUINO_TEENSY31",
+    "core": "teensy3",
+    "f_cpu": "72000000L",
+    "mcu": "mk20dx256",
+    "arduino": {
+      "ldscript": "mk20dx256.ld"
+    }
+  },
+  "upload": {
+    "protocol": "teensy-gui"
+  }
 }

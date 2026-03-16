@@ -10,5 +10,14 @@
     "arduino"
   ],
   "vendor": "Atmel",
-  "url": "http://www.atmel.com/devices/ATTINY1634.aspx"
+  "url": "http://www.atmel.com/devices/ATTINY1634.aspx",
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_ATTINY1634 -DLOWERCAL=9",
+    "core": "tinymodern",
+    "f_cpu": "8000000L",
+    "mcu": "attiny1634"
+  },
+  "upload": {
+    "protocol": "usbtiny"
+  }
 }

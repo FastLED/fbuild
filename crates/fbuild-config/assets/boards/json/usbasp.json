@@ -15,5 +15,15 @@
     "tools": {
       "simavr": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_USBASP",
+    "core": "arduino",
+    "f_cpu": "12000000L",
+    "mcu": "atmega8",
+    "variant": "standard"
+  },
+  "upload": {
+    "protocol": "usbasp"
   }
 }

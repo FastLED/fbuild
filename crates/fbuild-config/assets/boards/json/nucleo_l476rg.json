@@ -29,5 +29,15 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32L4 -DSTM32L476xx",
+    "core": "stm32",
+    "f_cpu": "80000000L",
+    "mcu": "stm32l476rgt6",
+    "variant": "STM32L4xx/L475R(C-E-G)T_L476R(C-E-G)T_L486RGT"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

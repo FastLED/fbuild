@@ -24,5 +24,15 @@
       "stlink": {},
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F446xx",
+    "core": "stm32",
+    "f_cpu": "168000000L",
+    "mcu": "stm32f446vet6",
+    "variant": "STM32F4xx/F446V(C-E)T"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

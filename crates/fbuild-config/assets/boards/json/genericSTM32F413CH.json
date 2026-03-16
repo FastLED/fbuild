@@ -20,5 +20,15 @@
       "jlink": {},
       "stlink": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F413xx -DSTM32F4xx",
+    "core": "stm32",
+    "f_cpu": "100000000L",
+    "mcu": "stm32f413chu6",
+    "variant": "STM32F4xx/F413C(G-H)U_F423CHU"
+  },
+  "upload": {
+    "protocol": "serial"
   }
 }

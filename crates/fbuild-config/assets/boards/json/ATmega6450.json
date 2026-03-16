@@ -10,5 +10,17 @@
     "arduino"
   ],
   "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega6450"
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega6450",
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_ATmega6450",
+    "core": "MegaCore",
+    "f_cpu": "16000000L",
+    "mcu": "atmega6450",
+    "variant": "100-pin-avr"
+  },
+  "upload": {
+    "protocol": "urclock",
+    "speed": 115200,
+    "require_upload_port": true
+  }
 }

@@ -16,5 +16,17 @@
       "simavr": {},
       "avr-stub": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_MEGA2560",
+    "core": "arduino",
+    "f_cpu": "8000000L",
+    "mcu": "atmega2560",
+    "variant": "mega"
+  },
+  "upload": {
+    "protocol": "stk500v2",
+    "speed": 57600,
+    "require_upload_port": true
   }
 }

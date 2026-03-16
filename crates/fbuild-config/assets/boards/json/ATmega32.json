@@ -10,5 +10,17 @@
     "arduino"
   ],
   "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega32"
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega32",
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_ATmega32",
+    "core": "MightyCore",
+    "f_cpu": "16000000L",
+    "mcu": "atmega32",
+    "variant": "standard"
+  },
+  "upload": {
+    "protocol": "urclock",
+    "speed": 115200,
+    "require_upload_port": true
+  }
 }

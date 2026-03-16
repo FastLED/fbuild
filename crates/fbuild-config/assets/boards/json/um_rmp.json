@@ -28,5 +28,22 @@
       "olimex-jtag-tiny": {},
       "tumpa": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DARDUINO_RMP -DBOARD_HAS_PSRAM -DARDUINO_USB_CDC_ON_BOOT=1",
+    "core": "esp32",
+    "f_cpu": "240000000L",
+    "mcu": "esp32s2",
+    "f_flash": "40000000L",
+    "flash_mode": "dio",
+    "variant": "um_rmp",
+    "arduino": {
+      "ldscript": "esp32s2_out.ld"
+    }
+  },
+  "upload": {
+    "flash_size": "4MB",
+    "speed": 921600,
+    "require_upload_port": true
   }
 }

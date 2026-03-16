@@ -10,5 +10,17 @@
     "arduino"
   ],
   "vendor": "Microchip",
-  "url": "https://www.microchip.com/wwwproducts/en/ATmega329"
+  "url": "https://www.microchip.com/wwwproducts/en/ATmega329",
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_ATmega329",
+    "core": "MegaCore",
+    "f_cpu": "16000000L",
+    "mcu": "atmega329",
+    "variant": "64-pin-avr"
+  },
+  "upload": {
+    "protocol": "urclock",
+    "speed": 115200,
+    "require_upload_port": true
+  }
 }

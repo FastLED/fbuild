@@ -20,5 +20,15 @@
       "jlink": {},
       "stlink": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F412Rx -DSTM32F4xx",
+    "core": "stm32",
+    "f_cpu": "100000000L",
+    "mcu": "stm32f412rgt6",
+    "variant": "STM32F4xx/F412R(E-G)(T-Y)x(P)"
+  },
+  "upload": {
+    "protocol": "serial"
   }
 }

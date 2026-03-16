@@ -28,5 +28,15 @@
       },
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32H7 -DSTM32H7xx -DSTM32H753xx",
+    "core": "stm32",
+    "f_cpu": "400000000L",
+    "mcu": "stm32h753zit6",
+    "variant": "STM32H7xx/H742Z(G-I)T_H743Z(G-I)T_H747A(G-I)I_H747I(G-I)T_H750ZBT_H753ZIT_H757AII_H757IIT"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

@@ -21,5 +21,13 @@
       "stlink": {},
       "cmsis-dap": {}
     }
+  },
+  "build": {
+    "extra_flags": "-DSTM32F4 -DSTM32F4xx -DSTM32F401xC",
+    "f_cpu": "84000000L",
+    "mcu": "stm32f401ccu6"
+  },
+  "upload": {
+    "protocol": "stlink"
   }
 }

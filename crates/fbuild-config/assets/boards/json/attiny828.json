@@ -10,5 +10,14 @@
     "arduino"
   ],
   "vendor": "Atmel",
-  "url": "http://www.atmel.com/devices/ATTINY828.aspx"
+  "url": "http://www.atmel.com/devices/ATTINY828.aspx",
+  "build": {
+    "extra_flags": "-DARDUINO_AVR_AVR_ATTINY828 -DLOWERCAL=9",
+    "core": "tinymodern",
+    "f_cpu": "8000000L",
+    "mcu": "attiny828"
+  },
+  "upload": {
+    "protocol": "usbtiny"
+  }
 }
