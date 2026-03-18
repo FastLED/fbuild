@@ -155,6 +155,40 @@ impl BuildOrchestrator for TeensyOrchestrator {
             sketch_objects.push(obj);
         }
 
+        // 7.5. Generate compile_commands.json
+        let mut compile_db = crate::compile_database::CompileDatabase::new();
+        // Core sources use user_flags
+        compile_db.extend(crate::compile_database::generate_entries(
+            compiler.gcc_path(),
+            compiler.gxx_path(),
+            &compiler.c_flags(),
+            &compiler.cpp_flags(),
+            &[], // Teensy: include flags already in c/cpp_flags
+            &user_flags,
+            &sources.core_sources,
+            &core_build_dir,
+            &params.project_dir,
+        ));
+        // Sketch sources use all_src_flags
+        compile_db.extend(crate::compile_database::generate_entries(
+            compiler.gcc_path(),
+            compiler.gxx_path(),
+            &compiler.c_flags(),
+            &compiler.cpp_flags(),
+            &[],
+            &all_src_flags,
+            &sources.sketch_sources,
+            &src_build_dir,
+            &params.project_dir,
+        ));
+        let compile_db =
+            compile_db.translate_for_clang(crate::compile_database::TargetArchitecture::Arm);
+        let compile_database_path = if compile_db.has_entries() {
+            Some(compile_db.write_and_copy(&build_dir, &params.project_dir)?)
+        } else {
+            None
+        };
+
         // 8-9. Link + convert (with linker script)
         let linker_script = framework.get_linker_script(board_id);
         let linker = TeensyLinker::new(
@@ -197,6 +231,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
             size_info: link_result.size_info,
             build_time_secs: elapsed,
             message: format!("Teensy build for {} completed", params.env_name),
+            compile_database_path,
         })
     }
 }

@@ -4,6 +4,7 @@
 //! Orchestrators handle: source scanning, compilation, linking, size reporting.
 
 pub mod avr;
+pub mod compile_database;
 pub mod compiler;
 pub mod esp32;
 pub mod linker;
@@ -24,6 +25,8 @@ pub struct BuildResult {
     pub size_info: Option<SizeInfo>,
     pub build_time_secs: f64,
     pub message: String,
+    /// Path to the generated `compile_commands.json`, if any.
+    pub compile_database_path: Option<PathBuf>,
 }
 
 /// Input parameters for a build.

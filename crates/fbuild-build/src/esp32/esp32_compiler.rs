@@ -80,6 +80,16 @@ impl Esp32Compiler {
         }
     }
 
+    /// Get the GCC compiler path.
+    pub fn gcc_path(&self) -> &Path {
+        &self.gcc_path
+    }
+
+    /// Get the G++ compiler path.
+    pub fn gxx_path(&self) -> &Path {
+        &self.gxx_path
+    }
+
     /// Build common compiler flags from the MCU config.
     fn common_flags(&self) -> Vec<String> {
         let mut flags = self.mcu_config.compiler_flags.common.clone();

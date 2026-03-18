@@ -415,6 +415,45 @@ impl BuildOrchestrator for Esp32Orchestrator {
             sketch_objects.extend(embed_objects);
         }
 
+        // 11.6. Generate compile_commands.json
+        let mut compile_db = crate::compile_database::CompileDatabase::new();
+        let include_flags = compiler.base.build_include_flags();
+        // Core + variant sources use user_flags
+        compile_db.extend(crate::compile_database::generate_entries(
+            compiler.gcc_path(),
+            compiler.gxx_path(),
+            &compiler.c_flags(),
+            &compiler.cpp_flags(),
+            &include_flags, // ESP32: include flags separate from c/cpp_flags
+            &user_flags,
+            &all_core_sources,
+            &core_build_dir,
+            &params.project_dir,
+        ));
+        // Sketch sources use all_src_flags
+        compile_db.extend(crate::compile_database::generate_entries(
+            compiler.gcc_path(),
+            compiler.gxx_path(),
+            &compiler.c_flags(),
+            &compiler.cpp_flags(),
+            &include_flags,
+            &all_src_flags,
+            &sources.sketch_sources,
+            &src_build_dir,
+            &params.project_dir,
+        ));
+        let arch = if mcu_config.is_xtensa() {
+            crate::compile_database::TargetArchitecture::Xtensa
+        } else {
+            crate::compile_database::TargetArchitecture::Riscv32
+        };
+        let compile_db = compile_db.translate_for_clang(arch);
+        let compile_database_path = if compile_db.has_entries() {
+            Some(compile_db.write_and_copy(&build_dir, &params.project_dir)?)
+        } else {
+            None
+        };
+
         // 12-13. Link + convert
         // Library archives join core_objects in the archives parameter
         let mut all_archives: Vec<std::path::PathBuf> = core_objects;
@@ -481,6 +520,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 "ESP32 build for {} ({}) completed",
                 params.env_name, board.mcu
             ),
+            compile_database_path,
         })
     }
 }

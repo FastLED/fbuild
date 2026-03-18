@@ -53,6 +53,8 @@
 - [ ] Parallel compilation with job control
 - [ ] Build profiles (release with LTO, quick without)
 - [ ] Size reporting (text, data, bss, flash%, ram%)
+- [x] `compile_commands.json` generation for clangd/VS Code IntelliSense (AVR, ESP32, Teensy)
+- [x] Library project detection (`library.json`) to suppress project-root overwrite
 - [ ] Platforms: AVR, ESP32, ESP8266, RP2040, STM32, Teensy, WASM
 
 ## Phase 6: Deploy & Monitor

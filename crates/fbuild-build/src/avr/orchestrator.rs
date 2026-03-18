@@ -166,6 +166,46 @@ impl BuildOrchestrator for AvrOrchestrator {
             sketch_objects.push(obj);
         }
 
+        // 7.5. Generate compile_commands.json
+        let mut compile_db = crate::compile_database::CompileDatabase::new();
+        // Core + variant sources use user_flags
+        let core_and_variant: Vec<std::path::PathBuf> = sources
+            .core_sources
+            .iter()
+            .chain(sources.variant_sources.iter())
+            .cloned()
+            .collect();
+        compile_db.extend(crate::compile_database::generate_entries(
+            compiler.gcc_path(),
+            compiler.gxx_path(),
+            &compiler.c_flags(),
+            &compiler.cpp_flags(),
+            &[], // AVR: include flags already in c/cpp_flags
+            &user_flags,
+            &core_and_variant,
+            &core_build_dir,
+            &params.project_dir,
+        ));
+        // Sketch sources use all_src_flags
+        compile_db.extend(crate::compile_database::generate_entries(
+            compiler.gcc_path(),
+            compiler.gxx_path(),
+            &compiler.c_flags(),
+            &compiler.cpp_flags(),
+            &[],
+            &all_src_flags,
+            &sources.sketch_sources,
+            &src_build_dir,
+            &params.project_dir,
+        ));
+        let compile_db =
+            compile_db.translate_for_clang(crate::compile_database::TargetArchitecture::Avr);
+        let compile_database_path = if compile_db.has_entries() {
+            Some(compile_db.write_and_copy(&build_dir, &params.project_dir)?)
+        } else {
+            None
+        };
+
         // 8-9. Link + convert
         let linker = AvrLinker::new(
             toolchain.get_gcc_path(),
@@ -207,6 +247,7 @@ impl BuildOrchestrator for AvrOrchestrator {
             size_info: link_result.size_info,
             build_time_secs: elapsed,
             message: format!("AVR build for {} completed", params.env_name),
+            compile_database_path,
         })
     }
 }

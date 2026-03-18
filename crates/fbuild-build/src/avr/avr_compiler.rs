@@ -41,6 +41,16 @@ impl AvrCompiler {
         }
     }
 
+    /// Get the GCC compiler path.
+    pub fn gcc_path(&self) -> &Path {
+        &self.gcc_path
+    }
+
+    /// Get the G++ compiler path.
+    pub fn gxx_path(&self) -> &Path {
+        &self.gxx_path
+    }
+
     /// Build the common AVR compiler flags.
     fn common_flags(&self) -> Vec<String> {
         let mut flags = vec![
@@ -59,14 +69,14 @@ impl AvrCompiler {
     }
 
     /// C-specific flags.
-    fn c_flags(&self) -> Vec<String> {
+    pub fn c_flags(&self) -> Vec<String> {
         let mut flags = self.common_flags();
         flags.push("-std=gnu11".to_string());
         flags
     }
 
     /// C++-specific flags.
-    fn cpp_flags(&self) -> Vec<String> {
+    pub fn cpp_flags(&self) -> Vec<String> {
         let mut flags = self.common_flags();
         flags.extend([
             "-std=gnu++11".to_string(),

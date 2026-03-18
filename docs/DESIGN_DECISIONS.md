@@ -57,3 +57,13 @@
 **Context**: FastLED calls `SerialMonitor.read_lines()` synchronously from Python. The Rust implementation needs async WebSocket communication.
 
 **Rationale**: Creating a runtime per `SerialMonitor` instance is simple and avoids lifetime issues with shared runtimes. The runtime lives as long as the context manager. `block_on()` bridges sync Python to async Rust. FastLED's `ThreadPoolExecutor` wrapper handles the blocking nature.
+
+## DD-008: compile_commands.json with Library Project Suppression
+
+**Decision**: Generate `compile_commands.json` after every build. Suppress the project-root copy when `library.json` exists at the project root.
+
+**Context**: clangd/VS Code IntelliSense needs a `compile_commands.json` at the project root to resolve `#include` paths. The old Python fbuild generates one with trampoline paths, which breaks "Go to Definition". Library projects (e.g. FastLED) have their own meson-based `compile_commands.json` that fbuild should not overwrite.
+
+**Rationale**: The Rust port generates the compile database from the original `include_dirs` (not trampolines), so include paths always point to actual source directories. Detection via `library.json` (Arduino library manifest) is reliable — every Arduino library must have one, and sketch projects never do. Writing to the build directory is always safe; only the project-root copy is suppressed.
+
+**Consequences**: Library developers building from their own repo keep their meson/cmake-generated `compile_commands.json`. Sketch projects get a clangd-compatible database automatically. The compile database is always available at `.fbuild/build/<env>/compile_commands.json` regardless.
