@@ -11,6 +11,19 @@ use fbuild_core::{FbuildError, Result};
 /// C++-only flags that must not be passed to gcc for .c files.
 const CXX_ONLY_PREFIXES: &[&str] = &["-std=gnu++", "-std=c++", "-fno-rtti", "-fuse-cxa-atexit"];
 
+/// Optionally prepend zccache to a compiler command line.
+fn wrap_compiler_args(args: &[&str], cache_path: Option<&Path>) -> Vec<String> {
+    match cache_path {
+        Some(zcc) => {
+            let mut wrapped = Vec::with_capacity(args.len() + 1);
+            wrapped.push(zcc.to_string_lossy().to_string());
+            wrapped.extend(args.iter().map(|s| s.to_string()));
+            wrapped
+        }
+        None => args.iter().map(|s| s.to_string()).collect(),
+    }
+}
+
 /// Check if a compiler flag is C++ only.
 fn is_cxx_only_flag(flag: &str) -> bool {
     CXX_ONLY_PREFIXES.iter().any(|p| flag.starts_with(p))
@@ -35,6 +48,7 @@ pub fn compile_library(
     cpp_flags: &[String],
     output_dir: &Path,
     verbose: bool,
+    compiler_cache: Option<&Path>,
 ) -> Result<Option<PathBuf>> {
     compile_library_with_jobs(
         name,
@@ -48,6 +62,7 @@ pub fn compile_library(
         output_dir,
         verbose,
         1,
+        compiler_cache,
     )
 }
 
@@ -65,6 +80,7 @@ pub fn compile_library_with_jobs(
     output_dir: &Path,
     verbose: bool,
     jobs: usize,
+    compiler_cache: Option<&Path>,
 ) -> Result<Option<PathBuf>> {
     if source_files.is_empty() {
         tracing::debug!("library {} is header-only, skipping compile", name);
@@ -110,6 +126,7 @@ pub fn compile_library_with_jobs(
                 &include_flags,
                 name,
                 verbose,
+                compiler_cache,
             )?;
             objects.push(obj);
         }
@@ -164,6 +181,7 @@ pub fn compile_library_with_jobs(
                             &include_flags,
                             name,
                             verbose,
+                            compiler_cache,
                         ) {
                             Ok(obj) => {
                                 let count = compiled_count
@@ -231,6 +249,7 @@ fn compile_one_source(
     include_flags: &[String],
     lib_name: &str,
     verbose: bool,
+    compiler_cache: Option<&Path>,
 ) -> Result<PathBuf> {
     let obj = object_path(source, obj_dir);
 
@@ -242,10 +261,10 @@ fn compile_one_source(
         (gxx_path, cpp_flags)
     };
 
-    let mut args: Vec<String> = vec![compiler.to_string_lossy().to_string()];
-    args.extend_from_slice(flags);
-    args.extend_from_slice(include_flags);
-    args.extend([
+    let mut raw_args: Vec<String> = vec![compiler.to_string_lossy().to_string()];
+    raw_args.extend_from_slice(flags);
+    raw_args.extend_from_slice(include_flags);
+    raw_args.extend([
         "-c".to_string(),
         source.to_string_lossy().to_string(),
         "-o".to_string(),
@@ -260,6 +279,8 @@ fn compile_one_source(
         );
     }
 
+    let raw_refs: Vec<&str> = raw_args.iter().map(|s| s.as_str()).collect();
+    let args = wrap_compiler_args(&raw_refs, compiler_cache);
     let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
     let result = run_command(&args_ref, None, None, None)?;
 

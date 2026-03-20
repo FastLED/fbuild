@@ -41,6 +41,12 @@ impl BuildOrchestrator for Esp32Orchestrator {
     fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
 
+        // 0. Find and start zccache compiler cache (if available)
+        let compiler_cache = crate::zccache::find_zccache().map(std::path::Path::to_path_buf);
+        if let Some(ref zcc) = compiler_cache {
+            crate::zccache::ensure_running(zcc);
+        }
+
         // 1. Parse platformio.ini
         let ini_path = params.project_dir.join("platformio.ini");
         let config = fbuild_config::PlatformIOConfig::from_path(&ini_path)?;
@@ -190,6 +196,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 &libs_dir,
                 params.verbose,
                 jobs,
+                compiler_cache.as_deref(),
             )?;
 
             // Add library include dirs to the main include list
@@ -292,6 +299,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                             &fw_libs_build_dir,
                             params.verbose,
                             fw_jobs,
+                            compiler_cache.as_deref(),
                         ) {
                             Ok(Some(archive)) => {
                                 library_archives.push(archive);

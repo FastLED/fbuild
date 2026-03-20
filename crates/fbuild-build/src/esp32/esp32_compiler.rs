@@ -25,6 +25,8 @@ pub struct Esp32Compiler {
     profile: BuildProfile,
     /// Directory for temporary files (response files, etc.).
     temp_dir: PathBuf,
+    /// Optional zccache path for compiler caching.
+    compiler_cache: Option<PathBuf>,
 }
 
 impl Esp32Compiler {
@@ -77,6 +79,7 @@ impl Esp32Compiler {
             mcu_config,
             profile,
             temp_dir,
+            compiler_cache: crate::zccache::find_zccache().map(PathBuf::from),
         }
     }
 
@@ -153,17 +156,19 @@ impl Esp32Compiler {
 
         let include_args = self.include_args()?;
 
-        let mut args: Vec<String> = vec![compiler.to_string_lossy().to_string()];
-        args.extend(flags.iter().cloned());
-        args.extend(include_args);
-        args.extend(extra_flags.iter().cloned());
-        args.extend([
+        let mut raw_args: Vec<String> = vec![compiler.to_string_lossy().to_string()];
+        raw_args.extend(flags.iter().cloned());
+        raw_args.extend(include_args);
+        raw_args.extend(extra_flags.iter().cloned());
+        raw_args.extend([
             "-c".to_string(),
             source.to_string_lossy().to_string(),
             "-o".to_string(),
             output.to_string_lossy().to_string(),
         ]);
 
+        let raw_refs: Vec<&str> = raw_args.iter().map(|s| s.as_str()).collect();
+        let args = crate::zccache::wrap_args(&raw_refs, self.compiler_cache.as_deref());
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
 
         if self.base.verbose {

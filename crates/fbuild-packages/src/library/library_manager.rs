@@ -41,6 +41,7 @@ pub async fn ensure_libraries(
     libs_dir: &Path,
     verbose: bool,
     jobs: usize,
+    compiler_cache: Option<&Path>,
 ) -> Result<LibraryResult> {
     // 1. Parse specs, filter ignored
     let specs: Vec<LibrarySpec> = lib_specs
@@ -131,6 +132,7 @@ pub async fn ensure_libraries(
             &lib.lib_dir,
             verbose,
             jobs,
+            compiler_cache,
         )? {
             archives.push(archive_path);
         }
@@ -283,6 +285,7 @@ pub fn ensure_libraries_sync(
     libs_dir: &Path,
     verbose: bool,
     jobs: usize,
+    compiler_cache: Option<&Path>,
 ) -> Result<LibraryResult> {
     let rt = tokio::runtime::Handle::try_current().ok();
     if let Some(handle) = rt {
@@ -298,6 +301,7 @@ pub fn ensure_libraries_sync(
             libs_dir,
             verbose,
             jobs,
+            compiler_cache,
         ))
     } else {
         let rt = tokio::runtime::Runtime::new().map_err(|e| {
@@ -315,6 +319,7 @@ pub fn ensure_libraries_sync(
             libs_dir,
             verbose,
             jobs,
+            compiler_cache,
         ))
     }
 }
@@ -337,6 +342,7 @@ mod tests {
             Path::new("/libs"),
             false,
             1,
+            None,
         )
         .unwrap();
         assert!(result.include_dirs.is_empty());
@@ -357,6 +363,7 @@ mod tests {
             Path::new("/libs"),
             false,
             1,
+            None,
         )
         .unwrap();
         assert!(result.include_dirs.is_empty());
@@ -377,6 +384,7 @@ mod tests {
             Path::new("/libs"),
             false,
             1,
+            None,
         )
         .unwrap();
         assert!(result.include_dirs.is_empty());

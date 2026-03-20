@@ -11,6 +11,7 @@ pub mod linker;
 pub mod parallel;
 pub mod source_scanner;
 pub mod teensy;
+pub mod zccache;
 
 pub use source_scanner::SourceScanner;
 
