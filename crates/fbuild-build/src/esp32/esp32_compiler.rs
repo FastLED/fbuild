@@ -249,12 +249,14 @@ fn write_response_file(flags: &[String], temp_dir: &Path) -> Result<PathBuf> {
         counter
     ));
     // GCC treats backslashes in response files as escape characters (\n = newline,
-    // \f = formfeed, etc.). Convert to forward slashes for Windows compatibility.
+    // \f = formfeed, etc.). Convert to forward slashes for Windows path compatibility,
+    // but preserve \" sequences which are intentional escape sequences (e.g., in
+    // -DMBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\").
     let content = flags
         .iter()
         .map(|f| {
-            let fwd = f.replace('\\', "/");
-            if fwd.contains(' ') {
+            let fwd = replace_path_backslashes(f);
+            if fwd.contains(' ') && !fwd.contains("\\\"") {
                 format!("\"{}\"", fwd)
             } else {
                 fwd
@@ -270,6 +272,29 @@ fn write_response_file(flags: &[String], temp_dir: &Path) -> Result<PathBuf> {
         ))
     })?;
     Ok(path)
+}
+
+/// Replace backslashes with forward slashes for GCC response files,
+/// but preserve `\"` sequences which are intentional escapes in define values.
+fn replace_path_backslashes(s: &str) -> String {
+    let bytes = s.as_bytes();
+    let mut result = String::with_capacity(s.len());
+    let mut i = 0;
+    while i < bytes.len() {
+        if bytes[i] == b'\\' && i + 1 < bytes.len() && bytes[i + 1] == b'"' {
+            // Preserve \" escape sequence
+            result.push('\\');
+            result.push('"');
+            i += 2;
+        } else if bytes[i] == b'\\' {
+            result.push('/');
+            i += 1;
+        } else {
+            result.push(bytes[i] as char);
+            i += 1;
+        }
+    }
+    result
 }
 
 #[cfg(test)]

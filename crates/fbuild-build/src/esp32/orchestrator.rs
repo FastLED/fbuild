@@ -139,10 +139,11 @@ impl BuildOrchestrator for Esp32Orchestrator {
             include_dirs.push(include_dir);
         }
 
-        // Read SDK linker flags early — needed to check LTO before compiling.
+        // Read SDK flags early — needed to check LTO before compiling.
         let sdk_ld_flags = framework.get_sdk_ld_flags(&board.mcu);
         let sdk_lib_flags = framework.get_sdk_lib_flags(&board.mcu);
         let sdk_ld_scripts = framework.get_sdk_ld_scripts(&board.mcu);
+        let sdk_defines = framework.get_sdk_defines(&board.mcu);
 
         // If SDK specifies -fno-lto, disable LTO in MCU config profiles to avoid
         // compiling objects with LTO that the linker can't handle.
@@ -158,7 +159,9 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let mut library_archives = Vec::new();
 
         // Read user build_flags early — needed for both library and sketch compilation.
-        let user_flags = config.get_build_flags(&params.env_name)?;
+        // SDK defines (from flags/defines) are prepended so user flags can override them.
+        let mut user_flags = sdk_defines;
+        user_flags.extend(config.get_build_flags(&params.env_name)?);
 
         if !lib_deps.is_empty() {
             let libs_dir = build_dir.join("libs");

@@ -323,6 +323,23 @@ impl Esp32Framework {
         flags
     }
 
+    /// Get the SDK compiler defines from `flags/defines`.
+    ///
+    /// Returns `-D` flags that must be passed to the compiler for SDK headers
+    /// to work correctly (e.g., `MBEDTLS_CONFIG_FILE`, `IDF_VER`).
+    /// Returns empty if the flags file doesn't exist.
+    ///
+    /// Uses [`split_defines`] instead of `shell_split` because define values
+    /// like `-DMBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\"` contain escaped
+    /// quotes that must be preserved for GCC.
+    pub fn get_sdk_defines(&self, mcu: &str) -> Vec<String> {
+        let defines_file = self.sdk_mcu_dir(mcu).join("flags").join("defines");
+        if let Ok(content) = std::fs::read_to_string(&defines_file) {
+            return split_defines(&content);
+        }
+        Vec::new()
+    }
+
     /// Get the ordered SDK linker flags from `flags/ld_flags`.
     ///
     /// Returns the linker flags (undefined symbols, wrap directives, etc.)
@@ -428,6 +445,53 @@ impl Framework for Esp32Framework {
 ///
 /// Uses `fbuild_core::shell_split::split` to tokenize (handles quoted paths,
 /// safe on Windows). Iterates with an index, consuming flag+path pairs.
+/// Split a defines string into individual `-D` flags, preserving escaped quotes.
+///
+/// The `flags/defines` file contains flags like:
+/// ```text
+/// -DFOO=1 -DBAR=\"baz.h\" -DQUX
+/// ```
+/// The `\"` sequences must be preserved because GCC needs the quotes in
+/// define values (e.g., `MBEDTLS_CONFIG_FILE` expands to `"mbedtls/esp_config.h"`).
+///
+/// Unlike `shell_split`, this splits on whitespace boundaries that precede `-D`
+/// and keeps the raw content of each flag intact.
+fn split_defines(content: &str) -> Vec<String> {
+    let mut tokens = Vec::new();
+    // Split on " -D" boundaries (preserving the -D prefix)
+    let trimmed = content.trim();
+    if trimmed.is_empty() {
+        return tokens;
+    }
+    // Find each -D token boundary
+    let mut start = 0;
+    let bytes = trimmed.as_bytes();
+    let len = bytes.len();
+    let mut i = 1; // skip first char
+    while i < len {
+        // A new -D token starts when we see whitespace followed by -D
+        if bytes[i] == b'-'
+            && i + 1 < len
+            && bytes[i + 1] == b'D'
+            && i > 0
+            && bytes[i - 1].is_ascii_whitespace()
+        {
+            let token = trimmed[start..i].trim();
+            if !token.is_empty() {
+                tokens.push(token.to_string());
+            }
+            start = i;
+        }
+        i += 1;
+    }
+    // Last token
+    let token = trimmed[start..].trim();
+    if !token.is_empty() {
+        tokens.push(token.to_string());
+    }
+    tokens
+}
+
 /// Handles two flag formats:
 /// - `-iwithprefixbefore relative/path` (new 3.3.7+, resolved against include_base)
 /// - `-I/absolute/path` or `-Irelative/path` (legacy 3.1.x)
@@ -782,5 +846,31 @@ mod tests {
 
         let dirs = fw.get_sdk_include_dirs("esp32c6");
         assert_eq!(dirs.len(), 2);
+    }
+
+    #[test]
+    fn test_split_defines_preserves_escaped_quotes() {
+        let content =
+            r#"-DFOO=1 -DMBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\" -DBAR -DIDF_VER=\"v5.5.2\""#;
+        let tokens = split_defines(content);
+        assert_eq!(tokens.len(), 4);
+        assert_eq!(tokens[0], "-DFOO=1");
+        assert_eq!(
+            tokens[1],
+            r#"-DMBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\""#
+        );
+        assert_eq!(tokens[2], "-DBAR");
+        assert_eq!(tokens[3], r#"-DIDF_VER=\"v5.5.2\""#);
+    }
+
+    #[test]
+    fn test_split_defines_empty() {
+        assert!(split_defines("").is_empty());
+        assert!(split_defines("   ").is_empty());
+    }
+
+    #[test]
+    fn test_split_defines_single() {
+        assert_eq!(split_defines("-DFOO=1"), vec!["-DFOO=1"]);
     }
 }

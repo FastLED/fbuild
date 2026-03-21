@@ -66,8 +66,13 @@ pub struct CompilerBase {
 
 impl CompilerBase {
     /// Build `-D` flags from the defines map.
+    ///
+    /// Flags are sorted by key to ensure deterministic ordering across builds.
+    /// This is critical for zccache: non-deterministic flag order causes different
+    /// command hashes → 0% cache hit rate.
     pub fn build_define_flags(&self) -> Vec<String> {
-        self.defines
+        let mut flags: Vec<String> = self
+            .defines
             .iter()
             .map(|(k, v)| {
                 if v == "1" {
@@ -76,7 +81,9 @@ impl CompilerBase {
                     format!("-D{}={}", k, v)
                 }
             })
-            .collect()
+            .collect();
+        flags.sort();
+        flags
     }
 
     /// Build `-I` flags from include directories.
