@@ -10,7 +10,12 @@ use std::sync::OnceLock;
 /// Cached result of searching for zccache on PATH.
 static ZCCACHE_PATH: OnceLock<Option<PathBuf>> = OnceLock::new();
 
-/// Find the zccache binary on PATH (cached after first call).
+/// Find the zccache binary.
+///
+/// Resolution order:
+/// 1. Next to the current executable (normal `pip install fbuild` puts both in Scripts/)
+/// 2. `VIRTUAL_ENV/Scripts/zccache.exe` (Windows) or `VIRTUAL_ENV/bin/zccache` (Unix)
+/// 3. First match on PATH
 pub fn find_zccache() -> Option<&'static Path> {
     ZCCACHE_PATH
         .get_or_init(|| {
@@ -20,11 +25,41 @@ pub fn find_zccache() -> Option<&'static Path> {
                 "zccache"
             };
 
+            // Prefer sibling of current executable (normal package install)
+            if let Ok(exe) = std::env::current_exe() {
+                if let Some(dir) = exe.parent() {
+                    let candidate = dir.join(exe_name);
+                    if candidate.is_file() {
+                        tracing::info!(
+                            "found zccache next to executable at {}",
+                            candidate.display()
+                        );
+                        return Some(candidate);
+                    }
+                }
+            }
+
+            // Try the virtual environment's zccache (set by `uv run`)
+            if let Some(venv) = std::env::var_os("VIRTUAL_ENV") {
+                let venv_dir = PathBuf::from(venv);
+                let bin_dir = if cfg!(windows) {
+                    venv_dir.join("Scripts")
+                } else {
+                    venv_dir.join("bin")
+                };
+                let candidate = bin_dir.join(exe_name);
+                if candidate.is_file() {
+                    tracing::info!("found zccache in VIRTUAL_ENV at {}", candidate.display());
+                    return Some(candidate);
+                }
+            }
+
+            // Fallback: search PATH
             std::env::var_os("PATH").and_then(|path_var| {
                 std::env::split_paths(&path_var).find_map(|dir| {
                     let candidate = dir.join(exe_name);
                     if candidate.is_file() {
-                        tracing::info!("found zccache at {}", candidate.display());
+                        tracing::info!("found zccache on PATH at {}", candidate.display());
                         Some(candidate)
                     } else {
                         None

@@ -238,6 +238,9 @@ pub fn compile_library_with_jobs(
 }
 
 /// Compile a single source file, returning its object path.
+///
+/// On Windows, ALL compiler flags are written to a GCC response file (`@file`)
+/// to avoid exceeding the 32KB command-line limit (OS error 206).
 #[allow(clippy::too_many_arguments)]
 fn compile_one_source(
     source: &Path,
@@ -261,16 +264,6 @@ fn compile_one_source(
         (gxx_path, cpp_flags)
     };
 
-    let mut raw_args: Vec<String> = vec![compiler.to_string_lossy().to_string()];
-    raw_args.extend_from_slice(flags);
-    raw_args.extend_from_slice(include_flags);
-    raw_args.extend([
-        "-c".to_string(),
-        source.to_string_lossy().to_string(),
-        "-o".to_string(),
-        obj.to_string_lossy().to_string(),
-    ]);
-
     if verbose {
         tracing::info!(
             "compile [{}]: {}",
@@ -279,8 +272,35 @@ fn compile_one_source(
         );
     }
 
-    let raw_refs: Vec<&str> = raw_args.iter().map(|s| s.as_str()).collect();
-    let args = wrap_compiler_args(&raw_refs, compiler_cache);
+    // Collect all flags that follow the compiler executable
+    let mut all_flags: Vec<String> = Vec::new();
+    all_flags.extend_from_slice(flags);
+    all_flags.extend_from_slice(include_flags);
+    all_flags.extend([
+        "-c".to_string(),
+        source.to_string_lossy().to_string(),
+        "-o".to_string(),
+        obj.to_string_lossy().to_string(),
+    ]);
+
+    // On Windows, put ALL flags in a response file to avoid command-line
+    // length limits (OS error 206).
+    let args = if cfg!(windows) {
+        let rsp_path = write_compile_response_file(&all_flags, obj_dir)?;
+        let mut a = Vec::new();
+        if let Some(zcc) = compiler_cache {
+            a.push(zcc.to_string_lossy().to_string());
+        }
+        a.push(compiler.to_string_lossy().to_string());
+        a.push(format!("@{}", rsp_path.display()));
+        a
+    } else {
+        let mut raw_args: Vec<String> = vec![compiler.to_string_lossy().to_string()];
+        raw_args.extend(all_flags);
+        let raw_refs: Vec<&str> = raw_args.iter().map(|s| s.as_str()).collect();
+        wrap_compiler_args(&raw_refs, compiler_cache)
+    };
+
     let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
     let result = run_command(&args_ref, None, None, None)?;
 
@@ -294,6 +314,58 @@ fn compile_one_source(
     }
 
     Ok(obj)
+}
+
+/// Write compiler flags to a response file for GCC `@file` syntax.
+fn write_compile_response_file(flags: &[String], dir: &Path) -> Result<PathBuf> {
+    use std::sync::atomic::{AtomicU64, Ordering};
+    static COMPILE_RSP_COUNTER: AtomicU64 = AtomicU64::new(0);
+
+    let temp_dir = if cfg!(windows) {
+        std::env::var("LOCALAPPDATA")
+            .map(|la| PathBuf::from(la).join("Temp"))
+            .unwrap_or_else(|_| dir.to_path_buf())
+    } else {
+        dir.to_path_buf()
+    };
+
+    std::fs::create_dir_all(&temp_dir).map_err(|e| {
+        FbuildError::BuildFailed(format!(
+            "failed to create temp dir {}: {}",
+            temp_dir.display(),
+            e
+        ))
+    })?;
+
+    let counter = COMPILE_RSP_COUNTER.fetch_add(1, Ordering::Relaxed);
+    let rsp_path = temp_dir.join(format!(
+        "fbuild_lib_compile_{}_{}.rsp",
+        std::process::id(),
+        counter
+    ));
+
+    let content = flags
+        .iter()
+        .map(|f| {
+            let fwd = f.replace('\\', "/");
+            if fwd.contains(' ') {
+                format!("\"{}\"", fwd)
+            } else {
+                fwd
+            }
+        })
+        .collect::<Vec<_>>()
+        .join("\n");
+
+    std::fs::write(&rsp_path, content).map_err(|e| {
+        FbuildError::BuildFailed(format!(
+            "failed to write response file {}: {}",
+            rsp_path.display(),
+            e
+        ))
+    })?;
+
+    Ok(rsp_path)
 }
 
 /// Build include flags, using a response file on Windows if needed.

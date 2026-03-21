@@ -50,7 +50,15 @@ impl Esp32Compiler {
             include_dirs,
             profile,
             verbose,
-            std::env::temp_dir(),
+            // On MSYS2/Git Bash, std::env::temp_dir() returns "/tmp/" which
+            // native Windows GCC treats as "C:\tmp\". Use LOCALAPPDATA\Temp.
+            if cfg!(windows) {
+                std::env::var("LOCALAPPDATA")
+                    .map(|la| PathBuf::from(la).join("Temp"))
+                    .unwrap_or_else(|_| std::env::temp_dir())
+            } else {
+                std::env::temp_dir()
+            },
         )
     }
 
@@ -127,21 +135,11 @@ impl Esp32Compiler {
         flags
     }
 
-    /// Build include flags, using a response file on Windows if needed.
-    fn include_args(&self) -> Result<Vec<String>> {
-        let include_flags = self.base.build_include_flags();
-
-        // On Windows, if we have many include paths, use a response file
-        // to avoid exceeding the 32KB command line limit.
-        if cfg!(windows) && include_flags.len() > 100 {
-            let response_file = write_response_file(&include_flags, &self.temp_dir)?;
-            Ok(vec![format!("@{}", response_file.display())])
-        } else {
-            Ok(include_flags)
-        }
-    }
-
     /// Compile a single source file using the given compiler and flags.
+    ///
+    /// On Windows, ALL compiler flags are written to a GCC response file (`@file`)
+    /// to avoid exceeding the 32KB command-line limit. This mirrors the linker's
+    /// approach in `esp32_linker.rs`.
     fn compile_with(
         &self,
         compiler: &Path,
@@ -154,21 +152,39 @@ impl Esp32Compiler {
             std::fs::create_dir_all(parent)?;
         }
 
-        let include_args = self.include_args()?;
+        let include_flags = self.base.build_include_flags();
 
-        let mut raw_args: Vec<String> = vec![compiler.to_string_lossy().to_string()];
-        raw_args.extend(flags.iter().cloned());
-        raw_args.extend(include_args);
-        raw_args.extend(extra_flags.iter().cloned());
-        raw_args.extend([
+        // Collect all flags that follow the compiler executable
+        let mut all_flags: Vec<String> = Vec::new();
+        all_flags.extend(flags.iter().cloned());
+        all_flags.extend(include_flags);
+        all_flags.extend(extra_flags.iter().cloned());
+        all_flags.extend([
             "-c".to_string(),
             source.to_string_lossy().to_string(),
             "-o".to_string(),
             output.to_string_lossy().to_string(),
         ]);
 
-        let raw_refs: Vec<&str> = raw_args.iter().map(|s| s.as_str()).collect();
-        let args = crate::zccache::wrap_args(&raw_refs, self.compiler_cache.as_deref());
+        // On Windows, put ALL flags in a response file to avoid command-line
+        // length limits (OS error 206). The command becomes:
+        //   [zccache] <compiler> @response.rsp
+        let args = if cfg!(windows) {
+            let response_file = write_response_file(&all_flags, &self.temp_dir)?;
+            let mut a = Vec::new();
+            if let Some(ref zcc) = self.compiler_cache {
+                a.push(zcc.to_string_lossy().to_string());
+            }
+            a.push(compiler.to_string_lossy().to_string());
+            a.push(format!("@{}", response_file.display()));
+            a
+        } else {
+            let mut raw_args: Vec<String> = vec![compiler.to_string_lossy().to_string()];
+            raw_args.extend(all_flags);
+            let raw_refs: Vec<&str> = raw_args.iter().map(|s| s.as_str()).collect();
+            crate::zccache::wrap_args(&raw_refs, self.compiler_cache.as_deref())
+        };
+
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
 
         if self.base.verbose {
@@ -337,9 +353,9 @@ mod tests {
     #[test]
     fn test_include_flags() {
         let compiler = test_compiler("esp32c6");
-        let include_args = compiler.include_args().unwrap();
-        // With only 1 include dir, should NOT use response file
-        assert!(include_args.iter().any(|f| f.contains("-I")));
+        let include_flags = compiler.base.build_include_flags();
+        // With only 1 include dir, should have -I flags
+        assert!(include_flags.iter().any(|f: &String| f.contains("-I")));
     }
 
     #[test]

@@ -232,3 +232,157 @@ fn build_nightdriverstrip_demo() {
         result.build_time_secs
     );
 }
+
+/// Incremental build of NightDriverStrip — no source changes.
+///
+/// Requires a prior clean build to exist at ~/dev/NightDriverStrip/.fbuild/build/demo/.
+/// Measures how fast a no-op rebuild is (should be seconds, not minutes).
+#[test]
+#[ignore]
+fn incremental_nightdriverstrip_no_changes() {
+    // Try both NightDriverStrip locations
+    let project_dir = home_dir().join("dev/NightDriverStrip");
+    let env_name = if project_dir.exists() {
+        "demo".to_string()
+    } else {
+        let alt = home_dir().join("dev/fbuild/tests/NightDriverStrip");
+        if !alt.exists() {
+            eprintln!("SKIP: no NightDriverStrip project found");
+            return;
+        }
+        // Use the test copy
+        return incremental_build_at(&alt, "demo");
+    };
+
+    incremental_build_at(&project_dir, &env_name);
+}
+
+fn incremental_build_at(project_dir: &std::path::Path, env_name: &str) {
+    // Verify there's an existing build
+    let build_marker = project_dir
+        .join(".fbuild/build")
+        .join(env_name)
+        .join("release/firmware.elf");
+    if !build_marker.exists() {
+        eprintln!(
+            "SKIP: no prior build at {} (run clean build first)",
+            build_marker.display()
+        );
+        return;
+    }
+
+    let params = BuildParams {
+        project_dir: project_dir.to_path_buf(),
+        env_name: env_name.to_string(),
+        clean: false,
+        profile: BuildProfile::Release,
+        build_dir: project_dir.join(".fbuild/build"),
+        verbose: true,
+        jobs: None,
+    };
+
+    let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
+    let result = orchestrator
+        .build(&params)
+        .expect("incremental build should succeed");
+
+    assert!(result.success, "incremental build should succeed");
+
+    eprintln!(
+        "\n=== INCREMENTAL BUILD (no changes) ===\nTime: {:.2}s\n",
+        result.build_time_secs
+    );
+
+    if let Some(ref size) = result.size_info {
+        eprintln!(
+            "Size: flash={}/{} ({:.1}%) ram={}/{} ({:.1}%)",
+            size.total_flash,
+            size.max_flash.unwrap_or(0),
+            size.flash_percent().unwrap_or(0.0),
+            size.total_ram,
+            size.max_ram.unwrap_or(0),
+            size.ram_percent().unwrap_or(0.0),
+        );
+    }
+
+    // Incremental with no changes should be fast (under 30 seconds)
+    assert!(
+        result.build_time_secs < 30.0,
+        "incremental build too slow: {:.1}s (expected < 30s)",
+        result.build_time_secs
+    );
+}
+
+/// Incremental build with a single source file touched.
+///
+/// Touches one .cpp file to simulate a single-file edit, then rebuilds.
+/// This measures the real incremental compile + relink time.
+#[test]
+#[ignore]
+fn incremental_nightdriverstrip_one_file_changed() {
+    let project_dir = home_dir().join("dev/NightDriverStrip");
+    if !project_dir.exists() {
+        eprintln!("SKIP: ~/dev/NightDriverStrip does not exist");
+        return;
+    }
+
+    let env_name = "demo";
+    let build_marker = project_dir
+        .join(".fbuild/build")
+        .join(env_name)
+        .join("release/firmware.elf");
+    if !build_marker.exists() {
+        eprintln!("SKIP: no prior build at {}", build_marker.display());
+        return;
+    }
+
+    // Touch one source file to trigger recompilation
+    let src_dir = project_dir.join("src");
+    if let Ok(entries) = std::fs::read_dir(&src_dir) {
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.extension().is_some_and(|e| e == "cpp" || e == "h") {
+                // Touch the file by writing it back unchanged
+                if let Ok(content) = std::fs::read(&path) {
+                    std::fs::write(&path, &content).ok();
+                    eprintln!("touched: {}", path.display());
+                    break;
+                }
+            }
+        }
+    }
+
+    let params = BuildParams {
+        project_dir: project_dir.clone(),
+        env_name: env_name.to_string(),
+        clean: false,
+        profile: BuildProfile::Release,
+        build_dir: project_dir.join(".fbuild/build"),
+        verbose: true,
+        jobs: None,
+    };
+
+    let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
+    let result = orchestrator
+        .build(&params)
+        .expect("incremental build should succeed");
+
+    assert!(result.success, "incremental build should succeed");
+
+    eprintln!(
+        "\n=== INCREMENTAL BUILD (one file touched) ===\nTime: {:.2}s\n",
+        result.build_time_secs
+    );
+
+    if let Some(ref size) = result.size_info {
+        eprintln!(
+            "Size: flash={}/{} ({:.1}%) ram={}/{} ({:.1}%)",
+            size.total_flash,
+            size.max_flash.unwrap_or(0),
+            size.flash_percent().unwrap_or(0.0),
+            size.total_ram,
+            size.max_ram.unwrap_or(0),
+            size.ram_percent().unwrap_or(0.0),
+        );
+    }
+}
