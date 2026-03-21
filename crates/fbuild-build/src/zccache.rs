@@ -13,9 +13,10 @@ static ZCCACHE_PATH: OnceLock<Option<PathBuf>> = OnceLock::new();
 /// Find the zccache binary.
 ///
 /// Resolution order:
-/// 1. Next to the current executable (normal `pip install fbuild` puts both in Scripts/)
-/// 2. `VIRTUAL_ENV/Scripts/zccache.exe` (Windows) or `VIRTUAL_ENV/bin/zccache` (Unix)
-/// 3. First match on PATH
+/// 1. `VIRTUAL_ENV/Scripts/zccache.exe` (Windows) or `VIRTUAL_ENV/bin/zccache` (Unix)
+/// 2. `.venv` in ancestor directories (for daemons spawned without VIRTUAL_ENV)
+/// 3. Next to the current executable (normal `pip install fbuild` puts both in Scripts/)
+/// 4. First match on PATH
 pub fn find_zccache() -> Option<&'static Path> {
     ZCCACHE_PATH
         .get_or_init(|| {
@@ -25,21 +26,7 @@ pub fn find_zccache() -> Option<&'static Path> {
                 "zccache"
             };
 
-            // Prefer sibling of current executable (normal package install)
-            if let Ok(exe) = std::env::current_exe() {
-                if let Some(dir) = exe.parent() {
-                    let candidate = dir.join(exe_name);
-                    if candidate.is_file() {
-                        tracing::info!(
-                            "found zccache next to executable at {}",
-                            candidate.display()
-                        );
-                        return Some(candidate);
-                    }
-                }
-            }
-
-            // Try the virtual environment's zccache (set by `uv run`)
+            // 1. Prefer the virtual environment's zccache (set by `uv run`)
             if let Some(venv) = std::env::var_os("VIRTUAL_ENV") {
                 let venv_dir = PathBuf::from(venv);
                 let bin_dir = if cfg!(windows) {
@@ -54,7 +41,28 @@ pub fn find_zccache() -> Option<&'static Path> {
                 }
             }
 
-            // Fallback: search PATH
+            // 2. Walk up from cwd looking for .venv (handles daemons without VIRTUAL_ENV)
+            if let Ok(cwd) = std::env::current_dir() {
+                if let Some(found) = find_zccache_in_venv(&cwd, exe_name) {
+                    return Some(found);
+                }
+            }
+
+            // 3. Sibling of current executable (normal package install)
+            if let Ok(exe) = std::env::current_exe() {
+                if let Some(dir) = exe.parent() {
+                    let candidate = dir.join(exe_name);
+                    if candidate.is_file() {
+                        tracing::info!(
+                            "found zccache next to executable at {}",
+                            candidate.display()
+                        );
+                        return Some(candidate);
+                    }
+                }
+            }
+
+            // 4. Fallback: search PATH
             std::env::var_os("PATH").and_then(|path_var| {
                 std::env::split_paths(&path_var).find_map(|dir| {
                     let candidate = dir.join(exe_name);
@@ -68,6 +76,27 @@ pub fn find_zccache() -> Option<&'static Path> {
             })
         })
         .as_deref()
+}
+
+/// Walk up from `start` looking for a `.venv` directory containing zccache.
+fn find_zccache_in_venv(start: &Path, exe_name: &str) -> Option<PathBuf> {
+    let mut dir = start;
+    loop {
+        let venv = dir.join(".venv");
+        if venv.is_dir() {
+            let bin_dir = if cfg!(windows) {
+                venv.join("Scripts")
+            } else {
+                venv.join("bin")
+            };
+            let candidate = bin_dir.join(exe_name);
+            if candidate.is_file() {
+                tracing::info!("found zccache in .venv at {}", candidate.display());
+                return Some(candidate);
+            }
+        }
+        dir = dir.parent()?;
+    }
 }
 
 /// Start the zccache daemon if it's not already running.

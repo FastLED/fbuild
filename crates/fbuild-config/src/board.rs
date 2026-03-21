@@ -229,11 +229,16 @@ impl BoardConfig {
             format!("ARDUINO_{}", self.board.to_uppercase()),
             "1".to_string(),
         );
-        // ARDUINO_BOARD and ARDUINO_VARIANT as quoted string defines
-        defines.insert("ARDUINO_BOARD".to_string(), format!("\"{}\"", self.board));
+        // ARDUINO_BOARD and ARDUINO_VARIANT as quoted string defines.
+        // Use \" escapes so GCC response files on Windows preserve the quotes
+        // (bare " is treated as a word delimiter by GCC's response file parser).
+        defines.insert(
+            "ARDUINO_BOARD".to_string(),
+            format!("\\\"{}\\\"", self.board),
+        );
         defines.insert(
             "ARDUINO_VARIANT".to_string(),
-            format!("\"{}\"", self.variant),
+            format!("\\\"{}\\\"", self.variant),
         );
 
         // Architecture define

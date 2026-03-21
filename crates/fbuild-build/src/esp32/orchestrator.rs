@@ -349,13 +349,14 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let mut defines = board.get_defines();
         defines.extend(mcu_config.defines_map());
 
-        // Defines required by the new framework (3.3.7+)
+        // Defines required by the new framework (3.3.7+).
+        // Use \" escapes for GCC response file compatibility (see board.rs).
         defines
             .entry("ARDUINO_BOARD".to_string())
-            .or_insert_with(|| format!("\"{}\"", board.name));
+            .or_insert_with(|| format!("\\\"{}\\\"", board.name));
         defines
             .entry("ARDUINO_VARIANT".to_string())
-            .or_insert_with(|| format!("\"{}\"", board.variant));
+            .or_insert_with(|| format!("\\\"{}\\\"", board.variant));
 
         let compiler = Esp32Compiler::with_temp_dir(
             toolchain.get_gcc_path(),

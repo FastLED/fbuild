@@ -284,13 +284,13 @@ fn compile_one_source(
     ]);
 
     // On Windows, put ALL flags in a response file to avoid command-line
-    // length limits (OS error 206).
+    // length limits (OS error 206). Skip zccache on Windows because zccache
+    // expands @file references internally and reconstructs the full command
+    // line, re-triggering OS error 206. Library archives (.a) are already
+    // cached on disk, so the zccache caching layer is redundant here.
     let args = if cfg!(windows) {
         let rsp_path = write_compile_response_file(&all_flags, obj_dir)?;
         let mut a = Vec::new();
-        if let Some(zcc) = compiler_cache {
-            a.push(zcc.to_string_lossy().to_string());
-        }
         a.push(compiler.to_string_lossy().to_string());
         a.push(format!("@{}", rsp_path.display()));
         a
@@ -347,8 +347,8 @@ fn write_compile_response_file(flags: &[String], dir: &Path) -> Result<PathBuf> 
     let content = flags
         .iter()
         .map(|f| {
-            let fwd = f.replace('\\', "/");
-            if fwd.contains(' ') {
+            let fwd = replace_path_backslashes(f);
+            if fwd.contains(' ') && !fwd.contains("\\\"") {
                 format!("\"{}\"", fwd)
             } else {
                 fwd
@@ -366,6 +366,29 @@ fn write_compile_response_file(flags: &[String], dir: &Path) -> Result<PathBuf> 
     })?;
 
     Ok(rsp_path)
+}
+
+/// Replace backslashes with forward slashes for GCC response files,
+/// but preserve `\"` sequences which are intentional escapes in define values.
+fn replace_path_backslashes(s: &str) -> String {
+    let bytes = s.as_bytes();
+    let mut result = String::with_capacity(s.len());
+    let mut i = 0;
+    while i < bytes.len() {
+        if bytes[i] == b'\\' && i + 1 < bytes.len() && bytes[i + 1] == b'"' {
+            // Preserve \" escape sequence
+            result.push('\\');
+            result.push('"');
+            i += 2;
+        } else if bytes[i] == b'\\' {
+            result.push('/');
+            i += 1;
+        } else {
+            result.push(bytes[i] as char);
+            i += 1;
+        }
+    }
+    result
 }
 
 /// Build include flags, using a response file on Windows if needed.
@@ -399,12 +422,12 @@ fn build_include_flags(include_dirs: &[PathBuf], temp_dir: &Path) -> Result<Vec<
         ));
 
         // GCC treats backslashes in response files as escape characters.
-        // Convert to forward slashes and quote paths with spaces.
+        // Convert to forward slashes (preserving \" escapes) and quote paths with spaces.
         let content = flags
             .iter()
             .map(|f| {
-                let fwd = f.replace('\\', "/");
-                if fwd.contains(' ') {
+                let fwd = replace_path_backslashes(f);
+                if fwd.contains(' ') && !fwd.contains("\\\"") {
                     format!("\"{}\"", fwd)
                 } else {
                     fwd

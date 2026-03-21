@@ -164,6 +164,11 @@ pub async fn ensure_daemon_running() -> fbuild_core::Result<()> {
         cmd.arg("--dev");
     }
 
+    // Propagate VIRTUAL_ENV so the daemon can find zccache from .venv
+    if let Ok(venv) = std::env::var("VIRTUAL_ENV") {
+        cmd.env("VIRTUAL_ENV", venv);
+    }
+
     // Prevent a console window from appearing on Windows (including MSYS/MinGW).
     #[cfg(windows)]
     {
