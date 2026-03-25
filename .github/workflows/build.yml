@@ -27,11 +27,13 @@ jobs:
           - target: aarch64-unknown-linux-gnu
             os: ubuntu-latest
             binary_ext: ""
-            cross: true
+            linux_cross: true
 
           - target: x86_64-apple-darwin
-            os: macos-13
+            os: macos-14
             binary_ext: ""
+            # Cross-compile x86_64 on ARM runner; no PyO3 (cli-only wheel)
+            macos_cross: true
 
           - target: aarch64-apple-darwin
             os: macos-latest
@@ -51,7 +53,7 @@ jobs:
           targets: ${{ matrix.target }}
 
       - uses: actions/setup-python@v5
-        if: ${{ !matrix.cross }}
+        if: ${{ !matrix.linux_cross && !matrix.macos_cross }}
         with:
           python-version: "3.13"
 
@@ -61,14 +63,14 @@ jobs:
 
       # Linux system dependencies (libudev for serial port detection)
       - name: Install Linux dependencies
-        if: runner.os == 'Linux' && !matrix.cross
+        if: runner.os == 'Linux' && !matrix.linux_cross
         run: |
           sudo apt-get update
           sudo apt-get install -y libudev-dev pkg-config
 
       # Linux aarch64 cross-compilation toolchain
       - name: Install cross-compilation tools
-        if: matrix.cross
+        if: matrix.linux_cross
         run: |
           sudo dpkg --add-architecture arm64
           # Handle DEB822 format (.sources files) used by Ubuntu 24.04+
@@ -98,14 +100,14 @@ jobs:
 
       - name: Build release binaries
         env:
-          CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: ${{ matrix.cross && 'aarch64-linux-gnu-gcc' || '' }}
+          CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: ${{ matrix.linux_cross && 'aarch64-linux-gnu-gcc' || '' }}
         run: |
           cargo build --release --target ${{ matrix.target }} -p fbuild-cli
           cargo build --release --target ${{ matrix.target }} -p fbuild-daemon
 
-      # PyO3 extension — build without --target to avoid cross-compilation mode
+      # PyO3 extension — skip for cross-compiled targets
       - name: Build Python extension
-        if: ${{ !matrix.cross }}
+        if: ${{ !matrix.linux_cross && !matrix.macos_cross }}
         shell: bash
         run: |
           if [ "${{ runner.os }}" = "macOS" ]; then
@@ -133,11 +135,11 @@ jobs:
           fi
 
           # Strip binaries (reduces size significantly)
-          if command -v strip &> /dev/null && [ -z "${{ matrix.cross }}" ]; then
+          if command -v strip &> /dev/null && [ -z "${{ matrix.linux_cross }}" ]; then
             strip staging/fbuild${{ matrix.binary_ext }} || true
             strip staging/fbuild-daemon${{ matrix.binary_ext }} || true
             strip staging/_native.abi3.so 2>/dev/null || true
-          elif [ "${{ matrix.cross }}" = "true" ]; then
+          elif [ "${{ matrix.linux_cross }}" = "true" ]; then
             aarch64-linux-gnu-strip staging/fbuild || true
             aarch64-linux-gnu-strip staging/fbuild-daemon || true
           fi
