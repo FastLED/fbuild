@@ -8,6 +8,7 @@ use std::path::{Path, PathBuf};
 use fbuild_core::subprocess::run_command;
 use fbuild_core::{Result, SizeInfo};
 
+use super::mcu_config::TeensyMcuConfig;
 use crate::linker::Linker;
 
 /// Teensy-specific linker using arm-none-eabi-gcc (link driver), ar, objcopy, size.
@@ -17,6 +18,7 @@ pub struct TeensyLinker {
     objcopy_path: PathBuf,
     size_path: PathBuf,
     linker_script_path: PathBuf,
+    mcu_config: TeensyMcuConfig,
     max_flash: Option<u64>,
     max_ram: Option<u64>,
     verbose: bool,
@@ -30,6 +32,7 @@ impl TeensyLinker {
         objcopy_path: PathBuf,
         size_path: PathBuf,
         linker_script_path: PathBuf,
+        mcu_config: TeensyMcuConfig,
         max_flash: Option<u64>,
         max_ram: Option<u64>,
         verbose: bool,
@@ -40,6 +43,7 @@ impl TeensyLinker {
             objcopy_path,
             size_path,
             linker_script_path,
+            mcu_config,
             max_flash,
             max_ram,
             verbose,
@@ -90,21 +94,21 @@ impl Linker for TeensyLinker {
         std::fs::create_dir_all(output_dir)?;
         let elf_path = output_dir.join("firmware.elf");
 
-        let mut args: Vec<String> = vec![
-            self.gcc_path.to_string_lossy().to_string(),
-            "-mcpu=cortex-m7".to_string(),
-            "-mthumb".to_string(),
-            "-mfloat-abi=hard".to_string(),
-            "-mfpu=fpv5-d16".to_string(),
-            "-Os".to_string(),
-            "-flto=auto".to_string(),
-            "-fuse-linker-plugin".to_string(),
-            "-Wl,--gc-sections".to_string(),
-            "-Wl,--print-memory-usage".to_string(),
+        let mut args: Vec<String> = vec![self.gcc_path.to_string_lossy().to_string()];
+
+        // Linker flags from config
+        args.extend(self.mcu_config.linker_flags.iter().cloned());
+
+        // Profile link flags
+        if let Some(profile) = self.mcu_config.get_profile("release") {
+            args.extend(profile.link_flags.iter().cloned());
+        }
+
+        args.extend([
             format!("-T{}", self.linker_script_path.display()),
             "-o".to_string(),
             elf_path.to_string_lossy().to_string(),
-        ];
+        ]);
 
         // Sketch objects first
         for obj in objects {
@@ -116,13 +120,8 @@ impl Linker for TeensyLinker {
             args.push(archive.to_string_lossy().to_string());
         }
 
-        // Linker libraries
-        args.extend([
-            "-lgcc".to_string(),
-            "-lstdc++".to_string(),
-            "-lm".to_string(),
-            "-lc".to_string(),
-        ]);
+        // Linker libraries from config
+        args.extend(self.mcu_config.linker_libs.iter().cloned());
 
         if self.verbose {
             tracing::info!("link: {}", args.join(" "));
@@ -144,15 +143,19 @@ impl Linker for TeensyLinker {
     fn convert_firmware(&self, elf_path: &Path, output_dir: &Path) -> Result<PathBuf> {
         let hex_path = output_dir.join("firmware.hex");
 
-        let args = [
+        let mut args = vec![
             self.objcopy_path.to_string_lossy().to_string(),
             "-O".to_string(),
-            "ihex".to_string(),
-            "-R".to_string(),
-            ".eeprom".to_string(),
-            elf_path.to_string_lossy().to_string(),
-            hex_path.to_string_lossy().to_string(),
+            self.mcu_config.objcopy.output_format.clone(),
         ];
+
+        for section in &self.mcu_config.objcopy.remove_sections {
+            args.push("-R".to_string());
+            args.push(section.clone());
+        }
+
+        args.push(elf_path.to_string_lossy().to_string());
+        args.push(hex_path.to_string_lossy().to_string());
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
         let result = run_command(&args_ref, None, None, None)?;
@@ -195,6 +198,7 @@ impl Linker for TeensyLinker {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::teensy::mcu_config::get_teensy_config;
 
     #[test]
     fn test_teensy_linker_creation() {
@@ -204,6 +208,7 @@ mod tests {
             PathBuf::from("/bin/arm-none-eabi-objcopy"),
             PathBuf::from("/bin/arm-none-eabi-size"),
             PathBuf::from("/teensy4/imxrt1062_t41.ld"),
+            get_teensy_config().unwrap(),
             Some(8126464),
             Some(1048576),
             false,
@@ -220,6 +225,7 @@ mod tests {
             PathBuf::from("/bin/arm-none-eabi-objcopy"),
             PathBuf::from("/bin/arm-none-eabi-size"),
             PathBuf::from("/teensy4/imxrt1062_t41.ld"),
+            get_teensy_config().unwrap(),
             Some(8126464),
             Some(1048576),
             false,

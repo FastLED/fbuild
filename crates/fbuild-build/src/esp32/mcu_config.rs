@@ -38,6 +38,18 @@ pub struct ProfileFlags {
 pub struct EsptoolConfig {
     pub elf_sha256_offset: String,
     pub flash_offsets: FlashOffsets,
+    /// Default flash mode for esptool (e.g. "dio", "qio").
+    pub default_flash_mode: String,
+    /// Default flash frequency for esptool (e.g. "80m", "40m").
+    pub default_flash_freq: String,
+    /// Default flash size for esptool (e.g. "4MB").
+    pub default_flash_size: String,
+    /// Default baud rate for flashing.
+    pub default_baud: u32,
+    /// Reset mode before flashing (e.g. "default_reset").
+    pub before_reset: String,
+    /// Reset mode after flashing (e.g. "hard_reset").
+    pub after_reset: String,
 }
 
 /// Flash memory offsets for bootloader, partitions, and firmware.
@@ -132,6 +144,36 @@ impl Esp32McuConfig {
         &self.esptool.flash_offsets.partitions
     }
 
+    /// Default flash mode (e.g. "dio").
+    pub fn default_flash_mode(&self) -> &str {
+        &self.esptool.default_flash_mode
+    }
+
+    /// Default flash frequency (e.g. "80m").
+    pub fn default_flash_freq(&self) -> &str {
+        &self.esptool.default_flash_freq
+    }
+
+    /// Default flash size (e.g. "4MB").
+    pub fn default_flash_size(&self) -> &str {
+        &self.esptool.default_flash_size
+    }
+
+    /// Default baud rate for flashing.
+    pub fn default_baud(&self) -> u32 {
+        self.esptool.default_baud
+    }
+
+    /// Reset mode before flashing (e.g. "default_reset").
+    pub fn before_reset(&self) -> &str {
+        &self.esptool.before_reset
+    }
+
+    /// Reset mode after flashing (e.g. "hard_reset").
+    pub fn after_reset(&self) -> &str {
+        &self.esptool.after_reset
+    }
+
     /// Get profile flags for a given profile name.
     pub fn get_profile(&self, name: &str) -> Option<&ProfileFlags> {
         self.profiles.get(name)
@@ -158,6 +200,23 @@ impl Esp32McuConfig {
                 .link_flags
                 .retain(|f| !f.contains("lto") && f != "-fuse-linker-plugin");
         }
+    }
+}
+
+/// Convert a flash size in bytes to an esptool-compatible size string (e.g. "4MB").
+///
+/// Falls back to `default` for unrecognized sizes.
+pub fn bytes_to_flash_size(bytes: Option<u64>, default: &str) -> &str {
+    match bytes {
+        Some(sz) if sz >= 128 * 1024 * 1024 => "128MB",
+        Some(sz) if sz >= 64 * 1024 * 1024 => "64MB",
+        Some(sz) if sz >= 32 * 1024 * 1024 => "32MB",
+        Some(sz) if sz >= 16 * 1024 * 1024 => "16MB",
+        Some(sz) if sz >= 8 * 1024 * 1024 => "8MB",
+        Some(sz) if sz >= 4 * 1024 * 1024 => "4MB",
+        Some(sz) if sz >= 2 * 1024 * 1024 => "2MB",
+        Some(sz) if sz >= 1024 * 1024 => "1MB",
+        _ => default,
     }
 }
 

@@ -106,6 +106,8 @@ impl BuildOrchestrator for TeensyOrchestrator {
 
         let user_flags = config.get_build_flags(&params.env_name)?;
 
+        let mcu_config = super::mcu_config::get_teensy_config()?;
+
         use fbuild_packages::Toolchain;
         let compiler = TeensyCompiler::new(
             toolchain.get_gcc_path(),
@@ -114,6 +116,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
             &board.f_cpu,
             defines,
             include_dirs,
+            mcu_config.clone(),
             params.verbose,
         );
 
@@ -197,6 +200,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
             toolchain.get_objcopy_path(),
             toolchain.get_size_path(),
             linker_script,
+            mcu_config,
             board.max_flash,
             board.max_ram,
             params.verbose,

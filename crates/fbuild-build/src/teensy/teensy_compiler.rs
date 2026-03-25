@@ -9,6 +9,7 @@ use std::path::{Path, PathBuf};
 use fbuild_core::subprocess::run_command;
 use fbuild_core::Result;
 
+use super::mcu_config::TeensyMcuConfig;
 use crate::compiler::{CompileResult, Compiler, CompilerBase};
 
 /// Teensy-specific compiler using arm-none-eabi-gcc and arm-none-eabi-g++.
@@ -16,9 +17,11 @@ pub struct TeensyCompiler {
     pub base: CompilerBase,
     gcc_path: PathBuf,
     gxx_path: PathBuf,
+    mcu_config: TeensyMcuConfig,
 }
 
 impl TeensyCompiler {
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         gcc_path: PathBuf,
         gxx_path: PathBuf,
@@ -26,6 +29,7 @@ impl TeensyCompiler {
         f_cpu: &str,
         defines: HashMap<String, String>,
         include_dirs: Vec<PathBuf>,
+        mcu_config: TeensyMcuConfig,
         verbose: bool,
     ) -> Self {
         Self {
@@ -38,6 +42,7 @@ impl TeensyCompiler {
             },
             gcc_path,
             gxx_path,
+            mcu_config,
         }
     }
 
@@ -53,25 +58,13 @@ impl TeensyCompiler {
 
     /// Build the common ARM Cortex-M7 compiler flags.
     fn common_flags(&self) -> Vec<String> {
-        let mut flags = vec![
-            "-mcpu=cortex-m7".to_string(),
-            "-mthumb".to_string(),
-            "-mfloat-abi=hard".to_string(),
-            "-mfpu=fpv5-d16".to_string(),
-            "-Wall".to_string(),
-            "-Wextra".to_string(),
-            "-Wno-unused-parameter".to_string(),
-            "-ffunction-sections".to_string(),
-            "-fdata-sections".to_string(),
-            "-MMD".to_string(),
-        ];
+        let mut flags = Vec::new();
+        flags.extend(self.mcu_config.compiler_flags.common.iter().cloned());
 
-        // Release flags (always optimize for size on embedded)
-        flags.extend([
-            "-Os".to_string(),
-            "-flto=auto".to_string(),
-            "-fno-fat-lto-objects".to_string(),
-        ]);
+        // Profile flags (release by default for embedded)
+        if let Some(profile) = self.mcu_config.get_profile("release") {
+            flags.extend(profile.compile_flags.iter().cloned());
+        }
 
         flags.extend(self.base.build_define_flags());
         flags.extend(self.base.build_include_flags());
@@ -81,20 +74,14 @@ impl TeensyCompiler {
     /// C-specific flags.
     pub fn c_flags(&self) -> Vec<String> {
         let mut flags = self.common_flags();
-        flags.push("-std=gnu11".to_string());
+        flags.extend(self.mcu_config.compiler_flags.c.iter().cloned());
         flags
     }
 
     /// C++-specific flags.
     pub fn cpp_flags(&self) -> Vec<String> {
         let mut flags = self.common_flags();
-        flags.extend([
-            "-std=gnu++17".to_string(),
-            "-fno-exceptions".to_string(),
-            "-fno-rtti".to_string(),
-            "-felide-constructors".to_string(),
-            "-fno-threadsafe-statics".to_string(),
-        ]);
+        flags.extend(self.mcu_config.compiler_flags.cxx.iter().cloned());
         flags
     }
 
@@ -164,6 +151,7 @@ impl Compiler for TeensyCompiler {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::teensy::mcu_config::get_teensy_config;
 
     fn test_compiler() -> TeensyCompiler {
         let mut defines = HashMap::new();
@@ -181,6 +169,7 @@ mod tests {
             "600000000L",
             defines,
             vec![PathBuf::from("/teensy4")],
+            get_teensy_config().unwrap(),
             false,
         )
     }

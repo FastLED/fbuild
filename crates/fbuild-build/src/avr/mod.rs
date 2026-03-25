@@ -2,6 +2,7 @@
 
 pub mod avr_compiler;
 pub mod avr_linker;
+pub mod mcu_config;
 pub mod orchestrator;
 
 pub use avr_compiler::AvrCompiler;

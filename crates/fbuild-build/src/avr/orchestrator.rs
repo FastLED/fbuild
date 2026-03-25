@@ -101,6 +101,8 @@ impl BuildOrchestrator for AvrOrchestrator {
         // Add user build flags to defines
         let user_flags = config.get_build_flags(&params.env_name)?;
 
+        let mcu_config = super::mcu_config::get_avr_config()?;
+
         use fbuild_packages::Toolchain;
         let compiler = AvrCompiler::new(
             toolchain.get_gcc_path(),
@@ -109,6 +111,7 @@ impl BuildOrchestrator for AvrOrchestrator {
             &board.f_cpu,
             defines,
             include_dirs,
+            mcu_config.clone(),
             params.verbose,
         );
 
@@ -213,6 +216,7 @@ impl BuildOrchestrator for AvrOrchestrator {
             toolchain.get_objcopy_path(),
             toolchain.get_size_path(),
             &board.mcu,
+            mcu_config,
             board.max_flash,
             board.max_ram,
             params.verbose,

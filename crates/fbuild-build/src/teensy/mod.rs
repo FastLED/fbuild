@@ -1,5 +1,6 @@
 //! Teensy platform build support (Teensy 4.0, 4.1)
 
+pub mod mcu_config;
 pub mod orchestrator;
 pub mod teensy_compiler;
 pub mod teensy_linker;

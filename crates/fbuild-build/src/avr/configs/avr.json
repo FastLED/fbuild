@@ -1,0 +1,59 @@
+{
+  "name": "AVR ATmega",
+  "description": "Configuration for AVR ATmega MCUs (Arduino Uno, Mega, Nano, etc.)",
+  "architecture": "avr",
+
+  "compiler_flags": {
+    "common": [
+      "-Os",
+      "-Wall",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-flto",
+      "-fno-fat-lto-objects"
+    ],
+    "c": [
+      "-std=gnu11"
+    ],
+    "cxx": [
+      "-std=gnu++11",
+      "-fno-exceptions",
+      "-fno-threadsafe-statics",
+      "-fpermissive"
+    ]
+  },
+
+  "linker_flags": [
+    "-Os",
+    "-flto",
+    "-fuse-linker-plugin",
+    "-Wl,--gc-sections",
+    "-Wl,--allow-multiple-definition"
+  ],
+
+  "linker_libs": [
+    "-lm"
+  ],
+
+  "objcopy": {
+    "output_format": "ihex",
+    "remove_sections": [".eeprom"]
+  },
+
+  "profiles": {
+    "release": {
+      "compile_flags": ["-Os", "-flto", "-fno-fat-lto-objects"],
+      "link_flags": ["-flto", "-fuse-linker-plugin"]
+    },
+    "quick": {
+      "compile_flags": ["-Os"],
+      "link_flags": []
+    }
+  },
+
+  "avrdude": {
+    "default_programmer": "arduino",
+    "default_baud": 115200,
+    "timeout_secs": 60
+  }
+}

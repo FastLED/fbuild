@@ -9,6 +9,7 @@ use std::path::{Path, PathBuf};
 use fbuild_core::subprocess::run_command;
 use fbuild_core::Result;
 
+use super::mcu_config::AvrMcuConfig;
 use crate::compiler::{CompileResult, Compiler, CompilerBase};
 
 /// AVR-specific compiler using avr-gcc and avr-g++.
@@ -16,9 +17,11 @@ pub struct AvrCompiler {
     pub base: CompilerBase,
     gcc_path: PathBuf,
     gxx_path: PathBuf,
+    mcu_config: AvrMcuConfig,
 }
 
 impl AvrCompiler {
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         gcc_path: PathBuf,
         gxx_path: PathBuf,
@@ -26,6 +29,7 @@ impl AvrCompiler {
         f_cpu: &str,
         defines: HashMap<String, String>,
         include_dirs: Vec<PathBuf>,
+        mcu_config: AvrMcuConfig,
         verbose: bool,
     ) -> Self {
         Self {
@@ -38,6 +42,7 @@ impl AvrCompiler {
             },
             gcc_path,
             gxx_path,
+            mcu_config,
         }
     }
 
@@ -53,16 +58,8 @@ impl AvrCompiler {
 
     /// Build the common AVR compiler flags.
     fn common_flags(&self) -> Vec<String> {
-        let mut flags = vec![
-            format!("-mmcu={}", self.base.mcu),
-            "-Os".to_string(),
-            "-Wall".to_string(),
-            "-ffunction-sections".to_string(),
-            "-fdata-sections".to_string(),
-            "-flto".to_string(),
-            "-fno-fat-lto-objects".to_string(),
-        ];
-
+        let mut flags = vec![format!("-mmcu={}", self.base.mcu)];
+        flags.extend(self.mcu_config.compiler_flags.common.iter().cloned());
         flags.extend(self.base.build_define_flags());
         flags.extend(self.base.build_include_flags());
         flags
@@ -71,19 +68,14 @@ impl AvrCompiler {
     /// C-specific flags.
     pub fn c_flags(&self) -> Vec<String> {
         let mut flags = self.common_flags();
-        flags.push("-std=gnu11".to_string());
+        flags.extend(self.mcu_config.compiler_flags.c.iter().cloned());
         flags
     }
 
     /// C++-specific flags.
     pub fn cpp_flags(&self) -> Vec<String> {
         let mut flags = self.common_flags();
-        flags.extend([
-            "-std=gnu++11".to_string(),
-            "-fno-exceptions".to_string(),
-            "-fno-threadsafe-statics".to_string(),
-            "-fpermissive".to_string(),
-        ]);
+        flags.extend(self.mcu_config.compiler_flags.cxx.iter().cloned());
         flags
     }
 
@@ -154,6 +146,7 @@ impl Compiler for AvrCompiler {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::avr::mcu_config::get_avr_config;
 
     fn test_compiler() -> AvrCompiler {
         let mut defines = HashMap::new();
@@ -172,6 +165,7 @@ mod tests {
                 PathBuf::from("/cores/arduino"),
                 PathBuf::from("/variants/standard"),
             ],
+            get_avr_config().unwrap(),
             false,
         )
     }

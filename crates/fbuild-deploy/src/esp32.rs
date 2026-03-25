@@ -13,7 +13,30 @@ use fbuild_core::Result;
 
 use crate::{Deployer, DeploymentResult};
 
-/// ESP32 deployer using `python -m esptool` or `esptool.py`.
+/// Esptool flash parameters sourced from MCU config JSON.
+///
+/// All fields correspond to `esptool` section fields in the MCU config.
+pub struct EsptoolParams {
+    pub flash_mode: String,
+    pub flash_freq: String,
+    pub default_baud: String,
+    pub before_reset: String,
+    pub after_reset: String,
+}
+
+impl Default for EsptoolParams {
+    fn default() -> Self {
+        Self {
+            flash_mode: "dio".to_string(),
+            flash_freq: "80m".to_string(),
+            default_baud: "460800".to_string(),
+            before_reset: "default_reset".to_string(),
+            after_reset: "hard_reset".to_string(),
+        }
+    }
+}
+
+/// ESP32 deployer using `esptool`.
 pub struct Esp32Deployer {
     /// MCU chip type for esptool --chip flag (e.g. "esp32c6").
     chip: String,
@@ -23,16 +46,26 @@ pub struct Esp32Deployer {
     bootloader_offset: String,
     partitions_offset: String,
     firmware_offset: String,
+    /// Flash mode for esptool (e.g. "dio", "qio").
+    flash_mode: String,
+    /// Flash frequency for esptool (e.g. "80m", "40m").
+    flash_freq: String,
+    /// Reset mode before flashing.
+    before_reset: String,
+    /// Reset mode after flashing.
+    after_reset: String,
     verbose: bool,
 }
 
 impl Esp32Deployer {
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         chip: &str,
         baud_rate: &str,
         bootloader_offset: &str,
         partitions_offset: &str,
         firmware_offset: &str,
+        esptool_params: &EsptoolParams,
         verbose: bool,
     ) -> Self {
         Self {
@@ -41,6 +74,10 @@ impl Esp32Deployer {
             bootloader_offset: bootloader_offset.to_string(),
             partitions_offset: partitions_offset.to_string(),
             firmware_offset: firmware_offset.to_string(),
+            flash_mode: esptool_params.flash_mode.clone(),
+            flash_freq: esptool_params.flash_freq.clone(),
+            before_reset: esptool_params.before_reset.clone(),
+            after_reset: esptool_params.after_reset.clone(),
             verbose,
         }
     }
@@ -51,27 +88,41 @@ impl Esp32Deployer {
         bootloader_offset: &str,
         partitions_offset: &str,
         firmware_offset: &str,
+        esptool_params: &EsptoolParams,
         verbose: bool,
     ) -> Self {
+        let baud = board
+            .upload_speed
+            .as_deref()
+            .unwrap_or(&esptool_params.default_baud);
+        // Board-level flash_mode overrides MCU default.
+        let flash_mode = board
+            .flash_mode
+            .as_deref()
+            .unwrap_or(&esptool_params.flash_mode);
+        let params = EsptoolParams {
+            flash_mode: flash_mode.to_string(),
+            flash_freq: esptool_params.flash_freq.clone(),
+            default_baud: esptool_params.default_baud.clone(),
+            before_reset: esptool_params.before_reset.clone(),
+            after_reset: esptool_params.after_reset.clone(),
+        };
         Self::new(
             &board.mcu,
-            board.upload_speed.as_deref().unwrap_or("460800"),
+            baud,
             bootloader_offset,
             partitions_offset,
             firmware_offset,
+            &params,
             verbose,
         )
     }
 
     /// Find the esptool executable.
     ///
-    /// Uses `python -m esptool` (most reliable across platforms).
+    /// Uses standalone `esptool` command (available when esptool is pip-installed).
     fn find_esptool() -> Vec<String> {
-        vec![
-            "python".to_string(),
-            "-m".to_string(),
-            "esptool".to_string(),
-        ]
+        vec!["esptool".to_string()]
     }
 }
 
@@ -108,9 +159,9 @@ impl Deployer for Esp32Deployer {
         // Reset behavior
         args.extend([
             "--before".to_string(),
-            "default_reset".to_string(),
+            self.before_reset.clone(),
             "--after".to_string(),
-            "hard_reset".to_string(),
+            self.after_reset.clone(),
         ]);
 
         // Write flash command
@@ -118,9 +169,9 @@ impl Deployer for Esp32Deployer {
             "write_flash".to_string(),
             "-z".to_string(),
             "--flash-mode".to_string(),
-            "dio".to_string(),
+            self.flash_mode.clone(),
             "--flash-freq".to_string(),
-            "80m".to_string(),
+            self.flash_freq.clone(),
             "--flash-size".to_string(),
             "detect".to_string(),
         ]);
@@ -180,11 +231,21 @@ mod tests {
 
     #[test]
     fn test_esp32_deployer_creation() {
-        let deployer = Esp32Deployer::new("esp32c6", "460800", "0x0", "0x8000", "0x10000", false);
+        let deployer = Esp32Deployer::new(
+            "esp32c6",
+            "460800",
+            "0x0",
+            "0x8000",
+            "0x10000",
+            &EsptoolParams::default(),
+            false,
+        );
         assert_eq!(deployer.chip, "esp32c6");
         assert_eq!(deployer.baud_rate, "460800");
         assert_eq!(deployer.bootloader_offset, "0x0");
         assert_eq!(deployer.firmware_offset, "0x10000");
+        assert_eq!(deployer.flash_mode, "dio");
+        assert_eq!(deployer.before_reset, "default_reset");
     }
 
     #[test]
@@ -192,14 +253,29 @@ mod tests {
         let board =
             fbuild_config::BoardConfig::from_board_id("esp32c6", &std::collections::HashMap::new())
                 .unwrap();
-        let deployer = Esp32Deployer::from_board_config(&board, "0x0", "0x8000", "0x10000", false);
+        let deployer = Esp32Deployer::from_board_config(
+            &board,
+            "0x0",
+            "0x8000",
+            "0x10000",
+            &EsptoolParams::default(),
+            false,
+        );
         assert_eq!(deployer.chip, "esp32c6");
         assert_eq!(deployer.bootloader_offset, "0x0");
     }
 
     #[test]
     fn test_deploy_requires_port() {
-        let deployer = Esp32Deployer::new("esp32c6", "460800", "0x0", "0x8000", "0x10000", false);
+        let deployer = Esp32Deployer::new(
+            "esp32c6",
+            "460800",
+            "0x0",
+            "0x8000",
+            "0x10000",
+            &EsptoolParams::default(),
+            false,
+        );
         let tmp = tempfile::TempDir::new().unwrap();
         let result = deployer.deploy(tmp.path(), "esp32c6", Path::new("firmware.bin"), None);
         assert!(result.is_err());

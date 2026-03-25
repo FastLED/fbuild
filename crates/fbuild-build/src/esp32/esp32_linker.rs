@@ -17,6 +17,25 @@ use crate::linker::Linker;
 
 use super::mcu_config::Esp32McuConfig;
 
+/// Convert `f_flash` board config value (e.g. `"80000000L"`) to esptool frequency (e.g. `"80m"`).
+///
+/// Falls back to `default_freq` (from MCU config) for unrecognized values.
+pub fn f_flash_to_esptool_freq<'a>(f_flash: Option<&str>, default_freq: &'a str) -> &'a str {
+    match f_flash {
+        Some(s) => {
+            let s = s.trim_end_matches('L');
+            match s {
+                "80000000" => "80m",
+                "40000000" => "40m",
+                "26000000" => "26m",
+                "20000000" => "20m",
+                _ => default_freq,
+            }
+        }
+        None => default_freq,
+    }
+}
+
 /// ESP32-specific linker using RISC-V or Xtensa GCC as the link driver.
 pub struct Esp32Linker {
     gcc_path: PathBuf,
@@ -34,6 +53,10 @@ pub struct Esp32Linker {
     sdk_ld_scripts: Vec<String>,
     /// Build profile.
     profile: BuildProfile,
+    /// Flash mode for esptool (e.g. "dio", "qio"). Defaults to "dio".
+    flash_mode: String,
+    /// Flash frequency for esptool (e.g. "80m", "40m"). Derived from board f_flash.
+    flash_freq: String,
     max_flash: Option<u64>,
     max_ram: Option<u64>,
     verbose: bool,
@@ -51,10 +74,13 @@ impl Esp32Linker {
         sdk_lib_flags: Vec<String>,
         sdk_ld_scripts: Vec<String>,
         profile: BuildProfile,
+        flash_mode: Option<String>,
+        flash_freq: &str,
         max_flash: Option<u64>,
         max_ram: Option<u64>,
         verbose: bool,
     ) -> Self {
+        let flash_mode = flash_mode.unwrap_or_else(|| mcu_config.default_flash_mode().to_string());
         Self {
             gcc_path,
             ar_path,
@@ -65,6 +91,8 @@ impl Esp32Linker {
             sdk_lib_flags,
             sdk_ld_scripts,
             profile,
+            flash_mode,
+            flash_freq: flash_freq.to_string(),
             max_flash,
             max_ram,
             verbose,
@@ -227,15 +255,63 @@ impl Linker for Esp32Linker {
     }
 
     fn convert_firmware(&self, elf_path: &Path, output_dir: &Path) -> Result<PathBuf> {
-        // ESP32 firmware is flashed from the ELF directly via esptool.py elf2image.
-        // Raw `objcopy -O binary` produces a bloated file because the ELF has segments
-        // at high addresses (IRAM 0x400xxxxx, DRAM 0x3FFxxxxx).
-        // Copy the ELF to the output directory as the build artifact.
+        // Copy ELF to output directory
         let elf_out = output_dir.join("firmware.elf");
         if elf_path != elf_out {
             std::fs::copy(elf_path, &elf_out)?;
         }
-        Ok(elf_out)
+
+        // Convert ELF to BIN using esptool elf2image.
+        // Raw `objcopy -O binary` produces a bloated file because the ELF has segments
+        // at high addresses (IRAM 0x400xxxxx, DRAM 0x3FFxxxxx). esptool understands
+        // the ESP32 image format and produces the correct flashable binary.
+        let bin_out = output_dir.join("firmware.bin");
+        let chip = &self.mcu_config.mcu;
+        let elf_str = elf_out.to_string_lossy();
+        let bin_str = bin_out.to_string_lossy();
+        // Determine flash size from max_flash config (bytes → human-readable).
+        // elf2image doesn't support "detect" — needs an explicit size.
+        let flash_size = super::mcu_config::bytes_to_flash_size(
+            self.max_flash,
+            self.mcu_config.default_flash_size(),
+        );
+        let args = [
+            "esptool",
+            "--chip",
+            chip,
+            "elf2image",
+            "--flash-mode",
+            &self.flash_mode,
+            "--flash-freq",
+            &self.flash_freq,
+            "--flash-size",
+            flash_size,
+            &elf_str,
+            "-o",
+            &bin_str,
+        ];
+
+        tracing::info!("elf2image: {}", args.join(" "));
+
+        match run_command(&args, None, None, Some(std::time::Duration::from_secs(30))) {
+            Ok(result) if result.success() => {
+                tracing::info!("converted firmware.elf → firmware.bin");
+                Ok(bin_out)
+            }
+            Ok(result) => {
+                tracing::warn!(
+                    "esptool elf2image failed (exit={}): {}{}",
+                    result.exit_code,
+                    result.stderr,
+                    result.stdout
+                );
+                Ok(elf_out)
+            }
+            Err(e) => {
+                tracing::warn!("esptool not found (firmware.bin not generated): {}", e);
+                Ok(elf_out)
+            }
+        }
     }
 
     fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
@@ -293,6 +369,8 @@ mod tests {
                 "-Tsections.ld".to_string(),
             ],
             BuildProfile::Release,
+            None,
+            "80m",
             Some(3145728),
             Some(327680),
             false,
@@ -333,6 +411,8 @@ mod tests {
             vec!["-lfreertos".to_string()],
             vec!["-Tmemory.ld".to_string()],
             BuildProfile::Release,
+            None,
+            "80m",
             Some(3145728),
             Some(327680),
             false,
@@ -373,6 +453,8 @@ mod tests {
             vec![],
             vec![],
             BuildProfile::Release,
+            None,
+            "80m",
             Some(3145728),
             Some(327680),
             false,

@@ -471,6 +471,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let mut all_archives: Vec<std::path::PathBuf> = core_objects;
         all_archives.extend(library_archives);
 
+        let flash_freq = crate::esp32::esp32_linker::f_flash_to_esptool_freq(
+            board.f_flash.as_deref(),
+            mcu_config.default_flash_freq(),
+        );
         let linker = Esp32Linker::new(
             toolchain.get_gcc_path(),
             toolchain.get_ar_path(),
@@ -481,6 +485,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
             sdk_lib_flags,
             sdk_ld_scripts,
             params.profile,
+            board.flash_mode.clone(),
+            flash_freq,
             board.max_flash,
             board.max_ram,
             params.verbose,
@@ -489,18 +495,120 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let link_result =
             crate::linker::Linker::link_all(&linker, &sketch_objects, &all_archives, &build_dir)?;
 
-        // 14. Copy bootloader.bin + partitions.bin
-        let boot_src = framework.get_bootloader_bin(&board.mcu);
-        let parts_src = framework.get_partitions_bin(&board.mcu);
-        if boot_src.exists() {
-            let boot_dst = build_dir.join("bootloader.bin");
-            std::fs::copy(&boot_src, &boot_dst)?;
+        // 14. Prepare bootloader.bin + partitions.bin for deployment
+        let boot_dst = build_dir.join("bootloader.bin");
+        let boot_bin_src = framework.get_bootloader_bin(&board.mcu);
+        if boot_bin_src.exists() {
+            // Pre-built bootloader.bin available — just copy
+            std::fs::copy(&boot_bin_src, &boot_dst)?;
             tracing::info!("copied bootloader.bin");
+        } else {
+            // Convert bootloader ELF to BIN using esptool elf2image.
+            // The bootloader ELF filename encodes the flash mode and frequency.
+            // ESP32 ROM bootloader typically requires DIO mode regardless of
+            // application flash mode, but we use the board's configured mode
+            // since the Arduino core names the ELF accordingly.
+            let boot_flash_mode = board
+                .flash_mode
+                .as_deref()
+                .unwrap_or(mcu_config.default_flash_mode());
+            let boot_elf = framework.get_bootloader_elf(&board.mcu, boot_flash_mode, flash_freq);
+            if boot_elf.exists() {
+                let boot_elf_str = boot_elf.to_string_lossy();
+                let boot_dst_str = boot_dst.to_string_lossy();
+                let flash_size = crate::esp32::mcu_config::bytes_to_flash_size(
+                    board.max_flash,
+                    mcu_config.default_flash_size(),
+                );
+                let args = [
+                    "esptool",
+                    "--chip",
+                    &board.mcu,
+                    "elf2image",
+                    "--flash-mode",
+                    boot_flash_mode,
+                    "--flash-freq",
+                    flash_freq,
+                    "--flash-size",
+                    flash_size,
+                    &boot_elf_str,
+                    "-o",
+                    &boot_dst_str,
+                ];
+                match fbuild_core::subprocess::run_command(
+                    &args,
+                    None,
+                    None,
+                    Some(std::time::Duration::from_secs(30)),
+                ) {
+                    Ok(result) if result.success() => {
+                        tracing::info!("converted bootloader ELF → bootloader.bin");
+                    }
+                    Ok(result) => {
+                        tracing::warn!(
+                            "bootloader elf2image failed: {}{}",
+                            result.stderr,
+                            result.stdout
+                        );
+                    }
+                    Err(e) => {
+                        tracing::warn!("esptool not found for bootloader conversion: {}", e);
+                    }
+                }
+            } else {
+                tracing::warn!(
+                    "no bootloader found at {} or {}",
+                    boot_bin_src.display(),
+                    boot_elf.display()
+                );
+            }
         }
-        if parts_src.exists() {
-            let parts_dst = build_dir.join("partitions.bin");
-            std::fs::copy(&parts_src, &parts_dst)?;
+
+        let parts_dst = build_dir.join("partitions.bin");
+        let parts_bin_src = framework.get_partitions_bin(&board.mcu);
+        if parts_bin_src.exists() {
+            // Pre-built partitions.bin available — just copy
+            std::fs::copy(&parts_bin_src, &parts_dst)?;
             tracing::info!("copied partitions.bin");
+        } else {
+            // Generate partitions.bin from CSV using gen_esp32part.py
+            let partitions_name = board.partitions.as_deref().unwrap_or("default.csv");
+            let parts_csv = framework.get_partitions_csv(partitions_name);
+            let gen_tool = framework.get_gen_esp32part();
+            if parts_csv.exists() && gen_tool.exists() {
+                let gen_tool_str = gen_tool.to_string_lossy();
+                let parts_csv_str = parts_csv.to_string_lossy();
+                let parts_dst_str = parts_dst.to_string_lossy();
+                let args = [
+                    "python",
+                    &gen_tool_str,
+                    "-q",
+                    &parts_csv_str,
+                    &parts_dst_str,
+                ];
+                match fbuild_core::subprocess::run_command(
+                    &args,
+                    None,
+                    None,
+                    Some(std::time::Duration::from_secs(10)),
+                ) {
+                    Ok(result) if result.success() => {
+                        tracing::info!("generated partitions.bin from {}", partitions_name);
+                    }
+                    Ok(result) => {
+                        tracing::warn!("gen_esp32part.py failed: {}", result.stderr);
+                    }
+                    Err(e) => {
+                        tracing::warn!("python not found for partitions generation: {}", e);
+                    }
+                }
+            } else {
+                tracing::warn!(
+                    "no partitions source: csv={} gen_tool={}",
+                    parts_csv.display(),
+                    gen_tool.display()
+                );
+            }
         }
 
         // 15. Size reporting

@@ -371,11 +371,28 @@ pub async fn deploy(
                             )
                             .unwrap()
                         });
+                // Load MCU config to get flash offsets and esptool defaults.
+                let mcu_config = fbuild_build::esp32::mcu_config::get_mcu_config(&board_config.mcu)
+                    .unwrap_or_else(|_| {
+                        fbuild_build::esp32::mcu_config::get_mcu_config("esp32").unwrap()
+                    });
+                let esptool_params = fbuild_deploy::esp32::EsptoolParams {
+                    flash_mode: board_config
+                        .flash_mode
+                        .as_deref()
+                        .unwrap_or(mcu_config.default_flash_mode())
+                        .to_string(),
+                    flash_freq: mcu_config.default_flash_freq().to_string(),
+                    default_baud: mcu_config.default_baud().to_string(),
+                    before_reset: mcu_config.before_reset().to_string(),
+                    after_reset: mcu_config.after_reset().to_string(),
+                };
                 Box::new(fbuild_deploy::esp32::Esp32Deployer::from_board_config(
                     &board_config,
-                    "0x0",
-                    "0x8000",
-                    "0x10000",
+                    mcu_config.bootloader_offset(),
+                    mcu_config.partitions_offset(),
+                    mcu_config.firmware_offset(),
+                    &esptool_params,
                     false,
                 ))
             }
@@ -386,8 +403,15 @@ pub async fn deploy(
                             fbuild_config::BoardConfig::from_board_id("uno", &Default::default())
                                 .unwrap()
                         });
+                let avr_config = fbuild_build::avr::mcu_config::get_avr_config().unwrap();
+                let avrdude_params = fbuild_deploy::avr::AvrdudeParams {
+                    default_programmer: avr_config.avrdude.default_programmer.clone(),
+                    default_baud: avr_config.avrdude.default_baud.to_string(),
+                    timeout_secs: avr_config.avrdude.timeout_secs,
+                };
                 Box::new(fbuild_deploy::avr::AvrDeployer::from_board_config(
                     &board_config,
+                    &avrdude_params,
                     false,
                 ))
             }
