@@ -7,7 +7,7 @@ rust-version.workspace = true
 license.workspace = true
 
 [lib]
-name = "fbuild"
+name = "_native"
 crate-type = ["cdylib"]
 
 [dependencies]

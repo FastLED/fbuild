@@ -40,6 +40,7 @@ ROOT = Path(__file__).resolve().parent
 DIST_DIR = ROOT / "dist"
 WHEEL_DIR = DIST_DIR / "wheels"
 WORKFLOW_FILE = "build.yml"
+PYTHON_SHIMS_DIR = ROOT / "python"
 
 # GitHub artifact name -> dist/ subdir
 ARTIFACT_MAP: dict[str, str] = {
@@ -58,6 +59,9 @@ PLATFORMS: dict[str, list[str]] = {
     "macos-aarch64": ["macosx_11_0_arm64"],
     "windows-x86_64": ["win_amd64"],
 }
+
+# Extension filenames produced by build.yml
+EXTENSION_NAMES = {"_native.abi3.so", "_native.pyd"}
 
 
 # ---------------------------------------------------------------------------
@@ -154,9 +158,9 @@ def trigger_and_wait(repo: str) -> int:
     ])
     existing_ids = {r["databaseId"] for r in json.loads(existing_raw)} if existing_raw else set()
 
-    # Trigger
-    log(f"  Triggering {WORKFLOW_FILE} on {branch}...")
-    run(["gh", "workflow", "run", WORKFLOW_FILE, "--repo", repo, "--ref", branch])
+    # Trigger — workflow lives on default branch; pass current branch as input
+    log(f"  Triggering {WORKFLOW_FILE} for ref={branch}...")
+    run(["gh", "workflow", "run", WORKFLOW_FILE, "--repo", repo, "--field", f"ref={branch}"])
 
     # Wait for run to appear
     log("  Waiting for run to start...")
@@ -272,15 +276,31 @@ def build_wheel(
     if not bin_dir.exists():
         return None
 
-    binaries = sorted(bin_dir.iterdir())
-    if not binaries:
+    # Separate CLI binaries from PyO3 extension
+    cli_binaries: list[Path] = []
+    extension_file: Path | None = None
+    for f in sorted(bin_dir.iterdir()):
+        if f.name in EXTENSION_NAMES:
+            extension_file = f
+        else:
+            cli_binaries.append(f)
+
+    if not cli_binaries:
         return None
 
+    has_extension = extension_file is not None
     name_norm = name.replace("-", "_")
     tag_plat = ".".join(plat_tags)
-    wheel_filename = f"{name_norm}-{version}-py3-none-{tag_plat}.whl"
     data_dir = f"{name_norm}-{version}.data"
     dist_info = f"{name_norm}-{version}.dist-info"
+
+    # abi3 tag when extension is present, generic py3 otherwise
+    if has_extension:
+        tag_prefix = "cp39-abi3"
+        wheel_filename = f"{name_norm}-{version}-cp39-abi3-{tag_plat}.whl"
+    else:
+        tag_prefix = "py3-none"
+        wheel_filename = f"{name_norm}-{version}-py3-none-{tag_plat}.whl"
 
     metadata = (
         f"Metadata-Version: 2.1\n"
@@ -296,7 +316,7 @@ def build_wheel(
         f"Root-Is-Purelib: false\n"
     )
     for pt in plat_tags:
-        wheel_meta += f"Tag: py3-none-{pt}\n"
+        wheel_meta += f"Tag: {tag_prefix}-{pt}\n"
 
     exec_perms = (
         stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR
@@ -308,23 +328,40 @@ def build_wheel(
     wheel_path = WHEEL_DIR / wheel_filename
     record_rows: list[tuple[str, str, int]] = []
 
-    with zipfile.ZipFile(wheel_path, "w", zipfile.ZIP_DEFLATED) as whl:
-        for binary in binaries:
-            data = binary.read_bytes()
-            arcname = f"{data_dir}/scripts/{binary.name}"
-            info = zipfile.ZipInfo(arcname)
+    def add_file(whl: zipfile.ZipFile, arcname: str, data: bytes, executable: bool = False) -> None:
+        info = zipfile.ZipInfo(arcname)
+        info.compress_type = zipfile.ZIP_DEFLATED
+        if executable:
             info.external_attr = exec_perms << 16
-            info.compress_type = zipfile.ZIP_DEFLATED
-            whl.writestr(info, data)
-            record_rows.append((arcname, record_hash(data), len(data)))
+        whl.writestr(info, data)
+        record_rows.append((arcname, record_hash(data), len(data)))
 
+    with zipfile.ZipFile(wheel_path, "w", zipfile.ZIP_DEFLATED) as whl:
+        # CLI binaries → .data/scripts/
+        for binary in cli_binaries:
+            add_file(whl, f"{data_dir}/scripts/{binary.name}", binary.read_bytes(), executable=True)
+
+        # Python shims + extension → fbuild/ package
+        if has_extension:
+            # Add Python shim files from python/fbuild/
+            for shim in sorted(PYTHON_SHIMS_DIR.rglob("*.py")):
+                rel = shim.relative_to(PYTHON_SHIMS_DIR)
+                add_file(whl, str(rel).replace("\\", "/"), shim.read_bytes())
+
+            # Add compiled extension into fbuild/ package
+            add_file(
+                whl,
+                f"{name_norm}/{extension_file.name}",
+                extension_file.read_bytes(),
+                executable=True,
+            )
+
+        # dist-info
         meta_bytes = metadata.encode()
-        whl.writestr(f"{dist_info}/METADATA", meta_bytes)
-        record_rows.append((f"{dist_info}/METADATA", record_hash(meta_bytes), len(meta_bytes)))
+        add_file(whl, f"{dist_info}/METADATA", meta_bytes)
 
         wheel_bytes = wheel_meta.encode()
-        whl.writestr(f"{dist_info}/WHEEL", wheel_bytes)
-        record_rows.append((f"{dist_info}/WHEEL", record_hash(wheel_bytes), len(wheel_bytes)))
+        add_file(whl, f"{dist_info}/WHEEL", wheel_bytes)
 
         buf = io.StringIO()
         writer = csv.writer(buf, lineterminator="\n")
@@ -334,7 +371,8 @@ def build_wheel(
         whl.writestr(f"{dist_info}/RECORD", buf.getvalue().encode())
 
     size_mb = wheel_path.stat().st_size / (1024 * 1024)
-    log(f"  {wheel_filename} ({size_mb:.1f} MB)")
+    ext_label = " +ext" if has_extension else " (cli-only)"
+    log(f"  {wheel_filename} ({size_mb:.1f} MB){ext_label}")
     return wheel_path
 
 

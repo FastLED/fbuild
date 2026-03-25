@@ -676,9 +676,9 @@ fn connect_daemon(project_dir: String, environment: String) -> DaemonConnection 
     DaemonConnection::new(project_dir, environment)
 }
 
-/// The fbuild Python module.
+/// The fbuild Python module (imported as fbuild._native).
 #[pymodule]
-fn fbuild(m: &Bound<'_, PyModule>) -> PyResult<()> {
+fn _native(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add("__version__", "2.0.0")?;
     m.add_class::<SerialMonitor>()?;
     m.add_class::<Daemon>()?;

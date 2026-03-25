@@ -193,6 +193,14 @@ enum Commands {
     },
     /// Start MCP (Model Context Protocol) server for AI assistant integration
     Mcp,
+    /// Run clang-tidy static analysis on project sources
+    ClangTidy {
+        project_dir: String,
+        #[arg(short = 'e', long)]
+        environment: Option<String>,
+        #[arg(short, long)]
+        verbose: bool,
+    },
 }
 
 #[derive(Subcommand)]
@@ -444,6 +452,11 @@ async fn main() {
                 ))
             }
         }
+        Some(Commands::ClangTidy {
+            project_dir,
+            environment,
+            verbose,
+        }) => run_clang_tidy(project_dir, environment, verbose).await,
         None => {
             // Default action: deploy with monitor (like Python fbuild)
             let project_dir = cli.project_dir.unwrap_or_else(|| ".".to_string());
@@ -894,6 +907,214 @@ async fn run_monitor(
         std::process::exit(resp.exit_code);
     }
     Ok(())
+}
+
+fn find_clang_tidy() -> fbuild_core::Result<std::path::PathBuf> {
+    // Check PlatformIO packages first
+    let home_var = if cfg!(windows) { "USERPROFILE" } else { "HOME" };
+    let home =
+        std::path::PathBuf::from(std::env::var(home_var).map_err(|_| {
+            fbuild_core::FbuildError::Other("cannot determine home directory".into())
+        })?);
+    let pio_path = home
+        .join(".platformio")
+        .join("packages")
+        .join("tool-clangtidy");
+    let binary = if cfg!(windows) {
+        pio_path.join("clang-tidy.exe")
+    } else {
+        pio_path.join("clang-tidy")
+    };
+    if binary.exists() {
+        return Ok(binary);
+    }
+
+    // Fall back to PATH
+    let which_cmd = if cfg!(windows) { "where" } else { "which" };
+    if let Ok(output) = std::process::Command::new(which_cmd)
+        .arg("clang-tidy")
+        .output()
+    {
+        if output.status.success() {
+            let path = String::from_utf8_lossy(&output.stdout)
+                .lines()
+                .next()
+                .unwrap_or("")
+                .trim()
+                .to_string();
+            if !path.is_empty() {
+                return Ok(std::path::PathBuf::from(path));
+            }
+        }
+    }
+
+    Err(fbuild_core::FbuildError::Other(
+        "clang-tidy not found. Install via: pio pkg install -g -t tool-clangtidy".into(),
+    ))
+}
+
+async fn run_clang_tidy(
+    project_dir: String,
+    environment: Option<String>,
+    verbose: bool,
+) -> fbuild_core::Result<()> {
+    // Canonicalize project dir so Windows-native tools (pio) get a real path
+    let project_dir = {
+        let canon = std::fs::canonicalize(&project_dir).map_err(|e| {
+            fbuild_core::FbuildError::Other(format!(
+                "cannot resolve project dir '{}': {}",
+                project_dir, e
+            ))
+        })?;
+        // Strip \\?\ prefix that canonicalize adds on Windows
+        let s = canon.to_string_lossy().to_string();
+        if let Some(stripped) = s.strip_prefix(r"\\?\") {
+            stripped.to_string()
+        } else {
+            s
+        }
+    };
+
+    let clang_tidy = find_clang_tidy()?;
+    println!("Using clang-tidy: {}", clang_tidy.display());
+
+    // Step 1: Generate compile_commands.json via pio run -t compiledb
+    println!("Generating compile_commands.json...");
+    {
+        let pio = find_pio()?;
+        let mut args = vec!["run", "-t", "compiledb", "-d", &project_dir];
+        let env_str;
+        if let Some(ref env) = environment {
+            env_str = env.clone();
+            args.extend(["-e", &env_str]);
+        }
+        let status = std::process::Command::new(&pio)
+            .args(&args)
+            .stdin(std::process::Stdio::inherit())
+            .stdout(std::process::Stdio::inherit())
+            .stderr(std::process::Stdio::inherit())
+            .status()
+            .map_err(|e| {
+                fbuild_core::FbuildError::Other(format!("failed to run pio for compiledb: {}", e))
+            })?;
+        if !status.success() {
+            return Err(fbuild_core::FbuildError::BuildFailed(
+                "pio compiledb generation failed".into(),
+            ));
+        }
+    }
+
+    // Step 2: Read compile_commands.json to get source files
+    let project_path = std::path::Path::new(&project_dir);
+    let db_path = project_path.join("compile_commands.json");
+    if !db_path.exists() {
+        return Err(fbuild_core::FbuildError::Other(
+            "compile_commands.json was not generated".into(),
+        ));
+    }
+    let db_content = std::fs::read_to_string(&db_path).map_err(|e| {
+        fbuild_core::FbuildError::Other(format!("failed to read compile_commands.json: {}", e))
+    })?;
+    let entries: Vec<serde_json::Value> = serde_json::from_str(&db_content).map_err(|e| {
+        fbuild_core::FbuildError::Other(format!("failed to parse compile_commands.json: {}", e))
+    })?;
+
+    // Filter to project source files only (under src/)
+    let src_dir = project_path.join("src");
+    let source_files: Vec<String> = entries
+        .iter()
+        .filter_map(|e| e.get("file").and_then(|f| f.as_str()).map(String::from))
+        .filter(|f| {
+            let p = std::path::Path::new(f);
+            p.starts_with(&src_dir)
+        })
+        .collect();
+
+    if source_files.is_empty() {
+        println!("No source files found in compile_commands.json under src/");
+        return Ok(());
+    }
+    println!(
+        "Running clang-tidy on {} source file(s)...",
+        source_files.len()
+    );
+
+    // Step 3: Run clang-tidy in parallel with ncpus * 2
+    let jobs = std::thread::available_parallelism()
+        .map(|n| n.get() * 2)
+        .unwrap_or(4);
+    println!("Using {} parallel jobs", jobs);
+
+    let semaphore = std::sync::Arc::new(tokio::sync::Semaphore::new(jobs));
+    let project_dir_arc = std::sync::Arc::new(project_dir.clone());
+    let clang_tidy_arc = std::sync::Arc::new(clang_tidy);
+    let verbose_flag = verbose;
+
+    let mut handles = Vec::new();
+    for file in source_files {
+        let sem = semaphore.clone();
+        let ct = clang_tidy_arc.clone();
+        let pd = project_dir_arc.clone();
+        let handle = tokio::spawn(async move {
+            let _permit = sem.acquire().await.unwrap();
+            let mut cmd = tokio::process::Command::new(ct.as_ref());
+            cmd.arg("-p").arg(pd.as_ref()).arg(&file);
+            if !verbose_flag {
+                cmd.arg("--quiet");
+            }
+            let output = cmd.output().await;
+            (file, output)
+        });
+        handles.push(handle);
+    }
+
+    let mut total_warnings = 0usize;
+    let mut total_errors = 0usize;
+    let mut failed_files = Vec::new();
+
+    for handle in handles {
+        let (file, result) = handle
+            .await
+            .map_err(|e| fbuild_core::FbuildError::Other(format!("task join error: {}", e)))?;
+        match result {
+            Ok(output) => {
+                let stdout = String::from_utf8_lossy(&output.stdout);
+                let stderr = String::from_utf8_lossy(&output.stderr);
+                let combined = format!("{}{}", stdout, stderr);
+                if !combined.trim().is_empty() {
+                    print!("{}", combined);
+                }
+                // Count warnings and errors from output
+                for line in combined.lines() {
+                    if line.contains("warning:") {
+                        total_warnings += 1;
+                    }
+                    if line.contains("error:") {
+                        total_errors += 1;
+                    }
+                }
+            }
+            Err(e) => {
+                eprintln!("failed to run clang-tidy on {}: {}", file, e);
+                failed_files.push(file);
+            }
+        }
+    }
+
+    println!("\n--- clang-tidy summary ---");
+    println!("Warnings: {}", total_warnings);
+    println!("Errors:   {}", total_errors);
+    if !failed_files.is_empty() {
+        println!("Failed:   {} file(s)", failed_files.len());
+    }
+
+    if total_errors > 0 || !failed_files.is_empty() {
+        Err(fbuild_core::FbuildError::BuildFailed(
+            "clang-tidy found errors".into(),
+        ))
+    } else {
+        Ok(())
+    }
 }
 
 fn run_purge(
