@@ -139,6 +139,25 @@ impl BuildOrchestrator for Esp32Orchestrator {
             include_dirs.push(include_dir);
         }
 
+        // PlatformIO automatically discovers libraries placed in the project's lib/ directory.
+        // Each subdirectory is treated as a library — add its root (and src/ if present).
+        let local_lib_dir = params.project_dir.join("lib");
+        if local_lib_dir.is_dir() {
+            if let Ok(entries) = std::fs::read_dir(&local_lib_dir) {
+                for entry in entries.flatten() {
+                    let path = entry.path();
+                    if path.is_dir() {
+                        let lib_src = path.join("src");
+                        if lib_src.is_dir() {
+                            include_dirs.push(lib_src);
+                        }
+                        // Always add the root too (some libraries have headers at top level)
+                        include_dirs.push(path);
+                    }
+                }
+            }
+        }
+
         // Read SDK flags early — needed to check LTO before compiling.
         let sdk_ld_flags = framework.get_sdk_ld_flags(&board.mcu);
         let sdk_lib_flags = framework.get_sdk_lib_flags(&board.mcu);

@@ -62,7 +62,7 @@ struct Cli {
 enum Commands {
     /// Build firmware
     Build {
-        project_dir: String,
+        project_dir: Option<String>,
         #[arg(short = 'e', long)]
         environment: Option<String>,
         #[arg(short = 'c', long)]
@@ -86,7 +86,7 @@ enum Commands {
     },
     /// Deploy firmware to device
     Deploy {
-        project_dir: String,
+        project_dir: Option<String>,
         #[arg(short = 'e', long)]
         environment: Option<String>,
         #[arg(short = 'p', long)]
@@ -124,7 +124,7 @@ enum Commands {
     },
     /// Monitor serial output
     Monitor {
-        project_dir: String,
+        project_dir: Option<String>,
         #[arg(short = 'e', long)]
         environment: Option<String>,
         #[arg(short = 'p', long)]
@@ -195,7 +195,7 @@ enum Commands {
     Mcp,
     /// Run clang-tidy static analysis on project sources
     ClangTidy {
-        project_dir: String,
+        project_dir: Option<String>,
         #[arg(short = 'e', long)]
         environment: Option<String>,
         #[arg(short, long)]
@@ -203,7 +203,7 @@ enum Commands {
     },
     /// Run include-what-you-use analysis on project sources
     Iwyu {
-        project_dir: String,
+        project_dir: Option<String>,
         #[arg(short = 'e', long)]
         environment: Option<String>,
         #[arg(short, long)]
@@ -211,7 +211,7 @@ enum Commands {
     },
     /// Run clang-query on project sources
     ClangQuery {
-        project_dir: String,
+        project_dir: Option<String>,
         #[arg(short = 'e', long)]
         environment: Option<String>,
         #[arg(short, long)]
@@ -304,9 +304,56 @@ enum DaemonAction {
     },
 }
 
+/// Resolve project_dir: prefer the subcommand's value, fall back to the top-level positional arg,
+/// then default to ".".  This lets callers write either `fbuild build <dir>` or `fbuild <dir> build`.
+fn resolve_project_dir(subcommand_dir: Option<String>, top_level_dir: &Option<String>) -> String {
+    subcommand_dir
+        .or_else(|| top_level_dir.clone())
+        .unwrap_or_else(|| ".".to_string())
+}
+
+/// Known subcommand names for arg rewriting.
+const KNOWN_SUBCOMMANDS: &[&str] = &[
+    "build",
+    "deploy",
+    "monitor",
+    "reset",
+    "purge",
+    "show",
+    "daemon",
+    "device",
+    "mcp",
+    "clang-tidy",
+    "iwyu",
+    "clang-query",
+];
+
+/// Rewrite `fbuild <dir> <subcommand> ...` → `fbuild <subcommand> <dir> ...`
+/// so that both `fbuild build <dir>` and `fbuild <dir> build` work.
+fn rewrite_args() -> Vec<String> {
+    let args: Vec<String> = std::env::args().collect();
+    if args.len() >= 3 {
+        let first = &args[1];
+        let second = &args[2];
+        // If first arg is NOT a subcommand and second IS, swap them
+        if !first.starts_with('-')
+            && !KNOWN_SUBCOMMANDS.contains(&first.as_str())
+            && KNOWN_SUBCOMMANDS.contains(&second.as_str())
+        {
+            let mut rewritten = Vec::with_capacity(args.len());
+            rewritten.push(args[0].clone());
+            rewritten.push(second.clone()); // subcommand first
+            rewritten.push(first.clone()); // project_dir second
+            rewritten.extend(args[3..].iter().cloned());
+            return rewritten;
+        }
+    }
+    args
+}
+
 #[tokio::main]
 async fn main() {
-    let cli = Cli::parse();
+    let cli = Cli::parse_from(rewrite_args());
 
     tracing_subscriber::fmt()
         .with_env_filter(tracing_subscriber::EnvFilter::from_default_env())
@@ -327,6 +374,9 @@ async fn main() {
     // Show compact daemon status before every command (matches Python behavior)
     daemon_client::display_daemon_stats_compact().await;
 
+    // Extract top-level project_dir before matching (since match partially moves cli)
+    let top_level_project_dir = cli.project_dir.clone();
+
     let result = match cli.command {
         Some(Commands::Build {
             project_dir,
@@ -340,6 +390,7 @@ async fn main() {
             dry_run,
             target,
         }) => {
+            let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
             if platformio {
                 pio_build(&project_dir, environment.as_deref(), clean, verbose)
             } else {
@@ -374,6 +425,7 @@ async fn main() {
             qemu,
             qemu_timeout,
         }) => {
+            let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
             if platformio {
                 pio_deploy(
                     &project_dir,
@@ -421,6 +473,7 @@ async fn main() {
             expect,
             no_timestamp,
         }) => {
+            let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
             if platformio {
                 pio_monitor(
                     &project_dir,
@@ -476,6 +529,7 @@ async fn main() {
             environment,
             verbose,
         }) => {
+            let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
             run_clang_tool(
                 fbuild_packages::toolchain::ClangComponentKind::ClangExtra,
                 "clang-tidy",
@@ -491,15 +545,8 @@ async fn main() {
             environment,
             verbose,
         }) => {
-            run_clang_tool(
-                fbuild_packages::toolchain::ClangComponentKind::Iwyu,
-                "include-what-you-use",
-                project_dir,
-                environment,
-                verbose,
-                &[],
-            )
-            .await
+            let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
+            run_iwyu(project_dir, environment, verbose).await
         }
         Some(Commands::ClangQuery {
             project_dir,
@@ -507,6 +554,7 @@ async fn main() {
             verbose,
             matcher,
         }) => {
+            let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
             let extra: Vec<String> = matcher
                 .map(|m| vec!["-c".to_string(), m])
                 .unwrap_or_default();
@@ -999,7 +1047,358 @@ fn normalize_path(path: &str) -> fbuild_core::Result<String> {
     Ok(s.strip_prefix(r"\\?\").unwrap_or(&s).to_string())
 }
 
-/// Generic runner for clang-based analysis tools (clang-tidy, iwyu, clang-query).
+/// Run IWYU (include-what-you-use) analysis with ESP32 cross-compilation support.
+///
+/// Unlike the generic `run_clang_tool()`, this:
+/// 1. Downloads IWYU via ClangComponent
+/// 2. Generates compile_commands.json via the fbuild daemon
+/// 3. Preprocesses the database: adds GCC builtin includes, converts framework
+///    `-I` to `-isystem`, removes `--target=` flags, deduplicates `-D` defines
+/// 4. Writes a modified compile_commands.json to a temp dir
+/// 5. Runs IWYU per-source-file with `-p <temp_dir>`
+/// 6. Filters output to only show suggestions for files under `src/`
+async fn run_iwyu(
+    project_dir: String,
+    environment: Option<String>,
+    verbose: bool,
+) -> fbuild_core::Result<()> {
+    let project_dir = normalize_path(&project_dir)?;
+
+    // Step 1: Ensure IWYU is installed
+    let component = fbuild_packages::toolchain::ClangComponent::new(
+        fbuild_packages::toolchain::ClangComponentKind::Iwyu,
+    );
+    let tool_path = component.get_binary("include-what-you-use").await?;
+    println!("Using include-what-you-use: {}", tool_path.display());
+
+    // Step 2: Generate compile_commands.json via fbuild daemon (skip if it already exists)
+    let project_path = std::path::Path::new(&project_dir);
+    let db_path = project_path.join("compile_commands.json");
+    if db_path.exists() {
+        println!("Using existing compile_commands.json");
+    } else {
+        println!("Generating compile_commands.json...");
+        run_build(
+            project_dir.clone(),
+            environment.clone(),
+            false,
+            verbose,
+            None,
+            false,
+            false,
+            false,
+            Some("compiledb".to_string()),
+        )
+        .await?;
+        if !db_path.exists() {
+            return Err(fbuild_core::FbuildError::Other(
+                "compile_commands.json was not generated".into(),
+            ));
+        }
+    }
+    let db_content = std::fs::read_to_string(&db_path).map_err(|e| {
+        fbuild_core::FbuildError::Other(format!("failed to read compile_commands.json: {}", e))
+    })?;
+    let entries: Vec<serde_json::Value> = serde_json::from_str(&db_content).map_err(|e| {
+        fbuild_core::FbuildError::Other(format!("failed to parse compile_commands.json: {}", e))
+    })?;
+
+    // Filter to project source files only.
+    // Source files can be under <project>/src/ (original) or
+    // <project>/.fbuild/build/<env>/*/src/ (build copies with Arduino preprocessing).
+    // Exclude framework/SDK files (paths containing cache/platforms/ or cache/toolchains/).
+    let src_dir = project_path.join("src");
+    let build_src_suffix = format!("{}src", std::path::MAIN_SEPARATOR_STR);
+    let project_prefix = project_path
+        .to_string_lossy()
+        .replace('/', std::path::MAIN_SEPARATOR_STR);
+    let source_entries: Vec<&serde_json::Value> = entries
+        .iter()
+        .filter(|e| {
+            e.get("file")
+                .and_then(|f| f.as_str())
+                .map(|f| {
+                    let p = std::path::Path::new(f);
+                    // Direct match: file is under <project>/src/
+                    if p.starts_with(&src_dir) {
+                        return true;
+                    }
+                    // Build copy: file is under <project>/.fbuild/build/.../src/
+                    let f_normalized = f.replace('/', std::path::MAIN_SEPARATOR_STR);
+                    f_normalized.starts_with(&project_prefix)
+                        && f_normalized.contains(&build_src_suffix)
+                        && !f_normalized.contains("cache")
+                })
+                .unwrap_or(false)
+        })
+        .collect();
+
+    if source_entries.is_empty() {
+        println!("No source files found in compile_commands.json under src/");
+        return Ok(());
+    }
+
+    // Step 4: Find GCC toolchain builtin include dirs
+    let gcc_includes = fbuild_packages::toolchain::clang::find_gcc_builtin_include_dirs();
+    if !gcc_includes.is_empty() {
+        println!("Found {} GCC builtin include dir(s)", gcc_includes.len());
+        if verbose {
+            for inc in &gcc_includes {
+                println!("  {}", inc.display());
+            }
+        }
+    }
+
+    // Step 5: Preprocess compile_commands.json for IWYU
+    // Transform entries directly as JSON: remove --target=, dedup -D, convert -I to -isystem
+    let src_prefix = src_dir.to_string_lossy().replace('\\', "/").to_lowercase();
+    let iwyu_entries: Vec<serde_json::Value> = entries
+        .iter()
+        .map(|entry| {
+            let mut new_entry = entry.clone();
+            if let Some(args) = entry.get("arguments").and_then(|a| a.as_array()) {
+                let mut new_args: Vec<serde_json::Value> =
+                    Vec::with_capacity(args.len() + gcc_includes.len() * 2);
+                let mut seen_defines = std::collections::HashSet::new();
+
+                for arg_val in args {
+                    let arg = arg_val.as_str().unwrap_or("");
+
+                    // Remove --target= flags
+                    if arg.starts_with("--target=") {
+                        continue;
+                    }
+
+                    // Remove GCC-only flags unsupported by IWYU's clang
+                    if matches!(
+                        arg,
+                        "-freorder-blocks"
+                            | "-fno-jump-tables"
+                            | "-flto"
+                            | "-flto=auto"
+                            | "-fno-fat-lto-objects"
+                            | "-fuse-linker-plugin"
+                            | "-ffat-lto-objects"
+                            | "-mlongcalls"
+                            | "-mdisable-hardware-atomics"
+                            | "-fstrict-volatile-bitfields"
+                            | "-mtext-section-literals"
+                            | "-fno-tree-switch-conversion"
+                            | "-mthumb-interwork"
+                    ) || arg.starts_with("-mfix-esp32-psram-cache-strategy=")
+                    {
+                        continue;
+                    }
+
+                    // Deduplicate -D flags (keep first occurrence by key)
+                    if arg.starts_with("-D") {
+                        let key = if let Some(eq_pos) = arg.find('=') {
+                            &arg[..eq_pos]
+                        } else {
+                            arg
+                        };
+                        if !seen_defines.insert(key.to_string()) {
+                            continue;
+                        }
+                    }
+
+                    // Convert non-project -I to -isystem
+                    if let Some(path) = arg.strip_prefix("-I") {
+                        let normalized = path.replace('\\', "/").to_lowercase();
+                        if normalized.starts_with(&src_prefix) {
+                            new_args.push(arg_val.clone());
+                        } else {
+                            new_args.push(serde_json::Value::String("-isystem".into()));
+                            new_args.push(serde_json::Value::String(path.to_string()));
+                        }
+                        continue;
+                    }
+
+                    new_args.push(arg_val.clone());
+                }
+
+                // Append GCC toolchain builtin include dirs as -isystem
+                for inc in &gcc_includes {
+                    new_args.push(serde_json::Value::String("-isystem".into()));
+                    new_args.push(serde_json::Value::String(inc.to_string_lossy().to_string()));
+                }
+
+                new_entry["arguments"] = serde_json::Value::Array(new_args);
+            }
+            new_entry
+        })
+        .collect();
+
+    // Write modified compile_commands.json to .fbuild/iwyu/ for IWYU to read via -p
+    let iwyu_dir_path = fbuild_paths::get_project_fbuild_dir(project_path).join("iwyu");
+    std::fs::create_dir_all(&iwyu_dir_path).map_err(|e| {
+        fbuild_core::FbuildError::Other(format!(
+            "failed to create {}: {}",
+            iwyu_dir_path.display(),
+            e
+        ))
+    })?;
+    let iwyu_db_path = iwyu_dir_path.join("compile_commands.json");
+    let iwyu_json = serde_json::to_string_pretty(&iwyu_entries).map_err(|e| {
+        fbuild_core::FbuildError::Other(format!("failed to serialize IWYU compile database: {}", e))
+    })?;
+    std::fs::write(&iwyu_db_path, iwyu_json).map_err(|e| {
+        fbuild_core::FbuildError::Other(format!(
+            "failed to write {}: {}",
+            iwyu_db_path.display(),
+            e
+        ))
+    })?;
+    println!(
+        "Running include-what-you-use on {} source file(s)...",
+        source_entries.len()
+    );
+
+    // Step 6: Run IWYU in parallel
+    let jobs = std::thread::available_parallelism()
+        .map(|n| n.get() * 2)
+        .unwrap_or(4);
+    let semaphore = std::sync::Arc::new(tokio::sync::Semaphore::new(jobs));
+    let tool_arc = std::sync::Arc::new(tool_path);
+    let iwyu_dir = std::sync::Arc::new(iwyu_dir_path);
+    let src_dir_arc = std::sync::Arc::new(src_dir.clone());
+
+    // Collect source file paths from the filtered entries
+    let source_files: Vec<String> = source_entries
+        .iter()
+        .filter_map(|e| e.get("file").and_then(|f| f.as_str()).map(String::from))
+        .collect();
+
+    let mut handles = Vec::new();
+    for file in source_files {
+        let sem = semaphore.clone();
+        let tool = tool_arc.clone();
+        let p_dir = iwyu_dir.clone();
+        let src = src_dir_arc.clone();
+        let verbose_flag = verbose;
+        let handle = tokio::spawn(async move {
+            let _permit = sem.acquire().await.unwrap();
+            let mut cmd = tokio::process::Command::new(tool.as_ref());
+            cmd.arg("-p").arg(p_dir.as_ref());
+            cmd.arg("-Xiwyu").arg("--no_comments");
+            cmd.arg("-Xiwyu").arg("--quoted_includes_first");
+            cmd.arg("-Xiwyu").arg("--max_line_length=100");
+            if verbose_flag {
+                cmd.arg("-Xiwyu").arg("--verbose=3");
+            }
+            cmd.arg(&file);
+            let output = cmd.output().await;
+            let src_path = src.as_ref().clone();
+            (file, output, src_path)
+        });
+        handles.push(handle);
+    }
+
+    let mut total_suggestions = 0usize;
+    let mut failed_files = Vec::new();
+
+    for handle in handles {
+        let (file, result, src_path) = handle
+            .await
+            .map_err(|e| fbuild_core::FbuildError::Other(format!("task join error: {}", e)))?;
+        match result {
+            Ok(output) => {
+                // IWYU writes analysis to stderr
+                let stderr = String::from_utf8_lossy(&output.stderr);
+                let filtered = filter_iwyu_output(&stderr, &src_path);
+                if !filtered.trim().is_empty() {
+                    print!("{}", filtered);
+                    total_suggestions += filtered
+                        .lines()
+                        .filter(|l| l.contains("should add") || l.contains("should remove"))
+                        .count();
+                }
+            }
+            Err(e) => {
+                eprintln!("failed to run include-what-you-use on {}: {}", file, e);
+                failed_files.push(file);
+            }
+        }
+    }
+
+    println!("\n--- include-what-you-use summary ---");
+    println!("Suggestions: {}", total_suggestions);
+    if !failed_files.is_empty() {
+        println!("Failed:      {} file(s)", failed_files.len());
+    }
+
+    if !failed_files.is_empty() {
+        Err(fbuild_core::FbuildError::BuildFailed(
+            "include-what-you-use failed on some files".into(),
+        ))
+    } else {
+        Ok(())
+    }
+}
+
+/// Filter IWYU output to show only suggestions for files under `src_dir`.
+///
+/// IWYU outputs blocks like:
+/// ```text
+/// /path/to/file.h should add these lines:
+/// #include <foo.h>
+///
+/// /path/to/file.h should remove these lines:
+/// - #include <bar.h>
+///
+/// The full include-list for /path/to/file.h:
+/// #include <baz.h>
+/// ---
+/// ```
+///
+/// We only keep blocks whose file path is under `src_dir`.
+fn filter_iwyu_output(output: &str, src_dir: &std::path::Path) -> String {
+    let src_prefix = src_dir.to_string_lossy().replace('\\', "/").to_lowercase();
+    let mut result = String::new();
+    let mut current_block = String::new();
+    let mut block_is_user_file = false;
+
+    for line in output.lines() {
+        // Detect block headers: "path/to/file should add/remove these lines:"
+        // or "The full include-list for path/to/file:"
+        let is_header = line.contains(" should add these lines")
+            || line.contains(" should remove these lines")
+            || line.starts_with("The full include-list for ");
+
+        if is_header {
+            // Flush previous block if it was a user file
+            if block_is_user_file && !current_block.trim().is_empty() {
+                result.push_str(&current_block);
+                result.push('\n');
+            }
+            current_block.clear();
+
+            // Check if this new block's file is under src_dir
+            let file_path = line
+                .split(" should ")
+                .next()
+                .or_else(|| {
+                    line.strip_prefix("The full include-list for ")
+                        .and_then(|s| s.strip_suffix(':'))
+                })
+                .unwrap_or("");
+            let normalized = file_path.replace('\\', "/").to_lowercase();
+            block_is_user_file = normalized.starts_with(&src_prefix);
+        }
+
+        current_block.push_str(line);
+        current_block.push('\n');
+    }
+
+    // Flush last block
+    if block_is_user_file && !current_block.trim().is_empty() {
+        result.push_str(&current_block);
+    }
+
+    result
+}
+
+/// Generic runner for clang-based analysis tools (clang-tidy, clang-query).
 ///
 /// 1. Ensure tool binary is installed via ClangComponent (downloads on demand)
 /// 2. Generate compile_commands.json via fbuild daemon (build -t compiledb)

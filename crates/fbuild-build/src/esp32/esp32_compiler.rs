@@ -252,11 +252,20 @@ fn write_response_file(flags: &[String], temp_dir: &Path) -> Result<PathBuf> {
     // \f = formfeed, etc.). Convert to forward slashes for Windows path compatibility,
     // but preserve \" sequences which are intentional escape sequences (e.g., in
     // -DMBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\").
+    //
+    // Flags containing \" (escaped quotes in define values like -DARDUINO_BOARD=\"...\")
+    // must be wrapped in single quotes with the \" converted to plain " — the Xtensa GCC
+    // response file parser treats \" inconsistently across platforms, but single-quoted
+    // arguments always preserve literal " characters.
     let content = flags
         .iter()
         .map(|f| {
             let fwd = replace_path_backslashes(f);
-            if fwd.contains(' ') && !fwd.contains("\\\"") {
+            if fwd.contains("\\\"") {
+                // Wrap in single quotes with \" → " for reliable quoting
+                let unescaped = fwd.replace("\\\"", "\"");
+                format!("'{}'", unescaped)
+            } else if fwd.contains(' ') {
                 format!("\"{}\"", fwd)
             } else {
                 fwd

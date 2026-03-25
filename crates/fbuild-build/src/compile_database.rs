@@ -150,13 +150,15 @@ impl TargetArchitecture {
 
 /// Check whether a GCC-specific flag should be removed for clang.
 fn should_remove_flag(flag: &str, arch: TargetArchitecture) -> bool {
-    // Common LTO flags unsupported by clang
+    // Common GCC-only flags unsupported by clang / IWYU
     match flag {
         "-flto=auto"
         | "-flto"
         | "-fno-fat-lto-objects"
         | "-fuse-linker-plugin"
-        | "-ffat-lto-objects" => return true,
+        | "-ffat-lto-objects"
+        | "-freorder-blocks"
+        | "-fno-jump-tables" => return true,
         _ => {}
     }
 
@@ -223,6 +225,79 @@ impl CompileDatabase {
                 directory: entry.directory.clone(),
                 file: entry.file.clone(),
                 output: entry.output.clone(),
+            })
+            .collect();
+        CompileDatabase { entries }
+    }
+
+    /// Prepare compile database for IWYU (include-what-you-use) analysis.
+    ///
+    /// Transforms the existing (already clang-translated) compile database so that
+    /// IWYU can process cross-compiled embedded code:
+    ///
+    /// - Removes `--target=` flags (IWYU doesn't need code generation support)
+    /// - Deduplicates `-D` defines (keeps first occurrence of each key)
+    /// - Converts non-project `-I` paths to `-isystem` (suppresses IWYU suggestions)
+    /// - Adds extra `-isystem` paths (e.g. GCC toolchain builtin includes)
+    pub fn prepare_for_iwyu(
+        &self,
+        project_src_dir: &Path,
+        extra_system_includes: &[PathBuf],
+    ) -> CompileDatabase {
+        let src_prefix = project_src_dir.to_string_lossy().to_lowercase();
+        let entries = self
+            .entries
+            .iter()
+            .map(|entry| {
+                let mut args =
+                    Vec::with_capacity(entry.arguments.len() + extra_system_includes.len() * 2);
+                let mut seen_defines = std::collections::HashSet::new();
+
+                for arg in &entry.arguments {
+                    // Remove --target= flags
+                    if arg.starts_with("--target=") {
+                        continue;
+                    }
+
+                    // Deduplicate -D flags (keep first occurrence by key)
+                    if arg.starts_with("-D") {
+                        let key = if let Some(eq_pos) = arg.find('=') {
+                            &arg[..eq_pos]
+                        } else {
+                            arg.as_str()
+                        };
+                        if !seen_defines.insert(key.to_string()) {
+                            continue;
+                        }
+                    }
+
+                    // Convert non-project -I to -isystem (suppresses IWYU analysis)
+                    if let Some(path) = arg.strip_prefix("-I") {
+                        let normalized = path.replace('\\', "/").to_lowercase();
+                        if normalized.starts_with(&src_prefix) {
+                            args.push(arg.clone());
+                        } else {
+                            args.push("-isystem".to_string());
+                            args.push(path.to_string());
+                        }
+                        continue;
+                    }
+
+                    args.push(arg.clone());
+                }
+
+                // Append GCC toolchain builtin include dirs as -isystem
+                for inc in extra_system_includes {
+                    args.push("-isystem".to_string());
+                    args.push(inc.to_string_lossy().to_string());
+                }
+
+                CompileEntry {
+                    arguments: args,
+                    directory: entry.directory.clone(),
+                    file: entry.file.clone(),
+                    output: entry.output.clone(),
+                }
             })
             .collect();
         CompileDatabase { entries }
@@ -1374,5 +1449,123 @@ mod tests {
         // Original should still have -mlongcalls
         assert!(db.entries[0].arguments.contains(&"-mlongcalls".to_string()));
         assert_eq!(db.entries[0].arguments[0], "/usr/bin/gcc");
+    }
+
+    // =========================================================================
+    // IWYU preparation tests
+    // =========================================================================
+
+    #[test]
+    fn test_should_remove_freorder_blocks() {
+        assert!(should_remove_flag(
+            "-freorder-blocks",
+            TargetArchitecture::Xtensa
+        ));
+        assert!(should_remove_flag(
+            "-freorder-blocks",
+            TargetArchitecture::Avr
+        ));
+    }
+
+    #[test]
+    fn test_should_remove_fno_jump_tables() {
+        assert!(should_remove_flag(
+            "-fno-jump-tables",
+            TargetArchitecture::Xtensa
+        ));
+    }
+
+    #[test]
+    fn test_fstack_protector_preserved() {
+        // -fstack-protector is supported by clang — keep it
+        assert!(!should_remove_flag(
+            "-fstack-protector",
+            TargetArchitecture::Xtensa
+        ));
+    }
+
+    #[test]
+    fn test_prepare_for_iwyu_removes_target() {
+        let mut db = CompileDatabase::new();
+        db.add_entry(CompileEntry {
+            arguments: vec![
+                "clang++".into(),
+                "--target=xtensa-esp-elf".into(),
+                "-Os".into(),
+                "-c".into(),
+                "src/main.cpp".into(),
+            ],
+            directory: "/project".into(),
+            file: "src/main.cpp".into(),
+            output: None,
+        });
+        let result = db.prepare_for_iwyu(Path::new("/project/src"), &[]);
+        assert!(!result.entries[0]
+            .arguments
+            .iter()
+            .any(|a| a.starts_with("--target=")));
+    }
+
+    #[test]
+    fn test_prepare_for_iwyu_dedup_defines() {
+        let mut db = CompileDatabase::new();
+        db.add_entry(CompileEntry {
+            arguments: vec![
+                "clang".into(),
+                "-DFOO=1".into(),
+                "-DBAR".into(),
+                "-DFOO=2".into(), // duplicate, should be dropped
+            ],
+            directory: "/project".into(),
+            file: "src/main.c".into(),
+            output: None,
+        });
+        let result = db.prepare_for_iwyu(Path::new("/project/src"), &[]);
+        let defines: Vec<&str> = result.entries[0]
+            .arguments
+            .iter()
+            .filter(|a| a.starts_with("-D"))
+            .map(|a| a.as_str())
+            .collect();
+        assert_eq!(defines, vec!["-DFOO=1", "-DBAR"]);
+    }
+
+    #[test]
+    fn test_prepare_for_iwyu_converts_system_includes() {
+        let mut db = CompileDatabase::new();
+        db.add_entry(CompileEntry {
+            arguments: vec![
+                "clang".into(),
+                "-I/project/src/mylib".into(),
+                "-I/usr/include/esp32".into(),
+            ],
+            directory: "/project".into(),
+            file: "src/main.c".into(),
+            output: None,
+        });
+        let result = db.prepare_for_iwyu(Path::new("/project/src"), &[]);
+        let args = &result.entries[0].arguments;
+        // Project include kept as -I
+        assert!(args.contains(&"-I/project/src/mylib".to_string()));
+        // System include converted to -isystem
+        assert!(args.contains(&"-isystem".to_string()));
+        assert!(args.contains(&"/usr/include/esp32".to_string()));
+        assert!(!args.contains(&"-I/usr/include/esp32".to_string()));
+    }
+
+    #[test]
+    fn test_prepare_for_iwyu_adds_extra_system_includes() {
+        let mut db = CompileDatabase::new();
+        db.add_entry(CompileEntry {
+            arguments: vec!["clang".into(), "-c".into(), "src/main.c".into()],
+            directory: "/project".into(),
+            file: "src/main.c".into(),
+            output: None,
+        });
+        let extras = vec![PathBuf::from("/toolchain/lib/gcc/xtensa/14/include")];
+        let result = db.prepare_for_iwyu(Path::new("/project/src"), &extras);
+        let args = &result.entries[0].arguments;
+        assert!(args.contains(&"-isystem".to_string()));
+        assert!(args.contains(&"/toolchain/lib/gcc/xtensa/14/include".to_string()));
     }
 }

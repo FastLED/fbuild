@@ -287,6 +287,64 @@ pub fn find_binary_in_dir(dir: &Path, name: &str) -> Option<PathBuf> {
     None
 }
 
+/// Search the fbuild toolchain cache for GCC builtin include directories.
+///
+/// GCC has implicit include paths (e.g. `lib/gcc/xtensa-esp-elf/14.2.0/include/`)
+/// that contain `stdbool.h`, `stddef.h`, `stdarg.h`, etc. These are not listed
+/// in compile_commands.json because GCC adds them automatically. IWYU (which is
+/// clang-based) needs them added explicitly as `-isystem` paths.
+///
+/// Returns all matching `include/` directories found under the toolchain cache.
+pub fn find_gcc_builtin_include_dirs() -> Vec<PathBuf> {
+    let cache_root = fbuild_paths::get_cache_root();
+    let toolchains_dir = cache_root.join("toolchains");
+
+    if !toolchains_dir.exists() {
+        return Vec::new();
+    }
+
+    let mut result = Vec::new();
+    find_gcc_includes_recursive(&toolchains_dir, 0, &mut result);
+    result
+}
+
+/// Walk up to `max_depth` levels looking for `lib/gcc/*/include/stdbool.h`.
+fn find_gcc_includes_recursive(dir: &Path, depth: u32, out: &mut Vec<PathBuf>) {
+    // Check for lib/gcc/ at current level
+    let lib_gcc = dir.join("lib").join("gcc");
+    if lib_gcc.is_dir() {
+        if let Ok(triples) = std::fs::read_dir(&lib_gcc) {
+            for triple_entry in triples.filter_map(|e| e.ok()) {
+                let triple_dir = triple_entry.path();
+                if !triple_dir.is_dir() {
+                    continue;
+                }
+                // Look for version subdirs: lib/gcc/<triple>/<version>/include/
+                if let Ok(versions) = std::fs::read_dir(&triple_dir) {
+                    for ver_entry in versions.filter_map(|e| e.ok()) {
+                        let include_dir = ver_entry.path().join("include");
+                        if include_dir.join("stdbool.h").exists() {
+                            out.push(include_dir);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Recurse into subdirectories (max 6 levels to avoid going too deep)
+    if depth < 6 {
+        if let Ok(entries) = std::fs::read_dir(dir) {
+            for entry in entries.filter_map(|e| e.ok()) {
+                let p = entry.path();
+                if p.is_dir() {
+                    find_gcc_includes_recursive(&p, depth + 1, out);
+                }
+            }
+        }
+    }
+}
+
 fn platform() -> &'static str {
     if cfg!(target_os = "windows") {
         "win"
@@ -381,5 +439,50 @@ mod tests {
     fn test_find_binary_not_found() {
         let dir = tempfile::tempdir().unwrap();
         assert!(find_binary_in_dir(dir.path(), "clang-tidy").is_none());
+    }
+
+    #[test]
+    fn test_find_gcc_includes_recursive_found() {
+        let dir = tempfile::tempdir().unwrap();
+        let include_dir = dir
+            .path()
+            .join("toolchain-xtensa")
+            .join("lib")
+            .join("gcc")
+            .join("xtensa-esp-elf")
+            .join("14.2.0")
+            .join("include");
+        std::fs::create_dir_all(&include_dir).unwrap();
+        std::fs::write(include_dir.join("stdbool.h"), b"// stub").unwrap();
+
+        let mut result = Vec::new();
+        find_gcc_includes_recursive(dir.path(), 0, &mut result);
+        assert_eq!(result.len(), 1);
+        assert_eq!(result[0], include_dir);
+    }
+
+    #[test]
+    fn test_find_gcc_includes_recursive_empty() {
+        let dir = tempfile::tempdir().unwrap();
+        let mut result = Vec::new();
+        find_gcc_includes_recursive(dir.path(), 0, &mut result);
+        assert!(result.is_empty());
+    }
+
+    #[test]
+    fn test_find_gcc_includes_recursive_no_stdbool() {
+        let dir = tempfile::tempdir().unwrap();
+        let include_dir = dir
+            .path()
+            .join("lib")
+            .join("gcc")
+            .join("arm-none-eabi")
+            .join("12.0")
+            .join("include");
+        std::fs::create_dir_all(&include_dir).unwrap();
+        // No stdbool.h → not found
+        let mut result = Vec::new();
+        find_gcc_includes_recursive(dir.path(), 0, &mut result);
+        assert!(result.is_empty());
     }
 }
