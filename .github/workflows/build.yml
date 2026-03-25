@@ -1,0 +1,115 @@
+name: Build Native Binaries
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Git ref to build (branch, tag, or SHA)"
+        required: false
+        default: "main"
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: "-D warnings"
+
+jobs:
+  build:
+    name: Build (${{ matrix.target }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-latest
+            binary_ext: ""
+
+          - target: aarch64-unknown-linux-gnu
+            os: ubuntu-latest
+            binary_ext: ""
+            cross: true
+
+          - target: x86_64-apple-darwin
+            os: macos-14
+            binary_ext: ""
+
+          - target: aarch64-apple-darwin
+            os: macos-latest
+            binary_ext: ""
+
+          - target: x86_64-pc-windows-msvc
+            os: windows-latest
+            binary_ext: ".exe"
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.ref || github.sha }}
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - uses: actions/setup-python@v5
+        if: ${{ !matrix.cross }}
+        with:
+          python-version: "3.x"
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ matrix.target }}
+
+      # Linux aarch64 cross-compilation toolchain
+      - name: Install cross-compilation tools
+        if: matrix.cross
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-aarch64-linux-gnu
+
+      - name: Build release binaries
+        env:
+          CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: ${{ matrix.cross && 'aarch64-linux-gnu-gcc' || '' }}
+        run: |
+          cargo build --release --target ${{ matrix.target }} -p fbuild-cli
+          cargo build --release --target ${{ matrix.target }} -p fbuild-daemon
+
+      # PyO3 extension requires native Python — skip for cross-compiled targets
+      - name: Build Python extension
+        if: ${{ !matrix.cross }}
+        run: |
+          cargo build --release --target ${{ matrix.target }} -p fbuild-python
+
+      - name: Stage artifacts
+        shell: bash
+        run: |
+          mkdir -p staging
+          cp target/${{ matrix.target }}/release/fbuild${{ matrix.binary_ext }} staging/
+          cp target/${{ matrix.target }}/release/fbuild-daemon${{ matrix.binary_ext }} staging/
+
+          # Stage Python extension (platform-specific naming)
+          if [ "${{ matrix.binary_ext }}" = ".exe" ]; then
+            [ -f target/${{ matrix.target }}/release/_native.dll ] && \
+              cp target/${{ matrix.target }}/release/_native.dll staging/_native.pyd
+          else
+            for ext in so dylib; do
+              src="target/${{ matrix.target }}/release/lib_native.$ext"
+              [ -f "$src" ] && cp "$src" staging/_native.abi3.so && break
+            done
+          fi
+
+          # Strip binaries (reduces size significantly)
+          if command -v strip &> /dev/null && [ -z "${{ matrix.cross }}" ]; then
+            strip staging/fbuild${{ matrix.binary_ext }} || true
+            strip staging/fbuild-daemon${{ matrix.binary_ext }} || true
+            strip staging/_native.abi3.so 2>/dev/null || true
+          elif [ "${{ matrix.cross }}" = "true" ]; then
+            aarch64-linux-gnu-strip staging/fbuild || true
+            aarch64-linux-gnu-strip staging/fbuild-daemon || true
+          fi
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: binaries-${{ matrix.target }}
+          path: staging/
+          if-no-files-found: error
