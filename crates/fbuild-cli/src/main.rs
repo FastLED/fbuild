@@ -201,6 +201,25 @@ enum Commands {
         #[arg(short, long)]
         verbose: bool,
     },
+    /// Run include-what-you-use analysis on project sources
+    Iwyu {
+        project_dir: String,
+        #[arg(short = 'e', long)]
+        environment: Option<String>,
+        #[arg(short, long)]
+        verbose: bool,
+    },
+    /// Run clang-query on project sources
+    ClangQuery {
+        project_dir: String,
+        #[arg(short = 'e', long)]
+        environment: Option<String>,
+        #[arg(short, long)]
+        verbose: bool,
+        /// clang-query matcher expression
+        #[arg(short = 'm', long)]
+        matcher: Option<String>,
+    },
 }
 
 #[derive(Subcommand)]
@@ -456,7 +475,52 @@ async fn main() {
             project_dir,
             environment,
             verbose,
-        }) => run_clang_tidy(project_dir, environment, verbose).await,
+        }) => {
+            run_clang_tool(
+                fbuild_packages::toolchain::ClangComponentKind::ClangExtra,
+                "clang-tidy",
+                project_dir,
+                environment,
+                verbose,
+                &[],
+            )
+            .await
+        }
+        Some(Commands::Iwyu {
+            project_dir,
+            environment,
+            verbose,
+        }) => {
+            run_clang_tool(
+                fbuild_packages::toolchain::ClangComponentKind::Iwyu,
+                "include-what-you-use",
+                project_dir,
+                environment,
+                verbose,
+                &[],
+            )
+            .await
+        }
+        Some(Commands::ClangQuery {
+            project_dir,
+            environment,
+            verbose,
+            matcher,
+        }) => {
+            let extra: Vec<String> = matcher
+                .map(|m| vec!["-c".to_string(), m])
+                .unwrap_or_default();
+            let extra_refs: Vec<&str> = extra.iter().map(|s| s.as_str()).collect();
+            run_clang_tool(
+                fbuild_packages::toolchain::ClangComponentKind::ClangExtra,
+                "clang-query",
+                project_dir,
+                environment,
+                verbose,
+                &extra_refs,
+            )
+            .await
+        }
         None => {
             // Default action: deploy with monitor (like Python fbuild)
             let project_dir = cli.project_dir.unwrap_or_else(|| ".".to_string());
@@ -909,102 +973,69 @@ async fn run_monitor(
     Ok(())
 }
 
-fn find_clang_tidy() -> fbuild_core::Result<std::path::PathBuf> {
-    // Check PlatformIO packages first
-    let home_var = if cfg!(windows) { "USERPROFILE" } else { "HOME" };
-    let home =
-        std::path::PathBuf::from(std::env::var(home_var).map_err(|_| {
-            fbuild_core::FbuildError::Other("cannot determine home directory".into())
-        })?);
-    let pio_path = home
-        .join(".platformio")
-        .join("packages")
-        .join("tool-clangtidy");
-    let binary = if cfg!(windows) {
-        pio_path.join("clang-tidy.exe")
-    } else {
-        pio_path.join("clang-tidy")
-    };
-    if binary.exists() {
-        return Ok(binary);
-    }
-
-    // Fall back to PATH
-    let which_cmd = if cfg!(windows) { "where" } else { "which" };
-    if let Ok(output) = std::process::Command::new(which_cmd)
-        .arg("clang-tidy")
-        .output()
-    {
-        if output.status.success() {
-            let path = String::from_utf8_lossy(&output.stdout)
-                .lines()
-                .next()
-                .unwrap_or("")
-                .trim()
-                .to_string();
-            if !path.is_empty() {
-                return Ok(std::path::PathBuf::from(path));
-            }
+/// Convert MSYS/Git-Bash paths (/c/Users/...) to native Windows paths and canonicalize.
+fn normalize_path(path: &str) -> fbuild_core::Result<String> {
+    let converted = if cfg!(windows) {
+        // /c/foo → C:\foo
+        let bytes = path.as_bytes();
+        if bytes.len() >= 3
+            && bytes[0] == b'/'
+            && bytes[2] == b'/'
+            && bytes[1].is_ascii_alphabetic()
+        {
+            let drive = (bytes[1] as char).to_ascii_uppercase();
+            format!("{}:{}", drive, path[2..].replace('/', "\\"))
+        } else {
+            path.to_string()
         }
-    }
-
-    Err(fbuild_core::FbuildError::Other(
-        "clang-tidy not found. Install via: pio pkg install -g -t tool-clangtidy".into(),
-    ))
+    } else {
+        path.to_string()
+    };
+    let canon = std::fs::canonicalize(&converted).map_err(|e| {
+        fbuild_core::FbuildError::Other(format!("cannot resolve path '{}': {}", path, e))
+    })?;
+    let s = canon.to_string_lossy().to_string();
+    // Strip \\?\ prefix that canonicalize adds on Windows
+    Ok(s.strip_prefix(r"\\?\").unwrap_or(&s).to_string())
 }
 
-async fn run_clang_tidy(
+/// Generic runner for clang-based analysis tools (clang-tidy, iwyu, clang-query).
+///
+/// 1. Ensure tool binary is installed via ClangComponent (downloads on demand)
+/// 2. Generate compile_commands.json via fbuild daemon (build -t compiledb)
+/// 3. Run tool on each source file in parallel (ncpus * 2)
+#[allow(clippy::too_many_arguments)]
+async fn run_clang_tool(
+    kind: fbuild_packages::toolchain::ClangComponentKind,
+    binary_name: &str,
     project_dir: String,
     environment: Option<String>,
     verbose: bool,
+    extra_args: &[&str],
 ) -> fbuild_core::Result<()> {
-    // Canonicalize project dir so Windows-native tools (pio) get a real path
-    let project_dir = {
-        let canon = std::fs::canonicalize(&project_dir).map_err(|e| {
-            fbuild_core::FbuildError::Other(format!(
-                "cannot resolve project dir '{}': {}",
-                project_dir, e
-            ))
-        })?;
-        // Strip \\?\ prefix that canonicalize adds on Windows
-        let s = canon.to_string_lossy().to_string();
-        if let Some(stripped) = s.strip_prefix(r"\\?\") {
-            stripped.to_string()
-        } else {
-            s
-        }
-    };
+    let project_dir = normalize_path(&project_dir)?;
 
-    let clang_tidy = find_clang_tidy()?;
-    println!("Using clang-tidy: {}", clang_tidy.display());
+    // Step 1: Ensure tool is installed
+    let component = fbuild_packages::toolchain::ClangComponent::new(kind);
+    let tool_path = component.get_binary(binary_name).await?;
+    println!("Using {}: {}", binary_name, tool_path.display());
 
-    // Step 1: Generate compile_commands.json via pio run -t compiledb
+    // Step 2: Generate compile_commands.json via fbuild daemon
     println!("Generating compile_commands.json...");
-    {
-        let pio = find_pio()?;
-        let mut args = vec!["run", "-t", "compiledb", "-d", &project_dir];
-        let env_str;
-        if let Some(ref env) = environment {
-            env_str = env.clone();
-            args.extend(["-e", &env_str]);
-        }
-        let status = std::process::Command::new(&pio)
-            .args(&args)
-            .stdin(std::process::Stdio::inherit())
-            .stdout(std::process::Stdio::inherit())
-            .stderr(std::process::Stdio::inherit())
-            .status()
-            .map_err(|e| {
-                fbuild_core::FbuildError::Other(format!("failed to run pio for compiledb: {}", e))
-            })?;
-        if !status.success() {
-            return Err(fbuild_core::FbuildError::BuildFailed(
-                "pio compiledb generation failed".into(),
-            ));
-        }
-    }
+    run_build(
+        project_dir.clone(),
+        environment.clone(),
+        false, // clean
+        verbose,
+        None,  // jobs
+        false, // quick
+        false, // release
+        false, // dry_run
+        Some("compiledb".to_string()),
+    )
+    .await?;
 
-    // Step 2: Read compile_commands.json to get source files
+    // Step 3: Read compile_commands.json to get source files
     let project_path = std::path::Path::new(&project_dir);
     let db_path = project_path.join("compile_commands.json");
     if !db_path.exists() {
@@ -1035,11 +1066,12 @@ async fn run_clang_tidy(
         return Ok(());
     }
     println!(
-        "Running clang-tidy on {} source file(s)...",
+        "Running {} on {} source file(s)...",
+        binary_name,
         source_files.len()
     );
 
-    // Step 3: Run clang-tidy in parallel with ncpus * 2
+    // Step 4: Run tool in parallel with ncpus * 2
     let jobs = std::thread::available_parallelism()
         .map(|n| n.get() * 2)
         .unwrap_or(4);
@@ -1047,18 +1079,24 @@ async fn run_clang_tidy(
 
     let semaphore = std::sync::Arc::new(tokio::sync::Semaphore::new(jobs));
     let project_dir_arc = std::sync::Arc::new(project_dir.clone());
-    let clang_tidy_arc = std::sync::Arc::new(clang_tidy);
+    let tool_arc = std::sync::Arc::new(tool_path);
+    let extra_owned: Vec<String> = extra_args.iter().map(|s| s.to_string()).collect();
     let verbose_flag = verbose;
 
     let mut handles = Vec::new();
     for file in source_files {
         let sem = semaphore.clone();
-        let ct = clang_tidy_arc.clone();
+        let tool = tool_arc.clone();
         let pd = project_dir_arc.clone();
+        let extra = extra_owned.clone();
         let handle = tokio::spawn(async move {
             let _permit = sem.acquire().await.unwrap();
-            let mut cmd = tokio::process::Command::new(ct.as_ref());
-            cmd.arg("-p").arg(pd.as_ref()).arg(&file);
+            let mut cmd = tokio::process::Command::new(tool.as_ref());
+            cmd.arg("-p").arg(pd.as_ref());
+            for arg in &extra {
+                cmd.arg(arg);
+            }
+            cmd.arg(&file);
             if !verbose_flag {
                 cmd.arg("--quiet");
             }
@@ -1084,7 +1122,6 @@ async fn run_clang_tidy(
                 if !combined.trim().is_empty() {
                     print!("{}", combined);
                 }
-                // Count warnings and errors from output
                 for line in combined.lines() {
                     if line.contains("warning:") {
                         total_warnings += 1;
@@ -1095,13 +1132,13 @@ async fn run_clang_tidy(
                 }
             }
             Err(e) => {
-                eprintln!("failed to run clang-tidy on {}: {}", file, e);
+                eprintln!("failed to run {} on {}: {}", binary_name, file, e);
                 failed_files.push(file);
             }
         }
     }
 
-    println!("\n--- clang-tidy summary ---");
+    println!("\n--- {} summary ---", binary_name);
     println!("Warnings: {}", total_warnings);
     println!("Errors:   {}", total_errors);
     if !failed_files.is_empty() {
@@ -1109,9 +1146,10 @@ async fn run_clang_tidy(
     }
 
     if total_errors > 0 || !failed_files.is_empty() {
-        Err(fbuild_core::FbuildError::BuildFailed(
-            "clang-tidy found errors".into(),
-        ))
+        Err(fbuild_core::FbuildError::BuildFailed(format!(
+            "{} found errors",
+            binary_name
+        )))
     } else {
         Ok(())
     }

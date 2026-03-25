@@ -27,11 +27,13 @@ jobs:
           - target: aarch64-unknown-linux-gnu
             os: ubuntu-latest
             binary_ext: ""
-            cross: true
+            linux_cross: true
 
           - target: x86_64-apple-darwin
             os: macos-14
             binary_ext: ""
+            # Cross-compile x86_64 on ARM runner; no PyO3 (cli-only wheel)
+            macos_cross: true
 
           - target: aarch64-apple-darwin
             os: macos-latest
@@ -51,29 +53,44 @@ jobs:
           targets: ${{ matrix.target }}
 
       - uses: actions/setup-python@v5
-        if: ${{ !matrix.cross }}
+        if: ${{ !matrix.linux_cross && !matrix.macos_cross }}
         with:
           python-version: "3.13"
 
       - uses: Swatinem/rust-cache@v2
         with:
-          key: ${{ matrix.target }}
+          key: ${{ matrix.target }}-v2
 
       # Linux system dependencies (libudev for serial port detection)
       - name: Install Linux dependencies
-        if: runner.os == 'Linux' && !matrix.cross
+        if: runner.os == 'Linux' && !matrix.linux_cross
         run: |
           sudo apt-get update
           sudo apt-get install -y libudev-dev pkg-config
 
       # Linux aarch64 cross-compilation toolchain
       - name: Install cross-compilation tools
-        if: matrix.cross
+        if: matrix.linux_cross
         run: |
           sudo dpkg --add-architecture arm64
-          sudo sed -i 's/^deb /deb [arch=amd64] /' /etc/apt/sources.list.d/*.list || true
-          echo "deb [arch=arm64] http://ports.ubuntu.com/ $(lsb_release -cs) main restricted universe" | sudo tee /etc/apt/sources.list.d/arm64.list
-          echo "deb [arch=arm64] http://ports.ubuntu.com/ $(lsb_release -cs)-updates main restricted universe" | sudo tee -a /etc/apt/sources.list.d/arm64.list
+          # Handle DEB822 format (.sources files) used by Ubuntu 24.04+
+          for f in /etc/apt/sources.list.d/*.sources; do
+            if [ -f "$f" ]; then
+              sudo sed -i 's/^Architectures:.*/Architectures: amd64/' "$f"
+              grep -q '^Architectures:' "$f" || sudo sed -i '/^Types:/a Architectures: amd64' "$f"
+            fi
+          done
+          # Handle traditional format (.list files)
+          sudo sed -i 's/^deb http/deb [arch=amd64] http/g' /etc/apt/sources.list 2>/dev/null || true
+          for f in /etc/apt/sources.list.d/*.list; do
+            [ -f "$f" ] && sudo sed -i 's/^deb http/deb [arch=amd64] http/g' "$f" || true
+          done
+          # Add arm64 sources from ports.ubuntu.com
+          sudo tee /etc/apt/sources.list.d/arm64.list <<EOF
+          deb [arch=arm64] http://ports.ubuntu.com/ $(lsb_release -cs) main restricted universe
+          deb [arch=arm64] http://ports.ubuntu.com/ $(lsb_release -cs)-updates main restricted universe
+          deb [arch=arm64] http://ports.ubuntu.com/ $(lsb_release -cs)-security main restricted universe
+          EOF
           sudo apt-get update
           sudo apt-get install -y gcc-aarch64-linux-gnu pkg-config \
             libudev-dev:arm64 libssl-dev:arm64
@@ -83,16 +100,21 @@ jobs:
 
       - name: Build release binaries
         env:
-          CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: ${{ matrix.cross && 'aarch64-linux-gnu-gcc' || '' }}
+          CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: ${{ matrix.linux_cross && 'aarch64-linux-gnu-gcc' || '' }}
         run: |
           cargo build --release --target ${{ matrix.target }} -p fbuild-cli
           cargo build --release --target ${{ matrix.target }} -p fbuild-daemon
 
-      # PyO3 extension requires native Python — skip for cross-compiled targets
+      # PyO3 extension — skip for cross-compiled targets
       - name: Build Python extension
-        if: ${{ !matrix.cross }}
+        if: ${{ !matrix.linux_cross && !matrix.macos_cross }}
+        shell: bash
         run: |
-          cargo build --release --target ${{ matrix.target }} -p fbuild-python
+          if [ "${{ runner.os }}" = "macOS" ]; then
+            cargo rustc --release -p fbuild-python -- -C link-args="-undefined dynamic_lookup"
+          else
+            cargo build --release -p fbuild-python
+          fi
 
       - name: Stage artifacts
         shell: bash
@@ -101,23 +123,23 @@ jobs:
           cp target/${{ matrix.target }}/release/fbuild${{ matrix.binary_ext }} staging/
           cp target/${{ matrix.target }}/release/fbuild-daemon${{ matrix.binary_ext }} staging/
 
-          # Stage Python extension (platform-specific naming)
+          # Stage Python extension — built without --target, so in target/release/
           if [ "${{ matrix.binary_ext }}" = ".exe" ]; then
-            [ -f target/${{ matrix.target }}/release/_native.dll ] && \
-              cp target/${{ matrix.target }}/release/_native.dll staging/_native.pyd
+            [ -f target/release/_native.dll ] && \
+              cp target/release/_native.dll staging/_native.pyd
           else
             for ext in so dylib; do
-              src="target/${{ matrix.target }}/release/lib_native.$ext"
+              src="target/release/lib_native.$ext"
               [ -f "$src" ] && cp "$src" staging/_native.abi3.so && break
             done
           fi
 
           # Strip binaries (reduces size significantly)
-          if command -v strip &> /dev/null && [ -z "${{ matrix.cross }}" ]; then
+          if command -v strip &> /dev/null && [ -z "${{ matrix.linux_cross }}" ]; then
             strip staging/fbuild${{ matrix.binary_ext }} || true
             strip staging/fbuild-daemon${{ matrix.binary_ext }} || true
             strip staging/_native.abi3.so 2>/dev/null || true
-          elif [ "${{ matrix.cross }}" = "true" ]; then
+          elif [ "${{ matrix.linux_cross }}" = "true" ]; then
             aarch64-linux-gnu-strip staging/fbuild || true
             aarch64-linux-gnu-strip staging/fbuild-daemon || true
           fi

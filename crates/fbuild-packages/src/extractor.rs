@@ -1,4 +1,4 @@
-//! Archive extraction: tar.gz, tar.bz2, tar.xz, zip.
+//! Archive extraction: tar.gz, tar.bz2, tar.xz, tar.zst, zip.
 //!
 //! All extraction is pure Rust — no subprocess calls.
 
@@ -8,7 +8,7 @@ use fbuild_core::{FbuildError, Result};
 
 /// Extract an archive into the given directory.
 ///
-/// Supported formats: .tar.gz, .tgz, .tar.bz2, .tar.xz, .txz, .zip
+/// Supported formats: .tar.gz, .tgz, .tar.bz2, .tar.xz, .txz, .tar.zst, .zip
 pub fn extract(archive_path: &Path, dest_dir: &Path) -> Result<()> {
     let name = archive_path
         .file_name()
@@ -22,6 +22,8 @@ pub fn extract(archive_path: &Path, dest_dir: &Path) -> Result<()> {
         extract_tar_bz2(archive_path, dest_dir)
     } else if name.ends_with(".tar.xz") || name.ends_with(".txz") {
         extract_tar_xz(archive_path, dest_dir)
+    } else if name.ends_with(".tar.zst") {
+        extract_tar_zst(archive_path, dest_dir)
     } else if name.ends_with(".zip") {
         extract_zip(archive_path, dest_dir)
     } else {
@@ -49,6 +51,26 @@ fn extract_tar_gz(archive_path: &Path, dest_dir: &Path) -> Result<()> {
 fn extract_tar_bz2(archive_path: &Path, dest_dir: &Path) -> Result<()> {
     let file = std::fs::File::open(archive_path)?;
     let decoder = bzip2::read::BzDecoder::new(file);
+    let mut archive = tar::Archive::new(decoder);
+    archive.unpack(dest_dir).map_err(|e| {
+        FbuildError::PackageError(format!(
+            "failed to extract {}: {}",
+            archive_path.display(),
+            e
+        ))
+    })?;
+    Ok(())
+}
+
+fn extract_tar_zst(archive_path: &Path, dest_dir: &Path) -> Result<()> {
+    let file = std::fs::File::open(archive_path)?;
+    let decoder = zstd::Decoder::new(file).map_err(|e| {
+        FbuildError::PackageError(format!(
+            "failed to open zstd {}: {}",
+            archive_path.display(),
+            e
+        ))
+    })?;
     let mut archive = tar::Archive::new(decoder);
     archive.unpack(dest_dir).map_err(|e| {
         FbuildError::PackageError(format!(
