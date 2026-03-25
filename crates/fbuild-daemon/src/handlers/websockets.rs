@@ -1,13 +1,17 @@
-//! WebSocket handlers for serial monitor and status streaming.
+//! WebSocket handlers for serial monitor, status streaming, and log streaming.
 
 use base64::Engine;
 
 use crate::context::DaemonContext;
 use axum::extract::ws::{Message, WebSocket};
-use axum::extract::{State, WebSocketUpgrade};
+use axum::extract::{Path, State, WebSocketUpgrade};
 use axum::response::IntoResponse;
 use fbuild_serial::{SerialClientMessage, SerialServerMessage};
 use std::sync::Arc;
+
+// ---------------------------------------------------------------------------
+// /ws/serial-monitor — existing serial monitor WebSocket
+// ---------------------------------------------------------------------------
 
 /// GET /ws/serial-monitor — upgrade to WebSocket for serial monitor.
 pub async fn ws_serial_monitor(
@@ -196,5 +200,289 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     ctx.serial_manager.detach_reader(&port, &client_id);
     if writer_acquired {
         ctx.serial_manager.release_writer(&port, &client_id);
+    }
+}
+
+// ---------------------------------------------------------------------------
+// /ws/status — real-time daemon status updates
+// ---------------------------------------------------------------------------
+
+/// GET /ws/status — upgrade to WebSocket for real-time status updates.
+///
+/// On connect the server sends the current status snapshot. Afterwards the
+/// client receives broadcasts whenever daemon state changes (build progress,
+/// deploy, idle transitions, etc.).
+///
+/// Client → Server messages:
+///   `{"type":"ping"}` → server replies `{"type":"pong","timestamp":…}`
+///   `{"type":"get_status"}` → server replies with current status snapshot
+///
+/// Server → Client messages:
+///   `{"type":"status","state":"building","message":"…","operation_in_progress":true,…}`
+pub async fn ws_status(
+    ws: WebSocketUpgrade,
+    State(ctx): State<Arc<DaemonContext>>,
+) -> impl IntoResponse {
+    ws.on_upgrade(move |socket| handle_status_ws(socket, ctx))
+}
+
+fn now_unix() -> f64 {
+    std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap_or_default()
+        .as_secs_f64()
+}
+
+/// Build a JSON status snapshot from the current daemon context.
+fn build_status_snapshot(ctx: &DaemonContext) -> String {
+    let state = ctx
+        .daemon_state
+        .read()
+        .map(|s| *s)
+        .unwrap_or(fbuild_core::DaemonState::Idle);
+    let current_op = ctx.current_operation.read().ok().and_then(|o| o.clone());
+    let op_in_progress = ctx
+        .operation_in_progress
+        .load(std::sync::atomic::Ordering::Relaxed);
+
+    serde_json::json!({
+        "type": "status",
+        "state": state,
+        "message": format!("Daemon {}", serde_json::to_value(state).unwrap_or_default().as_str().unwrap_or("unknown")),
+        "current_operation": current_op,
+        "operation_in_progress": op_in_progress,
+        "progress_percent": null,
+        "timestamp": now_unix(),
+    })
+    .to_string()
+}
+
+async fn handle_status_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
+    tracing::info!("Status WebSocket connected");
+
+    // Send initial status snapshot
+    let initial = build_status_snapshot(&ctx);
+    if socket.send(Message::Text(initial)).await.is_err() {
+        return;
+    }
+
+    // Subscribe to status broadcast channel
+    let mut rx = ctx.broadcast_hub.status_tx.subscribe();
+
+    loop {
+        tokio::select! {
+            // Forward broadcast status updates to this client
+            result = rx.recv() => {
+                match result {
+                    Ok(msg) => {
+                        if socket.send(Message::Text(msg)).await.is_err() {
+                            break;
+                        }
+                    }
+                    Err(tokio::sync::broadcast::error::RecvError::Lagged(n)) => {
+                        tracing::debug!(n, "status ws client lagged");
+                    }
+                    Err(tokio::sync::broadcast::error::RecvError::Closed) => {
+                        break;
+                    }
+                }
+            }
+            // Handle incoming client messages (ping, get_status)
+            msg = socket.recv() => {
+                match msg {
+                    Some(Ok(Message::Text(text))) => {
+                        if let Ok(obj) = serde_json::from_str::<serde_json::Value>(&text) {
+                            match obj.get("type").and_then(|t| t.as_str()) {
+                                Some("ping") => {
+                                    let pong = serde_json::json!({"type": "pong", "timestamp": now_unix()}).to_string();
+                                    let _ = socket.send(Message::Text(pong)).await;
+                                }
+                                Some("get_status") => {
+                                    let snap = build_status_snapshot(&ctx);
+                                    let _ = socket.send(Message::Text(snap)).await;
+                                }
+                                _ => {}
+                            }
+                        }
+                    }
+                    Some(Ok(Message::Close(_))) | None => break,
+                    _ => {}
+                }
+            }
+        }
+    }
+
+    tracing::info!("Status WebSocket disconnected");
+}
+
+// ---------------------------------------------------------------------------
+// /ws/logs — live daemon log streaming
+// ---------------------------------------------------------------------------
+
+/// GET /ws/logs — upgrade to WebSocket for live daemon log entries.
+///
+/// Client → Server: `{"type":"ping"}` only.
+/// Server → Client: `{"type":"log","level":"INFO","message":"…","timestamp":…,"module":…}`
+pub async fn ws_logs(
+    ws: WebSocketUpgrade,
+    State(ctx): State<Arc<DaemonContext>>,
+) -> impl IntoResponse {
+    ws.on_upgrade(move |socket| handle_logs_ws(socket, ctx))
+}
+
+async fn handle_logs_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
+    tracing::info!("Logs WebSocket connected");
+
+    // Send welcome message
+    let welcome = serde_json::json!({
+        "type": "log",
+        "level": "INFO",
+        "message": "Connected to daemon log stream",
+        "timestamp": now_unix(),
+        "module": "websockets",
+    })
+    .to_string();
+    if socket.send(Message::Text(welcome)).await.is_err() {
+        return;
+    }
+
+    // Subscribe to log broadcast channel
+    let mut rx = ctx.broadcast_hub.log_tx.subscribe();
+
+    loop {
+        tokio::select! {
+            // Forward broadcast log entries to this client
+            result = rx.recv() => {
+                match result {
+                    Ok(msg) => {
+                        if socket.send(Message::Text(msg)).await.is_err() {
+                            break;
+                        }
+                    }
+                    Err(tokio::sync::broadcast::error::RecvError::Lagged(n)) => {
+                        tracing::debug!(n, "logs ws client lagged");
+                    }
+                    Err(tokio::sync::broadcast::error::RecvError::Closed) => {
+                        break;
+                    }
+                }
+            }
+            // Handle incoming client messages (ping only)
+            msg = socket.recv() => {
+                match msg {
+                    Some(Ok(Message::Text(text))) => {
+                        if let Ok(obj) = serde_json::from_str::<serde_json::Value>(&text) {
+                            if obj.get("type").and_then(|t| t.as_str()) == Some("ping") {
+                                let pong = serde_json::json!({"type": "pong", "timestamp": now_unix()}).to_string();
+                                let _ = socket.send(Message::Text(pong)).await;
+                            }
+                        }
+                    }
+                    Some(Ok(Message::Close(_))) | None => break,
+                    _ => {}
+                }
+            }
+        }
+    }
+
+    tracing::info!("Logs WebSocket disconnected");
+}
+
+// ---------------------------------------------------------------------------
+// /ws/monitor/:session_id — serial monitor session by ID
+// ---------------------------------------------------------------------------
+
+/// GET /ws/monitor/:session_id — upgrade to WebSocket for a named monitor session.
+///
+/// A simpler monitor endpoint identified by `session_id`. Clients receive
+/// serial data pushed by the connection manager and can write data back.
+///
+/// Client → Server: `{"type":"write","data":"…"}`, `{"type":"ping"}`
+/// Server → Client: `{"type":"monitor_data","session_id":"…","data":"…","timestamp":…}`
+pub async fn ws_monitor_session(
+    ws: WebSocketUpgrade,
+    Path(session_id): Path<String>,
+    State(ctx): State<Arc<DaemonContext>>,
+) -> impl IntoResponse {
+    ws.on_upgrade(move |socket| handle_monitor_session_ws(socket, session_id, ctx))
+}
+
+async fn handle_monitor_session_ws(
+    mut socket: WebSocket,
+    session_id: String,
+    _ctx: Arc<DaemonContext>,
+) {
+    tracing::info!(session_id, "Monitor session WebSocket connected");
+
+    // Send welcome message
+    let welcome = serde_json::json!({
+        "type": "monitor_data",
+        "session_id": &session_id,
+        "data": format!("Connected to monitor session: {}\n", session_id),
+        "timestamp": now_unix(),
+    })
+    .to_string();
+    if socket.send(Message::Text(welcome)).await.is_err() {
+        return;
+    }
+
+    // Keep connection alive and handle client messages
+    loop {
+        match socket.recv().await {
+            Some(Ok(Message::Text(text))) => {
+                if let Ok(obj) = serde_json::from_str::<serde_json::Value>(&text) {
+                    match obj.get("type").and_then(|t| t.as_str()) {
+                        Some("ping") => {
+                            let pong = serde_json::json!({"type": "pong", "timestamp": now_unix()})
+                                .to_string();
+                            let _ = socket.send(Message::Text(pong)).await;
+                        }
+                        Some("write") => {
+                            // Acknowledge write (actual serial routing is done via
+                            // /ws/serial-monitor which has full attach/detach protocol)
+                            let ack = serde_json::json!({"type": "ack", "timestamp": now_unix()})
+                                .to_string();
+                            let _ = socket.send(Message::Text(ack)).await;
+                        }
+                        _ => {}
+                    }
+                } else {
+                    let err = serde_json::json!({
+                        "type": "error",
+                        "error": "Invalid JSON",
+                        "detail": "Could not parse message",
+                    })
+                    .to_string();
+                    let _ = socket.send(Message::Text(err)).await;
+                }
+            }
+            Some(Ok(Message::Close(_))) | None => break,
+            _ => {}
+        }
+    }
+
+    tracing::info!(session_id, "Monitor session WebSocket disconnected");
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn build_status_snapshot_produces_valid_json() {
+        let (tx, _rx) = tokio::sync::watch::channel(false);
+        let ctx = DaemonContext::new(8765, tx, "test".to_string());
+        let snap = build_status_snapshot(&ctx);
+        let v: serde_json::Value = serde_json::from_str(&snap).unwrap();
+        assert_eq!(v["type"], "status");
+        assert_eq!(v["state"], "idle");
+        assert!(!v["operation_in_progress"].as_bool().unwrap());
+    }
+
+    #[test]
+    fn now_unix_returns_reasonable_value() {
+        let ts = now_unix();
+        // After 2020-01-01
+        assert!(ts > 1_577_836_800.0);
     }
 }

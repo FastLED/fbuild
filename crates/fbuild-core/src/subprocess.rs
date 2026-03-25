@@ -101,31 +101,61 @@ fn is_msys_environment() -> bool {
 }
 
 /// Strip MSYS-specific environment variables and rebuild PATH without MSYS dirs.
+///
+/// Matches Python's `get_pio_safe_env()` in `pio_env.py`: strips variables with
+/// prefixes (MSYS*, MINGW*, CHERE*, ORIGINAL_PATH*), exact shell/terminal keys,
+/// and PATH entries starting with "/" (MSYS-style paths).
 #[cfg(windows)]
 fn strip_msys_env(cmd: &mut Command) {
-    // Remove MSYS/MSYS2 environment variables
-    let msys_vars = [
-        "MSYSTEM",
-        "MSYSTEM_CARCH",
-        "MSYSTEM_CHOST",
-        "MSYSTEM_PREFIX",
-        "MINGW_CHOST",
-        "MINGW_PREFIX",
-        "MINGW_PACKAGE_PREFIX",
-        "MSYS",
-        "MSYS2_PATH_TYPE",
-        "CHERE_INVOKING",
+    // Prefixes to strip (matches Python's strip_prefixes)
+    let strip_prefixes: &[&str] = &["MSYS", "MINGW", "CHERE", "ORIGINAL_PATH"];
+
+    // Exact keys to strip (matches Python's strip_exact)
+    let strip_exact: &[&str] = &[
+        "SHELL",
+        "SHLVL",
+        "TERM",
+        "TERM_PROGRAM",
+        "TERM_PROGRAM_VERSION",
+        "TMPDIR",
+        "TMP",
+        "TEMP",
+        "_",
+        "!",
+        "POSIXLY_CORRECT",
+        "EXECIGNORE",
+        "HOSTTYPE",
+        "MACHTYPE",
+        "OSTYPE",
         "CONFIG_SITE",
     ];
-    for var in &msys_vars {
-        cmd.env_remove(var);
+
+    // Collect keys to remove (prefix-based + exact)
+    let keys_to_remove: Vec<String> = std::env::vars()
+        .filter_map(|(k, _)| {
+            let should_strip = strip_prefixes.iter().any(|prefix| k.starts_with(prefix))
+                || strip_exact.contains(&k.as_str());
+            if should_strip {
+                Some(k)
+            } else {
+                None
+            }
+        })
+        .collect();
+
+    for key in &keys_to_remove {
+        cmd.env_remove(key);
     }
 
-    // Rebuild PATH: keep only non-MSYS directories
+    // Clean PATH: remove MSYS-style entries (start with "/") and dirs containing msys/usr
     if let Ok(path) = std::env::var("PATH") {
         let filtered: Vec<&str> = path
             .split(';')
             .filter(|p| {
+                // Remove MSYS-style paths (start with "/")
+                if p.starts_with('/') {
+                    return false;
+                }
                 let lower = p.to_lowercase();
                 !lower.contains("\\msys") && !lower.contains("/msys") && !lower.contains("/usr/")
             })

@@ -2,5 +2,6 @@
 
 pub mod devices;
 pub mod health;
+pub mod locks;
 pub mod operations;
 pub mod websockets;

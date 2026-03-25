@@ -56,6 +56,7 @@ void loop() {
         build_dir,
         verbose: true,
         jobs: None,
+        generate_compiledb: false,
     };
 
     let orchestrator = fbuild_build::teensy::orchestrator::TeensyOrchestrator;
@@ -107,6 +108,7 @@ fn build_teensy41_fixture() {
         build_dir,
         verbose: true,
         jobs: None,
+        generate_compiledb: false,
     };
 
     let orchestrator = fbuild_build::teensy::orchestrator::TeensyOrchestrator;

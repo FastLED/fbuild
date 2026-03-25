@@ -385,6 +385,35 @@ impl SharedSerialManager {
             .get_mut(port)
             .and_then(|mut decoder| decoder.process_line(line))
     }
+
+    /// Get a snapshot of all active serial port sessions for lock/status reporting.
+    pub fn get_port_sessions(&self) -> Vec<PortSessionInfo> {
+        self.sessions
+            .iter()
+            .map(|entry| {
+                let s = entry.value();
+                PortSessionInfo {
+                    port: s.port.clone(),
+                    is_open: s.is_open,
+                    writer_client_id: s.writer_client_id.clone(),
+                    reader_count: s.reader_client_ids.len(),
+                    owner_client_id: s.owner_client_id.clone(),
+                    baud_rate: s.baud_rate,
+                }
+            })
+            .collect()
+    }
+}
+
+/// Snapshot of a serial port session for status reporting.
+#[derive(Debug, Clone)]
+pub struct PortSessionInfo {
+    pub port: String,
+    pub is_open: bool,
+    pub writer_client_id: Option<String>,
+    pub reader_count: usize,
+    pub owner_client_id: Option<String>,
+    pub baud_rate: u32,
 }
 
 impl Default for SharedSerialManager {

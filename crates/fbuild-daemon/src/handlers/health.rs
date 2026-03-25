@@ -1,25 +1,45 @@
-//! Health check, daemon info, and shutdown handlers.
+//! Health check, daemon info, root, and shutdown handlers.
 
 use crate::context::DaemonContext;
-use crate::models::{DaemonInfoResponse, HealthResponse, ShutdownParams, ShutdownResponse};
+use crate::models::{
+    DaemonInfoResponse, HealthResponse, RootResponse, ShutdownParams, ShutdownResponse,
+};
 use axum::extract::{Query, State};
 use axum::http::StatusCode;
 use axum::Json;
 use std::sync::atomic::Ordering;
 use std::sync::Arc;
 
+/// GET /
+pub async fn root() -> Json<RootResponse> {
+    Json(RootResponse {
+        message: "fbuild Daemon API".to_string(),
+        version: env!("CARGO_PKG_VERSION").to_string(),
+        health: "/health".to_string(),
+    })
+}
+
 /// GET /health
 pub async fn health_check(State(ctx): State<Arc<DaemonContext>>) -> Json<HealthResponse> {
+    ctx.touch_activity();
     Json(HealthResponse {
         status: "healthy".to_string(),
         uptime_seconds: ctx.started_at.elapsed().as_secs_f64(),
         version: env!("CARGO_PKG_VERSION").to_string(),
         pid: std::process::id(),
+        source_mtime: ctx.source_mtime,
     })
 }
 
 /// GET /api/daemon/info
 pub async fn daemon_info(State(ctx): State<Arc<DaemonContext>>) -> Json<DaemonInfoResponse> {
+    ctx.touch_activity();
+    let daemon_state = *ctx.daemon_state.read().unwrap_or_else(|e| e.into_inner());
+    let current_operation = ctx
+        .current_operation
+        .read()
+        .unwrap_or_else(|e| e.into_inner())
+        .clone();
     Json(DaemonInfoResponse {
         status: "running".to_string(),
         uptime_seconds: ctx.started_at.elapsed().as_secs_f64(),
@@ -29,6 +49,15 @@ pub async fn daemon_info(State(ctx): State<Arc<DaemonContext>>) -> Json<DaemonIn
         started_at: ctx.started_at_unix,
         dev_mode: fbuild_paths::is_dev_mode(),
         host: "127.0.0.1".to_string(),
+        operation_in_progress: ctx.operation_in_progress.load(Ordering::Relaxed),
+        daemon_state,
+        current_operation,
+        client_count: ctx.serial_manager.get_port_sessions().len(),
+        cache_dir: fbuild_paths::get_cache_root().to_string_lossy().to_string(),
+        daemon_dir: fbuild_paths::get_daemon_dir().to_string_lossy().to_string(),
+        source_mtime: ctx.source_mtime,
+        spawner_cwd: ctx.spawner_cwd.clone(),
+        mcp_url: format!("http://127.0.0.1:{}/mcp", ctx.port),
     })
 }
 

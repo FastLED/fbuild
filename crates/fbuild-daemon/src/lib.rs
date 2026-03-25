@@ -17,10 +17,19 @@
 //!
 //! Devices:
 //! - POST /api/devices/list
+//! - GET  /api/devices/{port}/status
+//! - POST /api/devices/{port}/lease
+//! - POST /api/devices/{port}/release
+//! - POST /api/devices/{port}/preempt
 //!
 //! WebSocket:
 //! - GET  /ws/serial-monitor
+//! - GET  /ws/status
+//! - GET  /ws/logs
+//! - GET  /ws/monitor/{session_id}
 
 pub mod context;
+pub mod device_manager;
 pub mod handlers;
 pub mod models;
+pub mod status_manager;

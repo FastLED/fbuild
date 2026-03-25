@@ -36,6 +36,6 @@ pub mod messages;
 pub mod preemption;
 pub mod session;
 
-pub use manager::SharedSerialManager;
+pub use manager::{PortSessionInfo, SharedSerialManager};
 pub use messages::{SerialClientMessage, SerialServerMessage};
 pub use session::SerialSession;

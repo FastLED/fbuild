@@ -39,6 +39,7 @@ pub struct BuildParams {
     pub build_dir: PathBuf,
     pub verbose: bool,
     pub jobs: Option<usize>,
+    pub generate_compiledb: bool,
 }
 
 /// Trait for platform-specific build orchestrators.
@@ -54,7 +55,7 @@ pub fn get_orchestrator(platform: Platform) -> Result<Box<dyn BuildOrchestrator>
         Platform::Espressif32 => Ok(esp32::orchestrator::create()),
         Platform::Teensy => Ok(teensy::orchestrator::create()),
         _ => Err(fbuild_core::FbuildError::BuildFailed(format!(
-            "orchestrator for {:?} not yet implemented",
+            "native orchestrator for {:?} not yet implemented — use --platformio flag for this platform",
             platform
         ))),
     }

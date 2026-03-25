@@ -69,6 +69,7 @@ void loop() {
         build_dir,
         verbose: true,
         jobs: None,
+        generate_compiledb: false,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -148,6 +149,7 @@ void loop() {
         build_dir,
         verbose: true,
         jobs: None,
+        generate_compiledb: false,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -221,6 +223,7 @@ void loop() {
         build_dir,
         verbose: true,
         jobs: None,
+        generate_compiledb: false,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -284,6 +287,7 @@ fn build_esp32s3_fixture() {
         build_dir: build_dir.clone(),
         verbose: true,
         jobs: None,
+        generate_compiledb: false,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -339,6 +343,7 @@ fn build_nightdriverstrip_demo() {
         build_dir,
         verbose: true,
         jobs: None,
+        generate_compiledb: false,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -417,6 +422,7 @@ fn incremental_build_at(project_dir: &std::path::Path, env_name: &str) {
         build_dir: project_dir.join(".fbuild/build"),
         verbose: true,
         jobs: None,
+        generate_compiledb: false,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -498,6 +504,7 @@ fn incremental_nightdriverstrip_one_file_changed() {
         build_dir: project_dir.join(".fbuild/build"),
         verbose: true,
         jobs: None,
+        generate_compiledb: false,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;

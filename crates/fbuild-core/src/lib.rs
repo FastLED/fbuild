@@ -111,9 +111,10 @@ pub enum OperationType {
 }
 
 /// Daemon state.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum DaemonState {
+    #[default]
     Idle,
     Building,
     Deploying,
@@ -122,6 +123,21 @@ pub enum DaemonState {
     Failed,
     Cancelled,
     Unknown,
+}
+
+impl std::fmt::Display for DaemonState {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Idle => write!(f, "idle"),
+            Self::Building => write!(f, "building"),
+            Self::Deploying => write!(f, "deploying"),
+            Self::Monitoring => write!(f, "monitoring"),
+            Self::Completed => write!(f, "completed"),
+            Self::Failed => write!(f, "failed"),
+            Self::Cancelled => write!(f, "cancelled"),
+            Self::Unknown => write!(f, "unknown"),
+        }
+    }
 }
 
 /// Size information after a successful build.

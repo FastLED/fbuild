@@ -8,6 +8,8 @@
 
 pub mod avr;
 pub mod esp32;
+pub mod firmware_ledger;
+pub mod reset;
 pub mod teensy;
 
 use fbuild_core::Result;
