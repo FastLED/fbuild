@@ -30,7 +30,7 @@ jobs:
             cross: true
 
           - target: x86_64-apple-darwin
-            os: macos-14
+            os: macos-13
             binary_ext: ""
 
           - target: aarch64-apple-darwin
@@ -71,7 +71,10 @@ jobs:
         if: matrix.cross
         run: |
           sudo dpkg --add-architecture arm64
-          sudo sed -i 's/^deb /deb [arch=amd64] /' /etc/apt/sources.list.d/*.list || true
+          # Only modify .list files (not .sources), skip non-deb lines
+          for f in /etc/apt/sources.list.d/*.list; do
+            [ -f "$f" ] && sudo sed -i '/^deb /{/\[.*arch=/!s/^deb /deb [arch=amd64] /}' "$f" || true
+          done
           echo "deb [arch=arm64] http://ports.ubuntu.com/ $(lsb_release -cs) main restricted universe" | sudo tee /etc/apt/sources.list.d/arm64.list
           echo "deb [arch=arm64] http://ports.ubuntu.com/ $(lsb_release -cs)-updates main restricted universe" | sudo tee -a /etc/apt/sources.list.d/arm64.list
           sudo apt-get update
@@ -91,6 +94,9 @@ jobs:
       # PyO3 extension requires native Python — skip for cross-compiled targets
       - name: Build Python extension
         if: ${{ !matrix.cross }}
+        env:
+          # Ensure PyO3 finds the right Python when --target is specified
+          PYO3_PYTHON: python3
         run: |
           cargo build --release --target ${{ matrix.target }} -p fbuild-python
 
