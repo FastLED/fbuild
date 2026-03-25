@@ -100,7 +100,11 @@ jobs:
       - name: Build Python extension
         if: ${{ !matrix.cross }}
         run: |
-          cargo build --release -p fbuild-python
+          if [ "${{ runner.os }}" = "macOS" ]; then
+            cargo rustc --release -p fbuild-python -- -C link-args="-undefined dynamic_lookup"
+          else
+            cargo build --release -p fbuild-python
+          fi
 
       - name: Stage artifacts
         shell: bash
