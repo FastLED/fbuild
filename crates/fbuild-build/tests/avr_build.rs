@@ -84,6 +84,7 @@ fn build_uno_minimal() {
         verbose: true,
         jobs: None,
         generate_compiledb: false,
+        compiledb_only: false,
     };
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
@@ -167,6 +168,7 @@ fn compare_with_python_output() {
         verbose: false,
         jobs: None,
         generate_compiledb: false,
+        compiledb_only: false,
     };
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
@@ -243,6 +245,7 @@ void loop() {
         verbose: true,
         jobs: None,
         generate_compiledb: false,
+        compiledb_only: false,
     };
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;

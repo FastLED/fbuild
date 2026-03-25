@@ -452,6 +452,7 @@ async fn execute_tool(client: &DaemonClient, name: &str, args: &Value) -> Result
                 jobs,
                 profile: None,
                 generate_compiledb: false,
+                compiledb_only: false,
                 request_id: Some(uuid_v4()),
                 caller_pid,
                 caller_cwd,

@@ -909,6 +909,7 @@ async fn run_build(
         jobs,
         profile,
         generate_compiledb,
+        compiledb_only: generate_compiledb,
         request_id: None,
         caller_pid,
         caller_cwd,

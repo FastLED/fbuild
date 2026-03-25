@@ -15,6 +15,9 @@ pub struct BuildRequest {
     pub profile: Option<String>,
     #[serde(default)]
     pub generate_compiledb: bool,
+    /// Skip compilation/linking and only generate `compile_commands.json`.
+    #[serde(default)]
+    pub compiledb_only: bool,
     pub request_id: Option<String>,
     /// PID of the CLI client that sent this request (audit/tracking).
     pub caller_pid: Option<u32>,

@@ -17,6 +17,8 @@ pub struct BuildRequest {
     pub profile: Option<String>,
     #[serde(default)]
     pub generate_compiledb: bool,
+    #[serde(default)]
+    pub compiledb_only: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub request_id: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]

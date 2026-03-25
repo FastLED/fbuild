@@ -40,6 +40,9 @@ pub struct BuildParams {
     pub verbose: bool,
     pub jobs: Option<usize>,
     pub generate_compiledb: bool,
+    /// When true, skip compilation/linking and only generate `compile_commands.json`.
+    /// Used by IWYU and clang-tidy to avoid building framework core files.
+    pub compiledb_only: bool,
 }
 
 /// Trait for platform-specific build orchestrators.

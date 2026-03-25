@@ -236,7 +236,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
         // 8.6. Compile framework built-in libraries (WiFi, FS, SPIFFS, Network, etc.)
         // The linker's --gc-sections will strip any unused code.
-        {
+        // Skip when only generating compile_commands.json.
+        if !params.compiledb_only {
             let builtin_libs_dir = framework.get_libraries_dir();
             if builtin_libs_dir.is_dir() {
                 let fw_libs_build_dir = build_dir.join("fw_libs");
@@ -383,7 +384,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             mcu_config.clone(),
             &board.f_cpu,
             defines,
-            include_dirs,
+            include_dirs.clone(),
             params.profile,
             params.verbose,
             build_dir.join("tmp"),
@@ -391,11 +392,68 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let jobs = crate::parallel::effective_jobs(params.jobs);
         tracing::info!("parallel compilation: {} jobs", jobs);
 
-        // Compile core + variant sources in parallel
+        // Build source lists and flags needed for compile_commands.json
         let mut all_core_sources: Vec<std::path::PathBuf> = Vec::new();
         all_core_sources.extend(sources.core_sources.iter().cloned());
         all_core_sources.extend(sources.variant_sources.iter().cloned());
 
+        let src_flags = config.get_build_src_flags(&params.env_name)?;
+        let all_src_flags: Vec<String> =
+            user_flags.iter().chain(src_flags.iter()).cloned().collect();
+
+        // compiledb_only: generate compile_commands.json without compiling
+        if params.compiledb_only {
+            let mut compile_db = crate::compile_database::CompileDatabase::new();
+            let include_flags = compiler.base.build_include_flags();
+            compile_db.extend(crate::compile_database::generate_entries(
+                compiler.gcc_path(),
+                compiler.gxx_path(),
+                &compiler.c_flags(),
+                &compiler.cpp_flags(),
+                &include_flags,
+                &user_flags,
+                &all_core_sources,
+                &core_build_dir,
+                &params.project_dir,
+            ));
+            compile_db.extend(crate::compile_database::generate_entries(
+                compiler.gcc_path(),
+                compiler.gxx_path(),
+                &compiler.c_flags(),
+                &compiler.cpp_flags(),
+                &include_flags,
+                &all_src_flags,
+                &sources.sketch_sources,
+                &src_build_dir,
+                &params.project_dir,
+            ));
+            let arch = if mcu_config.is_xtensa() {
+                crate::compile_database::TargetArchitecture::Xtensa
+            } else {
+                crate::compile_database::TargetArchitecture::Riscv32
+            };
+            let compile_db = compile_db.translate_for_clang(arch);
+            let compile_database_path = if compile_db.has_entries() {
+                Some(compile_db.write_and_copy(&build_dir, &params.project_dir)?)
+            } else {
+                None
+            };
+            let elapsed = start.elapsed().as_secs_f64();
+            return Ok(BuildResult {
+                success: true,
+                hex_path: None,
+                elf_path: None,
+                size_info: None,
+                build_time_secs: elapsed,
+                message: format!(
+                    "compile_commands.json generated for {} ({})",
+                    params.env_name, board.mcu
+                ),
+                compile_database_path,
+            });
+        }
+
+        // Compile core + variant sources in parallel
         let core_objects = crate::parallel::compile_sources_parallel(
             &compiler,
             &all_core_sources,
@@ -405,10 +463,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
         )?;
 
         // Compile sketch sources in parallel
-        let src_flags = config.get_build_src_flags(&params.env_name)?;
-        let all_src_flags: Vec<String> =
-            user_flags.iter().chain(src_flags.iter()).cloned().collect();
-
         let mut sketch_objects = crate::parallel::compile_sources_parallel(
             &compiler,
             &sources.sketch_sources,
@@ -416,6 +470,66 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &all_src_flags,
             jobs,
         )?;
+
+        // Compile local libraries from the project's lib/ directory.
+        // PlatformIO discovers and compiles these automatically.
+        let local_lib_dir = params.project_dir.join("lib");
+        if local_lib_dir.is_dir() {
+            if let Ok(entries) = std::fs::read_dir(&local_lib_dir) {
+                for entry in entries.flatten() {
+                    let lib_path = entry.path();
+                    if !lib_path.is_dir() {
+                        continue;
+                    }
+                    let lib_name = lib_path
+                        .file_name()
+                        .unwrap_or_default()
+                        .to_string_lossy()
+                        .to_string();
+
+                    let lib_info = fbuild_packages::library::library_info::InstalledLibrary::new(
+                        &lib_path, &lib_name,
+                    );
+                    let lib_sources = lib_info.get_source_files();
+                    if lib_sources.is_empty() {
+                        continue;
+                    }
+
+                    let lib_build_dir = build_dir.join("lib").join(&lib_name);
+                    tracing::info!(
+                        "compiling local library '{}': {} source files",
+                        lib_name,
+                        lib_sources.len()
+                    );
+
+                    match fbuild_packages::library::library_compiler::compile_library_with_jobs(
+                        &lib_name,
+                        &lib_sources,
+                        &include_dirs,
+                        &toolchain.get_gcc_path(),
+                        &toolchain.get_gxx_path(),
+                        &toolchain.get_ar_path(),
+                        &apply_user_flags(&compiler.c_flags(), &all_src_flags),
+                        &apply_user_flags(&compiler.cpp_flags(), &all_src_flags),
+                        &lib_build_dir,
+                        params.verbose,
+                        jobs,
+                        compiler_cache.as_deref(),
+                    ) {
+                        Ok(Some(archive)) => {
+                            library_archives.push(archive);
+                        }
+                        Ok(None) => {} // header-only
+                        Err(e) => {
+                            return Err(fbuild_core::FbuildError::BuildFailed(format!(
+                                "local library '{}' failed to compile: {}",
+                                lib_name, e
+                            )));
+                        }
+                    }
+                }
+            }
+        }
 
         // 11.5. Process embedded files (board_build.embed_files + embed_txtfiles)
         let embed_files = config.get_embed_files(&params.env_name)?;

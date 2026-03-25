@@ -152,6 +152,7 @@ pub async fn build(
         verbose: req.verbose,
         jobs: req.jobs,
         generate_compiledb,
+        compiledb_only: req.compiledb_only,
     };
 
     // Run build in spawn_blocking since orchestrators do I/O
@@ -358,6 +359,7 @@ pub async fn deploy(
             verbose: req.verbose,
             jobs: None,
             generate_compiledb: false,
+            compiledb_only: false,
         };
 
         let build_result = {

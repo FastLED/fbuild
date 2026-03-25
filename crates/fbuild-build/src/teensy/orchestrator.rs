@@ -120,6 +120,55 @@ impl BuildOrchestrator for TeensyOrchestrator {
             params.verbose,
         );
 
+        // Build flags needed for compile_commands.json
+        let src_flags = config.get_build_src_flags(&params.env_name)?;
+        let all_src_flags: Vec<String> =
+            user_flags.iter().chain(src_flags.iter()).cloned().collect();
+
+        // compiledb_only: generate compile_commands.json without compiling
+        if params.compiledb_only {
+            let mut compile_db = crate::compile_database::CompileDatabase::new();
+            compile_db.extend(crate::compile_database::generate_entries(
+                compiler.gcc_path(),
+                compiler.gxx_path(),
+                &compiler.c_flags(),
+                &compiler.cpp_flags(),
+                &[],
+                &user_flags,
+                &sources.core_sources,
+                &core_build_dir,
+                &params.project_dir,
+            ));
+            compile_db.extend(crate::compile_database::generate_entries(
+                compiler.gcc_path(),
+                compiler.gxx_path(),
+                &compiler.c_flags(),
+                &compiler.cpp_flags(),
+                &[],
+                &all_src_flags,
+                &sources.sketch_sources,
+                &src_build_dir,
+                &params.project_dir,
+            ));
+            let compile_db =
+                compile_db.translate_for_clang(crate::compile_database::TargetArchitecture::Arm);
+            let compile_database_path = if compile_db.has_entries() {
+                Some(compile_db.write_and_copy(&build_dir, &params.project_dir)?)
+            } else {
+                None
+            };
+            let elapsed = start.elapsed().as_secs_f64();
+            return Ok(BuildResult {
+                success: true,
+                hex_path: None,
+                elf_path: None,
+                size_info: None,
+                build_time_secs: elapsed,
+                message: format!("compile_commands.json generated for {}", params.env_name),
+                compile_database_path,
+            });
+        }
+
         // Compile core sources
         let mut core_objects = Vec::new();
         for source in &sources.core_sources {
@@ -138,10 +187,6 @@ impl BuildOrchestrator for TeensyOrchestrator {
         }
 
         // Compile sketch sources (with src flags too)
-        let src_flags = config.get_build_src_flags(&params.env_name)?;
-        let all_src_flags: Vec<String> =
-            user_flags.iter().chain(src_flags.iter()).cloned().collect();
-
         let mut sketch_objects = Vec::new();
         for source in &sources.sketch_sources {
             let obj = CompilerBase::object_path(source, &src_build_dir);
