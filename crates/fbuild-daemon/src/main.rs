@@ -77,8 +77,7 @@ async fn main() {
                     "http://127.0.0.1".parse().unwrap(),
                 ])
                 .allow_methods(tower_http::cors::Any)
-                .allow_headers(tower_http::cors::Any)
-                .allow_credentials(true),
+                .allow_headers(tower_http::cors::Any),
         );
 
     let addr = format!("0.0.0.0:{}", port);

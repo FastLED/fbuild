@@ -20,6 +20,12 @@ static ZCCACHE_PATH: OnceLock<Option<PathBuf>> = OnceLock::new();
 pub fn find_zccache() -> Option<&'static Path> {
     ZCCACHE_PATH
         .get_or_init(|| {
+            // Allow disabling zccache via environment variable
+            if std::env::var("FBUILD_NO_ZCCACHE").is_ok() {
+                tracing::info!("zccache disabled via FBUILD_NO_ZCCACHE");
+                return None;
+            }
+
             let exe_name = if cfg!(windows) {
                 "zccache.exe"
             } else {
