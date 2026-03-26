@@ -1,0 +1,119 @@
+{
+  "name": "fbuild-vscode",
+  "displayName": "fbuild",
+  "description": "Build, deploy, and monitor Arduino/ESP32 projects using fbuild",
+  "version": "0.1.0",
+  "publisher": "fastled",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "embedded",
+    "arduino",
+    "esp32",
+    "fastled",
+    "platformio",
+    "build",
+    "deploy",
+    "monitor"
+  ],
+  "activationEvents": [
+    "workspaceContains:platformio.ini"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "fbuild.go",
+        "title": "fbuild: Go!",
+        "icon": "$(play)"
+      },
+      {
+        "command": "fbuild.selectBuildProfile",
+        "title": "fbuild: Select Build Profile"
+      },
+      {
+        "command": "fbuild.selectAction",
+        "title": "fbuild: Select Action"
+      },
+      {
+        "command": "fbuild.toggleMonitor",
+        "title": "fbuild: Toggle Monitor on Deploy"
+      },
+      {
+        "command": "fbuild.selectEnvironment",
+        "title": "fbuild: Select Environment"
+      }
+    ],
+    "configuration": {
+      "title": "fbuild",
+      "properties": {
+        "fbuild.buildProfile": {
+          "type": "string",
+          "default": "release",
+          "enum": [
+            "quick",
+            "release",
+            "debug"
+          ],
+          "enumDescriptions": [
+            "Quick build (no LTO, faster compile)",
+            "Release build (default, LTO enabled)",
+            "Debug build (debug symbols, no optimization)"
+          ],
+          "description": "Build profile to use for compilation"
+        },
+        "fbuild.action": {
+          "type": "string",
+          "default": "build+deploy+monitor",
+          "enum": [
+            "build+deploy+monitor",
+            "build",
+            "deploy"
+          ],
+          "enumDescriptions": [
+            "Build, deploy to device, and open serial monitor",
+            "Build only (compile firmware)",
+            "Deploy only (upload pre-built firmware)"
+          ],
+          "description": "Action to perform when Go! is clicked"
+        },
+        "fbuild.attachMonitor": {
+          "type": "boolean",
+          "default": true,
+          "description": "Attach serial monitor after deploy completes"
+        },
+        "fbuild.environment": {
+          "type": "string",
+          "default": "",
+          "description": "Target environment from platformio.ini (e.g. 'uno', 'esp32c6'). Leave empty for auto-detect."
+        },
+        "fbuild.pythonPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to Python executable with fbuild installed. Leave empty to use system default."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "package": "npx @vscode/vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.2.0",
+    "eslint": "^8.56.0",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "typescript": "^5.3.3"
+  }
+}
