@@ -6,7 +6,7 @@ and ESP-IDF libraries needed for ESP32 builds.
 Framework Download Process:
     1. Download Arduino-ESP32 core (framework-arduinoespressif32)
     2. Download ESP-IDF precompiled libraries (framework-arduinoespressif32-libs)
-    3. Extract both archives (.tar.xz format)
+    3. Extract both archives (.tar.xz, .tar.gz, or .zip format)
     4. Provide access to cores/, variants/, libraries/, and tools/
 
 Framework Structure (after extraction):
@@ -227,12 +227,18 @@ class FrameworkESP32(IFramework):
                     file_size = archive_path.stat().st_size
                     if file_size < 1024:
                         raise ValueError(f"Archive too small ({file_size} bytes), likely a failed download")
-                    # Check magic bytes: XZ files start with 0xFD377A585A00
+                    with open(archive_path, "rb") as f:
+                        magic = f.read(6)
+                    # Check magic bytes based on archive format
                     if archive_name.endswith((".tar.xz", ".txz")):
-                        with open(archive_path, "rb") as f:
-                            magic = f.read(6)
                         if magic != b"\xfd7zXZ\x00":
                             raise ValueError(f"Not a valid XZ file (magic bytes: {magic[:6]!r})")
+                    elif archive_name.endswith((".tar.gz", ".tgz")):
+                        if magic[:2] != b"\x1f\x8b":
+                            raise ValueError(f"Not a valid gzip file (magic bytes: {magic[:2]!r})")
+                    elif archive_name.endswith(".zip"):
+                        if magic[:4] != b"PK\x03\x04":
+                            raise ValueError(f"Not a valid ZIP file (magic bytes: {magic[:4]!r})")
                 except (ValueError, OSError) as e:
                     if attempt < max_attempts - 1:
                         if self.show_progress:
@@ -250,8 +256,14 @@ class FrameworkESP32(IFramework):
                 try:
                     if self.show_progress:
                         print(f"Extracting {desc}...")
-                    with tarfile.open(archive_path, "r:xz") as tar:
-                        tar.extractall(temp_dir)
+                    if archive_name.endswith(".zip"):
+                        import zipfile
+
+                        with zipfile.ZipFile(archive_path, "r") as zf:
+                            zf.extractall(temp_dir)
+                    else:
+                        with tarfile.open(archive_path, "r:*") as tar:
+                            tar.extractall(temp_dir)
                 except KeyboardInterrupt:
                     raise
                 except Exception as e:
