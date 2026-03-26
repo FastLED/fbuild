@@ -87,13 +87,13 @@ export class FbuildRunner {
   }
 
   private runRawInTerminal(name: string, cmd: string, cwd: string): void {
-    // Reuse or create a terminal
-    if (this.terminal) {
-      this.terminal.dispose();
+    // Reuse the existing terminal if it's still open, otherwise create a new one
+    const existing = this.terminal && vscode.window.terminals.includes(this.terminal);
+    if (!existing) {
+      this.terminal = vscode.window.createTerminal({ name, cwd });
     }
-    this.terminal = vscode.window.createTerminal({ name, cwd });
-    this.terminal.show();
-    this.terminal.sendText(cmd);
+    this.terminal!.show();
+    this.terminal!.sendText(cmd);
   }
 
   /**
