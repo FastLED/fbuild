@@ -8,6 +8,7 @@ CI error: "tarfile.ReadError: not an lzma file"
 """
 
 import io
+import os
 import tarfile
 import zipfile
 from pathlib import Path
@@ -21,8 +22,6 @@ from fbuild.packages.framework_esp32 import FrameworkESP32
 
 def _create_tar_xz_archive(archive_path: Path, content_dir_name: str = "framework") -> None:
     """Create a valid .tar.xz archive with a single top-level directory."""
-    import os
-
     with tarfile.open(archive_path, "w:xz") as tar:
         # Create a directory entry
         dirinfo = tarfile.TarInfo(name=content_dir_name)
@@ -39,8 +38,6 @@ def _create_tar_xz_archive(archive_path: Path, content_dir_name: str = "framewor
 
 def _create_tar_gz_archive(archive_path: Path, content_dir_name: str = "framework") -> None:
     """Create a valid .tar.gz archive with a single top-level directory."""
-    import os
-
     with tarfile.open(archive_path, "w:gz") as tar:
         dirinfo = tarfile.TarInfo(name=content_dir_name)
         dirinfo.type = tarfile.DIRTYPE
@@ -55,8 +52,6 @@ def _create_tar_gz_archive(archive_path: Path, content_dir_name: str = "framewor
 
 def _create_zip_archive(archive_path: Path, content_dir_name: str = "framework") -> None:
     """Create a valid .zip archive with a single top-level directory."""
-    import os
-
     with zipfile.ZipFile(archive_path, "w") as zf:
         zf.writestr(f"{content_dir_name}/package.json", os.urandom(4096).hex())
 

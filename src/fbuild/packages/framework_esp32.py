@@ -48,6 +48,7 @@ ESP-IDF Libraries Structure:
 
 import _thread
 import json
+import zipfile
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -257,8 +258,6 @@ class FrameworkESP32(IFramework):
                     if self.show_progress:
                         print(f"Extracting {desc}...")
                     if archive_name.endswith(".zip"):
-                        import zipfile
-
                         with zipfile.ZipFile(archive_path, "r") as zf:
                             zf.extractall(temp_dir)
                     else:
