@@ -20,6 +20,12 @@ class TestLoadConfig:
         assert hasattr(config, "compiler_flags")
         assert hasattr(config, "linker_flags")
 
+    def test_load_esp32c3_config(self):
+        """Load ESP32-C3 config from esp/ subdirectory."""
+        config = platform_configs.load_config("esp32c3")
+        assert config is not None
+        assert config.mcu == "esp32c3"
+
     def test_load_esp32c6_config(self):
         """Load ESP32-C6 config from esp/ subdirectory."""
         config = platform_configs.load_config("esp32c6")
