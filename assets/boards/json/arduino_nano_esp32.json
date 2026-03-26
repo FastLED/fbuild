@@ -32,5 +32,50 @@
       "esp-builtin": {},
       "dfu": {}
     }
+  },
+  "build": {
+    "arduino": {
+      "partitions": "app3M_fat9M_fact512k_16MB.csv",
+      "memory_type": "qio_opi"
+    },
+    "core": "esp32",
+    "extra_flags": [
+      "-DARDUINO_NANO_ESP32",
+      "-DBOARD_USES_HW_GPIO_NUMBERS",
+      "-DBOARD_HAS_PSRAM",
+      "-DUSB_MANUFACTURER=\\\"Arduino\\\"",
+      "-DUSB_PRODUCT=\\\"NanoESP32\\\"",
+      "-DARDUINO_USB_CDC_ON_BOOT=1",
+      "-DARDUINO_USB_DFU_ON_BOOT=1",
+      "-DARDUINO_RUNNING_CORE=1",
+      "-DARDUINO_EVENT_RUNNING_CORE=1"
+    ],
+    "f_cpu": "240000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "hwids": [
+      [
+        "0x2341",
+        "0x0070"
+      ]
+    ],
+    "mcu": "esp32s3",
+    "variant": "arduino_nano_nora"
+  },
+  "upload": {
+    "arduino": {
+      "flash_extra_images": [
+        [
+          "0xf70000",
+          "variants/arduino_nano_nora/extra/nora_recovery/nora_recovery.ino.bin"
+        ]
+      ]
+    },
+    "flash_size": "16MB",
+    "maximum_ram_size": 327680,
+    "maximum_size": 16777216,
+    "require_upload_port": true,
+    "speed": 460800,
+    "protocol": "dfu"
   }
 }
