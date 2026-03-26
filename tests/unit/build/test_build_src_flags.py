@@ -5,7 +5,7 @@ Tests that build_src_flags from platformio.ini:
 1. Are parsed correctly by ini_parser
 2. Flow through BuildContext
 3. Are applied only to sketch compilation (not core or libraries)
-4. Work with the debug flag warning in quick profile
+4. Work with the debug flag warning (fired for all build profiles)
 """
 
 from pathlib import Path
@@ -491,12 +491,12 @@ class TestCompileSketchSrcFlags:
 
 
 # ===========================================================================
-# 5. Debug flag warning in quick profile
+# 5. Debug flag warning (all build profiles)
 # ===========================================================================
 
 
 class TestDebugFlagWarning:
-    """Test that FlagBuilder warns when -g* is in build_flags during quick profile."""
+    """Test that FlagBuilder warns when -g* is in build_flags (any profile)."""
 
     def test_warns_on_g3_in_quick_profile(self) -> None:
         ctx = _make_mock_context(
@@ -546,10 +546,37 @@ class TestDebugFlagWarning:
             fb.build_flags()
             mock_warn.assert_not_called()
 
-    def test_no_warn_in_release_profile(self) -> None:
-        """-g3 in release profile is fine — no warning."""
+    def test_warns_on_g3_in_release_profile(self) -> None:
+        """-g3 in release profile must warn — framework compiled with debug info is always slow."""
         ctx = _make_mock_context(
             user_build_flags=["-g3"],
+            user_build_src_flags=[],
+            profile=BuildProfile.RELEASE,
+        )
+        fb = FlagBuilder(ctx)
+        with patch("fbuild.output.log_warning") as mock_warn:
+            fb.build_flags()
+            mock_warn.assert_called_once()
+            msg = mock_warn.call_args[0][0]
+            assert "-g3" in msg
+            assert "build_src_flags" in msg
+
+    def test_warns_on_g_in_release_profile(self) -> None:
+        """-g in release profile must also warn."""
+        ctx = _make_mock_context(
+            user_build_flags=["-g"],
+            user_build_src_flags=[],
+            profile=BuildProfile.RELEASE,
+        )
+        fb = FlagBuilder(ctx)
+        with patch("fbuild.output.log_warning") as mock_warn:
+            fb.build_flags()
+            mock_warn.assert_called_once()
+
+    def test_no_warn_on_g0_in_release_profile(self) -> None:
+        """-g0 in release profile should not warn."""
+        ctx = _make_mock_context(
+            user_build_flags=["-g0"],
             user_build_src_flags=[],
             profile=BuildProfile.RELEASE,
         )

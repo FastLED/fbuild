@@ -222,20 +222,17 @@ class FlagBuilder:
                 if flag.startswith("-D"):
                     flags["common"].append(flag)
 
-    def _warn_debug_flags_in_quick_profile(self) -> None:
-        """Warn if user has debug flags (-g*) in global build_flags during quick profile.
+    def _warn_debug_build_flags(self) -> None:
+        """Warn if user has debug flags (-g*) in global build_flags.
 
-        In quick profile, fbuild defaults to -g0 (no debug info) for fast builds.
-        If the user puts -g/-g1/-g2/-g3 in build_flags, it overrides -g0 and applies
-        to ALL compilation (sketch, core, and libraries), massively inflating .o files
-        and slowing linking.  The user likely intended debug info for their sketch only.
+        Flags like -g, -g1, -g2, -g3 in build_flags apply to ALL compilation
+        (sketch, core, and libraries), not just the user's own code.  Compiling
+        the framework with debug info massively inflates object files and slows
+        linking — it is highly unlikely the user intended to debug the framework
+        itself.  Suggest moving the flag to build_src_flags so it only affects
+        sketch files, or replacing it with -g0 to disable debug info entirely.
         """
         if self._debug_flag_warning_shown:
-            return
-
-        from fbuild.build.build_profiles import BuildProfile
-
-        if self.context.profile != BuildProfile.QUICK:
             return
 
         debug_flags = [f for f in self.user_build_flags if f == "-g" or (f.startswith("-g") and f[2:3] in ("0", "1", "2", "3", "g", "d") and not f.startswith("-gnone") and f != "-g0")]
@@ -249,8 +246,9 @@ class FlagBuilder:
         flag_str = " ".join(debug_flags)
         log_warning(
             f"build_flags contains '{flag_str}' which applies to ALL files (sketch, core, libraries).\n"
-            f"  In quick profile this overrides the default -g0, inflating object files ~30x and slowing linking.\n"
-            f"  Recommendation: move '{flag_str}' from build_flags to build_src_flags so it only applies to your sketch code."
+            f"  Compiling the framework with debug info inflates object files ~30x and massively slows linking.\n"
+            f"  Recommendation: move '{flag_str}' from build_flags to build_src_flags so it only applies to your sketch code,\n"
+            f"  or replace it with '-g0' in build_flags to disable debug info for all files."
         )
 
     def _add_user_flags(self, flags: Dict[str, List[str]]) -> None:
@@ -265,7 +263,7 @@ class FlagBuilder:
         Args:
             flags: Flags dictionary to update
         """
-        self._warn_debug_flags_in_quick_profile()
+        self._warn_debug_build_flags()
 
         i = 0
         user_flags = self.user_build_flags
