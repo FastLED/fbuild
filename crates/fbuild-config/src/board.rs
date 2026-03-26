@@ -765,4 +765,38 @@ leonardo.upload.speed=57600
         let defines = config.get_defines();
         assert_eq!(defines.get("ARDUINO_AVR_UNO"), Some(&"1".to_string()));
     }
+
+    #[test]
+    fn test_esp32c3_board_config() {
+        let config = BoardConfig::from_board_id("esp32c3", &HashMap::new()).unwrap();
+        assert_eq!(config.mcu, "esp32c3");
+        assert_eq!(config.core, "esp32");
+        assert_eq!(config.flash_mode, Some("qio".to_string()));
+        assert_eq!(config.ldscript, Some("esp32c3_out.ld".to_string()));
+        // ESP32-C3 DevKit runs at 160 MHz
+        assert_eq!(config.f_cpu, "160000000L");
+    }
+
+    #[test]
+    fn test_esp32c3_devkitm1_board_config() {
+        // Direct look up by full board ID (same underlying JSON)
+        let config = BoardConfig::from_board_id("esp32-c3-devkitm-1", &HashMap::new()).unwrap();
+        assert_eq!(config.mcu, "esp32c3");
+        let flags = config.extra_flags.unwrap_or_default();
+        assert!(
+            flags.contains("ARDUINO_ESP32C3_DEV"),
+            "expected ARDUINO_ESP32C3_DEV in extra_flags, got: {flags}"
+        );
+    }
+
+    #[test]
+    fn test_esp32c3_no_psram() {
+        // The plain C3 DevKit has no PSRAM
+        let config = BoardConfig::from_board_id("esp32c3", &HashMap::new()).unwrap();
+        let flags = config.extra_flags.clone().unwrap_or_default();
+        assert!(
+            !flags.contains("BOARD_HAS_PSRAM"),
+            "ESP32-C3 DevKit should not have PSRAM flag, got: {flags}"
+        );
+    }
 }
