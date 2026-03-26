@@ -31,5 +31,20 @@
       "tumpa": {},
       "esp-builtin": {}
     }
+  },
+  "build": {
+    "arduino": {
+      "memory_type": "qio_qspi"
+    },
+    "extra_flags": [
+      "-DBOARD_HAS_PSRAM"
+    ],
+    "f_cpu": "160000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "mcu": "esp32c61",
+    "psram_type": "qio",
+    "variant": "esp32c61",
+    "core": "esp32"
   }
 }

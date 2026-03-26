@@ -252,3 +252,72 @@ class TestBoardManifest:
             + "\n".join(f"  - {b}" for b in boards_without_platform[:20])
             + (f"\n  ... and {len(boards_without_platform) - 20} more" if len(boards_without_platform) > 20 else "")
         )
+
+    def test_esp32s3_boards_have_build_mcu(self) -> None:
+        """Verify all ESP32-S3 boards have build.mcu field.
+
+        This was a design flaw reported in Issue #1 (PSRAM): board JSON files
+        were missing the 'build' section entirely, which meant PSRAM type and
+        other hardware features couldn't be determined from the board database.
+        The build process uses pioarduino platform board JSONs (which have complete
+        build config), but the local board database should also be accurate.
+
+        This test specifically validates ESP32-S3 boards since they are the most
+        commonly affected by PSRAM configuration issues.
+        """
+        boards_missing_build_mcu: list[str] = []
+
+        for board_file in BOARDS_DIR.glob("*.json"):
+            try:
+                board_data = json.loads(board_file.read_text())
+                # Top-level 'mcu' field uses uppercase (e.g., "ESP32S3") to identify board family.
+                # build.mcu uses lowercase (e.g., "esp32s3") for the compiler. These are different
+                # fields and we only check for presence of build.mcu (truthy), not an exact match.
+                if board_data.get("mcu") != "ESP32S3":
+                    continue
+                build_mcu = board_data.get("build", {}).get("mcu")
+                if not build_mcu:
+                    boards_missing_build_mcu.append(board_file.stem)
+            except json.JSONDecodeError:
+                pass
+
+        assert not boards_missing_build_mcu, (
+            f"Found {len(boards_missing_build_mcu)} ESP32-S3 boards missing 'build.mcu' field "
+            f"(required for correct PSRAM, flash mode, and MCU-specific compilation):\n"
+            + "\n".join(f"  - {b}" for b in sorted(boards_missing_build_mcu)[:20])
+            + (f"\n  ... and {len(boards_missing_build_mcu) - 20} more" if len(boards_missing_build_mcu) > 20 else "")
+        )
+
+    def test_esp32s3_psram_boards_have_memory_type(self) -> None:
+        """Verify ESP32-S3 boards with PSRAM have build.arduino.memory_type field.
+
+        This is needed for correct SDK library selection (qio_opi vs qio_qspi).
+        Boards with OPI PSRAM (8MB+) need 'qio_opi' to get the correct SDK libs.
+        Boards with QSPI PSRAM (2MB) need 'qio_qspi'.
+        Boards without PSRAM omit memory_type (defaults to qio_qspi).
+        """
+        boards_with_psram_missing_type: list[tuple[str, str]] = []
+
+        for board_file in BOARDS_DIR.glob("*.json"):
+            try:
+                board_data = json.loads(board_file.read_text())
+                if board_data.get("build", {}).get("mcu") != "esp32s3":
+                    continue
+                extra_flags = board_data.get("build", {}).get("extra_flags", [])
+                if isinstance(extra_flags, str):
+                    extra_flags = extra_flags.split()
+                has_psram = "-DBOARD_HAS_PSRAM" in extra_flags
+                if not has_psram:
+                    continue
+                memory_type = board_data.get("build", {}).get("arduino", {}).get("memory_type")
+                if not memory_type:
+                    boards_with_psram_missing_type.append((board_file.stem, str(extra_flags)))
+            except json.JSONDecodeError:
+                pass
+
+        assert not boards_with_psram_missing_type, (
+            f"Found {len(boards_with_psram_missing_type)} ESP32-S3 PSRAM boards missing "
+            f"'build.arduino.memory_type' (needed for correct SDK library selection):\n"
+            + "\n".join(f"  - {name}" for name, _ in boards_with_psram_missing_type[:20])
+            + (f"\n  ... and {len(boards_with_psram_missing_type) - 20} more" if len(boards_with_psram_missing_type) > 20 else "")
+        )

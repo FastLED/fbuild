@@ -31,5 +31,38 @@
       "tumpa": {},
       "esp-builtin": {}
     }
+  },
+  "build": {
+    "arduino": {
+      "partitions": "default_8MB.csv",
+      "memory_type": "qio_qspi"
+    },
+    "core": "esp32",
+    "extra_flags": [
+      "-DBOARD_HAS_PSRAM",
+      "-DARDUINO_BPI_CENTI_S3",
+      "-DARDUINO_USB_MODE=1",
+      "-DARDUINO_USB_CDC_ON_BOOT=1"
+    ],
+    "f_cpu": "240000000L",
+    "f_flash": "80000000L",
+    "flash_mode": "qio",
+    "hwids": [
+      [
+        "0x303A",
+        "0x80DF"
+      ]
+    ],
+    "mcu": "esp32s3",
+    "variant": "bpi_leaf_s3"
+  },
+  "upload": {
+    "flash_size": "8MB",
+    "maximum_ram_size": 327680,
+    "maximum_size": 8388608,
+    "use_1200bps_touch": true,
+    "wait_for_upload_port": true,
+    "require_upload_port": true,
+    "speed": 921600
   }
 }
