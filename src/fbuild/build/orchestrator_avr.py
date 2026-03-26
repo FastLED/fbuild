@@ -32,7 +32,7 @@ from fbuild.build.source_scanner import SourceCollection, SourceScanner
 from fbuild.config import BoardConfig, BoardConfigLoader, PlatformIOConfig
 from fbuild.config.board_config import BoardConfigError
 from fbuild.interrupt_utils import handle_keyboard_interrupt_properly
-from fbuild.output import log, log_build_complete, log_detail, log_firmware_path, log_phase, set_verbose
+from fbuild.output import log, log_build_complete, log_detail, log_firmware_path, log_phase, log_warning, set_verbose
 from fbuild.packages import ArduinoCore, Cache, Toolchain
 from fbuild.packages.arduino_core import ArduinoCoreError
 from fbuild.packages.library_manager import LibraryError
@@ -93,6 +93,29 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
         """
         if not verbose_only or self.verbose:
             logging.info(message)
+
+    def _check_native_usb_cdc(self, board_id: str, mcu: str) -> None:
+        """Check for ATmega32U4 native USB and warn that Serial may block without a USB host.
+
+        ATmega32U4-based boards (Arduino Leonardo, Micro, Pro Micro, LilyPad USB, etc.)
+        route ``Serial.print()`` over the on-chip USB CDC peripheral rather than a
+        hardware UART.  When no USB host is enumerated at power-on, any
+        ``Serial.print()`` call will block indefinitely because the CDC TX buffer has
+        no consumer to drain it — the same foot gun as ``ARDUINO_USB_CDC_ON_BOOT=1``
+        on ESP32.
+
+        Args:
+            board_id: Board identifier (e.g. "leonardo", "micro")
+            mcu: MCU string from board configuration (e.g. "atmega32u4")
+        """
+        if mcu.lower() in ("atmega32u4",):
+            log_warning(
+                f"Board '{board_id}' uses ATmega32U4 with native USB. "
+                "Serial.print() communicates over USB CDC and will block indefinitely "
+                "if no USB host is connected at boot. "
+                "Add 'while (!Serial);' in setup() to wait for a USB host, "
+                "or use Serial1 for hardware UART."
+            )
 
     def build(self, request: "BuildParams") -> BuildResult:
         """
@@ -165,6 +188,9 @@ class BuildOrchestratorAVR(IBuildOrchestrator):
 
             # Phase 3: Ensure toolchain
             log_phase(3, 9, "Ensuring AVR toolchain...", verbose_only=not verbose_mode)
+
+            # Check for native USB CDC foot gun (ATmega32U4 boards like Leonardo, Micro)
+            self._check_native_usb_cdc(board_id, board_config.mcu)
 
             toolchain = self._ensure_toolchain()
 

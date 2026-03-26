@@ -23,6 +23,7 @@ from fbuild.build.linker import SizeInfo
 from fbuild.build.orchestrator import BuildResult, IBuildOrchestrator
 from fbuild.cli_utils import BannerFormatter
 from fbuild.config.board_config import BoardConfig
+from fbuild.output import log_warning
 from fbuild.packages import Cache
 from fbuild.packages.library_manager import LibraryError, LibraryManager
 from fbuild.packages.platform_teensy import PlatformTeensy
@@ -59,6 +60,56 @@ class OrchestratorTeensy(IBuildOrchestrator):
         """
         self.cache = cache
         self.verbose = verbose
+
+    def _check_usb_serial_mode(self, board_id: str, build_flags: List[str], platform_config: "Optional[object]") -> None:
+        """Warn when Teensy is configured for USB Serial mode (USB_SERIAL define).
+
+        Teensy boards default to ``USB_SERIAL`` mode, which routes ``Serial.print()``
+        over the USB CDC connection rather than a hardware UART.  When no USB host is
+        present, each ``Serial.print()`` call may stall for up to ~120 ms before the
+        write times out.  In timing-sensitive sketches this adds up quickly.
+
+        The effective USB mode is determined by the last ``-DUSB_*`` flag in the
+        combined (platform config + user build_flags) list, following C preprocessor
+        last-definition-wins semantics.
+
+        Args:
+            board_id: Board identifier (e.g. "teensy41")
+            build_flags: Build flags from platformio.ini (applied after platform config defines)
+            platform_config: Board platform configuration object with a ``defines`` list
+        """
+        # Collect all USB-mode-related defines in application order
+        defines_list: List[str] = []
+
+        # Gather defines from platform config (may be strings or [key, value] pairs)
+        if platform_config is not None:
+            raw_defines = getattr(platform_config, "defines", []) or []
+            for d in raw_defines:
+                if isinstance(d, str):
+                    defines_list.append(d)
+                elif isinstance(d, (list, tuple)) and d:
+                    defines_list.append(str(d[0]))
+
+        # Append user build_flags defines (-DUSB_*)
+        for flag in build_flags:
+            if flag.startswith("-DUSB_"):
+                # Strip the -D prefix to get the raw define
+                defines_list.append(flag[2:])
+
+        # Determine the effective USB mode — last USB_* define wins
+        effective_usb_mode: str | None = None
+        for d in defines_list:
+            if d.startswith("USB_"):
+                effective_usb_mode = d
+
+        if effective_usb_mode == "USB_SERIAL":
+            log_warning(
+                f"Board '{board_id}' is configured for USB Serial mode (USB_SERIAL). "
+                "Serial.print() communicates over USB and may stall for up to ~120 ms "
+                "per write when no USB host is connected. "
+                "Use Serial1 for hardware UART, or select a different USB mode via "
+                "build_flags (e.g. '-DUSB_SERIAL_HID') if you need both Serial and HID."
+            )
 
     def build(self, request: "BuildParams") -> BuildResult:
         """Execute complete build process.
@@ -222,6 +273,9 @@ class OrchestratorTeensy(IBuildOrchestrator):
             platform_config = platform_configs.load_board_config(board_id)
             if platform_config is None:
                 return self._error_result(start_time, f"No platform configuration found for {board_id}. Available: {platform_configs.list_available_configs()}")
+
+            # Warn if USB Serial mode is active (Serial routes over USB, not hardware UART)
+            self._check_usb_serial_mode(board_id, build_flags, platform_config)
 
             # Extract variant and core from board config
             variant = board_json.get("build", {}).get("variant", "")

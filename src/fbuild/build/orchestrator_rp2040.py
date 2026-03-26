@@ -25,7 +25,7 @@ from fbuild.build.linker import SizeInfo
 from fbuild.build.orchestrator import BuildResult, IBuildOrchestrator
 from fbuild.cli_utils import BannerFormatter
 from fbuild.config.board_config import BoardConfig
-from fbuild.output import DefaultProgressCallback
+from fbuild.output import DefaultProgressCallback, log_warning
 from fbuild.packages import Cache
 from fbuild.packages.library_manager import LibraryError, LibraryManager
 from fbuild.packages.platform_rp2040 import PlatformRP2040
@@ -74,6 +74,34 @@ class OrchestratorRP2040(IBuildOrchestrator):
         """
         self.cache = cache
         self.verbose = verbose
+
+    def _check_usb_serial_default(self, board_id: str, build_flags: List[str]) -> None:
+        """Warn that the arduino-pico framework uses USB CDC for Serial by default.
+
+        The arduino-pico framework routes ``Serial.print()`` over USB CDC rather than
+        a hardware UART.  When no USB host is connected at power-on, any
+        ``Serial.print()`` call may block for several seconds before timing out,
+        which can cause unexpected pauses or hangs in deployed (non-USB) setups.
+
+        Users who want reliable serial output without a USB host should use
+        ``Serial1`` (or another hardware UART) instead of ``Serial``, or suppress
+        this warning by adding ``-DPICO_STDIO_USB=0`` to ``build_flags``.
+
+        Args:
+            board_id: Board identifier (e.g. "rpipico", "rpipico2")
+            build_flags: Build flags from platformio.ini (checked for opt-out)
+        """
+        # Allow users to silence the warning by explicitly opting out of USB stdio
+        if "-DPICO_STDIO_USB=0" in build_flags:
+            return
+
+        log_warning(
+            f"Board '{board_id}' uses the arduino-pico framework where Serial.print() "
+            "communicates over USB CDC by default. "
+            "When no USB host is connected, Serial.print() may block for several seconds. "
+            "Use Serial1 for hardware UART, or add '-DPICO_STDIO_USB=0' to build_flags "
+            "to suppress this warning."
+        )
 
     def build(self, request: "BuildParams") -> BuildResult:
         """Execute complete build process.
@@ -240,6 +268,9 @@ class OrchestratorRP2040(IBuildOrchestrator):
             platform_config = platform_configs.load_config(board_config.mcu)
             if platform_config is None:
                 return self._error_result(start_time, f"No platform configuration found for {board_config.mcu}. Available: {platform_configs.list_available_configs()}")
+
+            # Warn if Serial is USB CDC (arduino-pico default) which may block without a USB host
+            self._check_usb_serial_default(board_id, build_flags)
 
             # Extract variant and core from board config
             variant = board_json.get("build", {}).get("variant", "")
