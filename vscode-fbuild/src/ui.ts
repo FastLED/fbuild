@@ -1,31 +1,11 @@
 import * as vscode from "vscode";
-
-/** Labels shown in the quick-pick menus. */
-const BUILD_PROFILES: Record<string, string> = {
-  quick: "$(zap) Quick",
-  release: "$(package) Release",
-  debug: "$(bug) Debug",
-};
-
-/** Short labels for the compact status bar summary. */
-const PROFILE_SHORT: Record<string, string> = {
-  quick: "Quick",
-  release: "Release",
-  debug: "Debug",
-};
-
-const ACTIONS: Record<string, string> = {
-  "build+deploy+monitor": "$(rocket) Build + Deploy + Monitor",
-  build: "$(tools) Build Only",
-  deploy: "$(cloud-upload) Deploy Only",
-};
-
-/** Short labels for the compact status bar summary. */
-const ACTION_SHORT: Record<string, string> = {
-  "build+deploy+monitor": "B+D+M",
-  build: "Build",
-  deploy: "Deploy",
-};
+import {
+  BUILD_PROFILES,
+  BUILD_PROFILE_ICONS,
+  ACTION_ICONS,
+  ACTION_SHORT,
+  ValueQuickPickItem,
+} from "./constants";
 
 /**
  * Manages the status-bar items: a compact configuration summary and a Go! button.
@@ -78,10 +58,9 @@ export class StatusBarUI {
   // ── Quick-pick menus (called from commands / tree view clicks) ──
 
   async pickBuildProfile(): Promise<void> {
-    const items = Object.entries(BUILD_PROFILES).map(([value, label]) => ({
-      label,
-      value,
-    }));
+    const items: ValueQuickPickItem[] = Object.entries(BUILD_PROFILE_ICONS).map(
+      ([value, label]) => ({ label, value })
+    );
 
     const picked = await vscode.window.showQuickPick(items, {
       placeHolder: "Select build profile",
@@ -99,10 +78,9 @@ export class StatusBarUI {
   }
 
   async pickAction(): Promise<void> {
-    const items = Object.entries(ACTIONS).map(([value, label]) => ({
-      label,
-      value,
-    }));
+    const items: ValueQuickPickItem[] = Object.entries(ACTION_ICONS).map(
+      ([value, label]) => ({ label, value })
+    );
 
     const picked = await vscode.window.showQuickPick(items, {
       placeHolder: "Select action",
@@ -138,7 +116,7 @@ export class StatusBarUI {
     const action = config.get<string>("action", "build+deploy+monitor");
     const env = config.get<string>("environment", "");
 
-    const profileLabel = PROFILE_SHORT[profile] ?? profile;
+    const profileLabel = BUILD_PROFILES[profile] ?? profile;
     const actionLabel = ACTION_SHORT[action] ?? action;
     const envLabel = env || "auto";
 

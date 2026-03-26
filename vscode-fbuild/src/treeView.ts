@@ -1,16 +1,5 @@
 import * as vscode from "vscode";
-
-const BUILD_PROFILES: Record<string, string> = {
-  quick: "Quick",
-  release: "Release",
-  debug: "Debug",
-};
-
-const ACTIONS: Record<string, string> = {
-  "build+deploy+monitor": "Build + Deploy + Monitor",
-  build: "Build Only",
-  deploy: "Deploy Only",
-};
+import { BUILD_PROFILES, ACTIONS } from "./constants";
 
 type ConfigItemId = "profile" | "action" | "environment" | "monitor";
 

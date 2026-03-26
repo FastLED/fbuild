@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import { FbuildRunner } from "./fbuildRunner";
 import { StatusBarUI } from "./ui";
 import { FbuildTreeProvider, detectEnvironments } from "./treeView";
+import { ValueQuickPickItem } from "./constants";
 
 let runner: FbuildRunner;
 let ui: StatusBarUI;
@@ -49,16 +50,18 @@ async function pickEnvironmentFromIni(): Promise<void> {
 
   if (envs.length > 0) {
     // Show detected environments as quick-pick items
-    const items: vscode.QuickPickItem[] = [
+    const items: ValueQuickPickItem[] = [
       {
         label: "$(search) auto-detect",
         description: "Let fbuild choose the environment",
-        detail: current === "" ? "$(check) Currently selected" : undefined,
+        detail: current === "" ? "Currently selected" : undefined,
+        value: "",
       },
       ...envs.map((e) => ({
         label: `$(circuit-board) ${e}`,
-        description: e === current ? "$(check) Currently selected" : undefined,
+        description: e === current ? "Currently selected" : undefined,
         detail: undefined as string | undefined,
+        value: e,
       })),
     ];
 
@@ -67,10 +70,9 @@ async function pickEnvironmentFromIni(): Promise<void> {
     });
 
     if (picked) {
-      const value = picked.label.startsWith("$(search)") ? "" : picked.label.replace("$(circuit-board) ", "");
       await config.update(
         "environment",
-        value,
+        picked.value,
         vscode.ConfigurationTarget.Workspace
       );
     }
