@@ -2,7 +2,7 @@
   "name": "fbuild-vscode",
   "displayName": "fbuild",
   "description": "Build, deploy, and monitor Arduino/ESP32 projects using fbuild",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "fastled",
   "license": "MIT",
   "engines": {
@@ -26,6 +26,31 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "fbuild-sidebar",
+          "title": "fbuild",
+          "icon": "resources/fbuild-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "fbuild-sidebar": [
+        {
+          "id": "fbuild.config",
+          "name": "Configuration",
+          "contextualTitle": "fbuild"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "fbuild.config",
+        "contents": "No platformio.ini found in this workspace.\n\n[Open Folder](command:vscode.openFolder)\n\nfbuild works with PlatformIO-compatible projects. Open a folder containing a platformio.ini file to get started.",
+        "when": "!fbuild.projectDetected"
+      }
+    ],
     "commands": [
       {
         "command": "fbuild.go",
@@ -47,6 +72,14 @@
       {
         "command": "fbuild.selectEnvironment",
         "title": "fbuild: Select Environment"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "fbuild.go",
+        "key": "ctrl+shift+g",
+        "mac": "cmd+shift+g",
+        "when": "fbuild.projectDetected"
       }
     ],
     "configuration": {

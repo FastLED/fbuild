@@ -14,17 +14,33 @@ fbuild must be available on your `PATH`, or configure a custom Python path in th
 
 ## Features
 
-The extension adds status-bar controls for one-click embedded development:
+### Sidebar Panel
 
-| Control | Description |
-|---------|-------------|
-| **Build Profile** | `Quick` · `Release` · `Debug` |
-| **Action** | `Build + Deploy + Monitor` · `Build Only` · `Deploy Only` |
-| **Environment** | Target environment from `platformio.ini` (auto-detect or manual) |
-| **Monitor** | Toggle serial monitor attachment on deploy |
+The extension adds a dedicated **fbuild** icon in the Activity Bar (left sidebar). Click it to open the configuration panel:
+
+| Tree Item | Description |
+|-----------|-------------|
+| **Profile** | `Quick` · `Release` · `Debug` — click to change |
+| **Action** | `Build + Deploy + Monitor` · `Build Only` · `Deploy Only` — click to change |
+| **Environment** | Auto-detected from `platformio.ini` — click to pick or enter manually |
+| **Monitor** | Toggle serial monitor attachment on deploy — click to toggle |
 | **Go!** | Execute the selected action |
 
-All controls are accessible from the status bar and via the Command Palette (`Ctrl+Shift+P` → "fbuild:").
+### Status Bar
+
+A compact summary in the status bar shows your current configuration at a glance (e.g., `⚡ Release | B+D+M | auto`). Click it to open the sidebar. The **Go!** button executes instantly.
+
+### Keyboard Shortcut
+
+Press **Ctrl+Shift+G** (macOS: **Cmd+Shift+G**) to execute the current action without touching the mouse.
+
+### Environment Auto-Detection
+
+When you click "Environment" in the sidebar, the extension parses your `platformio.ini` and shows all `[env:name]` sections as quick-pick items. No more typing environment names by hand.
+
+### Command Palette
+
+All controls are also accessible via the Command Palette (`Ctrl+Shift+P` → "fbuild:").
 
 ## How It Works
 
