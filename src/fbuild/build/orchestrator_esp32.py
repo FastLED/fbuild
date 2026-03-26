@@ -156,6 +156,50 @@ class OrchestratorESP32(IBuildOrchestrator):
 
         return flags
 
+    def _check_cdc_on_boot(self, board_id: str, build_flags: List[str], board_json: dict) -> None:
+        """Check for CDC on boot configuration and emit a warning if enabled.
+
+        ARDUINO_USB_CDC_ON_BOOT=1 means the USB CDC port is initialised during
+        boot via native USB (ESP32-S3, C3, C6, S2, …).  When no USB host is
+        connected at power-on, any call to Serial.print() will block indefinitely
+        because the CDC TX buffer has no consumer to drain it.
+
+        The check respects user overrides: if build_flags contains
+        ``-DARDUINO_USB_CDC_ON_BOOT=0`` after the board JSON declares ``=1``,
+        the last definition wins (C preprocessor semantics) and no warning is
+        emitted.
+
+        Args:
+            board_id: Board identifier (e.g. "adafruit_feather_esp32s3")
+            build_flags: Build flags from platformio.ini (applied after board JSON)
+            board_json: Board configuration dict loaded from the platform JSON file
+        """
+        # Collect all flag sources in the order they are applied to the compiler
+        arduino_extra_flags = board_json.get("build", {}).get("extra_flags", [])
+        if isinstance(arduino_extra_flags, str):
+            arduino_extra_flags = arduino_extra_flags.split()
+
+        arduino_config_extra_flags = board_json.get("build", {}).get("arduino", {}).get("extra_flags", [])
+        if isinstance(arduino_config_extra_flags, str):
+            arduino_config_extra_flags = arduino_config_extra_flags.split()
+
+        all_flags = arduino_extra_flags + arduino_config_extra_flags + build_flags
+
+        # Determine the effective value — last definition in the flag list wins
+        effective_cdc_on_boot: bool | None = None
+        for flag in all_flags:
+            if flag == "-DARDUINO_USB_CDC_ON_BOOT=1":
+                effective_cdc_on_boot = True
+            elif flag == "-DARDUINO_USB_CDC_ON_BOOT=0":
+                effective_cdc_on_boot = False
+
+        if effective_cdc_on_boot is True:
+            log_warning(
+                f"Board '{board_id}' has CDC on boot enabled (ARDUINO_USB_CDC_ON_BOOT=1). "
+                "If no USB host is connected at boot, Serial output may block indefinitely. "
+                "To disable, add 'build_flags = -DARDUINO_USB_CDC_ON_BOOT=0' to platformio.ini."
+            )
+
     def build(self, request: "BuildParams") -> BuildResult:
         """Execute complete build process.
 
@@ -334,6 +378,10 @@ class OrchestratorESP32(IBuildOrchestrator):
             # Add PSRAM-specific build flags based on board capabilities
             # This prevents "CORRUPT HEAP" crashes on boards without PSRAM
             build_flags = self._add_psram_flags(board_id, mcu, build_flags, board_json, verbose)
+
+            # Warn if CDC on boot is enabled so users know Serial may block
+            # when no USB host is connected at power-on.
+            self._check_cdc_on_boot(board_id, build_flags, board_json)
 
             # Get required packages
             packages = platform.get_required_packages(mcu)
