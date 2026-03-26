@@ -146,3 +146,8 @@ uv.lock
 .loop
 **/.pio
 compile_commands.json
+
+# VSCode extension build artifacts
+vscode-fbuild/out/
+vscode-fbuild/node_modules/
+vscode-fbuild/*.vsix
