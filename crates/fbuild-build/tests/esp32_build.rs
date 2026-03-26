@@ -176,6 +176,80 @@ void loop() {
     );
 }
 
+/// Build a self-contained ESP32-C3 blink sketch (RISC-V).
+///
+/// ESP32-C3 uses the rv32imc RISC-V ISA.  This test validates the full build
+/// pipeline for the C3 variant, including toolchain selection and framework
+/// extraction.  It requires Internet access (first run only, then cached).
+#[test]
+#[ignore]
+fn build_esp32c3_blink() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let project_dir = tmp.path();
+
+    fs::write(
+        project_dir.join("platformio.ini"),
+        "[env:esp32c3]\nplatform = espressif32\nboard = esp32-c3-devkitm-1\nframework = arduino\n",
+    )
+    .unwrap();
+
+    let src_dir = project_dir.join("src");
+    fs::create_dir_all(&src_dir).unwrap();
+    fs::write(
+        src_dir.join("blink.cpp"),
+        "\
+#include <Arduino.h>
+
+void setup() {
+  // GPIO 8 is commonly available on ESP32-C3 DevKit
+  pinMode(8, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(8, HIGH);
+  delay(1000);
+  digitalWrite(8, LOW);
+  delay(1000);
+}
+",
+    )
+    .unwrap();
+
+    let build_dir = project_dir.join(".fbuild/build");
+    let params = BuildParams {
+        project_dir: project_dir.to_path_buf(),
+        env_name: "esp32c3".to_string(),
+        clean: true,
+        profile: BuildProfile::Release,
+        build_dir,
+        verbose: true,
+        jobs: None,
+        generate_compiledb: false,
+        compiledb_only: false,
+    };
+
+    let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
+    let result = orchestrator
+        .build(&params)
+        .expect("ESP32-C3 build should succeed");
+
+    assert!(result.success);
+    let bin_path = result.hex_path.expect("should produce bin file");
+    assert!(bin_path.exists());
+
+    let size = result.size_info.expect("should have size info");
+    eprintln!(
+        "ESP32-C3 blink build: flash={}/{} ({:.1}%) ram={}/{} ({:.1}%) time={:.1}s",
+        size.total_flash,
+        size.max_flash.unwrap_or(0),
+        size.flash_percent().unwrap_or(0.0),
+        size.total_ram,
+        size.max_ram.unwrap_or(0),
+        size.ram_percent().unwrap_or(0.0),
+        result.build_time_secs
+    );
+}
+
 /// Build a self-contained ESP32-S3 blink sketch (Xtensa, native USB-CDC).
 ///
 /// This test requires Internet access (first run only, then cached).

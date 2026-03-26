@@ -31,3 +31,8 @@ __pycache__/
 *.egg-info/
 dist/
 build/
+
+# VSCode extension build artifacts
+vscode-fbuild/out/
+vscode-fbuild/node_modules/
+vscode-fbuild/*.vsix

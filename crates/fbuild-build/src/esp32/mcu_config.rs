@@ -438,4 +438,79 @@ mod tests {
         assert!(flags.contains(&"-Dmbedtls_sha1_finish_ret=mbedtls_sha1_finish".to_string()));
         assert_eq!(flags.len(), 6);
     }
+
+    // --- ESP32-C3 specific tests (mirrors test_platform_configs.py from main) ---
+
+    #[test]
+    fn test_esp32c3_config_loads() {
+        let config = get_mcu_config("esp32c3").expect("esp32c3 config should load");
+        assert_eq!(config.mcu, "esp32c3");
+    }
+
+    #[test]
+    fn test_esp32c3_is_riscv() {
+        let config = get_mcu_config("esp32c3").unwrap();
+        assert!(config.is_riscv(), "esp32c3 should be RISC-V");
+        assert!(!config.is_xtensa(), "esp32c3 should not be Xtensa");
+    }
+
+    #[test]
+    fn test_esp32c3_has_riscv_march_flag() {
+        let config = get_mcu_config("esp32c3").unwrap();
+        // Should contain RISC-V march flag (rv32imc variant)
+        let c_flags = &config.compiler_flags.c;
+        assert!(
+            c_flags.iter().any(|f| f.starts_with("-march=rv32")),
+            "esp32c3 should have -march=rv32... flag, got: {:?}",
+            c_flags
+        );
+    }
+
+    #[test]
+    fn test_esp32c3_has_required_fields() {
+        let config = get_mcu_config("esp32c3").unwrap();
+        // Must have compiler flags
+        assert!(!config.compiler_flags.common.is_empty());
+        // Must have linker flags
+        assert!(!config.linker_flags.is_empty());
+        // Must have esptool config for flashing
+        let _esptool = &config.esptool;
+    }
+
+    #[test]
+    fn test_esp32c3_toolchain_prefix() {
+        let config = get_mcu_config("esp32c3").unwrap();
+        assert_eq!(
+            config.toolchain_prefix(),
+            "riscv32-esp-elf-",
+            "esp32c3 should use riscv32-esp-elf toolchain"
+        );
+    }
+
+    #[test]
+    fn test_esp32c3_bootloader_offset() {
+        let config = get_mcu_config("esp32c3").unwrap();
+        // C-series uses 0x0 bootloader offset (unlike esp32 which uses 0x1000)
+        assert_eq!(
+            config.bootloader_offset(),
+            "0x0",
+            "esp32c3 should use 0x0 bootloader offset"
+        );
+    }
+
+    /// All supported MCUs should be discoverable and loadable — mirrors
+    /// `test_contains_expected_mcus` and `test_all_configs_loadable` from
+    /// `test_platform_configs.py`.
+    #[test]
+    fn test_all_supported_mcus_are_loadable() {
+        let mcus = supported_mcus();
+        assert!(
+            mcus.contains(&"esp32c3"),
+            "esp32c3 must be in supported MCU list"
+        );
+        for mcu in mcus {
+            get_mcu_config(mcu)
+                .unwrap_or_else(|e| panic!("failed to load config for {mcu}: {e}"));
+        }
+    }
 }
