@@ -436,4 +436,38 @@ mod tests {
         assert!(!Platform::Espressif32.matches_str("espressif8266"));
         assert!(!Platform::AtmelAvr.matches_str("teensy"));
     }
+
+    /// Guard: .env must contain only safe PATH entries, never secrets.
+    #[test]
+    fn dotenv_contains_only_path() {
+        // Walk up from the crate directory to find the workspace root .env
+        let manifest_dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR"));
+        let workspace_root = manifest_dir
+            .parent()
+            .expect("crates/")
+            .parent()
+            .expect("workspace root");
+        let env_path = workspace_root.join(".env");
+        let contents = std::fs::read_to_string(&env_path)
+            .unwrap_or_else(|e| panic!(".env not found at {}: {e}", env_path.display()));
+
+        // Only allowed variables (whitelist)
+        let allowed_keys = ["PATH"];
+
+        for line in contents.lines() {
+            let line = line.trim();
+            if line.is_empty() || line.starts_with('#') {
+                continue;
+            }
+            let key = line
+                .split('=')
+                .next()
+                .expect("each .env line must be KEY=VALUE");
+            assert!(
+                allowed_keys.contains(&key),
+                ".env contains disallowed key {key:?} — only {allowed_keys:?} are permitted. \
+                 Do not commit secrets to .env!"
+            );
+        }
+    }
 }
