@@ -509,8 +509,7 @@ mod tests {
             "esp32c3 must be in supported MCU list"
         );
         for mcu in mcus {
-            get_mcu_config(mcu)
-                .unwrap_or_else(|e| panic!("failed to load config for {mcu}: {e}"));
+            get_mcu_config(mcu).unwrap_or_else(|e| panic!("failed to load config for {mcu}: {e}"));
         }
     }
 }

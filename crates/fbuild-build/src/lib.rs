@@ -16,6 +16,44 @@ pub mod zccache;
 pub use source_scanner::SourceScanner;
 
 use fbuild_core::{BuildProfile, Platform, Result, SizeInfo};
+
+/// Warn if user has debug flags (`-g`, `-g1`, `-g2`, `-g3`) in global `build_flags`.
+///
+/// These flags apply to ALL compilation (sketch, core, and libraries), not just the
+/// user's own code.  Compiling the framework with debug info inflates object files ~30x
+/// and massively slows linking.  Suggest moving the flag to `build_src_flags`.
+pub fn warn_debug_build_flags(user_build_flags: &[String]) {
+    let debug_flags: Vec<&str> = user_build_flags
+        .iter()
+        .filter(|f| {
+            let f = f.as_str();
+            if f == "-g" {
+                return true;
+            }
+            if f.starts_with("-g") && !f.starts_with("-gnone") && f != "-g0" {
+                if let Some(c) = f.chars().nth(2) {
+                    return matches!(c, '0'..='3' | 'g' | 'd');
+                }
+            }
+            false
+        })
+        .map(|s| s.as_str())
+        .collect();
+
+    if debug_flags.is_empty() {
+        return;
+    }
+
+    let flag_str = debug_flags.join(" ");
+    tracing::warn!(
+        "build_flags contains '{}' which applies to ALL files (sketch, core, libraries).\n  \
+         Compiling the framework with debug info inflates object files ~30x and massively slows linking.\n  \
+         Recommendation: move '{}' from build_flags to build_src_flags so it only applies to your sketch code,\n  \
+         or replace it with '-g0' in build_flags to disable debug info for all files.",
+        flag_str,
+        flag_str,
+    );
+}
 use std::path::PathBuf;
 
 /// Result of a successful build.
@@ -61,5 +99,32 @@ pub fn get_orchestrator(platform: Platform) -> Result<Box<dyn BuildOrchestrator>
             "native orchestrator for {:?} not yet implemented — use --platformio flag for this platform",
             platform
         ))),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn warn_debug_build_flags_detects_g3() {
+        // Should not panic; exercises the detection path.
+        warn_debug_build_flags(&["-g3".to_string()]);
+    }
+
+    #[test]
+    fn warn_debug_build_flags_detects_bare_g() {
+        warn_debug_build_flags(&["-g".to_string()]);
+    }
+
+    #[test]
+    fn warn_debug_build_flags_ignores_g0() {
+        // -g0 disables debug info; should not warn.
+        warn_debug_build_flags(&["-g0".to_string()]);
+    }
+
+    #[test]
+    fn warn_debug_build_flags_ignores_unrelated() {
+        warn_debug_build_flags(&["-O2".to_string(), "-Wall".to_string()]);
     }
 }

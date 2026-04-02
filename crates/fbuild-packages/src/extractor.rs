@@ -130,8 +130,8 @@ mod tests {
 
     /// Helper: create a minimal .tar.gz archive containing a single file.
     fn make_tar_gz(dest: &Path, entry_name: &str, content: &[u8]) {
-        use flate2::Compression;
         use flate2::write::GzEncoder;
+        use flate2::Compression;
 
         let file = std::fs::File::create(dest).expect("create tar.gz");
         let enc = GzEncoder::new(file, Compression::default());
@@ -145,7 +145,11 @@ mod tests {
         builder
             .append_data(&mut header, entry_name, content)
             .expect("append entry");
-        builder.into_inner().expect("finish gz").finish().expect("finish encoder");
+        builder
+            .into_inner()
+            .expect("finish gz")
+            .finish()
+            .expect("finish encoder");
     }
 
     /// Helper: create a minimal .tar.xz archive containing a single file.
@@ -164,7 +168,11 @@ mod tests {
         builder
             .append_data(&mut header, entry_name, content)
             .expect("append entry");
-        builder.into_inner().expect("finish xz").finish().expect("finish encoder");
+        builder
+            .into_inner()
+            .expect("finish xz")
+            .finish()
+            .expect("finish encoder");
     }
 
     /// Helper: create a minimal .zip archive containing a single file.

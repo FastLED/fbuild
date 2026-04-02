@@ -186,6 +186,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // Emit a warning if CDC on boot is effectively enabled (may cause Serial to block
         // when no USB host is connected).
         warn_if_cdc_on_boot(&board.name, board.extra_flags.as_deref(), &user_build_flags);
+        crate::warn_debug_build_flags(&user_build_flags);
 
         if !lib_deps.is_empty() {
             let libs_dir = build_dir.join("libs");
@@ -1078,9 +1079,7 @@ pub fn cdc_on_boot_enabled(board_extra_flags: Option<&str>, user_build_flags: &[
         // Normalise: strip leading whitespace and optional `-D` prefix added by some tools.
         let stripped = flag.trim();
         // Match `-DARDUINO_USB_CDC_ON_BOOT=VALUE` or `ARDUINO_USB_CDC_ON_BOOT=VALUE`
-        let without_d = stripped
-            .strip_prefix("-D")
-            .unwrap_or(stripped);
+        let without_d = stripped.strip_prefix("-D").unwrap_or(stripped);
 
         if let Some(value) = without_d.strip_prefix("ARDUINO_USB_CDC_ON_BOOT=") {
             effective = Some(value.trim() == "1");
@@ -1171,9 +1170,7 @@ mod tests {
     /// Board that explicitly disables CDC on boot.
     #[test]
     fn test_cdc_disabled_by_board_extra_flags() {
-        let board_flags = Some(
-            "-DARDUINO_FREENOVE_ESP32_S3_WROOM -DARDUINO_USB_CDC_ON_BOOT=0"
-        );
+        let board_flags = Some("-DARDUINO_FREENOVE_ESP32_S3_WROOM -DARDUINO_USB_CDC_ON_BOOT=0");
         assert!(!cdc_on_boot_enabled(board_flags, &[]));
     }
 
@@ -1193,9 +1190,7 @@ mod tests {
     /// User build_flags override a board-level enable (last definition wins).
     #[test]
     fn test_user_flag_overrides_board_enable() {
-        let board_flags = Some(
-            "-DARDUINO_USB_CDC_ON_BOOT=1"
-        );
+        let board_flags = Some("-DARDUINO_USB_CDC_ON_BOOT=1");
         let user_flags = vec!["-DARDUINO_USB_CDC_ON_BOOT=0".to_string()];
         assert!(!cdc_on_boot_enabled(board_flags, &user_flags));
     }
