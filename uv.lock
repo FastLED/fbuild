@@ -10,8 +10,21 @@ dependencies = [
     { name = "zccache" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "fbuild-dev-tools" },
+]
+
 [package.metadata]
 requires-dist = [{ name = "zccache", specifier = ">=1.1.3" }]
+
+[package.metadata.requires-dev]
+dev = [{ name = "fbuild-dev-tools", editable = "ci/dev-tools" }]
+
+[[package]]
+name = "fbuild-dev-tools"
+version = "0.0.0"
+source = { editable = "ci/dev-tools" }
 
 [[package]]
 name = "zccache"
