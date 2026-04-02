@@ -63,3 +63,25 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - name: Build docs
         run: cargo doc --workspace --no-deps
+
+  validate-boards:
+    name: Validate Board Definitions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install PlatformIO
+        run: pip install platformio
+      - name: Install PlatformIO platforms
+        run: |
+          pio pkg install -g -p "platformio/atmelavr"
+          pio pkg install -g -p "platformio/espressif32"
+          pio pkg install -g -p "platformio/espressif8266"
+          pio pkg install -g -p "platformio/teensy"
+          pio pkg install -g -p "platformio/ststm32"
+          pio pkg install -g -p "platformio/raspberrypi"
+          pio pkg install -g -p "platformio/atmelmegaavr"
+      - name: Validate board JSONs match PlatformIO
+        run: python ci/validate_boards.py

@@ -1,6 +1,8 @@
 //! Library dependency management.
 
 pub mod arduino_core;
+pub mod attiny_core;
+pub mod avr_framework;
 pub mod esp32_framework;
 pub mod esp32_platform;
 pub mod library_compiler;
@@ -12,6 +14,8 @@ pub mod registry;
 pub mod teensy_core;
 
 pub use arduino_core::ArduinoCore;
+pub use attiny_core::ATTinyCore;
+pub use avr_framework::AvrFramework;
 pub use esp32_framework::Esp32Framework;
 pub use esp32_platform::Esp32Platform;
 pub use library_manager::LibraryResult;

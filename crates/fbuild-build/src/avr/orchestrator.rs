@@ -12,7 +12,7 @@
 //! 9. Convert to firmware.hex
 //! 10. Report size
 
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::time::Instant;
 
 use fbuild_core::{Platform, Result};
@@ -51,10 +51,9 @@ impl BuildOrchestrator for AvrOrchestrator {
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
         tracing::info!("avr-gcc toolchain at {}", toolchain_dir.display());
 
-        // 4. Ensure Arduino core
-        let framework = fbuild_packages::library::ArduinoCore::new(&params.project_dir);
-        let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
-        tracing::info!("Arduino core at {}", framework_dir.display());
+        // 4. Ensure Arduino core (select framework based on board's core name)
+        let (framework_dir, core_dir, variant_dir) =
+            ensure_avr_framework(&params.project_dir, &board.core, &board.variant)?;
 
         // 5. Setup build directories
         let cache = fbuild_packages::Cache::new(&params.project_dir);
@@ -73,9 +72,6 @@ impl BuildOrchestrator for AvrOrchestrator {
                 .get_src_dir(&params.env_name)?
                 .unwrap_or_else(|| "src".to_string()),
         );
-
-        let core_dir = framework.get_core_dir(&board.core);
-        let variant_dir = framework.get_variant_dir(&board.variant);
 
         let scanner = SourceScanner::new(&src_dir, &src_build_dir);
         let sources = scanner.scan_all(Some(&core_dir), Some(&variant_dir))?;
@@ -96,6 +92,25 @@ impl BuildOrchestrator for AvrOrchestrator {
         let include_dir = params.project_dir.join("include");
         if include_dir.is_dir() {
             include_dirs.push(include_dir);
+        }
+
+        // PlatformIO automatically discovers libraries placed in the project's lib/ directory.
+        // Each subdirectory is treated as a library — add its root (and src/ if present).
+        let local_lib_dir = params.project_dir.join("lib");
+        if local_lib_dir.is_dir() {
+            if let Ok(entries) = std::fs::read_dir(&local_lib_dir) {
+                for entry in entries.flatten() {
+                    let path = entry.path();
+                    if path.is_dir() {
+                        let lib_src = path.join("src");
+                        if lib_src.is_dir() {
+                            include_dirs.push(lib_src);
+                        }
+                        // Always add the root too (some libraries have headers at top level)
+                        include_dirs.push(path);
+                    }
+                }
+            }
         }
 
         // Add user build flags to defines
@@ -221,7 +236,58 @@ impl BuildOrchestrator for AvrOrchestrator {
             sketch_objects.push(obj);
         }
 
-        // 7.5. Generate compile_commands.json
+        // 7.5. Compile local libraries from the project's lib/ directory.
+        let mut library_objects = Vec::new();
+        let local_lib_dir = params.project_dir.join("lib");
+        if local_lib_dir.is_dir() {
+            if let Ok(entries) = std::fs::read_dir(&local_lib_dir) {
+                for entry in entries.flatten() {
+                    let lib_path = entry.path();
+                    if !lib_path.is_dir() {
+                        continue;
+                    }
+                    let lib_name = lib_path
+                        .file_name()
+                        .unwrap_or_default()
+                        .to_string_lossy()
+                        .to_string();
+
+                    let lib_info = fbuild_packages::library::library_info::InstalledLibrary::new(
+                        &lib_path, &lib_name,
+                    );
+                    let lib_sources = lib_info.get_source_files();
+                    if lib_sources.is_empty() {
+                        continue;
+                    }
+
+                    let lib_build_dir = build_dir.join("lib").join(&lib_name);
+                    std::fs::create_dir_all(&lib_build_dir)?;
+                    tracing::info!(
+                        "compiling local library '{}': {} source files",
+                        lib_name,
+                        lib_sources.len()
+                    );
+
+                    for source in &lib_sources {
+                        let obj = CompilerBase::object_path(source, &lib_build_dir);
+                        if CompilerBase::needs_rebuild(source, &obj) {
+                            let result = compiler.compile(source, &obj, &all_src_flags)?;
+                            if !result.success {
+                                return Err(fbuild_core::FbuildError::BuildFailed(format!(
+                                    "local library '{}' compilation failed for {}:\n{}",
+                                    lib_name,
+                                    source.display(),
+                                    result.stderr
+                                )));
+                            }
+                        }
+                        library_objects.push(obj);
+                    }
+                }
+            }
+        }
+
+        // 7.6. Generate compile_commands.json
         let mut compile_db = crate::compile_database::CompileDatabase::new();
         // Core + variant sources use user_flags
         let core_and_variant: Vec<std::path::PathBuf> = sources
@@ -274,8 +340,16 @@ impl BuildOrchestrator for AvrOrchestrator {
             params.verbose,
         );
 
-        let link_result =
-            crate::linker::Linker::link_all(&linker, &sketch_objects, &core_objects, &build_dir)?;
+        // Include library objects alongside core objects for linking
+        let mut all_core_objects = core_objects;
+        all_core_objects.extend(library_objects);
+
+        let link_result = crate::linker::Linker::link_all(
+            &linker,
+            &sketch_objects,
+            &all_core_objects,
+            &build_dir,
+        )?;
 
         // 10. Size reporting
         if let Some(ref size) = link_result.size_info {
@@ -311,6 +385,30 @@ impl BuildOrchestrator for AvrOrchestrator {
 /// Create an AVR orchestrator (convenience for get_orchestrator dispatch).
 pub fn create() -> Box<dyn BuildOrchestrator> {
     Box::new(AvrOrchestrator)
+}
+
+/// Select and install the correct AVR Arduino framework based on the board's core name.
+///
+/// Uses the data-driven `avr_frameworks.json` registry to resolve the correct
+/// framework package (GitHub URL, version) for any board core.
+/// Returns (framework_root, core_dir, variant_dir).
+fn ensure_avr_framework(
+    project_dir: &Path,
+    core_name: &str,
+    variant_name: &str,
+) -> fbuild_core::Result<(PathBuf, PathBuf, PathBuf)> {
+    use fbuild_packages::Package;
+
+    let framework = fbuild_packages::library::AvrFramework::for_core(core_name, project_dir)?;
+    let framework_dir = framework.ensure_installed()?;
+    tracing::info!(
+        "AVR framework for core '{}' at {}",
+        core_name,
+        framework_dir.display()
+    );
+    let core_dir = framework.get_core_dir(core_name);
+    let variant_dir = framework.get_variant_dir(variant_name);
+    Ok((framework_dir, core_dir, variant_dir))
 }
 
 /// Check if a project is configured for AVR by reading its platformio.ini.

@@ -67,3 +67,19 @@
 **Rationale**: The Rust port generates the compile database from the original `include_dirs` (not trampolines), so include paths always point to actual source directories. Detection via `library.json` (Arduino library manifest) is reliable — every Arduino library must have one, and sketch projects never do. Writing to the build directory is always safe; only the project-root copy is suppressed.
 
 **Consequences**: Library developers building from their own repo keep their meson/cmake-generated `compile_commands.json`. Sketch projects get a clangd-compatible database automatically. The compile database is always available at `.fbuild/build/<env>/compile_commands.json` regardless.
+
+## DD-009: Data-Driven Configuration over Hardcoded Values
+
+**Decision**: All external URLs, versions, package metadata, and hardware-specific mappings must live in data files (JSON registries, board JSONs, config assets), never as constants or literals in Rust/Python source code.
+
+**Context**: When adding ATTinyCore framework support, a hardcoded GitHub URL with a wrong tag prefix caused a 404 error on the very first run. PlatformIO avoids this by using data-driven manifests (`platform.json`, `package.json`, board JSONs) that map board cores to framework packages at runtime.
+
+**Rationale**: Hardcoded values create maintenance burden — every upstream tag rename, version bump, or URL change requires a code change, a rebuild, and a release. Data files can be validated by CI (see `validate_boards` workflow), updated independently of code, and are easier to audit. PlatformIO's patterns are the reference implementation for how hardware metadata should be structured, even though we never invoke PlatformIO as a build tool.
+
+**Rules**:
+1. **Board definitions** → `crates/fbuild-config/assets/boards/json/` (enriched from PlatformIO, validated by CI)
+2. **Framework packages** → `crates/fbuild-packages/assets/avr_frameworks.json` (maps core names to GitHub repos, versions)
+3. **Toolchain URLs/versions** → data files or registry configs, not `const` in source
+4. **Study PlatformIO** for data structure patterns; **never invoke PlatformIO** at runtime
+
+**Consequences**: Adding a new board or framework is a data file edit, not a code change. CI catches drift between our cached board JSONs and PlatformIO's upstream definitions. The `validate_boards` GitHub Actions job ensures our assets stay synchronized.

@@ -1,0 +1,29 @@
+{
+  "_comment": "Maps AVR board core names to Arduino framework packages. Mirrors PlatformIO's platform-atmelavr/platform.json + platform.py mapping.",
+  "frameworks": {
+    "arduino": {
+      "name": "arduino-avr-core",
+      "github": "arduino/ArduinoCore-avr",
+      "version": "1.8.6",
+      "tag_prefix": "",
+      "checksum": "49241fd5e504482b94954b5843c7d69ce38ebc1ab47ad3b677e8bb77e0cb8fe6",
+      "validation_path": "cores/arduino/main.cpp"
+    },
+    "tiny": {
+      "name": "attiny-core",
+      "github": "SpenceKonde/ATTinyCore",
+      "version": "1.5.2",
+      "tag_prefix": "",
+      "checksum": null,
+      "validation_path": "cores/tiny/Arduino.h"
+    },
+    "tinymodern": {
+      "name": "attiny-core",
+      "github": "SpenceKonde/ATTinyCore",
+      "version": "1.5.2",
+      "tag_prefix": "",
+      "checksum": null,
+      "validation_path": "cores/tinymodern/Arduino.h"
+    }
+  }
+}

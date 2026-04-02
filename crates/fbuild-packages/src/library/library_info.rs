@@ -24,14 +24,17 @@ impl InstalledLibrary {
     /// Get the source root directory.
     ///
     /// Handles the `src/src/` pattern (e.g., FastLED): if `src/src/` exists,
-    /// use that; otherwise use `src/`.
+    /// use that; if `src/` exists, use that; otherwise fall back to the
+    /// library root (PlatformIO scans the whole library when no `src/` dir).
     pub fn source_root(&self) -> PathBuf {
         let src = self.lib_dir.join("src");
         let src_src = src.join("src");
         if src_src.exists() && src_src.is_dir() {
             src_src
-        } else {
+        } else if src.exists() && src.is_dir() {
             src
+        } else {
+            self.lib_dir.clone()
         }
     }
 

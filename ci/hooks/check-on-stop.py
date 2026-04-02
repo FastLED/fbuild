@@ -94,8 +94,8 @@ def main():
 
     print("Running full workspace checks (changes detected)", file=sys.stderr)
 
-    lint_script = str(PROJECT_ROOT / "lint")
-    test_script = str(PROJECT_ROOT / "test")
+    lint_script = str(PROJECT_ROOT / "ci" / "lint.py")
+    test_script = str(PROJECT_ROOT / "ci" / "test.py")
 
     # Run lint and tests concurrently
     lint_results = []

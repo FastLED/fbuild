@@ -1,58 +1,55 @@
-#!/usr/bin/env -S uv run --script
-# /// script
-# requires-python = ">=3.10"
-# ///
-"""Run workspace tests.
+#!/bin/bash
+set -e
 
-Usage:
-    uv run test                          # unit tests only
-    uv run test --full                   # unit + stress + integration tests
-    uv run test -p fbuild-core            # single crate
-    uv run test -p fbuild-core -- name   # single test by name
-"""
+# Run workspace tests.
+#
+# Usage:
+#   ./test                          # unit tests only
+#   ./test --full                   # unit + stress + integration tests
+#   ./test -p fbuild-core           # single crate
+#   ./test -p fbuild-core -- name   # single test by name
 
-import subprocess
-import sys
-from pathlib import Path
+FULL=false
+ARGS=()
 
-SCRIPT_DIR = Path(__file__).parent.resolve()
+for arg in "$@"; do
+    if [ "$arg" = "--full" ]; then
+        FULL=true
+    else
+        ARGS+=("$arg")
+    fi
+done
 
+# Split on "--" to separate cargo args from test-binary args
+CARGO_ARGS=()
+TEST_ARGS=()
+FOUND_SEP=false
 
-def main():
-    cmd = ["uv", "run", "cargo", "test"]
+for arg in "${ARGS[@]}"; do
+    if [ "$arg" = "--" ]; then
+        FOUND_SEP=true
+        continue
+    fi
+    if $FOUND_SEP; then
+        TEST_ARGS+=("$arg")
+    else
+        CARGO_ARGS+=("$arg")
+    fi
+done
 
-    args = sys.argv[1:]
-    full = "--full" in args
-    if full:
-        args.remove("--full")
+CMD=(uv run cargo test)
 
-    # Split on "--" to separate cargo args from test-binary args.
-    if "--" in args:
-        sep = args.index("--")
-        cargo_args = args[:sep]
-        test_args = args[sep + 1:]
-    else:
-        cargo_args = args
-        test_args = []
+if [ ${#CARGO_ARGS[@]} -eq 0 ]; then
+    CMD+=(--workspace)
+fi
 
-    if not cargo_args:
-        cmd += ["--workspace"]
+CMD+=("${CARGO_ARGS[@]}")
+CMD+=(--)
 
-    cmd += cargo_args
-    cmd += ["--"]
-    if full:
-        cmd += ["--include-ignored"]
-    cmd += test_args
+if $FULL; then
+    CMD+=(--include-ignored)
+fi
 
-    result = subprocess.run(
-        cmd,
-        text=True,
-        encoding="utf-8",
-        errors="replace",
-        cwd=str(SCRIPT_DIR),
-    )
-    return result.returncode
+CMD+=("${TEST_ARGS[@]}")
 
-
-if __name__ == "__main__":
-    sys.exit(main())
+exec "${CMD[@]}"
