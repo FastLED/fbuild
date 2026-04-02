@@ -1250,12 +1250,29 @@ async fn run_iwyu(
             e
         ))
     })?;
+    // Step 6: Set up zccache-style content-addressed cache for IWYU results.
+    // Cache key = blake3(source_content + iwyu_entry_json) per file.
+    let cache_dir = iwyu_dir_path.join("cache");
+    std::fs::create_dir_all(&cache_dir).map_err(|e| {
+        fbuild_core::FbuildError::Other(format!("failed to create {}: {}", cache_dir.display(), e))
+    })?;
+
+    // Build a lookup from file path → preprocessed IWYU entry JSON for cache keying.
+    let iwyu_entry_map: std::collections::HashMap<String, String> = iwyu_entries
+        .iter()
+        .filter_map(|e| {
+            let file = e.get("file")?.as_str()?.to_string();
+            let json = serde_json::to_string(e).ok()?;
+            Some((file, json))
+        })
+        .collect();
+
     println!(
         "Running include-what-you-use on {} source file(s)...",
         source_entries.len()
     );
 
-    // Step 6: Run IWYU in parallel
+    // Step 7: Run IWYU in parallel with caching
     let jobs = std::thread::available_parallelism()
         .map(|n| n.get() * 2)
         .unwrap_or(4);
@@ -1263,6 +1280,8 @@ async fn run_iwyu(
     let tool_arc = std::sync::Arc::new(tool_path);
     let iwyu_dir = std::sync::Arc::new(iwyu_dir_path);
     let src_dir_arc = std::sync::Arc::new(src_dir.clone());
+    let cache_dir_arc = std::sync::Arc::new(cache_dir);
+    let entry_map_arc = std::sync::Arc::new(iwyu_entry_map);
 
     // Collect source file paths from the filtered entries
     let source_files: Vec<String> = source_entries
@@ -1276,9 +1295,29 @@ async fn run_iwyu(
         let tool = tool_arc.clone();
         let p_dir = iwyu_dir.clone();
         let src = src_dir_arc.clone();
+        let cache_d = cache_dir_arc.clone();
+        let emap = entry_map_arc.clone();
         let verbose_flag = verbose;
         let handle = tokio::spawn(async move {
             let _permit = sem.acquire().await.unwrap();
+            let src_path = src.as_ref().clone();
+
+            // Compute blake3 cache key from source content + compile entry
+            let cache_key = iwyu_cache_key(&file, &emap);
+            let cache_path: Option<std::path::PathBuf> = cache_key
+                .as_ref()
+                .map(|k| cache_d.join(format!("{}.txt", k)));
+
+            // Check cache
+            if let Some(ref cp) = cache_path {
+                if cp.exists() {
+                    if let Ok(cached) = std::fs::read_to_string(cp) {
+                        return (file, Ok(cached), true, src_path);
+                    }
+                }
+            }
+
+            // Cache miss — run IWYU
             let mut cmd = tokio::process::Command::new(tool.as_ref());
             cmd.arg("-p").arg(p_dir.as_ref());
             cmd.arg("-Xiwyu").arg("--no_comments");
@@ -1289,23 +1328,38 @@ async fn run_iwyu(
             }
             cmd.arg(&file);
             let output = cmd.output().await;
-            let src_path = src.as_ref().clone();
-            (file, output, src_path)
+
+            match output {
+                Ok(out) => {
+                    let stderr = String::from_utf8_lossy(&out.stderr).to_string();
+                    // Store in cache on success
+                    if let Some(ref cp) = cache_path {
+                        let _ = std::fs::write(cp, &stderr);
+                    }
+                    (file, Ok(stderr), false, src_path)
+                }
+                Err(e) => (file, Err(format!("{}", e)), false, src_path),
+            }
         });
         handles.push(handle);
     }
 
     let mut total_suggestions = 0usize;
     let mut failed_files = Vec::new();
+    let mut cache_hits = 0usize;
+    let mut cache_misses = 0usize;
 
     for handle in handles {
-        let (file, result, src_path) = handle
+        let (file, result, cached, src_path) = handle
             .await
             .map_err(|e| fbuild_core::FbuildError::Other(format!("task join error: {}", e)))?;
+        if cached {
+            cache_hits += 1;
+        } else {
+            cache_misses += 1;
+        }
         match result {
-            Ok(output) => {
-                // IWYU writes analysis to stderr
-                let stderr = String::from_utf8_lossy(&output.stderr);
+            Ok(stderr) => {
                 let filtered = filter_iwyu_output(&stderr, &src_path);
                 if !filtered.trim().is_empty() {
                     print!("{}", filtered);
@@ -1324,6 +1378,10 @@ async fn run_iwyu(
 
     println!("\n--- include-what-you-use summary ---");
     println!("Suggestions: {}", total_suggestions);
+    println!(
+        "Cache:       {} hit(s), {} miss(es)",
+        cache_hits, cache_misses
+    );
     if !failed_files.is_empty() {
         println!("Failed:      {} file(s)", failed_files.len());
     }
@@ -1335,6 +1393,24 @@ async fn run_iwyu(
     } else {
         Ok(())
     }
+}
+
+/// Compute a blake3 cache key for an IWYU analysis of a source file.
+///
+/// The key is derived from the source file content and the preprocessed
+/// compile_commands.json entry for that file (which includes all flags).
+/// This mirrors zccache's content-addressed hashing strategy.
+fn iwyu_cache_key(
+    file: &str,
+    entry_map: &std::collections::HashMap<String, String>,
+) -> Option<String> {
+    let source_content = std::fs::read(file).ok()?;
+    let entry_json = entry_map.get(file)?;
+    let mut hasher = blake3::Hasher::new();
+    hasher.update(b"fbuild-iwyu-cache-v1");
+    hasher.update(&source_content);
+    hasher.update(entry_json.as_bytes());
+    Some(hasher.finalize().to_hex().to_string())
 }
 
 /// Filter IWYU output to show only suggestions for files under `src_dir`.
