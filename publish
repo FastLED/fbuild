@@ -188,9 +188,11 @@ def trigger_and_wait(repo: str) -> int:
     log(f"  Run {run_id} started")
     log(f"  https://github.com/{repo}/actions/runs/{run_id}")
 
-    # Wait for completion (30 min timeout)
+    # Wait for completion (30 min timeout, 5 min queued timeout)
     timeout = 1800
+    queued_timeout = 300
     start = time.time()
+    queued_since: float | None = None
     while time.time() - start < timeout:
         result = run_capture([
             "gh", "run", "view", str(run_id),
@@ -198,8 +200,9 @@ def trigger_and_wait(repo: str) -> int:
             "--json", "status,conclusion",
         ])
         data = json.loads(result)
+        status = data["status"]
 
-        if data["status"] == "completed":
+        if status == "completed":
             if data.get("conclusion") == "success":
                 elapsed = int(time.time() - start)
                 log(f"  Build completed in {elapsed}s")
@@ -208,8 +211,20 @@ def trigger_and_wait(repo: str) -> int:
             log(f"  https://github.com/{repo}/actions/runs/{run_id}")
             sys.exit(1)
 
+        # Detect stuck-in-queue (no runners available)
+        if status in ("queued", "waiting", "pending"):
+            if queued_since is None:
+                queued_since = time.time()
+            elif time.time() - queued_since > queued_timeout:
+                log(f"  ERROR: Run has been queued for >{queued_timeout}s with no runner picking it up.")
+                log(f"  This usually means no GitHub Actions runners are available for the workflow.")
+                log(f"  Check: https://github.com/{repo}/actions/runs/{run_id}")
+                sys.exit(1)
+        else:
+            queued_since = None  # Reset if status progresses (e.g. "in_progress")
+
         elapsed = int(time.time() - start)
-        log(f"  [{elapsed}s] {data['status']}...")
+        log(f"  [{elapsed}s] {status}...")
         time.sleep(15)
 
     log(f"  ERROR: Build timed out after {timeout}s")

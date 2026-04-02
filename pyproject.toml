@@ -12,6 +12,7 @@ rustfmt = "ci.trampoline:rustfmt"
 clippy-driver = "ci.trampoline:clippy_driver"
 run_fbuild = "ci.trampoline:run_fbuild"
 run_fbuild_daemon = "ci.trampoline:run_fbuild_daemon"
+publish = "ci.trampoline:publish"
 
 [build-system]
 requires = ["setuptools>=64"]

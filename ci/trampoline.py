@@ -9,6 +9,7 @@ import os
 import shutil
 import subprocess
 import sys
+from pathlib import Path
 
 
 def _find_cargo_bin():
@@ -85,3 +86,10 @@ def run_fbuild():
 
 def run_fbuild_daemon():
     _run_cargo_bin("fbuild-daemon")
+
+
+def publish():
+    """Run the publish pipeline via the root publish script."""
+    script = Path(__file__).resolve().parent.parent / "publish"
+    result = subprocess.run([sys.executable, str(script)] + sys.argv[1:])
+    sys.exit(result.returncode)
