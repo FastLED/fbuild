@@ -107,6 +107,12 @@ impl BuildOrchestrator for TeensyOrchestrator {
                 .get_src_dir(&params.env_name)?
                 .unwrap_or_else(|| "src".to_string()),
         );
+        // Fall back to project root if src/ doesn't exist (Arduino IDE convention)
+        let src_dir = if src_dir.exists() {
+            src_dir
+        } else {
+            params.project_dir.clone()
+        };
 
         // Teensy cores: core dir is directly under framework (e.g. teensy4/), no variants
         let core_dir = framework.get_core_dir(&board.core);

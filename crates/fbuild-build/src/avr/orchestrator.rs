@@ -100,6 +100,12 @@ impl BuildOrchestrator for AvrOrchestrator {
                 .get_src_dir(&params.env_name)?
                 .unwrap_or_else(|| "src".to_string()),
         );
+        // Fall back to project root if src/ doesn't exist (Arduino IDE convention)
+        let src_dir = if src_dir.exists() {
+            src_dir
+        } else {
+            params.project_dir.clone()
+        };
 
         let scanner = SourceScanner::new(&src_dir, &src_build_dir);
         let sources = scanner.scan_all(Some(&core_dir), Some(&variant_dir))?;
