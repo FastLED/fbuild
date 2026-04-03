@@ -1,0 +1,152 @@
+name: Native Build Template
+
+on:
+  workflow_call:
+    inputs:
+      target:
+        required: true
+        type: string
+        description: "Rust target triple (e.g. x86_64-unknown-linux-gnu)"
+      runner:
+        required: true
+        type: string
+        description: "GitHub Actions runner label (e.g. ubuntu-latest)"
+      binary_ext:
+        required: false
+        type: string
+        default: ""
+        description: "Binary extension (.exe for Windows, empty otherwise)"
+      linux_cross:
+        required: false
+        type: boolean
+        default: false
+        description: "Linux aarch64 cross-compilation"
+      macos_cross:
+        required: false
+        type: boolean
+        default: false
+        description: "macOS x86_64 cross-compilation on ARM runner"
+      ref:
+        required: false
+        type: string
+        default: ""
+        description: "Git ref to build (branch, tag, or SHA)"
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: "-D warnings"
+
+jobs:
+  build:
+    name: Build (${{ inputs.target }})
+    runs-on: ${{ inputs.runner }}
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref || github.sha }}
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ inputs.target }}
+
+      - uses: actions/setup-python@v6
+        if: ${{ !inputs.linux_cross && !inputs.macos_cross }}
+        with:
+          python-version: "3.13"
+
+      - uses: mozilla-actions/sccache-action@v0.0.7
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ inputs.target }}-v2
+
+      # Linux system dependencies (libudev for serial port detection)
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux' && !inputs.linux_cross
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libudev-dev pkg-config
+
+      # Linux aarch64 cross-compilation toolchain
+      - name: Install cross-compilation tools
+        if: inputs.linux_cross
+        run: |
+          sudo dpkg --add-architecture arm64
+          # Handle DEB822 format (.sources files) used by Ubuntu 24.04+
+          for f in /etc/apt/sources.list.d/*.sources; do
+            if [ -f "$f" ]; then
+              sudo sed -i 's/^Architectures:.*/Architectures: amd64/' "$f"
+              grep -q '^Architectures:' "$f" || sudo sed -i '/^Types:/a Architectures: amd64' "$f"
+            fi
+          done
+          # Handle traditional format (.list files)
+          sudo sed -i 's/^deb http/deb [arch=amd64] http/g' /etc/apt/sources.list 2>/dev/null || true
+          for f in /etc/apt/sources.list.d/*.list; do
+            [ -f "$f" ] && sudo sed -i 's/^deb http/deb [arch=amd64] http/g' "$f" || true
+          done
+          # Add arm64 sources from ports.ubuntu.com
+          sudo tee /etc/apt/sources.list.d/arm64.list <<EOF
+          deb [arch=arm64] http://ports.ubuntu.com/ $(lsb_release -cs) main restricted universe
+          deb [arch=arm64] http://ports.ubuntu.com/ $(lsb_release -cs)-updates main restricted universe
+          deb [arch=arm64] http://ports.ubuntu.com/ $(lsb_release -cs)-security main restricted universe
+          EOF
+          sudo apt-get update
+          sudo apt-get install -y gcc-aarch64-linux-gnu pkg-config \
+            libudev-dev:arm64 libssl-dev:arm64
+          echo "PKG_CONFIG_SYSROOT_DIR=/usr/aarch64-linux-gnu" >> $GITHUB_ENV
+          echo "PKG_CONFIG_PATH=/usr/lib/aarch64-linux-gnu/pkgconfig" >> $GITHUB_ENV
+          echo "PKG_CONFIG_ALLOW_CROSS=1" >> $GITHUB_ENV
+
+      - name: Build release binaries
+        env:
+          CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: ${{ inputs.linux_cross && 'aarch64-linux-gnu-gcc' || '' }}
+        run: |
+          cargo build --release --target ${{ inputs.target }} -p fbuild-cli
+          cargo build --release --target ${{ inputs.target }} -p fbuild-daemon
+
+      # PyO3 extension — skip for cross-compiled targets
+      - name: Build Python extension
+        if: ${{ !inputs.linux_cross && !inputs.macos_cross }}
+        shell: bash
+        run: |
+          if [ "${{ runner.os }}" = "macOS" ]; then
+            cargo rustc --release -p fbuild-python -- -C link-args="-undefined dynamic_lookup"
+          else
+            cargo build --release -p fbuild-python
+          fi
+
+      - name: Stage artifacts
+        shell: bash
+        run: |
+          mkdir -p staging
+          cp target/${{ inputs.target }}/release/fbuild${{ inputs.binary_ext }} staging/
+          cp target/${{ inputs.target }}/release/fbuild-daemon${{ inputs.binary_ext }} staging/
+
+          # Stage Python extension — built without --target, so in target/release/
+          if [ "${{ inputs.binary_ext }}" = ".exe" ]; then
+            [ -f target/release/_native.dll ] && \
+              cp target/release/_native.dll staging/_native.pyd
+          else
+            for ext in so dylib; do
+              src="target/release/lib_native.$ext"
+              [ -f "$src" ] && cp "$src" staging/_native.abi3.so && break
+            done
+          fi
+
+          # Strip binaries (reduces size significantly)
+          if command -v strip &> /dev/null && [ -z "${{ inputs.linux_cross }}" ]; then
+            strip staging/fbuild${{ inputs.binary_ext }} || true
+            strip staging/fbuild-daemon${{ inputs.binary_ext }} || true
+            strip staging/_native.abi3.so 2>/dev/null || true
+          elif [ "${{ inputs.linux_cross }}" = "true" ]; then
+            aarch64-linux-gnu-strip staging/fbuild || true
+            aarch64-linux-gnu-strip staging/fbuild-daemon || true
+          fi
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: binaries-${{ inputs.target }}
+          path: staging/
+          if-no-files-found: error
