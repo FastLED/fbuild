@@ -86,13 +86,13 @@ impl BuildOrchestrator for AvrOrchestrator {
         // 5. Setup build directories
         let cache = fbuild_packages::Cache::new(&params.project_dir);
         if params.clean {
-            cache.clean_build(&params.env_name)?;
+            cache.clean_build(&params.env_name, params.profile)?;
         }
-        cache.ensure_build_directories(&params.env_name)?;
+        cache.ensure_build_directories(&params.env_name, params.profile)?;
 
-        let build_dir = cache.get_build_dir(&params.env_name);
-        let core_build_dir = cache.get_core_build_dir(&params.env_name);
-        let src_build_dir = cache.get_src_build_dir(&params.env_name);
+        let build_dir = cache.get_build_dir(&params.env_name, params.profile);
+        let core_build_dir = cache.get_core_build_dir(&params.env_name, params.profile);
+        let src_build_dir = cache.get_src_build_dir(&params.env_name, params.profile);
 
         // 6. Scan sources
         let src_dir = params.project_dir.join(

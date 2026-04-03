@@ -56,6 +56,16 @@ pub enum BuildProfile {
     Quick,
 }
 
+impl BuildProfile {
+    /// Directory name used for build output (e.g. `.fbuild/build/{env}/{profile}/`).
+    pub fn as_dir_name(&self) -> &'static str {
+        match self {
+            Self::Release => "release",
+            Self::Quick => "quick",
+        }
+    }
+}
+
 /// Platform identifier for orchestrator dispatch.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]

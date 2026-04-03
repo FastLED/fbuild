@@ -16,6 +16,7 @@
 //! The `stem` is a human-readable name derived from the URL.
 //! The `hash` is the first 16 chars of SHA256 for uniqueness.
 
+use fbuild_core::BuildProfile;
 use sha2::{Digest, Sha256};
 use std::path::{Path, PathBuf};
 
@@ -102,21 +103,21 @@ impl Cache {
 
     // --- Build directories (per-project) ---
 
-    /// Get the build directory for an environment.
-    pub fn get_build_dir(&self, env_name: &str) -> PathBuf {
+    /// Get the build directory for an environment and profile.
+    pub fn get_build_dir(&self, env_name: &str, profile: BuildProfile) -> PathBuf {
         fbuild_paths::get_project_build_root(&self.project_dir)
             .join(env_name)
-            .join("release")
+            .join(profile.as_dir_name())
     }
 
     /// Get the core build subdirectory (for compiled core .o files).
-    pub fn get_core_build_dir(&self, env_name: &str) -> PathBuf {
-        self.get_build_dir(env_name).join("core")
+    pub fn get_core_build_dir(&self, env_name: &str, profile: BuildProfile) -> PathBuf {
+        self.get_build_dir(env_name, profile).join("core")
     }
 
     /// Get the src build subdirectory (for compiled sketch .o files).
-    pub fn get_src_build_dir(&self, env_name: &str) -> PathBuf {
-        self.get_build_dir(env_name).join("src")
+    pub fn get_src_build_dir(&self, env_name: &str, profile: BuildProfile) -> PathBuf {
+        self.get_build_dir(env_name, profile).join("src")
     }
 
     // --- Directory management ---
@@ -130,16 +131,20 @@ impl Cache {
         Ok(())
     }
 
-    /// Ensure build directories exist for an environment.
-    pub fn ensure_build_directories(&self, env_name: &str) -> std::io::Result<()> {
-        std::fs::create_dir_all(self.get_core_build_dir(env_name))?;
-        std::fs::create_dir_all(self.get_src_build_dir(env_name))?;
+    /// Ensure build directories exist for an environment and profile.
+    pub fn ensure_build_directories(
+        &self,
+        env_name: &str,
+        profile: BuildProfile,
+    ) -> std::io::Result<()> {
+        std::fs::create_dir_all(self.get_core_build_dir(env_name, profile))?;
+        std::fs::create_dir_all(self.get_src_build_dir(env_name, profile))?;
         Ok(())
     }
 
-    /// Clean build directory for an environment.
-    pub fn clean_build(&self, env_name: &str) -> std::io::Result<()> {
-        let build_dir = self.get_build_dir(env_name);
+    /// Clean build directory for an environment and profile.
+    pub fn clean_build(&self, env_name: &str, profile: BuildProfile) -> std::io::Result<()> {
+        let build_dir = self.get_build_dir(env_name, profile);
         if build_dir.exists() {
             std::fs::remove_dir_all(&build_dir)?;
         }
@@ -334,16 +339,19 @@ mod tests {
     fn test_get_build_dir() {
         let tmp = TempDir::new().unwrap();
         let cache = Cache::new(tmp.path());
-        let build_dir = cache.get_build_dir("uno");
-        assert!(build_dir.to_string_lossy().contains("uno"));
-        assert!(build_dir.to_string_lossy().contains("release"));
+        let release_dir = cache.get_build_dir("uno", BuildProfile::Release);
+        assert!(release_dir.to_string_lossy().contains("uno"));
+        assert!(release_dir.to_string_lossy().contains("release"));
+        let quick_dir = cache.get_build_dir("uno", BuildProfile::Quick);
+        assert!(quick_dir.to_string_lossy().contains("uno"));
+        assert!(quick_dir.to_string_lossy().contains("quick"));
     }
 
     #[test]
     fn test_get_core_build_dir() {
         let tmp = TempDir::new().unwrap();
         let cache = Cache::new(tmp.path());
-        let dir = cache.get_core_build_dir("uno");
+        let dir = cache.get_core_build_dir("uno", BuildProfile::Release);
         assert!(dir.ends_with("core"));
     }
 
@@ -351,7 +359,7 @@ mod tests {
     fn test_get_src_build_dir() {
         let tmp = TempDir::new().unwrap();
         let cache = Cache::new(tmp.path());
-        let dir = cache.get_src_build_dir("uno");
+        let dir = cache.get_src_build_dir("uno", BuildProfile::Release);
         assert!(dir.ends_with("src"));
     }
 
@@ -370,26 +378,36 @@ mod tests {
     fn test_ensure_build_directories() {
         let tmp = TempDir::new().unwrap();
         let cache = Cache::new(tmp.path());
-        cache.ensure_build_directories("uno").unwrap();
-        assert!(cache.get_core_build_dir("uno").exists());
-        assert!(cache.get_src_build_dir("uno").exists());
+        cache
+            .ensure_build_directories("uno", BuildProfile::Release)
+            .unwrap();
+        assert!(cache
+            .get_core_build_dir("uno", BuildProfile::Release)
+            .exists());
+        assert!(cache
+            .get_src_build_dir("uno", BuildProfile::Release)
+            .exists());
     }
 
     #[test]
     fn test_clean_build() {
         let tmp = TempDir::new().unwrap();
         let cache = Cache::new(tmp.path());
-        cache.ensure_build_directories("uno").unwrap();
-        assert!(cache.get_build_dir("uno").exists());
-        cache.clean_build("uno").unwrap();
-        assert!(!cache.get_build_dir("uno").exists());
+        cache
+            .ensure_build_directories("uno", BuildProfile::Release)
+            .unwrap();
+        assert!(cache.get_build_dir("uno", BuildProfile::Release).exists());
+        cache.clean_build("uno", BuildProfile::Release).unwrap();
+        assert!(!cache.get_build_dir("uno", BuildProfile::Release).exists());
     }
 
     #[test]
     fn test_clean_build_nonexistent() {
         let tmp = TempDir::new().unwrap();
         let cache = Cache::new(tmp.path());
-        cache.clean_build("nonexistent").unwrap();
+        cache
+            .clean_build("nonexistent", BuildProfile::Release)
+            .unwrap();
     }
 
     #[test]
@@ -431,13 +449,17 @@ mod tests {
     fn test_multiple_environments() {
         let tmp = TempDir::new().unwrap();
         let cache = Cache::new(tmp.path());
-        cache.ensure_build_directories("uno").unwrap();
-        cache.ensure_build_directories("esp32").unwrap();
-        assert!(cache.get_build_dir("uno").exists());
-        assert!(cache.get_build_dir("esp32").exists());
-        cache.clean_build("uno").unwrap();
-        assert!(!cache.get_build_dir("uno").exists());
-        assert!(cache.get_build_dir("esp32").exists());
+        cache
+            .ensure_build_directories("uno", BuildProfile::Release)
+            .unwrap();
+        cache
+            .ensure_build_directories("esp32", BuildProfile::Release)
+            .unwrap();
+        assert!(cache.get_build_dir("uno", BuildProfile::Release).exists());
+        assert!(cache.get_build_dir("esp32", BuildProfile::Release).exists());
+        cache.clean_build("uno", BuildProfile::Release).unwrap();
+        assert!(!cache.get_build_dir("uno", BuildProfile::Release).exists());
+        assert!(cache.get_build_dir("esp32", BuildProfile::Release).exists());
     }
 
     #[test]
