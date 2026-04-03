@@ -1,0 +1,16 @@
+name: Build Teensy 4.0
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "Teensy 4.0"
+      test-dir: "tests/teensy40"
+      env-name: "teensy40"
+      firmware-ext: "hex"

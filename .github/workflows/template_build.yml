@@ -1,0 +1,69 @@
+name: Build Template
+
+on:
+  workflow_call:
+    inputs:
+      workflow-name:
+        required: true
+        type: string
+        description: "Display name for the workflow"
+      test-dir:
+        required: true
+        type: string
+        description: "Test directory path (e.g., tests/esp32c6)"
+      env-name:
+        required: true
+        type: string
+        description: "Environment name (e.g., esp32c6)"
+      firmware-ext:
+        required: true
+        type: string
+        description: "Firmware file extension (bin or hex)"
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: "-D warnings"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Rust build
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: platform-build-v1
+
+      - name: Install Linux dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libudev-dev pkg-config
+
+      - name: Build fbuild binaries
+        run: |
+          cargo build --release -p fbuild-cli -p fbuild-daemon
+
+      - name: Add fbuild to PATH
+        run: echo "${{ github.workspace }}/target/release" >> $GITHUB_PATH
+
+      - name: Build ${{ inputs.workflow-name }} (quick)
+        run: fbuild build ${{ inputs.test-dir }} -e ${{ inputs.env-name }} --quick
+
+      - name: Verify quick firmware output
+        run: |
+          test -f ${{ inputs.test-dir }}/.fbuild/build/${{ inputs.env-name }}/quick/firmware.${{ inputs.firmware-ext }}
+          echo "Quick build successful - firmware.${{ inputs.firmware-ext }} generated"
+
+      - name: Build ${{ inputs.workflow-name }} (release)
+        run: fbuild build ${{ inputs.test-dir }} -e ${{ inputs.env-name }} --release
+
+      - name: Verify release firmware output
+        run: |
+          test -f ${{ inputs.test-dir }}/.fbuild/build/${{ inputs.env-name }}/release/firmware.${{ inputs.firmware-ext }}
+          echo "Release build successful - firmware.${{ inputs.firmware-ext }} generated"

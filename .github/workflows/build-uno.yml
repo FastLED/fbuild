@@ -1,0 +1,16 @@
+name: Build Arduino Uno
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "Arduino Uno"
+      test-dir: "tests/uno"
+      env-name: "uno"
+      firmware-ext: "hex"

@@ -1,0 +1,16 @@
+name: Build ESP32-C6
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "ESP32-C6"
+      test-dir: "tests/esp32c6"
+      env-name: "esp32c6"
+      firmware-ext: "bin"

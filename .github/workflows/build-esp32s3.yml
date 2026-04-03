@@ -1,0 +1,16 @@
+name: Build ESP32-S3
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "ESP32-S3"
+      test-dir: "tests/esp32s3"
+      env-name: "esp32s3"
+      firmware-ext: "bin"

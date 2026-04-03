@@ -1,0 +1,16 @@
+name: Build ESP32 Dev
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "ESP32 Dev"
+      test-dir: "tests/esp32dev"
+      env-name: "esp32dev"
+      firmware-ext: "bin"
