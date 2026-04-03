@@ -295,8 +295,9 @@ fn compile_one_source(
         a.push(format!("@{}", rsp_path.display()));
         a
     } else {
+        let sanitized = fbuild_core::compiler_flags::prepare_flags_for_exec(all_flags);
         let mut raw_args: Vec<String> = vec![compiler.to_string_lossy().to_string()];
-        raw_args.extend(all_flags);
+        raw_args.extend(sanitized);
         let raw_refs: Vec<&str> = raw_args.iter().map(|s| s.as_str()).collect();
         wrap_compiler_args(&raw_refs, compiler_cache)
     };

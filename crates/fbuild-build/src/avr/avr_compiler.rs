@@ -116,7 +116,7 @@ impl AvrCompiler {
             ]
         } else {
             let mut a = vec![compiler.to_string_lossy().to_string()];
-            a.extend(all_flags);
+            a.extend(crate::compiler::prepare_flags_for_exec(all_flags));
             a
         };
 

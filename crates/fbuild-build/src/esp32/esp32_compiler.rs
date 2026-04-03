@@ -180,8 +180,9 @@ impl Esp32Compiler {
             a.push(format!("@{}", response_file.display()));
             a
         } else {
+            let sanitized = crate::compiler::prepare_flags_for_exec(all_flags);
             let mut raw_args: Vec<String> = vec![compiler.to_string_lossy().to_string()];
-            raw_args.extend(all_flags);
+            raw_args.extend(sanitized);
             let raw_refs: Vec<&str> = raw_args.iter().map(|s| s.as_str()).collect();
             crate::zccache::wrap_args(&raw_refs, self.compiler_cache.as_deref())
         };

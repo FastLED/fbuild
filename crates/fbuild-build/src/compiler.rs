@@ -196,6 +196,14 @@ pub fn write_response_file(flags: &[String], temp_dir: &Path, prefix: &str) -> R
     Ok(path)
 }
 
+/// Prepare compiler flags for direct execution (no response file).
+///
+/// Delegates to [`fbuild_core::compiler_flags::prepare_flags_for_exec`].
+/// See that module for full documentation.
+pub fn prepare_flags_for_exec(flags: Vec<String>) -> Vec<String> {
+    fbuild_core::compiler_flags::prepare_flags_for_exec(flags)
+}
+
 /// Replace backslashes with forward slashes for GCC response files,
 /// but preserve `\"` sequences which are intentional escapes in define values.
 pub fn replace_path_backslashes(s: &str) -> String {
@@ -271,5 +279,57 @@ mod tests {
     fn test_object_path() {
         let path = CompilerBase::object_path(Path::new("main.cpp"), Path::new("/build"));
         assert_eq!(path, PathBuf::from("/build/main.cpp.o"));
+    }
+
+    #[test]
+    fn test_prepare_flags_for_exec_strips_escaped_quotes() {
+        let flags = vec![
+            r#"-DARDUINO_BOARD=\"ESP32_DEV\""#.to_string(),
+            r#"-DMBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\""#.to_string(),
+            r#"-DIDF_VER=\"v5.3.2\""#.to_string(),
+        ];
+        let result = prepare_flags_for_exec(flags);
+        assert_eq!(result[0], r#"-DARDUINO_BOARD="ESP32_DEV""#);
+        assert_eq!(result[1], r#"-DMBEDTLS_CONFIG_FILE="mbedtls/esp_config.h""#);
+        assert_eq!(result[2], r#"-DIDF_VER="v5.3.2""#);
+    }
+
+    #[test]
+    fn test_prepare_flags_for_exec_preserves_normal_flags() {
+        let flags = vec![
+            "-DPLATFORMIO".to_string(),
+            "-DF_CPU=16000000L".to_string(),
+            "-I/usr/include".to_string(),
+            "-c".to_string(),
+            "-Wall".to_string(),
+        ];
+        let result = prepare_flags_for_exec(flags.clone());
+        assert_eq!(result, flags);
+    }
+
+    #[test]
+    fn test_prepare_flags_for_exec_empty() {
+        let result = prepare_flags_for_exec(Vec::new());
+        assert!(result.is_empty());
+    }
+
+    #[test]
+    fn test_prepare_flags_and_response_file_produce_same_define_value() {
+        // Both paths must produce the same define value for GCC.
+        // Given input: -DFOO=\"bar\"
+        // - prepare_flags_for_exec → -DFOO="bar" (argv: GCC sees FOO = "bar")
+        // - write_response_file → '-DFOO="bar"' (response file: GCC sees FOO = "bar")
+        let input = r#"-DFOO=\"bar\""#.to_string();
+
+        // Direct exec path
+        let exec_result = prepare_flags_for_exec(vec![input.clone()]);
+        assert_eq!(exec_result[0], r#"-DFOO="bar""#);
+
+        // Response file path
+        let tmp = tempfile::TempDir::new().unwrap();
+        let rsp = write_response_file(&[input], tmp.path(), "test").unwrap();
+        let content = std::fs::read_to_string(rsp).unwrap();
+        // Response file wraps in single quotes with unescaped "
+        assert_eq!(content, r#"'-DFOO="bar"'"#);
     }
 }

@@ -7,6 +7,7 @@
 //! - Size info parsing (avr-size / arm-none-eabi-size output)
 
 pub mod build_log;
+pub mod compiler_flags;
 pub mod shell_split;
 pub mod subprocess;
 
