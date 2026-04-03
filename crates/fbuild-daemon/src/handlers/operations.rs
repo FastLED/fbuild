@@ -415,14 +415,11 @@ pub async fn deploy(
     }
 
     // Extract board ID before spawn_blocking (env_config borrows config)
-    let board_id = env_config
-        .get("board")
-        .cloned()
-        .unwrap_or_else(|| match platform {
-            fbuild_core::Platform::Espressif32 => "esp32dev".to_string(),
-            fbuild_core::Platform::AtmelAvr => "uno".to_string(),
-            _ => "unknown".to_string(),
-        });
+    let board_id = env_config.get("board").cloned().unwrap_or_else(|| {
+        fbuild_build::get_platform_support(platform)
+            .map(|s| s.default_board_id().to_string())
+            .unwrap_or_else(|_| "unknown".to_string())
+    });
 
     // Deploy
     let deploy_env = env_name.clone();
@@ -466,7 +463,7 @@ pub async fn deploy(
                     false,
                 ))
             }
-            fbuild_core::Platform::AtmelAvr => {
+            fbuild_core::Platform::AtmelAvr | fbuild_core::Platform::AtmelMegaAvr => {
                 let board_config =
                     fbuild_config::BoardConfig::from_board_id(&board_id, &Default::default())
                         .unwrap_or_else(|_| {
@@ -1062,7 +1059,7 @@ pub async fn install_deps(
     // Install dependencies via the package manager
     let env_label = env_name.clone();
     let result = tokio::task::spawn_blocking(move || {
-        fbuild_packages::install_platform_deps(platform, &project_dir, &env_name)
+        fbuild_build::install_platform_deps(platform, &project_dir)
     })
     .await;
 

@@ -21,6 +21,9 @@ struct FrameworkEntry {
     tag_prefix: String,
     checksum: Option<String>,
     validation_path: String,
+    /// Override for the core subdirectory name inside `cores/`.
+    /// When `None`, the registry key (core name) is used as the directory name.
+    core_dir: Option<String>,
 }
 
 /// Parse the embedded JSON registry.
@@ -41,6 +44,7 @@ fn load_registry() -> HashMap<String, FrameworkEntry> {
         let tag_prefix = entry["tag_prefix"].as_str().unwrap_or("").to_string();
         let checksum = entry["checksum"].as_str().map(|s| s.to_string());
         let validation_path = entry["validation_path"].as_str().unwrap_or("").to_string();
+        let core_dir = entry["core_dir"].as_str().map(|s| s.to_string());
 
         map.insert(
             core_name.clone(),
@@ -51,6 +55,7 @@ fn load_registry() -> HashMap<String, FrameworkEntry> {
                 tag_prefix,
                 checksum,
                 validation_path,
+                core_dir,
             },
         );
     }
@@ -77,6 +82,9 @@ pub struct AvrFramework {
     base: PackageBase,
     core_name: String,
     validation_path: String,
+    /// Override for the subdirectory name inside `cores/`.
+    /// When `None`, `core_name` is used (works for most frameworks).
+    core_dir_override: Option<String>,
 }
 
 impl AvrFramework {
@@ -102,6 +110,7 @@ impl AvrFramework {
             ),
             core_name: core_name.to_string(),
             validation_path: entry.validation_path,
+            core_dir_override: entry.core_dir,
         })
     }
 
@@ -111,8 +120,12 @@ impl AvrFramework {
     }
 
     /// Get the core source directory for a specific core name.
+    ///
+    /// Uses `core_dir` from avr_frameworks.json when set (e.g. MiniCore uses
+    /// `MCUdude_corefiles` instead of `MiniCore` as the directory name).
     pub fn get_core_dir(&self, core_name: &str) -> PathBuf {
-        self.get_cores_dir().join(core_name)
+        let dir_name = self.core_dir_override.as_deref().unwrap_or(core_name);
+        self.get_cores_dir().join(dir_name)
     }
 
     /// Get the variant directory for a specific variant name.
@@ -282,5 +295,41 @@ mod tests {
         assert!(entry.github.contains("MiniCore"));
         assert!(!entry.version.is_empty());
         assert!(!entry.validation_path.is_empty());
+    }
+
+    #[test]
+    fn test_megatinycore_registered() {
+        let registry = load_registry();
+        assert!(
+            registry.contains_key("megatinycore"),
+            "megatinycore must be registered"
+        );
+    }
+
+    #[test]
+    fn test_megatinycore_lookup() {
+        let entry = lookup_entry("megatinycore").unwrap();
+        assert!(entry.github.contains("megaTinyCore"));
+        assert_eq!(entry.version, "2.6.11");
+        assert!(entry.validation_path.contains("megatinycore"));
+        assert_eq!(entry.core_dir.as_deref(), Some("megatinycore"));
+    }
+
+    #[test]
+    fn test_megacorex_registered() {
+        let registry = load_registry();
+        assert!(
+            registry.contains_key("MegaCoreX"),
+            "MegaCoreX must be registered"
+        );
+    }
+
+    #[test]
+    fn test_megacorex_lookup() {
+        let entry = lookup_entry("MegaCoreX").unwrap();
+        assert!(entry.github.contains("MegaCoreX"));
+        assert_eq!(entry.version, "1.1.5");
+        assert_eq!(entry.tag_prefix, "v");
+        assert_eq!(entry.core_dir.as_deref(), Some("coreX-corefiles"));
     }
 }

@@ -188,9 +188,9 @@ def trigger_and_wait(repo: str) -> int:
     log(f"  Run {run_id} started")
     log(f"  https://github.com/{repo}/actions/runs/{run_id}")
 
-    # Wait for completion (30 min timeout, 5 min queued timeout)
+    # Wait for completion (30 min timeout, 15 min queued timeout)
     timeout = 1800
-    queued_timeout = 300
+    queued_timeout = 900
     start = time.time()
     queued_since: float | None = None
     while time.time() - start < timeout:

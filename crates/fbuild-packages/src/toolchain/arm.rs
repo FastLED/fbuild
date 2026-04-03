@@ -28,7 +28,7 @@ impl ArmToolchain {
                 ARM_GCC_VERSION,
                 &url,
                 ARM_GCC_BASE_URL,
-                Some(&checksum),
+                checksum.as_deref(),
                 CacheSubdir::Toolchains,
                 project_dir,
             ),
@@ -45,7 +45,7 @@ impl ArmToolchain {
                 ARM_GCC_VERSION,
                 &url,
                 ARM_GCC_BASE_URL,
-                Some(&checksum),
+                checksum.as_deref(),
                 CacheSubdir::Toolchains,
                 project_dir,
                 cache_root,
@@ -158,36 +158,72 @@ impl Toolchain for ArmToolchain {
     }
 }
 
-/// Get the platform-specific download URL and checksum.
-fn platform_package() -> (String, String) {
-    let (filename, checksum) = if cfg!(target_os = "windows") {
+/// A platform-specific ARM toolchain package entry.
+struct ArmPlatformPackage {
+    filename: &'static str,
+    /// SHA-256 checksum. `None` = skip verification (not yet captured).
+    checksum: Option<&'static str>,
+}
+
+/// All platform variants for the ARM toolchain — no `cfg!` so tests can
+/// validate every entry regardless of which platform runs the test.
+fn all_platform_packages() -> [(&'static str, ArmPlatformPackage); 4] {
+    [
         (
-            "arm-gnu-toolchain-15.2.rel1-mingw-w64-x86_64-arm-none-eabi.zip",
-            "7936cac895611023ffb22a64b8e426098c7104cb689778c1894572ca840b9ece",
-        )
+            "windows",
+            ArmPlatformPackage {
+                filename: "arm-gnu-toolchain-15.2.rel1-mingw-w64-x86_64-arm-none-eabi.zip",
+                checksum: Some("7936cac895611023ffb22a64b8e426098c7104cb689778c1894572ca840b9ece"),
+            },
+        ),
+        (
+            "macos",
+            ArmPlatformPackage {
+                filename: "arm-gnu-toolchain-15.2.rel1-darwin-x86_64-arm-none-eabi.tar.xz",
+                // TODO: capture real checksum from macOS CI run
+                checksum: None,
+            },
+        ),
+        (
+            "linux-aarch64",
+            ArmPlatformPackage {
+                filename: "arm-gnu-toolchain-15.2.rel1-aarch64-arm-none-eabi.tar.xz",
+                // TODO: capture real checksum from aarch64 CI run
+                checksum: None,
+            },
+        ),
+        (
+            "linux-x86_64",
+            ArmPlatformPackage {
+                filename: "arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-eabi.tar.xz",
+                // TODO: capture real checksum from Linux x86_64 CI run
+                checksum: None,
+            },
+        ),
+    ]
+}
+
+/// Get the platform-specific download URL and optional checksum for the current host.
+fn platform_package() -> (String, Option<String>) {
+    let key = if cfg!(target_os = "windows") {
+        "windows"
     } else if cfg!(target_os = "macos") {
-        (
-            "arm-gnu-toolchain-15.2.rel1-darwin-x86_64-arm-none-eabi.tar.xz",
-            // TODO: verify macOS checksum after first download
-            "a000000000000000000000000000000000000000000000000000000000000002",
-        )
+        "macos"
     } else if cfg!(target_arch = "aarch64") {
-        (
-            "arm-gnu-toolchain-15.2.rel1-aarch64-arm-none-eabi.tar.xz",
-            // TODO: verify aarch64 checksum after first download
-            "a000000000000000000000000000000000000000000000000000000000000003",
-        )
+        "linux-aarch64"
     } else {
-        (
-            "arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-eabi.tar.xz",
-            // TODO: verify Linux x86_64 checksum after first download
-            "a000000000000000000000000000000000000000000000000000000000000004",
-        )
+        "linux-x86_64"
     };
 
+    let packages = all_platform_packages();
+    let (_, pkg) = packages
+        .iter()
+        .find(|(k, _)| *k == key)
+        .expect("no ARM package for current platform");
+
     (
-        format!("{}/15.2.rel1/binrel/{}", ARM_GCC_BASE_URL, filename),
-        checksum.to_string(),
+        format!("{}/15.2.rel1/binrel/{}", ARM_GCC_BASE_URL, pkg.filename),
+        pkg.checksum.map(|s| s.to_string()),
     )
 }
 
@@ -233,11 +269,10 @@ mod tests {
     use std::collections::HashMap;
 
     #[test]
-    fn test_platform_package_returns_url_and_checksum() {
-        let (url, checksum) = platform_package();
+    fn test_platform_package_returns_url() {
+        let (url, _checksum) = platform_package();
         assert!(url.starts_with("https://developer.arm.com"));
         assert!(url.contains("arm-none-eabi"));
-        assert_eq!(checksum.len(), 64); // SHA256 hex
     }
 
     #[test]
@@ -282,5 +317,44 @@ mod tests {
         let tmp = tempfile::TempDir::new().unwrap();
         let tc = ArmToolchain::with_cache_root(tmp.path(), &tmp.path().join("cache"));
         assert!(!tc.is_installed());
+    }
+
+    /// Checksums that are present must be valid 64-char lowercase hex (SHA-256).
+    /// Catches placeholder hashes like `a000...0002` on all platforms.
+    #[test]
+    fn test_all_checksums_are_valid_or_none() {
+        for (platform, pkg) in &all_platform_packages() {
+            if let Some(hash) = pkg.checksum {
+                assert_eq!(
+                    hash.len(),
+                    64,
+                    "checksum for {platform} has wrong length ({}): {hash}",
+                    hash.len(),
+                );
+                assert!(
+                    hash.chars().all(|c| c.is_ascii_hexdigit()),
+                    "checksum for {platform} contains non-hex characters: {hash}",
+                );
+                // Reject obviously-fake placeholder patterns
+                assert!(
+                    !hash.starts_with("a000000"),
+                    "checksum for {platform} looks like a placeholder: {hash}",
+                );
+            }
+        }
+    }
+
+    /// Every platform entry must have a valid URL.
+    #[test]
+    fn test_all_platform_urls_are_valid() {
+        for (platform, pkg) in &all_platform_packages() {
+            assert!(
+                pkg.filename
+                    .contains(ARM_GCC_VERSION.to_lowercase().as_str())
+                    || pkg.filename.contains("15.2"),
+                "filename for {platform} doesn't contain version: {}",
+                pkg.filename,
+            );
+        }
     }
 }

@@ -29,9 +29,28 @@
       "name": "minicore",
       "github": "MCUdude/MiniCore",
       "version": "2.2.2",
+      "tag_prefix": "v",
+      "checksum": null,
+      "validation_path": "cores/MCUdude_corefiles/Arduino.h",
+      "core_dir": "MCUdude_corefiles"
+    },
+    "megatinycore": {
+      "name": "megatinycore",
+      "github": "SpenceKonde/megaTinyCore",
+      "version": "2.6.11",
       "tag_prefix": "",
       "checksum": null,
-      "validation_path": "cores/MiniCore/Arduino.h"
+      "validation_path": "cores/megatinycore/Arduino.h",
+      "core_dir": "megatinycore"
+    },
+    "MegaCoreX": {
+      "name": "megacorex",
+      "github": "MCUdude/MegaCoreX",
+      "version": "1.1.5",
+      "tag_prefix": "v",
+      "checksum": null,
+      "validation_path": "cores/coreX-corefiles/Arduino.h",
+      "core_dir": "coreX-corefiles"
     }
   }
 }

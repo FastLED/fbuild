@@ -27,7 +27,7 @@ impl AvrToolchain {
                 AVR_GCC_VERSION,
                 &url,
                 AVR_GCC_BASE_URL,
-                Some(&checksum),
+                checksum.as_deref(),
                 CacheSubdir::Toolchains,
                 project_dir,
             ),
@@ -45,7 +45,7 @@ impl AvrToolchain {
                 AVR_GCC_VERSION,
                 &url,
                 AVR_GCC_BASE_URL,
-                Some(&checksum),
+                checksum.as_deref(),
                 CacheSubdir::Toolchains,
                 project_dir,
                 cache_root,
@@ -165,36 +165,73 @@ impl Toolchain for AvrToolchain {
     }
 }
 
-/// Get the platform-specific download URL and checksum.
-fn platform_package() -> (String, String) {
-    let (filename, checksum) = if cfg!(target_os = "windows") {
+/// A platform-specific AVR toolchain package entry.
+struct AvrPlatformPackage {
+    filename: &'static str,
+    /// SHA-256 checksum. `None` means skip verification (checksum not yet captured).
+    checksum: Option<&'static str>,
+}
+
+/// All platform variants for the AVR toolchain.
+///
+/// Defined as a plain function (no `cfg!`) so tests can validate every entry
+/// regardless of which platform the test runs on.
+fn all_platform_packages() -> [(&'static str, AvrPlatformPackage); 4] {
+    [
         (
-            "avr-gcc-7.3.0-atmel3.6.1-arduino7-i686-w64-mingw32.zip",
-            "a54f64755fff4cb792a1495e5defdd789902a2a3503982e81b898299cf39800e",
-        )
+            "windows",
+            AvrPlatformPackage {
+                filename: "avr-gcc-7.3.0-atmel3.6.1-arduino7-i686-w64-mingw32.zip",
+                checksum: Some("a54f64755fff4cb792a1495e5defdd789902a2a3503982e81b898299cf39800e"),
+            },
+        ),
+        (
+            "macos",
+            AvrPlatformPackage {
+                filename: "avr-gcc-7.3.0-atmel3.6.1-arduino7-x86_64-apple-darwin14.tar.bz2",
+                // TODO: capture real checksum from macOS CI run
+                checksum: None,
+            },
+        ),
+        (
+            "linux-aarch64",
+            AvrPlatformPackage {
+                filename: "avr-gcc-7.3.0-atmel3.6.1-arduino7-aarch64-pc-linux-gnu.tar.bz2",
+                // TODO: capture real checksum from aarch64 CI run
+                checksum: None,
+            },
+        ),
+        (
+            "linux-x86_64",
+            AvrPlatformPackage {
+                filename: "avr-gcc-7.3.0-atmel3.6.1-arduino7-x86_64-pc-linux-gnu.tar.bz2",
+                checksum: Some("bd8c37f6952a2130ac9ee32c53f6a660feb79bee8353c8e289eb60fdcefed91e"),
+            },
+        ),
+    ]
+}
+
+/// Get the platform-specific download URL and optional checksum for the current host.
+fn platform_package() -> (String, Option<String>) {
+    let key = if cfg!(target_os = "windows") {
+        "windows"
     } else if cfg!(target_os = "macos") {
-        // TODO: verify macOS checksum after first download
-        (
-            "avr-gcc-7.3.0-atmel3.6.1-arduino7-x86_64-apple-darwin14.tar.bz2",
-            "3903f0f0aab8e3e6e5d5e15c5e2e0c8c8a0a5f9d5e5c5d5e5f5a5b5c5d5e5f5a",
-        )
+        "macos"
     } else if cfg!(target_arch = "aarch64") {
-        // TODO: verify aarch64 checksum after first download
-        (
-            "avr-gcc-7.3.0-atmel3.6.1-arduino7-aarch64-pc-linux-gnu.tar.bz2",
-            "4903f0f0aab8e3e6e5d5e15c5e2e0c8c8a0a5f9d5e5c5d5e5f5a5b5c5d5e5f5a",
-        )
+        "linux-aarch64"
     } else {
-        // TODO: verify Linux x86_64 checksum after first download
-        (
-            "avr-gcc-7.3.0-atmel3.6.1-arduino7-x86_64-pc-linux-gnu.tar.bz2",
-            "5903f0f0aab8e3e6e5d5e15c5e2e0c8c8a0a5f9d5e5c5d5e5f5a5b5c5d5e5f5a",
-        )
+        "linux-x86_64"
     };
 
+    let packages = all_platform_packages();
+    let (_, pkg) = packages
+        .iter()
+        .find(|(k, _)| *k == key)
+        .expect("no AVR package for current platform");
+
     (
-        format!("{}/{}", AVR_GCC_BASE_URL, filename),
-        checksum.to_string(),
+        format!("{}/{}", AVR_GCC_BASE_URL, pkg.filename),
+        pkg.checksum.map(|s| s.to_string()),
     )
 }
 
@@ -242,10 +279,108 @@ mod tests {
     use std::collections::HashMap;
 
     #[test]
-    fn test_platform_package_returns_url_and_checksum() {
-        let (url, checksum) = platform_package();
+    fn test_platform_package_returns_url() {
+        let (url, _checksum) = platform_package();
         assert!(url.starts_with("https://downloads.arduino.cc/tools/avr-gcc"));
-        assert_eq!(checksum.len(), 64); // SHA256 hex
+    }
+
+    /// Checksums that are present must be valid 64-char lowercase hex (SHA-256).
+    /// This runs on every platform and checks ALL entries, catching placeholder
+    /// hashes like the `5903f0f0...` pattern that broke Linux CI.
+    #[test]
+    fn test_all_checksums_are_valid_or_none() {
+        for (platform, pkg) in &all_platform_packages() {
+            if let Some(hash) = pkg.checksum {
+                assert_eq!(
+                    hash.len(),
+                    64,
+                    "checksum for {platform} has wrong length ({}): {hash}",
+                    hash.len(),
+                );
+                assert!(
+                    hash.chars().all(|c| c.is_ascii_hexdigit()),
+                    "checksum for {platform} contains non-hex characters: {hash}",
+                );
+                // Reject obviously-fake incrementing patterns
+                assert!(
+                    !hash.contains("0aab8e3e6e5d5e15c5e2e0c8c"),
+                    "checksum for {platform} looks like a placeholder: {hash}",
+                );
+            }
+        }
+    }
+
+    /// Every platform entry must have a URL that starts with the base URL.
+    #[test]
+    fn test_all_platform_urls_are_valid() {
+        for (platform, pkg) in &all_platform_packages() {
+            let url = format!("{}/{}", AVR_GCC_BASE_URL, pkg.filename);
+            assert!(
+                url.starts_with("https://downloads.arduino.cc/tools/avr-gcc-"),
+                "URL for {platform} doesn't start with expected prefix: {url}",
+            );
+            assert!(
+                pkg.filename.contains(AVR_GCC_VERSION),
+                "filename for {platform} doesn't contain version {AVR_GCC_VERSION}: {}",
+                pkg.filename,
+            );
+        }
+    }
+
+    /// Windows and Linux x86_64 (the two CI platforms) must have checksums.
+    /// macOS/aarch64 may be None until captured from a CI run.
+    #[test]
+    fn test_ci_platforms_have_checksums() {
+        let packages = all_platform_packages();
+        for (platform, pkg) in &packages {
+            if *platform == "windows" || *platform == "linux-x86_64" {
+                assert!(
+                    pkg.checksum.is_some(),
+                    "CI platform {platform} must have a checksum (not None)",
+                );
+            }
+        }
+    }
+
+    /// Download the AVR toolchain for the current platform and verify the
+    /// checksum matches what we have on file. Skipped when checksum is None.
+    ///
+    /// This is an integration test that hits the network. Run with:
+    ///   cargo test -p fbuild-packages -- --ignored test_download_and_verify_checksum
+    #[test]
+    #[ignore]
+    fn test_download_and_verify_checksum() {
+        let (url, expected) = platform_package();
+        let Some(expected) = expected else {
+            eprintln!("skipping: no checksum for current platform (None)");
+            return;
+        };
+
+        let tmp = tempfile::TempDir::new().unwrap();
+        let out_path = tmp.path().join("avr-gcc.archive");
+
+        // Blocking download
+        let rt = tokio::runtime::Runtime::new().unwrap();
+        rt.block_on(async {
+            let resp = reqwest::get(&url).await.expect("download failed");
+            assert!(resp.status().is_success(), "HTTP {}", resp.status());
+            let bytes = resp.bytes().await.expect("read body failed");
+            std::fs::write(&out_path, &bytes).expect("write failed");
+        });
+
+        // Compute SHA-256
+        use sha2::{Digest, Sha256};
+        let data = std::fs::read(&out_path).unwrap();
+        let hash = format!("{:x}", Sha256::digest(&data));
+
+        assert_eq!(
+            hash, expected,
+            "checksum mismatch for current platform download\n\
+             url: {url}\n\
+             expected: {expected}\n\
+             actual:   {hash}\n\
+             If this fails, update the checksum in avr.rs"
+        );
     }
 
     #[test]

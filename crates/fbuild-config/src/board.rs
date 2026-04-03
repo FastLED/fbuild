@@ -43,6 +43,8 @@ pub struct BoardConfig {
     pub partitions: Option<String>,
     /// Linker script (e.g. "esp32s3_out.ld")
     pub ldscript: Option<String>,
+    /// Platform string from board JSON (e.g. "atmelmegaavr", "atmelavr")
+    pub platform_str: Option<String>,
 }
 
 impl BoardConfig {
@@ -111,6 +113,7 @@ impl BoardConfig {
             f_flash: get("f_flash"),
             partitions: get("partitions"),
             ldscript: get("ldscript"),
+            platform_str: get("platform_str"),
         })
     }
 
@@ -188,11 +191,18 @@ impl BoardConfig {
                 .get("ldscript")
                 .cloned()
                 .or_else(|| defaults.get("ldscript").cloned()),
+            platform_str: defaults.get("platform_str").cloned(),
         })
     }
 
-    /// Detect the platform from the MCU name.
+    /// Detect the platform from the board JSON's platform field, or fall back to MCU heuristic.
     pub fn platform(&self) -> Option<fbuild_core::Platform> {
+        // Prefer explicit platform from board JSON (distinguishes AtmelMegaAvr from AtmelAvr)
+        if let Some(ref p) = self.platform_str {
+            if let Some(platform) = fbuild_core::Platform::from_platform_str(p) {
+                return Some(platform);
+            }
+        }
         let mcu = self.mcu.to_lowercase();
         if mcu.starts_with("atmega") || mcu.starts_with("attiny") || mcu.starts_with("at90") {
             Some(fbuild_core::Platform::AtmelAvr)
@@ -440,6 +450,10 @@ fn get_board_defaults(board_id: &str) -> Option<HashMap<String, String>> {
 
     if let Some(rom) = entry.get("rom").and_then(|v| v.as_u64()) {
         d.insert("maximum_size".into(), rom.to_string());
+    }
+
+    if let Some(platform) = entry.get("platform").and_then(|v| v.as_str()) {
+        d.insert("platform_str".into(), platform.to_string());
     }
 
     // Data-driven: read build section from enriched JSON
@@ -844,5 +858,25 @@ leonardo.upload.speed=57600
         let defines = config.get_defines();
         assert_eq!(defines.get("USB_VID"), Some(&"0x2341".to_string()));
         assert_eq!(defines.get("USB_PID"), Some(&"0x8036".to_string()));
+    }
+
+    #[test]
+    fn test_attiny1604_board_config() {
+        let config = BoardConfig::from_board_id("ATtiny1604", &HashMap::new()).unwrap();
+        assert_eq!(config.mcu, "attiny1604");
+        assert_eq!(config.core, "megatinycore");
+        assert_eq!(config.variant, "txy4");
+        assert_eq!(config.platform(), Some(fbuild_core::Platform::AtmelMegaAvr));
+        let defines = config.get_defines();
+        assert_eq!(defines.get("ARDUINO_ARCH_MEGAAVR"), Some(&"1".to_string()));
+    }
+
+    #[test]
+    fn test_nano_every_board_config() {
+        let config = BoardConfig::from_board_id("nano_every", &HashMap::new()).unwrap();
+        assert_eq!(config.mcu, "atmega4809");
+        assert_eq!(config.core, "MegaCoreX");
+        assert_eq!(config.variant, "nano-every");
+        assert_eq!(config.platform(), Some(fbuild_core::Platform::AtmelMegaAvr));
     }
 }

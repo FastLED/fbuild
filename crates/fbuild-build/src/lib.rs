@@ -15,7 +15,43 @@ pub mod zccache;
 
 pub use source_scanner::SourceScanner;
 
+use std::path::Path;
+
 use fbuild_core::{BuildProfile, Platform, Result, SizeInfo};
+
+/// Trait for platform-specific build support.
+///
+/// Each platform module implements this to provide orchestrator creation,
+/// dependency installation, and configuration. Adding a new platform requires:
+/// 1. Implement this trait in the platform module
+/// 2. Register in `get_platform_support()`
+pub trait PlatformSupport: Send + Sync {
+    /// Create the build orchestrator for this platform.
+    fn create_orchestrator(&self) -> Box<dyn BuildOrchestrator>;
+
+    /// Install platform-specific dependencies (toolchain, framework).
+    fn install_deps(&self, project_dir: &Path) -> Result<()>;
+
+    /// Default board ID used as fallback when none is specified.
+    fn default_board_id(&self) -> &str;
+}
+
+/// Look up platform support for a given platform.
+///
+/// Returns `Err` for platforms without a native orchestrator.
+pub fn get_platform_support(platform: Platform) -> Result<Box<dyn PlatformSupport>> {
+    match platform {
+        Platform::AtmelAvr | Platform::AtmelMegaAvr => {
+            Ok(Box::new(avr::AvrPlatformSupport))
+        }
+        Platform::Espressif32 => Ok(Box::new(esp32::Esp32PlatformSupport)),
+        Platform::Teensy => Ok(Box::new(teensy::TeensyPlatformSupport)),
+        _ => Err(fbuild_core::FbuildError::BuildFailed(format!(
+            "native orchestrator for {:?} not yet implemented — use --platformio flag for this platform",
+            platform
+        ))),
+    }
+}
 
 /// Warn if user has debug flags (`-g`, `-g1`, `-g2`, `-g3`) in global `build_flags`.
 ///
@@ -91,15 +127,12 @@ pub trait BuildOrchestrator: Send + Sync {
 
 /// Select the appropriate orchestrator for a platform.
 pub fn get_orchestrator(platform: Platform) -> Result<Box<dyn BuildOrchestrator>> {
-    match platform {
-        Platform::AtmelAvr => Ok(avr::orchestrator::create()),
-        Platform::Espressif32 => Ok(esp32::orchestrator::create()),
-        Platform::Teensy => Ok(teensy::orchestrator::create()),
-        _ => Err(fbuild_core::FbuildError::BuildFailed(format!(
-            "native orchestrator for {:?} not yet implemented — use --platformio flag for this platform",
-            platform
-        ))),
-    }
+    get_platform_support(platform).map(|s| s.create_orchestrator())
+}
+
+/// Install platform-specific dependencies (toolchain, framework).
+pub fn install_platform_deps(platform: Platform, project_dir: &Path) -> Result<()> {
+    get_platform_support(platform)?.install_deps(project_dir)
 }
 
 #[cfg(test)]
@@ -126,5 +159,11 @@ mod tests {
     #[test]
     fn warn_debug_build_flags_ignores_unrelated() {
         warn_debug_build_flags(&["-O2".to_string(), "-Wall".to_string()]);
+    }
+
+    #[test]
+    fn test_get_orchestrator_atmelmegaavr() {
+        let orch = get_orchestrator(Platform::AtmelMegaAvr).unwrap();
+        assert_eq!(orch.platform(), Platform::AtmelAvr);
     }
 }

@@ -104,6 +104,25 @@ impl BuildOrchestrator for TeensyOrchestrator {
             include_dirs.push(include_dir);
         }
 
+        // PlatformIO automatically discovers libraries placed in the project's lib/ directory.
+        // Each subdirectory is treated as a library — add its root (and src/ if present).
+        let local_lib_dir = params.project_dir.join("lib");
+        if local_lib_dir.is_dir() {
+            if let Ok(entries) = std::fs::read_dir(&local_lib_dir) {
+                for entry in entries.flatten() {
+                    let path = entry.path();
+                    if path.is_dir() {
+                        let lib_src = path.join("src");
+                        if lib_src.is_dir() {
+                            include_dirs.push(lib_src);
+                        }
+                        // Always add the root too (some libraries have headers at top level)
+                        include_dirs.push(path);
+                    }
+                }
+            }
+        }
+
         let user_flags = config.get_build_flags(&params.env_name)?;
         crate::warn_debug_build_flags(&user_flags);
 
@@ -204,7 +223,57 @@ impl BuildOrchestrator for TeensyOrchestrator {
             sketch_objects.push(obj);
         }
 
-        // 7.5. Generate compile_commands.json
+        // 7.5. Compile local libraries from the project's lib/ directory.
+        let mut library_objects = Vec::new();
+        if local_lib_dir.is_dir() {
+            if let Ok(entries) = std::fs::read_dir(&local_lib_dir) {
+                for entry in entries.flatten() {
+                    let lib_path = entry.path();
+                    if !lib_path.is_dir() {
+                        continue;
+                    }
+                    let lib_name = lib_path
+                        .file_name()
+                        .unwrap_or_default()
+                        .to_string_lossy()
+                        .to_string();
+
+                    let lib_info = fbuild_packages::library::library_info::InstalledLibrary::new(
+                        &lib_path, &lib_name,
+                    );
+                    let lib_sources = lib_info.get_source_files();
+                    if lib_sources.is_empty() {
+                        continue;
+                    }
+
+                    let lib_build_dir = build_dir.join("lib").join(&lib_name);
+                    std::fs::create_dir_all(&lib_build_dir)?;
+                    tracing::info!(
+                        "compiling local library '{}': {} source files",
+                        lib_name,
+                        lib_sources.len()
+                    );
+
+                    for source in &lib_sources {
+                        let obj = CompilerBase::object_path(source, &lib_build_dir);
+                        if CompilerBase::needs_rebuild(source, &obj) {
+                            let result = compiler.compile(source, &obj, &all_src_flags)?;
+                            if !result.success {
+                                return Err(fbuild_core::FbuildError::BuildFailed(format!(
+                                    "local library '{}' compilation failed for {}:\n{}",
+                                    lib_name,
+                                    source.display(),
+                                    result.stderr
+                                )));
+                            }
+                        }
+                        library_objects.push(obj);
+                    }
+                }
+            }
+        }
+
+        // 7.6. Generate compile_commands.json
         let mut compile_db = crate::compile_database::CompileDatabase::new();
         // Core sources use user_flags
         compile_db.extend(crate::compile_database::generate_entries(
@@ -252,8 +321,16 @@ impl BuildOrchestrator for TeensyOrchestrator {
             params.verbose,
         );
 
-        let link_result =
-            crate::linker::Linker::link_all(&linker, &sketch_objects, &core_objects, &build_dir)?;
+        // Include library objects alongside core objects for linking
+        let mut all_core_objects = core_objects;
+        all_core_objects.extend(library_objects);
+
+        let link_result = crate::linker::Linker::link_all(
+            &linker,
+            &sketch_objects,
+            &all_core_objects,
+            &build_dir,
+        )?;
 
         // 10. Size reporting
         if let Some(ref size) = link_result.size_info {

@@ -17,34 +17,6 @@ pub use cache::Cache;
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
-/// Install platform-specific dependencies (toolchain, framework, libraries)
-/// without performing a build. Matches the Python daemon's install-deps contract.
-pub fn install_platform_deps(
-    platform: fbuild_core::Platform,
-    project_dir: &Path,
-    _env_name: &str,
-) -> fbuild_core::Result<()> {
-    match platform {
-        fbuild_core::Platform::Espressif32 => {
-            // Install ESP32 toolchain (defaults to xtensa)
-            let tc = toolchain::esp32::Esp32Toolchain::new(project_dir, false, "xtensa-esp-elf");
-            tc.ensure_installed()?;
-            tracing::info!("ESP32 toolchain installed");
-            Ok(())
-        }
-        fbuild_core::Platform::AtmelAvr => {
-            let tc = toolchain::avr::AvrToolchain::new(project_dir);
-            tc.ensure_installed()?;
-            tracing::info!("AVR toolchain installed");
-            Ok(())
-        }
-        other => {
-            tracing::info!("{:?} install-deps: minimal implementation, dependencies will be installed at first build", other);
-            Ok(())
-        }
-    }
-}
-
 /// Base trait for all installable packages.
 pub trait Package: Send + Sync {
     /// Ensure the package is installed, downloading if necessary.

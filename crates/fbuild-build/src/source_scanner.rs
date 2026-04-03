@@ -62,6 +62,9 @@ impl SourceScanner {
     /// Scan the project source directory for sketch files.
     ///
     /// Returns preprocessed .ino files as .cpp, plus existing .cpp/.c/.S files.
+    ///
+    /// When a `main.cpp` already `#include`s `.ino` files (PlatformIO convention),
+    /// the `.ino` files are NOT preprocessed separately to avoid duplicate symbols.
     pub fn scan_sketch_sources(&self) -> fbuild_core::Result<Vec<PathBuf>> {
         if !self.src_dir.exists() {
             return Ok(Vec::new());
@@ -69,6 +72,7 @@ impl SourceScanner {
 
         let mut sources = Vec::new();
         let mut ino_files = Vec::new();
+        let mut has_main_cpp = false;
 
         for entry in walk_sources(&self.src_dir) {
             let ext = entry
@@ -78,13 +82,19 @@ impl SourceScanner {
                 .to_lowercase();
             match ext.as_str() {
                 "ino" => ino_files.push(entry),
-                "cpp" | "c" | "s" | "cc" => sources.push(entry),
+                "cpp" | "c" | "s" | "cc" => {
+                    if entry.file_name().is_some_and(|n| n == "main.cpp") {
+                        has_main_cpp = true;
+                    }
+                    sources.push(entry);
+                }
                 _ => {}
             }
         }
 
-        // Preprocess .ino files
-        if !ino_files.is_empty() {
+        // If main.cpp exists and includes .ino files, skip preprocessing —
+        // the .ino content is already compiled via #include in main.cpp.
+        if !ino_files.is_empty() && !has_main_cpp {
             ino_files.sort();
             let preprocessed = self.preprocess_ino_files(&ino_files)?;
             sources.insert(0, preprocessed);

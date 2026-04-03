@@ -1,4 +1,11 @@
 {
+  "build": {
+    "core": "MegaCoreX",
+    "extra_flags": "-DARDUINO_AVR_NANO_EVERY",
+    "f_cpu": "16000000L",
+    "mcu": "atmega4809",
+    "variant": "nano-every"
+  },
   "fcpu": 16000000,
   "frameworks": [
     "arduino"
@@ -9,6 +16,11 @@
   "platform": "atmelmegaavr",
   "ram": 6144,
   "rom": 48640,
+  "upload": {
+    "protocol": "jtag2updi",
+    "require_upload_port": true,
+    "speed": 115200
+  },
   "url": "https://www.arduino.cc/en/Guide/NANOEvery",
   "vendor": "Arduino"
 }

@@ -8,3 +8,24 @@ pub mod orchestrator;
 pub use avr_compiler::AvrCompiler;
 pub use avr_linker::AvrLinker;
 pub use orchestrator::AvrOrchestrator;
+
+/// AVR platform support (AtmelAvr + AtmelMegaAvr).
+pub struct AvrPlatformSupport;
+
+impl crate::PlatformSupport for AvrPlatformSupport {
+    fn create_orchestrator(&self) -> Box<dyn crate::BuildOrchestrator> {
+        orchestrator::create()
+    }
+
+    fn install_deps(&self, project_dir: &std::path::Path) -> fbuild_core::Result<()> {
+        use fbuild_packages::Package;
+        let tc = fbuild_packages::toolchain::AvrToolchain::new(project_dir);
+        Package::ensure_installed(&tc)?;
+        tracing::info!("AVR toolchain installed");
+        Ok(())
+    }
+
+    fn default_board_id(&self) -> &str {
+        "uno"
+    }
+}

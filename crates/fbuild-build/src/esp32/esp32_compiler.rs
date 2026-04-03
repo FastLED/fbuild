@@ -170,7 +170,8 @@ impl Esp32Compiler {
         // length limits (OS error 206). The command becomes:
         //   [zccache] <compiler> @response.rsp
         let args = if cfg!(windows) {
-            let response_file = write_response_file(&all_flags, &self.temp_dir)?;
+            let response_file =
+                crate::compiler::write_response_file(&all_flags, &self.temp_dir, "esp32")?;
             let mut a = Vec::new();
             if let Some(ref zcc) = self.compiler_cache {
                 a.push(zcc.to_string_lossy().to_string());
@@ -225,86 +226,8 @@ impl Compiler for Esp32Compiler {
     }
 }
 
-/// Write flags to a temporary response file for GCC `@file` syntax.
-///
-/// Returns the path to the response file. The file is written to the system
-/// temp directory and will persist for the duration of the build.
-/// Uses an atomic counter for thread-safe unique filenames during parallel compilation.
-fn write_response_file(flags: &[String], temp_dir: &Path) -> Result<PathBuf> {
-    use std::sync::atomic::{AtomicU64, Ordering};
-    static RSP_COUNTER: AtomicU64 = AtomicU64::new(0);
-
-    std::fs::create_dir_all(temp_dir).map_err(|e| {
-        fbuild_core::FbuildError::BuildFailed(format!(
-            "failed to create temp dir {}: {}",
-            temp_dir.display(),
-            e
-        ))
-    })?;
-
-    let counter = RSP_COUNTER.fetch_add(1, Ordering::Relaxed);
-    let path = temp_dir.join(format!(
-        "fbuild_esp32_{}_{}.rsp",
-        std::process::id(),
-        counter
-    ));
-    // GCC treats backslashes in response files as escape characters (\n = newline,
-    // \f = formfeed, etc.). Convert to forward slashes for Windows path compatibility,
-    // but preserve \" sequences which are intentional escape sequences (e.g., in
-    // -DMBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\").
-    //
-    // Flags containing \" (escaped quotes in define values like -DARDUINO_BOARD=\"...\")
-    // must be wrapped in single quotes with the \" converted to plain " — the Xtensa GCC
-    // response file parser treats \" inconsistently across platforms, but single-quoted
-    // arguments always preserve literal " characters.
-    let content = flags
-        .iter()
-        .map(|f| {
-            let fwd = replace_path_backslashes(f);
-            if fwd.contains("\\\"") {
-                // Wrap in single quotes with \" → " for reliable quoting
-                let unescaped = fwd.replace("\\\"", "\"");
-                format!("'{}'", unescaped)
-            } else if fwd.contains(' ') {
-                format!("\"{}\"", fwd)
-            } else {
-                fwd
-            }
-        })
-        .collect::<Vec<_>>()
-        .join("\n");
-    std::fs::write(&path, content).map_err(|e| {
-        fbuild_core::FbuildError::BuildFailed(format!(
-            "failed to write response file {}: {}",
-            path.display(),
-            e
-        ))
-    })?;
-    Ok(path)
-}
-
-/// Replace backslashes with forward slashes for GCC response files,
-/// but preserve `\"` sequences which are intentional escapes in define values.
-fn replace_path_backslashes(s: &str) -> String {
-    let bytes = s.as_bytes();
-    let mut result = String::with_capacity(s.len());
-    let mut i = 0;
-    while i < bytes.len() {
-        if bytes[i] == b'\\' && i + 1 < bytes.len() && bytes[i + 1] == b'"' {
-            // Preserve \" escape sequence
-            result.push('\\');
-            result.push('"');
-            i += 2;
-        } else if bytes[i] == b'\\' {
-            result.push('/');
-            i += 1;
-        } else {
-            result.push(bytes[i] as char);
-            i += 1;
-        }
-    }
-    result
-}
+// Response file utilities (write_response_file, replace_path_backslashes)
+// are in crate::compiler for shared use across all platform compilers.
 
 #[cfg(test)]
 mod tests {
@@ -398,7 +321,7 @@ mod tests {
         let flags: Vec<String> = (0..200)
             .map(|i| format!("-I/path/to/include/{}", i))
             .collect();
-        let path = write_response_file(&flags, tmp.path()).unwrap();
+        let path = crate::compiler::write_response_file(&flags, tmp.path(), "esp32").unwrap();
         assert!(path.exists());
         let content = std::fs::read_to_string(&path).unwrap();
         assert!(content.contains("-I/path/to/include/0"));

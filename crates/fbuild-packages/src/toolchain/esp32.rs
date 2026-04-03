@@ -42,7 +42,7 @@ impl Esp32Toolchain {
                 ESP32_TOOLCHAIN_VERSION,
                 &url,
                 &url,
-                Some(&checksum),
+                checksum.as_deref(),
                 CacheSubdir::Toolchains,
                 project_dir,
             ),
@@ -70,7 +70,7 @@ impl Esp32Toolchain {
                 ESP32_TOOLCHAIN_VERSION,
                 &url,
                 &url,
-                Some(&checksum),
+                checksum.as_deref(),
                 CacheSubdir::Toolchains,
                 project_dir,
                 cache_root,
@@ -244,54 +244,94 @@ impl Toolchain for Esp32Toolchain {
     }
 }
 
-/// Get the platform-specific download URL and checksum for RISC-V or Xtensa.
-fn platform_package(is_riscv: bool) -> (String, String) {
+/// A platform-specific ESP32 toolchain package entry.
+struct Esp32PlatformPackage {
+    filename_suffix: &'static str,
+    /// SHA-256 checksum. `None` = skip verification (not yet captured).
+    checksum: Option<&'static str>,
+}
+
+/// All platform variants for the ESP32 toolchain — no `cfg!` so tests can
+/// validate every entry regardless of which platform runs the test.
+fn all_platform_packages() -> [(&'static str, Esp32PlatformPackage); 5] {
+    [
+        (
+            "windows",
+            Esp32PlatformPackage {
+                filename_suffix: "win64.zip",
+                // TODO: capture real checksum from Windows CI run
+                checksum: None,
+            },
+        ),
+        (
+            "macos-arm64",
+            Esp32PlatformPackage {
+                filename_suffix: "macos-arm64.tar.xz",
+                // TODO: capture real checksum from macOS ARM CI run
+                checksum: None,
+            },
+        ),
+        (
+            "macos-x86_64",
+            Esp32PlatformPackage {
+                filename_suffix: "macos.tar.xz",
+                // TODO: capture real checksum from macOS x86_64 CI run
+                checksum: None,
+            },
+        ),
+        (
+            "linux-aarch64",
+            Esp32PlatformPackage {
+                filename_suffix: "linux-arm64.tar.xz",
+                // TODO: capture real checksum from aarch64 CI run
+                checksum: None,
+            },
+        ),
+        (
+            "linux-x86_64",
+            Esp32PlatformPackage {
+                filename_suffix: "linux-amd64.tar.xz",
+                // TODO: capture real checksum from Linux x86_64 CI run
+                checksum: None,
+            },
+        ),
+    ]
+}
+
+/// Get the platform-specific download URL and optional checksum for RISC-V or Xtensa.
+fn platform_package(is_riscv: bool) -> (String, Option<String>) {
     let arch_name = if is_riscv {
         "riscv32-esp-elf"
     } else {
         "xtensa-esp-elf"
     };
 
-    let (filename_suffix, checksum) = if cfg!(target_os = "windows") {
-        (
-            "win64.zip",
-            // TODO: verify Windows checksum after first download
-            "a000000000000000000000000000000000000000000000000000000000000010",
-        )
+    let key = if cfg!(target_os = "windows") {
+        "windows"
     } else if cfg!(target_os = "macos") {
         if cfg!(target_arch = "aarch64") {
-            (
-                "macos-arm64.tar.xz",
-                // TODO: verify macOS ARM checksum
-                "a000000000000000000000000000000000000000000000000000000000000011",
-            )
+            "macos-arm64"
         } else {
-            (
-                "macos.tar.xz",
-                // TODO: verify macOS x86_64 checksum
-                "a000000000000000000000000000000000000000000000000000000000000012",
-            )
+            "macos-x86_64"
         }
     } else if cfg!(target_arch = "aarch64") {
-        (
-            "linux-arm64.tar.xz",
-            // TODO: verify Linux ARM64 checksum
-            "a000000000000000000000000000000000000000000000000000000000000013",
-        )
+        "linux-aarch64"
     } else {
-        (
-            "linux-amd64.tar.xz",
-            // TODO: verify Linux x86_64 checksum
-            "a000000000000000000000000000000000000000000000000000000000000014",
-        )
+        "linux-x86_64"
     };
+
+    let packages = all_platform_packages();
+    let (_, pkg) = packages
+        .iter()
+        .find(|(k, _)| *k == key)
+        .expect("no ESP32 package for current platform");
 
     let url = format!(
         "https://github.com/espressif/crosstool-NG/releases/download/esp-{}/{}-{}.{}",
-        ESP32_TOOLCHAIN_VERSION, arch_name, ESP32_TOOLCHAIN_VERSION, filename_suffix,
+        ESP32_TOOLCHAIN_VERSION, arch_name, ESP32_TOOLCHAIN_VERSION, pkg.filename_suffix,
     );
 
-    (url, checksum.to_string())
+    (url, pkg.checksum.map(|s| s.to_string()))
 }
 
 /// Extract a version-like string from a toolchain URL.
@@ -358,18 +398,16 @@ mod tests {
 
     #[test]
     fn test_platform_package_riscv() {
-        let (url, checksum) = platform_package(true);
+        let (url, _checksum) = platform_package(true);
         assert!(url.contains("riscv32-esp-elf"));
         assert!(url.contains("espressif"));
-        assert_eq!(checksum.len(), 64);
     }
 
     #[test]
     fn test_platform_package_xtensa() {
-        let (url, checksum) = platform_package(false);
+        let (url, _checksum) = platform_package(false);
         assert!(url.contains("xtensa-esp-elf"));
         assert!(url.contains("espressif"));
-        assert_eq!(checksum.len(), 64);
     }
 
     #[test]
@@ -436,5 +474,48 @@ mod tests {
         // Verify RISC-V prefix in paths
         let gcc = tools.get("gcc").unwrap().to_string_lossy().to_string();
         assert!(gcc.contains("riscv32-esp-elf-gcc"));
+    }
+
+    /// Checksums that are present must be valid 64-char lowercase hex (SHA-256).
+    /// Catches placeholder hashes like `a000...0010` on all platforms.
+    #[test]
+    fn test_all_checksums_are_valid_or_none() {
+        for (platform, pkg) in &all_platform_packages() {
+            if let Some(hash) = pkg.checksum {
+                assert_eq!(
+                    hash.len(),
+                    64,
+                    "checksum for {platform} has wrong length ({}): {hash}",
+                    hash.len(),
+                );
+                assert!(
+                    hash.chars().all(|c| c.is_ascii_hexdigit()),
+                    "checksum for {platform} contains non-hex characters: {hash}",
+                );
+                assert!(
+                    !hash.starts_with("a000000"),
+                    "checksum for {platform} looks like a placeholder: {hash}",
+                );
+            }
+        }
+    }
+
+    /// Every platform entry must have a valid filename suffix.
+    #[test]
+    fn test_all_platform_suffixes_are_valid() {
+        let valid_suffixes = [
+            "win64.zip",
+            "macos-arm64.tar.xz",
+            "macos.tar.xz",
+            "linux-arm64.tar.xz",
+            "linux-amd64.tar.xz",
+        ];
+        for (platform, pkg) in &all_platform_packages() {
+            assert!(
+                valid_suffixes.contains(&pkg.filename_suffix),
+                "unexpected filename suffix for {platform}: {}",
+                pkg.filename_suffix,
+            );
+        }
     }
 }

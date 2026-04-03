@@ -18,6 +18,7 @@ pub struct AvrCompiler {
     gcc_path: PathBuf,
     gxx_path: PathBuf,
     mcu_config: AvrMcuConfig,
+    temp_dir: PathBuf,
 }
 
 impl AvrCompiler {
@@ -43,6 +44,7 @@ impl AvrCompiler {
             gcc_path,
             gxx_path,
             mcu_config,
+            temp_dir: crate::compiler::windows_temp_dir(),
         }
     }
 
@@ -93,15 +95,30 @@ impl AvrCompiler {
             std::fs::create_dir_all(parent)?;
         }
 
-        let mut args: Vec<String> = vec![compiler.to_string_lossy().to_string()];
-        args.extend(flags.iter().cloned());
-        args.extend(extra_flags.iter().cloned());
-        args.extend([
+        let mut all_flags: Vec<String> = Vec::new();
+        all_flags.extend(flags.iter().cloned());
+        all_flags.extend(extra_flags.iter().cloned());
+        all_flags.extend([
             "-c".to_string(),
             source.to_string_lossy().to_string(),
             "-o".to_string(),
             output.to_string_lossy().to_string(),
         ]);
+
+        // On Windows, write all flags to a response file to avoid command-line
+        // length limits and backslash-quote escaping issues with CreateProcessW.
+        let args = if cfg!(windows) {
+            let response_file =
+                crate::compiler::write_response_file(&all_flags, &self.temp_dir, "avr")?;
+            vec![
+                compiler.to_string_lossy().to_string(),
+                format!("@{}", response_file.display()),
+            ]
+        } else {
+            let mut a = vec![compiler.to_string_lossy().to_string()];
+            a.extend(all_flags);
+            a
+        };
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
 
