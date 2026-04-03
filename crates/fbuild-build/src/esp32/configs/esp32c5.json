@@ -1,6 +1,6 @@
 {
   "name": "ESP32-C5",
-  "description": "Configuration for ESP32-C5 MCU extracted from PlatformIO",
+  "description": "Compiler, linker, and flash configuration for ESP32-C5 MCU",
   "mcu": "esp32c5",
   "architecture": "riscv32",
 

@@ -270,6 +270,14 @@ impl BoardConfig {
             defines.insert("ESP32".to_string(), "ESP32".to_string());
         }
 
+        // USB VID/PID defines for USB-native boards (Leonardo, Micro, etc.)
+        if let Some(ref vid) = self.vid {
+            defines.insert("USB_VID".to_string(), vid.clone());
+        }
+        if let Some(ref pid) = self.pid {
+            defines.insert("USB_PID".to_string(), pid.clone());
+        }
+
         // Extra flags
         if let Some(ref flags) = self.extra_flags {
             for flag in fbuild_core::shell_split::split(flags) {
@@ -302,6 +310,7 @@ impl BoardConfig {
     fn arch_define(&self) -> String {
         match self.platform() {
             Some(fbuild_core::Platform::AtmelAvr) => "AVR".to_string(),
+            Some(fbuild_core::Platform::AtmelMegaAvr) => "MEGAAVR".to_string(),
             Some(fbuild_core::Platform::Espressif32) => "ESP32".to_string(),
             Some(fbuild_core::Platform::Espressif8266) => "ESP8266".to_string(),
             Some(fbuild_core::Platform::RaspberryPi) => "RP2040".to_string(),
@@ -443,6 +452,12 @@ fn get_board_defaults(board_id: &str) -> Option<HashMap<String, String>> {
         }
         if let Some(flags) = build.get("extra_flags").and_then(|v| v.as_str()) {
             d.insert("extra_flags".into(), flags.to_string());
+        }
+        if let Some(vid) = build.get("vid").and_then(|v| v.as_str()) {
+            d.insert("vid".into(), vid.to_string());
+        }
+        if let Some(pid) = build.get("pid").and_then(|v| v.as_str()) {
+            d.insert("pid".into(), pid.to_string());
         }
         if let Some(flash_mode) = build.get("flash_mode").and_then(|v| v.as_str()) {
             d.insert("flash_mode".into(), flash_mode.to_string());
@@ -798,5 +813,36 @@ leonardo.upload.speed=57600
             !flags.contains("BOARD_HAS_PSRAM"),
             "ESP32-C3 DevKit should not have PSRAM flag, got: {flags}"
         );
+    }
+
+    // --- USB VID/PID defines ---
+
+    #[test]
+    fn test_get_defines_usb_vid_pid() {
+        let mut config = BoardConfig::from_board_id("uno", &HashMap::new()).unwrap();
+        config.vid = Some("0x2341".to_string());
+        config.pid = Some("0x8036".to_string());
+        let defines = config.get_defines();
+        assert_eq!(defines.get("USB_VID"), Some(&"0x2341".to_string()));
+        assert_eq!(defines.get("USB_PID"), Some(&"0x8036".to_string()));
+    }
+
+    #[test]
+    fn test_get_defines_no_usb_when_absent() {
+        let config = BoardConfig::from_board_id("uno", &HashMap::new()).unwrap();
+        assert!(config.vid.is_none());
+        let defines = config.get_defines();
+        assert!(!defines.contains_key("USB_VID"));
+        assert!(!defines.contains_key("USB_PID"));
+    }
+
+    #[test]
+    fn test_leonardo_board_has_vid_pid() {
+        let config = BoardConfig::from_board_id("leonardo", &HashMap::new()).unwrap();
+        assert_eq!(config.vid, Some("0x2341".to_string()));
+        assert_eq!(config.pid, Some("0x8036".to_string()));
+        let defines = config.get_defines();
+        assert_eq!(defines.get("USB_VID"), Some(&"0x2341".to_string()));
+        assert_eq!(defines.get("USB_PID"), Some(&"0x8036".to_string()));
     }
 }

@@ -44,6 +44,23 @@ impl Esp32Framework {
         }
     }
 
+    #[cfg(test)]
+    fn with_cache_root(project_dir: &Path, cache_root: &Path, _mcu: &str) -> Self {
+        Self {
+            base: PackageBase::with_cache_root(
+                "esp32-arduino",
+                ESP32_FRAMEWORK_VERSION,
+                ESP32_FRAMEWORK_URL,
+                ESP32_FRAMEWORK_URL,
+                None,
+                CacheSubdir::Platforms,
+                project_dir,
+                cache_root,
+            ),
+            install_dir: None,
+        }
+    }
+
     /// Create from a resolved URL (from platform.json).
     ///
     /// The orchestrator reads `platform.json` → `packages.framework-arduinoespressif32.version`
@@ -719,10 +736,8 @@ mod tests {
     #[test]
     fn test_esp32_framework_not_installed() {
         let tmp = tempfile::TempDir::new().unwrap();
-        std::env::set_var("FBUILD_CACHE_DIR", tmp.path().join("cache"));
-        let fw = Esp32Framework::new(tmp.path(), "esp32c6");
+        let fw = Esp32Framework::with_cache_root(tmp.path(), &tmp.path().join("cache"), "esp32c6");
         assert!(!fw.is_installed());
-        std::env::remove_var("FBUILD_CACHE_DIR");
     }
 
     #[test]

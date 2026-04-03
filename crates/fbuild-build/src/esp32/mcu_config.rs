@@ -15,7 +15,9 @@ const ESP32C2_JSON: &str = include_str!("configs/esp32c2.json");
 const ESP32C3_JSON: &str = include_str!("configs/esp32c3.json");
 const ESP32C5_JSON: &str = include_str!("configs/esp32c5.json");
 const ESP32C6_JSON: &str = include_str!("configs/esp32c6.json");
+const ESP32H2_JSON: &str = include_str!("configs/esp32h2.json");
 const ESP32P4_JSON: &str = include_str!("configs/esp32p4.json");
+const ESP32S2_JSON: &str = include_str!("configs/esp32s2.json");
 const ESP32S3_JSON: &str = include_str!("configs/esp32s3.json");
 
 /// Compiler flags split by language.
@@ -230,11 +232,13 @@ pub fn get_mcu_config(mcu: &str) -> Result<Esp32McuConfig> {
         "esp32c3" => ESP32C3_JSON,
         "esp32c5" => ESP32C5_JSON,
         "esp32c6" => ESP32C6_JSON,
+        "esp32h2" => ESP32H2_JSON,
         "esp32p4" => ESP32P4_JSON,
+        "esp32s2" => ESP32S2_JSON,
         "esp32s3" => ESP32S3_JSON,
         _ => {
             return Err(fbuild_core::FbuildError::ConfigError(format!(
-                "unsupported ESP32 MCU: '{}' (supported: esp32, esp32c2, esp32c3, esp32c5, esp32c6, esp32p4, esp32s3)",
+                "unsupported ESP32 MCU: '{}' (supported: esp32, esp32c2, esp32c3, esp32c5, esp32c6, esp32h2, esp32p4, esp32s2, esp32s3)",
                 mcu
             )));
         }
@@ -251,7 +255,8 @@ pub fn get_mcu_config(mcu: &str) -> Result<Esp32McuConfig> {
 /// List all supported ESP32 MCU names.
 pub fn supported_mcus() -> &'static [&'static str] {
     &[
-        "esp32", "esp32c2", "esp32c3", "esp32c5", "esp32c6", "esp32p4", "esp32s3",
+        "esp32", "esp32c2", "esp32c3", "esp32c5", "esp32c6", "esp32h2", "esp32p4", "esp32s2",
+        "esp32s3",
     ]
 }
 
@@ -362,9 +367,44 @@ mod tests {
 
     #[test]
     fn test_unsupported_mcu() {
-        let result = get_mcu_config("esp32h2");
+        let result = get_mcu_config("esp32x99");
         assert!(result.is_err());
         assert!(result.unwrap_err().to_string().contains("unsupported"));
+    }
+
+    #[test]
+    fn test_esp32s2_config_loads() {
+        let config = get_mcu_config("esp32s2").expect("esp32s2 config should load");
+        assert_eq!(config.mcu, "esp32s2");
+        assert!(config.is_xtensa(), "esp32s2 should be Xtensa");
+        assert!(!config.is_riscv());
+        assert_eq!(config.toolchain_prefix(), "xtensa-esp32s2-elf-");
+        assert!(config
+            .compiler_flags
+            .common
+            .contains(&"-mlongcalls".to_string()));
+        assert_eq!(config.bootloader_offset(), "0x1000");
+        assert_eq!(config.firmware_offset(), "0x10000");
+        assert!(!config.linker_scripts.is_empty());
+        assert!(!config.defines.is_empty());
+    }
+
+    #[test]
+    fn test_esp32h2_config_loads() {
+        let config = get_mcu_config("esp32h2").expect("esp32h2 config should load");
+        assert_eq!(config.mcu, "esp32h2");
+        assert!(config.is_riscv(), "esp32h2 should be RISC-V");
+        assert!(!config.is_xtensa());
+        assert_eq!(config.toolchain_prefix(), "riscv32-esp-elf-");
+        assert!(config
+            .compiler_flags
+            .c
+            .iter()
+            .any(|f| f.starts_with("-march=rv32")));
+        assert_eq!(config.bootloader_offset(), "0x0");
+        assert_eq!(config.firmware_offset(), "0x10000");
+        assert!(!config.linker_scripts.is_empty());
+        assert!(!config.defines.is_empty());
     }
 
     #[test]
@@ -510,6 +550,24 @@ mod tests {
         );
         for mcu in mcus {
             get_mcu_config(mcu).unwrap_or_else(|e| panic!("failed to load config for {mcu}: {e}"));
+        }
+    }
+
+    #[test]
+    fn test_no_platformio_in_descriptions() {
+        let disallowed = "platformio";
+        for mcu in supported_mcus() {
+            let config = get_mcu_config(mcu).unwrap();
+            assert!(
+                !config.description.to_lowercase().contains(disallowed),
+                "{mcu} config description must not mention PlatformIO, got: {:?}",
+                config.description
+            );
+            assert!(
+                !config.name.to_lowercase().contains(disallowed),
+                "{mcu} config name must not mention PlatformIO, got: {:?}",
+                config.name
+            );
         }
     }
 }

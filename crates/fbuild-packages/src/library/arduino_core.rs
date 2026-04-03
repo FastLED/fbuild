@@ -34,6 +34,23 @@ impl ArduinoCore {
         }
     }
 
+    #[cfg(test)]
+    fn with_cache_root(project_dir: &Path, cache_root: &Path) -> Self {
+        Self {
+            base: PackageBase::with_cache_root(
+                "arduino-avr-core",
+                AVR_CORE_VERSION,
+                AVR_CORE_URL,
+                AVR_CORE_URL,
+                Some(AVR_CORE_CHECKSUM),
+                CacheSubdir::Platforms,
+                project_dir,
+                cache_root,
+            ),
+            install_dir: None,
+        }
+    }
+
     /// Get the resolved root directory of the core.
     fn resolved_dir(&self) -> PathBuf {
         self.install_dir
@@ -201,11 +218,8 @@ mod tests {
     #[test]
     fn test_arduino_core_not_installed() {
         let tmp = tempfile::TempDir::new().unwrap();
-        // Use isolated cache so global cache doesn't interfere
-        std::env::set_var("FBUILD_CACHE_DIR", tmp.path().join("cache"));
-        let core = ArduinoCore::new(tmp.path());
+        let core = ArduinoCore::with_cache_root(tmp.path(), &tmp.path().join("cache"));
         assert!(!core.is_installed());
-        std::env::remove_var("FBUILD_CACHE_DIR");
     }
 
     #[test]

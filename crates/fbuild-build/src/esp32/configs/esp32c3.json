@@ -1,6 +1,6 @@
 {
   "name": "ESP32-C3",
-  "description": "Configuration for ESP32-C3 MCU extracted from PlatformIO",
+  "description": "Compiler, linker, and flash configuration for ESP32-C3 MCU",
   "mcu": "esp32c3",
   "architecture": "riscv32",
 

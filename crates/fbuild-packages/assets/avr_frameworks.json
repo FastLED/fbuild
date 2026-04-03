@@ -24,6 +24,14 @@
       "tag_prefix": "",
       "checksum": null,
       "validation_path": "cores/tinymodern/Arduino.h"
+    },
+    "MiniCore": {
+      "name": "minicore",
+      "github": "MCUdude/MiniCore",
+      "version": "2.2.2",
+      "tag_prefix": "",
+      "checksum": null,
+      "validation_path": "cores/MiniCore/Arduino.h"
     }
   }
 }

@@ -8,7 +8,9 @@ use std::collections::HashMap;
 use fbuild_core::Result;
 use serde::Deserialize;
 
+const TEENSY3X_JSON: &str = include_str!("configs/teensy3x.json");
 const TEENSY4X_JSON: &str = include_str!("configs/teensy4x.json");
+const TEENSYLC_JSON: &str = include_str!("configs/teensylc.json");
 
 /// Compiler flags split by language.
 #[derive(Debug, Clone, Deserialize)]
@@ -64,8 +66,27 @@ impl TeensyMcuConfig {
 
 /// Load the Teensy 4.x MCU configuration.
 pub fn get_teensy_config() -> Result<TeensyMcuConfig> {
-    serde_json::from_str(TEENSY4X_JSON).map_err(|e| {
-        fbuild_core::FbuildError::ConfigError(format!("failed to parse Teensy MCU config: {}", e))
+    get_teensy_config_for_mcu("imxrt1062")
+}
+
+/// Load the Teensy MCU configuration for a specific MCU.
+pub fn get_teensy_config_for_mcu(mcu: &str) -> Result<TeensyMcuConfig> {
+    let json = match mcu {
+        "imxrt1062" => TEENSY4X_JSON,
+        "mk20dx128" | "mk20dx256" | "mk64fx512" | "mk66fx1m0" => TEENSY3X_JSON,
+        "mkl26z64" => TEENSYLC_JSON,
+        _ => {
+            return Err(fbuild_core::FbuildError::ConfigError(format!(
+                "unsupported Teensy MCU: '{}' (supported: imxrt1062, mk20dx128, mk20dx256, mk64fx512, mk66fx1m0, mkl26z64)",
+                mcu
+            )));
+        }
+    };
+    serde_json::from_str(json).map_err(|e| {
+        fbuild_core::FbuildError::ConfigError(format!(
+            "failed to parse Teensy MCU config for '{}': {}",
+            mcu, e
+        ))
     })
 }
 
@@ -153,5 +174,50 @@ mod tests {
         assert_eq!(config.teensy_loader.wait_flag, "-w");
         assert_eq!(config.teensy_loader.verbose_flag, "-v");
         assert_eq!(config.teensy_loader.timeout_secs, 60);
+    }
+
+    #[test]
+    fn test_teensy_config_for_mcu_imxrt1062() {
+        let config = get_teensy_config_for_mcu("imxrt1062").expect("teensy4x config");
+        assert_eq!(config.architecture, "arm-cortex-m7");
+        assert!(config
+            .compiler_flags
+            .common
+            .contains(&"-mcpu=cortex-m7".to_string()));
+    }
+
+    #[test]
+    fn test_teensy_config_for_mcu_mk20dx256() {
+        let config = get_teensy_config_for_mcu("mk20dx256").expect("teensy3x config");
+        assert_eq!(config.architecture, "arm-cortex-m4");
+        assert!(config
+            .compiler_flags
+            .common
+            .contains(&"-mcpu=cortex-m4".to_string()));
+        assert!(config
+            .compiler_flags
+            .common
+            .contains(&"-mthumb".to_string()));
+    }
+
+    #[test]
+    fn test_teensy_config_for_mcu_mkl26z64() {
+        let config = get_teensy_config_for_mcu("mkl26z64").expect("teensylc config");
+        assert_eq!(config.architecture, "arm-cortex-m0plus");
+        assert!(config
+            .compiler_flags
+            .common
+            .contains(&"-mcpu=cortex-m0plus".to_string()));
+        assert!(!config
+            .compiler_flags
+            .common
+            .iter()
+            .any(|f| f.contains("fpv5")));
+    }
+
+    #[test]
+    fn test_teensy_config_for_mcu_unsupported() {
+        let result = get_teensy_config_for_mcu("unknown_mcu");
+        assert!(result.is_err());
     }
 }

@@ -1,6 +1,6 @@
 {
   "name": "ESP32-C6",
-  "description": "Configuration for ESP32-C6 MCU extracted from PlatformIO",
+  "description": "Compiler, linker, and flash configuration for ESP32-C6 MCU",
   "mcu": "esp32c6",
   "architecture": "riscv32",
 

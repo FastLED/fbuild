@@ -266,4 +266,21 @@ mod tests {
         assert_eq!(tiny.github, tinymodern.github);
         assert_eq!(tiny.version, tinymodern.version);
     }
+
+    #[test]
+    fn test_minicore_registered() {
+        let registry = load_registry();
+        assert!(
+            registry.contains_key("MiniCore"),
+            "MiniCore must be registered"
+        );
+    }
+
+    #[test]
+    fn test_minicore_lookup() {
+        let entry = lookup_entry("MiniCore").unwrap();
+        assert!(entry.github.contains("MiniCore"));
+        assert!(!entry.version.is_empty());
+        assert!(!entry.validation_path.is_empty());
+    }
 }

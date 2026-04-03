@@ -51,6 +51,35 @@ impl Esp32Toolchain {
         }
     }
 
+    #[cfg(test)]
+    fn with_cache_root(
+        project_dir: &Path,
+        cache_root: &Path,
+        is_riscv: bool,
+        prefix: &str,
+    ) -> Self {
+        let (url, checksum) = platform_package(is_riscv);
+        let name = if is_riscv {
+            "esp32-riscv-gcc"
+        } else {
+            "esp32-xtensa-gcc"
+        };
+        Self {
+            base: PackageBase::with_cache_root(
+                name,
+                ESP32_TOOLCHAIN_VERSION,
+                &url,
+                &url,
+                Some(&checksum),
+                CacheSubdir::Toolchains,
+                project_dir,
+                cache_root,
+            ),
+            install_dir: None,
+            prefix: prefix.to_string(),
+        }
+    }
+
     /// Create an ESP32 toolchain from a metadata-resolved URL.
     ///
     /// This is the preferred constructor — the orchestrator resolves the
@@ -371,10 +400,13 @@ mod tests {
     #[test]
     fn test_esp32_toolchain_not_installed() {
         let tmp = tempfile::TempDir::new().unwrap();
-        std::env::set_var("FBUILD_CACHE_DIR", tmp.path().join("cache"));
-        let tc = Esp32Toolchain::new(tmp.path(), true, "riscv32-esp-elf-");
+        let tc = Esp32Toolchain::with_cache_root(
+            tmp.path(),
+            &tmp.path().join("cache"),
+            true,
+            "riscv32-esp-elf-",
+        );
         assert!(!tc.is_installed());
-        std::env::remove_var("FBUILD_CACHE_DIR");
     }
 
     #[test]

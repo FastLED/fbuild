@@ -4,7 +4,9 @@
     "extra_flags": "-DARDUINO_AVR_LEONARDO",
     "f_cpu": "16000000L",
     "mcu": "atmega32u4",
-    "variant": "leonardo"
+    "variant": "leonardo",
+    "vid": "0x2341",
+    "pid": "0x8036"
   },
   "debug": {
     "tools": {

@@ -36,6 +36,24 @@ impl ArmToolchain {
         }
     }
 
+    #[cfg(test)]
+    fn with_cache_root(project_dir: &Path, cache_root: &Path) -> Self {
+        let (url, checksum) = platform_package();
+        Self {
+            base: PackageBase::with_cache_root(
+                "arm-gcc",
+                ARM_GCC_VERSION,
+                &url,
+                ARM_GCC_BASE_URL,
+                Some(&checksum),
+                CacheSubdir::Toolchains,
+                project_dir,
+                cache_root,
+            ),
+            install_dir: None,
+        }
+    }
+
     /// Get the resolved install directory, or compute it.
     fn resolved_dir(&self) -> PathBuf {
         self.install_dir
@@ -262,9 +280,7 @@ mod tests {
     #[test]
     fn test_arm_toolchain_not_installed() {
         let tmp = tempfile::TempDir::new().unwrap();
-        std::env::set_var("FBUILD_CACHE_DIR", tmp.path().join("cache"));
-        let tc = ArmToolchain::new(tmp.path());
+        let tc = ArmToolchain::with_cache_root(tmp.path(), &tmp.path().join("cache"));
         assert!(!tc.is_installed());
-        std::env::remove_var("FBUILD_CACHE_DIR");
     }
 }

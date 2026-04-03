@@ -1,6 +1,6 @@
 {
   "name": "ESP32-P4",
-  "description": "Configuration for ESP32-P4 MCU extracted from PlatformIO",
+  "description": "Compiler, linker, and flash configuration for ESP32-P4 MCU",
   "mcu": "esp32p4",
   "architecture": "riscv32",
 

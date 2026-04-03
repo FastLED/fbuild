@@ -1,6 +1,6 @@
 {
   "name": "ESP32-S3",
-  "description": "Configuration for ESP32-S3 MCU extracted from PlatformIO",
+  "description": "Compiler, linker, and flash configuration for ESP32-S3 MCU",
   "mcu": "esp32s3",
   "architecture": "xtensa-esp32s3",
 

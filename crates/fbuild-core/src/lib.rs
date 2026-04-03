@@ -57,6 +57,7 @@ pub enum BuildProfile {
 #[serde(rename_all = "lowercase")]
 pub enum Platform {
     AtmelAvr,
+    AtmelMegaAvr,
     Espressif32,
     Espressif8266,
     RaspberryPi,
@@ -78,6 +79,8 @@ impl Platform {
             Some(Self::Espressif8266)
         } else if s.contains("espressif32") {
             Some(Self::Espressif32)
+        } else if s.contains("atmelmegaavr") {
+            Some(Self::AtmelMegaAvr)
         } else if s.contains("atmelavr") {
             Some(Self::AtmelAvr)
         } else if s.contains("ststm32") {
@@ -435,6 +438,31 @@ mod tests {
         assert!(Platform::Espressif32.matches_str("platformio/espressif32@^6.3.0"));
         assert!(!Platform::Espressif32.matches_str("espressif8266"));
         assert!(!Platform::AtmelAvr.matches_str("teensy"));
+    }
+
+    #[test]
+    fn platform_from_str_atmelmegaavr() {
+        assert_eq!(
+            Platform::from_platform_str("atmelmegaavr"),
+            Some(Platform::AtmelMegaAvr)
+        );
+        assert_eq!(
+            Platform::from_platform_str("platformio/atmelmegaavr"),
+            Some(Platform::AtmelMegaAvr)
+        );
+        assert_eq!(
+            Platform::from_platform_str("ATMELMEGAAVR"),
+            Some(Platform::AtmelMegaAvr)
+        );
+    }
+
+    #[test]
+    fn platform_atmelmegaavr_not_atmelavr() {
+        // "atmelmegaavr" contains "atmelavr" as substring — must NOT match AtmelAvr
+        assert_ne!(
+            Platform::from_platform_str("atmelmegaavr"),
+            Some(Platform::AtmelAvr)
+        );
     }
 
     /// Guard: .env must contain only safe PATH entries, never secrets.

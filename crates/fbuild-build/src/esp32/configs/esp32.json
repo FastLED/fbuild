@@ -1,6 +1,6 @@
 {
   "name": "ESP32",
-  "description": "Configuration for ESP32 MCU extracted from PlatformIO",
+  "description": "Compiler, linker, and flash configuration for ESP32 MCU",
   "mcu": "esp32",
   "architecture": "xtensa-esp32",
 

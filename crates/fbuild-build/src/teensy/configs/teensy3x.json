@@ -1,0 +1,64 @@
+{
+  "name": "Teensy 3.x",
+  "description": "Configuration for Teensy 3.0-3.6 (ARM Cortex-M4, MK20DX/MK64FX/MK66FX)",
+  "architecture": "arm-cortex-m4",
+
+  "compiler_flags": {
+    "common": [
+      "-mcpu=cortex-m4",
+      "-mthumb",
+      "-Wall",
+      "-Wextra",
+      "-Wno-unused-parameter",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-MMD"
+    ],
+    "c": [
+      "-std=gnu11"
+    ],
+    "cxx": [
+      "-std=gnu++14",
+      "-fno-exceptions",
+      "-fno-rtti",
+      "-felide-constructors",
+      "-fno-threadsafe-statics"
+    ]
+  },
+
+  "linker_flags": [
+    "-mcpu=cortex-m4",
+    "-mthumb",
+    "-Wl,--gc-sections",
+    "-Wl,--print-memory-usage"
+  ],
+
+  "linker_libs": [
+    "-lgcc",
+    "-lstdc++",
+    "-lm",
+    "-lc"
+  ],
+
+  "objcopy": {
+    "output_format": "ihex",
+    "remove_sections": [".eeprom"]
+  },
+
+  "profiles": {
+    "release": {
+      "compile_flags": ["-Os", "-flto", "-fno-fat-lto-objects"],
+      "link_flags": ["-flto", "-fuse-linker-plugin"]
+    },
+    "quick": {
+      "compile_flags": ["-Os"],
+      "link_flags": []
+    }
+  },
+
+  "teensy_loader": {
+    "wait_flag": "-w",
+    "verbose_flag": "-v",
+    "timeout_secs": 60
+  }
+}

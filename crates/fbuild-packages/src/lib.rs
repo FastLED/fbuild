@@ -139,6 +139,29 @@ impl PackageBase {
         }
     }
 
+    /// Create with an explicit cache root (for testing without env vars).
+    #[allow(clippy::too_many_arguments)]
+    pub fn with_cache_root(
+        name: &str,
+        version: &str,
+        url: &str,
+        cache_key: &str,
+        checksum: Option<&str>,
+        cache_subdir: CacheSubdir,
+        project_dir: &Path,
+        cache_root: &Path,
+    ) -> Self {
+        Self {
+            name: name.to_string(),
+            version: version.to_string(),
+            url: url.to_string(),
+            cache_key: cache_key.to_string(),
+            checksum: checksum.map(|s| s.to_string()),
+            cache: Cache::with_cache_root(project_dir, cache_root),
+            cache_subdir,
+        }
+    }
+
     /// Get the install path in the cache.
     pub fn install_path(&self) -> PathBuf {
         match self.cache_subdir {

@@ -35,6 +35,25 @@ impl AvrToolchain {
         }
     }
 
+    /// Create with an explicit cache root (for testing without env vars).
+    #[cfg(test)]
+    fn with_cache_root(project_dir: &Path, cache_root: &Path) -> Self {
+        let (url, checksum) = platform_package();
+        Self {
+            base: PackageBase::with_cache_root(
+                "avr-gcc",
+                AVR_GCC_VERSION,
+                &url,
+                AVR_GCC_BASE_URL,
+                Some(&checksum),
+                CacheSubdir::Toolchains,
+                project_dir,
+                cache_root,
+            ),
+            install_dir: None,
+        }
+    }
+
     /// Get the resolved install directory, or compute it.
     fn resolved_dir(&self) -> PathBuf {
         self.install_dir
@@ -269,10 +288,7 @@ mod tests {
     #[test]
     fn test_avr_toolchain_not_installed() {
         let tmp = tempfile::TempDir::new().unwrap();
-        // Use isolated cache so global cache doesn't interfere
-        std::env::set_var("FBUILD_CACHE_DIR", tmp.path().join("cache"));
-        let tc = AvrToolchain::new(tmp.path());
+        let tc = AvrToolchain::with_cache_root(tmp.path(), &tmp.path().join("cache"));
         assert!(!tc.is_installed());
-        std::env::remove_var("FBUILD_CACHE_DIR");
     }
 }

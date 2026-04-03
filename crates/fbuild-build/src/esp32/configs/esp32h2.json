@@ -1,7 +1,7 @@
 {
-  "name": "ESP32-C2",
-  "description": "Compiler, linker, and flash configuration for ESP32-C2 MCU",
-  "mcu": "esp32c2",
+  "name": "ESP32-H2",
+  "description": "Compiler, linker, and flash configuration for ESP32-H2 MCU",
+  "mcu": "esp32h2",
   "architecture": "riscv32",
 
   "compiler_flags": {
@@ -26,13 +26,13 @@
       "-MMD"
     ],
     "c": [
-      "-march=rv32imc_zicsr_zifencei",
+      "-march=rv32imac_zicsr_zifencei",
       "-std=gnu17",
       "-Wno-old-style-declaration",
       "-Wno-strict-prototypes"
     ],
     "cxx": [
-      "-march=rv32imc_zicsr_zifencei",
+      "-march=rv32imac_zicsr_zifencei",
       "-std=gnu++2b",
       "-fexceptions",
       "-fno-rtti",
@@ -42,17 +42,17 @@
 
   "linker_flags": [
     "-nostartfiles",
-    "-march=rv32imc_zicsr_zifencei",
+    "-march=rv32imac_zicsr_zifencei",
     "-Wl,--cref",
-    "-Wl,--defsym=IDF_TARGET_ESP32C2=0",
+    "-Wl,--defsym=IDF_TARGET_ESP32H2=0",
     "-Wl,--no-warn-rwx-segments",
     "-Wl,--orphan-handling=warn",
     "-fno-rtti",
     "-Wl,--gc-sections",
+    "-Wl,--allow-multiple-definition",
     "-Wl,--warn-common",
-    "-Wl,--defsym=__wrap_log_printf=esp_log_printf",
+    "-Wl,--wrap=log_printf",
     "-Wl,--undefined=FreeRTOS_openocd_params",
-    "--specs=nano.specs",
     "-u", "nvs_sec_provider_include_impl",
     "-u", "_Z5setupv",
     "-u", "_Z4loopv",
@@ -65,6 +65,8 @@
     "-u", "esp_rom_include_multi_heap_patch",
     "-u", "__assert_func",
     "-u", "esp_security_init_include_impl",
+    "-u", "rv_core_critical_regs_save",
+    "-u", "rv_core_critical_regs_restore",
     "-u", "esp_sleep_gpio_include",
     "-u", "app_main",
     "-u", "esp_libc_include_heap_impl",
@@ -92,22 +94,20 @@
   ],
 
   "linker_scripts": [
-    "rom.api.ld",
-    "esp32c2.peripherals.ld",
-    "esp32c2.rom.ld",
-    "esp32c2.rom.api.ld",
-    "esp32c2.rom.rvfp.ld",
-    "esp32c2.rom.wdt.ld",
-    "esp32c2.rom.systimer.ld",
-    "esp32c2.rom.version.ld",
-    "esp32c2.rom.ble.ld",
-    "esp32c2.rom.libc.ld",
-    "esp32c2.rom.libc-suboptimal_for_misaligned_mem.ld",
-    "esp32c2.rom.newlib.ld",
-    "esp32c2.rom.newlib-nano.ld",
-    "esp32c2.rom.heap.ld",
     "memory.ld",
-    "sections.ld"
+    "sections.ld",
+    "rom.api.ld",
+    "esp32h2.peripherals.ld",
+    "esp32h2.rom.ld",
+    "esp32h2.rom.api.ld",
+    "esp32h2.rom.rvfp.ld",
+    "esp32h2.rom.wdt.ld",
+    "esp32h2.rom.systimer.ld",
+    "esp32h2.rom.version.ld",
+    "esp32h2.rom.libc.ld",
+    "esp32h2.rom.newlib.ld",
+    "esp32h2.rom.newlib-normal.ld",
+    "esp32h2.rom.heap.ld"
   ],
 
   "linker_libs": [
@@ -136,7 +136,7 @@
       "firmware": "0x10000"
     },
     "default_flash_mode": "dio",
-    "default_flash_freq": "80m",
+    "default_flash_freq": "48m",
     "default_flash_size": "4MB",
     "default_baud": 460800,
     "before_reset": "default_reset",
@@ -150,8 +150,6 @@
     ["IDF_VER", "\"v5.5.1-710-g8410210c9a\""],
     ["MBEDTLS_CONFIG_FILE", "\"mbedtls/esp_config.h\""],
     ["MD5_ENABLED", "1"],
-    ["OPENTHREAD_CONFIG_FILE", "\"openthread-core-esp32x-spinel-config.h\""],
-    ["OPENTHREAD_PROJECT_LIB_CONFIG_FILE", "\"openthread-core-esp32x-spinel-config.h\""],
     ["SERIAL_FLASHER_BOOT_HOLD_TIME_MS", "50"],
     ["SERIAL_FLASHER_RESET_HOLD_TIME_MS", "100"],
     ["SOC_MMU_PAGE_SIZE", "CONFIG_MMU_PAGE_SIZE"],
@@ -162,12 +160,7 @@
     "_GNU_SOURCE",
     "_POSIX_READER_WRITER_LOCKS",
     "TF_LITE_STATIC_MEMORY",
-    ["CHIP_CONFIG_SOFTWARE_VERSION_NUMBER", "0"],
-    ["CHIP_DNSSD_DEFAULT_PLATFORM", "true"],
-    ["CHIP_DNSSD_DEFAULT_NONE", "false"],
-    ["CHIP_DNSSD_DEFAULT_MINIMAL", "false"],
     "ARDUINO_ARCH_ESP32",
-    "CHIP_HAVE_CONFIG_H",
     ["ESP32", "ESP32"]
   ],
 
