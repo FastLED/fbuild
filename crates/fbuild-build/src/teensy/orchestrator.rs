@@ -46,10 +46,44 @@ impl BuildOrchestrator for TeensyOrchestrator {
         let overrides = config.get_board_overrides(&params.env_name)?;
         let board = fbuild_config::BoardConfig::from_board_id(board_id, &overrides)?;
 
+        let mut build_log = crate::build_output::create_build_log(params.log_sender.clone());
+        crate::build_output::log_build_banner(&mut build_log, &params.env_name);
+        crate::build_output::log_board_info(
+            &mut build_log,
+            &board.name,
+            &board.mcu,
+            &board.f_cpu,
+            board.max_flash,
+            board.max_ram,
+        );
+
         // 3. Ensure ARM GCC toolchain
         let toolchain = fbuild_packages::toolchain::ArmToolchain::new(&params.project_dir);
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
         tracing::info!("arm-gcc toolchain at {}", toolchain_dir.display());
+
+        // Log toolchain version
+        {
+            use fbuild_packages::Toolchain as _;
+            if let Ok(ver_out) = fbuild_core::subprocess::run_command(
+                &[
+                    toolchain.get_gcc_path().to_string_lossy().as_ref(),
+                    "-dumpversion",
+                ],
+                None,
+                None,
+                None,
+            ) {
+                let version = ver_out.stdout.trim().to_string();
+                if !version.is_empty() {
+                    crate::build_output::log_toolchain_version(
+                        &mut build_log,
+                        "arm-none-eabi-gcc",
+                        &version,
+                    );
+                }
+            }
+        }
 
         // 4. Ensure Teensy cores
         let framework = fbuild_packages::library::TeensyCores::new(&params.project_dir);
@@ -186,6 +220,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
                 build_time_secs: elapsed,
                 message: format!("compile_commands.json generated for {}", params.env_name),
                 compile_database_path,
+                build_log,
             });
         }
 
@@ -194,6 +229,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
         for source in &sources.core_sources {
             let obj = CompilerBase::object_path(source, &core_build_dir);
             if CompilerBase::needs_rebuild(source, &obj) {
+                crate::build_output::log_compiling(&mut build_log, &obj);
                 let result = compiler.compile(source, &obj, &user_flags)?;
                 if !result.success {
                     return Err(fbuild_core::FbuildError::BuildFailed(format!(
@@ -202,6 +238,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
                         result.stderr
                     )));
                 }
+                crate::build_output::collect_warnings(&result.stderr, &mut build_log);
             }
             core_objects.push(obj);
         }
@@ -211,6 +248,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
         for source in &sources.sketch_sources {
             let obj = CompilerBase::object_path(source, &src_build_dir);
             if CompilerBase::needs_rebuild(source, &obj) {
+                crate::build_output::log_compiling(&mut build_log, &obj);
                 let result = compiler.compile(source, &obj, &all_src_flags)?;
                 if !result.success {
                     return Err(fbuild_core::FbuildError::BuildFailed(format!(
@@ -219,6 +257,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
                         result.stderr
                     )));
                 }
+                crate::build_output::collect_warnings(&result.stderr, &mut build_log);
             }
             sketch_objects.push(obj);
         }
@@ -257,6 +296,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
                     for source in &lib_sources {
                         let obj = CompilerBase::object_path(source, &lib_build_dir);
                         if CompilerBase::needs_rebuild(source, &obj) {
+                            crate::build_output::log_compiling(&mut build_log, &obj);
                             let result = compiler.compile(source, &obj, &all_src_flags)?;
                             if !result.success {
                                 return Err(fbuild_core::FbuildError::BuildFailed(format!(
@@ -266,6 +306,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
                                     result.stderr
                                 )));
                             }
+                            crate::build_output::collect_warnings(&result.stderr, &mut build_log);
                         }
                         library_objects.push(obj);
                     }
@@ -308,6 +349,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
         };
 
         // 8-9. Link + convert (with linker script)
+        crate::build_output::log_linking(&mut build_log, "Linking firmware.elf");
         let linker_script = framework.get_linker_script(board_id);
         let linker = TeensyLinker::new(
             toolchain.get_gcc_path(),
@@ -332,6 +374,12 @@ impl BuildOrchestrator for TeensyOrchestrator {
             &build_dir,
         )?;
 
+        if link_result.hex_path.is_some() {
+            crate::build_output::log_linking(&mut build_log, "Building firmware.hex");
+        } else if link_result.bin_path.is_some() {
+            crate::build_output::log_linking(&mut build_log, "Building firmware.bin");
+        }
+
         // 10. Size reporting
         if let Some(ref size) = link_result.size_info {
             tracing::info!(
@@ -346,6 +394,19 @@ impl BuildOrchestrator for TeensyOrchestrator {
                 size.max_ram.unwrap_or(0),
                 size.ram_percent().unwrap_or(0.0),
             );
+            crate::build_output::log_size_report(&mut build_log, size);
+        }
+
+        // Artifact listing
+        if let Some(ref elf) = link_result.elf_path {
+            crate::build_output::log_artifact(&mut build_log, elf);
+        }
+        let firmware_path = link_result
+            .hex_path
+            .as_ref()
+            .or(link_result.bin_path.as_ref());
+        if let Some(fw) = firmware_path {
+            crate::build_output::log_artifact(&mut build_log, fw);
         }
 
         let elapsed = start.elapsed().as_secs_f64();
@@ -359,6 +420,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
             build_time_secs: elapsed,
             message: format!("Teensy build for {} completed", params.env_name),
             compile_database_path,
+            build_log,
         })
     }
 }

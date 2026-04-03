@@ -913,10 +913,13 @@ async fn run_build(
         request_id: None,
         caller_pid,
         caller_cwd,
+        stream: true,
     };
 
-    let resp = client.build(&req).await?;
-    println!("{}", resp.message);
+    let resp = client.build_streaming(&req).await?;
+    if !resp.message.is_empty() {
+        println!("{}", resp.message);
+    }
     if !resp.success {
         std::process::exit(resp.exit_code);
     }

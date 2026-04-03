@@ -71,6 +71,7 @@ void loop() {
         jobs: None,
         generate_compiledb: false,
         compiledb_only: false,
+        log_sender: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -152,6 +153,7 @@ void loop() {
         jobs: None,
         generate_compiledb: false,
         compiledb_only: false,
+        log_sender: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -226,6 +228,7 @@ void loop() {
         jobs: None,
         generate_compiledb: false,
         compiledb_only: false,
+        log_sender: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -301,6 +304,7 @@ void loop() {
         jobs: None,
         generate_compiledb: false,
         compiledb_only: false,
+        log_sender: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -366,6 +370,7 @@ fn build_esp32s3_fixture() {
         jobs: None,
         generate_compiledb: false,
         compiledb_only: false,
+        log_sender: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -423,6 +428,7 @@ fn build_nightdriverstrip_demo() {
         jobs: None,
         generate_compiledb: false,
         compiledb_only: false,
+        log_sender: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -503,6 +509,7 @@ fn incremental_build_at(project_dir: &std::path::Path, env_name: &str) {
         jobs: None,
         generate_compiledb: false,
         compiledb_only: false,
+        log_sender: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -586,6 +593,7 @@ fn incremental_nightdriverstrip_one_file_changed() {
         jobs: None,
         generate_compiledb: false,
         compiledb_only: false,
+        log_sender: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;

@@ -58,11 +58,14 @@ impl Drop for OperationGuard {
 pub async fn build(
     State(ctx): State<Arc<DaemonContext>>,
     Json(req): Json<BuildRequest>,
-) -> (StatusCode, Json<OperationResponse>) {
+) -> axum::response::Response {
+    use axum::response::IntoResponse;
+
     let request_id = req
         .request_id
         .unwrap_or_else(|| uuid::Uuid::new_v4().to_string());
     let project_dir = PathBuf::from(&req.project_dir);
+    let stream = req.stream;
 
     if !project_dir.exists() {
         return (
@@ -71,20 +74,11 @@ pub async fn build(
                 request_id,
                 format!("project directory does not exist: {}", req.project_dir),
             )),
-        );
+        )
+            .into_response();
     }
 
-    let _op_guard = OperationGuard::new(
-        &ctx,
-        fbuild_core::DaemonState::Building,
-        Some(format!("Building {}", req.project_dir)),
-    );
-
-    // Acquire per-project lock
-    let lock = ctx.project_lock(&project_dir);
-    let _guard = lock.lock().await;
-
-    // Parse platformio.ini to determine platform
+    // Validation: parse config, resolve platform
     let config =
         match fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")) {
             Ok(c) => c,
@@ -95,7 +89,8 @@ pub async fn build(
                         request_id,
                         format!("failed to parse platformio.ini: {}", e),
                     )),
-                );
+                )
+                    .into_response();
             }
         };
 
@@ -113,7 +108,8 @@ pub async fn build(
                     request_id,
                     format!("invalid environment '{}': {}", env_name, e),
                 )),
-            );
+            )
+                .into_response();
         }
     };
 
@@ -127,7 +123,8 @@ pub async fn build(
                     request_id,
                     format!("unsupported platform: {}", platform_str),
                 )),
-            );
+            )
+                .into_response();
         }
     };
 
@@ -137,83 +134,219 @@ pub async fn build(
     };
 
     let build_dir = fbuild_paths::get_project_build_root(&project_dir);
-    // FBUILD_COMPILEDB env var: always-on by default (set to "0" to disable),
-    // matching Python behavior. Explicit request flag also enables it.
     let compiledb_env = std::env::var("FBUILD_COMPILEDB")
         .map(|v| v != "0")
         .unwrap_or(true);
     let generate_compiledb = req.generate_compiledb || compiledb_env;
-    let params = fbuild_build::BuildParams {
-        project_dir: project_dir.clone(),
-        env_name: env_name.clone(),
-        clean: req.clean_build,
-        profile,
-        build_dir,
-        verbose: req.verbose,
-        jobs: req.jobs,
-        generate_compiledb,
-        compiledb_only: req.compiledb_only,
-    };
 
-    // Run build in spawn_blocking since orchestrators do I/O
-    let result = tokio::task::spawn_blocking(move || {
-        let orchestrator = fbuild_build::get_orchestrator(platform)?;
-        orchestrator.build(&params)
-    })
-    .await;
+    if stream {
+        // --- STREAMING PATH ---
+        // Build runs in a background task; log lines stream to client as NDJSON.
+        let (sync_tx, sync_rx) = std::sync::mpsc::channel::<String>();
+        let (async_tx, async_rx) = tokio::sync::mpsc::unbounded_channel::<bytes::Bytes>();
 
-    match result {
-        Ok(Ok(build_result)) => {
-            let msg = if build_result.success {
-                let size_str = build_result
-                    .size_info
-                    .as_ref()
-                    .map(|s| {
-                        format!(
-                            " (flash: {} bytes, ram: {} bytes)",
-                            s.total_flash, s.total_ram
-                        )
-                    })
-                    .unwrap_or_default();
-                format!(
-                    "build succeeded in {:.1}s{}",
-                    build_result.build_time_secs, size_str
-                )
-            } else {
-                build_result.message.clone()
+        let params = fbuild_build::BuildParams {
+            project_dir: project_dir.clone(),
+            env_name: env_name.clone(),
+            clean: req.clean_build,
+            profile,
+            build_dir,
+            verbose: req.verbose,
+            jobs: req.jobs,
+            generate_compiledb,
+            compiledb_only: req.compiledb_only,
+            log_sender: Some(sync_tx),
+        };
+
+        let project_dir_desc = req.project_dir.clone();
+        tokio::spawn(async move {
+            let _op_guard = OperationGuard::new(
+                &ctx,
+                fbuild_core::DaemonState::Building,
+                Some(format!("Building {}", project_dir_desc)),
+            );
+            let lock = ctx.project_lock(&project_dir);
+            let _lock_guard = lock.lock().await;
+
+            // Bridge: sync log lines → async NDJSON chunks
+            let bridge_tx = async_tx.clone();
+            let bridge = tokio::task::spawn_blocking(move || {
+                for line in sync_rx {
+                    let event = serde_json::json!({"type": "log", "message": line});
+                    let mut chunk = event.to_string();
+                    chunk.push('\n');
+                    if bridge_tx.send(bytes::Bytes::from(chunk)).is_err() {
+                        break;
+                    }
+                }
+            });
+
+            // Run build
+            let build_result = tokio::task::spawn_blocking(move || {
+                let orchestrator = fbuild_build::get_orchestrator(platform)?;
+                orchestrator.build(&params)
+            })
+            .await;
+
+            // Extract result (drops BuildLog sender so bridge can finish)
+            let (success, rid, msg, code, output_file) = match build_result {
+                Ok(Ok(br)) => {
+                    let _lines = br.build_log.into_lines(); // drop sender
+                    let summary = if br.success {
+                        let size_str = br
+                            .size_info
+                            .as_ref()
+                            .map(|s| {
+                                format!(
+                                    " (flash: {} bytes, ram: {} bytes)",
+                                    s.total_flash, s.total_ram
+                                )
+                            })
+                            .unwrap_or_default();
+                        format!("build succeeded in {:.1}s{}", br.build_time_secs, size_str)
+                    } else {
+                        br.message.clone()
+                    };
+                    let output = br
+                        .hex_path
+                        .or(br.elf_path)
+                        .map(|p| p.to_string_lossy().to_string());
+                    let c = if br.success { 0 } else { 1 };
+                    (br.success, request_id.clone(), summary, c, output)
+                }
+                Ok(Err(e)) => (
+                    false,
+                    request_id.clone(),
+                    format!("build error: {}", e),
+                    1,
+                    None,
+                ),
+                Err(e) => (
+                    false,
+                    request_id.clone(),
+                    format!("build task panicked: {}", e),
+                    1,
+                    None,
+                ),
             };
 
-            let output_file = build_result
-                .hex_path
-                .or(build_result.elf_path)
-                .map(|p| p.to_string_lossy().to_string());
+            let _ = bridge.await;
 
-            let code = if build_result.success { 0 } else { 1 };
-            (
-                StatusCode::OK,
-                Json(OperationResponse {
-                    success: build_result.success,
+            let result_event = serde_json::json!({
+                "type": "result",
+                "success": success,
+                "request_id": rid,
+                "message": msg,
+                "exit_code": code,
+                "output_file": output_file,
+            });
+            let mut chunk = result_event.to_string();
+            chunk.push('\n');
+            let _ = async_tx.send(bytes::Bytes::from(chunk));
+        });
+
+        // Return streaming response immediately
+        let stream = futures::stream::unfold(async_rx, |mut rx| async move {
+            rx.recv()
+                .await
+                .map(|data| (Ok::<_, std::convert::Infallible>(data), rx))
+        });
+        let body = axum::body::Body::from_stream(stream);
+        axum::response::Response::builder()
+            .header("content-type", "application/x-ndjson")
+            .body(body)
+            .unwrap()
+            .into_response()
+    } else {
+        // --- NON-STREAMING PATH (existing behavior) ---
+        let _op_guard = OperationGuard::new(
+            &ctx,
+            fbuild_core::DaemonState::Building,
+            Some(format!("Building {}", req.project_dir)),
+        );
+        let lock = ctx.project_lock(&project_dir);
+        let _guard = lock.lock().await;
+
+        let params = fbuild_build::BuildParams {
+            project_dir: project_dir.clone(),
+            env_name: env_name.clone(),
+            clean: req.clean_build,
+            profile,
+            build_dir,
+            verbose: req.verbose,
+            jobs: req.jobs,
+            generate_compiledb,
+            compiledb_only: req.compiledb_only,
+            log_sender: None,
+        };
+
+        let result = tokio::task::spawn_blocking(move || {
+            let orchestrator = fbuild_build::get_orchestrator(platform)?;
+            orchestrator.build(&params)
+        })
+        .await;
+
+        match result {
+            Ok(Ok(build_result)) => {
+                let summary = if build_result.success {
+                    let size_str = build_result
+                        .size_info
+                        .as_ref()
+                        .map(|s| {
+                            format!(
+                                " (flash: {} bytes, ram: {} bytes)",
+                                s.total_flash, s.total_ram
+                            )
+                        })
+                        .unwrap_or_default();
+                    format!(
+                        "build succeeded in {:.1}s{}",
+                        build_result.build_time_secs, size_str
+                    )
+                } else {
+                    build_result.message.clone()
+                };
+                let msg = if build_result.build_log.is_empty() {
+                    summary
+                } else {
+                    let mut lines = build_result.build_log.into_lines();
+                    lines.push(summary);
+                    lines.join("\n")
+                };
+                let output_file = build_result
+                    .hex_path
+                    .or(build_result.elf_path)
+                    .map(|p| p.to_string_lossy().to_string());
+                let code = if build_result.success { 0 } else { 1 };
+                (
+                    StatusCode::OK,
+                    Json(OperationResponse {
+                        success: build_result.success,
+                        request_id,
+                        message: msg,
+                        exit_code: code,
+                        output_file,
+                    }),
+                )
+                    .into_response()
+            }
+            Ok(Err(e)) => (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(OperationResponse::fail(
                     request_id,
-                    message: msg,
-                    exit_code: code,
-                    output_file,
-                }),
+                    format!("build error: {}", e),
+                )),
             )
+                .into_response(),
+            Err(e) => (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(OperationResponse::fail(
+                    request_id,
+                    format!("build task panicked: {}", e),
+                )),
+            )
+                .into_response(),
         }
-        Ok(Err(e)) => (
-            StatusCode::INTERNAL_SERVER_ERROR,
-            Json(OperationResponse::fail(
-                request_id,
-                format!("build error: {}", e),
-            )),
-        ),
-        Err(e) => (
-            StatusCode::INTERNAL_SERVER_ERROR,
-            Json(OperationResponse::fail(
-                request_id,
-                format!("build task panicked: {}", e),
-            )),
-        ),
     }
 }
 
@@ -360,6 +493,7 @@ pub async fn deploy(
             jobs: None,
             generate_compiledb: false,
             compiledb_only: false,
+            log_sender: None,
         };
 
         let build_result = {

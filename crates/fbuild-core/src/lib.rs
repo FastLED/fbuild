@@ -6,8 +6,11 @@
 //! - Subprocess runner with platform-specific flags
 //! - Size info parsing (avr-size / arm-none-eabi-size output)
 
+pub mod build_log;
 pub mod shell_split;
 pub mod subprocess;
+
+pub use build_log::BuildLog;
 
 use serde::{Deserialize, Serialize};
 

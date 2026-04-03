@@ -83,3 +83,24 @@
 4. **Study PlatformIO** for data structure patterns; **never invoke PlatformIO** at runtime
 
 **Consequences**: Adding a new board or framework is a data file edit, not a code change. CI catches drift between our cached board JSONs and PlatformIO's upstream definitions. The `validate_boards` GitHub Actions job ensures our assets stay synchronized.
+
+## DD-007: Streaming Build Output via NDJSON
+
+**Decision**: Build log lines are streamed from the daemon to the CLI in real-time using NDJSON (newline-delimited JSON) over the existing HTTP POST `/api/build` endpoint.
+
+**Context**: fbuild runs builds in a daemon process. The CLI sends a build request and waits for the response. Previously, all build output (compilation steps, warnings, size info) was collected in memory and returned as a single message at the end. Users saw no output until the build completed, making long builds feel unresponsive.
+
+**Rationale**:
+- **NDJSON over SSE/WebSocket**: NDJSON is simpler to implement (no protocol overhead), works with standard HTTP streaming, and is easy to parse line-by-line. SSE requires GET (our endpoint is POST). WebSocket adds connection lifecycle complexity.
+- **`stream` field for backwards compatibility**: The `BuildRequest.stream` boolean (default `false`) preserves the existing JSON response format for the Python client and MCP tools. Only the Rust CLI sets `stream: true`.
+- **`BuildLog` struct with `VecDeque` + optional `Sender`**: Centralizes log collection in `fbuild-core`. Uses `std::sync::mpsc::Sender` (not tokio) so orchestrators have no async dependency. A bridge task in the daemon forwards sync channel messages to the async response stream.
+- **Channel flow**: `Orchestrator → BuildLog (std::sync::mpsc) → bridge spawn_blocking → tokio::mpsc → NDJSON stream → reqwest bytes_stream → CLI println`
+
+**Protocol**:
+```
+{"type":"log","message":"=== BUILDING uno ==="}
+{"type":"log","message":"Compiling src/main.cpp.o"}
+{"type":"result","success":true,"request_id":"...","message":"build succeeded in 1.5s","exit_code":0}
+```
+
+**Consequences**: The CLI now shows compilation progress, compiler warnings, and size info in real-time. The daemon's non-streaming path and Python API are unchanged. Future orchestrators (ESP32, Teensy) can adopt the same `BuildLog` pattern by setting `log_sender` in their `BuildParams`.

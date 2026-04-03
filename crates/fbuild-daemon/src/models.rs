@@ -23,6 +23,9 @@ pub struct BuildRequest {
     pub caller_pid: Option<u32>,
     /// Working directory of the CLI client (audit/tracking).
     pub caller_cwd: Option<String>,
+    /// When true, return a streaming NDJSON response instead of a single JSON object.
+    #[serde(default)]
+    pub stream: bool,
 }
 
 /// POST /api/deploy

@@ -23,5 +23,6 @@ serde_json = { workspace = true }
 clap = { workspace = true }
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
+futures = { workspace = true }
 ctrlc = "3.5.2"
 blake3 = { workspace = true }

@@ -7,7 +7,7 @@ use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Mutex;
 
-use fbuild_core::{FbuildError, Result};
+use fbuild_core::{BuildLog, FbuildError, Result};
 
 use crate::compiler::{Compiler, CompilerBase};
 
@@ -23,18 +23,29 @@ pub fn effective_jobs(jobs: Option<usize>) -> usize {
     jobs.unwrap_or_else(default_jobs).max(1)
 }
 
+/// Result of parallel compilation.
+pub struct ParallelCompileResult {
+    /// Object file paths (in source order).
+    pub objects: Vec<PathBuf>,
+    /// Collected compiler stderr (warnings) from successful compilations.
+    pub warnings: Vec<String>,
+}
+
 /// Compile source files in parallel using a thread pool.
 ///
 /// Spawns up to `jobs` threads, each pulling work from a shared queue.
 /// Stops on first compilation error.
-/// Returns the list of object file paths (in source order).
+/// Returns object file paths (in source order) and collected warnings.
+///
+/// If `build_log` is provided, progress milestones are streamed to it.
 pub fn compile_sources_parallel(
     compiler: &dyn Compiler,
     sources: &[PathBuf],
     build_dir: &Path,
     extra_flags: &[String],
     jobs: usize,
-) -> Result<Vec<PathBuf>> {
+    build_log: Option<&Mutex<BuildLog>>,
+) -> Result<ParallelCompileResult> {
     // Build work list: (source, object) pairs needing rebuild
     let mut work: Vec<(PathBuf, PathBuf)> = Vec::new();
     let mut objects: Vec<PathBuf> = Vec::new();
@@ -48,7 +59,10 @@ pub fn compile_sources_parallel(
     }
 
     if work.is_empty() {
-        return Ok(objects);
+        return Ok(ParallelCompileResult {
+            objects,
+            warnings: Vec::new(),
+        });
     }
 
     let total = work.len();
@@ -58,28 +72,39 @@ pub fn compile_sources_parallel(
     let work_iter = Mutex::new(work.into_iter());
     let first_error: Mutex<Option<String>> = Mutex::new(None);
     let compiled_count = AtomicUsize::new(0);
+    let all_warnings: Mutex<Vec<String>> = Mutex::new(Vec::new());
 
     std::thread::scope(|scope| {
         let handles: Vec<_> = (0..thread_count)
             .map(|_| {
                 scope.spawn(|| {
+                    let mut local_warnings: Vec<String> = Vec::new();
                     loop {
                         // Check for early termination
                         if first_error.lock().unwrap().is_some() {
-                            return;
+                            break;
                         }
 
                         let job = work_iter.lock().unwrap().next();
                         let (source, obj) = match job {
                             Some(j) => j,
-                            None => return,
+                            None => break,
                         };
 
                         match compiler.compile(&source, &obj, extra_flags) {
                             Ok(result) if result.success => {
+                                let stderr = result.stderr.trim().to_string();
+                                if !stderr.is_empty() {
+                                    local_warnings.push(stderr);
+                                }
                                 let count = compiled_count.fetch_add(1, Ordering::Relaxed) + 1;
                                 if count % 20 == 0 || count == total {
                                     tracing::info!("[{}/{}] compiled", count, total);
+                                    if let Some(log) = build_log {
+                                        if let Ok(mut log) = log.lock() {
+                                            log.push(format!("Compiled {}/{} files", count, total));
+                                        }
+                                    }
                                 }
                             }
                             Ok(result) => {
@@ -100,6 +125,10 @@ pub fn compile_sources_parallel(
                             }
                         }
                     }
+                    // Merge local warnings into shared collection
+                    if !local_warnings.is_empty() {
+                        all_warnings.lock().unwrap().extend(local_warnings);
+                    }
                 })
             })
             .collect();
@@ -113,7 +142,10 @@ pub fn compile_sources_parallel(
         return Err(FbuildError::BuildFailed(error));
     }
 
-    Ok(objects)
+    Ok(ParallelCompileResult {
+        objects,
+        warnings: all_warnings.into_inner().unwrap(),
+    })
 }
 
 #[cfg(test)]

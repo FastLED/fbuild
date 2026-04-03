@@ -4,6 +4,7 @@
 //! Orchestrators handle: source scanning, compilation, linking, size reporting.
 
 pub mod avr;
+pub mod build_output;
 pub mod compile_database;
 pub mod compiler;
 pub mod esp32;
@@ -102,6 +103,8 @@ pub struct BuildResult {
     pub message: String,
     /// Path to the generated `compile_commands.json`, if any.
     pub compile_database_path: Option<PathBuf>,
+    /// Accumulated build output (headers, compilation steps, warnings, etc.).
+    pub build_log: fbuild_core::BuildLog,
 }
 
 /// Input parameters for a build.
@@ -117,6 +120,8 @@ pub struct BuildParams {
     /// When true, skip compilation/linking and only generate `compile_commands.json`.
     /// Used by IWYU and clang-tidy to avoid building framework core files.
     pub compiledb_only: bool,
+    /// Optional sender for streaming build log lines in real-time.
+    pub log_sender: Option<std::sync::mpsc::Sender<String>>,
 }
 
 /// Trait for platform-specific build orchestrators.

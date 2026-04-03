@@ -25,6 +25,9 @@ pub struct BuildRequest {
     pub caller_pid: Option<u32>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub caller_cwd: Option<String>,
+    /// When true, request a streaming NDJSON response.
+    #[serde(default)]
+    pub stream: bool,
 }
 
 #[derive(Debug, Serialize)]
@@ -101,6 +104,17 @@ pub struct OperationResponse {
     pub request_id: String,
     pub message: String,
     pub exit_code: i32,
+}
+
+/// NDJSON event from a streaming build response.
+#[derive(Debug, Deserialize)]
+struct StreamEvent {
+    #[serde(rename = "type")]
+    event_type: String,
+    message: Option<String>,
+    success: Option<bool>,
+    request_id: Option<String>,
+    exit_code: Option<i32>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -286,9 +300,87 @@ impl DaemonClient {
             .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("invalid response: {}", e)))
     }
 
-    /// Send a build request.
+    /// Send a build request (non-streaming, returns full response at end).
     pub async fn build(&self, req: &BuildRequest) -> fbuild_core::Result<OperationResponse> {
         self.post("/api/build", req).await
+    }
+
+    /// Send a streaming build request. Prints log lines in real-time,
+    /// returns the final `OperationResponse` when the build completes.
+    pub async fn build_streaming(
+        &self,
+        req: &BuildRequest,
+    ) -> fbuild_core::Result<OperationResponse> {
+        let resp = self
+            .client
+            .post(format!("{}/api/build", self.base_url))
+            .json(req)
+            .timeout(std::time::Duration::from_secs(1800))
+            .send()
+            .await
+            .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("request failed: {}", e)))?;
+
+        // If the daemon returned a non-success status, the body is regular JSON
+        // (not NDJSON). Fall back to parsing it as a standard OperationResponse.
+        if !resp.status().is_success() {
+            let status = resp.status();
+            let body = resp.text().await.map_err(|e| {
+                fbuild_core::FbuildError::DaemonError(format!("read error body: {}", e))
+            })?;
+            if let Ok(op) = serde_json::from_str::<OperationResponse>(&body) {
+                return Ok(op);
+            }
+            return Err(fbuild_core::FbuildError::DaemonError(format!(
+                "daemon returned {} — {}",
+                status, body
+            )));
+        }
+
+        use futures::StreamExt;
+        let mut stream = resp.bytes_stream();
+        let mut buffer = String::new();
+        let mut final_response: Option<OperationResponse> = None;
+
+        while let Some(chunk) = stream.next().await {
+            let chunk = chunk.map_err(|e| {
+                fbuild_core::FbuildError::DaemonError(format!("stream error: {}", e))
+            })?;
+            buffer.push_str(&String::from_utf8_lossy(&chunk));
+
+            // Process complete lines
+            while let Some(newline_pos) = buffer.find('\n') {
+                let line = buffer[..newline_pos].to_string();
+                buffer = buffer[newline_pos + 1..].to_string();
+
+                let line = line.trim();
+                if line.is_empty() {
+                    continue;
+                }
+
+                if let Ok(event) = serde_json::from_str::<StreamEvent>(line) {
+                    match event.event_type.as_str() {
+                        "log" => {
+                            if let Some(msg) = event.message {
+                                println!("{}", msg);
+                            }
+                        }
+                        "result" => {
+                            final_response = Some(OperationResponse {
+                                success: event.success.unwrap_or(false),
+                                request_id: event.request_id.unwrap_or_default(),
+                                message: event.message.unwrap_or_default(),
+                                exit_code: event.exit_code.unwrap_or(1),
+                            });
+                        }
+                        _ => {}
+                    }
+                }
+            }
+        }
+
+        final_response.ok_or_else(|| {
+            fbuild_core::FbuildError::DaemonError("stream ended without a result event".to_string())
+        })
     }
 
     /// Send a deploy request.
