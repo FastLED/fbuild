@@ -24,8 +24,8 @@ jobs:
         shell: bash
         run: |
           pip install zccache
-          SCRIPTS_DIR=$(python3 -c "import sysconfig; print(sysconfig.get_path('scripts'))")
-          chmod +x "$SCRIPTS_DIR/zccache" 2>/dev/null || true
+          # macOS installs to Python framework bin; chmod using sys.prefix
+          chmod +x "$(python3 -c 'import sys; print(sys.prefix)')/bin/zccache" 2>/dev/null || true
           find ~/.local -name 'zccache*' -type f -exec chmod +x {} + 2>/dev/null || true
           zccache start
       - name: Check
