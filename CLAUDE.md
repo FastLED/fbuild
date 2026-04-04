@@ -26,8 +26,8 @@ RUSTDOCFLAGS="-D warnings" uv run cargo doc --workspace --no-deps
 ./_cargo clippy --workspace --all-targets -- -D warnings
 ./_rustfmt --check <file.rs>
 
-# Local sccache setup (optional, auto-configures versioned cache)
-uv run python ci/sccache_setup.py
+# Local zccache setup (optional, configures rustc-wrapper)
+uv run python ci/zccache_setup.py
 ```
 
 ## Distribution

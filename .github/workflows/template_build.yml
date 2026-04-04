@@ -35,9 +35,6 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Setup sccache
-        uses: mozilla-actions/sccache-action@v0.0.7
-
       - name: Cache Rust build
         uses: Swatinem/rust-cache@v2
         with:
@@ -52,9 +49,14 @@ jobs:
         if: inputs.firmware-ext == 'bin'
         run: pip install esptool
 
+      - name: Setup zccache
+        run: pip install zccache && zccache start
+
       - name: Build fbuild binaries
         run: |
           cargo build --release -p fbuild-cli -p fbuild-daemon
+        env:
+          RUSTC_WRAPPER: zccache
 
       - name: Add fbuild to PATH
         run: echo "${{ github.workspace }}/target/release" >> $GITHUB_PATH

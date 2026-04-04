@@ -46,7 +46,7 @@ fbuild uses the same `platformio.ini` already used in platformio sketches.
   * Correct and blazing parallel package management system
     * locking is done through a daemon process
     * packages are fingerprinted to their version and cached, download only once
-    * sccache for caching compiles
+    * zccache for caching compiles
   * Easily add features via AI
     * This codebase is designed and implemented by AI, just fork it and ask ai to make your change Please send us a PR!
   * Supports new build chains easily
