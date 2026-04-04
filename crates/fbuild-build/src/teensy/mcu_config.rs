@@ -11,6 +11,7 @@ use serde::Deserialize;
 use crate::compiler::{CompilerFlags, McuConfig, ObjcopyConfig, ProfileFlags};
 use crate::esp32::mcu_config::DefineEntry;
 
+const TEENSY30_JSON: &str = include_str!("configs/teensy30.json");
 const TEENSY31_JSON: &str = include_str!("configs/teensy31.json");
 const TEENSY3X_JSON: &str = include_str!("configs/teensy3x.json");
 const TEENSY4X_JSON: &str = include_str!("configs/teensy4x.json");
@@ -83,7 +84,8 @@ pub fn get_teensy_config() -> Result<TeensyMcuConfig> {
 pub fn get_teensy_config_for_mcu(mcu: &str) -> Result<TeensyMcuConfig> {
     let json = match mcu {
         "imxrt1062" => TEENSY4X_JSON,
-        "mk20dx128" | "mk20dx256" => TEENSY31_JSON,
+        "mk20dx128" => TEENSY30_JSON,
+        "mk20dx256" => TEENSY31_JSON,
         "mk64fx512" | "mk66fx1m0" => TEENSY3X_JSON,
         "mkl26z64" => TEENSYLC_JSON,
         _ => {
@@ -554,7 +556,8 @@ mod tests {
     fn test_teensy_f_bus_per_mcu() {
         // Teensy 3.x/LC have F_BUS; Teensy 4.x (IMXRT) does not
         let with_fbus = [
-            ("mk20dx256", "48000000"),
+            ("mk20dx128", "48000000"),
+            ("mk20dx256", "36000000"),
             ("mk66fx1m0", "60000000"),
             ("mkl26z64", "24000000"),
         ];
