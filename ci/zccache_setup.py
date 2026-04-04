@@ -9,6 +9,7 @@ Sets RUSTC_WRAPPER=zccache in .cargo/config.toml and starts the zccache daemon.
 """
 
 import shutil
+import stat
 import subprocess
 import re
 import sys
@@ -99,7 +100,14 @@ def main():
         print("zccache not found — skipping local cache setup (optional).")
         return 0
 
-    # Step 2: Get version
+    # Step 2: Ensure all zccache binaries are executable (pip may drop +x)
+    if sys.platform != "win32":
+        bin_dir = Path(zccache_path).parent
+        for f in bin_dir.glob("zccache*"):
+            if f.is_file():
+                f.chmod(f.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
+
+    # Step 3: Get version
     try:
         result = subprocess.run(
             [zccache_path, "--version"],
@@ -120,7 +128,7 @@ def main():
         CARGO_CONFIG.write_text(new_config, encoding="utf-8")
         print(f"Updated {CARGO_CONFIG}")
 
-    # Step 5: Start the zccache daemon
+    # Step 5: Start the zccache daemon (uses zccache-daemon binary)
     subprocess.run(
         [zccache_path, "start"],
         stdout=subprocess.DEVNULL,

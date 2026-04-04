@@ -81,7 +81,7 @@ jobs:
         shell: bash
         run: |
           pip install zccache
-          chmod +x ~/.local/bin/zccache 2>/dev/null || true
+          find ~/.local -name 'zccache*' -type f -exec chmod +x {} + 2>/dev/null || true
           zccache start
 
       - name: Build release binaries

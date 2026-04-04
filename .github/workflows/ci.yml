@@ -28,7 +28,7 @@ jobs:
         shell: bash
         run: |
           pip install zccache
-          chmod +x ~/.local/bin/zccache 2>/dev/null || true
+          find ~/.local -name 'zccache*' -type f -exec chmod +x {} + 2>/dev/null || true
           zccache start
       - name: Check
         run: cargo check --workspace --all-targets
@@ -62,7 +62,10 @@ jobs:
       - uses: dtolnay/rust-toolchain@1.75.0
       - uses: Swatinem/rust-cache@v2
       - name: Setup zccache
-        run: pip install zccache && chmod +x ~/.local/bin/zccache && zccache start
+        run: |
+          pip install zccache
+          find ~/.local -name 'zccache*' -type f -exec chmod +x {} + 2>/dev/null || true
+          zccache start
       - name: Check MSRV
         run: cargo check --workspace
         env:
@@ -78,7 +81,10 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
       - name: Setup zccache
-        run: pip install zccache && chmod +x ~/.local/bin/zccache && zccache start
+        run: |
+          pip install zccache
+          find ~/.local -name 'zccache*' -type f -exec chmod +x {} + 2>/dev/null || true
+          zccache start
       - name: Build docs
         run: cargo doc --workspace --no-deps
         env:

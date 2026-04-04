@@ -50,7 +50,10 @@ jobs:
         run: pip install esptool
 
       - name: Setup zccache
-        run: pip install zccache && chmod +x ~/.local/bin/zccache && zccache start
+        run: |
+          pip install zccache
+          find ~/.local -name 'zccache*' -type f -exec chmod +x {} + 2>/dev/null || true
+          zccache start
 
       - name: Build fbuild binaries
         run: |
