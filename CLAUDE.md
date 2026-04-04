@@ -68,7 +68,7 @@ All hooks are Python scripts in `ci/hooks/`, invoked via `uv run`:
 Custom Claude Code skills in `.claude/skills/`:
 
 - **`/board-support`** — Diagnose and fix board definition issues. Searches fbuild's database, PlatformIO, Arduino package indices, and Zephyr boards. Auto-suggested by the `board_context.py` hook when board-related prompts are detected.
-- **`/code-review`** — End-of-session code review. Checks for hardcoded values (should be in JSON), code that belongs in core instead of platform crates, and bugs. Auto-triggered by Stop hook.
+- **`/code-review`** — End-of-session code review. Checks for hardcoded values (should be in JSON), code that belongs in core instead of platform crates, board/MCU JSON quality, orchestrator completeness, and bugs. Auto-triggered by Stop hook.
 
 ## Language Policy
 

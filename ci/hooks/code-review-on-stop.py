@@ -94,8 +94,9 @@ def main():
 
     print(
         "Source files changed during this session. "
-        "Please run /code-review to check for hardcoded values, "
-        "misplaced code (should be in core), and bugs before ending.",
+        "Please run /code-review to check for: hardcoded values (should be in JSON), "
+        "code that belongs in core, board/MCU JSON quality, "
+        "orchestrator completeness, and bugs.",
         file=sys.stderr,
     )
     return 0
