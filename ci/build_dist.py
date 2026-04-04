@@ -22,11 +22,11 @@ from pathlib import Path
 
 # Map GitHub Actions artifact names to platform wheel tags
 TARGETS = {
-    "binaries-x86_64-unknown-linux-gnu": {
+    "binaries-x86_64-unknown-linux-musl": {
         "wheel_plat": "manylinux_2_17_x86_64",
         "subdir": "linux-x86_64",
     },
-    "binaries-aarch64-unknown-linux-gnu": {
+    "binaries-aarch64-unknown-linux-musl": {
         "wheel_plat": "manylinux_2_17_aarch64",
         "subdir": "linux-aarch64",
     },

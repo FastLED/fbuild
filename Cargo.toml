@@ -35,7 +35,7 @@ hyper = { version = "1", features = ["full"] }
 reqwest = { version = "0.12", features = ["json", "blocking", "stream"] }
 semver = "1"
 tokio-serial = "5"
-serialport = "4"
+serialport = { version = "4", default-features = false }
 pyo3 = { version = "0.22", features = ["extension-module", "abi3-py39"] }
 tempfile = "3"
 sha2 = "0.10"
