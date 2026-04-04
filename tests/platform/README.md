@@ -8,10 +8,15 @@ PlatformIO-compatible test projects for each supported hardware platform. Each s
 |-----------|-----|--------------|-----------|
 | `esp32c2/` | ESP32-C2 | RISC-V | Arduino |
 | `esp32c3/` | ESP32-C3 | RISC-V | Arduino |
+| `esp32c5/` | ESP32-C5 | RISC-V | Arduino |
 | `esp32c6/` | ESP32-C6 | RISC-V | Arduino |
 | `esp32dev/` | ESP32 | Xtensa LX6 | Arduino |
+| `esp32h2/` | ESP32-H2 | RISC-V | Arduino |
+| `esp32p4/` | ESP32-P4 | RISC-V | Arduino |
+| `esp32s2/` | ESP32-S2 | Xtensa LX7 | Arduino |
 | `esp32s3/` | ESP32-S3 | Xtensa LX7 | Arduino |
 | `esp8266/` | ESP8266 | Xtensa L106 | Arduino |
+| `leonardo/` | ATmega32U4 | AVR | Arduino |
 | `teensy36/` | Teensy 3.6 | ARM Cortex-M4F | Arduino |
 | `teensy40/` | Teensy 4.0 | ARM Cortex-M7 | Arduino |
 | `teensy41/` | Teensy 4.1 | ARM Cortex-M7 | Arduino |

@@ -18,6 +18,7 @@
 
 ### AVR
 [![Build Arduino Uno](https://github.com/fastled/fbuild/actions/workflows/build-uno.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-uno.yml)
+[![Build Leonardo](https://github.com/fastled/fbuild/actions/workflows/build-leonardo.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-leonardo.yml)
 
 ### ESP8266
 [![Build ESP8266](https://github.com/fastled/fbuild/actions/workflows/build-esp8266.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-esp8266.yml)
@@ -26,7 +27,11 @@
 [![Build ESP32 Dev](https://github.com/fastled/fbuild/actions/workflows/build-esp32dev.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-esp32dev.yml)
 [![Build ESP32-C2](https://github.com/fastled/fbuild/actions/workflows/build-esp32c2.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-esp32c2.yml)
 [![Build ESP32-C3](https://github.com/fastled/fbuild/actions/workflows/build-esp32c3.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-esp32c3.yml)
+[![Build ESP32-C5](https://github.com/fastled/fbuild/actions/workflows/build-esp32c5.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-esp32c5.yml)
 [![Build ESP32-C6](https://github.com/fastled/fbuild/actions/workflows/build-esp32c6.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-esp32c6.yml)
+[![Build ESP32-H2](https://github.com/fastled/fbuild/actions/workflows/build-esp32h2.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-esp32h2.yml)
+[![Build ESP32-P4](https://github.com/fastled/fbuild/actions/workflows/build-esp32p4.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-esp32p4.yml)
+[![Build ESP32-S2](https://github.com/fastled/fbuild/actions/workflows/build-esp32s2.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-esp32s2.yml)
 [![Build ESP32-S3](https://github.com/fastled/fbuild/actions/workflows/build-esp32s3.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-esp32s3.yml)
 
 ### Teensy

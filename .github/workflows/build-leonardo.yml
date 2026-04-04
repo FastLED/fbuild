@@ -1,0 +1,16 @@
+name: Build Leonardo
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "Leonardo"
+      test-dir: "tests/platform/leonardo"
+      env-name: "leonardo"
+      firmware-ext: "hex"

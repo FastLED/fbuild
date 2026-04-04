@@ -1,0 +1,16 @@
+name: Build ESP32-H2
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "ESP32-H2"
+      test-dir: "tests/platform/esp32h2"
+      env-name: "esp32h2"
+      firmware-ext: "bin"

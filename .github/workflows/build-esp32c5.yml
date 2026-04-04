@@ -1,0 +1,16 @@
+name: Build ESP32-C5
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "ESP32-C5"
+      test-dir: "tests/platform/esp32c5"
+      env-name: "esp32c5"
+      firmware-ext: "bin"

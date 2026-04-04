@@ -1,0 +1,16 @@
+name: Build ESP32-P4
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "ESP32-P4"
+      test-dir: "tests/platform/esp32p4"
+      env-name: "esp32p4"
+      firmware-ext: "bin"
