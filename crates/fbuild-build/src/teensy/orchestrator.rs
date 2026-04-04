@@ -17,7 +17,8 @@ use std::time::Instant;
 
 use fbuild_core::{Platform, Result};
 
-use crate::compiler::{Compiler, CompilerBase};
+use crate::compile_database::TargetArchitecture;
+use crate::pipeline;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
 use super::teensy_compiler::TeensyCompiler;
@@ -34,94 +35,43 @@ impl BuildOrchestrator for TeensyOrchestrator {
     fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
 
-        // 1. Parse platformio.ini
-        let ini_path = params.project_dir.join("platformio.ini");
-        let config = fbuild_config::PlatformIOConfig::from_path(&ini_path)?;
-        let env_config = config.get_env_config(&params.env_name)?;
+        // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
+        let mut ctx = pipeline::BuildContext::new(
+            &params.project_dir,
+            &params.env_name,
+            params.clean,
+            params.profile,
+            params.log_sender.clone(),
+        )?;
 
-        // 2. Load board config
+        // Need board_id for linker script lookup later
+        let env_config = ctx.config.get_env_config(&params.env_name)?;
         let board_id = env_config.get("board").ok_or_else(|| {
             fbuild_core::FbuildError::ConfigError("missing 'board' in environment config".into())
         })?;
-        let overrides = config.get_board_overrides(&params.env_name)?;
-        let board = fbuild_config::BoardConfig::from_board_id(board_id, &overrides)?;
-
-        let mut build_log = crate::build_output::create_build_log(params.log_sender.clone());
-        crate::build_output::log_build_banner(&mut build_log, &params.env_name);
-        crate::build_output::log_board_info(
-            &mut build_log,
-            &board.name,
-            &board.mcu,
-            &board.f_cpu,
-            board.max_flash,
-            board.max_ram,
-        );
 
         // 3. Ensure ARM GCC toolchain
         let toolchain = fbuild_packages::toolchain::ArmToolchain::new(&params.project_dir);
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
         tracing::info!("arm-gcc toolchain at {}", toolchain_dir.display());
 
-        // Log toolchain version
-        {
-            use fbuild_packages::Toolchain as _;
-            if let Ok(ver_out) = fbuild_core::subprocess::run_command(
-                &[
-                    toolchain.get_gcc_path().to_string_lossy().as_ref(),
-                    "-dumpversion",
-                ],
-                None,
-                None,
-                None,
-            ) {
-                let version = ver_out.stdout.trim().to_string();
-                if !version.is_empty() {
-                    crate::build_output::log_toolchain_version(
-                        &mut build_log,
-                        "arm-none-eabi-gcc",
-                        &version,
-                    );
-                }
-            }
-        }
+        use fbuild_packages::Toolchain;
+        pipeline::log_toolchain_version(
+            &toolchain.get_gcc_path(),
+            "arm-none-eabi-gcc",
+            &mut ctx.build_log,
+        );
 
         // 4. Ensure Teensy cores
         let framework = fbuild_packages::library::TeensyCores::new(&params.project_dir);
         let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
         tracing::info!("Teensy cores at {}", framework_dir.display());
 
-        // 5. Setup build directories
-        let cache = fbuild_packages::Cache::new(&params.project_dir);
-        if params.clean {
-            cache.clean_build(&params.env_name, params.profile)?;
-        }
-        cache.ensure_build_directories(&params.env_name, params.profile)?;
+        // 5. Scan sources (Teensy: no variants, exclude Blink.cc test sketch)
+        let core_dir = framework.get_core_dir(&ctx.board.core);
 
-        let build_dir = cache.get_build_dir(&params.env_name, params.profile);
-        let core_build_dir = cache.get_core_build_dir(&params.env_name, params.profile);
-        let src_build_dir = cache.get_src_build_dir(&params.env_name, params.profile);
-
-        // 6. Scan sources
-        let src_dir = params.project_dir.join(
-            config
-                .get_src_dir(&params.env_name)?
-                .unwrap_or_else(|| "src".to_string()),
-        );
-        // Fall back to project root if src/ doesn't exist (Arduino IDE convention)
-        let src_dir = if src_dir.exists() {
-            src_dir
-        } else {
-            params.project_dir.clone()
-        };
-
-        // Teensy cores: core dir is directly under framework (e.g. teensy4/), no variants
-        let core_dir = framework.get_core_dir(&board.core);
-
-        let scanner = SourceScanner::new(&src_dir, &src_build_dir);
-        // No variant dir for Teensy
+        let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
         let mut sources = scanner.scan_all(Some(&core_dir), None)?;
-
-        // Exclude Blink.cc — it's a test sketch in the Teensy core that defines setup()/loop()
         sources
             .core_sources
             .retain(|p| p.file_name().map(|f| f != "Blink.cc").unwrap_or(true));
@@ -132,48 +82,20 @@ impl BuildOrchestrator for TeensyOrchestrator {
             sources.core_sources.len(),
         );
 
-        // 7. Compile
-        let defines = board.get_defines();
-        // Teensy include path is just the core dir (teensy4/), no variants dir
+        // 6. Build include dirs + compiler
+        let defines = ctx.board.get_defines();
         let mut include_dirs = vec![core_dir.clone()];
-        include_dirs.push(src_dir.clone());
+        include_dirs.push(ctx.src_dir.clone());
+        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
 
-        // PlatformIO automatically includes the project's include/ directory
-        let include_dir = params.project_dir.join("include");
-        if include_dir.is_dir() {
-            include_dirs.push(include_dir);
-        }
+        let mcu_config =
+            super::mcu_config::get_teensy_config_for_mcu(&ctx.board.mcu.to_lowercase())?;
 
-        // PlatformIO automatically discovers libraries placed in the project's lib/ directory.
-        // Each subdirectory is treated as a library — add its root (and src/ if present).
-        let local_lib_dir = params.project_dir.join("lib");
-        if local_lib_dir.is_dir() {
-            if let Ok(entries) = std::fs::read_dir(&local_lib_dir) {
-                for entry in entries.flatten() {
-                    let path = entry.path();
-                    if path.is_dir() {
-                        let lib_src = path.join("src");
-                        if lib_src.is_dir() {
-                            include_dirs.push(lib_src);
-                        }
-                        // Always add the root too (some libraries have headers at top level)
-                        include_dirs.push(path);
-                    }
-                }
-            }
-        }
-
-        let user_flags = config.get_build_flags(&params.env_name)?;
-        crate::warn_debug_build_flags(&user_flags);
-
-        let mcu_config = super::mcu_config::get_teensy_config_for_mcu(&board.mcu.to_lowercase())?;
-
-        use fbuild_packages::Toolchain;
         let compiler = TeensyCompiler::new(
             toolchain.get_gcc_path(),
             toolchain.get_gxx_path(),
-            &board.mcu,
-            &board.f_cpu,
+            &ctx.board.mcu,
+            &ctx.board.f_cpu,
             defines,
             include_dirs,
             mcu_config.clone(),
@@ -181,182 +103,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
             params.verbose,
         );
 
-        // Build flags needed for compile_commands.json
-        let src_flags = config.get_build_src_flags(&params.env_name)?;
-        let all_src_flags: Vec<String> =
-            user_flags.iter().chain(src_flags.iter()).cloned().collect();
-
-        // compiledb_only: generate compile_commands.json without compiling
-        if params.compiledb_only {
-            let mut compile_db = crate::compile_database::CompileDatabase::new();
-            compile_db.extend(crate::compile_database::generate_entries(
-                compiler.gcc_path(),
-                compiler.gxx_path(),
-                &compiler.c_flags(),
-                &compiler.cpp_flags(),
-                &[],
-                &user_flags,
-                &sources.core_sources,
-                &core_build_dir,
-                &params.project_dir,
-            ));
-            compile_db.extend(crate::compile_database::generate_entries(
-                compiler.gcc_path(),
-                compiler.gxx_path(),
-                &compiler.c_flags(),
-                &compiler.cpp_flags(),
-                &[],
-                &all_src_flags,
-                &sources.sketch_sources,
-                &src_build_dir,
-                &params.project_dir,
-            ));
-            let compile_db =
-                compile_db.translate_for_clang(crate::compile_database::TargetArchitecture::Arm);
-            let compile_database_path = if compile_db.has_entries() {
-                Some(compile_db.write_and_copy(&build_dir, &params.project_dir)?)
-            } else {
-                None
-            };
-            let elapsed = start.elapsed().as_secs_f64();
-            return Ok(BuildResult {
-                success: true,
-                firmware_path: None,
-                elf_path: None,
-                size_info: None,
-                build_time_secs: elapsed,
-                message: format!("compile_commands.json generated for {}", params.env_name),
-                compile_database_path,
-                build_log,
-            });
-        }
-
-        // Compile core sources
-        let mut core_objects = Vec::new();
-        for source in &sources.core_sources {
-            let obj = CompilerBase::object_path(source, &core_build_dir);
-            if CompilerBase::needs_rebuild(source, &obj) {
-                crate::build_output::log_compiling(&mut build_log, &obj);
-                let result = compiler.compile(source, &obj, &user_flags)?;
-                if !result.success {
-                    return Err(fbuild_core::FbuildError::BuildFailed(format!(
-                        "compilation failed for {}:\n{}",
-                        source.display(),
-                        result.stderr
-                    )));
-                }
-                crate::build_output::collect_warnings(&result.stderr, &mut build_log);
-            }
-            core_objects.push(obj);
-        }
-
-        // Compile sketch sources (with src flags too)
-        let mut sketch_objects = Vec::new();
-        for source in &sources.sketch_sources {
-            let obj = CompilerBase::object_path(source, &src_build_dir);
-            if CompilerBase::needs_rebuild(source, &obj) {
-                crate::build_output::log_compiling(&mut build_log, &obj);
-                let result = compiler.compile(source, &obj, &all_src_flags)?;
-                if !result.success {
-                    return Err(fbuild_core::FbuildError::BuildFailed(format!(
-                        "compilation failed for {}:\n{}",
-                        source.display(),
-                        result.stderr
-                    )));
-                }
-                crate::build_output::collect_warnings(&result.stderr, &mut build_log);
-            }
-            sketch_objects.push(obj);
-        }
-
-        // 7.5. Compile local libraries from the project's lib/ directory.
-        let mut library_objects = Vec::new();
-        if local_lib_dir.is_dir() {
-            if let Ok(entries) = std::fs::read_dir(&local_lib_dir) {
-                for entry in entries.flatten() {
-                    let lib_path = entry.path();
-                    if !lib_path.is_dir() {
-                        continue;
-                    }
-                    let lib_name = lib_path
-                        .file_name()
-                        .unwrap_or_default()
-                        .to_string_lossy()
-                        .to_string();
-
-                    let lib_info = fbuild_packages::library::library_info::InstalledLibrary::new(
-                        &lib_path, &lib_name,
-                    );
-                    let lib_sources = lib_info.get_source_files();
-                    if lib_sources.is_empty() {
-                        continue;
-                    }
-
-                    let lib_build_dir = build_dir.join("lib").join(&lib_name);
-                    std::fs::create_dir_all(&lib_build_dir)?;
-                    tracing::info!(
-                        "compiling local library '{}': {} source files",
-                        lib_name,
-                        lib_sources.len()
-                    );
-
-                    for source in &lib_sources {
-                        let obj = CompilerBase::object_path(source, &lib_build_dir);
-                        if CompilerBase::needs_rebuild(source, &obj) {
-                            crate::build_output::log_compiling(&mut build_log, &obj);
-                            let result = compiler.compile(source, &obj, &all_src_flags)?;
-                            if !result.success {
-                                return Err(fbuild_core::FbuildError::BuildFailed(format!(
-                                    "local library '{}' compilation failed for {}:\n{}",
-                                    lib_name,
-                                    source.display(),
-                                    result.stderr
-                                )));
-                            }
-                            crate::build_output::collect_warnings(&result.stderr, &mut build_log);
-                        }
-                        library_objects.push(obj);
-                    }
-                }
-            }
-        }
-
-        // 7.6. Generate compile_commands.json
-        let mut compile_db = crate::compile_database::CompileDatabase::new();
-        // Core sources use user_flags
-        compile_db.extend(crate::compile_database::generate_entries(
-            compiler.gcc_path(),
-            compiler.gxx_path(),
-            &compiler.c_flags(),
-            &compiler.cpp_flags(),
-            &[], // Teensy: include flags already in c/cpp_flags
-            &user_flags,
-            &sources.core_sources,
-            &core_build_dir,
-            &params.project_dir,
-        ));
-        // Sketch sources use all_src_flags
-        compile_db.extend(crate::compile_database::generate_entries(
-            compiler.gcc_path(),
-            compiler.gxx_path(),
-            &compiler.c_flags(),
-            &compiler.cpp_flags(),
-            &[],
-            &all_src_flags,
-            &sources.sketch_sources,
-            &src_build_dir,
-            &params.project_dir,
-        ));
-        let compile_db =
-            compile_db.translate_for_clang(crate::compile_database::TargetArchitecture::Arm);
-        let compile_database_path = if compile_db.has_entries() {
-            Some(compile_db.write_and_copy(&build_dir, &params.project_dir)?)
-        } else {
-            None
-        };
-
-        // 8-9. Link + convert (with linker script)
-        crate::build_output::log_linking(&mut build_log, "Linking firmware.elf");
+        // 7. Create linker (with linker script)
         let linker_script = framework.get_linker_script(board_id);
         let linker = TeensyLinker::new(
             toolchain.get_gcc_path(),
@@ -366,70 +113,22 @@ impl BuildOrchestrator for TeensyOrchestrator {
             linker_script,
             mcu_config,
             params.profile,
-            board.max_flash,
-            board.max_ram,
+            ctx.board.max_flash,
+            ctx.board.max_ram,
             params.verbose,
         );
 
-        // Include library objects alongside core objects for linking
-        let mut all_core_objects = core_objects;
-        all_core_objects.extend(library_objects);
-
-        let link_result = crate::linker::Linker::link_all(
+        // 8. Run shared sequential build pipeline
+        pipeline::run_sequential_build(
+            &compiler,
             &linker,
-            &sketch_objects,
-            &all_core_objects,
-            &build_dir,
-        )?;
-
-        if link_result.hex_path.is_some() {
-            crate::build_output::log_linking(&mut build_log, "Building firmware.hex");
-        } else if link_result.bin_path.is_some() {
-            crate::build_output::log_linking(&mut build_log, "Building firmware.bin");
-        }
-
-        // 10. Size reporting
-        if let Some(ref size) = link_result.size_info {
-            tracing::info!(
-                "size: text={} data={} bss={} | flash={}/{} ({:.1}%) ram={}/{} ({:.1}%)",
-                size.text,
-                size.data,
-                size.bss,
-                size.total_flash,
-                size.max_flash.unwrap_or(0),
-                size.flash_percent().unwrap_or(0.0),
-                size.total_ram,
-                size.max_ram.unwrap_or(0),
-                size.ram_percent().unwrap_or(0.0),
-            );
-            crate::build_output::log_size_report(&mut build_log, size);
-        }
-
-        // Artifact listing
-        if let Some(ref elf) = link_result.elf_path {
-            crate::build_output::log_artifact(&mut build_log, elf);
-        }
-        let firmware_path = link_result
-            .hex_path
-            .as_ref()
-            .or(link_result.bin_path.as_ref());
-        if let Some(fw) = firmware_path {
-            crate::build_output::log_artifact(&mut build_log, fw);
-        }
-
-        let elapsed = start.elapsed().as_secs_f64();
-        tracing::info!("build completed in {:.1}s", elapsed);
-
-        Ok(BuildResult {
-            success: true,
-            firmware_path: link_result.hex_path,
-            elf_path: link_result.elf_path,
-            size_info: link_result.size_info,
-            build_time_secs: elapsed,
-            message: format!("Teensy build for {} completed", params.env_name),
-            compile_database_path,
-            build_log,
-        })
+            ctx,
+            params,
+            &sources,
+            TargetArchitecture::Arm,
+            "Teensy",
+            start,
+        )
     }
 }
 

@@ -11,7 +11,7 @@
 - [x] fbuild-build: SourceScanner (.ino preprocessing, prototype extraction)
 - [x] fbuild-build: Base traits (Compiler, Linker, CompilerBase, LinkerBase)
 
-## Completed: Platform 1 — AVR Code
+## Completed: Platform 1 — AVR
 
 - [x] fbuild-packages: AvrToolchain (download avr-gcc, resolve bin paths)
 - [x] fbuild-packages: ArduinoCore (download Arduino AVR core)
@@ -20,23 +20,28 @@
 - [x] fbuild-build: AvrOrchestrator (wire all phases)
 - [x] fbuild-deploy: AvrDeployer (avrdude invocation)
 
-## Current: AVR Validation
+## Completed: Platform 2 — ESP32
 
-- [ ] Wire CLI `build` command to invoke AvrOrchestrator
-- [ ] `fbuild build tests/uno -e uno` produces firmware.hex
-- [ ] firmware.hex byte-identical to Python fbuild output
-- [ ] Size info matches Python fbuild output
+- [x] fbuild-packages: Esp32Toolchain, Esp32Framework
+- [x] fbuild-build: Esp32Orchestrator
+- [x] fbuild-deploy: Esp32Deployer
+- [x] fbuild-serial: Real serialport I/O
 
-## Next: Platform 2 — ESP32
+## Completed: Platform 3 — Teensy
 
-- [ ] fbuild-packages: Esp32Toolchain, Esp32Framework
-- [ ] fbuild-build: Esp32Orchestrator
-- [ ] fbuild-deploy: Esp32Deployer
-- [ ] fbuild-serial: Real serialport I/O
+- [x] fbuild-packages: ArmToolchain, TeensyCores
+- [x] fbuild-build: TeensyOrchestrator
+- [x] fbuild-deploy: TeensyDeployer
 
-## Future: Platforms 3-7
+## Completed: Build Pipeline Normalization
 
-- [ ] Teensy, RP2040, STM32, ESP8266, WASM
+- [x] Phase 1: Bug fixes (esptool, BuildProfile, firmware_path rename)
+- [x] Phase 2: Shared pipeline.rs helpers (BuildContext, compile/link/result helpers)
+- [x] Phase 3: Compiler trait extension + run_sequential_build() for AVR/Teensy
+
+## Future: Platforms 4-7
+
+- [ ] RP2040, STM32, ESP8266, WASM
 
 ## Future: Daemon + PyO3
 

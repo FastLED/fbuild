@@ -1,83 +1,311 @@
-# Platform-by-Platform Migration Plan
+# Build Pipeline Normalization Plan
 
-## Strategy
+## Context
 
-Vertical slices by platform: implement the minimum of each crate needed for one platform, validate end-to-end, then widen.
+The three platform orchestrators (AVR: 449 lines, Teensy: 435 lines, ESP32: ~850 lines) duplicate ~300 lines of identical code across config parsing, build directory setup, source scanning, compile loops, compile_commands.json generation, link result handling, and BuildResult assembly. This duplication causes bugs when fixes are applied to one orchestrator but not others (e.g., Teensy hardcoding "release" profile, ESP32 silently swallowing esptool failures). Phase 1 bug fixes are complete — this plan covers the structural refactoring to prevent the class of bugs from recurring.
 
+## Phase 1: Bug Fixes (DONE)
+
+- [x] CI: install esptool for ESP32 boards (`.github/workflows/template_build.yml`)
+- [x] ESP32: `convert_firmware()` returns `Err` instead of silent fallback (`esp32_linker.rs`)
+- [x] Teensy: compiler/linker respect `BuildProfile` param (`teensy_compiler.rs`, `teensy_linker.rs`)
+- [x] AVR: compiler/linker respect `BuildProfile` param (`avr_compiler.rs`, `avr_linker.rs`)
+- [x] AVR: moved optimization flags from `common`/`linker_flags` to `profiles` in `avr.json`
+- [x] Renamed `BuildResult.hex_path` → `firmware_path` everywhere
+- [x] All tests pass, clippy clean
+
+---
+
+## Phase 2: Extract Shared Pipeline Module
+
+### Goal
+
+Create `crates/fbuild-build/src/pipeline.rs` with shared helper functions. Each orchestrator calls these instead of duplicating logic. No trait indirection yet — just functions.
+
+### 2.1: `BuildContext` struct + `BuildContext::new()`
+
+Extract the identical config-parse → board-load → build-dir-setup → src-dir-resolve sequence that appears at the top of every orchestrator.
+
+**Duplicated block** (identical in all 3 orchestrators):
 ```
-Platform 1 (AVR):    config[avr] → packages[avr] → build[avr] → deploy[avr] → test
-Platform 2 (ESP32):  config[esp32] → packages[esp32] → build[esp32] → deploy[esp32] → test
-Platform 3+:         same pattern for Teensy, RP2040, STM32, ESP8266, WASM
+parse platformio.ini → load board → create build_log → log banner + board info
+→ setup cache → clean if requested → ensure build dirs → resolve src_dir
+→ parse user_flags + src_flags → merge all_src_flags
 ```
 
-## Platform Priority
+**New code in `pipeline.rs`:**
+```rust
+pub struct BuildContext {
+    pub config: PlatformIOConfig,
+    pub board: BoardConfig,
+    pub build_log: BuildLog,
+    pub build_dir: PathBuf,
+    pub core_build_dir: PathBuf,
+    pub src_build_dir: PathBuf,
+    pub src_dir: PathBuf,
+    pub user_flags: Vec<String>,
+    pub src_flags: Vec<String>,
+    pub all_src_flags: Vec<String>,
+}
 
-| # | Platform | Test Projects |
-|---|----------|---------------|
-| 1 | **AVR** | tests/uno, tests/uno_minimal, tests/uno_simple |
-| 2 | **ESP32** | tests/esp32dev, tests/esp32c6, tests/esp32s3 |
-| 3 | **Teensy** | tests/teensy40, tests/teensy41 |
-| 4 | **RP2040** | tests/rpipico, tests/rpipico2 |
-| 5 | **STM32** | tests/bluepill_f103c8, tests/nucleo_f446re |
-| 6 | **ESP8266** | tests/esp8266 |
-| 7 | **WASM** | tests/wasm |
+impl BuildContext {
+    pub fn new(params: &BuildParams) -> Result<Self> { ... }
+}
+```
 
-## Completed: Shared Foundation
+**Lines eliminated from each orchestrator:** ~35
 
-- [x] fbuild-core: SubprocessRunner, ToolOutput, SizeInfo::parse(), Platform::from_platform_str
-- [x] fbuild-config: Full INI parser (extends inheritance, variable substitution, multi-line values)
-- [x] fbuild-config: BoardConfig (from_boards_txt, from_board_id with 14 boards, get_defines, platform detection)
-- [x] fbuild-packages: Cache (URL hashing, directory management, build dirs)
-- [x] fbuild-packages: Base traits (Package, Toolchain, Framework) + PackageBase with async staged_install
-- [x] fbuild-packages: Async HTTP downloader + parallel download_all + SHA256 checksum verification
-- [x] fbuild-packages: Archive extractors (tar.gz, tar.bz2, zip)
-- [x] fbuild-build: SourceScanner (.ino preprocessing, function prototype extraction, #line directives)
-- [x] fbuild-build: Compiler/Linker traits + CompilerBase + LinkerBase
+**Files modified:**
+- `crates/fbuild-build/src/pipeline.rs` — NEW
+- `crates/fbuild-build/src/lib.rs` — add `pub mod pipeline;`
+- `crates/fbuild-build/src/avr/orchestrator.rs` — replace lines 37-170 with `BuildContext::new()`
+- `crates/fbuild-build/src/teensy/orchestrator.rs` — replace lines 37-187 with `BuildContext::new()`
+- `crates/fbuild-build/src/esp32/orchestrator.rs` — replace lines 50-147 with `BuildContext::new()`
 
-## Completed: Platform 1 — AVR
+### 2.2: `discover_project_includes()`
 
-- [x] fbuild-packages: AvrToolchain (avr-gcc 7.3.0, platform-specific URLs, bin path resolution)
-- [x] fbuild-packages: ArduinoCore (Arduino AVR core 1.8.6 from GitHub, cores/variants/boards.txt)
-- [x] fbuild-build: AvrCompiler (avr-gcc/g++ flags, MCU/define/include flag building)
-- [x] fbuild-build: AvrLinker (avr-ar, avr-gcc link, avr-objcopy → .hex, avr-size reporting)
-- [x] fbuild-build: AvrOrchestrator (full build pipeline: config → packages → compile → link → size)
-- [x] fbuild-deploy: AvrDeployer (avrdude invocation with port/MCU/protocol/baud)
+Extract the lib/ + include/ directory discovery loop (identical in all 3).
 
-### AVR Validation (Pending Hardware)
+```rust
+/// Add project's include/ dir and lib/ subdirs to include_dirs.
+pub fn discover_project_includes(
+    project_dir: &Path,
+    include_dirs: &mut Vec<PathBuf>,
+)
+```
 
-- [ ] `fbuild build tests/uno -e uno` produces firmware.hex
-- [ ] firmware.hex byte-identical to Python fbuild output
-- [ ] Size info matches Python fbuild output
-- [ ] `fbuild deploy tests/uno -e uno --port COM3` works on real hardware
+**Lines eliminated from each orchestrator:** ~20
 
-## Next: Platform 2 — ESP32
+**Files modified:**
+- `crates/fbuild-build/src/pipeline.rs`
+- All 3 orchestrators
 
-- [ ] fbuild-packages: Esp32Toolchain (xtensa-esp32-elf-gcc / riscv32)
-- [ ] fbuild-packages: Esp32Framework (pioarduino platform-espressif32, ESP-IDF libs)
-- [ ] fbuild-build: Esp32Orchestrator (partition tables, bootloader merge)
-- [ ] fbuild-deploy: Esp32Deployer (esptool.py, flash offsets, crash-loop recovery)
-- [ ] fbuild-serial: Real serialport I/O (USB-CDC, Windows 30-retry, preemption)
+### 2.3: `compile_sources_sequential()`
 
-## Daemon (Parallel Track)
+Extract the sequential compile loop used by AVR and Teensy (identical in both). ESP32 already has `compile_sources_parallel()` in the `parallel` module.
 
-Follow zccache's daemon launch pattern — not porting the Python daemon launch approach.
+```rust
+/// Compile a list of sources sequentially with rebuild detection.
+pub fn compile_sources_sequential(
+    compiler: &dyn Compiler,
+    sources: &[PathBuf],
+    build_dir: &Path,
+    extra_flags: &[String],
+    build_log: &mut BuildLog,
+) -> Result<Vec<PathBuf>>
+```
 
-- [ ] fbuild-daemon: Axum HTTP server (same endpoints as Python daemon)
-- [ ] fbuild-daemon: WebSocket serial monitor
-- [ ] fbuild-daemon: Request processors
+**Lines eliminated from each AVR/Teensy orchestrator:** ~50 (core + variant + sketch loops)
 
-## PyO3 Bindings (After ESP32)
+**Files modified:**
+- `crates/fbuild-build/src/pipeline.rs`
+- `crates/fbuild-build/src/avr/orchestrator.rs`
+- `crates/fbuild-build/src/teensy/orchestrator.rs`
 
-- [ ] fbuild-python: Wire SerialMonitor/DaemonConnection to real backends
-- [ ] Test with FastLED's ci/debug_attached.py
+### 2.4: `compile_local_libraries()`
 
-## Test Count: 125 passing across 11 crates
+Extract the local lib/ directory compilation (identical in AVR and Teensy). ESP32 uses the parallel `compile_library_with_jobs()` API instead — it stays as-is.
 
-| Crate | Tests |
-|-------|-------|
-| fbuild-core | 11 (subprocess, SizeInfo, Platform) |
-| fbuild-config | 44 (INI parser 26, BoardConfig 18) |
-| fbuild-packages | 33 (cache 16, downloader 2, extractor 1, AvrToolchain 6, ArduinoCore 5, README 3) |
-| fbuild-build | 33 (source_scanner 14, compiler 4, linker 2, AVR compiler 6, AVR linker 1, AVR orchestrator 3, README 3) |
-| fbuild-deploy | 3 (AVR deployer) |
-| fbuild-paths | 1 |
+```rust
+/// Compile all libraries in project_dir/lib/ sequentially.
+pub fn compile_local_libraries(
+    compiler: &dyn Compiler,
+    project_dir: &Path,
+    build_dir: &Path,
+    extra_flags: &[String],
+    build_log: &mut BuildLog,
+) -> Result<Vec<PathBuf>>
+```
+
+**Lines eliminated from each AVR/Teensy orchestrator:** ~50
+
+**Files modified:**
+- `crates/fbuild-build/src/pipeline.rs`
+- `crates/fbuild-build/src/avr/orchestrator.rs`
+- `crates/fbuild-build/src/teensy/orchestrator.rs`
+
+### 2.5: `generate_compile_db()`
+
+Extract compile_commands.json generation (identical pattern in all 3, differs only by TargetArchitecture and whether include_flags are separate).
+
+```rust
+/// Generate compile_commands.json for core+variant and sketch sources.
+pub fn generate_compile_db(
+    gcc_path: &Path,
+    gxx_path: &Path,
+    c_flags: &[String],
+    cpp_flags: &[String],
+    include_flags: &[String],   // empty for AVR/Teensy, populated for ESP32
+    user_flags: &[String],
+    all_src_flags: &[String],
+    core_sources: &[PathBuf],   // core + variant combined
+    sketch_sources: &[PathBuf],
+    core_build_dir: &Path,
+    src_build_dir: &Path,
+    build_dir: &Path,
+    project_dir: &Path,
+    arch: TargetArchitecture,
+) -> Result<Option<PathBuf>>
+```
+
+**Lines eliminated from each orchestrator:** ~30
+
+**Files modified:**
+- `crates/fbuild-build/src/pipeline.rs`
+- All 3 orchestrators
+
+### 2.6: `handle_link_result()` + `assemble_build_result()`
+
+Extract post-link logging and BuildResult construction (identical in all 3).
+
+```rust
+/// Log size report and artifacts from a link result.
+pub fn handle_link_result(
+    link_result: &LinkResult,
+    build_log: &mut BuildLog,
+)
+
+/// Assemble the final BuildResult from link output.
+pub fn assemble_build_result(
+    link_result: LinkResult,
+    elapsed: f64,
+    platform_label: &str,     // "AVR", "Teensy", "ESP32 (esp32s3)"
+    env_name: &str,
+    compile_database_path: Option<PathBuf>,
+    build_log: BuildLog,
+) -> BuildResult
+```
+
+**Lines eliminated from each orchestrator:** ~45
+
+**Files modified:**
+- `crates/fbuild-build/src/pipeline.rs`
+- All 3 orchestrators
+
+### 2.7: `log_toolchain_version()`
+
+Extract the toolchain version logging subprocess call (same pattern in all 3, differs by label).
+
+```rust
+/// Log the version of a GCC toolchain by running `gcc -dumpversion`.
+pub fn log_toolchain_version(
+    gcc_path: &Path,
+    label: &str,              // "avr-gcc", "arm-none-eabi-gcc", etc.
+    build_log: &mut BuildLog,
+)
+```
+
+**Lines eliminated from each orchestrator:** ~15
+
+---
+
+## Phase 2 Summary
+
+| Helper | AVR savings | Teensy savings | ESP32 savings |
+|--------|-------------|----------------|---------------|
+| `BuildContext::new()` | ~35 | ~35 | ~30 |
+| `discover_project_includes()` | ~20 | ~20 | ~20 |
+| `compile_sources_sequential()` | ~50 | ~35 | N/A (uses parallel) |
+| `compile_local_libraries()` | ~50 | ~50 | N/A (uses parallel) |
+| `generate_compile_db()` | ~30 | ~30 | ~30 |
+| `handle_link_result()` + `assemble_build_result()` | ~45 | ~45 | ~45 |
+| `log_toolchain_version()` | ~15 | ~15 | ~15 |
+| **Total** | **~245** | **~230** | **~140** |
+
+**Before (Phase 1):** AVR 449 + Teensy 435 + ESP32 ~850 = ~1734 lines
+**After Phase 2 (est):** AVR ~200 + Teensy ~200 + ESP32 ~710 + pipeline ~200 = ~1310 lines
+**After Phase 3 (actual):** AVR 192 + Teensy 185 + ESP32 1191 + pipeline 485 = ~2053 lines
+(ESP32 grew from ~850 due to new features added since plan was written: framework built-in
+libs, embed files, bootloader ELF conversion, pioarduino metadata resolution)
+**Net reduction in shared code:** ~188 lines from AVR/Teensy, plus guaranteed consistency
+
+---
+
+## Phase 2 Execution Order
+
+Each step is independently testable (`cargo check` + `cargo test` must pass after each).
+
+- [x] **Step 1:** Create `pipeline.rs` with all helpers, update `lib.rs`
+- [x] **Step 2:** Migrate AVR orchestrator to use pipeline helpers
+- [x] **Step 3:** Migrate Teensy orchestrator to use pipeline helpers
+- [x] **Step 4:** Migrate ESP32 orchestrator to use BuildContext + pipeline helpers
+- [x] **Step 5-10:** All helpers implemented and used (done as part of Steps 1-4)
+- [x] **Step 11:** Full verification: `cargo check + clippy + test --workspace` — all 217 tests pass
+
+---
+
+## Phase 3: Unified Compiler Trait + Sequential Build Runner (DONE)
+
+Instead of a full `PlatformBuild` trait (which would over-abstract given ESP32's divergent flow),
+Phase 3 took a pragmatic approach:
+
+### 3.1: Extend `Compiler` trait with `gcc_path`/`gxx_path`/`c_flags`/`cpp_flags`
+
+All 3 platform compilers had identical inherent methods. Moved them to the `Compiler` trait
+so `pipeline::run_sequential_build()` can work with `&dyn Compiler` without knowing the
+concrete type.
+
+**Files modified:**
+- `crates/fbuild-build/src/compiler.rs` — added 4 trait methods
+- `crates/fbuild-build/src/avr/avr_compiler.rs` — moved methods to trait impl
+- `crates/fbuild-build/src/teensy/teensy_compiler.rs` — moved methods to trait impl
+- `crates/fbuild-build/src/esp32/esp32_compiler.rs` — moved methods to trait impl
+
+### 3.2: `run_sequential_build()` template method
+
+Extracted the entire compile→link→result flow into `pipeline::run_sequential_build()`.
+Handles: compiledb_only early return, sequential compilation of core/variant/sketch/libs,
+compile database generation, linking, and result assembly.
+
+**Lines eliminated from AVR:** ~102 (294 → 192)
+**Lines eliminated from Teensy:** ~86 (271 → 185)
+**ESP32:** Not applicable — uses parallel compilation, SDK lib compilation, embed files,
+bootloader prep. Too many hooks for a shared template. Already uses individual pipeline
+helpers from Phase 2.
+
+### Phase 3 Execution
+
+- [x] **Step 1:** Add `gcc_path`/`gxx_path`/`c_flags`/`cpp_flags` to `Compiler` trait
+- [x] **Step 2:** Add `run_sequential_build()` to `pipeline.rs`
+- [x] **Step 3:** Migrate AVR orchestrator
+- [x] **Step 4:** Migrate Teensy orchestrator
+- [x] **Step 5:** Full verification: `cargo check + clippy + test` — all 37 tests pass
+
+---
+
+## Verification
+
+After each step:
+1. `uv run cargo check --workspace --all-targets`
+2. `uv run cargo clippy --workspace --all-targets -- -D warnings`
+3. `uv run cargo test --workspace --lib`
+
+After all steps:
+4. Push → verify all 11 CI board build workflows pass
+5. Verify ESP32-S3 produces `firmware.bin` (the original bug)
+6. Verify Teensy/AVR produce `firmware.hex` for both quick and release
+
+---
+
+## Critical Files
+
+| File | Role |
+|------|------|
+| `crates/fbuild-build/src/pipeline.rs` | NEW — shared pipeline helpers |
+| `crates/fbuild-build/src/lib.rs` | Add `pub mod pipeline` |
+| `crates/fbuild-build/src/avr/orchestrator.rs` | Migrate to pipeline helpers |
+| `crates/fbuild-build/src/teensy/orchestrator.rs` | Migrate to pipeline helpers |
+| `crates/fbuild-build/src/esp32/orchestrator.rs` | Migrate to pipeline helpers |
+
+## Existing Infrastructure to Reuse
+
+| Module | Functions | File |
+|--------|-----------|------|
+| `build_output` | `create_build_log()`, `log_build_banner()`, `log_board_info()`, `log_compiling()`, `log_linking()`, `collect_warnings()`, `log_size_report()`, `log_artifact()` | `crates/fbuild-build/src/build_output.rs` |
+| `compiler` | `CompilerBase::needs_rebuild()`, `CompilerBase::object_path()`, `Compiler` trait | `crates/fbuild-build/src/compiler.rs` |
+| `compile_database` | `generate_entries()`, `CompileDatabase`, `TargetArchitecture` | `crates/fbuild-build/src/compile_database.rs` |
+| `source_scanner` | `SourceScanner::scan_all()`, `SourceCollection` | `crates/fbuild-build/src/source_scanner.rs` |
+| `linker` | `Linker::link_all()`, `LinkResult` | `crates/fbuild-build/src/linker.rs` |
+| `parallel` | `compile_sources_parallel()` | `crates/fbuild-build/src/parallel/mod.rs` |
+| `fbuild-packages` | `Cache::new()`, `ensure_build_directories()`, `get_build_dir()` | `crates/fbuild-packages/src/cache.rs` |
+| `fbuild-config` | `PlatformIOConfig::from_path()`, `BoardConfig::from_board_id()` | `crates/fbuild-config/src/` |

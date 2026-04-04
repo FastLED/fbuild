@@ -24,6 +24,7 @@ use std::time::Instant;
 use fbuild_core::{Platform, Result};
 use fbuild_packages::Framework;
 
+use crate::compiler::Compiler as _;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
 use super::esp32_compiler::Esp32Compiler;
@@ -47,42 +48,28 @@ impl BuildOrchestrator for Esp32Orchestrator {
             crate::zccache::ensure_running(zcc);
         }
 
-        // 1. Parse platformio.ini
-        let ini_path = params.project_dir.join("platformio.ini");
-        let config = fbuild_config::PlatformIOConfig::from_path(&ini_path)?;
-        let env_config = config.get_env_config(&params.env_name)?;
-
-        // 2. Load board config
-        let board_id = env_config.get("board").ok_or_else(|| {
-            fbuild_core::FbuildError::ConfigError("missing 'board' in environment config".into())
-        })?;
-        let overrides = config.get_board_overrides(&params.env_name)?;
-        let board = fbuild_config::BoardConfig::from_board_id(board_id, &overrides)?;
+        // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
+        let mut ctx = crate::pipeline::BuildContext::new(
+            &params.project_dir,
+            &params.env_name,
+            params.clean,
+            params.profile,
+            params.log_sender.clone(),
+        )?;
 
         // 3. Load MCU config from embedded JSON
-        let mut mcu_config = get_mcu_config(&board.mcu)?;
-
-        let mut build_log = crate::build_output::create_build_log(params.log_sender.clone());
-        crate::build_output::log_build_banner(&mut build_log, &params.env_name);
-        crate::build_output::log_board_info(
-            &mut build_log,
-            &board.name,
-            &board.mcu,
-            &board.f_cpu,
-            board.max_flash,
-            board.max_ram,
-        );
+        let mut mcu_config = get_mcu_config(&ctx.board.mcu)?;
 
         tracing::info!(
             "ESP32 build: {} ({}, {})",
-            board.name,
-            board.mcu,
+            ctx.board.name,
+            ctx.board.mcu,
             mcu_config.architecture
         );
 
         // 4-6. Resolve platform, toolchain, and framework
         let (toolchain, framework) =
-            resolve_pioarduino_packages(&params.project_dir, &board.mcu, &mcu_config)?;
+            resolve_pioarduino_packages(&params.project_dir, &ctx.board.mcu, &mcu_config)?;
 
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
         tracing::info!(
@@ -95,66 +82,34 @@ impl BuildOrchestrator for Esp32Orchestrator {
             toolchain_dir.display()
         );
 
-        // Log toolchain version
-        {
-            use fbuild_packages::Toolchain as _;
-            let tc_label = if mcu_config.is_riscv() {
-                "riscv32-esp-elf-gcc"
-            } else {
-                "xtensa-esp-elf-gcc"
-            };
-            if let Ok(ver_out) = fbuild_core::subprocess::run_command(
-                &[
-                    toolchain.get_gcc_path().to_string_lossy().as_ref(),
-                    "-dumpversion",
-                ],
-                None,
-                None,
-                None,
-            ) {
-                let version = ver_out.stdout.trim().to_string();
-                if !version.is_empty() {
-                    crate::build_output::log_toolchain_version(&mut build_log, tc_label, &version);
-                }
-            }
-        }
+        let tc_label = if mcu_config.is_riscv() {
+            "riscv32-esp-elf-gcc"
+        } else {
+            "xtensa-esp-elf-gcc"
+        };
+        crate::pipeline::log_toolchain_version(
+            &toolchain.get_gcc_path(),
+            tc_label,
+            &mut ctx.build_log,
+        );
 
         let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
         tracing::info!("ESP32 framework at {}", framework_dir.display());
 
-        // 7. Setup build directories
-        let cache = fbuild_packages::Cache::new(&params.project_dir);
-        if params.clean {
-            cache.clean_build(&params.env_name, params.profile)?;
-        }
-        cache.ensure_build_directories(&params.env_name, params.profile)?;
+        // Aliases for build dirs (already set up by BuildContext::new())
+        let build_dir = &ctx.build_dir;
+        let core_build_dir = &ctx.core_build_dir;
+        let src_build_dir = &ctx.src_build_dir;
 
-        let build_dir = cache.get_build_dir(&params.env_name, params.profile);
-        let core_build_dir = cache.get_core_build_dir(&params.env_name, params.profile);
-        let src_build_dir = cache.get_src_build_dir(&params.env_name, params.profile);
-
-        // 8. Collect include paths
-        let src_dir = params.project_dir.join(
-            config
-                .get_src_dir(&params.env_name)?
-                .unwrap_or_else(|| "src".to_string()),
-        );
-        // Fall back to project root if src/ doesn't exist (Arduino IDE convention)
-        let src_dir = if src_dir.exists() {
-            src_dir
-        } else {
-            params.project_dir.clone()
-        };
-
-        let core_dir = framework.get_core_dir(&board.core);
-        let variant_dir = framework.get_variant_dir(&board.variant);
+        let core_dir = framework.get_core_dir(&ctx.board.core);
+        let variant_dir = framework.get_variant_dir(&ctx.board.variant);
 
         let mut include_dirs = vec![core_dir.clone()];
         if variant_dir.exists() {
             include_dirs.push(variant_dir.clone());
         }
         // Add SDK include paths (294+ paths from ESP-IDF)
-        include_dirs.extend(framework.get_sdk_include_dirs(&board.mcu));
+        include_dirs.extend(framework.get_sdk_include_dirs(&ctx.board.mcu));
 
         // Add built-in Arduino library includes (Wire, SPI, WiFi, etc.)
         let builtin_libs_dir = framework.get_libraries_dir();
@@ -172,38 +127,14 @@ impl BuildOrchestrator for Esp32Orchestrator {
             }
         }
 
-        include_dirs.push(src_dir.clone());
-
-        // PlatformIO automatically includes the project's include/ directory
-        let include_dir = params.project_dir.join("include");
-        if include_dir.is_dir() {
-            include_dirs.push(include_dir);
-        }
-
-        // PlatformIO automatically discovers libraries placed in the project's lib/ directory.
-        // Each subdirectory is treated as a library — add its root (and src/ if present).
-        let local_lib_dir = params.project_dir.join("lib");
-        if local_lib_dir.is_dir() {
-            if let Ok(entries) = std::fs::read_dir(&local_lib_dir) {
-                for entry in entries.flatten() {
-                    let path = entry.path();
-                    if path.is_dir() {
-                        let lib_src = path.join("src");
-                        if lib_src.is_dir() {
-                            include_dirs.push(lib_src);
-                        }
-                        // Always add the root too (some libraries have headers at top level)
-                        include_dirs.push(path);
-                    }
-                }
-            }
-        }
+        include_dirs.push(ctx.src_dir.clone());
+        crate::pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
 
         // Read SDK flags early — needed to check LTO before compiling.
-        let sdk_ld_flags = framework.get_sdk_ld_flags(&board.mcu);
-        let sdk_lib_flags = framework.get_sdk_lib_flags(&board.mcu);
-        let sdk_ld_scripts = framework.get_sdk_ld_scripts(&board.mcu);
-        let sdk_defines = framework.get_sdk_defines(&board.mcu);
+        let sdk_ld_flags = framework.get_sdk_ld_flags(&ctx.board.mcu);
+        let sdk_lib_flags = framework.get_sdk_lib_flags(&ctx.board.mcu);
+        let sdk_ld_scripts = framework.get_sdk_ld_scripts(&ctx.board.mcu);
+        let sdk_defines = framework.get_sdk_defines(&ctx.board.mcu);
 
         // If SDK specifies -fno-lto, disable LTO in MCU config profiles to avoid
         // compiling objects with LTO that the linker can't handle.
@@ -212,8 +143,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
         }
 
         // 8.5. Library dependencies
-        let lib_deps = config.get_lib_deps(&params.env_name)?;
-        let lib_ignore = config.get_lib_ignore(&params.env_name)?;
+        let lib_deps = ctx.config.get_lib_deps(&params.env_name)?;
+        let lib_ignore = ctx.config.get_lib_ignore(&params.env_name)?;
 
         use fbuild_packages::Toolchain;
         let mut library_archives = Vec::new();
@@ -221,26 +152,30 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // Read user build_flags early — needed for both library and sketch compilation.
         // SDK defines (from flags/defines) are prepended so user flags can override them.
         let mut user_flags = sdk_defines;
-        let user_build_flags = config.get_build_flags(&params.env_name)?;
+        let user_build_flags = ctx.config.get_build_flags(&params.env_name)?;
         user_flags.extend(user_build_flags.clone());
 
         // Emit a warning if CDC on boot is effectively enabled (may cause Serial to block
         // when no USB host is connected).
-        warn_if_cdc_on_boot(&board.name, board.extra_flags.as_deref(), &user_build_flags);
+        warn_if_cdc_on_boot(
+            &ctx.board.name,
+            ctx.board.extra_flags.as_deref(),
+            &user_build_flags,
+        );
         crate::warn_debug_build_flags(&user_build_flags);
 
         if !lib_deps.is_empty() {
             let libs_dir = build_dir.join("libs");
 
             // Build compiler to get flags for library compilation
-            let mut defines = board.get_defines();
+            let mut defines = ctx.board.get_defines();
             defines.extend(mcu_config.defines_map());
 
             let temp_compiler = Esp32Compiler::with_temp_dir(
                 toolchain.get_gcc_path(),
                 toolchain.get_gxx_path(),
                 mcu_config.clone(),
-                &board.f_cpu,
+                &ctx.board.f_cpu,
                 defines.clone(),
                 include_dirs.clone(),
                 params.profile,
@@ -300,14 +235,14 @@ impl BuildOrchestrator for Esp32Orchestrator {
                     .collect();
 
                 // Get compiler flags for framework library compilation
-                let mut fw_defines = board.get_defines();
+                let mut fw_defines = ctx.board.get_defines();
                 fw_defines.extend(mcu_config.defines_map());
 
                 let fw_compiler = Esp32Compiler::with_temp_dir(
                     toolchain.get_gcc_path(),
                     toolchain.get_gxx_path(),
                     mcu_config.clone(),
-                    &board.f_cpu,
+                    &ctx.board.f_cpu,
                     fw_defines,
                     include_dirs.clone(),
                     params.profile,
@@ -397,7 +332,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         }
 
         // 9. Scan sources
-        let scanner = SourceScanner::new(&src_dir, &src_build_dir);
+        let scanner = SourceScanner::new(&ctx.src_dir, src_build_dir);
         let variant_dir_opt = if variant_dir.exists() {
             Some(variant_dir.as_path())
         } else {
@@ -413,23 +348,23 @@ impl BuildOrchestrator for Esp32Orchestrator {
         );
 
         // 10-11. Compile
-        let mut defines = board.get_defines();
+        let mut defines = ctx.board.get_defines();
         defines.extend(mcu_config.defines_map());
 
         // Defines required by the new framework (3.3.7+).
-        // Use \" escapes for GCC response file compatibility (see board.rs).
+        // Use \" escapes for GCC response file compatibility (see ctx.board.rs).
         defines
             .entry("ARDUINO_BOARD".to_string())
-            .or_insert_with(|| format!("\\\"{}\\\"", board.name));
+            .or_insert_with(|| format!("\\\"{}\\\"", ctx.board.name));
         defines
             .entry("ARDUINO_VARIANT".to_string())
-            .or_insert_with(|| format!("\\\"{}\\\"", board.variant));
+            .or_insert_with(|| format!("\\\"{}\\\"", ctx.board.variant));
 
         let compiler = Esp32Compiler::with_temp_dir(
             toolchain.get_gcc_path(),
             toolchain.get_gxx_path(),
             mcu_config.clone(),
-            &board.f_cpu,
+            &ctx.board.f_cpu,
             defines,
             include_dirs.clone(),
             params.profile,
@@ -444,47 +379,36 @@ impl BuildOrchestrator for Esp32Orchestrator {
         all_core_sources.extend(sources.core_sources.iter().cloned());
         all_core_sources.extend(sources.variant_sources.iter().cloned());
 
-        let src_flags = config.get_build_src_flags(&params.env_name)?;
+        let src_flags = ctx.config.get_build_src_flags(&params.env_name)?;
         let all_src_flags: Vec<String> =
             user_flags.iter().chain(src_flags.iter()).cloned().collect();
 
+        // Precompute values needed for compile_commands.json in both paths
+        let include_flags = compiler.base.build_include_flags();
+        let arch = if mcu_config.is_xtensa() {
+            crate::compile_database::TargetArchitecture::Xtensa
+        } else {
+            crate::compile_database::TargetArchitecture::Riscv32
+        };
+
         // compiledb_only: generate compile_commands.json without compiling
         if params.compiledb_only {
-            let mut compile_db = crate::compile_database::CompileDatabase::new();
-            let include_flags = compiler.base.build_include_flags();
-            compile_db.extend(crate::compile_database::generate_entries(
+            let compile_database_path = crate::pipeline::generate_compile_db(
                 compiler.gcc_path(),
                 compiler.gxx_path(),
                 &compiler.c_flags(),
                 &compiler.cpp_flags(),
                 &include_flags,
                 &user_flags,
-                &all_core_sources,
-                &core_build_dir,
-                &params.project_dir,
-            ));
-            compile_db.extend(crate::compile_database::generate_entries(
-                compiler.gcc_path(),
-                compiler.gxx_path(),
-                &compiler.c_flags(),
-                &compiler.cpp_flags(),
-                &include_flags,
                 &all_src_flags,
+                &all_core_sources,
                 &sources.sketch_sources,
-                &src_build_dir,
+                core_build_dir,
+                src_build_dir,
+                build_dir,
                 &params.project_dir,
-            ));
-            let arch = if mcu_config.is_xtensa() {
-                crate::compile_database::TargetArchitecture::Xtensa
-            } else {
-                crate::compile_database::TargetArchitecture::Riscv32
-            };
-            let compile_db = compile_db.translate_for_clang(arch);
-            let compile_database_path = if compile_db.has_entries() {
-                Some(compile_db.write_and_copy(&build_dir, &params.project_dir)?)
-            } else {
-                None
-            };
+                arch,
+            )?;
             let elapsed = start.elapsed().as_secs_f64();
             return Ok(BuildResult {
                 success: true,
@@ -494,19 +418,19 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 build_time_secs: elapsed,
                 message: format!(
                     "compile_commands.json generated for {} ({})",
-                    params.env_name, board.mcu
+                    params.env_name, ctx.board.mcu
                 ),
                 compile_database_path,
-                build_log,
+                build_log: ctx.build_log,
             });
         }
 
         // Compile core + variant sources in parallel
-        let build_log_mutex = std::sync::Mutex::new(build_log);
+        let build_log_mutex = std::sync::Mutex::new(ctx.build_log);
         let core_result = crate::parallel::compile_sources_parallel(
             &compiler,
             &all_core_sources,
-            &core_build_dir,
+            core_build_dir,
             &user_flags,
             jobs,
             Some(&build_log_mutex),
@@ -516,7 +440,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let sketch_result = crate::parallel::compile_sources_parallel(
             &compiler,
             &sources.sketch_sources,
-            &src_build_dir,
+            src_build_dir,
             &all_src_flags,
             jobs,
             Some(&build_log_mutex),
@@ -592,8 +516,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
         }
 
         // 11.5. Process embedded files (board_build.embed_files + embed_txtfiles)
-        let embed_files = config.get_embed_files(&params.env_name)?;
-        let embed_txtfiles = config.get_embed_txtfiles(&params.env_name)?;
+        let embed_files = ctx.config.get_embed_files(&params.env_name)?;
+        let embed_txtfiles = ctx.config.get_embed_txtfiles(&params.env_name)?;
 
         if !embed_files.is_empty() || !embed_txtfiles.is_empty() {
             let embed_dir = build_dir.join("embed");
@@ -621,43 +545,22 @@ impl BuildOrchestrator for Esp32Orchestrator {
         }
 
         // 11.6. Generate compile_commands.json
-        let mut compile_db = crate::compile_database::CompileDatabase::new();
-        let include_flags = compiler.base.build_include_flags();
-        // Core + variant sources use user_flags
-        compile_db.extend(crate::compile_database::generate_entries(
-            compiler.gcc_path(),
-            compiler.gxx_path(),
-            &compiler.c_flags(),
-            &compiler.cpp_flags(),
-            &include_flags, // ESP32: include flags separate from c/cpp_flags
-            &user_flags,
-            &all_core_sources,
-            &core_build_dir,
-            &params.project_dir,
-        ));
-        // Sketch sources use all_src_flags
-        compile_db.extend(crate::compile_database::generate_entries(
+        let compile_database_path = crate::pipeline::generate_compile_db(
             compiler.gcc_path(),
             compiler.gxx_path(),
             &compiler.c_flags(),
             &compiler.cpp_flags(),
             &include_flags,
+            &user_flags,
             &all_src_flags,
+            &all_core_sources,
             &sources.sketch_sources,
-            &src_build_dir,
+            core_build_dir,
+            src_build_dir,
+            build_dir,
             &params.project_dir,
-        ));
-        let arch = if mcu_config.is_xtensa() {
-            crate::compile_database::TargetArchitecture::Xtensa
-        } else {
-            crate::compile_database::TargetArchitecture::Riscv32
-        };
-        let compile_db = compile_db.translate_for_clang(arch);
-        let compile_database_path = if compile_db.has_entries() {
-            Some(compile_db.write_and_copy(&build_dir, &params.project_dir)?)
-        } else {
-            None
-        };
+            arch,
+        )?;
 
         // 12-13. Link + convert
         // Library archives join core_objects in the archives parameter
@@ -665,7 +568,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         all_archives.extend(library_archives);
 
         let flash_freq = crate::esp32::esp32_linker::f_flash_to_esptool_freq(
-            board.f_flash.as_deref(),
+            ctx.board.f_flash.as_deref(),
             mcu_config.default_flash_freq(),
         );
         let linker = Esp32Linker::new(
@@ -678,19 +581,19 @@ impl BuildOrchestrator for Esp32Orchestrator {
             sdk_lib_flags,
             sdk_ld_scripts,
             params.profile,
-            board.flash_mode.clone(),
+            ctx.board.flash_mode.clone(),
             flash_freq,
-            board.max_flash,
-            board.max_ram,
+            ctx.board.max_flash,
+            ctx.board.max_ram,
             params.verbose,
         );
 
         let link_result =
-            crate::linker::Linker::link_all(&linker, &sketch_objects, &all_archives, &build_dir)?;
+            crate::linker::Linker::link_all(&linker, &sketch_objects, &all_archives, build_dir)?;
 
         // 14. Prepare bootloader.bin + partitions.bin for deployment
         let boot_dst = build_dir.join("bootloader.bin");
-        let boot_bin_src = framework.get_bootloader_bin(&board.mcu);
+        let boot_bin_src = framework.get_bootloader_bin(&ctx.board.mcu);
         if boot_bin_src.exists() {
             // Pre-built bootloader.bin available — just copy
             std::fs::copy(&boot_bin_src, &boot_dst)?;
@@ -701,22 +604,24 @@ impl BuildOrchestrator for Esp32Orchestrator {
             // ESP32 ROM bootloader typically requires DIO mode regardless of
             // application flash mode, but we use the board's configured mode
             // since the Arduino core names the ELF accordingly.
-            let boot_flash_mode = board
+            let boot_flash_mode = ctx
+                .board
                 .flash_mode
                 .as_deref()
                 .unwrap_or(mcu_config.default_flash_mode());
-            let boot_elf = framework.get_bootloader_elf(&board.mcu, boot_flash_mode, flash_freq);
+            let boot_elf =
+                framework.get_bootloader_elf(&ctx.board.mcu, boot_flash_mode, flash_freq);
             if boot_elf.exists() {
                 let boot_elf_str = boot_elf.to_string_lossy();
                 let boot_dst_str = boot_dst.to_string_lossy();
                 let flash_size = crate::esp32::mcu_config::bytes_to_flash_size(
-                    board.max_flash,
+                    ctx.board.max_flash,
                     mcu_config.default_flash_size(),
                 );
                 let args = [
                     "esptool",
                     "--chip",
-                    &board.mcu,
+                    &ctx.board.mcu,
                     "elf2image",
                     "--flash-mode",
                     boot_flash_mode,
@@ -758,14 +663,14 @@ impl BuildOrchestrator for Esp32Orchestrator {
         }
 
         let parts_dst = build_dir.join("partitions.bin");
-        let parts_bin_src = framework.get_partitions_bin(&board.mcu);
+        let parts_bin_src = framework.get_partitions_bin(&ctx.board.mcu);
         if parts_bin_src.exists() {
             // Pre-built partitions.bin available — just copy
             std::fs::copy(&parts_bin_src, &parts_dst)?;
             tracing::info!("copied partitions.bin");
         } else {
             // Generate partitions.bin from CSV using gen_esp32part.py
-            let partitions_name = board.partitions.as_deref().unwrap_or("default.csv");
+            let partitions_name = ctx.board.partitions.as_deref().unwrap_or("default.csv");
             let parts_csv = framework.get_partitions_csv(partitions_name);
             let gen_tool = framework.get_gen_esp32part();
             if parts_csv.exists() && gen_tool.exists() {
@@ -804,51 +709,18 @@ impl BuildOrchestrator for Esp32Orchestrator {
             }
         }
 
-        // 15. Size reporting
-        if let Some(ref size) = link_result.size_info {
-            tracing::info!(
-                "size: text={} data={} bss={} | flash={}/{} ({:.1}%) ram={}/{} ({:.1}%)",
-                size.text,
-                size.data,
-                size.bss,
-                size.total_flash,
-                size.max_flash.unwrap_or(0),
-                size.flash_percent().unwrap_or(0.0),
-                size.total_ram,
-                size.max_ram.unwrap_or(0),
-                size.ram_percent().unwrap_or(0.0),
-            );
-            crate::build_output::log_size_report(&mut build_log, size);
-        }
-
-        // Artifact listing
-        if let Some(ref elf) = link_result.elf_path {
-            crate::build_output::log_artifact(&mut build_log, elf);
-        }
-        if let Some(fw) = link_result
-            .bin_path
-            .as_ref()
-            .or(link_result.hex_path.as_ref())
-        {
-            crate::build_output::log_artifact(&mut build_log, fw);
-        }
-
+        // 15. Size reporting + result assembly
+        crate::pipeline::handle_link_result(&link_result, &mut build_log);
         let elapsed = start.elapsed().as_secs_f64();
-        tracing::info!("build completed in {:.1}s", elapsed);
-
-        Ok(BuildResult {
-            success: true,
-            firmware_path: link_result.bin_path.clone().or(link_result.hex_path),
-            elf_path: link_result.elf_path,
-            size_info: link_result.size_info,
-            build_time_secs: elapsed,
-            message: format!(
-                "ESP32 build for {} ({}) completed",
-                params.env_name, board.mcu
-            ),
+        let platform_label = format!("ESP32 ({})", ctx.board.mcu);
+        Ok(crate::pipeline::assemble_build_result(
+            link_result,
+            elapsed,
+            &platform_label,
+            &params.env_name,
             compile_database_path,
             build_log,
-        })
+        ))
     }
 }
 

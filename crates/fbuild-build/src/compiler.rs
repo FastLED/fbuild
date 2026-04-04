@@ -54,6 +54,18 @@ pub trait Compiler: Send + Sync {
             _ => self.compile_cpp(source, output, extra_flags),
         }
     }
+
+    /// Path to the C compiler (gcc).
+    fn gcc_path(&self) -> &Path;
+
+    /// Path to the C++ compiler (g++).
+    fn gxx_path(&self) -> &Path;
+
+    /// C compiler flags (without extra_flags).
+    fn c_flags(&self) -> Vec<String>;
+
+    /// C++ compiler flags (without extra_flags).
+    fn cpp_flags(&self) -> Vec<String>;
 }
 
 /// Shared compiler utilities used by all platform-specific compilers.

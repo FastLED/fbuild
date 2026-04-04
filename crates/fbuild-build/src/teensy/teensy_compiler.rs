@@ -51,16 +51,6 @@ impl TeensyCompiler {
         }
     }
 
-    /// Get the GCC compiler path.
-    pub fn gcc_path(&self) -> &Path {
-        &self.gcc_path
-    }
-
-    /// Get the G++ compiler path.
-    pub fn gxx_path(&self) -> &Path {
-        &self.gxx_path
-    }
-
     /// Build the common ARM Cortex-M7 compiler flags.
     fn common_flags(&self) -> Vec<String> {
         let mut flags = Vec::new();
@@ -73,20 +63,6 @@ impl TeensyCompiler {
 
         flags.extend(self.base.build_define_flags());
         flags.extend(self.base.build_include_flags());
-        flags
-    }
-
-    /// C-specific flags.
-    pub fn c_flags(&self) -> Vec<String> {
-        let mut flags = self.common_flags();
-        flags.extend(self.mcu_config.compiler_flags.c.iter().cloned());
-        flags
-    }
-
-    /// C++-specific flags.
-    pub fn cpp_flags(&self) -> Vec<String> {
-        let mut flags = self.common_flags();
-        flags.extend(self.mcu_config.compiler_flags.cxx.iter().cloned());
         flags
     }
 
@@ -147,6 +123,26 @@ impl TeensyCompiler {
 }
 
 impl Compiler for TeensyCompiler {
+    fn gcc_path(&self) -> &Path {
+        &self.gcc_path
+    }
+
+    fn gxx_path(&self) -> &Path {
+        &self.gxx_path
+    }
+
+    fn c_flags(&self) -> Vec<String> {
+        let mut flags = self.common_flags();
+        flags.extend(self.mcu_config.compiler_flags.c.iter().cloned());
+        flags
+    }
+
+    fn cpp_flags(&self) -> Vec<String> {
+        let mut flags = self.common_flags();
+        flags.extend(self.mcu_config.compiler_flags.cxx.iter().cloned());
+        flags
+    }
+
     fn compile_c(
         &self,
         source: &Path,

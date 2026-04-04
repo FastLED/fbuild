@@ -10,6 +10,7 @@ pub mod compiler;
 pub mod esp32;
 pub mod linker;
 pub mod parallel;
+pub mod pipeline;
 pub mod source_scanner;
 pub mod teensy;
 pub mod zccache;
