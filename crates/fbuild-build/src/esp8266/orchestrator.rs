@@ -132,6 +132,8 @@ impl BuildOrchestrator for Esp8266Orchestrator {
             .ldscript
             .as_deref()
             .unwrap_or("eagle.flash.4m1m.ld");
+        let sdk_ld_dir = framework.get_sdk_ld_dir();
+        let linker_scripts = crate::linker::LinkerScripts::single(sdk_ld_dir.clone(), ldscript);
 
         // Prefer f_image over f_flash for esptool frequency (see ESP32 orchestrator comment)
         let f_for_image = ctx
@@ -150,8 +152,8 @@ impl BuildOrchestrator for Esp8266Orchestrator {
             toolchain.get_objcopy_path(),
             toolchain.get_size_path(),
             framework.get_sdk_lib_dir(),
-            framework.get_sdk_ld_dir(),
-            ldscript,
+            sdk_ld_dir,
+            linker_scripts,
             mcu_config,
             params.profile,
             ctx.board.flash_mode.clone(),

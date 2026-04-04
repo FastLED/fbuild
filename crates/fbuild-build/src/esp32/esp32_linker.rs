@@ -13,7 +13,7 @@ use std::path::{Path, PathBuf};
 use fbuild_core::subprocess::run_command;
 use fbuild_core::{BuildProfile, Result, SizeInfo};
 
-use crate::linker::Linker;
+use crate::linker::{Linker, LinkerScripts};
 
 use super::mcu_config::Esp32McuConfig;
 
@@ -59,8 +59,8 @@ pub struct Esp32Linker {
     sdk_ld_flags: Vec<String>,
     /// SDK library flags from `flags/ld_libs` (ordered `-L`/`-l` flags).
     sdk_lib_flags: Vec<String>,
-    /// SDK linker script flags from `flags/ld_scripts` (`-L`/`-T` flags).
-    sdk_ld_scripts: Vec<String>,
+    /// SDK linker scripts (search dirs + script names from `flags/ld_scripts`).
+    linker_scripts: LinkerScripts,
     /// Build profile.
     profile: BuildProfile,
     /// Flash mode for esptool (e.g. "dio", "qio"). Defaults to "dio".
@@ -82,7 +82,7 @@ impl Esp32Linker {
         mcu_config: Esp32McuConfig,
         sdk_ld_flags: Vec<String>,
         sdk_lib_flags: Vec<String>,
-        sdk_ld_scripts: Vec<String>,
+        linker_scripts: LinkerScripts,
         profile: BuildProfile,
         flash_mode: Option<String>,
         flash_freq: &str,
@@ -99,7 +99,7 @@ impl Esp32Linker {
             mcu_config,
             sdk_ld_flags,
             sdk_lib_flags,
-            sdk_ld_scripts,
+            linker_scripts,
             profile,
             flash_mode,
             flash_freq: flash_freq.to_string(),
@@ -156,8 +156,8 @@ impl Linker for Esp32Linker {
         // Linker flags (from SDK flags/ld_flags or MCU config fallback)
         link_args.extend(self.linker_flags());
 
-        // Linker scripts (from SDK flags/ld_scripts)
-        link_args.extend(self.sdk_ld_scripts.clone());
+        // Linker scripts (search dirs + script names from SDK)
+        link_args.extend(self.linker_scripts.to_args());
 
         // Memory usage reporting
         link_args.push("-Wl,--print-memory-usage".to_string());
@@ -304,11 +304,11 @@ mod tests {
                 "-lfreertos".to_string(),
                 "-lesp_system".to_string(),
             ],
-            vec![
+            LinkerScripts::from_raw_flags(&[
                 "-L/sdk/ld".to_string(),
                 "-Tmemory.ld".to_string(),
                 "-Tsections.ld".to_string(),
-            ],
+            ]),
             BuildProfile::Release,
             None,
             "80m",
@@ -350,7 +350,7 @@ mod tests {
             config,
             vec![],
             vec!["-lfreertos".to_string()],
-            vec!["-Tmemory.ld".to_string()],
+            LinkerScripts::from_raw_flags(&["-Tmemory.ld".to_string()]),
             BuildProfile::Release,
             None,
             "80m",
@@ -366,9 +366,10 @@ mod tests {
     #[test]
     fn test_sdk_script_flags() {
         let linker = test_linker("esp32c6");
-        assert!(linker.sdk_ld_scripts.iter().any(|f| f.starts_with("-L")));
-        assert!(linker.sdk_ld_scripts.iter().any(|f| f == "-Tmemory.ld"));
-        assert!(linker.sdk_ld_scripts.iter().any(|f| f == "-Tsections.ld"));
+        let args = linker.linker_scripts.to_args();
+        assert!(args.iter().any(|f| f.starts_with("-L")));
+        assert!(args.iter().any(|f| f == "-Tmemory.ld"));
+        assert!(args.iter().any(|f| f == "-Tsections.ld"));
     }
 
     #[test]
@@ -392,7 +393,7 @@ mod tests {
             config,
             vec!["-mlongcalls".to_string()],
             vec![],
-            vec![],
+            LinkerScripts::new(),
             BuildProfile::Release,
             None,
             "80m",

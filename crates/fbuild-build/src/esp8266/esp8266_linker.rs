@@ -14,7 +14,7 @@ use fbuild_core::subprocess::run_command;
 use fbuild_core::{BuildProfile, Result, SizeInfo};
 
 use super::mcu_config::Esp8266McuConfig;
-use crate::linker::Linker;
+use crate::linker::{Linker, LinkerScripts};
 
 /// ESP8266-specific linker using Xtensa LX106 GCC as the link driver.
 pub struct Esp8266Linker {
@@ -24,10 +24,10 @@ pub struct Esp8266Linker {
     size_path: PathBuf,
     /// Path to `tools/sdk/lib/` inside the framework.
     sdk_lib_dir: PathBuf,
-    /// Path to `tools/sdk/ld/` inside the framework.
+    /// Path to `tools/sdk/ld/` — needed by `generate_linker_scripts()` for template lookup.
     sdk_ld_dir: PathBuf,
-    /// Board linker script name (e.g. `eagle.flash.4m1m.ld`).
-    ldscript: String,
+    /// Board linker script + search directories.
+    linker_scripts: LinkerScripts,
     mcu_config: Esp8266McuConfig,
     profile: BuildProfile,
     flash_mode: String,
@@ -46,7 +46,7 @@ impl Esp8266Linker {
         size_path: PathBuf,
         sdk_lib_dir: PathBuf,
         sdk_ld_dir: PathBuf,
-        ldscript: &str,
+        linker_scripts: LinkerScripts,
         mcu_config: Esp8266McuConfig,
         profile: BuildProfile,
         flash_mode: Option<String>,
@@ -64,7 +64,7 @@ impl Esp8266Linker {
             size_path,
             sdk_lib_dir,
             sdk_ld_dir,
-            ldscript: ldscript.to_string(),
+            linker_scripts,
             mcu_config,
             profile,
             flash_mode,
@@ -154,12 +154,10 @@ impl Linker for Esp8266Linker {
             args.extend(profile.link_flags.iter().cloned());
         }
 
-        // SDK linker script directory and board-specific script
-        args.push(format!("-L{}", self.sdk_ld_dir.to_string_lossy()));
         // Build output dir — contains generated local.eagle.app.v6.common.ld
         args.push(format!("-L{}", output_dir.to_string_lossy()));
-        args.push("-T".to_string());
-        args.push(self.ldscript.clone());
+        // Board linker script + SDK ld search directory
+        args.extend(self.linker_scripts.to_args());
 
         // SDK library directory
         args.push(format!("-L{}", self.sdk_lib_dir.to_string_lossy()));
@@ -272,7 +270,7 @@ mod tests {
             PathBuf::from("/bin/xtensa-lx106-elf-size"),
             PathBuf::from("/sdk/lib"),
             PathBuf::from("/sdk/ld"),
-            "eagle.flash.4m1m.ld",
+            LinkerScripts::single(PathBuf::from("/sdk/ld"), "eagle.flash.4m1m.ld"),
             get_esp8266_config().unwrap(),
             BuildProfile::Release,
             Some("dio".to_string()),
@@ -281,7 +279,11 @@ mod tests {
             Some(81_920),
             false,
         );
-        assert_eq!(linker.ldscript, "eagle.flash.4m1m.ld");
+        assert!(linker
+            .linker_scripts
+            .scripts
+            .iter()
+            .any(|s| s.contains("eagle.flash.4m1m")));
         assert_eq!(linker.max_flash, Some(4_194_304));
         assert_eq!(linker.max_ram, Some(81_920));
         assert_eq!(linker.flash_mode, "dio");

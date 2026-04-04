@@ -9,7 +9,7 @@ use fbuild_core::subprocess::run_command;
 use fbuild_core::{BuildProfile, Result, SizeInfo};
 
 use super::mcu_config::TeensyMcuConfig;
-use crate::linker::Linker;
+use crate::linker::{Linker, LinkerScripts};
 
 /// Teensy-specific linker using arm-none-eabi-gcc (link driver), ar, objcopy, size.
 pub struct TeensyLinker {
@@ -17,7 +17,7 @@ pub struct TeensyLinker {
     ar_path: PathBuf,
     objcopy_path: PathBuf,
     size_path: PathBuf,
-    linker_script_path: PathBuf,
+    linker_scripts: LinkerScripts,
     mcu_config: TeensyMcuConfig,
     profile: BuildProfile,
     max_flash: Option<u64>,
@@ -32,7 +32,7 @@ impl TeensyLinker {
         ar_path: PathBuf,
         objcopy_path: PathBuf,
         size_path: PathBuf,
-        linker_script_path: PathBuf,
+        linker_scripts: LinkerScripts,
         mcu_config: TeensyMcuConfig,
         profile: BuildProfile,
         max_flash: Option<u64>,
@@ -44,7 +44,7 @@ impl TeensyLinker {
             ar_path,
             objcopy_path,
             size_path,
-            linker_script_path,
+            linker_scripts,
             mcu_config,
             profile,
             max_flash,
@@ -78,11 +78,8 @@ impl Linker for TeensyLinker {
             args.extend(profile.link_flags.iter().cloned());
         }
 
-        args.extend([
-            format!("-T{}", self.linker_script_path.display()),
-            "-o".to_string(),
-            elf_path.to_string_lossy().to_string(),
-        ]);
+        args.extend(self.linker_scripts.to_args());
+        args.extend(["-o".to_string(), elf_path.to_string_lossy().to_string()]);
 
         // Sketch objects first
         for obj in objects {
@@ -148,7 +145,7 @@ mod tests {
             PathBuf::from("/bin/arm-none-eabi-ar"),
             PathBuf::from("/bin/arm-none-eabi-objcopy"),
             PathBuf::from("/bin/arm-none-eabi-size"),
-            PathBuf::from("/teensy4/imxrt1062_t41.ld"),
+            LinkerScripts::single(PathBuf::from("/teensy4"), "imxrt1062_t41.ld"),
             get_teensy_config().unwrap(),
             BuildProfile::Release,
             Some(8126464),
@@ -166,7 +163,7 @@ mod tests {
             PathBuf::from("/bin/arm-none-eabi-ar"),
             PathBuf::from("/bin/arm-none-eabi-objcopy"),
             PathBuf::from("/bin/arm-none-eabi-size"),
-            PathBuf::from("/teensy4/imxrt1062_t41.ld"),
+            LinkerScripts::single(PathBuf::from("/teensy4"), "imxrt1062_t41.ld"),
             get_teensy_config().unwrap(),
             BuildProfile::Release,
             Some(8126464),
@@ -174,8 +171,9 @@ mod tests {
             false,
         );
         assert!(linker
-            .linker_script_path
-            .to_string_lossy()
-            .contains("imxrt1062"));
+            .linker_scripts
+            .scripts
+            .iter()
+            .any(|s| s.contains("imxrt1062")));
     }
 }

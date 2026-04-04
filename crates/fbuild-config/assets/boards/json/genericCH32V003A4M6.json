@@ -1,0 +1,32 @@
+{
+  "build": {
+    "clock_source": "hsi+pll",
+    "core": "ch32v003",
+    "extra_flags": "-DCH32V003A4 -DCH32V00X -DCH32V00x -DCH32V003",
+    "f_cpu": "48000000L",
+    "mabi": "ilp32e",
+    "march": "rv32ecxw",
+    "mcu": "ch32v003a4m6",
+    "series": "ch32v003",
+    "variant": "CH32V003"
+  },
+  "debug": {
+    "tools": {
+      "wch-link": {}
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": ["noneos-sdk", "ch32v003fun", "arduino"],
+  "id": "genericCH32V003A4M6",
+  "mcu": "CH32V003A4M6",
+  "name": "Generic CH32V003A4M6",
+  "platform": "ch32v",
+  "ram": 2048,
+  "rom": 16384,
+  "upload": {
+    "protocol": "wch-link",
+    "protocols": ["wch-link", "minichlink", "isp", "wlink"]
+  },
+  "url": "http://www.wch-ic.com/products/CH32V003.html",
+  "vendor": "W.CH"
+}

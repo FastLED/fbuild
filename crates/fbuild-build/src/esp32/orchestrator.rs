@@ -24,6 +24,8 @@ use std::time::Instant;
 use fbuild_core::{Platform, Result};
 use fbuild_packages::Framework;
 
+use crate::linker::LinkerScripts;
+
 use crate::compiler::Compiler as _;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
@@ -135,7 +137,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // Read SDK flags early — needed to check LTO before compiling.
         let sdk_ld_flags = framework.get_sdk_ld_flags(&ctx.board.mcu);
         let sdk_lib_flags = framework.get_sdk_lib_flags(&ctx.board.mcu);
-        let sdk_ld_scripts = framework.get_sdk_ld_scripts(&ctx.board.mcu);
+        let sdk_ld_scripts =
+            LinkerScripts::from_raw_flags(&framework.get_sdk_ld_scripts(&ctx.board.mcu));
         let sdk_defines = framework.get_sdk_defines(&ctx.board.mcu);
 
         // If SDK specifies -fno-lto, disable LTO in MCU config profiles to avoid

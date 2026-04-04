@@ -105,14 +105,24 @@ impl BuildOrchestrator for TeensyOrchestrator {
             params.verbose,
         );
 
-        // 7. Create linker (with linker script)
-        let linker_script = framework.get_linker_script(board_id);
+        // 7. Create linker (with linker script from board config)
+        let linker_scripts = match ctx.board.ldscript.as_deref() {
+            Some(name) => crate::linker::LinkerScripts::single(core_dir.clone(), name),
+            None => {
+                // Fallback: framework's hardcoded lookup for backward compatibility
+                let path = framework.get_linker_script(board_id);
+                crate::linker::LinkerScripts {
+                    search_dirs: vec![],
+                    scripts: vec![path.to_string_lossy().to_string()],
+                }
+            }
+        };
         let linker = TeensyLinker::new(
             toolchain.get_gcc_path(),
             toolchain.get_ar_path(),
             toolchain.get_objcopy_path(),
             toolchain.get_size_path(),
-            linker_script,
+            linker_scripts,
             mcu_config,
             params.profile,
             ctx.board.max_flash,

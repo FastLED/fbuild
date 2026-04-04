@@ -118,6 +118,97 @@ pub trait Linker: Send + Sync {
     }
 }
 
+/// Linker script configuration — search directories and script names.
+///
+/// Platforms resolve linker scripts differently, but the final link command
+/// always needs `-L <dir>` and `-T <script>` flags.  This struct captures
+/// both patterns:
+///
+/// - **Simple** (Teensy, ESP8266): one search dir + one board script name,
+///   constructed via [`LinkerScripts::single`].
+/// - **SDK-provided** (ESP32): pre-built `-L`/`-T` flags from an SDK flags
+///   file, constructed via [`LinkerScripts::from_raw_flags`].
+///
+/// The canonical script name comes from `BoardConfig.ldscript` (populated
+/// from PlatformIO board JSON `build.arduino.ldscript`).
+#[derive(Debug, Clone, Default)]
+pub struct LinkerScripts {
+    /// Directories to search for linker scripts (`-L` flags).
+    pub search_dirs: Vec<PathBuf>,
+    /// Script files to include (`-T` flags).
+    pub scripts: Vec<String>,
+}
+
+impl LinkerScripts {
+    /// Create an empty configuration (no linker scripts).
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+    /// One search directory and one script name.
+    ///
+    /// Common case for Teensy and ESP8266 where the board JSON names a single
+    /// linker script and the framework provides the directory.
+    pub fn single(search_dir: PathBuf, script: &str) -> Self {
+        Self {
+            search_dirs: vec![search_dir],
+            scripts: vec![script.to_string()],
+        }
+    }
+
+    /// Parse pre-built `-L` / `-T` flags into a `LinkerScripts`.
+    ///
+    /// Used by ESP32 where the SDK provides a flags file containing the full
+    /// set of linker script arguments.
+    pub fn from_raw_flags(flags: &[String]) -> Self {
+        let mut search_dirs = Vec::new();
+        let mut scripts = Vec::new();
+        let mut i = 0;
+        while i < flags.len() {
+            let flag = &flags[i];
+            if let Some(dir) = flag.strip_prefix("-L") {
+                search_dirs.push(PathBuf::from(dir));
+            } else if let Some(script) = flag.strip_prefix("-T") {
+                if script.is_empty() {
+                    // `-T script` (separate args)
+                    if i + 1 < flags.len() {
+                        scripts.push(flags[i + 1].clone());
+                        i += 1;
+                    }
+                } else {
+                    // `-Tscript` (concatenated)
+                    scripts.push(script.to_string());
+                }
+            }
+            i += 1;
+        }
+        Self {
+            search_dirs,
+            scripts,
+        }
+    }
+
+    /// Convert to linker command-line arguments.
+    ///
+    /// Produces `-L{dir}` for each search directory, then `-T{script}` for
+    /// each script file.
+    pub fn to_args(&self) -> Vec<String> {
+        let mut args = Vec::with_capacity(self.search_dirs.len() + self.scripts.len());
+        for dir in &self.search_dirs {
+            args.push(format!("-L{}", dir.display()));
+        }
+        for script in &self.scripts {
+            args.push(format!("-T{script}"));
+        }
+        args
+    }
+
+    /// Returns `true` if no scripts are configured.
+    pub fn is_empty(&self) -> bool {
+        self.scripts.is_empty()
+    }
+}
+
 /// Shared linker utilities used by all platform-specific linkers.
 pub struct LinkerBase {
     pub verbose: bool,
@@ -275,5 +366,63 @@ mod tests {
         let objects = LinkerBase::collect_objects(tmp.path());
         assert_eq!(objects.len(), 2);
         assert!(objects.iter().all(|p| p.extension().unwrap() == "o"));
+    }
+
+    #[test]
+    fn test_linker_scripts_default_is_empty() {
+        let ls = LinkerScripts::new();
+        assert!(ls.is_empty());
+        assert!(ls.to_args().is_empty());
+    }
+
+    #[test]
+    fn test_linker_scripts_single() {
+        let ls = LinkerScripts::single(PathBuf::from("/sdk/ld"), "eagle.flash.4m1m.ld");
+        assert!(!ls.is_empty());
+        assert_eq!(ls.search_dirs, vec![PathBuf::from("/sdk/ld")]);
+        assert_eq!(ls.scripts, vec!["eagle.flash.4m1m.ld"]);
+        assert_eq!(ls.to_args(), vec!["-L/sdk/ld", "-Teagle.flash.4m1m.ld"]);
+    }
+
+    #[test]
+    fn test_linker_scripts_from_raw_flags_concatenated() {
+        let flags = vec![
+            "-L/sdk/ld".to_string(),
+            "-Tmemory.ld".to_string(),
+            "-Tsections.ld".to_string(),
+        ];
+        let ls = LinkerScripts::from_raw_flags(&flags);
+        assert_eq!(ls.search_dirs, vec![PathBuf::from("/sdk/ld")]);
+        assert_eq!(ls.scripts, vec!["memory.ld", "sections.ld"]);
+        assert_eq!(
+            ls.to_args(),
+            vec!["-L/sdk/ld", "-Tmemory.ld", "-Tsections.ld"]
+        );
+    }
+
+    #[test]
+    fn test_linker_scripts_from_raw_flags_separated() {
+        let flags = vec![
+            "-L/sdk/ld".to_string(),
+            "-T".to_string(),
+            "memory.ld".to_string(),
+        ];
+        let ls = LinkerScripts::from_raw_flags(&flags);
+        assert_eq!(ls.scripts, vec!["memory.ld"]);
+    }
+
+    #[test]
+    fn test_linker_scripts_from_raw_flags_empty() {
+        let ls = LinkerScripts::from_raw_flags(&[]);
+        assert!(ls.is_empty());
+    }
+
+    #[test]
+    fn test_linker_scripts_to_args_order() {
+        let ls = LinkerScripts {
+            search_dirs: vec![PathBuf::from("/a"), PathBuf::from("/b")],
+            scripts: vec!["x.ld".to_string(), "y.ld".to_string()],
+        };
+        assert_eq!(ls.to_args(), vec!["-L/a", "-L/b", "-Tx.ld", "-Ty.ld"]);
     }
 }

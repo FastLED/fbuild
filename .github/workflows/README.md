@@ -10,9 +10,10 @@ CI/CD workflows for the fbuild project, covering lint, test, documentation, and 
 
 ## Per-Board Builds (push/PR)
 
-- **`build-esp32{c2,c3,c6,dev,s3}.yml`** -- ESP32 variants
-- **`build-esp8266.yml`**, **`build-uno.yml`** -- AVR/Xtensa boards
+- **`build-esp32{c2,c3,c5,c6,dev,h2,p4,s2,s3}.yml`** -- ESP32 variants
+- **`build-esp8266.yml`**, **`build-uno.yml`**, **`build-leonardo.yml`** -- AVR/Xtensa boards
 - **`build-teensy{36,40,41,lc}.yml`** -- Teensy variants
+- **`build-ch32v003.yml`** -- CH32V RISC-V boards
 
 ## Native Binaries and Templates
 
