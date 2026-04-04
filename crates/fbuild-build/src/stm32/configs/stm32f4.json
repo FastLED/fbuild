@@ -1,0 +1,68 @@
+{
+  "name": "STM32F4",
+  "description": "STM32F4xx (ARM Cortex-M4F)",
+  "architecture": "arm-cortex-m4f",
+
+  "compiler_flags": {
+    "common": [
+      "-mcpu=cortex-m4",
+      "-mfloat-abi=hard",
+      "-mfpu=fpv4-sp-d16",
+      "-mthumb",
+      "-Wall",
+      "-Wextra",
+      "-Wno-unused-parameter",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-MMD",
+      "--specs=nano.specs"
+    ],
+    "c": [
+      "-std=gnu11"
+    ],
+    "cxx": [
+      "-std=gnu++17",
+      "-fno-exceptions",
+      "-fno-rtti",
+      "-fno-threadsafe-statics"
+    ]
+  },
+
+  "linker_flags": [
+    "-mcpu=cortex-m4",
+    "-mfloat-abi=hard",
+    "-mfpu=fpv4-sp-d16",
+    "-mthumb",
+    "-Wl,--gc-sections",
+    "-Wl,--print-memory-usage",
+    "--specs=nano.specs",
+    "--specs=nosys.specs"
+  ],
+
+  "linker_libs": [
+    "-lgcc",
+    "-lstdc++",
+    "-lm",
+    "-lc"
+  ],
+
+  "objcopy": {
+    "output_format": "ihex",
+    "remove_sections": [".eeprom"]
+  },
+
+  "profiles": {
+    "release": {
+      "compile_flags": ["-Os", "-flto", "-fno-fat-lto-objects"],
+      "link_flags": ["-flto", "-fuse-linker-plugin"]
+    },
+    "quick": {
+      "compile_flags": ["-Os"],
+      "link_flags": []
+    }
+  },
+
+  "defines": [
+    ["ARDUINO", "10808"]
+  ]
+}

@@ -1,0 +1,16 @@
+name: Build NRF52840 DK
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "NRF52840 DK"
+      test-dir: "tests/platform/nrf52840_dk"
+      env-name: "nrf52840_dk"
+      firmware-ext: "hex"

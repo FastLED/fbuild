@@ -1,0 +1,16 @@
+name: Build BlackPill F411CE
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "BlackPill F411CE"
+      test-dir: "tests/platform/blackpill_f411ce"
+      env-name: "blackpill"
+      firmware-ext: "hex"

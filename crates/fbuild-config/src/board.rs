@@ -226,6 +226,12 @@ impl BoardConfig {
             Some(fbuild_core::Platform::RaspberryPi)
         } else if mcu.starts_with("stm32") {
             Some(fbuild_core::Platform::Ststm32)
+        } else if mcu.starts_with("nrf52") {
+            Some(fbuild_core::Platform::NordicNrf52)
+        } else if mcu.starts_with("at91sam") || mcu.starts_with("sam") {
+            Some(fbuild_core::Platform::AtmelSam)
+        } else if mcu.starts_with("ra4") || mcu.starts_with("ra6") {
+            Some(fbuild_core::Platform::RenesasRa)
         } else {
             None
         }
@@ -322,8 +328,12 @@ impl BoardConfig {
             Some(fbuild_core::Platform::AtmelMegaAvr) => "MEGAAVR".to_string(),
             Some(fbuild_core::Platform::Espressif32) => "ESP32".to_string(),
             Some(fbuild_core::Platform::Espressif8266) => "ESP8266".to_string(),
+            Some(fbuild_core::Platform::NordicNrf52) => "NRF52".to_string(),
             Some(fbuild_core::Platform::RaspberryPi) => "RP2040".to_string(),
+            Some(fbuild_core::Platform::RenesasRa) => "RENESAS".to_string(),
+            Some(fbuild_core::Platform::SiliconLabs) => "SILABS".to_string(),
             Some(fbuild_core::Platform::Ststm32) => "STM32".to_string(),
+            Some(fbuild_core::Platform::AtmelSam) => "SAM".to_string(),
             Some(fbuild_core::Platform::Teensy) => "TEENSY".to_string(),
             Some(fbuild_core::Platform::Wasm) | None => String::new(),
         }

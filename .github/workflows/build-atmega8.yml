@@ -1,0 +1,16 @@
+name: Build ATmega8
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "ATmega8"
+      test-dir: "tests/platform/atmega8"
+      env-name: "atmega8"
+      firmware-ext: "hex"

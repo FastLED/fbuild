@@ -1,0 +1,16 @@
+name: Build Raspberry Pi Pico
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "Raspberry Pi Pico"
+      test-dir: "tests/platform/rpipico"
+      env-name: "rpipico"
+      firmware-ext: "bin"

@@ -1,0 +1,63 @@
+{
+  "name": "RP2040",
+  "description": "Raspberry Pi RP2040 (ARM Cortex-M0+)",
+  "architecture": "arm-cortex-m0plus",
+
+  "compiler_flags": {
+    "common": [
+      "-mcpu=cortex-m0plus",
+      "-mthumb",
+      "-Wall",
+      "-Wextra",
+      "-Wno-unused-parameter",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-MMD",
+      "--specs=nosys.specs"
+    ],
+    "c": [
+      "-std=gnu11"
+    ],
+    "cxx": [
+      "-std=gnu++17",
+      "-fno-exceptions",
+      "-fno-rtti",
+      "-fno-threadsafe-statics"
+    ]
+  },
+
+  "linker_flags": [
+    "-mcpu=cortex-m0plus",
+    "-mthumb",
+    "-Wl,--gc-sections",
+    "-Wl,--print-memory-usage",
+    "--specs=nosys.specs"
+  ],
+
+  "linker_libs": [
+    "-lgcc",
+    "-lstdc++",
+    "-lm",
+    "-lc"
+  ],
+
+  "objcopy": {
+    "output_format": "binary",
+    "remove_sections": []
+  },
+
+  "profiles": {
+    "release": {
+      "compile_flags": ["-Os", "-flto", "-fno-fat-lto-objects"],
+      "link_flags": ["-flto", "-fuse-linker-plugin"]
+    },
+    "quick": {
+      "compile_flags": ["-Os"],
+      "link_flags": []
+    }
+  },
+
+  "defines": [
+    ["ARDUINO", "10808"]
+  ]
+}

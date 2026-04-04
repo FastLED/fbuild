@@ -1,0 +1,16 @@
+name: Build Adafruit Feather NRF52840 Sense
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "Adafruit Feather NRF52840 Sense"
+      test-dir: "tests/platform/adafruit_feather_nrf52840_sense"
+      env-name: "nrf52840_sense"
+      firmware-ext: "hex"

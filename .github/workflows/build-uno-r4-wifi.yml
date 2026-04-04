@@ -1,0 +1,16 @@
+name: Build Arduino Uno R4 WiFi
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "Arduino Uno R4 WiFi"
+      test-dir: "tests/platform/uno_r4_wifi"
+      env-name: "uno_r4_wifi"
+      firmware-ext: "bin"

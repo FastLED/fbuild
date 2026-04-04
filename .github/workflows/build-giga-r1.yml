@@ -1,0 +1,16 @@
+name: Build Arduino Giga R1
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "Arduino Giga R1"
+      test-dir: "tests/platform/giga_r1_m7"
+      env-name: "giga_r1"
+      firmware-ext: "hex"

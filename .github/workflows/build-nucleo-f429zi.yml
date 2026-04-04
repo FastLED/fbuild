@@ -1,0 +1,16 @@
+name: Build Nucleo F429ZI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "Nucleo F429ZI"
+      test-dir: "tests/platform/nucleo_f429zi"
+      env-name: "nucleo_f429zi"
+      firmware-ext: "hex"

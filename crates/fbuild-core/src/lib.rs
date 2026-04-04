@@ -73,9 +73,13 @@ impl BuildProfile {
 pub enum Platform {
     AtmelAvr,
     AtmelMegaAvr,
+    AtmelSam,
     Espressif32,
     Espressif8266,
+    NordicNrf52,
     RaspberryPi,
+    RenesasRa,
+    SiliconLabs,
     Ststm32,
     Teensy,
     Wasm,
@@ -96,8 +100,16 @@ impl Platform {
             Some(Self::Espressif32)
         } else if s.contains("atmelmegaavr") {
             Some(Self::AtmelMegaAvr)
+        } else if s.contains("atmelsam") {
+            Some(Self::AtmelSam)
         } else if s.contains("atmelavr") {
             Some(Self::AtmelAvr)
+        } else if s.contains("nordicnrf52") {
+            Some(Self::NordicNrf52)
+        } else if s.contains("renesas") {
+            Some(Self::RenesasRa)
+        } else if s.contains("siliconlabs") {
+            Some(Self::SiliconLabs)
         } else if s.contains("ststm32") {
             Some(Self::Ststm32)
         } else if s.contains("raspberrypi") {

@@ -1,0 +1,16 @@
+name: Build Nano Every
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "Nano Every"
+      test-dir: "tests/platform/nano_every"
+      env-name: "nano_every"
+      firmware-ext: "hex"

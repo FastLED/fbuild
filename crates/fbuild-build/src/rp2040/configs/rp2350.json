@@ -1,0 +1,67 @@
+{
+  "name": "RP2350",
+  "description": "Raspberry Pi RP2350 (ARM Cortex-M33)",
+  "architecture": "arm-cortex-m33",
+
+  "compiler_flags": {
+    "common": [
+      "-mcpu=cortex-m33",
+      "-mthumb",
+      "-mfloat-abi=softfp",
+      "-mfpu=fpv5-sp-d16",
+      "-Wall",
+      "-Wextra",
+      "-Wno-unused-parameter",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-MMD",
+      "--specs=nosys.specs"
+    ],
+    "c": [
+      "-std=gnu11"
+    ],
+    "cxx": [
+      "-std=gnu++17",
+      "-fno-exceptions",
+      "-fno-rtti",
+      "-fno-threadsafe-statics"
+    ]
+  },
+
+  "linker_flags": [
+    "-mcpu=cortex-m33",
+    "-mthumb",
+    "-mfloat-abi=softfp",
+    "-mfpu=fpv5-sp-d16",
+    "-Wl,--gc-sections",
+    "-Wl,--print-memory-usage",
+    "--specs=nosys.specs"
+  ],
+
+  "linker_libs": [
+    "-lgcc",
+    "-lstdc++",
+    "-lm",
+    "-lc"
+  ],
+
+  "objcopy": {
+    "output_format": "binary",
+    "remove_sections": []
+  },
+
+  "profiles": {
+    "release": {
+      "compile_flags": ["-Os", "-flto", "-fno-fat-lto-objects"],
+      "link_flags": ["-flto", "-fuse-linker-plugin"]
+    },
+    "quick": {
+      "compile_flags": ["-Os"],
+      "link_flags": []
+    }
+  },
+
+  "defines": [
+    ["ARDUINO", "10808"]
+  ]
+}

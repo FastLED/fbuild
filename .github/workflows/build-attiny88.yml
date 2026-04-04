@@ -1,0 +1,16 @@
+name: Build ATtiny88
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "ATtiny88"
+      test-dir: "tests/platform/attiny88"
+      env-name: "attiny88"
+      firmware-ext: "hex"

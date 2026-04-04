@@ -9,10 +9,17 @@ pub mod compile_database;
 pub mod compiler;
 pub mod esp32;
 pub mod esp8266;
+pub mod generic_arm;
 pub mod linker;
+pub mod nrf52;
 pub mod parallel;
 pub mod pipeline;
+pub mod renesas;
+pub mod rp2040;
+pub mod sam;
+pub mod silabs;
 pub mod source_scanner;
+pub mod stm32;
 pub mod teensy;
 pub mod zccache;
 
@@ -50,6 +57,12 @@ pub fn get_platform_support(platform: Platform) -> Result<Box<dyn PlatformSuppor
         Platform::Espressif32 => Ok(Box::new(esp32::Esp32PlatformSupport)),
         Platform::Espressif8266 => Ok(Box::new(esp8266::Esp8266PlatformSupport)),
         Platform::Teensy => Ok(Box::new(teensy::TeensyPlatformSupport)),
+        Platform::Ststm32 => Ok(Box::new(stm32::Stm32PlatformSupport)),
+        Platform::RaspberryPi => Ok(Box::new(rp2040::Rp2040PlatformSupport)),
+        Platform::NordicNrf52 => Ok(Box::new(nrf52::Nrf52PlatformSupport)),
+        Platform::AtmelSam => Ok(Box::new(sam::SamPlatformSupport)),
+        Platform::RenesasRa => Ok(Box::new(renesas::RenesasPlatformSupport)),
+        Platform::SiliconLabs => Ok(Box::new(silabs::SilabsPlatformSupport)),
         _ => Err(fbuild_core::FbuildError::BuildFailed(format!(
             "native orchestrator for {:?} not yet implemented — use --platformio flag for this platform",
             platform

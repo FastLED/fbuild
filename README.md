@@ -16,9 +16,12 @@
 ### Native Binaries
 [![Build Native Binaries](https://github.com/fastled/fbuild/actions/workflows/build.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build.yml)
 
-### AVR
-[![Build Arduino Uno](https://github.com/fastled/fbuild/actions/workflows/build-uno.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-uno.yml)
-[![Build Leonardo](https://github.com/fastled/fbuild/actions/workflows/build-leonardo.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-leonardo.yml)
+### Arduino Family
+**Core Boards:** [![Build Arduino Uno](https://github.com/fastled/fbuild/actions/workflows/build-uno.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-uno.yml) [![Build ATmega8](https://github.com/fastled/fbuild/actions/workflows/build-atmega8.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-atmega8.yml) [![Build Nano Every](https://github.com/fastled/fbuild/actions/workflows/build-nano-every.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-nano-every.yml) [![Build Leonardo](https://github.com/fastled/fbuild/actions/workflows/build-leonardo.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-leonardo.yml)
+
+**ATtiny Series:** [![Build ATtiny85](https://github.com/fastled/fbuild/actions/workflows/build-attiny85.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-attiny85.yml) [![Build ATtiny88](https://github.com/fastled/fbuild/actions/workflows/build-attiny88.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-attiny88.yml) [![Build ATtiny1604](https://github.com/fastled/fbuild/actions/workflows/build-attiny1604.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-attiny1604.yml) [![Build ATtiny1616](https://github.com/fastled/fbuild/actions/workflows/build-attiny1616.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-attiny1616.yml) [![Build ATtiny4313](https://github.com/fastled/fbuild/actions/workflows/build-attiny4313.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-attiny4313.yml)
+
+**ARM Boards:** [![Build Arduino Due](https://github.com/fastled/fbuild/actions/workflows/build-due.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-due.yml) [![Build Arduino Uno R4 WiFi](https://github.com/fastled/fbuild/actions/workflows/build-uno-r4-wifi.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-uno-r4-wifi.yml) [![Build Arduino Giga R1](https://github.com/fastled/fbuild/actions/workflows/build-giga-r1.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-giga-r1.yml)
 
 ### ESP8266
 [![Build ESP8266](https://github.com/fastled/fbuild/actions/workflows/build-esp8266.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-esp8266.yml)
@@ -49,9 +52,29 @@
 [![Build Teensy 4.1](https://github.com/fastled/fbuild/actions/workflows/build-teensy41.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-teensy41.yml)
 [![Build Teensy 4.0](https://github.com/fastled/fbuild/actions/workflows/build-teensy40.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-teensy40.yml)
 [![Build Teensy 3.6](https://github.com/fastled/fbuild/actions/workflows/build-teensy36.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-teensy36.yml)
+[![Build Teensy 3.5](https://github.com/fastled/fbuild/actions/workflows/build-teensy35.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-teensy35.yml)
+[![Build Teensy 3.1](https://github.com/fastled/fbuild/actions/workflows/build-teensy31.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-teensy31.yml)
+[![Build Teensy 3.0](https://github.com/fastled/fbuild/actions/workflows/build-teensy30.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-teensy30.yml)
 [![Build Teensy LC](https://github.com/fastled/fbuild/actions/workflows/build-teensylc.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-teensylc.yml)
 
+### STM32
+[![Build BluePill F103C8](https://github.com/fastled/fbuild/actions/workflows/build-bluepill.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-bluepill.yml)
+[![Build BlackPill F411CE](https://github.com/fastled/fbuild/actions/workflows/build-blackpill.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-blackpill.yml)
+[![Build TinySTM103TB](https://github.com/fastled/fbuild/actions/workflows/build-tinystm.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-tinystm.yml)
+[![Build Nucleo F429ZI](https://github.com/fastled/fbuild/actions/workflows/build-nucleo-f429zi.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-nucleo-f429zi.yml)
+[![Build Nucleo F439ZI](https://github.com/fastled/fbuild/actions/workflows/build-nucleo-f439zi.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-nucleo-f439zi.yml)
+[![Build Arduino Giga R1](https://github.com/fastled/fbuild/actions/workflows/build-giga-r1.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-giga-r1.yml)
 
+### NRF52
+[![Build Adafruit Feather NRF52840 Sense](https://github.com/fastled/fbuild/actions/workflows/build-nrf52840-sense.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-nrf52840-sense.yml)
+[![Build NRF52840 DK](https://github.com/fastled/fbuild/actions/workflows/build-nrf52840-dk.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-nrf52840-dk.yml)
+
+### Raspberry Pi Pico
+[![Build Raspberry Pi Pico](https://github.com/fastled/fbuild/actions/workflows/build-rpipico.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-rpipico.yml)
+[![Build Raspberry Pi Pico 2](https://github.com/fastled/fbuild/actions/workflows/build-rpipico2.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-rpipico2.yml)
+
+### Silicon Labs
+[![Build SparkFun Thing Plus Matter](https://github.com/fastled/fbuild/actions/workflows/build-thingplusmatter.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-thingplusmatter.yml)
 
 # fbuild
 

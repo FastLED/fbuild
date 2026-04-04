@@ -1,0 +1,16 @@
+name: Build TinySTM103TB
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "TinySTM103TB"
+      test-dir: "tests/platform/hy_tinystm103tb"
+      env-name: "tinystm"
+      firmware-ext: "hex"

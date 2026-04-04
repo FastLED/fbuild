@@ -1,0 +1,16 @@
+name: Build SparkFun Thing Plus Matter
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "SparkFun Thing Plus Matter"
+      test-dir: "tests/platform/sparkfun_thingplusmatter"
+      env-name: "thingplusmatter"
+      firmware-ext: "bin"

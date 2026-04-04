@@ -1,0 +1,16 @@
+name: Build ATtiny1604
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "ATtiny1604"
+      test-dir: "tests/platform/attiny1604"
+      env-name: "attiny1604"
+      firmware-ext: "hex"

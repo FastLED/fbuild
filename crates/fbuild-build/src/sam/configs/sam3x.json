@@ -1,0 +1,18 @@
+{
+  "name": "SAM3X",
+  "description": "Atmel SAM3X8E (ARM Cortex-M3)",
+  "architecture": "arm-cortex-m3",
+  "compiler_flags": {
+    "common": ["-mcpu=cortex-m3", "-mthumb", "-Wall", "-Wextra", "-Wno-unused-parameter", "-ffunction-sections", "-fdata-sections", "-nostdlib", "-MMD", "--param", "max-inline-insns-single=500"],
+    "c": ["-std=gnu11"],
+    "cxx": ["-std=gnu++17", "-fno-exceptions", "-fno-rtti", "-fno-threadsafe-statics"]
+  },
+  "linker_flags": ["-mcpu=cortex-m3", "-mthumb", "-Wl,--gc-sections", "-Wl,--print-memory-usage"],
+  "linker_libs": ["-lgcc", "-lstdc++", "-lm", "-lc"],
+  "objcopy": {"output_format": "binary", "remove_sections": [".eeprom"]},
+  "profiles": {
+    "release": {"compile_flags": ["-Os", "-flto", "-fno-fat-lto-objects"], "link_flags": ["-flto", "-fuse-linker-plugin"]},
+    "quick": {"compile_flags": ["-Os"], "link_flags": []}
+  },
+  "defines": [["ARDUINO", "10808"]]
+}

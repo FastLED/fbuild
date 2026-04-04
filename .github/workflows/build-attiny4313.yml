@@ -1,0 +1,16 @@
+name: Build ATtiny4313
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "ATtiny4313"
+      test-dir: "tests/platform/attiny4313"
+      env-name: "attiny4313"
+      firmware-ext: "hex"
