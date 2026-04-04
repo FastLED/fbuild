@@ -1,0 +1,37 @@
+{
+  "build": {
+    "arduino": {
+      "openwch": {
+        "variant": "CH32L10x/CH32L103C8T6",
+        "variant_h": "variant_CH32L103C8T6.h"
+      }
+    },
+    "clock_source": "hsi+pll",
+    "core": "openwch",
+    "extra_flags": "-DCH32L103C8 -DCH32L10X -DCH32L10x -DCH32L103",
+    "f_cpu": "96000000L",
+    "mabi": "ilp32",
+    "march": "rv32imacxw",
+    "mcu": "ch32l103c8t6",
+    "series": "ch32l103"
+  },
+  "debug": {
+    "tools": {
+      "wch-link": {}
+    }
+  },
+  "fcpu": 96000000,
+  "frameworks": ["noneos-sdk", "arduino"],
+  "id": "genericCH32L103C8T6",
+  "mcu": "CH32L103C8T6",
+  "name": "Generic CH32L103C8T6",
+  "platform": "ch32v",
+  "ram": 20480,
+  "rom": 65536,
+  "upload": {
+    "protocol": "wch-link",
+    "protocols": ["wch-link", "minichlink", "isp", "wlink"]
+  },
+  "url": "http://www.wch-ic.com/products/CH32L103.html",
+  "vendor": "W.CH"
+}

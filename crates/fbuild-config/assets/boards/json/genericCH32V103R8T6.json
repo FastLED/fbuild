@@ -2,36 +2,36 @@
   "build": {
     "arduino": {
       "openwch": {
-        "variant": "CH32X035/CH32X035G8U",
-        "variant_h": "variant_CH32X035G8U.h"
+        "variant": "CH32V10x/CH32V103R8T6",
+        "variant_h": "variant_CH32V103R8T6.h"
       }
     },
     "clock_source": "hsi+pll",
     "core": "openwch",
-    "extra_flags": "-DCH32X035C8 -DCH32X03X -DCH32X03x -DCH32X035",
-    "f_cpu": "48000000L",
+    "extra_flags": "-DCH32V103R8 -DCH32V10X -DCH32V10x -DCH32V103",
+    "f_cpu": "72000000L",
     "mabi": "ilp32",
-    "march": "rv32imacxw",
-    "mcu": "ch32x035c8t6",
-    "series": "ch32x035"
+    "march": "rv32imac",
+    "mcu": "ch32v103r8t6",
+    "series": "ch32v103"
   },
   "debug": {
     "tools": {
       "wch-link": {}
     }
   },
-  "fcpu": 48000000,
+  "fcpu": 72000000,
   "frameworks": ["noneos-sdk", "freertos", "harmony-liteos", "rt-thread", "tencent-os", "ch32v003fun", "arduino"],
-  "id": "genericCH32X035C8T6",
-  "mcu": "CH32X035C8T6",
-  "name": "Generic CH32X035C8T6",
+  "id": "genericCH32V103R8T6",
+  "mcu": "CH32V103R8T6",
+  "name": "Generic CH32V103R8T6",
   "platform": "ch32v",
   "ram": 20480,
-  "rom": 63488,
+  "rom": 65536,
   "upload": {
     "protocol": "wch-link",
     "protocols": ["wch-link", "minichlink", "isp", "wlink"]
   },
-  "url": "http://www.wch-ic.com/products/CH32X035.html",
+  "url": "http://www.wch-ic.com/products/CH32V103.html",
   "vendor": "W.CH"
 }

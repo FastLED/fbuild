@@ -428,7 +428,9 @@ fn resolve_board_alias(board_id: &str) -> &str {
         "esp32c3" => "esp32-c3-devkitm-1",
         "esp32c6" => "esp32-c6-devkitm-1",
         "esp32s3" => "esp32-s3-devkitc-1",
+        "ch32l103" => "genericCH32L103C8T6",
         "ch32v003" => "genericCH32V003F4P6",
+        "ch32v006" => "genericCH32V006K8U6",
         "ch32v103" => "genericCH32V103C8T6",
         "ch32v203" => "genericCH32V203C8T6",
         "ch32v208" => "genericCH32V208WBU6",
@@ -579,7 +581,9 @@ mod tests {
     #[test]
     fn test_ch32v_aliases() {
         let cases = [
+            ("ch32l103", "ch32l103c8t6"),
             ("ch32v003", "ch32v003f4p6"),
+            ("ch32v006", "ch32v006k8u6"),
             ("ch32v103", "ch32v103c8t6"),
             ("ch32v203", "ch32v203c8t6"),
             ("ch32v208", "ch32v208wbu6"),

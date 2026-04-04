@@ -1,0 +1,16 @@
+name: Build CH32L103
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "CH32L103"
+      test-dir: "tests/platform/ch32l103"
+      env-name: "ch32l103"
+      firmware-ext: "bin"

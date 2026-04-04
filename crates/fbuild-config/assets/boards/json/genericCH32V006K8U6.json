@@ -1,0 +1,38 @@
+{
+  "build": {
+    "arduino": {
+      "openwch": {
+        "variant": "CH32VM00X/CH32V006K8",
+        "variant_h": "variant_CH32V006K8.h"
+      }
+    },
+    "clock_source": "hsi+pll",
+    "core": "openwch",
+    "extra_flags": "-DCH32V006K8 -DCH32VM0X -DCH32VM0x -DCH32V006",
+    "f_cpu": "48000000L",
+    "mabi": "ilp32e",
+    "march": "rv32ecxw",
+    "mcu": "ch32v006k8u6",
+    "series": "ch32v006",
+    "variant": "CH32V006"
+  },
+  "debug": {
+    "tools": {
+      "wch-link": {}
+    }
+  },
+  "fcpu": 48000000,
+  "frameworks": ["noneos-sdk", "arduino"],
+  "id": "genericCH32V006K8U6",
+  "mcu": "CH32V006K8U6",
+  "name": "Generic CH32V006K8U6",
+  "platform": "ch32v",
+  "ram": 8192,
+  "rom": 63488,
+  "upload": {
+    "protocol": "wch-link",
+    "protocols": ["wch-link", "minichlink", "isp", "wlink"]
+  },
+  "url": "http://www.wch-ic.com/products/CH32V006.html",
+  "vendor": "W.CH"
+}
