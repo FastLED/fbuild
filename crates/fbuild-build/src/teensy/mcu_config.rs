@@ -8,32 +8,12 @@ use std::collections::HashMap;
 use fbuild_core::Result;
 use serde::Deserialize;
 
+use crate::compiler::{CompilerFlags, McuConfig, ObjcopyConfig, ProfileFlags};
+
 const TEENSY31_JSON: &str = include_str!("configs/teensy31.json");
 const TEENSY3X_JSON: &str = include_str!("configs/teensy3x.json");
 const TEENSY4X_JSON: &str = include_str!("configs/teensy4x.json");
 const TEENSYLC_JSON: &str = include_str!("configs/teensylc.json");
-
-/// Compiler flags split by language.
-#[derive(Debug, Clone, Deserialize)]
-pub struct CompilerFlags {
-    pub common: Vec<String>,
-    pub c: Vec<String>,
-    pub cxx: Vec<String>,
-}
-
-/// Profile-specific build flags (release, quick).
-#[derive(Debug, Clone, Deserialize)]
-pub struct ProfileFlags {
-    pub compile_flags: Vec<String>,
-    pub link_flags: Vec<String>,
-}
-
-/// Objcopy configuration for firmware conversion.
-#[derive(Debug, Clone, Deserialize)]
-pub struct ObjcopyConfig {
-    pub output_format: String,
-    pub remove_sections: Vec<String>,
-}
 
 /// Teensy loader CLI deploy tool configuration.
 #[derive(Debug, Clone, Deserialize)]
@@ -61,6 +41,16 @@ pub struct TeensyMcuConfig {
 impl TeensyMcuConfig {
     /// Get profile flags for a given profile name.
     pub fn get_profile(&self, name: &str) -> Option<&ProfileFlags> {
+        self.profiles.get(name)
+    }
+}
+
+impl McuConfig for TeensyMcuConfig {
+    fn compiler_flags(&self) -> &CompilerFlags {
+        &self.compiler_flags
+    }
+
+    fn get_profile(&self, name: &str) -> Option<&ProfileFlags> {
         self.profiles.get(name)
     }
 }

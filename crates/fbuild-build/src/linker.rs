@@ -138,6 +138,120 @@ impl LinkerBase {
         objects.sort();
         objects
     }
+
+    /// Create a static archive (.a) from object files using `ar rcs`.
+    pub fn archive(
+        ar_path: &Path,
+        objects: &[PathBuf],
+        output: &Path,
+        tool_label: &str,
+    ) -> Result<()> {
+        use fbuild_core::subprocess::run_command;
+
+        if let Some(parent) = output.parent() {
+            std::fs::create_dir_all(parent)?;
+        }
+
+        // Remove existing archive to avoid stale objects
+        if output.exists() {
+            std::fs::remove_file(output)?;
+        }
+
+        let mut args: Vec<String> = vec![
+            ar_path.to_string_lossy().to_string(),
+            "rcs".to_string(),
+            output.to_string_lossy().to_string(),
+        ];
+
+        for obj in objects {
+            args.push(obj.to_string_lossy().to_string());
+        }
+
+        let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
+        let result = run_command(&args_ref, None, None, None)?;
+
+        if !result.success() {
+            return Err(fbuild_core::FbuildError::BuildFailed(format!(
+                "{} failed: {}",
+                tool_label, result.stderr
+            )));
+        }
+
+        Ok(())
+    }
+
+    /// Report firmware size by running the size tool and parsing its output.
+    pub fn report_size(
+        size_path: &Path,
+        elf_path: &Path,
+        max_flash: Option<u64>,
+        max_ram: Option<u64>,
+        tool_label: &str,
+    ) -> Result<SizeInfo> {
+        use fbuild_core::subprocess::run_command;
+
+        let args = [
+            size_path.to_string_lossy().to_string(),
+            elf_path.to_string_lossy().to_string(),
+        ];
+
+        let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
+        let result = run_command(&args_ref, None, None, None)?;
+
+        if !result.success() {
+            return Err(fbuild_core::FbuildError::BuildFailed(format!(
+                "{} failed: {}",
+                tool_label, result.stderr
+            )));
+        }
+
+        SizeInfo::parse(&result.stdout, max_flash, max_ram).ok_or_else(|| {
+            fbuild_core::FbuildError::BuildFailed(format!(
+                "failed to parse {} output:\n{}",
+                tool_label, result.stdout
+            ))
+        })
+    }
+
+    /// Convert ELF to firmware using objcopy (shared by AVR and Teensy).
+    pub fn objcopy_firmware(
+        objcopy_path: &Path,
+        elf_path: &Path,
+        output_dir: &Path,
+        output_format: &str,
+        remove_sections: &[String],
+        tool_label: &str,
+    ) -> Result<PathBuf> {
+        use fbuild_core::subprocess::run_command;
+
+        let hex_path = output_dir.join("firmware.hex");
+
+        let mut args = vec![
+            objcopy_path.to_string_lossy().to_string(),
+            "-O".to_string(),
+            output_format.to_string(),
+        ];
+
+        for section in remove_sections {
+            args.push("-R".to_string());
+            args.push(section.clone());
+        }
+
+        args.push(elf_path.to_string_lossy().to_string());
+        args.push(hex_path.to_string_lossy().to_string());
+
+        let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
+        let result = run_command(&args_ref, None, None, None)?;
+
+        if !result.success() {
+            return Err(fbuild_core::FbuildError::BuildFailed(format!(
+                "{} failed: {}",
+                tool_label, result.stderr
+            )));
+        }
+
+        Ok(hex_path)
+    }
 }
 
 #[cfg(test)]

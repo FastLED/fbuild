@@ -146,15 +146,7 @@ fn ensure_avr_framework(
 
 /// Check if a project is configured for AVR by reading its platformio.ini.
 pub fn is_avr_project(project_dir: &Path, env_name: &str) -> bool {
-    let ini_path = project_dir.join("platformio.ini");
-    if let Ok(config) = fbuild_config::PlatformIOConfig::from_path(&ini_path) {
-        if let Ok(env) = config.get_env_config(env_name) {
-            if let Some(platform) = env.get("platform") {
-                return fbuild_core::Platform::AtmelAvr.matches_str(platform);
-            }
-        }
-    }
-    false
+    crate::pipeline::is_platform_project(project_dir, env_name, fbuild_core::Platform::AtmelAvr)
 }
 
 #[cfg(test)]

@@ -9,6 +9,8 @@ use std::collections::HashMap;
 use fbuild_core::Result;
 use serde::Deserialize;
 
+use crate::compiler::{CompilerFlags, McuConfig, ProfileFlags};
+
 // Embed JSON configs at compile time.
 const ESP32_JSON: &str = include_str!("configs/esp32.json");
 const ESP32C2_JSON: &str = include_str!("configs/esp32c2.json");
@@ -19,21 +21,6 @@ const ESP32H2_JSON: &str = include_str!("configs/esp32h2.json");
 const ESP32P4_JSON: &str = include_str!("configs/esp32p4.json");
 const ESP32S2_JSON: &str = include_str!("configs/esp32s2.json");
 const ESP32S3_JSON: &str = include_str!("configs/esp32s3.json");
-
-/// Compiler flags split by language.
-#[derive(Debug, Clone, Deserialize)]
-pub struct CompilerFlags {
-    pub common: Vec<String>,
-    pub c: Vec<String>,
-    pub cxx: Vec<String>,
-}
-
-/// Profile-specific build flags (release, quick).
-#[derive(Debug, Clone, Deserialize)]
-pub struct ProfileFlags {
-    pub compile_flags: Vec<String>,
-    pub link_flags: Vec<String>,
-}
 
 /// Esptool flash configuration.
 #[derive(Debug, Clone, Deserialize)]
@@ -180,7 +167,19 @@ impl Esp32McuConfig {
     pub fn get_profile(&self, name: &str) -> Option<&ProfileFlags> {
         self.profiles.get(name)
     }
+}
 
+impl McuConfig for Esp32McuConfig {
+    fn compiler_flags(&self) -> &CompilerFlags {
+        &self.compiler_flags
+    }
+
+    fn get_profile(&self, name: &str) -> Option<&ProfileFlags> {
+        self.profiles.get(name)
+    }
+}
+
+impl Esp32McuConfig {
     /// Produce `-Dold=new` flags from the `compat_defines` entries.
     pub fn compat_define_flags(&self) -> Vec<String> {
         self.compat_defines

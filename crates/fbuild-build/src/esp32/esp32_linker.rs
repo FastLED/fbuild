@@ -126,35 +126,7 @@ impl Esp32Linker {
 
 impl Linker for Esp32Linker {
     fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
-        if let Some(parent) = output.parent() {
-            std::fs::create_dir_all(parent)?;
-        }
-
-        if output.exists() {
-            std::fs::remove_file(output)?;
-        }
-
-        let mut args: Vec<String> = vec![
-            self.ar_path.to_string_lossy().to_string(),
-            "rcs".to_string(),
-            output.to_string_lossy().to_string(),
-        ];
-
-        for obj in objects {
-            args.push(obj.to_string_lossy().to_string());
-        }
-
-        let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, None, None)?;
-
-        if !result.success() {
-            return Err(fbuild_core::FbuildError::BuildFailed(format!(
-                "ar failed: {}",
-                result.stderr
-            )));
-        }
-
-        Ok(())
+        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "ar")
     }
 
     fn link(
@@ -208,35 +180,12 @@ impl Linker for Esp32Linker {
         // On Windows, always use a response file to normalize paths
         // (forward slashes, quoting) and avoid command-line length issues.
         let result = if cfg!(windows) {
-            // GCC treats backslashes as escape characters in response files.
-            let response_content = link_args[1..]
-                .iter()
-                .map(|f| {
-                    let fwd = f.replace('\\', "/");
-                    if fwd.contains(' ') {
-                        format!("\"{}\"", fwd)
-                    } else {
-                        fwd
-                    }
-                })
-                .collect::<Vec<_>>()
-                .join("\n");
-            // On MSYS, std::env::temp_dir() returns "/tmp/" which native
-            // Windows binaries treat as "C:\tmp\". Use LOCALAPPDATA\Temp.
-            let temp_dir = if cfg!(windows) {
-                std::env::var("LOCALAPPDATA")
-                    .map(|la| std::path::PathBuf::from(la).join("Temp"))
-                    .unwrap_or_else(|_| std::env::temp_dir())
-            } else {
-                std::env::temp_dir()
-            };
-            let rsp_path = temp_dir.join(format!("fbuild_esp32_link_{}.rsp", std::process::id()));
-            std::fs::write(&rsp_path, &response_content).map_err(|e| {
-                fbuild_core::FbuildError::BuildFailed(format!(
-                    "failed to write linker response file: {}",
-                    e
-                ))
-            })?;
+            let flags_for_rsp: Vec<String> = link_args[1..].to_vec();
+            let rsp_path = fbuild_core::response_file::write_response_file(
+                &flags_for_rsp,
+                &fbuild_core::response_file::windows_temp_dir(),
+                "esp32_link",
+            )?;
             let rsp_args = [link_args[0].as_str(), &format!("@{}", rsp_path.display())];
             run_command(&rsp_args, None, None, None)?
         } else {
@@ -311,27 +260,13 @@ impl Linker for Esp32Linker {
     }
 
     fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
-        let args = [
-            self.size_path.to_string_lossy().to_string(),
-            elf_path.to_string_lossy().to_string(),
-        ];
-
-        let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, None, None)?;
-
-        if !result.success() {
-            return Err(fbuild_core::FbuildError::BuildFailed(format!(
-                "size command failed: {}",
-                result.stderr
-            )));
-        }
-
-        SizeInfo::parse(&result.stdout, self.max_flash, self.max_ram).ok_or_else(|| {
-            fbuild_core::FbuildError::BuildFailed(format!(
-                "failed to parse size output:\n{}",
-                result.stdout
-            ))
-        })
+        crate::linker::LinkerBase::report_size(
+            &self.size_path,
+            elf_path,
+            self.max_flash,
+            self.max_ram,
+            "size",
+        )
     }
 }
 

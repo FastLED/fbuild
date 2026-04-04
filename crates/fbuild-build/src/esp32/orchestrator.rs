@@ -1052,15 +1052,7 @@ pub fn warn_if_cdc_on_boot(
 
 /// Check if a project is configured for ESP32 by reading its platformio.ini.
 pub fn is_esp32_project(project_dir: &Path, env_name: &str) -> bool {
-    let ini_path = project_dir.join("platformio.ini");
-    if let Ok(config) = fbuild_config::PlatformIOConfig::from_path(&ini_path) {
-        if let Ok(env) = config.get_env_config(env_name) {
-            if let Some(platform) = env.get("platform") {
-                return fbuild_core::Platform::Espressif32.matches_str(platform);
-            }
-        }
-    }
-    false
+    crate::pipeline::is_platform_project(project_dir, env_name, fbuild_core::Platform::Espressif32)
 }
 
 #[cfg(test)]

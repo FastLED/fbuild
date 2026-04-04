@@ -56,36 +56,7 @@ impl TeensyLinker {
 
 impl Linker for TeensyLinker {
     fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
-        if let Some(parent) = output.parent() {
-            std::fs::create_dir_all(parent)?;
-        }
-
-        // Remove existing archive to avoid stale objects
-        if output.exists() {
-            std::fs::remove_file(output)?;
-        }
-
-        let mut args: Vec<String> = vec![
-            self.ar_path.to_string_lossy().to_string(),
-            "rcs".to_string(),
-            output.to_string_lossy().to_string(),
-        ];
-
-        for obj in objects {
-            args.push(obj.to_string_lossy().to_string());
-        }
-
-        let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, None, None)?;
-
-        if !result.success() {
-            return Err(fbuild_core::FbuildError::BuildFailed(format!(
-                "arm-none-eabi-ar failed: {}",
-                result.stderr
-            )));
-        }
-
-        Ok(())
+        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "arm-none-eabi-ar")
     }
 
     fn link(
@@ -144,57 +115,24 @@ impl Linker for TeensyLinker {
     }
 
     fn convert_firmware(&self, elf_path: &Path, output_dir: &Path) -> Result<PathBuf> {
-        let hex_path = output_dir.join("firmware.hex");
-
-        let mut args = vec![
-            self.objcopy_path.to_string_lossy().to_string(),
-            "-O".to_string(),
-            self.mcu_config.objcopy.output_format.clone(),
-        ];
-
-        for section in &self.mcu_config.objcopy.remove_sections {
-            args.push("-R".to_string());
-            args.push(section.clone());
-        }
-
-        args.push(elf_path.to_string_lossy().to_string());
-        args.push(hex_path.to_string_lossy().to_string());
-
-        let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, None, None)?;
-
-        if !result.success() {
-            return Err(fbuild_core::FbuildError::BuildFailed(format!(
-                "arm-none-eabi-objcopy failed: {}",
-                result.stderr
-            )));
-        }
-
-        Ok(hex_path)
+        crate::linker::LinkerBase::objcopy_firmware(
+            &self.objcopy_path,
+            elf_path,
+            output_dir,
+            &self.mcu_config.objcopy.output_format,
+            &self.mcu_config.objcopy.remove_sections,
+            "arm-none-eabi-objcopy",
+        )
     }
 
     fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
-        let args = [
-            self.size_path.to_string_lossy().to_string(),
-            elf_path.to_string_lossy().to_string(),
-        ];
-
-        let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, None, None)?;
-
-        if !result.success() {
-            return Err(fbuild_core::FbuildError::BuildFailed(format!(
-                "arm-none-eabi-size failed: {}",
-                result.stderr
-            )));
-        }
-
-        SizeInfo::parse(&result.stdout, self.max_flash, self.max_ram).ok_or_else(|| {
-            fbuild_core::FbuildError::BuildFailed(format!(
-                "failed to parse arm-none-eabi-size output:\n{}",
-                result.stdout
-            ))
-        })
+        crate::linker::LinkerBase::report_size(
+            &self.size_path,
+            elf_path,
+            self.max_flash,
+            self.max_ram,
+            "arm-none-eabi-size",
+        )
     }
 }
 

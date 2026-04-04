@@ -65,11 +65,18 @@ fn compiler_backends_must_sanitize_flags_for_exec() {
             content.contains("write_response_file") || content.contains("@response");
         let has_cfg_windows = content.contains("cfg!(windows)");
 
+        // Linker files use response files for link flags (not -D defines),
+        // so they don't need prepare_flags_for_exec.
+        let is_linker = path
+            .file_name()
+            .is_some_and(|n| n.to_string_lossy().contains("linker"));
+
         // If this file uses response files on Windows and run_command, it's a
         // compiler backend that must sanitize flags on the non-Windows path.
         if has_run_command
             && has_response_file
             && has_cfg_windows
+            && !is_linker
             && !content.contains("prepare_flags_for_exec")
         {
             let rel = path.strip_prefix(&src).unwrap_or(path);

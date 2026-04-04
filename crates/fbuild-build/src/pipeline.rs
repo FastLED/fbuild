@@ -483,3 +483,20 @@ pub fn log_toolchain_version(gcc_path: &Path, label: &str, build_log: &mut Build
         }
     }
 }
+
+/// Check if a project is configured for a specific platform by reading its platformio.ini.
+pub fn is_platform_project(
+    project_dir: &Path,
+    env_name: &str,
+    platform: fbuild_core::Platform,
+) -> bool {
+    let ini_path = project_dir.join("platformio.ini");
+    if let Ok(config) = fbuild_config::PlatformIOConfig::from_path(&ini_path) {
+        if let Ok(env) = config.get_env_config(env_name) {
+            if let Some(platform_str) = env.get("platform") {
+                return platform.matches_str(platform_str);
+            }
+        }
+    }
+    false
+}

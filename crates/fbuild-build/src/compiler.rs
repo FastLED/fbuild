@@ -4,10 +4,47 @@
 //! building compiler flags, invoking gcc/g++, and detecting rebuilds.
 
 use fbuild_core::Result;
+use serde::Deserialize;
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
-use std::sync::atomic::{AtomicU64, Ordering};
 use std::time::SystemTime;
+
+// ── Shared config types (used by all platform MCU configs) ──────────────
+
+/// Compiler flags split by language.
+#[derive(Debug, Clone, Deserialize)]
+pub struct CompilerFlags {
+    pub common: Vec<String>,
+    pub c: Vec<String>,
+    pub cxx: Vec<String>,
+}
+
+/// Profile-specific build flags (release, quick).
+#[derive(Debug, Clone, Deserialize)]
+pub struct ProfileFlags {
+    pub compile_flags: Vec<String>,
+    pub link_flags: Vec<String>,
+}
+
+/// Objcopy configuration for firmware conversion (AVR and Teensy).
+#[derive(Debug, Clone, Deserialize)]
+pub struct ObjcopyConfig {
+    pub output_format: String,
+    pub remove_sections: Vec<String>,
+}
+
+/// Common interface for platform MCU configurations.
+///
+/// Provides the minimal surface needed by shared compiler helpers.
+/// Platform-specific details (esptool config, compat_defines, etc.) remain
+/// on the concrete types.
+pub trait McuConfig {
+    /// Get the compiler flags (common, C, C++).
+    fn compiler_flags(&self) -> &CompilerFlags;
+
+    /// Get profile-specific flags by name (e.g., "release", "quick").
+    fn get_profile(&self, name: &str) -> Option<&ProfileFlags>;
+}
 
 /// Result of compiling a single source file.
 #[derive(Debug)]
@@ -21,13 +58,29 @@ pub struct CompileResult {
 
 /// Trait for platform-specific compilers.
 pub trait Compiler: Send + Sync {
+    /// Platform-specific compilation dispatch.
+    ///
+    /// Routes to `compile_source()` with platform-specific parameters
+    /// (temp dir, response file prefix, compiler cache, extra pre-flags).
+    fn compile_one(
+        &self,
+        compiler_path: &Path,
+        source: &Path,
+        output: &Path,
+        flags: &[String],
+        extra_flags: &[String],
+    ) -> Result<CompileResult>;
+
     /// Compile a C source file to an object file.
     fn compile_c(
         &self,
         source: &Path,
         output: &Path,
         extra_flags: &[String],
-    ) -> Result<CompileResult>;
+    ) -> Result<CompileResult> {
+        let flags = self.c_flags();
+        self.compile_one(self.gcc_path(), source, output, &flags, extra_flags)
+    }
 
     /// Compile a C++ source file to an object file.
     fn compile_cpp(
@@ -35,7 +88,10 @@ pub trait Compiler: Send + Sync {
         source: &Path,
         output: &Path,
         extra_flags: &[String],
-    ) -> Result<CompileResult>;
+    ) -> Result<CompileResult> {
+        let flags = self.cpp_flags();
+        self.compile_one(self.gxx_path(), source, output, &flags, extra_flags)
+    }
 
     /// Compile a source file (auto-detect C vs C++).
     fn compile(
@@ -135,77 +191,16 @@ impl CompilerBase {
 
 /// Get the platform-appropriate temp directory for response files.
 ///
-/// On MSYS2/Git Bash, `std::env::temp_dir()` returns `/tmp/` which native
-/// Windows GCC treats as `C:\tmp\`. Use `LOCALAPPDATA\Temp` instead.
+/// Delegates to [`fbuild_core::response_file::windows_temp_dir`].
 pub fn windows_temp_dir() -> PathBuf {
-    if cfg!(windows) {
-        std::env::var("LOCALAPPDATA")
-            .map(|la| PathBuf::from(la).join("Temp"))
-            .unwrap_or_else(|_| std::env::temp_dir())
-    } else {
-        std::env::temp_dir()
-    }
+    fbuild_core::response_file::windows_temp_dir()
 }
 
 /// Write flags to a temporary GCC response file (`@file` syntax).
 ///
-/// Returns the path to the response file. Uses an atomic counter for
-/// thread-safe unique filenames during parallel compilation.
-///
-/// Flags containing `\"` (escaped quotes in define values) are wrapped in
-/// single quotes with `\"` converted to plain `"` — GCC's response file
-/// parser always preserves literal `"` inside single-quoted arguments.
+/// Delegates to [`fbuild_core::response_file::write_response_file`].
 pub fn write_response_file(flags: &[String], temp_dir: &Path, prefix: &str) -> Result<PathBuf> {
-    static RSP_COUNTER: AtomicU64 = AtomicU64::new(0);
-
-    std::fs::create_dir_all(temp_dir).map_err(|e| {
-        fbuild_core::FbuildError::BuildFailed(format!(
-            "failed to create temp dir {}: {}",
-            temp_dir.display(),
-            e
-        ))
-    })?;
-
-    let counter = RSP_COUNTER.fetch_add(1, Ordering::Relaxed);
-    let path = temp_dir.join(format!(
-        "fbuild_{}_{}_{}.rsp",
-        prefix,
-        std::process::id(),
-        counter
-    ));
-
-    // GCC treats backslashes in response files as escape characters (\n = newline,
-    // \f = formfeed, etc.). Convert to forward slashes for Windows path compatibility,
-    // but preserve \" sequences which are intentional escape sequences (e.g., in
-    // -DMBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\").
-    //
-    // Flags containing \" (escaped quotes in define values like -DARDUINO_BOARD=\"...\")
-    // must be wrapped in single quotes with the \" converted to plain " — GCC's
-    // response file parser treats \" inconsistently across platforms, but single-quoted
-    // arguments always preserve literal " characters.
-    let content = flags
-        .iter()
-        .map(|f| {
-            let fwd = replace_path_backslashes(f);
-            if fwd.contains("\\\"") {
-                let unescaped = fwd.replace("\\\"", "\"");
-                format!("'{}'", unescaped)
-            } else if fwd.contains(' ') {
-                format!("\"{}\"", fwd)
-            } else {
-                fwd
-            }
-        })
-        .collect::<Vec<_>>()
-        .join("\n");
-    std::fs::write(&path, content).map_err(|e| {
-        fbuild_core::FbuildError::BuildFailed(format!(
-            "failed to write response file {}: {}",
-            path.display(),
-            e
-        ))
-    })?;
-    Ok(path)
+    fbuild_core::response_file::write_response_file(flags, temp_dir, prefix)
 }
 
 /// Prepare compiler flags for direct execution (no response file).
@@ -218,24 +213,98 @@ pub fn prepare_flags_for_exec(flags: Vec<String>) -> Vec<String> {
 
 /// Replace backslashes with forward slashes for GCC response files,
 /// but preserve `\"` sequences which are intentional escapes in define values.
+///
+/// Delegates to [`fbuild_core::response_file::replace_path_backslashes`].
 pub fn replace_path_backslashes(s: &str) -> String {
-    let bytes = s.as_bytes();
-    let mut result = String::with_capacity(s.len());
-    let mut i = 0;
-    while i < bytes.len() {
-        if bytes[i] == b'\\' && i + 1 < bytes.len() && bytes[i + 1] == b'"' {
-            result.push('\\');
-            result.push('"');
-            i += 2;
-        } else if bytes[i] == b'\\' {
-            result.push('/');
-            i += 1;
-        } else {
-            result.push(bytes[i] as char);
-            i += 1;
-        }
+    fbuild_core::response_file::replace_path_backslashes(s)
+}
+
+/// Build C flags: common_flags + language-specific C flags from MCU config.
+pub fn build_c_flags(common_flags: Vec<String>, config: &dyn McuConfig) -> Vec<String> {
+    let mut flags = common_flags;
+    flags.extend(config.compiler_flags().c.iter().cloned());
+    flags
+}
+
+/// Build C++ flags: common_flags + language-specific C++ flags from MCU config.
+pub fn build_cpp_flags(common_flags: Vec<String>, config: &dyn McuConfig) -> Vec<String> {
+    let mut flags = common_flags;
+    flags.extend(config.compiler_flags().cxx.iter().cloned());
+    flags
+}
+
+/// Compile a single source file: assemble flags, handle response files, execute.
+///
+/// This is the shared core of all platform compilers. Platform-specific
+/// differences are expressed through parameters:
+/// - `response_file_prefix`: "avr", "teensy", "esp32"
+/// - `extra_pre_flags`: additional flags inserted between base flags and extra_flags
+///   (ESP32 uses this for include flags deferred from common_flags)
+/// - `compiler_cache`: optional zccache path (ESP32 only, None for others)
+#[allow(clippy::too_many_arguments)]
+pub fn compile_source(
+    compiler: &Path,
+    source: &Path,
+    output: &Path,
+    flags: &[String],
+    extra_flags: &[String],
+    temp_dir: &Path,
+    response_file_prefix: &str,
+    verbose: bool,
+    compiler_cache: Option<&Path>,
+    extra_pre_flags: &[String],
+) -> Result<CompileResult> {
+    use fbuild_core::subprocess::run_command;
+
+    if let Some(parent) = output.parent() {
+        std::fs::create_dir_all(parent)?;
     }
-    result
+
+    let mut all_flags: Vec<String> = Vec::new();
+    all_flags.extend(flags.iter().cloned());
+    all_flags.extend(extra_pre_flags.iter().cloned());
+    all_flags.extend(extra_flags.iter().cloned());
+    all_flags.extend([
+        "-c".to_string(),
+        source.to_string_lossy().to_string(),
+        "-o".to_string(),
+        output.to_string_lossy().to_string(),
+    ]);
+
+    // On Windows, write all flags to a response file to avoid command-line
+    // length limits and backslash-quote escaping issues with CreateProcessW.
+    let args = if cfg!(windows) {
+        let response_file = write_response_file(&all_flags, temp_dir, response_file_prefix)?;
+        let mut a = Vec::new();
+        if let Some(zcc) = compiler_cache {
+            a.push(zcc.to_string_lossy().to_string());
+        }
+        a.push(compiler.to_string_lossy().to_string());
+        a.push(format!("@{}", response_file.display()));
+        a
+    } else {
+        let sanitized = prepare_flags_for_exec(all_flags);
+        let mut raw_args: Vec<String> = vec![compiler.to_string_lossy().to_string()];
+        raw_args.extend(sanitized);
+        let raw_refs: Vec<&str> = raw_args.iter().map(|s| s.as_str()).collect();
+        crate::zccache::wrap_args(&raw_refs, compiler_cache)
+    };
+
+    let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
+
+    if verbose {
+        tracing::info!("compile: {}", args.join(" "));
+    }
+
+    let result = run_command(&args_ref, None, None, None)?;
+
+    Ok(CompileResult {
+        success: result.success(),
+        object_file: output.to_path_buf(),
+        stdout: result.stdout,
+        stderr: result.stderr,
+        exit_code: result.exit_code,
+    })
 }
 
 #[cfg(test)]

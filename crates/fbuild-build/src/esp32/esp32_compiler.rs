@@ -7,7 +7,6 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
-use fbuild_core::subprocess::run_command;
 use fbuild_core::{BuildProfile, Result};
 
 use crate::compiler::{CompileResult, Compiler, CompilerBase};
@@ -110,78 +109,32 @@ impl Esp32Compiler {
         flags.extend(self.base.build_define_flags());
         flags
     }
+}
 
-    /// Compile a single source file using the given compiler and flags.
-    ///
-    /// On Windows, ALL compiler flags are written to a GCC response file (`@file`)
-    /// to avoid exceeding the 32KB command-line limit. This mirrors the linker's
-    /// approach in `esp32_linker.rs`.
-    fn compile_with(
+impl Compiler for Esp32Compiler {
+    fn compile_one(
         &self,
-        compiler: &Path,
+        compiler_path: &Path,
         source: &Path,
         output: &Path,
         flags: &[String],
         extra_flags: &[String],
     ) -> Result<CompileResult> {
-        if let Some(parent) = output.parent() {
-            std::fs::create_dir_all(parent)?;
-        }
-
         let include_flags = self.base.build_include_flags();
-
-        // Collect all flags that follow the compiler executable
-        let mut all_flags: Vec<String> = Vec::new();
-        all_flags.extend(flags.iter().cloned());
-        all_flags.extend(include_flags);
-        all_flags.extend(extra_flags.iter().cloned());
-        all_flags.extend([
-            "-c".to_string(),
-            source.to_string_lossy().to_string(),
-            "-o".to_string(),
-            output.to_string_lossy().to_string(),
-        ]);
-
-        // On Windows, put ALL flags in a response file to avoid command-line
-        // length limits (OS error 206). The command becomes:
-        //   [zccache] <compiler> @response.rsp
-        let args = if cfg!(windows) {
-            let response_file =
-                crate::compiler::write_response_file(&all_flags, &self.temp_dir, "esp32")?;
-            let mut a = Vec::new();
-            if let Some(ref zcc) = self.compiler_cache {
-                a.push(zcc.to_string_lossy().to_string());
-            }
-            a.push(compiler.to_string_lossy().to_string());
-            a.push(format!("@{}", response_file.display()));
-            a
-        } else {
-            let sanitized = crate::compiler::prepare_flags_for_exec(all_flags);
-            let mut raw_args: Vec<String> = vec![compiler.to_string_lossy().to_string()];
-            raw_args.extend(sanitized);
-            let raw_refs: Vec<&str> = raw_args.iter().map(|s| s.as_str()).collect();
-            crate::zccache::wrap_args(&raw_refs, self.compiler_cache.as_deref())
-        };
-
-        let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-
-        if self.base.verbose {
-            tracing::info!("compile: {}", args.join(" "));
-        }
-
-        let result = run_command(&args_ref, None, None, None)?;
-
-        Ok(CompileResult {
-            success: result.success(),
-            object_file: output.to_path_buf(),
-            stdout: result.stdout,
-            stderr: result.stderr,
-            exit_code: result.exit_code,
-        })
+        crate::compiler::compile_source(
+            compiler_path,
+            source,
+            output,
+            flags,
+            extra_flags,
+            &self.temp_dir,
+            "esp32",
+            self.base.verbose,
+            self.compiler_cache.as_deref(),
+            &include_flags,
+        )
     }
-}
 
-impl Compiler for Esp32Compiler {
     fn gcc_path(&self) -> &Path {
         &self.gcc_path
     }
@@ -191,35 +144,11 @@ impl Compiler for Esp32Compiler {
     }
 
     fn c_flags(&self) -> Vec<String> {
-        let mut flags = self.common_flags();
-        flags.extend(self.mcu_config.compiler_flags.c.clone());
-        flags
+        crate::compiler::build_c_flags(self.common_flags(), &self.mcu_config)
     }
 
     fn cpp_flags(&self) -> Vec<String> {
-        let mut flags = self.common_flags();
-        flags.extend(self.mcu_config.compiler_flags.cxx.clone());
-        flags
-    }
-
-    fn compile_c(
-        &self,
-        source: &Path,
-        output: &Path,
-        extra_flags: &[String],
-    ) -> Result<CompileResult> {
-        let flags = self.c_flags();
-        self.compile_with(&self.gcc_path, source, output, &flags, extra_flags)
-    }
-
-    fn compile_cpp(
-        &self,
-        source: &Path,
-        output: &Path,
-        extra_flags: &[String],
-    ) -> Result<CompileResult> {
-        let flags = self.cpp_flags();
-        self.compile_with(&self.gxx_path, source, output, &flags, extra_flags)
+        crate::compiler::build_cpp_flags(self.common_flags(), &self.mcu_config)
     }
 }
 

@@ -289,7 +289,11 @@ fn compile_one_source(
     // zccache >=1.1.7 passes @file references through to the compiler
     // without expanding them, so this is safe.
     let args = if cfg!(windows) {
-        let rsp_path = write_compile_response_file(&all_flags, obj_dir)?;
+        let rsp_path = fbuild_core::response_file::write_response_file(
+            &all_flags,
+            &fbuild_core::response_file::windows_temp_dir(),
+            "lib_compile",
+        )?;
         let mut a = Vec::new();
         if let Some(zcc) = compiler_cache {
             a.push(zcc.to_string_lossy().to_string());
@@ -320,132 +324,23 @@ fn compile_one_source(
     Ok(obj)
 }
 
-/// Write compiler flags to a response file for GCC `@file` syntax.
-fn write_compile_response_file(flags: &[String], dir: &Path) -> Result<PathBuf> {
-    use std::sync::atomic::{AtomicU64, Ordering};
-    static COMPILE_RSP_COUNTER: AtomicU64 = AtomicU64::new(0);
-
-    let temp_dir = if cfg!(windows) {
-        std::env::var("LOCALAPPDATA")
-            .map(|la| PathBuf::from(la).join("Temp"))
-            .unwrap_or_else(|_| dir.to_path_buf())
-    } else {
-        dir.to_path_buf()
-    };
-
-    std::fs::create_dir_all(&temp_dir).map_err(|e| {
-        FbuildError::BuildFailed(format!(
-            "failed to create temp dir {}: {}",
-            temp_dir.display(),
-            e
-        ))
-    })?;
-
-    let counter = COMPILE_RSP_COUNTER.fetch_add(1, Ordering::Relaxed);
-    let rsp_path = temp_dir.join(format!(
-        "fbuild_lib_compile_{}_{}.rsp",
-        std::process::id(),
-        counter
-    ));
-
-    let content = flags
-        .iter()
-        .map(|f| {
-            let fwd = replace_path_backslashes(f);
-            if fwd.contains(' ') && !fwd.contains("\\\"") {
-                format!("\"{}\"", fwd)
-            } else {
-                fwd
-            }
-        })
-        .collect::<Vec<_>>()
-        .join("\n");
-
-    std::fs::write(&rsp_path, content).map_err(|e| {
-        FbuildError::BuildFailed(format!(
-            "failed to write response file {}: {}",
-            rsp_path.display(),
-            e
-        ))
-    })?;
-
-    Ok(rsp_path)
-}
-
-/// Replace backslashes with forward slashes for GCC response files,
-/// but preserve `\"` sequences which are intentional escapes in define values.
-fn replace_path_backslashes(s: &str) -> String {
-    let bytes = s.as_bytes();
-    let mut result = String::with_capacity(s.len());
-    let mut i = 0;
-    while i < bytes.len() {
-        if bytes[i] == b'\\' && i + 1 < bytes.len() && bytes[i + 1] == b'"' {
-            // Preserve \" escape sequence
-            result.push('\\');
-            result.push('"');
-            i += 2;
-        } else if bytes[i] == b'\\' {
-            result.push('/');
-            i += 1;
-        } else {
-            result.push(bytes[i] as char);
-            i += 1;
-        }
-    }
-    result
-}
-
 /// Build include flags, using a response file on Windows if needed.
 ///
 /// When there are many include paths (>100), writes a response file.
 /// Uses `-iprefix` + `-iwithprefixbefore` for paths sharing a common prefix
 /// to keep the total command line under GCC 8.4.0's 32KB CreateProcess limit.
-fn build_include_flags(include_dirs: &[PathBuf], temp_dir: &Path) -> Result<Vec<String>> {
+fn build_include_flags(include_dirs: &[PathBuf], _temp_dir: &Path) -> Result<Vec<String>> {
     let flags: Vec<String> = include_dirs
         .iter()
         .map(|d| format!("-I{}", d.display()))
         .collect();
 
     if cfg!(windows) && flags.len() > 100 {
-        use std::sync::atomic::{AtomicU64, Ordering};
-        static LIB_RSP_COUNTER: AtomicU64 = AtomicU64::new(0);
-
-        std::fs::create_dir_all(temp_dir).map_err(|e| {
-            FbuildError::BuildFailed(format!(
-                "failed to create temp dir {}: {}",
-                temp_dir.display(),
-                e
-            ))
-        })?;
-
-        let counter = LIB_RSP_COUNTER.fetch_add(1, Ordering::Relaxed);
-        let rsp_path = temp_dir.join(format!(
-            "fbuild_lib_includes_{}_{}.rsp",
-            std::process::id(),
-            counter
-        ));
-
-        // GCC treats backslashes in response files as escape characters.
-        // Convert to forward slashes (preserving \" escapes) and quote paths with spaces.
-        let content = flags
-            .iter()
-            .map(|f| {
-                let fwd = replace_path_backslashes(f);
-                if fwd.contains(' ') && !fwd.contains("\\\"") {
-                    format!("\"{}\"", fwd)
-                } else {
-                    fwd
-                }
-            })
-            .collect::<Vec<_>>()
-            .join("\n");
-        std::fs::write(&rsp_path, content).map_err(|e| {
-            FbuildError::BuildFailed(format!(
-                "failed to write response file {}: {}",
-                rsp_path.display(),
-                e
-            ))
-        })?;
+        let rsp_path = fbuild_core::response_file::write_response_file(
+            &flags,
+            &fbuild_core::response_file::windows_temp_dir(),
+            "lib_includes",
+        )?;
         Ok(vec![format!("@{}", rsp_path.display())])
     } else {
         Ok(flags)

@@ -6,7 +6,6 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
-use fbuild_core::subprocess::run_command;
 use fbuild_core::{BuildProfile, Result};
 
 use super::mcu_config::TeensyMcuConfig;
@@ -47,7 +46,7 @@ impl TeensyCompiler {
             gxx_path,
             mcu_config,
             profile,
-            temp_dir: crate::compiler::windows_temp_dir(),
+            temp_dir: fbuild_core::response_file::windows_temp_dir(),
         }
     }
 
@@ -65,64 +64,31 @@ impl TeensyCompiler {
         flags.extend(self.base.build_include_flags());
         flags
     }
+}
 
-    /// Compile a single source file using the given compiler and flags.
-    fn compile_with(
+impl Compiler for TeensyCompiler {
+    fn compile_one(
         &self,
-        compiler: &Path,
+        compiler_path: &Path,
         source: &Path,
         output: &Path,
         flags: &[String],
         extra_flags: &[String],
     ) -> Result<CompileResult> {
-        if let Some(parent) = output.parent() {
-            std::fs::create_dir_all(parent)?;
-        }
-
-        let mut all_flags: Vec<String> = Vec::new();
-        all_flags.extend(flags.iter().cloned());
-        all_flags.extend(extra_flags.iter().cloned());
-        all_flags.extend([
-            "-c".to_string(),
-            source.to_string_lossy().to_string(),
-            "-o".to_string(),
-            output.to_string_lossy().to_string(),
-        ]);
-
-        // On Windows, write all flags to a response file to avoid command-line
-        // length limits and backslash-quote escaping issues with CreateProcessW.
-        let args = if cfg!(windows) {
-            let response_file =
-                crate::compiler::write_response_file(&all_flags, &self.temp_dir, "teensy")?;
-            vec![
-                compiler.to_string_lossy().to_string(),
-                format!("@{}", response_file.display()),
-            ]
-        } else {
-            let mut a = vec![compiler.to_string_lossy().to_string()];
-            a.extend(crate::compiler::prepare_flags_for_exec(all_flags));
-            a
-        };
-
-        let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-
-        if self.base.verbose {
-            tracing::info!("compile: {}", args.join(" "));
-        }
-
-        let result = run_command(&args_ref, None, None, None)?;
-
-        Ok(CompileResult {
-            success: result.success(),
-            object_file: output.to_path_buf(),
-            stdout: result.stdout,
-            stderr: result.stderr,
-            exit_code: result.exit_code,
-        })
+        crate::compiler::compile_source(
+            compiler_path,
+            source,
+            output,
+            flags,
+            extra_flags,
+            &self.temp_dir,
+            "teensy",
+            self.base.verbose,
+            None,
+            &[],
+        )
     }
-}
 
-impl Compiler for TeensyCompiler {
     fn gcc_path(&self) -> &Path {
         &self.gcc_path
     }
@@ -132,35 +98,11 @@ impl Compiler for TeensyCompiler {
     }
 
     fn c_flags(&self) -> Vec<String> {
-        let mut flags = self.common_flags();
-        flags.extend(self.mcu_config.compiler_flags.c.iter().cloned());
-        flags
+        crate::compiler::build_c_flags(self.common_flags(), &self.mcu_config)
     }
 
     fn cpp_flags(&self) -> Vec<String> {
-        let mut flags = self.common_flags();
-        flags.extend(self.mcu_config.compiler_flags.cxx.iter().cloned());
-        flags
-    }
-
-    fn compile_c(
-        &self,
-        source: &Path,
-        output: &Path,
-        extra_flags: &[String],
-    ) -> Result<CompileResult> {
-        let flags = self.c_flags();
-        self.compile_with(&self.gcc_path, source, output, &flags, extra_flags)
-    }
-
-    fn compile_cpp(
-        &self,
-        source: &Path,
-        output: &Path,
-        extra_flags: &[String],
-    ) -> Result<CompileResult> {
-        let flags = self.cpp_flags();
-        self.compile_with(&self.gxx_path, source, output, &flags, extra_flags)
+        crate::compiler::build_cpp_flags(self.common_flags(), &self.mcu_config)
     }
 }
 
