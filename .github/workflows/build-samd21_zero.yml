@@ -1,0 +1,16 @@
+name: Build Arduino Zero
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "Arduino Zero"
+      test-dir: "tests/platform/samd21_zero"
+      env-name: "samd21_zero"
+      firmware-ext: "bin"

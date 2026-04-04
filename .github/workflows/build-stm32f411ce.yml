@@ -1,0 +1,16 @@
+name: Build STM32F411CE
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "STM32F411CE"
+      test-dir: "tests/platform/stm32f411ce"
+      env-name: "stm32f411ce"
+      firmware-ext: "bin"

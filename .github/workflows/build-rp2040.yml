@@ -1,0 +1,16 @@
+name: Build RP2040
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "RP2040"
+      test-dir: "tests/platform/rp2040"
+      env-name: "rp2040"
+      firmware-ext: "bin"

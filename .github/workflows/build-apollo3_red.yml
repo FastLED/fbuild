@@ -1,0 +1,16 @@
+name: Build Apollo3 RedBoard
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "Apollo3 RedBoard"
+      test-dir: "tests/platform/apollo3_red"
+      env-name: "apollo3_red"
+      firmware-ext: "bin"

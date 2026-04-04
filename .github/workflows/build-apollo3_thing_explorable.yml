@@ -1,0 +1,16 @@
+name: Build Apollo3 expLoRaBLE
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "Apollo3 expLoRaBLE"
+      test-dir: "tests/platform/apollo3_thing_explorable"
+      env-name: "apollo3_thing_explorable"
+      firmware-ext: "bin"

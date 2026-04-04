@@ -1,0 +1,16 @@
+name: Build SAMD21
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "SAMD21"
+      test-dir: "tests/platform/samd21"
+      env-name: "samd21"
+      firmware-ext: "bin"

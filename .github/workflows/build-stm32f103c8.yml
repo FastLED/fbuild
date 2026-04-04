@@ -1,0 +1,16 @@
+name: Build STM32F103C8
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "STM32F103C8"
+      test-dir: "tests/platform/stm32f103c8"
+      env-name: "stm32f103c8"
+      firmware-ext: "bin"

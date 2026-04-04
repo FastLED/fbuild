@@ -1,0 +1,16 @@
+name: Build SAMD51P
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "SAMD51P"
+      test-dir: "tests/platform/samd51p"
+      env-name: "samd51p"
+      firmware-ext: "bin"

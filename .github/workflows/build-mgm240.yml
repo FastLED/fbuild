@@ -1,0 +1,16 @@
+name: Build MGM240
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "MGM240"
+      test-dir: "tests/platform/mgm240"
+      env-name: "mgm240"
+      firmware-ext: "bin"

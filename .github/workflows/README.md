@@ -11,8 +11,18 @@ CI/CD workflows for the fbuild project, covering lint, test, documentation, and 
 ## Per-Board Builds (push/PR)
 
 - **`build-esp32{c2,c3,c5,c6,dev,h2,p4,s2,s3}.yml`** -- ESP32 variants
-- **`build-esp8266.yml`**, **`build-uno.yml`**, **`build-leonardo.yml`** -- AVR/Xtensa boards
-- **`build-teensy{36,40,41,lc}.yml`** -- Teensy variants
+- **`build-esp8266.yml`** -- ESP8266
+- **`build-uno.yml`**, **`build-leonardo.yml`**, **`build-atmega8a.yml`** -- AVR classic boards
+- **`build-attiny{85,88,4313}.yml`** -- ATtiny AVR boards
+- **`build-ATtiny{1604,1616}.yml`**, **`build-nano_every.yml`** -- MegaAVR boards
+- **`build-uno_r4_wifi.yml`** -- Renesas RA
+- **`build-teensy{30,31,32,35,36,40,41,lc}.yml`** -- Teensy variants
+- **`build-stm32f{103c8,103cb,103tb,411ce}.yml`**, **`build-stm32h747xi.yml`**, **`build-nucleo_f{429,439}zi.yml`** -- STM32
+- **`build-sam3x8e_due.yml`**, **`build-samd{21,21_zero,51j,51p}.yml`** -- SAM/SAMD
+- **`build-rp{2040,2350}.yml`** -- RP2040/RP2350
+- **`build-nrf52840_dk.yml`** -- Nordic nRF52
+- **`build-apollo3_{red,thing_explorable}.yml`** -- Apollo3
+- **`build-mgm240.yml`** -- Silicon Labs EFR32
 - **`build-ch32v003.yml`** -- CH32V003 RISC-V (48MHz, 2KB RAM, 16KB Flash)
 - **`build-ch32v103.yml`** -- CH32V103 RISC-V (72MHz, 20KB RAM, 64KB Flash)
 - **`build-ch32v203.yml`** -- CH32V203 RISC-V (144MHz, 20KB RAM, 64KB Flash)

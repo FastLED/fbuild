@@ -1,0 +1,16 @@
+name: Build RP2350
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "RP2350"
+      test-dir: "tests/platform/rp2350"
+      env-name: "rp2350"
+      firmware-ext: "bin"

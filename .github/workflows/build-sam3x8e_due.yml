@@ -1,0 +1,16 @@
+name: Build Arduino Due
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "Arduino Due"
+      test-dir: "tests/platform/sam3x8e_due"
+      env-name: "sam3x8e_due"
+      firmware-ext: "bin"
