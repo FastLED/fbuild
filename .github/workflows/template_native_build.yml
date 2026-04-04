@@ -50,6 +50,11 @@ jobs:
         with:
           targets: ${{ inputs.target }}
 
+      # rust-toolchain.toml pins 1.94.1 which overrides the above;
+      # ensure the target stdlib is installed for the pinned toolchain too
+      - name: Add Rust target
+        run: rustup target add ${{ inputs.target }}
+
       - uses: actions/setup-python@v6
         if: ${{ !inputs.linux_cross && !inputs.macos_cross }}
         with:
@@ -68,20 +73,16 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y musl-tools pkg-config
 
-      # Linux aarch64 musl cross-compilation toolchain
+      # Linux aarch64 cross-linker (Rust bundles musl libc; we just need a cross-linker)
       - name: Install cross-compilation tools
         if: inputs.linux_cross
         run: |
           sudo apt-get update
-          sudo apt-get install -y pkg-config wget
-          # Download pre-built musl cross-compiler for aarch64
-          wget -q https://musl.cc/aarch64-linux-musl-cross.tgz
-          tar xf aarch64-linux-musl-cross.tgz -C /opt
-          echo "/opt/aarch64-linux-musl-cross/bin" >> $GITHUB_PATH
+          sudo apt-get install -y gcc-aarch64-linux-gnu pkg-config
 
       - name: Build release binaries
         env:
-          CARGO_TARGET_AARCH64_UNKNOWN_LINUX_MUSL_LINKER: ${{ inputs.linux_cross && 'aarch64-linux-musl-gcc' || '' }}
+          CARGO_TARGET_AARCH64_UNKNOWN_LINUX_MUSL_LINKER: ${{ inputs.linux_cross && 'aarch64-linux-gnu-gcc' || '' }}
         run: |
           cargo build --release --target ${{ inputs.target }} -p fbuild-cli
           cargo build --release --target ${{ inputs.target }} -p fbuild-daemon
@@ -121,8 +122,8 @@ jobs:
             strip staging/fbuild-daemon${{ inputs.binary_ext }} || true
             strip staging/_native.abi3.so 2>/dev/null || true
           elif [ "${{ inputs.linux_cross }}" = "true" ]; then
-            aarch64-linux-musl-strip staging/fbuild || true
-            aarch64-linux-musl-strip staging/fbuild-daemon || true
+            aarch64-linux-gnu-strip staging/fbuild || true
+            aarch64-linux-gnu-strip staging/fbuild-daemon || true
           fi
 
       - name: Upload artifacts
