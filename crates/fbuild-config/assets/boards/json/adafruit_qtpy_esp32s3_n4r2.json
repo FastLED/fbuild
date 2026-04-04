@@ -10,7 +10,9 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32s3",
-    "variant": "adafruit_qtpy_esp32s3_n4r2"
+    "pid": "0x8143",
+    "variant": "adafruit_qtpy_esp32s3_n4r2",
+    "vid": "0x239A"
   },
   "connectivity": [
     "bluetooth",

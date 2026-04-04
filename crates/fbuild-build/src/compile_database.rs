@@ -115,13 +115,17 @@ pub fn strip_cache_wrapper(args: &[String]) -> Vec<String> {
         return args.to_vec();
     }
 
-    let first = Path::new(&args[0])
-        .file_stem()
-        .unwrap_or_default()
-        .to_string_lossy()
+    // Extract the file stem manually so Windows paths (with `\`) work on Unix.
+    // `Path::file_stem` only splits on the platform's native separator, so
+    // `C:\...\sccache.exe` is treated as one component on Linux/macOS.
+    let filename = args[0].rsplit(['/', '\\']).next().unwrap_or(&args[0]);
+    let stem = filename
+        .strip_suffix(".exe")
+        .or_else(|| filename.strip_suffix(".EXE"))
+        .unwrap_or(filename)
         .to_lowercase();
 
-    if first == "sccache" || first == "ccache" || first == "zccache" {
+    if stem == "sccache" || stem == "ccache" || stem == "zccache" {
         args[1..].to_vec()
     } else {
         args.to_vec()

@@ -11,7 +11,9 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32s3",
-    "variant": "lolin_s3_pro"
+    "pid": "0x8161",
+    "variant": "lolin_s3_pro",
+    "vid": "0x303A"
   },
   "connectivity": [
     "wifi",

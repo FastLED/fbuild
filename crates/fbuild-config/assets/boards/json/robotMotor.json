@@ -4,7 +4,9 @@
     "extra_flags": "-DARDUINO_AVR_ROBOT_MOTOR",
     "f_cpu": "16000000L",
     "mcu": "atmega32u4",
-    "variant": "robot_motor"
+    "pid": "0x0039",
+    "variant": "robot_motor",
+    "vid": "0x2341"
   },
   "debug": {
     "tools": {

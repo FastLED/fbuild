@@ -10,7 +10,9 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32s3",
-    "variant": "waveshare_esp32s3_touch_lcd_128"
+    "pid": "0x55d3",
+    "variant": "waveshare_esp32s3_touch_lcd_128",
+    "vid": "0x1a86"
   },
   "connectivity": [
     "bluetooth",

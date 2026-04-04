@@ -4,7 +4,9 @@
     "extra_flags": "-DARDUINO_AVR_MICRODUINO_CORE_USB",
     "f_cpu": "16000000L",
     "mcu": "atmega32u4",
-    "variant": "microduino_32u4"
+    "pid": "0x8036",
+    "variant": "microduino_32u4",
+    "vid": "0x2341"
   },
   "debug": {
     "tools": {

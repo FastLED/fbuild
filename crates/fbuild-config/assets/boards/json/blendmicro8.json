@@ -4,7 +4,9 @@
     "extra_flags": "-DARDUINO_AVR_BLEND",
     "f_cpu": "8000000L",
     "mcu": "atmega32u4",
-    "variant": "micro"
+    "pid": "0x2404",
+    "variant": "micro",
+    "vid": "0x03EB"
   },
   "debug": {
     "tools": {

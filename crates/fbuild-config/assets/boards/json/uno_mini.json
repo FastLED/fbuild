@@ -4,7 +4,9 @@
     "extra_flags": "-DARDUINO_AVR_UNO",
     "f_cpu": "16000000L",
     "mcu": "atmega328p",
-    "variant": "standard"
+    "pid": "0x0062",
+    "variant": "standard",
+    "vid": "0x2341"
   },
   "debug": {
     "tools": {

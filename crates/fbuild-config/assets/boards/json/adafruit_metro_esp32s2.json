@@ -10,7 +10,9 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32s2",
-    "variant": "adafruit_metro_esp32s2"
+    "pid": "0x80DF",
+    "variant": "adafruit_metro_esp32s2",
+    "vid": "0x239A"
   },
   "connectivity": [
     "wifi"

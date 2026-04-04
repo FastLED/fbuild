@@ -1,4 +1,16 @@
 {
+  "build": {
+    "arduino": {
+      "ldscript": "eagle.flash.1m.ld"
+    },
+    "core": "esp8266",
+    "extra_flags": "-DESP8266 -DARDUINO_ARCH_ESP8266 -DARDUINO_AMPERKA_WIFI_SLOT",
+    "f_cpu": "80000000L",
+    "f_flash": "40000000L",
+    "flash_mode": "qio",
+    "mcu": "esp8266",
+    "variant": "wifi_slot"
+  },
   "connectivity": [
     "wifi"
   ],
@@ -14,6 +26,10 @@
   "platform": "espressif8266",
   "ram": 81920,
   "rom": 4194304,
+  "upload": {
+    "require_upload_port": true,
+    "speed": 115200
+  },
   "url": "https://amperka.ru/product/wifi-slot",
   "vendor": "Amperka"
 }

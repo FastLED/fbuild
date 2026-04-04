@@ -11,7 +11,9 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32s3",
-    "variant": "arduino_nano_nora"
+    "pid": "0x0070",
+    "variant": "arduino_nano_nora",
+    "vid": "0x2341"
   },
   "connectivity": [
     "bluetooth",

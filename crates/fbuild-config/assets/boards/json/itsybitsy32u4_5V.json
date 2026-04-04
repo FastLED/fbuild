@@ -4,7 +4,9 @@
     "extra_flags": "-DARDUINO_AVR_ITSYBITSY32U4_5V",
     "f_cpu": "16000000L",
     "mcu": "atmega32u4",
-    "variant": "itsybitsy32u4"
+    "pid": "0x000E",
+    "variant": "itsybitsy32u4",
+    "vid": "0x239A"
   },
   "debug": {
     "tools": {

@@ -11,7 +11,9 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32s3",
-    "variant": "adafruit_qualia_s3_rgb666"
+    "pid": "0x8147",
+    "variant": "adafruit_qualia_s3_rgb666",
+    "vid": "0x239A"
   },
   "connectivity": [
     "bluetooth",

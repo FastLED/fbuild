@@ -11,7 +11,9 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32s2",
-    "variant": "adafruit_feather_esp32s2"
+    "pid": "0x80EB",
+    "variant": "adafruit_feather_esp32s2",
+    "vid": "0x239A"
   },
   "connectivity": [
     "wifi"

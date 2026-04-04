@@ -10,7 +10,9 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32s3",
-    "variant": "um_bling"
+    "pid": "0x817F",
+    "variant": "um_bling",
+    "vid": "0X303A"
   },
   "connectivity": [
     "bluetooth",

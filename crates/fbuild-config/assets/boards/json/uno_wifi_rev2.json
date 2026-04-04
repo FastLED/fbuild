@@ -1,4 +1,13 @@
 {
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_UNO_WIFI_REV2 -DUNO_WIFI_REV2_328MODE -DMILLIS_USE_TIMERB3",
+    "f_cpu": "16000000L",
+    "mcu": "atmega4809",
+    "pid": "0x2145",
+    "variant": "uno2018",
+    "vid": "0x03eb"
+  },
   "fcpu": 16000000,
   "frameworks": [
     "arduino"
@@ -9,6 +18,10 @@
   "platform": "atmelmegaavr",
   "ram": 6144,
   "rom": 48640,
+  "upload": {
+    "protocol": "xplainedmini_updi",
+    "speed": 115200
+  },
   "url": "https://www.arduino.cc/en/Guide/ArduinoUnoWiFiRev2",
   "vendor": "Arduino"
 }

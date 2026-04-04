@@ -346,7 +346,7 @@ impl Esp32Framework {
     /// to work correctly (e.g., `MBEDTLS_CONFIG_FILE`, `IDF_VER`).
     /// Returns empty if the flags file doesn't exist.
     ///
-    /// Uses [`split_defines`] instead of `shell_split` because define values
+    /// Uses `split_defines` instead of `shell_split` because define values
     /// like `-DMBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\"` contain escaped
     /// quotes that must be preserved for GCC.
     pub fn get_sdk_defines(&self, mcu: &str) -> Vec<String> {

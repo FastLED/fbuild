@@ -856,7 +856,7 @@ leonardo.upload.speed=57600
 
     #[test]
     fn test_get_defines_no_usb_when_absent() {
-        let config = BoardConfig::from_board_id("uno", &HashMap::new()).unwrap();
+        let config = BoardConfig::from_board_id("esp32dev", &HashMap::new()).unwrap();
         assert!(config.vid.is_none());
         let defines = config.get_defines();
         assert!(!defines.contains_key("USB_VID"));
@@ -888,8 +888,8 @@ leonardo.upload.speed=57600
     fn test_nano_every_board_config() {
         let config = BoardConfig::from_board_id("nano_every", &HashMap::new()).unwrap();
         assert_eq!(config.mcu, "atmega4809");
-        assert_eq!(config.core, "MegaCoreX");
-        assert_eq!(config.variant, "nano-every");
+        assert_eq!(config.core, "arduino");
+        assert_eq!(config.variant, "nona4809");
         assert_eq!(config.platform(), Some(fbuild_core::Platform::AtmelMegaAvr));
     }
 }

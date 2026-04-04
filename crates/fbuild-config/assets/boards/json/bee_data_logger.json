@@ -9,7 +9,9 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32s3",
-    "variant": "Bee_Data_Logger"
+    "pid": "0x815C",
+    "variant": "Bee_Data_Logger",
+    "vid": "0x303A"
   },
   "connectivity": [
     "bluetooth",

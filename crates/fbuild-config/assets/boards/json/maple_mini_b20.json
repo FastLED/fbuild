@@ -4,7 +4,9 @@
     "extra_flags": "-DSTM32F1 -DSTM32F103xB",
     "f_cpu": "72000000L",
     "mcu": "stm32f103cbt6",
-    "variant": "MAPLEMINI_F103CB"
+    "pid": "0x0003",
+    "variant": "MAPLEMINI_F103CB",
+    "vid": "0x1EAF"
   },
   "debug": {
     "tools": {

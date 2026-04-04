@@ -1,7 +1,7 @@
 {
   "build": {
     "core": "megatinycore",
-    "extra_flags": "-DARDUINO_AVR_ATtiny1616",
+    "extra_flags": "-DARDUINO_attinyxy6 -DMILLIS_USE_TIMERD0 -DUARTBAUD5V",
     "f_cpu": "16000000L",
     "mcu": "attiny1616",
     "variant": "txy6"
@@ -17,8 +17,7 @@
   "ram": 2048,
   "rom": 16384,
   "upload": {
-    "protocol": "serialupdi",
-    "require_upload_port": true,
+    "protocol": "jtag2updi",
     "speed": 115200
   },
   "url": "https://www.microchip.com/wwwproducts/en/ATTINY1616",

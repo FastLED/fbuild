@@ -7,7 +7,9 @@
     "extra_flags": "-DARDUINO_GIGA -DARDUINO_GIGA_M7 -DGIGA_PINS",
     "f_cpu": "480000000L",
     "mcu": "stm32h747xih6",
-    "variant": "GIGA"
+    "pid": "0x0366",
+    "variant": "GIGA",
+    "vid": "0x2341"
   },
   "connectivity": [
     "bluetooth",

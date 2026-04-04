@@ -10,7 +10,9 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32s3",
-    "variant": "lolin_s3_mini"
+    "pid": "0x8167",
+    "variant": "lolin_s3_mini",
+    "vid": "0x303A"
   },
   "connectivity": [
     "bluetooth",

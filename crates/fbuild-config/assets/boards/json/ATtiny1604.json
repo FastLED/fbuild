@@ -1,7 +1,7 @@
 {
   "build": {
     "core": "megatinycore",
-    "extra_flags": "-DARDUINO_AVR_ATtiny1604",
+    "extra_flags": "-DARDUINO_attinyxy4 -DMILLIS_USE_TIMERA0 -DUARTBAUD5V",
     "f_cpu": "16000000L",
     "mcu": "attiny1604",
     "variant": "txy4"
@@ -17,8 +17,7 @@
   "ram": 1024,
   "rom": 16384,
   "upload": {
-    "protocol": "serialupdi",
-    "require_upload_port": true,
+    "protocol": "jtag2updi",
     "speed": 115200
   },
   "url": "https://www.microchip.com/wwwproducts/en/ATTINY1604",

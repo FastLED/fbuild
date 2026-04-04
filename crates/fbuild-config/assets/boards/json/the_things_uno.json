@@ -4,7 +4,9 @@
     "extra_flags": "-DARDUINO_AVR_THE_THINGS_UNO",
     "f_cpu": "16000000L",
     "mcu": "atmega32u4",
-    "variant": "leonardo"
+    "pid": "0x0036",
+    "variant": "leonardo",
+    "vid": "0x2341"
   },
   "debug": {
     "tools": {

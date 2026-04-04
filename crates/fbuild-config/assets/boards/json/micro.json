@@ -4,7 +4,9 @@
     "extra_flags": "-DARDUINO_AVR_MICRO",
     "f_cpu": "16000000L",
     "mcu": "atmega32u4",
-    "variant": "micro"
+    "pid": "0x8037",
+    "variant": "micro",
+    "vid": "0x2341"
   },
   "debug": {
     "tools": {

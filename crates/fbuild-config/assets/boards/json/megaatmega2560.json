@@ -4,7 +4,9 @@
     "extra_flags": "-DARDUINO_AVR_MEGA2560",
     "f_cpu": "16000000L",
     "mcu": "atmega2560",
-    "variant": "mega"
+    "pid": "0x0042",
+    "variant": "mega",
+    "vid": "0x2341"
   },
   "debug": {
     "tools": {

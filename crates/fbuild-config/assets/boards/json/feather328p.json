@@ -4,7 +4,9 @@
     "extra_flags": "-DARDUINO_AVR_FEATHER328P",
     "f_cpu": "8000000L",
     "mcu": "atmega328p",
-    "variant": "standard"
+    "pid": "0x800C",
+    "variant": "standard",
+    "vid": "0x239A"
   },
   "debug": {
     "tools": {

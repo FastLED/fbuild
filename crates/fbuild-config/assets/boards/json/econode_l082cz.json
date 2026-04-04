@@ -4,7 +4,9 @@
     "extra_flags": "-DSTM32L0 -DARDUINO_STM32L0_GRASSHOPPER",
     "f_cpu": "32000000L",
     "mcu": "stm32l082czy6",
-    "variant": "Grasshopper-L082CZ"
+    "pid": "0xDF11",
+    "variant": "Grasshopper-L082CZ",
+    "vid": "0x0483"
   },
   "debug": {
     "tools": {

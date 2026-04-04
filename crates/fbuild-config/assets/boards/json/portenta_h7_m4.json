@@ -7,7 +7,9 @@
     "extra_flags": "-DSTM32H7 -DARDUINO_PORTENTA_H7_M4 -DPORTENTA_H7_PINS",
     "f_cpu": "480000000L",
     "mcu": "stm32h747xih6",
-    "variant": "GENERIC_STM32H747_M4"
+    "pid": "0x035b",
+    "variant": "GENERIC_STM32H747_M4",
+    "vid": "0x2341"
   },
   "connectivity": [
     "bluetooth",

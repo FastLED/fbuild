@@ -4,7 +4,9 @@
     "f_cpu": "160000000L",
     "f_flash": "80000000L",
     "flash_mode": "qio",
-    "mcu": "esp32c6"
+    "mcu": "esp32c6",
+    "pid": "0x0048",
+    "vid": "0x2886"
   },
   "connectivity": [
     "wifi",

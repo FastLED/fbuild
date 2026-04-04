@@ -5,7 +5,9 @@
     "f_flash": "64000000L",
     "flash_mode": "qio",
     "mcu": "esp32h2",
-    "variant": "esp32h2"
+    "pid": "0x1001",
+    "variant": "esp32h2",
+    "vid": "0x303A"
   },
   "connectivity": [
     "bluetooth",

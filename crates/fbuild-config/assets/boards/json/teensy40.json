@@ -6,7 +6,9 @@
     "core": "teensy4",
     "extra_flags": "-D__IMXRT1062__ -DARDUINO_TEENSY40",
     "f_cpu": "600000000",
-    "mcu": "imxrt1062"
+    "mcu": "imxrt1062",
+    "pid": "0x0483",
+    "vid": "0x16C0"
   },
   "connectivity": [
     "can"

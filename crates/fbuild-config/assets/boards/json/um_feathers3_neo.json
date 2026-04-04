@@ -10,7 +10,9 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32s3",
-    "variant": "um_feathers3neo"
+    "pid": "0x81FB",
+    "variant": "um_feathers3neo",
+    "vid": "0X303A"
   },
   "connectivity": [
     "bluetooth",

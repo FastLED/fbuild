@@ -4,7 +4,9 @@
     "extra_flags": "-DARDUINO_AVR_prusa_mm_control",
     "f_cpu": "16000000L",
     "mcu": "atmega32u4",
-    "variant": "prusa_mm_control"
+    "pid": "0x0004",
+    "variant": "prusa_mm_control",
+    "vid": "0x2c99"
   },
   "debug": {
     "tools": {

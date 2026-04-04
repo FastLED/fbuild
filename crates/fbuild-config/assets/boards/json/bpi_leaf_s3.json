@@ -11,7 +11,9 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32s3",
-    "variant": "bpi_leaf_s3"
+    "pid": "0x80DF",
+    "variant": "bpi_leaf_s3",
+    "vid": "0x303A"
   },
   "connectivity": [
     "bluetooth",

@@ -1,10 +1,12 @@
 {
   "build": {
-    "core": "MegaCoreX",
-    "extra_flags": "-DARDUINO_AVR_NANO_EVERY",
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_AVR_NANO_EVERY -DAVR_NANO_4809_328MODE -DMILLIS_USE_TIMERB3 -DNO_EXTERNAL_I2C_PULLUP",
     "f_cpu": "16000000L",
     "mcu": "atmega4809",
-    "variant": "nano-every"
+    "pid": "0x0058",
+    "variant": "nona4809",
+    "vid": "0x2341"
   },
   "fcpu": 16000000,
   "frameworks": [
@@ -18,7 +20,6 @@
   "rom": 48640,
   "upload": {
     "protocol": "jtag2updi",
-    "require_upload_port": true,
     "speed": 115200
   },
   "url": "https://www.arduino.cc/en/Guide/NANOEvery",

@@ -9,7 +9,9 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32c3",
-    "variant": "esp32c3"
+    "pid": "0x1001",
+    "variant": "esp32c3",
+    "vid": "0x303A"
   },
   "connectivity": [
     "wifi",

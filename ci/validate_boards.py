@@ -61,6 +61,14 @@ def extract_build(pio_build: dict) -> dict:
                 val = normalize_extra_flags(val)
             build[field] = val
 
+    # Extract VID/PID from hwids (array of [vid, pid] pairs — take the first)
+    hwids = pio_build.get("hwids")
+    if isinstance(hwids, list) and hwids:
+        first = hwids[0]
+        if isinstance(first, list) and len(first) >= 2:
+            build["vid"] = first[0]
+            build["pid"] = first[1]
+
     # Extract arduino sub-fields
     if "arduino" in pio_build and isinstance(pio_build["arduino"], dict):
         arduino = {}

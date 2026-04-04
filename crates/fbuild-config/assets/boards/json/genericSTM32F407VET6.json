@@ -4,7 +4,9 @@
     "extra_flags": "-DSTM32F407xx -DARDUINO_STM32GenericF407VET6 -DSTM32F4",
     "f_cpu": "168000000L",
     "mcu": "stm32f407vet6",
-    "variant": "STM32F4xx/F407V(E-G)T_F417V(E-G)T"
+    "pid": "0x0003",
+    "variant": "STM32F4xx/F407V(E-G)T_F417V(E-G)T",
+    "vid": "0x1EAF"
   },
   "debug": {
     "tools": {

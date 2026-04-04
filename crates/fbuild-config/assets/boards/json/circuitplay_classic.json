@@ -4,7 +4,9 @@
     "extra_flags": "-DARDUINO_AVR_CIRCUIT_PLAYGROUND_CLASSIC",
     "f_cpu": "8000000L",
     "mcu": "atmega32u4",
-    "variant": "circuitplay32u4"
+    "pid": "0x8011",
+    "variant": "circuitplay32u4",
+    "vid": "0x239A"
   },
   "debug": {
     "tools": {

@@ -4,7 +4,9 @@
     "extra_flags": "-DARDUINO_AVR_FTDUINO",
     "f_cpu": "16000000L",
     "mcu": "atmega32u4",
-    "variant": "ftduino"
+    "pid": "0x0537",
+    "variant": "ftduino",
+    "vid": "0x1c40"
   },
   "debug": {
     "tools": {

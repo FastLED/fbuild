@@ -9,7 +9,9 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32s3",
-    "variant": "dfrobot_firebeetle2_esp32s3"
+    "pid": "0x83CF",
+    "variant": "dfrobot_firebeetle2_esp32s3",
+    "vid": "0x303A"
   },
   "connectivity": [
     "bluetooth",

@@ -7,7 +7,9 @@
     "extra_flags": "-DSTM32H7 -DARDUINO_PORTENTA_H7_M7",
     "f_cpu": "480000000L",
     "mcu": "stm32h747xih6",
-    "variant": "PORTENTA_H7_M7"
+    "pid": "0x035b",
+    "variant": "PORTENTA_H7_M7",
+    "vid": "0x2341"
   },
   "connectivity": [
     "bluetooth",

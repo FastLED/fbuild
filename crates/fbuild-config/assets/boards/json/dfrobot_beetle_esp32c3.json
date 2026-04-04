@@ -9,7 +9,9 @@
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32c3",
-    "variant": "dfrobot_beetle_esp32c3"
+    "pid": "0x8364",
+    "variant": "dfrobot_beetle_esp32c3",
+    "vid": "0x3343"
   },
   "connectivity": [
     "wifi"
