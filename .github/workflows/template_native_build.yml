@@ -81,7 +81,8 @@ jobs:
         shell: bash
         run: |
           pip install zccache
-          find ~/.local -name 'zccache*' -type f -exec chmod +x {} + 2>/dev/null || true
+          SCRIPTS_DIR=$(python -c "import sysconfig; print(sysconfig.get_path('scripts'))")
+          chmod +x "$SCRIPTS_DIR"/zccache* 2>/dev/null || true
           zccache start
 
       - name: Build release binaries

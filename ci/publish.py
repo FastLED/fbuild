@@ -45,8 +45,8 @@ PYTHON_SHIMS_DIR = ROOT / "python"
 
 # GitHub artifact name -> dist/ subdir
 ARTIFACT_MAP: dict[str, str] = {
-    "binaries-x86_64-unknown-linux-gnu": "linux-x86_64",
-    "binaries-aarch64-unknown-linux-gnu": "linux-aarch64",
+    "binaries-x86_64-unknown-linux-musl": "linux-x86_64",
+    "binaries-aarch64-unknown-linux-musl": "linux-aarch64",
     "binaries-x86_64-apple-darwin": "macos-x86_64",
     "binaries-aarch64-apple-darwin": "macos-aarch64",
     "binaries-x86_64-pc-windows-msvc": "windows-x86_64",
@@ -155,9 +155,9 @@ def download_failed_logs(repo: str, run_id: int) -> list[Path]:
     try:
         result = subprocess.run(
             ["gh", "run", "view", str(run_id), "--repo", repo, "--log-failed"],
-            capture_output=True, text=True, timeout=120,
+            capture_output=True, timeout=120,
         )
-        raw_output = result.stdout or result.stderr or ""
+        raw_output = (result.stdout or result.stderr or b"").decode("utf-8", errors="replace")
     except (subprocess.TimeoutExpired, FileNotFoundError) as e:
         log(f"  WARNING: Could not download logs: {e}")
         return []
