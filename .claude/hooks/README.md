@@ -1,9 +1,3 @@
 # Claude Code Hooks
 
-Hook scripts that enforce project standards automatically.
-
-- **tool_guard.py** — PreToolUse: blocks bare Rust commands (must use `uv run`)
-- **lint.py** — PostToolUse: auto-formats + runs clippy on edited .rs files
-- **readme_guard.py** — PostToolUse: ensures every directory has a README.md
-- **check-on-start.py** — SessionStart: captures git fingerprint
-- **check-on-stop.py** — Stop: runs full workspace lint + tests
+Reserved directory for Claude Code hook scripts. Currently empty -- all hook scripts live in `ci/hooks/` and are referenced by `../settings.json`. See `ci/hooks/README.md` for the full hook listing.

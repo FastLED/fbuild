@@ -1,3 +1,3 @@
 # ESP32-C6 Test Fixture
 
-Test project for ESP32-C6 (RISC-V) build validation.
+RISC-V build validation project for the ESP32-C6 board. Uses the Arduino framework on the `espressif32` platform.

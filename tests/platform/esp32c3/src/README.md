@@ -1,3 +1,3 @@
-# ESP32-C3 Source
+# Source
 
-Main sketch for the ESP32-C3 build validation test.
+Blink and serial output sketch. Toggles GPIO 8 at 1 Hz and prints to serial at 115200 baud.

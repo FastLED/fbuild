@@ -1,3 +1,3 @@
-# ESP32-S3 Test Source
+# Source
 
-Arduino sketch for ESP32-S3 blink + serial output test.
+Blink and serial output sketch. Toggles GPIO 2 at 1 Hz and prints to serial at 115200 baud.

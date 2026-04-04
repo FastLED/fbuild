@@ -1,3 +1,3 @@
 # Source
 
-Teensy 4.0 test sketch source files.
+Minimal blink sketch. Toggles the built-in LED at 1 Hz using `digitalWriteFast`.
