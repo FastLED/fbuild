@@ -9,6 +9,7 @@ use fbuild_core::Result;
 use serde::Deserialize;
 
 use crate::compiler::{CompilerFlags, McuConfig, ObjcopyConfig, ProfileFlags};
+use crate::esp32::mcu_config::DefineEntry;
 
 const TEENSY31_JSON: &str = include_str!("configs/teensy31.json");
 const TEENSY3X_JSON: &str = include_str!("configs/teensy3x.json");
@@ -35,6 +36,8 @@ pub struct TeensyMcuConfig {
     pub linker_libs: Vec<String>,
     pub objcopy: ObjcopyConfig,
     pub profiles: HashMap<String, ProfileFlags>,
+    #[serde(default)]
+    pub defines: Vec<DefineEntry>,
     pub teensy_loader: TeensyLoaderConfig,
 }
 
@@ -42,6 +45,22 @@ impl TeensyMcuConfig {
     /// Get profile flags for a given profile name.
     pub fn get_profile(&self, name: &str) -> Option<&ProfileFlags> {
         self.profiles.get(name)
+    }
+
+    /// Convert defines to a HashMap suitable for merging with board defines.
+    pub fn defines_map(&self) -> HashMap<String, String> {
+        let mut map = HashMap::new();
+        for entry in &self.defines {
+            match entry {
+                DefineEntry::Simple(name) => {
+                    map.insert(name.clone(), "1".to_string());
+                }
+                DefineEntry::KeyValue(name, value) => {
+                    map.insert(name.clone(), value.clone());
+                }
+            }
+        }
+        map
     }
 }
 
@@ -404,23 +423,37 @@ mod tests {
 
     /// Validate preprocessor defines against PlatformIO reference.
     ///
-    /// Defines come from `BoardConfig::get_defines()` (not from MCU config JSON).
-    /// This test constructs a BoardConfig for each reference board and checks that
-    /// every PIO define is present with the correct value.
+    /// Defines come from `BoardConfig::get_defines()` merged with MCU config JSON defines
+    /// (same as the orchestrator does at build time).
     #[test]
     fn test_defines_match_platformio_reference() {
-        let reference_configs: &[(&str, &str)] = &[
-            ("teensy36", include_str!("configs/reference/teensy36.json")),
-            ("teensy41", include_str!("configs/reference/teensy41.json")),
-            ("teensylc", include_str!("configs/reference/teensylc.json")),
+        let reference_configs: &[(&str, &str, &str)] = &[
+            (
+                "teensy36",
+                "mk66fx1m0",
+                include_str!("configs/reference/teensy36.json"),
+            ),
+            (
+                "teensy41",
+                "imxrt1062",
+                include_str!("configs/reference/teensy41.json"),
+            ),
+            (
+                "teensylc",
+                "mkl26z64",
+                include_str!("configs/reference/teensylc.json"),
+            ),
         ];
 
-        for (board_id, ref_json) in reference_configs {
+        for (board_id, mcu, ref_json) in reference_configs {
             let reference: serde_json::Value =
                 serde_json::from_str(ref_json).expect("reference JSON should parse");
             let board_config = fbuild_config::BoardConfig::from_board_id(board_id, &HashMap::new())
                 .unwrap_or_else(|_| panic!("BoardConfig should load for {}", board_id));
-            let actual_defines = board_config.get_defines();
+            let mcu_config = get_teensy_config_for_mcu(mcu)
+                .unwrap_or_else(|_| panic!("MCU config should load for {}", mcu));
+            let mut actual_defines = board_config.get_defines();
+            actual_defines.extend(mcu_config.defines_map());
 
             let ref_defines = reference["defines"]
                 .as_object()
@@ -486,6 +519,59 @@ mod tests {
                 mcu
             );
         }
+    }
+
+    #[test]
+    fn test_teensy_defines_from_json() {
+        // All Teensy configs must have TEENSYDUINO, USB_SERIAL, LAYOUT_US_ENGLISH, ARDUINO
+        for mcu in &["imxrt1062", "mk66fx1m0", "mk20dx256", "mkl26z64"] {
+            let config = get_teensy_config_for_mcu(mcu).unwrap();
+            let defines = config.defines_map();
+            assert_eq!(
+                defines.get("TEENSYDUINO"),
+                Some(&"159".to_string()),
+                "{mcu} missing TEENSYDUINO"
+            );
+            assert_eq!(
+                defines.get("USB_SERIAL"),
+                Some(&"1".to_string()),
+                "{mcu} missing USB_SERIAL"
+            );
+            assert_eq!(
+                defines.get("LAYOUT_US_ENGLISH"),
+                Some(&"1".to_string()),
+                "{mcu} missing LAYOUT_US_ENGLISH"
+            );
+            assert_eq!(
+                defines.get("ARDUINO"),
+                Some(&"10819".to_string()),
+                "{mcu} missing ARDUINO"
+            );
+        }
+    }
+
+    #[test]
+    fn test_teensy_f_bus_per_mcu() {
+        // Teensy 3.x/LC have F_BUS; Teensy 4.x (IMXRT) does not
+        let with_fbus = [
+            ("mk20dx256", "48000000"),
+            ("mk66fx1m0", "60000000"),
+            ("mkl26z64", "24000000"),
+        ];
+        for (mcu, expected) in with_fbus {
+            let config = get_teensy_config_for_mcu(mcu).unwrap();
+            assert_eq!(
+                config.defines_map().get("F_BUS"),
+                Some(&expected.to_string()),
+                "{mcu} should have F_BUS={expected}"
+            );
+        }
+        // Teensy 4.x should NOT have F_BUS
+        let config = get_teensy_config_for_mcu("imxrt1062").unwrap();
+        assert!(
+            !config.defines_map().contains_key("F_BUS"),
+            "Teensy 4.x should not have F_BUS"
+        );
     }
 
     #[test]

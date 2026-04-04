@@ -24,18 +24,6 @@ pub struct EsptoolParams {
     pub after_reset: String,
 }
 
-impl Default for EsptoolParams {
-    fn default() -> Self {
-        Self {
-            flash_mode: "dio".to_string(),
-            flash_freq: "80m".to_string(),
-            default_baud: "460800".to_string(),
-            before_reset: "default_reset".to_string(),
-            after_reset: "hard_reset".to_string(),
-        }
-    }
-}
-
 /// ESP32 deployer using `esptool`.
 pub struct Esp32Deployer {
     /// MCU chip type for esptool --chip flag (e.g. "esp32c6").
@@ -229,16 +217,22 @@ impl Deployer for Esp32Deployer {
 mod tests {
     use super::*;
 
+    /// Test params matching ESP32-C6 JSON config values.
+    fn test_esptool_params() -> EsptoolParams {
+        EsptoolParams {
+            flash_mode: "dio".to_string(),
+            flash_freq: "80m".to_string(),
+            default_baud: "460800".to_string(),
+            before_reset: "default_reset".to_string(),
+            after_reset: "hard_reset".to_string(),
+        }
+    }
+
     #[test]
     fn test_esp32_deployer_creation() {
+        let params = test_esptool_params();
         let deployer = Esp32Deployer::new(
-            "esp32c6",
-            "460800",
-            "0x0",
-            "0x8000",
-            "0x10000",
-            &EsptoolParams::default(),
-            false,
+            "esp32c6", "460800", "0x0", "0x8000", "0x10000", &params, false,
         );
         assert_eq!(deployer.chip, "esp32c6");
         assert_eq!(deployer.baud_rate, "460800");
@@ -253,28 +247,18 @@ mod tests {
         let board =
             fbuild_config::BoardConfig::from_board_id("esp32c6", &std::collections::HashMap::new())
                 .unwrap();
-        let deployer = Esp32Deployer::from_board_config(
-            &board,
-            "0x0",
-            "0x8000",
-            "0x10000",
-            &EsptoolParams::default(),
-            false,
-        );
+        let params = test_esptool_params();
+        let deployer =
+            Esp32Deployer::from_board_config(&board, "0x0", "0x8000", "0x10000", &params, false);
         assert_eq!(deployer.chip, "esp32c6");
         assert_eq!(deployer.bootloader_offset, "0x0");
     }
 
     #[test]
     fn test_deploy_requires_port() {
+        let params = test_esptool_params();
         let deployer = Esp32Deployer::new(
-            "esp32c6",
-            "460800",
-            "0x0",
-            "0x8000",
-            "0x10000",
-            &EsptoolParams::default(),
-            false,
+            "esp32c6", "460800", "0x0", "0x8000", "0x10000", &params, false,
         );
         let tmp = tempfile::TempDir::new().unwrap();
         let result = deployer.deploy(tmp.path(), "esp32c6", Path::new("firmware.bin"), None);

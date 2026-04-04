@@ -60,6 +60,13 @@
     }
   },
 
+  "defines": [
+    ["TEENSYDUINO", "159"],
+    ["USB_SERIAL", "1"],
+    ["LAYOUT_US_ENGLISH", "1"],
+    ["ARDUINO", "10819"]
+  ],
+
   "teensy_loader": {
     "wait_flag": "-w",
     "verbose_flag": "-v",

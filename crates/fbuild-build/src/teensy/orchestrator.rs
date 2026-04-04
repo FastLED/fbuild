@@ -83,13 +83,13 @@ impl BuildOrchestrator for TeensyOrchestrator {
         );
 
         // 6. Build include dirs + compiler
-        let defines = ctx.board.get_defines();
+        let mcu_config =
+            super::mcu_config::get_teensy_config_for_mcu(&ctx.board.mcu.to_lowercase())?;
+        let mut defines = ctx.board.get_defines();
+        defines.extend(mcu_config.defines_map());
         let mut include_dirs = vec![core_dir.clone()];
         include_dirs.push(ctx.src_dir.clone());
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
-
-        let mcu_config =
-            super::mcu_config::get_teensy_config_for_mcu(&ctx.board.mcu.to_lowercase())?;
 
         let compiler = TeensyCompiler::new(
             toolchain.get_gcc_path(),

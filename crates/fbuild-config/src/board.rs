@@ -230,10 +230,9 @@ impl BoardConfig {
         defines.insert("PLATFORMIO".to_string(), "1".to_string());
         defines.insert("F_CPU".to_string(), self.f_cpu.clone());
 
-        // Arduino version: Teensy boards use 10819, others use 10808
-        let is_teensy = matches!(self.platform(), Some(fbuild_core::Platform::Teensy));
-        let arduino_version = if is_teensy { "10819" } else { "10808" };
-        defines.insert("ARDUINO".to_string(), arduino_version.to_string());
+        // Default Arduino version. Platform-specific overrides (e.g. Teensy=10819)
+        // are in MCU config JSON defines, merged by the orchestrator after this.
+        defines.insert("ARDUINO".to_string(), "10808".to_string());
 
         defines.insert(
             format!("ARDUINO_{}", self.board.to_uppercase()),
@@ -263,34 +262,11 @@ impl BoardConfig {
             defines.insert(format!("__AVR_{}__", mcu_upper), "1".to_string());
         }
 
-        // Teensy-specific defines
-        if is_teensy {
-            if mcu_upper.starts_with("IMXRT") {
-                defines.insert(format!("__{}__", mcu_upper), "1".to_string());
-            }
-            defines.insert("TEENSYDUINO".to_string(), "159".to_string());
-            defines.insert("USB_SERIAL".to_string(), "1".to_string());
-            defines.insert("LAYOUT_US_ENGLISH".to_string(), "1".to_string());
-
-            // Peripheral bus clock frequency — required by Teensy 3.x/LC core headers.
-            // IMXRT (Teensy 4.x) boards don't use F_BUS.
-            let mcu_lower = self.mcu.to_lowercase();
-            let f_bus = match mcu_lower.as_str() {
-                "mk66fx1m0" | "mk64fx512" => Some("60000000"),
-                "mk20dx256" | "mk20dx128" => Some("48000000"),
-                "mkl26z64" => Some("24000000"),
-                _ => None,
-            };
-            if let Some(bus_freq) = f_bus {
-                defines.insert("F_BUS".to_string(), bus_freq.to_string());
-            }
-        }
-
-        // ESP32-specific defines
-        let is_esp32 = matches!(self.platform(), Some(fbuild_core::Platform::Espressif32));
-        if is_esp32 {
-            defines.insert("ESP_PLATFORM".to_string(), "1".to_string());
-            defines.insert("ESP32".to_string(), "ESP32".to_string());
+        // Teensy __MCU__ define (MCU detection, not a versioned constant)
+        if matches!(self.platform(), Some(fbuild_core::Platform::Teensy))
+            && mcu_upper.starts_with("IMXRT")
+        {
+            defines.insert(format!("__{}__", mcu_upper), "1".to_string());
         }
 
         // USB VID/PID defines for USB-native boards (Leonardo, Micro, etc.)

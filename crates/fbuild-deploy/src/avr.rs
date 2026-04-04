@@ -16,16 +16,6 @@ pub struct AvrdudeParams {
     pub timeout_secs: u64,
 }
 
-impl Default for AvrdudeParams {
-    fn default() -> Self {
-        Self {
-            default_programmer: "arduino".to_string(),
-            default_baud: "115200".to_string(),
-            timeout_secs: 60,
-        }
-    }
-}
-
 /// AVR deployer using avrdude.
 pub struct AvrDeployer {
     /// Path to avrdude binary (if not in PATH).
@@ -161,7 +151,12 @@ mod tests {
         let board =
             fbuild_config::BoardConfig::from_board_id("uno", &std::collections::HashMap::new())
                 .unwrap();
-        let deployer = AvrDeployer::from_board_config(&board, &AvrdudeParams::default(), false);
+        let params = AvrdudeParams {
+            default_programmer: "arduino".to_string(),
+            default_baud: "115200".to_string(),
+            timeout_secs: 60,
+        };
+        let deployer = AvrDeployer::from_board_config(&board, &params, false);
         assert_eq!(deployer.mcu, "atmega328p");
         assert_eq!(deployer.programmer, "arduino");
         assert_eq!(deployer.baud_rate, "115200");

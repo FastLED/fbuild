@@ -55,6 +55,8 @@ impl Esp8266Linker {
         max_ram: Option<u64>,
         verbose: bool,
     ) -> Self {
+        let flash_mode =
+            flash_mode.unwrap_or_else(|| mcu_config.esptool.default_flash_mode.clone());
         Self {
             gcc_path,
             ar_path,
@@ -65,7 +67,7 @@ impl Esp8266Linker {
             ldscript: ldscript.to_string(),
             mcu_config,
             profile,
-            flash_mode: flash_mode.unwrap_or_else(|| "dio".to_string()),
+            flash_mode,
             flash_freq: flash_freq.to_string(),
             max_flash,
             max_ram,
