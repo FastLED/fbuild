@@ -11,6 +11,9 @@ export function activate(context: vscode.ExtensionContext): void {
 
   context.subscriptions.push(
     vscode.commands.registerCommand("fbuild.go", () => executeGo()),
+    vscode.commands.registerCommand("fbuild.configure", () =>
+      ui.configure()
+    ),
     vscode.commands.registerCommand("fbuild.selectBuildProfile", () =>
       ui.pickBuildProfile()
     ),

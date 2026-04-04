@@ -48,6 +48,25 @@ This extension is a thin UI layer on top of the `fbuild` CLI. When you press **G
 
 This extension is versioned **independently** from the fbuild CLI tool. The extension is a UI wrapper and does not bundle fbuild — install/upgrade fbuild separately via pip.
 
+## Install from Source
+
+Build and install the extension locally from this repo:
+
+```bash
+cd vscode-fbuild
+npm install
+npm run package   # produces fbuild-vscode-0.1.0.vsix
+code --install-extension fbuild-vscode-0.1.0.vsix
+```
+
+Restart VS Code after installing. The extension activates automatically when a workspace contains a `platformio.ini` file.
+
+To uninstall:
+
+```bash
+code --uninstall-extension fastled.fbuild-vscode
+```
+
 ## Development
 
 ```bash

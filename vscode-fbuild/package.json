@@ -24,6 +24,7 @@
   "activationEvents": [
     "workspaceContains:platformio.ini"
   ],
+  "icon": "icon.png",
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
@@ -31,6 +32,10 @@
         "command": "fbuild.go",
         "title": "fbuild: Go!",
         "icon": "$(play)"
+      },
+      {
+        "command": "fbuild.configure",
+        "title": "fbuild: Configure"
       },
       {
         "command": "fbuild.selectBuildProfile",
