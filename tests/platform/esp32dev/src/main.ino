@@ -1,5 +1,9 @@
 #include <Arduino.h>
 
+#ifndef LED_BUILTIN
+#define LED_BUILTIN 2
+#endif
+
 void setup() {
     Serial.begin(115200);
     pinMode(LED_BUILTIN, OUTPUT);
