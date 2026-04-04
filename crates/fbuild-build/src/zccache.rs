@@ -109,11 +109,19 @@ fn find_zccache_in_venv(start: &Path, exe_name: &str) -> Option<PathBuf> {
 ///
 /// This is idempotent — `zccache start` is a no-op when the daemon is up.
 pub fn ensure_running(zccache: &Path) {
-    let result = std::process::Command::new(zccache)
-        .arg("start")
+    let mut cmd = std::process::Command::new(zccache);
+    cmd.arg("start")
         .stdout(std::process::Stdio::null())
-        .stderr(std::process::Stdio::null())
-        .status();
+        .stderr(std::process::Stdio::null());
+
+    #[cfg(windows)]
+    {
+        use std::os::windows::process::CommandExt;
+        const CREATE_NO_WINDOW: u32 = 0x08000000;
+        cmd.creation_flags(CREATE_NO_WINDOW);
+    }
+
+    let result = cmd.status();
 
     match result {
         Ok(status) if status.success() => {
