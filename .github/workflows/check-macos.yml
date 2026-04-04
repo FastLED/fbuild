@@ -24,28 +24,11 @@ jobs:
         shell: bash
         run: |
           pip install zccache
-          python3 -c "
-          import os, sys, stat, glob, zccache
-          # Fix entry-point scripts
-          for p in [
-              os.path.join(sys.prefix, 'bin', 'zccache'),
-              os.path.join(sys.base_prefix, 'bin', 'zccache'),
-              *glob.glob('/Library/Frameworks/Python.framework/Versions/*/bin/zccache'),
-              os.path.expanduser('~/.local/bin/zccache'),
-          ]:
-              if os.path.exists(p):
-                  os.chmod(p, 0o755)
-                  print(f'chmod 755 {p}')
-          # Fix bundled daemon binary inside the package
-          pkg_dir = os.path.dirname(zccache.__file__)
-          for root, dirs, files in os.walk(pkg_dir):
-              for f in files:
-                  fp = os.path.join(root, f)
-                  st = os.stat(fp)
-                  if not (st.st_mode & stat.S_IEXEC):
-                      os.chmod(fp, st.st_mode | stat.S_IEXEC | stat.S_IXGRP | stat.S_IXOTH)
-                      print(f'chmod +x {fp}')
-          "
+          # Fix all zccache binaries (entry point + bundled daemon)
+          SITE_PKGS=$(pip show zccache | grep Location | cut -d' ' -f2)
+          find "$SITE_PKGS/zccache" -type f ! -perm -u=x -exec chmod +x {} + 2>/dev/null || true
+          find /Library/Frameworks/Python.framework -name 'zccache*' -type f -exec chmod +x {} + 2>/dev/null || true
+          find ~/.local -name 'zccache*' -type f -exec chmod +x {} + 2>/dev/null || true
           zccache start
       - name: Check
         run: cargo check --workspace --all-targets
