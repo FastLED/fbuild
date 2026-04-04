@@ -11,6 +11,6 @@ jobs:
     uses: ./.github/workflows/template_build.yml
     with:
       workflow-name: "ESP32-C6"
-      test-dir: "tests/esp32c6"
+      test-dir: "tests/platform/esp32c6"
       env-name: "esp32c6"
       firmware-ext: "bin"

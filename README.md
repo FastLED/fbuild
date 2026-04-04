@@ -74,12 +74,12 @@ pip install fbuild
 
 ```bash
 # Default action: build + deploy
-fbuild tests/esp32c6
+fbuild tests/platform/esp32c6
 ```
 
 ```bash
 # Default action: build + deploy + monitor
-fbuild tests/esp32c6 --monitor
+fbuild tests/platform/esp32c6 --monitor
 ```
 
 
@@ -87,10 +87,10 @@ fbuild tests/esp32c6 --monitor
 
 ```bash
 # Deploy with clean build
-fbuild deploy tests/esp32c6 --clean
+fbuild deploy tests/platform/esp32c6 --clean
 
 # Deploy with monitoring and test patterns
-fbuild deploy tests/esp32c6 --monitor="--timeout 60 --halt-on-error \"TEST FAILED\" --halt-on-success \"TEST PASSED\""
+fbuild deploy tests/platform/esp32c6 --monitor="--timeout 60 --halt-on-error \"TEST FAILED\" --halt-on-success \"TEST PASSED\""
 ```
 
 **Monitor command:**
@@ -120,10 +120,10 @@ fbuild supports deploying to QEMU for testing ESP32 firmware without physical ha
 
 ```bash
 # Build for QEMU (use esp32dev)
-fbuild build tests/esp32dev -e esp32dev-qemu
+fbuild build tests/platform/esp32dev -e esp32dev-qemu
 
 # Deploy to QEMU
-fbuild deploy tests/esp32dev -e esp32dev-qemu --qemu
+fbuild deploy tests/platform/esp32dev -e esp32dev-qemu --qemu
 ```
 
 ### Configuration
@@ -320,7 +320,7 @@ lib_deps =
 **Example build with FastLED**:
 ```
 ✓ Build successful!
-Firmware: tests/uno/.fbuild/build/uno/firmware.hex
+Firmware: tests/platform/uno/.fbuild/build/uno/firmware.hex
 Size: 12KB (4318 bytes program, 3689 bytes RAM)
 Build time: 78.59 seconds
 ```

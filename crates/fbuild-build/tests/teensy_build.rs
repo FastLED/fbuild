@@ -92,7 +92,7 @@ fn build_teensy41_fixture() {
         .unwrap()
         .parent()
         .unwrap()
-        .join("tests/teensy41");
+        .join("tests/platform/teensy41");
 
     if !project_dir.exists() {
         eprintln!("SKIP: {} does not exist", project_dir.display());

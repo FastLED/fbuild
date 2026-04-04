@@ -11,6 +11,6 @@ jobs:
     uses: ./.github/workflows/template_build.yml
     with:
       workflow-name: "Teensy 3.6"
-      test-dir: "tests/teensy36"
+      test-dir: "tests/platform/teensy36"
       env-name: "teensy36"
       firmware-ext: "hex"

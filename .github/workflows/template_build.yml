@@ -10,7 +10,7 @@ on:
       test-dir:
         required: true
         type: string
-        description: "Test directory path (e.g., tests/esp32c6)"
+        description: "Test directory path (e.g., tests/platform/esp32c6)"
       env-name:
         required: true
         type: string

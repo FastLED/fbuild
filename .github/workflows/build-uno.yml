@@ -11,6 +11,6 @@ jobs:
     uses: ./.github/workflows/template_build.yml
     with:
       workflow-name: "Arduino Uno"
-      test-dir: "tests/uno"
+      test-dir: "tests/platform/uno"
       env-name: "uno"
       firmware-ext: "hex"

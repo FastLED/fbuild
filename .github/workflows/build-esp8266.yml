@@ -11,6 +11,6 @@ jobs:
     uses: ./.github/workflows/template_build.yml
     with:
       workflow-name: "ESP8266"
-      test-dir: "tests/esp8266"
+      test-dir: "tests/platform/esp8266"
       env-name: "esp8266"
       firmware-ext: "bin"

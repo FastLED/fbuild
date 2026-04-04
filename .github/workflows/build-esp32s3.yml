@@ -11,6 +11,6 @@ jobs:
     uses: ./.github/workflows/template_build.yml
     with:
       workflow-name: "ESP32-S3"
-      test-dir: "tests/esp32s3"
+      test-dir: "tests/platform/esp32s3"
       env-name: "esp32s3"
       firmware-ext: "bin"

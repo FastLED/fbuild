@@ -341,9 +341,9 @@ void loop() {
     );
 }
 
-/// Build ESP32-S3 blink from the tests/esp32s3 fixture with persistent output.
+/// Build ESP32-S3 blink from the tests/platform/esp32s3 fixture with persistent output.
 ///
-/// Build output is stored at tests/esp32s3/.fbuild/build/ for manual deployment.
+/// Build output is stored at tests/platform/esp32s3/.fbuild/build/ for manual deployment.
 #[test]
 #[ignore]
 fn build_esp32s3_fixture() {
@@ -352,7 +352,7 @@ fn build_esp32s3_fixture() {
         .unwrap()
         .parent()
         .unwrap()
-        .join("tests/esp32s3");
+        .join("tests/platform/esp32s3");
 
     if !project_dir.exists() {
         eprintln!("SKIP: {} does not exist", project_dir.display());

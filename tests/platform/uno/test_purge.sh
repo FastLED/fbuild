@@ -72,7 +72,7 @@ echo -e "${NC}"
 
 log_info "Test environment: FBUILD_DEV_MODE=1"
 log_info "Cache location: ~/.fbuild/cache_dev/"
-log_info "Test project: tests/uno"
+log_info "Test project: tests/platform/uno"
 echo ""
 
 # Step 1: Clean existing cache
