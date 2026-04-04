@@ -17,6 +17,8 @@ RUST_TOOLS = {"cargo", "rustc", "rustfmt", "clippy-driver", "cargo-clippy", "car
 PYTHON_TOOLS = {"python", "python3", "pip", "pip3"}
 
 ALLOWED_PREFIXES = ("uv run ", "uv pip ")
+TRAMPOLINE_PREFIXES = ("./_cargo ", "./_rustc ", "./_rustfmt ",
+                       "_cargo ", "_rustc ", "_rustfmt ")
 
 
 FORBIDDEN_SCRIPT_DIRS = re.compile(
@@ -53,8 +55,10 @@ def check_command(command):
         if not seg:
             continue
 
-        # Skip if properly wrapped with uv
+        # Skip if properly wrapped with uv or using a trampoline
         if any(seg.startswith(p) for p in ALLOWED_PREFIXES):
+            continue
+        if any(seg.startswith(p) or seg == p.strip() for p in TRAMPOLINE_PREFIXES):
             continue
 
         first_word = seg.split()[0] if seg.split() else ""
@@ -62,8 +66,9 @@ def check_command(command):
         if first_word in RUST_TOOLS:
             return (
                 first_word,
-                f"Use `uv run {first_word} ...` instead of bare `{first_word}`. "
-                f"The uv trampoline ensures the correct Rust toolchain is used.",
+                f"Use `uv run {first_word} ...` or `_cargo`/`_rustc`/`_rustfmt` "
+                f"trampolines instead of bare `{first_word}`. "
+                f"These ensure the correct Rust toolchain is used.",
             )
 
         if first_word in PYTHON_TOOLS:

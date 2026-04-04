@@ -14,13 +14,29 @@ MSYS2 curl issues with .exe files on Windows).
 
 import os
 import platform
+import re
 import shutil
 import subprocess
 import sys
 import tempfile
 import urllib.request
 
-RUST_TOOLCHAIN = "1.85.1"
+
+def _read_toolchain_version():
+    """Read the pinned Rust version from rust-toolchain.toml (single source of truth)."""
+    toml_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "rust-toolchain.toml")
+    try:
+        with open(toml_path) as f:
+            for line in f:
+                m = re.match(r'channel\s*=\s*"([^"]+)"', line.strip())
+                if m:
+                    return m.group(1)
+    except FileNotFoundError:
+        pass
+    return "stable"
+
+
+RUST_TOOLCHAIN = _read_toolchain_version()
 RUSTUP_WIN_URL = "https://static.rust-lang.org/rustup/dist/x86_64-pc-windows-msvc/rustup-init.exe"
 RUSTUP_UNIX_URL = "https://sh.rustup.rs"
 

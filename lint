@@ -14,6 +14,12 @@ from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).parent.resolve()
 
+# Activate rustup toolchain on PATH before any Rust tool invocations
+sys.path.insert(0, str(SCRIPT_DIR))
+from ci.env import activate  # noqa: E402
+
+activate()
+
 
 def detect_crate(file_path: str) -> str:
     """Detect crate name from file path (e.g. crates/fbuild-build/... -> fbuild-build)."""

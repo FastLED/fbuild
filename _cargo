@@ -1,0 +1,4 @@
+#!/bin/bash
+# Trampoline: ensures rustup toolchain is used for cargo.
+export PATH="$HOME/.cargo/bin:$PATH"
+exec cargo "$@"

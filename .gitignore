@@ -16,6 +16,9 @@ Thumbs.db
 # Session cache (hook fingerprints)
 .cache/
 
+# sccache local dev cache (versioned per-compiler)
+.sccache/
+
 # fbuild local build artifacts
 .fbuild/
 

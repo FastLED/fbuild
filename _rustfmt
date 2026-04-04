@@ -1,0 +1,4 @@
+#!/bin/bash
+# Trampoline: ensures rustup toolchain is used for rustfmt.
+export PATH="$HOME/.cargo/bin:$PATH"
+exec rustfmt "$@"

@@ -1,9 +1,6 @@
 [registries.crates-io]
 protocol = "sparse"
 
-[http]
-multiplexed = true
-
 [net]
 retry = 2
 git-fetch-with-cli = true

@@ -243,7 +243,13 @@ fn sanitize_stem(s: &str) -> String {
 }
 
 fn hex_encode(bytes: &[u8]) -> String {
-    bytes.iter().map(|b| format!("{:02x}", b)).collect()
+    use std::fmt::Write;
+    bytes
+        .iter()
+        .fold(String::with_capacity(bytes.len() * 2), |mut s, b| {
+            let _ = write!(s, "{:02x}", b);
+            s
+        })
 }
 
 #[cfg(test)]

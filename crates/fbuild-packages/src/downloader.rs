@@ -2,10 +2,20 @@
 //!
 //! Uses reqwest async client for parallel downloads.
 
+use std::fmt::Write;
 use std::path::{Path, PathBuf};
 
 use fbuild_core::{FbuildError, Result};
 use sha2::{Digest, Sha256};
+
+fn hex_encode(bytes: &[u8]) -> String {
+    bytes
+        .iter()
+        .fold(String::with_capacity(bytes.len() * 2), |mut s, b| {
+            let _ = write!(s, "{:02x}", b);
+            s
+        })
+}
 
 /// Download a file from a URL into the destination directory (async).
 ///
@@ -74,7 +84,7 @@ pub fn verify_checksum(path: &Path, expected: &str) -> Result<()> {
     let mut hasher = Sha256::new();
     hasher.update(&data);
     let result = hasher.finalize();
-    let actual: String = result.iter().map(|b| format!("{:02x}", b)).collect();
+    let actual = hex_encode(&result);
 
     if actual != expected.to_lowercase() {
         return Err(FbuildError::PackageError(format!(
@@ -94,7 +104,7 @@ pub async fn verify_checksum_async(path: &Path, expected: &str) -> Result<()> {
     let mut hasher = Sha256::new();
     hasher.update(&data);
     let result = hasher.finalize();
-    let actual: String = result.iter().map(|b| format!("{:02x}", b)).collect();
+    let actual = hex_encode(&result);
 
     if actual != expected.to_lowercase() {
         return Err(FbuildError::PackageError(format!(

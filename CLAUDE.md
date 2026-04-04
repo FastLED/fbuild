@@ -4,9 +4,9 @@ fbuild is a PlatformIO-compatible embedded build tool (11 crates). See @docs/CLA
 
 ## Essential Rules
 
-- **Always use `uv run` to execute Rust commands.** Bare cargo/rustc are blocked by hook. Trampolines in `pyproject.toml` ensure the correct toolchain.
+- **Always use `uv run` or `_cargo`/`_rustc`/`_rustfmt` trampolines to execute Rust commands.** Bare cargo/rustc are blocked by hook. Both `uv run` trampolines (via `pyproject.toml`) and shell trampolines (`_cargo`, `_rustc`, `_rustfmt`) prepend `~/.cargo/bin` to PATH, ensuring the rustup-managed toolchain is always used.
 - **Always use `uv` for Python.** Bare `python`/`pip` are blocked by hook. Use `uv run ...` or `uv pip ...`.
-- MSRV: 1.75 | Edition: 2021 | Toolchain: stable (clippy + rustfmt)
+- MSRV: 1.75 | Edition: 2021 | Toolchain: 1.94.1 pinned in `rust-toolchain.toml` (clippy + rustfmt)
 - CI: Linux, macOS, Windows. All warnings denied (`RUSTFLAGS="-D warnings"`)
 - Every directory with files must have a README.md (enforced by hook)
 
@@ -20,6 +20,14 @@ uv run cargo check --workspace --all-targets
 uv run cargo clippy --workspace --all-targets -- -D warnings
 uv run cargo fmt --all
 RUSTDOCFLAGS="-D warnings" uv run cargo doc --workspace --no-deps
+
+# Shell trampolines (alternative to uv run for Rust tools)
+./_cargo check --workspace --all-targets
+./_cargo clippy --workspace --all-targets -- -D warnings
+./_rustfmt --check <file.rs>
+
+# Local sccache setup (optional, auto-configures versioned cache)
+uv run python ci/sccache_setup.py
 ```
 
 ## Distribution
@@ -38,7 +46,7 @@ uv run python ci/build_dist.py --ref main
 
 All hooks are Python scripts in `ci/hooks/`, invoked via `uv run`:
 
-- **PreToolUse**: `ci/hooks/tool_guard.py` blocks bare Rust commands (must use `uv run`) and bare `python`/`pip` (must use `uv`)
+- **PreToolUse**: `ci/hooks/tool_guard.py` blocks bare Rust commands (must use `uv run` or `_cargo`/`_rustc`/`_rustfmt` trampolines) and bare `python`/`pip` (must use `uv`)
 - **PostToolUse**: `ci/hooks/lint.py` auto-formats + runs clippy on edited .rs files
 - **PostToolUse**: `ci/hooks/readme_guard.py` errors if directory lacks README.md
 - **SessionStart**: `ci/hooks/check-on-start.py` captures git fingerprint
