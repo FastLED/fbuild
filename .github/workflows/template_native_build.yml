@@ -56,7 +56,7 @@ jobs:
         run: rustup target add ${{ inputs.target }}
 
       - uses: actions/setup-python@v6
-        if: ${{ !inputs.linux_cross && !inputs.macos_cross }}
+        if: ${{ !inputs.linux_cross && !inputs.macos_cross || inputs.linux_cross }}
         with:
           python-version: "3.13"
 
@@ -73,23 +73,22 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y musl-tools pkg-config
 
-      # Full musl cross-compiler for aarch64 (gcc-aarch64-linux-gnu won't work —
-      # it compiles C code against glibc headers, causing __memcpy_chk errors)
+      # cargo-zigbuild for musl cross-compilation (zig provides a musl-aware
+      # C compiler — no external toolchain downloads needed)
       - name: Install cross-compilation tools
         if: inputs.linux_cross
-        run: |
-          curl --retry 5 --retry-delay 3 -sSL -o /tmp/aarch64-linux-musl-cross.tgz \
-            https://musl.cc/aarch64-linux-musl-cross.tgz
-          sudo tar xf /tmp/aarch64-linux-musl-cross.tgz -C /opt
-          echo "/opt/aarch64-linux-musl-cross/bin" >> $GITHUB_PATH
+        run: pip install cargo-zigbuild
 
       - name: Build release binaries
-        env:
-          CARGO_TARGET_AARCH64_UNKNOWN_LINUX_MUSL_LINKER: ${{ inputs.linux_cross && 'aarch64-linux-musl-gcc' || '' }}
-          CC_aarch64_unknown_linux_musl: ${{ inputs.linux_cross && 'aarch64-linux-musl-gcc' || '' }}
+        shell: bash
         run: |
-          cargo build --release --target ${{ inputs.target }} -p fbuild-cli
-          cargo build --release --target ${{ inputs.target }} -p fbuild-daemon
+          if [ "${{ inputs.linux_cross }}" = "true" ]; then
+            cargo-zigbuild build --release --target ${{ inputs.target }} -p fbuild-cli
+            cargo-zigbuild build --release --target ${{ inputs.target }} -p fbuild-daemon
+          else
+            cargo build --release --target ${{ inputs.target }} -p fbuild-cli
+            cargo build --release --target ${{ inputs.target }} -p fbuild-daemon
+          fi
 
       # PyO3 extension — skip for cross-compiled targets
       - name: Build Python extension
@@ -121,13 +120,13 @@ jobs:
           fi
 
           # Strip binaries (reduces size significantly)
-          if command -v strip &> /dev/null && [ -z "${{ inputs.linux_cross }}" ]; then
+          if [ "${{ inputs.linux_cross }}" = "true" ]; then
+            llvm-strip staging/fbuild || true
+            llvm-strip staging/fbuild-daemon || true
+          elif command -v strip &> /dev/null; then
             strip staging/fbuild${{ inputs.binary_ext }} || true
             strip staging/fbuild-daemon${{ inputs.binary_ext }} || true
             strip staging/_native.abi3.so 2>/dev/null || true
-          elif [ "${{ inputs.linux_cross }}" = "true" ]; then
-            aarch64-linux-musl-strip staging/fbuild || true
-            aarch64-linux-musl-strip staging/fbuild-daemon || true
           fi
 
       - name: Upload artifacts
