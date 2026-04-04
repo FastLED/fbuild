@@ -1,0 +1,231 @@
+//! ESP8266 linker implementation.
+//!
+//! Links ESP8266 object files into `firmware.elf`, converts to `firmware.bin`
+//! using esptool (with objcopy fallback), and reports size.
+//!
+//! Key differences from AVR:
+//! - SDK precompiled libraries from `tools/sdk/lib/`
+//! - Linker script from the board JSON `ldscript` field, resolved in `tools/sdk/ld/`
+//! - Firmware conversion via `esptool --chip esp8266 elf2image`
+
+use std::path::{Path, PathBuf};
+
+use fbuild_core::subprocess::run_command;
+use fbuild_core::{BuildProfile, Result, SizeInfo};
+
+use super::mcu_config::Esp8266McuConfig;
+use crate::linker::Linker;
+
+/// ESP8266-specific linker using Xtensa LX106 GCC as the link driver.
+pub struct Esp8266Linker {
+    gcc_path: PathBuf,
+    ar_path: PathBuf,
+    objcopy_path: PathBuf,
+    size_path: PathBuf,
+    /// Path to `tools/sdk/lib/` inside the framework.
+    sdk_lib_dir: PathBuf,
+    /// Path to `tools/sdk/ld/` inside the framework.
+    sdk_ld_dir: PathBuf,
+    /// Board linker script name (e.g. `eagle.flash.4m1m.ld`).
+    ldscript: String,
+    mcu_config: Esp8266McuConfig,
+    profile: BuildProfile,
+    flash_mode: String,
+    flash_freq: String,
+    max_flash: Option<u64>,
+    max_ram: Option<u64>,
+    verbose: bool,
+}
+
+impl Esp8266Linker {
+    #[allow(clippy::too_many_arguments)]
+    pub fn new(
+        gcc_path: PathBuf,
+        ar_path: PathBuf,
+        objcopy_path: PathBuf,
+        size_path: PathBuf,
+        sdk_lib_dir: PathBuf,
+        sdk_ld_dir: PathBuf,
+        ldscript: &str,
+        mcu_config: Esp8266McuConfig,
+        profile: BuildProfile,
+        flash_mode: Option<String>,
+        flash_freq: &str,
+        max_flash: Option<u64>,
+        max_ram: Option<u64>,
+        verbose: bool,
+    ) -> Self {
+        Self {
+            gcc_path,
+            ar_path,
+            objcopy_path,
+            size_path,
+            sdk_lib_dir,
+            sdk_ld_dir,
+            ldscript: ldscript.to_string(),
+            mcu_config,
+            profile,
+            flash_mode: flash_mode.unwrap_or_else(|| "dio".to_string()),
+            flash_freq: flash_freq.to_string(),
+            max_flash,
+            max_ram,
+            verbose,
+        }
+    }
+}
+
+impl Linker for Esp8266Linker {
+    fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
+        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "xtensa-lx106-elf-ar")
+    }
+
+    fn link(
+        &self,
+        objects: &[PathBuf],
+        archives: &[PathBuf],
+        output_dir: &Path,
+    ) -> Result<PathBuf> {
+        std::fs::create_dir_all(output_dir)?;
+        let elf_path = output_dir.join("firmware.elf");
+
+        let mut args: Vec<String> = vec![self.gcc_path.to_string_lossy().to_string()];
+
+        // Linker flags from config
+        args.extend(self.mcu_config.linker_flags.iter().cloned());
+
+        // Profile-specific link flags
+        if let Some(profile) = self.mcu_config.profiles.get(self.profile.as_dir_name()) {
+            args.extend(profile.link_flags.iter().cloned());
+        }
+
+        // SDK linker script directory and board-specific script
+        args.push(format!("-L{}", self.sdk_ld_dir.to_string_lossy()));
+        args.push("-T".to_string());
+        args.push(self.ldscript.clone());
+
+        // SDK library directory
+        args.push(format!("-L{}", self.sdk_lib_dir.to_string_lossy()));
+
+        args.extend(["-o".to_string(), elf_path.to_string_lossy().to_string()]);
+
+        // Sketch objects first
+        for obj in objects {
+            args.push(obj.to_string_lossy().to_string());
+        }
+
+        // Core/variant objects
+        for archive in archives {
+            args.push(archive.to_string_lossy().to_string());
+        }
+
+        // SDK libraries in a group for circular dependency resolution
+        args.push("-Wl,--start-group".to_string());
+        args.extend(self.mcu_config.linker_libs.iter().cloned());
+        args.push("-Wl,--end-group".to_string());
+
+        if self.verbose {
+            tracing::info!("link: {}", args.join(" "));
+        }
+
+        let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
+        let result = run_command(&args_ref, None, None, None)?;
+
+        if !result.success() {
+            return Err(fbuild_core::FbuildError::BuildFailed(format!(
+                "xtensa-lx106-elf-gcc link failed:\n{}",
+                result.stderr
+            )));
+        }
+
+        Ok(elf_path)
+    }
+
+    fn convert_firmware(&self, elf_path: &Path, output_dir: &Path) -> Result<PathBuf> {
+        let bin_path = output_dir.join("firmware.bin");
+
+        // Try esptool first
+        let elf_str = elf_path.to_string_lossy();
+        let bin_str = bin_path.to_string_lossy();
+        let args = [
+            "esptool",
+            "--chip",
+            &self.mcu_config.esptool.chip,
+            "elf2image",
+            "--flash-mode",
+            &self.flash_mode,
+            "--flash-freq",
+            &self.flash_freq,
+            "--flash-size",
+            &self.mcu_config.esptool.default_flash_size,
+            &elf_str,
+            "-o",
+            &bin_str,
+        ];
+
+        match run_command(&args, None, None, Some(std::time::Duration::from_secs(30))) {
+            Ok(result) if result.success() => {
+                tracing::info!("converted ELF → firmware.bin via esptool");
+                return Ok(bin_path);
+            }
+            Ok(result) => {
+                tracing::debug!(
+                    "esptool elf2image failed (falling back to objcopy): {}",
+                    result.stderr
+                );
+            }
+            Err(e) => {
+                tracing::debug!("esptool not found (falling back to objcopy): {}", e);
+            }
+        }
+
+        // Fallback to objcopy
+        crate::linker::LinkerBase::objcopy_firmware(
+            &self.objcopy_path,
+            elf_path,
+            output_dir,
+            &self.mcu_config.objcopy.output_format,
+            &self.mcu_config.objcopy.remove_sections,
+            "xtensa-lx106-elf-objcopy",
+        )
+    }
+
+    fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
+        crate::linker::LinkerBase::report_size(
+            &self.size_path,
+            elf_path,
+            self.max_flash,
+            self.max_ram,
+            "xtensa-lx106-elf-size",
+        )
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::esp8266::mcu_config::get_esp8266_config;
+
+    #[test]
+    fn test_esp8266_linker_creation() {
+        let linker = Esp8266Linker::new(
+            PathBuf::from("/bin/xtensa-lx106-elf-gcc"),
+            PathBuf::from("/bin/xtensa-lx106-elf-ar"),
+            PathBuf::from("/bin/xtensa-lx106-elf-objcopy"),
+            PathBuf::from("/bin/xtensa-lx106-elf-size"),
+            PathBuf::from("/sdk/lib"),
+            PathBuf::from("/sdk/ld"),
+            "eagle.flash.4m1m.ld",
+            get_esp8266_config().unwrap(),
+            BuildProfile::Release,
+            Some("dio".to_string()),
+            "40m",
+            Some(4_194_304),
+            Some(81_920),
+            false,
+        );
+        assert_eq!(linker.ldscript, "eagle.flash.4m1m.ld");
+        assert_eq!(linker.max_flash, Some(4_194_304));
+        assert_eq!(linker.max_ram, Some(81_920));
+        assert_eq!(linker.flash_mode, "dio");
+    }
+}

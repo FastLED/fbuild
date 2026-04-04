@@ -1,0 +1,82 @@
+{
+  "name": "ESP8266",
+  "description": "Configuration for ESP8266 MCU (Xtensa LX106)",
+  "architecture": "xtensa-lx106",
+
+  "compiler_flags": {
+    "common": [
+      "-mlongcalls",
+      "-mtext-section-literals",
+      "-falign-functions=4",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-Wall",
+      "-Wextra",
+      "-Wno-unused-parameter",
+      "-MMD"
+    ],
+    "c": [
+      "-std=gnu17"
+    ],
+    "cxx": [
+      "-std=gnu++17",
+      "-fno-rtti",
+      "-fno-exceptions"
+    ]
+  },
+
+  "linker_flags": [
+    "-nostdlib",
+    "-Wl,--no-check-sections",
+    "-Wl,--gc-sections",
+    "-u", "call_user_start",
+    "-u", "_printf_float",
+    "-u", "_scanf_float"
+  ],
+
+  "linker_libs": [
+    "-lhal",
+    "-lphy",
+    "-lpp",
+    "-lnet80211",
+    "-llwip2-536-feat",
+    "-lwpa",
+    "-lcrypto",
+    "-lmain",
+    "-lwps",
+    "-lbearssl",
+    "-laxtls",
+    "-lespnow",
+    "-lsmartconfig",
+    "-lairkiss",
+    "-lwpa2",
+    "-lstdc++",
+    "-lm",
+    "-lc",
+    "-lgcc"
+  ],
+
+  "objcopy": {
+    "output_format": "binary",
+    "remove_sections": [".eeprom"]
+  },
+
+  "profiles": {
+    "release": {
+      "compile_flags": ["-Os"],
+      "link_flags": []
+    },
+    "quick": {
+      "compile_flags": ["-Os"],
+      "link_flags": []
+    }
+  },
+
+  "esptool": {
+    "chip": "esp8266",
+    "default_flash_mode": "dio",
+    "default_flash_freq": "40m",
+    "default_flash_size": "4MB",
+    "default_baud": 115200
+  }
+}

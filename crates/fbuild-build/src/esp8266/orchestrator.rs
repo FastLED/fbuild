@@ -1,0 +1,235 @@
+//! ESP8266 build orchestrator — wires together config, packages, compiler, linker.
+//!
+//! Build phases:
+//! 1. Parse platformio.ini
+//! 2. Load board config
+//! 3. Ensure xtensa-lx106-elf toolchain
+//! 4. Ensure Arduino ESP8266 framework
+//! 5. Load MCU config from embedded JSON
+//! 6. Scan source files
+//! 7. Build include dirs + compiler + linker
+//! 8. Run shared sequential build pipeline
+
+use std::path::Path;
+use std::time::Instant;
+
+use fbuild_core::{Platform, Result};
+use fbuild_packages::Framework as _;
+
+use crate::compile_database::TargetArchitecture;
+use crate::pipeline;
+use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
+
+use super::esp8266_compiler::Esp8266Compiler;
+use super::esp8266_linker::Esp8266Linker;
+use super::mcu_config::get_esp8266_config;
+
+/// ESP8266 platform build orchestrator.
+pub struct Esp8266Orchestrator;
+
+impl BuildOrchestrator for Esp8266Orchestrator {
+    fn platform(&self) -> Platform {
+        Platform::Espressif8266
+    }
+
+    fn build(&self, params: &BuildParams) -> Result<BuildResult> {
+        let start = Instant::now();
+
+        // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
+        let mut ctx = pipeline::BuildContext::new(
+            &params.project_dir,
+            &params.env_name,
+            params.clean,
+            params.profile,
+            params.log_sender.clone(),
+        )?;
+
+        // 3. Ensure toolchain
+        let toolchain = fbuild_packages::toolchain::Esp8266Toolchain::new(&params.project_dir);
+        let _toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
+        tracing::info!("ESP8266 toolchain ready");
+
+        use fbuild_packages::Toolchain as _;
+        pipeline::log_toolchain_version(
+            &toolchain.get_gcc_path(),
+            "xtensa-lx106-elf-gcc",
+            &mut ctx.build_log,
+        );
+
+        // 4. Ensure framework
+        let framework = fbuild_packages::library::Esp8266Framework::new(&params.project_dir);
+        let _framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
+        tracing::info!("ESP8266 framework ready");
+
+        let core_dir = framework.get_core_dir(&ctx.board.core);
+        let variant_dir = framework.get_variant_dir(&ctx.board.variant);
+
+        // 5. Load MCU config
+        let mcu_config = get_esp8266_config()?;
+
+        // 6. Scan sources
+        let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
+        let variant_dir_opt = if variant_dir.exists() {
+            Some(variant_dir.as_path())
+        } else {
+            None
+        };
+        let sources = scanner.scan_all(Some(&core_dir), variant_dir_opt)?;
+
+        tracing::info!(
+            "sources: {} sketch, {} core, {} variant",
+            sources.sketch_sources.len(),
+            sources.core_sources.len(),
+            sources.variant_sources.len(),
+        );
+
+        // 7. Build include dirs
+        let defines = ctx.board.get_defines();
+        let mut include_dirs = vec![core_dir.clone()];
+        if variant_dir.exists() {
+            include_dirs.push(variant_dir.clone());
+        }
+        // SDK include paths
+        include_dirs.extend(framework.get_sdk_include_dirs());
+        // Built-in Arduino libraries (ESP8266WiFi, etc.)
+        let builtin_libs_dir = framework.get_libraries_dir();
+        if builtin_libs_dir.is_dir() {
+            if let Ok(entries) = std::fs::read_dir(&builtin_libs_dir) {
+                for entry in entries.flatten() {
+                    let path = entry.path();
+                    if path.is_dir() {
+                        let lib_src = path.join("src");
+                        if lib_src.is_dir() {
+                            include_dirs.push(lib_src);
+                        }
+                    }
+                }
+            }
+        }
+        include_dirs.push(ctx.src_dir.clone());
+        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
+
+        let compiler = Esp8266Compiler::new(
+            toolchain.get_gcc_path(),
+            toolchain.get_gxx_path(),
+            &ctx.board.f_cpu,
+            defines,
+            include_dirs,
+            mcu_config.clone(),
+            params.profile,
+            params.verbose,
+        );
+
+        // Resolve linker script from board config
+        let ldscript = ctx
+            .board
+            .ldscript
+            .as_deref()
+            .unwrap_or("eagle.flash.4m1m.ld");
+
+        // Resolve flash frequency from board f_flash
+        let flash_freq = f_flash_to_freq(
+            ctx.board.f_flash.as_deref(),
+            &mcu_config.esptool.default_flash_freq,
+        )
+        .to_string();
+
+        let linker = Esp8266Linker::new(
+            toolchain.get_gcc_path(),
+            toolchain.get_ar_path(),
+            toolchain.get_objcopy_path(),
+            toolchain.get_size_path(),
+            framework.get_sdk_lib_dir(),
+            framework.get_sdk_ld_dir(),
+            ldscript,
+            mcu_config,
+            params.profile,
+            ctx.board.flash_mode.clone(),
+            &flash_freq,
+            ctx.board.max_flash,
+            ctx.board.max_ram,
+            params.verbose,
+        );
+
+        // 8. Run shared sequential build pipeline
+        pipeline::run_sequential_build(
+            &compiler,
+            &linker,
+            ctx,
+            params,
+            &sources,
+            TargetArchitecture::Xtensa,
+            "ESP8266",
+            start,
+        )
+    }
+}
+
+/// Create an ESP8266 orchestrator.
+pub fn create() -> Box<dyn BuildOrchestrator> {
+    Box::new(Esp8266Orchestrator)
+}
+
+/// Convert `f_flash` board config value (e.g. `"40000000L"`) to esptool frequency string.
+fn f_flash_to_freq<'a>(f_flash: Option<&str>, default: &'a str) -> &'a str {
+    match f_flash {
+        Some(s) => {
+            let s = s.trim_end_matches('L');
+            match s {
+                "80000000" => "80m",
+                "40000000" => "40m",
+                "26000000" => "26m",
+                "20000000" => "20m",
+                _ => default,
+            }
+        }
+        None => default,
+    }
+}
+
+/// Check if a project is configured for ESP8266 by reading its platformio.ini.
+pub fn is_esp8266_project(project_dir: &Path, env_name: &str) -> bool {
+    pipeline::is_platform_project(project_dir, env_name, Platform::Espressif8266)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_esp8266_orchestrator_platform() {
+        let orch = Esp8266Orchestrator;
+        assert_eq!(orch.platform(), Platform::Espressif8266);
+    }
+
+    #[test]
+    fn test_is_esp8266_project() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        std::fs::write(
+            tmp.path().join("platformio.ini"),
+            "[env:esp8266]\nplatform = espressif8266\nboard = nodemcuv2\nframework = arduino\n",
+        )
+        .unwrap();
+        assert!(is_esp8266_project(tmp.path(), "esp8266"));
+        assert!(!is_esp8266_project(tmp.path(), "uno"));
+    }
+
+    #[test]
+    fn test_is_not_esp8266_project() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        std::fs::write(
+            tmp.path().join("platformio.ini"),
+            "[env:esp32]\nplatform = espressif32\nboard = esp32dev\nframework = arduino\n",
+        )
+        .unwrap();
+        assert!(!is_esp8266_project(tmp.path(), "esp32"));
+    }
+
+    #[test]
+    fn test_f_flash_to_freq() {
+        assert_eq!(f_flash_to_freq(Some("40000000L"), "40m"), "40m");
+        assert_eq!(f_flash_to_freq(Some("80000000L"), "40m"), "80m");
+        assert_eq!(f_flash_to_freq(None, "40m"), "40m");
+        assert_eq!(f_flash_to_freq(Some("unknown"), "40m"), "40m");
+    }
+}

@@ -8,6 +8,7 @@ pub mod build_output;
 pub mod compile_database;
 pub mod compiler;
 pub mod esp32;
+pub mod esp8266;
 pub mod linker;
 pub mod parallel;
 pub mod pipeline;
@@ -47,6 +48,7 @@ pub fn get_platform_support(platform: Platform) -> Result<Box<dyn PlatformSuppor
             Ok(Box::new(avr::AvrPlatformSupport))
         }
         Platform::Espressif32 => Ok(Box::new(esp32::Esp32PlatformSupport)),
+        Platform::Espressif8266 => Ok(Box::new(esp8266::Esp8266PlatformSupport)),
         Platform::Teensy => Ok(Box::new(teensy::TeensyPlatformSupport)),
         _ => Err(fbuild_core::FbuildError::BuildFailed(format!(
             "native orchestrator for {:?} not yet implemented — use --platformio flag for this platform",
@@ -171,5 +173,11 @@ mod tests {
     fn test_get_orchestrator_atmelmegaavr() {
         let orch = get_orchestrator(Platform::AtmelMegaAvr).unwrap();
         assert_eq!(orch.platform(), Platform::AtmelAvr);
+    }
+
+    #[test]
+    fn test_get_orchestrator_esp8266() {
+        let orch = get_orchestrator(Platform::Espressif8266).unwrap();
+        assert_eq!(orch.platform(), Platform::Espressif8266);
     }
 }
