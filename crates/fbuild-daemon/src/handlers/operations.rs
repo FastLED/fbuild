@@ -583,7 +583,16 @@ pub async fn deploy(
                         .as_deref()
                         .unwrap_or(mcu_config.default_flash_mode())
                         .to_string(),
-                    flash_freq: mcu_config.default_flash_freq().to_string(),
+                    flash_freq: {
+                        let f_for_image = board_config
+                            .f_image
+                            .as_deref()
+                            .or(board_config.f_flash.as_deref());
+                        fbuild_build::esp32::esp32_linker::f_flash_to_esptool_freq(
+                            f_for_image,
+                            mcu_config.default_flash_freq(),
+                        )
+                    },
                     default_baud: mcu_config.default_baud().to_string(),
                     before_reset: mcu_config.before_reset().to_string(),
                     after_reset: mcu_config.after_reset().to_string(),

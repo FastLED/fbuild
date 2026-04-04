@@ -39,6 +39,11 @@ pub struct BoardConfig {
     pub flash_mode: Option<String>,
     /// Flash frequency (e.g. "80000000L") — ESP32 boards
     pub f_flash: Option<String>,
+    /// Image flash frequency override (e.g. "48000000L") — used by esptool when
+    /// the board's actual SPI clock (`f_flash`) doesn't match a valid esptool frequency.
+    /// PlatformIO calls this `build.f_image`. When present, this takes priority over
+    /// `f_flash` for esptool's `--flash-freq` argument.
+    pub f_image: Option<String>,
     /// Partition table file (e.g. "default_8MB.csv") — ESP32 boards
     pub partitions: Option<String>,
     /// Linker script (e.g. "esp32s3_out.ld")
@@ -111,6 +116,7 @@ impl BoardConfig {
                 .and_then(|s| s.parse().ok()),
             flash_mode: get("flash_mode"),
             f_flash: get("f_flash"),
+            f_image: get("f_image"),
             partitions: get("partitions"),
             ldscript: get("ldscript"),
             platform_str: get("platform_str"),
@@ -183,6 +189,10 @@ impl BoardConfig {
                 .get("f_flash")
                 .cloned()
                 .or_else(|| defaults.get("f_flash").cloned()),
+            f_image: overrides
+                .get("f_image")
+                .cloned()
+                .or_else(|| defaults.get("f_image").cloned()),
             partitions: overrides
                 .get("partitions")
                 .cloned()
@@ -402,8 +412,9 @@ fn resolve_board_alias(board_id: &str) -> &str {
     match board_id {
         "mega" => "megaatmega2560",
         "nano" | "nanoatmega328" => "nanoatmega328",
-        "rpipico" => "pico",
-        "rpipico2" => "pico2",
+        "pico" | "rpipico" => "rpipico",
+        "picow" | "rpipicow" => "rpipicow",
+        "pico2" | "rpipico2" => "rpipico2",
         "esp32c3" => "esp32-c3-devkitm-1",
         "esp32c6" => "esp32-c6-devkitm-1",
         "esp32s3" => "esp32-s3-devkitc-1",
@@ -467,6 +478,9 @@ fn get_board_defaults(board_id: &str) -> Option<HashMap<String, String>> {
         }
         if let Some(f_flash) = build.get("f_flash").and_then(|v| v.as_str()) {
             d.insert("f_flash".into(), f_flash.to_string());
+        }
+        if let Some(f_image) = build.get("f_image").and_then(|v| v.as_str()) {
+            d.insert("f_image".into(), f_image.to_string());
         }
         // Arduino sub-fields
         if let Some(arduino) = build.get("arduino").and_then(|v| v.as_object()) {
@@ -771,8 +785,8 @@ leonardo.upload.speed=57600
     #[test]
     fn test_pico_enriched_fields() {
         let config = BoardConfig::from_board_id("rpipico", &HashMap::new()).unwrap();
-        assert_eq!(config.core, "arduino");
-        assert_eq!(config.variant, "RASPBERRY_PI_PICO");
+        assert_eq!(config.core, "earlephilhower");
+        assert_eq!(config.variant, "rpipico");
         assert_eq!(config.upload_protocol, Some("picotool".to_string()));
     }
 

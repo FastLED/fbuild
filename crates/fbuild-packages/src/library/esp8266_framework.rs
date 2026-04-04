@@ -108,6 +108,24 @@ impl Esp8266Framework {
         dirs
     }
 
+    /// SDK libc include directory (`tools/sdk/libc/xtensa-lx106-elf/include/`).
+    ///
+    /// Matches `compiler.libc.path` from platform.txt.
+    pub fn get_libc_include_dirs(&self) -> Vec<PathBuf> {
+        let libc_include = self
+            .resolved_dir()
+            .join("tools")
+            .join("sdk")
+            .join("libc")
+            .join("xtensa-lx106-elf")
+            .join("include");
+        if libc_include.is_dir() {
+            vec![libc_include]
+        } else {
+            Vec::new()
+        }
+    }
+
     /// Get the core source directory.
     pub fn get_core_dir(&self, core_name: &str) -> PathBuf {
         self.get_cores_dir().join(core_name)

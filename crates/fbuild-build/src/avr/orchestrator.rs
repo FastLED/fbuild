@@ -72,6 +72,8 @@ impl BuildOrchestrator for AvrOrchestrator {
         let mut include_dirs = ctx.board.get_include_paths(&framework_dir);
         include_dirs.push(ctx.src_dir.clone());
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
+        // Toolchain sysroot includes (avr/io.h, etc.)
+        include_dirs.extend(toolchain.get_include_dirs());
 
         let mcu_config = super::mcu_config::get_avr_config()?;
 

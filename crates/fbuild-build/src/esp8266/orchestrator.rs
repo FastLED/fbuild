@@ -92,6 +92,11 @@ impl BuildOrchestrator for Esp8266Orchestrator {
         }
         // SDK include paths
         include_dirs.extend(framework.get_sdk_include_dirs());
+        // Toolchain sysroot includes (xtensa/coreasm.h, etc.)
+        // Required by .S assembly files — see platform.txt compiler.S.flags.
+        include_dirs.extend(toolchain.get_include_dirs());
+        // SDK libc headers (platform.txt compiler.libc.path)
+        include_dirs.extend(framework.get_libc_include_dirs());
         // Built-in Arduino libraries (ESP8266WiFi, etc.)
         let builtin_libs_dir = framework.get_libraries_dir();
         if builtin_libs_dir.is_dir() {
@@ -128,9 +133,14 @@ impl BuildOrchestrator for Esp8266Orchestrator {
             .as_deref()
             .unwrap_or("eagle.flash.4m1m.ld");
 
-        // Resolve flash frequency from board f_flash
+        // Prefer f_image over f_flash for esptool frequency (see ESP32 orchestrator comment)
+        let f_for_image = ctx
+            .board
+            .f_image
+            .as_deref()
+            .or(ctx.board.f_flash.as_deref());
         let flash_freq = crate::esp32::esp32_linker::f_flash_to_esptool_freq(
-            ctx.board.f_flash.as_deref(),
+            f_for_image,
             &mcu_config.esptool.default_flash_freq,
         );
 

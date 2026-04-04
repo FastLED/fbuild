@@ -1,0 +1,34 @@
+{
+  "build": {
+    "core": "earlephilhower",
+    "extra_flags": "-DARDUINO_RASPBERRY_PI_PICO_W -DARDUINO_ARCH_RP2040 -DUSBD_MAX_POWER_MA=250",
+    "f_cpu": "133000000L",
+    "mcu": "rp2040",
+    "pid": "0xF00A",
+    "variant": "rpipicow",
+    "vid": "0x2E8A"
+  },
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "jlink": {},
+      "raspberrypi-swd": {}
+    }
+  },
+  "fcpu": 133000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "rpipicow",
+  "mcu": "RP2040",
+  "name": "Raspberry Pi Pico W",
+  "platform": "raspberrypi",
+  "ram": 262144,
+  "rom": 2097152,
+  "upload": {
+    "protocol": "picotool",
+    "require_upload_port": true
+  },
+  "url": "https://www.raspberrypi.org/products/raspberry-pi-pico/",
+  "vendor": "Raspberry Pi"
+}

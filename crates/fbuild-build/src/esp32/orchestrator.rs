@@ -129,6 +129,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
         include_dirs.push(ctx.src_dir.clone());
         crate::pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
+        // Toolchain sysroot includes (xtensa headers, etc.)
+        include_dirs.extend(toolchain.get_include_dirs());
 
         // Read SDK flags early — needed to check LTO before compiling.
         let sdk_ld_flags = framework.get_sdk_ld_flags(&ctx.board.mcu);
@@ -567,8 +569,17 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let mut all_archives: Vec<std::path::PathBuf> = core_objects;
         all_archives.extend(library_archives);
 
+        // Prefer f_image over f_flash for esptool frequency, matching PlatformIO's
+        // _get_board_f_image() behavior. f_image is the frequency encoded in the
+        // firmware image header; f_flash is the actual SPI clock (which may not be
+        // a valid esptool frequency, e.g. ESP32-H2's 64MHz).
+        let f_for_image = ctx
+            .board
+            .f_image
+            .as_deref()
+            .or(ctx.board.f_flash.as_deref());
         let flash_freq = crate::esp32::esp32_linker::f_flash_to_esptool_freq(
-            ctx.board.f_flash.as_deref(),
+            f_for_image,
             mcu_config.default_flash_freq(),
         );
         let linker = Esp32Linker::new(

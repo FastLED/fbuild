@@ -48,6 +48,22 @@ pub trait Toolchain: Package {
         tools.insert("size".to_string(), self.get_size_path());
         tools
     }
+
+    /// Toolchain include directories (sysroot headers like `xtensa/coreasm.h`).
+    ///
+    /// GCC cross-compilers may fail to resolve their own sysroot when
+    /// relocated. This returns the toolchain's `<root>/include/` directory
+    /// so callers can add it explicitly with `-I`.
+    fn get_include_dirs(&self) -> Vec<PathBuf> {
+        let mut dirs = Vec::new();
+        if let Some(root) = self.get_bin_dir().parent() {
+            let inc = root.join("include");
+            if inc.is_dir() {
+                dirs.push(inc);
+            }
+        }
+        dirs
+    }
 }
 
 /// Base trait for framework packages (Arduino core, ESP-IDF, etc.).

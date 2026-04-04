@@ -17,16 +17,28 @@ use crate::linker::Linker;
 
 use super::mcu_config::Esp32McuConfig;
 
+/// Valid esptool flash frequencies.
+const VALID_FLASH_FREQS: &[&str] = &[
+    "80m", "60m", "48m", "40m", "30m", "26m", "24m", "20m", "16m", "15m", "12m",
+];
+
 /// Convert `f_flash` board config value (e.g. `"80000000L"`) to esptool frequency (e.g. `"80m"`).
 ///
 /// Divides Hz by 1,000,000 and appends "m". Falls back to `default_freq` if the value
-/// cannot be parsed.
+/// cannot be parsed or is not a valid esptool frequency.
 pub fn f_flash_to_esptool_freq(f_flash: Option<&str>, default_freq: &str) -> String {
     match f_flash {
         Some(s) => {
             let s = s.trim_end_matches('L');
             match s.parse::<u64>() {
-                Ok(hz) => format!("{}m", hz / 1_000_000),
+                Ok(hz) => {
+                    let freq = format!("{}m", hz / 1_000_000);
+                    if VALID_FLASH_FREQS.contains(&freq.as_str()) {
+                        freq
+                    } else {
+                        default_freq.to_string()
+                    }
+                }
                 Err(_) => default_freq.to_string(),
             }
         }
@@ -415,8 +427,9 @@ mod tests {
         assert_eq!(f_flash_to_esptool_freq(Some("26000000L"), "80m"), "26m");
         assert_eq!(f_flash_to_esptool_freq(Some("20000000L"), "80m"), "20m");
         assert_eq!(f_flash_to_esptool_freq(Some("15000000L"), "80m"), "15m");
-        // Any valid Hz value is converted (no hardcoded table)
-        assert_eq!(f_flash_to_esptool_freq(Some("99000000L"), "40m"), "99m");
+        // Invalid esptool frequency falls back to default
+        assert_eq!(f_flash_to_esptool_freq(Some("99000000L"), "40m"), "40m");
+        assert_eq!(f_flash_to_esptool_freq(Some("64000000L"), "48m"), "48m");
         // Non-numeric falls back to default
         assert_eq!(f_flash_to_esptool_freq(Some("unknown"), "40m"), "40m");
         // None falls back to default
@@ -440,5 +453,17 @@ mod tests {
         // Simulate what the orchestrator does: board has f_flash=60000000L
         let freq = f_flash_to_esptool_freq(Some("60000000L"), config.default_flash_freq());
         assert_eq!(freq, "60m");
+    }
+
+    /// ESP32-H2 board has f_flash=64000000L, but 64m is not a valid esptool frequency.
+    /// Must fall back to the MCU default of 48m.
+    #[test]
+    fn test_esp32h2_flash_freq_not_64m() {
+        let config = get_mcu_config("esp32h2").unwrap();
+        assert_eq!(config.default_flash_freq(), "48m");
+
+        // Board has f_flash=64000000L → 64m is invalid → falls back to 48m
+        let freq = f_flash_to_esptool_freq(Some("64000000L"), config.default_flash_freq());
+        assert_eq!(freq, "48m");
     }
 }

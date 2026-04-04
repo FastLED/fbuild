@@ -90,6 +90,8 @@ impl BuildOrchestrator for TeensyOrchestrator {
         let mut include_dirs = vec![core_dir.clone()];
         include_dirs.push(ctx.src_dir.clone());
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
+        // Toolchain sysroot includes (ARM CMSIS headers, etc.)
+        include_dirs.extend(toolchain.get_include_dirs());
 
         let compiler = TeensyCompiler::new(
             toolchain.get_gcc_path(),

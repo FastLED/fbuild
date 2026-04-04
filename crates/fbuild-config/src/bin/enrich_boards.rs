@@ -21,6 +21,7 @@ const BUILD_FIELDS: &[&str] = &[
     "extra_flags",
     "f_cpu",
     "f_flash",
+    "f_image",
     "flash_mode",
     "mcu",
 ];
