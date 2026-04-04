@@ -166,7 +166,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
         let user_flags = config.get_build_flags(&params.env_name)?;
         crate::warn_debug_build_flags(&user_flags);
 
-        let mcu_config = super::mcu_config::get_teensy_config()?;
+        let mcu_config = super::mcu_config::get_teensy_config_for_mcu(&board.mcu.to_lowercase())?;
 
         use fbuild_packages::Toolchain;
         let compiler = TeensyCompiler::new(

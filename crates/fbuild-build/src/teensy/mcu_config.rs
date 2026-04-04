@@ -8,6 +8,7 @@ use std::collections::HashMap;
 use fbuild_core::Result;
 use serde::Deserialize;
 
+const TEENSY31_JSON: &str = include_str!("configs/teensy31.json");
 const TEENSY3X_JSON: &str = include_str!("configs/teensy3x.json");
 const TEENSY4X_JSON: &str = include_str!("configs/teensy4x.json");
 const TEENSYLC_JSON: &str = include_str!("configs/teensylc.json");
@@ -73,7 +74,8 @@ pub fn get_teensy_config() -> Result<TeensyMcuConfig> {
 pub fn get_teensy_config_for_mcu(mcu: &str) -> Result<TeensyMcuConfig> {
     let json = match mcu {
         "imxrt1062" => TEENSY4X_JSON,
-        "mk20dx128" | "mk20dx256" | "mk64fx512" | "mk66fx1m0" => TEENSY3X_JSON,
+        "mk20dx128" | "mk20dx256" => TEENSY31_JSON,
+        "mk64fx512" | "mk66fx1m0" => TEENSY3X_JSON,
         "mkl26z64" => TEENSYLC_JSON,
         _ => {
             return Err(fbuild_core::FbuildError::ConfigError(format!(
@@ -219,5 +221,215 @@ mod tests {
     fn test_teensy_config_for_mcu_unsupported() {
         let result = get_teensy_config_for_mcu("unknown_mcu");
         assert!(result.is_err());
+    }
+
+    // ── Critical linker flag validation ──────────────────────────────────
+    // These tests ensure MCU configs contain platform-critical linker flags
+    // that PlatformIO provides. Missing flags cause hard link failures
+    // (e.g. undefined reference to `__rtc_localtime`).
+
+    #[test]
+    fn test_teensy3x_linker_has_rtc_localtime_defsym() {
+        // Teensy 3.x core startup references __rtc_localtime as a weak symbol.
+        // Without --defsym the linker fails with "undefined reference to `__rtc_localtime'"
+        let config = get_teensy_config_for_mcu("mk66fx1m0").unwrap();
+        assert!(
+            config
+                .linker_flags
+                .iter()
+                .any(|f| f.contains("__rtc_localtime")),
+            "Teensy 3.x linker_flags must include --defsym=__rtc_localtime=0; \
+             without it, linking fails on ResetHandler. Flags: {:?}",
+            config.linker_flags
+        );
+    }
+
+    #[test]
+    fn test_teensy3x_linker_flags_match_platformio() {
+        // Validate Teensy 3.x linker flags contain the critical subset
+        // that PlatformIO's Teensy 3.6 builder provides.
+        let config = get_teensy_config_for_mcu("mk66fx1m0").unwrap();
+        let required = [
+            "-mcpu=cortex-m4",
+            "-mthumb",
+            "-Wl,--gc-sections",
+            "-Wl,--defsym=__rtc_localtime=0",
+        ];
+        for flag in &required {
+            assert!(
+                config.linker_flags.contains(&flag.to_string()),
+                "Teensy 3.x linker_flags missing '{}'. Have: {:?}",
+                flag,
+                config.linker_flags
+            );
+        }
+    }
+
+    #[test]
+    fn test_teensy4x_linker_flags_match_platformio() {
+        let config = get_teensy_config_for_mcu("imxrt1062").unwrap();
+        let required = [
+            "-mcpu=cortex-m7",
+            "-mthumb",
+            "-mfloat-abi=hard",
+            "-mfpu=fpv5-d16",
+            "-Wl,--gc-sections",
+        ];
+        for flag in &required {
+            assert!(
+                config.linker_flags.contains(&flag.to_string()),
+                "Teensy 4.x linker_flags missing '{}'. Have: {:?}",
+                flag,
+                config.linker_flags
+            );
+        }
+    }
+
+    #[test]
+    fn test_teensylc_linker_flags_match_platformio() {
+        let config = get_teensy_config_for_mcu("mkl26z64").unwrap();
+        let required = ["-mcpu=cortex-m0plus", "-mthumb", "-Wl,--gc-sections"];
+        for flag in &required {
+            assert!(
+                config.linker_flags.contains(&flag.to_string()),
+                "Teensy LC linker_flags missing '{}'. Have: {:?}",
+                flag,
+                config.linker_flags
+            );
+        }
+    }
+
+    /// Validate fbuild's MCU configs against the PlatformIO reference configs.
+    ///
+    /// The reference configs in configs/reference/ contain the authoritative
+    /// linker flags extracted from PlatformIO. If this test fails, either:
+    /// - fbuild's MCU config is missing a flag PlatformIO requires (fix the config)
+    /// - PlatformIO changed its defaults (regenerate with ci/extract_pio_linker_flags.py)
+    #[test]
+    fn test_linker_flags_match_platformio_reference() {
+        let reference_configs: &[(&str, &str)] = &[
+            ("mk66fx1m0", include_str!("configs/reference/teensy36.json")),
+            ("imxrt1062", include_str!("configs/reference/teensy41.json")),
+            ("mkl26z64", include_str!("configs/reference/teensylc.json")),
+        ];
+
+        for (mcu, ref_json) in reference_configs {
+            let reference: serde_json::Value =
+                serde_json::from_str(ref_json).expect("reference JSON should parse");
+            let mcu_config = get_teensy_config_for_mcu(mcu)
+                .unwrap_or_else(|_| panic!("MCU config should load for {}", mcu));
+
+            let ref_linker_flags: Vec<String> = reference["linker_flags"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|v| v.as_str().unwrap().to_string())
+                .collect();
+
+            for flag in &ref_linker_flags {
+                assert!(
+                    mcu_config.linker_flags.contains(flag),
+                    "MCU {} linker_flags missing PlatformIO reference flag '{}'\n\
+                     fbuild has:    {:?}\n\
+                     PlatformIO has: {:?}",
+                    mcu,
+                    flag,
+                    mcu_config.linker_flags,
+                    ref_linker_flags,
+                );
+            }
+
+            let ref_linker_libs: Vec<String> = reference["linker_libs"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|v| v.as_str().unwrap().to_string())
+                .collect();
+
+            for lib in &ref_linker_libs {
+                assert!(
+                    mcu_config.linker_libs.contains(lib),
+                    "MCU {} linker_libs missing PlatformIO reference lib '{}'\n\
+                     fbuild has:    {:?}\n\
+                     PlatformIO has: {:?}",
+                    mcu,
+                    lib,
+                    mcu_config.linker_libs,
+                    ref_linker_libs,
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn test_teensy31_no_hard_float_flags() {
+        // Teensy 3.0/3.1/3.2 (MK20DX) lack an FPU. Hard-float flags cause runtime hard faults.
+        for mcu in &["mk20dx128", "mk20dx256"] {
+            let config = get_teensy_config_for_mcu(mcu).unwrap();
+            for flag in config
+                .compiler_flags
+                .common
+                .iter()
+                .chain(&config.linker_flags)
+            {
+                assert!(
+                    !flag.contains("mfloat-abi=hard") && !flag.contains("mfpu="),
+                    "MCU {} must not have FPU flags (found '{}') — MK20DX has no FPU",
+                    mcu,
+                    flag
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn test_teensy35_36_have_hard_float_flags() {
+        // Teensy 3.5/3.6 (MK64FX/MK66FX) have a single-precision FPU.
+        for mcu in &["mk64fx512", "mk66fx1m0"] {
+            let config = get_teensy_config_for_mcu(mcu).unwrap();
+            assert!(
+                config
+                    .linker_flags
+                    .contains(&"-mfloat-abi=hard".to_string()),
+                "MCU {} linker_flags should include -mfloat-abi=hard",
+                mcu
+            );
+            assert!(
+                config
+                    .linker_flags
+                    .contains(&"-mfpu=fpv4-sp-d16".to_string()),
+                "MCU {} linker_flags should include -mfpu=fpv4-sp-d16",
+                mcu
+            );
+        }
+    }
+
+    #[test]
+    fn test_all_teensy_mcus_have_consistent_cpu_in_compiler_and_linker() {
+        // The -mcpu flag must match between compiler and linker flags.
+        // A mismatch (e.g. compiling for cortex-m4 but linking for cortex-m7)
+        // produces subtle ABI bugs or hard link failures.
+        let mcus = [
+            ("imxrt1062", "cortex-m7"),
+            ("mk66fx1m0", "cortex-m4"),
+            ("mk20dx256", "cortex-m4"),
+            ("mkl26z64", "cortex-m0plus"),
+        ];
+        for (mcu, expected_cpu) in mcus {
+            let config = get_teensy_config_for_mcu(mcu).unwrap();
+            let expected_flag = format!("-mcpu={}", expected_cpu);
+            assert!(
+                config.compiler_flags.common.contains(&expected_flag),
+                "MCU {} compiler_flags missing {}",
+                mcu,
+                expected_flag
+            );
+            assert!(
+                config.linker_flags.contains(&expected_flag),
+                "MCU {} linker_flags missing {}",
+                mcu,
+                expected_flag
+            );
+        }
     }
 }

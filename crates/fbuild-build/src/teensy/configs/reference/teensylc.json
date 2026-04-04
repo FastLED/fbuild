@@ -1,0 +1,21 @@
+{
+  "board": "teensylc",
+  "mcu": "mkl26z64",
+  "source": "PlatformIO teensy platform (extracted from SCons builder environment)",
+
+  "linker_flags": [
+    "-mcpu=cortex-m0plus",
+    "-mthumb",
+    "-Wl,--gc-sections",
+    "-Wl,--relax",
+    "-Wl,--print-memory-usage",
+    "--specs=nano.specs"
+  ],
+
+  "linker_libs": [
+    "-lm",
+    "-lstdc++",
+    "-lc",
+    "-lgcc"
+  ]
+}

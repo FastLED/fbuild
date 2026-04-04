@@ -30,7 +30,9 @@
     "-mcpu=cortex-m0plus",
     "-mthumb",
     "-Wl,--gc-sections",
-    "-Wl,--print-memory-usage"
+    "-Wl,--relax",
+    "-Wl,--print-memory-usage",
+    "--specs=nano.specs"
   ],
 
   "linker_libs": [

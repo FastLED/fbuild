@@ -1,0 +1,24 @@
+{
+  "board": "teensy36",
+  "mcu": "mk66fx1m0",
+  "source": "PlatformIO teensy platform (extracted from SCons builder environment)",
+
+  "linker_flags": [
+    "-mcpu=cortex-m4",
+    "-mthumb",
+    "-mfloat-abi=hard",
+    "-mfpu=fpv4-sp-d16",
+    "-Wl,--gc-sections",
+    "-Wl,--relax",
+    "-Wl,--print-memory-usage",
+    "-Wl,--defsym=__rtc_localtime=0",
+    "--specs=nano.specs"
+  ],
+
+  "linker_libs": [
+    "-lm",
+    "-lstdc++",
+    "-lc",
+    "-lgcc"
+  ]
+}

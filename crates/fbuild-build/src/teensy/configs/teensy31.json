@@ -1,20 +1,17 @@
 {
-  "name": "Teensy 3.x",
-  "description": "Configuration for Teensy 3.0-3.6 (ARM Cortex-M4, MK20DX/MK64FX/MK66FX)",
+  "name": "Teensy 3.0/3.1/3.2",
+  "description": "Configuration for Teensy 3.0-3.2 (ARM Cortex-M4, MK20DX — no FPU)",
   "architecture": "arm-cortex-m4",
 
   "compiler_flags": {
     "common": [
       "-mcpu=cortex-m4",
       "-mthumb",
-      "-mfloat-abi=hard",
-      "-mfpu=fpv4-sp-d16",
       "-Wall",
       "-Wextra",
       "-Wno-unused-parameter",
       "-ffunction-sections",
       "-fdata-sections",
-      "-fsingle-precision-constant",
       "-MMD"
     ],
     "c": [
@@ -32,8 +29,6 @@
   "linker_flags": [
     "-mcpu=cortex-m4",
     "-mthumb",
-    "-mfloat-abi=hard",
-    "-mfpu=fpv4-sp-d16",
     "-Wl,--gc-sections",
     "-Wl,--relax",
     "-Wl,--print-memory-usage",
