@@ -582,7 +582,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             sdk_ld_scripts,
             params.profile,
             ctx.board.flash_mode.clone(),
-            flash_freq,
+            &flash_freq,
             ctx.board.max_flash,
             ctx.board.max_ram,
             params.verbose,
@@ -610,7 +610,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 .as_deref()
                 .unwrap_or(mcu_config.default_flash_mode());
             let boot_elf =
-                framework.get_bootloader_elf(&ctx.board.mcu, boot_flash_mode, flash_freq);
+                framework.get_bootloader_elf(&ctx.board.mcu, boot_flash_mode, &flash_freq);
             if boot_elf.exists() {
                 let boot_elf_str = boot_elf.to_string_lossy();
                 let boot_dst_str = boot_dst.to_string_lossy();
@@ -626,7 +626,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                     "--flash-mode",
                     boot_flash_mode,
                     "--flash-freq",
-                    flash_freq,
+                    &flash_freq,
                     "--flash-size",
                     flash_size,
                     &boot_elf_str,

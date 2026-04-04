@@ -129,11 +129,10 @@ impl BuildOrchestrator for Esp8266Orchestrator {
             .unwrap_or("eagle.flash.4m1m.ld");
 
         // Resolve flash frequency from board f_flash
-        let flash_freq = f_flash_to_freq(
+        let flash_freq = crate::esp32::esp32_linker::f_flash_to_esptool_freq(
             ctx.board.f_flash.as_deref(),
             &mcu_config.esptool.default_flash_freq,
-        )
-        .to_string();
+        );
 
         let linker = Esp8266Linker::new(
             toolchain.get_gcc_path(),
@@ -169,23 +168,6 @@ impl BuildOrchestrator for Esp8266Orchestrator {
 /// Create an ESP8266 orchestrator.
 pub fn create() -> Box<dyn BuildOrchestrator> {
     Box::new(Esp8266Orchestrator)
-}
-
-/// Convert `f_flash` board config value (e.g. `"40000000L"`) to esptool frequency string.
-fn f_flash_to_freq<'a>(f_flash: Option<&str>, default: &'a str) -> &'a str {
-    match f_flash {
-        Some(s) => {
-            let s = s.trim_end_matches('L');
-            match s {
-                "80000000" => "80m",
-                "40000000" => "40m",
-                "26000000" => "26m",
-                "20000000" => "20m",
-                _ => default,
-            }
-        }
-        None => default,
-    }
 }
 
 /// Check if a project is configured for ESP8266 by reading its platformio.ini.
@@ -224,13 +206,5 @@ mod tests {
         )
         .unwrap();
         assert!(!is_esp8266_project(tmp.path(), "esp32"));
-    }
-
-    #[test]
-    fn test_f_flash_to_freq() {
-        assert_eq!(f_flash_to_freq(Some("40000000L"), "40m"), "40m");
-        assert_eq!(f_flash_to_freq(Some("80000000L"), "40m"), "80m");
-        assert_eq!(f_flash_to_freq(None, "40m"), "40m");
-        assert_eq!(f_flash_to_freq(Some("unknown"), "40m"), "40m");
     }
 }

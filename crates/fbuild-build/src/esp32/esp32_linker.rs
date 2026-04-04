@@ -19,20 +19,18 @@ use super::mcu_config::Esp32McuConfig;
 
 /// Convert `f_flash` board config value (e.g. `"80000000L"`) to esptool frequency (e.g. `"80m"`).
 ///
-/// Falls back to `default_freq` (from MCU config) for unrecognized values.
-pub fn f_flash_to_esptool_freq<'a>(f_flash: Option<&str>, default_freq: &'a str) -> &'a str {
+/// Divides Hz by 1,000,000 and appends "m". Falls back to `default_freq` if the value
+/// cannot be parsed.
+pub fn f_flash_to_esptool_freq(f_flash: Option<&str>, default_freq: &str) -> String {
     match f_flash {
         Some(s) => {
             let s = s.trim_end_matches('L');
-            match s {
-                "80000000" => "80m",
-                "40000000" => "40m",
-                "26000000" => "26m",
-                "20000000" => "20m",
-                _ => default_freq,
+            match s.parse::<u64>() {
+                Ok(hz) => format!("{}m", hz / 1_000_000),
+                Err(_) => default_freq.to_string(),
             }
         }
-        None => default_freq,
+        None => default_freq.to_string(),
     }
 }
 
@@ -406,5 +404,41 @@ mod tests {
             .flash_offsets
             .firmware
             .starts_with("0x"));
+    }
+
+    #[test]
+    fn test_f_flash_to_esptool_freq_all_mappings() {
+        assert_eq!(f_flash_to_esptool_freq(Some("80000000L"), "40m"), "80m");
+        assert_eq!(f_flash_to_esptool_freq(Some("60000000L"), "40m"), "60m");
+        assert_eq!(f_flash_to_esptool_freq(Some("40000000L"), "80m"), "40m");
+        assert_eq!(f_flash_to_esptool_freq(Some("30000000L"), "80m"), "30m");
+        assert_eq!(f_flash_to_esptool_freq(Some("26000000L"), "80m"), "26m");
+        assert_eq!(f_flash_to_esptool_freq(Some("20000000L"), "80m"), "20m");
+        assert_eq!(f_flash_to_esptool_freq(Some("15000000L"), "80m"), "15m");
+        // Any valid Hz value is converted (no hardcoded table)
+        assert_eq!(f_flash_to_esptool_freq(Some("99000000L"), "40m"), "99m");
+        // Non-numeric falls back to default
+        assert_eq!(f_flash_to_esptool_freq(Some("unknown"), "40m"), "40m");
+        // None falls back to default
+        assert_eq!(f_flash_to_esptool_freq(None, "60m"), "60m");
+    }
+
+    /// ESP32-C2 only supports 60m, 30m, 20m, 15m flash frequencies (not 80m).
+    /// The board config specifies f_flash=60000000L, so the resolved frequency
+    /// must be "60m", not "80m".
+    #[test]
+    fn test_esp32c2_flash_freq_not_80m() {
+        let config = get_mcu_config("esp32c2").unwrap();
+        // Default must not be 80m — ESP32-C2 doesn't support it
+        assert_ne!(
+            config.default_flash_freq(),
+            "80m",
+            "ESP32-C2 does not support 80m flash frequency"
+        );
+        assert_eq!(config.default_flash_freq(), "60m");
+
+        // Simulate what the orchestrator does: board has f_flash=60000000L
+        let freq = f_flash_to_esptool_freq(Some("60000000L"), config.default_flash_freq());
+        assert_eq!(freq, "60m");
     }
 }
