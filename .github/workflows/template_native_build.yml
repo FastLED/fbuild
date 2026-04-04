@@ -78,7 +78,11 @@ jobs:
         run: pip install cargo-zigbuild
 
       - name: Setup zccache
-        run: pip install zccache && zccache start
+        shell: bash
+        run: |
+          pip install zccache
+          chmod +x ~/.local/bin/zccache 2>/dev/null || true
+          zccache start
 
       - name: Build release binaries
         shell: bash
