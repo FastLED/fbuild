@@ -779,6 +779,16 @@ fn resolve_pioarduino_packages(
         framework.ensure_libs(&libs_url)?;
     }
 
+    // Ensure MCU-specific skeleton libs (e.g. ESP32-C2, ESP32-C61).
+    // Some MCUs ship their SDK in a separate skeleton package.
+    let mcu_suffix = mcu.strip_prefix("esp32").unwrap_or("");
+    if !mcu_suffix.is_empty() {
+        let skeleton_name = format!("framework-arduino-{}-skeleton-lib", mcu_suffix);
+        if let Ok(skeleton_url) = platform.get_package_url(&skeleton_name) {
+            framework.ensure_mcu_libs(&skeleton_url, mcu)?;
+        }
+    }
+
     Ok((toolchain, framework))
 }
 
