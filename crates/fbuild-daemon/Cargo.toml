@@ -39,6 +39,9 @@ bytes = { workspace = true }
 futures = { workspace = true }
 regex = { workspace = true }
 
+[dependencies.mimalloc]
+workspace = true
+
 [dev-dependencies]
 fbuild-test-support = { path = "../fbuild-test-support" }
 tempfile = { workspace = true }
