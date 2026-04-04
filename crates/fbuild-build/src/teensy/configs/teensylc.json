@@ -12,6 +12,7 @@
       "-Wno-unused-parameter",
       "-ffunction-sections",
       "-fdata-sections",
+      "-fsingle-precision-constant",
       "-MMD"
     ],
     "c": [
@@ -22,7 +23,8 @@
       "-fno-exceptions",
       "-fno-rtti",
       "-felide-constructors",
-      "-fno-threadsafe-statics"
+      "-fno-threadsafe-statics",
+      "-Wno-error=narrowing"
     ]
   },
 
@@ -49,11 +51,11 @@
 
   "profiles": {
     "release": {
-      "compile_flags": ["-Os", "-flto", "-fno-fat-lto-objects"],
-      "link_flags": ["-flto", "-fuse-linker-plugin"]
+      "compile_flags": ["-Os", "-flto=auto", "-fno-fat-lto-objects"],
+      "link_flags": ["-Os", "-flto=auto", "-fuse-linker-plugin"]
     },
     "quick": {
-      "compile_flags": ["-Os"],
+      "compile_flags": ["-O1"],
       "link_flags": []
     }
   },

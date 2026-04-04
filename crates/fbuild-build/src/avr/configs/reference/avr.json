@@ -1,0 +1,34 @@
+{
+  "board": "avr",
+  "mcu": "avr",
+  "platform": "avr",
+  "source": "PlatformIO avr platform (extracted from platform_configs)",
+  "compiler_flags": {
+    "common": [
+      "-w",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-MMD"
+    ],
+    "c": [
+      "-std=gnu11"
+    ],
+    "cxx": [
+      "-std=gnu++11",
+      "-fpermissive",
+      "-fno-exceptions",
+      "-fno-threadsafe-statics"
+    ]
+  },
+  "defines": {
+    "ARDUINO_ARCH_AVR": "1"
+  },
+  "linker_flags": [
+    "-w",
+    "-Wl,--gc-sections",
+    "-Wl,--allow-multiple-definition"
+  ],
+  "linker_libs": [
+    "-lm"
+  ]
+}

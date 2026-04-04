@@ -1,0 +1,60 @@
+{
+  "board": "wasm",
+  "mcu": "wasm32",
+  "platform": "wasm",
+  "source": "PlatformIO wasm platform (extracted from platform_configs)",
+  "compiler_flags": {
+    "common": [
+      "-std=gnu++17",
+      "-fpermissive",
+      "-fno-exceptions",
+      "-fno-rtti",
+      "-fno-threadsafe-statics",
+      "-pthread",
+      "-fpch-instantiate-templates",
+      "-Wno-constant-logical-operand",
+      "-Wnon-c-typedef-for-linkage",
+      "-Werror=bad-function-cast",
+      "-Werror=cast-function-type",
+      "-ffunction-sections",
+      "-fdata-sections"
+    ],
+    "c": [
+      "-std=gnu17"
+    ],
+    "cxx": [
+      "-std=gnu++17",
+      "-fpermissive",
+      "-fno-exceptions",
+      "-fno-rtti"
+    ]
+  },
+  "defines": {
+    "FASTLED_ENGINE_EVENTS_MAX_LISTENERS": "50",
+    "FASTLED_FORCE_NAMESPACE": "1",
+    "FASTLED_USE_PROGMEM": "0",
+    "USE_OFFSET_CONVERTER": "0",
+    "GL_ENABLE_GET_PROC_ADDRESS": "0",
+    "_REENTRANT": "1",
+    "EMSCRIPTEN_HAS_UNBOUND_TYPE_NAMES": "0"
+  },
+  "linker_flags": [
+    "-sWASM=1",
+    "-fuse-ld=wasm-ld",
+    "-pthread",
+    "-sUSE_PTHREADS=1",
+    "-sPROXY_TO_PTHREAD",
+    "-sMODULARIZE=1",
+    "-sEXPORT_NAME=fastled",
+    "-sALLOW_MEMORY_GROWTH=1",
+    "-sINITIAL_MEMORY=134217728",
+    "-sAUTO_NATIVE_LIBRARIES=0",
+    "-sEXIT_RUNTIME=0",
+    "-sFILESYSTEM=0",
+    "-Wl,--strip-debug",
+    "-Wl,--no-export-dynamic",
+    "-sEXPORTED_RUNTIME_METHODS=['ccall','cwrap','stringToUTF8','UTF8ToString','lengthBytesUTF8','HEAPU8','getValue']",
+    "-sEXPORTED_FUNCTIONS=['_malloc','_free','_main','_extern_setup','_extern_loop','_fastled_declare_files','_getStripPixelData','_getFrameData','_getScreenMapData','_freeFrameData','_getFrameVersion','_hasNewFrameData','_js_fetch_success_callback','_js_fetch_error_callback','_pushAudioSamples']"
+  ],
+  "linker_libs": []
+}

@@ -1,8 +1,39 @@
 {
   "board": "teensylc",
   "mcu": "mkl26z64",
-  "source": "PlatformIO teensy platform (extracted from SCons builder environment)",
-
+  "platform": "teensy",
+  "source": "PlatformIO teensy platform (extracted from platform_configs)",
+  "compiler_flags": {
+    "common": [
+      "-mcpu=cortex-m0plus",
+      "-mthumb",
+      "-Wall",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-fsingle-precision-constant",
+      "-MMD"
+    ],
+    "c": [
+      "-std=gnu11"
+    ],
+    "cxx": [
+      "-std=gnu++14",
+      "-fno-exceptions",
+      "-fno-rtti",
+      "-felide-constructors",
+      "-Wno-error=narrowing"
+    ]
+  },
+  "defines": {
+    "__MKL26Z64__": "1",
+    "ARDUINO_ARCH_TEENSY": "1",
+    "ARDUINO_TEENSYLC": "1",
+    "ARDUINO": "10819",
+    "TEENSYDUINO": "159",
+    "F_BUS": "24000000",
+    "USB_SERIAL": "1",
+    "LAYOUT_US_ENGLISH": "1"
+  },
   "linker_flags": [
     "-mcpu=cortex-m0plus",
     "-mthumb",
@@ -11,7 +42,6 @@
     "-Wl,--print-memory-usage",
     "--specs=nano.specs"
   ],
-
   "linker_libs": [
     "-lm",
     "-lstdc++",

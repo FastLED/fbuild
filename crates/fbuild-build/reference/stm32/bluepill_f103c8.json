@@ -1,0 +1,57 @@
+{
+  "board": "bluepill_f103c8",
+  "mcu": "stm32f103c8t6",
+  "platform": "stm32",
+  "source": "PlatformIO stm32 platform (extracted from platform_configs)",
+  "compiler_flags": {
+    "common": [
+      "-mcpu=cortex-m3",
+      "-mthumb",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-Wno-error=unused-function",
+      "-Wno-error=unused-variable",
+      "-Wno-error=deprecated-declarations",
+      "-Wno-unused-parameter",
+      "-Wno-sign-compare",
+      "-MMD"
+    ],
+    "c": [
+      "-std=gnu17",
+      "-Wno-old-style-declaration"
+    ],
+    "cxx": [
+      "-std=gnu++17",
+      "-fno-exceptions",
+      "-fno-rtti",
+      "-fno-threadsafe-statics"
+    ]
+  },
+  "defines": {
+    "STM32F1": "1",
+    "STM32F103xB": "1",
+    "ARDUINO_ARCH_STM32": "1",
+    "STM32_CORE_VERSION_MAJOR": "2",
+    "STM32_CORE_VERSION_MINOR": "12",
+    "USE_HAL_DRIVER": "1",
+    "F_CPU": "72000000L"
+  },
+  "linker_flags": [
+    "-mcpu=cortex-m3",
+    "-mthumb",
+    "-Wl,--gc-sections",
+    "-Wl,--cref",
+    "-Wl,--check-sections",
+    "-Wl,--unresolved-symbols=report-all",
+    "-Wl,--warn-common",
+    "--specs=nano.specs",
+    "--specs=nosys.specs",
+    "-Wl,--entry=Reset_Handler"
+  ],
+  "linker_libs": [
+    "-lgcc",
+    "-lstdc++",
+    "-lm",
+    "-lc"
+  ]
+}

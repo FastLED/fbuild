@@ -22,7 +22,8 @@
       "-fno-exceptions",
       "-fno-rtti",
       "-felide-constructors",
-      "-fno-threadsafe-statics"
+      "-fno-threadsafe-statics",
+      "-Wno-error=narrowing"
     ]
   },
 

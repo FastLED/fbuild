@@ -5,12 +5,14 @@
 
   "compiler_flags": {
     "common": [
+      "-w",
       "-Os",
       "-Wall",
       "-ffunction-sections",
       "-fdata-sections",
       "-flto",
-      "-fno-fat-lto-objects"
+      "-fno-fat-lto-objects",
+      "-MMD"
     ],
     "c": [
       "-std=gnu11"
@@ -24,6 +26,7 @@
   },
 
   "linker_flags": [
+    "-w",
     "-Os",
     "-flto",
     "-fuse-linker-plugin",

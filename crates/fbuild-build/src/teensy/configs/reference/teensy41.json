@@ -1,8 +1,41 @@
 {
   "board": "teensy41",
   "mcu": "imxrt1062",
-  "source": "PlatformIO teensy platform (extracted from SCons builder environment)",
-
+  "platform": "teensy",
+  "source": "PlatformIO teensy platform (extracted from platform_configs)",
+  "compiler_flags": {
+    "common": [
+      "-mcpu=cortex-m7",
+      "-mthumb",
+      "-mfloat-abi=hard",
+      "-mfpu=fpv5-d16",
+      "-Wall",
+      "-Wextra",
+      "-Wno-unused-parameter",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-MMD"
+    ],
+    "c": [
+      "-std=gnu11"
+    ],
+    "cxx": [
+      "-std=gnu++17",
+      "-fno-exceptions",
+      "-fno-rtti",
+      "-felide-constructors",
+      "-fno-threadsafe-statics"
+    ]
+  },
+  "defines": {
+    "__IMXRT1062__": "1",
+    "ARDUINO_ARCH_TEENSY": "1",
+    "ARDUINO_TEENSY41": "1",
+    "ARDUINO": "10819",
+    "TEENSYDUINO": "159",
+    "USB_SERIAL": "1",
+    "LAYOUT_US_ENGLISH": "1"
+  },
   "linker_flags": [
     "-mcpu=cortex-m7",
     "-mthumb",
@@ -11,7 +44,6 @@
     "-Wl,--gc-sections",
     "-Wl,--print-memory-usage"
   ],
-
   "linker_libs": [
     "-lgcc",
     "-lstdc++",

@@ -271,6 +271,19 @@ impl BoardConfig {
             defines.insert("TEENSYDUINO".to_string(), "159".to_string());
             defines.insert("USB_SERIAL".to_string(), "1".to_string());
             defines.insert("LAYOUT_US_ENGLISH".to_string(), "1".to_string());
+
+            // Peripheral bus clock frequency — required by Teensy 3.x/LC core headers.
+            // IMXRT (Teensy 4.x) boards don't use F_BUS.
+            let mcu_lower = self.mcu.to_lowercase();
+            let f_bus = match mcu_lower.as_str() {
+                "mk66fx1m0" | "mk64fx512" => Some("60000000"),
+                "mk20dx256" | "mk20dx128" => Some("48000000"),
+                "mkl26z64" => Some("24000000"),
+                _ => None,
+            };
+            if let Some(bus_freq) = f_bus {
+                defines.insert("F_BUS".to_string(), bus_freq.to_string());
+            }
         }
 
         // ESP32-specific defines

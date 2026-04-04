@@ -304,7 +304,7 @@ mod tests {
     /// The reference configs in configs/reference/ contain the authoritative
     /// linker flags extracted from PlatformIO. If this test fails, either:
     /// - fbuild's MCU config is missing a flag PlatformIO requires (fix the config)
-    /// - PlatformIO changed its defaults (regenerate with ci/extract_pio_linker_flags.py)
+    /// - PlatformIO changed its defaults (regenerate with ci/extract_pio_build_flags.py)
     #[test]
     fn test_linker_flags_match_platformio_reference() {
         let reference_configs: &[(&str, &str)] = &[
@@ -356,6 +356,100 @@ mod tests {
                     lib,
                     mcu_config.linker_libs,
                     ref_linker_libs,
+                );
+            }
+        }
+    }
+
+    /// Validate compiler flags against PlatformIO reference (superset check).
+    ///
+    /// fbuild's MCU config must contain every compiler flag that PlatformIO uses.
+    /// fbuild may add extra flags (e.g. -Wextra) beyond what PIO provides.
+    #[test]
+    fn test_compiler_flags_match_platformio_reference() {
+        let reference_configs: &[(&str, &str)] = &[
+            ("mk66fx1m0", include_str!("configs/reference/teensy36.json")),
+            ("imxrt1062", include_str!("configs/reference/teensy41.json")),
+            ("mkl26z64", include_str!("configs/reference/teensylc.json")),
+        ];
+
+        for (mcu, ref_json) in reference_configs {
+            let reference: serde_json::Value =
+                serde_json::from_str(ref_json).expect("reference JSON should parse");
+            let mcu_config = get_teensy_config_for_mcu(mcu)
+                .unwrap_or_else(|_| panic!("MCU config should load for {}", mcu));
+
+            let ref_cf = &reference["compiler_flags"];
+            for category in &["common", "c", "cxx"] {
+                let ref_flags: Vec<String> = ref_cf[*category]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .map(|v| v.as_str().unwrap().to_string())
+                    .collect();
+
+                let mcu_flags = match *category {
+                    "common" => &mcu_config.compiler_flags.common,
+                    "c" => &mcu_config.compiler_flags.c,
+                    "cxx" => &mcu_config.compiler_flags.cxx,
+                    _ => unreachable!(),
+                };
+
+                for flag in &ref_flags {
+                    assert!(
+                        mcu_flags.contains(flag),
+                        "MCU {} compiler_flags.{} missing PlatformIO reference flag '{}'\n\
+                         fbuild has:    {:?}\n\
+                         PlatformIO has: {:?}",
+                        mcu,
+                        category,
+                        flag,
+                        mcu_flags,
+                        ref_flags,
+                    );
+                }
+            }
+        }
+    }
+
+    /// Validate preprocessor defines against PlatformIO reference.
+    ///
+    /// Defines come from `BoardConfig::get_defines()` (not from MCU config JSON).
+    /// This test constructs a BoardConfig for each reference board and checks that
+    /// every PIO define is present with the correct value.
+    #[test]
+    fn test_defines_match_platformio_reference() {
+        let reference_configs: &[(&str, &str)] = &[
+            ("teensy36", include_str!("configs/reference/teensy36.json")),
+            ("teensy41", include_str!("configs/reference/teensy41.json")),
+            ("teensylc", include_str!("configs/reference/teensylc.json")),
+        ];
+
+        for (board_id, ref_json) in reference_configs {
+            let reference: serde_json::Value =
+                serde_json::from_str(ref_json).expect("reference JSON should parse");
+            let board_config = fbuild_config::BoardConfig::from_board_id(board_id, &HashMap::new())
+                .unwrap_or_else(|_| panic!("BoardConfig should load for {}", board_id));
+            let actual_defines = board_config.get_defines();
+
+            let ref_defines = reference["defines"]
+                .as_object()
+                .expect("reference defines should be an object");
+
+            for (name, value) in ref_defines {
+                let expected = value.as_str().unwrap();
+                let actual = actual_defines.get(name);
+                assert!(
+                    actual.map(|v| v.as_str()) == Some(expected),
+                    "Board {} missing or wrong define {}={}\n\
+                     fbuild has: {:?}\n\
+                     PlatformIO expects: {}={}",
+                    board_id,
+                    name,
+                    expected,
+                    actual,
+                    name,
+                    expected,
                 );
             }
         }
