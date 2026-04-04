@@ -9,6 +9,7 @@ use fbuild_core::Result;
 use serde::Deserialize;
 
 use crate::compiler::{CompilerFlags, McuConfig, ObjcopyConfig, ProfileFlags};
+use crate::esp32::mcu_config::DefineEntry;
 
 const ESP8266_JSON: &str = include_str!("configs/esp8266.json");
 
@@ -34,7 +35,27 @@ pub struct Esp8266McuConfig {
     pub linker_libs: Vec<String>,
     pub objcopy: ObjcopyConfig,
     pub profiles: HashMap<String, ProfileFlags>,
+    #[serde(default)]
+    pub defines: Vec<DefineEntry>,
     pub esptool: Esp8266EsptoolConfig,
+}
+
+impl Esp8266McuConfig {
+    /// Convert defines to a HashMap suitable for CompilerBase.
+    pub fn defines_map(&self) -> HashMap<String, String> {
+        let mut map = HashMap::new();
+        for entry in &self.defines {
+            match entry {
+                DefineEntry::Simple(name) => {
+                    map.insert(name.clone(), "1".to_string());
+                }
+                DefineEntry::KeyValue(name, value) => {
+                    map.insert(name.clone(), value.clone());
+                }
+            }
+        }
+        map
+    }
 }
 
 impl McuConfig for Esp8266McuConfig {

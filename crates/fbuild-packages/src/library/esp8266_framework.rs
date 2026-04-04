@@ -77,17 +77,16 @@ impl Esp8266Framework {
     /// Collect SDK include directories.
     ///
     /// The ESP8266 SDK places headers in `tools/sdk/include/` with per-component
-    /// subdirectories. We return the top-level dir plus every immediate child dir.
+    /// subdirectories. We return the top-level dir plus every immediate child dir,
+    /// plus `tools/sdk/lwip2/include` (network stack headers like `lwipopts.h`)
+    /// and `tools/sdk/libb64/include`.
     pub fn get_sdk_include_dirs(&self) -> Vec<PathBuf> {
-        let base = self
-            .resolved_dir()
-            .join("tools")
-            .join("sdk")
-            .join("include");
+        let sdk_base = self.resolved_dir().join("tools").join("sdk");
+        let include_base = sdk_base.join("include");
         let mut dirs = Vec::new();
-        if base.is_dir() {
-            dirs.push(base.clone());
-            if let Ok(entries) = std::fs::read_dir(&base) {
+        if include_base.is_dir() {
+            dirs.push(include_base.clone());
+            if let Ok(entries) = std::fs::read_dir(&include_base) {
                 for entry in entries.flatten() {
                     let path = entry.path();
                     if path.is_dir() {
@@ -95,6 +94,16 @@ impl Esp8266Framework {
                     }
                 }
             }
+        }
+        // lwip2 headers (lwipopts.h, lwip/*.h)
+        let lwip2_include = sdk_base.join("lwip2").join("include");
+        if lwip2_include.is_dir() {
+            dirs.push(lwip2_include);
+        }
+        // libb64 headers
+        let libb64_include = sdk_base.join("libb64").join("include");
+        if libb64_include.is_dir() {
+            dirs.push(libb64_include);
         }
         dirs
     }

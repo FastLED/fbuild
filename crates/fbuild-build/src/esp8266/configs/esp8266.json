@@ -72,6 +72,22 @@
     }
   },
 
+  "defines": [
+    "ESP8266",
+    "ARDUINO_ARCH_ESP8266",
+    "LWIP_OPEN_SRC",
+    ["TCP_MSS", "536"],
+    ["LWIP_FEATURES", "1"],
+    ["LWIP_IPV6", "0"],
+    "__ets__",
+    "ICACHE_FLASH",
+    "_GNU_SOURCE",
+    ["NONOSDK305", "1"],
+    "VTABLES_IN_FLASH",
+    ["MMU_IRAM_SIZE", "0xC000"],
+    ["MMU_ICACHE_SIZE", "0x8000"]
+  ],
+
   "esptool": {
     "chip": "esp8266",
     "default_flash_mode": "dio",

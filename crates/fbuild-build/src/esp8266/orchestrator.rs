@@ -83,8 +83,9 @@ impl BuildOrchestrator for Esp8266Orchestrator {
             sources.variant_sources.len(),
         );
 
-        // 7. Build include dirs
-        let defines = ctx.board.get_defines();
+        // 7. Build include dirs + defines
+        let mut defines = ctx.board.get_defines();
+        defines.extend(mcu_config.defines_map());
         let mut include_dirs = vec![core_dir.clone()];
         if variant_dir.exists() {
             include_dirs.push(variant_dir.clone());
