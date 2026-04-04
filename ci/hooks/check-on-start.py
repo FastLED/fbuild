@@ -49,7 +49,15 @@ def save_session_fingerprint(fingerprint):
     )
 
 
+def cleanup_session_markers():
+    """Remove markers from previous session."""
+    review_marker = PROJECT_ROOT / ".cache" / "code_review_done"
+    if review_marker.exists():
+        review_marker.unlink()
+
+
 def main():
+    cleanup_session_markers()
     fingerprint = get_current_fingerprint()
     if fingerprint is None:
         if SESSION_FINGERPRINT_FILE.exists():

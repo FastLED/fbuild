@@ -60,6 +60,7 @@ All hooks are Python scripts in `ci/hooks/`, invoked via `uv run`:
 - **PostToolUse**: `ci/hooks/lint.py` auto-formats + runs clippy on edited .rs files
 - **PostToolUse**: `ci/hooks/readme_guard.py` errors if directory lacks README.md
 - **SessionStart**: `ci/hooks/check-on-start.py` captures git fingerprint
+- **Stop**: `ci/hooks/code-review-on-stop.py` triggers `/code-review` skill if source files changed
 - **Stop**: `ci/hooks/check-on-stop.py` runs full workspace lint + tests (skips if no changes)
 
 ## Skills
@@ -67,6 +68,7 @@ All hooks are Python scripts in `ci/hooks/`, invoked via `uv run`:
 Custom Claude Code skills in `.claude/skills/`:
 
 - **`/board-support`** — Diagnose and fix board definition issues. Searches fbuild's database, PlatformIO, Arduino package indices, and Zephyr boards. Auto-suggested by the `board_context.py` hook when board-related prompts are detected.
+- **`/code-review`** — End-of-session code review. Checks for hardcoded values (should be in JSON), code that belongs in core instead of platform crates, and bugs. Auto-triggered by Stop hook.
 
 ## Language Policy
 

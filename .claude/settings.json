@@ -56,6 +56,11 @@
         "hooks": [
           {
             "type": "command",
+            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run ci/hooks/code-review-on-stop.py",
+            "timeout": 10
+          },
+          {
+            "type": "command",
             "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run ci/hooks/check-on-stop.py",
             "timeout": 600
           }
