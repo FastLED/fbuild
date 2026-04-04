@@ -96,7 +96,7 @@ use std::path::PathBuf;
 /// Result of a successful build.
 pub struct BuildResult {
     pub success: bool,
-    pub hex_path: Option<PathBuf>,
+    pub firmware_path: Option<PathBuf>,
     pub elf_path: Option<PathBuf>,
     pub size_info: Option<SizeInfo>,
     pub build_time_secs: f64,

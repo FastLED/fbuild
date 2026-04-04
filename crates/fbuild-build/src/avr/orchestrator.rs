@@ -161,6 +161,7 @@ impl BuildOrchestrator for AvrOrchestrator {
             defines,
             include_dirs,
             mcu_config.clone(),
+            params.profile,
             params.verbose,
         );
 
@@ -210,7 +211,7 @@ impl BuildOrchestrator for AvrOrchestrator {
             let elapsed = start.elapsed().as_secs_f64();
             return Ok(BuildResult {
                 success: true,
-                hex_path: None,
+                firmware_path: None,
                 elf_path: None,
                 size_info: None,
                 build_time_secs: elapsed,
@@ -378,6 +379,7 @@ impl BuildOrchestrator for AvrOrchestrator {
             toolchain.get_size_path(),
             &board.mcu,
             mcu_config,
+            params.profile,
             board.max_flash,
             board.max_ram,
             params.verbose,
@@ -434,7 +436,7 @@ impl BuildOrchestrator for AvrOrchestrator {
 
         Ok(BuildResult {
             success: true,
-            hex_path: link_result.hex_path,
+            firmware_path: link_result.hex_path,
             elf_path: link_result.elf_path,
             size_info: link_result.size_info,
             build_time_secs: elapsed,

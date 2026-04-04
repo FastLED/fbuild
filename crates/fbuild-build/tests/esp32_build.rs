@@ -80,7 +80,7 @@ void loop() {
         .expect("ESP32 build should succeed");
 
     assert!(result.success);
-    let elf_path = result.hex_path.expect("should produce ELF file");
+    let elf_path = result.firmware_path.expect("should produce ELF file");
     assert!(elf_path.exists());
 
     let elf_size = elf_path.metadata().unwrap().len();
@@ -162,7 +162,7 @@ void loop() {
         .expect("ESP32-C6 build should succeed");
 
     assert!(result.success);
-    let bin_path = result.hex_path.expect("should produce bin file");
+    let bin_path = result.firmware_path.expect("should produce bin file");
     assert!(bin_path.exists());
 
     let size = result.size_info.expect("should have size info");
@@ -237,7 +237,7 @@ void loop() {
         .expect("ESP32-C3 build should succeed");
 
     assert!(result.success);
-    let bin_path = result.hex_path.expect("should produce bin file");
+    let bin_path = result.firmware_path.expect("should produce bin file");
     assert!(bin_path.exists());
 
     let size = result.size_info.expect("should have size info");
@@ -313,7 +313,7 @@ void loop() {
         .expect("ESP32-S3 build should succeed");
 
     assert!(result.success);
-    let elf_path = result.hex_path.expect("should produce ELF file");
+    let elf_path = result.firmware_path.expect("should produce ELF file");
     assert!(elf_path.exists());
 
     let elf_size = elf_path.metadata().unwrap().len();
@@ -379,7 +379,7 @@ fn build_esp32s3_fixture() {
         .expect("ESP32-S3 fixture build should succeed");
 
     assert!(result.success);
-    let elf_path = result.hex_path.expect("should produce ELF file");
+    let elf_path = result.firmware_path.expect("should produce ELF file");
     assert!(elf_path.exists());
 
     eprintln!("ESP32-S3 firmware ELF at: {}", elf_path.display());
@@ -438,7 +438,10 @@ fn build_nightdriverstrip_demo() {
 
     assert!(result.success, "build should report success");
 
-    let bin_path = result.hex_path.as_ref().expect("should produce bin file");
+    let bin_path = result
+        .firmware_path
+        .as_ref()
+        .expect("should produce bin file");
     assert!(bin_path.exists(), "firmware.bin should exist");
 
     let bin_size = bin_path.metadata().unwrap().len();

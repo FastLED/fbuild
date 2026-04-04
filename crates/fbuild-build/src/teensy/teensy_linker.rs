@@ -6,7 +6,7 @@
 use std::path::{Path, PathBuf};
 
 use fbuild_core::subprocess::run_command;
-use fbuild_core::{Result, SizeInfo};
+use fbuild_core::{BuildProfile, Result, SizeInfo};
 
 use super::mcu_config::TeensyMcuConfig;
 use crate::linker::Linker;
@@ -19,6 +19,7 @@ pub struct TeensyLinker {
     size_path: PathBuf,
     linker_script_path: PathBuf,
     mcu_config: TeensyMcuConfig,
+    profile: BuildProfile,
     max_flash: Option<u64>,
     max_ram: Option<u64>,
     verbose: bool,
@@ -33,6 +34,7 @@ impl TeensyLinker {
         size_path: PathBuf,
         linker_script_path: PathBuf,
         mcu_config: TeensyMcuConfig,
+        profile: BuildProfile,
         max_flash: Option<u64>,
         max_ram: Option<u64>,
         verbose: bool,
@@ -44,6 +46,7 @@ impl TeensyLinker {
             size_path,
             linker_script_path,
             mcu_config,
+            profile,
             max_flash,
             max_ram,
             verbose,
@@ -99,8 +102,8 @@ impl Linker for TeensyLinker {
         // Linker flags from config
         args.extend(self.mcu_config.linker_flags.iter().cloned());
 
-        // Profile link flags
-        if let Some(profile) = self.mcu_config.get_profile("release") {
+        // Profile-specific link flags
+        if let Some(profile) = self.mcu_config.get_profile(self.profile.as_dir_name()) {
             args.extend(profile.link_flags.iter().cloned());
         }
 
@@ -209,6 +212,7 @@ mod tests {
             PathBuf::from("/bin/arm-none-eabi-size"),
             PathBuf::from("/teensy4/imxrt1062_t41.ld"),
             get_teensy_config().unwrap(),
+            BuildProfile::Release,
             Some(8126464),
             Some(1048576),
             false,
@@ -226,6 +230,7 @@ mod tests {
             PathBuf::from("/bin/arm-none-eabi-size"),
             PathBuf::from("/teensy4/imxrt1062_t41.ld"),
             get_teensy_config().unwrap(),
+            BuildProfile::Release,
             Some(8126464),
             Some(1048576),
             false,

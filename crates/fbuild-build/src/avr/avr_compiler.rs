@@ -7,7 +7,7 @@ use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
 use fbuild_core::subprocess::run_command;
-use fbuild_core::Result;
+use fbuild_core::{BuildProfile, Result};
 
 use super::mcu_config::AvrMcuConfig;
 use crate::compiler::{CompileResult, Compiler, CompilerBase};
@@ -18,6 +18,7 @@ pub struct AvrCompiler {
     gcc_path: PathBuf,
     gxx_path: PathBuf,
     mcu_config: AvrMcuConfig,
+    profile: BuildProfile,
     temp_dir: PathBuf,
 }
 
@@ -31,6 +32,7 @@ impl AvrCompiler {
         defines: HashMap<String, String>,
         include_dirs: Vec<PathBuf>,
         mcu_config: AvrMcuConfig,
+        profile: BuildProfile,
         verbose: bool,
     ) -> Self {
         Self {
@@ -44,6 +46,7 @@ impl AvrCompiler {
             gcc_path,
             gxx_path,
             mcu_config,
+            profile,
             temp_dir: crate::compiler::windows_temp_dir(),
         }
     }
@@ -62,6 +65,12 @@ impl AvrCompiler {
     fn common_flags(&self) -> Vec<String> {
         let mut flags = vec![format!("-mmcu={}", self.base.mcu)];
         flags.extend(self.mcu_config.compiler_flags.common.iter().cloned());
+
+        // Profile-specific flags (optimization, LTO, etc.)
+        if let Some(profile) = self.mcu_config.get_profile(self.profile.as_dir_name()) {
+            flags.extend(profile.compile_flags.iter().cloned());
+        }
+
         flags.extend(self.base.build_define_flags());
         flags.extend(self.base.build_include_flags());
         flags
@@ -183,6 +192,7 @@ mod tests {
                 PathBuf::from("/variants/standard"),
             ],
             get_avr_config().unwrap(),
+            BuildProfile::Release,
             false,
         )
     }

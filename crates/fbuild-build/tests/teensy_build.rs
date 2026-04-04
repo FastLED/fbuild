@@ -67,7 +67,7 @@ void loop() {
         .expect("Teensy build should succeed");
 
     assert!(result.success);
-    let hex_path = result.hex_path.expect("should produce hex");
+    let hex_path = result.firmware_path.expect("should produce hex");
     assert!(hex_path.exists());
 
     let content = fs::read_to_string(&hex_path).unwrap();
@@ -121,7 +121,7 @@ fn build_teensy41_fixture() {
         .expect("Teensy fixture build should succeed");
 
     assert!(result.success);
-    assert!(result.hex_path.is_some());
+    assert!(result.firmware_path.is_some());
 
     if let Some(ref size) = result.size_info {
         eprintln!(

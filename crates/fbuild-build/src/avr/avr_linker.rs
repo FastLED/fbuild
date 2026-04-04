@@ -6,7 +6,7 @@
 use std::path::{Path, PathBuf};
 
 use fbuild_core::subprocess::run_command;
-use fbuild_core::{Result, SizeInfo};
+use fbuild_core::{BuildProfile, Result, SizeInfo};
 
 use super::mcu_config::AvrMcuConfig;
 use crate::linker::Linker;
@@ -19,6 +19,7 @@ pub struct AvrLinker {
     size_path: PathBuf,
     mcu: String,
     mcu_config: AvrMcuConfig,
+    profile: BuildProfile,
     max_flash: Option<u64>,
     max_ram: Option<u64>,
     verbose: bool,
@@ -33,6 +34,7 @@ impl AvrLinker {
         size_path: PathBuf,
         mcu: &str,
         mcu_config: AvrMcuConfig,
+        profile: BuildProfile,
         max_flash: Option<u64>,
         max_ram: Option<u64>,
         verbose: bool,
@@ -44,6 +46,7 @@ impl AvrLinker {
             size_path,
             mcu: mcu.to_string(),
             mcu_config,
+            profile,
             max_flash,
             max_ram,
             verbose,
@@ -101,6 +104,11 @@ impl Linker for AvrLinker {
 
         // Linker flags from config
         args.extend(self.mcu_config.linker_flags.iter().cloned());
+
+        // Profile-specific link flags
+        if let Some(profile) = self.mcu_config.get_profile(self.profile.as_dir_name()) {
+            args.extend(profile.link_flags.iter().cloned());
+        }
 
         args.extend(["-o".to_string(), elf_path.to_string_lossy().to_string()]);
 
@@ -206,6 +214,7 @@ mod tests {
             PathBuf::from("/bin/avr-size"),
             "atmega328p",
             get_avr_config().unwrap(),
+            BuildProfile::Release,
             Some(32256),
             Some(2048),
             false,

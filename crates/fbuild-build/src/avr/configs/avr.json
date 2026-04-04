@@ -6,12 +6,9 @@
   "compiler_flags": {
     "common": [
       "-w",
-      "-Os",
       "-Wall",
       "-ffunction-sections",
       "-fdata-sections",
-      "-flto",
-      "-fno-fat-lto-objects",
       "-MMD"
     ],
     "c": [
@@ -27,9 +24,6 @@
 
   "linker_flags": [
     "-w",
-    "-Os",
-    "-flto",
-    "-fuse-linker-plugin",
     "-Wl,--gc-sections",
     "-Wl,--allow-multiple-definition"
   ],

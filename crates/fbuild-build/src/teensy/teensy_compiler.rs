@@ -7,7 +7,7 @@ use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
 use fbuild_core::subprocess::run_command;
-use fbuild_core::Result;
+use fbuild_core::{BuildProfile, Result};
 
 use super::mcu_config::TeensyMcuConfig;
 use crate::compiler::{CompileResult, Compiler, CompilerBase};
@@ -18,6 +18,7 @@ pub struct TeensyCompiler {
     gcc_path: PathBuf,
     gxx_path: PathBuf,
     mcu_config: TeensyMcuConfig,
+    profile: BuildProfile,
     temp_dir: PathBuf,
 }
 
@@ -31,6 +32,7 @@ impl TeensyCompiler {
         defines: HashMap<String, String>,
         include_dirs: Vec<PathBuf>,
         mcu_config: TeensyMcuConfig,
+        profile: BuildProfile,
         verbose: bool,
     ) -> Self {
         Self {
@@ -44,6 +46,7 @@ impl TeensyCompiler {
             gcc_path,
             gxx_path,
             mcu_config,
+            profile,
             temp_dir: crate::compiler::windows_temp_dir(),
         }
     }
@@ -63,8 +66,8 @@ impl TeensyCompiler {
         let mut flags = Vec::new();
         flags.extend(self.mcu_config.compiler_flags.common.iter().cloned());
 
-        // Profile flags (release by default for embedded)
-        if let Some(profile) = self.mcu_config.get_profile("release") {
+        // Profile-specific flags (optimization, LTO, etc.)
+        if let Some(profile) = self.mcu_config.get_profile(self.profile.as_dir_name()) {
             flags.extend(profile.compile_flags.iter().cloned());
         }
 
@@ -187,6 +190,7 @@ mod tests {
             defines,
             vec![PathBuf::from("/teensy4")],
             get_teensy_config().unwrap(),
+            BuildProfile::Release,
             false,
         )
     }

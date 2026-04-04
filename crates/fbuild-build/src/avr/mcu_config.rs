@@ -91,8 +91,7 @@ mod tests {
     #[test]
     fn test_compiler_flags_content() {
         let config = get_avr_config().unwrap();
-        assert!(config.compiler_flags.common.contains(&"-Os".to_string()));
-        assert!(config.compiler_flags.common.contains(&"-flto".to_string()));
+        // Optimization flags (-Os, -flto) are in profiles, not common
         assert!(config
             .compiler_flags
             .common
@@ -111,8 +110,7 @@ mod tests {
     #[test]
     fn test_linker_flags() {
         let config = get_avr_config().unwrap();
-        assert!(config.linker_flags.contains(&"-Os".to_string()));
-        assert!(config.linker_flags.contains(&"-flto".to_string()));
+        // Optimization flags (-Os, -flto) are in profiles, not linker_flags
         assert!(config
             .linker_flags
             .contains(&"-Wl,--gc-sections".to_string()));

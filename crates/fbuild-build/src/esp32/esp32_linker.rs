@@ -298,19 +298,15 @@ impl Linker for Esp32Linker {
                 tracing::info!("converted firmware.elf → firmware.bin");
                 Ok(bin_out)
             }
-            Ok(result) => {
-                tracing::warn!(
-                    "esptool elf2image failed (exit={}): {}{}",
-                    result.exit_code,
-                    result.stderr,
-                    result.stdout
-                );
-                Ok(elf_out)
-            }
-            Err(e) => {
-                tracing::warn!("esptool not found (firmware.bin not generated): {}", e);
-                Ok(elf_out)
-            }
+            Ok(result) => Err(fbuild_core::FbuildError::BuildFailed(format!(
+                "esptool elf2image failed (exit={}):\n{}{}",
+                result.exit_code, result.stderr, result.stdout
+            ))),
+            Err(e) => Err(fbuild_core::FbuildError::BuildFailed(format!(
+                "esptool not found — cannot convert firmware.elf to firmware.bin.\n\
+                 Install with: pip install esptool\nError: {}",
+                e
+            ))),
         }
     }
 

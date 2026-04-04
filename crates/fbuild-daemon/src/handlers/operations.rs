@@ -208,7 +208,7 @@ pub async fn build(
                         br.message.clone()
                     };
                     let output = br
-                        .hex_path
+                        .firmware_path
                         .or(br.elf_path)
                         .map(|p| p.to_string_lossy().to_string());
                     let c = if br.success { 0 } else { 1 };
@@ -314,7 +314,7 @@ pub async fn build(
                     lines.join("\n")
                 };
                 let output_file = build_result
-                    .hex_path
+                    .firmware_path
                     .or(build_result.elf_path)
                     .map(|p| p.to_string_lossy().to_string());
                 let code = if build_result.success { 0 } else { 1 };
@@ -507,7 +507,7 @@ pub async fn deploy(
 
         match build_result {
             Ok(Ok(r)) if r.success => r
-                .hex_path
+                .firmware_path
                 .unwrap_or_else(|| r.elf_path.unwrap_or_else(|| PathBuf::from("firmware.bin"))),
             Ok(Ok(r)) => {
                 return (

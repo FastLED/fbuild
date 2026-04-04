@@ -488,7 +488,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             let elapsed = start.elapsed().as_secs_f64();
             return Ok(BuildResult {
                 success: true,
-                hex_path: None,
+                firmware_path: None,
                 elf_path: None,
                 size_info: None,
                 build_time_secs: elapsed,
@@ -838,7 +838,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
         Ok(BuildResult {
             success: true,
-            hex_path: link_result.bin_path.clone().or(link_result.hex_path),
+            firmware_path: link_result.bin_path.clone().or(link_result.hex_path),
             elf_path: link_result.elf_path,
             size_info: link_result.size_info,
             build_time_secs: elapsed,

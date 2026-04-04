@@ -96,7 +96,10 @@ fn build_uno_minimal() {
     assert!(result.success, "build should report success");
 
     // Verify firmware.hex was produced
-    let hex_path = result.hex_path.as_ref().expect("should produce hex file");
+    let hex_path = result
+        .firmware_path
+        .as_ref()
+        .expect("should produce hex file");
     assert!(hex_path.exists(), "firmware.hex should exist");
 
     let hex_content = fs::read_to_string(hex_path).unwrap();
@@ -175,7 +178,7 @@ fn compare_with_python_output() {
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
     let result = orchestrator.build(&params).expect("build should succeed");
-    let rust_hex = result.hex_path.expect("should produce hex");
+    let rust_hex = result.firmware_path.expect("should produce hex");
 
     let python_content = fs::read_to_string(&python_hex).unwrap();
     let rust_content = fs::read_to_string(&rust_hex).unwrap();
@@ -257,7 +260,7 @@ void loop() {
         .expect("self-contained build should succeed");
 
     assert!(result.success);
-    let hex_path = result.hex_path.expect("should produce hex");
+    let hex_path = result.firmware_path.expect("should produce hex");
     assert!(hex_path.exists());
 
     let content = fs::read_to_string(&hex_path).unwrap();

@@ -48,6 +48,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libudev-dev pkg-config
 
+      - name: Install esptool (ESP32 firmware conversion)
+        if: inputs.firmware-ext == 'bin'
+        run: pip install esptool
+
       - name: Build fbuild binaries
         run: |
           cargo build --release -p fbuild-cli -p fbuild-daemon
