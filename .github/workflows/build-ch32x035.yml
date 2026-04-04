@@ -1,0 +1,16 @@
+name: Build CH32X035
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "CH32X035"
+      test-dir: "tests/platform/ch32x035"
+      env-name: "ch32x035"
+      firmware-ext: "bin"

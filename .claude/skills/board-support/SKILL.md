@@ -68,6 +68,18 @@ These are JSON files listing board support packages. Fetch and inspect them:
 | **SparkFun** | `https://raw.githubusercontent.com/sparkfun/Arduino_Boards/main/IDE_Board_Manager/package_sparkfun_index.json` |
 | **Teensy** | `https://www.pjrc.com/teensy/package_teensy_index.json` |
 
+### CH32V (WCH RISC-V) Platform
+The CH32V family (CH32V003, V103, V203, V208, V303, V307, CH32X035) uses the community PlatformIO platform:
+
+| Resource | URL |
+|----------|-----|
+| **PlatformIO platform** | `https://github.com/Community-PIO-CH32V/platform-ch32v` |
+| **Board definitions** | `https://github.com/Community-PIO-CH32V/platform-ch32v/tree/develop/boards` |
+| **WCH Arduino core** | `https://github.com/openwch/arduino_core_ch32` |
+| **WCH product pages** | `http://www.wch-ic.com/products/CH32V003.html` (replace series in URL) |
+
+All CH32V boards use `platform = ch32v` in platformio.ini. Arduino framework is available for V003, V203, and V307 series. Other series use `noneos-sdk` or `ch32v003fun` frameworks.
+
 Arduino package index JSON structure:
 ```
 packages[].platforms[].boards[].name  — board display name

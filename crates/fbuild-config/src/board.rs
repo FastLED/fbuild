@@ -418,6 +418,13 @@ fn resolve_board_alias(board_id: &str) -> &str {
         "esp32c3" => "esp32-c3-devkitm-1",
         "esp32c6" => "esp32-c6-devkitm-1",
         "esp32s3" => "esp32-s3-devkitc-1",
+        "ch32v003" => "genericCH32V003F4P6",
+        "ch32v103" => "genericCH32V103C8T6",
+        "ch32v203" => "genericCH32V203C8T6",
+        "ch32v208" => "genericCH32V208WBU6",
+        "ch32v303" => "genericCH32V303VCT6",
+        "ch32v307" => "genericCH32V307VCT6",
+        "ch32x035" => "genericCH32X035C8T6",
         other => other,
     }
 }
@@ -557,6 +564,27 @@ mod tests {
     fn test_from_board_id_megaatmega2560_alias() {
         let config = BoardConfig::from_board_id("megaatmega2560", &HashMap::new()).unwrap();
         assert_eq!(config.mcu, "atmega2560");
+    }
+
+    #[test]
+    fn test_ch32v_aliases() {
+        let cases = [
+            ("ch32v003", "ch32v003f4p6"),
+            ("ch32v103", "ch32v103c8t6"),
+            ("ch32v203", "ch32v203c8t6"),
+            ("ch32v208", "ch32v208wbu6"),
+            ("ch32v303", "ch32v303vct6"),
+            ("ch32v307", "ch32v307vct6"),
+            ("ch32x035", "ch32x035c8t6"),
+        ];
+        for (alias, expected_mcu) in cases {
+            let config = BoardConfig::from_board_id(alias, &HashMap::new()).unwrap();
+            assert_eq!(
+                config.mcu, expected_mcu,
+                "alias '{}' should resolve to mcu '{}'",
+                alias, expected_mcu
+            );
+        }
     }
 
     #[test]

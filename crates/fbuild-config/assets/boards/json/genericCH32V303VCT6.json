@@ -1,0 +1,30 @@
+{
+  "build": {
+    "clock_source": "hsi+pll",
+    "extra_flags": "-DCH32V303VC -DCH32V30X -DCH32V30x -DCH32V303 -DCH32V30x_D8",
+    "f_cpu": "144000000L",
+    "mabi": "ilp32",
+    "march": "rv32imacxw",
+    "mcu": "ch32v303vct6",
+    "series": "ch32v303"
+  },
+  "debug": {
+    "tools": {
+      "wch-link": {}
+    }
+  },
+  "fcpu": 144000000,
+  "frameworks": ["noneos-sdk", "freertos", "harmony-liteos", "rt-thread", "tencent-os", "ch32v003fun"],
+  "id": "genericCH32V303VCT6",
+  "mcu": "CH32V303VCT6",
+  "name": "Generic CH32V303VCT6",
+  "platform": "ch32v",
+  "ram": 65536,
+  "rom": 262144,
+  "upload": {
+    "protocol": "wch-link",
+    "protocols": ["wch-link", "minichlink", "isp", "wlink"]
+  },
+  "url": "http://www.wch-ic.com/products/CH32V303.html",
+  "vendor": "W.CH"
+}

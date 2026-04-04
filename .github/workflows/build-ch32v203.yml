@@ -1,0 +1,16 @@
+name: Build CH32V203
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "CH32V203"
+      test-dir: "tests/platform/ch32v203"
+      env-name: "ch32v203"
+      firmware-ext: "bin"

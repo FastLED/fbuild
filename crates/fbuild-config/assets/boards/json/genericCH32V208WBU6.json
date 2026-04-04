@@ -1,0 +1,30 @@
+{
+  "build": {
+    "clock_source": "hsi+pll",
+    "extra_flags": "-DCH32V208WB -DCH32V20X -DCH32V20x -DCH32V208 -DCH32V20x_D8W",
+    "f_cpu": "144000000L",
+    "mabi": "ilp32",
+    "march": "rv32imacxw",
+    "mcu": "ch32v208wbu6",
+    "series": "ch32v208"
+  },
+  "debug": {
+    "tools": {
+      "wch-link": {}
+    }
+  },
+  "fcpu": 144000000,
+  "frameworks": ["noneos-sdk", "freertos", "harmony-liteos", "rt-thread", "tencent-os", "ch32v003fun"],
+  "id": "genericCH32V208WBU6",
+  "mcu": "CH32V208WBU6",
+  "name": "Generic CH32V208WBU6",
+  "platform": "ch32v",
+  "ram": 65536,
+  "rom": 131072,
+  "upload": {
+    "protocol": "wch-link",
+    "protocols": ["wch-link", "minichlink", "isp", "wlink"]
+  },
+  "url": "http://www.wch-ic.com/products/CH32V208.html",
+  "vendor": "W.CH"
+}

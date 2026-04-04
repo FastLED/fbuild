@@ -36,6 +36,14 @@
 
 ### CH32V (RISC-V)
 [![Build CH32V003](https://github.com/fastled/fbuild/actions/workflows/build-ch32v003.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-ch32v003.yml)
+[![Build CH32V103](https://github.com/fastled/fbuild/actions/workflows/build-ch32v103.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-ch32v103.yml)
+[![Build CH32V203](https://github.com/fastled/fbuild/actions/workflows/build-ch32v203.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-ch32v203.yml)
+[![Build CH32V208](https://github.com/fastled/fbuild/actions/workflows/build-ch32v208.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-ch32v208.yml)
+[![Build CH32V303](https://github.com/fastled/fbuild/actions/workflows/build-ch32v303.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-ch32v303.yml)
+[![Build CH32V307](https://github.com/fastled/fbuild/actions/workflows/build-ch32v307.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-ch32v307.yml)
+
+### CH32X (RISC-V, USB PD)
+[![Build CH32X035](https://github.com/fastled/fbuild/actions/workflows/build-ch32x035.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-ch32x035.yml)
 
 ### Teensy
 [![Build Teensy 4.1](https://github.com/fastled/fbuild/actions/workflows/build-teensy41.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-teensy41.yml)

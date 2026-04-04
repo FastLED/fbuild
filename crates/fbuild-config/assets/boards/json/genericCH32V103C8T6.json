@@ -1,0 +1,30 @@
+{
+  "build": {
+    "clock_source": "hsi+pll",
+    "extra_flags": "-DCH32V103C8 -DCH32V10X -DCH32V10x -DCH32V103",
+    "f_cpu": "72000000L",
+    "mabi": "ilp32",
+    "march": "rv32imac",
+    "mcu": "ch32v103c8t6",
+    "series": "ch32v103"
+  },
+  "debug": {
+    "tools": {
+      "wch-link": {}
+    }
+  },
+  "fcpu": 72000000,
+  "frameworks": ["noneos-sdk", "freertos", "harmony-liteos", "rt-thread", "tencent-os", "ch32v003fun"],
+  "id": "genericCH32V103C8T6",
+  "mcu": "CH32V103C8T6",
+  "name": "Generic CH32V103C8T6",
+  "platform": "ch32v",
+  "ram": 20480,
+  "rom": 65536,
+  "upload": {
+    "protocol": "wch-link",
+    "protocols": ["wch-link", "minichlink", "isp", "wlink"]
+  },
+  "url": "http://www.wch-ic.com/products/CH32V103.html",
+  "vendor": "W.CH"
+}
