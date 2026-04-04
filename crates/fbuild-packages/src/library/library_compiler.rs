@@ -284,13 +284,16 @@ fn compile_one_source(
     ]);
 
     // On Windows, put ALL flags in a response file to avoid command-line
-    // length limits (OS error 206). Skip zccache on Windows because zccache
-    // expands @file references internally and reconstructs the full command
-    // line, re-triggering OS error 206. Library archives (.a) are already
-    // cached on disk, so the zccache caching layer is redundant here.
+    // length limits (OS error 206). The command becomes:
+    //   [zccache] <compiler> @response.rsp
+    // zccache >=1.1.7 passes @file references through to the compiler
+    // without expanding them, so this is safe.
     let args = if cfg!(windows) {
         let rsp_path = write_compile_response_file(&all_flags, obj_dir)?;
         let mut a = Vec::new();
+        if let Some(zcc) = compiler_cache {
+            a.push(zcc.to_string_lossy().to_string());
+        }
         a.push(compiler.to_string_lossy().to_string());
         a.push(format!("@{}", rsp_path.display()));
         a
