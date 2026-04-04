@@ -1,0 +1,27 @@
+name: Documentation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  docs:
+    name: Documentation
+    runs-on: ubuntu-latest
+    env:
+      RUSTDOCFLAGS: "-D warnings"
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Setup zccache
+        run: |
+          pip install zccache
+          find ~/.local -name 'zccache*' -type f -exec chmod +x {} + 2>/dev/null || true
+          zccache start
+      - name: Build docs
+        run: cargo doc --workspace --no-deps
+        env:
+          RUSTC_WRAPPER: zccache

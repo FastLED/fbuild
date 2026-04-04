@@ -4,7 +4,16 @@
 
 ## Build Status
 
-[![CI](https://github.com/fastled/fbuild/actions/workflows/ci.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/ci.yml)
+### CI
+[![Check Ubuntu](https://github.com/fastled/fbuild/actions/workflows/check-ubuntu.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/check-ubuntu.yml)
+[![Check macOS](https://github.com/fastled/fbuild/actions/workflows/check-macos.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/check-macos.yml)
+[![Check Windows](https://github.com/fastled/fbuild/actions/workflows/check-windows.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/check-windows.yml)
+[![Formatting](https://github.com/fastled/fbuild/actions/workflows/fmt.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/fmt.yml)
+[![Min Rust Version](https://github.com/fastled/fbuild/actions/workflows/msrv.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/msrv.yml)
+[![Documentation](https://github.com/fastled/fbuild/actions/workflows/docs.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/docs.yml)
+[![Validate Boards](https://github.com/fastled/fbuild/actions/workflows/validate-boards.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/validate-boards.yml)
+
+### Native Binaries
 [![Build Native Binaries](https://github.com/fastled/fbuild/actions/workflows/build.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build.yml)
 
 ### AVR

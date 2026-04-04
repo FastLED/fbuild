@@ -1,0 +1,25 @@
+name: Min Rust Version (1.75)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  msrv:
+    name: Min Rust Version (1.75)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@1.75.0
+      - uses: Swatinem/rust-cache@v2
+      - name: Setup zccache
+        run: |
+          pip install zccache
+          find ~/.local -name 'zccache*' -type f -exec chmod +x {} + 2>/dev/null || true
+          zccache start
+      - name: Check MSRV
+        run: cargo check --workspace
+        env:
+          RUSTC_WRAPPER: zccache

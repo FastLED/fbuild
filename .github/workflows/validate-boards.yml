@@ -1,0 +1,30 @@
+name: Validate Boards
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-boards:
+    name: Validate Board Definitions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install PlatformIO
+        run: pip install platformio
+      - name: Install PlatformIO platforms
+        run: |
+          pio pkg install -g -p "platformio/atmelavr"
+          pio pkg install -g -p "platformio/espressif32"
+          pio pkg install -g -p "platformio/espressif8266"
+          pio pkg install -g -p "platformio/teensy"
+          pio pkg install -g -p "platformio/ststm32"
+          pio pkg install -g -p "platformio/raspberrypi"
+          pio pkg install -g -p "platformio/atmelmegaavr"
+      - name: Validate board JSONs match PlatformIO
+        run: python ci/validate_boards.py
