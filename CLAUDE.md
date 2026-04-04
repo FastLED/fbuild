@@ -28,6 +28,15 @@ RUSTDOCFLAGS="-D warnings" uv run cargo doc --workspace --no-deps
 
 # Local zccache setup (optional, configures rustc-wrapper)
 uv run python ci/zccache_setup.py
+
+# Board definition management
+uv run python ci/validate_boards.py                    # validate against PlatformIO
+uv run python ci/validate_boards.py --external         # compare against Arduino + Zephyr
+uv run python ci/board_sources.py --search QUERY       # search all external sources
+uv run python ci/board_sources.py --compare            # find boards missing from fbuild
+uv run python ci/board_sources.py --list-arduino       # list Arduino package index boards
+uv run python ci/board_sources.py --list-zephyr        # list Zephyr boards
+uv run cargo run -p fbuild-config --bin enrich_boards  # enrich from local PlatformIO
 ```
 
 ## Distribution
@@ -46,11 +55,18 @@ uv run python ci/build_dist.py --ref main
 
 All hooks are Python scripts in `ci/hooks/`, invoked via `uv run`:
 
+- **UserPromptSubmit**: `ci/hooks/board_context.py` detects board-related prompts and injects skill guidance (board lookup workflow, external source URLs, relevant commands)
 - **PreToolUse**: `ci/hooks/tool_guard.py` blocks bare Rust commands (must use `uv run` or `_cargo`/`_rustc`/`_rustfmt` trampolines) and bare `python`/`pip` (must use `uv`)
 - **PostToolUse**: `ci/hooks/lint.py` auto-formats + runs clippy on edited .rs files
 - **PostToolUse**: `ci/hooks/readme_guard.py` errors if directory lacks README.md
 - **SessionStart**: `ci/hooks/check-on-start.py` captures git fingerprint
 - **Stop**: `ci/hooks/check-on-stop.py` runs full workspace lint + tests (skips if no changes)
+
+## Skills
+
+Custom Claude Code skills in `.claude/skills/`:
+
+- **`/board-support`** — Diagnose and fix board definition issues. Searches fbuild's database, PlatformIO, Arduino package indices, and Zephyr boards. Auto-suggested by the `board_context.py` hook when board-related prompts are detected.
 
 ## Language Policy
 

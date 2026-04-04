@@ -4,4 +4,4 @@ Path-scoped and global rules loaded by Claude Code on demand. Rules without `pat
 
 ## Contents
 
-- **`workflow.md`** -- Plan mode, subagent strategy, self-improvement, verification, autonomous bug fixing, task management, and A/B testing rules
+- **`workflow.md`** -- Plan mode, subagent strategy, self-improvement, verification, autonomous bug fixing, task management, A/B testing, and board support issue rules

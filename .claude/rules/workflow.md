@@ -38,3 +38,11 @@
 - When debugging serial behavior: compare Python fbuild vs Rust fbuild vs PlatformIO
 - The Python integration tests are the source of truth
 - If behavior diverges: study the Python implementation, not guesses
+
+## Board Support Issues
+- The `board_context.py` hook auto-injects guidance when board-related prompts are detected
+- Use `/board-support` skill for step-by-step board diagnosis
+- Always check fbuild's database first (`manifest.json`), then PlatformIO, then external sources
+- External sources: Arduino package indices, Zephyr board.yml, Mbed targets.json, probe-rs targets
+- Tools: `ci/board_sources.py` (external lookup), `ci/validate_boards.py` (PlatformIO + external validation)
+- When a board is missing: search externally, create the JSON, run enrichment, validate

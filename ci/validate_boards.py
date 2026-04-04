@@ -10,8 +10,10 @@ any differences. Exits non-zero if any board is out of sync.
 
 Usage:
     python ci/validate_boards.py [--platforms atmelavr,espressif32,...]
+    python ci/validate_boards.py --external [--json]
 
 If --platforms is not specified, validates all platforms that are installed.
+Use --external to compare against Arduino and Zephyr board registries (requires internet).
 """
 
 from __future__ import annotations
@@ -177,19 +179,104 @@ def get_installed_platforms(pio_dir: Path) -> set[str]:
     return platforms
 
 
+def run_external_comparison(output_json: bool = False) -> int:
+    """Compare fbuild boards against Arduino + Zephyr external sources.
+
+    Delegates to ci/board_sources.py --compare.
+    """
+    from board_sources import (
+        compare_boards,
+        fetch_all_arduino,
+        fetch_zephyr_boards,
+        load_fbuild_board_names,
+        load_fbuild_boards,
+    )
+
+    print("Fetching external board lists...", file=sys.stderr)
+    arduino_reports = fetch_all_arduino()
+    zephyr_report = fetch_zephyr_boards()
+    all_reports = arduino_reports + [zephyr_report]
+
+    fbuild_ids = load_fbuild_boards()
+    fbuild_names = load_fbuild_board_names()
+
+    missing = compare_boards(all_reports, fbuild_ids, fbuild_names)
+
+    total_external = sum(len(r.boards) for r in all_reports if not r.error)
+    total_missing = sum(len(boards) for boards in missing.values())
+    errors = [r for r in all_reports if r.error]
+
+    if output_json:
+        out = {
+            "fbuild_board_count": len(fbuild_ids),
+            "external_board_count": total_external,
+            "missing_count": total_missing,
+            "errors": [{"source": r.source_id, "error": r.error} for r in errors],
+            "missing_by_source": {
+                src: [
+                    {"name": b.name, "architecture": b.architecture, "vendor": b.vendor}
+                    for b in boards
+                ]
+                for src, boards in sorted(missing.items())
+            },
+        }
+        print(json.dumps(out, indent=2))
+    else:
+        print(f"\n{'=' * 60}")
+        print("External Board Coverage Comparison")
+        print(f"{'=' * 60}")
+        print(f"  fbuild boards:       {len(fbuild_ids)}")
+        print(f"  External boards:     {total_external}")
+        print(f"  Missing from fbuild: {total_missing}")
+
+        if errors:
+            print(f"\n  Fetch errors ({len(errors)}):")
+            for r in errors:
+                print(f"    {r.source_id}: {r.error}")
+
+        if missing:
+            print(f"\n{'─' * 60}")
+            print("Boards in external sources but NOT in fbuild:")
+            print(f"{'─' * 60}")
+            for src, boards in sorted(missing.items()):
+                print(f"\n  [{src}] ({len(boards)} boards):")
+                for board in sorted(boards, key=lambda b: b.name)[:50]:
+                    parts = [f"    {board.name}"]
+                    if board.architecture:
+                        parts.append(f"[{board.architecture}]")
+                    print(" ".join(parts))
+                if len(boards) > 50:
+                    print(f"    ... and {len(boards) - 50} more")
+        else:
+            print("\nAll external boards have matches in fbuild!")
+
+    return 1 if missing else 0
+
+
 def main() -> int:
-    # Parse --platforms flag
+    # Parse flags
     filter_platforms: set[str] | None = None
+    run_external = False
+    output_json = False
     args = sys.argv[1:]
     i = 0
     while i < len(args):
         if args[i] == "--platforms" and i + 1 < len(args):
             filter_platforms = set(args[i + 1].split(","))
             i += 2
+        elif args[i] == "--external":
+            run_external = True
+            i += 1
+        elif args[i] == "--json":
+            output_json = True
+            i += 1
         else:
             print(f"Unknown argument: {args[i]}", file=sys.stderr)
             print(__doc__, file=sys.stderr)
             return 1
+
+    if run_external:
+        return run_external_comparison(output_json)
 
     boards_dir = assets_boards_dir()
     pio_dir = pio_platforms_dir()
