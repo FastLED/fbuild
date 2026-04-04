@@ -53,8 +53,12 @@ impl BuildOrchestrator for AvrOrchestrator {
         pipeline::log_toolchain_version(&toolchain.get_gcc_path(), "avr-gcc", &mut ctx.build_log);
 
         // 4. Ensure Arduino core
-        let (framework_dir, core_dir, variant_dir) =
-            ensure_avr_framework(&params.project_dir, &ctx.board.core, &ctx.board.variant)?;
+        let (framework_dir, core_dir, variant_dir) = ensure_avr_framework(
+            &params.project_dir,
+            &ctx.board.core,
+            &ctx.board.variant,
+            ctx.board.platform(),
+        )?;
 
         // 5. Scan sources
         let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
@@ -126,19 +130,33 @@ pub fn create() -> Box<dyn BuildOrchestrator> {
 ///
 /// Uses the data-driven `avr_frameworks.json` registry to resolve the correct
 /// framework package (GitHub URL, version) for any board core.
+/// For `AtmelMegaAvr` boards whose core is `"arduino"`, the lookup key is remapped
+/// to `"arduino_megaavr"` so they get `ArduinoCore-megaavr` (which contains the
+/// megaAVR variants like `nona4809`) instead of `ArduinoCore-avr`.
 /// Returns (framework_root, core_dir, variant_dir).
 fn ensure_avr_framework(
     project_dir: &Path,
     core_name: &str,
     variant_name: &str,
+    platform: Option<fbuild_core::Platform>,
 ) -> fbuild_core::Result<(PathBuf, PathBuf, PathBuf)> {
     use fbuild_packages::Package;
 
-    let framework = fbuild_packages::library::AvrFramework::for_core(core_name, project_dir)?;
+    // megaAVR boards (e.g. nano_every) share core name "arduino" with standard AVR
+    // but need ArduinoCore-megaavr instead of ArduinoCore-avr.
+    let lookup_key =
+        if platform == Some(fbuild_core::Platform::AtmelMegaAvr) && core_name == "arduino" {
+            "arduino_megaavr"
+        } else {
+            core_name
+        };
+
+    let framework = fbuild_packages::library::AvrFramework::for_core(lookup_key, project_dir)?;
     let framework_dir = framework.ensure_installed()?;
     tracing::info!(
-        "AVR framework for core '{}' at {}",
+        "AVR framework for core '{}' (lookup '{}') at {}",
         core_name,
+        lookup_key,
         framework_dir.display()
     );
     let core_dir = framework.get_core_dir(core_name);
@@ -182,5 +200,27 @@ mod tests {
         )
         .unwrap();
         assert!(!is_avr_project(tmp.path(), "esp32"));
+    }
+
+    /// Verify that megaAVR boards remap "arduino" core to "arduino_megaavr" framework.
+    #[test]
+    fn test_megaavr_core_remaps_to_megaavr_framework() {
+        let core = "arduino";
+        let platform = Some(Platform::AtmelMegaAvr);
+        let lookup_key = if platform == Some(Platform::AtmelMegaAvr) && core == "arduino" {
+            "arduino_megaavr"
+        } else {
+            core
+        };
+        assert_eq!(lookup_key, "arduino_megaavr");
+
+        // Standard AVR should NOT remap
+        let platform_avr = Some(Platform::AtmelAvr);
+        let lookup_avr = if platform_avr == Some(Platform::AtmelMegaAvr) && core == "arduino" {
+            "arduino_megaavr"
+        } else {
+            core
+        };
+        assert_eq!(lookup_avr, "arduino");
     }
 }

@@ -51,6 +51,15 @@
       "checksum": null,
       "validation_path": "cores/coreX-corefiles/Arduino.h",
       "core_dir": "coreX-corefiles"
+    },
+    "arduino_megaavr": {
+      "name": "arduino-megaavr-core",
+      "github": "arduino/ArduinoCore-megaavr",
+      "version": "1.8.8",
+      "tag_prefix": "",
+      "checksum": null,
+      "validation_path": "cores/arduino/Arduino.h",
+      "core_dir": "arduino"
     }
   }
 }

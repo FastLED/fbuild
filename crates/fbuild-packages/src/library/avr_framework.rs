@@ -332,4 +332,21 @@ mod tests {
         assert_eq!(entry.tag_prefix, "v");
         assert_eq!(entry.core_dir.as_deref(), Some("coreX-corefiles"));
     }
+
+    #[test]
+    fn test_arduino_megaavr_registered() {
+        let registry = load_registry();
+        assert!(
+            registry.contains_key("arduino_megaavr"),
+            "arduino_megaavr must be registered for AtmelMegaAvr boards"
+        );
+    }
+
+    #[test]
+    fn test_arduino_megaavr_lookup() {
+        let entry = lookup_entry("arduino_megaavr").unwrap();
+        assert!(entry.github.contains("ArduinoCore-megaavr"));
+        assert_eq!(entry.name, "arduino-megaavr-core");
+        assert_eq!(entry.core_dir.as_deref(), Some("arduino"));
+    }
 }
