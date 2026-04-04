@@ -39,6 +39,36 @@ jobs:
         uses: Swatinem/rust-cache@v2
         with:
           key: platform-build-v1
+          save-if: "true"
+
+      - name: Cache zccache
+        uses: actions/cache@v4
+        with:
+          path: ~/.zccache
+          key: zccache-${{ runner.os }}-${{ inputs.env-name }}-${{ github.sha }}
+          restore-keys: |
+            zccache-${{ runner.os }}-${{ inputs.env-name }}-
+            zccache-${{ runner.os }}-
+          save-always: true
+
+      - name: Cache fbuild toolchains
+        uses: actions/cache@v4
+        with:
+          path: ~/.fbuild/prod/cache
+          key: fbuild-toolchain-${{ runner.os }}-${{ inputs.env-name }}-${{ github.sha }}
+          restore-keys: |
+            fbuild-toolchain-${{ runner.os }}-${{ inputs.env-name }}-
+            fbuild-toolchain-${{ runner.os }}-
+          save-always: true
+
+      - name: Cache platform build artifacts
+        uses: actions/cache@v4
+        with:
+          path: ${{ inputs.test-dir }}/.fbuild/build
+          key: fbuild-build-${{ runner.os }}-${{ inputs.env-name }}-${{ github.sha }}
+          restore-keys: |
+            fbuild-build-${{ runner.os }}-${{ inputs.env-name }}-
+          save-always: true
 
       - name: Install Linux dependencies
         run: |
@@ -57,12 +87,12 @@ jobs:
 
       - name: Build fbuild binaries
         run: |
-          cargo build --release -p fbuild-cli -p fbuild-daemon
+          cargo build -p fbuild-cli -p fbuild-daemon
         env:
           RUSTC_WRAPPER: zccache
 
       - name: Add fbuild to PATH
-        run: echo "${{ github.workspace }}/target/release" >> $GITHUB_PATH
+        run: echo "${{ github.workspace }}/target/debug" >> $GITHUB_PATH
 
       - name: Build ${{ inputs.workflow-name }} (quick)
         run: fbuild build ${{ inputs.test-dir }} -e ${{ inputs.env-name }} --quick

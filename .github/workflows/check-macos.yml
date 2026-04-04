@@ -20,6 +20,17 @@ jobs:
         with:
           components: clippy, rustfmt
       - uses: Swatinem/rust-cache@v2
+        with:
+          save-if: "true"
+      - name: Cache zccache
+        uses: actions/cache@v4
+        with:
+          path: ~/.zccache
+          key: zccache-${{ runner.os }}-check-${{ github.sha }}
+          restore-keys: |
+            zccache-${{ runner.os }}-check-
+            zccache-${{ runner.os }}-
+          save-always: true
       - name: Setup zccache
         shell: bash
         run: |
