@@ -24,9 +24,18 @@ jobs:
         shell: bash
         run: |
           pip install zccache
-          # macOS installs to Python framework bin; chmod using sys.prefix
-          chmod +x "$(python3 -c 'import sys; print(sys.prefix)')/bin/zccache" 2>/dev/null || true
-          find ~/.local -name 'zccache*' -type f -exec chmod +x {} + 2>/dev/null || true
+          python3 -c "
+          import os, sys, stat, glob
+          for p in [
+              os.path.join(sys.prefix, 'bin', 'zccache'),
+              os.path.join(sys.base_prefix, 'bin', 'zccache'),
+              *glob.glob('/Library/Frameworks/Python.framework/Versions/*/bin/zccache'),
+              os.path.expanduser('~/.local/bin/zccache'),
+          ]:
+              if os.path.exists(p):
+                  os.chmod(p, 0o755)
+                  print(f'chmod 755 {p}')
+          "
           zccache start
       - name: Check
         run: cargo check --workspace --all-targets
