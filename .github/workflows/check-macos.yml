@@ -25,7 +25,8 @@ jobs:
         run: |
           pip install zccache
           python3 -c "
-          import os, sys, stat, glob
+          import os, sys, stat, glob, zccache
+          # Fix entry-point scripts
           for p in [
               os.path.join(sys.prefix, 'bin', 'zccache'),
               os.path.join(sys.base_prefix, 'bin', 'zccache'),
@@ -35,6 +36,15 @@ jobs:
               if os.path.exists(p):
                   os.chmod(p, 0o755)
                   print(f'chmod 755 {p}')
+          # Fix bundled daemon binary inside the package
+          pkg_dir = os.path.dirname(zccache.__file__)
+          for root, dirs, files in os.walk(pkg_dir):
+              for f in files:
+                  fp = os.path.join(root, f)
+                  st = os.stat(fp)
+                  if not (st.st_mode & stat.S_IEXEC):
+                      os.chmod(fp, st.st_mode | stat.S_IEXEC | stat.S_IXGRP | stat.S_IXOTH)
+                      print(f'chmod +x {fp}')
           "
           zccache start
       - name: Check
