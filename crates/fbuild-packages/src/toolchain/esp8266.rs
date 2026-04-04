@@ -9,7 +9,7 @@ use std::path::{Path, PathBuf};
 use crate::{CacheSubdir, PackageBase, PackageInfo, Toolchain};
 
 /// Toolchain version (matches Arduino ESP8266 core 3.1.2 / espressif8266@4.2.1).
-const ESP8266_TOOLCHAIN_VERSION: &str = "3.1.0-gcc10.3";
+const ESP8266_TOOLCHAIN_VERSION: &str = "3.2.0-gcc10.3";
 
 /// Binary prefix for all tools.
 const PREFIX: &str = "xtensa-lx106-elf-";
@@ -165,35 +165,36 @@ fn all_platform_packages() -> [(&'static str, PlatformPackage); 5] {
         (
             "windows",
             PlatformPackage {
-                filename_suffix: "x86_64-w64-mingw32.xtensa-lx106-elf-c791sp3.230831.zip",
+                filename_suffix: "x86_64-w64-mingw32.xtensa-lx106-elf-c791b74.230224.zip",
                 checksum: None,
             },
         ),
         (
+            // No aarch64-apple-darwin build exists; use x86_64 under Rosetta 2.
             "macos-arm64",
             PlatformPackage {
-                filename_suffix: "aarch64-apple-darwin20.4.xtensa-lx106-elf-c791sp3.230831.tar.gz",
+                filename_suffix: "x86_64-apple-darwin14.xtensa-lx106-elf-c791b74.230224.tar.gz",
                 checksum: None,
             },
         ),
         (
             "macos-x86_64",
             PlatformPackage {
-                filename_suffix: "x86_64-apple-darwin14.xtensa-lx106-elf-c791sp3.230831.tar.gz",
+                filename_suffix: "x86_64-apple-darwin14.xtensa-lx106-elf-c791b74.230224.tar.gz",
                 checksum: None,
             },
         ),
         (
             "linux-aarch64",
             PlatformPackage {
-                filename_suffix: "aarch64-linux-gnu.xtensa-lx106-elf-c791sp3.230831.tar.gz",
+                filename_suffix: "aarch64-linux-gnu.xtensa-lx106-elf-c791b74.230224.tar.gz",
                 checksum: None,
             },
         ),
         (
             "linux-x86_64",
             PlatformPackage {
-                filename_suffix: "x86_64-pc-linux-gnu.xtensa-lx106-elf-c791sp3.230831.tar.gz",
+                filename_suffix: "x86_64-linux-gnu.xtensa-lx106-elf-c791b74.230224.tar.gz",
                 checksum: None,
             },
         ),
@@ -222,8 +223,8 @@ fn platform_package() -> (String, Option<String>) {
         .expect("no ESP8266 toolchain package for current platform");
 
     let url = format!(
-        "https://github.com/earlephilhower/esp-quick-toolchain/releases/download/3.1.0-gcc10.3/{}",
-        pkg.filename_suffix,
+        "https://github.com/earlephilhower/esp-quick-toolchain/releases/download/{}/{}",
+        ESP8266_TOOLCHAIN_VERSION, pkg.filename_suffix,
     );
 
     (url, pkg.checksum.map(|s| s.to_string()))
