@@ -14,9 +14,9 @@ use std::path::Path;
 use fbuild_core::Result;
 
 /// Version of ArduinoCore-API to use.
-const ARDUINO_API_VERSION: &str = "1.4.2";
+const ARDUINO_API_VERSION: &str = "1.5.2";
 const ARDUINO_API_URL: &str =
-    "https://github.com/arduino/ArduinoCore-API/archive/refs/tags/1.4.2.tar.gz";
+    "https://github.com/arduino/ArduinoCore-API/archive/refs/tags/1.5.2.tar.gz";
 
 /// Ensure the ArduinoCore-API `api/` directory exists in the framework's core dir.
 ///

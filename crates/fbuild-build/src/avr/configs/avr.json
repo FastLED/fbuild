@@ -43,8 +43,8 @@
       "link_flags": ["-flto", "-fuse-linker-plugin"]
     },
     "quick": {
-      "compile_flags": ["-Os"],
-      "link_flags": []
+      "compile_flags": ["-Os", "-flto", "-fno-fat-lto-objects"],
+      "link_flags": ["-flto", "-fuse-linker-plugin"]
     }
   },
 
