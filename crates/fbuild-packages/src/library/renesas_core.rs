@@ -108,7 +108,11 @@ impl RenesasCores {
 impl crate::Package for RenesasCores {
     fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
         if self.is_installed() {
-            return Ok(self.resolved_dir());
+            let root = self.resolved_dir();
+            // Ensure ArduinoCore-API is present (may have been cached without it)
+            let core_dir = root.join("cores").join("arduino");
+            super::arduino_api::ensure_arduino_api(&core_dir)?;
+            return Ok(root);
         }
 
         let rt = tokio::runtime::Handle::try_current().ok();
@@ -124,7 +128,13 @@ impl crate::Package for RenesasCores {
             rt.block_on(self.base.staged_install(Self::validate))?
         };
 
-        Ok(find_core_root(&install_path))
+        let root = find_core_root(&install_path);
+
+        // ArduinoCore-renesas requires ArduinoCore-API in cores/arduino/api/
+        let core_dir = root.join("cores").join("arduino");
+        super::arduino_api::ensure_arduino_api(&core_dir)?;
+
+        Ok(root)
     }
 
     fn is_installed(&self) -> bool {

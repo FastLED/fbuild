@@ -24,6 +24,8 @@ struct FrameworkEntry {
     /// Override for the core subdirectory name inside `cores/`.
     /// When `None`, the registry key (core name) is used as the directory name.
     core_dir: Option<String>,
+    /// Whether this framework needs ArduinoCore-API injected into cores/<core>/api/.
+    needs_arduino_api: bool,
 }
 
 /// Parse the embedded JSON registry.
@@ -45,6 +47,7 @@ fn load_registry() -> HashMap<String, FrameworkEntry> {
         let checksum = entry["checksum"].as_str().map(|s| s.to_string());
         let validation_path = entry["validation_path"].as_str().unwrap_or("").to_string();
         let core_dir = entry["core_dir"].as_str().map(|s| s.to_string());
+        let needs_arduino_api = entry["needs_arduino_api"].as_bool().unwrap_or(false);
 
         map.insert(
             core_name.clone(),
@@ -56,6 +59,7 @@ fn load_registry() -> HashMap<String, FrameworkEntry> {
                 checksum,
                 validation_path,
                 core_dir,
+                needs_arduino_api,
             },
         );
     }
@@ -85,6 +89,8 @@ pub struct AvrFramework {
     /// Override for the subdirectory name inside `cores/`.
     /// When `None`, `core_name` is used (works for most frameworks).
     core_dir_override: Option<String>,
+    /// Whether to fetch ArduinoCore-API into cores/<core>/api/ after install.
+    needs_arduino_api: bool,
 }
 
 impl AvrFramework {
@@ -111,6 +117,7 @@ impl AvrFramework {
             core_name: core_name.to_string(),
             validation_path: entry.validation_path,
             core_dir_override: entry.core_dir,
+            needs_arduino_api: entry.needs_arduino_api,
         })
     }
 
@@ -137,7 +144,13 @@ impl AvrFramework {
 impl crate::Package for AvrFramework {
     fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
         if self.is_installed() {
-            return Ok(self.resolved_dir());
+            let root = self.resolved_dir();
+            // Still ensure API is present (may have been cached without it)
+            if self.needs_arduino_api {
+                let core_dir = self.get_core_dir(&self.core_name);
+                super::arduino_api::ensure_arduino_api(&core_dir)?;
+            }
+            return Ok(root);
         }
 
         let validation_path = self.validation_path.clone();
@@ -171,7 +184,16 @@ impl crate::Package for AvrFramework {
             rt.block_on(self.base.staged_install(validate_fn))?
         };
 
-        Ok(find_framework_root(&install_path))
+        let root = find_framework_root(&install_path);
+
+        // Fetch ArduinoCore-API if needed (e.g. ArduinoCore-megaavr)
+        if self.needs_arduino_api {
+            let core_dir_name = self.core_dir_override.as_deref().unwrap_or(&self.core_name);
+            let core_dir = root.join("cores").join(core_dir_name);
+            super::arduino_api::ensure_arduino_api(&core_dir)?;
+        }
+
+        Ok(root)
     }
 
     fn is_installed(&self) -> bool {

@@ -1,7 +1,7 @@
 {
   "build": {
     "core": "megatinycore",
-    "extra_flags": "-DARDUINO_attinyxy4 -DMILLIS_USE_TIMERA0 -DUARTBAUD5V",
+    "extra_flags": "-DARDUINO_attinyxy4 -DMILLIS_USE_TIMERA0 -DUARTBAUD5V -DCLOCK_SOURCE=0",
     "f_cpu": "16000000L",
     "mcu": "attiny1604",
     "variant": "txy4"

@@ -1,5 +1,6 @@
 //! Library dependency management.
 
+pub mod arduino_api;
 pub mod arduino_core;
 pub mod attiny_core;
 pub mod avr_framework;

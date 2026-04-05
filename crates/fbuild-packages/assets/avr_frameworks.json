@@ -59,7 +59,8 @@
       "tag_prefix": "",
       "checksum": null,
       "validation_path": "cores/arduino/Arduino.h",
-      "core_dir": "arduino"
+      "core_dir": "arduino",
+      "needs_arduino_api": true
     }
   }
 }
