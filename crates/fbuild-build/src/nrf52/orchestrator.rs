@@ -68,13 +68,16 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
         let mut sources = scanner.scan_all(Some(&core_dir), Some(&variant_dir))?;
 
-        // Add TinyUSB sources (USB CDC Serial support for nRF52840)
-        let tinyusb_src = framework_dir
+        // Add TinyUSB Arduino sources (USB CDC Serial support for nRF52840).
+        // Only compile src/arduino/ (CDC/Device), not the full src/ tree which
+        // includes USB Host code that requires SPI.h.
+        let tinyusb_arduino = framework_dir
             .join("libraries")
             .join("Adafruit_TinyUSB_Arduino")
-            .join("src");
-        if tinyusb_src.exists() {
-            let tinyusb_sources = scanner.scan_core_sources(&tinyusb_src);
+            .join("src")
+            .join("arduino");
+        if tinyusb_arduino.exists() {
+            let tinyusb_sources = scanner.scan_core_sources(&tinyusb_arduino);
             tracing::info!("TinyUSB sources: {}", tinyusb_sources.len());
             sources.core_sources.extend(tinyusb_sources);
         }
