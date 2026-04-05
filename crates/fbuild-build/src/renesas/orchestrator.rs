@@ -4,7 +4,7 @@
 //! 1. Parse platformio.ini
 //! 2. Load board config (uno_r4_wifi, etc.)
 //! 3. Ensure ARM GCC toolchain
-//! 4. Ensure Renesas cores (via `fbuild_packages::library::RenesasCores` — not yet implemented)
+//! 4. Ensure Renesas cores (ArduinoCore-renesas)
 //! 5. Setup build directories
 //! 6. Scan source files
 //! 7. Compile core sources
@@ -13,18 +13,16 @@
 //! 10. Convert to binary + report size
 
 use std::path::Path;
+use std::time::Instant;
 
 use fbuild_core::{Platform, Result};
 
-use crate::BuildOrchestrator;
+use crate::compile_database::TargetArchitecture;
+use crate::pipeline;
+use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
-// These imports will be used once RenesasCores is available in fbuild_packages:
-// use std::time::Instant;
-// use crate::compile_database::TargetArchitecture;
-// use crate::pipeline;
-// use crate::{BuildParams, BuildResult, SourceScanner};
-// use super::renesas_compiler::RenesasCompiler;
-// use super::renesas_linker::RenesasLinker;
+use super::renesas_compiler::RenesasCompiler;
+use super::renesas_linker::RenesasLinker;
 
 /// Renesas RA platform build orchestrator.
 pub struct RenesasOrchestrator;
@@ -34,21 +32,98 @@ impl BuildOrchestrator for RenesasOrchestrator {
         Platform::RenesasRa
     }
 
-    fn build(&self, _params: &crate::BuildParams) -> Result<crate::BuildResult> {
-        // TODO: Enable once fbuild_packages::library::RenesasCores is implemented.
-        //
-        // The full build pipeline will:
-        // 1. Parse config via pipeline::BuildContext::new()
-        // 2. Install ARM GCC toolchain via ArmToolchain
-        // 3. Install Renesas cores via RenesasCores
-        // 4. Scan sources via SourceScanner
-        // 5. Compile with RenesasCompiler (see renesas_compiler.rs)
-        // 6. Link with RenesasLinker (see renesas_linker.rs)
-        // 7. Run pipeline::run_sequential_build() with TargetArchitecture::Arm
-        Err(fbuild_core::FbuildError::BuildFailed(
-            "Renesas RA platform build not yet available: RenesasCores package not implemented"
-                .into(),
-        ))
+    fn build(&self, params: &BuildParams) -> Result<BuildResult> {
+        let start = Instant::now();
+
+        // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
+        let mut ctx = pipeline::BuildContext::new(
+            &params.project_dir,
+            &params.env_name,
+            params.clean,
+            params.profile,
+            params.log_sender.clone(),
+        )?;
+
+        // 3. Ensure ARM GCC toolchain
+        let toolchain = fbuild_packages::toolchain::ArmToolchain::new(&params.project_dir);
+        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
+        tracing::info!("arm-gcc toolchain at {}", toolchain_dir.display());
+
+        use fbuild_packages::Toolchain;
+        pipeline::log_toolchain_version(
+            &toolchain.get_gcc_path(),
+            "arm-none-eabi-gcc",
+            &mut ctx.build_log,
+        );
+
+        // 4. Ensure Renesas cores (ArduinoCore-renesas)
+        let framework = fbuild_packages::library::RenesasCores::new(&params.project_dir);
+        let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
+        tracing::info!("Renesas cores at {}", framework_dir.display());
+
+        // 5. Scan sources
+        let core_dir = framework.get_core_dir(&ctx.board.core);
+        let variant_dir = framework.get_variant_dir(&ctx.board.variant);
+
+        let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
+        let sources = scanner.scan_all(Some(&core_dir), Some(&variant_dir))?;
+
+        tracing::info!(
+            "sources: {} sketch, {} core, {} variant",
+            sources.sketch_sources.len(),
+            sources.core_sources.len(),
+            sources.variant_sources.len(),
+        );
+
+        // 6. Build include dirs + compiler
+        let mcu_config =
+            super::mcu_config::get_renesas_config_for_mcu(&ctx.board.mcu.to_lowercase())?;
+        let mut defines = ctx.board.get_defines();
+        defines.extend(mcu_config.defines_map());
+        let mut include_dirs = ctx.board.get_include_paths(&framework_dir);
+        include_dirs.push(ctx.src_dir.clone());
+        pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
+        // Toolchain sysroot includes (ARM CMSIS headers, etc.)
+        include_dirs.extend(toolchain.get_include_dirs());
+
+        let compiler = RenesasCompiler::new(
+            toolchain.get_gcc_path(),
+            toolchain.get_gxx_path(),
+            &ctx.board.mcu,
+            &ctx.board.f_cpu,
+            defines,
+            include_dirs,
+            mcu_config.clone(),
+            params.profile,
+            params.verbose,
+        );
+
+        // 7. Create linker (resolve linker script from framework variant)
+        let linker_script_path = framework.get_linker_script(&ctx.board.variant);
+        let linker = RenesasLinker::new(
+            toolchain.get_gcc_path(),
+            toolchain.get_ar_path(),
+            toolchain.get_objcopy_path(),
+            toolchain.get_size_path(),
+            linker_script_path,
+            mcu_config,
+            params.profile,
+            ctx.board.max_flash,
+            ctx.board.max_ram,
+            params.verbose,
+        );
+
+        // 8. Run shared sequential build pipeline
+        pipeline::run_sequential_build(
+            &compiler,
+            &linker,
+            ctx,
+            params,
+            &sources,
+            TargetArchitecture::Arm,
+            "Renesas RA",
+            start,
+        )
     }
 }
 
@@ -70,5 +145,28 @@ mod tests {
     fn test_renesas_orchestrator_platform() {
         let orch = RenesasOrchestrator;
         assert_eq!(orch.platform(), Platform::RenesasRa);
+    }
+
+    #[test]
+    fn test_is_renesas_project() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        std::fs::write(
+            tmp.path().join("platformio.ini"),
+            "[env:uno_r4_wifi]\nplatform = renesas-ra\nboard = uno_r4_wifi\nframework = arduino\n",
+        )
+        .unwrap();
+        assert!(is_renesas_project(tmp.path(), "uno_r4_wifi"));
+        assert!(!is_renesas_project(tmp.path(), "uno"));
+    }
+
+    #[test]
+    fn test_is_not_renesas_project() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        std::fs::write(
+            tmp.path().join("platformio.ini"),
+            "[env:uno]\nplatform = atmelavr\nboard = uno\nframework = arduino\n",
+        )
+        .unwrap();
+        assert!(!is_renesas_project(tmp.path(), "uno"));
     }
 }

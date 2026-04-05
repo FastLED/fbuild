@@ -1,4 +1,9 @@
 {
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DF_CPU=48000000L -DARDUINO_UNOR4_WIFI",
+    "variant": "UNOWIFIR4"
+  },
   "debug": {
     "tools": {
       "jlink": {},
