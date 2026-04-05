@@ -85,6 +85,12 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
         // Toolchain sysroot includes
         include_dirs.extend(toolchain.get_include_dirs());
+        // CMSIS Core includes (core_cm4.h, etc.)
+        let cmsis = fbuild_packages::library::CmsisFramework::new(&params.project_dir);
+        let _cmsis_dir = fbuild_packages::Package::ensure_installed(&cmsis)?;
+        tracing::info!("CMSIS framework installed");
+        include_dirs.push(cmsis.get_core_include_dir());
+        include_dirs.push(cmsis.get_dsp_include_dir());
         // Nordic SDK includes (bundled inside the core)
         let nordic_dir = core_dir.join("nordic");
         include_dirs.push(nordic_dir.clone());
