@@ -82,9 +82,18 @@ impl BuildOrchestrator for RenesasOrchestrator {
         defines.extend(mcu_config.defines_map());
         // Use resolved core_dir/variant_dir instead of get_include_paths() which
         // doesn't account for core_dir overrides.
-        let mut include_dirs = vec![core_dir.clone(), variant_dir];
+        let mut include_dirs = vec![core_dir.clone(), variant_dir.clone()];
         // Renesas core has headers in subdirectories (tinyusb/, usb/, cm_backtrace/)
         discover_header_subdirs(&core_dir, &mut include_dirs);
+        // Arduino API deprecated compatibility headers
+        let api_deprecated = core_dir.join("api").join("deprecated");
+        if api_deprecated.is_dir() {
+            include_dirs.push(api_deprecated);
+        }
+        let api_deprecated_avr = core_dir.join("api").join("deprecated-avr-comp");
+        if api_deprecated_avr.is_dir() {
+            include_dirs.push(api_deprecated_avr);
+        }
         // FSP includes from variant's includes.txt (bsp_api.h, CMSIS, etc.)
         include_dirs.extend(framework.get_variant_includes(&ctx.board.variant));
         include_dirs.push(ctx.src_dir.clone());

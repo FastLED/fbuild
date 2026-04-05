@@ -1,7 +1,7 @@
 {
   "build": {
     "core": "arduino",
-    "extra_flags": "-DF_CPU=48000000L -DARDUINO_UNOR4_WIFI",
+    "extra_flags": "-DF_CPU=48000000L -DARDUINO_UNOR4_WIFI -DNO_USB -DBACKTRACE_SUPPORT -DARDUINO_ARCH_RENESAS -DARDUINO_FSP -D_XOPEN_SOURCE=700 -DCFG_TUSB_MCU=OPT_MCU_RAXXX -D_RA_CORE=CM4 -D_RENESAS_RA_",
     "variant": "UNOWIFIR4"
   },
   "debug": {
