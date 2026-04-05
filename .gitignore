@@ -1,6 +1,7 @@
 # Build artifacts
 /target/
 **/*.rs.bk
+**/compile_commands.json
 
 # IDE
 .idea/
