@@ -152,6 +152,8 @@ impl BuildOrchestrator for Esp8266Orchestrator {
             toolchain.get_objcopy_path(),
             toolchain.get_size_path(),
             framework.get_sdk_lib_dir(),
+            framework.get_sdk_nonosdk_lib_dir(),
+            framework.get_libc_lib_dir(),
             sdk_ld_dir,
             linker_scripts,
             mcu_config,

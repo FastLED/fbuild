@@ -69,6 +69,31 @@ impl Esp8266Framework {
         self.resolved_dir().join("tools").join("sdk").join("lib")
     }
 
+    /// NonOS SDK version-specific libraries (`tools/sdk/lib/NONOSDK305/`).
+    ///
+    /// The ESP8266 NonOS SDK ships precompiled `.a` files (libphy, libpp,
+    /// libnet80211, etc.) in version-specific subdirectories under `tools/sdk/lib/`.
+    /// The version matches the `build.sdk` property from `platform.txt`.
+    pub fn get_sdk_nonosdk_lib_dir(&self) -> PathBuf {
+        self.resolved_dir()
+            .join("tools")
+            .join("sdk")
+            .join("lib")
+            .join("NONOSDK305")
+    }
+
+    /// SDK libc library directory (`tools/sdk/libc/xtensa-lx106-elf/lib/`).
+    ///
+    /// Matches `compiler.libc.path` + `/lib` from platform.txt.
+    pub fn get_libc_lib_dir(&self) -> PathBuf {
+        self.resolved_dir()
+            .join("tools")
+            .join("sdk")
+            .join("libc")
+            .join("xtensa-lx106-elf")
+            .join("lib")
+    }
+
     /// SDK linker scripts (`tools/sdk/ld/`).
     pub fn get_sdk_ld_dir(&self) -> PathBuf {
         self.resolved_dir().join("tools").join("sdk").join("ld")

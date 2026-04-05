@@ -45,7 +45,6 @@
     "-lmain",
     "-lwps",
     "-lbearssl",
-    "-laxtls",
     "-lespnow",
     "-lsmartconfig",
     "-lairkiss",
