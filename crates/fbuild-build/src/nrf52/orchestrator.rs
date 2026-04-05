@@ -121,6 +121,15 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         // SEGGER SystemView includes
         include_dirs.push(core_dir.join("sysview").join("SEGGER"));
         include_dirs.push(core_dir.join("sysview").join("Config"));
+        // TinyUSB includes (USB CDC Serial support for nRF52840)
+        let tinyusb_dir = framework_dir
+            .join("libraries")
+            .join("Adafruit_TinyUSB_Arduino")
+            .join("src")
+            .join("arduino");
+        if tinyusb_dir.exists() {
+            include_dirs.push(tinyusb_dir);
+        }
 
         let compiler = Nrf52Compiler::new(
             toolchain.get_gcc_path(),

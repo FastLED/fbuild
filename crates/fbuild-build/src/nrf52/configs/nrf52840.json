@@ -14,5 +14,19 @@
     "release": {"compile_flags": ["-Os", "-flto", "-fno-fat-lto-objects"], "link_flags": ["-flto", "-fuse-linker-plugin"]},
     "quick": {"compile_flags": ["-Os"], "link_flags": []}
   },
-  "defines": [["ARDUINO", "10808"], ["NRF52840_XXAA", "1"]]
+  "defines": [
+    ["ARDUINO", "10808"],
+    "NRF52840_XXAA",
+    "NRF52_SERIES",
+    "USE_TINYUSB",
+    "USBCON",
+    "SOFTDEVICE_PRESENT",
+    "ARDUINO_NRF52_ADAFRUIT",
+    "DX_CC_TEE",
+    ["LFS_NAME_MAX", "64"],
+    ["CFG_DEBUG", "0"],
+    ["CFG_LOGGER", "0"],
+    ["CFG_SYSVIEW", "0"],
+    ["ARDUINO_BSP_VERSION", "\"1.6.1\""]
+  ]
 }
