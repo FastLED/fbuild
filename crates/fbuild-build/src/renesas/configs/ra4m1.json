@@ -4,7 +4,7 @@
   "architecture": "arm-cortex-m4",
   "compiler_flags": {
     "common": ["-mcpu=cortex-m4", "-mthumb", "-mfloat-abi=hard", "-mfpu=fpv4-sp-d16", "-w", "-ffunction-sections", "-fdata-sections", "-fno-strict-aliasing", "-fno-builtin", "-fsigned-char", "-nostdlib", "-MMD"],
-    "c": ["-std=gnu11"],
+    "c": ["-std=gnu11", "-Wno-error=return-mismatch", "-Wno-error=implicit-function-declaration", "-Wno-error=int-conversion", "-Wno-error=incompatible-pointer-types"],
     "cxx": ["-std=gnu++17", "-fno-exceptions", "-fno-rtti", "-fno-threadsafe-statics"]
   },
   "linker_flags": ["-mcpu=cortex-m4", "-mthumb", "-mfloat-abi=hard", "-mfpu=fpv4-sp-d16", "-Wl,--gc-sections", "-Wl,--print-memory-usage", "--specs=nano.specs", "--specs=nosys.specs"],
