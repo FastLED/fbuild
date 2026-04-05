@@ -81,6 +81,14 @@ impl BuildOrchestrator for Nrf52Orchestrator {
                 "common",
                 "class/cdc",
                 "class/vendor",
+                "class/msc",
+                "class/hid",
+                "class/midi",
+                "class/video",
+                "class/audio",
+                "class/dfu",
+                "class/net",
+                "class/usbtmc",
                 "portable/nordic/nrf5x",
             ] {
                 let dir = tinyusb_root.join(subdir);
