@@ -1,4 +1,8 @@
 {
+  "build": {
+    "core": "nRF5",
+    "variant": "feather_nrf52840_sense"
+  },
   "connectivity": [
     "bluetooth"
   ],
