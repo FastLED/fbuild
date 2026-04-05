@@ -80,7 +80,9 @@ impl BuildOrchestrator for RenesasOrchestrator {
             super::mcu_config::get_renesas_config_for_mcu(&ctx.board.mcu.to_lowercase())?;
         let mut defines = ctx.board.get_defines();
         defines.extend(mcu_config.defines_map());
-        let mut include_dirs = ctx.board.get_include_paths(&framework_dir);
+        // Use resolved core_dir/variant_dir instead of get_include_paths() which
+        // doesn't account for core_dir overrides.
+        let mut include_dirs = vec![core_dir, variant_dir];
         include_dirs.push(ctx.src_dir.clone());
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
         // Toolchain sysroot includes (ARM CMSIS headers, etc.)
