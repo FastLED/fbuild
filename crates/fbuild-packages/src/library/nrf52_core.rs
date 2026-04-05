@@ -1,15 +1,15 @@
 //! Adafruit nRF52 Arduino core framework package.
 //!
-//! Downloads and manages the Adafruit nRF52 Arduino core from GitHub.
+//! Downloads and manages the Adafruit nRF52 Arduino core from PlatformIO's
+//! registry (which includes submodules like TinyUSB pre-bundled).
 //! Provides paths to: cores/nRF5, variants/, libraries/.
 
 use std::path::{Path, PathBuf};
 
 use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 
-const NRF52_CORE_VERSION: &str = "1.6.1";
-const NRF52_CORE_URL: &str =
-    "https://github.com/adafruit/Adafruit_nRF52_Arduino/archive/refs/tags/1.6.1.tar.gz";
+const NRF52_CORE_VERSION: &str = "1.10601.0";
+const NRF52_CORE_URL: &str = "https://dl.registry.platformio.org/download/platformio/tool/framework-arduinoadafruitnrf52/1.10601.0/framework-arduinoadafruitnrf52-1.10601.0.tar.gz";
 
 /// Adafruit nRF52 Arduino core framework manager.
 pub struct Nrf52Cores {
