@@ -1,15 +1,19 @@
 //! Arduino Renesas core (ArduinoCore-renesas) framework package.
 //!
-//! Downloads and manages the Arduino Renesas core from GitHub.
-//! Provides paths to: cores/arduino, variants/, libraries/.
+//! Downloads the official Arduino Board Manager archive which includes
+//! all submodules pre-resolved (ArduinoCore-API, TinyUSB, FSP, etc.).
+//! GitHub archive downloads exclude submodules, so we use the Arduino
+//! Board Manager URL instead.
 
 use std::path::{Path, PathBuf};
 
 use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 
 const RENESAS_CORE_VERSION: &str = "1.2.2";
+/// Arduino Board Manager archive — includes all submodules resolved.
+/// GitHub archive URLs exclude submodules (tinyusb, fsp, ArduinoCore-API are symlinks).
 const RENESAS_CORE_URL: &str =
-    "https://github.com/arduino/ArduinoCore-renesas/archive/refs/tags/1.2.2.tar.gz";
+    "https://downloads.arduino.cc/cores/staging/ArduinoCore-renesas_uno-1.2.2.tar.bz2";
 
 /// Arduino Renesas core framework manager.
 pub struct RenesasCores {
@@ -149,11 +153,7 @@ impl RenesasCores {
 impl crate::Package for RenesasCores {
     fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
         if self.is_installed() {
-            let root = self.resolved_dir();
-            // Ensure ArduinoCore-API is present (may have been cached without it)
-            let core_dir = root.join("cores").join("arduino");
-            super::arduino_api::ensure_arduino_api(&core_dir)?;
-            return Ok(root);
+            return Ok(self.resolved_dir());
         }
 
         let rt = tokio::runtime::Handle::try_current().ok();
@@ -169,13 +169,7 @@ impl crate::Package for RenesasCores {
             rt.block_on(self.base.staged_install(Self::validate))?
         };
 
-        let root = find_core_root(&install_path);
-
-        // ArduinoCore-renesas requires ArduinoCore-API in cores/arduino/api/
-        let core_dir = root.join("cores").join("arduino");
-        super::arduino_api::ensure_arduino_api(&core_dir)?;
-
-        Ok(root)
+        Ok(find_core_root(&install_path))
     }
 
     fn is_installed(&self) -> bool {

@@ -83,17 +83,8 @@ impl BuildOrchestrator for RenesasOrchestrator {
         // Use resolved core_dir/variant_dir instead of get_include_paths() which
         // doesn't account for core_dir overrides.
         let mut include_dirs = vec![core_dir.clone(), variant_dir];
-        // Renesas core has headers in subdirectories (tinyusb/, usb/, etc.)
-        let pre_count = include_dirs.len();
+        // Renesas core has headers in subdirectories (tinyusb/, usb/, cm_backtrace/)
         discover_header_subdirs(&core_dir, &mut include_dirs);
-        eprintln!(
-            "Renesas core subdir includes: {} paths discovered under {}",
-            include_dirs.len() - pre_count,
-            core_dir.display()
-        );
-        for d in &include_dirs[pre_count..] {
-            eprintln!("  include: {}", d.display());
-        }
         // FSP includes from variant's includes.txt (bsp_api.h, CMSIS, etc.)
         include_dirs.extend(framework.get_variant_includes(&ctx.board.variant));
         include_dirs.push(ctx.src_dir.clone());
@@ -179,6 +170,41 @@ pub fn is_renesas_project(project_dir: &Path, env_name: &str) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_discover_header_subdirs() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let core = tmp.path().join("cores/arduino");
+        std::fs::create_dir_all(core.join("tinyusb")).unwrap();
+        std::fs::create_dir_all(core.join("usb")).unwrap();
+        std::fs::create_dir_all(core.join("empty")).unwrap();
+        // Write headers
+        std::fs::write(core.join("Arduino.h"), "").unwrap();
+        std::fs::write(core.join("tinyusb/tusb.h"), "").unwrap();
+        std::fs::write(core.join("tinyusb/tusb_option.h"), "").unwrap();
+        std::fs::write(core.join("usb/SerialUSB.h"), "").unwrap();
+        // usb has only .cpp, no .h? Actually let's add one
+        std::fs::write(core.join("usb/usb_bridge.h"), "").unwrap();
+
+        let mut includes = Vec::new();
+        discover_header_subdirs(&core, &mut includes);
+        // Should find tinyusb/ and usb/ but NOT empty/
+        assert!(
+            includes.iter().any(|p| p.ends_with("tinyusb")),
+            "tinyusb/ should be in includes: {:?}",
+            includes
+        );
+        assert!(
+            includes.iter().any(|p| p.ends_with("usb")),
+            "usb/ should be in includes: {:?}",
+            includes
+        );
+        assert!(
+            !includes.iter().any(|p| p.ends_with("empty")),
+            "empty/ should NOT be in includes: {:?}",
+            includes
+        );
+    }
 
     #[test]
     fn test_renesas_orchestrator_platform() {

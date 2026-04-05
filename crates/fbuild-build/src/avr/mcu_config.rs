@@ -131,7 +131,8 @@ mod tests {
 
         let quick = config.get_profile("quick").unwrap();
         assert!(quick.compile_flags.contains(&"-Os".to_string()));
-        assert!(quick.link_flags.is_empty());
+        assert!(quick.compile_flags.contains(&"-flto".to_string()));
+        assert!(quick.link_flags.contains(&"-flto".to_string()));
     }
 
     #[test]
