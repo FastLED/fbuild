@@ -11,7 +11,7 @@
   "linker_libs": ["-lgcc", "-lstdc++", "-lm", "-lc", "-lnosys"],
   "objcopy": {"output_format": "ihex", "remove_sections": [".eeprom"]},
   "profiles": {
-    "release": {"compile_flags": ["-Os", "-flto", "-fno-fat-lto-objects"], "link_flags": ["-flto", "-fuse-linker-plugin"]},
+    "release": {"compile_flags": ["-Os", "-flto", "-fno-fat-lto-objects"], "link_flags": ["-flto", "-fuse-linker-plugin", "-Wl,--undefined=vTaskSwitchContext"]},
     "quick": {"compile_flags": ["-Os"], "link_flags": []}
   },
   "defines": [
