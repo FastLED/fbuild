@@ -49,10 +49,7 @@ pub fn ensure_arduino_api(core_dir: &Path) -> Result<()> {
 
     // Use blocking reqwest since we may or may not be in an async context
     let response = reqwest::blocking::get(ARDUINO_API_URL).map_err(|e| {
-        fbuild_core::FbuildError::PackageError(format!(
-            "failed to download ArduinoCore-API: {}",
-            e
-        ))
+        fbuild_core::FbuildError::PackageError(format!("failed to download ArduinoCore-API: {}", e))
     })?;
 
     if !response.status().is_success() {
