@@ -85,6 +85,36 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
         // Toolchain sysroot includes
         include_dirs.extend(toolchain.get_include_dirs());
+        // Nordic SDK includes (bundled inside the core)
+        let nordic_dir = core_dir.join("nordic");
+        include_dirs.push(nordic_dir.clone());
+        include_dirs.push(nordic_dir.join("nrfx"));
+        include_dirs.push(nordic_dir.join("nrfx").join("hal"));
+        include_dirs.push(nordic_dir.join("nrfx").join("mdk"));
+        include_dirs.push(nordic_dir.join("nrfx").join("soc"));
+        include_dirs.push(nordic_dir.join("nrfx").join("drivers").join("include"));
+        include_dirs.push(nordic_dir.join("nrfx").join("drivers").join("src"));
+        // SoftDevice API includes (s140 for nRF52840)
+        let sd_dir = nordic_dir
+            .join("softdevice")
+            .join("s140_nrf52_6.1.1_API")
+            .join("include");
+        if sd_dir.exists() {
+            include_dirs.push(sd_dir.clone());
+            let sd_chip = sd_dir.join("nrf52");
+            if sd_chip.exists() {
+                include_dirs.push(sd_chip);
+            }
+        }
+        // FreeRTOS includes
+        let freertos = core_dir.join("freertos");
+        include_dirs.push(freertos.join("Source").join("include"));
+        include_dirs.push(freertos.join("config"));
+        include_dirs.push(freertos.join("portable").join("GCC").join("nrf52"));
+        include_dirs.push(freertos.join("portable").join("CMSIS").join("nrf52"));
+        // SEGGER SystemView includes
+        include_dirs.push(core_dir.join("sysview").join("SEGGER"));
+        include_dirs.push(core_dir.join("sysview").join("Config"));
 
         let compiler = Nrf52Compiler::new(
             toolchain.get_gcc_path(),
