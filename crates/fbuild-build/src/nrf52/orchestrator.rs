@@ -144,6 +144,14 @@ impl BuildOrchestrator for Nrf52Orchestrator {
             include_dirs.push(tinyusb_src.join("arduino"));
             include_dirs.push(tinyusb_src.clone());
         }
+        // Framework library includes (SPI, Wire, etc.)
+        let libs_dir = framework_dir.join("libraries");
+        for lib_name in &["SPI", "Wire"] {
+            let lib_dir = libs_dir.join(lib_name);
+            if lib_dir.exists() {
+                include_dirs.push(lib_dir);
+            }
+        }
 
         let compiler = Nrf52Compiler::new(
             toolchain.get_gcc_path(),
