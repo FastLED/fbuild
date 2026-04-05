@@ -68,18 +68,35 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
         let mut sources = scanner.scan_all(Some(&core_dir), Some(&variant_dir))?;
 
-        // Add TinyUSB Arduino sources (USB CDC Serial support for nRF52840).
-        // Only compile src/arduino/ (CDC/Device), not the full src/ tree which
-        // includes USB Host code that requires SPI.h.
-        let tinyusb_arduino = framework_dir
+        // Add TinyUSB sources (USB CDC Serial support for nRF52840).
+        // Compile arduino/ wrapper + device stack + CDC class + nRF5x port.
+        let tinyusb_root = framework_dir
             .join("libraries")
             .join("Adafruit_TinyUSB_Arduino")
-            .join("src")
-            .join("arduino");
-        if tinyusb_arduino.exists() {
-            let tinyusb_sources = scanner.scan_core_sources(&tinyusb_arduino);
-            tracing::info!("TinyUSB sources: {}", tinyusb_sources.len());
-            sources.core_sources.extend(tinyusb_sources);
+            .join("src");
+        if tinyusb_root.exists() {
+            for subdir in &[
+                "arduino",
+                "device",
+                "common",
+                "class/cdc",
+                "class/vendor",
+                "portable/nordic/nrf5x",
+            ] {
+                let dir = tinyusb_root.join(subdir);
+                if dir.exists() {
+                    sources.core_sources.extend(scanner.scan_core_sources(&dir));
+                }
+            }
+            // tusb.c at the root
+            let tusb_c = tinyusb_root.join("tusb.c");
+            if tusb_c.exists() {
+                sources.core_sources.push(tusb_c);
+            }
+            tracing::info!(
+                "TinyUSB sources added to core (total core: {})",
+                sources.core_sources.len()
+            );
         }
 
         tracing::info!(
