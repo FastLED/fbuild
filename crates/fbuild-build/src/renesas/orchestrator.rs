@@ -12,7 +12,7 @@
 //! 9. Link (with linker script)
 //! 10. Convert to binary + report size
 
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::time::Instant;
 
 use fbuild_core::{Platform, Result};
@@ -82,7 +82,9 @@ impl BuildOrchestrator for RenesasOrchestrator {
         defines.extend(mcu_config.defines_map());
         // Use resolved core_dir/variant_dir instead of get_include_paths() which
         // doesn't account for core_dir overrides.
-        let mut include_dirs = vec![core_dir, variant_dir];
+        let mut include_dirs = vec![core_dir.clone(), variant_dir];
+        // Renesas core has headers in subdirectories (tinyusb/, usb/, etc.)
+        discover_header_subdirs(&core_dir, &mut include_dirs);
         // FSP includes from variant's includes.txt (bsp_api.h, CMSIS, etc.)
         include_dirs.extend(framework.get_variant_includes(&ctx.board.variant));
         include_dirs.push(ctx.src_dir.clone());
@@ -134,6 +136,30 @@ impl BuildOrchestrator for RenesasOrchestrator {
 /// Create a Renesas orchestrator (convenience for get_orchestrator dispatch).
 pub fn create() -> Box<dyn BuildOrchestrator> {
     Box::new(RenesasOrchestrator)
+}
+
+/// Recursively find subdirectories that contain .h files and add them as include dirs.
+fn discover_header_subdirs(dir: &Path, include_dirs: &mut Vec<PathBuf>) {
+    let entries = match std::fs::read_dir(dir) {
+        Ok(e) => e,
+        Err(_) => return,
+    };
+    for entry in entries.flatten() {
+        let path = entry.path();
+        if path.is_dir() {
+            // Check if this directory contains any .h files
+            if let Ok(children) = std::fs::read_dir(&path) {
+                let has_headers = children
+                    .flatten()
+                    .any(|e| e.path().extension().is_some_and(|ext| ext == "h"));
+                if has_headers {
+                    include_dirs.push(path.clone());
+                }
+            }
+            // Recurse into subdirectories
+            discover_header_subdirs(&path, include_dirs);
+        }
+    }
 }
 
 /// Check if a project is configured for Renesas by reading its platformio.ini.
