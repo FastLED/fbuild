@@ -84,7 +84,13 @@ impl BuildOrchestrator for RenesasOrchestrator {
         // doesn't account for core_dir overrides.
         let mut include_dirs = vec![core_dir.clone(), variant_dir];
         // Renesas core has headers in subdirectories (tinyusb/, usb/, etc.)
+        let pre_count = include_dirs.len();
         discover_header_subdirs(&core_dir, &mut include_dirs);
+        tracing::info!(
+            "Renesas core subdir includes: {} paths discovered under {}",
+            include_dirs.len() - pre_count,
+            core_dir.display()
+        );
         // FSP includes from variant's includes.txt (bsp_api.h, CMSIS, etc.)
         include_dirs.extend(framework.get_variant_includes(&ctx.board.variant));
         include_dirs.push(ctx.src_dir.clone());
