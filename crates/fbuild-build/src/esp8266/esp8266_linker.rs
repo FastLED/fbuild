@@ -230,8 +230,15 @@ impl Linker for Esp8266Linker {
 
         match run_command(&args, None, None, Some(std::time::Duration::from_secs(30))) {
             Ok(result) if result.success() => {
-                tracing::info!("converted ELF → firmware.bin via esptool");
-                return Ok(bin_path);
+                // Verify the output file was actually created with content.
+                // ESP8266 esptool may create segmented files (firmware.bin-0x00000.bin)
+                // instead of a single firmware.bin, leaving it empty.
+                let size = std::fs::metadata(&bin_path).map(|m| m.len()).unwrap_or(0);
+                if size > 0 {
+                    tracing::info!("converted ELF → firmware.bin via esptool");
+                    return Ok(bin_path);
+                }
+                tracing::debug!("esptool produced empty firmware.bin (falling back to objcopy)");
             }
             Ok(result) => {
                 tracing::debug!(
