@@ -26,6 +26,11 @@ pub struct BuildRequest {
     /// When true, return a streaming NDJSON response instead of a single JSON object.
     #[serde(default)]
     pub stream: bool,
+    /// When true, run symbol-level memory analysis after linking.
+    #[serde(default)]
+    pub symbol_analysis: bool,
+    /// Optional path to write the symbol analysis report to.
+    pub symbol_analysis_path: Option<String>,
 }
 
 /// POST /api/deploy

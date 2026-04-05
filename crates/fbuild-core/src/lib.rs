@@ -268,6 +268,110 @@ impl SizeInfo {
     }
 }
 
+/// Memory region classification for a symbol.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum MemoryRegion {
+    Flash,
+    Ram,
+}
+
+/// A single symbol from the ELF binary with its memory classification.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct SymbolEntry {
+    pub name: String,
+    pub size: u64,
+    pub region: MemoryRegion,
+    /// nm type character (T, D, B, R, etc.)
+    pub sym_type: char,
+}
+
+/// Per-symbol breakdown of firmware memory usage.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct SymbolMap {
+    pub symbols: Vec<SymbolEntry>,
+    pub total_flash: u64,
+    pub total_ram: u64,
+}
+
+impl SymbolMap {
+    /// Classify an `nm` type character into a memory region.
+    ///
+    /// Returns `None` for symbols that don't map to Flash or RAM
+    /// (undefined, absolute, debug, etc.).
+    fn classify(sym_type: char) -> Option<MemoryRegion> {
+        match sym_type {
+            // Flash: text (code), read-only data, weak symbols in text
+            'T' | 't' | 'R' | 'r' | 'W' | 'w' => Some(MemoryRegion::Flash),
+            // RAM: initialized data, uninitialized data (BSS)
+            'D' | 'd' | 'B' | 'b' => Some(MemoryRegion::Ram),
+            // Everything else: undefined, absolute, debug, etc.
+            _ => None,
+        }
+    }
+
+    /// Parse output from `nm --print-size --size-sort --reverse-sort`.
+    ///
+    /// Expected format per line: `<address> <size> <type> <name>`
+    /// Example: `00000080 00000024 T setup`
+    pub fn parse_nm_output(output: &str) -> Option<Self> {
+        let mut symbols = Vec::new();
+        let mut total_flash = 0u64;
+        let mut total_ram = 0u64;
+
+        for line in output.lines() {
+            let parts: Vec<&str> = line.split_whitespace().collect();
+            if parts.len() < 4 {
+                continue;
+            }
+
+            // parts[0] = address (hex), parts[1] = size (hex), parts[2] = type, parts[3..] = name
+            let size = match u64::from_str_radix(parts[1], 16) {
+                Ok(s) => s,
+                Err(_) => continue,
+            };
+
+            let sym_type_char = match parts[2].chars().next() {
+                Some(c) => c,
+                None => continue,
+            };
+
+            let region = match Self::classify(sym_type_char) {
+                Some(r) => r,
+                None => continue,
+            };
+
+            // Name may contain spaces (e.g. C++ templates), rejoin
+            let name = parts[3..].join(" ");
+            if size == 0 {
+                continue;
+            }
+
+            match region {
+                MemoryRegion::Flash => total_flash += size,
+                MemoryRegion::Ram => total_ram += size,
+            }
+
+            symbols.push(SymbolEntry {
+                name,
+                size,
+                region,
+                sym_type: sym_type_char,
+            });
+        }
+
+        if symbols.is_empty() {
+            return None;
+        }
+
+        Some(Self {
+            symbols,
+            total_flash,
+            total_ram,
+        })
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -490,6 +594,62 @@ mod tests {
             Platform::from_platform_str("atmelmegaavr"),
             Some(Platform::AtmelAvr)
         );
+    }
+
+    #[test]
+    fn symbol_map_parse_nm_output_basic() {
+        let output = "\
+00000080 00000024 T setup\n\
+000000a4 00000012 T loop\n\
+00000200 00000008 D some_data\n\
+00000300 00000010 B bss_buffer\n\
+00000400 00000006 R const_table\n";
+        let map = SymbolMap::parse_nm_output(output).unwrap();
+        assert_eq!(map.symbols.len(), 5);
+        // Flash = setup(0x24=36) + loop(0x12=18) + const_table(0x06=6) = 60
+        assert_eq!(map.total_flash, 60);
+        // RAM = some_data(0x08=8) + bss_buffer(0x10=16) = 24
+        assert_eq!(map.total_ram, 24);
+    }
+
+    #[test]
+    fn symbol_map_parse_nm_output_skips_undefined() {
+        let output = "\
+00000080 00000024 T setup\n\
+         U _start\n\
+00000200 00000008 D data_var\n";
+        let map = SymbolMap::parse_nm_output(output).unwrap();
+        assert_eq!(map.symbols.len(), 2);
+    }
+
+    #[test]
+    fn symbol_map_parse_nm_output_empty() {
+        assert!(SymbolMap::parse_nm_output("").is_none());
+        assert!(SymbolMap::parse_nm_output("garbage\nnot nm output\n").is_none());
+    }
+
+    #[test]
+    fn symbol_map_parse_nm_output_skips_zero_size() {
+        let output = "00000080 00000000 T empty_func\n00000080 00000010 T real_func\n";
+        let map = SymbolMap::parse_nm_output(output).unwrap();
+        assert_eq!(map.symbols.len(), 1);
+        assert_eq!(map.symbols[0].name, "real_func");
+    }
+
+    #[test]
+    fn symbol_map_classify() {
+        assert_eq!(SymbolMap::classify('T'), Some(MemoryRegion::Flash));
+        assert_eq!(SymbolMap::classify('t'), Some(MemoryRegion::Flash));
+        assert_eq!(SymbolMap::classify('R'), Some(MemoryRegion::Flash));
+        assert_eq!(SymbolMap::classify('r'), Some(MemoryRegion::Flash));
+        assert_eq!(SymbolMap::classify('W'), Some(MemoryRegion::Flash));
+        assert_eq!(SymbolMap::classify('D'), Some(MemoryRegion::Ram));
+        assert_eq!(SymbolMap::classify('d'), Some(MemoryRegion::Ram));
+        assert_eq!(SymbolMap::classify('B'), Some(MemoryRegion::Ram));
+        assert_eq!(SymbolMap::classify('b'), Some(MemoryRegion::Ram));
+        assert_eq!(SymbolMap::classify('U'), None);
+        assert_eq!(SymbolMap::classify('A'), None);
+        assert_eq!(SymbolMap::classify('N'), None);
     }
 
     /// Guard: .env must contain only safe PATH entries, never secrets.

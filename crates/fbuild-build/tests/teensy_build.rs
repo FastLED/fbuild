@@ -59,6 +59,8 @@ void loop() {
         generate_compiledb: false,
         compiledb_only: false,
         log_sender: None,
+        symbol_analysis: false,
+        symbol_analysis_path: None,
     };
 
     let orchestrator = fbuild_build::teensy::orchestrator::TeensyOrchestrator;
@@ -113,6 +115,8 @@ fn build_teensy41_fixture() {
         generate_compiledb: false,
         compiledb_only: false,
         log_sender: None,
+        symbol_analysis: false,
+        symbol_analysis_path: None,
     };
 
     let orchestrator = fbuild_build::teensy::orchestrator::TeensyOrchestrator;

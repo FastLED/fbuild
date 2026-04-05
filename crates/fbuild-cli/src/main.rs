@@ -83,6 +83,10 @@ enum Commands {
         /// Build target: 'compiledb' generates compile_commands.json without compiling
         #[arg(short = 't', long, value_parser = ["compiledb"])]
         target: Option<String>,
+        /// Run per-symbol memory analysis after building; optionally write report to PATH
+        /// instead of streaming to console
+        #[arg(long, num_args = 0..=1, default_missing_value = "")]
+        symbol_analysis: Option<String>,
     },
     /// Deploy firmware to device
     Deploy {
@@ -389,6 +393,7 @@ async fn main() {
             platformio,
             dry_run,
             target,
+            symbol_analysis,
         }) => {
             let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
             if platformio {
@@ -404,6 +409,7 @@ async fn main() {
                     release,
                     dry_run,
                     target,
+                    symbol_analysis,
                 )
                 .await
             }
@@ -866,6 +872,7 @@ async fn run_build(
     release: bool,
     dry_run: bool,
     target: Option<String>,
+    symbol_analysis: Option<String>,
 ) -> fbuild_core::Result<()> {
     daemon_client::ensure_daemon_running().await?;
 
@@ -914,6 +921,8 @@ async fn run_build(
         caller_pid,
         caller_cwd,
         stream: true,
+        symbol_analysis: symbol_analysis.is_some(),
+        symbol_analysis_path: symbol_analysis.filter(|s| !s.is_empty()),
     };
 
     let resp = client.build_streaming(&req).await?;
@@ -1092,6 +1101,7 @@ async fn run_iwyu(
             false,
             false,
             Some("compiledb".to_string()),
+            None,
         )
         .await?;
         if !db_path.exists() {
@@ -1511,6 +1521,7 @@ async fn run_clang_tool(
         false, // release
         false, // dry_run
         Some("compiledb".to_string()),
+        None,
     )
     .await?;
 

@@ -72,6 +72,8 @@ void loop() {
         generate_compiledb: false,
         compiledb_only: false,
         log_sender: None,
+        symbol_analysis: false,
+        symbol_analysis_path: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -154,6 +156,8 @@ void loop() {
         generate_compiledb: false,
         compiledb_only: false,
         log_sender: None,
+        symbol_analysis: false,
+        symbol_analysis_path: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -229,6 +233,8 @@ void loop() {
         generate_compiledb: false,
         compiledb_only: false,
         log_sender: None,
+        symbol_analysis: false,
+        symbol_analysis_path: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -305,6 +311,8 @@ void loop() {
         generate_compiledb: false,
         compiledb_only: false,
         log_sender: None,
+        symbol_analysis: false,
+        symbol_analysis_path: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -371,6 +379,8 @@ fn build_esp32s3_fixture() {
         generate_compiledb: false,
         compiledb_only: false,
         log_sender: None,
+        symbol_analysis: false,
+        symbol_analysis_path: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -429,6 +439,8 @@ fn build_nightdriverstrip_demo() {
         generate_compiledb: false,
         compiledb_only: false,
         log_sender: None,
+        symbol_analysis: false,
+        symbol_analysis_path: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -513,6 +525,8 @@ fn incremental_build_at(project_dir: &std::path::Path, env_name: &str) {
         generate_compiledb: false,
         compiledb_only: false,
         log_sender: None,
+        symbol_analysis: false,
+        symbol_analysis_path: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -597,6 +611,8 @@ fn incremental_nightdriverstrip_one_file_changed() {
         generate_compiledb: false,
         compiledb_only: false,
         log_sender: None,
+        symbol_analysis: false,
+        symbol_analysis_path: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;

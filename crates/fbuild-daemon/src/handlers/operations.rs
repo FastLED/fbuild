@@ -156,6 +156,11 @@ pub async fn build(
             generate_compiledb,
             compiledb_only: req.compiledb_only,
             log_sender: Some(sync_tx),
+            symbol_analysis: req.symbol_analysis,
+            symbol_analysis_path: req
+                .symbol_analysis_path
+                .as_deref()
+                .map(std::path::PathBuf::from),
         };
 
         let project_dir_desc = req.project_dir.clone();
@@ -278,6 +283,11 @@ pub async fn build(
             generate_compiledb,
             compiledb_only: req.compiledb_only,
             log_sender: None,
+            symbol_analysis: req.symbol_analysis,
+            symbol_analysis_path: req
+                .symbol_analysis_path
+                .as_deref()
+                .map(std::path::PathBuf::from),
         };
 
         let result = tokio::task::spawn_blocking(move || {
@@ -494,6 +504,8 @@ pub async fn deploy(
             generate_compiledb: false,
             compiledb_only: false,
             log_sender: None,
+            symbol_analysis: false,
+            symbol_analysis_path: None,
         };
 
         let build_result = {

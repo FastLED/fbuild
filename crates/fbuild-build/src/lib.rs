@@ -115,6 +115,7 @@ pub struct BuildResult {
     pub firmware_path: Option<PathBuf>,
     pub elf_path: Option<PathBuf>,
     pub size_info: Option<SizeInfo>,
+    pub symbol_map: Option<fbuild_core::SymbolMap>,
     pub build_time_secs: f64,
     pub message: String,
     /// Path to the generated `compile_commands.json`, if any.
@@ -138,6 +139,11 @@ pub struct BuildParams {
     pub compiledb_only: bool,
     /// Optional sender for streaming build log lines in real-time.
     pub log_sender: Option<std::sync::mpsc::Sender<String>>,
+    /// When true, run symbol-level memory analysis after linking.
+    pub symbol_analysis: bool,
+    /// Optional path to write the symbol analysis report to.
+    /// When set, the report is written to this path instead of the build artifacts directory.
+    pub symbol_analysis_path: Option<std::path::PathBuf>,
 }
 
 /// Trait for platform-specific build orchestrators.

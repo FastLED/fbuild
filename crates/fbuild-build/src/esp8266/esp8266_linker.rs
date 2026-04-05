@@ -245,6 +245,10 @@ impl Linker for Esp8266Linker {
         )
     }
 
+    fn size_tool_path(&self) -> &Path {
+        &self.size_path
+    }
+
     fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
         crate::linker::LinkerBase::report_size(
             &self.size_path,

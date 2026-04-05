@@ -457,6 +457,8 @@ async fn execute_tool(client: &DaemonClient, name: &str, args: &Value) -> Result
                 caller_pid,
                 caller_cwd,
                 stream: false,
+                symbol_analysis: false,
+                symbol_analysis_path: None,
             };
 
             let resp = client

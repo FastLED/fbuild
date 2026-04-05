@@ -6,7 +6,7 @@
 
 use std::path::Path;
 
-use fbuild_core::{BuildLog, SizeInfo};
+use fbuild_core::{BuildLog, MemoryRegion, SizeInfo, SymbolMap};
 
 /// Create a [`BuildLog`], optionally wired to a real-time streaming sender.
 pub fn create_build_log(sender: Option<std::sync::mpsc::Sender<String>>) -> BuildLog {
@@ -115,6 +115,60 @@ pub fn log_artifact(log: &mut BuildLog, path: &Path) {
         path.display(),
         format_bytes(size)
     ));
+}
+
+/// Format a per-symbol memory breakdown as a multi-line string.
+///
+/// Used both for streaming to the build log and writing to a text file.
+pub fn format_symbol_report(symbols: &SymbolMap) -> String {
+    let flash_symbols: Vec<_> = symbols
+        .symbols
+        .iter()
+        .filter(|s| s.region == MemoryRegion::Flash)
+        .collect();
+    let ram_symbols: Vec<_> = symbols
+        .symbols
+        .iter()
+        .filter(|s| s.region == MemoryRegion::Ram)
+        .collect();
+
+    let mut lines = Vec::new();
+    lines.push("--- Symbol Analysis ---".to_string());
+    lines.push(format!(
+        "Flash: {} across {} symbols",
+        format_bytes(symbols.total_flash),
+        flash_symbols.len()
+    ));
+    lines.push(format!(
+        "RAM:   {} across {} symbols",
+        format_bytes(symbols.total_ram),
+        ram_symbols.len()
+    ));
+    lines.push(String::new());
+
+    if !flash_symbols.is_empty() {
+        lines.push("Top Flash consumers:".to_string());
+        for sym in flash_symbols.iter().take(20) {
+            lines.push(format!("  {:>8}  {}", format_bytes(sym.size), sym.name));
+        }
+        lines.push(String::new());
+    }
+
+    if !ram_symbols.is_empty() {
+        lines.push("Top RAM consumers:".to_string());
+        for sym in ram_symbols.iter().take(20) {
+            lines.push(format!("  {:>8}  {}", format_bytes(sym.size), sym.name));
+        }
+    }
+
+    lines.join("\n")
+}
+
+/// Emit a per-symbol memory breakdown to the build log.
+pub fn log_symbol_report(log: &mut BuildLog, symbols: &SymbolMap) {
+    for line in format_symbol_report(symbols).lines() {
+        log.push(line.to_string());
+    }
 }
 
 /// Format a byte count as a human-readable string.
@@ -265,5 +319,48 @@ mod tests {
         let mut log = create_build_log(Some(tx));
         log.push("test");
         assert_eq!(rx.try_recv().unwrap(), "test");
+    }
+
+    #[test]
+    fn test_log_symbol_report() {
+        use fbuild_core::{MemoryRegion, SymbolEntry, SymbolMap};
+
+        let mut log = BuildLog::new();
+        let symbols = SymbolMap {
+            symbols: vec![
+                SymbolEntry {
+                    name: "setup".to_string(),
+                    size: 5000,
+                    region: MemoryRegion::Flash,
+                    sym_type: 'T',
+                },
+                SymbolEntry {
+                    name: "loop".to_string(),
+                    size: 3000,
+                    region: MemoryRegion::Flash,
+                    sym_type: 'T',
+                },
+                SymbolEntry {
+                    name: "leds".to_string(),
+                    size: 2048,
+                    region: MemoryRegion::Ram,
+                    sym_type: 'B',
+                },
+            ],
+            total_flash: 8000,
+            total_ram: 2048,
+        };
+        log_symbol_report(&mut log, &symbols);
+        let lines = log.into_lines();
+        assert!(lines[0].contains("Symbol Analysis"));
+        assert!(lines[1].contains("Flash:"));
+        assert!(lines[1].contains("2 symbols"));
+        assert!(lines[2].contains("RAM:"));
+        assert!(lines[2].contains("1 symbols"));
+        // Check that symbol names appear
+        let all = lines.join("\n");
+        assert!(all.contains("setup"));
+        assert!(all.contains("loop"));
+        assert!(all.contains("leds"));
     }
 }

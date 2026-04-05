@@ -28,6 +28,12 @@ pub struct BuildRequest {
     /// When true, request a streaming NDJSON response.
     #[serde(default)]
     pub stream: bool,
+    /// When true, run symbol-level memory analysis after linking.
+    #[serde(default)]
+    pub symbol_analysis: bool,
+    /// Optional path to write the symbol analysis report to.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub symbol_analysis_path: Option<String>,
 }
 
 #[derive(Debug, Serialize)]

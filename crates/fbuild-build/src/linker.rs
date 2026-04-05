@@ -14,6 +14,7 @@ pub struct LinkResult {
     pub hex_path: Option<PathBuf>,
     pub bin_path: Option<PathBuf>,
     pub size_info: Option<SizeInfo>,
+    pub symbol_map: Option<fbuild_core::SymbolMap>,
     pub stdout: String,
     pub stderr: String,
 }
@@ -53,7 +54,12 @@ pub trait Linker: Send + Sync {
     /// Report firmware size.
     fn report_size(&self, elf_path: &Path) -> Result<SizeInfo>;
 
-    /// Full link pipeline: archive core → link → convert → size.
+    /// Path to the platform's size tool (e.g. `arm-none-eabi-size`).
+    ///
+    /// Used to derive the `nm` tool path for symbol analysis.
+    fn size_tool_path(&self) -> &Path;
+
+    /// Full link pipeline: archive core → link → convert → size → optional symbol analysis.
     ///
     /// Skips relinking when the existing firmware.elf is newer than all input
     /// objects and archives, saving ~10-14s on incremental builds where only
@@ -63,6 +69,7 @@ pub trait Linker: Send + Sync {
         sketch_objects: &[PathBuf],
         core_objects: &[PathBuf],
         output_dir: &Path,
+        symbol_analysis: bool,
     ) -> Result<LinkResult> {
         let candidate_elf = output_dir.join("firmware.elf");
         if candidate_elf.exists() {
@@ -74,6 +81,11 @@ pub trait Linker: Send + Sync {
                 tracing::info!("link: firmware.elf is up-to-date, skipping relink");
                 let firmware_path = self.convert_firmware(&candidate_elf, output_dir)?;
                 let size_info = self.report_size(&candidate_elf).ok();
+                let symbol_map = if symbol_analysis {
+                    LinkerBase::analyze_symbols(self.size_tool_path(), &candidate_elf).ok()
+                } else {
+                    None
+                };
                 let is_hex = firmware_path.extension().is_some_and(|e| e == "hex");
                 return Ok(LinkResult {
                     success: true,
@@ -85,6 +97,7 @@ pub trait Linker: Send + Sync {
                     },
                     bin_path: if !is_hex { Some(firmware_path) } else { None },
                     size_info,
+                    symbol_map,
                     stdout: String::new(),
                     stderr: String::new(),
                 });
@@ -101,6 +114,13 @@ pub trait Linker: Send + Sync {
         // Size
         let size_info = self.report_size(&elf_path).ok();
 
+        // Symbol analysis
+        let symbol_map = if symbol_analysis {
+            LinkerBase::analyze_symbols(self.size_tool_path(), &elf_path).ok()
+        } else {
+            None
+        };
+
         let is_hex = firmware_path.extension().is_some_and(|e| e == "hex");
         Ok(LinkResult {
             success: true,
@@ -112,6 +132,7 @@ pub trait Linker: Send + Sync {
             },
             bin_path: if !is_hex { Some(firmware_path) } else { None },
             size_info,
+            symbol_map,
             stdout: String::new(),
             stderr: String::new(),
         })
@@ -304,6 +325,53 @@ impl LinkerBase {
         })
     }
 
+    /// Derive the `nm` tool path from the `size` tool path.
+    ///
+    /// All GCC cross-toolchains use the same prefix convention:
+    /// `arm-none-eabi-size` → `arm-none-eabi-nm`, `avr-size` → `avr-nm`.
+    pub fn nm_path_from_size_path(size_path: &Path) -> PathBuf {
+        let stem = size_path.file_stem().unwrap_or_default().to_string_lossy();
+        let nm_stem = if let Some(prefix) = stem.strip_suffix("size") {
+            format!("{prefix}nm")
+        } else {
+            "nm".to_string()
+        };
+        let parent = size_path.parent().unwrap_or(Path::new("."));
+        let ext = size_path.extension().unwrap_or_default();
+        if ext.is_empty() {
+            parent.join(&nm_stem)
+        } else {
+            parent.join(format!("{nm_stem}.{}", ext.to_string_lossy()))
+        }
+    }
+
+    /// Run `nm --print-size --size-sort --reverse-sort` on an ELF and parse the output.
+    pub fn analyze_symbols(size_path: &Path, elf_path: &Path) -> Result<fbuild_core::SymbolMap> {
+        use fbuild_core::subprocess::run_command;
+
+        let nm_path = Self::nm_path_from_size_path(size_path);
+        let args = [
+            nm_path.to_string_lossy().to_string(),
+            "--print-size".to_string(),
+            "--size-sort".to_string(),
+            "--reverse-sort".to_string(),
+            elf_path.to_string_lossy().to_string(),
+        ];
+        let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
+        let result = run_command(&args_ref, None, None, None)?;
+
+        if !result.success() {
+            return Err(fbuild_core::FbuildError::BuildFailed(format!(
+                "nm failed: {}",
+                result.stderr
+            )));
+        }
+
+        fbuild_core::SymbolMap::parse_nm_output(&result.stdout).ok_or_else(|| {
+            fbuild_core::FbuildError::BuildFailed("nm produced no parseable symbols".into())
+        })
+    }
+
     /// Convert ELF to firmware using objcopy (shared by AVR and Teensy).
     pub fn objcopy_firmware(
         objcopy_path: &Path,
@@ -424,5 +492,33 @@ mod tests {
             scripts: vec!["x.ld".to_string(), "y.ld".to_string()],
         };
         assert_eq!(ls.to_args(), vec!["-L/a", "-L/b", "-Tx.ld", "-Ty.ld"]);
+    }
+
+    #[test]
+    fn test_nm_path_from_size_path_arm() {
+        let size = PathBuf::from("/toolchain/bin/arm-none-eabi-size");
+        let nm = LinkerBase::nm_path_from_size_path(&size);
+        assert_eq!(nm, PathBuf::from("/toolchain/bin/arm-none-eabi-nm"));
+    }
+
+    #[test]
+    fn test_nm_path_from_size_path_avr() {
+        let size = PathBuf::from("/toolchain/bin/avr-size");
+        let nm = LinkerBase::nm_path_from_size_path(&size);
+        assert_eq!(nm, PathBuf::from("/toolchain/bin/avr-nm"));
+    }
+
+    #[test]
+    fn test_nm_path_from_size_path_xtensa() {
+        let size = PathBuf::from("/toolchain/bin/xtensa-esp32-elf-size");
+        let nm = LinkerBase::nm_path_from_size_path(&size);
+        assert_eq!(nm, PathBuf::from("/toolchain/bin/xtensa-esp32-elf-nm"));
+    }
+
+    #[test]
+    fn test_nm_path_from_size_path_with_exe() {
+        let size = PathBuf::from("C:/toolchain/bin/arm-none-eabi-size.exe");
+        let nm = LinkerBase::nm_path_from_size_path(&size);
+        assert_eq!(nm, PathBuf::from("C:/toolchain/bin/arm-none-eabi-nm.exe"));
     }
 }

@@ -420,6 +420,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 firmware_path: None,
                 elf_path: None,
                 size_info: None,
+                symbol_map: None,
                 build_time_secs: elapsed,
                 message: format!(
                     "compile_commands.json generated for {} ({})",
@@ -602,8 +603,13 @@ impl BuildOrchestrator for Esp32Orchestrator {
             params.verbose,
         );
 
-        let link_result =
-            crate::linker::Linker::link_all(&linker, &sketch_objects, &all_archives, build_dir)?;
+        let link_result = crate::linker::Linker::link_all(
+            &linker,
+            &sketch_objects,
+            &all_archives,
+            build_dir,
+            params.symbol_analysis,
+        )?;
 
         // 14. Prepare bootloader.bin + partitions.bin for deployment
         let boot_dst = build_dir.join("bootloader.bin");
@@ -724,7 +730,12 @@ impl BuildOrchestrator for Esp32Orchestrator {
         }
 
         // 15. Size reporting + result assembly
-        crate::pipeline::handle_link_result(&link_result, &mut build_log);
+        crate::pipeline::handle_link_result(
+            &link_result,
+            &mut build_log,
+            params.symbol_analysis_path.as_deref(),
+            params.verbose,
+        );
         let elapsed = start.elapsed().as_secs_f64();
         let platform_label = format!("ESP32 ({})", ctx.board.mcu);
         Ok(crate::pipeline::assemble_build_result(
