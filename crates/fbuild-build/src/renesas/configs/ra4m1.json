@@ -3,7 +3,7 @@
   "description": "Renesas RA4M1 (ARM Cortex-M4)",
   "architecture": "arm-cortex-m4",
   "compiler_flags": {
-    "common": ["-mcpu=cortex-m4", "-mthumb", "-mfloat-abi=hard", "-mfpu=fpv4-sp-d16", "-Wall", "-Wextra", "-Wno-unused-parameter", "-ffunction-sections", "-fdata-sections", "-fno-strict-aliasing", "-MMD"],
+    "common": ["-mcpu=cortex-m4", "-mthumb", "-mfloat-abi=hard", "-mfpu=fpv4-sp-d16", "-w", "-ffunction-sections", "-fdata-sections", "-fno-strict-aliasing", "-fno-builtin", "-fsigned-char", "-nostdlib", "-MMD"],
     "c": ["-std=gnu11"],
     "cxx": ["-std=gnu++17", "-fno-exceptions", "-fno-rtti", "-fno-threadsafe-statics"]
   },
