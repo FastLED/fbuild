@@ -81,8 +81,21 @@ pub fn ensure_arduino_api(core_dir: &Path) -> Result<()> {
         )
     })?;
 
-    // Copy api/ into the core directory
+    // Remove any existing api/ (may be a dangling symlink from the archive).
+    // ArduinoCore-renesas has `api` as a symlink to ../../../ArduinoCore-API/api/
+    // which is dangling after archive extraction.
     let api_dest = core_dir.join("api");
+    let is_symlink = std::fs::symlink_metadata(&api_dest)
+        .map(|m| m.file_type().is_symlink())
+        .unwrap_or(false);
+    if is_symlink {
+        // Remove dangling symlink (works on both Unix and Windows)
+        let _ = std::fs::remove_file(&api_dest);
+    } else if api_dest.is_dir() {
+        let _ = std::fs::remove_dir_all(&api_dest);
+    }
+
+    // Copy api/ into the core directory
     copy_dir_recursive(&api_src, &api_dest)?;
 
     // Verify
