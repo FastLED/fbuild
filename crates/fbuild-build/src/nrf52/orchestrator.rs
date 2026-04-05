@@ -66,7 +66,18 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         let variant_dir = framework.get_variant_dir(&ctx.board.variant);
 
         let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
-        let sources = scanner.scan_all(Some(&core_dir), Some(&variant_dir))?;
+        let mut sources = scanner.scan_all(Some(&core_dir), Some(&variant_dir))?;
+
+        // Add TinyUSB sources (USB CDC Serial support for nRF52840)
+        let tinyusb_src = framework_dir
+            .join("libraries")
+            .join("Adafruit_TinyUSB_Arduino")
+            .join("src");
+        if tinyusb_src.exists() {
+            let tinyusb_sources = scanner.scan_core_sources(&tinyusb_src);
+            tracing::info!("TinyUSB sources: {}", tinyusb_sources.len());
+            sources.core_sources.extend(tinyusb_sources);
+        }
 
         tracing::info!(
             "sources: {} sketch, {} core, {} variant",
@@ -122,13 +133,13 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         include_dirs.push(core_dir.join("sysview").join("SEGGER"));
         include_dirs.push(core_dir.join("sysview").join("Config"));
         // TinyUSB includes (USB CDC Serial support for nRF52840)
-        let tinyusb_dir = framework_dir
+        let tinyusb_src = framework_dir
             .join("libraries")
             .join("Adafruit_TinyUSB_Arduino")
-            .join("src")
-            .join("arduino");
-        if tinyusb_dir.exists() {
-            include_dirs.push(tinyusb_dir);
+            .join("src");
+        if tinyusb_src.exists() {
+            include_dirs.push(tinyusb_src.join("arduino"));
+            include_dirs.push(tinyusb_src.clone());
         }
 
         let compiler = Nrf52Compiler::new(
