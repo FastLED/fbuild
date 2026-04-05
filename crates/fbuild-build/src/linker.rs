@@ -383,7 +383,11 @@ impl LinkerBase {
     ) -> Result<PathBuf> {
         use fbuild_core::subprocess::run_command;
 
-        let hex_path = output_dir.join("firmware.hex");
+        let ext = match output_format {
+            "ihex" => "hex",
+            _ => "bin",
+        };
+        let hex_path = output_dir.join(format!("firmware.{ext}"));
 
         let mut args = vec![
             objcopy_path.to_string_lossy().to_string(),
