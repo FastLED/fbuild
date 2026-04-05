@@ -86,10 +86,12 @@ impl RenesasCores {
     ///
     /// ArduinoCore-renesas variants ship an `includes.txt` that lists all
     /// FSP (Flexible Software Package) include paths needed for compilation.
-    /// Lines are `-iwithprefixbefore/path` entries relative to the variant dir.
+    /// Lines are `-iwithprefixbefore/variants/VARIANT/includes/...` entries
+    /// relative to the framework root directory.
     pub fn get_variant_includes(&self, variant_name: &str) -> Vec<PathBuf> {
         let variant_dir = self.get_variant_dir(variant_name);
         let includes_txt = variant_dir.join("includes.txt");
+        let framework_root = self.resolved_dir();
 
         let content = match std::fs::read_to_string(&includes_txt) {
             Ok(c) => c,
@@ -99,18 +101,26 @@ impl RenesasCores {
             }
         };
 
-        content
+        let includes: Vec<PathBuf> = content
             .lines()
             .filter_map(|line| {
                 let line = line.trim();
-                // Lines are like: -iwithprefixbefore/includes/ra/fsp/inc/api
+                // Lines: -iwithprefixbefore/variants/UNOWIFIR4/includes/ra/fsp/inc/api
+                // Paths are relative to the framework root.
                 let path = line
                     .strip_prefix("-iwithprefixbefore/")
                     .or_else(|| line.strip_prefix("-iwithprefixbefore"));
-                path.map(|p| variant_dir.join(p))
+                path.map(|p| framework_root.join(p))
             })
             .filter(|p| p.is_dir())
-            .collect()
+            .collect();
+
+        tracing::info!(
+            "Renesas variant '{}' includes: {} paths from includes.txt",
+            variant_name,
+            includes.len()
+        );
+        includes
     }
 
     /// Get the linker script for a variant.
