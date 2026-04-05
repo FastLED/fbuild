@@ -73,8 +73,32 @@ impl Ch32vCores {
     }
 
     /// Get the core source directory for a specific core name.
+    ///
+    /// The board JSON `core` field (e.g. "openwch") comes from PlatformIO's
+    /// board definition and may not match the actual directory name inside the
+    /// core package (which is typically `cores/arduino/`).  When the named
+    /// directory doesn't exist, fall back to the first subdirectory of `cores/`.
     pub fn get_core_dir(&self, core_name: &str) -> PathBuf {
-        self.get_cores_dir().join(core_name)
+        let named = self.get_cores_dir().join(core_name);
+        if named.exists() {
+            return named;
+        }
+        // Auto-detect: pick the first subdirectory in cores/
+        let cores_dir = self.get_cores_dir();
+        if let Ok(entries) = std::fs::read_dir(&cores_dir) {
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    tracing::debug!(
+                        "CH32V core dir '{}' not found, using '{}'",
+                        core_name,
+                        path.display()
+                    );
+                    return path;
+                }
+            }
+        }
+        named
     }
 
     /// Get the variant directory for a specific variant name.

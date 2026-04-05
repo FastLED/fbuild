@@ -63,6 +63,81 @@ impl RiscvToolchain {
             .unwrap_or_else(|| find_bin_root(&self.base.install_path()))
     }
 
+    /// Get all C++ system include directories needed to work around xPack GCC's
+    /// broken sysroot resolution on Windows.
+    ///
+    /// Returns paths that must be passed as `-isystem` (not `-I`), in the
+    /// correct search order:
+    /// 1. `<root>/riscv-none-elf/include/c++/<ver>/` — base C++ headers
+    /// 2. `<root>/riscv-none-elf/include/c++/<ver>/riscv-none-elf/<march>/<mabi>/` — multilib
+    /// 3. `<root>/riscv-none-elf/include/c++/<ver>/backward/` — backward compat
+    /// 4. `<root>/lib/gcc/riscv-none-elf/<ver>/include/` — GCC builtins
+    /// 5. `<root>/lib/gcc/riscv-none-elf/<ver>/include-fixed/` — fixed headers
+    /// 6. `<root>/riscv-none-elf/include/` — target system headers
+    pub fn get_cxx_system_includes(&self, march: &str, mabi: &str) -> Vec<PathBuf> {
+        let root = self.resolved_dir();
+        let mut dirs = Vec::new();
+
+        // GCC multilib directories use only the base ISA (rv32ec), not sub-extensions
+        // like _zicsr. Strip everything from the first underscore.
+        let multilib_march = march.split('_').next().unwrap_or(march);
+
+        // C++ headers: find the version directory dynamically
+        let cxx_base = root.join("riscv-none-elf").join("include").join("c++");
+        if let Ok(entries) = std::fs::read_dir(&cxx_base) {
+            for entry in entries.flatten() {
+                let version_dir = entry.path();
+                if version_dir.is_dir() {
+                    // 1. Base C++ headers
+                    dirs.push(version_dir.clone());
+                    // 2. Multilib-specific
+                    let multilib = version_dir
+                        .join("riscv-none-elf")
+                        .join(multilib_march)
+                        .join(mabi);
+                    if multilib.is_dir() {
+                        dirs.push(multilib);
+                    }
+                    // 3. Backward compat
+                    let backward = version_dir.join("backward");
+                    if backward.is_dir() {
+                        dirs.push(backward);
+                    }
+                    break;
+                }
+            }
+        }
+
+        // GCC internal headers: find the version directory dynamically
+        let gcc_lib = root.join("lib").join("gcc").join("riscv-none-elf");
+        if let Ok(entries) = std::fs::read_dir(&gcc_lib) {
+            for entry in entries.flatten() {
+                let ver_dir = entry.path();
+                if ver_dir.is_dir() {
+                    // 4. GCC builtins
+                    let inc = ver_dir.join("include");
+                    if inc.is_dir() {
+                        dirs.push(inc);
+                    }
+                    // 5. Fixed headers
+                    let inc_fixed = ver_dir.join("include-fixed");
+                    if inc_fixed.is_dir() {
+                        dirs.push(inc_fixed);
+                    }
+                    break;
+                }
+            }
+        }
+
+        // 6. Target system headers
+        let sys_inc = root.join("riscv-none-elf").join("include");
+        if sys_inc.is_dir() {
+            dirs.push(sys_inc);
+        }
+
+        dirs
+    }
+
     /// Validate that the toolchain installation has all required files.
     fn validate(install_dir: &Path) -> fbuild_core::Result<()> {
         let root = find_bin_root(install_dir);

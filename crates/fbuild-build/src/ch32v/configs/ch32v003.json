@@ -3,12 +3,12 @@
   "description": "WCH CH32V003 (RISC-V RV32EC)",
   "architecture": "riscv32",
   "compiler_flags": {
-    "common": ["-march=rv32ecxw", "-mabi=ilp32e", "-msmall-data-limit=0", "-Wall", "-Wextra", "-Wno-unused-parameter", "-ffunction-sections", "-fdata-sections", "-fno-strict-aliasing", "-fmessage-length=0", "-fsigned-char", "-MMD", "-nostdlib"],
+    "common": ["-march=rv32ec_zicsr", "-mabi=ilp32e", "-msmall-data-limit=0", "-Wall", "-Wextra", "-Wno-unused-parameter", "-ffunction-sections", "-fdata-sections", "-fno-strict-aliasing", "-fmessage-length=0", "-fsigned-char", "-MMD", "-nostdlib"],
     "c": ["-std=gnu11"],
     "cxx": ["-std=gnu++17", "-fno-exceptions", "-fno-rtti", "-fno-threadsafe-statics"]
   },
-  "linker_flags": ["-march=rv32ecxw", "-mabi=ilp32e", "-Wl,--gc-sections", "-Wl,--print-memory-usage", "-nostartfiles", "-nostdlib"],
-  "linker_libs": ["-lgcc", "-lstdc++", "-lm", "-lc", "-lnosys"],
+  "linker_flags": ["-march=rv32ec_zicsr", "-mabi=ilp32e", "-specs=nano.specs", "-specs=nosys.specs", "-Wl,--gc-sections", "-Wl,--print-memory-usage", "-nostartfiles"],
+  "linker_libs": ["-Wl,--start-group", "-lgcc", "-lstdc++_nano", "-lm", "-lc_nano", "-lnosys", "-Wl,--end-group"],
   "objcopy": {"output_format": "binary", "remove_sections": [".eeprom"]},
   "profiles": {
     "release": {"compile_flags": ["-Os", "-flto", "-fno-fat-lto-objects"], "link_flags": ["-flto", "-fuse-linker-plugin"]},

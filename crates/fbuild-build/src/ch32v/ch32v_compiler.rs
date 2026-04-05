@@ -19,6 +19,8 @@ pub struct Ch32vCompiler {
     mcu_config: Ch32vMcuConfig,
     profile: BuildProfile,
     temp_dir: PathBuf,
+    /// Extra flags prepended to every compile (e.g. `-isystem` for multilib).
+    extra_pre_flags: Vec<String>,
 }
 
 impl Ch32vCompiler {
@@ -33,6 +35,7 @@ impl Ch32vCompiler {
         mcu_config: Ch32vMcuConfig,
         profile: BuildProfile,
         verbose: bool,
+        extra_pre_flags: Vec<String>,
     ) -> Self {
         Self {
             base: CompilerBase {
@@ -47,6 +50,7 @@ impl Ch32vCompiler {
             mcu_config,
             profile,
             temp_dir: fbuild_core::response_file::windows_temp_dir(),
+            extra_pre_flags,
         }
     }
 
@@ -60,6 +64,7 @@ impl Ch32vCompiler {
             flags.extend(profile.compile_flags.iter().cloned());
         }
 
+        flags.extend(self.extra_pre_flags.iter().cloned());
         flags.extend(self.base.build_define_flags());
         flags.extend(self.base.build_include_flags());
         flags
@@ -127,6 +132,7 @@ mod tests {
             get_ch32v_config_for_mcu("ch32v003").unwrap(),
             BuildProfile::Release,
             false,
+            Vec::new(),
         )
     }
 
@@ -134,7 +140,7 @@ mod tests {
     fn test_common_flags_contain_riscv() {
         let compiler = test_compiler();
         let flags = compiler.common_flags();
-        assert!(flags.contains(&"-march=rv32ecxw".to_string()));
+        assert!(flags.contains(&"-march=rv32ec_zicsr".to_string()));
         assert!(flags.contains(&"-mabi=ilp32e".to_string()));
     }
 

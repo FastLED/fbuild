@@ -12,7 +12,7 @@
 //! 9. Link (with linker script)
 //! 10. Convert to binary + report size
 
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::time::Instant;
 
 use fbuild_core::{Platform, Result};
@@ -76,26 +76,62 @@ impl BuildOrchestrator for Ch32vOrchestrator {
         );
 
         // 6. Build include dirs + compiler
-        // Derive the series from the MCU name (e.g. "ch32v003f4p6" -> "ch32v003")
+        // Derive the series from the MCU name (e.g. "ch32v003f4p6" -> "ch32v003").
+        // CH32V MCU names follow: ch32{letter}{3-digit series}{package suffix}
+        // Skip the leading "ch32" prefix, then take the letter + digits.
         let mcu_lower = ctx.board.mcu.to_lowercase();
-        let series = mcu_lower
-            .find(|c: char| c.is_ascii_digit())
-            .map(|digit_start| {
-                let after_digits = mcu_lower[digit_start..]
-                    .find(|c: char| !c.is_ascii_digit())
-                    .map(|pos| digit_start + pos)
-                    .unwrap_or(mcu_lower.len());
-                mcu_lower[..after_digits].to_string()
-            })
-            .unwrap_or_else(|| "ch32v003".to_string());
+        let series = if let Some(after_prefix) = mcu_lower.strip_prefix("ch32") {
+            // e.g. "v003f4p6"
+            let series_end = after_prefix
+                .char_indices()
+                .skip(1) // skip the letter (v, x, l)
+                .find(|(_, c)| !c.is_ascii_digit())
+                .map(|(i, _)| i)
+                .unwrap_or(after_prefix.len());
+            format!("ch32{}", &after_prefix[..series_end])
+        } else {
+            "ch32v003".to_string()
+        };
         let mcu_config = super::mcu_config::get_ch32v_config_for_mcu(&series)?;
         let mut defines = ctx.board.get_defines();
         defines.extend(mcu_config.defines_map());
-        let mut include_dirs = ctx.board.get_include_paths(&framework_dir);
+        // CH32V cores use `#include VARIANT_H` — define it from the variant dir
+        if let Some(vh) = find_variant_h(&variant_dir) {
+            defines.insert("VARIANT_H".to_string(), format!("\\\"{}\\\"", vh));
+        }
+        // Use resolved core_dir/variant_dir directly — board.get_include_paths()
+        // uses the raw board core name which may differ from the actual directory
+        // (e.g. OpenWCH core dir is "arduino", not "openwch").
+        let mut include_dirs = vec![core_dir.clone(), variant_dir.clone()];
+        // Core subdirectories (ch32/, ch32/lib/) contain essential headers
+        discover_header_subdirs(&core_dir, &mut include_dirs);
+        // System HAL headers (Peripheral/inc, Core, USER)
+        discover_system_includes(&framework_dir, &series, &mut include_dirs);
         include_dirs.push(ctx.src_dir.clone());
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
         // Toolchain sysroot includes
         include_dirs.extend(toolchain.get_include_dirs());
+
+        // xPack RISC-V GCC 14.x can't resolve its own multilib C++ include path
+        // on Windows; add it explicitly via -isystem (not -I, which doesn't work
+        // for GCC's C++ wrapper headers that use #include_next).
+        let march = mcu_config
+            .compiler_flags
+            .common
+            .iter()
+            .find_map(|f| f.strip_prefix("-march="))
+            .unwrap_or("rv32ec");
+        let mabi = mcu_config
+            .compiler_flags
+            .common
+            .iter()
+            .find_map(|f| f.strip_prefix("-mabi="))
+            .unwrap_or("ilp32e");
+        let isystem_flags: Vec<String> = toolchain
+            .get_cxx_system_includes(march, mabi)
+            .into_iter()
+            .flat_map(|p| vec!["-isystem".to_string(), p.to_string_lossy().to_string()])
+            .collect();
 
         let compiler = Ch32vCompiler::new(
             toolchain.get_gcc_path(),
@@ -107,10 +143,18 @@ impl BuildOrchestrator for Ch32vOrchestrator {
             mcu_config.clone(),
             params.profile,
             params.verbose,
+            isystem_flags,
         );
 
-        // 7. Create linker (resolve linker script from framework variant)
-        let linker_script_path = framework.get_linker_script(&ctx.board.variant);
+        // 7. Create linker (resolve linker script from system dir)
+        // CH32V linker scripts are in system/<SERIES>/SRC/Ld/, not in variants/
+        let system_dir_name = series_to_system_dir(&series);
+        let linker_script_path = framework_dir
+            .join("system")
+            .join(&system_dir_name)
+            .join("SRC")
+            .join("Ld")
+            .join("Link.ld");
         let linker = Ch32vLinker::new(
             toolchain.get_gcc_path(),
             toolchain.get_ar_path(),
@@ -141,6 +185,74 @@ impl BuildOrchestrator for Ch32vOrchestrator {
 /// Create a CH32V orchestrator (convenience for get_orchestrator dispatch).
 pub fn create() -> Box<dyn BuildOrchestrator> {
     Box::new(Ch32vOrchestrator)
+}
+
+/// Recursively add subdirectories that contain .h files as include paths.
+fn discover_header_subdirs(dir: &Path, include_dirs: &mut Vec<PathBuf>) {
+    if let Ok(entries) = std::fs::read_dir(dir) {
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                include_dirs.push(path.clone());
+                discover_header_subdirs(&path, include_dirs);
+            }
+        }
+    }
+}
+
+/// Add system HAL include directories for a CH32V series.
+///
+/// The OpenWCH core has a `system/<SERIES>/` directory with vendor HAL headers
+/// in subdirectories like `SRC/Peripheral/inc/`, `SRC/Core/`, and `USER/`.
+fn discover_system_includes(framework_dir: &Path, series: &str, include_dirs: &mut Vec<PathBuf>) {
+    // Map series name (e.g. "ch32v003") to system dir name (e.g. "CH32V00x")
+    let system_dir_name = series_to_system_dir(series);
+    let system_dir = framework_dir.join("system").join(&system_dir_name);
+    if !system_dir.exists() {
+        tracing::debug!(
+            "CH32V system dir not found: {} (series={}, mapped={})",
+            system_dir.display(),
+            series,
+            system_dir_name
+        );
+        return;
+    }
+    // Add USER/ and all subdirectories under SRC/ (the OpenWCH core's
+    // ch32yyxx_*.c templates #include series-specific .c files from Peripheral/src/)
+    let user_dir = system_dir.join("USER");
+    if user_dir.is_dir() {
+        include_dirs.push(user_dir);
+    }
+    let src_dir = system_dir.join("SRC");
+    if src_dir.is_dir() {
+        discover_header_subdirs(&src_dir, include_dirs);
+    }
+}
+
+/// Find the variant_*.h file in a variant directory.
+/// Returns the filename (e.g. "variant_CH32V003F4.h") if found.
+fn find_variant_h(variant_dir: &Path) -> Option<String> {
+    if let Ok(entries) = std::fs::read_dir(variant_dir) {
+        for entry in entries.flatten() {
+            let name = entry.file_name().to_string_lossy().to_string();
+            if name.starts_with("variant_") && name.ends_with(".h") {
+                return Some(name);
+            }
+        }
+    }
+    None
+}
+
+/// Map a series name to the system directory name in the OpenWCH core.
+/// e.g. "ch32v003" -> "CH32V00x", "ch32v103" -> "CH32V10x", "ch32x035" -> "CH32X035"
+fn series_to_system_dir(series: &str) -> String {
+    let upper = series.to_uppercase();
+    // Replace the last digit with 'x': CH32V003 -> CH32V00x, CH32V103 -> CH32V10x
+    if upper.len() >= 7 {
+        format!("{}x", &upper[..upper.len() - 1])
+    } else {
+        upper
+    }
 }
 
 /// Check if a project is configured for CH32V by reading its platformio.ini.

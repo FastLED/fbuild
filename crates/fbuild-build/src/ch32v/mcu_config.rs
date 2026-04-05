@@ -103,7 +103,7 @@ mod tests {
         assert!(config
             .compiler_flags
             .common
-            .contains(&"-march=rv32ecxw".to_string()));
+            .contains(&"-march=rv32ec_zicsr".to_string()));
         assert!(config
             .compiler_flags
             .common
@@ -118,7 +118,9 @@ mod tests {
     #[test]
     fn test_linker_flags() {
         let config = get_ch32v_config_for_mcu("ch32v003").unwrap();
-        assert!(config.linker_flags.contains(&"-march=rv32ecxw".to_string()));
+        assert!(config
+            .linker_flags
+            .contains(&"-march=rv32ec_zicsr".to_string()));
         assert!(config
             .linker_flags
             .contains(&"-Wl,--gc-sections".to_string()));
@@ -128,7 +130,7 @@ mod tests {
     fn test_linker_libs() {
         let config = get_ch32v_config_for_mcu("ch32v003").unwrap();
         assert!(config.linker_libs.contains(&"-lgcc".to_string()));
-        assert!(config.linker_libs.contains(&"-lstdc++".to_string()));
+        assert!(config.linker_libs.contains(&"-lstdc++_nano".to_string()));
     }
 
     #[test]

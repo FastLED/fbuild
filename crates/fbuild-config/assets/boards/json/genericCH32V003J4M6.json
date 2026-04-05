@@ -11,7 +11,7 @@
     "extra_flags": "-DCH32V003J4 -DCH32V00X -DCH32V00x -DCH32V003",
     "f_cpu": "48000000L",
     "mabi": "ilp32e",
-    "march": "rv32ecxw",
+    "march": "rv32ec_zicsr",
     "mcu": "ch32v003j4m6",
     "series": "ch32v003",
     "variant": "CH32V003"

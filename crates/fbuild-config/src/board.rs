@@ -512,6 +512,18 @@ fn get_board_defaults(board_id: &str) -> Option<HashMap<String, String>> {
             if let Some(partitions) = arduino.get("partitions").and_then(|v| v.as_str()) {
                 d.insert("partitions".into(), partitions.to_string());
             }
+            // Core-specific overrides: build.arduino.<core_name>.variant
+            // e.g. build.arduino.openwch.variant = "CH32V00x/CH32V003F4"
+            if let Some(core_name) = build.get("core").and_then(|v| v.as_str()) {
+                if let Some(core_obj) = arduino.get(core_name).and_then(|v| v.as_object()) {
+                    if let Some(variant) = core_obj.get("variant").and_then(|v| v.as_str()) {
+                        d.insert("variant".into(), variant.to_string());
+                    }
+                    if let Some(vh) = core_obj.get("variant_h").and_then(|v| v.as_str()) {
+                        d.insert("variant_h".into(), vh.to_string());
+                    }
+                }
+            }
         }
     }
 
@@ -926,5 +938,90 @@ leonardo.upload.speed=57600
         assert_eq!(config.core, "arduino");
         assert_eq!(config.variant, "nona4809");
         assert_eq!(config.platform(), Some(fbuild_core::Platform::AtmelMegaAvr));
+    }
+
+    /// Validate that ALL megatinycore boards have the required framework-injected
+    /// defines in extra_flags. PlatformIO's builder script injects these at build
+    /// time, but fbuild must carry them in the board JSON since we don't run
+    /// PlatformIO's SCons scripts.
+    #[test]
+    fn test_megatinycore_boards_have_required_defines() {
+        let db = get_board_db();
+        let required = &[
+            "MEGATINYCORE=",
+            "MEGATINYCORE_MAJOR=",
+            "MEGATINYCORE_MINOR=",
+            "MEGATINYCORE_PATCH=",
+            "MEGATINYCORE_RELEASED=",
+            "CORE_ATTACH_ALL",
+            "TWI_MORS",
+            "CLOCK_SOURCE=",
+        ];
+        let mut failures = Vec::new();
+        for (board_id, value) in db.iter() {
+            let core = value
+                .pointer("/build/core")
+                .and_then(|v| v.as_str())
+                .unwrap_or("");
+            if core != "megatinycore" {
+                continue;
+            }
+            let flags = value
+                .pointer("/build/extra_flags")
+                .and_then(|v| v.as_str())
+                .unwrap_or("");
+            for &define in required {
+                if !flags.contains(&format!("-D{define}")) {
+                    failures.push(format!("{board_id}: missing -D{define}"));
+                }
+            }
+        }
+        assert!(
+            failures.is_empty(),
+            "megatinycore boards missing required framework defines:\n{}",
+            failures.join("\n")
+        );
+    }
+
+    /// Validate that ALL dxcore boards have the required framework-injected
+    /// defines in extra_flags.
+    #[test]
+    fn test_dxcore_boards_have_required_defines() {
+        let db = get_board_db();
+        let required = &[
+            "DXCORE=",
+            "DXCORE_MAJOR=",
+            "DXCORE_MINOR=",
+            "DXCORE_PATCH=",
+            "DXCORE_RELEASED=",
+            "CORE_ATTACH_ALL",
+            "TWI_MORS_SINGLE",
+            "MILLIS_USE_TIMER",
+            "CLOCK_SOURCE=",
+        ];
+        let mut failures = Vec::new();
+        for (board_id, value) in db.iter() {
+            let core = value
+                .pointer("/build/core")
+                .and_then(|v| v.as_str())
+                .unwrap_or("");
+            if core != "dxcore" {
+                continue;
+            }
+            let flags = value
+                .pointer("/build/extra_flags")
+                .and_then(|v| v.as_str())
+                .unwrap_or("");
+            for &define in required {
+                if !flags.contains(&format!("-D{define}")) {
+                    failures.push(format!("{board_id}: missing -D{define}"));
+                }
+            }
+        }
+        assert!(
+            failures.is_empty(),
+            "dxcore boards missing required framework defines:\n{}",
+            failures.join("\n")
+        );
     }
 }
