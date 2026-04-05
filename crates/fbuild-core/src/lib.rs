@@ -74,6 +74,7 @@ pub enum Platform {
     AtmelAvr,
     AtmelMegaAvr,
     AtmelSam,
+    Ch32v,
     Espressif32,
     Espressif8266,
     NordicNrf52,
@@ -104,6 +105,8 @@ impl Platform {
             Some(Self::AtmelSam)
         } else if s.contains("atmelavr") {
             Some(Self::AtmelAvr)
+        } else if s.contains("ch32v") {
+            Some(Self::Ch32v)
         } else if s.contains("nordicnrf52") {
             Some(Self::NordicNrf52)
         } else if s.contains("renesas") {
@@ -540,6 +543,16 @@ mod tests {
             Platform::from_platform_str("TEENSY"),
             Some(Platform::Teensy)
         );
+    }
+
+    #[test]
+    fn platform_from_str_ch32v() {
+        assert_eq!(Platform::from_platform_str("ch32v"), Some(Platform::Ch32v));
+        assert_eq!(
+            Platform::from_platform_str("platformio/ch32v"),
+            Some(Platform::Ch32v)
+        );
+        assert_eq!(Platform::from_platform_str("CH32V"), Some(Platform::Ch32v));
     }
 
     #[test]

@@ -232,6 +232,8 @@ impl BoardConfig {
             Some(fbuild_core::Platform::AtmelSam)
         } else if mcu.starts_with("ra4") || mcu.starts_with("ra6") {
             Some(fbuild_core::Platform::RenesasRa)
+        } else if mcu.starts_with("ch32") {
+            Some(fbuild_core::Platform::Ch32v)
         } else {
             None
         }
@@ -335,6 +337,7 @@ impl BoardConfig {
             Some(fbuild_core::Platform::Ststm32) => "STM32".to_string(),
             Some(fbuild_core::Platform::AtmelSam) => "SAM".to_string(),
             Some(fbuild_core::Platform::Teensy) => "TEENSY".to_string(),
+            Some(fbuild_core::Platform::Ch32v) => "CH32V".to_string(),
             Some(fbuild_core::Platform::Wasm) | None => String::new(),
         }
     }

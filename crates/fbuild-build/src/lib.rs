@@ -5,6 +5,7 @@
 
 pub mod avr;
 pub mod build_output;
+pub mod ch32v;
 pub mod compile_database;
 pub mod compiler;
 pub mod esp32;
@@ -63,6 +64,7 @@ pub fn get_platform_support(platform: Platform) -> Result<Box<dyn PlatformSuppor
         Platform::AtmelSam => Ok(Box::new(sam::SamPlatformSupport)),
         Platform::RenesasRa => Ok(Box::new(renesas::RenesasPlatformSupport)),
         Platform::SiliconLabs => Ok(Box::new(silabs::SilabsPlatformSupport)),
+        Platform::Ch32v => Ok(Box::new(ch32v::Ch32vPlatformSupport)),
         _ => Err(fbuild_core::FbuildError::BuildFailed(format!(
             "native orchestrator for {:?} not yet implemented — use --platformio flag for this platform",
             platform
