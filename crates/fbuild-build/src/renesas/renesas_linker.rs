@@ -78,6 +78,19 @@ impl Linker for RenesasLinker {
             args.extend(profile.link_flags.iter().cloned());
         }
 
+        // Add variant directory to linker search path so INCLUDE directives
+        // in fsp.ld can find memory_regions.ld
+        if let Some(variant_dir) = self.linker_script_path.parent() {
+            args.push(format!("-L{}", variant_dir.display()));
+            // Link with libfsp.a if present in the variant's libs/ directory
+            let libfsp = variant_dir.join("libs").join("libfsp.a");
+            if libfsp.exists() {
+                args.push("-Wl,--whole-archive".to_string());
+                args.push(libfsp.to_string_lossy().to_string());
+                args.push("-Wl,--no-whole-archive".to_string());
+            }
+        }
+
         args.extend([
             format!("-T{}", self.linker_script_path.display()),
             "-o".to_string(),
