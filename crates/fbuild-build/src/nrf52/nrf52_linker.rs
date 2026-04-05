@@ -18,6 +18,7 @@ pub struct Nrf52Linker {
     objcopy_path: PathBuf,
     size_path: PathBuf,
     linker_script_path: PathBuf,
+    linker_search_dirs: Vec<PathBuf>,
     mcu_config: Nrf52McuConfig,
     profile: BuildProfile,
     max_flash: Option<u64>,
@@ -33,6 +34,7 @@ impl Nrf52Linker {
         objcopy_path: PathBuf,
         size_path: PathBuf,
         linker_script_path: PathBuf,
+        linker_search_dirs: Vec<PathBuf>,
         mcu_config: Nrf52McuConfig,
         profile: BuildProfile,
         max_flash: Option<u64>,
@@ -45,6 +47,7 @@ impl Nrf52Linker {
             objcopy_path,
             size_path,
             linker_script_path,
+            linker_search_dirs,
             mcu_config,
             profile,
             max_flash,
@@ -76,6 +79,11 @@ impl Linker for Nrf52Linker {
         // Profile-specific link flags
         if let Some(profile) = self.mcu_config.get_profile(self.profile.as_dir_name()) {
             args.extend(profile.link_flags.iter().cloned());
+        }
+
+        // Linker search dirs (for INCLUDE directives in linker scripts)
+        for dir in &self.linker_search_dirs {
+            args.push(format!("-L{}", dir.display()));
         }
 
         args.extend([
@@ -153,6 +161,7 @@ mod tests {
             PathBuf::from("/bin/arm-none-eabi-objcopy"),
             PathBuf::from("/bin/arm-none-eabi-size"),
             PathBuf::from("/nrf52/nrf52840.ld"),
+            vec![],
             get_nrf52_config_for_mcu("nrf52840").unwrap(),
             BuildProfile::Release,
             Some(1048576),
@@ -171,6 +180,7 @@ mod tests {
             PathBuf::from("/bin/arm-none-eabi-objcopy"),
             PathBuf::from("/bin/arm-none-eabi-size"),
             PathBuf::from("/nrf52/nrf52840.ld"),
+            vec![],
             get_nrf52_config_for_mcu("nrf52840").unwrap(),
             BuildProfile::Release,
             Some(1048576),

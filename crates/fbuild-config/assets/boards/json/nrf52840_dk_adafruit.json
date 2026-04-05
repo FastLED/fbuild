@@ -1,7 +1,10 @@
 {
   "build": {
     "core": "nRF5",
-    "variant": "pca10056"
+    "variant": "pca10056",
+    "arduino": {
+      "ldscript": "nrf52840_s140_v6.ld"
+    }
   },
   "connectivity": [
     "bluetooth"

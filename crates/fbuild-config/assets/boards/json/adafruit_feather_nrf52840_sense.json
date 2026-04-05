@@ -1,7 +1,10 @@
 {
   "build": {
     "core": "nRF5",
-    "variant": "feather_nrf52840_sense"
+    "variant": "feather_nrf52840_sense",
+    "arduino": {
+      "ldscript": "nrf52840_s140_v6.ld"
+    }
   },
   "connectivity": [
     "bluetooth"

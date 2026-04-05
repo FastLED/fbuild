@@ -143,14 +143,20 @@ impl BuildOrchestrator for Nrf52Orchestrator {
             params.verbose,
         );
 
-        // 7. Create linker (resolve linker script from framework variant)
-        let linker_script_path = framework.get_linker_script(&ctx.board.variant);
+        // 7. Create linker (resolve linker script from board config)
+        let ldscript_name = ctx
+            .board
+            .ldscript
+            .as_deref()
+            .unwrap_or("nrf52840_s140_v6.ld");
+        let linker_script_path = framework.get_linker_script(ldscript_name);
         let linker = Nrf52Linker::new(
             toolchain.get_gcc_path(),
             toolchain.get_ar_path(),
             toolchain.get_objcopy_path(),
             toolchain.get_size_path(),
             linker_script_path,
+            vec![framework.get_linker_dir()],
             mcu_config,
             params.profile,
             ctx.board.max_flash,

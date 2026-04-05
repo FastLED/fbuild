@@ -82,28 +82,24 @@ impl Nrf52Cores {
         self.get_variants_dir().join(variant_name)
     }
 
-    /// Get the linker script for a variant.
+    /// Get the linker script for a given script name.
     ///
-    /// nRF52 linker scripts are typically in `variants/<variant>/linker/` or
-    /// directly in the variant directory. This method searches for .ld files.
-    pub fn get_linker_script(&self, variant_name: &str) -> PathBuf {
-        let variant_dir = self.get_variant_dir(variant_name);
+    /// Adafruit nRF52 linker scripts live in `cores/nRF5/linker/` (not in
+    /// the variant directory). The script name comes from the board JSON
+    /// `build.arduino.ldscript` field (e.g. `nrf52840_s140_v6.ld`).
+    pub fn get_linker_script(&self, ldscript_name: &str) -> PathBuf {
+        self.get_linker_dir().join(ldscript_name)
+    }
 
-        // First check linker/ subdirectory
-        let linker_dir = variant_dir.join("linker");
-        if linker_dir.is_dir() {
-            if let Some(ld) = find_ld_file(&linker_dir) {
-                return ld;
-            }
-        }
-
-        // Fall back to searching the variant directory itself
-        if let Some(ld) = find_ld_file(&variant_dir) {
-            return ld;
-        }
-
-        // Default fallback path
-        variant_dir.join("linker_script.ld")
+    /// Get the linker scripts directory (`cores/nRF5/linker/`).
+    ///
+    /// This must be added to the linker's library search path (`-L`) so that
+    /// `INCLUDE "nrf52_common.ld"` directives in the linker scripts resolve.
+    pub fn get_linker_dir(&self) -> PathBuf {
+        self.resolved_dir()
+            .join("cores")
+            .join("nRF5")
+            .join("linker")
     }
 
     /// List all .c, .cpp, .cc, and .s source files in the core.
@@ -182,25 +178,6 @@ fn find_core_root(install_dir: &Path) -> PathBuf {
     install_dir.to_path_buf()
 }
 
-/// Find the first .ld file in a directory.
-fn find_ld_file(dir: &Path) -> Option<PathBuf> {
-    let mut ld_files = Vec::new();
-    if let Ok(entries) = std::fs::read_dir(dir) {
-        for entry in entries.flatten() {
-            let path = entry.path();
-            if path.is_file() {
-                if let Some(ext) = path.extension() {
-                    if ext == "ld" {
-                        ld_files.push(path);
-                    }
-                }
-            }
-        }
-    }
-    ld_files.sort();
-    ld_files.into_iter().next()
-}
-
 /// Collect .c, .cpp, .cc, and .s source files from a directory (non-recursive).
 fn collect_sources(dir: &Path) -> Vec<PathBuf> {
     let mut sources = Vec::new();
@@ -251,39 +228,22 @@ mod tests {
     }
 
     #[test]
-    fn test_get_linker_script_from_linker_subdir() {
+    fn test_get_linker_script() {
         let tmp = tempfile::TempDir::new().unwrap();
-        let variant_dir = tmp.path().join("variants/feather_nrf52840_express");
-        let linker_dir = variant_dir.join("linker");
-        std::fs::create_dir_all(&linker_dir).unwrap();
-        std::fs::write(linker_dir.join("nrf52840_s140_v7.ld"), "").unwrap();
-
-        // Create a core that points at tmp as root
+        std::fs::create_dir_all(tmp.path().join("cores/nRF5/linker")).unwrap();
         let core = Nrf52Cores::new(tmp.path());
-        // We test find_ld_file directly since the core paths differ
-        let ld = find_ld_file(&linker_dir);
-        assert!(ld.is_some());
-        assert!(ld.unwrap().to_string_lossy().contains(".ld"));
-
-        // Suppress unused variable warning
-        let _ = core;
+        let ld = core.get_linker_script("nrf52840_s140_v6.ld");
+        assert!(ld.to_string_lossy().contains("nrf52840_s140_v6.ld"));
+        assert!(ld.to_string_lossy().contains("linker"));
     }
 
     #[test]
-    fn test_find_ld_file() {
+    fn test_get_linker_dir() {
         let tmp = tempfile::TempDir::new().unwrap();
-        std::fs::write(tmp.path().join("script.ld"), "").unwrap();
-        std::fs::write(tmp.path().join("other.txt"), "").unwrap();
-        let ld = find_ld_file(tmp.path());
-        assert!(ld.is_some());
-        assert!(ld.unwrap().to_string_lossy().contains("script.ld"));
-    }
-
-    #[test]
-    fn test_find_ld_file_empty() {
-        let tmp = tempfile::TempDir::new().unwrap();
-        let ld = find_ld_file(tmp.path());
-        assert!(ld.is_none());
+        std::fs::create_dir_all(tmp.path().join("cores/nRF5/linker")).unwrap();
+        let core = Nrf52Cores::new(tmp.path());
+        let dir = core.get_linker_dir();
+        assert!(dir.ends_with("linker"));
     }
 
     #[test]
