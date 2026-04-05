@@ -82,6 +82,37 @@ impl RenesasCores {
         self.get_variants_dir().join(variant_name)
     }
 
+    /// Get additional include directories from the variant's `includes.txt`.
+    ///
+    /// ArduinoCore-renesas variants ship an `includes.txt` that lists all
+    /// FSP (Flexible Software Package) include paths needed for compilation.
+    /// Lines are `-iwithprefixbefore/path` entries relative to the variant dir.
+    pub fn get_variant_includes(&self, variant_name: &str) -> Vec<PathBuf> {
+        let variant_dir = self.get_variant_dir(variant_name);
+        let includes_txt = variant_dir.join("includes.txt");
+
+        let content = match std::fs::read_to_string(&includes_txt) {
+            Ok(c) => c,
+            Err(_) => {
+                tracing::warn!("No includes.txt found at {}", includes_txt.display());
+                return Vec::new();
+            }
+        };
+
+        content
+            .lines()
+            .filter_map(|line| {
+                let line = line.trim();
+                // Lines are like: -iwithprefixbefore/includes/ra/fsp/inc/api
+                let path = line
+                    .strip_prefix("-iwithprefixbefore/")
+                    .or_else(|| line.strip_prefix("-iwithprefixbefore"));
+                path.map(|p| variant_dir.join(p))
+            })
+            .filter(|p| p.is_dir())
+            .collect()
+    }
+
     /// Get the linker script for a variant.
     ///
     /// Renesas variants typically have `fsp.ld` or other .ld files. This

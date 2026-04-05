@@ -83,6 +83,8 @@ impl BuildOrchestrator for RenesasOrchestrator {
         // Use resolved core_dir/variant_dir instead of get_include_paths() which
         // doesn't account for core_dir overrides.
         let mut include_dirs = vec![core_dir, variant_dir];
+        // FSP includes from variant's includes.txt (bsp_api.h, CMSIS, etc.)
+        include_dirs.extend(framework.get_variant_includes(&ctx.board.variant));
         include_dirs.push(ctx.src_dir.clone());
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
         // Toolchain sysroot includes (ARM CMSIS headers, etc.)
