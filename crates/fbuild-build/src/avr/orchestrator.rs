@@ -53,7 +53,7 @@ impl BuildOrchestrator for AvrOrchestrator {
         pipeline::log_toolchain_version(&toolchain.get_gcc_path(), "avr-gcc", &mut ctx.build_log);
 
         // 4. Ensure Arduino core
-        let (framework_dir, core_dir, variant_dir) = ensure_avr_framework(
+        let (_framework_dir, core_dir, variant_dir) = ensure_avr_framework(
             &params.project_dir,
             &ctx.board.core,
             &ctx.board.variant,
@@ -73,7 +73,10 @@ impl BuildOrchestrator for AvrOrchestrator {
 
         // 6. Build include dirs + compiler
         let defines = ctx.board.get_defines();
-        let mut include_dirs = ctx.board.get_include_paths(&framework_dir);
+        // Use the resolved core_dir/variant_dir directly — board.get_include_paths()
+        // uses the raw board core name which may differ from the actual directory
+        // (e.g. MiniCore's core dir is "MCUdude_corefiles", not "MiniCore").
+        let mut include_dirs = vec![core_dir.clone(), variant_dir.clone()];
         include_dirs.push(ctx.src_dir.clone());
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
         // Toolchain sysroot includes (avr/io.h, etc.)
