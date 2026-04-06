@@ -1,5 +1,7 @@
 //! HTTP client for communicating with the fbuild daemon.
 
+use std::collections::BTreeMap;
+
 use serde::{Deserialize, Serialize};
 
 /// Percent-encode a port name for use in a URL path segment.
@@ -46,6 +48,10 @@ pub struct BuildRequest {
     /// Override for PLATFORMIO_SRC_DIR — forwarded from caller's environment.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub src_dir: Option<String>,
+    /// Snapshot of all `PLATFORMIO_*` env vars from the caller's environment.
+    /// The daemon does not inherit caller env vars, so they are forwarded here.
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    pub pio_env: BTreeMap<String, String>,
 }
 
 #[derive(Debug, Serialize)]
@@ -84,6 +90,9 @@ pub struct DeployRequest {
     /// Override for PLATFORMIO_SRC_DIR — forwarded from caller's environment.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub src_dir: Option<String>,
+    /// Snapshot of all `PLATFORMIO_*` env vars from the caller's environment.
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    pub pio_env: BTreeMap<String, String>,
 }
 
 #[derive(Debug, Serialize)]
@@ -119,6 +128,19 @@ pub fn caller_info() -> (Option<u32>, Option<String>) {
         .ok()
         .map(|p| p.to_string_lossy().to_string());
     (pid, cwd)
+}
+
+/// Snapshot all `PLATFORMIO_*` env vars from the current process environment.
+///
+/// This is the only place in the codebase where `std::env::vars()` is consulted
+/// for `PLATFORMIO_*` keys (other than `fbuild-paths` startup fallbacks). The
+/// returned map is forwarded to the daemon over HTTP via `BuildRequest.pio_env`
+/// / `DeployRequest.pio_env`, since the daemon process does not inherit caller
+/// env vars.
+pub fn capture_pio_env() -> BTreeMap<String, String> {
+    std::env::vars()
+        .filter(|(k, _)| k.starts_with("PLATFORMIO_"))
+        .collect()
 }
 
 #[derive(Debug, Deserialize)]

@@ -90,6 +90,7 @@ fn build_uno_minimal() {
         symbol_analysis_path: None,
         no_timestamp: false,
         src_dir: None,
+        pio_env: Default::default(),
     };
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
@@ -182,6 +183,7 @@ fn compare_with_python_output() {
         symbol_analysis_path: None,
         no_timestamp: false,
         src_dir: None,
+        pio_env: Default::default(),
     };
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
@@ -264,6 +266,7 @@ void loop() {
         symbol_analysis_path: None,
         no_timestamp: false,
         src_dir: None,
+        pio_env: Default::default(),
     };
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;

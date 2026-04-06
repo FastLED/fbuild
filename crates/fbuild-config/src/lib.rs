@@ -9,7 +9,12 @@
 pub mod board;
 pub mod ini_parser;
 pub mod mcu;
+pub mod pio_env;
 
 pub use board::BoardConfig;
 pub use ini_parser::PlatformIOConfig;
 pub use mcu::McuSpec;
+pub use pio_env::{
+    scan_unsupported, scan_warn_only, PioEnvOverrides, SUPPORTED_PIO_ENV_VARS,
+    WARN_ONLY_PIO_ENV_VARS,
+};

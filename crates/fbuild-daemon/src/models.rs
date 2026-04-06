@@ -1,5 +1,7 @@
 //! Request/response JSON types matching the Python daemon's API contract.
 
+use std::collections::BTreeMap;
+
 use serde::{Deserialize, Serialize};
 
 /// POST /api/build
@@ -39,6 +41,12 @@ pub struct BuildRequest {
     /// does not inherit the caller's env vars.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub src_dir: Option<String>,
+    /// Snapshot of `PLATFORMIO_*` env vars from the CLI caller's environment.
+    ///
+    /// The daemon does not inherit caller env vars, so the CLI forwards them
+    /// here per request. Consumed by `fbuild-config::PioEnvOverrides`.
+    #[serde(default)]
+    pub pio_env: BTreeMap<String, String>,
 }
 
 /// POST /api/deploy
@@ -73,6 +81,9 @@ pub struct DeployRequest {
     /// Override for PLATFORMIO_SRC_DIR — the source directory to compile.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub src_dir: Option<String>,
+    /// Snapshot of `PLATFORMIO_*` env vars from the CLI caller's environment.
+    #[serde(default)]
+    pub pio_env: BTreeMap<String, String>,
 }
 
 fn default_qemu_timeout() -> u32 {

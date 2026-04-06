@@ -463,6 +463,7 @@ async fn execute_tool(client: &DaemonClient, name: &str, args: &Value) -> Result
                 src_dir: std::env::var("PLATFORMIO_SRC_DIR")
                     .ok()
                     .filter(|s| !s.is_empty()),
+                pio_env: crate::daemon_client::capture_pio_env(),
             };
 
             let resp = client
@@ -519,6 +520,7 @@ async fn execute_tool(client: &DaemonClient, name: &str, args: &Value) -> Result
                 src_dir: std::env::var("PLATFORMIO_SRC_DIR")
                     .ok()
                     .filter(|s| !s.is_empty()),
+                pio_env: crate::daemon_client::capture_pio_env(),
             };
 
             let resp = client

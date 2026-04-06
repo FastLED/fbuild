@@ -369,6 +369,17 @@ async fn main() {
         .with_env_filter(tracing_subscriber::EnvFilter::from_default_env())
         .init();
 
+    // Scan caller's environment for `PLATFORMIO_*` vars and warn about any
+    // that fbuild does not act on, so users aren't bitten by silent
+    // mis-builds. The captured map is forwarded to the daemon per request.
+    let pio_env = daemon_client::capture_pio_env();
+    for var in fbuild_config::scan_unsupported(&pio_env) {
+        tracing::warn!("{} is set but not supported by fbuild (ignored)", var);
+    }
+    for var in fbuild_config::scan_warn_only(&pio_env) {
+        tracing::warn!("{} is set but fbuild does not act on it", var);
+    }
+
     // Handle Ctrl+C with exit code 130 (standard POSIX SIGINT behavior, matches Python)
     ctrlc::set_handler(move || {
         eprintln!("\nInterrupted");
@@ -939,6 +950,7 @@ async fn run_build(
         src_dir: std::env::var("PLATFORMIO_SRC_DIR")
             .ok()
             .filter(|s| !s.is_empty()),
+        pio_env: daemon_client::capture_pio_env(),
     };
 
     let resp = client.build_streaming(&req).await?;
@@ -1006,6 +1018,7 @@ async fn run_deploy(
         src_dir: std::env::var("PLATFORMIO_SRC_DIR")
             .ok()
             .filter(|s| !s.is_empty()),
+        pio_env: daemon_client::capture_pio_env(),
     };
 
     let resp = client.deploy(&req).await?;

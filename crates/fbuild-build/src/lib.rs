@@ -153,6 +153,11 @@ pub struct BuildParams {
     /// Override for the source directory (PLATFORMIO_SRC_DIR).
     /// When set, takes precedence over INI config and env var.
     pub src_dir: Option<String>,
+    /// `PLATFORMIO_*` env var overrides forwarded from the CLI caller.
+    ///
+    /// The daemon does not inherit caller env vars, so all `PLATFORMIO_*`
+    /// config flows through this map. Empty when no overrides apply.
+    pub pio_env: std::collections::BTreeMap<String, String>,
 }
 
 /// Trait for platform-specific build orchestrators.

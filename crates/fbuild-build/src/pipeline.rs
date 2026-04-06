@@ -41,9 +41,13 @@ impl BuildContext {
         let project_dir = &params.project_dir;
         let env_name = &params.env_name;
 
-        // 1. Parse platformio.ini
+        // 1. Parse platformio.ini, attaching any forwarded `PLATFORMIO_*` env
+        // var overrides from the CLI caller (the daemon does not inherit
+        // caller env vars).
         let ini_path = project_dir.join("platformio.ini");
-        let config = fbuild_config::PlatformIOConfig::from_path(&ini_path)?;
+        let pio_overrides = fbuild_config::PioEnvOverrides::from_map(params.pio_env.clone());
+        let config =
+            fbuild_config::PlatformIOConfig::from_path_with_overrides(&ini_path, pio_overrides)?;
         let env_config = config.get_env_config(env_name)?;
 
         // 2. Load board config

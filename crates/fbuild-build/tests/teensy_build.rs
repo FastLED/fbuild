@@ -63,6 +63,7 @@ void loop() {
         symbol_analysis_path: None,
         no_timestamp: false,
         src_dir: None,
+        pio_env: Default::default(),
     };
 
     let orchestrator = fbuild_build::teensy::orchestrator::TeensyOrchestrator;
@@ -121,6 +122,7 @@ fn build_teensy41_fixture() {
         symbol_analysis_path: None,
         no_timestamp: false,
         src_dir: None,
+        pio_env: Default::default(),
     };
 
     let orchestrator = fbuild_build::teensy::orchestrator::TeensyOrchestrator;

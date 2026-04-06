@@ -14,6 +14,8 @@ use std::path::{Path, PathBuf};
 
 use regex::Regex;
 
+use crate::pio_env::PioEnvOverrides;
+
 /// Parsed platformio.ini configuration.
 pub struct PlatformIOConfig {
     /// Raw sections: section_name -> key -> value
@@ -22,11 +24,31 @@ pub struct PlatformIOConfig {
     resolved_envs: HashMap<String, HashMap<String, String>>,
     /// Path to the platformio.ini file
     path: PathBuf,
+    /// Per-request `PLATFORMIO_*` env var overrides forwarded from the caller.
+    ///
+    /// Used by getters to honor env-driven overrides without reading
+    /// `std::env::var` directly. The daemon does not inherit caller env vars,
+    /// so all `PLATFORMIO_*` config must flow through this struct.
+    overrides: PioEnvOverrides,
 }
 
 impl PlatformIOConfig {
-    /// Parse a platformio.ini file.
+    /// Parse a platformio.ini file with no env var overrides.
+    ///
+    /// Equivalent to `from_path_with_overrides(path, PioEnvOverrides::empty())`.
     pub fn from_path(path: &Path) -> fbuild_core::Result<Self> {
+        Self::from_path_with_overrides(path, PioEnvOverrides::empty())
+    }
+
+    /// Parse a platformio.ini file and attach `PLATFORMIO_*` env var overrides.
+    ///
+    /// The overrides are consulted by getters before falling back to INI values,
+    /// allowing CLI callers to forward env vars to the daemon over HTTP without
+    /// the daemon process needing to inherit them.
+    pub fn from_path_with_overrides(
+        path: &Path,
+        overrides: PioEnvOverrides,
+    ) -> fbuild_core::Result<Self> {
         let content = std::fs::read_to_string(path).map_err(|e| {
             fbuild_core::FbuildError::ConfigError(format!(
                 "failed to read {}: {}",
@@ -42,7 +64,13 @@ impl PlatformIOConfig {
             sections,
             resolved_envs,
             path: path.to_path_buf(),
+            overrides,
         })
+    }
+
+    /// Borrow the env var overrides attached to this config.
+    pub fn overrides(&self) -> &PioEnvOverrides {
+        &self.overrides
     }
 
     /// List all environment names (from `[env:name]` sections).
