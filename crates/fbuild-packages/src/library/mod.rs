@@ -1,5 +1,6 @@
 //! Library dependency management.
 
+pub mod apollo3_core;
 pub mod arduino_api;
 pub mod arduino_core;
 pub mod attiny_core;
@@ -25,6 +26,7 @@ pub mod silabs_core;
 pub mod stm32_core;
 pub mod teensy_core;
 
+pub use apollo3_core::Apollo3Cores;
 pub use arduino_core::ArduinoCore;
 pub use attiny_core::ATTinyCore;
 pub use avr_framework::AvrFramework;

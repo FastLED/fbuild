@@ -71,6 +71,7 @@ impl BuildProfile {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum Platform {
+    Apollo3,
     AtmelAvr,
     AtmelMegaAvr,
     AtmelSam,
@@ -93,9 +94,12 @@ impl Platform {
     /// bare names, owner-prefixed, versioned, git URLs, git refs, local paths.
     pub fn from_platform_str(s: &str) -> Option<Self> {
         let s = s.to_lowercase();
+        // Apollo3 (Ambiq Micro) — check before generic substring matches.
+        if s.contains("apollo3") {
+            Some(Self::Apollo3)
         // Check espressif8266 before espressif32 to avoid false match
         // ("espressif8266" does not contain "espressif32", but be explicit).
-        if s.contains("espressif8266") {
+        } else if s.contains("espressif8266") {
             Some(Self::Espressif8266)
         } else if s.contains("espressif32") {
             Some(Self::Espressif32)
