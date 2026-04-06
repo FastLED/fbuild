@@ -34,6 +34,9 @@ pub struct BuildRequest {
     /// Optional path to write the symbol analysis report to.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub symbol_analysis_path: Option<String>,
+    /// Disable elapsed-time prefix on build output lines.
+    #[serde(default)]
+    pub no_timestamp: bool,
 }
 
 #[derive(Debug, Serialize)]

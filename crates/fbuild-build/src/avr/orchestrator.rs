@@ -42,6 +42,7 @@ impl BuildOrchestrator for AvrOrchestrator {
             params.clean,
             params.profile,
             params.log_sender.clone(),
+            params.no_timestamp,
         )?;
 
         // 3. Ensure toolchain

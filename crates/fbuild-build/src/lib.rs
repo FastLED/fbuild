@@ -148,6 +148,8 @@ pub struct BuildParams {
     /// Optional path to write the symbol analysis report to.
     /// When set, the report is written to this path instead of the build artifacts directory.
     pub symbol_analysis_path: Option<std::path::PathBuf>,
+    /// Disable elapsed-time prefix on build output lines.
+    pub no_timestamp: bool,
 }
 
 /// Trait for platform-specific build orchestrators.

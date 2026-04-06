@@ -40,6 +40,7 @@ impl BuildOrchestrator for Apollo3Orchestrator {
             params.clean,
             params.profile,
             params.log_sender.clone(),
+            params.no_timestamp,
         )?;
 
         // 3. Ensure ARM GCC 8 toolchain (Apollo3/mbed-os requires GCC 8)

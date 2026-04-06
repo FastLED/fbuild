@@ -87,6 +87,9 @@ enum Commands {
         /// instead of streaming to console
         #[arg(long, num_args = 0..=1, default_missing_value = "")]
         symbol_analysis: Option<String>,
+        /// Disable elapsed-time prefix on build output lines
+        #[arg(long)]
+        no_timestamp: bool,
     },
     /// Deploy firmware to device
     Deploy {
@@ -394,6 +397,7 @@ async fn main() {
             dry_run,
             target,
             symbol_analysis,
+            no_timestamp,
         }) => {
             let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
             if platformio {
@@ -410,6 +414,7 @@ async fn main() {
                     dry_run,
                     target,
                     symbol_analysis,
+                    no_timestamp,
                 )
                 .await
             }
@@ -873,6 +878,7 @@ async fn run_build(
     dry_run: bool,
     target: Option<String>,
     symbol_analysis: Option<String>,
+    no_timestamp: bool,
 ) -> fbuild_core::Result<()> {
     daemon_client::ensure_daemon_running().await?;
 
@@ -923,6 +929,7 @@ async fn run_build(
         stream: true,
         symbol_analysis: symbol_analysis.is_some(),
         symbol_analysis_path: symbol_analysis.filter(|s| !s.is_empty()),
+        no_timestamp,
     };
 
     let resp = client.build_streaming(&req).await?;
@@ -1102,6 +1109,7 @@ async fn run_iwyu(
             false,
             Some("compiledb".to_string()),
             None,
+            true, // no_timestamp: compiledb generation doesn't need timestamps
         )
         .await?;
         if !db_path.exists() {
@@ -1522,6 +1530,7 @@ async fn run_clang_tool(
         false, // dry_run
         Some("compiledb".to_string()),
         None,
+        true, // no_timestamp: compiledb generation doesn't need timestamps
     )
     .await?;
 

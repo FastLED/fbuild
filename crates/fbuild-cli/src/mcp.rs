@@ -459,6 +459,7 @@ async fn execute_tool(client: &DaemonClient, name: &str, args: &Value) -> Result
                 stream: false,
                 symbol_analysis: false,
                 symbol_analysis_path: None,
+                no_timestamp: false,
             };
 
             let resp = client

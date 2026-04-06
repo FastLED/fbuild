@@ -3,9 +3,13 @@
 //! Collects build output lines and optionally streams them in real-time
 //! through a channel sender. Uses `VecDeque` internally to reduce memory
 //! fragmentation on repeated pushes.
+//!
+//! When an `epoch` is set, every line pushed is automatically prefixed with
+//! the elapsed time since that epoch (e.g. `"   0.46 compiling foo.cpp"`).
 
 use std::collections::VecDeque;
 use std::sync::mpsc::Sender;
+use std::time::Instant;
 
 /// Centralized build output log.
 ///
@@ -15,33 +19,61 @@ use std::sync::mpsc::Sender;
 pub struct BuildLog {
     lines: VecDeque<String>,
     sender: Option<Sender<String>>,
+    epoch: Option<Instant>,
 }
 
 impl BuildLog {
-    /// Create a log that only collects lines locally.
+    /// Create a log that only collects lines locally (no timestamps).
     pub fn new() -> Self {
         Self {
             lines: VecDeque::new(),
             sender: None,
+            epoch: None,
         }
     }
 
-    /// Create a log that streams each line through the given sender.
+    /// Create a log that streams each line through the given sender (no timestamps).
     pub fn with_sender(sender: Sender<String>) -> Self {
         Self {
             lines: VecDeque::new(),
             sender: Some(sender),
+            epoch: None,
         }
     }
 
-    /// Push a line. If a sender is configured, also streams it immediately.
+    /// Create a log with elapsed-time prefixes from the given epoch.
+    pub fn with_epoch(epoch: Instant) -> Self {
+        Self {
+            lines: VecDeque::new(),
+            sender: None,
+            epoch: Some(epoch),
+        }
+    }
+
+    /// Create a log that streams each line and prefixes with elapsed time.
+    pub fn with_sender_and_epoch(sender: Sender<String>, epoch: Instant) -> Self {
+        Self {
+            lines: VecDeque::new(),
+            sender: Some(sender),
+            epoch: Some(epoch),
+        }
+    }
+
+    /// Push a line. If an epoch is set, the line is prefixed with elapsed time.
+    /// If a sender is configured, also streams the (possibly prefixed) line immediately.
     pub fn push(&mut self, line: impl Into<String>) {
         let line = line.into();
+        let tagged = match self.epoch {
+            Some(epoch) => {
+                let prefix = crate::elapsed::format_elapsed(epoch.elapsed());
+                format!("{prefix}{line}")
+            }
+            None => line,
+        };
         if let Some(ref sender) = self.sender {
-            // Best-effort send; if receiver is dropped, silently ignore
-            let _ = sender.send(line.clone());
+            let _ = sender.send(tagged.clone());
         }
-        self.lines.push_back(line);
+        self.lines.push_back(tagged);
     }
 
     /// Consume the log and return all collected lines.
@@ -64,6 +96,7 @@ impl Default for BuildLog {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::time::Duration;
 
     #[test]
     fn push_and_collect() {
@@ -102,5 +135,37 @@ mod tests {
         // Should not panic even though receiver is gone
         log.push("orphaned line");
         assert_eq!(log.into_lines(), vec!["orphaned line"]);
+    }
+
+    // --- Phase 2 TDD: epoch integration ---
+
+    #[test]
+    fn push_with_epoch_prepends_elapsed() {
+        let epoch = Instant::now();
+        std::thread::sleep(Duration::from_millis(50));
+        let mut log = BuildLog::with_epoch(epoch);
+        log.push("hello");
+        let lines = log.into_lines();
+        assert!(lines[0].ends_with("hello"), "line: {:?}", lines[0]);
+        assert!(lines[0].len() > "hello".len(), "no prefix added");
+        assert!(!lines[0].contains('['), "should not contain brackets");
+    }
+
+    #[test]
+    fn push_without_epoch_no_prefix() {
+        let mut log = BuildLog::new();
+        log.push("hello");
+        assert_eq!(log.into_lines(), vec!["hello"]);
+    }
+
+    #[test]
+    fn with_sender_and_epoch_streams_prefixed() {
+        let (tx, rx) = std::sync::mpsc::channel();
+        let epoch = Instant::now();
+        let mut log = BuildLog::with_sender_and_epoch(tx, epoch);
+        log.push("test");
+        let received = rx.try_recv().unwrap();
+        assert!(received.ends_with("test"), "received: {:?}", received);
+        assert!(received.len() > "test".len(), "no prefix in streamed line");
     }
 }

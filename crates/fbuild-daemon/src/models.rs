@@ -31,6 +31,9 @@ pub struct BuildRequest {
     pub symbol_analysis: bool,
     /// Optional path to write the symbol analysis report to.
     pub symbol_analysis_path: Option<String>,
+    /// Disable elapsed-time prefix on build output lines.
+    #[serde(default)]
+    pub no_timestamp: bool,
 }
 
 /// POST /api/deploy

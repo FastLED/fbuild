@@ -42,6 +42,7 @@ impl BuildOrchestrator for Esp8266Orchestrator {
             params.clean,
             params.profile,
             params.log_sender.clone(),
+            params.no_timestamp,
         )?;
 
         // 3. Ensure toolchain

@@ -52,6 +52,7 @@ impl BuildOrchestrator for SamOrchestrator {
             params.clean,
             params.profile,
             params.log_sender.clone(),
+            params.no_timestamp,
         )?;
 
         // 3. Ensure ARM GCC toolchain

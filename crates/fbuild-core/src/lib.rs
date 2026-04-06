@@ -8,6 +8,7 @@
 
 pub mod build_log;
 pub mod compiler_flags;
+pub mod elapsed;
 pub mod response_file;
 pub mod shell_split;
 pub mod subprocess;

@@ -60,6 +60,8 @@ pub async fn resolve_library(
     name: &str,
     version_spec: Option<&str>,
 ) -> Result<ResolvedLibrary> {
+    tracing::info!("resolving library: {}...", name);
+
     // Resolve owner if not specified
     let owner = if owner.is_empty() {
         search_library(name).await?.ok_or_else(|| {
@@ -158,7 +160,7 @@ pub async fn resolve_library(
         .and_then(|u| u.as_str())
         .unwrap_or(&owner);
 
-    Ok(ResolvedLibrary {
+    let resolved = ResolvedLibrary {
         owner: resolved_owner.to_string(),
         name: data
             .get("name")
@@ -167,7 +169,17 @@ pub async fn resolve_library(
             .to_string(),
         version: matched_ver.to_string(),
         download_url: download_url.to_string(),
-    })
+    };
+
+    tracing::info!(
+        "resolved {} -> {}/{} v{}",
+        name,
+        resolved.owner,
+        resolved.name,
+        resolved.version
+    );
+
+    Ok(resolved)
 }
 
 /// Fallback: resolve via the search API (no version constraint support).

@@ -88,6 +88,7 @@ fn build_uno_minimal() {
         log_sender: None,
         symbol_analysis: false,
         symbol_analysis_path: None,
+        no_timestamp: false,
     };
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
@@ -178,6 +179,7 @@ fn compare_with_python_output() {
         log_sender: None,
         symbol_analysis: false,
         symbol_analysis_path: None,
+        no_timestamp: false,
     };
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
@@ -258,6 +260,7 @@ void loop() {
         log_sender: None,
         symbol_analysis: false,
         symbol_analysis_path: None,
+        no_timestamp: false,
     };
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;

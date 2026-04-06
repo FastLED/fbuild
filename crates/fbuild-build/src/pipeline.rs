@@ -40,6 +40,7 @@ impl BuildContext {
         clean: bool,
         profile: BuildProfile,
         log_sender: Option<std::sync::mpsc::Sender<String>>,
+        no_timestamp: bool,
     ) -> Result<Self> {
         // 1. Parse platformio.ini
         let ini_path = project_dir.join("platformio.ini");
@@ -54,7 +55,11 @@ impl BuildContext {
         let board = fbuild_config::BoardConfig::from_board_id(board_id, &overrides)?;
 
         // 3. Build log initialization
-        let mut build_log = crate::build_output::create_build_log(log_sender);
+        let mut build_log = if no_timestamp {
+            crate::build_output::create_build_log(log_sender)
+        } else {
+            crate::build_output::create_build_log_with_epoch(log_sender, std::time::Instant::now())
+        };
         crate::build_output::log_build_banner(&mut build_log, env_name);
         crate::build_output::log_board_info(
             &mut build_log,

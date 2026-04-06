@@ -61,6 +61,7 @@ void loop() {
         log_sender: None,
         symbol_analysis: false,
         symbol_analysis_path: None,
+        no_timestamp: false,
     };
 
     let orchestrator = fbuild_build::teensy::orchestrator::TeensyOrchestrator;
@@ -117,6 +118,7 @@ fn build_teensy41_fixture() {
         log_sender: None,
         symbol_analysis: false,
         symbol_analysis_path: None,
+        no_timestamp: false,
     };
 
     let orchestrator = fbuild_build::teensy::orchestrator::TeensyOrchestrator;

@@ -57,6 +57,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             params.clean,
             params.profile,
             params.log_sender.clone(),
+            params.no_timestamp,
         )?;
 
         // 3. Load MCU config from embedded JSON

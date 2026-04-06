@@ -5,6 +5,7 @@
 //! streams them in real-time through a channel sender.
 
 use std::path::Path;
+use std::time::Instant;
 
 use fbuild_core::{BuildLog, MemoryRegion, SizeInfo, SymbolMap};
 
@@ -13,6 +14,17 @@ pub fn create_build_log(sender: Option<std::sync::mpsc::Sender<String>>) -> Buil
     match sender {
         Some(s) => BuildLog::with_sender(s),
         None => BuildLog::new(),
+    }
+}
+
+/// Create a [`BuildLog`] with elapsed-time prefixes from the given epoch.
+pub fn create_build_log_with_epoch(
+    sender: Option<std::sync::mpsc::Sender<String>>,
+    epoch: Instant,
+) -> BuildLog {
+    match sender {
+        Some(s) => BuildLog::with_sender_and_epoch(s, epoch),
+        None => BuildLog::with_epoch(epoch),
     }
 }
 

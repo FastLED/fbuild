@@ -42,6 +42,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
             params.clean,
             params.profile,
             params.log_sender.clone(),
+            params.no_timestamp,
         )?;
 
         // Need board_id for linker script lookup later
