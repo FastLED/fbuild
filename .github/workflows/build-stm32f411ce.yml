@@ -13,4 +13,4 @@ jobs:
       workflow-name: "STM32F411CE"
       test-dir: "tests/platform/stm32f411ce"
       env-name: "stm32f411ce"
-      firmware-ext: "bin"
+      firmware-ext: "hex"

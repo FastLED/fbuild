@@ -13,4 +13,4 @@ jobs:
       workflow-name: "STM32F103TB"
       test-dir: "tests/platform/stm32f103tb"
       env-name: "stm32f103tb"
-      firmware-ext: "bin"
+      firmware-ext: "hex"

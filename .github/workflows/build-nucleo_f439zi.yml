@@ -13,4 +13,4 @@ jobs:
       workflow-name: "Nucleo F439ZI"
       test-dir: "tests/platform/nucleo_f439zi"
       env-name: "nucleo_f439zi"
-      firmware-ext: "bin"
+      firmware-ext: "hex"
