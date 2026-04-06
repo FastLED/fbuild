@@ -101,8 +101,22 @@ impl Linker for ArmLinker {
             tracing::info!("link: {}", args.join(" "));
         }
 
-        let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, None, None)?;
+        // On Windows, use a response file to avoid command-line length limits
+        // (STM32 HAL/LL wrappers produce hundreds of .o files).
+        let result = if cfg!(windows) && args.len() > 50 {
+            let temp_dir = fbuild_core::response_file::windows_temp_dir();
+            std::fs::create_dir_all(&temp_dir)?;
+            let rsp_path = temp_dir.join("arm_link.rsp");
+            // Response file contains all args except the gcc binary itself.
+            // Convert backslashes to forward slashes so GCC doesn't treat them as escapes.
+            let rsp_content: Vec<String> = args[1..].iter().map(|a| a.replace('\\', "/")).collect();
+            std::fs::write(&rsp_path, rsp_content.join("\n"))?;
+            let rsp_arg = format!("@{}", rsp_path.display());
+            run_command(&[args[0].as_str(), &rsp_arg], None, None, None)?
+        } else {
+            let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
+            run_command(&args_ref, None, None, None)?
+        };
 
         if !result.success() {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(
