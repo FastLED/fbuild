@@ -123,11 +123,13 @@ impl Deployer for AvrDeployer {
                 success: true,
                 message: format!("firmware flashed to {}", port),
                 port: Some(port.to_string()),
+                stdout: result.stdout,
+                stderr: result.stderr,
             })
         } else {
             Err(fbuild_core::FbuildError::DeployFailed(format!(
-                "avrdude failed:\n{}",
-                result.stderr
+                "avrdude failed:\n{}\n{}",
+                result.stdout, result.stderr
             )))
         }
     }

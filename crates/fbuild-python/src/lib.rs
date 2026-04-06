@@ -659,14 +659,30 @@ fn send_op(url: &str, req: &OpRequest, timeout: f64) -> bool {
     {
         Ok(resp) => {
             if let Ok(body) = resp.json::<serde_json::Value>() {
-                body.get("success")
+                let success = body
+                    .get("success")
                     .and_then(|v| v.as_bool())
-                    .unwrap_or(false)
+                    .unwrap_or(false);
+                if !success {
+                    if let Some(msg) = body.get("message").and_then(|v| v.as_str()) {
+                        eprintln!("[fbuild] operation failed: {}", msg);
+                    }
+                    if let Some(stderr) = body.get("stderr").and_then(|v| v.as_str()) {
+                        if !stderr.is_empty() {
+                            eprintln!("[fbuild] stderr:\n{}", stderr);
+                        }
+                    }
+                }
+                success
             } else {
+                eprintln!("[fbuild] failed to parse daemon response");
                 false
             }
         }
-        Err(_) => false,
+        Err(e) => {
+            eprintln!("[fbuild] request failed: {}", e);
+            false
+        }
     }
 }
 

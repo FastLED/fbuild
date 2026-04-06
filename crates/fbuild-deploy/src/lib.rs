@@ -20,6 +20,10 @@ pub struct DeploymentResult {
     pub success: bool,
     pub message: String,
     pub port: Option<String>,
+    /// Captured stdout from the deploy tool (esptool, avrdude, etc.).
+    pub stdout: String,
+    /// Captured stderr from the deploy tool.
+    pub stderr: String,
 }
 
 /// Trait for platform-specific deployers.

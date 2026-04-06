@@ -507,6 +507,7 @@ async fn execute_tool(client: &DaemonClient, name: &str, args: &Value) -> Result
                 monitor_halt_on_success: None,
                 monitor_expect: None,
                 monitor_show_timestamp: true,
+                baud_rate: None,
                 qemu: false,
                 qemu_timeout: 30,
                 request_id: Some(uuid_v4()),

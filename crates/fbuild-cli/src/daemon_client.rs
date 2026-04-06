@@ -2,6 +2,12 @@
 
 use serde::{Deserialize, Serialize};
 
+/// Percent-encode a port name for use in a URL path segment.
+/// Linux ports like `/dev/ttyUSB0` contain slashes that break URL routing.
+fn encode_port(port: &str) -> String {
+    port.replace('%', "%25").replace('/', "%2F")
+}
+
 /// Request/response types (defined locally, no dependency on fbuild-daemon binary crate).
 
 #[derive(Debug, Serialize)]
@@ -59,6 +65,9 @@ pub struct DeployRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub monitor_expect: Option<String>,
     pub monitor_show_timestamp: bool,
+    /// Override the board's default upload baud rate for flashing.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub baud_rate: Option<u32>,
     #[serde(default)]
     pub qemu: bool,
     #[serde(default)]
@@ -449,7 +458,11 @@ impl DaemonClient {
     pub async fn device_status(&self, port: &str) -> fbuild_core::Result<DeviceStatusResponse> {
         let resp = self
             .client
-            .get(format!("{}/api/devices/{}/status", self.base_url, port))
+            .get(format!(
+                "{}/api/devices/{}/status",
+                self.base_url,
+                encode_port(port)
+            ))
             .timeout(std::time::Duration::from_secs(10))
             .send()
             .await
@@ -469,7 +482,11 @@ impl DaemonClient {
     ) -> fbuild_core::Result<DeviceLeaseResponse> {
         let resp = self
             .client
-            .post(format!("{}/api/devices/{}/lease", self.base_url, port))
+            .post(format!(
+                "{}/api/devices/{}/lease",
+                self.base_url,
+                encode_port(port)
+            ))
             .json(&serde_json::json!({
                 "lease_type": lease_type,
                 "description": description,
@@ -496,7 +513,11 @@ impl DaemonClient {
         };
         let resp = self
             .client
-            .post(format!("{}/api/devices/{}/release", self.base_url, port))
+            .post(format!(
+                "{}/api/devices/{}/release",
+                self.base_url,
+                encode_port(port)
+            ))
             .json(&body)
             .timeout(std::time::Duration::from_secs(10))
             .send()
@@ -516,7 +537,11 @@ impl DaemonClient {
     ) -> fbuild_core::Result<DevicePreemptResponse> {
         let resp = self
             .client
-            .post(format!("{}/api/devices/{}/preempt", self.base_url, port))
+            .post(format!(
+                "{}/api/devices/{}/preempt",
+                self.base_url,
+                encode_port(port)
+            ))
             .json(&serde_json::json!({"reason": reason}))
             .timeout(std::time::Duration::from_secs(10))
             .send()
@@ -759,7 +784,16 @@ pub async fn display_daemon_stats_compact() {
 
     if info.operation_in_progress {
         if let Some(ref op) = info.current_operation {
-            let op_display = if op.len() > 30 { &op[..27] } else { op };
+            let op_display = if op.len() > 30 {
+                // Find the last char boundary at or before byte 27
+                let mut end = 27;
+                while end > 0 && !op.is_char_boundary(end) {
+                    end -= 1;
+                }
+                &op[..end]
+            } else {
+                op
+            };
             parts.push(format!("[{}]", op_display));
         }
     }

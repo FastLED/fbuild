@@ -49,7 +49,7 @@
   "upload": {
     "flash_size": "8MB",
     "require_upload_port": true,
-    "speed": 460800
+    "speed": 921600
   },
   "url": "https://www.seeedstudio.com/XIAO-ESP32S3-p-5627.html",
   "vendor": "Seeed Studio"

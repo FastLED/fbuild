@@ -56,6 +56,8 @@ pub struct DeployRequest {
     pub monitor_expect: Option<String>,
     #[serde(default = "default_true")]
     pub monitor_show_timestamp: bool,
+    /// Override the board's default upload baud rate for flashing.
+    pub baud_rate: Option<u32>,
     #[serde(default)]
     pub qemu: bool,
     #[serde(default = "default_qemu_timeout")]
@@ -100,6 +102,12 @@ pub struct OperationResponse {
     pub exit_code: i32,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub output_file: Option<String>,
+    /// Captured stdout from the deploy/build tool.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub stdout: Option<String>,
+    /// Captured stderr from the deploy/build tool.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub stderr: Option<String>,
 }
 
 impl OperationResponse {
@@ -110,6 +118,8 @@ impl OperationResponse {
             message,
             exit_code: 0,
             output_file: None,
+            stdout: None,
+            stderr: None,
         }
     }
 
@@ -120,6 +130,8 @@ impl OperationResponse {
             message,
             exit_code: 1,
             output_file: None,
+            stdout: None,
+            stderr: None,
         }
     }
 }

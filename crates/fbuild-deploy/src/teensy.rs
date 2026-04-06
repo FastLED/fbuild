@@ -114,11 +114,13 @@ impl Deployer for TeensyDeployer {
                 success: true,
                 message: format!("firmware flashed to {}", self.mcu_name),
                 port: port.map(|p| p.to_string()),
+                stdout: result.stdout,
+                stderr: result.stderr,
             })
         } else {
             Err(fbuild_core::FbuildError::DeployFailed(format!(
-                "teensy_loader_cli failed:\n{}",
-                result.stderr
+                "teensy_loader_cli failed:\n{}\n{}",
+                result.stdout, result.stderr
             )))
         }
     }

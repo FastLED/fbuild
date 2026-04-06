@@ -338,6 +338,8 @@ pub async fn build(
                         message: msg,
                         exit_code: code,
                         output_file,
+                        stdout: None,
+                        stderr: None,
                     }),
                 )
                     .into_response()
@@ -467,6 +469,8 @@ pub async fn deploy(
                         message: "firmware unchanged, skipping build+deploy".to_string(),
                         exit_code: 0,
                         output_file: None,
+                        stdout: None,
+                        stderr: None,
                     }),
                 );
             }
@@ -575,6 +579,7 @@ pub async fn deploy(
     let deploy_project = project_dir.clone();
     let deploy_port = deploy_port_str.clone();
     let deploy_fw = firmware_path.clone();
+    let baud_override = req.baud_rate;
     let deploy_result = tokio::task::spawn_blocking(move || {
         let deployer: Box<dyn fbuild_deploy::Deployer> = match platform {
             fbuild_core::Platform::Espressif32 => {
@@ -612,14 +617,20 @@ pub async fn deploy(
                     before_reset: mcu_config.before_reset().to_string(),
                     after_reset: mcu_config.after_reset().to_string(),
                 };
-                Box::new(fbuild_deploy::esp32::Esp32Deployer::from_board_config(
+                let deployer = fbuild_deploy::esp32::Esp32Deployer::from_board_config(
                     &board_config,
                     mcu_config.bootloader_offset(),
                     mcu_config.partitions_offset(),
                     mcu_config.firmware_offset(),
                     &esptool_params,
                     false,
-                ))
+                );
+                let deployer = if let Some(baud) = baud_override {
+                    deployer.with_baud_rate(&baud.to_string())
+                } else {
+                    deployer
+                };
+                Box::new(deployer)
             }
             fbuild_core::Platform::AtmelAvr | fbuild_core::Platform::AtmelMegaAvr => {
                 let board_config =
@@ -656,14 +667,34 @@ pub async fn deploy(
     })
     .await;
 
-    // Clear preemption then wait for USB re-enumeration
+    // Clear preemption then wait for USB re-enumeration.
+    // Fast-poll the serial port instead of a hard 2s sleep — most ESP32-S3
+    // boards with native USB re-enumerate in <500ms.
     if let Some(ref p) = deploy_port_str {
         ctx.serial_manager.clear_preemption(p).await;
-        tokio::time::sleep(std::time::Duration::from_secs(2)).await;
+        let port_name = p.clone();
+        let _ = tokio::task::spawn_blocking(move || {
+            let deadline = std::time::Instant::now() + std::time::Duration::from_secs(3);
+            while std::time::Instant::now() < deadline {
+                if serialport::new(&port_name, 115200)
+                    .timeout(std::time::Duration::from_millis(50))
+                    .open()
+                    .is_ok()
+                {
+                    return;
+                }
+                std::thread::sleep(std::time::Duration::from_millis(100));
+            }
+            tracing::warn!(
+                "USB re-enumeration: port {} not available after 3s",
+                port_name
+            );
+        })
+        .await;
     }
 
-    let deploy_success = match deploy_result {
-        Ok(Ok(r)) if r.success => true,
+    let (deploy_success, deploy_stdout, deploy_stderr) = match deploy_result {
+        Ok(Ok(r)) if r.success => (true, Some(r.stdout), Some(r.stderr)),
         Ok(Ok(r)) => {
             return (
                 StatusCode::INTERNAL_SERVER_ERROR,
@@ -673,6 +704,8 @@ pub async fn deploy(
                     message: r.message,
                     exit_code: 1,
                     output_file: Some(firmware_path.to_string_lossy().to_string()),
+                    stdout: Some(r.stdout),
+                    stderr: Some(r.stderr),
                 }),
             );
         }
@@ -753,6 +786,8 @@ pub async fn deploy(
                     message: format!("deploy succeeded but monitor failed to open port: {}", e),
                     exit_code: 0,
                     output_file: Some(firmware_path.to_string_lossy().to_string()),
+                    stdout: deploy_stdout,
+                    stderr: deploy_stderr,
                 }),
             );
         }
@@ -769,6 +804,8 @@ pub async fn deploy(
                         message: "deploy succeeded but monitor could not attach reader".to_string(),
                         exit_code: 0,
                         output_file: Some(firmware_path.to_string_lossy().to_string()),
+                        stdout: deploy_stdout,
+                        stderr: deploy_stderr,
                     }),
                 );
             }
@@ -795,6 +832,8 @@ pub async fn deploy(
                     message: format!("deploy succeeded; monitor: {}", msg),
                     exit_code: 0,
                     output_file: Some(firmware_path.to_string_lossy().to_string()),
+                    stdout: deploy_stdout,
+                    stderr: deploy_stderr,
                 }),
             ),
             MonitorOutcome::Error(msg) => (
@@ -805,6 +844,8 @@ pub async fn deploy(
                     message: format!("deploy succeeded; monitor error: {}", msg),
                     exit_code: 1,
                     output_file: Some(firmware_path.to_string_lossy().to_string()),
+                    stdout: deploy_stdout,
+                    stderr: deploy_stderr,
                 }),
             ),
             MonitorOutcome::Timeout { expect_found } => {
@@ -832,6 +873,8 @@ pub async fn deploy(
                         ),
                         exit_code: code,
                         output_file: Some(firmware_path.to_string_lossy().to_string()),
+                        stdout: deploy_stdout,
+                        stderr: deploy_stderr,
                     }),
                 )
             }
@@ -846,6 +889,8 @@ pub async fn deploy(
             message: "deploy succeeded".to_string(),
             exit_code: 0,
             output_file: Some(firmware_path.to_string_lossy().to_string()),
+            stdout: deploy_stdout,
+            stderr: deploy_stderr,
         }),
     )
 }

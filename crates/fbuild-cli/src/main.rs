@@ -128,6 +128,9 @@ enum Commands {
         /// Timeout in seconds for QEMU execution (default: 30)
         #[arg(long, default_value = "30")]
         qemu_timeout: u32,
+        /// Override the board's default upload baud rate
+        #[arg(short = 'b', long = "baud", alias = "baud-rate")]
+        baud_rate: Option<u32>,
     },
     /// Monitor serial output
     Monitor {
@@ -435,6 +438,7 @@ async fn main() {
             skip_build,
             qemu,
             qemu_timeout,
+            baud_rate,
         }) => {
             let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
             if platformio {
@@ -467,6 +471,7 @@ async fn main() {
                     skip_build,
                     qemu,
                     qemu_timeout,
+                    baud_rate,
                 )
                 .await
             }
@@ -592,7 +597,7 @@ async fn main() {
                     cli.verbose,
                 )
             } else {
-                let monitor_after = cli.monitor.as_ref().map_or(true, |_| true);
+                let monitor_after = true;
                 let parsed = cli
                     .monitor
                     .as_deref()
@@ -614,6 +619,7 @@ async fn main() {
                     false,
                     false,
                     30,
+                    None,
                 )
                 .await
             }
@@ -964,6 +970,7 @@ async fn run_deploy(
     skip_build: bool,
     qemu: bool,
     qemu_timeout: u32,
+    baud_rate: Option<u32>,
 ) -> fbuild_core::Result<()> {
     if qemu {
         return Err(fbuild_core::FbuildError::Other(
@@ -987,6 +994,7 @@ async fn run_deploy(
         monitor_halt_on_success: halt_on_success,
         monitor_expect: expect,
         monitor_show_timestamp: !no_timestamp,
+        baud_rate,
         qemu,
         qemu_timeout,
         request_id: None,

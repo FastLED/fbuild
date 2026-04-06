@@ -106,6 +106,12 @@ impl Esp32Deployer {
         )
     }
 
+    /// Override the baud rate (e.g. from a CLI `--baud` flag).
+    pub fn with_baud_rate(mut self, baud: &str) -> Self {
+        self.baud_rate = baud.to_string();
+        self
+    }
+
     /// Find the esptool executable.
     ///
     /// Uses standalone `esptool` command (available when esptool is pip-installed).
@@ -203,11 +209,13 @@ impl Deployer for Esp32Deployer {
                 success: true,
                 message: format!("firmware flashed to {} ({})", port, self.chip),
                 port: Some(port.to_string()),
+                stdout: result.stdout,
+                stderr: result.stderr,
             })
         } else {
             Err(fbuild_core::FbuildError::DeployFailed(format!(
-                "esptool failed:\n{}",
-                result.stderr
+                "esptool failed:\n{}\n{}",
+                result.stdout, result.stderr
             )))
         }
     }
