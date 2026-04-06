@@ -247,9 +247,14 @@ fn find_variant_h(variant_dir: &Path) -> Option<String> {
 /// e.g. "ch32v003" -> "CH32V00x", "ch32v103" -> "CH32V10x", "ch32x035" -> "CH32X035"
 fn series_to_system_dir(series: &str) -> String {
     let upper = series.to_uppercase();
-    // Replace the last digit with 'x': CH32V003 -> CH32V00x, CH32V103 -> CH32V10x
     if upper.len() >= 7 {
-        format!("{}x", &upper[..upper.len() - 1])
+        // CH32V series use the "replace last digit with x" pattern (CH32V00x, CH32V10x, etc.)
+        // CH32X/CH32L series use the exact uppercase name (CH32X035, CH32L103, etc.)
+        if upper.starts_with("CH32V") {
+            format!("{}x", &upper[..upper.len() - 1])
+        } else {
+            upper
+        }
     } else {
         upper
     }
@@ -291,5 +296,18 @@ mod tests {
         )
         .unwrap();
         assert!(!is_ch32v_project(tmp.path(), "uno"));
+    }
+
+    #[test]
+    fn test_series_to_system_dir() {
+        // CH32V series: last digit replaced with 'x'
+        assert_eq!(series_to_system_dir("ch32v003"), "CH32V00x");
+        assert_eq!(series_to_system_dir("ch32v103"), "CH32V10x");
+        assert_eq!(series_to_system_dir("ch32v203"), "CH32V20x");
+        assert_eq!(series_to_system_dir("ch32v303"), "CH32V30x");
+        assert_eq!(series_to_system_dir("ch32v307"), "CH32V30x");
+        // CH32X/CH32L: exact uppercase name
+        assert_eq!(series_to_system_dir("ch32x035"), "CH32X035");
+        assert_eq!(series_to_system_dir("ch32l103"), "CH32L103");
     }
 }
