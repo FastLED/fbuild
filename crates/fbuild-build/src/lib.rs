@@ -3,6 +3,7 @@
 //! Each platform has its own orchestrator implementing the `BuildOrchestrator` trait.
 //! Orchestrators handle: source scanning, compilation, linking, size reporting.
 
+pub mod apollo3;
 pub mod avr;
 pub mod build_output;
 pub mod ch32v;
@@ -52,6 +53,7 @@ pub trait PlatformSupport: Send + Sync {
 /// Returns `Err` for platforms without a native orchestrator.
 pub fn get_platform_support(platform: Platform) -> Result<Box<dyn PlatformSupport>> {
     match platform {
+        Platform::Apollo3 => Ok(Box::new(apollo3::Apollo3PlatformSupport)),
         Platform::AtmelAvr | Platform::AtmelMegaAvr => {
             Ok(Box::new(avr::AvrPlatformSupport))
         }

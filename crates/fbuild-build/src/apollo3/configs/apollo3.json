@@ -1,0 +1,65 @@
+{
+  "name": "Apollo3",
+  "description": "Ambiq Micro Apollo3 (ARM Cortex-M4F)",
+  "architecture": "arm-cortex-m4f",
+
+  "compiler_flags": {
+    "common": [
+      "-mcpu=cortex-m4",
+      "-mthumb",
+      "-mfloat-abi=hard",
+      "-mfpu=fpv4-sp-d16",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fmessage-length=0",
+      "-fno-exceptions",
+      "-fomit-frame-pointer",
+      "-funsigned-char",
+      "-MMD"
+    ],
+    "c": [
+      "-std=gnu11"
+    ],
+    "cxx": [
+      "-std=gnu++14",
+      "-fno-rtti"
+    ]
+  },
+
+  "linker_flags": [
+    "-mcpu=cortex-m4",
+    "-mthumb",
+    "-mfloat-abi=hard",
+    "-mfpu=fpv4-sp-d16",
+    "-Wl,--gc-sections",
+    "-Wl,-n"
+  ],
+
+  "linker_libs": [
+    "-lsupc++",
+    "-lstdc++",
+    "-lm"
+  ],
+
+  "objcopy": {
+    "output_format": "binary",
+    "remove_sections": []
+  },
+
+  "profiles": {
+    "release": {
+      "compile_flags": ["-Os"],
+      "link_flags": []
+    },
+    "quick": {
+      "compile_flags": ["-Os"],
+      "link_flags": []
+    }
+  },
+
+  "defines": [
+    ["ARDUINO", "10808"],
+    "MBED_NO_GLOBAL_USING_DIRECTIVE",
+    "CORDIO_ZERO_COPY_HCI"
+  ]
+}

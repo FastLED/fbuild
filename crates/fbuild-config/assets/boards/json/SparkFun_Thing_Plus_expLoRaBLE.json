@@ -1,0 +1,25 @@
+{
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DLoRa_THING_PLUS_expLoRaBLE",
+    "f_cpu": "48000000L",
+    "mcu": "apollo3",
+    "variant": "LoRa_THING_PLUS_expLoRaBLE"
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "SparkFun_Thing_Plus_expLoRaBLE",
+  "mcu": "AMA3B1KK",
+  "name": "SparkFun Thing Plus expLoRaBLE",
+  "platform": "apollo3blue",
+  "ram": 393216,
+  "rom": 983040,
+  "upload": {
+    "protocol": "svl",
+    "speed": 460800
+  },
+  "url": "https://www.sparkfun.com/products/17354",
+  "vendor": "SparkFun"
+}

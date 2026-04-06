@@ -1,0 +1,25 @@
+{
+  "build": {
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_APOLLO3_SFE_ARTEMIS_ATP",
+    "f_cpu": "48000000L",
+    "mcu": "apollo3",
+    "variant": "SFE_ARTEMIS_ATP"
+  },
+  "fcpu": 48000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "SparkFun_RedBoard_Artemis_ATP",
+  "mcu": "AMA3B1KK",
+  "name": "SparkFun RedBoard Artemis ATP",
+  "platform": "apollo3blue",
+  "ram": 393216,
+  "rom": 983040,
+  "upload": {
+    "protocol": "svl",
+    "speed": 460800
+  },
+  "url": "https://www.sparkfun.com/products/15442",
+  "vendor": "SparkFun"
+}

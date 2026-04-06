@@ -234,6 +234,8 @@ impl BoardConfig {
             Some(fbuild_core::Platform::RenesasRa)
         } else if mcu.starts_with("ch32") {
             Some(fbuild_core::Platform::Ch32v)
+        } else if mcu.starts_with("apollo3") || mcu.starts_with("ama3b") {
+            Some(fbuild_core::Platform::Apollo3)
         } else {
             None
         }
@@ -338,6 +340,7 @@ impl BoardConfig {
             Some(fbuild_core::Platform::AtmelSam) => "SAM".to_string(),
             Some(fbuild_core::Platform::Teensy) => "TEENSY".to_string(),
             Some(fbuild_core::Platform::Ch32v) => "CH32V".to_string(),
+            Some(fbuild_core::Platform::Apollo3) => "APOLLO3".to_string(),
             Some(fbuild_core::Platform::Wasm) | None => String::new(),
         }
     }
