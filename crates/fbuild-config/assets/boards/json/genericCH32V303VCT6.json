@@ -1,6 +1,13 @@
 {
   "build": {
+    "arduino": {
+      "openwch": {
+        "variant": "CH32V30x/CH32V307VCT6",
+        "variant_h": "variant_CH32V307VCT6.h"
+      }
+    },
     "clock_source": "hsi+pll",
+    "core": "openwch",
     "extra_flags": "-DCH32V303VC -DCH32V30X -DCH32V30x -DCH32V303 -DCH32V30x_D8",
     "f_cpu": "144000000L",
     "mabi": "ilp32",

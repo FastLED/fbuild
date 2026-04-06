@@ -1,6 +1,13 @@
 {
   "build": {
+    "arduino": {
+      "openwch": {
+        "variant": "CH32V20x/CH32V203C8",
+        "variant_h": "variant_CH32V203C8.h"
+      }
+    },
     "clock_source": "hsi+pll",
+    "core": "openwch",
     "extra_flags": "-DCH32V208WB -DCH32V20X -DCH32V20x -DCH32V208 -DCH32V20x_D8W",
     "f_cpu": "144000000L",
     "mabi": "ilp32",
