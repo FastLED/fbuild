@@ -25,8 +25,8 @@
 [![Build ATtiny4313](https://github.com/fastled/fbuild/actions/workflows/build-attiny4313.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-attiny4313.yml)
 
 ### MegaAVR
-[![Build ATtiny1604](https://github.com/fastled/fbuild/actions/workflows/build-ATtiny1604.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-ATtiny1604.yml)
-[![Build ATtiny1616](https://github.com/fastled/fbuild/actions/workflows/build-ATtiny1616.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-ATtiny1616.yml)
+[![Build ATtiny1604](https://github.com/fastled/fbuild/actions/workflows/build-attiny1604.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-attiny1604.yml)
+[![Build ATtiny1616](https://github.com/fastled/fbuild/actions/workflows/build-attiny1616.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-attiny1616.yml)
 [![Build Nano Every](https://github.com/fastled/fbuild/actions/workflows/build-nano_every.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-nano_every.yml)
 
 ### Renesas
@@ -100,7 +100,7 @@
 
 ### NRF52
 [![Build Adafruit Feather NRF52840 Sense](https://github.com/fastled/fbuild/actions/workflows/build-nrf52840-sense.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-nrf52840-sense.yml)
-[![Build NRF52840 DK](https://github.com/fastled/fbuild/actions/workflows/build-nrf52840-dk.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-nrf52840-dk.yml)
+[![Build NRF52840 DK](https://github.com/fastled/fbuild/actions/workflows/build-nrf52840_dk.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-nrf52840_dk.yml)
 
 ### Raspberry Pi Pico
 [![Build Raspberry Pi Pico](https://github.com/fastled/fbuild/actions/workflows/build-rpipico.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-rpipico.yml)
