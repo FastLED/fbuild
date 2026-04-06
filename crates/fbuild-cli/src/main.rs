@@ -936,6 +936,9 @@ async fn run_build(
         symbol_analysis: symbol_analysis.is_some(),
         symbol_analysis_path: symbol_analysis.filter(|s| !s.is_empty()),
         no_timestamp,
+        src_dir: std::env::var("PLATFORMIO_SRC_DIR")
+            .ok()
+            .filter(|s| !s.is_empty()),
     };
 
     let resp = client.build_streaming(&req).await?;
@@ -1000,6 +1003,9 @@ async fn run_deploy(
         request_id: None,
         caller_pid,
         caller_cwd,
+        src_dir: std::env::var("PLATFORMIO_SRC_DIR")
+            .ok()
+            .filter(|s| !s.is_empty()),
     };
 
     let resp = client.deploy(&req).await?;

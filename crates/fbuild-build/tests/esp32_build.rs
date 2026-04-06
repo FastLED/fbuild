@@ -75,6 +75,7 @@ void loop() {
         symbol_analysis: false,
         symbol_analysis_path: None,
         no_timestamp: false,
+        src_dir: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -160,6 +161,7 @@ void loop() {
         symbol_analysis: false,
         symbol_analysis_path: None,
         no_timestamp: false,
+        src_dir: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -238,6 +240,7 @@ void loop() {
         symbol_analysis: false,
         symbol_analysis_path: None,
         no_timestamp: false,
+        src_dir: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -317,6 +320,7 @@ void loop() {
         symbol_analysis: false,
         symbol_analysis_path: None,
         no_timestamp: false,
+        src_dir: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -386,6 +390,7 @@ fn build_esp32s3_fixture() {
         symbol_analysis: false,
         symbol_analysis_path: None,
         no_timestamp: false,
+        src_dir: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -447,6 +452,7 @@ fn build_nightdriverstrip_demo() {
         symbol_analysis: false,
         symbol_analysis_path: None,
         no_timestamp: false,
+        src_dir: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -534,6 +540,7 @@ fn incremental_build_at(project_dir: &std::path::Path, env_name: &str) {
         symbol_analysis: false,
         symbol_analysis_path: None,
         no_timestamp: false,
+        src_dir: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -621,6 +628,7 @@ fn incremental_nightdriverstrip_one_file_changed() {
         symbol_analysis: false,
         symbol_analysis_path: None,
         no_timestamp: false,
+        src_dir: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;

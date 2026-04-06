@@ -460,6 +460,9 @@ async fn execute_tool(client: &DaemonClient, name: &str, args: &Value) -> Result
                 symbol_analysis: false,
                 symbol_analysis_path: None,
                 no_timestamp: false,
+                src_dir: std::env::var("PLATFORMIO_SRC_DIR")
+                    .ok()
+                    .filter(|s| !s.is_empty()),
             };
 
             let resp = client
@@ -513,6 +516,9 @@ async fn execute_tool(client: &DaemonClient, name: &str, args: &Value) -> Result
                 request_id: Some(uuid_v4()),
                 caller_pid,
                 caller_cwd,
+                src_dir: std::env::var("PLATFORMIO_SRC_DIR")
+                    .ok()
+                    .filter(|s| !s.is_empty()),
             };
 
             let resp = client

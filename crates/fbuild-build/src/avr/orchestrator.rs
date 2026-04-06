@@ -36,14 +36,7 @@ impl BuildOrchestrator for AvrOrchestrator {
         let start = Instant::now();
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
-        let mut ctx = pipeline::BuildContext::new(
-            &params.project_dir,
-            &params.env_name,
-            params.clean,
-            params.profile,
-            params.log_sender.clone(),
-            params.no_timestamp,
-        )?;
+        let mut ctx = pipeline::BuildContext::new(params)?;
 
         // 3. Ensure toolchain
         let toolchain = fbuild_packages::toolchain::AvrToolchain::new(&params.project_dir);

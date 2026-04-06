@@ -6,7 +6,7 @@
 use std::path::{Path, PathBuf};
 use std::time::Instant;
 
-use fbuild_core::{BuildLog, BuildProfile, Result};
+use fbuild_core::{BuildLog, Result};
 
 use crate::compile_database::{self, CompileDatabase, TargetArchitecture};
 use crate::compiler::{Compiler, CompilerBase};
@@ -34,14 +34,13 @@ pub struct BuildContext {
 impl BuildContext {
     /// Parse platformio.ini, load board config, setup build directories,
     /// resolve source directory, and collect user flags.
-    pub fn new(
-        project_dir: &Path,
-        env_name: &str,
-        clean: bool,
-        profile: BuildProfile,
-        log_sender: Option<std::sync::mpsc::Sender<String>>,
-        no_timestamp: bool,
-    ) -> Result<Self> {
+    ///
+    /// Takes `&BuildParams` so that new fields (e.g. `src_dir`) flow through
+    /// automatically — orchestrators just pass `params` without listing every field.
+    pub fn new(params: &BuildParams) -> Result<Self> {
+        let project_dir = &params.project_dir;
+        let env_name = &params.env_name;
+
         // 1. Parse platformio.ini
         let ini_path = project_dir.join("platformio.ini");
         let config = fbuild_config::PlatformIOConfig::from_path(&ini_path)?;
@@ -55,10 +54,13 @@ impl BuildContext {
         let board = fbuild_config::BoardConfig::from_board_id(board_id, &overrides)?;
 
         // 3. Build log initialization
-        let mut build_log = if no_timestamp {
-            crate::build_output::create_build_log(log_sender)
+        let mut build_log = if params.no_timestamp {
+            crate::build_output::create_build_log(params.log_sender.clone())
         } else {
-            crate::build_output::create_build_log_with_epoch(log_sender, std::time::Instant::now())
+            crate::build_output::create_build_log_with_epoch(
+                params.log_sender.clone(),
+                std::time::Instant::now(),
+            )
         };
         crate::build_output::log_build_banner(&mut build_log, env_name);
         crate::build_output::log_board_info(
@@ -72,19 +74,23 @@ impl BuildContext {
 
         // 4. Setup build directories
         let cache = fbuild_packages::Cache::new(project_dir);
-        if clean {
-            cache.clean_build(env_name, profile)?;
+        if params.clean {
+            cache.clean_build(env_name, params.profile)?;
         }
-        cache.ensure_build_directories(env_name, profile)?;
+        cache.ensure_build_directories(env_name, params.profile)?;
 
-        let build_dir = cache.get_build_dir(env_name, profile);
-        let core_build_dir = cache.get_core_build_dir(env_name, profile);
-        let src_build_dir = cache.get_src_build_dir(env_name, profile);
+        let build_dir = cache.get_build_dir(env_name, params.profile);
+        let core_build_dir = cache.get_core_build_dir(env_name, params.profile);
+        let src_build_dir = cache.get_src_build_dir(env_name, params.profile);
 
         // 5. Resolve source directory (Arduino IDE convention: fall back to project root)
+        // Priority: explicit override (from HTTP request) > env var > INI config > "src"
         let src_dir = project_dir.join(
-            config
-                .get_src_dir(env_name)?
+            params
+                .src_dir
+                .as_deref()
+                .map(|s| s.to_string())
+                .or_else(|| config.get_src_dir(env_name).ok().flatten())
                 .unwrap_or_else(|| "src".to_string()),
         );
         let src_dir = if src_dir.exists() {

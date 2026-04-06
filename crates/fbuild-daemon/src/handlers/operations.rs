@@ -162,6 +162,7 @@ pub async fn build(
                 .as_deref()
                 .map(std::path::PathBuf::from),
             no_timestamp: req.no_timestamp,
+            src_dir: req.src_dir.clone(),
         };
 
         let project_dir_desc = req.project_dir.clone();
@@ -290,6 +291,7 @@ pub async fn build(
                 .as_deref()
                 .map(std::path::PathBuf::from),
             no_timestamp: req.no_timestamp,
+            src_dir: req.src_dir,
         };
 
         let result = tokio::task::spawn_blocking(move || {
@@ -513,6 +515,7 @@ pub async fn deploy(
             symbol_analysis: false,
             symbol_analysis_path: None,
             no_timestamp: false,
+            src_dir: req.src_dir,
         };
 
         let build_result = {

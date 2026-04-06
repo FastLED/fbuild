@@ -36,14 +36,7 @@ impl BuildOrchestrator for Ch32vOrchestrator {
         let start = Instant::now();
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
-        let mut ctx = pipeline::BuildContext::new(
-            &params.project_dir,
-            &params.env_name,
-            params.clean,
-            params.profile,
-            params.log_sender.clone(),
-            params.no_timestamp,
-        )?;
+        let mut ctx = pipeline::BuildContext::new(params)?;
 
         // 3. Ensure RISC-V GCC toolchain
         let toolchain = fbuild_packages::toolchain::RiscvToolchain::new(&params.project_dir);

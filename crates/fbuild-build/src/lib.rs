@@ -150,6 +150,9 @@ pub struct BuildParams {
     pub symbol_analysis_path: Option<std::path::PathBuf>,
     /// Disable elapsed-time prefix on build output lines.
     pub no_timestamp: bool,
+    /// Override for the source directory (PLATFORMIO_SRC_DIR).
+    /// When set, takes precedence over INI config and env var.
+    pub src_dir: Option<String>,
 }
 
 /// Trait for platform-specific build orchestrators.

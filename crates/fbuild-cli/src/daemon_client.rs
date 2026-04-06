@@ -43,6 +43,9 @@ pub struct BuildRequest {
     /// Disable elapsed-time prefix on build output lines.
     #[serde(default)]
     pub no_timestamp: bool,
+    /// Override for PLATFORMIO_SRC_DIR — forwarded from caller's environment.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub src_dir: Option<String>,
 }
 
 #[derive(Debug, Serialize)]
@@ -78,6 +81,9 @@ pub struct DeployRequest {
     pub caller_pid: Option<u32>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub caller_cwd: Option<String>,
+    /// Override for PLATFORMIO_SRC_DIR — forwarded from caller's environment.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub src_dir: Option<String>,
 }
 
 #[derive(Debug, Serialize)]

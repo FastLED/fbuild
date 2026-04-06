@@ -34,14 +34,7 @@ impl BuildOrchestrator for Apollo3Orchestrator {
         let start = Instant::now();
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
-        let mut ctx = pipeline::BuildContext::new(
-            &params.project_dir,
-            &params.env_name,
-            params.clean,
-            params.profile,
-            params.log_sender.clone(),
-            params.no_timestamp,
-        )?;
+        let mut ctx = pipeline::BuildContext::new(params)?;
 
         // 3. Ensure ARM GCC 8 toolchain (Apollo3/mbed-os requires GCC 8)
         let toolchain = fbuild_packages::toolchain::ArmGcc8Toolchain::new(&params.project_dir);

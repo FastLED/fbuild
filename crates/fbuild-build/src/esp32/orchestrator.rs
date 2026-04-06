@@ -51,14 +51,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         }
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
-        let mut ctx = crate::pipeline::BuildContext::new(
-            &params.project_dir,
-            &params.env_name,
-            params.clean,
-            params.profile,
-            params.log_sender.clone(),
-            params.no_timestamp,
-        )?;
+        let mut ctx = crate::pipeline::BuildContext::new(params)?;
 
         // 3. Load MCU config from embedded JSON
         let mut mcu_config = get_mcu_config(&ctx.board.mcu)?;

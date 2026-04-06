@@ -34,6 +34,11 @@ pub struct BuildRequest {
     /// Disable elapsed-time prefix on build output lines.
     #[serde(default)]
     pub no_timestamp: bool,
+    /// Override for PLATFORMIO_SRC_DIR — the source directory to compile.
+    /// Forwarded from the CLI caller's environment since the daemon process
+    /// does not inherit the caller's env vars.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub src_dir: Option<String>,
 }
 
 /// POST /api/deploy
@@ -65,6 +70,9 @@ pub struct DeployRequest {
     pub request_id: Option<String>,
     pub caller_pid: Option<u32>,
     pub caller_cwd: Option<String>,
+    /// Override for PLATFORMIO_SRC_DIR — the source directory to compile.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub src_dir: Option<String>,
 }
 
 fn default_qemu_timeout() -> u32 {
@@ -379,6 +387,14 @@ mod tests {
         assert!(req.jobs.is_none());
         assert!(req.profile.is_none());
         assert!(req.request_id.is_none());
+        assert!(req.src_dir.is_none());
+    }
+
+    #[test]
+    fn build_request_src_dir_override() {
+        let json = r#"{"project_dir": "/tmp/p", "src_dir": "examples/AutoResearch"}"#;
+        let req: BuildRequest = serde_json::from_str(json).unwrap();
+        assert_eq!(req.src_dir.unwrap(), "examples/AutoResearch");
     }
 
     #[test]
@@ -441,6 +457,14 @@ mod tests {
         assert!(req.monitor_show_timestamp);
         assert!(!req.qemu);
         assert_eq!(req.qemu_timeout, 30);
+        assert!(req.src_dir.is_none());
+    }
+
+    #[test]
+    fn deploy_request_src_dir_override() {
+        let json = r#"{"project_dir": "/tmp/p", "src_dir": "examples/AutoResearch"}"#;
+        let req: DeployRequest = serde_json::from_str(json).unwrap();
+        assert_eq!(req.src_dir.unwrap(), "examples/AutoResearch");
     }
 
     // --- MonitorRequest deserialization ---

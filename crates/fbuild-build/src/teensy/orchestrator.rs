@@ -36,14 +36,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
         let start = Instant::now();
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
-        let mut ctx = pipeline::BuildContext::new(
-            &params.project_dir,
-            &params.env_name,
-            params.clean,
-            params.profile,
-            params.log_sender.clone(),
-            params.no_timestamp,
-        )?;
+        let mut ctx = pipeline::BuildContext::new(params)?;
 
         // Need board_id for linker script lookup later
         let env_config = ctx.config.get_env_config(&params.env_name)?;
