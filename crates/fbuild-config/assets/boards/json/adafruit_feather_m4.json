@@ -9,6 +9,12 @@
   "frameworks": [
     "arduino"
   ],
+  "build": {
+    "core": "arduino",
+    "variant": "feather_m4",
+    "vid": "0x239A",
+    "pid": "0x8022"
+  },
   "id": "adafruit_feather_m4",
   "mcu": "SAMD51J19A",
   "name": "Adafruit Feather M4 Express",

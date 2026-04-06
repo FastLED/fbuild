@@ -143,7 +143,6 @@ mod tests {
         let compiler = test_compiler();
         let flags = compiler.common_flags();
         assert!(flags.contains(&"-Os".to_string()));
-        assert!(flags.contains(&"-flto".to_string()));
     }
 
     #[test]

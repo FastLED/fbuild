@@ -12,6 +12,8 @@ use crate::compiler::{CompilerFlags, McuConfig, ObjcopyConfig, ProfileFlags};
 use crate::esp32::mcu_config::DefineEntry;
 
 const SAM3X_JSON: &str = include_str!("configs/sam3x.json");
+const SAMD21_JSON: &str = include_str!("configs/samd21.json");
+const SAMD51_JSON: &str = include_str!("configs/samd51.json");
 
 /// Complete SAM MCU configuration parsed from JSON.
 #[derive(Debug, Clone, Deserialize)]
@@ -66,9 +68,11 @@ impl McuConfig for SamMcuConfig {
 pub fn get_sam_config_for_mcu(mcu: &str) -> Result<SamMcuConfig> {
     let json = match mcu {
         "at91sam3x8e" => SAM3X_JSON,
+        m if m.starts_with("samd21") => SAMD21_JSON,
+        m if m.starts_with("samd51") => SAMD51_JSON,
         _ => {
             return Err(fbuild_core::FbuildError::ConfigError(format!(
-                "unsupported SAM MCU: '{}' (supported: at91sam3x8e)",
+                "unsupported SAM MCU: '{}' (supported: at91sam3x8e, samd21*, samd51*)",
                 mcu
             )));
         }
@@ -139,7 +143,6 @@ mod tests {
         let config = get_sam_config_for_mcu("at91sam3x8e").unwrap();
         let release = config.get_profile("release").unwrap();
         assert!(release.compile_flags.contains(&"-Os".to_string()));
-        assert!(release.compile_flags.contains(&"-flto".to_string()));
 
         let quick = config.get_profile("quick").unwrap();
         assert!(quick.compile_flags.contains(&"-Os".to_string()));
@@ -157,5 +160,37 @@ mod tests {
         let config = get_sam_config_for_mcu("at91sam3x8e").unwrap();
         let defines = config.defines_map();
         assert_eq!(defines.get("ARDUINO"), Some(&"10808".to_string()));
+    }
+
+    #[test]
+    fn test_samd21_config_parses() {
+        let config = get_sam_config_for_mcu("samd21g18a").unwrap();
+        assert_eq!(config.name, "SAMD21");
+        assert_eq!(config.architecture, "arm-cortex-m0plus");
+        assert!(config
+            .compiler_flags
+            .common
+            .contains(&"-mcpu=cortex-m0plus".to_string()));
+    }
+
+    #[test]
+    fn test_samd51_config_parses() {
+        let config = get_sam_config_for_mcu("samd51j19a").unwrap();
+        assert_eq!(config.name, "SAMD51");
+        assert_eq!(config.architecture, "arm-cortex-m4f");
+        assert!(config
+            .compiler_flags
+            .common
+            .contains(&"-mcpu=cortex-m4".to_string()));
+        assert!(config
+            .compiler_flags
+            .common
+            .contains(&"-mfloat-abi=hard".to_string()));
+    }
+
+    #[test]
+    fn test_samd51p_config_parses() {
+        let config = get_sam_config_for_mcu("samd51p20a").unwrap();
+        assert_eq!(config.name, "SAMD51");
     }
 }

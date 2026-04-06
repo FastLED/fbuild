@@ -23,6 +23,8 @@ pub struct SamLinker {
     max_flash: Option<u64>,
     max_ram: Option<u64>,
     verbose: bool,
+    extra_lib_dirs: Vec<PathBuf>,
+    extra_libs: Vec<String>,
 }
 
 impl SamLinker {
@@ -50,7 +52,19 @@ impl SamLinker {
             max_flash,
             max_ram,
             verbose,
+            extra_lib_dirs: Vec::new(),
+            extra_libs: Vec::new(),
         }
+    }
+
+    /// Add extra library search directories (passed as `-L` to linker).
+    pub fn add_lib_dirs(&mut self, dirs: Vec<PathBuf>) {
+        self.extra_lib_dirs.extend(dirs);
+    }
+
+    /// Add extra libraries to link (passed as `-l<name>` to linker).
+    pub fn add_libs(&mut self, libs: Vec<String>) {
+        self.extra_libs.extend(libs);
     }
 }
 
@@ -92,6 +106,16 @@ impl Linker for SamLinker {
         // Core objects passed directly (not archived) for LTO compatibility
         for archive in archives {
             args.push(archive.to_string_lossy().to_string());
+        }
+
+        // Extra library search paths
+        for dir in &self.extra_lib_dirs {
+            args.push(format!("-L{}", dir.display()));
+        }
+
+        // Extra libraries (e.g. variant system lib)
+        for lib in &self.extra_libs {
+            args.push(format!("-l{}", lib));
         }
 
         // Linker libraries from config

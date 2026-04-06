@@ -1,30 +1,30 @@
-//! Arduino SAM core (ArduinoCore-sam) framework package.
+//! Adafruit SAMD core (ArduinoCore-samd) framework package.
 //!
-//! Downloads and manages the Arduino SAM core for Due boards from GitHub.
-//! Provides paths to: cores/arduino, variants/arduino_due_x, system/.
+//! Downloads and manages the Adafruit SAMD core for SAMD21/SAMD51 boards from GitHub.
+//! Provides paths to: cores/arduino, variants/<board>, libraries/.
 
 use std::path::{Path, PathBuf};
 
 use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 
-const SAM_CORE_VERSION: &str = "1.6.12";
-const SAM_CORE_URL: &str =
-    "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-sam/1.6.12/framework-arduino-sam-1.6.12.tar.gz";
+const SAMD_CORE_VERSION: &str = "1.7.16";
+const SAMD_CORE_URL: &str =
+    "https://github.com/adafruit/ArduinoCore-samd/archive/refs/tags/1.7.16.tar.gz";
 
-/// Arduino SAM core framework manager.
-pub struct SamCores {
+/// Adafruit SAMD core framework manager.
+pub struct SamdCores {
     base: PackageBase,
     install_dir: Option<PathBuf>,
 }
 
-impl SamCores {
+impl SamdCores {
     pub fn new(project_dir: &Path) -> Self {
         Self {
             base: PackageBase::new(
-                "sam-core",
-                SAM_CORE_VERSION,
-                SAM_CORE_URL,
-                SAM_CORE_URL,
+                "samd-core",
+                SAMD_CORE_VERSION,
+                SAMD_CORE_URL,
+                SAMD_CORE_URL,
                 None,
                 CacheSubdir::Platforms,
                 project_dir,
@@ -37,10 +37,10 @@ impl SamCores {
     fn with_cache_root(project_dir: &Path, cache_root: &Path) -> Self {
         Self {
             base: PackageBase::with_cache_root(
-                "sam-core",
-                SAM_CORE_VERSION,
-                SAM_CORE_URL,
-                SAM_CORE_URL,
+                "samd-core",
+                SAMD_CORE_VERSION,
+                SAMD_CORE_URL,
+                SAMD_CORE_URL,
                 None,
                 CacheSubdir::Platforms,
                 project_dir,
@@ -64,7 +64,7 @@ impl SamCores {
         let arduino_h = root.join("cores/arduino/Arduino.h");
         if !arduino_h.exists() {
             return Err(fbuild_core::FbuildError::PackageError(format!(
-                "SAM core missing cores/arduino/Arduino.h (in {})",
+                "SAMD core missing cores/arduino/Arduino.h (in {})",
                 root.display()
             )));
         }
@@ -82,20 +82,15 @@ impl SamCores {
         self.get_variants_dir().join(variant_name)
     }
 
-    /// Get the linker script for the Arduino Due.
+    /// Get the linker script for a SAMD variant.
     ///
-    /// The SAM core stores linker scripts in
-    /// `variants/arduino_due_x/linker_scripts/gcc/flash.ld`.
+    /// SAMD variants store linker scripts in
+    /// `variants/<variant>/linker_scripts/gcc/flash_with_bootloader.ld`.
     pub fn get_linker_script(&self, variant_name: &str) -> PathBuf {
         self.get_variant_dir(variant_name)
             .join("linker_scripts")
             .join("gcc")
-            .join("flash.ld")
-    }
-
-    /// Get the system directory (CMSIS).
-    pub fn get_system_dir(&self) -> PathBuf {
-        self.resolved_dir().join("system")
+            .join("flash_with_bootloader.ld")
     }
 
     /// List all .c, .cpp, .cc, and .s source files in the core.
@@ -105,7 +100,7 @@ impl SamCores {
     }
 }
 
-impl crate::Package for SamCores {
+impl crate::Package for SamdCores {
     fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
         if self.is_installed() {
             return Ok(self.resolved_dir());
@@ -143,7 +138,7 @@ impl crate::Package for SamCores {
     }
 }
 
-impl Framework for SamCores {
+impl Framework for SamdCores {
     fn get_cores_dir(&self) -> PathBuf {
         self.resolved_dir().join("cores")
     }
@@ -159,7 +154,7 @@ impl Framework for SamCores {
 
 /// Find the actual core root inside an extracted archive.
 ///
-/// Archives may extract with a nested directory containing the core.
+/// GitHub archives extract as `ArduinoCore-samd-1.7.16/` with the core inside.
 fn find_core_root(install_dir: &Path) -> PathBuf {
     if install_dir.join("cores").exists() {
         return install_dir.to_path_buf();
@@ -205,9 +200,9 @@ mod tests {
     use crate::Package;
 
     #[test]
-    fn test_sam_cores_not_installed() {
+    fn test_samd_cores_not_installed() {
         let tmp = tempfile::TempDir::new().unwrap();
-        let core = SamCores::with_cache_root(tmp.path(), &tmp.path().join("cache"));
+        let core = SamdCores::with_cache_root(tmp.path(), &tmp.path().join("cache"));
         assert!(!core.is_installed());
     }
 
@@ -221,7 +216,7 @@ mod tests {
     #[test]
     fn test_find_core_root_nested() {
         let tmp = tempfile::TempDir::new().unwrap();
-        let nested = tmp.path().join("ArduinoCore-sam-1.6.12");
+        let nested = tmp.path().join("ArduinoCore-samd-1.7.16");
         std::fs::create_dir_all(nested.join("cores/arduino")).unwrap();
         assert_eq!(find_core_root(tmp.path()), nested);
     }
@@ -229,18 +224,12 @@ mod tests {
     #[test]
     fn test_get_linker_script() {
         let tmp = tempfile::TempDir::new().unwrap();
-        let core = SamCores::new(tmp.path());
-        let script = core.get_linker_script("arduino_due_x");
-        assert!(script.to_string_lossy().contains("flash.ld"));
+        let core = SamdCores::new(tmp.path());
+        let script = core.get_linker_script("feather_m0");
+        assert!(script
+            .to_string_lossy()
+            .contains("flash_with_bootloader.ld"));
         assert!(script.to_string_lossy().contains("linker_scripts"));
-    }
-
-    #[test]
-    fn test_get_system_dir() {
-        let tmp = tempfile::TempDir::new().unwrap();
-        let core = SamCores::new(tmp.path());
-        let sys_dir = core.get_system_dir();
-        assert!(sys_dir.to_string_lossy().contains("system"));
     }
 
     #[test]
@@ -257,7 +246,7 @@ mod tests {
     #[test]
     fn test_validate_missing_arduino_h() {
         let tmp = tempfile::TempDir::new().unwrap();
-        let result = SamCores::validate(tmp.path());
+        let result = SamdCores::validate(tmp.path());
         assert!(result.is_err());
     }
 }

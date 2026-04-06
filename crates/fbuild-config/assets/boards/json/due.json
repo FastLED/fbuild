@@ -15,6 +15,12 @@
     "arduino",
     "zephyr"
   ],
+  "build": {
+    "core": "arduino",
+    "variant": "arduino_due_x",
+    "vid": "0x2341",
+    "pid": "0x003E"
+  },
   "id": "due",
   "mcu": "AT91SAM3X8E",
   "name": "Arduino Due (Programming Port)",

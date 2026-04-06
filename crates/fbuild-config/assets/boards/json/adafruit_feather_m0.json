@@ -11,6 +11,12 @@
     "arduino",
     "zephyr"
   ],
+  "build": {
+    "core": "arduino",
+    "variant": "feather_m0",
+    "vid": "0x239A",
+    "pid": "0x800B"
+  },
   "id": "adafruit_feather_m0",
   "mcu": "SAMD21G18A",
   "name": "Adafruit Feather M0",

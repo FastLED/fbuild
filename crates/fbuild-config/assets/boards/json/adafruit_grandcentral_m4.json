@@ -9,6 +9,12 @@
   "frameworks": [
     "arduino"
   ],
+  "build": {
+    "core": "arduino",
+    "variant": "grand_central_m4",
+    "vid": "0x239A",
+    "pid": "0x8031"
+  },
   "id": "adafruit_grandcentral_m4",
   "mcu": "SAMD51P20A",
   "name": "Adafruit Grand Central M4",

@@ -1,0 +1,18 @@
+{
+  "name": "SAMD51",
+  "description": "Atmel SAMD51 (ARM Cortex-M4F)",
+  "architecture": "arm-cortex-m4f",
+  "compiler_flags": {
+    "common": ["-mcpu=cortex-m4", "-mthumb", "-mfloat-abi=hard", "-mfpu=fpv4-sp-d16", "-Wall", "-Wextra", "-Wno-unused-parameter", "-Wno-expansion-to-defined", "-ffunction-sections", "-fdata-sections", "-nostdlib", "-MMD", "--param", "max-inline-insns-single=500"],
+    "c": ["-std=gnu11"],
+    "cxx": ["-std=gnu++11", "-fno-exceptions", "-fno-rtti", "-fno-threadsafe-statics"]
+  },
+  "linker_flags": ["-mcpu=cortex-m4", "-mthumb", "-mfloat-abi=hard", "-mfpu=fpv4-sp-d16", "-Wl,--gc-sections", "-Wl,--check-sections", "-Wl,--unresolved-symbols=report-all", "-Wl,--warn-common", "-Wl,--warn-section-align", "-Wl,--no-warn-mismatch", "-Wl,--print-memory-usage", "--specs=nano.specs", "--specs=nosys.specs"],
+  "linker_libs": ["-lgcc", "-lstdc++", "-lm", "-lc"],
+  "objcopy": {"output_format": "binary", "remove_sections": [".eeprom"]},
+  "profiles": {
+    "release": {"compile_flags": ["-Os"], "link_flags": []},
+    "quick": {"compile_flags": ["-Os"], "link_flags": []}
+  },
+  "defines": [["ARDUINO", "10808"]]
+}

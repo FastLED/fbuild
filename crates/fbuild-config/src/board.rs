@@ -440,6 +440,7 @@ fn resolve_board_alias(board_id: &str) -> &str {
         "ch32v303" => "genericCH32V303VCT6",
         "ch32v307" => "genericCH32V307VCT6",
         "ch32x035" => "genericCH32X035C8T6",
+        "adafruit_grand_central_m4" => "adafruit_grandcentral_m4",
         other => other,
     }
 }

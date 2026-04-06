@@ -10,6 +10,12 @@
   "frameworks": [
     "arduino"
   ],
+  "build": {
+    "core": "arduino",
+    "variant": "arduino_zero",
+    "vid": "0x2341",
+    "pid": "0x804D"
+  },
   "id": "zeroUSB",
   "mcu": "SAMD21G18A",
   "name": "Arduino Zero (USB Native Port)",
