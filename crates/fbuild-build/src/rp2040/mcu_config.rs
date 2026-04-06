@@ -1,61 +1,17 @@
 //! Data-driven RP2040/RP2350 MCU configuration from embedded JSON.
-
-use std::collections::HashMap;
+//!
+//! Maps RP2040/RP2350 MCU names to the appropriate ARM Cortex-M configuration.
+//! RP2040 uses Cortex-M0+, RP2350 uses Cortex-M33.
 
 use fbuild_core::Result;
-use serde::Deserialize;
 
-use crate::compiler::{CompilerFlags, McuConfig, ObjcopyConfig, ProfileFlags};
-use crate::esp32::mcu_config::DefineEntry;
+use crate::generic_arm::ArmMcuConfig;
 
 const RP2040_JSON: &str = include_str!("configs/rp2040.json");
 const RP2350_JSON: &str = include_str!("configs/rp2350.json");
 
-/// RP2040/RP2350 MCU configuration parsed from JSON.
-#[derive(Debug, Clone, Deserialize)]
-pub struct Rp2040McuConfig {
-    pub name: String,
-    #[serde(default)]
-    pub description: String,
-    pub architecture: String,
-    pub compiler_flags: CompilerFlags,
-    pub linker_flags: Vec<String>,
-    pub linker_libs: Vec<String>,
-    pub objcopy: ObjcopyConfig,
-    pub profiles: HashMap<String, ProfileFlags>,
-    #[serde(default)]
-    pub defines: Vec<DefineEntry>,
-}
-
-impl Rp2040McuConfig {
-    pub fn defines_map(&self) -> HashMap<String, String> {
-        let mut map = HashMap::new();
-        for entry in &self.defines {
-            match entry {
-                DefineEntry::Simple(name) => {
-                    map.insert(name.clone(), "1".to_string());
-                }
-                DefineEntry::KeyValue(name, value) => {
-                    map.insert(name.clone(), value.clone());
-                }
-            }
-        }
-        map
-    }
-}
-
-impl McuConfig for Rp2040McuConfig {
-    fn compiler_flags(&self) -> &CompilerFlags {
-        &self.compiler_flags
-    }
-
-    fn get_profile(&self, name: &str) -> Option<&ProfileFlags> {
-        self.profiles.get(name)
-    }
-}
-
 /// Load MCU configuration for a specific RP2040/RP2350 MCU.
-pub fn get_rp2040_config_for_mcu(mcu: &str) -> Result<Rp2040McuConfig> {
+pub fn get_rp2040_config_for_mcu(mcu: &str) -> Result<ArmMcuConfig> {
     let json = match mcu {
         "rp2040" => RP2040_JSON,
         "rp2350" => RP2350_JSON,
@@ -82,16 +38,44 @@ mod tests {
     fn test_load_rp2040_config() {
         let config = get_rp2040_config_for_mcu("rp2040").unwrap();
         assert_eq!(config.name, "RP2040");
+        assert_eq!(config.architecture, "arm-cortex-m0plus");
     }
 
     #[test]
     fn test_load_rp2350_config() {
         let config = get_rp2040_config_for_mcu("rp2350").unwrap();
         assert_eq!(config.name, "RP2350");
+        assert_eq!(config.architecture, "arm-cortex-m33");
     }
 
     #[test]
     fn test_unsupported_mcu() {
         assert!(get_rp2040_config_for_mcu("rp9999").is_err());
+    }
+
+    #[test]
+    fn test_rp2040_compiler_flags() {
+        let config = get_rp2040_config_for_mcu("rp2040").unwrap();
+        assert!(config
+            .compiler_flags
+            .common
+            .contains(&"-mcpu=cortex-m0plus".to_string()));
+        assert!(config
+            .compiler_flags
+            .common
+            .contains(&"-mthumb".to_string()));
+    }
+
+    #[test]
+    fn test_rp2350_has_fpu_flags() {
+        let config = get_rp2040_config_for_mcu("rp2350").unwrap();
+        assert!(config
+            .compiler_flags
+            .common
+            .contains(&"-mfloat-abi=softfp".to_string()));
+        assert!(config
+            .compiler_flags
+            .common
+            .contains(&"-mfpu=fpv5-sp-d16".to_string()));
     }
 }
