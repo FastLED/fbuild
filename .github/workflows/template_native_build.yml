@@ -98,12 +98,31 @@ jobs:
             cargo build --release --target ${{ inputs.target }} -p fbuild-daemon
           fi
 
-      # PyO3 extension — skip for cross-compiled targets
+      # PyO3 extension — built for ALL targets, including cross-compiled.
+      # Notes:
+      #   - PYO3_NO_PYTHON=1 + abi3-py39 feature lets pyo3-build-config skip
+      #     the host interpreter lookup on cross builds.
+      #   - Linux aarch64 cross: manylinux wheels are glibc-based, so the
+      #     extension MUST target aarch64-unknown-linux-gnu (not musl) via
+      #     cargo-zigbuild with a glibc version suffix for manylinux_2_17.
+      #     The CLI binaries stay on musl for static-link portability.
+      #   - macOS cross: cargo rustc with -undefined dynamic_lookup works the
+      #     same as native; just add --target.
       - name: Build Python extension
-        if: ${{ !inputs.linux_cross && !inputs.macos_cross }}
         shell: bash
         run: |
-          if [ "${{ runner.os }}" = "macOS" ]; then
+          if [ "${{ inputs.linux_cross }}" = "true" ]; then
+            TARGET="${{ inputs.target }}"
+            ARCH="${TARGET%%-*}"
+            PYO3_TARGET="${ARCH}-unknown-linux-gnu"
+            rustup target add "$PYO3_TARGET"
+            PYO3_NO_PYTHON=1 cargo-zigbuild build --release \
+              --target "${PYO3_TARGET}.2.17" -p fbuild-python
+          elif [ "${{ inputs.macos_cross }}" = "true" ]; then
+            PYO3_NO_PYTHON=1 cargo rustc --release \
+              --target ${{ inputs.target }} -p fbuild-python \
+              -- -C link-args="-undefined dynamic_lookup"
+          elif [ "${{ runner.os }}" = "macOS" ]; then
             cargo rustc --release -p fbuild-python -- -C link-args="-undefined dynamic_lookup"
           else
             cargo build --release -p fbuild-python
@@ -116,8 +135,16 @@ jobs:
           cp target/${{ inputs.target }}/release/fbuild${{ inputs.binary_ext }} staging/
           cp target/${{ inputs.target }}/release/fbuild-daemon${{ inputs.binary_ext }} staging/
 
-          # Stage Python extension — built without --target, so in target/release/
-          if [ "${{ inputs.binary_ext }}" = ".exe" ]; then
+          # Stage Python extension — location depends on how it was built
+          if [ "${{ inputs.linux_cross }}" = "true" ]; then
+            TARGET="${{ inputs.target }}"
+            ARCH="${TARGET%%-*}"
+            ext_src="target/${ARCH}-unknown-linux-gnu/release/lib_native.so"
+            [ -f "$ext_src" ] && cp "$ext_src" staging/_native.abi3.so
+          elif [ "${{ inputs.macos_cross }}" = "true" ]; then
+            ext_src="target/${{ inputs.target }}/release/lib_native.dylib"
+            [ -f "$ext_src" ] && cp "$ext_src" staging/_native.abi3.so
+          elif [ "${{ inputs.binary_ext }}" = ".exe" ]; then
             [ -f target/release/_native.dll ] && \
               cp target/release/_native.dll staging/_native.pyd
           else
@@ -127,10 +154,18 @@ jobs:
             done
           fi
 
+          # Fail fast if the extension is missing — we expect it on all targets
+          if [ "${{ inputs.binary_ext }}" = ".exe" ]; then
+            [ -f staging/_native.pyd ] || { echo "ERROR: _native.pyd missing"; exit 1; }
+          else
+            [ -f staging/_native.abi3.so ] || { echo "ERROR: _native.abi3.so missing"; exit 1; }
+          fi
+
           # Strip binaries (reduces size significantly)
           if [ "${{ inputs.linux_cross }}" = "true" ]; then
             llvm-strip staging/fbuild || true
             llvm-strip staging/fbuild-daemon || true
+            llvm-strip staging/_native.abi3.so 2>/dev/null || true
           elif command -v strip &> /dev/null; then
             strip staging/fbuild${{ inputs.binary_ext }} || true
             strip staging/fbuild-daemon${{ inputs.binary_ext }} || true
