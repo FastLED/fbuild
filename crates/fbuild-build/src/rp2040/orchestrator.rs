@@ -18,6 +18,7 @@ use std::time::Instant;
 use fbuild_core::{Platform, Result};
 
 use crate::compile_database::TargetArchitecture;
+use crate::compiler::Compiler as _;
 use crate::generic_arm::{ArmCompiler, ArmLinker};
 use crate::pipeline;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
@@ -102,7 +103,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             &ctx.board.mcu,
             &ctx.board.f_cpu,
             defines,
-            include_dirs,
+            include_dirs.clone(),
             mcu_config.clone(),
             params.profile,
             params.verbose,
@@ -123,13 +124,35 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             params.verbose,
         );
 
-        // 8. Run shared sequential build pipeline
-        pipeline::run_sequential_build(
+        // 8. Build LibraryBuildEnv for project-as-library compilation
+        let gcc_path = toolchain.get_gcc_path();
+        let gxx_path = toolchain.get_gxx_path();
+        let ar_path = toolchain.get_ar_path();
+        let gcc_ar_path = toolchain.get_gcc_ar_path();
+        let c_flags = compiler.c_flags();
+        let cpp_flags = compiler.cpp_flags();
+        // Use gcc-ar for LTO archives so the linker-plugin index is written.
+        let lib_ar_path = pipeline::pick_archiver(&ar_path, &gcc_ar_path, &c_flags, &cpp_flags);
+        let lib_env = pipeline::LibraryBuildEnv {
+            gcc_path: &gcc_path,
+            gxx_path: &gxx_path,
+            ar_path: lib_ar_path,
+            c_flags: &c_flags,
+            cpp_flags: &cpp_flags,
+            include_dirs: &include_dirs,
+            verbose: params.verbose,
+            jobs: crate::parallel::effective_jobs(params.jobs),
+            compiler_cache: None,
+        };
+
+        // 9. Run shared sequential build pipeline
+        pipeline::run_sequential_build_with_libs(
             &compiler,
             &linker,
             ctx,
             params,
             &sources,
+            Some(&lib_env),
             TargetArchitecture::Arm,
             "RP2040",
             start,

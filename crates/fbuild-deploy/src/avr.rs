@@ -127,10 +127,15 @@ impl Deployer for AvrDeployer {
                 stderr: result.stderr,
             })
         } else {
-            Err(fbuild_core::FbuildError::DeployFailed(format!(
-                "avrdude failed:\n{}\n{}",
-                result.stdout, result.stderr
-            )))
+            // Return a non-success DeploymentResult instead of Err so the
+            // daemon handler can forward avrdude's stdout/stderr to the client.
+            Ok(DeploymentResult {
+                success: false,
+                message: format!("avrdude failed (exit code {})", result.exit_code),
+                port: Some(port.to_string()),
+                stdout: result.stdout,
+                stderr: result.stderr,
+            })
         }
     }
 }

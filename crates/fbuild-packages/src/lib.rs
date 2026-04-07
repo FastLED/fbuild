@@ -38,6 +38,41 @@ pub trait Toolchain: Package {
     fn get_size_path(&self) -> PathBuf;
     fn get_bin_dir(&self) -> PathBuf;
 
+    /// Path to the LTO-aware archiver (`{prefix}-gcc-ar`).
+    ///
+    /// Required for LTO-enabled builds: plain `ar` does not insert the LTO
+    /// linker-plugin index, which can cause the linker to silently drop
+    /// symbols on toolchains where the plugin path isn't auto-discovered.
+    /// See ISSUES.md Issue 8 for the full rationale.
+    ///
+    /// Default implementation derives the path by replacing the `ar`
+    /// basename suffix with `gcc-ar`. If the derived binary doesn't exist
+    /// on disk, falls back to `get_ar_path()`.
+    fn get_gcc_ar_path(&self) -> PathBuf {
+        let ar = self.get_ar_path();
+        let parent = ar.parent().unwrap_or(Path::new(""));
+        let file_name = ar.file_name().and_then(|n| n.to_str()).unwrap_or("ar");
+        // Strip platform extension if present (e.g. `.exe`).
+        let (stem, ext) = match file_name.rsplit_once('.') {
+            Some((s, e)) => (s, format!(".{}", e)),
+            None => (file_name, String::new()),
+        };
+        // Replace trailing `ar` (or `-ar`) with `gcc-ar` (or `-gcc-ar`).
+        let gcc_ar_stem = if let Some(prefix) = stem.strip_suffix("-ar") {
+            format!("{}-gcc-ar", prefix)
+        } else if let Some(prefix) = stem.strip_suffix("ar") {
+            format!("{}gcc-ar", prefix)
+        } else {
+            return ar;
+        };
+        let candidate = parent.join(format!("{}{}", gcc_ar_stem, ext));
+        if candidate.exists() {
+            candidate
+        } else {
+            ar
+        }
+    }
+
     /// Get all tool paths as a map.
     fn get_all_tools(&self) -> HashMap<String, PathBuf> {
         let mut tools = HashMap::new();
@@ -243,5 +278,91 @@ impl PackageBase {
             url: self.url.clone(),
             install_path: self.install_path(),
         }
+    }
+}
+
+#[cfg(test)]
+mod toolchain_gcc_ar_tests {
+    use super::*;
+
+    /// Test toolchain that lets the test set the `ar_path`.
+    struct TestToolchain {
+        ar_path: PathBuf,
+    }
+
+    impl Package for TestToolchain {
+        fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
+            Ok(PathBuf::new())
+        }
+        fn is_installed(&self) -> bool {
+            true
+        }
+        fn get_info(&self) -> PackageInfo {
+            PackageInfo {
+                name: "test".to_string(),
+                version: "0.0".to_string(),
+                url: String::new(),
+                install_path: PathBuf::new(),
+            }
+        }
+    }
+
+    impl Toolchain for TestToolchain {
+        fn get_gcc_path(&self) -> PathBuf {
+            PathBuf::new()
+        }
+        fn get_gxx_path(&self) -> PathBuf {
+            PathBuf::new()
+        }
+        fn get_ar_path(&self) -> PathBuf {
+            self.ar_path.clone()
+        }
+        fn get_objcopy_path(&self) -> PathBuf {
+            PathBuf::new()
+        }
+        fn get_size_path(&self) -> PathBuf {
+            PathBuf::new()
+        }
+        fn get_bin_dir(&self) -> PathBuf {
+            self.ar_path
+                .parent()
+                .map(Path::to_path_buf)
+                .unwrap_or_default()
+        }
+    }
+
+    #[test]
+    fn falls_back_to_ar_when_gcc_ar_does_not_exist() {
+        // /__bogus__/avr-gcc-ar does not exist on disk → fall back to ar.
+        let tc = TestToolchain {
+            ar_path: PathBuf::from("/__bogus__/avr-ar"),
+        };
+        assert_eq!(tc.get_gcc_ar_path(), tc.get_ar_path());
+    }
+
+    #[test]
+    fn returns_gcc_ar_when_present_on_disk_unix_style() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let bin = tmp.path();
+        let ar = bin.join("xtensa-esp-elf-ar");
+        let gcc_ar = bin.join("xtensa-esp-elf-gcc-ar");
+        std::fs::write(&ar, b"").unwrap();
+        std::fs::write(&gcc_ar, b"").unwrap();
+
+        let tc = TestToolchain { ar_path: ar };
+        assert_eq!(tc.get_gcc_ar_path(), gcc_ar);
+    }
+
+    #[test]
+    fn returns_gcc_ar_when_present_on_disk_with_exe_suffix() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let bin = tmp.path();
+        let ar = bin.join("avr-ar.exe");
+        let gcc_ar = bin.join("avr-gcc-ar.exe");
+        std::fs::write(&ar, b"").unwrap();
+        std::fs::write(&gcc_ar, b"").unwrap();
+
+        let tc = TestToolchain { ar_path: ar };
+        assert_eq!(tc.get_gcc_ar_path(), gcc_ar);
     }
 }

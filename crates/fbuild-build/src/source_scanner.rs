@@ -36,11 +36,18 @@ impl SourceCollection {
 const EXCLUDE_DIRS: &[&str] = &[
     ".zap",
     ".pio",
+    ".build",
     "build",
     ".git",
     "__pycache__",
     "node_modules",
     ".fbuild",
+    ".venv",
+    "venv",
+    ".cache",
+    "target",
+    ".vscode",
+    ".idea",
 ];
 
 /// Scans project directories for source files and preprocesses .ino files.
@@ -260,16 +267,34 @@ impl SourceScanner {
 }
 
 /// Walk a directory for source files, respecting exclude list.
+/// Walk a directory tree collecting source files, skipping excluded subdirectories.
+///
+/// Excludes:
+///   - Any directory in EXCLUDE_DIRS (build artifacts, VCS, package managers, etc.)
+///   - Any hidden directory (name starts with `.`) — covers `.build`, `.cache`, etc.
+///   - The walk's root is never excluded by name (to allow scanning hidden roots).
 fn walk_sources(dir: &Path) -> Vec<PathBuf> {
     let exclude: HashSet<&str> = EXCLUDE_DIRS.iter().copied().collect();
     let mut files = Vec::new();
 
-    for entry in WalkDir::new(dir)
+    let root = dir.to_path_buf();
+    for entry in WalkDir::new(&root)
         .into_iter()
         .filter_entry(|e| {
+            // Always allow the root itself (even if its name starts with '.')
+            if e.path() == root {
+                return true;
+            }
             if e.file_type().is_dir() {
                 let name = e.file_name().to_string_lossy();
-                !exclude.contains(name.as_ref())
+                if exclude.contains(name.as_ref()) {
+                    return false;
+                }
+                // Skip hidden directories (anything starting with '.')
+                if name.starts_with('.') {
+                    return false;
+                }
+                true
             } else {
                 true
             }

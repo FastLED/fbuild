@@ -187,12 +187,21 @@ impl BuildOrchestrator for Esp32Orchestrator {
             let cpp_flags = apply_user_flags(&temp_compiler.cpp_flags(), &user_flags);
 
             let jobs = crate::parallel::effective_jobs(params.jobs);
+            // Use gcc-ar for LTO archives so the linker-plugin index is written.
+            let dep_ar_path = toolchain.get_ar_path();
+            let dep_gcc_ar_path = toolchain.get_gcc_ar_path();
+            let dep_lib_ar_path = crate::pipeline::pick_archiver(
+                &dep_ar_path,
+                &dep_gcc_ar_path,
+                &c_flags,
+                &cpp_flags,
+            );
             let lib_result = fbuild_packages::library::library_manager::ensure_libraries_sync(
                 &lib_deps,
                 &lib_ignore,
                 &toolchain.get_gcc_path(),
                 &toolchain.get_gxx_path(),
-                &toolchain.get_ar_path(),
+                dep_lib_ar_path,
                 &c_flags,
                 &cpp_flags,
                 &include_dirs,
@@ -211,6 +220,76 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 library_archives.len(),
                 include_dirs.len()
             );
+        }
+
+        // 8.5b. Project-as-library compilation — shared with sequential pipeline.
+        // When the project root contains library.json or library.properties (e.g., FastLED),
+        // the project's own src/ directory is compiled as a library archive so that example
+        // sketches can link against it. Centralized in pipeline::compile_project_as_library
+        // so every orchestrator gets this behavior architecturally.
+        if !params.compiledb_only {
+            // Build temp compiler to get the actual c_flags/cpp_flags ESP32 uses for
+            // library compilation. SDK defines + user flags must be applied so the
+            // archive matches what sketch sources see.
+            let mut p_defines = ctx.board.get_defines();
+            p_defines.extend(mcu_config.defines_map());
+            let p_compiler = Esp32Compiler::with_temp_dir(
+                toolchain.get_gcc_path(),
+                toolchain.get_gxx_path(),
+                mcu_config.clone(),
+                &ctx.board.f_cpu,
+                p_defines,
+                include_dirs.clone(),
+                params.profile,
+                params.verbose,
+                build_dir.join("tmp"),
+            );
+            let p_c_flags = apply_user_flags(&p_compiler.c_flags(), &user_flags);
+            let p_cpp_flags = apply_user_flags(&p_compiler.cpp_flags(), &user_flags);
+
+            // Collect lib/* names so the helper can detect collisions with project-as-library.
+            let mut existing_lib_names = std::collections::HashSet::new();
+            let local_lib_dir = params.project_dir.join("lib");
+            if local_lib_dir.is_dir() {
+                if let Ok(entries) = std::fs::read_dir(&local_lib_dir) {
+                    for entry in entries.flatten() {
+                        let path = entry.path();
+                        if path.is_dir() {
+                            if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
+                                existing_lib_names.insert(name.to_lowercase());
+                            }
+                        }
+                    }
+                }
+            }
+
+            let gcc_path = toolchain.get_gcc_path();
+            let gxx_path = toolchain.get_gxx_path();
+            let ar_path = toolchain.get_ar_path();
+            let gcc_ar_path = toolchain.get_gcc_ar_path();
+            // Use gcc-ar for LTO archives so the linker-plugin index is written.
+            let lib_ar_path =
+                crate::pipeline::pick_archiver(&ar_path, &gcc_ar_path, &p_c_flags, &p_cpp_flags);
+            let lib_env = crate::pipeline::LibraryBuildEnv {
+                gcc_path: &gcc_path,
+                gxx_path: &gxx_path,
+                ar_path: lib_ar_path,
+                c_flags: &p_c_flags,
+                cpp_flags: &p_cpp_flags,
+                include_dirs: &include_dirs,
+                verbose: params.verbose,
+                jobs: crate::parallel::effective_jobs(params.jobs),
+                compiler_cache: compiler_cache.as_deref(),
+            };
+            if let Some(archive) = crate::pipeline::compile_project_as_library(
+                &params.project_dir,
+                &ctx.src_dir,
+                build_dir,
+                &lib_env,
+                &existing_lib_names,
+            )? {
+                library_archives.push(archive);
+            }
         }
 
         tracing::info!("include paths: {} total", include_dirs.len());
@@ -291,13 +370,22 @@ impl BuildOrchestrator for Esp32Orchestrator {
                         }
 
                         let fw_jobs = crate::parallel::effective_jobs(params.jobs);
+                        // Use gcc-ar for LTO archives so the linker-plugin index is written.
+                        let fw_ar_path = toolchain.get_ar_path();
+                        let fw_gcc_ar_path = toolchain.get_gcc_ar_path();
+                        let fw_lib_ar_path = crate::pipeline::pick_archiver(
+                            &fw_ar_path,
+                            &fw_gcc_ar_path,
+                            &fw_c_flags,
+                            &fw_cpp_flags,
+                        );
                         match fbuild_packages::library::library_compiler::compile_library_with_jobs(
                             &lib_name,
                             &sources,
                             &include_dirs,
                             &toolchain.get_gcc_path(),
                             &toolchain.get_gxx_path(),
-                            &toolchain.get_ar_path(),
+                            fw_lib_ar_path,
                             &fw_c_flags,
                             &fw_cpp_flags,
                             &fw_libs_build_dir,
@@ -486,15 +574,26 @@ impl BuildOrchestrator for Esp32Orchestrator {
                         lib_sources.len()
                     );
 
+                    // Use gcc-ar for LTO archives so the linker-plugin index is written.
+                    let local_ar_path = toolchain.get_ar_path();
+                    let local_gcc_ar_path = toolchain.get_gcc_ar_path();
+                    let local_c_flags = apply_user_flags(&compiler.c_flags(), &all_src_flags);
+                    let local_cpp_flags = apply_user_flags(&compiler.cpp_flags(), &all_src_flags);
+                    let local_lib_ar_path = crate::pipeline::pick_archiver(
+                        &local_ar_path,
+                        &local_gcc_ar_path,
+                        &local_c_flags,
+                        &local_cpp_flags,
+                    );
                     match fbuild_packages::library::library_compiler::compile_library_with_jobs(
                         &lib_name,
                         &lib_sources,
                         &include_dirs,
                         &toolchain.get_gcc_path(),
                         &toolchain.get_gxx_path(),
-                        &toolchain.get_ar_path(),
-                        &apply_user_flags(&compiler.c_flags(), &all_src_flags),
-                        &apply_user_flags(&compiler.cpp_flags(), &all_src_flags),
+                        local_lib_ar_path,
+                        &local_c_flags,
+                        &local_cpp_flags,
                         &lib_build_dir,
                         params.verbose,
                         jobs,

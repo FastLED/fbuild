@@ -118,10 +118,15 @@ impl Deployer for TeensyDeployer {
                 stderr: result.stderr,
             })
         } else {
-            Err(fbuild_core::FbuildError::DeployFailed(format!(
-                "teensy_loader_cli failed:\n{}\n{}",
-                result.stdout, result.stderr
-            )))
+            // Return a non-success DeploymentResult instead of Err so the
+            // daemon handler can forward teensy_loader_cli's stdout/stderr.
+            Ok(DeploymentResult {
+                success: false,
+                message: format!("teensy_loader_cli failed (exit code {})", result.exit_code),
+                port: port.map(|p| p.to_string()),
+                stdout: result.stdout,
+                stderr: result.stderr,
+            })
         }
     }
 }
