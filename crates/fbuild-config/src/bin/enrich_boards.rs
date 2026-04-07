@@ -28,7 +28,16 @@ const BUILD_FIELDS: &[&str] = &[
 
 const ARDUINO_FIELDS: &[&str] = &["ldscript", "partitions", "memory_type"];
 
-const UPLOAD_FIELDS: &[&str] = &["protocol", "speed", "flash_size", "require_upload_port"];
+const UPLOAD_FIELDS: &[&str] = &[
+    "protocol",
+    "speed",
+    "flash_size",
+    "require_upload_port",
+    "maximum_ram_size",
+    "maximum_size",
+    "use_1200bps_touch",
+    "wait_for_upload_port",
+];
 
 fn home_dir() -> PathBuf {
     #[cfg(windows)]

@@ -27,7 +27,16 @@ from pathlib import Path
 # Must match enrich_boards.rs exactly
 BUILD_FIELDS = ("core", "variant", "extra_flags", "f_cpu", "f_flash", "flash_mode", "mcu")
 ARDUINO_FIELDS = ("ldscript", "partitions", "memory_type")
-UPLOAD_FIELDS = ("protocol", "speed", "flash_size", "require_upload_port")
+UPLOAD_FIELDS = (
+    "protocol",
+    "speed",
+    "flash_size",
+    "require_upload_port",
+    "maximum_ram_size",
+    "maximum_size",
+    "use_1200bps_touch",
+    "wait_for_upload_port",
+)
 
 
 def home_dir() -> Path:
