@@ -25,7 +25,7 @@ from pathlib import Path
 
 
 # Must match enrich_boards.rs exactly
-BUILD_FIELDS = ("core", "variant", "extra_flags", "f_cpu", "f_flash", "flash_mode", "mcu")
+BUILD_FIELDS = ("core", "variant", "extra_flags", "f_cpu", "f_flash", "f_image", "flash_mode", "mcu")
 ARDUINO_FIELDS = ("ldscript", "partitions", "memory_type")
 UPLOAD_FIELDS = (
     "protocol",

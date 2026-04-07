@@ -41,4 +41,4 @@ vscode-fbuild/out/
 vscode-fbuild/node_modules/
 vscode-fbuild/*.vsix
 .claude/worktrees/
-bin/
+/bin/
