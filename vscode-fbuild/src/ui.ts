@@ -1,57 +1,47 @@
 import * as vscode from "vscode";
-
-/** Labels shown in the quick-pick menus. */
-const BUILD_PROFILES: Record<string, string> = {
-  quick: "$(zap) Quick",
-  release: "$(package) Release",
-  debug: "$(bug) Debug",
-};
-
-const ACTIONS: Record<string, string> = {
-  "build+deploy+monitor": "$(rocket) Build + Deploy + Monitor",
-  build: "$(tools) Build Only",
-  deploy: "$(cloud-upload) Deploy Only",
-};
-
-interface ConfigItem extends vscode.QuickPickItem {
-  id: string;
-}
+import {
+  BUILD_PROFILES,
+  BUILD_PROFILE_ICONS,
+  ACTION_ICONS,
+  ACTION_SHORT,
+  ValueQuickPickItem,
+} from "./constants";
 
 /**
- * Two status-bar items that read as one unified group:
- *   [ ⚙ release | auto | monitor ][ ▶ Go! ]
+ * Manages the status-bar items: a compact configuration summary and a Go! button.
  *
- * Clicking the config item opens a quick-pick to change any setting.
- * Clicking Go! runs the selected action.
+ * The full configuration UI lives in the sidebar tree view (see treeView.ts).
+ * The status bar provides a quick-glance summary and one-click execution.
  */
 export class StatusBarUI {
-  private configItem: vscode.StatusBarItem;
+  private summaryItem: vscode.StatusBarItem;
   private goItem: vscode.StatusBarItem;
 
   constructor(ctx: vscode.ExtensionContext) {
-    // --- Config summary (left half of the group) ---
-    this.configItem = vscode.window.createStatusBarItem(
+    // --- Compact config summary (click opens sidebar) ---
+    this.summaryItem = vscode.window.createStatusBarItem(
       vscode.StatusBarAlignment.Left,
       100
     );
-    this.configItem.command = "fbuild.configure";
-    this.configItem.tooltip = "fbuild: Click to configure";
-    ctx.subscriptions.push(this.configItem);
+    this.summaryItem.command = "workbench.view.extension.fbuild-sidebar";
+    this.summaryItem.tooltip =
+      "fbuild: Click to open configuration panel";
+    ctx.subscriptions.push(this.summaryItem);
 
-    // --- Go! button (right half of the group) ---
+    // --- Go! button ---
     this.goItem = vscode.window.createStatusBarItem(
       vscode.StatusBarAlignment.Left,
       99
     );
     this.goItem.command = "fbuild.go";
     this.goItem.text = "$(play) Go!";
-    this.goItem.tooltip = "fbuild: Execute selected action";
+    this.goItem.tooltip = "fbuild: Execute selected action (Ctrl+Shift+G)";
     this.goItem.backgroundColor = new vscode.ThemeColor(
       "statusBarItem.warningBackground"
     );
     ctx.subscriptions.push(this.goItem);
 
-    // Keep in sync with config changes
+    // Listen for config changes to keep status bar in sync
     ctx.subscriptions.push(
       vscode.workspace.onDidChangeConfiguration((e) => {
         if (e.affectsConfiguration("fbuild")) {
@@ -61,71 +51,16 @@ export class StatusBarUI {
     );
 
     this.refresh();
-    this.configItem.show();
+    this.summaryItem.show();
     this.goItem.show();
   }
 
-  // ── Combined configure menu ───────────────────────────────────
-
-  async configure(): Promise<void> {
-    const config = vscode.workspace.getConfiguration("fbuild");
-    const profile = config.get<string>("buildProfile", "release");
-    const action = config.get<string>("action", "build+deploy+monitor");
-    const monitor = config.get<boolean>("attachMonitor", true);
-    const env = config.get<string>("environment", "") || "auto";
-
-    const items: ConfigItem[] = [
-      {
-        label: "$(package) Build Profile",
-        description: profile,
-        id: "profile",
-      },
-      {
-        label: "$(rocket) Action",
-        description: action,
-        id: "action",
-      },
-      {
-        label: "$(circuit-board) Environment",
-        description: env,
-        id: "environment",
-      },
-      {
-        label: "$(terminal) Monitor",
-        description: monitor ? "ON" : "OFF",
-        id: "monitor",
-      },
-    ];
-
-    const picked = await vscode.window.showQuickPick(items, {
-      placeHolder: "Configure fbuild",
-    });
-
-    if (picked) {
-      switch (picked.id) {
-        case "profile":
-          await this.pickBuildProfile();
-          break;
-        case "action":
-          await this.pickAction();
-          break;
-        case "environment":
-          await this.pickEnvironment();
-          break;
-        case "monitor":
-          await this.toggleMonitor();
-          break;
-      }
-    }
-  }
-
-  // ── Individual quick-pick menus ───────────────────────────────
+  // ── Quick-pick menus (called from commands / tree view clicks) ──
 
   async pickBuildProfile(): Promise<void> {
-    const items = Object.entries(BUILD_PROFILES).map(([value, label]) => ({
-      label,
-      value,
-    }));
+    const items: ValueQuickPickItem[] = Object.entries(BUILD_PROFILE_ICONS).map(
+      ([value, label]) => ({ label, value })
+    );
 
     const picked = await vscode.window.showQuickPick(items, {
       placeHolder: "Select build profile",
@@ -143,10 +78,9 @@ export class StatusBarUI {
   }
 
   async pickAction(): Promise<void> {
-    const items = Object.entries(ACTIONS).map(([value, label]) => ({
-      label,
-      value,
-    }));
+    const items: ValueQuickPickItem[] = Object.entries(ACTION_ICONS).map(
+      ([value, label]) => ({ label, value })
+    );
 
     const picked = await vscode.window.showQuickPick(items, {
       placeHolder: "Select action",
@@ -173,37 +107,19 @@ export class StatusBarUI {
     );
   }
 
-  async pickEnvironment(): Promise<void> {
-    const env = await vscode.window.showInputBox({
-      prompt:
-        "Enter target environment from platformio.ini (e.g. uno, esp32c6). Leave empty for auto-detect.",
-      value: vscode.workspace
-        .getConfiguration("fbuild")
-        .get<string>("environment", ""),
-      placeHolder: "auto-detect",
-    });
-
-    if (env !== undefined) {
-      await vscode.workspace
-        .getConfiguration("fbuild")
-        .update(
-          "environment",
-          env,
-          vscode.ConfigurationTarget.Workspace
-        );
-    }
-  }
-
   // ── Status bar rendering ──────────────────────────────────────
 
   private refresh(): void {
     const config = vscode.workspace.getConfiguration("fbuild");
-    const profile = config.get<string>("buildProfile", "release");
-    const env = config.get<string>("environment", "") || "auto";
-    const monitor = config.get<boolean>("attachMonitor", true);
 
-    const monitorLabel = monitor ? "monitor" : "no-monitor";
-    this.configItem.text =
-      `$(gear) fbuild: ${profile} | ${env} | ${monitorLabel}`;
+    const profile = config.get<string>("buildProfile", "release");
+    const action = config.get<string>("action", "build+deploy+monitor");
+    const env = config.get<string>("environment", "");
+
+    const profileLabel = BUILD_PROFILES[profile] ?? profile;
+    const actionLabel = ACTION_SHORT[action] ?? action;
+    const envLabel = env || "auto";
+
+    this.summaryItem.text = `$(zap) ${profileLabel} | ${actionLabel} | ${envLabel}`;
   }
 }
