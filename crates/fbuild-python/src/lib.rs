@@ -692,13 +692,70 @@ fn connect_daemon(project_dir: String, environment: String) -> DaemonConnection 
     DaemonConnection::new(project_dir, environment)
 }
 
+/// The version string exposed to Python as `fbuild.__version__`.
+///
+/// Sourced from `CARGO_PKG_VERSION` at compile time so it always tracks the
+/// workspace version declared in the root `Cargo.toml`. Do not hardcode this
+/// string — a stale literal (previously `"2.0.0"`) made freshness checks
+/// against the native binary unreliable.
+const PYTHON_MODULE_VERSION: &str = env!("CARGO_PKG_VERSION");
+
 /// The fbuild Python module (imported as fbuild._native).
 #[pymodule]
 fn _native(m: &Bound<'_, PyModule>) -> PyResult<()> {
-    m.add("__version__", "2.1.7")?;
+    m.add("__version__", PYTHON_MODULE_VERSION)?;
     m.add_class::<SerialMonitor>()?;
     m.add_class::<Daemon>()?;
     m.add_class::<DaemonConnection>()?;
     m.add_function(wrap_pyfunction!(connect_daemon, m)?)?;
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::PYTHON_MODULE_VERSION;
+
+    /// Ensures the Python-visible `__version__` is sourced from Cargo and not
+    /// a stale hardcoded literal. The previous value `"2.0.0"` diverged from
+    /// the workspace version and broke native-binary freshness checks.
+    #[test]
+    fn python_module_version_matches_cargo_pkg_version() {
+        assert_eq!(PYTHON_MODULE_VERSION, env!("CARGO_PKG_VERSION"));
+        assert_ne!(
+            PYTHON_MODULE_VERSION, "2.0.0",
+            "fbuild-python __version__ must not be hardcoded to the legacy 2.0.0 literal"
+        );
+    }
+
+    /// Guards against malformed version strings leaking into the Python
+    /// module. Accepts `MAJOR.MINOR.PATCH` with optional pre-release/build
+    /// metadata (e.g. `2.1.5`, `2.1.5-rc1`, `2.1.5+build.7`).
+    #[test]
+    fn python_module_version_is_valid_semver_shape() {
+        let version = PYTHON_MODULE_VERSION;
+        assert!(!version.is_empty(), "version must not be empty");
+
+        // Strip optional pre-release (-xxx) and build metadata (+xxx) suffixes
+        // before splitting on '.'.
+        let core = version
+            .split_once('-')
+            .map(|(c, _)| c)
+            .unwrap_or(version)
+            .split_once('+')
+            .map(|(c, _)| c)
+            .unwrap_or_else(|| version.split_once('-').map(|(c, _)| c).unwrap_or(version));
+
+        let parts: Vec<&str> = core.split('.').collect();
+        assert_eq!(
+            parts.len(),
+            3,
+            "version {version:?} must have MAJOR.MINOR.PATCH components"
+        );
+        for (name, part) in ["major", "minor", "patch"].iter().zip(parts.iter()) {
+            assert!(
+                part.parse::<u64>().is_ok(),
+                "version {name} component {part:?} must be a non-negative integer"
+            );
+        }
+    }
 }
