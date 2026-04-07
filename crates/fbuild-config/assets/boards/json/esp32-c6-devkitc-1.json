@@ -4,7 +4,8 @@
     "f_cpu": "160000000L",
     "f_flash": "80000000L",
     "flash_mode": "qio",
-    "mcu": "esp32c6"
+    "mcu": "esp32c6",
+    "variant": "esp32c6"
   },
   "connectivity": [
     "bluetooth",
@@ -39,6 +40,8 @@
   "rom": 8388608,
   "upload": {
     "flash_size": "8MB",
+    "maximum_ram_size": 327680,
+    "maximum_size": 8388608,
     "require_upload_port": true,
     "speed": 460800
   },

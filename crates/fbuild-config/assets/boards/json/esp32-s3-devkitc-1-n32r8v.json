@@ -50,6 +50,8 @@
   "rom": 33554432,
   "upload": {
     "flash_size": "32MB",
+    "maximum_ram_size": 327680,
+    "maximum_size": 33554432,
     "require_upload_port": true,
     "speed": 921600
   },

@@ -1,7 +1,6 @@
 {
   "build": {
     "arduino": {
-      "ldscript": "esp32s3_out.ld",
       "memory_type": "qio_qspi"
     },
     "core": "esp32",
@@ -45,6 +44,8 @@
   "rom": 4194304,
   "upload": {
     "flash_size": "4MB",
+    "maximum_ram_size": 327680,
+    "maximum_size": 4194304,
     "require_upload_port": true,
     "speed": 460800
   },

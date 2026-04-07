@@ -48,8 +48,10 @@
   "rom": 8388608,
   "upload": {
     "flash_size": "8MB",
+    "maximum_ram_size": 327680,
+    "maximum_size": 8388608,
     "require_upload_port": true,
-    "speed": 921600
+    "speed": 460800
   },
   "url": "https://www.seeedstudio.com/XIAO-ESP32S3-p-5627.html",
   "vendor": "Seeed Studio"

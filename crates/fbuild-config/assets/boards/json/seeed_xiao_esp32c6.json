@@ -1,11 +1,13 @@
 {
   "build": {
     "core": "esp32",
+    "extra_flags": "-DARDUINO_XIAO_ESP32C6 -DARDUINO_USB_MODE=1 -DARDUINO_USB_CDC_ON_BOOT=1",
     "f_cpu": "160000000L",
     "f_flash": "80000000L",
     "flash_mode": "qio",
     "mcu": "esp32c6",
-    "pid": "0x0048",
+    "pid": "0x0046",
+    "variant": "XIAO_ESP32C6",
     "vid": "0x2886"
   },
   "connectivity": [
@@ -43,6 +45,8 @@
   "rom": 4194304,
   "upload": {
     "flash_size": "4MB",
+    "maximum_ram_size": 327680,
+    "maximum_size": 4194304,
     "require_upload_port": true,
     "speed": 460800
   },

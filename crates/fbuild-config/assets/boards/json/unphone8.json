@@ -45,8 +45,12 @@
   "rom": 8323072,
   "upload": {
     "flash_size": "8MB",
+    "maximum_ram_size": 2424832,
+    "maximum_size": 8323072,
     "require_upload_port": true,
-    "speed": 460800
+    "speed": 460800,
+    "use_1200bps_touch": true,
+    "wait_for_upload_port": true
   },
   "url": "https://unphone.net/",
   "vendor": "University of Sheffield"

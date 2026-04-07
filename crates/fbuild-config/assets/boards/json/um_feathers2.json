@@ -43,8 +43,12 @@
   "rom": 16777216,
   "upload": {
     "flash_size": "16MB",
+    "maximum_ram_size": 327680,
+    "maximum_size": 16777216,
     "require_upload_port": true,
-    "speed": 921600
+    "speed": 921600,
+    "use_1200bps_touch": true,
+    "wait_for_upload_port": true
   },
   "url": "https://feathers2.io",
   "vendor": "Unexpected Maker"

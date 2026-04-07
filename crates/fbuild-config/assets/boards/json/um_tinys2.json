@@ -1,7 +1,8 @@
 {
   "build": {
     "arduino": {
-      "ldscript": "esp32s2_out.ld"
+      "memory_type": "qio_qspi",
+      "partitions": "default_4MB.csv"
     },
     "core": "esp32",
     "extra_flags": "-DARDUINO_TINYS2 -DBOARD_HAS_PSRAM -DARDUINO_USB_CDC_ON_BOOT=1",
@@ -43,8 +44,12 @@
   "rom": 4194304,
   "upload": {
     "flash_size": "4MB",
+    "maximum_ram_size": 327680,
+    "maximum_size": 4194304,
     "require_upload_port": true,
-    "speed": 921600
+    "speed": 921600,
+    "use_1200bps_touch": true,
+    "wait_for_upload_port": true
   },
   "url": "https://tinys2.io",
   "vendor": "Unexpected Maker"

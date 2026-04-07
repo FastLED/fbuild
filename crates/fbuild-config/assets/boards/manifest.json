@@ -478,7 +478,6 @@
   "adafruit_qtpy_esp32",
   "adafruit_qtpy_esp32c3",
   "adafruit_qtpy_esp32s2",
-  "adafruit_qtpy_esp32s3",
   "adafruit_qtpy_esp32s3_n4r2",
   "adafruit_qtpy_esp32s3_nopsram",
   "adafruit_qualia_s3_rgb666",
