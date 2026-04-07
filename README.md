@@ -121,6 +121,8 @@ fbuild uses the same `platformio.ini` already used in platformio sketches.
 
 **TODO: firmware.bin size comparisons between Arduino/PlatformIO vs fbuild**
 
+**TODO: Add integration with [velxio](https://github.com/davidmonterocrespo24/velxio)**
+
 **Design Goals**
 
   * Replaces `platformio` in `FastLED` repo builders
