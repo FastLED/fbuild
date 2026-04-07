@@ -496,7 +496,7 @@ checksum = "37909eebbb50d72f9059c3b6d82c0463f2ff062c9e95845c43a6c9c0355411be"
 
 [[package]]
 name = "fbuild-build"
-version = "2.1.9"
+version = "2.1.10"
 dependencies = [
  "async-trait",
  "fbuild-config",
@@ -515,7 +515,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-cli"
-version = "2.1.9"
+version = "2.1.10"
 dependencies = [
  "blake3",
  "clap",
@@ -536,7 +536,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-config"
-version = "2.1.9"
+version = "2.1.10"
 dependencies = [
  "fbuild-core",
  "include_dir",
@@ -550,7 +550,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-core"
-version = "2.1.9"
+version = "2.1.10"
 dependencies = [
  "serde",
  "serde_json",
@@ -560,7 +560,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-daemon"
-version = "2.1.9"
+version = "2.1.10"
 dependencies = [
  "axum",
  "base64",
@@ -594,7 +594,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-deploy"
-version = "2.1.9"
+version = "2.1.10"
 dependencies = [
  "async-trait",
  "fbuild-config",
@@ -613,7 +613,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-packages"
-version = "2.1.9"
+version = "2.1.10"
 dependencies = [
  "bzip2",
  "fbuild-config",
@@ -637,14 +637,14 @@ dependencies = [
 
 [[package]]
 name = "fbuild-paths"
-version = "2.1.9"
+version = "2.1.10"
 dependencies = [
  "fbuild-core",
 ]
 
 [[package]]
 name = "fbuild-python"
-version = "2.1.9"
+version = "2.1.10"
 dependencies = [
  "base64",
  "fbuild-core",
@@ -662,7 +662,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-serial"
-version = "2.1.9"
+version = "2.1.10"
 dependencies = [
  "async-trait",
  "base64",
@@ -684,7 +684,7 @@ dependencies = [
 
 [[package]]
 name = "fbuild-test-support"
-version = "2.1.9"
+version = "2.1.10"
 dependencies = [
  "tempfile",
  "tokio",
