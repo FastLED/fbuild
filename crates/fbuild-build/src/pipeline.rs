@@ -9,7 +9,7 @@ use std::time::Instant;
 use fbuild_core::{BuildLog, Result};
 
 use crate::compile_database::{self, CompileDatabase, TargetArchitecture};
-use crate::compiler::{Compiler, CompilerBase};
+use crate::compiler::Compiler;
 use crate::linker::LinkResult;
 use crate::source_scanner::SourceCollection;
 use crate::{BuildParams, BuildResult};
@@ -170,94 +170,105 @@ pub fn is_project_a_library(project_dir: &Path) -> bool {
     project_dir.join("library.json").exists() || project_dir.join("library.properties").exists()
 }
 
-/// Compile a list of sources sequentially with incremental rebuild detection.
+/// Compile a list of sources in parallel with incremental rebuild detection.
 ///
-/// Used by AVR and Teensy orchestrators. ESP32 uses parallel compilation instead.
-pub fn compile_sources_sequential(
+/// Thin wrapper over [`crate::parallel::compile_sources_parallel`] that flushes
+/// collected warnings into the shared build log Mutex. Used by
+/// [`run_sequential_build_with_libs`]; ESP32 calls `compile_sources_parallel`
+/// directly because it interleaves multiple compile phases through the same
+/// log Mutex.
+pub fn compile_sources(
     compiler: &dyn Compiler,
     sources: &[PathBuf],
     build_dir: &Path,
     extra_flags: &[String],
-    build_log: &mut BuildLog,
+    jobs: usize,
+    build_log: &std::sync::Mutex<BuildLog>,
 ) -> Result<Vec<PathBuf>> {
-    let mut objects = Vec::new();
-    for source in sources {
-        let obj = CompilerBase::object_path(source, build_dir);
-        if CompilerBase::needs_rebuild(source, &obj) {
-            crate::build_output::log_compiling(build_log, &obj);
-            let result = compiler.compile(source, &obj, extra_flags)?;
-            if !result.success {
-                return Err(fbuild_core::FbuildError::BuildFailed(format!(
-                    "compilation failed for {}:\n{}",
-                    source.display(),
-                    result.stderr
-                )));
-            }
-            crate::build_output::collect_warnings(&result.stderr, build_log);
+    let result = crate::parallel::compile_sources_parallel(
+        compiler,
+        sources,
+        build_dir,
+        extra_flags,
+        jobs,
+        Some(build_log),
+    )?;
+    if !result.warnings.is_empty() {
+        let mut log = build_log.lock().unwrap();
+        for w in &result.warnings {
+            crate::build_output::collect_warnings(w, &mut log);
         }
-        objects.push(obj);
     }
-    Ok(objects)
+    Ok(result.objects)
 }
 
-/// Compile all libraries in the project's `lib/` directory sequentially.
+/// Compile all libraries in the project's `lib/` directory.
 ///
-/// Used by AVR and Teensy orchestrators. ESP32 uses parallel library compilation.
+/// Each library's source files are compiled in parallel via
+/// [`crate::parallel::compile_sources_parallel`]. Libraries themselves are
+/// processed one after another so the per-lib `jobs` budget isn't oversubscribed.
 pub fn compile_local_libraries(
     compiler: &dyn Compiler,
     project_dir: &Path,
     build_dir: &Path,
     extra_flags: &[String],
-    build_log: &mut BuildLog,
+    jobs: usize,
+    build_log: &std::sync::Mutex<BuildLog>,
 ) -> Result<Vec<PathBuf>> {
     let mut library_objects = Vec::new();
     let local_lib_dir = project_dir.join("lib");
-    if local_lib_dir.is_dir() {
-        if let Ok(entries) = std::fs::read_dir(&local_lib_dir) {
-            for entry in entries.flatten() {
-                let lib_path = entry.path();
-                if !lib_path.is_dir() {
-                    continue;
-                }
-                let lib_name = lib_path
-                    .file_name()
-                    .unwrap_or_default()
-                    .to_string_lossy()
-                    .to_string();
+    if !local_lib_dir.is_dir() {
+        return Ok(library_objects);
+    }
+    let entries = match std::fs::read_dir(&local_lib_dir) {
+        Ok(e) => e,
+        Err(_) => return Ok(library_objects),
+    };
+    for entry in entries.flatten() {
+        let lib_path = entry.path();
+        if !lib_path.is_dir() {
+            continue;
+        }
+        let lib_name = lib_path
+            .file_name()
+            .unwrap_or_default()
+            .to_string_lossy()
+            .to_string();
 
-                let lib_info = fbuild_packages::library::library_info::InstalledLibrary::new(
-                    &lib_path, &lib_name,
-                );
-                let lib_sources = lib_info.get_source_files();
-                if lib_sources.is_empty() {
-                    continue;
-                }
+        let lib_info =
+            fbuild_packages::library::library_info::InstalledLibrary::new(&lib_path, &lib_name);
+        let lib_sources = lib_info.get_source_files();
+        if lib_sources.is_empty() {
+            continue;
+        }
 
-                let lib_build_dir = build_dir.join("lib").join(&lib_name);
-                std::fs::create_dir_all(&lib_build_dir)?;
-                tracing::info!(
-                    "compiling local library '{}': {} source files",
-                    lib_name,
-                    lib_sources.len()
-                );
+        let lib_build_dir = build_dir.join("lib").join(&lib_name);
+        std::fs::create_dir_all(&lib_build_dir)?;
+        tracing::info!(
+            "compiling local library '{}': {} source files",
+            lib_name,
+            lib_sources.len()
+        );
 
-                for source in &lib_sources {
-                    let obj = CompilerBase::object_path(source, &lib_build_dir);
-                    if CompilerBase::needs_rebuild(source, &obj) {
-                        crate::build_output::log_compiling(build_log, &obj);
-                        let result = compiler.compile(source, &obj, extra_flags)?;
-                        if !result.success {
-                            return Err(fbuild_core::FbuildError::BuildFailed(format!(
-                                "local library '{}' compilation failed for {}:\n{}",
-                                lib_name,
-                                source.display(),
-                                result.stderr
-                            )));
-                        }
-                        crate::build_output::collect_warnings(&result.stderr, build_log);
-                    }
-                    library_objects.push(obj);
-                }
+        let result = crate::parallel::compile_sources_parallel(
+            compiler,
+            &lib_sources,
+            &lib_build_dir,
+            extra_flags,
+            jobs,
+            Some(build_log),
+        )
+        .map_err(|e| {
+            fbuild_core::FbuildError::BuildFailed(format!(
+                "local library '{}' compilation failed: {}",
+                lib_name, e
+            ))
+        })?;
+        library_objects.extend(result.objects);
+        if !result.warnings.is_empty() {
+            let mut log = build_log.lock().unwrap();
+            for w in &result.warnings {
+                crate::build_output::collect_warnings(w, &mut log);
             }
         }
     }
@@ -478,40 +489,55 @@ pub fn run_sequential_build_with_libs(
         });
     }
 
+    // Wrap the build log so it can be shared across parallel compile phases.
+    // Phases still run one after another (compile core → variant → sketch →
+    // libs → link), but each phase fans out file compilation across `jobs`
+    // threads via `compile_sources_parallel`.
+    let jobs = crate::parallel::effective_jobs(params.jobs);
+    let build_log_mutex = std::sync::Mutex::new(ctx.build_log);
+
     // Compile core + variant
-    let mut core_objects = compile_sources_sequential(
+    let mut core_objects = compile_sources(
         compiler,
         &sources.core_sources,
         &ctx.core_build_dir,
         &ctx.user_flags,
-        &mut ctx.build_log,
+        jobs,
+        &build_log_mutex,
     )?;
-    let variant_objects = compile_sources_sequential(
+    let variant_objects = compile_sources(
         compiler,
         &sources.variant_sources,
         &ctx.core_build_dir,
         &ctx.user_flags,
-        &mut ctx.build_log,
+        jobs,
+        &build_log_mutex,
     )?;
     core_objects.extend(variant_objects);
 
     // Compile sketch
-    let sketch_objects = compile_sources_sequential(
+    let sketch_objects = compile_sources(
         compiler,
         &sources.sketch_sources,
         &ctx.src_build_dir,
         &ctx.all_src_flags,
-        &mut ctx.build_log,
+        jobs,
+        &build_log_mutex,
     )?;
 
-    // Compile local libraries (lib/* — sequential, loose objects, LTO-safe)
+    // Compile local libraries (lib/* — loose objects, LTO-safe; per-lib parallel)
     let library_objects = compile_local_libraries(
         compiler,
         &params.project_dir,
         &ctx.build_dir,
         &ctx.all_src_flags,
-        &mut ctx.build_log,
+        jobs,
+        &build_log_mutex,
     )?;
+
+    // Unwrap the build log Mutex back into the context for the remaining
+    // single-threaded phases (link, result assembly).
+    ctx.build_log = build_log_mutex.into_inner().unwrap();
 
     // Project-as-library: compile project root's src/ as an archive when
     // building an example sketch from a library project (e.g. FastLED examples).
