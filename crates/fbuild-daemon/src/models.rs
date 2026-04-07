@@ -535,6 +535,35 @@ mod tests {
         assert!(json.contains("/tmp/fw.bin"));
     }
 
+    /// ISSUES.md "Issue H": the success path of `/api/deploy` must
+    /// forward esptool/avrdude `stdout` and `stderr` when present, so
+    /// AI agents and CLI consumers can read flash progress, chip
+    /// detection output, and similar diagnostics. The model layer must
+    /// serialize them when set, and skip them when None (so quiet
+    /// builds don't bloat the JSON).
+    #[test]
+    fn operation_response_stdout_stderr_round_trip_on_success() {
+        let mut resp = OperationResponse::ok("id".into(), "deploy succeeded".into());
+        resp.stdout = Some("Connecting....\nWriting at 0x10000... (12 %)".into());
+        resp.stderr = Some("esptool.py v4.6.2".into());
+
+        let json = serde_json::to_string(&resp).unwrap();
+        assert!(json.contains("\"stdout\""));
+        assert!(json.contains("Connecting"));
+        assert!(json.contains("\"stderr\""));
+        assert!(json.contains("esptool.py"));
+        // Success path is still success.
+        assert!(json.contains("\"success\":true"));
+    }
+
+    #[test]
+    fn operation_response_stdout_stderr_skipped_when_none() {
+        let resp = OperationResponse::ok("id".into(), "ok".into());
+        let json = serde_json::to_string(&resp).unwrap();
+        assert!(!json.contains("stdout"));
+        assert!(!json.contains("stderr"));
+    }
+
     // --- HealthResponse serialization ---
 
     #[test]

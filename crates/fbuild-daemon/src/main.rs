@@ -84,12 +84,21 @@ async fn main() {
         );
 
     let addr = format!("0.0.0.0:{}", port);
-    let listener = tokio::net::TcpListener::bind(&addr)
-        .await
-        .unwrap_or_else(|e| {
-            eprintln!("failed to bind to {}: {}", addr, e);
-            std::process::exit(1);
-        });
+    // Before binding, check whether a stale PID file points at a dead
+    // process. If the previous daemon was killed uncleanly, its PID file
+    // still exists and any stale TCP state may linger for the protocol
+    // timeout. Cleaning up the PID file lets `fbuild daemon list` reflect
+    // reality, and the bind retry below handles the kernel-state case.
+    // See ISSUES.md "Issue B5a".
+    if let Some(stale_pid) = read_stale_daemon_pid() {
+        tracing::warn!(
+            "found stale daemon PID file pointing at dead PID {}; cleaning up",
+            stale_pid
+        );
+        let _ = std::fs::remove_file(fbuild_paths::get_daemon_pid_file());
+    }
+
+    let listener = bind_listener_with_retry(&addr);
 
     tracing::info!("listening on {}", addr);
 
@@ -213,4 +222,220 @@ async fn main() {
 
     tracing::info!("daemon exiting");
     std::process::exit(0);
+}
+
+/// Read the daemon PID file. Returns `Some(pid)` only if the file exists,
+/// the contents parse as a u32, AND the referenced process is no longer
+/// alive (i.e. it's safe to clean up). Returns `None` if the file is
+/// missing, unreadable, malformed, or points at a still-running process.
+///
+/// Used at startup to clean up after a crashed previous instance so that
+/// `fbuild daemon list` reflects reality and the bind-retry loop has a
+/// chance to claim the port. See ISSUES.md "Issue B5a".
+fn read_stale_daemon_pid() -> Option<u32> {
+    let path = fbuild_paths::get_daemon_pid_file();
+    let raw = std::fs::read_to_string(&path).ok()?;
+    let pid: u32 = raw.trim().parse().ok()?;
+    if is_pid_alive(pid) {
+        None
+    } else {
+        Some(pid)
+    }
+}
+
+/// Cross-platform "is this PID still running?" check. Avoids dragging in
+/// the `sysinfo` crate for a 10-line operation.
+fn is_pid_alive(pid: u32) -> bool {
+    #[cfg(unix)]
+    {
+        // SAFETY: kill(pid, 0) is a probe — it sends no signal but
+        // returns 0 if the PID exists and we have permission, or -1
+        // with errno=ESRCH if the PID does not exist.
+        unsafe { libc::kill(pid as i32, 0) == 0 }
+    }
+    #[cfg(windows)]
+    {
+        // OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION) succeeds for any
+        // running process; ERROR_INVALID_PARAMETER (87) means the PID is
+        // gone. We use the limited variant so the probe works for
+        // processes owned by other users / elevated daemons.
+        const PROCESS_QUERY_LIMITED_INFORMATION: u32 = 0x1000;
+        type Handle = *mut std::ffi::c_void;
+        #[link(name = "kernel32")]
+        extern "system" {
+            fn OpenProcess(desired_access: u32, inherit_handle: i32, process_id: u32) -> Handle;
+            fn CloseHandle(handle: Handle) -> i32;
+        }
+        unsafe {
+            let h = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, 0, pid);
+            if h.is_null() {
+                false
+            } else {
+                CloseHandle(h);
+                true
+            }
+        }
+    }
+    #[cfg(not(any(unix, windows)))]
+    {
+        let _ = pid;
+        true
+    }
+}
+
+/// Bind the daemon's TCP listener with platform-appropriate hardening:
+///
+/// * **Windows** — sets `SO_EXCLUSIVEADDRUSE` so no other local process
+///   can hijack the port via `SO_REUSEADDR`. The earlier B5 mitigation
+///   used `SO_REUSEADDR` instead, which on Windows permits multi-binder
+///   takeover (Linux/BSD `SO_REUSEADDR` only allows `TIME_WAIT` recovery,
+///   so it's safe there but not on Windows). See ISSUES.md "Issue B5a".
+/// * **Unix** — sets `SO_REUSEADDR`, which only permits `TIME_WAIT`
+///   recovery on this OS family.
+///
+/// Bind is retried up to 3 times with 500 ms backoff to handle the brief
+/// window where a hard-killed previous instance still has kernel TCP
+/// state. Permanent failures (port owned by a live process, permission
+/// denied) bubble up after the retries are exhausted.
+fn bind_listener_with_retry(addr: &str) -> tokio::net::TcpListener {
+    use socket2::{Domain, Protocol, Socket, Type};
+    let std_addr: std::net::SocketAddr = addr.parse().unwrap_or_else(|e| {
+        eprintln!("invalid bind address {}: {}", addr, e);
+        std::process::exit(1);
+    });
+
+    let mut last_err: Option<std::io::Error> = None;
+    for attempt in 0..3u32 {
+        let sock = match Socket::new(Domain::IPV4, Type::STREAM, Some(Protocol::TCP)) {
+            Ok(s) => s,
+            Err(e) => {
+                eprintln!("failed to create socket: {}", e);
+                std::process::exit(1);
+            }
+        };
+
+        // Apply platform-specific address-reuse policy.
+        #[cfg(windows)]
+        {
+            if let Err(e) = set_exclusive_address_windows(&sock) {
+                tracing::warn!("failed to set SO_EXCLUSIVEADDRUSE: {}", e);
+            }
+        }
+        #[cfg(not(windows))]
+        {
+            if let Err(e) = sock.set_reuse_address(true) {
+                tracing::warn!("failed to set SO_REUSEADDR: {}", e);
+            }
+        }
+
+        if let Err(e) = sock.set_nonblocking(true) {
+            eprintln!("failed to set non-blocking: {}", e);
+            std::process::exit(1);
+        }
+
+        match sock.bind(&std_addr.into()) {
+            Ok(()) => match sock.listen(128) {
+                Ok(()) => {
+                    let std_listener: std::net::TcpListener = sock.into();
+                    return tokio::net::TcpListener::from_std(std_listener).unwrap_or_else(|e| {
+                        eprintln!("failed to convert listener to tokio: {}", e);
+                        std::process::exit(1);
+                    });
+                }
+                Err(e) => {
+                    eprintln!("failed to listen on {}: {}", addr, e);
+                    std::process::exit(1);
+                }
+            },
+            Err(e) => {
+                tracing::warn!(
+                    attempt,
+                    "bind to {} failed ({}); retrying in 500ms",
+                    addr,
+                    e
+                );
+                last_err = Some(e);
+                std::thread::sleep(std::time::Duration::from_millis(500));
+            }
+        }
+    }
+
+    eprintln!(
+        "failed to bind to {} after 3 attempts: {}",
+        addr,
+        last_err
+            .map(|e| e.to_string())
+            .unwrap_or_else(|| "unknown".to_string())
+    );
+    std::process::exit(1);
+}
+
+/// Set `SO_EXCLUSIVEADDRUSE` on a Windows socket using a manual FFI call,
+/// since socket2 0.6 does not yet expose this option. The constant value
+/// is `~SO_REUSEADDR = -5` (i.e. the bitwise complement of `SO_REUSEADDR`).
+/// `SOL_SOCKET` on Winsock is `0xFFFF`, NOT `1` like on Linux.
+#[cfg(windows)]
+fn set_exclusive_address_windows(sock: &socket2::Socket) -> std::io::Result<()> {
+    use std::os::windows::io::AsRawSocket;
+
+    const SOL_SOCKET: i32 = 0xFFFF;
+    const SO_EXCLUSIVEADDRUSE: i32 = !0x0004; // = -5
+
+    type SocketHandle = usize;
+    #[link(name = "ws2_32")]
+    extern "system" {
+        fn setsockopt(
+            s: SocketHandle,
+            level: i32,
+            optname: i32,
+            optval: *const u8,
+            optlen: i32,
+        ) -> i32;
+    }
+
+    let raw: SocketHandle = sock.as_raw_socket() as SocketHandle;
+    let on: i32 = 1;
+    let ret = unsafe {
+        setsockopt(
+            raw,
+            SOL_SOCKET,
+            SO_EXCLUSIVEADDRUSE,
+            &on as *const i32 as *const u8,
+            std::mem::size_of::<i32>() as i32,
+        )
+    };
+    if ret == 0 {
+        Ok(())
+    } else {
+        Err(std::io::Error::last_os_error())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn is_pid_alive_returns_true_for_self() {
+        // Our own PID must always be reported alive — this confirms the
+        // OpenProcess/kill probe is wired up correctly on each platform.
+        assert!(
+            is_pid_alive(std::process::id()),
+            "is_pid_alive(self) must return true"
+        );
+    }
+
+    #[test]
+    fn is_pid_alive_returns_false_for_obviously_dead_pid() {
+        // PID 0 is reserved (Windows: System Idle Process; Unix: kernel
+        // task scheduler) and the OpenProcess / kill(0,0) probes both
+        // refuse to operate on it. Use a very large PID instead, well
+        // outside any plausible PID range.
+        let likely_dead: u32 = 4_000_000_000;
+        assert!(
+            !is_pid_alive(likely_dead),
+            "is_pid_alive({}) must return false",
+            likely_dead
+        );
+    }
 }

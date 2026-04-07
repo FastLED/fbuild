@@ -77,27 +77,62 @@ impl SharedSerialManager {
             }
         }
 
-        let max_retries: usize = if cfg!(windows) { 30 } else { 15 };
-        let backoff_schedule = [1000u64, 2000, 4000, 8000, 10000]; // ms
+        // Retry budget: USB re-enumeration on Windows after esptool reset
+        // typically completes in <2s; flash uploads finish in <5s. Cap the
+        // total wait at ~15s so that permanent failures (port doesn't exist,
+        // permission denied, no device) bubble up quickly instead of stalling
+        // the daemon's WebSocket clients for 4+ minutes. The previous schedule
+        // had 30 retries × ~10s ≈ 5 minutes which deadlocked self-eviction.
+        let max_retries: usize = if cfg!(windows) { 8 } else { 6 };
+        let backoff_schedule = [250u64, 500, 1000, 2000, 3000]; // ms
 
         let port_name = port.to_string();
         let mut last_err = String::new();
 
         for attempt in 0..max_retries {
             let timeout_ms = 100;
-            match serialport::new(&port_name, baud_rate)
-                .timeout(Duration::from_millis(timeout_ms))
-                .open()
-            {
-                Ok(mut serial) => {
-                    // Set DTR=true, RTS=true for flow control
-                    if let Err(e) = serial.write_data_terminal_ready(true) {
-                        tracing::warn!(port, "failed to set DTR: {}", e);
-                    }
-                    if let Err(e) = serial.write_request_to_send(true) {
-                        tracing::warn!(port, "failed to set RTS: {}", e);
-                    }
+            // serialport::open() and DTR/RTS toggling are synchronous Win32 /
+            // POSIX system calls. Running them directly inside an `async fn`
+            // pins a tokio worker thread for the duration of `CreateFile`
+            // (which on Windows can stall multiple seconds during USB
+            // re-enumeration). Move the blocking work to a dedicated blocking
+            // pool thread so other tokio tasks (WebSocket forwarding,
+            // self-eviction tick, HTTP handlers) keep making progress. See
+            // ISSUES.md "Issue C".
+            let port_for_open = port_name.clone();
+            let open_result: std::result::Result<
+                std::result::Result<Box<dyn serialport::SerialPort>, serialport::Error>,
+                tokio::task::JoinError,
+            > = tokio::task::spawn_blocking(move || {
+                let mut serial = serialport::new(&port_for_open, baud_rate)
+                    .timeout(Duration::from_millis(timeout_ms))
+                    .open()?;
+                // Set DTR=true, RTS=true for flow control. Failures here are
+                // non-fatal — some adapters (e.g. CP210x in CDC mode) reject
+                // the request but the port is still usable.
+                if let Err(e) = serial.write_data_terminal_ready(true) {
+                    tracing::warn!("failed to set DTR: {}", e);
+                }
+                if let Err(e) = serial.write_request_to_send(true) {
+                    tracing::warn!("failed to set RTS: {}", e);
+                }
+                Ok(serial)
+            })
+            .await;
 
+            let open_inner = match open_result {
+                Ok(inner) => inner,
+                Err(join_err) => {
+                    last_err = format!("open task panicked: {}", join_err);
+                    let backoff_idx = attempt.min(backoff_schedule.len() - 1);
+                    let backoff_ms = backoff_schedule[backoff_idx];
+                    tokio::time::sleep(Duration::from_millis(backoff_ms)).await;
+                    continue;
+                }
+            };
+
+            match open_inner {
+                Ok(serial) => {
                     let serial_handle = Arc::new(Mutex::new(serial));
                     let stop_flag = Arc::new(AtomicBool::new(false));
 
@@ -312,6 +347,22 @@ impl SharedSerialManager {
         }
     }
 
+    /// Returns the number of attached readers for a port (0 if not open).
+    pub fn reader_count(&self, port: &str) -> usize {
+        self.sessions
+            .get(port)
+            .map(|s| s.reader_client_ids.len())
+            .unwrap_or(0)
+    }
+
+    /// Returns true if a port has any active reader or writer client.
+    pub fn has_clients(&self, port: &str) -> bool {
+        self.sessions
+            .get(port)
+            .map(|s| !s.reader_client_ids.is_empty() || s.writer_client_id.is_some())
+            .unwrap_or(false)
+    }
+
     /// Acquire exclusive write access to a port.
     pub async fn acquire_writer(&self, port: &str, client_id: &str) -> fbuild_core::Result<()> {
         if let Some(mut session) = self.sessions.get_mut(port) {
@@ -419,5 +470,75 @@ pub struct PortSessionInfo {
 impl Default for SharedSerialManager {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// TDD red→green for ISSUES.md "Issue C": calling `open_port` against a
+    /// definitely-nonexistent port must NOT block other tokio tasks on the
+    /// same multi-thread runtime. Before the spawn_blocking fix, the
+    /// synchronous `serialport::open()` call held one of the worker threads
+    /// for the full retry budget; with only one worker, a concurrently
+    /// scheduled task could not run until the open finished.
+    ///
+    /// We use a 1-worker multi-thread runtime to make the regression
+    /// observable: with the fix, the keepalive task runs while the open
+    /// retries are blocked on a *blocking-pool* thread; without the fix,
+    /// the open call hogs the only worker and the keepalive ticks never
+    /// fire until the retries time out (~15s on Windows).
+    #[test]
+    fn open_port_does_not_starve_runtime_workers() {
+        let rt = tokio::runtime::Builder::new_multi_thread()
+            .worker_threads(1)
+            .enable_all()
+            .build()
+            .expect("build runtime");
+
+        rt.block_on(async {
+            let mgr = Arc::new(SharedSerialManager::new());
+            let mgr_open = Arc::clone(&mgr);
+
+            // Pick a port name that cannot exist on any platform so the
+            // open call always fails and retries through the full schedule.
+            // Using a very long invalid name avoids the slim chance of
+            // matching an actual /dev/ttyUSB* on Linux CI runners.
+            let bogus_port = "FBUILD_TEST_NONEXISTENT_PORT_xyz_zzz".to_string();
+
+            let open_task = tokio::spawn(async move {
+                let _ = mgr_open.open_port(&bogus_port, 115200, "test_client").await;
+            });
+
+            // Concurrent keepalive: should tick at least 5 times (5 × 50ms
+            // = 250ms) within the first second of the open retries. With
+            // the bug present, this counter would still be 0 because the
+            // single worker is blocked inside `serialport::open()`.
+            let ticks = Arc::new(std::sync::atomic::AtomicUsize::new(0));
+            let ticks_clone = Arc::clone(&ticks);
+            let keepalive = tokio::spawn(async move {
+                for _ in 0..20 {
+                    tokio::time::sleep(Duration::from_millis(50)).await;
+                    ticks_clone.fetch_add(1, Ordering::Relaxed);
+                }
+            });
+
+            // Wait for the keepalive to finish (1s).
+            let _ = tokio::time::timeout(Duration::from_secs(3), keepalive).await;
+            let observed = ticks.load(Ordering::Relaxed);
+
+            // Abort the open task — we don't care about its result, only
+            // that it didn't starve the runtime.
+            open_task.abort();
+
+            assert!(
+                observed >= 5,
+                "concurrent task ticked {} times in 1s while open_port \
+                 was retrying — runtime worker is starved (Issue C \
+                 regression: serialport::open() must run via spawn_blocking)",
+                observed
+            );
+        });
     }
 }

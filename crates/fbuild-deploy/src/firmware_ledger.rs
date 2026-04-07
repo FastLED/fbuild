@@ -26,6 +26,16 @@ pub struct FirmwareEntry {
     pub upload_timestamp: f64,
     #[serde(default)]
     pub build_flags_hash: Option<String>,
+    /// SHA256 of `bootloader.bin` at the time of deployment, if present.
+    /// Tracked separately from the firmware so that bootloader rebuilds
+    /// (e.g. switching DIO/QIO modes) force a redeploy even when the
+    /// application binary is unchanged. See ISSUES.md "Issue B4".
+    #[serde(default)]
+    pub bootloader_hash: Option<String>,
+    /// SHA256 of `partitions.bin` at the time of deployment, if present.
+    /// Tracked for the same reason as `bootloader_hash`.
+    #[serde(default)]
+    pub partitions_hash: Option<String>,
 }
 
 impl FirmwareEntry {
@@ -84,6 +94,7 @@ impl FirmwareLedger {
     }
 
     /// Record a successful firmware deployment.
+    #[allow(clippy::too_many_arguments)]
     pub fn record_deployment(
         &self,
         port: &str,
@@ -92,6 +103,8 @@ impl FirmwareLedger {
         project_dir: &str,
         environment: &str,
         build_flags_hash: Option<&str>,
+        bootloader_hash: Option<&str>,
+        partitions_hash: Option<&str>,
     ) {
         let entry = FirmwareEntry {
             port: port.to_string(),
@@ -104,6 +117,8 @@ impl FirmwareLedger {
                 .unwrap_or_default()
                 .as_secs_f64(),
             build_flags_hash: build_flags_hash.map(|s| s.to_string()),
+            bootloader_hash: bootloader_hash.map(|s| s.to_string()),
+            partitions_hash: partitions_hash.map(|s| s.to_string()),
         };
         let mut entries = self.entries.lock().unwrap();
         entries.insert(port.to_string(), entry);
@@ -120,11 +135,21 @@ impl FirmwareLedger {
 
     /// Check whether the firmware on `port` needs to be redeployed.
     /// Returns `true` if a redeploy is required.
+    ///
+    /// In addition to the application source/flags, this also compares
+    /// the bootloader and partitions hashes if the caller provides them
+    /// (Some). A bootloader rebuild that changes `bootloader.bin` is not
+    /// reflected in the source hash, so without this check the ledger
+    /// would mark the device as up-to-date and skip flashing — leaving
+    /// the device booted off the previous (broken) bootloader. See
+    /// ISSUES.md "Issue B4".
     pub fn needs_redeploy(
         &self,
         port: &str,
         source_hash: &str,
         build_flags_hash: Option<&str>,
+        bootloader_hash: Option<&str>,
+        partitions_hash: Option<&str>,
     ) -> bool {
         match self.get_deployment(port) {
             None => true,
@@ -136,6 +161,28 @@ impl FirmwareLedger {
                 if entry.build_flags_hash.as_deref() != build_flags_hash {
                     tracing::info!("firmware ledger: build flags changed for port {}", port);
                     return true;
+                }
+                // Only enforce bootloader/partitions hash equality when the
+                // caller actually computed them (Some). A None on the caller
+                // side means "not applicable to this platform" (e.g. AVR)
+                // and must not invalidate the ledger entry.
+                if let Some(new_boot) = bootloader_hash {
+                    if entry.bootloader_hash.as_deref() != Some(new_boot) {
+                        tracing::info!(
+                            "firmware ledger: bootloader hash changed for port {}",
+                            port
+                        );
+                        return true;
+                    }
+                }
+                if let Some(new_parts) = partitions_hash {
+                    if entry.partitions_hash.as_deref() != Some(new_parts) {
+                        tracing::info!(
+                            "firmware ledger: partitions hash changed for port {}",
+                            port
+                        );
+                        return true;
+                    }
                 }
                 tracing::info!(
                     "firmware ledger: firmware on {} is current, skipping redeploy",
@@ -285,6 +332,8 @@ mod tests {
                 .unwrap()
                 .as_secs_f64(),
             build_flags_hash: None,
+            bootloader_hash: None,
+            partitions_hash: None,
         };
         assert!(!entry.is_stale());
     }
@@ -299,6 +348,8 @@ mod tests {
             environment: "esp32dev".to_string(),
             upload_timestamp: 1000.0, // Very old timestamp
             build_flags_hash: None,
+            bootloader_hash: None,
+            partitions_hash: None,
         };
         assert!(entry.is_stale());
     }
@@ -312,7 +363,9 @@ mod tests {
             entries: Mutex::new(HashMap::new()),
         };
 
-        ledger.record_deployment("COM3", "fw_hash", "src_hash", "/project", "esp32dev", None);
+        ledger.record_deployment(
+            "COM3", "fw_hash", "src_hash", "/project", "esp32dev", None, None, None,
+        );
 
         let entry = ledger.get_deployment("COM3").unwrap();
         assert_eq!(entry.firmware_hash, "fw_hash");
@@ -337,19 +390,80 @@ mod tests {
             "/project",
             "esp32dev",
             Some("flags_hash"),
+            None,
+            None,
         );
 
         // Same source + flags → no redeploy
-        assert!(!ledger.needs_redeploy("COM3", "src_hash_v1", Some("flags_hash")));
+        assert!(!ledger.needs_redeploy("COM3", "src_hash_v1", Some("flags_hash"), None, None));
 
         // Changed source → needs redeploy
-        assert!(ledger.needs_redeploy("COM3", "src_hash_v2", Some("flags_hash")));
+        assert!(ledger.needs_redeploy("COM3", "src_hash_v2", Some("flags_hash"), None, None));
 
         // Changed flags → needs redeploy
-        assert!(ledger.needs_redeploy("COM3", "src_hash_v1", Some("flags_hash_v2")));
+        assert!(ledger.needs_redeploy("COM3", "src_hash_v1", Some("flags_hash_v2"), None, None));
 
         // Unknown port → needs redeploy
-        assert!(ledger.needs_redeploy("COM4", "src_hash_v1", Some("flags_hash")));
+        assert!(ledger.needs_redeploy("COM4", "src_hash_v1", Some("flags_hash"), None, None));
+    }
+
+    /// TDD red→green: bootloader hash changes must invalidate the ledger.
+    /// This is the regression for ISSUES.md "Issue B4": after a bootloader
+    /// rebuild that flips DIO/QIO, fbuild used to skip redeploy because only
+    /// the application source hash was tracked, leaving the device booting
+    /// off the previous (broken) bootloader forever.
+    #[test]
+    fn ledger_needs_redeploy_on_bootloader_change() {
+        let tmp = TempDir::new().unwrap();
+        let ledger = FirmwareLedger {
+            path: tmp.path().join("firmware_ledger.json"),
+            entries: Mutex::new(HashMap::new()),
+        };
+
+        ledger.record_deployment(
+            "COM3",
+            "fw",
+            "src_v1",
+            "/project",
+            "esp32s3",
+            Some("flags_v1"),
+            Some("boot_v1"),
+            Some("parts_v1"),
+        );
+
+        // Identical to recorded deploy → no redeploy.
+        assert!(!ledger.needs_redeploy(
+            "COM3",
+            "src_v1",
+            Some("flags_v1"),
+            Some("boot_v1"),
+            Some("parts_v1"),
+        ));
+
+        // Bootloader changed (e.g. DIO ↔ QIO rebuild) but source identical →
+        // MUST redeploy. Without the bootloader hash this returned false and
+        // the device kept running the broken bootloader.
+        assert!(ledger.needs_redeploy(
+            "COM3",
+            "src_v1",
+            Some("flags_v1"),
+            Some("boot_v2"),
+            Some("parts_v1"),
+        ));
+
+        // Partitions changed → MUST redeploy.
+        assert!(ledger.needs_redeploy(
+            "COM3",
+            "src_v1",
+            Some("flags_v1"),
+            Some("boot_v1"),
+            Some("parts_v2"),
+        ));
+
+        // Caller passes None for bootloader/partitions (e.g. AVR target) →
+        // hashes are not enforced and the entry is still valid as long as
+        // source and flags match.
+        assert!(!ledger.needs_redeploy("COM3", "src_v1", Some("flags_v1"), None, None));
     }
 
     #[test]
@@ -361,8 +475,8 @@ mod tests {
             entries: Mutex::new(HashMap::new()),
         };
 
-        ledger.record_deployment("COM3", "h1", "s1", "/p1", "e1", None);
-        ledger.record_deployment("COM4", "h2", "s2", "/p2", "e2", None);
+        ledger.record_deployment("COM3", "h1", "s1", "/p1", "e1", None, None, None);
+        ledger.record_deployment("COM4", "h2", "s2", "/p2", "e2", None, None, None);
 
         ledger.clear("COM3");
         assert!(ledger.get_deployment("COM3").is_none());
@@ -424,7 +538,7 @@ mod tests {
                 path: ledger_path.clone(),
                 entries: Mutex::new(HashMap::new()),
             };
-            ledger.record_deployment("COM3", "fw", "src", "/p", "env", None);
+            ledger.record_deployment("COM3", "fw", "src", "/p", "env", None, None, None);
         }
 
         // Load from disk

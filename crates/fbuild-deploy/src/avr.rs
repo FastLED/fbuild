@@ -71,6 +71,15 @@ impl AvrDeployer {
             verbose,
         )
     }
+
+    /// Override the baud rate (e.g. from a CLI `--baud` flag). Mirrors
+    /// `Esp32Deployer::with_baud_rate` so the daemon can apply the user's
+    /// CLI override on either platform without branching. See ISSUES.md
+    /// "Issue I".
+    pub fn with_baud_rate(mut self, baud: &str) -> Self {
+        self.baud_rate = baud.to_string();
+        self
+    }
 }
 
 impl Deployer for AvrDeployer {
@@ -167,6 +176,16 @@ mod tests {
         assert_eq!(deployer.mcu, "atmega328p");
         assert_eq!(deployer.programmer, "arduino");
         assert_eq!(deployer.baud_rate, "115200");
+    }
+
+    #[test]
+    fn with_baud_rate_overrides_board_default() {
+        // TDD red→green for ISSUES.md "Issue I": the deploy CLI's `--baud`
+        // flag must reach the deployer and override `board.upload_speed`,
+        // not just be silently dropped.
+        let deployer = AvrDeployer::new("atmega328p", "arduino", "115200", 60, None, false)
+            .with_baud_rate("57600");
+        assert_eq!(deployer.baud_rate, "57600");
     }
 
     #[test]

@@ -7,7 +7,7 @@ use fbuild_core::DaemonState;
 use fbuild_deploy::firmware_ledger::FirmwareLedger;
 use fbuild_serial::SharedSerialManager;
 use std::path::PathBuf;
-use std::sync::atomic::AtomicBool;
+use std::sync::atomic::{AtomicBool, AtomicUsize};
 use std::sync::Arc;
 use std::time::Instant;
 use tokio::sync::Mutex;
@@ -87,6 +87,13 @@ pub struct DaemonContext {
     pub is_shutting_down: Arc<AtomicBool>,
     /// Whether a build/deploy operation is currently in progress.
     pub operation_in_progress: Arc<AtomicBool>,
+    /// Number of WebSocket connections currently inside the serial-monitor
+    /// handler (e.g. waiting for a port to open). Counted independently of
+    /// `serial_manager` sessions because a port may take seconds to open
+    /// during USB re-enumeration; without this counter the daemon would
+    /// self-evict mid-attach and the client would see a forcibly-closed
+    /// WebSocket. See ISSUES.md "Self-eviction during pending serial attach".
+    pub pending_serial_attaches: Arc<AtomicUsize>,
     /// Current daemon state (idle, building, deploying, etc.).
     pub daemon_state: Arc<std::sync::RwLock<DaemonState>>,
     /// Description of the current operation (e.g. project dir being built).
@@ -129,6 +136,7 @@ impl DaemonContext {
             serial_manager: Arc::new(SharedSerialManager::new()),
             is_shutting_down: Arc::new(AtomicBool::new(false)),
             operation_in_progress: Arc::new(AtomicBool::new(false)),
+            pending_serial_attaches: Arc::new(AtomicUsize::new(0)),
             daemon_state: Arc::new(std::sync::RwLock::new(DaemonState::Idle)),
             current_operation: Arc::new(std::sync::RwLock::new(None)),
             project_locks: DashMap::new(),
@@ -154,13 +162,20 @@ impl DaemonContext {
         }
     }
 
-    /// Check whether the daemon is completely idle (no ops, no serial sessions).
+    /// Check whether the daemon is completely idle (no ops, no serial sessions,
+    /// no pending serial attaches). Pending attaches are counted separately
+    /// because a WebSocket client may be in the middle of opening a port; if
+    /// we self-evict during that window the client sees a forcibly-closed
+    /// WebSocket and the autoresearch lifecycle breaks.
     pub fn is_empty(&self) -> bool {
         let op_running = self
             .operation_in_progress
             .load(std::sync::atomic::Ordering::Relaxed);
         let serial_session_count = self.serial_manager.get_port_sessions().len();
-        !op_running && serial_session_count == 0
+        let pending_attaches = self
+            .pending_serial_attaches
+            .load(std::sync::atomic::Ordering::Relaxed);
+        !op_running && serial_session_count == 0 && pending_attaches == 0
     }
 
     /// How long since the daemon started.
@@ -231,5 +246,32 @@ mod tests {
         let lock1 = ctx.project_lock(&PathBuf::from("/tmp/a"));
         let lock2 = ctx.project_lock(&PathBuf::from("/tmp/b"));
         assert!(!Arc::ptr_eq(&lock1, &lock2));
+    }
+
+    /// Issue A follow-up: a streaming serial monitor must keep
+    /// `idle_duration()` near zero by calling `touch_activity()` on every
+    /// inbound line. Verify the contract: stale -> touch -> fresh.
+    #[test]
+    fn touch_activity_resets_idle_duration() {
+        let ctx = make_ctx();
+        // Force last_activity into the past so idle_duration is non-zero.
+        {
+            let mut t = ctx.last_activity.lock().unwrap();
+            *t = Instant::now() - Duration::from_secs(60);
+        }
+        let stale = ctx.idle_duration();
+        assert!(
+            stale >= Duration::from_secs(59),
+            "expected stale idle_duration ≥59s, got {:?}",
+            stale
+        );
+
+        ctx.touch_activity();
+        let fresh = ctx.idle_duration();
+        assert!(
+            fresh < Duration::from_secs(1),
+            "touch_activity must reset idle_duration to ~0, got {:?}",
+            fresh
+        );
     }
 }

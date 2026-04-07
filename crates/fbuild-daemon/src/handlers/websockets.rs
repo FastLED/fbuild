@@ -21,7 +21,36 @@ pub async fn ws_serial_monitor(
     ws.on_upgrade(move |socket| handle_serial_ws(socket, ctx))
 }
 
+/// RAII guard that increments `pending_serial_attaches` on construction and
+/// decrements on drop. Prevents the daemon's self-eviction loop from killing
+/// the daemon while a WebSocket client is mid-attach (e.g. waiting for
+/// `open_port` to complete its USB re-enumeration retries).
+struct PendingAttachGuard {
+    ctx: Arc<DaemonContext>,
+}
+
+impl PendingAttachGuard {
+    fn new(ctx: Arc<DaemonContext>) -> Self {
+        ctx.pending_serial_attaches
+            .fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+        Self { ctx }
+    }
+}
+
+impl Drop for PendingAttachGuard {
+    fn drop(&mut self) {
+        self.ctx
+            .pending_serial_attaches
+            .fetch_sub(1, std::sync::atomic::Ordering::Relaxed);
+    }
+}
+
 async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
+    // Mark this attach as pending so the self-eviction loop won't shut the
+    // daemon down while we're waiting for `open_port` to finish (USB
+    // re-enumeration on Windows can take 10+ seconds).
+    let _attach_guard = PendingAttachGuard::new(ctx.clone());
+
     // Wait for the attach message
     let (client_id, port, baud_rate, pre_acquire_writer) = match socket.recv().await {
         Some(Ok(Message::Text(text))) => {
@@ -121,6 +150,17 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                 match result {
                     Ok(line) => {
                         line_index += 1;
+                        // A streaming serial monitor is "active" — bump
+                        // last_activity on every line so the 12-hour
+                        // IDLE_TIMEOUT doesn't kill a long unattended
+                        // autoresearch run. Self-eviction is already
+                        // handled separately by `pending_serial_attaches`
+                        // + open serial session count, but `idle_duration()`
+                        // is independent and would otherwise tick toward
+                        // the 12h fallback. See ISSUES.md outstanding
+                        // "self-eviction grace period during attach"
+                        // (Issue A follow-up).
+                        ctx.touch_activity();
 
                         // Process through crash decoder
                         let mut lines = vec![line.clone()];
@@ -150,6 +190,12 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                     Some(Ok(Message::Text(text))) => {
                         match serde_json::from_str::<SerialClientMessage>(&text) {
                             Ok(SerialClientMessage::Write { data }) => {
+                                // Inbound writes also count as activity —
+                                // resets idle timer so client-driven
+                                // sessions (e.g. JSON-RPC over serial)
+                                // keep the daemon hot. See Issue A
+                                // follow-up in ISSUES.md.
+                                ctx.touch_activity();
                                 let decoded = match base64::engine::general_purpose::STANDARD.decode(&data) {
                                     Ok(d) => d,
                                     Err(e) => {
@@ -196,10 +242,24 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
         }
     }
 
-    // Cleanup
+    // Cleanup: detach reader, release writer, and close the port if we
+    // were the last client. Without the close, the daemon's background
+    // reader keeps the OS file handle open, blocking other tools (e.g.
+    // `pyserial.Serial(...)` from the same Python process) with
+    // "Access is denied" until the daemon itself shuts down.
     ctx.serial_manager.detach_reader(&port, &client_id);
     if writer_acquired {
         ctx.serial_manager.release_writer(&port, &client_id);
+    }
+    if !ctx.serial_manager.has_clients(&port) {
+        if let Err(e) = ctx.serial_manager.close_port(&port, &client_id).await {
+            tracing::warn!(
+                client_id,
+                port,
+                "failed to close port on last detach: {}",
+                e
+            );
+        }
     }
 }
 

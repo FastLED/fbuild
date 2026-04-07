@@ -93,6 +93,13 @@ impl BoardConfig {
             ))
         })?;
 
+        // For ESP32 chips we deliberately drop the boards.txt `flash_mode`
+        // field and let downstream consumers fall back to the per-MCU
+        // default ("dio"). See the equivalent comment in `from_board_id`
+        // for the rationale (ESP32-S3 QIE-bit unreliability + bootloader
+        // ROM that requires DIO).
+        let is_esp32_family = mcu.starts_with("esp32");
+
         Ok(Self {
             name,
             mcu,
@@ -114,7 +121,11 @@ impl BoardConfig {
             max_ram: get("maximum_data_size")
                 .or_else(|| props.get("maximum_data_size").cloned())
                 .and_then(|s| s.parse().ok()),
-            flash_mode: get("flash_mode"),
+            flash_mode: if is_esp32_family {
+                overrides.get("flash_mode").cloned()
+            } else {
+                get("flash_mode")
+            },
             f_flash: get("f_flash"),
             f_image: get("f_image"),
             partitions: get("partitions"),
@@ -141,6 +152,13 @@ impl BoardConfig {
                 .cloned()
                 .unwrap_or_else(|| defaults.get(key).cloned().unwrap_or(default.to_string()))
         };
+
+        // Determine if this is an ESP32-family chip — used to ignore the
+        // board JSON's `flash_mode` field below. We have to compute this
+        // here (before constructing Self) because the resolution of
+        // `flash_mode` happens inside the struct literal.
+        let resolved_mcu = get("mcu", "unknown");
+        let is_esp32_family = resolved_mcu.starts_with("esp32");
 
         Ok(Self {
             name: get("name", board_id),
@@ -181,10 +199,28 @@ impl BoardConfig {
                         .get("maximum_data_size")
                         .and_then(|s| s.parse().ok())
                 }),
-            flash_mode: overrides
-                .get("flash_mode")
-                .cloned()
-                .or_else(|| defaults.get("flash_mode").cloned()),
+            // Flash mode resolution:
+            //   - For ESP32 chips, IGNORE the board JSON's flash_mode field.
+            //     Many board JSONs ship `flash_mode: qio` because the flash
+            //     chip *supports* QIO, but ESP32-S3's QIE-bit init is
+            //     unreliable on real hardware. The MCU-level default
+            //     (`default_flash_mode` in fbuild-build's esp32 configs) is
+            //     "dio" for the entire ESP32 family — that's the safe value
+            //     to use unless the user explicitly opts in via the env
+            //     section's `board_build.flash_mode = qio`.
+            //   - For non-ESP32 chips, the existing behaviour is preserved
+            //     (env override → board JSON → None).
+            //   - Either way, downstream code that needs an effective value
+            //     when this is `None` should fall back to
+            //     `mcu_config.default_flash_mode()`.
+            flash_mode: if is_esp32_family {
+                overrides.get("flash_mode").cloned()
+            } else {
+                overrides
+                    .get("flash_mode")
+                    .cloned()
+                    .or_else(|| defaults.get("flash_mode").cloned())
+            },
             f_flash: overrides
                 .get("f_flash")
                 .cloned()
@@ -837,10 +873,24 @@ leonardo.upload.speed=57600
         let config = BoardConfig::from_board_id("esp32dev", &HashMap::new()).unwrap();
         assert_eq!(config.core, "esp32");
         assert_eq!(config.variant, "esp32");
-        assert_eq!(config.flash_mode, Some("dio".to_string()));
+        // ESP32 boards now intentionally drop the JSON-shipped flash_mode
+        // (see comments in `from_board_id`). Downstream consumers fall back
+        // to mcu_config.default_flash_mode() which is "dio".
+        assert_eq!(config.flash_mode, None);
         assert_eq!(config.f_flash, Some("40000000L".to_string()));
         assert_eq!(config.ldscript, Some("esp32_out.ld".to_string()));
         assert_eq!(config.upload_speed, Some("460800".to_string()));
+    }
+
+    #[test]
+    fn test_esp32_flash_mode_env_override_honoured() {
+        // The user can opt back into QIO via `board_build.flash_mode = qio`
+        // in their [env:X] section, which the daemon translates into a
+        // `flash_mode` override key.
+        let mut overrides = HashMap::new();
+        overrides.insert("flash_mode".to_string(), "qio".to_string());
+        let config = BoardConfig::from_board_id("esp32dev", &overrides).unwrap();
+        assert_eq!(config.flash_mode, Some("qio".to_string()));
     }
 
     #[test]
@@ -864,7 +914,9 @@ leonardo.upload.speed=57600
         let config = BoardConfig::from_board_id("esp32c3", &HashMap::new()).unwrap();
         assert_eq!(config.mcu, "esp32c3");
         assert_eq!(config.core, "esp32");
-        assert_eq!(config.flash_mode, Some("qio".to_string()));
+        // ESP32 boards drop the JSON-shipped flash_mode (see
+        // `test_esp32dev_enriched_fields`); fall back is "dio" from MCU config.
+        assert_eq!(config.flash_mode, None);
         assert_eq!(config.ldscript, Some("esp32c3_out.ld".to_string()));
         // ESP32-C3 DevKit runs at 160 MHz
         assert_eq!(config.f_cpu, "160000000L");

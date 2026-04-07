@@ -38,6 +38,18 @@ base64 = { workspace = true }
 bytes = { workspace = true }
 futures = { workspace = true }
 regex = { workspace = true }
+# socket2 used in main.rs to set SO_REUSEADDR (Unix) /
+# SO_EXCLUSIVEADDRUSE (Windows) before binding the daemon's TCP listener,
+# so the daemon can recover when a previous (crashed) instance left
+# CLOSE_WAIT/TIME_WAIT entries on the port without permitting port hijack
+# on Windows. See ISSUES.md "Issue B5a".
+socket2 = "0.6"
+
+# libc::kill(pid, 0) is used as a probe to detect dead daemon PIDs at
+# startup (stale-PID cleanup). Unix-only — Windows uses a manual
+# OpenProcess FFI in main.rs.
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
 
 [dependencies.mimalloc]
 workspace = true

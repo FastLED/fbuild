@@ -713,15 +713,39 @@ impl BuildOrchestrator for Esp32Orchestrator {
             tracing::info!("copied bootloader.bin");
         } else {
             // Convert bootloader ELF to BIN using esptool elf2image.
-            // The bootloader ELF filename encodes the flash mode and frequency.
-            // ESP32 ROM bootloader typically requires DIO mode regardless of
-            // application flash mode, but we use the board's configured mode
-            // since the Arduino core names the ELF accordingly.
-            let boot_flash_mode = ctx
+            //
+            // CRITICAL: The ESP32 ROM bootloader can only fetch the second-stage
+            // bootloader from flash in DIO mode (or OPI mode for octal-SPI
+            // boards). Even if the application is QIO, the bootloader itself
+            // must be DIO — otherwise the ROM bootloader cannot read it and
+            // the chip enters a watchdog reset loop with `Saved PC` pointing
+            // into ROM (e.g. `0x400454d5` on ESP32-S3).
+            //
+            // The Arduino-ESP32 framework ships pre-built ELFs named
+            // `bootloader_<mode>_<freq>.elf` for this exact reason; we pick
+            // `bootloader_dio_80m.elf` for non-OPI boards and pass
+            // `--flash-mode dio` to esptool so the resulting BIN header
+            // (byte 0x02) has the correct mode. The application's flash
+            // mode (which may be QIO/QOUT/etc) is unaffected — that mode
+            // is encoded in the firmware.bin and applied later by the
+            // second-stage bootloader.
+            //
+            // We treat the app's `flash_mode` as OPI iff it equals "opi";
+            // every other value (qio, qout, dio, dout, undefined) maps to
+            // a DIO bootloader. This matches Arduino-ESP32 / PlatformIO
+            // behaviour. Frequency is taken as-is because the bootloader
+            // ELFs only exist at 80m (and 120m for QIO chips), and the
+            // ROM bootloader runs at the boot frequency anyway.
+            let app_flash_mode = ctx
                 .board
                 .flash_mode
                 .as_deref()
                 .unwrap_or(mcu_config.default_flash_mode());
+            let boot_flash_mode = if app_flash_mode == "opi" {
+                "opi"
+            } else {
+                "dio"
+            };
             let boot_elf =
                 framework.get_bootloader_elf(&ctx.board.mcu, boot_flash_mode, &flash_freq);
             if boot_elf.exists() {

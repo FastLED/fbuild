@@ -264,7 +264,11 @@ impl SerialMonitor {
                 let remaining = deadline - std::time::Instant::now();
                 let result = {
                     let mut read = ws_read.lock().unwrap();
-                    rt.block_on(tokio::time::timeout(remaining, read.next()))
+                    // tokio::time::timeout MUST be constructed inside the
+                    // runtime context, otherwise it panics with "there is
+                    // no reactor running" because the Sleep future needs
+                    // Handle::current() to register with the timer driver.
+                    rt.block_on(async { tokio::time::timeout(remaining, read.next()).await })
                 };
 
                 match result {
@@ -342,7 +346,8 @@ impl SerialMonitor {
         // Wait for write_ack
         let mut read = ws_read.lock().unwrap();
         let timeout = std::time::Duration::from_secs(5);
-        match rt.block_on(tokio::time::timeout(timeout, read.next())) {
+        // tokio::time::timeout must be created inside the runtime context.
+        match rt.block_on(async { tokio::time::timeout(timeout, read.next()).await }) {
             Ok(Some(Ok(tungstenite::Message::Text(text)))) => {
                 if let Ok(ServerMessage::WriteAck { bytes_written, .. }) =
                     serde_json::from_str(&text)
@@ -441,7 +446,9 @@ impl SerialMonitor {
             let remaining = deadline - std::time::Instant::now();
             let result = {
                 let mut read = ws_read.lock().unwrap();
-                rt.block_on(tokio::time::timeout(remaining, read.next()))
+                // tokio::time::timeout must be created inside the runtime
+                // context (otherwise: "there is no reactor running" panic).
+                rt.block_on(async { tokio::time::timeout(remaining, read.next()).await })
             };
 
             match result {

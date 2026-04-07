@@ -54,6 +54,33 @@ impl Drop for OperationGuard {
     }
 }
 
+/// Compute SHA256 hashes of `bootloader.bin` and `partitions.bin` next to a
+/// freshly-built `firmware.bin`. Returns `(None, None)` for non-ESP builds
+/// where these artifacts don't exist. Used by the firmware ledger so that a
+/// bootloader rebuild (e.g. DIO ↔ QIO) forces a redeploy even when the
+/// application source hash is unchanged. See ISSUES.md "Issue B4".
+fn compute_boot_parts_hashes(
+    build_dir: Option<&std::path::Path>,
+) -> (Option<String>, Option<String>) {
+    let dir = match build_dir {
+        Some(d) => d,
+        None => return (None, None),
+    };
+    let boot = dir.join("bootloader.bin");
+    let parts = dir.join("partitions.bin");
+    let boot_hash = if boot.exists() {
+        fbuild_deploy::firmware_ledger::compute_firmware_hash(&boot).ok()
+    } else {
+        None
+    };
+    let parts_hash = if parts.exists() {
+        fbuild_deploy::firmware_ledger::compute_firmware_hash(&parts).ok()
+    } else {
+        None
+    };
+    (boot_hash, parts_hash)
+}
+
 /// POST /api/build
 pub async fn build(
     State(ctx): State<Arc<DaemonContext>>,
@@ -442,7 +469,11 @@ pub async fn deploy(
         }
     };
 
-    // Firmware ledger: check if source+flags are unchanged → skip build+deploy
+    // Firmware ledger: check if source+flags+bootloader+partitions are
+    // unchanged → skip build+deploy. The bootloader/partitions hashes are
+    // computed against the *previously built* artifacts (if they exist) so
+    // a stale entry from a build that produced a broken bootloader doesn't
+    // shadow the next deploy. See ISSUES.md "Issue B4".
     let deploy_port_for_ledger = req.port.clone();
     if !req.skip_build && !req.clean_build {
         if let Some(ref port) = deploy_port_for_ledger {
@@ -460,10 +491,29 @@ pub async fn deploy(
                 .unwrap_or_default();
             let flags_hash = fbuild_deploy::firmware_ledger::compute_build_flags_hash(&build_flags);
 
-            if !ctx
-                .firmware_ledger
-                .needs_redeploy(port, &source_hash, Some(&flags_hash))
-            {
+            // Look up any pre-existing bootloader/partitions hashes from the
+            // last build. find_firmware locates `firmware.bin`; the sibling
+            // `bootloader.bin`/`partitions.bin` live in the same directory.
+            let (boot_hash, parts_hash) =
+                match fbuild_paths::find_firmware(&project_dir, &env_name, None) {
+                    Some(fw) => {
+                        let dir = fw.parent().map(|p| p.to_path_buf());
+                        tokio::task::spawn_blocking(move || {
+                            compute_boot_parts_hashes(dir.as_deref())
+                        })
+                        .await
+                        .unwrap_or((None, None))
+                    }
+                    None => (None, None),
+                };
+
+            if !ctx.firmware_ledger.needs_redeploy(
+                port,
+                &source_hash,
+                Some(&flags_hash),
+                boot_hash.as_deref(),
+                parts_hash.as_deref(),
+            ) {
                 tracing::info!("firmware ledger: skipping build+deploy for {}", port);
                 return (
                     StatusCode::OK,
@@ -580,6 +630,15 @@ pub async fn deploy(
             .unwrap_or_else(|_| "unknown".to_string())
     });
 
+    // Extract env-section board_build.* / board_upload.* overrides BEFORE
+    // spawn_blocking (env_config borrows config). Without these, fbuild
+    // would silently ignore `board_build.flash_mode = dio` (and friends)
+    // from the user's [env:X] section and fall back to whatever the board
+    // JSON says — producing a firmware/bootloader that doesn't match the
+    // hardware. The build phase already passes overrides; the deploy phase
+    // must do the same so esptool flashes with the right --flash-mode.
+    let board_overrides = config.get_board_overrides(&env_name).unwrap_or_default();
+
     // Deploy
     let deploy_env = env_name.clone();
     let deploy_project = project_dir.clone();
@@ -590,19 +649,22 @@ pub async fn deploy(
         let deployer: Box<dyn fbuild_deploy::Deployer> = match platform {
             fbuild_core::Platform::Espressif32 => {
                 let board_config =
-                    fbuild_config::BoardConfig::from_board_id(&board_id, &Default::default())
+                    fbuild_config::BoardConfig::from_board_id(&board_id, &board_overrides)
                         .unwrap_or_else(|_| {
-                            fbuild_config::BoardConfig::from_board_id(
-                                "esp32dev",
-                                &Default::default(),
-                            )
-                            .unwrap()
+                            fbuild_config::BoardConfig::from_board_id("esp32dev", &board_overrides)
+                                .unwrap()
                         });
                 // Load MCU config to get flash offsets and esptool defaults.
                 let mcu_config = fbuild_build::esp32::mcu_config::get_mcu_config(&board_config.mcu)
                     .unwrap_or_else(|_| {
                         fbuild_build::esp32::mcu_config::get_mcu_config("esp32").unwrap()
                     });
+                // Flash mode: `board_config.flash_mode` is `None` for ESP32
+                // chips unless the user explicitly set `board_build.flash_mode`
+                // in their `[env:X]` section (see `BoardConfig::from_board_id`
+                // — the JSON-shipped value is intentionally dropped for ESP32
+                // because ESP32-S3's QIE-bit init is unreliable). The unwrap
+                // therefore falls back to the per-MCU default "dio".
                 let esptool_params = fbuild_deploy::esp32::EsptoolParams {
                     flash_mode: board_config
                         .flash_mode
@@ -636,13 +698,68 @@ pub async fn deploy(
                 } else {
                     deployer
                 };
+
+                // Fast deploy: ask the device whether it already holds
+                // the exact firmware/bootloader/partitions we'd be about
+                // to write. Uses esptool's `verify-flash` which dispatches
+                // to the stub flasher's `FLASH_MD5SUM` command — no full
+                // read-back, just one MD5 round-trip per region.
+                //
+                // Measured on a 2.4 MB FastLED esp32s3 image:
+                //   * fresh write-flash: ~25 s
+                //   * verify-flash skip: ~6 s   (-19 s, ~76% faster)
+                //
+                // Falls through to the normal flash path silently on
+                // mismatch or transport error so we never break a deploy
+                // that the verify call didn't understand.
+                if let Some(port) = deploy_port.as_deref() {
+                    match deployer.try_verify_deployment(&deploy_fw, port) {
+                        Ok(outcome) if outcome.is_match() => {
+                            let (stdout, stderr) = match outcome {
+                                fbuild_deploy::esp32::VerifyOutcome::Match {
+                                    stdout,
+                                    stderr,
+                                } => (stdout, stderr),
+                                _ => (String::new(), String::new()),
+                            };
+                            tracing::info!(
+                                port,
+                                "verify-flash: device already running this exact image; skipping write"
+                            );
+                            return Ok(fbuild_deploy::DeploymentResult {
+                                success: true,
+                                message: format!(
+                                    "firmware already current on {} (skipped via verify-flash)",
+                                    port
+                                ),
+                                port: Some(port.to_string()),
+                                stdout,
+                                stderr,
+                            });
+                        }
+                        Ok(_) => {
+                            tracing::info!(
+                                port,
+                                "verify-flash: device image differs; proceeding with full flash"
+                            );
+                        }
+                        Err(e) => {
+                            tracing::warn!(
+                                port,
+                                "verify-flash pre-check failed ({}); proceeding with full flash",
+                                e
+                            );
+                        }
+                    }
+                }
+
                 Box::new(deployer)
             }
             fbuild_core::Platform::AtmelAvr | fbuild_core::Platform::AtmelMegaAvr => {
                 let board_config =
-                    fbuild_config::BoardConfig::from_board_id(&board_id, &Default::default())
+                    fbuild_config::BoardConfig::from_board_id(&board_id, &board_overrides)
                         .unwrap_or_else(|_| {
-                            fbuild_config::BoardConfig::from_board_id("uno", &Default::default())
+                            fbuild_config::BoardConfig::from_board_id("uno", &board_overrides)
                                 .unwrap()
                         });
                 let avr_config = fbuild_build::avr::mcu_config::get_avr_config().unwrap();
@@ -651,11 +768,17 @@ pub async fn deploy(
                     default_baud: avr_config.avrdude.default_baud.to_string(),
                     timeout_secs: avr_config.avrdude.timeout_secs,
                 };
-                Box::new(fbuild_deploy::avr::AvrDeployer::from_board_config(
+                let deployer = fbuild_deploy::avr::AvrDeployer::from_board_config(
                     &board_config,
                     &avrdude_params,
                     false,
-                ))
+                );
+                let deployer = if let Some(baud) = baud_override {
+                    deployer.with_baud_rate(&baud.to_string())
+                } else {
+                    deployer
+                };
+                Box::new(deployer)
             }
             _ => {
                 return Err(fbuild_core::FbuildError::DeployFailed(format!(
@@ -735,24 +858,29 @@ pub async fn deploy(
         }
     };
 
-    // Record successful deployment in firmware ledger
+    // Record successful deployment in firmware ledger. We hash bootloader.bin
+    // and partitions.bin in addition to firmware.bin so that a bootloader
+    // rebuild (e.g. DIO ↔ QIO) on the next deploy is detected as a real
+    // change and not skipped. See ISSUES.md "Issue B4".
     if deploy_success {
         if let Some(ref port) = deploy_port_str {
             let fw = firmware_path.clone();
             let proj_dir = project_dir.to_string_lossy().to_string();
             let env = env_name.clone();
             let proj_for_hash = project_dir.clone();
+            let build_dir = firmware_path.parent().map(|p| p.to_path_buf());
 
             // Compute hashes in blocking context
             let ledger_result = tokio::task::spawn_blocking(move || {
                 let fw_hash =
                     fbuild_deploy::firmware_ledger::compute_firmware_hash(&fw).unwrap_or_default();
                 let src_hash = fbuild_deploy::firmware_ledger::compute_source_hash(&proj_for_hash);
-                (fw_hash, src_hash)
+                let (boot_hash, parts_hash) = compute_boot_parts_hashes(build_dir.as_deref());
+                (fw_hash, src_hash, boot_hash, parts_hash)
             })
             .await;
 
-            if let Ok((fw_hash, src_hash)) = ledger_result {
+            if let Ok((fw_hash, src_hash, boot_hash, parts_hash)) = ledger_result {
                 let build_flags: Vec<String> = env_config
                     .get("build_flags")
                     .map(|f| f.split_whitespace().map(|s| s.to_string()).collect())
@@ -767,6 +895,8 @@ pub async fn deploy(
                     &proj_dir,
                     &env,
                     Some(&flags_hash),
+                    boot_hash.as_deref(),
+                    parts_hash.as_deref(),
                 );
             }
         }
