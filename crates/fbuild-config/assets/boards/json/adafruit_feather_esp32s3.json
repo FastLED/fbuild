@@ -37,7 +37,7 @@
   ],
   "id": "adafruit_feather_esp32s3",
   "mcu": "ESP32S3",
-  "name": "Adafruit Feather ESP32-S3 No PSRAM",
+  "name": "Adafruit Feather ESP32-S3 (2MB PSRAM)",
   "platform": "espressif32",
   "ram": 327680,
   "rom": 4194304,
