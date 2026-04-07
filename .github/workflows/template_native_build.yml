@@ -71,10 +71,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y musl-tools pkg-config
 
-      # cargo-zigbuild for musl cross-compilation (zig provides a musl-aware
-      # C compiler — no external toolchain downloads needed)
+      # cargo-zigbuild — used for two reasons on Linux:
+      #   1. musl cross-compilation (linux_cross targets)
+      #   2. Building the PyO3 extension with a pinned glibc symbol version
+      #      so manylinux_2_17 wheels actually run on glibc 2.17. The native
+      #      ubuntu-latest linker would otherwise pull in glibc 2.39 symbols.
       - name: Install cross-compilation tools
-        if: inputs.linux_cross
+        if: runner.os == 'Linux'
         run: pip install cargo-zigbuild
 
       - name: Setup zccache
@@ -102,16 +105,18 @@ jobs:
       # Notes:
       #   - PYO3_NO_PYTHON=1 + abi3-py39 feature lets pyo3-build-config skip
       #     the host interpreter lookup on cross builds.
-      #   - Linux aarch64 cross: manylinux wheels are glibc-based, so the
-      #     extension MUST target aarch64-unknown-linux-gnu (not musl) via
-      #     cargo-zigbuild with a glibc version suffix for manylinux_2_17.
+      #   - All Linux builds (native AND cross) use cargo-zigbuild against
+      #     <arch>-unknown-linux-gnu.2.17 — manylinux wheels are glibc-based
+      #     and must work on glibc >= 2.17 (the manylinux_2_17 floor). Native
+      #     ubuntu-latest's system linker would otherwise pull in glibc 2.39
+      #     symbols, breaking the wheel on every distro older than ubuntu-24.04.
       #     The CLI binaries stay on musl for static-link portability.
       #   - macOS cross: cargo rustc with -undefined dynamic_lookup works the
       #     same as native; just add --target.
       - name: Build Python extension
         shell: bash
         run: |
-          if [ "${{ inputs.linux_cross }}" = "true" ]; then
+          if [ "${{ runner.os }}" = "Linux" ]; then
             TARGET="${{ inputs.target }}"
             ARCH="${TARGET%%-*}"
             PYO3_TARGET="${ARCH}-unknown-linux-gnu"
@@ -136,7 +141,7 @@ jobs:
           cp target/${{ inputs.target }}/release/fbuild-daemon${{ inputs.binary_ext }} staging/
 
           # Stage Python extension — location depends on how it was built
-          if [ "${{ inputs.linux_cross }}" = "true" ]; then
+          if [ "${{ runner.os }}" = "Linux" ]; then
             TARGET="${{ inputs.target }}"
             ARCH="${TARGET%%-*}"
             ext_src="target/${ARCH}-unknown-linux-gnu/release/lib_native.so"
