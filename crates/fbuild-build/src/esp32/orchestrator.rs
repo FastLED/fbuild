@@ -876,10 +876,26 @@ fn apply_user_flags(base_flags: &[String], user_flags: &[String]) -> Vec<String>
         if flag.starts_with("-std=") {
             // Replace any existing -std= flag
             result.retain(|f| !f.starts_with("-std="));
+        } else if let Some(define_name) = define_flag_name(flag) {
+            // Replace any existing -DNAME / -DNAME=value flag with the same macro name.
+            result.retain(|f| define_flag_name(f) != Some(define_name));
         }
         result.push(flag.clone());
     }
     result
+}
+
+fn define_flag_name(flag: &str) -> Option<&str> {
+    let define = flag.strip_prefix("-D")?;
+    let name = define
+        .split_once('=')
+        .map_or(define, |(name, _)| name)
+        .trim();
+    if name.is_empty() {
+        None
+    } else {
+        Some(name)
+    }
 }
 
 /// Resolve framework + toolchain for pioarduino mode (GCC 14 + ESP-IDF 5.x).
@@ -1210,6 +1226,50 @@ pub fn is_esp32_project(project_dir: &Path, env_name: &str) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_apply_user_flags_replaces_std_flag() {
+        let base = vec!["-Os".to_string(), "-std=gnu++2b".to_string()];
+        let user = vec!["-std=gnu++20".to_string()];
+
+        let result = apply_user_flags(&base, &user);
+
+        assert_eq!(result, vec!["-Os", "-std=gnu++20"]);
+    }
+
+    #[test]
+    fn test_apply_user_flags_replaces_define_with_same_name() {
+        let base = vec![
+            r#"-DIDF_VER=\"v5.5.1-710-g8410210c9a\""#.to_string(),
+            r#"-DESP_MDNS_VERSION_NUMBER=\"1.9.0\""#.to_string(),
+            "-Os".to_string(),
+        ];
+        let user = vec![
+            r#"-DESP_MDNS_VERSION_NUMBER=\"1.9.1\""#.to_string(),
+            r#"-DIDF_VER=\"v5.5.2-729-g87912cd291\""#.to_string(),
+        ];
+
+        let result = apply_user_flags(&base, &user);
+
+        assert_eq!(
+            result,
+            vec![
+                "-Os",
+                r#"-DESP_MDNS_VERSION_NUMBER=\"1.9.1\""#,
+                r#"-DIDF_VER=\"v5.5.2-729-g87912cd291\""#,
+            ]
+        );
+    }
+
+    #[test]
+    fn test_apply_user_flags_replaces_bare_define_with_value_define() {
+        let base = vec!["-DFOO".to_string(), "-DBAR=1".to_string()];
+        let user = vec!["-DFOO=2".to_string()];
+
+        let result = apply_user_flags(&base, &user);
+
+        assert_eq!(result, vec!["-DBAR=1", "-DFOO=2"]);
+    }
 
     #[test]
     fn test_esp32_orchestrator_platform() {

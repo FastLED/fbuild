@@ -262,6 +262,85 @@ pub fn supported_mcus() -> &'static [&'static str] {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::collections::HashMap;
+
+    fn sdk_owned_define_names(mcu: &str) -> &'static [&'static str] {
+        match mcu {
+            "esp32" | "esp32c3" | "esp32c5" | "esp32c6" | "esp32s3" => &[
+                "ESP32_ARDUINO_LIB_BUILDER",
+                "ESP_MDNS_VERSION_NUMBER",
+                "ESP_PLATFORM",
+                "IDF_VER",
+                "MBEDTLS_CONFIG_FILE",
+                "MD5_ENABLED",
+                "OPENTHREAD_CONFIG_FILE",
+                "OPENTHREAD_FTD",
+                "OPENTHREAD_PROJECT_LIB_CONFIG_FILE",
+                "SERIAL_FLASHER_BOOT_HOLD_TIME_MS",
+                "SERIAL_FLASHER_RESET_HOLD_TIME_MS",
+                "SOC_MMU_PAGE_SIZE",
+                "SOC_XTAL_FREQ_MHZ",
+                "UNITY_INCLUDE_CONFIG_H",
+                "_GLIBCXX_HAVE_POSIX_SEMAPHORE",
+                "_GLIBCXX_USE_POSIX_SEMAPHORE",
+                "_GNU_SOURCE",
+                "_POSIX_READER_WRITER_LOCKS",
+                "TF_LITE_STATIC_MEMORY",
+                "CHIP_CONFIG_SOFTWARE_VERSION_NUMBER",
+                "CHIP_DNSSD_DEFAULT_PLATFORM",
+                "CHIP_DNSSD_DEFAULT_NONE",
+                "CHIP_DNSSD_DEFAULT_MINIMAL",
+            ],
+            "esp32c2" => &[
+                "ESP32_ARDUINO_LIB_BUILDER",
+                "ESP_MDNS_VERSION_NUMBER",
+                "ESP_PLATFORM",
+                "IDF_VER",
+                "MBEDTLS_CONFIG_FILE",
+                "SOC_MMU_PAGE_SIZE",
+                "SOC_XTAL_FREQ_MHZ",
+                "UNITY_INCLUDE_CONFIG_H",
+                "_GLIBCXX_HAVE_POSIX_SEMAPHORE",
+                "_GLIBCXX_USE_POSIX_SEMAPHORE",
+                "_GNU_SOURCE",
+                "_POSIX_READER_WRITER_LOCKS",
+            ],
+            "esp32h2" | "esp32s2" => &[
+                "ESP32_ARDUINO_LIB_BUILDER",
+                "ESP_MDNS_VERSION_NUMBER",
+                "ESP_PLATFORM",
+                "IDF_VER",
+                "MBEDTLS_CONFIG_FILE",
+                "MD5_ENABLED",
+                "SERIAL_FLASHER_BOOT_HOLD_TIME_MS",
+                "SERIAL_FLASHER_RESET_HOLD_TIME_MS",
+                "SOC_MMU_PAGE_SIZE",
+                "SOC_XTAL_FREQ_MHZ",
+                "UNITY_INCLUDE_CONFIG_H",
+                "_GLIBCXX_HAVE_POSIX_SEMAPHORE",
+                "_GLIBCXX_USE_POSIX_SEMAPHORE",
+                "_GNU_SOURCE",
+                "_POSIX_READER_WRITER_LOCKS",
+                "TF_LITE_STATIC_MEMORY",
+            ],
+            "esp32p4" => &[
+                "ESP32_ARDUINO_LIB_BUILDER",
+                "ESP_MDNS_VERSION_NUMBER",
+                "ESP_PLATFORM",
+                "IDF_VER",
+                "MBEDTLS_CONFIG_FILE",
+                "SOC_MMU_PAGE_SIZE",
+                "SOC_XTAL_FREQ_MHZ",
+                "TF_LITE_STATIC_MEMORY",
+                "UNITY_INCLUDE_CONFIG_H",
+                "_GLIBCXX_HAVE_POSIX_SEMAPHORE",
+                "_GLIBCXX_USE_POSIX_SEMAPHORE",
+                "_GNU_SOURCE",
+                "_POSIX_READER_WRITER_LOCKS",
+            ],
+            _ => &[],
+        }
+    }
 
     #[test]
     fn test_all_configs_parse() {
@@ -331,11 +410,73 @@ mod tests {
     fn test_defines_map() {
         let config = get_mcu_config("esp32c6").unwrap();
         let defines = config.defines_map();
-        assert_eq!(defines.get("ESP_PLATFORM"), Some(&"1".to_string()));
         assert_eq!(defines.get("ARDUINO_ARCH_ESP32"), Some(&"1".to_string()));
-        // Key-value defines
-        assert!(defines.contains_key("IDF_VER"));
-        assert!(defines.get("IDF_VER").unwrap().contains("v5."));
+        assert_eq!(defines.get("ESP32"), Some(&"ESP32".to_string()));
+        assert!(!defines.contains_key("ESP_PLATFORM"));
+        assert!(!defines.contains_key("IDF_VER"));
+    }
+
+    #[test]
+    fn test_json_defines_do_not_duplicate_sdk_owned_macros() {
+        for mcu in supported_mcus() {
+            let config = get_mcu_config(mcu).unwrap();
+            let defines = config.defines_map();
+            for name in sdk_owned_define_names(mcu) {
+                assert!(
+                    !defines.contains_key(*name),
+                    "{} should rely on framework defines for {}",
+                    mcu,
+                    name
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn test_non_sdk_mcu_defines_match_platformio_reference() {
+        let reference_configs: &[(&str, &str)] = &[
+            ("esp32", include_str!("configs/reference/esp32.json")),
+            ("esp32c2", include_str!("configs/reference/esp32c2.json")),
+            ("esp32c3", include_str!("configs/reference/esp32c3.json")),
+            ("esp32c5", include_str!("configs/reference/esp32c5.json")),
+            ("esp32c6", include_str!("configs/reference/esp32c6.json")),
+            ("esp32p4", include_str!("configs/reference/esp32p4.json")),
+            ("esp32s3", include_str!("configs/reference/esp32s3.json")),
+        ];
+
+        for (mcu, ref_json) in reference_configs {
+            let reference: serde_json::Value =
+                serde_json::from_str(ref_json).expect("reference JSON should parse");
+            let mcu_config = get_mcu_config(mcu)
+                .unwrap_or_else(|e| panic!("failed to load config for {mcu}: {e}"));
+
+            let actual_defines = mcu_config.defines_map();
+
+            let mut expected_defines = HashMap::new();
+            let ref_defines = reference["defines"]
+                .as_object()
+                .expect("reference defines should be an object");
+            for (name, value) in ref_defines {
+                if sdk_owned_define_names(mcu).contains(&name.as_str()) {
+                    continue;
+                }
+                expected_defines.insert(
+                    name.clone(),
+                    value
+                        .as_str()
+                        .unwrap_or_else(|| {
+                            panic!("reference define {name} for {mcu} should be a string")
+                        })
+                        .to_string(),
+                );
+            }
+
+            assert_eq!(
+                actual_defines, expected_defines,
+                "MCU defines drifted from PlatformIO reference for {}",
+                mcu
+            );
+        }
     }
 
     #[test]

@@ -221,8 +221,9 @@ mod tests {
         let flags = compiler.common_flags();
         assert!(flags.iter().any(|f| f == "-DPLATFORMIO"));
         assert!(flags.iter().any(|f| f == "-DF_CPU=160000000L"));
-        assert!(flags.iter().any(|f| f == "-DESP_PLATFORM"));
         assert!(flags.iter().any(|f| f == "-DARDUINO_ARCH_ESP32"));
+        // SDK-owned macros like ESP_PLATFORM are supplied later by the framework.
+        assert!(!flags.iter().any(|f| f == "-DESP_PLATFORM"));
     }
 
     #[test]
