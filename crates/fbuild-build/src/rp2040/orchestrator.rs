@@ -80,6 +80,9 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         let framework_include = framework_dir.join("include");
         if framework_include.exists() {
             include_dirs.push(framework_include);
+        }
+        add_rp_manifest_includes(&framework_dir, &ctx.board.mcu, &mut include_dirs);
+        if framework_include.exists() {
             add_rp_family_includes(
                 &framework_dir.join("include"),
                 &ctx.board.mcu,
@@ -225,6 +228,55 @@ fn add_rp_family_includes(
     }
 }
 
+fn add_rp_manifest_includes(
+    framework_dir: &Path,
+    mcu: &str,
+    include_dirs: &mut Vec<std::path::PathBuf>,
+) {
+    for path in rp_manifest_include_files(framework_dir, mcu) {
+        add_prefixed_include_file(&path, framework_dir, include_dirs);
+    }
+}
+
+fn rp_manifest_include_files(framework_dir: &Path, mcu: &str) -> Vec<std::path::PathBuf> {
+    let family = if mcu.to_lowercase().starts_with("rp2350") {
+        "rp2350"
+    } else {
+        "rp2040"
+    };
+    vec![
+        framework_dir.join("lib").join("core_inc.txt"),
+        framework_dir
+            .join("lib")
+            .join(family)
+            .join("platform_inc.txt"),
+    ]
+}
+
+fn add_prefixed_include_file(
+    include_file: &Path,
+    base_dir: &Path,
+    include_dirs: &mut Vec<std::path::PathBuf>,
+) {
+    let Ok(content) = std::fs::read_to_string(include_file) else {
+        return;
+    };
+
+    for line in content.lines() {
+        let trimmed = line.trim();
+        let rel = trimmed
+            .strip_prefix("-iwithprefixbefore/")
+            .or_else(|| trimmed.strip_prefix("-iwithprefixbefore"));
+        let Some(rel) = rel else {
+            continue;
+        };
+        let path = base_dir.join(rel.trim_start_matches('/'));
+        if path.is_dir() {
+            include_dirs.push(path);
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -248,5 +300,30 @@ mod tests {
         assert!(include_dirs.contains(&rp2040));
         assert!(include_dirs.contains(&rp2040.join("pico_base")));
         assert!(include_dirs.contains(&rp2040.join("hardware_gpio")));
+    }
+
+    #[test]
+    fn test_add_prefixed_include_file_reads_platformio_manifest() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let target = tmp
+            .path()
+            .join("pico-sdk")
+            .join("src")
+            .join("rp2_common")
+            .join("pico_platform")
+            .join("include");
+        std::fs::create_dir_all(&target).unwrap();
+
+        let manifest = tmp.path().join("core_inc.txt");
+        std::fs::write(
+            &manifest,
+            "-iwithprefixbefore/pico-sdk/src/rp2_common/pico_platform/include\n",
+        )
+        .unwrap();
+
+        let mut include_dirs = Vec::new();
+        add_prefixed_include_file(&manifest, tmp.path(), &mut include_dirs);
+
+        assert_eq!(include_dirs, vec![target]);
     }
 }

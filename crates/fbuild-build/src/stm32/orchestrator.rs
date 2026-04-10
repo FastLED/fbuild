@@ -64,7 +64,7 @@ impl BuildOrchestrator for Stm32Orchestrator {
         // the board JSON says core = "stm32". Map it here.
         let core_dir = framework.get_core_dir("arduino");
         let framework_props =
-            load_stm32_framework_props(&framework.get_boards_txt(), &ctx.board.variant);
+            load_stm32_framework_props(&ctx.board.variant, &framework.get_boards_txt());
         let resolved_variant = framework_props
             .as_ref()
             .and_then(|props| props.get("variant").cloned())
@@ -288,7 +288,7 @@ fn build_arduino_mbed_stm32(
             }
         }
     }
-    let board_ldflags = load_stm32_framework_props(&framework.get_boards_txt(), &ctx.board.variant)
+    let board_ldflags = load_stm32_framework_props(&ctx.board.variant, &framework.get_boards_txt())
         .and_then(|props| props.get("extra_ldflags").cloned())
         .map(|flags| fbuild_core::shell_split::split(&flags))
         .unwrap_or_default();
@@ -736,20 +736,18 @@ fn stem_lower(name: &str) -> String {
         .to_lowercase()
 }
 
-fn load_stm32_framework_props(boards_txt: &Path, variant: &str) -> Option<HashMap<String, String>> {
+fn load_stm32_framework_props(
+    board_or_variant: &str,
+    boards_txt: &Path,
+) -> Option<HashMap<String, String>> {
     let content = std::fs::read_to_string(boards_txt).ok()?;
-    let prefix = content.lines().find_map(|line| {
-        let trimmed = line.trim();
-        if trimmed.is_empty() || trimmed.starts_with('#') {
-            return None;
-        }
-        let (key, value) = trimmed.split_once('=')?;
-        if key.ends_with(".build.variant") && value.trim() == variant {
-            Some(key.trim_end_matches(".build.variant").to_string())
-        } else {
-            None
-        }
-    })?;
+    let preferred_key = if board_or_variant.contains('/') {
+        ".build.variant"
+    } else {
+        ".build.board"
+    };
+    let prefix = find_stm32_prop_prefix(&content, preferred_key, board_or_variant)
+        .or_else(|| find_stm32_prop_prefix(&content, ".build.variant", board_or_variant))?;
 
     let mut props = HashMap::new();
     for scope in stm32_property_scopes(&prefix) {
@@ -796,6 +794,21 @@ fn load_stm32_framework_props(boards_txt: &Path, variant: &str) -> Option<HashMa
     }
 
     Some(props)
+}
+
+fn find_stm32_prop_prefix(content: &str, suffix: &str, value: &str) -> Option<String> {
+    content.lines().find_map(|line| {
+        let trimmed = line.trim();
+        if trimmed.is_empty() || trimmed.starts_with('#') {
+            return None;
+        }
+        let (key, actual) = trimmed.split_once('=')?;
+        if key.ends_with(suffix) && actual.trim() == value {
+            Some(key.trim_end_matches(suffix).to_string())
+        } else {
+            None
+        }
+    })
 }
 
 fn stm32_property_scopes(prefix: &str) -> Vec<String> {
@@ -870,14 +883,13 @@ giga.build.extra_ldflags=-DCM4_BINARY_START=0x08180000
         )
         .unwrap();
 
-        let maple =
-            load_stm32_framework_props(&boards_txt, "STM32F1xx/F103C8T_F103CB(T-U)").unwrap();
+        let maple = load_stm32_framework_props("MAPLEMINI_F103CB", &boards_txt).unwrap();
         assert_eq!(
             maple.get("variant_h").map(String::as_str),
             Some("variant_MAPLEMINI_F103CB.h")
         );
 
-        let giga = load_stm32_framework_props(&boards_txt, "GIGA").unwrap();
+        let giga = load_stm32_framework_props("GIGA", &boards_txt).unwrap();
         assert_eq!(
             giga.get("extra_ldflags").map(String::as_str),
             Some("-DCM4_BINARY_START=0x08180000")

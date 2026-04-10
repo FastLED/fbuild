@@ -13,4 +13,4 @@ jobs:
       workflow-name: "STM32H747XI"
       test-dir: "tests/platform/stm32h747xi"
       env-name: "stm32h747xi"
-      firmware-ext: "hex"
+      firmware-ext: "bin"
