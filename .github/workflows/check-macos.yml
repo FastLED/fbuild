@@ -22,15 +22,14 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           save-if: "true"
-      - name: Cache zccache
-        uses: actions/cache@v4
+      - name: Restore zccache
+        uses: actions/cache/restore@v5
         with:
           path: ~/.zccache
           key: zccache-${{ runner.os }}-check-${{ github.sha }}
           restore-keys: |
             zccache-${{ runner.os }}-check-
             zccache-${{ runner.os }}-
-          save-always: true
       - name: Setup zccache
         shell: bash
         run: |
@@ -53,3 +52,9 @@ jobs:
         run: cargo test --workspace
         env:
           RUSTC_WRAPPER: zccache
+      - name: Save zccache
+        if: always()
+        uses: actions/cache/save@v5
+        with:
+          path: ~/.zccache
+          key: zccache-${{ runner.os }}-check-${{ github.sha }}

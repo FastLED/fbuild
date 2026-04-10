@@ -41,34 +41,31 @@ jobs:
           key: platform-build-v1
           save-if: "true"
 
-      - name: Cache zccache
-        uses: actions/cache@v4
+      - name: Restore zccache
+        uses: actions/cache/restore@v5
         with:
           path: ~/.zccache
           key: zccache-${{ runner.os }}-${{ inputs.env-name }}-${{ github.sha }}
           restore-keys: |
             zccache-${{ runner.os }}-${{ inputs.env-name }}-
             zccache-${{ runner.os }}-
-          save-always: true
 
-      - name: Cache fbuild toolchains
-        uses: actions/cache@v4
+      - name: Restore fbuild toolchains
+        uses: actions/cache/restore@v5
         with:
           path: ~/.fbuild/prod/cache
           key: fbuild-toolchain-${{ runner.os }}-${{ inputs.env-name }}-${{ github.sha }}
           restore-keys: |
             fbuild-toolchain-${{ runner.os }}-${{ inputs.env-name }}-
             fbuild-toolchain-${{ runner.os }}-
-          save-always: true
 
-      - name: Cache platform build artifacts
-        uses: actions/cache@v4
+      - name: Restore platform build artifacts
+        uses: actions/cache/restore@v5
         with:
           path: ${{ inputs.test-dir }}/.fbuild/build
           key: fbuild-build-${{ runner.os }}-${{ inputs.env-name }}-${{ github.sha }}
           restore-keys: |
             fbuild-build-${{ runner.os }}-${{ inputs.env-name }}-
-          save-always: true
 
       - name: Install Linux dependencies
         run: |
@@ -109,3 +106,24 @@ jobs:
         run: |
           test -f ${{ inputs.test-dir }}/.fbuild/build/${{ inputs.env-name }}/release/firmware.${{ inputs.firmware-ext }}
           echo "Release build successful - firmware.${{ inputs.firmware-ext }} generated"
+
+      - name: Save zccache
+        if: always()
+        uses: actions/cache/save@v5
+        with:
+          path: ~/.zccache
+          key: zccache-${{ runner.os }}-${{ inputs.env-name }}-${{ github.sha }}
+
+      - name: Save fbuild toolchains
+        if: always()
+        uses: actions/cache/save@v5
+        with:
+          path: ~/.fbuild/prod/cache
+          key: fbuild-toolchain-${{ runner.os }}-${{ inputs.env-name }}-${{ github.sha }}
+
+      - name: Save platform build artifacts
+        if: always()
+        uses: actions/cache/save@v5
+        with:
+          path: ${{ inputs.test-dir }}/.fbuild/build
+          key: fbuild-build-${{ runner.os }}-${{ inputs.env-name }}-${{ github.sha }}
