@@ -58,7 +58,7 @@ impl BuildOrchestrator for Apollo3Orchestrator {
         let variant_dir = framework.get_variant_dir(&ctx.board.variant);
 
         let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
-        let mut sources = scanner.scan_all(Some(&core_dir), Some(&variant_dir))?;
+        let sources = scanner.scan_all(Some(&core_dir), Some(&variant_dir))?;
 
         let variant_config_dir = variant_dir.join("config");
 

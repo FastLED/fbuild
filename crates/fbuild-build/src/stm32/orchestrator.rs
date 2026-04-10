@@ -17,7 +17,7 @@ use std::path::{Path, PathBuf};
 use std::time::Instant;
 
 use fbuild_core::{Platform, Result};
-use fbuild_packages::Framework;
+use fbuild_packages::{Framework, Toolchain};
 
 use crate::compile_database::TargetArchitecture;
 use crate::generic_arm::{ArmCompiler, ArmLinker};
@@ -44,7 +44,6 @@ impl BuildOrchestrator for Stm32Orchestrator {
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
         tracing::info!("arm-gcc toolchain at {}", toolchain_dir.display());
 
-        use fbuild_packages::Toolchain;
         pipeline::log_toolchain_version(
             &toolchain.get_gcc_path(),
             "arm-none-eabi-gcc",
