@@ -26,8 +26,6 @@ pub struct Esp8266Linker {
     sdk_lib_dir: PathBuf,
     /// Path to `tools/sdk/lib/NONOSDK305/` — NonOS SDK version-specific libraries.
     sdk_nonosdk_lib_dir: PathBuf,
-    /// Path to `tools/sdk/libc/xtensa-lx106-elf/lib/` — libc libraries.
-    libc_lib_dir: PathBuf,
     /// Path to `tools/sdk/ld/` — needed by `generate_linker_scripts()` for template lookup.
     sdk_ld_dir: PathBuf,
     /// Board linker script + search directories.
@@ -50,7 +48,6 @@ impl Esp8266Linker {
         size_path: PathBuf,
         sdk_lib_dir: PathBuf,
         sdk_nonosdk_lib_dir: PathBuf,
-        libc_lib_dir: PathBuf,
         sdk_ld_dir: PathBuf,
         linker_scripts: LinkerScripts,
         mcu_config: Esp8266McuConfig,
@@ -70,7 +67,6 @@ impl Esp8266Linker {
             size_path,
             sdk_lib_dir,
             sdk_nonosdk_lib_dir,
-            libc_lib_dir,
             sdk_ld_dir,
             linker_scripts,
             mcu_config,
@@ -194,10 +190,10 @@ impl Linker for Esp8266Linker {
         // Board linker script + SDK ld search directory
         args.extend(self.linker_scripts.to_args());
 
-        // SDK library directories: common libs + NonOS SDK version-specific + libc
+        // PlatformIO relies on GCC's built-in search path for libc/libstdc++;
+        // only the framework SDK directories are added explicitly here.
         args.push(format!("-L{}", self.sdk_lib_dir.to_string_lossy()));
         args.push(format!("-L{}", self.sdk_nonosdk_lib_dir.to_string_lossy()));
-        args.push(format!("-L{}", self.libc_lib_dir.to_string_lossy()));
 
         args.extend(["-o".to_string(), elf_path.to_string_lossy().to_string()]);
 
@@ -318,7 +314,6 @@ mod tests {
             PathBuf::from("/bin/xtensa-lx106-elf-size"),
             PathBuf::from("/sdk/lib"),
             PathBuf::from("/sdk/lib/NONOSDK305"),
-            PathBuf::from("/sdk/libc/xtensa-lx106-elf/lib"),
             PathBuf::from("/sdk/ld"),
             LinkerScripts::single(PathBuf::from("/sdk/ld"), "eagle.flash.4m1m.ld"),
             get_esp8266_config().unwrap(),

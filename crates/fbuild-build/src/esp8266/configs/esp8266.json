@@ -10,17 +10,11 @@
       "-ffunction-sections",
       "-fdata-sections",
       "-falign-functions=4",
-      "-Wl,-EL",
-      "-fno-inline-functions",
-      "-nostdlib",
-      "-Wno-error=unused-function",
-      "-Wno-error=unused-variable",
-      "-Wno-error=unused-but-set-variable",
-      "-Wno-error=deprecated-declarations",
-      "-Wno-unused-parameter",
-      "-Wno-sign-compare",
-      "-fno-strict-aliasing",
-      "-MMD"
+      "-U__STRICT_ANSI__",
+      "-Wall",
+      "-Werror=return-type",
+      "-free",
+      "-fipa-pta"
     ],
     "c": [
       "-std=gnu17",
@@ -28,19 +22,19 @@
       "-Wno-implicit-function-declaration",
       "-Wl,-EL",
       "-fno-inline-functions",
-      "-nostdlib"
+      "-nostdlib",
+      "-MMD"
     ],
     "cxx": [
       "-std=gnu++17",
       "-fno-rtti",
-      "-fno-exceptions"
+      "-fno-exceptions",
+      "-MMD"
     ]
   },
 
   "linker_flags": [
-    "-mlongcalls",
-    "-mtext-section-literals",
-    "-Wl,-EL",
+    "-Os",
     "-Wl,--no-check-sections",
     "-Wl,--gc-sections",
     "-Wl,-wrap,system_restart_local",

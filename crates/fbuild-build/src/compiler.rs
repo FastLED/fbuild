@@ -184,6 +184,10 @@ impl CompilerBase {
     /// Compute the output .o path for a source file.
     pub fn object_path(source: &Path, build_dir: &Path) -> PathBuf {
         let stem = source.file_stem().unwrap_or_default().to_string_lossy();
+        let source_ext = source
+            .extension()
+            .and_then(|ext| ext.to_str())
+            .unwrap_or_default();
         let hash = {
             use sha2::{Digest, Sha256};
             let mut hasher = Sha256::new();
@@ -191,7 +195,13 @@ impl CompilerBase {
             let result = hasher.finalize();
             format!("{:02x}{:02x}", result[0], result[1])
         };
-        build_dir.join(format!("{}_{}.o", stem, hash))
+        // Preserve the source extension before `.o` so linker scripts that
+        // match `*.cpp.o` / `*.c.o` still route sections correctly.
+        if source_ext.is_empty() {
+            build_dir.join(format!("{}_{}.o", stem, hash))
+        } else {
+            build_dir.join(format!("{}_{}.{}.o", stem, hash, source_ext))
+        }
     }
 }
 
@@ -379,6 +389,17 @@ mod tests {
         let p1 = CompilerBase::object_path(Path::new("/src/a/main.cpp"), Path::new("/build"));
         let p2 = CompilerBase::object_path(Path::new("/src/b/main.cpp"), Path::new("/build"));
         assert_ne!(p1, p2);
+    }
+
+    #[test]
+    fn test_object_path_preserves_source_extension_before_o() {
+        let cpp = CompilerBase::object_path(Path::new("/src/main.cpp"), Path::new("/build"));
+        let c = CompilerBase::object_path(Path::new("/src/startup.c"), Path::new("/build"));
+        let asm = CompilerBase::object_path(Path::new("/src/vector.S"), Path::new("/build"));
+
+        assert!(cpp.to_string_lossy().ends_with(".cpp.o"));
+        assert!(c.to_string_lossy().ends_with(".c.o"));
+        assert!(asm.to_string_lossy().ends_with(".S.o"));
     }
 
     #[test]
