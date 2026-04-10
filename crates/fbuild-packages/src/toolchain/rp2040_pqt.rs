@@ -195,7 +195,7 @@ fn all_platform_packages() -> [(&'static str, PlatformPackage); 5] {
             "linux-x86_64",
             PlatformPackage {
                 filename: "x86_64-linux-gnu.arm-none-eabi-8ec9d6f.240929.tar.gz",
-                checksum: Some("8607c781b7b01032c264b3357889e958998fe2e557342ad0f8153233fa5f7f37"),
+                checksum: Some("ae082491cc07d60c014ca928c406aed72c4b1ead4c33076216c77fd2d242f74d"),
             },
         ),
     ]
