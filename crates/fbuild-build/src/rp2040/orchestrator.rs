@@ -83,11 +83,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         }
         add_rp_manifest_includes(&framework_dir, &ctx.board.mcu, &mut include_dirs);
         if framework_include.exists() {
-            add_rp_family_includes(
-                &framework_include,
-                &ctx.board.mcu,
-                &mut include_dirs,
-            );
+            add_rp_family_includes(&framework_include, &ctx.board.mcu, &mut include_dirs);
         }
         include_dirs.push(ctx.src_dir.clone());
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
