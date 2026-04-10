@@ -60,27 +60,11 @@ impl BuildOrchestrator for Apollo3Orchestrator {
         let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
         let mut sources = scanner.scan_all(Some(&core_dir), Some(&variant_dir))?;
 
-        // Also scan variant/config for pin definitions
         let variant_config_dir = variant_dir.join("config");
-        if variant_config_dir.exists() {
-            sources
-                .variant_sources
-                .extend(scanner.scan_core_sources(&variant_config_dir));
-        }
 
-        // Scan the arduino/mbed-bridge core sources
+        // `scan_all()` already recurses through the Apollo3 core and variant
+        // trees. Re-scanning subdirectories here duplicates objects at link time.
         let mbed_bridge_dir = core_dir.join("mbed-bridge");
-        if mbed_bridge_dir.exists() {
-            sources
-                .core_sources
-                .extend(scanner.scan_core_sources(&mbed_bridge_dir));
-            let core_api_dir = mbed_bridge_dir.join("core-api");
-            if core_api_dir.exists() {
-                sources
-                    .core_sources
-                    .extend(scanner.scan_core_sources(&core_api_dir));
-            }
-        }
 
         tracing::info!(
             "sources: {} sketch, {} core, {} variant",

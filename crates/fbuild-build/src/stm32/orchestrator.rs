@@ -12,7 +12,8 @@
 //! 9. Link (with linker script from variant dir)
 //! 10. Convert to hex + report size
 
-use std::path::Path;
+use std::collections::{HashMap, HashSet};
+use std::path::{Path, PathBuf};
 use std::time::Instant;
 
 use fbuild_core::{Platform, Result};
@@ -21,6 +22,7 @@ use fbuild_packages::Framework;
 use crate::compile_database::TargetArchitecture;
 use crate::generic_arm::{ArmCompiler, ArmLinker};
 use crate::pipeline;
+use crate::source_scanner::SourceCollection;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
 /// STM32 platform build orchestrator.
@@ -48,6 +50,10 @@ impl BuildOrchestrator for Stm32Orchestrator {
             "arm-none-eabi-gcc",
             &mut ctx.build_log,
         );
+
+        if is_arduino_mbed_stm32_variant(&ctx.board.variant) {
+            return build_arduino_mbed_stm32(params, ctx, &toolchain, start);
+        }
 
         // 4. Ensure STM32duino cores
         let framework = fbuild_packages::library::Stm32Cores::new(&params.project_dir);
@@ -124,7 +130,7 @@ impl BuildOrchestrator for Stm32Orchestrator {
         defines.insert("USE_FULL_LL_DRIVER".to_string(), "1".to_string());
         defines.insert(
             "VARIANT_H".to_string(),
-            format!("\\\"{}\\\"", selected_variant.header),
+            format!("\"{}\"", selected_variant.header),
         );
         // UART HAL module is disabled by default in stm32yyxx_hal_conf.h — enable it
         // so WSerial.h can create the Serial instance.
@@ -228,6 +234,134 @@ impl BuildOrchestrator for Stm32Orchestrator {
     }
 }
 
+fn build_arduino_mbed_stm32(
+    params: &BuildParams,
+    ctx: pipeline::BuildContext,
+    toolchain: &fbuild_packages::toolchain::ArmToolchain,
+    start: Instant,
+) -> Result<BuildResult> {
+    let framework = fbuild_packages::library::ArduinoMbedCore::new(&params.project_dir);
+    let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
+    tracing::info!("Arduino mbed core at {}", framework_dir.display());
+
+    let core_dir = framework.get_core_dir("arduino");
+    let variant_dir = framework.get_variant_dir(&ctx.board.variant);
+
+    let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
+    let sources = SourceCollection {
+        sketch_sources: scanner.scan_sketch_sources()?,
+        core_sources: framework.get_core_sources(),
+        variant_sources: framework.get_variant_sources(&ctx.board.variant),
+        headers: Vec::new(),
+    };
+
+    tracing::info!(
+        "sources: {} sketch, {} core, {} variant",
+        sources.sketch_sources.len(),
+        sources.core_sources.len(),
+        sources.variant_sources.len(),
+    );
+
+    let mut defines = ctx.board.get_defines();
+    defines.insert("ARDUINO".to_string(), "10810".to_string());
+    defines.insert("ARDUINO_ARCH_MBED".to_string(), "1".to_string());
+    for token in fbuild_core::shell_split::split(
+        &framework.read_variant_file(&ctx.board.variant, "defines.txt"),
+    ) {
+        if let Some(def) = token.strip_prefix("-D") {
+            if let Some((key, val)) = def.split_once('=') {
+                defines.insert(key.to_string(), val.to_string());
+            } else {
+                defines.insert(def.to_string(), "1".to_string());
+            }
+        }
+    }
+
+    let mut include_dirs = vec![
+        core_dir.clone(),
+        core_dir.join("api").join("deprecated"),
+        core_dir.join("api").join("deprecated-avr-comp"),
+        variant_dir.clone(),
+    ];
+    include_dirs.extend(framework.get_variant_includes(&ctx.board.variant));
+    include_dirs.push(ctx.src_dir.clone());
+    pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
+    dedupe_paths(&mut include_dirs);
+
+    let variant_ldflags = fbuild_core::shell_split::split(
+        &framework.read_variant_file(&ctx.board.variant, "ldflags.txt"),
+    );
+    let linker_script = preprocess_linker_script(
+        toolchain.get_gxx_path(),
+        &variant_dir,
+        &ctx.board.variant,
+        &ctx.build_dir,
+        &variant_ldflags,
+    )?;
+
+    let mcu_config = build_arduino_mbed_mcu_config(
+        &framework,
+        &ctx.board.variant,
+        framework.get_mbed_lib(&ctx.board.variant),
+    );
+
+    let compiler = ArmCompiler::new(
+        toolchain.get_gcc_path(),
+        toolchain.get_gxx_path(),
+        &ctx.board.mcu,
+        &ctx.board.f_cpu,
+        defines,
+        include_dirs.clone(),
+        mcu_config.clone(),
+        params.profile,
+        params.verbose,
+    );
+
+    let linker = ArmLinker::new(
+        toolchain.get_gcc_path(),
+        toolchain.get_ar_path(),
+        toolchain.get_objcopy_path(),
+        toolchain.get_size_path(),
+        linker_script,
+        mcu_config,
+        params.profile,
+        ctx.board.max_flash,
+        ctx.board.max_ram,
+        params.verbose,
+    );
+
+    let gcc_path = toolchain.get_gcc_path();
+    let gxx_path = toolchain.get_gxx_path();
+    let ar_path = toolchain.get_ar_path();
+    let gcc_ar_path = toolchain.get_gcc_ar_path();
+    let c_flags = crate::compiler::Compiler::c_flags(&compiler);
+    let cpp_flags = crate::compiler::Compiler::cpp_flags(&compiler);
+    let lib_ar_path = pipeline::pick_archiver(&ar_path, &gcc_ar_path, &c_flags, &cpp_flags);
+    let lib_env = pipeline::LibraryBuildEnv {
+        gcc_path: &gcc_path,
+        gxx_path: &gxx_path,
+        ar_path: lib_ar_path,
+        c_flags: &c_flags,
+        cpp_flags: &cpp_flags,
+        include_dirs: &include_dirs,
+        verbose: params.verbose,
+        jobs: crate::parallel::effective_jobs(params.jobs),
+        compiler_cache: None,
+    };
+
+    pipeline::run_sequential_build_with_libs(
+        &compiler,
+        &linker,
+        ctx,
+        params,
+        &sources,
+        Some(&lib_env),
+        TargetArchitecture::Arm,
+        "STM32",
+        start,
+    )
+}
+
 /// Add STM32duino system include directories for CMSIS and HAL.
 ///
 /// The STM32duino core bundles CMSIS and HAL drivers under `system/`:
@@ -289,6 +423,122 @@ fn add_stm32_system_includes(
     if system_family.exists() {
         include_dirs.push(system_family);
     }
+}
+
+fn is_arduino_mbed_stm32_variant(variant: &str) -> bool {
+    matches!(
+        variant,
+        "GIGA" | "PORTENTA_H7_M7" | "GENERIC_STM32H747_M4" | "NICLA_VISION" | "OPTA"
+    )
+}
+
+fn build_arduino_mbed_mcu_config(
+    framework: &fbuild_packages::library::ArduinoMbedCore,
+    variant_name: &str,
+    mbed_lib: PathBuf,
+) -> crate::generic_arm::ArmMcuConfig {
+    let cflags =
+        fbuild_core::shell_split::split(&framework.read_variant_file(variant_name, "cflags.txt"));
+    let cxxflags =
+        fbuild_core::shell_split::split(&framework.read_variant_file(variant_name, "cxxflags.txt"));
+    let ldflags =
+        fbuild_core::shell_split::split(&framework.read_variant_file(variant_name, "ldflags.txt"));
+
+    let mut common_flags: Vec<String> = cflags
+        .into_iter()
+        .filter(|f| f != "-c" && !f.starts_with("-std="))
+        .collect();
+    common_flags.push("-nostdlib".to_string());
+    dedupe_strings(&mut common_flags);
+
+    let c_flags = vec!["-std=gnu11".to_string()];
+    let mut cxx_only = cxxflags
+        .into_iter()
+        .filter(|f| f != "-c" && !common_flags.contains(f))
+        .collect::<Vec<_>>();
+    dedupe_strings(&mut cxx_only);
+
+    let mut linker_flags: Vec<String> = ldflags
+        .into_iter()
+        .filter(|f| !f.starts_with("-D"))
+        .collect();
+    linker_flags.push("--specs=nano.specs".to_string());
+    linker_flags.push("--specs=nosys.specs".to_string());
+    dedupe_strings(&mut linker_flags);
+
+    crate::generic_arm::ArmMcuConfig {
+        name: "ArduinoCore-mbed".to_string(),
+        description: format!("Arduino mbed variant {variant_name}"),
+        architecture: "arm-cortex-m".to_string(),
+        compiler_flags: crate::compiler::CompilerFlags {
+            common: common_flags,
+            c: c_flags,
+            cxx: cxx_only,
+        },
+        linker_flags,
+        linker_libs: vec![
+            "-Wl,--whole-archive".to_string(),
+            mbed_lib.to_string_lossy().to_string(),
+            "-Wl,--no-whole-archive".to_string(),
+            "-Wl,--start-group".to_string(),
+            "-lstdc++".to_string(),
+            "-lsupc++".to_string(),
+            "-lm".to_string(),
+            "-lc".to_string(),
+            "-lgcc".to_string(),
+            "-lnosys".to_string(),
+            "-Wl,--end-group".to_string(),
+        ],
+        objcopy: crate::compiler::ObjcopyConfig {
+            output_format: "binary".to_string(),
+            remove_sections: Vec::new(),
+        },
+        profiles: HashMap::new(),
+        defines: Vec::new(),
+    }
+}
+
+fn preprocess_linker_script(
+    gxx_path: PathBuf,
+    variant_dir: &Path,
+    variant_name: &str,
+    build_dir: &Path,
+    ldflags: &[String],
+) -> Result<PathBuf> {
+    let input = variant_dir.join("linker_script.ld");
+    let output = build_dir.join("cpp.linker_script.ld");
+    let mut args = vec![
+        gxx_path.to_string_lossy().to_string(),
+        "-E".to_string(),
+        "-P".to_string(),
+        "-x".to_string(),
+        "c".to_string(),
+    ];
+    args.extend(ldflags.iter().filter(|f| f.starts_with("-D")).cloned());
+    args.push(input.to_string_lossy().to_string());
+    args.push("-o".to_string());
+    args.push(output.to_string_lossy().to_string());
+
+    let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
+    let result = fbuild_core::subprocess::run_command(&args_ref, None, None, None)?;
+    if !result.success() {
+        return Err(fbuild_core::FbuildError::BuildFailed(format!(
+            "failed to preprocess Arduino mbed linker script for {}:\n{}",
+            variant_name, result.stderr
+        )));
+    }
+
+    Ok(output)
+}
+
+fn dedupe_paths(paths: &mut Vec<PathBuf>) {
+    let mut seen = HashSet::new();
+    paths.retain(|path| seen.insert(path.clone()));
+}
+
+fn dedupe_strings(flags: &mut Vec<String>) {
+    let mut seen = HashSet::new();
+    flags.retain(|flag| seen.insert(flag.clone()));
 }
 
 /// Derive the STM32duino generic board define from the MCU name.

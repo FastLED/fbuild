@@ -1,7 +1,8 @@
 //! RP2040 (arduino-pico by earlephilhower) framework package.
 //!
-//! Downloads and manages the arduino-pico core from GitHub.
-//! Provides paths to: cores/rp2040, variants/, libraries/, pico-sdk/.
+//! Uses the packaged release archive rather than the GitHub source tarball,
+//! because the source tarball omits required bundled content such as
+//! `ArduinoCore-API` and `pico-sdk`.
 
 use std::path::{Path, PathBuf};
 
@@ -9,7 +10,7 @@ use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 
 const RP2040_CORE_VERSION: &str = "4.5.3";
 const RP2040_CORE_URL: &str =
-    "https://github.com/earlephilhower/arduino-pico/archive/refs/tags/4.5.3.tar.gz";
+    "https://github.com/earlephilhower/arduino-pico/releases/download/4.5.3/rp2040-4.5.3.zip";
 
 /// RP2040 (arduino-pico) core framework manager.
 pub struct Rp2040Cores {
@@ -65,6 +66,25 @@ impl Rp2040Cores {
         if !arduino_h.exists() {
             return Err(fbuild_core::FbuildError::PackageError(format!(
                 "RP2040 core missing cores/rp2040/Arduino.h (in {})",
+                root.display()
+            )));
+        }
+
+        let arduino_api = root
+            .join("ArduinoCore-API")
+            .join("api")
+            .join("ArduinoAPI.h");
+        if !arduino_api.exists() {
+            return Err(fbuild_core::FbuildError::PackageError(format!(
+                "RP2040 core missing ArduinoCore-API/api/ArduinoAPI.h (in {})",
+                root.display()
+            )));
+        }
+
+        let pico_sdk = root.join("pico-sdk").join("src");
+        if !pico_sdk.exists() {
+            return Err(fbuild_core::FbuildError::PackageError(format!(
+                "RP2040 core missing pico-sdk/src (in {})",
                 root.display()
             )));
         }
@@ -139,6 +159,12 @@ impl crate::Package for Rp2040Cores {
         }
         let root = find_core_root(&self.base.install_path());
         root.join("cores").join("rp2040").join("Arduino.h").exists()
+            && root
+                .join("ArduinoCore-API")
+                .join("api")
+                .join("ArduinoAPI.h")
+                .exists()
+            && root.join("pico-sdk").join("src").exists()
     }
 
     fn get_info(&self) -> PackageInfo {

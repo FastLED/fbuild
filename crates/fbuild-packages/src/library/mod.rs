@@ -3,6 +3,7 @@
 pub mod apollo3_core;
 pub mod arduino_api;
 pub mod arduino_core;
+pub mod arduino_mbed_core;
 pub mod attiny_core;
 pub mod avr_framework;
 pub mod ch32v_core;
@@ -28,6 +29,7 @@ pub mod teensy_core;
 
 pub use apollo3_core::Apollo3Cores;
 pub use arduino_core::ArduinoCore;
+pub use arduino_mbed_core::ArduinoMbedCore;
 pub use attiny_core::ATTinyCore;
 pub use avr_framework::AvrFramework;
 pub use ch32v_core::Ch32vCores;
