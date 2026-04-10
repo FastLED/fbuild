@@ -12,6 +12,7 @@
 //! 9. Link (with linker script from variant dir)
 //! 10. Convert to binary + report size
 
+use std::collections::HashMap;
 use std::path::Path;
 use std::time::Instant;
 
@@ -73,6 +74,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             super::mcu_config::get_rp2040_config_for_mcu(&ctx.board.mcu.to_lowercase())?;
         let mut defines = ctx.board.get_defines();
         defines.extend(mcu_config.defines_map());
+        add_rp_manifest_defines(&framework_dir, &ctx.board.mcu, &mut defines);
         // Use the resolved core_dir/variant_dir instead of board.get_include_paths():
         // RP2040 board metadata reports `core = earlephilhower`, while the actual
         // package directory is `cores/rp2040/`.
@@ -234,6 +236,12 @@ fn add_rp_manifest_includes(
     }
 }
 
+fn add_rp_manifest_defines(framework_dir: &Path, mcu: &str, defines: &mut HashMap<String, String>) {
+    for path in rp_manifest_define_files(framework_dir, mcu) {
+        add_define_file(&path, defines);
+    }
+}
+
 fn rp_manifest_include_files(framework_dir: &Path, mcu: &str) -> Vec<std::path::PathBuf> {
     let family = if mcu.to_lowercase().starts_with("rp2350") {
         "rp2350"
@@ -247,6 +255,18 @@ fn rp_manifest_include_files(framework_dir: &Path, mcu: &str) -> Vec<std::path::
             .join(family)
             .join("platform_inc.txt"),
     ]
+}
+
+fn rp_manifest_define_files(framework_dir: &Path, mcu: &str) -> Vec<std::path::PathBuf> {
+    let family = if mcu.to_lowercase().starts_with("rp2350") {
+        "rp2350"
+    } else {
+        "rp2040"
+    };
+    vec![framework_dir
+        .join("lib")
+        .join(family)
+        .join("platform_def.txt")]
 }
 
 fn add_prefixed_include_file(
@@ -273,9 +293,34 @@ fn add_prefixed_include_file(
     }
 }
 
+fn add_define_file(define_file: &Path, defines: &mut HashMap<String, String>) {
+    let Ok(content) = std::fs::read_to_string(define_file) else {
+        return;
+    };
+
+    let flags = content
+        .lines()
+        .flat_map(fbuild_core::shell_split::split)
+        .collect::<Vec<_>>();
+    apply_define_flags(&flags, defines);
+}
+
+fn apply_define_flags(flags: &[String], defines: &mut HashMap<String, String>) {
+    for flag in flags {
+        if let Some(def) = flag.strip_prefix("-D") {
+            if let Some((key, val)) = def.split_once('=') {
+                defines.insert(key.to_string(), val.trim().to_string());
+            } else {
+                defines.insert(def.trim().to_string(), "1".to_string());
+            }
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::collections::HashMap;
 
     #[test]
     fn test_rp2040_orchestrator_platform() {
@@ -321,5 +366,18 @@ mod tests {
         add_prefixed_include_file(&manifest, tmp.path(), &mut include_dirs);
 
         assert_eq!(include_dirs, vec![target]);
+    }
+
+    #[test]
+    fn test_add_define_file_reads_platformio_manifest() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let manifest = tmp.path().join("platform_def.txt");
+        std::fs::write(&manifest, "-DTARGET_RP2040\n-DPICO_RP2040=1 \n").unwrap();
+
+        let mut defines = HashMap::new();
+        add_define_file(&manifest, &mut defines);
+
+        assert_eq!(defines.get("TARGET_RP2040").map(String::as_str), Some("1"));
+        assert_eq!(defines.get("PICO_RP2040").map(String::as_str), Some("1"));
     }
 }

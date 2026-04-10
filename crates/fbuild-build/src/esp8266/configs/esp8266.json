@@ -7,16 +7,28 @@
     "common": [
       "-mlongcalls",
       "-mtext-section-literals",
-      "-falign-functions=4",
       "-ffunction-sections",
       "-fdata-sections",
-      "-Wall",
-      "-Wextra",
+      "-falign-functions=4",
+      "-Wl,-EL",
+      "-fno-inline-functions",
+      "-nostdlib",
+      "-Wno-error=unused-function",
+      "-Wno-error=unused-variable",
+      "-Wno-error=unused-but-set-variable",
+      "-Wno-error=deprecated-declarations",
       "-Wno-unused-parameter",
+      "-Wno-sign-compare",
+      "-fno-strict-aliasing",
       "-MMD"
     ],
     "c": [
-      "-std=gnu17"
+      "-std=gnu17",
+      "-Wpointer-arith",
+      "-Wno-implicit-function-declaration",
+      "-Wl,-EL",
+      "-fno-inline-functions",
+      "-nostdlib"
     ],
     "cxx": [
       "-std=gnu++17",
@@ -26,18 +38,31 @@
   },
 
   "linker_flags": [
-    "-nostdlib",
-    "-Wl,--no-check-sections",
+    "-mlongcalls",
+    "-mtext-section-literals",
+    "-Wl,-EL",
     "-Wl,--gc-sections",
-    "-Wl,-static",
     "-Wl,-wrap,system_restart_local",
     "-Wl,-wrap,spi_flash_read",
-    "-u", "app_entry",
-    "-u", "_printf_float",
-    "-u", "_scanf_float"
+    "-nostdlib",
+    "-u",
+    "_printf_float",
+    "-u",
+    "_scanf_float",
+    "-u",
+    "app_entry",
+    "-u",
+    "_xt_isr_attach",
+    "-u",
+    "_xtos_set_exception_handler",
+    "-u",
+    "_xtos_set_interrupt_handler",
+    "-u",
+    "_xtos_c_handler_table"
   ],
 
   "linker_libs": [
+    "-lgcc",
     "-lhal",
     "-lphy",
     "-lpp",
@@ -54,8 +79,7 @@
     "-lwpa2",
     "-lstdc++",
     "-lm",
-    "-lc",
-    "-lgcc"
+    "-lc"
   ],
 
   "objcopy": {
@@ -77,6 +101,7 @@
   "defines": [
     "ESP8266",
     "ARDUINO_ARCH_ESP8266",
+    ["ARDUINO", "10805"],
     "LWIP_OPEN_SRC",
     ["TCP_MSS", "536"],
     ["LWIP_FEATURES", "1"],

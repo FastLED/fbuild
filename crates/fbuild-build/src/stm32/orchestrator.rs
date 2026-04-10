@@ -130,6 +130,12 @@ impl BuildOrchestrator for Stm32Orchestrator {
             .push("-Wl,--defsym=LD_FLASH_OFFSET=0".to_string());
         let mut defines = ctx.board.get_defines();
         defines.extend(mcu_config.defines_map());
+        if let Some(board_define) = framework_props
+            .as_ref()
+            .and_then(|props| props.get("board"))
+        {
+            defines.insert(format!("ARDUINO_{board_define}"), "1".to_string());
+        }
         // STM32duino's stm32_def.h checks for STM32YYxx (e.g. STM32F1xx). The board
         // JSON extra_flags may only have STM32F1, so ensure the full family define.
         defines.insert(family.to_string(), "1".to_string());
