@@ -72,6 +72,11 @@ impl Ch32vCores {
         Ok(())
     }
 
+    /// Apply compatibility patches for known upstream core issues.
+    fn patch_compatibility(root: &Path) -> fbuild_core::Result<()> {
+        patch_backup_header(root)
+    }
+
     /// Get the core source directory for a specific core name.
     ///
     /// The board JSON `core` field (e.g. "openwch") comes from PlatformIO's
@@ -125,7 +130,9 @@ impl Ch32vCores {
 impl crate::Package for Ch32vCores {
     fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
         if self.is_installed() {
-            return Ok(self.resolved_dir());
+            let root = self.resolved_dir();
+            Self::patch_compatibility(&root)?;
+            return Ok(root);
         }
 
         let rt = tokio::runtime::Handle::try_current().ok();
@@ -141,7 +148,9 @@ impl crate::Package for Ch32vCores {
             rt.block_on(self.base.staged_install(Self::validate))?
         };
 
-        Ok(find_core_root(&install_path))
+        let root = find_core_root(&install_path);
+        Self::patch_compatibility(&root)?;
+        Ok(root)
     }
 
     fn is_installed(&self) -> bool {
@@ -210,6 +219,39 @@ fn find_ld_file(dir: &Path) -> Option<PathBuf> {
     ld_files.into_iter().next()
 }
 
+fn patch_backup_header(root: &Path) -> fbuild_core::Result<()> {
+    let backup_h = root
+        .join("cores")
+        .join("arduino")
+        .join("ch32")
+        .join("backup.h");
+    if !backup_h.exists() {
+        return Ok(());
+    }
+
+    let content = std::fs::read_to_string(&backup_h).map_err(|e| {
+        fbuild_core::FbuildError::PackageError(format!(
+            "failed to read CH32V backup header {}: {}",
+            backup_h.display(),
+            e
+        ))
+    })?;
+
+    let patched = content.replace("#ifndef CH32V00x", "#ifdef RCC_APB1Periph_BKP");
+    if patched != content {
+        std::fs::write(&backup_h, patched).map_err(|e| {
+            fbuild_core::FbuildError::PackageError(format!(
+                "failed to patch CH32V backup header {}: {}",
+                backup_h.display(),
+                e
+            ))
+        })?;
+        tracing::debug!("patched {}", backup_h.display());
+    }
+
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -262,5 +304,29 @@ mod tests {
         let tmp = tempfile::TempDir::new().unwrap();
         let result = Ch32vCores::validate(tmp.path());
         assert!(result.is_err());
+    }
+
+    #[test]
+    fn test_patch_backup_header_replaces_old_guard() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let backup_h = tmp.path().join("cores/arduino/ch32/backup.h");
+        std::fs::create_dir_all(backup_h.parent().unwrap()).unwrap();
+        std::fs::write(
+            &backup_h,
+            "static inline void resetBackupDomain(void)\n{\n#ifndef CH32V00x\n  RCC_BackupResetCmd(ENABLE);\n  RCC_BackupResetCmd(DISABLE);\n#endif\n}\n",
+        )
+        .unwrap();
+
+        patch_backup_header(tmp.path()).unwrap();
+
+        let patched = std::fs::read_to_string(&backup_h).unwrap();
+        assert!(patched.contains("#ifdef RCC_APB1Periph_BKP"));
+        assert!(!patched.contains("#ifndef CH32V00x"));
+    }
+
+    #[test]
+    fn test_patch_backup_header_is_noop_when_missing() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        patch_backup_header(tmp.path()).unwrap();
     }
 }
