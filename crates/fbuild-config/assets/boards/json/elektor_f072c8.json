@@ -28,6 +28,8 @@
   "ram": 16384,
   "rom": 65536,
   "upload": {
+    "maximum_ram_size": 16384,
+    "maximum_size": 65536,
     "protocol": "serial"
   },
   "url": "https://www.elektormagazine.com/labs/lorawan-node-experimental-platform",

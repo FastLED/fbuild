@@ -17,6 +17,8 @@
   "ram": 4096,
   "rom": 131072,
   "upload": {
+    "maximum_ram_size": 4096,
+    "maximum_size": 131072,
     "protocol": "urclock",
     "require_upload_port": true,
     "speed": 115200

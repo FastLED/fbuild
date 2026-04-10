@@ -26,8 +26,12 @@
   "ram": 270336,
   "rom": 2097152,
   "upload": {
+    "maximum_ram_size": 270336,
+    "maximum_size": 2097152,
     "protocol": "picotool",
-    "require_upload_port": true
+    "require_upload_port": true,
+    "use_1200bps_touch": true,
+    "wait_for_upload_port": false
   },
   "url": "https://blog.arduino.cc/2021/01/20/welcome-raspberry-pi-to-the-world-of-microcontrollers/",
   "vendor": "Arduino"

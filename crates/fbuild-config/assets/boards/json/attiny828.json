@@ -16,6 +16,8 @@
   "ram": 512,
   "rom": 8192,
   "upload": {
+    "maximum_ram_size": 512,
+    "maximum_size": 8192,
     "protocol": "usbtiny"
   },
   "url": "http://www.atmel.com/devices/ATTINY828.aspx",

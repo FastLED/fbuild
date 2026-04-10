@@ -30,6 +30,8 @@
   "ram": 524288,
   "rom": 2031616,
   "upload": {
+    "maximum_ram_size": 524288,
+    "maximum_size": 2031616,
     "protocol": "teensy-gui"
   },
   "url": "https://www.pjrc.com/store/teensy40.html",

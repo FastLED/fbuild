@@ -19,9 +19,13 @@
   "ram": 2048,
   "rom": 61440,
   "upload": {
+    "maximum_ram_size": 2048,
+    "maximum_size": 61440,
     "protocol": "avr109",
     "require_upload_port": true,
-    "speed": 57600
+    "speed": 57600,
+    "use_1200bps_touch": true,
+    "wait_for_upload_port": true
   },
   "url": "http://www.dwengo.org/",
   "vendor": "Dwengo"

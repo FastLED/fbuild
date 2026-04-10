@@ -34,6 +34,8 @@
   "ram": 98304,
   "rom": 524288,
   "upload": {
+    "maximum_ram_size": 98304,
+    "maximum_size": 524288,
     "protocol": "stlink"
   },
   "url": "https://developer.mbed.org/platforms/ST-Nucleo-F401RE/",

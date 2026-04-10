@@ -37,6 +37,8 @@
   "ram": 524288,
   "rom": 2097152,
   "upload": {
+    "maximum_ram_size": 524288,
+    "maximum_size": 2097152,
     "protocol": "stlink"
   },
   "url": "https://developer.mbed.org/platforms/ST-Nucleo-F767ZI/",

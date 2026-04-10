@@ -31,6 +31,8 @@
   "ram": 16384,
   "rom": 131072,
   "upload": {
+    "maximum_ram_size": 16384,
+    "maximum_size": 131072,
     "protocol": "stlink"
   },
   "url": "http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1848/PF258515",

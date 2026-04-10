@@ -27,6 +27,8 @@
   "ram": 4096,
   "rom": 16384,
   "upload": {
+    "maximum_ram_size": 4096,
+    "maximum_size": 16384,
     "protocol": "stlink"
   },
   "url": "https://www.hotmcu.com/stm32f030f4p6-minimum-systerm-boardcortexm0-p-208.html",

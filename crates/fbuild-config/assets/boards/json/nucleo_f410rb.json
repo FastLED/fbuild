@@ -31,6 +31,8 @@
   "ram": 32768,
   "rom": 131072,
   "upload": {
+    "maximum_ram_size": 32768,
+    "maximum_size": 131072,
     "protocol": "stlink"
   },
   "url": "https://developer.mbed.org/platforms/ST-Nucleo-F410RB/",

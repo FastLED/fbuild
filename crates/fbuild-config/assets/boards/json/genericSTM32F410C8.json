@@ -27,6 +27,8 @@
   "ram": 32768,
   "rom": 65536,
   "upload": {
+    "maximum_ram_size": 32768,
+    "maximum_size": 65536,
     "protocol": "serial"
   },
   "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f410c8.html",

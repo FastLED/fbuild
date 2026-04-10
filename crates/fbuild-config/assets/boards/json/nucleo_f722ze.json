@@ -33,6 +33,8 @@
   "ram": 262144,
   "rom": 524288,
   "upload": {
+    "maximum_ram_size": 262144,
+    "maximum_size": 524288,
     "protocol": "stlink"
   },
   "url": "https://www.st.com/en/evaluation-tools/nucleo-f722ze.html",

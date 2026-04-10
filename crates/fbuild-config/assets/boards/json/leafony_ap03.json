@@ -33,6 +33,8 @@
   "ram": 163840,
   "rom": 524288,
   "upload": {
+    "maximum_ram_size": 163840,
+    "maximum_size": 524288,
     "protocol": "serial"
   },
   "url": "https://shop.leafony.com/",

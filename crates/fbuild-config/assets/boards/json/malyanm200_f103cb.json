@@ -30,8 +30,12 @@
   "ram": 20480,
   "rom": 122880,
   "upload": {
+    "maximum_ram_size": 20480,
+    "maximum_size": 122880,
     "protocol": "stlink",
-    "require_upload_port": true
+    "require_upload_port": true,
+    "use_1200bps_touch": false,
+    "wait_for_upload_port": false
   },
   "url": "http://malyansys.com/en/product/fdm-series/m200-v1/",
   "vendor": "Malyan"

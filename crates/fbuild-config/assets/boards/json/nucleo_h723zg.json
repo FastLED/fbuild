@@ -36,6 +36,8 @@
   "ram": 327680,
   "rom": 1048576,
   "upload": {
+    "maximum_ram_size": 327680,
+    "maximum_size": 1048576,
     "protocol": "stlink"
   },
   "url": "https://www.st.com/en/evaluation-tools/nucleo-h723zg.html",

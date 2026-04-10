@@ -13,6 +13,10 @@
   "platform": "atmelavr",
   "ram": 1024,
   "rom": 16384,
+  "upload": {
+    "maximum_ram_size": 1024,
+    "maximum_size": 16384
+  },
   "url": "http://www.microchip.com/wwwproducts/en/AT90PWM316",
   "vendor": "Microchip"
 }

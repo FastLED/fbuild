@@ -29,6 +29,8 @@
   "ram": 65536,
   "rom": 524288,
   "upload": {
+    "maximum_ram_size": 65536,
+    "maximum_size": 524288,
     "protocol": "stlink"
   },
   "url": "https://developer.mbed.org/platforms/ST-Nucleo-F303ZE/",

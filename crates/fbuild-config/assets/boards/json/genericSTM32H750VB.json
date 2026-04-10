@@ -27,6 +27,8 @@
   "ram": 524288,
   "rom": 131072,
   "upload": {
+    "maximum_ram_size": 524288,
+    "maximum_size": 131072,
     "protocol": "serial"
   },
   "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32h750vb.html",

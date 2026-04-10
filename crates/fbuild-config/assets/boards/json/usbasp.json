@@ -22,6 +22,8 @@
   "ram": 1024,
   "rom": 8192,
   "upload": {
+    "maximum_ram_size": 1024,
+    "maximum_size": 8192,
     "protocol": "usbasp"
   },
   "url": "https://www.fischl.de/usbasp/",

@@ -29,6 +29,8 @@
   "ram": 98304,
   "rom": 524288,
   "upload": {
+    "maximum_ram_size": 98304,
+    "maximum_size": 524288,
     "protocol": "stlink"
   },
   "url": "https://github.com/WeActStudio/WeActStudio.MiniSTM32F4x1",

@@ -22,6 +22,8 @@
   "ram": 1024,
   "rom": 7168,
   "upload": {
+    "maximum_ram_size": 1024,
+    "maximum_size": 7168,
     "protocol": "arduino",
     "require_upload_port": true,
     "speed": 19200

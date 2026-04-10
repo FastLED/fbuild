@@ -30,6 +30,8 @@
   "ram": 20480,
   "rom": 122880,
   "upload": {
+    "maximum_ram_size": 20480,
+    "maximum_size": 122880,
     "protocol": "dfu",
     "require_upload_port": true
   },

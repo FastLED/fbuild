@@ -31,6 +31,8 @@
   "ram": 442368,
   "rom": 1048576,
   "upload": {
+    "maximum_ram_size": 442368,
+    "maximum_size": 1048576,
     "protocol": "stlink"
   },
   "url": "https://www.st.com/en/evaluation-tools/stm32h735g-dk.html",

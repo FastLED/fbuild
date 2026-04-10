@@ -29,6 +29,8 @@
   "ram": 20480,
   "rom": 131072,
   "upload": {
+    "maximum_ram_size": 20480,
+    "maximum_size": 131072,
     "protocol": "stlink"
   },
   "url": "https://www.olimex.com/Products/ARM/ST/STM32-H103/",

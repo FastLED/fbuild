@@ -27,6 +27,8 @@
   "ram": 8192,
   "rom": 32768,
   "upload": {
+    "maximum_ram_size": 8192,
+    "maximum_size": 32768,
     "protocol": "mbed"
   },
   "url": "https://www.st.com/en/evaluation-tools/stm32g0316-disco.html",

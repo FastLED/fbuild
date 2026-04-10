@@ -32,6 +32,8 @@
   "ram": 131072,
   "rom": 524288,
   "upload": {
+    "maximum_ram_size": 131072,
+    "maximum_size": 524288,
     "protocol": "stlink"
   },
   "url": "https://developer.mbed.org/platforms/ST-B96B-F446VE/",

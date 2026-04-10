@@ -30,8 +30,12 @@
   "ram": 20480,
   "rom": 108000,
   "upload": {
+    "maximum_ram_size": 20480,
+    "maximum_size": 108000,
     "protocol": "dfu",
-    "require_upload_port": true
+    "require_upload_port": true,
+    "use_1200bps_touch": false,
+    "wait_for_upload_port": false
   },
   "url": "http://wiki.microduinoinc.com/Microduino-Module_CoreSTM32",
   "vendor": "Microduino"

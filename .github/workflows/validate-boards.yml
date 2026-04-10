@@ -10,21 +10,30 @@ jobs:
   validate-boards:
     name: Validate Board Definitions
     runs-on: ubuntu-latest
+    env:
+      PLATFORMIO_CORE_VERSION: "6.1.19"
+      PLATFORMIO_ATMELAVR_VERSION: "5.1.0"
+      PLATFORMIO_ATMELMEGAAVR_VERSION: "1.9.0"
+      PLATFORMIO_ESPRESSIF32_VERSION: "6.13.0"
+      PLATFORMIO_ESPRESSIF8266_VERSION: "4.2.1"
+      PLATFORMIO_RASPBERRYPI_VERSION: "1.19.0"
+      PLATFORMIO_STSTM32_VERSION: "19.5.0"
+      PLATFORMIO_TEENSY_VERSION: "5.1.0"
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
       - name: Install PlatformIO
-        run: pip install platformio
+        run: pip install "platformio==${PLATFORMIO_CORE_VERSION}"
       - name: Install PlatformIO platforms
         run: |
-          pio pkg install -g -p "platformio/atmelavr"
-          pio pkg install -g -p "platformio/espressif32"
-          pio pkg install -g -p "platformio/espressif8266"
-          pio pkg install -g -p "platformio/teensy"
-          pio pkg install -g -p "platformio/ststm32"
-          pio pkg install -g -p "platformio/raspberrypi"
-          pio pkg install -g -p "platformio/atmelmegaavr"
+          pio pkg install -g -p "platformio/atmelavr@${PLATFORMIO_ATMELAVR_VERSION}"
+          pio pkg install -g -p "platformio/espressif32@${PLATFORMIO_ESPRESSIF32_VERSION}"
+          pio pkg install -g -p "platformio/espressif8266@${PLATFORMIO_ESPRESSIF8266_VERSION}"
+          pio pkg install -g -p "platformio/teensy@${PLATFORMIO_TEENSY_VERSION}"
+          pio pkg install -g -p "platformio/ststm32@${PLATFORMIO_STSTM32_VERSION}"
+          pio pkg install -g -p "platformio/raspberrypi@${PLATFORMIO_RASPBERRYPI_VERSION}"
+          pio pkg install -g -p "platformio/atmelmegaavr@${PLATFORMIO_ATMELMEGAAVR_VERSION}"
       - name: Validate board JSONs match PlatformIO
         run: python ci/validate_boards.py

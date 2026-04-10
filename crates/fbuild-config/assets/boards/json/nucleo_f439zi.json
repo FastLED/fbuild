@@ -35,6 +35,8 @@
   "ram": 196608,
   "rom": 2097152,
   "upload": {
+    "maximum_ram_size": 196608,
+    "maximum_size": 2097152,
     "protocol": "stlink"
   },
   "url": "https://www.st.com/en/evaluation-tools/nucleo-f439zi.html",

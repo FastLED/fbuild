@@ -31,6 +31,8 @@
   "ram": 196608,
   "rom": 524288,
   "upload": {
+    "maximum_ram_size": 131072,
+    "maximum_size": 524288,
     "protocol": "blackmagic"
   },
   "url": "http://docs.armstrap.org/en/latest/hardware-overview.html",

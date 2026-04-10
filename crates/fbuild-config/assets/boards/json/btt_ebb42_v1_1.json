@@ -29,6 +29,8 @@
   "ram": 147456,
   "rom": 131072,
   "upload": {
+    "maximum_ram_size": 147456,
+    "maximum_size": 131072,
     "protocol": "stlink"
   },
   "url": "https://github.com/bigtreetech/EBB/tree/master/EBB%20CAN%20V1.1%20(STM32G0B1)/EBB42%20CAN%20V1.1",

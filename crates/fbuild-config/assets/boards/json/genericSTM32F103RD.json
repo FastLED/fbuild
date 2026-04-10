@@ -27,6 +27,8 @@
   "ram": 65536,
   "rom": 393216,
   "upload": {
+    "maximum_ram_size": 65536,
+    "maximum_size": 393216,
     "protocol": "serial"
   },
   "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103rd.html",

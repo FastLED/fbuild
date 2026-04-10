@@ -22,6 +22,8 @@
   "ram": 4096,
   "rom": 64512,
   "upload": {
+    "maximum_ram_size": 4096,
+    "maximum_size": 64512,
     "protocol": "arduino",
     "require_upload_port": true,
     "speed": 57600

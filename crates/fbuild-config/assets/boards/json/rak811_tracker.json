@@ -27,6 +27,8 @@
   "ram": 16384,
   "rom": 131072,
   "upload": {
+    "maximum_ram_size": 16384,
+    "maximum_size": 131072,
     "protocol": "stlink"
   },
   "url": "https://github.com/RAKWireless/RAK811",

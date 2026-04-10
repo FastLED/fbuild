@@ -37,6 +37,8 @@
   "ram": 327680,
   "rom": 1048576,
   "upload": {
+    "maximum_ram_size": 327680,
+    "maximum_size": 1048576,
     "protocol": "stlink"
   },
   "url": "https://developer.mbed.org/platforms/ST-Nucleo-F446ZE/",

@@ -22,6 +22,8 @@
   "ram": 512,
   "rom": 6012,
   "upload": {
+    "maximum_ram_size": 512,
+    "maximum_size": 6012,
     "protocol": "micronucleus"
   },
   "url": "http://digistump.com/products/1",

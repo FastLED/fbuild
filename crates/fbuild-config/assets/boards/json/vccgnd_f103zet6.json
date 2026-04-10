@@ -28,6 +28,8 @@
   "ram": 65536,
   "rom": 524288,
   "upload": {
+    "maximum_ram_size": 65536,
+    "maximum_size": 524288,
     "protocol": "stlink"
   },
   "url": "https://stm32-base.org/boards/STM32F103ZET6-VCC-GND-XLarge",

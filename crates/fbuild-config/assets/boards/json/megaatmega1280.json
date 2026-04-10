@@ -23,6 +23,8 @@
   "ram": 8192,
   "rom": 126976,
   "upload": {
+    "maximum_ram_size": 8192,
+    "maximum_size": 126976,
     "protocol": "arduino",
     "require_upload_port": true,
     "speed": 57600

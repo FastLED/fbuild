@@ -17,6 +17,8 @@
   "ram": 512,
   "rom": 4096,
   "upload": {
+    "maximum_ram_size": 512,
+    "maximum_size": 4096,
     "protocol": "urclock",
     "require_upload_port": false
   },

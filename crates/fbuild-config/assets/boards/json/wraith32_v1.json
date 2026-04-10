@@ -26,6 +26,8 @@
   "ram": 7936,
   "rom": 32768,
   "upload": {
+    "maximum_ram_size": 7936,
+    "maximum_size": 32768,
     "protocol": "stlink"
   },
   "url": "https://store.myairbot.com/esc/4in1-esc.html",

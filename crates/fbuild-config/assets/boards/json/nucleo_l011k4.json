@@ -29,6 +29,8 @@
   "ram": 2048,
   "rom": 16384,
   "upload": {
+    "maximum_ram_size": 2048,
+    "maximum_size": 16384,
     "protocol": "stlink"
   },
   "url": "https://www.st.com/en/evaluation-tools/nucleo-l011k4.html",

@@ -31,6 +31,8 @@
   "ram": 98304,
   "rom": 524288,
   "upload": {
+    "maximum_ram_size": 98304,
+    "maximum_size": 524288,
     "protocol": "stlink"
   },
   "url": "https://shop.mchobby.be/fr/micropython/1830-pybstick-lite-26-micropython-et-arduino-3232100018303-garatronic.html",

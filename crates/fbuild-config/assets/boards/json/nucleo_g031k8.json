@@ -30,6 +30,8 @@
   "ram": 8192,
   "rom": 65536,
   "upload": {
+    "maximum_ram_size": 8192,
+    "maximum_size": 65536,
     "protocol": "stlink"
   },
   "url": "https://www.st.com/en/evaluation-tools/nucleo-g031k8.html",

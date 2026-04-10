@@ -30,6 +30,8 @@
   "ram": 15168,
   "rom": 122880,
   "upload": {
+    "maximum_ram_size": 15168,
+    "maximum_size": 122880,
     "protocol": "stlink"
   },
   "url": "http://malyansys.com/en/product/fdm-series/m200-v2/",

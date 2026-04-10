@@ -32,6 +32,8 @@
   "ram": 348160,
   "rom": 65536,
   "upload": {
+    "maximum_ram_size": 348160,
+    "maximum_size": 65536,
     "protocol": "stlink"
   },
   "url": "https://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/mcu-mpu-eval-tools/stm32-mcu-mpu-eval-tools/stm32-discovery-kits/stm32f7508-dk.html",

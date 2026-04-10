@@ -29,6 +29,8 @@
   "ram": 81920,
   "rom": 4194304,
   "upload": {
+    "maximum_ram_size": 81920,
+    "maximum_size": 4194304,
     "require_upload_port": true,
     "speed": 115200
   },

@@ -26,8 +26,12 @@
   "ram": 270336,
   "rom": 2097152,
   "upload": {
+    "maximum_ram_size": 270336,
+    "maximum_size": 2097152,
     "protocol": "picotool",
-    "require_upload_port": true
+    "require_upload_port": true,
+    "use_1200bps_touch": true,
+    "wait_for_upload_port": false
   },
   "url": "https://www.raspberrypi.org/products/raspberry-pi-pico/",
   "vendor": "Raspberry Pi"

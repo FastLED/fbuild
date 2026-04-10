@@ -30,8 +30,12 @@
   "ram": 20480,
   "rom": 65536,
   "upload": {
+    "maximum_ram_size": 20480,
+    "maximum_size": 65536,
     "protocol": "stlink",
-    "require_upload_port": true
+    "require_upload_port": true,
+    "use_1200bps_touch": false,
+    "wait_for_upload_port": false
   },
   "url": "http://www.st.com/en/microcontrollers/stm32f103t8.html",
   "vendor": "Generic"

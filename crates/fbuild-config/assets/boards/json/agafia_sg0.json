@@ -28,6 +28,8 @@
   "ram": 36864,
   "rom": 131072,
   "upload": {
+    "maximum_ram_size": 36864,
+    "maximum_size": 131072,
     "protocol": "stlink"
   },
   "url": "https://www.sigmaic.com/store/p7/agafia-sgo.html",

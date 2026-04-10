@@ -30,8 +30,12 @@
   "ram": 49152,
   "rom": 262144,
   "upload": {
+    "maximum_ram_size": 49152,
+    "maximum_size": 262144,
     "protocol": "stlink",
-    "require_upload_port": true
+    "require_upload_port": true,
+    "use_1200bps_touch": false,
+    "wait_for_upload_port": false
   },
   "url": "http://www.st.com/content/st_com/en/products/microcontrollers/stm32-32-bit-arm-cortex-mcus/stm32f1-series/stm32f103/stm32f103rc.html",
   "vendor": "Generic"

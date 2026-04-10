@@ -33,6 +33,8 @@
   "ram": 20480,
   "rom": 131072,
   "upload": {
+    "maximum_ram_size": 20480,
+    "maximum_size": 131072,
     "protocol": "stlink"
   },
   "url": "https://developer.mbed.org/platforms/ST-Nucleo-F103RB/",

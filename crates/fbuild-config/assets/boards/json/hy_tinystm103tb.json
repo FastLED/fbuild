@@ -30,8 +30,12 @@
   "ram": 20480,
   "rom": 131072,
   "upload": {
+    "maximum_ram_size": 20480,
+    "maximum_size": 131072,
     "protocol": "dfu",
-    "require_upload_port": true
+    "require_upload_port": true,
+    "use_1200bps_touch": false,
+    "wait_for_upload_port": false
   },
   "url": "http://www.hotmcu.com/stm32f103tb-arm-cortex-m3-development-board-p-222.html",
   "vendor": "HY"

@@ -27,6 +27,8 @@
   "ram": 196608,
   "rom": 524288,
   "upload": {
+    "maximum_ram_size": 196608,
+    "maximum_size": 524288,
     "protocol": "mbed"
   },
   "url": "https://midatronics.com/Development_Boards/MKR_Sharky_I",

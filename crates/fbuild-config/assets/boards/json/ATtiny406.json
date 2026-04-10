@@ -1,7 +1,7 @@
 {
   "build": {
     "core": "megatinycore",
-    "extra_flags": "-DARDUINO_attinyxy6 -DMILLIS_USE_TIMERA0 -DUARTBAUD5V -DCLOCK_SOURCE=0 -DMEGATINYCORE=\"2.6.11\" -DMEGATINYCORE_MAJOR=2UL -DMEGATINYCORE_MINOR=6UL -DMEGATINYCORE_PATCH=11UL -DMEGATINYCORE_RELEASED=1 -DCORE_ATTACH_ALL -DTWI_MORS -DUSE_TIMERD0_PWM",
+    "extra_flags": "-DARDUINO_attinyxy6 -DMILLIS_USE_TIMERA0 -DUARTBAUD5V",
     "f_cpu": "16000000L",
     "mcu": "attiny406",
     "variant": "txy6"
@@ -17,6 +17,8 @@
   "ram": 256,
   "rom": 4096,
   "upload": {
+    "maximum_ram_size": 256,
+    "maximum_size": 4096,
     "protocol": "jtag2updi",
     "speed": 115200
   },

@@ -33,8 +33,12 @@
   "ram": 294248,
   "rom": 1048576,
   "upload": {
+    "maximum_ram_size": 294248,
+    "maximum_size": 1048576,
     "protocol": "dfu",
-    "require_upload_port": true
+    "require_upload_port": true,
+    "use_1200bps_touch": true,
+    "wait_for_upload_port": true
   },
   "url": "https://store.arduino.cc/products/nicla-vision",
   "vendor": "Arduino"

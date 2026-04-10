@@ -22,6 +22,8 @@
   "ram": 128,
   "rom": 2048,
   "upload": {
+    "maximum_ram_size": 128,
+    "maximum_size": 2048,
     "protocol": "usbtiny"
   },
   "url": "http://www.atmel.com/devices/ATTINY25.aspx",

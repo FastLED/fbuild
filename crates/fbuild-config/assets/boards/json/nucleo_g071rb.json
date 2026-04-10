@@ -32,6 +32,8 @@
   "ram": 36864,
   "rom": 131072,
   "upload": {
+    "maximum_ram_size": 36864,
+    "maximum_size": 131072,
     "protocol": "stlink"
   },
   "url": "https://www.st.com/en/evaluation-tools/nucleo-g071rb.html",

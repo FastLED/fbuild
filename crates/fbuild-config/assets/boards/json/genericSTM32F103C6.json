@@ -28,6 +28,8 @@
   "ram": 10240,
   "rom": 32768,
   "upload": {
+    "maximum_ram_size": 10240,
+    "maximum_size": 32768,
     "protocol": "serial"
   },
   "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103c6.html",

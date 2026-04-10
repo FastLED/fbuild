@@ -28,6 +28,8 @@
   "ram": 20480,
   "rom": 196608,
   "upload": {
+    "maximum_ram_size": 20480,
+    "maximum_size": 196608,
     "protocol": "stlink"
   },
   "url": "http://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/mcu-eval-tools/stm32-mcu-eval-tools/stm32-mcu-eval-boards/stm32l073z-eval.html",

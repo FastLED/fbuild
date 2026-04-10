@@ -22,6 +22,8 @@
   "ram": 2048,
   "rom": 28672,
   "upload": {
+    "maximum_ram_size": 2048,
+    "maximum_size": 28672,
     "protocol": "usbtiny"
   },
   "url": "http://www.adafruit.com/products/2010",

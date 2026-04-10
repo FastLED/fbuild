@@ -29,6 +29,8 @@
   "ram": 147456,
   "rom": 524288,
   "upload": {
+    "maximum_ram_size": 147456,
+    "maximum_size": 524288,
     "protocol": "stlink"
   },
   "url": "https://www.st.com/en/evaluation-tools/nucleo-g0b1re.html",

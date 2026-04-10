@@ -28,6 +28,8 @@
   "ram": 12288,
   "rom": 65536,
   "upload": {
+    "maximum_ram_size": 12288,
+    "maximum_size": 65536,
     "protocol": "stlink"
   },
   "url": "http://www.st.com/web/en/catalog/tools/PF260318",

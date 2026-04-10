@@ -22,6 +22,8 @@
   "ram": 16384,
   "rom": 131072,
   "upload": {
+    "maximum_ram_size": 16384,
+    "maximum_size": 131072,
     "protocol": "urclock",
     "require_upload_port": true,
     "speed": 115200

@@ -28,6 +28,8 @@
   "ram": 20480,
   "rom": 131072,
   "upload": {
+    "maximum_ram_size": 20480,
+    "maximum_size": 131072,
     "protocol": "stlink"
   },
   "url": "https://www.st.com/en/evaluation-tools/nucleo-l010rb.html",

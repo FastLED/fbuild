@@ -32,6 +32,8 @@
   "ram": 131072,
   "rom": 1048576,
   "upload": {
+    "maximum_ram_size": 131072,
+    "maximum_size": 1048576,
     "protocol": "cmsis-dap"
   },
   "url": "https://os.mbed.com/platforms/RHOMBIO-L476DMW1K/",

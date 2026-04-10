@@ -29,6 +29,8 @@
   "ram": 20480,
   "rom": 131072,
   "upload": {
+    "maximum_ram_size": 20480,
+    "maximum_size": 131072,
     "protocol": "stlink"
   },
   "url": "https://docs.zephyrproject.org/latest/boards/arm/olimexino_stm32/doc/index.html",

@@ -19,6 +19,8 @@
   "ram": 6144,
   "rom": 48640,
   "upload": {
+    "maximum_ram_size": 6144,
+    "maximum_size": 48640,
     "protocol": "xplainedmini_updi",
     "speed": 115200
   },

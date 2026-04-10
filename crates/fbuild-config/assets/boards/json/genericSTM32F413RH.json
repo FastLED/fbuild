@@ -27,6 +27,8 @@
   "ram": 327680,
   "rom": 1572864,
   "upload": {
+    "maximum_ram_size": 327680,
+    "maximum_size": 1572864,
     "protocol": "serial"
   },
   "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f413rh.html",

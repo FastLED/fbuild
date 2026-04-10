@@ -33,6 +33,8 @@
   "ram": 32768,
   "rom": 131072,
   "upload": {
+    "maximum_ram_size": 32768,
+    "maximum_size": 131072,
     "protocol": "stlink"
   },
   "url": "https://www.st.com/en/evaluation-tools/b-g431b-esc1.html",

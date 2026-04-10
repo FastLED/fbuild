@@ -32,6 +32,8 @@
   "ram": 131072,
   "rom": 1048576,
   "upload": {
+    "maximum_ram_size": 131072,
+    "maximum_size": 1048576,
     "protocol": "stlink"
   },
   "url": "https://docs.zephyrproject.org/latest/boards/arm/olimex_stm32_e407/doc/index.html",

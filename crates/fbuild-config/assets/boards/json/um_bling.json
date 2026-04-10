@@ -50,9 +50,7 @@
     "maximum_ram_size": 327680,
     "maximum_size": 8388608,
     "require_upload_port": true,
-    "speed": 460800,
-    "use_1200bps_touch": true,
-    "wait_for_upload_port": true
+    "speed": 460800
   },
   "url": "https://unexpectedmaker.com/shop/bling",
   "vendor": "Unexpected Maker"

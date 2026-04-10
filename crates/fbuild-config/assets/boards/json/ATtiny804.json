@@ -1,7 +1,7 @@
 {
   "build": {
     "core": "megatinycore",
-    "extra_flags": "-DARDUINO_attinyxy4 -DMILLIS_USE_TIMERA0 -DUARTBAUD5V -DCLOCK_SOURCE=0 -DMEGATINYCORE=\"2.6.11\" -DMEGATINYCORE_MAJOR=2UL -DMEGATINYCORE_MINOR=6UL -DMEGATINYCORE_PATCH=11UL -DMEGATINYCORE_RELEASED=1 -DCORE_ATTACH_ALL -DTWI_MORS -DUSE_TIMERD0_PWM",
+    "extra_flags": "-DARDUINO_attinyxy4 -DMILLIS_USE_TIMERA0 -DUARTBAUD5V",
     "f_cpu": "16000000L",
     "mcu": "attiny804",
     "variant": "txy4"
@@ -17,6 +17,8 @@
   "ram": 512,
   "rom": 8192,
   "upload": {
+    "maximum_ram_size": 512,
+    "maximum_size": 8192,
     "protocol": "jtag2updi",
     "speed": 115200
   },

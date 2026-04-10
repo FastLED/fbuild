@@ -32,6 +32,8 @@
   "ram": 4096,
   "rom": 32768,
   "upload": {
+    "maximum_ram_size": 4096,
+    "maximum_size": 32768,
     "protocol": "stlink"
   },
   "url": "https://developer.mbed.org/platforms/ST-Nucleo-F031K6/",

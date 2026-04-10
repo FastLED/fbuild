@@ -32,8 +32,12 @@
   "ram": 131072,
   "rom": 514288,
   "upload": {
+    "maximum_ram_size": 131072,
+    "maximum_size": 514288,
     "protocol": "stlink",
-    "require_upload_port": true
+    "require_upload_port": true,
+    "use_1200bps_touch": false,
+    "wait_for_upload_port": false
   },
   "url": "https://rymcu.com/products",
   "vendor": "RYMCU"

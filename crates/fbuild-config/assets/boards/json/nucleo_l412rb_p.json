@@ -30,6 +30,8 @@
   "ram": 40960,
   "rom": 131072,
   "upload": {
+    "maximum_ram_size": 40960,
+    "maximum_size": 131072,
     "protocol": "stlink"
   },
   "url": "https://www.st.com/en/evaluation-tools/nucleo-l412rb-p.html",

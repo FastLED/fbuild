@@ -23,6 +23,8 @@
   "ram": 8192,
   "rom": 258048,
   "upload": {
+    "maximum_ram_size": 8192,
+    "maximum_size": 258048,
     "protocol": "wiring",
     "require_upload_port": true,
     "speed": 57600

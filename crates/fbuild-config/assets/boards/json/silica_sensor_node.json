@@ -32,6 +32,8 @@
   "ram": 131072,
   "rom": 1048576,
   "upload": {
+    "maximum_ram_size": 131072,
+    "maximum_size": 1048576,
     "protocol": "mbed"
   },
   "url": "https://www.avnet.com/shop/emea/products/avnet-engineering-services/silicastmsensornodeplus-3074457345633959668/",

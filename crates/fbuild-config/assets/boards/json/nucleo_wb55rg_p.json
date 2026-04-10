@@ -31,6 +31,8 @@
   "ram": 196608,
   "rom": 524288,
   "upload": {
+    "maximum_ram_size": 196608,
+    "maximum_size": 524288,
     "protocol": "stlink"
   },
   "url": "https://www.st.com/en/evaluation-tools/p-nucleo-wb55.html",
