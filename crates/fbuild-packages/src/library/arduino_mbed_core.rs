@@ -80,6 +80,10 @@ impl ArduinoMbedCore {
         self.get_variants_dir().join(variant_name)
     }
 
+    pub fn get_boards_txt(&self) -> PathBuf {
+        self.resolved_dir().join("boards.txt")
+    }
+
     pub fn get_linker_script(&self, variant_name: &str) -> PathBuf {
         self.get_variant_dir(variant_name).join("linker_script.ld")
     }
@@ -300,5 +304,13 @@ mod tests {
         let nested = tmp.path().join("ArduinoCore-mbed-4.5.0");
         std::fs::create_dir_all(nested.join("cores/arduino")).unwrap();
         assert_eq!(find_core_root(tmp.path()), nested);
+    }
+
+    #[test]
+    fn test_get_boards_txt() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let core = ArduinoMbedCore::new(tmp.path());
+        let path = core.get_boards_txt();
+        assert!(path.to_string_lossy().contains("boards.txt"));
     }
 }

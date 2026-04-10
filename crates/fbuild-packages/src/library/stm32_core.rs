@@ -82,6 +82,11 @@ impl Stm32Cores {
         self.get_variants_dir().join(variant_name)
     }
 
+    /// Get path to boards.txt.
+    pub fn get_boards_txt(&self) -> PathBuf {
+        self.resolved_dir().join("boards.txt")
+    }
+
     /// Get the linker script for a variant.
     pub fn get_linker_script(&self, variant_name: &str) -> PathBuf {
         self.get_variant_dir(variant_name).join("ldscript.ld")
@@ -226,6 +231,14 @@ mod tests {
         let core = Stm32Cores::new(tmp.path());
         let script = core.get_linker_script("STM32F4xx");
         assert!(script.to_string_lossy().contains("ldscript.ld"));
+    }
+
+    #[test]
+    fn test_get_boards_txt() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let core = Stm32Cores::new(tmp.path());
+        let path = core.get_boards_txt();
+        assert!(path.to_string_lossy().contains("boards.txt"));
     }
 
     #[test]

@@ -77,6 +77,10 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         // RP2040 board metadata reports `core = earlephilhower`, while the actual
         // package directory is `cores/rp2040/`.
         let mut include_dirs = vec![core_dir.clone(), variant_dir.clone()];
+        let framework_include = framework_dir.join("include");
+        if framework_include.exists() {
+            include_dirs.push(framework_include);
+        }
         include_dirs.push(ctx.src_dir.clone());
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
         // Toolchain sysroot includes

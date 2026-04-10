@@ -64,7 +64,16 @@ impl BuildOrchestrator for Stm32Orchestrator {
         // the board JSON says core = "stm32". Map it here.
         let core_dir = framework.get_core_dir("arduino");
         let variant_dir = framework.get_variant_dir(&ctx.board.variant);
-        let selected_variant = select_variant_files(&variant_dir, &ctx.board.variant);
+        let framework_props =
+            load_stm32_framework_props(&framework.get_boards_txt(), &ctx.board.variant);
+        let selected_variant = select_variant_files(
+            &variant_dir,
+            &ctx.board.variant,
+            framework_props
+                .as_ref()
+                .and_then(|props| props.get("variant_h").map(String::as_str))
+                .or(ctx.board.variant_h.as_deref()),
+        );
 
         let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
         // Scan core + variant, but pass None for variant — we'll filter variant
@@ -275,6 +284,11 @@ fn build_arduino_mbed_stm32(
             }
         }
     }
+    let board_ldflags = load_stm32_framework_props(&framework.get_boards_txt(), &ctx.board.variant)
+        .and_then(|props| props.get("extra_ldflags").cloned())
+        .map(|flags| fbuild_core::shell_split::split(&flags))
+        .unwrap_or_default();
+    apply_define_flags(&board_ldflags, &mut defines);
 
     let mut include_dirs = vec![
         core_dir.clone(),
@@ -287,9 +301,11 @@ fn build_arduino_mbed_stm32(
     pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
     dedupe_paths(&mut include_dirs);
 
-    let variant_ldflags = fbuild_core::shell_split::split(
+    let mut variant_ldflags = fbuild_core::shell_split::split(
         &framework.read_variant_file(&ctx.board.variant, "ldflags.txt"),
     );
+    variant_ldflags.extend(board_ldflags.iter().cloned());
+    dedupe_strings(&mut variant_ldflags);
     let linker_script = preprocess_linker_script(
         toolchain.get_gxx_path(),
         &variant_dir,
@@ -302,6 +318,7 @@ fn build_arduino_mbed_stm32(
         &framework,
         &ctx.board.variant,
         framework.get_mbed_lib(&ctx.board.variant),
+        &board_ldflags,
     );
 
     let compiler = ArmCompiler::new(
@@ -435,6 +452,7 @@ fn build_arduino_mbed_mcu_config(
     framework: &fbuild_packages::library::ArduinoMbedCore,
     variant_name: &str,
     mbed_lib: PathBuf,
+    board_ldflags: &[String],
 ) -> crate::generic_arm::ArmMcuConfig {
     let cflags =
         fbuild_core::shell_split::split(&framework.read_variant_file(variant_name, "cflags.txt"));
@@ -461,6 +479,12 @@ fn build_arduino_mbed_mcu_config(
         .into_iter()
         .filter(|f| !f.starts_with("-D"))
         .collect();
+    linker_flags.extend(
+        board_ldflags
+            .iter()
+            .filter(|f| !f.starts_with("-D"))
+            .cloned(),
+    );
     linker_flags.push("--specs=nano.specs".to_string());
     linker_flags.push("--specs=nosys.specs".to_string());
     dedupe_strings(&mut linker_flags);
@@ -540,6 +564,18 @@ fn dedupe_strings(flags: &mut Vec<String>) {
     flags.retain(|flag| seen.insert(flag.clone()));
 }
 
+fn apply_define_flags(flags: &[String], defines: &mut HashMap<String, String>) {
+    for flag in flags {
+        if let Some(def) = flag.strip_prefix("-D") {
+            if let Some((key, val)) = def.split_once('=') {
+                defines.insert(key.to_string(), val.to_string());
+            } else {
+                defines.insert(def.to_string(), "1".to_string());
+            }
+        }
+    }
+}
+
 /// Derive the STM32duino generic board define from the MCU name.
 ///
 /// `stm32f103c8t6` → `GENERIC_F103C8TX`
@@ -568,27 +604,49 @@ struct SelectedVariantFiles {
     peripheral_stem: Option<String>,
 }
 
-fn select_variant_files(variant_dir: &Path, variant_name: &str) -> SelectedVariantFiles {
+fn select_variant_files(
+    variant_dir: &Path,
+    variant_name: &str,
+    preferred_header: Option<&str>,
+) -> SelectedVariantFiles {
     let entries = std::fs::read_dir(variant_dir)
         .ok()
         .into_iter()
         .flatten()
         .flatten()
-        .filter_map(|entry| {
-            entry
-                .file_name()
-                .into_string()
-                .ok()
-                .map(|name| name.to_lowercase())
-        })
+        .filter_map(|entry| entry.file_name().into_string().ok())
         .collect::<Vec<_>>();
 
-    let header = pick_variant_file(&entries, variant_name, "variant_", ".h")
+    let header = preferred_header
+        .and_then(|name| find_entry_case_insensitive(&entries, name))
+        .or_else(|| pick_variant_file(&entries, variant_name, "variant_", ".h"))
         .unwrap_or_else(|| "variant_generic.h".to_string());
-    let source_stem =
-        pick_variant_file(&entries, variant_name, "variant_", ".cpp").map(|name| stem_lower(&name));
-    let peripheral_stem = pick_variant_file(&entries, variant_name, "peripheralpins_", ".c")
-        .map(|name| stem_lower(&name));
+
+    let header_suffix = Path::new(&header)
+        .file_stem()
+        .and_then(|stem| stem.to_str())
+        .and_then(|stem| stem.strip_prefix("variant_"));
+    let source_stem = header_suffix
+        .and_then(|suffix| {
+            find_entry_case_insensitive(&entries, &format!("variant_{suffix}.cpp"))
+                .map(|name| stem_lower(&name))
+        })
+        .or_else(|| {
+            pick_variant_file(&entries, variant_name, "variant_", ".cpp")
+                .map(|name| stem_lower(&name))
+        });
+    let peripheral_stem = header_suffix
+        .and_then(|suffix| {
+            find_entry_case_insensitive(&entries, &format!("PeripheralPins_{suffix}.c"))
+                .or_else(|| {
+                    find_entry_case_insensitive(&entries, &format!("peripheralpins_{suffix}.c"))
+                })
+                .map(|name| stem_lower(&name))
+        })
+        .or_else(|| {
+            pick_variant_file(&entries, variant_name, "peripheralpins_", ".c")
+                .map(|name| stem_lower(&name))
+        });
 
     SelectedVariantFiles {
         header,
@@ -605,22 +663,32 @@ fn pick_variant_file(
 ) -> Option<String> {
     let normalized = normalize_variant_name(variant_name);
     let exact = format!("{prefix}{normalized}{suffix}");
-    if entries.iter().any(|name| name == &exact) {
-        return Some(exact);
+    if let Some(name) = find_entry_case_insensitive(entries, &exact) {
+        return Some(name);
     }
 
     let generic = format!("{prefix}generic{suffix}");
-    if entries.iter().any(|name| name == &generic) {
-        return Some(generic);
+    if let Some(name) = find_entry_case_insensitive(entries, &generic) {
+        return Some(name);
     }
 
     let mut matches = entries
         .iter()
-        .filter(|name| name.starts_with(prefix) && name.ends_with(suffix))
+        .filter(|name| {
+            let lower = name.to_lowercase();
+            lower.starts_with(prefix) && lower.ends_with(suffix)
+        })
         .cloned()
         .collect::<Vec<_>>();
-    matches.sort();
+    matches.sort_by_key(|name| name.to_lowercase());
     matches.into_iter().next()
+}
+
+fn find_entry_case_insensitive(entries: &[String], target: &str) -> Option<String> {
+    entries
+        .iter()
+        .find(|name| name.eq_ignore_ascii_case(target))
+        .cloned()
 }
 
 fn keep_variant_source(path: &Path, selected: &SelectedVariantFiles) -> bool {
@@ -664,6 +732,66 @@ fn stem_lower(name: &str) -> String {
         .to_lowercase()
 }
 
+fn load_stm32_framework_props(boards_txt: &Path, variant: &str) -> Option<HashMap<String, String>> {
+    let content = std::fs::read_to_string(boards_txt).ok()?;
+    let prefix = content.lines().find_map(|line| {
+        let trimmed = line.trim();
+        if trimmed.is_empty() || trimmed.starts_with('#') {
+            return None;
+        }
+        let (key, value) = trimmed.split_once('=')?;
+        if key.ends_with(".build.variant") && value.trim() == variant {
+            Some(key.trim_end_matches(".build.variant").to_string())
+        } else {
+            None
+        }
+    })?;
+
+    let line_prefix = format!("{prefix}.");
+    let mut props = HashMap::new();
+    for line in content.lines() {
+        let trimmed = line.trim();
+        if trimmed.is_empty() || trimmed.starts_with('#') {
+            continue;
+        }
+        let Some(rest) = trimmed.strip_prefix(&line_prefix) else {
+            continue;
+        };
+        let Some((key, value)) = rest.split_once('=') else {
+            continue;
+        };
+        let key = key.trim();
+        let normalized = key
+            .strip_prefix("build.")
+            .or_else(|| key.strip_prefix("upload."))
+            .unwrap_or(key);
+        props.insert(normalized.to_string(), value.trim().to_string());
+        if normalized != key {
+            props.insert(key.to_string(), value.trim().to_string());
+        }
+    }
+
+    let substitutions = [
+        (
+            "{build.board}",
+            props.get("board").cloned().unwrap_or_default(),
+        ),
+        (
+            "{build.variant}",
+            props.get("variant").cloned().unwrap_or_default(),
+        ),
+    ];
+    for value in props.values_mut() {
+        for (needle, replacement) in &substitutions {
+            if !replacement.is_empty() {
+                *value = value.replace(needle, replacement);
+            }
+        }
+    }
+
+    Some(props)
+}
+
 /// Create an STM32 orchestrator.
 pub fn create() -> Box<dyn BuildOrchestrator> {
     Box::new(Stm32Orchestrator)
@@ -677,6 +805,7 @@ pub fn is_stm32_project(project_dir: &Path, env_name: &str) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::fs;
 
     #[test]
     fn test_stm32_orchestrator_platform() {
@@ -694,5 +823,55 @@ mod tests {
         .unwrap();
         assert!(is_stm32_project(tmp.path(), "bluepill"));
         assert!(!is_stm32_project(tmp.path(), "uno"));
+    }
+
+    #[test]
+    fn test_load_stm32_framework_props_resolves_variant_h_template() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let boards_txt = tmp.path().join("boards.txt");
+        fs::write(
+            &boards_txt,
+            "\
+GenF1.menu.pnum.MAPLEMINI_F103CB.build.board=MAPLEMINI_F103CB
+GenF1.menu.pnum.MAPLEMINI_F103CB.build.variant=STM32F1xx/F103C8T_F103CB(T-U)
+GenF1.menu.pnum.MAPLEMINI_F103CB.build.variant_h=variant_{build.board}.h
+giga.build.variant=GIGA
+giga.build.extra_ldflags=-DCM4_BINARY_START=0x08180000
+",
+        )
+        .unwrap();
+
+        let maple =
+            load_stm32_framework_props(&boards_txt, "STM32F1xx/F103C8T_F103CB(T-U)").unwrap();
+        assert_eq!(
+            maple.get("variant_h").map(String::as_str),
+            Some("variant_MAPLEMINI_F103CB.h")
+        );
+
+        let giga = load_stm32_framework_props(&boards_txt, "GIGA").unwrap();
+        assert_eq!(
+            giga.get("extra_ldflags").map(String::as_str),
+            Some("-DCM4_BINARY_START=0x08180000")
+        );
+    }
+
+    #[test]
+    fn test_select_variant_files_prefers_framework_header() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        fs::write(tmp.path().join("variant_MAPLEMINI_F103CB.h"), "").unwrap();
+        fs::write(tmp.path().join("variant_MAPLEMINI_F103CB.cpp"), "").unwrap();
+        fs::write(tmp.path().join("variant_generic.cpp"), "").unwrap();
+
+        let selected = select_variant_files(
+            tmp.path(),
+            "STM32F1xx/F103C8T_F103CB(T-U)",
+            Some("variant_MAPLEMINI_F103CB.h"),
+        );
+
+        assert_eq!(selected.header, "variant_MAPLEMINI_F103CB.h");
+        assert_eq!(
+            selected.source_stem.as_deref(),
+            Some("variant_maplemini_f103cb")
+        );
     }
 }

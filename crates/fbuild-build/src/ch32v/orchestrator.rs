@@ -92,7 +92,12 @@ impl BuildOrchestrator for Ch32vOrchestrator {
         defines.extend(mcu_config.defines_map());
         defines.insert(system_series.clone(), "1".to_string());
         // CH32V cores use `#include VARIANT_H` — define it from the variant dir
-        if let Some(vh) = find_variant_h(&variant_dir) {
+        if let Some(vh) = ctx
+            .board
+            .variant_h
+            .clone()
+            .or_else(|| find_variant_h(&variant_dir))
+        {
             defines.insert("VARIANT_H".to_string(), format!("\\\"{}\\\"", vh));
         }
         if series == "ch32x035" {

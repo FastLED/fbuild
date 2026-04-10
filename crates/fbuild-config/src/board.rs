@@ -21,6 +21,8 @@ pub struct BoardConfig {
     pub board: String,
     pub core: String,
     pub variant: String,
+    /// Variant header override for frameworks that use `#include VARIANT_H`
+    pub variant_h: Option<String>,
     /// USB vendor ID (optional)
     pub vid: Option<String>,
     /// USB product ID (optional)
@@ -109,6 +111,7 @@ impl BoardConfig {
                 .unwrap_or_else(|| board_id_to_board_define(board_id)),
             core: get("core").unwrap_or_else(|| "arduino".to_string()),
             variant: get("variant").unwrap_or_else(|| "standard".to_string()),
+            variant_h: get("variant_h"),
             vid: get("vid"),
             pid: get("pid"),
             extra_flags: get("extra_flags"),
@@ -167,6 +170,10 @@ impl BoardConfig {
             board: get("board", &board_id_to_board_define(board_id)),
             core: get("core", "arduino"),
             variant: get("variant", "standard"),
+            variant_h: overrides
+                .get("variant_h")
+                .cloned()
+                .or_else(|| defaults.get("variant_h").cloned()),
             vid: overrides
                 .get("vid")
                 .cloned()
@@ -526,6 +533,9 @@ fn get_board_defaults(board_id: &str) -> Option<HashMap<String, String>> {
         if let Some(variant) = build.get("variant").and_then(|v| v.as_str()) {
             d.insert("variant".into(), variant.to_string());
         }
+        if let Some(variant_h) = build.get("variant_h").and_then(|v| v.as_str()) {
+            d.insert("variant_h".into(), variant_h.to_string());
+        }
         if let Some(flags) = build.get("extra_flags").and_then(|v| v.as_str()) {
             d.insert("extra_flags".into(), flags.to_string());
         }
@@ -636,22 +646,29 @@ mod tests {
     #[test]
     fn test_ch32v_aliases() {
         let cases = [
-            ("ch32l103", "ch32l103c8t6"),
-            ("ch32v003", "ch32v003f4p6"),
-            ("ch32v006", "ch32v006k8u6"),
-            ("ch32v103", "ch32v103c8t6"),
-            ("ch32v203", "ch32v203c8t6"),
-            ("ch32v208", "ch32v208wbu6"),
-            ("ch32v303", "ch32v303vct6"),
-            ("ch32v307", "ch32v307vct6"),
-            ("ch32x035", "ch32x035c8t6"),
+            ("ch32l103", "ch32l103c8t6", Some("variant_CH32L103C8T6.h")),
+            ("ch32v003", "ch32v003f4p6", Some("variant_CH32V003F4.h")),
+            ("ch32v006", "ch32v006k8u6", Some("variant_CH32V006K8.h")),
+            ("ch32v103", "ch32v103c8t6", Some("variant_CH32V103R8T6.h")),
+            ("ch32v203", "ch32v203c8t6", Some("variant_CH32V203C8.h")),
+            ("ch32v208", "ch32v208wbu6", Some("variant_CH32V203C8.h")),
+            ("ch32v303", "ch32v303vct6", Some("variant_CH32V307VCT6.h")),
+            ("ch32v307", "ch32v307vct6", Some("variant_CH32V307VCT6.h")),
+            ("ch32x035", "ch32x035c8t6", Some("variant_CH32X035G8U.h")),
         ];
-        for (alias, expected_mcu) in cases {
+        for (alias, expected_mcu, expected_variant_h) in cases {
             let config = BoardConfig::from_board_id(alias, &HashMap::new()).unwrap();
             assert_eq!(
                 config.mcu, expected_mcu,
                 "alias '{}' should resolve to mcu '{}'",
                 alias, expected_mcu
+            );
+            assert_eq!(
+                config.variant_h.as_deref(),
+                expected_variant_h,
+                "alias '{}' should resolve to variant_h '{:?}'",
+                alias,
+                expected_variant_h
             );
         }
     }
