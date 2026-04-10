@@ -116,6 +116,8 @@ pub struct DaemonContext {
     pub spawner_cwd: String,
     /// Broadcast hub for WebSocket status/log streaming.
     pub broadcast_hub: BroadcastHub,
+    /// Active AVR8js sessions keyed by session ID.
+    pub avr8js_sessions: DashMap<String, PathBuf>,
 }
 
 impl DaemonContext {
@@ -152,6 +154,7 @@ impl DaemonContext {
             last_activity: Arc::new(std::sync::Mutex::new(Instant::now())),
             spawner_cwd,
             broadcast_hub: BroadcastHub::new(),
+            avr8js_sessions: DashMap::new(),
         }
     }
 

@@ -463,6 +463,7 @@ async fn execute_tool(client: &DaemonClient, name: &str, args: &Value) -> Result
                 src_dir: std::env::var("PLATFORMIO_SRC_DIR")
                     .ok()
                     .filter(|s| !s.is_empty()),
+                output_dir: None,
                 pio_env: crate::daemon_client::capture_pio_env(),
             };
 
@@ -512,6 +513,9 @@ async fn execute_tool(client: &DaemonClient, name: &str, args: &Value) -> Result
                 monitor_expect: None,
                 monitor_show_timestamp: true,
                 baud_rate: None,
+                to: None,
+                emulator: None,
+                target: None,
                 qemu: false,
                 qemu_timeout: 30,
                 request_id: Some(uuid_v4()),
@@ -520,6 +524,7 @@ async fn execute_tool(client: &DaemonClient, name: &str, args: &Value) -> Result
                 src_dir: std::env::var("PLATFORMIO_SRC_DIR")
                     .ok()
                     .filter(|s| !s.is_empty()),
+                output_dir: None,
                 pio_env: crate::daemon_client::capture_pio_env(),
             };
 

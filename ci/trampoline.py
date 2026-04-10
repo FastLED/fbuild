@@ -13,7 +13,7 @@ from pathlib import Path
 
 
 def _find_cargo_bin():
-    """Find the rustup .cargo/bin directory."""
+    """Find a Rust tool bin directory for the active rustup toolchain."""
     for candidate in [
         os.environ.get("CARGO_HOME", ""),
         os.path.join(os.path.expanduser("~"), ".cargo"),
@@ -23,6 +23,20 @@ def _find_cargo_bin():
             bin_dir = os.path.join(candidate, "bin")
             if os.path.isdir(bin_dir):
                 return bin_dir
+
+    rustup = shutil.which("rustup")
+    if rustup:
+        try:
+            tool_path = subprocess.check_output(
+                [rustup, "which", "cargo"],
+                text=True,
+                stderr=subprocess.DEVNULL,
+            ).strip()
+            if tool_path and os.path.isfile(tool_path):
+                return os.path.dirname(tool_path)
+        except Exception:
+            pass
+
     return None
 
 

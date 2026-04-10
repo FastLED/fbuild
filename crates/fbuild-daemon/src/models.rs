@@ -41,6 +41,9 @@ pub struct BuildRequest {
     /// does not inherit the caller's env vars.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub src_dir: Option<String>,
+    /// Export a tooling-friendly artifact bundle to this directory after build.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub output_dir: Option<String>,
     /// Snapshot of `PLATFORMIO_*` env vars from the CLI caller's environment.
     ///
     /// The daemon does not inherit caller env vars, so the CLI forwards them
@@ -71,6 +74,12 @@ pub struct DeployRequest {
     pub monitor_show_timestamp: bool,
     /// Override the board's default upload baud rate for flashing.
     pub baud_rate: Option<u32>,
+    /// Deploy destination: "device", "emu", or "emulator".
+    pub to: Option<String>,
+    /// Emulator backend when deploying to `emu`/`emulator`.
+    pub emulator: Option<String>,
+    /// Legacy deploy target alias: "device" (default), "qemu", or "avr8js".
+    pub target: Option<String>,
     #[serde(default)]
     pub qemu: bool,
     #[serde(default = "default_qemu_timeout")]
@@ -81,6 +90,9 @@ pub struct DeployRequest {
     /// Override for PLATFORMIO_SRC_DIR — the source directory to compile.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub src_dir: Option<String>,
+    /// Export a tooling-friendly artifact bundle to this directory after build.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub output_dir: Option<String>,
     /// Snapshot of `PLATFORMIO_*` env vars from the CLI caller's environment.
     #[serde(default)]
     pub pio_env: BTreeMap<String, String>,
@@ -121,6 +133,10 @@ pub struct OperationResponse {
     pub exit_code: i32,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub output_file: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub output_dir: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub launch_url: Option<String>,
     /// Captured stdout from the deploy/build tool.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub stdout: Option<String>,
@@ -137,6 +153,8 @@ impl OperationResponse {
             message,
             exit_code: 0,
             output_file: None,
+            output_dir: None,
+            launch_url: None,
             stdout: None,
             stderr: None,
         }
@@ -149,6 +167,8 @@ impl OperationResponse {
             message,
             exit_code: 1,
             output_file: None,
+            output_dir: None,
+            launch_url: None,
             stdout: None,
             stderr: None,
         }
@@ -466,9 +486,19 @@ mod tests {
         assert!(req.monitor_timeout.is_none());
         assert!(req.monitor_halt_on_error.is_none());
         assert!(req.monitor_show_timestamp);
+        assert!(req.to.is_none());
+        assert!(req.emulator.is_none());
         assert!(!req.qemu);
         assert_eq!(req.qemu_timeout, 30);
         assert!(req.src_dir.is_none());
+    }
+
+    #[test]
+    fn deploy_request_emulator_destination_fields() {
+        let json = r#"{"project_dir": "/tmp/p", "to": "emu", "emulator": "avr8js"}"#;
+        let req: DeployRequest = serde_json::from_str(json).unwrap();
+        assert_eq!(req.to.as_deref(), Some("emu"));
+        assert_eq!(req.emulator.as_deref(), Some("avr8js"));
     }
 
     #[test]

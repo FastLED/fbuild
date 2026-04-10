@@ -8,7 +8,8 @@ use crate::models::{
 use axum::extract::State;
 use axum::http::StatusCode;
 use axum::Json;
-use std::path::PathBuf;
+use serde::Serialize;
+use std::path::{Path, PathBuf};
 use std::sync::atomic::Ordering;
 use std::sync::Arc;
 
@@ -81,6 +82,206 @@ fn compute_boot_parts_hashes(
     (boot_hash, parts_hash)
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum EmulatorKind {
+    Qemu,
+    Avr8js,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum DeployRoute {
+    Device,
+    Emulator(EmulatorKind),
+}
+
+fn parse_emulator_kind(raw: &str) -> fbuild_core::Result<EmulatorKind> {
+    match raw {
+        "qemu" => Ok(EmulatorKind::Qemu),
+        "avr8js" => Ok(EmulatorKind::Avr8js),
+        other => Err(fbuild_core::FbuildError::DeployFailed(format!(
+            "unsupported emulator '{}'",
+            other
+        ))),
+    }
+}
+
+fn parse_deploy_route(req: &DeployRequest) -> fbuild_core::Result<DeployRoute> {
+    if let Some(target) = req.target.as_deref() {
+        return match target {
+            "device" => Ok(DeployRoute::Device),
+            "qemu" => Ok(DeployRoute::Emulator(EmulatorKind::Qemu)),
+            "avr8js" => Ok(DeployRoute::Emulator(EmulatorKind::Avr8js)),
+            other => Err(fbuild_core::FbuildError::DeployFailed(format!(
+                "unsupported deploy target '{}'",
+                other
+            ))),
+        };
+    }
+
+    let destination = req.to.as_deref().unwrap_or("device");
+    match destination {
+        "device" => {
+            if req.qemu {
+                return Err(fbuild_core::FbuildError::DeployFailed(
+                    "--qemu cannot be combined with --to device".to_string(),
+                ));
+            }
+            if let Some(emulator) = req.emulator.as_deref() {
+                return Err(fbuild_core::FbuildError::DeployFailed(format!(
+                    "--emulator {} requires --to emu",
+                    emulator
+                )));
+            }
+            Ok(DeployRoute::Device)
+        }
+        "emu" | "emulator" => {
+            let emulator = if req.qemu {
+                if let Some(explicit) = req.emulator.as_deref() {
+                    if explicit != "qemu" {
+                        return Err(fbuild_core::FbuildError::DeployFailed(
+                            "--qemu cannot be combined with a different --emulator".to_string(),
+                        ));
+                    }
+                }
+                "qemu"
+            } else {
+                req.emulator.as_deref().unwrap_or("avr8js")
+            };
+            Ok(DeployRoute::Emulator(parse_emulator_kind(emulator)?))
+        }
+        other => Err(fbuild_core::FbuildError::DeployFailed(format!(
+            "unsupported deploy destination '{}'",
+            other
+        ))),
+    }
+}
+
+fn resolve_client_path(raw: &str, caller_cwd: Option<&str>, project_dir: &Path) -> PathBuf {
+    let path = PathBuf::from(raw);
+    if path.is_absolute() {
+        path
+    } else if let Some(cwd) = caller_cwd {
+        PathBuf::from(cwd).join(path)
+    } else {
+        project_dir.join(path)
+    }
+}
+
+#[derive(Debug, Serialize)]
+struct ArtifactFileEntry {
+    name: String,
+    role: String,
+}
+
+#[derive(Debug, Serialize)]
+struct ArtifactManifest {
+    platform: String,
+    environment: String,
+    primary_firmware: Option<String>,
+    elf: Option<String>,
+    files: Vec<ArtifactFileEntry>,
+}
+
+struct ArtifactExportResult {
+    output_dir: PathBuf,
+    primary_output: Option<PathBuf>,
+}
+
+fn artifact_role(name: &str, primary_firmware: Option<&Path>, elf_path: Option<&Path>) -> String {
+    if primary_firmware
+        .and_then(|p| p.file_name())
+        .is_some_and(|n| n == name)
+    {
+        "firmware".to_string()
+    } else if elf_path
+        .and_then(|p| p.file_name())
+        .is_some_and(|n| n == name)
+    {
+        "elf".to_string()
+    } else {
+        match name {
+            "bootloader.bin" => "bootloader".to_string(),
+            "partitions.bin" => "partitions".to_string(),
+            "compile_commands.json" => "compile_database".to_string(),
+            "symbol_analysis.txt" => "symbol_analysis".to_string(),
+            _ => "artifact".to_string(),
+        }
+    }
+}
+
+fn export_artifacts_bundle(
+    output_dir: &Path,
+    platform: fbuild_core::Platform,
+    env_name: &str,
+    primary_firmware: Option<&Path>,
+    elf_path: Option<&Path>,
+) -> fbuild_core::Result<ArtifactExportResult> {
+    std::fs::create_dir_all(output_dir)?;
+
+    let source_dir = primary_firmware
+        .and_then(|p| p.parent())
+        .or_else(|| elf_path.and_then(|p| p.parent()))
+        .ok_or_else(|| {
+            fbuild_core::FbuildError::Other(
+                "could not determine source artifact directory for export".to_string(),
+            )
+        })?;
+
+    let mut copied_names = Vec::new();
+    for entry in std::fs::read_dir(source_dir)? {
+        let entry = entry?;
+        let path = entry.path();
+        if !path.is_file() {
+            continue;
+        }
+        let file_name = match path.file_name() {
+            Some(name) => name,
+            None => continue,
+        };
+        let dest = output_dir.join(file_name);
+        if path != dest {
+            std::fs::copy(&path, &dest)?;
+        }
+        copied_names.push(file_name.to_string_lossy().to_string());
+    }
+    copied_names.sort();
+    copied_names.dedup();
+
+    let manifest = ArtifactManifest {
+        platform: format!("{:?}", platform),
+        environment: env_name.to_string(),
+        primary_firmware: primary_firmware
+            .and_then(|p| p.file_name())
+            .map(|p| p.to_string_lossy().to_string()),
+        elf: elf_path
+            .and_then(|p| p.file_name())
+            .map(|p| p.to_string_lossy().to_string()),
+        files: copied_names
+            .iter()
+            .map(|name| ArtifactFileEntry {
+                name: name.clone(),
+                role: artifact_role(name, primary_firmware, elf_path),
+            })
+            .collect(),
+    };
+
+    std::fs::write(
+        output_dir.join("artifacts.json"),
+        serde_json::to_vec_pretty(&manifest).map_err(|e| {
+            fbuild_core::FbuildError::Other(format!("failed to serialize artifact manifest: {}", e))
+        })?,
+    )?;
+
+    let primary_output = primary_firmware
+        .and_then(|p| p.file_name())
+        .map(|name| output_dir.join(name));
+
+    Ok(ArtifactExportResult {
+        output_dir: output_dir.to_path_buf(),
+        primary_output,
+    })
+}
+
 /// POST /api/build
 pub async fn build(
     State(ctx): State<Arc<DaemonContext>>,
@@ -123,6 +324,7 @@ pub async fn build(
 
     let env_name = req
         .environment
+        .clone()
         .or_else(|| config.get_default_environment().map(|s| s.to_string()))
         .unwrap_or_else(|| "default".to_string());
 
@@ -165,6 +367,14 @@ pub async fn build(
         .map(|v| v != "0")
         .unwrap_or(true);
     let generate_compiledb = req.generate_compiledb || compiledb_env;
+    let resolved_symbol_analysis_path = req
+        .symbol_analysis_path
+        .as_deref()
+        .map(|p| resolve_client_path(p, req.caller_cwd.as_deref(), &project_dir));
+    let resolved_output_dir = req
+        .output_dir
+        .as_deref()
+        .map(|p| resolve_client_path(p, req.caller_cwd.as_deref(), &project_dir));
 
     if stream {
         // --- STREAMING PATH ---
@@ -184,10 +394,7 @@ pub async fn build(
             compiledb_only: req.compiledb_only,
             log_sender: Some(sync_tx),
             symbol_analysis: req.symbol_analysis,
-            symbol_analysis_path: req
-                .symbol_analysis_path
-                .as_deref()
-                .map(std::path::PathBuf::from),
+            symbol_analysis_path: resolved_symbol_analysis_path.clone(),
             no_timestamp: req.no_timestamp,
             src_dir: req.src_dir.clone(),
             pio_env: req.pio_env.clone(),
@@ -224,8 +431,23 @@ pub async fn build(
             .await;
 
             // Extract result (drops BuildLog sender so bridge can finish)
-            let (success, rid, msg, code, output_file) = match build_result {
+            let (success, rid, msg, code, output_file, output_dir) = match build_result {
                 Ok(Ok(br)) => {
+                    let exported = if br.success {
+                        if let Some(ref out_dir) = resolved_output_dir {
+                            Some(export_artifacts_bundle(
+                                out_dir,
+                                platform,
+                                &env_name,
+                                br.firmware_path.as_deref(),
+                                br.elf_path.as_deref(),
+                            ))
+                        } else {
+                            None
+                        }
+                    } else {
+                        None
+                    };
                     let _lines = br.build_log.into_lines(); // drop sender
                     let summary = if br.success {
                         let size_str = br
@@ -238,16 +460,44 @@ pub async fn build(
                                 )
                             })
                             .unwrap_or_default();
-                        format!("build succeeded in {:.1}s{}", br.build_time_secs, size_str)
+                        let export_suffix = match exported.as_ref() {
+                            Some(Ok(result)) => {
+                                format!("; artifacts exported to {}", result.output_dir.display())
+                            }
+                            Some(Err(e)) => {
+                                format!("; artifact export failed: {}", e)
+                            }
+                            None => String::new(),
+                        };
+                        format!(
+                            "build succeeded in {:.1}s{}{}",
+                            br.build_time_secs, size_str, export_suffix
+                        )
                     } else {
                         br.message.clone()
                     };
-                    let output = br
-                        .firmware_path
-                        .or(br.elf_path)
-                        .map(|p| p.to_string_lossy().to_string());
+                    let output = match exported.as_ref() {
+                        Some(Ok(result)) => result
+                            .primary_output
+                            .clone()
+                            .or(br.firmware_path.clone())
+                            .or(br.elf_path.clone()),
+                        _ => br.firmware_path.clone().or(br.elf_path.clone()),
+                    }
+                    .map(|p| p.to_string_lossy().to_string());
+                    let output_dir = match exported.as_ref() {
+                        Some(Ok(result)) => Some(result.output_dir.to_string_lossy().to_string()),
+                        _ => None,
+                    };
                     let c = if br.success { 0 } else { 1 };
-                    (br.success, request_id.clone(), summary, c, output)
+                    (
+                        br.success,
+                        request_id.clone(),
+                        summary,
+                        c,
+                        output,
+                        output_dir,
+                    )
                 }
                 Ok(Err(e)) => (
                     false,
@@ -255,12 +505,14 @@ pub async fn build(
                     format!("build error: {}", e),
                     1,
                     None,
+                    None,
                 ),
                 Err(e) => (
                     false,
                     request_id.clone(),
                     format!("build task panicked: {}", e),
                     1,
+                    None,
                     None,
                 ),
             };
@@ -274,6 +526,7 @@ pub async fn build(
                 "message": msg,
                 "exit_code": code,
                 "output_file": output_file,
+                "output_dir": output_dir,
             });
             let mut chunk = result_event.to_string();
             chunk.push('\n');
@@ -314,10 +567,7 @@ pub async fn build(
             compiledb_only: req.compiledb_only,
             log_sender: None,
             symbol_analysis: req.symbol_analysis,
-            symbol_analysis_path: req
-                .symbol_analysis_path
-                .as_deref()
-                .map(std::path::PathBuf::from),
+            symbol_analysis_path: resolved_symbol_analysis_path,
             no_timestamp: req.no_timestamp,
             src_dir: req.src_dir,
             pio_env: req.pio_env,
@@ -331,6 +581,21 @@ pub async fn build(
 
         match result {
             Ok(Ok(build_result)) => {
+                let exported = if build_result.success {
+                    if let Some(ref out_dir) = resolved_output_dir {
+                        Some(export_artifacts_bundle(
+                            out_dir,
+                            platform,
+                            &env_name,
+                            build_result.firmware_path.as_deref(),
+                            build_result.elf_path.as_deref(),
+                        ))
+                    } else {
+                        None
+                    }
+                } else {
+                    None
+                };
                 let summary = if build_result.success {
                     let size_str = build_result
                         .size_info
@@ -342,9 +607,16 @@ pub async fn build(
                             )
                         })
                         .unwrap_or_default();
+                    let export_suffix = match exported.as_ref() {
+                        Some(Ok(result)) => {
+                            format!("; artifacts exported to {}", result.output_dir.display())
+                        }
+                        Some(Err(e)) => format!("; artifact export failed: {}", e),
+                        None => String::new(),
+                    };
                     format!(
-                        "build succeeded in {:.1}s{}",
-                        build_result.build_time_secs, size_str
+                        "build succeeded in {:.1}s{}{}",
+                        build_result.build_time_secs, size_str, export_suffix
                     )
                 } else {
                     build_result.message.clone()
@@ -356,10 +628,22 @@ pub async fn build(
                     lines.push(summary);
                     lines.join("\n")
                 };
-                let output_file = build_result
-                    .firmware_path
-                    .or(build_result.elf_path)
-                    .map(|p| p.to_string_lossy().to_string());
+                let output_file = match exported.as_ref() {
+                    Some(Ok(result)) => result
+                        .primary_output
+                        .clone()
+                        .or(build_result.firmware_path.clone())
+                        .or(build_result.elf_path.clone()),
+                    _ => build_result
+                        .firmware_path
+                        .clone()
+                        .or(build_result.elf_path.clone()),
+                }
+                .map(|p| p.to_string_lossy().to_string());
+                let output_dir = match exported.as_ref() {
+                    Some(Ok(result)) => Some(result.output_dir.to_string_lossy().to_string()),
+                    _ => None,
+                };
                 let code = if build_result.success { 0 } else { 1 };
                 (
                     StatusCode::OK,
@@ -369,6 +653,8 @@ pub async fn build(
                         message: msg,
                         exit_code: code,
                         output_file,
+                        output_dir,
+                        launch_url: None,
                         stdout: None,
                         stderr: None,
                     }),
@@ -439,6 +725,7 @@ pub async fn deploy(
 
     let env_name = req
         .environment
+        .clone()
         .or_else(|| config.get_default_environment().map(|s| s.to_string()))
         .unwrap_or_else(|| "default".to_string());
 
@@ -454,6 +741,19 @@ pub async fn deploy(
             );
         }
     };
+    let deploy_route = match parse_deploy_route(&req) {
+        Ok(route) => route,
+        Err(e) => {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(OperationResponse::fail(request_id, e.to_string())),
+            );
+        }
+    };
+    let resolved_output_dir = req
+        .output_dir
+        .as_deref()
+        .map(|p| resolve_client_path(p, req.caller_cwd.as_deref(), &project_dir));
 
     let platform_str = env_config.get("platform").cloned().unwrap_or_default();
     let platform = match fbuild_core::Platform::from_platform_str(&platform_str) {
@@ -523,6 +823,8 @@ pub async fn deploy(
                         message: "firmware unchanged, skipping build+deploy".to_string(),
                         exit_code: 0,
                         output_file: None,
+                        output_dir: None,
+                        launch_url: None,
                         stdout: None,
                         stderr: None,
                     }),
@@ -532,11 +834,15 @@ pub async fn deploy(
     }
 
     // Build first unless skip_build
-    let firmware_path = if req.skip_build {
+    let (firmware_path, elf_path) = if req.skip_build {
         // Look for existing firmware using the standard search order
         // (profiles: release/quick, base env dir, legacy .pio/build)
         match fbuild_paths::find_firmware(&project_dir, &env_name, None) {
-            Some(path) => path,
+            Some(path) => {
+                let elf = path.parent().map(|dir| dir.join("firmware.elf"));
+                let elf = elf.filter(|p| p.exists());
+                (path, elf)
+            }
             None => {
                 return (
                     StatusCode::BAD_REQUEST,
@@ -581,9 +887,14 @@ pub async fn deploy(
         };
 
         match build_result {
-            Ok(Ok(r)) if r.success => r
-                .firmware_path
-                .unwrap_or_else(|| r.elf_path.unwrap_or_else(|| PathBuf::from("firmware.bin"))),
+            Ok(Ok(r)) if r.success => {
+                let fw = r.firmware_path.clone().unwrap_or_else(|| {
+                    r.elf_path
+                        .clone()
+                        .unwrap_or_else(|| PathBuf::from("firmware.bin"))
+                });
+                (fw, r.elf_path)
+            }
             Ok(Ok(r)) => {
                 return (
                     StatusCode::INTERNAL_SERVER_ERROR,
@@ -613,6 +924,70 @@ pub async fn deploy(
             }
         }
     };
+
+    let artifact_export = match resolved_output_dir.as_ref() {
+        Some(out_dir) => match export_artifacts_bundle(
+            out_dir,
+            platform,
+            &env_name,
+            Some(&firmware_path),
+            elf_path.as_deref(),
+        ) {
+            Ok(result) => Some(result),
+            Err(e) => {
+                return (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    Json(OperationResponse::fail(
+                        request_id,
+                        format!("failed to export artifacts: {}", e),
+                    )),
+                );
+            }
+        },
+        None => None,
+    };
+
+    if deploy_route == DeployRoute::Emulator(EmulatorKind::Qemu) {
+        return (
+            StatusCode::BAD_REQUEST,
+            Json(OperationResponse::fail(
+                request_id,
+                "QEMU deployment is not yet supported in the Rust port. Use --platformio for QEMU support.".to_string(),
+            )),
+        );
+    }
+
+    let reported_output_file = artifact_export
+        .as_ref()
+        .and_then(|r| r.primary_output.clone())
+        .unwrap_or_else(|| firmware_path.clone())
+        .to_string_lossy()
+        .to_string();
+    let reported_output_dir = artifact_export
+        .as_ref()
+        .map(|r| r.output_dir.to_string_lossy().to_string());
+
+    if deploy_route == DeployRoute::Emulator(EmulatorKind::Avr8js) {
+        return crate::handlers::emulator::deploy_avr8js(
+            ctx,
+            crate::handlers::emulator::DeployAvr8jsRequest {
+                request_id,
+                project_dir,
+                env_name,
+                board_id: env_config
+                    .get("board")
+                    .cloned()
+                    .unwrap_or_else(|| "uno".to_string()),
+                platform,
+                firmware_path,
+                elf_path,
+                monitor_after: req.monitor_after,
+                output_file: reported_output_file,
+                output_dir: reported_output_dir,
+            },
+        )
+        .await;
+    }
 
     // Preempt serial if port specified
     let deploy_port_str = req.port.clone();
@@ -832,7 +1207,9 @@ pub async fn deploy(
                     request_id,
                     message: r.message,
                     exit_code: 1,
-                    output_file: Some(firmware_path.to_string_lossy().to_string()),
+                    output_file: Some(reported_output_file.clone()),
+                    output_dir: reported_output_dir.clone(),
+                    launch_url: None,
                     stdout: Some(r.stdout),
                     stderr: Some(r.stderr),
                 }),
@@ -921,7 +1298,9 @@ pub async fn deploy(
                     request_id,
                     message: format!("deploy succeeded but monitor failed to open port: {}", e),
                     exit_code: 0,
-                    output_file: Some(firmware_path.to_string_lossy().to_string()),
+                    output_file: Some(reported_output_file.clone()),
+                    output_dir: reported_output_dir.clone(),
+                    launch_url: None,
                     stdout: deploy_stdout,
                     stderr: deploy_stderr,
                 }),
@@ -939,7 +1318,9 @@ pub async fn deploy(
                         request_id,
                         message: "deploy succeeded but monitor could not attach reader".to_string(),
                         exit_code: 0,
-                        output_file: Some(firmware_path.to_string_lossy().to_string()),
+                        output_file: Some(reported_output_file.clone()),
+                        output_dir: reported_output_dir.clone(),
+                        launch_url: None,
                         stdout: deploy_stdout,
                         stderr: deploy_stderr,
                     }),
@@ -967,7 +1348,9 @@ pub async fn deploy(
                     request_id,
                     message: format!("deploy succeeded; monitor: {}", msg),
                     exit_code: 0,
-                    output_file: Some(firmware_path.to_string_lossy().to_string()),
+                    output_file: Some(reported_output_file.clone()),
+                    output_dir: reported_output_dir.clone(),
+                    launch_url: None,
                     stdout: deploy_stdout,
                     stderr: deploy_stderr,
                 }),
@@ -979,7 +1362,9 @@ pub async fn deploy(
                     request_id,
                     message: format!("deploy succeeded; monitor error: {}", msg),
                     exit_code: 1,
-                    output_file: Some(firmware_path.to_string_lossy().to_string()),
+                    output_file: Some(reported_output_file.clone()),
+                    output_dir: reported_output_dir.clone(),
+                    launch_url: None,
                     stdout: deploy_stdout,
                     stderr: deploy_stderr,
                 }),
@@ -1008,7 +1393,9 @@ pub async fn deploy(
                             }
                         ),
                         exit_code: code,
-                        output_file: Some(firmware_path.to_string_lossy().to_string()),
+                        output_file: Some(reported_output_file.clone()),
+                        output_dir: reported_output_dir.clone(),
+                        launch_url: None,
                         stdout: deploy_stdout,
                         stderr: deploy_stderr,
                     }),
@@ -1024,7 +1411,9 @@ pub async fn deploy(
             request_id,
             message: "deploy succeeded".to_string(),
             exit_code: 0,
-            output_file: Some(firmware_path.to_string_lossy().to_string()),
+            output_file: Some(reported_output_file),
+            output_dir: reported_output_dir,
+            launch_url: None,
             stdout: deploy_stdout,
             stderr: deploy_stderr,
         }),
@@ -1365,6 +1754,7 @@ pub async fn install_deps(
 
     let env_name = req
         .environment
+        .clone()
         .or_else(|| config.get_default_environment().map(|s| s.to_string()))
         .unwrap_or_else(|| "default".to_string());
 

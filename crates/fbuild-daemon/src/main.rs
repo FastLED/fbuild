@@ -7,7 +7,7 @@ use clap::Parser;
 use fbuild_daemon::context::{
     DaemonContext, IDLE_TIMEOUT, SELF_EVICTION_TIMEOUT, STALE_LOCK_CHECK_INTERVAL,
 };
-use fbuild_daemon::handlers::{devices, health, locks, operations, websockets};
+use fbuild_daemon::handlers::{devices, emulator, health, locks, operations, websockets};
 use std::sync::Arc;
 
 #[derive(Parser)]
@@ -65,6 +65,16 @@ async fn main() {
         .route("/api/locks/clear", post(locks::clear_locks))
         .route("/api/install-deps", post(operations::install_deps))
         .route("/api/reset", post(operations::reset))
+        .route(
+            "/api/emulator/avr8js/:session_id",
+            get(emulator::avr8js_session_json),
+        )
+        .route(
+            "/api/emulator/avr8js/:session_id/firmware.hex",
+            get(emulator::avr8js_firmware_hex),
+        )
+        .route("/emulator/avr8js/app.js", get(emulator::avr8js_app_js))
+        .route("/emulator/avr8js/:session_id", get(emulator::avr8js_page))
         .route("/ws/serial-monitor", get(websockets::ws_serial_monitor))
         .route("/ws/status", get(websockets::ws_status))
         .route("/ws/logs", get(websockets::ws_logs))

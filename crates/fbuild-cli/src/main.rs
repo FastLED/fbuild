@@ -90,6 +90,9 @@ enum Commands {
         /// Disable elapsed-time prefix on build output lines
         #[arg(long)]
         no_timestamp: bool,
+        /// Export build artifacts to a tooling-friendly directory
+        #[arg(long)]
+        output_dir: Option<String>,
     },
     /// Deploy firmware to device
     Deploy {
@@ -131,6 +134,18 @@ enum Commands {
         /// Override the board's default upload baud rate
         #[arg(short = 'b', long = "baud", alias = "baud-rate")]
         baud_rate: Option<u32>,
+        /// Deploy destination: device (default) or emulator
+        #[arg(long = "to", value_parser = ["device", "emu", "emulator"])]
+        to: Option<String>,
+        /// Emulator backend when deploying to `emu`
+        #[arg(long, value_parser = ["avr8js", "qemu"])]
+        emulator: Option<String>,
+        /// Legacy deploy target alias: device, qemu, or avr8js
+        #[arg(long, value_parser = ["device", "qemu", "avr8js"], hide = true)]
+        target: Option<String>,
+        /// Export build artifacts to a tooling-friendly directory
+        #[arg(long)]
+        output_dir: Option<String>,
     },
     /// Monitor serial output
     Monitor {
@@ -412,6 +427,7 @@ async fn main() {
             target,
             symbol_analysis,
             no_timestamp,
+            output_dir,
         }) => {
             let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
             if platformio {
@@ -429,6 +445,7 @@ async fn main() {
                     target,
                     symbol_analysis,
                     no_timestamp,
+                    output_dir,
                 )
                 .await
             }
@@ -450,6 +467,10 @@ async fn main() {
             qemu,
             qemu_timeout,
             baud_rate,
+            to,
+            emulator,
+            target,
+            output_dir,
         }) => {
             let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
             if platformio {
@@ -483,6 +504,10 @@ async fn main() {
                     qemu,
                     qemu_timeout,
                     baud_rate,
+                    to,
+                    emulator,
+                    target,
+                    output_dir,
                 )
                 .await
             }
@@ -630,6 +655,10 @@ async fn main() {
                     false,
                     false,
                     30,
+                    None,
+                    None,
+                    None,
+                    None,
                     None,
                 )
                 .await
@@ -883,6 +912,28 @@ fn pio_monitor(
     run_pio_command(&args)
 }
 
+fn open_in_browser(url: &str) -> fbuild_core::Result<()> {
+    let status = if cfg!(target_os = "windows") {
+        std::process::Command::new("cmd")
+            .args(["/c", "start", "", url])
+            .status()
+    } else if cfg!(target_os = "macos") {
+        std::process::Command::new("open").arg(url).status()
+    } else {
+        std::process::Command::new("xdg-open").arg(url).status()
+    }
+    .map_err(|e| fbuild_core::FbuildError::Other(format!("failed to launch browser: {}", e)))?;
+
+    if status.success() {
+        Ok(())
+    } else {
+        Err(fbuild_core::FbuildError::Other(format!(
+            "browser launcher exited with status {}",
+            status
+        )))
+    }
+}
+
 #[allow(clippy::too_many_arguments)]
 async fn run_build(
     project_dir: String,
@@ -896,6 +947,7 @@ async fn run_build(
     target: Option<String>,
     symbol_analysis: Option<String>,
     no_timestamp: bool,
+    output_dir: Option<String>,
 ) -> fbuild_core::Result<()> {
     daemon_client::ensure_daemon_running().await?;
 
@@ -950,6 +1002,7 @@ async fn run_build(
         src_dir: std::env::var("PLATFORMIO_SRC_DIR")
             .ok()
             .filter(|s| !s.is_empty()),
+        output_dir,
         pio_env: daemon_client::capture_pio_env(),
     };
 
@@ -969,6 +1022,80 @@ async fn run_build(
     Ok(())
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum CliEmulatorKind {
+    Qemu,
+    Avr8js,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum CliDeployRoute {
+    Device,
+    Emulator(CliEmulatorKind),
+}
+
+fn resolve_cli_deploy_route(
+    to: Option<&str>,
+    emulator: Option<&str>,
+    target: Option<&str>,
+    qemu: bool,
+) -> fbuild_core::Result<CliDeployRoute> {
+    if let Some(target) = target {
+        return match target {
+            "device" => Ok(CliDeployRoute::Device),
+            "qemu" => Ok(CliDeployRoute::Emulator(CliEmulatorKind::Qemu)),
+            "avr8js" => Ok(CliDeployRoute::Emulator(CliEmulatorKind::Avr8js)),
+            other => Err(fbuild_core::FbuildError::Other(format!(
+                "unsupported deploy target '{}'",
+                other
+            ))),
+        };
+    }
+
+    match to.unwrap_or("device") {
+        "device" => {
+            if qemu {
+                return Err(fbuild_core::FbuildError::Other(
+                    "--qemu cannot be combined with --to device".to_string(),
+                ));
+            }
+            if let Some(emulator) = emulator {
+                return Err(fbuild_core::FbuildError::Other(format!(
+                    "--emulator {} requires --to emu",
+                    emulator
+                )));
+            }
+            Ok(CliDeployRoute::Device)
+        }
+        "emu" | "emulator" => {
+            let emulator = if qemu {
+                if let Some(explicit) = emulator {
+                    if explicit != "qemu" {
+                        return Err(fbuild_core::FbuildError::Other(
+                            "--qemu cannot be combined with a different --emulator".to_string(),
+                        ));
+                    }
+                }
+                "qemu"
+            } else {
+                emulator.unwrap_or("avr8js")
+            };
+            match emulator {
+                "qemu" => Ok(CliDeployRoute::Emulator(CliEmulatorKind::Qemu)),
+                "avr8js" => Ok(CliDeployRoute::Emulator(CliEmulatorKind::Avr8js)),
+                other => Err(fbuild_core::FbuildError::Other(format!(
+                    "unsupported emulator '{}'",
+                    other
+                ))),
+            }
+        }
+        other => Err(fbuild_core::FbuildError::Other(format!(
+            "unsupported deploy destination '{}'",
+            other
+        ))),
+    }
+}
+
 #[allow(clippy::too_many_arguments)]
 async fn run_deploy(
     project_dir: String,
@@ -986,14 +1113,16 @@ async fn run_deploy(
     qemu: bool,
     qemu_timeout: u32,
     baud_rate: Option<u32>,
+    to: Option<String>,
+    emulator: Option<String>,
+    target: Option<String>,
+    output_dir: Option<String>,
 ) -> fbuild_core::Result<()> {
-    if qemu {
-        return Err(fbuild_core::FbuildError::Other(
-            "QEMU deployment is not yet supported in the Rust port. Use --platformio for QEMU support.".into(),
-        ));
-    }
     daemon_client::ensure_daemon_running().await?;
     let client = DaemonClient::new();
+
+    let deploy_route =
+        resolve_cli_deploy_route(to.as_deref(), emulator.as_deref(), target.as_deref(), qemu)?;
 
     let (caller_pid, caller_cwd) = daemon_client::caller_info();
     let req = DeployRequest {
@@ -1010,6 +1139,9 @@ async fn run_deploy(
         monitor_expect: expect,
         monitor_show_timestamp: !no_timestamp,
         baud_rate,
+        to,
+        emulator,
+        target,
         qemu,
         qemu_timeout,
         request_id: None,
@@ -1018,6 +1150,7 @@ async fn run_deploy(
         src_dir: std::env::var("PLATFORMIO_SRC_DIR")
             .ok()
             .filter(|s| !s.is_empty()),
+        output_dir,
         pio_env: daemon_client::capture_pio_env(),
     };
 
@@ -1025,6 +1158,14 @@ async fn run_deploy(
     println!("{}", resp.message);
     if !resp.success {
         std::process::exit(resp.exit_code);
+    }
+    if deploy_route == CliDeployRoute::Emulator(CliEmulatorKind::Avr8js) && monitor_after {
+        if let Some(url) = resp.launch_url.as_deref() {
+            if let Err(e) = open_in_browser(url) {
+                eprintln!("warning: failed to open browser: {}", e);
+                eprintln!("open this URL manually: {}", url);
+            }
+        }
     }
     Ok(())
 }
@@ -1137,6 +1278,7 @@ async fn run_iwyu(
             Some("compiledb".to_string()),
             None,
             true, // no_timestamp: compiledb generation doesn't need timestamps
+            None,
         )
         .await?;
         if !db_path.exists() {
@@ -1558,6 +1700,7 @@ async fn run_clang_tool(
         Some("compiledb".to_string()),
         None,
         true, // no_timestamp: compiledb generation doesn't need timestamps
+        None,
     )
     .await?;
 

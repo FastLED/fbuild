@@ -5,6 +5,8 @@ Import and call activate() at the top of CI scripts.
 """
 
 import os
+import shutil
+import subprocess
 
 
 def find_cargo_bin():
@@ -26,6 +28,20 @@ def find_cargo_bin():
             bin_dir = os.path.join(candidate, "bin")
             if os.path.isdir(bin_dir):
                 return os.path.abspath(bin_dir)
+
+    rustup = shutil.which("rustup")
+    if rustup:
+        try:
+            tool_path = subprocess.check_output(
+                [rustup, "which", "cargo"],
+                text=True,
+                stderr=subprocess.DEVNULL,
+            ).strip()
+            if tool_path and os.path.isfile(tool_path):
+                return os.path.abspath(os.path.dirname(tool_path))
+        except Exception:
+            pass
+
     return None
 
 

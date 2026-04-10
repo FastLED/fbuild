@@ -20,6 +20,7 @@ Architecture docs are split by subsystem. Read only what's relevant to your curr
 
 ## Other docs
 
-- **[DESIGN_DECISIONS.md](DESIGN_DECISIONS.md)** — ADR-style decisions with rationale
-- **[ROADMAP.md](ROADMAP.md)** — Implementation phases
-- **[ARCHITECTURE.md](ARCHITECTURE.md)** — Index of all architecture documents
+- **[DESIGN_DECISIONS.md](DESIGN_DECISIONS.md)** - ADR-style decisions with rationale
+- **[ROADMAP.md](ROADMAP.md)** - Implementation phases
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - Index of all architecture documents
+- **[../PLAN_AVR8JS.md](../PLAN_AVR8JS.md)** - Emulator deploy plan and CLI direction (`fbuild deploy --to emu [--emulator <kind>]`)

@@ -48,6 +48,9 @@ pub struct BuildRequest {
     /// Override for PLATFORMIO_SRC_DIR — forwarded from caller's environment.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub src_dir: Option<String>,
+    /// Export a tooling-friendly artifact bundle to this directory after build.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub output_dir: Option<String>,
     /// Snapshot of all `PLATFORMIO_*` env vars from the caller's environment.
     /// The daemon does not inherit caller env vars, so they are forwarded here.
     #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
@@ -77,6 +80,15 @@ pub struct DeployRequest {
     /// Override the board's default upload baud rate for flashing.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub baud_rate: Option<u32>,
+    /// Deploy destination: "device", "emu", or "emulator".
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub to: Option<String>,
+    /// Emulator backend when deploying to `emu`/`emulator`.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub emulator: Option<String>,
+    /// Legacy deploy target alias: "device", "qemu", or "avr8js".
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub target: Option<String>,
     #[serde(default)]
     pub qemu: bool,
     #[serde(default)]
@@ -90,6 +102,9 @@ pub struct DeployRequest {
     /// Override for PLATFORMIO_SRC_DIR — forwarded from caller's environment.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub src_dir: Option<String>,
+    /// Export a tooling-friendly artifact bundle to this directory after build.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub output_dir: Option<String>,
     /// Snapshot of all `PLATFORMIO_*` env vars from the caller's environment.
     #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
     pub pio_env: BTreeMap<String, String>,
@@ -150,6 +165,12 @@ pub struct OperationResponse {
     pub request_id: String,
     pub message: String,
     pub exit_code: i32,
+    #[allow(dead_code)]
+    pub output_file: Option<String>,
+    #[allow(dead_code)]
+    pub output_dir: Option<String>,
+    #[allow(dead_code)]
+    pub launch_url: Option<String>,
 }
 
 /// NDJSON event from a streaming build response.
@@ -161,6 +182,8 @@ struct StreamEvent {
     success: Option<bool>,
     request_id: Option<String>,
     exit_code: Option<i32>,
+    output_file: Option<String>,
+    output_dir: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -416,6 +439,9 @@ impl DaemonClient {
                                 request_id: event.request_id.unwrap_or_default(),
                                 message: event.message.unwrap_or_default(),
                                 exit_code: event.exit_code.unwrap_or(1),
+                                output_file: event.output_file,
+                                output_dir: event.output_dir,
+                                launch_url: None,
                             });
                         }
                         _ => {}

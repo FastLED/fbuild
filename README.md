@@ -165,6 +165,15 @@ fbuild deploy tests/platform/esp32c6 --clean
 
 # Deploy with monitoring and test patterns
 fbuild deploy tests/platform/esp32c6 --monitor="--timeout 60 --halt-on-error \"TEST FAILED\" --halt-on-success \"TEST PASSED\""
+
+# Deploy to the default emulator backend
+fbuild deploy tests/platform/uno -e uno --to emu
+
+# Deploy to the default emulator backend and open the monitor page
+fbuild deploy tests/platform/uno -e uno --to emu --monitor
+
+# Deploy to an explicit emulator backend
+fbuild deploy tests/platform/esp32dev -e esp32dev-qemu --to emu --emulator qemu
 ```
 
 **Monitor command:**
@@ -180,6 +189,14 @@ fbuild monitor --timeout 60 --halt-on-error "TEST FAILED" --halt-on-success "TES
 ## QEMU Testing
 
 fbuild supports deploying to QEMU for testing ESP32 firmware without physical hardware.
+
+The public emulator deploy API is:
+
+```bash
+fbuild deploy <project> --to emu
+fbuild deploy <project> --to emu --monitor
+fbuild deploy <project> --to emu --emulator qemu
+```
 
 ### QEMU Supported Platforms
 
@@ -197,8 +214,13 @@ fbuild supports deploying to QEMU for testing ESP32 firmware without physical ha
 fbuild build tests/platform/esp32dev -e esp32dev-qemu
 
 # Deploy to QEMU
-fbuild deploy tests/platform/esp32dev -e esp32dev-qemu --qemu
+fbuild deploy tests/platform/esp32dev -e esp32dev-qemu --to emu --emulator qemu
 ```
+
+Compatibility aliases:
+
+- `--qemu` remains accepted as a legacy alias
+- older `--target ...` emulator syntax remains accepted for compatibility
 
 ### Configuration
 
