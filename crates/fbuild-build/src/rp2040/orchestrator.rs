@@ -79,12 +79,12 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         let mut include_dirs = vec![core_dir.clone(), variant_dir.clone()];
         let framework_include = framework_dir.join("include");
         if framework_include.exists() {
-            include_dirs.push(framework_include);
+            include_dirs.push(framework_include.clone());
         }
         add_rp_manifest_includes(&framework_dir, &ctx.board.mcu, &mut include_dirs);
         if framework_include.exists() {
             add_rp_family_includes(
-                &framework_dir.join("include"),
+                &framework_include,
                 &ctx.board.mcu,
                 &mut include_dirs,
             );
