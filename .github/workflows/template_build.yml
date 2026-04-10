@@ -107,6 +107,11 @@ jobs:
           test -f ${{ inputs.test-dir }}/.fbuild/build/${{ inputs.env-name }}/release/firmware.${{ inputs.firmware-ext }}
           echo "Release build successful - firmware.${{ inputs.firmware-ext }} generated"
 
+      - name: Stop zccache
+        if: always()
+        shell: bash
+        run: zccache stop || true
+
       - name: Save zccache
         if: always()
         uses: actions/cache/save@v5
