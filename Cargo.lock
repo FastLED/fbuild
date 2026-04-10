@@ -652,6 +652,7 @@ dependencies = [
  "fbuild-serial",
  "futures",
  "pyo3",
+ "pyo3-build-config",
  "reqwest",
  "serde",
  "serde_json",

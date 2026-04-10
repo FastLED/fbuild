@@ -6,9 +6,16 @@ edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
 
+[features]
+default = []
+extension-module = ["pyo3/extension-module"]
+
 [lib]
 name = "_native"
 crate-type = ["cdylib", "rlib"]
+
+[build-dependencies]
+pyo3-build-config = "0.22"
 
 [dependencies]
 fbuild-core = { path = "../fbuild-core" }
