@@ -54,6 +54,16 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         let framework = fbuild_packages::library::Rp2040Cores::new(&params.project_dir);
         let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
         tracing::info!("RP2040 cores at {}", framework_dir.display());
+        let board_id = ctx
+            .config
+            .get_env_config(&params.env_name)?
+            .get("board")
+            .cloned()
+            .unwrap_or_default();
+        let board_props = crate::arduino_props::load_board_props_with_default_menus(
+            &framework.get_boards_txt(),
+            &board_id,
+        );
 
         // 5. Scan sources (core + variant)
         let core_dir = framework.get_core_dir(&ctx.board.core);
@@ -75,6 +85,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         let mut defines = ctx.board.get_defines();
         defines.extend(mcu_config.defines_map());
         add_rp_manifest_defines(&framework_dir, &ctx.board.mcu, &mut defines);
+        apply_rp_board_props(&board_props, &framework_dir, &mut defines);
         // Use the resolved core_dir/variant_dir instead of board.get_include_paths():
         // RP2040 board metadata reports `core = earlephilhower`, while the actual
         // package directory is `cores/rp2040/`.
@@ -87,6 +98,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         if framework_include.exists() {
             add_rp_family_includes(&framework_include, &ctx.board.mcu, &mut include_dirs);
         }
+        add_rp_board_includes(&board_props, &framework_dir, &mut include_dirs);
         include_dirs.push(ctx.src_dir.clone());
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
         // Toolchain sysroot includes
@@ -303,6 +315,59 @@ fn add_define_file(define_file: &Path, defines: &mut HashMap<String, String>) {
         .flat_map(fbuild_core::shell_split::split)
         .collect::<Vec<_>>();
     apply_define_flags(&flags, defines);
+}
+
+fn apply_rp_board_props(
+    board_props: &Option<HashMap<String, String>>,
+    framework_dir: &Path,
+    defines: &mut HashMap<String, String>,
+) {
+    let Some(props) = board_props.as_ref() else {
+        return;
+    };
+    for key in [
+        "usbvid",
+        "usbpid",
+        "usbpwr",
+        "usbstack_flags",
+        "variantdefines",
+        "led",
+    ] {
+        if let Some(flags) = props.get(key) {
+            let expanded =
+                flags.replace("{runtime.platform.path}", &framework_dir.to_string_lossy());
+            let tokens = fbuild_core::shell_split::split(&expanded);
+            apply_define_flags(&tokens, defines);
+        }
+    }
+    if let Some(value) = props.get("usb_manufacturer") {
+        defines.insert("USB_MANUFACTURER".to_string(), value.clone());
+    }
+    if let Some(value) = props.get("usb_product") {
+        defines.insert("USB_PRODUCT".to_string(), value.clone());
+    }
+}
+
+fn add_rp_board_includes(
+    board_props: &Option<HashMap<String, String>>,
+    framework_dir: &Path,
+    include_dirs: &mut Vec<std::path::PathBuf>,
+) {
+    let Some(props) = board_props.as_ref() else {
+        return;
+    };
+    let Some(flags) = props.get("usbstack_flags") else {
+        return;
+    };
+    let expanded = flags.replace("{runtime.platform.path}", &framework_dir.to_string_lossy());
+    for token in fbuild_core::shell_split::split(&expanded) {
+        if let Some(path) = token.strip_prefix("-I") {
+            let candidate = Path::new(path);
+            if candidate.is_dir() {
+                include_dirs.push(candidate.to_path_buf());
+            }
+        }
+    }
 }
 
 fn apply_define_flags(flags: &[String], defines: &mut HashMap<String, String>) {

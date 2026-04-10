@@ -4,6 +4,7 @@
 //! Orchestrators handle: source scanning, compilation, linking, size reporting.
 
 pub mod apollo3;
+mod arduino_props;
 pub mod avr;
 pub mod build_output;
 pub mod ch32v;

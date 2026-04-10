@@ -119,6 +119,11 @@ impl Rp2040Cores {
         self.get_variant_dir(variant_name).join("memmap_default.ld")
     }
 
+    /// Get path to boards.txt.
+    pub fn get_boards_txt(&self) -> PathBuf {
+        self.resolved_dir().join("boards.txt")
+    }
+
     /// Get the pico-sdk directory.
     pub fn get_pico_sdk_dir(&self) -> PathBuf {
         self.resolved_dir().join("pico-sdk")

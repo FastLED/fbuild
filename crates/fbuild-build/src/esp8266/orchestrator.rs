@@ -10,6 +10,7 @@
 //! 7. Build include dirs + compiler + linker
 //! 8. Run shared sequential build pipeline
 
+use std::collections::HashMap;
 use std::path::Path;
 use std::time::Instant;
 
@@ -54,12 +55,23 @@ impl BuildOrchestrator for Esp8266Orchestrator {
         let framework = fbuild_packages::library::Esp8266Framework::new(&params.project_dir);
         let _framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
         tracing::info!("ESP8266 framework ready");
+        let board_id = ctx
+            .config
+            .get_env_config(&params.env_name)?
+            .get("board")
+            .cloned()
+            .unwrap_or_default();
+        let board_props = crate::arduino_props::load_board_props_with_default_menus(
+            &framework.get_boards_txt(),
+            &board_id,
+        );
 
         let core_dir = framework.get_core_dir(&ctx.board.core);
         let variant_dir = framework.get_variant_dir(&ctx.board.variant);
 
         // 5. Load MCU config
-        let mcu_config = get_esp8266_config()?;
+        let mut mcu_config = get_esp8266_config()?;
+        apply_esp8266_board_props(&board_props, &mut mcu_config);
 
         // 6. Scan sources
         let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
@@ -79,6 +91,7 @@ impl BuildOrchestrator for Esp8266Orchestrator {
 
         // 7. Build include dirs + defines
         let mut defines = ctx.board.get_defines();
+        apply_define_flags_from_props(&board_props, &mut defines);
         defines.extend(mcu_config.defines_map());
         let mut include_dirs = vec![core_dir.clone()];
         if variant_dir.exists() {
@@ -140,13 +153,14 @@ impl BuildOrchestrator for Esp8266Orchestrator {
             &mcu_config.esptool.default_flash_freq,
         );
 
+        let sdk_name = esp8266_sdk_name(&mcu_config).to_string();
         let linker = Esp8266Linker::new(
             toolchain.get_gcc_path(),
             toolchain.get_ar_path(),
             toolchain.get_objcopy_path(),
             toolchain.get_size_path(),
             framework.get_sdk_lib_dir(),
-            framework.get_sdk_nonosdk_lib_dir(),
+            framework.get_sdk_nonosdk_lib_dir_for(&sdk_name),
             framework.get_libc_lib_dir(),
             sdk_ld_dir,
             linker_scripts,
@@ -193,6 +207,113 @@ impl BuildOrchestrator for Esp8266Orchestrator {
             start,
         )
     }
+}
+
+fn apply_define_flags_from_props(
+    board_props: &Option<HashMap<String, String>>,
+    defines: &mut HashMap<String, String>,
+) {
+    let Some(props) = board_props.as_ref() else {
+        return;
+    };
+    for key in [
+        "flash_flags",
+        "lwip_flags",
+        "mmuflags",
+        "debug_port",
+        "debug_level",
+        "vtable_flags",
+    ] {
+        if let Some(flags) = props.get(key) {
+            let tokens = fbuild_core::shell_split::split(flags);
+            for token in tokens {
+                if let Some(def) = token.strip_prefix("-D") {
+                    if let Some((name, value)) = def.split_once('=') {
+                        defines.insert(name.to_string(), value.to_string());
+                    } else {
+                        defines.insert(def.to_string(), "1".to_string());
+                    }
+                }
+            }
+        }
+    }
+}
+
+fn apply_esp8266_board_props(
+    board_props: &Option<HashMap<String, String>>,
+    mcu_config: &mut super::mcu_config::Esp8266McuConfig,
+) {
+    let Some(props) = board_props.as_ref() else {
+        return;
+    };
+
+    if let Some(sdk_name) = props.get("sdk") {
+        mcu_config
+            .defines
+            .retain(|entry| !matches!(entry, crate::esp32::mcu_config::DefineEntry::KeyValue(name, _) if name.starts_with("NONOSDK")));
+        mcu_config
+            .defines
+            .push(crate::esp32::mcu_config::DefineEntry::KeyValue(
+                sdk_name.clone(),
+                "1".to_string(),
+            ));
+    }
+
+    for key in ["flash_flags", "lwip_flags", "mmuflags", "vtable_flags"] {
+        if let Some(flags) = props.get(key) {
+            for token in fbuild_core::shell_split::split(flags) {
+                if let Some(def) = token.strip_prefix("-D") {
+                    let (name, value) = def
+                        .split_once('=')
+                        .map(|(name, value)| (name.to_string(), value.to_string()))
+                        .unwrap_or_else(|| (def.to_string(), "1".to_string()));
+                    mcu_config.defines.retain(|entry| match entry {
+                        crate::esp32::mcu_config::DefineEntry::Simple(existing) => {
+                            existing != &name
+                        }
+                        crate::esp32::mcu_config::DefineEntry::KeyValue(existing, _) => {
+                            existing != &name
+                        }
+                    });
+                    mcu_config
+                        .defines
+                        .push(crate::esp32::mcu_config::DefineEntry::KeyValue(name, value));
+                }
+            }
+        }
+    }
+
+    if let Some(lwip_lib) = props.get("lwip_lib") {
+        for lib in &mut mcu_config.linker_libs {
+            if lib.starts_with("-llwip") {
+                *lib = lwip_lib.clone();
+                break;
+            }
+        }
+    }
+    if let Some(stdcpp_lib) = props.get("stdcpp_lib") {
+        for lib in &mut mcu_config.linker_libs {
+            if lib == "-lstdc++" || lib == "-lstdc++-exc" {
+                *lib = stdcpp_lib.clone();
+                break;
+            }
+        }
+    }
+}
+
+fn esp8266_sdk_name(mcu_config: &super::mcu_config::Esp8266McuConfig) -> &str {
+    mcu_config
+        .defines
+        .iter()
+        .find_map(|entry| match entry {
+            crate::esp32::mcu_config::DefineEntry::KeyValue(name, _)
+                if name.starts_with("NONOSDK") =>
+            {
+                Some(name.as_str())
+            }
+            _ => None,
+        })
+        .unwrap_or("NONOSDK22x_190703")
 }
 
 /// Create an ESP8266 orchestrator.

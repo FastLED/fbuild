@@ -109,9 +109,9 @@
     "__ets__",
     "ICACHE_FLASH",
     "_GNU_SOURCE",
-    ["NONOSDK305", "1"],
+    ["NONOSDK22x_190703", "1"],
     "VTABLES_IN_FLASH",
-    ["MMU_IRAM_SIZE", "0xC000"],
+    ["MMU_IRAM_SIZE", "0x8000"],
     ["MMU_ICACHE_SIZE", "0x8000"]
   ],
 
