@@ -12,8 +12,7 @@
       "-Wno-unused-parameter",
       "-ffunction-sections",
       "-fdata-sections",
-      "-MMD",
-      "--specs=nosys.specs"
+      "-MMD"
     ],
     "c": [
       "-std=gnu11"
@@ -30,8 +29,7 @@
     "-mcpu=cortex-m0plus",
     "-mthumb",
     "-Wl,--gc-sections",
-    "-Wl,--print-memory-usage",
-    "--specs=nosys.specs"
+    "-Wl,--print-memory-usage"
   ],
 
   "linker_libs": [

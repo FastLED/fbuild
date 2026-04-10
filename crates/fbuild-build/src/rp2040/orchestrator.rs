@@ -3,7 +3,7 @@
 //! Build phases:
 //! 1. Parse platformio.ini
 //! 2. Load board config (rpipico, rpipico2, etc.)
-//! 3. Ensure ARM GCC toolchain
+//! 3. Ensure the arduino-pico-matched pqt-gcc toolchain
 //! 4. Ensure RP2040 cores (arduino-pico by earlephilhower)
 //! 5. Setup build directories
 //! 6. Scan source files
@@ -38,10 +38,10 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
         let mut ctx = pipeline::BuildContext::new(params)?;
 
-        // 3. Ensure ARM GCC toolchain
-        let toolchain = fbuild_packages::toolchain::ArmToolchain::new(&params.project_dir);
+        // 3. Ensure the arduino-pico-matched pqt-gcc toolchain
+        let toolchain = fbuild_packages::toolchain::Rp2040PqtToolchain::new(&params.project_dir);
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
-        tracing::info!("arm-gcc toolchain at {}", toolchain_dir.display());
+        tracing::info!("rp2040 pqt-gcc toolchain at {}", toolchain_dir.display());
 
         use fbuild_packages::Toolchain;
         pipeline::log_toolchain_version(

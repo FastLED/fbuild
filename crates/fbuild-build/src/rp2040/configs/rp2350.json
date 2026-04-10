@@ -14,8 +14,7 @@
       "-Wno-unused-parameter",
       "-ffunction-sections",
       "-fdata-sections",
-      "-MMD",
-      "--specs=nosys.specs"
+      "-MMD"
     ],
     "c": [
       "-std=gnu11"
@@ -34,8 +33,7 @@
     "-mfloat-abi=softfp",
     "-mfpu=fpv5-sp-d16",
     "-Wl,--gc-sections",
-    "-Wl,--print-memory-usage",
-    "--specs=nosys.specs"
+    "-Wl,--print-memory-usage"
   ],
 
   "linker_libs": [

@@ -54,17 +54,18 @@
     "-u",
     "app_entry",
     "-u",
-    "_xt_isr_attach",
+    "_DebugExceptionVector",
     "-u",
-    "_xtos_set_exception_handler",
+    "_DoubleExceptionVector",
     "-u",
-    "_xtos_set_interrupt_handler",
+    "_KernelExceptionVector",
     "-u",
-    "_xtos_c_handler_table"
+    "_NMIExceptionVector",
+    "-u",
+    "_UserExceptionVector"
   ],
 
   "linker_libs": [
-    "-lgcc",
     "-lhal",
     "-lphy",
     "-lpp",
@@ -81,7 +82,8 @@
     "-lwpa2",
     "-lstdc++",
     "-lm",
-    "-lc"
+    "-lc",
+    "-lgcc"
   ],
 
   "objcopy": {

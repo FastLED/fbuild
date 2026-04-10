@@ -92,6 +92,7 @@ impl BuildOrchestrator for Esp8266Orchestrator {
         // 7. Build include dirs + defines
         let mut defines = ctx.board.get_defines();
         apply_define_flags_from_props(&board_props, &mut defines);
+        apply_esp8266_board_identity(&board_props, &board_id, &mut defines);
         defines.extend(mcu_config.defines_map());
         let mut include_dirs = vec![core_dir.clone()];
         if variant_dir.exists() {
@@ -299,6 +300,30 @@ fn apply_esp8266_board_props(
             }
         }
     }
+}
+
+fn apply_esp8266_board_identity(
+    board_props: &Option<HashMap<String, String>>,
+    board_id: &str,
+    defines: &mut HashMap<String, String>,
+) {
+    if let Some(props) = board_props.as_ref() {
+        if let Some(board_define) = props.get("board") {
+            defines.insert(
+                format!("ARDUINO_{}", board_define.to_uppercase()),
+                "1".to_string(),
+            );
+        }
+    }
+
+    defines.insert(
+        "ARDUINO_BOARD".to_string(),
+        format!("\\\"PLATFORMIO_{}\\\"", board_id.to_uppercase()),
+    );
+    defines.insert(
+        "ARDUINO_BOARD_ID".to_string(),
+        format!("\\\"{}\\\"", board_id),
+    );
 }
 
 fn esp8266_sdk_name(mcu_config: &super::mcu_config::Esp8266McuConfig) -> &str {
