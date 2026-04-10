@@ -549,8 +549,21 @@ fn compile_boot2_object(
             .to_string_lossy()
             .to_string(),
     ];
-    let result =
-        crate::compiler::Compiler::compile(compiler, &boot2_source, &boot2_object, &extra_flags)?;
+    let mut boot2_flags = compiler.c_flags();
+    boot2_flags.retain(|flag| {
+        !matches!(
+            flag.as_str(),
+            "-flto" | "-fuse-linker-plugin" | "-fno-fat-lto-objects"
+        )
+    });
+    let result = crate::compiler::Compiler::compile_one(
+        compiler,
+        compiler.gcc_path(),
+        &boot2_source,
+        &boot2_object,
+        &boot2_flags,
+        &extra_flags,
+    )?;
     if !result.success {
         return Err(fbuild_core::FbuildError::BuildFailed(format!(
             "RP2040 boot2 compile failed for {}:\n{}",
@@ -687,21 +700,22 @@ mod tests {
     #[test]
     fn test_generate_linker_script_substitutes_family_values() {
         let tmp = tempfile::TempDir::new().unwrap();
-        let framework_dir = tmp.path().join("framework");
         let build_dir = tmp.path().join("build");
-        std::fs::create_dir_all(framework_dir.join("lib").join("rp2040")).unwrap();
-        std::fs::create_dir_all(framework_dir.join("variants").join("rpipico")).unwrap();
-        std::fs::write(
-            framework_dir.join("lib").join("rp2040").join("memmap_default.ld"),
-            "FLASH=__FLASH_LENGTH__ RAM=__RAM_LENGTH__ FS=__FS_START__-__FS_END__ EEPROM=__EEPROM_START__ PSRAM=__PSRAM_LENGTH__",
-        )
-        .unwrap();
-
         let framework = fbuild_packages::library::Rp2040Cores::new(tmp.path());
         let mut board =
             fbuild_config::BoardConfig::from_board_id("rpipico", &HashMap::new()).unwrap();
+        board.variant = "fbuild-test-rpipico".to_string();
         board.max_flash = Some(2_097_152);
         board.max_ram = Some(262_144);
+        let template = framework
+            .get_variant_dir(&board.variant)
+            .join("memmap_default.ld");
+        std::fs::create_dir_all(template.parent().unwrap()).unwrap();
+        std::fs::write(
+            &template,
+            "FLASH=__FLASH_LENGTH__ RAM=__RAM_LENGTH__ FS=__FS_START__-__FS_END__ EEPROM=__EEPROM_START__ PSRAM=__PSRAM_LENGTH__",
+        )
+        .unwrap();
 
         let mut props = HashMap::new();
         props.insert("flash_length".to_string(), "2093056".to_string());
