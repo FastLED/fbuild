@@ -206,13 +206,13 @@ impl Linker for Esp8266Linker {
             args.push(obj.to_string_lossy().to_string());
         }
 
-        // Core/variant objects
+        // PlatformIO links the core archive inside the linker group together with
+        // the SDK libraries. Keeping it outside the group leaves later SDK/core
+        // cross-references like `settimeofday` unresolved.
+        args.push("-Wl,--start-group".to_string());
         for archive in &positional_archives {
             args.push(archive.to_string_lossy().to_string());
         }
-
-        // SDK libraries in a group for circular dependency resolution
-        args.push("-Wl,--start-group".to_string());
         args.extend(self.mcu_config.linker_libs.iter().cloned());
         args.push("-Wl,--end-group".to_string());
 
