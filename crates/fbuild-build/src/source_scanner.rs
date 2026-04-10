@@ -260,10 +260,19 @@ impl SourceScanner {
             .unwrap_or_default()
             .to_string_lossy();
         let output_path = self.build_dir.join(format!("{}.ino.cpp", stem));
-        std::fs::write(&output_path, &output)?;
+        write_if_changed(&output_path, &output)?;
 
         Ok(output_path)
     }
+}
+
+fn write_if_changed(path: &Path, contents: &str) -> std::io::Result<()> {
+    if let Ok(existing) = std::fs::read_to_string(path) {
+        if existing == contents {
+            return Ok(());
+        }
+    }
+    std::fs::write(path, contents)
 }
 
 /// Walk a directory for source files, respecting exclude list.
@@ -567,6 +576,25 @@ mod tests {
         let sources = scanner.scan_sketch_sources().unwrap();
         let content = fs::read_to_string(&sources[0]).unwrap();
         assert!(content.contains("#line 1"));
+    }
+
+    #[test]
+    fn test_preprocess_does_not_rewrite_unchanged_output() {
+        let (_tmp, src_dir, build_dir) =
+            setup_project(&[("sketch.ino", "void setup() {}\nvoid loop() {}\n")]);
+        let scanner = SourceScanner::new(&src_dir, &build_dir);
+
+        let first = scanner.scan_sketch_sources().unwrap();
+        let output = first[0].clone();
+        let first_mtime = fs::metadata(&output).unwrap().modified().unwrap();
+
+        std::thread::sleep(std::time::Duration::from_millis(20));
+
+        let second = scanner.scan_sketch_sources().unwrap();
+        assert_eq!(second[0], output);
+        let second_mtime = fs::metadata(&output).unwrap().modified().unwrap();
+
+        assert_eq!(first_mtime, second_mtime);
     }
 
     #[test]

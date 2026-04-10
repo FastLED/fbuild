@@ -191,9 +191,10 @@ impl Linker for Esp32Linker {
         // (forward slashes, quoting) and avoid command-line length issues.
         let result = if cfg!(windows) {
             let flags_for_rsp: Vec<String> = link_args[1..].to_vec();
+            let rsp_dir = output_dir.join("tmp");
             let rsp_path = fbuild_core::response_file::write_response_file(
                 &flags_for_rsp,
-                &fbuild_core::response_file::windows_temp_dir(),
+                &rsp_dir,
                 "esp32_link",
             )?;
             let rsp_args = [link_args[0].as_str(), &format!("@{}", rsp_path.display())];

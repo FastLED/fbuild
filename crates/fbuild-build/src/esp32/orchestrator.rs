@@ -18,7 +18,7 @@
 //! 15. Copy bootloader.bin + partitions.bin
 //! 16. Size reporting
 
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::time::Instant;
 
 use fbuild_core::{Platform, Result};
@@ -35,6 +35,67 @@ use super::mcu_config::get_mcu_config;
 
 /// ESP32 platform build orchestrator.
 pub struct Esp32Orchestrator;
+
+fn framework_failure_marker(build_dir: &Path, lib_name: &str) -> PathBuf {
+    build_dir.join(format!(".{lib_name}.failed"))
+}
+
+fn framework_signature(
+    include_dirs: &[PathBuf],
+    c_flags: &[String],
+    cpp_flags: &[String],
+) -> String {
+    let mut parts = Vec::with_capacity(include_dirs.len() + c_flags.len() + cpp_flags.len() + 2);
+    parts.push("i".to_string());
+    parts.extend(
+        include_dirs
+            .iter()
+            .map(|p| p.to_string_lossy().into_owned()),
+    );
+    parts.push("c".to_string());
+    parts.extend(c_flags.iter().cloned());
+    parts.push("cxx".to_string());
+    parts.extend(cpp_flags.iter().cloned());
+    parts.join("\x1f")
+}
+
+fn latest_mtime(paths: &[PathBuf]) -> Result<Option<std::time::SystemTime>> {
+    let mut latest = None;
+    for path in paths {
+        let modified = std::fs::metadata(path)?.modified()?;
+        latest = Some(match latest {
+            Some(current) if current > modified => current,
+            _ => modified,
+        });
+    }
+    Ok(latest)
+}
+
+fn should_skip_failed_framework_lib(
+    marker_path: &Path,
+    signature: &str,
+    sources: &[PathBuf],
+) -> Result<bool> {
+    if !marker_path.exists() {
+        return Ok(false);
+    }
+
+    let marker_text = std::fs::read_to_string(marker_path)?;
+    let recorded_signature = marker_text.lines().next().unwrap_or_default();
+    if recorded_signature != signature {
+        return Ok(false);
+    }
+
+    let Some(latest_source_time) = latest_mtime(sources)? else {
+        return Ok(false);
+    };
+    let marker_time = std::fs::metadata(marker_path)?.modified()?;
+    Ok(marker_time >= latest_source_time)
+}
+
+fn record_failed_framework_lib(marker_path: &Path, signature: &str, error: &str) {
+    let _ = std::fs::write(marker_path, format!("{signature}\n{error}\n"));
+}
 
 impl BuildOrchestrator for Esp32Orchestrator {
     fn platform(&self) -> Platform {
@@ -329,6 +390,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 );
                 let fw_c_flags = apply_user_flags(&fw_compiler.c_flags(), &user_flags);
                 let fw_cpp_flags = apply_user_flags(&fw_compiler.cpp_flags(), &user_flags);
+                let fw_signature = framework_signature(&include_dirs, &fw_c_flags, &fw_cpp_flags);
 
                 let mut fw_lib_count = 0;
                 if let Ok(entries) = std::fs::read_dir(&builtin_libs_dir) {
@@ -368,6 +430,19 @@ impl BuildOrchestrator for Esp32Orchestrator {
                         if sources.is_empty() {
                             continue;
                         }
+                        let failure_marker =
+                            framework_failure_marker(&fw_libs_build_dir, &lib_name);
+                        if should_skip_failed_framework_lib(
+                            &failure_marker,
+                            &fw_signature,
+                            &sources,
+                        )? {
+                            tracing::debug!(
+                                "skipping previously failed framework library '{}'",
+                                lib_name
+                            );
+                            continue;
+                        }
 
                         let fw_jobs = crate::parallel::effective_jobs(params.jobs);
                         // Use gcc-ar for LTO archives so the linker-plugin index is written.
@@ -394,6 +469,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                             compiler_cache.as_deref(),
                         ) {
                             Ok(Some(archive)) => {
+                                let _ = std::fs::remove_file(&failure_marker);
                                 library_archives.push(archive);
                                 fw_lib_count += 1;
                             }
@@ -406,6 +482,11 @@ impl BuildOrchestrator for Esp32Orchestrator {
                                     "framework library {} failed to compile: {}",
                                     lib_name,
                                     e
+                                );
+                                record_failed_framework_lib(
+                                    &failure_marker,
+                                    &fw_signature,
+                                    &e.to_string(),
                                 );
                             }
                         }
@@ -869,7 +950,9 @@ impl BuildOrchestrator for Esp32Orchestrator {
 /// Apply user build_flags from platformio.ini onto base compiler flags.
 ///
 /// Matches PlatformIO behavior: user flags are appended to common flags,
-/// but `-std=` flags replace the existing standard (not stack).
+/// but `-std=` flags replace the existing standard (not stack). `-D` flags are
+/// deduplicated by macro name so later values override earlier defaults without
+/// tripping GCC redefinition warnings.
 fn apply_user_flags(base_flags: &[String], user_flags: &[String]) -> Vec<String> {
     let mut result = base_flags.to_vec();
     for flag in user_flags {
@@ -1226,6 +1309,7 @@ pub fn is_esp32_project(project_dir: &Path, env_name: &str) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::time::Duration;
 
     #[test]
     fn test_apply_user_flags_replaces_std_flag() {
@@ -1391,5 +1475,87 @@ mod tests {
             Some("-DARDUINO_USB_CDC_ON_BOOT=1"),
             &["-DARDUINO_USB_CDC_ON_BOOT=0".to_string()],
         );
+    }
+
+    #[test]
+    fn test_framework_signature_changes_with_flags() {
+        let includes = vec![PathBuf::from("C:/sdk/include")];
+        let sig_a = framework_signature(
+            &includes,
+            &["-O2".to_string()],
+            &["-std=gnu++17".to_string()],
+        );
+        let sig_b = framework_signature(
+            &includes,
+            &["-O0".to_string()],
+            &["-std=gnu++17".to_string()],
+        );
+        assert_ne!(sig_a, sig_b);
+    }
+
+    #[test]
+    fn test_apply_user_flags_replaces_existing_define_by_key() {
+        let merged = apply_user_flags(
+            &[r#"-DIDF_VER=\"old\""#.to_string(), "-O2".to_string()],
+            &[r#"-DIDF_VER=\"new\""#.to_string()],
+        );
+        assert_eq!(
+            merged,
+            vec![r#"-O2"#.to_string(), r#"-DIDF_VER=\"new\""#.to_string()]
+        );
+    }
+
+    #[test]
+    fn test_apply_user_flags_keeps_last_user_define() {
+        let merged = apply_user_flags(
+            &[],
+            &[
+                r#"-DMBEDTLS_CONFIG_FILE=\"a.h\""#.to_string(),
+                r#"-DMBEDTLS_CONFIG_FILE=\"b.h\""#.to_string(),
+            ],
+        );
+        assert_eq!(merged, vec![r#"-DMBEDTLS_CONFIG_FILE=\"b.h\""#.to_string()]);
+    }
+
+    #[test]
+    fn test_skip_failed_framework_lib_when_marker_matches_and_is_current() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let source = tmp.path().join("Matter.cpp");
+        std::fs::write(&source, "int x;").unwrap();
+        let marker = framework_failure_marker(tmp.path(), "matter");
+        let sig = framework_signature(&[], &["-O2".to_string()], &["-std=gnu++2b".to_string()]);
+        std::thread::sleep(Duration::from_millis(20));
+        record_failed_framework_lib(&marker, &sig, "compile failed");
+
+        assert!(should_skip_failed_framework_lib(&marker, &sig, &[source]).unwrap());
+    }
+
+    #[test]
+    fn test_retry_failed_framework_lib_after_source_change() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let source = tmp.path().join("Matter.cpp");
+        std::fs::write(&source, "int x;").unwrap();
+        let marker = framework_failure_marker(tmp.path(), "matter");
+        let sig = framework_signature(&[], &["-O2".to_string()], &["-std=gnu++2b".to_string()]);
+        std::thread::sleep(Duration::from_millis(20));
+        record_failed_framework_lib(&marker, &sig, "compile failed");
+        std::thread::sleep(Duration::from_millis(20));
+        std::fs::write(&source, "int y;").unwrap();
+
+        assert!(!should_skip_failed_framework_lib(&marker, &sig, &[source]).unwrap());
+    }
+
+    #[test]
+    fn test_retry_failed_framework_lib_after_signature_change() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let source = tmp.path().join("Matter.cpp");
+        std::fs::write(&source, "int x;").unwrap();
+        let marker = framework_failure_marker(tmp.path(), "matter");
+        let sig_a = framework_signature(&[], &["-O2".to_string()], &["-std=gnu++2b".to_string()]);
+        let sig_b = framework_signature(&[], &["-O0".to_string()], &["-std=gnu++2b".to_string()]);
+        std::thread::sleep(Duration::from_millis(20));
+        record_failed_framework_lib(&marker, &sig_a, "compile failed");
+
+        assert!(!should_skip_failed_framework_lib(&marker, &sig_b, &[source]).unwrap());
     }
 }

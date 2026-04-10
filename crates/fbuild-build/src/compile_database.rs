@@ -126,6 +126,12 @@ pub fn strip_cache_wrapper(args: &[String]) -> Vec<String> {
         .to_lowercase();
 
     if stem == "sccache" || stem == "ccache" || stem == "zccache" {
+        if stem == "zccache" && args.get(1).is_some_and(|arg| arg == "wrap") {
+            if args.len() < 3 {
+                return args.to_vec();
+            }
+            return args[2..].to_vec();
+        }
         args[1..].to_vec()
     } else {
         args.to_vec()
@@ -509,6 +515,19 @@ mod tests {
         ];
         let stripped = strip_cache_wrapper(&args);
         assert_eq!(stripped[0], "/usr/bin/gcc");
+    }
+
+    #[test]
+    fn test_strip_zccache_wrap_mode() {
+        let args = vec![
+            "C:\\tools\\zccache.exe".to_string(),
+            "wrap".to_string(),
+            "C:\\tc\\bin\\xtensa-esp32-elf-g++.exe".to_string(),
+            "-c".to_string(),
+        ];
+        let stripped = strip_cache_wrapper(&args);
+        assert_eq!(stripped[0], "C:\\tc\\bin\\xtensa-esp32-elf-g++.exe");
+        assert_eq!(stripped[1], "-c");
     }
 
     #[test]

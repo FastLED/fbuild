@@ -5,7 +5,9 @@
 
 use fbuild_core::Result;
 use serde::Deserialize;
+use sha2::{Digest, Sha256};
 use std::collections::HashMap;
+use std::ffi::OsString;
 use std::path::{Path, PathBuf};
 use std::time::SystemTime;
 
@@ -122,6 +124,22 @@ pub trait Compiler: Send + Sync {
 
     /// C++ compiler flags (without extra_flags).
     fn cpp_flags(&self) -> Vec<String>;
+
+    /// Stable fingerprint of the effective compile configuration for one source file.
+    ///
+    /// Used for incremental rebuild invalidation when flags or compiler paths change.
+    fn rebuild_signature(&self, source: &Path, extra_flags: &[String]) -> String {
+        let ext = source
+            .extension()
+            .unwrap_or_default()
+            .to_string_lossy()
+            .to_lowercase();
+        let (compiler_path, flags) = match ext.as_str() {
+            "c" | "s" => (self.gcc_path(), self.c_flags()),
+            _ => (self.gxx_path(), self.cpp_flags()),
+        };
+        build_rebuild_signature(compiler_path, &flags, &[], extra_flags)
+    }
 }
 
 /// Shared compiler utilities used by all platform-specific compilers.
@@ -165,15 +183,42 @@ impl CompilerBase {
 
     /// Check if a source file needs rebuilding (source newer than object).
     pub fn needs_rebuild(source: &Path, object: &Path) -> bool {
+        Self::needs_rebuild_with_signature(source, object, None)
+    }
+
+    /// Check if a source file needs rebuilding, optionally accounting for a
+    /// fingerprint of the effective compile command.
+    pub fn needs_rebuild_with_signature(
+        source: &Path,
+        object: &Path,
+        signature: Option<&str>,
+    ) -> bool {
         if !object.exists() {
             return true;
         }
 
-        let src_time = source
+        let obj_time = object
             .metadata()
             .and_then(|m| m.modified())
             .unwrap_or(SystemTime::UNIX_EPOCH);
-        let obj_time = object
+
+        if let Some(expected) = signature {
+            let stamp = command_hash_path(object);
+            let actual = std::fs::read_to_string(&stamp).ok();
+            if actual.as_deref() != Some(expected) {
+                return true;
+            }
+        }
+
+        let depfile = depfile_path(object);
+        if depfile.exists() {
+            if dependency_is_newer_than_object(&depfile, obj_time).unwrap_or(true) {
+                return true;
+            }
+            return false;
+        }
+
+        let src_time = source
             .metadata()
             .and_then(|m| m.modified())
             .unwrap_or(SystemTime::UNIX_EPOCH);
@@ -205,6 +250,77 @@ impl CompilerBase {
     }
 }
 
+fn depfile_path(object: &Path) -> PathBuf {
+    object.with_extension("d")
+}
+
+fn command_hash_path(object: &Path) -> PathBuf {
+    object.with_extension("cmdhash")
+}
+
+pub fn build_rebuild_signature(
+    compiler_path: &Path,
+    flags: &[String],
+    pre_flags: &[String],
+    extra_flags: &[String],
+) -> String {
+    let mut hasher = Sha256::new();
+    hasher.update(compiler_path.to_string_lossy().as_bytes());
+    hasher.update([0]);
+    for group in [flags, pre_flags, extra_flags] {
+        for flag in group {
+            hasher.update(flag.as_bytes());
+            hasher.update([0]);
+        }
+        hasher.update([0xff]);
+    }
+    format!("{:x}", hasher.finalize())
+}
+
+fn dependency_is_newer_than_object(
+    depfile: &Path,
+    object_time: SystemTime,
+) -> std::io::Result<bool> {
+    let depfile_time = depfile.metadata()?.modified()?;
+    if depfile_time > object_time {
+        return Ok(true);
+    }
+
+    for dependency in parse_depfile_paths(depfile)? {
+        let dep_time = std::fs::metadata(&dependency)?.modified()?;
+        if dep_time > object_time {
+            return Ok(true);
+        }
+    }
+
+    Ok(false)
+}
+
+fn parse_depfile_paths(depfile: &Path) -> std::io::Result<Vec<PathBuf>> {
+    let text = std::fs::read_to_string(depfile)?;
+    let normalized = text.replace("\\\r\n", " ").replace("\\\n", " ");
+    let deps = depfile_dependencies_section(&normalized);
+
+    let mut paths = Vec::new();
+    for token in deps.split_whitespace() {
+        let unescaped = token.replace("\\ ", " ");
+        if !unescaped.is_empty() {
+            paths.push(PathBuf::from(OsString::from(unescaped)));
+        }
+    }
+    Ok(paths)
+}
+
+fn depfile_dependencies_section(contents: &str) -> &str {
+    let bytes = contents.as_bytes();
+    for i in 0..bytes.len().saturating_sub(1) {
+        if bytes[i] == b':' && bytes[i + 1].is_ascii_whitespace() {
+            return &contents[i + 1..];
+        }
+    }
+    contents
+}
+
 /// Get the platform-appropriate temp directory for response files.
 ///
 /// Delegates to [`fbuild_core::response_file::windows_temp_dir`].
@@ -217,6 +333,22 @@ pub fn windows_temp_dir() -> PathBuf {
 /// Delegates to [`fbuild_core::response_file::write_response_file`].
 pub fn write_response_file(flags: &[String], temp_dir: &Path, prefix: &str) -> Result<PathBuf> {
     fbuild_core::response_file::write_response_file(flags, temp_dir, prefix)
+}
+
+fn response_file_dir(output: &Path, fallback_temp_dir: &Path) -> PathBuf {
+    output
+        .parent()
+        .filter(|parent| !parent.as_os_str().is_empty())
+        .map(|parent| parent.join("tmp"))
+        .unwrap_or_else(|| fallback_temp_dir.to_path_buf())
+}
+
+fn invocation_response_file_path(path: &Path) -> std::io::Result<PathBuf> {
+    if path.is_absolute() {
+        Ok(path.to_path_buf())
+    } else {
+        Ok(std::env::current_dir()?.join(path))
+    }
 }
 
 /// Prepare compiler flags for direct execution (no response file).
@@ -257,6 +389,10 @@ pub fn build_cpp_flags(common_flags: Vec<String>, config: &dyn McuConfig) -> Vec
 /// - `extra_pre_flags`: additional flags inserted between base flags and extra_flags
 ///   (ESP32 uses this for include flags deferred from common_flags)
 /// - `compiler_cache`: optional zccache path (ESP32 only, None for others)
+///
+/// On Windows, response files are written into a stable `tmp` directory next to
+/// the output object so repeated builds can reuse the same path and avoid
+/// timestamp churn from ephemeral temp files.
 #[allow(clippy::too_many_arguments)]
 pub fn compile_source(
     compiler: &Path,
@@ -280,6 +416,7 @@ pub fn compile_source(
     all_flags.extend(flags.iter().cloned());
     all_flags.extend(extra_pre_flags.iter().cloned());
     all_flags.extend(extra_flags.iter().cloned());
+    let rebuild_signature = build_rebuild_signature(compiler, flags, extra_pre_flags, extra_flags);
     all_flags.extend([
         "-c".to_string(),
         source.to_string_lossy().to_string(),
@@ -290,14 +427,15 @@ pub fn compile_source(
     // On Windows, write all flags to a response file to avoid command-line
     // length limits and backslash-quote escaping issues with CreateProcessW.
     let args = if cfg!(windows) {
-        let response_file = write_response_file(&all_flags, temp_dir, response_file_prefix)?;
-        let mut a = Vec::new();
-        if let Some(zcc) = compiler_cache {
-            a.push(zcc.to_string_lossy().to_string());
-        }
-        a.push(compiler.to_string_lossy().to_string());
-        a.push(format!("@{}", response_file.display()));
-        a
+        let response_dir = response_file_dir(output, temp_dir);
+        let response_file = write_response_file(&all_flags, &response_dir, response_file_prefix)?;
+        let response_file = invocation_response_file_path(&response_file)?;
+        let raw_args = [
+            compiler.to_string_lossy().to_string(),
+            format!("@{}", response_file.display()),
+        ];
+        let raw_refs: Vec<&str> = raw_args.iter().map(|s| s.as_str()).collect();
+        crate::zccache::wrap_args(&raw_refs, compiler_cache)
     } else {
         let sanitized = prepare_flags_for_exec(all_flags);
         let mut raw_args: Vec<String> = vec![compiler.to_string_lossy().to_string()];
@@ -313,6 +451,10 @@ pub fn compile_source(
     }
 
     let result = run_command(&args_ref, None, None, None)?;
+
+    if result.success() {
+        std::fs::write(command_hash_path(output), rebuild_signature)?;
+    }
 
     Ok(CompileResult {
         success: result.success(),
@@ -452,5 +594,113 @@ mod tests {
         let content = std::fs::read_to_string(rsp).unwrap();
         // Response file wraps in single quotes with unescaped "
         assert_eq!(content, r#"'-DFOO="bar"'"#);
+    }
+
+    #[test]
+    fn test_response_file_dir_prefers_output_sibling_tmp() {
+        let output = Path::new("C:/work/build/src/main.cpp.o");
+        let fallback = Path::new("C:/temp");
+        assert_eq!(
+            response_file_dir(output, fallback),
+            PathBuf::from("C:/work/build/src/tmp")
+        );
+    }
+
+    #[test]
+    fn test_response_file_dir_falls_back_without_output_parent() {
+        let output = Path::new("main.o");
+        let fallback = Path::new("C:/temp");
+        assert_eq!(
+            response_file_dir(output, fallback),
+            PathBuf::from("C:/temp")
+        );
+    }
+
+    #[test]
+    fn test_invocation_response_file_path_makes_relative_path_absolute() {
+        let relative = Path::new("build/tmp/test.rsp");
+        let absolute = invocation_response_file_path(relative).unwrap();
+        assert!(absolute.is_absolute());
+        assert!(absolute.ends_with(relative));
+    }
+
+    #[test]
+    fn test_invocation_response_file_path_preserves_absolute_path() {
+        let absolute_input = std::env::current_dir().unwrap().join("build/tmp/test.rsp");
+        let absolute = invocation_response_file_path(&absolute_input).unwrap();
+        assert_eq!(absolute, absolute_input);
+    }
+
+    #[test]
+    fn test_needs_rebuild_when_depfile_dependency_is_newer() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let src = tmp.path().join("main.cpp");
+        let header = tmp.path().join("config.h");
+        let obj = tmp.path().join("main.cpp.o");
+        let dep = tmp.path().join("main.cpp.d");
+
+        std::fs::write(&src, "#include \"config.h\"\n").unwrap();
+        std::fs::write(&header, "#define X 1\n").unwrap();
+        std::thread::sleep(std::time::Duration::from_millis(20));
+        std::fs::write(&obj, "obj").unwrap();
+        std::fs::write(
+            &dep,
+            format!(
+                "{}: {} {}\n",
+                obj.display(),
+                src.display(),
+                header.display()
+            ),
+        )
+        .unwrap();
+        std::thread::sleep(std::time::Duration::from_millis(20));
+        std::fs::write(&header, "#define X 2\n").unwrap();
+
+        assert!(CompilerBase::needs_rebuild(&src, &obj));
+    }
+
+    #[test]
+    fn test_needs_rebuild_uses_depfile_when_dependencies_are_current() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let src = tmp.path().join("main.cpp");
+        let header = tmp.path().join("config.h");
+        let obj = tmp.path().join("main.cpp.o");
+        let dep = tmp.path().join("main.cpp.d");
+
+        std::fs::write(&src, "#include \"config.h\"\n").unwrap();
+        std::fs::write(&header, "#define X 1\n").unwrap();
+        std::fs::write(
+            &dep,
+            format!(
+                "{}: {} {}\n",
+                obj.display(),
+                src.display(),
+                header.display()
+            ),
+        )
+        .unwrap();
+        std::thread::sleep(std::time::Duration::from_millis(20));
+        std::fs::write(&obj, "obj").unwrap();
+
+        assert!(!CompilerBase::needs_rebuild(&src, &obj));
+    }
+
+    #[test]
+    fn test_needs_rebuild_when_command_hash_changes() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let src = tmp.path().join("main.cpp");
+        let obj = tmp.path().join("main.cpp.o");
+        let stamp = tmp.path().join("main.cpp.cmdhash");
+
+        std::fs::write(&src, "int main() { return 0; }\n").unwrap();
+        std::thread::sleep(std::time::Duration::from_millis(20));
+        std::fs::write(&obj, "obj").unwrap();
+        std::fs::write(&stamp, "old-signature").unwrap();
+
+        assert!(CompilerBase::needs_rebuild_with_signature(
+            &src,
+            &obj,
+            Some("new-signature")
+        ));
     }
 }

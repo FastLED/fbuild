@@ -150,6 +150,29 @@ impl Compiler for Esp32Compiler {
     fn cpp_flags(&self) -> Vec<String> {
         crate::compiler::build_cpp_flags(self.common_flags(), &self.mcu_config)
     }
+
+    fn rebuild_signature(&self, source: &Path, extra_flags: &[String]) -> String {
+        let ext = source
+            .extension()
+            .unwrap_or_default()
+            .to_string_lossy()
+            .to_lowercase();
+        let base_flags = match ext.as_str() {
+            "c" | "s" => self.c_flags(),
+            _ => self.cpp_flags(),
+        };
+        let include_flags = self.base.build_include_flags();
+        let compiler_path = match ext.as_str() {
+            "c" | "s" => self.gcc_path(),
+            _ => self.gxx_path(),
+        };
+        crate::compiler::build_rebuild_signature(
+            compiler_path,
+            &base_flags,
+            &include_flags,
+            extra_flags,
+        )
+    }
 }
 
 // Response file utilities (write_response_file, replace_path_backslashes)

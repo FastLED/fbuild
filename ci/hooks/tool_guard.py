@@ -99,18 +99,29 @@ def deny(reason):
     }, sys.stdout)
 
 
+def extract_command(data):
+    """Best-effort extraction across shell tool event shapes."""
+    tool_input = data.get("tool_input", {})
+    if not isinstance(tool_input, dict):
+        return ""
+    for key in ("command", "script", "cmd"):
+        value = tool_input.get(key)
+        if isinstance(value, str) and value.strip():
+            return value
+    return ""
+
+
 def main():
     try:
         data = json.load(sys.stdin)
     except json.JSONDecodeError:
         sys.exit(0)
 
-    # Only check Bash commands
     tool_name = data.get("tool_name", "")
-    if tool_name != "Bash":
+    if tool_name not in {"Bash", "Shell", "PowerShell"}:
         sys.exit(0)
 
-    command = data.get("tool_input", {}).get("command", "")
+    command = extract_command(data)
     if not command:
         sys.exit(0)
 

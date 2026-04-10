@@ -6,7 +6,6 @@
 
 use crate::Result;
 use std::path::{Path, PathBuf};
-use std::sync::atomic::{AtomicU64, Ordering};
 
 /// Get the platform-appropriate temp directory for response files.
 ///
@@ -46,15 +45,12 @@ pub fn replace_path_backslashes(s: &str) -> String {
 
 /// Write flags to a temporary GCC response file (`@file` syntax).
 ///
-/// Returns the path to the response file. Uses an atomic counter for
-/// thread-safe unique filenames during parallel compilation.
+/// Returns the path to the response file.
 ///
 /// Flags containing `\"` (escaped quotes in define values) are wrapped in
 /// single quotes with `\"` converted to plain `"` — GCC's response file
 /// parser always preserves literal `"` inside single-quoted arguments.
 pub fn write_response_file(flags: &[String], temp_dir: &Path, prefix: &str) -> Result<PathBuf> {
-    static RSP_COUNTER: AtomicU64 = AtomicU64::new(0);
-
     std::fs::create_dir_all(temp_dir).map_err(|e| {
         crate::FbuildError::BuildFailed(format!(
             "failed to create temp dir {}: {}",
@@ -62,14 +58,6 @@ pub fn write_response_file(flags: &[String], temp_dir: &Path, prefix: &str) -> R
             e
         ))
     })?;
-
-    let counter = RSP_COUNTER.fetch_add(1, Ordering::Relaxed);
-    let path = temp_dir.join(format!(
-        "fbuild_{}_{}_{}.rsp",
-        prefix,
-        std::process::id(),
-        counter
-    ));
 
     // GCC treats backslashes in response files as escape characters (\n = newline,
     // \f = formfeed, etc.). Convert to forward slashes for Windows path compatibility,
@@ -95,6 +83,22 @@ pub fn write_response_file(flags: &[String], temp_dir: &Path, prefix: &str) -> R
         })
         .collect::<Vec<_>>()
         .join("\n");
+    let hash = {
+        use sha2::{Digest, Sha256};
+        let mut hasher = Sha256::new();
+        hasher.update(content.as_bytes());
+        let digest = hasher.finalize();
+        format!(
+            "{:02x}{:02x}{:02x}{:02x}",
+            digest[0], digest[1], digest[2], digest[3]
+        )
+    };
+    let path = temp_dir.join(format!("fbuild_{}_{}.rsp", prefix, hash));
+
+    if path.exists() {
+        return Ok(path);
+    }
+
     std::fs::write(&path, content).map_err(|e| {
         crate::FbuildError::BuildFailed(format!(
             "failed to write response file {}: {}",
@@ -131,5 +135,25 @@ mod tests {
             replace_path_backslashes(r#"-I C:\path\to\include -DNAME=\"val\""#),
             r#"-I C:/path/to/include -DNAME=\"val\""#
         );
+    }
+
+    #[test]
+    fn test_write_response_file_reuses_same_path_for_same_content() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let flags = vec!["-O2".to_string(), "-c".to_string(), "src.cpp".to_string()];
+
+        let first = write_response_file(&flags, tmp.path(), "stable").unwrap();
+        let second = write_response_file(&flags, tmp.path(), "stable").unwrap();
+
+        assert_eq!(first, second);
+    }
+
+    #[test]
+    fn test_write_response_file_changes_path_when_content_changes() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let first = write_response_file(&["-O2".to_string()], tmp.path(), "stable").unwrap();
+        let second = write_response_file(&["-O3".to_string()], tmp.path(), "stable").unwrap();
+
+        assert_ne!(first, second);
     }
 }

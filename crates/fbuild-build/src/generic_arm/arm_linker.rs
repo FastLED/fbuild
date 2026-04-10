@@ -104,13 +104,14 @@ impl Linker for ArmLinker {
         // On Windows, use a response file to avoid command-line length limits
         // (STM32 HAL/LL wrappers produce hundreds of .o files).
         let result = if cfg!(windows) && args.len() > 50 {
-            let temp_dir = fbuild_core::response_file::windows_temp_dir();
+            let temp_dir = output_dir.join("tmp");
             std::fs::create_dir_all(&temp_dir)?;
-            let rsp_path = temp_dir.join("arm_link.rsp");
-            // Response file contains all args except the gcc binary itself.
-            // Convert backslashes to forward slashes so GCC doesn't treat them as escapes.
             let rsp_content: Vec<String> = args[1..].iter().map(|a| a.replace('\\', "/")).collect();
-            std::fs::write(&rsp_path, rsp_content.join("\n"))?;
+            let rsp_path = fbuild_core::response_file::write_response_file(
+                &rsp_content,
+                &temp_dir,
+                "arm_link",
+            )?;
             let rsp_arg = format!("@{}", rsp_path.display());
             run_command(&[args[0].as_str(), &rsp_arg], None, None, None)?
         } else {

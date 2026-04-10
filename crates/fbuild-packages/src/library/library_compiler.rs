@@ -3,10 +3,14 @@
 //! Compiles C/C++ source files from downloaded libraries using the ESP32
 //! toolchain, then archives the object files into static libraries (.a).
 
+use std::ffi::OsString;
+use std::fs::Metadata;
 use std::path::{Path, PathBuf};
+use std::time::SystemTime;
 
 use fbuild_core::subprocess::run_command;
 use fbuild_core::{FbuildError, Result};
+use sha2::{Digest, Sha256};
 
 /// C++-only flags that must not be passed to gcc for .c files.
 const CXX_ONLY_PREFIXES: &[&str] = &["-std=gnu++", "-std=c++", "-fno-rtti", "-fuse-cxa-atexit"];
@@ -15,12 +19,21 @@ const CXX_ONLY_PREFIXES: &[&str] = &["-std=gnu++", "-std=c++", "-fno-rtti", "-fu
 fn wrap_compiler_args(args: &[&str], cache_path: Option<&Path>) -> Vec<String> {
     match cache_path {
         Some(zcc) => {
-            let mut wrapped = Vec::with_capacity(args.len() + 1);
+            let mut wrapped = Vec::with_capacity(args.len() + 2);
             wrapped.push(zcc.to_string_lossy().to_string());
+            wrapped.push("wrap".to_string());
             wrapped.extend(args.iter().map(|s| s.to_string()));
             wrapped
         }
         None => args.iter().map(|s| s.to_string()).collect(),
+    }
+}
+
+fn invocation_response_file_path(path: &Path) -> Result<PathBuf> {
+    if path.is_absolute() {
+        Ok(path.to_path_buf())
+    } else {
+        Ok(std::env::current_dir()?.join(path))
     }
 }
 
@@ -109,14 +122,49 @@ pub fn compile_library_with_jobs(
         .collect();
 
     let cpp_flags = cpp_flags.to_vec();
+    let all_objects: Vec<PathBuf> = source_files
+        .iter()
+        .map(|source| object_path(source, &obj_dir))
+        .collect();
+    let stale_sources: Vec<PathBuf> = source_files
+        .iter()
+        .zip(all_objects.iter())
+        .filter_map(|(source, obj)| {
+            let signature = compile_signature(
+                source,
+                gcc_path,
+                gxx_path,
+                &c_safe_flags,
+                &cpp_flags,
+                &include_flags,
+            );
+            if object_needs_rebuild(source, obj, &signature).unwrap_or(true) {
+                Some(source.clone())
+            } else {
+                None
+            }
+        })
+        .collect();
+    let archive_path = output_dir.join(format!("lib{}.a", name));
+
+    if stale_sources.is_empty()
+        && archive_is_up_to_date(&archive_path, &all_objects).unwrap_or(false)
+    {
+        tracing::info!(
+            "library {} is up to date: {} files -> {}",
+            name,
+            all_objects.len(),
+            archive_path.display()
+        );
+        return Ok(Some(archive_path));
+    }
 
     let jobs = jobs.max(1);
 
-    if jobs <= 1 || source_files.len() <= 1 {
+    if jobs <= 1 || stale_sources.len() <= 1 {
         // Sequential path
-        let mut objects = Vec::new();
-        for source in source_files {
-            let obj = compile_one_source(
+        for source in &stale_sources {
+            compile_one_source(
                 source,
                 &obj_dir,
                 gcc_path,
@@ -128,28 +176,26 @@ pub fn compile_library_with_jobs(
                 verbose,
                 compiler_cache,
             )?;
-            objects.push(obj);
         }
 
-        let archive_path = output_dir.join(format!("lib{}.a", name));
-        archive_objects(ar_path, &objects, &archive_path)?;
+        archive_objects(ar_path, &all_objects, &archive_path)?;
         tracing::info!(
-            "compiled library {}: {} files -> {}",
+            "compiled library {}: {} changed / {} total files -> {}",
             name,
-            objects.len(),
+            stale_sources.len(),
+            all_objects.len(),
             archive_path.display()
         );
         return Ok(Some(archive_path));
     }
 
     // Parallel path
-    let total = source_files.len();
+    let total = stale_sources.len();
     let thread_count = jobs.min(total);
 
-    let work_iter = std::sync::Mutex::new(source_files.iter());
+    let work_iter = std::sync::Mutex::new(stale_sources.iter());
     let first_error: std::sync::Mutex<Option<String>> = std::sync::Mutex::new(None);
     let compiled_count = std::sync::atomic::AtomicUsize::new(0);
-    let objects: std::sync::Mutex<Vec<(usize, PathBuf)>> = std::sync::Mutex::new(Vec::new());
 
     std::thread::scope(|scope| {
         let handles: Vec<_> = (0..thread_count)
@@ -183,11 +229,10 @@ pub fn compile_library_with_jobs(
                             verbose,
                             compiler_cache,
                         ) {
-                            Ok(obj) => {
+                            Ok(_) => {
                                 let count = compiled_count
                                     .fetch_add(1, std::sync::atomic::Ordering::Relaxed)
                                     + 1;
-                                objects.lock().unwrap().push((count, obj));
                                 if count % 20 == 0 || count == total {
                                     tracing::info!("[{}/{}] compiled [{}]", count, total, name);
                                 }
@@ -213,22 +258,16 @@ pub fn compile_library_with_jobs(
         return Err(FbuildError::BuildFailed(error));
     }
 
-    // Collect objects (order doesn't matter for archiving)
-    let mut all_objects: Vec<PathBuf> = objects
-        .into_inner()
-        .unwrap()
-        .into_iter()
-        .map(|(_, obj)| obj)
-        .collect();
+    let mut all_objects = all_objects;
     all_objects.sort(); // deterministic archive
 
     // Archive
-    let archive_path = output_dir.join(format!("lib{}.a", name));
     archive_objects(ar_path, &all_objects, &archive_path)?;
 
     tracing::info!(
-        "compiled library {}: {} files ({} threads) -> {}",
+        "compiled library {}: {} changed / {} total files ({} threads) -> {}",
         name,
+        total,
         all_objects.len(),
         thread_count,
         archive_path.display()
@@ -255,6 +294,7 @@ fn compile_one_source(
     compiler_cache: Option<&Path>,
 ) -> Result<PathBuf> {
     let obj = object_path(source, obj_dir);
+    let rsp_dir = obj_dir.parent().unwrap_or(obj_dir).join("tmp");
 
     let is_c = source.extension().map(|e| e == "c").unwrap_or(false);
 
@@ -263,6 +303,7 @@ fn compile_one_source(
     } else {
         (gxx_path, cpp_flags)
     };
+    let rebuild_signature = build_rebuild_signature(compiler, flags, include_flags);
 
     if verbose {
         tracing::info!(
@@ -289,18 +330,15 @@ fn compile_one_source(
     // zccache >=1.1.7 passes @file references through to the compiler
     // without expanding them, so this is safe.
     let args = if cfg!(windows) {
-        let rsp_path = fbuild_core::response_file::write_response_file(
-            &all_flags,
-            &fbuild_core::response_file::windows_temp_dir(),
-            "lib_compile",
-        )?;
-        let mut a = Vec::new();
-        if let Some(zcc) = compiler_cache {
-            a.push(zcc.to_string_lossy().to_string());
-        }
-        a.push(compiler.to_string_lossy().to_string());
-        a.push(format!("@{}", rsp_path.display()));
-        a
+        let rsp_path =
+            fbuild_core::response_file::write_response_file(&all_flags, &rsp_dir, "lib_compile")?;
+        let rsp_path = invocation_response_file_path(&rsp_path)?;
+        let raw_args = [
+            compiler.to_string_lossy().to_string(),
+            format!("@{}", rsp_path.display()),
+        ];
+        let raw_refs: Vec<&str> = raw_args.iter().map(|s| s.as_str()).collect();
+        wrap_compiler_args(&raw_refs, compiler_cache)
     } else {
         let sanitized = fbuild_core::compiler_flags::prepare_flags_for_exec(all_flags);
         let mut raw_args: Vec<String> = vec![compiler.to_string_lossy().to_string()];
@@ -321,7 +359,133 @@ fn compile_one_source(
         )));
     }
 
+    std::fs::write(command_hash_path(&obj), rebuild_signature)?;
+
     Ok(obj)
+}
+
+fn object_needs_rebuild(source: &Path, object: &Path, signature: &str) -> Result<bool> {
+    if !object.exists() {
+        return Ok(true);
+    }
+
+    let object_meta = std::fs::metadata(object)?;
+    let object_time = modified_time(&object_meta)?;
+    let actual_signature = std::fs::read_to_string(command_hash_path(object)).unwrap_or_default();
+    if actual_signature != signature {
+        return Ok(true);
+    }
+    let depfile = object.with_extension("d");
+    if depfile.exists() {
+        return dependency_is_newer_than_object(&depfile, object_time);
+    }
+
+    let source_meta = std::fs::metadata(source)?;
+    Ok(object_time < modified_time(&source_meta)?)
+}
+
+fn command_hash_path(object: &Path) -> PathBuf {
+    object.with_extension("cmdhash")
+}
+
+fn compile_signature(
+    source: &Path,
+    gcc_path: &Path,
+    gxx_path: &Path,
+    c_safe_flags: &[String],
+    cpp_flags: &[String],
+    include_flags: &[String],
+) -> String {
+    let is_c = source.extension().map(|e| e == "c").unwrap_or(false);
+    let (compiler, flags): (&Path, &[String]) = if is_c {
+        (gcc_path, c_safe_flags)
+    } else {
+        (gxx_path, cpp_flags)
+    };
+    build_rebuild_signature(compiler, flags, include_flags)
+}
+
+fn build_rebuild_signature(compiler: &Path, flags: &[String], include_flags: &[String]) -> String {
+    let mut hasher = Sha256::new();
+    hasher.update(compiler.to_string_lossy().as_bytes());
+    hasher.update([0]);
+    for flag in flags {
+        hasher.update(flag.as_bytes());
+        hasher.update([0]);
+    }
+    hasher.update([0xff]);
+    for flag in include_flags {
+        hasher.update(flag.as_bytes());
+        hasher.update([0]);
+    }
+    format!("{:x}", hasher.finalize())
+}
+
+fn dependency_is_newer_than_object(depfile: &Path, object_time: SystemTime) -> Result<bool> {
+    let depfile_time = modified_time(&std::fs::metadata(depfile)?)?;
+    if depfile_time > object_time {
+        return Ok(true);
+    }
+
+    for dependency in parse_depfile_paths(depfile)? {
+        let dep_time = modified_time(&std::fs::metadata(&dependency)?)?;
+        if dep_time > object_time {
+            return Ok(true);
+        }
+    }
+
+    Ok(false)
+}
+
+fn parse_depfile_paths(depfile: &Path) -> Result<Vec<PathBuf>> {
+    let text = std::fs::read_to_string(depfile).map_err(|e| {
+        FbuildError::BuildFailed(format!("failed to read depfile {}: {e}", depfile.display()))
+    })?;
+    let normalized = text.replace("\\\r\n", " ").replace("\\\n", " ");
+    let deps = depfile_dependencies_section(&normalized);
+
+    let mut paths = Vec::new();
+    for token in deps.split_whitespace() {
+        let unescaped = token.replace("\\ ", " ");
+        if !unescaped.is_empty() {
+            paths.push(PathBuf::from(OsString::from(unescaped)));
+        }
+    }
+    Ok(paths)
+}
+
+fn depfile_dependencies_section(contents: &str) -> &str {
+    let bytes = contents.as_bytes();
+    for i in 0..bytes.len().saturating_sub(1) {
+        if bytes[i] == b':' && bytes[i + 1].is_ascii_whitespace() {
+            return &contents[i + 1..];
+        }
+    }
+    contents
+}
+
+fn archive_is_up_to_date(archive: &Path, objects: &[PathBuf]) -> Result<bool> {
+    if !archive.exists() || objects.is_empty() {
+        return Ok(false);
+    }
+
+    let archive_time = modified_time(&std::fs::metadata(archive)?)?;
+    for object in objects {
+        if !object.exists() {
+            return Ok(false);
+        }
+        if archive_time < modified_time(&std::fs::metadata(object)?)? {
+            return Ok(false);
+        }
+    }
+
+    Ok(true)
+}
+
+fn modified_time(metadata: &Metadata) -> Result<SystemTime> {
+    metadata.modified().map_err(|e| {
+        FbuildError::BuildFailed(format!("failed to read file modification time: {e}"))
+    })
 }
 
 /// Build include flags, using a response file on Windows if needed.
@@ -336,11 +500,9 @@ fn build_include_flags(include_dirs: &[PathBuf], _temp_dir: &Path) -> Result<Vec
         .collect();
 
     if cfg!(windows) && flags.len() > 100 {
-        let rsp_path = fbuild_core::response_file::write_response_file(
-            &flags,
-            &fbuild_core::response_file::windows_temp_dir(),
-            "lib_includes",
-        )?;
+        let rsp_dir = _temp_dir.join("tmp");
+        let rsp_path =
+            fbuild_core::response_file::write_response_file(&flags, &rsp_dir, "lib_includes")?;
         Ok(vec![format!("@{}", rsp_path.display())])
     } else {
         Ok(flags)
@@ -393,6 +555,11 @@ fn object_path(source: &Path, obj_dir: &Path) -> PathBuf {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::time::Duration;
+
+    fn test_signature() -> &'static str {
+        "test-signature"
+    }
 
     #[test]
     fn test_is_cxx_only_flag() {
@@ -430,5 +597,129 @@ mod tests {
         let flags = build_include_flags(&dirs, tmp.path()).unwrap();
         assert_eq!(flags.len(), 2);
         assert!(flags[0].starts_with("-I"));
+    }
+
+    #[test]
+    fn test_invocation_response_file_path_makes_relative_path_absolute() {
+        let relative = Path::new("build/tmp/test.rsp");
+        let absolute = invocation_response_file_path(relative).unwrap();
+        assert!(absolute.is_absolute());
+        assert!(absolute.ends_with(relative));
+    }
+
+    #[test]
+    fn test_invocation_response_file_path_preserves_absolute_path() {
+        let absolute_input = std::env::current_dir().unwrap().join("build/tmp/test.rsp");
+        let absolute = invocation_response_file_path(&absolute_input).unwrap();
+        assert_eq!(absolute, absolute_input);
+    }
+
+    #[test]
+    fn test_object_needs_rebuild_when_object_missing() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let source = tmp.path().join("src.cpp");
+        std::fs::write(&source, "int x;").unwrap();
+        let object = tmp.path().join("src.o");
+
+        assert!(object_needs_rebuild(&source, &object, test_signature()).unwrap());
+    }
+
+    #[test]
+    fn test_object_needs_rebuild_when_source_newer() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let source = tmp.path().join("src.cpp");
+        let object = tmp.path().join("src.o");
+        std::fs::write(&source, "int x;").unwrap();
+        std::thread::sleep(Duration::from_millis(20));
+        std::fs::write(&object, "obj").unwrap();
+        std::fs::write(command_hash_path(&object), test_signature()).unwrap();
+        std::thread::sleep(Duration::from_millis(20));
+        std::fs::write(&source, "int y;").unwrap();
+
+        assert!(object_needs_rebuild(&source, &object, test_signature()).unwrap());
+    }
+
+    #[test]
+    fn test_object_needs_rebuild_when_object_current() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let source = tmp.path().join("src.cpp");
+        let object = tmp.path().join("src.o");
+        std::fs::write(&source, "int x;").unwrap();
+        std::thread::sleep(Duration::from_millis(20));
+        std::fs::write(&object, "obj").unwrap();
+        std::fs::write(command_hash_path(&object), test_signature()).unwrap();
+
+        assert!(!object_needs_rebuild(&source, &object, test_signature()).unwrap());
+    }
+
+    #[test]
+    fn test_object_needs_rebuild_when_header_dep_is_newer() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let source = tmp.path().join("src.cpp");
+        let header = tmp.path().join("config.h");
+        let object = tmp.path().join("src.o");
+        let depfile = tmp.path().join("src.d");
+
+        std::fs::write(&source, "#include \"config.h\"\n").unwrap();
+        std::fs::write(&header, "#define X 1\n").unwrap();
+        std::thread::sleep(Duration::from_millis(20));
+        std::fs::write(&object, "obj").unwrap();
+        std::fs::write(
+            &depfile,
+            format!(
+                "{}: {} {}\n",
+                object.display(),
+                source.display(),
+                header.display()
+            ),
+        )
+        .unwrap();
+        std::fs::write(command_hash_path(&object), test_signature()).unwrap();
+        std::thread::sleep(Duration::from_millis(20));
+        std::fs::write(&header, "#define X 2\n").unwrap();
+
+        assert!(object_needs_rebuild(&source, &object, test_signature()).unwrap());
+    }
+
+    #[test]
+    fn test_object_needs_rebuild_when_command_hash_changes() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let source = tmp.path().join("src.cpp");
+        let object = tmp.path().join("src.o");
+
+        std::fs::write(&source, "int x;").unwrap();
+        std::thread::sleep(Duration::from_millis(20));
+        std::fs::write(&object, "obj").unwrap();
+        std::fs::write(command_hash_path(&object), "old-signature").unwrap();
+
+        assert!(object_needs_rebuild(&source, &object, test_signature()).unwrap());
+    }
+
+    #[test]
+    fn test_archive_is_up_to_date_when_archive_newer_than_all_objects() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let object_a = tmp.path().join("a.o");
+        let object_b = tmp.path().join("b.o");
+        let archive = tmp.path().join("libx.a");
+        std::fs::write(&object_a, "a").unwrap();
+        std::fs::write(&object_b, "b").unwrap();
+        std::thread::sleep(Duration::from_millis(20));
+        std::fs::write(&archive, "archive").unwrap();
+
+        assert!(archive_is_up_to_date(&archive, &[object_a, object_b]).unwrap());
+    }
+
+    #[test]
+    fn test_archive_is_not_up_to_date_when_object_newer() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let object = tmp.path().join("a.o");
+        let archive = tmp.path().join("libx.a");
+        std::fs::write(&object, "a").unwrap();
+        std::thread::sleep(Duration::from_millis(20));
+        std::fs::write(&archive, "archive").unwrap();
+        std::thread::sleep(Duration::from_millis(20));
+        std::fs::write(&object, "newer").unwrap();
+
+        assert!(!archive_is_up_to_date(&archive, &[object]).unwrap());
     }
 }

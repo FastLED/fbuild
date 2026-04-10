@@ -52,7 +52,8 @@ pub fn compile_sources_parallel(
 
     for source in sources {
         let obj = CompilerBase::object_path(source, build_dir);
-        if CompilerBase::needs_rebuild(source, &obj) {
+        let signature = compiler.rebuild_signature(source, extra_flags);
+        if CompilerBase::needs_rebuild_with_signature(source, &obj, Some(&signature)) {
             work.push((source.clone(), obj.clone()));
         }
         objects.push(obj);

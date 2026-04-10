@@ -1,7 +1,7 @@
 //! Optional zccache compiler cache integration.
 //!
 //! When zccache is found on PATH, compiler invocations are wrapped as
-//! `zccache <real-compiler> <args...>` so that repeated compilations
+//! `zccache wrap <real-compiler> <args...>` so that repeated compilations
 //! serve cached object files instead of re-invoking gcc/g++.
 
 use std::path::{Path, PathBuf};
@@ -136,15 +136,17 @@ pub fn ensure_running(zccache: &Path) {
     }
 }
 
-/// Prepend zccache to a compiler command line.
+/// Prepend zccache explicit-wrap mode to a compiler command line.
 ///
-/// Transforms `["gcc", "-c", "foo.c", ...]` into `["zccache", "gcc", "-c", "foo.c", ...]`.
+/// Transforms `["gcc", "-c", "foo.c", ...]` into
+/// `["zccache", "wrap", "gcc", "-c", "foo.c", ...]`.
 /// If `cache_path` is None, returns the original args unchanged.
 pub fn wrap_args(args: &[&str], cache_path: Option<&Path>) -> Vec<String> {
     match cache_path {
         Some(zcc) => {
-            let mut wrapped = Vec::with_capacity(args.len() + 1);
+            let mut wrapped = Vec::with_capacity(args.len() + 2);
             wrapped.push(zcc.to_string_lossy().to_string());
+            wrapped.push("wrap".to_string());
             wrapped.extend(args.iter().map(|s| s.to_string()));
             wrapped
         }

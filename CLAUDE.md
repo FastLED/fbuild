@@ -56,7 +56,7 @@ uv run python ci/build_dist.py --ref main
 All hooks are Python scripts in `ci/hooks/`, invoked via `uv run`:
 
 - **UserPromptSubmit**: `ci/hooks/board_context.py` detects board-related prompts and injects skill guidance (board lookup workflow, external source URLs, relevant commands)
-- **PreToolUse**: `ci/hooks/tool_guard.py` blocks bare Rust commands (must use `uv run` or `_cargo`/`_rustc`/`_rustfmt` trampolines) and bare `python`/`pip` (must use `uv`)
+- **PreToolUse**: `ci/hooks/tool_guard.py` blocks bare Rust commands (must use `uv run` or `_cargo`/`_rustc`/`_rustfmt` trampolines) and bare `python`/`pip` (must use `uv`) across supported shell tools, not just Bash
 - **PostToolUse**: `ci/hooks/lint.py` auto-formats + runs clippy on edited .rs files
 - **PostToolUse**: `ci/hooks/readme_guard.py` errors if directory lacks README.md
 - **SessionStart**: `ci/hooks/check-on-start.py` captures git fingerprint

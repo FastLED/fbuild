@@ -230,7 +230,12 @@ mod tests {
 
     #[test]
     fn run_echo() {
-        let result = run_command(&["echo", "hello"], None, None, None).unwrap();
+        let args = if cfg!(windows) {
+            vec!["cmd", "/C", "echo", "hello"]
+        } else {
+            vec!["echo", "hello"]
+        };
+        let result = run_command(&args, None, None, None).unwrap();
         assert!(result.success());
         assert!(result.stdout.trim().contains("hello"));
     }
