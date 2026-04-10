@@ -140,15 +140,8 @@ impl crate::Package for Esp32Platform {
             return Ok(self.resolved_dir());
         }
 
-        let rt = tokio::runtime::Handle::try_current().ok();
-        let install_path = if let Some(handle) = rt {
-            handle.block_on(self.base.staged_install(Self::validate_install))?
-        } else {
-            let rt = tokio::runtime::Runtime::new().map_err(|e| {
-                FbuildError::PackageError(format!("failed to create tokio runtime: {}", e))
-            })?;
-            rt.block_on(self.base.staged_install(Self::validate_install))?
-        };
+        let install_path =
+            crate::block_on_package_future(self.base.staged_install(Self::validate_install))?;
 
         Ok(find_platform_root(&install_path))
     }

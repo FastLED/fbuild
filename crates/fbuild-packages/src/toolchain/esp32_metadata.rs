@@ -76,23 +76,11 @@ pub fn resolve_toolchain_url_sync(
     toolchain_name: &str,
     cache_dir: &Path,
 ) -> Result<ResolvedToolchain> {
-    let rt = tokio::runtime::Handle::try_current().ok();
-    if let Some(handle) = rt {
-        handle.block_on(resolve_toolchain_url(
-            metadata_url,
-            toolchain_name,
-            cache_dir,
-        ))
-    } else {
-        let rt = tokio::runtime::Runtime::new().map_err(|e| {
-            FbuildError::PackageError(format!("failed to create tokio runtime: {}", e))
-        })?;
-        rt.block_on(resolve_toolchain_url(
-            metadata_url,
-            toolchain_name,
-            cache_dir,
-        ))
-    }
+    crate::block_on_package_future(resolve_toolchain_url(
+        metadata_url,
+        toolchain_name,
+        cache_dir,
+    ))
 }
 
 /// Find tools.json in a directory (may be at root or one level deep).

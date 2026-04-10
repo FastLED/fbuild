@@ -444,13 +444,17 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
         let core_dir = framework.get_core_dir(&ctx.board.core);
         let variant_dir = framework.get_variant_dir(&ctx.board.variant);
+        let sdk_memory_type = ctx
+            .board
+            .effective_esp32_memory_type(mcu_config.default_flash_mode());
 
         let mut include_dirs = vec![core_dir.clone()];
         if variant_dir.exists() {
             include_dirs.push(variant_dir.clone());
         }
         // Add SDK include paths (294+ paths from ESP-IDF)
-        include_dirs.extend(framework.get_sdk_include_dirs(&ctx.board.mcu));
+        include_dirs
+            .extend(framework.get_sdk_include_dirs(&ctx.board.mcu, sdk_memory_type.as_deref()));
 
         // Add built-in Arduino library includes (Wire, SPI, WiFi, etc.)
         let builtin_libs_dir = framework.get_libraries_dir();
@@ -475,7 +479,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
         // Read SDK flags early — needed to check LTO before compiling.
         let sdk_ld_flags = framework.get_sdk_ld_flags(&ctx.board.mcu);
-        let sdk_lib_flags = framework.get_sdk_lib_flags(&ctx.board.mcu);
+        let sdk_lib_flags = framework.get_sdk_lib_flags(&ctx.board.mcu, sdk_memory_type.as_deref());
         let sdk_ld_scripts =
             LinkerScripts::from_raw_flags(&framework.get_sdk_ld_scripts(&ctx.board.mcu));
         let sdk_defines = framework.get_sdk_defines(&ctx.board.mcu);
@@ -496,7 +500,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // Read user build_flags early — needed for both library and sketch compilation.
         // SDK defines (from flags/defines) are prepended so user flags can override them.
         let mut user_flags = sdk_defines;
-        let user_build_flags = ctx.config.get_build_flags(&params.env_name)?;
+        let mut user_build_flags = ctx.config.get_build_flags(&params.env_name)?;
+        user_build_flags.extend(params.extra_build_flags.clone());
         user_flags.extend(user_build_flags.clone());
 
         // Emit a warning if CDC on boot is effectively enabled (may cause Serial to block
@@ -1053,7 +1058,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             params.symbol_analysis,
         )?;
 
-        // 14. Prepare bootloader.bin + partitions.bin for deployment
+        // 14. Prepare boot artifacts for deployment / emulation
         let boot_dst = build_dir.join("bootloader.bin");
         let boot_bin_src = framework.get_bootloader_bin(&ctx.board.mcu);
         if boot_bin_src.exists() {
@@ -1193,6 +1198,13 @@ impl BuildOrchestrator for Esp32Orchestrator {
                     gen_tool.display()
                 );
             }
+        }
+
+        let boot_app0_src = framework.get_boot_app0_bin();
+        let boot_app0_dst = build_dir.join("boot_app0.bin");
+        if boot_app0_src.exists() {
+            std::fs::copy(&boot_app0_src, &boot_app0_dst)?;
+            tracing::info!("copied boot_app0.bin");
         }
 
         // 15. Size reporting + result assembly

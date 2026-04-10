@@ -160,6 +160,10 @@ pub struct BuildParams {
     /// The daemon does not inherit caller env vars, so all `PLATFORMIO_*`
     /// config flows through this map. Empty when no overrides apply.
     pub pio_env: std::collections::BTreeMap<String, String>,
+    /// Additional build flags injected by the caller for one-off build modes
+    /// such as QEMU emulation. These are appended after platformio.ini
+    /// `build_flags`, so they can intentionally override board/user defaults.
+    pub extra_build_flags: Vec<String>,
 }
 
 /// Trait for platform-specific build orchestrators.

@@ -171,6 +171,10 @@ pub struct OperationResponse {
     pub output_dir: Option<String>,
     #[allow(dead_code)]
     pub launch_url: Option<String>,
+    #[serde(default)]
+    pub stdout: Option<String>,
+    #[serde(default)]
+    pub stderr: Option<String>,
 }
 
 /// NDJSON event from a streaming build response.
@@ -442,6 +446,8 @@ impl DaemonClient {
                                 output_file: event.output_file,
                                 output_dir: event.output_dir,
                                 launch_url: None,
+                                stdout: None,
+                                stderr: None,
                             });
                         }
                         _ => {}

@@ -172,8 +172,11 @@ fbuild deploy tests/platform/uno -e uno --to emu
 # Deploy to the default emulator backend and open the monitor page
 fbuild deploy tests/platform/uno -e uno --to emu --monitor
 
+# Deploy ESP32-S3 to the default emulator backend
+fbuild deploy tests/platform/esp32s3 -e esp32s3 --to emu --monitor --timeout 10 --verbose
+
 # Deploy to an explicit emulator backend
-fbuild deploy tests/platform/esp32dev -e esp32dev-qemu --to emu --emulator qemu
+fbuild deploy tests/platform/esp32s3 -e esp32s3 --to emu --emulator qemu --monitor --timeout 10
 ```
 
 **Monitor command:**
@@ -188,7 +191,7 @@ fbuild monitor --timeout 60 --halt-on-error "TEST FAILED" --halt-on-success "TES
 
 ## QEMU Testing
 
-fbuild supports deploying to QEMU for testing ESP32 firmware without physical hardware.
+fbuild supports native QEMU emulation for ESP32-S3 firmware without physical hardware.
 
 The public emulator deploy API is:
 
@@ -198,23 +201,33 @@ fbuild deploy <project> --to emu --monitor
 fbuild deploy <project> --to emu --emulator qemu
 ```
 
+For `--to emu`, fbuild infers the emulator backend from the board when possible:
+
+- AVR / megaAVR boards default to `avr8js`
+- ESP32-S3 boards default to native `qemu`
+
+So for ESP32-S3 you usually do not need `--emulator qemu`.
+
 ### QEMU Supported Platforms
 
 | Platform | QEMU Status | Notes |
 |----------|-------------|-------|
-| ESP32dev (original ESP32) | ✅ Fully supported | Recommended for QEMU testing |
-| ESP32-S3 | ❌ Not supported | Bootloader incompatible with QEMU |
-| ESP32C6 | ❌ Not supported | QEMU lacks C6 emulation |
-| ESP32C3 | ⚠️ Untested | May work (RISC-V architecture) |
+| ESP32-S3 | Supported | Native QEMU path implemented and tested |
+| ESP32dev (original ESP32) | Not the primary path | README examples should prefer ESP32-S3 |
+| ESP32C6 | Not supported | QEMU lacks C6 emulation |
+| ESP32C3 | Untested | May work later, not currently documented as supported |
 
 ### Usage
 
 ```bash
-# Build for QEMU (use esp32dev)
-fbuild build tests/platform/esp32dev -e esp32dev-qemu
+# Build ESP32-S3 for QEMU
+fbuild build tests/platform/esp32s3 -e esp32s3
 
-# Deploy to QEMU
-fbuild deploy tests/platform/esp32dev -e esp32dev-qemu --to emu --emulator qemu
+# Deploy to the inferred emulator backend (QEMU for ESP32-S3)
+fbuild deploy tests/platform/esp32s3 -e esp32s3 --to emu --monitor --timeout 10
+
+# Explicit form, if you want to pin the backend
+fbuild deploy tests/platform/esp32s3 -e esp32s3 --to emu --emulator qemu --monitor --timeout 10
 ```
 
 Compatibility aliases:
@@ -224,31 +237,39 @@ Compatibility aliases:
 
 ### Configuration
 
-Add QEMU environment to platformio.ini:
+ESP32-S3 QEMU runs from a normal ESP32-S3 Arduino environment. fbuild adds the required QEMU build flags automatically when deploying to `--to emu`.
+
+Example:
 
 ```ini
-[env:esp32dev-qemu]
+[env:esp32s3]
 platform = https://github.com/pioarduino/platform-espressif32/releases/download/55.03.34/platform-espressif32.zip
-board = esp32dev
+board = esp32-s3-devkitc-1
 framework = arduino
-board_build.flash_mode = dio     # Required for QEMU
-board_upload.flash_mode = dio    # Required for QEMU
+board_build.flash_mode = dio
+board_upload.flash_mode = dio
 ```
 
 ### Requirements
 
-- Docker installed and running
-- `espressif/idf:latest` Docker image (pulled automatically)
+- Native Espressif Xtensa QEMU runtime available on the host
+- Supported host platforms:
+  - Linux `x86_64` / `arm64`
+  - macOS `x86_64` / `arm64`
+  - Windows `x86_64`
+- On Windows, fbuild stages the required QEMU runtime DLLs for the managed install
+
+QEMU is native-only here. Unsupported hosts fail explicitly; Docker is not the fallback path.
 
 ### Known Limitations
 
-1. **ESP32-S3 bootloader incompatibility**: The ESP32-S3 software bootloader contains QIO mode detection logic that crashes in QEMU. Use ESP32dev for QEMU testing instead.
+1. **ESP32-S3 only**: Native emulation support is currently implemented for ESP32-S3, not the rest of the ESP32 family.
 
-2. **ESP32C6 chip ID mismatch**: QEMU doesn't have native ESP32C6 support yet. It falls back to ESP32C3 emulation, which causes chip ID validation failures.
+2. **QEMU-specific firmware patching**: fbuild patches the generated ESP32-S3 app image for QEMU to bypass an ADC calibration constructor that hangs under emulation, then repairs the image checksum and hash.
 
-3. **Performance**: QEMU emulation is slower than real hardware. Use for basic functional testing, not performance validation.
+3. **Performance**: QEMU emulation is slower than real hardware. Use it for functional validation, not timing-sensitive behavior.
 
-4. **Peripheral emulation**: Not all peripherals are fully emulated. Test on real hardware for production validation.
+4. **Peripheral coverage**: Not all peripherals are fully emulated. Real hardware is still required for production validation.
 
 ## Key Features
 
@@ -1136,3 +1157,4 @@ Given this landscape, the cost to FastLED developers became untenable. It proved
 In the spirit of Dan Garcia's permissively licensed software, `fbuild` is presented as free software.
 
 BSD 3-Clause License
+

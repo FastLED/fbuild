@@ -15,6 +15,9 @@
 .DS_Store
 Thumbs.db
 
+# Runtime DLLs (copied at runtime, not shipped in repo)
+libiconv-2.dll
+
 # Session cache (hook fingerprints)
 .cache/
 

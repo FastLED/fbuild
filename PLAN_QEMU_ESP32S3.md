@@ -4,9 +4,45 @@
 
 Docker is not absolutely needed.
 
-The strongest reason is Espressif's own QEMU documentation for ESP32-S3: they officially support QEMU for ESP32-S3, provide prebuilt binaries for x86_64 Windows, and document installation through `idf_tools.py`, not Docker.
+The strongest reason is Espressif's own QEMU documentation for ESP32-S3: they officially support QEMU for ESP32-S3, provide prebuilt binaries for Windows x64, Linux x64/arm64, and macOS x64/arm64, and document installation through `idf_tools.py`, not Docker.
 
 FastLED's current implementation uses Docker as a packaging and reproducibility layer. It is not evidence that Docker is technically required for running ESP32-S3 firmware in QEMU.
+
+## Decision
+
+Implement this as `native-only` for supported hosts.
+
+Rationale:
+
+- Espressif already publishes official prebuilt QEMU binaries for the mainstream host matrix we care about.
+- The native path matches Espressif's documented installation and execution flow.
+- Docker adds another runtime layer, more packaging work, and more host-specific behavior than we need for the first production implementation.
+- If a host is unsupported, fail explicitly rather than adding a second runtime path.
+
+## Status
+
+Implemented in the Rust codebase for ESP32-S3 on supported hosts:
+
+- native QEMU tool discovery and managed install
+- merged ESP32-S3 flash image generation
+- local QEMU subprocess runner
+- shared monitor and crash-decoder integration
+- QEMU-specific UART0 build overrides and config validation
+- `fbuild deploy --qemu` routing
+- explicit unsupported-host failure
+- unit coverage for tool resolution, image creation, command building, runner success, and crash decoding
+- ignored end-to-end fixture coverage for the real ESP32-S3 build + QEMU path
+
+## Top-level tasks
+
+1. Implement native QEMU tool discovery and managed install for supported hosts.
+2. Add ESP32-S3 flash-image generation for QEMU from existing build artifacts.
+3. Add a local QEMU runner that launches `qemu-system-xtensa` and streams output.
+4. Reuse the daemon monitor and crash-decoder pipeline for QEMU stdout.
+5. Add QEMU-specific ESP32-S3 build adjustments for UART0 and config validation.
+6. Wire `fbuild deploy --qemu` to the new native runner and remove the stale Docker wording.
+7. Fail explicitly on unsupported hosts rather than adding a container fallback.
+8. Add unit and integration coverage for tool resolution, image creation, boot success, and crash decoding.
 
 ## Important scope note
 
@@ -23,7 +59,7 @@ That said, your request is specifically about `esp32s3`, and this Rust repo is a
 
 ### In `fbuild2`
 
-- `fbuild deploy --qemu` is currently a stub in `crates/fbuild-cli/src/main.rs`.
+- `fbuild deploy --qemu` is now implemented natively in Rust.
 - ESP32-S3 build output already contains the files QEMU needs.
 - ESP32 boards already default to safe DIO flash mode in `crates/fbuild-config/src/board.rs` unless the user explicitly overrides it back to `qio`.
 - The repo already warns about `ARDUINO_USB_CDC_ON_BOOT=1` because USB CDC can block / misroute serial output on ESP32-family boards.
@@ -46,17 +82,22 @@ That said, your request is specifically about `esp32s3`, and this Rust repo is a
 
 - Official ESP-IDF docs state that Espressif maintains a QEMU fork with ESP32-S3 support.
 - Official docs also state that ESP-IDF provides prebuilt QEMU binaries for:
-  - x86_64 Windows
-  - x86_64 Linux
+  - x64 Windows
+  - x64 Linux
   - arm64 Linux
-  - x86_64 macOS
+  - x64 macOS
   - arm64 macOS
 - Official install path is:
-  - `python $IDF_PATH/tools/idf_tools.py install qemu-xtensa qemu-riscv32`
+  - `python $IDF_PATH/tools/idf_tools.py install qemu-xtensa`
+- Official ESP32-S3 run flow is:
+  - merge a full flash image
+  - run `qemu-system-xtensa -nographic -machine esp32s3 -drive file=...,if=mtd,format=raw`
 
 ## Recommended implementation
 
 I would implement this without Docker and keep Docker out of the first version entirely.
+
+Native is the only supported product path for this feature.
 
 ### 1. Treat QEMU as a cached tool package
 
@@ -81,7 +122,7 @@ Fallback if metadata integration is slower than expected:
 - then auto-discover from an existing ESP-IDF install
 - then add the managed download path immediately after
 
-I would still avoid Docker in that fallback.
+I would not add a Docker fallback sequence.
 
 ### 2. Add an ESP32 flash-image merger for QEMU
 
@@ -166,6 +207,94 @@ Reason:
 
 If issue parity later requires `fbuild test-emu`, it can be a thin wrapper over the same runner.
 
+## Implementation instructions
+
+### Native toolchain policy
+
+Implement tool resolution in this order:
+
+1. Respect `FBUILD_QEMU_XTENSA_PATH` if set.
+2. Check a managed `fbuild` cache install of Espressif QEMU.
+3. Auto-discover an existing ESP-IDF tools install if present.
+4. Offer or trigger a managed native install on supported hosts.
+5. Fail explicitly if the host is unsupported or native setup cannot be completed.
+
+Supported native host matrix for first release:
+
+- Windows x64
+- Linux x64
+- Linux arm64
+- macOS x64
+- macOS arm64
+
+If the host is outside that matrix, fail explicitly.
+
+### Native install behavior
+
+- Do not require a full ESP-IDF checkout just to get QEMU.
+- Prefer downloading the official Espressif QEMU archives directly into the `fbuild` cache.
+- Keep the extracted bundle intact; on Windows this avoids breaking DLL adjacency assumptions.
+- Record the resolved executable path in logs when `--verbose` is enabled.
+
+### Flash image generation behavior
+
+Build a merged raw flash image locally before launch.
+
+For ESP32-S3:
+
+- use `bootloader.bin` at `0x0`
+- use `partitions.bin` at `0x8000`
+- use `firmware.bin` at `0x10000`
+- fill unused regions with `0xFF`
+- support only QEMU-valid flash sizes: `2MB`, `4MB`, `8MB`, or `16MB`
+
+Prefer implementing the merger in Rust. If later testing shows that `flash_args` is required for correctness, switch the merger backend without changing the runner API.
+
+### QEMU launch behavior
+
+Base command for the first release:
+
+```text
+qemu-system-xtensa
+-nographic
+-machine esp32s3
+-drive file=<flash_image>,if=mtd,format=raw
+-serial mon:stdio
+-monitor none
+-global driver=timer.esp32c3.timg,property=wdt_disable,value=true
+```
+
+Notes:
+
+- Keep the watchdog disable override because it matches Espressif's current ESP32-S3 guidance.
+- `timer.esp32c3.timg` is the correct property target for ESP32-S3 at the moment.
+- Add optional PSRAM, eFuse, and networking flags later; do not block the first slice on them.
+
+### Build-mode behavior
+
+When `--qemu` targets ESP32-S3:
+
+- inject `-DARDUINO_USB_MODE=0`
+- inject `-DARDUINO_USB_CDC_ON_BOOT=0`
+- reject explicitly unsafe flash configurations
+- surface a clear error when the selected board or MCU is not supported by the first implementation
+
+Do not mutate board JSON definitions. These are emulation-only overrides applied at build time.
+
+### Monitor integration behavior
+
+- Treat QEMU as a subprocess, not a serial device.
+- Refactor the existing monitor loop so it can consume generic line streams.
+- Feed QEMU stdout into that same path.
+- Attach `CrashDecoder` using the produced `firmware.elf` and derived `addr2line`.
+- Keep timeout, expect, halt-on-success, and halt-on-error semantics identical between physical and emulated runs.
+
+### Unsupported hosts policy
+
+Docker is not part of this implementation.
+
+If the host architecture is outside Espressif's published native binary matrix, or if native QEMU packaging is broken on a given host, fail explicitly with a clear error.
+
 ## Concrete implementation sequence
 
 ### Phase 1: minimal engine
@@ -239,15 +368,9 @@ Mitigation:
 - make tool resolution return the executable inside the extracted bundle root
 - keep the whole extracted tree intact in cache
 
-## When Docker would become justified
+## Unsupported host stance
 
-I would only accept Docker as a fallback if one of these becomes true:
-
-1. Espressif's official Windows-hosted QEMU binary is broken for the exact ESP32-S3 use case while the same binary works reliably only inside their container image.
-2. The Windows dependency story for the official QEMU package is unstable enough that the local runner cannot be made reliable.
-3. Arduino-produced ESP32-S3 images require an IDF-side launch wrapper that is materially harder to reproduce locally than to run in a container.
-
-Right now I do not see evidence for any of those.
+If native QEMU cannot be supported reliably on a host, that host is unsupported until the native path is fixed.
 
 ## Recommendation
 

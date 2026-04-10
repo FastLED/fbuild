@@ -9,9 +9,21 @@ use axum::extract::State;
 use axum::http::StatusCode;
 use axum::Json;
 use serde::Serialize;
+use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 use std::sync::atomic::Ordering;
 use std::sync::Arc;
+
+fn qemu_extra_build_flags(platform: fbuild_core::Platform, mcu: &str) -> Vec<String> {
+    if platform == fbuild_core::Platform::Espressif32 && mcu.eq_ignore_ascii_case("esp32s3") {
+        vec![
+            "-DARDUINO_USB_MODE=0".to_string(),
+            "-DARDUINO_USB_CDC_ON_BOOT=0".to_string(),
+        ]
+    } else {
+        Vec::new()
+    }
+}
 
 /// RAII guard that sets `operation_in_progress` to true on creation
 /// and false on drop. Also tracks daemon state and current operation description.
@@ -105,7 +117,22 @@ fn parse_emulator_kind(raw: &str) -> fbuild_core::Result<EmulatorKind> {
     }
 }
 
-fn parse_deploy_route(req: &DeployRequest) -> fbuild_core::Result<DeployRoute> {
+fn infer_default_emulator_kind(platform: fbuild_core::Platform, mcu: &str) -> Option<EmulatorKind> {
+    match platform {
+        fbuild_core::Platform::AtmelAvr | fbuild_core::Platform::AtmelMegaAvr => {
+            Some(EmulatorKind::Avr8js)
+        }
+        fbuild_core::Platform::Espressif32 if mcu.eq_ignore_ascii_case("esp32s3") => {
+            Some(EmulatorKind::Qemu)
+        }
+        _ => None,
+    }
+}
+
+fn parse_deploy_route(
+    req: &DeployRequest,
+    default_emulator: Option<EmulatorKind>,
+) -> fbuild_core::Result<DeployRoute> {
     if let Some(target) = req.target.as_deref() {
         return match target {
             "device" => Ok(DeployRoute::Device),
@@ -145,7 +172,19 @@ fn parse_deploy_route(req: &DeployRequest) -> fbuild_core::Result<DeployRoute> {
                 }
                 "qemu"
             } else {
-                req.emulator.as_deref().unwrap_or("avr8js")
+                match req.emulator.as_deref() {
+                    Some(explicit) => explicit,
+                    None => match default_emulator {
+                        Some(EmulatorKind::Qemu) => "qemu",
+                        Some(EmulatorKind::Avr8js) => "avr8js",
+                        None => {
+                            return Err(fbuild_core::FbuildError::DeployFailed(
+                                "--to emu requires an explicit --emulator for this board"
+                                    .to_string(),
+                            ))
+                        }
+                    },
+                }
             };
             Ok(DeployRoute::Emulator(parse_emulator_kind(emulator)?))
         }
@@ -398,6 +437,7 @@ pub async fn build(
             no_timestamp: req.no_timestamp,
             src_dir: req.src_dir.clone(),
             pio_env: req.pio_env.clone(),
+            extra_build_flags: Vec::new(),
         };
 
         let project_dir_desc = req.project_dir.clone();
@@ -571,6 +611,7 @@ pub async fn build(
             no_timestamp: req.no_timestamp,
             src_dir: req.src_dir,
             pio_env: req.pio_env,
+            extra_build_flags: Vec::new(),
         };
 
         let result = tokio::task::spawn_blocking(move || {
@@ -741,15 +782,6 @@ pub async fn deploy(
             );
         }
     };
-    let deploy_route = match parse_deploy_route(&req) {
-        Ok(route) => route,
-        Err(e) => {
-            return (
-                StatusCode::BAD_REQUEST,
-                Json(OperationResponse::fail(request_id, e.to_string())),
-            );
-        }
-    };
     let resolved_output_dir = req
         .output_dir
         .as_deref()
@@ -765,6 +797,29 @@ pub async fn deploy(
                     request_id,
                     format!("unsupported platform: {}", platform_str),
                 )),
+            );
+        }
+    };
+    let board_id = env_config.get("board").cloned().unwrap_or_else(|| {
+        fbuild_build::get_platform_support(platform)
+            .map(|s| s.default_board_id().to_string())
+            .unwrap_or_else(|_| "unknown".to_string())
+    });
+    let board_overrides = config.get_board_overrides(&env_name).unwrap_or_default();
+    let board = fbuild_config::BoardConfig::from_board_id(&board_id, &board_overrides)
+        .or_else(|_| fbuild_config::BoardConfig::from_board_id(&board_id, &HashMap::new()))
+        .ok();
+    let deploy_route = match parse_deploy_route(
+        &req,
+        board
+            .as_ref()
+            .and_then(|board| infer_default_emulator_kind(platform, &board.mcu)),
+    ) {
+        Ok(route) => route,
+        Err(e) => {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(OperationResponse::fail(request_id, e.to_string())),
             );
         }
     };
@@ -785,10 +840,15 @@ pub async fn deploy(
             .unwrap_or_default();
 
             // Extract build flags from env config
-            let build_flags: Vec<String> = env_config
+            let mut build_flags: Vec<String> = env_config
                 .get("build_flags")
                 .map(|f| f.split_whitespace().map(|s| s.to_string()).collect())
                 .unwrap_or_default();
+            if deploy_route == DeployRoute::Emulator(EmulatorKind::Qemu) {
+                if let Some(board) = board.as_ref() {
+                    build_flags.extend(qemu_extra_build_flags(platform, &board.mcu));
+                }
+            }
             let flags_hash = fbuild_deploy::firmware_ledger::compute_build_flags_hash(&build_flags);
 
             // Look up any pre-existing bootloader/partitions hashes from the
@@ -875,6 +935,14 @@ pub async fn deploy(
             no_timestamp: false,
             src_dir: req.src_dir,
             pio_env: req.pio_env,
+            extra_build_flags: if deploy_route == DeployRoute::Emulator(EmulatorKind::Qemu) {
+                board
+                    .as_ref()
+                    .map(|board| qemu_extra_build_flags(platform, &board.mcu))
+                    .unwrap_or_default()
+            } else {
+                Vec::new()
+            },
         };
 
         let build_result = {
@@ -947,16 +1015,6 @@ pub async fn deploy(
         None => None,
     };
 
-    if deploy_route == DeployRoute::Emulator(EmulatorKind::Qemu) {
-        return (
-            StatusCode::BAD_REQUEST,
-            Json(OperationResponse::fail(
-                request_id,
-                "QEMU deployment is not yet supported in the Rust port. Use --platformio for QEMU support.".to_string(),
-            )),
-        );
-    }
-
     let reported_output_file = artifact_export
         .as_ref()
         .and_then(|r| r.primary_output.clone())
@@ -974,16 +1032,39 @@ pub async fn deploy(
                 request_id,
                 project_dir,
                 env_name,
-                board_id: env_config
-                    .get("board")
-                    .cloned()
-                    .unwrap_or_else(|| "uno".to_string()),
+                board_id,
                 platform,
                 firmware_path,
                 elf_path,
                 monitor_after: req.monitor_after,
                 output_file: reported_output_file,
                 output_dir: reported_output_dir,
+            },
+        )
+        .await;
+    }
+
+    if deploy_route == DeployRoute::Emulator(EmulatorKind::Qemu) {
+        return crate::handlers::emulator::deploy_qemu(
+            ctx,
+            crate::handlers::emulator::DeployQemuRequest {
+                request_id,
+                project_dir,
+                env_name,
+                board_id,
+                platform,
+                firmware_path,
+                elf_path,
+                output_file: reported_output_file,
+                output_dir: reported_output_dir,
+                monitor_timeout: req.monitor_timeout,
+                qemu_timeout_secs: req.qemu_timeout,
+                halt_on_error: req.monitor_halt_on_error.clone(),
+                halt_on_success: req.monitor_halt_on_success.clone(),
+                expect: req.monitor_expect.clone(),
+                show_timestamp: req.monitor_show_timestamp,
+                verbose: req.verbose,
+                board_overrides,
             },
         )
         .await;
@@ -1020,14 +1101,18 @@ pub async fn deploy(
     let deploy_port = deploy_port_str.clone();
     let deploy_fw = firmware_path.clone();
     let baud_override = req.baud_rate;
+    let deploy_board_overrides = board_overrides.clone();
     let deploy_result = tokio::task::spawn_blocking(move || {
         let deployer: Box<dyn fbuild_deploy::Deployer> = match platform {
             fbuild_core::Platform::Espressif32 => {
                 let board_config =
-                    fbuild_config::BoardConfig::from_board_id(&board_id, &board_overrides)
+                    fbuild_config::BoardConfig::from_board_id(&board_id, &deploy_board_overrides)
                         .unwrap_or_else(|_| {
-                            fbuild_config::BoardConfig::from_board_id("esp32dev", &board_overrides)
-                                .unwrap()
+                            fbuild_config::BoardConfig::from_board_id(
+                                "esp32dev",
+                                &deploy_board_overrides,
+                            )
+                            .unwrap()
                         });
                 // Load MCU config to get flash offsets and esptool defaults.
                 let mcu_config = fbuild_build::esp32::mcu_config::get_mcu_config(&board_config.mcu)
@@ -1132,10 +1217,13 @@ pub async fn deploy(
             }
             fbuild_core::Platform::AtmelAvr | fbuild_core::Platform::AtmelMegaAvr => {
                 let board_config =
-                    fbuild_config::BoardConfig::from_board_id(&board_id, &board_overrides)
+                    fbuild_config::BoardConfig::from_board_id(&board_id, &deploy_board_overrides)
                         .unwrap_or_else(|_| {
-                            fbuild_config::BoardConfig::from_board_id("uno", &board_overrides)
-                                .unwrap()
+                            fbuild_config::BoardConfig::from_board_id(
+                                "uno",
+                                &deploy_board_overrides,
+                            )
+                            .unwrap()
                         });
                 let avr_config = fbuild_build::avr::mcu_config::get_avr_config().unwrap();
                 let avrdude_params = fbuild_deploy::avr::AvrdudeParams {
@@ -1258,10 +1346,21 @@ pub async fn deploy(
             .await;
 
             if let Ok((fw_hash, src_hash, boot_hash, parts_hash)) = ledger_result {
-                let build_flags: Vec<String> = env_config
+                let mut build_flags: Vec<String> = env_config
                     .get("build_flags")
                     .map(|f| f.split_whitespace().map(|s| s.to_string()).collect())
                     .unwrap_or_default();
+                if deploy_route == DeployRoute::Emulator(EmulatorKind::Qemu) {
+                    let board_id = env_config
+                        .get("board")
+                        .cloned()
+                        .unwrap_or_else(|| "esp32dev".to_string());
+                    if let Ok(board) =
+                        fbuild_config::BoardConfig::from_board_id(&board_id, &board_overrides)
+                    {
+                        build_flags.extend(qemu_extra_build_flags(platform, &board.mcu));
+                    }
+                }
                 let flags_hash =
                     fbuild_deploy::firmware_ledger::compute_build_flags_hash(&build_flags);
 
@@ -1421,13 +1520,119 @@ pub async fn deploy(
 }
 
 /// Outcome of a post-deploy monitor session.
-enum MonitorOutcome {
+#[derive(Debug)]
+pub(crate) enum MonitorOutcome {
     /// halt-on-success pattern matched
     Success(String),
     /// halt-on-error pattern matched
     Error(String),
     /// Timeout reached
     Timeout { expect_found: bool },
+}
+
+pub(crate) struct MonitorState {
+    halt_error_re: Option<regex::Regex>,
+    halt_success_re: Option<regex::Regex>,
+    expect_re: Option<regex::Regex>,
+    start: std::time::Instant,
+    timeout_dur: Option<std::time::Duration>,
+    expect_found: bool,
+    show_timestamp: bool,
+}
+
+impl MonitorState {
+    pub(crate) fn new(
+        timeout_secs: Option<f64>,
+        halt_on_error: Option<&str>,
+        halt_on_success: Option<&str>,
+        expect: Option<&str>,
+        show_timestamp: bool,
+    ) -> Self {
+        let halt_error_re = halt_on_error.and_then(|p| {
+            regex::RegexBuilder::new(p)
+                .case_insensitive(true)
+                .build()
+                .ok()
+        });
+        let halt_success_re = halt_on_success.and_then(|p| {
+            regex::RegexBuilder::new(p)
+                .case_insensitive(true)
+                .build()
+                .ok()
+        });
+        let expect_re = expect.and_then(|p| {
+            regex::RegexBuilder::new(p)
+                .case_insensitive(true)
+                .build()
+                .ok()
+        });
+        Self {
+            halt_error_re,
+            halt_success_re,
+            expect_re,
+            start: std::time::Instant::now(),
+            timeout_dur: timeout_secs.map(std::time::Duration::from_secs_f64),
+            expect_found: false,
+            show_timestamp,
+        }
+    }
+
+    pub(crate) fn timed_out(&self) -> bool {
+        self.timeout_dur
+            .is_some_and(|dur| self.start.elapsed() >= dur)
+    }
+
+    pub(crate) fn remaining(&self) -> Option<std::time::Duration> {
+        self.timeout_dur
+            .map(|dur| dur.saturating_sub(self.start.elapsed()))
+    }
+
+    pub(crate) fn timeout_outcome(&self) -> MonitorOutcome {
+        MonitorOutcome::Timeout {
+            expect_found: self.expect_found,
+        }
+    }
+
+    pub(crate) fn expect_found(&self) -> bool {
+        self.expect_found
+    }
+
+    pub(crate) fn process_line(&mut self, line: &str) -> Option<MonitorOutcome> {
+        if self.show_timestamp {
+            let total_secs = self.start.elapsed().as_secs_f64();
+            let minutes = (total_secs / 60.0) as u64;
+            let seconds = total_secs % 60.0;
+            tracing::info!("{:02}:{:05.2} {}", minutes, seconds, line);
+        } else {
+            tracing::info!("{}", line);
+        }
+
+        if let Some(ref re) = self.expect_re {
+            if re.is_match(line) {
+                self.expect_found = true;
+            }
+        }
+
+        if let Some(ref re) = self.halt_error_re {
+            if re.is_match(line) {
+                return Some(MonitorOutcome::Error(format!(
+                    "halt-on-error pattern matched: {}",
+                    line
+                )));
+            }
+        }
+
+        if let Some(ref re) = self.halt_success_re {
+            if re.is_match(line) {
+                return Some(MonitorOutcome::Success(format!(
+                    "halt-on-success pattern matched: {}",
+                    line
+                )));
+            }
+        }
+
+        None
+    }
 }
 
 /// Run a monitor loop reading lines from broadcast, checking halt conditions
@@ -1440,91 +1645,38 @@ async fn run_monitor_loop(
     expect: Option<&str>,
     show_timestamp: bool,
 ) -> MonitorOutcome {
-    let halt_error_re = halt_on_error.and_then(|p| {
-        regex::RegexBuilder::new(p)
-            .case_insensitive(true)
-            .build()
-            .ok()
-    });
-    let halt_success_re = halt_on_success.and_then(|p| {
-        regex::RegexBuilder::new(p)
-            .case_insensitive(true)
-            .build()
-            .ok()
-    });
-    let expect_re = expect.and_then(|p| {
-        regex::RegexBuilder::new(p)
-            .case_insensitive(true)
-            .build()
-            .ok()
-    });
-
-    let start = std::time::Instant::now();
-    let timeout_dur = timeout_secs.map(std::time::Duration::from_secs_f64);
-    let mut expect_found = false;
-
+    let mut state = MonitorState::new(
+        timeout_secs,
+        halt_on_error,
+        halt_on_success,
+        expect,
+        show_timestamp,
+    );
     loop {
-        // Check timeout
-        if let Some(dur) = timeout_dur {
-            if start.elapsed() >= dur {
-                return MonitorOutcome::Timeout { expect_found };
-            }
+        if state.timed_out() {
+            return state.timeout_outcome();
         }
 
-        let remaining = timeout_dur.map(|dur| dur.saturating_sub(start.elapsed()));
-        let recv_timeout = remaining.unwrap_or(std::time::Duration::from_secs(1));
+        let recv_timeout = state
+            .remaining()
+            .unwrap_or(std::time::Duration::from_secs(1));
 
         match tokio::time::timeout(recv_timeout, rx.recv()).await {
             Ok(Ok(line)) => {
-                // Print line (with optional timestamp prefix in MM:SS.cc format)
-                if show_timestamp {
-                    let total_secs = start.elapsed().as_secs_f64();
-                    let minutes = (total_secs / 60.0) as u64;
-                    let seconds = total_secs % 60.0;
-                    tracing::info!("{:02}:{:05.2} {}", minutes, seconds, line);
-                } else {
-                    tracing::info!("{}", line);
-                }
-
-                // Check expect pattern
-                if let Some(ref re) = expect_re {
-                    if re.is_match(&line) {
-                        expect_found = true;
-                    }
-                }
-
-                // Check halt-on-error
-                if let Some(ref re) = halt_error_re {
-                    if re.is_match(&line) {
-                        return MonitorOutcome::Error(format!(
-                            "halt-on-error pattern matched: {}",
-                            line
-                        ));
-                    }
-                }
-
-                // Check halt-on-success
-                if let Some(ref re) = halt_success_re {
-                    if re.is_match(&line) {
-                        return MonitorOutcome::Success(format!(
-                            "halt-on-success pattern matched: {}",
-                            line
-                        ));
-                    }
+                if let Some(outcome) = state.process_line(&line) {
+                    return outcome;
                 }
             }
             Ok(Err(tokio::sync::broadcast::error::RecvError::Lagged(n))) => {
                 tracing::warn!("monitor lagged, skipped {} messages", n);
             }
             Ok(Err(tokio::sync::broadcast::error::RecvError::Closed)) => {
-                return MonitorOutcome::Timeout { expect_found };
+                return state.timeout_outcome();
             }
             Err(_) => {
                 // Timeout on recv — check if overall timeout expired
-                if let Some(dur) = timeout_dur {
-                    if start.elapsed() >= dur {
-                        return MonitorOutcome::Timeout { expect_found };
-                    }
+                if state.timed_out() {
+                    return state.timeout_outcome();
                 }
                 // No overall timeout: just keep waiting
             }

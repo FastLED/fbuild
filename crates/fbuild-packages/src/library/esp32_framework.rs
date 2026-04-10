@@ -278,11 +278,29 @@ impl Esp32Framework {
         root.join("tools").join("sdk").join(mcu)
     }
 
+    fn sdk_memory_variant_dir(sdk_dir: &Path, requested: Option<&str>) -> Option<PathBuf> {
+        if let Some(requested) = requested {
+            let requested_dir = sdk_dir.join(requested);
+            if requested_dir.exists() {
+                return Some(requested_dir);
+            }
+        }
+
+        for variant in &["qio_opi", "dio_opi", "opi_opi", "qio_qspi", "dio_qspi"] {
+            let candidate = sdk_dir.join(variant);
+            if candidate.exists() {
+                return Some(candidate);
+            }
+        }
+
+        None
+    }
+
     /// Get SDK include directories for a given MCU.
     ///
     /// Reads the `flags/includes` file from the SDK directory, which lists
     /// all 305+ include paths. Falls back to scanning `include/` subdirectories.
-    pub fn get_sdk_include_dirs(&self, mcu: &str) -> Vec<PathBuf> {
+    pub fn get_sdk_include_dirs(&self, mcu: &str, memory_type: Option<&str>) -> Vec<PathBuf> {
         let root = self.resolved_dir();
         let sdk_dir = self.sdk_mcu_dir(mcu);
 
@@ -296,12 +314,10 @@ impl Esp32Framework {
                 // Add flash/PSRAM variant include dir (contains sdkconfig.h).
                 // Try common variants in preference order; the correct one depends
                 // on board_build.flash_mode and board_build.arduino.memory_type.
-                let variants = ["qio_opi", "dio_opi", "opi_opi", "qio_qspi", "dio_qspi"];
-                for variant in &variants {
-                    let v_include = sdk_dir.join(variant).join("include");
+                if let Some(variant_dir) = Self::sdk_memory_variant_dir(&sdk_dir, memory_type) {
+                    let v_include = variant_dir.join("include");
                     if v_include.exists() {
                         dirs.push(v_include);
-                        break;
                     }
                 }
 
@@ -342,12 +358,10 @@ impl Esp32Framework {
         }
 
         // Also add flash/PSRAM variant include dir (contains sdkconfig.h).
-        let variants = ["qio_opi", "dio_opi", "opi_opi", "qio_qspi", "dio_qspi"];
-        for variant in &variants {
-            let v_include = sdk_dir.join(variant).join("include");
+        if let Some(variant_dir) = Self::sdk_memory_variant_dir(&sdk_dir, memory_type) {
+            let v_include = variant_dir.join("include");
             if v_include.exists() {
                 dirs.push(v_include);
-                break;
             }
         }
 
@@ -366,7 +380,7 @@ impl Esp32Framework {
     /// Returns the pre-ordered `-l` flags (with duplicates for circular deps)
     /// as specified by the SDK. Falls back to scanning `lib/` for `.a` files
     /// if the flags file doesn't exist.
-    pub fn get_sdk_lib_flags(&self, mcu: &str) -> Vec<String> {
+    pub fn get_sdk_lib_flags(&self, mcu: &str, memory_type: Option<&str>) -> Vec<String> {
         let sdk_dir = self.sdk_mcu_dir(mcu);
         let ld_libs_file = sdk_dir.join("flags").join("ld_libs");
 
@@ -379,12 +393,8 @@ impl Esp32Framework {
             }
             // Add flash-mode-specific directory (contains libspi_flash.a and others).
             // Default to dio_qspi (most common for ESP32dev boards).
-            for flash_mode in &["dio_qspi", "qio_qspi"] {
-                let fm_dir = sdk_dir.join(flash_mode);
-                if fm_dir.exists() {
-                    flags.push(format!("-L{}", fm_dir.display()));
-                    break;
-                }
+            if let Some(variant_dir) = Self::sdk_memory_variant_dir(&sdk_dir, memory_type) {
+                flags.push(format!("-L{}", variant_dir.display()));
             }
             flags.extend(fbuild_core::shell_split::split(&content));
             return flags;
@@ -482,6 +492,14 @@ impl Esp32Framework {
     /// Get the path to the partitions binary.
     pub fn get_partitions_bin(&self, mcu: &str) -> PathBuf {
         self.sdk_mcu_dir(mcu).join("bin").join("partitions.bin")
+    }
+
+    /// Get the path to the default ESP-IDF boot_app0 helper binary.
+    pub fn get_boot_app0_bin(&self) -> PathBuf {
+        self.resolved_dir()
+            .join("tools")
+            .join("partitions")
+            .join("boot_app0.bin")
     }
 
     /// Get the path to the partitions CSV file.
@@ -902,6 +920,14 @@ mod tests {
     }
 
     #[test]
+    fn test_boot_app0_bin_path() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let fw = Esp32Framework::new(tmp.path(), "esp32c6");
+        let boot_app0 = fw.get_boot_app0_bin();
+        assert!(boot_app0.to_string_lossy().contains("boot_app0.bin"));
+    }
+
+    #[test]
     fn test_parse_iwithprefixbefore_format() {
         let tmp = tempfile::TempDir::new().unwrap();
         let include_base = tmp.path().join("include");
@@ -953,8 +979,74 @@ mod tests {
             install_dir: Some(tmp.path().to_path_buf()),
         };
 
-        let dirs = fw.get_sdk_include_dirs("esp32c6");
+        let dirs = fw.get_sdk_include_dirs("esp32c6", None);
         assert_eq!(dirs.len(), 2);
+    }
+
+    #[test]
+    fn test_sdk_include_dirs_prefers_requested_memory_variant() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let sdk_dir = tmp.path().join("tools").join("sdk").join("esp32s3");
+        let flags_dir = sdk_dir.join("flags");
+        std::fs::create_dir_all(&flags_dir).unwrap();
+        std::fs::create_dir_all(sdk_dir.join("include")).unwrap();
+        std::fs::write(flags_dir.join("includes"), "").unwrap();
+        std::fs::create_dir_all(sdk_dir.join("qio_opi").join("include")).unwrap();
+        std::fs::create_dir_all(sdk_dir.join("dio_qspi").join("include")).unwrap();
+
+        let fw = Esp32Framework {
+            base: PackageBase::new(
+                "test",
+                "1.0",
+                "http://example.com",
+                "http://example.com",
+                None,
+                CacheSubdir::Platforms,
+                tmp.path(),
+            ),
+            install_dir: Some(tmp.path().to_path_buf()),
+        };
+
+        let dirs = fw.get_sdk_include_dirs("esp32s3", Some("dio_qspi"));
+        assert!(dirs
+            .iter()
+            .any(|d| d.ends_with(Path::new("dio_qspi").join("include"))));
+        assert!(!dirs
+            .iter()
+            .any(|d| d.ends_with(Path::new("qio_opi").join("include"))));
+    }
+
+    #[test]
+    fn test_sdk_lib_flags_prefers_requested_memory_variant() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let sdk_dir = tmp.path().join("tools").join("sdk").join("esp32s3");
+        let flags_dir = sdk_dir.join("flags");
+        std::fs::create_dir_all(&flags_dir).unwrap();
+        std::fs::write(flags_dir.join("ld_libs"), "-lfoo").unwrap();
+        std::fs::create_dir_all(sdk_dir.join("lib")).unwrap();
+        std::fs::create_dir_all(sdk_dir.join("dio_qspi")).unwrap();
+        std::fs::create_dir_all(sdk_dir.join("qio_opi")).unwrap();
+
+        let fw = Esp32Framework {
+            base: PackageBase::new(
+                "test",
+                "1.0",
+                "http://example.com",
+                "http://example.com",
+                None,
+                CacheSubdir::Platforms,
+                tmp.path(),
+            ),
+            install_dir: Some(tmp.path().to_path_buf()),
+        };
+
+        let flags = fw.get_sdk_lib_flags("esp32s3", Some("dio_qspi"));
+        assert!(flags
+            .iter()
+            .any(|f| f.ends_with("\\esp32s3\\dio_qspi") || f.ends_with("/esp32s3/dio_qspi")));
+        assert!(!flags
+            .iter()
+            .any(|f| f.ends_with("\\esp32s3\\qio_opi") || f.ends_with("/esp32s3/qio_opi")));
     }
 
     #[test]

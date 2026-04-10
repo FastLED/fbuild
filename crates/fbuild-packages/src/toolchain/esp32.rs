@@ -166,24 +166,10 @@ impl crate::Package for Esp32Toolchain {
         }
 
         let prefix = self.prefix.clone();
-        let rt = tokio::runtime::Handle::try_current().ok();
-        let install_path = if let Some(handle) = rt {
-            handle.block_on(
-                self.base
-                    .staged_install(|dir| Self::validate_install(dir, &prefix)),
-            )?
-        } else {
-            let rt = tokio::runtime::Runtime::new().map_err(|e| {
-                fbuild_core::FbuildError::PackageError(format!(
-                    "failed to create tokio runtime: {}",
-                    e
-                ))
-            })?;
-            rt.block_on(
-                self.base
-                    .staged_install(|dir| Self::validate_install(dir, &prefix)),
-            )?
-        };
+        let install_path = crate::block_on_package_future(
+            self.base
+                .staged_install(|dir| Self::validate_install(dir, &prefix)),
+        )?;
 
         Ok(find_bin_root(&install_path))
     }

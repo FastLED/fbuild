@@ -12,6 +12,12 @@ use std::path::{Path, PathBuf};
 
 use serde::{Deserialize, Serialize};
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Esp32QemuPsramConfig {
+    pub size_mib: u32,
+    pub is_octal: bool,
+}
+
 /// Board configuration loaded from boards.txt or built-in defaults.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct BoardConfig {
@@ -39,6 +45,10 @@ pub struct BoardConfig {
     pub max_ram: Option<u64>,
     /// Flash mode (e.g. "dio", "qio") — ESP32 boards
     pub flash_mode: Option<String>,
+    /// Memory profile (e.g. "qio_qspi", "qio_opi") - ESP32 boards
+    pub memory_type: Option<String>,
+    /// PSRAM type (e.g. "qspi", "opi") - ESP32 boards
+    pub psram_type: Option<String>,
     /// Flash frequency (e.g. "80000000L") — ESP32 boards
     pub f_flash: Option<String>,
     /// Image flash frequency override (e.g. "48000000L") — used by esptool when
@@ -128,6 +138,22 @@ impl BoardConfig {
                 overrides.get("flash_mode").cloned()
             } else {
                 get("flash_mode")
+            },
+            memory_type: if is_esp32_family {
+                overrides
+                    .get("memory_type")
+                    .cloned()
+                    .or_else(|| get("memory_type"))
+            } else {
+                get("memory_type")
+            },
+            psram_type: if is_esp32_family {
+                overrides
+                    .get("psram_type")
+                    .cloned()
+                    .or_else(|| get("psram_type"))
+            } else {
+                get("psram_type")
             },
             f_flash: get("f_flash"),
             f_image: get("f_image"),
@@ -228,6 +254,14 @@ impl BoardConfig {
                     .cloned()
                     .or_else(|| defaults.get("flash_mode").cloned())
             },
+            memory_type: overrides
+                .get("memory_type")
+                .cloned()
+                .or_else(|| defaults.get("memory_type").cloned()),
+            psram_type: overrides
+                .get("psram_type")
+                .cloned()
+                .or_else(|| defaults.get("psram_type").cloned()),
             f_flash: overrides
                 .get("f_flash")
                 .cloned()
@@ -246,6 +280,70 @@ impl BoardConfig {
                 .or_else(|| defaults.get("ldscript").cloned()),
             platform_str: defaults.get("platform_str").cloned(),
         })
+    }
+
+    /// Resolve the effective ESP32 SDK memory profile used for variant headers/libs.
+    ///
+    /// This keeps the SDK `sdkconfig.h` and memory-profile libraries aligned
+    /// with the repo's effective flash-mode policy. Boards that explicitly use
+    /// OPI flash keep the `opi` flash-half because that represents a distinct
+    /// bus type rather than an optional fast-read mode.
+    pub fn effective_esp32_memory_type(&self, default_flash_mode: &str) -> Option<String> {
+        if !self.mcu.starts_with("esp32") {
+            return None;
+        }
+
+        let effective_flash_mode = self
+            .flash_mode
+            .as_deref()
+            .unwrap_or(default_flash_mode)
+            .to_ascii_lowercase();
+
+        let (flash_half, psram_half) = if let Some(memory_type) = self.memory_type.as_deref() {
+            if let Some((flash, psram)) = memory_type.split_once('_') {
+                (
+                    Some(flash.to_ascii_lowercase()),
+                    Some(psram.to_ascii_lowercase()),
+                )
+            } else {
+                (Some(memory_type.to_ascii_lowercase()), None)
+            }
+        } else {
+            (None, None)
+        };
+
+        let resolved_flash = match flash_half.as_deref() {
+            Some("opi") => "opi".to_string(),
+            _ => effective_flash_mode,
+        };
+        let resolved_psram = psram_half
+            .or_else(|| self.psram_type.as_deref().map(|s| s.to_ascii_lowercase()))
+            .unwrap_or_else(|| "qspi".to_string());
+
+        Some(format!("{}_{}", resolved_flash, resolved_psram))
+    }
+
+    pub fn qemu_esp32_psram_config(&self) -> Option<Esp32QemuPsramConfig> {
+        let has_psram = self
+            .extra_flags
+            .as_deref()
+            .is_some_and(|flags| extra_flags_contain_define(flags, "BOARD_HAS_PSRAM"))
+            || self.psram_type.is_some();
+        if !has_psram {
+            return None;
+        }
+
+        let is_octal = self
+            .psram_type
+            .as_deref()
+            .is_some_and(|psram| psram.eq_ignore_ascii_case("opi"))
+            || self
+                .memory_type
+                .as_deref()
+                .is_some_and(|memory| memory.ends_with("_opi"));
+        let size_mib = infer_psram_size_mib(&self.name).unwrap_or(if is_octal { 8 } else { 2 });
+
+        Some(Esp32QemuPsramConfig { size_mib, is_octal })
     }
 
     /// Detect the platform from the board JSON's platform field, or fall back to MCU heuristic.
@@ -430,6 +528,39 @@ fn board_id_to_board_define(board_id: &str) -> String {
     board_id.to_uppercase().replace('-', "_")
 }
 
+fn extra_flags_contain_define(extra_flags: &str, define: &str) -> bool {
+    extra_flags.split_whitespace().any(|flag| {
+        let Some(raw) = flag.strip_prefix("-D") else {
+            return false;
+        };
+        raw.split_once('=').map_or(raw, |(name, _)| name) == define
+    })
+}
+
+fn infer_psram_size_mib(name: &str) -> Option<u32> {
+    let upper = name.to_ascii_uppercase();
+
+    for size in [32_u32, 16, 8, 4, 2] {
+        if upper.contains(&format!("{size} MB PSRAM")) {
+            return Some(size);
+        }
+    }
+
+    for (marker, size) in [
+        ("R32", 32_u32),
+        ("R16", 16),
+        ("R8", 8),
+        ("R4", 4),
+        ("R2", 2),
+    ] {
+        if upper.contains(marker) {
+            return Some(size);
+        }
+    }
+
+    None
+}
+
 /// Embedded board database — 1609 boards from PlatformIO registry JSON files.
 ///
 /// Loaded once on first access via `OnceLock`. Each entry maps board_id → JSON object
@@ -548,6 +679,12 @@ fn get_board_defaults(board_id: &str) -> Option<HashMap<String, String>> {
         if let Some(flash_mode) = build.get("flash_mode").and_then(|v| v.as_str()) {
             d.insert("flash_mode".into(), flash_mode.to_string());
         }
+        if let Some(memory_type) = build.get("memory_type").and_then(|v| v.as_str()) {
+            d.insert("memory_type".into(), memory_type.to_string());
+        }
+        if let Some(psram_type) = build.get("psram_type").and_then(|v| v.as_str()) {
+            d.insert("psram_type".into(), psram_type.to_string());
+        }
         if let Some(f_flash) = build.get("f_flash").and_then(|v| v.as_str()) {
             d.insert("f_flash".into(), f_flash.to_string());
         }
@@ -561,6 +698,9 @@ fn get_board_defaults(board_id: &str) -> Option<HashMap<String, String>> {
             }
             if let Some(partitions) = arduino.get("partitions").and_then(|v| v.as_str()) {
                 d.insert("partitions".into(), partitions.to_string());
+            }
+            if let Some(memory_type) = arduino.get("memory_type").and_then(|v| v.as_str()) {
+                d.insert("memory_type".into(), memory_type.to_string());
             }
             // Core-specific overrides: build.arduino.<core_name>.variant
             // e.g. build.arduino.openwch.variant = "CH32V00x/CH32V003F4"
@@ -894,6 +1034,7 @@ leonardo.upload.speed=57600
         // (see comments in `from_board_id`). Downstream consumers fall back
         // to mcu_config.default_flash_mode() which is "dio".
         assert_eq!(config.flash_mode, None);
+        assert_eq!(config.memory_type, None);
         assert_eq!(config.f_flash, Some("40000000L".to_string()));
         assert_eq!(config.ldscript, Some("esp32_out.ld".to_string()));
         assert_eq!(config.upload_speed, Some("460800".to_string()));
@@ -934,9 +1075,59 @@ leonardo.upload.speed=57600
         // ESP32 boards drop the JSON-shipped flash_mode (see
         // `test_esp32dev_enriched_fields`); fall back is "dio" from MCU config.
         assert_eq!(config.flash_mode, None);
+        assert_eq!(config.memory_type, None);
         assert_eq!(config.ldscript, Some("esp32c3_out.ld".to_string()));
         // ESP32-C3 DevKit runs at 160 MHz
         assert_eq!(config.f_cpu, "160000000L");
+    }
+
+    #[test]
+    fn test_esp32_effective_memory_type_tracks_effective_flash_mode() {
+        let config = BoardConfig::from_board_id("esp32c3", &HashMap::new()).unwrap();
+        assert_eq!(
+            config.effective_esp32_memory_type("dio"),
+            Some("dio_qspi".to_string())
+        );
+    }
+
+    #[test]
+    fn test_esp32_effective_memory_type_preserves_opi_flash_profiles() {
+        let config =
+            BoardConfig::from_board_id("esp32-s3-devkitc-1-n32r8v", &HashMap::new()).unwrap();
+        assert_eq!(
+            config.effective_esp32_memory_type("dio"),
+            Some("opi_opi".to_string())
+        );
+    }
+
+    #[test]
+    fn test_qemu_psram_config_absent_for_non_psram_board() {
+        let config = BoardConfig::from_board_id("esp32-s3-devkitc-1", &HashMap::new()).unwrap();
+        assert_eq!(config.qemu_esp32_psram_config(), None);
+    }
+
+    #[test]
+    fn test_qemu_psram_config_detects_quad_psram_board() {
+        let config = BoardConfig::from_board_id("esp32-s3-devkitc1-n8r2", &HashMap::new()).unwrap();
+        assert_eq!(
+            config.qemu_esp32_psram_config(),
+            Some(Esp32QemuPsramConfig {
+                size_mib: 2,
+                is_octal: false,
+            })
+        );
+    }
+
+    #[test]
+    fn test_qemu_psram_config_detects_octal_psram_board() {
+        let config = BoardConfig::from_board_id("esp32-s3-devkitc1-n8r8", &HashMap::new()).unwrap();
+        assert_eq!(
+            config.qemu_esp32_psram_config(),
+            Some(Esp32QemuPsramConfig {
+                size_mib: 8,
+                is_octal: true,
+            })
+        );
     }
 
     #[test]

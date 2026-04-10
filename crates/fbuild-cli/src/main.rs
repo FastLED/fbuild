@@ -125,7 +125,7 @@ enum Commands {
         /// Skip the build step and deploy existing firmware (upload-only mode)
         #[arg(long)]
         skip_build: bool,
-        /// Deploy to QEMU emulator instead of physical device (requires Docker)
+        /// Deploy to the native QEMU emulator instead of a physical device
         #[arg(long)]
         qemu: bool,
         /// Timeout in seconds for QEMU execution (default: 30)
@@ -1034,11 +1034,56 @@ enum CliDeployRoute {
     Emulator(CliEmulatorKind),
 }
 
+fn infer_cli_default_emulator_kind(
+    project_dir: &str,
+    environment: Option<&str>,
+) -> fbuild_core::Result<Option<CliEmulatorKind>> {
+    let project_dir = std::path::Path::new(project_dir);
+    let config = fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini"))
+        .map_err(|e| {
+            fbuild_core::FbuildError::Other(format!("failed to parse platformio.ini: {}", e))
+        })?;
+    let env_name = environment
+        .map(|s| s.to_string())
+        .or_else(|| config.get_default_environment().map(|s| s.to_string()))
+        .unwrap_or_else(|| "default".to_string());
+    let env_config = config.get_env_config(&env_name).map_err(|e| {
+        fbuild_core::FbuildError::Other(format!("invalid environment '{}': {}", env_name, e))
+    })?;
+    let platform_str = env_config.get("platform").cloned().unwrap_or_default();
+    let Some(platform) = fbuild_core::Platform::from_platform_str(&platform_str) else {
+        return Ok(None);
+    };
+    let Some(board_id) = env_config.get("board").cloned() else {
+        return Ok(None);
+    };
+    let board_overrides = config.get_board_overrides(&env_name).unwrap_or_default();
+    let board = fbuild_config::BoardConfig::from_board_id(&board_id, &board_overrides)
+        .or_else(|_| {
+            fbuild_config::BoardConfig::from_board_id(&board_id, &std::collections::HashMap::new())
+        })
+        .ok();
+    Ok(
+        match (platform, board.as_ref().map(|board| board.mcu.as_str())) {
+            (fbuild_core::Platform::AtmelAvr, _) | (fbuild_core::Platform::AtmelMegaAvr, _) => {
+                Some(CliEmulatorKind::Avr8js)
+            }
+            (fbuild_core::Platform::Espressif32, Some(mcu))
+                if mcu.eq_ignore_ascii_case("esp32s3") =>
+            {
+                Some(CliEmulatorKind::Qemu)
+            }
+            _ => None,
+        },
+    )
+}
+
 fn resolve_cli_deploy_route(
     to: Option<&str>,
     emulator: Option<&str>,
     target: Option<&str>,
     qemu: bool,
+    default_emulator: Option<CliEmulatorKind>,
 ) -> fbuild_core::Result<CliDeployRoute> {
     if let Some(target) = target {
         return match target {
@@ -1078,7 +1123,19 @@ fn resolve_cli_deploy_route(
                 }
                 "qemu"
             } else {
-                emulator.unwrap_or("avr8js")
+                match emulator {
+                    Some(explicit) => explicit,
+                    None => match default_emulator {
+                        Some(CliEmulatorKind::Qemu) => "qemu",
+                        Some(CliEmulatorKind::Avr8js) => "avr8js",
+                        None => {
+                            return Err(fbuild_core::FbuildError::Other(
+                                "--to emu requires an explicit --emulator for this board"
+                                    .to_string(),
+                            ))
+                        }
+                    },
+                }
             };
             match emulator {
                 "qemu" => Ok(CliDeployRoute::Emulator(CliEmulatorKind::Qemu)),
@@ -1121,8 +1178,22 @@ async fn run_deploy(
     daemon_client::ensure_daemon_running().await?;
     let client = DaemonClient::new();
 
-    let deploy_route =
-        resolve_cli_deploy_route(to.as_deref(), emulator.as_deref(), target.as_deref(), qemu)?;
+    let default_emulator = if matches!(to.as_deref(), Some("emu" | "emulator"))
+        && emulator.is_none()
+        && target.is_none()
+        && !qemu
+    {
+        infer_cli_default_emulator_kind(&project_dir, environment.as_deref())?
+    } else {
+        None
+    };
+    let deploy_route = resolve_cli_deploy_route(
+        to.as_deref(),
+        emulator.as_deref(),
+        target.as_deref(),
+        qemu,
+        default_emulator,
+    )?;
 
     let (caller_pid, caller_cwd) = daemon_client::caller_info();
     let req = DeployRequest {
@@ -1155,6 +1226,9 @@ async fn run_deploy(
     };
 
     let resp = client.deploy(&req).await?;
+    if deploy_route == CliDeployRoute::Emulator(CliEmulatorKind::Qemu) {
+        print_operation_streams(&resp);
+    }
     println!("{}", resp.message);
     if !resp.success {
         std::process::exit(resp.exit_code);
@@ -1168,6 +1242,29 @@ async fn run_deploy(
         }
     }
     Ok(())
+}
+
+fn print_operation_streams(resp: &daemon_client::OperationResponse) {
+    if let Some(stdout) = resp
+        .stdout
+        .as_deref()
+        .filter(|text| !text.trim().is_empty())
+    {
+        print!("{}", stdout);
+        if !stdout.ends_with('\n') {
+            println!();
+        }
+    }
+    if let Some(stderr) = resp
+        .stderr
+        .as_deref()
+        .filter(|text| !text.trim().is_empty())
+    {
+        eprint!("{}", stderr);
+        if !stderr.ends_with('\n') {
+            eprintln!();
+        }
+    }
 }
 
 #[allow(clippy::too_many_arguments)]

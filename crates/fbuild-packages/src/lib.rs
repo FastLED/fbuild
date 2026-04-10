@@ -15,7 +15,22 @@ pub mod toolchain;
 pub use cache::Cache;
 
 use std::collections::HashMap;
+use std::future::Future;
 use std::path::{Path, PathBuf};
+
+pub(crate) fn block_on_package_future<F, T>(future: F) -> fbuild_core::Result<T>
+where
+    F: Future<Output = fbuild_core::Result<T>>,
+{
+    if let Ok(handle) = tokio::runtime::Handle::try_current() {
+        tokio::task::block_in_place(|| handle.block_on(future))
+    } else {
+        let rt = tokio::runtime::Runtime::new().map_err(|e| {
+            fbuild_core::FbuildError::PackageError(format!("failed to create tokio runtime: {}", e))
+        })?;
+        rt.block_on(future)
+    }
+}
 
 /// Base trait for all installable packages.
 pub trait Package: Send + Sync {

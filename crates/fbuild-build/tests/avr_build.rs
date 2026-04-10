@@ -91,6 +91,7 @@ fn build_uno_minimal() {
         no_timestamp: false,
         src_dir: None,
         pio_env: Default::default(),
+        extra_build_flags: Vec::new(),
     };
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
@@ -184,6 +185,7 @@ fn compare_with_python_output() {
         no_timestamp: false,
         src_dir: None,
         pio_env: Default::default(),
+        extra_build_flags: Vec::new(),
     };
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
@@ -267,6 +269,7 @@ void loop() {
         no_timestamp: false,
         src_dir: None,
         pio_env: Default::default(),
+        extra_build_flags: Vec::new(),
     };
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
