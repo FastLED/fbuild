@@ -62,6 +62,22 @@ impl Esp8266Compiler {
         flags.extend(self.base.build_include_flags());
         flags
     }
+
+    fn asm_flags(&self) -> Vec<String> {
+        let mut flags = vec![
+            "-g".to_string(),
+            "-x".to_string(),
+            "assembler-with-cpp".to_string(),
+            "-MMD".to_string(),
+            "-mlongcalls".to_string(),
+        ];
+        if let Some(toolchain_root) = self.gcc_path.parent().and_then(|bin| bin.parent()) {
+            flags.push(format!("-I{}", toolchain_root.join("include").display()));
+        }
+        flags.extend(self.base.build_define_flags());
+        flags.extend(self.base.build_include_flags());
+        flags
+    }
 }
 
 impl Compiler for Esp8266Compiler {
@@ -85,6 +101,22 @@ impl Compiler for Esp8266Compiler {
             None,
             &[],
         )
+    }
+
+    fn compile(
+        &self,
+        source: &Path,
+        output: &Path,
+        extra_flags: &[String],
+    ) -> Result<CompileResult> {
+        match source.extension().and_then(|ext| ext.to_str()) {
+            Some("c") => self.compile_c(source, output, extra_flags),
+            Some("S") | Some("s") => {
+                let flags = self.asm_flags();
+                self.compile_one(self.gcc_path(), source, output, &flags, extra_flags)
+            }
+            _ => self.compile_cpp(source, output, extra_flags),
+        }
     }
 
     fn gcc_path(&self) -> &Path {

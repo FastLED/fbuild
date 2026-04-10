@@ -151,6 +151,33 @@ impl Linker for Esp8266Linker {
         self.generate_linker_scripts(output_dir)?;
 
         let elf_path = output_dir.join("firmware.elf");
+        let mut positional_archives: Vec<PathBuf> = archives
+            .iter()
+            .filter(|path| {
+                path.extension()
+                    .and_then(|ext| ext.to_str())
+                    .map(|ext| ext.eq_ignore_ascii_case("a"))
+                    .unwrap_or(false)
+            })
+            .cloned()
+            .collect();
+        let loose_objects: Vec<PathBuf> = archives
+            .iter()
+            .filter(|path| {
+                !path
+                    .extension()
+                    .and_then(|ext| ext.to_str())
+                    .map(|ext| ext.eq_ignore_ascii_case("a"))
+                    .unwrap_or(false)
+            })
+            .cloned()
+            .collect();
+
+        if !loose_objects.is_empty() {
+            let bundled_archive = output_dir.join("libfbuild-core.a");
+            self.archive(&loose_objects, &bundled_archive)?;
+            positional_archives.insert(0, bundled_archive);
+        }
 
         let mut args: Vec<String> = vec![self.gcc_path.to_string_lossy().to_string()];
 
@@ -180,7 +207,7 @@ impl Linker for Esp8266Linker {
         }
 
         // Core/variant objects
-        for archive in archives {
+        for archive in &positional_archives {
             args.push(archive.to_string_lossy().to_string());
         }
 
