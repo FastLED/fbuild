@@ -9,7 +9,7 @@ use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 
 const SILABS_CORE_VERSION: &str = "2.2.0";
 const SILABS_CORE_URL: &str =
-    "https://github.com/SiliconLabs/arduino/archive/refs/tags/v2.2.0.tar.gz";
+    "https://github.com/SiliconLabs/arduino/archive/refs/tags/2.2.0.tar.gz";
 
 /// Silicon Labs Arduino core framework manager.
 pub struct SilabsCores {

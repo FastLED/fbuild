@@ -1,10 +1,7 @@
 name: Build CH32L103
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+  workflow_dispatch:
 
 jobs:
   build:

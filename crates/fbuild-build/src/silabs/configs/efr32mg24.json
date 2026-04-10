@@ -8,7 +8,7 @@
     "cxx": ["-std=gnu++17", "-fno-exceptions", "-fno-rtti", "-fno-threadsafe-statics"]
   },
   "linker_flags": ["-mcpu=cortex-m33", "-mthumb", "-mfloat-abi=hard", "-mfpu=fpv5-sp-d16", "-Wl,--gc-sections", "-Wl,--print-memory-usage", "--specs=nano.specs", "--specs=nosys.specs"],
-  "linker_libs": ["-lgcc", "-lstdc++", "-lm", "-lc"],
+  "linker_libs": ["-lgcc", "-lstdc++", "-lm", "-lc", "-lnosys", "-lsupc++"],
   "objcopy": {"output_format": "binary", "remove_sections": [".eeprom"]},
   "profiles": {
     "release": {"compile_flags": ["-Os", "-flto", "-fno-fat-lto-objects"], "link_flags": ["-flto", "-fuse-linker-plugin"]},

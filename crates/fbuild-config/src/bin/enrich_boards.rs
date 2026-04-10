@@ -39,6 +39,30 @@ const UPLOAD_FIELDS: &[&str] = &[
     "wait_for_upload_port",
 ];
 
+const MEGATINYCORE_EXTRA_FLAGS: &[&str] = &[
+    "-DCLOCK_SOURCE=0",
+    r#"-DMEGATINYCORE="2.6.11""#,
+    "-DMEGATINYCORE_MAJOR=2UL",
+    "-DMEGATINYCORE_MINOR=6UL",
+    "-DMEGATINYCORE_PATCH=11UL",
+    "-DMEGATINYCORE_RELEASED=1",
+    "-DCORE_ATTACH_ALL",
+    "-DTWI_MORS",
+    "-DUSE_TIMERD0_PWM",
+];
+
+const DXCORE_EXTRA_FLAGS: &[&str] = &[
+    "-DCLOCK_SOURCE=0",
+    r#"-DDXCORE="1.5.6""#,
+    "-DDXCORE_MAJOR=1UL",
+    "-DDXCORE_MINOR=5UL",
+    "-DDXCORE_PATCH=6UL",
+    "-DDXCORE_RELEASED=1",
+    "-DCORE_ATTACH_ALL",
+    "-DTWI_MORS_SINGLE",
+    "-DMILLIS_USE_TIMERB2",
+];
+
 fn home_dir() -> PathBuf {
     #[cfg(windows)]
     {
@@ -108,14 +132,43 @@ fn normalize_extra_flags(val: &Value) -> Value {
     }
 }
 
+fn framework_extra_flags(core: Option<&str>) -> &'static [&'static str] {
+    match core {
+        Some("megatinycore") => MEGATINYCORE_EXTRA_FLAGS,
+        Some("dxcore") => DXCORE_EXTRA_FLAGS,
+        _ => &[],
+    }
+}
+
+fn merge_extra_flags(core: Option<&str>, flags: &str) -> String {
+    let mut merged: Vec<String> = flags.split_whitespace().map(str::to_string).collect();
+    let existing: BTreeSet<&str> = flags.split_whitespace().collect();
+
+    // PlatformIO injects these framework defines at build time rather than
+    // storing them in the board JSON, but fbuild consumes the static board
+    // assets directly and needs the full define set preserved there.
+    for flag in framework_extra_flags(core) {
+        if !existing.contains(flag) {
+            merged.push((*flag).to_string());
+        }
+    }
+
+    merged.join(" ")
+}
+
 /// Extract relevant build fields from PlatformIO's build section.
 fn extract_build(pio_build: &Map<String, Value>) -> Map<String, Value> {
     let mut build = Map::new();
+    let core = pio_build.get("core").and_then(|v| v.as_str());
 
     for &field in BUILD_FIELDS {
         if let Some(val) = pio_build.get(field) {
             let val = if field == "extra_flags" {
-                normalize_extra_flags(val)
+                let normalized = normalize_extra_flags(val);
+                Value::String(merge_extra_flags(
+                    core,
+                    normalized.as_str().unwrap_or_default(),
+                ))
             } else {
                 val.clone()
             };

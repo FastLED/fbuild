@@ -18,6 +18,8 @@ pub struct SilabsLinker {
     objcopy_path: PathBuf,
     size_path: PathBuf,
     linker_script_path: PathBuf,
+    precompiled_gsdk: Option<PathBuf>,
+    precompiled_libs: Vec<PathBuf>,
     mcu_config: SilabsMcuConfig,
     profile: BuildProfile,
     max_flash: Option<u64>,
@@ -33,6 +35,8 @@ impl SilabsLinker {
         objcopy_path: PathBuf,
         size_path: PathBuf,
         linker_script_path: PathBuf,
+        precompiled_gsdk: Option<PathBuf>,
+        precompiled_libs: Vec<PathBuf>,
         mcu_config: SilabsMcuConfig,
         profile: BuildProfile,
         max_flash: Option<u64>,
@@ -45,6 +49,8 @@ impl SilabsLinker {
             objcopy_path,
             size_path,
             linker_script_path,
+            precompiled_gsdk,
+            precompiled_libs,
             mcu_config,
             profile,
             max_flash,
@@ -94,8 +100,18 @@ impl Linker for SilabsLinker {
             args.push(archive.to_string_lossy().to_string());
         }
 
-        // Linker libraries from config
+        if let Some(gsdk) = &self.precompiled_gsdk {
+            args.push("-Wl,--whole-archive".to_string());
+            args.push(gsdk.to_string_lossy().to_string());
+            args.push("-Wl,--no-whole-archive".to_string());
+        }
+
+        args.push("-Wl,--start-group".to_string());
         args.extend(self.mcu_config.linker_libs.iter().cloned());
+        for archive in &self.precompiled_libs {
+            args.push(archive.to_string_lossy().to_string());
+        }
+        args.push("-Wl,--end-group".to_string());
 
         if self.verbose {
             tracing::info!("link: {}", args.join(" "));
@@ -153,6 +169,8 @@ mod tests {
             PathBuf::from("/bin/arm-none-eabi-objcopy"),
             PathBuf::from("/bin/arm-none-eabi-size"),
             PathBuf::from("/silabs/efr32mg24.ld"),
+            None,
+            Vec::new(),
             get_silabs_config_for_mcu("efr32mg24").unwrap(),
             BuildProfile::Release,
             Some(1572864),
@@ -171,6 +189,8 @@ mod tests {
             PathBuf::from("/bin/arm-none-eabi-objcopy"),
             PathBuf::from("/bin/arm-none-eabi-size"),
             PathBuf::from("/silabs/efr32mg24.ld"),
+            None,
+            Vec::new(),
             get_silabs_config_for_mcu("efr32mg24").unwrap(),
             BuildProfile::Release,
             Some(1572864),

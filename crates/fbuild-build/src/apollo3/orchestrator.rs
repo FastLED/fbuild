@@ -108,7 +108,7 @@ impl BuildOrchestrator for Apollo3Orchestrator {
         }
 
         // 7. Build include dirs
-        let mut include_dirs = ctx.board.get_include_paths(&framework_dir);
+        let mut include_dirs = vec![core_dir.clone(), variant_dir.clone()];
         include_dirs.push(ctx.src_dir.clone());
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
 
@@ -162,23 +162,26 @@ impl BuildOrchestrator for Apollo3Orchestrator {
         let mbed_config_h = framework.get_mbed_config_h(&ctx.board.variant);
         let sdk_h = core_dir.join("sdk").join("ArduinoSDK.h");
 
-        // Build extra compiler flags for the -include directives
+        // `mbed_config.h` is required for both C and C++, but `ArduinoSDK.h`
+        // pulls in C++ headers like `<chrono>` and breaks plain C compilation.
         let mut extra_common_flags: Vec<String> = Vec::new();
+        let mut extra_cpp_flags: Vec<String> = Vec::new();
         if mbed_config_h.exists() {
             extra_common_flags.push("-include".to_string());
             extra_common_flags.push(mbed_config_h.to_string_lossy().to_string());
         }
         if sdk_h.exists() {
-            extra_common_flags.push("-include".to_string());
-            extra_common_flags.push(sdk_h.to_string_lossy().to_string());
+            extra_cpp_flags.push("-include".to_string());
+            extra_cpp_flags.push(sdk_h.to_string_lossy().to_string());
         }
 
-        // Merge extra flags into the MCU config's common flags
+        // Merge the response-file includes into the MCU config.
         let mut augmented_config = mcu_config.clone();
         augmented_config
             .compiler_flags
             .common
             .extend(extra_common_flags);
+        augmented_config.compiler_flags.cxx.extend(extra_cpp_flags);
 
         let compiler = ArmCompiler::new(
             toolchain.get_gcc_path(),

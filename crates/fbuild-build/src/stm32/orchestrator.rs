@@ -59,6 +59,7 @@ impl BuildOrchestrator for Stm32Orchestrator {
         // the board JSON says core = "stm32". Map it here.
         let core_dir = framework.get_core_dir("arduino");
         let variant_dir = framework.get_variant_dir(&ctx.board.variant);
+        let selected_variant = select_variant_files(&variant_dir, &ctx.board.variant);
 
         let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
         // Scan core + variant, but pass None for variant — we'll filter variant
@@ -66,22 +67,10 @@ impl BuildOrchestrator for Stm32Orchestrator {
         // board variants (MALYAN, AFROFLIGHT, etc.) and startup files that
         // conflict with the generic one in cores/arduino/stm32/.
         let mut sources = scanner.scan_all(Some(&core_dir), None)?;
-        // Only include the generic variant files (not board-specific alternates)
         sources.variant_sources = scanner
             .scan_variant_sources(&variant_dir)
             .into_iter()
-            .filter(|p| {
-                let name = p
-                    .file_name()
-                    .unwrap_or_default()
-                    .to_string_lossy()
-                    .to_lowercase();
-                // Keep: variant_generic.cpp, PeripheralPins.c, generic_clock.c
-                // Skip: variant_MALYAN*.*, variant_AFRO*.*, startup_*.S, PeripheralPins_*.c
-                (name.starts_with("variant_generic") || !name.starts_with("variant_"))
-                    && !name.starts_with("peripheralpins_")
-                    && !name.starts_with("startup_")
-            })
+            .filter(|p| keep_variant_source(p, &selected_variant))
             .collect();
 
         // SrcWrapper is a core library in STM32duino — its sources must be
@@ -135,7 +124,7 @@ impl BuildOrchestrator for Stm32Orchestrator {
         defines.insert("USE_FULL_LL_DRIVER".to_string(), "1".to_string());
         defines.insert(
             "VARIANT_H".to_string(),
-            "\\\"variant_generic.h\\\"".to_string(),
+            format!("\\\"{}\\\"", selected_variant.header),
         );
         // UART HAL module is disabled by default in stm32yyxx_hal_conf.h — enable it
         // so WSerial.h can create the Serial instance.
@@ -321,6 +310,109 @@ fn stm32_generic_board_define(mcu: &str) -> String {
     }
     let trimmed: String = chars.into_iter().collect();
     format!("GENERIC_{trimmed}")
+}
+
+#[derive(Debug, Clone)]
+struct SelectedVariantFiles {
+    header: String,
+    source_stem: Option<String>,
+    peripheral_stem: Option<String>,
+}
+
+fn select_variant_files(variant_dir: &Path, variant_name: &str) -> SelectedVariantFiles {
+    let entries = std::fs::read_dir(variant_dir)
+        .ok()
+        .into_iter()
+        .flatten()
+        .flatten()
+        .filter_map(|entry| {
+            entry
+                .file_name()
+                .into_string()
+                .ok()
+                .map(|name| name.to_lowercase())
+        })
+        .collect::<Vec<_>>();
+
+    let header = pick_variant_file(&entries, variant_name, "variant_", ".h")
+        .unwrap_or_else(|| "variant_generic.h".to_string());
+    let source_stem =
+        pick_variant_file(&entries, variant_name, "variant_", ".cpp").map(|name| stem_lower(&name));
+    let peripheral_stem = pick_variant_file(&entries, variant_name, "peripheralpins_", ".c")
+        .map(|name| stem_lower(&name));
+
+    SelectedVariantFiles {
+        header,
+        source_stem,
+        peripheral_stem,
+    }
+}
+
+fn pick_variant_file(
+    entries: &[String],
+    variant_name: &str,
+    prefix: &str,
+    suffix: &str,
+) -> Option<String> {
+    let normalized = normalize_variant_name(variant_name);
+    let exact = format!("{prefix}{normalized}{suffix}");
+    if entries.iter().any(|name| name == &exact) {
+        return Some(exact);
+    }
+
+    let generic = format!("{prefix}generic{suffix}");
+    if entries.iter().any(|name| name == &generic) {
+        return Some(generic);
+    }
+
+    let mut matches = entries
+        .iter()
+        .filter(|name| name.starts_with(prefix) && name.ends_with(suffix))
+        .cloned()
+        .collect::<Vec<_>>();
+    matches.sort();
+    matches.into_iter().next()
+}
+
+fn keep_variant_source(path: &Path, selected: &SelectedVariantFiles) -> bool {
+    let name = path
+        .file_name()
+        .unwrap_or_default()
+        .to_string_lossy()
+        .to_lowercase();
+    let stem = stem_lower(&name);
+
+    if name.starts_with("startup_") {
+        return false;
+    }
+    if name.starts_with("variant_") {
+        return selected
+            .source_stem
+            .as_ref()
+            .is_some_and(|wanted| &stem == wanted);
+    }
+    if name.starts_with("peripheralpins_") {
+        return selected
+            .peripheral_stem
+            .as_ref()
+            .is_some_and(|wanted| &stem == wanted);
+    }
+
+    true
+}
+
+fn normalize_variant_name(name: &str) -> String {
+    name.to_lowercase()
+        .replace(['/', '\\', '-', ' '], "_")
+        .replace("__", "_")
+}
+
+fn stem_lower(name: &str) -> String {
+    Path::new(name)
+        .file_stem()
+        .unwrap_or_default()
+        .to_string_lossy()
+        .to_lowercase()
 }
 
 /// Create an STM32 orchestrator.

@@ -73,7 +73,10 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             super::mcu_config::get_rp2040_config_for_mcu(&ctx.board.mcu.to_lowercase())?;
         let mut defines = ctx.board.get_defines();
         defines.extend(mcu_config.defines_map());
-        let mut include_dirs = ctx.board.get_include_paths(&framework_dir);
+        // Use the resolved core_dir/variant_dir instead of board.get_include_paths():
+        // RP2040 board metadata reports `core = earlephilhower`, while the actual
+        // package directory is `cores/rp2040/`.
+        let mut include_dirs = vec![core_dir.clone(), variant_dir.clone()];
         include_dirs.push(ctx.src_dir.clone());
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
         // Toolchain sysroot includes

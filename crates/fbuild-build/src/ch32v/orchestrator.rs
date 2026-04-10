@@ -86,12 +86,17 @@ impl BuildOrchestrator for Ch32vOrchestrator {
         } else {
             "ch32v003".to_string()
         };
+        let system_series = series_to_system_dir(&series);
         let mcu_config = super::mcu_config::get_ch32v_config_for_mcu(&series)?;
         let mut defines = ctx.board.get_defines();
         defines.extend(mcu_config.defines_map());
+        defines.insert(system_series.clone(), "1".to_string());
         // CH32V cores use `#include VARIANT_H` — define it from the variant dir
         if let Some(vh) = find_variant_h(&variant_dir) {
             defines.insert("VARIANT_H".to_string(), format!("\\\"{}\\\"", vh));
+        }
+        if series == "ch32x035" {
+            defines.insert("RCC_BackupResetCmd(x)".to_string(), "((void)0)".to_string());
         }
         // Use resolved core_dir/variant_dir directly — board.get_include_paths()
         // uses the raw board core name which may differ from the actual directory
@@ -142,10 +147,9 @@ impl BuildOrchestrator for Ch32vOrchestrator {
 
         // 7. Create linker (resolve linker script from system dir)
         // CH32V linker scripts are in system/<SERIES>/SRC/Ld/, not in variants/
-        let system_dir_name = series_to_system_dir(&series);
         let linker_script_path = framework_dir
             .join("system")
-            .join(&system_dir_name)
+            .join(&system_series)
             .join("SRC")
             .join("Ld")
             .join("Link.ld");

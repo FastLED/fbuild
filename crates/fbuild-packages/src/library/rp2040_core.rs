@@ -74,7 +74,19 @@ impl Rp2040Cores {
 
     /// Get the core source directory for a specific core name.
     pub fn get_core_dir(&self, core_name: &str) -> PathBuf {
-        self.get_cores_dir().join(core_name)
+        let named = self.get_cores_dir().join(core_name);
+        if named.exists() {
+            return named;
+        }
+
+        // PlatformIO board metadata uses `earlephilhower` as the core name, but
+        // the actual package layout is `cores/rp2040/`.
+        let fallback = self.get_cores_dir().join("rp2040");
+        if fallback.exists() {
+            return fallback;
+        }
+
+        named
     }
 
     /// Get the variant directory for a specific variant name.

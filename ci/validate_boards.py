@@ -38,6 +38,30 @@ UPLOAD_FIELDS = (
     "wait_for_upload_port",
 )
 
+MEGATINYCORE_EXTRA_FLAGS = (
+    "-DCLOCK_SOURCE=0",
+    '-DMEGATINYCORE="2.6.11"',
+    "-DMEGATINYCORE_MAJOR=2UL",
+    "-DMEGATINYCORE_MINOR=6UL",
+    "-DMEGATINYCORE_PATCH=11UL",
+    "-DMEGATINYCORE_RELEASED=1",
+    "-DCORE_ATTACH_ALL",
+    "-DTWI_MORS",
+    "-DUSE_TIMERD0_PWM",
+)
+
+DXCORE_EXTRA_FLAGS = (
+    "-DCLOCK_SOURCE=0",
+    '-DDXCORE="1.5.6"',
+    "-DDXCORE_MAJOR=1UL",
+    "-DDXCORE_MINOR=5UL",
+    "-DDXCORE_PATCH=6UL",
+    "-DDXCORE_RELEASED=1",
+    "-DCORE_ATTACH_ALL",
+    "-DTWI_MORS_SINGLE",
+    "-DMILLIS_USE_TIMERB2",
+)
+
 
 def home_dir() -> Path:
     home = os.environ.get("USERPROFILE") if sys.platform == "win32" else os.environ.get("HOME")
@@ -62,14 +86,37 @@ def normalize_extra_flags(val: object) -> str:
     return ""
 
 
+def framework_extra_flags(core: str | None) -> tuple[str, ...]:
+    if core == "megatinycore":
+        return MEGATINYCORE_EXTRA_FLAGS
+    if core == "dxcore":
+        return DXCORE_EXTRA_FLAGS
+    return ()
+
+
+def merge_extra_flags(core: str | None, flags: str) -> str:
+    merged = flags.split()
+    existing = set(merged)
+
+    # PlatformIO injects these framework defines during the build rather than
+    # storing them in the board JSON, but fbuild relies on the static board
+    # assets carrying the full define set.
+    for flag in framework_extra_flags(core):
+        if flag not in existing:
+            merged.append(flag)
+
+    return " ".join(merged)
+
+
 def extract_build(pio_build: dict) -> dict:
     """Extract relevant build fields from PlatformIO's build section."""
     build: dict = {}
+    core = pio_build.get("core")
     for field in BUILD_FIELDS:
         if field in pio_build:
             val = pio_build[field]
             if field == "extra_flags":
-                val = normalize_extra_flags(val)
+                val = merge_extra_flags(core if isinstance(core, str) else None, normalize_extra_flags(val))
             build[field] = val
 
     # Extract VID/PID from hwids (array of [vid, pid] pairs — take the first)
