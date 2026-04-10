@@ -1039,6 +1039,12 @@ pub async fn deploy(
                 monitor_after: req.monitor_after,
                 output_file: reported_output_file,
                 output_dir: reported_output_dir,
+                monitor_timeout: req.monitor_timeout,
+                halt_on_error: req.monitor_halt_on_error.clone(),
+                halt_on_success: req.monitor_halt_on_success.clone(),
+                expect: req.monitor_expect.clone(),
+                show_timestamp: req.monitor_show_timestamp,
+                verbose: req.verbose,
             },
         )
         .await;

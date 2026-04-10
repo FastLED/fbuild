@@ -1226,14 +1226,17 @@ async fn run_deploy(
     };
 
     let resp = client.deploy(&req).await?;
-    if deploy_route == CliDeployRoute::Emulator(CliEmulatorKind::Qemu) {
+    if deploy_route == CliDeployRoute::Emulator(CliEmulatorKind::Qemu)
+        || deploy_route == CliDeployRoute::Emulator(CliEmulatorKind::Avr8js)
+    {
         print_operation_streams(&resp);
     }
     println!("{}", resp.message);
     if !resp.success {
         std::process::exit(resp.exit_code);
     }
-    if deploy_route == CliDeployRoute::Emulator(CliEmulatorKind::Avr8js) && monitor_after {
+    // Open browser for avr8js only when daemon returned a launch URL (non-headless mode)
+    if deploy_route == CliDeployRoute::Emulator(CliEmulatorKind::Avr8js) {
         if let Some(url) = resp.launch_url.as_deref() {
             if let Err(e) = open_in_browser(url) {
                 eprintln!("warning: failed to open browser: {}", e);
