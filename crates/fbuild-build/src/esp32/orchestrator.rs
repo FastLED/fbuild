@@ -23,8 +23,14 @@ use std::time::Instant;
 
 use fbuild_core::{Platform, Result};
 use fbuild_packages::Framework;
+use serde::Serialize;
 
+use crate::build_fingerprint::{
+    hash_watch_set_stamps, load_json, normalize_path, save_json, stable_hash_json,
+    PersistedBuildFingerprint, BUILD_FINGERPRINT_VERSION,
+};
 use crate::linker::LinkerScripts;
+use crate::zccache::FingerprintWatch;
 
 use crate::compiler::Compiler as _;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
@@ -35,6 +41,53 @@ use super::mcu_config::get_mcu_config;
 
 /// ESP32 platform build orchestrator.
 pub struct Esp32Orchestrator;
+
+const FAST_PATH_EXTENSIONS: &[&str] = &[
+    "a", "bin", "c", "cc", "cpp", "csv", "elf", "h", "hh", "hpp", "ino", "json", "ld", "lds", "py",
+    "s", "S", "txt",
+];
+const FAST_PATH_EXCLUDES: &[&str] = &[
+    ".cache",
+    ".fbuild",
+    ".git",
+    ".pio",
+    ".venv",
+    ".vscode",
+    "__pycache__",
+    "build",
+    "node_modules",
+    "target",
+    "venv",
+];
+
+#[derive(Debug, Serialize)]
+struct Esp32FingerprintMetadata {
+    version: u32,
+    env_name: String,
+    profile: String,
+    board_name: String,
+    board_mcu: String,
+    board_define: String,
+    board_core: String,
+    board_variant: String,
+    board_variant_h: Option<String>,
+    board_extra_flags: Option<String>,
+    board_upload_protocol: Option<String>,
+    board_upload_speed: Option<String>,
+    board_partitions: Option<String>,
+    board_ldscript: Option<String>,
+    board_platform: Option<String>,
+    architecture: String,
+    platform: String,
+    project_dir: String,
+    toolchain_dir: String,
+    framework_dir: String,
+    flash_mode: String,
+    flash_freq: String,
+    flash_size: String,
+    max_flash: Option<u64>,
+    max_ram: Option<u64>,
+}
 
 fn framework_failure_marker(build_dir: &Path, lib_name: &str) -> PathBuf {
     build_dir.join(format!(".{lib_name}.failed"))
@@ -97,6 +150,68 @@ fn record_failed_framework_lib(marker_path: &Path, signature: &str, error: &str)
     let _ = std::fs::write(marker_path, format!("{signature}\n{error}\n"));
 }
 
+fn build_fingerprint_path(build_dir: &Path) -> PathBuf {
+    build_dir.join("build_fingerprint.json")
+}
+
+fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
+    match profile {
+        fbuild_core::BuildProfile::Release => "release",
+        fbuild_core::BuildProfile::Quick => "quick",
+    }
+}
+
+fn fast_path_watch(cache_name: &str, build_dir: &Path, root: &Path) -> Option<FingerprintWatch> {
+    if !root.exists() {
+        return None;
+    }
+    Some(FingerprintWatch {
+        cache_file: build_dir.join(format!(".{}.zccache_fp.json", cache_name)),
+        root: root.to_path_buf(),
+        extensions: FAST_PATH_EXTENSIONS
+            .iter()
+            .map(|ext| (*ext).to_string())
+            .collect(),
+        excludes: FAST_PATH_EXCLUDES
+            .iter()
+            .map(|exclude| (*exclude).to_string())
+            .collect(),
+    })
+}
+
+fn collect_fast_path_watches(build_dir: &Path, project_dir: &Path) -> Vec<FingerprintWatch> {
+    let mut watches = Vec::new();
+    if let Some(watch) = fast_path_watch("project", build_dir, project_dir) {
+        watches.push(watch);
+    }
+    let resolved_libs_dir = build_dir.join("libs");
+    if let Some(watch) = fast_path_watch("dep_libs", build_dir, &resolved_libs_dir) {
+        watches.push(watch);
+    }
+    watches
+}
+
+fn compile_db_is_current(build_dir: &Path, project_dir: &Path) -> bool {
+    let build_copy = build_dir.join("compile_commands.json");
+    if !build_copy.exists() {
+        return false;
+    }
+    crate::compile_database::CompileDatabase::expected_output_path(build_dir, project_dir).exists()
+}
+
+fn expected_fast_path_artifacts(
+    build_dir: &Path,
+    project_dir: &Path,
+) -> (PathBuf, PathBuf, PathBuf, PathBuf, PathBuf) {
+    (
+        build_dir.join("firmware.elf"),
+        build_dir.join("firmware.bin"),
+        build_dir.join("bootloader.bin"),
+        build_dir.join("partitions.bin"),
+        crate::compile_database::CompileDatabase::expected_output_path(build_dir, project_dir),
+    )
+}
+
 impl BuildOrchestrator for Esp32Orchestrator {
     fn platform(&self) -> Platform {
         Platform::Espressif32
@@ -105,11 +220,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
     fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
 
-        // 0. Find and start zccache compiler cache (if available)
+        // 0. Discover zccache compiler cache (startup is deferred until compile work begins)
         let compiler_cache = crate::zccache::find_zccache().map(std::path::Path::to_path_buf);
-        if let Some(ref zcc) = compiler_cache {
-            crate::zccache::ensure_running(zcc);
-        }
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
         let mut ctx = crate::pipeline::BuildContext::new(params)?;
@@ -127,6 +239,183 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // 4-6. Resolve platform, toolchain, and framework
         let (toolchain, framework) =
             resolve_pioarduino_packages(&params.project_dir, &ctx.board.mcu, &mcu_config)?;
+        let toolchain_cache_dir = fbuild_packages::Package::get_info(&toolchain).install_path;
+        let framework_cache_dir = fbuild_packages::Package::get_info(&framework).install_path;
+
+        // Aliases for build dirs (already set up by BuildContext::new())
+        let build_dir = &ctx.build_dir;
+        let core_build_dir = &ctx.core_build_dir;
+        let src_build_dir = &ctx.src_build_dir;
+
+        // Read link-affecting config before the expensive include/library/source discovery steps
+        // so the no-op fast path can return early on warm builds.
+        let sdk_ld_flags = framework.get_sdk_ld_flags(&ctx.board.mcu);
+        let sdk_defines = framework.get_sdk_defines(&ctx.board.mcu);
+
+        if sdk_ld_flags.iter().any(|f| f == "-fno-lto") {
+            mcu_config.disable_lto();
+        }
+
+        let mut user_flags = sdk_defines;
+        let user_build_flags = ctx.config.get_build_flags(&params.env_name)?;
+        user_flags.extend(user_build_flags.clone());
+        let embed_files = ctx.config.get_embed_files(&params.env_name)?;
+        let embed_txtfiles = ctx.config.get_embed_txtfiles(&params.env_name)?;
+
+        let f_for_image = ctx
+            .board
+            .f_image
+            .as_deref()
+            .or(ctx.board.f_flash.as_deref());
+        let flash_freq = crate::esp32::esp32_linker::f_flash_to_esptool_freq(
+            f_for_image,
+            mcu_config.default_flash_freq(),
+        );
+        let flash_mode = ctx
+            .board
+            .flash_mode
+            .clone()
+            .unwrap_or_else(|| mcu_config.default_flash_mode().to_string());
+        let flash_size = crate::esp32::mcu_config::bytes_to_flash_size(
+            ctx.board.max_flash,
+            mcu_config.default_flash_size(),
+        )
+        .to_string();
+        let metadata_hash = stable_hash_json(&Esp32FingerprintMetadata {
+            version: BUILD_FINGERPRINT_VERSION,
+            env_name: params.env_name.clone(),
+            profile: profile_label(params.profile).to_string(),
+            board_name: ctx.board.name.clone(),
+            board_mcu: ctx.board.mcu.clone(),
+            board_define: ctx.board.board.clone(),
+            board_core: ctx.board.core.clone(),
+            board_variant: ctx.board.variant.clone(),
+            board_variant_h: ctx.board.variant_h.clone(),
+            board_extra_flags: ctx.board.extra_flags.clone(),
+            board_upload_protocol: ctx.board.upload_protocol.clone(),
+            board_upload_speed: ctx.board.upload_speed.clone(),
+            board_partitions: ctx.board.partitions.clone(),
+            board_ldscript: ctx.board.ldscript.clone(),
+            board_platform: ctx.board.platform_str.clone(),
+            architecture: mcu_config.architecture.clone(),
+            platform: "espressif32".to_string(),
+            project_dir: normalize_path(&params.project_dir),
+            toolchain_dir: normalize_path(&toolchain_cache_dir),
+            framework_dir: normalize_path(&framework_cache_dir),
+            flash_mode: flash_mode.clone(),
+            flash_freq: flash_freq.clone(),
+            flash_size: flash_size.clone(),
+            max_flash: ctx.board.max_flash,
+            max_ram: ctx.board.max_ram,
+        })?;
+        let fingerprint_path = build_fingerprint_path(build_dir);
+        let fingerprint_watches = collect_fast_path_watches(build_dir, &params.project_dir);
+
+        if !params.compiledb_only
+            && !params.symbol_analysis
+            && params.symbol_analysis_path.is_none()
+        {
+            let (fast_elf, fast_bin, fast_boot, fast_parts, fast_compile_db) =
+                expected_fast_path_artifacts(build_dir, &params.project_dir);
+            let persisted = match load_json::<PersistedBuildFingerprint>(&fingerprint_path) {
+                Ok(value) => value,
+                Err(e) => {
+                    tracing::warn!("ignoring invalid build fingerprint: {}", e);
+                    None
+                }
+            };
+            let artifacts_ready = fast_elf.exists()
+                && fast_bin.exists()
+                && fast_boot.exists()
+                && fast_parts.exists()
+                && fast_compile_db.exists()
+                && compile_db_is_current(build_dir, &params.project_dir);
+
+            if let Some(previous) = persisted.as_ref() {
+                if previous.version == BUILD_FINGERPRINT_VERSION
+                    && previous.metadata_hash == metadata_hash
+                    && artifacts_ready
+                {
+                    let file_set_matches = if let Some(ref zcc) = compiler_cache {
+                        let mut changed = false;
+                        let mut zccache_ok = true;
+                        for watch in &fingerprint_watches {
+                            match crate::zccache::check_fingerprint(zcc, watch) {
+                                Ok(crate::zccache::FingerprintCheck::Unchanged) => {}
+                                Ok(crate::zccache::FingerprintCheck::Changed) => {
+                                    changed = true;
+                                    break;
+                                }
+                                Err(e) => {
+                                    tracing::warn!(
+                                        "zccache fingerprint unavailable for {}: {}",
+                                        watch.root.display(),
+                                        e
+                                    );
+                                    zccache_ok = false;
+                                    break;
+                                }
+                            }
+                        }
+                        if zccache_ok {
+                            !changed
+                        } else {
+                            match previous.file_set_hash.as_deref() {
+                                Some(previous_hash) => {
+                                    match hash_watch_set_stamps(&fingerprint_watches) {
+                                        Ok(current_hash) => current_hash == previous_hash,
+                                        Err(e) => {
+                                            tracing::warn!("failed to hash watched inputs: {}", e);
+                                            false
+                                        }
+                                    }
+                                }
+                                None => false,
+                            }
+                        }
+                    } else {
+                        match previous.file_set_hash.as_deref() {
+                            Some(previous_hash) => {
+                                match hash_watch_set_stamps(&fingerprint_watches) {
+                                    Ok(current_hash) => current_hash == previous_hash,
+                                    Err(e) => {
+                                        tracing::warn!("failed to hash watched inputs: {}", e);
+                                        false
+                                    }
+                                }
+                            }
+                            None => false,
+                        }
+                    };
+
+                    if file_set_matches {
+                        ctx.build_log.push(
+                            "No-op fingerprint matched; reusing existing ESP32 artifacts."
+                                .to_string(),
+                        );
+                        let elapsed = start.elapsed().as_secs_f64();
+                        return Ok(BuildResult {
+                            success: true,
+                            firmware_path: Some(fast_bin),
+                            elf_path: Some(fast_elf),
+                            size_info: previous.size_info.clone(),
+                            symbol_map: None,
+                            build_time_secs: elapsed,
+                            message: format!(
+                                "ESP32 ({}) build for {} reused cached artifacts",
+                                ctx.board.mcu, params.env_name
+                            ),
+                            compile_database_path: Some(fast_compile_db),
+                            build_log: ctx.build_log,
+                        });
+                    }
+                }
+            }
+        }
+
+        if let Some(ref zcc) = compiler_cache {
+            crate::zccache::ensure_running(zcc);
+        }
 
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
         tracing::info!(
@@ -139,6 +428,9 @@ impl BuildOrchestrator for Esp32Orchestrator {
             toolchain_dir.display()
         );
 
+        let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
+        tracing::info!("ESP32 framework at {}", framework_dir.display());
+
         let tc_label = if mcu_config.is_riscv() {
             "riscv32-esp-elf-gcc"
         } else {
@@ -149,14 +441,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
             tc_label,
             &mut ctx.build_log,
         );
-
-        let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
-        tracing::info!("ESP32 framework at {}", framework_dir.display());
-
-        // Aliases for build dirs (already set up by BuildContext::new())
-        let build_dir = &ctx.build_dir;
-        let core_build_dir = &ctx.core_build_dir;
-        let src_build_dir = &ctx.src_build_dir;
 
         let core_dir = framework.get_core_dir(&ctx.board.core);
         let variant_dir = framework.get_variant_dir(&ctx.board.variant);
@@ -696,9 +980,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
         }
 
         // 11.5. Process embedded files (board_build.embed_files + embed_txtfiles)
-        let embed_files = ctx.config.get_embed_files(&params.env_name)?;
-        let embed_txtfiles = ctx.config.get_embed_txtfiles(&params.env_name)?;
-
         if !embed_files.is_empty() || !embed_txtfiles.is_empty() {
             let embed_dir = build_dir.join("embed");
             std::fs::create_dir_all(&embed_dir)?;
@@ -747,19 +1028,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let mut all_archives: Vec<std::path::PathBuf> = core_objects;
         all_archives.extend(library_archives);
 
-        // Prefer f_image over f_flash for esptool frequency, matching PlatformIO's
-        // _get_board_f_image() behavior. f_image is the frequency encoded in the
-        // firmware image header; f_flash is the actual SPI clock (which may not be
-        // a valid esptool frequency, e.g. ESP32-H2's 64MHz).
-        let f_for_image = ctx
-            .board
-            .f_image
-            .as_deref()
-            .or(ctx.board.f_flash.as_deref());
-        let flash_freq = crate::esp32::esp32_linker::f_flash_to_esptool_freq(
-            f_for_image,
-            mcu_config.default_flash_freq(),
-        );
         let linker = Esp32Linker::new(
             toolchain.get_gcc_path(),
             toolchain.get_ar_path(),
@@ -770,7 +1038,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             sdk_lib_flags,
             sdk_ld_scripts,
             params.profile,
-            ctx.board.flash_mode.clone(),
+            Some(flash_mode.clone()),
             &flash_freq,
             ctx.board.max_flash,
             ctx.board.max_ram,
@@ -928,6 +1196,33 @@ impl BuildOrchestrator for Esp32Orchestrator {
         }
 
         // 15. Size reporting + result assembly
+        let persisted_fingerprint = PersistedBuildFingerprint {
+            version: BUILD_FINGERPRINT_VERSION,
+            metadata_hash: metadata_hash.clone(),
+            file_set_hash: match hash_watch_set_stamps(&fingerprint_watches) {
+                Ok(hash) => Some(hash),
+                Err(e) => {
+                    tracing::warn!("failed to hash watched inputs for fingerprint save: {}", e);
+                    None
+                }
+            },
+            size_info: link_result.size_info.clone(),
+        };
+        if let Err(e) = save_json(&fingerprint_path, &persisted_fingerprint) {
+            tracing::warn!("failed to write build fingerprint: {}", e);
+        }
+        if let Some(ref zcc) = compiler_cache {
+            for watch in &fingerprint_watches {
+                if let Err(e) = crate::zccache::mark_fingerprint_success(zcc, watch) {
+                    tracing::warn!(
+                        "failed to mark zccache fingerprint success for {}: {}",
+                        watch.root.display(),
+                        e
+                    );
+                }
+            }
+        }
+
         crate::pipeline::handle_link_result(
             &link_result,
             &mut build_log,

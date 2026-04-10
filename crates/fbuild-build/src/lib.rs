@@ -6,6 +6,7 @@
 pub mod apollo3;
 mod arduino_props;
 pub mod avr;
+pub mod build_fingerprint;
 pub mod build_output;
 pub mod ch32v;
 pub mod compile_database;

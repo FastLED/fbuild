@@ -13,6 +13,9 @@ use std::path::{Path, PathBuf};
 use fbuild_core::subprocess::run_command;
 use fbuild_core::{BuildProfile, Result, SizeInfo};
 
+use crate::build_fingerprint::{
+    load_json, save_json, BinArtifactCache, FileStamp, SizeArtifactCache, BUILD_FINGERPRINT_VERSION,
+};
 use crate::linker::{Linker, LinkerScripts};
 
 use super::mcu_config::Esp32McuConfig;
@@ -132,6 +135,100 @@ impl Esp32Linker {
 
         flags
     }
+
+    fn flash_size(&self) -> String {
+        super::mcu_config::bytes_to_flash_size(self.max_flash, self.mcu_config.default_flash_size())
+            .to_string()
+    }
+
+    fn bin_cache_path(&self, output_dir: &Path) -> PathBuf {
+        output_dir.join(".firmware_bin_cache.json")
+    }
+
+    fn size_cache_path(&self, output_dir: &Path) -> PathBuf {
+        output_dir.join(".firmware_size_cache.json")
+    }
+
+    fn current_bin_cache(&self, elf_path: &Path, flash_size: &str) -> Result<BinArtifactCache> {
+        Ok(BinArtifactCache {
+            version: BUILD_FINGERPRINT_VERSION,
+            elf_stamp: FileStamp::from_path(elf_path)?,
+            flash_mode: self.flash_mode.clone(),
+            flash_freq: self.flash_freq.clone(),
+            flash_size: flash_size.to_string(),
+        })
+    }
+
+    fn can_reuse_bin(&self, elf_path: &Path, output_dir: &Path, flash_size: &str) -> bool {
+        let bin_out = output_dir.join("firmware.bin");
+        if !bin_out.exists() {
+            return false;
+        }
+
+        let bin_mtime = match std::fs::metadata(&bin_out).and_then(|m| m.modified()) {
+            Ok(mtime) => mtime,
+            Err(_) => return false,
+        };
+        let elf_mtime = match std::fs::metadata(elf_path).and_then(|m| m.modified()) {
+            Ok(mtime) => mtime,
+            Err(_) => return false,
+        };
+        if bin_mtime < elf_mtime {
+            return false;
+        }
+
+        let expected = match self.current_bin_cache(elf_path, flash_size) {
+            Ok(cache) => cache,
+            Err(_) => return false,
+        };
+        match load_json::<BinArtifactCache>(&self.bin_cache_path(output_dir)) {
+            Ok(Some(recorded)) => recorded == expected,
+            Ok(None) => false,
+            Err(e) => {
+                tracing::warn!("ignoring invalid firmware bin cache: {}", e);
+                false
+            }
+        }
+    }
+
+    fn load_cached_size(&self, elf_path: &Path) -> Option<SizeInfo> {
+        let output_dir = elf_path.parent().unwrap_or_else(|| Path::new("."));
+        let expected_stamp = match FileStamp::from_path(elf_path) {
+            Ok(stamp) => stamp,
+            Err(_) => return None,
+        };
+        match load_json::<SizeArtifactCache>(&self.size_cache_path(output_dir)) {
+            Ok(Some(cache))
+                if cache.version == BUILD_FINGERPRINT_VERSION
+                    && cache.elf_stamp == expected_stamp =>
+            {
+                Some(cache.size_info)
+            }
+            Ok(_) => None,
+            Err(e) => {
+                tracing::warn!("ignoring invalid firmware size cache: {}", e);
+                None
+            }
+        }
+    }
+
+    fn save_size_cache(&self, elf_path: &Path, size_info: &SizeInfo) {
+        let output_dir = elf_path.parent().unwrap_or_else(|| Path::new("."));
+        let cache = match FileStamp::from_path(elf_path) {
+            Ok(stamp) => SizeArtifactCache {
+                version: BUILD_FINGERPRINT_VERSION,
+                elf_stamp: stamp,
+                size_info: size_info.clone(),
+            },
+            Err(e) => {
+                tracing::warn!("failed to record firmware size cache: {}", e);
+                return;
+            }
+        };
+        if let Err(e) = save_json(&self.size_cache_path(output_dir), &cache) {
+            tracing::warn!("failed to write firmware size cache: {}", e);
+        }
+    }
 }
 
 impl Linker for Esp32Linker {
@@ -229,12 +326,13 @@ impl Linker for Esp32Linker {
         let chip = &self.mcu_config.mcu;
         let elf_str = elf_out.to_string_lossy();
         let bin_str = bin_out.to_string_lossy();
+        let flash_size = self.flash_size();
+        if self.can_reuse_bin(&elf_out, output_dir, &flash_size) {
+            tracing::info!("elf2image: firmware.bin is current, skipping conversion");
+            return Ok(bin_out);
+        }
         // Determine flash size from max_flash config (bytes → human-readable).
         // elf2image doesn't support "detect" — needs an explicit size.
-        let flash_size = super::mcu_config::bytes_to_flash_size(
-            self.max_flash,
-            self.mcu_config.default_flash_size(),
-        );
         let args = [
             "esptool",
             "--chip",
@@ -245,7 +343,7 @@ impl Linker for Esp32Linker {
             "--flash-freq",
             &self.flash_freq,
             "--flash-size",
-            flash_size,
+            &flash_size,
             &elf_str,
             "-o",
             &bin_str,
@@ -255,6 +353,10 @@ impl Linker for Esp32Linker {
 
         match run_command(&args, None, None, Some(std::time::Duration::from_secs(30))) {
             Ok(result) if result.success() => {
+                let cache = self.current_bin_cache(&elf_out, &flash_size)?;
+                if let Err(e) = save_json(&self.bin_cache_path(output_dir), &cache) {
+                    tracing::warn!("failed to write firmware bin cache: {}", e);
+                }
                 tracing::info!("converted firmware.elf → firmware.bin");
                 Ok(bin_out)
             }
@@ -275,13 +377,20 @@ impl Linker for Esp32Linker {
     }
 
     fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
-        crate::linker::LinkerBase::report_size(
+        if let Some(size_info) = self.load_cached_size(elf_path) {
+            tracing::info!("size: firmware.elf is unchanged, reusing cached size report");
+            return Ok(size_info);
+        }
+
+        let size_info = crate::linker::LinkerBase::report_size(
             &self.size_path,
             elf_path,
             self.max_flash,
             self.max_ram,
             "size",
-        )
+        )?;
+        self.save_size_cache(elf_path, &size_info);
+        Ok(size_info)
     }
 }
 

@@ -7,8 +7,26 @@
 use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
+use fbuild_core::Result;
+
 /// Cached result of searching for zccache on PATH.
 static ZCCACHE_PATH: OnceLock<Option<PathBuf>> = OnceLock::new();
+
+/// A persistent zccache fingerprint watch.
+#[derive(Debug, Clone)]
+pub struct FingerprintWatch {
+    pub cache_file: PathBuf,
+    pub root: PathBuf,
+    pub extensions: Vec<String>,
+    pub excludes: Vec<String>,
+}
+
+/// Result of a zccache fingerprint check.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum FingerprintCheck {
+    Changed,
+    Unchanged,
+}
 
 /// Find the zccache binary.
 ///
@@ -151,5 +169,75 @@ pub fn wrap_args(args: &[&str], cache_path: Option<&Path>) -> Vec<String> {
             wrapped
         }
         None => args.iter().map(|s| s.to_string()).collect(),
+    }
+}
+
+/// Ask zccache whether the watched root changed since the last successful mark.
+///
+/// Exit code semantics come from `zccache fp check`:
+/// - `0`: changed, build work should run
+/// - `1`: unchanged, the watched root can be reused
+pub fn check_fingerprint(zccache: &Path, watch: &FingerprintWatch) -> Result<FingerprintCheck> {
+    if let Some(parent) = watch.cache_file.parent() {
+        std::fs::create_dir_all(parent)?;
+    }
+
+    let mut args = vec![
+        zccache.to_string_lossy().to_string(),
+        "fp".to_string(),
+        "--cache-file".to_string(),
+        watch.cache_file.to_string_lossy().to_string(),
+        "check".to_string(),
+        "--root".to_string(),
+        watch.root.to_string_lossy().to_string(),
+    ];
+    for ext in &watch.extensions {
+        args.push("--ext".to_string());
+        args.push(ext.clone());
+    }
+    for exclude in &watch.excludes {
+        args.push("--exclude".to_string());
+        args.push(exclude.clone());
+    }
+
+    let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
+    let result = fbuild_core::subprocess::run_command(&args_ref, None, None, None)?;
+    match result.exit_code {
+        0 => Ok(FingerprintCheck::Changed),
+        1 => Ok(FingerprintCheck::Unchanged),
+        code => Err(fbuild_core::FbuildError::BuildFailed(format!(
+            "zccache fp check failed for {} (exit={}): {}{}",
+            watch.root.display(),
+            code,
+            result.stderr,
+            result.stdout
+        ))),
+    }
+}
+
+/// Mark a previously checked watch as successful.
+pub fn mark_fingerprint_success(zccache: &Path, watch: &FingerprintWatch) -> Result<()> {
+    if let Some(parent) = watch.cache_file.parent() {
+        std::fs::create_dir_all(parent)?;
+    }
+
+    let args = [
+        zccache.to_string_lossy().to_string(),
+        "fp".to_string(),
+        "--cache-file".to_string(),
+        watch.cache_file.to_string_lossy().to_string(),
+        "mark-success".to_string(),
+    ];
+    let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
+    let result = fbuild_core::subprocess::run_command(&args_ref, None, None, None)?;
+    if result.success() {
+        Ok(())
+    } else {
+        Err(fbuild_core::FbuildError::BuildFailed(format!(
+            "zccache fp mark-success failed for {}: {}{}",
+            watch.root.display(),
+            result.stderr,
+            result.stdout
+        )))
     }
 }

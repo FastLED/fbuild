@@ -6,7 +6,20 @@ Import and call activate() at the top of CI scripts.
 
 import os
 import shutil
-import subprocess
+
+
+def _cargo_bin_from_tool(tool_name):
+    """Derive a rustup-managed .cargo/bin directory from a tool on PATH."""
+    tool_path = shutil.which(tool_name)
+    if not tool_path:
+        return None
+
+    bin_dir = os.path.dirname(os.path.abspath(tool_path))
+    rustup_name = "rustup.exe" if os.name == "nt" else "rustup"
+    rustup_path = os.path.join(bin_dir, rustup_name)
+    if os.path.isfile(rustup_path):
+        return bin_dir
+    return None
 
 
 def find_cargo_bin():
@@ -29,19 +42,10 @@ def find_cargo_bin():
             if os.path.isdir(bin_dir):
                 return os.path.abspath(bin_dir)
 
-    rustup = shutil.which("rustup")
-    if rustup:
-        try:
-            tool_path = subprocess.check_output(
-                [rustup, "which", "cargo"],
-                text=True,
-                stderr=subprocess.DEVNULL,
-            ).strip()
-            if tool_path and os.path.isfile(tool_path):
-                return os.path.abspath(os.path.dirname(tool_path))
-        except Exception:
-            pass
-
+    for tool_name in ("rustup", "cargo", "rustc"):
+        bin_dir = _cargo_bin_from_tool(tool_name)
+        if bin_dir:
+            return bin_dir
     return None
 
 

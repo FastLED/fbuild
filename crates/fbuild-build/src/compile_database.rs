@@ -74,13 +74,7 @@ impl CompileDatabase {
             ))
         })?;
 
-        std::fs::write(&path, json).map_err(|e| {
-            fbuild_core::FbuildError::BuildFailed(format!(
-                "failed to write {}: {}",
-                path.display(),
-                e
-            ))
-        })?;
+        write_if_changed(&path, json.as_bytes())?;
 
         Ok(path)
     }
@@ -103,6 +97,27 @@ impl CompileDatabase {
         let project_path = self.write(project_dir)?;
         Ok(project_path)
     }
+
+    /// Path callers should report as the effective compile database output.
+    pub fn expected_output_path(build_dir: &Path, project_dir: &Path) -> PathBuf {
+        if is_library_project(project_dir) {
+            build_dir.join("compile_commands.json")
+        } else {
+            project_dir.join("compile_commands.json")
+        }
+    }
+}
+
+fn write_if_changed(path: &Path, contents: &[u8]) -> Result<()> {
+    if let Ok(existing) = std::fs::read(path) {
+        if existing == contents {
+            return Ok(());
+        }
+    }
+
+    std::fs::write(path, contents).map_err(|e| {
+        fbuild_core::FbuildError::BuildFailed(format!("failed to write {}: {}", path.display(), e))
+    })
 }
 
 /// Strip cache wrapper (sccache/zccache/ccache) from compiler arguments.
@@ -490,6 +505,56 @@ mod tests {
         db.write_and_copy(&build_dir, &project_dir).unwrap();
         assert!(build_dir.join("compile_commands.json").exists());
         assert!(project_dir.join("compile_commands.json").exists());
+    }
+
+    #[test]
+    fn test_database_write_does_not_rewrite_unchanged_contents() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let dir = tmp.path().join("build");
+        let mut db = CompileDatabase::new();
+        db.add_entry(CompileEntry {
+            arguments: vec!["/usr/bin/gcc".to_string(), "-c".to_string()],
+            directory: "/project".to_string(),
+            file: "main.c".to_string(),
+            output: None,
+        });
+
+        let path = db.write(&dir).unwrap();
+        let first_mtime = std::fs::metadata(&path).unwrap().modified().unwrap();
+        std::thread::sleep(std::time::Duration::from_millis(20));
+
+        let path_again = db.write(&dir).unwrap();
+        let second_mtime = std::fs::metadata(&path_again).unwrap().modified().unwrap();
+
+        assert_eq!(path, path_again);
+        assert_eq!(first_mtime, second_mtime);
+    }
+
+    #[test]
+    fn test_expected_output_path_prefers_project_root_for_normal_projects() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let build_dir = tmp.path().join("build");
+        let project_dir = tmp.path().join("project");
+        std::fs::create_dir_all(&project_dir).unwrap();
+
+        assert_eq!(
+            CompileDatabase::expected_output_path(&build_dir, &project_dir),
+            project_dir.join("compile_commands.json")
+        );
+    }
+
+    #[test]
+    fn test_expected_output_path_prefers_build_dir_for_library_projects() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let build_dir = tmp.path().join("build");
+        let project_dir = tmp.path().join("project");
+        std::fs::create_dir_all(&project_dir).unwrap();
+        std::fs::write(project_dir.join("library.json"), r#"{"name":"test"}"#).unwrap();
+
+        assert_eq!(
+            CompileDatabase::expected_output_path(&build_dir, &project_dir),
+            build_dir.join("compile_commands.json")
+        );
     }
 
     // --- Cache wrapper stripping tests ---
