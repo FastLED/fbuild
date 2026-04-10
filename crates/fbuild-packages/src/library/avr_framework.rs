@@ -24,7 +24,8 @@ struct FrameworkEntry {
     /// Override for the core subdirectory name inside `cores/`.
     /// When `None`, the registry key (core name) is used as the directory name.
     core_dir: Option<String>,
-    /// Whether this framework needs ArduinoCore-API injected into cores/<core>/api/.
+    /// Whether this framework needs ArduinoCore-API injected into
+    /// `cores/<core>/api/`.
     needs_arduino_api: bool,
 }
 
@@ -89,7 +90,7 @@ pub struct AvrFramework {
     /// Override for the subdirectory name inside `cores/`.
     /// When `None`, `core_name` is used (works for most frameworks).
     core_dir_override: Option<String>,
-    /// Whether to fetch ArduinoCore-API into cores/<core>/api/ after install.
+    /// Whether to fetch ArduinoCore-API into `cores/<core>/api/` after install.
     needs_arduino_api: bool,
 }
 

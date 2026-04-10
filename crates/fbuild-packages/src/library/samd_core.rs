@@ -1,7 +1,7 @@
 //! Adafruit SAMD core (ArduinoCore-samd) framework package.
 //!
 //! Downloads and manages the Adafruit SAMD core for SAMD21/SAMD51 boards from GitHub.
-//! Provides paths to: cores/arduino, variants/<board>, libraries/.
+//! Provides paths to: `cores/arduino`, `variants/<board>`, and `libraries/`.
 
 use std::path::{Path, PathBuf};
 
