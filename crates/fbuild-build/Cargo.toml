@@ -19,6 +19,7 @@ tracing = { workspace = true }
 async-trait = { workspace = true }
 regex = { workspace = true }
 walkdir = { workspace = true }
+sha2 = { workspace = true }
 
 [dev-dependencies]
 tempfile = { workspace = true }
