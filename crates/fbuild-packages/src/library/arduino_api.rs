@@ -90,6 +90,10 @@ pub fn ensure_arduino_api(core_dir: &Path) -> Result<()> {
         let _ = std::fs::remove_file(&api_dest);
     } else if api_dest.is_dir() {
         let _ = std::fs::remove_dir_all(&api_dest);
+    } else if api_dest.exists() {
+        // GitHub archive extraction can materialize symlink placeholders as
+        // regular files on Windows. Remove them before copying `api/`.
+        let _ = std::fs::remove_file(&api_dest);
     }
 
     // Copy api/ into the core directory

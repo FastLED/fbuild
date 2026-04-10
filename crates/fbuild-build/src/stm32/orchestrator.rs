@@ -129,7 +129,7 @@ impl BuildOrchestrator for Stm32Orchestrator {
         defines.insert("USE_FULL_LL_DRIVER".to_string(), "1".to_string());
         defines.insert(
             "VARIANT_H".to_string(),
-            format!("\"{}\"", selected_variant.header),
+            format!("\\\"{}\\\"", selected_variant.header),
         );
         // UART HAL module is disabled by default in stm32yyxx_hal_conf.h — enable it
         // so WSerial.h can create the Serial instance.

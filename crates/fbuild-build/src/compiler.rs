@@ -184,8 +184,14 @@ impl CompilerBase {
     /// Compute the output .o path for a source file.
     pub fn object_path(source: &Path, build_dir: &Path) -> PathBuf {
         let stem = source.file_stem().unwrap_or_default().to_string_lossy();
-        let ext = source.extension().unwrap_or_default().to_string_lossy();
-        build_dir.join(format!("{}.{}.o", stem, ext))
+        let hash = {
+            use sha2::{Digest, Sha256};
+            let mut hasher = Sha256::new();
+            hasher.update(source.to_string_lossy().as_bytes());
+            let result = hasher.finalize();
+            format!("{:02x}{:02x}", result[0], result[1])
+        };
+        build_dir.join(format!("{}_{}.o", stem, hash))
     }
 }
 
@@ -359,7 +365,20 @@ mod tests {
     #[test]
     fn test_object_path() {
         let path = CompilerBase::object_path(Path::new("main.cpp"), Path::new("/build"));
-        assert_eq!(path, PathBuf::from("/build/main.cpp.o"));
+        assert!(path.starts_with("/build"));
+        assert!(path
+            .file_name()
+            .unwrap_or_default()
+            .to_string_lossy()
+            .starts_with("main_"));
+        assert_eq!(path.extension().unwrap(), "o");
+    }
+
+    #[test]
+    fn test_object_path_is_unique_per_source_path() {
+        let p1 = CompilerBase::object_path(Path::new("/src/a/main.cpp"), Path::new("/build"));
+        let p2 = CompilerBase::object_path(Path::new("/src/b/main.cpp"), Path::new("/build"));
+        assert_ne!(p1, p2);
     }
 
     #[test]

@@ -93,7 +93,7 @@ impl BuildOrchestrator for Ch32vOrchestrator {
         defines.insert(system_series.clone(), "1".to_string());
         // CH32V cores use `#include VARIANT_H` — define it from the variant dir
         if let Some(vh) = find_variant_h(&variant_dir) {
-            defines.insert("VARIANT_H".to_string(), format!("\"{}\"", vh));
+            defines.insert("VARIANT_H".to_string(), format!("\\\"{}\\\"", vh));
         }
         if series == "ch32x035" {
             defines.insert("RCC_BackupResetCmd(x)".to_string(), "((void)0)".to_string());

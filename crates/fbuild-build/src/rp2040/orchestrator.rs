@@ -98,6 +98,23 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             if boards_inc.exists() {
                 include_dirs.push(boards_inc);
             }
+            // ArduinoCore-API's IPAddress.h pulls in lwIP headers even for
+            // non-network sketches, so include the Pico SDK lwIP roots.
+            let pico_lwip_inc = pico_sdk_src
+                .join("rp2_common")
+                .join("pico_lwip")
+                .join("include");
+            if pico_lwip_inc.exists() {
+                include_dirs.push(pico_lwip_inc);
+            }
+        }
+        let lwip_inc = pico_sdk_dir
+            .join("lib")
+            .join("lwip")
+            .join("src")
+            .join("include");
+        if lwip_inc.exists() {
+            include_dirs.push(lwip_inc);
         }
 
         let compiler = ArmCompiler::new(

@@ -97,7 +97,9 @@ impl SilabsCores {
 impl crate::Package for SilabsCores {
     fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
         if self.is_installed() {
-            return Ok(self.resolved_dir());
+            let root = self.resolved_dir();
+            super::arduino_api::ensure_arduino_api(&root.join("cores").join("silabs"))?;
+            return Ok(root);
         }
 
         let rt = tokio::runtime::Handle::try_current().ok();
@@ -113,7 +115,9 @@ impl crate::Package for SilabsCores {
             rt.block_on(self.base.staged_install(Self::validate))?
         };
 
-        Ok(find_core_root(&install_path))
+        let root = find_core_root(&install_path);
+        super::arduino_api::ensure_arduino_api(&root.join("cores").join("silabs"))?;
+        Ok(root)
     }
 
     fn is_installed(&self) -> bool {
