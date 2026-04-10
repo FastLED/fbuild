@@ -63,12 +63,16 @@ impl BuildOrchestrator for Stm32Orchestrator {
         // STM32duino uses "arduino" as its core directory name, even though
         // the board JSON says core = "stm32". Map it here.
         let core_dir = framework.get_core_dir("arduino");
-        let variant_dir = framework.get_variant_dir(&ctx.board.variant);
         let framework_props =
             load_stm32_framework_props(&framework.get_boards_txt(), &ctx.board.variant);
+        let resolved_variant = framework_props
+            .as_ref()
+            .and_then(|props| props.get("variant").cloned())
+            .unwrap_or_else(|| ctx.board.variant.clone());
+        let variant_dir = framework.get_variant_dir(&resolved_variant);
         let selected_variant = select_variant_files(
             &variant_dir,
-            &ctx.board.variant,
+            &resolved_variant,
             framework_props
                 .as_ref()
                 .and_then(|props| props.get("variant_h").map(String::as_str))
@@ -107,7 +111,7 @@ impl BuildOrchestrator for Stm32Orchestrator {
 
         // 6. Build include dirs + compiler
         // Extract MCU family from variant path (e.g. "STM32F1xx" from "STM32F1xx/F103C8T_...")
-        let family = ctx.board.variant.split('/').next().unwrap_or("STM32F1xx");
+        let family = resolved_variant.split('/').next().unwrap_or("STM32F1xx");
 
         let mut mcu_config =
             super::mcu_config::get_stm32_config_for_mcu(&ctx.board.mcu.to_lowercase())?;
@@ -191,7 +195,7 @@ impl BuildOrchestrator for Stm32Orchestrator {
         // 7. Create linker (linker script from variant dir)
         let linker_script = match ctx.board.ldscript.as_deref() {
             Some(name) => variant_dir.join(name),
-            None => framework.get_linker_script(&ctx.board.variant),
+            None => framework.get_linker_script(&resolved_variant),
         };
         let linker = ArmLinker::new(
             toolchain.get_gcc_path(),
@@ -747,27 +751,29 @@ fn load_stm32_framework_props(boards_txt: &Path, variant: &str) -> Option<HashMa
         }
     })?;
 
-    let line_prefix = format!("{prefix}.");
     let mut props = HashMap::new();
-    for line in content.lines() {
-        let trimmed = line.trim();
-        if trimmed.is_empty() || trimmed.starts_with('#') {
-            continue;
-        }
-        let Some(rest) = trimmed.strip_prefix(&line_prefix) else {
-            continue;
-        };
-        let Some((key, value)) = rest.split_once('=') else {
-            continue;
-        };
-        let key = key.trim();
-        let normalized = key
-            .strip_prefix("build.")
-            .or_else(|| key.strip_prefix("upload."))
-            .unwrap_or(key);
-        props.insert(normalized.to_string(), value.trim().to_string());
-        if normalized != key {
-            props.insert(key.to_string(), value.trim().to_string());
+    for scope in stm32_property_scopes(&prefix) {
+        let line_prefix = format!("{scope}.");
+        for line in content.lines() {
+            let trimmed = line.trim();
+            if trimmed.is_empty() || trimmed.starts_with('#') {
+                continue;
+            }
+            let Some(rest) = trimmed.strip_prefix(&line_prefix) else {
+                continue;
+            };
+            let Some((key, value)) = rest.split_once('=') else {
+                continue;
+            };
+            let key = key.trim();
+            let normalized = key
+                .strip_prefix("build.")
+                .or_else(|| key.strip_prefix("upload."))
+                .unwrap_or(key);
+            props.insert(normalized.to_string(), value.trim().to_string());
+            if normalized != key {
+                props.insert(key.to_string(), value.trim().to_string());
+            }
         }
     }
 
@@ -790,6 +796,29 @@ fn load_stm32_framework_props(boards_txt: &Path, variant: &str) -> Option<HashMa
     }
 
     Some(props)
+}
+
+fn stm32_property_scopes(prefix: &str) -> Vec<String> {
+    let segments = prefix.split('.').collect::<Vec<_>>();
+    if segments.is_empty() {
+        return Vec::new();
+    }
+
+    let mut scopes = vec![segments[0].to_string()];
+    let mut idx = 1;
+    while idx + 2 < segments.len() {
+        if segments[idx] != "menu" {
+            break;
+        }
+        idx += 3;
+        scopes.push(segments[..idx].join("."));
+    }
+
+    if scopes.last().is_none_or(|scope| scope != prefix) {
+        scopes.push(prefix.to_string());
+    }
+
+    scopes
 }
 
 /// Create an STM32 orchestrator.
@@ -832,10 +861,10 @@ mod tests {
         fs::write(
             &boards_txt,
             "\
+GenF1.build.variant_h=variant_{build.board}.h
 GenF1.menu.pnum.MAPLEMINI_F103CB.build.board=MAPLEMINI_F103CB
 GenF1.menu.pnum.MAPLEMINI_F103CB.build.variant=STM32F1xx/F103C8T_F103CB(T-U)
-GenF1.menu.pnum.MAPLEMINI_F103CB.build.variant_h=variant_{build.board}.h
-giga.build.variant=GIGA
+giga.menu.target_core.cm7.build.variant=GIGA
 giga.build.extra_ldflags=-DCM4_BINARY_START=0x08180000
 ",
         )
@@ -852,6 +881,22 @@ giga.build.extra_ldflags=-DCM4_BINARY_START=0x08180000
         assert_eq!(
             giga.get("extra_ldflags").map(String::as_str),
             Some("-DCM4_BINARY_START=0x08180000")
+        );
+    }
+
+    #[test]
+    fn test_stm32_property_scopes_include_parent_menu_levels() {
+        assert_eq!(
+            stm32_property_scopes("giga.menu.target_core.cm7"),
+            vec!["giga", "giga.menu.target_core.cm7"]
+        );
+        assert_eq!(
+            stm32_property_scopes("foo.menu.cpu.atmega328.menu.speed.fast"),
+            vec![
+                "foo",
+                "foo.menu.cpu.atmega328",
+                "foo.menu.cpu.atmega328.menu.speed.fast"
+            ]
         );
     }
 

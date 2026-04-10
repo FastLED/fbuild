@@ -55,21 +55,7 @@ impl BuildOrchestrator for Ch32vOrchestrator {
         let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
         tracing::info!("CH32V cores at {}", framework_dir.display());
 
-        // 5. Scan sources
-        let core_dir = framework.get_core_dir(&ctx.board.core);
-        let variant_dir = framework.get_variant_dir(&ctx.board.variant);
-
-        let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
-        let sources = scanner.scan_all(Some(&core_dir), Some(&variant_dir))?;
-
-        tracing::info!(
-            "sources: {} sketch, {} core, {} variant",
-            sources.sketch_sources.len(),
-            sources.core_sources.len(),
-            sources.variant_sources.len(),
-        );
-
-        // 6. Build include dirs + compiler
+        // 5. Resolve series/variant selection used by both scanning and compile flags.
         // Derive the series from the MCU name (e.g. "ch32v003f4p6" -> "ch32v003").
         // CH32V MCU names follow: ch32{letter}{3-digit series}{package suffix}
         // Skip the leading "ch32" prefix, then take the letter + digits.
@@ -87,17 +73,28 @@ impl BuildOrchestrator for Ch32vOrchestrator {
             "ch32v003".to_string()
         };
         let system_series = series_to_system_dir(&series);
+
+        // 6. Scan sources
+        let core_dir = framework.get_core_dir(&ctx.board.core);
+        let variant_dir = resolve_variant_dir(&framework_dir, &ctx.board.variant, &system_series);
+
+        let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
+        let sources = scanner.scan_all(Some(&core_dir), Some(&variant_dir))?;
+
+        tracing::info!(
+            "sources: {} sketch, {} core, {} variant",
+            sources.sketch_sources.len(),
+            sources.core_sources.len(),
+            sources.variant_sources.len(),
+        );
+
+        // 7. Build include dirs + compiler
         let mcu_config = super::mcu_config::get_ch32v_config_for_mcu(&series)?;
         let mut defines = ctx.board.get_defines();
         defines.extend(mcu_config.defines_map());
         defines.insert(system_series.clone(), "1".to_string());
         // CH32V cores use `#include VARIANT_H` — define it from the variant dir
-        if let Some(vh) = ctx
-            .board
-            .variant_h
-            .clone()
-            .or_else(|| find_variant_h(&variant_dir))
-        {
+        if let Some(vh) = resolve_variant_h(&variant_dir, ctx.board.variant_h.as_deref()) {
             defines.insert("VARIANT_H".to_string(), format!("\\\"{}\\\"", vh));
         }
         if series == "ch32x035" {
@@ -268,6 +265,50 @@ fn find_variant_h(variant_dir: &Path) -> Option<String> {
     None
 }
 
+fn resolve_variant_h(variant_dir: &Path, preferred: Option<&str>) -> Option<String> {
+    preferred
+        .filter(|name| variant_dir.join(name).exists())
+        .map(ToOwned::to_owned)
+        .or_else(|| find_variant_h(variant_dir))
+}
+
+fn resolve_variant_dir(
+    framework_dir: &Path,
+    requested_variant: &str,
+    system_series: &str,
+) -> PathBuf {
+    let requested = framework_dir.join("variants").join(requested_variant);
+    if requested.is_dir() {
+        return requested;
+    }
+
+    let family_dir = framework_dir.join("variants").join(system_series);
+    if !family_dir.is_dir() {
+        return requested;
+    }
+
+    let requested_leaf = Path::new(requested_variant)
+        .file_name()
+        .and_then(|name| name.to_str());
+    if let Some(leaf) = requested_leaf {
+        let candidate = family_dir.join(leaf);
+        if candidate.is_dir() {
+            return candidate;
+        }
+    }
+
+    let mut variant_dirs = std::fs::read_dir(&family_dir)
+        .ok()
+        .into_iter()
+        .flatten()
+        .flatten()
+        .map(|entry| entry.path())
+        .filter(|path| path.is_dir())
+        .collect::<Vec<_>>();
+    variant_dirs.sort();
+    variant_dirs.into_iter().next().unwrap_or(requested)
+}
+
 /// Map a series name to the system directory name in the OpenWCH core.
 /// e.g. "ch32v003" -> "CH32V00x", "ch32v103" -> "CH32V10x", "ch32x035" -> "CH32X035"
 fn series_to_system_dir(series: &str) -> String {
@@ -334,5 +375,28 @@ mod tests {
         // CH32X/CH32L: exact uppercase name
         assert_eq!(series_to_system_dir("ch32x035"), "CH32X035");
         assert_eq!(series_to_system_dir("ch32l103"), "CH32L103");
+    }
+
+    #[test]
+    fn test_resolve_variant_dir_falls_back_to_family_variant() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let fallback = tmp
+            .path()
+            .join("variants")
+            .join("CH32V00x")
+            .join("CH32V003F4");
+        std::fs::create_dir_all(&fallback).unwrap();
+
+        let resolved = resolve_variant_dir(tmp.path(), "CH32V00x/CH32V006K8", "CH32V00x");
+        assert_eq!(resolved, fallback);
+    }
+
+    #[test]
+    fn test_resolve_variant_h_ignores_missing_preferred_header() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        std::fs::write(tmp.path().join("variant_CH32V003F4.h"), "").unwrap();
+
+        let resolved = resolve_variant_h(tmp.path(), Some("variant_CH32V006K8.h"));
+        assert_eq!(resolved.as_deref(), Some("variant_CH32V003F4.h"));
     }
 }

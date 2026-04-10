@@ -80,6 +80,11 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         let framework_include = framework_dir.join("include");
         if framework_include.exists() {
             include_dirs.push(framework_include);
+            add_rp_family_includes(
+                &framework_dir.join("include"),
+                &ctx.board.mcu,
+                &mut include_dirs,
+            );
         }
         include_dirs.push(ctx.src_dir.clone());
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
@@ -194,6 +199,32 @@ pub fn is_rp2040_project(project_dir: &Path, env_name: &str) -> bool {
     crate::pipeline::is_platform_project(project_dir, env_name, fbuild_core::Platform::RaspberryPi)
 }
 
+fn add_rp_family_includes(
+    framework_include: &Path,
+    mcu: &str,
+    include_dirs: &mut Vec<std::path::PathBuf>,
+) {
+    let family = if mcu.to_lowercase().starts_with("rp2350") {
+        "rp2350"
+    } else {
+        "rp2040"
+    };
+    let family_dir = framework_include.join(family);
+    if !family_dir.is_dir() {
+        return;
+    }
+
+    include_dirs.push(family_dir.clone());
+    if let Ok(entries) = std::fs::read_dir(&family_dir) {
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                include_dirs.push(path);
+            }
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -202,5 +233,20 @@ mod tests {
     fn test_rp2040_orchestrator_platform() {
         let orch = Rp2040Orchestrator;
         assert_eq!(orch.platform(), Platform::RaspberryPi);
+    }
+
+    #[test]
+    fn test_add_rp_family_includes_discovers_mcu_specific_subdirs() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let rp2040 = tmp.path().join("rp2040");
+        std::fs::create_dir_all(rp2040.join("pico_base")).unwrap();
+        std::fs::create_dir_all(rp2040.join("hardware_gpio")).unwrap();
+
+        let mut include_dirs = Vec::new();
+        add_rp_family_includes(tmp.path(), "rp2040", &mut include_dirs);
+
+        assert!(include_dirs.contains(&rp2040));
+        assert!(include_dirs.contains(&rp2040.join("pico_base")));
+        assert!(include_dirs.contains(&rp2040.join("hardware_gpio")));
     }
 }
