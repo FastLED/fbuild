@@ -147,6 +147,7 @@ impl BuildOrchestrator for SilabsOrchestrator {
             ctx,
             params,
             &sources,
+            &[],
             Some(&lib_env),
             TargetArchitecture::Arm,
             "Silicon Labs",

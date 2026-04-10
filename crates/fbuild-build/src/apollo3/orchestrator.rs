@@ -254,6 +254,7 @@ impl BuildOrchestrator for Apollo3Orchestrator {
             ctx,
             params,
             &sources,
+            &[],
             Some(&lib_env),
             TargetArchitecture::Arm,
             "APOLLO3",

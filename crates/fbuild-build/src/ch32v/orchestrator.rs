@@ -196,6 +196,7 @@ impl BuildOrchestrator for Ch32vOrchestrator {
             ctx,
             params,
             &sources,
+            &[],
             Some(&lib_env),
             TargetArchitecture::Riscv32,
             "CH32V",

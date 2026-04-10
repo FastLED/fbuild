@@ -201,6 +201,7 @@ impl BuildOrchestrator for Esp8266Orchestrator {
             ctx,
             params,
             &sources,
+            &[],
             Some(&lib_env),
             TargetArchitecture::Xtensa,
             "ESP8266",

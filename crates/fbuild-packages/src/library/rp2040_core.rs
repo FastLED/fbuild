@@ -277,12 +277,12 @@ mod tests {
     #[test]
     fn test_get_linker_script_prefers_variant_override() {
         let tmp = tempfile::TempDir::new().unwrap();
-        let variant_dir = tmp.path().join("variants").join("rpipico");
+        let core = Rp2040Cores::with_cache_root(tmp.path(), &tmp.path().join("cache"));
+        let variant_dir = core.base.install_path().join("variants").join("rpipico");
         std::fs::create_dir_all(&variant_dir).unwrap();
         let variant_script = variant_dir.join("memmap_default.ld");
         std::fs::write(&variant_script, "MEMORY {}\n").unwrap();
 
-        let core = Rp2040Cores::with_cache_root(tmp.path(), &tmp.path().join("cache"));
         let script = core.get_linker_script("rpipico", "rp2040");
         assert_eq!(script, variant_script);
     }
@@ -290,12 +290,12 @@ mod tests {
     #[test]
     fn test_get_linker_script_falls_back_to_family_lib_dir() {
         let tmp = tempfile::TempDir::new().unwrap();
-        let lib_dir = tmp.path().join("lib").join("rp2350");
+        let core = Rp2040Cores::with_cache_root(tmp.path(), &tmp.path().join("cache"));
+        let lib_dir = core.base.install_path().join("lib").join("rp2350");
         std::fs::create_dir_all(&lib_dir).unwrap();
         let lib_script = lib_dir.join("memmap_default.ld");
         std::fs::write(&lib_script, "MEMORY {}\n").unwrap();
 
-        let core = Rp2040Cores::with_cache_root(tmp.path(), &tmp.path().join("cache"));
         let script = core.get_linker_script("rpipico2", "rp2350");
         assert_eq!(script, lib_script);
     }

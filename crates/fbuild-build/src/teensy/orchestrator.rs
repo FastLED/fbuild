@@ -153,6 +153,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
             ctx,
             params,
             &sources,
+            &[],
             Some(&lib_env),
             TargetArchitecture::Arm,
             "Teensy",

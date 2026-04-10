@@ -133,6 +133,7 @@ impl BuildOrchestrator for AvrOrchestrator {
             ctx,
             params,
             &sources,
+            &[],
             Some(&lib_env),
             TargetArchitecture::Avr,
             "AVR",

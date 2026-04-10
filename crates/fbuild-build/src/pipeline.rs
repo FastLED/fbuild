@@ -449,6 +449,7 @@ pub fn run_sequential_build_with_libs(
     mut ctx: BuildContext,
     params: &BuildParams,
     sources: &SourceCollection,
+    extra_link_inputs: &[PathBuf],
     lib_env: Option<&LibraryBuildEnv<'_>>,
     arch: TargetArchitecture,
     platform_label: &str,
@@ -594,6 +595,7 @@ pub fn run_sequential_build_with_libs(
     // Link
     crate::build_output::log_linking(&mut ctx.build_log, "Linking firmware.elf");
     core_objects.extend(library_objects);
+    core_objects.extend(extra_link_inputs.iter().cloned());
     if let Some(archive) = project_as_lib_archive {
         // GCC accepts .a in the same positional slot as .o files.
         core_objects.push(archive);

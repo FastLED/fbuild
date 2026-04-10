@@ -13,7 +13,7 @@
 //! 10. Convert to binary + report size
 
 use std::collections::HashMap;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::time::Instant;
 
 use fbuild_core::{Platform, Result};
@@ -84,6 +84,9 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             super::mcu_config::get_rp2040_config_for_mcu(&ctx.board.mcu.to_lowercase())?;
         let mut defines = ctx.board.get_defines();
         defines.extend(mcu_config.defines_map());
+        if let Some(max_flash) = ctx.board.max_flash {
+            defines.insert("PICO_FLASH_SIZE_BYTES".to_string(), max_flash.to_string());
+        }
         add_rp_manifest_defines(&framework_dir, &ctx.board.mcu, &mut defines);
         apply_rp_board_props(&board_props, &framework_dir, &mut defines);
         // Use the resolved core_dir/variant_dir instead of board.get_include_paths():
@@ -151,8 +154,22 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             params.verbose,
         );
 
-        // 7. Create linker (linker script from variant dir)
-        let linker_script = framework.get_linker_script(&ctx.board.variant, &ctx.board.mcu);
+        // 7. Generate the linker script the same way upstream does.
+        let linker_script =
+            generate_linker_script(&framework, &ctx.build_dir, &ctx.board, &board_props)?;
+        let boot2_object = compile_boot2_object(
+            &compiler,
+            &framework_dir,
+            &ctx.build_dir,
+            &ctx.board.mcu,
+            board_props
+                .as_ref()
+                .and_then(|props| props.get("boot2"))
+                .map(String::as_str)
+                .unwrap_or("boot2_w25q080_2_padded_checksum"),
+        )?;
+        let mut mcu_config = mcu_config;
+        add_rp_linker_flags(&framework_dir, &ctx.board.mcu, &mut mcu_config);
         let linker = ArmLinker::new(
             toolchain.get_gcc_path(),
             toolchain.get_ar_path(),
@@ -187,6 +204,9 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             compiler_cache: None,
         };
 
+        let mut support_link_inputs = rp_support_objects(&framework_dir, &ctx.board.mcu);
+        support_link_inputs.push(boot2_object);
+
         // 9. Run shared sequential build pipeline
         pipeline::run_sequential_build_with_libs(
             &compiler,
@@ -194,6 +214,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             ctx,
             params,
             &sources,
+            &support_link_inputs,
             Some(&lib_env),
             TargetArchitecture::Arm,
             "RP2040",
@@ -382,6 +403,223 @@ fn apply_define_flags(flags: &[String], defines: &mut HashMap<String, String>) {
     }
 }
 
+fn rp_family(mcu: &str) -> &'static str {
+    if mcu.to_lowercase().starts_with("rp2350") {
+        "rp2350"
+    } else {
+        "rp2040"
+    }
+}
+
+fn generate_linker_script(
+    framework: &fbuild_packages::library::Rp2040Cores,
+    build_dir: &Path,
+    board: &fbuild_config::BoardConfig,
+    board_props: &Option<HashMap<String, String>>,
+) -> Result<PathBuf> {
+    let template = framework.get_linker_script(&board.variant, &board.mcu);
+    let mut content = std::fs::read_to_string(&template).map_err(|e| {
+        fbuild_core::FbuildError::BuildFailed(format!(
+            "failed to read RP2040 linker script template {}: {}",
+            template.display(),
+            e
+        ))
+    })?;
+
+    let props = board_props.as_ref();
+    let flash_length = props
+        .and_then(|p| p.get("flash_length"))
+        .cloned()
+        .or_else(|| board.max_flash.map(|value| value.to_string()))
+        .ok_or_else(|| {
+            fbuild_core::FbuildError::BuildFailed(format!(
+                "RP2040 board '{}' is missing flash_length / maximum_size metadata",
+                board.name
+            ))
+        })?;
+    let ram_length = props
+        .and_then(|p| p.get("ram_length"))
+        .cloned()
+        .or_else(|| board.max_ram.map(|value| format!("{}k", value / 1024)))
+        .ok_or_else(|| {
+            fbuild_core::FbuildError::BuildFailed(format!(
+                "RP2040 board '{}' is missing ram_length / maximum_ram_size metadata",
+                board.name
+            ))
+        })?;
+
+    let flash_total = props
+        .and_then(|p| p.get("flash_total"))
+        .and_then(|value| value.parse::<u64>().ok())
+        .or(board.max_flash)
+        .unwrap_or(0);
+    let flash_base = 0x1000_0000u64;
+    let default_flash_end = flash_base.saturating_add(flash_total);
+    let default_flash_end = format!("0x{default_flash_end:08x}");
+
+    let substitutions = [
+        ("__FLASH_LENGTH__", flash_length),
+        (
+            "__EEPROM_START__",
+            props
+                .and_then(|p| p.get("eeprom_start"))
+                .cloned()
+                .unwrap_or_else(|| default_flash_end.clone()),
+        ),
+        (
+            "__FS_START__",
+            props
+                .and_then(|p| p.get("fs_start"))
+                .cloned()
+                .unwrap_or_else(|| default_flash_end.clone()),
+        ),
+        (
+            "__FS_END__",
+            props
+                .and_then(|p| p.get("fs_end"))
+                .cloned()
+                .unwrap_or_else(|| default_flash_end.clone()),
+        ),
+        ("__RAM_LENGTH__", ram_length),
+        (
+            "__PSRAM_LENGTH__",
+            props
+                .and_then(|p| p.get("psram_length"))
+                .cloned()
+                .unwrap_or_else(|| "0x000000".to_string()),
+        ),
+    ];
+
+    for (needle, replacement) in substitutions {
+        content = content.replace(needle, &replacement);
+    }
+
+    let output = build_dir.join("memmap_default.ld");
+    std::fs::write(&output, content).map_err(|e| {
+        fbuild_core::FbuildError::BuildFailed(format!(
+            "failed to write generated RP2040 linker script {}: {}",
+            output.display(),
+            e
+        ))
+    })?;
+    tracing::info!(
+        "generated RP2040 linker script at {} from {}",
+        output.display(),
+        template.display()
+    );
+    Ok(output)
+}
+
+fn compile_boot2_object(
+    compiler: &ArmCompiler,
+    framework_dir: &Path,
+    build_dir: &Path,
+    mcu: &str,
+    boot2_name: &str,
+) -> Result<PathBuf> {
+    let boot2_source = framework_dir
+        .join("boot2")
+        .join(rp_family(mcu))
+        .join(format!("{boot2_name}.S"));
+    if !boot2_source.exists() {
+        return Err(fbuild_core::FbuildError::BuildFailed(format!(
+            "RP2040 boot2 source not found: {}",
+            boot2_source.display()
+        )));
+    }
+
+    let boot2_object = build_dir.join("boot2.o");
+    let extra_flags = vec![
+        "-I".to_string(),
+        framework_dir
+            .join("pico-sdk")
+            .join("src")
+            .join(rp_family(mcu))
+            .join("hardware_regs")
+            .join("include")
+            .to_string_lossy()
+            .to_string(),
+        "-I".to_string(),
+        framework_dir
+            .join("pico-sdk")
+            .join("src")
+            .join("common")
+            .join("pico_binary_info")
+            .join("include")
+            .to_string_lossy()
+            .to_string(),
+    ];
+    let result =
+        crate::compiler::Compiler::compile(compiler, &boot2_source, &boot2_object, &extra_flags)?;
+    if !result.success {
+        return Err(fbuild_core::FbuildError::BuildFailed(format!(
+            "RP2040 boot2 compile failed for {}:\n{}",
+            boot2_source.display(),
+            result.stderr
+        )));
+    }
+    Ok(boot2_object)
+}
+
+fn add_rp_linker_flags(
+    framework_dir: &Path,
+    mcu: &str,
+    mcu_config: &mut crate::generic_arm::ArmMcuConfig,
+) {
+    let family = rp_family(mcu);
+    let mut extra_flags = vec![
+        format!(
+            "@{}",
+            framework_dir
+                .join("lib")
+                .join(family)
+                .join("platform_wrap.txt")
+                .display()
+        ),
+        format!(
+            "@{}",
+            framework_dir.join("lib").join("core_wrap.txt").display()
+        ),
+        "-u_printf_float".to_string(),
+        "-u_scanf_float".to_string(),
+        "-Wl,--no-warn-rwx-segments".to_string(),
+        "-Wl,--check-sections".to_string(),
+        "-Wl,--unresolved-symbols=report-all".to_string(),
+        "-Wl,--warn-common".to_string(),
+        "-Wl,--undefined=runtime_init_install_ram_vector_table".to_string(),
+        "-Wl,--undefined=__pre_init_runtime_init_clocks".to_string(),
+        "-Wl,--undefined=__pre_init_runtime_init_bootrom_reset".to_string(),
+        "-Wl,--undefined=__pre_init_runtime_init_early_resets".to_string(),
+        "-Wl,--undefined=__pre_init_runtime_init_usb_power_down".to_string(),
+        "-Wl,--undefined=__pre_init_runtime_init_post_clock_resets".to_string(),
+        "-Wl,--undefined=__pre_init_runtime_init_spin_locks_reset".to_string(),
+        "-Wl,--undefined=__pre_init_runtime_init_boot_locks_reset".to_string(),
+        "-Wl,--undefined=__pre_init_runtime_init_bootrom_locking_enable".to_string(),
+        "-Wl,--undefined=__pre_init_runtime_init_mutex".to_string(),
+        "-Wl,--undefined=__pre_init_runtime_init_default_alarm_pool".to_string(),
+        "-Wl,--undefined=__pre_init_first_per_core_initializer".to_string(),
+        "-Wl,--undefined=__pre_init_runtime_init_per_core_bootrom_reset".to_string(),
+        "-Wl,--undefined=__pre_init_runtime_init_per_core_h3_irq_registers".to_string(),
+        "-Wl,--undefined=__pre_init_runtime_init_per_core_irq_priorities".to_string(),
+        "-Wl,--start-group".to_string(),
+    ];
+    mcu_config.linker_flags.append(&mut extra_flags);
+    mcu_config.linker_libs.push("-Wl,--end-group".to_string());
+}
+
+fn rp_support_objects(framework_dir: &Path, mcu: &str) -> Vec<PathBuf> {
+    let family = rp_family(mcu);
+    let lib_dir = framework_dir.join("lib").join(family);
+    let mut objects = vec![
+        lib_dir.join("ota.o"),
+        lib_dir.join("libpico.a"),
+        lib_dir.join("libipv4.a"),
+        lib_dir.join("libbearssl.a"),
+    ];
+    objects.retain(|path| path.exists());
+    objects
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -444,5 +682,40 @@ mod tests {
 
         assert_eq!(defines.get("TARGET_RP2040").map(String::as_str), Some("1"));
         assert_eq!(defines.get("PICO_RP2040").map(String::as_str), Some("1"));
+    }
+
+    #[test]
+    fn test_generate_linker_script_substitutes_family_values() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let framework_dir = tmp.path().join("framework");
+        let build_dir = tmp.path().join("build");
+        std::fs::create_dir_all(framework_dir.join("lib").join("rp2040")).unwrap();
+        std::fs::create_dir_all(framework_dir.join("variants").join("rpipico")).unwrap();
+        std::fs::write(
+            framework_dir.join("lib").join("rp2040").join("memmap_default.ld"),
+            "FLASH=__FLASH_LENGTH__ RAM=__RAM_LENGTH__ FS=__FS_START__-__FS_END__ EEPROM=__EEPROM_START__ PSRAM=__PSRAM_LENGTH__",
+        )
+        .unwrap();
+
+        let framework = fbuild_packages::library::Rp2040Cores::new(tmp.path());
+        let mut board =
+            fbuild_config::BoardConfig::from_board_id("rpipico", &HashMap::new()).unwrap();
+        board.max_flash = Some(2_097_152);
+        board.max_ram = Some(262_144);
+
+        let mut props = HashMap::new();
+        props.insert("flash_length".to_string(), "2093056".to_string());
+        props.insert("ram_length".to_string(), "256k".to_string());
+        props.insert("fs_start".to_string(), "270528512".to_string());
+        props.insert("fs_end".to_string(), "270528512".to_string());
+        props.insert("eeprom_start".to_string(), "270528512".to_string());
+
+        let output = generate_linker_script(&framework, &build_dir, &board, &Some(props)).unwrap();
+        let generated = std::fs::read_to_string(output).unwrap();
+        assert!(generated.contains("FLASH=2093056"));
+        assert!(generated.contains("RAM=256k"));
+        assert!(generated.contains("FS=270528512-270528512"));
+        assert!(generated.contains("EEPROM=270528512"));
+        assert!(generated.contains("PSRAM=0x000000"));
     }
 }

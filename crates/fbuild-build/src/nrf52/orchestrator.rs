@@ -233,6 +233,7 @@ impl BuildOrchestrator for Nrf52Orchestrator {
             ctx,
             params,
             &sources,
+            &[],
             Some(&lib_env),
             TargetArchitecture::Arm,
             "NRF52",

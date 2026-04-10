@@ -177,6 +177,7 @@ impl BuildOrchestrator for SamOrchestrator {
             ctx,
             params,
             &sources,
+            &[],
             Some(&lib_env),
             TargetArchitecture::Arm,
             "SAM",

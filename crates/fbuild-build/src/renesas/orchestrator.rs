@@ -150,6 +150,7 @@ impl BuildOrchestrator for RenesasOrchestrator {
             ctx,
             params,
             &sources,
+            &[],
             Some(&lib_env),
             TargetArchitecture::Arm,
             "Renesas RA",
