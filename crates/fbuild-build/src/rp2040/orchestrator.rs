@@ -701,6 +701,7 @@ mod tests {
     fn test_generate_linker_script_substitutes_family_values() {
         let tmp = tempfile::TempDir::new().unwrap();
         let build_dir = tmp.path().join("build");
+        std::fs::create_dir_all(&build_dir).unwrap();
         let framework = fbuild_packages::library::Rp2040Cores::new(tmp.path());
         let mut board =
             fbuild_config::BoardConfig::from_board_id("rpipico", &HashMap::new()).unwrap();
