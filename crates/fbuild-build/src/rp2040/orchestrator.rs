@@ -152,7 +152,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
         );
 
         // 7. Create linker (linker script from variant dir)
-        let linker_script = framework.get_linker_script(&ctx.board.variant);
+        let linker_script = framework.get_linker_script(&ctx.board.variant, &ctx.board.mcu);
         let linker = ArmLinker::new(
             toolchain.get_gcc_path(),
             toolchain.get_ar_path(),

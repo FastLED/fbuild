@@ -114,9 +114,23 @@ impl Rp2040Cores {
         self.get_variants_dir().join(variant_name)
     }
 
-    /// Get the linker script for a variant.
-    pub fn get_linker_script(&self, variant_name: &str) -> PathBuf {
-        self.get_variant_dir(variant_name).join("memmap_default.ld")
+    /// Get the linker script for a board.
+    pub fn get_linker_script(&self, variant_name: &str, mcu: &str) -> PathBuf {
+        let variant_script = self.get_variant_dir(variant_name).join("memmap_default.ld");
+        if variant_script.exists() {
+            return variant_script;
+        }
+
+        let family = if mcu.to_lowercase().starts_with("rp2350") {
+            "rp2350"
+        } else {
+            "rp2040"
+        };
+
+        self.resolved_dir()
+            .join("lib")
+            .join(family)
+            .join("memmap_default.ld")
     }
 
     /// Get path to boards.txt.
@@ -261,11 +275,29 @@ mod tests {
     }
 
     #[test]
-    fn test_get_linker_script() {
+    fn test_get_linker_script_prefers_variant_override() {
         let tmp = tempfile::TempDir::new().unwrap();
-        let core = Rp2040Cores::new(tmp.path());
-        let script = core.get_linker_script("rpipico");
-        assert!(script.to_string_lossy().contains("memmap_default.ld"));
+        let variant_dir = tmp.path().join("variants").join("rpipico");
+        std::fs::create_dir_all(&variant_dir).unwrap();
+        let variant_script = variant_dir.join("memmap_default.ld");
+        std::fs::write(&variant_script, "MEMORY {}\n").unwrap();
+
+        let core = Rp2040Cores::with_cache_root(tmp.path(), &tmp.path().join("cache"));
+        let script = core.get_linker_script("rpipico", "rp2040");
+        assert_eq!(script, variant_script);
+    }
+
+    #[test]
+    fn test_get_linker_script_falls_back_to_family_lib_dir() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let lib_dir = tmp.path().join("lib").join("rp2350");
+        std::fs::create_dir_all(&lib_dir).unwrap();
+        let lib_script = lib_dir.join("memmap_default.ld");
+        std::fs::write(&lib_script, "MEMORY {}\n").unwrap();
+
+        let core = Rp2040Cores::with_cache_root(tmp.path(), &tmp.path().join("cache"));
+        let script = core.get_linker_script("rpipico2", "rp2350");
+        assert_eq!(script, lib_script);
     }
 
     #[test]
