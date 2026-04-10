@@ -4,12 +4,10 @@ use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 use std::time::Instant;
 
-use fbuild_core::{Platform, Result};
-use fbuild_packages::Framework;
-
 use crate::compile_database::TargetArchitecture;
 use crate::pipeline;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
+use fbuild_core::{Platform, Result};
 
 use super::{SilabsCompiler, SilabsLinker};
 
