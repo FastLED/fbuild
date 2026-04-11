@@ -274,6 +274,37 @@ pub struct ClearLocksResponse {
 }
 
 #[derive(Debug, Deserialize)]
+pub struct CacheStatsResponse {
+    pub success: bool,
+    pub archive_bytes: u64,
+    pub installed_bytes: u64,
+    pub total_bytes: u64,
+    pub entry_count: i64,
+    pub high_watermark: u64,
+    pub low_watermark: u64,
+    pub archive_budget: u64,
+    #[serde(default)]
+    #[allow(dead_code)]
+    pub installed_budget: u64,
+    pub message: Option<String>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct GcResponse {
+    pub success: bool,
+    pub installed_evicted: u64,
+    pub installed_bytes_freed: u64,
+    pub archives_evicted: u64,
+    pub archive_bytes_freed: u64,
+    pub total_bytes_freed: u64,
+    #[serde(default)]
+    pub orphan_files_removed: usize,
+    #[serde(default)]
+    pub orphan_rows_cleaned: usize,
+    pub message: Option<String>,
+}
+
+#[derive(Debug, Deserialize)]
 pub struct HealthResponseFull {
     #[allow(dead_code)]
     pub status: String,
@@ -656,6 +687,36 @@ impl DaemonClient {
             .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("request failed: {}", e)))?;
 
         resp.json::<ClearLocksResponse>()
+            .await
+            .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("invalid response: {}", e)))
+    }
+
+    /// Get cache statistics from the daemon.
+    pub async fn cache_stats(&self) -> fbuild_core::Result<CacheStatsResponse> {
+        let resp = self
+            .client
+            .get(format!("{}/api/cache/stats", self.base_url))
+            .timeout(std::time::Duration::from_secs(5))
+            .send()
+            .await
+            .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("request failed: {}", e)))?;
+
+        resp.json::<CacheStatsResponse>()
+            .await
+            .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("invalid response: {}", e)))
+    }
+
+    /// Trigger a GC run on the daemon.
+    pub async fn run_gc(&self) -> fbuild_core::Result<GcResponse> {
+        let resp = self
+            .client
+            .post(format!("{}/api/cache/gc", self.base_url))
+            .timeout(std::time::Duration::from_secs(30))
+            .send()
+            .await
+            .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("request failed: {}", e)))?;
+
+        resp.json::<GcResponse>()
             .await
             .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("invalid response: {}", e)))
     }

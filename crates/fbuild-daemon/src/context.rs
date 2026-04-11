@@ -118,6 +118,8 @@ pub struct DaemonContext {
     pub broadcast_hub: BroadcastHub,
     /// Active AVR8js sessions keyed by session ID.
     pub avr8js_sessions: DashMap<String, PathBuf>,
+    /// Serializes GC runs so background and manual `/api/cache/gc` don't interleave.
+    pub gc_mutex: Arc<tokio::sync::Mutex<()>>,
 }
 
 impl DaemonContext {
@@ -155,6 +157,7 @@ impl DaemonContext {
             spawner_cwd,
             broadcast_hub: BroadcastHub::new(),
             avr8js_sessions: DashMap::new(),
+            gc_mutex: Arc::new(tokio::sync::Mutex::new(())),
         }
     }
 

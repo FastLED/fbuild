@@ -194,6 +194,9 @@ enum Commands {
         dry_run: bool,
         #[arg(long)]
         project_dir: Option<String>,
+        /// Run LRU garbage collection instead of full purge
+        #[arg(long)]
+        gc: bool,
     },
     /// Manage the fbuild daemon
     Daemon {
@@ -344,6 +347,10 @@ enum DaemonAction {
     Locks,
     /// Clear stale locks
     ClearLocks,
+    /// Show disk cache statistics
+    CacheStats,
+    /// Run disk cache garbage collection
+    Gc,
     /// Tail daemon logs (alias for `fbuild show daemon`)
     Monitor {
         /// Don't follow the log file (just print last lines and exit)
@@ -585,7 +592,14 @@ async fn main() {
             target,
             dry_run,
             project_dir,
-        }) => run_purge(target, dry_run, project_dir),
+            gc,
+        }) => {
+            if gc {
+                run_purge_gc().await
+            } else {
+                run_purge(target, dry_run, project_dir)
+            }
+        }
         Some(Commands::Daemon { action }) => run_daemon(action).await,
         Some(Commands::Show {
             target,
@@ -2017,6 +2031,57 @@ async fn run_clang_tool(
     }
 }
 
+async fn run_purge_gc() -> fbuild_core::Result<()> {
+    // Try to route GC through the daemon to respect its gc_mutex.
+    let client = DaemonClient::new();
+    if client.health().await {
+        let result = client.run_gc().await?;
+        if !result.success {
+            return Err(fbuild_core::FbuildError::Other(format!(
+                "GC failed: {}",
+                result.message.as_deref().unwrap_or("unknown error")
+            )));
+        }
+        println!("GC complete (via daemon):");
+        println!(
+            "  Installed evicted: {} ({})",
+            result.installed_evicted,
+            format_size(result.installed_bytes_freed)
+        );
+        println!(
+            "  Archives evicted:  {} ({})",
+            result.archives_evicted,
+            format_size(result.archive_bytes_freed)
+        );
+        println!(
+            "  Total freed:       {}",
+            format_size(result.total_bytes_freed)
+        );
+        if result.orphan_files_removed > 0 {
+            println!("  Orphan files removed: {}", result.orphan_files_removed);
+        }
+        if result.orphan_rows_cleaned > 0 {
+            println!("  Orphan rows cleaned:  {}", result.orphan_rows_cleaned);
+        }
+        return Ok(());
+    }
+
+    // No daemon running — safe to run GC locally.
+    match fbuild_packages::DiskCache::open() {
+        Ok(dc) => match dc.run_gc() {
+            Ok(report) => {
+                print_gc_report(&report);
+                Ok(())
+            }
+            Err(e) => Err(fbuild_core::FbuildError::Other(format!("GC failed: {}", e))),
+        },
+        Err(e) => Err(fbuild_core::FbuildError::Other(format!(
+            "failed to open disk cache: {}",
+            e
+        ))),
+    }
+}
+
 fn run_purge(
     target: Option<String>,
     dry_run: bool,
@@ -2329,6 +2394,12 @@ async fn run_daemon(action: DaemonAction) -> fbuild_core::Result<()> {
         DaemonAction::ClearLocks => {
             run_daemon_clear_locks(&client).await?;
         }
+        DaemonAction::CacheStats => {
+            run_daemon_cache_stats(&client).await?;
+        }
+        DaemonAction::Gc => {
+            run_daemon_gc(&client).await?;
+        }
         DaemonAction::Monitor { no_follow, lines } => {
             return run_show("daemon", !no_follow, lines);
         }
@@ -2435,6 +2506,122 @@ async fn run_daemon_clear_locks(client: &DaemonClient) -> fbuild_core::Result<()
         println!("Cleared {} lock(s)", result.cleared_count);
     }
     Ok(())
+}
+
+async fn run_daemon_cache_stats(client: &DaemonClient) -> fbuild_core::Result<()> {
+    if !client.health().await {
+        // Fall back to local cache stats if daemon isn't running
+        match fbuild_packages::DiskCache::open() {
+            Ok(dc) => {
+                let stats = dc.stats().map_err(|e| {
+                    fbuild_core::FbuildError::Other(format!("failed to read cache stats: {}", e))
+                })?;
+                println!("{}", stats);
+            }
+            Err(e) => {
+                return Err(fbuild_core::FbuildError::Other(format!(
+                    "failed to open disk cache: {}",
+                    e
+                )));
+            }
+        }
+        return Ok(());
+    }
+
+    let stats = client.cache_stats().await?;
+    if !stats.success {
+        return Err(fbuild_core::FbuildError::Other(format!(
+            "failed to get cache stats: {}",
+            stats.message.as_deref().unwrap_or("unknown error")
+        )));
+    }
+    println!("Disk Cache Statistics:");
+    println!("  Entries:    {}", stats.entry_count);
+    println!("  Installed:  {}", format_size(stats.installed_bytes));
+    println!("  Archives:   {}", format_size(stats.archive_bytes));
+    println!("  Total:      {}", format_size(stats.total_bytes));
+    println!(
+        "  Watermarks: {} high / {} low",
+        format_size(stats.high_watermark),
+        format_size(stats.low_watermark)
+    );
+    println!("  Archive budget: {}", format_size(stats.archive_budget));
+    Ok(())
+}
+
+async fn run_daemon_gc(client: &DaemonClient) -> fbuild_core::Result<()> {
+    if !client.health().await {
+        // Fall back to local GC if daemon isn't running
+        let dc = fbuild_packages::DiskCache::open().map_err(|e| {
+            fbuild_core::FbuildError::Other(format!("failed to open disk cache: {}", e))
+        })?;
+        let report = dc
+            .run_gc()
+            .map_err(|e| fbuild_core::FbuildError::Other(format!("GC failed: {}", e)))?;
+        print_gc_report(&report);
+        return Ok(());
+    }
+
+    let result = client.run_gc().await?;
+    if !result.success {
+        return Err(fbuild_core::FbuildError::Other(format!(
+            "GC failed: {}",
+            result.message.as_deref().unwrap_or("unknown error")
+        )));
+    }
+    println!("GC complete:");
+    println!(
+        "  Installed evicted: {} ({})",
+        result.installed_evicted,
+        format_size(result.installed_bytes_freed)
+    );
+    println!(
+        "  Archives evicted:  {} ({})",
+        result.archives_evicted,
+        format_size(result.archive_bytes_freed)
+    );
+    println!(
+        "  Total freed:       {}",
+        format_size(result.total_bytes_freed)
+    );
+    if result.orphan_files_removed > 0 {
+        println!("  Orphan files removed: {}", result.orphan_files_removed);
+    }
+    if result.orphan_rows_cleaned > 0 {
+        println!("  Orphan rows cleaned:  {}", result.orphan_rows_cleaned);
+    }
+    Ok(())
+}
+
+fn print_gc_report(report: &fbuild_packages::disk_cache::GcReport) {
+    if report.total_bytes_freed() == 0
+        && report.orphan_files_removed == 0
+        && report.orphan_rows_cleaned == 0
+    {
+        println!("GC: nothing to clean up");
+        return;
+    }
+    println!("GC complete:");
+    println!(
+        "  Installed evicted: {} ({})",
+        report.installed_evicted,
+        format_size(report.installed_bytes_freed)
+    );
+    println!(
+        "  Archives evicted:  {} ({})",
+        report.archives_evicted,
+        format_size(report.archive_bytes_freed)
+    );
+    println!(
+        "  Total freed:       {}",
+        format_size(report.total_bytes_freed())
+    );
+    if report.orphan_files_removed > 0 {
+        println!("  Orphan files removed: {}", report.orphan_files_removed);
+    }
+    if report.orphan_rows_cleaned > 0 {
+        println!("  Orphan rows cleaned:  {}", report.orphan_rows_cleaned);
+    }
 }
 
 async fn run_daemon_kill(

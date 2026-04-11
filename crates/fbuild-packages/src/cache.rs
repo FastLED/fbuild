@@ -142,6 +142,27 @@ impl Cache {
         Ok(())
     }
 
+    /// Get a toolchain metadata cache directory by name.
+    ///
+    /// Returns `{cache_root}/toolchains/{toolchain_name}` — used by
+    /// `esp32_metadata::resolve_toolchain_url_sync` to store `tools.json`.
+    ///
+    /// `toolchain_name` is validated to be a single normal path component
+    /// (no `/`, `\`, `..`, or absolute paths) to prevent directory traversal.
+    pub fn toolchain_metadata_dir(&self, toolchain_name: &str) -> PathBuf {
+        use std::path::Component;
+        let path = Path::new(toolchain_name);
+        let mut comps = path.components();
+        let is_safe = matches!(comps.next(), Some(Component::Normal(_))) && comps.next().is_none();
+        if is_safe {
+            self.toolchains_dir().join(toolchain_name)
+        } else {
+            // Unsafe name — hash it to a safe single component
+            let safe_name = format!("_unsafe_{}", hash_url(toolchain_name));
+            self.toolchains_dir().join(safe_name)
+        }
+    }
+
     /// Clean build directory for an environment and profile.
     pub fn clean_build(&self, env_name: &str, profile: BuildProfile) -> std::io::Result<()> {
         let build_dir = self.get_build_dir(env_name, profile);
