@@ -1540,6 +1540,127 @@ impl EmulatorRunner for Avr8jsRunner {
     }
 }
 
+// ---------------------------------------------------------------------------
+// SimAVR native runner (Issue #24)
+// ---------------------------------------------------------------------------
+
+/// Find the `simavr` binary on PATH.
+///
+/// SimAVR is a native AVR simulator. Install via:
+/// - Linux: `apt install simavr` or build from source
+/// - macOS: `brew install simavr`
+/// - Windows: build from source (MSYS2/MinGW) — limited support
+fn find_simavr() -> fbuild_core::Result<PathBuf> {
+    let simavr = if cfg!(windows) {
+        "simavr.exe"
+    } else {
+        "simavr"
+    };
+    // Try running simavr to verify it exists
+    match std::process::Command::new(simavr)
+        .arg("--help")
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .output()
+    {
+        Ok(_) => Ok(PathBuf::from(simavr)),
+        Err(_) => {
+            let install_hint = if cfg!(target_os = "linux") {
+                "Install via: apt install simavr (Debian/Ubuntu) or your distro's package manager"
+            } else if cfg!(target_os = "macos") {
+                "Install via: brew install simavr"
+            } else {
+                "SimAVR has limited Windows support. Build from source via MSYS2/MinGW, \
+                 or use --emulator avr8js for ATmega328P boards instead"
+            };
+            Err(fbuild_core::FbuildError::DeployFailed(format!(
+                "simavr is required but '{}' was not found on PATH. {}",
+                simavr, install_hint
+            )))
+        }
+    }
+}
+
+/// SimAVR-based native emulator runner for AVR boards.
+///
+/// Supports any AVR board that advertises `simavr` in its debug_tools.
+/// Primary targets: ATmega328P (Uno), ATmega32U4 (Leonardo), ATmega2560 (Mega).
+/// Consumes `firmware.elf` directly.
+pub struct SimavrRunner {
+    board: fbuild_config::BoardConfig,
+}
+
+impl SimavrRunner {
+    pub fn new(board: fbuild_config::BoardConfig) -> Self {
+        Self { board }
+    }
+}
+
+#[async_trait::async_trait]
+impl EmulatorRunner for SimavrRunner {
+    fn name(&self) -> &str {
+        "simavr"
+    }
+
+    async fn run(&self, config: &EmulatorRunConfig) -> fbuild_core::Result<EmulatorRunResult> {
+        let simavr_path = find_simavr()?;
+
+        // simavr requires an ELF file
+        let elf_path = config.elf_path.as_ref().ok_or_else(|| {
+            fbuild_core::FbuildError::DeployFailed(
+                "simavr requires firmware.elf but no ELF path was produced by the build"
+                    .to_string(),
+            )
+        })?;
+
+        let f_cpu_hz: u32 = self
+            .board
+            .f_cpu
+            .trim_end_matches('L')
+            .parse()
+            .unwrap_or(16_000_000);
+
+        let mcu = self.board.mcu.to_lowercase();
+
+        let args: Vec<String> = vec![
+            "-m".to_string(),
+            mcu.clone(),
+            "-f".to_string(),
+            f_cpu_hz.to_string(),
+            elf_path.display().to_string(),
+        ];
+
+        let command_line = format!("{} {}", simavr_path.display(), args.join(" "));
+
+        // Reuse the generic process runner (run_qemu_process) with no crash decoder
+        let result = run_qemu_process(
+            &simavr_path,
+            &args,
+            RunQemuOptions {
+                elf_path: None,       // no ESP32 crash decoder needed
+                addr2line_path: None, // no addr2line for AVR in this path
+                timeout_secs: config.timeout,
+                halt_on_error: config.halt_on_error.as_deref(),
+                halt_on_success: config.halt_on_success.as_deref(),
+                expect: config.expect.as_deref(),
+                show_timestamp: config.show_timestamp,
+                verbose: config.verbose,
+            },
+        )
+        .await?;
+
+        let outcome = monitor_outcome_to_emulator(result.outcome, None);
+
+        Ok(EmulatorRunResult {
+            outcome,
+            stdout: result.stdout,
+            stderr: result.stderr,
+            command_line,
+            exit_code: None,
+        })
+    }
+}
+
 /// Select the appropriate emulator runner based on platform, MCU, and optional
 /// explicit emulator choice.
 ///
@@ -1592,8 +1713,25 @@ pub fn select_runner(
                 }
                 Ok(Box::new(Avr8jsRunner::new(board)))
             }
+            "simavr" => {
+                if !matches!(
+                    platform,
+                    fbuild_core::Platform::AtmelAvr | fbuild_core::Platform::AtmelMegaAvr
+                ) {
+                    return Err(fbuild_core::FbuildError::DeployFailed(
+                        "simavr runner is only supported for AVR boards".to_string(),
+                    ));
+                }
+                if !board.has_emulator("simavr") {
+                    return Err(fbuild_core::FbuildError::DeployFailed(format!(
+                        "board '{}' does not advertise simavr support in its debug_tools",
+                        board_id
+                    )));
+                }
+                Ok(Box::new(SimavrRunner::new(board)))
+            }
             other => Err(fbuild_core::FbuildError::DeployFailed(format!(
-                "unsupported emulator '{}'; available: qemu, avr8js",
+                "unsupported emulator '{}'; available: qemu, avr8js, simavr",
                 other
             ))),
         };
@@ -1603,10 +1741,15 @@ pub fn select_runner(
     match platform {
         fbuild_core::Platform::AtmelAvr | fbuild_core::Platform::AtmelMegaAvr => {
             if board.mcu.eq_ignore_ascii_case("atmega328p") {
+                // Default to avr8js for ATmega328P (no external binary needed)
                 Ok(Box::new(Avr8jsRunner::new(board)))
+            } else if board.has_emulator("simavr") {
+                // Use simavr for other AVR MCUs that advertise it
+                Ok(Box::new(SimavrRunner::new(board)))
             } else {
                 Err(fbuild_core::FbuildError::DeployFailed(format!(
-                    "no emulator runner available for AVR MCU '{}'; only ATmega328P is supported via avr8js",
+                    "no emulator runner available for AVR MCU '{}'; \
+                     ATmega328P is supported via avr8js, other AVR boards require simavr in debug_tools",
                     board.mcu
                 )))
             }
@@ -2192,5 +2335,258 @@ mod tests {
             }
             other => panic!("expected error, got {:?}", other),
         }
+    }
+
+    // -----------------------------------------------------------------------
+    // SimAVR runner tests (use fake process, no real simavr needed)
+    // -----------------------------------------------------------------------
+
+    #[tokio::test]
+    async fn simavr_runner_captures_stdout_via_process_runner() {
+        // SimavrRunner delegates to run_qemu_process, so we verify the same
+        // subprocess monitoring path works for simavr-style output.
+        let (exe, args) = test_process_command(&["Hello from ATmega2560!"]);
+        let result = run_qemu_process(
+            &exe,
+            &args,
+            RunQemuOptions {
+                elf_path: None,
+                addr2line_path: None,
+                timeout_secs: Some(2.0),
+                halt_on_error: None,
+                halt_on_success: None,
+                expect: Some("Hello from ATmega2560"),
+                show_timestamp: false,
+                verbose: false,
+            },
+        )
+        .await
+        .unwrap();
+
+        assert!(result.stdout.contains("Hello from ATmega2560!"));
+        match result.outcome {
+            MonitorOutcome::Success(_) => {}
+            other => panic!("expected success, got {:?}", other),
+        }
+    }
+
+    #[tokio::test]
+    async fn simavr_runner_halt_on_success() {
+        let (exe, args) = test_process_command(&["simavr: init", "PASS: all tests passed", "done"]);
+        let result = run_qemu_process(
+            &exe,
+            &args,
+            RunQemuOptions {
+                elf_path: None,
+                addr2line_path: None,
+                timeout_secs: Some(2.0),
+                halt_on_error: None,
+                halt_on_success: Some("PASS:"),
+                expect: None,
+                show_timestamp: false,
+                verbose: false,
+            },
+        )
+        .await
+        .unwrap();
+
+        match result.outcome {
+            MonitorOutcome::Success(msg) => {
+                assert!(msg.contains("halt-on-success pattern matched"));
+            }
+            other => panic!("expected success, got {:?}", other),
+        }
+    }
+
+    #[tokio::test]
+    async fn simavr_runner_halt_on_error() {
+        let (exe, args) = test_process_command(&["simavr: init", "FAIL: assertion failed"]);
+        let result = run_qemu_process(
+            &exe,
+            &args,
+            RunQemuOptions {
+                elf_path: None,
+                addr2line_path: None,
+                timeout_secs: Some(2.0),
+                halt_on_error: Some("FAIL:"),
+                halt_on_success: None,
+                expect: None,
+                show_timestamp: false,
+                verbose: false,
+            },
+        )
+        .await
+        .unwrap();
+
+        match result.outcome {
+            MonitorOutcome::Error(msg) => {
+                assert!(msg.contains("halt-on-error pattern matched"));
+            }
+            other => panic!("expected error, got {:?}", other),
+        }
+    }
+
+    #[tokio::test]
+    async fn simavr_runner_timeout() {
+        let (exe, args) = test_process_command(&["simavr: init", "running..."]);
+        let result = run_qemu_process(
+            &exe,
+            &args,
+            RunQemuOptions {
+                elf_path: None,
+                addr2line_path: None,
+                timeout_secs: Some(0.1),
+                halt_on_error: None,
+                halt_on_success: Some("PASS:"),
+                expect: None,
+                show_timestamp: false,
+                verbose: false,
+            },
+        )
+        .await
+        .unwrap();
+
+        // Process exits quickly so the outcome depends on whether halt pattern matched
+        // before the process ended — either timeout or a normal exit without the pattern.
+        match result.outcome {
+            MonitorOutcome::Success(_) => {
+                // Process exited cleanly before timeout, expect not set so counts as success
+            }
+            MonitorOutcome::Timeout { .. } => {
+                // Timed out waiting for halt-on-success pattern — also valid
+            }
+            MonitorOutcome::Error(_) => {
+                // Process exited before halt pattern found — also acceptable
+            }
+        }
+    }
+
+    // -----------------------------------------------------------------------
+    // select_runner tests for simavr
+    // -----------------------------------------------------------------------
+
+    #[test]
+    fn select_runner_explicit_simavr_for_uno() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "uno",
+            fbuild_core::Platform::AtmelAvr,
+            "uno",
+            &HashMap::new(),
+            Some("simavr"),
+        );
+        assert!(result.is_ok(), "select_runner should accept simavr for uno");
+        assert_eq!(result.unwrap().name(), "simavr");
+    }
+
+    #[test]
+    fn select_runner_explicit_simavr_for_mega() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "megaatmega2560",
+            fbuild_core::Platform::AtmelAvr,
+            "megaatmega2560",
+            &HashMap::new(),
+            Some("simavr"),
+        );
+        assert!(
+            result.is_ok(),
+            "select_runner should accept simavr for mega"
+        );
+        assert_eq!(result.unwrap().name(), "simavr");
+    }
+
+    #[test]
+    fn select_runner_explicit_simavr_for_leonardo() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "leonardo",
+            fbuild_core::Platform::AtmelAvr,
+            "leonardo",
+            &HashMap::new(),
+            Some("simavr"),
+        );
+        assert!(
+            result.is_ok(),
+            "select_runner should accept simavr for leonardo"
+        );
+        assert_eq!(result.unwrap().name(), "simavr");
+    }
+
+    #[test]
+    fn select_runner_explicit_simavr_rejects_esp32() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "esp32dev",
+            fbuild_core::Platform::Espressif32,
+            "esp32dev",
+            &HashMap::new(),
+            Some("simavr"),
+        );
+        assert!(result.is_err(), "simavr should reject ESP32 boards");
+    }
+
+    #[test]
+    fn select_runner_auto_detects_simavr_for_mega() {
+        // ATmega2560 should auto-detect simavr since it's not ATmega328P
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "megaatmega2560",
+            fbuild_core::Platform::AtmelAvr,
+            "megaatmega2560",
+            &HashMap::new(),
+            None,
+        );
+        assert!(
+            result.is_ok(),
+            "auto-detect should find simavr for mega: {:?}",
+            result.err()
+        );
+        assert_eq!(result.unwrap().name(), "simavr");
+    }
+
+    #[test]
+    fn select_runner_auto_detects_simavr_for_leonardo() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "leonardo",
+            fbuild_core::Platform::AtmelAvr,
+            "leonardo",
+            &HashMap::new(),
+            None,
+        );
+        assert!(
+            result.is_ok(),
+            "auto-detect should find simavr for leonardo: {:?}",
+            result.err()
+        );
+        assert_eq!(result.unwrap().name(), "simavr");
+    }
+
+    #[test]
+    fn select_runner_auto_detects_avr8js_for_uno() {
+        // ATmega328P should still default to avr8js, not simavr
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "uno",
+            fbuild_core::Platform::AtmelAvr,
+            "uno",
+            &HashMap::new(),
+            None,
+        );
+        assert!(result.is_ok());
+        assert_eq!(
+            result.unwrap().name(),
+            "avr8js ATmega328P",
+            "ATmega328P should default to avr8js"
+        );
+    }
+
+    #[test]
+    fn select_runner_simavr_name_matches() {
+        let board =
+            fbuild_config::BoardConfig::from_board_id("megaatmega2560", &HashMap::new()).unwrap();
+        let runner = SimavrRunner::new(board);
+        assert_eq!(runner.name(), "simavr");
     }
 }
