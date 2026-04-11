@@ -92,7 +92,7 @@ def read_project_meta() -> tuple[str, str, str, str]:
         proj["name"],
         proj["version"],
         proj.get("description", ""),
-        proj.get("requires-python", ">=3.9"),
+        proj.get("requires-python", ">=3.10"),
     )
 
 
@@ -402,8 +402,8 @@ def build_wheel(
 
     # abi3 tag when extension is present, generic py3 otherwise
     if has_extension:
-        tag_prefix = "cp39-abi3"
-        wheel_filename = f"{name_norm}-{version}-cp39-abi3-{tag_plat}.whl"
+        tag_prefix = "cp310-abi3"
+        wheel_filename = f"{name_norm}-{version}-cp310-abi3-{tag_plat}.whl"
     else:
         tag_prefix = "py3-none"
         wheel_filename = f"{name_norm}-{version}-py3-none-{tag_plat}.whl"

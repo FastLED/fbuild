@@ -2,7 +2,7 @@
 name = "fbuild-dev-tools"
 version = "0.0.0"
 description = "Repo-local Rust toolchain trampolines for fbuild development"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = []
 
 [project.scripts]

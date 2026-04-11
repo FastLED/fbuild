@@ -103,7 +103,7 @@ jobs:
 
       # PyO3 extension — built for ALL targets, including cross-compiled.
       # Notes:
-      #   - PYO3_NO_PYTHON=1 + abi3-py39 feature lets pyo3-build-config skip
+      #   - PYO3_NO_PYTHON=1 + abi3-py310 feature lets pyo3-build-config skip
       #     the host interpreter lookup on cross builds.
       #   - All Linux builds (native AND cross) use cargo-zigbuild against
       #     <arch>-unknown-linux-gnu.2.17 — manylinux wheels are glibc-based
