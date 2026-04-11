@@ -57,3 +57,4 @@ dashmap = "6"
 blake3 = "1"
 mimalloc = "0.1"
 object = "0.36"
+rusqlite = { version = "0.31", features = ["bundled"] }

@@ -7,12 +7,14 @@
 //! - Package, Toolchain, and Framework traits
 
 pub mod cache;
+pub mod disk_cache;
 pub mod downloader;
 pub mod extractor;
 pub mod library;
 pub mod toolchain;
 
 pub use cache::Cache;
+pub use disk_cache::DiskCache;
 
 use std::collections::HashMap;
 use std::future::Future;
