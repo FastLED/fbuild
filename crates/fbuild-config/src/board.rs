@@ -18,6 +18,20 @@ pub struct Esp32QemuPsramConfig {
     pub is_octal: bool,
 }
 
+/// Metadata for a single debug tool entry from the board JSON `debug.tools` section.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub struct DebugToolMeta {
+    /// Whether the tool is built into the board (no external hardware needed).
+    #[serde(default)]
+    pub onboard: bool,
+    /// Whether this is the board's default debug tool.
+    #[serde(default)]
+    pub default: bool,
+}
+
+/// Known emulator/simulator tool names that can run firmware without hardware.
+const EMULATOR_TOOL_NAMES: &[&str] = &["simavr", "qemu", "renode", "ovpsim", "verilator"];
+
 /// Board configuration loaded from boards.txt or built-in defaults.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct BoardConfig {
@@ -62,6 +76,10 @@ pub struct BoardConfig {
     pub ldscript: Option<String>,
     /// Platform string from board JSON (e.g. "atmelmegaavr", "atmelavr")
     pub platform_str: Option<String>,
+    /// Debug tools from board JSON `debug.tools` section.
+    /// Maps tool name (e.g. "simavr", "qemu", "renode") to its metadata.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub debug_tools: Option<HashMap<String, DebugToolMeta>>,
 }
 
 impl BoardConfig {
@@ -160,6 +178,7 @@ impl BoardConfig {
             partitions: get("partitions"),
             ldscript: get("ldscript"),
             platform_str: get("platform_str"),
+            debug_tools: None, // boards.txt format does not contain debug metadata
         })
     }
 
@@ -279,7 +298,31 @@ impl BoardConfig {
                 .cloned()
                 .or_else(|| defaults.get("ldscript").cloned()),
             platform_str: defaults.get("platform_str").cloned(),
+            debug_tools: get_board_debug_tools(board_id),
         })
+    }
+
+    /// Returns emulator/simulator tools available for this board.
+    ///
+    /// Filters `debug_tools` to only include known software emulators
+    /// (simavr, qemu, renode, ovpsim, verilator), excluding hardware debug probes.
+    pub fn emulators(&self) -> HashMap<&str, &DebugToolMeta> {
+        let Some(ref tools) = self.debug_tools else {
+            return HashMap::new();
+        };
+        tools
+            .iter()
+            .filter(|(name, _)| EMULATOR_TOOL_NAMES.contains(&name.as_str()))
+            .map(|(name, meta)| (name.as_str(), meta))
+            .collect()
+    }
+
+    /// Check whether this board supports a specific emulator tool.
+    pub fn has_emulator(&self, tool_name: &str) -> bool {
+        self.debug_tools
+            .as_ref()
+            .is_some_and(|tools| tools.contains_key(tool_name))
+            && EMULATOR_TOOL_NAMES.contains(&tool_name)
     }
 
     /// Resolve the effective ESP32 SDK memory profile used for variant headers/libs.
@@ -620,6 +663,37 @@ fn resolve_board_alias(board_id: &str) -> &str {
         "adafruit_grand_central_m4" => "adafruit_grandcentral_m4",
         other => other,
     }
+}
+
+/// Extract debug tools from a board JSON entry's `debug.tools` section.
+fn get_board_debug_tools(board_id: &str) -> Option<HashMap<String, DebugToolMeta>> {
+    let db = get_board_db();
+    let resolved = resolve_board_alias(board_id);
+    let entry = db.get(board_id).or_else(|| db.get(resolved))?;
+
+    let tools = entry
+        .get("debug")
+        .and_then(|d| d.get("tools"))
+        .and_then(|t| t.as_object())?;
+
+    if tools.is_empty() {
+        return None;
+    }
+
+    let mut result = HashMap::new();
+    for (name, meta) in tools {
+        let onboard = meta
+            .get("onboard")
+            .and_then(|v| v.as_bool())
+            .unwrap_or(false);
+        let default = meta
+            .get("default")
+            .and_then(|v| v.as_bool())
+            .unwrap_or(false);
+        result.insert(name.clone(), DebugToolMeta { onboard, default });
+    }
+
+    Some(result)
 }
 
 fn get_board_defaults(board_id: &str) -> Option<HashMap<String, String>> {
@@ -1287,5 +1361,81 @@ leonardo.upload.speed=57600
             "dxcore boards missing required framework defines:\n{}",
             failures.join("\n")
         );
+    }
+
+    #[test]
+    fn test_uno_debug_tools_has_simavr() {
+        let config = BoardConfig::from_board_id("uno", &HashMap::new()).unwrap();
+        let tools = config
+            .debug_tools
+            .as_ref()
+            .expect("uno should have debug tools");
+        assert!(tools.contains_key("simavr"), "uno should have simavr");
+        assert!(tools.contains_key("avr-stub"), "uno should have avr-stub");
+        // simavr is not marked as onboard in the board JSON
+        assert!(!tools["simavr"].onboard);
+    }
+
+    #[test]
+    fn test_emulators_filters_hardware_probes() {
+        let config = BoardConfig::from_board_id("uno", &HashMap::new()).unwrap();
+        let emus = config.emulators();
+        // simavr is an emulator, avr-stub is not in EMULATOR_TOOL_NAMES
+        assert!(emus.contains_key("simavr"), "simavr should be in emulators");
+        assert!(
+            !emus.contains_key("avr-stub"),
+            "avr-stub is not an emulator"
+        );
+    }
+
+    #[test]
+    fn test_has_emulator() {
+        let config = BoardConfig::from_board_id("uno", &HashMap::new()).unwrap();
+        assert!(config.has_emulator("simavr"));
+        assert!(!config.has_emulator("qemu"));
+        assert!(!config.has_emulator("avr-stub")); // not in EMULATOR_TOOL_NAMES
+    }
+
+    #[test]
+    fn test_debug_tools_round_trip_serde() {
+        let config = BoardConfig::from_board_id("uno", &HashMap::new()).unwrap();
+        let json = serde_json::to_string(&config).unwrap();
+        let restored: BoardConfig = serde_json::from_str(&json).unwrap();
+        assert_eq!(config.debug_tools, restored.debug_tools);
+    }
+
+    #[test]
+    fn test_boards_txt_has_no_debug_tools() {
+        let f = write_boards_txt(
+            "\
+uno.name=Arduino Uno
+uno.build.mcu=atmega328p
+uno.build.f_cpu=16000000L
+",
+        );
+        let config = BoardConfig::from_boards_txt(f.path(), "uno", &HashMap::new()).unwrap();
+        assert!(
+            config.debug_tools.is_none(),
+            "boards.txt should not have debug tools"
+        );
+    }
+
+    #[test]
+    fn test_board_without_debug_section() {
+        // Find a board that has no debug section (if any), or verify graceful handling
+        // by checking that debug_tools is populated from the JSON when present
+        let config = BoardConfig::from_board_id("esp32dev", &HashMap::new()).unwrap();
+        // esp32dev has debug tools (hardware probes only, no emulators)
+        if let Some(ref tools) = config.debug_tools {
+            let emus = config.emulators();
+            // esp32dev has no software emulators, only hardware probes
+            assert!(
+                emus.is_empty(),
+                "esp32dev should have no emulators, got: {:?}",
+                emus
+            );
+            // But it should still have hardware debug tools
+            assert!(!tools.is_empty(), "esp32dev should have debug tools");
+        }
     }
 }
