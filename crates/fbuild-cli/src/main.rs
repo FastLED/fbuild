@@ -595,7 +595,7 @@ async fn main() {
             gc,
         }) => {
             if gc {
-                run_purge_gc()
+                run_purge_gc().await
             } else {
                 run_purge(target, dry_run, project_dir)
             }
@@ -2031,7 +2031,36 @@ async fn run_clang_tool(
     }
 }
 
-fn run_purge_gc() -> fbuild_core::Result<()> {
+async fn run_purge_gc() -> fbuild_core::Result<()> {
+    // Try to route GC through the daemon to respect its gc_mutex.
+    let client = DaemonClient::new();
+    if client.health().await {
+        let result = client.run_gc().await?;
+        if !result.success {
+            return Err(fbuild_core::FbuildError::Other(format!(
+                "GC failed: {}",
+                result.message.as_deref().unwrap_or("unknown error")
+            )));
+        }
+        println!("GC complete (via daemon):");
+        println!(
+            "  Installed evicted: {} ({})",
+            result.installed_evicted,
+            format_size(result.installed_bytes_freed)
+        );
+        println!(
+            "  Archives evicted:  {} ({})",
+            result.archives_evicted,
+            format_size(result.archive_bytes_freed)
+        );
+        println!(
+            "  Total freed:       {}",
+            format_size(result.total_bytes_freed)
+        );
+        return Ok(());
+    }
+
+    // No daemon running — safe to run GC locally.
     match fbuild_packages::DiskCache::open() {
         Ok(dc) => match dc.run_gc() {
             Ok(report) => {

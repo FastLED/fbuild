@@ -72,7 +72,16 @@ pub fn stem_and_hash(url: &str) -> (String, String) {
 /// or would collide with staging `.partial` directories, a short hash of
 /// the original string is appended to keep the mapping collision-free.
 fn sanitize_component(s: &str) -> String {
-    let sanitized = s.replace(['/', '\\', '\0'], "_").replace("..", "_");
+    let sanitized: String = s
+        .chars()
+        .map(|c| match c {
+            '/' | '\\' | '\0' | ':' | '*' | '?' | '"' | '<' | '>' | '|' => '_',
+            _ => c,
+        })
+        .collect();
+    let sanitized = sanitized.replace("..", "_");
+    // Trim trailing spaces and dots (invalid on Windows)
+    let sanitized = sanitized.trim_end_matches([' ', '.']).to_string();
     let sanitized = if sanitized.is_empty() || sanitized == "." {
         "_".to_string()
     } else {
@@ -312,6 +321,50 @@ mod tests {
             !a.ends_with(".partial"),
             "must not end with .partial: {}",
             a
+        );
+    }
+
+    #[test]
+    fn test_sanitize_windows_illegal_chars() {
+        // Windows-illegal characters must be replaced
+        let a = sanitize_component("1:2");
+        assert!(!a.contains(':'), "colon not sanitized: {}", a);
+
+        let b = sanitize_component("v1*beta");
+        assert!(!b.contains('*'), "asterisk not sanitized: {}", b);
+
+        let c = sanitize_component("test?ver");
+        assert!(!c.contains('?'), "question mark not sanitized: {}", c);
+
+        let d = sanitize_component("a<b>c");
+        assert!(
+            !d.contains('<') && !d.contains('>'),
+            "angle brackets not sanitized: {}",
+            d
+        );
+
+        let e = sanitize_component("a|b");
+        assert!(!e.contains('|'), "pipe not sanitized: {}", e);
+
+        let f = sanitize_component(r#"a"b"#);
+        assert!(!f.contains('"'), "quote not sanitized: {}", f);
+
+        // Trailing dots and spaces stripped (Windows restriction)
+        let g = sanitize_component("v1.");
+        assert!(!g.ends_with('.'), "trailing dot not stripped: {}", g);
+
+        let h = sanitize_component("v1 ");
+        assert!(!h.ends_with(' '), "trailing space not stripped: {}", h);
+    }
+
+    #[test]
+    fn test_sanitize_windows_collision_free() {
+        // "1:2" and "1_2" must not collide
+        let a = sanitize_component("1:2");
+        let b = sanitize_component("1_2");
+        assert_ne!(
+            a, b,
+            "Windows-illegal char sanitization must be disambiguated"
         );
     }
 }
