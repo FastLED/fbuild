@@ -1182,9 +1182,21 @@ mod tests {
             )
         });
         let reference = std::path::PathBuf::from(&firmware_path);
-        if !reference.exists() {
-            panic!(
-                "reference firmware not found at {}; build and flash it first",
+        assert!(
+            reference.is_file(),
+            "reference firmware not found at {}; build and flash it first",
+            reference.display()
+        );
+        let ref_dir = reference
+            .parent()
+            .unwrap_or_else(|| std::path::Path::new("."));
+        for name in ["bootloader.bin", "partitions.bin"] {
+            let artifact = ref_dir.join(name);
+            assert!(
+                artifact.is_file(),
+                "[{}] missing {} next to {}; otherwise this only verifies firmware.bin",
+                chip,
+                name,
                 reference.display()
             );
         }
@@ -1228,14 +1240,10 @@ mod tests {
 
         // Phase 2: tampered image -> Mismatch
         let tmp = tempfile::TempDir::new().unwrap();
-        let ref_dir = reference.parent().unwrap();
         // Copy bootloader and partitions next to the tampered firmware so
         // build_verify_flash_args picks them up alongside firmware.bin.
-        for name in &["bootloader.bin", "partitions.bin"] {
-            let src = ref_dir.join(name);
-            if src.exists() {
-                std::fs::copy(&src, tmp.path().join(name)).unwrap();
-            }
+        for name in ["bootloader.bin", "partitions.bin"] {
+            std::fs::copy(ref_dir.join(name), tmp.path().join(name)).unwrap();
         }
         let tampered = tmp.path().join("firmware.bin");
         let mut bytes = std::fs::read(&reference).unwrap();
