@@ -1322,12 +1322,14 @@ pub async fn avr8js_firmware_hex(
 // EmulatorRunner abstraction (Issue #23)
 // ---------------------------------------------------------------------------
 
-use fbuild_core::emulator::{EmulatorOutcome, EmulatorRunResult};
+use fbuild_core::emulator::{EmulatorArtifactBundle, EmulatorOutcome, EmulatorRunResult};
 
 /// Configuration for an emulator test run (user-facing options).
 pub struct EmulatorRunConfig {
     pub firmware_path: PathBuf,
     pub elf_path: Option<PathBuf>,
+    /// Structured artifact bundle for runner validation.
+    pub artifact_bundle: EmulatorArtifactBundle,
     pub timeout: Option<f64>,
     pub halt_on_error: Option<String>,
     pub halt_on_success: Option<String>,
@@ -1388,6 +1390,12 @@ impl EmulatorRunner for QemuRunner {
     }
 
     async fn run(&self, config: &EmulatorRunConfig) -> fbuild_core::Result<EmulatorRunResult> {
+        if let Err(msg) = config
+            .artifact_bundle
+            .validate_for(fbuild_core::emulator::RunnerKind::QemuEsp32)
+        {
+            return Err(fbuild_core::FbuildError::DeployFailed(msg));
+        }
         let mcu_config = fbuild_build::esp32::mcu_config::get_mcu_config(&self.board.mcu)?;
 
         let effective_flash_mode = self
@@ -1489,6 +1497,12 @@ impl EmulatorRunner for Avr8jsRunner {
     }
 
     async fn run(&self, config: &EmulatorRunConfig) -> fbuild_core::Result<EmulatorRunResult> {
+        if let Err(msg) = config
+            .artifact_bundle
+            .validate_for(fbuild_core::emulator::RunnerKind::Avr8js)
+        {
+            return Err(fbuild_core::FbuildError::DeployFailed(msg));
+        }
         let node_path = find_node()?;
         let avr8js_cache = ensure_avr8js_npm()?;
 
@@ -1603,6 +1617,12 @@ impl EmulatorRunner for SimavrRunner {
     }
 
     async fn run(&self, config: &EmulatorRunConfig) -> fbuild_core::Result<EmulatorRunResult> {
+        if let Err(msg) = config
+            .artifact_bundle
+            .validate_for(fbuild_core::emulator::RunnerKind::Simavr)
+        {
+            return Err(fbuild_core::FbuildError::DeployFailed(msg));
+        }
         let simavr_path = find_simavr()?;
 
         // simavr requires an ELF file
@@ -1956,9 +1976,11 @@ pub async fn test_emu(
     };
 
     // Run the emulator
+    let artifact_bundle = EmulatorArtifactBundle::from_paths(&firmware_path, elf_path.as_deref());
     let run_config = EmulatorRunConfig {
         firmware_path,
         elf_path,
+        artifact_bundle,
         timeout: req.timeout,
         halt_on_error: req.halt_on_error.clone(),
         halt_on_success: req.halt_on_success.clone(),
