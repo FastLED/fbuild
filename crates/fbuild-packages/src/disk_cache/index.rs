@@ -468,6 +468,26 @@ impl CacheIndex {
         Ok(entries)
     }
 
+    /// Look up the most recently used entry for a kind+url pair (any version).
+    /// Returns the entry with the highest `last_used_at` that has an installed path.
+    pub fn lookup_latest(&self, kind: Kind, url: &str) -> rusqlite::Result<Option<CacheEntry>> {
+        let (_, hash) = paths::stem_and_hash(url);
+        let conn = self.conn.lock().unwrap();
+        conn.query_row(
+            "SELECT id, kind, url, stem, hash, version,
+                    archive_path, archive_bytes, archive_sha256,
+                    installed_path, installed_bytes, installed_at,
+                    archived_at, last_used_at, use_count, pinned
+             FROM entries
+             WHERE kind = ?1 AND hash = ?2 AND installed_path IS NOT NULL
+             ORDER BY last_used_at DESC
+             LIMIT 1",
+            params![kind.as_str(), hash],
+            Self::row_to_entry,
+        )
+        .optional()
+    }
+
     /// Get total entry count.
     pub fn entry_count(&self) -> rusqlite::Result<i64> {
         let conn = self.conn.lock().unwrap();

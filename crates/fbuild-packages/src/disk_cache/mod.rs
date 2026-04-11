@@ -173,6 +173,12 @@ impl DiskCache {
     pub fn install_staging_dir(&self, kind: Kind, url: &str, version: &str) -> PathBuf {
         paths::install_staging_dir(&self.cache_root, kind, url, version)
     }
+
+    /// Look up the most recently used installed entry for a kind+url pair (any version).
+    /// Useful when you want to find *any* cached version of a package.
+    pub fn lookup_latest(&self, kind: Kind, url: &str) -> rusqlite::Result<Option<CacheEntry>> {
+        self.index.lookup_latest(kind, url)
+    }
 }
 
 /// Cache statistics for `fbuild status`.
