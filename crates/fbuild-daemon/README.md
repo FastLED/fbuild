@@ -20,7 +20,7 @@ Axum-based HTTP/WebSocket daemon server that replaces the Python FastAPI daemon.
 
 ## Endpoints
 
-Operations: `POST /api/build`, `/api/deploy`, `/api/monitor`, `/api/install-deps`, `/api/reset`
+Operations: `POST /api/build`, `/api/deploy`, `/api/test-emu`, `/api/monitor`, `/api/install-deps`, `/api/reset`
 
 Management: `GET /health`, `/api/daemon/info`; `POST /api/daemon/shutdown`
 

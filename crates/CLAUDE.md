@@ -35,8 +35,8 @@ fbuild-test-support (test utilities) ──────────────�
 - **fbuild-serial** — `SharedSerialManager` (centralized serial I/O), deploy preemption protocol, WebSocket messages, USB-CDC retry logic
 - **fbuild-build** — `BuildOrchestrator` trait, per-platform orchestrators (AVR, ESP32, ESP8266, RP2040, STM32, Teensy, WASM)
 - **fbuild-deploy** — `Deployer` trait, esptool/avrdude/picotool invocation, firmware upload
-- **fbuild-daemon** — Axum HTTP/WS server, request processors, device lease manager, lock manager
-- **fbuild-cli** — Clap CLI: build, deploy, monitor, purge subcommands. Thin HTTP client to daemon.
+- **fbuild-daemon** — Axum HTTP/WS server, request processors, device lease manager, lock manager, emulator runners (avr8js, simavr, QEMU)
+- **fbuild-cli** — Clap CLI: build, deploy, test-emu, monitor, purge subcommands. Thin HTTP client to daemon.
 - **fbuild-python** — PyO3 bindings: `SerialMonitor`, `Daemon`, `DaemonConnection`, `connect_daemon`
 - **fbuild-test-support** — `create_test_project()`, temp dir fixtures
 

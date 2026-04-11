@@ -26,6 +26,11 @@ uv run cargo run -p fbuild-cli -- deploy tests/platform/uno -e uno --to emu
 uv run cargo run -p fbuild-cli -- deploy tests/platform/uno -e uno --to emu --monitor
 uv run cargo run -p fbuild-cli -- deploy tests/platform/esp32dev -e esp32dev-qemu --to emu --emulator qemu
 
+# test-emu: build + run in emulator (CI-friendly, exits with emulator exit code)
+uv run cargo run -p fbuild-cli -- test-emu tests/platform/uno -e uno
+uv run cargo run -p fbuild-cli -- test-emu tests/platform/esp32s3 -e esp32s3 --timeout 10
+uv run cargo run -p fbuild-cli -- test-emu tests/platform/mega -e megaatmega2560 --emulator simavr
+
 # Shell trampolines (alternative to uv run for Rust tools)
 ./_cargo check --workspace --all-targets
 ./_cargo clippy --workspace --all-targets -- -D warnings
@@ -103,7 +108,7 @@ Custom Claude Code skills in `.claude/skills/`:
 - **Dev mode isolation** — `FBUILD_DEV_MODE=1` → port 8865, `~/.fbuild/dev/`
 - **HTTP API compatibility** — same endpoints and JSON schemas as the Python daemon
 - **Windows USB-CDC** — 30 retries, aggressive buffer drain, DTR/RTS toggling after flash
-- **Deploy CLI convention** — prefer `fbuild deploy --to emu [--emulator <kind>]`; keep `--target` and `--qemu` only as compatibility aliases
+- **Emulator CLI convention** — prefer `fbuild test-emu` for CI; `fbuild deploy --to emu [--emulator <kind>]` for interactive use; keep `--target` and `--qemu` only as compatibility aliases
 
 ## Reference Implementations
 

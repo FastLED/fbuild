@@ -1,6 +1,6 @@
 # fbuild-cli
 
-Clap-based CLI for fbuild. Thin HTTP client that delegates all work to the daemon. Subcommands: build, deploy, monitor, reset, purge, daemon, device, show, mcp, clang-tidy, iwyu, clang-query.
+Clap-based CLI for fbuild. Thin HTTP client that delegates all work to the daemon. Subcommands: build, deploy, test-emu, monitor, reset, purge, daemon, device, show, mcp, clang-tidy, iwyu, clang-query.
 
 ## Key Types
 
@@ -16,7 +16,8 @@ Clap-based CLI for fbuild. Thin HTTP client that delegates all work to the daemo
 ## Subcommands
 
 - `build` -- compile firmware (supports streaming output, compiledb target, quick/release profiles)
-- `deploy` -- flash firmware to device (optional post-deploy monitor, QEMU support)
+- `deploy` -- flash firmware to device (optional post-deploy monitor, emulator support via `--to emu`)
+- `test-emu` -- build firmware and run it in an emulator (avr8js, simavr, or QEMU) with pattern matching and timeout
 - `monitor` -- serial monitor with halt-on-error/success and timeout
 - `reset` -- reset device via DTR/RTS without re-flashing
 - `purge` -- clear cached packages and build artifacts
