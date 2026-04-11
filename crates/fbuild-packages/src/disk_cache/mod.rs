@@ -33,7 +33,6 @@ use std::sync::Arc;
 pub struct DiskCache {
     index: Arc<CacheIndex>,
     cache_root: PathBuf,
-    budget: CacheBudget,
 }
 
 impl DiskCache {
@@ -46,7 +45,6 @@ impl DiskCache {
     /// Open the disk cache at a specific root (for testing).
     pub fn open_at(cache_root: &Path) -> rusqlite::Result<Self> {
         let index = CacheIndex::open(cache_root)?;
-        let budget = CacheBudget::compute(cache_root);
 
         // Ensure phase directories exist — propagate failures so callers
         // don't silently operate on an unusable cache layout.
@@ -62,7 +60,6 @@ impl DiskCache {
         Ok(Self {
             index: Arc::new(index),
             cache_root: cache_root.to_path_buf(),
-            budget,
         })
     }
 
@@ -133,12 +130,15 @@ impl DiskCache {
     }
 
     /// Get cache statistics.
+    /// Recomputes the budget from current disk space so callers always
+    /// see fresh watermarks.
     pub fn stats(&self) -> rusqlite::Result<CacheStats> {
+        let budget = CacheBudget::compute(&self.cache_root);
         Ok(CacheStats {
             archive_bytes: self.index.total_archive_bytes()? as u64,
             installed_bytes: self.index.total_installed_bytes()? as u64,
             entry_count: self.index.entry_count()?,
-            budget: self.budget,
+            budget,
         })
     }
 
@@ -147,9 +147,9 @@ impl DiskCache {
         &self.cache_root
     }
 
-    /// Get the computed budget.
-    pub fn budget(&self) -> &CacheBudget {
-        &self.budget
+    /// Get the current budget, recomputed from live disk space.
+    pub fn budget(&self) -> CacheBudget {
+        CacheBudget::compute(&self.cache_root)
     }
 
     // --- Path helpers for callers ---

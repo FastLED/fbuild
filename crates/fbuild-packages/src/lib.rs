@@ -21,20 +21,24 @@ use std::future::Future;
 use std::path::{Path, PathBuf};
 
 /// Recursively compute the total size of a directory in bytes.
+///
+/// Symlink-safe: uses `symlink_metadata` and skips symlinks to avoid
+/// infinite recursion. Tolerates permission errors by treating
+/// inaccessible entries as zero-size.
 fn dir_size(path: &Path) -> u64 {
-    std::fs::read_dir(path)
-        .into_iter()
-        .flatten()
+    let Ok(entries) = std::fs::read_dir(path) else {
+        return 0;
+    };
+    entries
         .filter_map(|e| e.ok())
-        .map(|e| {
-            let meta = e.metadata().unwrap_or_else(|_| {
-                // Fallback: zero-size if metadata fails
-                std::fs::metadata(e.path()).unwrap_or_else(|_| unreachable!())
-            });
-            if meta.is_dir() {
-                dir_size(&e.path())
+        .filter_map(|e| {
+            let meta = std::fs::symlink_metadata(e.path()).ok()?;
+            if meta.is_symlink() {
+                None // skip symlinks to avoid cycles
+            } else if meta.is_dir() {
+                Some(dir_size(&e.path()))
             } else {
-                meta.len()
+                Some(meta.len())
             }
         })
         .sum()
@@ -270,13 +274,16 @@ impl PackageBase {
     }
 
     /// Best-effort: record a completed install in the DiskCache index.
+    /// Only records if `install_path` is under the DiskCache root — legacy
+    /// Cache paths are skipped to avoid indexing absolute legacy paths.
     fn record_install_in_disk_cache(&self, install_path: &Path) {
         if let Some(ref dc) = self.disk_cache {
+            let rel_path = match install_path.strip_prefix(dc.cache_root()) {
+                Ok(rel) => rel,
+                Err(_) => return, // legacy path outside DiskCache root
+            };
             let kind = self.cache_subdir.into();
             let installed_bytes = dir_size(install_path) as i64;
-            let rel_path = install_path
-                .strip_prefix(dc.cache_root())
-                .unwrap_or(install_path);
             let _ = dc.record_install(
                 kind,
                 &self.cache_key,
@@ -353,14 +360,13 @@ impl PackageBase {
             fbuild_core::FbuildError::PackageError(format!("failed to commit installation: {}", e))
         })?;
 
-        // Write sentinel so GC reconciliation recognizes this as a complete install
+        // Write sentinel so GC reconciliation recognizes this as a complete install.
+        // Best-effort: the install succeeded (rename was atomic), so a sentinel
+        // failure should not cause the caller to see an error.
         let sentinel = disk_cache::paths::install_complete_sentinel(&install_path);
-        std::fs::write(&sentinel, b"").map_err(|e| {
-            fbuild_core::FbuildError::PackageError(format!(
-                "failed to write install sentinel: {}",
-                e
-            ))
-        })?;
+        if let Err(e) = std::fs::write(&sentinel, b"") {
+            tracing::warn!("failed to write install sentinel: {}", e);
+        }
 
         // Best-effort: record in DiskCache index for LRU tracking
         self.record_install_in_disk_cache(&install_path);

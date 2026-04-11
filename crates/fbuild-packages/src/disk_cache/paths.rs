@@ -66,8 +66,14 @@ pub fn stem_and_hash(url: &str) -> (String, String) {
 
 /// Sanitize a path component to prevent directory traversal.
 /// Strips path separators, `.` and `..` sequences, and null bytes.
+/// Returns `"_"` if the result would be empty or `"."`.
 fn sanitize_component(s: &str) -> String {
-    s.replace(['/', '\\', '\0'], "_").replace("..", "_")
+    let sanitized = s.replace(['/', '\\', '\0'], "_").replace("..", "_");
+    if sanitized.is_empty() || sanitized == "." {
+        "_".to_string()
+    } else {
+        sanitized
+    }
 }
 
 /// Root of the archives phase: `{cache_root}/archives/`

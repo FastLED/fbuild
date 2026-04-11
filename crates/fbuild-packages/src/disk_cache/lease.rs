@@ -59,9 +59,17 @@ impl Lease {
 
 impl Drop for Lease {
     fn drop(&mut self) {
-        let _ = self
+        if let Err(e) = self
             .index
-            .unpin(self.entry_id, self.holder_pid, self.holder_nonce);
+            .unpin(self.entry_id, self.holder_pid, self.holder_nonce)
+        {
+            tracing::warn!(
+                "failed to unpin lease entry_id={} holder_pid={}: {}",
+                self.entry_id,
+                self.holder_pid,
+                e
+            );
+        }
     }
 }
 
