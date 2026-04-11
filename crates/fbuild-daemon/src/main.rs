@@ -195,6 +195,28 @@ async fn main() {
         });
     }
 
+    // Run startup reconciliation in a background task — cleans up partial
+    // installs and orphan files left by crashed previous instances.
+    {
+        tokio::spawn(async {
+            match fbuild_packages::DiskCache::open() {
+                Ok(dc) => match dc.reconcile() {
+                    Ok(report) => {
+                        if report.orphan_files_removed > 0 || report.orphan_rows_cleaned > 0 {
+                            tracing::info!(
+                                "startup reconciliation: cleaned {} orphan files, {} orphan rows",
+                                report.orphan_files_removed,
+                                report.orphan_rows_cleaned,
+                            );
+                        }
+                    }
+                    Err(e) => tracing::warn!("startup reconciliation failed: {}", e),
+                },
+                Err(e) => tracing::debug!("could not open cache for reconciliation: {}", e),
+            }
+        });
+    }
+
     // Spawn background GC loop — runs every 5 minutes
     {
         tokio::spawn(async move {

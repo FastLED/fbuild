@@ -70,8 +70,10 @@ pub fn run_gc(index: &CacheIndex, budget: &CacheBudget) -> rusqlite::Result<GcRe
             // Remove the directory from disk
             if let Some(ref path) = entry.installed_path {
                 let full_path = index.cache_root().join(path);
-                if full_path.exists() {
-                    if let Err(e) = std::fs::remove_dir_all(&full_path) {
+                match std::fs::remove_dir_all(&full_path) {
+                    Ok(()) => {}
+                    Err(e) if e.kind() == std::io::ErrorKind::NotFound => {}
+                    Err(e) => {
                         tracing::warn!("GC: failed to remove {}: {}", full_path.display(), e);
                         continue;
                     }
@@ -101,8 +103,10 @@ pub fn run_gc(index: &CacheIndex, budget: &CacheBudget) -> rusqlite::Result<GcRe
             // Remove the archive file from disk
             if let Some(ref path) = entry.archive_path {
                 let full_path = index.cache_root().join(path);
-                if full_path.exists() {
-                    if let Err(e) = remove_path(&full_path) {
+                match remove_path(&full_path) {
+                    Ok(()) => {}
+                    Err(e) if e.kind() == std::io::ErrorKind::NotFound => {}
+                    Err(e) => {
                         tracing::warn!("GC: failed to remove {}: {}", full_path.display(), e);
                         continue;
                     }
@@ -243,14 +247,24 @@ fn remove_partial_dirs(root: &Path, report: &mut GcReport) {
 }
 
 /// Simple recursive directory walker (no external dependency needed here).
+/// Uses symlink_metadata to avoid following symlinks and prevent infinite recursion.
 fn walkdir_sync(root: &Path) -> std::io::Result<Vec<std::path::PathBuf>> {
     let mut result = Vec::new();
     if root.is_dir() {
         for entry in std::fs::read_dir(root)? {
-            let entry = entry?;
+            let entry = match entry {
+                Ok(e) => e,
+                Err(_) => continue,
+            };
             let path = entry.path();
+            // Use symlink_metadata to avoid following symlinks
+            let meta = match std::fs::symlink_metadata(&path) {
+                Ok(m) => m,
+                Err(_) => continue,
+            };
             result.push(path.clone());
-            if path.is_dir() {
+            // Only recurse into real directories, not symlinks
+            if meta.is_dir() {
                 if let Ok(children) = walkdir_sync(&path) {
                     result.extend(children);
                 }
