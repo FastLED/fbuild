@@ -371,6 +371,29 @@ pub struct DeviceStatusResponse {
     pub monitor_count: usize,
 }
 
+/// POST /api/test-emu — build firmware then run it in an emulator.
+#[derive(Debug, Deserialize)]
+pub struct TestEmuRequest {
+    pub project_dir: String,
+    pub environment: Option<String>,
+    #[serde(default)]
+    pub verbose: bool,
+    pub timeout: Option<f64>,
+    pub halt_on_error: Option<String>,
+    pub halt_on_success: Option<String>,
+    pub expect: Option<String>,
+    /// Explicit emulator backend: "qemu" or "avr8js". Auto-detected if omitted.
+    pub emulator: Option<String>,
+    #[serde(default = "default_true")]
+    pub show_timestamp: bool,
+    pub request_id: Option<String>,
+    pub caller_pid: Option<u32>,
+    pub caller_cwd: Option<String>,
+    /// Snapshot of `PLATFORMIO_*` env vars from the CLI caller's environment.
+    #[serde(default)]
+    pub pio_env: BTreeMap<String, String>,
+}
+
 /// POST /api/reset request.
 #[derive(Debug, Deserialize)]
 pub struct ResetRequest {
@@ -751,5 +774,50 @@ mod tests {
         assert_eq!(req.board.unwrap(), "esp32dev");
         assert!(req.verbose);
         assert_eq!(req.request_id.unwrap(), "rst-1");
+    }
+
+    // --- TestEmuRequest deserialization ---
+
+    #[test]
+    fn test_emu_request_minimal() {
+        let json = r#"{"project_dir": "/tmp/p"}"#;
+        let req: TestEmuRequest = serde_json::from_str(json).unwrap();
+        assert_eq!(req.project_dir, "/tmp/p");
+        assert!(req.environment.is_none());
+        assert!(!req.verbose);
+        assert!(req.timeout.is_none());
+        assert!(req.halt_on_error.is_none());
+        assert!(req.halt_on_success.is_none());
+        assert!(req.expect.is_none());
+        assert!(req.emulator.is_none());
+        assert!(req.show_timestamp); // default true
+        assert!(req.request_id.is_none());
+    }
+
+    #[test]
+    fn test_emu_request_all_fields() {
+        let json = r#"{
+            "project_dir": "/tmp/p",
+            "environment": "uno",
+            "verbose": true,
+            "timeout": 10.0,
+            "halt_on_error": "FAIL",
+            "halt_on_success": "PASS",
+            "expect": "ready",
+            "emulator": "avr8js",
+            "show_timestamp": false,
+            "request_id": "test-1"
+        }"#;
+        let req: TestEmuRequest = serde_json::from_str(json).unwrap();
+        assert_eq!(req.project_dir, "/tmp/p");
+        assert_eq!(req.environment.unwrap(), "uno");
+        assert!(req.verbose);
+        assert_eq!(req.timeout.unwrap(), 10.0);
+        assert_eq!(req.halt_on_error.unwrap(), "FAIL");
+        assert_eq!(req.halt_on_success.unwrap(), "PASS");
+        assert_eq!(req.expect.unwrap(), "ready");
+        assert_eq!(req.emulator.unwrap(), "avr8js");
+        assert!(!req.show_timestamp);
+        assert_eq!(req.request_id.unwrap(), "test-1");
     }
 }

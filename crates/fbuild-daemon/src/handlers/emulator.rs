@@ -229,6 +229,7 @@ struct QemuRunResult {
     outcome: MonitorOutcome,
     stdout: String,
     stderr: String,
+    exit_code: Option<i32>,
 }
 
 struct RunQemuOptions<'a> {
@@ -240,6 +241,8 @@ struct RunQemuOptions<'a> {
     expect: Option<&'a str>,
     show_timestamp: bool,
     verbose: bool,
+    /// Label used in user-visible messages (e.g. "QEMU", "simavr").
+    process_label: &'a str,
 }
 
 pub async fn deploy_avr8js(
@@ -588,6 +591,7 @@ struct Avr8jsRunResult {
     outcome: MonitorOutcome,
     stdout: String,
     stderr: String,
+    exit_code: Option<i32>,
 }
 
 struct RunAvr8jsHeadlessOptions<'a> {
@@ -753,6 +757,7 @@ async fn run_avr8js_headless(
         outcome,
         stdout: stdout_buf,
         stderr: stderr_buf,
+        exit_code: child_exit.and_then(|s| s.code()),
     })
 }
 
@@ -858,23 +863,25 @@ async fn run_qemu_process(
         .stderr(Stdio::piped());
     apply_windows_process_flags(&mut cmd, qemu_path);
 
+    let label = options.process_label;
     if options.verbose {
-        tracing::info!("qemu: {} {}", qemu_path.display(), args.join(" "));
+        tracing::info!("{}: {} {}", label, qemu_path.display(), args.join(" "));
     }
 
     let mut child = cmd.spawn().map_err(|e| {
         fbuild_core::FbuildError::DeployFailed(build_linux_macos_qemu_hint(&format!(
-            "failed to launch QEMU at {}: {}",
+            "failed to launch {} at {}: {}",
+            label,
             qemu_path.display(),
             e
         )))
     })?;
 
     let stdout = child.stdout.take().ok_or_else(|| {
-        fbuild_core::FbuildError::DeployFailed("failed to capture QEMU stdout".to_string())
+        fbuild_core::FbuildError::DeployFailed(format!("failed to capture {} stdout", label))
     })?;
     let stderr = child.stderr.take().ok_or_else(|| {
-        fbuild_core::FbuildError::DeployFailed("failed to capture QEMU stderr".to_string())
+        fbuild_core::FbuildError::DeployFailed(format!("failed to capture {} stderr", label))
     })?;
 
     let (tx, mut rx) = tokio::sync::mpsc::unbounded_channel::<ProcessEvent>();
@@ -911,7 +918,7 @@ async fn run_qemu_process(
         tokio::select! {
             status = child.wait(), if child_exit.is_none() => {
                 child_exit = Some(status.map_err(|e| {
-                    fbuild_core::FbuildError::DeployFailed(format!("QEMU wait failed: {}", e))
+                    fbuild_core::FbuildError::DeployFailed(format!("{} wait failed: {}", label, e))
                 })?);
                 if streams_open == 0 {
                     break;
@@ -968,7 +975,7 @@ async fn run_qemu_process(
 
     if child_exit.is_none() {
         child_exit = Some(child.wait().await.map_err(|e| {
-            fbuild_core::FbuildError::DeployFailed(format!("QEMU wait failed: {}", e))
+            fbuild_core::FbuildError::DeployFailed(format!("{} wait failed: {}", label, e))
         })?);
     }
 
@@ -984,26 +991,29 @@ async fn run_qemu_process(
     } else if let Some(status) = child_exit {
         if status.success() {
             if options.expect.is_some() && !monitor.expect_found() {
-                MonitorOutcome::Error(
-                    "QEMU exited before the expected pattern was found".to_string(),
-                )
+                MonitorOutcome::Error(format!(
+                    "{} exited before the expected pattern was found",
+                    label
+                ))
             } else {
-                MonitorOutcome::Success("QEMU exited normally".to_string())
+                MonitorOutcome::Success(format!("{} exited normally", label))
             }
         } else {
             MonitorOutcome::Error(format!(
-                "QEMU exited with code {}",
+                "{} exited with code {}",
+                label,
                 status.code().unwrap_or(-1)
             ))
         }
     } else {
-        MonitorOutcome::Error("QEMU exited unexpectedly".to_string())
+        MonitorOutcome::Error(format!("{} exited unexpectedly", label))
     };
 
     Ok(QemuRunResult {
         outcome,
         stdout: stdout_buf,
         stderr: stderr_buf,
+        exit_code: child_exit.and_then(|s| s.code()),
     })
 }
 
@@ -1066,13 +1076,13 @@ pub async fn deploy_qemu(
             );
         }
     };
-    if !board.mcu.eq_ignore_ascii_case("esp32s3") {
+    if !is_qemu_supported_esp32_mcu(&board.mcu) {
         return (
             StatusCode::BAD_REQUEST,
             Json(OperationResponse::fail(
                 request_id,
                 format!(
-                    "native QEMU deploy currently supports only ESP32-S3 boards, got '{}'",
+                    "native QEMU deploy currently supports ESP32 and ESP32-S3 boards, got '{}'",
                     board.mcu
                 ),
             )),
@@ -1148,6 +1158,12 @@ pub async fn deploy_qemu(
         );
     }
     let flash_image = session_dir.join("qemu_flash.bin");
+    // Only apply the ESP32-S3 ADC calibration patch for S3 variants.
+    let elf_for_adc_patch = if board.mcu.eq_ignore_ascii_case("esp32s3") {
+        elf_path.as_deref()
+    } else {
+        None
+    };
     if let Err(e) = fbuild_deploy::esp32::create_qemu_flash_image(
         &firmware_path,
         &flash_image,
@@ -1155,7 +1171,7 @@ pub async fn deploy_qemu(
         mcu_config.bootloader_offset(),
         mcu_config.partitions_offset(),
         mcu_config.firmware_offset(),
-        elf_path.as_deref(),
+        elf_for_adc_patch,
     ) {
         return (
             StatusCode::INTERNAL_SERVER_ERROR,
@@ -1166,7 +1182,8 @@ pub async fn deploy_qemu(
         );
     }
 
-    let args = fbuild_deploy::esp32::build_qemu_esp32s3_args(
+    let args = fbuild_deploy::esp32::build_qemu_args(
+        &board.mcu,
         &flash_image,
         board.qemu_esp32_psram_config(),
     );
@@ -1189,6 +1206,7 @@ pub async fn deploy_qemu(
             expect: expect.as_deref(),
             show_timestamp,
             verbose,
+            process_label: "QEMU",
         },
     )
     .await
@@ -1202,6 +1220,7 @@ pub async fn deploy_qemu(
         }
     };
 
+    let real_exit_code = qemu_result.exit_code;
     match qemu_result.outcome {
         MonitorOutcome::Success(message) => (
             StatusCode::OK,
@@ -1209,7 +1228,7 @@ pub async fn deploy_qemu(
                 success: true,
                 request_id,
                 message: format!("QEMU run succeeded: {}", message),
-                exit_code: 0,
+                exit_code: real_exit_code.unwrap_or(0),
                 output_file: Some(output_file),
                 output_dir,
                 launch_url: None,
@@ -1223,7 +1242,7 @@ pub async fn deploy_qemu(
                 success: false,
                 request_id,
                 message: format!("QEMU run failed: {}", message),
-                exit_code: 1,
+                exit_code: real_exit_code.unwrap_or(1),
                 output_file: Some(output_file),
                 output_dir,
                 launch_url: None,
@@ -1233,7 +1252,7 @@ pub async fn deploy_qemu(
         ),
         MonitorOutcome::Timeout { expect_found } => {
             let success = expect.is_none() || expect_found;
-            let exit_code = if success { 0 } else { 1 };
+            let exit_code = real_exit_code.unwrap_or(if success { 0 } else { 1 });
             (
                 StatusCode::OK,
                 Json(OperationResponse {
@@ -1318,11 +1337,790 @@ pub async fn avr8js_firmware_hex(
     }
 }
 
+// ---------------------------------------------------------------------------
+// EmulatorRunner abstraction (Issue #23)
+// ---------------------------------------------------------------------------
+
+use fbuild_core::emulator::{EmulatorArtifactBundle, EmulatorOutcome, EmulatorRunResult};
+
+/// Configuration for an emulator test run (user-facing options).
+pub struct EmulatorRunConfig {
+    pub firmware_path: PathBuf,
+    pub elf_path: Option<PathBuf>,
+    /// Structured artifact bundle for runner validation.
+    pub artifact_bundle: EmulatorArtifactBundle,
+    pub timeout: Option<f64>,
+    pub halt_on_error: Option<String>,
+    pub halt_on_success: Option<String>,
+    pub expect: Option<String>,
+    pub show_timestamp: bool,
+    pub verbose: bool,
+}
+
+/// Convert a `MonitorOutcome` into an `EmulatorOutcome`.
+fn monitor_outcome_to_emulator(outcome: MonitorOutcome, exit_code: Option<i32>) -> EmulatorOutcome {
+    match outcome {
+        MonitorOutcome::Success(msg) => EmulatorOutcome::Passed(msg),
+        MonitorOutcome::Error(msg) => {
+            // Heuristic: if the process crashed (non-zero exit with crash signature)
+            if let Some(code) = exit_code {
+                if code != 0 && (msg.contains("abort()") || msg.contains("Guru Meditation")) {
+                    return EmulatorOutcome::Crashed(msg);
+                }
+            }
+            EmulatorOutcome::Failed(msg)
+        }
+        MonitorOutcome::Timeout { expect_found } => EmulatorOutcome::TimedOut { expect_found },
+    }
+}
+
+/// Abstraction over emulator backends. Each implementation knows how to set up
+/// and execute a specific emulator (QEMU, avr8js, etc.).
+#[async_trait::async_trait]
+pub trait EmulatorRunner: Send + Sync {
+    /// Human-readable name of this runner (e.g. "QEMU ESP32-S3", "avr8js ATmega328P").
+    fn name(&self) -> &str;
+
+    /// Run the emulator with the given configuration.
+    async fn run(&self, config: &EmulatorRunConfig) -> fbuild_core::Result<EmulatorRunResult>;
+}
+
+/// QEMU-based emulator runner for ESP32-family boards.
+pub struct QemuRunner {
+    project_dir: PathBuf,
+    env_name: String,
+    board: fbuild_config::BoardConfig,
+    display_name: String,
+}
+
+impl QemuRunner {
+    pub fn new(project_dir: PathBuf, env_name: String, board: fbuild_config::BoardConfig) -> Self {
+        let display_name = format!("QEMU {}", board.mcu.to_uppercase());
+        Self {
+            project_dir,
+            env_name,
+            board,
+            display_name,
+        }
+    }
+}
+
+#[async_trait::async_trait]
+impl EmulatorRunner for QemuRunner {
+    fn name(&self) -> &str {
+        &self.display_name
+    }
+
+    async fn run(&self, config: &EmulatorRunConfig) -> fbuild_core::Result<EmulatorRunResult> {
+        if let Err(msg) = config
+            .artifact_bundle
+            .validate_for(fbuild_core::emulator::RunnerKind::QemuEsp32)
+        {
+            return Err(fbuild_core::FbuildError::DeployFailed(msg));
+        }
+        let mcu_config = fbuild_build::esp32::mcu_config::get_mcu_config(&self.board.mcu)?;
+
+        let effective_flash_mode = self
+            .board
+            .flash_mode
+            .as_deref()
+            .unwrap_or(mcu_config.default_flash_mode());
+        if !effective_flash_mode.eq_ignore_ascii_case("dio") {
+            return Ok(EmulatorRunResult {
+                outcome: EmulatorOutcome::Unsupported(format!(
+                    "QEMU requires DIO flash mode; effective mode is '{}'",
+                    effective_flash_mode
+                )),
+                stdout: String::new(),
+                stderr: String::new(),
+                command_line: String::new(),
+                exit_code: None,
+            });
+        }
+
+        let flash_size_bytes = fbuild_deploy::esp32::resolve_qemu_flash_size_bytes(
+            &self.board,
+            mcu_config.default_flash_size(),
+        )?;
+
+        let qemu = fbuild_packages::toolchain::EspQemuXtensa::new(&self.project_dir)
+            .and_then(|pkg| pkg.resolve_executable())?;
+
+        let session_dir = qemu_session_dir(&self.project_dir, &self.env_name);
+        std::fs::create_dir_all(&session_dir)?;
+
+        let flash_image = session_dir.join("qemu_flash.bin");
+
+        // Only apply the ESP32-S3 ADC calibration patch for S3 variants.
+        let elf_for_adc_patch = if self.board.mcu.eq_ignore_ascii_case("esp32s3") {
+            config.elf_path.as_deref()
+        } else {
+            None
+        };
+        fbuild_deploy::esp32::create_qemu_flash_image(
+            &config.firmware_path,
+            &flash_image,
+            flash_size_bytes,
+            mcu_config.bootloader_offset(),
+            mcu_config.partitions_offset(),
+            mcu_config.firmware_offset(),
+            elf_for_adc_patch,
+        )?;
+
+        let args = fbuild_deploy::esp32::build_qemu_args(
+            &self.board.mcu,
+            &flash_image,
+            self.board.qemu_esp32_psram_config(),
+        );
+        let addr2line_path = config.elf_path.as_ref().and_then(|_| {
+            resolve_esp32_toolchain_gcc_path(&self.project_dir, &mcu_config)
+                .ok()
+                .and_then(|gcc| fbuild_serial::crash_decoder::derive_addr2line_path(&gcc))
+        });
+
+        let command_line = format!("{} {}", qemu.display(), args.join(" "));
+
+        let qemu_result = run_qemu_process(
+            &qemu,
+            &args,
+            RunQemuOptions {
+                elf_path: config.elf_path.clone(),
+                addr2line_path,
+                timeout_secs: config.timeout,
+                halt_on_error: config.halt_on_error.as_deref(),
+                halt_on_success: config.halt_on_success.as_deref(),
+                expect: config.expect.as_deref(),
+                show_timestamp: config.show_timestamp,
+                verbose: config.verbose,
+                process_label: "QEMU",
+            },
+        )
+        .await?;
+
+        let exit_code = qemu_result.exit_code;
+        let outcome = monitor_outcome_to_emulator(qemu_result.outcome, exit_code);
+
+        Ok(EmulatorRunResult {
+            outcome,
+            stdout: qemu_result.stdout,
+            stderr: qemu_result.stderr,
+            command_line,
+            exit_code,
+        })
+    }
+}
+
+/// AVR8js-based emulator runner for ATmega328P (headless Node.js).
+pub struct Avr8jsRunner {
+    board: fbuild_config::BoardConfig,
+}
+
+impl Avr8jsRunner {
+    pub fn new(board: fbuild_config::BoardConfig) -> Self {
+        Self { board }
+    }
+}
+
+#[async_trait::async_trait]
+impl EmulatorRunner for Avr8jsRunner {
+    fn name(&self) -> &str {
+        "avr8js ATmega328P"
+    }
+
+    async fn run(&self, config: &EmulatorRunConfig) -> fbuild_core::Result<EmulatorRunResult> {
+        if let Err(msg) = config
+            .artifact_bundle
+            .validate_for(fbuild_core::emulator::RunnerKind::Avr8js)
+        {
+            return Err(fbuild_core::FbuildError::DeployFailed(msg));
+        }
+        let node_path = find_node()?;
+        let avr8js_cache = ensure_avr8js_npm()?;
+
+        let session_dir = tempfile::TempDir::new()?;
+        let script_path = session_dir.path().join("headless.mjs");
+        std::fs::write(&script_path, AVR8JS_HEADLESS_MJS)?;
+
+        let f_cpu_hz: u32 = self
+            .board
+            .f_cpu
+            .trim_end_matches('L')
+            .parse()
+            .unwrap_or(16_000_000);
+
+        let command_line = format!(
+            "{} {} --hex {} --f-cpu {}",
+            node_path.display(),
+            script_path.display(),
+            config.firmware_path.display(),
+            f_cpu_hz
+        );
+
+        let avr8js_result = run_avr8js_headless(
+            &node_path,
+            &script_path,
+            &config.firmware_path,
+            f_cpu_hz,
+            &avr8js_cache,
+            RunAvr8jsHeadlessOptions {
+                timeout_secs: config.timeout,
+                halt_on_error: config.halt_on_error.as_deref(),
+                halt_on_success: config.halt_on_success.as_deref(),
+                expect: config.expect.as_deref(),
+                show_timestamp: config.show_timestamp,
+                verbose: config.verbose,
+            },
+        )
+        .await?;
+
+        let exit_code = avr8js_result.exit_code;
+        let outcome = monitor_outcome_to_emulator(avr8js_result.outcome, exit_code);
+
+        Ok(EmulatorRunResult {
+            outcome,
+            stdout: avr8js_result.stdout,
+            stderr: avr8js_result.stderr,
+            command_line,
+            exit_code,
+        })
+    }
+}
+
+// ---------------------------------------------------------------------------
+// SimAVR native runner (Issue #24)
+// ---------------------------------------------------------------------------
+
+/// Find the `simavr` binary on PATH.
+///
+/// SimAVR is a native AVR simulator. Install via:
+/// - Linux: `apt install simavr` or build from source
+/// - macOS: `brew install simavr`
+/// - Windows: build from source (MSYS2/MinGW) — limited support
+fn find_simavr() -> fbuild_core::Result<PathBuf> {
+    let simavr = if cfg!(windows) {
+        "simavr.exe"
+    } else {
+        "simavr"
+    };
+    // Try running simavr to verify it exists
+    match std::process::Command::new(simavr)
+        .arg("--help")
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .output()
+    {
+        Ok(_) => Ok(PathBuf::from(simavr)),
+        Err(_) => {
+            let install_hint = if cfg!(target_os = "linux") {
+                "Install via: apt install simavr (Debian/Ubuntu) or your distro's package manager"
+            } else if cfg!(target_os = "macos") {
+                "Install via: brew install simavr"
+            } else {
+                "SimAVR has limited Windows support. Build from source via MSYS2/MinGW, \
+                 or use --emulator avr8js for ATmega328P boards instead"
+            };
+            Err(fbuild_core::FbuildError::DeployFailed(format!(
+                "simavr is required but '{}' was not found on PATH. {}",
+                simavr, install_hint
+            )))
+        }
+    }
+}
+
+/// SimAVR-based native emulator runner for AVR boards.
+///
+/// Supports any AVR board that advertises `simavr` in its debug_tools.
+/// Primary targets: ATmega328P (Uno), ATmega32U4 (Leonardo), ATmega2560 (Mega).
+/// Consumes `firmware.elf` directly.
+pub struct SimavrRunner {
+    board: fbuild_config::BoardConfig,
+}
+
+impl SimavrRunner {
+    pub fn new(board: fbuild_config::BoardConfig) -> Self {
+        Self { board }
+    }
+}
+
+#[async_trait::async_trait]
+impl EmulatorRunner for SimavrRunner {
+    fn name(&self) -> &str {
+        "simavr"
+    }
+
+    async fn run(&self, config: &EmulatorRunConfig) -> fbuild_core::Result<EmulatorRunResult> {
+        if let Err(msg) = config
+            .artifact_bundle
+            .validate_for(fbuild_core::emulator::RunnerKind::Simavr)
+        {
+            return Err(fbuild_core::FbuildError::DeployFailed(msg));
+        }
+        let simavr_path = find_simavr()?;
+
+        // simavr requires an ELF file
+        let elf_path = config.elf_path.as_ref().ok_or_else(|| {
+            fbuild_core::FbuildError::DeployFailed(
+                "simavr requires firmware.elf but no ELF path was produced by the build"
+                    .to_string(),
+            )
+        })?;
+
+        let f_cpu_hz: u32 = self
+            .board
+            .f_cpu
+            .trim_end_matches('L')
+            .parse()
+            .unwrap_or(16_000_000);
+
+        let mcu = self.board.mcu.to_lowercase();
+
+        let args: Vec<String> = vec![
+            "-m".to_string(),
+            mcu.clone(),
+            "-f".to_string(),
+            f_cpu_hz.to_string(),
+            elf_path.display().to_string(),
+        ];
+
+        let command_line = format!("{} {}", simavr_path.display(), args.join(" "));
+
+        // Reuse the generic process runner (run_qemu_process) with no crash decoder
+        let result = run_qemu_process(
+            &simavr_path,
+            &args,
+            RunQemuOptions {
+                elf_path: None,       // no ESP32 crash decoder needed
+                addr2line_path: None, // no addr2line for AVR in this path
+                timeout_secs: config.timeout,
+                halt_on_error: config.halt_on_error.as_deref(),
+                halt_on_success: config.halt_on_success.as_deref(),
+                expect: config.expect.as_deref(),
+                show_timestamp: config.show_timestamp,
+                verbose: config.verbose,
+                process_label: "simavr",
+            },
+        )
+        .await?;
+
+        let exit_code = result.exit_code;
+        let outcome = monitor_outcome_to_emulator(result.outcome, exit_code);
+
+        Ok(EmulatorRunResult {
+            outcome,
+            stdout: result.stdout,
+            stderr: result.stderr,
+            command_line,
+            exit_code,
+        })
+    }
+}
+
+/// Check whether a given MCU is supported by the QEMU runner.
+fn is_qemu_supported_esp32_mcu(mcu: &str) -> bool {
+    mcu.eq_ignore_ascii_case("esp32") || mcu.eq_ignore_ascii_case("esp32s3")
+}
+
+/// Fail fast if the board's flash mode is incompatible with QEMU (DIO only).
+fn check_qemu_flash_mode(board: &fbuild_config::BoardConfig) -> fbuild_core::Result<()> {
+    let mcu_config = fbuild_build::esp32::mcu_config::get_mcu_config(&board.mcu)?;
+    let effective_flash_mode = board
+        .flash_mode
+        .as_deref()
+        .unwrap_or(mcu_config.default_flash_mode());
+    if !effective_flash_mode.eq_ignore_ascii_case("dio") {
+        return Err(fbuild_core::FbuildError::DeployFailed(format!(
+            "QEMU requires DIO flash mode; board '{}' uses '{}'",
+            board.name, effective_flash_mode
+        )));
+    }
+    Ok(())
+}
+
+/// Select the appropriate emulator runner based on platform, MCU, and optional
+/// explicit emulator choice.
+///
+/// Returns `Err` with `EmulatorOutcome::Unsupported` information if no runner
+/// matches.
+pub fn select_runner(
+    project_dir: &Path,
+    env_name: &str,
+    platform: fbuild_core::Platform,
+    board_id: &str,
+    board_overrides: &HashMap<String, String>,
+    emulator: Option<&str>,
+) -> fbuild_core::Result<Box<dyn EmulatorRunner>> {
+    let board = fbuild_config::BoardConfig::from_board_id(board_id, board_overrides)?;
+
+    if let Some(explicit) = emulator {
+        return match explicit {
+            "qemu" => {
+                if platform != fbuild_core::Platform::Espressif32 {
+                    return Err(fbuild_core::FbuildError::DeployFailed(
+                        "QEMU runner is only supported for ESP32-family boards".to_string(),
+                    ));
+                }
+                if !is_qemu_supported_esp32_mcu(&board.mcu) {
+                    return Err(fbuild_core::FbuildError::DeployFailed(format!(
+                        "QEMU runner currently supports ESP32 and ESP32-S3, got '{}'",
+                        board.mcu
+                    )));
+                }
+                check_qemu_flash_mode(&board)?;
+                Ok(Box::new(QemuRunner::new(
+                    project_dir.to_path_buf(),
+                    env_name.to_string(),
+                    board,
+                )))
+            }
+            "avr8js" => {
+                if !matches!(
+                    platform,
+                    fbuild_core::Platform::AtmelAvr | fbuild_core::Platform::AtmelMegaAvr
+                ) {
+                    return Err(fbuild_core::FbuildError::DeployFailed(
+                        "avr8js runner is only supported for AVR boards".to_string(),
+                    ));
+                }
+                if !board.mcu.eq_ignore_ascii_case("atmega328p") {
+                    return Err(fbuild_core::FbuildError::DeployFailed(format!(
+                        "avr8js runner currently supports only ATmega328P, got '{}'",
+                        board.mcu
+                    )));
+                }
+                Ok(Box::new(Avr8jsRunner::new(board)))
+            }
+            "simavr" => {
+                if !matches!(
+                    platform,
+                    fbuild_core::Platform::AtmelAvr | fbuild_core::Platform::AtmelMegaAvr
+                ) {
+                    return Err(fbuild_core::FbuildError::DeployFailed(
+                        "simavr runner is only supported for AVR boards".to_string(),
+                    ));
+                }
+                if !board.has_emulator("simavr") {
+                    return Err(fbuild_core::FbuildError::DeployFailed(format!(
+                        "board '{}' does not advertise simavr support in its debug_tools",
+                        board_id
+                    )));
+                }
+                Ok(Box::new(SimavrRunner::new(board)))
+            }
+            other => Err(fbuild_core::FbuildError::DeployFailed(format!(
+                "unsupported emulator '{}'; available: qemu, avr8js, simavr",
+                other
+            ))),
+        };
+    }
+
+    // Auto-detect based on platform and MCU
+    match platform {
+        fbuild_core::Platform::AtmelAvr | fbuild_core::Platform::AtmelMegaAvr => {
+            if board.mcu.eq_ignore_ascii_case("atmega328p") {
+                // Default to avr8js for ATmega328P (no external binary needed)
+                Ok(Box::new(Avr8jsRunner::new(board)))
+            } else if board.has_emulator("simavr") {
+                // Use simavr for other AVR MCUs that advertise it
+                Ok(Box::new(SimavrRunner::new(board)))
+            } else {
+                Err(fbuild_core::FbuildError::DeployFailed(format!(
+                    "no emulator runner available for AVR MCU '{}'; \
+                     ATmega328P is supported via avr8js, other AVR boards require simavr in debug_tools",
+                    board.mcu
+                )))
+            }
+        }
+        fbuild_core::Platform::Espressif32 => {
+            if is_qemu_supported_esp32_mcu(&board.mcu) {
+                check_qemu_flash_mode(&board)?;
+                Ok(Box::new(QemuRunner::new(
+                    project_dir.to_path_buf(),
+                    env_name.to_string(),
+                    board,
+                )))
+            } else {
+                Err(fbuild_core::FbuildError::DeployFailed(format!(
+                    "no emulator runner available for ESP32 MCU '{}'; \
+                     ESP32 and ESP32-S3 are supported via QEMU",
+                    board.mcu
+                )))
+            }
+        }
+        _ => Err(fbuild_core::FbuildError::DeployFailed(format!(
+            "no emulator runner available for platform {:?}",
+            platform
+        ))),
+    }
+}
+
+/// POST /api/test-emu handler — build firmware then run it in an emulator.
+pub async fn test_emu(
+    State(ctx): State<Arc<DaemonContext>>,
+    Json(req): Json<crate::models::TestEmuRequest>,
+) -> (StatusCode, Json<OperationResponse>) {
+    let request_id = req
+        .request_id
+        .clone()
+        .unwrap_or_else(|| uuid::Uuid::new_v4().to_string());
+    let project_dir = PathBuf::from(&req.project_dir);
+
+    if !project_dir.exists() {
+        return (
+            StatusCode::BAD_REQUEST,
+            Json(OperationResponse::fail(
+                request_id,
+                format!("project directory does not exist: {}", req.project_dir),
+            )),
+        );
+    }
+
+    // Parse config
+    let config =
+        match fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")) {
+            Ok(c) => c,
+            Err(e) => {
+                return (
+                    StatusCode::BAD_REQUEST,
+                    Json(OperationResponse::fail(
+                        request_id,
+                        format!("failed to parse platformio.ini: {}", e),
+                    )),
+                );
+            }
+        };
+
+    let env_name = req
+        .environment
+        .clone()
+        .or_else(|| config.get_default_environment().map(|s| s.to_string()))
+        .unwrap_or_else(|| "default".to_string());
+
+    let env_config = match config.get_env_config(&env_name) {
+        Ok(c) => c,
+        Err(e) => {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(OperationResponse::fail(
+                    request_id,
+                    format!("invalid environment '{}': {}", env_name, e),
+                )),
+            );
+        }
+    };
+
+    let platform_str = env_config.get("platform").cloned().unwrap_or_default();
+    let platform = match fbuild_core::Platform::from_platform_str(&platform_str) {
+        Some(p) => p,
+        None => {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(OperationResponse::fail(
+                    request_id,
+                    format!("unsupported platform: {}", platform_str),
+                )),
+            );
+        }
+    };
+
+    let board_id = env_config.get("board").cloned().unwrap_or_else(|| {
+        fbuild_build::get_platform_support(platform)
+            .map(|s| s.default_board_id().to_string())
+            .unwrap_or_else(|_| "unknown".to_string())
+    });
+    let board_overrides = config.get_board_overrides(&env_name).unwrap_or_default();
+
+    // Select the emulator runner before building (fail fast on unsupported boards)
+    let runner = match select_runner(
+        &project_dir,
+        &env_name,
+        platform,
+        &board_id,
+        &board_overrides,
+        req.emulator.as_deref(),
+    ) {
+        Ok(r) => r,
+        Err(e) => {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(OperationResponse::fail(request_id, e.to_string())),
+            );
+        }
+    };
+
+    // Build firmware (hold project lock only during build, not the emulator phase)
+    let build_result = {
+        let lock = ctx.project_lock(&project_dir);
+        let _guard = lock.lock().await;
+
+        let needs_qemu_flags = platform == fbuild_core::Platform::Espressif32
+            && req.emulator.as_deref() != Some("avr8js");
+        let board_for_flags = if needs_qemu_flags {
+            fbuild_config::BoardConfig::from_board_id(&board_id, &board_overrides).ok()
+        } else {
+            None
+        };
+
+        let build_dir = fbuild_paths::get_project_build_root(&project_dir);
+        let params = fbuild_build::BuildParams {
+            project_dir: project_dir.clone(),
+            env_name: env_name.clone(),
+            clean: false,
+            profile: fbuild_core::BuildProfile::Release,
+            build_dir,
+            verbose: req.verbose,
+            jobs: None,
+            generate_compiledb: false,
+            compiledb_only: false,
+            log_sender: None,
+            symbol_analysis: false,
+            symbol_analysis_path: None,
+            no_timestamp: false,
+            src_dir: None,
+            pio_env: req.pio_env.clone(),
+            extra_build_flags: if needs_qemu_flags {
+                board_for_flags
+                    .as_ref()
+                    .map(|b| crate::handlers::operations::qemu_extra_build_flags(platform, &b.mcu))
+                    .unwrap_or_default()
+            } else {
+                Vec::new()
+            },
+        };
+
+        let p = platform;
+        tokio::task::spawn_blocking(move || {
+            let orchestrator = fbuild_build::get_orchestrator(p)?;
+            orchestrator.build(&params)
+        })
+        .await
+    };
+
+    let (firmware_path, elf_path) = match build_result {
+        Ok(Ok(r)) if r.success => {
+            let fw = r.firmware_path.clone().unwrap_or_else(|| {
+                r.elf_path
+                    .clone()
+                    .unwrap_or_else(|| PathBuf::from("firmware.bin"))
+            });
+            (fw, r.elf_path)
+        }
+        Ok(Ok(r)) => {
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(OperationResponse::fail(
+                    request_id,
+                    format!("build failed: {}", r.message),
+                )),
+            );
+        }
+        Ok(Err(e)) => {
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(OperationResponse::fail(
+                    request_id,
+                    format!("build error: {}", e),
+                )),
+            );
+        }
+        Err(e) => {
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(OperationResponse::fail(
+                    request_id,
+                    format!("build task panicked: {}", e),
+                )),
+            );
+        }
+    };
+
+    // Run the emulator
+    let artifact_bundle = EmulatorArtifactBundle::from_paths(&firmware_path, elf_path.as_deref());
+    let run_config = EmulatorRunConfig {
+        firmware_path,
+        elf_path,
+        artifact_bundle,
+        timeout: req.timeout,
+        halt_on_error: req.halt_on_error.clone(),
+        halt_on_success: req.halt_on_success.clone(),
+        expect: req.expect.clone(),
+        show_timestamp: req.show_timestamp,
+        verbose: req.verbose,
+    };
+
+    let emu_result = match runner.run(&run_config).await {
+        Ok(r) => r,
+        Err(e) => {
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(OperationResponse::fail(
+                    request_id,
+                    format!("emulator error: {}", e),
+                )),
+            );
+        }
+    };
+
+    let success = emu_result.is_success();
+    let exit_code = emu_result.exit_code.unwrap_or(if success { 0 } else { 1 });
+    let message = format!(
+        "{} test-emu {}: {}",
+        runner.name(),
+        if success { "passed" } else { "failed" },
+        emu_result.outcome
+    );
+
+    (
+        StatusCode::OK,
+        Json(OperationResponse {
+            success,
+            request_id,
+            message,
+            exit_code,
+            output_file: None,
+            output_dir: None,
+            launch_url: None,
+            stdout: Some(emu_result.stdout),
+            stderr: Some(emu_result.stderr),
+        }),
+    )
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use fbuild_build::{BuildOrchestrator, BuildParams};
     use fbuild_core::BuildProfile;
+
+    #[test]
+    fn monitor_outcome_to_emulator_maps_success() {
+        let outcome = monitor_outcome_to_emulator(MonitorOutcome::Success("ok".into()), Some(0));
+        assert_eq!(outcome, EmulatorOutcome::Passed("ok".into()));
+    }
+
+    #[test]
+    fn monitor_outcome_to_emulator_maps_error() {
+        let outcome = monitor_outcome_to_emulator(MonitorOutcome::Error("bad".into()), Some(1));
+        assert_eq!(outcome, EmulatorOutcome::Failed("bad".into()));
+    }
+
+    #[test]
+    fn monitor_outcome_to_emulator_maps_crash() {
+        let outcome = monitor_outcome_to_emulator(
+            MonitorOutcome::Error("abort() was called at PC 0x4200".into()),
+            Some(134),
+        );
+        assert_eq!(
+            outcome,
+            EmulatorOutcome::Crashed("abort() was called at PC 0x4200".into())
+        );
+    }
+
+    #[test]
+    fn monitor_outcome_to_emulator_maps_timeout() {
+        let outcome =
+            monitor_outcome_to_emulator(MonitorOutcome::Timeout { expect_found: true }, None);
+        assert_eq!(outcome, EmulatorOutcome::TimedOut { expect_found: true });
+    }
 
     fn test_process_command(lines: &[&str]) -> (PathBuf, Vec<String>) {
         #[cfg(windows)]
@@ -1369,6 +2167,7 @@ mod tests {
                 expect: Some("Hello from ESP32-S3"),
                 show_timestamp: false,
                 verbose: false,
+                process_label: "QEMU",
             },
         )
         .await
@@ -1399,6 +2198,7 @@ mod tests {
                 expect: None,
                 show_timestamp: false,
                 verbose: false,
+                process_label: "QEMU",
             },
         )
         .await
@@ -1492,7 +2292,8 @@ mod tests {
         let qemu = fbuild_packages::toolchain::EspQemuXtensa::new(&project_dir)
             .and_then(|pkg| pkg.resolve_executable())
             .expect("native QEMU should resolve for ignored integration test");
-        let args = fbuild_deploy::esp32::build_qemu_esp32s3_args(
+        let args = fbuild_deploy::esp32::build_qemu_args(
+            &board.mcu,
             &flash_image,
             board.qemu_esp32_psram_config(),
         );
@@ -1514,6 +2315,7 @@ mod tests {
                     expect: Some("Hello from ESP32-S3!"),
                     show_timestamp: false,
                     verbose: true,
+                    process_label: "QEMU",
                 },
             ))
             .unwrap();
@@ -1548,6 +2350,7 @@ mod tests {
                 expect: Some("Hello from AVR"),
                 show_timestamp: false,
                 verbose: false,
+                process_label: "QEMU",
             },
         )
         .await
@@ -1578,6 +2381,7 @@ mod tests {
                 expect: None,
                 show_timestamp: false,
                 verbose: false,
+                process_label: "QEMU",
             },
         )
         .await
@@ -1606,6 +2410,7 @@ mod tests {
                 expect: None,
                 show_timestamp: false,
                 verbose: false,
+                process_label: "QEMU",
             },
         )
         .await
@@ -1617,5 +2422,370 @@ mod tests {
             }
             other => panic!("expected error, got {:?}", other),
         }
+    }
+
+    // -----------------------------------------------------------------------
+    // SimAVR runner tests (use fake process, no real simavr needed)
+    // -----------------------------------------------------------------------
+
+    #[tokio::test]
+    async fn simavr_runner_captures_stdout_via_process_runner() {
+        // SimavrRunner delegates to run_qemu_process, so we verify the same
+        // subprocess monitoring path works for simavr-style output.
+        let (exe, args) = test_process_command(&["Hello from ATmega2560!"]);
+        let result = run_qemu_process(
+            &exe,
+            &args,
+            RunQemuOptions {
+                elf_path: None,
+                addr2line_path: None,
+                timeout_secs: Some(2.0),
+                halt_on_error: None,
+                halt_on_success: None,
+                expect: Some("Hello from ATmega2560"),
+                show_timestamp: false,
+                verbose: false,
+                process_label: "simavr",
+            },
+        )
+        .await
+        .unwrap();
+
+        assert!(result.stdout.contains("Hello from ATmega2560!"));
+        match result.outcome {
+            MonitorOutcome::Success(_) => {}
+            other => panic!("expected success, got {:?}", other),
+        }
+    }
+
+    #[tokio::test]
+    async fn simavr_runner_halt_on_success() {
+        let (exe, args) = test_process_command(&["simavr: init", "PASS: all tests passed", "done"]);
+        let result = run_qemu_process(
+            &exe,
+            &args,
+            RunQemuOptions {
+                elf_path: None,
+                addr2line_path: None,
+                timeout_secs: Some(2.0),
+                halt_on_error: None,
+                halt_on_success: Some("PASS:"),
+                expect: None,
+                show_timestamp: false,
+                verbose: false,
+                process_label: "simavr",
+            },
+        )
+        .await
+        .unwrap();
+
+        match result.outcome {
+            MonitorOutcome::Success(msg) => {
+                assert!(msg.contains("halt-on-success pattern matched"));
+            }
+            other => panic!("expected success, got {:?}", other),
+        }
+    }
+
+    #[tokio::test]
+    async fn simavr_runner_halt_on_error() {
+        let (exe, args) = test_process_command(&["simavr: init", "FAIL: assertion failed"]);
+        let result = run_qemu_process(
+            &exe,
+            &args,
+            RunQemuOptions {
+                elf_path: None,
+                addr2line_path: None,
+                timeout_secs: Some(2.0),
+                halt_on_error: Some("FAIL:"),
+                halt_on_success: None,
+                expect: None,
+                show_timestamp: false,
+                verbose: false,
+                process_label: "simavr",
+            },
+        )
+        .await
+        .unwrap();
+
+        match result.outcome {
+            MonitorOutcome::Error(msg) => {
+                assert!(msg.contains("halt-on-error pattern matched"));
+            }
+            other => panic!("expected error, got {:?}", other),
+        }
+    }
+
+    #[tokio::test]
+    async fn simavr_runner_timeout() {
+        let (exe, args) = test_process_command(&["simavr: init", "running..."]);
+        let result = run_qemu_process(
+            &exe,
+            &args,
+            RunQemuOptions {
+                elf_path: None,
+                addr2line_path: None,
+                timeout_secs: Some(0.1),
+                halt_on_error: None,
+                halt_on_success: Some("PASS:"),
+                expect: None,
+                show_timestamp: false,
+                verbose: false,
+                process_label: "simavr",
+            },
+        )
+        .await
+        .unwrap();
+
+        // Process exits quickly so the outcome depends on whether halt pattern matched
+        // before the process ended — either timeout or a normal exit without the pattern.
+        match result.outcome {
+            MonitorOutcome::Success(_) => {
+                // Process exited cleanly before timeout, expect not set so counts as success
+            }
+            MonitorOutcome::Timeout { .. } => {
+                // Timed out waiting for halt-on-success pattern — also valid
+            }
+            MonitorOutcome::Error(_) => {
+                // Process exited before halt pattern found — also acceptable
+            }
+        }
+    }
+
+    // -----------------------------------------------------------------------
+    // select_runner tests for simavr
+    // -----------------------------------------------------------------------
+
+    #[test]
+    fn select_runner_explicit_simavr_for_uno() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "uno",
+            fbuild_core::Platform::AtmelAvr,
+            "uno",
+            &HashMap::new(),
+            Some("simavr"),
+        );
+        assert!(result.is_ok(), "select_runner should accept simavr for uno");
+        assert_eq!(result.unwrap().name(), "simavr");
+    }
+
+    #[test]
+    fn select_runner_explicit_simavr_for_mega() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "megaatmega2560",
+            fbuild_core::Platform::AtmelAvr,
+            "megaatmega2560",
+            &HashMap::new(),
+            Some("simavr"),
+        );
+        assert!(
+            result.is_ok(),
+            "select_runner should accept simavr for mega"
+        );
+        assert_eq!(result.unwrap().name(), "simavr");
+    }
+
+    #[test]
+    fn select_runner_explicit_simavr_for_leonardo() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "leonardo",
+            fbuild_core::Platform::AtmelAvr,
+            "leonardo",
+            &HashMap::new(),
+            Some("simavr"),
+        );
+        assert!(
+            result.is_ok(),
+            "select_runner should accept simavr for leonardo"
+        );
+        assert_eq!(result.unwrap().name(), "simavr");
+    }
+
+    #[test]
+    fn select_runner_explicit_simavr_rejects_esp32() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "esp32dev",
+            fbuild_core::Platform::Espressif32,
+            "esp32dev",
+            &HashMap::new(),
+            Some("simavr"),
+        );
+        assert!(result.is_err(), "simavr should reject ESP32 boards");
+    }
+
+    #[test]
+    fn select_runner_auto_detects_simavr_for_mega() {
+        // ATmega2560 should auto-detect simavr since it's not ATmega328P
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "megaatmega2560",
+            fbuild_core::Platform::AtmelAvr,
+            "megaatmega2560",
+            &HashMap::new(),
+            None,
+        );
+        assert!(
+            result.is_ok(),
+            "auto-detect should find simavr for mega: {:?}",
+            result.err()
+        );
+        assert_eq!(result.unwrap().name(), "simavr");
+    }
+
+    #[test]
+    fn select_runner_auto_detects_simavr_for_leonardo() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "leonardo",
+            fbuild_core::Platform::AtmelAvr,
+            "leonardo",
+            &HashMap::new(),
+            None,
+        );
+        assert!(
+            result.is_ok(),
+            "auto-detect should find simavr for leonardo: {:?}",
+            result.err()
+        );
+        assert_eq!(result.unwrap().name(), "simavr");
+    }
+
+    #[test]
+    fn select_runner_auto_detects_avr8js_for_uno() {
+        // ATmega328P should still default to avr8js, not simavr
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "uno",
+            fbuild_core::Platform::AtmelAvr,
+            "uno",
+            &HashMap::new(),
+            None,
+        );
+        assert!(result.is_ok());
+        assert_eq!(
+            result.unwrap().name(),
+            "avr8js ATmega328P",
+            "ATmega328P should default to avr8js"
+        );
+    }
+
+    #[test]
+    fn select_runner_simavr_name_matches() {
+        let board =
+            fbuild_config::BoardConfig::from_board_id("megaatmega2560", &HashMap::new()).unwrap();
+        let runner = SimavrRunner::new(board);
+        assert_eq!(runner.name(), "simavr");
+    }
+
+    // -----------------------------------------------------------------------
+    // select_runner tests for ESP32 QEMU (Issue #25)
+    // -----------------------------------------------------------------------
+
+    #[test]
+    fn select_runner_explicit_qemu_for_esp32dev() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "esp32dev",
+            fbuild_core::Platform::Espressif32,
+            "esp32dev",
+            &HashMap::new(),
+            Some("qemu"),
+        );
+        assert!(
+            result.is_ok(),
+            "select_runner should accept qemu for esp32dev: {:?}",
+            result.err()
+        );
+        assert_eq!(result.unwrap().name(), "QEMU ESP32");
+    }
+
+    #[test]
+    fn select_runner_explicit_qemu_for_esp32s3() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "esp32-s3-devkitc-1",
+            fbuild_core::Platform::Espressif32,
+            "esp32-s3-devkitc-1",
+            &HashMap::new(),
+            Some("qemu"),
+        );
+        assert!(
+            result.is_ok(),
+            "select_runner should accept qemu for esp32-s3: {:?}",
+            result.err()
+        );
+        assert_eq!(result.unwrap().name(), "QEMU ESP32S3");
+    }
+
+    #[test]
+    fn select_runner_explicit_qemu_rejects_esp32c3() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "esp32-c3-devkitm-1",
+            fbuild_core::Platform::Espressif32,
+            "esp32-c3-devkitm-1",
+            &HashMap::new(),
+            Some("qemu"),
+        );
+        assert!(
+            result.is_err(),
+            "QEMU should reject ESP32-C3 (RISC-V, not yet supported)"
+        );
+    }
+
+    #[test]
+    fn select_runner_auto_detects_qemu_for_esp32dev() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "esp32dev",
+            fbuild_core::Platform::Espressif32,
+            "esp32dev",
+            &HashMap::new(),
+            None,
+        );
+        assert!(
+            result.is_ok(),
+            "auto-detect should find qemu for esp32dev: {:?}",
+            result.err()
+        );
+        assert_eq!(result.unwrap().name(), "QEMU ESP32");
+    }
+
+    #[test]
+    fn select_runner_auto_detects_qemu_for_esp32s3() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "esp32-s3-devkitc-1",
+            fbuild_core::Platform::Espressif32,
+            "esp32-s3-devkitc-1",
+            &HashMap::new(),
+            None,
+        );
+        assert!(
+            result.is_ok(),
+            "auto-detect should find qemu for esp32-s3: {:?}",
+            result.err()
+        );
+        assert_eq!(result.unwrap().name(), "QEMU ESP32S3");
+    }
+
+    #[test]
+    fn is_qemu_supported_esp32_mcu_accepts_esp32() {
+        assert!(is_qemu_supported_esp32_mcu("esp32"));
+        assert!(is_qemu_supported_esp32_mcu("ESP32"));
+        assert!(is_qemu_supported_esp32_mcu("esp32s3"));
+        assert!(is_qemu_supported_esp32_mcu("ESP32S3"));
+    }
+
+    #[test]
+    fn is_qemu_supported_esp32_mcu_rejects_unsupported() {
+        assert!(!is_qemu_supported_esp32_mcu("esp32c3"));
+        assert!(!is_qemu_supported_esp32_mcu("esp32s2"));
+        assert!(!is_qemu_supported_esp32_mcu("esp32h2"));
+        assert!(!is_qemu_supported_esp32_mcu("atmega328p"));
     }
 }

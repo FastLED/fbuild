@@ -249,7 +249,7 @@ impl VerifyOutcome {
 
 /// Resolve the flash-image size to use for QEMU.
 ///
-/// ESP32-S3 QEMU supports 2MB, 4MB, 8MB, and 16MB flash images. We derive
+/// ESP32 QEMU supports 2MB, 4MB, 8MB, and 16MB flash images. We derive
 /// the size from the board's `maximum_size` when present, otherwise fall back
 /// to the MCU config's default flash size label.
 pub fn resolve_qemu_flash_size_bytes(
@@ -264,7 +264,7 @@ pub fn resolve_qemu_flash_size_bytes(
         Ok(size_bytes)
     } else {
         Err(fbuild_core::FbuildError::DeployFailed(format!(
-            "ESP32-S3 QEMU supports only 2MB, 4MB, 8MB, or 16MB flash images; got {} bytes",
+            "ESP32 QEMU supports only 2MB, 4MB, 8MB, or 16MB flash images; got {} bytes",
             size_bytes
         )))
     }
@@ -272,6 +272,9 @@ pub fn resolve_qemu_flash_size_bytes(
 
 /// Create a merged raw flash image for ESP32 QEMU from bootloader,
 /// partitions, and application firmware.
+///
+/// When `elf_path` is `Some`, the ESP32-S3 ADC calibration patch is applied.
+/// Pass `None` for non-S3 variants to skip the patch.
 pub fn create_qemu_flash_image(
     firmware_path: &Path,
     output_path: &Path,
@@ -331,15 +334,20 @@ pub fn create_qemu_flash_image(
     Ok(output_path.to_path_buf())
 }
 
-/// Build the QEMU argv for ESP32-S3 emulation.
-pub fn build_qemu_esp32s3_args(
+/// Build the QEMU argv for ESP32-family emulation.
+///
+/// The `mcu` parameter selects the QEMU machine type and watchdog timer
+/// driver name. Supported values: `esp32`, `esp32s2`, `esp32s3`.
+pub fn build_qemu_args(
+    mcu: &str,
     flash_image: &Path,
     psram: Option<fbuild_config::Esp32QemuPsramConfig>,
 ) -> Vec<String> {
+    let machine = mcu.to_lowercase();
     let mut args = vec![
         "-nographic".to_string(),
         "-machine".to_string(),
-        "esp32s3".to_string(),
+        machine.clone(),
     ];
     if let Some(psram) = psram {
         args.push("-m".to_string());
@@ -353,7 +361,10 @@ pub fn build_qemu_esp32s3_args(
         "-monitor".to_string(),
         "none".to_string(),
         "-global".to_string(),
-        "driver=timer.esp32s3.timg,property=wdt_disable,value=true".to_string(),
+        format!(
+            "driver=timer.{}.timg,property=wdt_disable,value=true",
+            machine
+        ),
     ]);
     if let Some(psram) = psram {
         if psram.is_octal {
@@ -362,6 +373,14 @@ pub fn build_qemu_esp32s3_args(
         }
     }
     args
+}
+
+/// Build the QEMU argv for ESP32-S3 emulation (convenience wrapper).
+pub fn build_qemu_esp32s3_args(
+    flash_image: &Path,
+    psram: Option<fbuild_config::Esp32QemuPsramConfig>,
+) -> Vec<String> {
+    build_qemu_args("esp32s3", flash_image, psram)
 }
 
 fn parse_hex_offset(raw: &str) -> Result<u64> {
@@ -958,6 +977,18 @@ mod tests {
         assert!(args
             .iter()
             .any(|arg| arg == "driver=timer.esp32s3.timg,property=wdt_disable,value=true"));
+        assert!(args
+            .iter()
+            .any(|arg| arg.contains("file=flash.bin,if=mtd,format=raw")));
+    }
+
+    #[test]
+    fn qemu_command_builder_uses_esp32_machine_for_base_variant() {
+        let args = build_qemu_args("esp32", Path::new("flash.bin"), None);
+        assert!(args.contains(&"esp32".to_string()));
+        assert!(args
+            .iter()
+            .any(|arg| arg == "driver=timer.esp32.timg,property=wdt_disable,value=true"));
         assert!(args
             .iter()
             .any(|arg| arg.contains("file=flash.bin,if=mtd,format=raw")));
