@@ -5,28 +5,21 @@
 //! correctly maintain independent refcounts via a per-process nonce.
 
 use super::index::CacheIndex;
-use std::sync::atomic::{AtomicU64, Ordering};
-use std::sync::Arc;
+use std::sync::{Arc, OnceLock};
 
-/// Per-process nonce, initialized once at startup to a value derived from
+/// Per-process nonce, initialized exactly once to a value derived from
 /// the process start time. Guards against PID reuse: a recycled PID will
 /// have a different nonce and won't collide with stale lease rows.
+/// Uses `OnceLock` to guarantee single-assignment even under concurrent access.
 fn process_nonce() -> u64 {
-    static NONCE: AtomicU64 = AtomicU64::new(0);
-    let val = NONCE.load(Ordering::Relaxed);
-    if val != 0 {
-        return val;
-    }
-    // Use current time as a nonce — unique enough to distinguish PID reuse.
-    let nonce = std::time::SystemTime::now()
-        .duration_since(std::time::UNIX_EPOCH)
-        .unwrap_or_default()
-        .as_nanos() as u64;
-    // Race is benign: worst case two threads compute different nonces,
-    // one wins, and both use the winner's value on subsequent calls.
-    let nonce = nonce.max(1); // ensure non-zero
-    NONCE.store(nonce, Ordering::Relaxed);
-    nonce
+    static NONCE: OnceLock<u64> = OnceLock::new();
+    *NONCE.get_or_init(|| {
+        let nonce = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap_or_default()
+            .as_nanos() as u64;
+        nonce.max(1) // ensure non-zero
+    })
 }
 
 /// RAII guard that pins a cache entry. Released on drop.

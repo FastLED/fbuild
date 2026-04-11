@@ -2484,7 +2484,10 @@ async fn run_daemon_cache_stats(client: &DaemonClient) -> fbuild_core::Result<()
                 println!("{}", stats);
             }
             Err(e) => {
-                eprintln!("failed to open disk cache: {}", e);
+                return Err(fbuild_core::FbuildError::Other(format!(
+                    "failed to open disk cache: {}",
+                    e
+                )));
             }
         }
         return Ok(());
@@ -2492,11 +2495,10 @@ async fn run_daemon_cache_stats(client: &DaemonClient) -> fbuild_core::Result<()
 
     let stats = client.cache_stats().await?;
     if !stats.success {
-        eprintln!(
+        return Err(fbuild_core::FbuildError::Other(format!(
             "failed to get cache stats: {}",
             stats.message.as_deref().unwrap_or("unknown error")
-        );
-        return Ok(());
+        )));
     }
     println!("Disk Cache Statistics:");
     println!("  Entries:    {}", stats.entry_count);
@@ -2515,29 +2517,22 @@ async fn run_daemon_cache_stats(client: &DaemonClient) -> fbuild_core::Result<()
 async fn run_daemon_gc(client: &DaemonClient) -> fbuild_core::Result<()> {
     if !client.health().await {
         // Fall back to local GC if daemon isn't running
-        match fbuild_packages::DiskCache::open() {
-            Ok(dc) => match dc.run_gc() {
-                Ok(report) => {
-                    print_gc_report(&report);
-                }
-                Err(e) => {
-                    eprintln!("GC failed: {}", e);
-                }
-            },
-            Err(e) => {
-                eprintln!("failed to open disk cache: {}", e);
-            }
-        }
+        let dc = fbuild_packages::DiskCache::open().map_err(|e| {
+            fbuild_core::FbuildError::Other(format!("failed to open disk cache: {}", e))
+        })?;
+        let report = dc
+            .run_gc()
+            .map_err(|e| fbuild_core::FbuildError::Other(format!("GC failed: {}", e)))?;
+        print_gc_report(&report);
         return Ok(());
     }
 
     let result = client.run_gc().await?;
     if !result.success {
-        eprintln!(
+        return Err(fbuild_core::FbuildError::Other(format!(
             "GC failed: {}",
             result.message.as_deref().unwrap_or("unknown error")
-        );
-        return Ok(());
+        )));
     }
     println!("GC complete:");
     println!(

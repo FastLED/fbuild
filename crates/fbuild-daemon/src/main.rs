@@ -219,12 +219,15 @@ async fn main() {
 
     // Spawn background GC loop — runs every 5 minutes
     {
+        let gc_mutex = context.gc_mutex.clone();
         tokio::spawn(async move {
             // Wait 60s after startup before first GC to avoid slowing boot
             tokio::time::sleep(std::time::Duration::from_secs(60)).await;
 
             let gc_interval = std::time::Duration::from_secs(300);
             loop {
+                // Serialize with manual /api/cache/gc endpoint.
+                let _guard = gc_mutex.lock().await;
                 match fbuild_packages::DiskCache::open() {
                     Ok(dc) => match dc.run_gc() {
                         Ok(report) => {

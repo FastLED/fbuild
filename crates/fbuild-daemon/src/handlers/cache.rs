@@ -36,7 +36,9 @@ pub async fn cache_stats(State(_ctx): State<Arc<DaemonContext>>) -> Json<CacheSt
 }
 
 /// POST /api/cache/gc
-pub async fn run_gc(State(_ctx): State<Arc<DaemonContext>>) -> Json<GcResponse> {
+pub async fn run_gc(State(ctx): State<Arc<DaemonContext>>) -> Json<GcResponse> {
+    // Serialize with background GC loop to prevent interleaved deletes.
+    let _guard = ctx.gc_mutex.lock().await;
     match fbuild_packages::DiskCache::open() {
         Ok(dc) => match dc.run_gc() {
             Ok(report) => Json(GcResponse {
@@ -46,6 +48,8 @@ pub async fn run_gc(State(_ctx): State<Arc<DaemonContext>>) -> Json<GcResponse> 
                 archives_evicted: report.archives_evicted,
                 archive_bytes_freed: report.archive_bytes_freed,
                 total_bytes_freed: report.total_bytes_freed(),
+                orphan_files_removed: report.orphan_files_removed,
+                orphan_rows_cleaned: report.orphan_rows_cleaned,
                 message: None,
             }),
             Err(e) => Json(GcResponse {

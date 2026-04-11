@@ -74,6 +74,7 @@ impl DiskCache {
     }
 
     /// Record that an archive was downloaded.
+    /// Negative `archive_bytes` are clamped to 0.
     pub fn record_archive(
         &self,
         kind: Kind,
@@ -88,12 +89,13 @@ impl DiskCache {
             url,
             version,
             archive_path,
-            archive_bytes,
+            archive_bytes.max(0),
             archive_sha256,
         )
     }
 
     /// Record that an entry was installed (extracted from archive).
+    /// Negative `installed_bytes` are clamped to 0.
     pub fn record_install(
         &self,
         kind: Kind,
@@ -103,7 +105,7 @@ impl DiskCache {
         installed_bytes: i64,
     ) -> rusqlite::Result<CacheEntry> {
         self.index
-            .record_install(kind, url, version, installed_path, installed_bytes)
+            .record_install(kind, url, version, installed_path, installed_bytes.max(0))
     }
 
     /// Acquire a lease for the given entry, preventing GC eviction.
@@ -135,8 +137,8 @@ impl DiskCache {
     pub fn stats(&self) -> rusqlite::Result<CacheStats> {
         let budget = CacheBudget::compute(&self.cache_root);
         Ok(CacheStats {
-            archive_bytes: self.index.total_archive_bytes()? as u64,
-            installed_bytes: self.index.total_installed_bytes()? as u64,
+            archive_bytes: self.index.total_archive_bytes()?.max(0) as u64,
+            installed_bytes: self.index.total_installed_bytes()?.max(0) as u64,
             entry_count: self.index.entry_count()?,
             budget,
         })

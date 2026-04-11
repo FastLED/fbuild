@@ -418,6 +418,8 @@ pub struct GcResponse {
     pub archives_evicted: u64,
     pub archive_bytes_freed: u64,
     pub total_bytes_freed: u64,
+    pub orphan_files_removed: usize,
+    pub orphan_rows_cleaned: usize,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub message: Option<String>,
 }

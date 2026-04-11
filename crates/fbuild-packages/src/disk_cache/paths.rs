@@ -67,13 +67,38 @@ pub fn stem_and_hash(url: &str) -> (String, String) {
 /// Sanitize a path component to prevent directory traversal.
 /// Strips path separators, `.` and `..` sequences, and null bytes.
 /// Returns `"_"` if the result would be empty or `"."`.
+///
+/// When the sanitized form differs from the input (lossy transformation)
+/// or would collide with staging `.partial` directories, a short hash of
+/// the original string is appended to keep the mapping collision-free.
 fn sanitize_component(s: &str) -> String {
     let sanitized = s.replace(['/', '\\', '\0'], "_").replace("..", "_");
-    if sanitized.is_empty() || sanitized == "." {
+    let sanitized = if sanitized.is_empty() || sanitized == "." {
         "_".to_string()
     } else {
         sanitized
+    };
+    // Append a short hash when the mapping is lossy or the name would collide
+    // with the `.partial` staging convention.
+    if sanitized != s || sanitized.ends_with(".partial") {
+        let hash = short_hash(s);
+        format!("{}_{}", sanitized, hash)
+    } else {
+        sanitized
     }
+}
+
+/// 8-char hex hash of a string, for disambiguation suffixes.
+fn short_hash(s: &str) -> String {
+    use sha2::{Digest, Sha256};
+    let mut hasher = Sha256::new();
+    hasher.update(s.as_bytes());
+    let result = hasher.finalize();
+    // First 4 bytes → 8 hex chars
+    result[..4]
+        .iter()
+        .map(|b| format!("{:02x}", b))
+        .collect::<String>()
 }
 
 /// Root of the archives phase: `{cache_root}/archives/`
@@ -267,8 +292,31 @@ mod tests {
             dir_str
         );
 
-        // Normal versions are unchanged
+        // Normal versions are unchanged (no hash suffix)
         let dir = archive_entry_dir(root, Kind::Packages, url, "1.2.3");
-        assert!(dir.to_string_lossy().contains("1.2.3"));
+        assert!(dir.to_string_lossy().ends_with("1.2.3"));
+    }
+
+    #[test]
+    fn test_sanitize_collision_free() {
+        // Different inputs that would collide without hash suffix
+        let a = sanitize_component("1/2");
+        let b = sanitize_component("1_2");
+        assert_ne!(a, b, "lossy sanitization must be disambiguated");
+
+        // Normal version: no suffix
+        let c = sanitize_component("1.2.3");
+        assert_eq!(c, "1.2.3");
+    }
+
+    #[test]
+    fn test_sanitize_partial_collision() {
+        // "1.partial" must not collide with staging dir for version "1"
+        let a = sanitize_component("1.partial");
+        assert!(
+            !a.ends_with(".partial"),
+            "must not end with .partial: {}",
+            a
+        );
     }
 }
