@@ -394,6 +394,34 @@ pub struct TestEmuRequest {
     pub pio_env: BTreeMap<String, String>,
 }
 
+/// GET /api/cache/stats response.
+#[derive(Debug, Default, Serialize)]
+pub struct CacheStatsResponse {
+    pub success: bool,
+    pub archive_bytes: u64,
+    pub installed_bytes: u64,
+    pub total_bytes: u64,
+    pub entry_count: i64,
+    pub high_watermark: u64,
+    pub low_watermark: u64,
+    pub archive_budget: u64,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub message: Option<String>,
+}
+
+/// POST /api/cache/gc response.
+#[derive(Debug, Default, Serialize)]
+pub struct GcResponse {
+    pub success: bool,
+    pub installed_evicted: u64,
+    pub installed_bytes_freed: u64,
+    pub archives_evicted: u64,
+    pub archive_bytes_freed: u64,
+    pub total_bytes_freed: u64,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub message: Option<String>,
+}
+
 /// POST /api/reset request.
 #[derive(Debug, Deserialize)]
 pub struct ResetRequest {

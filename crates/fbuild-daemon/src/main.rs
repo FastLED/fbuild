@@ -7,7 +7,7 @@ use clap::Parser;
 use fbuild_daemon::context::{
     DaemonContext, IDLE_TIMEOUT, SELF_EVICTION_TIMEOUT, STALE_LOCK_CHECK_INTERVAL,
 };
-use fbuild_daemon::handlers::{devices, emulator, health, locks, operations, websockets};
+use fbuild_daemon::handlers::{cache, devices, emulator, health, locks, operations, websockets};
 use std::sync::Arc;
 
 #[derive(Parser)]
@@ -63,6 +63,8 @@ async fn main() {
         .route("/api/devices/:port/preempt", post(devices::device_preempt))
         .route("/api/locks/status", get(locks::lock_status))
         .route("/api/locks/clear", post(locks::clear_locks))
+        .route("/api/cache/stats", get(cache::cache_stats))
+        .route("/api/cache/gc", post(cache::run_gc))
         .route("/api/install-deps", post(operations::install_deps))
         .route("/api/reset", post(operations::reset))
         .route("/api/test-emu", post(emulator::test_emu))
@@ -189,6 +191,40 @@ async fn main() {
                         );
                     }
                 }
+            }
+        });
+    }
+
+    // Spawn background GC loop — runs every 5 minutes
+    {
+        tokio::spawn(async move {
+            // Wait 60s after startup before first GC to avoid slowing boot
+            tokio::time::sleep(std::time::Duration::from_secs(60)).await;
+
+            let gc_interval = std::time::Duration::from_secs(300);
+            loop {
+                match fbuild_packages::DiskCache::open() {
+                    Ok(dc) => match dc.run_gc() {
+                        Ok(report) => {
+                            if report.total_bytes_freed() > 0 {
+                                tracing::info!(
+                                    "background GC: freed {} installed ({} entries) + {} archives ({} entries)",
+                                    format_bytes_compact(report.installed_bytes_freed),
+                                    report.installed_evicted,
+                                    format_bytes_compact(report.archive_bytes_freed),
+                                    report.archives_evicted,
+                                );
+                            }
+                        }
+                        Err(e) => {
+                            tracing::warn!("background GC failed: {}", e);
+                        }
+                    },
+                    Err(e) => {
+                        tracing::debug!("background GC: could not open cache: {}", e);
+                    }
+                }
+                tokio::time::sleep(gc_interval).await;
             }
         });
     }
@@ -419,6 +455,22 @@ fn set_exclusive_address_windows(sock: &socket2::Socket) -> std::io::Result<()> 
         Ok(())
     } else {
         Err(std::io::Error::last_os_error())
+    }
+}
+
+/// Compact byte formatter for log messages.
+fn format_bytes_compact(bytes: u64) -> String {
+    const GIB: u64 = 1024 * 1024 * 1024;
+    const MIB: u64 = 1024 * 1024;
+    const KIB: u64 = 1024;
+    if bytes >= GIB {
+        format!("{:.1} GiB", bytes as f64 / GIB as f64)
+    } else if bytes >= MIB {
+        format!("{:.1} MiB", bytes as f64 / MIB as f64)
+    } else if bytes >= KIB {
+        format!("{:.1} KiB", bytes as f64 / KIB as f64)
+    } else {
+        format!("{} B", bytes)
     }
 }
 
