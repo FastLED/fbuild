@@ -441,10 +441,11 @@ impl CacheIndex {
             }
         }
 
-        // Refresh pinned counts for all affected entries
+        // Refresh pinned counts for all affected entries — use SUM(refcount)
+        // to match pin()/unpin() which also use SUM(refcount), not COUNT(*).
         if reaped > 0 {
             conn.execute_batch(
-                "UPDATE entries SET pinned = (SELECT COUNT(*) FROM leases WHERE leases.entry_id = entries.id)",
+                "UPDATE entries SET pinned = (SELECT COALESCE(SUM(refcount), 0) FROM leases WHERE leases.entry_id = entries.id)",
             )?;
         }
 

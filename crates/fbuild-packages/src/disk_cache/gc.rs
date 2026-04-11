@@ -54,8 +54,8 @@ pub fn run_gc(index: &CacheIndex, budget: &CacheBudget) -> rusqlite::Result<GcRe
     };
 
     // Step 1: evict installed directories if over budget
-    let mut installed_bytes = index.total_installed_bytes()? as u64;
-    let total_bytes = index.total_archive_bytes()? as u64 + installed_bytes;
+    let mut installed_bytes = index.total_installed_bytes()?.max(0) as u64;
+    let total_bytes = index.total_archive_bytes()?.max(0) as u64 + installed_bytes;
 
     if installed_bytes > budget.installed_budget || total_bytes > budget.high_watermark {
         let target = budget.low_watermark.min(budget.installed_budget);
@@ -88,7 +88,7 @@ pub fn run_gc(index: &CacheIndex, budget: &CacheBudget) -> rusqlite::Result<GcRe
     }
 
     // Step 2: evict archives if over per-phase budget OR combined high watermark
-    let mut archive_bytes = index.total_archive_bytes()? as u64;
+    let mut archive_bytes = index.total_archive_bytes()?.max(0) as u64;
     let mut total_bytes = archive_bytes + installed_bytes;
 
     if archive_bytes > budget.archive_budget || total_bytes > budget.high_watermark {

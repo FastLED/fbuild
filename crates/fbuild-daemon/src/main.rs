@@ -226,27 +226,30 @@ async fn main() {
 
             let gc_interval = std::time::Duration::from_secs(300);
             loop {
-                // Serialize with manual /api/cache/gc endpoint.
-                let _guard = gc_mutex.lock().await;
-                match fbuild_packages::DiskCache::open() {
-                    Ok(dc) => match dc.run_gc() {
-                        Ok(report) => {
-                            if report.total_bytes_freed() > 0 {
-                                tracing::info!(
-                                    "background GC: freed {} installed ({} entries) + {} archives ({} entries)",
-                                    format_bytes_compact(report.installed_bytes_freed),
-                                    report.installed_evicted,
-                                    format_bytes_compact(report.archive_bytes_freed),
-                                    report.archives_evicted,
-                                );
+                {
+                    // Serialize with manual /api/cache/gc endpoint.
+                    // Scope the guard so it's dropped before the sleep.
+                    let _guard = gc_mutex.lock().await;
+                    match fbuild_packages::DiskCache::open() {
+                        Ok(dc) => match dc.run_gc() {
+                            Ok(report) => {
+                                if report.total_bytes_freed() > 0 {
+                                    tracing::info!(
+                                        "background GC: freed {} installed ({} entries) + {} archives ({} entries)",
+                                        format_bytes_compact(report.installed_bytes_freed),
+                                        report.installed_evicted,
+                                        format_bytes_compact(report.archive_bytes_freed),
+                                        report.archives_evicted,
+                                    );
+                                }
                             }
-                        }
+                            Err(e) => {
+                                tracing::warn!("background GC failed: {}", e);
+                            }
+                        },
                         Err(e) => {
-                            tracing::warn!("background GC failed: {}", e);
+                            tracing::debug!("background GC: could not open cache: {}", e);
                         }
-                    },
-                    Err(e) => {
-                        tracing::debug!("background GC: could not open cache: {}", e);
                     }
                 }
                 tokio::time::sleep(gc_interval).await;
