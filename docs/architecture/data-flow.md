@@ -39,6 +39,28 @@
 4. CLI displays result
 ```
 
+## Test-Emu Request
+
+```
+1. CLI parses args → TestEmuRequest JSON
+2. HTTP POST /api/test-emu → daemon
+3. Daemon selects emulator runner (avr8js, simavr, or QEMU)
+   based on platform, MCU, and optional --emulator flag.
+   Unsupported boards fail fast before building.
+4. Daemon acquires project lock, builds firmware,
+   releases lock before emulator phase.
+5. EmulatorRunner::run():
+   a. Validate artifact bundle (hex/elf/bin)
+   b. Launch emulator process (Node.js, simavr, or QEMU)
+   c. Monitor stdout/stderr with halt-on-error/success/expect
+   d. On timeout: kill process, report TimedOut
+   e. On halt pattern: kill process, report Passed/Failed
+   f. On process exit: classify outcome (Passed/Failed/Crashed)
+6. Daemon returns EmulatorRunResult with outcome,
+   stdout, stderr, and real process exit code.
+7. CLI prints output and exits with the emulator exit code.
+```
+
 ## Serial Monitor (WebSocket)
 
 ```

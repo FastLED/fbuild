@@ -138,7 +138,7 @@ enum Commands {
         #[arg(long = "to", value_parser = ["device", "emu", "emulator"])]
         to: Option<String>,
         /// Emulator backend when deploying to `emu`
-        #[arg(long, value_parser = ["avr8js", "qemu"])]
+        #[arg(long, value_parser = ["avr8js", "qemu", "simavr"])]
         emulator: Option<String>,
         /// Legacy deploy target alias: device, qemu, or avr8js
         #[arg(long, value_parser = ["device", "qemu", "avr8js"], hide = true)]
@@ -256,8 +256,8 @@ enum Commands {
         /// Disable timestamp prefix on output lines
         #[arg(long)]
         no_timestamp: bool,
-        /// Emulator backend: "qemu" or "avr8js" (auto-detected if omitted)
-        #[arg(long, value_parser = ["avr8js", "qemu"])]
+        /// Emulator backend: "qemu", "avr8js", or "simavr" (auto-detected if omitted)
+        #[arg(long, value_parser = ["avr8js", "qemu", "simavr"])]
         emulator: Option<String>,
     },
     /// Run clang-query on project sources

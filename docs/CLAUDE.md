@@ -23,4 +23,5 @@ Architecture docs are split by subsystem. Read only what's relevant to your curr
 - **[DESIGN_DECISIONS.md](DESIGN_DECISIONS.md)** - ADR-style decisions with rationale
 - **[ROADMAP.md](ROADMAP.md)** - Implementation phases
 - **[ARCHITECTURE.md](ARCHITECTURE.md)** - Index of all architecture documents
-- **[../PLAN_AVR8JS.md](../PLAN_AVR8JS.md)** - Emulator deploy plan and CLI direction (`fbuild deploy --to emu [--emulator <kind>]`)
+- **[../PLAN_QEMU_ESP32S3.md](../PLAN_QEMU_ESP32S3.md)** - QEMU ESP32-S3 emulation plan
+- Emulator CLI: `fbuild test-emu` (build + emulate) and `fbuild deploy --to emu [--emulator <kind>]`
