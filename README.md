@@ -179,6 +179,34 @@ fbuild deploy tests/platform/esp32s3 -e esp32s3 --to emu --monitor --timeout 10 
 fbuild deploy tests/platform/esp32s3 -e esp32s3 --to emu --emulator qemu --monitor --timeout 10
 ```
 
+**Test-emu command** -- build + run in emulator in one step:
+
+```bash
+# Auto-detect emulator backend from the board
+fbuild test-emu tests/platform/uno -e uno
+
+# Explicit backend, with pattern matching
+fbuild test-emu tests/platform/esp32s3 -e esp32s3 --emulator qemu --timeout 10
+
+# AVR with simavr backend
+fbuild test-emu tests/platform/mega -e megaatmega2560 --emulator simavr
+
+# Halt on first test result
+fbuild test-emu tests/platform/uno -e uno --halt-on-success "TEST PASSED" --halt-on-error "TEST FAILED"
+```
+
+`test-emu` builds the firmware, selects the right emulator backend, and runs the firmware to completion (or until a halt/timeout pattern matches). The exit code reflects the emulator outcome.
+
+| Option | Description |
+|--------|-------------|
+| `--emulator <backend>` | Force backend: `avr8js`, `qemu`, or `simavr` (auto-detected if omitted) |
+| `--timeout <secs>` | Kill the emulator after N seconds |
+| `--halt-on-success <regex>` | Stop and report pass when pattern matches |
+| `--halt-on-error <regex>` | Stop and report fail when pattern matches |
+| `--expect <regex>` | Require this pattern in output (fail on timeout if missing) |
+| `--no-timestamp` | Disable timestamp prefix on output lines |
+| `-v, --verbose` | Show emulator command and build details |
+
 **Monitor command:**
 
 ```bash
@@ -189,11 +217,51 @@ fbuild monitor --timeout 60 --halt-on-error "TEST FAILED" --halt-on-success "TES
   * Serial monitoring requires pyserial to attach to the USB device
   * Port auto-detection works similarly to PlatformIO
 
-## QEMU Testing
+## Emulator Testing
 
-fbuild supports native QEMU emulation for ESP32-S3 firmware without physical hardware.
+fbuild can build and run firmware in emulators without physical hardware. Two entry points:
 
-The public emulator deploy API is:
+- **`fbuild test-emu`** -- one-shot build + emulate + exit (CI-friendly)
+- **`fbuild deploy --to emu`** -- deploy flow with optional `--monitor`
+
+Both auto-detect the emulator backend from the board, or accept `--emulator <backend>`.
+
+### Emulator Backends
+
+| Backend | Platforms | MCUs | Requirements |
+|---------|-----------|------|--------------|
+| **avr8js** | AtmelAVR | ATmega328P | Node.js (bundled headless script) |
+| **simavr** | AtmelAVR, MegaAVR | ATmega2560, ATmega32U4, and others | `simavr` binary on PATH |
+| **qemu** | Espressif32 | ESP32, ESP32-S3 | Native QEMU (auto-downloaded) |
+
+Auto-detection rules when `--emulator` is omitted:
+
+- ATmega328P defaults to **avr8js** (no external binary needed)
+- Other AVR MCUs with `simavr` in `debug_tools` default to **simavr**
+- ESP32 / ESP32-S3 default to **qemu**
+
+### test-emu (recommended for CI)
+
+```bash
+# Auto-detect backend from the board
+fbuild test-emu tests/platform/uno -e uno
+
+# ESP32-S3 with QEMU
+fbuild test-emu tests/platform/esp32s3 -e esp32s3 --timeout 10
+
+# Explicit simavr for ATmega2560
+fbuild test-emu tests/platform/mega -e megaatmega2560 --emulator simavr
+
+# Pattern matching: halt on first pass/fail
+fbuild test-emu tests/platform/uno -e uno \
+  --halt-on-success "TEST PASSED" \
+  --halt-on-error "TEST FAILED" \
+  --timeout 30
+```
+
+The exit code is the emulator process exit code (0 on pass, non-zero on fail/crash/timeout), so `test-emu` integrates directly into CI scripts.
+
+### deploy --to emu
 
 ```bash
 fbuild deploy <project> --to emu
@@ -201,41 +269,12 @@ fbuild deploy <project> --to emu --monitor
 fbuild deploy <project> --to emu --emulator qemu
 ```
 
-For `--to emu`, fbuild infers the emulator backend from the board when possible:
-
-- AVR / megaAVR boards default to `avr8js`
-- ESP32-S3 boards default to native `qemu`
-
-So for ESP32-S3 you usually do not need `--emulator qemu`.
-
-### QEMU Supported Platforms
-
-| Platform | QEMU Status | Notes |
-|----------|-------------|-------|
-| ESP32-S3 | Supported | Native QEMU path implemented and tested |
-| ESP32dev (original ESP32) | Not the primary path | README examples should prefer ESP32-S3 |
-| ESP32C6 | Not supported | QEMU lacks C6 emulation |
-| ESP32C3 | Untested | May work later, not currently documented as supported |
-
-### Usage
-
-```bash
-# Build ESP32-S3 for QEMU
-fbuild build tests/platform/esp32s3 -e esp32s3
-
-# Deploy to the inferred emulator backend (QEMU for ESP32-S3)
-fbuild deploy tests/platform/esp32s3 -e esp32s3 --to emu --monitor --timeout 10
-
-# Explicit form, if you want to pin the backend
-fbuild deploy tests/platform/esp32s3 -e esp32s3 --to emu --emulator qemu --monitor --timeout 10
-```
-
 Compatibility aliases:
 
 - `--qemu` remains accepted as a legacy alias
 - older `--target ...` emulator syntax remains accepted for compatibility
 
-### Configuration
+### QEMU Configuration
 
 ESP32-S3 QEMU runs from a normal ESP32-S3 Arduino environment. fbuild adds the required QEMU build flags automatically when deploying to `--to emu`.
 
@@ -250,7 +289,9 @@ board_build.flash_mode = dio
 board_upload.flash_mode = dio
 ```
 
-### Requirements
+QEMU requires DIO flash mode. Boards configured with `qio` or `qout` will fail fast before building.
+
+### QEMU Requirements
 
 - Native Espressif Xtensa QEMU runtime available on the host
 - Supported host platforms:
@@ -263,7 +304,7 @@ QEMU is native-only here. Unsupported hosts fail explicitly; Docker is not the f
 
 ### Known Limitations
 
-1. **ESP32-S3 only**: Native emulation support is currently implemented for ESP32-S3, not the rest of the ESP32 family.
+1. **ESP32 QEMU**: Currently supports ESP32 and ESP32-S3 only. ESP32-C3/C6/S2 are not supported by upstream QEMU.
 
 2. **QEMU-specific firmware patching**: fbuild patches the generated ESP32-S3 app image for QEMU to bypass an ADC calibration constructor that hangs under emulation, then repairs the image checksum and hash.
 
