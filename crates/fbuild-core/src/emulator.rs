@@ -184,7 +184,7 @@ impl std::fmt::Display for EmulatorOutcome {
                 if *expect_found {
                     write!(f, "timed out (expected pattern was found)")
                 } else {
-                    write!(f, "timed out (expected pattern NOT found)")
+                    write!(f, "timed out")
                 }
             }
             Self::Unsupported(msg) => write!(f, "unsupported: {}", msg),
@@ -241,7 +241,7 @@ mod tests {
                 expect_found: false
             }
             .to_string(),
-            "timed out (expected pattern NOT found)"
+            "timed out"
         );
         assert_eq!(
             EmulatorOutcome::Unsupported("no runner".into()).to_string(),

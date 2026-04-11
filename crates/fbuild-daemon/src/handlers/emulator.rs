@@ -229,6 +229,7 @@ struct QemuRunResult {
     outcome: MonitorOutcome,
     stdout: String,
     stderr: String,
+    exit_code: Option<i32>,
 }
 
 struct RunQemuOptions<'a> {
@@ -240,6 +241,8 @@ struct RunQemuOptions<'a> {
     expect: Option<&'a str>,
     show_timestamp: bool,
     verbose: bool,
+    /// Label used in user-visible messages (e.g. "QEMU", "simavr").
+    process_label: &'a str,
 }
 
 pub async fn deploy_avr8js(
@@ -588,6 +591,7 @@ struct Avr8jsRunResult {
     outcome: MonitorOutcome,
     stdout: String,
     stderr: String,
+    exit_code: Option<i32>,
 }
 
 struct RunAvr8jsHeadlessOptions<'a> {
@@ -753,6 +757,7 @@ async fn run_avr8js_headless(
         outcome,
         stdout: stdout_buf,
         stderr: stderr_buf,
+        exit_code: child_exit.and_then(|s| s.code()),
     })
 }
 
@@ -858,23 +863,25 @@ async fn run_qemu_process(
         .stderr(Stdio::piped());
     apply_windows_process_flags(&mut cmd, qemu_path);
 
+    let label = options.process_label;
     if options.verbose {
-        tracing::info!("qemu: {} {}", qemu_path.display(), args.join(" "));
+        tracing::info!("{}: {} {}", label, qemu_path.display(), args.join(" "));
     }
 
     let mut child = cmd.spawn().map_err(|e| {
         fbuild_core::FbuildError::DeployFailed(build_linux_macos_qemu_hint(&format!(
-            "failed to launch QEMU at {}: {}",
+            "failed to launch {} at {}: {}",
+            label,
             qemu_path.display(),
             e
         )))
     })?;
 
     let stdout = child.stdout.take().ok_or_else(|| {
-        fbuild_core::FbuildError::DeployFailed("failed to capture QEMU stdout".to_string())
+        fbuild_core::FbuildError::DeployFailed(format!("failed to capture {} stdout", label))
     })?;
     let stderr = child.stderr.take().ok_or_else(|| {
-        fbuild_core::FbuildError::DeployFailed("failed to capture QEMU stderr".to_string())
+        fbuild_core::FbuildError::DeployFailed(format!("failed to capture {} stderr", label))
     })?;
 
     let (tx, mut rx) = tokio::sync::mpsc::unbounded_channel::<ProcessEvent>();
@@ -911,7 +918,7 @@ async fn run_qemu_process(
         tokio::select! {
             status = child.wait(), if child_exit.is_none() => {
                 child_exit = Some(status.map_err(|e| {
-                    fbuild_core::FbuildError::DeployFailed(format!("QEMU wait failed: {}", e))
+                    fbuild_core::FbuildError::DeployFailed(format!("{} wait failed: {}", label, e))
                 })?);
                 if streams_open == 0 {
                     break;
@@ -968,7 +975,7 @@ async fn run_qemu_process(
 
     if child_exit.is_none() {
         child_exit = Some(child.wait().await.map_err(|e| {
-            fbuild_core::FbuildError::DeployFailed(format!("QEMU wait failed: {}", e))
+            fbuild_core::FbuildError::DeployFailed(format!("{} wait failed: {}", label, e))
         })?);
     }
 
@@ -984,26 +991,29 @@ async fn run_qemu_process(
     } else if let Some(status) = child_exit {
         if status.success() {
             if options.expect.is_some() && !monitor.expect_found() {
-                MonitorOutcome::Error(
-                    "QEMU exited before the expected pattern was found".to_string(),
-                )
+                MonitorOutcome::Error(format!(
+                    "{} exited before the expected pattern was found",
+                    label
+                ))
             } else {
-                MonitorOutcome::Success("QEMU exited normally".to_string())
+                MonitorOutcome::Success(format!("{} exited normally", label))
             }
         } else {
             MonitorOutcome::Error(format!(
-                "QEMU exited with code {}",
+                "{} exited with code {}",
+                label,
                 status.code().unwrap_or(-1)
             ))
         }
     } else {
-        MonitorOutcome::Error("QEMU exited unexpectedly".to_string())
+        MonitorOutcome::Error(format!("{} exited unexpectedly", label))
     };
 
     Ok(QemuRunResult {
         outcome,
         stdout: stdout_buf,
         stderr: stderr_buf,
+        exit_code: child_exit.and_then(|s| s.code()),
     })
 }
 
@@ -1196,6 +1206,7 @@ pub async fn deploy_qemu(
             expect: expect.as_deref(),
             show_timestamp,
             verbose,
+            process_label: "QEMU",
         },
     )
     .await
@@ -1209,6 +1220,7 @@ pub async fn deploy_qemu(
         }
     };
 
+    let real_exit_code = qemu_result.exit_code;
     match qemu_result.outcome {
         MonitorOutcome::Success(message) => (
             StatusCode::OK,
@@ -1216,7 +1228,7 @@ pub async fn deploy_qemu(
                 success: true,
                 request_id,
                 message: format!("QEMU run succeeded: {}", message),
-                exit_code: 0,
+                exit_code: real_exit_code.unwrap_or(0),
                 output_file: Some(output_file),
                 output_dir,
                 launch_url: None,
@@ -1230,7 +1242,7 @@ pub async fn deploy_qemu(
                 success: false,
                 request_id,
                 message: format!("QEMU run failed: {}", message),
-                exit_code: 1,
+                exit_code: real_exit_code.unwrap_or(1),
                 output_file: Some(output_file),
                 output_dir,
                 launch_url: None,
@@ -1240,7 +1252,7 @@ pub async fn deploy_qemu(
         ),
         MonitorOutcome::Timeout { expect_found } => {
             let success = expect.is_none() || expect_found;
-            let exit_code = if success { 0 } else { 1 };
+            let exit_code = real_exit_code.unwrap_or(if success { 0 } else { 1 });
             (
                 StatusCode::OK,
                 Json(OperationResponse {
@@ -1480,11 +1492,12 @@ impl EmulatorRunner for QemuRunner {
                 expect: config.expect.as_deref(),
                 show_timestamp: config.show_timestamp,
                 verbose: config.verbose,
+                process_label: "QEMU",
             },
         )
         .await?;
 
-        let exit_code = None; // QEMU process exit code not directly exposed by run_qemu_process
+        let exit_code = qemu_result.exit_code;
         let outcome = monitor_outcome_to_emulator(qemu_result.outcome, exit_code);
 
         Ok(EmulatorRunResult {
@@ -1560,14 +1573,15 @@ impl EmulatorRunner for Avr8jsRunner {
         )
         .await?;
 
-        let outcome = monitor_outcome_to_emulator(avr8js_result.outcome, None);
+        let exit_code = avr8js_result.exit_code;
+        let outcome = monitor_outcome_to_emulator(avr8js_result.outcome, exit_code);
 
         Ok(EmulatorRunResult {
             outcome,
             stdout: avr8js_result.stdout,
             stderr: avr8js_result.stderr,
             command_line,
-            exit_code: None,
+            exit_code,
         })
     }
 }
@@ -1683,18 +1697,20 @@ impl EmulatorRunner for SimavrRunner {
                 expect: config.expect.as_deref(),
                 show_timestamp: config.show_timestamp,
                 verbose: config.verbose,
+                process_label: "simavr",
             },
         )
         .await?;
 
-        let outcome = monitor_outcome_to_emulator(result.outcome, None);
+        let exit_code = result.exit_code;
+        let outcome = monitor_outcome_to_emulator(result.outcome, exit_code);
 
         Ok(EmulatorRunResult {
             outcome,
             stdout: result.stdout,
             stderr: result.stderr,
             command_line,
-            exit_code: None,
+            exit_code,
         })
     }
 }
@@ -1702,6 +1718,22 @@ impl EmulatorRunner for SimavrRunner {
 /// Check whether a given MCU is supported by the QEMU runner.
 fn is_qemu_supported_esp32_mcu(mcu: &str) -> bool {
     mcu.eq_ignore_ascii_case("esp32") || mcu.eq_ignore_ascii_case("esp32s3")
+}
+
+/// Fail fast if the board's flash mode is incompatible with QEMU (DIO only).
+fn check_qemu_flash_mode(board: &fbuild_config::BoardConfig) -> fbuild_core::Result<()> {
+    let mcu_config = fbuild_build::esp32::mcu_config::get_mcu_config(&board.mcu)?;
+    let effective_flash_mode = board
+        .flash_mode
+        .as_deref()
+        .unwrap_or(mcu_config.default_flash_mode());
+    if !effective_flash_mode.eq_ignore_ascii_case("dio") {
+        return Err(fbuild_core::FbuildError::DeployFailed(format!(
+            "QEMU requires DIO flash mode; board '{}' uses '{}'",
+            board.name, effective_flash_mode
+        )));
+    }
+    Ok(())
 }
 
 /// Select the appropriate emulator runner based on platform, MCU, and optional
@@ -1733,6 +1765,7 @@ pub fn select_runner(
                         board.mcu
                     )));
                 }
+                check_qemu_flash_mode(&board)?;
                 Ok(Box::new(QemuRunner::new(
                     project_dir.to_path_buf(),
                     env_name.to_string(),
@@ -1799,6 +1832,7 @@ pub fn select_runner(
         }
         fbuild_core::Platform::Espressif32 => {
             if is_qemu_supported_esp32_mcu(&board.mcu) {
+                check_qemu_flash_mode(&board)?;
                 Ok(Box::new(QemuRunner::new(
                     project_dir.to_path_buf(),
                     env_name.to_string(),
@@ -1913,46 +1947,46 @@ pub async fn test_emu(
         }
     };
 
-    // Build firmware
-    let lock = ctx.project_lock(&project_dir);
-    let _guard = lock.lock().await;
-
-    let needs_qemu_flags =
-        platform == fbuild_core::Platform::Espressif32 && req.emulator.as_deref() != Some("avr8js");
-    let board_for_flags = if needs_qemu_flags {
-        fbuild_config::BoardConfig::from_board_id(&board_id, &board_overrides).ok()
-    } else {
-        None
-    };
-
-    let build_dir = fbuild_paths::get_project_build_root(&project_dir);
-    let params = fbuild_build::BuildParams {
-        project_dir: project_dir.clone(),
-        env_name: env_name.clone(),
-        clean: false,
-        profile: fbuild_core::BuildProfile::Release,
-        build_dir,
-        verbose: req.verbose,
-        jobs: None,
-        generate_compiledb: false,
-        compiledb_only: false,
-        log_sender: None,
-        symbol_analysis: false,
-        symbol_analysis_path: None,
-        no_timestamp: false,
-        src_dir: None,
-        pio_env: req.pio_env.clone(),
-        extra_build_flags: if needs_qemu_flags {
-            board_for_flags
-                .as_ref()
-                .map(|b| crate::handlers::operations::qemu_extra_build_flags(platform, &b.mcu))
-                .unwrap_or_default()
-        } else {
-            Vec::new()
-        },
-    };
-
+    // Build firmware (hold project lock only during build, not the emulator phase)
     let build_result = {
+        let lock = ctx.project_lock(&project_dir);
+        let _guard = lock.lock().await;
+
+        let needs_qemu_flags = platform == fbuild_core::Platform::Espressif32
+            && req.emulator.as_deref() != Some("avr8js");
+        let board_for_flags = if needs_qemu_flags {
+            fbuild_config::BoardConfig::from_board_id(&board_id, &board_overrides).ok()
+        } else {
+            None
+        };
+
+        let build_dir = fbuild_paths::get_project_build_root(&project_dir);
+        let params = fbuild_build::BuildParams {
+            project_dir: project_dir.clone(),
+            env_name: env_name.clone(),
+            clean: false,
+            profile: fbuild_core::BuildProfile::Release,
+            build_dir,
+            verbose: req.verbose,
+            jobs: None,
+            generate_compiledb: false,
+            compiledb_only: false,
+            log_sender: None,
+            symbol_analysis: false,
+            symbol_analysis_path: None,
+            no_timestamp: false,
+            src_dir: None,
+            pio_env: req.pio_env.clone(),
+            extra_build_flags: if needs_qemu_flags {
+                board_for_flags
+                    .as_ref()
+                    .map(|b| crate::handlers::operations::qemu_extra_build_flags(platform, &b.mcu))
+                    .unwrap_or_default()
+            } else {
+                Vec::new()
+            },
+        };
+
         let p = platform;
         tokio::task::spawn_blocking(move || {
             let orchestrator = fbuild_build::get_orchestrator(p)?;
@@ -2027,7 +2061,7 @@ pub async fn test_emu(
     };
 
     let success = emu_result.is_success();
-    let exit_code = if success { 0 } else { 1 };
+    let exit_code = emu_result.exit_code.unwrap_or(if success { 0 } else { 1 });
     let message = format!(
         "{} test-emu {}: {}",
         runner.name(),
@@ -2133,6 +2167,7 @@ mod tests {
                 expect: Some("Hello from ESP32-S3"),
                 show_timestamp: false,
                 verbose: false,
+                process_label: "QEMU",
             },
         )
         .await
@@ -2163,6 +2198,7 @@ mod tests {
                 expect: None,
                 show_timestamp: false,
                 verbose: false,
+                process_label: "QEMU",
             },
         )
         .await
@@ -2279,6 +2315,7 @@ mod tests {
                     expect: Some("Hello from ESP32-S3!"),
                     show_timestamp: false,
                     verbose: true,
+                    process_label: "QEMU",
                 },
             ))
             .unwrap();
@@ -2313,6 +2350,7 @@ mod tests {
                 expect: Some("Hello from AVR"),
                 show_timestamp: false,
                 verbose: false,
+                process_label: "QEMU",
             },
         )
         .await
@@ -2343,6 +2381,7 @@ mod tests {
                 expect: None,
                 show_timestamp: false,
                 verbose: false,
+                process_label: "QEMU",
             },
         )
         .await
@@ -2371,6 +2410,7 @@ mod tests {
                 expect: None,
                 show_timestamp: false,
                 verbose: false,
+                process_label: "QEMU",
             },
         )
         .await
@@ -2405,6 +2445,7 @@ mod tests {
                 expect: Some("Hello from ATmega2560"),
                 show_timestamp: false,
                 verbose: false,
+                process_label: "simavr",
             },
         )
         .await
@@ -2432,6 +2473,7 @@ mod tests {
                 expect: None,
                 show_timestamp: false,
                 verbose: false,
+                process_label: "simavr",
             },
         )
         .await
@@ -2460,6 +2502,7 @@ mod tests {
                 expect: None,
                 show_timestamp: false,
                 verbose: false,
+                process_label: "simavr",
             },
         )
         .await
@@ -2488,6 +2531,7 @@ mod tests {
                 expect: None,
                 show_timestamp: false,
                 verbose: false,
+                process_label: "simavr",
             },
         )
         .await
