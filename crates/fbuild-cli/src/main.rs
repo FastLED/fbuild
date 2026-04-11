@@ -194,6 +194,9 @@ enum Commands {
         dry_run: bool,
         #[arg(long)]
         project_dir: Option<String>,
+        /// Run LRU garbage collection instead of full purge
+        #[arg(long)]
+        gc: bool,
     },
     /// Manage the fbuild daemon
     Daemon {
@@ -589,7 +592,14 @@ async fn main() {
             target,
             dry_run,
             project_dir,
-        }) => run_purge(target, dry_run, project_dir),
+            gc,
+        }) => {
+            if gc {
+                run_purge_gc()
+            } else {
+                run_purge(target, dry_run, project_dir)
+            }
+        }
         Some(Commands::Daemon { action }) => run_daemon(action).await,
         Some(Commands::Show {
             target,
@@ -2018,6 +2028,22 @@ async fn run_clang_tool(
         )))
     } else {
         Ok(())
+    }
+}
+
+fn run_purge_gc() -> fbuild_core::Result<()> {
+    match fbuild_packages::DiskCache::open() {
+        Ok(dc) => match dc.run_gc() {
+            Ok(report) => {
+                print_gc_report(&report);
+                Ok(())
+            }
+            Err(e) => Err(fbuild_core::FbuildError::Other(format!("GC failed: {}", e))),
+        },
+        Err(e) => Err(fbuild_core::FbuildError::Other(format!(
+            "failed to open disk cache: {}",
+            e
+        ))),
     }
 }
 
