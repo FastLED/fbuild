@@ -84,6 +84,11 @@ pub fn run_gc(index: &CacheIndex, budget: &CacheBudget) -> rusqlite::Result<GcRe
             installed_bytes = installed_bytes.saturating_sub(bytes);
             report.installed_evicted += 1;
             report.installed_bytes_freed += bytes;
+
+            // If archive was already gone, delete the now-empty row
+            if entry.archive_path.is_none() {
+                index.delete_entry(entry.id)?;
+            }
         }
     }
 

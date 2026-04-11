@@ -19,6 +19,7 @@ pub async fn cache_stats(State(_ctx): State<Arc<DaemonContext>>) -> Json<CacheSt
                 high_watermark: stats.budget.high_watermark,
                 low_watermark: stats.budget.low_watermark,
                 archive_budget: stats.budget.archive_budget,
+                installed_budget: stats.budget.installed_budget,
                 message: None,
             }),
             Err(e) => Json(CacheStatsResponse {

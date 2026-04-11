@@ -283,6 +283,9 @@ pub struct CacheStatsResponse {
     pub high_watermark: u64,
     pub low_watermark: u64,
     pub archive_budget: u64,
+    #[serde(default)]
+    #[allow(dead_code)]
+    pub installed_budget: u64,
     pub message: Option<String>,
 }
 

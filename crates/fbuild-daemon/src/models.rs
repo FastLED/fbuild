@@ -405,6 +405,7 @@ pub struct CacheStatsResponse {
     pub high_watermark: u64,
     pub low_watermark: u64,
     pub archive_budget: u64,
+    pub installed_budget: u64,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub message: Option<String>,
 }

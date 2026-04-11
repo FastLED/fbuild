@@ -116,11 +116,6 @@ pub fn index_path(cache_root: &Path) -> PathBuf {
     cache_root.join("index.sqlite")
 }
 
-/// Path to the GC advisory lock: `{cache_root}/gc.lock`
-pub fn gc_lock_path(cache_root: &Path) -> PathBuf {
-    cache_root.join("gc.lock")
-}
-
 /// Archive entry path: `{cache_root}/archives/{kind}/{stem}/{hash}/{version}/`
 pub fn archive_entry_dir(cache_root: &Path, kind: Kind, url: &str, version: &str) -> PathBuf {
     let (stem, hash) = stem_and_hash(url);

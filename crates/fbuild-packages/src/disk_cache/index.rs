@@ -541,15 +541,20 @@ fn is_pid_alive(pid: u32) -> bool {
     }
     #[cfg(windows)]
     {
-        use std::process::Command;
-        Command::new("tasklist")
-            .args(["/FI", &format!("PID eq {}", pid), "/NH"])
-            .output()
-            .map(|o| {
-                let stdout = String::from_utf8_lossy(&o.stdout);
-                stdout.contains(&pid.to_string())
-            })
-            .unwrap_or(false)
+        // Use OpenProcess to check if PID is alive (fast, no subprocess).
+        // PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+        extern "system" {
+            fn OpenProcess(access: u32, inherit: i32, pid: u32) -> *mut std::ffi::c_void;
+            fn CloseHandle(handle: *mut std::ffi::c_void) -> i32;
+        }
+        const PROCESS_QUERY_LIMITED_INFORMATION: u32 = 0x1000;
+        let handle = unsafe { OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, 0, pid) };
+        if handle.is_null() {
+            false
+        } else {
+            unsafe { CloseHandle(handle) };
+            true
+        }
     }
     #[cfg(not(any(unix, windows)))]
     {

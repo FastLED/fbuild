@@ -83,6 +83,9 @@ pub fn parse_human_size(s: &str) -> Option<u64> {
     };
 
     let num: f64 = num_part.parse().ok()?;
+    if num.is_nan() || num.is_infinite() || num < 0.0 {
+        return None;
+    }
 
     let multiplier: u64 = match suffix.as_str() {
         "" | "B" => 1,
@@ -149,9 +152,9 @@ fn get_total_disk_space_windows(path: &Path) -> u64 {
 #[cfg(unix)]
 fn get_total_disk_space_unix(path: &Path) -> u64 {
     use std::process::Command;
-    // Use POSIX-compatible `df -P` which works on both GNU and BSD/macOS.
-    // Output is in 512-byte blocks; multiply by 512 to get bytes.
-    let output = Command::new("df").arg("-P").arg(path).output();
+    // Use `df -Pk` for portable 1024-byte block output.
+    // `-P` gives POSIX format, `-k` forces 1024-byte blocks on all platforms.
+    let output = Command::new("df").args(["-P", "-k"]).arg(path).output();
 
     output
         .ok()
@@ -161,11 +164,11 @@ fn get_total_disk_space_unix(path: &Path) -> u64 {
                 .lines()
                 .nth(1) // skip header
                 .and_then(|line| {
-                    // POSIX df -P columns: Filesystem 512-blocks Used Available Capacity Mounted
+                    // POSIX df -Pk columns: Filesystem 1024-blocks Used Available Capacity Mounted
                     line.split_whitespace()
-                        .nth(1) // total 512-byte blocks
+                        .nth(1) // total 1024-byte blocks
                         .and_then(|s| s.parse::<u64>().ok())
-                        .map(|blocks| blocks * 512)
+                        .map(|blocks| blocks * 1024)
                 })
         })
         .unwrap_or(500 * 1024 * 1024 * 1024) // fallback 500 GB
@@ -217,6 +220,14 @@ mod tests {
     fn test_parse_human_size_invalid() {
         assert_eq!(parse_human_size("abc"), None);
         assert_eq!(parse_human_size("10X"), None);
+        assert_eq!(parse_human_size("-5G"), None);
+    }
+
+    #[test]
+    fn test_parse_human_size_nan_inf() {
+        assert_eq!(parse_human_size("NaN"), None);
+        assert_eq!(parse_human_size("inf"), None);
+        assert_eq!(parse_human_size("InfG"), None);
     }
 
     #[test]
