@@ -9,6 +9,7 @@
 //! - POST /api/build
 //! - POST /api/deploy
 //! - POST /api/monitor
+//! - POST /api/test-emu
 //!
 //! Management:
 //! - GET  /health

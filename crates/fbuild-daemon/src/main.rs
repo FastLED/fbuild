@@ -65,6 +65,7 @@ async fn main() {
         .route("/api/locks/clear", post(locks::clear_locks))
         .route("/api/install-deps", post(operations::install_deps))
         .route("/api/reset", post(operations::reset))
+        .route("/api/test-emu", post(emulator::test_emu))
         .route(
             "/api/emulator/avr8js/:session_id",
             get(emulator::avr8js_session_json),

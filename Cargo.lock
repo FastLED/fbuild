@@ -565,6 +565,7 @@ dependencies = [
 name = "fbuild-daemon"
 version = "2.1.11"
 dependencies = [
+ "async-trait",
  "axum",
  "base64",
  "bytes",

@@ -2,7 +2,7 @@ mod daemon_client;
 mod mcp;
 
 use clap::{Parser, Subcommand};
-use daemon_client::{BuildRequest, DaemonClient, DeployRequest, MonitorRequest};
+use daemon_client::{BuildRequest, DaemonClient, DeployRequest, MonitorRequest, TestEmuRequest};
 
 #[derive(Parser)]
 #[command(
@@ -234,6 +234,32 @@ enum Commands {
         #[arg(short, long)]
         verbose: bool,
     },
+    /// Build firmware and run it in an emulator for testing
+    TestEmu {
+        project_dir: Option<String>,
+        #[arg(short = 'e', long)]
+        environment: Option<String>,
+        #[arg(short, long)]
+        verbose: bool,
+        /// Timeout in seconds for the emulator run
+        #[arg(long)]
+        timeout: Option<f64>,
+        /// Halt on error pattern (regex)
+        #[arg(long)]
+        halt_on_error: Option<String>,
+        /// Halt on success pattern (regex)
+        #[arg(long)]
+        halt_on_success: Option<String>,
+        /// Expected output pattern (regex)
+        #[arg(long)]
+        expect: Option<String>,
+        /// Disable timestamp prefix on output lines
+        #[arg(long)]
+        no_timestamp: bool,
+        /// Emulator backend: "qemu" or "avr8js" (auto-detected if omitted)
+        #[arg(long, value_parser = ["avr8js", "qemu"])]
+        emulator: Option<String>,
+    },
     /// Run clang-query on project sources
     ClangQuery {
         project_dir: Option<String>,
@@ -351,6 +377,7 @@ const KNOWN_SUBCOMMANDS: &[&str] = &[
     "clang-tidy",
     "iwyu",
     "clang-query",
+    "test-emu",
 ];
 
 /// Rewrite `fbuild <dir> <subcommand> ...` → `fbuild <subcommand> <dir> ...`
@@ -599,6 +626,31 @@ async fn main() {
         }) => {
             let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
             run_iwyu(project_dir, environment, verbose).await
+        }
+        Some(Commands::TestEmu {
+            project_dir,
+            environment,
+            verbose,
+            timeout,
+            halt_on_error,
+            halt_on_success,
+            expect,
+            no_timestamp,
+            emulator,
+        }) => {
+            let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
+            run_test_emu(
+                project_dir,
+                environment,
+                verbose,
+                timeout,
+                halt_on_error,
+                halt_on_success,
+                expect,
+                no_timestamp,
+                emulator,
+            )
+            .await
         }
         Some(Commands::ClangQuery {
             project_dir,
@@ -1243,6 +1295,47 @@ async fn run_deploy(
                 eprintln!("open this URL manually: {}", url);
             }
         }
+    }
+    Ok(())
+}
+
+#[allow(clippy::too_many_arguments)]
+async fn run_test_emu(
+    project_dir: String,
+    environment: Option<String>,
+    verbose: bool,
+    timeout: Option<f64>,
+    halt_on_error: Option<String>,
+    halt_on_success: Option<String>,
+    expect: Option<String>,
+    no_timestamp: bool,
+    emulator: Option<String>,
+) -> fbuild_core::Result<()> {
+    daemon_client::ensure_daemon_running().await?;
+    let client = DaemonClient::new();
+
+    let (caller_pid, caller_cwd) = daemon_client::caller_info();
+    let req = TestEmuRequest {
+        project_dir,
+        environment,
+        verbose,
+        timeout,
+        halt_on_error,
+        halt_on_success,
+        expect,
+        emulator,
+        show_timestamp: !no_timestamp,
+        request_id: None,
+        caller_pid,
+        caller_cwd,
+        pio_env: daemon_client::capture_pio_env(),
+    };
+
+    let resp = client.test_emu(&req).await?;
+    print_operation_streams(&resp);
+    println!("{}", resp.message);
+    if !resp.success {
+        std::process::exit(resp.exit_code);
     }
     Ok(())
 }

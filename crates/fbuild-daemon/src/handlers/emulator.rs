@@ -1318,11 +1318,586 @@ pub async fn avr8js_firmware_hex(
     }
 }
 
+// ---------------------------------------------------------------------------
+// EmulatorRunner abstraction (Issue #23)
+// ---------------------------------------------------------------------------
+
+use fbuild_core::emulator::{EmulatorOutcome, EmulatorRunResult};
+
+/// Configuration for an emulator test run (user-facing options).
+pub struct EmulatorRunConfig {
+    pub firmware_path: PathBuf,
+    pub elf_path: Option<PathBuf>,
+    pub timeout: Option<f64>,
+    pub halt_on_error: Option<String>,
+    pub halt_on_success: Option<String>,
+    pub expect: Option<String>,
+    pub show_timestamp: bool,
+    pub verbose: bool,
+}
+
+/// Convert a `MonitorOutcome` into an `EmulatorOutcome`.
+fn monitor_outcome_to_emulator(outcome: MonitorOutcome, exit_code: Option<i32>) -> EmulatorOutcome {
+    match outcome {
+        MonitorOutcome::Success(msg) => EmulatorOutcome::Passed(msg),
+        MonitorOutcome::Error(msg) => {
+            // Heuristic: if the process crashed (non-zero exit with crash signature)
+            if let Some(code) = exit_code {
+                if code != 0 && (msg.contains("abort()") || msg.contains("Guru Meditation")) {
+                    return EmulatorOutcome::Crashed(msg);
+                }
+            }
+            EmulatorOutcome::Failed(msg)
+        }
+        MonitorOutcome::Timeout { expect_found } => EmulatorOutcome::TimedOut { expect_found },
+    }
+}
+
+/// Abstraction over emulator backends. Each implementation knows how to set up
+/// and execute a specific emulator (QEMU, avr8js, etc.).
+#[async_trait::async_trait]
+pub trait EmulatorRunner: Send + Sync {
+    /// Human-readable name of this runner (e.g. "QEMU ESP32-S3", "avr8js ATmega328P").
+    fn name(&self) -> &str;
+
+    /// Run the emulator with the given configuration.
+    async fn run(&self, config: &EmulatorRunConfig) -> fbuild_core::Result<EmulatorRunResult>;
+}
+
+/// QEMU-based emulator runner for ESP32-S3.
+pub struct QemuRunner {
+    project_dir: PathBuf,
+    env_name: String,
+    board: fbuild_config::BoardConfig,
+}
+
+impl QemuRunner {
+    pub fn new(project_dir: PathBuf, env_name: String, board: fbuild_config::BoardConfig) -> Self {
+        Self {
+            project_dir,
+            env_name,
+            board,
+        }
+    }
+}
+
+#[async_trait::async_trait]
+impl EmulatorRunner for QemuRunner {
+    fn name(&self) -> &str {
+        "QEMU ESP32-S3"
+    }
+
+    async fn run(&self, config: &EmulatorRunConfig) -> fbuild_core::Result<EmulatorRunResult> {
+        let mcu_config = fbuild_build::esp32::mcu_config::get_mcu_config(&self.board.mcu)?;
+
+        let effective_flash_mode = self
+            .board
+            .flash_mode
+            .as_deref()
+            .unwrap_or(mcu_config.default_flash_mode());
+        if !effective_flash_mode.eq_ignore_ascii_case("dio") {
+            return Ok(EmulatorRunResult {
+                outcome: EmulatorOutcome::Unsupported(format!(
+                    "QEMU requires DIO flash mode; effective mode is '{}'",
+                    effective_flash_mode
+                )),
+                stdout: String::new(),
+                stderr: String::new(),
+                command_line: String::new(),
+                exit_code: None,
+            });
+        }
+
+        let flash_size_bytes = fbuild_deploy::esp32::resolve_qemu_flash_size_bytes(
+            &self.board,
+            mcu_config.default_flash_size(),
+        )?;
+
+        let qemu = fbuild_packages::toolchain::EspQemuXtensa::new(&self.project_dir)
+            .and_then(|pkg| pkg.resolve_executable())?;
+
+        let session_dir = qemu_session_dir(&self.project_dir, &self.env_name);
+        std::fs::create_dir_all(&session_dir)?;
+
+        let flash_image = session_dir.join("qemu_flash.bin");
+        fbuild_deploy::esp32::create_qemu_flash_image(
+            &config.firmware_path,
+            &flash_image,
+            flash_size_bytes,
+            mcu_config.bootloader_offset(),
+            mcu_config.partitions_offset(),
+            mcu_config.firmware_offset(),
+            config.elf_path.as_deref(),
+        )?;
+
+        let args = fbuild_deploy::esp32::build_qemu_esp32s3_args(
+            &flash_image,
+            self.board.qemu_esp32_psram_config(),
+        );
+        let addr2line_path = config.elf_path.as_ref().and_then(|_| {
+            resolve_esp32_toolchain_gcc_path(&self.project_dir, &mcu_config)
+                .ok()
+                .and_then(|gcc| fbuild_serial::crash_decoder::derive_addr2line_path(&gcc))
+        });
+
+        let command_line = format!("{} {}", qemu.display(), args.join(" "));
+
+        let qemu_result = run_qemu_process(
+            &qemu,
+            &args,
+            RunQemuOptions {
+                elf_path: config.elf_path.clone(),
+                addr2line_path,
+                timeout_secs: config.timeout,
+                halt_on_error: config.halt_on_error.as_deref(),
+                halt_on_success: config.halt_on_success.as_deref(),
+                expect: config.expect.as_deref(),
+                show_timestamp: config.show_timestamp,
+                verbose: config.verbose,
+            },
+        )
+        .await?;
+
+        let exit_code = None; // QEMU process exit code not directly exposed by run_qemu_process
+        let outcome = monitor_outcome_to_emulator(qemu_result.outcome, exit_code);
+
+        Ok(EmulatorRunResult {
+            outcome,
+            stdout: qemu_result.stdout,
+            stderr: qemu_result.stderr,
+            command_line,
+            exit_code,
+        })
+    }
+}
+
+/// AVR8js-based emulator runner for ATmega328P (headless Node.js).
+pub struct Avr8jsRunner {
+    board: fbuild_config::BoardConfig,
+}
+
+impl Avr8jsRunner {
+    pub fn new(board: fbuild_config::BoardConfig) -> Self {
+        Self { board }
+    }
+}
+
+#[async_trait::async_trait]
+impl EmulatorRunner for Avr8jsRunner {
+    fn name(&self) -> &str {
+        "avr8js ATmega328P"
+    }
+
+    async fn run(&self, config: &EmulatorRunConfig) -> fbuild_core::Result<EmulatorRunResult> {
+        let node_path = find_node()?;
+        let avr8js_cache = ensure_avr8js_npm()?;
+
+        let session_dir = tempfile::TempDir::new()?;
+        let script_path = session_dir.path().join("headless.mjs");
+        std::fs::write(&script_path, AVR8JS_HEADLESS_MJS)?;
+
+        let f_cpu_hz: u32 = self
+            .board
+            .f_cpu
+            .trim_end_matches('L')
+            .parse()
+            .unwrap_or(16_000_000);
+
+        let command_line = format!(
+            "{} {} --hex {} --f-cpu {}",
+            node_path.display(),
+            script_path.display(),
+            config.firmware_path.display(),
+            f_cpu_hz
+        );
+
+        let avr8js_result = run_avr8js_headless(
+            &node_path,
+            &script_path,
+            &config.firmware_path,
+            f_cpu_hz,
+            &avr8js_cache,
+            RunAvr8jsHeadlessOptions {
+                timeout_secs: config.timeout,
+                halt_on_error: config.halt_on_error.as_deref(),
+                halt_on_success: config.halt_on_success.as_deref(),
+                expect: config.expect.as_deref(),
+                show_timestamp: config.show_timestamp,
+                verbose: config.verbose,
+            },
+        )
+        .await?;
+
+        let outcome = monitor_outcome_to_emulator(avr8js_result.outcome, None);
+
+        Ok(EmulatorRunResult {
+            outcome,
+            stdout: avr8js_result.stdout,
+            stderr: avr8js_result.stderr,
+            command_line,
+            exit_code: None,
+        })
+    }
+}
+
+/// Select the appropriate emulator runner based on platform, MCU, and optional
+/// explicit emulator choice.
+///
+/// Returns `Err` with `EmulatorOutcome::Unsupported` information if no runner
+/// matches.
+pub fn select_runner(
+    project_dir: &Path,
+    env_name: &str,
+    platform: fbuild_core::Platform,
+    board_id: &str,
+    board_overrides: &HashMap<String, String>,
+    emulator: Option<&str>,
+) -> fbuild_core::Result<Box<dyn EmulatorRunner>> {
+    let board = fbuild_config::BoardConfig::from_board_id(board_id, board_overrides)?;
+
+    if let Some(explicit) = emulator {
+        return match explicit {
+            "qemu" => {
+                if platform != fbuild_core::Platform::Espressif32 {
+                    return Err(fbuild_core::FbuildError::DeployFailed(
+                        "QEMU runner is only supported for ESP32-family boards".to_string(),
+                    ));
+                }
+                if !board.mcu.eq_ignore_ascii_case("esp32s3") {
+                    return Err(fbuild_core::FbuildError::DeployFailed(format!(
+                        "QEMU runner currently supports only ESP32-S3, got '{}'",
+                        board.mcu
+                    )));
+                }
+                Ok(Box::new(QemuRunner::new(
+                    project_dir.to_path_buf(),
+                    env_name.to_string(),
+                    board,
+                )))
+            }
+            "avr8js" => {
+                if !matches!(
+                    platform,
+                    fbuild_core::Platform::AtmelAvr | fbuild_core::Platform::AtmelMegaAvr
+                ) {
+                    return Err(fbuild_core::FbuildError::DeployFailed(
+                        "avr8js runner is only supported for AVR boards".to_string(),
+                    ));
+                }
+                if !board.mcu.eq_ignore_ascii_case("atmega328p") {
+                    return Err(fbuild_core::FbuildError::DeployFailed(format!(
+                        "avr8js runner currently supports only ATmega328P, got '{}'",
+                        board.mcu
+                    )));
+                }
+                Ok(Box::new(Avr8jsRunner::new(board)))
+            }
+            other => Err(fbuild_core::FbuildError::DeployFailed(format!(
+                "unsupported emulator '{}'; available: qemu, avr8js",
+                other
+            ))),
+        };
+    }
+
+    // Auto-detect based on platform and MCU
+    match platform {
+        fbuild_core::Platform::AtmelAvr | fbuild_core::Platform::AtmelMegaAvr => {
+            if board.mcu.eq_ignore_ascii_case("atmega328p") {
+                Ok(Box::new(Avr8jsRunner::new(board)))
+            } else {
+                Err(fbuild_core::FbuildError::DeployFailed(format!(
+                    "no emulator runner available for AVR MCU '{}'; only ATmega328P is supported via avr8js",
+                    board.mcu
+                )))
+            }
+        }
+        fbuild_core::Platform::Espressif32 => {
+            if board.mcu.eq_ignore_ascii_case("esp32s3") {
+                Ok(Box::new(QemuRunner::new(
+                    project_dir.to_path_buf(),
+                    env_name.to_string(),
+                    board,
+                )))
+            } else {
+                Err(fbuild_core::FbuildError::DeployFailed(format!(
+                    "no emulator runner available for ESP32 MCU '{}'; only ESP32-S3 is supported via QEMU",
+                    board.mcu
+                )))
+            }
+        }
+        _ => Err(fbuild_core::FbuildError::DeployFailed(format!(
+            "no emulator runner available for platform {:?}",
+            platform
+        ))),
+    }
+}
+
+/// POST /api/test-emu handler — build firmware then run it in an emulator.
+pub async fn test_emu(
+    State(ctx): State<Arc<DaemonContext>>,
+    Json(req): Json<crate::models::TestEmuRequest>,
+) -> (StatusCode, Json<OperationResponse>) {
+    let request_id = req
+        .request_id
+        .clone()
+        .unwrap_or_else(|| uuid::Uuid::new_v4().to_string());
+    let project_dir = PathBuf::from(&req.project_dir);
+
+    if !project_dir.exists() {
+        return (
+            StatusCode::BAD_REQUEST,
+            Json(OperationResponse::fail(
+                request_id,
+                format!("project directory does not exist: {}", req.project_dir),
+            )),
+        );
+    }
+
+    // Parse config
+    let config =
+        match fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")) {
+            Ok(c) => c,
+            Err(e) => {
+                return (
+                    StatusCode::BAD_REQUEST,
+                    Json(OperationResponse::fail(
+                        request_id,
+                        format!("failed to parse platformio.ini: {}", e),
+                    )),
+                );
+            }
+        };
+
+    let env_name = req
+        .environment
+        .clone()
+        .or_else(|| config.get_default_environment().map(|s| s.to_string()))
+        .unwrap_or_else(|| "default".to_string());
+
+    let env_config = match config.get_env_config(&env_name) {
+        Ok(c) => c,
+        Err(e) => {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(OperationResponse::fail(
+                    request_id,
+                    format!("invalid environment '{}': {}", env_name, e),
+                )),
+            );
+        }
+    };
+
+    let platform_str = env_config.get("platform").cloned().unwrap_or_default();
+    let platform = match fbuild_core::Platform::from_platform_str(&platform_str) {
+        Some(p) => p,
+        None => {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(OperationResponse::fail(
+                    request_id,
+                    format!("unsupported platform: {}", platform_str),
+                )),
+            );
+        }
+    };
+
+    let board_id = env_config.get("board").cloned().unwrap_or_else(|| {
+        fbuild_build::get_platform_support(platform)
+            .map(|s| s.default_board_id().to_string())
+            .unwrap_or_else(|_| "unknown".to_string())
+    });
+    let board_overrides = config.get_board_overrides(&env_name).unwrap_or_default();
+
+    // Select the emulator runner before building (fail fast on unsupported boards)
+    let runner = match select_runner(
+        &project_dir,
+        &env_name,
+        platform,
+        &board_id,
+        &board_overrides,
+        req.emulator.as_deref(),
+    ) {
+        Ok(r) => r,
+        Err(e) => {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(OperationResponse::fail(request_id, e.to_string())),
+            );
+        }
+    };
+
+    // Build firmware
+    let lock = ctx.project_lock(&project_dir);
+    let _guard = lock.lock().await;
+
+    let needs_qemu_flags =
+        platform == fbuild_core::Platform::Espressif32 && req.emulator.as_deref() != Some("avr8js");
+    let board_for_flags = if needs_qemu_flags {
+        fbuild_config::BoardConfig::from_board_id(&board_id, &board_overrides).ok()
+    } else {
+        None
+    };
+
+    let build_dir = fbuild_paths::get_project_build_root(&project_dir);
+    let params = fbuild_build::BuildParams {
+        project_dir: project_dir.clone(),
+        env_name: env_name.clone(),
+        clean: false,
+        profile: fbuild_core::BuildProfile::Release,
+        build_dir,
+        verbose: req.verbose,
+        jobs: None,
+        generate_compiledb: false,
+        compiledb_only: false,
+        log_sender: None,
+        symbol_analysis: false,
+        symbol_analysis_path: None,
+        no_timestamp: false,
+        src_dir: None,
+        pio_env: req.pio_env.clone(),
+        extra_build_flags: if needs_qemu_flags {
+            board_for_flags
+                .as_ref()
+                .map(|b| crate::handlers::operations::qemu_extra_build_flags(platform, &b.mcu))
+                .unwrap_or_default()
+        } else {
+            Vec::new()
+        },
+    };
+
+    let build_result = {
+        let p = platform;
+        tokio::task::spawn_blocking(move || {
+            let orchestrator = fbuild_build::get_orchestrator(p)?;
+            orchestrator.build(&params)
+        })
+        .await
+    };
+
+    let (firmware_path, elf_path) = match build_result {
+        Ok(Ok(r)) if r.success => {
+            let fw = r.firmware_path.clone().unwrap_or_else(|| {
+                r.elf_path
+                    .clone()
+                    .unwrap_or_else(|| PathBuf::from("firmware.bin"))
+            });
+            (fw, r.elf_path)
+        }
+        Ok(Ok(r)) => {
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(OperationResponse::fail(
+                    request_id,
+                    format!("build failed: {}", r.message),
+                )),
+            );
+        }
+        Ok(Err(e)) => {
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(OperationResponse::fail(
+                    request_id,
+                    format!("build error: {}", e),
+                )),
+            );
+        }
+        Err(e) => {
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(OperationResponse::fail(
+                    request_id,
+                    format!("build task panicked: {}", e),
+                )),
+            );
+        }
+    };
+
+    // Run the emulator
+    let run_config = EmulatorRunConfig {
+        firmware_path,
+        elf_path,
+        timeout: req.timeout,
+        halt_on_error: req.halt_on_error.clone(),
+        halt_on_success: req.halt_on_success.clone(),
+        expect: req.expect.clone(),
+        show_timestamp: req.show_timestamp,
+        verbose: req.verbose,
+    };
+
+    let emu_result = match runner.run(&run_config).await {
+        Ok(r) => r,
+        Err(e) => {
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(OperationResponse::fail(
+                    request_id,
+                    format!("emulator error: {}", e),
+                )),
+            );
+        }
+    };
+
+    let success = emu_result.is_success();
+    let exit_code = if success { 0 } else { 1 };
+    let message = format!(
+        "{} test-emu {}: {}",
+        runner.name(),
+        if success { "passed" } else { "failed" },
+        emu_result.outcome
+    );
+
+    (
+        StatusCode::OK,
+        Json(OperationResponse {
+            success,
+            request_id,
+            message,
+            exit_code,
+            output_file: None,
+            output_dir: None,
+            launch_url: None,
+            stdout: Some(emu_result.stdout),
+            stderr: Some(emu_result.stderr),
+        }),
+    )
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use fbuild_build::{BuildOrchestrator, BuildParams};
     use fbuild_core::BuildProfile;
+
+    #[test]
+    fn monitor_outcome_to_emulator_maps_success() {
+        let outcome = monitor_outcome_to_emulator(MonitorOutcome::Success("ok".into()), Some(0));
+        assert_eq!(outcome, EmulatorOutcome::Passed("ok".into()));
+    }
+
+    #[test]
+    fn monitor_outcome_to_emulator_maps_error() {
+        let outcome = monitor_outcome_to_emulator(MonitorOutcome::Error("bad".into()), Some(1));
+        assert_eq!(outcome, EmulatorOutcome::Failed("bad".into()));
+    }
+
+    #[test]
+    fn monitor_outcome_to_emulator_maps_crash() {
+        let outcome = monitor_outcome_to_emulator(
+            MonitorOutcome::Error("abort() was called at PC 0x4200".into()),
+            Some(134),
+        );
+        assert_eq!(
+            outcome,
+            EmulatorOutcome::Crashed("abort() was called at PC 0x4200".into())
+        );
+    }
+
+    #[test]
+    fn monitor_outcome_to_emulator_maps_timeout() {
+        let outcome =
+            monitor_outcome_to_emulator(MonitorOutcome::Timeout { expect_found: true }, None);
+        assert_eq!(outcome, EmulatorOutcome::TimedOut { expect_found: true });
+    }
 
     fn test_process_command(lines: &[&str]) -> (PathBuf, Vec<String>) {
         #[cfg(windows)]

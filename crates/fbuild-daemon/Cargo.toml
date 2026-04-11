@@ -38,6 +38,8 @@ base64 = { workspace = true }
 bytes = { workspace = true }
 futures = { workspace = true }
 regex = { workspace = true }
+async-trait = { workspace = true }
+tempfile = { workspace = true }
 # socket2 used in main.rs to set SO_REUSEADDR (Unix) /
 # SO_EXCLUSIVEADDRUSE (Windows) before binding the daemon's TCP listener,
 # so the daemon can recover when a previous (crashed) instance left
@@ -56,4 +58,3 @@ workspace = true
 
 [dev-dependencies]
 fbuild-test-support = { path = "../fbuild-test-support" }
-tempfile = { workspace = true }
