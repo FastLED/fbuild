@@ -536,8 +536,12 @@ impl CacheIndex {
 fn is_pid_alive(pid: u32) -> bool {
     #[cfg(unix)]
     {
-        // kill(pid, 0) checks if process exists without sending a signal
-        unsafe { libc::kill(pid as i32, 0) == 0 }
+        // kill(pid, 0) checks if process exists without sending a signal.
+        // Use raw FFI to avoid a libc crate dependency (matters for musl builds).
+        extern "C" {
+            fn kill(pid: i32, sig: i32) -> i32;
+        }
+        unsafe { kill(pid as i32, 0) == 0 }
     }
     #[cfg(windows)]
     {

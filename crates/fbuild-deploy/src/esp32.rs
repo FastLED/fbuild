@@ -1131,28 +1131,72 @@ mod tests {
         assert!(!mm.is_match());
     }
 
-    /// Hardware-gated integration test for fast deploy.
+    // ---------------------------------------------------------------
+    // Hardware-gated verify-deployment tests for each ESP32 family MCU.
+    //
+    // These tests are `#[ignore]` so they never run in CI.  To exercise
+    // them on a local bench, set the env vars described below and run:
+    //
+    //   uv run cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real -- --ignored --nocapture
+    //
+    // Each test reads **two** environment variables:
+    //
+    //   <MCU>_PORT        – serial port the board is attached to (e.g. COM13, /dev/ttyUSB0)
+    //   <MCU>_FIRMWARE    – absolute path to a pre-flashed firmware.bin
+    //
+    // where <MCU> is one of ESP32, ESP32S2, ESP32S3, ESP32C2, ESP32C3,
+    // ESP32C6, ESP32H2, ESP32P4.
+    //
+    // The firmware directory must also contain `bootloader.bin` and
+    // `partitions.bin` so that verify-flash can check all three regions
+    // in a single esptool invocation.
+    //
+    // Bootloader offsets per chip (from esp32.rs header comment):
+    //   0x1000 – esp32, esp32s2
+    //   0x0    – esp32c2, esp32c3, esp32c5, esp32c6, esp32h2, esp32s3
+    //   0x2000 – esp32p4
+    // ---------------------------------------------------------------
+
+    /// Shared implementation for all per-chip hardware-gated verify tests.
     ///
-    /// Requires a real ESP32-S3 attached to `COM13` that has been
-    /// pre-flashed with the FastLED reference firmware at
-    /// `C:\Users\niteris\dev\fastled\.pio\build\esp32s3\firmware.bin`.
-    /// Run with:
-    /// ```
-    /// uv run cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32s3 -- --ignored --nocapture
-    /// ```
-    ///
-    /// Asserts (a) verify against the same image returns `Match` in
-    /// under 15 seconds, and (b) verify against a tampered firmware
-    /// (1 byte flipped) returns `Mismatch`.
-    #[test]
-    #[ignore = "requires ESP32-S3 attached to COM13 with FastLED reference firmware"]
-    fn try_verify_deployment_real_esp32s3() {
-        let port = "COM13";
-        let reference: std::path::PathBuf =
-            r"C:\Users\niteris\dev\fastled\.pio\build\esp32s3\firmware.bin".into();
-        if !reference.exists() {
+    /// 1. Reads `{port_env}` and `{firmware_env}` from the environment.
+    /// 2. Asserts that verify against the pre-flashed image returns `Match`
+    ///    in under 15 seconds.
+    /// 3. Asserts that a tampered image (1 byte flipped) returns `Mismatch`.
+    fn run_verify_deployment_test(
+        chip: &str,
+        bootloader_offset: &str,
+        port_env: &str,
+        firmware_env: &str,
+    ) {
+        let port = std::env::var(port_env).unwrap_or_else(|_| {
             panic!(
-                "reference firmware not found at {}; pre-build FastLED's esp32s3 env first",
+                "set {} to the serial port your {} board is attached to (e.g. COM13)",
+                port_env, chip
+            )
+        });
+        let firmware_path = std::env::var(firmware_env).unwrap_or_else(|_| {
+            panic!(
+                "set {} to the absolute path of the pre-flashed firmware.bin for {}",
+                firmware_env, chip
+            )
+        });
+        let reference = std::path::PathBuf::from(&firmware_path);
+        assert!(
+            reference.is_file(),
+            "reference firmware not found at {}; build and flash it first",
+            reference.display()
+        );
+        let ref_dir = reference
+            .parent()
+            .unwrap_or_else(|| std::path::Path::new("."));
+        for name in ["bootloader.bin", "partitions.bin"] {
+            let artifact = ref_dir.join(name);
+            assert!(
+                artifact.is_file(),
+                "[{}] missing {} next to {}; otherwise this only verifies firmware.bin",
+                chip,
+                name,
                 reference.display()
             );
         }
@@ -1161,46 +1205,46 @@ mod tests {
             flash_mode: "dio".to_string(),
             flash_freq: "80m".to_string(),
             default_baud: "921600".to_string(),
-            before_reset: "default-reset".to_string(),
-            after_reset: "hard-reset".to_string(),
+            before_reset: "default_reset".to_string(),
+            after_reset: "hard_reset".to_string(),
         };
         let deployer = Esp32Deployer::new(
-            "esp32s3", "921600", "0x0", "0x8000", "0x10000", &params, true,
+            chip,
+            "921600",
+            bootloader_offset,
+            "0x8000",
+            "0x10000",
+            &params,
+            true,
         );
 
-        // Phase 1: matching image → Match
+        // Phase 1: matching image -> Match
         let start = std::time::Instant::now();
         let outcome = deployer
-            .try_verify_deployment(&reference, port)
-            .expect("verify must not fail to run against attached ESP32-S3");
+            .try_verify_deployment(&reference, &port)
+            .unwrap_or_else(|e| panic!("verify must not fail against attached {}: {}", chip, e));
         let elapsed = start.elapsed();
         assert!(
             outcome.is_match(),
-            "expected Match against pre-flashed firmware; got {:?}",
+            "[{}] expected Match against pre-flashed firmware; got {:?}",
+            chip,
             outcome
         );
         assert!(
             elapsed < std::time::Duration::from_secs(15),
-            "verify took {:?} — should complete in <15s for the FastLED 2.4MB image",
+            "[{}] verify took {:?} -- should complete in <15s",
+            chip,
             elapsed
         );
-        eprintln!("verify (Match) elapsed: {:?}", elapsed);
+        eprintln!("[{}] verify (Match) elapsed: {:?}", chip, elapsed);
 
-        // Phase 2: tampered image → Mismatch
+        // Phase 2: tampered image -> Mismatch
         let tmp = tempfile::TempDir::new().unwrap();
         // Copy bootloader and partitions next to the tampered firmware so
         // build_verify_flash_args picks them up alongside firmware.bin.
-        let ref_dir = reference.parent().unwrap();
-        std::fs::copy(
-            ref_dir.join("bootloader.bin"),
-            tmp.path().join("bootloader.bin"),
-        )
-        .unwrap();
-        std::fs::copy(
-            ref_dir.join("partitions.bin"),
-            tmp.path().join("partitions.bin"),
-        )
-        .unwrap();
+        for name in ["bootloader.bin", "partitions.bin"] {
+            std::fs::copy(ref_dir.join(name), tmp.path().join(name)).unwrap();
+        }
         let tampered = tmp.path().join("firmware.bin");
         let mut bytes = std::fs::read(&reference).unwrap();
         // Flip a byte well past the image header to avoid invalidating
@@ -1211,13 +1255,121 @@ mod tests {
         std::fs::write(&tampered, &bytes).unwrap();
 
         let outcome = deployer
-            .try_verify_deployment(&tampered, port)
-            .expect("verify must not fail to run with tampered firmware");
+            .try_verify_deployment(&tampered, &port)
+            .unwrap_or_else(|e| {
+                panic!(
+                    "[{}] verify must not fail with tampered firmware: {}",
+                    chip, e
+                )
+            });
         assert!(
             !outcome.is_match(),
-            "expected Mismatch for tampered firmware; got {:?}",
+            "[{}] expected Mismatch for tampered firmware; got {:?}",
+            chip,
             outcome
         );
-        eprintln!("verify (Mismatch) detected correctly");
+        eprintln!("[{}] verify (Mismatch) detected correctly", chip);
+    }
+
+    /// ESP32 (Xtensa, bootloader at 0x1000).
+    ///
+    /// ```text
+    /// ESP32_PORT=COM5 ESP32_FIRMWARE=C:\path\to\firmware.bin \
+    ///   uv run cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32 -- --ignored --nocapture
+    /// ```
+    #[test]
+    #[ignore = "requires real ESP32 board — set ESP32_PORT and ESP32_FIRMWARE"]
+    fn try_verify_deployment_real_esp32() {
+        run_verify_deployment_test("esp32", "0x1000", "ESP32_PORT", "ESP32_FIRMWARE");
+    }
+
+    /// ESP32-S2 (Xtensa single-core, bootloader at 0x1000).
+    ///
+    /// ```text
+    /// ESP32S2_PORT=COM6 ESP32S2_FIRMWARE=C:\path\to\firmware.bin \
+    ///   uv run cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32s2 -- --ignored --nocapture
+    /// ```
+    #[test]
+    #[ignore = "requires real ESP32-S2 board — set ESP32S2_PORT and ESP32S2_FIRMWARE"]
+    fn try_verify_deployment_real_esp32s2() {
+        run_verify_deployment_test("esp32s2", "0x1000", "ESP32S2_PORT", "ESP32S2_FIRMWARE");
+    }
+
+    /// ESP32-S3 (Xtensa dual-core, bootloader at 0x0).
+    ///
+    /// This is the original baseline test, now using env-var configuration
+    /// consistent with the rest of the family.
+    ///
+    /// ```text
+    /// ESP32S3_PORT=COM13 ESP32S3_FIRMWARE=C:\Users\niteris\dev\fastled\.pio\build\esp32s3\firmware.bin \
+    ///   uv run cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32s3 -- --ignored --nocapture
+    /// ```
+    #[test]
+    #[ignore = "requires real ESP32-S3 board — set ESP32S3_PORT and ESP32S3_FIRMWARE"]
+    fn try_verify_deployment_real_esp32s3() {
+        run_verify_deployment_test("esp32s3", "0x0", "ESP32S3_PORT", "ESP32S3_FIRMWARE");
+    }
+
+    /// ESP32-C2 (RISC-V single-core, bootloader at 0x0).
+    ///
+    /// ```text
+    /// ESP32C2_PORT=COM7 ESP32C2_FIRMWARE=C:\path\to\firmware.bin \
+    ///   uv run cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32c2 -- --ignored --nocapture
+    /// ```
+    #[test]
+    #[ignore = "requires real ESP32-C2 board — set ESP32C2_PORT and ESP32C2_FIRMWARE"]
+    fn try_verify_deployment_real_esp32c2() {
+        run_verify_deployment_test("esp32c2", "0x0", "ESP32C2_PORT", "ESP32C2_FIRMWARE");
+    }
+
+    /// ESP32-C3 (RISC-V single-core, bootloader at 0x0).
+    ///
+    /// ```text
+    /// ESP32C3_PORT=COM8 ESP32C3_FIRMWARE=C:\path\to\firmware.bin \
+    ///   uv run cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32c3 -- --ignored --nocapture
+    /// ```
+    #[test]
+    #[ignore = "requires real ESP32-C3 board — set ESP32C3_PORT and ESP32C3_FIRMWARE"]
+    fn try_verify_deployment_real_esp32c3() {
+        run_verify_deployment_test("esp32c3", "0x0", "ESP32C3_PORT", "ESP32C3_FIRMWARE");
+    }
+
+    /// ESP32-C6 (RISC-V single-core, bootloader at 0x0).
+    ///
+    /// ```text
+    /// ESP32C6_PORT=COM9 ESP32C6_FIRMWARE=C:\path\to\firmware.bin \
+    ///   uv run cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32c6 -- --ignored --nocapture
+    /// ```
+    #[test]
+    #[ignore = "requires real ESP32-C6 board — set ESP32C6_PORT and ESP32C6_FIRMWARE"]
+    fn try_verify_deployment_real_esp32c6() {
+        run_verify_deployment_test("esp32c6", "0x0", "ESP32C6_PORT", "ESP32C6_FIRMWARE");
+    }
+
+    /// ESP32-H2 (RISC-V single-core, bootloader at 0x0).
+    ///
+    /// ```text
+    /// ESP32H2_PORT=COM10 ESP32H2_FIRMWARE=C:\path\to\firmware.bin \
+    ///   uv run cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32h2 -- --ignored --nocapture
+    /// ```
+    #[test]
+    #[ignore = "requires real ESP32-H2 board — set ESP32H2_PORT and ESP32H2_FIRMWARE"]
+    fn try_verify_deployment_real_esp32h2() {
+        run_verify_deployment_test("esp32h2", "0x0", "ESP32H2_PORT", "ESP32H2_FIRMWARE");
+    }
+
+    /// ESP32-P4 (RISC-V dual-core, OPI flash, bootloader at 0x2000).
+    ///
+    /// Note: ESP32-P4 uses OPI flash and has a different bootloader offset
+    /// (0x2000) compared to other ESP32 chips.
+    ///
+    /// ```text
+    /// ESP32P4_PORT=COM11 ESP32P4_FIRMWARE=C:\path\to\firmware.bin \
+    ///   uv run cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32p4 -- --ignored --nocapture
+    /// ```
+    #[test]
+    #[ignore = "requires real ESP32-P4 board — set ESP32P4_PORT and ESP32P4_FIRMWARE"]
+    fn try_verify_deployment_real_esp32p4() {
+        run_verify_deployment_test("esp32p4", "0x2000", "ESP32P4_PORT", "ESP32P4_FIRMWARE");
     }
 }
