@@ -2057,6 +2057,12 @@ async fn run_purge_gc() -> fbuild_core::Result<()> {
             "  Total freed:       {}",
             format_size(result.total_bytes_freed)
         );
+        if result.orphan_files_removed > 0 {
+            println!("  Orphan files removed: {}", result.orphan_files_removed);
+        }
+        if result.orphan_rows_cleaned > 0 {
+            println!("  Orphan rows cleaned:  {}", result.orphan_rows_cleaned);
+        }
         return Ok(());
     }
 
@@ -2578,6 +2584,12 @@ async fn run_daemon_gc(client: &DaemonClient) -> fbuild_core::Result<()> {
         "  Total freed:       {}",
         format_size(result.total_bytes_freed)
     );
+    if result.orphan_files_removed > 0 {
+        println!("  Orphan files removed: {}", result.orphan_files_removed);
+    }
+    if result.orphan_rows_cleaned > 0 {
+        println!("  Orphan rows cleaned:  {}", result.orphan_rows_cleaned);
+    }
     Ok(())
 }
 

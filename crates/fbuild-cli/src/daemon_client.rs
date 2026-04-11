@@ -297,6 +297,10 @@ pub struct GcResponse {
     pub archives_evicted: u64,
     pub archive_bytes_freed: u64,
     pub total_bytes_freed: u64,
+    #[serde(default)]
+    pub orphan_files_removed: usize,
+    #[serde(default)]
+    pub orphan_rows_cleaned: usize,
     pub message: Option<String>,
 }
 
