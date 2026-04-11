@@ -1066,13 +1066,13 @@ pub async fn deploy_qemu(
             );
         }
     };
-    if !board.mcu.eq_ignore_ascii_case("esp32s3") {
+    if !is_qemu_supported_esp32_mcu(&board.mcu) {
         return (
             StatusCode::BAD_REQUEST,
             Json(OperationResponse::fail(
                 request_id,
                 format!(
-                    "native QEMU deploy currently supports only ESP32-S3 boards, got '{}'",
+                    "native QEMU deploy currently supports ESP32 and ESP32-S3 boards, got '{}'",
                     board.mcu
                 ),
             )),
@@ -1148,6 +1148,12 @@ pub async fn deploy_qemu(
         );
     }
     let flash_image = session_dir.join("qemu_flash.bin");
+    // Only apply the ESP32-S3 ADC calibration patch for S3 variants.
+    let elf_for_adc_patch = if board.mcu.eq_ignore_ascii_case("esp32s3") {
+        elf_path.as_deref()
+    } else {
+        None
+    };
     if let Err(e) = fbuild_deploy::esp32::create_qemu_flash_image(
         &firmware_path,
         &flash_image,
@@ -1155,7 +1161,7 @@ pub async fn deploy_qemu(
         mcu_config.bootloader_offset(),
         mcu_config.partitions_offset(),
         mcu_config.firmware_offset(),
-        elf_path.as_deref(),
+        elf_for_adc_patch,
     ) {
         return (
             StatusCode::INTERNAL_SERVER_ERROR,
@@ -1166,7 +1172,8 @@ pub async fn deploy_qemu(
         );
     }
 
-    let args = fbuild_deploy::esp32::build_qemu_esp32s3_args(
+    let args = fbuild_deploy::esp32::build_qemu_args(
+        &board.mcu,
         &flash_image,
         board.qemu_esp32_psram_config(),
     );
@@ -1366,19 +1373,22 @@ pub trait EmulatorRunner: Send + Sync {
     async fn run(&self, config: &EmulatorRunConfig) -> fbuild_core::Result<EmulatorRunResult>;
 }
 
-/// QEMU-based emulator runner for ESP32-S3.
+/// QEMU-based emulator runner for ESP32-family boards.
 pub struct QemuRunner {
     project_dir: PathBuf,
     env_name: String,
     board: fbuild_config::BoardConfig,
+    display_name: String,
 }
 
 impl QemuRunner {
     pub fn new(project_dir: PathBuf, env_name: String, board: fbuild_config::BoardConfig) -> Self {
+        let display_name = format!("QEMU {}", board.mcu.to_uppercase());
         Self {
             project_dir,
             env_name,
             board,
+            display_name,
         }
     }
 }
@@ -1386,7 +1396,7 @@ impl QemuRunner {
 #[async_trait::async_trait]
 impl EmulatorRunner for QemuRunner {
     fn name(&self) -> &str {
-        "QEMU ESP32-S3"
+        &self.display_name
     }
 
     async fn run(&self, config: &EmulatorRunConfig) -> fbuild_core::Result<EmulatorRunResult> {
@@ -1428,6 +1438,13 @@ impl EmulatorRunner for QemuRunner {
         std::fs::create_dir_all(&session_dir)?;
 
         let flash_image = session_dir.join("qemu_flash.bin");
+
+        // Only apply the ESP32-S3 ADC calibration patch for S3 variants.
+        let elf_for_adc_patch = if self.board.mcu.eq_ignore_ascii_case("esp32s3") {
+            config.elf_path.as_deref()
+        } else {
+            None
+        };
         fbuild_deploy::esp32::create_qemu_flash_image(
             &config.firmware_path,
             &flash_image,
@@ -1435,10 +1452,11 @@ impl EmulatorRunner for QemuRunner {
             mcu_config.bootloader_offset(),
             mcu_config.partitions_offset(),
             mcu_config.firmware_offset(),
-            config.elf_path.as_deref(),
+            elf_for_adc_patch,
         )?;
 
-        let args = fbuild_deploy::esp32::build_qemu_esp32s3_args(
+        let args = fbuild_deploy::esp32::build_qemu_args(
+            &self.board.mcu,
             &flash_image,
             self.board.qemu_esp32_psram_config(),
         );
@@ -1681,6 +1699,11 @@ impl EmulatorRunner for SimavrRunner {
     }
 }
 
+/// Check whether a given MCU is supported by the QEMU runner.
+fn is_qemu_supported_esp32_mcu(mcu: &str) -> bool {
+    mcu.eq_ignore_ascii_case("esp32") || mcu.eq_ignore_ascii_case("esp32s3")
+}
+
 /// Select the appropriate emulator runner based on platform, MCU, and optional
 /// explicit emulator choice.
 ///
@@ -1704,9 +1727,9 @@ pub fn select_runner(
                         "QEMU runner is only supported for ESP32-family boards".to_string(),
                     ));
                 }
-                if !board.mcu.eq_ignore_ascii_case("esp32s3") {
+                if !is_qemu_supported_esp32_mcu(&board.mcu) {
                     return Err(fbuild_core::FbuildError::DeployFailed(format!(
-                        "QEMU runner currently supports only ESP32-S3, got '{}'",
+                        "QEMU runner currently supports ESP32 and ESP32-S3, got '{}'",
                         board.mcu
                     )));
                 }
@@ -1775,7 +1798,7 @@ pub fn select_runner(
             }
         }
         fbuild_core::Platform::Espressif32 => {
-            if board.mcu.eq_ignore_ascii_case("esp32s3") {
+            if is_qemu_supported_esp32_mcu(&board.mcu) {
                 Ok(Box::new(QemuRunner::new(
                     project_dir.to_path_buf(),
                     env_name.to_string(),
@@ -1783,7 +1806,8 @@ pub fn select_runner(
                 )))
             } else {
                 Err(fbuild_core::FbuildError::DeployFailed(format!(
-                    "no emulator runner available for ESP32 MCU '{}'; only ESP32-S3 is supported via QEMU",
+                    "no emulator runner available for ESP32 MCU '{}'; \
+                     ESP32 and ESP32-S3 are supported via QEMU",
                     board.mcu
                 )))
             }
@@ -2232,7 +2256,8 @@ mod tests {
         let qemu = fbuild_packages::toolchain::EspQemuXtensa::new(&project_dir)
             .and_then(|pkg| pkg.resolve_executable())
             .expect("native QEMU should resolve for ignored integration test");
-        let args = fbuild_deploy::esp32::build_qemu_esp32s3_args(
+        let args = fbuild_deploy::esp32::build_qemu_args(
+            &board.mcu,
             &flash_image,
             board.qemu_esp32_psram_config(),
         );
@@ -2610,5 +2635,113 @@ mod tests {
             fbuild_config::BoardConfig::from_board_id("megaatmega2560", &HashMap::new()).unwrap();
         let runner = SimavrRunner::new(board);
         assert_eq!(runner.name(), "simavr");
+    }
+
+    // -----------------------------------------------------------------------
+    // select_runner tests for ESP32 QEMU (Issue #25)
+    // -----------------------------------------------------------------------
+
+    #[test]
+    fn select_runner_explicit_qemu_for_esp32dev() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "esp32dev",
+            fbuild_core::Platform::Espressif32,
+            "esp32dev",
+            &HashMap::new(),
+            Some("qemu"),
+        );
+        assert!(
+            result.is_ok(),
+            "select_runner should accept qemu for esp32dev: {:?}",
+            result.err()
+        );
+        assert_eq!(result.unwrap().name(), "QEMU ESP32");
+    }
+
+    #[test]
+    fn select_runner_explicit_qemu_for_esp32s3() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "esp32-s3-devkitc-1",
+            fbuild_core::Platform::Espressif32,
+            "esp32-s3-devkitc-1",
+            &HashMap::new(),
+            Some("qemu"),
+        );
+        assert!(
+            result.is_ok(),
+            "select_runner should accept qemu for esp32-s3: {:?}",
+            result.err()
+        );
+        assert_eq!(result.unwrap().name(), "QEMU ESP32S3");
+    }
+
+    #[test]
+    fn select_runner_explicit_qemu_rejects_esp32c3() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "esp32-c3-devkitm-1",
+            fbuild_core::Platform::Espressif32,
+            "esp32-c3-devkitm-1",
+            &HashMap::new(),
+            Some("qemu"),
+        );
+        assert!(
+            result.is_err(),
+            "QEMU should reject ESP32-C3 (RISC-V, not yet supported)"
+        );
+    }
+
+    #[test]
+    fn select_runner_auto_detects_qemu_for_esp32dev() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "esp32dev",
+            fbuild_core::Platform::Espressif32,
+            "esp32dev",
+            &HashMap::new(),
+            None,
+        );
+        assert!(
+            result.is_ok(),
+            "auto-detect should find qemu for esp32dev: {:?}",
+            result.err()
+        );
+        assert_eq!(result.unwrap().name(), "QEMU ESP32");
+    }
+
+    #[test]
+    fn select_runner_auto_detects_qemu_for_esp32s3() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "esp32-s3-devkitc-1",
+            fbuild_core::Platform::Espressif32,
+            "esp32-s3-devkitc-1",
+            &HashMap::new(),
+            None,
+        );
+        assert!(
+            result.is_ok(),
+            "auto-detect should find qemu for esp32-s3: {:?}",
+            result.err()
+        );
+        assert_eq!(result.unwrap().name(), "QEMU ESP32S3");
+    }
+
+    #[test]
+    fn is_qemu_supported_esp32_mcu_accepts_esp32() {
+        assert!(is_qemu_supported_esp32_mcu("esp32"));
+        assert!(is_qemu_supported_esp32_mcu("ESP32"));
+        assert!(is_qemu_supported_esp32_mcu("esp32s3"));
+        assert!(is_qemu_supported_esp32_mcu("ESP32S3"));
+    }
+
+    #[test]
+    fn is_qemu_supported_esp32_mcu_rejects_unsupported() {
+        assert!(!is_qemu_supported_esp32_mcu("esp32c3"));
+        assert!(!is_qemu_supported_esp32_mcu("esp32s2"));
+        assert!(!is_qemu_supported_esp32_mcu("esp32h2"));
+        assert!(!is_qemu_supported_esp32_mcu("atmega328p"));
     }
 }
