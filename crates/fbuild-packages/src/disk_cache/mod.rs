@@ -48,9 +48,16 @@ impl DiskCache {
         let index = CacheIndex::open(cache_root)?;
         let budget = CacheBudget::compute(cache_root);
 
-        // Ensure phase directories exist
-        std::fs::create_dir_all(paths::archives_root(cache_root)).ok();
-        std::fs::create_dir_all(paths::installed_root(cache_root)).ok();
+        // Ensure phase directories exist — propagate failures so callers
+        // don't silently operate on an unusable cache layout.
+        let map_io = |e: std::io::Error| {
+            rusqlite::Error::InvalidPath(PathBuf::from(format!(
+                "failed to create cache phase dir: {}",
+                e
+            )))
+        };
+        std::fs::create_dir_all(paths::archives_root(cache_root)).map_err(&map_io)?;
+        std::fs::create_dir_all(paths::installed_root(cache_root)).map_err(map_io)?;
 
         Ok(Self {
             index: Arc::new(index),
@@ -113,8 +120,11 @@ impl DiskCache {
     }
 
     /// Run a full GC pass.
+    /// Recomputes budgets from current disk space so long-lived processes
+    /// don't enforce stale watermarks.
     pub fn run_gc(&self) -> rusqlite::Result<GcReport> {
-        gc::run_gc(&self.index, &self.budget)
+        let budget = CacheBudget::compute(&self.cache_root);
+        gc::run_gc(&self.index, &budget)
     }
 
     /// Reconcile index against filesystem (run on daemon startup).

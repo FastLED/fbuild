@@ -149,11 +149,9 @@ fn get_total_disk_space_windows(path: &Path) -> u64 {
 #[cfg(unix)]
 fn get_total_disk_space_unix(path: &Path) -> u64 {
     use std::process::Command;
-    // Use `df` to get total space
-    let output = Command::new("df")
-        .args(["-B1", "--output=size"])
-        .arg(path)
-        .output();
+    // Use POSIX-compatible `df -P` which works on both GNU and BSD/macOS.
+    // Output is in 512-byte blocks; multiply by 512 to get bytes.
+    let output = Command::new("df").arg("-P").arg(path).output();
 
     output
         .ok()
@@ -162,7 +160,13 @@ fn get_total_disk_space_unix(path: &Path) -> u64 {
             stdout
                 .lines()
                 .nth(1) // skip header
-                .and_then(|line| line.trim().parse::<u64>().ok())
+                .and_then(|line| {
+                    // POSIX df -P columns: Filesystem 512-blocks Used Available Capacity Mounted
+                    line.split_whitespace()
+                        .nth(1) // total 512-byte blocks
+                        .and_then(|s| s.parse::<u64>().ok())
+                        .map(|blocks| blocks * 512)
+                })
         })
         .unwrap_or(500 * 1024 * 1024 * 1024) // fallback 500 GB
 }

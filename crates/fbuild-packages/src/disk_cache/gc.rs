@@ -8,7 +8,7 @@
 
 use super::budget::CacheBudget;
 use super::index::CacheIndex;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 /// Report of a GC run.
 #[derive(Debug, Clone, Default)]
@@ -85,14 +85,15 @@ pub fn run_gc(index: &CacheIndex, budget: &CacheBudget) -> rusqlite::Result<GcRe
         }
     }
 
-    // Step 2: evict archives if over budget
+    // Step 2: evict archives if over per-phase budget OR combined high watermark
     let mut archive_bytes = index.total_archive_bytes()? as u64;
+    let mut total_bytes = archive_bytes + installed_bytes;
 
-    if archive_bytes > budget.archive_budget {
+    if archive_bytes > budget.archive_budget || total_bytes > budget.high_watermark {
         let entries = index.lru_archive_entries(1000)?;
 
         for entry in entries {
-            if archive_bytes <= budget.archive_budget {
+            if archive_bytes <= budget.archive_budget && total_bytes <= budget.high_watermark {
                 break;
             }
             let bytes = entry.archive_bytes.unwrap_or(0) as u64;
@@ -110,6 +111,7 @@ pub fn run_gc(index: &CacheIndex, budget: &CacheBudget) -> rusqlite::Result<GcRe
 
             index.clear_archive(entry.id)?;
             archive_bytes = archive_bytes.saturating_sub(bytes);
+            total_bytes = total_bytes.saturating_sub(bytes);
             report.archives_evicted += 1;
             report.archive_bytes_freed += bytes;
 
@@ -159,8 +161,19 @@ pub fn reconcile(index: &CacheIndex) -> rusqlite::Result<GcReport> {
         }
     }
 
-    // Phase 2: walk filesystem, remove files not in the index
-    // Walk archives and installed roots
+    // Phase 2: walk filesystem, remove orphan files not in the index
+    // Collect all known relative paths from the index for membership checks
+    let all_entries = index.all_entries()?;
+    let mut known_paths = std::collections::HashSet::new();
+    for entry in &all_entries {
+        if let Some(ref p) = entry.archive_path {
+            known_paths.insert(cache_root.join(p));
+        }
+        if let Some(ref p) = entry.installed_path {
+            known_paths.insert(cache_root.join(p));
+        }
+    }
+
     for phase_root in &[
         super::paths::archives_root(&cache_root),
         super::paths::installed_root(&cache_root),
@@ -169,9 +182,46 @@ pub fn reconcile(index: &CacheIndex) -> rusqlite::Result<GcReport> {
             continue;
         }
         remove_partial_dirs(phase_root, &mut report);
+        remove_orphan_entries(phase_root, &known_paths, &mut report);
     }
 
     Ok(report)
+}
+
+/// Remove leaf directories (version-level) that are not tracked by the index.
+fn remove_orphan_entries(
+    root: &Path,
+    known_paths: &std::collections::HashSet<PathBuf>,
+    report: &mut GcReport,
+) {
+    // Walk two levels: kind/stem/hash/version
+    if let Ok(entries) = walkdir_sync(root) {
+        for path in entries {
+            if !path.is_dir() {
+                continue;
+            }
+            // Skip .partial dirs (handled separately)
+            if path
+                .file_name()
+                .map(|n| n.to_string_lossy().ends_with(".partial"))
+                .unwrap_or(false)
+            {
+                continue;
+            }
+            // Only remove leaf dirs (those with no subdirectories)
+            let has_subdirs = std::fs::read_dir(&path)
+                .map(|rd| rd.filter_map(|e| e.ok()).any(|e| e.path().is_dir()))
+                .unwrap_or(true);
+            if has_subdirs {
+                continue;
+            }
+            // If this leaf dir isn't known to the index, it's an orphan
+            if !known_paths.contains(&path) {
+                let _ = std::fs::remove_dir_all(&path);
+                report.orphan_files_removed += 1;
+            }
+        }
+    }
 }
 
 /// Remove any `.partial` directories (incomplete downloads/installs).
@@ -352,7 +402,7 @@ mod tests {
                 5000,
             )
             .unwrap();
-        idx.pin(entry.id, std::process::id()).unwrap();
+        idx.pin(entry.id, std::process::id(), 1).unwrap();
 
         // Budget is tiny — would normally evict
         let budget = make_budget(100, 100, 200);

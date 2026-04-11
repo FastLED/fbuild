@@ -20,6 +20,26 @@ use std::collections::HashMap;
 use std::future::Future;
 use std::path::{Path, PathBuf};
 
+/// Recursively compute the total size of a directory in bytes.
+fn dir_size(path: &Path) -> u64 {
+    std::fs::read_dir(path)
+        .into_iter()
+        .flatten()
+        .filter_map(|e| e.ok())
+        .map(|e| {
+            let meta = e.metadata().unwrap_or_else(|_| {
+                // Fallback: zero-size if metadata fails
+                std::fs::metadata(e.path()).unwrap_or_else(|_| unreachable!())
+            });
+            if meta.is_dir() {
+                dir_size(&e.path())
+            } else {
+                meta.len()
+            }
+        })
+        .sum()
+}
+
 pub(crate) fn block_on_package_future<F, T>(future: F) -> fbuild_core::Result<T>
 where
     F: Future<Output = fbuild_core::Result<T>>,
@@ -149,6 +169,8 @@ pub struct PackageBase {
     pub cache: Cache,
     /// Cache subdirectory: "toolchains" or "platforms".
     pub cache_subdir: CacheSubdir,
+    /// Optional DiskCache for LRU tracking. Best-effort: `None` if SQLite open fails.
+    disk_cache: Option<DiskCache>,
 }
 
 /// Which cache subdirectory to use.
@@ -156,6 +178,15 @@ pub struct PackageBase {
 pub enum CacheSubdir {
     Toolchains,
     Platforms,
+}
+
+impl From<CacheSubdir> for disk_cache::Kind {
+    fn from(subdir: CacheSubdir) -> Self {
+        match subdir {
+            CacheSubdir::Toolchains => disk_cache::Kind::Toolchains,
+            CacheSubdir::Platforms => disk_cache::Kind::Platforms,
+        }
+    }
 }
 
 impl PackageBase {
@@ -168,14 +199,17 @@ impl PackageBase {
         cache_subdir: CacheSubdir,
         project_dir: &Path,
     ) -> Self {
+        let cache = Cache::new(project_dir);
+        let disk_cache = DiskCache::open().ok();
         Self {
             name: name.to_string(),
             version: version.to_string(),
             url: url.to_string(),
             cache_key: cache_key.to_string(),
             checksum: checksum.map(|s| s.to_string()),
-            cache: Cache::new(project_dir),
+            cache,
             cache_subdir,
+            disk_cache,
         }
     }
 
@@ -191,6 +225,7 @@ impl PackageBase {
         project_dir: &Path,
         cache_root: &Path,
     ) -> Self {
+        let disk_cache = DiskCache::open_at(cache_root).ok();
         Self {
             name: name.to_string(),
             version: version.to_string(),
@@ -199,6 +234,7 @@ impl PackageBase {
             checksum: checksum.map(|s| s.to_string()),
             cache: Cache::with_cache_root(project_dir, cache_root),
             cache_subdir,
+            disk_cache,
         }
     }
 
@@ -213,9 +249,42 @@ impl PackageBase {
     }
 
     /// Check if already installed in cache.
+    /// On a cache hit, bumps the LRU timestamp in the DiskCache index.
     pub fn is_cached(&self) -> bool {
         let path = self.install_path();
-        path.exists() && path.is_dir()
+        let cached = path.exists() && path.is_dir();
+        if cached {
+            self.touch_disk_cache();
+        }
+        cached
+    }
+
+    /// Best-effort LRU touch in the DiskCache index.
+    fn touch_disk_cache(&self) {
+        if let Some(ref dc) = self.disk_cache {
+            let kind = self.cache_subdir.into();
+            if let Ok(Some(entry)) = dc.lookup(kind, &self.cache_key, &self.version) {
+                let _ = dc.touch(&entry);
+            }
+        }
+    }
+
+    /// Best-effort: record a completed install in the DiskCache index.
+    fn record_install_in_disk_cache(&self, install_path: &Path) {
+        if let Some(ref dc) = self.disk_cache {
+            let kind = self.cache_subdir.into();
+            let installed_bytes = dir_size(install_path) as i64;
+            let rel_path = install_path
+                .strip_prefix(dc.cache_root())
+                .unwrap_or(install_path);
+            let _ = dc.record_install(
+                kind,
+                &self.cache_key,
+                &self.version,
+                &rel_path.to_string_lossy(),
+                installed_bytes,
+            );
+        }
     }
 
     /// Download and install with staged directory pattern.
@@ -283,6 +352,18 @@ impl PackageBase {
         std::fs::rename(&staging_path, &install_path).map_err(|e| {
             fbuild_core::FbuildError::PackageError(format!("failed to commit installation: {}", e))
         })?;
+
+        // Write sentinel so GC reconciliation recognizes this as a complete install
+        let sentinel = disk_cache::paths::install_complete_sentinel(&install_path);
+        std::fs::write(&sentinel, b"").map_err(|e| {
+            fbuild_core::FbuildError::PackageError(format!(
+                "failed to write install sentinel: {}",
+                e
+            ))
+        })?;
+
+        // Best-effort: record in DiskCache index for LRU tracking
+        self.record_install_in_disk_cache(&install_path);
 
         tracing::info!("installed {} v{}", self.name, self.version);
         Ok(install_path)

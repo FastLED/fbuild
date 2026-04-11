@@ -64,6 +64,12 @@ pub fn stem_and_hash(url: &str) -> (String, String) {
     (url_stem(url), hash_url(url))
 }
 
+/// Sanitize a path component to prevent directory traversal.
+/// Strips path separators, `.` and `..` sequences, and null bytes.
+fn sanitize_component(s: &str) -> String {
+    s.replace(['/', '\\', '\0'], "_").replace("..", "_")
+}
+
 /// Root of the archives phase: `{cache_root}/archives/`
 pub fn archives_root(cache_root: &Path) -> PathBuf {
     cache_root.join("archives")
@@ -87,42 +93,46 @@ pub fn gc_lock_path(cache_root: &Path) -> PathBuf {
 /// Archive entry path: `{cache_root}/archives/{kind}/{stem}/{hash}/{version}/`
 pub fn archive_entry_dir(cache_root: &Path, kind: Kind, url: &str, version: &str) -> PathBuf {
     let (stem, hash) = stem_and_hash(url);
+    let safe_version = sanitize_component(version);
     archives_root(cache_root)
         .join(kind.as_str())
         .join(stem)
         .join(hash)
-        .join(version)
+        .join(safe_version)
 }
 
 /// Staging path for an in-progress archive download.
 /// Uses `.partial` suffix so reconciliation can identify incomplete downloads.
 pub fn archive_staging_dir(cache_root: &Path, kind: Kind, url: &str, version: &str) -> PathBuf {
     let (stem, hash) = stem_and_hash(url);
+    let safe_version = sanitize_component(version);
     archives_root(cache_root)
         .join(kind.as_str())
         .join(stem)
         .join(hash)
-        .join(format!("{}.partial", version))
+        .join(format!("{}.partial", safe_version))
 }
 
 /// Installed entry path: `{cache_root}/installed/{kind}/{stem}/{hash}/{version}/`
 pub fn installed_entry_dir(cache_root: &Path, kind: Kind, url: &str, version: &str) -> PathBuf {
     let (stem, hash) = stem_and_hash(url);
+    let safe_version = sanitize_component(version);
     installed_root(cache_root)
         .join(kind.as_str())
         .join(stem)
         .join(hash)
-        .join(version)
+        .join(safe_version)
 }
 
 /// Staging path for an in-progress extraction.
 pub fn install_staging_dir(cache_root: &Path, kind: Kind, url: &str, version: &str) -> PathBuf {
     let (stem, hash) = stem_and_hash(url);
+    let safe_version = sanitize_component(version);
     installed_root(cache_root)
         .join(kind.as_str())
         .join(stem)
         .join(hash)
-        .join(format!("{}.partial", version))
+        .join(format!("{}.partial", safe_version))
 }
 
 /// Sentinel file that marks a completed installation.
@@ -219,5 +229,40 @@ mod tests {
         let (stem, hash) = stem_and_hash(url);
         assert_eq!(stem, url_stem(url));
         assert_eq!(hash, hash_url(url));
+    }
+
+    #[test]
+    fn test_version_traversal_sanitized() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let root = tmp.path();
+        let url = "https://example.com/pkg";
+
+        // Path traversal attempt should be sanitized
+        let dir = archive_entry_dir(root, Kind::Packages, url, "../../etc/passwd");
+        let dir_str = dir.to_string_lossy();
+        assert!(
+            !dir_str.contains(".."),
+            "path traversal not sanitized: {}",
+            dir_str
+        );
+        // Ensure the path stays under the cache root
+        assert!(
+            dir.starts_with(root),
+            "path escaped cache root: {}",
+            dir_str
+        );
+
+        // Backslash traversal
+        let dir = installed_entry_dir(root, Kind::Packages, url, r"1.0\..\..\etc");
+        let dir_str = dir.to_string_lossy();
+        assert!(
+            !dir_str.contains(".."),
+            "backslash traversal not sanitized: {}",
+            dir_str
+        );
+
+        // Normal versions are unchanged
+        let dir = archive_entry_dir(root, Kind::Packages, url, "1.2.3");
+        assert!(dir.to_string_lossy().contains("1.2.3"));
     }
 }

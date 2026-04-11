@@ -135,10 +135,12 @@ impl CacheIndex {
                 ON entries(last_used_at) WHERE archive_path IS NOT NULL;
 
             CREATE TABLE IF NOT EXISTS leases (
-                entry_id    INTEGER NOT NULL REFERENCES entries(id) ON DELETE CASCADE,
-                holder_pid  INTEGER NOT NULL,
-                acquired_at INTEGER NOT NULL,
-                PRIMARY KEY(entry_id, holder_pid)
+                entry_id     INTEGER NOT NULL REFERENCES entries(id) ON DELETE CASCADE,
+                holder_pid   INTEGER NOT NULL,
+                holder_nonce INTEGER NOT NULL DEFAULT 0,
+                refcount     INTEGER NOT NULL DEFAULT 1,
+                acquired_at  INTEGER NOT NULL,
+                PRIMARY KEY(entry_id, holder_pid, holder_nonce)
             );",
         )?;
 
@@ -290,29 +292,46 @@ impl CacheIndex {
     }
 
     /// Increment the pinned count for an entry (lease acquired).
-    pub fn pin(&self, entry_id: i64, holder_pid: u32) -> rusqlite::Result<()> {
+    /// Uses a per-(PID, nonce) refcount so multiple `Lease` guards in the same
+    /// process correctly track independent pins.
+    pub fn pin(&self, entry_id: i64, holder_pid: u32, holder_nonce: u64) -> rusqlite::Result<()> {
         let now = Self::now_epoch();
         let conn = self.conn.lock().unwrap();
-        conn.execute(
-            "INSERT OR IGNORE INTO leases (entry_id, holder_pid, acquired_at) VALUES (?1, ?2, ?3)",
-            params![entry_id, holder_pid as i64, now],
+        let updated = conn.execute(
+            "UPDATE leases SET refcount = refcount + 1
+             WHERE entry_id = ?1 AND holder_pid = ?2 AND holder_nonce = ?3",
+            params![entry_id, holder_pid as i64, holder_nonce as i64],
         )?;
+        if updated == 0 {
+            conn.execute(
+                "INSERT INTO leases (entry_id, holder_pid, holder_nonce, refcount, acquired_at)
+                 VALUES (?1, ?2, ?3, 1, ?4)",
+                params![entry_id, holder_pid as i64, holder_nonce as i64, now],
+            )?;
+        }
         conn.execute(
-            "UPDATE entries SET pinned = (SELECT COUNT(*) FROM leases WHERE entry_id = ?1) WHERE id = ?1",
+            "UPDATE entries SET pinned = (SELECT COALESCE(SUM(refcount), 0) FROM leases WHERE entry_id = ?1) WHERE id = ?1",
             params![entry_id],
         )?;
         Ok(())
     }
 
     /// Decrement the pinned count for an entry (lease released).
-    pub fn unpin(&self, entry_id: i64, holder_pid: u32) -> rusqlite::Result<()> {
+    /// Decrements refcount; removes the row when it reaches zero.
+    pub fn unpin(&self, entry_id: i64, holder_pid: u32, holder_nonce: u64) -> rusqlite::Result<()> {
         let conn = self.conn.lock().unwrap();
         conn.execute(
-            "DELETE FROM leases WHERE entry_id = ?1 AND holder_pid = ?2",
-            params![entry_id, holder_pid as i64],
+            "UPDATE leases SET refcount = refcount - 1
+             WHERE entry_id = ?1 AND holder_pid = ?2 AND holder_nonce = ?3",
+            params![entry_id, holder_pid as i64, holder_nonce as i64],
         )?;
         conn.execute(
-            "UPDATE entries SET pinned = (SELECT COUNT(*) FROM leases WHERE entry_id = ?1) WHERE id = ?1",
+            "DELETE FROM leases
+             WHERE entry_id = ?1 AND holder_pid = ?2 AND holder_nonce = ?3 AND refcount <= 0",
+            params![entry_id, holder_pid as i64, holder_nonce as i64],
+        )?;
+        conn.execute(
+            "UPDATE entries SET pinned = (SELECT COALESCE(SUM(refcount), 0) FROM leases WHERE entry_id = ?1) WHERE id = ?1",
             params![entry_id],
         )?;
         Ok(())
@@ -643,7 +662,7 @@ mod tests {
             .unwrap();
         assert_eq!(entry.pinned, 0);
 
-        idx.pin(entry.id, 12345).unwrap();
+        idx.pin(entry.id, 12345, 1).unwrap();
         let entry = idx
             .lookup(Kind::Packages, "https://example.com/a", "1.0")
             .unwrap()
@@ -651,7 +670,7 @@ mod tests {
         assert_eq!(entry.pinned, 1);
 
         // Pin with another PID
-        idx.pin(entry.id, 67890).unwrap();
+        idx.pin(entry.id, 67890, 2).unwrap();
         let entry = idx
             .lookup(Kind::Packages, "https://example.com/a", "1.0")
             .unwrap()
@@ -659,7 +678,7 @@ mod tests {
         assert_eq!(entry.pinned, 2);
 
         // Unpin one
-        idx.unpin(entry.id, 12345).unwrap();
+        idx.unpin(entry.id, 12345, 1).unwrap();
         let entry = idx
             .lookup(Kind::Packages, "https://example.com/a", "1.0")
             .unwrap()
@@ -692,7 +711,7 @@ mod tests {
             .unwrap();
 
         // Pin e1
-        idx.pin(e1.id, 99999).unwrap();
+        idx.pin(e1.id, 99999, 1).unwrap();
 
         // LRU should only return e2 (unpinned)
         let lru = idx.lru_installed_entries(10).unwrap();
