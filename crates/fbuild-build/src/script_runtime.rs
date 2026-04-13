@@ -304,7 +304,12 @@ mod tests {
         )
         .unwrap();
         assert_eq!(flags[0], "-lm");
-        assert!(flags[1].ends_with("/tmp/project/libs/foo.a"));
+        assert_eq!(
+            flags[1],
+            absolutize_if_relative(project_dir, "libs/foo.a")
+                .to_string_lossy()
+                .to_string()
+        );
     }
 
     #[test]
@@ -326,9 +331,10 @@ mod tests {
         let overlay = scope_to_compile_overlay(project_dir, &scope).unwrap();
         assert!(overlay.common.contains(&"-DFOO".to_string()));
         assert!(overlay.common.contains(&"-DBAR=1".to_string()));
-        assert!(overlay
-            .common
-            .contains(&"-I/tmp/project/include".to_string()));
+        assert!(overlay.common.contains(&format!(
+            "-I{}",
+            absolutize_if_relative(project_dir, "include").display()
+        )));
         assert!(overlay.common.contains(&"-Wall".to_string()));
         assert_eq!(overlay.c, vec!["-std=c11"]);
         assert_eq!(overlay.cxx, vec!["-std=gnu++20"]);
@@ -350,8 +356,16 @@ mod tests {
 
         let overlay = scope_to_link_overlay(project_dir, &scope).unwrap();
         assert!(overlay.flags.contains(&"-Wl,--gc-sections".to_string()));
-        assert!(overlay.flags.contains(&"-L/tmp/project/lib".to_string()));
+        assert!(overlay.flags.contains(&format!(
+            "-L{}",
+            absolutize_if_relative(project_dir, "lib").display()
+        )));
         assert_eq!(overlay.libs[0], "-lm");
-        assert!(overlay.libs[1].ends_with("/tmp/project/archives/foo.a"));
+        assert_eq!(
+            overlay.libs[1],
+            absolutize_if_relative(project_dir, "archives/foo.a")
+                .to_string_lossy()
+                .to_string()
+        );
     }
 }
