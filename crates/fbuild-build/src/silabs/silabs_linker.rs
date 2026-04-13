@@ -9,7 +9,7 @@ use fbuild_core::subprocess::run_command;
 use fbuild_core::{BuildProfile, Result, SizeInfo};
 
 use super::mcu_config::SilabsMcuConfig;
-use crate::linker::Linker;
+use crate::linker::{LinkExtraArgs, Linker};
 
 /// Silicon Labs-specific linker using arm-none-eabi-gcc (link driver), ar, objcopy, size.
 pub struct SilabsLinker {
@@ -70,6 +70,7 @@ impl Linker for SilabsLinker {
         objects: &[PathBuf],
         archives: &[PathBuf],
         output_dir: &Path,
+        extra: &LinkExtraArgs,
     ) -> Result<PathBuf> {
         std::fs::create_dir_all(output_dir)?;
         let elf_path = output_dir.join("firmware.elf");
@@ -83,6 +84,7 @@ impl Linker for SilabsLinker {
         if let Some(profile) = self.mcu_config.get_profile(self.profile.as_dir_name()) {
             args.extend(profile.link_flags.iter().cloned());
         }
+        args.extend(extra.flags.iter().cloned());
 
         args.extend([
             format!("-T{}", self.linker_script_path.display()),
@@ -108,6 +110,7 @@ impl Linker for SilabsLinker {
 
         args.push("-Wl,--start-group".to_string());
         args.extend(self.mcu_config.linker_libs.iter().cloned());
+        args.extend(extra.libs.iter().cloned());
         for archive in &self.precompiled_libs {
             args.push(archive.to_string_lossy().to_string());
         }

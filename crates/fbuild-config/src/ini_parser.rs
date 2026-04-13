@@ -161,6 +161,18 @@ impl PlatformIOConfig {
         }
     }
 
+    /// Get `extra_scripts` for an environment.
+    ///
+    /// PlatformIO treats entries without an explicit prefix as POST scripts.
+    /// Values may be provided comma-separated or as a multi-line list.
+    pub fn get_extra_scripts(&self, env_name: &str) -> fbuild_core::Result<Vec<String>> {
+        let config = self.get_env_config(env_name)?;
+        match config.get("extra_scripts") {
+            Some(scripts) => Ok(parse_list_values(scripts)),
+            None => Ok(Vec::new()),
+        }
+    }
+
     /// Get `board_build.embed_files` for an environment (binary files to embed).
     pub fn get_embed_files(&self, env_name: &str) -> fbuild_core::Result<Vec<String>> {
         let overrides = self.get_board_overrides(env_name)?;
@@ -644,6 +656,22 @@ fn parse_lib_deps(deps_str: &str) -> Vec<String> {
     result
 }
 
+/// Parse a generic multi-value option from a multi-line or comma-separated string.
+fn parse_list_values(value: &str) -> Vec<String> {
+    let mut result = Vec::new();
+
+    for line in value.lines() {
+        for item in line.split(',') {
+            let trimmed = item.trim();
+            if !trimmed.is_empty() {
+                result.push(trimmed.to_string());
+            }
+        }
+    }
+
+    result
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -804,6 +832,31 @@ build_flags = -D FOO -D BAR
         let config = PlatformIOConfig::from_path(f.path()).unwrap();
         let flags = config.get_build_flags("uno").unwrap();
         assert_eq!(flags, vec!["-DFOO", "-DBAR"]);
+    }
+
+    #[test]
+    fn test_get_extra_scripts_multiline_and_comma_separated() {
+        let f = write_ini(
+            "\
+[env:uno]
+platform = atmelavr
+board = uno
+framework = arduino
+extra_scripts =
+    pre:scripts/pre.py, scripts/post.py
+    post:scripts/after.py
+",
+        );
+        let config = PlatformIOConfig::from_path(f.path()).unwrap();
+        let scripts = config.get_extra_scripts("uno").unwrap();
+        assert_eq!(
+            scripts,
+            vec![
+                "pre:scripts/pre.py",
+                "scripts/post.py",
+                "post:scripts/after.py"
+            ]
+        );
     }
 
     #[test]

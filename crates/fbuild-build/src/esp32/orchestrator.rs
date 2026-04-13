@@ -29,6 +29,7 @@ use crate::build_fingerprint::{
     hash_watch_set_stamps, load_json, normalize_path, save_json, stable_hash_json,
     PersistedBuildFingerprint, BUILD_FINGERPRINT_VERSION,
 };
+use crate::flag_overlay::LanguageExtraFlags;
 use crate::linker::LinkerScripts;
 use crate::zccache::FingerprintWatch;
 
@@ -503,6 +504,26 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let mut user_build_flags = ctx.config.get_build_flags(&params.env_name)?;
         user_build_flags.extend(params.extra_build_flags.clone());
         user_flags.extend(user_build_flags.clone());
+        let user_overlay = LanguageExtraFlags {
+            common: user_flags
+                .iter()
+                .cloned()
+                .chain(ctx.global_compile_overlay.common.iter().cloned())
+                .collect(),
+            c: ctx.global_compile_overlay.c.clone(),
+            cxx: ctx.global_compile_overlay.cxx.clone(),
+            asm: ctx.global_compile_overlay.asm.clone(),
+        };
+        let src_overlay = LanguageExtraFlags::combined(&[
+            &user_overlay,
+            &LanguageExtraFlags {
+                common: ctx.src_flags.clone(),
+                c: Vec::new(),
+                cxx: Vec::new(),
+                asm: Vec::new(),
+            },
+            &ctx.project_compile_overlay,
+        ]);
 
         // Emit a warning if CDC on boot is effectively enabled (may cause Serial to block
         // when no USB host is connected).
@@ -533,8 +554,9 @@ impl BuildOrchestrator for Esp32Orchestrator {
             );
             // Apply user build_flags to library compilation (matching PlatformIO behavior).
             // User flags like -std=gnu++2a replace the MCU config's -std=gnu++2b.
-            let c_flags = apply_user_flags(&temp_compiler.c_flags(), &user_flags);
-            let cpp_flags = apply_user_flags(&temp_compiler.cpp_flags(), &user_flags);
+            let c_flags = apply_overlay_flags(&temp_compiler.c_flags(), &user_overlay, "dummy.c");
+            let cpp_flags =
+                apply_overlay_flags(&temp_compiler.cpp_flags(), &user_overlay, "dummy.cpp");
 
             let jobs = crate::parallel::effective_jobs(params.jobs);
             // Use gcc-ar for LTO archives so the linker-plugin index is written.
@@ -594,8 +616,9 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 params.verbose,
                 build_dir.join("tmp"),
             );
-            let p_c_flags = apply_user_flags(&p_compiler.c_flags(), &user_flags);
-            let p_cpp_flags = apply_user_flags(&p_compiler.cpp_flags(), &user_flags);
+            let p_c_flags = apply_overlay_flags(&p_compiler.c_flags(), &src_overlay, "dummy.c");
+            let p_cpp_flags =
+                apply_overlay_flags(&p_compiler.cpp_flags(), &src_overlay, "dummy.cpp");
 
             // Collect lib/* names so the helper can detect collisions with project-as-library.
             let mut existing_lib_names = std::collections::HashSet::new();
@@ -677,8 +700,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
                     params.verbose,
                     build_dir.join("tmp"),
                 );
-                let fw_c_flags = apply_user_flags(&fw_compiler.c_flags(), &user_flags);
-                let fw_cpp_flags = apply_user_flags(&fw_compiler.cpp_flags(), &user_flags);
+                let fw_c_flags =
+                    apply_overlay_flags(&fw_compiler.c_flags(), &user_overlay, "dummy.c");
+                let fw_cpp_flags =
+                    apply_overlay_flags(&fw_compiler.cpp_flags(), &user_overlay, "dummy.cpp");
                 let fw_signature = framework_signature(&include_dirs, &fw_c_flags, &fw_cpp_flags);
 
                 let mut fw_lib_count = 0;
@@ -836,10 +861,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
         all_core_sources.extend(sources.core_sources.iter().cloned());
         all_core_sources.extend(sources.variant_sources.iter().cloned());
 
-        let src_flags = ctx.config.get_build_src_flags(&params.env_name)?;
-        let all_src_flags: Vec<String> =
-            user_flags.iter().chain(src_flags.iter()).cloned().collect();
-
         // Precompute values needed for compile_commands.json in both paths
         let include_flags = compiler.base.build_include_flags();
         let arch = if mcu_config.is_xtensa() {
@@ -856,8 +877,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 &compiler.c_flags(),
                 &compiler.cpp_flags(),
                 &include_flags,
-                &user_flags,
-                &all_src_flags,
+                &user_overlay,
+                &src_overlay,
                 &all_core_sources,
                 &sources.sketch_sources,
                 core_build_dir,
@@ -889,7 +910,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &compiler,
             &all_core_sources,
             core_build_dir,
-            &user_flags,
+            &user_overlay,
             jobs,
             Some(&build_log_mutex),
         )?;
@@ -899,7 +920,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &compiler,
             &sources.sketch_sources,
             src_build_dir,
-            &all_src_flags,
+            &src_overlay,
             jobs,
             Some(&build_log_mutex),
         )?;
@@ -947,8 +968,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
                     // Use gcc-ar for LTO archives so the linker-plugin index is written.
                     let local_ar_path = toolchain.get_ar_path();
                     let local_gcc_ar_path = toolchain.get_gcc_ar_path();
-                    let local_c_flags = apply_user_flags(&compiler.c_flags(), &all_src_flags);
-                    let local_cpp_flags = apply_user_flags(&compiler.cpp_flags(), &all_src_flags);
+                    let local_c_flags =
+                        apply_overlay_flags(&compiler.c_flags(), &src_overlay, "dummy.c");
+                    let local_cpp_flags =
+                        apply_overlay_flags(&compiler.cpp_flags(), &src_overlay, "dummy.cpp");
                     let local_lib_ar_path = crate::pipeline::pick_archiver(
                         &local_ar_path,
                         &local_gcc_ar_path,
@@ -1017,8 +1040,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &compiler.c_flags(),
             &compiler.cpp_flags(),
             &include_flags,
-            &user_flags,
-            &all_src_flags,
+            &user_overlay,
+            &src_overlay,
             &all_core_sources,
             &sources.sketch_sources,
             core_build_dir,
@@ -1055,6 +1078,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &sketch_objects,
             &all_archives,
             build_dir,
+            &crate::linker::LinkExtraArgs {
+                flags: ctx.overlay_link_flags.clone(),
+                libs: ctx.overlay_link_libs.clone(),
+            },
             params.symbol_analysis,
         )?;
 
@@ -1273,6 +1300,14 @@ fn apply_user_flags(base_flags: &[String], user_flags: &[String]) -> Vec<String>
         result.push(flag.clone());
     }
     result
+}
+
+fn apply_overlay_flags(
+    base_flags: &[String],
+    overlay: &LanguageExtraFlags,
+    probe_name: &str,
+) -> Vec<String> {
+    apply_user_flags(base_flags, &overlay.for_source(Path::new(probe_name)))
 }
 
 fn define_flag_name(flag: &str) -> Option<&str> {

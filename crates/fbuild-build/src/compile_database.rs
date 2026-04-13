@@ -8,6 +8,8 @@ use std::path::{Path, PathBuf};
 
 use fbuild_core::Result;
 
+use crate::flag_overlay::LanguageExtraFlags;
+
 /// A single entry in the compile database.
 #[derive(Debug, Clone, serde::Serialize)]
 pub struct CompileEntry {
@@ -355,7 +357,7 @@ pub fn generate_entries(
     c_flags: &[String],
     cpp_flags: &[String],
     include_flags: &[String],
-    extra_flags: &[String],
+    extra_flags: &LanguageExtraFlags,
     sources: &[PathBuf],
     build_dir: &Path,
     project_dir: &Path,
@@ -377,13 +379,15 @@ pub fn generate_entries(
             };
 
             let obj = crate::compiler::CompilerBase::object_path(source, build_dir);
+            let source_extra_flags = extra_flags.for_source(source);
 
-            let mut arguments =
-                Vec::with_capacity(1 + flags.len() + include_flags.len() + extra_flags.len() + 4);
+            let mut arguments = Vec::with_capacity(
+                1 + flags.len() + include_flags.len() + source_extra_flags.len() + 4,
+            );
             arguments.push(compiler.to_string_lossy().to_string());
             arguments.extend(flags.iter().cloned());
             arguments.extend(include_flags.iter().cloned());
-            arguments.extend(extra_flags.iter().cloned());
+            arguments.extend(source_extra_flags);
             arguments.push("-c".to_string());
             arguments.push(source.to_string_lossy().to_string());
             arguments.push("-o".to_string());
@@ -402,6 +406,36 @@ pub fn generate_entries(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[allow(clippy::too_many_arguments)]
+    fn generate_entries(
+        gcc_path: &Path,
+        gxx_path: &Path,
+        c_flags: &[String],
+        cpp_flags: &[String],
+        include_flags: &[String],
+        extra_flags: &[String],
+        sources: &[PathBuf],
+        build_dir: &Path,
+        project_dir: &Path,
+    ) -> Vec<CompileEntry> {
+        super::generate_entries(
+            gcc_path,
+            gxx_path,
+            c_flags,
+            cpp_flags,
+            include_flags,
+            &LanguageExtraFlags {
+                common: extra_flags.to_vec(),
+                c: Vec::new(),
+                cxx: Vec::new(),
+                asm: Vec::new(),
+            },
+            sources,
+            build_dir,
+            project_dir,
+        )
+    }
 
     // --- Serialization tests ---
 

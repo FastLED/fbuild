@@ -9,7 +9,7 @@ use fbuild_core::subprocess::run_command;
 use fbuild_core::{BuildProfile, Result, SizeInfo};
 
 use super::mcu_config::TeensyMcuConfig;
-use crate::linker::{Linker, LinkerScripts};
+use crate::linker::{LinkExtraArgs, Linker, LinkerScripts};
 
 /// Teensy-specific linker using arm-none-eabi-gcc (link driver), ar, objcopy, size.
 pub struct TeensyLinker {
@@ -64,6 +64,7 @@ impl Linker for TeensyLinker {
         objects: &[PathBuf],
         archives: &[PathBuf],
         output_dir: &Path,
+        extra: &LinkExtraArgs,
     ) -> Result<PathBuf> {
         std::fs::create_dir_all(output_dir)?;
         let elf_path = output_dir.join("firmware.elf");
@@ -77,6 +78,7 @@ impl Linker for TeensyLinker {
         if let Some(profile) = self.mcu_config.get_profile(self.profile.as_dir_name()) {
             args.extend(profile.link_flags.iter().cloned());
         }
+        args.extend(extra.flags.iter().cloned());
 
         args.extend(self.linker_scripts.to_args());
         args.extend(["-o".to_string(), elf_path.to_string_lossy().to_string()]);
@@ -93,6 +95,7 @@ impl Linker for TeensyLinker {
 
         // Linker libraries from config
         args.extend(self.mcu_config.linker_libs.iter().cloned());
+        args.extend(extra.libs.iter().cloned());
 
         if self.verbose {
             tracing::info!("link: {}", args.join(" "));

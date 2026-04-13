@@ -14,7 +14,7 @@ use fbuild_core::subprocess::run_command;
 use fbuild_core::{BuildProfile, Result, SizeInfo};
 
 use super::mcu_config::Esp8266McuConfig;
-use crate::linker::{Linker, LinkerScripts};
+use crate::linker::{LinkExtraArgs, Linker, LinkerScripts};
 
 /// ESP8266-specific linker using Xtensa LX106 GCC as the link driver.
 pub struct Esp8266Linker {
@@ -140,6 +140,7 @@ impl Linker for Esp8266Linker {
         objects: &[PathBuf],
         archives: &[PathBuf],
         output_dir: &Path,
+        extra: &LinkExtraArgs,
     ) -> Result<PathBuf> {
         std::fs::create_dir_all(output_dir)?;
 
@@ -184,6 +185,7 @@ impl Linker for Esp8266Linker {
         if let Some(profile) = self.mcu_config.profiles.get(self.profile.as_dir_name()) {
             args.extend(profile.link_flags.iter().cloned());
         }
+        args.extend(extra.flags.iter().cloned());
 
         // Build output dir — contains generated local.eagle.app.v6.common.ld
         args.push(format!("-L{}", output_dir.to_string_lossy()));
@@ -210,6 +212,7 @@ impl Linker for Esp8266Linker {
             args.push(archive.to_string_lossy().to_string());
         }
         args.extend(self.mcu_config.linker_libs.iter().cloned());
+        args.extend(extra.libs.iter().cloned());
         args.push("-Wl,--end-group".to_string());
 
         if self.verbose {

@@ -10,6 +10,7 @@ use fbuild_core::{BuildLog, Result};
 
 use crate::compile_database::{self, CompileDatabase, TargetArchitecture};
 use crate::compiler::Compiler;
+use crate::flag_overlay::LanguageExtraFlags;
 use crate::linker::LinkResult;
 use crate::source_scanner::SourceCollection;
 use crate::{BuildParams, BuildResult};
@@ -29,6 +30,10 @@ pub struct BuildContext {
     pub user_flags: Vec<String>,
     pub src_flags: Vec<String>,
     pub all_src_flags: Vec<String>,
+    pub global_compile_overlay: LanguageExtraFlags,
+    pub project_compile_overlay: LanguageExtraFlags,
+    pub overlay_link_flags: Vec<String>,
+    pub overlay_link_libs: Vec<String>,
 }
 
 impl BuildContext {
@@ -49,6 +54,8 @@ impl BuildContext {
         let config =
             fbuild_config::PlatformIOConfig::from_path_with_overrides(&ini_path, pio_overrides)?;
         let env_config = config.get_env_config(env_name)?;
+        let overlay =
+            crate::script_runtime::resolve_extra_script_overlay(project_dir, env_name, &config)?;
 
         // 2. Load board config
         let board_id = env_config.get("board").ok_or_else(|| {
@@ -75,6 +82,9 @@ impl BuildContext {
             board.max_flash,
             board.max_ram,
         );
+        for note in &overlay.notes {
+            build_log.push(format!("extra_scripts: {}", note));
+        }
 
         // 4. Setup build directories
         let cache = fbuild_packages::Cache::new(project_dir);
@@ -121,6 +131,10 @@ impl BuildContext {
             user_flags,
             src_flags,
             all_src_flags,
+            global_compile_overlay: overlay.global_compile,
+            project_compile_overlay: overlay.project_compile,
+            overlay_link_flags: overlay.link.flags,
+            overlay_link_libs: overlay.link.libs,
         })
     }
 }
@@ -185,7 +199,7 @@ pub fn compile_sources(
     compiler: &dyn Compiler,
     sources: &[PathBuf],
     build_dir: &Path,
-    extra_flags: &[String],
+    extra_flags: &LanguageExtraFlags,
     jobs: usize,
     build_log: &std::sync::Mutex<BuildLog>,
 ) -> Result<Vec<PathBuf>> {
@@ -215,7 +229,7 @@ pub fn compile_local_libraries(
     compiler: &dyn Compiler,
     project_dir: &Path,
     build_dir: &Path,
-    extra_flags: &[String],
+    extra_flags: &LanguageExtraFlags,
     jobs: usize,
     build_log: &std::sync::Mutex<BuildLog>,
 ) -> Result<Vec<PathBuf>> {
@@ -287,8 +301,8 @@ pub fn generate_compile_db(
     c_flags: &[String],
     cpp_flags: &[String],
     include_flags: &[String],
-    user_flags: &[String],
-    all_src_flags: &[String],
+    user_flags: &LanguageExtraFlags,
+    all_src_flags: &LanguageExtraFlags,
     core_sources: &[PathBuf],
     sketch_sources: &[PathBuf],
     core_build_dir: &Path,
@@ -461,6 +475,27 @@ pub fn run_sequential_build_with_libs(
         .chain(sources.variant_sources.iter())
         .cloned()
         .collect();
+    let user_overlay = LanguageExtraFlags {
+        common: ctx
+            .user_flags
+            .iter()
+            .cloned()
+            .chain(ctx.global_compile_overlay.common.iter().cloned())
+            .collect(),
+        c: ctx.global_compile_overlay.c.clone(),
+        cxx: ctx.global_compile_overlay.cxx.clone(),
+        asm: ctx.global_compile_overlay.asm.clone(),
+    };
+    let src_overlay = LanguageExtraFlags::combined(&[
+        &user_overlay,
+        &LanguageExtraFlags {
+            common: ctx.src_flags.clone(),
+            c: Vec::new(),
+            cxx: Vec::new(),
+            asm: Vec::new(),
+        },
+        &ctx.project_compile_overlay,
+    ]);
 
     // compiledb_only: generate compile_commands.json without compiling
     if params.compiledb_only {
@@ -470,8 +505,8 @@ pub fn run_sequential_build_with_libs(
             &compiler.c_flags(),
             &compiler.cpp_flags(),
             &[],
-            &ctx.user_flags,
-            &ctx.all_src_flags,
+            &user_overlay,
+            &src_overlay,
             &core_and_variant,
             &sources.sketch_sources,
             &ctx.core_build_dir,
@@ -506,7 +541,7 @@ pub fn run_sequential_build_with_libs(
         compiler,
         &sources.core_sources,
         &ctx.core_build_dir,
-        &ctx.user_flags,
+        &user_overlay,
         jobs,
         &build_log_mutex,
     )?;
@@ -514,7 +549,7 @@ pub fn run_sequential_build_with_libs(
         compiler,
         &sources.variant_sources,
         &ctx.core_build_dir,
-        &ctx.user_flags,
+        &user_overlay,
         jobs,
         &build_log_mutex,
     )?;
@@ -525,7 +560,7 @@ pub fn run_sequential_build_with_libs(
         compiler,
         &sources.sketch_sources,
         &ctx.src_build_dir,
-        &ctx.all_src_flags,
+        &src_overlay,
         jobs,
         &build_log_mutex,
     )?;
@@ -535,7 +570,7 @@ pub fn run_sequential_build_with_libs(
         compiler,
         &params.project_dir,
         &ctx.build_dir,
-        &ctx.all_src_flags,
+        &src_overlay,
         jobs,
         &build_log_mutex,
     )?;
@@ -581,8 +616,8 @@ pub fn run_sequential_build_with_libs(
         &compiler.c_flags(),
         &compiler.cpp_flags(),
         &[],
-        &ctx.user_flags,
-        &ctx.all_src_flags,
+        &user_overlay,
+        &src_overlay,
         &core_and_variant,
         &sources.sketch_sources,
         &ctx.core_build_dir,
@@ -605,6 +640,10 @@ pub fn run_sequential_build_with_libs(
         &sketch_objects,
         &core_objects,
         &ctx.build_dir,
+        &crate::linker::LinkExtraArgs {
+            flags: ctx.overlay_link_flags.clone(),
+            libs: ctx.overlay_link_libs.clone(),
+        },
         params.symbol_analysis,
     )?;
 

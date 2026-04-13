@@ -16,7 +16,7 @@ use fbuild_core::{BuildProfile, Result, SizeInfo};
 use crate::build_fingerprint::{
     load_json, save_json, BinArtifactCache, FileStamp, SizeArtifactCache, BUILD_FINGERPRINT_VERSION,
 };
-use crate::linker::{Linker, LinkerScripts};
+use crate::linker::{LinkExtraArgs, Linker, LinkerScripts};
 
 use super::mcu_config::Esp32McuConfig;
 
@@ -241,6 +241,7 @@ impl Linker for Esp32Linker {
         objects: &[PathBuf],
         archives: &[PathBuf],
         output_dir: &Path,
+        extra: &LinkExtraArgs,
     ) -> Result<PathBuf> {
         std::fs::create_dir_all(output_dir)?;
         let elf_path = output_dir.join("firmware.elf");
@@ -252,6 +253,7 @@ impl Linker for Esp32Linker {
 
         // Linker flags (from SDK flags/ld_flags or MCU config fallback)
         link_args.extend(self.linker_flags());
+        link_args.extend(extra.flags.iter().cloned());
 
         // Linker scripts (search dirs + script names from SDK)
         link_args.extend(self.linker_scripts.to_args());
@@ -277,6 +279,7 @@ impl Linker for Esp32Linker {
 
         // SDK precompiled libraries (ordered flags from flags/ld_libs)
         link_args.extend(self.sdk_lib_flags.clone());
+        link_args.extend(extra.libs.iter().cloned());
 
         link_args.push("-Wl,--end-group".to_string());
 

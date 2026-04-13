@@ -9,7 +9,7 @@ use fbuild_core::subprocess::run_command;
 use fbuild_core::{BuildProfile, Result, SizeInfo};
 
 use super::mcu_config::SamMcuConfig;
-use crate::linker::Linker;
+use crate::linker::{LinkExtraArgs, Linker};
 
 /// SAM-specific linker using arm-none-eabi-gcc (link driver), ar, objcopy, size.
 pub struct SamLinker {
@@ -78,6 +78,7 @@ impl Linker for SamLinker {
         objects: &[PathBuf],
         archives: &[PathBuf],
         output_dir: &Path,
+        extra: &LinkExtraArgs,
     ) -> Result<PathBuf> {
         std::fs::create_dir_all(output_dir)?;
         let elf_path = output_dir.join("firmware.elf");
@@ -91,6 +92,7 @@ impl Linker for SamLinker {
         if let Some(profile) = self.mcu_config.get_profile(self.profile.as_dir_name()) {
             args.extend(profile.link_flags.iter().cloned());
         }
+        args.extend(extra.flags.iter().cloned());
 
         args.extend([
             format!("-T{}", self.linker_script_path.display()),
@@ -115,11 +117,17 @@ impl Linker for SamLinker {
 
         // Extra libraries (e.g. variant system lib)
         for lib in &self.extra_libs {
-            args.push(format!("-l{}", lib));
+            if lib.starts_with("-l") || lib.contains(std::path::MAIN_SEPARATOR) || lib.contains('/')
+            {
+                args.push(lib.clone());
+            } else {
+                args.push(format!("-l{}", lib));
+            }
         }
 
         // Linker libraries from config
         args.extend(self.mcu_config.linker_libs.iter().cloned());
+        args.extend(extra.libs.iter().cloned());
 
         if self.verbose {
             tracing::info!("link: {}", args.join(" "));
