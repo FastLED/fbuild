@@ -35,20 +35,10 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Cache Rust build
-        uses: Swatinem/rust-cache@v2
+      - name: Setup zccache
+        uses: zackees/zccache@main
         with:
-          key: platform-build-v1
-          save-if: "true"
-
-      - name: Restore zccache
-        uses: actions/cache/restore@v5
-        with:
-          path: ~/.zccache
-          key: zccache-${{ runner.os }}-${{ inputs.env-name }}-${{ github.sha }}
-          restore-keys: |
-            zccache-${{ runner.os }}-${{ inputs.env-name }}-
-            zccache-${{ runner.os }}-
+          shared-key: ${{ runner.os }}-${{ inputs.env-name }}
 
       - name: Restore fbuild toolchains
         uses: actions/cache/restore@v5
@@ -76,17 +66,9 @@ jobs:
         if: inputs.firmware-ext == 'bin'
         run: pip install esptool
 
-      - name: Setup zccache
-        run: |
-          pip install zccache
-          find ~/.local -name 'zccache*' -type f -exec chmod +x {} + 2>/dev/null || true
-          zccache start
-
       - name: Build fbuild binaries
         run: |
           cargo build -p fbuild-cli -p fbuild-daemon
-        env:
-          RUSTC_WRAPPER: zccache
 
       - name: Add fbuild to PATH
         run: echo "${{ github.workspace }}/target/debug" >> $GITHUB_PATH
@@ -107,17 +89,9 @@ jobs:
           test -f ${{ inputs.test-dir }}/.fbuild/build/${{ inputs.env-name }}/release/firmware.${{ inputs.firmware-ext }}
           echo "Release build successful - firmware.${{ inputs.firmware-ext }} generated"
 
-      - name: Stop zccache
+      - name: Cleanup zccache
         if: always()
-        shell: bash
-        run: zccache stop || true
-
-      - name: Save zccache
-        if: always()
-        uses: actions/cache/save@v5
-        with:
-          path: ~/.zccache
-          key: zccache-${{ runner.os }}-${{ inputs.env-name }}-${{ github.sha }}
+        uses: zackees/zccache/action/cleanup@main
 
       - name: Save fbuild toolchains
         if: always()

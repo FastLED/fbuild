@@ -19,42 +19,18 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy, rustfmt
-      - uses: Swatinem/rust-cache@v2
-        with:
-          save-if: "true"
-      - name: Restore zccache
-        uses: actions/cache/restore@v5
-        with:
-          path: ~/.zccache
-          key: zccache-${{ runner.os }}-check-${{ github.sha }}
-          restore-keys: |
-            zccache-${{ runner.os }}-check-
-            zccache-${{ runner.os }}-
       - name: Setup zccache
-        shell: bash
-        run: |
-          pip install zccache
-          find ~/.local -name 'zccache*' -type f -exec chmod +x {} + 2>/dev/null || true
-          zccache start
+        uses: zackees/zccache@main
+        with:
+          shared-key: ${{ runner.os }}-check
+
       - name: Check
         run: cargo check --workspace --all-targets
-        env:
-          RUSTC_WRAPPER: zccache
       - name: Clippy
         run: cargo clippy --workspace --all-targets -- -D warnings
-        env:
-          RUSTC_WRAPPER: zccache
       - name: Test
         run: cargo test --workspace
-        env:
-          RUSTC_WRAPPER: zccache
-      - name: Stop zccache
+
+      - name: Cleanup zccache
         if: always()
-        shell: bash
-        run: zccache stop || true
-      - name: Save zccache
-        if: always()
-        uses: actions/cache/save@v5
-        with:
-          path: ~/.zccache
-          key: zccache-${{ runner.os }}-check-${{ github.sha }}
+        uses: zackees/zccache/action/cleanup@main

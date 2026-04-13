@@ -60,9 +60,10 @@ jobs:
         with:
           python-version: "3.13"
 
-      - uses: Swatinem/rust-cache@v2
+      - name: Setup zccache
+        uses: zackees/zccache@main
         with:
-          key: ${{ inputs.target }}-v2
+          shared-key: ${{ inputs.target }}
 
       # Linux musl toolchain (libudev is auto-excluded for musl targets by serialport)
       - name: Install Linux dependencies
@@ -80,18 +81,8 @@ jobs:
         if: runner.os == 'Linux'
         run: pip install cargo-zigbuild
 
-      - name: Setup zccache
-        shell: bash
-        run: |
-          pip install zccache
-          SCRIPTS_DIR=$(python -c "import sysconfig; print(sysconfig.get_path('scripts'))")
-          chmod +x "$SCRIPTS_DIR"/zccache* 2>/dev/null || true
-          zccache start
-
       - name: Build release binaries
         shell: bash
-        env:
-          RUSTC_WRAPPER: zccache
         run: |
           if [ "${{ inputs.linux_cross }}" = "true" ]; then
             cargo-zigbuild build --release --target ${{ inputs.target }} -p fbuild-cli
@@ -184,3 +175,7 @@ jobs:
           name: binaries-${{ inputs.target }}
           path: staging/
           if-no-files-found: error
+
+      - name: Cleanup zccache
+        if: always()
+        uses: zackees/zccache/action/cleanup@main
