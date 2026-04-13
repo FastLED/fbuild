@@ -10,6 +10,7 @@ use std::sync::Mutex;
 use fbuild_core::{BuildLog, FbuildError, Result};
 
 use crate::compiler::{Compiler, CompilerBase};
+use crate::flag_overlay::LanguageExtraFlags;
 
 /// Default job count: num_cpus * 2.
 pub fn default_jobs() -> usize {
@@ -42,7 +43,7 @@ pub fn compile_sources_parallel(
     compiler: &dyn Compiler,
     sources: &[PathBuf],
     build_dir: &Path,
-    extra_flags: &[String],
+    extra_flags: &LanguageExtraFlags,
     jobs: usize,
     build_log: Option<&Mutex<BuildLog>>,
 ) -> Result<ParallelCompileResult> {
@@ -52,7 +53,8 @@ pub fn compile_sources_parallel(
 
     for source in sources {
         let obj = CompilerBase::object_path(source, build_dir);
-        let signature = compiler.rebuild_signature(source, extra_flags);
+        let source_flags = extra_flags.for_source(source);
+        let signature = compiler.rebuild_signature(source, &source_flags);
         if CompilerBase::needs_rebuild_with_signature(source, &obj, Some(&signature)) {
             work.push((source.clone(), obj.clone()));
         }
@@ -92,7 +94,8 @@ pub fn compile_sources_parallel(
                             None => break,
                         };
 
-                        match compiler.compile(&source, &obj, extra_flags) {
+                        let source_flags = extra_flags.for_source(&source);
+                        match compiler.compile(&source, &obj, &source_flags) {
                             Ok(result) if result.success => {
                                 let stderr = result.stderr.trim().to_string();
                                 if !stderr.is_empty() {

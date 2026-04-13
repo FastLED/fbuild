@@ -9,7 +9,7 @@ use fbuild_core::subprocess::run_command;
 use fbuild_core::{BuildProfile, Result, SizeInfo};
 
 use super::mcu_config::Nrf52McuConfig;
-use crate::linker::Linker;
+use crate::linker::{LinkExtraArgs, Linker};
 
 /// NRF52-specific linker using arm-none-eabi-gcc (link driver), ar, objcopy, size.
 pub struct Nrf52Linker {
@@ -67,6 +67,7 @@ impl Linker for Nrf52Linker {
         objects: &[PathBuf],
         archives: &[PathBuf],
         output_dir: &Path,
+        extra: &LinkExtraArgs,
     ) -> Result<PathBuf> {
         std::fs::create_dir_all(output_dir)?;
         let elf_path = output_dir.join("firmware.elf");
@@ -80,6 +81,7 @@ impl Linker for Nrf52Linker {
         if let Some(profile) = self.mcu_config.get_profile(self.profile.as_dir_name()) {
             args.extend(profile.link_flags.iter().cloned());
         }
+        args.extend(extra.flags.iter().cloned());
 
         // Linker search dirs (for INCLUDE directives in linker scripts)
         for dir in &self.linker_search_dirs {
@@ -104,6 +106,7 @@ impl Linker for Nrf52Linker {
 
         // Linker libraries from config
         args.extend(self.mcu_config.linker_libs.iter().cloned());
+        args.extend(extra.libs.iter().cloned());
 
         if self.verbose {
             tracing::info!("link: {}", args.join(" "));

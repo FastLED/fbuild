@@ -9,7 +9,7 @@ use fbuild_core::subprocess::run_command;
 use fbuild_core::{BuildProfile, Result, SizeInfo};
 
 use super::mcu_config::AvrMcuConfig;
-use crate::linker::Linker;
+use crate::linker::{LinkExtraArgs, Linker};
 
 /// AVR-specific linker using avr-gcc (link driver), avr-ar, avr-objcopy, avr-size.
 pub struct AvrLinker {
@@ -64,6 +64,7 @@ impl Linker for AvrLinker {
         objects: &[PathBuf],
         archives: &[PathBuf],
         output_dir: &Path,
+        extra: &LinkExtraArgs,
     ) -> Result<PathBuf> {
         std::fs::create_dir_all(output_dir)?;
         let elf_path = output_dir.join("firmware.elf");
@@ -80,6 +81,7 @@ impl Linker for AvrLinker {
         if let Some(profile) = self.mcu_config.get_profile(self.profile.as_dir_name()) {
             args.extend(profile.link_flags.iter().cloned());
         }
+        args.extend(extra.flags.iter().cloned());
 
         args.extend(["-o".to_string(), elf_path.to_string_lossy().to_string()]);
 
@@ -97,6 +99,7 @@ impl Linker for AvrLinker {
         // Group for circular deps + libraries from config
         args.push("-Wl,--start-group".to_string());
         args.extend(self.mcu_config.linker_libs.iter().cloned());
+        args.extend(extra.libs.iter().cloned());
         args.push("-Wl,--end-group".to_string());
 
         if self.verbose {

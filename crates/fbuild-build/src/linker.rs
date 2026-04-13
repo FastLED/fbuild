@@ -19,6 +19,13 @@ pub struct LinkResult {
     pub stderr: String,
 }
 
+/// Additional link arguments resolved outside the platform linker config.
+#[derive(Debug, Clone, Default)]
+pub struct LinkExtraArgs {
+    pub flags: Vec<String>,
+    pub libs: Vec<String>,
+}
+
 /// Check whether `elf_path` is newer than every file in `inputs`.
 ///
 /// Returns `true` when the ELF can be reused (no input was modified since
@@ -46,7 +53,13 @@ pub trait Linker: Send + Sync {
     fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()>;
 
     /// Link objects and archives into an ELF binary.
-    fn link(&self, objects: &[PathBuf], archives: &[PathBuf], output: &Path) -> Result<PathBuf>;
+    fn link(
+        &self,
+        objects: &[PathBuf],
+        archives: &[PathBuf],
+        output: &Path,
+        extra: &LinkExtraArgs,
+    ) -> Result<PathBuf>;
 
     /// Convert ELF to firmware format (.hex, .bin, etc.).
     fn convert_firmware(&self, elf_path: &Path, output_dir: &Path) -> Result<PathBuf>;
@@ -69,6 +82,7 @@ pub trait Linker: Send + Sync {
         sketch_objects: &[PathBuf],
         core_objects: &[PathBuf],
         output_dir: &Path,
+        extra: &LinkExtraArgs,
         symbol_analysis: bool,
     ) -> Result<LinkResult> {
         let candidate_elf = output_dir.join("firmware.elf");
@@ -106,7 +120,7 @@ pub trait Linker: Send + Sync {
 
         // Pass core objects directly to linker (not archived) for LTO compatibility.
         // With LTO + archives, the linker can't see symbols across TUs properly.
-        let elf_path = self.link(sketch_objects, core_objects, output_dir)?;
+        let elf_path = self.link(sketch_objects, core_objects, output_dir, extra)?;
 
         // Convert
         let firmware_path = self.convert_firmware(&elf_path, output_dir)?;
