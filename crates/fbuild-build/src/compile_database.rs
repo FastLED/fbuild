@@ -407,6 +407,7 @@ pub fn generate_entries(
 mod tests {
     use super::*;
 
+    #[allow(clippy::too_many_arguments)]
     fn generate_entries(
         gcc_path: &Path,
         gxx_path: &Path,
