@@ -143,6 +143,77 @@ impl PlatformIOConfig {
         }
     }
 
+    /// Get build_unflags for an environment.
+    ///
+    /// Priority:
+    /// 1. `PLATFORMIO_BUILD_UNFLAGS` forwarded override
+    /// 2. `build_unflags`
+    pub fn get_build_unflags(&self, env_name: &str) -> fbuild_core::Result<Vec<String>> {
+        if let Some(flags) = self.overrides.get_build_unflags() {
+            return Ok(parse_flags(flags));
+        }
+
+        let config = self.get_env_config(env_name)?;
+        match config.get("build_unflags") {
+            Some(flags) => Ok(parse_flags(flags)),
+            None => Ok(Vec::new()),
+        }
+    }
+
+    /// Get build_type for an environment.
+    ///
+    /// PlatformIO defaults this to `release`.
+    pub fn get_build_type(&self, env_name: &str) -> fbuild_core::Result<String> {
+        let config = self.get_env_config(env_name)?;
+        Ok(config
+            .get("build_type")
+            .map(|value| strip_inline_comment(value))
+            .filter(|value| !value.is_empty())
+            .unwrap_or_else(|| "release".to_string()))
+    }
+
+    /// Get debug_build_flags for an environment.
+    ///
+    /// PlatformIO defaults to `-Og -g2 -ggdb2` when the option is not set.
+    pub fn get_debug_build_flags(&self, env_name: &str) -> fbuild_core::Result<Vec<String>> {
+        let config = self.get_env_config(env_name)?;
+        match config.get("debug_build_flags") {
+            Some(flags) => Ok(parse_flags(flags)),
+            None => Ok(vec![
+                "-Og".to_string(),
+                "-g2".to_string(),
+                "-ggdb2".to_string(),
+            ]),
+        }
+    }
+
+    /// Get source filter rules for an environment.
+    ///
+    /// Priority:
+    /// 1. `PLATFORMIO_BUILD_SRC_FILTER` forwarded override
+    /// 2. `build_src_filter`
+    /// 3. legacy `src_filter`
+    pub fn get_source_filter(&self, env_name: &str) -> fbuild_core::Result<Option<String>> {
+        if let Some(value) = self.overrides.get_build_src_filter() {
+            let cleaned = strip_inline_comment(value);
+            if !cleaned.is_empty() {
+                return Ok(Some(cleaned.to_string()));
+            }
+        }
+
+        let config = self.get_env_config(env_name)?;
+        for key in ["build_src_filter", "src_filter"] {
+            if let Some(value) = config.get(key) {
+                let cleaned = strip_inline_comment(value);
+                if !cleaned.is_empty() {
+                    return Ok(Some(cleaned.to_string()));
+                }
+            }
+        }
+
+        Ok(None)
+    }
+
     /// Get library dependencies for an environment.
     pub fn get_lib_deps(&self, env_name: &str) -> fbuild_core::Result<Vec<String>> {
         let config = self.get_env_config(env_name)?;
@@ -1250,5 +1321,158 @@ board_build.embed_txtfiles = config/timezones.json
         let config = PlatformIOConfig::from_path(f.path()).unwrap();
         assert!(config.get_embed_files("uno").unwrap().is_empty());
         assert!(config.get_embed_txtfiles("uno").unwrap().is_empty());
+    }
+
+    #[test]
+    fn test_get_source_filter_prefers_build_src_filter() {
+        let f = write_ini(
+            "\
+[env:demo]
+platform = espressif32
+board = esp32dev
+framework = arduino
+src_filter = +<legacy.cpp>
+build_src_filter =
+    +<*>
+    -<generated/>
+",
+        );
+        let config = PlatformIOConfig::from_path(f.path()).unwrap();
+        assert_eq!(
+            config.get_source_filter("demo").unwrap(),
+            Some("+<*>\n-<generated/>".to_string())
+        );
+    }
+
+    #[test]
+    fn test_get_source_filter_falls_back_to_src_filter() {
+        let f = write_ini(
+            "\
+[env:demo]
+platform = ststm32
+board = bluepill_f103c8
+framework = stm32cube
+src_filter =
+    +<main.cpp>
+    -<legacy/>
+",
+        );
+        let config = PlatformIOConfig::from_path(f.path()).unwrap();
+        assert_eq!(
+            config.get_source_filter("demo").unwrap(),
+            Some("+<main.cpp>\n-<legacy/>".to_string())
+        );
+    }
+
+    #[test]
+    fn test_get_build_unflags_prefers_env_override() {
+        let f = write_ini(
+            "\
+[env:demo]
+platform = espressif32
+board = esp32dev
+framework = arduino
+build_unflags = -std=gnu++11
+",
+        );
+        let overrides = crate::pio_env::PioEnvOverrides::from_map(
+            [(
+                "PLATFORMIO_BUILD_UNFLAGS".to_string(),
+                "-std=gnu++17 -DDEBUG".to_string(),
+            )]
+            .into_iter()
+            .collect(),
+        );
+        let config = PlatformIOConfig::from_path_with_overrides(f.path(), overrides).unwrap();
+        assert_eq!(
+            config.get_build_unflags("demo").unwrap(),
+            vec!["-std=gnu++17", "-DDEBUG"]
+        );
+    }
+
+    #[test]
+    fn test_get_build_unflags_from_ini() {
+        let f = write_ini(
+            "\
+[env:demo]
+platform = ststm32
+board = bluepill_f103c8
+framework = stm32cube
+build_unflags =
+    -Os
+    -DDEBUG
+",
+        );
+        let config = PlatformIOConfig::from_path(f.path()).unwrap();
+        assert_eq!(
+            config.get_build_unflags("demo").unwrap(),
+            vec!["-Os", "-DDEBUG"]
+        );
+    }
+
+    #[test]
+    fn test_get_build_type_defaults_to_release() {
+        let f = write_ini(
+            "\
+[env:demo]
+platform = atmelavr
+board = uno
+framework = arduino
+",
+        );
+        let config = PlatformIOConfig::from_path(f.path()).unwrap();
+        assert_eq!(config.get_build_type("demo").unwrap(), "release");
+    }
+
+    #[test]
+    fn test_get_build_type_reads_debug() {
+        let f = write_ini(
+            "\
+[env:demo]
+platform = espressif32
+board = esp32dev
+framework = arduino
+build_type = debug
+",
+        );
+        let config = PlatformIOConfig::from_path(f.path()).unwrap();
+        assert_eq!(config.get_build_type("demo").unwrap(), "debug");
+    }
+
+    #[test]
+    fn test_get_debug_build_flags_uses_platformio_defaults() {
+        let f = write_ini(
+            "\
+[env:demo]
+platform = espressif32
+board = esp32dev
+framework = arduino
+build_type = debug
+",
+        );
+        let config = PlatformIOConfig::from_path(f.path()).unwrap();
+        assert_eq!(
+            config.get_debug_build_flags("demo").unwrap(),
+            vec!["-Og", "-g2", "-ggdb2"]
+        );
+    }
+
+    #[test]
+    fn test_get_debug_build_flags_reads_ini_override() {
+        let f = write_ini(
+            "\
+[env:demo]
+platform = espressif32
+board = esp32dev
+framework = arduino
+build_type = debug
+debug_build_flags = -Og -g3
+",
+        );
+        let config = PlatformIOConfig::from_path(f.path()).unwrap();
+        assert_eq!(
+            config.get_debug_build_flags("demo").unwrap(),
+            vec!["-Og", "-g3"]
+        );
     }
 }

@@ -820,7 +820,11 @@ impl BuildOrchestrator for Esp32Orchestrator {
         } else {
             None
         };
-        let sources = scanner.scan_all(Some(&core_dir), variant_dir_opt)?;
+        let sources = scanner.scan_all_filtered(
+            Some(&core_dir),
+            variant_dir_opt,
+            ctx.source_filter.as_deref(),
+        )?;
 
         tracing::info!(
             "sources: {} sketch, {} core, {} variant",

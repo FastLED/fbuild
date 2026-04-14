@@ -60,7 +60,11 @@ impl BuildOrchestrator for RenesasOrchestrator {
         let variant_dir = framework.get_variant_dir(&ctx.board.variant);
 
         let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
-        let sources = scanner.scan_all(Some(&core_dir), Some(&variant_dir))?;
+        let sources = scanner.scan_all_filtered(
+            Some(&core_dir),
+            Some(&variant_dir),
+            ctx.source_filter.as_deref(),
+        )?;
 
         tracing::info!(
             "sources: {} sketch, {} core, {} variant",

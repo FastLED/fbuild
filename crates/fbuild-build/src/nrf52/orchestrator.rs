@@ -60,7 +60,11 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         let variant_dir = framework.get_variant_dir(&ctx.board.variant);
 
         let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
-        let mut sources = scanner.scan_all(Some(&core_dir), Some(&variant_dir))?;
+        let mut sources = scanner.scan_all_filtered(
+            Some(&core_dir),
+            Some(&variant_dir),
+            ctx.source_filter.as_deref(),
+        )?;
 
         // Add TinyUSB sources (USB CDC Serial support for nRF52840).
         // Compile arduino/ wrapper + device stack + CDC class + nRF5x port.

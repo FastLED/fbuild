@@ -15,6 +15,9 @@ struct ScriptRuntimeInput<'a> {
     env_name: &'a str,
     extra_scripts: &'a [String],
     project_options: &'a HashMap<String, String>,
+    board_config: HashMap<String, String>,
+    platform_name: Option<String>,
+    platformio_home: String,
 }
 
 pub fn resolve_extra_script_overlay(
@@ -28,11 +31,17 @@ pub fn resolve_extra_script_overlay(
     }
 
     let project_options = config.get_env_config(env_name)?;
+    let board_config = build_script_runtime_board_config(project_options)?;
     let input = ScriptRuntimeInput {
         project_dir: &project_dir.to_string_lossy(),
         env_name,
         extra_scripts: &extra_scripts,
         project_options,
+        board_config,
+        platform_name: project_options.get("platform").cloned(),
+        platformio_home: fbuild_paths::get_platformio_home()
+            .to_string_lossy()
+            .to_string(),
     };
 
     let python = find_python().ok_or_else(|| {
@@ -276,10 +285,60 @@ fn find_python() -> Option<Vec<String>> {
     None
 }
 
+fn build_script_runtime_board_config(
+    project_options: &HashMap<String, String>,
+) -> fbuild_core::Result<HashMap<String, String>> {
+    let mut result = HashMap::new();
+    let Some(board_id) = project_options.get("board") else {
+        return Ok(result);
+    };
+
+    let board = fbuild_config::BoardConfig::from_board_id(board_id, &HashMap::new())?;
+    result.insert("name".to_string(), board.name.clone());
+    result.insert("build.mcu".to_string(), board.mcu.clone());
+    result.insert("build.f_cpu".to_string(), board.f_cpu.clone());
+    result.insert("build.board".to_string(), board.board.clone());
+    result.insert("build.core".to_string(), board.core.clone());
+    result.insert("build.variant".to_string(), board.variant.clone());
+    if let Some(value) = &board.extra_flags {
+        result.insert("build.extra_flags".to_string(), value.clone());
+    }
+    if let Some(value) = &board.flash_mode {
+        result.insert("build.flash_mode".to_string(), value.clone());
+    }
+    if let Some(value) = &board.memory_type {
+        result.insert("build.memory_type".to_string(), value.clone());
+    }
+    if let Some(value) = &board.psram_type {
+        result.insert("build.psram_type".to_string(), value.clone());
+    }
+    if let Some(value) = &board.partitions {
+        result.insert("build.partitions".to_string(), value.clone());
+    }
+    if let Some(value) = &board.ldscript {
+        result.insert("build.ldscript".to_string(), value.clone());
+    }
+    if let Some(value) = &board.platform_str {
+        result.insert("platform".to_string(), value.clone());
+    }
+    if let Some(value) = &board.upload_protocol {
+        result.insert("upload.protocol".to_string(), value.clone());
+    }
+    if let Some(value) = &board.upload_speed {
+        result.insert("upload.speed".to_string(), value.clone());
+    }
+    if let Some(value) = project_options.get("framework") {
+        result.insert("frameworks".to_string(), value.clone());
+    }
+
+    Ok(result)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use crate::flag_overlay::ScriptScopeState;
+    use std::fs;
 
     #[test]
     fn test_cppdefines_to_flags_string_and_kv() {
@@ -367,5 +426,182 @@ mod tests {
                 .to_string_lossy()
                 .to_string()
         );
+    }
+
+    #[test]
+    fn test_resolve_extra_script_overlay_supports_dump_shim() {
+        if find_python().is_none() {
+            return;
+        }
+
+        let temp = tempfile::tempdir().unwrap();
+        let project_dir = temp.path();
+        fs::write(
+            project_dir.join("platformio.ini"),
+            "\
+[env:demo]
+platform = atmelavr
+board = uno
+framework = arduino
+extra_scripts = post:dump_test.py
+",
+        )
+        .unwrap();
+        fs::write(
+            project_dir.join("dump_test.py"),
+            "\
+Import(\"env\", \"projenv\")
+state = env.Dump()
+proj_state = projenv.Dump()
+if \"CPPDEFINES\" not in state or \"CPPDEFINES\" not in proj_state:
+    raise RuntimeError(\"missing dump scopes\")
+env.Append(CPPDEFINES=[\"DUMP_SHIM_OK\"])
+",
+        )
+        .unwrap();
+
+        let config =
+            fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini"))
+                .unwrap();
+        let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).unwrap();
+        assert!(overlay
+            .global_compile
+            .common
+            .contains(&"-DDUMP_SHIM_OK".to_string()));
+    }
+
+    #[test]
+    fn test_resolve_extra_script_overlay_supports_common_noop_scons_helpers() {
+        if find_python().is_none() {
+            return;
+        }
+
+        let temp = tempfile::tempdir().unwrap();
+        let project_dir = temp.path();
+        fs::write(
+            project_dir.join("platformio.ini"),
+            "\
+[env:demo]
+platform = atmelavr
+board = uno
+framework = arduino
+extra_scripts = post:helpers_test.py
+",
+        )
+        .unwrap();
+        fs::write(
+            project_dir.join("helpers_test.py"),
+            "\
+Import(\"env\")
+if env.IsCleanTarget():
+    raise RuntimeError(\"unexpected clean target\")
+if env.IsIntegrationDump():
+    raise RuntimeError(\"unexpected integration dump\")
+flattened = env.Flatten([[\"a\"], [\"b\", [\"c\"]]])
+if flattened != [\"a\", \"b\", \"c\"]:
+    raise RuntimeError(\"unexpected flatten result\")
+env.Execute(env.VerboseAction(\"echo noop\", \"noop\"))
+env.Append(CPPDEFINES=[\"HELPERS_SHIM_OK\"])
+",
+        )
+        .unwrap();
+
+        let config =
+            fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini"))
+                .unwrap();
+        let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).unwrap();
+        assert!(overlay
+            .global_compile
+            .common
+            .contains(&"-DHELPERS_SHIM_OK".to_string()));
+    }
+
+    #[test]
+    fn test_resolve_extra_script_overlay_supports_board_config_shim() {
+        if find_python().is_none() {
+            return;
+        }
+
+        let temp = tempfile::tempdir().unwrap();
+        let project_dir = temp.path();
+        fs::write(
+            project_dir.join("platformio.ini"),
+            "\
+[env:demo]
+platform = atmelavr
+board = uno
+framework = arduino
+extra_scripts = post:board_config_test.py
+",
+        )
+        .unwrap();
+        fs::write(
+            project_dir.join("board_config_test.py"),
+            "\
+Import(\"env\")
+board = env.BoardConfig()
+if board.get(\"build.mcu\") != \"atmega328p\":
+    raise RuntimeError(\"unexpected board mcu\")
+if board.get(\"build.f_cpu\") != \"16000000L\":
+    raise RuntimeError(\"unexpected board f_cpu\")
+env.Append(CPPDEFINES=[\"BOARD_CONFIG_SHIM_OK\"])
+",
+        )
+        .unwrap();
+
+        let config =
+            fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini"))
+                .unwrap();
+        let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).unwrap();
+        assert!(overlay
+            .global_compile
+            .common
+            .contains(&"-DBOARD_CONFIG_SHIM_OK".to_string()));
+    }
+
+    #[test]
+    fn test_resolve_extra_script_overlay_supports_pio_platform_shim() {
+        if find_python().is_none() {
+            return;
+        }
+
+        let temp = tempfile::tempdir().unwrap();
+        let project_dir = temp.path();
+        fs::write(
+            project_dir.join("platformio.ini"),
+            "\
+[env:demo]
+platform = atmelavr
+board = uno
+framework = arduino
+extra_scripts = post:pio_platform_test.py
+",
+        )
+        .unwrap();
+        fs::write(
+            project_dir.join("pio_platform_test.py"),
+            "\
+Import(\"env\")
+platform = env.PioPlatform()
+if platform.name != \"atmelavr\":
+    raise RuntimeError(\"unexpected platform name\")
+if not platform.is_embedded():
+    raise RuntimeError(\"expected embedded platform\")
+pkg = platform.get_package_dir(\"tool-avrdude\")
+if not pkg.endswith(\"tool-avrdude\"):
+    raise RuntimeError(\"unexpected package path\")
+env.Append(CPPDEFINES=[\"PIO_PLATFORM_SHIM_OK\"])
+",
+        )
+        .unwrap();
+
+        let config =
+            fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini"))
+                .unwrap();
+        let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).unwrap();
+        assert!(overlay
+            .global_compile
+            .common
+            .contains(&"-DPIO_PLATFORM_SHIM_OK".to_string()));
     }
 }

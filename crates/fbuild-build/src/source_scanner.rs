@@ -58,6 +58,18 @@ pub struct SourceScanner {
     build_dir: PathBuf,
 }
 
+#[derive(Debug)]
+struct SourceFilter {
+    rules: Vec<SourceFilterRule>,
+    has_include_rules: bool,
+}
+
+#[derive(Debug)]
+struct SourceFilterRule {
+    include: bool,
+    matcher: Regex,
+}
+
 impl SourceScanner {
     pub fn new(src_dir: &Path, build_dir: &Path) -> Self {
         Self {
@@ -73,6 +85,14 @@ impl SourceScanner {
     /// When a `main.cpp` already `#include`s `.ino` files (PlatformIO convention),
     /// the `.ino` files are NOT preprocessed separately to avoid duplicate symbols.
     pub fn scan_sketch_sources(&self) -> fbuild_core::Result<Vec<PathBuf>> {
+        self.scan_sketch_sources_filtered(None)
+    }
+
+    /// Scan sketch sources applying a PlatformIO-style source filter, when provided.
+    pub fn scan_sketch_sources_filtered(
+        &self,
+        filter_spec: Option<&str>,
+    ) -> fbuild_core::Result<Vec<PathBuf>> {
         if !self.src_dir.exists() {
             return Ok(Vec::new());
         }
@@ -80,8 +100,13 @@ impl SourceScanner {
         let mut sources = Vec::new();
         let mut ino_files = Vec::new();
         let mut has_main_cpp = false;
+        let filter = SourceFilter::parse(filter_spec)?;
 
         for entry in walk_sources(&self.src_dir) {
+            if !filter.matches(&self.src_dir, &entry) {
+                continue;
+            }
+
             let ext = entry
                 .extension()
                 .unwrap_or_default()
@@ -170,7 +195,17 @@ impl SourceScanner {
         core_dir: Option<&Path>,
         variant_dir: Option<&Path>,
     ) -> fbuild_core::Result<SourceCollection> {
-        let sketch_sources = self.scan_sketch_sources()?;
+        self.scan_all_filtered(core_dir, variant_dir, None)
+    }
+
+    /// Scan everything, applying a source filter to sketch files only.
+    pub fn scan_all_filtered(
+        &self,
+        core_dir: Option<&Path>,
+        variant_dir: Option<&Path>,
+        filter_spec: Option<&str>,
+    ) -> fbuild_core::Result<SourceCollection> {
+        let sketch_sources = self.scan_sketch_sources_filtered(filter_spec)?;
         let core_sources = core_dir
             .map(|d| self.scan_core_sources(d))
             .unwrap_or_default();
@@ -264,6 +299,128 @@ impl SourceScanner {
 
         Ok(output_path)
     }
+}
+
+impl SourceFilter {
+    fn parse(spec: Option<&str>) -> fbuild_core::Result<Self> {
+        let mut rules = Vec::new();
+        let mut has_include_rules = false;
+
+        let Some(spec) = spec else {
+            return Ok(Self {
+                rules,
+                has_include_rules,
+            });
+        };
+
+        for raw in spec.lines().flat_map(|line| line.split(',')) {
+            let token = raw.trim();
+            if token.is_empty() {
+                continue;
+            }
+
+            let (include, inner) = if token.starts_with("+<") && token.ends_with('>') {
+                (true, &token[2..token.len() - 1])
+            } else if token.starts_with("-<") && token.ends_with('>') {
+                (false, &token[2..token.len() - 1])
+            } else {
+                return Err(fbuild_core::FbuildError::ConfigError(format!(
+                    "invalid source filter rule '{}': expected +/-<pattern>",
+                    token
+                )));
+            };
+
+            let pattern = inner.trim().replace('\\', "/");
+            if pattern.is_empty() {
+                return Err(fbuild_core::FbuildError::ConfigError(
+                    "source filter rule must not be empty".to_string(),
+                ));
+            }
+
+            if include {
+                has_include_rules = true;
+            }
+
+            rules.push(SourceFilterRule {
+                include,
+                matcher: compile_source_filter_pattern(&pattern)?,
+            });
+        }
+
+        Ok(Self {
+            rules,
+            has_include_rules,
+        })
+    }
+
+    fn matches(&self, root: &Path, path: &Path) -> bool {
+        if self.rules.is_empty() {
+            return true;
+        }
+
+        let rel = path
+            .strip_prefix(root)
+            .unwrap_or(path)
+            .to_string_lossy()
+            .replace('\\', "/");
+
+        let mut included = !self.has_include_rules;
+        for rule in &self.rules {
+            if rule.matcher.is_match(&rel) {
+                included = rule.include;
+            }
+        }
+        included
+    }
+}
+
+fn compile_source_filter_pattern(pattern: &str) -> fbuild_core::Result<Regex> {
+    let normalized = pattern.replace('\\', "/");
+    let regex_body = if normalized == "*" {
+        String::from(".*")
+    } else if normalized.ends_with('/') {
+        format!(
+            "{}(?:/.*)?",
+            glob_fragment_to_regex(normalized.trim_end_matches('/'))
+        )
+    } else if normalized.contains('/') {
+        glob_fragment_to_regex(&normalized)
+    } else {
+        format!("(?:.*/)?{}", glob_fragment_to_regex(&normalized))
+    };
+
+    Regex::new(&format!("^{}$", regex_body)).map_err(|e| {
+        fbuild_core::FbuildError::ConfigError(format!(
+            "invalid source filter pattern '{}': {}",
+            normalized, e
+        ))
+    })
+}
+
+fn glob_fragment_to_regex(pattern: &str) -> String {
+    let chars: Vec<char> = pattern.chars().collect();
+    let mut out = String::new();
+    let mut i = 0;
+    while i < chars.len() {
+        match chars[i] {
+            '*' => {
+                if i + 1 < chars.len() && chars[i + 1] == '*' {
+                    out.push_str(".*");
+                    i += 1;
+                } else {
+                    out.push_str("[^/]*");
+                }
+            }
+            '?' => out.push_str("[^/]"),
+            c if ".+()[]{}^$|\\".contains(c) => {
+                out.push('\\');
+                out.push(c);
+            }
+            c => out.push(c),
+        }
+        i += 1;
+    }
+    out
 }
 
 fn write_if_changed(path: &Path, contents: &str) -> std::io::Result<()> {
@@ -619,5 +776,38 @@ mod tests {
         assert_eq!(collection.core_sources.len(), 1);
         assert_eq!(collection.variant_sources.len(), 1);
         assert_eq!(collection.all_sources().len(), 3);
+    }
+
+    #[test]
+    fn test_scan_sketch_sources_filtered_excludes_subdirectory() {
+        let (_tmp, src_dir, build_dir) = setup_project(&[
+            ("main.cpp", "int main() { return 0; }"),
+            ("generated/skip.cpp", "void skip() {}"),
+        ]);
+        let scanner = SourceScanner::new(&src_dir, &build_dir);
+        let sources = scanner
+            .scan_sketch_sources_filtered(Some("+<*>\n-<generated/>"))
+            .unwrap();
+        assert_eq!(sources.len(), 1);
+        assert!(sources[0].ends_with("main.cpp"));
+    }
+
+    #[test]
+    fn test_scan_sketch_sources_filtered_includes_only_selected_files() {
+        let (_tmp, src_dir, build_dir) = setup_project(&[
+            ("main.cpp", "int main() { return 0; }"),
+            ("helper.cpp", "void helper() {}"),
+            ("sub/util.c", "void util() {}"),
+        ]);
+        let scanner = SourceScanner::new(&src_dir, &build_dir);
+        let sources = scanner
+            .scan_sketch_sources_filtered(Some("+<main.cpp>\n+<sub/util.c>"))
+            .unwrap();
+        assert_eq!(sources.len(), 2);
+        assert!(sources.iter().any(|p| p.ends_with("main.cpp")));
+        assert!(sources
+            .iter()
+            .any(|p| p.ends_with("sub\\util.c") || p.ends_with("sub/util.c")));
+        assert!(!sources.iter().any(|p| p.ends_with("helper.cpp")));
     }
 }

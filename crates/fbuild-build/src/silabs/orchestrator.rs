@@ -57,7 +57,8 @@ impl BuildOrchestrator for SilabsOrchestrator {
         }
 
         let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
-        let mut sources = scanner.scan_all(Some(&core_dir), None)?;
+        let mut sources =
+            scanner.scan_all_filtered(Some(&core_dir), None, ctx.source_filter.as_deref())?;
         sources.variant_sources = scan_variant_root_sources(&variant_dir);
 
         tracing::info!(

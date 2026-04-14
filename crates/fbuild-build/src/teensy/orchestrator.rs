@@ -66,7 +66,8 @@ impl BuildOrchestrator for TeensyOrchestrator {
         let core_dir = framework.get_core_dir(&ctx.board.core);
 
         let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
-        let mut sources = scanner.scan_all(Some(&core_dir), None)?;
+        let mut sources =
+            scanner.scan_all_filtered(Some(&core_dir), None, ctx.source_filter.as_deref())?;
         sources
             .core_sources
             .retain(|p| p.file_name().map(|f| f != "Blink.cc").unwrap_or(true));

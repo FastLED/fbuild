@@ -84,7 +84,8 @@ impl BuildOrchestrator for Stm32Orchestrator {
         // sources manually because the variant dir contains files for multiple
         // board variants (MALYAN, AFROFLIGHT, etc.) and startup files that
         // conflict with the generic one in cores/arduino/stm32/.
-        let mut sources = scanner.scan_all(Some(&core_dir), None)?;
+        let mut sources =
+            scanner.scan_all_filtered(Some(&core_dir), None, ctx.source_filter.as_deref())?;
         sources.variant_sources = scanner
             .scan_variant_sources(&variant_dir)
             .into_iter()
@@ -268,7 +269,7 @@ fn build_arduino_mbed_stm32(
 
     let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
     let sources = SourceCollection {
-        sketch_sources: scanner.scan_sketch_sources()?,
+        sketch_sources: scanner.scan_sketch_sources_filtered(ctx.source_filter.as_deref())?,
         core_sources: framework.get_core_sources(),
         variant_sources: framework.get_variant_sources(&ctx.board.variant),
         headers: Vec::new(),
