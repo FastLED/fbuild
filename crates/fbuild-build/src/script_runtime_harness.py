@@ -34,12 +34,37 @@ class RuntimeFailure(Exception):
     pass
 
 
+class MockPioPlatform:
+    def __init__(self, name, platformio_home):
+        self.name = name or ""
+        self._platformio_home = platformio_home
+
+    def is_embedded(self):
+        return True
+
+    def get_package_dir(self, package_name):
+        return os.path.join(self._platformio_home, "packages", package_name)
+
+
 class MockEnv:
-    def __init__(self, label, project_dir, env_name, project_options, notes, unsupported):
+    def __init__(
+        self,
+        label,
+        project_dir,
+        env_name,
+        project_options,
+        board_config,
+        platform_name,
+        platformio_home,
+        notes,
+        unsupported,
+    ):
         self._label = label
         self._project_dir = project_dir
         self._env_name = env_name
         self._project_options = project_options
+        self._board_config = board_config
+        self._pio_platform = MockPioPlatform(platform_name, platformio_home)
         self._notes = notes
         self._unsupported = unsupported
         self._scopes = {key: [] for key in SUPPORTED_SCOPES}
@@ -142,6 +167,45 @@ class MockEnv:
 
     def StringifyMacro(self, value):
         return stringify_macro(value)
+
+    def Dump(self):
+        data = dict(self._vars)
+        data.update({scope: list(values) for scope, values in self._scopes.items()})
+        return data
+
+    def BoardConfig(self):
+        return dict(self._board_config)
+
+    def PioPlatform(self):
+        return self._pio_platform
+
+    def IsCleanTarget(self):
+        return False
+
+    def IsIntegrationDump(self):
+        return False
+
+    def Flatten(self, value):
+        items = []
+
+        def visit(node):
+            if isinstance(node, (list, tuple)):
+                for child in node:
+                    visit(child)
+            else:
+                items.append(node)
+
+        visit(value)
+        return items
+
+    def VerboseAction(self, action, message=None):
+        if message:
+            self._notes.append(f"{self._label}.VerboseAction ignored message: {message}")
+        return action
+
+    def Execute(self, action):
+        self._notes.append(f"{self._label}.Execute ignored by native extra_scripts runtime")
+        return 0
 
     def subst(self, text):
         text = str(text)
@@ -246,8 +310,31 @@ def main():
     project_options = data.get("project_options", {})
     notes = []
     unsupported = []
-    env = MockEnv("env", project_dir, env_name, project_options, notes, unsupported)
-    projenv = MockEnv("projenv", project_dir, env_name, project_options, notes, unsupported)
+    board_config = data.get("board_config", {})
+    platform_name = data.get("platform_name")
+    platformio_home = data.get("platformio_home", os.path.expanduser("~/.platformio"))
+    env = MockEnv(
+        "env",
+        project_dir,
+        env_name,
+        project_options,
+        board_config,
+        platform_name,
+        platformio_home,
+        notes,
+        unsupported,
+    )
+    projenv = MockEnv(
+        "projenv",
+        project_dir,
+        env_name,
+        project_options,
+        board_config,
+        platform_name,
+        platformio_home,
+        notes,
+        unsupported,
+    )
 
     script_entries = [resolve_script_entry(env, item) for item in data.get("extra_scripts", [])]
     pre_scripts = [path for scope, path in script_entries if scope == "pre"]
