@@ -806,7 +806,17 @@ fn get_board_defaults(board_id: &str) -> Option<HashMap<String, String>> {
         d.insert("core".into(), "arduino".into());
     }
     if !d.contains_key("variant") {
-        d.insert("variant".into(), board_id.to_string());
+        // For ESP32 boards, the Arduino framework uses the MCU name as the
+        // variant directory name (e.g., variants/esp32c6/).  Fall back to
+        // MCU rather than board_id so builds find pins_arduino.h.
+        let fallback = if d.get("core").is_some_and(|c| c == "esp32") {
+            d.get("mcu")
+                .cloned()
+                .unwrap_or_else(|| board_id.to_string())
+        } else {
+            board_id.to_string()
+        };
+        d.insert("variant".into(), fallback);
     }
     d.entry("board".into())
         .or_insert_with(|| board_id_to_board_define(board_id));
@@ -1417,6 +1427,33 @@ uno.build.f_cpu=16000000L
         assert!(
             config.debug_tools.is_none(),
             "boards.txt should not have debug tools"
+        );
+    }
+
+    #[test]
+    fn test_esp32c6_devkitc1_has_variant() {
+        // Regression: esp32-c6-devkitc-1.json was missing build.variant,
+        // causing fbuild to look for variants/esp32-c6-devkitc-1/ instead
+        // of variants/esp32c6/, which broke compilation (pins_arduino.h
+        // not found). See https://github.com/FastLED/fbuild/issues/46
+        let config = BoardConfig::from_board_id("esp32-c6-devkitc-1", &HashMap::new()).unwrap();
+        assert_eq!(config.mcu, "esp32c6");
+        assert_eq!(config.core, "esp32");
+        assert_eq!(
+            config.variant, "esp32c6",
+            "esp32-c6-devkitc-1 must have variant=esp32c6, not the board ID fallback"
+        );
+    }
+
+    #[test]
+    fn test_esp32c6_alias_has_variant() {
+        // The 'esp32c6' alias resolves to esp32-c6-devkitm-1 which has
+        // the variant field. Verify both paths produce correct variant.
+        let config = BoardConfig::from_board_id("esp32c6", &HashMap::new()).unwrap();
+        assert_eq!(config.mcu, "esp32c6");
+        assert_eq!(
+            config.variant, "esp32c6",
+            "esp32c6 alias must resolve to variant=esp32c6"
         );
     }
 
