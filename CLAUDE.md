@@ -4,7 +4,7 @@ fbuild is a PlatformIO-compatible embedded build tool (11 crates). See @docs/CLA
 
 ## Essential Rules
 
-- **Always use `uv run` or `_cargo`/`_rustc`/`_rustfmt` trampolines to execute Rust commands.** Bare cargo/rustc are blocked by hook. Both `uv run` trampolines (via `pyproject.toml`) and shell trampolines (`_cargo`, `_rustc`, `_rustfmt`) prepend `~/.cargo/bin` to PATH, ensuring the rustup-managed toolchain is always used.
+- **Always use `uv run`, `soldr`, or `_cargo`/`_rustc`/`_rustfmt` trampolines to execute Rust commands.** Bare cargo/rustc are blocked by hook. All three forms resolve through [soldr](https://github.com/zackees/soldr), which uses `rustup which` to pick the rustup-managed toolchain; the cargo path adds `--no-cache` so the previous bare-cargo semantics are preserved.
 - **Always use `uv` for Python.** Bare `python`/`pip` are blocked by hook. Use `uv run ...` or `uv pip ...`.
 - MSRV: 1.75 | Edition: 2021 | Toolchain: 1.94.1 pinned in `rust-toolchain.toml` (clippy + rustfmt)
 - CI: Linux, macOS, Windows. All warnings denied (`RUSTFLAGS="-D warnings"`)

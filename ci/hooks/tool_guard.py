@@ -16,7 +16,7 @@ import sys
 RUST_TOOLS = {"cargo", "rustc", "rustfmt", "clippy-driver", "cargo-clippy", "cargo-fmt"}
 PYTHON_TOOLS = {"python", "python3", "pip", "pip3"}
 
-ALLOWED_PREFIXES = ("uv run ", "uv pip ")
+ALLOWED_PREFIXES = ("uv run ", "uv pip ", "soldr ")
 TRAMPOLINE_PREFIXES = ("./_cargo ", "./_rustc ", "./_rustfmt ",
                        "_cargo ", "_rustc ", "_rustfmt ")
 
@@ -66,9 +66,9 @@ def check_command(command):
         if first_word in RUST_TOOLS:
             return (
                 first_word,
-                f"Use `uv run {first_word} ...` or `_cargo`/`_rustc`/`_rustfmt` "
-                f"trampolines instead of bare `{first_word}`. "
-                f"These ensure the correct Rust toolchain is used.",
+                f"Use `uv run {first_word} ...`, `soldr {first_word} ...`, or "
+                f"a `_cargo`/`_rustc`/`_rustfmt` trampoline instead of bare "
+                f"`{first_word}`. These ensure the correct Rust toolchain is used.",
             )
 
         if first_word in PYTHON_TOOLS:
