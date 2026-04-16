@@ -429,6 +429,63 @@ impl SerialMonitor {
             timeout
         )))
     }
+
+    /// Reset the device via the daemon's DTR/RTS reset endpoint.
+    ///
+    /// Sends POST /api/reset to the daemon, which preempts any active
+    /// serial monitor session, toggles DTR/RTS to reset the device,
+    /// then clears preemption so monitors can reconnect.
+    ///
+    /// Works whether or not __enter__ has been called — the reset goes
+    /// through the daemon's HTTP API, not the WebSocket session.
+    ///
+    /// Args:
+    ///     board: Board identifier (e.g. "esp32s3", "teensy40").
+    ///            Determines the platform-specific reset sequence.
+    ///            If None, a generic DTR toggle is used.
+    ///
+    /// Returns:
+    ///     True if reset succeeded, False otherwise.
+    #[pyo3(signature = (board=None))]
+    fn reset_device(&self, board: Option<String>) -> PyResult<bool> {
+        let url = format!("{}/api/reset", fbuild_paths::get_daemon_url());
+
+        #[derive(Serialize)]
+        struct ResetPayload {
+            port: String,
+            #[serde(skip_serializing_if = "Option::is_none")]
+            board: Option<String>,
+        }
+
+        let payload = ResetPayload {
+            port: self.port.clone(),
+            board,
+        };
+
+        let resp = reqwest::blocking::Client::new()
+            .post(&url)
+            .json(&payload)
+            .timeout(std::time::Duration::from_secs(10))
+            .send()
+            .map_err(|e| {
+                pyo3::exceptions::PyConnectionError::new_err(format!(
+                    "failed to send reset request to daemon: {}",
+                    e
+                ))
+            })?;
+
+        let body: serde_json::Value = resp.json().map_err(|e| {
+            pyo3::exceptions::PyRuntimeError::new_err(format!(
+                "failed to parse reset response: {}",
+                e
+            ))
+        })?;
+
+        Ok(body
+            .get("success")
+            .and_then(|v| v.as_bool())
+            .unwrap_or(false))
+    }
 }
 
 impl SerialMonitor {
