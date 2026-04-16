@@ -27,10 +27,10 @@ jobs:
             macos_cross: false
 
           - target: x86_64-apple-darwin
-            runner: macos-14
+            runner: macos-13
             binary_ext: ""
             linux_cross: false
-            macos_cross: true
+            macos_cross: false
 
           - target: aarch64-apple-darwin
             runner: macos-latest
