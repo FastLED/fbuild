@@ -13,17 +13,16 @@ from __future__ import annotations
 import time
 
 import pytest
-import serial as pyserial
+import serial.tools.list_ports as list_ports
 
 
 def _port_exists(port: str) -> bool:
-    """Check if a serial port exists and can be opened."""
-    try:
-        s = pyserial.Serial(port, 115200, timeout=0.1)
-        s.close()
-        return True
-    except (OSError, pyserial.SerialException):
-        return False
+    """Check if a serial port is enumerated (without opening it).
+
+    Uses pyserial's port enumeration instead of opening the port,
+    which would conflict with a daemon holding the port open.
+    """
+    return any(info.device == port for info in list_ports.comports())
 
 
 def _daemon_running() -> bool:
@@ -52,16 +51,12 @@ def test_reset_esp32s3_and_read_output() -> None:
     time.sleep(3.0)
 
     # Now attach a fresh monitor and read output
-    mon2 = SerialMonitor(port="COM13", baud_rate=115200)
-    mon2.__enter__()
-    try:
+    with SerialMonitor(port="COM13", baud_rate=115200) as mon2:
         lines = mon2.read_lines(timeout=5.0)
         assert len(lines) > 0, (
             "Device should produce serial output after reset. "
             "Got 0 lines — device may not have rebooted."
         )
-    finally:
-        mon2.__exit__(None, None, None)
 
 
 @pytest.mark.skipif(not _port_exists("COM13"), reason="COM13 not available")
