@@ -25,3 +25,19 @@ def test_serial_monitor_reset_device_is_callable() -> None:
     assert callable(getattr(mon, "reset_device", None)), (
         "SerialMonitor.reset_device exists but is not callable"
     )
+
+
+def test_serial_monitor_reset_device_accepts_wait_for_output() -> None:
+    """reset_device must accept wait_for_output and timeout parameters."""
+    import inspect
+
+    from fbuild._native import SerialMonitor
+
+    sig = inspect.signature(SerialMonitor.reset_device)
+    params = list(sig.parameters.keys())
+    assert "wait_for_output" in params, (
+        f"reset_device missing wait_for_output parameter. Has: {params}"
+    )
+    assert "timeout" in params, (
+        f"reset_device missing timeout parameter. Has: {params}"
+    )
