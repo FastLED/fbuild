@@ -851,6 +851,27 @@ impl Esp32Deployer {
             ));
         }
 
+        // Fail loudly if the caller asked for a region whose file isn't
+        // on disk. Without this check `build_write_flash_args` would
+        // silently drop the request and esptool would complain with an
+        // opaque usage error.
+        let build_dir = firmware_path.parent().unwrap_or_else(|| Path::new("."));
+        for region in regions {
+            let (name, path) = match region {
+                FlashRegion::Bootloader => ("bootloader.bin", build_dir.join("bootloader.bin")),
+                FlashRegion::Partitions => ("partitions.bin", build_dir.join("partitions.bin")),
+                FlashRegion::Firmware => continue,
+            };
+            if !path.exists() {
+                return Err(fbuild_core::FbuildError::DeployFailed(format!(
+                    "deploy_regions requested {:?} but {} is missing from {}",
+                    region,
+                    name,
+                    build_dir.display()
+                )));
+            }
+        }
+
         let args = self.build_write_flash_args(firmware_path, port, Some(regions));
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
 
@@ -1403,6 +1424,30 @@ Verification successful (digest matched).\n";
         assert!(args.contains(&"0x0".to_string()));
         assert!(args.contains(&"0x8000".to_string()));
         assert!(args.contains(&"0x10000".to_string()));
+    }
+
+    /// If a caller requests a region whose file is missing on disk, fail
+    /// with a clear error rather than silently emitting a write_flash
+    /// call with no offset/file pair (which would produce an opaque
+    /// esptool usage error). Addresses CodeRabbit review on PR #71.
+    #[test]
+    fn deploy_regions_errors_when_requested_region_file_missing() {
+        let params = test_esptool_params();
+        let deployer = Esp32Deployer::new(
+            "esp32s3", "921600", "0x0", "0x8000", "0x10000", &params, false,
+        );
+        let tmp = tempfile::TempDir::new().unwrap();
+        let fw = tmp.path().join("firmware.bin");
+        std::fs::write(&fw, b"firm").unwrap();
+        // Note: no bootloader.bin written.
+        let err = deployer
+            .deploy_regions(&fw, "COM13", &[FlashRegion::Bootloader])
+            .unwrap_err();
+        assert!(
+            err.to_string().contains("bootloader.bin"),
+            "error must name the missing file: {}",
+            err
+        );
     }
 
     /// Empty region slice -> usage error; we surface it rather than let
