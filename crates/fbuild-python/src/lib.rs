@@ -1065,6 +1065,63 @@ impl AsyncSerialMonitor {
     }
 }
 
+/// Python-visible AsyncDaemon class.
+///
+/// Native async counterpart to `Daemon`. Follows the same additive
+/// pattern as `AsyncSerialMonitor` (Issue #65): the sync `Daemon` class
+/// stays unchanged, and this one exposes async methods so callers under
+/// an asyncio event loop can `await` them directly.
+///
+/// ```python
+/// import asyncio
+/// from fbuild._native import AsyncDaemon
+///
+/// async def main():
+///     info = await AsyncDaemon.status()
+///
+/// asyncio.run(main())
+/// ```
+#[pyclass]
+struct AsyncDaemon;
+
+#[pymethods]
+impl AsyncDaemon {
+    /// Asynchronously fetch `/api/daemon/info` from the daemon. Returns
+    /// a JSON-deserialized Python object on success, or raises a
+    /// ConnectionError/RuntimeError.
+    #[staticmethod]
+    fn status(py: Python<'_>) -> PyResult<Bound<'_, PyAny>> {
+        let url = format!("{}/api/daemon/info", fbuild_paths::get_daemon_url());
+
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let resp = reqwest::Client::new()
+                .get(&url)
+                .timeout(std::time::Duration::from_secs(10))
+                .send()
+                .await
+                .map_err(|e| {
+                    pyo3::exceptions::PyConnectionError::new_err(format!(
+                        "failed to connect to daemon: {}",
+                        e
+                    ))
+                })?;
+
+            let text = resp.text().await.map_err(|e| {
+                pyo3::exceptions::PyRuntimeError::new_err(format!(
+                    "failed to read daemon response: {}",
+                    e
+                ))
+            })?;
+
+            Python::with_gil(|py| {
+                let json_module = py.import_bound("json")?;
+                let parsed = json_module.call_method1("loads", (text,))?;
+                Ok(parsed.unbind())
+            })
+        })
+    }
+}
+
 /// The fbuild Python module (imported as fbuild._native).
 #[pymodule]
 fn _native(m: &Bound<'_, PyModule>) -> PyResult<()> {
@@ -1072,6 +1129,7 @@ fn _native(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<SerialMonitor>()?;
     m.add_class::<AsyncSerialMonitor>()?;
     m.add_class::<Daemon>()?;
+    m.add_class::<AsyncDaemon>()?;
     m.add_class::<DaemonConnection>()?;
     m.add_function(wrap_pyfunction!(connect_daemon, m)?)?;
     Ok(())
