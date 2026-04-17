@@ -95,11 +95,26 @@ impl PlatformIOConfig {
     /// Get the default environment name.
     ///
     /// Priority:
-    /// 1. `[platformio]` section `default_envs` key (first value)
-    /// 2. First environment in file order
-    /// 3. None if no environments
+    /// 1. forwarded `PLATFORMIO_DEFAULT_ENVS` override (first value)
+    /// 2. `[platformio]` section `default_envs` key (first value)
+    /// 3. First environment in file order
+    /// 4. None if no environments
     pub fn get_default_environment(&self) -> Option<&str> {
-        // Check [platformio].default_envs
+        // Check forwarded PLATFORMIO_DEFAULT_ENVS first.
+        if let Some(defaults) = self.overrides.get_default_envs() {
+            let first = defaults.split(',').next().unwrap_or("").trim();
+            if !first.is_empty() && self.resolved_envs.contains_key(first) {
+                return Some(
+                    self.resolved_envs
+                        .keys()
+                        .find(|k| k.as_str() == first)
+                        .map(|k| k.as_str())
+                        .unwrap(),
+                );
+            }
+        }
+
+        // Fall back to [platformio].default_envs.
         if let Some(pio) = self.sections.get("platformio") {
             if let Some(defaults) = pio.get("default_envs") {
                 let first = defaults.split(',').next().unwrap_or("").trim();
@@ -127,6 +142,10 @@ impl PlatformIOConfig {
     /// - Multi-line flags (one per line)
     /// - `-D FLAG` → `-DFLAG` normalization
     pub fn get_build_flags(&self, env_name: &str) -> fbuild_core::Result<Vec<String>> {
+        if let Some(flags) = self.overrides.get_build_flags() {
+            return Ok(parse_flags(flags));
+        }
+
         let config = self.get_env_config(env_name)?;
         match config.get("build_flags") {
             Some(flags) => Ok(parse_flags(flags)),
@@ -136,6 +155,10 @@ impl PlatformIOConfig {
 
     /// Get build_src_flags for an environment (sketch-only flags).
     pub fn get_build_src_flags(&self, env_name: &str) -> fbuild_core::Result<Vec<String>> {
+        if let Some(flags) = self.overrides.get_build_src_flags() {
+            return Ok(parse_flags(flags));
+        }
+
         let config = self.get_env_config(env_name)?;
         match config.get("build_src_flags") {
             Some(flags) => Ok(parse_flags(flags)),
@@ -262,13 +285,11 @@ impl PlatformIOConfig {
         }
     }
 
-    /// Get src_dir setting, checking env var override and ini config.
+    /// Get src_dir setting, checking forwarded override and ini config.
     pub fn get_src_dir(&self, env_name: &str) -> fbuild_core::Result<Option<String>> {
-        // PLATFORMIO_SRC_DIR env var takes precedence
-        if let Ok(env_val) = std::env::var("PLATFORMIO_SRC_DIR") {
-            if !env_val.is_empty() {
-                return Ok(Some(env_val));
-            }
+        // Forwarded PLATFORMIO_SRC_DIR takes precedence.
+        if let Some(env_val) = self.overrides.get_src_dir() {
+            return Ok(Some(env_val.to_string()));
         }
 
         let config = self.get_env_config(env_name)?;
@@ -746,6 +767,7 @@ fn parse_list_values(value: &str) -> Vec<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::collections::BTreeMap;
     use std::io::Write;
     use tempfile::NamedTempFile;
 
@@ -754,6 +776,15 @@ mod tests {
         f.write_all(content.as_bytes()).unwrap();
         f.flush().unwrap();
         f
+    }
+
+    fn overrides(pairs: &[(&str, &str)]) -> crate::pio_env::PioEnvOverrides {
+        crate::pio_env::PioEnvOverrides::from_map(
+            pairs
+                .iter()
+                .map(|(k, v)| ((*k).to_string(), (*v).to_string()))
+                .collect::<BTreeMap<_, _>>(),
+        )
     }
 
     #[test]
@@ -871,6 +902,28 @@ build_flags = -DFOO -DBAR
     }
 
     #[test]
+    fn test_get_build_flags_prefers_forwarded_override() {
+        let f = write_ini(
+            "\
+[env:uno]
+platform = atmelavr
+board = uno
+framework = arduino
+build_flags = -DINI=1
+",
+        );
+        let config = PlatformIOConfig::from_path_with_overrides(
+            f.path(),
+            overrides(&[("PLATFORMIO_BUILD_FLAGS", "-DOVERRIDE=1 -DFAST=1")]),
+        )
+        .unwrap();
+        assert_eq!(
+            config.get_build_flags("uno").unwrap(),
+            vec!["-DOVERRIDE=1", "-DFAST=1"]
+        );
+    }
+
+    #[test]
     fn test_get_build_flags_multiline() {
         let f = write_ini(
             "\
@@ -903,6 +956,28 @@ build_flags = -D FOO -D BAR
         let config = PlatformIOConfig::from_path(f.path()).unwrap();
         let flags = config.get_build_flags("uno").unwrap();
         assert_eq!(flags, vec!["-DFOO", "-DBAR"]);
+    }
+
+    #[test]
+    fn test_get_build_src_flags_prefers_forwarded_override() {
+        let f = write_ini(
+            "\
+[env:uno]
+platform = atmelavr
+board = uno
+framework = arduino
+build_src_flags = -DINI_SRC
+",
+        );
+        let config = PlatformIOConfig::from_path_with_overrides(
+            f.path(),
+            overrides(&[("PLATFORMIO_BUILD_SRC_FLAGS", "-DOVERRIDE_SRC=1")]),
+        )
+        .unwrap();
+        assert_eq!(
+            config.get_build_src_flags("uno").unwrap(),
+            vec!["-DOVERRIDE_SRC=1"]
+        );
     }
 
     #[test]
@@ -1003,6 +1078,32 @@ framework = arduino
     }
 
     #[test]
+    fn test_get_default_environment_prefers_forwarded_override() {
+        let f = write_ini(
+            "\
+[platformio]
+default_envs = esp32
+
+[env:uno]
+platform = atmelavr
+board = uno
+framework = arduino
+
+[env:esp32]
+platform = espressif32
+board = esp32dev
+framework = arduino
+",
+        );
+        let config = PlatformIOConfig::from_path_with_overrides(
+            f.path(),
+            overrides(&[("PLATFORMIO_DEFAULT_ENVS", "uno")]),
+        )
+        .unwrap();
+        assert_eq!(config.get_default_environment(), Some("uno"));
+    }
+
+    #[test]
     fn test_get_default_environment_first_fallback() {
         let f = write_ini(
             "\
@@ -1097,6 +1198,30 @@ framework = arduino
         assert_eq!(
             config.get_src_dir("uno").unwrap(),
             Some("custom_src".to_string())
+        );
+    }
+
+    #[test]
+    fn test_get_src_dir_prefers_forwarded_override() {
+        let f = write_ini(
+            "\
+[platformio]
+src_dir = ini_src
+
+[env:uno]
+platform = atmelavr
+board = uno
+framework = arduino
+",
+        );
+        let config = PlatformIOConfig::from_path_with_overrides(
+            f.path(),
+            overrides(&[("PLATFORMIO_SRC_DIR", "override_src")]),
+        )
+        .unwrap();
+        assert_eq!(
+            config.get_src_dir("uno").unwrap(),
+            Some("override_src".to_string())
         );
     }
 
