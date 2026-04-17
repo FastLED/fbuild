@@ -134,30 +134,59 @@ async fn main() {
         tokio::spawn(async move {
             let mut daemon_empty_since: Option<std::time::Instant> = None;
             let mut last_lock_cleanup = std::time::Instant::now();
+            // Periodic reminder of why the daemon is staying alive, so
+            // users can see the blocker rather than thinking self-eviction
+            // is broken. See FastLED/fbuild#51.
+            let busy_report_interval = std::time::Duration::from_secs(60);
+            let mut last_busy_report: Option<std::time::Instant> = None;
+            let mut last_busy_reason: Option<String> = None;
 
             loop {
                 tokio::time::sleep(std::time::Duration::from_secs(1)).await;
 
                 // --- Self-eviction: 0 ops + 0 serial sessions for SELF_EVICTION_TIMEOUT ---
-                if ctx.is_empty() {
-                    if daemon_empty_since.is_none() {
-                        daemon_empty_since = Some(std::time::Instant::now());
-                        tracing::debug!(
-                            "Daemon is now empty (0 ops, 0 serial sessions), starting eviction timer"
-                        );
-                    } else if let Some(since) = daemon_empty_since {
-                        if since.elapsed() >= SELF_EVICTION_TIMEOUT {
+                match ctx.busy_reason() {
+                    None => {
+                        if last_busy_reason.is_some() {
+                            last_busy_reason = None;
+                            last_busy_report = None;
+                        }
+                        if daemon_empty_since.is_none() {
+                            daemon_empty_since = Some(std::time::Instant::now());
                             tracing::info!(
-                                "Self-eviction triggered: daemon empty for {:.1}s, shutting down",
-                                since.elapsed().as_secs_f64()
+                                "Daemon is idle; self-eviction in {:.0}s unless new work arrives",
+                                SELF_EVICTION_TIMEOUT.as_secs_f64()
                             );
-                            let _ = ctx.shutdown_tx.send(true);
-                            return;
+                        } else if let Some(since) = daemon_empty_since {
+                            if since.elapsed() >= SELF_EVICTION_TIMEOUT {
+                                tracing::info!(
+                                    "Self-eviction triggered: daemon empty for {:.1}s, shutting down",
+                                    since.elapsed().as_secs_f64()
+                                );
+                                let _ = ctx.shutdown_tx.send(true);
+                                return;
+                            }
                         }
                     }
-                } else if daemon_empty_since.is_some() {
-                    tracing::debug!("Daemon is no longer empty, resetting eviction timer");
-                    daemon_empty_since = None;
+                    Some(reason) => {
+                        if daemon_empty_since.is_some() {
+                            tracing::debug!("Daemon is no longer empty, resetting eviction timer");
+                            daemon_empty_since = None;
+                        }
+                        // Announce the blocker on transition and then
+                        // periodically repeat the reminder so a stuck
+                        // session is visible in logs without spamming every
+                        // tick.
+                        let reason_changed = last_busy_reason.as_deref() != Some(reason.as_str());
+                        let due_for_reminder = last_busy_report
+                            .map(|t| t.elapsed() >= busy_report_interval)
+                            .unwrap_or(true);
+                        if reason_changed || due_for_reminder {
+                            tracing::info!("Daemon staying alive: {}", reason);
+                            last_busy_report = Some(std::time::Instant::now());
+                            last_busy_reason = Some(reason);
+                        }
+                    }
                 }
 
                 // --- Idle timeout (12h fallback) ---
