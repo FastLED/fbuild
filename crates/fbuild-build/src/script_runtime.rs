@@ -1,3 +1,10 @@
+//! Native compatibility layer for a constrained subset of PlatformIO `extra_scripts`.
+//!
+//! Supported shapes are intentionally narrow: `pre:`/`post:` entries, `Import("env")`
+//! in PRE/POST scripts, `Import("projenv")` in POST scripts only, and flag/path
+//! mutations over the known compiler/linker scopes. Unsupported behavior fails fast
+//! with a recommendation to use `--platformio`.
+
 use std::collections::HashMap;
 use std::path::Path;
 use std::process::Command;
@@ -340,6 +347,40 @@ mod tests {
     use crate::flag_overlay::ScriptScopeState;
     use std::fs;
 
+    fn write_runtime_project(
+        extra_scripts: &str,
+        script_name: &str,
+        script_body: &str,
+    ) -> tempfile::TempDir {
+        let temp = tempfile::tempdir().unwrap();
+        let project_dir = temp.path();
+        fs::write(
+            project_dir.join("platformio.ini"),
+            format!(
+                "\
+[env:demo]
+platform = atmelavr
+board = uno
+framework = arduino
+extra_scripts = {}
+",
+                extra_scripts
+            ),
+        )
+        .unwrap();
+        fs::write(project_dir.join(script_name), script_body).unwrap();
+        temp
+    }
+
+    fn resolve_runtime_error(project_dir: &Path) -> String {
+        let config =
+            fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini"))
+                .unwrap();
+        resolve_extra_script_overlay(project_dir, "demo", &config)
+            .unwrap_err()
+            .to_string()
+    }
+
     #[test]
     fn test_cppdefines_to_flags_string_and_kv() {
         let flags = cppdefines_to_flags(&[
@@ -603,5 +644,87 @@ env.Append(CPPDEFINES=[\"PIO_PLATFORM_SHIM_OK\"])
             .global_compile
             .common
             .contains(&"-DPIO_PLATFORM_SHIM_OK".to_string()));
+    }
+
+    #[test]
+    fn test_resolve_extra_script_overlay_rejects_unsupported_import_name() {
+        if find_python().is_none() {
+            return;
+        }
+
+        let temp = write_runtime_project(
+            "post:bad_import_test.py",
+            "bad_import_test.py",
+            "\
+Import(\"board\")
+",
+        );
+        let err = resolve_runtime_error(temp.path());
+        assert!(err.contains("Import('board') is not supported"), "{err}");
+        assert!(err.contains("Recommendation: use --platformio"), "{err}");
+    }
+
+    #[test]
+    fn test_resolve_extra_script_overlay_rejects_projenv_in_pre_script() {
+        if find_python().is_none() {
+            return;
+        }
+
+        let temp = write_runtime_project(
+            "pre:pre_projenv_test.py",
+            "pre_projenv_test.py",
+            "\
+Import(\"env\", \"projenv\")
+",
+        );
+        let err = resolve_runtime_error(temp.path());
+        assert!(
+            err.contains("projenv is not available in PRE extra_scripts"),
+            "{err}"
+        );
+        assert!(err.contains("Recommendation: use --platformio"), "{err}");
+    }
+
+    #[test]
+    fn test_resolve_extra_script_overlay_rejects_unsupported_scope_mutation() {
+        if find_python().is_none() {
+            return;
+        }
+
+        let temp = write_runtime_project(
+            "post:unsupported_scope_test.py",
+            "unsupported_scope_test.py",
+            "\
+Import(\"env\")
+env.Append(FOO=[\"x\"])
+",
+        );
+        let err = resolve_runtime_error(temp.path());
+        assert!(
+            err.contains("env.append on unsupported scope 'FOO'"),
+            "{err}"
+        );
+        assert!(err.contains("Recommendation: use --platformio"), "{err}");
+    }
+
+    #[test]
+    fn test_resolve_extra_script_overlay_rejects_unsupported_script_prefix() {
+        if find_python().is_none() {
+            return;
+        }
+
+        let temp = write_runtime_project(
+            "mid:prefix_test.py",
+            "prefix_test.py",
+            "\
+Import(\"env\")
+",
+        );
+        let err = resolve_runtime_error(temp.path());
+        assert!(
+            err.contains("unsupported extra_scripts prefix 'mid'"),
+            "{err}"
+        );
+        assert!(err.contains("Recommendation: use --platformio"), "{err}");
     }
 }

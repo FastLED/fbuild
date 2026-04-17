@@ -13,6 +13,29 @@ Build orchestration, compilation, linking for all platforms (AVR, ESP32, RP2040,
 - **parallel** — Parallel compilation with job control
 - **source_scanner** — Source file discovery (sketch, core, variant)
 
+## Native `extra_scripts` Boundary
+
+Native mode intentionally supports only a narrow subset of PlatformIO `extra_scripts`.
+The goal is to preserve ordinary flag and path mutations without trying to emulate all of SCons.
+
+Supported in native mode:
+
+- `pre:` and `post:` script entries
+- `Import("env")` in PRE/POST scripts
+- `Import("projenv")` in POST scripts only
+- `Append`, `AppendUnique`, `Prepend`, and `Replace` over `CPPDEFINES`, `CPPPATH`, `CCFLAGS`, `CFLAGS`, `CXXFLAGS`, `ASFLAGS`, `LINKFLAGS`, `LIBPATH`, and `LIBS`
+- helper shims such as `Dump`, `BoardConfig`, `PioPlatform`, `Flatten`, `VerboseAction`, and `Execute`
+
+Rejected or out of scope:
+
+- unsupported script prefixes
+- PRE scripts that request `projenv`
+- mutations on unsupported SCons scopes
+- unsupported `Import(...)` targets
+- builders, middleware, upload/package hooks, and other arbitrary Python-driven build behavior
+
+Unsupported `extra_scripts` behavior fails the native build early with a recommendation to use `--platformio`.
+
 ## Compile Database (compile_commands.json)
 
 After every build, fbuild generates a [JSON Compilation Database](https://clang.llvm.org/docs/JSONCompilationDatabase.html) so that clangd and VS Code IntelliSense can resolve includes to actual source files.

@@ -14,6 +14,17 @@ Build orchestration for all supported embedded platforms.
 - **`build_output.rs`** -- Uniform build log formatting across all platforms
 - **`zccache.rs`** -- Optional zccache compiler cache wrapper integration
 
+## Native `extra_scripts` Boundary
+
+The native replay path intentionally supports a narrow subset of PlatformIO script behavior:
+
+- Supported script prefixes: `pre:` and `post:`
+- Supported imports: `Import("env")`; `Import("projenv")` only in post scripts
+- Supported mutation scopes: `CPPDEFINES`, `CPPPATH`, `CCFLAGS`, `CFLAGS`, `CXXFLAGS`, `ASFLAGS`, `LINKFLAGS`, `LIBPATH`, `LIBS`
+- Supported no-op helpers: `AddPreAction`, `AddPostAction`, `AlwaysBuild`, `Alias`, `Depends`
+
+Anything outside that matrix fails fast with a `use --platformio` recommendation so unsupported scripts do not silently produce a partial build.
+
 ## Platform Subdirectories
 
 - **`avr/`** -- AVR ATmega (Arduino Uno, Mega, Nano)
