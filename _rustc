@@ -1,4 +1,4 @@
 #!/bin/bash
-# Trampoline: ensures rustup toolchain is used for rustc.
-export PATH="$HOME/.cargo/bin:$PATH"
-exec rustc "$@"
+# Trampoline: runs rustc through soldr so the rustup-managed toolchain
+# is always used. soldr resolves rustc via `rustup which`.
+exec uv run soldr rustc "$@"

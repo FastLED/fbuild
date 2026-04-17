@@ -1,4 +1,5 @@
 #!/bin/bash
-# Trampoline: ensures rustup toolchain is used for cargo.
-export PATH="$HOME/.cargo/bin:$PATH"
-exec cargo "$@"
+# Trampoline: runs cargo through soldr so the rustup-managed toolchain
+# is always used. --no-cache keeps the compilation wrapper off to
+# match the previous bare-cargo behavior.
+exec uv run soldr --no-cache cargo "$@"

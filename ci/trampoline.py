@@ -1,97 +1,73 @@
 """Rust toolchain trampolines.
 
-Ensures the rustup-managed toolchain is on PATH before executing
-the real Rust tool. Registered as project scripts in pyproject.toml
-so they can be invoked via `uv run cargo ...`, `uv run rustfmt ...`, etc.
+Routes cargo/rustc/rustfmt/clippy-driver through soldr so the
+rustup-managed toolchain is always used, without per-call PATH
+munging. Registered as project scripts in pyproject.toml so they can
+be invoked via `uv run cargo ...`, `uv run rustfmt ...`, etc.
+
+Why soldr:
+- soldr resolves each tool via `rustup which`, which respects
+  `rust-toolchain.toml` the same way the old PATH-based trampolines
+  did, but without requiring PATH to be pre-shaped.
+- `soldr --no-cache cargo` preserves the prior bare-cargo semantics
+  (no RUSTC_WRAPPER, no managed zccache) so this migration is
+  behavior-preserving for CI and local dev. Adopting soldr's built-in
+  zccache wrapper is a separate, deliberate decision.
 """
 
-import os
 import shutil
 import subprocess
 import sys
 from pathlib import Path
 
 
-def _cargo_bin_from_tool(tool_name):
-    """Derive a rustup-managed .cargo/bin directory from a tool on PATH."""
-    tool_path = shutil.which(tool_name)
-    if not tool_path:
-        return None
-
-    bin_dir = os.path.dirname(os.path.abspath(tool_path))
-    rustup_name = "rustup.exe" if os.name == "nt" else "rustup"
-    rustup_path = os.path.join(bin_dir, rustup_name)
-    if os.path.isfile(rustup_path):
-        return bin_dir
-    return None
-
-
-def _find_cargo_bin():
-    """Find a Rust tool bin directory for the active rustup toolchain."""
-    for candidate in [
-        os.environ.get("CARGO_HOME", ""),
-        os.path.join(os.path.expanduser("~"), ".cargo"),
-        os.path.join(os.environ.get("USERPROFILE", ""), ".cargo"),
-    ]:
-        if candidate:
-            bin_dir = os.path.join(candidate, "bin")
-            if os.path.isdir(bin_dir):
-                return bin_dir
-
-    for tool_name in ("rustup", "cargo", "rustc"):
-        bin_dir = _cargo_bin_from_tool(tool_name)
-        if bin_dir:
-            return bin_dir
-    return None
-
-
-def _run_tool(tool_name):
-    """Prepend .cargo/bin to PATH and exec the given tool."""
-    cargo_bin = _find_cargo_bin()
-    if not cargo_bin:
-        print("error: Cannot find .cargo/bin. Run ./install first.", file=sys.stderr)
+def _soldr_prefix(no_cache: bool):
+    """Return the argv prefix that runs soldr, with `--no-cache` if asked."""
+    if not shutil.which("soldr"):
+        print(
+            "error: `soldr` not found on PATH. Run ./install (or `uv sync`) "
+            "to install fbuild-dev-tools, which pulls soldr in as a dependency.",
+            file=sys.stderr,
+        )
         sys.exit(1)
+    prefix = ["soldr"]
+    if no_cache:
+        prefix.append("--no-cache")
+    return prefix
 
-    os.environ["PATH"] = cargo_bin + os.pathsep + os.environ.get("PATH", "")
 
-    if not shutil.which(tool_name):
-        print(f"error: {tool_name} not found in {cargo_bin}.", file=sys.stderr)
-        sys.exit(1)
-
-    result = subprocess.run([tool_name] + sys.argv[1:])
+def _run_via_soldr(subcommand: str, *, no_cache: bool):
+    """Exec `soldr [--no-cache] <subcommand> <argv...>`."""
+    cmd = _soldr_prefix(no_cache) + [subcommand] + sys.argv[1:]
+    result = subprocess.run(cmd)
     sys.exit(result.returncode)
 
 
 def cargo():
-    _run_tool("cargo")
+    # --no-cache keeps soldr's RUSTC_WRAPPER / zccache path off, matching
+    # the previous bare-cargo behavior of this trampoline.
+    _run_via_soldr("cargo", no_cache=True)
 
 
 def rustc():
-    _run_tool("rustc")
+    _run_via_soldr("rustc", no_cache=False)
 
 
 def rustfmt():
-    _run_tool("rustfmt")
+    _run_via_soldr("rustfmt", no_cache=False)
 
 
 def clippy_driver():
-    _run_tool("clippy-driver")
+    _run_via_soldr("clippy-driver", no_cache=False)
 
 
 def _run_cargo_bin(package):
-    """Run a cargo binary with the correct toolchain on PATH."""
-    cargo_bin = _find_cargo_bin()
-    if not cargo_bin:
-        print("error: Cannot find .cargo/bin. Run ./install first.", file=sys.stderr)
-        sys.exit(1)
-
-    os.environ["PATH"] = cargo_bin + os.pathsep + os.environ.get("PATH", "")
-
+    """Run a cargo binary with the correct toolchain via soldr."""
     extra = sys.argv[1:]
-    # Strip leading '--' that uv inserts
+    # Strip leading '--' that uv inserts.
     if extra and extra[0] == "--":
         extra = extra[1:]
-    cmd = ["cargo", "run", "-p", package]
+    cmd = _soldr_prefix(no_cache=True) + ["cargo", "run", "-p", package]
     if extra:
         cmd.append("--")
         cmd.extend(extra)

@@ -15,6 +15,12 @@ class ToolGuardTests(unittest.TestCase):
     def test_allows_uv_run_wrapped_cargo(self):
         self.assertIsNone(check_command("uv run cargo test"))
 
+    def test_allows_soldr_wrapped_cargo(self):
+        self.assertIsNone(check_command("soldr cargo test"))
+        self.assertIsNone(check_command("soldr --no-cache cargo build"))
+        self.assertIsNone(check_command("soldr rustc --version"))
+        self.assertIsNone(check_command("soldr rustfmt --check src/lib.rs"))
+
     def test_blocks_bare_python(self):
         result = check_command("python ci/script.py")
         self.assertIsNotNone(result)

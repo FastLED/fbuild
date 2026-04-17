@@ -4,12 +4,15 @@ Codex working notes for this repo. Start with [CLAUDE.md](./CLAUDE.md) for the f
 
 ## Mandatory command rules
 
-- Always run Rust tooling through `uv run` or the repo trampolines.
+- Always run Rust tooling through `uv run`, `soldr`, or the repo trampolines.
 - Never run bare `cargo`, `rustc`, `rustfmt`, `clippy-driver`, `python`, or `pip`.
 - Approved Rust forms in this repo are:
   - `uv run cargo ...`
   - `uv run rustc ...`
   - `uv run rustfmt ...`
+  - `soldr cargo ...`
+  - `soldr rustc ...`
+  - `soldr rustfmt ...`
   - `./_cargo ...`
   - `./_rustc ...`
   - `./_rustfmt ...`
@@ -17,9 +20,10 @@ Codex working notes for this repo. Start with [CLAUDE.md](./CLAUDE.md) for the f
 ## Why
 
 - Repo hooks enforce this.
-- `uv run cargo ...` works because `ci/dev-tools` registers `cargo`/`rustc`/`rustfmt` as repo-local uv scripts that dispatch through `ci/trampoline.py`.
-- The uv scripts and shell trampolines both make sure the rustup-managed toolchain is used instead of stale system or Chocolatey installs.
-- If you bypass them, you can hit wrong-toolchain errors or failures like `Cannot find .cargo/bin. Run ./install first.`
+- All three forms dispatch through [soldr](https://github.com/zackees/soldr), which resolves each tool via `rustup which` so the rustup-managed toolchain is always used instead of a stale system or Chocolatey install.
+- `uv run cargo ...` works because `ci/dev-tools` registers `cargo`/`rustc`/`rustfmt` as repo-local uv scripts that now dispatch through `ci/trampoline.py` → `soldr`.
+- The `cargo` path passes `--no-cache` so the previous bare-cargo semantics are preserved (no RUSTC_WRAPPER / managed zccache inserted).
+- If you bypass them, you can hit wrong-toolchain errors.
 
 ## Use these
 
