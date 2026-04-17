@@ -174,6 +174,17 @@ impl DaemonContext {
     /// we self-evict during that window the client sees a forcibly-closed
     /// WebSocket and the autoresearch lifecycle breaks.
     pub fn is_empty(&self) -> bool {
+        self.busy_reason().is_none()
+    }
+
+    /// Human-readable description of what is keeping the daemon alive, or
+    /// `None` if the daemon is idle and eligible for self-eviction.
+    ///
+    /// Surfaces the specific blocker (operation in progress, open serial
+    /// sessions, pending serial attaches) so the self-eviction loop can log
+    /// it and users can see why the daemon isn't shutting down. See issue
+    /// FastLED/fbuild#51.
+    pub fn busy_reason(&self) -> Option<String> {
         let op_running = self
             .operation_in_progress
             .load(std::sync::atomic::Ordering::Relaxed);
@@ -181,7 +192,31 @@ impl DaemonContext {
         let pending_attaches = self
             .pending_serial_attaches
             .load(std::sync::atomic::Ordering::Relaxed);
-        !op_running && serial_session_count == 0 && pending_attaches == 0
+
+        let mut reasons: Vec<String> = Vec::new();
+        if op_running {
+            reasons.push("build/deploy operation in progress".to_string());
+        }
+        if serial_session_count > 0 {
+            reasons.push(format!(
+                "{} open serial session{}",
+                serial_session_count,
+                if serial_session_count == 1 { "" } else { "s" }
+            ));
+        }
+        if pending_attaches > 0 {
+            reasons.push(format!(
+                "{} pending serial attach{}",
+                pending_attaches,
+                if pending_attaches == 1 { "" } else { "es" }
+            ));
+        }
+
+        if reasons.is_empty() {
+            None
+        } else {
+            Some(reasons.join(", "))
+        }
     }
 
     /// How long since the daemon started.
@@ -252,6 +287,63 @@ mod tests {
         let lock1 = ctx.project_lock(&PathBuf::from("/tmp/a"));
         let lock2 = ctx.project_lock(&PathBuf::from("/tmp/b"));
         assert!(!Arc::ptr_eq(&lock1, &lock2));
+    }
+
+    /// `busy_reason()` returns `None` for a fresh context (no ops, no serial
+    /// sessions, no pending attaches) and `is_empty()` is the negation.
+    /// Regression guard for FastLED/fbuild#51: a fresh daemon must be
+    /// immediately eligible for self-eviction.
+    #[test]
+    fn busy_reason_none_on_fresh_context() {
+        let ctx = make_ctx();
+        assert_eq!(ctx.busy_reason(), None);
+        assert!(ctx.is_empty());
+    }
+
+    /// An in-progress operation is the primary blocker the self-eviction
+    /// loop must surface so users can see why the daemon isn't shutting down.
+    #[test]
+    fn busy_reason_reports_operation_in_progress() {
+        let ctx = make_ctx();
+        ctx.operation_in_progress.store(true, Ordering::Relaxed);
+        let reason = ctx.busy_reason().expect("expected a busy reason");
+        assert!(
+            reason.contains("operation in progress"),
+            "reason should mention the in-progress operation, got: {}",
+            reason
+        );
+        assert!(!ctx.is_empty());
+    }
+
+    /// A pending serial attach (WebSocket client mid-handshake) must keep
+    /// the daemon alive AND be surfaced in `busy_reason()` so it's visible
+    /// in logs if the client gets stuck. See FastLED/fbuild#51.
+    #[test]
+    fn busy_reason_reports_pending_serial_attach() {
+        let ctx = make_ctx();
+        ctx.pending_serial_attaches.fetch_add(1, Ordering::Relaxed);
+        let reason = ctx.busy_reason().expect("expected a busy reason");
+        assert!(
+            reason.contains("pending serial attach"),
+            "reason should mention the pending attach, got: {}",
+            reason
+        );
+    }
+
+    /// Multiple concurrent blockers should all appear in the report so the
+    /// self-eviction log line describes the full picture.
+    #[test]
+    fn busy_reason_joins_multiple_blockers() {
+        let ctx = make_ctx();
+        ctx.operation_in_progress.store(true, Ordering::Relaxed);
+        ctx.pending_serial_attaches.fetch_add(2, Ordering::Relaxed);
+        let reason = ctx.busy_reason().expect("expected a busy reason");
+        assert!(
+            reason.contains("operation in progress")
+                && reason.contains("2 pending serial attaches"),
+            "reason should join both blockers, got: {}",
+            reason
+        );
     }
 
     /// Issue A follow-up: a streaming serial monitor must keep
