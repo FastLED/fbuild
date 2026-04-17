@@ -513,8 +513,7 @@ impl SerialMonitor {
         // We poll the daemon's /ws/serial-monitor endpoint indirectly by using
         // the WebSocket read path if connected, or a simple HTTP health check
         // with serial output buffer query.
-        let deadline =
-            std::time::Instant::now() + std::time::Duration::from_secs_f64(timeout);
+        let deadline = std::time::Instant::now() + std::time::Duration::from_secs_f64(timeout);
 
         // Brief pause for USB re-enumeration after DTR toggle
         std::thread::sleep(std::time::Duration::from_millis(300));
