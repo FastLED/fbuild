@@ -8,6 +8,7 @@
 
 pub mod avr;
 pub mod esp32;
+pub mod esp32_native;
 pub mod reset;
 pub mod teensy;
 
