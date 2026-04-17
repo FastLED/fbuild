@@ -128,6 +128,17 @@ async fn main() {
         tracing::warn!("failed to write port file: {}", e);
     }
 
+    // On Windows, `tokio::signal::ctrl_c()` catches CTRL_C_EVENT and
+    // CTRL_BREAK_EVENT but NOT CTRL_CLOSE_EVENT (terminal window closed),
+    // CTRL_LOGOFF_EVENT, or CTRL_SHUTDOWN_EVENT. Without a console ctrl
+    // handler, those events terminate the daemon immediately, skipping
+    // graceful shutdown and leaving stale PID/port files. Register a
+    // handler that funnels them into the same `shutdown_tx` the HTTP
+    // endpoint and Ctrl+C paths use. See FastLED/fbuild#18 ("B5a
+    // hardening leftovers").
+    #[cfg(windows)]
+    windows_console::register_ctrl_handler(context.shutdown_tx.clone());
+
     // Spawn background maintenance task (self-eviction, idle timeout, stale lock cleanup)
     {
         let ctx = context.clone();
@@ -512,6 +523,79 @@ fn set_exclusive_address_windows(sock: &socket2::Socket) -> std::io::Result<()> 
         Ok(())
     } else {
         Err(std::io::Error::last_os_error())
+    }
+}
+
+/// Windows-only console ctrl handler registration.
+///
+/// `tokio::signal::ctrl_c()` covers CTRL_C_EVENT / CTRL_BREAK_EVENT on
+/// Windows but the console subsystem also fires CTRL_CLOSE_EVENT (window
+/// X button), CTRL_LOGOFF_EVENT, and CTRL_SHUTDOWN_EVENT — each of which
+/// terminates the process unless an explicit handler is registered via
+/// `SetConsoleCtrlHandler`. Without the hook, the daemon dies without
+/// running its graceful-shutdown path, leaving stale PID/port files and
+/// potentially orphaned child processes. See FastLED/fbuild#18 ("B5a
+/// hardening leftovers").
+#[cfg(windows)]
+mod windows_console {
+    use std::sync::OnceLock;
+    use tokio::sync::watch;
+
+    /// Globally accessible shutdown sender — the console ctrl handler
+    /// has a fixed C-ABI signature with no user-data pointer, so the only
+    /// way to reach the daemon's shutdown channel from inside it is
+    /// through process-wide state.
+    static SHUTDOWN_TX: OnceLock<watch::Sender<bool>> = OnceLock::new();
+
+    /// Windows console control events: `CTRL_CLOSE_EVENT = 2`,
+    /// `CTRL_LOGOFF_EVENT = 5`, `CTRL_SHUTDOWN_EVENT = 6`. `CTRL_C_EVENT`
+    /// and `CTRL_BREAK_EVENT` are already covered by `tokio::signal::ctrl_c`
+    /// so we deliberately fall through (return 0 / FALSE) to let the
+    /// default handler chain propagate them to tokio's signal driver.
+    unsafe extern "system" fn console_ctrl_handler(ctrl_type: u32) -> i32 {
+        const CTRL_CLOSE_EVENT: u32 = 2;
+        const CTRL_LOGOFF_EVENT: u32 = 5;
+        const CTRL_SHUTDOWN_EVENT: u32 = 6;
+
+        match ctrl_type {
+            CTRL_CLOSE_EVENT | CTRL_LOGOFF_EVENT | CTRL_SHUTDOWN_EVENT => {
+                if let Some(tx) = SHUTDOWN_TX.get() {
+                    let _ = tx.send(true);
+                    // Windows gives a CTRL_CLOSE handler ~5s and a
+                    // CTRL_SHUTDOWN handler ~20s before it force-kills
+                    // the process. Block here so the main graceful-shutdown
+                    // path has a chance to run to completion; if it
+                    // finishes sooner, the process exits normally from
+                    // `main` and this sleep is cut short by that exit.
+                    std::thread::sleep(std::time::Duration::from_millis(3500));
+                }
+                1 // TRUE — handled
+            }
+            _ => 0, // FALSE — let the default handler take it
+        }
+    }
+
+    pub fn register_ctrl_handler(shutdown_tx: watch::Sender<bool>) {
+        // Idempotent on repeated calls; `OnceLock::set` returns Err if
+        // already initialised — we ignore it.
+        let _ = SHUTDOWN_TX.set(shutdown_tx);
+
+        #[link(name = "kernel32")]
+        extern "system" {
+            fn SetConsoleCtrlHandler(
+                handler_routine: Option<unsafe extern "system" fn(u32) -> i32>,
+                add: i32,
+            ) -> i32;
+        }
+
+        let ret = unsafe { SetConsoleCtrlHandler(Some(console_ctrl_handler), 1) };
+        if ret == 0 {
+            tracing::warn!(
+                "SetConsoleCtrlHandler failed (err={}); \
+                 CTRL_CLOSE/LOGOFF/SHUTDOWN events will bypass graceful shutdown",
+                std::io::Error::last_os_error()
+            );
+        }
     }
 }
 
