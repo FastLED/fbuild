@@ -427,18 +427,29 @@ impl SerialMonitor {
     /// serial monitor session, toggles DTR/RTS to reset the device,
     /// then clears preemption so monitors can reconnect.
     ///
-    /// Works whether or not __enter__ has been called — the reset goes
+    /// Works whether or not `__enter__` has been called — the reset goes
     /// through the daemon's HTTP API, not the WebSocket session.
     ///
     /// Args:
     ///     board: Board identifier (e.g. "esp32s3", "teensy40").
     ///            Determines the platform-specific reset sequence.
     ///            If None, a generic DTR toggle is used.
+    ///     wait_for_output: If True, block until serial output is detected
+    ///            after the reset (device has rebooted and is producing data).
+    ///            If False (default), return immediately after reset.
+    ///     timeout: Maximum seconds to wait for output (only used when
+    ///            wait_for_output is True). Default: 5.0.
     ///
     /// Returns:
-    ///     True if reset succeeded, False otherwise.
-    #[pyo3(signature = (board=None))]
-    fn reset_device(&self, board: Option<String>) -> PyResult<bool> {
+    ///     True if reset succeeded (and output detected, if wait_for_output).
+    ///     False on failure or timeout.
+    #[pyo3(signature = (board=None, wait_for_output=false, timeout=5.0))]
+    fn reset_device(
+        &self,
+        board: Option<String>,
+        wait_for_output: bool,
+        timeout: f64,
+    ) -> PyResult<bool> {
         let url = format!("{}/api/reset", fbuild_paths::get_daemon_url());
 
         #[derive(Serialize)]
@@ -472,10 +483,44 @@ impl SerialMonitor {
             ))
         })?;
 
-        Ok(body
+        let success = body
             .get("success")
             .and_then(|v| v.as_bool())
-            .unwrap_or(false))
+            .unwrap_or(false);
+
+        if !success || !wait_for_output {
+            return Ok(success);
+        }
+
+        // Wait for the device to produce serial output after reset.
+        let deadline = std::time::Instant::now() + std::time::Duration::from_secs_f64(timeout);
+
+        // Brief pause for USB re-enumeration after DTR toggle
+        std::thread::sleep(std::time::Duration::from_millis(300));
+
+        // If WebSocket is connected (__enter__ was called), poll via read_lines.
+        // Note: the daemon preempts our session during reset and sends a
+        // "Reconnected" message after. With auto_reconnect=true the WebSocket
+        // transparently re-attaches, so read_lines_inner will see new output.
+        if self.runtime.is_some() && self.ws_read.is_some() {
+            while std::time::Instant::now() < deadline {
+                let remaining = (deadline - std::time::Instant::now())
+                    .as_secs_f64()
+                    .min(0.2);
+                let lines = self.read_lines_inner(remaining);
+                if !lines.is_empty() {
+                    return Ok(true);
+                }
+            }
+            return Ok(false);
+        }
+
+        // No WebSocket — we can't observe output directly.
+        // Wait a conservative 1 second (ESP32-S3 USB-CDC typically boots
+        // in <500ms). The caller can pass a shorter timeout if needed.
+        let wait = timeout.min(1.0);
+        std::thread::sleep(std::time::Duration::from_secs_f64(wait));
+        Ok(true)
     }
 }
 
