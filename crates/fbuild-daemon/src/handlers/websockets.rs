@@ -45,6 +45,32 @@ impl Drop for PendingAttachGuard {
     }
 }
 
+/// Unwinds any serial-session state that the ws_serial_monitor handler
+/// left on the shared manager: detach reader, release writer, and close
+/// the port if there are no remaining clients. Idempotent — safe to call
+/// on a partially-set-up session. See FastLED/fbuild#51.
+async fn cleanup_ws_serial_session(
+    ctx: &Arc<DaemonContext>,
+    port: &str,
+    client_id: &str,
+    writer_acquired: bool,
+) {
+    ctx.serial_manager.detach_reader(port, client_id);
+    if writer_acquired {
+        ctx.serial_manager.release_writer(port, client_id);
+    }
+    if !ctx.serial_manager.has_clients(port) {
+        if let Err(e) = ctx.serial_manager.close_port(port, client_id).await {
+            tracing::warn!(
+                client_id,
+                port,
+                "failed to close port on last detach: {}",
+                e
+            );
+        }
+    }
+}
+
 async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     // Mark this attach as pending so the self-eviction loop won't shut the
     // daemon down while we're waiting for `open_port` to finish (USB
@@ -103,6 +129,12 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
         _ => return,
     };
 
+    // From this point on, `open_port` has created state on the shared
+    // manager (session + broadcaster) that MUST be torn down on every exit
+    // path — otherwise `has_clients()` keeps returning true and the
+    // daemon's self-eviction loop never fires. See FastLED/fbuild#51 for
+    // the leak that kept fbuild-daemon resident after autoresearch ended.
+
     // Pre-acquire writer if requested
     let writer_acquired = if pre_acquire_writer {
         ctx.serial_manager
@@ -123,6 +155,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
             let _ = socket
                 .send(Message::Text(serde_json::to_string(&err_msg).unwrap()))
                 .await;
+            cleanup_ws_serial_session(&ctx, &port, &client_id, writer_acquired).await;
             return;
         }
     };
@@ -138,6 +171,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
         .await
         .is_err()
     {
+        cleanup_ws_serial_session(&ctx, &port, &client_id, writer_acquired).await;
         return;
     }
 
@@ -247,20 +281,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     // reader keeps the OS file handle open, blocking other tools (e.g.
     // `pyserial.Serial(...)` from the same Python process) with
     // "Access is denied" until the daemon itself shuts down.
-    ctx.serial_manager.detach_reader(&port, &client_id);
-    if writer_acquired {
-        ctx.serial_manager.release_writer(&port, &client_id);
-    }
-    if !ctx.serial_manager.has_clients(&port) {
-        if let Err(e) = ctx.serial_manager.close_port(&port, &client_id).await {
-            tracing::warn!(
-                client_id,
-                port,
-                "failed to close port on last detach: {}",
-                e
-            );
-        }
-    }
+    cleanup_ws_serial_session(&ctx, &port, &client_id, writer_acquired).await;
 }
 
 // ---------------------------------------------------------------------------
