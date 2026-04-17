@@ -1,6 +1,6 @@
 # fbuild-deploy
 
-Firmware deployment to embedded devices via platform-specific upload tools (esptool, avrdude, teensy_loader_cli). Includes a firmware ledger for skip-redeploy optimization and device reset sequences.
+Firmware deployment to embedded devices via platform-specific upload tools (esptool, avrdude, teensy_loader_cli), and device reset sequences.
 
 ## Key Types
 
@@ -9,15 +9,14 @@ Firmware deployment to embedded devices via platform-specific upload tools (espt
 - `Esp32Deployer` -- esptool-based deployer with chip-specific flash offsets and modes
 - `AvrDeployer` -- avrdude-based deployer for Arduino boards
 - `TeensyDeployer` -- teensy_loader_cli-based deployer via USB HID
-- `FirmwareLedger` -- persistent JSON ledger tracking deployed firmware hashes per port
-- `FirmwareEntry` -- single deployment record with source/firmware hashes and staleness check
 
 ## Modules
 
 - **esp32** -- `Esp32Deployer`, `EsptoolParams`; handles bootloader/partitions/firmware offsets per MCU
 - **avr** -- `AvrDeployer`, `AvrdudeParams`; flashes firmware.hex via serial
 - **teensy** -- `TeensyDeployer`, `TeensyLoaderParams`; flashes firmware.hex via USB
-- **firmware_ledger** -- `FirmwareLedger`, source/firmware/build-flags hashing for skip-redeploy
 - **reset** -- `reset_device`, `detect_platform_for_reset`; DTR/RTS toggle sequences per platform
+
+Skip-redeploy is handled authoritatively by the daemon's device-side `verify-flash` pre-check (see `handlers/operations.rs`), which asks the ESP32 stub flasher for a per-region MD5 via `FLASH_MD5SUM` before writing. The previous client-side `FirmwareLedger` was removed (issue #18) because it could not detect flashes performed outside fbuild.
 
 See `docs/architecture/deploy-preemption.md` for architecture details.

@@ -67,33 +67,6 @@ impl Drop for OperationGuard {
     }
 }
 
-/// Compute SHA256 hashes of `bootloader.bin` and `partitions.bin` next to a
-/// freshly-built `firmware.bin`. Returns `(None, None)` for non-ESP builds
-/// where these artifacts don't exist. Used by the firmware ledger so that a
-/// bootloader rebuild (e.g. DIO ↔ QIO) forces a redeploy even when the
-/// application source hash is unchanged. See ISSUES.md "Issue B4".
-fn compute_boot_parts_hashes(
-    build_dir: Option<&std::path::Path>,
-) -> (Option<String>, Option<String>) {
-    let dir = match build_dir {
-        Some(d) => d,
-        None => return (None, None),
-    };
-    let boot = dir.join("bootloader.bin");
-    let parts = dir.join("partitions.bin");
-    let boot_hash = if boot.exists() {
-        fbuild_deploy::firmware_ledger::compute_firmware_hash(&boot).ok()
-    } else {
-        None
-    };
-    let parts_hash = if parts.exists() {
-        fbuild_deploy::firmware_ledger::compute_firmware_hash(&parts).ok()
-    } else {
-        None
-    };
-    (boot_hash, parts_hash)
-}
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum EmulatorKind {
     Qemu,
@@ -824,75 +797,6 @@ pub async fn deploy(
         }
     };
 
-    // Firmware ledger: check if source+flags+bootloader+partitions are
-    // unchanged → skip build+deploy. The bootloader/partitions hashes are
-    // computed against the *previously built* artifacts (if they exist) so
-    // a stale entry from a build that produced a broken bootloader doesn't
-    // shadow the next deploy. See ISSUES.md "Issue B4".
-    let deploy_port_for_ledger = req.port.clone();
-    if !req.skip_build && !req.clean_build {
-        if let Some(ref port) = deploy_port_for_ledger {
-            let proj = project_dir.clone();
-            let source_hash = tokio::task::spawn_blocking(move || {
-                fbuild_deploy::firmware_ledger::compute_source_hash(&proj)
-            })
-            .await
-            .unwrap_or_default();
-
-            // Extract build flags from env config
-            let mut build_flags: Vec<String> = env_config
-                .get("build_flags")
-                .map(|f| f.split_whitespace().map(|s| s.to_string()).collect())
-                .unwrap_or_default();
-            if deploy_route == DeployRoute::Emulator(EmulatorKind::Qemu) {
-                if let Some(board) = board.as_ref() {
-                    build_flags.extend(qemu_extra_build_flags(platform, &board.mcu));
-                }
-            }
-            let flags_hash = fbuild_deploy::firmware_ledger::compute_build_flags_hash(&build_flags);
-
-            // Look up any pre-existing bootloader/partitions hashes from the
-            // last build. find_firmware locates `firmware.bin`; the sibling
-            // `bootloader.bin`/`partitions.bin` live in the same directory.
-            let (boot_hash, parts_hash) =
-                match fbuild_paths::find_firmware(&project_dir, &env_name, None) {
-                    Some(fw) => {
-                        let dir = fw.parent().map(|p| p.to_path_buf());
-                        tokio::task::spawn_blocking(move || {
-                            compute_boot_parts_hashes(dir.as_deref())
-                        })
-                        .await
-                        .unwrap_or((None, None))
-                    }
-                    None => (None, None),
-                };
-
-            if !ctx.firmware_ledger.needs_redeploy(
-                port,
-                &source_hash,
-                Some(&flags_hash),
-                boot_hash.as_deref(),
-                parts_hash.as_deref(),
-            ) {
-                tracing::info!("firmware ledger: skipping build+deploy for {}", port);
-                return (
-                    StatusCode::OK,
-                    Json(OperationResponse {
-                        success: true,
-                        request_id,
-                        message: "firmware unchanged, skipping build+deploy".to_string(),
-                        exit_code: 0,
-                        output_file: None,
-                        output_dir: None,
-                        launch_url: None,
-                        stdout: None,
-                        stderr: None,
-                    }),
-                );
-            }
-        }
-    }
-
     // Build first unless skip_build
     let (firmware_path, elf_path) = if req.skip_build {
         // Look for existing firmware using the standard search order
@@ -1328,61 +1232,6 @@ pub async fn deploy(
             );
         }
     };
-
-    // Record successful deployment in firmware ledger. We hash bootloader.bin
-    // and partitions.bin in addition to firmware.bin so that a bootloader
-    // rebuild (e.g. DIO ↔ QIO) on the next deploy is detected as a real
-    // change and not skipped. See ISSUES.md "Issue B4".
-    if deploy_success {
-        if let Some(ref port) = deploy_port_str {
-            let fw = firmware_path.clone();
-            let proj_dir = project_dir.to_string_lossy().to_string();
-            let env = env_name.clone();
-            let proj_for_hash = project_dir.clone();
-            let build_dir = firmware_path.parent().map(|p| p.to_path_buf());
-
-            // Compute hashes in blocking context
-            let ledger_result = tokio::task::spawn_blocking(move || {
-                let fw_hash =
-                    fbuild_deploy::firmware_ledger::compute_firmware_hash(&fw).unwrap_or_default();
-                let src_hash = fbuild_deploy::firmware_ledger::compute_source_hash(&proj_for_hash);
-                let (boot_hash, parts_hash) = compute_boot_parts_hashes(build_dir.as_deref());
-                (fw_hash, src_hash, boot_hash, parts_hash)
-            })
-            .await;
-
-            if let Ok((fw_hash, src_hash, boot_hash, parts_hash)) = ledger_result {
-                let mut build_flags: Vec<String> = env_config
-                    .get("build_flags")
-                    .map(|f| f.split_whitespace().map(|s| s.to_string()).collect())
-                    .unwrap_or_default();
-                if deploy_route == DeployRoute::Emulator(EmulatorKind::Qemu) {
-                    let board_id = env_config
-                        .get("board")
-                        .cloned()
-                        .unwrap_or_else(|| "esp32dev".to_string());
-                    if let Ok(board) =
-                        fbuild_config::BoardConfig::from_board_id(&board_id, &board_overrides)
-                    {
-                        build_flags.extend(qemu_extra_build_flags(platform, &board.mcu));
-                    }
-                }
-                let flags_hash =
-                    fbuild_deploy::firmware_ledger::compute_build_flags_hash(&build_flags);
-
-                ctx.firmware_ledger.record_deployment(
-                    port,
-                    &fw_hash,
-                    &src_hash,
-                    &proj_dir,
-                    &env,
-                    Some(&flags_hash),
-                    boot_hash.as_deref(),
-                    parts_hash.as_deref(),
-                );
-            }
-        }
-    }
 
     // Post-deploy monitoring: if monitor_after is set, open the serial port
     // and stream lines checking halt conditions (matching Python behavior).
