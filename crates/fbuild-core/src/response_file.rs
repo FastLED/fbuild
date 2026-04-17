@@ -6,19 +6,93 @@
 
 use crate::Result;
 use std::path::{Path, PathBuf};
+use std::time::{Duration, SystemTime};
+
+const RESPONSE_FILE_PREFIX: &str = "fbuild_";
+const RESPONSE_FILE_SUFFIX: &str = ".rsp";
+const RESPONSE_FILE_STALE_AFTER: Duration = Duration::from_secs(7 * 24 * 60 * 60);
 
 /// Get the platform-appropriate temp directory for response files.
 ///
 /// On MSYS2/Git Bash, `std::env::temp_dir()` returns `/tmp/` which native
-/// Windows GCC treats as `C:\tmp\`. Use `LOCALAPPDATA\Temp` instead.
+/// Windows GCC treats as `C:\tmp\`. Use an app-owned directory under
+/// `~/.fbuild/{dev|prod}/tmp/response-files` instead.
 pub fn windows_temp_dir() -> PathBuf {
     if cfg!(windows) {
-        std::env::var("LOCALAPPDATA")
-            .map(|la| PathBuf::from(la).join("Temp"))
-            .unwrap_or_else(|_| std::env::temp_dir())
+        response_files_dir()
     } else {
         std::env::temp_dir()
     }
+}
+
+fn response_files_dir() -> PathBuf {
+    response_files_root(&home_dir(), is_dev_mode())
+}
+
+fn response_files_root(home: &Path, dev_mode: bool) -> PathBuf {
+    let mode = if dev_mode { "dev" } else { "prod" };
+    home.join(".fbuild")
+        .join(mode)
+        .join("tmp")
+        .join("response-files")
+}
+
+fn home_dir() -> PathBuf {
+    std::env::var("HOME")
+        .or_else(|_| std::env::var("USERPROFILE"))
+        .map(PathBuf::from)
+        .unwrap_or_else(|_| std::env::temp_dir())
+}
+
+fn is_dev_mode() -> bool {
+    std::env::var("FBUILD_DEV_MODE")
+        .map(|v| v == "1")
+        .unwrap_or(false)
+}
+
+fn cleanup_stale_response_files(
+    temp_dir: &Path,
+    stale_after: Duration,
+    now: SystemTime,
+) -> std::io::Result<usize> {
+    let mut removed = 0usize;
+    let entries = match std::fs::read_dir(temp_dir) {
+        Ok(entries) => entries,
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => return Ok(0),
+        Err(e) => return Err(e),
+    };
+
+    for entry in entries {
+        let entry = entry?;
+        let path = entry.path();
+        let file_name = match path.file_name().and_then(|s| s.to_str()) {
+            Some(name) => name,
+            None => continue,
+        };
+        if !file_name.starts_with(RESPONSE_FILE_PREFIX)
+            || !file_name.ends_with(RESPONSE_FILE_SUFFIX)
+        {
+            continue;
+        }
+
+        let metadata = match entry.metadata() {
+            Ok(metadata) => metadata,
+            Err(_) => continue,
+        };
+        let modified = match metadata.modified() {
+            Ok(modified) => modified,
+            Err(_) => continue,
+        };
+        let age = match now.duration_since(modified) {
+            Ok(age) => age,
+            Err(_) => continue,
+        };
+        if age >= stale_after && std::fs::remove_file(&path).is_ok() {
+            removed += 1;
+        }
+    }
+
+    Ok(removed)
 }
 
 /// Replace backslashes with forward slashes for GCC response files,
@@ -58,6 +132,7 @@ pub fn write_response_file(flags: &[String], temp_dir: &Path, prefix: &str) -> R
             e
         ))
     })?;
+    let _ = cleanup_stale_response_files(temp_dir, RESPONSE_FILE_STALE_AFTER, SystemTime::now());
 
     // GCC treats backslashes in response files as escape characters (\n = newline,
     // \f = formfeed, etc.). Convert to forward slashes for Windows path compatibility,
@@ -155,5 +230,47 @@ mod tests {
         let second = write_response_file(&["-O3".to_string()], tmp.path(), "stable").unwrap();
 
         assert_ne!(first, second);
+    }
+
+    #[test]
+    fn test_response_files_root_uses_fbuild_owned_tmp_dir() {
+        let home = Path::new("/home/user");
+
+        assert_eq!(
+            response_files_root(home, false),
+            home.join(".fbuild")
+                .join("prod")
+                .join("tmp")
+                .join("response-files")
+        );
+        assert_eq!(
+            response_files_root(home, true),
+            home.join(".fbuild")
+                .join("dev")
+                .join("tmp")
+                .join("response-files")
+        );
+    }
+
+    #[test]
+    fn test_cleanup_stale_response_files_removes_only_old_rsp_files() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let stale = tmp.path().join("fbuild_old.rsp");
+        let fresh = tmp.path().join("fbuild_fresh.rsp");
+        let other = tmp.path().join("notes.txt");
+
+        std::fs::write(&stale, "old").unwrap();
+        std::thread::sleep(Duration::from_millis(200));
+        std::fs::write(&fresh, "new").unwrap();
+        std::fs::write(&other, "keep").unwrap();
+
+        let removed =
+            cleanup_stale_response_files(tmp.path(), Duration::from_millis(100), SystemTime::now())
+                .unwrap();
+
+        assert_eq!(removed, 1);
+        assert!(!stale.exists());
+        assert!(fresh.exists());
+        assert!(other.exists());
     }
 }
