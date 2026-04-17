@@ -20,6 +20,11 @@ thiserror = { workspace = true }
 tracing = { workspace = true }
 async-trait = { workspace = true }
 object = { workspace = true }
+# Feasibility spike for #66: native ESP32 flasher protocol. The
+# `serialport` feature gates the `Flasher` type (the real transport
+# entry point) so we enable it; default features stay off to keep the
+# CLI/TUI surface out of our dependency graph.
+espflash = { version = "4", default-features = false, features = ["serialport"] }
 
 [dev-dependencies]
 tempfile = { workspace = true }
