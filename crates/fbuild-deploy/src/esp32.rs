@@ -48,6 +48,30 @@ pub struct Esp32Deployer {
     verbose: bool,
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum FlashRegionKind {
+    Bootloader,
+    Partitions,
+    Firmware,
+}
+
+impl FlashRegionKind {
+    pub fn as_str(self) -> &'static str {
+        match self {
+            Self::Bootloader => "bootloader",
+            Self::Partitions => "partitions",
+            Self::Firmware => "firmware",
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+struct FlashRegion {
+    kind: FlashRegionKind,
+    offset: String,
+    path: PathBuf,
+}
+
 impl Esp32Deployer {
     #[allow(clippy::too_many_arguments)]
     pub fn new(
@@ -122,6 +146,34 @@ impl Esp32Deployer {
         vec!["esptool".to_string()]
     }
 
+    fn flash_regions(&self, firmware_path: &Path) -> Vec<FlashRegion> {
+        let build_dir = firmware_path.parent().unwrap_or_else(|| Path::new("."));
+        let bootloader_path = build_dir.join("bootloader.bin");
+        let partitions_path = build_dir.join("partitions.bin");
+        let mut regions = Vec::new();
+
+        if bootloader_path.exists() {
+            regions.push(FlashRegion {
+                kind: FlashRegionKind::Bootloader,
+                offset: self.bootloader_offset.clone(),
+                path: bootloader_path,
+            });
+        }
+        if partitions_path.exists() {
+            regions.push(FlashRegion {
+                kind: FlashRegionKind::Partitions,
+                offset: self.partitions_offset.clone(),
+                path: partitions_path,
+            });
+        }
+        regions.push(FlashRegion {
+            kind: FlashRegionKind::Firmware,
+            offset: self.firmware_offset.clone(),
+            path: firmware_path.to_path_buf(),
+        });
+        regions
+    }
+
     /// Build the `esptool verify-flash` command line that this deployer
     /// would run to verify a candidate firmware image is already on the
     /// device. Pure (no I/O) so we can unit-test the argument layout
@@ -133,10 +185,6 @@ impl Esp32Deployer {
     /// ~6 seconds end-to-end vs ~25 seconds for a full re-flash.
     /// See ISSUES.md "Fast deploy via verify-then-skip".
     pub fn build_verify_flash_args(&self, firmware_path: &Path, port: &str) -> Vec<String> {
-        let build_dir = firmware_path.parent().unwrap_or_else(|| Path::new("."));
-        let bootloader_path = build_dir.join("bootloader.bin");
-        let partitions_path = build_dir.join("partitions.bin");
-
         let mut args = Self::find_esptool();
         args.extend([
             "--chip".to_string(),
@@ -154,17 +202,108 @@ impl Esp32Deployer {
 
         // Verify all three regions in a single esptool invocation so we
         // pay the stub-flasher upload cost (~3s) once, not three times.
-        if bootloader_path.exists() {
-            args.push(self.bootloader_offset.clone());
-            args.push(bootloader_path.to_string_lossy().to_string());
+        for region in self.flash_regions(firmware_path) {
+            args.push(region.offset);
+            args.push(region.path.to_string_lossy().to_string());
         }
-        if partitions_path.exists() {
-            args.push(self.partitions_offset.clone());
-            args.push(partitions_path.to_string_lossy().to_string());
-        }
-        args.push(self.firmware_offset.clone());
-        args.push(firmware_path.to_string_lossy().to_string());
         args
+    }
+
+    fn build_write_flash_args_for_regions(
+        &self,
+        regions: &[FlashRegion],
+        port: &str,
+    ) -> Vec<String> {
+        let mut args = Self::find_esptool();
+
+        args.extend([
+            "--chip".to_string(),
+            self.chip.clone(),
+            "--port".to_string(),
+            port.to_string(),
+            "--baud".to_string(),
+            self.baud_rate.clone(),
+            "--before".to_string(),
+            self.before_reset.clone(),
+            "--after".to_string(),
+            self.after_reset.clone(),
+            "write_flash".to_string(),
+            "-z".to_string(),
+            "--flash-mode".to_string(),
+            self.flash_mode.clone(),
+            "--flash-freq".to_string(),
+            self.flash_freq.clone(),
+            "--flash-size".to_string(),
+            "detect".to_string(),
+        ]);
+
+        for region in regions {
+            args.push(region.offset.clone());
+            args.push(region.path.to_string_lossy().to_string());
+        }
+        args
+    }
+
+    pub fn write_regions(
+        &self,
+        firmware_path: &Path,
+        port: &str,
+        kinds: &[FlashRegionKind],
+    ) -> Result<DeploymentResult> {
+        let all_regions = self.flash_regions(firmware_path);
+        let selected_regions: Vec<FlashRegion> = all_regions
+            .into_iter()
+            .filter(|region| kinds.contains(&region.kind))
+            .collect();
+
+        if selected_regions.is_empty() {
+            return Err(fbuild_core::FbuildError::DeployFailed(
+                "no flash regions selected for ESP32 deploy".to_string(),
+            ));
+        }
+
+        let args = self.build_write_flash_args_for_regions(&selected_regions, port);
+        let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
+
+        if self.verbose {
+            tracing::info!("deploy: {}", args.join(" "));
+        }
+        tracing::info!(
+            "flashing {} region(s) to {} via esptool ({}): {}",
+            selected_regions.len(),
+            port,
+            self.chip,
+            kinds
+                .iter()
+                .map(|kind| kind.as_str())
+                .collect::<Vec<_>>()
+                .join(", ")
+        );
+
+        let result = run_command(
+            &args_ref,
+            None,
+            None,
+            Some(std::time::Duration::from_secs(120)),
+        )?;
+
+        if result.success() {
+            Ok(DeploymentResult {
+                success: true,
+                message: format!("firmware flashed to {} ({})", port, self.chip),
+                port: Some(port.to_string()),
+                stdout: result.stdout,
+                stderr: result.stderr,
+            })
+        } else {
+            Ok(DeploymentResult {
+                success: false,
+                message: format!("esptool failed (exit code {})", result.exit_code),
+                port: Some(port.to_string()),
+                stdout: result.stdout,
+                stderr: result.stderr,
+            })
+        }
     }
 
     /// Run `esptool verify-flash` on bootloader + partitions + firmware
@@ -214,9 +353,13 @@ impl Esp32Deployer {
             // contains the literal "Verification failed" string.
             let combined = format!("{}\n{}", result.stdout, result.stderr);
             if combined.contains("Verification failed") || combined.contains("digest mismatch") {
+                let mismatched_regions =
+                    parse_mismatched_regions(&combined, &self.flash_regions(firmware_path))
+                        .unwrap_or_default();
                 Ok(VerifyOutcome::Mismatch {
                     stdout: result.stdout,
                     stderr: result.stderr,
+                    mismatched_regions,
                 })
             } else {
                 Err(fbuild_core::FbuildError::DeployFailed(format!(
@@ -237,7 +380,11 @@ pub enum VerifyOutcome {
     Match { stdout: String, stderr: String },
     /// At least one region differs from the local files; the caller
     /// should proceed with a normal `deploy()`.
-    Mismatch { stdout: String, stderr: String },
+    Mismatch {
+        stdout: String,
+        stderr: String,
+        mismatched_regions: Vec<FlashRegionKind>,
+    },
 }
 
 impl VerifyOutcome {
@@ -245,6 +392,65 @@ impl VerifyOutcome {
     pub fn is_match(&self) -> bool {
         matches!(self, VerifyOutcome::Match { .. })
     }
+}
+
+fn parse_verifying_address(line: &str) -> Option<u64> {
+    let marker = " at ";
+    let start = line.find(marker)? + marker.len();
+    let rest = &line[start..];
+    let end = rest.find(" in flash against ")?;
+    parse_hex_offset(rest[..end].trim()).ok()
+}
+
+fn parse_mismatched_regions(output: &str, regions: &[FlashRegion]) -> Option<Vec<FlashRegionKind>> {
+    let mut states: Vec<(FlashRegionKind, Option<bool>)> =
+        regions.iter().map(|region| (region.kind, None)).collect();
+    let region_by_offset: std::collections::HashMap<u64, FlashRegionKind> = regions
+        .iter()
+        .filter_map(|region| {
+            parse_hex_offset(&region.offset)
+                .ok()
+                .map(|o| (o, region.kind))
+        })
+        .collect();
+    let mut current = None;
+
+    for line in output.lines() {
+        if let Some(address) = parse_verifying_address(line) {
+            current = region_by_offset.get(&address).copied();
+            continue;
+        }
+
+        let Some(kind) = current else {
+            continue;
+        };
+
+        let status = if line.contains("Verification successful") {
+            Some(true)
+        } else if line.contains("Verification failed") {
+            Some(false)
+        } else {
+            None
+        };
+
+        if let Some(status) = status {
+            if let Some((_, slot)) = states.iter_mut().find(|(candidate, _)| *candidate == kind) {
+                *slot = Some(status);
+            }
+            current = None;
+        }
+    }
+
+    if states.iter().any(|(_, status)| status.is_none()) {
+        return None;
+    }
+
+    Some(
+        states
+            .into_iter()
+            .filter_map(|(kind, status)| (!status.unwrap_or(true)).then_some(kind))
+            .collect(),
+    )
 }
 
 /// Resolve the flash-image size to use for QEMU.
@@ -674,7 +880,7 @@ fn write_binary_at_offset(
 impl Deployer for Esp32Deployer {
     fn deploy(
         &self,
-        project_dir: &Path,
+        _project_dir: &Path,
         _env_name: &str,
         firmware_path: &Path,
         port: Option<&str>,
@@ -685,55 +891,8 @@ impl Deployer for Esp32Deployer {
             )
         })?;
 
-        let build_dir = firmware_path.parent().unwrap_or(project_dir);
-        let bootloader_path = build_dir.join("bootloader.bin");
-        let partitions_path = build_dir.join("partitions.bin");
-
-        let mut args = Self::find_esptool();
-
-        // Chip and port
-        args.extend([
-            "--chip".to_string(),
-            self.chip.clone(),
-            "--port".to_string(),
-            port.to_string(),
-            "--baud".to_string(),
-            self.baud_rate.clone(),
-        ]);
-
-        // Reset behavior
-        args.extend([
-            "--before".to_string(),
-            self.before_reset.clone(),
-            "--after".to_string(),
-            self.after_reset.clone(),
-        ]);
-
-        // Write flash command
-        args.extend([
-            "write_flash".to_string(),
-            "-z".to_string(),
-            "--flash-mode".to_string(),
-            self.flash_mode.clone(),
-            "--flash-freq".to_string(),
-            self.flash_freq.clone(),
-            "--flash-size".to_string(),
-            "detect".to_string(),
-        ]);
-
-        // Flash addresses and files
-        if bootloader_path.exists() {
-            args.push(self.bootloader_offset.clone());
-            args.push(bootloader_path.to_string_lossy().to_string());
-        }
-
-        if partitions_path.exists() {
-            args.push(self.partitions_offset.clone());
-            args.push(partitions_path.to_string_lossy().to_string());
-        }
-
-        args.push(self.firmware_offset.clone());
-        args.push(firmware_path.to_string_lossy().to_string());
+        let args =
+            self.build_write_flash_args_for_regions(&self.flash_regions(firmware_path), port);
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
 
@@ -1126,9 +1285,84 @@ mod tests {
         let mm = VerifyOutcome::Mismatch {
             stdout: String::new(),
             stderr: "Verification failed".into(),
+            mismatched_regions: vec![FlashRegionKind::Firmware],
         };
         assert!(m.is_match());
         assert!(!mm.is_match());
+    }
+
+    #[test]
+    fn build_write_flash_args_for_regions_uses_selected_subset() {
+        let params = test_esptool_params();
+        let deployer = Esp32Deployer::new(
+            "esp32s3", "921600", "0x0", "0x8000", "0x10000", &params, false,
+        );
+        let tmp = tempfile::TempDir::new().unwrap();
+        std::fs::write(tmp.path().join("bootloader.bin"), b"boot").unwrap();
+        std::fs::write(tmp.path().join("partitions.bin"), b"part").unwrap();
+        let fw = tmp.path().join("firmware.bin");
+        std::fs::write(&fw, b"firm").unwrap();
+        let regions = deployer.flash_regions(&fw);
+        let selected: Vec<FlashRegion> = regions
+            .into_iter()
+            .filter(|region| region.kind == FlashRegionKind::Firmware)
+            .collect();
+
+        let args = deployer.build_write_flash_args_for_regions(&selected, "COM13");
+
+        assert!(args.contains(&"write_flash".to_string()));
+        assert!(args.contains(&"0x10000".to_string()));
+        assert!(args.iter().any(|arg| arg.ends_with("firmware.bin")));
+        assert!(!args.contains(&"0x0".to_string()));
+        assert!(!args.contains(&"0x8000".to_string()));
+        assert!(!args.iter().any(|arg| arg.ends_with("bootloader.bin")));
+        assert!(!args.iter().any(|arg| arg.ends_with("partitions.bin")));
+    }
+
+    #[test]
+    fn parse_mismatched_regions_detects_only_firmware_difference() {
+        let params = test_esptool_params();
+        let deployer = Esp32Deployer::new(
+            "esp32s3", "921600", "0x0", "0x8000", "0x10000", &params, false,
+        );
+        let tmp = tempfile::TempDir::new().unwrap();
+        std::fs::write(tmp.path().join("bootloader.bin"), b"boot").unwrap();
+        std::fs::write(tmp.path().join("partitions.bin"), b"part").unwrap();
+        let fw = tmp.path().join("firmware.bin");
+        std::fs::write(&fw, b"firm").unwrap();
+        let regions = deployer.flash_regions(&fw);
+        let output = "\
+Verifying 0x1000 (4096) bytes at 0x00000000 in flash against 'bootloader.bin'...
+Verification successful (digest matched).
+Verifying 0x1000 (4096) bytes at 0x00008000 in flash against 'partitions.bin'...
+Verification successful (digest matched).
+Verifying 0x2000 (8192) bytes at 0x00010000 in flash against 'firmware.bin'...
+Verification failed (digest mismatch).
+";
+
+        let mismatched = parse_mismatched_regions(output, &regions).unwrap();
+        assert_eq!(mismatched, vec![FlashRegionKind::Firmware]);
+    }
+
+    #[test]
+    fn parse_mismatched_regions_returns_none_when_output_is_incomplete() {
+        let params = test_esptool_params();
+        let deployer = Esp32Deployer::new(
+            "esp32s3", "921600", "0x0", "0x8000", "0x10000", &params, false,
+        );
+        let tmp = tempfile::TempDir::new().unwrap();
+        std::fs::write(tmp.path().join("bootloader.bin"), b"boot").unwrap();
+        std::fs::write(tmp.path().join("partitions.bin"), b"part").unwrap();
+        let fw = tmp.path().join("firmware.bin");
+        std::fs::write(&fw, b"firm").unwrap();
+        let regions = deployer.flash_regions(&fw);
+        let output = "\
+Verifying 0x1000 (4096) bytes at 0x00000000 in flash against 'bootloader.bin'...
+Verification successful (digest matched).
+Verifying 0x1000 (4096) bytes at 0x00008000 in flash against 'partitions.bin'...
+";
+
+        assert!(parse_mismatched_regions(output, &regions).is_none());
     }
 
     // ---------------------------------------------------------------

@@ -1107,10 +1107,26 @@ pub async fn deploy(
                                 stderr,
                             });
                         }
+                        Ok(fbuild_deploy::esp32::VerifyOutcome::Mismatch {
+                            mismatched_regions,
+                            ..
+                        }) if !mismatched_regions.is_empty() => {
+                            let region_labels = mismatched_regions
+                                .iter()
+                                .map(|region| region.as_str())
+                                .collect::<Vec<_>>()
+                                .join(", ");
+                            tracing::info!(
+                                port,
+                                "verify-flash: selective rewrite of mismatched regions: {}",
+                                region_labels
+                            );
+                            return deployer.write_regions(&deploy_fw, port, &mismatched_regions);
+                        }
                         Ok(_) => {
                             tracing::info!(
                                 port,
-                                "verify-flash: device image differs; proceeding with full flash"
+                                "verify-flash: mismatch output could not be mapped to regions; proceeding with full flash"
                             );
                         }
                         Err(e) => {
