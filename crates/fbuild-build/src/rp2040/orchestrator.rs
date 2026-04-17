@@ -156,7 +156,8 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             mcu_config.clone(),
             params.profile,
             params.verbose,
-        );
+        )
+        .with_build_unflags(ctx.build_unflags.clone());
 
         // 7. Generate the linker script the same way upstream does.
         let linker_script =

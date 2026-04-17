@@ -99,7 +99,8 @@ impl BuildOrchestrator for SilabsOrchestrator {
             mcu_config.clone(),
             params.profile,
             params.verbose,
-        );
+        )
+        .with_build_unflags(ctx.build_unflags.clone());
 
         let linker_script = stack_dir.join("linkerfile.ld");
         let gsdk = stack_dir.join("gsdk.a");

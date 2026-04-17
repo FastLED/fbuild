@@ -19,6 +19,9 @@ pub struct AvrCompiler {
     mcu_config: AvrMcuConfig,
     profile: BuildProfile,
     temp_dir: PathBuf,
+    /// PlatformIO `build_unflags` to strip from the effective compile
+    /// line. See FastLED/fbuild#37.
+    build_unflags: Vec<String>,
 }
 
 impl AvrCompiler {
@@ -47,7 +50,15 @@ impl AvrCompiler {
             mcu_config,
             profile,
             temp_dir: fbuild_core::response_file::windows_temp_dir(),
+            build_unflags: Vec::new(),
         }
+    }
+
+    /// Attach PlatformIO `build_unflags` to strip from every compile
+    /// command. See FastLED/fbuild#37.
+    pub fn with_build_unflags(mut self, build_unflags: Vec<String>) -> Self {
+        self.build_unflags = build_unflags;
+        self
     }
 
     /// Build the common AVR compiler flags.
@@ -87,6 +98,10 @@ impl Compiler for AvrCompiler {
             None,
             &[],
         )
+    }
+
+    fn build_unflags(&self) -> &[String] {
+        &self.build_unflags
     }
 
     fn gcc_path(&self) -> &Path {

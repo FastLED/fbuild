@@ -93,7 +93,8 @@ impl BuildOrchestrator for AvrOrchestrator {
             mcu_config.clone(),
             params.profile,
             params.verbose,
-        );
+        )
+        .with_build_unflags(ctx.build_unflags.clone());
 
         // 7. Create linker
         let linker = AvrLinker::new(

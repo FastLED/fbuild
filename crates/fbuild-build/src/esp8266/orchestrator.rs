@@ -136,7 +136,8 @@ impl BuildOrchestrator for Esp8266Orchestrator {
             mcu_config.clone(),
             params.profile,
             params.verbose,
-        );
+        )
+        .with_build_unflags(ctx.build_unflags.clone());
 
         // Resolve linker script from board config
         let ldscript = ctx
