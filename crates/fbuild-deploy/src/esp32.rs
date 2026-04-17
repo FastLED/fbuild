@@ -14,7 +14,7 @@ use fbuild_core::Result;
 use object::{Object, ObjectSymbol};
 use sha2::{Digest, Sha256};
 
-use crate::{Deployer, DeploymentResult};
+use crate::{DeployOutcome, Deployer, DeploymentResult};
 
 /// Esptool flash parameters sourced from MCU config JSON.
 ///
@@ -905,6 +905,9 @@ impl Esp32Deployer {
                 port: Some(port.to_string()),
                 stdout: result.stdout,
                 stderr: result.stderr,
+                outcome: DeployOutcome::SelectiveFlash {
+                    regions: regions.to_vec(),
+                },
             })
         } else {
             Ok(DeploymentResult {
@@ -913,6 +916,9 @@ impl Esp32Deployer {
                 port: Some(port.to_string()),
                 stdout: result.stdout,
                 stderr: result.stderr,
+                outcome: DeployOutcome::SelectiveFlash {
+                    regions: regions.to_vec(),
+                },
             })
         }
     }
@@ -960,6 +966,7 @@ impl Deployer for Esp32Deployer {
                 port: Some(port.to_string()),
                 stdout: result.stdout,
                 stderr: result.stderr,
+                outcome: DeployOutcome::FullFlash,
             })
         } else {
             Ok(DeploymentResult {
@@ -968,6 +975,7 @@ impl Deployer for Esp32Deployer {
                 port: Some(port.to_string()),
                 stdout: result.stdout,
                 stderr: result.stderr,
+                outcome: DeployOutcome::FullFlash,
             })
         }
     }
