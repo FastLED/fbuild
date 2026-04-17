@@ -405,23 +405,14 @@ impl SerialMonitor {
         let data = format!("{}\n", json_str);
         self.write(&data);
 
-        let deadline = std::time::Instant::now() + std::time::Duration::from_secs_f64(timeout);
-
-        while std::time::Instant::now() < deadline {
-            let remaining = (deadline - std::time::Instant::now()).as_secs_f64();
+        if let Some(json_part) = wait_for_remote_json_rpc_response(timeout, |remaining| {
             // read_lines takes &mut self but we only have &self here —
-            // use the raw WS read directly
-            let lines = self.read_lines_inner(remaining.min(1.0));
-            for line in &lines {
-                if let Some(json_part) = line.strip_prefix("REMOTE:") {
-                    let json_module = py.import_bound("json")?;
-                    let result = json_module.call_method1("loads", (json_part.trim(),))?;
-                    return Ok(result.to_object(py));
-                }
-            }
-            if lines.is_empty() {
-                break;
-            }
+            // use the raw WS read directly.
+            self.read_lines_inner(remaining.min(1.0))
+        }) {
+            let json_module = py.import_bound("json")?;
+            let result = json_module.call_method1("loads", (json_part.trim(),))?;
+            return Ok(result.to_object(py));
         }
 
         Err(pyo3::exceptions::PyTimeoutError::new_err(format!(
@@ -539,6 +530,30 @@ impl SerialMonitor {
 
         lines
     }
+}
+
+fn extract_remote_json_rpc_response(lines: &[String]) -> Option<String> {
+    lines.iter().find_map(|line| {
+        line.strip_prefix("REMOTE:")
+            .map(|json_part| json_part.to_string())
+    })
+}
+
+fn wait_for_remote_json_rpc_response<F>(timeout: f64, mut poll: F) -> Option<String>
+where
+    F: FnMut(f64) -> Vec<String>,
+{
+    let deadline = std::time::Instant::now() + std::time::Duration::from_secs_f64(timeout);
+
+    while std::time::Instant::now() < deadline {
+        let remaining = (deadline - std::time::Instant::now()).as_secs_f64();
+        let lines = poll(remaining);
+        if let Some(json_part) = extract_remote_json_rpc_response(&lines) {
+            return Some(json_part);
+        }
+    }
+
+    None
 }
 
 /// Python-visible Daemon class (high-level API).
@@ -777,7 +792,9 @@ fn _native(m: &Bound<'_, PyModule>) -> PyResult<()> {
 
 #[cfg(test)]
 mod tests {
-    use super::PYTHON_MODULE_VERSION;
+    use super::{
+        extract_remote_json_rpc_response, wait_for_remote_json_rpc_response, PYTHON_MODULE_VERSION,
+    };
 
     /// Ensures the Python-visible `__version__` is sourced from Cargo and not
     /// a stale hardcoded literal. The previous value `"2.0.0"` diverged from
@@ -821,5 +838,40 @@ mod tests {
                 "version {name} component {part:?} must be a non-negative integer"
             );
         }
+    }
+
+    #[test]
+    fn extract_remote_json_rpc_response_skips_empty_batches() {
+        let empty: Vec<String> = vec![];
+        assert_eq!(extract_remote_json_rpc_response(&empty), None);
+    }
+
+    #[test]
+    fn extract_remote_json_rpc_response_finds_remote_payload() {
+        let lines = vec![
+            "noise".to_string(),
+            r#"REMOTE: {"ok": true}"#.to_string(),
+            "more noise".to_string(),
+        ];
+        assert_eq!(
+            extract_remote_json_rpc_response(&lines).as_deref(),
+            Some(r#" {"ok": true}"#)
+        );
+    }
+
+    #[test]
+    fn wait_for_remote_json_rpc_response_keeps_polling_after_empty_batch() {
+        let mut polls = 0usize;
+        let result = wait_for_remote_json_rpc_response(0.05, |_| {
+            polls += 1;
+            match polls {
+                1 => vec![],
+                2 => vec!["REMOTE: {\"ok\": true}".to_string()],
+                _ => vec![],
+            }
+        });
+
+        assert_eq!(polls, 2, "an empty batch must not end the overall wait");
+        assert_eq!(result.as_deref(), Some(r#" {"ok": true}"#));
     }
 }
