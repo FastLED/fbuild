@@ -35,6 +35,13 @@ pub struct BuildContext {
     pub project_compile_overlay: LanguageExtraFlags,
     pub overlay_link_flags: Vec<String>,
     pub overlay_link_libs: Vec<String>,
+    /// Tokens from PlatformIO `build_unflags` to strip from the effective
+    /// compile command. Already applied to `user_flags` / `src_flags` /
+    /// `overlay_link_flags` by `BuildContext::new`; orchestrators can pass
+    /// this to their platform compiler (via e.g. `with_build_unflags`) to
+    /// also filter framework/toolchain-contributed flags. See
+    /// FastLED/fbuild#37.
+    pub build_unflags: Vec<String>,
 }
 
 impl BuildContext {
@@ -153,6 +160,7 @@ impl BuildContext {
             project_compile_overlay: overlay.project_compile,
             overlay_link_flags,
             overlay_link_libs: overlay.link.libs,
+            build_unflags,
         })
     }
 }
@@ -199,7 +207,14 @@ fn apply_debug_build_type(
     (user_flags, src_flags, link_flags)
 }
 
-fn remove_unflagged_tokens(flags: &mut Vec<String>, build_unflags: &[String]) {
+/// Remove tokens listed in `build_unflags` from `flags` in place, using
+/// PlatformIO-compatible semantics: exact token matches and flag-value
+/// pair matches for options that take values (like `-include`, `-D`).
+/// Public so platform compilers can apply it to the full effective flag
+/// set — framework + toolchain + user — not just the user-facing scopes
+/// already handled by `apply_build_unflags` in `BuildContext::new`.
+/// See FastLED/fbuild#37.
+pub fn remove_unflagged_tokens(flags: &mut Vec<String>, build_unflags: &[String]) {
     let mut i = 0;
     while i < build_unflags.len() {
         let token = &build_unflags[i];

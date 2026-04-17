@@ -551,7 +551,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 params.profile,
                 params.verbose,
                 build_dir.join("tmp"),
-            );
+            )
+            .with_build_unflags(ctx.build_unflags.clone());
             // Apply user build_flags to library compilation (matching PlatformIO behavior).
             // User flags like -std=gnu++2a replace the MCU config's -std=gnu++2b.
             let c_flags = apply_overlay_flags(&temp_compiler.c_flags(), &user_overlay, "dummy.c");
@@ -615,7 +616,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 params.profile,
                 params.verbose,
                 build_dir.join("tmp"),
-            );
+            )
+            .with_build_unflags(ctx.build_unflags.clone());
             let p_c_flags = apply_overlay_flags(&p_compiler.c_flags(), &src_overlay, "dummy.c");
             let p_cpp_flags =
                 apply_overlay_flags(&p_compiler.cpp_flags(), &src_overlay, "dummy.cpp");
@@ -699,7 +701,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
                     params.profile,
                     params.verbose,
                     build_dir.join("tmp"),
-                );
+                )
+                .with_build_unflags(ctx.build_unflags.clone());
                 let fw_c_flags =
                     apply_overlay_flags(&fw_compiler.c_flags(), &user_overlay, "dummy.c");
                 let fw_cpp_flags =
@@ -856,7 +859,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
             params.profile,
             params.verbose,
             build_dir.join("tmp"),
-        );
+        )
+        .with_build_unflags(ctx.build_unflags.clone());
         let jobs = crate::parallel::effective_jobs(params.jobs);
         tracing::info!("parallel compilation: {} jobs", jobs);
 

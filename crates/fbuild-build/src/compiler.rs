@@ -73,6 +73,19 @@ pub trait Compiler: Send + Sync {
         extra_flags: &[String],
     ) -> Result<CompileResult>;
 
+    /// Tokens to strip from every compile command line. Default: none.
+    ///
+    /// Platforms that want PlatformIO `build_unflags` applied against
+    /// framework/toolchain-contributed flags — not just user flags —
+    /// override this to return their stored set, typically
+    /// `&self.base.build_unflags`. The default `compile_c` / `compile_cpp`
+    /// impls below filter both the platform flags AND `extra_flags`
+    /// through this set before invoking `compile_one`. See
+    /// FastLED/fbuild#37.
+    fn build_unflags(&self) -> &[String] {
+        &[]
+    }
+
     /// Compile a C source file to an object file.
     fn compile_c(
         &self,
@@ -81,7 +94,8 @@ pub trait Compiler: Send + Sync {
         extra_flags: &[String],
     ) -> Result<CompileResult> {
         let flags = self.c_flags();
-        self.compile_one(self.gcc_path(), source, output, &flags, extra_flags)
+        let (flags, extra) = apply_compile_unflags(flags, extra_flags, self.build_unflags());
+        self.compile_one(self.gcc_path(), source, output, &flags, &extra)
     }
 
     /// Compile a C++ source file to an object file.
@@ -92,7 +106,8 @@ pub trait Compiler: Send + Sync {
         extra_flags: &[String],
     ) -> Result<CompileResult> {
         let flags = self.cpp_flags();
-        self.compile_one(self.gxx_path(), source, output, &flags, extra_flags)
+        let (flags, extra) = apply_compile_unflags(flags, extra_flags, self.build_unflags());
+        self.compile_one(self.gxx_path(), source, output, &flags, &extra)
     }
 
     /// Compile a source file (auto-detect C vs C++).
@@ -248,6 +263,26 @@ impl CompilerBase {
             build_dir.join(format!("{}_{}.{}.o", stem, hash, source_ext))
         }
     }
+}
+
+/// Filter both `flags` and `extra_flags` through `unflags` using the shared
+/// PlatformIO-compatible removal semantics in `pipeline::remove_unflagged_tokens`.
+/// Returns the filtered pair ready to pass to `compile_one`. Short-circuits
+/// when `unflags` is empty so platforms that don't opt in pay no overhead.
+/// See FastLED/fbuild#37.
+fn apply_compile_unflags(
+    flags: Vec<String>,
+    extra_flags: &[String],
+    unflags: &[String],
+) -> (Vec<String>, Vec<String>) {
+    if unflags.is_empty() {
+        return (flags, extra_flags.to_vec());
+    }
+    let mut flags = flags;
+    let mut extra = extra_flags.to_vec();
+    crate::pipeline::remove_unflagged_tokens(&mut flags, unflags);
+    crate::pipeline::remove_unflagged_tokens(&mut extra, unflags);
+    (flags, extra)
 }
 
 fn depfile_path(object: &Path) -> PathBuf {

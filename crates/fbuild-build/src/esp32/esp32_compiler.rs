@@ -26,6 +26,11 @@ pub struct Esp32Compiler {
     temp_dir: PathBuf,
     /// Optional zccache path for compiler caching.
     compiler_cache: Option<PathBuf>,
+    /// PlatformIO `build_unflags` tokens to strip from the effective
+    /// compile line. Populated post-construction by the orchestrator
+    /// from `BuildContext::build_unflags`. Empty by default so existing
+    /// callers don't need to change. See FastLED/fbuild#37.
+    build_unflags: Vec<String>,
 }
 
 impl Esp32Compiler {
@@ -87,7 +92,18 @@ impl Esp32Compiler {
             profile,
             temp_dir,
             compiler_cache: crate::zccache::find_zccache().map(PathBuf::from),
+            build_unflags: Vec::new(),
         }
+    }
+
+    /// Attach PlatformIO `build_unflags` to be stripped from every compile
+    /// command issued by this compiler. Consumed by the default `compile_c` /
+    /// `compile_cpp` impls via `Compiler::build_unflags`, so the
+    /// framework-level flags (not just user flags) are filtered too.
+    /// See FastLED/fbuild#37.
+    pub fn with_build_unflags(mut self, build_unflags: Vec<String>) -> Self {
+        self.build_unflags = build_unflags;
+        self
     }
 
     /// Build common compiler flags from the MCU config.
@@ -133,6 +149,10 @@ impl Compiler for Esp32Compiler {
             self.compiler_cache.as_deref(),
             &include_flags,
         )
+    }
+
+    fn build_unflags(&self) -> &[String] {
+        &self.build_unflags
     }
 
     fn gcc_path(&self) -> &Path {
@@ -276,6 +296,54 @@ mod tests {
         let content = std::fs::read_to_string(&path).unwrap();
         assert!(content.contains("-I/path/to/include/0"));
         assert!(content.contains("-I/path/to/include/199"));
+    }
+
+    /// Regression guard for FastLED/fbuild#37: with `build_unflags`
+    /// populated, a framework-contributed flag (e.g. `-std=gnu++2b`)
+    /// must be removed from the effective compile line. The trait's
+    /// default `compile_c`/`compile_cpp` route through
+    /// `Compiler::build_unflags` → `apply_compile_unflags`, so we can
+    /// verify by checking that the ESP32 compiler reports the
+    /// configured unflags back and that removing the framework default
+    /// via `remove_unflagged_tokens` leaves the right residue.
+    #[test]
+    fn with_build_unflags_exposes_them_via_trait_method() {
+        let compiler = test_compiler("esp32c6")
+            .with_build_unflags(vec!["-std=gnu++2b".to_string(), "-Os".to_string()]);
+        assert_eq!(
+            Compiler::build_unflags(&compiler),
+            &["-std=gnu++2b".to_string(), "-Os".to_string()]
+        );
+    }
+
+    /// Default trait impl returns an empty slice when `with_build_unflags`
+    /// was never called — guarantees zero behavior change for callers
+    /// that haven't opted in.
+    #[test]
+    fn default_build_unflags_is_empty() {
+        let compiler = test_compiler("esp32c6");
+        assert!(Compiler::build_unflags(&compiler).is_empty());
+    }
+
+    /// End-to-end check that the unflags set is actually applied to the
+    /// platform-level `cpp_flags()` when routed through the trait's
+    /// default compile path. We can't invoke the real compile (no
+    /// toolchain in tests) but we can mirror the filter the default
+    /// impl uses and confirm it drops the flag.
+    #[test]
+    fn configured_unflags_strip_framework_cpp_flag() {
+        let compiler =
+            test_compiler("esp32c6").with_build_unflags(vec!["-std=gnu++2b".to_string()]);
+        let mut flags = compiler.cpp_flags();
+        assert!(
+            flags.contains(&"-std=gnu++2b".to_string()),
+            "precondition: framework provides -std=gnu++2b"
+        );
+        crate::pipeline::remove_unflagged_tokens(&mut flags, Compiler::build_unflags(&compiler));
+        assert!(
+            !flags.contains(&"-std=gnu++2b".to_string()),
+            "unflags must strip framework-contributed -std=gnu++2b"
+        );
     }
 
     #[test]
