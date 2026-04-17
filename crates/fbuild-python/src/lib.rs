@@ -437,8 +437,35 @@ impl SerialMonitor {
     ///
     /// Returns:
     ///     True if reset succeeded, False otherwise.
-    #[pyo3(signature = (board=None))]
-    fn reset_device(&self, board: Option<String>) -> PyResult<bool> {
+    /// Reset the device via the daemon's DTR/RTS reset endpoint.
+    ///
+    /// Sends POST /api/reset to the daemon, which preempts any active
+    /// serial monitor session, toggles DTR/RTS to reset the device,
+    /// then clears preemption so monitors can reconnect.
+    ///
+    /// Works whether or not __enter__ has been called — the reset goes
+    /// through the daemon's HTTP API, not the WebSocket session.
+    ///
+    /// Args:
+    ///     board: Board identifier (e.g. "esp32s3", "teensy40").
+    ///            Determines the platform-specific reset sequence.
+    ///            If None, a generic DTR toggle is used.
+    ///     wait_for_output: If True, block until serial output is detected
+    ///            after the reset (device has rebooted and is producing data).
+    ///            If False (default), return immediately after reset.
+    ///     timeout: Maximum seconds to wait for output (only used when
+    ///            wait_for_output is True). Default: 5.0.
+    ///
+    /// Returns:
+    ///     True if reset succeeded (and output detected, if wait_for_output).
+    ///     False on failure or timeout.
+    #[pyo3(signature = (board=None, wait_for_output=false, timeout=5.0))]
+    fn reset_device(
+        &self,
+        board: Option<String>,
+        wait_for_output: bool,
+        timeout: f64,
+    ) -> PyResult<bool> {
         let url = format!("{}/api/reset", fbuild_paths::get_daemon_url());
 
         #[derive(Serialize)]
@@ -472,10 +499,64 @@ impl SerialMonitor {
             ))
         })?;
 
-        Ok(body
+        let success = body
             .get("success")
             .and_then(|v| v.as_bool())
-            .unwrap_or(false))
+            .unwrap_or(false);
+
+        if !success || !wait_for_output {
+            return Ok(success);
+        }
+
+        // Poll the daemon's serial output buffer via HTTP.
+        // After reset, the daemon clears preemption and monitors can reconnect.
+        // We poll the daemon's /ws/serial-monitor endpoint indirectly by using
+        // the WebSocket read path if connected, or a simple HTTP health check
+        // with serial output buffer query.
+        let deadline =
+            std::time::Instant::now() + std::time::Duration::from_secs_f64(timeout);
+
+        // Brief pause for USB re-enumeration after DTR toggle
+        std::thread::sleep(std::time::Duration::from_millis(300));
+
+        // If WebSocket is connected (__enter__ was called), poll via read_lines.
+        // This is the fast path: we watch for actual serial output.
+        if self.runtime.is_some() && self.ws_read.is_some() {
+            while std::time::Instant::now() < deadline {
+                let remaining = (deadline - std::time::Instant::now())
+                    .as_secs_f64()
+                    .min(0.2);
+                let lines = self.read_lines_inner(remaining);
+                if !lines.is_empty() {
+                    return Ok(true);
+                }
+            }
+            return Ok(false);
+        }
+
+        // No WebSocket connection — poll via daemon's HTTP serial output API.
+        // The daemon buffers serial output; we can query it to detect boot.
+        let output_url = format!(
+            "{}/api/serial/output?port={}&limit=1",
+            fbuild_paths::get_daemon_url(),
+            self.port
+        );
+        while std::time::Instant::now() < deadline {
+            if let Ok(resp) = reqwest::blocking::Client::new()
+                .get(&output_url)
+                .timeout(std::time::Duration::from_millis(500))
+                .send()
+            {
+                if let Ok(body) = resp.text() {
+                    // Any non-empty response with lines means device is outputting
+                    if body.len() > 10 {
+                        return Ok(true);
+                    }
+                }
+            }
+            std::thread::sleep(std::time::Duration::from_millis(100));
+        }
+        Ok(false)
     }
 }
 
