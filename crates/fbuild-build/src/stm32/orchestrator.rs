@@ -197,7 +197,8 @@ impl BuildOrchestrator for Stm32Orchestrator {
             mcu_config.clone(),
             params.profile,
             params.verbose,
-        );
+        )
+        .with_build_unflags(ctx.build_unflags.clone());
 
         // 7. Create linker (linker script from variant dir)
         let linker_script = match ctx.board.ldscript.as_deref() {
@@ -343,7 +344,8 @@ fn build_arduino_mbed_stm32(
         mcu_config.clone(),
         params.profile,
         params.verbose,
-    );
+    )
+    .with_build_unflags(ctx.build_unflags.clone());
 
     let linker = ArmLinker::new(
         toolchain.get_gcc_path(),

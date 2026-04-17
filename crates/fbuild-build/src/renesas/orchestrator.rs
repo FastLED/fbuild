@@ -109,7 +109,8 @@ impl BuildOrchestrator for RenesasOrchestrator {
             mcu_config.clone(),
             params.profile,
             params.verbose,
-        );
+        )
+        .with_build_unflags(ctx.build_unflags.clone());
 
         // 7. Create linker (resolve linker script from framework variant)
         let linker_script_path = framework.get_linker_script(&ctx.board.variant);

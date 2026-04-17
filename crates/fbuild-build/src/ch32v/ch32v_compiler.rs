@@ -21,6 +21,8 @@ pub struct Ch32vCompiler {
     temp_dir: PathBuf,
     /// Extra flags prepended to every compile (e.g. `-isystem` for multilib).
     extra_pre_flags: Vec<String>,
+    /// PlatformIO `build_unflags`. See FastLED/fbuild#37.
+    build_unflags: Vec<String>,
 }
 
 impl Ch32vCompiler {
@@ -51,7 +53,14 @@ impl Ch32vCompiler {
             profile,
             temp_dir: fbuild_core::response_file::windows_temp_dir(),
             extra_pre_flags,
+            build_unflags: Vec::new(),
         }
+    }
+
+    /// Attach PlatformIO `build_unflags`. See FastLED/fbuild#37.
+    pub fn with_build_unflags(mut self, build_unflags: Vec<String>) -> Self {
+        self.build_unflags = build_unflags;
+        self
     }
 
     /// Build the common RISC-V compiler flags.
@@ -108,6 +117,10 @@ impl Compiler for Ch32vCompiler {
 
     fn cpp_flags(&self) -> Vec<String> {
         crate::compiler::build_cpp_flags(self.common_flags(), &self.mcu_config)
+    }
+
+    fn build_unflags(&self) -> &[String] {
+        &self.build_unflags
     }
 }
 

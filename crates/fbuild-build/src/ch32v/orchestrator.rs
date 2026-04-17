@@ -149,7 +149,8 @@ impl BuildOrchestrator for Ch32vOrchestrator {
             params.profile,
             params.verbose,
             isystem_flags,
-        );
+        )
+        .with_build_unflags(ctx.build_unflags.clone());
 
         // 7. Create linker (resolve linker script from system dir)
         // CH32V linker scripts are in system/<SERIES>/SRC/Ld/, not in variants/

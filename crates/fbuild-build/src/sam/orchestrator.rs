@@ -130,7 +130,8 @@ impl BuildOrchestrator for SamOrchestrator {
             mcu_config.clone(),
             params.profile,
             params.verbose,
-        );
+        )
+        .with_build_unflags(ctx.build_unflags.clone());
 
         // 7. Create linker (resolve linker script from framework variant)
         let mut linker = SamLinker::new(

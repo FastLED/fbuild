@@ -181,7 +181,8 @@ impl BuildOrchestrator for Apollo3Orchestrator {
             augmented_config.clone(),
             params.profile,
             params.verbose,
-        );
+        )
+        .with_build_unflags(ctx.build_unflags.clone());
 
         // 8. Create linker
         let linker_script = framework.get_linker_script();

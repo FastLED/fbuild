@@ -19,6 +19,9 @@ pub struct TeensyCompiler {
     mcu_config: TeensyMcuConfig,
     profile: BuildProfile,
     temp_dir: PathBuf,
+    /// PlatformIO `build_unflags` to strip from the effective compile
+    /// line. See FastLED/fbuild#37.
+    build_unflags: Vec<String>,
 }
 
 impl TeensyCompiler {
@@ -47,7 +50,15 @@ impl TeensyCompiler {
             mcu_config,
             profile,
             temp_dir: fbuild_core::response_file::windows_temp_dir(),
+            build_unflags: Vec::new(),
         }
+    }
+
+    /// Attach PlatformIO `build_unflags` to strip from every compile
+    /// command. See FastLED/fbuild#37.
+    pub fn with_build_unflags(mut self, build_unflags: Vec<String>) -> Self {
+        self.build_unflags = build_unflags;
+        self
     }
 
     /// Build the common ARM Cortex-M7 compiler flags.
@@ -103,6 +114,10 @@ impl Compiler for TeensyCompiler {
 
     fn cpp_flags(&self) -> Vec<String> {
         crate::compiler::build_cpp_flags(self.common_flags(), &self.mcu_config)
+    }
+
+    fn build_unflags(&self) -> &[String] {
+        &self.build_unflags
     }
 }
 

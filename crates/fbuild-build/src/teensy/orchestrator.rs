@@ -99,7 +99,8 @@ impl BuildOrchestrator for TeensyOrchestrator {
             mcu_config.clone(),
             params.profile,
             params.verbose,
-        );
+        )
+        .with_build_unflags(ctx.build_unflags.clone());
 
         // 7. Create linker (with linker script from board config)
         let linker_scripts = match ctx.board.ldscript.as_deref() {
