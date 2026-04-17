@@ -674,18 +674,7 @@ impl DaemonConnection {
 
     #[pyo3(signature = (clean=false, verbose=false, timeout=1800.0))]
     fn build(&self, clean: bool, verbose: bool, timeout: f64) -> bool {
-        let url = format!("{}/api/build", fbuild_paths::get_daemon_url());
-        let req = OpRequest {
-            project_dir: self.project_dir.clone(),
-            environment: Some(self.environment.clone()),
-            clean_build: clean,
-            verbose,
-            port: None,
-            monitor_after: false,
-            skip_build: false,
-            baud_rate: None,
-        };
-        send_op(&url, &req, timeout)
+        send_op(&build_url(), &self.build_request(clean, verbose), timeout).success
     }
 
     #[pyo3(signature = (port=None, clean=false, skip_build=false, monitor_after=false, timeout=1800.0))]
@@ -697,8 +686,99 @@ impl DaemonConnection {
         monitor_after: bool,
         timeout: f64,
     ) -> bool {
-        let url = format!("{}/api/deploy", fbuild_paths::get_daemon_url());
-        let req = OpRequest {
+        send_op(
+            &deploy_url(),
+            &self.deploy_request(port, clean, skip_build, monitor_after),
+            timeout,
+        )
+        .success
+    }
+
+    #[pyo3(signature = (port=None, baud_rate=None, timeout=None))]
+    fn monitor(&self, port: Option<String>, baud_rate: Option<u32>, timeout: Option<f64>) -> bool {
+        send_op(
+            &monitor_url(),
+            &self.monitor_request(port, baud_rate),
+            timeout.unwrap_or(1800.0),
+        )
+        .success
+    }
+
+    /// Same as `build()` but returns a dict with structured result fields:
+    /// `success`, `message`, `exit_code`, `stdout`, `stderr`. Callers that
+    /// need to branch on failure mode can inspect the dict instead of
+    /// swallowing a bare bool. See FastLED/fbuild#18.
+    #[pyo3(signature = (clean=false, verbose=false, timeout=1800.0))]
+    fn build_result<'py>(
+        &self,
+        py: Python<'py>,
+        clean: bool,
+        verbose: bool,
+        timeout: f64,
+    ) -> PyResult<Bound<'py, pyo3::types::PyDict>> {
+        let outcome = send_op(&build_url(), &self.build_request(clean, verbose), timeout);
+        outcome_to_pydict(py, &outcome)
+    }
+
+    /// Structured-result counterpart to `deploy()`. See `build_result()`.
+    #[pyo3(signature = (port=None, clean=false, skip_build=false, monitor_after=false, timeout=1800.0))]
+    fn deploy_result<'py>(
+        &self,
+        py: Python<'py>,
+        port: Option<String>,
+        clean: bool,
+        skip_build: bool,
+        monitor_after: bool,
+        timeout: f64,
+    ) -> PyResult<Bound<'py, pyo3::types::PyDict>> {
+        let outcome = send_op(
+            &deploy_url(),
+            &self.deploy_request(port, clean, skip_build, monitor_after),
+            timeout,
+        );
+        outcome_to_pydict(py, &outcome)
+    }
+
+    /// Structured-result counterpart to `monitor()`. See `build_result()`.
+    #[pyo3(signature = (port=None, baud_rate=None, timeout=None))]
+    fn monitor_result<'py>(
+        &self,
+        py: Python<'py>,
+        port: Option<String>,
+        baud_rate: Option<u32>,
+        timeout: Option<f64>,
+    ) -> PyResult<Bound<'py, pyo3::types::PyDict>> {
+        let outcome = send_op(
+            &monitor_url(),
+            &self.monitor_request(port, baud_rate),
+            timeout.unwrap_or(1800.0),
+        );
+        outcome_to_pydict(py, &outcome)
+    }
+}
+
+impl DaemonConnection {
+    fn build_request(&self, clean: bool, verbose: bool) -> OpRequest {
+        OpRequest {
+            project_dir: self.project_dir.clone(),
+            environment: Some(self.environment.clone()),
+            clean_build: clean,
+            verbose,
+            port: None,
+            monitor_after: false,
+            skip_build: false,
+            baud_rate: None,
+        }
+    }
+
+    fn deploy_request(
+        &self,
+        port: Option<String>,
+        clean: bool,
+        skip_build: bool,
+        monitor_after: bool,
+    ) -> OpRequest {
+        OpRequest {
             project_dir: self.project_dir.clone(),
             environment: Some(self.environment.clone()),
             clean_build: clean,
@@ -707,14 +787,11 @@ impl DaemonConnection {
             monitor_after,
             skip_build,
             baud_rate: None,
-        };
-        send_op(&url, &req, timeout)
+        }
     }
 
-    #[pyo3(signature = (port=None, baud_rate=None, timeout=None))]
-    fn monitor(&self, port: Option<String>, baud_rate: Option<u32>, timeout: Option<f64>) -> bool {
-        let url = format!("{}/api/monitor", fbuild_paths::get_daemon_url());
-        let req = OpRequest {
+    fn monitor_request(&self, port: Option<String>, baud_rate: Option<u32>) -> OpRequest {
+        OpRequest {
             project_dir: self.project_dir.clone(),
             environment: Some(self.environment.clone()),
             clean_build: false,
@@ -723,12 +800,82 @@ impl DaemonConnection {
             monitor_after: false,
             skip_build: false,
             baud_rate,
-        };
-        send_op(&url, &req, timeout.unwrap_or(1800.0))
+        }
     }
 }
 
-fn send_op(url: &str, req: &OpRequest, timeout: f64) -> bool {
+fn build_url() -> String {
+    format!("{}/api/build", fbuild_paths::get_daemon_url())
+}
+
+fn deploy_url() -> String {
+    format!("{}/api/deploy", fbuild_paths::get_daemon_url())
+}
+
+fn monitor_url() -> String {
+    format!("{}/api/monitor", fbuild_paths::get_daemon_url())
+}
+
+/// Structured result of a daemon operation (build/deploy/monitor).
+///
+/// Used internally by `send_op` and exposed to Python callers via
+/// `DaemonConnection::{build,deploy,monitor}_result`. Lets callers branch
+/// on specific failure modes (transport error vs. build error vs. no
+/// response) instead of inspecting a bare bool. See FastLED/fbuild#18.
+#[derive(Debug, Clone, Default)]
+struct OperationOutcome {
+    success: bool,
+    message: Option<String>,
+    exit_code: Option<i32>,
+    stdout: Option<String>,
+    stderr: Option<String>,
+}
+
+fn outcome_to_pydict<'py>(
+    py: Python<'py>,
+    outcome: &OperationOutcome,
+) -> PyResult<Bound<'py, pyo3::types::PyDict>> {
+    let dict = pyo3::types::PyDict::new_bound(py);
+    dict.set_item("success", outcome.success)?;
+    dict.set_item("message", outcome.message.clone())?;
+    dict.set_item("exit_code", outcome.exit_code)?;
+    dict.set_item("stdout", outcome.stdout.clone())?;
+    dict.set_item("stderr", outcome.stderr.clone())?;
+    Ok(dict)
+}
+
+fn parse_outcome(body: &serde_json::Value) -> OperationOutcome {
+    OperationOutcome {
+        success: body
+            .get("success")
+            .and_then(|v| v.as_bool())
+            .unwrap_or(false),
+        message: body
+            .get("message")
+            .and_then(|v| v.as_str())
+            .map(str::to_string),
+        exit_code: body
+            .get("exit_code")
+            .and_then(|v| v.as_i64())
+            .and_then(|n| {
+                if n >= i32::MIN as i64 && n <= i32::MAX as i64 {
+                    Some(n as i32)
+                } else {
+                    None
+                }
+            }),
+        stdout: body
+            .get("stdout")
+            .and_then(|v| v.as_str())
+            .map(str::to_string),
+        stderr: body
+            .get("stderr")
+            .and_then(|v| v.as_str())
+            .map(str::to_string),
+    }
+}
+
+fn send_op(url: &str, req: &OpRequest, timeout: f64) -> OperationOutcome {
     let client = reqwest::blocking::Client::new();
     match client
         .post(url)
@@ -736,31 +883,39 @@ fn send_op(url: &str, req: &OpRequest, timeout: f64) -> bool {
         .timeout(std::time::Duration::from_secs_f64(timeout))
         .send()
     {
-        Ok(resp) => {
-            if let Ok(body) = resp.json::<serde_json::Value>() {
-                let success = body
-                    .get("success")
-                    .and_then(|v| v.as_bool())
-                    .unwrap_or(false);
-                if !success {
-                    if let Some(msg) = body.get("message").and_then(|v| v.as_str()) {
+        Ok(resp) => match resp.json::<serde_json::Value>() {
+            Ok(body) => {
+                let outcome = parse_outcome(&body);
+                if !outcome.success {
+                    if let Some(ref msg) = outcome.message {
                         eprintln!("[fbuild] operation failed: {}", msg);
                     }
-                    if let Some(stderr) = body.get("stderr").and_then(|v| v.as_str()) {
+                    if let Some(ref stderr) = outcome.stderr {
                         if !stderr.is_empty() {
                             eprintln!("[fbuild] stderr:\n{}", stderr);
                         }
                     }
                 }
-                success
-            } else {
-                eprintln!("[fbuild] failed to parse daemon response");
-                false
+                outcome
             }
-        }
+            Err(e) => {
+                let msg = format!("failed to parse daemon response: {}", e);
+                eprintln!("[fbuild] {}", msg);
+                OperationOutcome {
+                    success: false,
+                    message: Some(msg),
+                    ..Default::default()
+                }
+            }
+        },
         Err(e) => {
-            eprintln!("[fbuild] request failed: {}", e);
-            false
+            let msg = format!("request failed: {}", e);
+            eprintln!("[fbuild] {}", msg);
+            OperationOutcome {
+                success: false,
+                message: Some(msg),
+                ..Default::default()
+            }
         }
     }
 }
@@ -793,8 +948,59 @@ fn _native(m: &Bound<'_, PyModule>) -> PyResult<()> {
 #[cfg(test)]
 mod tests {
     use super::{
-        extract_remote_json_rpc_response, wait_for_remote_json_rpc_response, PYTHON_MODULE_VERSION,
+        extract_remote_json_rpc_response, parse_outcome, wait_for_remote_json_rpc_response,
+        PYTHON_MODULE_VERSION,
     };
+
+    /// `parse_outcome` must faithfully extract every field the daemon's
+    /// `OperationResponse` populates so Python callers can branch on the
+    /// specific failure mode (see FastLED/fbuild#18). If any field is
+    /// silently dropped, the structured-result API offers no more
+    /// information than the legacy bool.
+    #[test]
+    fn parse_outcome_extracts_all_fields() {
+        let body = serde_json::json!({
+            "success": false,
+            "message": "build failed",
+            "exit_code": 2,
+            "stdout": "compile log",
+            "stderr": "error: missing header",
+        });
+        let outcome = parse_outcome(&body);
+        assert!(!outcome.success);
+        assert_eq!(outcome.message.as_deref(), Some("build failed"));
+        assert_eq!(outcome.exit_code, Some(2));
+        assert_eq!(outcome.stdout.as_deref(), Some("compile log"));
+        assert_eq!(outcome.stderr.as_deref(), Some("error: missing header"));
+    }
+
+    /// The daemon omits `stdout`, `stderr`, and `exit_code` on many success
+    /// responses. `parse_outcome` must treat missing fields as `None`
+    /// rather than defaulting to empty strings or zero, so Python callers
+    /// can distinguish "no data" from "empty data".
+    #[test]
+    fn parse_outcome_treats_missing_fields_as_none() {
+        let body = serde_json::json!({
+            "success": true,
+            "message": "done",
+        });
+        let outcome = parse_outcome(&body);
+        assert!(outcome.success);
+        assert_eq!(outcome.message.as_deref(), Some("done"));
+        assert_eq!(outcome.exit_code, None);
+        assert_eq!(outcome.stdout, None);
+        assert_eq!(outcome.stderr, None);
+    }
+
+    /// A malformed or empty response body must not panic and must default
+    /// to a failure outcome so callers don't mistakenly treat a garbage
+    /// response as success.
+    #[test]
+    fn parse_outcome_defaults_to_failure_on_empty_body() {
+        let outcome = parse_outcome(&serde_json::json!({}));
+        assert!(!outcome.success);
+        assert_eq!(outcome.message, None);
+    }
 
     /// Ensures the Python-visible `__version__` is sourced from Cargo and not
     /// a stale hardcoded literal. The previous value `"2.0.0"` diverged from
