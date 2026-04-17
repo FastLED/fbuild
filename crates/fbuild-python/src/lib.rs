@@ -979,11 +979,98 @@ fn connect_daemon(project_dir: String, environment: String) -> DaemonConnection 
 /// against the native binary unreliable.
 const PYTHON_MODULE_VERSION: &str = env!("CARGO_PKG_VERSION");
 
+/// Python-visible AsyncSerialMonitor class.
+///
+/// Native async equivalent of `SerialMonitor`. Scaffolds the pattern for
+/// Issue #65 — long-running operations are exposed as `async def` so
+/// callers can `await` them directly from an asyncio event loop without
+/// the thread-pool shim FastLED currently uses (`_run_in_thread`).
+///
+/// The first async method shipped is `reset_device` because it's
+/// stateless (pure HTTP, no WebSocket). Future work will migrate
+/// `read_lines`, `write`, and `write_json_rpc` as the shared WebSocket
+/// state is refactored to be `Send + Sync` across `await` points.
+///
+/// ```python
+/// import asyncio
+/// from fbuild._native import AsyncSerialMonitor
+///
+/// async def main():
+///     mon = AsyncSerialMonitor(port="COM13", baud_rate=115200)
+///     ok = await mon.reset_device(board="esp32s3")
+///
+/// asyncio.run(main())
+/// ```
+#[pyclass]
+struct AsyncSerialMonitor {
+    port: String,
+    #[allow(dead_code)]
+    baud_rate: u32,
+}
+
+#[pymethods]
+impl AsyncSerialMonitor {
+    #[new]
+    #[pyo3(signature = (port, baud_rate=115200))]
+    fn new(port: String, baud_rate: u32) -> Self {
+        Self { port, baud_rate }
+    }
+
+    /// Asynchronously reset the device via the daemon's `POST /api/reset`
+    /// endpoint. Returns `True` if the daemon reported success.
+    #[pyo3(signature = (board=None))]
+    fn reset_device<'py>(
+        &self,
+        py: Python<'py>,
+        board: Option<String>,
+    ) -> PyResult<Bound<'py, PyAny>> {
+        let url = format!("{}/api/reset", fbuild_paths::get_daemon_url());
+        let port = self.port.clone();
+
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            #[derive(Serialize)]
+            struct ResetPayload {
+                port: String,
+                #[serde(skip_serializing_if = "Option::is_none")]
+                board: Option<String>,
+            }
+
+            let payload = ResetPayload { port, board };
+
+            let resp = reqwest::Client::new()
+                .post(&url)
+                .json(&payload)
+                .timeout(std::time::Duration::from_secs(10))
+                .send()
+                .await
+                .map_err(|e| {
+                    pyo3::exceptions::PyConnectionError::new_err(format!(
+                        "failed to send reset request to daemon: {}",
+                        e
+                    ))
+                })?;
+
+            let body: serde_json::Value = resp.json().await.map_err(|e| {
+                pyo3::exceptions::PyRuntimeError::new_err(format!(
+                    "failed to parse reset response: {}",
+                    e
+                ))
+            })?;
+
+            Ok(body
+                .get("success")
+                .and_then(|v| v.as_bool())
+                .unwrap_or(false))
+        })
+    }
+}
+
 /// The fbuild Python module (imported as fbuild._native).
 #[pymodule]
 fn _native(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add("__version__", PYTHON_MODULE_VERSION)?;
     m.add_class::<SerialMonitor>()?;
+    m.add_class::<AsyncSerialMonitor>()?;
     m.add_class::<Daemon>()?;
     m.add_class::<DaemonConnection>()?;
     m.add_function(wrap_pyfunction!(connect_daemon, m)?)?;
