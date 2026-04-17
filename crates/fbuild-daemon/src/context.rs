@@ -4,7 +4,6 @@ use crate::device_manager::DeviceManager;
 use crate::status_manager::StatusManager;
 use dashmap::DashMap;
 use fbuild_core::DaemonState;
-use fbuild_deploy::firmware_ledger::FirmwareLedger;
 use fbuild_serial::SharedSerialManager;
 use std::path::PathBuf;
 use std::sync::atomic::{AtomicBool, AtomicUsize};
@@ -100,8 +99,6 @@ pub struct DaemonContext {
     pub current_operation: Arc<std::sync::RwLock<Option<String>>>,
     /// Per-project build locks to serialize builds on the same project.
     pub project_locks: DashMap<PathBuf, Arc<Mutex<()>>>,
-    /// Firmware deployment ledger for skip-redeploy optimization.
-    pub firmware_ledger: FirmwareLedger,
     /// Device lease manager.
     pub device_manager: DeviceManager,
     /// Persistent status file manager (`daemon_status.json`).
@@ -144,7 +141,6 @@ impl DaemonContext {
             daemon_state: Arc::new(std::sync::RwLock::new(DaemonState::Idle)),
             current_operation: Arc::new(std::sync::RwLock::new(None)),
             project_locks: DashMap::new(),
-            firmware_ledger: FirmwareLedger::new(),
             device_manager: DeviceManager::new(),
             status_manager: StatusManager::new(
                 fbuild_paths::get_daemon_status_file(),
