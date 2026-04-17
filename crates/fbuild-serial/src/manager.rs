@@ -329,15 +329,21 @@ impl SharedSerialManager {
     }
 
     /// Attach a reader to receive broadcast output.
+    ///
+    /// All-or-nothing: returns `None` without mutating session state if
+    /// the port has no active broadcaster, so callers that fail to attach
+    /// don't leave a dangling `reader_client_ids` entry that would block
+    /// self-eviction. See FastLED/fbuild#51.
     pub fn attach_reader(
         &self,
         port: &str,
         client_id: &str,
     ) -> Option<broadcast::Receiver<String>> {
+        let rx = self.broadcasters.get(port).map(|tx| tx.subscribe())?;
         if let Some(mut session) = self.sessions.get_mut(port) {
             session.reader_client_ids.insert(client_id.to_string());
         }
-        self.broadcasters.get(port).map(|tx| tx.subscribe())
+        Some(rx)
     }
 
     /// Detach a reader.
@@ -540,5 +546,61 @@ mod tests {
                 observed
             );
         });
+    }
+
+    /// Regression guard for FastLED/fbuild#51: `attach_reader` used to
+    /// insert `client_id` into `session.reader_client_ids` even when the
+    /// broadcaster was missing (returning `None`). That left a dangling
+    /// reader id that kept `has_clients()` true forever, blocking
+    /// self-eviction and leaving `fbuild-daemon.exe` resident after the
+    /// autoresearch session ended.
+    ///
+    /// Contract: if `attach_reader` returns `None`, no session state may
+    /// be mutated.
+    #[test]
+    fn attach_reader_missing_broadcaster_does_not_mutate_session_state() {
+        let mgr = SharedSerialManager::new();
+        let port = "COM_TEST_NO_BROADCASTER";
+        let client = "client-1";
+
+        // Insert a bare session without a broadcaster — simulates the
+        // pathological "half-set-up" state.
+        mgr.sessions.insert(
+            port.to_string(),
+            super::SerialSession {
+                port: port.to_string(),
+                baud_rate: 115200,
+                is_open: false,
+                writer_client_id: None,
+                reader_client_ids: Default::default(),
+                output_buffer: Default::default(),
+                total_bytes_read: 0,
+                total_bytes_written: 0,
+                started_at: 0.0,
+                owner_client_id: None,
+                elf_path: None,
+                serial_handle: None,
+                reader_handle: None,
+                stop_flag: Arc::new(std::sync::atomic::AtomicBool::new(false)),
+            },
+        );
+
+        let result = mgr.attach_reader(port, client);
+        assert!(
+            result.is_none(),
+            "attach_reader must return None when broadcaster is absent"
+        );
+
+        let leaked = mgr
+            .sessions
+            .get(port)
+            .map(|s| s.reader_client_ids.contains(client))
+            .unwrap_or(false);
+        assert!(
+            !leaked,
+            "attach_reader must not mutate reader_client_ids when it \
+             returns None — regression of FastLED/fbuild#51 where the \
+             leaked id kept has_clients() true forever"
+        );
     }
 }
