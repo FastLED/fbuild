@@ -1082,16 +1082,10 @@ pub async fn deploy(
                 // Falls through to the normal flash path silently on
                 // mismatch or transport error so we never break a deploy
                 // that the verify call didn't understand.
+                let mut selective_regions: Option<Vec<fbuild_deploy::esp32::FlashRegion>> = None;
                 if let Some(port) = deploy_port.as_deref() {
                     match deployer.try_verify_deployment(&deploy_fw, port) {
-                        Ok(outcome) if outcome.is_match() => {
-                            let (stdout, stderr) = match outcome {
-                                fbuild_deploy::esp32::VerifyOutcome::Match {
-                                    stdout,
-                                    stderr,
-                                } => (stdout, stderr),
-                                _ => (String::new(), String::new()),
-                            };
+                        Ok(fbuild_deploy::esp32::VerifyOutcome::Match { stdout, stderr }) => {
                             tracing::info!(
                                 port,
                                 "verify-flash: device already running this exact image; skipping write"
@@ -1107,11 +1101,30 @@ pub async fn deploy(
                                 stderr,
                             });
                         }
-                        Ok(_) => {
-                            tracing::info!(
-                                port,
-                                "verify-flash: device image differs; proceeding with full flash"
-                            );
+                        Ok(fbuild_deploy::esp32::VerifyOutcome::Mismatch { regions, .. }) => {
+                            // Pick only the regions that actually differ
+                            // so we avoid the ~1s bootloader/partitions
+                            // rewrite when only firmware changed. Empty
+                            // `regions` means parsing failed — fall back
+                            // to full flash.
+                            let to_write: Vec<_> = regions
+                                .iter()
+                                .filter(|r| !r.matched)
+                                .map(|r| r.region)
+                                .collect();
+                            if !regions.is_empty() && !to_write.is_empty() && to_write.len() < 3 {
+                                tracing::info!(
+                                    port,
+                                    "verify-flash: only {} region(s) differ; flashing selectively",
+                                    to_write.len()
+                                );
+                                selective_regions = Some(to_write);
+                            } else {
+                                tracing::info!(
+                                    port,
+                                    "verify-flash: device image differs; proceeding with full flash"
+                                );
+                            }
                         }
                         Err(e) => {
                             tracing::warn!(
@@ -1121,6 +1134,10 @@ pub async fn deploy(
                             );
                         }
                     }
+                }
+
+                if let (Some(regions), Some(port)) = (selective_regions, deploy_port.as_deref()) {
+                    return deployer.deploy_regions(&deploy_fw, port, &regions);
                 }
 
                 Box::new(deployer)
