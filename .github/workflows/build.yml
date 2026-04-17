@@ -26,11 +26,10 @@ jobs:
             linux_cross: true
             macos_cross: false
 
-          - target: x86_64-apple-darwin
-            runner: macos-15
-            binary_ext: ""
-            linux_cross: false
-            macos_cross: true
+          # x86_64-apple-darwin removed: Intel Macs use ARM wheel via Rosetta.
+          # Cross-compiling ring crate ARM→x86 fails; native macos-13 runners
+          # are perpetually unavailable. Re-enable when ring supports cross or
+          # GitHub restores Intel runner capacity.
 
           - target: aarch64-apple-darwin
             runner: macos-latest
