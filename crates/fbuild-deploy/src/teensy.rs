@@ -7,7 +7,7 @@ use std::path::{Path, PathBuf};
 use fbuild_core::subprocess::run_command;
 use fbuild_core::Result;
 
-use crate::{Deployer, DeploymentResult};
+use crate::{DeployOutcome, Deployer, DeploymentResult};
 
 /// Teensy loader CLI deploy parameters sourced from MCU config JSON.
 pub struct TeensyLoaderParams {
@@ -116,6 +116,7 @@ impl Deployer for TeensyDeployer {
                 port: port.map(|p| p.to_string()),
                 stdout: result.stdout,
                 stderr: result.stderr,
+                outcome: DeployOutcome::FullFlash,
             })
         } else {
             // Return a non-success DeploymentResult instead of Err so the
@@ -126,6 +127,7 @@ impl Deployer for TeensyDeployer {
                 port: port.map(|p| p.to_string()),
                 stdout: result.stdout,
                 stderr: result.stderr,
+                outcome: DeployOutcome::FullFlash,
             })
         }
     }

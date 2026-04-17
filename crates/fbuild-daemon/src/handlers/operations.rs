@@ -1099,6 +1099,7 @@ pub async fn deploy(
                                 port: Some(port.to_string()),
                                 stdout,
                                 stderr,
+                                outcome: fbuild_deploy::DeployOutcome::VerifySkip,
                             });
                         }
                         Ok(fbuild_deploy::esp32::VerifyOutcome::Mismatch { regions, .. }) => {
@@ -1212,8 +1213,8 @@ pub async fn deploy(
         .await;
     }
 
-    let (deploy_success, deploy_stdout, deploy_stderr) = match deploy_result {
-        Ok(Ok(r)) if r.success => (true, Some(r.stdout), Some(r.stderr)),
+    let (deploy_success, deploy_stdout, deploy_stderr, deploy_outcome) = match deploy_result {
+        Ok(Ok(r)) if r.success => (true, Some(r.stdout), Some(r.stderr), r.outcome),
         Ok(Ok(r)) => {
             return (
                 StatusCode::INTERNAL_SERVER_ERROR,
@@ -1249,6 +1250,11 @@ pub async fn deploy(
             );
         }
     };
+    // Build the "deploy succeeded (...)" prefix used by every
+    // monitor-attached and non-monitor-attached response below. Stable
+    // wording — see GitHub issue #76 and the DeployOutcome::describe
+    // test in fbuild-deploy.
+    let deploy_prefix = format!("deploy succeeded ({})", deploy_outcome.describe());
 
     // Post-deploy monitoring: if monitor_after is set, open the serial port
     // and stream lines checking halt conditions (matching Python behavior).
@@ -1267,7 +1273,7 @@ pub async fn deploy(
                 Json(OperationResponse {
                     success: true,
                     request_id,
-                    message: format!("deploy succeeded but monitor failed to open port: {}", e),
+                    message: format!("{} but monitor failed to open port: {}", deploy_prefix, e),
                     exit_code: 0,
                     output_file: Some(reported_output_file.clone()),
                     output_dir: reported_output_dir.clone(),
@@ -1287,7 +1293,7 @@ pub async fn deploy(
                     Json(OperationResponse {
                         success: true,
                         request_id,
-                        message: "deploy succeeded but monitor could not attach reader".to_string(),
+                        message: format!("{} but monitor could not attach reader", deploy_prefix),
                         exit_code: 0,
                         output_file: Some(reported_output_file.clone()),
                         output_dir: reported_output_dir.clone(),
@@ -1317,7 +1323,7 @@ pub async fn deploy(
                 Json(OperationResponse {
                     success: true,
                     request_id,
-                    message: format!("deploy succeeded; monitor: {}", msg),
+                    message: format!("{}; monitor: {}", deploy_prefix, msg),
                     exit_code: 0,
                     output_file: Some(reported_output_file.clone()),
                     output_dir: reported_output_dir.clone(),
@@ -1331,7 +1337,7 @@ pub async fn deploy(
                 Json(OperationResponse {
                     success: false,
                     request_id,
-                    message: format!("deploy succeeded; monitor error: {}", msg),
+                    message: format!("{}; monitor error: {}", deploy_prefix, msg),
                     exit_code: 1,
                     output_file: Some(reported_output_file.clone()),
                     output_dir: reported_output_dir.clone(),
@@ -1356,7 +1362,8 @@ pub async fn deploy(
                         success,
                         request_id,
                         message: format!(
-                            "deploy succeeded; monitor timed out{}",
+                            "{}; monitor timed out{}",
+                            deploy_prefix,
                             if !expect_found && req.monitor_expect.is_some() {
                                 " (expected pattern not found)"
                             } else {
@@ -1380,7 +1387,7 @@ pub async fn deploy(
         Json(OperationResponse {
             success: true,
             request_id,
-            message: "deploy succeeded".to_string(),
+            message: deploy_prefix,
             exit_code: 0,
             output_file: Some(reported_output_file),
             output_dir: reported_output_dir,
@@ -1838,5 +1845,70 @@ pub async fn install_deps(
                 format!("install-deps task panicked: {}", e),
             )),
         ),
+    }
+}
+
+#[cfg(test)]
+mod deploy_message_tests {
+    //! Verifies the `/api/deploy` response message exposes the real
+    //! deploy outcome (full / verify-skip / selective) instead of the
+    //! generic `"deploy succeeded"`. See GitHub issue #76.
+    //!
+    //! These tests cover only the pure string-formatting contract; the
+    //! underlying outcome computation is tested in `fbuild-deploy`.
+    use fbuild_deploy::{esp32::FlashRegion, DeployOutcome};
+
+    fn prefix_for(outcome: &DeployOutcome) -> String {
+        format!("deploy succeeded ({})", outcome.describe())
+    }
+
+    #[test]
+    fn full_flash_prefix() {
+        assert_eq!(
+            prefix_for(&DeployOutcome::FullFlash),
+            "deploy succeeded (full flash)"
+        );
+    }
+
+    #[test]
+    fn verify_skip_prefix() {
+        assert_eq!(
+            prefix_for(&DeployOutcome::VerifySkip),
+            "deploy succeeded (verify skipped, device already matched)"
+        );
+    }
+
+    #[test]
+    fn selective_flash_firmware_prefix() {
+        let outcome = DeployOutcome::SelectiveFlash {
+            regions: vec![FlashRegion::Firmware],
+        };
+        assert_eq!(
+            prefix_for(&outcome),
+            "deploy succeeded (selective flash: firmware)"
+        );
+    }
+
+    #[test]
+    fn monitor_suffix_preserved_on_selective_flash() {
+        let outcome = DeployOutcome::SelectiveFlash {
+            regions: vec![FlashRegion::Firmware],
+        };
+        let prefix = prefix_for(&outcome);
+        let combined = format!("{}; monitor: ok", prefix);
+        assert_eq!(
+            combined,
+            "deploy succeeded (selective flash: firmware); monitor: ok"
+        );
+    }
+
+    #[test]
+    fn monitor_error_suffix_preserved_on_verify_skip() {
+        let prefix = prefix_for(&DeployOutcome::VerifySkip);
+        let combined = format!("{}; monitor error: pattern matched", prefix);
+        assert_eq!(
+            combined,
+            "deploy succeeded (verify skipped, device already matched); monitor error: pattern matched"
+        );
     }
 }
