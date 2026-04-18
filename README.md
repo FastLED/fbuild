@@ -174,22 +174,29 @@ Both auto-detect the emulator backend from the board, or accept `--emulator <bac
 |---------|-----------|------|--------------|
 | **avr8js** | AtmelAVR | ATmega328P | Node.js (bundled headless script) |
 | **simavr** | AtmelAVR, MegaAVR | ATmega2560, ATmega32U4, and others | `simavr` binary on PATH |
-| **qemu** | Espressif32 | ESP32, ESP32-S3 | Native QEMU (auto-downloaded) |
+| **qemu** | Espressif32 | ESP32, ESP32-S3 (Xtensa); ESP32-C3, ESP32-C6, ESP32-H2 (RISC-V) | Native QEMU (auto-downloaded) |
 
 Auto-detection rules when `--emulator` is omitted:
 
 - ATmega328P defaults to **avr8js** (no external binary needed)
 - Other AVR MCUs with `simavr` in `debug_tools` default to **simavr**
-- ESP32 / ESP32-S3 default to **qemu**
+- ESP32, ESP32-S3 (Xtensa) and ESP32-C3, ESP32-C6, ESP32-H2 (RISC-V) default to **qemu**
 
 ### QEMU notes
 
-ESP32-S3 QEMU runs from a normal ESP32-S3 Arduino environment. fbuild adds the required QEMU build flags automatically when deploying to `--to emu`.
+ESP32-family QEMU runs from a normal Arduino environment. fbuild launches the correct Espressif QEMU binary (`qemu-system-xtensa` for ESP32/ESP32-S3; `qemu-system-riscv32` for ESP32-C3/C6/H2) based on the selected `board`. The required QEMU build flags are injected automatically when deploying to `--to emu`.
 
 ```ini
 [env:esp32s3]
 platform = https://github.com/pioarduino/platform-espressif32/releases/download/55.03.34/platform-espressif32.zip
 board = esp32-s3-devkitc-1
+framework = arduino
+board_build.flash_mode = dio
+board_upload.flash_mode = dio
+
+[env:esp32c3]
+platform = https://github.com/pioarduino/platform-espressif32/releases/download/55.03.34/platform-espressif32.zip
+board = esp32-c3-devkitm-1
 framework = arduino
 board_build.flash_mode = dio
 board_upload.flash_mode = dio
@@ -201,8 +208,8 @@ QEMU runtime is native-only. Supported hosts: Linux x86_64/arm64, macOS x86_64/a
 
 **Known limitations**:
 
-1. **ESP32 QEMU** currently supports ESP32 and ESP32-S3 only. ESP32-C3/C6/S2 are not supported by upstream QEMU.
-2. **QEMU-specific firmware patching**: fbuild patches the generated ESP32-S3 app image for QEMU to bypass an ADC calibration constructor that hangs under emulation, then repairs the image checksum and hash.
+1. **ESP32 QEMU** supports ESP32, ESP32-S3 (Xtensa) and ESP32-C3, ESP32-C6, ESP32-H2 (RISC-V). ESP32-S2 and ESP32-P4 are not yet supported by upstream Espressif QEMU.
+2. **QEMU-specific firmware patching**: fbuild patches the generated ESP32-S3 app image for QEMU to bypass an ADC calibration constructor that hangs under emulation, then repairs the image checksum and hash. RISC-V variants (C3/C6/H2) do not require this patch.
 3. **Performance**: QEMU emulation is slower than real hardware. Use it for functional validation, not timing-sensitive behavior.
 4. **Peripheral coverage**: Not all peripherals are fully emulated. Real hardware is still required for production validation.
 

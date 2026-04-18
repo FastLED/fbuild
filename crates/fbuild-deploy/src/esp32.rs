@@ -442,7 +442,10 @@ pub fn create_qemu_flash_image(
 /// Build the QEMU argv for ESP32-family emulation.
 ///
 /// The `mcu` parameter selects the QEMU machine type and watchdog timer
-/// driver name. Supported values: `esp32`, `esp32s2`, `esp32s3`.
+/// driver name. Supported values: `esp32`, `esp32s3` (via
+/// `qemu-system-xtensa`) and `esp32c3`, `esp32c6`, `esp32h2` (via
+/// `qemu-system-riscv32`). Callers are responsible for launching the
+/// matching QEMU binary; this function only emits the argv.
 pub fn build_qemu_args(
     mcu: &str,
     flash_image: &Path,
