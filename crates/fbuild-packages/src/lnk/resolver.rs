@@ -73,14 +73,18 @@ pub fn resolve(lnk: &LnkFile, cache: &DiskCache) -> Result<ResolvedBlob> {
             // Best-effort sha verify on cache hit — cheap (single read,
             // not network). Catches accidental cache corruption.
             if verify_sha256(&blob_path, &lnk.sha256).is_ok() {
-                let lease = cache.lease(&entry).map_err(map_cache_err)?;
-                cache.touch(&entry).map_err(map_cache_err)?;
+                // Lease acquisition is best-effort: older cache schemas may
+                // lack the `refcount` column. A missing lease just means
+                // "blob isn't pinned against concurrent GC"; for a single-
+                // process build that's acceptable.
+                let lease = best_effort_lease(cache, &entry);
+                let _ = cache.touch(&entry);
                 debug!(url = %lnk.url, sha = %lnk.sha256, "lnk cache hit");
                 return Ok(ResolvedBlob {
                     path: blob_path,
                     sha256: lnk.sha256.clone(),
                     entry: Some(entry),
-                    lease: Some(lease),
+                    lease,
                 });
             }
             tracing::warn!(
@@ -156,7 +160,7 @@ pub fn resolve(lnk: &LnkFile, cache: &DiskCache) -> Result<ResolvedBlob> {
         )
         .map_err(map_cache_err)?;
 
-    let lease = cache.lease(&entry).map_err(map_cache_err)?;
+    let lease = best_effort_lease(cache, &entry);
     info!(
         url = %lnk.url,
         bytes = archive_bytes,
@@ -168,8 +172,29 @@ pub fn resolve(lnk: &LnkFile, cache: &DiskCache) -> Result<ResolvedBlob> {
         path: final_path,
         sha256: lnk.sha256.clone(),
         entry: Some(entry),
-        lease: Some(lease),
+        lease,
     })
+}
+
+/// Attempt to acquire a cache lease, returning `None` on failure.
+///
+/// Older `DiskCache` schemas may lack the `refcount` column that
+/// `lease.rs` expects. In that case we log a warning and continue
+/// without a lease — the cached blob is still valid, it just isn't
+/// pinned against concurrent GC. For a single-process build that's
+/// acceptable; parallel builds on an old schema may race, but the
+/// same was true before this change.
+fn best_effort_lease(cache: &DiskCache, entry: &CacheEntry) -> Option<Lease> {
+    match cache.lease(entry) {
+        Ok(l) => Some(l),
+        Err(e) => {
+            tracing::warn!(
+                error = %e,
+                "failed to acquire lnk cache lease; continuing unpinned"
+            );
+            None
+        }
+    }
 }
 
 /// Reconstruct the on-disk blob path from a `CacheEntry`. The entry's
