@@ -11,6 +11,23 @@ use std::sync::Arc;
 use std::time::Instant;
 use tokio::sync::Mutex;
 
+/// Per-firmware-path memo for the deploy-handler SHA-256 image hash.
+///
+/// Hashing bootloader + partitions + firmware (~2–4 MB) on every
+/// warm redeploy is 5–15 ms of wasted work when the build output is
+/// unchanged. The deploy handler reads the three files' `mtime` as a
+/// cache key — if all three match the memo, it reuses the stored
+/// hash instead of re-reading + re-hashing. Cleared implicitly when
+/// any file's `mtime` advances (i.e. the next build produced new
+/// output).
+#[derive(Debug, Clone, Copy)]
+pub struct ImageHashMemo {
+    pub bootloader_mtime: std::time::SystemTime,
+    pub partitions_mtime: std::time::SystemTime,
+    pub firmware_mtime: std::time::SystemTime,
+    pub hash: [u8; 32],
+}
+
 /// Broadcast hub for WebSocket endpoints (`/ws/status`, `/ws/logs`).
 ///
 /// Uses `tokio::sync::broadcast` channels so multiple WebSocket clients can
@@ -131,6 +148,10 @@ pub struct DaemonContext {
     pub broadcast_hub: BroadcastHub,
     /// Active AVR8js sessions keyed by session ID.
     pub avr8js_sessions: DashMap<String, PathBuf>,
+    /// Memoized SHA-256 of the ESP32 deploy-image (bootloader +
+    /// partitions + firmware) keyed by firmware file path. See
+    /// [`ImageHashMemo`]. Cleared entry-by-entry when `mtime` changes.
+    pub image_hash_memo: DashMap<PathBuf, ImageHashMemo>,
     /// Serializes GC runs so background and manual `/api/cache/gc` don't interleave.
     pub gc_mutex: Arc<tokio::sync::Mutex<()>>,
 }
@@ -183,6 +204,7 @@ impl DaemonContext {
             spawner_cwd,
             broadcast_hub,
             avr8js_sessions: DashMap::new(),
+            image_hash_memo: DashMap::new(),
             gc_mutex: Arc::new(tokio::sync::Mutex::new(())),
         }
     }
