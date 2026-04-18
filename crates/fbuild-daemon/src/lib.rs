@@ -35,3 +35,4 @@ pub mod handlers;
 pub mod log_layer;
 pub mod models;
 pub mod status_manager;
+pub mod watch_set_cache;

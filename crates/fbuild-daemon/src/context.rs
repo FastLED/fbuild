@@ -152,6 +152,13 @@ pub struct DaemonContext {
     /// partitions + firmware) keyed by firmware file path. See
     /// [`ImageHashMemo`]. Cleared entry-by-entry when `mtime` changes.
     pub image_hash_memo: DashMap<PathBuf, ImageHashMemo>,
+    /// Daemon-scoped cache for `hash_watch_set_stamps` results so
+    /// back-to-back warm builds skip the per-call walk over thousands
+    /// of watched files (the dominant cost on warm rebuilds of large
+    /// projects — see `docs/PERF_WARM_BUILD.md`). Threaded into
+    /// [`fbuild_build::BuildParams::watch_set_cache`] from the build
+    /// handler.
+    pub watch_set_cache: Arc<crate::watch_set_cache::DaemonWatchSetCache>,
     /// Serializes GC runs so background and manual `/api/cache/gc` don't interleave.
     pub gc_mutex: Arc<tokio::sync::Mutex<()>>,
 }
@@ -205,6 +212,7 @@ impl DaemonContext {
             broadcast_hub,
             avr8js_sessions: DashMap::new(),
             image_hash_memo: DashMap::new(),
+            watch_set_cache: Arc::new(crate::watch_set_cache::DaemonWatchSetCache::new()),
             gc_mutex: Arc::new(tokio::sync::Mutex::new(())),
         }
     }

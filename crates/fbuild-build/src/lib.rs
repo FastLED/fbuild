@@ -167,6 +167,14 @@ pub struct BuildParams {
     /// such as QEMU emulation. These are appended after platformio.ini
     /// `build_flags`, so they can intentionally override board/user defaults.
     pub extra_build_flags: Vec<String>,
+    /// Optional daemon-scoped memo for the warm-build fingerprint
+    /// `hash_watch_set_stamps` walk. When supplied, the orchestrator
+    /// short-circuits the walk on a fresh cache hit — the dominant
+    /// non-trivial cost on warm rebuilds of large projects (see
+    /// `docs/PERF_WARM_BUILD.md`). `None` from the CLI / tests means
+    /// the orchestrator falls back to walking on every call, which is
+    /// the pre-existing behaviour.
+    pub watch_set_cache: Option<std::sync::Arc<dyn build_fingerprint::WatchSetStampCache>>,
 }
 
 /// Trait for platform-specific build orchestrators.

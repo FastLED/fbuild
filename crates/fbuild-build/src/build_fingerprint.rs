@@ -156,6 +156,47 @@ pub fn hash_watch_set(watches: &[FingerprintWatch]) -> Result<String> {
     Ok(format!("{:x}", hasher.finalize()))
 }
 
+/// In-memory cache for [`hash_watch_set_stamps`] results across
+/// invocations within the same daemon lifetime. The daemon implements
+/// this so warm rebuilds within a few seconds of each other can skip
+/// the per-build walk over thousands of watched files.
+///
+/// The cache key is derived by the implementor from the watch set's
+/// root paths; the orchestrator just hands the slice in. Callers must
+/// expect `get` to return `None` whenever the implementation considers
+/// the entry stale (typically a 2–5 s freshness window since the last
+/// `put`), so correctness is unaffected by an absent or evicted entry.
+pub trait WatchSetStampCache: Send + Sync {
+    fn get(&self, watches: &[FingerprintWatch]) -> Option<String>;
+    fn put(&self, watches: &[FingerprintWatch], hash: String);
+}
+
+/// [`hash_watch_set_stamps`] with an optional in-memory short-circuit.
+///
+/// When `cache` is `Some`, a cache hit returns immediately without
+/// walking the watch tree (the dominant cost for large projects per
+/// `docs/PERF_WARM_BUILD.md`). On miss, the result is recorded
+/// before being returned.
+///
+/// `cache: None` is identical to calling [`hash_watch_set_stamps`]
+/// directly — used by code paths (CLI, tests) that don't have a
+/// daemon-scoped cache to consult.
+pub fn hash_watch_set_stamps_cached(
+    watches: &[FingerprintWatch],
+    cache: Option<&dyn WatchSetStampCache>,
+) -> Result<String> {
+    if let Some(c) = cache {
+        if let Some(hash) = c.get(watches) {
+            return Ok(hash);
+        }
+    }
+    let hash = hash_watch_set_stamps(watches)?;
+    if let Some(c) = cache {
+        c.put(watches, hash.clone());
+    }
+    Ok(hash)
+}
+
 pub fn hash_watch_set_stamps(watches: &[FingerprintWatch]) -> Result<String> {
     let mut ordered = watches.to_vec();
     ordered.sort_by(|a, b| a.root.cmp(&b.root).then(a.cache_file.cmp(&b.cache_file)));
