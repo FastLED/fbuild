@@ -36,10 +36,8 @@ jobs:
     timeout-minutes: 75
     env:
       BENCH_TIMINGS: ${{ github.workspace }}/phase-timings.tsv
-      # FBUILD_CACHE_DIR is also set by the fbuild-setup step below for the
-      # subsequent compile. We export it early so our cache-restore step sees
-      # the same path.
-      FBUILD_CACHE_DIR: ${{ runner.temp }}/fbuild-cache
+      # FBUILD_CACHE_DIR is resolved in the "Init" step below (runner.*
+      # context is not available in job-level env).
     steps:
       - name: Checkout benchmark branch
         uses: actions/checkout@v4
@@ -68,11 +66,12 @@ jobs:
           echo "cache_bust=${CACHE_BUST}" >> "$GITHUB_OUTPUT"
           echo "Resolved: board=${BOARD} ref=${FASTLED_REF} examples=${EXAMPLES} cache_bust=${CACHE_BUST}"
 
-      - name: Init phase timings file
+      - name: Init phase timings file + resolve cache dir
         run: |
           printf 'phase\tseconds\n' > "$BENCH_TIMINGS"
           echo "BENCH_JOB_START=$(date +%s.%N)" >> "$GITHUB_ENV"
-          mkdir -p "$FBUILD_CACHE_DIR"
+          echo "FBUILD_CACHE_DIR=${RUNNER_TEMP}/fbuild-cache" >> "$GITHUB_ENV"
+          mkdir -p "${RUNNER_TEMP}/fbuild-cache"
 
       # --- phase: setup-python (inlined so we can time it) ---
       - name: "Phase - setup-python"
