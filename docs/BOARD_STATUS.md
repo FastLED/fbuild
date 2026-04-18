@@ -4,6 +4,9 @@ Live per-platform CI status and supported-board reference for fbuild.
 
 ## Per-platform CI badges
 
+<details>
+<summary>Expand CI badge matrix</summary>
+
 ### AVR
 [![Build Arduino Uno](https://github.com/fastled/fbuild/actions/workflows/build-uno.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-uno.yml)
 [![Build Leonardo](https://github.com/fastled/fbuild/actions/workflows/build-leonardo.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-leonardo.yml)
@@ -96,6 +99,8 @@ Live per-platform CI status and supported-board reference for fbuild.
 
 ### Silicon Labs
 [![Build SparkFun Thing Plus Matter](https://github.com/fastled/fbuild/actions/workflows/build-thingplusmatter.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-thingplusmatter.yml)
+
+</details>
 
 ## Supported platforms and boards
 
