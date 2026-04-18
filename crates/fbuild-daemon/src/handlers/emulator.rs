@@ -1082,7 +1082,8 @@ pub async fn deploy_qemu(
             Json(OperationResponse::fail(
                 request_id,
                 format!(
-                    "native QEMU deploy currently supports ESP32 and ESP32-S3 boards, got '{}'",
+                    "native QEMU deploy currently supports ESP32, ESP32-S3 (Xtensa) and \
+                     ESP32-C3, ESP32-C6, ESP32-H2 (RISC-V) boards, got '{}'",
                     board.mcu
                 ),
             )),
@@ -1132,9 +1133,7 @@ pub async fn deploy_qemu(
         }
     };
 
-    let qemu = match fbuild_packages::toolchain::EspQemuXtensa::new(&project_dir)
-        .and_then(|pkg| pkg.resolve_executable())
-    {
+    let qemu = match resolve_esp_qemu_for_mcu(&project_dir, &board.mcu) {
         Ok(path) => path,
         Err(e) => {
             return (
@@ -1443,8 +1442,7 @@ impl EmulatorRunner for QemuRunner {
             mcu_config.default_flash_size(),
         )?;
 
-        let qemu = fbuild_packages::toolchain::EspQemuXtensa::new(&self.project_dir)
-            .and_then(|pkg| pkg.resolve_executable())?;
+        let qemu = resolve_esp_qemu_for_mcu(&self.project_dir, &self.board.mcu)?;
 
         let session_dir = qemu_session_dir(&self.project_dir, &self.env_name);
         std::fs::create_dir_all(&session_dir)?;
@@ -1716,8 +1714,28 @@ impl EmulatorRunner for SimavrRunner {
 }
 
 /// Check whether a given MCU is supported by the QEMU runner.
+///
+/// Supported MCUs:
+/// - Xtensa (`qemu-system-xtensa`): `esp32`, `esp32s3`
+/// - RISC-V (`qemu-system-riscv32`): `esp32c3`, `esp32c6`, `esp32h2`
 fn is_qemu_supported_esp32_mcu(mcu: &str) -> bool {
-    mcu.eq_ignore_ascii_case("esp32") || mcu.eq_ignore_ascii_case("esp32s3")
+    fbuild_packages::toolchain::EspQemuArch::for_mcu(mcu).is_some()
+}
+
+/// Resolve the Espressif QEMU executable appropriate for the given MCU.
+///
+/// Picks `qemu-system-xtensa` for ESP32/ESP32-S3 and `qemu-system-riscv32`
+/// for ESP32-C3/C6/H2. Returns the resolved binary path (downloading into
+/// the managed fbuild cache if required).
+fn resolve_esp_qemu_for_mcu(project_dir: &Path, mcu: &str) -> fbuild_core::Result<PathBuf> {
+    let arch = fbuild_packages::toolchain::EspQemuArch::for_mcu(mcu).ok_or_else(|| {
+        fbuild_core::FbuildError::DeployFailed(format!(
+            "no QEMU backend available for MCU '{}'",
+            mcu
+        ))
+    })?;
+    let pkg = fbuild_packages::toolchain::EspQemu::new(project_dir, arch)?;
+    pkg.resolve_executable()
 }
 
 /// Fail fast if the board's flash mode is incompatible with QEMU (DIO only).
@@ -1761,7 +1779,8 @@ pub fn select_runner(
                 }
                 if !is_qemu_supported_esp32_mcu(&board.mcu) {
                     return Err(fbuild_core::FbuildError::DeployFailed(format!(
-                        "QEMU runner currently supports ESP32 and ESP32-S3, got '{}'",
+                        "QEMU runner currently supports ESP32, ESP32-S3 (Xtensa) and \
+                         ESP32-C3, ESP32-C6, ESP32-H2 (RISC-V), got '{}'",
                         board.mcu
                     )));
                 }
@@ -1841,7 +1860,8 @@ pub fn select_runner(
             } else {
                 Err(fbuild_core::FbuildError::DeployFailed(format!(
                     "no emulator runner available for ESP32 MCU '{}'; \
-                     ESP32 and ESP32-S3 are supported via QEMU",
+                     ESP32, ESP32-S3 (Xtensa) and ESP32-C3, ESP32-C6, ESP32-H2 (RISC-V) \
+                     are supported via QEMU",
                     board.mcu
                 )))
             }
@@ -2095,6 +2115,47 @@ mod tests {
     fn monitor_outcome_to_emulator_maps_success() {
         let outcome = monitor_outcome_to_emulator(MonitorOutcome::Success("ok".into()), Some(0));
         assert_eq!(outcome, EmulatorOutcome::Passed("ok".into()));
+    }
+
+    #[test]
+    fn avr8js_cache_marker_points_to_package_json() {
+        let cache = PathBuf::from("/some/cache/avr8js-node");
+        let marker = avr8js_cache_marker(&cache);
+        assert!(
+            marker.ends_with("node_modules/avr8js/package.json")
+                || marker.ends_with("node_modules\\avr8js\\package.json"),
+            "marker {:?} should point to package.json",
+            marker
+        );
+        assert!(marker.starts_with(&cache));
+    }
+
+    #[test]
+    fn prepare_avr8js_script_writes_into_cache_dir() {
+        // Regression test for FastLED/fbuild#86: headless.mjs must be written
+        // *into* the cache dir (next to node_modules/) so Node.js ESM can
+        // resolve `import "avr8js"` via parent-walk. NODE_PATH is ignored for
+        // ESM, so placing the script elsewhere (e.g., in a tempdir) breaks
+        // module resolution.
+        let tmp = tempfile::TempDir::new().unwrap();
+        let script_path = prepare_avr8js_script(tmp.path()).expect("should write script");
+
+        // Path must be inside the cache dir (this is the whole point).
+        assert_eq!(
+            script_path.parent().unwrap(),
+            tmp.path(),
+            "headless.mjs must live directly in the cache dir so ESM resolution finds \
+             node_modules/avr8js via parent-walk"
+        );
+        assert_eq!(script_path.file_name().unwrap(), "headless.mjs");
+
+        // Content matches the bundled source.
+        let written = std::fs::read_to_string(&script_path).unwrap();
+        assert_eq!(written, AVR8JS_HEADLESS_MJS);
+
+        // Idempotent: calling twice works.
+        let script_path_2 = prepare_avr8js_script(tmp.path()).expect("idempotent");
+        assert_eq!(script_path, script_path_2);
     }
 
     #[test]
@@ -2722,7 +2783,7 @@ mod tests {
     }
 
     #[test]
-    fn select_runner_explicit_qemu_rejects_esp32c3() {
+    fn select_runner_explicit_qemu_accepts_esp32c3() {
         let result = select_runner(
             Path::new("/tmp/test"),
             "esp32-c3-devkitm-1",
@@ -2732,8 +2793,59 @@ mod tests {
             Some("qemu"),
         );
         assert!(
+            result.is_ok(),
+            "QEMU should accept ESP32-C3 via qemu-system-riscv32: {:?}",
+            result.err()
+        );
+    }
+
+    #[test]
+    fn select_runner_explicit_qemu_accepts_esp32c6() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "esp32-c6-devkitc-1",
+            fbuild_core::Platform::Espressif32,
+            "esp32-c6-devkitc-1",
+            &HashMap::new(),
+            Some("qemu"),
+        );
+        assert!(
+            result.is_ok(),
+            "QEMU should accept ESP32-C6 via qemu-system-riscv32: {:?}",
+            result.err()
+        );
+    }
+
+    #[test]
+    fn select_runner_explicit_qemu_accepts_esp32h2() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "esp32-h2-devkitm-1",
+            fbuild_core::Platform::Espressif32,
+            "esp32-h2-devkitm-1",
+            &HashMap::new(),
+            Some("qemu"),
+        );
+        assert!(
+            result.is_ok(),
+            "QEMU should accept ESP32-H2 via qemu-system-riscv32: {:?}",
+            result.err()
+        );
+    }
+
+    #[test]
+    fn select_runner_explicit_qemu_rejects_esp32s2() {
+        let result = select_runner(
+            Path::new("/tmp/test"),
+            "esp32-s2-saola-1",
+            fbuild_core::Platform::Espressif32,
+            "esp32-s2-saola-1",
+            &HashMap::new(),
+            Some("qemu"),
+        );
+        assert!(
             result.is_err(),
-            "QEMU should reject ESP32-C3 (RISC-V, not yet supported)"
+            "QEMU should reject ESP32-S2 (not emulated upstream)"
         );
     }
 
@@ -2774,7 +2886,7 @@ mod tests {
     }
 
     #[test]
-    fn is_qemu_supported_esp32_mcu_accepts_esp32() {
+    fn is_qemu_supported_esp32_mcu_accepts_xtensa() {
         assert!(is_qemu_supported_esp32_mcu("esp32"));
         assert!(is_qemu_supported_esp32_mcu("ESP32"));
         assert!(is_qemu_supported_esp32_mcu("esp32s3"));
@@ -2782,10 +2894,17 @@ mod tests {
     }
 
     #[test]
+    fn is_qemu_supported_esp32_mcu_accepts_riscv() {
+        assert!(is_qemu_supported_esp32_mcu("esp32c3"));
+        assert!(is_qemu_supported_esp32_mcu("ESP32C3"));
+        assert!(is_qemu_supported_esp32_mcu("esp32c6"));
+        assert!(is_qemu_supported_esp32_mcu("esp32h2"));
+    }
+
+    #[test]
     fn is_qemu_supported_esp32_mcu_rejects_unsupported() {
-        assert!(!is_qemu_supported_esp32_mcu("esp32c3"));
         assert!(!is_qemu_supported_esp32_mcu("esp32s2"));
-        assert!(!is_qemu_supported_esp32_mcu("esp32h2"));
         assert!(!is_qemu_supported_esp32_mcu("atmega328p"));
+        assert!(!is_qemu_supported_esp32_mcu("esp32p4"));
     }
 }
