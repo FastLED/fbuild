@@ -6,7 +6,7 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::sync::Mutex;
-use std::time::{SystemTime, UNIX_EPOCH};
+use std::time::{Instant, SystemTime, UNIX_EPOCH};
 use uuid::Uuid;
 
 /// Type of device lease.
@@ -27,6 +27,22 @@ pub struct DeviceLease {
     pub acquired_at: f64,
 }
 
+/// In-memory record of the firmware image the daemon *last observed*
+/// on a given port (either written by us, or confirmed by
+/// `verify-flash` MD5 match). Used by the session-trusted verify-skip
+/// path — see [`DeviceManager::trusted_firmware_hash`].
+#[derive(Debug, Clone, Copy)]
+pub struct TrustedFirmwareHash {
+    /// SHA-256 of the (offset, size, bytes) tuples for all flashed
+    /// regions. Stable across rebuilds that produce identical output.
+    pub hash: [u8; 32],
+    /// Instant when this hash was recorded. Compared against
+    /// [`DeviceState::last_disconnect_at`] to invalidate trust on any
+    /// device disconnect — if the user unplugged the board, something
+    /// else may have flashed it before it came back.
+    pub set_at: Instant,
+}
+
 /// Per-device tracked state.
 #[derive(Debug, Clone)]
 pub struct DeviceState {
@@ -39,6 +55,15 @@ pub struct DeviceState {
     pub monitor_leases: HashMap<String, DeviceLease>,
     pub last_seen_at: f64,
     pub is_connected: bool,
+    /// Firmware image last seen on this device, or `None` if the
+    /// daemon has not deployed/verified since startup. Cleared on
+    /// disconnect through [`DeviceState::last_disconnect_at`].
+    pub trusted_firmware: Option<TrustedFirmwareHash>,
+    /// `Instant` of the most recent `true → false` transition on
+    /// `is_connected`. Used to invalidate `trusted_firmware` if a
+    /// disconnect happened after the trust was set. Populated at
+    /// runtime, never serialized.
+    pub last_disconnect_at: Option<Instant>,
 }
 
 impl DeviceState {
@@ -90,8 +115,15 @@ impl DeviceManager {
         let mut devices = self.devices.lock().unwrap();
         let now = Self::now_unix();
 
-        // Mark all devices as disconnected first
-        for state in devices.values_mut() {
+        // Mark all devices as disconnected first. Track the previous
+        // `is_connected` state so we can stamp `last_disconnect_at`
+        // on the `true → false` edge *after* the re-enumeration pass
+        // below re-flips surviving devices. The stamp lets
+        // `trusted_firmware_hash` invalidate any trust that predates
+        // a physical disconnect — see `TrustedFirmwareHash::set_at`.
+        let mut was_connected: HashMap<String, bool> = HashMap::with_capacity(devices.len());
+        for (key, state) in devices.iter_mut() {
+            was_connected.insert(key.clone(), state.is_connected);
             state.is_connected = false;
         }
 
@@ -129,6 +161,8 @@ impl DeviceManager {
                 monitor_leases: HashMap::new(),
                 last_seen_at: now,
                 is_connected: true,
+                trusted_firmware: None,
+                last_disconnect_at: None,
             });
 
             entry.is_connected = true;
@@ -137,6 +171,21 @@ impl DeviceManager {
             entry.device_id = device_id;
             entry.vid = vid;
             entry.pid = pid;
+        }
+
+        // Stamp `last_disconnect_at` for every device that went from
+        // `true → false` on this refresh (i.e. it was connected
+        // before, but absent from this enumeration). Devices that
+        // came back on this pass stay with `is_connected = true` and
+        // don't get a fresh stamp.
+        for (key, prev) in was_connected {
+            if prev {
+                if let Some(state) = devices.get_mut(&key) {
+                    if !state.is_connected {
+                        state.last_disconnect_at = Some(Instant::now());
+                    }
+                }
+            }
         }
     }
 
@@ -316,6 +365,60 @@ impl DeviceManager {
         Ok((lease, preempted_client_id))
     }
 
+    /// Return the currently-trusted firmware hash for `port`, if any.
+    ///
+    /// Trust is valid only if:
+    ///  1. [`DeviceState::trusted_firmware`] is `Some`, AND
+    ///  2. The port is currently connected, AND
+    ///  3. No disconnect has been observed since the hash was recorded
+    ///     (i.e. [`DeviceState::last_disconnect_at`] is either `None`
+    ///     or older than `trusted_firmware.set_at`).
+    ///
+    /// Returns `None` in every other case, so the deploy handler falls
+    /// back to the regular `verify-flash` path on any doubt.
+    pub fn trusted_firmware_hash(&self, port: &str) -> Option<[u8; 32]> {
+        let devices = self.devices.lock().unwrap();
+        let state = devices.get(port)?;
+        if !state.is_connected {
+            return None;
+        }
+        let trusted = state.trusted_firmware.as_ref()?;
+        if let Some(disc) = state.last_disconnect_at {
+            if disc > trusted.set_at {
+                return None;
+            }
+        }
+        Some(trusted.hash)
+    }
+
+    /// Record a newly-observed firmware hash for `port`, stamped
+    /// with `Instant::now()`. Called after a successful write-flash
+    /// *or* a successful verify-flash match — in both cases the
+    /// daemon knows exactly what the device holds right now.
+    ///
+    /// Silently no-ops if the port isn't in the enumeration cache
+    /// yet: the hash will be recorded on the next deploy once
+    /// `refresh_devices` has picked the port up.
+    pub fn set_trusted_firmware_hash(&self, port: &str, hash: [u8; 32]) {
+        let mut devices = self.devices.lock().unwrap();
+        if let Some(state) = devices.get_mut(port) {
+            state.trusted_firmware = Some(TrustedFirmwareHash {
+                hash,
+                set_at: Instant::now(),
+            });
+        }
+    }
+
+    /// Drop any recorded trust for `port`. Called when a deploy
+    /// fails part-way through — partial writes mean we can't say
+    /// what's on the chip anymore.
+    pub fn clear_trusted_firmware_hash(&self, port: &str) {
+        let mut devices = self.devices.lock().unwrap();
+        if let Some(state) = devices.get_mut(port) {
+            state.trusted_firmware = None;
+        }
+    }
+
     /// Remove stale disconnected devices that have no leases.
     pub fn cleanup_stale_devices(&self) -> usize {
         let mut devices = self.devices.lock().unwrap();
@@ -354,6 +457,8 @@ mod tests {
                     monitor_leases: HashMap::new(),
                     last_seen_at: DeviceManager::now_unix(),
                     is_connected: true,
+                    trusted_firmware: None,
+                    last_disconnect_at: None,
                 },
             );
         }
@@ -481,6 +586,73 @@ mod tests {
         }
         assert_eq!(mgr.cleanup_stale_devices(), 1);
         assert!(mgr.get_all_devices().is_empty());
+    }
+
+    #[test]
+    fn trusted_hash_round_trip() {
+        let mgr = make_manager_with_device("COM3");
+        assert_eq!(mgr.trusted_firmware_hash("COM3"), None);
+        let h = [7u8; 32];
+        mgr.set_trusted_firmware_hash("COM3", h);
+        assert_eq!(mgr.trusted_firmware_hash("COM3"), Some(h));
+    }
+
+    #[test]
+    fn trusted_hash_cleared_on_demand() {
+        let mgr = make_manager_with_device("COM3");
+        mgr.set_trusted_firmware_hash("COM3", [1u8; 32]);
+        mgr.clear_trusted_firmware_hash("COM3");
+        assert_eq!(mgr.trusted_firmware_hash("COM3"), None);
+    }
+
+    /// Unknown port is never trusted — no panic, no fabrication of
+    /// device state. Regression guard: the deploy handler calls this
+    /// with a user-supplied port string that may not be in the
+    /// daemon's enumeration cache yet.
+    #[test]
+    fn trusted_hash_unknown_port_is_none() {
+        let mgr = DeviceManager::new();
+        assert_eq!(mgr.trusted_firmware_hash("COM99"), None);
+    }
+
+    /// A disconnected device must never be trusted, even if the hash
+    /// was previously recorded. Re-enumeration can come back with a
+    /// physically different board on the same port name — trust
+    /// across that boundary is unsafe.
+    #[test]
+    fn trusted_hash_invalid_after_disconnect() {
+        let mgr = make_manager_with_device("COM3");
+        mgr.set_trusted_firmware_hash("COM3", [9u8; 32]);
+        // Simulate a disconnect that happened *after* the trust was
+        // recorded — exactly the condition
+        // `trusted_firmware_hash` must treat as "unsafe to trust".
+        {
+            let mut devices = mgr.devices.lock().unwrap();
+            let state = devices.get_mut("COM3").unwrap();
+            state.is_connected = false;
+            state.last_disconnect_at = Some(Instant::now());
+        }
+        assert_eq!(mgr.trusted_firmware_hash("COM3"), None);
+    }
+
+    /// A stale disconnect stamp from *before* the trust was set
+    /// (e.g. device was unplugged earlier in the session but the
+    /// user reconnected and we re-trusted) does NOT invalidate the
+    /// fresh trust. Ordering is what matters: `disconnect > set` ⇒
+    /// untrusted; `set > disconnect` ⇒ trusted.
+    #[test]
+    fn trusted_hash_survives_older_disconnect_stamp() {
+        let mgr = make_manager_with_device("COM3");
+        // Plant an old disconnect stamp first, then re-set trust
+        // later (what happens on a re-enumerate + fresh deploy).
+        {
+            let mut devices = mgr.devices.lock().unwrap();
+            let state = devices.get_mut("COM3").unwrap();
+            state.last_disconnect_at = Some(Instant::now());
+        }
+        std::thread::sleep(std::time::Duration::from_millis(5));
+        mgr.set_trusted_firmware_hash("COM3", [3u8; 32]);
+        assert_eq!(mgr.trusted_firmware_hash("COM3"), Some([3u8; 32]));
     }
 
     #[test]

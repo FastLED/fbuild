@@ -33,6 +33,64 @@ pub(crate) fn native_verify_enabled() -> bool {
     }
 }
 
+/// Returns `true` when the daemon should trust an in-memory firmware
+/// hash (keyed by port) and skip the `verify-flash` MD5 round-trip on
+/// a warm redeploy.
+///
+/// Safety model: the hash is only honoured if the port has been
+/// continuously enumerated since the hash was recorded (enforced by
+/// [`DeviceManager::trusted_firmware_hash`]). If the user unplugged
+/// the board and something else flashed it before it came back, the
+/// disconnect edge invalidates the cached hash and the deploy falls
+/// through to the normal verify-flash path.
+///
+/// Controlled by the `FBUILD_TRUST_DEVICE_HASH` environment variable
+/// (set to `1`, `true`, `yes`, or `on` — case-insensitive). Default
+/// off while the path accumulates bench time, mirroring the opt-in
+/// convention used by `FBUILD_USE_ESPFLASH_{VERIFY,WRITE}`.
+pub(crate) fn trust_device_hash_enabled() -> bool {
+    match std::env::var("FBUILD_TRUST_DEVICE_HASH") {
+        Ok(v) => matches!(
+            v.trim().to_ascii_lowercase().as_str(),
+            "1" | "true" | "yes" | "on"
+        ),
+        Err(_) => false,
+    }
+}
+
+/// Compute a stable SHA-256 over the three ESP32 flash regions the
+/// daemon would otherwise MD5 with `verify-flash`. Hashes the tuple
+/// `(offset_le, len_le, bytes)` for each region in fixed order
+/// (bootloader → partitions → firmware) so the digest uniquely
+/// identifies the image that would be written; two builds of the
+/// same source with identical output hash to the same value.
+///
+/// Returns `None` if any of the three files is missing on disk, so
+/// the caller treats it as "can't trust-skip, fall through to
+/// verify-flash."
+pub(crate) fn compute_esp32_image_hash(
+    firmware_path: &std::path::Path,
+    bootloader_offset: u32,
+    partitions_offset: u32,
+    firmware_offset: u32,
+) -> Option<[u8; 32]> {
+    use sha2::{Digest, Sha256};
+    let build_dir = firmware_path.parent()?;
+    let regions: [(u32, std::path::PathBuf); 3] = [
+        (bootloader_offset, build_dir.join("bootloader.bin")),
+        (partitions_offset, build_dir.join("partitions.bin")),
+        (firmware_offset, firmware_path.to_path_buf()),
+    ];
+    let mut hasher = Sha256::new();
+    for (offset, path) in &regions {
+        let bytes = std::fs::read(path).ok()?;
+        hasher.update(offset.to_le_bytes());
+        hasher.update((bytes.len() as u64).to_le_bytes());
+        hasher.update(&bytes);
+    }
+    Some(hasher.finalize().into())
+}
+
 /// Returns `true` when the daemon should route ESP32 `write-flash`
 /// through the native [`espflash`] crate (issue #66) instead of the
 /// Python `esptool` subprocess.
@@ -1072,7 +1130,27 @@ pub async fn deploy(
     let deploy_fw = firmware_path.clone();
     let baud_override = req.baud_rate;
     let deploy_board_overrides = board_overrides.clone();
+    // Snapshot the ctx pointer so the spawn_blocking closure can
+    // consult / update the daemon's in-memory trusted-hash cache
+    // without needing a cross-thread lock handshake.
+    let ctx_for_deploy = Arc::clone(&ctx);
+    let trusted_hash_enabled = trust_device_hash_enabled();
+    // Refresh the enumeration cache so the trust-hash invalidation
+    // path (`last_disconnect_at`) sees any unplug/replug that
+    // happened between the previous deploy and now. Without this,
+    // a user who swapped boards at the same COM port without hitting
+    // a device-list endpoint could trip the trust check into a
+    // false match. Cost is a single OS-level port enumeration
+    // (~10–30 ms on Windows), paid once per deploy.
+    if trusted_hash_enabled {
+        ctx.device_manager.refresh_devices();
+    }
     let deploy_result = tokio::task::spawn_blocking(move || {
+        // Populated by the Espressif32 arm with (image_hash, port).
+        // The tail of the closure consults it after `deployer.deploy`
+        // returns to record or invalidate the daemon's trusted-hash
+        // cache. Other platforms leave it `None`.
+        let mut trusted_hash_update: Option<([u8; 32], String)> = None;
         let deployer: Box<dyn fbuild_deploy::Deployer> = match platform {
             fbuild_core::Platform::Espressif32 => {
                 let board_config =
@@ -1141,6 +1219,68 @@ pub async fn deploy(
                 // until the native write path has bench time on every
                 // ESP32 family member.
                 let deployer = deployer.with_native_write(native_write_enabled());
+
+                // Compute a deterministic SHA-256 over the three
+                // regions we'd otherwise verify-flash. Used twice
+                // below: once to consult the daemon's trusted-hash
+                // cache (opt-in via `FBUILD_TRUST_DEVICE_HASH=1`),
+                // and once to *record* the hash after a successful
+                // deploy so the next warm redeploy can skip the MD5
+                // round-trip entirely. A `None` return means one of
+                // the three files isn't on disk yet — treat it as
+                // "can't trust-skip" rather than erroring, so the
+                // fallback path is free to rebuild missing artefacts.
+                let image_hash = compute_esp32_image_hash(
+                    &deploy_fw,
+                    u32::from_str_radix(
+                        mcu_config.bootloader_offset().trim_start_matches("0x"),
+                        16,
+                    )
+                    .unwrap_or(0),
+                    u32::from_str_radix(
+                        mcu_config.partitions_offset().trim_start_matches("0x"),
+                        16,
+                    )
+                    .unwrap_or(0),
+                    u32::from_str_radix(
+                        mcu_config.firmware_offset().trim_start_matches("0x"),
+                        16,
+                    )
+                    .unwrap_or(0),
+                );
+
+                // Session-trusted verify-skip: if the daemon last
+                // flashed *this exact image* onto *this port* and the
+                // port has been continuously enumerated since then,
+                // no external agent could have re-flashed the chip
+                // without breaking our enumeration (`last_disconnect_at`
+                // is how we detect it). Skip the entire serial open +
+                // espflash connect + MD5 round-trip.
+                if let (Some(port), Some(hash)) = (deploy_port.as_deref(), image_hash) {
+                    if trusted_hash_enabled {
+                        if let Some(trusted) =
+                            ctx_for_deploy.device_manager.trusted_firmware_hash(port)
+                        {
+                            if trusted == hash {
+                                tracing::info!(
+                                    port,
+                                    "trusted-hash: session-trusted match; skipping verify-flash entirely"
+                                );
+                                return Ok(fbuild_deploy::DeploymentResult {
+                                    success: true,
+                                    message: format!(
+                                        "firmware already current on {} (skipped via session trust)",
+                                        port
+                                    ),
+                                    port: Some(port.to_string()),
+                                    stdout: String::new(),
+                                    stderr: String::new(),
+                                    outcome: fbuild_deploy::DeployOutcome::VerifySkip,
+                                });
+                            }
+                        }
+                    }
+                }
 
                 // Fast deploy: ask the device whether it already holds
                 // the exact firmware/bootloader/partitions we'd be about
@@ -1211,8 +1351,35 @@ pub async fn deploy(
                 }
 
                 if let (Some(regions), Some(port)) = (selective_regions, deploy_port.as_deref()) {
-                    return deployer.deploy_regions(&deploy_fw, port, &regions);
+                    let result = deployer.deploy_regions(&deploy_fw, port, &regions);
+                    // Record/invalidate the trusted hash based on
+                    // the selective-flash outcome so the next warm
+                    // redeploy can short-circuit via trust-skip.
+                    if let Some(hash) = image_hash {
+                        match &result {
+                            Ok(r) if r.success => {
+                                ctx_for_deploy
+                                    .device_manager
+                                    .set_trusted_firmware_hash(port, hash);
+                            }
+                            _ => {
+                                ctx_for_deploy.device_manager.clear_trusted_firmware_hash(port);
+                            }
+                        }
+                    }
+                    return result;
                 }
+
+                // Capture the hash into the boxed deployer closure
+                // below — the full-flash path (`deployer.deploy(...)`)
+                // at the end of this `spawn_blocking` applies the
+                // same record/invalidate rule. We stash the hash +
+                // port via a small impl-only wrapper because the
+                // `Deployer` trait doesn't expose the cache hook.
+                // Stored here so the common tail after the `match`
+                // can reach it without re-threading every arm.
+                // (AVR / other arms leave it `None` → no-op.)
+                trusted_hash_update = image_hash.zip(deploy_port.as_deref().map(str::to_string));
 
                 Box::new(deployer)
             }
@@ -1251,39 +1418,75 @@ pub async fn deploy(
                 )));
             }
         };
-        deployer.deploy(
+        let result = deployer.deploy(
             &deploy_project,
             &deploy_env,
             &deploy_fw,
             deploy_port.as_deref(),
-        )
+        );
+        // Session-trusted verify-skip: record (or invalidate) the
+        // image hash the daemon associates with this port. Scoped
+        // to the Espressif32 arm above — other platforms leave
+        // `trusted_hash_update` as `None` and this block no-ops.
+        // Failed or partial deploys clear the cache so the next
+        // warm run falls back to the verify-flash path.
+        if let Some((hash, port)) = trusted_hash_update {
+            match &result {
+                Ok(r) if r.success => {
+                    ctx_for_deploy
+                        .device_manager
+                        .set_trusted_firmware_hash(&port, hash);
+                }
+                _ => {
+                    ctx_for_deploy
+                        .device_manager
+                        .clear_trusted_firmware_hash(&port);
+                }
+            }
+        }
+        result
     })
     .await;
 
     // Clear preemption then wait for USB re-enumeration.
     // Fast-poll the serial port instead of a hard 2s sleep — most ESP32-S3
     // boards with native USB re-enumerate in <500ms.
+    //
+    // Skip the poll entirely when the deploy didn't actually touch
+    // flash (VerifySkip): no reset happened, no USB re-enumeration
+    // is coming, and the poll's `open()` probe would conflict with
+    // any already-attached monitor and burn the full 3 s timeout.
+    // This is load-bearing for the < 4 s warm-trust-skip budget.
+    let deploy_skipped_bus_work = matches!(
+        &deploy_result,
+        Ok(Ok(r)) if r.success && matches!(
+            r.outcome,
+            fbuild_deploy::DeployOutcome::VerifySkip
+        )
+    );
     if let Some(ref p) = deploy_port_str {
         ctx.serial_manager.clear_preemption(p).await;
-        let port_name = p.clone();
-        let _ = tokio::task::spawn_blocking(move || {
-            let deadline = std::time::Instant::now() + std::time::Duration::from_secs(3);
-            while std::time::Instant::now() < deadline {
-                if serialport::new(&port_name, 115200)
-                    .timeout(std::time::Duration::from_millis(50))
-                    .open()
-                    .is_ok()
-                {
-                    return;
+        if !deploy_skipped_bus_work {
+            let port_name = p.clone();
+            let _ = tokio::task::spawn_blocking(move || {
+                let deadline = std::time::Instant::now() + std::time::Duration::from_secs(3);
+                while std::time::Instant::now() < deadline {
+                    if serialport::new(&port_name, 115200)
+                        .timeout(std::time::Duration::from_millis(50))
+                        .open()
+                        .is_ok()
+                    {
+                        return;
+                    }
+                    std::thread::sleep(std::time::Duration::from_millis(100));
                 }
-                std::thread::sleep(std::time::Duration::from_millis(100));
-            }
-            tracing::warn!(
-                "USB re-enumeration: port {} not available after 3s",
-                port_name
-            );
-        })
-        .await;
+                tracing::warn!(
+                    "USB re-enumeration: port {} not available after 3s",
+                    port_name
+                );
+            })
+            .await;
+        }
     }
 
     let (deploy_success, deploy_stdout, deploy_stderr, deploy_outcome) = match deploy_result {
