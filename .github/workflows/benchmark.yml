@@ -20,15 +20,26 @@ on:
     branches:
       - bench/fastled-examples
 
+# Cancel any stale queued/running benchmark when a new push lands. The FastLED
+# org GH-hosted runner pool is routinely saturated; without this, a push to
+# update the workflow would just pile up behind the old run.
+concurrency:
+  group: fastled-examples-benchmark
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
 jobs:
   benchmark:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 75
     env:
       BENCH_TIMINGS: ${{ github.workspace }}/phase-timings.tsv
+      # FBUILD_CACHE_DIR is also set by the fbuild-setup step below for the
+      # subsequent compile. We export it early so our cache-restore step sees
+      # the same path.
+      FBUILD_CACHE_DIR: ${{ runner.temp }}/fbuild-cache
     steps:
       - name: Checkout benchmark branch
         uses: actions/checkout@v4
@@ -61,33 +72,73 @@ jobs:
         run: |
           printf 'phase\tseconds\n' > "$BENCH_TIMINGS"
           echo "BENCH_JOB_START=$(date +%s.%N)" >> "$GITHUB_ENV"
+          mkdir -p "$FBUILD_CACHE_DIR"
 
-      # --- phase: checkout fbuild main (for the `setup` composite action) ---
-      - name: Phase - checkout fbuild main (for setup action)
+      # --- phase: setup-python (inlined so we can time it) ---
+      - name: "Phase - setup-python"
+        id: phase_setup_python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: "Phase - record setup-python timing"
+        id: record_setup_python
+        run: |
+          # setup-python doesn't expose elapsed; we bracket it with time marks
+          # on the surrounding steps. Start timestamp captured in init step,
+          # end here. This measures "job init → python available".
+          t_now=$(date +%s.%N)
+          printf 'job_init_to_python_available\t%.3f\n' \
+            "$(awk "BEGIN{print $t_now-$BENCH_JOB_START}")" >> "$BENCH_TIMINGS"
+
+      # --- phase: pip install fbuild (inlined) ---
+      - name: "Phase - pip install fbuild"
         run: |
           t0=$(date +%s.%N)
-          git clone --depth 1 --branch main https://github.com/FastLED/fbuild.git fbuild-src
+          python -m pip install --upgrade pip
+          python -m pip install fbuild
+          fbuild --version 2>&1 || echo "fbuild --version not supported on this release" >&2
           t1=$(date +%s.%N)
-          printf 'checkout_fbuild\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
+          printf 'pip_install_fbuild\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
 
-      # --- phase: setup fbuild (python + pip install + cache restore) ---
-      - name: Phase - set up fbuild (install + cache restore)
-        id: fbuild_setup
-        uses: ./fbuild-src/.github/actions/setup
-        with:
-          cache-version: "bench-v1-${{ steps.bench_config.outputs.cache_bust }}"
-          cache-key-extra: "${{ steps.bench_config.outputs.board }}-${{ steps.bench_config.outputs.ref }}"
-
-      - name: Phase - record fbuild-setup cache-hit
+      - name: "Phase - compute fbuild content hash"
+        id: fbuild_hash
         run: |
-          echo "fbuild cache-hit: ${{ steps.fbuild_setup.outputs.cache-hit }}"
-          printf 'fbuild_cache_hit\t%s\n' "${{ steps.fbuild_setup.outputs.cache-hit }}" >> "$BENCH_TIMINGS"
+          t0=$(date +%s.%N)
+          FBUILD_HASH=$(python - <<'PY'
+          import hashlib, importlib.metadata as md
+          dist = md.distribution("fbuild")
+          record = dist.read_text("RECORD") or f"{dist.version}\n{dist.read_text('METADATA') or ''}"
+          print(hashlib.sha256(record.encode()).hexdigest()[:16])
+          PY
+          )
+          echo "fbuild-hash=${FBUILD_HASH}" >> "$GITHUB_OUTPUT"
+          t1=$(date +%s.%N)
+          printf 'fbuild_hash_compute\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
+
+      # --- phase: restore fbuild cache ---
+      - name: "Phase - restore fbuild cache"
+        id: fbuild_cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ env.FBUILD_CACHE_DIR }}
+          key: "bench-v1-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild_hash.outputs.fbuild-hash }}-${{ steps.bench_config.outputs.board }}-${{ steps.bench_config.outputs.ref }}"
+          restore-keys: |
+            bench-v1-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild_hash.outputs.fbuild-hash }}-
+            bench-v1-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-
+
+      - name: "Phase - record cache-restore result"
+        run: |
+          printf 'fbuild_cache_hit\t%s\n' "${{ steps.fbuild_cache.outputs.cache-hit }}" >> "$BENCH_TIMINGS"
+          printf 'fbuild_cache_key_matched\t%s\n' "${{ steps.fbuild_cache.outputs.cache-matched-key }}" >> "$BENCH_TIMINGS"
+          echo "Cache hit: ${{ steps.fbuild_cache.outputs.cache-hit }}"
+          echo "Key matched: ${{ steps.fbuild_cache.outputs.cache-matched-key }}"
+          du -sh "$FBUILD_CACHE_DIR" 2>/dev/null || echo "cache dir empty"
 
       # --- phase: clone FastLED ---
-      - name: Phase - clone FastLED
+      - name: "Phase - clone FastLED"
         run: |
           t0=$(date +%s.%N)
-          # Try shallow-clone-at-ref first; fall back to full clone + checkout.
           if ! git clone --depth 1 --branch "$BENCH_REF" \
                  https://github.com/FastLED/FastLED.git fastled 2>/dev/null; then
             rm -rf fastled
@@ -98,14 +149,14 @@ jobs:
           printf 'clone_fastled\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
           echo "FastLED HEAD: $(cd fastled && git rev-parse HEAD)"
 
-      # --- phase: install uv + uv sync .venv for FastLED's compile script ---
-      - name: Phase - install uv
+      # --- phase: install uv (used by FastLED's compile script) ---
+      - name: "Phase - install uv"
         uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
           version: "0.8.0"
 
-      - name: Phase - uv sync FastLED venv
+      - name: "Phase - uv sync FastLED venv"
         working-directory: fastled
         run: |
           t0=$(date +%s.%N)
@@ -118,7 +169,7 @@ jobs:
           printf 'uv_sync\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
 
       # --- phase: compile ---
-      - name: Phase - compile examples
+      - name: "Phase - compile examples"
         working-directory: fastled
         run: |
           t0=$(date +%s.%N)
@@ -130,10 +181,19 @@ jobs:
             "$BENCH_BOARD" $BENCH_EXAMPLES 2>&1 | tee compile.log || rc=$?
           t1=$(date +%s.%N)
           printf 'compile\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
+          echo "compile exit=$rc"
           exit "$rc"
 
-      # --- final: job-level total + job summary ---
-      - name: Phase - job total + summary
+      # --- save fbuild cache (only on success) ---
+      - name: "Phase - save fbuild cache"
+        if: success()
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ env.FBUILD_CACHE_DIR }}
+          key: "bench-v1-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild_hash.outputs.fbuild-hash }}-${{ steps.bench_config.outputs.board }}-${{ steps.bench_config.outputs.ref }}"
+
+      # --- final: job-level total + step summary ---
+      - name: "Phase - job total + summary"
         if: always()
         run: |
           t1=$(date +%s.%N)
@@ -143,18 +203,20 @@ jobs:
           {
             echo "## Benchmark: ${BENCH_BOARD} ${BENCH_EXAMPLES} @ ${BENCH_REF}"
             echo ""
+            echo "- run: \`${{ github.run_id }}\` attempt \`${{ github.run_attempt }}\`"
             echo "- commit: \`${{ github.sha }}\`"
-            echo "- cache-hit: \`${{ steps.fbuild_setup.outputs.cache-hit }}\`"
+            echo "- cache-hit: \`${{ steps.fbuild_cache.outputs.cache-hit }}\`"
             echo "- cache-bust: \`${BENCH_CACHE_BUST:-<none>}\`"
             echo ""
             echo "| phase | seconds |"
             echo "|-------|--------:|"
-            awk -F'\t' 'NR>1 && $1!="fbuild_cache_hit" {printf "| %s | %s |\n", $1, $2}' "$BENCH_TIMINGS"
+            awk -F'\t' 'NR>1 && $1!="fbuild_cache_hit" && $1!="fbuild_cache_key_matched" {printf "| %s | %s |\n", $1, $2}' "$BENCH_TIMINGS"
           } >> "$GITHUB_STEP_SUMMARY"
 
+          echo "=== phase-timings.tsv ==="
           cat "$BENCH_TIMINGS"
 
-      - name: Upload phase timings artifact
+      - name: "Upload phase timings artifact"
         if: always()
         uses: actions/upload-artifact@v4
         with:
