@@ -23,6 +23,7 @@ A grep-friendly FAQ that maps common questions to the file that answers them. Bo
 | How do I run tests / lint / fmt?                          | [DEVELOPMENT.md](DEVELOPMENT.md#testing)                   |
 | Why is my build failing?                                  | [DEVELOPMENT.md](DEVELOPMENT.md#troubleshooting)           |
 | How do I use the emulator (QEMU / avr8js / simavr)?       | [../README.md](../README.md#emulator-testing)              |
+| How do I persist fbuild's cache across CI runs?           | [CI_CACHING.md](CI_CACHING.md)                             |
 | What architecture docs should I read for a given crate?   | [CLAUDE.md](CLAUDE.md)                                     |
 
 ## Conventions
