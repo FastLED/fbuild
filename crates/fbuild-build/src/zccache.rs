@@ -127,6 +127,11 @@ fn find_zccache_in_venv(start: &Path, exe_name: &str) -> Option<PathBuf> {
 ///
 /// This is idempotent — `zccache start` is a no-op when the daemon is up.
 pub fn ensure_running(zccache: &Path) {
+    // INTENTIONALLY DETACHED (FastLED/fbuild#32): zccache is itself a
+    // long-running daemon with independent lifecycle management. `start`
+    // is a no-op when it's already running, and either way the zccache
+    // daemon must survive the fbuild daemon — so this spawn stays out
+    // of the containment group.
     let mut cmd = std::process::Command::new(zccache);
     cmd.arg("start")
         .stdout(std::process::Stdio::null())

@@ -34,6 +34,17 @@ async fn main() {
         unsafe { std::env::set_var("FBUILD_DEV_MODE", "1") };
     }
 
+    // Install the process-wide containment group as early as possible so
+    // every subprocess the daemon spawns (compilers, linkers, esptool,
+    // avrdude, qemu, simavr, node, npm, …) is born inside a Windows Job
+    // Object (JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE) or a Unix process
+    // group with PR_SET_PDEATHSIG. When the daemon dies for any reason
+    // — SIGKILL, power loss, crash, console window close — the OS
+    // reaps every descendant in the group. See FastLED/fbuild#32.
+    if let Err(e) = fbuild_core::containment::init_global_containment("FBUILD-DAEMON") {
+        eprintln!("warning: failed to install process containment: {}", e);
+    }
+
     let port = args.port.unwrap_or_else(fbuild_paths::get_daemon_port);
 
     tracing_subscriber::fmt()

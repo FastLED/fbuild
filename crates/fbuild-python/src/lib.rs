@@ -616,6 +616,12 @@ impl Daemon {
             }
         }
 
+        // INTENTIONALLY DETACHED (FastLED/fbuild#32): the Python host
+        // spawns the daemon and then the Python interpreter may exit —
+        // the daemon must survive. This PyO3 binding runs inside the
+        // Python interpreter process, which has no global containment
+        // group, so `spawn()` is already uncontained; see the matching
+        // comment in fbuild-cli/src/daemon_client.rs.
         let mut cmd = std::process::Command::new("fbuild-daemon");
         if fbuild_paths::is_dev_mode() {
             cmd.arg("--dev");
@@ -1557,6 +1563,8 @@ impl AsyncDaemon {
                 }
             }
 
+            // INTENTIONALLY DETACHED (FastLED/fbuild#32): see the
+            // matching comment in `Daemon::ensure_running` above.
             let mut cmd = std::process::Command::new("fbuild-daemon");
             if dev_mode {
                 cmd.arg("--dev");

@@ -165,12 +165,41 @@ fn strip_msys_env(cmd: &mut Command) {
 }
 
 fn run_no_timeout(mut cmd: Command) -> Result<ToolOutput> {
-    let output: Output = cmd.output()?;
+    // Route the spawn through the process-wide containment group so the
+    // resulting child (and any grandchildren it forks) dies with the
+    // daemon. Falls back to an uncontained spawn when the global group
+    // is not initialised (CLI binary, unit tests). See FastLED/fbuild#32.
+    let mut child = crate::containment::spawn_contained(&mut cmd)?;
+    let stdout = child
+        .stdout
+        .take()
+        .map(|mut s| {
+            let mut buf = Vec::new();
+            std::io::Read::read_to_end(&mut s, &mut buf).ok();
+            buf
+        })
+        .unwrap_or_default();
+    let stderr = child
+        .stderr
+        .take()
+        .map(|mut s| {
+            let mut buf = Vec::new();
+            std::io::Read::read_to_end(&mut s, &mut buf).ok();
+            buf
+        })
+        .unwrap_or_default();
+    let status = child.wait()?;
+    let output = Output {
+        status,
+        stdout,
+        stderr,
+    };
     Ok(output_to_tool_output(output))
 }
 
 fn run_with_timeout(mut cmd: Command, timeout: Duration) -> Result<ToolOutput> {
-    let mut child = cmd.spawn()?;
+    // See `run_no_timeout`: route through containment.
+    let mut child = crate::containment::spawn_contained(&mut cmd)?;
 
     let timeout_ms = timeout.as_millis() as u64;
     let start = std::time::Instant::now();

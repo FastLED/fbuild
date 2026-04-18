@@ -58,3 +58,8 @@ workspace = true
 
 [dev-dependencies]
 fbuild-test-support = { path = "../fbuild-test-support" }
+
+# libc::kill(pid, SIGKILL) is used by the process-containment integration
+# test (tests/process_containment.rs). Unix-only; Windows uses taskkill /F.
+[target.'cfg(unix)'.dev-dependencies]
+libc = "0.2"

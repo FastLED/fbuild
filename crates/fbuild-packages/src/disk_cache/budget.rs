@@ -119,48 +119,45 @@ fn get_total_disk_space(path: &Path) -> u64 {
 
 #[cfg(windows)]
 fn get_total_disk_space_windows(path: &Path) -> u64 {
-    use std::process::Command;
-    // Use PowerShell to get disk info
+    // Use PowerShell to get disk info. Route through fbuild-core's
+    // `run_command` so the probe spawn is captured by the daemon's
+    // containment group (issue #32) — a daemon crash mid-GC must not
+    // leak a `powershell.exe` or its `conhost.exe` wrapper.
     let path_str = path.to_string_lossy();
     let drive = if path_str.len() >= 2 && path_str.as_bytes()[1] == b':' {
         &path_str[..2]
     } else {
         "C:"
     };
-
-    Command::new("powershell")
-        .args([
-            "-NoProfile",
-            "-Command",
-            &format!(
-                "(Get-PSDrive -Name '{}').Used + (Get-PSDrive -Name '{}').Free",
-                &drive[..1],
-                &drive[..1]
-            ),
-        ])
-        .output()
-        .ok()
-        .and_then(|o| {
-            String::from_utf8_lossy(&o.stdout)
-                .trim()
-                .parse::<u64>()
-                .ok()
-        })
-        .unwrap_or(500 * 1024 * 1024 * 1024) // fallback 500 GB
+    let ps_cmd = format!(
+        "(Get-PSDrive -Name '{}').Used + (Get-PSDrive -Name '{}').Free",
+        &drive[..1],
+        &drive[..1]
+    );
+    fbuild_core::subprocess::run_command(
+        &["powershell", "-NoProfile", "-Command", &ps_cmd],
+        None,
+        None,
+        None,
+    )
+    .ok()
+    .and_then(|o| o.stdout.trim().parse::<u64>().ok())
+    .unwrap_or(500 * 1024 * 1024 * 1024) // fallback 500 GB
 }
 
 #[cfg(unix)]
 fn get_total_disk_space_unix(path: &Path) -> u64 {
-    use std::process::Command;
     // Use `df -Pk` for portable 1024-byte block output.
-    // `-P` gives POSIX format, `-k` forces 1024-byte blocks on all platforms.
-    let output = Command::new("df").args(["-P", "-k"]).arg(path).output();
+    // `-P` gives POSIX format, `-k` forces 1024-byte blocks on all
+    // platforms. Route through the containment group (issue #32).
+    let path_str = path.to_string_lossy();
+    let output =
+        fbuild_core::subprocess::run_command(&["df", "-P", "-k", &path_str], None, None, None);
 
     output
         .ok()
         .and_then(|o| {
-            let stdout = String::from_utf8_lossy(&o.stdout);
-            stdout
+            o.stdout
                 .lines()
                 .nth(1) // skip header
                 .and_then(|line| {
