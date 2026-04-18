@@ -1,49 +1,19 @@
-# TODO — Platform-by-Platform Migration
+# TODO — Warm-pass perf investigation (#91)
 
-## Completed: Shared Foundation
+## Plan
 
-- [x] fbuild-core: SubprocessRunner, ToolOutput, SizeInfo::parse()
-- [x] fbuild-config: Full INI parser (extends, variable substitution)
-- [x] fbuild-config: BoardConfig (from_boards_txt, from_board_id, get_defines)
-- [x] fbuild-packages: Cache system (URL hashing, directory management)
-- [x] fbuild-packages: Base traits (Package, Toolchain, Framework)
-- [x] fbuild-packages: Async HTTP downloader + archive extractors
-- [x] fbuild-build: SourceScanner (.ino preprocessing, prototype extraction)
-- [x] fbuild-build: Base traits (Compiler, Linker, CompilerBase, LinkerBase)
+- [x] Add `perf_log` module in `fbuild-build` with env-gated (`FBUILD_PERF_LOG=1`) phase timer
+- [x] Instrument `BuildContext::new()` (config parse, board load, build-dir setup, flag collect)
+- [x] Instrument `pipeline::run_sequential_build_with_libs` phases (core, variant, sketch, libs, compiledb, link)
+- [x] Instrument AVR orchestrator outer phases (toolchain, framework, scan)
+- [x] Instrument daemon `build` handler (lock acquire, spawn_blocking bookkeeping)
+- [x] Instrument CLI round-trip for the warm build path
+- [x] Ensure `cargo check` + `cargo clippy` + `cargo fmt` clean
+- [x] Run cold+warm experiment on `tests/platform/uno`
+- [x] Write `docs/PERF_WARM_BUILD.md` with methodology, phase table, top stalls, follow-ups
+- [x] Add row to `docs/INDEX.md`
+- [x] Commit (no push)
 
-## Completed: Platform 1 — AVR
+## Review
 
-- [x] fbuild-packages: AvrToolchain (download avr-gcc, resolve bin paths)
-- [x] fbuild-packages: ArduinoCore (download Arduino AVR core)
-- [x] fbuild-build: AvrCompiler (avr-gcc flags, compile C/C++)
-- [x] fbuild-build: AvrLinker (link, objcopy, size reporting)
-- [x] fbuild-build: AvrOrchestrator (wire all phases)
-- [x] fbuild-deploy: AvrDeployer (avrdude invocation)
-
-## Completed: Platform 2 — ESP32
-
-- [x] fbuild-packages: Esp32Toolchain, Esp32Framework
-- [x] fbuild-build: Esp32Orchestrator
-- [x] fbuild-deploy: Esp32Deployer
-- [x] fbuild-serial: Real serialport I/O
-
-## Completed: Platform 3 — Teensy
-
-- [x] fbuild-packages: ArmToolchain, TeensyCores
-- [x] fbuild-build: TeensyOrchestrator
-- [x] fbuild-deploy: TeensyDeployer
-
-## Completed: Build Pipeline Normalization
-
-- [x] Phase 1: Bug fixes (esptool, BuildProfile, firmware_path rename)
-- [x] Phase 2: Shared pipeline.rs helpers (BuildContext, compile/link/result helpers)
-- [x] Phase 3: Compiler trait extension + run_sequential_build() for AVR/Teensy
-
-## Future: Platforms 4-7
-
-- [ ] RP2040, STM32, ESP8266, WASM
-
-## Future: Daemon + PyO3
-
-- [ ] fbuild-daemon: Axum server (follow zccache pattern for launch)
-- [ ] fbuild-python: Wire PyO3 bindings to real backends
+See `docs/PERF_WARM_BUILD.md` for measurements + top stalls.

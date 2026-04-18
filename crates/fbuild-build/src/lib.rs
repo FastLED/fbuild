@@ -18,6 +18,7 @@ pub mod generic_arm;
 pub mod linker;
 pub mod nrf52;
 pub mod parallel;
+pub mod perf_log;
 pub mod pipeline;
 pub mod renesas;
 pub mod rp2040;

@@ -35,33 +35,48 @@ impl BuildOrchestrator for AvrOrchestrator {
 
     fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
+        // Env-gated per-phase timer (FBUILD_PERF_LOG=1); zero-overhead when unset.
+        let mut perf = crate::perf_log::PerfTimer::new("avr-orchestrator");
 
-        // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
-        let mut ctx = pipeline::BuildContext::new(params)?;
+        // 1-2. Parse config, load board, setup build dirs, resolve src dir,
+        //      collect flags. `new_with_perf` records its own sub-phases
+        //      (config-parse, board-load, build-dirs, flag-collect) into
+        //      the shared `perf` timer.
+        let mut ctx = pipeline::BuildContext::new_with_perf(params, Some(&mut perf))?;
 
         // 3. Ensure toolchain
-        let toolchain = fbuild_packages::toolchain::AvrToolchain::new(&params.project_dir);
-        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
+        let (toolchain, toolchain_dir) = {
+            let _g = perf.phase("toolchain-ensure");
+            let toolchain = fbuild_packages::toolchain::AvrToolchain::new(&params.project_dir);
+            let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
+            (toolchain, toolchain_dir)
+        };
         tracing::info!("avr-gcc toolchain at {}", toolchain_dir.display());
 
         use fbuild_packages::Toolchain as _;
         pipeline::log_toolchain_version(&toolchain.get_gcc_path(), "avr-gcc", &mut ctx.build_log);
 
         // 4. Ensure Arduino core
-        let (_framework_dir, core_dir, variant_dir) = ensure_avr_framework(
-            &params.project_dir,
-            &ctx.board.core,
-            &ctx.board.variant,
-            ctx.board.platform(),
-        )?;
+        let (_framework_dir, core_dir, variant_dir) = {
+            let _g = perf.phase("framework-ensure");
+            ensure_avr_framework(
+                &params.project_dir,
+                &ctx.board.core,
+                &ctx.board.variant,
+                ctx.board.platform(),
+            )?
+        };
 
         // 5. Scan sources
-        let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
-        let sources = scanner.scan_all_filtered(
-            Some(&core_dir),
-            Some(&variant_dir),
-            ctx.source_filter.as_deref(),
-        )?;
+        let sources = {
+            let _g = perf.phase("source-scan");
+            let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
+            scanner.scan_all_filtered(
+                Some(&core_dir),
+                Some(&variant_dir),
+                ctx.source_filter.as_deref(),
+            )?
+        };
 
         tracing::info!(
             "sources: {} sketch, {} core, {} variant",
