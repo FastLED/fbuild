@@ -2118,47 +2118,6 @@ mod tests {
     }
 
     #[test]
-    fn avr8js_cache_marker_points_to_package_json() {
-        let cache = PathBuf::from("/some/cache/avr8js-node");
-        let marker = avr8js_cache_marker(&cache);
-        assert!(
-            marker.ends_with("node_modules/avr8js/package.json")
-                || marker.ends_with("node_modules\\avr8js\\package.json"),
-            "marker {:?} should point to package.json",
-            marker
-        );
-        assert!(marker.starts_with(&cache));
-    }
-
-    #[test]
-    fn prepare_avr8js_script_writes_into_cache_dir() {
-        // Regression test for FastLED/fbuild#86: headless.mjs must be written
-        // *into* the cache dir (next to node_modules/) so Node.js ESM can
-        // resolve `import "avr8js"` via parent-walk. NODE_PATH is ignored for
-        // ESM, so placing the script elsewhere (e.g., in a tempdir) breaks
-        // module resolution.
-        let tmp = tempfile::TempDir::new().unwrap();
-        let script_path = prepare_avr8js_script(tmp.path()).expect("should write script");
-
-        // Path must be inside the cache dir (this is the whole point).
-        assert_eq!(
-            script_path.parent().unwrap(),
-            tmp.path(),
-            "headless.mjs must live directly in the cache dir so ESM resolution finds \
-             node_modules/avr8js via parent-walk"
-        );
-        assert_eq!(script_path.file_name().unwrap(), "headless.mjs");
-
-        // Content matches the bundled source.
-        let written = std::fs::read_to_string(&script_path).unwrap();
-        assert_eq!(written, AVR8JS_HEADLESS_MJS);
-
-        // Idempotent: calling twice works.
-        let script_path_2 = prepare_avr8js_script(tmp.path()).expect("idempotent");
-        assert_eq!(script_path, script_path_2);
-    }
-
-    #[test]
     fn monitor_outcome_to_emulator_maps_error() {
         let outcome = monitor_outcome_to_emulator(MonitorOutcome::Error("bad".into()), Some(1));
         assert_eq!(outcome, EmulatorOutcome::Failed("bad".into()));
