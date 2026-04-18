@@ -53,7 +53,20 @@ impl BroadcastHub {
 /// next `fbuild` invocation in an interactive workflow, without leaving
 /// the daemon holding shell-inherited resources (see #91) for two minutes
 /// after a one-shot command returns.
-pub const SELF_EVICTION_TIMEOUT: Duration = Duration::from_secs(30);
+///
+/// Overridable at runtime via `FBUILD_SELF_EVICTION_SECS` (useful for
+/// benchmarks that need the daemon to stay alive across multiple CLI
+/// invocations without re-paying daemon spawn cost).
+pub fn self_eviction_timeout() -> Duration {
+    std::env::var("FBUILD_SELF_EVICTION_SECS")
+        .ok()
+        .and_then(|s| s.parse::<u64>().ok())
+        .map(Duration::from_secs)
+        .unwrap_or(SELF_EVICTION_TIMEOUT_DEFAULT)
+}
+
+pub const SELF_EVICTION_TIMEOUT_DEFAULT: Duration = Duration::from_secs(30);
+pub const SELF_EVICTION_TIMEOUT: Duration = SELF_EVICTION_TIMEOUT_DEFAULT;
 
 /// Fallback idle timeout: daemon shuts down after 12 hours regardless.
 pub const IDLE_TIMEOUT: Duration = Duration::from_secs(43200);

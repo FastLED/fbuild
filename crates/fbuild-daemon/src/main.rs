@@ -5,7 +5,7 @@ use axum::routing::{get, post};
 use axum::Router;
 use clap::Parser;
 use fbuild_daemon::context::{
-    BroadcastHub, DaemonContext, IDLE_TIMEOUT, SELF_EVICTION_TIMEOUT, STALE_LOCK_CHECK_INTERVAL,
+    self_eviction_timeout, BroadcastHub, DaemonContext, IDLE_TIMEOUT, STALE_LOCK_CHECK_INTERVAL,
 };
 use fbuild_daemon::handlers::{cache, devices, emulator, health, locks, operations, websockets};
 use fbuild_daemon::log_layer::BroadcastLogLayer;
@@ -184,7 +184,7 @@ async fn main() {
             loop {
                 tokio::time::sleep(std::time::Duration::from_secs(1)).await;
 
-                // --- Self-eviction: 0 ops + 0 serial sessions for SELF_EVICTION_TIMEOUT ---
+                // --- Self-eviction: 0 ops + 0 serial sessions for self_eviction_timeout ---
                 match ctx.busy_reason() {
                     None => {
                         if last_busy_reason.is_some() {
@@ -195,10 +195,10 @@ async fn main() {
                             daemon_empty_since = Some(std::time::Instant::now());
                             tracing::info!(
                                 "Daemon is idle; self-eviction in {:.0}s unless new work arrives",
-                                SELF_EVICTION_TIMEOUT.as_secs_f64()
+                                self_eviction_timeout().as_secs_f64()
                             );
                         } else if let Some(since) = daemon_empty_since {
-                            if since.elapsed() >= SELF_EVICTION_TIMEOUT {
+                            if since.elapsed() >= self_eviction_timeout() {
                                 tracing::info!(
                                     "Self-eviction triggered: daemon empty for {:.1}s, shutting down",
                                     since.elapsed().as_secs_f64()

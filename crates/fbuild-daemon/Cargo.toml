@@ -23,6 +23,7 @@ fbuild-serial = { path = "../fbuild-serial" }
 fbuild-build = { path = "../fbuild-build" }
 fbuild-deploy = { path = "../fbuild-deploy" }
 tokio = { workspace = true }
+sha2 = { workspace = true }
 axum = { workspace = true }
 tower-http = { workspace = true }
 serde = { workspace = true }
