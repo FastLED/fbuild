@@ -674,7 +674,7 @@ struct DaemonConnection {
     environment: String,
 }
 
-#[derive(Serialize)]
+#[derive(Clone, Serialize)]
 struct OpRequest {
     project_dir: String,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -965,10 +965,68 @@ fn send_op(url: &str, req: &OpRequest, timeout: f64) -> OperationOutcome {
     }
 }
 
+/// Native-async counterpart to `send_op`. Issues the same HTTP POST against
+/// the daemon but yields on I/O instead of blocking a thread, so callers on
+/// an asyncio event loop don't need FastLED's `_run_in_thread` shim.
+///
+/// Returns the same `OperationOutcome` so the sync and async surfaces share
+/// `parse_outcome` and `outcome_to_pydict`. See FastLED/fbuild#65.
+async fn send_op_async(url: String, req: OpRequest, timeout: f64) -> OperationOutcome {
+    let client = reqwest::Client::new();
+    let request = client
+        .post(&url)
+        .json(&req)
+        .timeout(std::time::Duration::from_secs_f64(timeout));
+
+    match request.send().await {
+        Ok(resp) => match resp.json::<serde_json::Value>().await {
+            Ok(body) => {
+                let outcome = parse_outcome(&body);
+                if !outcome.success {
+                    if let Some(ref msg) = outcome.message {
+                        eprintln!("[fbuild] operation failed: {}", msg);
+                    }
+                    if let Some(ref stderr) = outcome.stderr {
+                        if !stderr.is_empty() {
+                            eprintln!("[fbuild] stderr:\n{}", stderr);
+                        }
+                    }
+                }
+                outcome
+            }
+            Err(e) => {
+                let msg = format!("failed to parse daemon response: {}", e);
+                eprintln!("[fbuild] {}", msg);
+                OperationOutcome {
+                    success: false,
+                    message: Some(msg),
+                    ..Default::default()
+                }
+            }
+        },
+        Err(e) => {
+            let msg = format!("request failed: {}", e);
+            eprintln!("[fbuild] {}", msg);
+            OperationOutcome {
+                success: false,
+                message: Some(msg),
+                ..Default::default()
+            }
+        }
+    }
+}
+
 /// Factory function matching `from fbuild import connect_daemon`.
 #[pyfunction]
 fn connect_daemon(project_dir: String, environment: String) -> DaemonConnection {
     DaemonConnection::new(project_dir, environment)
+}
+
+/// Async-flavored factory matching `connect_daemon` but returning the native
+/// async counterpart. Convenience for callers already under `asyncio.run`.
+#[pyfunction]
+fn connect_daemon_async(project_dir: String, environment: String) -> AsyncDaemonConnection {
+    AsyncDaemonConnection::new(project_dir, environment)
 }
 
 /// The version string exposed to Python as `fbuild.__version__`.
@@ -1120,6 +1178,306 @@ impl AsyncDaemon {
             })
         })
     }
+
+    /// Asynchronously ensure the daemon is running. Mirrors the sync
+    /// `Daemon.ensure_running` contract: returns `True` if the daemon
+    /// responds to `/health`, spawning a new `fbuild-daemon` process if
+    /// needed and polling until the health endpoint succeeds.
+    ///
+    /// The spawn itself is synchronous (`std::process::Command::spawn`)
+    /// because `tokio::process::Command` adds no value for a detached
+    /// child — the child does not need an async stdio pipe. The key win
+    /// for async callers is that the health poll loop uses
+    /// `tokio::time::sleep` and async reqwest instead of blocking the
+    /// event loop thread.
+    #[staticmethod]
+    fn ensure_running(py: Python<'_>) -> PyResult<Bound<'_, PyAny>> {
+        let url = format!("{}/health", fbuild_paths::get_daemon_url());
+        let dev_mode = fbuild_paths::is_dev_mode();
+
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let client = reqwest::Client::new();
+
+            // Fast path: daemon is already up.
+            if let Ok(resp) = client
+                .get(&url)
+                .timeout(std::time::Duration::from_secs(5))
+                .send()
+                .await
+            {
+                if resp.status().is_success() {
+                    return Ok(true);
+                }
+            }
+
+            let mut cmd = std::process::Command::new("fbuild-daemon");
+            if dev_mode {
+                cmd.arg("--dev");
+            }
+            cmd.stdin(std::process::Stdio::null())
+                .stdout(std::process::Stdio::null())
+                .stderr(std::process::Stdio::null());
+
+            if cmd.spawn().is_err() {
+                return Ok(false);
+            }
+
+            for _ in 0..100 {
+                tokio::time::sleep(std::time::Duration::from_millis(100)).await;
+                if let Ok(resp) = client
+                    .get(&url)
+                    .timeout(std::time::Duration::from_secs(5))
+                    .send()
+                    .await
+                {
+                    if resp.status().is_success() {
+                        return Ok(true);
+                    }
+                }
+            }
+            Ok(false)
+        })
+    }
+
+    /// Asynchronously shut down the daemon via `POST /api/daemon/shutdown`.
+    /// Returns `True` if the daemon acknowledged with a 2xx response.
+    #[staticmethod]
+    fn stop(py: Python<'_>) -> PyResult<Bound<'_, PyAny>> {
+        let url = format!("{}/api/daemon/shutdown", fbuild_paths::get_daemon_url());
+
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let ok = reqwest::Client::new()
+                .post(&url)
+                .timeout(std::time::Duration::from_secs(10))
+                .send()
+                .await
+                .map(|r| r.status().is_success())
+                .unwrap_or(false);
+            Ok(ok)
+        })
+    }
+}
+
+/// Python-visible AsyncDaemonConnection class.
+///
+/// Native async counterpart to `DaemonConnection`. Exposes `build`,
+/// `deploy`, and `monitor` (and their `_result` variants) as async methods
+/// that call the daemon over `reqwest::Client` (non-blocking) instead of
+/// the blocking client used by the sync sibling. This is the method set
+/// FastLED/fbuild#65 explicitly targets under "Daemon/DaemonConnection:
+/// send_op and any other HTTP call".
+///
+/// ```python
+/// import asyncio
+/// from fbuild._native import AsyncDaemonConnection
+///
+/// async def main():
+///     conn = AsyncDaemonConnection(project_dir="tests/platform/uno", environment="uno")
+///     ok = await conn.build()
+///     result = await conn.build_result()
+///
+/// asyncio.run(main())
+/// ```
+#[pyclass]
+struct AsyncDaemonConnection {
+    project_dir: String,
+    environment: String,
+}
+
+#[pymethods]
+impl AsyncDaemonConnection {
+    #[new]
+    fn new(project_dir: String, environment: String) -> Self {
+        Self {
+            project_dir,
+            environment,
+        }
+    }
+
+    /// Async context manager entry. Returns self so callers can
+    /// `async with AsyncDaemonConnection(...) as conn:`.
+    fn __aenter__<'py>(slf: PyRef<'py, Self>, py: Python<'py>) -> PyResult<Bound<'py, PyAny>> {
+        let project_dir = slf.project_dir.clone();
+        let environment = slf.environment.clone();
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            Python::with_gil(|py| {
+                let obj = Py::new(
+                    py,
+                    AsyncDaemonConnection {
+                        project_dir,
+                        environment,
+                    },
+                )?;
+                Ok(obj.to_object(py))
+            })
+        })
+    }
+
+    #[pyo3(signature = (_exc_type=None, _exc_val=None, _exc_tb=None))]
+    fn __aexit__<'py>(
+        &self,
+        py: Python<'py>,
+        _exc_type: Option<PyObject>,
+        _exc_val: Option<PyObject>,
+        _exc_tb: Option<PyObject>,
+    ) -> PyResult<Bound<'py, PyAny>> {
+        pyo3_async_runtimes::tokio::future_into_py(py, async move { Ok(false) })
+    }
+
+    /// Async counterpart to `DaemonConnection::build`. Awaits the daemon's
+    /// `POST /api/build` response and returns the `success` bool.
+    #[pyo3(signature = (clean=false, verbose=false, timeout=1800.0))]
+    fn build<'py>(
+        &self,
+        py: Python<'py>,
+        clean: bool,
+        verbose: bool,
+        timeout: f64,
+    ) -> PyResult<Bound<'py, PyAny>> {
+        let url = build_url();
+        let req = self.build_request(clean, verbose);
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            Ok(send_op_async(url, req, timeout).await.success)
+        })
+    }
+
+    /// Async counterpart to `DaemonConnection::deploy`.
+    #[pyo3(signature = (port=None, clean=false, skip_build=false, monitor_after=false, timeout=1800.0))]
+    fn deploy<'py>(
+        &self,
+        py: Python<'py>,
+        port: Option<String>,
+        clean: bool,
+        skip_build: bool,
+        monitor_after: bool,
+        timeout: f64,
+    ) -> PyResult<Bound<'py, PyAny>> {
+        let url = deploy_url();
+        let req = self.deploy_request(port, clean, skip_build, monitor_after);
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            Ok(send_op_async(url, req, timeout).await.success)
+        })
+    }
+
+    /// Async counterpart to `DaemonConnection::monitor`.
+    #[pyo3(signature = (port=None, baud_rate=None, timeout=None))]
+    fn monitor<'py>(
+        &self,
+        py: Python<'py>,
+        port: Option<String>,
+        baud_rate: Option<u32>,
+        timeout: Option<f64>,
+    ) -> PyResult<Bound<'py, PyAny>> {
+        let url = monitor_url();
+        let req = self.monitor_request(port, baud_rate);
+        let t = timeout.unwrap_or(1800.0);
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            Ok(send_op_async(url, req, t).await.success)
+        })
+    }
+
+    /// Async counterpart to `DaemonConnection::build_result`. Returns the
+    /// full structured outcome dict (`success`, `message`, `exit_code`,
+    /// `stdout`, `stderr`) — matches the sync surface exactly.
+    #[pyo3(signature = (clean=false, verbose=false, timeout=1800.0))]
+    fn build_result<'py>(
+        &self,
+        py: Python<'py>,
+        clean: bool,
+        verbose: bool,
+        timeout: f64,
+    ) -> PyResult<Bound<'py, PyAny>> {
+        let url = build_url();
+        let req = self.build_request(clean, verbose);
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let outcome = send_op_async(url, req, timeout).await;
+            Python::with_gil(|py| Ok(outcome_to_pydict(py, &outcome)?.unbind()))
+        })
+    }
+
+    /// Async counterpart to `DaemonConnection::deploy_result`.
+    #[pyo3(signature = (port=None, clean=false, skip_build=false, monitor_after=false, timeout=1800.0))]
+    fn deploy_result<'py>(
+        &self,
+        py: Python<'py>,
+        port: Option<String>,
+        clean: bool,
+        skip_build: bool,
+        monitor_after: bool,
+        timeout: f64,
+    ) -> PyResult<Bound<'py, PyAny>> {
+        let url = deploy_url();
+        let req = self.deploy_request(port, clean, skip_build, monitor_after);
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let outcome = send_op_async(url, req, timeout).await;
+            Python::with_gil(|py| Ok(outcome_to_pydict(py, &outcome)?.unbind()))
+        })
+    }
+
+    /// Async counterpart to `DaemonConnection::monitor_result`.
+    #[pyo3(signature = (port=None, baud_rate=None, timeout=None))]
+    fn monitor_result<'py>(
+        &self,
+        py: Python<'py>,
+        port: Option<String>,
+        baud_rate: Option<u32>,
+        timeout: Option<f64>,
+    ) -> PyResult<Bound<'py, PyAny>> {
+        let url = monitor_url();
+        let req = self.monitor_request(port, baud_rate);
+        let t = timeout.unwrap_or(1800.0);
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let outcome = send_op_async(url, req, t).await;
+            Python::with_gil(|py| Ok(outcome_to_pydict(py, &outcome)?.unbind()))
+        })
+    }
+}
+
+impl AsyncDaemonConnection {
+    fn build_request(&self, clean: bool, verbose: bool) -> OpRequest {
+        OpRequest {
+            project_dir: self.project_dir.clone(),
+            environment: Some(self.environment.clone()),
+            clean_build: clean,
+            verbose,
+            port: None,
+            monitor_after: false,
+            skip_build: false,
+            baud_rate: None,
+        }
+    }
+
+    fn deploy_request(
+        &self,
+        port: Option<String>,
+        clean: bool,
+        skip_build: bool,
+        monitor_after: bool,
+    ) -> OpRequest {
+        OpRequest {
+            project_dir: self.project_dir.clone(),
+            environment: Some(self.environment.clone()),
+            clean_build: clean,
+            verbose: false,
+            port,
+            monitor_after,
+            skip_build,
+            baud_rate: None,
+        }
+    }
+
+    fn monitor_request(&self, port: Option<String>, baud_rate: Option<u32>) -> OpRequest {
+        OpRequest {
+            project_dir: self.project_dir.clone(),
+            environment: Some(self.environment.clone()),
+            clean_build: false,
+            verbose: false,
+            port,
+            monitor_after: false,
+            skip_build: false,
+            baud_rate,
+        }
+    }
 }
 
 /// The fbuild Python module (imported as fbuild._native).
@@ -1131,16 +1489,19 @@ fn _native(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<Daemon>()?;
     m.add_class::<AsyncDaemon>()?;
     m.add_class::<DaemonConnection>()?;
+    m.add_class::<AsyncDaemonConnection>()?;
     m.add_function(wrap_pyfunction!(connect_daemon, m)?)?;
+    m.add_function(wrap_pyfunction!(connect_daemon_async, m)?)?;
     Ok(())
 }
 
 #[cfg(test)]
 mod tests {
     use super::{
-        extract_remote_json_rpc_response, parse_outcome, wait_for_remote_json_rpc_response,
-        PYTHON_MODULE_VERSION,
+        extract_remote_json_rpc_response, parse_outcome, send_op_async,
+        wait_for_remote_json_rpc_response, OpRequest, PYTHON_MODULE_VERSION,
     };
+    use tokio::io::{AsyncReadExt, AsyncWriteExt};
 
     /// `parse_outcome` must faithfully extract every field the daemon's
     /// `OperationResponse` populates so Python callers can branch on the
@@ -1269,5 +1630,108 @@ mod tests {
 
         assert_eq!(polls, 2, "an empty batch must not end the overall wait");
         assert_eq!(result.as_deref(), Some(r#" {"ok": true}"#));
+    }
+
+    fn sample_op_request() -> OpRequest {
+        OpRequest {
+            project_dir: "tests/platform/uno".into(),
+            environment: Some("uno".into()),
+            clean_build: false,
+            verbose: false,
+            port: None,
+            monitor_after: false,
+            skip_build: false,
+            baud_rate: None,
+        }
+    }
+
+    /// Minimal in-process HTTP mock. Accepts a single connection, reads
+    /// the request (ignored), replies with `body` as a JSON 200 OK, and
+    /// returns the bound address for the caller to point reqwest at.
+    ///
+    /// Deliberately does not pull a crate dep — axum is already in the
+    /// workspace but not in `fbuild-python`'s dep graph, and adding it
+    /// just for one test would inflate the build graph for every clean
+    /// `uv run cargo check`. Raw TCP is adequate for a response we control.
+    async fn spawn_mock_daemon(body: String) -> String {
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let addr = listener.local_addr().unwrap();
+        tokio::spawn(async move {
+            if let Ok((mut sock, _)) = listener.accept().await {
+                // Drain the request so reqwest sees the response arrive.
+                let mut buf = [0u8; 4096];
+                let _ = sock.read(&mut buf).await;
+                let resp = format!(
+                    "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",
+                    body.len(),
+                    body
+                );
+                let _ = sock.write_all(resp.as_bytes()).await;
+                let _ = sock.shutdown().await;
+            }
+        });
+        format!("http://{}/api/build", addr)
+    }
+
+    /// `send_op_async` must parse a successful response identically to
+    /// the blocking `send_op`, so the AsyncDaemonConnection surface
+    /// returns the same OperationOutcome fields as the sync sibling.
+    #[test]
+    fn send_op_async_parses_success_response() {
+        let rt = tokio::runtime::Runtime::new().unwrap();
+        rt.block_on(async {
+            let url = spawn_mock_daemon(
+                r#"{"success":true,"message":"ok","exit_code":0,"stdout":"","stderr":""}"#.into(),
+            )
+            .await;
+            let outcome = send_op_async(url, sample_op_request(), 5.0).await;
+            assert!(outcome.success, "expected success=true from mock");
+            assert_eq!(outcome.message.as_deref(), Some("ok"));
+            assert_eq!(outcome.exit_code, Some(0));
+        });
+    }
+
+    /// `send_op_async` must surface structured failure fields (message,
+    /// exit_code, stderr) exactly like `send_op`, so callers porting to
+    /// async don't regress in what they can branch on.
+    #[test]
+    fn send_op_async_parses_failure_response() {
+        let rt = tokio::runtime::Runtime::new().unwrap();
+        rt.block_on(async {
+            let url = spawn_mock_daemon(
+                r#"{"success":false,"message":"build failed","exit_code":2,"stderr":"compile error"}"#
+                    .into(),
+            )
+            .await;
+            let outcome = send_op_async(url, sample_op_request(), 5.0).await;
+            assert!(!outcome.success);
+            assert_eq!(outcome.message.as_deref(), Some("build failed"));
+            assert_eq!(outcome.exit_code, Some(2));
+            assert_eq!(outcome.stderr.as_deref(), Some("compile error"));
+        });
+    }
+
+    /// Connection errors must materialize as `success=false` with a
+    /// descriptive message, matching the sync contract. This guards
+    /// against the async path panicking when the daemon is not up.
+    #[test]
+    fn send_op_async_returns_failure_outcome_on_connection_error() {
+        let rt = tokio::runtime::Runtime::new().unwrap();
+        rt.block_on(async {
+            // Unroutable address (reserved TEST-NET-1). reqwest will fail
+            // fast with a connect error instead of hanging to the timeout.
+            let url = "http://192.0.2.1:1/api/build".to_string();
+            let outcome = send_op_async(url, sample_op_request(), 1.0).await;
+            assert!(!outcome.success);
+            assert!(
+                outcome
+                    .message
+                    .as_deref()
+                    .map(|m| m.contains("request failed"))
+                    .unwrap_or(false),
+                "expected 'request failed' message, got {:?}",
+                outcome.message
+            );
+        });
     }
 }
