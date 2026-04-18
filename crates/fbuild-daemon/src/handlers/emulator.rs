@@ -553,38 +553,164 @@ fn find_node() -> fbuild_core::Result<PathBuf> {
     }
 }
 
+/// Env-var that forces `ensure_avr8js_npm` to wipe and reinstall the cache
+/// regardless of the integrity marker. Set `FBUILD_REFRESH_EMU_CACHE=1` before
+/// invoking `fbuild test-emu` (or restart the daemon with it in the env) to
+/// recover from a corrupt or partial avr8js install.
+const REFRESH_EMU_CACHE_ENV: &str = "FBUILD_REFRESH_EMU_CACHE";
+
+fn refresh_emu_cache_requested() -> bool {
+    matches!(
+        std::env::var(REFRESH_EMU_CACHE_ENV)
+            .ok()
+            .as_deref()
+            .map(str::trim),
+        Some("1") | Some("true") | Some("TRUE") | Some("yes") | Some("YES")
+    )
+}
+
+fn avr8js_cache_is_intact(cache_dir: &Path) -> bool {
+    // Cheapest proof of a non-corrupt install: both the `avr8js` module dir
+    // *and* its `package.json` must exist. A stale/partial `npm install`
+    // sometimes leaves the directory without the manifest and causes
+    // Node to fail with `ERR_MODULE_NOT_FOUND` at runtime.
+    let module_dir = cache_dir.join("node_modules").join("avr8js");
+    let marker = module_dir.join("package.json");
+    module_dir.is_dir() && marker.is_file()
+}
+
+/// Describes what `prepare_avr8js_cache_for_install` did to the cache dir
+/// before a reinstall attempt. Exposed for unit testing; production code
+/// only needs the side-effect on disk.
+#[derive(Debug, PartialEq, Eq)]
+enum Avr8jsCachePrep {
+    /// Cache was already intact — no-op, reinstall not required.
+    AlreadyIntact,
+    /// No preexisting cache tree; reinstall will populate a fresh dir.
+    NothingToClean,
+    /// `node_modules/` was present but corrupt (missing marker); wiped.
+    WipedNodeModules,
+    /// Force-refresh was requested; entire `cache_dir` was wiped.
+    ForceWiped,
+}
+
+/// Inspect `cache_dir`, wipe corrupt/partial installs, and return what was
+/// done. Does NOT run `npm install`.
+fn prepare_avr8js_cache_for_install(cache_dir: &Path, force_refresh: bool) -> Avr8jsCachePrep {
+    if !force_refresh && avr8js_cache_is_intact(cache_dir) {
+        return Avr8jsCachePrep::AlreadyIntact;
+    }
+
+    if force_refresh && cache_dir.exists() {
+        tracing::info!(
+            "{}=1 set; wiping avr8js cache at {}",
+            REFRESH_EMU_CACHE_ENV,
+            cache_dir.display()
+        );
+        if let Err(e) = std::fs::remove_dir_all(cache_dir) {
+            tracing::warn!(
+                "failed to wipe avr8js cache at {}: {} (continuing with reinstall)",
+                cache_dir.display(),
+                e
+            );
+        }
+        return Avr8jsCachePrep::ForceWiped;
+    }
+
+    if cache_dir.exists() {
+        let node_modules = cache_dir.join("node_modules");
+        if node_modules.exists() {
+            tracing::warn!(
+                "avr8js cache at {} is corrupt (missing node_modules/avr8js/package.json); reinstalling",
+                cache_dir.display()
+            );
+            if let Err(e) = std::fs::remove_dir_all(&node_modules) {
+                tracing::warn!(
+                    "failed to wipe avr8js node_modules at {}: {} (continuing with reinstall)",
+                    node_modules.display(),
+                    e
+                );
+            }
+            return Avr8jsCachePrep::WipedNodeModules;
+        }
+    }
+
+    Avr8jsCachePrep::NothingToClean
+}
+
 fn ensure_avr8js_npm() -> fbuild_core::Result<PathBuf> {
     let cache_dir = fbuild_paths::get_cache_root().join("avr8js-node");
-    let marker = cache_dir.join("node_modules").join("avr8js");
-    if marker.exists() {
-        return Ok(cache_dir);
+    ensure_avr8js_npm_in(&cache_dir, refresh_emu_cache_requested())?;
+    Ok(cache_dir)
+}
+
+/// Populate `cache_dir` with a fresh `node_modules/avr8js` install, wiping
+/// a corrupt or partial install as needed. Split out from `ensure_avr8js_npm`
+/// so unit tests can inject a temporary cache dir without touching env vars.
+fn ensure_avr8js_npm_in(cache_dir: &Path, force_refresh: bool) -> fbuild_core::Result<()> {
+    if prepare_avr8js_cache_for_install(cache_dir, force_refresh) == Avr8jsCachePrep::AlreadyIntact
+    {
+        return Ok(());
     }
-    std::fs::create_dir_all(&cache_dir).map_err(|e| {
-        fbuild_core::FbuildError::DeployFailed(format!("failed to create avr8js cache dir: {}", e))
+
+    std::fs::create_dir_all(cache_dir).map_err(|e| {
+        fbuild_core::FbuildError::DeployFailed(format!(
+            "failed to create avr8js cache dir at {}: {}",
+            cache_dir.display(),
+            e
+        ))
     })?;
+
     let npm = if cfg!(windows) { "npm.cmd" } else { "npm" };
     let output = std::process::Command::new(npm)
         .args(["install", "--save", "avr8js@0.21.0"])
         .arg("--prefix")
-        .arg(&cache_dir)
+        .arg(cache_dir)
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
         .output()
         .map_err(|e| {
             fbuild_core::FbuildError::DeployFailed(format!(
-                "failed to run npm install for avr8js: {}. \
-                 Ensure npm is installed alongside Node.js.",
-                e
+                "failed to launch 'npm' (for `npm install avr8js@0.21.0 --prefix {}`): {}. \
+                 Ensure `npm` is installed alongside Node.js and on PATH \
+                 (https://nodejs.org/). If npm is installed, set \
+                 {}=1 to force a clean reinstall.",
+                cache_dir.display(),
+                e,
+                REFRESH_EMU_CACHE_ENV
             ))
         })?;
     if !output.status.success() {
+        let stdout = String::from_utf8_lossy(&output.stdout);
         let stderr = String::from_utf8_lossy(&output.stderr);
         return Err(fbuild_core::FbuildError::DeployFailed(format!(
-            "npm install avr8js failed: {}",
-            stderr
+            "`npm install avr8js@0.21.0 --prefix {}` exited with status {}.\n\
+             --- stdout ---\n{}\n--- stderr ---\n{}",
+            cache_dir.display(),
+            output
+                .status
+                .code()
+                .map(|c| c.to_string())
+                .unwrap_or_else(|| "?".to_string()),
+            stdout.trim_end(),
+            stderr.trim_end()
         )));
     }
-    Ok(cache_dir)
+
+    // Post-install integrity check: guard against npm exiting 0 without
+    // actually extracting the package (rare, but has been seen on Windows
+    // under antivirus interference).
+    if !avr8js_cache_is_intact(cache_dir) {
+        return Err(fbuild_core::FbuildError::DeployFailed(format!(
+            "avr8js npm install at {} reported success but the cache is still \
+             incomplete (missing node_modules/avr8js/package.json). \
+             Try rerunning with {}=1.",
+            cache_dir.display(),
+            REFRESH_EMU_CACHE_ENV
+        )));
+    }
+
+    Ok(())
 }
 
 struct Avr8jsRunResult {
@@ -611,6 +737,26 @@ async fn run_avr8js_headless(
     avr8js_cache_dir: &Path,
     options: RunAvr8jsHeadlessOptions<'_>,
 ) -> fbuild_core::Result<Avr8jsRunResult> {
+    // Fail-fast: re-verify the cache is intact before we spawn Node. This
+    // guards against race conditions (cache wiped between `ensure_avr8js_npm`
+    // and this call) and makes the error actionable instead of a cryptic
+    // Node `ERR_MODULE_NOT_FOUND` stack trace (issue #86).
+    if !avr8js_cache_is_intact(avr8js_cache_dir) {
+        tracing::error!(
+            "avr8js cache not populated at {}; aborting (expected \
+             node_modules/avr8js/package.json). Set {}=1 to force reinstall.",
+            avr8js_cache_dir.display(),
+            REFRESH_EMU_CACHE_ENV
+        );
+        return Err(fbuild_core::FbuildError::DeployFailed(format!(
+            "avr8js cache not populated at {} (missing \
+             node_modules/avr8js/package.json). \
+             Set {}=1 to force reinstall.",
+            avr8js_cache_dir.display(),
+            REFRESH_EMU_CACHE_ENV
+        )));
+    }
+
     let mut cmd = tokio::process::Command::new(node_path);
     cmd.arg(script_path)
         .arg("--hex")
@@ -2865,5 +3011,217 @@ mod tests {
         assert!(!is_qemu_supported_esp32_mcu("esp32s2"));
         assert!(!is_qemu_supported_esp32_mcu("atmega328p"));
         assert!(!is_qemu_supported_esp32_mcu("esp32p4"));
+    }
+
+    // -----------------------------------------------------------------------
+    // avr8js npm cache integrity tests (issue #86)
+    // -----------------------------------------------------------------------
+
+    /// Serialises tests that mutate process-wide env vars (PATH). Without
+    /// this, parallel cargo-test workers would clobber each other's PATH.
+    fn env_lock() -> std::sync::MutexGuard<'static, ()> {
+        use std::sync::{Mutex, OnceLock};
+        static LOCK: OnceLock<Mutex<()>> = OnceLock::new();
+        LOCK.get_or_init(|| Mutex::new(()))
+            .lock()
+            .unwrap_or_else(|p| p.into_inner())
+    }
+
+    #[test]
+    fn avr8js_cache_is_intact_detects_missing_dir() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        // Empty cache dir: no node_modules at all.
+        assert!(!avr8js_cache_is_intact(tmp.path()));
+    }
+
+    #[test]
+    fn avr8js_cache_is_intact_detects_missing_package_json() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        // Simulate a partial/corrupt install: dir exists, but no package.json.
+        std::fs::create_dir_all(tmp.path().join("node_modules").join("avr8js")).unwrap();
+        assert!(
+            !avr8js_cache_is_intact(tmp.path()),
+            "corrupt install (no package.json) must not count as intact"
+        );
+    }
+
+    #[test]
+    fn avr8js_cache_is_intact_accepts_marker_present() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let module_dir = tmp.path().join("node_modules").join("avr8js");
+        std::fs::create_dir_all(&module_dir).unwrap();
+        std::fs::write(module_dir.join("package.json"), b"{\"name\":\"avr8js\"}").unwrap();
+        assert!(avr8js_cache_is_intact(tmp.path()));
+    }
+
+    #[test]
+    fn prepare_avr8js_cache_skips_when_intact() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let module_dir = tmp.path().join("node_modules").join("avr8js");
+        std::fs::create_dir_all(&module_dir).unwrap();
+        std::fs::write(module_dir.join("package.json"), b"{}").unwrap();
+        assert_eq!(
+            prepare_avr8js_cache_for_install(tmp.path(), false),
+            Avr8jsCachePrep::AlreadyIntact
+        );
+        // Tree must survive untouched.
+        assert!(module_dir.join("package.json").exists());
+    }
+
+    #[test]
+    fn prepare_avr8js_cache_wipes_node_modules_when_corrupt() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let node_modules = tmp.path().join("node_modules");
+        let module_dir = node_modules.join("avr8js");
+        std::fs::create_dir_all(&module_dir).unwrap();
+        // Stray partial file inside an otherwise package.json-less install.
+        std::fs::write(module_dir.join("index.mjs"), b"partial").unwrap();
+        assert!(!avr8js_cache_is_intact(tmp.path()));
+
+        let prep = prepare_avr8js_cache_for_install(tmp.path(), false);
+        assert_eq!(prep, Avr8jsCachePrep::WipedNodeModules);
+        assert!(
+            !node_modules.exists(),
+            "corrupt node_modules tree must be wiped before reinstall"
+        );
+    }
+
+    #[test]
+    fn prepare_avr8js_cache_force_refresh_wipes_entire_dir() {
+        let tmp_parent = tempfile::TempDir::new().unwrap();
+        let cache = tmp_parent.path().join("avr8js-node");
+        let module_dir = cache.join("node_modules").join("avr8js");
+        std::fs::create_dir_all(&module_dir).unwrap();
+        std::fs::write(module_dir.join("package.json"), b"{}").unwrap();
+        // Even a fully-intact install must be wiped under force_refresh=true.
+        let prep = prepare_avr8js_cache_for_install(&cache, true);
+        assert_eq!(prep, Avr8jsCachePrep::ForceWiped);
+        assert!(!cache.exists(), "force-refresh must remove the cache dir");
+    }
+
+    #[test]
+    fn prepare_avr8js_cache_nothing_to_clean_on_fresh_path() {
+        let tmp_parent = tempfile::TempDir::new().unwrap();
+        let cache = tmp_parent.path().join("avr8js-node"); // doesn't exist yet
+        assert_eq!(
+            prepare_avr8js_cache_for_install(&cache, false),
+            Avr8jsCachePrep::NothingToClean
+        );
+    }
+
+    #[test]
+    fn refresh_emu_cache_requested_recognises_truthy_values() {
+        let _guard = env_lock();
+        for (val, expected) in [
+            ("1", true),
+            ("true", true),
+            ("TRUE", true),
+            ("yes", true),
+            ("YES", true),
+            ("0", false),
+            ("", false),
+            ("no", false),
+        ] {
+            std::env::set_var(REFRESH_EMU_CACHE_ENV, val);
+            assert_eq!(
+                refresh_emu_cache_requested(),
+                expected,
+                "{}={:?} should parse as {}",
+                REFRESH_EMU_CACHE_ENV,
+                val,
+                expected
+            );
+        }
+        std::env::remove_var(REFRESH_EMU_CACHE_ENV);
+        assert!(!refresh_emu_cache_requested());
+    }
+
+    /// When npm isn't on PATH, `ensure_avr8js_npm_in` must return an
+    /// `FbuildError::DeployFailed` that names both `npm` and the cache dir.
+    /// This is the fix for issue #86's silent `ERR_MODULE_NOT_FOUND`.
+    #[test]
+    fn ensure_avr8js_npm_in_reports_clear_error_without_npm() {
+        let _guard = env_lock();
+        let saved_path = std::env::var_os("PATH");
+        // PATHEXT matters on Windows for command resolution of .cmd files.
+        let saved_pathext = std::env::var_os("PATHEXT");
+
+        std::env::set_var("PATH", "");
+        #[cfg(windows)]
+        {
+            // Ensure .cmd isn't resolved via some fallback.
+            std::env::set_var("PATHEXT", "");
+        }
+
+        let tmp = tempfile::TempDir::new().unwrap();
+        let cache = tmp.path().join("avr8js-node");
+        let result = ensure_avr8js_npm_in(&cache, false);
+
+        // Restore BEFORE asserting so a panic doesn't leak PATH="" to sibling tests.
+        if let Some(p) = saved_path {
+            std::env::set_var("PATH", p);
+        } else {
+            std::env::remove_var("PATH");
+        }
+        if let Some(p) = saved_pathext {
+            std::env::set_var("PATHEXT", p);
+        } else {
+            std::env::remove_var("PATHEXT");
+        }
+
+        let err = result.expect_err("npm must be unresolvable with PATH=\"\"");
+        let msg = err.to_string();
+        assert!(
+            msg.contains("npm"),
+            "error message must mention 'npm'; got: {}",
+            msg
+        );
+        assert!(
+            msg.contains(&cache.display().to_string()),
+            "error message must include cache dir path; got: {}",
+            msg
+        );
+        assert!(
+            msg.contains(REFRESH_EMU_CACHE_ENV),
+            "error message must reference {} for recovery; got: {}",
+            REFRESH_EMU_CACHE_ENV,
+            msg
+        );
+    }
+
+    /// When the cache dir contains a corrupt partial install, the reinstall
+    /// path must fire (detected here by asserting the partial tree is wiped
+    /// even when the downstream npm call subsequently fails).
+    #[test]
+    fn ensure_avr8js_npm_in_wipes_corrupt_before_reinstall() {
+        let _guard = env_lock();
+        let saved_path = std::env::var_os("PATH");
+
+        // Force the npm spawn to fail so we isolate the wipe behaviour.
+        std::env::set_var("PATH", "");
+
+        let tmp = tempfile::TempDir::new().unwrap();
+        let cache = tmp.path().join("avr8js-node");
+        let node_modules = cache.join("node_modules");
+        let module_dir = node_modules.join("avr8js");
+        std::fs::create_dir_all(&module_dir).unwrap();
+        // Deliberately omit package.json → corrupt.
+        std::fs::write(module_dir.join("garbage"), b"partial").unwrap();
+        assert!(!avr8js_cache_is_intact(&cache));
+
+        let result = ensure_avr8js_npm_in(&cache, false);
+
+        if let Some(p) = saved_path {
+            std::env::set_var("PATH", p);
+        } else {
+            std::env::remove_var("PATH");
+        }
+
+        // npm spawn must fail (no PATH), but the corrupt tree must be gone.
+        assert!(result.is_err(), "empty PATH should prevent npm install");
+        assert!(
+            !node_modules.exists(),
+            "corrupt node_modules must be wiped before reinstall attempt"
+        );
     }
 }
