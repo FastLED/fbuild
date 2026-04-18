@@ -10,22 +10,29 @@ We want to iterate on the benchmark (change caching strategy, change board, try 
 
 ## Running the benchmark
 
-Trigger manually from the GitHub Actions UI, or via CLI:
+The workflow triggers on **every push** to `bench/fastled-examples`. `workflow_dispatch` would require the workflow to live on `main`, which defeats the point of the orphan branch.
+
+Edit [`bench.config`](./bench.config), commit, push:
 
 ```bash
-# default: uno, full example list, master
-gh workflow run benchmark.yml --ref bench/fastled-examples --repo FastLED/fbuild
+# change the parameters
+$EDITOR bench.config
 
-# override board / ref / cache state
-gh workflow run benchmark.yml --ref bench/fastled-examples --repo FastLED/fbuild \
-  -f board=esp32dev \
-  -f fastled_ref=master \
-  -f examples=all
-
-# cold-cache run (bust the fbuild cache)
-gh workflow run benchmark.yml --ref bench/fastled-examples --repo FastLED/fbuild \
-  -f cache_bust=$(date +%s)
+git commit -am "bench: try esp32dev warm"
+git push
 ```
+
+To re-run with the same parameters (e.g., for a warm-cache repeat), push an empty commit:
+
+```bash
+git commit --allow-empty -m "bench: rerun warm"
+git push
+```
+
+### Cold vs warm
+
+- **Cold** = `bench.config` has a non-empty `CACHE_BUST` value. Bump it (e.g., to a timestamp) to force a cache miss.
+- **Warm** = `CACHE_BUST=` (empty). Run once to prime, then again to measure the warm number.
 
 ## Phases measured
 
@@ -41,11 +48,6 @@ Each phase writes one row into `phase-timings.tsv` (uploaded as an artifact):
 | `job_total`         | end-to-end wall-clock from job start to end                     |
 
 `actions/setup-python` and `pip install fbuild` are inside the composite `setup` action so their wall-clock shows up in the Actions UI under that step rather than in the TSV.
-
-## Cold vs warm
-
-- **Cold**: bump `cache_bust` (any new value) → `fbuild_cache_hit=false`.
-- **Warm**: leave `cache_bust` empty and run twice. First run primes the cache; second run is the warm number.
 
 ## Interpreting results
 

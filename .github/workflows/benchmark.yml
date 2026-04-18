@@ -7,56 +7,63 @@ name: FastLED examples compile benchmark
 # where the time actually goes — for both cold-cache and warm-cache regimes.
 #
 # Tracked by: https://github.com/FastLED/fbuild/issues/112
+#
+# Trigger model
+# -------------
+# Every push to this branch runs the benchmark. workflow_dispatch would require
+# the workflow to live on the default branch (main), which defeats the point of
+# an orphan branch. Runs are parameterized via `bench.config` at the root of
+# this branch — edit, commit, push to re-run.
 
 on:
-  workflow_dispatch:
-    inputs:
-      board:
-        description: "FastLED board to compile all examples for (e.g. uno, esp32dev, esp32s3)"
-        required: false
-        default: "uno"
-        type: string
-      fastled_ref:
-        description: "FastLED git ref (branch, tag, or SHA) to benchmark against"
-        required: false
-        default: "master"
-        type: string
-      cache_bust:
-        description: "Set to any non-empty string to bust the fbuild cache (forces a cold run)"
-        required: false
-        default: ""
-        type: string
-      examples:
-        description: "Compile args passed to ./compile after the board — 'all' for every example, or a space-separated subset like 'Blink DemoReel100'"
-        required: false
-        default: "all"
-        type: string
+  push:
+    branches:
+      - bench/fastled-examples
 
 permissions:
   contents: read
 
 jobs:
   benchmark:
-    name: "compile ${{ inputs.board }} ${{ inputs.examples }}"
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
-      BENCH_BOARD: ${{ inputs.board }}
-      BENCH_REF: ${{ inputs.fastled_ref }}
-      BENCH_EXAMPLES: ${{ inputs.examples }}
-      BENCH_CACHE_BUST: ${{ inputs.cache_bust }}
       BENCH_TIMINGS: ${{ github.workspace }}/phase-timings.tsv
     steps:
+      - name: Checkout benchmark branch
+        uses: actions/checkout@v4
+
+      - name: Load bench.config
+        id: bench_config
+        run: |
+          set -euo pipefail
+          if [ ! -f bench.config ]; then
+            echo "bench.config not found; using defaults" >&2
+            BOARD=uno
+            FASTLED_REF=master
+            EXAMPLES=all
+            CACHE_BUST=
+          else
+            # shellcheck disable=SC1091
+            . ./bench.config
+          fi
+          echo "BENCH_BOARD=${BOARD}" >> "$GITHUB_ENV"
+          echo "BENCH_REF=${FASTLED_REF}" >> "$GITHUB_ENV"
+          echo "BENCH_EXAMPLES=${EXAMPLES}" >> "$GITHUB_ENV"
+          echo "BENCH_CACHE_BUST=${CACHE_BUST}" >> "$GITHUB_ENV"
+          echo "board=${BOARD}" >> "$GITHUB_OUTPUT"
+          echo "ref=${FASTLED_REF}" >> "$GITHUB_OUTPUT"
+          echo "examples=${EXAMPLES}" >> "$GITHUB_OUTPUT"
+          echo "cache_bust=${CACHE_BUST}" >> "$GITHUB_OUTPUT"
+          echo "Resolved: board=${BOARD} ref=${FASTLED_REF} examples=${EXAMPLES} cache_bust=${CACHE_BUST}"
+
       - name: Init phase timings file
         run: |
           printf 'phase\tseconds\n' > "$BENCH_TIMINGS"
-          # Track job wall-clock from here forward
           echo "BENCH_JOB_START=$(date +%s.%N)" >> "$GITHUB_ENV"
 
-      # --- phase: checkout fbuild (this branch has only the benchmark, so we
-      #     also need fbuild's `setup` composite action. Pull it from main.) ---
+      # --- phase: checkout fbuild main (for the `setup` composite action) ---
       - name: Phase - checkout fbuild main (for setup action)
-        id: phase_checkout_fbuild
         run: |
           t0=$(date +%s.%N)
           git clone --depth 1 --branch main https://github.com/FastLED/fbuild.git fbuild-src
@@ -64,34 +71,25 @@ jobs:
           printf 'checkout_fbuild\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
 
       # --- phase: setup fbuild (python + pip install + cache restore) ---
-      # The setup action bundles python setup + pip install + cache restore;
-      # we time the whole composite as one phase and then break it out below
-      # by reading its cache-hit output.
       - name: Phase - set up fbuild (install + cache restore)
         id: fbuild_setup
         uses: ./fbuild-src/.github/actions/setup
         with:
-          cache-version: "bench-v1-${{ inputs.cache_bust }}"
-          cache-key-extra: "${{ inputs.board }}-${{ inputs.fastled_ref }}"
+          cache-version: "bench-v1-${{ steps.bench_config.outputs.cache_bust }}"
+          cache-key-extra: "${{ steps.bench_config.outputs.board }}-${{ steps.bench_config.outputs.ref }}"
 
-      - name: Phase - record fbuild-setup timing and cache-hit
+      - name: Phase - record fbuild-setup cache-hit
         run: |
-          # Composite steps don't expose per-step timing directly; we record
-          # cache-hit status so we can attribute cold vs warm. Wall-clock for
-          # the composite itself shows up in the UI under the step above.
           echo "fbuild cache-hit: ${{ steps.fbuild_setup.outputs.cache-hit }}"
           printf 'fbuild_cache_hit\t%s\n' "${{ steps.fbuild_setup.outputs.cache-hit }}" >> "$BENCH_TIMINGS"
 
       # --- phase: clone FastLED ---
-      - name: Phase - clone FastLED @ ${{ inputs.fastled_ref }}
-        id: phase_clone_fastled
+      - name: Phase - clone FastLED
         run: |
           t0=$(date +%s.%N)
-          git clone --depth 1 --branch "$BENCH_REF" \
-            https://github.com/FastLED/FastLED.git fastled \
-            || git clone https://github.com/FastLED/FastLED.git fastled
-          if [ "$BENCH_REF" != "master" ] && [ ! -d fastled/.git ]; then
-            echo "shallow branch clone failed; falling back to full clone + checkout"
+          # Try shallow-clone-at-ref first; fall back to full clone + checkout.
+          if ! git clone --depth 1 --branch "$BENCH_REF" \
+                 https://github.com/FastLED/FastLED.git fastled 2>/dev/null; then
             rm -rf fastled
             git clone https://github.com/FastLED/FastLED.git fastled
             (cd fastled && git checkout "$BENCH_REF")
@@ -100,7 +98,7 @@ jobs:
           printf 'clone_fastled\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
           echo "FastLED HEAD: $(cd fastled && git rev-parse HEAD)"
 
-      # --- phase: install FastLED's python deps via uv (compile script wants it) ---
+      # --- phase: install uv + uv sync .venv for FastLED's compile script ---
       - name: Phase - install uv
         uses: astral-sh/setup-uv@v6
         with:
@@ -108,12 +106,9 @@ jobs:
           version: "0.8.0"
 
       - name: Phase - uv sync FastLED venv
-        id: phase_uv_sync
         working-directory: fastled
         run: |
           t0=$(date +%s.%N)
-          # ./compile auto-creates .venv via ./install; force it to run now so
-          # we time it as its own phase and don't smuggle it into the compile.
           if [ -x ./install ]; then
             ./install || uv sync
           else
@@ -124,22 +119,20 @@ jobs:
 
       # --- phase: compile ---
       - name: Phase - compile examples
-        id: phase_compile
         working-directory: fastled
         run: |
           t0=$(date +%s.%N)
           set -o pipefail
+          rc=0
           ./compile --no-interactive --no-parallel \
             --log-failures failures \
             --max-failures 3 \
-            "$BENCH_BOARD" $BENCH_EXAMPLES \
-            | tee compile.log
-          rc=$?
+            "$BENCH_BOARD" $BENCH_EXAMPLES 2>&1 | tee compile.log || rc=$?
           t1=$(date +%s.%N)
           printf 'compile\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
-          exit $rc
+          exit "$rc"
 
-      # --- final: write job-level total + publish summary ---
+      # --- final: job-level total + job summary ---
       - name: Phase - job total + summary
         if: always()
         run: |
@@ -150,8 +143,9 @@ jobs:
           {
             echo "## Benchmark: ${BENCH_BOARD} ${BENCH_EXAMPLES} @ ${BENCH_REF}"
             echo ""
-            echo "cache-hit: \`${{ steps.fbuild_setup.outputs.cache-hit }}\`"
-            echo "cache-bust: \`${BENCH_CACHE_BUST:-<none>}\`"
+            echo "- commit: \`${{ github.sha }}\`"
+            echo "- cache-hit: \`${{ steps.fbuild_setup.outputs.cache-hit }}\`"
+            echo "- cache-bust: \`${BENCH_CACHE_BUST:-<none>}\`"
             echo ""
             echo "| phase | seconds |"
             echo "|-------|--------:|"
@@ -164,6 +158,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: phase-timings-${{ inputs.board }}-${{ inputs.fastled_ref }}-${{ github.run_attempt }}
+          name: phase-timings-${{ env.BENCH_BOARD }}-${{ env.BENCH_REF }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: ${{ env.BENCH_TIMINGS }}
           if-no-files-found: warn
