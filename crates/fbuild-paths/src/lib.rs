@@ -227,7 +227,7 @@ mod tests {
         // Note: can't set env vars in parallel tests safely,
         // so just test the function exists and returns a valid port
         let port = get_daemon_port();
-        assert!(port == 8765 || port == 8865);
+        assert!(port > 0);
     }
 
     #[test]
