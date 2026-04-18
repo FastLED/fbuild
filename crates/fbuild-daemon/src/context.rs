@@ -128,6 +128,20 @@ impl DaemonContext {
         shutdown_tx: tokio::sync::watch::Sender<bool>,
         spawner_cwd: String,
     ) -> Self {
+        Self::with_hub(port, shutdown_tx, spawner_cwd, BroadcastHub::new())
+    }
+
+    /// Construct with a caller-supplied [`BroadcastHub`]. Used by
+    /// `main.rs` so the tracing layer can be registered against
+    /// `hub.log_tx` before the daemon emits its first
+    /// `tracing::info!` (otherwise the layer would need a late-bound
+    /// handle through a global OnceLock).
+    pub fn with_hub(
+        port: u16,
+        shutdown_tx: tokio::sync::watch::Sender<bool>,
+        spawner_cwd: String,
+        broadcast_hub: BroadcastHub,
+    ) -> Self {
         let now_unix = std::time::SystemTime::now()
             .duration_since(std::time::UNIX_EPOCH)
             .unwrap_or_default()
@@ -154,7 +168,7 @@ impl DaemonContext {
             source_mtime,
             last_activity: Arc::new(std::sync::Mutex::new(Instant::now())),
             spawner_cwd,
-            broadcast_hub: BroadcastHub::new(),
+            broadcast_hub,
             avr8js_sessions: DashMap::new(),
             gc_mutex: Arc::new(tokio::sync::Mutex::new(())),
         }
