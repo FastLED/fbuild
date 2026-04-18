@@ -47,14 +47,20 @@ pub struct Esp32Deployer {
     after_reset: String,
     verbose: bool,
     /// Route `verify-flash` through the native [`espflash`] crate
-    /// instead of the Python `esptool` subprocess. Write-flash is
-    /// unaffected — issue #66's native write path is a follow-up PR.
+    /// instead of the Python `esptool` subprocess.
     ///
     /// The daemon sets this from the `FBUILD_USE_ESPFLASH_VERIFY` env
     /// var. Default `false` keeps esptool as the fallback so users on
     /// unusual setups aren't forced onto the native path until it has
     /// bench time on every ESP32 family member.
     use_native_verify: bool,
+    /// Route `write-flash` through the native [`espflash`] crate
+    /// instead of the Python `esptool` subprocess (issue #66).
+    ///
+    /// The daemon sets this from the `FBUILD_USE_ESPFLASH_WRITE` env
+    /// var, independently of `use_native_verify`. Default `false` keeps
+    /// esptool as the safe fallback.
+    use_native_write: bool,
 }
 
 impl Esp32Deployer {
@@ -80,15 +86,26 @@ impl Esp32Deployer {
             after_reset: esptool_params.after_reset.clone(),
             verbose,
             use_native_verify: false,
+            use_native_write: false,
         }
     }
 
     /// Opt this deployer into the native espflash-based verify path
-    /// (issue #66). No effect on write-flash, which always goes through
-    /// esptool until the follow-up PR lands.
+    /// (issue #66). Independent of `with_native_write`.
     #[must_use]
     pub fn with_native_verify(mut self, enabled: bool) -> Self {
         self.use_native_verify = enabled;
+        self
+    }
+
+    /// Opt this deployer into the native espflash-based write-flash
+    /// path (issue #66). Independent of `with_native_verify`. On opt-in
+    /// both [`Deployer::deploy`] and [`Esp32Deployer::deploy_regions`]
+    /// route through the in-process espflash `Flasher`, skipping the
+    /// ~1.5 s Python/esptool startup per flash.
+    #[must_use]
+    pub fn with_native_write(mut self, enabled: bool) -> Self {
+        self.use_native_write = enabled;
         self
     }
 
@@ -313,6 +330,117 @@ impl Esp32Deployer {
             parts_off,
             fw_off,
         )
+    }
+
+    /// Native `write-flash` via the [`espflash`] crate (issue #66).
+    ///
+    /// Writes the full three-region set (bootloader + partitions +
+    /// firmware where present). Saves the Python interpreter startup
+    /// (~1 s) plus subprocess spawn (~0.5 s) vs the esptool path, and
+    /// surfaces per-region progress via `tracing` (bridged into the
+    /// daemon's existing log broadcaster). Same [`DeploymentResult`]
+    /// shape as the esptool path so callers swap behind a single flag.
+    fn try_deploy_native(&self, firmware_path: &Path, port: &str) -> Result<DeploymentResult> {
+        let baud = self.parse_native_baud()?;
+        let (boot_off, parts_off, fw_off) = self.parse_native_offsets()?;
+
+        let regions = crate::esp32_native::collect_standard_write_regions(
+            firmware_path,
+            boot_off,
+            parts_off,
+            fw_off,
+        );
+
+        if self.verbose {
+            tracing::info!(
+                "native write: chip={} port={} baud={} regions={}",
+                self.chip,
+                port,
+                baud,
+                regions.len()
+            );
+        }
+        tracing::info!(
+            "flashing {} to {} via espflash ({})",
+            firmware_path.display(),
+            port,
+            self.chip
+        );
+
+        crate::esp32_native::try_write_deployment_native(
+            &self.chip,
+            port,
+            baud,
+            &self.before_reset,
+            &self.after_reset,
+            &regions,
+            /* selective */ false,
+        )
+    }
+
+    /// Native `write-flash` for a caller-chosen subset of regions
+    /// (issue #66). Used after a verify-mismatch to rewrite only the
+    /// regions that actually differ — skipping the ~1s
+    /// bootloader/partitions rewrite when only firmware changed.
+    fn try_deploy_regions_native(
+        &self,
+        firmware_path: &Path,
+        port: &str,
+        regions: &[FlashRegion],
+    ) -> Result<DeploymentResult> {
+        let baud = self.parse_native_baud()?;
+        let (boot_off, parts_off, fw_off) = self.parse_native_offsets()?;
+
+        let write_regions = crate::esp32_native::collect_selected_write_regions(
+            firmware_path,
+            boot_off,
+            parts_off,
+            fw_off,
+            regions,
+        )?;
+
+        if self.verbose {
+            tracing::info!(
+                "native write (selective): chip={} port={} baud={} regions={:?}",
+                self.chip,
+                port,
+                baud,
+                regions
+            );
+        }
+        tracing::info!(
+            "flashing regions {:?} of {} to {} via espflash ({})",
+            regions,
+            firmware_path.display(),
+            port,
+            self.chip
+        );
+
+        crate::esp32_native::try_write_deployment_native(
+            &self.chip,
+            port,
+            baud,
+            &self.before_reset,
+            &self.after_reset,
+            &write_regions,
+            /* selective */ true,
+        )
+    }
+
+    fn parse_native_baud(&self) -> Result<u32> {
+        self.baud_rate.parse().map_err(|e| {
+            fbuild_core::FbuildError::DeployFailed(format!(
+                "native write: invalid baud rate '{}': {}",
+                self.baud_rate, e
+            ))
+        })
+    }
+
+    fn parse_native_offsets(&self) -> Result<(u32, u32, u32)> {
+        let boot = parse_hex_offset_u32(&self.bootloader_offset)?;
+        let parts = parse_hex_offset_u32(&self.partitions_offset)?;
+        let fw = parse_hex_offset_u32(&self.firmware_offset)?;
+        Ok((boot, parts, fw))
     }
 }
 
@@ -969,6 +1097,10 @@ impl Esp32Deployer {
             }
         }
 
+        if self.use_native_write {
+            return self.try_deploy_regions_native(firmware_path, port, regions);
+        }
+
         let args = self.build_write_flash_args(firmware_path, port, Some(regions));
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
 
@@ -1034,6 +1166,10 @@ impl Deployer for Esp32Deployer {
                 "serial port required for ESP32 deploy (use --port)".to_string(),
             )
         })?;
+
+        if self.use_native_write {
+            return self.try_deploy_native(firmware_path, port);
+        }
 
         let args = self.build_write_flash_args(firmware_path, port, None);
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
