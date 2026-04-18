@@ -1135,6 +1135,16 @@ pub async fn deploy(
     // without needing a cross-thread lock handshake.
     let ctx_for_deploy = Arc::clone(&ctx);
     let trusted_hash_enabled = trust_device_hash_enabled();
+    // Refresh the enumeration cache so the trust-hash invalidation
+    // path (`last_disconnect_at`) sees any unplug/replug that
+    // happened between the previous deploy and now. Without this,
+    // a user who swapped boards at the same COM port without hitting
+    // a device-list endpoint could trip the trust check into a
+    // false match. Cost is a single OS-level port enumeration
+    // (~10–30 ms on Windows), paid once per deploy.
+    if trusted_hash_enabled {
+        ctx.device_manager.refresh_devices();
+    }
     let deploy_result = tokio::task::spawn_blocking(move || {
         // Populated by the Espressif32 arm with (image_hash, port).
         // The tail of the closure consults it after `deployer.deploy`
