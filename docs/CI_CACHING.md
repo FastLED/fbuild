@@ -8,7 +8,20 @@ For the *local* developer experience see [DEVELOPMENT.md](DEVELOPMENT.md). For *
 
 ---
 
-## TL;DR — drop-in GitHub Actions snippet
+## TL;DR — use the composite action
+
+Most consumers should use the [`FastLED/fbuild/.github/actions/setup`](../.github/actions/setup/README.md) composite action — it handles fbuild install, cache restore/save, and env-var wiring in one line:
+
+```yaml
+- uses: FastLED/fbuild/.github/actions/setup@main
+  with:
+    cache-key-extra: ${{ hashFiles('platformio.ini') }}
+- run: fbuild build examples/Blink -e esp32dev
+```
+
+The action sidesteps the whole `~/.fbuild/*/daemon/` "don't cache ephemeral state" pitfall by redirecting fbuild's cache to `$RUNNER_TEMP/fbuild-cache` via `FBUILD_CACHE_DIR`. See the [action's README](../.github/actions/setup/README.md) for inputs/outputs and a full matrix example.
+
+### Raw snippet (if you don't want the action dependency)
 
 ```yaml
 - name: Restore fbuild cache
