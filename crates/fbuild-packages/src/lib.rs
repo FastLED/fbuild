@@ -11,10 +11,12 @@ pub mod disk_cache;
 pub mod downloader;
 pub mod extractor;
 pub mod library;
+pub mod lnk;
 pub mod toolchain;
 
 pub use cache::Cache;
 pub use disk_cache::DiskCache;
+pub use lnk::{ExtractMode, LnkFile};
 
 use std::collections::HashMap;
 use std::future::Future;

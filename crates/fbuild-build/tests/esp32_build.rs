@@ -78,6 +78,7 @@ void loop() {
         src_dir: None,
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
+        watch_set_cache: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -166,6 +167,7 @@ void loop() {
         src_dir: None,
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
+        watch_set_cache: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -247,6 +249,7 @@ void loop() {
         src_dir: None,
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
+        watch_set_cache: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -329,6 +332,7 @@ void loop() {
         src_dir: None,
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
+        watch_set_cache: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -401,6 +405,7 @@ fn build_esp32s3_fixture() {
         src_dir: None,
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
+        watch_set_cache: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -465,6 +470,7 @@ fn build_nightdriverstrip_demo() {
         src_dir: None,
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
+        watch_set_cache: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -555,6 +561,7 @@ fn incremental_build_at(project_dir: &std::path::Path, env_name: &str) {
         src_dir: None,
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
+        watch_set_cache: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -645,6 +652,7 @@ fn incremental_nightdriverstrip_one_file_changed() {
         src_dir: None,
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
+        watch_set_cache: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;

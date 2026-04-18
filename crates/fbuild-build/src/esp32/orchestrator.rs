@@ -26,7 +26,7 @@ use fbuild_packages::Framework;
 use serde::Serialize;
 
 use crate::build_fingerprint::{
-    hash_watch_set_stamps, load_json, normalize_path, save_json, stable_hash_json,
+    hash_watch_set_stamps_cached, load_json, normalize_path, save_json, stable_hash_json,
     PersistedBuildFingerprint, BUILD_FINGERPRINT_VERSION,
 };
 use crate::flag_overlay::LanguageExtraFlags;
@@ -374,7 +374,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
                         } else {
                             match previous.file_set_hash.as_deref() {
                                 Some(previous_hash) => {
-                                    match hash_watch_set_stamps(&fingerprint_watches) {
+                                    match hash_watch_set_stamps_cached(
+                                        &fingerprint_watches,
+                                        params.watch_set_cache.as_deref(),
+                                    ) {
                                         Ok(current_hash) => current_hash == previous_hash,
                                         Err(e) => {
                                             tracing::warn!("failed to hash watched inputs: {}", e);
@@ -388,7 +391,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
                     } else {
                         match previous.file_set_hash.as_deref() {
                             Some(previous_hash) => {
-                                match hash_watch_set_stamps(&fingerprint_watches) {
+                                match hash_watch_set_stamps_cached(
+                                    &fingerprint_watches,
+                                    params.watch_set_cache.as_deref(),
+                                ) {
                                     Ok(current_hash) => current_hash == previous_hash,
                                     Err(e) => {
                                         tracing::warn!("failed to hash watched inputs: {}", e);
@@ -1257,7 +1263,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let persisted_fingerprint = PersistedBuildFingerprint {
             version: BUILD_FINGERPRINT_VERSION,
             metadata_hash: metadata_hash.clone(),
-            file_set_hash: match hash_watch_set_stamps(&fingerprint_watches) {
+            file_set_hash: match hash_watch_set_stamps_cached(
+                &fingerprint_watches,
+                params.watch_set_cache.as_deref(),
+            ) {
                 Ok(hash) => Some(hash),
                 Err(e) => {
                     tracing::warn!("failed to hash watched inputs for fingerprint save: {}", e);

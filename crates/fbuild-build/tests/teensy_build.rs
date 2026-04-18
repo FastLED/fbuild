@@ -65,6 +65,7 @@ void loop() {
         src_dir: None,
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
+        watch_set_cache: None,
     };
 
     let orchestrator = fbuild_build::teensy::orchestrator::TeensyOrchestrator;
@@ -125,6 +126,7 @@ fn build_teensy41_fixture() {
         src_dir: None,
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
+        watch_set_cache: None,
     };
 
     let orchestrator = fbuild_build::teensy::orchestrator::TeensyOrchestrator;

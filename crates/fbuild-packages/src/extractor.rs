@@ -34,6 +34,18 @@ pub fn extract(archive_path: &Path, dest_dir: &Path) -> Result<()> {
     }
 }
 
+/// Extract a `.zip` archive. Public so callers (e.g. lnk materializer)
+/// can dispatch without depending on the source file's extension.
+pub fn extract_zip_public(archive_path: &Path, dest_dir: &Path) -> Result<()> {
+    extract_zip(archive_path, dest_dir)
+}
+
+/// Extract a `.tar.gz` archive. Public so callers (e.g. lnk materializer)
+/// can dispatch without depending on the source file's extension.
+pub fn extract_tar_gz_public(archive_path: &Path, dest_dir: &Path) -> Result<()> {
+    extract_tar_gz(archive_path, dest_dir)
+}
+
 fn extract_tar_gz(archive_path: &Path, dest_dir: &Path) -> Result<()> {
     let file = std::fs::File::open(archive_path)?;
     let decoder = flate2::read::GzDecoder::new(file);

@@ -2158,6 +2158,7 @@ pub async fn test_emu(
             } else {
                 Vec::new()
             },
+            watch_set_cache: Some(std::sync::Arc::clone(&ctx.watch_set_cache) as std::sync::Arc<_>),
         };
 
         let p = platform;
@@ -2420,6 +2421,7 @@ mod tests {
                 "-DARDUINO_USB_MODE=0".to_string(),
                 "-DARDUINO_USB_CDC_ON_BOOT=0".to_string(),
             ],
+            watch_set_cache: None,
         };
 
         let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
