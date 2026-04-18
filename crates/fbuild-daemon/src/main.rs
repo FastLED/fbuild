@@ -407,6 +407,17 @@ fn is_pid_alive(pid: u32) -> bool {
 ///   so it's safe there but not on Windows). See ISSUES.md "Issue B5a".
 /// * **Unix** — sets `SO_REUSEADDR`, which only permits `TIME_WAIT`
 ///   recovery on this OS family.
+/// * **All platforms** — sets `SO_LINGER = 0` on the listening socket so
+///   that accepted client sockets inherit a zero linger and force an
+///   immediate `RST` on close instead of going through the
+///   `FIN / CLOSE_WAIT / TIME_WAIT` dance. After a hard-kill of the
+///   daemon, this prevents the kernel from leaking dangling `CLOSE_WAIT`
+///   state on client sockets that outlives the daemon itself and would
+///   otherwise block a fresh instance from re-binding the port. SO_LINGER
+///   is inherited from the listener by `accept(2)` on Linux, macOS, and
+///   Windows (AFD.sys), so setting it once on the listener covers every
+///   subsequently accepted connection without needing to hook axum 0.7's
+///   internal accept loop. See FastLED/fbuild#32.
 ///
 /// Bind is retried up to 3 times with 500 ms backoff to handle the brief
 /// window where a hard-killed previous instance still has kernel TCP
@@ -441,6 +452,13 @@ fn bind_listener_with_retry(addr: &str) -> tokio::net::TcpListener {
             if let Err(e) = sock.set_reuse_address(true) {
                 tracing::warn!("failed to set SO_REUSEADDR: {}", e);
             }
+        }
+
+        // Force RST on close for accepted client sockets — inherited via
+        // `accept(2)` on Linux/macOS/Windows. See doc comment above and
+        // FastLED/fbuild#32.
+        if let Err(e) = sock.set_linger(Some(std::time::Duration::ZERO)) {
+            tracing::warn!("failed to set SO_LINGER=0 on listener: {}", e);
         }
 
         if let Err(e) = sock.set_nonblocking(true) {
