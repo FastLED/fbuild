@@ -51,12 +51,25 @@ impl BuildContext {
     /// Takes `&BuildParams` so that new fields (e.g. `src_dir`) flow through
     /// automatically — orchestrators just pass `params` without listing every field.
     pub fn new(params: &BuildParams) -> Result<Self> {
+        Self::new_with_perf(params, None)
+    }
+
+    /// Variant that records phase timings into an optional `PerfTimer`.
+    ///
+    /// Orchestrators that want per-phase visibility (see [`crate::perf_log`])
+    /// pass in a shared timer. Callers that don't care get zero overhead by
+    /// passing `None`.
+    pub fn new_with_perf(
+        params: &BuildParams,
+        mut perf: Option<&mut crate::perf_log::PerfTimer>,
+    ) -> Result<Self> {
         let project_dir = &params.project_dir;
         let env_name = &params.env_name;
 
         // 1. Parse platformio.ini, attaching any forwarded `PLATFORMIO_*` env
         // var overrides from the CLI caller (the daemon does not inherit
         // caller env vars).
+        let t0 = std::time::Instant::now();
         let ini_path = project_dir.join("platformio.ini");
         let pio_overrides = fbuild_config::PioEnvOverrides::from_map(params.pio_env.clone());
         let config =
@@ -64,13 +77,20 @@ impl BuildContext {
         let env_config = config.get_env_config(env_name)?;
         let overlay =
             crate::script_runtime::resolve_extra_script_overlay(project_dir, env_name, &config)?;
+        if let Some(p) = perf.as_mut() {
+            p.record("config-parse", t0.elapsed());
+        }
 
         // 2. Load board config
+        let t0 = std::time::Instant::now();
         let board_id = env_config.get("board").ok_or_else(|| {
             fbuild_core::FbuildError::ConfigError("missing 'board' in environment config".into())
         })?;
         let overrides = config.get_board_overrides(env_name)?;
         let board = fbuild_config::BoardConfig::from_board_id(board_id, &overrides)?;
+        if let Some(p) = perf.as_mut() {
+            p.record("board-load", t0.elapsed());
+        }
 
         // 3. Build log initialization
         let mut build_log = if params.no_timestamp {
@@ -95,6 +115,7 @@ impl BuildContext {
         }
 
         // 4. Setup build directories
+        let t0 = std::time::Instant::now();
         let cache = fbuild_packages::Cache::new(project_dir);
         if params.clean {
             cache.clean_build(env_name, params.profile)?;
@@ -104,6 +125,9 @@ impl BuildContext {
         let build_dir = cache.get_build_dir(env_name, params.profile);
         let core_build_dir = cache.get_core_build_dir(env_name, params.profile);
         let src_build_dir = cache.get_src_build_dir(env_name, params.profile);
+        if let Some(p) = perf.as_mut() {
+            p.record("build-dirs", t0.elapsed());
+        }
 
         // 5. Resolve source directory (Arduino IDE convention: fall back to project root)
         // Priority: explicit override (from HTTP request) > env var > INI config > "src"
@@ -123,6 +147,7 @@ impl BuildContext {
         let source_filter = config.get_source_filter(env_name)?;
 
         // 6. Collect user flags
+        let t0 = std::time::Instant::now();
         let build_type = config.get_build_type(env_name)?;
         let user_flags = config.get_build_flags(env_name)?;
         crate::warn_debug_build_flags(&user_flags);
@@ -143,6 +168,9 @@ impl BuildContext {
         let (user_flags, src_flags, all_src_flags) =
             apply_build_unflags(user_flags, src_flags, &build_unflags);
         remove_unflagged_tokens(&mut overlay_link_flags, &build_unflags);
+        if let Some(p) = perf.as_mut() {
+            p.record("flag-collect", t0.elapsed());
+        }
 
         Ok(Self {
             config,
@@ -616,6 +644,9 @@ pub fn run_sequential_build_with_libs(
     platform_label: &str,
     start: Instant,
 ) -> Result<BuildResult> {
+    // Env-gated per-phase timer (FBUILD_PERF_LOG=1). Emits summary on drop.
+    // Zero-overhead when the env var is unset — phase guards become no-ops.
+    let mut perf = crate::perf_log::PerfTimer::new("pipeline");
     let core_and_variant: Vec<PathBuf> = sources
         .core_sources
         .iter()
@@ -684,43 +715,55 @@ pub fn run_sequential_build_with_libs(
     let build_log_mutex = std::sync::Mutex::new(ctx.build_log);
 
     // Compile core + variant
-    let mut core_objects = compile_sources(
-        compiler,
-        &sources.core_sources,
-        &ctx.core_build_dir,
-        &user_overlay,
-        jobs,
-        &build_log_mutex,
-    )?;
-    let variant_objects = compile_sources(
-        compiler,
-        &sources.variant_sources,
-        &ctx.core_build_dir,
-        &user_overlay,
-        jobs,
-        &build_log_mutex,
-    )?;
+    let mut core_objects = {
+        let _g = perf.phase("compile-core");
+        compile_sources(
+            compiler,
+            &sources.core_sources,
+            &ctx.core_build_dir,
+            &user_overlay,
+            jobs,
+            &build_log_mutex,
+        )?
+    };
+    let variant_objects = {
+        let _g = perf.phase("compile-variant");
+        compile_sources(
+            compiler,
+            &sources.variant_sources,
+            &ctx.core_build_dir,
+            &user_overlay,
+            jobs,
+            &build_log_mutex,
+        )?
+    };
     core_objects.extend(variant_objects);
 
     // Compile sketch
-    let sketch_objects = compile_sources(
-        compiler,
-        &sources.sketch_sources,
-        &ctx.src_build_dir,
-        &src_overlay,
-        jobs,
-        &build_log_mutex,
-    )?;
+    let sketch_objects = {
+        let _g = perf.phase("compile-sketch");
+        compile_sources(
+            compiler,
+            &sources.sketch_sources,
+            &ctx.src_build_dir,
+            &src_overlay,
+            jobs,
+            &build_log_mutex,
+        )?
+    };
 
     // Compile local libraries (lib/* — loose objects, LTO-safe; per-lib parallel)
-    let library_objects = compile_local_libraries(
-        compiler,
-        &params.project_dir,
-        &ctx.build_dir,
-        &src_overlay,
-        jobs,
-        &build_log_mutex,
-    )?;
+    let library_objects = {
+        let _g = perf.phase("compile-local-libs");
+        compile_local_libraries(
+            compiler,
+            &params.project_dir,
+            &ctx.build_dir,
+            &src_overlay,
+            jobs,
+            &build_log_mutex,
+        )?
+    };
 
     // Unwrap the build log Mutex back into the context for the remaining
     // single-threaded phases (link, result assembly).
@@ -729,50 +772,56 @@ pub fn run_sequential_build_with_libs(
     // Project-as-library: compile project root's src/ as an archive when
     // building an example sketch from a library project (e.g. FastLED examples).
     // Only runs when caller provided a LibraryBuildEnv with toolchain paths.
-    let project_as_lib_archive: Option<PathBuf> = if let Some(env) = lib_env {
-        // Collect existing lib/* names so the helper can detect collisions.
-        let mut existing_lib_names = std::collections::HashSet::new();
-        let local_lib_dir = params.project_dir.join("lib");
-        if local_lib_dir.is_dir() {
-            if let Ok(entries) = std::fs::read_dir(&local_lib_dir) {
-                for entry in entries.flatten() {
-                    let path = entry.path();
-                    if path.is_dir() {
-                        if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
-                            existing_lib_names.insert(name.to_lowercase());
+    let project_as_lib_archive: Option<PathBuf> = {
+        let _g = perf.phase("project-as-lib");
+        if let Some(env) = lib_env {
+            // Collect existing lib/* names so the helper can detect collisions.
+            let mut existing_lib_names = std::collections::HashSet::new();
+            let local_lib_dir = params.project_dir.join("lib");
+            if local_lib_dir.is_dir() {
+                if let Ok(entries) = std::fs::read_dir(&local_lib_dir) {
+                    for entry in entries.flatten() {
+                        let path = entry.path();
+                        if path.is_dir() {
+                            if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
+                                existing_lib_names.insert(name.to_lowercase());
+                            }
                         }
                     }
                 }
             }
+            compile_project_as_library(
+                &params.project_dir,
+                &ctx.src_dir,
+                &ctx.build_dir,
+                env,
+                &existing_lib_names,
+            )?
+        } else {
+            None
         }
-        compile_project_as_library(
-            &params.project_dir,
-            &ctx.src_dir,
-            &ctx.build_dir,
-            env,
-            &existing_lib_names,
-        )?
-    } else {
-        None
     };
 
     // Generate compile_commands.json
-    let compile_database_path = generate_compile_db(
-        compiler.gcc_path(),
-        compiler.gxx_path(),
-        &compiler.c_flags(),
-        &compiler.cpp_flags(),
-        &[],
-        &user_overlay,
-        &src_overlay,
-        &core_and_variant,
-        &sources.sketch_sources,
-        &ctx.core_build_dir,
-        &ctx.src_build_dir,
-        &ctx.build_dir,
-        &params.project_dir,
-        arch,
-    )?;
+    let compile_database_path = {
+        let _g = perf.phase("compile-db");
+        generate_compile_db(
+            compiler.gcc_path(),
+            compiler.gxx_path(),
+            &compiler.c_flags(),
+            &compiler.cpp_flags(),
+            &[],
+            &user_overlay,
+            &src_overlay,
+            &core_and_variant,
+            &sources.sketch_sources,
+            &ctx.core_build_dir,
+            &ctx.src_build_dir,
+            &ctx.build_dir,
+            &params.project_dir,
+            arch,
+        )?
+    };
 
     // Link
     crate::build_output::log_linking(&mut ctx.build_log, "Linking firmware.elf");
@@ -782,17 +831,20 @@ pub fn run_sequential_build_with_libs(
         // GCC accepts .a in the same positional slot as .o files.
         core_objects.push(archive);
     }
-    let link_result = crate::linker::Linker::link_all(
-        linker,
-        &sketch_objects,
-        &core_objects,
-        &ctx.build_dir,
-        &crate::linker::LinkExtraArgs {
-            flags: ctx.overlay_link_flags.clone(),
-            libs: ctx.overlay_link_libs.clone(),
-        },
-        params.symbol_analysis,
-    )?;
+    let link_result = {
+        let _g = perf.phase("link");
+        crate::linker::Linker::link_all(
+            linker,
+            &sketch_objects,
+            &core_objects,
+            &ctx.build_dir,
+            &crate::linker::LinkExtraArgs {
+                flags: ctx.overlay_link_flags.clone(),
+                libs: ctx.overlay_link_libs.clone(),
+            },
+            params.symbol_analysis,
+        )?
+    };
 
     // Result
     handle_link_result(

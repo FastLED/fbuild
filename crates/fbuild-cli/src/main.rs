@@ -1012,7 +1012,15 @@ async fn run_build(
     no_timestamp: bool,
     output_dir: Option<String>,
 ) -> fbuild_core::Result<()> {
+    // FBUILD_PERF_LOG=1 enables coarse CLI-side timing (daemon handshake +
+    // round-trip). Zero-overhead when unset.
+    let perf_enabled = std::env::var("FBUILD_PERF_LOG")
+        .map(|v| !v.is_empty() && v != "0")
+        .unwrap_or(false);
+    let cli_start = std::time::Instant::now();
+    let handshake_start = std::time::Instant::now();
     daemon_client::ensure_daemon_running().await?;
+    let handshake_elapsed = handshake_start.elapsed();
 
     // Dry-run: verify daemon starts and environment resolves, then exit
     if dry_run {
@@ -1069,9 +1077,21 @@ async fn run_build(
         pio_env: daemon_client::capture_pio_env(),
     };
 
+    let stream_start = std::time::Instant::now();
     let resp = client.build_streaming(&req).await?;
+    let stream_elapsed = stream_start.elapsed();
     if !resp.message.is_empty() {
         println!("{}", resp.message);
+    }
+    if perf_enabled {
+        let summary = format!(
+            "[perf-log cli-build] daemon-handshake={} ms, server-roundtrip={} ms, total={} ms",
+            handshake_elapsed.as_millis(),
+            stream_elapsed.as_millis(),
+            cli_start.elapsed().as_millis(),
+        );
+        tracing::info!(target: "fbuild_cli::perf_log", "{}", summary);
+        eprintln!("{}", summary);
     }
     if !resp.success {
         std::process::exit(resp.exit_code);

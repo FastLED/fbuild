@@ -434,13 +434,22 @@ pub async fn build(
 
         let project_dir_desc = req.project_dir.clone();
         tokio::spawn(async move {
+            // FBUILD_PERF_LOG=1 enables daemon-side coarse phase timing
+            // (lock-wait + build). Zero overhead when unset.
+            let perf_enabled = std::env::var("FBUILD_PERF_LOG")
+                .map(|v| !v.is_empty() && v != "0")
+                .unwrap_or(false);
+            let daemon_start = std::time::Instant::now();
+
             let _op_guard = OperationGuard::new(
                 &ctx,
                 fbuild_core::DaemonState::Building,
                 Some(format!("Building {}", project_dir_desc)),
             );
+            let lock_wait_start = std::time::Instant::now();
             let lock = ctx.project_lock(&project_dir);
             let _lock_guard = lock.lock().await;
+            let lock_wait = lock_wait_start.elapsed();
 
             // Bridge: sync log lines → async NDJSON chunks
             let bridge_tx = async_tx.clone();
@@ -456,11 +465,23 @@ pub async fn build(
             });
 
             // Run build
+            let build_wallclock_start = std::time::Instant::now();
             let build_result = tokio::task::spawn_blocking(move || {
                 let orchestrator = fbuild_build::get_orchestrator(platform)?;
                 orchestrator.build(&params)
             })
             .await;
+            let build_wallclock = build_wallclock_start.elapsed();
+            if perf_enabled {
+                let summary = format!(
+                    "[perf-log daemon-handler] lock-wait={} ms, build-wallclock={} ms, total={} ms",
+                    lock_wait.as_millis(),
+                    build_wallclock.as_millis(),
+                    daemon_start.elapsed().as_millis(),
+                );
+                tracing::info!(target: "fbuild_daemon::perf_log", "{}", summary);
+                eprintln!("{}", summary);
+            }
 
             // Extract result (drops BuildLog sender so bridge can finish)
             let (success, rid, msg, code, output_file, output_dir) = match build_result {

@@ -25,6 +25,8 @@ A grep-friendly FAQ that maps common questions to the file that answers them. Bo
 | How do I use the emulator (QEMU / avr8js / simavr)?       | [../README.md](../README.md#emulator-testing)              |
 | How do I cache fbuild across CI runs?                     | [CI_CACHING.md](CI_CACHING.md)                             |
 | What's safe to cache in GitHub Actions?                   | [CI_CACHING.md](CI_CACHING.md#what-the-cache-holds)        |
+| Why does warm-pass build take ~30 s per sketch? (#91)     | [PERF_WARM_BUILD.md](PERF_WARM_BUILD.md)                   |
+| What does `FBUILD_PERF_LOG=1` do?                          | [PERF_WARM_BUILD.md](PERF_WARM_BUILD.md#instrumentation)   |
 | What architecture docs should I read for a given crate?   | [CLAUDE.md](CLAUDE.md)                                     |
 
 ## Conventions

@@ -220,12 +220,17 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
     fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
+        // Env-gated per-phase timer (FBUILD_PERF_LOG=1); zero overhead when unset.
+        let mut perf = crate::perf_log::PerfTimer::new("esp32-orchestrator");
 
         // 0. Discover zccache compiler cache (startup is deferred until compile work begins)
-        let compiler_cache = crate::zccache::find_zccache().map(std::path::Path::to_path_buf);
+        let compiler_cache = {
+            let _g = perf.phase("zccache-discover");
+            crate::zccache::find_zccache().map(std::path::Path::to_path_buf)
+        };
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
-        let mut ctx = crate::pipeline::BuildContext::new(params)?;
+        let mut ctx = crate::pipeline::BuildContext::new_with_perf(params, Some(&mut perf))?;
 
         // 3. Load MCU config from embedded JSON
         let mut mcu_config = get_mcu_config(&ctx.board.mcu)?;
@@ -238,8 +243,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
         );
 
         // 4-6. Resolve platform, toolchain, and framework
+        let _resolve_phase = perf.phase("pioarduino-resolve");
         let (toolchain, framework) =
             resolve_pioarduino_packages(&params.project_dir, &ctx.board.mcu, &mcu_config)?;
+        drop(_resolve_phase);
         let toolchain_cache_dir = fbuild_packages::Package::get_info(&toolchain).install_path;
         let framework_cache_dir = fbuild_packages::Package::get_info(&framework).install_path;
 
@@ -310,12 +317,16 @@ impl BuildOrchestrator for Esp32Orchestrator {
             max_ram: ctx.board.max_ram,
         })?;
         let fingerprint_path = build_fingerprint_path(build_dir);
-        let fingerprint_watches = collect_fast_path_watches(build_dir, &params.project_dir);
+        let fingerprint_watches = {
+            let _g = perf.phase("fp-watches-collect");
+            collect_fast_path_watches(build_dir, &params.project_dir)
+        };
 
         if !params.compiledb_only
             && !params.symbol_analysis
             && params.symbol_analysis_path.is_none()
         {
+            let _fast_path_phase = perf.phase("fast-path-check");
             let (fast_elf, fast_bin, fast_boot, fast_parts, fast_compile_db) =
                 expected_fast_path_artifacts(build_dir, &params.project_dir);
             let persisted = match load_json::<PersistedBuildFingerprint>(&fingerprint_path) {
