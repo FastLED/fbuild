@@ -380,9 +380,17 @@ pub struct DaemonClient {
 
 impl DaemonClient {
     pub fn new() -> Self {
+        // 100ms connect_timeout fails fast when the daemon is not running
+        // (ECONNREFUSED returns instantly on Windows and Linux but reqwest
+        // would otherwise wait for the full request timeout before surfacing
+        // the error).
+        let client = reqwest::Client::builder()
+            .connect_timeout(std::time::Duration::from_millis(100))
+            .build()
+            .unwrap_or_else(|_| reqwest::Client::new());
         Self {
             base_url: fbuild_paths::get_daemon_url(),
-            client: reqwest::Client::new(),
+            client,
         }
     }
 
@@ -889,6 +897,16 @@ async fn spawn_daemon_process() -> fbuild_core::Result<()> {
         .stdout(std::process::Stdio::null())
         .stderr(std::process::Stdio::from(log_file));
 
+    // On Windows, any inheritable handle in our process — including the shell's
+    // stderr pipe — flows into the daemon grandchild via bInheritHandles=TRUE
+    // in CreateProcess. The daemon holds that pipe open for SELF_EVICTION_TIMEOUT
+    // (120s), blocking the shell from unblocking even after the CLI exits. Strip
+    // HANDLE_FLAG_INHERIT from our std handles before spawn so Rust's plumbing
+    // only passes through the explicit Stdio handles it configured above.
+    // See issue #91.
+    #[cfg(windows)]
+    strip_std_handle_inheritance();
+
     cmd.spawn().map_err(|e| {
         fbuild_core::FbuildError::DaemonError(format!(
             "failed to spawn daemon (is fbuild-daemon in PATH?): {}",
@@ -897,6 +915,39 @@ async fn spawn_daemon_process() -> fbuild_core::Result<()> {
     })?;
 
     Ok(())
+}
+
+/// Clear `HANDLE_FLAG_INHERIT` on the CLI's STD_INPUT/OUTPUT/ERROR handles.
+///
+/// Called immediately before spawning the daemon so the parent shell's pipes
+/// (attached to our stderr via `|`, `2>&1`, etc.) are not inherited by the
+/// long-lived daemon grandchild.
+#[cfg(windows)]
+fn strip_std_handle_inheritance() {
+    use std::ffi::c_void;
+
+    const HANDLE_FLAG_INHERIT: u32 = 0x1;
+    const STD_INPUT_HANDLE: u32 = -10i32 as u32;
+    const STD_OUTPUT_HANDLE: u32 = -11i32 as u32;
+    const STD_ERROR_HANDLE: u32 = -12i32 as u32;
+    const INVALID_HANDLE_VALUE: isize = -1;
+
+    unsafe extern "system" {
+        fn GetStdHandle(nStdHandle: u32) -> *mut c_void;
+        fn SetHandleInformation(hObject: *mut c_void, dwMask: u32, dwFlags: u32) -> i32;
+    }
+
+    for std_id in [STD_INPUT_HANDLE, STD_OUTPUT_HANDLE, STD_ERROR_HANDLE] {
+        // SAFETY: GetStdHandle / SetHandleInformation are documented safe for
+        // concurrent use on owned std handles. We only clear a flag on handles
+        // the OS already owns on our behalf; we do not close them.
+        unsafe {
+            let h = GetStdHandle(std_id);
+            if !h.is_null() && (h as isize) != INVALID_HANDLE_VALUE {
+                SetHandleInformation(h, HANDLE_FLAG_INHERIT, 0);
+            }
+        }
+    }
 }
 
 /// Display compact daemon status line before every command (matches Python behavior).
