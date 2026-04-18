@@ -65,10 +65,18 @@ pub(crate) fn trust_device_hash_enabled() -> bool {
 /// identifies the image that would be written; two builds of the
 /// same source with identical output hash to the same value.
 ///
+/// Memoized on [`crate::context::DaemonContext::image_hash_memo`]
+/// keyed by firmware path: if all three files' `mtime` matches the
+/// previously-stored tuple, the cached hash is reused (skipping the
+/// 2–4 MB disk read + SHA-256) — the dominant non-serial cost on the
+/// trust-skip path. Cache entries self-invalidate when any `mtime`
+/// advances.
+///
 /// Returns `None` if any of the three files is missing on disk, so
 /// the caller treats it as "can't trust-skip, fall through to
 /// verify-flash."
 pub(crate) fn compute_esp32_image_hash(
+    ctx: &crate::context::DaemonContext,
     firmware_path: &std::path::Path,
     bootloader_offset: u32,
     partitions_offset: u32,
@@ -76,10 +84,33 @@ pub(crate) fn compute_esp32_image_hash(
 ) -> Option<[u8; 32]> {
     use sha2::{Digest, Sha256};
     let build_dir = firmware_path.parent()?;
-    let regions: [(u32, std::path::PathBuf); 3] = [
-        (bootloader_offset, build_dir.join("bootloader.bin")),
-        (partitions_offset, build_dir.join("partitions.bin")),
-        (firmware_offset, firmware_path.to_path_buf()),
+    let bootloader_path = build_dir.join("bootloader.bin");
+    let partitions_path = build_dir.join("partitions.bin");
+    let firmware = firmware_path.to_path_buf();
+
+    let mt = |p: &std::path::Path| -> Option<std::time::SystemTime> {
+        std::fs::metadata(p).ok()?.modified().ok()
+    };
+    let mtimes = (mt(&bootloader_path)?, mt(&partitions_path)?, mt(&firmware)?);
+
+    // Fast path: the three files have the same `mtime` as last time
+    // we hashed them, so the output bytes are unchanged. Reuse the
+    // stored digest instead of re-reading + re-hashing (~5-15 ms).
+    if let Some(memo) = ctx.image_hash_memo.get(&firmware) {
+        if memo.bootloader_mtime == mtimes.0
+            && memo.partitions_mtime == mtimes.1
+            && memo.firmware_mtime == mtimes.2
+        {
+            return Some(memo.hash);
+        }
+    }
+
+    // Miss: rebuild the digest over the current file contents and
+    // record it alongside the captured `mtime`s.
+    let regions: [(u32, &std::path::Path); 3] = [
+        (bootloader_offset, bootloader_path.as_path()),
+        (partitions_offset, partitions_path.as_path()),
+        (firmware_offset, firmware.as_path()),
     ];
     let mut hasher = Sha256::new();
     for (offset, path) in &regions {
@@ -88,7 +119,17 @@ pub(crate) fn compute_esp32_image_hash(
         hasher.update((bytes.len() as u64).to_le_bytes());
         hasher.update(&bytes);
     }
-    Some(hasher.finalize().into())
+    let hash: [u8; 32] = hasher.finalize().into();
+    ctx.image_hash_memo.insert(
+        firmware.clone(),
+        crate::context::ImageHashMemo {
+            bootloader_mtime: mtimes.0,
+            partitions_mtime: mtimes.1,
+            firmware_mtime: mtimes.2,
+            hash,
+        },
+    );
+    Some(hash)
 }
 
 /// Returns `true` when the daemon should route ESP32 `write-flash`
@@ -1140,10 +1181,18 @@ pub async fn deploy(
     // happened between the previous deploy and now. Without this,
     // a user who swapped boards at the same COM port without hitting
     // a device-list endpoint could trip the trust check into a
-    // false match. Cost is a single OS-level port enumeration
-    // (~10–30 ms on Windows), paid once per deploy.
+    // false match.
+    //
+    // Back-to-back warm deploys (the 4 s / 1 s budget target) would
+    // otherwise re-pay ~20–30 ms per deploy on Windows; cap the cost
+    // at one enumeration per 2 s. The window is short enough that a
+    // physically-sneaky board swap between two in-flight deploys
+    // still needs to happen inside that window to trip trust, and
+    // the trust-check still requires `is_connected == true` on the
+    // cached DeviceState, which the most-recent refresh supplied.
     if trusted_hash_enabled {
-        ctx.device_manager.refresh_devices();
+        ctx.device_manager
+            .refresh_devices_if_stale(std::time::Duration::from_secs(2));
     }
     let deploy_result = tokio::task::spawn_blocking(move || {
         // Populated by the Espressif32 arm with (image_hash, port).
@@ -1231,6 +1280,7 @@ pub async fn deploy(
                 // "can't trust-skip" rather than erroring, so the
                 // fallback path is free to rebuild missing artefacts.
                 let image_hash = compute_esp32_image_hash(
+                    &ctx_for_deploy,
                     &deploy_fw,
                     u32::from_str_radix(
                         mcu_config.bootloader_offset().trim_start_matches("0x"),
@@ -2185,6 +2235,94 @@ mod deploy_message_tests {
         assert_eq!(
             combined,
             "deploy succeeded (verify skipped, device already matched); monitor error: pattern matched"
+        );
+    }
+}
+
+#[cfg(test)]
+mod image_hash_memo_tests {
+    //! Memo-cache correctness for [`compute_esp32_image_hash`]: the
+    //! memo must *reuse* the stored hash when none of the three
+    //! region files have changed, and *re-hash* when any of them
+    //! changes on disk.
+    use super::compute_esp32_image_hash;
+    use crate::context::DaemonContext;
+    use std::io::Write;
+    use std::path::Path;
+
+    fn write(path: &Path, bytes: &[u8]) {
+        let mut f = std::fs::File::create(path).unwrap();
+        f.write_all(bytes).unwrap();
+    }
+
+    fn fresh_ctx() -> std::sync::Arc<DaemonContext> {
+        let (tx, _rx) = tokio::sync::watch::channel(false);
+        std::sync::Arc::new(DaemonContext::new(8765, tx, "unknown".to_string()))
+    }
+
+    fn seed_image(dir: &Path) {
+        write(&dir.join("bootloader.bin"), b"BOOT0");
+        write(&dir.join("partitions.bin"), b"PART00");
+        write(&dir.join("firmware.bin"), b"FW__FIRST_BUILD");
+    }
+
+    /// Second call with unchanged files must hit the memo (same
+    /// result, no work). We verify the memo side by directly
+    /// inspecting `ctx.image_hash_memo`.
+    #[test]
+    fn memo_hit_reuses_hash() {
+        let tmp = tempfile::tempdir().unwrap();
+        seed_image(tmp.path());
+        let ctx = fresh_ctx();
+        let fw = tmp.path().join("firmware.bin");
+
+        let h1 = compute_esp32_image_hash(&ctx, &fw, 0x0, 0x8000, 0x10000).unwrap();
+        assert_eq!(ctx.image_hash_memo.len(), 1);
+        let h2 = compute_esp32_image_hash(&ctx, &fw, 0x0, 0x8000, 0x10000).unwrap();
+        assert_eq!(h1, h2);
+        assert_eq!(ctx.image_hash_memo.len(), 1, "memo must not grow on a hit");
+    }
+
+    /// When any of the three files changes on disk, the memo
+    /// invalidates via `mtime` change and the hash recomputes.
+    /// We assert the hash *differs* because the file contents
+    /// changed — so this catches both the bytes going through the
+    /// hasher AND the invalidation path.
+    #[test]
+    fn memo_miss_on_firmware_mtime_change() {
+        let tmp = tempfile::tempdir().unwrap();
+        seed_image(tmp.path());
+        let ctx = fresh_ctx();
+        let fw = tmp.path().join("firmware.bin");
+
+        let h1 = compute_esp32_image_hash(&ctx, &fw, 0x0, 0x8000, 0x10000).unwrap();
+        // Rewrite firmware.bin with new content; `std::fs::File::create`
+        // bumps the `mtime` on Windows with enough resolution (100 ns)
+        // even for sub-millisecond follow-ups.
+        std::thread::sleep(std::time::Duration::from_millis(20));
+        write(&fw, b"FW__SECOND_BUILD_DIFFERENT");
+
+        let h2 = compute_esp32_image_hash(&ctx, &fw, 0x0, 0x8000, 0x10000).unwrap();
+        assert_ne!(h1, h2, "content-changed image must hash to a new value");
+    }
+
+    /// Missing files on disk short-circuit to `None` — the caller
+    /// falls through to the regular verify-flash path instead of
+    /// trust-skipping with a stale hash. The memo must NOT store an
+    /// entry for an input that couldn't be hashed.
+    #[test]
+    fn memo_skipped_when_inputs_missing() {
+        let tmp = tempfile::tempdir().unwrap();
+        // Only create firmware.bin — bootloader/partitions absent.
+        write(&tmp.path().join("firmware.bin"), b"FW");
+        let ctx = fresh_ctx();
+        let fw = tmp.path().join("firmware.bin");
+
+        assert!(compute_esp32_image_hash(&ctx, &fw, 0x0, 0x8000, 0x10000).is_none());
+        assert_eq!(
+            ctx.image_hash_memo.len(),
+            0,
+            "memo must not record entries for inputs that fail to hash"
         );
     }
 }

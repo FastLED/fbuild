@@ -79,6 +79,12 @@ impl DeviceState {
 /// Thread-safe device manager.
 pub struct DeviceManager {
     devices: Mutex<HashMap<String, DeviceState>>,
+    /// `Instant` of the most recent successful [`Self::refresh_devices`]
+    /// call. Used by [`Self::refresh_devices_if_stale`] to skip the
+    /// OS-level port enumeration (~20–30 ms on Windows) when the
+    /// enumeration cache is still fresh — the dominant cost on
+    /// back-to-back warm deploys.
+    last_refresh_at: Mutex<Option<Instant>>,
 }
 
 impl Default for DeviceManager {
@@ -91,6 +97,7 @@ impl DeviceManager {
     pub fn new() -> Self {
         Self {
             devices: Mutex::new(HashMap::new()),
+            last_refresh_at: Mutex::new(None),
         }
     }
 
@@ -99,6 +106,27 @@ impl DeviceManager {
             .duration_since(UNIX_EPOCH)
             .unwrap_or_default()
             .as_secs_f64()
+    }
+
+    /// Refresh the device inventory only if the last refresh is older
+    /// than `max_age`. Returns `true` if a refresh actually ran.
+    ///
+    /// Called by the deploy handler with a small `max_age` (e.g. 2 s)
+    /// so back-to-back warm deploys don't re-pay the OS port
+    /// enumeration cost (~20–30 ms on Windows). The trust-cache
+    /// invalidation logic still requires a refresh to have happened
+    /// *recently enough* — we just don't need one on every deploy.
+    pub fn refresh_devices_if_stale(&self, max_age: std::time::Duration) -> bool {
+        {
+            let last = self.last_refresh_at.lock().unwrap();
+            if let Some(t) = *last {
+                if t.elapsed() < max_age {
+                    return false;
+                }
+            }
+        }
+        self.refresh_devices();
+        true
     }
 
     /// Refresh the device inventory from serial port enumeration.
@@ -187,6 +215,11 @@ impl DeviceManager {
                 }
             }
         }
+        drop(devices);
+        // Record the successful enumeration so `refresh_devices_if_stale`
+        // can short-circuit subsequent calls inside the freshness
+        // window.
+        *self.last_refresh_at.lock().unwrap() = Some(Instant::now());
     }
 
     /// Get all devices.
@@ -586,6 +619,29 @@ mod tests {
         }
         assert_eq!(mgr.cleanup_stale_devices(), 1);
         assert!(mgr.get_all_devices().is_empty());
+    }
+
+    /// Calling `refresh_devices_if_stale` twice back-to-back with a
+    /// generous max-age must only actually run one OS-level
+    /// enumeration — the second call is inside the freshness window
+    /// and returns `false`. Regression guard for the sub-1 s warm
+    /// deploy path (#114 follow-up).
+    #[test]
+    fn refresh_devices_if_stale_skips_inside_window() {
+        let mgr = DeviceManager::new();
+        assert!(mgr.refresh_devices_if_stale(std::time::Duration::from_secs(5)));
+        assert!(!mgr.refresh_devices_if_stale(std::time::Duration::from_secs(5)));
+    }
+
+    /// An already-stale refresh window must trigger a real
+    /// enumeration on the next call. `Duration::ZERO` is the
+    /// strictest case — any elapsed time is >= 0, so only an
+    /// in-flight call can short-circuit (and we don't have one).
+    #[test]
+    fn refresh_devices_if_stale_reruns_when_expired() {
+        let mgr = DeviceManager::new();
+        assert!(mgr.refresh_devices_if_stale(std::time::Duration::from_secs(5)));
+        assert!(mgr.refresh_devices_if_stale(std::time::Duration::ZERO));
     }
 
     #[test]
