@@ -8,6 +8,6 @@ Usage::
         lines = mon.read_lines(timeout=30.0)
 """
 
-from fbuild._native import SerialMonitor  # noqa: F401
+from fbuild._native import AsyncSerialMonitor, SerialMonitor  # noqa: F401
 
-__all__ = ["SerialMonitor"]
+__all__ = ["AsyncSerialMonitor", "SerialMonitor"]
