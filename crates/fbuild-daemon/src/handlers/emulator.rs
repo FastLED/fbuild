@@ -538,13 +538,12 @@ pub async fn deploy_avr8js(
 
 fn find_node() -> fbuild_core::Result<PathBuf> {
     let node = if cfg!(windows) { "node.exe" } else { "node" };
-    match std::process::Command::new(node)
-        .arg("--version")
-        .stdout(Stdio::piped())
-        .stderr(Stdio::null())
-        .output()
-    {
-        Ok(output) if output.status.success() => Ok(PathBuf::from(node)),
+    // Route through fbuild-core's `run_command` so the probe spawn is
+    // captured by the daemon's containment group (issue #32). The probe
+    // is short-lived (`node --version`) but a missing binary should
+    // still bubble up the same way.
+    match fbuild_core::subprocess::run_command(&[node, "--version"], None, None, None) {
+        Ok(output) if output.success() => Ok(PathBuf::from(node)),
         _ => Err(fbuild_core::FbuildError::DeployFailed(
             "Node.js is required for headless avr8js emulation but 'node' was not found on PATH. \
              Install Node.js 18+ from https://nodejs.org/"
@@ -662,38 +661,42 @@ fn ensure_avr8js_npm_in(cache_dir: &Path, force_refresh: bool) -> fbuild_core::R
     })?;
 
     let npm = if cfg!(windows) { "npm.cmd" } else { "npm" };
-    let output = std::process::Command::new(npm)
-        .args(["install", "--save", "avr8js@0.21.0"])
-        .arg("--prefix")
-        .arg(cache_dir)
-        .stdout(Stdio::piped())
-        .stderr(Stdio::piped())
-        .output()
-        .map_err(|e| {
-            fbuild_core::FbuildError::DeployFailed(format!(
-                "failed to launch 'npm' (for `npm install avr8js@0.21.0 --prefix {}`): {}. \
-                 Ensure `npm` is installed alongside Node.js and on PATH \
-                 (https://nodejs.org/). If npm is installed, set \
-                 {}=1 to force a clean reinstall.",
-                cache_dir.display(),
-                e,
-                REFRESH_EMU_CACHE_ENV
-            ))
-        })?;
-    if !output.status.success() {
-        let stdout = String::from_utf8_lossy(&output.stdout);
-        let stderr = String::from_utf8_lossy(&output.stderr);
+    // Route through `run_command` (which spawns via the daemon's
+    // containment group) so an `npm install` killed mid-flight doesn't
+    // leak node processes after the daemon dies. See FastLED/fbuild#32.
+    let cache_dir_str = cache_dir.to_string_lossy().to_string();
+    let output = fbuild_core::subprocess::run_command(
+        &[
+            npm,
+            "install",
+            "--save",
+            "avr8js@0.21.0",
+            "--prefix",
+            &cache_dir_str,
+        ],
+        None,
+        None,
+        None,
+    )
+    .map_err(|e| {
+        fbuild_core::FbuildError::DeployFailed(format!(
+            "failed to launch 'npm' (for `npm install avr8js@0.21.0 --prefix {}`): {}. \
+             Ensure `npm` is installed alongside Node.js and on PATH \
+             (https://nodejs.org/). If npm is installed, set \
+             {}=1 to force a clean reinstall.",
+            cache_dir.display(),
+            e,
+            REFRESH_EMU_CACHE_ENV
+        ))
+    })?;
+    if !output.success() {
         return Err(fbuild_core::FbuildError::DeployFailed(format!(
             "`npm install avr8js@0.21.0 --prefix {}` exited with status {}.\n\
              --- stdout ---\n{}\n--- stderr ---\n{}",
             cache_dir.display(),
-            output
-                .status
-                .code()
-                .map(|c| c.to_string())
-                .unwrap_or_else(|| "?".to_string()),
-            stdout.trim_end(),
-            stderr.trim_end()
+            output.exit_code,
+            output.stdout.trim_end(),
+            output.stderr.trim_end()
         )));
     }
 
@@ -784,12 +787,15 @@ async fn run_avr8js_headless(
         );
     }
 
-    let mut child = cmd.spawn().map_err(|e| {
-        fbuild_core::FbuildError::DeployFailed(format!(
-            "failed to launch Node.js for avr8js: {}",
-            e
-        ))
-    })?;
+    // Route through containment (#32) so a daemon crash mid-emulation
+    // takes node.exe and any helper processes it spawned with it.
+    let mut child =
+        fbuild_core::containment::tokio_spawn::spawn_contained(&mut cmd).map_err(|e| {
+            fbuild_core::FbuildError::DeployFailed(format!(
+                "failed to launch Node.js for avr8js: {}",
+                e
+            ))
+        })?;
 
     let stdout = child.stdout.take().ok_or_else(|| {
         fbuild_core::FbuildError::DeployFailed("failed to capture avr8js stdout".to_string())
@@ -1014,14 +1020,18 @@ async fn run_qemu_process(
         tracing::info!("{}: {} {}", label, qemu_path.display(), args.join(" "));
     }
 
-    let mut child = cmd.spawn().map_err(|e| {
-        fbuild_core::FbuildError::DeployFailed(build_linux_macos_qemu_hint(&format!(
-            "failed to launch {} at {}: {}",
-            label,
-            qemu_path.display(),
-            e
-        )))
-    })?;
+    // Route through containment (#32). QEMU is a long-running process
+    // — a daemon hard-kill mid-emulation must not leave `qemu-system-*`
+    // or its `conhost.exe` wrapper behind.
+    let mut child =
+        fbuild_core::containment::tokio_spawn::spawn_contained(&mut cmd).map_err(|e| {
+            fbuild_core::FbuildError::DeployFailed(build_linux_macos_qemu_hint(&format!(
+                "failed to launch {} at {}: {}",
+                label,
+                qemu_path.display(),
+                e
+            )))
+        })?;
 
     let stdout = child.stdout.take().ok_or_else(|| {
         fbuild_core::FbuildError::DeployFailed(format!("failed to capture {} stdout", label))
@@ -1746,13 +1756,10 @@ fn find_simavr() -> fbuild_core::Result<PathBuf> {
     } else {
         "simavr"
     };
-    // Try running simavr to verify it exists
-    match std::process::Command::new(simavr)
-        .arg("--help")
-        .stdout(Stdio::piped())
-        .stderr(Stdio::piped())
-        .output()
-    {
+    // Try running simavr to verify it exists; route through containment
+    // (issue #32). This is a short-lived probe so the containment
+    // difference is purely consistency.
+    match fbuild_core::subprocess::run_command(&[simavr, "--help"], None, None, None) {
         Ok(_) => Ok(PathBuf::from(simavr)),
         Err(_) => {
             let install_hint = if cfg!(target_os = "linux") {

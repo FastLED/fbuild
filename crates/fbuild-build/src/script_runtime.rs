@@ -100,10 +100,19 @@ pub fn resolve_extra_script_overlay(
         .stdin(std::process::Stdio::null())
         .stdout(std::process::Stdio::piped())
         .stderr(std::process::Stdio::piped());
-    let output = command.output().map_err(|e| {
+    // Route the spawn through the daemon's containment group so a
+    // daemon crash mid-evaluation doesn't leave a python child running
+    // in the background. See FastLED/fbuild#32.
+    let child = fbuild_core::containment::spawn_contained(&mut command).map_err(|e| {
         fbuild_core::FbuildError::BuildFailed(format!(
             "failed to run extra_scripts runtime via '{}': {}",
             python.join(" "),
+            e
+        ))
+    })?;
+    let output = child.wait_with_output().map_err(|e| {
+        fbuild_core::FbuildError::BuildFailed(format!(
+            "failed to collect extra_scripts runtime output: {}",
             e
         ))
     })?;
