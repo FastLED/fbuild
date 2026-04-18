@@ -46,6 +46,15 @@ pub struct Esp32Deployer {
     /// Reset mode after flashing.
     after_reset: String,
     verbose: bool,
+    /// Route `verify-flash` through the native [`espflash`] crate
+    /// instead of the Python `esptool` subprocess. Write-flash is
+    /// unaffected — issue #66's native write path is a follow-up PR.
+    ///
+    /// The daemon sets this from the `FBUILD_USE_ESPFLASH_VERIFY` env
+    /// var. Default `false` keeps esptool as the fallback so users on
+    /// unusual setups aren't forced onto the native path until it has
+    /// bench time on every ESP32 family member.
+    use_native_verify: bool,
 }
 
 impl Esp32Deployer {
@@ -70,7 +79,17 @@ impl Esp32Deployer {
             before_reset: esptool_params.before_reset.clone(),
             after_reset: esptool_params.after_reset.clone(),
             verbose,
+            use_native_verify: false,
         }
+    }
+
+    /// Opt this deployer into the native espflash-based verify path
+    /// (issue #66). No effect on write-flash, which always goes through
+    /// esptool until the follow-up PR lands.
+    #[must_use]
+    pub fn with_native_verify(mut self, enabled: bool) -> Self {
+        self.use_native_verify = enabled;
+        self
     }
 
     /// Create an ESP32 deployer from board config with explicit flash offsets.
@@ -179,6 +198,9 @@ impl Esp32Deployer {
     /// return as "device is now running the requested firmware" without
     /// any extra reset.
     pub fn try_verify_deployment(&self, firmware_path: &Path, port: &str) -> Result<VerifyOutcome> {
+        if self.use_native_verify {
+            return self.try_verify_deployment_native(firmware_path, port);
+        }
         let args = self.build_verify_flash_args(firmware_path, port);
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
 
@@ -233,6 +255,78 @@ impl Esp32Deployer {
             }
         }
     }
+
+    /// Native `verify-flash` via the [`espflash`] crate (issue #66).
+    ///
+    /// Saves the Python interpreter startup (~1 s) and subprocess spawn
+    /// (~0.5 s) that the esptool path pays per invocation. Same three
+    /// regions (bootloader / partitions / firmware) and same
+    /// [`VerifyOutcome`] semantics as the esptool path, so callers can
+    /// swap between the two behind the `use_native_verify` flag without
+    /// any result-handling changes.
+    fn try_verify_deployment_native(
+        &self,
+        firmware_path: &Path,
+        port: &str,
+    ) -> Result<VerifyOutcome> {
+        let baud: u32 = self.baud_rate.parse().map_err(|e| {
+            fbuild_core::FbuildError::DeployFailed(format!(
+                "native verify: invalid baud rate '{}': {}",
+                self.baud_rate, e
+            ))
+        })?;
+        let boot_off = parse_hex_offset_u32(&self.bootloader_offset)?;
+        let parts_off = parse_hex_offset_u32(&self.partitions_offset)?;
+        let fw_off = parse_hex_offset_u32(&self.firmware_offset)?;
+
+        let regions = crate::esp32_native::collect_standard_regions(
+            firmware_path,
+            boot_off,
+            parts_off,
+            fw_off,
+        );
+
+        if self.verbose {
+            tracing::info!(
+                "native verify: chip={} port={} baud={} regions={}",
+                self.chip,
+                port,
+                baud,
+                regions.len()
+            );
+        }
+        tracing::info!(
+            "verifying {} on {} via espflash ({})",
+            firmware_path.display(),
+            port,
+            self.chip
+        );
+
+        crate::esp32_native::try_verify_deployment_native(
+            &self.chip,
+            port,
+            baud,
+            &self.before_reset,
+            &self.after_reset,
+            &regions,
+            boot_off,
+            parts_off,
+            fw_off,
+        )
+    }
+}
+
+/// Parse a hex flash offset (accepts `0x` prefix) as a `u32`. espflash's
+/// `FLASH_MD5SUM` command takes 32-bit offsets, so we narrow the shared
+/// [`parse_hex_offset`] result here.
+fn parse_hex_offset_u32(raw: &str) -> Result<u32> {
+    let as_u64 = parse_hex_offset(raw)?;
+    u32::try_from(as_u64).map_err(|_| {
+        fbuild_core::FbuildError::DeployFailed(format!(
+            "native verify: flash offset {} does not fit in u32",
+            raw
+        ))
+    })
 }
 
 /// Which of the three logical flash regions a verify/write targets.

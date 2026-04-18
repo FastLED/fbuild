@@ -14,6 +14,25 @@ use std::path::{Path, PathBuf};
 use std::sync::atomic::Ordering;
 use std::sync::Arc;
 
+/// Returns `true` when the daemon should route ESP32 `verify-flash`
+/// pre-checks through the native [`espflash`] crate (issue #66) instead
+/// of the Python `esptool` subprocess.
+///
+/// Controlled by the `FBUILD_USE_ESPFLASH_VERIFY` environment variable
+/// (set to `1`, `true`, `yes`, or `on` to enable — case-insensitive).
+/// Any other value — including unset — keeps the default esptool path,
+/// so users on unusual setups retain the existing escape hatch until
+/// the native path has bench time on every ESP32 family member.
+pub(crate) fn native_verify_enabled() -> bool {
+    match std::env::var("FBUILD_USE_ESPFLASH_VERIFY") {
+        Ok(v) => matches!(
+            v.trim().to_ascii_lowercase().as_str(),
+            "1" | "true" | "yes" | "on"
+        ),
+        Err(_) => false,
+    }
+}
+
 pub(crate) fn qemu_extra_build_flags(platform: fbuild_core::Platform, mcu: &str) -> Vec<String> {
     if platform == fbuild_core::Platform::Espressif32 && mcu.eq_ignore_ascii_case("esp32s3") {
         vec![
@@ -1068,6 +1087,13 @@ pub async fn deploy(
                 } else {
                     deployer
                 };
+                // Issue #66: opt-in native `verify-flash` via the
+                // `espflash` crate. Off by default so esptool remains
+                // the fallback path; set `FBUILD_USE_ESPFLASH_VERIFY=1`
+                // to route the verify pre-check (not write-flash)
+                // through espflash and skip the ~1.5 s Python subprocess
+                // cost.
+                let deployer = deployer.with_native_verify(native_verify_enabled());
 
                 // Fast deploy: ask the device whether it already holds
                 // the exact firmware/bootloader/partitions we'd be about
