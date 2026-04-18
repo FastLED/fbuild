@@ -5,10 +5,13 @@ use axum::routing::{get, post};
 use axum::Router;
 use clap::Parser;
 use fbuild_daemon::context::{
-    DaemonContext, IDLE_TIMEOUT, SELF_EVICTION_TIMEOUT, STALE_LOCK_CHECK_INTERVAL,
+    BroadcastHub, DaemonContext, IDLE_TIMEOUT, SELF_EVICTION_TIMEOUT, STALE_LOCK_CHECK_INTERVAL,
 };
 use fbuild_daemon::handlers::{cache, devices, emulator, health, locks, operations, websockets};
+use fbuild_daemon::log_layer::BroadcastLogLayer;
 use std::sync::Arc;
+use tracing_subscriber::layer::SubscriberExt;
+use tracing_subscriber::util::SubscriberInitExt;
 
 #[derive(Parser)]
 #[command(name = "fbuild-daemon", about = "fbuild daemon server")]
@@ -47,17 +50,32 @@ async fn main() {
 
     let port = args.port.unwrap_or_else(fbuild_paths::get_daemon_port);
 
-    tracing_subscriber::fmt()
-        .with_env_filter(
+    // Build the broadcast hub before installing the tracing subscriber
+    // so the `/ws/logs` bridge layer (issue #66 follow-up) can be
+    // registered with the very first tracing event. Any later event —
+    // including native ESP32 `write-flash` progress — lands on the same
+    // channel that `/ws/logs` subscribers read.
+    let broadcast_hub = BroadcastHub::new();
+    let log_tx = broadcast_hub.log_tx.clone();
+
+    tracing_subscriber::registry()
+        .with(
             tracing_subscriber::EnvFilter::from_default_env()
                 .add_directive(tracing::Level::INFO.into()),
         )
+        .with(tracing_subscriber::fmt::layer())
+        .with(BroadcastLogLayer::new(log_tx))
         .init();
 
     tracing::info!("fbuild daemon starting on port {}", port);
 
     let (shutdown_tx, mut shutdown_rx) = tokio::sync::watch::channel(false);
-    let context = Arc::new(DaemonContext::new(port, shutdown_tx, args.spawner_cwd));
+    let context = Arc::new(DaemonContext::with_hub(
+        port,
+        shutdown_tx,
+        args.spawner_cwd,
+        broadcast_hub,
+    ));
 
     let app = Router::new()
         .route("/", get(health::root))
