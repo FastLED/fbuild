@@ -2145,20 +2145,15 @@ mod tests {
     fn test_process_command(lines: &[&str]) -> (PathBuf, Vec<String>) {
         #[cfg(windows)]
         {
+            let system_root =
+                std::env::var("SystemRoot").unwrap_or_else(|_| "C:\\Windows".to_string());
+            let exe = PathBuf::from(system_root).join(r"System32\cmd.exe");
             let script = lines
                 .iter()
-                .map(|line| format!("Write-Output '{}'", line.replace('\'', "''")))
+                .map(|line| format!("echo {}", line))
                 .collect::<Vec<_>>()
-                .join("; ");
-            (
-                PathBuf::from("powershell"),
-                vec![
-                    "-NoProfile".to_string(),
-                    "-NonInteractive".to_string(),
-                    "-Command".to_string(),
-                    script,
-                ],
-            )
+                .join(" & ");
+            (exe, vec!["/C".to_string(), script])
         }
 
         #[cfg(not(windows))]
