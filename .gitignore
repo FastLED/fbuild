@@ -56,3 +56,8 @@ vscode-fbuild/node_modules/
 vscode-fbuild/*.vsix
 .claude/worktrees/
 /bin/
+
+# Local agent-loop scratch — LOOP.md is an operator-driven benchmark spec
+# generated per-session; not a stable doc and not part of the repo.
+/LOOP.md
+tasks/loop-runs/
