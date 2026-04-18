@@ -1,0 +1,90 @@
+name: "Set up fbuild"
+description: "Install fbuild and configure its cache for save/restore across CI runs."
+author: "FastLED"
+branding:
+  icon: "zap"
+  color: "yellow"
+
+inputs:
+  fbuild-version:
+    description: "fbuild version to install from PyPI. 'latest' pulls the newest release."
+    required: false
+    default: "latest"
+  python-version:
+    description: "Python version used to install fbuild. Must be >= 3.9."
+    required: false
+    default: "3.12"
+  cache:
+    description: "Whether to save/restore the fbuild cache via actions/cache. Set to 'false' to skip caching (install only)."
+    required: false
+    default: "true"
+  cache-key-extra:
+    description: "Extra string baked into the cache key. Typically hashFiles('platformio.ini', ...) so graph-input changes invalidate stale artifacts."
+    required: false
+    default: ""
+  cache-version:
+    description: "Manual bump to force-invalidate the cache without changing any inputs. Increment this string (or bump in a workflow env) when cache needs busting."
+    required: false
+    default: "v1"
+  cache-dir:
+    description: "Override the cache directory. Default: $RUNNER_TEMP/fbuild-cache (runner-stable, survives across steps of the same job)."
+    required: false
+    default: ""
+
+outputs:
+  cache-hit:
+    description: "true if the fbuild cache was restored from a previous run, false on miss."
+    value: ${{ steps.fbuild-cache.outputs.cache-hit }}
+  cache-dir:
+    description: "Resolved cache directory path (useful for diagnostic steps)."
+    value: ${{ steps.resolve-paths.outputs.cache-dir }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Resolve cache directory and fbuild install target
+      id: resolve-paths
+      shell: bash
+      run: |
+        set -euo pipefail
+
+        if [ -n "${{ inputs.cache-dir }}" ]; then
+          CACHE_DIR="${{ inputs.cache-dir }}"
+        else
+          CACHE_DIR="${RUNNER_TEMP}/fbuild-cache"
+        fi
+        mkdir -p "$CACHE_DIR"
+
+        # Exported for every subsequent step in the user's job.
+        echo "FBUILD_CACHE_DIR=$CACHE_DIR" >> "$GITHUB_ENV"
+        echo "cache-dir=$CACHE_DIR" >> "$GITHUB_OUTPUT"
+
+        if [ "${{ inputs.fbuild-version }}" = "latest" ]; then
+          echo "pip-spec=fbuild" >> "$GITHUB_OUTPUT"
+        else
+          echo "pip-spec=fbuild==${{ inputs.fbuild-version }}" >> "$GITHUB_OUTPUT"
+        fi
+
+    - name: Install fbuild
+      shell: bash
+      run: |
+        set -euo pipefail
+        python -m pip install --upgrade pip
+        python -m pip install '${{ steps.resolve-paths.outputs.pip-spec }}'
+        fbuild --version || echo "fbuild --version not yet supported on this release" >&2
+
+    - name: Restore fbuild cache
+      if: ${{ inputs.cache == 'true' }}
+      id: fbuild-cache
+      uses: actions/cache@v4
+      with:
+        path: ${{ steps.resolve-paths.outputs.cache-dir }}
+        key: fbuild-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-${{ inputs.cache-key-extra }}
+        restore-keys: |
+          fbuild-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-
+          fbuild-${{ inputs.cache-version }}-${{ runner.os }}-
