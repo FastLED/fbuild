@@ -12,6 +12,20 @@ tracing = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 sha2 = { workspace = true }
+# Process containment primitive (Job Objects on Windows; process groups +
+# PR_SET_PDEATHSIG on Linux; process groups on macOS). The single global
+# `ContainedProcessGroup` owned by the daemon ensures every child process
+# spawned through `fbuild_core::subprocess::run_command` (and the emulator
+# helpers) dies with the daemon. See FastLED/fbuild#32.
+running-process-core = { workspace = true }
+# Async helpers for the tokio integration in `containment::tokio_spawn` —
+# we need the `process` feature so `tokio::process::Command` is in scope.
+tokio = { workspace = true }
+
+# `libc::setpgid` / `libc::prctl` for the Unix `pre_exec` hook used by
+# `containment::tokio_spawn::configure`. See FastLED/fbuild#32.
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
 
 [dev-dependencies]
 tempfile = { workspace = true }

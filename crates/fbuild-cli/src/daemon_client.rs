@@ -907,6 +907,15 @@ async fn spawn_daemon_process() -> fbuild_core::Result<()> {
     #[cfg(windows)]
     strip_std_handle_inheritance();
 
+    // INTENTIONALLY DETACHED (FastLED/fbuild#32): the CLI spawns the
+    // daemon and then exits — the daemon must survive the CLI. The
+    // daemon in turn installs its own global `ContainedProcessGroup`
+    // (see fbuild-daemon/src/main.rs) so every descendant it spawns
+    // dies with *it*. The CLI binary itself has no global containment
+    // group installed, so this `spawn()` is already uncontained; the
+    // comment is here so a future refactor doesn't accidentally reroute
+    // it through `containment::spawn_contained`, which would make the
+    // daemon die the instant the CLI exits.
     cmd.spawn().map_err(|e| {
         fbuild_core::FbuildError::DaemonError(format!(
             "failed to spawn daemon (is fbuild-daemon in PATH?): {}",

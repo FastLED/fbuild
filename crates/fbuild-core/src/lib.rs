@@ -8,6 +8,7 @@
 
 pub mod build_log;
 pub mod compiler_flags;
+pub mod containment;
 pub mod elapsed;
 pub mod emulator;
 pub mod response_file;
