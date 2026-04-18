@@ -441,9 +441,6 @@ async fn main() {
         eprintln!("FBUILD_DEV_MODE=1 (dev mode: port 8865, ~/.fbuild/dev/)");
     }
 
-    // Show compact daemon status before every command (matches Python behavior)
-    daemon_client::display_daemon_stats_compact().await;
-
     // Extract top-level project_dir before matching (since match partially moves cli)
     let top_level_project_dir = cli.project_dir.clone();
 
