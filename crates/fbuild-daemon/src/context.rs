@@ -49,8 +49,11 @@ impl BroadcastHub {
 
 /// Self-eviction timeout: daemon shuts down after this many seconds with
 /// 0 clients, 0 operations, and 0 serial sessions.
-/// Set to 120s to accommodate validation workflows (deploy + compile + upload).
-pub const SELF_EVICTION_TIMEOUT: Duration = Duration::from_secs(120);
+/// 30s is enough to bridge the gap between a compile finishing and the
+/// next `fbuild` invocation in an interactive workflow, without leaving
+/// the daemon holding shell-inherited resources (see #91) for two minutes
+/// after a one-shot command returns.
+pub const SELF_EVICTION_TIMEOUT: Duration = Duration::from_secs(30);
 
 /// Fallback idle timeout: daemon shuts down after 12 hours regardless.
 pub const IDLE_TIMEOUT: Duration = Duration::from_secs(43200);
