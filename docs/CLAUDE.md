@@ -2,6 +2,8 @@
 
 Architecture docs are split by subsystem. Read only what's relevant to your current work.
 
+For a full FAQ-style index of every doc in this repo (human + LLM entry point), see [INDEX.md](INDEX.md).
+
 ## Which doc to read
 
 | Working on crate | Read these |
@@ -20,8 +22,13 @@ Architecture docs are split by subsystem. Read only what's relevant to your curr
 
 ## Other docs
 
+- **[INDEX.md](INDEX.md)** - FAQ-style index across all docs
+- **[WHY.md](WHY.md)** - Why fbuild exists, key benefits, performance
+- **[BOARD_STATUS.md](BOARD_STATUS.md)** - Per-platform CI badges and supported boards
+- **[DEVELOPMENT.md](DEVELOPMENT.md)** - Testing, troubleshooting, local setup
 - **[DESIGN_DECISIONS.md](DESIGN_DECISIONS.md)** - ADR-style decisions with rationale
 - **[ROADMAP.md](ROADMAP.md)** - Implementation phases
 - **[ARCHITECTURE.md](ARCHITECTURE.md)** - Index of all architecture documents
+- **[../crates/CLAUDE.md](../crates/CLAUDE.md)** - Crate dependency graph and boundaries
 - **[../PLAN_QEMU_ESP32S3.md](../PLAN_QEMU_ESP32S3.md)** - QEMU ESP32-S3 emulation plan
 - Emulator CLI: `fbuild test-emu` (build + emulate) and `fbuild deploy --to emu [--emulator <kind>]`
