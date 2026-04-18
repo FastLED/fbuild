@@ -2314,7 +2314,7 @@ mod tests {
                 .map(|line| format!("printf '%s\\n' '{}'", line.replace('\'', "'\"'\"'")))
                 .collect::<Vec<_>>()
                 .join("; ");
-            (PathBuf::from("sh"), vec!["-c".to_string(), script])
+            (PathBuf::from("/bin/sh"), vec!["-c".to_string(), script])
         }
     }
 
