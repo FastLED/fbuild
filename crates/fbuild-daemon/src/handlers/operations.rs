@@ -1441,27 +1441,42 @@ pub async fn deploy(
     // Clear preemption then wait for USB re-enumeration.
     // Fast-poll the serial port instead of a hard 2s sleep — most ESP32-S3
     // boards with native USB re-enumerate in <500ms.
+    //
+    // Skip the poll entirely when the deploy didn't actually touch
+    // flash (VerifySkip): no reset happened, no USB re-enumeration
+    // is coming, and the poll's `open()` probe would conflict with
+    // any already-attached monitor and burn the full 3 s timeout.
+    // This is load-bearing for the < 4 s warm-trust-skip budget.
+    let deploy_skipped_bus_work = matches!(
+        &deploy_result,
+        Ok(Ok(r)) if r.success && matches!(
+            r.outcome,
+            fbuild_deploy::DeployOutcome::VerifySkip
+        )
+    );
     if let Some(ref p) = deploy_port_str {
         ctx.serial_manager.clear_preemption(p).await;
-        let port_name = p.clone();
-        let _ = tokio::task::spawn_blocking(move || {
-            let deadline = std::time::Instant::now() + std::time::Duration::from_secs(3);
-            while std::time::Instant::now() < deadline {
-                if serialport::new(&port_name, 115200)
-                    .timeout(std::time::Duration::from_millis(50))
-                    .open()
-                    .is_ok()
-                {
-                    return;
+        if !deploy_skipped_bus_work {
+            let port_name = p.clone();
+            let _ = tokio::task::spawn_blocking(move || {
+                let deadline = std::time::Instant::now() + std::time::Duration::from_secs(3);
+                while std::time::Instant::now() < deadline {
+                    if serialport::new(&port_name, 115200)
+                        .timeout(std::time::Duration::from_millis(50))
+                        .open()
+                        .is_ok()
+                    {
+                        return;
+                    }
+                    std::thread::sleep(std::time::Duration::from_millis(100));
                 }
-                std::thread::sleep(std::time::Duration::from_millis(100));
-            }
-            tracing::warn!(
-                "USB re-enumeration: port {} not available after 3s",
-                port_name
-            );
-        })
-        .await;
+                tracing::warn!(
+                    "USB re-enumeration: port {} not available after 3s",
+                    port_name
+                );
+            })
+            .await;
+        }
     }
 
     let (deploy_success, deploy_stdout, deploy_stderr, deploy_outcome) = match deploy_result {
