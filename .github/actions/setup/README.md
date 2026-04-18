@@ -68,6 +68,7 @@ jobs:
 |---|---|
 | `cache-hit` | `true` if the cache was restored from a previous run, `false` on miss. |
 | `cache-dir` | Resolved cache directory path. Useful for diagnostic steps. |
+| `fbuild-hash` | sha256 prefix (16 hex chars) of the installed fbuild wheel's `RECORD` file. Baked into the cache key so any fbuild change — including a re-released wheel at the same version — invalidates stale cache artifacts. |
 
 ## What this action does
 
@@ -75,7 +76,18 @@ jobs:
 2. Resolves a stable cache directory under `$RUNNER_TEMP` (survives across steps of the same job; not a surprise `$HOME` path).
 3. Exports `FBUILD_CACHE_DIR` via `$GITHUB_ENV` so every later step inherits it.
 4. Installs fbuild from PyPI at the requested version.
-5. Restores (and on job-end, saves) the cache via `actions/cache@v4`.
+5. **Computes the installed fbuild's content hash** (sha256 of its dist-info `RECORD`) and bakes it into the cache key. This guarantees the cache is tied to the exact fbuild you're running, not just the PyPI version string — so `latest` is safe and a re-released wheel won't poison the cache.
+6. Restores (and on job-end, saves) the cache via `actions/cache@v4`.
+
+### Why hash-pinning matters
+
+The fbuild cache stores toolchains, frameworks, and build outputs whose internal layout is tied to fbuild's own fingerprint format, response-file generation, and path embedding. If fbuild itself changes without the cache key changing, the restored cache can encode stale paths or obsolete fingerprints — silent cache poisoning.
+
+Baking the wheel's `RECORD` hash into the key means:
+
+- `fbuild-version: latest` is reproducible-by-construction: a new release produces a new hash, which rolls the cache.
+- A re-uploaded wheel (same version, different contents) invalidates correctly.
+- Per-platform wheel differences (manylinux vs. macOS vs. Windows) produce different hashes and do not cross-pollute caches.
 
 It does **not** cache `~/.fbuild/*/daemon/` — that's ephemeral runtime state and restoring it across runs causes broken daemon discovery on the next client call. The action sidesteps the whole `~/.fbuild/` tree by redirecting fbuild's cache to `$RUNNER_TEMP/fbuild-cache` via `FBUILD_CACHE_DIR`.
 
