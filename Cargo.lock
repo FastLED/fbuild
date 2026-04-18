@@ -789,6 +789,8 @@ dependencies = [
  "reqwest",
  "serde",
  "serde_json",
+ "sha2",
+ "tempfile",
  "tokio",
  "tracing",
  "tracing-subscriber",
@@ -885,6 +887,7 @@ dependencies = [
 name = "fbuild-packages"
 version = "2.1.17"
 dependencies = [
+ "axum",
  "bzip2",
  "fbuild-config",
  "fbuild-core",
@@ -901,6 +904,7 @@ dependencies = [
  "thiserror 2.0.18",
  "tokio",
  "tracing",
+ "walkdir",
  "xz2",
  "zip",
  "zstd",

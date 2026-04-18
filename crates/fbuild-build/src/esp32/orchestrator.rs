@@ -26,7 +26,7 @@ use fbuild_packages::Framework;
 use serde::Serialize;
 
 use crate::build_fingerprint::{
-    hash_watch_set_stamps, load_json, normalize_path, save_json, stable_hash_json,
+    hash_watch_set_stamps_cached, load_json, normalize_path, save_json, stable_hash_json,
     PersistedBuildFingerprint, BUILD_FINGERPRINT_VERSION,
 };
 use crate::flag_overlay::LanguageExtraFlags;
@@ -374,7 +374,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
                         } else {
                             match previous.file_set_hash.as_deref() {
                                 Some(previous_hash) => {
-                                    match hash_watch_set_stamps(&fingerprint_watches) {
+                                    match hash_watch_set_stamps_cached(
+                                        &fingerprint_watches,
+                                        params.watch_set_cache.as_deref(),
+                                    ) {
                                         Ok(current_hash) => current_hash == previous_hash,
                                         Err(e) => {
                                             tracing::warn!("failed to hash watched inputs: {}", e);
@@ -388,7 +391,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
                     } else {
                         match previous.file_set_hash.as_deref() {
                             Some(previous_hash) => {
-                                match hash_watch_set_stamps(&fingerprint_watches) {
+                                match hash_watch_set_stamps_cached(
+                                    &fingerprint_watches,
+                                    params.watch_set_cache.as_deref(),
+                                ) {
                                     Ok(current_hash) => current_hash == previous_hash,
                                     Err(e) => {
                                         tracing::warn!("failed to hash watched inputs: {}", e);
@@ -1027,9 +1033,51 @@ impl BuildOrchestrator for Esp32Orchestrator {
         }
 
         // 11.5. Process embedded files (board_build.embed_files + embed_txtfiles)
+        //
+        // `.lnk` entries are pre-resolved: each `.lnk` is parsed, its blob is
+        // fetched (or pulled from the disk cache), and the materialized path
+        // is substituted in place before objcopy sees it. The `_lnk_leases`
+        // vector keeps cache leases alive until we leave this scope, so the
+        // disk-cache GC can't reap a blob mid-build.
         if !embed_files.is_empty() || !embed_txtfiles.is_empty() {
             let embed_dir = build_dir.join("embed");
             std::fs::create_dir_all(&embed_dir)?;
+
+            let lnk_dir = embed_dir.join("lnk");
+            let mut _lnk_leases: Vec<fbuild_packages::lnk::MaterializedLnk> = Vec::new();
+            let lnk_cache = fbuild_packages::DiskCache::open().ok();
+
+            let resolve_lnk = |lnk_path: &Path| -> Result<PathBuf> {
+                let cache = lnk_cache.as_ref().ok_or_else(|| {
+                    fbuild_core::FbuildError::PackageError(
+                        "disk cache unavailable; cannot resolve .lnk entries".to_string(),
+                    )
+                })?;
+                let m = fbuild_packages::lnk::materialize_lnk_entry(lnk_path, &lnk_dir, cache)?;
+                Ok(m.target_path.clone())
+            };
+            // Closures can't borrow `_lnk_leases` mutably while also being
+            // FnMut for both expansions, so we collect leases inline by
+            // calling `materialize_lnk_entry` directly inside a small loop.
+            let expand = |entries: &[String]| -> Result<Vec<String>> {
+                let mut out = Vec::with_capacity(entries.len());
+                for entry in entries {
+                    let p = if Path::new(entry).is_absolute() {
+                        std::path::PathBuf::from(entry)
+                    } else {
+                        params.project_dir.join(entry)
+                    };
+                    if fbuild_packages::lnk::has_lnk_extension(&p) {
+                        let resolved = resolve_lnk(&p)?;
+                        out.push(resolved.to_string_lossy().into_owned());
+                    } else {
+                        out.push(entry.clone());
+                    }
+                }
+                Ok(out)
+            };
+            let resolved_embed_files = expand(&embed_files)?;
+            let resolved_embed_txtfiles = expand(&embed_txtfiles)?;
 
             let objcopy_path = toolchain.get_objcopy_path();
             let (output_target, binary_arch) = if mcu_config.is_riscv() {
@@ -1039,8 +1087,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
             };
 
             let embed_objects = process_embed_files(
-                &embed_files,
-                &embed_txtfiles,
+                &resolved_embed_files,
+                &resolved_embed_txtfiles,
                 &params.project_dir,
                 &embed_dir,
                 &objcopy_path,
@@ -1257,7 +1305,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let persisted_fingerprint = PersistedBuildFingerprint {
             version: BUILD_FINGERPRINT_VERSION,
             metadata_hash: metadata_hash.clone(),
-            file_set_hash: match hash_watch_set_stamps(&fingerprint_watches) {
+            file_set_hash: match hash_watch_set_stamps_cached(
+                &fingerprint_watches,
+                params.watch_set_cache.as_deref(),
+            ) {
                 Ok(hash) => Some(hash),
                 Err(e) => {
                     tracing::warn!("failed to hash watched inputs for fingerprint save: {}", e);

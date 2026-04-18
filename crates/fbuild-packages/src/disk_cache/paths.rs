@@ -14,6 +14,11 @@ pub enum Kind {
     Platforms,
     Libraries,
     Frameworks,
+    /// Resource blobs fetched via `.lnk` pointers. Cache entries are keyed
+    /// by `(Kind::LnkBlobs, url, sha256)` — the "version" slot holds the
+    /// expected sha256 so identical blobs across URLs share storage at the
+    /// content-addressable layer (the staging dir uses the sha256).
+    LnkBlobs,
 }
 
 impl Kind {
@@ -24,6 +29,7 @@ impl Kind {
             Kind::Platforms => "platforms",
             Kind::Libraries => "libraries",
             Kind::Frameworks => "frameworks",
+            Kind::LnkBlobs => "lnk-blobs",
         }
     }
 
@@ -34,6 +40,7 @@ impl Kind {
             Kind::Platforms,
             Kind::Libraries,
             Kind::Frameworks,
+            Kind::LnkBlobs,
         ]
     }
 }
@@ -54,6 +61,7 @@ impl std::str::FromStr for Kind {
             "platforms" => Ok(Kind::Platforms),
             "libraries" => Ok(Kind::Libraries),
             "frameworks" => Ok(Kind::Frameworks),
+            "lnk-blobs" => Ok(Kind::LnkBlobs),
             other => Err(format!("unknown cache kind: {}", other)),
         }
     }

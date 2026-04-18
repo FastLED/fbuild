@@ -26,6 +26,9 @@ bzip2 = { workspace = true }
 zstd = { workspace = true }
 semver = { workspace = true }
 rusqlite = { workspace = true }
+walkdir = { workspace = true }
 
 [dev-dependencies]
 tempfile = { workspace = true }
+axum = { workspace = true }
+tokio = { workspace = true }
