@@ -118,6 +118,24 @@ uv run python ci/build_dist.py --ref main
 ./publish
 ```
 
+### Python / PyO3 extension
+
+The `fbuild` Python package wraps a Rust PyO3 extension built from `crates/fbuild-python`. The compiled binary (`python/fbuild/_native.{pyd,abi3.so,so,dylib}`) is **not** checked into the repo — it must be rebuilt whenever `crates/fbuild-python/src/lib.rs` changes, otherwise tests that import `fbuild._native` fail with `ModuleNotFoundError` or `AttributeError`.
+
+```bash
+# Build the extension and copy it into the Python package
+uv run cargo build --release -p fbuild-python --features extension-module
+
+# Windows
+cp target/release/_native.dll python/fbuild/_native.pyd
+# Linux
+cp target/release/lib_native.so python/fbuild/_native.abi3.so
+# macOS
+cp target/release/lib_native.dylib python/fbuild/_native.abi3.so
+```
+
+See [`../python/README.md`](../python/README.md) for more detail. PyPI wheels are assembled by `ci/publish.py` using native binaries built in GitHub Actions — this local step only affects in-tree Python tests and scripts.
+
 ### Hooks (enforced automatically)
 
 See the root [CLAUDE.md](../CLAUDE.md) for the full list of PreToolUse / PostToolUse / Stop hooks under `ci/hooks/`.

@@ -40,6 +40,16 @@ __pycache__/
 dist/
 build/
 
+# PyO3 native extension — built locally from crates/fbuild-python via
+# `uv run cargo build --release -p fbuild-python --features extension-module`,
+# then copied into python/fbuild/. Never commit these binaries: they go stale
+# relative to crates/fbuild-python/src/lib.rs and break Python tests with
+# ModuleNotFoundError / AttributeError. CI rebuilds them on every publish.
+python/fbuild/_native.pyd
+python/fbuild/_native.abi3.so
+python/fbuild/_native.so
+python/fbuild/_native.dylib
+
 # VSCode extension build artifacts
 vscode-fbuild/out/
 vscode-fbuild/node_modules/
