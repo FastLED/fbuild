@@ -38,6 +38,9 @@ outputs:
   cache-dir:
     description: "Resolved cache directory path (useful for diagnostic steps)."
     value: ${{ steps.resolve-paths.outputs.cache-dir }}
+  fbuild-hash:
+    description: "sha256 prefix of the installed fbuild wheel's RECORD file. Baked into the cache key so an fbuild upgrade invalidates stale artifacts."
+    value: ${{ steps.fbuild-hash.outputs.fbuild-hash }}
 
 runs:
   using: "composite"
@@ -78,13 +81,41 @@ runs:
         python -m pip install '${{ steps.resolve-paths.outputs.pip-spec }}'
         fbuild --version || echo "fbuild --version not yet supported on this release" >&2
 
+    - name: Resolve fbuild content hash
+      id: fbuild-hash
+      shell: bash
+      run: |
+        set -euo pipefail
+        # Cache correctness depends on the EXACT installed fbuild, not just the
+        # PyPI version string. Hash the wheel's dist-info RECORD file — it
+        # contains sha256s of every installed file, so any change to fbuild
+        # (re-released wheel, local build, different platform tag) produces a
+        # different digest. See docs/CI_CACHING.md "Cache-key strategy".
+        FBUILD_HASH=$(python - <<'PY'
+        import hashlib
+        import importlib.metadata as md
+        import sys
+        try:
+            dist = md.distribution("fbuild")
+        except md.PackageNotFoundError:
+            sys.exit("fbuild is not installed; cannot resolve content hash")
+        record = dist.read_text("RECORD")
+        if not record:
+            # Fallback: hash version + metadata so we at least discriminate by release.
+            record = f"{dist.version}\n{dist.read_text('METADATA') or ''}"
+        print(hashlib.sha256(record.encode("utf-8")).hexdigest()[:16])
+        PY
+        )
+        echo "fbuild-hash=${FBUILD_HASH}" >> "$GITHUB_OUTPUT"
+        echo "Resolved fbuild content hash: ${FBUILD_HASH}"
+
     - name: Restore fbuild cache
       if: ${{ inputs.cache == 'true' }}
       id: fbuild-cache
       uses: actions/cache@v4
       with:
         path: ${{ steps.resolve-paths.outputs.cache-dir }}
-        key: fbuild-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-${{ inputs.cache-key-extra }}
+        key: fbuild-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.fbuild-hash }}-${{ inputs.cache-key-extra }}
         restore-keys: |
+          fbuild-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.fbuild-hash }}-
           fbuild-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-
-          fbuild-${{ inputs.cache-version }}-${{ runner.os }}-

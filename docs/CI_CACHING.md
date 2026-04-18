@@ -23,19 +23,35 @@ The action sidesteps the whole `~/.fbuild/*/daemon/` "don't cache ephemeral stat
 
 ### Raw snippet (if you don't want the action dependency)
 
+If you skip the composite action, you MUST still bake the fbuild content hash into the cache key — see [Cache-key strategy](#cache-key-strategy) below for why. Minimal version:
+
 ```yaml
+- name: Resolve fbuild content hash
+  id: fbuild-hash
+  shell: bash
+  run: |
+    FBUILD_HASH=$(python - <<'PY'
+    import hashlib, importlib.metadata as md
+    dist = md.distribution("fbuild")
+    record = dist.read_text("RECORD") or f"{dist.version}\n{dist.read_text('METADATA') or ''}"
+    print(hashlib.sha256(record.encode('utf-8')).hexdigest()[:16])
+    PY
+    )
+    echo "hash=$FBUILD_HASH" >> "$GITHUB_OUTPUT"
+
 - name: Restore fbuild cache
   uses: actions/cache@v4
   with:
     path: |
       ~/.fbuild/prod/cache
-    key: fbuild-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('platformio.ini', '**/boards.txt', 'rust-toolchain.toml') }}-${{ hashFiles('.fbuild-cache-version') }}
+    key: fbuild-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.hash }}-${{ hashFiles('platformio.ini', '**/boards.txt', 'rust-toolchain.toml') }}-${{ hashFiles('.fbuild-cache-version') }}
     restore-keys: |
-      fbuild-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('platformio.ini', '**/boards.txt', 'rust-toolchain.toml') }}-
+      fbuild-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.hash }}-${{ hashFiles('platformio.ini', '**/boards.txt', 'rust-toolchain.toml') }}-
+      fbuild-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.hash }}-
       fbuild-${{ runner.os }}-${{ runner.arch }}-
 ```
 
-Adjust `hashFiles(...)` inputs to whatever files actually change the build graph in your project. `.fbuild-cache-version` is a sentinel you bump when you want to force a cache bust (or cache an fbuild version identifier file — see [Cache-key strategy](#cache-key-strategy) below).
+Adjust `hashFiles(...)` inputs to whatever files actually change the build graph in your project. `.fbuild-cache-version` is a sentinel you bump when you want to force a cache bust.
 
 **Do not cache** `~/.fbuild/*/daemon/` — it's runtime state (port file, PID file, log), and restoring it across runs will make the next client try to connect to a dead daemon.
 
@@ -60,9 +76,34 @@ See `crates/fbuild-paths/src/lib.rs` for the authoritative path list.
 The goal is to maximize hit rate without producing wrong output. In priority order, the key should discriminate on:
 
 1. **Runner OS + arch** — `${{ runner.os }}-${{ runner.arch }}`. Toolchains are platform-pinned; sharing across OSes corrupts builds.
-2. **fbuild version** — if you use the fbuild PyPI wheel, cache-key `fbuild --version` output. Internal fingerprints and cache-index formats are stable within a minor version but may change on major bumps.
+2. **fbuild content hash** — **required**, not optional. Key on a content hash of the installed fbuild (e.g., sha256 of the wheel's dist-info `RECORD` file), not just the PyPI version string. A version string does not discriminate against re-released wheels, dev builds, or local installs; cached artifacts can encode fbuild-internal layout (response-file format, path embedding, fingerprint scheme) that changes silently across those. The composite `setup` action computes this hash for you and exports it via the `fbuild-hash` output — consumers who roll their own `actions/cache@v4` should do the equivalent.
 3. **Graph inputs** — `platformio.ini`, per-board JSONs, `rust-toolchain.toml`, any `lib_deps`-defining file. A change to these invalidates the warm-build fingerprint anyway, so it's cheap to bake them into the key to avoid carrying obsolete artifacts.
 4. **Manual bump** — a `.fbuild-cache-version` sentinel in the repo lets you force-invalidate with a one-line commit when the runtime has rotted for reasons GH Actions can't see.
+
+### Computing the fbuild content hash (if you're not using the composite action)
+
+```yaml
+- name: Resolve fbuild content hash
+  id: fbuild-hash
+  shell: bash
+  run: |
+    FBUILD_HASH=$(python - <<'PY'
+    import hashlib, importlib.metadata as md
+    dist = md.distribution("fbuild")
+    record = dist.read_text("RECORD") or f"{dist.version}\n{dist.read_text('METADATA') or ''}"
+    print(hashlib.sha256(record.encode('utf-8')).hexdigest()[:16])
+    PY
+    )
+    echo "hash=$FBUILD_HASH" >> "$GITHUB_OUTPUT"
+
+- uses: actions/cache@v4
+  with:
+    path: ~/.fbuild/prod/cache
+    key: fbuild-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.hash }}-${{ hashFiles('platformio.ini') }}
+    restore-keys: |
+      fbuild-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.hash }}-
+      fbuild-${{ runner.os }}-${{ runner.arch }}-
+```
 
 ### Restore-key fallback chain
 
