@@ -35,9 +35,9 @@ pub struct EsptoolConfig {
     pub default_flash_size: String,
     /// Default baud rate for flashing.
     pub default_baud: u32,
-    /// Reset mode before flashing (e.g. "default_reset").
+    /// Reset mode before flashing (e.g. "default-reset").
     pub before_reset: String,
-    /// Reset mode after flashing (e.g. "hard_reset").
+    /// Reset mode after flashing (e.g. "hard-reset").
     pub after_reset: String,
 }
 
@@ -153,12 +153,12 @@ impl Esp32McuConfig {
         self.esptool.default_baud
     }
 
-    /// Reset mode before flashing (e.g. "default_reset").
+    /// Reset mode before flashing (e.g. "default-reset").
     pub fn before_reset(&self) -> &str {
         &self.esptool.before_reset
     }
 
-    /// Reset mode after flashing (e.g. "hard_reset").
+    /// Reset mode after flashing (e.g. "hard-reset").
     pub fn after_reset(&self) -> &str {
         &self.esptool.after_reset
     }

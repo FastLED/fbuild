@@ -146,8 +146,8 @@
     "default_flash_freq": "80m",
     "default_flash_size": "4MB",
     "default_baud": 460800,
-    "before_reset": "default_reset",
-    "after_reset": "hard_reset"
+    "before_reset": "default-reset",
+    "after_reset": "hard-reset"
   },
 
   "defines": [

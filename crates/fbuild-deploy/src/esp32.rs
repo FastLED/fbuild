@@ -174,7 +174,7 @@ impl Esp32Deployer {
     /// only when esptool itself failed to run (port not found, stub
     /// upload failed, etc.).
     ///
-    /// On success the chip is hard-reset by esptool's `--after hard_reset`,
+    /// On success the chip is hard-reset by esptool's `--after hard-reset`,
     /// matching the post-flash behavior — so callers can treat a `true`
     /// return as "device is now running the requested firmware" without
     /// any extra reset.
@@ -255,7 +255,7 @@ pub struct RegionVerifyResult {
 pub enum VerifyOutcome {
     /// All flashed regions match the candidate image; flashing would be
     /// a no-op. The device has been hard-reset by esptool's
-    /// `--after hard_reset` so it's already running the requested image.
+    /// `--after hard-reset` so it's already running the requested image.
     Match { stdout: String, stderr: String },
     /// At least one region differs from the local files. `regions` carries
     /// the parsed per-region verdict when stdout was understood; empty
@@ -804,7 +804,7 @@ impl Esp32Deployer {
             self.before_reset.clone(),
             "--after".to_string(),
             self.after_reset.clone(),
-            "write_flash".to_string(),
+            "write-flash".to_string(),
             "-z".to_string(),
             "--flash-mode".to_string(),
             self.flash_mode.clone(),
@@ -991,8 +991,8 @@ mod tests {
             flash_mode: "dio".to_string(),
             flash_freq: "80m".to_string(),
             default_baud: "460800".to_string(),
-            before_reset: "default_reset".to_string(),
-            after_reset: "hard_reset".to_string(),
+            before_reset: "default-reset".to_string(),
+            after_reset: "hard-reset".to_string(),
         }
     }
 
@@ -1007,7 +1007,7 @@ mod tests {
         assert_eq!(deployer.bootloader_offset, "0x0");
         assert_eq!(deployer.firmware_offset, "0x10000");
         assert_eq!(deployer.flash_mode, "dio");
-        assert_eq!(deployer.before_reset, "default_reset");
+        assert_eq!(deployer.before_reset, "default-reset");
     }
 
     #[test]
@@ -1389,7 +1389,7 @@ Verification successful (digest matched).\n";
         );
     }
 
-    /// The selective write-flash argv must include the write_flash
+    /// The selective write-flash argv must include the write-flash
     /// subcommand and only the requested region's offset/file pair.
     /// Skipping bootloader + partitions is the ~1s save targeted by #67.
     #[test]
@@ -1406,7 +1406,7 @@ Verification successful (digest matched).\n";
 
         let args = deployer.build_write_flash_args(&fw, "COM13", Some(&[FlashRegion::Firmware]));
 
-        assert!(args.contains(&"write_flash".to_string()));
+        assert!(args.contains(&"write-flash".to_string()));
         assert!(!args.iter().any(|a| a.ends_with("bootloader.bin")));
         assert!(!args.iter().any(|a| a.ends_with("partitions.bin")));
         assert!(args.contains(&"0x10000".to_string()));
@@ -1435,7 +1435,7 @@ Verification successful (digest matched).\n";
     }
 
     /// If a caller requests a region whose file is missing on disk, fail
-    /// with a clear error rather than silently emitting a write_flash
+    /// with a clear error rather than silently emitting a write-flash
     /// call with no offset/file pair (which would produce an opaque
     /// esptool usage error). Addresses CodeRabbit review on PR #71.
     #[test]
@@ -1561,8 +1561,8 @@ Verification successful (digest matched).\n";
             flash_mode: "dio".to_string(),
             flash_freq: "80m".to_string(),
             default_baud: "921600".to_string(),
-            before_reset: "default_reset".to_string(),
-            after_reset: "hard_reset".to_string(),
+            before_reset: "default-reset".to_string(),
+            after_reset: "hard-reset".to_string(),
         };
         let deployer = Esp32Deployer::new(
             chip,
