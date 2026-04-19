@@ -53,6 +53,12 @@ pub struct Esp32Deployer {
     /// var. Default `false` keeps esptool as the fallback so users on
     /// unusual setups aren't forced onto the native path until it has
     /// bench time on every ESP32 family member.
+    ///
+    /// Only compiled in when the `espflash-native` cargo feature is
+    /// enabled (issue #66 spike). Without the feature the struct layout
+    /// doesn't even carry the flag, so default builds pay zero cost for
+    /// the native path.
+    #[cfg(feature = "espflash-native")]
     use_native_verify: bool,
     /// Route `write-flash` through the native [`espflash`] crate
     /// instead of the Python `esptool` subprocess (issue #66).
@@ -60,6 +66,9 @@ pub struct Esp32Deployer {
     /// The daemon sets this from the `FBUILD_USE_ESPFLASH_WRITE` env
     /// var, independently of `use_native_verify`. Default `false` keeps
     /// esptool as the safe fallback.
+    ///
+    /// Feature-gated — see `use_native_verify`.
+    #[cfg(feature = "espflash-native")]
     use_native_write: bool,
 }
 
@@ -85,13 +94,19 @@ impl Esp32Deployer {
             before_reset: esptool_params.before_reset.clone(),
             after_reset: esptool_params.after_reset.clone(),
             verbose,
+            #[cfg(feature = "espflash-native")]
             use_native_verify: false,
+            #[cfg(feature = "espflash-native")]
             use_native_write: false,
         }
     }
 
     /// Opt this deployer into the native espflash-based verify path
     /// (issue #66). Independent of `with_native_write`.
+    ///
+    /// Only present when the `espflash-native` cargo feature is enabled;
+    /// without it the esptool-subprocess path is the only code path.
+    #[cfg(feature = "espflash-native")]
     #[must_use]
     pub fn with_native_verify(mut self, enabled: bool) -> Self {
         self.use_native_verify = enabled;
@@ -103,6 +118,9 @@ impl Esp32Deployer {
     /// both [`Deployer::deploy`] and [`Esp32Deployer::deploy_regions`]
     /// route through the in-process espflash `Flasher`, skipping the
     /// ~1.5 s Python/esptool startup per flash.
+    ///
+    /// Only present when the `espflash-native` cargo feature is enabled.
+    #[cfg(feature = "espflash-native")]
     #[must_use]
     pub fn with_native_write(mut self, enabled: bool) -> Self {
         self.use_native_write = enabled;
@@ -215,6 +233,7 @@ impl Esp32Deployer {
     /// return as "device is now running the requested firmware" without
     /// any extra reset.
     pub fn try_verify_deployment(&self, firmware_path: &Path, port: &str) -> Result<VerifyOutcome> {
+        #[cfg(feature = "espflash-native")]
         if self.use_native_verify {
             return self.try_verify_deployment_native(firmware_path, port);
         }
@@ -281,6 +300,7 @@ impl Esp32Deployer {
     /// [`VerifyOutcome`] semantics as the esptool path, so callers can
     /// swap between the two behind the `use_native_verify` flag without
     /// any result-handling changes.
+    #[cfg(feature = "espflash-native")]
     fn try_verify_deployment_native(
         &self,
         firmware_path: &Path,
@@ -340,6 +360,7 @@ impl Esp32Deployer {
     /// surfaces per-region progress via `tracing` (bridged into the
     /// daemon's existing log broadcaster). Same [`DeploymentResult`]
     /// shape as the esptool path so callers swap behind a single flag.
+    #[cfg(feature = "espflash-native")]
     fn try_deploy_native(&self, firmware_path: &Path, port: &str) -> Result<DeploymentResult> {
         let baud = self.parse_native_baud()?;
         let (boot_off, parts_off, fw_off) = self.parse_native_offsets()?;
@@ -382,6 +403,7 @@ impl Esp32Deployer {
     /// (issue #66). Used after a verify-mismatch to rewrite only the
     /// regions that actually differ — skipping the ~1s
     /// bootloader/partitions rewrite when only firmware changed.
+    #[cfg(feature = "espflash-native")]
     fn try_deploy_regions_native(
         &self,
         firmware_path: &Path,
@@ -427,6 +449,7 @@ impl Esp32Deployer {
         )
     }
 
+    #[cfg(feature = "espflash-native")]
     fn parse_native_baud(&self) -> Result<u32> {
         self.baud_rate.parse().map_err(|e| {
             fbuild_core::FbuildError::DeployFailed(format!(
@@ -436,6 +459,7 @@ impl Esp32Deployer {
         })
     }
 
+    #[cfg(feature = "espflash-native")]
     fn parse_native_offsets(&self) -> Result<(u32, u32, u32)> {
         let boot = parse_hex_offset_u32(&self.bootloader_offset)?;
         let parts = parse_hex_offset_u32(&self.partitions_offset)?;
@@ -446,7 +470,10 @@ impl Esp32Deployer {
 
 /// Parse a hex flash offset (accepts `0x` prefix) as a `u32`. espflash's
 /// `FLASH_MD5SUM` command takes 32-bit offsets, so we narrow the shared
-/// [`parse_hex_offset`] result here.
+/// [`parse_hex_offset`] result here. Only used by the native verify/write
+/// path, so gated with the crate's feature to avoid dead-code lints on
+/// default builds.
+#[cfg(feature = "espflash-native")]
 fn parse_hex_offset_u32(raw: &str) -> Result<u32> {
     let as_u64 = parse_hex_offset(raw)?;
     u32::try_from(as_u64).map_err(|_| {
@@ -1097,6 +1124,7 @@ impl Esp32Deployer {
             }
         }
 
+        #[cfg(feature = "espflash-native")]
         if self.use_native_write {
             return self.try_deploy_regions_native(firmware_path, port, regions);
         }
@@ -1167,6 +1195,7 @@ impl Deployer for Esp32Deployer {
             )
         })?;
 
+        #[cfg(feature = "espflash-native")]
         if self.use_native_write {
             return self.try_deploy_native(firmware_path, port);
         }

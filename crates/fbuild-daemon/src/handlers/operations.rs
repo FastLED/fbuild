@@ -23,6 +23,7 @@ use std::sync::Arc;
 /// Any other value — including unset — keeps the default esptool path,
 /// so users on unusual setups retain the existing escape hatch until
 /// the native path has bench time on every ESP32 family member.
+#[cfg(feature = "espflash-native")]
 pub(crate) fn native_verify_enabled() -> bool {
     match std::env::var("FBUILD_USE_ESPFLASH_VERIFY") {
         Ok(v) => matches!(
@@ -142,6 +143,7 @@ pub(crate) fn compute_esp32_image_hash(
 /// flipped without the other. Default off so esptool remains the safe
 /// fallback while the native write path accumulates bench time across
 /// every ESP32 family member.
+#[cfg(feature = "espflash-native")]
 pub(crate) fn native_write_enabled() -> bool {
     match std::env::var("FBUILD_USE_ESPFLASH_WRITE") {
         Ok(v) => matches!(
@@ -1258,19 +1260,18 @@ pub async fn deploy(
                 } else {
                     deployer
                 };
-                // Issue #66: opt-in native `verify-flash` via the
-                // `espflash` crate. Off by default so esptool remains
-                // the fallback path; set `FBUILD_USE_ESPFLASH_VERIFY=1`
-                // to route the verify pre-check through espflash and
-                // skip the ~1.5 s Python subprocess cost.
-                let deployer = deployer.with_native_verify(native_verify_enabled());
-                // Issue #66: opt-in native `write-flash` via the
-                // `espflash` crate. Independent of the verify toggle —
-                // set `FBUILD_USE_ESPFLASH_WRITE=1` to route write-flash
-                // through espflash. Default stays on esptool subprocess
-                // until the native write path has bench time on every
-                // ESP32 family member.
-                let deployer = deployer.with_native_write(native_write_enabled());
+                // Issue #66: opt-in native `verify-flash` + `write-flash`
+                // via the `espflash` crate. Only compiled in when the
+                // daemon is built with `--features espflash-native`;
+                // default builds keep the esptool-subprocess path and
+                // skip pulling espflash + its ~30 transitive deps. At
+                // runtime, further gated by the `FBUILD_USE_ESPFLASH_*`
+                // env vars so operators can still fall back to esptool
+                // on an espflash-native build.
+                #[cfg(feature = "espflash-native")]
+                let deployer = deployer
+                    .with_native_verify(native_verify_enabled())
+                    .with_native_write(native_write_enabled());
 
                 // Compute a deterministic SHA-256 over the three
                 // regions we'd otherwise verify-flash. Used twice
