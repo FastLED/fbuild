@@ -169,31 +169,13 @@ fn run_no_timeout(mut cmd: Command) -> Result<ToolOutput> {
     // resulting child (and any grandchildren it forks) dies with the
     // daemon. Falls back to an uncontained spawn when the global group
     // is not initialised (CLI binary, unit tests). See FastLED/fbuild#32.
-    let mut child = crate::containment::spawn_contained(&mut cmd)?;
-    let stdout = child
-        .stdout
-        .take()
-        .map(|mut s| {
-            let mut buf = Vec::new();
-            std::io::Read::read_to_end(&mut s, &mut buf).ok();
-            buf
-        })
-        .unwrap_or_default();
-    let stderr = child
-        .stderr
-        .take()
-        .map(|mut s| {
-            let mut buf = Vec::new();
-            std::io::Read::read_to_end(&mut s, &mut buf).ok();
-            buf
-        })
-        .unwrap_or_default();
-    let status = child.wait()?;
-    let output = Output {
-        status,
-        stdout,
-        stderr,
-    };
+    //
+    // `wait_with_output` drains stdout and stderr concurrently on
+    // background threads before waiting, which is required to avoid a
+    // pipe-buffer deadlock when the child writes >64 KB to either stream
+    // (e.g. ESP32 GCC stderr during a full build).
+    let child = crate::containment::spawn_contained(&mut cmd)?;
+    let output = child.wait_with_output()?;
     Ok(output_to_tool_output(output))
 }
 
@@ -201,39 +183,37 @@ fn run_with_timeout(mut cmd: Command, timeout: Duration) -> Result<ToolOutput> {
     // See `run_no_timeout`: route through containment.
     let mut child = crate::containment::spawn_contained(&mut cmd)?;
 
+    // Drain stdout and stderr concurrently on background threads. Reading
+    // serially would deadlock the moment either pipe's ~64 KB OS buffer
+    // fills — the child then blocks on `write()` forever, and we sit in
+    // the poll loop until the timeout fires. See FastLED/fbuild regression
+    // from the containment rewrite.
+    let stdout_handle = child.stdout.take().map(|mut s| {
+        std::thread::spawn(move || {
+            let mut buf = Vec::new();
+            std::io::Read::read_to_end(&mut s, &mut buf).ok();
+            buf
+        })
+    });
+    let stderr_handle = child.stderr.take().map(|mut s| {
+        std::thread::spawn(move || {
+            let mut buf = Vec::new();
+            std::io::Read::read_to_end(&mut s, &mut buf).ok();
+            buf
+        })
+    });
+
     let timeout_ms = timeout.as_millis() as u64;
     let start = std::time::Instant::now();
 
-    loop {
+    let status = loop {
         match child.try_wait()? {
-            Some(status) => {
-                let stdout = child
-                    .stdout
-                    .take()
-                    .map(|mut s| {
-                        let mut buf = Vec::new();
-                        std::io::Read::read_to_end(&mut s, &mut buf).ok();
-                        buf
-                    })
-                    .unwrap_or_default();
-                let stderr = child
-                    .stderr
-                    .take()
-                    .map(|mut s| {
-                        let mut buf = Vec::new();
-                        std::io::Read::read_to_end(&mut s, &mut buf).ok();
-                        buf
-                    })
-                    .unwrap_or_default();
-                return Ok(ToolOutput {
-                    stdout: String::from_utf8_lossy(&stdout).to_string(),
-                    stderr: String::from_utf8_lossy(&stderr).to_string(),
-                    exit_code: status.code().unwrap_or(-1),
-                });
-            }
+            Some(status) => break status,
             None => {
                 if start.elapsed().as_millis() as u64 > timeout_ms {
                     let _ = child.kill();
+                    // Drop reader threads' joins — they'll finish once the
+                    // kill closes the pipes, but we're already erroring.
                     return Err(FbuildError::Timeout(format!(
                         "command timed out after {}s",
                         timeout.as_secs()
@@ -242,7 +222,20 @@ fn run_with_timeout(mut cmd: Command, timeout: Duration) -> Result<ToolOutput> {
                 std::thread::sleep(Duration::from_millis(50));
             }
         }
-    }
+    };
+
+    let stdout = stdout_handle
+        .and_then(|h| h.join().ok())
+        .unwrap_or_default();
+    let stderr = stderr_handle
+        .and_then(|h| h.join().ok())
+        .unwrap_or_default();
+
+    Ok(ToolOutput {
+        stdout: String::from_utf8_lossy(&stdout).to_string(),
+        stderr: String::from_utf8_lossy(&stderr).to_string(),
+        exit_code: status.code().unwrap_or(-1),
+    })
 }
 
 fn output_to_tool_output(output: Output) -> ToolOutput {
