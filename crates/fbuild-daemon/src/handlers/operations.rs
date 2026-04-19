@@ -165,14 +165,14 @@ pub(crate) fn qemu_extra_build_flags(platform: fbuild_core::Platform, mcu: &str)
 
 /// RAII guard that sets `operation_in_progress` to true on creation
 /// and false on drop. Also tracks daemon state and current operation description.
-struct OperationGuard {
+pub(crate) struct OperationGuard {
     flag: Arc<std::sync::atomic::AtomicBool>,
     state: Arc<std::sync::RwLock<fbuild_core::DaemonState>>,
     operation: Arc<std::sync::RwLock<Option<String>>>,
 }
 
 impl OperationGuard {
-    fn new(
+    pub(crate) fn new(
         ctx: &DaemonContext,
         daemon_state: fbuild_core::DaemonState,
         description: Option<String>,

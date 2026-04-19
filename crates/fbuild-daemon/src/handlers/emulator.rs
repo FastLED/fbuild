@@ -2037,6 +2037,18 @@ pub async fn test_emu(
         .unwrap_or_else(|| uuid::Uuid::new_v4().to_string());
     let project_dir = PathBuf::from(&req.project_dir);
 
+    // Mark the daemon as busy for the full build + emulate lifecycle.
+    // Without this guard the 30 s self-eviction loop sees an "empty"
+    // daemon during long (>30 s) ESP32/QEMU builds and triggers graceful
+    // shutdown, which closes the in-flight HTTP connection and surfaces
+    // as `error sending request for url (.../api/test-emu)` on the CLI
+    // side. See issue #130.
+    let _op_guard = crate::handlers::operations::OperationGuard::new(
+        &ctx,
+        fbuild_core::DaemonState::Building,
+        Some(format!("test-emu {}", req.project_dir)),
+    );
+
     if !project_dir.exists() {
         return (
             StatusCode::BAD_REQUEST,
