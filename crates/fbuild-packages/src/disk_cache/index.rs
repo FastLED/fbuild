@@ -2,6 +2,19 @@
 //!
 //! Opened in WAL mode with `synchronous=NORMAL` for multi-reader/single-writer
 //! safety and crash recovery. The WAL is replayed on next open after a crash.
+//!
+//! # Schema migrations
+//!
+//! Migrations are tracked in the `schema_migrations` table keyed by a
+//! stable migration id (`m001_initial_schema`, `m002_add_leases_refcount`,
+//! ...). On open, every registered migration is applied in order, inside
+//! its own transaction, unless it has already been recorded. This lets
+//! older production databases (created before a column existed) pick up
+//! schema deltas idempotently — adding a new migration is append-only.
+//!
+//! The legacy `cache_meta.schema_version` key is still written for
+//! backwards compatibility with any tooling that inspects it, but the
+//! authoritative source of truth is `schema_migrations`.
 
 use super::paths::{self, Kind};
 use rusqlite::{params, Connection, OptionalExtension};
@@ -9,7 +22,41 @@ use std::path::{Path, PathBuf};
 use std::sync::Mutex;
 use std::time::{SystemTime, UNIX_EPOCH};
 
-const SCHEMA_VERSION: i64 = 1;
+/// Legacy version pin written to `cache_meta` for backwards compatibility.
+///
+/// The real source of truth is the `schema_migrations` table. This value
+/// is mirrored so older tools that read `cache_meta.schema_version` keep
+/// working.
+const LEGACY_SCHEMA_VERSION: i64 = 1;
+
+/// A single ordered schema migration. Applied idempotently on open.
+///
+/// `id` must be stable and unique. Append new migrations to [`MIGRATIONS`]
+/// — never reorder or rename existing ids.
+struct Migration {
+    id: &'static str,
+    up: fn(&Connection) -> rusqlite::Result<()>,
+}
+
+/// The ordered list of migrations. Append-only.
+///
+/// - `m001_initial_schema` — the original tables + indexes. Uses
+///   `CREATE TABLE IF NOT EXISTS` so it is safe on databases where these
+///   objects already exist (e.g. older production caches).
+/// - `m002_add_leases_refcount` — adds `leases.refcount` when absent.
+///   Older databases (pre-#119) had a `leases` table without this column,
+///   which broke `pin()`/`unpin()`. New databases already get it from
+///   `m001`, so this migration only mutates old caches.
+const MIGRATIONS: &[Migration] = &[
+    Migration {
+        id: "m001_initial_schema",
+        up: migrate_m001_initial_schema,
+    },
+    Migration {
+        id: "m002_add_leases_refcount",
+        up: migrate_m002_add_leases_refcount,
+    },
+];
 
 /// A row in the `entries` table.
 #[derive(Debug, Clone)]
@@ -83,73 +130,53 @@ impl CacheIndex {
 
     fn migrate(&self) -> rusqlite::Result<()> {
         let conn = self.conn.lock().unwrap();
-        let version: i64 = conn
-            .query_row(
-                "SELECT value FROM cache_meta WHERE key = 'schema_version'",
-                [],
-                |row| {
-                    let v: String = row.get(0)?;
-                    Ok(v.parse::<i64>().unwrap_or(0))
-                },
-            )
-            .unwrap_or(0);
-
-        if version < 1 {
-            Self::migrate_v1(&conn)?;
-        }
-        Ok(())
+        Self::run_migrations(&conn)
     }
 
-    fn migrate_v1(conn: &Connection) -> rusqlite::Result<()> {
-        let tx = conn.unchecked_transaction()?;
-
-        tx.execute_batch(
-            "CREATE TABLE IF NOT EXISTS cache_meta (
-                key   TEXT PRIMARY KEY,
-                value TEXT NOT NULL
-            );
-
-            CREATE TABLE IF NOT EXISTS entries (
-                id              INTEGER PRIMARY KEY,
-                kind            TEXT NOT NULL,
-                url             TEXT NOT NULL,
-                stem            TEXT NOT NULL,
-                hash            TEXT NOT NULL,
-                version         TEXT NOT NULL,
-                archive_path    TEXT,
-                archive_bytes   INTEGER,
-                archive_sha256  TEXT,
-                installed_path  TEXT,
-                installed_bytes INTEGER,
-                installed_at    INTEGER,
-                archived_at     INTEGER,
-                last_used_at    INTEGER NOT NULL,
-                use_count       INTEGER NOT NULL DEFAULT 0,
-                pinned          INTEGER NOT NULL DEFAULT 0,
-                UNIQUE(kind, hash, version)
-            );
-
-            CREATE INDEX IF NOT EXISTS idx_lru_installed
-                ON entries(last_used_at) WHERE installed_path IS NOT NULL;
-            CREATE INDEX IF NOT EXISTS idx_lru_archive
-                ON entries(last_used_at) WHERE archive_path IS NOT NULL;
-
-            CREATE TABLE IF NOT EXISTS leases (
-                entry_id     INTEGER NOT NULL REFERENCES entries(id) ON DELETE CASCADE,
-                holder_pid   INTEGER NOT NULL,
-                holder_nonce INTEGER NOT NULL DEFAULT 0,
-                refcount     INTEGER NOT NULL DEFAULT 1,
-                acquired_at  INTEGER NOT NULL,
-                PRIMARY KEY(entry_id, holder_pid, holder_nonce)
+    /// Bootstrap the migrations-tracking table and run each registered
+    /// migration exactly once. Safe to call against fresh *or* pre-existing
+    /// databases; each migration is wrapped in its own transaction.
+    fn run_migrations(conn: &Connection) -> rusqlite::Result<()> {
+        // Bootstrap the migrations-tracking table. We can't use the
+        // migration framework itself for this because it's what records
+        // whether a migration ran.
+        conn.execute_batch(
+            "CREATE TABLE IF NOT EXISTS schema_migrations (
+                id         TEXT PRIMARY KEY,
+                applied_at INTEGER NOT NULL
             );",
         )?;
 
-        tx.execute(
-            "INSERT OR REPLACE INTO cache_meta (key, value) VALUES ('schema_version', ?1)",
-            params![SCHEMA_VERSION.to_string()],
-        )?;
+        for m in MIGRATIONS {
+            let already_applied: bool = conn
+                .query_row(
+                    "SELECT 1 FROM schema_migrations WHERE id = ?1",
+                    params![m.id],
+                    |_| Ok(true),
+                )
+                .optional()?
+                .unwrap_or(false);
+            if already_applied {
+                continue;
+            }
 
-        tx.commit()?;
+            let tx = conn.unchecked_transaction()?;
+            (m.up)(&tx)?;
+            tx.execute(
+                "INSERT INTO schema_migrations (id, applied_at) VALUES (?1, ?2)",
+                params![m.id, Self::now_epoch()],
+            )?;
+            tx.commit()?;
+        }
+
+        // Mirror the legacy cache_meta.schema_version key so any tooling
+        // that inspects it sees the expected value. Best-effort — the
+        // authoritative source is now `schema_migrations`.
+        let _ = conn.execute(
+            "INSERT OR REPLACE INTO cache_meta (key, value) VALUES ('schema_version', ?1)",
+            params![LEGACY_SCHEMA_VERSION.to_string()],
+        );
+
         Ok(())
     }
 
@@ -532,6 +559,86 @@ impl CacheIndex {
     }
 }
 
+/// m001 — original schema. Creates `cache_meta`, `entries`, the LRU
+/// indexes, and `leases` (with `refcount`). Uses `IF NOT EXISTS` so it
+/// is safe against caches that already have these objects from the
+/// pre-migration-framework era.
+fn migrate_m001_initial_schema(conn: &Connection) -> rusqlite::Result<()> {
+    conn.execute_batch(
+        "CREATE TABLE IF NOT EXISTS cache_meta (
+            key   TEXT PRIMARY KEY,
+            value TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS entries (
+            id              INTEGER PRIMARY KEY,
+            kind            TEXT NOT NULL,
+            url             TEXT NOT NULL,
+            stem            TEXT NOT NULL,
+            hash            TEXT NOT NULL,
+            version         TEXT NOT NULL,
+            archive_path    TEXT,
+            archive_bytes   INTEGER,
+            archive_sha256  TEXT,
+            installed_path  TEXT,
+            installed_bytes INTEGER,
+            installed_at    INTEGER,
+            archived_at     INTEGER,
+            last_used_at    INTEGER NOT NULL,
+            use_count       INTEGER NOT NULL DEFAULT 0,
+            pinned          INTEGER NOT NULL DEFAULT 0,
+            UNIQUE(kind, hash, version)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_lru_installed
+            ON entries(last_used_at) WHERE installed_path IS NOT NULL;
+        CREATE INDEX IF NOT EXISTS idx_lru_archive
+            ON entries(last_used_at) WHERE archive_path IS NOT NULL;
+
+        CREATE TABLE IF NOT EXISTS leases (
+            entry_id     INTEGER NOT NULL REFERENCES entries(id) ON DELETE CASCADE,
+            holder_pid   INTEGER NOT NULL,
+            holder_nonce INTEGER NOT NULL DEFAULT 0,
+            refcount     INTEGER NOT NULL DEFAULT 1,
+            acquired_at  INTEGER NOT NULL,
+            PRIMARY KEY(entry_id, holder_pid, holder_nonce)
+        );",
+    )?;
+    Ok(())
+}
+
+/// m002 — add `leases.refcount` on pre-existing caches.
+///
+/// Older fbuild versions created `leases` without the `refcount` column.
+/// New caches already get it from `m001_initial_schema`, so this
+/// migration is a no-op for them. For old ones, we `ALTER TABLE` to add
+/// the column with `DEFAULT 1` (matching the semantic that existing rows
+/// represent a single held lease) and then rebaseline to `1` in case the
+/// column was added but left at its implicit NULL by older sqlite.
+fn migrate_m002_add_leases_refcount(conn: &Connection) -> rusqlite::Result<()> {
+    if leases_has_refcount(conn)? {
+        return Ok(());
+    }
+    conn.execute_batch(
+        "ALTER TABLE leases ADD COLUMN refcount INTEGER NOT NULL DEFAULT 1;
+         UPDATE leases SET refcount = 1 WHERE refcount IS NULL OR refcount <= 0;",
+    )?;
+    Ok(())
+}
+
+/// Returns true iff the `leases` table has a column named `refcount`.
+/// Used by migrations to decide whether an `ALTER TABLE` is needed.
+fn leases_has_refcount(conn: &Connection) -> rusqlite::Result<bool> {
+    let mut stmt = conn.prepare("PRAGMA table_info(leases)")?;
+    let rows = stmt.query_map([], |row| row.get::<_, String>(1))?;
+    for col in rows {
+        if col? == "refcount" {
+            return Ok(true);
+        }
+    }
+    Ok(false)
+}
+
 /// Check if a PID is alive. Platform-specific.
 fn is_pid_alive(pid: u32) -> bool {
     #[cfg(unix)]
@@ -842,5 +949,105 @@ mod tests {
             .unwrap();
         assert!(entry.archive_path.is_none());
         assert_eq!(idx.entry_count().unwrap(), 1);
+    }
+
+    /// A freshly-migrated database must report every registered migration
+    /// as applied — regression guard against adding a migration to
+    /// `MIGRATIONS` but forgetting to record it.
+    #[test]
+    fn test_all_migrations_recorded_after_open() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let idx = CacheIndex::open(tmp.path()).unwrap();
+        let conn = idx.conn.lock().unwrap();
+        for m in MIGRATIONS {
+            let applied: Option<i64> = conn
+                .query_row(
+                    "SELECT 1 FROM schema_migrations WHERE id = ?1",
+                    params![m.id],
+                    |row| row.get(0),
+                )
+                .optional()
+                .unwrap();
+            assert!(applied.is_some(), "migration {} not recorded", m.id);
+        }
+    }
+
+    /// Pre-migration schema: `leases` without `refcount`. Opening via
+    /// `CacheIndex::open` must transparently add the column, and
+    /// subsequent `pin()` calls must succeed.
+    #[test]
+    fn test_legacy_schema_missing_refcount_is_migrated() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let db_path = paths::index_path(tmp.path());
+        std::fs::create_dir_all(db_path.parent().unwrap()).unwrap();
+
+        // Hand-craft the legacy schema: leases has no refcount column.
+        {
+            let raw = Connection::open(&db_path).unwrap();
+            raw.execute_batch(
+                "CREATE TABLE cache_meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
+                 CREATE TABLE entries (
+                    id              INTEGER PRIMARY KEY,
+                    kind            TEXT NOT NULL,
+                    url             TEXT NOT NULL,
+                    stem            TEXT NOT NULL,
+                    hash            TEXT NOT NULL,
+                    version         TEXT NOT NULL,
+                    archive_path    TEXT,
+                    archive_bytes   INTEGER,
+                    archive_sha256  TEXT,
+                    installed_path  TEXT,
+                    installed_bytes INTEGER,
+                    installed_at    INTEGER,
+                    archived_at     INTEGER,
+                    last_used_at    INTEGER NOT NULL,
+                    use_count       INTEGER NOT NULL DEFAULT 0,
+                    pinned          INTEGER NOT NULL DEFAULT 0,
+                    UNIQUE(kind, hash, version)
+                 );
+                 CREATE TABLE leases (
+                    entry_id     INTEGER NOT NULL REFERENCES entries(id) ON DELETE CASCADE,
+                    holder_pid   INTEGER NOT NULL,
+                    holder_nonce INTEGER NOT NULL DEFAULT 0,
+                    acquired_at  INTEGER NOT NULL,
+                    PRIMARY KEY(entry_id, holder_pid, holder_nonce)
+                 );
+                 INSERT INTO cache_meta(key, value) VALUES ('schema_version', '1');",
+            )
+            .unwrap();
+            // raw goes out of scope → connection closes and file is flushed.
+        }
+
+        // Re-open through the normal path. Migrations should run.
+        let idx = CacheIndex::open(tmp.path()).unwrap();
+        assert!(
+            leases_has_refcount(&idx.conn.lock().unwrap()).unwrap(),
+            "m002 should have added leases.refcount"
+        );
+
+        // pin()/unpin() must now succeed end-to-end.
+        let entry = idx
+            .record_archive(Kind::Packages, "https://example.com/x", "1.0", "p", 1, "s")
+            .unwrap();
+        idx.pin(entry.id, 4242, 7).unwrap();
+        let entry = idx
+            .lookup(Kind::Packages, "https://example.com/x", "1.0")
+            .unwrap()
+            .unwrap();
+        assert_eq!(entry.pinned, 1);
+        idx.unpin(entry.id, 4242, 7).unwrap();
+    }
+
+    /// Migrations must be idempotent: opening twice must not re-apply
+    /// them and must not double-error on the `ALTER TABLE`.
+    #[test]
+    fn test_migrations_idempotent_across_reopens() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        {
+            let _idx = CacheIndex::open(tmp.path()).unwrap();
+        }
+        // Second open must succeed — no "duplicate column name" error.
+        let idx = CacheIndex::open(tmp.path()).unwrap();
+        assert!(leases_has_refcount(&idx.conn.lock().unwrap()).unwrap());
     }
 }
