@@ -58,6 +58,7 @@ pub async fn daemon_info(State(ctx): State<Arc<DaemonContext>>) -> Json<DaemonIn
         source_mtime: ctx.source_mtime,
         spawner_cwd: ctx.spawner_cwd.clone(),
         mcp_url: format!("http://127.0.0.1:{}/mcp", ctx.port),
+        watch_set_cache: Some(ctx.watch_set_cache.stats()),
     })
 }
 
