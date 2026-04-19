@@ -438,6 +438,15 @@ def build_wheel(
         info = zipfile.ZipInfo(arcname)
         info.compress_type = zipfile.ZIP_DEFLATED
         if executable:
+            # Unix permission bits live in the upper 16 of external_attr,
+            # BUT only when create_system == 3 (Unix). The Python
+            # `ZipInfo` default is 0 (DOS/Windows), under which
+            # external_attr encodes DOS file-attribute flags instead,
+            # and every unpacker (pip, installer, unzip) then ignores
+            # the Unix mode and installs the file without +x. That's
+            # what caused `fbuild --version` → Permission denied after
+            # `pip install fbuild==2.1.18` — see FastLED/fbuild#129.
+            info.create_system = 3
             info.external_attr = exec_perms << 16
         whl.writestr(info, data)
         record_rows.append((arcname, record_hash(data), len(data)))
