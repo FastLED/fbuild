@@ -3,26 +3,15 @@ name: FastLED examples compile benchmark
 # Self-contained benchmark living on an orphan branch (bench/fastled-examples).
 #
 # Goal: measure wall-clock to compile the FastLED examples/ set for one board,
-# broken out by phase (pip install, toolchain fetch, compile), so we can tell
-# where the time actually goes — for both cold-cache and warm-cache regimes.
+# broken out by phase, for both cold-cache and warm-cache regimes.
 #
 # Tracked by: https://github.com/FastLED/fbuild/issues/112
-#
-# Trigger model
-# -------------
-# Every push to this branch runs the benchmark. workflow_dispatch would require
-# the workflow to live on the default branch (main), which defeats the point of
-# an orphan branch. Runs are parameterized via `bench.config` at the root of
-# this branch — edit, commit, push to re-run.
 
 on:
   push:
     branches:
       - bench/fastled-examples
 
-# Cancel any stale queued/running benchmark when a new push lands. The FastLED
-# org GH-hosted runner pool is routinely saturated; without this, a push to
-# update the workflow would just pile up behind the old run.
 concurrency:
   group: fastled-examples-benchmark
   cancel-in-progress: true
@@ -36,8 +25,6 @@ jobs:
     timeout-minutes: 75
     env:
       BENCH_TIMINGS: ${{ github.workspace }}/phase-timings.tsv
-      # FBUILD_CACHE_DIR is resolved in the "Init" step below (runner.*
-      # context is not available in job-level env).
     steps:
       - name: Checkout benchmark branch
         uses: actions/checkout@v4
@@ -47,11 +34,7 @@ jobs:
         run: |
           set -euo pipefail
           if [ ! -f bench.config ]; then
-            echo "bench.config not found; using defaults" >&2
-            BOARD=uno
-            FASTLED_REF=master
-            EXAMPLES=all
-            CACHE_BUST=
+            BOARD=uno; FASTLED_REF=master; EXAMPLES=all; CACHE_BUST=
           else
             # shellcheck disable=SC1091
             . ./bench.config
@@ -66,44 +49,29 @@ jobs:
           echo "cache_bust=${CACHE_BUST}" >> "$GITHUB_OUTPUT"
           echo "Resolved: board=${BOARD} ref=${FASTLED_REF} examples=${EXAMPLES} cache_bust=${CACHE_BUST}"
 
-      - name: Init phase timings file + resolve cache dir
+      - name: Init phase timings
         run: |
           printf 'phase\tseconds\n' > "$BENCH_TIMINGS"
           echo "BENCH_JOB_START=$(date +%s.%N)" >> "$GITHUB_ENV"
-          echo "FBUILD_CACHE_DIR=${RUNNER_TEMP}/fbuild-cache" >> "$GITHUB_ENV"
-          mkdir -p "${RUNNER_TEMP}/fbuild-cache"
 
-      # --- phase: setup-python (inlined so we can time it) ---
+      # -------- system setup (python, fbuild, uv) --------
       - name: "Phase - setup-python"
-        id: phase_setup_python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: "Phase - record setup-python timing"
-        id: record_setup_python
-        run: |
-          # setup-python doesn't expose elapsed; we bracket it with time marks
-          # on the surrounding steps. Start timestamp captured in init step,
-          # end here. This measures "job init → python available".
-          t_now=$(date +%s.%N)
-          printf 'job_init_to_python_available\t%.3f\n' \
-            "$(awk "BEGIN{print $t_now-$BENCH_JOB_START}")" >> "$BENCH_TIMINGS"
-
-      # --- phase: pip install fbuild (inlined) ---
       - name: "Phase - pip install fbuild"
         run: |
           t0=$(date +%s.%N)
           python -m pip install --upgrade pip
           python -m pip install fbuild
-          fbuild --version 2>&1 || echo "fbuild --version not supported on this release" >&2
+          fbuild --version 2>&1 || true
           t1=$(date +%s.%N)
           printf 'pip_install_fbuild\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
 
       - name: "Phase - compute fbuild content hash"
         id: fbuild_hash
         run: |
-          t0=$(date +%s.%N)
           FBUILD_HASH=$(python - <<'PY'
           import hashlib, importlib.metadata as md
           dist = md.distribution("fbuild")
@@ -112,29 +80,10 @@ jobs:
           PY
           )
           echo "fbuild-hash=${FBUILD_HASH}" >> "$GITHUB_OUTPUT"
-          t1=$(date +%s.%N)
-          printf 'fbuild_hash_compute\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
+          echo "fbuild content hash: ${FBUILD_HASH}"
 
-      # --- phase: restore fbuild cache ---
-      - name: "Phase - restore fbuild cache"
-        id: fbuild_cache
-        uses: actions/cache/restore@v4
-        with:
-          path: ${{ env.FBUILD_CACHE_DIR }}
-          key: "bench-v1-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild_hash.outputs.fbuild-hash }}-${{ steps.bench_config.outputs.board }}-${{ steps.bench_config.outputs.ref }}"
-          restore-keys: |
-            bench-v1-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild_hash.outputs.fbuild-hash }}-
-            bench-v1-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-
-
-      - name: "Phase - record cache-restore result"
-        run: |
-          printf 'fbuild_cache_hit\t%s\n' "${{ steps.fbuild_cache.outputs.cache-hit }}" >> "$BENCH_TIMINGS"
-          printf 'fbuild_cache_key_matched\t%s\n' "${{ steps.fbuild_cache.outputs.cache-matched-key }}" >> "$BENCH_TIMINGS"
-          echo "Cache hit: ${{ steps.fbuild_cache.outputs.cache-hit }}"
-          echo "Key matched: ${{ steps.fbuild_cache.outputs.cache-matched-key }}"
-          du -sh "$FBUILD_CACHE_DIR" 2>/dev/null || echo "cache dir empty"
-
-      # --- phase: clone FastLED ---
+      # -------- clone FastLED (needs to happen BEFORE cache restore because the
+      #         cache writes into fastled/.build/ which only exists after clone) --------
       - name: "Phase - clone FastLED"
         run: |
           t0=$(date +%s.%N)
@@ -144,11 +93,45 @@ jobs:
             git clone https://github.com/FastLED/FastLED.git fastled
             (cd fastled && git checkout "$BENCH_REF")
           fi
+          # Make sure the cache target subdir exists so actions/cache can write into it.
+          mkdir -p fastled/.build
           t1=$(date +%s.%N)
           printf 'clone_fastled\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
           echo "FastLED HEAD: $(cd fastled && git rev-parse HEAD)"
 
-      # --- phase: install uv (used by FastLED's compile script) ---
+      # -------- iteration 1: cache the directories fbuild actually writes to --------
+      # Iteration 0 cached $RUNNER_TEMP/fbuild-cache, which was empty. The real
+      # state lives in:
+      #   ~/.fbuild/                — fbuild toolchain + daemon state (arch-level)
+      #   ~/.fastled/global_cache/  — PlatformIO toolchain downloads
+      #   fastled/.build/pio/<board>/ — compile outputs + per-project .fbuild/
+      - name: "Phase - restore compile cache"
+        id: compile_cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.fbuild
+            ~/.fastled/global_cache
+            fastled/.build/pio/${{ env.BENCH_BOARD }}
+          key: "bench-v2-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild_hash.outputs.fbuild-hash }}-${{ steps.bench_config.outputs.board }}-${{ steps.bench_config.outputs.ref }}"
+          restore-keys: |
+            bench-v2-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild_hash.outputs.fbuild-hash }}-${{ steps.bench_config.outputs.board }}-
+            bench-v2-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild_hash.outputs.fbuild-hash }}-
+
+      - name: "Phase - record cache-restore result"
+        run: |
+          printf 'compile_cache_hit\t%s\n' "${{ steps.compile_cache.outputs.cache-hit }}" >> "$BENCH_TIMINGS"
+          printf 'compile_cache_key_matched\t%s\n' "${{ steps.compile_cache.outputs.cache-matched-key }}" >> "$BENCH_TIMINGS"
+          echo "Cache hit: ${{ steps.compile_cache.outputs.cache-hit }}"
+          echo "Key matched: ${{ steps.compile_cache.outputs.cache-matched-key }}"
+          for d in ~/.fbuild ~/.fastled/global_cache fastled/.build/pio/${BENCH_BOARD}; do
+            if [ -d "$d" ]; then
+              printf '  %s: %s\n' "$d" "$(du -sh "$d" 2>/dev/null | cut -f1)"
+            else
+              printf '  %s: (missing)\n' "$d"
+            fi
+          done
+
       - name: "Phase - install uv"
         uses: astral-sh/setup-uv@v6
         with:
@@ -167,7 +150,6 @@ jobs:
           t1=$(date +%s.%N)
           printf 'uv_sync\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
 
-      # --- phase: compile ---
       - name: "Phase - compile examples"
         working-directory: fastled
         run: |
@@ -183,15 +165,28 @@ jobs:
           echo "compile exit=$rc"
           exit "$rc"
 
-      # --- save fbuild cache (only on success) ---
-      - name: "Phase - save fbuild cache"
+      - name: "Phase - post-compile cache footprint"
+        if: always()
+        run: |
+          echo "=== post-compile cache footprint ==="
+          for d in ~/.fbuild ~/.fastled/global_cache fastled/.build/pio/${BENCH_BOARD}; do
+            if [ -d "$d" ]; then
+              printf '  %s: %s\n' "$d" "$(du -sh "$d" 2>/dev/null | cut -f1)"
+            else
+              printf '  %s: (missing)\n' "$d"
+            fi
+          done
+
+      - name: "Phase - save compile cache"
         if: success()
         uses: actions/cache/save@v4
         with:
-          path: ${{ env.FBUILD_CACHE_DIR }}
-          key: "bench-v1-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild_hash.outputs.fbuild-hash }}-${{ steps.bench_config.outputs.board }}-${{ steps.bench_config.outputs.ref }}"
+          path: |
+            ~/.fbuild
+            ~/.fastled/global_cache
+            fastled/.build/pio/${{ env.BENCH_BOARD }}
+          key: "bench-v2-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild_hash.outputs.fbuild-hash }}-${{ steps.bench_config.outputs.board }}-${{ steps.bench_config.outputs.ref }}"
 
-      # --- final: job-level total + step summary ---
       - name: "Phase - job total + summary"
         if: always()
         run: |
@@ -204,12 +199,12 @@ jobs:
             echo ""
             echo "- run: \`${{ github.run_id }}\` attempt \`${{ github.run_attempt }}\`"
             echo "- commit: \`${{ github.sha }}\`"
-            echo "- cache-hit: \`${{ steps.fbuild_cache.outputs.cache-hit }}\`"
+            echo "- cache-hit: \`${{ steps.compile_cache.outputs.cache-hit }}\`"
             echo "- cache-bust: \`${BENCH_CACHE_BUST:-<none>}\`"
             echo ""
             echo "| phase | seconds |"
             echo "|-------|--------:|"
-            awk -F'\t' 'NR>1 && $1!="fbuild_cache_hit" && $1!="fbuild_cache_key_matched" {printf "| %s | %s |\n", $1, $2}' "$BENCH_TIMINGS"
+            awk -F'\t' 'NR>1 && $1 !~ /^compile_cache_/ {printf "| %s | %s |\n", $1, $2}' "$BENCH_TIMINGS"
           } >> "$GITHUB_STEP_SUMMARY"
 
           echo "=== phase-timings.tsv ==="
