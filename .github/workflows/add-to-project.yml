@@ -21,11 +21,17 @@ name: add-to-project
 on:
   issues:
     types: [opened]
-  pull_request_target:
+  pull_request:
     types: [opened]
 
+# pull_request (not pull_request_target) — fork PRs run in the fork's context
+# without access to PROJECT_APP_PRIVATE_KEY, so they simply won't be
+# auto-added. That is an intentional security trade-off: pull_request_target
+# would run with base-repo secrets against fork-authored metadata, which is a
+# known exfiltration vector even when no code is checked out.
 permissions:
   contents: read
+  pull-requests: read
 
 jobs:
   add:
