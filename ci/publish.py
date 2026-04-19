@@ -426,8 +426,16 @@ def build_wheel(
     for pt in plat_tags:
         wheel_meta += f"Tag: {tag_prefix}-{pt}\n"
 
+    # S_IFREG is required — pip's wheel installer calls S_ISREG() on the
+    # upper 16 bits of external_attr and falls back to the umask default
+    # (0o644) if the file-type bit is missing, regardless of the mode
+    # bits set. That's how 2.1.20 shipped with mode=0o755 but still
+    # `/bin/fbuild: Permission denied` on every Linux/macOS install.
+    # Reference: uv/ruff wheels have external_attr 0x81ed0000
+    # (S_IFREG | 0o755); 2.1.20 had 0x01ed0000.
     exec_perms = (
-        stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR
+        stat.S_IFREG
+        | stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR
         | stat.S_IRGRP | stat.S_IXGRP
         | stat.S_IROTH | stat.S_IXOTH
     )
