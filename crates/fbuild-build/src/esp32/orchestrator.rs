@@ -1058,13 +1058,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
                     if fbuild_packages::lnk::has_lnk_extension(&p) {
                         let cache = lnk_cache.as_ref().ok_or_else(|| {
                             fbuild_core::FbuildError::PackageError(
-                                "disk cache unavailable; cannot resolve .lnk entries"
-                                    .to_string(),
+                                "disk cache unavailable; cannot resolve .lnk entries".to_string(),
                             )
                         })?;
-                        let m = fbuild_packages::lnk::materialize_lnk_entry(
-                            &p, &lnk_dir, cache,
-                        )?;
+                        let m = fbuild_packages::lnk::materialize_lnk_entry(&p, &lnk_dir, cache)?;
                         out.push(m.target_path.to_string_lossy().into_owned());
                     } else {
                         out.push(entry.clone());
