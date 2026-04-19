@@ -64,12 +64,11 @@ jobs:
         run: |
           t0=$(date +%s.%N)
           python -m pip install --upgrade pip
-          # Pinned to 2.1.16 until fbuild#129 (broken 2.1.18) is resolved.
-          python -m pip install "fbuild==2.1.16"
-          # 2.1.16 wheel is fine, but we chmod +x defensively in case the
-          # console-script permission bug recurs.
-          chmod +x "$(python -c 'import sys,os;print(os.path.join(os.path.dirname(sys.executable),"fbuild"))')" 2>/dev/null || true
-          fbuild --version 2>&1 || true
+          # Unpinned at iter2: FastLED/fbuild#129 (broken 2.1.18 exec bit) was
+          # fixed in #135 and released in 2.1.20. We now pull whatever's
+          # latest on PyPI so the benchmark also exercises the current wheel.
+          python -m pip install fbuild
+          fbuild --version
           t1=$(date +%s.%N)
           printf 'pip_install_fbuild\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
 
@@ -151,12 +150,10 @@ jobs:
           else
             uv sync
           fi
-          # Force FastLED's venv to the known-good fbuild 2.1.16 (2.1.18 is
-          # broken — see FastLED/fbuild#129). uv sync may have pulled 2.1.18
-          # transitively.
-          uv pip install --python .venv/bin/python "fbuild==2.1.16"
-          chmod +x .venv/bin/fbuild 2>/dev/null || true
-          .venv/bin/fbuild --version 2>&1 || true
+          # iter2: no more re-pin / chmod workaround. #129 is fixed in 2.1.20,
+          # and whatever FastLED's pyproject resolves to is what we want to
+          # measure.
+          .venv/bin/fbuild --version
           t1=$(date +%s.%N)
           printf 'uv_sync\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
 
