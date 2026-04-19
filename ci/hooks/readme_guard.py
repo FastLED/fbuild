@@ -27,6 +27,17 @@ def main():
     if not file_path:
         return 0
 
+    # Scope the guard to THIS repo only. Writes outside the project tree
+    # (e.g. to ~/.claude/projects/.../memory/) are not covered.
+    # The hook runs with cwd set to `git rev-parse --show-toplevel` by
+    # settings.json, so cwd is the project root at invocation time.
+    try:
+        repo_root = Path.cwd().resolve()
+        abs_path = Path(file_path).resolve()
+        abs_path.relative_to(repo_root)
+    except (ValueError, OSError):
+        return 0
+
     # Normalize path
     file_path = file_path.replace("\\", "/")
     filename = os.path.basename(file_path)
