@@ -85,6 +85,24 @@ pub fn self_eviction_timeout() -> Duration {
 pub const SELF_EVICTION_TIMEOUT_DEFAULT: Duration = Duration::from_secs(30);
 pub const SELF_EVICTION_TIMEOUT: Duration = SELF_EVICTION_TIMEOUT_DEFAULT;
 
+/// Freshness window for [`crate::watch_set_cache::DaemonWatchSetCache`],
+/// read from the `FBUILD_WATCH_SET_CACHE_SECS` env var at daemon
+/// startup (#122 follow-up).
+///
+/// - Unset / unparseable → 2 s (the cache's own default).
+/// - Positive integer → that many seconds.
+/// - `0` → `Duration::ZERO`, i.e. every entry is stale the instant
+///   it's stored. Lets an operator bypass the cache at runtime —
+///   useful for A/B-ing a suspected regression without a rebuild.
+pub fn watch_set_cache_window_from_env() -> Duration {
+    const DEFAULT_SECS: u64 = 2;
+    let secs = std::env::var("FBUILD_WATCH_SET_CACHE_SECS")
+        .ok()
+        .and_then(|s| s.trim().parse::<u64>().ok())
+        .unwrap_or(DEFAULT_SECS);
+    Duration::from_secs(secs)
+}
+
 /// Fallback idle timeout: daemon shuts down after 12 hours regardless.
 pub const IDLE_TIMEOUT: Duration = Duration::from_secs(43200);
 
@@ -212,7 +230,9 @@ impl DaemonContext {
             broadcast_hub,
             avr8js_sessions: DashMap::new(),
             image_hash_memo: DashMap::new(),
-            watch_set_cache: Arc::new(crate::watch_set_cache::DaemonWatchSetCache::new()),
+            watch_set_cache: Arc::new(crate::watch_set_cache::DaemonWatchSetCache::with_max_age(
+                watch_set_cache_window_from_env(),
+            )),
             gc_mutex: Arc::new(tokio::sync::Mutex::new(())),
         }
     }
@@ -427,5 +447,41 @@ mod tests {
             "touch_activity must reset idle_duration to ~0, got {:?}",
             fresh
         );
+    }
+
+    /// `FBUILD_WATCH_SET_CACHE_SECS` controls the cache freshness
+    /// window (#122). Exhaustive table-driven coverage of the
+    /// parse rules so a future refactor can't silently drop one of
+    /// the three cases.
+    #[test]
+    fn watch_set_cache_window_env_rules() {
+        let prior = std::env::var("FBUILD_WATCH_SET_CACHE_SECS").ok();
+
+        // Unset → default.
+        unsafe { std::env::remove_var("FBUILD_WATCH_SET_CACHE_SECS") };
+        assert_eq!(watch_set_cache_window_from_env(), Duration::from_secs(2));
+
+        // Zero → zero duration (disables the cache by making every
+        // entry stale on store).
+        unsafe { std::env::set_var("FBUILD_WATCH_SET_CACHE_SECS", "0") };
+        assert_eq!(watch_set_cache_window_from_env(), Duration::ZERO);
+
+        // Positive integer → literal.
+        unsafe { std::env::set_var("FBUILD_WATCH_SET_CACHE_SECS", "15") };
+        assert_eq!(watch_set_cache_window_from_env(), Duration::from_secs(15));
+
+        // Garbage → default (graceful degradation, not a panic).
+        unsafe { std::env::set_var("FBUILD_WATCH_SET_CACHE_SECS", "not-a-number") };
+        assert_eq!(watch_set_cache_window_from_env(), Duration::from_secs(2));
+
+        // Whitespace around a valid value → parsed after trim.
+        unsafe { std::env::set_var("FBUILD_WATCH_SET_CACHE_SECS", "  9  ") };
+        assert_eq!(watch_set_cache_window_from_env(), Duration::from_secs(9));
+
+        // Restore whatever the ambient shell had set.
+        match prior {
+            Some(v) => unsafe { std::env::set_var("FBUILD_WATCH_SET_CACHE_SECS", v) },
+            None => unsafe { std::env::remove_var("FBUILD_WATCH_SET_CACHE_SECS") },
+        }
     }
 }
