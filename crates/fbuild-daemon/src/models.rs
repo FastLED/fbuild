@@ -207,6 +207,12 @@ pub struct DaemonInfoResponse {
     pub spawner_cwd: String,
     /// MCP (Model Context Protocol) server URL.
     pub mcp_url: String,
+    /// Watch-set fingerprint cache counters (#123). Surfaced on
+    /// `/api/daemon/info` so operators can validate the cache is
+    /// serving hits in the field without scraping tracing logs.
+    /// Skipped on older daemons that predate the field.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub watch_set_cache: Option<crate::watch_set_cache::WatchSetCacheStats>,
 }
 
 /// GET / (root endpoint)
@@ -687,6 +693,7 @@ mod tests {
             source_mtime: 1700000000.0,
             spawner_cwd: "/home/user/project".into(),
             mcp_url: "http://127.0.0.1:8765/mcp".into(),
+            watch_set_cache: None,
         };
         let json = serde_json::to_string(&resp).unwrap();
         assert!(json.contains("\"started_at\""));
@@ -725,6 +732,7 @@ mod tests {
             source_mtime: 0.0,
             spawner_cwd: "unknown".into(),
             mcp_url: "http://127.0.0.1:8765/mcp".into(),
+            watch_set_cache: None,
         };
         let json = serde_json::to_string(&resp).unwrap();
         assert!(!json.contains("current_operation"));
@@ -750,6 +758,7 @@ mod tests {
             source_mtime: 0.0,
             spawner_cwd: "unknown".into(),
             mcp_url: "http://127.0.0.1:8765/mcp".into(),
+            watch_set_cache: None,
         };
         let json = serde_json::to_string(&resp).unwrap();
         assert!(json.contains("\"current_operation\""));
