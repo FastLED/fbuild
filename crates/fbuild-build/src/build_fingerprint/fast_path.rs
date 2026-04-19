@@ -111,9 +111,10 @@ pub struct FastPathInputs<'a> {
     /// `compile_commands.json` also has the PlatformIO-style project-root
     /// copy. Returning `false` forces a full rebuild.
     pub extra_artifact_ok: Option<&'a dyn Fn() -> bool>,
-    /// Optional daemon-scoped memo for the [`hash_watch_set_stamps`]
-    /// walk (see [`WatchSetStampCache`]). `None` when invoked outside
-    /// the daemon (tests, direct CLI).
+    /// Optional daemon-scoped memo for the
+    /// [`super::hash_watch_set_stamps`] walk (see
+    /// [`WatchSetStampCache`]). `None` when invoked outside the daemon
+    /// (tests, direct CLI).
     pub watch_set_cache: Option<&'a dyn WatchSetStampCache>,
     /// Discovered zccache binary, if any. When present the helper
     /// uses its persistent fingerprint as the primary invalidation
