@@ -8,7 +8,9 @@ use serde::Deserialize;
 use sha2::{Digest, Sha256};
 use std::collections::HashMap;
 use std::ffi::OsString;
+use std::path::Component;
 use std::path::{Path, PathBuf};
+use std::sync::{Mutex, OnceLock};
 use std::time::SystemTime;
 
 // ── Shared config types (used by all platform MCU configs) ──────────────
@@ -57,6 +59,8 @@ pub struct CompileResult {
     pub stderr: String,
     pub exit_code: i32,
 }
+
+static COMPILER_IDENTITY_CACHE: OnceLock<Mutex<HashMap<PathBuf, String>>> = OnceLock::new();
 
 /// Trait for platform-specific compilers.
 pub trait Compiler: Send + Sync {
@@ -300,16 +304,128 @@ pub fn build_rebuild_signature(
     extra_flags: &[String],
 ) -> String {
     let mut hasher = Sha256::new();
-    hasher.update(compiler_path.to_string_lossy().as_bytes());
+    hasher.update(compiler_identity(compiler_path).as_bytes());
     hasher.update([0]);
     for group in [flags, pre_flags, extra_flags] {
-        for flag in group {
-            hasher.update(flag.as_bytes());
-            hasher.update([0]);
-        }
+        hash_signature_group(&mut hasher, group);
         hasher.update([0xff]);
     }
     format!("{:x}", hasher.finalize())
+}
+
+fn hash_signature_group(hasher: &mut Sha256, group: &[String]) {
+    let mut expects_path_value = false;
+    for flag in group {
+        let normalized = if expects_path_value {
+            expects_path_value = false;
+            normalize_signature_value(flag)
+        } else {
+            expects_path_value = is_split_path_flag(flag);
+            normalize_signature_flag(flag)
+        };
+        hasher.update(normalized.as_bytes());
+        hasher.update([0]);
+    }
+}
+
+fn is_split_path_flag(flag: &str) -> bool {
+    matches!(
+        flag,
+        "-I" | "-isystem" | "-iquote" | "-include" | "--sysroot"
+    )
+}
+
+fn normalize_signature_flag(flag: &str) -> String {
+    for prefix in ["-I", "-isystem=", "-iquote=", "-include=", "--sysroot="] {
+        if let Some(value) = flag.strip_prefix(prefix) {
+            return format!("{prefix}{}", normalize_signature_value(value));
+        }
+    }
+    flag.to_string()
+}
+
+fn normalize_signature_value(value: &str) -> String {
+    if value.is_empty() {
+        return String::new();
+    }
+    let path = Path::new(value);
+    if !looks_like_absolute_path(path, value) {
+        return value.to_string();
+    }
+    normalize_signature_path(path)
+}
+
+fn normalize_signature_path(path: &Path) -> String {
+    let normalized = normalize_signature_components(path);
+    if let Some(index) = normalized
+        .iter()
+        .position(|component| component.eq_ignore_ascii_case(".fbuild"))
+    {
+        return normalized[index..].join("/");
+    }
+    if let Some(index) = normalized
+        .iter()
+        .position(|component| component.eq_ignore_ascii_case(".build"))
+    {
+        return normalized[index..].join("/");
+    }
+    const TAIL_COMPONENTS: usize = 2;
+    let start = normalized.len().saturating_sub(TAIL_COMPONENTS);
+    normalized[start..].join("/")
+}
+
+fn normalize_signature_components(path: &Path) -> Vec<String> {
+    path.components()
+        .filter_map(|component| match component {
+            Component::Prefix(prefix) => {
+                Some(prefix.as_os_str().to_string_lossy().replace('\\', "/"))
+            }
+            Component::RootDir => None,
+            Component::CurDir => None,
+            Component::ParentDir => Some("..".to_string()),
+            Component::Normal(value) => Some(value.to_string_lossy().replace('\\', "/")),
+        })
+        .collect()
+}
+
+fn looks_like_absolute_path(path: &Path, raw: &str) -> bool {
+    path.is_absolute()
+        || path.has_root()
+        || raw.starts_with('/')
+        || raw.starts_with('\\')
+        || raw.as_bytes().get(1) == Some(&b':')
+}
+
+fn compiler_identity(path: &Path) -> String {
+    let cache = COMPILER_IDENTITY_CACHE.get_or_init(|| Mutex::new(HashMap::new()));
+    if let Some(identity) = cache.lock().unwrap().get(path).cloned() {
+        return identity;
+    }
+
+    let stem = path
+        .file_stem()
+        .and_then(|value| value.to_str())
+        .unwrap_or_default()
+        .to_string();
+    let version = compiler_version(path);
+    let identity = format!("{stem}\0{version}");
+    cache
+        .lock()
+        .unwrap()
+        .insert(path.to_path_buf(), identity.clone());
+    identity
+}
+
+fn compiler_version(path: &Path) -> String {
+    match std::process::Command::new(path)
+        .arg("-dumpversion")
+        .output()
+    {
+        Ok(output) if output.status.success() => {
+            String::from_utf8_lossy(&output.stdout).trim().to_string()
+        }
+        _ => String::new(),
+    }
 }
 
 fn dependency_is_newer_than_object(
@@ -737,5 +853,107 @@ mod tests {
             &obj,
             Some("new-signature")
         ));
+    }
+
+    #[test]
+    fn test_build_rebuild_signature_ignores_absolute_compiler_path() {
+        let flags = vec!["-Os".to_string(), "-mmcu=atmega328p".to_string()];
+        let sig_a =
+            build_rebuild_signature(Path::new("/opt/toolchains/a/bin/avr-gcc"), &flags, &[], &[]);
+        let sig_b = build_rebuild_signature(
+            Path::new("/home/runner/.fbuild/packages/toolchain-atmelavr/bin/avr-gcc"),
+            &flags,
+            &[],
+            &[],
+        );
+
+        assert_eq!(sig_a, sig_b);
+    }
+
+    #[test]
+    fn test_build_rebuild_signature_changes_when_compiler_name_changes() {
+        let flags = vec!["-Os".to_string()];
+        let sig_a =
+            build_rebuild_signature(Path::new("/tmp/toolchains/a/bin/avr-gcc"), &flags, &[], &[]);
+        let sig_b = build_rebuild_signature(
+            Path::new("/tmp/toolchains/a/bin/xtensa-gcc"),
+            &flags,
+            &[],
+            &[],
+        );
+
+        assert_ne!(sig_a, sig_b);
+    }
+
+    #[test]
+    fn test_build_rebuild_signature_ignores_attached_include_root() {
+        let flags_a = vec![
+            "-I/tmp/ws-a/project/include".to_string(),
+            "-I/home/runner/.fbuild/packages/framework-arduinoavr/cores/arduino".to_string(),
+        ];
+        let flags_b = vec![
+            "-I/tmp/ws-b/project/include".to_string(),
+            "-I/Users/runner/.fbuild/packages/framework-arduinoavr/cores/arduino".to_string(),
+        ];
+
+        let sig_a =
+            build_rebuild_signature(Path::new("/tmp/ws-a/tool/bin/avr-gcc"), &flags_a, &[], &[]);
+        let sig_b =
+            build_rebuild_signature(Path::new("/tmp/ws-b/tool/bin/avr-gcc"), &flags_b, &[], &[]);
+
+        assert_eq!(sig_a, sig_b);
+    }
+
+    #[test]
+    fn test_build_rebuild_signature_ignores_split_path_flag_values() {
+        let flags_a = vec![
+            "-isystem".to_string(),
+            "/tmp/ws-a/project/sdk/include".to_string(),
+        ];
+        let flags_b = vec![
+            "-isystem".to_string(),
+            "/tmp/ws-b/project/sdk/include".to_string(),
+        ];
+
+        let sig_a = build_rebuild_signature(
+            Path::new("/tmp/ws-a/tool/bin/xtensa-gcc"),
+            &flags_a,
+            &[],
+            &[],
+        );
+        let sig_b = build_rebuild_signature(
+            Path::new("/tmp/ws-b/tool/bin/xtensa-gcc"),
+            &flags_b,
+            &[],
+            &[],
+        );
+
+        assert_eq!(sig_a, sig_b);
+    }
+
+    #[test]
+    fn test_build_rebuild_signature_changes_when_include_suffix_changes() {
+        let flags_a = vec!["-I/tmp/ws-a/project/include".to_string()];
+        let flags_b = vec!["-I/tmp/ws-a/project/generated".to_string()];
+
+        let sig_a =
+            build_rebuild_signature(Path::new("/tmp/ws-a/tool/bin/avr-gcc"), &flags_a, &[], &[]);
+        let sig_b =
+            build_rebuild_signature(Path::new("/tmp/ws-a/tool/bin/avr-gcc"), &flags_b, &[], &[]);
+
+        assert_ne!(sig_a, sig_b);
+    }
+
+    #[test]
+    fn test_build_rebuild_signature_changes_when_non_path_flag_changes() {
+        let flags_a = vec!["-Os".to_string()];
+        let flags_b = vec!["-O2".to_string()];
+
+        let sig_a =
+            build_rebuild_signature(Path::new("/tmp/ws-a/tool/bin/avr-gcc"), &flags_a, &[], &[]);
+        let sig_b =
+            build_rebuild_signature(Path::new("/tmp/ws-a/tool/bin/avr-gcc"), &flags_b, &[], &[]);
+
+        assert_ne!(sig_a, sig_b);
     }
 }

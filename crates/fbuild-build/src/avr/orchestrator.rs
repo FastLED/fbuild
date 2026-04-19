@@ -19,7 +19,7 @@ use fbuild_core::{Platform, Result};
 use serde::Serialize;
 
 use crate::build_fingerprint::{
-    hash_watch_set_stamps_cached, normalize_path, save_json, stable_hash_json, FastPathInputs,
+    hash_watch_set_stamps_cached, save_json, stable_hash_json, FastPathInputs,
     PersistedBuildFingerprint, BUILD_FINGERPRINT_VERSION,
 };
 use crate::compile_database::{CompileDatabase, TargetArchitecture};
@@ -56,9 +56,6 @@ struct AvrFingerprintMetadata {
     board_upload_protocol: Option<String>,
     board_upload_speed: Option<String>,
     platform: String,
-    project_dir: String,
-    toolchain_dir: String,
-    framework_dir: String,
     max_flash: Option<u64>,
     max_ram: Option<u64>,
 }
@@ -134,7 +131,7 @@ impl BuildOrchestrator for AvrOrchestrator {
         pipeline::log_toolchain_version(&toolchain.get_gcc_path(), "avr-gcc", &mut ctx.build_log);
 
         // 4. Ensure Arduino core
-        let (framework_dir, core_dir, variant_dir) = {
+        let (_framework_dir, core_dir, variant_dir) = {
             let _g = perf.phase("framework-ensure");
             ensure_avr_framework(
                 &params.project_dir,
@@ -168,9 +165,6 @@ impl BuildOrchestrator for AvrOrchestrator {
             board_upload_protocol: ctx.board.upload_protocol.clone(),
             board_upload_speed: ctx.board.upload_speed.clone(),
             platform: "atmelavr".to_string(),
-            project_dir: normalize_path(&params.project_dir),
-            toolchain_dir: normalize_path(&toolchain_dir),
-            framework_dir: normalize_path(&framework_dir),
             max_flash: ctx.board.max_flash,
             max_ram: ctx.board.max_ram,
         })?;

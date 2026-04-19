@@ -26,8 +26,8 @@ use fbuild_packages::Framework;
 use serde::Serialize;
 
 use crate::build_fingerprint::{
-    hash_watch_set_stamps_cached, normalize_path, save_json, stable_hash_json,
-    PersistedBuildFingerprint, BUILD_FINGERPRINT_VERSION,
+    hash_watch_set_stamps_cached, save_json, stable_hash_json, PersistedBuildFingerprint,
+    BUILD_FINGERPRINT_VERSION,
 };
 use crate::flag_overlay::LanguageExtraFlags;
 use crate::linker::LinkerScripts;
@@ -62,9 +62,6 @@ struct Esp32FingerprintMetadata {
     board_platform: Option<String>,
     architecture: String,
     platform: String,
-    project_dir: String,
-    toolchain_dir: String,
-    framework_dir: String,
     flash_mode: String,
     flash_freq: String,
     flash_size: String,
@@ -215,8 +212,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let (toolchain, framework) =
             resolve_pioarduino_packages(&params.project_dir, &ctx.board.mcu, &mcu_config)?;
         drop(_resolve_phase);
-        let toolchain_cache_dir = fbuild_packages::Package::get_info(&toolchain).install_path;
-        let framework_cache_dir = fbuild_packages::Package::get_info(&framework).install_path;
+        let _toolchain_cache_dir = fbuild_packages::Package::get_info(&toolchain).install_path;
+        let _framework_cache_dir = fbuild_packages::Package::get_info(&framework).install_path;
 
         // Aliases for build dirs (already set up by BuildContext::new())
         let build_dir = &ctx.build_dir;
@@ -275,9 +272,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
             board_platform: ctx.board.platform_str.clone(),
             architecture: mcu_config.architecture.clone(),
             platform: "espressif32".to_string(),
-            project_dir: normalize_path(&params.project_dir),
-            toolchain_dir: normalize_path(&toolchain_cache_dir),
-            framework_dir: normalize_path(&framework_cache_dir),
             flash_mode: flash_mode.clone(),
             flash_freq: flash_freq.clone(),
             flash_size: flash_size.clone(),

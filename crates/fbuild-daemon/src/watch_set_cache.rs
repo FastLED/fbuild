@@ -9,7 +9,7 @@
 //! # Why
 //!
 //! `hash_watch_set_stamps` walks every file under each watch root and
-//! stat()s it to build a per-build fingerprint. On large projects
+//! hashes the watched content to build a per-build fingerprint. On large projects
 //! (FastLED-class sketches with the Arduino framework + libraries),
 //! that walk is the dominant cost on warm rebuilds — see
 //! `docs/PERF_WARM_BUILD.md`.

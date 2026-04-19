@@ -758,6 +758,7 @@ name = "fbuild-build"
 version = "2.1.21"
 dependencies = [
  "async-trait",
+ "blake3",
  "fbuild-config",
  "fbuild-core",
  "fbuild-packages",
