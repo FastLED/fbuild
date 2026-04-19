@@ -521,6 +521,12 @@ def upload_wheels(wheels: list[Path], name: str, version: str) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Build and publish fbuild to PyPI")
     parser.add_argument("--dry-run", action="store_true", help="Build wheels but do not upload.")
+    parser.add_argument(
+        "--run-id",
+        type=int,
+        default=None,
+        help="Skip Step 2 (build). Reuse the given build.yml run's artifacts.",
+    )
     args = parser.parse_args()
 
     # Verify prerequisites
@@ -537,8 +543,12 @@ def main() -> None:
     # Step 1: Fail fast if version exists
     check_pypi_version(name, version)
 
-    # Step 2: Build native binaries on all platforms
-    run_id = trigger_and_wait(repo)
+    # Step 2: Build native binaries on all platforms (or reuse a prior run)
+    if args.run_id is not None:
+        log(f"\n=== Step 2: Reusing existing run {args.run_id} ===")
+        run_id = args.run_id
+    else:
+        run_id = trigger_and_wait(repo)
 
     # Step 3: Download artifacts
     download_artifacts(repo, run_id)
