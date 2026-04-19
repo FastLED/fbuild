@@ -1405,7 +1405,17 @@ async fn run_test_emu(
     print_operation_streams(&resp);
     println!("{}", resp.message);
     if !resp.success {
-        std::process::exit(resp.exit_code);
+        // Guarantee a non-zero exit when the daemon reports failure. A
+        // structured error response carries `exit_code`, but if the
+        // daemon handler or an intermediate proxy returns 0 alongside
+        // success=false (issue #130), we must still surface failure to
+        // the shell rather than silently exiting 0.
+        let code = if resp.exit_code == 0 {
+            1
+        } else {
+            resp.exit_code
+        };
+        std::process::exit(code);
     }
     Ok(())
 }
