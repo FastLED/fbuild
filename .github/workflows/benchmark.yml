@@ -64,10 +64,12 @@ jobs:
         run: |
           t0=$(date +%s.%N)
           python -m pip install --upgrade pip
-          # Unpinned at iter2: FastLED/fbuild#129 (broken 2.1.18 exec bit) was
-          # fixed in #135 and released in 2.1.20. We now pull whatever's
-          # latest on PyPI so the benchmark also exercises the current wheel.
+          # iter3: 2.1.20 still shipped a wheel whose console-script was missing
+          # the exec bit (iter2 failed here). 2.1.21 carries the S_IFREG fix,
+          # but we keep a defensive `chmod +x` so a future regression in the
+          # wheel doesn't mask a cache-behavior measurement here.
           python -m pip install fbuild
+          chmod +x "$(python -c 'import sys,os;print(os.path.join(os.path.dirname(sys.executable),"fbuild"))')" || true
           fbuild --version
           t1=$(date +%s.%N)
           printf 'pip_install_fbuild\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
