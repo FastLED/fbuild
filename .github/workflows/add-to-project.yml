@@ -21,11 +21,17 @@ name: add-to-project
 on:
   issues:
     types: [opened]
-  pull_request_target:
+  pull_request:
     types: [opened]
 
+# pull_request (not pull_request_target) — fork PRs run in the fork's context
+# without access to PROJECT_APP_PRIVATE_KEY, so they simply won't be
+# auto-added. That is an intentional security trade-off: pull_request_target
+# would run with base-repo secrets against fork-authored metadata, which is a
+# known exfiltration vector even when no code is checked out.
 permissions:
   contents: read
+  pull-requests: read
 
 jobs:
   add:
@@ -34,13 +40,21 @@ jobs:
     steps:
       - name: Generate App token
         id: app-token
+        continue-on-error: true
         uses: actions/create-github-app-token@v1
         with:
           app-id: ${{ vars.PROJECT_APP_ID }}
           private-key: ${{ secrets.PROJECT_APP_PRIVATE_KEY }}
           owner: ${{ vars.PROJECT_OWNER }}
 
+      - name: App not installed — skipping project sync
+        if: ${{ steps.app-token.outcome != 'success' }}
+        run: |
+          echo "::warning::FastLED Project Sync App is not installed on '${{ vars.PROJECT_OWNER }}'."
+          echo "::warning::Install it at https://github.com/organizations/${{ vars.PROJECT_OWNER }}/settings/installations to enable auto-add-to-project."
+
       - name: Add to project
+        if: ${{ steps.app-token.outcome == 'success' }}
         uses: actions/add-to-project@v1.0.2
         with:
           project-url: https://github.com/orgs/${{ vars.PROJECT_OWNER }}/projects/${{ vars.PROJECT_NUMBER }}
