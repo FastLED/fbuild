@@ -104,10 +104,7 @@ mod tests {
     #[test]
     fn passes_through_non_lnk_entries() {
         let project = Path::new("/proj");
-        let entries = vec![
-            "data/file.bin".to_string(),
-            "/abs/path/x.txt".to_string(),
-        ];
+        let entries = vec!["data/file.bin".to_string(), "/abs/path/x.txt".to_string()];
         let resolved = expand_lnk_entries(&entries, project, |_| {
             panic!("should not be called for non-lnk entries")
         })
@@ -129,7 +126,10 @@ mod tests {
         .unwrap();
         assert_eq!(calls.len(), 1);
         assert_eq!(calls[0], Path::new("/proj/data/asset.bin.lnk"));
-        assert_eq!(resolved, vec![PathBuf::from("/build/resources/data/asset.bin")]);
+        assert_eq!(
+            resolved,
+            vec![PathBuf::from("/build/resources/data/asset.bin")]
+        );
     }
 
     #[test]
@@ -156,10 +156,7 @@ mod tests {
 
     #[test]
     fn resolver_error_aborts_expansion() {
-        let entries = vec![
-            "good.bin.lnk".to_string(),
-            "bad.bin.lnk".to_string(),
-        ];
+        let entries = vec!["good.bin.lnk".to_string(), "bad.bin.lnk".to_string()];
         let mut count = 0;
         let result = expand_lnk_entries(&entries, Path::new("/p"), |_| {
             count += 1;

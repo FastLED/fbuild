@@ -2951,17 +2951,14 @@ async fn run_lnk(
 
     fn open_cache() -> fbuild_core::Result<fbuild_packages::DiskCache> {
         fbuild_packages::DiskCache::open().map_err(|e| {
-            fbuild_core::FbuildError::PackageError(format!(
-                "failed to open lnk disk cache: {e}"
-            ))
+            fbuild_core::FbuildError::PackageError(format!("failed to open lnk disk cache: {e}"))
         })
     }
 
-    fn resolve_root(
-        explicit: Option<String>,
-        fallback: &Option<String>,
-    ) -> PathBuf {
-        let chosen = explicit.or_else(|| fallback.clone()).unwrap_or_else(|| ".".to_string());
+    fn resolve_root(explicit: Option<String>, fallback: &Option<String>) -> PathBuf {
+        let chosen = explicit
+            .or_else(|| fallback.clone())
+            .unwrap_or_else(|| ".".to_string());
         PathBuf::from(chosen)
     }
 
@@ -2993,7 +2990,10 @@ async fn run_lnk(
                     }
                 }
             }
-            println!("\nlnk pull: {ok} ok, {failed} failed (of {})", discovered.len());
+            println!(
+                "\nlnk pull: {ok} ok, {failed} failed (of {})",
+                discovered.len()
+            );
             if failed > 0 {
                 std::process::exit(1);
             }
@@ -3012,25 +3012,34 @@ async fn run_lnk(
             let mut missing = 0usize;
             let mut mismatched = 0usize;
             for d in &discovered {
-                let entry = cache.lookup(
-                    fbuild_packages::disk_cache::Kind::LnkBlobs,
-                    &d.lnk.url,
-                    &d.lnk.sha256,
-                ).map_err(|e| {
-                    fbuild_core::FbuildError::PackageError(format!(
-                        "lnk cache lookup failed for {}: {e}",
-                        d.path.display()
-                    ))
-                })?;
+                let entry = cache
+                    .lookup(
+                        fbuild_packages::disk_cache::Kind::LnkBlobs,
+                        &d.lnk.url,
+                        &d.lnk.sha256,
+                    )
+                    .map_err(|e| {
+                        fbuild_core::FbuildError::PackageError(format!(
+                            "lnk cache lookup failed for {}: {e}",
+                            d.path.display()
+                        ))
+                    })?;
                 let Some(entry) = entry else {
                     missing += 1;
-                    println!("MISSING {}  (run `fbuild lnk pull` to fetch)", d.path.display());
+                    println!(
+                        "MISSING {}  (run `fbuild lnk pull` to fetch)",
+                        d.path.display()
+                    );
                     continue;
                 };
                 let blob_path = PathBuf::from(entry.archive_path.unwrap_or_default());
                 if !blob_path.exists() {
                     missing += 1;
-                    println!("MISSING {}  (cache index points at {} which is gone)", d.path.display(), blob_path.display());
+                    println!(
+                        "MISSING {}  (cache index points at {} which is gone)",
+                        d.path.display(),
+                        blob_path.display()
+                    );
                     continue;
                 }
                 let bytes = std::fs::read(&blob_path).map_err(|e| {
@@ -3086,9 +3095,7 @@ async fn run_lnk(
 
             // Download to a temp dir, hash it, then write the .lnk.
             let tmp = tempfile::tempdir().map_err(|e| {
-                fbuild_core::FbuildError::PackageError(format!(
-                    "failed to create temp dir: {e}"
-                ))
+                fbuild_core::FbuildError::PackageError(format!("failed to create temp dir: {e}"))
             })?;
             let downloaded = fbuild_packages::downloader::download_file(&url, tmp.path()).await?;
             let bytes = std::fs::read(&downloaded).map_err(|e| {

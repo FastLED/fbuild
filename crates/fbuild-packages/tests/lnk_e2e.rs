@@ -38,17 +38,19 @@ async fn spawn_test_server(blobs: Vec<(String, Vec<u8>)>) -> (u16, tokio::task::
 
     let app = Router::new().route(
         "/:name",
-        get(move |axum::extract::Path(name): axum::extract::Path<String>| {
-            let blobs = Arc::clone(&blobs_for_handler);
-            async move {
-                for (n, bytes) in blobs.iter() {
-                    if n == &name {
-                        return (StatusCode::OK, Bytes::from(bytes.clone())).into_response();
+        get(
+            move |axum::extract::Path(name): axum::extract::Path<String>| {
+                let blobs = Arc::clone(&blobs_for_handler);
+                async move {
+                    for (n, bytes) in blobs.iter() {
+                        if n == &name {
+                            return (StatusCode::OK, Bytes::from(bytes.clone())).into_response();
+                        }
                     }
+                    (StatusCode::NOT_FOUND, "not found").into_response()
                 }
-                (StatusCode::NOT_FOUND, "not found").into_response()
-            }
-        }),
+            },
+        ),
     );
 
     // Bind to port 0 to get a free port from the OS.
@@ -99,7 +101,11 @@ async fn lnk_pipeline_e2e_fetches_verifies_and_materializes() {
     assert_eq!(materialized.len(), 1);
 
     let target = build_dir.join("data/asset.bin");
-    assert!(target.exists(), "materialized file should exist at {}", target.display());
+    assert!(
+        target.exists(),
+        "materialized file should exist at {}",
+        target.display()
+    );
     let got = std::fs::read(&target).unwrap();
     assert_eq!(got, blob_bytes, "materialized bytes should match source");
 
@@ -185,7 +191,10 @@ async fn lnk_pipeline_handles_404() {
     // Either the downloader bails on the non-2xx, or we bail on sha verify.
     // Both are acceptable failure modes — the assertion is just "errors out".
     let result = materialize_all(&discovered, &src_root, &build_dir, &cache);
-    assert!(result.is_err(), "expected error for unreachable/missing blob");
+    assert!(
+        result.is_err(),
+        "expected error for unreachable/missing blob"
+    );
 
     server_handle.abort();
 }
