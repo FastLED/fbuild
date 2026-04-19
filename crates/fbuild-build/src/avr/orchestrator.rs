@@ -19,10 +19,10 @@ use fbuild_core::{Platform, Result};
 use serde::Serialize;
 
 use crate::build_fingerprint::{
-    hash_watch_set_stamps_cached, load_json, save_json, stable_hash_json,
+    hash_watch_set_stamps_cached, normalize_path, save_json, stable_hash_json, FastPathInputs,
     PersistedBuildFingerprint, BUILD_FINGERPRINT_VERSION,
 };
-use crate::compile_database::TargetArchitecture;
+use crate::compile_database::{CompileDatabase, TargetArchitecture};
 use crate::compiler::Compiler as _;
 use crate::pipeline;
 use crate::zccache::FingerprintWatch;
@@ -31,12 +31,16 @@ use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 use super::avr_compiler::AvrCompiler;
 use super::avr_linker::AvrLinker;
 
-/// Inputs whose value — when unchanged — guarantees the AVR build
-/// output is byte-identical to the previously cached one. Serialized
-/// as JSON + SHA-256 into `PersistedBuildFingerprint::metadata_hash`
-/// so a single byte difference in any of these bumps the hash.
-/// Mirrors the ESP32 orchestrator's metadata but with only the
-/// AVR-relevant inputs (no flash_mode / partitions / upload fields).
+/// AVR platform build orchestrator.
+pub struct AvrOrchestrator;
+
+/// Per-build metadata hashed into the AVR no-op fast path.
+///
+/// Any field that can change the produced firmware belongs here;
+/// a change flips the hash and forces a full rebuild. Keep this in
+/// sync with what [`AvrCompiler`] / [`AvrLinker`] actually read off
+/// of `BoardConfig` — extra fields only cost a tiny amount of CPU,
+/// but missing fields silently let stale artifacts get reused.
 #[derive(Debug, Serialize)]
 struct AvrFingerprintMetadata {
     version: u32,
@@ -44,73 +48,54 @@ struct AvrFingerprintMetadata {
     profile: String,
     board_name: String,
     board_mcu: String,
-    board_f_cpu: String,
+    board_define: String,
+    board_core: String,
     board_variant: String,
+    board_f_cpu: String,
     board_extra_flags: Option<String>,
     board_upload_protocol: Option<String>,
     board_upload_speed: Option<String>,
+    platform: String,
     project_dir: String,
     toolchain_dir: String,
-    core_dir: String,
-    variant_dir: String,
+    framework_dir: String,
+    max_flash: Option<u64>,
+    max_ram: Option<u64>,
 }
-
-/// Extensions that count as "project source" for the warm-path
-/// watch-set walk. We hash `(path, len, mtime)` per file so any
-/// source-file edit invalidates the cached fingerprint.
-const AVR_FAST_PATH_EXTS: &[&str] = &["c", "cpp", "cc", "cxx", "h", "hpp", "ino", "S"];
-
-/// Directory names to skip while walking the project for the
-/// fingerprint watch — build artifacts, VCS metadata, and the
-/// daemon's own working dirs.
-const AVR_FAST_PATH_EXCLUDES: &[&str] = &[
-    ".fbuild",
-    ".git",
-    ".pio",
-    ".vscode",
-    "build",
-    "target",
-    "node_modules",
-    "venv",
-];
 
 fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
-    profile.as_dir_name()
+    match profile {
+        fbuild_core::BuildProfile::Release => "release",
+        fbuild_core::BuildProfile::Quick => "quick",
+    }
 }
 
-fn avr_fast_path_watches(project_dir: &Path) -> Vec<FingerprintWatch> {
-    vec![FingerprintWatch {
-        cache_file: project_dir.join(".fbuild/watch-cache.json"),
-        root: project_dir.to_path_buf(),
-        extensions: AVR_FAST_PATH_EXTS.iter().map(|s| s.to_string()).collect(),
-        excludes: AVR_FAST_PATH_EXCLUDES
-            .iter()
-            .map(|s| s.to_string())
-            .collect(),
-    }]
+fn build_fingerprint_path(build_dir: &Path) -> PathBuf {
+    build_dir.join("build_fingerprint.json")
 }
 
-/// Absolute paths the fast-path check requires on disk before it
-/// will short-circuit: the three canonical build artifacts. If any
-/// are missing, the next build must run end-to-end.
-fn avr_fast_path_artifacts(
-    build_dir: &Path,
-    profile: fbuild_core::BuildProfile,
-    env_name: &str,
-) -> (PathBuf, PathBuf, PathBuf) {
-    let release_dir = build_dir
-        .join("build")
-        .join(env_name)
-        .join(profile_label(profile));
-    (
-        release_dir.join("firmware.hex"),
-        release_dir.join("firmware.elf"),
-        release_dir.join("compile_commands.json"),
-    )
+/// Build the watch set for the AVR fast-path check.
+///
+/// Covers the project directory (sketch + local `lib/`) and the
+/// resolved libraries directory if present. Mirrors the ESP32
+/// orchestrator's policy — any directory that can produce a source
+/// file consumed by the build must be watched, or we risk reusing
+/// stale artifacts.
+fn collect_fast_path_watches(build_dir: &Path, project_dir: &Path) -> Vec<FingerprintWatch> {
+    let mut watches = Vec::new();
+    if let Some(watch) =
+        crate::build_fingerprint::fast_path_watch("project", build_dir, project_dir)
+    {
+        watches.push(watch);
+    }
+    let resolved_libs_dir = build_dir.join("libs");
+    if let Some(watch) =
+        crate::build_fingerprint::fast_path_watch("dep_libs", build_dir, &resolved_libs_dir)
+    {
+        watches.push(watch);
+    }
+    watches
 }
-
-/// AVR platform build orchestrator.
-pub struct AvrOrchestrator;
 
 impl BuildOrchestrator for AvrOrchestrator {
     fn platform(&self) -> Platform {
@@ -121,6 +106,14 @@ impl BuildOrchestrator for AvrOrchestrator {
         let start = Instant::now();
         // Env-gated per-phase timer (FBUILD_PERF_LOG=1); zero-overhead when unset.
         let mut perf = crate::perf_log::PerfTimer::new("avr-orchestrator");
+
+        // 0. Discover zccache compiler cache (startup is deferred until
+        // compile work begins). Also used by the fast-path check to short-
+        // circuit the watch walk on warm rebuilds.
+        let compiler_cache = {
+            let _g = perf.phase("zccache-discover");
+            crate::zccache::find_zccache().map(std::path::Path::to_path_buf)
+        };
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir,
         //      collect flags. `new_with_perf` records its own sub-phases
@@ -141,7 +134,7 @@ impl BuildOrchestrator for AvrOrchestrator {
         pipeline::log_toolchain_version(&toolchain.get_gcc_path(), "avr-gcc", &mut ctx.build_log);
 
         // 4. Ensure Arduino core
-        let (_framework_dir, core_dir, variant_dir) = {
+        let (framework_dir, core_dir, variant_dir) = {
             let _g = perf.phase("framework-ensure");
             ensure_avr_framework(
                 &params.project_dir,
@@ -151,93 +144,78 @@ impl BuildOrchestrator for AvrOrchestrator {
             )?
         };
 
-        // 4.5. Warm-build fast path (issue #121).
+        // 4.5. Warm-build fast path.
         //
-        // Before the ~50 ms source-scan + stat-heavy compiler staleness
-        // walk below, consult the persisted `PersistedBuildFingerprint`
-        // next to the previous build's artifacts. If metadata_hash +
-        // the three canonical artifacts (firmware.hex / firmware.elf /
-        // compile_commands.json) + the watch-set hash all match, the
-        // output is byte-identical to the cached one and we can
-        // early-return with the cached `BuildResult`. Skipped for the
-        // compiledb-only / symbol-analysis modes whose outputs aren't
-        // captured by the fingerprint.
+        // All link-affecting config that influences the produced ELF gets
+        // folded into `metadata_hash`. If it matches the persisted fingerprint
+        // AND the watched inputs (project + resolved libs) are byte-identical
+        // since the last successful build, skip the entire compile/link stack.
+        // This lives here rather than before `ensure_installed` so the hashed
+        // toolchain/framework paths reflect the real install location.
+        let build_dir = &ctx.build_dir;
+        let fingerprint_path = build_fingerprint_path(build_dir);
         let metadata_hash = stable_hash_json(&AvrFingerprintMetadata {
             version: BUILD_FINGERPRINT_VERSION,
             env_name: params.env_name.clone(),
             profile: profile_label(params.profile).to_string(),
             board_name: ctx.board.name.clone(),
             board_mcu: ctx.board.mcu.clone(),
-            board_f_cpu: ctx.board.f_cpu.clone(),
+            board_define: ctx.board.board.clone(),
+            board_core: ctx.board.core.clone(),
             board_variant: ctx.board.variant.clone(),
+            board_f_cpu: ctx.board.f_cpu.clone(),
             board_extra_flags: ctx.board.extra_flags.clone(),
             board_upload_protocol: ctx.board.upload_protocol.clone(),
             board_upload_speed: ctx.board.upload_speed.clone(),
-            project_dir: params.project_dir.to_string_lossy().into_owned(),
-            toolchain_dir: toolchain_dir.to_string_lossy().into_owned(),
-            core_dir: core_dir.to_string_lossy().into_owned(),
-            variant_dir: variant_dir.to_string_lossy().into_owned(),
+            platform: "atmelavr".to_string(),
+            project_dir: normalize_path(&params.project_dir),
+            toolchain_dir: normalize_path(&toolchain_dir),
+            framework_dir: normalize_path(&framework_dir),
+            max_flash: ctx.board.max_flash,
+            max_ram: ctx.board.max_ram,
         })?;
-
-        let fingerprint_path = ctx.build_dir.join("build_fingerprint.json");
-        let (fast_hex, fast_elf, fast_compile_db) =
-            avr_fast_path_artifacts(&ctx.build_dir, params.profile, &params.env_name);
-        let fingerprint_watches = avr_fast_path_watches(&params.project_dir);
+        let fingerprint_watches = {
+            let _g = perf.phase("fp-watches-collect");
+            collect_fast_path_watches(build_dir, &params.project_dir)
+        };
 
         if !params.compiledb_only
             && !params.symbol_analysis
             && params.symbol_analysis_path.is_none()
         {
-            let _g = perf.phase("fast-path-check");
-            let persisted = match load_json::<PersistedBuildFingerprint>(&fingerprint_path) {
-                Ok(v) => v,
-                Err(e) => {
-                    tracing::warn!("ignoring invalid AVR build fingerprint: {}", e);
-                    None
-                }
+            let _fast_path_phase = perf.phase("fast-path-check");
+            let fast_elf = build_dir.join("firmware.elf");
+            let fast_hex = build_dir.join("firmware.hex");
+            let fast_compile_db =
+                CompileDatabase::expected_output_path(build_dir, &params.project_dir);
+            let required_artifacts = [fast_elf.clone(), fast_hex.clone(), fast_compile_db.clone()];
+            let inputs = FastPathInputs {
+                fingerprint_path: &fingerprint_path,
+                metadata_hash: &metadata_hash,
+                watches: &fingerprint_watches,
+                required_artifacts: &required_artifacts,
+                extra_artifact_ok: None,
+                watch_set_cache: params.watch_set_cache.as_deref(),
+                compiler_cache: compiler_cache.as_deref(),
             };
-            let artifacts_ready =
-                fast_hex.exists() && fast_elf.exists() && fast_compile_db.exists();
-            if let Some(previous) = persisted.as_ref() {
-                if previous.version == BUILD_FINGERPRINT_VERSION
-                    && previous.metadata_hash == metadata_hash
-                    && artifacts_ready
-                {
-                    let file_set_matches = match previous.file_set_hash.as_deref() {
-                        Some(prev_hash) => match hash_watch_set_stamps_cached(
-                            &fingerprint_watches,
-                            params.watch_set_cache.as_deref(),
-                        ) {
-                            Ok(current) => current == prev_hash,
-                            Err(e) => {
-                                tracing::warn!("AVR fast-path: failed to hash watches: {}", e);
-                                false
-                            }
-                        },
-                        None => false,
-                    };
-                    if file_set_matches {
-                        ctx.build_log.push(
-                            "No-op fingerprint matched; reusing existing AVR artifacts."
-                                .to_string(),
-                        );
-                        let elapsed = start.elapsed().as_secs_f64();
-                        return Ok(BuildResult {
-                            success: true,
-                            firmware_path: Some(fast_hex),
-                            elf_path: Some(fast_elf),
-                            size_info: previous.size_info.clone(),
-                            symbol_map: None,
-                            build_time_secs: elapsed,
-                            message: format!(
-                                "AVR ({}) build for {} reused cached artifacts",
-                                ctx.board.mcu, params.env_name
-                            ),
-                            compile_database_path: Some(fast_compile_db),
-                            build_log: ctx.build_log,
-                        });
-                    }
-                }
+            if let Some(hit) = crate::build_fingerprint::fast_path_check(&inputs)? {
+                ctx.build_log
+                    .push("No-op fingerprint matched; reusing existing AVR artifacts.".to_string());
+                let elapsed = start.elapsed().as_secs_f64();
+                return Ok(BuildResult {
+                    success: true,
+                    firmware_path: Some(fast_hex),
+                    elf_path: Some(fast_elf),
+                    size_info: hit.size_info,
+                    symbol_map: None,
+                    build_time_secs: elapsed,
+                    message: format!(
+                        "AVR ({}) build for {} reused cached artifacts",
+                        ctx.board.mcu, params.env_name
+                    ),
+                    compile_database_path: Some(fast_compile_db),
+                    build_log: ctx.build_log,
+                });
             }
         }
 
@@ -321,7 +299,7 @@ impl BuildOrchestrator for AvrOrchestrator {
         };
 
         // 9. Run shared sequential build pipeline
-        let result = pipeline::run_sequential_build_with_libs(
+        let build_result = pipeline::run_sequential_build_with_libs(
             &compiler,
             &linker,
             ctx,
@@ -334,31 +312,47 @@ impl BuildOrchestrator for AvrOrchestrator {
             start,
         )?;
 
-        // 10. Persist the build fingerprint so the next warm rebuild
-        // can short-circuit via the fast-path check above. Best-effort:
-        // a write failure (e.g. read-only FS) is logged but doesn't
-        // poison the build — the fingerprint is pure acceleration.
-        if result.success && !params.compiledb_only && !params.symbol_analysis {
-            let fp = PersistedBuildFingerprint {
+        // 10. Persist fingerprint so the next warm invocation can hit the
+        // fast path. Skip this for compile-db-only / symbol-analysis runs
+        // — they don't produce the full artifact set the fast path
+        // requires.
+        if build_result.success
+            && !params.compiledb_only
+            && !params.symbol_analysis
+            && params.symbol_analysis_path.is_none()
+        {
+            let persisted_fingerprint = PersistedBuildFingerprint {
                 version: BUILD_FINGERPRINT_VERSION,
-                metadata_hash,
-                file_set_hash: hash_watch_set_stamps_cached(
+                metadata_hash: metadata_hash.clone(),
+                file_set_hash: match hash_watch_set_stamps_cached(
                     &fingerprint_watches,
                     params.watch_set_cache.as_deref(),
-                )
-                .ok(),
-                size_info: result.size_info.clone(),
+                ) {
+                    Ok(hash) => Some(hash),
+                    Err(e) => {
+                        tracing::warn!("failed to hash watched inputs for fingerprint save: {}", e);
+                        None
+                    }
+                },
+                size_info: build_result.size_info.clone(),
             };
-            if let Err(e) = save_json(&fingerprint_path, &fp) {
-                tracing::warn!(
-                    "failed to persist AVR build fingerprint at {}: {}",
-                    fingerprint_path.display(),
-                    e
-                );
+            if let Err(e) = save_json(&fingerprint_path, &persisted_fingerprint) {
+                tracing::warn!("failed to write build fingerprint: {}", e);
+            }
+            if let Some(ref zcc) = compiler_cache {
+                for watch in &fingerprint_watches {
+                    if let Err(e) = crate::zccache::mark_fingerprint_success(zcc, watch) {
+                        tracing::warn!(
+                            "failed to mark zccache fingerprint success for {}: {}",
+                            watch.root.display(),
+                            e
+                        );
+                    }
+                }
             }
         }
 
-        Ok(result)
+        Ok(build_result)
     }
 }
 
