@@ -15,12 +15,18 @@
 //!   When the daemon process exits for any reason, Windows closes the
 //!   job handle and kills every assigned process atomically. Children
 //!   are assigned to the job via `AssignProcessToJobObject` after spawn.
-//! * **Linux** — children are placed in a new process group with
-//!   `setpgid(0, 0)` and request `PR_SET_PDEATHSIG(SIGKILL)` so the
-//!   kernel sends SIGKILL when the daemon thread exits. On `Drop` the
-//!   group issues `killpg(SIGKILL)` as a backstop.
-//! * **macOS** — process groups only; `prctl` is not available. The
-//!   drop-time `killpg` is the primary mechanism.
+//! * **Linux** — each child is placed in its own new process group with
+//!   `setpgid(0, 0)` and requests `PR_SET_PDEATHSIG(SIGKILL)` so the
+//!   kernel sends SIGKILL when the daemon thread exits. Per-child groups
+//!   avoid the EPERM that
+//!   [`ContainedProcessGroup::spawn_with_containment`] hits when a
+//!   second child tries to join a stale, already-exited first child's
+//!   pgid (see issue #129).
+//! * **macOS** — `prctl` is not available. Each child gets a fresh
+//!   process group; there is no drop-time `killpg` backstop because the
+//!   global group is a `OnceLock<...>` that never drops. This is the
+//!   same coverage gap that existed before this fix — macOS containment
+//!   is best-effort, and improving it is tracked separately.
 //!
 //! # Wiring
 //!
@@ -41,11 +47,18 @@
 //! [`spawn_detached`].
 //!
 //! Based on the `ContainedProcessGroup` / `Containment` primitives in
-//! <https://github.com/zackees/running-process>. See FastLED/fbuild#32.
+//! <https://github.com/zackees/running-process>. On Unix, we
+//! deliberately bypass `ContainedProcessGroup::spawn_with_containment`'s
+//! shared-pgid behaviour and apply the `setpgid(0, 0)` + `prctl` pattern
+//! per-child ourselves — see the module-level "How" section for why.
+//! See FastLED/fbuild#32, #129.
 
 use std::process::{Child, Command};
 use std::sync::OnceLock;
 
+#[cfg(unix)]
+use running_process_core::ContainedProcessGroup;
+#[cfg(windows)]
 use running_process_core::{ContainedChild, ContainedProcessGroup, Containment};
 
 /// Global process-wide containment group. Initialised once by the
@@ -87,14 +100,38 @@ pub fn is_initialised() -> bool {
 ///
 /// Falls back to uncontained `Command::spawn` when no global group has
 /// been initialised (non-daemon binaries).
+///
+/// **Windows**: delegates to `ContainedProcessGroup::spawn` which
+/// assigns the child to the Job Object — safe and stateless.
+///
+/// **Unix**: installs a per-child `pre_exec` hook that creates a new
+/// process group (`setpgid(0, 0)`) and, on Linux, requests
+/// `PR_SET_PDEATHSIG(SIGKILL)`. This sidesteps
+/// [`ContainedProcessGroup::spawn_with_containment`]'s shared-pgid
+/// behaviour, which fails with EPERM on the second spawn after the
+/// first child (the pgid leader) has exited — the root cause of
+/// FastLED/fbuild#129. The Linux kernel's `PR_SET_PDEATHSIG` still
+/// enforces the "child dies with daemon" contract; macOS relies on
+/// process-group-leader death alone.
 pub fn spawn_contained(command: &mut Command) -> std::io::Result<Child> {
-    match GLOBAL_GROUP.get() {
-        Some(group) => {
-            let ContainedChild { child, .. } =
-                group.spawn_with_containment(command, Containment::Contained)?;
-            Ok(child)
+    #[cfg(windows)]
+    {
+        match GLOBAL_GROUP.get() {
+            Some(group) => {
+                let ContainedChild { child, .. } =
+                    group.spawn_with_containment(command, Containment::Contained)?;
+                Ok(child)
+            }
+            None => command.spawn(),
         }
-        None => command.spawn(),
+    }
+    #[cfg(unix)]
+    {
+        if GLOBAL_GROUP.get().is_none() {
+            return command.spawn();
+        }
+        unix_install_pre_exec(command);
+        command.spawn()
     }
 }
 
@@ -102,13 +139,74 @@ pub fn spawn_contained(command: &mut Command) -> std::io::Result<Child> {
 /// processes that must outlive the daemon (the daemon itself, spawned
 /// by the CLI / PyO3 bindings).
 pub fn spawn_detached(command: &mut Command) -> std::io::Result<Child> {
-    match GLOBAL_GROUP.get() {
-        Some(group) => {
-            let ContainedChild { child, .. } =
-                group.spawn_with_containment(command, Containment::Detached)?;
-            Ok(child)
+    #[cfg(windows)]
+    {
+        match GLOBAL_GROUP.get() {
+            Some(group) => {
+                let ContainedChild { child, .. } =
+                    group.spawn_with_containment(command, Containment::Detached)?;
+                Ok(child)
+            }
+            None => command.spawn(),
         }
-        None => command.spawn(),
+    }
+    #[cfg(unix)]
+    {
+        // Detached: create a new session so the child survives the
+        // daemon thread that spawned it. Matches the upstream behaviour
+        // but without joining any shared pgid.
+        if GLOBAL_GROUP.get().is_none() {
+            return command.spawn();
+        }
+        unix_install_detached_pre_exec(command);
+        command.spawn()
+    }
+}
+
+/// Install a `pre_exec` hook that puts the child in a fresh process
+/// group (Unix) and, on Linux, asks the kernel to SIGKILL the child
+/// when the spawning thread exits.
+///
+/// Per-child pgid avoids the EPERM race from
+/// [`ContainedProcessGroup::spawn_with_containment`] where a second
+/// spawn tries to join a stale first-child pgid.
+#[cfg(unix)]
+fn unix_install_pre_exec(command: &mut Command) {
+    use std::os::unix::process::CommandExt;
+    // SAFETY: the closure only calls async-signal-safe libc entries
+    // (`setpgid`, `prctl`, `getppid`, `_exit`) and does not allocate.
+    unsafe {
+        command.pre_exec(|| {
+            if libc::setpgid(0, 0) == -1 {
+                return Err(std::io::Error::last_os_error());
+            }
+            #[cfg(target_os = "linux")]
+            {
+                if libc::prctl(libc::PR_SET_PDEATHSIG, libc::SIGKILL) == -1 {
+                    return Err(std::io::Error::last_os_error());
+                }
+                if libc::getppid() == 1 {
+                    // Parent already exited between fork() and prctl();
+                    // don't orphan this child to init.
+                    libc::_exit(1);
+                }
+            }
+            Ok(())
+        });
+    }
+}
+
+#[cfg(unix)]
+fn unix_install_detached_pre_exec(command: &mut Command) {
+    use std::os::unix::process::CommandExt;
+    // SAFETY: `setsid` is async-signal-safe.
+    unsafe {
+        command.pre_exec(|| {
+            if libc::setsid() == -1 {
+                return Err(std::io::Error::last_os_error());
+            }
+            Ok(())
+        });
     }
 }
 
@@ -359,5 +457,62 @@ mod tests {
         // `init_global_containment` here because the global is shared
         // across all tests in this binary.
         let _: bool = is_initialised();
+    }
+
+    /// Regression: FastLED/fbuild#129 — two consecutive
+    /// `spawn_contained` calls must both succeed after the first child
+    /// has exited. The previous implementation (shared-pgid via
+    /// `ContainedProcessGroup::spawn_with_containment`) recorded the
+    /// first child's PID as the pgid and then tried to `setpgid(0,
+    /// first_pid)` on the second child, which fails with EPERM once
+    /// the first child has exited and been reaped.
+    ///
+    /// Per-child pgids (`setpgid(0, 0)`) + `PR_SET_PDEATHSIG` on Linux
+    /// avoids the stale-pgid dependency entirely. Windows uses Job
+    /// Object assignment, which is stateless and has no analogous
+    /// failure mode.
+    #[test]
+    fn sequential_contained_spawns_do_not_fail_with_eperm() {
+        // Install the global group so we exercise the contained path
+        // rather than the uncontained fallback. Idempotent.
+        init_global_containment("FBUILD-UNIT-TEST").expect("init_global_containment");
+        assert!(is_initialised(), "global group must be initialised");
+
+        // First spawn: short-lived command, wait for it to exit before
+        // issuing the second spawn. This is exactly the shape of the
+        // AVR build's "gcc -dumpversion then compile" sequence that
+        // reproduces the original bug.
+        let build_cmd = || {
+            let mut cmd = if cfg!(windows) {
+                let mut c = Command::new("cmd");
+                c.args(["/C", "echo", "ok"]);
+                c
+            } else {
+                let mut c = Command::new("echo");
+                c.arg("ok");
+                c
+            };
+            cmd.stdin(std::process::Stdio::null());
+            cmd.stdout(std::process::Stdio::null());
+            cmd.stderr(std::process::Stdio::null());
+            cmd
+        };
+
+        let mut first = build_cmd();
+        let mut first_child = spawn_contained(&mut first).expect("first spawn");
+        let first_status = first_child.wait().expect("first wait");
+        assert!(first_status.success(), "first child should succeed");
+
+        // Small pause so the reaped pid and its (now defunct) pgroup
+        // have time to be torn down by the kernel. On the pre-fix
+        // code path this made the second spawn's `setpgid(0, stale)`
+        // fail with EPERM with very high probability.
+        std::thread::sleep(std::time::Duration::from_millis(50));
+
+        let mut second = build_cmd();
+        let mut second_child =
+            spawn_contained(&mut second).expect("second spawn must not fail with EPERM");
+        let second_status = second_child.wait().expect("second wait");
+        assert!(second_status.success(), "second child should succeed");
     }
 }
