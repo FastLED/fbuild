@@ -34,13 +34,21 @@ jobs:
     steps:
       - name: Generate App token
         id: app-token
+        continue-on-error: true
         uses: actions/create-github-app-token@v1
         with:
           app-id: ${{ vars.PROJECT_APP_ID }}
           private-key: ${{ secrets.PROJECT_APP_PRIVATE_KEY }}
           owner: ${{ vars.PROJECT_OWNER }}
 
+      - name: App not installed — skipping project sync
+        if: ${{ steps.app-token.outcome != 'success' }}
+        run: |
+          echo "::warning::FastLED Project Sync App is not installed on '${{ vars.PROJECT_OWNER }}'."
+          echo "::warning::Install it at https://github.com/organizations/${{ vars.PROJECT_OWNER }}/settings/installations to enable auto-add-to-project."
+
       - name: Add to project
+        if: ${{ steps.app-token.outcome == 'success' }}
         uses: actions/add-to-project@v1.0.2
         with:
           project-url: https://github.com/orgs/${{ vars.PROJECT_OWNER }}/projects/${{ vars.PROJECT_NUMBER }}
