@@ -1,6 +1,6 @@
 //! Tracing-subscriber layer that forwards events to
-//! [`BroadcastHub::log_tx`] so `/ws/logs` subscribers see the same
-//! events that are written to the daemon's stderr.
+//! [`crate::context::BroadcastHub::log_tx`] so `/ws/logs` subscribers
+//! see the same events that are written to the daemon's stderr.
 //!
 //! # Why (issue #66)
 //!

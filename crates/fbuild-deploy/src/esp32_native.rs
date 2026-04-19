@@ -35,9 +35,10 @@
 //!
 //! # Opt-in
 //!
-//! `verify-flash` is guarded by [`Esp32Deployer::use_native_verify`]
-//! (daemon env: `FBUILD_USE_ESPFLASH_VERIFY`), and `write-flash` by
-//! [`Esp32Deployer::use_native_write`] (daemon env:
+//! `verify-flash` is guarded by
+//! [`super::esp32::Esp32Deployer::with_native_verify`] (daemon env:
+//! `FBUILD_USE_ESPFLASH_VERIFY`), and `write-flash` by
+//! [`super::esp32::Esp32Deployer::with_native_write`] (daemon env:
 //! `FBUILD_USE_ESPFLASH_WRITE`). The two flags are independent —
 //! users can flip one without the other while the native write path
 //! accumulates bench time on every ESP32 family member.
@@ -230,9 +231,10 @@ pub struct NativeWriteRegion {
 ///
 /// Progress from espflash is bridged into `tracing` so the daemon's
 /// existing log broadcaster surfaces it without new API surface (see
-/// [`LoggingProgressBridge`]). Structured WebSocket progress frames are
-/// a follow-up: the bridge is a drop-in replacement point for a richer
-/// callback without touching any of the call sites.
+/// the private `LoggingProgressBridge` below). Structured WebSocket
+/// progress frames are a follow-up: the bridge is a drop-in
+/// replacement point for a richer callback without touching any of
+/// the call sites.
 ///
 /// On success the chip is hard-reset (matching esptool's
 /// `--after hard-reset`) so callers can treat the `Ok` return as
