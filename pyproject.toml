@@ -3,7 +3,7 @@ name = "fbuild"
 version = "2.1.21"
 description = "PlatformIO-compatible embedded build tool (Rust implementation)"
 requires-python = ">=3.10"
-dependencies = ["zccache>=1.2.12"]
+dependencies = ["zccache>=1.2.13"]
 
 [dependency-groups]
 dev = ["fbuild-dev-tools"]
