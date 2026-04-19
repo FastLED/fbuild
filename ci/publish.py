@@ -35,6 +35,7 @@ import tomllib
 import urllib.error
 import urllib.request
 import zipfile
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -338,11 +339,11 @@ def download_artifacts(repo: str, run_id: int) -> None:
     tmp.mkdir()
     run(["gh", "run", "download", str(run_id), "--repo", repo, "--dir", str(tmp)])
 
-    found = 0
+    missing: list[str] = []
     for artifact_name, subdir in ARTIFACT_MAP.items():
         src = tmp / artifact_name
         if not src.exists():
-            log(f"  WARNING: Missing {artifact_name}")
+            missing.append(artifact_name)
             continue
 
         dest = DIST_DIR / subdir
@@ -356,13 +357,14 @@ def download_artifacts(repo: str, run_id: int) -> None:
             size_mb = target.stat().st_size / (1024 * 1024)
             log(f"  {subdir}/{f.name} ({size_mb:.1f} MB)")
 
-        found += 1
-
     shutil.rmtree(tmp)
+    found = len(ARTIFACT_MAP) - len(missing)
     log(f"  {found}/{len(ARTIFACT_MAP)} platforms downloaded")
 
-    if found == 0:
-        log("  ERROR: No artifacts downloaded.")
+    if missing:
+        log(f"  ERROR: Missing artifacts for: {', '.join(missing)}")
+        log(f"  A partial publish would leave PyPI without wheels for those platforms.")
+        log(f"  Re-run the build workflow or pass --run-id <id> of a complete run.")
         sys.exit(1)
 
 
@@ -498,13 +500,17 @@ def build_all_wheels(name: str, version: str, summary: str, requires_python: str
         shutil.rmtree(WHEEL_DIR)
 
     wheels: list[Path] = []
+    missing: list[str] = []
     for subdir, plat_tags in PLATFORMS.items():
         whl = build_wheel(name, version, summary, requires_python, subdir, plat_tags)
         if whl:
             wheels.append(whl)
+        else:
+            missing.append(subdir)
 
-    if not wheels:
-        log("  ERROR: No wheels were built.")
+    if missing:
+        log(f"  ERROR: Failed to build wheels for: {', '.join(missing)}")
+        log(f"  Refusing to publish a partial release.")
         sys.exit(1)
 
     log(f"  {len(wheels)} wheel(s) ready")
@@ -515,12 +521,77 @@ def build_all_wheels(name: str, version: str, summary: str, requires_python: str
 # Step 5: Upload
 # ---------------------------------------------------------------------------
 
-def upload_wheels(wheels: list[Path], name: str, version: str) -> None:
-    log(f"\n=== Step 5: Upload to PyPI ===")
-    upload_cmd = ["uv", "publish"]
-    upload_cmd.extend(str(w) for w in sorted(wheels))
-    run(upload_cmd)
-    log(f"\n  Published: https://pypi.org/project/{name}/{version}/")
+PYPI_CHECK_URL = "https://pypi.org/simple/"
+
+
+def _upload_one(wheel: Path) -> tuple[Path, bool, str]:
+    """Upload a single wheel. Returns (wheel, ok, output)."""
+    cmd = ["uv", "publish", "--check-url", PYPI_CHECK_URL, str(wheel)]
+    try:
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
+        output = (proc.stdout or "") + (proc.stderr or "")
+        return wheel, proc.returncode == 0, output
+    except subprocess.TimeoutExpired:
+        return wheel, False, "timeout after 300s"
+    except Exception as e:  # noqa: BLE001
+        return wheel, False, f"subprocess error: {e}"
+
+
+def upload_wheels(wheels: list[Path]) -> None:
+    log(f"\n=== Step 5: Upload to PyPI (concurrent, {len(wheels)} wheels) ===")
+
+    failures: list[tuple[Path, str]] = []
+    with ThreadPoolExecutor(max_workers=len(wheels)) as pool:
+        future_to_wheel = {pool.submit(_upload_one, w): w for w in sorted(wheels)}
+        for fut in as_completed(future_to_wheel):
+            wheel, ok, output = fut.result()
+            tag = "OK  " if ok else "FAIL"
+            log(f"  [{tag}] {wheel.name}")
+            if not ok:
+                failures.append((wheel, output))
+                for line in output.strip().splitlines()[-10:]:
+                    log(f"        {line}")
+
+    if failures:
+        log(f"\n  ERROR: {len(failures)}/{len(wheels)} wheel upload(s) failed.")
+        log(f"  Re-run `./publish --upload-only` — `--check-url` will skip files already on PyPI.")
+        sys.exit(1)
+
+    log(f"\n  All {len(wheels)} wheels uploaded.")
+
+
+def verify_published(name: str, version: str, wheels: list[Path]) -> None:
+    """Post-upload check: query PyPI and assert every wheel we built is listed."""
+    log(f"\n=== Step 6: Verify release on PyPI ===")
+    expected = {w.name for w in wheels}
+    url = f"https://pypi.org/pypi/{name}/{version}/json"
+
+    # PyPI's CDN can lag a few seconds; retry briefly.
+    published: set[str] = set()
+    last_err: str | None = None
+    for _ in range(6):
+        try:
+            with urllib.request.urlopen(url, timeout=15) as resp:
+                data = json.loads(resp.read())
+            published = {u["filename"] for u in data.get("urls", [])}
+            if expected.issubset(published):
+                break
+        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as e:
+            last_err = str(e)
+        time.sleep(5)
+
+    missing = expected - published
+    if missing:
+        log(f"  ERROR: PyPI release is incomplete.")
+        log(f"  Expected: {sorted(expected)}")
+        log(f"  Found:    {sorted(published) if published else '(none)' + (f' [{last_err}]' if last_err else '')}")
+        log(f"  Missing:  {sorted(missing)}")
+        log(f"  This version is now stuck — PyPI does not allow re-uploading the same filename.")
+        log(f"  Bump the version in pyproject.toml and re-run ./publish.")
+        sys.exit(1)
+
+    log(f"  All {len(expected)} wheel(s) present on PyPI.")
+    log(f"  https://pypi.org/project/{name}/{version}/")
 
 
 # ---------------------------------------------------------------------------
@@ -536,34 +607,55 @@ def main() -> None:
         default=None,
         help="Skip Step 2 (build). Reuse the given build.yml run's artifacts.",
     )
+    parser.add_argument(
+        "--upload-only",
+        action="store_true",
+        help="Skip steps 2-4. Upload wheels already present in dist/wheels/. "
+             "Safe to retry — --check-url skips files already on PyPI.",
+    )
     args = parser.parse_args()
 
-    # Verify prerequisites
-    try:
-        run_capture(["gh", "--version"])
-    except FileNotFoundError:
-        log("ERROR: 'gh' (GitHub CLI) is not installed.")
-        sys.exit(1)
-
     name, version, summary, requires_python = read_project_meta()
-    repo = detect_repo()
-    log(f"Publishing {name} {version} from {repo}")
 
-    # Step 1: Fail fast if version exists
-    check_pypi_version(name, version)
-
-    # Step 2: Build native binaries on all platforms (or reuse a prior run)
-    if args.run_id is not None:
-        log(f"\n=== Step 2: Reusing existing run {args.run_id} ===")
-        run_id = args.run_id
+    if args.upload_only:
+        log(f"Publishing {name} {version} (upload-only, reusing dist/wheels/)")
+        if not WHEEL_DIR.exists():
+            log(f"ERROR: {WHEEL_DIR} does not exist. Run ./publish (without --upload-only) first.")
+            sys.exit(1)
+        wheels = sorted(WHEEL_DIR.glob("*.whl"))
+        if not wheels:
+            log(f"ERROR: No .whl files in {WHEEL_DIR}.")
+            sys.exit(1)
+        expected = len(PLATFORMS)
+        if len(wheels) != expected:
+            log(f"ERROR: Expected {expected} wheels in {WHEEL_DIR}, found {len(wheels)}.")
+            log(f"  Refusing to publish a partial release.")
+            sys.exit(1)
+        log(f"\n=== Steps 1-4 skipped (--upload-only, {len(wheels)} wheels ready) ===")
     else:
-        run_id = trigger_and_wait(repo)
+        try:
+            run_capture(["gh", "--version"])
+        except FileNotFoundError:
+            log("ERROR: 'gh' (GitHub CLI) is not installed.")
+            sys.exit(1)
+        repo = detect_repo()
+        log(f"Publishing {name} {version} from {repo}")
 
-    # Step 3: Download artifacts
-    download_artifacts(repo, run_id)
+        # Step 1: Fail fast if version exists
+        check_pypi_version(name, version)
 
-    # Step 4: Build platform wheels
-    wheels = build_all_wheels(name, version, summary, requires_python)
+        # Step 2: Build native binaries on all platforms (or reuse a prior run)
+        if args.run_id is not None:
+            log(f"\n=== Step 2: Reusing existing run {args.run_id} ===")
+            run_id = args.run_id
+        else:
+            run_id = trigger_and_wait(repo)
+
+        # Step 3: Download artifacts
+        download_artifacts(repo, run_id)
+
+        # Step 4: Build platform wheels
+        wheels = build_all_wheels(name, version, summary, requires_python)
 
     # Step 5: Upload
     if args.dry_run:
@@ -571,7 +663,9 @@ def main() -> None:
         for w in wheels:
             log(f"  {w.name}")
     else:
-        upload_wheels(wheels, name, version)
+        upload_wheels(wheels)
+        # Step 6: Verify all expected wheels actually landed on PyPI.
+        verify_published(name, version, wheels)
 
     log("\n=== Done ===")
 
