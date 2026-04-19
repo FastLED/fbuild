@@ -8,6 +8,13 @@
 
 pub mod avr;
 pub mod esp32;
+/// Native espflash-backed verify/write path (issue #66).
+///
+/// Compiled in only when the `espflash-native` cargo feature is enabled.
+/// Default builds keep the esptool-subprocess path and pay zero cost in
+/// the dep graph (espflash pulls ~30 transitive crates: strum, deku,
+/// miette, ...).
+#[cfg(feature = "espflash-native")]
 pub mod esp32_native;
 pub mod reset;
 pub mod teensy;
