@@ -84,16 +84,23 @@ def run_capture(cmd: list[str]) -> str:
     return result.stdout.strip()
 
 
-def read_project_meta() -> tuple[str, str, str, str]:
-    """Return (name, version, summary, requires_python) from pyproject.toml."""
+def read_project_meta() -> tuple[str, str, str, str, str]:
+    """Return (name, version, summary, requires_python, readme) from pyproject.toml."""
     with open(ROOT / "pyproject.toml", "rb") as f:
         data = tomllib.load(f)
     proj = data["project"]
+    readme = ""
+    readme_field = proj.get("readme")
+    if readme_field:
+        readme_path = ROOT / (readme_field if isinstance(readme_field, str) else readme_field.get("file", ""))
+        if readme_path.exists():
+            readme = readme_path.read_text(encoding="utf-8")
     return (
         proj["name"],
         proj["version"],
         proj.get("description", ""),
         proj.get("requires-python", ">=3.10"),
+        readme,
     )
 
 
@@ -377,6 +384,7 @@ def build_wheel(
     version: str,
     summary: str,
     requires_python: str,
+    readme: str,
     platform_subdir: str,
     plat_tags: list[str],
 ) -> Path | None:
@@ -417,6 +425,10 @@ def build_wheel(
         f"Summary: {summary}\n"
         f"Requires-Python: {requires_python}\n"
     )
+    if readme:
+        # Per PEP 566: blank line separates headers from the description body,
+        # and Description-Content-Type declares the rendering format PyPI uses.
+        metadata += f"Description-Content-Type: text/markdown\n\n{readme}\n"
 
     wheel_meta = (
         f"Wheel-Version: 1.0\n"
@@ -501,7 +513,7 @@ def build_wheel(
     return wheel_path
 
 
-def build_all_wheels(name: str, version: str, summary: str, requires_python: str) -> list[Path]:
+def build_all_wheels(name: str, version: str, summary: str, requires_python: str, readme: str) -> list[Path]:
     log(f"\n=== Step 4: Build wheels ({name} {version}) ===")
 
     if WHEEL_DIR.exists():
@@ -510,7 +522,7 @@ def build_all_wheels(name: str, version: str, summary: str, requires_python: str
     wheels: list[Path] = []
     missing: list[str] = []
     for subdir, plat_tags in PLATFORMS.items():
-        whl = build_wheel(name, version, summary, requires_python, subdir, plat_tags)
+        whl = build_wheel(name, version, summary, requires_python, readme, subdir, plat_tags)
         if whl:
             wheels.append(whl)
         else:
@@ -623,7 +635,7 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    name, version, summary, requires_python = read_project_meta()
+    name, version, summary, requires_python, readme = read_project_meta()
 
     if args.upload_only:
         log(f"Publishing {name} {version} (upload-only, reusing dist/wheels/)")
@@ -663,7 +675,7 @@ def main() -> None:
         download_artifacts(repo, run_id)
 
         # Step 4: Build platform wheels
-        wheels = build_all_wheels(name, version, summary, requires_python)
+        wheels = build_all_wheels(name, version, summary, requires_python, readme)
 
     # Step 5: Upload
     if args.dry_run:
