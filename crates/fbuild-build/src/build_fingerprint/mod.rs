@@ -1,5 +1,9 @@
 //! Persisted metadata for top-level no-op build fast paths.
 
+pub mod fast_path;
+
+pub use fast_path::{fast_path_check, fast_path_watch, FastPathHit, FastPathInputs};
+
 use std::path::{Path, PathBuf};
 use std::time::UNIX_EPOCH;
 

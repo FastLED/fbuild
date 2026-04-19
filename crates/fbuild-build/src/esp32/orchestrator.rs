@@ -26,7 +26,7 @@ use fbuild_packages::Framework;
 use serde::Serialize;
 
 use crate::build_fingerprint::{
-    hash_watch_set_stamps_cached, load_json, normalize_path, save_json, stable_hash_json,
+    hash_watch_set_stamps_cached, normalize_path, save_json, stable_hash_json,
     PersistedBuildFingerprint, BUILD_FINGERPRINT_VERSION,
 };
 use crate::flag_overlay::LanguageExtraFlags;
@@ -42,24 +42,6 @@ use super::mcu_config::get_mcu_config;
 
 /// ESP32 platform build orchestrator.
 pub struct Esp32Orchestrator;
-
-const FAST_PATH_EXTENSIONS: &[&str] = &[
-    "a", "bin", "c", "cc", "cpp", "csv", "elf", "h", "hh", "hpp", "ino", "json", "ld", "lds", "py",
-    "s", "S", "txt",
-];
-const FAST_PATH_EXCLUDES: &[&str] = &[
-    ".cache",
-    ".fbuild",
-    ".git",
-    ".pio",
-    ".venv",
-    ".vscode",
-    "__pycache__",
-    "build",
-    "node_modules",
-    "target",
-    "venv",
-];
 
 #[derive(Debug, Serialize)]
 struct Esp32FingerprintMetadata {
@@ -162,31 +144,17 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     }
 }
 
-fn fast_path_watch(cache_name: &str, build_dir: &Path, root: &Path) -> Option<FingerprintWatch> {
-    if !root.exists() {
-        return None;
-    }
-    Some(FingerprintWatch {
-        cache_file: build_dir.join(format!(".{}.zccache_fp.json", cache_name)),
-        root: root.to_path_buf(),
-        extensions: FAST_PATH_EXTENSIONS
-            .iter()
-            .map(|ext| (*ext).to_string())
-            .collect(),
-        excludes: FAST_PATH_EXCLUDES
-            .iter()
-            .map(|exclude| (*exclude).to_string())
-            .collect(),
-    })
-}
-
 fn collect_fast_path_watches(build_dir: &Path, project_dir: &Path) -> Vec<FingerprintWatch> {
     let mut watches = Vec::new();
-    if let Some(watch) = fast_path_watch("project", build_dir, project_dir) {
+    if let Some(watch) =
+        crate::build_fingerprint::fast_path_watch("project", build_dir, project_dir)
+    {
         watches.push(watch);
     }
     let resolved_libs_dir = build_dir.join("libs");
-    if let Some(watch) = fast_path_watch("dep_libs", build_dir, &resolved_libs_dir) {
+    if let Some(watch) =
+        crate::build_fingerprint::fast_path_watch("dep_libs", build_dir, &resolved_libs_dir)
+    {
         watches.push(watch);
     }
     watches
@@ -329,105 +297,45 @@ impl BuildOrchestrator for Esp32Orchestrator {
             let _fast_path_phase = perf.phase("fast-path-check");
             let (fast_elf, fast_bin, fast_boot, fast_parts, fast_compile_db) =
                 expected_fast_path_artifacts(build_dir, &params.project_dir);
-            let persisted = match load_json::<PersistedBuildFingerprint>(&fingerprint_path) {
-                Ok(value) => value,
-                Err(e) => {
-                    tracing::warn!("ignoring invalid build fingerprint: {}", e);
-                    None
-                }
+            let required_artifacts = [
+                fast_elf.clone(),
+                fast_bin.clone(),
+                fast_boot.clone(),
+                fast_parts.clone(),
+                fast_compile_db.clone(),
+            ];
+            // ESP32 also requires the project-root copy of compile_commands.json
+            // to be in sync with the build-dir copy. That's platform-specific,
+            // so it rides on the shared helper via `extra_artifact_ok`.
+            let compile_db_fresh = || compile_db_is_current(build_dir, &params.project_dir);
+            let inputs = crate::build_fingerprint::FastPathInputs {
+                fingerprint_path: &fingerprint_path,
+                metadata_hash: &metadata_hash,
+                watches: &fingerprint_watches,
+                required_artifacts: &required_artifacts,
+                extra_artifact_ok: Some(&compile_db_fresh),
+                watch_set_cache: params.watch_set_cache.as_deref(),
+                compiler_cache: compiler_cache.as_deref(),
             };
-            let artifacts_ready = fast_elf.exists()
-                && fast_bin.exists()
-                && fast_boot.exists()
-                && fast_parts.exists()
-                && fast_compile_db.exists()
-                && compile_db_is_current(build_dir, &params.project_dir);
-
-            if let Some(previous) = persisted.as_ref() {
-                if previous.version == BUILD_FINGERPRINT_VERSION
-                    && previous.metadata_hash == metadata_hash
-                    && artifacts_ready
-                {
-                    let file_set_matches = if let Some(ref zcc) = compiler_cache {
-                        let mut changed = false;
-                        let mut zccache_ok = true;
-                        for watch in &fingerprint_watches {
-                            match crate::zccache::check_fingerprint(zcc, watch) {
-                                Ok(crate::zccache::FingerprintCheck::Unchanged) => {}
-                                Ok(crate::zccache::FingerprintCheck::Changed) => {
-                                    changed = true;
-                                    break;
-                                }
-                                Err(e) => {
-                                    tracing::warn!(
-                                        "zccache fingerprint unavailable for {}: {}",
-                                        watch.root.display(),
-                                        e
-                                    );
-                                    zccache_ok = false;
-                                    break;
-                                }
-                            }
-                        }
-                        if zccache_ok {
-                            !changed
-                        } else {
-                            match previous.file_set_hash.as_deref() {
-                                Some(previous_hash) => {
-                                    match hash_watch_set_stamps_cached(
-                                        &fingerprint_watches,
-                                        params.watch_set_cache.as_deref(),
-                                    ) {
-                                        Ok(current_hash) => current_hash == previous_hash,
-                                        Err(e) => {
-                                            tracing::warn!("failed to hash watched inputs: {}", e);
-                                            false
-                                        }
-                                    }
-                                }
-                                None => false,
-                            }
-                        }
-                    } else {
-                        match previous.file_set_hash.as_deref() {
-                            Some(previous_hash) => {
-                                match hash_watch_set_stamps_cached(
-                                    &fingerprint_watches,
-                                    params.watch_set_cache.as_deref(),
-                                ) {
-                                    Ok(current_hash) => current_hash == previous_hash,
-                                    Err(e) => {
-                                        tracing::warn!("failed to hash watched inputs: {}", e);
-                                        false
-                                    }
-                                }
-                            }
-                            None => false,
-                        }
-                    };
-
-                    if file_set_matches {
-                        ctx.build_log.push(
-                            "No-op fingerprint matched; reusing existing ESP32 artifacts."
-                                .to_string(),
-                        );
-                        let elapsed = start.elapsed().as_secs_f64();
-                        return Ok(BuildResult {
-                            success: true,
-                            firmware_path: Some(fast_bin),
-                            elf_path: Some(fast_elf),
-                            size_info: previous.size_info.clone(),
-                            symbol_map: None,
-                            build_time_secs: elapsed,
-                            message: format!(
-                                "ESP32 ({}) build for {} reused cached artifacts",
-                                ctx.board.mcu, params.env_name
-                            ),
-                            compile_database_path: Some(fast_compile_db),
-                            build_log: ctx.build_log,
-                        });
-                    }
-                }
+            if let Some(hit) = crate::build_fingerprint::fast_path_check(&inputs)? {
+                ctx.build_log.push(
+                    "No-op fingerprint matched; reusing existing ESP32 artifacts.".to_string(),
+                );
+                let elapsed = start.elapsed().as_secs_f64();
+                return Ok(BuildResult {
+                    success: true,
+                    firmware_path: Some(fast_bin),
+                    elf_path: Some(fast_elf),
+                    size_info: hit.size_info,
+                    symbol_map: None,
+                    build_time_secs: elapsed,
+                    message: format!(
+                        "ESP32 ({}) build for {} reused cached artifacts",
+                        ctx.board.mcu, params.env_name
+                    ),
+                    compile_database_path: Some(fast_compile_db),
+                    build_log: ctx.build_log,
+                });
             }
         }
 
