@@ -134,7 +134,7 @@ pub fn hash_files(paths: &[PathBuf]) -> Result<String> {
 
 pub fn hash_watch_set(watches: &[FingerprintWatch]) -> Result<String> {
     let mut ordered = watches.to_vec();
-    ordered.sort_by(|a, b| watch_identity(a).cmp(&watch_identity(b)));
+    ordered.sort_by_key(watch_identity);
 
     let mut hasher = Sha256::new();
     for watch in &ordered {
@@ -228,7 +228,7 @@ where
     F: FnMut(&Path) -> Result<String>,
 {
     let mut ordered = watches.to_vec();
-    ordered.sort_by(|a, b| watch_identity(a).cmp(&watch_identity(b)));
+    ordered.sort_by_key(watch_identity);
 
     let mut hasher = Sha256::new();
     for watch in &ordered {
