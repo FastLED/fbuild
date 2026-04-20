@@ -36,9 +36,6 @@ uv run cargo run -p fbuild-cli -- test-emu tests/platform/mega -e megaatmega2560
 ./_cargo clippy --workspace --all-targets -- -D warnings
 ./_rustfmt --check <file.rs>
 
-# Local zccache setup (optional, configures rustc-wrapper)
-uv run python ci/zccache_setup.py
-
 # Board definition management
 uv run python ci/validate_boards.py                    # validate against PlatformIO
 uv run python ci/validate_boards.py --external         # compare against Arduino + Zephyr
@@ -59,6 +56,12 @@ uv run python ci/build_dist.py --ref main
 
 # Publish to PyPI
 ./publish
+```
+
+Optional wrapper-mode only; do not use for standard soldr builds:
+
+```bash
+uv run python ci/zccache_setup.py  # writes rustc-wrapper = "zccache"
 ```
 
 ## Hooks (enforced automatically)
