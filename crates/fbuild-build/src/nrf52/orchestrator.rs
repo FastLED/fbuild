@@ -12,13 +12,19 @@
 //! 9. Link (with linker script)
 //! 10. Convert to hex + report size
 
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::time::Instant;
 
 use fbuild_core::{Platform, Result};
+use serde::Serialize;
 
-use crate::compile_database::TargetArchitecture;
+use crate::build_fingerprint::{
+    hash_watch_set_stamps_cached, save_json, stable_hash_json, FastPathInputs,
+    PersistedBuildFingerprint, BUILD_FINGERPRINT_VERSION,
+};
+use crate::compile_database::{CompileDatabase, TargetArchitecture};
 use crate::pipeline;
+use crate::zccache::FingerprintWatch;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
 use super::nrf52_compiler::Nrf52Compiler;
@@ -27,6 +33,62 @@ use super::nrf52_linker::Nrf52Linker;
 /// NRF52 platform build orchestrator.
 pub struct Nrf52Orchestrator;
 
+#[derive(Debug, Serialize)]
+struct Nrf52FingerprintMetadata {
+    version: u32,
+    env_name: String,
+    profile: String,
+    board_name: String,
+    board_mcu: String,
+    board_define: String,
+    board_core: String,
+    board_variant: String,
+    board_f_cpu: String,
+    board_extra_flags: Option<String>,
+    linker_script: String,
+    platform: String,
+    max_flash: Option<u64>,
+    max_ram: Option<u64>,
+}
+
+fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
+    match profile {
+        fbuild_core::BuildProfile::Release => "release",
+        fbuild_core::BuildProfile::Quick => "quick",
+    }
+}
+
+fn build_fingerprint_path(build_dir: &Path) -> PathBuf {
+    build_dir.join("build_fingerprint.json")
+}
+
+fn collect_fast_path_watches(build_dir: &Path, project_dir: &Path) -> Vec<FingerprintWatch> {
+    let mut watches = Vec::new();
+    if let Some(watch) =
+        crate::build_fingerprint::fast_path_watch("project", build_dir, project_dir)
+    {
+        watches.push(watch);
+    }
+    let resolved_libs_dir = build_dir.join("libs");
+    if let Some(watch) =
+        crate::build_fingerprint::fast_path_watch("dep_libs", build_dir, &resolved_libs_dir)
+    {
+        watches.push(watch);
+    }
+    watches
+}
+
+fn expected_fast_path_artifacts(
+    build_dir: &Path,
+    project_dir: &Path,
+) -> (PathBuf, PathBuf, PathBuf) {
+    (
+        build_dir.join("firmware.elf"),
+        build_dir.join("firmware.hex"),
+        CompileDatabase::expected_output_path(build_dir, project_dir),
+    )
+}
+
 impl BuildOrchestrator for Nrf52Orchestrator {
     fn platform(&self) -> Platform {
         Platform::NordicNrf52
@@ -34,6 +96,7 @@ impl BuildOrchestrator for Nrf52Orchestrator {
 
     fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
+        let compiler_cache = crate::zccache::find_zccache().map(std::path::Path::to_path_buf);
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
         let mut ctx = pipeline::BuildContext::new(params)?;
@@ -54,6 +117,69 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         let framework = fbuild_packages::library::Nrf52Cores::new(&params.project_dir);
         let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
         tracing::info!("NRF52 cores at {}", framework_dir.display());
+
+        let build_dir = &ctx.build_dir;
+        let ldscript_name = ctx
+            .board
+            .ldscript
+            .as_deref()
+            .unwrap_or("nrf52840_s140_v6.ld");
+        let fingerprint_path = build_fingerprint_path(build_dir);
+        let metadata_hash = stable_hash_json(&Nrf52FingerprintMetadata {
+            version: BUILD_FINGERPRINT_VERSION,
+            env_name: params.env_name.clone(),
+            profile: profile_label(params.profile).to_string(),
+            board_name: ctx.board.name.clone(),
+            board_mcu: ctx.board.mcu.clone(),
+            board_define: ctx.board.board.clone(),
+            board_core: ctx.board.core.clone(),
+            board_variant: ctx.board.variant.clone(),
+            board_f_cpu: ctx.board.f_cpu.clone(),
+            board_extra_flags: ctx.board.extra_flags.clone(),
+            linker_script: ldscript_name.to_string(),
+            platform: "nordicnrf52".to_string(),
+            max_flash: ctx.board.max_flash,
+            max_ram: ctx.board.max_ram,
+        })?;
+        let fingerprint_watches = collect_fast_path_watches(build_dir, &params.project_dir);
+
+        if !params.compiledb_only
+            && !params.symbol_analysis
+            && params.symbol_analysis_path.is_none()
+        {
+            let (fast_elf, fast_hex, fast_compile_db) =
+                expected_fast_path_artifacts(build_dir, &params.project_dir);
+            let required_artifacts = [fast_elf.clone(), fast_hex.clone(), fast_compile_db.clone()];
+            let inputs = FastPathInputs {
+                fingerprint_path: &fingerprint_path,
+                metadata_hash: &metadata_hash,
+                watches: &fingerprint_watches,
+                required_artifacts: &required_artifacts,
+                extra_artifact_ok: None,
+                watch_set_cache: params.watch_set_cache.as_deref(),
+                compiler_cache: compiler_cache.as_deref(),
+            };
+            if let Some(hit) = crate::build_fingerprint::fast_path_check(&inputs)? {
+                ctx.build_log.push(
+                    "No-op fingerprint matched; reusing existing NRF52 artifacts.".to_string(),
+                );
+                let elapsed = start.elapsed().as_secs_f64();
+                return Ok(BuildResult {
+                    success: true,
+                    firmware_path: Some(fast_hex),
+                    elf_path: Some(fast_elf),
+                    size_info: hit.size_info,
+                    symbol_map: None,
+                    build_time_secs: elapsed,
+                    message: format!(
+                        "NRF52 ({}) build for {} reused cached artifacts",
+                        ctx.board.mcu, params.env_name
+                    ),
+                    compile_database_path: Some(fast_compile_db),
+                    build_log: ctx.build_log,
+                });
+            }
+        }
 
         // 5. Scan sources
         let core_dir = framework.get_core_dir(&ctx.board.core);
@@ -190,11 +316,6 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         .with_build_unflags(ctx.build_unflags.clone());
 
         // 7. Create linker (resolve linker script from board config)
-        let ldscript_name = ctx
-            .board
-            .ldscript
-            .as_deref()
-            .unwrap_or("nrf52840_s140_v6.ld");
         let linker_script_path = framework.get_linker_script(ldscript_name);
         let linker = Nrf52Linker::new(
             toolchain.get_gcc_path(),
@@ -232,7 +353,7 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         };
 
         // 9. Run shared sequential build pipeline
-        pipeline::run_sequential_build_with_libs(
+        let build_result = pipeline::run_sequential_build_with_libs(
             &compiler,
             &linker,
             ctx,
@@ -243,7 +364,45 @@ impl BuildOrchestrator for Nrf52Orchestrator {
             TargetArchitecture::Arm,
             "NRF52",
             start,
-        )
+        )?;
+
+        if build_result.success
+            && !params.compiledb_only
+            && !params.symbol_analysis
+            && params.symbol_analysis_path.is_none()
+        {
+            let persisted_fingerprint = PersistedBuildFingerprint {
+                version: BUILD_FINGERPRINT_VERSION,
+                metadata_hash: metadata_hash.clone(),
+                file_set_hash: match hash_watch_set_stamps_cached(
+                    &fingerprint_watches,
+                    params.watch_set_cache.as_deref(),
+                ) {
+                    Ok(hash) => Some(hash),
+                    Err(e) => {
+                        tracing::warn!("failed to hash watched inputs for fingerprint save: {}", e);
+                        None
+                    }
+                },
+                size_info: build_result.size_info.clone(),
+            };
+            if let Err(e) = save_json(&fingerprint_path, &persisted_fingerprint) {
+                tracing::warn!("failed to write build fingerprint: {}", e);
+            }
+            if let Some(ref zcc) = compiler_cache {
+                for watch in &fingerprint_watches {
+                    if let Err(e) = crate::zccache::mark_fingerprint_success(zcc, watch) {
+                        tracing::warn!(
+                            "failed to mark zccache fingerprint success for {}: {}",
+                            watch.root.display(),
+                            e
+                        );
+                    }
+                }
+            }
+        }
+
+        Ok(build_result)
     }
 }
 
@@ -265,5 +424,40 @@ mod tests {
     fn test_nrf52_orchestrator_platform() {
         let orch = Nrf52Orchestrator;
         assert_eq!(orch.platform(), Platform::NordicNrf52);
+    }
+
+    #[test]
+    fn test_collect_fast_path_watches_includes_project_and_resolved_libs() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let build_dir = tmp.path().join("build");
+        let project_dir = tmp.path().join("project");
+        let libs_dir = build_dir.join("libs");
+        std::fs::create_dir_all(&libs_dir).unwrap();
+        std::fs::create_dir_all(&project_dir).unwrap();
+
+        let watches = collect_fast_path_watches(&build_dir, &project_dir);
+
+        assert_eq!(watches.len(), 2);
+        assert_eq!(watches[0].root, project_dir);
+        assert_eq!(watches[1].root, libs_dir);
+    }
+
+    #[test]
+    fn test_expected_fast_path_artifacts_include_compile_db() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let build_dir = tmp.path().join("build");
+        let project_dir = tmp.path().join("project");
+
+        let (elf, hex, compile_db) = expected_fast_path_artifacts(&build_dir, &project_dir);
+
+        assert_eq!(elf, build_dir.join("firmware.elf"));
+        assert_eq!(hex, build_dir.join("firmware.hex"));
+        assert_eq!(
+            compile_db,
+            crate::compile_database::CompileDatabase::expected_output_path(
+                &build_dir,
+                &project_dir
+            )
+        );
     }
 }
