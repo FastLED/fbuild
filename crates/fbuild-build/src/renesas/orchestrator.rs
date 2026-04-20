@@ -16,9 +16,16 @@ use std::path::{Path, PathBuf};
 use std::time::Instant;
 
 use fbuild_core::{Platform, Result};
+use serde::Serialize;
 
+use crate::build_fingerprint::{
+    hash_watch_set_stamps_cached, save_json, stable_hash_json, FastPathInputs,
+    PersistedBuildFingerprint, BUILD_FINGERPRINT_VERSION,
+};
+use crate::compile_database::CompileDatabase;
 use crate::compile_database::TargetArchitecture;
 use crate::pipeline;
+use crate::zccache::FingerprintWatch;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
 use super::renesas_compiler::RenesasCompiler;
@@ -27,6 +34,63 @@ use super::renesas_linker::RenesasLinker;
 /// Renesas RA platform build orchestrator.
 pub struct RenesasOrchestrator;
 
+#[derive(Debug, Serialize)]
+struct RenesasFingerprintMetadata {
+    version: u32,
+    env_name: String,
+    profile: String,
+    board_name: String,
+    board_mcu: String,
+    board_define: String,
+    board_core: String,
+    board_variant: String,
+    board_f_cpu: String,
+    board_extra_flags: Option<String>,
+    board_upload_protocol: Option<String>,
+    board_upload_speed: Option<String>,
+    platform: String,
+    max_flash: Option<u64>,
+    max_ram: Option<u64>,
+}
+
+fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
+    match profile {
+        fbuild_core::BuildProfile::Release => "release",
+        fbuild_core::BuildProfile::Quick => "quick",
+    }
+}
+
+fn build_fingerprint_path(build_dir: &Path) -> PathBuf {
+    build_dir.join("build_fingerprint.json")
+}
+
+fn collect_fast_path_watches(build_dir: &Path, project_dir: &Path) -> Vec<FingerprintWatch> {
+    let mut watches = Vec::new();
+    if let Some(watch) =
+        crate::build_fingerprint::fast_path_watch("project", build_dir, project_dir)
+    {
+        watches.push(watch);
+    }
+    let resolved_libs_dir = build_dir.join("libs");
+    if let Some(watch) =
+        crate::build_fingerprint::fast_path_watch("dep_libs", build_dir, &resolved_libs_dir)
+    {
+        watches.push(watch);
+    }
+    watches
+}
+
+fn expected_fast_path_artifacts(
+    build_dir: &Path,
+    project_dir: &Path,
+) -> (PathBuf, PathBuf, PathBuf) {
+    (
+        build_dir.join("firmware.elf"),
+        build_dir.join("firmware.bin"),
+        CompileDatabase::expected_output_path(build_dir, project_dir),
+    )
+}
+
 impl BuildOrchestrator for RenesasOrchestrator {
     fn platform(&self) -> Platform {
         Platform::RenesasRa
@@ -34,6 +98,7 @@ impl BuildOrchestrator for RenesasOrchestrator {
 
     fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
+        let compiler_cache = crate::zccache::find_zccache().map(std::path::Path::to_path_buf);
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
         let mut ctx = pipeline::BuildContext::new(params)?;
@@ -58,6 +123,64 @@ impl BuildOrchestrator for RenesasOrchestrator {
         // 5. Scan sources
         let core_dir = framework.get_core_dir(&ctx.board.core);
         let variant_dir = framework.get_variant_dir(&ctx.board.variant);
+        let build_dir = &ctx.build_dir;
+        let fingerprint_path = build_fingerprint_path(build_dir);
+        let metadata_hash = stable_hash_json(&RenesasFingerprintMetadata {
+            version: BUILD_FINGERPRINT_VERSION,
+            env_name: params.env_name.clone(),
+            profile: profile_label(params.profile).to_string(),
+            board_name: ctx.board.name.clone(),
+            board_mcu: ctx.board.mcu.clone(),
+            board_define: ctx.board.board.clone(),
+            board_core: ctx.board.core.clone(),
+            board_variant: ctx.board.variant.clone(),
+            board_f_cpu: ctx.board.f_cpu.clone(),
+            board_extra_flags: ctx.board.extra_flags.clone(),
+            board_upload_protocol: ctx.board.upload_protocol.clone(),
+            board_upload_speed: ctx.board.upload_speed.clone(),
+            platform: "renesas-ra".to_string(),
+            max_flash: ctx.board.max_flash,
+            max_ram: ctx.board.max_ram,
+        })?;
+        let fingerprint_watches = collect_fast_path_watches(build_dir, &params.project_dir);
+
+        if !params.compiledb_only
+            && !params.symbol_analysis
+            && params.symbol_analysis_path.is_none()
+        {
+            let (fast_elf, fast_bin, fast_compile_db) =
+                expected_fast_path_artifacts(build_dir, &params.project_dir);
+            let required_artifacts = [fast_elf.clone(), fast_bin.clone(), fast_compile_db.clone()];
+            let inputs = FastPathInputs {
+                fingerprint_path: &fingerprint_path,
+                metadata_hash: &metadata_hash,
+                watches: &fingerprint_watches,
+                required_artifacts: &required_artifacts,
+                extra_artifact_ok: None,
+                watch_set_cache: params.watch_set_cache.as_deref(),
+                compiler_cache: compiler_cache.as_deref(),
+            };
+            if let Some(hit) = crate::build_fingerprint::fast_path_check(&inputs)? {
+                ctx.build_log.push(
+                    "No-op fingerprint matched; reusing existing Renesas artifacts.".to_string(),
+                );
+                let elapsed = start.elapsed().as_secs_f64();
+                return Ok(BuildResult {
+                    success: true,
+                    firmware_path: Some(fast_bin),
+                    elf_path: Some(fast_elf),
+                    size_info: hit.size_info,
+                    symbol_map: None,
+                    build_time_secs: elapsed,
+                    message: format!(
+                        "Renesas RA ({}) build for {} reused cached artifacts",
+                        ctx.board.mcu, params.env_name
+                    ),
+                    compile_database_path: Some(fast_compile_db),
+                    build_log: ctx.build_log,
+                });
+            }
+        }
 
         let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
         let sources = scanner.scan_all_filtered(
@@ -149,7 +272,7 @@ impl BuildOrchestrator for RenesasOrchestrator {
         };
 
         // 9. Run shared sequential build pipeline
-        pipeline::run_sequential_build_with_libs(
+        let build_result = pipeline::run_sequential_build_with_libs(
             &compiler,
             &linker,
             ctx,
@@ -160,7 +283,45 @@ impl BuildOrchestrator for RenesasOrchestrator {
             TargetArchitecture::Arm,
             "Renesas RA",
             start,
-        )
+        )?;
+
+        if build_result.success
+            && !params.compiledb_only
+            && !params.symbol_analysis
+            && params.symbol_analysis_path.is_none()
+        {
+            let persisted_fingerprint = PersistedBuildFingerprint {
+                version: BUILD_FINGERPRINT_VERSION,
+                metadata_hash: metadata_hash.clone(),
+                file_set_hash: match hash_watch_set_stamps_cached(
+                    &fingerprint_watches,
+                    params.watch_set_cache.as_deref(),
+                ) {
+                    Ok(hash) => Some(hash),
+                    Err(e) => {
+                        tracing::warn!("failed to hash watched inputs for fingerprint save: {}", e);
+                        None
+                    }
+                },
+                size_info: build_result.size_info.clone(),
+            };
+            if let Err(e) = save_json(&fingerprint_path, &persisted_fingerprint) {
+                tracing::warn!("failed to write build fingerprint: {}", e);
+            }
+            if let Some(ref zcc) = compiler_cache {
+                for watch in &fingerprint_watches {
+                    if let Err(e) = crate::zccache::mark_fingerprint_success(zcc, watch) {
+                        tracing::warn!(
+                            "failed to mark zccache fingerprint success for {}: {}",
+                            watch.root.display(),
+                            e
+                        );
+                    }
+                }
+            }
+        }
+
+        Ok(build_result)
     }
 }
 
@@ -264,5 +425,36 @@ mod tests {
         )
         .unwrap();
         assert!(!is_renesas_project(tmp.path(), "uno"));
+    }
+
+    #[test]
+    fn test_collect_fast_path_watches_skips_missing_dep_libs() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let build_dir = tmp.path().join("build");
+        let project_dir = tmp.path().join("project");
+        std::fs::create_dir_all(&build_dir).unwrap();
+        std::fs::create_dir_all(&project_dir).unwrap();
+
+        let watches = collect_fast_path_watches(&build_dir, &project_dir);
+        assert_eq!(watches.len(), 1);
+        assert_eq!(watches[0].root, project_dir);
+    }
+
+    #[test]
+    fn test_expected_fast_path_artifacts_follow_compile_db_location() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let build_dir = tmp.path().join("build");
+        let app_project = tmp.path().join("app");
+        let lib_project = tmp.path().join("libproj");
+        std::fs::create_dir_all(&build_dir).unwrap();
+        std::fs::create_dir_all(&app_project).unwrap();
+        std::fs::create_dir_all(&lib_project).unwrap();
+        std::fs::write(lib_project.join("library.json"), r#"{"name":"libproj"}"#).unwrap();
+
+        let (_, _, app_compile_db) = expected_fast_path_artifacts(&build_dir, &app_project);
+        let (_, _, lib_compile_db) = expected_fast_path_artifacts(&build_dir, &lib_project);
+
+        assert_eq!(app_compile_db, app_project.join("compile_commands.json"));
+        assert_eq!(lib_compile_db, build_dir.join("compile_commands.json"));
     }
 }
