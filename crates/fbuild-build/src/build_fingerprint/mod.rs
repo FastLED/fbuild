@@ -112,18 +112,22 @@ pub fn stable_hash_json<T: Serialize>(value: &T) -> Result<String> {
 }
 
 pub fn hash_files(paths: &[PathBuf]) -> Result<String> {
-    let mut sorted = paths.to_vec();
-    sorted.sort();
+    let root = common_parent_for_hash(paths);
+    let mut sorted: Vec<(String, &PathBuf)> = paths
+        .iter()
+        .map(|path| (path_for_hash(root.as_deref(), path), path))
+        .collect();
+    sorted.sort_by(|a, b| a.0.cmp(&b.0).then_with(|| a.1.cmp(b.1)));
     let mut hasher = Sha256::new();
-    for path in &sorted {
+    for (path_for_hash, path) in sorted {
         if !path.exists() {
             hasher.update(b"missing\0");
-            hasher.update(normalize_path(path));
+            hasher.update(path_for_hash);
             hasher.update(b"\0");
             continue;
         }
         hasher.update(b"path\0");
-        hasher.update(normalize_path(path));
+        hasher.update(path_for_hash);
         hasher.update(b"\0");
         let bytes = std::fs::read(path)?;
         hasher.update((bytes.len() as u64).to_le_bytes());
@@ -348,6 +352,37 @@ fn relative_path_for_hash(root: &Path, path: &Path) -> String {
     normalize_path(relative)
 }
 
+fn path_for_hash(root: Option<&Path>, path: &Path) -> String {
+    root.map_or_else(
+        || normalize_path(path),
+        |root| relative_path_for_hash(root, path),
+    )
+}
+
+fn common_parent_for_hash(paths: &[PathBuf]) -> Option<PathBuf> {
+    let mut shared: Option<PathBuf> = None;
+    for path in paths {
+        let parent = path.parent().unwrap_or_else(|| Path::new(""));
+        shared = Some(match shared {
+            None => parent.to_path_buf(),
+            Some(existing) => common_path_prefix(&existing, parent),
+        });
+    }
+
+    shared.filter(|path| !path.as_os_str().is_empty())
+}
+
+fn common_path_prefix(left: &Path, right: &Path) -> PathBuf {
+    let mut prefix = PathBuf::new();
+    for (left_component, right_component) in left.components().zip(right.components()) {
+        if left_component != right_component {
+            break;
+        }
+        prefix.push(left_component.as_os_str());
+    }
+    prefix
+}
+
 fn watch_identity(watch: &FingerprintWatch) -> String {
     watch
         .cache_file
@@ -430,6 +465,33 @@ mod tests {
         fs::write(&path, "two").unwrap();
         let second = hash_files(std::slice::from_ref(&path)).unwrap();
         assert_ne!(first, second);
+    }
+
+    #[test]
+    fn test_hash_files_ignores_workspace_root() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let a_root = tmp.path().join("workspace-a").join("project");
+        let b_root = tmp.path().join("workspace-b").join("project");
+        fs::create_dir_all(a_root.join("include")).unwrap();
+        fs::create_dir_all(b_root.join("include")).unwrap();
+        fs::write(a_root.join("main.cpp"), "int main() { return 0; }\n").unwrap();
+        fs::write(b_root.join("main.cpp"), "int main() { return 0; }\n").unwrap();
+        fs::write(a_root.join("include").join("app.h"), "#pragma once\n").unwrap();
+        fs::write(b_root.join("include").join("app.h"), "#pragma once\n").unwrap();
+
+        let a_paths = vec![
+            a_root.join("main.cpp"),
+            a_root.join("include").join("app.h"),
+        ];
+        let b_paths = vec![
+            b_root.join("main.cpp"),
+            b_root.join("include").join("app.h"),
+        ];
+
+        let a_hash = hash_files(&a_paths).unwrap();
+        let b_hash = hash_files(&b_paths).unwrap();
+
+        assert_eq!(a_hash, b_hash);
     }
 
     #[test]
