@@ -41,9 +41,15 @@ uv run cargo fmt --all
 uv run test
 uv run test --full
 uv run test -p fbuild-build -- some_test_name
+```
 
+## Optional wrapper-mode
+
+```powershell
 uv run python ci/zccache_setup.py
 ```
+
+This configures `rustc-wrapper = "zccache"` for local wrapper-mode experiments. Standard builds should use `uv run`, `soldr`, or the `_cargo`/`_rustc`/`_rustfmt` trampolines above.
 
 ## Allowed fallback
 

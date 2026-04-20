@@ -56,10 +56,18 @@ jobs:
         with:
           targets: ${{ inputs.target }}
 
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Install soldr bootstrap
+        shell: bash
+        run: python -m pip install soldr==0.7.4
+
       - name: Build soldr from source
         shell: bash
         working-directory: soldr
-        run: cargo build --package soldr-cli --release --locked
+        run: soldr cargo build --package soldr-cli --release --locked
 
       - name: Add soldr to PATH
         shell: bash
@@ -69,11 +77,6 @@ jobs:
       # ensure the target stdlib is installed for the pinned toolchain too
       - name: Add Rust target
         run: rustup target add ${{ inputs.target }}
-
-      - uses: actions/setup-python@v6
-        if: ${{ !inputs.linux_cross && !inputs.macos_cross || inputs.linux_cross }}
-        with:
-          python-version: "3.13"
 
       # Linux musl toolchain (libudev is auto-excluded for musl targets by serialport)
       - name: Install Linux dependencies
@@ -95,8 +98,8 @@ jobs:
         shell: bash
         run: |
           if [ "${{ inputs.linux_cross }}" = "true" ]; then
-            soldr cargo zigbuild build --release --target ${{ inputs.target }} -p fbuild-cli
-            soldr cargo zigbuild build --release --target ${{ inputs.target }} -p fbuild-daemon
+            soldr cargo zigbuild --release --target ${{ inputs.target }} -p fbuild-cli
+            soldr cargo zigbuild --release --target ${{ inputs.target }} -p fbuild-daemon
           else
             soldr cargo build --release --target ${{ inputs.target }} -p fbuild-cli
             soldr cargo build --release --target ${{ inputs.target }} -p fbuild-daemon
@@ -122,7 +125,7 @@ jobs:
             ARCH="${TARGET%%-*}"
             PYO3_TARGET="${ARCH}-unknown-linux-gnu"
             rustup target add "$PYO3_TARGET"
-            PYO3_NO_PYTHON=1 soldr cargo zigbuild build --release \
+            PYO3_NO_PYTHON=1 soldr cargo zigbuild --release \
               --target "${PYO3_TARGET}.2.17" -p fbuild-python \
               --features extension-module
           elif [ "${{ inputs.macos_cross }}" = "true" ]; then
