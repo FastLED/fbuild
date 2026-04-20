@@ -127,8 +127,8 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             &framework.get_boards_txt(),
             &board_id,
         );
-        let build_dir = &ctx.build_dir;
-        let fingerprint_path = build_fingerprint_path(build_dir);
+        let build_dir = ctx.build_dir.clone();
+        let fingerprint_path = build_fingerprint_path(&build_dir);
         let metadata_hash = stable_hash_json(&Rp2040FingerprintMetadata {
             version: BUILD_FINGERPRINT_VERSION,
             env_name: params.env_name.clone(),
@@ -145,14 +145,14 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             max_flash: ctx.board.max_flash,
             max_ram: ctx.board.max_ram,
         })?;
-        let fingerprint_watches = collect_fast_path_watches(build_dir, &params.project_dir);
+        let fingerprint_watches = collect_fast_path_watches(&build_dir, &params.project_dir);
 
         if !params.compiledb_only
             && !params.symbol_analysis
             && params.symbol_analysis_path.is_none()
         {
             let (fast_elf, fast_bin, fast_compile_db) =
-                expected_fast_path_artifacts(build_dir, &params.project_dir);
+                expected_fast_path_artifacts(&build_dir, &params.project_dir);
             let required_artifacts = [fast_elf.clone(), fast_bin.clone(), fast_compile_db.clone()];
             let inputs = FastPathInputs {
                 fingerprint_path: &fingerprint_path,
@@ -351,11 +351,13 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             && !params.symbol_analysis
             && params.symbol_analysis_path.is_none()
         {
+            let persisted_fingerprint_watches =
+                collect_fast_path_watches(&build_dir, &params.project_dir);
             let persisted_fingerprint = PersistedBuildFingerprint {
                 version: BUILD_FINGERPRINT_VERSION,
                 metadata_hash: metadata_hash.clone(),
                 file_set_hash: match hash_watch_set_stamps_cached(
-                    &fingerprint_watches,
+                    &persisted_fingerprint_watches,
                     params.watch_set_cache.as_deref(),
                 ) {
                     Ok(hash) => Some(hash),
@@ -370,7 +372,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
                 tracing::warn!("failed to write build fingerprint: {}", e);
             }
             if let Some(ref zcc) = compiler_cache {
-                for watch in &fingerprint_watches {
+                for watch in &persisted_fingerprint_watches {
                     if let Err(e) = crate::zccache::mark_fingerprint_success(zcc, watch) {
                         tracing::warn!(
                             "failed to mark zccache fingerprint success for {}: {}",
@@ -908,6 +910,21 @@ mod tests {
         let watches = collect_fast_path_watches(&build_dir, &project_dir);
         assert_eq!(watches.len(), 1);
         assert_eq!(watches[0].root, project_dir);
+    }
+
+    #[test]
+    fn test_collect_fast_path_watches_includes_dep_libs_when_present() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let build_dir = tmp.path().join("build");
+        let project_dir = tmp.path().join("project");
+        let dep_libs_dir = build_dir.join("libs");
+        std::fs::create_dir_all(&dep_libs_dir).unwrap();
+        std::fs::create_dir_all(&project_dir).unwrap();
+
+        let watches = collect_fast_path_watches(&build_dir, &project_dir);
+        assert_eq!(watches.len(), 2);
+        assert_eq!(watches[0].root, project_dir);
+        assert_eq!(watches[1].root, dep_libs_dir);
     }
 
     #[test]
