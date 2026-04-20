@@ -1,5 +1,4 @@
 #!/bin/bash
 # Trampoline: runs cargo through soldr so the rustup-managed toolchain
-# is always used. --no-cache keeps the compilation wrapper off to
-# match the previous bare-cargo behavior.
-exec uv run soldr --no-cache cargo "$@"
+# is always used.
+exec uv run soldr cargo "$@"

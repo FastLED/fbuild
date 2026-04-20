@@ -16,21 +16,28 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v6
+      - uses: actions/checkout@v6
+        with:
+          repository: zackees/soldr
+          ref: v0.7.4
+          path: soldr
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy, rustfmt
-      - name: Setup zccache
-        uses: zackees/zccache@main
-        with:
-          shared-key: ${{ runner.os }}-check
+      - name: Build soldr from source
+        shell: bash
+        working-directory: soldr
+        run: cargo build --package soldr-cli --release --locked
+      - name: Add soldr to PATH
+        shell: bash
+        run: echo "${{ github.workspace }}/soldr/target/release" >> "$GITHUB_PATH"
 
       - name: Check
-        run: cargo check --workspace --all-targets
+        shell: bash
+        run: soldr cargo check --workspace --all-targets
       - name: Clippy
-        run: cargo clippy --workspace --all-targets -- -D warnings
+        shell: bash
+        run: soldr cargo clippy --workspace --all-targets -- -D warnings
       - name: Test
-        run: cargo test --workspace
-
-      - name: Cleanup zccache
-        if: always()
-        uses: zackees/zccache/action/cleanup@main
+        shell: bash
+        run: soldr cargo test --workspace

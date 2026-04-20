@@ -11,7 +11,7 @@ Python scripts for CI, packaging, and development tooling. All invoked via `uv r
 - **`test.py`** -- Workspace test runner with `--full` (stress + integration) and per-crate filtering
 - **`trampoline.py`** -- Rust toolchain trampolines (cargo, rustc, rustfmt, clippy-driver) registered as `uv` project scripts
 - **`validate_boards.py`** -- Validates fbuild board JSON assets against PlatformIO board definitions
-- **`zccache_setup.py`** -- Optional local setup for zccache as the Cargo rustc-wrapper
+- **`zccache_setup.py`** -- Optional local wrapper-mode setup for zccache; not used by the standard soldr build path
 
 ## Subdirectories
 

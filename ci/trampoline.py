@@ -9,10 +9,9 @@ Why soldr:
 - soldr resolves each tool via `rustup which`, which respects
   `rust-toolchain.toml` the same way the old PATH-based trampolines
   did, but without requiring PATH to be pre-shaped.
-- `soldr --no-cache cargo` preserves the prior bare-cargo semantics
-  (no RUSTC_WRAPPER, no managed zccache) so this migration is
-  behavior-preserving for CI and local dev. Adopting soldr's built-in
-  zccache wrapper is a separate, deliberate decision.
+- The normal Cargo path is `soldr cargo ...`, matching Soldr's
+  integration guidance and letting Soldr manage its own wrapper
+  behavior without repo-specific `RUSTC_WRAPPER` wiring.
 """
 
 import shutil
@@ -21,8 +20,8 @@ import sys
 from pathlib import Path
 
 
-def _soldr_prefix(no_cache: bool):
-    """Return the argv prefix that runs soldr, with `--no-cache` if asked."""
+def _soldr_prefix():
+    """Return the argv prefix that runs soldr."""
     if not shutil.which("soldr"):
         print(
             "error: `soldr` not found on PATH. Run ./install (or `uv sync`) "
@@ -30,35 +29,30 @@ def _soldr_prefix(no_cache: bool):
             file=sys.stderr,
         )
         sys.exit(1)
-    prefix = ["soldr"]
-    if no_cache:
-        prefix.append("--no-cache")
-    return prefix
+    return ["soldr"]
 
 
-def _run_via_soldr(subcommand: str, *, no_cache: bool):
-    """Exec `soldr [--no-cache] <subcommand> <argv...>`."""
-    cmd = _soldr_prefix(no_cache) + [subcommand] + sys.argv[1:]
+def _run_via_soldr(subcommand: str):
+    """Exec `soldr <subcommand> <argv...>`."""
+    cmd = _soldr_prefix() + [subcommand] + sys.argv[1:]
     result = subprocess.run(cmd)
     sys.exit(result.returncode)
 
 
 def cargo():
-    # --no-cache keeps soldr's RUSTC_WRAPPER / zccache path off, matching
-    # the previous bare-cargo behavior of this trampoline.
-    _run_via_soldr("cargo", no_cache=True)
+    _run_via_soldr("cargo")
 
 
 def rustc():
-    _run_via_soldr("rustc", no_cache=False)
+    _run_via_soldr("rustc")
 
 
 def rustfmt():
-    _run_via_soldr("rustfmt", no_cache=False)
+    _run_via_soldr("rustfmt")
 
 
 def clippy_driver():
-    _run_via_soldr("clippy-driver", no_cache=False)
+    _run_via_soldr("clippy-driver")
 
 
 def _run_cargo_bin(package):
@@ -67,7 +61,7 @@ def _run_cargo_bin(package):
     # Strip leading '--' that uv inserts.
     if extra and extra[0] == "--":
         extra = extra[1:]
-    cmd = _soldr_prefix(no_cache=True) + ["cargo", "run", "-p", package]
+    cmd = _soldr_prefix() + ["cargo", "run", "-p", package]
     if extra:
         cmd.append("--")
         cmd.extend(extra)
