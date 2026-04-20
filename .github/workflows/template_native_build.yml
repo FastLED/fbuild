@@ -54,6 +54,8 @@ jobs:
 
       - uses: dtolnay/rust-toolchain@stable
         with:
+          toolchain: 1.94.1
+          components: clippy, rustfmt
           targets: ${{ inputs.target }}
 
       - uses: actions/setup-python@v6

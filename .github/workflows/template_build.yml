@@ -32,8 +32,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Install Rust toolchain
+      - name: Install pinned Rust toolchain
         uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.94.1
+          components: clippy, rustfmt
 
       - name: Install soldr 0.7.4
         shell: bash
