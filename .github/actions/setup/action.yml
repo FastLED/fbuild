@@ -38,6 +38,9 @@ outputs:
   cache-dir:
     description: "Resolved cache directory path (useful for diagnostic steps)."
     value: ${{ steps.resolve-paths.outputs.cache-dir }}
+  zccache-store-path:
+    description: "Resolved zccache store path exported as ZCCACHE_DIR for downstream actions/cache steps."
+    value: ${{ steps.resolve-paths.outputs.zccache-store-path }}
   fbuild-hash:
     description: "sha256 prefix of the installed fbuild wheel's RECORD file. Baked into the cache key so an fbuild upgrade invalidates stale artifacts."
     value: ${{ steps.fbuild-hash.outputs.fbuild-hash }}
@@ -50,7 +53,7 @@ runs:
       with:
         python-version: ${{ inputs.python-version }}
 
-    - name: Resolve cache directory and fbuild install target
+    - name: Resolve cache directories and fbuild install target
       id: resolve-paths
       shell: bash
       run: |
@@ -61,11 +64,14 @@ runs:
         else
           CACHE_DIR="${RUNNER_TEMP}/fbuild-cache"
         fi
-        mkdir -p "$CACHE_DIR"
+        ZCCACHE_DIR="${RUNNER_TEMP}/zccache"
+        mkdir -p "$CACHE_DIR" "$ZCCACHE_DIR"
 
         # Exported for every subsequent step in the user's job.
         echo "FBUILD_CACHE_DIR=$CACHE_DIR" >> "$GITHUB_ENV"
+        echo "ZCCACHE_DIR=$ZCCACHE_DIR" >> "$GITHUB_ENV"
         echo "cache-dir=$CACHE_DIR" >> "$GITHUB_OUTPUT"
+        echo "zccache-store-path=$ZCCACHE_DIR" >> "$GITHUB_OUTPUT"
 
         if [ "${{ inputs.fbuild-version }}" = "latest" ]; then
           echo "pip-spec=fbuild" >> "$GITHUB_OUTPUT"
