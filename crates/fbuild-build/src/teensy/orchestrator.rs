@@ -676,7 +676,7 @@ mod tests {
 
         let mut sources = resolve_teensy_framework_library_sources_from_libraries(
             &libraries,
-            &[project_src.clone()],
+            std::slice::from_ref(&project_src),
         );
         sources.sort();
 
@@ -728,7 +728,7 @@ mod tests {
 
         let mut sources = resolve_teensy_framework_library_sources_from_libraries(
             &libraries,
-            &[project_src.clone()],
+            std::slice::from_ref(&project_src),
         );
         sources.sort();
 
