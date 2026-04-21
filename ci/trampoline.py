@@ -9,9 +9,9 @@ Why soldr:
 - soldr resolves each tool via `rustup which`, which respects
   `rust-toolchain.toml` the same way the old PATH-based trampolines
   did, but without requiring PATH to be pre-shaped.
-- The normal Cargo path is `soldr cargo ...`, matching Soldr's
-  integration guidance and letting Soldr manage its own wrapper
-  behavior without repo-specific `RUSTC_WRAPPER` wiring.
+- The normal Cargo path is `soldr cargo ...`, so local dev and CI get
+  soldr's managed zccache path by default without repo-specific
+  `RUSTC_WRAPPER` wiring.
 """
 
 import shutil
