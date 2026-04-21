@@ -40,6 +40,11 @@ jobs:
   build:
     name: Build (${{ inputs.target }})
     runs-on: ${{ inputs.runner }}
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+      artifact-metadata: write
 
     steps:
       - uses: actions/checkout@v6
@@ -183,6 +188,57 @@ jobs:
             strip staging/fbuild-daemon${{ inputs.binary_ext }} || true
             strip staging/_native.abi3.so 2>/dev/null || true
           fi
+
+      - name: Generate artifact metadata and checksums
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          import subprocess
+          from pathlib import Path
+
+          staging = Path("staging")
+          source_sha = subprocess.check_output(
+              ["git", "rev-parse", "HEAD"],
+              text=True,
+          ).strip()
+          metadata = {
+              "repository": os.environ["GITHUB_REPOSITORY"],
+              "workflow": os.environ["GITHUB_WORKFLOW"],
+              "run_id": os.environ["GITHUB_RUN_ID"],
+              "run_attempt": os.environ["GITHUB_RUN_ATTEMPT"],
+              "source_ref": "${{ inputs.ref || github.sha }}",
+              "source_sha": source_sha,
+              "target": "${{ inputs.target }}",
+              "runner_os": os.environ["RUNNER_OS"],
+              "runner_arch": os.environ["RUNNER_ARCH"],
+              "workflow_sha": os.environ["GITHUB_SHA"],
+          }
+          (staging / "BUILD-METADATA.json").write_text(
+              json.dumps(metadata, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+
+          entries = []
+          for path in sorted(staging.iterdir()):
+              if not path.is_file() or path.name == "SHA256SUMS":
+                  continue
+              digest = hashlib.sha256(path.read_bytes()).hexdigest()
+              entries.append(f"{digest} *{path.name}\n")
+          (staging / "SHA256SUMS").write_text("".join(entries), encoding="utf-8")
+          PY
+
+      - name: Attest staged artifacts
+        uses: actions/attest@v4
+        with:
+          subject-checksums: staging/SHA256SUMS
+
+      - name: Attest checksum manifest
+        uses: actions/attest@v4
+        with:
+          subject-path: staging/SHA256SUMS
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
