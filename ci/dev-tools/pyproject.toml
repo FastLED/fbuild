@@ -3,7 +3,7 @@ name = "fbuild-dev-tools"
 version = "0.0.0"
 description = "Repo-local Rust toolchain trampolines for fbuild development"
 requires-python = ">=3.10"
-dependencies = ["soldr>=0.7.0"]
+dependencies = ["soldr>=0.7.4"]
 
 [project.scripts]
 cargo = "ci.trampoline:cargo"

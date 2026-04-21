@@ -21,8 +21,8 @@ Codex working notes for this repo. Start with [CLAUDE.md](./CLAUDE.md) for the f
 
 - Repo hooks enforce this.
 - All three forms dispatch through [soldr](https://github.com/zackees/soldr), which resolves each tool via `rustup which` so the rustup-managed toolchain is always used instead of a stale system or Chocolatey install.
-- `uv run cargo ...` works because `ci/dev-tools` registers `cargo`/`rustc`/`rustfmt` as repo-local uv scripts that now dispatch through `ci/trampoline.py` → `soldr`.
-- The normal Cargo path is `soldr cargo ...`; do not add repo-specific `RUSTC_WRAPPER` wiring for standard builds.
+- `uv run cargo ...` works because `ci/dev-tools` registers `cargo`/`rustc`/`rustfmt` as repo-local uv scripts that now dispatch through `ci/trampoline.py` -> `soldr`.
+- The normal Cargo path is `soldr cargo ...`, so repo Rust builds use soldr's managed zccache path by default; do not add repo-specific `RUSTC_WRAPPER` wiring for standard builds.
 - If you bypass them, you can hit wrong-toolchain errors.
 
 ## Use these
