@@ -88,6 +88,67 @@ void loop() {
     );
 }
 
+/// Build a Teensy 4.1 sketch that includes Teensyduino framework libraries.
+#[test]
+#[ignore]
+fn build_teensy41_spi_octo_headers() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let project_dir = tmp.path();
+
+    fs::write(
+        project_dir.join("platformio.ini"),
+        "[env:teensy41]\nplatform = teensy\nboard = teensy41\nframework = arduino\n",
+    )
+    .unwrap();
+
+    let src_dir = project_dir.join("src");
+    fs::create_dir_all(&src_dir).unwrap();
+    fs::write(
+        src_dir.join("main.cpp"),
+        "\
+#include <Arduino.h>
+#include <SPI.h>
+#include <OctoWS2811.h>
+
+void setup() {
+  SPI.begin();
+}
+
+void loop() {}
+",
+    )
+    .unwrap();
+
+    let build_dir = project_dir.join(".fbuild/build");
+    let params = BuildParams {
+        project_dir: project_dir.to_path_buf(),
+        env_name: "teensy41".to_string(),
+        clean: true,
+        profile: BuildProfile::Release,
+        build_dir,
+        verbose: true,
+        jobs: None,
+        generate_compiledb: false,
+        compiledb_only: false,
+        log_sender: None,
+        symbol_analysis: false,
+        symbol_analysis_path: None,
+        no_timestamp: false,
+        src_dir: None,
+        pio_env: Default::default(),
+        extra_build_flags: Vec::new(),
+        watch_set_cache: None,
+    };
+
+    let orchestrator = fbuild_build::teensy::orchestrator::TeensyOrchestrator;
+    let result = orchestrator
+        .build(&params)
+        .expect("Teensy framework library headers should build");
+
+    assert!(result.success);
+    assert!(result.firmware_path.expect("should produce hex").exists());
+}
+
 /// Build using Teensy test fixture from the repo.
 #[test]
 #[ignore]
