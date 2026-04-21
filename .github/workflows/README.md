@@ -36,3 +36,37 @@ CI/CD workflows for the fbuild project, covering lint, test, documentation, and 
 - **`build.yml`** -- Manual dispatch: cross-platform native binary builds
 - **`template_build.yml`** -- Reusable workflow for per-board firmware builds
 - **`template_native_build.yml`** -- Reusable workflow for native Rust binary builds
+
+### Native Build Attestations
+
+`build.yml` produces GitHub Artifact Attestations for the native artifacts
+staged by `template_native_build.yml`:
+
+- `fbuild` / `fbuild.exe`
+- `fbuild-daemon` / `fbuild-daemon.exe`
+- `_native.abi3.so` / `_native.pyd`
+- `BUILD-METADATA.json`
+- `SHA256SUMS`
+
+Each native build artifact also includes `BUILD-METADATA.json`, which records
+the repository, workflow run, source ref/SHA, runner OS/architecture, and target
+triple, plus `SHA256SUMS` for local digest inspection.
+
+To verify a downloaded artifact file:
+
+```bash
+gh attestation verify <path-to-file> --repo FastLED/fbuild
+```
+
+For a downloaded and extracted `binaries-${target}` artifact, verify every file
+with:
+
+```bash
+for file in *; do
+  gh attestation verify "$file" --repo FastLED/fbuild
+done
+```
+
+For release distribution, run `build.yml` from the release tag or exact commit
+being published. Manual builds from branches are attested too, but release/tag
+attestations are the intended trusted distribution path.
