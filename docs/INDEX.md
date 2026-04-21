@@ -23,6 +23,8 @@ A grep-friendly FAQ that maps common questions to the file that answers them. Bo
 | How do I run tests / lint / fmt?                          | [DEVELOPMENT.md](DEVELOPMENT.md#testing)                   |
 | Why is my build failing?                                  | [DEVELOPMENT.md](DEVELOPMENT.md#troubleshooting)           |
 | How do I use the emulator (QEMU / avr8js / simavr)?       | [../README.md](../README.md#emulator-testing)              |
+| What CI cache block should consumers copy?                | [CI_CACHE.md](CI_CACHE.md#copy-paste-github-actions-block) |
+| What cache keys and invalidation pattern should CI use?   | [CI_CACHE.md](CI_CACHE.md#key-composition)                 |
 | How do I cache fbuild across CI runs?                     | [CI_CACHING.md](CI_CACHING.md)                             |
 | What's safe to cache in GitHub Actions?                   | [CI_CACHING.md](CI_CACHING.md#what-the-cache-holds)        |
 | Why does warm-pass build take ~30 s per sketch? (#91)     | [PERF_WARM_BUILD.md](PERF_WARM_BUILD.md)                   |
