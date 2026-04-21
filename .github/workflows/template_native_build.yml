@@ -157,8 +157,11 @@ jobs:
             ext_src="target/${{ inputs.target }}/release/lib_native.dylib"
             [ -f "$ext_src" ] && cp "$ext_src" staging/_native.abi3.so
           elif [ "${{ inputs.binary_ext }}" = ".exe" ]; then
-            [ -f target/release/_native.dll ] && \
-              cp target/release/_native.dll staging/_native.pyd
+            for ext_src in \
+              "target/${{ inputs.target }}/release/_native.dll" \
+              "target/release/_native.dll"; do
+              [ -f "$ext_src" ] && cp "$ext_src" staging/_native.pyd && break
+            done
           else
             for ext in so dylib; do
               src="target/release/lib_native.$ext"
@@ -182,6 +185,7 @@ jobs:
             strip staging/fbuild${{ inputs.binary_ext }} || true
             strip staging/fbuild-daemon${{ inputs.binary_ext }} || true
             strip staging/_native.abi3.so 2>/dev/null || true
+            strip staging/_native.pyd 2>/dev/null || true
           fi
 
       - name: Upload artifacts
