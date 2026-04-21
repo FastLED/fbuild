@@ -55,37 +55,12 @@ jobs:
           echo "BENCH_JOB_START=$(date +%s.%N)" >> "$GITHUB_ENV"
 
       # -------- system setup (python, fbuild, uv) --------
-      - name: "Phase - setup-python"
-        uses: actions/setup-python@v5
+      - name: "Phase - setup fbuild"
+        id: fbuild-setup
+        uses: FastLED/fbuild/.github/actions/setup@main
         with:
           python-version: "3.12"
-
-      - name: "Phase - pip install fbuild"
-        run: |
-          t0=$(date +%s.%N)
-          python -m pip install --upgrade pip
-          # iter3: 2.1.20 still shipped a wheel whose console-script was missing
-          # the exec bit (iter2 failed here). 2.1.21 carries the S_IFREG fix,
-          # but we keep a defensive `chmod +x` so a future regression in the
-          # wheel doesn't mask a cache-behavior measurement here.
-          python -m pip install fbuild
-          chmod +x "$(python -c 'import sys,os;print(os.path.join(os.path.dirname(sys.executable),"fbuild"))')" || true
-          fbuild --version
-          t1=$(date +%s.%N)
-          printf 'pip_install_fbuild\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
-
-      - name: "Phase - compute fbuild content hash"
-        id: fbuild_hash
-        run: |
-          FBUILD_HASH=$(python - <<'PY'
-          import hashlib, importlib.metadata as md
-          dist = md.distribution("fbuild")
-          record = dist.read_text("RECORD") or f"{dist.version}\n{dist.read_text('METADATA') or ''}"
-          print(hashlib.sha256(record.encode()).hexdigest()[:16])
-          PY
-          )
-          echo "fbuild-hash=${FBUILD_HASH}" >> "$GITHUB_OUTPUT"
-          echo "fbuild content hash: ${FBUILD_HASH}"
+          cache: "false"
 
       # -------- clone FastLED (needs to happen BEFORE cache restore because the
       #         cache writes into fastled/.build/ which only exists after clone) --------
@@ -104,12 +79,13 @@ jobs:
           printf 'clone_fastled\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
           echo "FastLED HEAD: $(cd fastled && git rev-parse HEAD)"
 
-      # -------- iteration 1: cache the directories fbuild actually writes to --------
+      # -------- iteration 4: cache the directories fbuild actually writes to --------
       # Iteration 0 cached $RUNNER_TEMP/fbuild-cache, which was empty. The real
       # state lives in:
       #   ~/.fbuild/                — fbuild toolchain + daemon state (arch-level)
       #   ~/.fastled/global_cache/  — PlatformIO toolchain downloads
       #   fastled/.build/pio/<board>/ — compile outputs + per-project .fbuild/
+      #   $ZCCACHE_DIR                - compiler object store from setup action
       - name: "Phase - restore compile cache"
         id: compile_cache
         uses: actions/cache/restore@v4
@@ -118,10 +94,11 @@ jobs:
             ~/.fbuild
             ~/.fastled/global_cache
             fastled/.build/pio/${{ env.BENCH_BOARD }}
-          key: "bench-v2-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild_hash.outputs.fbuild-hash }}-${{ steps.bench_config.outputs.board }}-${{ steps.bench_config.outputs.ref }}"
+            ${{ steps.fbuild-setup.outputs.zccache-store-path }}
+          key: "bench-v4-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-setup.outputs.fbuild-hash }}-${{ steps.bench_config.outputs.board }}-${{ steps.bench_config.outputs.ref }}"
           restore-keys: |
-            bench-v2-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild_hash.outputs.fbuild-hash }}-${{ steps.bench_config.outputs.board }}-
-            bench-v2-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild_hash.outputs.fbuild-hash }}-
+            bench-v4-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-setup.outputs.fbuild-hash }}-${{ steps.bench_config.outputs.board }}-
+            bench-v4-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-setup.outputs.fbuild-hash }}-
 
       - name: "Phase - record cache-restore result"
         run: |
@@ -129,7 +106,7 @@ jobs:
           printf 'compile_cache_key_matched\t%s\n' "${{ steps.compile_cache.outputs.cache-matched-key }}" >> "$BENCH_TIMINGS"
           echo "Cache hit: ${{ steps.compile_cache.outputs.cache-hit }}"
           echo "Key matched: ${{ steps.compile_cache.outputs.cache-matched-key }}"
-          for d in ~/.fbuild ~/.fastled/global_cache fastled/.build/pio/${BENCH_BOARD}; do
+          for d in ~/.fbuild ~/.fastled/global_cache fastled/.build/pio/${BENCH_BOARD} "${ZCCACHE_DIR}"; do
             if [ -d "$d" ]; then
               printf '  %s: %s\n' "$d" "$(du -sh "$d" 2>/dev/null | cut -f1)"
             else
@@ -178,7 +155,7 @@ jobs:
         if: always()
         run: |
           echo "=== post-compile cache footprint ==="
-          for d in ~/.fbuild ~/.fastled/global_cache fastled/.build/pio/${BENCH_BOARD}; do
+          for d in ~/.fbuild ~/.fastled/global_cache fastled/.build/pio/${BENCH_BOARD} "${ZCCACHE_DIR}"; do
             if [ -d "$d" ]; then
               printf '  %s: %s\n' "$d" "$(du -sh "$d" 2>/dev/null | cut -f1)"
             else
@@ -194,7 +171,8 @@ jobs:
             ~/.fbuild
             ~/.fastled/global_cache
             fastled/.build/pio/${{ env.BENCH_BOARD }}
-          key: "bench-v2-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild_hash.outputs.fbuild-hash }}-${{ steps.bench_config.outputs.board }}-${{ steps.bench_config.outputs.ref }}"
+            ${{ steps.fbuild-setup.outputs.zccache-store-path }}
+          key: "bench-v4-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-setup.outputs.fbuild-hash }}-${{ steps.bench_config.outputs.board }}-${{ steps.bench_config.outputs.ref }}"
 
       - name: "Phase - job total + summary"
         if: always()
