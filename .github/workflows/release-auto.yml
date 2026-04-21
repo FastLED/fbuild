@@ -1,0 +1,302 @@
+name: Autonomous Release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - Cargo.toml
+      - pyproject.toml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  attestations: write
+  id-token: write
+
+concurrency:
+  group: release-auto-${{ github.ref_name }}
+  cancel-in-progress: false
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: "-D warnings"
+
+jobs:
+  prepare:
+    name: Prepare release
+    runs-on: ubuntu-24.04
+    outputs:
+      should_release: ${{ steps.prepare.outputs.should_release }}
+      version: ${{ steps.prepare.outputs.version }}
+      project_version: ${{ steps.prepare.outputs.project_version }}
+      commit_sha: ${{ steps.prepare.outputs.commit_sha }}
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Check release eligibility
+        id: prepare
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          cargo_version="$(
+            python - <<'PY'
+          import tomllib
+          with open("Cargo.toml", "rb") as f:
+              print(tomllib.load(f)["workspace"]["package"]["version"])
+          PY
+          )"
+          pyproject_version="$(
+            python - <<'PY'
+          import tomllib
+          with open("pyproject.toml", "rb") as f:
+              print(tomllib.load(f)["project"]["version"])
+          PY
+          )"
+
+          if [ "$cargo_version" != "$pyproject_version" ]; then
+            echo "Cargo.toml version ($cargo_version) does not match pyproject.toml version ($pyproject_version)" >&2
+            exit 1
+          fi
+
+          version="v${cargo_version}"
+          commit_sha="$(git rev-parse HEAD)"
+
+          tag_exists="false"
+          if git ls-remote --exit-code --tags origin "refs/tags/${version}" >/dev/null 2>&1; then
+            tag_exists="true"
+          fi
+
+          latest="$(
+            curl -fsSL https://pypi.org/pypi/fbuild/json \
+              | python -c 'import json,sys; print(json.load(sys.stdin)["info"]["version"])' \
+              || true
+          )"
+          if [ -z "$latest" ]; then
+            latest="0.0.0"
+          fi
+
+          should_release="false"
+          newest="$(printf '%s\n%s\n' "$latest" "$cargo_version" | sort -V | tail -n1)"
+          if [ "$tag_exists" != "true" ] && [ "$newest" = "$cargo_version" ] && [ "$cargo_version" != "$latest" ]; then
+            should_release="true"
+          fi
+
+          {
+            echo "version=${version}"
+            echo "project_version=${cargo_version}"
+            echo "commit_sha=${commit_sha}"
+            echo "should_release=${should_release}"
+          } >> "$GITHUB_OUTPUT"
+
+          echo "Candidate version: ${version}"
+          echo "Latest PyPI version: ${latest}"
+          echo "Tag exists: ${tag_exists}"
+          echo "Should release: ${should_release}"
+
+  build:
+    name: Native build (${{ matrix.target }})
+    needs: prepare
+    if: needs.prepare.outputs.should_release == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: x86_64-unknown-linux-musl
+            runner: ubuntu-latest
+            binary_ext: ""
+            linux_cross: false
+            macos_cross: false
+
+          - target: aarch64-unknown-linux-musl
+            runner: ubuntu-latest
+            binary_ext: ""
+            linux_cross: true
+            macos_cross: false
+
+          - target: aarch64-apple-darwin
+            runner: macos-latest
+            binary_ext: ""
+            linux_cross: false
+            macos_cross: false
+
+          - target: x86_64-pc-windows-msvc
+            runner: windows-latest
+            binary_ext: ".exe"
+            linux_cross: false
+            macos_cross: false
+
+    uses: ./.github/workflows/template_native_build.yml
+    with:
+      target: ${{ matrix.target }}
+      runner: ${{ matrix.runner }}
+      binary_ext: ${{ matrix.binary_ext }}
+      linux_cross: ${{ matrix.linux_cross }}
+      macos_cross: ${{ matrix.macos_cross }}
+      ref: ${{ needs.prepare.outputs.commit_sha }}
+
+  publish:
+    name: Publish GitHub release
+    needs: [prepare, build]
+    if: needs.prepare.outputs.should_release == 'true'
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.prepare.outputs.commit_sha }}
+
+      - name: Download native artifacts
+        uses: actions/download-artifact@v7
+        with:
+          pattern: binaries-*
+          path: artifacts
+
+      - name: Package release archives
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          version="${{ needs.prepare.outputs.version }}"
+          mkdir -p dist pkg
+
+          for artifact_dir in artifacts/binaries-*; do
+            [ -d "$artifact_dir" ] || continue
+            target="${artifact_dir#artifacts/binaries-}"
+            package_name="fbuild-${version}-${target}"
+            package_dir="pkg/${package_name}"
+
+            rm -rf "$package_dir"
+            mkdir -p "$package_dir"
+            cp -a "$artifact_dir"/. "$package_dir"/
+
+            if [[ "$target" == *windows* ]]; then
+              (cd pkg && zip -r "../dist/${package_name}.zip" "$package_name")
+            else
+              tar -C pkg -czf "dist/${package_name}.tar.gz" "$package_name"
+            fi
+          done
+
+          cd dist
+          sha256sum fbuild-* > "fbuild-${version}-SHA256SUMS.txt"
+
+      - name: Attest release artifacts
+        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3
+        with:
+          subject-checksums: dist/fbuild-${{ needs.prepare.outputs.version }}-SHA256SUMS.txt
+
+      - name: Create draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="${{ needs.prepare.outputs.version }}"
+          gh release create "$version" dist/* \
+            --draft \
+            --generate-notes \
+            --target "${{ needs.prepare.outputs.commit_sha }}" \
+            --title "$version"
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: gh release edit "${{ needs.prepare.outputs.version }}" --draft=false
+
+  build-pypi:
+    name: Build PyPI wheels
+    needs: [prepare, build]
+    if: needs.prepare.outputs.should_release == 'true'
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.prepare.outputs.commit_sha }}
+
+      - name: Download native artifacts
+        uses: actions/download-artifact@v7
+        with:
+          pattern: binaries-*
+          path: dist/_tmp
+
+      - name: Build wheels
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python - <<'PY'
+          import shutil
+
+          import ci.publish as publish
+
+          tmp = publish.DIST_DIR / "_tmp"
+          missing = []
+          for artifact_name, subdir in publish.ARTIFACT_MAP.items():
+              src = tmp / artifact_name
+              if not src.exists():
+                  missing.append(artifact_name)
+                  continue
+
+              dest = publish.DIST_DIR / subdir
+              if dest.exists():
+                  shutil.rmtree(dest)
+              dest.mkdir(parents=True)
+
+              for path in src.iterdir():
+                  if path.is_file():
+                      target = dest / path.name
+                      shutil.copy2(path, target)
+                      if not path.name.endswith(".exe"):
+                          target.chmod(0o755)
+
+          if missing:
+              raise SystemExit(f"Missing native artifacts: {', '.join(missing)}")
+
+          meta = publish.read_project_meta()
+          wheels = publish.build_all_wheels(*meta)
+          print(f"Built {len(wheels)} wheel(s)")
+          PY
+
+      - name: Smoke test Linux x86_64 wheel
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m venv .venv
+          . .venv/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install dist/wheels/*manylinux_2_17_x86_64*.whl
+          fbuild --version
+          python -c "import fbuild; print(fbuild.__version__)"
+
+      - name: Upload PyPI distributions
+        uses: actions/upload-artifact@v7
+        with:
+          name: pypi-fbuild
+          path: dist/wheels/*.whl
+          if-no-files-found: error
+
+  publish-pypi:
+    name: Publish PyPI
+    needs: [prepare, build-pypi]
+    if: needs.prepare.outputs.should_release == 'true'
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Download PyPI distributions
+        uses: actions/download-artifact@v7
+        with:
+          name: pypi-fbuild
+          path: dist
+
+      - name: List distributions
+        shell: bash
+        run: ls -lh dist
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b # release/v1
+        with:
+          packages-dir: dist
+          attestations: true
