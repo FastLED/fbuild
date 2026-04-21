@@ -10,12 +10,6 @@ on:
 
 jobs:
   build:
-    permissions:
-      contents: read
-      id-token: write
-      attestations: write
-      artifact-metadata: write
-
     strategy:
       fail-fast: false
       matrix:

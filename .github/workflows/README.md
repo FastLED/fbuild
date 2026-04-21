@@ -34,39 +34,36 @@ CI/CD workflows for the fbuild project, covering lint, test, documentation, and 
 ## Native Binaries and Templates
 
 - **`build.yml`** -- Manual dispatch: cross-platform native binary builds
+- **`release-auto.yml`** -- Version-gated GitHub/PyPI release workflow with attestations
 - **`template_build.yml`** -- Reusable workflow for per-board firmware builds
 - **`template_native_build.yml`** -- Reusable workflow for native Rust binary builds
 
-### Native Build Attestations
+### Autonomous Releases
 
-`build.yml` produces GitHub Artifact Attestations for the native artifacts
-staged by `template_native_build.yml`:
+`release-auto.yml` follows the attested release pattern used by `soldr`:
 
-- `fbuild` / `fbuild.exe`
-- `fbuild-daemon` / `fbuild-daemon.exe`
-- `_native.abi3.so` / `_native.pyd`
-- `BUILD-METADATA.json`
-- `SHA256SUMS`
+- reads the workspace/package version from `Cargo.toml` and `pyproject.toml`
+- skips the run if the tag already exists or PyPI already has that version
+- builds native artifacts through `template_native_build.yml`
+- packages GitHub Release archives and creates `SHA256SUMS`
+- attests the release archive checksums with GitHub Artifact Attestations
+- builds fbuild wheels from the native artifacts
+- publishes wheels to PyPI through Trusted Publishing
 
-Each native build artifact also includes `BUILD-METADATA.json`, which records
-the repository, workflow run, source ref/SHA, runner OS/architecture, and target
-triple, plus `SHA256SUMS` for local digest inspection.
-
-To verify a downloaded artifact file:
+To verify a downloaded GitHub Release artifact:
 
 ```bash
-gh attestation verify <path-to-file> --repo FastLED/fbuild
+gh attestation verify <path-to-release-archive> --repo FastLED/fbuild
 ```
 
-For a downloaded and extracted `binaries-${target}` artifact, verify every file
-with:
+To inspect the release checksums:
 
 ```bash
-for file in *; do
-  gh attestation verify "$file" --repo FastLED/fbuild
-done
+sha256sum -c fbuild-vX.Y.Z-SHA256SUMS.txt
 ```
 
-For release distribution, run `build.yml` from the release tag or exact commit
-being published. Manual builds from branches are attested too, but release/tag
-attestations are the intended trusted distribution path.
+PyPI publishing requires a Trusted Publisher configured on PyPI for:
+
+- project: `fbuild`
+- repository: `FastLED/fbuild`
+- workflow: `.github/workflows/release-auto.yml`
