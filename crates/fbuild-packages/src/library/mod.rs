@@ -47,4 +47,4 @@ pub use sam_core::SamCores;
 pub use samd_core::SamdCores;
 pub use silabs_core::SilabsCores;
 pub use stm32_core::Stm32Cores;
-pub use teensy_core::TeensyCores;
+pub use teensy_core::{TeensyCores, TeensyFrameworkLibrary};
