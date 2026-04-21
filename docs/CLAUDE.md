@@ -26,6 +26,7 @@ For a full FAQ-style index of every doc in this repo (human + LLM entry point), 
 - **[WHY.md](WHY.md)** - Why fbuild exists, key benefits, performance
 - **[BOARD_STATUS.md](BOARD_STATUS.md)** - Per-platform CI badges and supported boards
 - **[DEVELOPMENT.md](DEVELOPMENT.md)** - Testing, troubleshooting, local setup
+- **[CI_CACHE.md](CI_CACHE.md)** - Consumer-facing cross-run CI cache strategy
 - **[DESIGN_DECISIONS.md](DESIGN_DECISIONS.md)** - ADR-style decisions with rationale
 - **[ROADMAP.md](ROADMAP.md)** - Implementation phases
 - **[ARCHITECTURE.md](ARCHITECTURE.md)** - Index of all architecture documents

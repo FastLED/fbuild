@@ -10,6 +10,7 @@ Architecture and design documentation for the fbuild project.
 - **`WHY.md`** -- Why fbuild exists, key benefits, performance benchmarks
 - **`BOARD_STATUS.md`** -- Per-platform CI badges and supported boards
 - **`DEVELOPMENT.md`** -- Testing, troubleshooting, local development setup
+- **`CI_CACHE.md`** -- Consumer-facing cross-run CI cache strategy
 - **`CI_CACHING.md`** -- How to save/restore fbuild's cache across CI runs
 - **`DESIGN_DECISIONS.md`** -- ADR-style decisions with rationale
 - **`ROADMAP.md`** -- Implementation phases for the Rust port
