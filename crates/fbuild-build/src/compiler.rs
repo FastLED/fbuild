@@ -596,12 +596,13 @@ pub fn compile_source(
     };
 
     let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
+    let compile_cwd = compiler_cache.and_then(|_| crate::zccache::compile_cwd_from_output(output));
 
     if verbose {
         tracing::info!("compile: {}", args.join(" "));
     }
 
-    let result = run_command(&args_ref, None, None, None)?;
+    let result = run_command(&args_ref, compile_cwd.as_deref(), None, None)?;
 
     if result.success() {
         std::fs::write(command_hash_path(output), rebuild_signature)?;

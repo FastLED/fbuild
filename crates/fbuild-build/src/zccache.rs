@@ -177,6 +177,26 @@ pub fn wrap_args(args: &[&str], cache_path: Option<&Path>) -> Vec<String> {
     }
 }
 
+/// Return the workspace root to use as the CWD for zccache-wrapped compiles.
+///
+/// Upstream zccache normalizes cache-key paths relative to the wrapper
+/// process CWD. fbuild object files live under `<workspace>/.fbuild/...`, so
+/// running the wrapper from `<workspace>` lets identical renamed workspaces
+/// share per-TU cache keys even when compiler args contain absolute paths.
+pub fn compile_cwd_from_output(output: &Path) -> Option<PathBuf> {
+    let mut dir = output.parent()?;
+    loop {
+        if dir
+            .file_name()
+            .and_then(|name| name.to_str())
+            .is_some_and(|name| name.eq_ignore_ascii_case(".fbuild"))
+        {
+            return dir.parent().map(Path::to_path_buf);
+        }
+        dir = dir.parent()?;
+    }
+}
+
 /// Ask zccache whether the watched root changed since the last successful mark.
 ///
 /// Exit code semantics come from `zccache fp check`:
@@ -244,5 +264,27 @@ pub fn mark_fingerprint_success(zccache: &Path, watch: &FingerprintWatch) -> Res
             result.stderr,
             result.stdout
         )))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn compile_cwd_from_output_uses_workspace_before_fbuild() {
+        let output = Path::new("/work/project/.fbuild/build/env/release/src/main.o");
+
+        assert_eq!(
+            compile_cwd_from_output(output).as_deref(),
+            Some(Path::new("/work/project"))
+        );
+    }
+
+    #[test]
+    fn compile_cwd_from_output_returns_none_without_fbuild_component() {
+        let output = Path::new("/work/project/build/env/main.o");
+
+        assert!(compile_cwd_from_output(output).is_none());
     }
 }
