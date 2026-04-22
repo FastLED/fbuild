@@ -38,6 +38,27 @@ CI/CD workflows for the fbuild project, covering lint, test, documentation, and 
 - **`template_build.yml`** -- Reusable workflow for per-board firmware builds
 - **`template_native_build.yml`** -- Reusable workflow for native Rust binary builds
 
+### Native Build Attestations
+
+Manual `build.yml` native artifacts include `SHA256SUMS.txt` and GitHub Artifact
+Attestations for every staged native file:
+
+- `fbuild` / `fbuild.exe`
+- `fbuild-daemon` / `fbuild-daemon.exe`
+- `_native.abi3.so` / `_native.pyd`
+
+After downloading and extracting a `binaries-${target}` workflow artifact:
+
+```bash
+sha256sum -c SHA256SUMS.txt
+gh attestation verify fbuild --repo FastLED/fbuild
+gh attestation verify fbuild-daemon --repo FastLED/fbuild
+gh attestation verify _native.abi3.so --repo FastLED/fbuild
+```
+
+For Windows artifacts, verify `fbuild.exe`, `fbuild-daemon.exe`, and
+`_native.pyd` instead.
+
 ### Autonomous Releases
 
 `release-auto.yml` follows the attested release pattern used by `soldr`:

@@ -36,6 +36,11 @@ env:
   CARGO_TERM_COLOR: always
   RUSTFLAGS: "-D warnings"
 
+permissions:
+  contents: read
+  attestations: write
+  id-token: write
+
 jobs:
   build:
     name: Build (${{ inputs.target }})
@@ -187,6 +192,19 @@ jobs:
             strip staging/_native.abi3.so 2>/dev/null || true
             strip staging/_native.pyd 2>/dev/null || true
           fi
+
+      - name: Generate checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd staging
+          sha256sum * > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: Attest native artifacts
+        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3
+        with:
+          subject-checksums: staging/SHA256SUMS.txt
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
