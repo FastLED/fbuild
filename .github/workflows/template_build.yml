@@ -69,7 +69,9 @@ jobs:
 
       - name: Build fbuild binaries
         run: |
-          soldr cargo build -p fbuild-cli -p fbuild-daemon
+          # Avoid failing board builds on a stale or unresponsive zccache daemon.
+          # These jobs still cache downloaded fbuild toolchains and platform outputs.
+          soldr --no-cache cargo build -p fbuild-cli -p fbuild-daemon
 
       - name: Add fbuild to PATH
         run: echo "${{ github.workspace }}/target/debug" >> $GITHUB_PATH
