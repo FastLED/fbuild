@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """PreToolUse hook: blocks bare Rust commands and bare python/pip.
 
-All cargo/rustc/rustfmt must go through uv run (trampoline ensures correct toolchain).
+All cargo/rustc/rustfmt must go through soldr (ensures correct toolchain).
 All python must go through uv (ensures correct environment).
 
 Exit codes:
@@ -16,9 +16,9 @@ import sys
 RUST_TOOLS = {"cargo", "rustc", "rustfmt", "clippy-driver", "cargo-clippy", "cargo-fmt"}
 PYTHON_TOOLS = {"python", "python3", "pip", "pip3"}
 
-ALLOWED_PREFIXES = ("uv run ", "uv pip ", "soldr ")
-TRAMPOLINE_PREFIXES = ("./_cargo ", "./_rustc ", "./_rustfmt ",
-                       "_cargo ", "_rustc ", "_rustfmt ")
+SOLDR_PREFIXES = ("soldr ", "uv run soldr ")
+UV_RUN_PREFIX = "uv run "
+UV_PIP_PREFIX = "uv pip "
 
 
 FORBIDDEN_SCRIPT_DIRS = re.compile(
@@ -55,20 +55,38 @@ def check_command(command):
         if not seg:
             continue
 
-        # Skip if properly wrapped with uv or using a trampoline
-        if any(seg.startswith(p) for p in ALLOWED_PREFIXES):
+        # Skip if Rust tooling is explicitly routed through soldr.
+        if any(seg.startswith(p) for p in SOLDR_PREFIXES):
             continue
-        if any(seg.startswith(p) or seg == p.strip() for p in TRAMPOLINE_PREFIXES):
+
+        if seg.startswith(UV_PIP_PREFIX):
             continue
 
         first_word = seg.split()[0] if seg.split() else ""
 
+        if seg.startswith(UV_RUN_PREFIX):
+            parts = seg.split()
+            # `uv run soldr ...` was handled above. Block the old `uv run cargo`
+            # console-script shim path so Rust tooling has one canonical entry.
+            run_target = parts[2] if len(parts) >= 3 else ""
+            if run_target == "--" and len(parts) >= 4:
+                run_target = parts[3]
+            if run_target in RUST_TOOLS:
+                return (
+                    run_target,
+                    f"Use `uv run soldr {run_target} ...` instead of "
+                    f"`uv run {run_target} ...`. soldr resolves the checked-in "
+                    f"Rust toolchain directly via rustup.",
+                )
+            continue
+
         if first_word in RUST_TOOLS:
             return (
                 first_word,
-                f"Use `uv run {first_word} ...`, `soldr {first_word} ...`, or "
-                f"a `_cargo`/`_rustc`/`_rustfmt` trampoline instead of bare "
-                f"`{first_word}`. These ensure the correct Rust toolchain is used.",
+                f"Use `soldr {first_word} ...` or "
+                f"`uv run soldr {first_word} ...` instead of bare "
+                f"`{first_word}`. soldr resolves the checked-in Rust toolchain "
+                f"directly via rustup.",
             )
 
         if first_word in PYTHON_TOOLS:

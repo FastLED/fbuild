@@ -3,7 +3,7 @@
 //! Downloads avr-gcc + Arduino core (cached after first run), compiles a
 //! minimal blink sketch, and validates the output firmware.hex.
 //!
-//! Run with: `uv run cargo test -p fbuild-build --test avr_build -- --ignored`
+//! Run with: `uv run soldr cargo test -p fbuild-build --test avr_build -- --ignored`
 
 use std::fs;
 use std::path::PathBuf;

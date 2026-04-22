@@ -4,39 +4,36 @@ Codex working notes for this repo. Start with [CLAUDE.md](./CLAUDE.md) for the f
 
 ## Mandatory command rules
 
-- Always run Rust tooling through `uv run`, `soldr`, or the repo trampolines.
+- Always run Rust tooling through `soldr` or `uv run soldr`.
 - Never run bare `cargo`, `rustc`, `rustfmt`, `clippy-driver`, `python`, or `pip`.
 - Approved Rust forms in this repo are:
-  - `uv run cargo ...`
-  - `uv run rustc ...`
-  - `uv run rustfmt ...`
   - `soldr cargo ...`
   - `soldr rustc ...`
   - `soldr rustfmt ...`
-  - `./_cargo ...`
-  - `./_rustc ...`
-  - `./_rustfmt ...`
+  - `uv run soldr cargo ...`
+  - `uv run soldr rustc ...`
+  - `uv run soldr rustfmt ...`
 
 ## Why
 
 - Repo hooks enforce this.
-- All three forms dispatch through [soldr](https://github.com/zackees/soldr), which resolves each tool via `rustup which` so the rustup-managed toolchain is always used instead of a stale system or Chocolatey install.
-- `uv run cargo ...` works because `ci/dev-tools` registers `cargo`/`rustc`/`rustfmt` as repo-local uv scripts that now dispatch through `ci/trampoline.py` -> `soldr`.
+- [soldr](https://github.com/zackees/soldr) resolves each tool via `rustup which` so the rustup-managed toolchain is always used instead of a stale system or Chocolatey install.
+- `uv run soldr ...` works because `ci/dev-tools` installs `soldr` into the repo-local uv environment.
 - The normal Cargo path is `soldr cargo ...`, so repo Rust builds use soldr's managed zccache path by default; do not add repo-specific `RUSTC_WRAPPER` wiring for standard builds.
 - If you bypass them, you can hit wrong-toolchain errors.
 
 ## Use these
 
 ```powershell
-uv run cargo check --workspace --all-targets
-uv run cargo test -p fbuild-build -- --ignored
-uv run cargo clippy --workspace --all-targets -- -D warnings
-uv run cargo fmt --all
+uv run soldr cargo check --workspace --all-targets
+uv run soldr cargo test -p fbuild-build -- --ignored
+uv run soldr cargo clippy --workspace --all-targets -- -D warnings
+uv run soldr cargo fmt --all
 
-./_cargo check --workspace --all-targets
-./_cargo test -p fbuild-build -- --ignored
-./_cargo clippy --workspace --all-targets -- -D warnings
-./_rustfmt --check crates/fbuild-build/src/compiler.rs
+soldr cargo check --workspace --all-targets
+soldr cargo test -p fbuild-build -- --ignored
+soldr cargo clippy --workspace --all-targets -- -D warnings
+soldr rustfmt --check crates/fbuild-build/src/compiler.rs
 
 uv run test
 uv run test --full
@@ -49,13 +46,11 @@ uv run test -p fbuild-build -- some_test_name
 uv run python ci/zccache_setup.py
 ```
 
-This configures `rustc-wrapper = "zccache"` for local wrapper-mode experiments. Standard builds should use `uv run`, `soldr`, or the `_cargo`/`_rustc`/`_rustfmt` trampolines above.
+This configures `rustc-wrapper = "zccache"` for local wrapper-mode experiments. Standard builds should use `soldr` or `uv run soldr` above.
 
-## Allowed fallback
+## Fallback
 
-- Repo trampolines: `_cargo`, `_rustc`, `_rustfmt`
-- These are first-class approved paths, not second-class workarounds.
-- Use `./_cargo`/`./_rustc`/`./_rustfmt` directly from the repo root when you want the shell trampoline form.
+- Use `uv run soldr ...` when `soldr` is not on PATH but the repo-local uv environment is available.
 
 ## If a command fails
 

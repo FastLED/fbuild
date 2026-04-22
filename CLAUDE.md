@@ -4,7 +4,7 @@ fbuild is a PlatformIO-compatible embedded build tool (11 crates). See @docs/CLA
 
 ## Essential Rules
 
-- **Always use `uv run`, `soldr`, or `_cargo`/`_rustc`/`_rustfmt` trampolines to execute Rust commands.** Bare cargo/rustc are blocked by hook. All three forms resolve through [soldr](https://github.com/zackees/soldr), which uses `rustup which` to pick the rustup-managed toolchain. The standard Cargo path is `soldr cargo ...`, so repo Rust builds get soldr's managed zccache path by default; do not add repo-specific `RUSTC_WRAPPER` wiring for normal builds.
+- **Always use `soldr` or `uv run soldr` to execute Rust commands.** Bare cargo/rustc and legacy `uv run cargo` shims are blocked by hook. soldr uses `rustup which` to pick the rustup-managed toolchain from `rust-toolchain.toml`. The standard Cargo path is `soldr cargo ...`, so repo Rust builds get soldr's managed zccache path by default; do not add repo-specific `RUSTC_WRAPPER` wiring for normal builds.
 - **Always use `uv` for Python.** Bare `python`/`pip` are blocked by hook. Use `uv run ...` or `uv pip ...`.
 - MSRV: 1.75 | Edition: 2021 | Toolchain: 1.94.1 pinned in `rust-toolchain.toml` (clippy + rustfmt)
 - CI: Linux, macOS, Windows. All warnings denied (`RUSTFLAGS="-D warnings"`)
@@ -16,25 +16,25 @@ fbuild is a PlatformIO-compatible embedded build tool (11 crates). See @docs/CLA
 uv run test                 # unit tests only
 uv run test --full          # unit + stress + integration tests
 uv run test -p <crate> -- <test_name>
-uv run cargo check --workspace --all-targets
-uv run cargo clippy --workspace --all-targets -- -D warnings
-uv run cargo fmt --all
-RUSTDOCFLAGS="-D warnings" uv run cargo doc --workspace --no-deps
+uv run soldr cargo check --workspace --all-targets
+uv run soldr cargo clippy --workspace --all-targets -- -D warnings
+uv run soldr cargo fmt --all
+RUSTDOCFLAGS="-D warnings" uv run soldr cargo doc --workspace --no-deps
 
 # Public deploy API conventions
-uv run cargo run -p fbuild-cli -- deploy tests/platform/uno -e uno --to emu
-uv run cargo run -p fbuild-cli -- deploy tests/platform/uno -e uno --to emu --monitor
-uv run cargo run -p fbuild-cli -- deploy tests/platform/esp32dev -e esp32dev-qemu --to emu --emulator qemu
+uv run soldr cargo run -p fbuild-cli -- deploy tests/platform/uno -e uno --to emu
+uv run soldr cargo run -p fbuild-cli -- deploy tests/platform/uno -e uno --to emu --monitor
+uv run soldr cargo run -p fbuild-cli -- deploy tests/platform/esp32dev -e esp32dev-qemu --to emu --emulator qemu
 
 # test-emu: build + run in emulator (CI-friendly, exits with emulator exit code)
-uv run cargo run -p fbuild-cli -- test-emu tests/platform/uno -e uno
-uv run cargo run -p fbuild-cli -- test-emu tests/platform/esp32s3 -e esp32s3 --timeout 10
-uv run cargo run -p fbuild-cli -- test-emu tests/platform/mega -e megaatmega2560 --emulator simavr
+uv run soldr cargo run -p fbuild-cli -- test-emu tests/platform/uno -e uno
+uv run soldr cargo run -p fbuild-cli -- test-emu tests/platform/esp32s3 -e esp32s3 --timeout 10
+uv run soldr cargo run -p fbuild-cli -- test-emu tests/platform/mega -e megaatmega2560 --emulator simavr
 
-# Shell trampolines (alternative to uv run for Rust tools)
-./_cargo check --workspace --all-targets
-./_cargo clippy --workspace --all-targets -- -D warnings
-./_rustfmt --check <file.rs>
+# Direct soldr commands (alternative to uv run soldr)
+soldr cargo check --workspace --all-targets
+soldr cargo clippy --workspace --all-targets -- -D warnings
+soldr rustfmt --check <file.rs>
 
 # Board definition management
 uv run python ci/validate_boards.py                    # validate against PlatformIO
@@ -43,7 +43,7 @@ uv run python ci/board_sources.py --search QUERY       # search all external sou
 uv run python ci/board_sources.py --compare            # find boards missing from fbuild
 uv run python ci/board_sources.py --list-arduino       # list Arduino package index boards
 uv run python ci/board_sources.py --list-zephyr        # list Zephyr boards
-uv run cargo run -p fbuild-config --bin enrich_boards  # enrich from local PlatformIO
+uv run soldr cargo run -p fbuild-config --bin enrich_boards  # enrich from local PlatformIO
 ```
 
 ## Distribution
@@ -69,7 +69,7 @@ uv run python ci/zccache_setup.py  # writes rustc-wrapper = "zccache"
 All hooks are Python scripts in `ci/hooks/`, invoked via `uv run`:
 
 - **UserPromptSubmit**: `ci/hooks/board_context.py` detects board-related prompts and injects skill guidance (board lookup workflow, external source URLs, relevant commands)
-- **PreToolUse**: `ci/hooks/tool_guard.py` blocks bare Rust commands (must use `uv run` or `_cargo`/`_rustc`/`_rustfmt` trampolines) and bare `python`/`pip` (must use `uv`) across supported shell tools, not just Bash
+- **PreToolUse**: `ci/hooks/tool_guard.py` blocks bare Rust commands and legacy `uv run cargo` shims (must use `soldr` or `uv run soldr`) and bare `python`/`pip` (must use `uv`) across supported shell tools, not just Bash
 - **PostToolUse**: `ci/hooks/lint.py` auto-formats + runs clippy on edited .rs files
 - **PostToolUse**: `ci/hooks/readme_guard.py` errors if directory lacks README.md
 - **SessionStart**: `ci/hooks/check-on-start.py` captures git fingerprint

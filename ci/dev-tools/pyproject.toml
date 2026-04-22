@@ -1,15 +1,11 @@
 [project]
 name = "fbuild-dev-tools"
 version = "0.0.0"
-description = "Repo-local Rust toolchain trampolines for fbuild development"
+description = "Repo-local fbuild development helpers"
 requires-python = ">=3.10"
 dependencies = ["soldr>=0.7.4"]
 
 [project.scripts]
-cargo = "ci.trampoline:cargo"
-rustc = "ci.trampoline:rustc"
-rustfmt = "ci.trampoline:rustfmt"
-clippy-driver = "ci.trampoline:clippy_driver"
 run_fbuild = "ci.trampoline:run_fbuild"
 run_fbuild_daemon = "ci.trampoline:run_fbuild_daemon"
 publish = "ci.trampoline:publish"

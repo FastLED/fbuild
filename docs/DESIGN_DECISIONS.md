@@ -12,11 +12,11 @@
 
 ## DD-002: Workspace Pattern from zccache
 
-**Decision**: 11-crate Rust workspace with shared `Cargo.toml` dependencies, matching zccache's CI/trampoline/hook infrastructure.
+**Decision**: 11-crate Rust workspace with shared `Cargo.toml` dependencies, matching zccache's CI and hook infrastructure.
 
 **Context**: zccache has a proven pattern for Rust workspaces with uv-based toolchain management, agent hooks, and progressive disclosure documentation.
 
-**Rationale**: Reusing the pattern avoids reinventing CI, toolchain management, and agent workflow. The trampoline solves the Chocolatey-vs-rustup PATH conflict on Windows.
+**Rationale**: Reusing the pattern avoids reinventing CI, toolchain management, and agent workflow. soldr solves the Chocolatey-vs-rustup PATH conflict on Windows by resolving tools through rustup.
 
 ## DD-003: Axum over Actix-Web
 

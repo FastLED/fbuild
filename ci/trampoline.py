@@ -1,14 +1,12 @@
-"""Rust toolchain trampolines.
+"""Repo-local development command helpers.
 
-Routes cargo/rustc/rustfmt/clippy-driver through soldr so the
-rustup-managed toolchain is always used, without per-call PATH
-munging. Registered as project scripts in pyproject.toml so they can
-be invoked via `uv run cargo ...`, `uv run rustfmt ...`, etc.
+Rust tooling should be invoked with `soldr ...` or `uv run soldr ...`
+directly. This module only keeps helper entry points that run fbuild
+workspace binaries through soldr-managed Cargo.
 
 Why soldr:
 - soldr resolves each tool via `rustup which`, which respects
-  `rust-toolchain.toml` the same way the old PATH-based trampolines
-  did, but without requiring PATH to be pre-shaped.
+  `rust-toolchain.toml` without requiring PATH to be pre-shaped.
 - The normal Cargo path is `soldr cargo ...`, so local dev and CI get
   soldr's managed zccache path by default without repo-specific
   `RUSTC_WRAPPER` wiring.
@@ -32,30 +30,7 @@ def _soldr_prefix():
     return ["soldr"]
 
 
-def _run_via_soldr(subcommand: str):
-    """Exec `soldr <subcommand> <argv...>`."""
-    cmd = _soldr_prefix() + [subcommand] + sys.argv[1:]
-    result = subprocess.run(cmd)
-    sys.exit(result.returncode)
-
-
-def cargo():
-    _run_via_soldr("cargo")
-
-
-def rustc():
-    _run_via_soldr("rustc")
-
-
-def rustfmt():
-    _run_via_soldr("rustfmt")
-
-
-def clippy_driver():
-    _run_via_soldr("clippy-driver")
-
-
-def _run_cargo_bin(package):
+def _run_workspace_package(package):
     """Run a cargo binary with the correct toolchain via soldr."""
     extra = sys.argv[1:]
     # Strip leading '--' that uv inserts.
@@ -70,11 +45,11 @@ def _run_cargo_bin(package):
 
 
 def run_fbuild():
-    _run_cargo_bin("fbuild-cli")
+    _run_workspace_package("fbuild-cli")
 
 
 def run_fbuild_daemon():
-    _run_cargo_bin("fbuild-daemon")
+    _run_workspace_package("fbuild-daemon")
 
 
 def publish():
