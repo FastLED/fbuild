@@ -32,17 +32,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Install pinned Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
+      - name: Setup soldr
+        id: setup-soldr
+        uses: zackees/setup-soldr@v0
         with:
-          toolchain: 1.94.1
-          components: clippy, rustfmt
-
-      - name: Install soldr 0.7.4
-        shell: bash
-        run: |
-          curl -fsSL https://raw.githubusercontent.com/zackees/soldr/v0.7.4/install.sh | bash -s -- --version 0.7.4
-          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          cache: true
+          build-cache: true
+          target-cache: true
+          cache-key-suffix: board-${{ inputs.env-name }}
 
       - name: Restore fbuild toolchains
         uses: actions/cache/restore@v5

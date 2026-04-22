@@ -12,12 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: dtolnay/rust-toolchain@1.75.0
-      - name: Install soldr 0.7.4
-        shell: bash
-        run: |
-          curl -fsSL https://raw.githubusercontent.com/zackees/soldr/v0.7.4/install.sh | bash -s -- --version 0.7.4
-          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+      - name: Setup soldr
+        id: setup-soldr
+        uses: zackees/setup-soldr@v0
+        with:
+          cache: true
+          build-cache: true
+          target-cache: true
+          toolchain: 1.75.0
 
       - name: Check MSRV
         run: soldr cargo check --workspace

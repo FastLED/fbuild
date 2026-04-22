@@ -51,34 +51,18 @@ jobs:
         with:
           ref: ${{ inputs.ref || github.sha }}
 
-      - uses: actions/checkout@v6
+      - name: Setup soldr
+        id: setup-soldr
+        uses: zackees/setup-soldr@v0
         with:
-          repository: zackees/soldr
-          ref: v0.7.4
-          path: soldr
-
-      - uses: dtolnay/rust-toolchain@stable
-        with:
-          toolchain: 1.94.1
-          components: clippy, rustfmt
-          targets: ${{ inputs.target }}
+          cache: true
+          build-cache: true
+          target-cache: true
+          cache-key-suffix: native-${{ inputs.target }}
 
       - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
-
-      - name: Install soldr bootstrap
-        shell: bash
-        run: python -m pip install soldr==0.7.4
-
-      - name: Build soldr from source
-        shell: bash
-        working-directory: soldr
-        run: soldr cargo build --package soldr-cli --release --locked
-
-      - name: Add soldr to PATH
-        shell: bash
-        run: echo "${{ github.workspace }}/soldr/target/release" >> "$GITHUB_PATH"
 
       # rust-toolchain.toml pins 1.94.1 which overrides the above;
       # ensure the target stdlib is installed for the pinned toolchain too
