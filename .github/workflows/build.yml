@@ -8,6 +8,11 @@ on:
         required: false
         default: "main"
 
+permissions:
+  contents: read
+  attestations: write
+  id-token: write
+
 jobs:
   build:
     strategy:
