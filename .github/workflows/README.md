@@ -67,3 +67,9 @@ PyPI publishing requires a Trusted Publisher configured on PyPI for:
 - project: `fbuild`
 - repository: `FastLED/fbuild`
 - workflow: `.github/workflows/release-auto.yml`
+- environment: `pypi`
+
+The PyPI publish job declares the `pypi` GitHub environment so PyPI receives an
+OIDC token with `environment: pypi`. The Trusted Publisher entry on PyPI must
+match that environment exactly; otherwise PyPI rejects the exchange with
+`invalid-publisher`.
