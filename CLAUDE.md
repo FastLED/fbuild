@@ -6,7 +6,7 @@ fbuild is a PlatformIO-compatible embedded build tool (11 crates). See @docs/CLA
 
 - **Always use `soldr` or `uv run soldr` to execute Rust commands.** Bare cargo/rustc and legacy `uv run cargo` shims are blocked by hook. soldr uses `rustup which` to pick the rustup-managed toolchain from `rust-toolchain.toml`. The standard Cargo path is `soldr cargo ...`, so repo Rust builds get soldr's managed zccache path by default; do not add repo-specific `RUSTC_WRAPPER` wiring for normal builds.
 - **Always use `uv` for Python.** Bare `python`/`pip` are blocked by hook. Use `uv run ...` or `uv pip ...`.
-- MSRV: 1.75 | Edition: 2021 | Toolchain: 1.94.1 pinned in `rust-toolchain.toml` (clippy + rustfmt)
+- MSRV: 1.94.1 | Edition: 2021 | Toolchain: 1.94.1 pinned in `rust-toolchain.toml` (clippy + rustfmt)
 - CI: Linux, macOS, Windows. All warnings denied (`RUSTFLAGS="-D warnings"`)
 - Every directory with files must have a README.md (enforced by hook)
 

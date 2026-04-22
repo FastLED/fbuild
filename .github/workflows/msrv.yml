@@ -1,4 +1,4 @@
-name: Min Rust Version (1.75)
+name: Min Rust Version (1.94.1)
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   msrv:
-    name: Min Rust Version (1.75)
+    name: Min Rust Version (1.94.1)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -19,7 +19,7 @@ jobs:
           cache: true
           build-cache: true
           target-cache: true
-          toolchain: 1.75.0
+          toolchain: 1.94.1
 
       - name: Check MSRV
         run: soldr cargo check --workspace

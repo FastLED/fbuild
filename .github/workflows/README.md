@@ -6,7 +6,7 @@ CI/CD workflows for the fbuild project, covering lint, test, documentation, and 
 
 - **`check-{macos,ubuntu,windows}.yml`** -- Clippy + tests per platform
 - **`fmt.yml`** -- Rustfmt check | **`docs.yml`** -- Doc build with `-D warnings`
-- **`msrv.yml`** -- MSRV 1.75 verification | **`validate-boards.yml`** -- Board JSON validation
+- **`msrv.yml`** -- MSRV 1.94.1 verification | **`validate-boards.yml`** -- Board JSON validation
 
 ## Per-Board Builds (push/PR)
 
