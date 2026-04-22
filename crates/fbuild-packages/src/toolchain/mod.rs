@@ -10,6 +10,7 @@ pub mod esp8266;
 pub mod esp_qemu;
 pub mod riscv;
 pub mod rp2040_pqt;
+pub mod teensy_arm;
 
 pub use arm::ArmToolchain;
 pub use arm_gcc8::ArmGcc8Toolchain;
@@ -22,3 +23,4 @@ pub use esp_qemu::build_windows_qemu_path_env;
 pub use esp_qemu::{EspQemu, EspQemuArch, EspQemuRiscv32, EspQemuXtensa};
 pub use riscv::RiscvToolchain;
 pub use rp2040_pqt::Rp2040PqtToolchain;
+pub use teensy_arm::TeensyArmToolchain;

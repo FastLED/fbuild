@@ -3,7 +3,7 @@
 //! Build phases:
 //! 1. Parse platformio.ini
 //! 2. Load board config (teensy40/teensy41)
-//! 3. Ensure ARM GCC toolchain
+//! 3. Ensure Teensy-compatible ARM GCC toolchain
 //! 4. Ensure Teensy cores
 //! 5. Setup build directories
 //! 6. Scan source files
@@ -319,10 +319,10 @@ impl BuildOrchestrator for TeensyOrchestrator {
             fbuild_core::FbuildError::ConfigError("missing 'board' in environment config".into())
         })?;
 
-        // 3. Ensure ARM GCC toolchain
-        let toolchain = fbuild_packages::toolchain::ArmToolchain::new(&params.project_dir);
+        // 3. Ensure Teensy-compatible ARM GCC toolchain
+        let toolchain = fbuild_packages::toolchain::TeensyArmToolchain::new(&params.project_dir);
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
-        tracing::info!("arm-gcc toolchain at {}", toolchain_dir.display());
+        tracing::info!("Teensy ARM GCC toolchain at {}", toolchain_dir.display());
 
         use fbuild_packages::Toolchain;
         pipeline::log_toolchain_version(
