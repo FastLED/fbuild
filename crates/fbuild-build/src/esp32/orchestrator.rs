@@ -592,6 +592,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // The linker's --gc-sections will strip any unused code.
         // Skip when only generating compile_commands.json.
         if !params.compiledb_only {
+            let fw_libs_started = Instant::now();
+            perf.checkpoint("fw-libs-start");
             let builtin_libs_dir = framework.get_libraries_dir();
             if builtin_libs_dir.is_dir() {
                 let fw_libs_build_dir = build_dir.join("fw_libs");
@@ -629,6 +631,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 let fw_signature = framework_signature(&include_dirs, &fw_c_flags, &fw_cpp_flags);
 
                 let mut fw_lib_count = 0;
+                let mut fw_lib_seen = 0;
                 if let Ok(entries) = std::fs::read_dir(&builtin_libs_dir) {
                     for entry in entries.flatten() {
                         let path = entry.path();
@@ -649,9 +652,17 @@ impl BuildOrchestrator for Esp32Orchestrator {
                             continue;
                         }
 
+                        fw_lib_seen += 1;
+
                         // Check if archive already exists
                         let archive_path = fw_libs_build_dir.join(format!("lib{}.a", lib_name));
                         if archive_path.exists() {
+                            if perf.is_active() {
+                                perf.checkpoint(format!(
+                                    "fw-lib-cache-hit name={} index={}",
+                                    lib_name, fw_lib_seen
+                                ));
+                            }
                             library_archives.push(archive_path);
                             fw_lib_count += 1;
                             continue;
@@ -673,6 +684,14 @@ impl BuildOrchestrator for Esp32Orchestrator {
                             &fw_signature,
                             &sources,
                         )? {
+                            if perf.is_active() {
+                                perf.checkpoint(format!(
+                                    "fw-lib-skip-failed name={} index={} sources={}",
+                                    lib_name,
+                                    fw_lib_seen,
+                                    sources.len()
+                                ));
+                            }
                             tracing::debug!(
                                 "skipping previously failed framework library '{}'",
                                 lib_name
@@ -681,6 +700,15 @@ impl BuildOrchestrator for Esp32Orchestrator {
                         }
 
                         let fw_jobs = crate::parallel::effective_jobs(params.jobs);
+                        if perf.is_active() {
+                            perf.checkpoint(format!(
+                                "fw-lib-compile-start name={} index={} sources={} jobs={}",
+                                lib_name,
+                                fw_lib_seen,
+                                sources.len(),
+                                fw_jobs
+                            ));
+                        }
                         // Use gcc-ar for LTO archives so the linker-plugin index is written.
                         let fw_ar_path = toolchain.get_ar_path();
                         let fw_gcc_ar_path = toolchain.get_gcc_ar_path();
@@ -708,12 +736,31 @@ impl BuildOrchestrator for Esp32Orchestrator {
                                 let _ = std::fs::remove_file(&failure_marker);
                                 library_archives.push(archive);
                                 fw_lib_count += 1;
+                                if perf.is_active() {
+                                    perf.checkpoint(format!(
+                                        "fw-lib-compile-finish name={} index={} count={}",
+                                        lib_name, fw_lib_seen, fw_lib_count
+                                    ));
+                                }
                             }
-                            Ok(None) => {} // header-only
+                            Ok(None) => {
+                                if perf.is_active() {
+                                    perf.checkpoint(format!(
+                                        "fw-lib-header-only name={} index={}",
+                                        lib_name, fw_lib_seen
+                                    ));
+                                }
+                            }
                             Err(e) => {
                                 // Non-fatal: some framework libs may fail to compile
                                 // (e.g., platform-specific ones). The linker will report
                                 // if any actually-needed symbols are missing.
+                                if perf.is_active() {
+                                    perf.checkpoint(format!(
+                                        "fw-lib-compile-error name={} index={}",
+                                        lib_name, fw_lib_seen
+                                    ));
+                                }
                                 tracing::debug!(
                                     "framework library {} failed to compile: {}",
                                     lib_name,
@@ -733,20 +780,25 @@ impl BuildOrchestrator for Esp32Orchestrator {
                     tracing::info!("compiled {} framework built-in libraries", fw_lib_count);
                 }
             }
+            perf.record("fw-libs", fw_libs_started.elapsed());
+            perf.checkpoint("fw-libs-finish");
         }
 
         // 9. Scan sources
-        let scanner = SourceScanner::new(&ctx.src_dir, src_build_dir);
-        let variant_dir_opt = if variant_dir.exists() {
-            Some(variant_dir.as_path())
-        } else {
-            None
+        let sources = {
+            let _g = perf.phase("scan-sources");
+            let scanner = SourceScanner::new(&ctx.src_dir, src_build_dir);
+            let variant_dir_opt = if variant_dir.exists() {
+                Some(variant_dir.as_path())
+            } else {
+                None
+            };
+            scanner.scan_all_filtered(
+                Some(&core_dir),
+                variant_dir_opt,
+                ctx.source_filter.as_deref(),
+            )?
         };
-        let sources = scanner.scan_all_filtered(
-            Some(&core_dir),
-            variant_dir_opt,
-            ctx.source_filter.as_deref(),
-        )?;
 
         tracing::info!(
             "sources: {} sketch, {} core, {} variant",
@@ -798,22 +850,25 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
         // compiledb_only: generate compile_commands.json without compiling
         if params.compiledb_only {
-            let compile_database_path = crate::pipeline::generate_compile_db(
-                compiler.gcc_path(),
-                compiler.gxx_path(),
-                &compiler.c_flags(),
-                &compiler.cpp_flags(),
-                &include_flags,
-                &user_overlay,
-                &src_overlay,
-                &all_core_sources,
-                &sources.sketch_sources,
-                core_build_dir,
-                src_build_dir,
-                build_dir,
-                &params.project_dir,
-                arch,
-            )?;
+            let compile_database_path = {
+                let _g = perf.phase("compile-db");
+                crate::pipeline::generate_compile_db(
+                    compiler.gcc_path(),
+                    compiler.gxx_path(),
+                    &compiler.c_flags(),
+                    &compiler.cpp_flags(),
+                    &include_flags,
+                    &user_overlay,
+                    &src_overlay,
+                    &all_core_sources,
+                    &sources.sketch_sources,
+                    core_build_dir,
+                    src_build_dir,
+                    build_dir,
+                    &params.project_dir,
+                    arch,
+                )?
+            };
             let elapsed = start.elapsed().as_secs_f64();
             return Ok(BuildResult {
                 success: true,
@@ -833,24 +888,30 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
         // Compile core + variant sources in parallel
         let build_log_mutex = std::sync::Mutex::new(ctx.build_log);
-        let core_result = crate::parallel::compile_sources_parallel(
-            &compiler,
-            &all_core_sources,
-            core_build_dir,
-            &user_overlay,
-            jobs,
-            Some(&build_log_mutex),
-        )?;
+        let core_result = {
+            let _g = perf.phase("compile-core-variant");
+            crate::parallel::compile_sources_parallel(
+                &compiler,
+                &all_core_sources,
+                core_build_dir,
+                &user_overlay,
+                jobs,
+                Some(&build_log_mutex),
+            )?
+        };
 
         // Compile sketch sources in parallel
-        let sketch_result = crate::parallel::compile_sources_parallel(
-            &compiler,
-            &sources.sketch_sources,
-            src_build_dir,
-            &src_overlay,
-            jobs,
-            Some(&build_log_mutex),
-        )?;
+        let sketch_result = {
+            let _g = perf.phase("compile-sketch");
+            crate::parallel::compile_sources_parallel(
+                &compiler,
+                &sources.sketch_sources,
+                src_build_dir,
+                &src_overlay,
+                jobs,
+                Some(&build_log_mutex),
+            )?
+        };
 
         // Unwrap build log and flush collected warnings
         let mut build_log = build_log_mutex.into_inner().unwrap();
@@ -863,71 +924,75 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
         // Compile local libraries from the project's lib/ directory.
         // PlatformIO discovers and compiles these automatically.
-        let local_lib_dir = params.project_dir.join("lib");
-        if local_lib_dir.is_dir() {
-            if let Ok(entries) = std::fs::read_dir(&local_lib_dir) {
-                for entry in entries.flatten() {
-                    let lib_path = entry.path();
-                    if !lib_path.is_dir() {
-                        continue;
-                    }
-                    let lib_name = lib_path
-                        .file_name()
-                        .unwrap_or_default()
-                        .to_string_lossy()
-                        .to_string();
-
-                    let lib_info = fbuild_packages::library::library_info::InstalledLibrary::new(
-                        &lib_path, &lib_name,
-                    );
-                    let lib_sources = lib_info.get_source_files();
-                    if lib_sources.is_empty() {
-                        continue;
-                    }
-
-                    let lib_build_dir = build_dir.join("lib").join(&lib_name);
-                    tracing::info!(
-                        "compiling local library '{}': {} source files",
-                        lib_name,
-                        lib_sources.len()
-                    );
-
-                    // Use gcc-ar for LTO archives so the linker-plugin index is written.
-                    let local_ar_path = toolchain.get_ar_path();
-                    let local_gcc_ar_path = toolchain.get_gcc_ar_path();
-                    let local_c_flags =
-                        apply_overlay_flags(&compiler.c_flags(), &src_overlay, "dummy.c");
-                    let local_cpp_flags =
-                        apply_overlay_flags(&compiler.cpp_flags(), &src_overlay, "dummy.cpp");
-                    let local_lib_ar_path = crate::pipeline::pick_archiver(
-                        &local_ar_path,
-                        &local_gcc_ar_path,
-                        &local_c_flags,
-                        &local_cpp_flags,
-                    );
-                    match fbuild_packages::library::library_compiler::compile_library_with_jobs(
-                        &lib_name,
-                        &lib_sources,
-                        &include_dirs,
-                        &toolchain.get_gcc_path(),
-                        &toolchain.get_gxx_path(),
-                        local_lib_ar_path,
-                        &local_c_flags,
-                        &local_cpp_flags,
-                        &lib_build_dir,
-                        params.verbose,
-                        jobs,
-                        compiler_cache.as_deref(),
-                    ) {
-                        Ok(Some(archive)) => {
-                            library_archives.push(archive);
+        {
+            let _g = perf.phase("compile-local-libs");
+            let local_lib_dir = params.project_dir.join("lib");
+            if local_lib_dir.is_dir() {
+                if let Ok(entries) = std::fs::read_dir(&local_lib_dir) {
+                    for entry in entries.flatten() {
+                        let lib_path = entry.path();
+                        if !lib_path.is_dir() {
+                            continue;
                         }
-                        Ok(None) => {} // header-only
-                        Err(e) => {
-                            return Err(fbuild_core::FbuildError::BuildFailed(format!(
-                                "local library '{}' failed to compile: {}",
-                                lib_name, e
-                            )));
+                        let lib_name = lib_path
+                            .file_name()
+                            .unwrap_or_default()
+                            .to_string_lossy()
+                            .to_string();
+
+                        let lib_info =
+                            fbuild_packages::library::library_info::InstalledLibrary::new(
+                                &lib_path, &lib_name,
+                            );
+                        let lib_sources = lib_info.get_source_files();
+                        if lib_sources.is_empty() {
+                            continue;
+                        }
+
+                        let lib_build_dir = build_dir.join("lib").join(&lib_name);
+                        tracing::info!(
+                            "compiling local library '{}': {} source files",
+                            lib_name,
+                            lib_sources.len()
+                        );
+
+                        // Use gcc-ar for LTO archives so the linker-plugin index is written.
+                        let local_ar_path = toolchain.get_ar_path();
+                        let local_gcc_ar_path = toolchain.get_gcc_ar_path();
+                        let local_c_flags =
+                            apply_overlay_flags(&compiler.c_flags(), &src_overlay, "dummy.c");
+                        let local_cpp_flags =
+                            apply_overlay_flags(&compiler.cpp_flags(), &src_overlay, "dummy.cpp");
+                        let local_lib_ar_path = crate::pipeline::pick_archiver(
+                            &local_ar_path,
+                            &local_gcc_ar_path,
+                            &local_c_flags,
+                            &local_cpp_flags,
+                        );
+                        match fbuild_packages::library::library_compiler::compile_library_with_jobs(
+                            &lib_name,
+                            &lib_sources,
+                            &include_dirs,
+                            &toolchain.get_gcc_path(),
+                            &toolchain.get_gxx_path(),
+                            local_lib_ar_path,
+                            &local_c_flags,
+                            &local_cpp_flags,
+                            &lib_build_dir,
+                            params.verbose,
+                            jobs,
+                            compiler_cache.as_deref(),
+                        ) {
+                            Ok(Some(archive)) => {
+                                library_archives.push(archive);
+                            }
+                            Ok(None) => {} // header-only
+                            Err(e) => {
+                                return Err(fbuild_core::FbuildError::BuildFailed(format!(
+                                    "local library '{}' failed to compile: {}",
+                                    lib_name, e
+                                )));
+                            }
                         }
                     }
                 }
@@ -942,6 +1007,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // vector keeps cache leases alive until we leave this scope, so the
         // disk-cache GC can't reap a blob mid-build.
         if !embed_files.is_empty() || !embed_txtfiles.is_empty() {
+            let _g = perf.phase("embed-files");
             let embed_dir = build_dir.join("embed");
             std::fs::create_dir_all(&embed_dir)?;
 
@@ -996,22 +1062,25 @@ impl BuildOrchestrator for Esp32Orchestrator {
         }
 
         // 11.6. Generate compile_commands.json
-        let compile_database_path = crate::pipeline::generate_compile_db(
-            compiler.gcc_path(),
-            compiler.gxx_path(),
-            &compiler.c_flags(),
-            &compiler.cpp_flags(),
-            &include_flags,
-            &user_overlay,
-            &src_overlay,
-            &all_core_sources,
-            &sources.sketch_sources,
-            core_build_dir,
-            src_build_dir,
-            build_dir,
-            &params.project_dir,
-            arch,
-        )?;
+        let compile_database_path = {
+            let _g = perf.phase("compile-db");
+            crate::pipeline::generate_compile_db(
+                compiler.gcc_path(),
+                compiler.gxx_path(),
+                &compiler.c_flags(),
+                &compiler.cpp_flags(),
+                &include_flags,
+                &user_overlay,
+                &src_overlay,
+                &all_core_sources,
+                &sources.sketch_sources,
+                core_build_dir,
+                src_build_dir,
+                build_dir,
+                &params.project_dir,
+                arch,
+            )?
+        };
 
         // 12-13. Link + convert
         // Library archives join core_objects in the archives parameter
@@ -1035,19 +1104,24 @@ impl BuildOrchestrator for Esp32Orchestrator {
             params.verbose,
         );
 
-        let link_result = crate::linker::Linker::link_all(
-            &linker,
-            &sketch_objects,
-            &all_archives,
-            build_dir,
-            &crate::linker::LinkExtraArgs {
-                flags: ctx.overlay_link_flags.clone(),
-                libs: ctx.overlay_link_libs.clone(),
-            },
-            params.symbol_analysis,
-        )?;
+        let link_result = {
+            let _g = perf.phase("link-convert-size");
+            crate::linker::Linker::link_all(
+                &linker,
+                &sketch_objects,
+                &all_archives,
+                build_dir,
+                &crate::linker::LinkExtraArgs {
+                    flags: ctx.overlay_link_flags.clone(),
+                    libs: ctx.overlay_link_libs.clone(),
+                },
+                params.symbol_analysis,
+            )?
+        };
 
         // 14. Prepare boot artifacts for deployment / emulation
+        let boot_artifacts_started = Instant::now();
+        perf.checkpoint("boot-artifacts-start");
         let boot_dst = build_dir.join("bootloader.bin");
         let boot_bin_src = framework.get_bootloader_bin(&ctx.board.mcu);
         if boot_bin_src.exists() {
@@ -1195,8 +1269,12 @@ impl BuildOrchestrator for Esp32Orchestrator {
             std::fs::copy(&boot_app0_src, &boot_app0_dst)?;
             tracing::info!("copied boot_app0.bin");
         }
+        perf.record("boot-artifacts", boot_artifacts_started.elapsed());
+        perf.checkpoint("boot-artifacts-finish");
 
         // 15. Size reporting + result assembly
+        let fingerprint_started = Instant::now();
+        perf.checkpoint("fingerprint-save-start");
         let persisted_fingerprint = PersistedBuildFingerprint {
             version: BUILD_FINGERPRINT_VERSION,
             metadata_hash: metadata_hash.clone(),
@@ -1226,6 +1304,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 }
             }
         }
+        perf.record("fingerprint-save", fingerprint_started.elapsed());
+        perf.checkpoint("fingerprint-save-finish");
 
         crate::pipeline::handle_link_result(
             &link_result,
