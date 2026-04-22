@@ -50,6 +50,12 @@ CI/CD workflows for the fbuild project, covering lint, test, documentation, and 
 - builds fbuild wheels from the native artifacts
 - publishes wheels to PyPI through Trusted Publishing
 
+If GitHub release creation succeeds but PyPI publishing fails, run
+`release-auto.yml` manually with `workflow_dispatch`. When the matching tag
+already exists but PyPI has fewer than the expected wheel files, the workflow
+rebuilds from that tag, skips GitHub release creation, and retries only the PyPI
+publish path.
+
 To verify a downloaded GitHub Release artifact:
 
 ```bash
