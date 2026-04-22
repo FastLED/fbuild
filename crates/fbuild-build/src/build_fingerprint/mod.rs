@@ -16,7 +16,7 @@ use walkdir::WalkDir;
 use crate::zccache::FingerprintWatch;
 
 pub const BUILD_FINGERPRINT_VERSION: u32 = 2;
-const WATCH_STAMP_CACHE_VERSION: u32 = 1;
+const WATCH_STAMP_CACHE_VERSION: u32 = 2;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PersistedBuildFingerprint {
@@ -456,6 +456,10 @@ mod tests {
         .unwrap()
     }
 
+    fn set_file_mtime(path: &Path, secs: i64) {
+        filetime::set_file_mtime(path, filetime::FileTime::from_unix_time(secs, 0)).unwrap();
+    }
+
     #[test]
     fn test_hash_files_changes_when_contents_change() {
         let tmp = tempfile::TempDir::new().unwrap();
@@ -566,6 +570,60 @@ mod tests {
         let second = hash_watch_set_stamps(std::slice::from_ref(&watch)).unwrap();
 
         assert_eq!(first, second);
+    }
+
+    #[test]
+    fn test_hash_watch_set_stamps_survives_mtime_reset_without_rewrite() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let src = tmp.path().join("src");
+        fs::create_dir_all(&src).unwrap();
+        let main = src.join("main.cpp");
+        fs::write(&main, "int main() { return 1; }\n").unwrap();
+        set_file_mtime(&main, 1_700_000_000);
+
+        let watch = make_watch(&src, &tmp.path().join(".project.zccache_fp.json"));
+        let hash_count = Cell::new(0usize);
+
+        let first = hash_watch_with_counter(&watch, &hash_count);
+        set_file_mtime(&main, 1_700_000_123);
+        let second = hash_watch_with_counter(&watch, &hash_count);
+        let after_second = hash_count.get();
+        let third = hash_watch_with_counter(&watch, &hash_count);
+
+        assert_eq!(first, second);
+        assert_eq!(second, third);
+        assert_eq!(
+            after_second, 2,
+            "mtime reset should rehash once to prove byte identity"
+        );
+        assert_eq!(
+            hash_count.get(),
+            after_second,
+            "updated stamp cache should restore the stat-only fast path"
+        );
+    }
+
+    #[test]
+    fn test_hash_watch_set_stamps_detects_same_length_content_change_after_mtime_reset() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let src = tmp.path().join("src");
+        fs::create_dir_all(&src).unwrap();
+        let main = src.join("main.cpp");
+        fs::write(&main, "int main() { return 1; }\n").unwrap();
+        set_file_mtime(&main, 1_700_000_000);
+
+        let watch = make_watch(&src, &tmp.path().join(".project.zccache_fp.json"));
+
+        let first = hash_watch_set_stamps(std::slice::from_ref(&watch)).unwrap();
+        fs::write(&main, "int main() { return 2; }\n").unwrap();
+        set_file_mtime(&main, 1_700_000_123);
+        let second = hash_watch_set_stamps(std::slice::from_ref(&watch)).unwrap();
+
+        assert_eq!(
+            fs::metadata(&main).unwrap().len(),
+            "int main() { return 1; }\n".len() as u64
+        );
+        assert_ne!(first, second);
     }
 
     #[test]
