@@ -283,6 +283,10 @@ jobs:
     needs: [prepare, build-pypi]
     if: needs.prepare.outputs.should_release == 'true'
     runs-on: ubuntu-24.04
+    environment: pypi
+    permissions:
+      contents: read
+      id-token: write
 
     steps:
       - name: Download PyPI distributions
