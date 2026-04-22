@@ -89,11 +89,13 @@ jobs:
         shell: bash
         run: |
           if [ "${{ inputs.linux_cross }}" = "true" ]; then
-            soldr cargo zigbuild --release --target ${{ inputs.target }} -p fbuild-cli
-            soldr cargo zigbuild --release --target ${{ inputs.target }} -p fbuild-daemon
+            soldr cargo zigbuild --release --target ${{ inputs.target }} \
+              -p fbuild-cli \
+              -p fbuild-daemon
           else
-            soldr cargo build --release --target ${{ inputs.target }} -p fbuild-cli
-            soldr cargo build --release --target ${{ inputs.target }} -p fbuild-daemon
+            soldr cargo build --release --target ${{ inputs.target }} \
+              -p fbuild-cli \
+              -p fbuild-daemon
           fi
 
       # PyO3 extension — built for ALL targets, including cross-compiled.
@@ -124,9 +126,13 @@ jobs:
               --target ${{ inputs.target }} -p fbuild-python \
               --features extension-module
           elif [ "${{ runner.os }}" = "macOS" ]; then
-            soldr cargo build --release -p fbuild-python --features extension-module
+            soldr cargo build --release --target ${{ inputs.target }} \
+              -p fbuild-python \
+              --features extension-module
           else
-            soldr cargo build --release -p fbuild-python --features extension-module
+            soldr cargo build --release --target ${{ inputs.target }} \
+              -p fbuild-python \
+              --features extension-module
           fi
 
       - name: Stage artifacts
@@ -142,7 +148,7 @@ jobs:
             ARCH="${TARGET%%-*}"
             ext_src="target/${ARCH}-unknown-linux-gnu/release/lib_native.so"
             [ -f "$ext_src" ] && cp "$ext_src" staging/_native.abi3.so
-          elif [ "${{ inputs.macos_cross }}" = "true" ]; then
+          elif [ "${{ runner.os }}" = "macOS" ]; then
             ext_src="target/${{ inputs.target }}/release/lib_native.dylib"
             [ -f "$ext_src" ] && cp "$ext_src" staging/_native.abi3.so
           elif [ "${{ inputs.binary_ext }}" = ".exe" ]; then
