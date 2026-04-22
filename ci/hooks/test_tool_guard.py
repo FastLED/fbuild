@@ -13,12 +13,22 @@ class ToolGuardTests(unittest.TestCase):
         self.assertEqual(result[0], "cargo")
 
     def test_blocks_uv_run_rust_tool_shim(self):
-        result = check_command("uv run cargo test")
-        self.assertIsNotNone(result)
-        self.assertEqual(result[0], "cargo")
-        result = check_command("uv run -- cargo test")
-        self.assertIsNotNone(result)
-        self.assertEqual(result[0], "cargo")
+        commands = (
+            "uv run cargo test",
+            "uv run -- cargo test",
+            "uv run --offline cargo build",
+            "uv run --with foo cargo test",
+            "uv run --with=foo cargo test",
+            "uv run --isolated cargo build",
+            "uv run --project . cargo check",
+            "uv run -q cargo test",
+            "uv run -- --offline cargo test",
+        )
+        for command in commands:
+            with self.subTest(command=command):
+                result = check_command(command)
+                self.assertIsNotNone(result)
+                self.assertEqual(result[0], "cargo")
 
     def test_allows_soldr_wrapped_rust_tool(self):
         self.assertIsNone(check_command("soldr cargo test"))

@@ -19,6 +19,26 @@ PYTHON_TOOLS = {"python", "python3", "pip", "pip3"}
 SOLDR_PREFIXES = ("soldr ", "uv run soldr ")
 UV_RUN_PREFIX = "uv run "
 UV_PIP_PREFIX = "uv pip "
+UV_RUN_FLAGS_WITH_VALUES = {
+    "--config-setting",
+    "--directory",
+    "--env-file",
+    "--extra",
+    "--find-links",
+    "--from",
+    "--group",
+    "--index-url",
+    "--no-extra",
+    "--no-group",
+    "--only-group",
+    "--project",
+    "--python",
+    "--with",
+    "--with-editable",
+    "--with-requirements",
+    "-m",
+    "-p",
+}
 
 
 FORBIDDEN_SCRIPT_DIRS = re.compile(
@@ -34,6 +54,27 @@ DENY_PYTHON_IN_CODE = (
     "Do not use Python for benchmarks or tests. "
     "Write them in Rust instead. Python is only for CI scripts and packaging."
 )
+
+
+def uv_run_target(parts):
+    """Return the uv-run command target after leading uv options."""
+    index = 2
+    while index < len(parts):
+        token = parts[index]
+        if token == "--":
+            index += 1
+            continue
+        if token in UV_RUN_FLAGS_WITH_VALUES:
+            index += 2
+            continue
+        if any(token.startswith(f"{flag}=") for flag in UV_RUN_FLAGS_WITH_VALUES):
+            index += 1
+            continue
+        if token.startswith("-"):
+            index += 1
+            continue
+        return token
+    return ""
 
 
 def check_command(command):
@@ -68,9 +109,7 @@ def check_command(command):
             parts = seg.split()
             # `uv run soldr ...` was handled above. Block the old `uv run cargo`
             # console-script shim path so Rust tooling has one canonical entry.
-            run_target = parts[2] if len(parts) >= 3 else ""
-            if run_target == "--" and len(parts) >= 4:
-                run_target = parts[3]
+            run_target = uv_run_target(parts)
             if run_target in RUST_TOOLS:
                 return (
                     run_target,

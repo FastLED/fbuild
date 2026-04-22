@@ -223,14 +223,14 @@ libs, embed files, bootloader ELF conversion, pioarduino metadata resolution)
 
 ## Phase 2 Execution Order
 
-Each step is independently testable (`cargo check` + `cargo test` must pass after each).
+Each step is independently testable (`uv run soldr cargo check` + `uv run soldr cargo test` must pass after each).
 
 - [x] **Step 1:** Create `pipeline.rs` with all helpers, update `lib.rs`
 - [x] **Step 2:** Migrate AVR orchestrator to use pipeline helpers
 - [x] **Step 3:** Migrate Teensy orchestrator to use pipeline helpers
 - [x] **Step 4:** Migrate ESP32 orchestrator to use BuildContext + pipeline helpers
 - [x] **Step 5-10:** All helpers implemented and used (done as part of Steps 1-4)
-- [x] **Step 11:** Full verification: `cargo check + clippy + test --workspace` — all 217 tests pass
+- [x] **Step 11:** Full verification: `uv run soldr cargo check + uv run soldr cargo clippy + uv run soldr cargo test --workspace` — all 217 tests pass
 
 ---
 
@@ -269,7 +269,7 @@ helpers from Phase 2.
 - [x] **Step 2:** Add `run_sequential_build()` to `pipeline.rs`
 - [x] **Step 3:** Migrate AVR orchestrator
 - [x] **Step 4:** Migrate Teensy orchestrator
-- [x] **Step 5:** Full verification: `cargo check + clippy + test` — all 37 tests pass
+- [x] **Step 5:** Full verification: `uv run soldr cargo check + uv run soldr cargo clippy + uv run soldr cargo test` — all 37 tests pass
 
 ---
 

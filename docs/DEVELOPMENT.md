@@ -8,13 +8,13 @@ fbuild includes comprehensive integration tests. The Rust workspace uses `cargo 
 
 ```bash
 # Run unit tests only
-uv run test
+bash test
 
 # Run unit + stress + integration tests
-uv run test --full
+bash test --full
 
 # Run a specific test in a specific crate
-uv run test -p <crate> -- <test_name>
+bash test -p <crate> -- <test_name>
 ```
 
 For the legacy Python test suite (used only for CI parity checks against the Python fbuild reference):
