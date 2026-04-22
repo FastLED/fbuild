@@ -59,6 +59,11 @@ jobs:
           build-cache: true
           target-cache: true
           cache-key-suffix: native-${{ inputs.target }}
+          target-cache-paths: |
+            target/${{ inputs.target }}/release
+            target/*-unknown-linux-gnu.2.17/release
+            target/*-unknown-linux-gnu/release
+            target/release
 
       - uses: actions/setup-python@v6
         with:
