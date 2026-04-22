@@ -167,7 +167,7 @@ def uv_sync():
         subprocess.run(["uv", "sync"], check=False)
 
 
-def source_cargo_env():
+def source_rust_env():
     """Add .cargo/bin to PATH."""
     for candidate in [
         os.environ.get("CARGO_HOME", ""),
@@ -187,7 +187,7 @@ def source_cargo_env():
 
 def current_rust_version():
     """Get the current rustc version, or None."""
-    source_cargo_env()
+    source_rust_env()
     try:
         out = subprocess.check_output(["rustc", "--version"], text=True).strip()
         parts = out.split()
@@ -234,7 +234,7 @@ def install_rustup(plat):
 
 def verify(plat):
     """Verify the installation."""
-    source_cargo_env()
+    source_rust_env()
 
     if not shutil.which("rustc"):
         err("rustc not found on PATH after installation.")
@@ -273,7 +273,7 @@ def verify(plat):
             warn('  export PATH="$HOME/.cargo/bin:$PATH"')
 
     log("")
-    log("Done. Run: uv run cargo check --workspace")
+    log("Done. Run: uv run soldr cargo check --workspace")
     return True
 
 
@@ -299,7 +299,7 @@ def main():
         if current:
             warn(f"Current rustc: {current} (need {RUST_TOOLCHAIN})")
 
-        source_cargo_env()
+        source_rust_env()
         if shutil.which("rustup"):
             log(f"rustup found. Installing toolchain {RUST_TOOLCHAIN} ...")
             subprocess.run(
@@ -312,12 +312,12 @@ def main():
             log("rustup not found. Installing from scratch ...")
             install_rustup(plat)
 
-    source_cargo_env()
+    source_rust_env()
     if not verify(plat):
         warn("")
         warn("Restart your terminal, then run:")
         warn("  rustc --version")
-        warn("  uv run cargo check --workspace")
+        warn("  uv run soldr cargo check --workspace")
 
 
 if __name__ == "__main__":

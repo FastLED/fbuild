@@ -276,9 +276,9 @@ helpers from Phase 2.
 ## Verification
 
 After each step:
-1. `uv run cargo check --workspace --all-targets`
-2. `uv run cargo clippy --workspace --all-targets -- -D warnings`
-3. `uv run cargo test --workspace --lib`
+1. `uv run soldr cargo check --workspace --all-targets`
+2. `uv run soldr cargo clippy --workspace --all-targets -- -D warnings`
+3. `uv run soldr cargo test --workspace --lib`
 
 After all steps:
 4. Push → verify all 11 CI board build workflows pass

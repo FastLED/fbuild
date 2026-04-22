@@ -1,4 +1,0 @@
-#!/bin/bash
-# Trampoline: runs rustfmt through soldr so the rustup-managed toolchain
-# is always used. soldr resolves rustfmt via `rustup which`.
-exec uv run soldr rustfmt "$@"

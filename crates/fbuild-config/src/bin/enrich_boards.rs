@@ -8,7 +8,7 @@
 //! are committed to the repo and used as static assets at compile time.
 //!
 //! Usage:
-//!     uv run cargo run -p fbuild-config --bin enrich_boards
+//!     uv run soldr cargo run -p fbuild-config --bin enrich_boards
 
 use serde_json::{Map, Value};
 use std::collections::BTreeSet;

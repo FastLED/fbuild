@@ -1912,7 +1912,7 @@ mod tests {
     /// a stale hardcoded literal. The previous value `"2.0.0"` diverged from
     /// the workspace version and broke native-binary freshness checks.
     #[test]
-    fn python_module_version_matches_cargo_pkg_version() {
+    fn python_module_version_matches_pkg_version() {
         assert_eq!(PYTHON_MODULE_VERSION, env!("CARGO_PKG_VERSION"));
         assert_ne!(
             PYTHON_MODULE_VERSION, "2.0.0",
@@ -2007,7 +2007,7 @@ mod tests {
     /// Deliberately does not pull a crate dep — axum is already in the
     /// workspace but not in `fbuild-python`'s dep graph, and adding it
     /// just for one test would inflate the build graph for every clean
-    /// `uv run cargo check`. Raw TCP is adequate for a response we control.
+    /// `uv run soldr cargo check`. Raw TCP is adequate for a response we control.
     async fn spawn_mock_daemon(body: String) -> String {
         let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
         let addr = listener.local_addr().unwrap();

@@ -9,7 +9,7 @@
 //! "stray '\\' in program" errors because the backslash is a literal character,
 //! not a shell escape. `prepare_flags_for_exec` strips `\"` → `"`.
 //!
-//! Run with: `uv run cargo test -p fbuild-build --test flag_escaping_lint`
+//! Run with: `uv run soldr cargo test -p fbuild-build --test flag_escaping_lint`
 
 use std::fs;
 use std::path::{Path, PathBuf};

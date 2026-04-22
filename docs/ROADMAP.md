@@ -8,7 +8,7 @@
 - [x] CI infrastructure (lint, test, install, hooks)
 - [x] Progressive disclosure documentation
 - [x] PyO3 binding stubs (SerialMonitor, Daemon, connect_daemon)
-- [x] `uv run cargo check/test/clippy` all passing
+- [x] `uv run soldr cargo check/test/clippy` all passing
 
 ## Phase 1: Serial Manager (HIGHEST RISK)
 

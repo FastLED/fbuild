@@ -8,7 +8,7 @@ import os
 import shutil
 
 
-def _cargo_bin_from_tool(tool_name):
+def _rust_bin_from_tool(tool_name):
     """Derive a rustup-managed .cargo/bin directory from a tool on PATH."""
     tool_path = shutil.which(tool_name)
     if not tool_path:
@@ -22,7 +22,7 @@ def _cargo_bin_from_tool(tool_name):
     return None
 
 
-def find_cargo_bin():
+def find_rust_bin():
     """Locate .cargo/bin cross-platform.
 
     Checks CARGO_HOME, then ~/.cargo, then %USERPROFILE%\\.cargo.
@@ -43,7 +43,7 @@ def find_cargo_bin():
                 return os.path.abspath(bin_dir)
 
     for tool_name in ("rustup", "cargo", "rustc"):
-        bin_dir = _cargo_bin_from_tool(tool_name)
+        bin_dir = _rust_bin_from_tool(tool_name)
         if bin_dir:
             return bin_dir
     return None
@@ -54,7 +54,7 @@ def activate():
 
     Call this at the top of any CI script that invokes Rust tools.
     """
-    cargo_bin = find_cargo_bin()
+    cargo_bin = find_rust_bin()
     if not cargo_bin:
         return
     current_path = os.environ.get("PATH", "")
@@ -71,7 +71,7 @@ def clean_env():
     env = os.environ.copy()
 
     # Ensure .cargo/bin is on PATH
-    cargo_bin = find_cargo_bin()
+    cargo_bin = find_rust_bin()
     if cargo_bin:
         path_parts = env.get("PATH", "").split(os.pathsep)
         if cargo_bin not in path_parts:

@@ -5,7 +5,7 @@ Python scripts invoked by Claude Code lifecycle hooks, configured in `.claude/se
 ## Contents
 
 - **`board_context.py`** -- UserPromptSubmit: detects board-related prompts (board names, MCU keywords, board error patterns) and injects guidance about the `/board-support` skill, relevant commands, and external board registries
-- **`tool_guard.py`** -- PreToolUse: blocks bare `cargo`/`rustc`/`rustfmt` and bare `python`/`pip` commands across shell tool variants such as Bash and PowerShell, requiring `uv run`, `soldr ...`, or `_cargo`/`_rustc`/`_rustfmt` trampolines
+- **`tool_guard.py`** -- PreToolUse: blocks bare `cargo`/`rustc`/`rustfmt`, legacy `uv run cargo`-style shims, and bare `python`/`pip` commands across shell tool variants such as Bash and PowerShell, requiring `soldr ...` or `uv run soldr ...` for Rust tooling and `uv run` / `uv pip` for Python tooling
 - **`lint.py`** -- PostToolUse: runs per-file rustfmt + clippy on edited `.rs` files
 - **`readme_guard.py`** -- PostToolUse: ensures every directory containing edited files has a `README.md`
 - **`check-on-start.py`** -- SessionStart: captures a git fingerprint so the stop hook can detect changes

@@ -4,7 +4,7 @@ This document covers the developer workflow: testing, troubleshooting, and local
 
 ## Testing
 
-fbuild includes comprehensive integration tests. The Rust workspace uses `cargo test` via the `uv run` / `soldr` trampolines enforced by repo hooks.
+fbuild includes comprehensive integration tests. The Rust workspace uses `cargo test` via `soldr`, enforced by repo hooks.
 
 ```bash
 # Run unit tests only
@@ -96,12 +96,12 @@ This environment requires you to use `git-bash`.
 
 ### Linting
 
-Use the `uv run` trampolines (bare `cargo` / `rustc` are blocked by hook):
+Use `soldr` directly through the repo-local uv environment (bare `cargo` / `rustc` and `uv run cargo` shims are blocked by hook):
 
 ```bash
-uv run cargo check --workspace --all-targets
-uv run cargo clippy --workspace --all-targets -- -D warnings
-uv run cargo fmt --all
+uv run soldr cargo check --workspace --all-targets
+uv run soldr cargo clippy --workspace --all-targets -- -D warnings
+uv run soldr cargo fmt --all
 ```
 
 The legacy Python linters (`./lint.sh` with `pylint`, `flake8`, `mypy`) remain for any Python utility code under `ci/`.
@@ -124,7 +124,7 @@ The `fbuild` Python package wraps a Rust PyO3 extension built from `crates/fbuil
 
 ```bash
 # Build the extension and copy it into the Python package
-uv run cargo build --release -p fbuild-python --features extension-module
+uv run soldr cargo build --release -p fbuild-python --features extension-module
 
 # Windows
 cp target/release/_native.dll python/fbuild/_native.pyd

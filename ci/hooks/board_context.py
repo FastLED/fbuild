@@ -74,7 +74,7 @@ step-by-step guidance for diagnosing board issues.
 - **Validate against PlatformIO**: `uv run python ci/validate_boards.py`
 - **Search external sources**: `uv run python ci/board_sources.py --search QUERY`
 - **Compare coverage**: `uv run python ci/board_sources.py --compare`
-- **Enrich from PlatformIO**: `uv run cargo run -p fbuild-config --bin enrich_boards`
+- **Enrich from PlatformIO**: `uv run soldr cargo run -p fbuild-config --bin enrich_boards`
 
 ### External board registries (for boards not in PlatformIO):
 - Arduino package indices: `uv run python ci/board_sources.py --list-arduino`

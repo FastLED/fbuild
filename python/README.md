@@ -14,7 +14,7 @@ The `_native` extension is **not** checked into the repo — it would go stale r
 
 ```bash
 # 1. Compile the PyO3 extension
-uv run cargo build --release -p fbuild-python --features extension-module
+uv run soldr cargo build --release -p fbuild-python --features extension-module
 
 # 2. Copy into python/fbuild/ (platform-specific extension name).
 #    Rustup may place output under target/<triple>/release/ on some hosts —
