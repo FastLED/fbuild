@@ -1,6 +1,6 @@
 # Teensy Build Support
 
-Compiler, linker, and orchestrator for Teensy boards (4.0, 4.1, 3.x, LC) using the ARM arm-none-eabi toolchain.
+Compiler, linker, and orchestrator for Teensy boards (4.0, 4.1, 3.x, LC) using the Teensy-compatible PlatformIO/PJRC arm-none-eabi toolchain.
 
 ## Modules
 
