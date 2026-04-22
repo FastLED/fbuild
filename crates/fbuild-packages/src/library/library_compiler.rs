@@ -178,6 +178,12 @@ pub fn compile_library_with_jobs(
             )?;
         }
 
+        tracing::info!(
+            "archiving library {}: {} objects -> {}",
+            name,
+            all_objects.len(),
+            archive_path.display()
+        );
         archive_objects(ar_path, &all_objects, &archive_path)?;
         tracing::info!(
             "compiled library {}: {} changed / {} total files -> {}",
@@ -262,6 +268,12 @@ pub fn compile_library_with_jobs(
     all_objects.sort(); // deterministic archive
 
     // Archive
+    tracing::info!(
+        "archiving library {}: {} objects -> {}",
+        name,
+        all_objects.len(),
+        archive_path.display()
+    );
     archive_objects(ar_path, &all_objects, &archive_path)?;
 
     tracing::info!(

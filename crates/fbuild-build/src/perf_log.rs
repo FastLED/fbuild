@@ -71,8 +71,24 @@ impl PerfTimer {
         }
     }
 
+    /// Return whether this timer is actively emitting/recording diagnostics.
+    pub fn is_active(&self) -> bool {
+        self.active
+    }
+
+    /// Emit an immediate wall-clock checkpoint without starting a timed phase.
+    pub fn checkpoint(&self, name: impl AsRef<str>) {
+        if !self.active {
+            return;
+        }
+        self.emit_event("checkpoint", name.as_ref(), Duration::from_millis(0));
+    }
+
     /// Start a phase; finishes when the returned guard drops.
     pub fn phase(&mut self, name: &'static str) -> PhaseGuard<'_> {
+        if self.active {
+            self.emit_event("phase-start", name, Duration::from_millis(0));
+        }
         PhaseGuard {
             owner: self,
             name,
@@ -91,6 +107,17 @@ impl PerfTimer {
         } else {
             self.phases.push(Phase { name, total: dur });
         }
+    }
+
+    fn emit_event(&self, event: &str, name: &str, duration: Duration) {
+        let wall_ms = self.start.elapsed().as_millis();
+        let phase_ms = duration.as_millis();
+        let line = format!(
+            "[perf-log {}] {} last_phase={} wall={} ms phase={} ms",
+            self.label, event, name, wall_ms, phase_ms
+        );
+        tracing::info!(target: "fbuild_build::perf_log", "{}", line);
+        eprintln!("{}", line);
     }
 }
 
@@ -133,6 +160,7 @@ impl<'a> Drop for PhaseGuard<'a> {
                 total: dur,
             });
         }
+        self.owner.emit_event("phase-finish", self.name, dur);
     }
 }
 
