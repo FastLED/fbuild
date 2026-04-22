@@ -38,6 +38,7 @@ tokio-serial = "5"
 serialport = { version = "4", default-features = false }
 pyo3 = { version = "0.22", features = ["abi3-py310"] }
 tempfile = "3"
+filetime = "0.2"
 sha2 = "0.10"
 regex = "1"
 walkdir = "2"
