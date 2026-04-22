@@ -26,10 +26,13 @@ jobs:
     name: Prepare release
     runs-on: ubuntu-24.04
     outputs:
-      should_release: ${{ steps.prepare.outputs.should_release }}
+      should_build: ${{ steps.prepare.outputs.should_build }}
+      should_publish_github: ${{ steps.prepare.outputs.should_publish_github }}
+      should_publish_pypi: ${{ steps.prepare.outputs.should_publish_pypi }}
       version: ${{ steps.prepare.outputs.version }}
       project_version: ${{ steps.prepare.outputs.project_version }}
       commit_sha: ${{ steps.prepare.outputs.commit_sha }}
+      release_ref: ${{ steps.prepare.outputs.release_ref }}
 
     steps:
       - uses: actions/checkout@v6
@@ -62,43 +65,62 @@ jobs:
 
           version="v${cargo_version}"
           commit_sha="$(git rev-parse HEAD)"
+          release_ref="${commit_sha}"
 
           tag_exists="false"
-          if git ls-remote --exit-code --tags origin "refs/tags/${version}" >/dev/null 2>&1; then
+          tag_sha=""
+          if tag_sha="$(git ls-remote --exit-code --tags origin "refs/tags/${version}" | awk '{print $1}' | tail -n1)"; then
             tag_exists="true"
+            release_ref="${version}"
           fi
 
-          latest="$(
-            curl -fsSL https://pypi.org/pypi/fbuild/json \
-              | python -c 'import json,sys; print(json.load(sys.stdin)["info"]["version"])' \
-              || true
-          )"
-          if [ -z "$latest" ]; then
+          pypi_json="$(mktemp)"
+          if curl -fsSL https://pypi.org/pypi/fbuild/json -o "$pypi_json"; then
+            latest="$(python -c 'import json,sys; print(json.load(open(sys.argv[1]))["info"]["version"])' "$pypi_json")"
+            pypi_file_count="$(python -c 'import json,sys; data=json.load(open(sys.argv[1])); print(len(data.get("releases", {}).get(sys.argv[2], [])))' "$pypi_json" "$cargo_version")"
+          else
             latest="0.0.0"
+            pypi_file_count="0"
           fi
 
-          should_release="false"
+          should_build="false"
+          should_publish_github="false"
+          should_publish_pypi="false"
           newest="$(printf '%s\n%s\n' "$latest" "$cargo_version" | sort -V | tail -n1)"
-          if [ "$tag_exists" != "true" ] && [ "$newest" = "$cargo_version" ] && [ "$cargo_version" != "$latest" ]; then
-            should_release="true"
+
+          if [ "$tag_exists" != "true" ] && [ "$newest" = "$cargo_version" ] && [ "$pypi_file_count" -lt 4 ]; then
+            should_build="true"
+            should_publish_github="true"
+            should_publish_pypi="true"
+          elif [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ] && [ "$tag_exists" = "true" ] && [ "$pypi_file_count" -lt 4 ]; then
+            should_build="true"
+            should_publish_pypi="true"
           fi
 
           {
             echo "version=${version}"
             echo "project_version=${cargo_version}"
             echo "commit_sha=${commit_sha}"
-            echo "should_release=${should_release}"
+            echo "release_ref=${release_ref}"
+            echo "should_build=${should_build}"
+            echo "should_publish_github=${should_publish_github}"
+            echo "should_publish_pypi=${should_publish_pypi}"
           } >> "$GITHUB_OUTPUT"
 
           echo "Candidate version: ${version}"
           echo "Latest PyPI version: ${latest}"
+          echo "PyPI files for ${cargo_version}: ${pypi_file_count}"
           echo "Tag exists: ${tag_exists}"
-          echo "Should release: ${should_release}"
+          echo "Tag SHA: ${tag_sha:-<none>}"
+          echo "Release ref: ${release_ref}"
+          echo "Should build: ${should_build}"
+          echo "Should publish GitHub release: ${should_publish_github}"
+          echo "Should publish PyPI: ${should_publish_pypi}"
 
   build:
     name: Native build (${{ matrix.target }})
     needs: prepare
-    if: needs.prepare.outputs.should_release == 'true'
+    if: needs.prepare.outputs.should_build == 'true'
     strategy:
       fail-fast: false
       matrix:
@@ -134,18 +156,18 @@ jobs:
       binary_ext: ${{ matrix.binary_ext }}
       linux_cross: ${{ matrix.linux_cross }}
       macos_cross: ${{ matrix.macos_cross }}
-      ref: ${{ needs.prepare.outputs.commit_sha }}
+      ref: ${{ needs.prepare.outputs.release_ref }}
 
   publish:
     name: Publish GitHub release
     needs: [prepare, build]
-    if: needs.prepare.outputs.should_release == 'true'
+    if: needs.prepare.outputs.should_publish_github == 'true'
     runs-on: ubuntu-24.04
 
     steps:
       - uses: actions/checkout@v6
         with:
-          ref: ${{ needs.prepare.outputs.commit_sha }}
+          ref: ${{ needs.prepare.outputs.release_ref }}
 
       - name: Download native artifacts
         uses: actions/download-artifact@v7
@@ -196,7 +218,7 @@ jobs:
           gh release create "$version" dist/* \
             --draft \
             --generate-notes \
-            --target "${{ needs.prepare.outputs.commit_sha }}" \
+            --target "${{ needs.prepare.outputs.release_ref }}" \
             --title "$version"
 
       - name: Publish release
@@ -208,13 +230,13 @@ jobs:
   build-pypi:
     name: Build PyPI wheels
     needs: [prepare, build]
-    if: needs.prepare.outputs.should_release == 'true'
+    if: needs.prepare.outputs.should_publish_pypi == 'true'
     runs-on: ubuntu-24.04
 
     steps:
       - uses: actions/checkout@v6
         with:
-          ref: ${{ needs.prepare.outputs.commit_sha }}
+          ref: ${{ needs.prepare.outputs.release_ref }}
 
       - name: Download native artifacts
         uses: actions/download-artifact@v7
@@ -281,7 +303,7 @@ jobs:
   publish-pypi:
     name: Publish PyPI
     needs: [prepare, build-pypi]
-    if: needs.prepare.outputs.should_release == 'true'
+    if: needs.prepare.outputs.should_publish_pypi == 'true'
     runs-on: ubuntu-24.04
     environment: pypi
     permissions:
@@ -304,3 +326,4 @@ jobs:
         with:
           packages-dir: dist
           attestations: true
+          skip-existing: true
