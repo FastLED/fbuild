@@ -62,6 +62,19 @@ jobs:
           python-version: "3.12"
           cache: "false"
 
+      - name: "Phase - configure zccache store"
+        run: |
+          set -euo pipefail
+          zccache_store='${{ steps.fbuild-setup.outputs.zccache-store-path }}'
+          if [ -z "${zccache_store}" ]; then
+            echo "fbuild setup did not expose zccache-store-path" >&2
+            exit 1
+          fi
+          mkdir -p "${zccache_store}"
+          echo "ZCCACHE_CACHE_DIR=${zccache_store}" >> "$GITHUB_ENV"
+          echo "ZCCACHE_DIR=${zccache_store}" >> "$GITHUB_ENV"
+          echo "zccache store: ${zccache_store}"
+
       # -------- clone FastLED (needs to happen BEFORE cache restore because the
       #         cache writes into fastled/.build/ which only exists after clone) --------
       - name: "Phase - clone FastLED"
@@ -79,13 +92,13 @@ jobs:
           printf 'clone_fastled\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
           echo "FastLED HEAD: $(cd fastled && git rev-parse HEAD)"
 
-      # -------- iteration 4: cache the directories fbuild actually writes to --------
+      # -------- iteration 5: cache the directories fbuild actually writes to --------
       # Iteration 0 cached $RUNNER_TEMP/fbuild-cache, which was empty. The real
       # state lives in:
       #   ~/.fbuild/                — fbuild toolchain + daemon state (arch-level)
       #   ~/.fastled/global_cache/  — PlatformIO toolchain downloads
       #   fastled/.build/pio/<board>/ — compile outputs + per-project .fbuild/
-      #   $ZCCACHE_DIR                - compiler object store from setup action
+      #   $ZCCACHE_CACHE_DIR          - compiler object store from setup action
       - name: "Phase - restore compile cache"
         id: compile_cache
         uses: actions/cache/restore@v4
@@ -95,10 +108,10 @@ jobs:
             ~/.fastled/global_cache
             fastled/.build/pio/${{ env.BENCH_BOARD }}
             ${{ steps.fbuild-setup.outputs.zccache-store-path }}
-          key: "bench-v4-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-setup.outputs.fbuild-hash }}-${{ steps.bench_config.outputs.board }}-${{ steps.bench_config.outputs.ref }}"
+          key: "bench-v5-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-setup.outputs.fbuild-hash }}-${{ steps.bench_config.outputs.board }}-${{ steps.bench_config.outputs.ref }}"
           restore-keys: |
-            bench-v4-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-setup.outputs.fbuild-hash }}-${{ steps.bench_config.outputs.board }}-
-            bench-v4-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-setup.outputs.fbuild-hash }}-
+            bench-v5-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-setup.outputs.fbuild-hash }}-${{ steps.bench_config.outputs.board }}-
+            bench-v5-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-setup.outputs.fbuild-hash }}-
 
       - name: "Phase - record cache-restore result"
         run: |
@@ -106,7 +119,7 @@ jobs:
           printf 'compile_cache_key_matched\t%s\n' "${{ steps.compile_cache.outputs.cache-matched-key }}" >> "$BENCH_TIMINGS"
           echo "Cache hit: ${{ steps.compile_cache.outputs.cache-hit }}"
           echo "Key matched: ${{ steps.compile_cache.outputs.cache-matched-key }}"
-          for d in ~/.fbuild ~/.fastled/global_cache fastled/.build/pio/${BENCH_BOARD} "${ZCCACHE_DIR}"; do
+          for d in ~/.fbuild ~/.fastled/global_cache fastled/.build/pio/${BENCH_BOARD} "${ZCCACHE_CACHE_DIR}"; do
             if [ -d "$d" ]; then
               printf '  %s: %s\n' "$d" "$(du -sh "$d" 2>/dev/null | cut -f1)"
             else
@@ -155,7 +168,7 @@ jobs:
         if: always()
         run: |
           echo "=== post-compile cache footprint ==="
-          for d in ~/.fbuild ~/.fastled/global_cache fastled/.build/pio/${BENCH_BOARD} "${ZCCACHE_DIR}"; do
+          for d in ~/.fbuild ~/.fastled/global_cache fastled/.build/pio/${BENCH_BOARD} "${ZCCACHE_CACHE_DIR}"; do
             if [ -d "$d" ]; then
               printf '  %s: %s\n' "$d" "$(du -sh "$d" 2>/dev/null | cut -f1)"
             else
@@ -172,7 +185,7 @@ jobs:
             ~/.fastled/global_cache
             fastled/.build/pio/${{ env.BENCH_BOARD }}
             ${{ steps.fbuild-setup.outputs.zccache-store-path }}
-          key: "bench-v4-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-setup.outputs.fbuild-hash }}-${{ steps.bench_config.outputs.board }}-${{ steps.bench_config.outputs.ref }}"
+          key: "bench-v5-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-setup.outputs.fbuild-hash }}-${{ steps.bench_config.outputs.board }}-${{ steps.bench_config.outputs.ref }}"
 
       - name: "Phase - job total + summary"
         if: always()
