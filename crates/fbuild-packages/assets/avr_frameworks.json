@@ -25,6 +25,24 @@
       "checksum": null,
       "validation_path": "cores/tinymodern/Arduino.h"
     },
+    "dtiny": {
+      "name": "digistump-avr-core",
+      "github": "ArminJo/DigistumpArduino",
+      "version": "1.7.2",
+      "tag_prefix": "",
+      "checksum": null,
+      "validation_path": "cores/tiny/Arduino.h",
+      "core_dir": "tiny"
+    },
+    "pro": {
+      "name": "digistump-avr-core",
+      "github": "ArminJo/DigistumpArduino",
+      "version": "1.7.2",
+      "tag_prefix": "",
+      "checksum": null,
+      "validation_path": "cores/pro/Arduino.h",
+      "core_dir": "pro"
+    },
     "MiniCore": {
       "name": "minicore",
       "github": "MCUdude/MiniCore",

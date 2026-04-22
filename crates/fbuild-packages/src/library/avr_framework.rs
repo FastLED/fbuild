@@ -372,4 +372,29 @@ mod tests {
         assert_eq!(entry.name, "arduino-megaavr-core");
         assert_eq!(entry.core_dir.as_deref(), Some("arduino"));
     }
+
+    #[test]
+    fn test_digispark_dtiny_registered() {
+        let registry = load_registry();
+        assert!(
+            registry.contains_key("dtiny"),
+            "dtiny must be registered for Digistump/Digispark boards"
+        );
+    }
+
+    #[test]
+    fn test_digispark_dtiny_lookup() {
+        let entry = lookup_entry("dtiny").unwrap();
+        assert!(entry.github.contains("DigistumpArduino"));
+        assert_eq!(entry.name, "digistump-avr-core");
+        assert_eq!(entry.core_dir.as_deref(), Some("tiny"));
+    }
+
+    #[test]
+    fn test_digispark_pro_lookup() {
+        let entry = lookup_entry("pro").unwrap();
+        assert!(entry.github.contains("DigistumpArduino"));
+        assert_eq!(entry.name, "digistump-avr-core");
+        assert_eq!(entry.core_dir.as_deref(), Some("pro"));
+    }
 }
