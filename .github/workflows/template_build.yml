@@ -41,6 +41,9 @@ jobs:
           target-cache: true
           cache-key-suffix: board-${{ inputs.env-name }}
 
+      - name: Reset zccache daemon after cache warm
+        run: pkill -f '[z]ccache-daemon' || true
+
       - name: Restore fbuild toolchains
         uses: actions/cache/restore@v5
         with:
