@@ -54,20 +54,26 @@ jobs:
           printf 'phase\tseconds\n' > "$BENCH_TIMINGS"
           echo "BENCH_JOB_START=$(date +%s.%N)" >> "$GITHUB_ENV"
 
-      # -------- system setup (python, fbuild, uv) --------
-      - name: "Phase - setup fbuild"
-        id: fbuild-setup
-        uses: FastLED/fbuild/.github/actions/setup@main
+      # -------- system setup (python, soldr, uv) --------
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
+      - name: "Phase - setup soldr"
+        id: soldr-setup
+        uses: zackees/setup-soldr@v0
+        with:
+          version: "0.7.11"
           cache: "false"
+          build-cache: "false"
 
       - name: "Phase - configure zccache store"
         run: |
           set -euo pipefail
-          zccache_store='${{ steps.fbuild-setup.outputs.zccache-store-path }}'
+          zccache_store='${{ steps.soldr-setup.outputs.build-cache-path }}'
           if [ -z "${zccache_store}" ]; then
-            echo "fbuild setup did not expose zccache-store-path" >&2
+            echo "setup-soldr did not expose build-cache-path" >&2
             exit 1
           fi
           mkdir -p "${zccache_store}"
@@ -107,11 +113,11 @@ jobs:
             ~/.fbuild
             ~/.fastled/global_cache
             fastled/.build/pio/${{ env.BENCH_BOARD }}
-            ${{ steps.fbuild-setup.outputs.zccache-store-path }}
-          key: "bench-v5-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-setup.outputs.fbuild-hash }}-${{ steps.bench_config.outputs.board }}-${{ steps.bench_config.outputs.ref }}"
+            ${{ steps.soldr-setup.outputs.build-cache-path }}
+          key: "bench-v6-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.soldr-setup.outputs.soldr-version }}-${{ steps.bench_config.outputs.board }}-${{ steps.bench_config.outputs.ref }}"
           restore-keys: |
-            bench-v5-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-setup.outputs.fbuild-hash }}-${{ steps.bench_config.outputs.board }}-
-            bench-v5-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-setup.outputs.fbuild-hash }}-
+            bench-v6-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.soldr-setup.outputs.soldr-version }}-${{ steps.bench_config.outputs.board }}-
+            bench-v6-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.soldr-setup.outputs.soldr-version }}-
 
       - name: "Phase - record cache-restore result"
         run: |
@@ -184,8 +190,8 @@ jobs:
             ~/.fbuild
             ~/.fastled/global_cache
             fastled/.build/pio/${{ env.BENCH_BOARD }}
-            ${{ steps.fbuild-setup.outputs.zccache-store-path }}
-          key: "bench-v5-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-setup.outputs.fbuild-hash }}-${{ steps.bench_config.outputs.board }}-${{ steps.bench_config.outputs.ref }}"
+            ${{ steps.soldr-setup.outputs.build-cache-path }}
+          key: "bench-v6-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.soldr-setup.outputs.soldr-version }}-${{ steps.bench_config.outputs.board }}-${{ steps.bench_config.outputs.ref }}"
 
       - name: "Phase - job total + summary"
         if: always()
