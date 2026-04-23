@@ -217,6 +217,8 @@ fn zccache_hit_across_workspace_rename() {
 
     create_workspace(&ws_a);
     create_workspace(&ws_b);
+    let expected_ws_a = cwd_display_path(&ws_a);
+    let expected_ws_b = cwd_display_path(&ws_b);
 
     let _cwd = CurrentDirGuard::set_to(tmp.path());
     env::set_var("FBUILD_FAKE_ZCCACHE_CACHE", &cache_dir);
@@ -237,13 +239,22 @@ fn zccache_hit_across_workspace_rename() {
         "renamed workspace should reuse the cache entry:\n{log}"
     );
     assert!(
-        lines[0].contains(&format!("cwd={}", ws_a.display())),
+        lines[0].contains(&format!("cwd={expected_ws_a}")),
         "first wrapper CWD should be workspace root:\n{log}"
     );
     assert!(
-        lines[1].contains(&format!("cwd={}", ws_b.display())),
+        lines[1].contains(&format!("cwd={expected_ws_b}")),
         "second wrapper CWD should be workspace root:\n{log}"
     );
+}
+
+fn cwd_display_path(path: &Path) -> String {
+    let path = path.canonicalize().unwrap_or_else(|_| path.to_path_buf());
+    let display = path.display().to_string();
+    display
+        .strip_prefix(r"\\?\")
+        .unwrap_or(&display)
+        .to_string()
 }
 
 fn compile_fake_zccache(root: &Path) -> PathBuf {

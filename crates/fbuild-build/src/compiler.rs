@@ -563,17 +563,37 @@ pub fn compile_source(
         std::fs::create_dir_all(parent)?;
     }
 
+    let compile_cwd = compiler_cache.and_then(|_| crate::zccache::compile_cwd_from_output(output));
+    let (source_arg, output_arg) = if let Some(cwd) = compile_cwd.as_deref() {
+        (
+            crate::zccache::path_arg_for_compile_cwd(source, cwd),
+            crate::zccache::path_arg_for_compile_cwd(output, cwd),
+        )
+    } else {
+        (
+            source.to_string_lossy().to_string(),
+            output.to_string_lossy().to_string(),
+        )
+    };
+
     let mut all_flags: Vec<String> = Vec::new();
-    all_flags.extend(flags.iter().cloned());
-    all_flags.extend(extra_pre_flags.iter().cloned());
-    all_flags.extend(extra_flags.iter().cloned());
+    if let Some(cwd) = compile_cwd.as_deref() {
+        all_flags.extend(crate::zccache::normalize_flags_for_compile_cwd(flags, cwd));
+        all_flags.extend(crate::zccache::normalize_flags_for_compile_cwd(
+            extra_pre_flags,
+            cwd,
+        ));
+        all_flags.extend(crate::zccache::normalize_flags_for_compile_cwd(
+            extra_flags,
+            cwd,
+        ));
+    } else {
+        all_flags.extend(flags.iter().cloned());
+        all_flags.extend(extra_pre_flags.iter().cloned());
+        all_flags.extend(extra_flags.iter().cloned());
+    }
     let rebuild_signature = build_rebuild_signature(compiler, flags, extra_pre_flags, extra_flags);
-    all_flags.extend([
-        "-c".to_string(),
-        source.to_string_lossy().to_string(),
-        "-o".to_string(),
-        output.to_string_lossy().to_string(),
-    ]);
+    all_flags.extend(["-c".to_string(), source_arg, "-o".to_string(), output_arg]);
 
     // On Windows, write all flags to a response file to avoid command-line
     // length limits and backslash-quote escaping issues with CreateProcessW.
@@ -596,7 +616,6 @@ pub fn compile_source(
     };
 
     let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-    let compile_cwd = compiler_cache.and_then(|_| crate::zccache::compile_cwd_from_output(output));
 
     if verbose {
         tracing::info!("compile: {}", args.join(" "));
