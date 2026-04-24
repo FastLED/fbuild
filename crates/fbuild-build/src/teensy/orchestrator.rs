@@ -117,6 +117,11 @@ fn resolve_teensy_framework_library_sources_from_libraries(
         }
     }
 
+    let mut local_headers = HashSet::new();
+    for root in roots {
+        collect_header_names(root, &mut local_headers);
+    }
+
     let mut pending = HashSet::new();
     for root in roots {
         collect_included_headers(root, &mut pending);
@@ -125,6 +130,9 @@ fn resolve_teensy_framework_library_sources_from_libraries(
     let mut selected = HashSet::new();
     let mut queue: Vec<String> = pending.iter().cloned().collect();
     while let Some(header) = queue.pop() {
+        if local_headers.contains(&header) {
+            continue;
+        }
         let Some(&library_idx) = header_to_library.get(&header) else {
             continue;
         };
@@ -736,5 +744,56 @@ mod tests {
             sources,
             vec![wrapper_dir.join("NeedsSpi.cpp"), spi_dir.join("SPI.cpp")]
         );
+    }
+
+    #[test]
+    fn test_resolve_teensy_framework_libraries_prefers_local_fastled_over_framework() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let project_src = tmp.path().join("project").join("src");
+        let project_lib = tmp
+            .path()
+            .join("project")
+            .join("lib")
+            .join("FastLED")
+            .join("src");
+        std::fs::create_dir_all(&project_src).unwrap();
+        std::fs::create_dir_all(&project_lib).unwrap();
+        std::fs::write(project_src.join("main.cpp"), "#include <FastLED.h>\n").unwrap();
+        std::fs::write(project_lib.join("FastLED.h"), "#include <SPI.h>\n").unwrap();
+        std::fs::write(project_lib.join("FastLED.cpp"), "").unwrap();
+
+        let framework_fastled_dir = tmp
+            .path()
+            .join("framework")
+            .join("libraries")
+            .join("FastLED");
+        std::fs::create_dir_all(&framework_fastled_dir).unwrap();
+        std::fs::write(framework_fastled_dir.join("FastLED.h"), "").unwrap();
+        std::fs::write(framework_fastled_dir.join("FastLED.cpp"), "").unwrap();
+
+        let spi_dir = tmp.path().join("framework").join("libraries").join("SPI");
+        std::fs::create_dir_all(&spi_dir).unwrap();
+        std::fs::write(spi_dir.join("SPI.h"), "").unwrap();
+        std::fs::write(spi_dir.join("SPI.cpp"), "").unwrap();
+
+        let libraries = vec![
+            TeensyFrameworkLibrary {
+                name: "FastLED".to_string(),
+                dir: framework_fastled_dir.clone(),
+                include_dirs: vec![framework_fastled_dir.clone()],
+                source_files: vec![framework_fastled_dir.join("FastLED.cpp")],
+            },
+            TeensyFrameworkLibrary {
+                name: "SPI".to_string(),
+                dir: spi_dir.clone(),
+                include_dirs: vec![spi_dir.clone()],
+                source_files: vec![spi_dir.join("SPI.cpp")],
+            },
+        ];
+
+        let roots = vec![project_src, project_lib];
+        let sources = resolve_teensy_framework_library_sources_from_libraries(&libraries, &roots);
+
+        assert_eq!(sources, vec![spi_dir.join("SPI.cpp")]);
     }
 }
