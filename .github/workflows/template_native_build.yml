@@ -35,6 +35,7 @@ on:
 env:
   CARGO_TERM_COLOR: always
   RUSTFLAGS: "-D warnings"
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
 permissions:
   contents: read
@@ -199,7 +200,7 @@ jobs:
           cat SHA256SUMS.txt
 
       - name: Attest native artifacts
-        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3
+        uses: actions/attest-build-provenance@v4
         with:
           subject-checksums: staging/SHA256SUMS.txt
 

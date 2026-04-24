@@ -1,6 +1,6 @@
 # `FastLED/fbuild/setup` - composite GitHub Action
 
-One-line fbuild setup for consumer CI pipelines. Installs fbuild, wires `actions/cache@v4` with sensible defaults, and exports `FBUILD_CACHE_DIR` plus `ZCCACHE_DIR` so subsequent steps Just Work.
+One-line fbuild setup for consumer CI pipelines. Installs fbuild, wires `actions/cache@v5` with sensible defaults, and exports `FBUILD_CACHE_DIR` plus `ZCCACHE_DIR` so subsequent steps Just Work.
 
 For the underlying cache design (what's cached, why, and how to tune the key for your project) see [`../../docs/CI_CACHING.md`](../../../docs/CI_CACHING.md).
 
@@ -53,7 +53,7 @@ jobs:
 
 ## Caching the zccache store
 
-The built-in `cache: true` wiring covers the fbuild package/tool cache rooted at `FBUILD_CACHE_DIR`. If you also want cross-run reuse of zccache's object store, add your own `actions/cache@v4` step for the resolved zccache directory and your project build outputs:
+The built-in `cache: true` wiring covers the fbuild package/tool cache rooted at `FBUILD_CACHE_DIR`. If you also want cross-run reuse of zccache's object store, add your own `actions/cache@v5` step for the resolved zccache directory and your project build outputs:
 
 ```yaml
 - name: Setup fbuild
@@ -63,7 +63,7 @@ The built-in `cache: true` wiring covers the fbuild package/tool cache rooted at
     cache-key-extra: ${{ matrix.board }}-${{ hashFiles('platformio.ini') }}
 
 - name: Restore zccache store + project build outputs
-  uses: actions/cache@v4
+  uses: actions/cache@v5
   with:
     path: |
       ${{ steps.fbuild-setup.outputs.zccache-store-path }}
@@ -105,7 +105,7 @@ Use `steps.<id>.outputs.zccache-store-path` inside workflow expressions. The sam
 | `cache-hit` | `true` if the cache was restored from a previous run, `false` on miss. |
 | `cache-dir` | Resolved cache directory path. Useful for diagnostic steps. |
 | `fbuild-hash` | sha256 prefix (16 hex chars) of the installed fbuild wheel's `RECORD` file. Baked into the cache key so any fbuild change, including a re-released wheel at the same version, invalidates stale cache artifacts. |
-| `zccache-store-path` | Resolved zccache object-store directory. The same path is exported to later steps as `ZCCACHE_DIR`, so consumer-managed `actions/cache@v4` blocks can reuse it without guessing platform-specific defaults. |
+| `zccache-store-path` | Resolved zccache object-store directory. The same path is exported to later steps as `ZCCACHE_DIR`, so consumer-managed `actions/cache@v5` blocks can reuse it without guessing platform-specific defaults. |
 
 ## What this action does
 
@@ -114,7 +114,7 @@ Use `steps.<id>.outputs.zccache-store-path` inside workflow expressions. The sam
 3. Exports `FBUILD_CACHE_DIR` and `ZCCACHE_DIR` via `$GITHUB_ENV` so every later step inherits them, and exposes the zccache location as the `zccache-store-path` output.
 4. Installs fbuild from PyPI at the requested version.
 5. **Computes the installed fbuild's content hash** (sha256 of its dist-info `RECORD`) and bakes it into the cache key. This guarantees the cache is tied to the exact fbuild you're running, not just the PyPI version string, so `latest` is safe and a re-released wheel won't poison the cache.
-6. Restores (and on job-end, saves) the fbuild cache via `actions/cache@v4`.
+6. Restores (and on job-end, saves) the fbuild cache via `actions/cache@v5`.
 
 ### Why hash-pinning matters
 
@@ -128,7 +128,7 @@ Baking the wheel's `RECORD` hash into the key means:
 
 It does **not** cache `~/.fbuild/*/daemon/` - that's ephemeral runtime state and restoring it across runs causes broken daemon discovery on the next client call. The action sidesteps the whole `~/.fbuild/` tree by redirecting fbuild's cache to `$RUNNER_TEMP/fbuild-cache` via `FBUILD_CACHE_DIR`.
 
-It also does **not** automatically cache zccache's object store for you. That store lives at `ZCCACHE_DIR` / `zccache-store-path`, and consumers who want cross-run per-TU reuse should add their own `actions/cache@v4` step as shown above.
+It also does **not** automatically cache zccache's object store for you. That store lives at `ZCCACHE_DIR` / `zccache-store-path`, and consumers who want cross-run per-TU reuse should add their own `actions/cache@v5` step as shown above.
 
 ## Version pinning
 
@@ -142,5 +142,5 @@ At time of writing there is no `v1` tag - use `@main` and pin `fbuild-version` t
 
 ## Related
 
-- [`docs/CI_CACHING.md`](../../../docs/CI_CACHING.md) - detailed design of the underlying cache, plus raw `actions/cache@v4` snippets for consumers who prefer to avoid the action dependency.
+- [`docs/CI_CACHING.md`](../../../docs/CI_CACHING.md) - detailed design of the underlying cache, plus raw `actions/cache@v5` snippets for consumers who prefer to avoid the action dependency.
 - [#101](https://github.com/FastLED/fbuild/issues/101) - the issue that tracked creation of this action.

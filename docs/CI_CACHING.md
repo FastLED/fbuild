@@ -19,7 +19,7 @@ Most consumers should use the [`FastLED/fbuild/.github/actions/setup`](../.githu
 - run: fbuild build examples/Blink -e esp32dev
 ```
 
-The action sidesteps the whole `~/.fbuild/*/daemon/` "don't cache ephemeral state" pitfall by redirecting fbuild's cache to `$RUNNER_TEMP/fbuild-cache` via `FBUILD_CACHE_DIR`. It also exposes the resolved zccache store as both the `zccache-store-path` output and the `ZCCACHE_DIR` environment variable, so consumer workflows can add their own `actions/cache@v4` entry for cross-run per-TU reuse. See the [action's README](../.github/actions/setup/README.md) for inputs, outputs, and a full matrix example.
+The action sidesteps the whole `~/.fbuild/*/daemon/` "don't cache ephemeral state" pitfall by redirecting fbuild's cache to `$RUNNER_TEMP/fbuild-cache` via `FBUILD_CACHE_DIR`. It also exposes the resolved zccache store as both the `zccache-store-path` output and the `ZCCACHE_DIR` environment variable, so consumer workflows can add their own `actions/cache@v5` entry for cross-run per-TU reuse. See the [action's README](../.github/actions/setup/README.md) for inputs, outputs, and a full matrix example.
 
 ### If you want zccache hits across CI runs
 
@@ -33,7 +33,7 @@ Keep the action's built-in cache for `FBUILD_CACHE_DIR`, then add a second cache
     cache-key-extra: ${{ matrix.board }}-${{ hashFiles('platformio.ini') }}
 
 - name: Restore zccache store + project build outputs
-  uses: actions/cache@v4
+  uses: actions/cache@v5
   with:
     path: |
       ${{ steps.fbuild-setup.outputs.zccache-store-path }}
@@ -66,7 +66,7 @@ If you skip the composite action, you MUST still bake the fbuild content hash in
     echo "hash=$FBUILD_HASH" >> "$GITHUB_OUTPUT"
 
 - name: Restore fbuild cache
-  uses: actions/cache@v4
+  uses: actions/cache@v5
   with:
     path: |
       ~/.fbuild/prod/cache
@@ -105,7 +105,7 @@ See `crates/fbuild-paths/src/lib.rs` for the authoritative path list.
 The goal is to maximize hit rate without producing wrong output. In priority order, the key should discriminate on:
 
 1. **Runner OS + arch** - `${{ runner.os }}-${{ runner.arch }}`. Toolchains are platform-pinned; sharing across OSes corrupts builds.
-2. **fbuild content hash** - **required**, not optional. Key on a content hash of the installed fbuild (e.g., sha256 of the wheel's dist-info `RECORD` file), not just the PyPI version string. A version string does not discriminate against re-released wheels, dev builds, or local installs; cached artifacts can encode fbuild-internal layout (response-file format, path embedding, fingerprint scheme) that changes silently across those. The composite `setup` action computes this hash for you and exports it via the `fbuild-hash` output - consumers who roll their own `actions/cache@v4` should do the equivalent.
+2. **fbuild content hash** - **required**, not optional. Key on a content hash of the installed fbuild (e.g., sha256 of the wheel's dist-info `RECORD` file), not just the PyPI version string. A version string does not discriminate against re-released wheels, dev builds, or local installs; cached artifacts can encode fbuild-internal layout (response-file format, path embedding, fingerprint scheme) that changes silently across those. The composite `setup` action computes this hash for you and exports it via the `fbuild-hash` output - consumers who roll their own `actions/cache@v5` should do the equivalent.
 3. **Graph inputs** - `platformio.ini`, per-board JSONs, `rust-toolchain.toml`, any `lib_deps`-defining file. A change to these invalidates the warm-build fingerprint anyway, so it's cheap to bake them into the key to avoid carrying obsolete artifacts.
 4. **Manual bump** - a `.fbuild-cache-version` sentinel in the repo lets you force-invalidate with a one-line commit when the runtime has rotted for reasons GH Actions can't see.
 
@@ -127,7 +127,7 @@ If you also cache `ZCCACHE_DIR`, use the same OS/arch, `fbuild-hash`, and graph-
     )
     echo "hash=$FBUILD_HASH" >> "$GITHUB_OUTPUT"
 
-- uses: actions/cache@v4
+- uses: actions/cache@v5
   with:
     path: ~/.fbuild/prod/cache
     key: fbuild-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.hash }}-${{ hashFiles('platformio.ini') }}
@@ -151,7 +151,7 @@ The index SQLite file is the only thing that MUST match the archives/installed d
 ## Hermeticity
 
 - **Toolchain binaries, frameworks, and libraries are content-addressed** - they produce bit-for-bit identical intermediate objects given identical inputs, regardless of which runner built them. Safe to share across the matrix.
-- **Compile outputs under `.fbuild/build/` are reproducible in file *content* but not always in *mtime***. fbuild's build fingerprint is content-hashed, not mtime-based, so a restored cache does not need mtime preservation from the CI runner - `needs_rebuild` keys on depfile contents and command-hash, not timestamps. This means `actions/cache@v4` restoring without mtime fidelity is fine.
+- **Compile outputs under `.fbuild/build/` are reproducible in file *content* but not always in *mtime***. fbuild's build fingerprint is content-hashed, not mtime-based, so a restored cache does not need mtime preservation from the CI runner - `needs_rebuild` keys on depfile contents and command-hash, not timestamps. This means `actions/cache@v5` restoring without mtime fidelity is fine.
 - **Absolute path embedding**: response files (`*.rsp`) under `.fbuild/build/` contain absolute paths to `~/.fbuild/.../installed/...`. On a runner where `$HOME` differs between runs (uncommon but possible), response files become stale. Mitigate by pinning `HOME` to a stable runner path, or by bumping `.fbuild-cache-version` when you change runner images.
 - **Debug info**: optimized release builds don't embed source paths beyond what DWARF requires. If you ship debuggable firmware, embedded paths may differ across runners - file-per-runner cache shards if this matters.
 
@@ -159,7 +159,7 @@ The index SQLite file is the only thing that MUST match the archives/installed d
 
 `disk_cache::reconcile_on_open` runs **on daemon startup**, not per-build. On CI where the daemon starts fresh each job, reconcile happens exactly once and is fast (just walks `index.sqlite` + verifies referenced paths exist, removes orphans). No full filesystem rescan per build.
 
-The LRU/GC budget (`crates/fbuild-packages/src/disk_cache/budget.rs`) auto-scales to disk free space. On a 14 GB-free GH Actions runner this lands on a ~10 GB budget - within `actions/cache@v4`'s 10 GB cache-entry limit. If you use a bigger runner, consider pinning the budget with `FBUILD_CACHE_BUDGET=8G` (or whatever you want) to keep the cache entry from growing past what the hosted cache will accept.
+The LRU/GC budget (`crates/fbuild-packages/src/disk_cache/budget.rs`) auto-scales to disk free space. On a 14 GB-free GH Actions runner this lands on a ~10 GB budget - within `actions/cache@v5`'s 10 GB cache-entry limit. If you use a bigger runner, consider pinning the budget with `FBUILD_CACHE_BUDGET=8G` (or whatever you want) to keep the cache entry from growing past what the hosted cache will accept.
 
 ### Forcing a rebuild in CI
 
@@ -192,7 +192,7 @@ Matrix jobs sharing one `actions/cache` key will each read the same restore atom
 
 As of this doc:
 
-- `fbuild cache export <tarball>` / `fbuild cache import <tarball>`: **not implemented**. `actions/cache@v4` handles archive+extract. A native helper would only be needed for non-GHA CI systems.
+- `fbuild cache export <tarball>` / `fbuild cache import <tarball>`: **not implemented**. `actions/cache@v5` handles archive+extract. A native helper would only be needed for non-GHA CI systems.
 - `fbuild cache pin <entry>`: **not implemented**. LRU eviction is based on recency; if you need to guarantee a toolchain never evicts on a shared cache, file a follow-up.
 - `fbuild cache stats`: yes - `DiskCache::stats()` exposes size and entry counts. Useful for CI debug output.
 
@@ -216,7 +216,7 @@ steps:
       cache-key-extra: ${{ matrix.board }}-${{ hashFiles('platformio.ini', 'rust-toolchain.toml') }}
 
   - name: Restore zccache store + project build outputs
-    uses: actions/cache@v4
+    uses: actions/cache@v5
     with:
       path: |
         ${{ steps.fbuild-setup.outputs.zccache-store-path }}

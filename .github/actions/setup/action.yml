@@ -49,7 +49,7 @@ runs:
   using: "composite"
   steps:
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ inputs.python-version }}
 
@@ -118,7 +118,7 @@ runs:
     - name: Restore fbuild cache
       if: ${{ inputs.cache == 'true' }}
       id: fbuild-cache
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: ${{ steps.resolve-paths.outputs.cache-dir }}
         key: fbuild-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.fbuild-hash }}-${{ inputs.cache-key-extra }}

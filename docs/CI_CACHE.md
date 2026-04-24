@@ -74,7 +74,7 @@ jobs:
           cache-key-extra: ${{ env.FBUILD_RUNNER_IMAGE }}-${{ env.FBUILD_BOARD }}-${{ hashFiles('platformio.ini', 'rust-toolchain.toml', '.fbuild-cache-version') }}
 
       - name: Restore zccache store and fbuild build outputs
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             ${{ steps.fbuild.outputs.zccache-store-path }}

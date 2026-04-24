@@ -24,6 +24,9 @@ on:
   pull_request:
     types: [opened]
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 # pull_request (not pull_request_target) — fork PRs run in the fork's context
 # without access to PROJECT_APP_PRIVATE_KEY, so they simply won't be
 # auto-added. That is an intentional security trade-off: pull_request_target

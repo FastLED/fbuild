@@ -170,7 +170,7 @@ jobs:
           ref: ${{ needs.prepare.outputs.release_ref }}
 
       - name: Download native artifacts
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           pattern: binaries-*
           path: artifacts
@@ -204,7 +204,7 @@ jobs:
           sha256sum fbuild-* > "fbuild-${version}-SHA256SUMS.txt"
 
       - name: Attest release artifacts
-        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3
+        uses: actions/attest-build-provenance@v4
         with:
           subject-checksums: dist/fbuild-${{ needs.prepare.outputs.version }}-SHA256SUMS.txt
 
@@ -239,7 +239,7 @@ jobs:
           ref: ${{ needs.prepare.outputs.release_ref }}
 
       - name: Download native artifacts
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           pattern: binaries-*
           path: dist/_tmp
@@ -312,7 +312,7 @@ jobs:
 
     steps:
       - name: Download PyPI distributions
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: pypi-fbuild
           path: dist
