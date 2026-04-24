@@ -63,8 +63,23 @@ pub fn run_command_passthrough(
     timeout: Option<Duration>,
 ) -> Result<i32> {
     let config = build_config(args, cwd, env, /*capture=*/ false, StdinMode::Inherit)?;
-    let process = NativeProcess::new(config);
+    let mut process = NativeProcess::new(config);
     process.start().map_err(|e| spawn_err(args, e))?;
+    wait_or_kill(&mut process, args, timeout)
+}
+
+/// Wait on a running `NativeProcess` and translate its outcome into a
+/// `FbuildError`-flavoured `Result<i32>`.
+///
+/// On timeout the child is killed (best-effort) before the error is
+/// returned. Shared by [`run_command_passthrough`] and [`run_captured`]
+/// so that the timeout/kill/error-mapping contract lives in exactly one
+/// place.
+fn wait_or_kill(
+    process: &mut NativeProcess,
+    args: &[&str],
+    timeout: Option<Duration>,
+) -> Result<i32> {
     match process.wait(timeout) {
         Ok(code) => Ok(code),
         Err(ProcessError::Timeout) => {
@@ -86,24 +101,9 @@ fn run_captured(
     args: &[&str],
     timeout: Option<Duration>,
 ) -> Result<ToolOutput> {
-    let process = NativeProcess::new(config);
+    let mut process = NativeProcess::new(config);
     process.start().map_err(|e| spawn_err(args, e))?;
-    let exit_code = match process.wait(timeout) {
-        Ok(code) => code,
-        Err(ProcessError::Timeout) => {
-            let _ = process.kill();
-            return Err(FbuildError::Timeout(format!(
-                "command timed out after {}s",
-                timeout.map(|d| d.as_secs()).unwrap_or(0)
-            )));
-        }
-        Err(e) => {
-            return Err(FbuildError::Other(format!(
-                "command {:?} failed: {}",
-                args, e
-            )))
-        }
-    };
+    let exit_code = wait_or_kill(&mut process, args, timeout)?;
 
     let stdout = join_lines(process.captured_stdout());
     let stderr = join_lines(process.captured_stderr());
@@ -200,6 +200,14 @@ fn compute_env(program: &str, overlay: Option<&[(&str, &str)]>) -> Option<Vec<(S
     {
         let mut env_map: std::collections::BTreeMap<String, String> = std::env::vars().collect();
 
+        // Strip MSYS/MSYS2 environment variables first, *before* we
+        // prepend the exe directory, so that an exe_dir whose path
+        // happens to contain `\msys` or `/usr/` is not filtered back
+        // out by strip_msys_env's PATH-entry scrubbing.
+        if is_msys_environment(&env_map) {
+            strip_msys_env(&mut env_map);
+        }
+
         // Prepend the executable's directory to PATH so that child
         // processes (e.g., cc1plus launched by g++) can find DLLs in
         // the same bin/ dir.
@@ -211,18 +219,13 @@ fn compute_env(program: &str, overlay: Option<&[(&str, &str)]>) -> Option<Vec<(S
                     .or_else(|| env_map.get("Path"))
                     .cloned()
                     .unwrap_or_default();
-                env_map.insert(
-                    "PATH".to_string(),
-                    format!("{};{}", exe_dir_str, current_path),
-                );
+                let new_path = if current_path.is_empty() {
+                    exe_dir_str
+                } else {
+                    format!("{};{}", exe_dir_str, current_path)
+                };
+                env_map.insert("PATH".to_string(), new_path);
             }
-        }
-
-        // Strip MSYS/MSYS2 environment variables that interfere with
-        // native Windows toolchain binaries finding their internal
-        // tools.
-        if is_msys_environment(&env_map) {
-            strip_msys_env(&mut env_map);
         }
 
         if let Some(vars) = overlay {
@@ -369,5 +372,33 @@ mod tests {
         let result = run_command(&args, None, None, None).unwrap();
         assert!(result.success());
         assert!(result.stderr.contains("err"), "got: {:?}", result);
+    }
+
+    #[test]
+    fn run_passthrough_propagates_exit_code() {
+        // Smoke test for run_command_passthrough: the returned i32 must
+        // match the child's real exit status. We use the shell `exit`
+        // builtin (cross-platform via cmd /C on Windows, sh -c elsewhere)
+        // because it is always available and the passthrough entry point
+        // does not capture output for us to assert on.
+        let args = if cfg!(windows) {
+            vec!["cmd", "/C", "exit 7"]
+        } else {
+            vec!["sh", "-c", "exit 7"]
+        };
+        let code = run_command_passthrough(&args, None, None, None).unwrap();
+        assert_eq!(
+            code, 7,
+            "run_command_passthrough should return child exit code"
+        );
+
+        // And zero is zero.
+        let args_ok = if cfg!(windows) {
+            vec!["cmd", "/C", "exit 0"]
+        } else {
+            vec!["sh", "-c", "exit 0"]
+        };
+        let code_ok = run_command_passthrough(&args_ok, None, None, None).unwrap();
+        assert_eq!(code_ok, 0);
     }
 }
