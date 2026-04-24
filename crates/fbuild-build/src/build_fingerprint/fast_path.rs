@@ -28,9 +28,10 @@ use std::path::{Path, PathBuf};
 use fbuild_core::{Result, SizeInfo};
 
 use super::{
-    hash_watch_set_stamps_cached, load_json, PersistedBuildFingerprint, WatchSetStampCache,
-    BUILD_FINGERPRINT_VERSION,
+    hash_watch_set_stamps_cached, load_json, save_json, PersistedBuildFingerprint,
+    WatchSetStampCache, BUILD_FINGERPRINT_VERSION,
 };
+use crate::compile_database::CompileDatabase;
 use crate::zccache::{self, FingerprintWatch};
 
 /// File extensions considered source inputs for the watch-set fingerprint.
@@ -65,18 +66,8 @@ pub const FAST_PATH_EXCLUDES: &[&str] = &[
 /// Build a default [`FingerprintWatch`] for a directory using the
 /// shared fast-path extension / exclude lists.
 ///
-/// Returns `None` if `root` does not exist, which lets callers skip
-/// optional paths (e.g. a resolved-library tree that hasn't been
-/// populated yet) without filtering in a second pass.
-pub fn fast_path_watch(
-    cache_name: &str,
-    build_dir: &Path,
-    root: &Path,
-) -> Option<FingerprintWatch> {
-    if !root.exists() {
-        return None;
-    }
-    Some(FingerprintWatch {
+pub fn fast_path_watch(cache_name: &str, build_dir: &Path, root: &Path) -> FingerprintWatch {
+    FingerprintWatch {
         cache_file: build_dir.join(format!(".{}.zccache_fp.json", cache_name)),
         root: root.to_path_buf(),
         extensions: FAST_PATH_EXTENSIONS
@@ -87,25 +78,115 @@ pub fn fast_path_watch(
             .iter()
             .map(|exclude| (*exclude).to_string())
             .collect(),
-    })
+    }
+}
+
+/// Build the standard warm-build artifact set for a project.
+///
+/// Returns:
+/// - `firmware.elf`
+/// - platform-specific output artifacts under `build_dir`
+/// - the effective compile database path for `project_dir`
+pub fn expected_fast_path_artifacts<const N: usize>(
+    build_dir: &Path,
+    project_dir: &Path,
+    output_names: [&str; N],
+) -> (PathBuf, [PathBuf; N], PathBuf) {
+    (
+        build_dir.join("firmware.elf"),
+        output_names.map(|name| build_dir.join(name)),
+        CompileDatabase::expected_output_path(build_dir, project_dir),
+    )
+}
+
+/// Shared declaration of the artifacts and watched roots that make up
+/// a warm-build cache hit for one orchestrator invocation.
+///
+/// Orchestrators own the platform-specific metadata hash and named
+/// output paths, but the shared layer owns:
+/// - the persisted fingerprint path convention
+/// - the default watch roots (`project` + resolved `libs`)
+/// - the list of artifacts that must exist on a fast-path hit
+#[derive(Debug, Clone)]
+pub struct FastPathContract {
+    build_dir: PathBuf,
+    fingerprint_path: PathBuf,
+    watches: Vec<FingerprintWatch>,
+    required_artifacts: Vec<PathBuf>,
+}
+
+impl FastPathContract {
+    /// Create an empty contract rooted at `build_dir`.
+    pub fn new(build_dir: &Path) -> Self {
+        Self {
+            build_dir: build_dir.to_path_buf(),
+            fingerprint_path: build_dir.join("build_fingerprint.json"),
+            watches: Vec::new(),
+            required_artifacts: Vec::new(),
+        }
+    }
+
+    /// Standard project contract: watch the project tree plus
+    /// resolved libraries, and require the provided outputs.
+    pub fn for_project_outputs<I>(
+        build_dir: &Path,
+        project_dir: &Path,
+        required_artifacts: I,
+    ) -> Self
+    where
+        I: IntoIterator<Item = PathBuf>,
+    {
+        let mut contract = Self::new(build_dir);
+        contract.add_default_watches(project_dir);
+        contract.add_required_artifacts(required_artifacts);
+        contract
+    }
+
+    /// Add a watched root. Missing roots are still recorded so the
+    /// fingerprint encodes that absence until the directory appears.
+    pub fn add_watch_root(&mut self, cache_name: &str, root: &Path) -> &mut Self {
+        self.watches
+            .push(fast_path_watch(cache_name, &self.build_dir, root));
+        self
+    }
+
+    /// Add the shared project + resolved-library watch roots.
+    pub fn add_default_watches(&mut self, project_dir: &Path) -> &mut Self {
+        self.add_watch_root("project", project_dir);
+        self.add_watch_root("dep_libs", &self.build_dir.join("libs"));
+        self
+    }
+
+    /// Declare outputs that must exist for a warm-build reuse hit.
+    pub fn add_required_artifacts<I>(&mut self, artifacts: I) -> &mut Self
+    where
+        I: IntoIterator<Item = PathBuf>,
+    {
+        self.required_artifacts.extend(artifacts);
+        self
+    }
+
+    pub fn fingerprint_path(&self) -> &Path {
+        &self.fingerprint_path
+    }
+
+    pub fn watches(&self) -> &[FingerprintWatch] {
+        &self.watches
+    }
+
+    pub fn required_artifacts(&self) -> &[PathBuf] {
+        &self.required_artifacts
+    }
 }
 
 /// Inputs to [`fast_path_check`].
 ///
-/// Bundled in a struct so callers don't accumulate 8-argument calls
-/// and so field additions stay source-compatible. All lifetimes tie
-/// to the orchestrator's own call frame.
-pub struct FastPathInputs<'a> {
-    /// Location of the persisted `build_fingerprint.json`.
-    pub fingerprint_path: &'a Path,
+/// Bundled in a struct so callers don't accumulate several arguments
+/// that vary per invocation while the contract stays fixed.
+pub struct FastPathCheckInputs<'a> {
     /// Current build's metadata hash (board, profile, flash params, …).
     /// A mismatch against the persisted value forces a full rebuild.
     pub metadata_hash: &'a str,
-    /// Directories walked to form the watch-set fingerprint.
-    pub watches: &'a [FingerprintWatch],
-    /// Files that MUST exist on disk for a cache hit to be valid
-    /// (ELF, firmware binary, compile_commands.json, …).
-    pub required_artifacts: &'a [PathBuf],
     /// Optional extra "is current?" callback run after the artifact
     /// existence check. ESP32 uses this to require that
     /// `compile_commands.json` also has the PlatformIO-style project-root
@@ -120,6 +201,23 @@ pub struct FastPathInputs<'a> {
     /// uses its persistent fingerprint as the primary invalidation
     /// signal and falls back to the watch-set hash only on zccache
     /// failure.
+    pub compiler_cache: Option<&'a Path>,
+}
+
+/// Back-compat alias for earlier call sites/tests that imported the
+/// original name before the shared contract existed.
+pub type FastPathInputs<'a> = FastPathCheckInputs<'a>;
+
+/// Inputs to [`persist_fast_path_success`].
+pub struct FastPathPersistInputs<'a> {
+    /// Current build's metadata hash (board, profile, flash params, …).
+    pub metadata_hash: &'a str,
+    /// Size info to persist alongside the fingerprint for fast-path reuse.
+    pub size_info: Option<SizeInfo>,
+    /// Optional daemon-scoped memo for the watch-set traversal.
+    pub watch_set_cache: Option<&'a dyn WatchSetStampCache>,
+    /// Discovered zccache binary, if any. When present each watch root is
+    /// marked successful after the fingerprint is persisted.
     pub compiler_cache: Option<&'a Path>,
 }
 
@@ -152,11 +250,14 @@ pub struct FastPathHit {
 ///
 /// The helper itself logs parse/hash warnings via `tracing::warn!`
 /// but never panics.
-pub fn fast_path_check(inputs: &FastPathInputs<'_>) -> Result<Option<FastPathHit>> {
+pub fn fast_path_check(
+    contract: &FastPathContract,
+    inputs: &FastPathCheckInputs<'_>,
+) -> Result<Option<FastPathHit>> {
     // Load the persisted fingerprint. A parse error falls back to a
     // full build (matches the pre-extraction ESP32 behaviour).
     let persisted: Option<PersistedBuildFingerprint> =
-        match load_json::<PersistedBuildFingerprint>(inputs.fingerprint_path) {
+        match load_json::<PersistedBuildFingerprint>(contract.fingerprint_path()) {
             Ok(value) => value,
             Err(e) => {
                 tracing::warn!("ignoring invalid build fingerprint: {}", e);
@@ -176,7 +277,7 @@ pub fn fast_path_check(inputs: &FastPathInputs<'_>) -> Result<Option<FastPathHit
     }
 
     // All declared artifacts must exist.
-    for artifact in inputs.required_artifacts {
+    for artifact in contract.required_artifacts() {
         if !artifact.exists() {
             return Ok(None);
         }
@@ -194,9 +295,9 @@ pub fn fast_path_check(inputs: &FastPathInputs<'_>) -> Result<Option<FastPathHit
     // On zccache miss/error, fall back to the recorded
     // `file_set_hash` using the in-memory WatchSetStampCache.
     let file_set_matches = if let Some(zcc) = inputs.compiler_cache {
-        check_with_zccache(zcc, inputs.watches, &previous, inputs.watch_set_cache)
+        check_with_zccache(zcc, contract.watches(), &previous, inputs.watch_set_cache)
     } else {
-        check_with_stamps(inputs.watches, &previous, inputs.watch_set_cache)
+        check_with_stamps(contract.watches(), &previous, inputs.watch_set_cache)
     };
 
     if !file_set_matches {
@@ -207,6 +308,40 @@ pub fn fast_path_check(inputs: &FastPathInputs<'_>) -> Result<Option<FastPathHit
         size_info: previous.size_info.clone(),
         persisted: previous,
     }))
+}
+
+/// Persist the fingerprint after a successful full build and mark the
+/// zccache watch roots successful when available.
+pub fn persist_fast_path_success(contract: &FastPathContract, inputs: &FastPathPersistInputs<'_>) {
+    let persisted_fingerprint = PersistedBuildFingerprint {
+        version: BUILD_FINGERPRINT_VERSION,
+        metadata_hash: inputs.metadata_hash.to_string(),
+        file_set_hash: match hash_watch_set_stamps_cached(
+            contract.watches(),
+            inputs.watch_set_cache,
+        ) {
+            Ok(hash) => Some(hash),
+            Err(e) => {
+                tracing::warn!("failed to hash watched inputs for fingerprint save: {}", e);
+                None
+            }
+        },
+        size_info: inputs.size_info.clone(),
+    };
+    if let Err(e) = save_json(contract.fingerprint_path(), &persisted_fingerprint) {
+        tracing::warn!("failed to write build fingerprint: {}", e);
+    }
+    if let Some(zcc) = inputs.compiler_cache {
+        for watch in contract.watches() {
+            if let Err(e) = crate::zccache::mark_fingerprint_success(zcc, watch) {
+                tracing::warn!(
+                    "failed to mark zccache fingerprint success for {}: {}",
+                    watch.root.display(),
+                    e
+                );
+            }
+        }
+    }
 }
 
 /// zccache-powered fingerprint check with graceful fallback.
@@ -301,10 +436,9 @@ mod tests {
 
     struct Fixture {
         _tmp: tempfile::TempDir,
-        fingerprint_path: PathBuf,
         required_artifact: PathBuf,
         src_root: PathBuf,
-        watch: FingerprintWatch,
+        contract: FastPathContract,
     }
 
     impl Fixture {
@@ -317,32 +451,31 @@ mod tests {
             let main = src_root.join("main.cpp");
             fs::write(&main, "int main() { return 0; }\n").unwrap();
 
-            let fingerprint_path = build_dir.join("build_fingerprint.json");
             let required_artifact = build_dir.join("firmware.elf");
             fs::write(&required_artifact, b"elf-bytes").unwrap();
 
-            let watch = super::fast_path_watch("project", &build_dir, &src_root)
-                .expect("watch present — src_root exists");
+            let mut contract = FastPathContract::new(&build_dir);
+            contract.add_watch_root("project", &src_root);
+            contract.add_required_artifacts([required_artifact.clone()]);
 
             Self {
                 _tmp: tmp,
-                fingerprint_path,
                 required_artifact,
                 src_root,
-                watch,
+                contract,
             }
         }
 
         fn write_fingerprint(&self, metadata_hash: &str) -> String {
             let file_set_hash =
-                super::super::hash_watch_set_stamps(std::slice::from_ref(&self.watch)).unwrap();
+                super::super::hash_watch_set_stamps(self.contract.watches()).unwrap();
             let fp = PersistedBuildFingerprint {
                 version: BUILD_FINGERPRINT_VERSION,
                 metadata_hash: metadata_hash.to_string(),
                 file_set_hash: Some(file_set_hash.clone()),
                 size_info: None,
             };
-            super::super::save_json(&self.fingerprint_path, &fp).unwrap();
+            super::super::save_json(self.contract.fingerprint_path(), &fp).unwrap();
             file_set_hash
         }
     }
@@ -353,26 +486,22 @@ mod tests {
         fx.write_fingerprint("meta-abc");
 
         let cache: Arc<RecordingCache> = Arc::new(RecordingCache::default());
-        let required = vec![fx.required_artifact.clone()];
-        let watches = vec![fx.watch.clone()];
-        let inputs = FastPathInputs {
-            fingerprint_path: &fx.fingerprint_path,
+        let inputs = FastPathCheckInputs {
             metadata_hash: "meta-abc",
-            watches: &watches,
-            required_artifacts: &required,
             extra_artifact_ok: None,
             watch_set_cache: Some(cache.as_ref()),
             compiler_cache: None,
         };
 
-        let hit = fast_path_check(&inputs).expect("check must not error on happy path");
+        let hit =
+            fast_path_check(&fx.contract, &inputs).expect("check must not error on happy path");
         assert!(hit.is_some(), "expected fast-path hit");
 
         // Second call should populate the memoised watch-set cache so
         // a third call skips the walk entirely (can't observe the
         // skip directly without instrumentation, but the cache must
         // hold an entry).
-        let _ = fast_path_check(&inputs).unwrap();
+        let _ = fast_path_check(&fx.contract, &inputs).unwrap();
         let recorded = cache.entries.lock().unwrap().len();
         assert_eq!(recorded, 1, "watch-set cache should record one entry");
     }
@@ -381,18 +510,13 @@ mod tests {
     fn fast_path_misses_when_fingerprint_absent() {
         let fx = Fixture::new();
         // Deliberately do NOT write the fingerprint file.
-        let required = vec![fx.required_artifact.clone()];
-        let watches = vec![fx.watch.clone()];
-        let inputs = FastPathInputs {
-            fingerprint_path: &fx.fingerprint_path,
+        let inputs = FastPathCheckInputs {
             metadata_hash: "meta-abc",
-            watches: &watches,
-            required_artifacts: &required,
             extra_artifact_ok: None,
             watch_set_cache: None,
             compiler_cache: None,
         };
-        let hit = fast_path_check(&inputs).unwrap();
+        let hit = fast_path_check(&fx.contract, &inputs).unwrap();
         assert!(hit.is_none(), "missing fingerprint must force a full build");
     }
 
@@ -409,18 +533,13 @@ mod tests {
         )
         .unwrap();
 
-        let required = vec![fx.required_artifact.clone()];
-        let watches = vec![fx.watch.clone()];
-        let inputs = FastPathInputs {
-            fingerprint_path: &fx.fingerprint_path,
+        let inputs = FastPathCheckInputs {
             metadata_hash: "meta-abc",
-            watches: &watches,
-            required_artifacts: &required,
             extra_artifact_ok: None,
             watch_set_cache: None,
             compiler_cache: None,
         };
-        let hit = fast_path_check(&inputs).unwrap();
+        let hit = fast_path_check(&fx.contract, &inputs).unwrap();
         assert!(
             hit.is_none(),
             "changed source file must invalidate fast path"
@@ -432,18 +551,13 @@ mod tests {
         let fx = Fixture::new();
         fx.write_fingerprint("meta-abc");
 
-        let required = vec![fx.required_artifact.clone()];
-        let watches = vec![fx.watch.clone()];
-        let inputs = FastPathInputs {
-            fingerprint_path: &fx.fingerprint_path,
+        let inputs = FastPathCheckInputs {
             metadata_hash: "meta-xyz",
-            watches: &watches,
-            required_artifacts: &required,
             extra_artifact_ok: None,
             watch_set_cache: None,
             compiler_cache: None,
         };
-        let hit = fast_path_check(&inputs).unwrap();
+        let hit = fast_path_check(&fx.contract, &inputs).unwrap();
         assert!(hit.is_none(), "metadata hash mismatch must invalidate");
     }
 
@@ -453,18 +567,13 @@ mod tests {
         fx.write_fingerprint("meta-abc");
         fs::remove_file(&fx.required_artifact).unwrap();
 
-        let required = vec![fx.required_artifact.clone()];
-        let watches = vec![fx.watch.clone()];
-        let inputs = FastPathInputs {
-            fingerprint_path: &fx.fingerprint_path,
+        let inputs = FastPathCheckInputs {
             metadata_hash: "meta-abc",
-            watches: &watches,
-            required_artifacts: &required,
             extra_artifact_ok: None,
             watch_set_cache: None,
             compiler_cache: None,
         };
-        let hit = fast_path_check(&inputs).unwrap();
+        let hit = fast_path_check(&fx.contract, &inputs).unwrap();
         assert!(hit.is_none(), "missing artifact must invalidate");
     }
 
@@ -473,22 +582,93 @@ mod tests {
         let fx = Fixture::new();
         fx.write_fingerprint("meta-abc");
 
-        let required = vec![fx.required_artifact.clone()];
-        let watches = vec![fx.watch.clone()];
         let always_stale = || false;
-        let inputs = FastPathInputs {
-            fingerprint_path: &fx.fingerprint_path,
+        let inputs = FastPathCheckInputs {
             metadata_hash: "meta-abc",
-            watches: &watches,
-            required_artifacts: &required,
             extra_artifact_ok: Some(&always_stale),
             watch_set_cache: None,
             compiler_cache: None,
         };
-        let hit = fast_path_check(&inputs).unwrap();
+        let hit = fast_path_check(&fx.contract, &inputs).unwrap();
         assert!(
             hit.is_none(),
             "extra_artifact_ok returning false must invalidate"
+        );
+    }
+
+    #[test]
+    fn contract_uses_shared_path_and_default_watches() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let build_dir = tmp.path().join("build");
+        let project_dir = tmp.path().join("project");
+        fs::create_dir_all(&build_dir).unwrap();
+        fs::create_dir_all(&project_dir).unwrap();
+        let artifact = build_dir.join("firmware.elf");
+
+        let contract =
+            FastPathContract::for_project_outputs(&build_dir, &project_dir, [artifact.clone()]);
+
+        assert_eq!(
+            contract.fingerprint_path(),
+            build_dir.join("build_fingerprint.json")
+        );
+        assert_eq!(contract.required_artifacts(), &[artifact]);
+        assert_eq!(contract.watches().len(), 2);
+        assert_eq!(contract.watches()[0].root, project_dir);
+        assert_eq!(contract.watches()[1].root, build_dir.join("libs"));
+    }
+
+    #[test]
+    fn expected_fast_path_artifacts_follow_compile_db_location() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let build_dir = tmp.path().join("build");
+        let app_project = tmp.path().join("app");
+        let lib_project = tmp.path().join("libproj");
+        fs::create_dir_all(&build_dir).unwrap();
+        fs::create_dir_all(&app_project).unwrap();
+        fs::create_dir_all(&lib_project).unwrap();
+        fs::write(lib_project.join("library.json"), r#"{"name":"libproj"}"#).unwrap();
+
+        let (app_elf, [app_hex], app_compile_db) =
+            expected_fast_path_artifacts(&build_dir, &app_project, ["firmware.hex"]);
+        let (lib_elf, [lib_hex], lib_compile_db) =
+            expected_fast_path_artifacts(&build_dir, &lib_project, ["firmware.hex"]);
+
+        assert_eq!(app_elf, build_dir.join("firmware.elf"));
+        assert_eq!(app_hex, build_dir.join("firmware.hex"));
+        assert_eq!(lib_elf, build_dir.join("firmware.elf"));
+        assert_eq!(lib_hex, build_dir.join("firmware.hex"));
+        assert_eq!(app_compile_db, app_project.join("compile_commands.json"));
+        assert_eq!(lib_compile_db, build_dir.join("compile_commands.json"));
+    }
+
+    #[test]
+    fn persist_success_writes_fingerprint_for_contract() {
+        let fx = Fixture::new();
+
+        persist_fast_path_success(
+            &fx.contract,
+            &FastPathPersistInputs {
+                metadata_hash: "meta-abc",
+                size_info: None,
+                watch_set_cache: None,
+                compiler_cache: None,
+            },
+        );
+
+        let hit = fast_path_check(
+            &fx.contract,
+            &FastPathCheckInputs {
+                metadata_hash: "meta-abc",
+                extra_artifact_ok: None,
+                watch_set_cache: None,
+                compiler_cache: None,
+            },
+        )
+        .unwrap();
+        assert!(
+            hit.is_some(),
+            "persisted contract should produce a fast-path hit"
         );
     }
 }
