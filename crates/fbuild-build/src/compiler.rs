@@ -417,13 +417,10 @@ fn compiler_identity(path: &Path) -> String {
 }
 
 fn compiler_version(path: &Path) -> String {
-    match std::process::Command::new(path)
-        .arg("-dumpversion")
-        .output()
-    {
-        Ok(output) if output.status.success() => {
-            String::from_utf8_lossy(&output.stdout).trim().to_string()
-        }
+    let program = path.to_string_lossy();
+    let args = [program.as_ref(), "-dumpversion"];
+    match fbuild_core::subprocess::run_command(&args, None, None, None) {
+        Ok(output) if output.success() => output.stdout.trim().to_string(),
         _ => String::new(),
     }
 }

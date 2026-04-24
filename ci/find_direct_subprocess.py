@@ -2,26 +2,38 @@
 # /// script
 # requires-python = ">=3.10"
 # ///
-"""Find direct std::process / tokio::process spawn sites in fbuild crates.
+"""Linter: forbid direct `std::process::Command::new` / `tokio::process::Command::new`
+outside of documented hold-outs.
 
-Goal: every subprocess that fbuild starts should go through
-`running-process` (via the wrappers in `fbuild-core::subprocess` and
-`fbuild-core::containment`). This script enumerates every remaining
-direct `Command::new(...)` site so they can be migrated and eliminated
-one PR at a time.
+Every subprocess fbuild starts must go through the
+`fbuild-core::subprocess` wrappers (which are themselves backed by
+[`running-process`](https://github.com/zackees/running-process) so
+that containment, concurrent pipe draining, and Windows-specific env
+handling are implemented once and cannot drift.
+
+Tracked by FastLED/fbuild#141.
 
 A site is allowlisted by placing this marker on the same line or on
 the line immediately before the `Command::new(`:
 
     // allow-direct-spawn: <one-line reason>
 
-When this script reports zero non-allowlisted sites across the whole
-workspace, delete it (and the marker comments) and rely on
-`running-process` exclusively. Tracked by FastLED/fbuild#<issue>.
+Intentional hold-outs currently allowed:
+- Daemon spawns from CLI/Python/tests (daemon must outlive parent).
+- zccache daemon bootstrap (independent lifecycle).
+- containment module's own regression tests.
+- Integration test harnesses that spawn binaries under test.
+- tokio async streaming emulator handlers (QEMU, avr8js/node) where
+  NativeProcess's blocking API is unsuitable.
+- tokio parallel async fan-out in the CLI (IWYU, clang-tidy) inside a
+  process that has no daemon containment group.
+
+Run in CI with `--fail` so any new direct spawn without a marker
+breaks the build.
 
 Usage:
     uv run python ci/find_direct_subprocess.py            # report
-    uv run python ci/find_direct_subprocess.py --fail     # exit 1 if >0
+    uv run python ci/find_direct_subprocess.py --fail     # exit 1 if any
     uv run python ci/find_direct_subprocess.py --json     # machine output
 """
 
@@ -125,7 +137,13 @@ def render_text(hits: list[Hit]) -> str:
     lines.append(f"  allowlisted: {len(allowed)}")
     if pending:
         lines.append("")
-        lines.append("To migrate (no allow-direct-spawn marker):")
+        lines.append(
+            "NEW direct spawns without an `allow-direct-spawn: <reason>` marker:"
+        )
+        lines.append(
+            "  (route via fbuild_core::subprocess::{run_command,run_command_passthrough}"
+        )
+        lines.append("   or annotate with a one-line reason — see FastLED/fbuild#141)")
         for h in pending:
             rel = h.path.relative_to(REPO_ROOT)
             lines.append(f"  {rel}:{h.line_no}: {h.text.strip()}")

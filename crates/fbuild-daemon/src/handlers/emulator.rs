@@ -760,6 +760,7 @@ async fn run_avr8js_headless(
         )));
     }
 
+    // allow-direct-spawn: tokio streaming emulator; blocking NativeProcess unsuitable.
     let mut cmd = tokio::process::Command::new(node_path);
     cmd.arg(script_path)
         .arg("--hex")
@@ -1008,6 +1009,7 @@ async fn run_qemu_process(
     args: &[String],
     options: RunQemuOptions<'_>,
 ) -> fbuild_core::Result<QemuRunResult> {
+    // allow-direct-spawn: tokio streaming QEMU emulator; blocking NativeProcess unsuitable.
     let mut cmd = tokio::process::Command::new(qemu_path);
     cmd.args(args)
         .stdin(Stdio::null())

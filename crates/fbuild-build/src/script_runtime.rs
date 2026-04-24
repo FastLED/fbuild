@@ -7,7 +7,6 @@
 
 use std::collections::HashMap;
 use std::path::Path;
-use std::process::Command;
 
 use crate::flag_overlay::{
     absolutize_if_relative, values_to_args, BuildOverlay, LanguageExtraFlags, LinkExtraFlags,
@@ -89,47 +88,37 @@ pub fn resolve_extra_script_overlay(
         ))
     })?;
 
-    let mut command = Command::new(&python[0]);
-    if python.len() > 1 {
-        command.args(&python[1..]);
-    }
-    command
-        .arg(&harness_path)
-        .arg(&input_path)
-        .current_dir(project_dir)
-        .stdin(std::process::Stdio::null())
-        .stdout(std::process::Stdio::piped())
-        .stderr(std::process::Stdio::piped());
     // Route the spawn through the daemon's containment group so a
     // daemon crash mid-evaluation doesn't leave a python child running
-    // in the background. See FastLED/fbuild#32.
-    let child = fbuild_core::containment::spawn_contained(&mut command).map_err(|e| {
-        fbuild_core::FbuildError::BuildFailed(format!(
-            "failed to run extra_scripts runtime via '{}': {}",
-            python.join(" "),
-            e
-        ))
-    })?;
-    let output = child.wait_with_output().map_err(|e| {
-        fbuild_core::FbuildError::BuildFailed(format!(
-            "failed to collect extra_scripts runtime output: {}",
-            e
-        ))
-    })?;
+    // in the background. See FastLED/fbuild#32. Uses fbuild_core's
+    // NativeProcess-backed runner to drain stdout/stderr concurrently.
+    let harness_path_str = harness_path.to_string_lossy();
+    let input_path_str = input_path.to_string_lossy();
+    let mut argv: Vec<&str> = python.iter().map(|s| s.as_str()).collect();
+    argv.push(harness_path_str.as_ref());
+    argv.push(input_path_str.as_ref());
+    let output = fbuild_core::subprocess::run_command(&argv, Some(project_dir), None, None)
+        .map_err(|e| {
+            fbuild_core::FbuildError::BuildFailed(format!(
+                "failed to run extra_scripts runtime via '{}': {}",
+                python.join(" "),
+                e
+            ))
+        })?;
 
-    if !output.status.success() {
-        let stderr = String::from_utf8_lossy(&output.stderr).trim().to_string();
+    if !output.success() {
+        let stderr = output.stderr.trim();
         return Err(fbuild_core::FbuildError::BuildFailed(format!(
             "extra_scripts runtime failed: {}\nRecommendation: use --platformio for this project.",
             if stderr.is_empty() {
-                format!("process exited with status {}", output.status)
+                format!("process exited with status {}", output.exit_code)
             } else {
-                stderr
+                stderr.to_string()
             }
         )));
     }
 
-    let runtime: ScriptRuntimeResult = serde_json::from_slice(&output.stdout).map_err(|e| {
+    let runtime: ScriptRuntimeResult = serde_json::from_str(&output.stdout).map_err(|e| {
         fbuild_core::FbuildError::BuildFailed(format!(
             "failed to parse extra_scripts runtime output: {}",
             e
@@ -288,12 +277,10 @@ fn find_python() -> Option<Vec<String>> {
     };
 
     for candidate in candidates {
-        let mut command = Command::new(candidate[0]);
-        if candidate.len() > 1 {
-            command.args(&candidate[1..]);
-        }
-        if let Ok(output) = command.arg("--version").output() {
-            if output.status.success() {
+        let mut argv: Vec<&str> = candidate.to_vec();
+        argv.push("--version");
+        if let Ok(output) = fbuild_core::subprocess::run_command(&argv, None, None, None) {
+            if output.success() {
                 return Some(candidate.iter().map(|s| (*s).to_string()).collect());
             }
         }

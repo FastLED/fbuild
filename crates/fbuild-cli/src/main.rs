@@ -888,12 +888,11 @@ fn shell_tokenize(s: &str) -> Vec<String> {
 /// Find the `pio` binary. Checks PATH first, then the fbuild cache.
 fn find_pio() -> fbuild_core::Result<std::path::PathBuf> {
     // Check PATH
-    if let Ok(output) = std::process::Command::new(if cfg!(windows) { "where" } else { "which" })
-        .arg("pio")
-        .output()
-    {
-        if output.status.success() {
-            let path = String::from_utf8_lossy(&output.stdout)
+    let locator = if cfg!(windows) { "where" } else { "which" };
+    if let Ok(output) = fbuild_core::subprocess::run_command(&[locator, "pio"], None, None, None) {
+        if output.success() {
+            let path = output
+                .stdout
                 .lines()
                 .next()
                 .unwrap_or("")
@@ -929,16 +928,14 @@ fn find_pio() -> fbuild_core::Result<std::path::PathBuf> {
 /// Run a PlatformIO command with real-time output streaming.
 fn run_pio_command(args: &[&str]) -> fbuild_core::Result<()> {
     let pio = find_pio()?;
-    let status = std::process::Command::new(&pio)
-        .args(args)
-        .stdin(std::process::Stdio::inherit())
-        .stdout(std::process::Stdio::inherit())
-        .stderr(std::process::Stdio::inherit())
-        .status()
+    let pio_str = pio.to_string_lossy();
+    let mut argv: Vec<&str> = vec![pio_str.as_ref()];
+    argv.extend_from_slice(args);
+    let code = fbuild_core::subprocess::run_command_passthrough(&argv, None, None, None)
         .map_err(|e| fbuild_core::FbuildError::Other(format!("failed to run pio: {}", e)))?;
 
-    if !status.success() {
-        std::process::exit(status.code().unwrap_or(1));
+    if code != 0 {
+        std::process::exit(code);
     }
     Ok(())
 }
@@ -1015,23 +1012,22 @@ fn pio_monitor(
 }
 
 fn open_in_browser(url: &str) -> fbuild_core::Result<()> {
-    let status = if cfg!(target_os = "windows") {
-        std::process::Command::new("cmd")
-            .args(["/c", "start", "", url])
-            .status()
+    let args: Vec<&str> = if cfg!(target_os = "windows") {
+        vec!["cmd", "/c", "start", "", url]
     } else if cfg!(target_os = "macos") {
-        std::process::Command::new("open").arg(url).status()
+        vec!["open", url]
     } else {
-        std::process::Command::new("xdg-open").arg(url).status()
-    }
-    .map_err(|e| fbuild_core::FbuildError::Other(format!("failed to launch browser: {}", e)))?;
+        vec!["xdg-open", url]
+    };
+    let output = fbuild_core::subprocess::run_command(&args, None, None, None)
+        .map_err(|e| fbuild_core::FbuildError::Other(format!("failed to launch browser: {}", e)))?;
 
-    if status.success() {
+    if output.success() {
         Ok(())
     } else {
         Err(fbuild_core::FbuildError::Other(format!(
             "browser launcher exited with status {}",
-            status
+            output.exit_code
         )))
     }
 }
@@ -1780,7 +1776,9 @@ async fn run_iwyu(
                 }
             }
 
-            // Cache miss — run IWYU
+            // Cache miss — run IWYU. Parallel async fan-out inside the CLI binary
+            // (no daemon containment group in this process).
+            // allow-direct-spawn: parallel async fan-out in CLI; no containment group here.
             let mut cmd = tokio::process::Command::new(tool.as_ref());
             cmd.arg("-p").arg(p_dir.as_ref());
             cmd.arg("-Xiwyu").arg("--no_comments");
@@ -2033,6 +2031,7 @@ async fn run_clang_tool(
         let extra = extra_owned.clone();
         let handle = tokio::spawn(async move {
             let _permit = sem.acquire().await.unwrap();
+            // allow-direct-spawn: parallel async fan-out (clang-tidy) in CLI binary.
             let mut cmd = tokio::process::Command::new(tool.as_ref());
             cmd.arg("-p").arg(pd.as_ref());
             for arg in &extra {
@@ -2756,30 +2755,26 @@ fn run_daemon_kill_all(force: bool) -> fbuild_core::Result<()> {
 }
 
 fn kill_process(pid: u32, force: bool) -> fbuild_core::Result<()> {
-    let output = if cfg!(windows) {
-        let mut cmd = std::process::Command::new("taskkill");
+    let pid_str = pid.to_string();
+    let argv: Vec<&str> = if cfg!(windows) {
         if force {
-            cmd.arg("/F");
+            vec!["taskkill", "/F", "/PID", &pid_str]
+        } else {
+            vec!["taskkill", "/PID", &pid_str]
         }
-        cmd.arg("/PID").arg(pid.to_string());
-        cmd.output()
     } else {
         let signal = if force { "-9" } else { "-TERM" };
-        std::process::Command::new("kill")
-            .arg(signal)
-            .arg(pid.to_string())
-            .output()
+        vec!["kill", signal, &pid_str]
     };
 
-    let output = output.map_err(|e| {
+    let output = fbuild_core::subprocess::run_command(&argv, None, None, None).map_err(|e| {
         fbuild_core::FbuildError::Other(format!("failed to execute kill command: {}", e))
     })?;
 
-    if !output.status.success() {
-        let stderr = String::from_utf8_lossy(&output.stderr);
+    if !output.success() {
         return Err(fbuild_core::FbuildError::Other(format!(
             "kill failed: {}",
-            stderr.trim()
+            output.stderr.trim()
         )));
     }
     Ok(())
@@ -2787,15 +2782,22 @@ fn kill_process(pid: u32, force: bool) -> fbuild_core::Result<()> {
 
 fn find_daemon_pids() -> fbuild_core::Result<Vec<u32>> {
     if cfg!(windows) {
-        let output = std::process::Command::new("tasklist")
-            .args(["/FI", "IMAGENAME eq fbuild-daemon.exe", "/FO", "CSV", "/NH"])
-            .output()
-            .map_err(|e| {
-                fbuild_core::FbuildError::Other(format!("failed to run tasklist: {}", e))
-            })?;
-        let stdout = String::from_utf8_lossy(&output.stdout);
+        let output = fbuild_core::subprocess::run_command(
+            &[
+                "tasklist",
+                "/FI",
+                "IMAGENAME eq fbuild-daemon.exe",
+                "/FO",
+                "CSV",
+                "/NH",
+            ],
+            None,
+            None,
+            None,
+        )
+        .map_err(|e| fbuild_core::FbuildError::Other(format!("failed to run tasklist: {}", e)))?;
         let mut pids = Vec::new();
-        for line in stdout.lines() {
+        for line in output.stdout.lines() {
             // CSV format: "image name","PID","session name","session#","mem usage"
             if line.contains("fbuild-daemon") {
                 let fields: Vec<&str> = line.split(',').collect();
@@ -2809,12 +2811,15 @@ fn find_daemon_pids() -> fbuild_core::Result<Vec<u32>> {
         }
         Ok(pids)
     } else {
-        let output = std::process::Command::new("pgrep")
-            .args(["-f", "fbuild-daemon"])
-            .output()
-            .map_err(|e| fbuild_core::FbuildError::Other(format!("failed to run pgrep: {}", e)))?;
-        let stdout = String::from_utf8_lossy(&output.stdout);
-        let pids: Vec<u32> = stdout
+        let output = fbuild_core::subprocess::run_command(
+            &["pgrep", "-f", "fbuild-daemon"],
+            None,
+            None,
+            None,
+        )
+        .map_err(|e| fbuild_core::FbuildError::Other(format!("failed to run pgrep: {}", e)))?;
+        let pids: Vec<u32> = output
+            .stdout
             .lines()
             .filter_map(|line| line.trim().parse().ok())
             .collect();

@@ -858,6 +858,7 @@ pub async fn ensure_daemon_running() -> fbuild_core::Result<()> {
 /// Spawn a single daemon process instance.
 async fn spawn_daemon_process() -> fbuild_core::Result<()> {
     let daemon_exe = "fbuild-daemon";
+    // allow-direct-spawn: daemon must outlive the CLI; see INTENTIONALLY DETACHED comment below.
     let mut cmd = tokio::process::Command::new(daemon_exe);
 
     if fbuild_paths::is_dev_mode() {
