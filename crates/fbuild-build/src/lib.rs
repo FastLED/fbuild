@@ -14,6 +14,7 @@ pub mod compiler;
 pub mod esp32;
 pub mod esp8266;
 pub mod flag_overlay;
+pub mod framework_libs;
 pub mod generic_arm;
 pub mod linker;
 pub mod nrf52;
