@@ -3,8 +3,8 @@
 pub mod fast_path;
 
 pub use fast_path::{
-    fast_path_check, fast_path_watch, persist_fast_path_success, FastPathCheckInputs,
-    FastPathContract, FastPathHit, FastPathInputs, FastPathPersistInputs,
+    expected_fast_path_artifacts, fast_path_check, fast_path_watch, persist_fast_path_success,
+    FastPathCheckInputs, FastPathContract, FastPathHit, FastPathInputs, FastPathPersistInputs,
 };
 
 use std::collections::HashMap;

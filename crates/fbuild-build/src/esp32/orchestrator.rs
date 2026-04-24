@@ -26,8 +26,8 @@ use fbuild_packages::Framework;
 use serde::Serialize;
 
 use crate::build_fingerprint::{
-    stable_hash_json, FastPathCheckInputs, FastPathContract, FastPathPersistInputs,
-    BUILD_FINGERPRINT_VERSION,
+    expected_fast_path_artifacts, stable_hash_json, FastPathCheckInputs, FastPathContract,
+    FastPathPersistInputs, BUILD_FINGERPRINT_VERSION,
 };
 use crate::flag_overlay::LanguageExtraFlags;
 use crate::linker::LinkerScripts;
@@ -144,19 +144,6 @@ fn compile_db_is_current(build_dir: &Path, project_dir: &Path) -> bool {
     crate::compile_database::CompileDatabase::expected_output_path(build_dir, project_dir).exists()
 }
 
-fn expected_fast_path_artifacts(
-    build_dir: &Path,
-    project_dir: &Path,
-) -> (PathBuf, PathBuf, PathBuf, PathBuf, PathBuf) {
-    (
-        build_dir.join("firmware.elf"),
-        build_dir.join("firmware.bin"),
-        build_dir.join("bootloader.bin"),
-        build_dir.join("partitions.bin"),
-        crate::compile_database::CompileDatabase::expected_output_path(build_dir, project_dir),
-    )
-}
-
 impl BuildOrchestrator for Esp32Orchestrator {
     fn platform(&self) -> Platform {
         Platform::Espressif32
@@ -257,8 +244,17 @@ impl BuildOrchestrator for Esp32Orchestrator {
             max_flash: ctx.board.max_flash,
             max_ram: ctx.board.max_ram,
         })?;
-        let (fast_elf, fast_bin, fast_boot, fast_parts, fast_compile_db) =
-            expected_fast_path_artifacts(build_dir, &params.project_dir);
+        let (fast_elf, [fast_bin, fast_boot, fast_parts, fast_app0], fast_compile_db) =
+            expected_fast_path_artifacts(
+                build_dir,
+                &params.project_dir,
+                [
+                    "firmware.bin",
+                    "bootloader.bin",
+                    "partitions.bin",
+                    "boot_app0.bin",
+                ],
+            );
         let fast_path = {
             let _g = perf.phase("fp-watches-collect");
             FastPathContract::for_project_outputs(
@@ -269,6 +265,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                     fast_bin.clone(),
                     fast_boot.clone(),
                     fast_parts.clone(),
+                    fast_app0.clone(),
                     fast_compile_db.clone(),
                 ],
             )
@@ -1253,15 +1250,26 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // 15. Size reporting + result assembly
         let fingerprint_started = Instant::now();
         perf.checkpoint("fingerprint-save-start");
-        crate::build_fingerprint::persist_fast_path_success(
-            &fast_path,
-            &FastPathPersistInputs {
-                metadata_hash: &metadata_hash,
-                size_info: link_result.size_info.clone(),
-                watch_set_cache: params.watch_set_cache.as_deref(),
-                compiler_cache: compiler_cache.as_deref(),
-            },
-        );
+        let fast_path_ready = fast_path
+            .required_artifacts()
+            .iter()
+            .all(|path| path.exists())
+            && compile_db_is_current(build_dir, &params.project_dir);
+        if fast_path_ready {
+            crate::build_fingerprint::persist_fast_path_success(
+                &fast_path,
+                &FastPathPersistInputs {
+                    metadata_hash: &metadata_hash,
+                    size_info: link_result.size_info.clone(),
+                    watch_set_cache: params.watch_set_cache.as_deref(),
+                    compiler_cache: compiler_cache.as_deref(),
+                },
+            );
+        } else {
+            tracing::warn!(
+                "skipping ESP32 fast-path persistence because final artifacts are incomplete"
+            );
+        }
         perf.record("fingerprint-save", fingerprint_started.elapsed());
         perf.checkpoint("fingerprint-save-finish");
 

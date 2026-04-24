@@ -31,6 +31,7 @@ use super::{
     hash_watch_set_stamps_cached, load_json, save_json, PersistedBuildFingerprint,
     WatchSetStampCache, BUILD_FINGERPRINT_VERSION,
 };
+use crate::compile_database::CompileDatabase;
 use crate::zccache::{self, FingerprintWatch};
 
 /// File extensions considered source inputs for the watch-set fingerprint.
@@ -65,18 +66,8 @@ pub const FAST_PATH_EXCLUDES: &[&str] = &[
 /// Build a default [`FingerprintWatch`] for a directory using the
 /// shared fast-path extension / exclude lists.
 ///
-/// Returns `None` if `root` does not exist, which lets callers skip
-/// optional paths (e.g. a resolved-library tree that hasn't been
-/// populated yet) without filtering in a second pass.
-pub fn fast_path_watch(
-    cache_name: &str,
-    build_dir: &Path,
-    root: &Path,
-) -> Option<FingerprintWatch> {
-    if !root.exists() {
-        return None;
-    }
-    Some(FingerprintWatch {
+pub fn fast_path_watch(cache_name: &str, build_dir: &Path, root: &Path) -> FingerprintWatch {
+    FingerprintWatch {
         cache_file: build_dir.join(format!(".{}.zccache_fp.json", cache_name)),
         root: root.to_path_buf(),
         extensions: FAST_PATH_EXTENSIONS
@@ -87,7 +78,25 @@ pub fn fast_path_watch(
             .iter()
             .map(|exclude| (*exclude).to_string())
             .collect(),
-    })
+    }
+}
+
+/// Build the standard warm-build artifact set for a project.
+///
+/// Returns:
+/// - `firmware.elf`
+/// - platform-specific output artifacts under `build_dir`
+/// - the effective compile database path for `project_dir`
+pub fn expected_fast_path_artifacts<const N: usize>(
+    build_dir: &Path,
+    project_dir: &Path,
+    output_names: [&str; N],
+) -> (PathBuf, [PathBuf; N], PathBuf) {
+    (
+        build_dir.join("firmware.elf"),
+        output_names.map(|name| build_dir.join(name)),
+        CompileDatabase::expected_output_path(build_dir, project_dir),
+    )
 }
 
 /// Shared declaration of the artifacts and watched roots that make up
@@ -133,11 +142,11 @@ impl FastPathContract {
         contract
     }
 
-    /// Add a watched root, skipping it when the directory is absent.
+    /// Add a watched root. Missing roots are still recorded so the
+    /// fingerprint encodes that absence until the directory appears.
     pub fn add_watch_root(&mut self, cache_name: &str, root: &Path) -> &mut Self {
-        if let Some(watch) = fast_path_watch(cache_name, &self.build_dir, root) {
-            self.watches.push(watch);
-        }
+        self.watches
+            .push(fast_path_watch(cache_name, &self.build_dir, root));
         self
     }
 
@@ -604,8 +613,33 @@ mod tests {
             build_dir.join("build_fingerprint.json")
         );
         assert_eq!(contract.required_artifacts(), &[artifact]);
-        assert_eq!(contract.watches().len(), 1);
+        assert_eq!(contract.watches().len(), 2);
         assert_eq!(contract.watches()[0].root, project_dir);
+        assert_eq!(contract.watches()[1].root, build_dir.join("libs"));
+    }
+
+    #[test]
+    fn expected_fast_path_artifacts_follow_compile_db_location() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let build_dir = tmp.path().join("build");
+        let app_project = tmp.path().join("app");
+        let lib_project = tmp.path().join("libproj");
+        fs::create_dir_all(&build_dir).unwrap();
+        fs::create_dir_all(&app_project).unwrap();
+        fs::create_dir_all(&lib_project).unwrap();
+        fs::write(lib_project.join("library.json"), r#"{"name":"libproj"}"#).unwrap();
+
+        let (app_elf, [app_hex], app_compile_db) =
+            expected_fast_path_artifacts(&build_dir, &app_project, ["firmware.hex"]);
+        let (lib_elf, [lib_hex], lib_compile_db) =
+            expected_fast_path_artifacts(&build_dir, &lib_project, ["firmware.hex"]);
+
+        assert_eq!(app_elf, build_dir.join("firmware.elf"));
+        assert_eq!(app_hex, build_dir.join("firmware.hex"));
+        assert_eq!(lib_elf, build_dir.join("firmware.elf"));
+        assert_eq!(lib_hex, build_dir.join("firmware.hex"));
+        assert_eq!(app_compile_db, app_project.join("compile_commands.json"));
+        assert_eq!(lib_compile_db, build_dir.join("compile_commands.json"));
     }
 
     #[test]

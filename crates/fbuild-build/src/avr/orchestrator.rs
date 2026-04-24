@@ -19,10 +19,10 @@ use fbuild_core::{Platform, Result};
 use serde::Serialize;
 
 use crate::build_fingerprint::{
-    stable_hash_json, FastPathCheckInputs, FastPathContract, FastPathPersistInputs,
-    BUILD_FINGERPRINT_VERSION,
+    expected_fast_path_artifacts, stable_hash_json, FastPathCheckInputs, FastPathContract,
+    FastPathPersistInputs, BUILD_FINGERPRINT_VERSION,
 };
-use crate::compile_database::{CompileDatabase, TargetArchitecture};
+use crate::compile_database::TargetArchitecture;
 use crate::compiler::Compiler as _;
 use crate::pipeline;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
@@ -64,17 +64,6 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
         fbuild_core::BuildProfile::Release => "release",
         fbuild_core::BuildProfile::Quick => "quick",
     }
-}
-
-fn expected_fast_path_artifacts(
-    build_dir: &Path,
-    project_dir: &Path,
-) -> (PathBuf, PathBuf, PathBuf) {
-    (
-        build_dir.join("firmware.elf"),
-        build_dir.join("firmware.hex"),
-        CompileDatabase::expected_output_path(build_dir, project_dir),
-    )
 }
 
 impl BuildOrchestrator for AvrOrchestrator {
@@ -150,8 +139,8 @@ impl BuildOrchestrator for AvrOrchestrator {
             max_flash: ctx.board.max_flash,
             max_ram: ctx.board.max_ram,
         })?;
-        let (fast_elf, fast_hex, fast_compile_db) =
-            expected_fast_path_artifacts(build_dir, &params.project_dir);
+        let (fast_elf, [fast_hex], fast_compile_db) =
+            expected_fast_path_artifacts(build_dir, &params.project_dir, ["firmware.hex"]);
         let fast_path = {
             let _g = perf.phase("fp-watches-collect");
             FastPathContract::for_project_outputs(

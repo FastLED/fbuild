@@ -12,17 +12,17 @@
 //! 9. Link (with linker script)
 //! 10. Convert to hex + report size
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::time::Instant;
 
 use fbuild_core::{Platform, Result};
 use serde::Serialize;
 
 use crate::build_fingerprint::{
-    stable_hash_json, FastPathCheckInputs, FastPathContract, FastPathPersistInputs,
-    BUILD_FINGERPRINT_VERSION,
+    expected_fast_path_artifacts, stable_hash_json, FastPathCheckInputs, FastPathContract,
+    FastPathPersistInputs, BUILD_FINGERPRINT_VERSION,
 };
-use crate::compile_database::{CompileDatabase, TargetArchitecture};
+use crate::compile_database::TargetArchitecture;
 use crate::pipeline;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
@@ -55,17 +55,6 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
         fbuild_core::BuildProfile::Release => "release",
         fbuild_core::BuildProfile::Quick => "quick",
     }
-}
-
-fn expected_fast_path_artifacts(
-    build_dir: &Path,
-    project_dir: &Path,
-) -> (PathBuf, PathBuf, PathBuf) {
-    (
-        build_dir.join("firmware.elf"),
-        build_dir.join("firmware.hex"),
-        CompileDatabase::expected_output_path(build_dir, project_dir),
-    )
 }
 
 impl BuildOrchestrator for Nrf52Orchestrator {
@@ -119,8 +108,8 @@ impl BuildOrchestrator for Nrf52Orchestrator {
             max_flash: ctx.board.max_flash,
             max_ram: ctx.board.max_ram,
         })?;
-        let (fast_elf, fast_hex, fast_compile_db) =
-            expected_fast_path_artifacts(build_dir, &params.project_dir);
+        let (fast_elf, [fast_hex], fast_compile_db) =
+            expected_fast_path_artifacts(build_dir, &params.project_dir, ["firmware.hex"]);
         let fast_path = FastPathContract::for_project_outputs(
             build_dir,
             &params.project_dir,
@@ -393,30 +382,14 @@ mod tests {
         std::fs::create_dir_all(&libs_dir).unwrap();
         std::fs::create_dir_all(&project_dir).unwrap();
 
-        let contract =
-            FastPathContract::for_project_outputs(&build_dir, &project_dir, Vec::<PathBuf>::new());
+        let contract = FastPathContract::for_project_outputs(
+            &build_dir,
+            &project_dir,
+            Vec::<std::path::PathBuf>::new(),
+        );
 
         assert_eq!(contract.watches().len(), 2);
         assert_eq!(contract.watches()[0].root, project_dir);
         assert_eq!(contract.watches()[1].root, libs_dir);
-    }
-
-    #[test]
-    fn test_expected_fast_path_artifacts_include_compile_db() {
-        let tmp = tempfile::TempDir::new().unwrap();
-        let build_dir = tmp.path().join("build");
-        let project_dir = tmp.path().join("project");
-
-        let (elf, hex, compile_db) = expected_fast_path_artifacts(&build_dir, &project_dir);
-
-        assert_eq!(elf, build_dir.join("firmware.elf"));
-        assert_eq!(hex, build_dir.join("firmware.hex"));
-        assert_eq!(
-            compile_db,
-            crate::compile_database::CompileDatabase::expected_output_path(
-                &build_dir,
-                &project_dir
-            )
-        );
     }
 }

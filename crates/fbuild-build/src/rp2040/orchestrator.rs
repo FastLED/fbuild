@@ -20,10 +20,10 @@ use fbuild_core::{Platform, Result};
 use serde::Serialize;
 
 use crate::build_fingerprint::{
-    stable_hash_json, FastPathCheckInputs, FastPathContract, FastPathPersistInputs,
-    BUILD_FINGERPRINT_VERSION,
+    expected_fast_path_artifacts, stable_hash_json, FastPathCheckInputs, FastPathContract,
+    FastPathPersistInputs, BUILD_FINGERPRINT_VERSION,
 };
-use crate::compile_database::{CompileDatabase, TargetArchitecture};
+use crate::compile_database::TargetArchitecture;
 use crate::compiler::Compiler as _;
 use crate::generic_arm::{ArmCompiler, ArmLinker};
 use crate::pipeline;
@@ -55,17 +55,6 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
         fbuild_core::BuildProfile::Release => "release",
         fbuild_core::BuildProfile::Quick => "quick",
     }
-}
-
-fn expected_fast_path_artifacts(
-    build_dir: &Path,
-    project_dir: &Path,
-) -> (PathBuf, PathBuf, PathBuf) {
-    (
-        build_dir.join("firmware.elf"),
-        build_dir.join("firmware.bin"),
-        CompileDatabase::expected_output_path(build_dir, project_dir),
-    )
 }
 
 impl BuildOrchestrator for Rp2040Orchestrator {
@@ -123,8 +112,8 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             max_flash: ctx.board.max_flash,
             max_ram: ctx.board.max_ram,
         })?;
-        let (fast_elf, fast_bin, fast_compile_db) =
-            expected_fast_path_artifacts(&build_dir, &params.project_dir);
+        let (fast_elf, [fast_bin], fast_compile_db) =
+            expected_fast_path_artifacts(&build_dir, &params.project_dir, ["firmware.bin"]);
         let fast_path = FastPathContract::for_project_outputs(
             &build_dir,
             &params.project_dir,
@@ -856,7 +845,7 @@ mod tests {
     }
 
     #[test]
-    fn test_fast_path_contract_skips_missing_dep_libs() {
+    fn test_fast_path_contract_preserves_missing_dep_libs() {
         let tmp = tempfile::TempDir::new().unwrap();
         let build_dir = tmp.path().join("build");
         let project_dir = tmp.path().join("project");
@@ -865,8 +854,9 @@ mod tests {
 
         let contract =
             FastPathContract::for_project_outputs(&build_dir, &project_dir, Vec::<PathBuf>::new());
-        assert_eq!(contract.watches().len(), 1);
+        assert_eq!(contract.watches().len(), 2);
         assert_eq!(contract.watches()[0].root, project_dir);
+        assert_eq!(contract.watches()[1].root, build_dir.join("libs"));
     }
 
     #[test]
@@ -883,23 +873,5 @@ mod tests {
         assert_eq!(contract.watches().len(), 2);
         assert_eq!(contract.watches()[0].root, project_dir);
         assert_eq!(contract.watches()[1].root, dep_libs_dir);
-    }
-
-    #[test]
-    fn test_expected_fast_path_artifacts_follow_compile_db_location() {
-        let tmp = tempfile::TempDir::new().unwrap();
-        let build_dir = tmp.path().join("build");
-        let app_project = tmp.path().join("app");
-        let lib_project = tmp.path().join("libproj");
-        std::fs::create_dir_all(&build_dir).unwrap();
-        std::fs::create_dir_all(&app_project).unwrap();
-        std::fs::create_dir_all(&lib_project).unwrap();
-        std::fs::write(lib_project.join("library.json"), r#"{"name":"libproj"}"#).unwrap();
-
-        let (_, _, app_compile_db) = expected_fast_path_artifacts(&build_dir, &app_project);
-        let (_, _, lib_compile_db) = expected_fast_path_artifacts(&build_dir, &lib_project);
-
-        assert_eq!(app_compile_db, app_project.join("compile_commands.json"));
-        assert_eq!(lib_compile_db, build_dir.join("compile_commands.json"));
     }
 }
