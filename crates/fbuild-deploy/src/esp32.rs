@@ -1245,11 +1245,9 @@ impl Deployer for Esp32Deployer {
 
         #[cfg(feature = "espflash-native")]
         if self.use_native_write {
-            if let Some(result) =
-                native_write_or_fallback(port, "write-flash", || {
-                    self.try_deploy_native(firmware_path, port)
-                })
-            {
+            if let Some(result) = native_write_or_fallback(port, "write-flash", || {
+                self.try_deploy_native(firmware_path, port)
+            }) {
                 return Ok(result);
             }
         }
