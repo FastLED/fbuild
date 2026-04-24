@@ -248,11 +248,6 @@ def _strip_rust_literals(src: str) -> str:
     return "".join(out)
 
 
-# Backwards-compat shim (retained in case external callers imported it).
-def _is_doc_or_string(line: str) -> bool:
-    return _is_doc_or_comment(line)
-
-
 def _allowlist_reason(lines: list[str], idx: int) -> str | None:
     """Return the allowlist reason if this hit is annotated, else None.
 
