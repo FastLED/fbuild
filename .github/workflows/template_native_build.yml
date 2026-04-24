@@ -59,11 +59,6 @@ jobs:
           build-cache: true
           target-cache: true
           cache-key-suffix: native-${{ inputs.target }}
-          target-cache-paths: |
-            target/${{ inputs.target }}/release
-            target/*-unknown-linux-gnu.2.17/release
-            target/*-unknown-linux-gnu/release
-            target/release
 
       - uses: actions/setup-python@v6
         with:
@@ -118,24 +113,29 @@ jobs:
       - name: Build Python extension
         shell: bash
         run: |
+          PYTHON_TARGET_DIR="target/python-extension"
           if [ "${{ runner.os }}" = "Linux" ]; then
             TARGET="${{ inputs.target }}"
             ARCH="${TARGET%%-*}"
             PYO3_TARGET="${ARCH}-unknown-linux-gnu"
             rustup target add "$PYO3_TARGET"
             PYO3_NO_PYTHON=1 soldr cargo zigbuild --release \
+              --target-dir "${PYTHON_TARGET_DIR}" \
               --target "${PYO3_TARGET}.2.17" -p fbuild-python \
               --features extension-module
           elif [ "${{ inputs.macos_cross }}" = "true" ]; then
             PYO3_NO_PYTHON=1 soldr cargo build --release \
+              --target-dir "${PYTHON_TARGET_DIR}" \
               --target ${{ inputs.target }} -p fbuild-python \
               --features extension-module
           elif [ "${{ runner.os }}" = "macOS" ]; then
-            soldr cargo build --release --target ${{ inputs.target }} \
+            soldr cargo build --release --target-dir "${PYTHON_TARGET_DIR}" \
+              --target ${{ inputs.target }} \
               -p fbuild-python \
               --features extension-module
           else
-            soldr cargo build --release --target ${{ inputs.target }} \
+            soldr cargo build --release --target-dir "${PYTHON_TARGET_DIR}" \
+              --target ${{ inputs.target }} \
               -p fbuild-python \
               --features extension-module
           fi
@@ -143,6 +143,7 @@ jobs:
       - name: Stage artifacts
         shell: bash
         run: |
+          PYTHON_TARGET_DIR="target/python-extension"
           mkdir -p staging
           cp target/${{ inputs.target }}/release/fbuild${{ inputs.binary_ext }} staging/
           cp target/${{ inputs.target }}/release/fbuild-daemon${{ inputs.binary_ext }} staging/
@@ -151,20 +152,21 @@ jobs:
           if [ "${{ runner.os }}" = "Linux" ]; then
             TARGET="${{ inputs.target }}"
             ARCH="${TARGET%%-*}"
-            ext_src="target/${ARCH}-unknown-linux-gnu/release/lib_native.so"
+            ext_src="${PYTHON_TARGET_DIR}/${ARCH}-unknown-linux-gnu.2.17/release/lib_native.so"
+            [ -f "$ext_src" ] || ext_src="${PYTHON_TARGET_DIR}/${ARCH}-unknown-linux-gnu/release/lib_native.so"
             [ -f "$ext_src" ] && cp "$ext_src" staging/_native.abi3.so
           elif [ "${{ runner.os }}" = "macOS" ]; then
-            ext_src="target/${{ inputs.target }}/release/lib_native.dylib"
+            ext_src="${PYTHON_TARGET_DIR}/${{ inputs.target }}/release/lib_native.dylib"
             [ -f "$ext_src" ] && cp "$ext_src" staging/_native.abi3.so
           elif [ "${{ inputs.binary_ext }}" = ".exe" ]; then
             for ext_src in \
-              "target/${{ inputs.target }}/release/_native.dll" \
-              "target/release/_native.dll"; do
+              "${PYTHON_TARGET_DIR}/${{ inputs.target }}/release/_native.dll" \
+              "${PYTHON_TARGET_DIR}/release/_native.dll"; do
               [ -f "$ext_src" ] && cp "$ext_src" staging/_native.pyd && break
             done
           else
             for ext in so dylib; do
-              src="target/release/lib_native.$ext"
+              src="${PYTHON_TARGET_DIR}/release/lib_native.$ext"
               [ -f "$src" ] && cp "$src" staging/_native.abi3.so && break
             done
           fi
