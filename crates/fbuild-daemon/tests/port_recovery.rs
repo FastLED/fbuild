@@ -35,6 +35,7 @@ fn daemon_rebinds_cleanly_after_hard_kill_with_open_connection() {
     let bin = env!("CARGO_BIN_EXE_fbuild-daemon");
 
     // 1) Spawn the first daemon.
+    // allow-direct-spawn: test driver spawns the real fbuild-daemon binary under test.
     let mut d1 = Command::new(bin)
         .env("FBUILD_DAEMON_PORT", port.to_string())
         .stdout(Stdio::null())
@@ -61,6 +62,7 @@ fn daemon_rebinds_cleanly_after_hard_kill_with_open_connection() {
     #[cfg(windows)]
     {
         // taskkill /F is the Windows equivalent of SIGKILL.
+        // allow-direct-spawn: test driver hard-killing the daemon process under test.
         let _ = Command::new("taskkill")
             .args(["/F", "/PID", &d1.id().to_string()])
             .status();
@@ -71,6 +73,7 @@ fn daemon_rebinds_cleanly_after_hard_kill_with_open_connection() {
     //    a short window. Spawn a second daemon and assert it binds.
     //    With a *correct* fix (graceful shutdown + SO_EXCLUSIVEADDRUSE
     //    on Windows) this should succeed without permissive REUSEADDR.
+    // allow-direct-spawn: test driver spawns the real fbuild-daemon binary under test.
     let mut d2 = Command::new(bin)
         .env("FBUILD_DAEMON_PORT", port.to_string())
         .stdout(Stdio::piped())

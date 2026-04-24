@@ -263,6 +263,7 @@ fn compile_fake_zccache(root: &Path) -> PathBuf {
     fs::write(&source, FAKE_ZCCACHE).unwrap();
 
     let rustc = env::var_os("RUSTC").unwrap_or_else(|| "rustc".into());
+    // allow-direct-spawn: test helper compiling a throwaway rustc binary.
     let status = Command::new(rustc)
         .arg(&source)
         .arg("-o")

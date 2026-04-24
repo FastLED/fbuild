@@ -132,6 +132,7 @@ pub fn ensure_running(zccache: &Path) {
     // is a no-op when it's already running, and either way the zccache
     // daemon must survive the fbuild daemon — so this spawn stays out
     // of the containment group.
+    // allow-direct-spawn: zccache daemon must outlive the fbuild daemon.
     let mut cmd = std::process::Command::new(zccache);
     cmd.arg("start")
         .stdout(std::process::Stdio::null())

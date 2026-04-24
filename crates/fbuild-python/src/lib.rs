@@ -622,6 +622,7 @@ impl Daemon {
         // Python interpreter process, which has no global containment
         // group, so `spawn()` is already uncontained; see the matching
         // comment in fbuild-cli/src/daemon_client.rs.
+        // allow-direct-spawn: daemon must outlive the Python interpreter.
         let mut cmd = std::process::Command::new("fbuild-daemon");
         if fbuild_paths::is_dev_mode() {
             cmd.arg("--dev");
@@ -1565,6 +1566,7 @@ impl AsyncDaemon {
 
             // INTENTIONALLY DETACHED (FastLED/fbuild#32): see the
             // matching comment in `Daemon::ensure_running` above.
+            // allow-direct-spawn: daemon must outlive the Python interpreter.
             let mut cmd = std::process::Command::new("fbuild-daemon");
             if dev_mode {
                 cmd.arg("--dev");

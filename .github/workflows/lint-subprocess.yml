@@ -1,0 +1,28 @@
+name: Lint subprocess spawns
+
+# Regression guard for FastLED/fbuild#141: every subprocess fbuild
+# starts must flow through the fbuild-core::subprocess wrappers (which
+# are backed by running-process-core). Direct std::process::Command /
+# tokio::process::Command spawns are only allowed when annotated with
+# an // allow-direct-spawn: <reason> marker.
+#
+# Keeps pipe-deadlock and containment-drift bugs from creeping back in.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  lint-subprocess:
+    name: Lint subprocess spawns
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v3
+      - name: Check no unannotated direct Command::new spawns
+        run: uv run python ci/find_direct_subprocess.py --fail

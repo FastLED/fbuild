@@ -1,11 +1,27 @@
-//! Subprocess runner with timeout support.
+//! Subprocess runner backed by `running-process-core`.
 //!
-//! On Windows, uses CREATE_NO_WINDOW to prevent compiler processes from
-//! spawning visible console windows.
+//! Every synchronous spawn in fbuild flows through this module. We use
+//! [`running_process_core::NativeProcess`] so that stdout and stderr are
+//! drained concurrently from the moment the child starts — the manual
+//! drain loop that preceded this module deadlocked the moment a compiler
+//! filled its stderr pipe (see FastLED/fbuild#141).
+//!
+//! On Windows we still:
+//!   * prepend the executable's directory to PATH so GCC's `cc1plus` can
+//!     find its sibling DLLs; and
+//!   * strip MSYS/MSYS2 env vars that would otherwise poison native
+//!     Windows toolchain binaries.
+//!
+//! Containment is honoured via `ProcessConfig::containment = Some(...)`
+//! when the daemon has installed the global containment group. CLI
+//! binaries and unit tests run uncontained just as before.
 
 use std::path::Path;
-use std::process::{Command, Output, Stdio};
 use std::time::Duration;
+
+use running_process_core::{
+    CommandSpec, Containment, NativeProcess, ProcessConfig, ProcessError, StderrMode, StdinMode,
+};
 
 use crate::{FbuildError, Result};
 
@@ -31,86 +47,224 @@ pub fn run_command(
     env: Option<&[(&str, &str)]>,
     timeout: Option<Duration>,
 ) -> Result<ToolOutput> {
+    let config = build_config(args, cwd, env, /*capture=*/ true, StdinMode::Null)?;
+    run_captured(config, args, timeout)
+}
+
+/// Run an external command with inherited stdin/stdout/stderr (no
+/// capture). Intended for pass-through cases like the `pio` CLI
+/// delegation where users expect the tool's live output.
+///
+/// Returns the exit code.
+pub fn run_command_passthrough(
+    args: &[&str],
+    cwd: Option<&Path>,
+    env: Option<&[(&str, &str)]>,
+    timeout: Option<Duration>,
+) -> Result<i32> {
+    let config = build_config(args, cwd, env, /*capture=*/ false, StdinMode::Inherit)?;
+    let process = NativeProcess::new(config);
+    process.start().map_err(|e| spawn_err(args, e))?;
+    match process.wait(timeout) {
+        Ok(code) => Ok(code),
+        Err(ProcessError::Timeout) => {
+            let _ = process.kill();
+            Err(FbuildError::Timeout(format!(
+                "command timed out after {}s",
+                timeout.map(|d| d.as_secs()).unwrap_or(0)
+            )))
+        }
+        Err(e) => Err(FbuildError::Other(format!(
+            "command {:?} failed: {}",
+            args, e
+        ))),
+    }
+}
+
+fn run_captured(
+    config: ProcessConfig,
+    args: &[&str],
+    timeout: Option<Duration>,
+) -> Result<ToolOutput> {
+    let process = NativeProcess::new(config);
+    process.start().map_err(|e| spawn_err(args, e))?;
+    let exit_code = match process.wait(timeout) {
+        Ok(code) => code,
+        Err(ProcessError::Timeout) => {
+            let _ = process.kill();
+            return Err(FbuildError::Timeout(format!(
+                "command timed out after {}s",
+                timeout.map(|d| d.as_secs()).unwrap_or(0)
+            )));
+        }
+        Err(e) => {
+            return Err(FbuildError::Other(format!(
+                "command {:?} failed: {}",
+                args, e
+            )))
+        }
+    };
+
+    let stdout = join_lines(process.captured_stdout());
+    let stderr = join_lines(process.captured_stderr());
+
+    Ok(ToolOutput {
+        stdout,
+        stderr,
+        exit_code,
+    })
+}
+
+fn build_config(
+    args: &[&str],
+    cwd: Option<&Path>,
+    env: Option<&[(&str, &str)]>,
+    capture: bool,
+    stdin_mode: StdinMode,
+) -> Result<ProcessConfig> {
     if args.is_empty() {
         return Err(FbuildError::Other("empty command".to_string()));
     }
 
-    let mut cmd = build_command(args);
+    let argv: Vec<String> = args.iter().map(|s| (*s).to_string()).collect();
 
-    if let Some(dir) = cwd {
-        cmd.current_dir(dir);
-    }
-
-    if let Some(vars) = env {
-        for (k, v) in vars {
-            cmd.env(k, v);
-        }
-    }
-
-    if let Some(timeout) = timeout {
-        run_with_timeout(cmd, timeout)
-    } else {
-        run_no_timeout(cmd)
-    }
-}
-
-/// Build a `Command` with platform-specific settings.
-///
-/// On Windows: adds the executable's directory to PATH so child processes
-/// (like GCC's cc1plus) can find shared libraries (libgcc_s_seh-1.dll, etc.)
-/// that live alongside the main binary. Also strips MSYS/MSYS2 environment
-/// variables when detected, to prevent interference with native Windows
-/// toolchain binaries.
-fn build_command(args: &[&str]) -> Command {
-    let mut cmd = Command::new(args[0]);
-    cmd.args(&args[1..]);
+    // Build the environment the child will see. Windows needs PATH
+    // rewriting (prepend exe dir) and optional MSYS-var stripping; Unix
+    // only needs overlay vars applied. When no changes are required
+    // leave `env = None` so the child inherits the parent environment
+    // verbatim (matching the pre-migration behaviour).
+    let env_vec = compute_env(args[0], env);
 
     #[cfg(windows)]
-    {
-        use std::os::windows::process::CommandExt;
+    let creationflags = {
         const CREATE_NO_WINDOW: u32 = 0x08000000;
-        cmd.creation_flags(CREATE_NO_WINDOW);
+        Some(CREATE_NO_WINDOW)
+    };
+    #[cfg(not(windows))]
+    let creationflags: Option<u32> = None;
 
-        // Add the executable's parent directory to PATH so that child processes
-        // (e.g., cc1plus launched by g++) can find DLLs in the same bin/ dir.
-        if let Some(exe_dir) = Path::new(args[0]).parent() {
-            let exe_dir_str = exe_dir.to_string_lossy();
+    Ok(ProcessConfig {
+        command: CommandSpec::Argv(argv),
+        cwd: cwd.map(|p| p.to_path_buf()),
+        env: env_vec,
+        capture,
+        stderr_mode: StderrMode::Pipe,
+        creationflags,
+        create_process_group: false,
+        stdin_mode,
+        nice: None,
+        containment: if crate::containment::is_initialised() {
+            Some(Containment::Contained)
+        } else {
+            None
+        },
+    })
+}
+
+fn join_lines(lines: Vec<Vec<u8>>) -> String {
+    // NativeProcess returns one Vec<u8> per line (CR/LF stripped). Join
+    // with '\n' and add a trailing newline when non-empty so the result
+    // matches the shape of the previous `String::from_utf8_lossy(&raw)`
+    // output closely enough for downstream parsers (which mostly call
+    // `.trim()` or `.lines()`).
+    if lines.is_empty() {
+        return String::new();
+    }
+    let mut out = String::new();
+    for (idx, line) in lines.iter().enumerate() {
+        if idx > 0 {
+            out.push('\n');
+        }
+        out.push_str(&String::from_utf8_lossy(line));
+    }
+    out.push('\n');
+    out
+}
+
+fn spawn_err(args: &[&str], e: ProcessError) -> FbuildError {
+    FbuildError::Other(format!("failed to spawn {:?}: {}", args, e))
+}
+
+/// Build the env vector to pass to the child.
+///
+/// * On Unix: when `overlay` is Some, merge it into the current
+///   environment and return `Some(vec)`. Otherwise return `None` so the
+///   child inherits `std::env::vars()` transparently.
+/// * On Windows: always construct a full env vector when we need to
+///   rewrite PATH (to prepend the exe directory) or strip MSYS vars.
+///   This mirrors the behaviour of the pre-migration code, which called
+///   `cmd.env("PATH", …)` and `cmd.env_remove(...)` on a command that
+///   otherwise inherited the current env.
+fn compute_env(program: &str, overlay: Option<&[(&str, &str)]>) -> Option<Vec<(String, String)>> {
+    #[cfg(windows)]
+    {
+        let mut env_map: std::collections::BTreeMap<String, String> = std::env::vars().collect();
+
+        // Prepend the executable's directory to PATH so that child
+        // processes (e.g., cc1plus launched by g++) can find DLLs in
+        // the same bin/ dir.
+        if let Some(exe_dir) = Path::new(program).parent() {
+            let exe_dir_str = exe_dir.to_string_lossy().to_string();
             if !exe_dir_str.is_empty() {
-                let current_path = std::env::var("PATH").unwrap_or_default();
-                cmd.env("PATH", format!("{};{}", exe_dir_str, current_path));
+                let current_path = env_map
+                    .get("PATH")
+                    .or_else(|| env_map.get("Path"))
+                    .cloned()
+                    .unwrap_or_default();
+                env_map.insert(
+                    "PATH".to_string(),
+                    format!("{};{}", exe_dir_str, current_path),
+                );
             }
         }
 
         // Strip MSYS/MSYS2 environment variables that interfere with
-        // native Windows toolchain binaries finding their internal tools.
-        if is_msys_environment() {
-            strip_msys_env(&mut cmd);
+        // native Windows toolchain binaries finding their internal
+        // tools.
+        if is_msys_environment(&env_map) {
+            strip_msys_env(&mut env_map);
+        }
+
+        if let Some(vars) = overlay {
+            for (k, v) in vars {
+                env_map.insert((*k).to_string(), (*v).to_string());
+            }
+        }
+
+        Some(env_map.into_iter().collect())
+    }
+    #[cfg(not(windows))]
+    {
+        let _ = program;
+        match overlay {
+            Some(vars) if !vars.is_empty() => {
+                let mut env_map: std::collections::BTreeMap<String, String> =
+                    std::env::vars().collect();
+                for (k, v) in vars {
+                    env_map.insert((*k).to_string(), (*v).to_string());
+                }
+                Some(env_map.into_iter().collect())
+            }
+            _ => None,
         }
     }
-
-    cmd.stdin(Stdio::null());
-    cmd.stdout(Stdio::piped());
-    cmd.stderr(Stdio::piped());
-    cmd
 }
 
-/// Check if we're running inside an MSYS/MSYS2 environment.
 #[cfg(windows)]
-fn is_msys_environment() -> bool {
-    std::env::var("MSYSTEM").is_ok() || std::env::var("MSYS").is_ok()
+fn is_msys_environment(env_map: &std::collections::BTreeMap<String, String>) -> bool {
+    env_map.contains_key("MSYSTEM") || env_map.contains_key("MSYS")
 }
 
-/// Strip MSYS-specific environment variables and rebuild PATH without MSYS dirs.
+/// Strip MSYS-specific environment variables and rebuild PATH without
+/// MSYS dirs.
 ///
-/// Matches Python's `get_pio_safe_env()` in `pio_env.py`: strips variables with
-/// prefixes (MSYS*, MINGW*, CHERE*, ORIGINAL_PATH*), exact shell/terminal keys,
-/// and PATH entries starting with "/" (MSYS-style paths).
+/// Matches Python's `get_pio_safe_env()` in `pio_env.py`: strips vars
+/// with prefixes (MSYS*, MINGW*, CHERE*, ORIGINAL_PATH*), exact
+/// shell/terminal keys, and PATH entries starting with "/" (MSYS-style
+/// paths).
 #[cfg(windows)]
-fn strip_msys_env(cmd: &mut Command) {
-    // Prefixes to strip (matches Python's strip_prefixes)
+fn strip_msys_env(env_map: &mut std::collections::BTreeMap<String, String>) {
     let strip_prefixes: &[&str] = &["MSYS", "MINGW", "CHERE", "ORIGINAL_PATH"];
-
-    // Exact keys to strip (matches Python's strip_exact)
     let strip_exact: &[&str] = &[
         "SHELL",
         "SHLVL",
@@ -130,29 +284,24 @@ fn strip_msys_env(cmd: &mut Command) {
         "CONFIG_SITE",
     ];
 
-    // Collect keys to remove (prefix-based + exact)
-    let keys_to_remove: Vec<String> = std::env::vars()
-        .filter_map(|(k, _)| {
-            let should_strip = strip_prefixes.iter().any(|prefix| k.starts_with(prefix))
-                || strip_exact.contains(&k.as_str());
-            if should_strip {
-                Some(k)
-            } else {
-                None
-            }
+    let keys_to_remove: Vec<String> = env_map
+        .keys()
+        .filter(|k| {
+            strip_prefixes.iter().any(|prefix| k.starts_with(prefix))
+                || strip_exact.contains(&k.as_str())
         })
+        .cloned()
         .collect();
-
-    for key in &keys_to_remove {
-        cmd.env_remove(key);
+    for key in keys_to_remove {
+        env_map.remove(&key);
     }
 
-    // Clean PATH: remove MSYS-style entries (start with "/") and dirs containing msys/usr
-    if let Ok(path) = std::env::var("PATH") {
+    // Clean PATH: remove MSYS-style entries (start with "/") and dirs
+    // containing msys/usr.
+    if let Some(path) = env_map.get("PATH").cloned() {
         let filtered: Vec<&str> = path
             .split(';')
             .filter(|p| {
-                // Remove MSYS-style paths (start with "/")
                 if p.starts_with('/') {
                     return false;
                 }
@@ -160,89 +309,7 @@ fn strip_msys_env(cmd: &mut Command) {
                 !lower.contains("\\msys") && !lower.contains("/msys") && !lower.contains("/usr/")
             })
             .collect();
-        cmd.env("PATH", filtered.join(";"));
-    }
-}
-
-fn run_no_timeout(mut cmd: Command) -> Result<ToolOutput> {
-    // Route the spawn through the process-wide containment group so the
-    // resulting child (and any grandchildren it forks) dies with the
-    // daemon. Falls back to an uncontained spawn when the global group
-    // is not initialised (CLI binary, unit tests). See FastLED/fbuild#32.
-    //
-    // `wait_with_output` drains stdout and stderr concurrently on
-    // background threads before waiting, which is required to avoid a
-    // pipe-buffer deadlock when the child writes >64 KB to either stream
-    // (e.g. ESP32 GCC stderr during a full build).
-    let child = crate::containment::spawn_contained(&mut cmd)?;
-    let output = child.wait_with_output()?;
-    Ok(output_to_tool_output(output))
-}
-
-fn run_with_timeout(mut cmd: Command, timeout: Duration) -> Result<ToolOutput> {
-    // See `run_no_timeout`: route through containment.
-    let mut child = crate::containment::spawn_contained(&mut cmd)?;
-
-    // Drain stdout and stderr concurrently on background threads. Reading
-    // serially would deadlock the moment either pipe's ~64 KB OS buffer
-    // fills — the child then blocks on `write()` forever, and we sit in
-    // the poll loop until the timeout fires. See FastLED/fbuild regression
-    // from the containment rewrite.
-    let stdout_handle = child.stdout.take().map(|mut s| {
-        std::thread::spawn(move || {
-            let mut buf = Vec::new();
-            std::io::Read::read_to_end(&mut s, &mut buf).ok();
-            buf
-        })
-    });
-    let stderr_handle = child.stderr.take().map(|mut s| {
-        std::thread::spawn(move || {
-            let mut buf = Vec::new();
-            std::io::Read::read_to_end(&mut s, &mut buf).ok();
-            buf
-        })
-    });
-
-    let timeout_ms = timeout.as_millis() as u64;
-    let start = std::time::Instant::now();
-
-    let status = loop {
-        match child.try_wait()? {
-            Some(status) => break status,
-            None => {
-                if start.elapsed().as_millis() as u64 > timeout_ms {
-                    let _ = child.kill();
-                    // Drop reader threads' joins — they'll finish once the
-                    // kill closes the pipes, but we're already erroring.
-                    return Err(FbuildError::Timeout(format!(
-                        "command timed out after {}s",
-                        timeout.as_secs()
-                    )));
-                }
-                std::thread::sleep(Duration::from_millis(50));
-            }
-        }
-    };
-
-    let stdout = stdout_handle
-        .and_then(|h| h.join().ok())
-        .unwrap_or_default();
-    let stderr = stderr_handle
-        .and_then(|h| h.join().ok())
-        .unwrap_or_default();
-
-    Ok(ToolOutput {
-        stdout: String::from_utf8_lossy(&stdout).to_string(),
-        stderr: String::from_utf8_lossy(&stderr).to_string(),
-        exit_code: status.code().unwrap_or(-1),
-    })
-}
-
-fn output_to_tool_output(output: Output) -> ToolOutput {
-    ToolOutput {
-        stdout: String::from_utf8_lossy(&output.stdout).to_string(),
-        stderr: String::from_utf8_lossy(&output.stderr).to_string(),
-        exit_code: output.status.code().unwrap_or(-1),
+        env_map.insert("PATH".to_string(), filtered.join(";"));
     }
 }
 
@@ -253,7 +320,7 @@ mod tests {
     #[test]
     fn run_echo() {
         let args = if cfg!(windows) {
-            vec!["cmd", "/C", "echo", "hello"]
+            vec!["cmd", "/C", "echo hello"]
         } else {
             vec!["echo", "hello"]
         };
@@ -275,12 +342,6 @@ mod tests {
     }
 
     #[test]
-    fn run_with_cwd() {
-        let result = run_command(&["pwd"], Some(Path::new("/")), None, None);
-        let _ = result;
-    }
-
-    #[test]
     fn tool_output_success() {
         let output = ToolOutput {
             stdout: "ok".to_string(),
@@ -295,5 +356,18 @@ mod tests {
             exit_code: 1,
         };
         assert!(!output.success());
+    }
+
+    #[test]
+    fn run_captures_stderr() {
+        // Verify that stderr is captured independently from stdout.
+        let args = if cfg!(windows) {
+            vec!["cmd", "/C", "echo err 1>&2"]
+        } else {
+            vec!["sh", "-c", "echo err 1>&2"]
+        };
+        let result = run_command(&args, None, None, None).unwrap();
+        assert!(result.success());
+        assert!(result.stderr.contains("err"), "got: {:?}", result);
     }
 }

@@ -38,6 +38,7 @@ fn daemon_children_die_when_daemon_dies() {
     let harness = env!("CARGO_BIN_EXE_containment_harness");
 
     // Start the parent role.
+    // allow-direct-spawn: integration-test driver invoking the containment harness binary.
     let mut parent = Command::new(harness)
         .arg("parent")
         .stdin(Stdio::null())
@@ -165,6 +166,7 @@ fn kill_hard(pid: u32) -> std::io::Result<()> {
 fn kill_hard(pid: u32) -> std::io::Result<()> {
     // `taskkill /F` is the standard Windows hard-kill and works for
     // arbitrary PIDs without DLL shenanigans.
+    // allow-direct-spawn: test driver using taskkill to hard-kill a test subject.
     let status = Command::new("taskkill")
         .args(["/F", "/PID", &pid.to_string()])
         .stdout(Stdio::null())

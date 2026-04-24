@@ -137,6 +137,7 @@ fn test_emu_exits_non_zero_when_daemon_returns_failure() {
     // Drive the CLI at the mock daemon. We clear FBUILD_DEV_MODE so the
     // CLI sticks to prod-mode path assumptions, and pin
     // FBUILD_DAEMON_PORT so the client calls 127.0.0.1:<port>.
+    // allow-direct-spawn: integration test driver that invokes the compiled fbuild binary.
     let output = Command::new(bin)
         .args([
             "test-emu",
