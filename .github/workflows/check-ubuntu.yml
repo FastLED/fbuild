@@ -29,6 +29,7 @@ jobs:
         run: soldr cargo check --workspace --all-targets
       - name: Clippy
         run: soldr cargo clippy --workspace --all-targets -- -D warnings
+      - uses: astral-sh/setup-uv@v3
       - name: Lint subprocess spawns
         run: uv run python ci/find_direct_subprocess.py --fail
       - name: Test
