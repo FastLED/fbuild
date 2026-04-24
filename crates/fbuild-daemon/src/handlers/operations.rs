@@ -18,20 +18,13 @@ use std::sync::Arc;
 /// pre-checks through the native [`espflash`] crate (issue #66) instead
 /// of the Python `esptool` subprocess.
 ///
-/// Controlled by the `FBUILD_USE_ESPFLASH_VERIFY` environment variable
-/// (set to `1`, `true`, `yes`, or `on` to enable — case-insensitive).
-/// Any other value — including unset — keeps the default esptool path,
-/// so users on unusual setups retain the existing escape hatch until
-/// the native path has bench time on every ESP32 family member.
+/// Controlled by the `FBUILD_USE_ESPFLASH_VERIFY` environment variable.
+/// Native verify is enabled by default when compiled in.
+/// Set this variable to `0`, `false`, `no`, or `off` (case-insensitive)
+/// to force esptool.
 #[cfg(feature = "espflash-native")]
 pub(crate) fn native_verify_enabled() -> bool {
-    match std::env::var("FBUILD_USE_ESPFLASH_VERIFY") {
-        Ok(v) => matches!(
-            v.trim().to_ascii_lowercase().as_str(),
-            "1" | "true" | "yes" | "on"
-        ),
-        Err(_) => false,
-    }
+    env_default_enabled("FBUILD_USE_ESPFLASH_VERIFY")
 }
 
 /// Returns `true` when the daemon should trust an in-memory firmware
@@ -137,20 +130,23 @@ pub(crate) fn compute_esp32_image_hash(
 /// through the native [`espflash`] crate (issue #66) instead of the
 /// Python `esptool` subprocess.
 ///
-/// Controlled by the `FBUILD_USE_ESPFLASH_WRITE` environment variable
-/// (set to `1`, `true`, `yes`, or `on` to enable — case-insensitive).
-/// Independent of `FBUILD_USE_ESPFLASH_VERIFY` — either toggle can be
-/// flipped without the other. Default off so esptool remains the safe
-/// fallback while the native write path accumulates bench time across
-/// every ESP32 family member.
+/// Controlled by the `FBUILD_USE_ESPFLASH_WRITE` environment variable.
+/// Native write is enabled by default when compiled in. Independent of
+/// `FBUILD_USE_ESPFLASH_VERIFY`. Set it to `0`, `false`, `no`, or `off`
+/// (case-insensitive) to force esptool.
 #[cfg(feature = "espflash-native")]
 pub(crate) fn native_write_enabled() -> bool {
-    match std::env::var("FBUILD_USE_ESPFLASH_WRITE") {
-        Ok(v) => matches!(
+    env_default_enabled("FBUILD_USE_ESPFLASH_WRITE")
+}
+
+#[cfg(feature = "espflash-native")]
+fn env_default_enabled(name: &str) -> bool {
+    match std::env::var(name) {
+        Ok(v) => !matches!(
             v.trim().to_ascii_lowercase().as_str(),
-            "1" | "true" | "yes" | "on"
+            "0" | "false" | "no" | "off"
         ),
-        Err(_) => false,
+        Err(_) => true,
     }
 }
 
@@ -1260,14 +1256,11 @@ pub async fn deploy(
                 } else {
                     deployer
                 };
-                // Issue #66: opt-in native `verify-flash` + `write-flash`
-                // via the `espflash` crate. Only compiled in when the
-                // daemon is built with `--features espflash-native`;
-                // default builds keep the esptool-subprocess path and
-                // skip pulling espflash + its ~30 transitive deps. At
-                // runtime, further gated by the `FBUILD_USE_ESPFLASH_*`
-                // env vars so operators can still fall back to esptool
-                // on an espflash-native build.
+                // Issue #66: native `verify-flash` + `write-flash` via
+                // the `espflash` crate. This is compiled in by default;
+                // `FBUILD_USE_ESPFLASH_*` are opt-out switches, and the
+                // deployer falls back to esptool automatically when a
+                // native operation fails.
                 #[cfg(feature = "espflash-native")]
                 let deployer = deployer
                     .with_native_verify(native_verify_enabled())
@@ -2240,6 +2233,44 @@ mod deploy_message_tests {
             combined,
             "deploy succeeded (verify skipped, device already matched); monitor error: pattern matched"
         );
+    }
+}
+
+#[cfg(all(test, feature = "espflash-native"))]
+mod espflash_env_tests {
+    use super::{native_verify_enabled, native_write_enabled};
+
+    static ENV_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
+
+    #[test]
+    fn native_verify_defaults_on_and_allows_opt_out() {
+        let _guard = ENV_LOCK.lock().unwrap();
+        std::env::remove_var("FBUILD_USE_ESPFLASH_VERIFY");
+        assert!(native_verify_enabled());
+
+        std::env::set_var("FBUILD_USE_ESPFLASH_VERIFY", "0");
+        assert!(!native_verify_enabled());
+
+        std::env::set_var("FBUILD_USE_ESPFLASH_VERIFY", "false");
+        assert!(!native_verify_enabled());
+
+        std::env::set_var("FBUILD_USE_ESPFLASH_VERIFY", "1");
+        assert!(native_verify_enabled());
+        std::env::remove_var("FBUILD_USE_ESPFLASH_VERIFY");
+    }
+
+    #[test]
+    fn native_write_defaults_on_and_allows_opt_out() {
+        let _guard = ENV_LOCK.lock().unwrap();
+        std::env::remove_var("FBUILD_USE_ESPFLASH_WRITE");
+        assert!(native_write_enabled());
+
+        std::env::set_var("FBUILD_USE_ESPFLASH_WRITE", "off");
+        assert!(!native_write_enabled());
+
+        std::env::set_var("FBUILD_USE_ESPFLASH_WRITE", "yes");
+        assert!(native_write_enabled());
+        std::env::remove_var("FBUILD_USE_ESPFLASH_WRITE");
     }
 }
 

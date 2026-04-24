@@ -235,8 +235,26 @@ impl Esp32Deployer {
     pub fn try_verify_deployment(&self, firmware_path: &Path, port: &str) -> Result<VerifyOutcome> {
         #[cfg(feature = "espflash-native")]
         if self.use_native_verify {
-            return self.try_verify_deployment_native(firmware_path, port);
+            match self.try_verify_deployment_native(firmware_path, port) {
+                Ok(outcome) => return Ok(outcome),
+                Err(e) => {
+                    tracing::warn!(
+                        port,
+                        "native verify-flash failed ({}); falling back to esptool",
+                        e
+                    );
+                }
+            }
         }
+
+        self.try_verify_deployment_esptool(firmware_path, port)
+    }
+
+    fn try_verify_deployment_esptool(
+        &self,
+        firmware_path: &Path,
+        port: &str,
+    ) -> Result<VerifyOutcome> {
         let args = self.build_verify_flash_args(firmware_path, port);
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
 
@@ -1126,7 +1144,23 @@ impl Esp32Deployer {
 
         #[cfg(feature = "espflash-native")]
         if self.use_native_write {
-            return self.try_deploy_regions_native(firmware_path, port, regions);
+            match self.try_deploy_regions_native(firmware_path, port, regions) {
+                Ok(result) if result.success => return Ok(result),
+                Ok(result) => {
+                    tracing::warn!(
+                        port,
+                        "native selective write-flash failed ({}); falling back to esptool",
+                        result.message
+                    );
+                }
+                Err(e) => {
+                    tracing::warn!(
+                        port,
+                        "native selective write-flash failed ({}); falling back to esptool",
+                        e
+                    );
+                }
+            }
         }
 
         let args = self.build_write_flash_args(firmware_path, port, Some(regions));
@@ -1197,7 +1231,23 @@ impl Deployer for Esp32Deployer {
 
         #[cfg(feature = "espflash-native")]
         if self.use_native_write {
-            return self.try_deploy_native(firmware_path, port);
+            match self.try_deploy_native(firmware_path, port) {
+                Ok(result) if result.success => return Ok(result),
+                Ok(result) => {
+                    tracing::warn!(
+                        port,
+                        "native write-flash failed ({}); falling back to esptool",
+                        result.message
+                    );
+                }
+                Err(e) => {
+                    tracing::warn!(
+                        port,
+                        "native write-flash failed ({}); falling back to esptool",
+                        e
+                    );
+                }
+            }
         }
 
         let args = self.build_write_flash_args(firmware_path, port, None);
