@@ -7,13 +7,10 @@ rust-version.workspace = true
 license.workspace = true
 
 [features]
-# Default is the conservative esptool-subprocess path. The native
-# espflash-backed verify/write paths compile in only when the caller
-# explicitly opts in via this feature — keeps the default dep graph slim
-# (no espflash/strum/deku/miette/... pulled in for consumers that don't
-# need it) and gives issue #66's spike a clean kill-switch while it
-# accumulates bench time on every ESP32 family member.
-default = []
+# Compile the native espflash-backed verify/write paths by default. The
+# ESP32 deployer keeps the esptool subprocess path as an automatic runtime
+# fallback when native connect/verify/write fails.
+default = ["espflash-native"]
 espflash-native = ["dep:espflash", "dep:md-5"]
 
 [dependencies]
@@ -31,15 +28,12 @@ tracing = { workspace = true }
 async-trait = { workspace = true }
 object = { workspace = true }
 # Native ESP32 flasher protocol (issue #66). The `serialport` feature
-# gates the `Flasher` type (the real transport entry point) so we enable
-# it; default features stay off to keep the CLI/TUI surface out of our
-# dependency graph. Optional so default builds don't pull espflash +
-# its ~30 transitive deps (strum, deku, miette, ...); enabled via the
-# `espflash-native` feature.
+# gates the `Flasher` type (the real transport entry point), so it is
+# enabled while espflash's CLI/TUI defaults stay off.
 espflash = { version = "4", default-features = false, features = ["serialport"], optional = true }
 # Local MD5 of firmware regions for comparison against espflash's on-chip
 # `FLASH_MD5SUM` command. Optional and gated behind `espflash-native`
-# since it's only used by the native verify path.
+# since it is only used by the native verify path.
 md-5 = { version = "0.10", optional = true }
 
 [dev-dependencies]
