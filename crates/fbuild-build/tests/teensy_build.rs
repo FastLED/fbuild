@@ -6,10 +6,24 @@
 //! Run with: `uv run soldr cargo test -p fbuild-build --test teensy_build -- --ignored`
 
 use std::fs;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use fbuild_build::{BuildOrchestrator, BuildParams};
 use fbuild_core::BuildProfile;
+
+fn copy_dir_recursive(src: &Path, dst: &Path) {
+    fs::create_dir_all(dst).unwrap();
+    for entry in fs::read_dir(src).unwrap() {
+        let entry = entry.unwrap();
+        let src_path = entry.path();
+        let dst_path = dst.join(entry.file_name());
+        if src_path.is_dir() {
+            copy_dir_recursive(&src_path, &dst_path);
+        } else {
+            fs::copy(&src_path, &dst_path).unwrap();
+        }
+    }
+}
 
 /// Build a self-contained Teensy 4.1 blink sketch.
 ///
@@ -211,4 +225,129 @@ fn build_teensy41_fixture() {
     }
 
     eprintln!("Build succeeded in {:.1}s", result.build_time_secs);
+}
+
+/// Build a Teensy 3.0 fixture where a project-local lib/FastLED shadows the bundled framework.
+#[test]
+#[ignore]
+fn build_teensy30_fixture_prefers_local_fastled() {
+    let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+    let fixture_dir = manifest_dir
+        .parent()
+        .unwrap()
+        .parent()
+        .unwrap()
+        .join("tests/platform/teensy30");
+
+    if !fixture_dir.exists() {
+        eprintln!("SKIP: {} does not exist", fixture_dir.display());
+        return;
+    }
+
+    let tmp = tempfile::TempDir::new().unwrap();
+    let project_dir = tmp.path().join("project");
+    copy_dir_recursive(&fixture_dir, &project_dir);
+
+    fs::create_dir_all(project_dir.join("lib/FastLED/src")).unwrap();
+    fs::write(
+        project_dir.join("lib/FastLED/src/FastLED.h"),
+        "\
+#pragma once
+#include <Arduino.h>
+
+namespace fastled_fixture {
+void begin();
+}
+",
+    )
+    .unwrap();
+    fs::write(
+        project_dir.join("lib/FastLED/src/FastLED.cpp"),
+        "\
+#include <FastLED.h>
+
+namespace fastled_fixture {
+void begin() {
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+}
+",
+    )
+    .unwrap();
+    fs::write(
+        project_dir.join("src/main.ino"),
+        "\
+#include <FastLED.h>
+
+void setup() {
+  fastled_fixture::begin();
+}
+
+void loop() {
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(500);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(500);
+}
+",
+    )
+    .unwrap();
+
+    let params = BuildParams {
+        project_dir: project_dir.clone(),
+        env_name: "teensy30".to_string(),
+        clean: true,
+        profile: BuildProfile::Release,
+        build_dir: tmp.path().join(".fbuild/build"),
+        verbose: true,
+        jobs: None,
+        generate_compiledb: false,
+        compiledb_only: false,
+        log_sender: None,
+        symbol_analysis: false,
+        symbol_analysis_path: None,
+        no_timestamp: false,
+        src_dir: None,
+        pio_env: Default::default(),
+        extra_build_flags: Vec::new(),
+        watch_set_cache: None,
+    };
+
+    let orchestrator = fbuild_build::teensy::orchestrator::TeensyOrchestrator;
+    let result = orchestrator
+        .build(&params)
+        .expect("Teensy 3.0 local FastLED shadow build should succeed");
+
+    assert!(result.success);
+    let firmware_path = result.firmware_path.expect("should produce hex");
+    assert!(firmware_path.exists());
+    let build_dir = result
+        .elf_path
+        .as_ref()
+        .and_then(|path| path.parent())
+        .expect("elf path should live in the build output directory")
+        .to_path_buf();
+
+    let local_fastled_objects: Vec<_> = fs::read_dir(build_dir.join("lib").join("FastLED"))
+        .unwrap()
+        .filter_map(|entry| entry.ok())
+        .map(|entry| entry.file_name().to_string_lossy().to_string())
+        .filter(|name| name.starts_with("FastLED_") && name.ends_with(".cpp.o"))
+        .collect();
+    assert!(
+        !local_fastled_objects.is_empty(),
+        "expected local lib/FastLED to compile"
+    );
+
+    let framework_fastled_objects: Vec<_> = fs::read_dir(build_dir.join("core"))
+        .unwrap()
+        .filter_map(|entry| entry.ok())
+        .map(|entry| entry.file_name().to_string_lossy().to_string())
+        .filter(|name| name.starts_with("FastLED_") && name.ends_with(".cpp.o"))
+        .collect();
+    assert!(
+        framework_fastled_objects.is_empty(),
+        "bundled Teensy framework FastLED should be shadowed by lib/FastLED, found {:?}",
+        framework_fastled_objects
+    );
 }
