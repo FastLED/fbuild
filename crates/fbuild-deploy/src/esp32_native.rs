@@ -1,6 +1,6 @@
 //! Native ESP32 `verify-flash` **and** `write-flash` implementations
 //! backed by the [`espflash`] crate. Alternatives to the default
-//! [`super::esp32::Esp32Deployer`] path, which shells out to Python
+//! [`crate::esp32::Esp32Deployer`] path, which shells out to Python
 //! `esptool`.
 //!
 //! # Why (issue #66)
@@ -16,7 +16,8 @@
 //! # Scope
 //!
 //! * `verify-flash` — three regions (bootloader / partitions /
-//!   firmware), same [`VerifyOutcome`] semantics as the esptool path.
+//!   firmware), same [`crate::esp32::VerifyOutcome`] semantics as the
+//!   esptool path.
 //! * `write-flash` — same three regions, same
 //!   [`DeploymentResult`]/[`DeployOutcome`] shape as the esptool path.
 //!   Progress callbacks from espflash are bridged into `tracing` so the
@@ -36,9 +37,9 @@
 //! # Opt-in
 //!
 //! `verify-flash` is guarded by
-//! [`super::esp32::Esp32Deployer::with_native_verify`] (daemon env:
+//! [`crate::esp32::Esp32Deployer::with_native_verify`] (daemon env:
 //! `FBUILD_USE_ESPFLASH_VERIFY`), and `write-flash` by
-//! [`super::esp32::Esp32Deployer::with_native_write`] (daemon env:
+//! [`crate::esp32::Esp32Deployer::with_native_write`] (daemon env:
 //! `FBUILD_USE_ESPFLASH_WRITE`). The two flags are independent —
 //! users can flip one without the other while the native write path
 //! accumulates bench time on every ESP32 family member.
