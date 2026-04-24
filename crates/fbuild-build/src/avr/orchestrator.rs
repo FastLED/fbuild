@@ -19,13 +19,12 @@ use fbuild_core::{Platform, Result};
 use serde::Serialize;
 
 use crate::build_fingerprint::{
-    hash_watch_set_stamps_cached, save_json, stable_hash_json, FastPathInputs,
-    PersistedBuildFingerprint, BUILD_FINGERPRINT_VERSION,
+    stable_hash_json, FastPathCheckInputs, FastPathContract, FastPathPersistInputs,
+    BUILD_FINGERPRINT_VERSION,
 };
 use crate::compile_database::{CompileDatabase, TargetArchitecture};
 use crate::compiler::Compiler as _;
 use crate::pipeline;
-use crate::zccache::FingerprintWatch;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
 use super::avr_compiler::AvrCompiler;
@@ -67,31 +66,15 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     }
 }
 
-fn build_fingerprint_path(build_dir: &Path) -> PathBuf {
-    build_dir.join("build_fingerprint.json")
-}
-
-/// Build the watch set for the AVR fast-path check.
-///
-/// Covers the project directory (sketch + local `lib/`) and the
-/// resolved libraries directory if present. Mirrors the ESP32
-/// orchestrator's policy — any directory that can produce a source
-/// file consumed by the build must be watched, or we risk reusing
-/// stale artifacts.
-fn collect_fast_path_watches(build_dir: &Path, project_dir: &Path) -> Vec<FingerprintWatch> {
-    let mut watches = Vec::new();
-    if let Some(watch) =
-        crate::build_fingerprint::fast_path_watch("project", build_dir, project_dir)
-    {
-        watches.push(watch);
-    }
-    let resolved_libs_dir = build_dir.join("libs");
-    if let Some(watch) =
-        crate::build_fingerprint::fast_path_watch("dep_libs", build_dir, &resolved_libs_dir)
-    {
-        watches.push(watch);
-    }
-    watches
+fn expected_fast_path_artifacts(
+    build_dir: &Path,
+    project_dir: &Path,
+) -> (PathBuf, PathBuf, PathBuf) {
+    (
+        build_dir.join("firmware.elf"),
+        build_dir.join("firmware.hex"),
+        CompileDatabase::expected_output_path(build_dir, project_dir),
+    )
 }
 
 impl BuildOrchestrator for AvrOrchestrator {
@@ -150,7 +133,6 @@ impl BuildOrchestrator for AvrOrchestrator {
         // This lives here rather than before `ensure_installed` so the hashed
         // toolchain/framework paths reflect the real install location.
         let build_dir = &ctx.build_dir;
-        let fingerprint_path = build_fingerprint_path(build_dir);
         let metadata_hash = stable_hash_json(&AvrFingerprintMetadata {
             version: BUILD_FINGERPRINT_VERSION,
             env_name: params.env_name.clone(),
@@ -168,9 +150,15 @@ impl BuildOrchestrator for AvrOrchestrator {
             max_flash: ctx.board.max_flash,
             max_ram: ctx.board.max_ram,
         })?;
-        let fingerprint_watches = {
+        let (fast_elf, fast_hex, fast_compile_db) =
+            expected_fast_path_artifacts(build_dir, &params.project_dir);
+        let fast_path = {
             let _g = perf.phase("fp-watches-collect");
-            collect_fast_path_watches(build_dir, &params.project_dir)
+            FastPathContract::for_project_outputs(
+                build_dir,
+                &params.project_dir,
+                [fast_elf.clone(), fast_hex.clone(), fast_compile_db.clone()],
+            )
         };
 
         if !params.compiledb_only
@@ -178,21 +166,13 @@ impl BuildOrchestrator for AvrOrchestrator {
             && params.symbol_analysis_path.is_none()
         {
             let _fast_path_phase = perf.phase("fast-path-check");
-            let fast_elf = build_dir.join("firmware.elf");
-            let fast_hex = build_dir.join("firmware.hex");
-            let fast_compile_db =
-                CompileDatabase::expected_output_path(build_dir, &params.project_dir);
-            let required_artifacts = [fast_elf.clone(), fast_hex.clone(), fast_compile_db.clone()];
-            let inputs = FastPathInputs {
-                fingerprint_path: &fingerprint_path,
+            let inputs = FastPathCheckInputs {
                 metadata_hash: &metadata_hash,
-                watches: &fingerprint_watches,
-                required_artifacts: &required_artifacts,
                 extra_artifact_ok: None,
                 watch_set_cache: params.watch_set_cache.as_deref(),
                 compiler_cache: compiler_cache.as_deref(),
             };
-            if let Some(hit) = crate::build_fingerprint::fast_path_check(&inputs)? {
+            if let Some(hit) = crate::build_fingerprint::fast_path_check(&fast_path, &inputs)? {
                 ctx.build_log
                     .push("No-op fingerprint matched; reusing existing AVR artifacts.".to_string());
                 let elapsed = start.elapsed().as_secs_f64();
@@ -315,35 +295,15 @@ impl BuildOrchestrator for AvrOrchestrator {
             && !params.symbol_analysis
             && params.symbol_analysis_path.is_none()
         {
-            let persisted_fingerprint = PersistedBuildFingerprint {
-                version: BUILD_FINGERPRINT_VERSION,
-                metadata_hash: metadata_hash.clone(),
-                file_set_hash: match hash_watch_set_stamps_cached(
-                    &fingerprint_watches,
-                    params.watch_set_cache.as_deref(),
-                ) {
-                    Ok(hash) => Some(hash),
-                    Err(e) => {
-                        tracing::warn!("failed to hash watched inputs for fingerprint save: {}", e);
-                        None
-                    }
+            crate::build_fingerprint::persist_fast_path_success(
+                &fast_path,
+                &FastPathPersistInputs {
+                    metadata_hash: &metadata_hash,
+                    size_info: build_result.size_info.clone(),
+                    watch_set_cache: params.watch_set_cache.as_deref(),
+                    compiler_cache: compiler_cache.as_deref(),
                 },
-                size_info: build_result.size_info.clone(),
-            };
-            if let Err(e) = save_json(&fingerprint_path, &persisted_fingerprint) {
-                tracing::warn!("failed to write build fingerprint: {}", e);
-            }
-            if let Some(ref zcc) = compiler_cache {
-                for watch in &fingerprint_watches {
-                    if let Err(e) = crate::zccache::mark_fingerprint_success(zcc, watch) {
-                        tracing::warn!(
-                            "failed to mark zccache fingerprint success for {}: {}",
-                            watch.root.display(),
-                            e
-                        );
-                    }
-                }
-            }
+            );
         }
 
         Ok(build_result)

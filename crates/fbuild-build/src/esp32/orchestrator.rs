@@ -26,12 +26,11 @@ use fbuild_packages::Framework;
 use serde::Serialize;
 
 use crate::build_fingerprint::{
-    hash_watch_set_stamps_cached, save_json, stable_hash_json, PersistedBuildFingerprint,
+    stable_hash_json, FastPathCheckInputs, FastPathContract, FastPathPersistInputs,
     BUILD_FINGERPRINT_VERSION,
 };
 use crate::flag_overlay::LanguageExtraFlags;
 use crate::linker::LinkerScripts;
-use crate::zccache::FingerprintWatch;
 
 use crate::compiler::Compiler as _;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
@@ -130,31 +129,11 @@ fn record_failed_framework_lib(marker_path: &Path, signature: &str, error: &str)
     let _ = std::fs::write(marker_path, format!("{signature}\n{error}\n"));
 }
 
-fn build_fingerprint_path(build_dir: &Path) -> PathBuf {
-    build_dir.join("build_fingerprint.json")
-}
-
 fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     match profile {
         fbuild_core::BuildProfile::Release => "release",
         fbuild_core::BuildProfile::Quick => "quick",
     }
-}
-
-fn collect_fast_path_watches(build_dir: &Path, project_dir: &Path) -> Vec<FingerprintWatch> {
-    let mut watches = Vec::new();
-    if let Some(watch) =
-        crate::build_fingerprint::fast_path_watch("project", build_dir, project_dir)
-    {
-        watches.push(watch);
-    }
-    let resolved_libs_dir = build_dir.join("libs");
-    if let Some(watch) =
-        crate::build_fingerprint::fast_path_watch("dep_libs", build_dir, &resolved_libs_dir)
-    {
-        watches.push(watch);
-    }
-    watches
 }
 
 fn compile_db_is_current(build_dir: &Path, project_dir: &Path) -> bool {
@@ -278,10 +257,21 @@ impl BuildOrchestrator for Esp32Orchestrator {
             max_flash: ctx.board.max_flash,
             max_ram: ctx.board.max_ram,
         })?;
-        let fingerprint_path = build_fingerprint_path(build_dir);
-        let fingerprint_watches = {
+        let (fast_elf, fast_bin, fast_boot, fast_parts, fast_compile_db) =
+            expected_fast_path_artifacts(build_dir, &params.project_dir);
+        let fast_path = {
             let _g = perf.phase("fp-watches-collect");
-            collect_fast_path_watches(build_dir, &params.project_dir)
+            FastPathContract::for_project_outputs(
+                build_dir,
+                &params.project_dir,
+                [
+                    fast_elf.clone(),
+                    fast_bin.clone(),
+                    fast_boot.clone(),
+                    fast_parts.clone(),
+                    fast_compile_db.clone(),
+                ],
+            )
         };
 
         if !params.compiledb_only
@@ -289,29 +279,17 @@ impl BuildOrchestrator for Esp32Orchestrator {
             && params.symbol_analysis_path.is_none()
         {
             let _fast_path_phase = perf.phase("fast-path-check");
-            let (fast_elf, fast_bin, fast_boot, fast_parts, fast_compile_db) =
-                expected_fast_path_artifacts(build_dir, &params.project_dir);
-            let required_artifacts = [
-                fast_elf.clone(),
-                fast_bin.clone(),
-                fast_boot.clone(),
-                fast_parts.clone(),
-                fast_compile_db.clone(),
-            ];
             // ESP32 also requires the project-root copy of compile_commands.json
             // to be in sync with the build-dir copy. That's platform-specific,
             // so it rides on the shared helper via `extra_artifact_ok`.
             let compile_db_fresh = || compile_db_is_current(build_dir, &params.project_dir);
-            let inputs = crate::build_fingerprint::FastPathInputs {
-                fingerprint_path: &fingerprint_path,
+            let inputs = FastPathCheckInputs {
                 metadata_hash: &metadata_hash,
-                watches: &fingerprint_watches,
-                required_artifacts: &required_artifacts,
                 extra_artifact_ok: Some(&compile_db_fresh),
                 watch_set_cache: params.watch_set_cache.as_deref(),
                 compiler_cache: compiler_cache.as_deref(),
             };
-            if let Some(hit) = crate::build_fingerprint::fast_path_check(&inputs)? {
+            if let Some(hit) = crate::build_fingerprint::fast_path_check(&fast_path, &inputs)? {
                 ctx.build_log.push(
                     "No-op fingerprint matched; reusing existing ESP32 artifacts.".to_string(),
                 );
@@ -1275,35 +1253,15 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // 15. Size reporting + result assembly
         let fingerprint_started = Instant::now();
         perf.checkpoint("fingerprint-save-start");
-        let persisted_fingerprint = PersistedBuildFingerprint {
-            version: BUILD_FINGERPRINT_VERSION,
-            metadata_hash: metadata_hash.clone(),
-            file_set_hash: match hash_watch_set_stamps_cached(
-                &fingerprint_watches,
-                params.watch_set_cache.as_deref(),
-            ) {
-                Ok(hash) => Some(hash),
-                Err(e) => {
-                    tracing::warn!("failed to hash watched inputs for fingerprint save: {}", e);
-                    None
-                }
+        crate::build_fingerprint::persist_fast_path_success(
+            &fast_path,
+            &FastPathPersistInputs {
+                metadata_hash: &metadata_hash,
+                size_info: link_result.size_info.clone(),
+                watch_set_cache: params.watch_set_cache.as_deref(),
+                compiler_cache: compiler_cache.as_deref(),
             },
-            size_info: link_result.size_info.clone(),
-        };
-        if let Err(e) = save_json(&fingerprint_path, &persisted_fingerprint) {
-            tracing::warn!("failed to write build fingerprint: {}", e);
-        }
-        if let Some(ref zcc) = compiler_cache {
-            for watch in &fingerprint_watches {
-                if let Err(e) = crate::zccache::mark_fingerprint_success(zcc, watch) {
-                    tracing::warn!(
-                        "failed to mark zccache fingerprint success for {}: {}",
-                        watch.root.display(),
-                        e
-                    );
-                }
-            }
-        }
+        );
         perf.record("fingerprint-save", fingerprint_started.elapsed());
         perf.checkpoint("fingerprint-save-finish");
 

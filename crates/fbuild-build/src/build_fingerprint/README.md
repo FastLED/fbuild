@@ -11,9 +11,9 @@ nothing relevant has changed.
   primitives (`hash_watch_set`, `hash_watch_set_stamps`,
   `hash_watch_set_stamps_cached`), and the `WatchSetStampCache` trait
   the daemon implements for cross-invocation memoisation.
-- **`fast_path.rs`** -- Shared fast-path check extracted from the
-  ESP32 orchestrator. Takes a `FastPathInputs` (metadata hash,
-  watches, required artifacts, optional zccache + stamp-cache) and
-  returns `Some(FastPathHit)` when the caller can skip the pipeline
-  entirely. Used by ESP32 + AVR today; Teensy / RP2040 / STM32 will
-  follow.
+- **`fast_path.rs`** -- Shared warm-build cache contract. Orchestrators
+  declare required outputs through `FastPathContract`, then use
+  `fast_path_check` for reuse decisions and
+  `persist_fast_path_success` to write `build_fingerprint.json` and
+  mark zccache watch roots. Used by ESP32, AVR, Teensy, RP2040, SAM,
+  NRF52, and Renesas.
