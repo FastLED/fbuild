@@ -2240,11 +2240,14 @@ mod deploy_message_tests {
 mod espflash_env_tests {
     use super::{native_verify_enabled, native_write_enabled};
 
+    // This lock only serializes these unit tests while they mutate the
+    // process environment. Production callers and any other tests reading
+    // the same env vars remain unsynchronized.
     static ENV_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
 
     #[test]
     fn native_verify_defaults_on_and_allows_opt_out() {
-        let _guard = ENV_LOCK.lock().unwrap();
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
         std::env::remove_var("FBUILD_USE_ESPFLASH_VERIFY");
         assert!(native_verify_enabled());
 
@@ -2261,7 +2264,7 @@ mod espflash_env_tests {
 
     #[test]
     fn native_write_defaults_on_and_allows_opt_out() {
-        let _guard = ENV_LOCK.lock().unwrap();
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
         std::env::remove_var("FBUILD_USE_ESPFLASH_WRITE");
         assert!(native_write_enabled());
 

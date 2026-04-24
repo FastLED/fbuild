@@ -50,26 +50,51 @@ pub struct Esp32Deployer {
     /// instead of the Python `esptool` subprocess.
     ///
     /// The daemon sets this from the `FBUILD_USE_ESPFLASH_VERIFY` env
-    /// var. Default `false` keeps esptool as the fallback so users on
-    /// unusual setups aren't forced onto the native path until it has
-    /// bench time on every ESP32 family member.
+    /// var. When enabled, the deployer still falls back to esptool if
+    /// the native path fails on a given board or host.
     ///
     /// Only compiled in when the `espflash-native` cargo feature is
-    /// enabled (issue #66 spike). Without the feature the struct layout
-    /// doesn't even carry the flag, so default builds pay zero cost for
-    /// the native path.
+    /// enabled.
     #[cfg(feature = "espflash-native")]
     use_native_verify: bool,
     /// Route `write-flash` through the native [`espflash`] crate
     /// instead of the Python `esptool` subprocess (issue #66).
     ///
     /// The daemon sets this from the `FBUILD_USE_ESPFLASH_WRITE` env
-    /// var, independently of `use_native_verify`. Default `false` keeps
-    /// esptool as the safe fallback.
+    /// var, independently of `use_native_verify`. When enabled, the
+    /// deployer still falls back to esptool if the native path fails.
     ///
     /// Feature-gated — see `use_native_verify`.
     #[cfg(feature = "espflash-native")]
     use_native_write: bool,
+}
+
+#[cfg(feature = "espflash-native")]
+fn native_write_or_fallback<F>(port: &str, label: &str, native: F) -> Option<DeploymentResult>
+where
+    F: FnOnce() -> Result<DeploymentResult>,
+{
+    match native() {
+        Ok(result) if result.success => Some(result),
+        Ok(result) => {
+            tracing::warn!(
+                port,
+                "native {} failed ({}); falling back to esptool",
+                label,
+                result.message
+            );
+            None
+        }
+        Err(e) => {
+            tracing::warn!(
+                port,
+                "native {} failed ({}); falling back to esptool",
+                label,
+                e
+            );
+            None
+        }
+    }
 }
 
 impl Esp32Deployer {
@@ -114,10 +139,11 @@ impl Esp32Deployer {
     }
 
     /// Opt this deployer into the native espflash-based write-flash
-    /// path (issue #66). Independent of `with_native_verify`. On opt-in
-    /// both [`Deployer::deploy`] and [`Esp32Deployer::deploy_regions`]
-    /// route through the in-process espflash `Flasher`, skipping the
-    /// ~1.5 s Python/esptool startup per flash.
+    /// path (issue #66). Independent of `with_native_verify`. When
+    /// enabled, both [`Deployer::deploy`] and
+    /// [`Esp32Deployer::deploy_regions`] route through the in-process
+    /// espflash `Flasher`, skipping the ~1.5 s Python/esptool startup
+    /// per flash unless they need to fall back.
     ///
     /// Only present when the `espflash-native` cargo feature is enabled.
     #[cfg(feature = "espflash-native")]
@@ -1144,22 +1170,10 @@ impl Esp32Deployer {
 
         #[cfg(feature = "espflash-native")]
         if self.use_native_write {
-            match self.try_deploy_regions_native(firmware_path, port, regions) {
-                Ok(result) if result.success => return Ok(result),
-                Ok(result) => {
-                    tracing::warn!(
-                        port,
-                        "native selective write-flash failed ({}); falling back to esptool",
-                        result.message
-                    );
-                }
-                Err(e) => {
-                    tracing::warn!(
-                        port,
-                        "native selective write-flash failed ({}); falling back to esptool",
-                        e
-                    );
-                }
+            if let Some(result) = native_write_or_fallback(port, "selective write-flash", || {
+                self.try_deploy_regions_native(firmware_path, port, regions)
+            }) {
+                return Ok(result);
             }
         }
 
@@ -1231,22 +1245,12 @@ impl Deployer for Esp32Deployer {
 
         #[cfg(feature = "espflash-native")]
         if self.use_native_write {
-            match self.try_deploy_native(firmware_path, port) {
-                Ok(result) if result.success => return Ok(result),
-                Ok(result) => {
-                    tracing::warn!(
-                        port,
-                        "native write-flash failed ({}); falling back to esptool",
-                        result.message
-                    );
-                }
-                Err(e) => {
-                    tracing::warn!(
-                        port,
-                        "native write-flash failed ({}); falling back to esptool",
-                        e
-                    );
-                }
+            if let Some(result) =
+                native_write_or_fallback(port, "write-flash", || {
+                    self.try_deploy_native(firmware_path, port)
+                })
+            {
+                return Ok(result);
             }
         }
 
