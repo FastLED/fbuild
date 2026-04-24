@@ -20,6 +20,7 @@ use fbuild_core::{Platform, Result};
 use fbuild_packages::{Framework, Toolchain};
 
 use crate::compile_database::TargetArchitecture;
+use crate::framework_libs::resolve_framework_library_sources;
 use crate::generic_arm::{ArmCompiler, ArmLinker};
 use crate::pipeline;
 use crate::source_scanner::SourceCollection;
@@ -103,6 +104,22 @@ impl BuildOrchestrator for Stm32Orchestrator {
                 .extend(scanner.scan_core_sources(&srcwrapper_src));
         }
 
+        // Walk Arduino_Core_STM32's libraries/ (SPI, Wire, EEPROM, ...) and
+        // pull in any the sketch transitively #includes. Without this, sketches
+        // that include <SPI.h> fail with "No such file or directory" because
+        // STM32duino only exposes bundled libraries via this framework-level
+        // discovery (PlatformIO's LDF does the same for `framework = arduino`).
+        let framework_libs = framework.get_framework_libraries();
+        let framework_library_sources =
+            resolve_framework_library_sources(&framework_libs, &params.project_dir, &ctx.src_dir);
+        if !framework_library_sources.is_empty() {
+            tracing::info!(
+                "STM32 framework library sources added: {}",
+                framework_library_sources.len()
+            );
+            sources.core_sources.extend(framework_library_sources);
+        }
+
         tracing::info!(
             "sources: {} sketch, {} core, {} variant",
             sources.sketch_sources.len(),
@@ -173,6 +190,9 @@ impl BuildOrchestrator for Stm32Orchestrator {
         }
         include_dirs.push(ctx.src_dir.clone());
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
+        // Bundled framework library headers (SPI, Wire, EEPROM, ...) so
+        // sketches can `#include <SPI.h>` etc.
+        include_dirs.extend(framework.get_framework_library_include_dirs());
 
         // STM32duino system includes (CMSIS device, HAL drivers, etc.)
         let system_dir = framework.get_system_dir();

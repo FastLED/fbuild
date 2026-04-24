@@ -5,6 +5,7 @@
 
 use std::path::{Path, PathBuf};
 
+use crate::library::framework_library::{discover_framework_libraries, FrameworkLibrary};
 use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 
 const STM32_CORE_VERSION: &str = "2.9.0";
@@ -101,6 +102,19 @@ impl Stm32Cores {
     pub fn get_core_sources(&self, core_name: &str) -> Vec<PathBuf> {
         let core_dir = self.get_core_dir(core_name);
         collect_sources(&core_dir)
+    }
+
+    /// List bundled Arduino_Core_STM32 framework libraries (SPI, Wire, ...).
+    pub fn get_framework_libraries(&self) -> Vec<FrameworkLibrary> {
+        discover_framework_libraries(&self.get_libraries_dir())
+    }
+
+    /// All include directories needed to make bundled framework headers visible.
+    pub fn get_framework_library_include_dirs(&self) -> Vec<PathBuf> {
+        self.get_framework_libraries()
+            .into_iter()
+            .flat_map(|lib| lib.include_dirs)
+            .collect()
     }
 }
 

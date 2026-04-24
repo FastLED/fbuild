@@ -6,20 +6,12 @@
 
 use std::path::{Path, PathBuf};
 
+use crate::library::framework_library::{discover_framework_libraries, FrameworkLibrary};
 use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 
 /// Framework package used by platform-teensy 5.1.0.
 const TEENSY_CORE_VERSION: &str = "1.160.0";
 const TEENSY_CORE_URL: &str = "https://dl.registry.platformio.org/download/platformio/tool/framework-arduinoteensy/1.160.0/framework-arduinoteensy-1.160.0.tar.gz";
-
-/// A bundled Teensyduino framework library.
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct TeensyFrameworkLibrary {
-    pub name: String,
-    pub dir: PathBuf,
-    pub include_dirs: Vec<PathBuf>,
-    pub source_files: Vec<PathBuf>,
-}
 
 /// Teensy cores framework manager.
 pub struct TeensyCores {
@@ -135,36 +127,8 @@ impl TeensyCores {
     }
 
     /// List bundled Teensyduino framework libraries.
-    pub fn get_framework_libraries(&self) -> Vec<TeensyFrameworkLibrary> {
-        let libraries_dir = self.get_libraries_dir();
-        let mut libs = Vec::new();
-        let Ok(entries) = std::fs::read_dir(&libraries_dir) else {
-            return libs;
-        };
-
-        for entry in entries.flatten() {
-            let dir = entry.path();
-            if !dir.is_dir() {
-                continue;
-            }
-            let name = dir
-                .file_name()
-                .and_then(|n| n.to_str())
-                .unwrap_or_default()
-                .to_string();
-            if name.is_empty() {
-                continue;
-            }
-            libs.push(TeensyFrameworkLibrary {
-                name,
-                include_dirs: library_include_dirs(&dir),
-                source_files: collect_library_sources(&dir),
-                dir,
-            });
-        }
-
-        libs.sort_by(|a, b| a.name.cmp(&b.name));
-        libs
+    pub fn get_framework_libraries(&self) -> Vec<FrameworkLibrary> {
+        discover_framework_libraries(&self.get_libraries_dir())
     }
 
     /// All include directories needed to make bundled framework headers visible.
@@ -299,75 +263,6 @@ fn collect_sources(dir: &Path) -> Vec<PathBuf> {
     sources
 }
 
-fn library_include_dirs(lib_dir: &Path) -> Vec<PathBuf> {
-    let mut dirs = Vec::new();
-    let src = lib_dir.join("src");
-    if src.is_dir() {
-        dirs.push(src);
-    } else {
-        dirs.push(lib_dir.to_path_buf());
-    }
-
-    let utility = lib_dir.join("utility");
-    if utility.is_dir() {
-        dirs.push(utility);
-    }
-    let include = lib_dir.join("include");
-    if include.is_dir() {
-        dirs.push(include);
-    }
-    dirs
-}
-
-fn collect_library_sources(lib_dir: &Path) -> Vec<PathBuf> {
-    let search_dir = {
-        let src = lib_dir.join("src");
-        if src.is_dir() {
-            src
-        } else {
-            lib_dir.to_path_buf()
-        }
-    };
-
-    let mut sources = Vec::new();
-    collect_library_sources_inner(&search_dir, &mut sources);
-    sources.sort();
-    sources
-}
-
-fn collect_library_sources_inner(dir: &Path, out: &mut Vec<PathBuf>) {
-    let Ok(entries) = std::fs::read_dir(dir) else {
-        return;
-    };
-
-    for entry in entries.flatten() {
-        let path = entry.path();
-        if path.is_dir() {
-            let name = path
-                .file_name()
-                .unwrap_or_default()
-                .to_string_lossy()
-                .to_lowercase();
-            if matches!(
-                name.as_str(),
-                "example" | "examples" | "test" | "tests" | "extras"
-            ) {
-                continue;
-            }
-            collect_library_sources_inner(&path, out);
-        } else {
-            let ext = path
-                .extension()
-                .unwrap_or_default()
-                .to_string_lossy()
-                .to_lowercase();
-            if matches!(ext.as_str(), "c" | "cpp" | "cc" | "cxx" | "s") {
-                out.push(path);
-            }
-        }
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -437,28 +332,5 @@ mod tests {
         let result = TeensyCores::validate(tmp.path());
         assert!(result.is_err());
         assert!(result.unwrap_err().to_string().contains("Arduino.h"));
-    }
-
-    #[test]
-    fn test_library_include_dirs_for_root_layout() {
-        let tmp = tempfile::TempDir::new().unwrap();
-        let lib = tmp.path().join("SPI");
-        std::fs::create_dir_all(&lib).unwrap();
-        std::fs::write(lib.join("SPI.h"), "").unwrap();
-
-        assert_eq!(library_include_dirs(&lib), vec![lib]);
-    }
-
-    #[test]
-    fn test_collect_library_sources_skips_examples_and_extras() {
-        let tmp = tempfile::TempDir::new().unwrap();
-        std::fs::write(tmp.path().join("OctoWS2811.cpp"), "").unwrap();
-        std::fs::create_dir_all(tmp.path().join("examples")).unwrap();
-        std::fs::write(tmp.path().join("examples").join("Demo.cpp"), "").unwrap();
-        std::fs::create_dir_all(tmp.path().join("extras")).unwrap();
-        std::fs::write(tmp.path().join("extras").join("tool.c"), "").unwrap();
-
-        let sources = collect_library_sources(tmp.path());
-        assert_eq!(sources, vec![tmp.path().join("OctoWS2811.cpp")]);
     }
 }
