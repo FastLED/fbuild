@@ -1,4 +1,5 @@
 mod daemon_client;
+mod lib_select;
 mod mcp;
 
 use clap::{Parser, Subcommand};
@@ -284,6 +285,22 @@ enum Commands {
         #[command(subcommand)]
         action: LnkAction,
     },
+    /// Diagnostic: drive the LDF-style library-selection resolver and print
+    /// the selected library set. Useful for debugging FastLED/fbuild#202 /
+    /// `#204`-style "library not found" issues without running a full build.
+    LibSelect {
+        /// Project directory (defaults to ".").
+        project_dir: Option<String>,
+        /// Target environment.
+        #[arg(short = 'e', long)]
+        environment: Option<String>,
+        /// Show selection origin per library, unresolved headers, etc.
+        #[arg(long, conflicts_with = "json")]
+        explain: bool,
+        /// Emit machine-readable JSON instead of plain text.
+        #[arg(long, conflicts_with = "explain")]
+        json: bool,
+    },
 }
 
 /// Subcommands for `fbuild lnk`.
@@ -423,6 +440,7 @@ const KNOWN_SUBCOMMANDS: &[&str] = &[
     "iwyu",
     "clang-query",
     "test-emu",
+    "lib-select",
 ];
 
 /// Rewrite `fbuild <dir> <subcommand> ...` → `fbuild <subcommand> <dir> ...`
@@ -723,6 +741,21 @@ async fn main() {
             .await
         }
         Some(Commands::Lnk { action }) => run_lnk(action, &top_level_project_dir).await,
+        Some(Commands::LibSelect {
+            project_dir,
+            environment,
+            explain,
+            json,
+        }) => {
+            let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
+            let exit = lib_select::run(
+                std::path::Path::new(&project_dir),
+                environment.as_deref(),
+                explain,
+                json,
+            );
+            std::process::exit(exit);
+        }
         None => {
             // Default action: deploy with monitor (like Python fbuild)
             let project_dir = cli.project_dir.unwrap_or_else(|| ".".to_string());

@@ -17,3 +17,11 @@
 **Pattern**: PyO3 0.22+ requires explicit `#[pyo3(signature = (...))]` on `__exit__` methods with `Option<T>` parameters. Without it, clippy reports deprecated implicit defaults.
 
 **Fix**: Add `#[pyo3(signature = (_exc_type=None, _exc_val=None, _exc_tb=None))]`.
+
+## 2026-04-25: Match Upstream Semantics, Don't Re-derive Them (#205)
+
+**Problem**: The original #205 plan called for "fixed-point over include closure (typically 2–3 iterations)" for library selection. PlatformIO LDF is not a fixed-point — it's BFS + ONE reconciliation pass (piolib.py:1156), with unconverged deps dropping silently.
+
+**Lesson**: When replicating an upstream tool's behavior (PlatformIO, Arduino-CLI, etc.), read the source first and match its semantics exactly. Users who flip between fbuild and the upstream tool should see byte-identical output, not a "more correct" reinterpretation.
+
+**Bonus**: Path-prefix attribution beats basename matching for library resolution. A library is selected only if the walker resolves an include *into* its `include_dirs`, not because some header shares a basename. Closes #202 and #204.

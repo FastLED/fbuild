@@ -18,6 +18,8 @@ A grep-friendly FAQ that maps common questions to the file that answers them. Bo
 | How do the PyO3 Python bindings work?                     | [architecture/pyo3-bindings.md](architecture/pyo3-bindings.md) |
 | How does deploy preemption work?                          | [architecture/deploy-preemption.md](architecture/deploy-preemption.md) |
 | What are the cross-platform portability constraints?      | [architecture/portability.md](architecture/portability.md) |
+| How does library selection (LDF) work in fbuild?          | [architecture/library-selection.md](architecture/library-selection.md) |
+| Why was my library wrongly compiled (#204) / not found (#202)? | [architecture/library-selection.md](architecture/library-selection.md#why) |
 | Why did we choose X over Y?                               | [DESIGN_DECISIONS.md](DESIGN_DECISIONS.md)                 |
 | What's on the implementation roadmap?                     | [ROADMAP.md](ROADMAP.md)                                   |
 | How do I run tests / lint / fmt?                          | [DEVELOPMENT.md](DEVELOPMENT.md#testing)                   |

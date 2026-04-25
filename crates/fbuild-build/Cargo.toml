@@ -26,3 +26,4 @@ tempfile = { workspace = true }
 
 [dev-dependencies]
 filetime = { workspace = true }
+fbuild-test-support = { path = "../fbuild-test-support" }
