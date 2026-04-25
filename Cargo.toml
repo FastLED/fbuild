@@ -12,6 +12,8 @@ members = [
     "crates/fbuild-cli",
     "crates/fbuild-python",
     "crates/fbuild-test-support",
+    "crates/fbuild-header-scan",
+    "crates/fbuild-library-select",
 ]
 
 [workspace.package]
@@ -57,8 +59,9 @@ async-trait = "0.1"
 dashmap = "6"
 blake3 = "1"
 mimalloc = "0.1"
-object = "0.36"
+object = { version = "0.36", default-features = false, features = ["read", "std", "elf", "write"] }
 rusqlite = { version = "0.31", features = ["bundled"] }
+shell-words = "1"
 
 # Process containment: all subprocess spawns the daemon performs (compilers,
 # esptool, qemu, simavr, node, npm, …) and any grandchildren they fork must

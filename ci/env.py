@@ -36,10 +36,13 @@ def find_rust_bin():
     if userprofile:
         candidates.append(os.path.join(userprofile, ".cargo"))
 
+    cargo_name = "cargo.exe" if os.name == "nt" else "cargo"
     for candidate in candidates:
         if candidate:
             bin_dir = os.path.join(candidate, "bin")
-            if os.path.isdir(bin_dir):
+            if os.path.isdir(bin_dir) and os.path.isfile(
+                os.path.join(bin_dir, cargo_name)
+            ):
                 return os.path.abspath(bin_dir)
 
     for tool_name in ("rustup", "cargo", "rustc"):
@@ -50,16 +53,20 @@ def find_rust_bin():
 
 
 def activate():
-    """Prepend .cargo/bin to PATH if not already present.
+    """Prepend .cargo/bin to PATH, moving it to the front if necessary.
 
-    Call this at the top of any CI script that invokes Rust tools.
+    Call this at the top of any CI script that invokes Rust tools. If another
+    cargo is already earlier in PATH (e.g. a chocolatey install with a
+    different host triple) we still need ours to win, so always prepend and
+    remove duplicates of the same directory further down PATH.
     """
     cargo_bin = find_rust_bin()
     if not cargo_bin:
         return
-    current_path = os.environ.get("PATH", "")
-    if cargo_bin not in current_path.split(os.pathsep):
-        os.environ["PATH"] = cargo_bin + os.pathsep + current_path
+    norm = os.path.normcase(os.path.normpath(cargo_bin))
+    parts = os.environ.get("PATH", "").split(os.pathsep)
+    filtered = [p for p in parts if os.path.normcase(os.path.normpath(p)) != norm]
+    os.environ["PATH"] = cargo_bin + os.pathsep + os.pathsep.join(filtered)
 
 
 def clean_env():

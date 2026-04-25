@@ -1,0 +1,16 @@
+[package]
+name = "fbuild-library-select"
+description = "PlatformIO-LDF-style library resolver using the fbuild header scanner"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+fbuild-header-scan = { path = "../fbuild-header-scan" }
+fbuild-packages = { path = "../fbuild-packages" }
+tracing = { workspace = true }
+walkdir = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }

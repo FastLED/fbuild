@@ -5,16 +5,16 @@
 //! `Wire`. A sketch that does `#include <SPI.h>` must get the library's
 //! include dirs on the compiler's search path and its sources linked in.
 //!
-//! This module walks project sources for `#include` directives, matches them
-//! against the library's exported headers, and returns the set of source
-//! files that must be compiled. It transitively follows includes inside
-//! selected libraries so `A.h -> B.h` pulls in B as well, and it shadows
-//! framework libraries with project-local copies of the same name so a user
-//! can override a bundled library by vendoring it under `lib/<name>/`.
+//! Implementation delegates to `fbuild-library-select`, which runs a
+//! PlatformIO-LDF-style two-pass walk backed by `fbuild-header-scan`. That
+//! crate does path-prefix attribution (not basename matching), so libraries
+//! with colliding header names no longer trample each other, and unreferenced
+//! framework libraries (FNET/Snooze/RadioHead/mbedtls on teensyLC, for
+//! example) stay out of the compile set. See FastLED/fbuild#205.
 
-use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 
+use fbuild_library_select::resolve as resolve_library_selection;
 use fbuild_packages::library::FrameworkLibrary;
 use walkdir::{DirEntry, WalkDir};
 
@@ -28,71 +28,32 @@ pub fn resolve_framework_library_sources(
     resolve_framework_library_sources_from_libraries(libraries, &roots)
 }
 
-/// Selection algorithm: build a header-to-library map, transitively follow
-/// includes from project sources, prefer project-local headers, emit the
-/// selected libraries' source files deduped and sorted.
+/// Walk project roots for source seeds, delegate to the LDF-style resolver,
+/// and flatten the selection into the orchestrator-expected `Vec<PathBuf>`
+/// of compile-set source files.
 pub fn resolve_framework_library_sources_from_libraries(
     libraries: &[FrameworkLibrary],
     roots: &[PathBuf],
 ) -> Vec<PathBuf> {
-    let mut header_to_library = HashMap::new();
-    for (idx, library) in libraries.iter().enumerate() {
-        let mut headers = HashSet::new();
-        for include_dir in &library.include_dirs {
-            collect_header_names(include_dir, &mut headers);
-        }
-        for header in headers {
-            header_to_library.entry(header).or_insert(idx);
-        }
+    if libraries.is_empty() {
+        return Vec::new();
     }
 
-    let mut local_headers = HashSet::new();
-    for root in roots {
-        collect_header_names(root, &mut local_headers);
-    }
+    let seeds = collect_project_seeds(roots);
+    let search_paths: Vec<PathBuf> = roots.to_vec();
+    let selection = resolve_library_selection(&seeds, &search_paths, libraries);
 
-    let mut pending = HashSet::new();
-    for root in roots {
-        collect_included_headers(root, &mut pending);
-    }
-
-    let mut selected = HashSet::new();
-    let mut queue: Vec<String> = pending.iter().cloned().collect();
-    while let Some(header) = queue.pop() {
-        if local_headers.contains(&header) {
-            continue;
-        }
-        let Some(&library_idx) = header_to_library.get(&header) else {
-            continue;
-        };
-        if !selected.insert(library_idx) {
-            continue;
-        }
-
-        let mut transitive_headers = HashSet::new();
-        collect_framework_included_headers(&libraries[library_idx].dir, &mut transitive_headers);
-        for transitive in transitive_headers {
-            if pending.insert(transitive.clone()) {
-                queue.push(transitive);
-            }
+    for name in &selection.required_libraries {
+        if let Some(lib) = libraries.iter().find(|l| &l.name == name) {
+            tracing::info!(
+                "selected framework library '{}': {} source files",
+                lib.name,
+                lib.source_files.len()
+            );
         }
     }
 
-    let mut selected_indices: Vec<_> = selected.into_iter().collect();
-    selected_indices.sort_unstable();
-
-    let mut sources = Vec::new();
-    for idx in selected_indices {
-        tracing::info!(
-            "selected framework library '{}': {} source files",
-            libraries[idx].name,
-            libraries[idx].source_files.len()
-        );
-        sources.extend(libraries[idx].source_files.iter().cloned());
-    }
-    sources.sort();
-    sources.dedup();
-    sources
+    selection.source_files
 }
 
 /// Project directories to scan for `#include` directives and local headers.
@@ -114,59 +75,29 @@ fn push_existing_unique(roots: &mut Vec<PathBuf>, path: PathBuf) {
     }
 }
 
-fn collect_header_names(root: &Path, headers: &mut HashSet<String>) {
-    if !root.exists() {
-        return;
-    }
-
-    for entry in WalkDir::new(root)
-        .into_iter()
-        .filter_entry(should_scan_framework_entry)
-        .flatten()
-    {
-        if !entry.file_type().is_file() || !is_header_file(entry.path()) {
+/// Collect every source file under each root as a walker seed. Headers are
+/// intentionally included so libraries referenced only from a `.h` in the
+/// project tree still get picked up.
+fn collect_project_seeds(roots: &[PathBuf]) -> Vec<PathBuf> {
+    let mut seeds = Vec::new();
+    for root in roots {
+        if !root.exists() {
             continue;
         }
-        if let Some(name) = entry.path().file_name().and_then(|name| name.to_str()) {
-            headers.insert(name.to_string());
-        }
-    }
-}
-
-fn collect_included_headers(root: &Path, headers: &mut HashSet<String>) {
-    collect_included_headers_with_filter(root, headers, should_scan_entry);
-}
-
-fn collect_framework_included_headers(root: &Path, headers: &mut HashSet<String>) {
-    collect_included_headers_with_filter(root, headers, should_scan_framework_entry);
-}
-
-fn collect_included_headers_with_filter(
-    root: &Path,
-    headers: &mut HashSet<String>,
-    filter: fn(&DirEntry) -> bool,
-) {
-    if !root.exists() {
-        return;
-    }
-
-    for entry in WalkDir::new(root)
-        .into_iter()
-        .filter_entry(filter)
-        .flatten()
-    {
-        if !entry.file_type().is_file() || !is_source_or_header_file(entry.path()) {
-            continue;
-        }
-        let Ok(content) = std::fs::read_to_string(entry.path()) else {
-            continue;
-        };
-        for line in content.lines() {
-            if let Some(header) = parse_include_header(line) {
-                headers.insert(header);
+        for entry in WalkDir::new(root)
+            .into_iter()
+            .filter_entry(should_scan_entry)
+            .flatten()
+        {
+            if !entry.file_type().is_file() {
+                continue;
+            }
+            if is_source_or_header_file(entry.path()) {
+                seeds.push(entry.path().to_path_buf());
             }
         }
     }
+    seeds
 }
 
 fn should_scan_entry(entry: &DirEntry) -> bool {
@@ -187,17 +118,6 @@ fn should_scan_entry(entry: &DirEntry) -> bool {
     )
 }
 
-fn should_scan_framework_entry(entry: &DirEntry) -> bool {
-    if !should_scan_entry(entry) {
-        return false;
-    }
-    let name = entry.file_name().to_string_lossy().to_lowercase();
-    !matches!(
-        name.as_str(),
-        "examples" | "example" | "extras" | "test" | "tests" | "fontconvert"
-    )
-}
-
 fn is_source_or_header_file(path: &Path) -> bool {
     let ext = path
         .extension()
@@ -210,51 +130,9 @@ fn is_source_or_header_file(path: &Path) -> bool {
     )
 }
 
-fn is_header_file(path: &Path) -> bool {
-    let ext = path
-        .extension()
-        .and_then(|ext| ext.to_str())
-        .unwrap_or_default()
-        .to_lowercase();
-    matches!(ext.as_str(), "h" | "hh" | "hpp" | "hxx")
-}
-
-fn parse_include_header(line: &str) -> Option<String> {
-    let trimmed = line.trim_start();
-    let directive = trimmed.strip_prefix('#')?.trim_start();
-    let rest = directive.strip_prefix("include")?.trim_start();
-    let mut chars = rest.chars();
-    let opener = chars.next()?;
-    let closer = match opener {
-        '<' => '>',
-        '"' => '"',
-        _ => return None,
-    };
-    let remainder = &rest[opener.len_utf8()..];
-    let end = remainder.find(closer)?;
-    let include_path = &remainder[..end];
-    Path::new(include_path)
-        .file_name()
-        .and_then(|name| name.to_str())
-        .map(|name| name.to_string())
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn parse_include_extracts_basename() {
-        assert_eq!(
-            parse_include_header("#include <SPI.h>"),
-            Some("SPI.h".to_string())
-        );
-        assert_eq!(
-            parse_include_header("  # include \"utility/foo.hpp\""),
-            Some("foo.hpp".to_string())
-        );
-        assert_eq!(parse_include_header("int x = 1;"), None);
-    }
 
     #[test]
     fn resolves_libraries_from_project_includes() {
@@ -306,14 +184,13 @@ mod tests {
         );
         sources.sort();
 
-        assert_eq!(
-            sources,
-            vec![
-                octo_dir.join("OctoWS2811.cpp"),
-                octo_dir.join("OctoWS2811_imxrt.cpp"),
-                spi_dir.join("SPI.cpp"),
-            ]
-        );
+        let mut expected = vec![
+            octo_dir.join("OctoWS2811.cpp"),
+            octo_dir.join("OctoWS2811_imxrt.cpp"),
+            spi_dir.join("SPI.cpp"),
+        ];
+        expected.sort();
+        assert_eq!(sources, expected);
     }
 
     #[test]
@@ -358,10 +235,50 @@ mod tests {
         );
         sources.sort();
 
-        assert_eq!(
-            sources,
-            vec![wrapper_dir.join("NeedsSpi.cpp"), spi_dir.join("SPI.cpp")]
+        let mut expected = vec![wrapper_dir.join("NeedsSpi.cpp"), spi_dir.join("SPI.cpp")];
+        expected.sort();
+        assert_eq!(sources, expected);
+    }
+
+    #[test]
+    fn unrelated_library_not_selected() {
+        // Regression guard for #204: libraries whose headers are never
+        // referenced must not appear in the compile set.
+        let tmp = tempfile::TempDir::new().unwrap();
+        let project_src = tmp.path().join("project").join("src");
+        std::fs::create_dir_all(&project_src).unwrap();
+        std::fs::write(project_src.join("main.cpp"), "#include <SPI.h>\n").unwrap();
+
+        let spi_dir = tmp.path().join("framework").join("libraries").join("SPI");
+        std::fs::create_dir_all(&spi_dir).unwrap();
+        std::fs::write(spi_dir.join("SPI.h"), "").unwrap();
+        std::fs::write(spi_dir.join("SPI.cpp"), "").unwrap();
+
+        let fnet_dir = tmp.path().join("framework").join("libraries").join("FNET");
+        std::fs::create_dir_all(&fnet_dir).unwrap();
+        std::fs::write(fnet_dir.join("fnet.h"), "").unwrap();
+        std::fs::write(fnet_dir.join("fnet.cpp"), "").unwrap();
+
+        let libraries = vec![
+            FrameworkLibrary {
+                name: "FNET".to_string(),
+                dir: fnet_dir.clone(),
+                include_dirs: vec![fnet_dir.clone()],
+                source_files: vec![fnet_dir.join("fnet.cpp")],
+            },
+            FrameworkLibrary {
+                name: "SPI".to_string(),
+                dir: spi_dir.clone(),
+                include_dirs: vec![spi_dir.clone()],
+                source_files: vec![spi_dir.join("SPI.cpp")],
+            },
+        ];
+
+        let sources = resolve_framework_library_sources_from_libraries(
+            &libraries,
+            std::slice::from_ref(&project_src),
         );
+        assert_eq!(sources, vec![spi_dir.join("SPI.cpp")]);
     }
 
     #[test]
