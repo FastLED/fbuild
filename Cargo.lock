@@ -764,6 +764,7 @@ dependencies = [
  "fbuild-library-select",
  "fbuild-packages",
  "fbuild-paths",
+ "fbuild-test-support",
  "filetime",
  "regex",
  "serde",
@@ -786,6 +787,7 @@ dependencies = [
  "fbuild-config",
  "fbuild-core",
  "fbuild-deploy",
+ "fbuild-library-select",
  "fbuild-packages",
  "fbuild-paths",
  "futures",
@@ -797,6 +799,7 @@ dependencies = [
  "tokio",
  "tracing",
  "tracing-subscriber",
+ "walkdir",
 ]
 
 [[package]]

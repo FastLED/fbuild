@@ -1,0 +1,122 @@
+//! Acceptance gate for #205 AC#4 / closes #202: stm32f103c8 SPI auto-discovery.
+//!
+//! This integration test verifies that an stm32f103c8 Blink sketch which
+//! `#include`s `<SPI.h>` builds with no manual library allowlist, and that
+//! the bundled `Arduino_Core_STM32` SPI library is automatically discovered
+//! by fbuild's library-selection layer.
+//!
+//! Run with:
+//! `uv run soldr cargo test -p fbuild-build --test stm32_acceptance -- --ignored`
+//!
+//! Marked `#[ignore]` because it downloads the ARM GCC toolchain plus the
+//! STM32duino cores (cached after first run) and performs a full firmware
+//! build — too heavy for default `cargo test`.
+//!
+//! Acceptance criteria (#205 AC#4):
+//! 1. The build succeeds.
+//! 2. `compile_commands.json` references at least one source file under
+//!    the SPI library (substring `SPI`).
+//! 3. The ELF contains a symbol whose mangled name contains `SPIClass`.
+
+use std::path::{Path, PathBuf};
+
+use fbuild_build::{BuildOrchestrator, BuildParams};
+use fbuild_core::BuildProfile;
+use fbuild_test_support::{CompileDb, ElfProbe};
+
+#[test]
+#[ignore = "downloads STM32duino + builds firmware; CI-only"]
+fn stm32f103c8_blink_with_spi_auto_discovers_library_205_ac4() {
+    // Use a temporary project dir so we can write our own SPI-using sketch
+    // independent of whatever ships in the fixture.
+    let tmp = tempfile::TempDir::new().unwrap();
+    let project_dir = tmp.path();
+
+    std::fs::write(
+        project_dir.join("platformio.ini"),
+        "[env:stm32f103c8]\n\
+         platform = ststm32\n\
+         board = bluepill_f103c8\n\
+         framework = arduino\n",
+    )
+    .unwrap();
+
+    let src = project_dir.join("src");
+    std::fs::create_dir_all(&src).unwrap();
+    std::fs::write(
+        src.join("main.cpp"),
+        "#include <Arduino.h>\n\
+         #include <SPI.h>\n\
+         void setup() { SPI.begin(); }\n\
+         void loop() {}\n",
+    )
+    .unwrap();
+
+    let build_dir = project_dir.join(".fbuild/build");
+    let params = BuildParams {
+        project_dir: project_dir.to_path_buf(),
+        env_name: "stm32f103c8".to_string(),
+        clean: true,
+        profile: BuildProfile::Release,
+        build_dir: build_dir.clone(),
+        verbose: true,
+        jobs: None,
+        generate_compiledb: true,
+        compiledb_only: false,
+        log_sender: None,
+        symbol_analysis: false,
+        symbol_analysis_path: None,
+        no_timestamp: false,
+        src_dir: None,
+        pio_env: Default::default(),
+        extra_build_flags: Vec::new(),
+        watch_set_cache: None,
+    };
+
+    let orchestrator = fbuild_build::stm32::orchestrator::Stm32Orchestrator;
+    let result = orchestrator
+        .build(&params)
+        .expect("stm32f103c8 build with SPI must succeed");
+    assert!(result.success, "build did not report success");
+
+    let elf = result
+        .elf_path
+        .as_ref()
+        .expect("stm32 build must produce ELF");
+    let probe = ElfProbe::open(elf).expect("ELF parses");
+    assert!(
+        probe
+            .has_symbol_containing("SPIClass")
+            .expect("symbol query"),
+        "AC#4: SPIClass symbol must be present in ELF — closes #202"
+    );
+
+    let compdb = locate_compile_commands(&build_dir, "stm32f103c8")
+        .expect("compile_commands.json should land in build dir");
+    let db = CompileDb::from_path(&compdb).expect("parse compile_commands.json");
+    let spi_entries: Vec<_> = db.entries_matching("SPI").collect();
+    assert!(
+        !spi_entries.is_empty(),
+        "AC#4: compile_commands.json must reference an SPI library entry — \
+         closes #202; found {} entries with no SPI hit",
+        db.tu_count()
+    );
+}
+
+fn locate_compile_commands(build_dir: &Path, env: &str) -> Option<PathBuf> {
+    let candidates = [
+        build_dir.join(env).join("compile_commands.json"),
+        build_dir.join("compile_commands.json"),
+    ];
+    for c in candidates {
+        if c.exists() {
+            return Some(c);
+        }
+    }
+    for entry in walkdir::WalkDir::new(build_dir).into_iter().flatten() {
+        if entry.file_name() == "compile_commands.json" {
+            return Some(entry.into_path());
+        }
+    }
+    None
+}

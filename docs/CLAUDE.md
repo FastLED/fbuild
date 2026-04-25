@@ -18,6 +18,7 @@ For a full FAQ-style index of every doc in this repo (human + LLM entry point), 
 | `fbuild-packages` | [overview.md](architecture/overview.md) |
 | `fbuild-paths` | [overview.md](architecture/overview.md) |
 | `fbuild-core` | [overview.md](architecture/overview.md) |
+| `fbuild-header-scan` / `fbuild-library-select` | [library-selection.md](architecture/library-selection.md) |
 | Platform-specific issues | [portability.md](architecture/portability.md) |
 
 ## Other docs
