@@ -1,0 +1,12 @@
+[package]
+name = "fbuild-header-scan"
+description = "Line-oriented C/C++ #include scanner and transitive include-graph walker"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+
+[dev-dependencies]
+tempfile = { workspace = true }

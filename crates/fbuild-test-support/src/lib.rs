@@ -1,5 +1,13 @@
 //! Test utilities and fixtures for fbuild.
 
+pub mod compile_db;
+pub mod elf_probe;
+pub mod mini_framework;
+
+pub use compile_db::{CompileDb, CompileDbError, CompileEntry};
+pub use elf_probe::{ElfProbe, ElfProbeError, SectionInfo, SymbolInfo};
+pub use mini_framework::{LibraryBuilder, MiniFramework};
+
 /// Create a temporary project directory with a minimal platformio.ini.
 pub fn create_test_project(env_name: &str, platform: &str, board: &str) -> tempfile::TempDir {
     let dir = tempfile::tempdir().expect("failed to create temp dir");
