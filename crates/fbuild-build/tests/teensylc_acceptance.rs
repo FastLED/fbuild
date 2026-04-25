@@ -73,8 +73,7 @@ fn teensylc_blink_meets_205_acceptance_criteria() {
     }
     for required in ["setup", "loop"] {
         assert!(
-            probe.has_symbol(required).expect("symbol query")
-                || probe.has_symbol_containing(required).expect("symbol query"),
+            probe.has_symbol(required).expect("symbol query"),
             "A-11: required symbol '{required}' missing from ELF"
         );
     }

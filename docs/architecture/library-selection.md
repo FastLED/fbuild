@@ -1,8 +1,9 @@
 # Library selection (LDF-style)
 
 > Status: foundation phases (0–3 + Phase 5 framework_libs delegation) landed
-> in PR #207. Phase 4 (zccache memoization) tracked at zackees/zccache#130.
-> Phase 6 acceptance gates and Phase 7 perf gates are follow-ups in #205.
+> in PR #207. Phase 6 acceptance gates and Phase 8.a `lib-select` CLI landed
+> in PR #208. Phase 4 (zccache memoization) tracked at zackees/zccache#130.
+> Phase 7 perf gates and Phase 8.b cleanup remain follow-ups in `#205`.
 
 ## Why
 
@@ -127,20 +128,21 @@ keys safe.
 - Resolver tests in `crates/fbuild-library-select/src/lib.rs` including
   the #204 regression guard, sort-stability, missing-include-dir
   tolerance, and same-basename-different-library disambiguation.
-- Acceptance tests for AC#1 (teensyLC), AC#4 (stm32 SPI auto-discovery)
-  land in Phase 6 via `fbuild-test-support`'s `MiniFramework`,
-  `ElfProbe`, and `CompileDb` utilities.
+- Acceptance gates for AC#1 (teensyLC) and AC#4 (stm32 SPI
+  auto-discovery) live in `crates/fbuild-build/tests/`
+  (`teensylc_acceptance.rs`, `stm32_acceptance.rs`). They are
+  `#[ignore]`'d by default and run by CI with `--ignored`. They use
+  `fbuild-test-support`'s `ElfProbe` and `CompileDb` utilities to probe
+  the produced firmware.
 
 ## Future work
 
 - **Phase 4** — zccache K/V memoization. Gated on zackees/zccache#130
   shipping a versioned `KvStore` API and a 1.4.0 release; see
   `tasks/zccache-kv-design.md`.
-- **Phase 6** — wire ELF + compile-DB probes through `fbuild-test-support`
-  into per-board acceptance tests, gating CI on AC#1..#4 from #205.
 - **Phase 7** — perf gates wired into `bench/fastled-examples`.
-- **Phase 8** — `fbuild lib-select --explain` CLI subcommand and final
-  deletion of `framework_libs.rs` helpers.
+- **Phase 8.b** — final deletion of any dead helpers in `framework_libs.rs`
+  once Phase 4 cache lands.
 
 ## References
 
