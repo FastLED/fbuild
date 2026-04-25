@@ -9,4 +9,9 @@ license.workspace = true
 [dependencies]
 
 [dev-dependencies]
+criterion = { workspace = true }
 tempfile = { workspace = true }
+
+[[bench]]
+name = "scan_throughput"
+harness = false
