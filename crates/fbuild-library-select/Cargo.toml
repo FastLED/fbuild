@@ -14,3 +14,9 @@ walkdir = { workspace = true }
 
 [dev-dependencies]
 tempfile = { workspace = true }
+criterion = { workspace = true }
+fbuild-test-support = { path = "../fbuild-test-support" }
+
+[[bench]]
+name = "resolve_cold"
+harness = false
