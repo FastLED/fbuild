@@ -48,6 +48,8 @@ fbuild-test-support (test utilities) ──────────────�
 
 **HTTP API boundary:** CLI sends JSON requests to daemon over HTTP. Build output streams via WebSocket. Serial monitor data streams via `/ws/serial-monitor`. All endpoints match the Python FastAPI daemon's contract.
 
+**Diagnostic subcommand exception:** A small, growing set of `fbuild-cli` subcommands (`clang-tidy`, `clang-query`, `iwyu`, `mcp`, `lnk`, `lib-select`) run in-process and intentionally bypass the daemon. They are read-only diagnostics that don't need build orchestration, so a round-trip through the HTTP API would only add latency. The "thin HTTP client" rule still applies to every command that touches the build pipeline (`build`, `deploy`, `monitor`, `test-emu`, etc.).
+
 **PyO3 consumer contract:** FastLED imports `SerialMonitor` as a Python context manager with `read_lines()`, `write()`, `write_json_rpc()`. The `fbuild-python` crate must preserve this API exactly.
 
 ## Current Status
