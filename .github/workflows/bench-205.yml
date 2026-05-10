@@ -7,6 +7,7 @@ on:
       - 'crates/fbuild-header-scan/**'
       - 'crates/fbuild-library-select/**'
       - 'crates/fbuild-test-support/src/mini_framework.rs'
+      - 'bench/fastled-examples/**'
       - '.github/workflows/bench-205.yml'
 
 env:
@@ -57,8 +58,7 @@ jobs:
           retention-days: 14
 
   fastled-examples:
-    name: Bench (fastled-examples — workflow_dispatch only)
-    if: github.event_name == 'workflow_dispatch'
+    name: Bench (fastled-examples — AC#5 ≤ 50 ms warm)
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -81,12 +81,13 @@ jobs:
           # bench/fastled-examples/README.md when retaking baseline.
           ref: "3.10.3"
 
-      - name: Run bench-fastled-examples
+      - name: Run bench-fastled-examples (AC#5 enforcement, threshold 50 ms)
         env:
           FASTLED_DIR: ${{ github.workspace }}/external/fastled
         run: |
           mkdir -p bench/fastled-examples
           soldr cargo run --release -p fbuild-bench-fastled-examples -- \
+            --max-warm-ms 50 \
             --json bench/fastled-examples/report.json | tee bench/fastled-examples/report.md
 
       - name: Upload report
