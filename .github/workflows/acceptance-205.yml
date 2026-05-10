@@ -17,6 +17,7 @@ on:
       - 'crates/fbuild-build/src/teensy/**'
       - 'crates/fbuild-build/src/stm32/**'
       - 'crates/fbuild-build/tests/teensylc_acceptance.rs'
+      - 'crates/fbuild-build/tests/teensy30_acceptance.rs'
       - 'crates/fbuild-build/tests/stm32_acceptance.rs'
       - '.github/workflows/acceptance-205.yml'
 
@@ -37,6 +38,9 @@ jobs:
           - gate: teensyLC
             test_bin: teensylc_acceptance
             test_fn: teensylc_blink_meets_205_acceptance_criteria
+          - gate: teensy30 AnalogOutput
+            test_bin: teensy30_acceptance
+            test_fn: teensy30_analog_output_meets_205_ac2
           - gate: stm32f103c8 SPI
             test_bin: stm32_acceptance
             test_fn: stm32f103c8_blink_with_spi_auto_discovers_library_205_ac4
