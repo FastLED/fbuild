@@ -12,6 +12,8 @@
 [![Documentation](https://github.com/fastled/fbuild/actions/workflows/docs.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/docs.yml)
 [![Validate Boards](https://github.com/fastled/fbuild/actions/workflows/validate-boards.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/validate-boards.yml)
 [![Build Native Binaries](https://github.com/fastled/fbuild/actions/workflows/build.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build.yml)
+[![Library Selection Acceptance (#205)](https://github.com/fastled/fbuild/actions/workflows/acceptance-205.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/acceptance-205.yml)
+[![Library Selection Perf (#205)](https://github.com/fastled/fbuild/actions/workflows/bench-205.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/bench-205.yml)
 
 <details>
 <summary><strong>Per-platform board build badges</strong> (click to expand)</summary>
