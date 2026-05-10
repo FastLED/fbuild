@@ -16,8 +16,11 @@ For each target it:
 3. Probes the resulting firmware.elf for ``.text`` / ``.data`` / ``.bss`` /
    ``.dmabuffers`` section sizes via ``arm-none-eabi-size`` (preferred for
    ARM targets) or ``llvm-size``.
-4. Scans compile_commands.json for FNET / Snooze / RadioHead / mbedtls
-   entries (the libraries that #204 root-caused as wrongly-selected).
+4. Scans compile_commands.json for compiled FNET / Snooze / RadioHead /
+   mbedtls source files (the libraries that #204 root-caused as
+   wrongly-selected). Counts are by ``file`` field only — never by the
+   ``-I.../libraries/<lib>`` header search-path flag, which is on every
+   TU regardless of which sources were compiled.
 
 Skipping behaviour:
 
@@ -207,7 +210,20 @@ def generate_compdb(project: Path, env: str) -> tuple[bool, str]:
 
 # ── Parsers ──────────────────────────────────────────────────────────────────
 def parse_compile_commands(path: Path) -> tuple[Optional[int], dict]:
-    """Return (tu_count, excluded_lib_hits)."""
+    """Return (tu_count, excluded_lib_hits).
+
+    ``excluded_lib_hits[lib]`` counts TUs whose ``file`` field is under
+    ``.../libraries/<lib>/`` — i.e. the library actually had a source
+    file compiled. We deliberately do NOT scan the ``arguments`` /
+    ``command`` fields: the framework's full ``-I.../libraries/<lib>``
+    flag is propagated to every TU as a header search path, so a naive
+    substring match would report counts equal to the TU count even
+    when zero ``<lib>/*.c`` files were compiled.
+
+    AC#1 from FastLED/fbuild#205 is "FNET / Snooze / RadioHead /
+    mbedtls are not compiled" — that question is answered by the
+    ``file`` field alone.
+    """
     try:
         with path.open(encoding="utf-8") as fh:
             entries = json.load(fh)
@@ -222,11 +238,13 @@ def parse_compile_commands(path: Path) -> tuple[Optional[int], dict]:
     for entry in entries:
         if not isinstance(entry, dict):
             continue
-        haystack = " ".join(
-            str(entry.get(key, "")) for key in ("file", "directory", "command", "arguments")
-        )
+        file_field = entry.get("file")
+        if not isinstance(file_field, str):
+            continue
+        # Normalize separators so the same check works on Windows + Unix.
+        normalized = file_field.replace("\\", "/")
         for needle in EXCLUDED_LIB_NEEDLES:
-            if needle.lower() in haystack.lower():
+            if f"/libraries/{needle}/" in normalized:
                 hits[needle] += 1
     return tu_count, hits
 
@@ -332,10 +350,12 @@ def render_markdown(results: List[TargetResult], git_sha: str, branch: str, carg
                 lines.append(f"- {section}: section absent or size tool unavailable")
             else:
                 lines.append(f"- {section}: {value:,} bytes")
-        lines.append("- Excluded library hits in compile_commands.json:")
+        lines.append(
+            "- Excluded-library source files compiled (AC#1 must be 0 for all):"
+        )
         for needle in EXCLUDED_LIB_NEEDLES:
             count = r.excluded_lib_hits.get(needle, 0)
-            label = "not present" if count == 0 else f"{count} entries"
+            label = "0 (not compiled)" if count == 0 else f"{count} TU(s) compiled"
             lines.append(f"  - {needle}: {label}")
         if r.notes:
             lines.append(f"- Notes: {r.notes}")
