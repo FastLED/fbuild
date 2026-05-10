@@ -18,6 +18,7 @@ on:
       - 'crates/fbuild-build/src/stm32/**'
       - 'crates/fbuild-build/tests/teensylc_acceptance.rs'
       - 'crates/fbuild-build/tests/teensy30_acceptance.rs'
+      - 'crates/fbuild-build/tests/teensy41_acceptance.rs'
       - 'crates/fbuild-build/tests/stm32_acceptance.rs'
       - '.github/workflows/acceptance-205.yml'
 
@@ -44,6 +45,9 @@ jobs:
           - gate: stm32f103c8 SPI
             test_bin: stm32_acceptance
             test_fn: stm32f103c8_blink_with_spi_auto_discovers_library_205_ac4
+          - gate: teensy41 cold resolver
+            test_bin: teensy41_acceptance
+            test_fn: teensy41_cold_library_selection_meets_205_ac6
     steps:
       - uses: actions/checkout@v6
       - uses: astral-sh/setup-uv@v3
