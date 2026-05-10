@@ -92,6 +92,9 @@
 
 ### Nordic NRF52
 [![Build nRF52840 DK](https://github.com/fastled/fbuild/actions/workflows/build-nrf52840_dk.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-nrf52840_dk.yml)
+[![Build SuperMini nRF52840](https://github.com/fastled/fbuild/actions/workflows/build-supermini_nrf52840.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-supermini_nrf52840.yml)
+[![Build nice!nano nRF52840](https://github.com/fastled/fbuild/actions/workflows/build-nice_nano_nrf52840.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-nice_nano_nrf52840.yml)
+[![Build nRFMicro nRF52840](https://github.com/fastled/fbuild/actions/workflows/build-nrfmicro_nrf52840.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-nrfmicro_nrf52840.yml)
 
 ### Apollo3
 [![Build Apollo3 RedBoard](https://github.com/fastled/fbuild/actions/workflows/build-apollo3_red.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-apollo3_red.yml)

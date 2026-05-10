@@ -1,0 +1,16 @@
+name: Build nice!nano nRF52840
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "nice!nano nRF52840"
+      test-dir: "tests/platform/nice_nano_nrf52840"
+      env-name: "nice_nano_nrf52840"
+      firmware-ext: "hex"
