@@ -7,20 +7,22 @@ Per-crate criterion benches live alongside their crate, e.g.:
 
 - `crates/fbuild-header-scan/benches/scan_throughput.rs`
 - `crates/fbuild-library-select/benches/resolve_cold.rs`
+- `crates/fbuild-library-select/benches/resolve_warm.rs`
 
 Run those with:
 
 ```bash
 uv run soldr cargo bench -p fbuild-library-select --bench resolve_cold
+uv run soldr cargo bench -p fbuild-library-select --bench resolve_warm
 uv run soldr cargo bench -p fbuild-header-scan  --bench scan_throughput
 ```
 
 ## Subdirectories
 
-- [`fastled-examples/`](fastled-examples/README.md) — placeholder for the
-  warm-cache library-selection harness across the FastLED examples matrix
-  (`FastLED/fbuild#205` AC#5, P-01). Awaits Phase 4 zccache K/V memoization
-  before there's a warm path to measure.
+- [`fastled-examples/`](fastled-examples/README.md) — reserved for the
+  real-FastLED warm-cache library-selection matrix (`FastLED/fbuild#205`
+  AC#5, P-01) once `~/dev/fastled` is wired in. The synthetic warm-path
+  baseline already lives in `crates/fbuild-library-select/benches/resolve_warm.rs`.
 
 Other end-to-end matrices (whole-build wall-clock, deploy+flash latency,
 emulator boot) may join this directory in the future. Each subdirectory
