@@ -2,8 +2,9 @@
 
 > Status: foundation phases (0–3 + Phase 5 framework_libs delegation) landed
 > in PR #207. Phase 6 acceptance gates and Phase 8.a `lib-select` CLI landed
-> in PR #208. Phase 4 (zccache memoization) tracked at zackees/zccache#130.
-> Phase 7 perf gates and Phase 8.b cleanup remain follow-ups in `#205`.
+> in PR #208. Phase 4 (zccache memoization, `resolve_cached`) shipped in
+> PR #212 and is wired into the teensy + stm32 orchestrators by #214.
+> Phase 7 perf gates remain a follow-up in `#205`.
 
 ## Why
 
@@ -93,22 +94,25 @@ original issue framing ("fixed-point over include closure — typically 2–3
 iterations") was wrong; we match PIO's 2-pass semantics exactly so users
 who flip between PlatformIO and fbuild see the same library set.
 
-## Cache key (Phase 4, not yet shipped)
+## Cache key
 
-The resolver output is a pure function of:
+`resolve_cached` (see `crates/fbuild-library-select/src/cache.rs`) hashes:
 
 - sorted blake3s of project source content,
-- sorted blake3s of each lib's canonical headers + `library.json` /
-  `library.properties`,
-- ordered search-path list,
+- sorted blake3s of each lib's canonical header
+  (`<include_dir>/<lib_name>.h`),
+- ordered search-path list (order matters — PIO's resolution is
+  order-sensitive),
 - toolchain triple,
 - framework install path + version identifier,
 - `SCANNER_VERSION` (bumped on tokenizer changes),
 - `LDF_MODE_VERSION` (bumped on resolver semantic changes).
 
-Memoization is gated on the K/V proposal at zackees/zccache#130
-(`tasks/zccache-kv-design.md`). The resolver is already deterministic and
-sort-stable, so cache wiring is a pure addition with no behavior change.
+The KvStore is opened lazily by `framework_libs::library_select_kv_store()`
+under `fbuild_paths::get_cache_root().join("library-selection")`, which
+respects `FBUILD_DEV_MODE` and `FBUILD_CACHE_DIR`. Wiring the cache was a
+pure addition: orchestrators that hit a backend error fall through to the
+uncached `resolve(...)` rather than fail.
 
 ## Determinism
 
@@ -137,16 +141,16 @@ keys safe.
 
 ## Future work
 
-- **Phase 4** — zccache K/V memoization. Gated on zackees/zccache#130
-  shipping a versioned `KvStore` API and a 1.4.0 release; see
-  `tasks/zccache-kv-design.md`.
-- **Phase 7** — perf gates wired into `bench/fastled-examples`.
-- **Phase 8.b** — final deletion of any dead helpers in `framework_libs.rs`
-  once Phase 4 cache lands.
+- **Phase 7** — perf gates wired into `bench/fastled-examples` to catch
+  regressions in both cold-resolve and warm cache-hit paths (#215).
+- **Phase 8.b** — `framework_libs.rs` is now a thin delegator: scan-root
+  collection, the uncached and cached entry points, the `KvStore` opener,
+  and tests. No remaining dead helpers to retire.
 
 ## References
 
 - PlatformIO LDF source: `platformio/builder/tools/piolib.py`.
 - Issue: FastLED/fbuild#205.
 - Closes: FastLED/fbuild#202, FastLED/fbuild#204.
-- Cache prerequisite: zackees/zccache#130.
+- Cache wiring: FastLED/fbuild#212 (cache helper), FastLED/fbuild#214
+  (orchestrator wiring).
