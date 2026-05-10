@@ -28,6 +28,9 @@ jobs:
           - crate: fbuild-library-select
             bench: resolve_cold
             target: P-02 (<= 200 ms cold for typical project)
+          - crate: fbuild-library-select
+            bench: resolve_warm
+            target: P-01-mini (warm cache against MiniFramework, baseline TBD)
     steps:
       - uses: actions/checkout@v6
       - uses: astral-sh/setup-uv@v3

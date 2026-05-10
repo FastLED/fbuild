@@ -24,3 +24,7 @@ fbuild-test-support = { path = "../fbuild-test-support" }
 [[bench]]
 name = "resolve_cold"
 harness = false
+
+[[bench]]
+name = "resolve_warm"
+harness = false
