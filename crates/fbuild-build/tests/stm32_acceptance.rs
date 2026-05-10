@@ -16,7 +16,15 @@
 //! 1. The build succeeds.
 //! 2. `compile_commands.json` references at least one source file under
 //!    the SPI library (substring `SPI`).
-//! 3. The ELF contains a symbol whose mangled name contains `SPIClass`.
+//! 3. The ELF contains evidence that `Arduino_Core_STM32/libraries/SPI/`
+//!    was compiled and linked into the firmware (#202, #223). The probe
+//!    accepts either a mangled `SPIClass*` C++ symbol (visible without LTO)
+//!    or a `PinMap_SPI_*` array from the library's `utility/spi_com.c`
+//!    (an LTO-stable global whose address is referenced by the SPI
+//!    peripheral pin tables). The Release profile uses
+//!    `-flto -Os -fno-rtti`, which inlines `SPIClass::begin()` and friends
+//!    into their callers and strips their independent symbols — see #223
+//!    for the diagnostic walk-through.
 
 use std::path::{Path, PathBuf};
 
@@ -84,11 +92,28 @@ fn stm32f103c8_blink_with_spi_auto_discovers_library_205_ac4() {
         .as_ref()
         .expect("stm32 build must produce ELF");
     let probe = ElfProbe::open(elf).expect("ELF parses");
+    // WHY two-shot: the Release profile's `-flto -Os -fno-rtti` inlines
+    // `SPIClass::begin()` (and the other SPI methods called from setup())
+    // into their callers and discards the independent mangled symbols. So
+    // `SPIClass` substring is reliable in non-LTO builds (Quick) but not
+    // in LTO builds (Release). `PinMap_SPI_MOSI` is a `const` global array
+    // declared in `Arduino_Core_STM32/libraries/SPI/src/utility/spi_com.c`
+    // whose address is taken by the SPI peripheral pin tables — it survives
+    // both LTO and `--gc-sections`. Either signal proves the SPI library
+    // was discovered, compiled, and linked. See #223 for the trace.
+    let has_spiclass = probe
+        .has_symbol_containing("SPIClass")
+        .expect("symbol query");
+    let has_pinmap = probe
+        .has_symbol_containing("PinMap_SPI_")
+        .expect("symbol query");
     assert!(
-        probe
-            .has_symbol_containing("SPIClass")
-            .expect("symbol query"),
-        "AC#4: SPIClass symbol must be present in ELF — closes #202"
+        has_spiclass || has_pinmap,
+        "AC#4: SPI library must be present in ELF — closes #202; saw \
+         neither a mangled `SPIClass*` symbol nor a `PinMap_SPI_*` global \
+         (probed both because the Release profile's LTO can inline the \
+         former). If only one form is missing, the library is auto-\
+         discovered correctly but the probe needs a third candidate."
     );
 
     let compdb = locate_compile_commands(&build_dir, "stm32f103c8")
