@@ -1,0 +1,20 @@
+[package]
+name = "fbuild-bench-fastled-examples"
+description = "Warm-cache library-selection bench across the FastLED examples matrix (#205 Phase 7)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[[bin]]
+name = "bench-fastled-examples"
+path = "src/main.rs"
+
+[dependencies]
+fbuild-library-select = { path = "../../crates/fbuild-library-select" }
+fbuild-packages = { path = "../../crates/fbuild-packages" }
+fbuild-test-support = { path = "../../crates/fbuild-test-support" }
+zccache-artifact = { workspace = true }
+tempfile = { workspace = true }
+serde_json = { workspace = true }

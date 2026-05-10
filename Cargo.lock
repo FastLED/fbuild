@@ -842,6 +842,18 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "37909eebbb50d72f9059c3b6d82c0463f2ff062c9e95845c43a6c9c0355411be"
 
 [[package]]
+name = "fbuild-bench-fastled-examples"
+version = "2.2.3"
+dependencies = [
+ "fbuild-library-select",
+ "fbuild-packages",
+ "fbuild-test-support",
+ "serde_json",
+ "tempfile",
+ "zccache-artifact",
+]
+
+[[package]]
 name = "fbuild-build"
 version = "2.2.3"
 dependencies = [
