@@ -22,9 +22,14 @@ use std::path::{Path, PathBuf};
 
 use fbuild_header_scan::walk;
 use fbuild_packages::library::FrameworkLibrary;
+use serde::{Deserialize, Serialize};
+
+pub mod cache;
+
+pub use cache::{cache_key, resolve_cached, CacheKeyInputs, CachedSelection};
 
 /// Resolved library selection plus the transitive include closure.
-#[derive(Debug, Clone, Default, PartialEq, Eq)]
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Selection {
     /// Canonicalized paths of every file reached by the walker.
     pub included_files: Vec<PathBuf>,

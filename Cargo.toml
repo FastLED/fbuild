@@ -63,6 +63,8 @@ mimalloc = "0.1"
 object = { version = "0.36", default-features = false, features = ["read", "std", "elf", "write"] }
 rusqlite = { version = "0.31", features = ["bundled"] }
 shell-words = "1"
+bincode = "1"
+zccache-artifact = "1.4.0"
 
 # Process containment: all subprocess spawns the daemon performs (compilers,
 # esptool, qemu, simavr, node, npm, …) and any grandchildren they fork must
