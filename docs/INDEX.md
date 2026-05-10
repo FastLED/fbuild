@@ -32,6 +32,7 @@ A grep-friendly FAQ that maps common questions to the file that answers them. Bo
 | Why does warm-pass build take ~30 s per sketch? (#91)     | [PERF_WARM_BUILD.md](PERF_WARM_BUILD.md)                   |
 | What does `FBUILD_PERF_LOG=1` do?                          | [PERF_WARM_BUILD.md](PERF_WARM_BUILD.md#instrumentation)   |
 | How fast is `soldr` when building fbuild itself?            | [SOLDR_BUILD_PERF.md](SOLDR_BUILD_PERF.md)                 |
+| Where do end-to-end perf benchmarks live (FastLED matrix, P-01)? | [../bench/fastled-examples/README.md](../bench/fastled-examples/README.md) |
 | What architecture docs should I read for a given crate?   | [CLAUDE.md](CLAUDE.md)                                     |
 
 ## Conventions

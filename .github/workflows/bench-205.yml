@@ -1,0 +1,54 @@
+name: Perf benches (#205)
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'crates/fbuild-header-scan/**'
+      - 'crates/fbuild-library-select/**'
+      - 'crates/fbuild-test-support/src/mini_framework.rs'
+      - '.github/workflows/bench-205.yml'
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: "-D warnings"
+
+jobs:
+  bench:
+    name: Bench (${{ matrix.bench }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - crate: fbuild-header-scan
+            bench: scan_throughput
+            target: P-03 (>= 50 MB/s single-thread)
+          - crate: fbuild-library-select
+            bench: resolve_cold
+            target: P-02 (<= 200 ms cold for typical project)
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v3
+      - name: Setup soldr
+        uses: zackees/setup-soldr@v0
+        with:
+          cache: true
+          build-cache: true
+          target-cache: true
+
+      - name: "Run ${{ matrix.bench }} (target: ${{ matrix.target }})"
+        run: |
+          soldr cargo bench -p ${{ matrix.crate }} --bench ${{ matrix.bench }} -- --output-format bencher | tee bench-${{ matrix.bench }}.txt
+
+      - name: Upload criterion HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: criterion-${{ matrix.bench }}
+          path: |
+            target/criterion/**
+            bench-${{ matrix.bench }}.txt
+          if-no-files-found: warn
+          retention-days: 14
