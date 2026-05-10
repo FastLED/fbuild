@@ -30,7 +30,10 @@ fn teensylc_blink_meets_205_acceptance_criteria() {
 
     let params = BuildParams {
         project_dir: project_dir.clone(),
-        env_name: "teensyLC".to_string(),
+        // WHY: env names are case-sensitive and must match the
+        // [env:teensylc] key in tests/platform/teensylc/platformio.ini.
+        // Same root-cause family as #220 / #221 in measure_baseline_205.py.
+        env_name: "teensylc".to_string(),
         clean: true,
         profile: BuildProfile::Release,
         build_dir: build_dir.path().to_path_buf(),
@@ -71,15 +74,29 @@ fn teensylc_blink_meets_205_acceptance_criteria() {
              #204 regression"
         );
     }
-    for required in ["setup", "loop"] {
+    // WHY: setup/loop are extern "C" via Arduino.h's prototype, so
+    // ideally appear unmangled. But Teensyduino's main calls them via
+    // the framework's main.cpp and toolchain LTO can leave only the
+    // mangled C++ symbols (`_Z5setupv` / `_Z4loopv`) when the .ino is
+    // compiled as C++ without the extern "C" prototype reaching the
+    // definition. Accept either form — the contract is "the user's
+    // setup/loop landed in the firmware", not "they kept their C
+    // linkage". The earlier `has_symbol_containing` was rejected in
+    // PR #209 review for matching `Stream::setupXxx`-style false
+    // positives; the explicit-mangled fallback below is targeted and
+    // doesn't share that problem.
+    for (required, mangled) in [("setup", "_Z5setupv"), ("loop", "_Z4loopv")] {
+        let unmangled_present = probe.has_symbol(required).expect("symbol query");
+        let mangled_present = probe.has_symbol(mangled).expect("symbol query");
         assert!(
-            probe.has_symbol(required).expect("symbol query"),
-            "A-11: required symbol '{required}' missing from ELF"
+            unmangled_present || mangled_present,
+            "A-11: required symbol '{required}' missing from ELF \
+             (also looked for mangled '{mangled}')"
         );
     }
 
     // ── compile_commands.json probes (AC#1, A-20..A-22) ─────────────────
-    let compdb_path = locate_compile_commands(build_dir.path(), "teensyLC")
+    let compdb_path = locate_compile_commands(build_dir.path(), "teensylc")
         .expect("compile_commands.json should land in build dir");
     let db = CompileDb::from_path(&compdb_path).expect("parse compile_commands.json");
     assert!(

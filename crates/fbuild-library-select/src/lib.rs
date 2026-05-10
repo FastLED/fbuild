@@ -249,6 +249,48 @@ mod tests {
     }
 
     #[test]
+    fn r04_pass2_reconciliation_catches_cpp_only_dependency() {
+        // The whole reason the LDF resolver is 2-pass instead of single-pass
+        // BFS: a lib's `.cpp` may pull in a second lib that the first lib's
+        // `.h` does NOT mention. Pass 1 (BFS from project seeds + reached
+        // headers) cannot see that edge; pass 2 re-seeds with each selected
+        // lib's full source set and catches it.
+        //
+        // Setup: project includes <SPI.h>. SPI.h is silent. SPI.cpp includes
+        // <Wire.h>. Wire is only reachable through SPI.cpp.
+        //
+        // Expected: pass 1 selects {SPI}; pass 2 (with SPI.cpp as a seed)
+        // selects {SPI, Wire}. A regression that drops the second pass would
+        // produce {SPI} only and silently miss Wire at link time.
+        let tmp = TempDir::new().unwrap();
+        let project_src = tmp.path().join("project").join("src");
+        write(&project_src.join("main.cpp"), "#include <SPI.h>\n");
+
+        let mut spi = lib(tmp.path(), "SPI");
+        write(
+            &spi.include_dirs[0].join("SPI.h"),
+            "// no transitive includes\n",
+        );
+        let spi_cpp = spi.include_dirs[0].join("SPI.cpp");
+        write(&spi_cpp, "#include <Wire.h>\n");
+        spi.source_files.push(spi_cpp);
+
+        let mut wire = lib(tmp.path(), "Wire");
+        write(&wire.include_dirs[0].join("Wire.h"), "");
+        let wire_cpp = wire.include_dirs[0].join("Wire.cpp");
+        write(&wire_cpp, "");
+        wire.source_files.push(wire_cpp);
+
+        let seeds = vec![project_src.join("main.cpp")];
+        let sel = resolve(&seeds, &[project_src], &[spi, wire]);
+        assert_eq!(
+            sel.required_libraries,
+            vec!["SPI".to_string(), "Wire".to_string()],
+            "pass 2 reconciliation must catch Wire reached only via SPI.cpp"
+        );
+    }
+
+    #[test]
     fn r03_no_includes_selects_nothing() {
         let tmp = TempDir::new().unwrap();
         let project_src = tmp.path().join("project").join("src");
