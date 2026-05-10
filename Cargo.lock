@@ -863,6 +863,7 @@ dependencies = [
  "tokio",
  "tracing",
  "walkdir",
+ "zccache-artifact",
 ]
 
 [[package]]

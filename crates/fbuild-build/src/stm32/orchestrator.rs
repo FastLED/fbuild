@@ -20,7 +20,10 @@ use fbuild_core::{Platform, Result};
 use fbuild_packages::{Framework, Toolchain};
 
 use crate::compile_database::TargetArchitecture;
-use crate::framework_libs::resolve_framework_library_sources;
+use crate::framework_libs::{
+    library_select_kv_store, resolve_framework_library_sources,
+    resolve_framework_library_sources_cached,
+};
 use crate::generic_arm::{ArmCompiler, ArmLinker};
 use crate::pipeline;
 use crate::source_scanner::SourceCollection;
@@ -110,8 +113,34 @@ impl BuildOrchestrator for Stm32Orchestrator {
         // STM32duino only exposes bundled libraries via this framework-level
         // discovery (PlatformIO's LDF does the same for `framework = arduino`).
         let framework_libs = framework.get_framework_libraries();
-        let framework_library_sources =
-            resolve_framework_library_sources(&framework_libs, &params.project_dir, &ctx.src_dir);
+        // WHY: STM32duino targets every Cortex-M family from M0 (F0xx) up
+        // through M7 (H7xx) but the toolchain triple is constant
+        // (`arm-none-eabi`). The cache key already includes
+        // `framework_install_path` + `framework_version`, so per-MCU drift
+        // is handled there — this string only needs to disambiguate stm32
+        // from teensy etc. so cross-platform key collisions are impossible.
+        let framework_info = fbuild_packages::Package::get_info(&framework);
+        let framework_library_sources = match library_select_kv_store() {
+            Some(store) => {
+                let key_inputs = fbuild_library_select::cache::CacheKeyInputs {
+                    toolchain_triple: "stm32-arm-none-eabi",
+                    framework_install_path: &framework_info.install_path,
+                    framework_version: &framework_info.version,
+                };
+                resolve_framework_library_sources_cached(
+                    &framework_libs,
+                    &params.project_dir,
+                    &ctx.src_dir,
+                    &key_inputs,
+                    store,
+                )
+            }
+            None => resolve_framework_library_sources(
+                &framework_libs,
+                &params.project_dir,
+                &ctx.src_dir,
+            ),
+        };
         if !framework_library_sources.is_empty() {
             tracing::info!(
                 "STM32 framework library sources added: {}",

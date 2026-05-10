@@ -24,7 +24,10 @@ use crate::build_fingerprint::{
 };
 use crate::compile_database::TargetArchitecture;
 use crate::compiler::Compiler as _;
-use crate::framework_libs::resolve_framework_library_sources;
+use crate::framework_libs::{
+    library_select_kv_store, resolve_framework_library_sources,
+    resolve_framework_library_sources_cached,
+};
 use crate::pipeline;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
@@ -159,8 +162,33 @@ impl BuildOrchestrator for TeensyOrchestrator {
             .retain(|p| p.file_name().map(|f| f != "Blink.cc").unwrap_or(true));
 
         let framework_libs = framework.get_framework_libraries();
-        let framework_library_sources =
-            resolve_framework_library_sources(&framework_libs, &params.project_dir, &ctx.src_dir);
+        // WHY: Teensy 3.x/4.x and TeensyLC all share teensyduino's
+        // arm-none-eabi toolchain — a single stable triple covers every
+        // board this orchestrator handles. The triple feeds the cache key
+        // so bumping it invalidates the entire teensy slice without
+        // touching SCANNER_VERSION / LDF_MODE_VERSION.
+        let framework_info = fbuild_packages::Package::get_info(&framework);
+        let framework_library_sources = match library_select_kv_store() {
+            Some(store) => {
+                let key_inputs = fbuild_library_select::cache::CacheKeyInputs {
+                    toolchain_triple: "teensy-arm-none-eabi",
+                    framework_install_path: &framework_info.install_path,
+                    framework_version: &framework_info.version,
+                };
+                resolve_framework_library_sources_cached(
+                    &framework_libs,
+                    &params.project_dir,
+                    &ctx.src_dir,
+                    &key_inputs,
+                    store,
+                )
+            }
+            None => resolve_framework_library_sources(
+                &framework_libs,
+                &params.project_dir,
+                &ctx.src_dir,
+            ),
+        };
         if !framework_library_sources.is_empty() {
             tracing::info!(
                 "Teensy framework library sources added: {}",

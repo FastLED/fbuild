@@ -13,10 +13,13 @@
 //! example) stay out of the compile set. See FastLED/fbuild#205.
 
 use std::path::{Path, PathBuf};
+use std::sync::OnceLock;
 
+use fbuild_library_select::cache::{resolve_cached, CacheKeyInputs};
 use fbuild_library_select::resolve as resolve_library_selection;
 use fbuild_packages::library::FrameworkLibrary;
 use walkdir::{DirEntry, WalkDir};
+use zccache_artifact::KvStore;
 
 /// Resolve framework library source files needed by a project.
 pub fn resolve_framework_library_sources(
@@ -54,6 +57,123 @@ pub fn resolve_framework_library_sources_from_libraries(
     }
 
     selection.source_files
+}
+
+/// Cached counterpart to [`resolve_framework_library_sources`].
+///
+/// Routes the same `(libraries, project_dir, src_dir)` resolution through
+/// `fbuild_library_select::cache::resolve_cached` using the supplied
+/// `KvStore`. On a backend failure (open, read, write) we log a warning and
+/// fall back to the uncached `resolve(...)` so a degraded cache can never
+/// poison a build — same philosophy as the corrupt-entry handling already
+/// inside `cache.rs`.
+pub fn resolve_framework_library_sources_cached(
+    libraries: &[FrameworkLibrary],
+    project_dir: &Path,
+    src_dir: &Path,
+    key_inputs: &CacheKeyInputs<'_>,
+    store: &KvStore,
+) -> Vec<PathBuf> {
+    let (sources, _hit) = resolve_framework_library_sources_cached_with_hit(
+        libraries,
+        project_dir,
+        src_dir,
+        key_inputs,
+        store,
+    );
+    sources
+}
+
+/// Internal helper that returns `(sources, from_cache)` so tests can assert
+/// hit/miss without the public API surfacing that bit. The hit flag is
+/// `false` whenever the cache backend errored and we fell back to the
+/// uncached resolver.
+pub(crate) fn resolve_framework_library_sources_cached_with_hit(
+    libraries: &[FrameworkLibrary],
+    project_dir: &Path,
+    src_dir: &Path,
+    key_inputs: &CacheKeyInputs<'_>,
+    store: &KvStore,
+) -> (Vec<PathBuf>, bool) {
+    let roots = framework_include_scan_roots(project_dir, src_dir);
+    if libraries.is_empty() {
+        return (Vec::new(), false);
+    }
+
+    let seeds = collect_project_seeds(&roots);
+    let search_paths: Vec<PathBuf> = roots.clone();
+
+    match resolve_cached(&seeds, &search_paths, libraries, key_inputs, store) {
+        Ok(cached) => {
+            for name in &cached.selection.required_libraries {
+                if let Some(lib) = libraries.iter().find(|l| &l.name == name) {
+                    tracing::info!(
+                        "selected framework library '{}': {} source files",
+                        lib.name,
+                        lib.source_files.len()
+                    );
+                }
+            }
+            tracing::info!(
+                cache = if cached.from_cache { "hit" } else { "miss" },
+                key = %cached.key.to_hex(),
+                "library-select cache: {}",
+                if cached.from_cache { "hit" } else { "miss" }
+            );
+            (cached.selection.source_files, cached.from_cache)
+        }
+        Err(err) => {
+            tracing::warn!(
+                error = %err,
+                "library-select cache backend error; falling back to uncached resolve"
+            );
+            (
+                resolve_framework_library_sources_from_libraries(libraries, &roots),
+                false,
+            )
+        }
+    }
+}
+
+/// Process-shared `KvStore` for the library-selection cache.
+///
+/// Opens lazily on first call and caches the handle for the rest of the
+/// process. Returns `None` on open failure — callers must skip caching
+/// (and route through the uncached resolver) rather than crash.
+pub fn library_select_kv_store() -> Option<&'static KvStore> {
+    static STORE: OnceLock<Option<KvStore>> = OnceLock::new();
+    STORE
+        .get_or_init(|| {
+            let dir = library_select_cache_dir();
+            match KvStore::open(&dir) {
+                Ok(store) => {
+                    tracing::info!(
+                        path = %dir.display(),
+                        "library-select cache: opened KvStore"
+                    );
+                    Some(store)
+                }
+                Err(err) => {
+                    tracing::warn!(
+                        path = %dir.display(),
+                        error = %err,
+                        "library-select cache: failed to open KvStore; \
+                         resolution will run uncached"
+                    );
+                    None
+                }
+            }
+        })
+        .as_ref()
+}
+
+/// Filesystem location of the library-selection KvStore.
+///
+/// Routes through `fbuild_paths::get_cache_root()` so the cache obeys the
+/// dev/prod isolation contract (`FBUILD_DEV_MODE=1` → `~/.fbuild/dev/cache`)
+/// and any `FBUILD_CACHE_DIR` override.
+fn library_select_cache_dir() -> PathBuf {
+    fbuild_paths::get_cache_root().join("library-selection")
 }
 
 /// Project directories to scan for `#include` directives and local headers.
@@ -330,5 +450,55 @@ mod tests {
         let sources = resolve_framework_library_sources_from_libraries(&libraries, &roots);
 
         assert_eq!(sources, vec![spi_dir.join("SPI.cpp")]);
+    }
+
+    #[test]
+    fn cached_resolution_round_trips_through_kvstore() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let project_dir = tmp.path().join("project");
+        let src_dir = project_dir.join("src");
+        std::fs::create_dir_all(&src_dir).unwrap();
+        std::fs::write(src_dir.join("main.cpp"), "#include <SPI.h>\n").unwrap();
+
+        let spi_dir = tmp.path().join("framework").join("libraries").join("SPI");
+        std::fs::create_dir_all(&spi_dir).unwrap();
+        std::fs::write(spi_dir.join("SPI.h"), "").unwrap();
+        std::fs::write(spi_dir.join("SPI.cpp"), "").unwrap();
+
+        let libraries = vec![FrameworkLibrary {
+            name: "SPI".to_string(),
+            dir: spi_dir.clone(),
+            include_dirs: vec![spi_dir.clone()],
+            source_files: vec![spi_dir.join("SPI.cpp")],
+        }];
+
+        let framework_root = tmp.path().join("framework");
+        let key_inputs = CacheKeyInputs {
+            toolchain_triple: "test-arm-none-eabi",
+            framework_install_path: &framework_root,
+            framework_version: "0.0.0-test",
+        };
+
+        let kv = KvStore::open(tmp.path().join("kv")).unwrap();
+
+        let (first, hit_first) = resolve_framework_library_sources_cached_with_hit(
+            &libraries,
+            &project_dir,
+            &src_dir,
+            &key_inputs,
+            &kv,
+        );
+        assert!(!hit_first, "first call must miss the cache");
+        assert_eq!(first, vec![spi_dir.join("SPI.cpp")]);
+
+        let (second, hit_second) = resolve_framework_library_sources_cached_with_hit(
+            &libraries,
+            &project_dir,
+            &src_dir,
+            &key_inputs,
+            &kv,
+        );
+        assert!(hit_second, "second call must hit the cache");
+        assert_eq!(first, second, "cache hit must yield identical sources");
     }
 }
