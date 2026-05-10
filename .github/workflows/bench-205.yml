@@ -55,3 +55,47 @@ jobs:
             bench-${{ matrix.bench }}.txt
           if-no-files-found: warn
           retention-days: 14
+
+  fastled-examples:
+    name: Bench (fastled-examples — workflow_dispatch only)
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v3
+      - name: Setup soldr
+        uses: zackees/setup-soldr@v0
+        with:
+          cache: true
+          build-cache: true
+          target-cache: true
+
+      - name: Checkout FastLED
+        uses: actions/checkout@v6
+        with:
+          repository: FastLED/FastLED
+          path: external/fastled
+          # Pinned to a FastLED release tag for reproducibility. Bump in
+          # lockstep with the sample-numbers table in
+          # bench/fastled-examples/README.md when retaking baseline.
+          ref: "3.10.3"
+
+      - name: Run bench-fastled-examples
+        env:
+          FASTLED_DIR: ${{ github.workspace }}/external/fastled
+        run: |
+          mkdir -p bench/fastled-examples
+          soldr cargo run --release -p fbuild-bench-fastled-examples -- \
+            --json bench/fastled-examples/report.json | tee bench/fastled-examples/report.md
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bench-fastled-examples
+          path: |
+            bench/fastled-examples/report.md
+            bench/fastled-examples/report.json
+          if-no-files-found: warn
+          retention-days: 30

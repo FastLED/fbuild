@@ -19,10 +19,13 @@ uv run soldr cargo bench -p fbuild-header-scan  --bench scan_throughput
 
 ## Subdirectories
 
-- [`fastled-examples/`](fastled-examples/README.md) — reserved for the
-  real-FastLED warm-cache library-selection matrix (`FastLED/fbuild#205`
-  AC#5, P-01) once `~/dev/fastled` is wired in. The synthetic warm-path
-  baseline already lives in `crates/fbuild-library-select/benches/resolve_warm.rs`.
+- [`fastled-examples/`](fastled-examples/README.md) — real-FastLED
+  warm-cache library-selection matrix (`FastLED/fbuild#205` AC#5, P-01).
+  Discovers examples under `$FASTLED_DIR` (default `~/dev/fastled`),
+  runs the resolver cold + warm per example, and reports timings.
+  Run with `uv run soldr cargo run --release -p fbuild-bench-fastled-examples`.
+  The synthetic warm-path baseline lives in
+  `crates/fbuild-library-select/benches/resolve_warm.rs`.
 
 Other end-to-end matrices (whole-build wall-clock, deploy+flash latency,
 emulator boot) may join this directory in the future. Each subdirectory

@@ -1,69 +1,98 @@
 # bench/fastled-examples
 
-Warm-cache library-selection benchmarks across the FastLED examples matrix.
-This is the harness referenced by `FastLED/fbuild#205` for acceptance
-criterion **AC#5 / P-01**:
+Warm-cache library-selection benchmark across a curated FastLED examples
+matrix. This is the AC#5 / P-01 measurement for
+[`FastLED/fbuild#205`](https://github.com/FastLED/fbuild/issues/205).
 
-> Warm library-selection on FastLED examples matrix `<= current fbuild
-> + 50 ms`.
+## What it measures
 
-## Status: empty placeholder
+For each example sketch under `$FASTLED_DIR/examples/`, runs the
+`fbuild_library_select::cache::resolve_cached` resolver twice against a
+fresh `KvStore`:
 
-There is no harness in this directory yet — the real per-board, per-example
-matrix needs a checked-out FastLED tree (`~/dev/fastled`) and orchestrator
-wiring that routes through `resolve_cached`. That work is tracked
-separately. The synthetic warm baseline (`MiniFramework`-backed cache hit,
-no real FastLED) already exists at
-[`../../crates/fbuild-library-select/benches/resolve_warm.rs`](../../crates/fbuild-library-select/benches/resolve_warm.rs)
-and is the first-pass regression guard for the cache-hit path.
+- **Cold** — empty cache. Wall-clock includes the scanner walk over the
+  FastLED `src/` tree (~1000 files), the 2-pass LDF reconciliation, and
+  the cache write. This dominates total time.
+- **Warm** — cache pre-populated. Wall-clock includes the cache-key
+  compute (sorted seed/header content hashing, bounded by `cache_key`
+  itself) and the bincode decode of the cached `Selection`.
+  `from_cache = true` is asserted so silent re-misses surface
+  immediately.
 
-Phase 4 K/V memoization itself shipped in PR #212, so the warm path is
-real and measurable today; what is missing here is the multi-board,
-real-sketch matrix that AC#5 requires.
+The framework library set is a synthetic Teensyduino-class stub built
+via `MiniFramework`. The bench measures resolver throughput, not the
+correctness of which libraries get selected — that is the acceptance-test
+layer (`crates/fbuild-build/tests/teensylc_acceptance.rs`).
 
-## The plan once the FastLED tree is wired in
+## Running
 
-1. Iterate the FastLED examples tree (`~/dev/fastled/examples/**`) under
-   each supported board: at minimum `teensyLC`, `teensy30`, `teensy41`,
-   `stm32f103c8`, `esp32-s3`, `uno`, `ws2812`. The matrix expands with
-   board coverage.
-2. For each `(example, board)` pair, run the resolver twice:
-   - **Cold pass.** Empty `~/.zccache/`. Captures the K/V miss path and
-     the underlying scan + walk + LDF cost. This is the P-02 lane.
-   - **Warm pass.** Populated `~/.zccache/`. Captures the K/V hit path,
-     where the only work should be cache lookup + result deserialization.
-     This is the P-01 lane.
-3. Diff the warm scan time against a captured baseline checked into
-   `tasks/baseline-205.md`. CI fails the job if any `(example, board)`
-   regresses the warm path by more than 50 ms vs. that baseline (the
-   `#205` AC#5 threshold).
-4. Emit a structured JSON report (`bench/fastled-examples/report.json`)
-   that future PR comments can diff. Format TBD with the harness.
-
-## Running the synthetic mini benches today
-
-The closest signal available right now without a FastLED checkout is the
-per-crate cold and warm criterion benches against `MiniFramework`:
+`FASTLED_DIR` is required — there is no implicit default, since the
+correct path is host-dependent (CI uses `external/fastled` from the
+workflow checkout, developers use whatever convention they like) and a
+silent fallback would mask configuration mistakes.
 
 ```bash
-uv run soldr cargo bench -p fbuild-library-select --bench resolve_cold
-uv run soldr cargo bench -p fbuild-library-select --bench resolve_warm
+FASTLED_DIR=/path/to/fastled \
+  uv run soldr cargo run --release -p fbuild-bench-fastled-examples
+
+# Emit a JSON report alongside stdout
+FASTLED_DIR=/path/to/fastled \
+  uv run soldr cargo run --release -p fbuild-bench-fastled-examples \
+  -- --json bench/fastled-examples/report.json
 ```
 
-Those benches drive a synthetic ~30-library Teensyduino-class tree built
-from `fbuild-test-support`'s `MiniFramework` rather than real FastLED
-sketches. They are useful regression guards for the resolver and its
-cache layer respectively, but they do **not** satisfy AC#5 on their own.
+If any example fails to measure (missing sketch, KvStore error, warm
+miss) the binary exits non-zero rather than skipping the row. CI must
+treat a partial matrix as a failure, not a pass.
+
+## Sample numbers
+
+Captured 2026-05-10 on Windows / Ryzen workstation, FastLED `main`,
+release build:
+
+| example       | cold (ms) | warm (ms) | speedup |
+|---------------|----------:|----------:|--------:|
+| Blink         |    923.58 |     11.36 |   81.3x |
+| Pacifica      |    915.98 |     12.64 |   72.4x |
+| Animartrix    |    970.14 |     11.76 |   82.5x |
+| Audio         |    830.51 |     11.74 |   70.7x |
+| BlurBenchmark |    827.46 |     10.48 |   79.0x |
+| Chromancer    |    844.13 |     10.89 |   77.5x |
+
+The warm path comfortably clears AC#5 (≤ +50 ms over current fbuild) at
+~11 ms per example. The ~75x speedup reflects the cost asymmetry between
+walking the FastLED `src/` tree (~1000 files) and a `KvStore`
+get + bincode decode of a serialized `Selection`.
+
+## Curated example set
+
+The harness intentionally runs a small representative subset rather than
+all 80+ examples. Adding more is cheap — see `EXAMPLES` in `src/main.rs`.
+The current set spans:
+
+- Trivial single-strip sketches (`Blink`)
+- Animation-heavy sketches (`Pacifica`, `Animartrix`)
+- I/O-heavy sketches (`Audio`)
+- Throughput stress sketches (`BlurBenchmark`, `Chromancer`)
+
+## CI
+
+The `fastled-examples` job in `.github/workflows/bench-205.yml` is
+`workflow_dispatch`-only because it requires a FastLED checkout. CI
+checks out FastLED at a pinned release tag (currently `3.10.3`) so
+measurements are reproducible, then runs the bench and uploads the JSON
+report as an artifact. Bumping the pin is a deliberate baseline event —
+update both the workflow `ref:` and the sample-numbers table above in
+lockstep.
+
+There is no automatic CI gate on the warm timings yet — first capture a
+stable cross-runner baseline, then a follow-up adds the threshold gate.
 
 ## Cross-links
 
-- Issue: `FastLED/fbuild#205`
-- Phase 4 K/V memoization (shipped in #212):
-  [`../../tasks/zccache-kv-design.md`](../../tasks/zccache-kv-design.md)
+- Issue: [`FastLED/fbuild#205`](https://github.com/FastLED/fbuild/issues/205)
+- This harness: [`FastLED/fbuild#218`](https://github.com/FastLED/fbuild/issues/218)
+- Per-crate synthetic warm bench:
+  [`crates/fbuild-library-select/benches/resolve_warm.rs`](../../crates/fbuild-library-select/benches/resolve_warm.rs)
 - Subsystem architecture:
-  [`../../docs/architecture/library-selection.md`](../../docs/architecture/library-selection.md)
-- Foundation baseline that the warm threshold compares against:
-  [`../../tasks/baseline-205.md`](../../tasks/baseline-205.md)
-- Per-crate cold + warm benches (different scope, same subsystem):
-  [`../../crates/fbuild-library-select/benches/README.md`](../../crates/fbuild-library-select/benches/README.md),
-  [`../../crates/fbuild-header-scan/benches/README.md`](../../crates/fbuild-header-scan/benches/README.md)
+  [`docs/architecture/library-selection.md`](../../docs/architecture/library-selection.md)

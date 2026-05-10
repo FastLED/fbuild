@@ -14,6 +14,7 @@ members = [
     "crates/fbuild-test-support",
     "crates/fbuild-header-scan",
     "crates/fbuild-library-select",
+    "bench/fastled-examples",
 ]
 
 [workspace.package]
