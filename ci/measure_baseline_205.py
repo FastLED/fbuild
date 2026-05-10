@@ -57,7 +57,10 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 # in the fixture project. teensyLC, teensy30, teensy41, stm32f103c8 all ship a
 # Blink-class sketch as ``src/main.ino``.
 TARGETS = [
-    ("teensyLC", "tests/platform/teensylc", "Blink"),
+    # WHY: env names must match the [env:...] keys in each fixture's
+    # platformio.ini exactly (case-sensitive). The teensy LC env is
+    # `teensylc` lowercase per tests/platform/teensylc/platformio.ini.
+    ("teensylc", "tests/platform/teensylc", "Blink"),
     ("teensy30", "tests/platform/teensy30", "Blink"),
     ("teensy41", "tests/platform/teensy41", "Blink"),
     ("stm32f103c8", "tests/platform/stm32f103c8", "Blink"),
