@@ -75,30 +75,53 @@ fn teensylc_blink_meets_205_acceptance_criteria() {
         );
     }
     // WHY: setup/loop are extern "C" via Arduino.h's prototype, so
-    // ideally appear unmangled. But Teensyduino's main calls them via
-    // the framework's main.cpp and toolchain LTO can leave only the
-    // mangled C++ symbols (`_Z5setupv` / `_Z4loopv`) when the .ino is
-    // compiled as C++ without the extern "C" prototype reaching the
-    // definition. Accept either form — the contract is "the user's
-    // setup/loop landed in the firmware", not "they kept their C
-    // linkage". The earlier `has_symbol_containing` was rejected in
-    // PR #209 review for matching `Stream::setupXxx`-style false
-    // positives; the explicit-mangled fallback below is targeted and
-    // doesn't share that problem.
+    // ideally appear unmangled. But under the orchestrator's Release
+    // profile (-flto + -Os) Teensyduino's main.cpp and the .ino are
+    // visible in the same LTO unit, so the linker inlines the tiny
+    // setup()/loop() bodies into main() and discards both the
+    // unmangled and the mangled (`_Z5setupv` / `_Z4loopv`) symbols
+    // via --gc-sections. Same root-cause family as #223. Accept any
+    // of three signals — the contract is "the user's setup/loop
+    // landed in the firmware":
+    //   1. unmangled `setup` / `loop` symbol survived (no LTO inline)
+    //   2. mangled `_Z5setupv` / `_Z4loopv` survived (LTO disabled)
+    //   3. the sketch's unique `Serial.println` literal is present
+    //      in the firmware bytes — proves the .ino's println() chain
+    //      was linked. Strings in .rodata survive --gc-sections
+    //      because their address is taken by the println call.
+    // The earlier `has_symbol_containing` was rejected in PR #209
+    // review for matching `Stream::setupXxx`-style false positives;
+    // exact-name and byte-needle probes don't share that problem.
+    let elf_bytes = std::fs::read(elf).expect("read ELF for byte probe");
+    // Marker chosen from tests/platform/teensylc/src/main.ino — must
+    // stay in sync with the sketch's first println literal.
+    const SKETCH_MARKER: &[u8] = b"Teensy LC Test - LED Blink";
+    let sketch_bytes_present = elf_bytes
+        .windows(SKETCH_MARKER.len())
+        .any(|w| w == SKETCH_MARKER);
     for (required, mangled) in [("setup", "_Z5setupv"), ("loop", "_Z4loopv")] {
         let unmangled_present = probe.has_symbol(required).expect("symbol query");
         let mangled_present = probe.has_symbol(mangled).expect("symbol query");
         assert!(
-            unmangled_present || mangled_present,
+            unmangled_present || mangled_present || sketch_bytes_present,
             "A-11: required symbol '{required}' missing from ELF \
-             (also looked for mangled '{mangled}')"
+             (also looked for mangled '{mangled}' and the sketch's \
+             '{}' literal in firmware bytes)",
+            std::str::from_utf8(SKETCH_MARKER).unwrap()
         );
     }
 
     // ── compile_commands.json probes (AC#1, A-20..A-22) ─────────────────
-    let compdb_path = locate_compile_commands(build_dir.path(), "teensylc")
-        .expect("compile_commands.json should land in build dir");
-    let db = CompileDb::from_path(&compdb_path).expect("parse compile_commands.json");
+    // WHY use result.compile_database_path: the pipeline ignores
+    // params.build_dir and roots its build cache at
+    // <project_dir>/.fbuild/build/<env>/<profile>/, so a tempdir-based
+    // walk from build_dir.path() never finds the file. The orchestrator
+    // already reports the effective location in BuildResult — trust it.
+    let compdb_path = result
+        .compile_database_path
+        .as_ref()
+        .expect("teensy build must report compile_commands.json path");
+    let db = CompileDb::from_path(compdb_path).expect("parse compile_commands.json");
     assert!(
         db.tu_count() <= 250,
         "AC#1: TU count must be <= 250; got {} entries",
@@ -121,27 +144,4 @@ fn repo_fixture(name: &str) -> PathBuf {
         .unwrap()
         .join("tests/platform")
         .join(name)
-}
-
-fn locate_compile_commands(build_dir: &std::path::Path, env: &str) -> Option<PathBuf> {
-    // Per fbuild's layout the file lives at one of:
-    //   <build_dir>/<env>/compile_commands.json
-    //   <build_dir>/compile_commands.json
-    // Search both, prefer the per-env path.
-    let candidates = [
-        build_dir.join(env).join("compile_commands.json"),
-        build_dir.join("compile_commands.json"),
-    ];
-    for c in candidates {
-        if c.exists() {
-            return Some(c);
-        }
-    }
-    // Fallback: walk the build_dir for any compile_commands.json.
-    for entry in walkdir::WalkDir::new(build_dir).into_iter().flatten() {
-        if entry.file_name() == "compile_commands.json" {
-            return Some(entry.into_path());
-        }
-    }
-    None
 }
