@@ -39,11 +39,35 @@ FASTLED_DIR=/path/to/fastled \
 FASTLED_DIR=/path/to/fastled \
   uv run soldr cargo run --release -p fbuild-bench-fastled-examples \
   -- --json bench/fastled-examples/report.json
+
+# Enforce AC#5 (≤ 50 ms warm per example). Exits 1 on breach.
+FASTLED_DIR=/path/to/fastled \
+  uv run soldr cargo run --release -p fbuild-bench-fastled-examples \
+  -- --max-warm-ms 50
 ```
 
 If any example fails to measure (missing sketch, KvStore error, warm
 miss) the binary exits non-zero rather than skipping the row. CI must
 treat a partial matrix as a failure, not a pass.
+
+## AC#5 enforcement
+
+`--max-warm-ms <f64>` is the CI gate for AC#5. When provided, the
+binary prints the full results table, then exits 1 if any example's
+warm timing exceeds the threshold; the error message lists every
+breach. The threshold is also echoed in the report header (`- Warm
+threshold: 50.00 ms`) and recorded under the top-level `max_warm_ms`
+key in the JSON report, with the breach list under `breaches`.
+
+The `fastled-examples` job in `.github/workflows/bench-205.yml` passes
+`--max-warm-ms 50`. The 50 ms value gives roughly 25× headroom over
+the current ~1-2 ms warm timings on developer hardware (and ~10 ms on
+CI runners), comfortably absorbing runner noise without false
+positives. The job runs on every PR whose changes touch
+`crates/fbuild-library-select/**`, `crates/fbuild-header-scan/**`,
+`bench/fastled-examples/**`, the shared `MiniFramework` fixture, or
+the workflow itself — gating those PRs on the resolver staying within
+the AC#5 envelope.
 
 ## Sample numbers
 
@@ -77,16 +101,15 @@ The current set spans:
 
 ## CI
 
-The `fastled-examples` job in `.github/workflows/bench-205.yml` is
-`workflow_dispatch`-only because it requires a FastLED checkout. CI
-checks out FastLED at a pinned release tag (currently `3.10.3`) so
-measurements are reproducible, then runs the bench and uploads the JSON
-report as an artifact. Bumping the pin is a deliberate baseline event —
-update both the workflow `ref:` and the sample-numbers table above in
-lockstep.
-
-There is no automatic CI gate on the warm timings yet — first capture a
-stable cross-runner baseline, then a follow-up adds the threshold gate.
+The `fastled-examples` job in `.github/workflows/bench-205.yml` runs on
+every PR that touches the resolver crates, this bench, or the workflow
+itself. CI checks out FastLED at a pinned release tag (currently
+`3.10.3`) so measurements are reproducible, then runs the bench with
+`--max-warm-ms 50` and uploads the JSON report as an artifact. The
+threshold is the AC#5 enforcement gate (see "AC#5 enforcement" above);
+a breach fails the job and blocks the PR. Bumping the FastLED pin is a
+deliberate baseline event — update both the workflow `ref:` and the
+sample-numbers table above in lockstep.
 
 ## Cross-links
 

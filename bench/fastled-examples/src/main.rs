@@ -33,11 +33,16 @@
 //! ## CLI
 //!
 //! ```text
-//! bench-fastled-examples [--json <path>]
+//! bench-fastled-examples [--json <path>] [--max-warm-ms <f64>]
 //! ```
 //!
 //! `--json <path>` writes a structured report alongside the stdout table
 //! for diffing in PR comments.
+//!
+//! `--max-warm-ms <f64>` enforces AC#5: each example whose warm timing
+//! exceeds the threshold causes the binary to exit 1 after the table is
+//! printed. Wired in CI at 50 ms (`~25x` headroom over current ~1-2 ms
+//! warm numbers — absorbs runner noise without false positives).
 //!
 //! Refs: #205 Phase 7 (AC#5), #218.
 
@@ -86,7 +91,8 @@ fn main() {
 
 fn run() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<String> = std::env::args().collect();
-    let json_out = parse_json_flag(&args);
+    let json_out = parse_path_flag(&args, "--json");
+    let max_warm_ms = parse_f64_flag(&args, "--max-warm-ms")?;
 
     let fastled_dir = resolve_fastled_dir()?;
     let fastled_src = fastled_dir.join("src");
@@ -109,6 +115,10 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
     println!();
     println!("- FastLED: `{}`", fastled_dir.display());
     println!("- Framework lib set: {} synthetic libs", libraries.len());
+    match max_warm_ms {
+        Some(t) => println!("- Warm threshold: {t:.2} ms"),
+        None => println!("- Warm threshold: none"),
+    }
     println!();
     println!("| example | cold (ms) | warm (ms) | speedup | selected | hit |");
     println!("|---|---:|---:|---:|---:|---|");
@@ -138,10 +148,36 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
         rows.push(row);
     }
 
+    // Collect breaches (after the table prints, so the row data is always visible).
+    let breaches: Vec<(String, f64)> = match max_warm_ms {
+        Some(t) => rows
+            .iter()
+            .filter(|r| r.warm_ms > t)
+            .map(|r| (r.example.clone(), r.warm_ms))
+            .collect(),
+        None => Vec::new(),
+    };
+
     if let Some(path) = json_out {
-        write_json_report(&path, &fastled_dir, &rows)?;
+        write_json_report(&path, &fastled_dir, &rows, max_warm_ms, &breaches)?;
         println!();
         println!("JSON report written to `{}`", path.display());
+    }
+
+    if let Some(t) = max_warm_ms {
+        if !breaches.is_empty() {
+            let summary: Vec<String> = breaches
+                .iter()
+                .map(|(name, ms)| format!("{name} ({ms:.2} ms)"))
+                .collect();
+            return Err(format!(
+                "AC#5 warm threshold breached: {} example(s) exceeded {:.2} ms: {}",
+                breaches.len(),
+                t,
+                summary.join(", ")
+            )
+            .into());
+        }
     }
 
     Ok(())
@@ -212,6 +248,8 @@ fn write_json_report(
     path: &Path,
     fastled_dir: &Path,
     rows: &[Row],
+    max_warm_ms: Option<f64>,
+    breaches: &[(String, f64)],
 ) -> Result<(), Box<dyn std::error::Error>> {
     let entries: Vec<_> = rows
         .iter()
@@ -225,8 +263,19 @@ fn write_json_report(
             })
         })
         .collect();
+    let breach_entries: Vec<_> = breaches
+        .iter()
+        .map(|(name, ms)| {
+            serde_json::json!({
+                "example": name,
+                "warm_ms": ms,
+            })
+        })
+        .collect();
     let body = serde_json::json!({
         "fastled_dir": fastled_dir.to_string_lossy(),
+        "max_warm_ms": max_warm_ms,
+        "breaches": breach_entries,
         "rows": entries,
     });
     if let Some(parent) = path.parent() {
@@ -236,17 +285,45 @@ fn write_json_report(
     Ok(())
 }
 
-fn parse_json_flag(args: &[String]) -> Option<PathBuf> {
+fn parse_path_flag(args: &[String], flag: &str) -> Option<PathBuf> {
+    let prefix = format!("{flag}=");
     let mut iter = args.iter().skip(1);
     while let Some(arg) = iter.next() {
-        if arg == "--json" {
+        if arg == flag {
             return iter.next().map(PathBuf::from);
         }
-        if let Some(rest) = arg.strip_prefix("--json=") {
+        if let Some(rest) = arg.strip_prefix(prefix.as_str()) {
             return Some(PathBuf::from(rest));
         }
     }
     None
+}
+
+fn parse_f64_flag(args: &[String], flag: &str) -> Result<Option<f64>, Box<dyn std::error::Error>> {
+    let prefix = format!("{flag}=");
+    let mut iter = args.iter().skip(1);
+    while let Some(arg) = iter.next() {
+        let raw = if arg == flag {
+            match iter.next() {
+                Some(v) => v.as_str(),
+                None => return Err(format!("{flag} requires a value").into()),
+            }
+        } else if let Some(rest) = arg.strip_prefix(prefix.as_str()) {
+            rest
+        } else {
+            continue;
+        };
+        let parsed: f64 = raw
+            .parse()
+            .map_err(|e| format!("{flag} expects a number, got {raw:?}: {e}"))?;
+        if !parsed.is_finite() || parsed < 0.0 {
+            return Err(
+                format!("{flag} must be a non-negative finite number, got {parsed}").into(),
+            );
+        }
+        return Ok(Some(parsed));
+    }
+    Ok(None)
 }
 
 /// Read `FASTLED_DIR` from the environment. No fallback default: the
