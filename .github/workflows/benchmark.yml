@@ -18,6 +18,7 @@ concurrency:
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   benchmark:
@@ -25,6 +26,7 @@ jobs:
     timeout-minutes: 75
     env:
       BENCH_TIMINGS: ${{ github.workspace }}/phase-timings.tsv
+      BENCH_CACHE_TARBALL: ${{ github.workspace }}/bench-cache.tar.zst
     steps:
       - name: Checkout benchmark branch
         uses: actions/checkout@v4
@@ -54,6 +56,21 @@ jobs:
           printf 'phase\tseconds\n' > "$BENCH_TIMINGS"
           echo "BENCH_JOB_START=$(date +%s.%N)" >> "$GITHUB_ENV"
 
+      # iter7 diagnostic: surface repo-wide actions/cache pressure. Iter5's
+      # cache-miss-on-back-to-back-run turned out to be repo-wide LRU eviction
+      # (9.4GB/10GB pre-iter7) — log this every run so we notice when we
+      # hit the wall again.
+      - name: "Phase - log repo cache pressure"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          usage=$(gh api repos/${{ github.repository }}/actions/cache/usage 2>/dev/null || echo '{}')
+          bytes=$(echo "$usage" | jq -r '.active_caches_size_in_bytes // 0')
+          count=$(echo "$usage" | jq -r '.active_caches_count // 0')
+          gb=$(awk "BEGIN{printf \"%.2f\", $bytes/1073741824}")
+          echo "repo actions/cache usage: ${gb}GB across ${count} caches (limit: 10GB)"
+
       # -------- system setup (python, soldr, uv) --------
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -81,8 +98,6 @@ jobs:
           echo "ZCCACHE_DIR=${zccache_store}" >> "$GITHUB_ENV"
           echo "zccache store: ${zccache_store}"
 
-      # -------- clone FastLED (needs to happen BEFORE cache restore because the
-      #         cache writes into fastled/.build/ which only exists after clone) --------
       - name: "Phase - clone FastLED"
         run: |
           t0=$(date +%s.%N)
@@ -92,39 +107,71 @@ jobs:
             git clone https://github.com/FastLED/FastLED.git fastled
             (cd fastled && git checkout "$BENCH_REF")
           fi
-          # Make sure the cache target subdir exists so actions/cache can write into it.
           mkdir -p fastled/.build
           t1=$(date +%s.%N)
           printf 'clone_fastled\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
           echo "FastLED HEAD: $(cd fastled && git rev-parse HEAD)"
 
-      # -------- iteration 5: cache the directories fbuild actually writes to --------
-      # Iteration 0 cached $RUNNER_TEMP/fbuild-cache, which was empty. The real
-      # state lives in:
-      #   ~/.fbuild/                — fbuild toolchain + daemon state (arch-level)
-      #   ~/.fastled/global_cache/  — PlatformIO toolchain downloads
-      #   fastled/.build/pio/<board>/ — compile outputs + per-project .fbuild/
-      #   $ZCCACHE_CACHE_DIR          - compiler object store from setup action
-      - name: "Phase - restore compile cache"
-        id: compile_cache
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            ~/.fbuild
-            ~/.fastled/global_cache
-            fastled/.build/pio/${{ env.BENCH_BOARD }}
-            ${{ steps.soldr-setup.outputs.build-cache-path }}
-          key: "bench-v6-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.soldr-setup.outputs.soldr-version }}-${{ steps.bench_config.outputs.board }}-${{ steps.bench_config.outputs.ref }}"
-          restore-keys: |
-            bench-v6-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.soldr-setup.outputs.soldr-version }}-${{ steps.bench_config.outputs.board }}-
-            bench-v6-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.soldr-setup.outputs.soldr-version }}-
-
-      - name: "Phase - record cache-restore result"
+      # -------- iter7: artifact-based warm restore --------
+      # Why not actions/cache? FastLED/fbuild has a 9.4GB cache footprint on
+      # main (5x toolchain caches @ 1.7-2.4GB each). The repo hits the 10GB
+      # LRU eviction wall constantly, evicting our small bench cache within
+      # ~20 minutes. Artifacts have a separate quota and 90-day retention,
+      # so a stable warm cache survives between runs.
+      - name: "Phase - warm restore from prior artifact"
+        id: warm_restore
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ARTIFACT_NAME: bench-cache-${{ env.BENCH_BOARD }}-${{ env.BENCH_REF }}-${{ steps.soldr-setup.outputs.soldr-version }}-${{ steps.bench_config.outputs.cache_bust }}
         run: |
-          printf 'compile_cache_hit\t%s\n' "${{ steps.compile_cache.outputs.cache-hit }}" >> "$BENCH_TIMINGS"
-          printf 'compile_cache_key_matched\t%s\n' "${{ steps.compile_cache.outputs.cache-matched-key }}" >> "$BENCH_TIMINGS"
-          echo "Cache hit: ${{ steps.compile_cache.outputs.cache-hit }}"
-          echo "Key matched: ${{ steps.compile_cache.outputs.cache-matched-key }}"
+          set -euo pipefail
+          t0=$(date +%s.%N)
+          warm=false
+          src_run=
+
+          # Find most recent successful run on this branch (excluding self) that has the artifact.
+          prev_run_id=$(gh run list \
+            --workflow=benchmark.yml \
+            --branch bench/fastled-examples \
+            --status success \
+            --limit 20 \
+            --json databaseId \
+            --jq '.[] | .databaseId' \
+            | awk -v cur="${{ github.run_id }}" '$1 != cur {print}' \
+            | head -1 || true)
+
+          if [ -z "${prev_run_id:-}" ]; then
+            echo "no prior successful run — cold"
+          else
+            echo "trying to restore from run ${prev_run_id} (artifact ${ARTIFACT_NAME})"
+            mkdir -p /tmp/bench-restore
+            if gh run download "${prev_run_id}" \
+                 --repo "${{ github.repository }}" \
+                 --name "${ARTIFACT_NAME}" \
+                 --dir /tmp/bench-restore 2>&1; then
+              tarball=$(find /tmp/bench-restore -type f -name '*.tar.zst' | head -1)
+              if [ -n "${tarball}" ] && [ -s "${tarball}" ]; then
+                echo "extracting $(du -h "${tarball}" | cut -f1) tarball from run ${prev_run_id}"
+                tar --use-compress-program='zstd -d' -xPf "${tarball}"
+                warm=true
+                src_run="${prev_run_id}"
+              else
+                echo "artifact downloaded but no tarball found"
+              fi
+            else
+              echo "no matching artifact on run ${prev_run_id}"
+            fi
+            rm -rf /tmp/bench-restore
+          fi
+
+          t1=$(date +%s.%N)
+          printf 'warm_restore\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
+          printf 'warm_restore_hit\t%s\n' "$warm" >> "$BENCH_TIMINGS"
+          printf 'warm_restore_source_run\t%s\n' "${src_run:-<none>}" >> "$BENCH_TIMINGS"
+          echo "warm=${warm}" >> "$GITHUB_OUTPUT"
+          echo "source_run=${src_run}" >> "$GITHUB_OUTPUT"
+
+          echo "=== post-restore footprint ==="
           for d in ~/.fbuild ~/.fastled/global_cache fastled/.build/pio/${BENCH_BOARD} "${ZCCACHE_CACHE_DIR}"; do
             if [ -d "$d" ]; then
               printf '  %s: %s\n' "$d" "$(du -sh "$d" 2>/dev/null | cut -f1)"
@@ -148,9 +195,6 @@ jobs:
           else
             uv sync
           fi
-          # iter2: no more re-pin / chmod workaround. #129 is fixed in 2.1.20,
-          # and whatever FastLED's pyproject resolves to is what we want to
-          # measure.
           .venv/bin/fbuild --version
           t1=$(date +%s.%N)
           printf 'uv_sync\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
@@ -182,16 +226,35 @@ jobs:
             fi
           done
 
-      - name: "Phase - save compile cache"
+      - name: "Phase - pack cache tarball"
         if: success()
-        uses: actions/cache/save@v4
+        run: |
+          set -euo pipefail
+          t0=$(date +%s.%N)
+          paths=()
+          for p in "$HOME/.fbuild" "$HOME/.fastled/global_cache" \
+                   "$GITHUB_WORKSPACE/fastled/.build/pio/${BENCH_BOARD}" \
+                   "${ZCCACHE_CACHE_DIR}"; do
+            if [ -d "$p" ]; then paths+=("$p"); fi
+          done
+          if [ "${#paths[@]}" -eq 0 ]; then
+            echo "no cache dirs to pack" >&2
+            exit 1
+          fi
+          tar --use-compress-program='zstd -T0 -3' -cPf "$BENCH_CACHE_TARBALL" "${paths[@]}"
+          t1=$(date +%s.%N)
+          printf 'pack_cache\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
+          ls -lh "$BENCH_CACHE_TARBALL"
+
+      - name: "Phase - upload cache artifact"
+        if: success()
+        uses: actions/upload-artifact@v4
         with:
-          path: |
-            ~/.fbuild
-            ~/.fastled/global_cache
-            fastled/.build/pio/${{ env.BENCH_BOARD }}
-            ${{ steps.soldr-setup.outputs.build-cache-path }}
-          key: "bench-v6-${{ steps.bench_config.outputs.cache_bust }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.soldr-setup.outputs.soldr-version }}-${{ steps.bench_config.outputs.board }}-${{ steps.bench_config.outputs.ref }}"
+          name: bench-cache-${{ env.BENCH_BOARD }}-${{ env.BENCH_REF }}-${{ steps.soldr-setup.outputs.soldr-version }}-${{ steps.bench_config.outputs.cache_bust }}
+          path: ${{ env.BENCH_CACHE_TARBALL }}
+          retention-days: 30
+          if-no-files-found: error
+          overwrite: true
 
       - name: "Phase - job total + summary"
         if: always()
@@ -205,12 +268,12 @@ jobs:
             echo ""
             echo "- run: \`${{ github.run_id }}\` attempt \`${{ github.run_attempt }}\`"
             echo "- commit: \`${{ github.sha }}\`"
-            echo "- cache-hit: \`${{ steps.compile_cache.outputs.cache-hit }}\`"
+            echo "- warm-restore hit: \`${{ steps.warm_restore.outputs.warm }}\` (source run \`${{ steps.warm_restore.outputs.source_run }}\`)"
             echo "- cache-bust: \`${BENCH_CACHE_BUST:-<none>}\`"
             echo ""
             echo "| phase | seconds |"
             echo "|-------|--------:|"
-            awk -F'\t' 'NR>1 && $1 !~ /^compile_cache_/ {printf "| %s | %s |\n", $1, $2}' "$BENCH_TIMINGS"
+            awk -F'\t' 'NR>1 && $1 !~ /^warm_restore_(hit|source_run)$/ {printf "| %s | %s |\n", $1, $2}' "$BENCH_TIMINGS"
           } >> "$GITHUB_STEP_SUMMARY"
 
           echo "=== phase-timings.tsv ==="

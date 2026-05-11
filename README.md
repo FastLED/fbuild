@@ -38,16 +38,30 @@ git push
 
 Each phase writes one row into `phase-timings.tsv` (uploaded as an artifact):
 
-| phase               | what it measures                                              |
-|---------------------|----------------------------------------------------------------|
-| `checkout_fbuild`   | shallow-clone `fbuild` to pull the `setup` composite action     |
-| `fbuild_cache_hit`  | `true`/`false` — did we restore the fbuild cache from a prior run |
-| `clone_fastled`     | `git clone` FastLED at the requested ref                        |
-| `uv_sync`           | FastLED's `./install` / `uv sync` to materialize the .venv      |
-| `compile`           | `./compile --no-interactive --no-parallel <board> <examples>`   |
-| `job_total`         | end-to-end wall-clock from job start to end                     |
+| phase                       | what it measures                                              |
+|-----------------------------|----------------------------------------------------------------|
+| `clone_fastled`             | `git clone` FastLED at the requested ref                        |
+| `warm_restore`              | seconds to look up + download + extract the prior-run cache artifact (or 0 if cold) |
+| `warm_restore_hit`          | `true`/`false` — did we restore from a prior run's artifact      |
+| `warm_restore_source_run`   | run id we restored from (or `<none>`)                            |
+| `uv_sync`                   | FastLED's `./install` / `uv sync` to materialize the .venv      |
+| `compile`                   | `./compile --no-interactive --no-parallel <board> <examples>`   |
+| `pack_cache`                | tar+zstd the cache dirs into `bench-cache.tar.zst`               |
+| `job_total`                 | end-to-end wall-clock from job start to end                     |
 
-`actions/setup-python` and `pip install fbuild` are inside the composite `setup` action so their wall-clock shows up in the Actions UI under that step rather than in the TSV.
+The `pip install fbuild` step is inside the FastLED `./install` script (which calls `uv sync`), so it shows up as part of `uv_sync` in the TSV.
+
+## Cache strategy (iter7+)
+
+This benchmark uses `actions/upload-artifact` + `actions/download-artifact` instead of `actions/cache`. Why: `FastLED/fbuild` has ~9.4GB of toolchain caches on `main` (close to the 10GB repo cap), and any new save triggers LRU eviction of our small 64MB bench cache within ~20 minutes. Artifacts have a separate, generous quota and 30-day retention here, so a warm cache survives between runs.
+
+On each run:
+
+1. Look up the most recent successful benchmark run on this branch.
+2. Try to download the artifact named `bench-cache-${BOARD}-${REF}-${SOLDR_VER}-${CACHE_BUST}`.
+3. If found, extract it (preserves absolute paths via `tar -xPf`). Sets `warm_restore_hit=true`.
+4. If not found, run cold.
+5. After compile, repack the cache dirs into a new artifact with the same name (overwrites the prior one).
 
 ## Interpreting results
 
