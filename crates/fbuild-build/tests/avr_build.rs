@@ -6,7 +6,11 @@
 //! Run with: `uv run soldr cargo test -p fbuild-build --test avr_build -- --ignored`
 
 use std::fs;
-use std::path::PathBuf;
+use std::io::Cursor;
+use std::path::{Path, PathBuf};
+
+use filetime::{set_file_mtime, FileTime};
+use tar::{Archive, Builder};
 
 use fbuild_build::{BuildOrchestrator, BuildParams};
 use fbuild_core::BuildProfile;
@@ -292,5 +296,257 @@ void loop() {
     eprintln!(
         "Self-contained build: flash={} ram={} time={:.1}s",
         size.total_flash, size.total_ram, result.build_time_secs
+    );
+}
+
+const UNO_PLATFORMIO_INI: &str =
+    "[env:uno]\nplatform = atmelavr\nboard = uno\nframework = arduino\n";
+
+const UNO_BLINK_INO: &str = "\
+void setup() {
+  pinMode(13, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(13, HIGH);
+  delay(1000);
+  digitalWrite(13, LOW);
+  delay(1000);
+}
+";
+
+fn scaffold_uno_blink(project_dir: &Path) {
+    fs::write(project_dir.join("platformio.ini"), UNO_PLATFORMIO_INI).unwrap();
+    let src_dir = project_dir.join("src");
+    fs::create_dir_all(&src_dir).unwrap();
+    fs::write(src_dir.join("blink.ino"), UNO_BLINK_INO).unwrap();
+}
+
+fn uno_build_params(project_dir: &Path, build_dir: PathBuf, clean: bool) -> BuildParams {
+    BuildParams {
+        project_dir: project_dir.to_path_buf(),
+        env_name: "uno".to_string(),
+        clean,
+        profile: BuildProfile::Release,
+        build_dir,
+        verbose: false,
+        jobs: None,
+        generate_compiledb: false,
+        compiledb_only: false,
+        log_sender: None,
+        symbol_analysis: false,
+        symbol_analysis_path: None,
+        no_timestamp: false,
+        src_dir: None,
+        pio_env: Default::default(),
+        extra_build_flags: Vec::new(),
+        watch_set_cache: None,
+    }
+}
+
+fn tar_directory(root: &Path) -> Vec<u8> {
+    let mut builder = Builder::new(Vec::new());
+    builder.follow_symlinks(false);
+    builder.append_dir_all("proj", root).unwrap();
+    builder.into_inner().unwrap()
+}
+
+fn untar_into(bytes: &[u8], dest: &Path) {
+    fs::create_dir_all(dest).unwrap();
+    let mut archive = Archive::new(Cursor::new(bytes));
+    archive.set_preserve_mtime(false);
+    archive.unpack(dest).unwrap();
+}
+
+fn stomp_mtimes(root: &Path, mtime: FileTime) {
+    for entry in walkdir::WalkDir::new(root).into_iter().flatten() {
+        if entry.file_type().is_file() {
+            // Best-effort: some restored files (e.g. read-only artifacts on Windows)
+            // may refuse mtime updates; the test's correctness does not depend on every
+            // file being stomped, only on enough source-tree files having mtimes that
+            // differ from the originals.
+            let _ = set_file_mtime(entry.path(), mtime);
+        }
+    }
+}
+
+fn fingerprint_path(project_dir: &Path) -> PathBuf {
+    project_dir.join(".fbuild/build/uno/release/build_fingerprint.json")
+}
+
+/// RAII guard for an env var: sets it on construction, restores the previous
+/// value on drop. Test-only helper so the env var leak does not pollute other
+/// tests that share this process.
+struct EnvVarGuard {
+    key: &'static str,
+    previous: Option<std::ffi::OsString>,
+}
+
+impl EnvVarGuard {
+    fn set(key: &'static str, value: &str) -> Self {
+        let previous = std::env::var_os(key);
+        std::env::set_var(key, value);
+        Self { key, previous }
+    }
+}
+
+impl Drop for EnvVarGuard {
+    fn drop(&mut self) {
+        match &self.previous {
+            Some(value) => std::env::set_var(self.key, value),
+            None => std::env::remove_var(self.key),
+        }
+    }
+}
+
+/// End-to-end regression gate for #147: build → tar → restore at a different parent →
+/// rebuild must hit the warm fast path. Integration-level companion to the hermetic
+/// unit test in `tests/cache_survives_tar_extract.rs`.
+///
+/// Failure modes this catches that the unit test cannot:
+///   * Orchestrator state persisted outside the watch set (e.g., a side file the
+///     fast-path predicate forgot about) that gets invalidated by tar-extract.
+///   * Fast-path predicate bugs that pass the per-layer unit tests but reject a
+///     legitimately-cached `BuildResult`.
+///   * Absolute paths baked into a build artifact that the fast-path check actually
+///     reads (compile DB, build_fingerprint.json) but the unit test does not cover.
+///
+/// `FBUILD_NO_ZCCACHE=1` is set for this test on purpose: the zccache layer has its
+/// own fingerprint-state machinery that may not survive a tar-restore on every
+/// platform, and that concern is already covered by
+/// `zccache_hit_across_workspace_rename.rs`. This test isolates the fbuild-owned
+/// fast-path predicate (build_fingerprint.json + watch-set stamps) -- which is the
+/// machinery the #147 fix actually changed.
+///
+/// Gated `#[ignore]` because it downloads avr-gcc + Arduino-AVR core (cached globally
+/// after first run, but still adds 30s+ to first invocation).
+#[test]
+#[ignore]
+fn cache_survives_tar_extract_uno() {
+    let _no_zccache = EnvVarGuard::set("FBUILD_NO_ZCCACHE", "1");
+
+    let tmp_a = tempfile::TempDir::new().unwrap();
+    let proj_a = tmp_a.path().join("proj");
+    fs::create_dir_all(&proj_a).unwrap();
+    scaffold_uno_blink(&proj_a);
+
+    let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
+
+    let cold_result = orchestrator
+        .build(&uno_build_params(
+            &proj_a,
+            proj_a.join(".fbuild/build"),
+            true,
+        ))
+        .expect("cold AVR build should succeed");
+    assert!(cold_result.success, "cold build should report success");
+    assert!(
+        !cold_result.message.contains("reused cached artifacts"),
+        "cold build hit fast path unexpectedly; test setup invariant broken: {}",
+        cold_result.message,
+    );
+    assert!(
+        fingerprint_path(&proj_a).exists(),
+        "cold build did not persist build_fingerprint.json at {} -- \
+         orchestrator never reached persist_fast_path_success.",
+        fingerprint_path(&proj_a).display()
+    );
+    let cold_hex = fs::read(
+        cold_result
+            .firmware_path
+            .as_ref()
+            .expect("cold build should produce hex"),
+    )
+    .unwrap();
+    let cold_time = cold_result.build_time_secs;
+    eprintln!("cold build: {:.2}s", cold_time);
+
+    // Sanity gate: a same-project warm rebuild MUST hit the fast path before we
+    // bother testing the tar-extract case. If this asserts, the test is failing
+    // because of an orchestrator/fast-path bug unrelated to tar restoration.
+    let same_project_warm = orchestrator
+        .build(&uno_build_params(
+            &proj_a,
+            proj_a.join(".fbuild/build"),
+            false,
+        ))
+        .expect("same-project warm build should succeed");
+    assert!(
+        same_project_warm
+            .message
+            .contains("reused cached artifacts"),
+        "same-project warm rebuild did not hit fast path -- the regression is in the \
+         fast-path predicate itself, not in tar-restore handling. message: {}",
+        same_project_warm.message,
+    );
+    eprintln!(
+        "same-project warm: {:.2}s (fast-path hit confirmed)",
+        same_project_warm.build_time_secs
+    );
+
+    let tarball = tar_directory(&proj_a);
+
+    let tmp_b = tempfile::TempDir::new().unwrap();
+    let relocation_root = tmp_b.path().join("nested").join("run-b").join("deeper");
+    fs::create_dir_all(&relocation_root).unwrap();
+    untar_into(&tarball, &relocation_root);
+    let proj_b = relocation_root.join("proj");
+    assert!(
+        proj_b.join("src/blink.ino").exists(),
+        "tar restore left no src/blink.ino at {}",
+        proj_b.display()
+    );
+    assert!(
+        proj_b.join(".fbuild/build").exists(),
+        "tar restore left no .fbuild/build/ at {}",
+        proj_b.display()
+    );
+    assert_ne!(
+        proj_a.parent(),
+        proj_b.parent(),
+        "test setup invariant: restored project must live under a different parent path"
+    );
+
+    stomp_mtimes(&proj_b, FileTime::from_unix_time(1_577_836_800, 0)); // 2020-01-01 UTC
+
+    let warm_result = orchestrator
+        .build(&uno_build_params(
+            &proj_b,
+            proj_b.join(".fbuild/build"),
+            false,
+        ))
+        .expect("warm AVR build (post tar-extract) should succeed");
+    assert!(warm_result.success, "warm build should report success");
+    assert!(
+        warm_result.message.contains("reused cached artifacts"),
+        "warm build did NOT hit fast path -- this is the regression #147 was supposed to \
+         prevent. message: {}",
+        warm_result.message,
+    );
+
+    let warm_hex = fs::read(
+        warm_result
+            .firmware_path
+            .as_ref()
+            .expect("warm build should still report a hex path"),
+    )
+    .unwrap();
+    assert_eq!(
+        cold_hex, warm_hex,
+        "warm build returned a different firmware.hex than the cold build; \
+         fast-path artifacts diverged across tar-restore."
+    );
+
+    let warm_time = warm_result.build_time_secs;
+    eprintln!(
+        "warm build (post tar-extract relocation): {:.2}s (cold was {:.2}s)",
+        warm_time, cold_time
+    );
+    assert!(
+        warm_time < cold_time,
+        "warm build ({:.2}s) was not faster than cold build ({:.2}s); fast-path is not \
+         actually short-circuiting the compile/link stack.",
+        warm_time,
+        cold_time,
     );
 }
