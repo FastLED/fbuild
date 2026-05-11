@@ -72,3 +72,6 @@ zccache-artifact = "1.4.0"
 # die with the daemon. Published to crates.io is pending; pin a git rev.
 # See FastLED/fbuild#32.
 running-process-core = { git = "https://github.com/zackees/running-process", rev = "ff9d7972504f7a0dcee0f410274daf3b02e4fcc2", package = "running-process-core" }
+
+[profile.dev]
+debug = 0
