@@ -55,6 +55,7 @@ vscode-fbuild/out/
 vscode-fbuild/node_modules/
 vscode-fbuild/*.vsix
 .claude/worktrees/
+.claude/scheduled_tasks.lock
 /bin/
 
 # Local agent-loop scratch — LOOP.md is an operator-driven benchmark spec
