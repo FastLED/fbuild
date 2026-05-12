@@ -66,6 +66,8 @@ rusqlite = { version = "0.31", features = ["bundled"] }
 shell-words = "1"
 bincode = "1"
 zccache-artifact = "1.4.0"
+rayon = "1"
+tracing-test = "0.2"
 
 # Process containment: all subprocess spawns the daemon performs (compilers,
 # esptool, qemu, simavr, node, npm, …) and any grandchildren they fork must

@@ -20,13 +20,25 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
 
-use fbuild_header_scan::walk;
+use fbuild_header_scan::{walk_with_state, WalkState};
 use fbuild_packages::library::FrameworkLibrary;
 use serde::{Deserialize, Serialize};
 
 pub mod cache;
 
 pub use cache::{cache_key, resolve_cached, CacheKeyInputs, CachedSelection};
+
+/// Stats emitted by [`resolve_with_stats`] for performance assertions and
+/// daemon-side observability. `files_read` is the total number of physical
+/// `std::fs::read_to_string` invocations across all LDF passes within a
+/// single `resolve` call; `passes` is the total pass count (Pass 1 plus
+/// every reconciliation iteration that ran, including the final
+/// no-change iteration that proved convergence).
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub struct ResolveStats {
+    pub files_read: usize,
+    pub passes: usize,
+}
 
 /// Resolved library selection plus the transitive include closure.
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -59,9 +71,27 @@ pub fn resolve(
     project_search_paths: &[PathBuf],
     libraries: &[FrameworkLibrary],
 ) -> Selection {
+    resolve_with_stats(seeds, project_search_paths, libraries).0
+}
+
+/// Same contract as [`resolve`] but also returns [`ResolveStats`] so callers
+/// can observe the number of physical file reads and LDF passes performed.
+///
+/// Internally this is the single implementation; [`resolve`] simply discards
+/// the stats. A shared [`WalkState`] is threaded through every pass so that
+/// any file scanned by Pass 1 is reused (not re-read) by Pass 2's
+/// reconciliation walk. Each pass is wrapped in an `ldf_pass` tracing span;
+/// the walker emits its own `ldf_walk` span per BFS invocation.
+pub fn resolve_with_stats(
+    seeds: &[PathBuf],
+    project_search_paths: &[PathBuf],
+    libraries: &[FrameworkLibrary],
+) -> (Selection, ResolveStats) {
     let mut selected: BTreeSet<usize> = BTreeSet::new();
     let mut all_included: BTreeSet<PathBuf> = BTreeSet::new();
     let mut all_unresolved: BTreeSet<String> = BTreeSet::new();
+    let mut state = WalkState::new();
+    let mut pass_count: usize = 0;
 
     let canon_lib_dirs: Vec<Vec<PathBuf>> = libraries
         .iter()
@@ -83,31 +113,43 @@ pub fn resolve(
     }
 
     // Pass 1: BFS from project seeds.
-    let res = walk(seeds, &full_search_paths);
-    for p in &res.reached {
-        all_included.insert(p.clone());
-    }
-    for u in &res.unresolved {
-        all_unresolved.insert(u.clone());
-    }
-    for (idx, dirs) in canon_lib_dirs.iter().enumerate() {
-        if res.reached.iter().any(|p| path_in_any(p, dirs)) {
-            selected.insert(idx);
+    {
+        let _span = tracing::info_span!("ldf_pass", pass = 1u32).entered();
+        pass_count += 1;
+        tracing::info!(pass = 1u32, "ldf_pass");
+        let res = walk_with_state(seeds, &full_search_paths, &mut state);
+        for p in &res.reached {
+            all_included.insert(p.clone());
+        }
+        for u in &res.unresolved {
+            all_unresolved.insert(u.clone());
+        }
+        for (idx, dirs) in canon_lib_dirs.iter().enumerate() {
+            if res.reached.iter().any(|p| path_in_any(p, dirs)) {
+                selected.insert(idx);
+            }
         }
     }
 
-    // Pass 2: reconciliation. Re-walk with each selected library's full source
-    // set as seeds, in case a lib-to-lib dep is only visible through a `.cpp`
-    // (not a header). Keeps iterating until the selection stabilizes, which for
-    // realistic Arduino-library graphs is 1–2 rounds.
+    // Pass 2+: reconciliation. Re-walk with each selected library's full
+    // source set as seeds, in case a lib-to-lib dep is only visible through a
+    // `.cpp` (not a header). Keeps iterating until the selection stabilizes,
+    // which for realistic Arduino-library graphs is 1–2 rounds. With the
+    // shared `WalkState`, `res.reached` is the *delta* of newly-discovered
+    // files for this pass -- the prefix-match check still works correctly
+    // because a library can only become newly-selected via a path reached for
+    // the first time in this pass.
     loop {
+        pass_count += 1;
+        let _span = tracing::info_span!("ldf_pass", pass = pass_count as u32).entered();
+        tracing::info!(pass = pass_count as u32, "ldf_pass");
         let mut recon_seeds: Vec<PathBuf> = seeds.to_vec();
         for idx in &selected {
             for src in &libraries[*idx].source_files {
                 recon_seeds.push(src.clone());
             }
         }
-        let res = walk(&recon_seeds, &full_search_paths);
+        let res = walk_with_state(&recon_seeds, &full_search_paths, &mut state);
         for p in &res.reached {
             all_included.insert(p.clone());
         }
@@ -147,13 +189,18 @@ pub fn resolve(
     required_libraries.sort();
     required_libraries.dedup();
 
-    Selection {
+    let selection = Selection {
         included_files: all_included.into_iter().collect(),
         required_libraries,
         source_files: source_files.into_iter().collect(),
         include_dirs: include_dirs.into_keys().collect(),
         unresolved: all_unresolved.into_iter().collect(),
-    }
+    };
+    let stats = ResolveStats {
+        files_read: state.files_read(),
+        passes: pass_count,
+    };
+    (selection, stats)
 }
 
 fn canon(p: &Path) -> PathBuf {
