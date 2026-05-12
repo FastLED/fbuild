@@ -101,8 +101,23 @@ impl Linker for TeensyLinker {
             tracing::info!("link: {}", args.join(" "));
         }
 
-        let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, None, None)?;
+        // On Windows, use a response file to avoid command-line length limits
+        // (teensy41 produces ~500 .o files; see issue #234).
+        let result = if cfg!(windows) && args.len() > 50 {
+            let temp_dir = output_dir.join("tmp");
+            std::fs::create_dir_all(&temp_dir)?;
+            let rsp_content: Vec<String> = args[1..].iter().map(|a| a.replace('\\', "/")).collect();
+            let rsp_path = fbuild_core::response_file::write_response_file(
+                &rsp_content,
+                &temp_dir,
+                "teensy_link",
+            )?;
+            let rsp_arg = format!("@{}", rsp_path.display());
+            run_command(&[args[0].as_str(), &rsp_arg], None, None, None)?
+        } else {
+            let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
+            run_command(&args_ref, None, None, None)?
+        };
 
         if !result.success() {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(
