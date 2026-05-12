@@ -36,6 +36,10 @@ impl BuildOrchestrator for Apollo3Orchestrator {
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
         let mut ctx = pipeline::BuildContext::new(params)?;
 
+        // Compute eh_frame strip policy once per build (FastLED/fbuild#244).
+        let eh_frame_policy =
+            crate::eh_frame_policy_compute::compute_eh_frame_policy(&ctx, params.profile, None);
+
         // 3. Ensure ARM GCC 8 toolchain (Apollo3/mbed-os requires GCC 8)
         let toolchain = fbuild_packages::toolchain::ArmGcc8Toolchain::new(&params.project_dir);
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
@@ -182,7 +186,8 @@ impl BuildOrchestrator for Apollo3Orchestrator {
             params.profile,
             params.verbose,
         )
-        .with_build_unflags(ctx.build_unflags.clone());
+        .with_build_unflags(ctx.build_unflags.clone())
+        .with_eh_frame_policy(eh_frame_policy);
 
         // 8. Create linker
         let linker_script = framework.get_linker_script();

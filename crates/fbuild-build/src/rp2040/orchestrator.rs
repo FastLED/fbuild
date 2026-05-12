@@ -48,6 +48,7 @@ struct Rp2040FingerprintMetadata {
     platform: String,
     max_flash: Option<u64>,
     max_ram: Option<u64>,
+    eh_frame_policy: &'static str,
 }
 
 fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
@@ -68,6 +69,10 @@ impl BuildOrchestrator for Rp2040Orchestrator {
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
         let mut ctx = pipeline::BuildContext::new(params)?;
+
+        // Compute eh_frame strip policy once per build (FastLED/fbuild#244).
+        let eh_frame_policy =
+            crate::eh_frame_policy_compute::compute_eh_frame_policy(&ctx, params.profile, None);
 
         // 3. Ensure the arduino-pico-matched pqt-gcc toolchain
         let toolchain = fbuild_packages::toolchain::Rp2040PqtToolchain::new(&params.project_dir);
@@ -111,6 +116,10 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             platform: "raspberrypi".to_string(),
             max_flash: ctx.board.max_flash,
             max_ram: ctx.board.max_ram,
+            eh_frame_policy: match eh_frame_policy {
+                crate::eh_frame_policy::EhFramePolicy::Strip => "strip",
+                crate::eh_frame_policy::EhFramePolicy::Preserve => "preserve",
+            },
         })?;
         let (fast_elf, [fast_bin], fast_compile_db) =
             expected_fast_path_artifacts(&build_dir, &params.project_dir, ["firmware.bin"]);
@@ -244,7 +253,8 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             params.profile,
             params.verbose,
         )
-        .with_build_unflags(ctx.build_unflags.clone());
+        .with_build_unflags(ctx.build_unflags.clone())
+        .with_eh_frame_policy(eh_frame_policy);
 
         // 7. Generate the linker script the same way upstream does.
         let linker_script =

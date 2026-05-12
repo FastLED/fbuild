@@ -12,6 +12,8 @@ pub mod ch32v;
 pub mod compile_database;
 pub mod compile_many;
 pub mod compiler;
+pub mod eh_frame_policy;
+pub(crate) mod eh_frame_policy_compute;
 pub mod esp32;
 pub mod esp8266;
 pub mod flag_overlay;

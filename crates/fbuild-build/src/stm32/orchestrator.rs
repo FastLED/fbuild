@@ -43,6 +43,10 @@ impl BuildOrchestrator for Stm32Orchestrator {
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
         let mut ctx = pipeline::BuildContext::new(params)?;
 
+        // Compute eh_frame strip policy once per build (FastLED/fbuild#244).
+        let eh_frame_policy =
+            crate::eh_frame_policy_compute::compute_eh_frame_policy(&ctx, params.profile, None);
+
         // 3. Ensure ARM GCC toolchain
         let toolchain = fbuild_packages::toolchain::ArmToolchain::new(&params.project_dir);
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
@@ -247,7 +251,8 @@ impl BuildOrchestrator for Stm32Orchestrator {
             params.profile,
             params.verbose,
         )
-        .with_build_unflags(ctx.build_unflags.clone());
+        .with_build_unflags(ctx.build_unflags.clone())
+        .with_eh_frame_policy(eh_frame_policy);
 
         // 7. Create linker (linker script from variant dir)
         let linker_script = match ctx.board.ldscript.as_deref() {
@@ -310,6 +315,10 @@ fn build_arduino_mbed_stm32(
     toolchain: &fbuild_packages::toolchain::ArmToolchain,
     start: Instant,
 ) -> Result<BuildResult> {
+    // Compute eh_frame strip policy once per build (FastLED/fbuild#244).
+    let eh_frame_policy =
+        crate::eh_frame_policy_compute::compute_eh_frame_policy(&ctx, params.profile, None);
+
     let framework = fbuild_packages::library::ArduinoMbedCore::new(&params.project_dir);
     let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
     tracing::info!("Arduino mbed core at {}", framework_dir.display());
@@ -394,7 +403,8 @@ fn build_arduino_mbed_stm32(
         params.profile,
         params.verbose,
     )
-    .with_build_unflags(ctx.build_unflags.clone());
+    .with_build_unflags(ctx.build_unflags.clone())
+    .with_eh_frame_policy(eh_frame_policy);
 
     let linker = ArmLinker::new(
         toolchain.get_gcc_path(),

@@ -57,6 +57,7 @@ struct AvrFingerprintMetadata {
     platform: String,
     max_flash: Option<u64>,
     max_ram: Option<u64>,
+    eh_frame_policy: &'static str,
 }
 
 fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
@@ -89,6 +90,11 @@ impl BuildOrchestrator for AvrOrchestrator {
         //      (config-parse, board-load, build-dirs, flag-collect) into
         //      the shared `perf` timer.
         let mut ctx = pipeline::BuildContext::new_with_perf(params, Some(&mut perf))?;
+
+        // Compute eh_frame strip policy once per build (FastLED/fbuild#244).
+        // No sdkconfig on AVR.
+        let eh_frame_policy =
+            crate::eh_frame_policy_compute::compute_eh_frame_policy(&ctx, params.profile, None);
 
         // 3. Ensure toolchain
         let (toolchain, toolchain_dir) = {
@@ -138,6 +144,10 @@ impl BuildOrchestrator for AvrOrchestrator {
             platform: "atmelavr".to_string(),
             max_flash: ctx.board.max_flash,
             max_ram: ctx.board.max_ram,
+            eh_frame_policy: match eh_frame_policy {
+                crate::eh_frame_policy::EhFramePolicy::Strip => "strip",
+                crate::eh_frame_policy::EhFramePolicy::Preserve => "preserve",
+            },
         })?;
         let (fast_elf, [fast_hex], fast_compile_db) =
             expected_fast_path_artifacts(build_dir, &params.project_dir, ["firmware.hex"]);
@@ -224,7 +234,8 @@ impl BuildOrchestrator for AvrOrchestrator {
             params.profile,
             params.verbose,
         )
-        .with_build_unflags(ctx.build_unflags.clone());
+        .with_build_unflags(ctx.build_unflags.clone())
+        .with_eh_frame_policy(eh_frame_policy);
 
         // 7. Create linker
         let linker = AvrLinker::new(

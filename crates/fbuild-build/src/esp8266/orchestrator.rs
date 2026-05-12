@@ -39,6 +39,11 @@ impl BuildOrchestrator for Esp8266Orchestrator {
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
         let mut ctx = pipeline::BuildContext::new(params)?;
 
+        // Compute eh_frame strip policy once per build (FastLED/fbuild#244).
+        // No sdkconfig on ESP8266.
+        let eh_frame_policy =
+            crate::eh_frame_policy_compute::compute_eh_frame_policy(&ctx, params.profile, None);
+
         // 3. Ensure toolchain
         let toolchain = fbuild_packages::toolchain::Esp8266Toolchain::new(&params.project_dir);
         let _toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
@@ -137,7 +142,8 @@ impl BuildOrchestrator for Esp8266Orchestrator {
             params.profile,
             params.verbose,
         )
-        .with_build_unflags(ctx.build_unflags.clone());
+        .with_build_unflags(ctx.build_unflags.clone())
+        .with_eh_frame_policy(eh_frame_policy);
 
         // Resolve linker script from board config
         let ldscript = ctx

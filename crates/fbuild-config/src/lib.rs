@@ -10,6 +10,7 @@ pub mod board;
 pub mod ini_parser;
 pub mod mcu;
 pub mod pio_env;
+pub mod sdkconfig;
 
 pub use board::{BoardConfig, DebugToolMeta, Esp32QemuPsramConfig};
 pub use ini_parser::PlatformIOConfig;
