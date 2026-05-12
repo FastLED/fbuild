@@ -234,6 +234,7 @@ jobs:
           paths=()
           for p in "$HOME/.fbuild" "$HOME/.fastled/global_cache" \
                    "$GITHUB_WORKSPACE/fastled/.build/pio/${BENCH_BOARD}" \
+                   "$GITHUB_WORKSPACE/fastled/.venv" \
                    "${ZCCACHE_CACHE_DIR}"; do
             if [ -d "$p" ]; then paths+=("$p"); fi
           done
@@ -241,7 +242,11 @@ jobs:
             echo "no cache dirs to pack" >&2
             exit 1
           fi
-          tar --use-compress-program='zstd -T0 -3' -cPf "$BENCH_CACHE_TARBALL" "${paths[@]}"
+          # --dereference: follow Python interpreter symlinks in fastled/.venv so
+          # the restored venv carries its own bin/python copy and survives across
+          # runs where actions/setup-python may pick a different interpreter path
+          # (see #239).
+          tar --dereference --use-compress-program='zstd -T0 -3' -cPf "$BENCH_CACHE_TARBALL" "${paths[@]}"
           t1=$(date +%s.%N)
           printf 'pack_cache\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
           ls -lh "$BENCH_CACHE_TARBALL"
