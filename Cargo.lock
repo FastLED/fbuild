@@ -886,6 +886,7 @@ dependencies = [
  "blake3",
  "clap",
  "ctrlc",
+ "fbuild-build",
  "fbuild-config",
  "fbuild-core",
  "fbuild-deploy",

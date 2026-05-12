@@ -301,6 +301,38 @@ enum Commands {
         #[arg(long, conflicts_with = "explain")]
         json: bool,
     },
+    /// Two-stage compile of many sketches against the same board
+    /// (FastLED/fbuild#238). Builds the framework + library archives once
+    /// (stage 1) and fans out per-sketch compile + link in parallel
+    /// (stage 2). Independent parallelism knobs for each stage so memory-
+    /// heavy framework work stays modest while sketch work saturates cores.
+    CompileMany {
+        /// Board id (e.g. "uno", "teensy41"). Used to dispatch to the
+        /// right platform orchestrator and to pick the matching
+        /// `[env:<board>]` (or first env with `board = <board>`) inside
+        /// each sketch's `platformio.ini`.
+        #[arg(long)]
+        board: String,
+        /// Parallelism for stage 1 (framework + library compile). When
+        /// omitted, defaults to `min(cores, 2)`.
+        #[arg(long)]
+        framework_jobs: Option<usize>,
+        /// Parallelism for stage 2 (per-sketch compile + link). When
+        /// omitted, defaults to `cores`.
+        #[arg(long)]
+        sketch_jobs: Option<usize>,
+        /// Build profile.
+        #[arg(long, group = "compile_many_profile")]
+        quick: bool,
+        #[arg(long, group = "compile_many_profile")]
+        release: bool,
+        /// Verbose compiler output.
+        #[arg(short, long)]
+        verbose: bool,
+        /// Sketch project directories (each must contain `platformio.ini`).
+        #[arg(required = true)]
+        sketches: Vec<String>,
+    },
 }
 
 /// Subcommands for `fbuild lnk`.
@@ -441,6 +473,7 @@ const KNOWN_SUBCOMMANDS: &[&str] = &[
     "clang-query",
     "test-emu",
     "lib-select",
+    "compile-many",
 ];
 
 /// Rewrite `fbuild <dir> <subcommand> ...` → `fbuild <subcommand> <dir> ...`
@@ -755,6 +788,26 @@ async fn main() {
                 json,
             );
             std::process::exit(exit);
+        }
+        Some(Commands::CompileMany {
+            board,
+            framework_jobs,
+            sketch_jobs,
+            quick,
+            release,
+            verbose,
+            sketches,
+        }) => {
+            run_compile_many(
+                board,
+                framework_jobs,
+                sketch_jobs,
+                quick,
+                release,
+                verbose,
+                sketches,
+            )
+            .await
         }
         None => {
             // Default action: deploy with monitor (like Python fbuild)
@@ -1169,6 +1222,113 @@ async fn run_build(
         if db_path.exists() {
             println!("compile_commands.json written to {}", db_path.display());
         }
+    }
+    Ok(())
+}
+
+/// Handler for `fbuild compile-many` (FastLED/fbuild#238).
+///
+/// Runs the two-stage compile-many primitive in-process via the existing
+/// `fbuild-build` orchestrator. We bypass the daemon here on purpose: the
+/// design goal of #238 is "one process, one toolchain load, one LDF run,
+/// one framework build" — so all stage-1 + stage-2 work happens in this
+/// process, parallelism is driven by the `compile_many` thread pool, and
+/// no per-sketch daemon round-trip is incurred.
+async fn run_compile_many(
+    board: String,
+    framework_jobs: Option<usize>,
+    sketch_jobs: Option<usize>,
+    quick: bool,
+    release: bool,
+    verbose: bool,
+    sketches: Vec<String>,
+) -> fbuild_core::Result<()> {
+    use fbuild_build::compile_many::{compile_many, CompileManyRequest, Stage};
+
+    let profile = if release {
+        fbuild_core::BuildProfile::Release
+    } else if quick {
+        fbuild_core::BuildProfile::Quick
+    } else {
+        // Default to release: matches `fbuild build`'s default profile so
+        // CI builds aren't silently dropped into quick mode.
+        fbuild_core::BuildProfile::Release
+    };
+
+    let sketches: Vec<std::path::PathBuf> =
+        sketches.into_iter().map(std::path::PathBuf::from).collect();
+
+    let req = CompileManyRequest {
+        board: board.clone(),
+        sketches: sketches.clone(),
+        framework_jobs,
+        sketch_jobs,
+        profile,
+        verbose,
+    };
+
+    let effective_framework = req
+        .framework_jobs
+        .unwrap_or_else(fbuild_build::compile_many::default_framework_jobs);
+    let effective_sketch = req
+        .sketch_jobs
+        .unwrap_or_else(fbuild_build::compile_many::default_sketch_jobs);
+    println!(
+        "compile-many: board={} sketches={} framework_jobs={} sketch_jobs={}",
+        board,
+        sketches.len(),
+        effective_framework,
+        effective_sketch,
+    );
+
+    // `compile_many` is fully synchronous (CPU-bound). Run it on a
+    // blocking pool so we don't tie up the tokio runtime thread.
+    let result = tokio::task::spawn_blocking(move || compile_many(req))
+        .await
+        .map_err(|e| {
+            fbuild_core::FbuildError::Other(format!("compile-many task panicked: {e}"))
+        })??;
+
+    // Per-sketch result map suitable for the bench summary.
+    println!();
+    println!("compile-many results:");
+    for r in &result.results {
+        let stage_label = match r.stage {
+            Stage::Stage1Framework => "stage1",
+            Stage::Stage2Sketch => "stage2",
+        };
+        let status = if r.success { "OK" } else { "FAIL" };
+        let log_str = r
+            .log_path
+            .as_ref()
+            .map(|p| p.display().to_string())
+            .unwrap_or_else(|| "-".to_string());
+        println!(
+            "  [{}] {} ({:.2}s) {}  log={}  {}",
+            stage_label,
+            status,
+            r.build_time_secs,
+            r.sketch.display(),
+            log_str,
+            r.message,
+        );
+    }
+    println!();
+    println!(
+        "compile-many summary: stage1={}/{:.2}s stage2={}/{:.2}s total={:.2}s",
+        result.stage1_count,
+        result.stage1_secs,
+        result.stage2_count,
+        result.stage2_secs,
+        result.total_secs,
+    );
+
+    if !result.all_success {
+        return Err(fbuild_core::FbuildError::BuildFailed(format!(
+            "compile-many: {}/{} sketches failed",
+            result.results.iter().filter(|r| !r.success).count(),
+            result.results.len(),
+        )));
     }
     Ok(())
 }
