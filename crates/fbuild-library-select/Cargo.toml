@@ -20,6 +20,7 @@ zccache-artifact = { workspace = true }
 tempfile = { workspace = true }
 criterion = { workspace = true }
 fbuild-test-support = { path = "../fbuild-test-support" }
+tracing-test = { workspace = true, features = ["no-env-filter"] }
 
 [[bench]]
 name = "resolve_cold"
