@@ -10,6 +10,7 @@ pub mod build_fingerprint;
 pub mod build_output;
 pub mod ch32v;
 pub mod compile_database;
+pub mod compile_many;
 pub mod compiler;
 pub mod esp32;
 pub mod esp8266;

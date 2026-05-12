@@ -13,6 +13,7 @@ Build orchestration for all supported embedded platforms.
 - **`compile_database.rs`** -- Generates `compile_commands.json` for clangd/IDE support
 - **`build_output.rs`** -- Uniform build log formatting across all platforms
 - **`zccache.rs`** -- Optional zccache compiler cache wrapper integration
+- **`compile_many.rs`** -- Two-stage primitive for batched sketch builds (FastLED/fbuild#238): framework + libs built once with `--framework-jobs`, then per-sketch compile + link fanned out across `--sketch-jobs` workers
 
 ## Native `extra_scripts` Boundary
 

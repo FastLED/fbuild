@@ -12,6 +12,7 @@ path = "src/main.rs"
 
 [dependencies]
 fbuild-core = { path = "../fbuild-core" }
+fbuild-build = { path = "../fbuild-build" }
 fbuild-config = { path = "../fbuild-config" }
 fbuild-deploy = { path = "../fbuild-deploy" }
 fbuild-library-select = { path = "../fbuild-library-select" }
