@@ -162,6 +162,7 @@ fn make_request(
         sketch_jobs: Some(sketch_jobs),
         profile: BuildProfile::Release,
         verbose: false,
+        pio_env: std::collections::HashMap::new(),
     }
 }
 
