@@ -66,6 +66,7 @@ struct Esp32FingerprintMetadata {
     flash_size: String,
     max_flash: Option<u64>,
     max_ram: Option<u64>,
+    eh_frame_policy: &'static str,
 }
 
 fn framework_failure_marker(build_dir: &Path, lib_name: &str) -> PathBuf {
@@ -163,6 +164,17 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
         let mut ctx = crate::pipeline::BuildContext::new_with_perf(params, Some(&mut perf))?;
 
+        // Compute eh_frame strip policy once per build (FastLED/fbuild#243).
+        // Reads sdkconfig from the project dir (ESP32 only) so panic-backtrace
+        // / gdbstub users automatically Preserve.
+        let sdkconfig =
+            fbuild_config::sdkconfig::SdkConfigSummary::from_project_dir(&params.project_dir);
+        let eh_frame_policy = crate::eh_frame_policy_compute::compute_eh_frame_policy(
+            &ctx,
+            params.profile,
+            Some(&sdkconfig),
+        );
+
         // 3. Load MCU config from embedded JSON
         let mut mcu_config = get_mcu_config(&ctx.board.mcu)?;
 
@@ -243,6 +255,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
             flash_size: flash_size.clone(),
             max_flash: ctx.board.max_flash,
             max_ram: ctx.board.max_ram,
+            eh_frame_policy: match eh_frame_policy {
+                crate::eh_frame_policy::EhFramePolicy::Strip => "strip",
+                crate::eh_frame_policy::EhFramePolicy::Preserve => "preserve",
+            },
         })?;
         let (fast_elf, [fast_bin, fast_boot, fast_parts, fast_app0], fast_compile_db) =
             expected_fast_path_artifacts(
@@ -446,7 +462,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 params.verbose,
                 build_dir.join("tmp"),
             )
-            .with_build_unflags(ctx.build_unflags.clone());
+            .with_build_unflags(ctx.build_unflags.clone())
+            .with_eh_frame_policy(eh_frame_policy);
             // Apply user build_flags to library compilation (matching PlatformIO behavior).
             // User flags like -std=gnu++2a replace the MCU config's -std=gnu++2b.
             let c_flags = apply_overlay_flags(&temp_compiler.c_flags(), &user_overlay, "dummy.c");
@@ -511,7 +528,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 params.verbose,
                 build_dir.join("tmp"),
             )
-            .with_build_unflags(ctx.build_unflags.clone());
+            .with_build_unflags(ctx.build_unflags.clone())
+            .with_eh_frame_policy(eh_frame_policy);
             let p_c_flags = apply_overlay_flags(&p_compiler.c_flags(), &src_overlay, "dummy.c");
             let p_cpp_flags =
                 apply_overlay_flags(&p_compiler.cpp_flags(), &src_overlay, "dummy.cpp");
@@ -598,7 +616,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
                     params.verbose,
                     build_dir.join("tmp"),
                 )
-                .with_build_unflags(ctx.build_unflags.clone());
+                .with_build_unflags(ctx.build_unflags.clone())
+                .with_eh_frame_policy(eh_frame_policy);
                 let fw_c_flags =
                     apply_overlay_flags(&fw_compiler.c_flags(), &user_overlay, "dummy.c");
                 let fw_cpp_flags =
@@ -806,7 +825,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
             params.verbose,
             build_dir.join("tmp"),
         )
-        .with_build_unflags(ctx.build_unflags.clone());
+        .with_build_unflags(ctx.build_unflags.clone())
+        .with_eh_frame_policy(eh_frame_policy);
         let jobs = crate::parallel::effective_jobs(params.jobs);
         tracing::info!("parallel compilation: {} jobs", jobs);
 

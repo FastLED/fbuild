@@ -866,6 +866,7 @@ dependencies = [
  "fbuild-paths",
  "fbuild-test-support",
  "filetime",
+ "object 0.36.7",
  "regex",
  "serde",
  "serde_json",

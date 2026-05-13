@@ -29,3 +29,4 @@ tempfile = { workspace = true }
 filetime = { workspace = true }
 fbuild-test-support = { path = "../fbuild-test-support" }
 tar = { workspace = true }
+object = { workspace = true }

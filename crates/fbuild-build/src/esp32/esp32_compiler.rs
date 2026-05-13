@@ -10,6 +10,7 @@ use std::path::{Path, PathBuf};
 use fbuild_core::{BuildProfile, Result};
 
 use crate::compiler::{CompileResult, Compiler, CompilerBase};
+use crate::eh_frame_policy::EhFramePolicy;
 
 use super::mcu_config::Esp32McuConfig;
 
@@ -31,6 +32,10 @@ pub struct Esp32Compiler {
     /// from `BuildContext::build_unflags`. Empty by default so existing
     /// callers don't need to change. See FastLED/fbuild#37.
     build_unflags: Vec<String>,
+    /// Whether to strip eh_frame unwinding tables. Default `Preserve` so existing
+    /// callers see no behavior change; orchestrators set this via
+    /// [`Self::with_eh_frame_policy`]. See FastLED/fbuild#243.
+    eh_frame_policy: EhFramePolicy,
 }
 
 impl Esp32Compiler {
@@ -93,6 +98,7 @@ impl Esp32Compiler {
             temp_dir,
             compiler_cache: crate::zccache::find_zccache().map(PathBuf::from),
             build_unflags: Vec::new(),
+            eh_frame_policy: EhFramePolicy::default(),
         }
     }
 
@@ -103,6 +109,15 @@ impl Esp32Compiler {
     /// See FastLED/fbuild#37.
     pub fn with_build_unflags(mut self, build_unflags: Vec<String>) -> Self {
         self.build_unflags = build_unflags;
+        self
+    }
+
+    /// Attach the eh_frame strip/preserve policy decided by the orchestrator.
+    /// Default `Preserve` keeps existing behavior; set `Strip` to drop the
+    /// unwind tables via `-fno-asynchronous-unwind-tables -fno-unwind-tables`.
+    /// See FastLED/fbuild#243.
+    pub fn with_eh_frame_policy(mut self, policy: EhFramePolicy) -> Self {
+        self.eh_frame_policy = policy;
         self
     }
 
@@ -123,6 +138,14 @@ impl Esp32Compiler {
         flags.extend(self.mcu_config.compat_define_flags());
 
         flags.extend(self.base.build_define_flags());
+
+        if matches!(self.eh_frame_policy, EhFramePolicy::Strip) {
+            flags.extend(
+                crate::eh_frame_policy::STRIP_FLAGS
+                    .iter()
+                    .map(|s| s.to_string()),
+            );
+        }
         flags
     }
 }
@@ -344,6 +367,26 @@ mod tests {
             !flags.contains(&"-std=gnu++2b".to_string()),
             "unflags must strip framework-contributed -std=gnu++2b"
         );
+    }
+
+    /// FastLED/fbuild#243: by default the compiler preserves eh_frame; the
+    /// STRIP_FLAGS must not leak into the effective compile line.
+    #[test]
+    fn cpp_flags_preserve_eh_frame_by_default() {
+        let compiler = test_compiler("esp32c6");
+        let flags = compiler.cpp_flags();
+        assert!(!flags.iter().any(|f| f == "-fno-asynchronous-unwind-tables"));
+        assert!(!flags.iter().any(|f| f == "-fno-unwind-tables"));
+    }
+
+    /// FastLED/fbuild#243: when policy is Strip, both unwind-tables flags
+    /// must appear in the effective C++ flag list.
+    #[test]
+    fn cpp_flags_strip_eh_frame_when_policy_set() {
+        let compiler = test_compiler("esp32c6").with_eh_frame_policy(EhFramePolicy::Strip);
+        let flags = compiler.cpp_flags();
+        assert!(flags.iter().any(|f| f == "-fno-asynchronous-unwind-tables"));
+        assert!(flags.iter().any(|f| f == "-fno-unwind-tables"));
     }
 
     #[test]
