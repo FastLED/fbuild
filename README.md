@@ -124,6 +124,8 @@ Board descriptions and family deep-dives live in [`docs/BOARD_STATUS.md`](docs/B
 
 **`platformio.ini` compatible** — fbuild uses the same `platformio.ini` already used in your PlatformIO sketches.
 
+Note: fbuild's release binaries on Teensy/STM32/RP2040/NRF52/ESP8266 are smaller than PlatformIO's by default due to `.eh_frame` stripping — see the [`PlatformIO compatibility: .eh_frame strip`](#platformio-compatibility-eh_frame-strip) section.
+
 **Current status**: v2.0.6 — Rust rewrite. Full ESP32 / Teensy support with a working build system.
 
 ## Docs index
@@ -426,6 +428,45 @@ Features:
 - **`platformio.ini` compatible** — drop-in replacement for PlatformIO builds
 
 See [`docs/WHY.md`](docs/WHY.md) for the full rationale, benefits, and performance benchmarks.
+
+## PlatformIO compatibility: `.eh_frame` strip
+
+By default, fbuild strips GCC's `.eh_frame` exception-unwinding tables on release builds for platforms that don't use them (Teensy, STM32, RP2040, NRF52, ESP8266). This saves 40–180 KB of flash on a typical FastLED sketch. PlatformIO does not do this — running the same project under `pio run` produces a larger binary. ESP32 with the stock Arduino sdkconfig preserves `.eh_frame` because `esp32_exception_decoder` and panic-print-backtrace consume it.
+
+### Policy
+
+The decision is made per build via the following precedence (first match wins):
+
+| Condition | Policy |
+|---|---|
+| `FBUILD_STRIP_EH_FRAME=1` env var | Strip |
+| `FBUILD_KEEP_EH_FRAME=1` env var | Preserve |
+| `build_type = debug` in platformio.ini | Preserve |
+| `-fexceptions` / `-funwind-tables` / `-fasynchronous-unwind-tables` in `build_flags` | Preserve |
+| ESP32 with `CONFIG_ESP_SYSTEM_PANIC_PRINT_BACKTRACE=y` (Arduino default) | Preserve |
+| Otherwise (release on Teensy/STM32/RP2040/NRF52/ESP8266) | Strip |
+
+### Opt out (per project)
+
+Add an unwind-tables flag to your `platformio.ini` to keep `.eh_frame` for a specific environment:
+
+```ini
+[env:teensy41]
+platform = teensy
+board = teensy41
+framework = arduino
+build_flags = -funwind-tables
+```
+
+Or set an environment variable to force preservation for any build:
+
+```bash
+FBUILD_KEEP_EH_FRAME=1 fbuild build
+```
+
+### Why we deviate
+
+GCC emits `.eh_frame` by default even when nothing consumes it. On the platforms above, the toolchain JSON already ships `-fno-exceptions`, no runtime calls `_Unwind_*`, and no debugger or decoder reads the tables — so `.eh_frame` is pure dead metadata occupying flash. A byte-level audit on an ESP32-S3 FastLED Blink build ([FastLED/FastLED#2473](https://github.com/FastLED/FastLED/issues/2473)) found `.eh_frame` accounted for 36% of firmware size. Stripping it at the compiler level (cc1 flags `-fno-asynchronous-unwind-tables -fno-unwind-tables`) is the only reliable fix; library-side pragmas are no-ops on modern GCC. Implementation details and the full decision matrix are in [#245](https://github.com/fastled/fbuild/pull/245).
 
 ## Supported platforms
 
