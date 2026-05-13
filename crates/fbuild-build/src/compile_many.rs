@@ -105,6 +105,10 @@ pub struct CompileManyRequest {
     pub profile: BuildProfile,
     /// Verbose compiler output.
     pub verbose: bool,
+    /// `PLATFORMIO_*` env-var overlay forwarded to each per-sketch
+    /// `BuildParams.pio_env`. Empty by default. Used by `fbuild ci` to
+    /// surface `--lib` / `--project-conf` to the underlying orchestrator.
+    pub pio_env: HashMap<String, String>,
 }
 
 /// Result for a single sketch.
@@ -219,6 +223,7 @@ fn platform_for_board(board: &str) -> Result<Platform> {
 ///
 /// `jobs` controls intra-build parallelism (passed through to the
 /// orchestrator's per-build thread pool).
+#[allow(clippy::too_many_arguments)]
 fn build_one_sketch(
     sketch: &Path,
     env_name: &str,
@@ -227,6 +232,7 @@ fn build_one_sketch(
     jobs: usize,
     verbose: bool,
     stage: Stage,
+    pio_env: HashMap<String, String>,
 ) -> SketchResult {
     let start = Instant::now();
     let build_dir = fbuild_packages::Cache::new(sketch).get_build_dir(env_name, profile);
@@ -245,7 +251,7 @@ fn build_one_sketch(
         symbol_analysis_path: None,
         no_timestamp: true,
         src_dir: None,
-        pio_env: Default::default(),
+        pio_env: pio_env.into_iter().collect(),
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
     };
@@ -324,6 +330,8 @@ pub struct SketchBuildInputs {
     pub jobs: usize,
     pub verbose: bool,
     pub stage: Stage,
+    /// `PLATFORMIO_*` env-var overlay forwarded to `BuildParams.pio_env`.
+    pub pio_env: HashMap<String, String>,
 }
 
 /// Trait used by [`compile_many_with`] to run a single sketch. Tests
@@ -348,6 +356,7 @@ impl SketchBuilder for OrchestratorBuilder {
             inputs.jobs,
             inputs.verbose,
             inputs.stage,
+            inputs.pio_env,
         )
     }
 }
@@ -413,6 +422,7 @@ pub fn compile_many_with(
         jobs: framework_jobs,
         verbose: req.verbose,
         stage: Stage::Stage1Framework,
+        pio_env: req.pio_env.clone(),
     });
     let stage1_secs = stage1_start.elapsed().as_secs_f64();
 
@@ -445,6 +455,7 @@ pub fn compile_many_with(
             sketch_jobs,
             req.verbose,
             builder,
+            &req.pio_env,
         )
     };
     let stage2_secs = stage2_start.elapsed().as_secs_f64();
@@ -477,6 +488,7 @@ fn run_stage2(
     sketch_jobs: usize,
     verbose: bool,
     builder: &dyn SketchBuilder,
+    pio_env: &HashMap<String, String>,
 ) -> Vec<SketchResult> {
     let total = rest.len();
     let cap = sketch_jobs.min(total).max(1);
@@ -516,6 +528,7 @@ fn run_stage2(
                         jobs: 1,
                         verbose,
                         stage: Stage::Stage2Sketch,
+                        pio_env: pio_env.clone(),
                     });
                     *results_slot[idx].lock().unwrap() = Some(res);
                 })
@@ -602,6 +615,7 @@ mod tests {
             sketch_jobs: None,
             profile: BuildProfile::Release,
             verbose: false,
+            pio_env: HashMap::new(),
         };
         assert!(compile_many(req).is_err());
     }
@@ -617,6 +631,7 @@ mod tests {
             sketch_jobs: None,
             profile: BuildProfile::Release,
             verbose: false,
+            pio_env: HashMap::new(),
         };
         assert!(compile_many(req).is_err());
     }
@@ -636,6 +651,7 @@ mod tests {
             sketch_jobs: None,
             profile: BuildProfile::Release,
             verbose: false,
+            pio_env: HashMap::new(),
         };
         assert!(compile_many(req).is_err());
     }

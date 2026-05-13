@@ -333,6 +333,49 @@ enum Commands {
         #[arg(required = true)]
         sketches: Vec<String>,
     },
+    /// PlatformIO-compatible CI command (FastLED/fbuild#242). Drop-in
+    /// replacement for `pio ci` that delegates to the two-stage
+    /// `compile-many` primitive (PR FastLED/fbuild#241).
+    Ci {
+        /// Board id (e.g. "uno", "teensy41"). Matches `pio ci --board`.
+        #[arg(short = 'b', long)]
+        board: String,
+        /// Extra library search dir (repeatable). Mapped to
+        /// `PLATFORMIO_LIB_EXTRA_DIRS` (';' on Windows, ':' elsewhere).
+        /// Matches `pio ci --lib`.
+        #[arg(short = 'l', long = "lib")]
+        libs: Vec<String>,
+        /// Project `platformio.ini` path. Mapped to
+        /// `PLATFORMIO_PROJECT_CONFIG`. Matches `pio ci --project-conf`.
+        #[arg(short = 'c', long = "project-conf")]
+        project_conf: Option<String>,
+        /// Accepted for `pio ci` compatibility (no-op; fbuild always
+        /// keeps build dirs under `.fbuild/build/...`).
+        #[arg(long)]
+        keep_build_dir: bool,
+        /// Accepted for `pio ci` compatibility. Not yet honored;
+        /// prints a warning when set.
+        #[arg(long)]
+        build_dir: Option<String>,
+        /// Parallelism for stage 1 (framework + libs).
+        #[arg(long)]
+        framework_jobs: Option<usize>,
+        /// Parallelism for stage 2 (per-sketch compile + link).
+        #[arg(long)]
+        sketch_jobs: Option<usize>,
+        /// Build profile.
+        #[arg(long, group = "ci_profile")]
+        quick: bool,
+        #[arg(long, group = "ci_profile")]
+        release: bool,
+        /// Verbose compiler output.
+        #[arg(short, long)]
+        verbose: bool,
+        /// Sketch project dirs or `.ino` files (parent dir is used for
+        /// `.ino` files). Matches `pio ci` positional args.
+        #[arg(required = true)]
+        sketches: Vec<String>,
+    },
 }
 
 /// Subcommands for `fbuild lnk`.
@@ -474,6 +517,7 @@ const KNOWN_SUBCOMMANDS: &[&str] = &[
     "test-emu",
     "lib-select",
     "compile-many",
+    "ci",
 ];
 
 /// Rewrite `fbuild <dir> <subcommand> ...` → `fbuild <subcommand> <dir> ...`
@@ -806,6 +850,40 @@ async fn main() {
                 release,
                 verbose,
                 sketches,
+                std::collections::HashMap::new(),
+            )
+            .await
+        }
+        Some(Commands::Ci {
+            board,
+            libs,
+            project_conf,
+            keep_build_dir: _keep_build_dir,
+            build_dir,
+            framework_jobs,
+            sketch_jobs,
+            quick,
+            release,
+            verbose,
+            sketches,
+        }) => {
+            if let Some(bd) = &build_dir {
+                eprintln!(
+                    "warning: --build-dir {} is accepted for pio ci compatibility but not yet honored; outputs go to .fbuild/build/...",
+                    bd
+                );
+            }
+            let normalized = normalize_ci_sketches(&sketches);
+            let pio_env = build_ci_pio_env(&libs, project_conf.as_deref());
+            run_compile_many(
+                board,
+                framework_jobs,
+                sketch_jobs,
+                quick,
+                release,
+                verbose,
+                normalized,
+                pio_env,
             )
             .await
         }
@@ -1226,6 +1304,74 @@ async fn run_build(
     Ok(())
 }
 
+/// Separator used to join `PLATFORMIO_LIB_EXTRA_DIRS` entries.
+///
+/// PlatformIO follows `PATH`-style conventions: ';' on Windows, ':' elsewhere.
+/// Centralized here so the CLI handler and the unit tests agree.
+fn ci_lib_extra_dirs_sep() -> &'static str {
+    if cfg!(windows) {
+        ";"
+    } else {
+        ":"
+    }
+}
+
+/// Map a single `pio ci` positional argument to a project directory.
+///
+/// `pio ci` lets callers point at either a sketch dir or directly at the
+/// `.ino` file. fbuild's `compile-many` only takes project dirs, so a `.ino`
+/// path is rewritten to its parent. Case-insensitive on the extension so
+/// `Blink.INO` works on Windows where casing isn't preserved.
+fn normalize_ci_sketch_entry(entry: &str) -> String {
+    let path = std::path::Path::new(entry);
+    let is_ino = path
+        .extension()
+        .and_then(|e| e.to_str())
+        .map(|e| e.eq_ignore_ascii_case("ino"))
+        .unwrap_or(false);
+    if is_ino {
+        if let Some(parent) = path.parent() {
+            let p = parent.to_string_lossy().to_string();
+            if p.is_empty() {
+                return ".".to_string();
+            }
+            return p;
+        }
+    }
+    entry.to_string()
+}
+
+/// Normalize every `pio ci` positional argument.
+fn normalize_ci_sketches(entries: &[String]) -> Vec<String> {
+    entries
+        .iter()
+        .map(|e| normalize_ci_sketch_entry(e))
+        .collect()
+}
+
+/// Build the `PLATFORMIO_*` env overlay for `fbuild ci` from `--lib` and
+/// `--project-conf`. Returns an empty map when neither flag was set.
+fn build_ci_pio_env(
+    libs: &[String],
+    project_conf: Option<&str>,
+) -> std::collections::HashMap<String, String> {
+    let mut env = std::collections::HashMap::new();
+    if !libs.is_empty() {
+        env.insert(
+            "PLATFORMIO_LIB_EXTRA_DIRS".to_string(),
+            libs.join(ci_lib_extra_dirs_sep()),
+        );
+    }
+    if let Some(conf) = project_conf {
+        let canonical = std::fs::canonicalize(conf)
+            .ok()
+            .map(|p| p.to_string_lossy().to_string())
+            .unwrap_or_else(|| conf.to_string());
+        env.insert("PLATFORMIO_PROJECT_CONFIG".to_string(), canonical);
+    }
+    env
+}
+
 /// Handler for `fbuild compile-many` (FastLED/fbuild#238).
 ///
 /// Runs the two-stage compile-many primitive in-process via the existing
@@ -1234,6 +1380,7 @@ async fn run_build(
 /// one framework build" — so all stage-1 + stage-2 work happens in this
 /// process, parallelism is driven by the `compile_many` thread pool, and
 /// no per-sketch daemon round-trip is incurred.
+#[allow(clippy::too_many_arguments)]
 async fn run_compile_many(
     board: String,
     framework_jobs: Option<usize>,
@@ -1242,6 +1389,7 @@ async fn run_compile_many(
     release: bool,
     verbose: bool,
     sketches: Vec<String>,
+    pio_env: std::collections::HashMap<String, String>,
 ) -> fbuild_core::Result<()> {
     use fbuild_build::compile_many::{compile_many, CompileManyRequest, Stage};
 
@@ -1265,6 +1413,7 @@ async fn run_compile_many(
         sketch_jobs,
         profile,
         verbose,
+        pio_env,
     };
 
     let effective_framework = req
@@ -3357,5 +3506,146 @@ async fn run_lnk(
             );
             Ok(())
         }
+    }
+}
+
+#[cfg(test)]
+mod ci_tests {
+    use super::*;
+    use clap::Parser;
+
+    #[test]
+    fn normalize_ino_path_strips_to_parent_dir() {
+        let entry = "examples/Blink/Blink.ino";
+        let got = normalize_ci_sketch_entry(entry);
+        assert_eq!(
+            got,
+            std::path::Path::new("examples/Blink").to_string_lossy()
+        );
+    }
+
+    #[test]
+    fn normalize_ino_path_is_case_insensitive() {
+        let entry = "examples/Blink/Blink.INO";
+        let got = normalize_ci_sketch_entry(entry);
+        assert_eq!(
+            got,
+            std::path::Path::new("examples/Blink").to_string_lossy()
+        );
+    }
+
+    #[test]
+    fn normalize_passes_through_project_dirs() {
+        let entry = "examples/Blink";
+        assert_eq!(normalize_ci_sketch_entry(entry), "examples/Blink");
+    }
+
+    #[test]
+    fn normalize_bare_ino_becomes_dot() {
+        let entry = "Blink.ino";
+        assert_eq!(normalize_ci_sketch_entry(entry), ".");
+    }
+
+    #[test]
+    fn normalize_batch_preserves_order() {
+        let entries = vec![
+            "examples/Blink/Blink.ino".to_string(),
+            "examples/Fire2012".to_string(),
+        ];
+        let got = normalize_ci_sketches(&entries);
+        assert_eq!(got.len(), 2);
+        assert_eq!(
+            got[0],
+            std::path::Path::new("examples/Blink").to_string_lossy()
+        );
+        assert_eq!(got[1], "examples/Fire2012");
+    }
+
+    #[test]
+    fn build_pio_env_joins_libs_with_platform_separator() {
+        let libs = vec!["a".to_string(), "b".to_string()];
+        let env = build_ci_pio_env(&libs, None);
+        let expected = if cfg!(windows) { "a;b" } else { "a:b" };
+        assert_eq!(
+            env.get("PLATFORMIO_LIB_EXTRA_DIRS").map(String::as_str),
+            Some(expected)
+        );
+        assert!(!env.contains_key("PLATFORMIO_PROJECT_CONFIG"));
+    }
+
+    #[test]
+    fn build_pio_env_omits_libs_key_when_empty() {
+        let env = build_ci_pio_env(&[], None);
+        assert!(env.is_empty());
+    }
+
+    #[test]
+    fn build_pio_env_falls_back_to_as_given_when_canonicalize_fails() {
+        let bogus = "/this/path/does/not/exist/conf.ini";
+        let env = build_ci_pio_env(&[], Some(bogus));
+        assert_eq!(
+            env.get("PLATFORMIO_PROJECT_CONFIG").map(String::as_str),
+            Some(bogus)
+        );
+    }
+
+    #[test]
+    fn ci_subcommand_round_trips_through_clap() {
+        let argv = [
+            "fbuild",
+            "ci",
+            "--board",
+            "uno",
+            "--lib",
+            "./libs",
+            "--lib",
+            "./more",
+            "-c",
+            "custom.ini",
+            "examples/Blink/Blink.ino",
+        ];
+        let cli = Cli::try_parse_from(argv).expect("parse");
+        match cli.command {
+            Some(Commands::Ci {
+                board,
+                libs,
+                project_conf,
+                sketches,
+                ..
+            }) => {
+                assert_eq!(board, "uno");
+                assert_eq!(libs, vec!["./libs".to_string(), "./more".to_string()]);
+                assert_eq!(project_conf.as_deref(), Some("custom.ini"));
+                assert_eq!(sketches, vec!["examples/Blink/Blink.ino".to_string()]);
+            }
+            _ => panic!("expected Ci subcommand"),
+        }
+    }
+
+    #[test]
+    fn ci_short_board_flag_b_is_accepted() {
+        let argv = ["fbuild", "ci", "-b", "uno", "examples/Blink"];
+        let cli = Cli::try_parse_from(argv).expect("parse");
+        match cli.command {
+            Some(Commands::Ci {
+                board, sketches, ..
+            }) => {
+                assert_eq!(board, "uno");
+                assert_eq!(sketches, vec!["examples/Blink".to_string()]);
+            }
+            _ => panic!("expected Ci subcommand"),
+        }
+    }
+
+    #[test]
+    fn ci_requires_at_least_one_sketch() {
+        let argv = ["fbuild", "ci", "--board", "uno"];
+        assert!(Cli::try_parse_from(argv).is_err());
+    }
+
+    #[test]
+    fn ci_quick_and_release_are_mutually_exclusive() {
+        let argv = ["fbuild", "ci", "-b", "uno", "--quick", "--release", "."];
+        assert!(Cli::try_parse_from(argv).is_err());
     }
 }

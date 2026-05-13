@@ -1,6 +1,6 @@
 # fbuild-cli
 
-Clap-based CLI for fbuild. Thin HTTP client that delegates all work to the daemon. Subcommands: build, deploy, test-emu, monitor, reset, purge, daemon, device, show, mcp, clang-tidy, iwyu, clang-query.
+Clap-based CLI for fbuild. Thin HTTP client that delegates most work to the daemon. Subcommands: build, deploy, test-emu, monitor, reset, purge, daemon, device, show, mcp, clang-tidy, iwyu, clang-query, compile-many, ci.
 
 ## Key Types
 
@@ -25,3 +25,30 @@ Clap-based CLI for fbuild. Thin HTTP client that delegates all work to the daemo
 - `device` -- list/status/lease/release/preempt connected devices
 - `show` -- display daemon logs
 - `mcp` -- start MCP server for AI assistants
+- `compile-many` -- two-stage compile of many sketches against the same board (FastLED/fbuild#238, PR #241)
+- `ci` -- PlatformIO-compatible CI command (drop-in for `pio ci`, FastLED/fbuild#242)
+
+## `fbuild ci` -- PlatformIO-compatible CI command
+
+`fbuild ci` is a drop-in replacement for [`pio ci`](https://docs.platformio.org/en/latest/core/userguide/cmd_ci.html) that delegates to the two-stage `compile-many` primitive shipped in PR [#241](https://github.com/FastLED/fbuild/pull/241). It lets existing CI workflows swap `s/pio ci/fbuild ci/` without other changes. Tracking issue: [#242](https://github.com/FastLED/fbuild/issues/242).
+
+### Flag mapping
+
+| `fbuild ci` flag | `pio ci` equivalent | Behavior |
+|---|---|---|
+| `--board <b>` / `-b <b>` | `--board` / `-b` | Required. Board id (e.g. `uno`, `teensy41`). |
+| `--lib <path>` / `-l <path>` (repeatable) | `--lib` / `-l` | Mapped to `PLATFORMIO_LIB_EXTRA_DIRS`; joined with `;` on Windows, `:` elsewhere. |
+| `--project-conf <path>` / `-c <path>` | `--project-conf` / `-c` | Mapped to `PLATFORMIO_PROJECT_CONFIG`. Canonicalized when possible. |
+| `--keep-build-dir` | `--keep-build-dir` | Accepted for compatibility; no-op (fbuild always keeps build dirs under `.fbuild/build/...`). |
+| `--build-dir <path>` | `--build-dir` | Accepted for compatibility; not yet honored. Emits a warning when set. |
+| `--framework-jobs` / `--sketch-jobs` / `--quick` / `--release` / `--verbose` (-v) | n/a | fbuild-native; see `compile-many`. |
+| positional sketches | positional | Each entry may be a project dir or a `.ino` file (its parent dir is used). |
+
+### Example
+
+```bash
+fbuild ci --board uno --lib ./libs --lib ./more -c custom.ini \
+  examples/Blink/Blink.ino examples/Fire2012/Fire2012.ino
+```
+
+Exits 0 when every sketch builds, non-zero on any failure.
