@@ -14,6 +14,7 @@
 [![Build Native Binaries](https://github.com/fastled/fbuild/actions/workflows/build.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build.yml)
 [![Library Selection Acceptance (#205)](https://github.com/fastled/fbuild/actions/workflows/acceptance-205.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/acceptance-205.yml)
 [![Library Selection Perf (#205)](https://github.com/fastled/fbuild/actions/workflows/bench-205.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/bench-205.yml)
+[![LOC Gate](https://github.com/fastled/fbuild/actions/workflows/loc-gate.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/loc-gate.yml)
 
 <details>
 <summary><strong>Per-platform board build badges</strong> (click to expand)</summary>
