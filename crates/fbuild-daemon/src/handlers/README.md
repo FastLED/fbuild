@@ -4,7 +4,7 @@ HTTP and WebSocket route handlers for the fbuild daemon.
 
 - **`mod.rs`** -- Module declarations
 - **`health.rs`** -- `GET /`, `/health`, `/api/daemon/info`, `POST /api/daemon/shutdown`
-- **`operations.rs`** -- `POST /api/build`, `/api/deploy`, `/api/monitor`, `/api/install-deps`, `/api/reset` with RAII `OperationGuard` for state tracking
+- **`operations/`** -- `POST /api/build`, `/api/deploy`, `/api/monitor`, `/api/install-deps`, `/api/reset` with RAII `OperationGuard` for state tracking (split into submodules, see `operations/README.md`)
 - **`devices.rs`** -- Device discovery, lease acquire/release/preempt handlers for `/api/devices/` endpoints
 - **`locks.rs`** -- `GET /api/locks/status` and `POST /api/locks/clear` for project and serial port locks
 - **`emulator.rs`** -- Emulator deploy handlers (AVR8js, QEMU), `EmulatorRunner` trait abstraction, `POST /api/test-emu` build-then-emulate flow
