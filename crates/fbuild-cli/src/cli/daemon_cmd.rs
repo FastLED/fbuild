@@ -1,0 +1,474 @@
+//! `fbuild daemon ...` subcommand handlers (status, restart, kill, locks,
+//! cache-stats, gc, monitor-tail) plus process-management helpers shared
+//! with the purge subcommand.
+
+use crate::daemon_client::{self, DaemonClient};
+
+use super::args::DaemonAction;
+use super::purge::format_size;
+use super::show::run_show;
+
+pub async fn run_daemon(action: DaemonAction) -> fbuild_core::Result<()> {
+    let client = DaemonClient::new();
+    match action {
+        DaemonAction::Stop => {
+            if !client.health().await {
+                println!("daemon is not running");
+                return Ok(());
+            }
+            client.shutdown().await?;
+            // Wait for it to actually stop
+            for _ in 0..50 {
+                tokio::time::sleep(std::time::Duration::from_millis(100)).await;
+                if !client.health().await {
+                    println!("daemon stopped");
+                    return Ok(());
+                }
+            }
+            println!("daemon stop requested (may still be shutting down)");
+        }
+        DaemonAction::Status => {
+            if client.health().await {
+                match client.daemon_info().await {
+                    Ok(info) => {
+                        let uptime = format_uptime(info.uptime_seconds);
+                        println!("daemon is running at {}", fbuild_paths::get_daemon_url());
+                        println!("  PID:     {}", info.pid);
+                        println!("  Port:    {}", info.port);
+                        println!("  Uptime:  {}", uptime);
+                        println!("  Version: {}", info.version);
+                        println!("  Mode:    {}", if info.dev_mode { "dev" } else { "prod" });
+                        println!("  State:   {}", info.daemon_state);
+                        if info.operation_in_progress {
+                            if let Some(ref op) = info.current_operation {
+                                println!("  Operation: {}", op);
+                            } else {
+                                println!("  Operation: (in progress)");
+                            }
+                        }
+                        if info.client_count > 0 {
+                            println!("  Clients: {}", info.client_count);
+                        }
+                        if let Some(ref cwd) = info.spawner_cwd {
+                            println!("  Spawned from: {}", cwd);
+                        }
+                        if let Some(mtime) = info.source_mtime {
+                            println!("  Binary mtime: {:.0}", mtime);
+                        }
+                    }
+                    Err(_) => {
+                        println!("daemon is running at {}", fbuild_paths::get_daemon_url());
+                    }
+                }
+            } else {
+                println!("daemon is not running");
+            }
+        }
+        DaemonAction::Restart => {
+            // Stop if running
+            if client.health().await {
+                client.shutdown().await?;
+                for _ in 0..50 {
+                    tokio::time::sleep(std::time::Duration::from_millis(100)).await;
+                    if !client.health().await {
+                        break;
+                    }
+                }
+            }
+            // Start fresh
+            daemon_client::ensure_daemon_running().await?;
+            println!("daemon restarted");
+        }
+        DaemonAction::List => {
+            run_daemon_list(&client).await?;
+        }
+        DaemonAction::Kill { pid, force } => {
+            run_daemon_kill(&client, pid, force).await?;
+        }
+        DaemonAction::KillAll { force } => {
+            run_daemon_kill_all(force)?;
+        }
+        DaemonAction::Locks => {
+            run_daemon_locks(&client).await?;
+        }
+        DaemonAction::ClearLocks => {
+            run_daemon_clear_locks(&client).await?;
+        }
+        DaemonAction::CacheStats => {
+            run_daemon_cache_stats(&client).await?;
+        }
+        DaemonAction::Gc => {
+            run_daemon_gc(&client).await?;
+        }
+        DaemonAction::Monitor { no_follow, lines } => {
+            return run_show("daemon", !no_follow, lines);
+        }
+    }
+    Ok(())
+}
+
+pub async fn run_daemon_list(client: &DaemonClient) -> fbuild_core::Result<()> {
+    if client.health().await {
+        match client.daemon_info().await {
+            Ok(info) => {
+                let uptime = format_uptime(info.uptime_seconds);
+                println!("fbuild daemon (running)");
+                println!("  PID:     {}", info.pid);
+                println!("  Port:    {}", info.port);
+                println!("  Uptime:  {}", uptime);
+                println!("  Version: {}", info.version);
+                println!("  Mode:    {}", if info.dev_mode { "dev" } else { "prod" });
+            }
+            Err(e) => {
+                println!("daemon is running but info unavailable: {}", e);
+            }
+        }
+    } else {
+        println!("no daemon is running");
+        // Check for stale PID file
+        let pid_file = fbuild_paths::get_daemon_pid_file();
+        if pid_file.exists() {
+            if let Ok(contents) = std::fs::read_to_string(&pid_file) {
+                println!(
+                    "  (stale PID file: {} — PID {})",
+                    pid_file.display(),
+                    contents.trim()
+                );
+            }
+        }
+    }
+
+    // Also scan for orphan processes
+    let pids = find_daemon_pids()?;
+    if pids.len() > 1 {
+        println!("\nwarning: multiple fbuild-daemon processes detected:");
+        for pid in &pids {
+            println!("  PID {}", pid);
+        }
+        println!("use 'fbuild daemon kill-all' to clean up");
+    }
+    Ok(())
+}
+
+pub async fn run_daemon_locks(client: &DaemonClient) -> fbuild_core::Result<()> {
+    if !client.health().await {
+        println!("daemon is not running");
+        return Ok(());
+    }
+
+    let status = client.lock_status().await?;
+
+    // Display port locks
+    if status.port_locks.is_empty() {
+        println!("Port Locks: (none)");
+    } else {
+        println!("Port Locks:");
+        for lock in &status.port_locks {
+            let state = if lock.is_held { "HELD" } else { "FREE" };
+            let writer = lock.writer_client_id.as_deref().unwrap_or("none");
+            println!(
+                "  {} [{}] open={} writer={} readers={}",
+                lock.port, state, lock.is_open, writer, lock.reader_count
+            );
+        }
+    }
+
+    // Display project locks
+    if status.project_locks.is_empty() {
+        println!("Project Locks: (none)");
+    } else {
+        println!("Project Locks:");
+        for lock in &status.project_locks {
+            let state = if lock.is_held { "HELD" } else { "FREE" };
+            println!("  {} [{}]", lock.project_dir, state);
+        }
+    }
+
+    if !status.stale_locks.is_empty() {
+        println!(
+            "\nWarning: {} stale lock(s) detected. Use 'fbuild daemon clear-locks' to clear.",
+            status.stale_locks.len()
+        );
+    }
+
+    Ok(())
+}
+
+pub async fn run_daemon_clear_locks(client: &DaemonClient) -> fbuild_core::Result<()> {
+    if !client.health().await {
+        println!("daemon is not running");
+        return Ok(());
+    }
+
+    let result = client.clear_locks().await?;
+    println!("{}", result.message);
+    if result.cleared_count > 0 {
+        println!("Cleared {} lock(s)", result.cleared_count);
+    }
+    Ok(())
+}
+
+pub async fn run_daemon_cache_stats(client: &DaemonClient) -> fbuild_core::Result<()> {
+    if !client.health().await {
+        // Fall back to local cache stats if daemon isn't running
+        match fbuild_packages::DiskCache::open() {
+            Ok(dc) => {
+                let stats = dc.stats().map_err(|e| {
+                    fbuild_core::FbuildError::Other(format!("failed to read cache stats: {}", e))
+                })?;
+                println!("{}", stats);
+            }
+            Err(e) => {
+                return Err(fbuild_core::FbuildError::Other(format!(
+                    "failed to open disk cache: {}",
+                    e
+                )));
+            }
+        }
+        return Ok(());
+    }
+
+    let stats = client.cache_stats().await?;
+    if !stats.success {
+        return Err(fbuild_core::FbuildError::Other(format!(
+            "failed to get cache stats: {}",
+            stats.message.as_deref().unwrap_or("unknown error")
+        )));
+    }
+    println!("Disk Cache Statistics:");
+    println!("  Entries:    {}", stats.entry_count);
+    println!("  Installed:  {}", format_size(stats.installed_bytes));
+    println!("  Archives:   {}", format_size(stats.archive_bytes));
+    println!("  Total:      {}", format_size(stats.total_bytes));
+    println!(
+        "  Watermarks: {} high / {} low",
+        format_size(stats.high_watermark),
+        format_size(stats.low_watermark)
+    );
+    println!("  Archive budget: {}", format_size(stats.archive_budget));
+    Ok(())
+}
+
+pub async fn run_daemon_gc(client: &DaemonClient) -> fbuild_core::Result<()> {
+    if !client.health().await {
+        // Fall back to local GC if daemon isn't running
+        let dc = fbuild_packages::DiskCache::open().map_err(|e| {
+            fbuild_core::FbuildError::Other(format!("failed to open disk cache: {}", e))
+        })?;
+        let report = dc
+            .run_gc()
+            .map_err(|e| fbuild_core::FbuildError::Other(format!("GC failed: {}", e)))?;
+        print_gc_report(&report);
+        return Ok(());
+    }
+
+    let result = client.run_gc().await?;
+    if !result.success {
+        return Err(fbuild_core::FbuildError::Other(format!(
+            "GC failed: {}",
+            result.message.as_deref().unwrap_or("unknown error")
+        )));
+    }
+    println!("GC complete:");
+    println!(
+        "  Installed evicted: {} ({})",
+        result.installed_evicted,
+        format_size(result.installed_bytes_freed)
+    );
+    println!(
+        "  Archives evicted:  {} ({})",
+        result.archives_evicted,
+        format_size(result.archive_bytes_freed)
+    );
+    println!(
+        "  Total freed:       {}",
+        format_size(result.total_bytes_freed)
+    );
+    if result.orphan_files_removed > 0 {
+        println!("  Orphan files removed: {}", result.orphan_files_removed);
+    }
+    if result.orphan_rows_cleaned > 0 {
+        println!("  Orphan rows cleaned:  {}", result.orphan_rows_cleaned);
+    }
+    Ok(())
+}
+
+pub fn print_gc_report(report: &fbuild_packages::disk_cache::GcReport) {
+    if report.total_bytes_freed() == 0
+        && report.orphan_files_removed == 0
+        && report.orphan_rows_cleaned == 0
+    {
+        println!("GC: nothing to clean up");
+        return;
+    }
+    println!("GC complete:");
+    println!(
+        "  Installed evicted: {} ({})",
+        report.installed_evicted,
+        format_size(report.installed_bytes_freed)
+    );
+    println!(
+        "  Archives evicted:  {} ({})",
+        report.archives_evicted,
+        format_size(report.archive_bytes_freed)
+    );
+    println!(
+        "  Total freed:       {}",
+        format_size(report.total_bytes_freed())
+    );
+    if report.orphan_files_removed > 0 {
+        println!("  Orphan files removed: {}", report.orphan_files_removed);
+    }
+    if report.orphan_rows_cleaned > 0 {
+        println!("  Orphan rows cleaned:  {}", report.orphan_rows_cleaned);
+    }
+}
+
+pub async fn run_daemon_kill(
+    client: &DaemonClient,
+    pid: Option<u32>,
+    force: bool,
+) -> fbuild_core::Result<()> {
+    let target_pid = if let Some(p) = pid {
+        p
+    } else if client.health().await {
+        match client.daemon_info().await {
+            Ok(info) => info.pid,
+            Err(_) => read_pid_from_file()?,
+        }
+    } else {
+        read_pid_from_file()?
+    };
+
+    kill_process(target_pid, force)?;
+    println!("killed daemon (PID {})", target_pid);
+    let _ = std::fs::remove_file(fbuild_paths::get_daemon_pid_file());
+    Ok(())
+}
+
+pub fn read_pid_from_file() -> fbuild_core::Result<u32> {
+    let pid_file = fbuild_paths::get_daemon_pid_file();
+    if pid_file.exists() {
+        std::fs::read_to_string(&pid_file)
+            .ok()
+            .and_then(|s| s.trim().parse().ok())
+            .ok_or_else(|| {
+                fbuild_core::FbuildError::DaemonError(
+                    "could not parse PID from PID file".to_string(),
+                )
+            })
+    } else {
+        Err(fbuild_core::FbuildError::DaemonError(
+            "no daemon running and no PID file found".to_string(),
+        ))
+    }
+}
+
+pub fn run_daemon_kill_all(force: bool) -> fbuild_core::Result<()> {
+    let pids = find_daemon_pids()?;
+    if pids.is_empty() {
+        println!("no fbuild-daemon processes found");
+        return Ok(());
+    }
+
+    let mut killed = 0;
+    for pid in &pids {
+        match kill_process(*pid, force) {
+            Ok(()) => {
+                println!("killed daemon (PID {})", pid);
+                killed += 1;
+            }
+            Err(e) => {
+                eprintln!("failed to kill PID {}: {}", pid, e);
+            }
+        }
+    }
+
+    let _ = std::fs::remove_file(fbuild_paths::get_daemon_pid_file());
+    println!("killed {} daemon(s)", killed);
+    Ok(())
+}
+
+pub fn kill_process(pid: u32, force: bool) -> fbuild_core::Result<()> {
+    let pid_str = pid.to_string();
+    let argv: Vec<&str> = if cfg!(windows) {
+        if force {
+            vec!["taskkill", "/F", "/PID", &pid_str]
+        } else {
+            vec!["taskkill", "/PID", &pid_str]
+        }
+    } else {
+        let signal = if force { "-9" } else { "-TERM" };
+        vec!["kill", signal, &pid_str]
+    };
+
+    let output = fbuild_core::subprocess::run_command(&argv, None, None, None).map_err(|e| {
+        fbuild_core::FbuildError::Other(format!("failed to execute kill command: {}", e))
+    })?;
+
+    if !output.success() {
+        return Err(fbuild_core::FbuildError::Other(format!(
+            "kill failed: {}",
+            output.stderr.trim()
+        )));
+    }
+    Ok(())
+}
+
+pub fn find_daemon_pids() -> fbuild_core::Result<Vec<u32>> {
+    if cfg!(windows) {
+        let output = fbuild_core::subprocess::run_command(
+            &[
+                "tasklist",
+                "/FI",
+                "IMAGENAME eq fbuild-daemon.exe",
+                "/FO",
+                "CSV",
+                "/NH",
+            ],
+            None,
+            None,
+            None,
+        )
+        .map_err(|e| fbuild_core::FbuildError::Other(format!("failed to run tasklist: {}", e)))?;
+        let mut pids = Vec::new();
+        for line in output.stdout.lines() {
+            // CSV format: "image name","PID","session name","session#","mem usage"
+            if line.contains("fbuild-daemon") {
+                let fields: Vec<&str> = line.split(',').collect();
+                if fields.len() >= 2 {
+                    let pid_str = fields[1].trim_matches('"').trim();
+                    if let Ok(pid) = pid_str.parse::<u32>() {
+                        pids.push(pid);
+                    }
+                }
+            }
+        }
+        Ok(pids)
+    } else {
+        let output = fbuild_core::subprocess::run_command(
+            &["pgrep", "-f", "fbuild-daemon"],
+            None,
+            None,
+            None,
+        )
+        .map_err(|e| fbuild_core::FbuildError::Other(format!("failed to run pgrep: {}", e)))?;
+        let pids: Vec<u32> = output
+            .stdout
+            .lines()
+            .filter_map(|line| line.trim().parse().ok())
+            .collect();
+        Ok(pids)
+    }
+}
+
+pub fn format_uptime(seconds: f64) -> String {
+    let secs = seconds as u64;
+    if secs < 60 {
+        format!("{}s", secs)
+    } else if secs < 3600 {
+        format!("{}m {}s", secs / 60, secs % 60)
+    } else {
+        format!("{}h {}m", secs / 3600, (secs % 3600) / 60)
+    }
+}
