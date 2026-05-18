@@ -1,0 +1,80 @@
+//! Board configuration data types.
+//!
+//! Defines the [`BoardConfig`] struct loaded from boards.txt and built-in
+//! defaults, along with supporting metadata types ([`DebugToolMeta`],
+//! [`Esp32QemuPsramConfig`]) and module-private constants.
+
+use std::collections::HashMap;
+
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Esp32QemuPsramConfig {
+    pub size_mib: u32,
+    pub is_octal: bool,
+}
+
+/// Metadata for a single debug tool entry from the board JSON `debug.tools` section.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub struct DebugToolMeta {
+    /// Whether the tool is built into the board (no external hardware needed).
+    #[serde(default)]
+    pub onboard: bool,
+    /// Whether this is the board's default debug tool.
+    #[serde(default)]
+    pub default: bool,
+}
+
+/// Known emulator/simulator tool names that can run firmware without hardware.
+pub(super) const EMULATOR_TOOL_NAMES: &[&str] =
+    &["simavr", "qemu", "renode", "ovpsim", "verilator"];
+
+/// Board configuration loaded from boards.txt or built-in defaults.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct BoardConfig {
+    pub name: String,
+    pub mcu: String,
+    pub f_cpu: String,
+    pub board: String,
+    pub core: String,
+    pub variant: String,
+    /// Variant header override for frameworks that use `#include VARIANT_H`
+    pub variant_h: Option<String>,
+    /// USB vendor ID (optional)
+    pub vid: Option<String>,
+    /// USB product ID (optional)
+    pub pid: Option<String>,
+    /// Extra build flags from board definition
+    pub extra_flags: Option<String>,
+    /// Upload protocol (e.g. "arduino", "esptool", "teensy-gui")
+    pub upload_protocol: Option<String>,
+    /// Upload speed
+    pub upload_speed: Option<String>,
+    /// Maximum flash size in bytes
+    pub max_flash: Option<u64>,
+    /// Maximum RAM size in bytes
+    pub max_ram: Option<u64>,
+    /// Flash mode (e.g. "dio", "qio") — ESP32 boards
+    pub flash_mode: Option<String>,
+    /// Memory profile (e.g. "qio_qspi", "qio_opi") - ESP32 boards
+    pub memory_type: Option<String>,
+    /// PSRAM type (e.g. "qspi", "opi") - ESP32 boards
+    pub psram_type: Option<String>,
+    /// Flash frequency (e.g. "80000000L") — ESP32 boards
+    pub f_flash: Option<String>,
+    /// Image flash frequency override (e.g. "48000000L") — used by esptool when
+    /// the board's actual SPI clock (`f_flash`) doesn't match a valid esptool frequency.
+    /// PlatformIO calls this `build.f_image`. When present, this takes priority over
+    /// `f_flash` for esptool's `--flash-freq` argument.
+    pub f_image: Option<String>,
+    /// Partition table file (e.g. "default_8MB.csv") — ESP32 boards
+    pub partitions: Option<String>,
+    /// Linker script (e.g. "esp32s3_out.ld")
+    pub ldscript: Option<String>,
+    /// Platform string from board JSON (e.g. "atmelmegaavr", "atmelavr")
+    pub platform_str: Option<String>,
+    /// Debug tools from board JSON `debug.tools` section.
+    /// Maps tool name (e.g. "simavr", "qemu", "renode") to its metadata.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub debug_tools: Option<HashMap<String, DebugToolMeta>>,
+}

@@ -1,0 +1,39 @@
+name: LOC Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  loc-gate:
+    name: Reject .rs files over 1000 LOC
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check .rs file line counts
+        shell: bash
+        run: |
+          set -euo pipefail
+          THRESHOLD=1000
+          violations=0
+          while IFS= read -r -d '' file; do
+            lines=$(wc -l < "$file")
+            if [ "$lines" -gt "$THRESHOLD" ]; then
+              echo "::error file=${file}::${file} has ${lines} LOC (limit: ${THRESHOLD})"
+              echo "FAIL ${lines} ${file}"
+              violations=$((violations + 1))
+            fi
+          done < <(find . -type f -name '*.rs' \
+            -not -path './target/*' \
+            -not -path './.git/*' \
+            -print0)
+          if [ "$violations" -gt 0 ]; then
+            echo ""
+            echo "Found ${violations} .rs file(s) over ${THRESHOLD} LOC."
+            echo "Split them into smaller modules before merging."
+            exit 1
+          fi
+          echo "All .rs files are within the ${THRESHOLD} LOC limit."
