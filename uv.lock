@@ -16,7 +16,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "zccache", specifier = ">=1.2.13" }]
+requires-dist = [{ name = "zccache", specifier = ">=1.8.2" }]
 
 [package.metadata.requires-dev]
 dev = [{ name = "fbuild-dev-tools", editable = "ci/dev-tools" }]
@@ -47,13 +47,13 @@ wheels = [
 
 [[package]]
 name = "zccache"
-version = "1.2.13"
+version = "1.8.2"
 source = { registry = "https://pypi.org/simple" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/87/73/4080b898921a865faff716717e1a198846c0ff256f38cbea54b28ea81fbb/zccache-1.2.13-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:25c01b6259118c226d7d9adb8fe854eca74e47d622023685553eb5d16afe69a9", size = 11488674, upload-time = "2026-04-19T09:12:46.718Z" },
-    { url = "https://files.pythonhosted.org/packages/0c/3c/4d5f45dabb676bcfdc1f38945675ea8ce06ca47b057cdd755112cf393f5a/zccache-1.2.13-py3-none-macosx_11_0_arm64.whl", hash = "sha256:ca4b87d9110e23848a074a02887a3427868936915c387e9b9ffc7b39aaa38b30", size = 10981829, upload-time = "2026-04-19T09:13:03.894Z" },
-    { url = "https://files.pythonhosted.org/packages/ea/1e/f4a222a3addc2227abc067459ad0128a5aaf0179c8d460c8872476bfe1f0/zccache-1.2.13-py3-none-manylinux_2_17_aarch64.whl", hash = "sha256:1cfc01e890ced64349a10ca7fa1973750fdadc6aad027c2a9eab1d5803b08f45", size = 10942113, upload-time = "2026-04-19T09:13:21.216Z" },
-    { url = "https://files.pythonhosted.org/packages/f1/74/485a8c67a7a86fa4e7b1032266d761427d4d97de6a70da2e9cb6d4025e3e/zccache-1.2.13-py3-none-manylinux_2_17_x86_64.whl", hash = "sha256:9bdf895a0c24933adb28c57ef99948083d05adbf7220a5f643e4be7c504171c8", size = 11887723, upload-time = "2026-04-19T09:13:39.91Z" },
-    { url = "https://files.pythonhosted.org/packages/ac/dc/7f8c8ced3eba832990bef18489bc5b419a4b3e5f1fe14727a5c123d6b9cb/zccache-1.2.13-py3-none-win_amd64.whl", hash = "sha256:7ed67d6bdf92b1e6f142aaf987c72f751824c8fcf9c18fd0401479f46d7ebca1", size = 10713286, upload-time = "2026-04-19T09:14:01.432Z" },
-    { url = "https://files.pythonhosted.org/packages/6c/a3/95ebc437fbf581cee66484ccf455f2c0bf5729e264b800646ed1a06ec87c/zccache-1.2.13-py3-none-win_arm64.whl", hash = "sha256:117cd479adaa1c1aeca197fee7d86d9e59845807a82c03e3141bfd23815257cb", size = 9956694, upload-time = "2026-04-19T09:14:17.552Z" },
+    { url = "https://files.pythonhosted.org/packages/0b/fb/40cfe8df8c2ac6c250b08845873f98eeca6352325d7af8f10bb28a6faa16/zccache-1.8.2-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:b960c703d05e6bedace35be51db1cf477cd94aeba35afb93c919f1860233d4dd", size = 12400172, upload-time = "2026-05-22T14:27:25.927Z" },
+    { url = "https://files.pythonhosted.org/packages/ac/38/78525b2f66d921e1042592300b24107b7f512082a62d00fa769c416cf0d7/zccache-1.8.2-py3-none-macosx_11_0_arm64.whl", hash = "sha256:b9b7ce451e7a7c6696c7b8008dcde92dd8cb35fd20a978cc4afe0c05c2c85aa9", size = 11877951, upload-time = "2026-05-22T14:27:29.317Z" },
+    { url = "https://files.pythonhosted.org/packages/f8/84/e3f73a89d89d7cd6d443e0de0f0b8d7fdaf50aa2f9ca8196b111b32ded37/zccache-1.8.2-py3-none-manylinux_2_17_aarch64.whl", hash = "sha256:c0d2e62faa7e994ca6889b2864092da6c6ce71de8aa2c2d0637c084434791883", size = 13982209, upload-time = "2026-05-22T14:27:32.007Z" },
+    { url = "https://files.pythonhosted.org/packages/03/9a/4a13ae46798ee1b7530ba3a0e9359a36829be7c0ea7b6cd52241bb55e5a4/zccache-1.8.2-py3-none-manylinux_2_17_x86_64.whl", hash = "sha256:cb75a827ea79d275d130775ea7c41a7d035faca4040fb0d8dbdba69f3222d588", size = 14414946, upload-time = "2026-05-22T14:27:35.551Z" },
+    { url = "https://files.pythonhosted.org/packages/80/c9/1ab6c223d905320d8130a35bca39128c3950375607ba75beb571a1a8f333/zccache-1.8.2-py3-none-win_amd64.whl", hash = "sha256:6f21c6fb2ecad6b958723be4216127d1c5700bc9d9651d3ce2db57401ba8e88e", size = 11682901, upload-time = "2026-05-22T14:27:38.72Z" },
+    { url = "https://files.pythonhosted.org/packages/f4/51/6b84d6f7145b844a01740d36db4cfbdc43aadb911df1a3439fb5f454910c/zccache-1.8.2-py3-none-win_arm64.whl", hash = "sha256:b607217557af61b876ff193b636c5d6165447d67628deefb2f67c0e0c6d8ffd5", size = 10879203, upload-time = "2026-05-22T14:27:41.741Z" },
 ]

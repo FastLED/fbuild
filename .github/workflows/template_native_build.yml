@@ -59,6 +59,7 @@ jobs:
           cache: true
           build-cache: true
           target-cache: true
+          prebuild-deps: none
           cache-key-suffix: native-${{ inputs.target }}
 
       - uses: actions/setup-python@v6

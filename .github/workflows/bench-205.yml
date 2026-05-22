@@ -41,6 +41,7 @@ jobs:
           cache: true
           build-cache: true
           target-cache: true
+          prebuild-deps: none
 
       - name: "Run ${{ matrix.bench }} (target: ${{ matrix.target }})"
         run: |
@@ -70,6 +71,7 @@ jobs:
           cache: true
           build-cache: true
           target-cache: true
+          prebuild-deps: none
 
       - name: Checkout FastLED
         uses: actions/checkout@v6

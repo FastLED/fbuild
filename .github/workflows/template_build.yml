@@ -40,6 +40,7 @@ jobs:
           cache: true
           build-cache: true
           target-cache: true
+          prebuild-deps: none
           cache-key-suffix: board-${{ inputs.env-name }}
 
       - name: Reset zccache daemon after cache warm

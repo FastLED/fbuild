@@ -130,11 +130,19 @@ fn escaped_quote_usage_is_restricted() {
 
     // These files are allowed to contain \\\" because they are the canonical
     // sources/handlers of escaped-quote define values.
+    //
+    // Note: LOC-gate splits (refactor commits 5c90d0e/91f54e4/0cca5f3) moved
+    // canonical define code from board.rs / orchestrator.rs into submodule
+    // files (methods.rs, build.rs, mod.rs). Those are listed here too — they
+    // are still canonical define sources, just renamed.
     let allowed_files: &[&str] = &[
         "board.rs",            // canonical define source with \\\"
+        "methods.rs",          // canonical: split out of fbuild-config/src/board.rs (LOC gate)
         "compiler.rs",         // escaping module (prepare_flags_for_exec, write_response_file)
         "esp32_framework.rs",  // SDK defines parser (reads \\\" from disk)
         "orchestrator.rs",     // fallback define construction (same pattern as board.rs)
+        "build.rs",            // canonical: split out of esp32/orchestrator.rs (LOC gate)
+        "mod.rs",              // canonical: split out of stm32/orchestrator.rs (LOC gate)
         "library_compiler.rs", // response file writer (checks for \\\" to skip double-quoting)
     ];
 
