@@ -56,10 +56,7 @@
 use std::process::{Child, Command};
 use std::sync::OnceLock;
 
-#[cfg(unix)]
-use running_process_core::ContainedProcessGroup;
-#[cfg(windows)]
-use running_process_core::{ContainedChild, ContainedProcessGroup, Containment};
+use running_process_core::{ContainedProcessGroup, ORIGINATOR_ENV_VAR};
 
 /// Global process-wide containment group. Initialised once by the
 /// daemon; remains `None` in non-daemon contexts (CLI binary, tests).
@@ -101,35 +98,40 @@ pub fn is_initialised() -> bool {
 /// Falls back to uncontained `Command::spawn` when no global group has
 /// been initialised (non-daemon binaries).
 ///
-/// **Windows**: delegates to `ContainedProcessGroup::spawn` which
-/// assigns the child to the Job Object — safe and stateless.
+/// **Windows**: spawn directly, then assign the child handle to a Job
+/// Object with `JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE`
+/// ([`windows_job::assign`]) — the same containment mechanism the
+/// pre-publication `running-process-core` rev used internally,
+/// reimplemented locally since the published 3.4 API no longer exposes
+/// `spawn_with_containment(_, Containment::Contained)`.
 ///
 /// **Unix**: installs a per-child `pre_exec` hook that creates a new
 /// process group (`setpgid(0, 0)`) and, on Linux, requests
-/// `PR_SET_PDEATHSIG(SIGKILL)`. This sidesteps
-/// [`ContainedProcessGroup::spawn_with_containment`]'s shared-pgid
-/// behaviour, which fails with EPERM on the second spawn after the
-/// first child (the pgid leader) has exited — the root cause of
+/// `PR_SET_PDEATHSIG(SIGKILL)`. We deliberately do not call
+/// `ContainedProcessGroup::spawn` here because the per-child pgid
+/// approach sidesteps an EPERM race that hit the second spawn after the
+/// first child (the pgid leader) had exited — the root cause of
 /// FastLED/fbuild#129. The Linux kernel's `PR_SET_PDEATHSIG` still
 /// enforces the "child dies with daemon" contract; macOS relies on
 /// process-group-leader death alone.
 pub fn spawn_contained(command: &mut Command) -> std::io::Result<Child> {
     #[cfg(windows)]
     {
-        match GLOBAL_GROUP.get() {
-            Some(group) => {
-                let ContainedChild { child, .. } =
-                    group.spawn_with_containment(command, Containment::Contained)?;
-                Ok(child)
-            }
-            None => command.spawn(),
-        }
+        let Some(group) = GLOBAL_GROUP.get() else {
+            return command.spawn();
+        };
+        inject_originator_env(command, group);
+        let child = command.spawn()?;
+        use std::os::windows::io::AsRawHandle;
+        windows_job::assign(child.as_raw_handle())?;
+        Ok(child)
     }
     #[cfg(unix)]
     {
-        if GLOBAL_GROUP.get().is_none() {
+        let Some(group) = GLOBAL_GROUP.get() else {
             return command.spawn();
-        }
+        };
+        inject_originator_env(command, group);
         unix_install_pre_exec(command);
         command.spawn()
     }
@@ -141,25 +143,36 @@ pub fn spawn_contained(command: &mut Command) -> std::io::Result<Child> {
 pub fn spawn_detached(command: &mut Command) -> std::io::Result<Child> {
     #[cfg(windows)]
     {
-        match GLOBAL_GROUP.get() {
-            Some(group) => {
-                let ContainedChild { child, .. } =
-                    group.spawn_with_containment(command, Containment::Detached)?;
-                Ok(child)
-            }
-            None => command.spawn(),
+        // Detached: no Job Object assignment so the child survives
+        // when the daemon's job handle closes. We still inject the
+        // originator env var for cross-process correlation.
+        if let Some(group) = GLOBAL_GROUP.get() {
+            inject_originator_env(command, group);
         }
+        command.spawn()
     }
     #[cfg(unix)]
     {
         // Detached: create a new session so the child survives the
         // daemon thread that spawned it. Matches the upstream behaviour
         // but without joining any shared pgid.
-        if GLOBAL_GROUP.get().is_none() {
+        let Some(group) = GLOBAL_GROUP.get() else {
             return command.spawn();
-        }
+        };
+        inject_originator_env(command, group);
         unix_install_detached_pre_exec(command);
         command.spawn()
+    }
+}
+
+/// Mirror of `ContainedProcessGroup::inject_originator_env`: stamp
+/// `RUNNING_PROCESS_ORIGINATOR=TOOL:PID` onto the command's env. We do
+/// this manually because the published 3.4 API only exposes it via
+/// `ContainedProcessGroup::spawn` (which returns its own
+/// `SpawnedChild`, not a `std::process::Child` — see #32).
+fn inject_originator_env(command: &mut Command, group: &ContainedProcessGroup) {
+    if let Some(value) = group.originator_value() {
+        command.env(ORIGINATOR_ENV_VAR, value);
     }
 }
 

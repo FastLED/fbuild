@@ -12,15 +12,18 @@
 //!   * strip MSYS/MSYS2 env vars that would otherwise poison native
 //!     Windows toolchain binaries.
 //!
-//! Containment is honoured via `ProcessConfig::containment = Some(...)`
-//! when the daemon has installed the global containment group. CLI
-//! binaries and unit tests run uncontained just as before.
+//! On Windows, containment is applied post-spawn by
+//! [`crate::containment::windows_job::assign`] when the daemon has
+//! installed the global containment group; CLI binaries and unit tests
+//! run uncontained just as before. (Earlier code used a `containment:`
+//! field on `ProcessConfig` from a pre-release `running-process-core`;
+//! the published 3.4 API does not expose that field — see #32.)
 
 use std::path::Path;
 use std::time::Duration;
 
 use running_process_core::{
-    CommandSpec, Containment, NativeProcess, ProcessConfig, ProcessError, StderrMode, StdinMode,
+    CommandSpec, NativeProcess, ProcessConfig, ProcessError, StderrMode, StdinMode,
 };
 
 use crate::{FbuildError, Result};
@@ -153,11 +156,6 @@ fn build_config(
         create_process_group: false,
         stdin_mode,
         nice: None,
-        containment: if crate::containment::is_initialised() {
-            Some(Containment::Contained)
-        } else {
-            None
-        },
     })
 }
 
