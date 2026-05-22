@@ -39,7 +39,7 @@ jobs:
         with:
           cache: true
           build-cache: true
-          target-cache-profile: thin-v1
+          target-cache: true
           cache-key-suffix: board-${{ inputs.env-name }}
 
       - name: Reset zccache daemon after cache warm

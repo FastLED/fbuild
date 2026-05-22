@@ -56,7 +56,7 @@ jobs:
         with:
           cache: true
           build-cache: true
-          target-cache-profile: thin-v1
+          target-cache: true
 
       - name: Run ${{ matrix.gate }} acceptance gate
         run: |
