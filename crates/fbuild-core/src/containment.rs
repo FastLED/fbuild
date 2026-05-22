@@ -121,9 +121,17 @@ pub fn spawn_contained(command: &mut Command) -> std::io::Result<Child> {
             return command.spawn();
         };
         inject_originator_env(command, group);
-        let child = command.spawn()?;
+        let mut child = command.spawn()?;
         use std::os::windows::io::AsRawHandle;
-        windows_job::assign(child.as_raw_handle())?;
+        if let Err(e) = windows_job::assign(child.as_raw_handle()) {
+            // The atomic spawn+assign that `ContainedProcessGroup::spawn_with_containment`
+            // used to provide is gone in 3.4. If assign fails after spawn
+            // succeeds, kill the orphan so the caller can't leak an
+            // uncontained child by accident.
+            let _ = child.kill();
+            let _ = child.wait();
+            return Err(e);
+        }
         Ok(child)
     }
     #[cfg(unix)]
@@ -253,8 +261,11 @@ pub mod tokio_spawn {
     pub fn spawn_contained(
         command: &mut tokio::process::Command,
     ) -> std::io::Result<tokio::process::Child> {
-        if !super::is_initialised() {
+        let Some(group) = super::GLOBAL_GROUP.get() else {
             return command.spawn();
+        };
+        if let Some(value) = group.originator_value() {
+            command.env(super::ORIGINATOR_ENV_VAR, value);
         }
         configure(command);
         let child = command.spawn()?;
