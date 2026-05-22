@@ -22,5 +22,6 @@ jobs:
           cache: true
           build-cache: true
           target-cache: false
+          prebuild-deps: none
       - name: Check formatting
         run: soldr cargo fmt --all -- --check

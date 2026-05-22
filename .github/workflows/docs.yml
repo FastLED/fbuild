@@ -24,6 +24,7 @@ jobs:
           cache: true
           build-cache: true
           target-cache: true
+          prebuild-deps: none
 
       - name: Build docs
         run: soldr cargo doc --workspace --no-deps

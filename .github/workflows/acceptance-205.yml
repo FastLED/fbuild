@@ -57,6 +57,7 @@ jobs:
           cache: true
           build-cache: true
           target-cache: true
+          prebuild-deps: none
 
       - name: Run ${{ matrix.gate }} acceptance gate
         run: |

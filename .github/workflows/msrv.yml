@@ -22,6 +22,7 @@ jobs:
           cache: true
           build-cache: true
           target-cache: true
+          prebuild-deps: none
           toolchain: 1.94.1
 
       - name: Check MSRV

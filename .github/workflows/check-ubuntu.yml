@@ -25,6 +25,7 @@ jobs:
           cache: true
           build-cache: true
           target-cache: true
+          prebuild-deps: none
 
       - name: Check
         run: soldr cargo check --workspace --all-targets
