@@ -40,7 +40,7 @@ jobs:
         with:
           cache: true
           build-cache: true
-          target-cache: true
+          target-cache-profile: thin-v1
 
       - name: "Run ${{ matrix.bench }} (target: ${{ matrix.target }})"
         run: |
@@ -69,7 +69,7 @@ jobs:
         with:
           cache: true
           build-cache: true
-          target-cache: true
+          target-cache-profile: thin-v1
 
       - name: Checkout FastLED
         uses: actions/checkout@v6

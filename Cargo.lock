@@ -489,6 +489,30 @@ dependencies = [
 ]
 
 [[package]]
+name = "crash-context"
+version = "0.6.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "031ed29858d90cfdf27fe49fae28028a1f20466db97962fa2f4ea34809aeebf3"
+dependencies = [
+ "cfg-if",
+ "libc",
+ "mach2",
+]
+
+[[package]]
+name = "crash-handler"
+version = "0.6.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2066907075af649bcb8bcb1b9b986329b243677e6918b2d920aa64b0aac5ace3"
+dependencies = [
+ "cfg-if",
+ "crash-context",
+ "libc",
+ "mach2",
+ "parking_lot",
+]
+
+[[package]]
 name = "crc32fast"
 version = "1.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2094,6 +2118,16 @@ name = "oorandom"
 version = "11.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d6790f58c7ff633d8771f42965289203411a5e5c68388703c06e14f24770b41e"
+
+[[package]]
+name = "parking_lot"
+version = "0.12.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "93857453250e3077bd71ff98b6a65ea6621a19bb0f559a85248955ac12c45a1a"
+dependencies = [
+ "lock_api",
+ "parking_lot_core",
+]
 
 [[package]]
 name = "parking_lot_core"
@@ -4080,12 +4114,14 @@ dependencies = [
 
 [[package]]
 name = "zccache-artifact"
-version = "1.4.0"
+version = "1.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4144e1348f83ab3ec55c039e199b0f16dc7afa3d6c0af475debc00023adce425"
+checksum = "a85b1a2851359f7f87bdaa44cb35d1d59c7b0dec346da8de466130fb9fbe03dd"
 dependencies = [
  "bincode",
  "blake3",
+ "dashmap",
+ "rayon",
  "redb",
  "serde",
  "serde_json",
@@ -4098,11 +4134,14 @@ dependencies = [
 
 [[package]]
 name = "zccache-core"
-version = "1.4.0"
+version = "1.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "694f8a8a46b8552415458eca9a39a0bb36ed28fb0d152374a1f83761abef8222"
+checksum = "8a7bc2339b9244683e2e3cf72f338f5a963731370e9f4cd4705023bb1804b5f7"
 dependencies = [
+ "crash-handler",
+ "libc",
  "serde",
+ "serde_json",
  "thiserror 2.0.18",
  "tracing",
  "windows-sys 0.59.0",
@@ -4110,9 +4149,9 @@ dependencies = [
 
 [[package]]
 name = "zccache-hash"
-version = "1.4.0"
+version = "1.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3eb7ff97b2722055babfb6037757f4d6de41f8e4b838491e31d1eb3f367c318b"
+checksum = "1023a805e42f729dac4f19865e6fe365cc6430f30230aaaacb0aa662e2b4b254"
 dependencies = [
  "blake3",
  "memmap2",

@@ -65,14 +65,17 @@ object = { version = "0.36", default-features = false, features = ["read", "std"
 rusqlite = { version = "0.31", features = ["bundled"] }
 shell-words = "1"
 bincode = "1"
-zccache-artifact = "1.4.0"
+zccache-artifact = "1.8"
 rayon = "1"
 tracing-test = "0.2"
 
 # Process containment: all subprocess spawns the daemon performs (compilers,
 # esptool, qemu, simavr, node, npm, …) and any grandchildren they fork must
-# die with the daemon. Published to crates.io is pending; pin a git rev.
-# See FastLED/fbuild#32.
+# die with the daemon. Pinned to a pre-release rev that exposes the
+# `Containment` enum / `spawn_with_containment` API. The published
+# `running-process-core` 3.4.x dropped those in favor of
+# `ContainedProcessGroup` — fbuild will need a containment-layer
+# refactor before it can move to crates.io. See FastLED/fbuild#32.
 running-process-core = { git = "https://github.com/zackees/running-process", rev = "ff9d7972504f7a0dcee0f410274daf3b02e4fcc2", package = "running-process-core" }
 
 [profile.dev]
