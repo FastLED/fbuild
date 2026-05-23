@@ -5,7 +5,7 @@ use clap::Parser;
 
 use crate::{daemon_client, lib_select, mcp};
 
-use super::args::{rewrite_args, resolve_project_dir, Cli, Commands};
+use super::args::{resolve_project_dir, rewrite_args, Cli, Commands};
 use super::build::run_build;
 use super::clang_tools::{run_clang_tool, run_iwyu};
 use super::compile_many::{

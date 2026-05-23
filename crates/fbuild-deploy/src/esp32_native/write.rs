@@ -28,7 +28,7 @@ use super::types::NativeWriteRegion;
 ///
 /// Progress from espflash is bridged into `tracing` so the daemon's
 /// existing log broadcaster surfaces it without new API surface (see
-/// the private `LoggingProgressBridge` in [`super::progress`]).
+/// the private `LoggingProgressBridge` in `super::progress`).
 /// Structured WebSocket progress frames are a follow-up: the bridge is
 /// a drop-in replacement point for a richer callback without touching
 /// any of the call sites.

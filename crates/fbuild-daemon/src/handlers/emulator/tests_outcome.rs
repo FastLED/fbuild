@@ -30,7 +30,6 @@ fn monitor_outcome_to_emulator_maps_crash() {
 
 #[test]
 fn monitor_outcome_to_emulator_maps_timeout() {
-    let outcome =
-        monitor_outcome_to_emulator(MonitorOutcome::Timeout { expect_found: true }, None);
+    let outcome = monitor_outcome_to_emulator(MonitorOutcome::Timeout { expect_found: true }, None);
     assert_eq!(outcome, EmulatorOutcome::TimedOut { expect_found: true });
 }

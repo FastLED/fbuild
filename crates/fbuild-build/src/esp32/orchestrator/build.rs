@@ -16,9 +16,7 @@ use super::cdc::warn_if_cdc_on_boot;
 use super::embed_stage::stage_embed_files;
 use super::fingerprint::Esp32FingerprintMetadata;
 use super::framework_libs::compile_framework_builtin_libs;
-use super::helpers::{
-    apply_overlay_flags, compile_db_is_current, profile_label,
-};
+use super::helpers::{apply_overlay_flags, compile_db_is_current, profile_label};
 use super::local_libs::compile_local_libraries;
 use super::packages::resolve_pioarduino_packages;
 use super::Esp32Orchestrator;

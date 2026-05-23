@@ -13,10 +13,12 @@
 //! 10. Convert to hex + report size
 //!
 //! Module layout (refactored to keep each .rs file under the 1000-LOC gate):
-//! - [`arduino_mbed`] — Arduino mbed-core build path (GIGA, PORTENTA, ...)
-//! - [`framework_props`] — STM32duino `boards.txt` parser
-//! - [`includes`] — include-path/define helpers and small shared utilities
-//! - [`variant_files`] — variant_*.{h,cpp} / PeripheralPins_*.c selection
+//! - `arduino_mbed` — Arduino mbed-core build path (GIGA, PORTENTA, ...)
+//! - `framework_props` — STM32duino `boards.txt` parser
+//! - `includes` — include-path/define helpers and small shared utilities
+//! - `variant_files` — variant_*.{h,cpp} / PeripheralPins_*.c selection
+//!
+//! All four submodules are private internals of the STM32 orchestrator.
 
 mod arduino_mbed;
 mod framework_props;

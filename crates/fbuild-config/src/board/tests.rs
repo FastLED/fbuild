@@ -356,8 +356,7 @@ fn test_esp32_effective_memory_type_tracks_effective_flash_mode() {
 
 #[test]
 fn test_esp32_effective_memory_type_preserves_opi_flash_profiles() {
-    let config =
-        BoardConfig::from_board_id("esp32-s3-devkitc-1-n32r8v", &HashMap::new()).unwrap();
+    let config = BoardConfig::from_board_id("esp32-s3-devkitc-1-n32r8v", &HashMap::new()).unwrap();
     assert_eq!(
         config.effective_esp32_memory_type("dio"),
         Some("opi_opi".to_string())

@@ -18,10 +18,10 @@
 //! * **Linux** — each child is placed in its own new process group with
 //!   `setpgid(0, 0)` and requests `PR_SET_PDEATHSIG(SIGKILL)` so the
 //!   kernel sends SIGKILL when the daemon thread exits. Per-child groups
-//!   avoid the EPERM that
-//!   [`ContainedProcessGroup::spawn_with_containment`] hits when a
-//!   second child tries to join a stale, already-exited first child's
-//!   pgid (see issue #129).
+//!   avoid the EPERM that the pre-publication
+//!   `ContainedProcessGroup::spawn_with_containment` (since removed from
+//!   `running-process-core` 3.4) hit when a second child tried to join a
+//!   stale, already-exited first child's pgid (see issue #129).
 //! * **macOS** — `prctl` is not available. Each child gets a fresh
 //!   process group; there is no drop-time `killpg` backstop because the
 //!   global group is a `OnceLock<...>` that never drops. This is the
@@ -100,8 +100,8 @@ pub fn is_initialised() -> bool {
 ///
 /// **Windows**: spawn directly, then assign the child handle to a Job
 /// Object with `JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE`
-/// ([`windows_job::assign`]) — the same containment mechanism the
-/// pre-publication `running-process-core` rev used internally,
+/// (via the private `windows_job::assign` helper) — the same containment
+/// mechanism the pre-publication `running-process-core` rev used internally,
 /// reimplemented locally since the published 3.4 API no longer exposes
 /// `spawn_with_containment(_, Containment::Contained)`.
 ///

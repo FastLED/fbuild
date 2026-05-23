@@ -305,8 +305,7 @@ fn test_generate_entries_windows_backslash_paths() {
 fn test_generate_entries_no_response_file_in_args() {
     // Even with many include flags, generate_entries should produce
     // individual -I flags, never @file references (those are for GCC only).
-    let include_flags: Vec<String> =
-        (0..300).map(|i| format!("-I/sdk/include/{}", i)).collect();
+    let include_flags: Vec<String> = (0..300).map(|i| format!("-I/sdk/include/{}", i)).collect();
 
     let entries = generate_entries(
         Path::new("/usr/bin/gcc"),

@@ -13,7 +13,7 @@
 //!     Windows toolchain binaries.
 //!
 //! On Windows, containment is applied post-spawn by
-//! [`crate::containment::windows_job::assign`] when the daemon has
+//! `crate::containment::windows_job::assign` when the daemon has
 //! installed the global containment group; CLI binaries and unit tests
 //! run uncontained just as before. (Earlier code used a `containment:`
 //! field on `ProcessConfig` from a pre-release `running-process-core`;

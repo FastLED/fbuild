@@ -4,9 +4,7 @@ use std::path::{Path, PathBuf};
 
 use fbuild_core::Result;
 
-use super::image::{
-    fill_with_ff, patch_qemu_esp32s3_adc_calibration, write_binary_at_offset,
-};
+use super::image::{fill_with_ff, patch_qemu_esp32s3_adc_calibration, write_binary_at_offset};
 use super::parse::{parse_flash_size_bytes, parse_hex_offset};
 
 /// Resolve the flash-image size to use for QEMU.
