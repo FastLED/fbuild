@@ -16,14 +16,6 @@ members = [
     "crates/fbuild-library-select",
     "bench/fastled-examples",
 ]
-exclude = [
-    # Dylint lints live in their own nightly toolchain — see each
-    # dylint's rust-toolchain.toml. Not part of the workspace build.
-    "dylints/ban_raw_subprocess",
-]
-
-[workspace.metadata.dylint]
-libraries = [{ path = "dylints/*" }]
 
 [workspace.package]
 version = "2.2.4"
