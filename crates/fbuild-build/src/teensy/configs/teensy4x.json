@@ -38,6 +38,7 @@
   ],
 
   "linker_libs": [
+    "-larm_cortexM7lfsp_math",
     "-lgcc",
     "-lstdc++",
     "-lm",
