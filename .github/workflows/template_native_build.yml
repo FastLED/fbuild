@@ -60,6 +60,13 @@ jobs:
           build-cache: true
           target-cache: true
           prebuild-deps: none
+          # `fast` (the default) injects mold-or-rust-lld via SOLDR_LINKER,
+          # which clobbers the per-target linker config that
+          # `cargo zigbuild` needs for aarch64-unknown-linux-musl
+          # cross-compile (clang tries to use host /usr/bin/ld and fails
+          # with "file in wrong format" on the cross crt1.o). Disable the
+          # injection and let cargo + the toolchain decide.
+          linker: platform-default
           cache-key-suffix: native-${{ inputs.target }}
 
       - uses: actions/setup-python@v6
