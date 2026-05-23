@@ -6,8 +6,8 @@ use fbuild_core::Result;
 
 use super::super::esp32_compiler::Esp32Compiler;
 use super::helpers::apply_overlay_flags;
-use crate::flag_overlay::LanguageExtraFlags;
 use crate::compiler::Compiler as _;
+use crate::flag_overlay::LanguageExtraFlags;
 
 /// Walk `project_dir/lib/*` and compile each subdirectory as a library archive.
 /// Archives are appended to `library_archives`.
@@ -46,9 +46,8 @@ pub(super) fn compile_local_libraries(
             .to_string_lossy()
             .to_string();
 
-        let lib_info = fbuild_packages::library::library_info::InstalledLibrary::new(
-            &lib_path, &lib_name,
-        );
+        let lib_info =
+            fbuild_packages::library::library_info::InstalledLibrary::new(&lib_path, &lib_name);
         let lib_sources = lib_info.get_source_files();
         if lib_sources.is_empty() {
             continue;
@@ -65,8 +64,7 @@ pub(super) fn compile_local_libraries(
         let local_ar_path = toolchain.get_ar_path();
         let local_gcc_ar_path = toolchain.get_gcc_ar_path();
         let local_c_flags = apply_overlay_flags(&compiler.c_flags(), src_overlay, "dummy.c");
-        let local_cpp_flags =
-            apply_overlay_flags(&compiler.cpp_flags(), src_overlay, "dummy.cpp");
+        let local_cpp_flags = apply_overlay_flags(&compiler.cpp_flags(), src_overlay, "dummy.cpp");
         let local_lib_ar_path = crate::pipeline::pick_archiver(
             &local_ar_path,
             &local_gcc_ar_path,

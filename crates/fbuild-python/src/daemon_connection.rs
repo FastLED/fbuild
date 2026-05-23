@@ -2,9 +2,7 @@
 
 use pyo3::prelude::*;
 
-use crate::outcome::{
-    build_url, deploy_url, monitor_url, outcome_to_pydict, send_op, OpRequest,
-};
+use crate::outcome::{build_url, deploy_url, monitor_url, outcome_to_pydict, send_op, OpRequest};
 
 /// Python-visible DaemonConnection (context manager).
 #[pyclass]

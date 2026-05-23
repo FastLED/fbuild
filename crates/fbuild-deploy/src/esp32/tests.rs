@@ -7,18 +7,18 @@ use std::path::Path;
 use sha2::{Digest, Sha256};
 
 use super::deployer::{Esp32Deployer, EsptoolParams};
+use super::image::patch_bytes;
 use super::image::{
     repair_esp_image_checksum_and_hash, resolve_esp_image_file_offset, ESP_IMAGE_APPENDED_HASH_LEN,
     ESP_IMAGE_HEADER_LEN, ESP_IMAGE_HEADER_MAGIC, ESP_IMAGE_SEGMENT_HEADER_LEN,
-    ESP_ROM_CHECKSUM_INITIAL, QEMU_ADC_CALIBRATION_EXPECTED_BYTES, QEMU_ADC_CALIBRATION_PATCH_BYTES,
+    ESP_ROM_CHECKSUM_INITIAL, QEMU_ADC_CALIBRATION_EXPECTED_BYTES,
+    QEMU_ADC_CALIBRATION_PATCH_BYTES,
 };
-use super::image::patch_bytes;
 use super::qemu::{
-    build_qemu_args, build_qemu_esp32s3_args, create_qemu_flash_image, resolve_qemu_flash_size_bytes,
+    build_qemu_args, build_qemu_esp32s3_args, create_qemu_flash_image,
+    resolve_qemu_flash_size_bytes,
 };
-use super::verify::{
-    parse_verify_regions, FlashRegion, RegionVerifyResult, VerifyOutcome,
-};
+use super::verify::{parse_verify_regions, FlashRegion, RegionVerifyResult, VerifyOutcome};
 use crate::Deployer;
 
 /// Test params matching ESP32-C6 JSON config values.
@@ -199,8 +199,7 @@ fn repair_esp_image_checksum_and_hash_updates_trailers_after_patch() {
             word[..chunk.len()].copy_from_slice(chunk);
             checksum_word ^= u32::from_le_bytes(word);
         }
-        ((checksum_word >> 24) ^ (checksum_word >> 16) ^ (checksum_word >> 8) ^ checksum_word)
-            as u8
+        ((checksum_word >> 24) ^ (checksum_word >> 16) ^ (checksum_word >> 8) ^ checksum_word) as u8
     };
     let expected_hash = Sha256::digest(&image[..checksum_offset + 1]);
     assert_eq!(image[checksum_offset], expected_checksum);

@@ -9,15 +9,18 @@
 //! This file is the module entrypoint; the implementation is split
 //! across sibling files to keep each one under the LOC gate:
 //!
-//! * [`deployer`] — [`Esp32Deployer`], [`EsptoolParams`], esptool argv,
+//! * `deployer` — [`Esp32Deployer`], [`EsptoolParams`], esptool argv,
 //!   verify/write paths, and the [`crate::Deployer`] impl.
-//! * [`verify`]   — [`FlashRegion`], [`RegionVerifyResult`],
-//!   [`VerifyOutcome`], and the [`parse_verify_regions`] helper.
-//! * [`qemu`]     — QEMU flash-image assembly and argv builders.
-//! * [`image`]    — ESP image header constants, byte patching, checksum
+//! * `verify`   — `FlashRegion`, `RegionVerifyResult`, `VerifyOutcome`,
+//!   and the `parse_verify_regions` helper.
+//! * `qemu`     — QEMU flash-image assembly and argv builders.
+//! * `image`    — ESP image header constants, byte patching, checksum
 //!   and SHA-256 trailer repair, and raw binary I/O helpers.
-//! * [`parse`]    — Hex offset / flash-size string parsers shared across
+//! * `parse`    — Hex offset / flash-size string parsers shared across
 //!   the submodules.
+//!
+//! All submodules are private; only the types re-exported below form
+//! the public API.
 
 mod deployer;
 mod image;
@@ -29,6 +32,7 @@ mod verify;
 
 pub use deployer::{Esp32Deployer, EsptoolParams};
 pub use qemu::{
-    build_qemu_args, build_qemu_esp32s3_args, create_qemu_flash_image, resolve_qemu_flash_size_bytes,
+    build_qemu_args, build_qemu_esp32s3_args, create_qemu_flash_image,
+    resolve_qemu_flash_size_bytes,
 };
 pub use verify::{parse_verify_regions, FlashRegion, RegionVerifyResult, VerifyOutcome};

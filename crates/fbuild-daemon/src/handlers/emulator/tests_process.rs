@@ -8,8 +8,7 @@ use std::path::PathBuf;
 pub(super) fn test_process_command(lines: &[&str]) -> (PathBuf, Vec<String>) {
     #[cfg(windows)]
     {
-        let system_root =
-            std::env::var("SystemRoot").unwrap_or_else(|_| "C:\\Windows".to_string());
+        let system_root = std::env::var("SystemRoot").unwrap_or_else(|_| "C:\\Windows".to_string());
         let exe = PathBuf::from(system_root).join(r"System32\cmd.exe");
         let script = lines
             .iter()

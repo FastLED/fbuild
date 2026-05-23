@@ -337,4 +337,3 @@ pub(crate) async fn run_qemu_process(
         exit_code: child_exit.and_then(|s| s.code()),
     })
 }
-

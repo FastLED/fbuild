@@ -178,8 +178,7 @@ fn test_write_and_copy_identical_content() {
 
     db.write_and_copy(&build_dir, &project_dir).unwrap();
 
-    let build_content =
-        std::fs::read_to_string(build_dir.join("compile_commands.json")).unwrap();
+    let build_content = std::fs::read_to_string(build_dir.join("compile_commands.json")).unwrap();
     let project_content =
         std::fs::read_to_string(project_dir.join("compile_commands.json")).unwrap();
     assert_eq!(build_content, project_content);

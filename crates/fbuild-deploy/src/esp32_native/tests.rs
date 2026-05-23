@@ -9,8 +9,7 @@ use crate::DeployOutcome;
 
 use super::progress::LoggingProgressBridge;
 use super::transport::{
-    local_md5, parse_after_reset, parse_before_reset, parse_chip, region_name,
-    render_native_stdout,
+    local_md5, parse_after_reset, parse_before_reset, parse_chip, region_name, render_native_stdout,
 };
 use super::types::NativeWriteRegion;
 use super::verify::collect_standard_regions;
