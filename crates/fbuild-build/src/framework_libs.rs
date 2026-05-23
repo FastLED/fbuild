@@ -12,6 +12,7 @@
 //! framework libraries (FNET/Snooze/RadioHead/mbedtls on teensyLC, for
 //! example) stay out of the compile set. See FastLED/fbuild#205.
 
+use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
@@ -28,7 +29,83 @@ pub fn resolve_framework_library_sources(
     src_dir: &Path,
 ) -> Vec<PathBuf> {
     let roots = framework_include_scan_roots(project_dir, src_dir);
-    resolve_framework_library_sources_from_libraries(libraries, &roots)
+    let filtered = filter_framework_libs_shadowed_by_project(libraries, &roots);
+    resolve_framework_library_sources_from_libraries(&filtered, &roots)
+}
+
+/// Drop framework libraries whose primary header (`<lib_name>.h`) is
+/// shadowed by a same-basename header anywhere under the supplied
+/// `shadowing_roots`. See FastLED/fbuild#263.
+///
+/// Why this exists: the LDF resolver's path-prefix attribution can
+/// mis-select a framework library when the user's own project also
+/// owns that library's headers — even with the project's include
+/// roots searched first, a transitive `#include` from the user's
+/// header (e.g. `noise.h`) can resolve into the framework's bundled
+/// copy if the project doesn't ship the transitive header itself.
+/// That pulls the bundled library's `.cpp` files into the build set,
+/// producing `multiple definition` link errors for every symbol that
+/// exists in both copies.
+///
+/// The filter is intentionally conservative: it only drops a library
+/// when the project itself ships a header matching the library's
+/// canonical name. Other libraries are unaffected.
+pub fn filter_framework_libs_shadowed_by_project(
+    libraries: &[FrameworkLibrary],
+    shadowing_roots: &[PathBuf],
+) -> Vec<FrameworkLibrary> {
+    let project_headers = collect_header_basenames(shadowing_roots);
+    libraries
+        .iter()
+        .filter(|lib| {
+            let primary = format!("{}.h", lib.name).to_lowercase();
+            if project_headers.contains(&primary) {
+                tracing::info!(
+                    library = %lib.name,
+                    "dropping framework library: shadowed by project header `{}.h` — see #263",
+                    lib.name,
+                );
+                false
+            } else {
+                true
+            }
+        })
+        .cloned()
+        .collect()
+}
+
+/// Walk every `shadowing_roots` entry once, collecting the lowercased
+/// basename of every C/C++ header file it contains. Uses the same
+/// dir-skip rules as [`collect_project_seeds`] so build outputs and
+/// VCS metadata don't pollute the shadowing set.
+fn collect_header_basenames(roots: &[PathBuf]) -> HashSet<String> {
+    let mut out = HashSet::new();
+    for root in roots {
+        if !root.exists() {
+            continue;
+        }
+        for entry in WalkDir::new(root)
+            .into_iter()
+            .filter_entry(should_scan_entry)
+            .flatten()
+        {
+            if !entry.file_type().is_file() {
+                continue;
+            }
+            let path = entry.path();
+            let ext = path
+                .extension()
+                .and_then(|e| e.to_str())
+                .unwrap_or_default()
+                .to_lowercase();
+            if matches!(ext.as_str(), "h" | "hh" | "hpp" | "hxx") {
+                if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
+                    out.insert(name.to_lowercase());
+                }
+            }
+        }
+    }
+    out
 }
 
 /// Walk project roots for source seeds, delegate to the LDF-style resolver,
@@ -100,13 +177,20 @@ pub(crate) fn resolve_framework_library_sources_cached_with_hit(
         return (Vec::new(), false);
     }
 
+    // Defensive filter: drop framework libraries whose primary header
+    // is shadowed by a project-owned header. See #263.
+    let filtered = filter_framework_libs_shadowed_by_project(libraries, &roots);
+    if filtered.is_empty() {
+        return (Vec::new(), false);
+    }
+
     let seeds = collect_project_seeds(&roots);
     let search_paths: Vec<PathBuf> = roots.clone();
 
-    match resolve_cached(&seeds, &search_paths, libraries, key_inputs, store) {
+    match resolve_cached(&seeds, &search_paths, &filtered, key_inputs, store) {
         Ok(cached) => {
             for name in &cached.selection.required_libraries {
-                if let Some(lib) = libraries.iter().find(|l| &l.name == name) {
+                if let Some(lib) = filtered.iter().find(|l| &l.name == name) {
                     tracing::info!(
                         "selected framework library '{}': {} source files",
                         lib.name,
@@ -128,7 +212,7 @@ pub(crate) fn resolve_framework_library_sources_cached_with_hit(
                 "library-select cache backend error; falling back to uncached resolve"
             );
             (
-                resolve_framework_library_sources_from_libraries(libraries, &roots),
+                resolve_framework_library_sources_from_libraries(&filtered, &roots),
                 false,
             )
         }
@@ -450,6 +534,134 @@ mod tests {
         let sources = resolve_framework_library_sources_from_libraries(&libraries, &roots);
 
         assert_eq!(sources, vec![spi_dir.join("SPI.cpp")]);
+    }
+
+    /// Regression for FastLED/fbuild#263 — case A: when the user's project
+    /// IS the library (FastLED's own source tree has `src/FastLED.h`
+    /// directly under one of the walker's roots), the framework's bundled
+    /// FastLED at `cores/teensy4/libraries/FastLED/` must not get selected.
+    /// This case works in the LDF resolver today because path-prefix
+    /// attribution finds `project/src/FastLED.h` first.
+    #[test]
+    fn project_is_the_library_does_not_pull_in_bundled_copy() {
+        let tmp = tempfile::TempDir::new().unwrap();
+
+        let project_src = tmp.path().join("project").join("src");
+        std::fs::create_dir_all(&project_src).unwrap();
+        std::fs::write(project_src.join("FastLED.h"), "// the real FastLED\n").unwrap();
+        std::fs::write(project_src.join("FastLED.cpp"), "// user impl\n").unwrap();
+        std::fs::write(
+            project_src.join("example_main.cpp"),
+            "#include <FastLED.h>\n",
+        )
+        .unwrap();
+
+        let bundled_fastled_dir = tmp
+            .path()
+            .join("framework")
+            .join("libraries")
+            .join("FastLED");
+        std::fs::create_dir_all(&bundled_fastled_dir).unwrap();
+        std::fs::write(
+            bundled_fastled_dir.join("FastLED.h"),
+            "// bundled (stale) FastLED\n",
+        )
+        .unwrap();
+        std::fs::write(bundled_fastled_dir.join("FastLED.cpp"), "// bundled impl\n").unwrap();
+
+        let libraries = vec![FrameworkLibrary {
+            name: "FastLED".to_string(),
+            dir: bundled_fastled_dir.clone(),
+            include_dirs: vec![bundled_fastled_dir.clone()],
+            source_files: vec![bundled_fastled_dir.join("FastLED.cpp")],
+        }];
+
+        let sources = resolve_framework_library_sources_from_libraries(
+            &libraries,
+            std::slice::from_ref(&project_src),
+        );
+
+        assert!(
+            sources.is_empty(),
+            "bundled FastLED must NOT be selected when the project owns FastLED.h \
+             directly under src/ — see #263. Got: {sources:?}"
+        );
+    }
+
+    /// Regression for FastLED/fbuild#263 — case B: the user's project owns
+    /// FastLED.h at a path that is NOT one of the walker roots passed to
+    /// the resolver (e.g. `<repo>/src/FastLED.h` while the resolver only
+    /// sees `<repo>/tests/platform/teensy41/src/`). The walker then can
+    /// only find FastLED.h via the framework's bundled
+    /// `cores/teensy4/libraries/FastLED/` include dir, mis-attributes the
+    /// include to the bundled library, and pulls its sources into the
+    /// build set — duplicate-symbol time. The fix in `framework_libs.rs`
+    /// drops framework libraries whose primary header is shadowed by a
+    /// project header even when the project header isn't first in the
+    /// search order.
+    #[test]
+    fn example_only_root_does_not_pull_in_bundled_fastled_when_user_owns_fastled() {
+        let tmp = tempfile::TempDir::new().unwrap();
+
+        // The repo: user's local FastLED lives at <repo>/src/, which is
+        // NOT among the resolver's roots for the per-example build.
+        let repo_src = tmp.path().join("repo").join("src");
+        std::fs::create_dir_all(&repo_src).unwrap();
+        std::fs::write(repo_src.join("FastLED.h"), "// the real FastLED\n").unwrap();
+        std::fs::write(repo_src.join("FastLED.cpp"), "// user impl\n").unwrap();
+
+        // The per-example project root the resolver actually sees.
+        let example_src = tmp
+            .path()
+            .join("repo")
+            .join("tests")
+            .join("platform")
+            .join("teensy41")
+            .join("src");
+        std::fs::create_dir_all(&example_src).unwrap();
+        std::fs::write(
+            example_src.join("example_main.cpp"),
+            "#include <FastLED.h>\n",
+        )
+        .unwrap();
+
+        // Framework bundles its own FastLED.
+        let bundled_fastled_dir = tmp
+            .path()
+            .join("framework")
+            .join("libraries")
+            .join("FastLED");
+        std::fs::create_dir_all(&bundled_fastled_dir).unwrap();
+        std::fs::write(bundled_fastled_dir.join("FastLED.h"), "// bundled\n").unwrap();
+        std::fs::write(bundled_fastled_dir.join("FastLED.cpp"), "// bundled impl\n").unwrap();
+
+        let libraries = vec![FrameworkLibrary {
+            name: "FastLED".to_string(),
+            dir: bundled_fastled_dir.clone(),
+            include_dirs: vec![bundled_fastled_dir.clone()],
+            source_files: vec![bundled_fastled_dir.join("FastLED.cpp")],
+        }];
+
+        // The fbuild build pipeline calls `local_overridden_framework_libs`
+        // with both the example root AND the repo's actual src/ as
+        // shadowing roots. The repo src/FastLED.h shadows the framework's
+        // FastLED → framework library is filtered out before the resolver
+        // ever sees it.
+        let shadowing_roots = vec![example_src.clone(), repo_src.clone()];
+        let filtered = filter_framework_libs_shadowed_by_project(&libraries, &shadowing_roots);
+
+        // Resolver runs on the FILTERED library set.
+        let sources = resolve_framework_library_sources_from_libraries(
+            &filtered,
+            std::slice::from_ref(&example_src),
+        );
+
+        assert!(
+            sources.is_empty(),
+            "bundled FastLED must be filtered out because the user's repo owns \
+             FastLED.h even when it's not in the per-example walker roots — see #263. \
+             Got: {sources:?}"
+        );
     }
 
     #[test]
