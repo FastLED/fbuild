@@ -112,8 +112,15 @@ impl Linker for Nrf52Linker {
             tracing::info!("link: {}", args.join(" "));
         }
 
+        // GCC LTO temp dir for MSYS-safe paths — see FastLED/fbuild#261.
+        let lto_env = fbuild_core::subprocess::link_env_for_build(output_dir)?;
+        let env_slice: Vec<(&str, &str)> = lto_env
+            .iter()
+            .map(|(k, v)| (k.as_str(), v.as_str()))
+            .collect();
+
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, None, None)?;
+        let result = run_command(&args_ref, None, Some(&env_slice), None)?;
 
         if !result.success() {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(

@@ -28,6 +28,39 @@ use running_process_core::{
 
 use crate::{FbuildError, Result};
 
+/// Build the env overlay that GCC link steps should pass to
+/// [`run_command`] so that `lto-wrapper`'s temp files (the `*.ltrans*.o`
+/// pieces it shuffles between partitions) land inside a fbuild-owned,
+/// forward-slashed directory.
+///
+/// Why this exists — see FastLED/fbuild#261. On Windows hosts with an
+/// MSYS/Git Bash shell, GCC's `lto-wrapper` emits a make rule whose
+/// recipe shells out to `mv` to rename `*.ltrans*.o.tem` files. If the
+/// temp path contains literal backslashes (the default `%USERPROFILE%`
+/// resolution does), MSYS collapses them on the recipe line and `mv`
+/// can't find the source file. Forcing TMPDIR/TMP/TEMP to a path that
+/// already uses `/` sidesteps the issue.
+///
+/// The temp dir is created under `<build_dir>/.lto-tmp/` so it's
+/// tracked by fbuild's existing build-dir cleanup — no `%TEMP%`
+/// pollution.
+///
+/// Returns an owned `Vec<(String, String)>` so callers can build the
+/// `&[(&str, &str)]` slice that `run_command` expects.
+pub fn link_env_for_build(build_dir: &Path) -> std::io::Result<Vec<(String, String)>> {
+    let lto_tmp = build_dir.join(".lto-tmp");
+    std::fs::create_dir_all(&lto_tmp)?;
+    // Forward-slash form so MSYS-flavored shells (used by the `mv` step
+    // inside GCC's LTO wrapper recipe on Windows) don't lose the path
+    // separators.
+    let posix_path = lto_tmp.to_string_lossy().replace('\\', "/");
+    Ok(vec![
+        ("TMPDIR".to_string(), posix_path.clone()),
+        ("TMP".to_string(), posix_path.clone()),
+        ("TEMP".to_string(), posix_path),
+    ])
+}
+
 /// Output from a subprocess invocation.
 #[derive(Debug, Clone)]
 pub struct ToolOutput {
@@ -337,6 +370,50 @@ mod tests {
     fn run_empty_args() {
         let result = run_command(&[], None, None, None);
         assert!(result.is_err());
+    }
+
+    #[test]
+    fn link_env_for_build_creates_dir_and_returns_posix_paths() {
+        let tmp = tempfile::tempdir().expect("tempdir");
+        let env = link_env_for_build(tmp.path()).expect("link_env_for_build");
+
+        // Directory created on disk.
+        let lto_tmp = tmp.path().join(".lto-tmp");
+        assert!(
+            lto_tmp.is_dir(),
+            ".lto-tmp must be a directory after the call"
+        );
+
+        // The three keys GCC/lto-wrapper look at, in TMPDIR > TMP > TEMP order.
+        let keys: Vec<&str> = env.iter().map(|(k, _)| k.as_str()).collect();
+        assert!(keys.contains(&"TMPDIR"), "missing TMPDIR; got {keys:?}");
+        assert!(keys.contains(&"TMP"), "missing TMP; got {keys:?}");
+        assert!(keys.contains(&"TEMP"), "missing TEMP; got {keys:?}");
+
+        // Each value must be forward-slashed and rooted under the
+        // caller's build_dir — the whole point of the helper.
+        for (k, v) in &env {
+            assert!(
+                !v.contains('\\'),
+                "{k}={v:?} must not contain backslashes — see #261"
+            );
+            assert!(
+                v.contains('/'),
+                "{k}={v:?} must use forward slashes — see #261"
+            );
+            assert!(
+                v.ends_with(".lto-tmp"),
+                "{k}={v:?} must point at the .lto-tmp subdir under build_dir"
+            );
+        }
+    }
+
+    #[test]
+    fn link_env_for_build_is_idempotent() {
+        let tmp = tempfile::tempdir().expect("tempdir");
+        let first = link_env_for_build(tmp.path()).expect("first call");
+        let second = link_env_for_build(tmp.path()).expect("second call (dir already exists)");
+        assert_eq!(first, second, "helper must be idempotent");
     }
 
     #[test]

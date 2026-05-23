@@ -101,6 +101,15 @@ impl Linker for TeensyLinker {
             tracing::info!("link: {}", args.join(" "));
         }
 
+        // Redirect GCC LTO temp files into a forward-slashed, fbuild-owned
+        // dir under the build dir so MSYS `mv` doesn't collapse backslashes
+        // in the recipe lines emitted by lto-wrapper. See FastLED/fbuild#261.
+        let lto_env = fbuild_core::subprocess::link_env_for_build(output_dir)?;
+        let env_slice: Vec<(&str, &str)> = lto_env
+            .iter()
+            .map(|(k, v)| (k.as_str(), v.as_str()))
+            .collect();
+
         // On Windows, use a response file to avoid command-line length limits
         // (teensy41 produces ~500 .o files; see issue #234).
         let result = if cfg!(windows) && args.len() > 50 {
@@ -113,10 +122,10 @@ impl Linker for TeensyLinker {
                 "teensy_link",
             )?;
             let rsp_arg = format!("@{}", rsp_path.display());
-            run_command(&[args[0].as_str(), &rsp_arg], None, None, None)?
+            run_command(&[args[0].as_str(), &rsp_arg], None, Some(&env_slice), None)?
         } else {
             let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-            run_command(&args_ref, None, None, None)?
+            run_command(&args_ref, None, Some(&env_slice), None)?
         };
 
         if !result.success() {
