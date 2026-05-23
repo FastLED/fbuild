@@ -33,5 +33,14 @@ jobs:
         run: soldr cargo clippy --workspace --all-targets -- -D warnings
       - name: Lint subprocess spawns
         run: uv run python ci/find_direct_subprocess.py --fail
+      # Custom dylint enforces the rule that all subprocess spawns go
+      # through the wrappers in `fbuild_core::{subprocess,containment}`.
+      # See `dylints/ban_raw_subprocess/`. The dylint crate has its
+      # own nightly toolchain (rust-toolchain.toml inside the dir);
+      # `cargo dylint` picks it up automatically.
+      - name: Install cargo-dylint
+        run: cargo install cargo-dylint dylint-link --locked
+      - name: Run ban_raw_subprocess dylint
+        run: cargo dylint --all -- --workspace --all-targets
       - name: Test
         run: soldr cargo test --workspace

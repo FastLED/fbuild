@@ -1,0 +1,41 @@
+# Each non-empty, non-comment line is matched against the tail of each
+# source file path (slashes normalized to /). The lint only fires on
+# files under `crates/`; anywhere else is out of scope and does not
+# need an entry here.
+#
+# Add an entry ONLY for files that legitimately need to bypass the
+# wrappers in `crates/fbuild-core/src/{subprocess,containment}.rs`.
+# Include an inline comment explaining why.
+
+# The blessed wrappers themselves. `subprocess.rs` runs commands via
+# `running_process_core::NativeProcess::start()` (not `Command::spawn`),
+# but defensively allowlist it so internal helpers/refactors stay
+# unconstrained. `containment.rs` is the entire point of the file —
+# raw `command.spawn()` is the implementation detail that gives us a
+# `std::process::Child` to attach to the Windows Job Object (the
+# published `running-process-core` 3.4 API returns `SpawnedChild`, not
+# `Child`, so this raw-spawn pattern is the bridge — see PR #254).
+crates/fbuild-core/src/subprocess.rs
+crates/fbuild-core/src/containment.rs
+
+# Test harness binary that exercises the containment regression for
+# FastLED/fbuild#129. Spawns itself to validate the EPERM-on-second-
+# child fix. Test-only; doesn't ship in production paths.
+crates/fbuild-daemon/src/bin/containment_harness.rs
+
+# CLI spawns the daemon detached so it outlives the CLI process; no
+# `containment::tokio_spawn::spawn_detached` exists (the wrapper only
+# covers `spawn_contained` for tokio). The raw spawn here is
+# intentional and documented inline ("daemon must outlive the CLI").
+crates/fbuild-cli/src/daemon_client.rs
+
+# `fbuild-build/src/zccache.rs` starts the `zccache` daemon which must
+# outlive the fbuild daemon (cross-tool dependency: zccache is a
+# separate process, not subordinate to fbuild). Documented inline.
+crates/fbuild-build/src/zccache.rs
+
+# Parallel async fan-out for clang-tidy/iwyu in the CLI binary. The
+# CLI doesn't install a global containment group, so going through
+# `containment::tokio_spawn::spawn_contained` would be a no-op anyway;
+# documented inline at each call site.
+crates/fbuild-cli/src/cli/clang_tools.rs
