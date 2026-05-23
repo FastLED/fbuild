@@ -9,7 +9,7 @@ concrete to anchor "+1%" or "<= 250" claims to.
 
 For each target it:
 
-1. Builds the fixture project via ``uv run soldr cargo run -p fbuild-cli --
+1. Builds the fixture project via ``soldr cargo run -p fbuild-cli --
    build <project> -e <env>`` plus a separate ``-t compiledb`` invocation to
    produce ``compile_commands.json``.
 2. Counts distinct ``file`` entries in the resulting compile_commands.json.
@@ -501,7 +501,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         _run(["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=REPO_ROOT).stdout.strip()
         or "unknown"
     )
-    cargo_proc = _run(["uv", "run", "soldr", "cargo", "--version"], cwd=REPO_ROOT, timeout=120)
+    cargo_proc = _run(["soldr", "cargo", "--version"], cwd=REPO_ROOT, timeout=120)
     cargo_version = cargo_proc.stdout.strip() or "unknown"
 
     out_path = (REPO_ROOT / args.out).resolve()

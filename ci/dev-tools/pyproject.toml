@@ -1,9 +1,9 @@
 [project]
 name = "fbuild-dev-tools"
 version = "0.0.0"
-description = "Repo-local fbuild development helpers"
+description = "Repo-local fbuild development helpers (soldr must be installed globally; see https://github.com/zackees/soldr)"
 requires-python = ">=3.10"
-dependencies = ["soldr>=0.7.4"]
+dependencies = []
 
 [project.scripts]
 run_fbuild = "ci.trampoline:run_fbuild"

@@ -99,9 +99,9 @@ This environment requires you to use `git-bash`.
 Use `soldr` directly through the repo-local uv environment (bare `cargo` / `rustc` and `uv run cargo` shims are blocked by hook):
 
 ```bash
-uv run soldr cargo check --workspace --all-targets
-uv run soldr cargo clippy --workspace --all-targets -- -D warnings
-uv run soldr cargo fmt --all
+soldr cargo check --workspace --all-targets
+soldr cargo clippy --workspace --all-targets -- -D warnings
+soldr cargo fmt --all
 ```
 
 The legacy Python linters (`./lint.sh` with `pylint`, `flake8`, `mypy`) remain for any Python utility code under `ci/`.
@@ -124,7 +124,7 @@ The `fbuild` Python package wraps a Rust PyO3 extension built from `crates/fbuil
 
 ```bash
 # Build the extension and copy it into the Python package
-uv run soldr cargo build --release -p fbuild-python --features extension-module
+soldr cargo build --release -p fbuild-python --features extension-module
 
 # Windows
 cp target/release/_native.dll python/fbuild/_native.pyd

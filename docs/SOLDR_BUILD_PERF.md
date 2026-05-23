@@ -12,7 +12,7 @@ daemon from this workspace.
 - Command:
 
 ```powershell
-uv run soldr cargo build --release -p fbuild-cli -p fbuild-daemon
+soldr cargo build --release -p fbuild-cli -p fbuild-daemon
 ```
 
 The benchmark used temporary target directories under `.cache/` so the normal

@@ -30,13 +30,28 @@ class ToolGuardTests(unittest.TestCase):
                 self.assertIsNotNone(result)
                 self.assertEqual(result[0], "cargo")
 
+    def test_blocks_uv_run_soldr(self):
+        """`uv run soldr ...` is no longer allowed — soldr was removed from
+        the repo-local uv env in issue #251. Users must call the global
+        `soldr` binary directly.
+        """
+        commands = (
+            "uv run soldr cargo test",
+            "uv run -- soldr cargo build",
+            "uv run --offline soldr rustfmt --check src/lib.rs",
+            "uv run --project . soldr cargo check",
+        )
+        for command in commands:
+            with self.subTest(command=command):
+                result = check_command(command)
+                self.assertIsNotNone(result, f"expected deny for: {command}")
+                self.assertEqual(result[0], "soldr")
+
     def test_allows_soldr_wrapped_rust_tool(self):
         self.assertIsNone(check_command("soldr cargo test"))
         self.assertIsNone(check_command("soldr --no-cache cargo build"))
         self.assertIsNone(check_command("soldr rustc --version"))
         self.assertIsNone(check_command("soldr rustfmt --check src/lib.rs"))
-        self.assertIsNone(check_command("uv run soldr cargo test"))
-        self.assertIsNone(check_command("uv run soldr rustfmt --check src/lib.rs"))
 
     def test_blocks_bare_python(self):
         result = check_command("python ci/script.py")

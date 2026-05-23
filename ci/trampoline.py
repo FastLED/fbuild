@@ -1,8 +1,10 @@
 """Repo-local development command helpers.
 
-Rust tooling should be invoked with `soldr ...` or `uv run soldr ...`
-directly. This module only keeps helper entry points that run fbuild
-workspace binaries through soldr-managed Cargo.
+Rust tooling is invoked with a globally-installed `soldr` directly
+(see issue #251 — `soldr` is no longer pulled into the repo-local uv
+environment as a dependency of `fbuild-dev-tools`). This module only
+keeps helper entry points that run fbuild workspace binaries through
+soldr-managed Cargo.
 
 Why soldr:
 - soldr resolves each tool via `rustup which`, which respects
@@ -22,8 +24,11 @@ def _soldr_prefix():
     """Return the argv prefix that runs soldr."""
     if not shutil.which("soldr"):
         print(
-            "error: `soldr` not found on PATH. Run ./install (or `uv sync`) "
-            "to install fbuild-dev-tools, which pulls soldr in as a dependency.",
+            "error: `soldr` not found on PATH. `soldr` is required globally "
+            "for this repo. Install it via one of:\n"
+            "  uv tool install soldr\n"
+            "  curl -fsSL https://raw.githubusercontent.com/zackees/soldr/main/install.sh | bash\n"
+            "See https://github.com/zackees/soldr for other install options.",
             file=sys.stderr,
         )
         sys.exit(1)

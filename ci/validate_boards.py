@@ -410,7 +410,7 @@ def main() -> int:
             for diff in diffs:
                 print(f"    {diff}")
             print()
-        print("To fix: run 'uv run soldr cargo run -p fbuild-config --bin enrich_boards' and commit the changes.")
+        print("To fix: run 'soldr cargo run -p fbuild-config --bin enrich_boards' and commit the changes.")
         return 1
 
     print("All checked boards match PlatformIO definitions.")

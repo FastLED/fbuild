@@ -37,7 +37,7 @@ for arg in "${ARGS[@]}"; do
     fi
 done
 
-CMD=(uv run soldr cargo test)
+CMD=(soldr cargo test)
 
 if [ ${#CARGO_ARGS[@]} -eq 0 ]; then
     CMD+=(--workspace)

@@ -54,13 +54,13 @@ def lint_single_file(file_path):
         return 1
 
     # Format single file
-    result = run_cmd(["uv", "run", "soldr", "rustfmt", file_path])
+    result = run_cmd(["soldr", "rustfmt", file_path])
     if result.returncode != 0:
         return result.returncode
 
     # Clippy on the affected crate (or workspace if unknown)
     crate = detect_crate(file_path)
-    cmd = ["uv", "run", "soldr", "cargo", "clippy"]
+    cmd = ["soldr", "cargo", "clippy"]
     if crate:
         cmd += ["-p", crate]
     else:
@@ -74,14 +74,14 @@ def lint_single_file(file_path):
 def lint_workspace():
     """Full workspace lint: fmt check + clippy."""
     # Format check
-    result = run_cmd(["uv", "run", "soldr", "cargo", "fmt", "--all", "--check"])
+    result = run_cmd(["soldr", "cargo", "fmt", "--all", "--check"])
     if result.returncode != 0:
         print("Formatting issues found. Run './lint --fix' to auto-fix.", file=sys.stderr)
         return result.returncode
 
     # Clippy
     result = run_cmd([
-        "uv", "run", "soldr", "cargo", "clippy", "--workspace", "--all-targets",
+        "soldr", "cargo", "clippy", "--workspace", "--all-targets",
         "--", "-D", "warnings",
     ])
     return result.returncode
@@ -93,13 +93,13 @@ def main():
     # Handle --fix flag
     if "--fix" in args:
         args.remove("--fix")
-        result = run_cmd(["uv", "run", "soldr", "cargo", "fmt", "--all"])
+        result = run_cmd(["soldr", "cargo", "fmt", "--all"])
         if result.returncode != 0:
             return result.returncode
         if not args:
             # After fixing fmt, run clippy
             result = run_cmd([
-                "uv", "run", "soldr", "cargo", "clippy", "--workspace", "--all-targets",
+                "soldr", "cargo", "clippy", "--workspace", "--all-targets",
                 "--", "-D", "warnings",
             ])
             return result.returncode

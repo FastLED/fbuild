@@ -3,7 +3,7 @@
 //! Downloads esp32 toolchain + framework (cached after first run), compiles a
 //! minimal blink sketch, and validates the output firmware.bin.
 //!
-//! Run with: `uv run soldr cargo test -p fbuild-build --test esp32_build -- --ignored`
+//! Run with: `soldr cargo test -p fbuild-build --test esp32_build -- --ignored`
 
 use std::fs;
 use std::path::PathBuf;

@@ -4,35 +4,31 @@ Codex working notes for this repo. Start with [CLAUDE.md](./CLAUDE.md) for the f
 
 ## Mandatory command rules
 
-- Always run Rust tooling through `soldr` or `uv run soldr`.
+- Always run Rust tooling through a globally-installed `soldr`.
 - Never run bare `cargo`, `rustc`, `rustfmt`, `clippy-driver`, `python`, or `pip`.
+- Never run `uv run soldr ...` — soldr is no longer installed into the
+  repo-local uv environment (see issue #251). Install soldr globally
+  (e.g. `uv tool install soldr` or the install script at
+  https://github.com/zackees/soldr) and call it directly.
 - Approved Rust forms in this repo are:
   - `soldr cargo ...`
   - `soldr rustc ...`
   - `soldr rustfmt ...`
-  - `uv run soldr cargo ...`
-  - `uv run soldr rustc ...`
-  - `uv run soldr rustfmt ...`
 
 ## Why
 
 - Repo hooks enforce this.
 - [soldr](https://github.com/zackees/soldr) resolves each tool via `rustup which` so the rustup-managed toolchain is always used instead of a stale system or Chocolatey install.
-- `uv run soldr ...` works because `ci/dev-tools` installs `soldr` into the repo-local uv environment.
 - The normal Cargo path is `soldr cargo ...`, so repo Rust builds use soldr's managed zccache path by default; do not add repo-specific `RUSTC_WRAPPER` wiring for standard builds.
 - If you bypass them, you can hit wrong-toolchain errors.
 
 ## Use these
 
 ```powershell
-uv run soldr cargo check --workspace --all-targets
-uv run soldr cargo test -p fbuild-build -- --ignored
-uv run soldr cargo clippy --workspace --all-targets -- -D warnings
-uv run soldr cargo fmt --all
-
 soldr cargo check --workspace --all-targets
 soldr cargo test -p fbuild-build -- --ignored
 soldr cargo clippy --workspace --all-targets -- -D warnings
+soldr cargo fmt --all
 soldr rustfmt --check crates/fbuild-build/src/compiler.rs
 
 uv run test
@@ -46,11 +42,13 @@ uv run test -p fbuild-build -- some_test_name
 uv run python ci/zccache_setup.py
 ```
 
-This configures `rustc-wrapper = "zccache"` for local wrapper-mode experiments. Standard builds should use `soldr` or `uv run soldr` above.
+This configures `rustc-wrapper = "zccache"` for local wrapper-mode experiments. Standard builds should use `soldr` above.
 
-## Fallback
+## If `soldr` is missing
 
-- Use `uv run soldr ...` when `soldr` is not on PATH but the repo-local uv environment is available.
+- Install globally with `uv tool install soldr` or follow
+  https://github.com/zackees/soldr.
+- Then re-run the failing command.
 
 ## If a command fails
 

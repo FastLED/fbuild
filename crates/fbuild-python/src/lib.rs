@@ -236,7 +236,7 @@ mod tests {
     /// Deliberately does not pull a crate dep — axum is already in the
     /// workspace but not in `fbuild-python`'s dep graph, and adding it
     /// just for one test would inflate the build graph for every clean
-    /// `uv run soldr cargo check`. Raw TCP is adequate for a response we control.
+    /// `soldr cargo check`. Raw TCP is adequate for a response we control.
     async fn spawn_mock_daemon(body: String) -> String {
         let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
         let addr = listener.local_addr().unwrap();

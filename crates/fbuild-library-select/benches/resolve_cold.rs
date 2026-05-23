@@ -13,7 +13,7 @@
 //! Run with:
 //!
 //! ```text
-//! uv run soldr cargo bench -p fbuild-library-select --bench resolve_cold
+//! soldr cargo bench -p fbuild-library-select --bench resolve_cold
 //! ```
 //!
 //! Future PRs gate against the baseline number this captures.
