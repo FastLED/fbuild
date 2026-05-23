@@ -199,6 +199,26 @@ mod tests {
             .contains(&"-mcpu=cortex-m7".to_string()));
     }
 
+    /// Regression test for issue #257: teensy4x must link
+    /// `libarm_cortexM7lfsp_math.a` (CMSIS-DSP) so Teensy Audio FFT
+    /// examples (`Ports/PJRCSpectrumAnalyzer`) resolve symbols like
+    /// `arm_cfft_radix4_q15`. The library ships in the Teensy 4.x core
+    /// dir, which the linker already gets as `-L<core_dir>` via
+    /// `LinkerScripts::single`.
+    #[test]
+    fn teensy4x_links_cmsis_dsp_math() {
+        let config = get_teensy_config_for_mcu("imxrt1062").expect("teensy4x config");
+        assert!(
+            config
+                .linker_libs
+                .contains(&"-larm_cortexM7lfsp_math".to_string()),
+            "teensy4x linker_libs must include -larm_cortexM7lfsp_math \
+             so Teensy Audio FFT examples link; see issue #257. \
+             Actual libs: {:?}",
+            config.linker_libs
+        );
+    }
+
     #[test]
     fn test_teensy_config_for_mcu_mk20dx256() {
         let config = get_teensy_config_for_mcu("mk20dx256").expect("teensy3x config");
