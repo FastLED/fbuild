@@ -167,6 +167,29 @@ def uv_sync():
         subprocess.run(["uv", "sync"], check=False)
 
 
+def install_soldr_global():
+    """Ensure `soldr` is installed globally.
+
+    Since issue #251, `soldr` is no longer pulled into the repo-local uv
+    env as a dependency of `fbuild-dev-tools`. Bootstrap it via
+    `uv tool install soldr` so subsequent `soldr cargo ...` invocations
+    work out of the box.
+    """
+    if shutil.which("soldr"):
+        log("soldr already on PATH.")
+        return
+    if not shutil.which("uv"):
+        warn("uv not on PATH; cannot install soldr globally.")
+        warn("Install soldr manually — see https://github.com/zackees/soldr")
+        return
+    log("Installing soldr globally via `uv tool install soldr` ...")
+    subprocess.run(["uv", "tool", "install", "soldr"], check=False)
+    if not shutil.which("soldr"):
+        warn("uv tool install soldr did not put `soldr` on PATH.")
+        warn("You may need to run: uv tool update-shell")
+        warn("Or install manually: see https://github.com/zackees/soldr")
+
+
 def source_rust_env():
     """Add .cargo/bin to PATH."""
     for candidate in [
@@ -273,7 +296,7 @@ def verify(plat):
             warn('  export PATH="$HOME/.cargo/bin:$PATH"')
 
     log("")
-    log("Done. Run: uv run soldr cargo check --workspace")
+    log("Done. Run: soldr cargo check --workspace")
     return True
 
 
@@ -290,6 +313,9 @@ def main():
 
     # Step 2: Initialize uv project
     uv_sync()
+
+    # Step 2b: Ensure soldr is globally installed (#251)
+    install_soldr_global()
 
     # Step 3: Install Rust
     current = current_rust_version()
@@ -317,7 +343,7 @@ def main():
         warn("")
         warn("Restart your terminal, then run:")
         warn("  rustc --version")
-        warn("  uv run soldr cargo check --workspace")
+        warn("  soldr cargo check --workspace")
 
 
 if __name__ == "__main__":

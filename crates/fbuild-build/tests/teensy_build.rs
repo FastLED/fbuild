@@ -3,7 +3,7 @@
 //! Downloads arm-gcc + Teensy cores (cached after first run), compiles a
 //! minimal blink sketch, and validates the output firmware.hex.
 //!
-//! Run with: `uv run soldr cargo test -p fbuild-build --test teensy_build -- --ignored`
+//! Run with: `soldr cargo test -p fbuild-build --test teensy_build -- --ignored`
 
 use std::fs;
 use std::path::{Path, PathBuf};

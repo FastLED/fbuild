@@ -528,7 +528,7 @@ fn verify_outcome_is_match_helper() {
 // These tests are `#[ignore]` so they never run in CI.  To exercise
 // them on a local bench, set the env vars described below and run:
 //
-//   uv run soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real -- --ignored --nocapture
+//   soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real -- --ignored --nocapture
 //
 // Each test reads **two** environment variables:
 //
@@ -666,7 +666,7 @@ fn run_verify_deployment_test(
 ///
 /// ```text
 /// ESP32_PORT=COM5 ESP32_FIRMWARE=C:\path\to\firmware.bin \
-///   uv run soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32 -- --ignored --nocapture
+///   soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32 -- --ignored --nocapture
 /// ```
 #[test]
 #[ignore = "requires real ESP32 board — set ESP32_PORT and ESP32_FIRMWARE"]
@@ -678,7 +678,7 @@ fn try_verify_deployment_real_esp32() {
 ///
 /// ```text
 /// ESP32S2_PORT=COM6 ESP32S2_FIRMWARE=C:\path\to\firmware.bin \
-///   uv run soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32s2 -- --ignored --nocapture
+///   soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32s2 -- --ignored --nocapture
 /// ```
 #[test]
 #[ignore = "requires real ESP32-S2 board — set ESP32S2_PORT and ESP32S2_FIRMWARE"]
@@ -693,7 +693,7 @@ fn try_verify_deployment_real_esp32s2() {
 ///
 /// ```text
 /// ESP32S3_PORT=COM13 ESP32S3_FIRMWARE=C:\Users\niteris\dev\fastled\.pio\build\esp32s3\firmware.bin \
-///   uv run soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32s3 -- --ignored --nocapture
+///   soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32s3 -- --ignored --nocapture
 /// ```
 #[test]
 #[ignore = "requires real ESP32-S3 board — set ESP32S3_PORT and ESP32S3_FIRMWARE"]
@@ -705,7 +705,7 @@ fn try_verify_deployment_real_esp32s3() {
 ///
 /// ```text
 /// ESP32C2_PORT=COM7 ESP32C2_FIRMWARE=C:\path\to\firmware.bin \
-///   uv run soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32c2 -- --ignored --nocapture
+///   soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32c2 -- --ignored --nocapture
 /// ```
 #[test]
 #[ignore = "requires real ESP32-C2 board — set ESP32C2_PORT and ESP32C2_FIRMWARE"]
@@ -717,7 +717,7 @@ fn try_verify_deployment_real_esp32c2() {
 ///
 /// ```text
 /// ESP32C3_PORT=COM8 ESP32C3_FIRMWARE=C:\path\to\firmware.bin \
-///   uv run soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32c3 -- --ignored --nocapture
+///   soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32c3 -- --ignored --nocapture
 /// ```
 #[test]
 #[ignore = "requires real ESP32-C3 board — set ESP32C3_PORT and ESP32C3_FIRMWARE"]
@@ -729,7 +729,7 @@ fn try_verify_deployment_real_esp32c3() {
 ///
 /// ```text
 /// ESP32C6_PORT=COM9 ESP32C6_FIRMWARE=C:\path\to\firmware.bin \
-///   uv run soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32c6 -- --ignored --nocapture
+///   soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32c6 -- --ignored --nocapture
 /// ```
 #[test]
 #[ignore = "requires real ESP32-C6 board — set ESP32C6_PORT and ESP32C6_FIRMWARE"]
@@ -741,7 +741,7 @@ fn try_verify_deployment_real_esp32c6() {
 ///
 /// ```text
 /// ESP32H2_PORT=COM10 ESP32H2_FIRMWARE=C:\path\to\firmware.bin \
-///   uv run soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32h2 -- --ignored --nocapture
+///   soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32h2 -- --ignored --nocapture
 /// ```
 #[test]
 #[ignore = "requires real ESP32-H2 board — set ESP32H2_PORT and ESP32H2_FIRMWARE"]
@@ -756,7 +756,7 @@ fn try_verify_deployment_real_esp32h2() {
 ///
 /// ```text
 /// ESP32P4_PORT=COM11 ESP32P4_FIRMWARE=C:\path\to\firmware.bin \
-///   uv run soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32p4 -- --ignored --nocapture
+///   soldr cargo test -p fbuild-deploy esp32::tests::try_verify_deployment_real_esp32p4 -- --ignored --nocapture
 /// ```
 #[test]
 #[ignore = "requires real ESP32-P4 board — set ESP32P4_PORT and ESP32P4_FIRMWARE"]

@@ -17,7 +17,7 @@
 //! Run with:
 //!
 //! ```text
-//! uv run soldr cargo bench -p fbuild-library-select --bench resolve_warm
+//! soldr cargo bench -p fbuild-library-select --bench resolve_warm
 //! ```
 //!
 //! Follows up #215 (mini bench) and #205 Phase 7 (perf budgets).

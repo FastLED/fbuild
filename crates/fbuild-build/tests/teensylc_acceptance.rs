@@ -14,7 +14,7 @@
 //!
 //! This test downloads Teensyduino + arm-gcc on the first run and is
 //! therefore CI-only — it is gated behind `#[ignore]` and runs via
-//! `uv run soldr cargo test -p fbuild-build --test teensylc_acceptance -- --ignored`.
+//! `soldr cargo test -p fbuild-build --test teensylc_acceptance -- --ignored`.
 
 use std::path::PathBuf;
 

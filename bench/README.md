@@ -12,9 +12,9 @@ Per-crate criterion benches live alongside their crate, e.g.:
 Run those with:
 
 ```bash
-uv run soldr cargo bench -p fbuild-library-select --bench resolve_cold
-uv run soldr cargo bench -p fbuild-library-select --bench resolve_warm
-uv run soldr cargo bench -p fbuild-header-scan  --bench scan_throughput
+soldr cargo bench -p fbuild-library-select --bench resolve_cold
+soldr cargo bench -p fbuild-library-select --bench resolve_warm
+soldr cargo bench -p fbuild-header-scan  --bench scan_throughput
 ```
 
 ## Subdirectories
@@ -23,7 +23,7 @@ uv run soldr cargo bench -p fbuild-header-scan  --bench scan_throughput
   warm-cache library-selection matrix (`FastLED/fbuild#205` AC#5, P-01).
   Discovers examples under `$FASTLED_DIR` (default `~/dev/fastled`),
   runs the resolver cold + warm per example, and reports timings.
-  Run with `uv run soldr cargo run --release -p fbuild-bench-fastled-examples`.
+  Run with `soldr cargo run --release -p fbuild-bench-fastled-examples`.
   The synthetic warm-path baseline lives in
   `crates/fbuild-library-select/benches/resolve_warm.rs`.
 

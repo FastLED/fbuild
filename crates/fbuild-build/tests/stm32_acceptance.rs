@@ -6,7 +6,7 @@
 //! by fbuild's library-selection layer.
 //!
 //! Run with:
-//! `uv run soldr cargo test -p fbuild-build --test stm32_acceptance -- --ignored`
+//! `soldr cargo test -p fbuild-build --test stm32_acceptance -- --ignored`
 //!
 //! Marked `#[ignore]` because it downloads the ARM GCC toolchain plus the
 //! STM32duino cores (cached after first run) and performs a full firmware

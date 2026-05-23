@@ -21,7 +21,7 @@
 //! `compile_commands.json` or `.fbuild/` is ever left behind in the repo.
 //!
 //! Run with:
-//! `uv run soldr cargo test -p fbuild-build --test teensy30_acceptance -- --ignored`
+//! `soldr cargo test -p fbuild-build --test teensy30_acceptance -- --ignored`
 //!
 //! Marked `#[ignore]` because it downloads Teensyduino + arm-gcc on the
 //! first run (cached after) and performs a full firmware build — too

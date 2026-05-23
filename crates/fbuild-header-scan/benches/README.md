@@ -16,5 +16,5 @@ gate (Phase 7 will wire that up in a follow-up).
 Run:
 
 ```bash
-uv run soldr cargo bench -p fbuild-header-scan --bench scan_throughput
+soldr cargo bench -p fbuild-header-scan --bench scan_throughput
 ```

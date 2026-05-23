@@ -19,7 +19,7 @@ SCRIPT_DIR = Path(__file__).parent.resolve()
 
 
 def main():
-    cmd = ["uv", "run", "soldr", "cargo", "test"]
+    cmd = ["soldr", "cargo", "test"]
 
     args = sys.argv[1:]
     full = "--full" in args

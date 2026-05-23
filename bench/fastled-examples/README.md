@@ -33,16 +33,16 @@ silent fallback would mask configuration mistakes.
 
 ```bash
 FASTLED_DIR=/path/to/fastled \
-  uv run soldr cargo run --release -p fbuild-bench-fastled-examples
+  soldr cargo run --release -p fbuild-bench-fastled-examples
 
 # Emit a JSON report alongside stdout
 FASTLED_DIR=/path/to/fastled \
-  uv run soldr cargo run --release -p fbuild-bench-fastled-examples \
+  soldr cargo run --release -p fbuild-bench-fastled-examples \
   -- --json bench/fastled-examples/report.json
 
 # Enforce AC#5 (≤ 50 ms warm per example). Exits 1 on breach.
 FASTLED_DIR=/path/to/fastled \
-  uv run soldr cargo run --release -p fbuild-bench-fastled-examples \
+  soldr cargo run --release -p fbuild-bench-fastled-examples \
   -- --max-warm-ms 50
 ```
 

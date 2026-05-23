@@ -25,7 +25,7 @@
 //!
 //! Run explicitly with:
 //! ```bash
-//! uv run soldr cargo test -p fbuild-daemon --test process_containment -- --ignored
+//! soldr cargo test -p fbuild-daemon --test process_containment -- --ignored
 //! ```
 
 use std::io::{BufRead, BufReader};

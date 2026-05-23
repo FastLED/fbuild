@@ -19,7 +19,7 @@ against it.
 Run:
 
 ```bash
-uv run soldr cargo bench -p fbuild-library-select --bench resolve_cold
+soldr cargo bench -p fbuild-library-select --bench resolve_cold
 ```
 
 ## resolve_warm
@@ -39,7 +39,7 @@ guard that runs on every CI of this crate.
 Run:
 
 ```bash
-uv run soldr cargo bench -p fbuild-library-select --bench resolve_warm
+soldr cargo bench -p fbuild-library-select --bench resolve_warm
 ```
 
 Compare against `resolve_cold`: warm should be orders of magnitude faster

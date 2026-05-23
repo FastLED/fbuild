@@ -317,7 +317,7 @@ export FBUILD_DEV_MODE=1 FBUILD_PERF_LOG=1
 export PATH="target/x86_64-pc-windows-msvc/release:$PATH"
 
 # Build once (release) so the binaries match the instrumentation
-uv run soldr cargo build --release -p fbuild-cli -p fbuild-daemon
+soldr cargo build --release -p fbuild-cli -p fbuild-daemon
 
 # Kill any stale daemon, then run a cold build to populate disk cache
 fbuild.exe daemon stop

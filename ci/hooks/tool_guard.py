@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """PreToolUse hook: blocks bare Rust commands and bare python/pip.
 
-All cargo/rustc/rustfmt must go through soldr (ensures correct toolchain).
+All cargo/rustc/rustfmt must go through a globally-installed `soldr`
+(ensures correct toolchain). The historical `uv run soldr ...` path is
+also blocked — `soldr` was removed from `ci/dev-tools` as of issue #251
+and is no longer available in the repo-local uv env.
 All python must go through uv (ensures correct environment).
 
 Exit codes:
@@ -16,9 +19,15 @@ import sys
 RUST_TOOLS = {"cargo", "rustc", "rustfmt", "clippy-driver", "cargo-clippy", "cargo-fmt"}
 PYTHON_TOOLS = {"python", "python3", "pip", "pip3"}
 
-SOLDR_PREFIXES = ("soldr ", "uv run soldr ")
+# Only the bare, global `soldr` is allowed for Rust tooling.
+SOLDR_PREFIXES = ("soldr ",)
 UV_RUN_PREFIX = "uv run "
 UV_PIP_PREFIX = "uv pip "
+# `uv run` targets that are forbidden because they belong to the
+# global-soldr path: `cargo` / `rustc` / etc. (the console-script shims
+# from a venv-installed Rust toolchain) and `soldr` itself (since
+# soldr is no longer a venv dependency — see issue #251).
+UV_RUN_FORBIDDEN_TARGETS = RUST_TOOLS | {"soldr"}
 UV_RUN_FLAGS_WITH_VALUES = {
     "--config-setting",
     "--directory",
@@ -107,13 +116,23 @@ def check_command(command):
 
         if seg.startswith(UV_RUN_PREFIX):
             parts = seg.split()
-            # `uv run soldr ...` was handled above. Block the old `uv run cargo`
-            # console-script shim path so Rust tooling has one canonical entry.
+            # Block both `uv run cargo ...` (the old venv-shim path) and
+            # `uv run soldr ...` (no longer valid since #251 removed
+            # soldr from the repo-local uv env).
             run_target = uv_run_target(parts)
-            if run_target in RUST_TOOLS:
+            if run_target in UV_RUN_FORBIDDEN_TARGETS:
+                if run_target == "soldr":
+                    return (
+                        "soldr",
+                        "Use a globally-installed `soldr ...` instead of "
+                        "`uv run soldr ...`. soldr was removed from the "
+                        "repo-local uv env in issue #251. Install via "
+                        "`uv tool install soldr` (or see "
+                        "https://github.com/zackees/soldr).",
+                    )
                 return (
                     run_target,
-                    f"Use `uv run soldr {run_target} ...` instead of "
+                    f"Use `soldr {run_target} ...` instead of "
                     f"`uv run {run_target} ...`. soldr resolves the checked-in "
                     f"Rust toolchain directly via rustup.",
                 )
@@ -122,10 +141,9 @@ def check_command(command):
         if first_word in RUST_TOOLS:
             return (
                 first_word,
-                f"Use `soldr {first_word} ...` or "
-                f"`uv run soldr {first_word} ...` instead of bare "
-                f"`{first_word}`. soldr resolves the checked-in Rust toolchain "
-                f"directly via rustup.",
+                f"Use `soldr {first_word} ...` instead of bare "
+                f"`{first_word}`. soldr (installed globally) resolves the "
+                f"checked-in Rust toolchain directly via rustup.",
             )
 
         if first_word in PYTHON_TOOLS:

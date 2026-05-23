@@ -49,13 +49,13 @@ def main() -> int:
 
     # --fix mode
     if fix:
-        rc = run(["uv", "run", "soldr", "cargo", "fmt", "--all"])
+        rc = run(["soldr", "cargo", "fmt", "--all"])
         if rc != 0:
             return rc
         if not file_arg:
             return run(
                 [
-                    "uv", "run", "soldr", "cargo", "clippy",
+                    "soldr", "cargo", "clippy",
                     "--workspace", "--all-targets", "--", "-D", "warnings",
                 ]
             )
@@ -66,27 +66,27 @@ def main() -> int:
         if not os.path.isfile(file_path):
             print(f"File not found: {file_path}", file=sys.stderr)
             return 1
-        rc = run(["uv", "run", "soldr", "rustfmt", file_path])
+        rc = run(["soldr", "rustfmt", file_path])
         if rc != 0:
             return rc
         crate = detect_crate(file_path)
         if crate:
             return run(
                 [
-                    "uv", "run", "soldr", "cargo", "clippy",
+                    "soldr", "cargo", "clippy",
                     "-p", crate, "--all-targets", "--", "-D", "warnings",
                 ]
             )
         else:
             return run(
                 [
-                    "uv", "run", "soldr", "cargo", "clippy",
+                    "soldr", "cargo", "clippy",
                     "--workspace", "--all-targets", "--", "-D", "warnings",
                 ]
             )
 
     # Full workspace mode
-    rc = run(["uv", "run", "soldr", "cargo", "fmt", "--all", "--check"])
+    rc = run(["soldr", "cargo", "fmt", "--all", "--check"])
     if rc != 0:
         print(
             "Formatting issues found. Run 'uv run --script lint --fix' to auto-fix.",
@@ -95,7 +95,7 @@ def main() -> int:
         return 1
     return run(
         [
-            "uv", "run", "soldr", "cargo", "clippy",
+            "soldr", "cargo", "clippy",
             "--workspace", "--all-targets", "--", "-D", "warnings",
         ]
     )

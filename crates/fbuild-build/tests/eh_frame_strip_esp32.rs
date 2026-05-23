@@ -6,7 +6,7 @@
 //! of MB on first run) and is not headless-CI-friendly. Run with:
 //!
 //! ```
-//! uv run soldr cargo test -p fbuild-build --test eh_frame_strip_esp32 -- --ignored
+//! soldr cargo test -p fbuild-build --test eh_frame_strip_esp32 -- --ignored
 //! ```
 //!
 //! The orchestrator invocation pattern mirrors
