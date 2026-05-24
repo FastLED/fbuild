@@ -47,6 +47,45 @@ jobs:
           export PATH="${CARGO_HOME}/bin:${PATH}"
           cargo +nightly-2026-03-26 test --manifest-path dylints/ban_raw_subprocess/Cargo.toml
       - name: Run dylint over workspace
+        # cargo-dylint 5.0.0 expects libraries on disk as
+        # `<name>@<toolchain>.<ext>` but cargo emits them as bare
+        # `<name>.<ext>` on first build. After each cargo-dylint
+        # invocation, alias any just-built libraries that lack the
+        # `@<toolchain>` suffix and retry. Same loop zccache uses in
+        # `ci/lint.py::lint_dylint_only`.
         run: |
           export PATH="${CARGO_HOME}/bin:${PATH}"
-          cargo dylint --all -- --workspace --all-targets
+          set +e
+          for attempt in 1 2 3; do
+            cargo dylint --all -- --workspace --all-targets
+            rc=$?
+            if [ $rc -eq 0 ]; then
+              exit 0
+            fi
+            created_any=0
+            for lib_dir in target/dylint/libraries/*/release; do
+              [ -d "$lib_dir" ] || continue
+              toolchain="$(basename "$(dirname "$lib_dir")")"
+              for ext in so dylib dll; do
+                for lib in "$lib_dir"/*."$ext"; do
+                  [ -f "$lib" ] || continue
+                  stem="$(basename "$lib" ".$ext")"
+                  case "$stem" in
+                    *"@"*) continue ;;
+                  esac
+                  alias_path="$lib_dir/${stem}@${toolchain}.${ext}"
+                  if [ ! -e "$alias_path" ]; then
+                    cp "$lib" "$alias_path"
+                    created_any=1
+                  fi
+                done
+              done
+            done
+            if [ "$created_any" -eq 0 ]; then
+              echo "::error::cargo dylint failed and no new aliases to create on attempt $attempt"
+              exit $rc
+            fi
+            echo "Created @<toolchain> aliases; retrying cargo dylint (attempt $((attempt+1)))..."
+          done
+          echo "::error::cargo dylint did not succeed after 3 attempts"
+          exit 1
