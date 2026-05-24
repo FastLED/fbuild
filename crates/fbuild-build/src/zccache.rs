@@ -211,9 +211,13 @@ pub fn path_arg_for_compile_cwd(path: &Path, cwd: &Path) -> String {
         return path.to_string_lossy().to_string();
     }
 
+    // Both ends must be in the same normal form (stripped of any `\\?\`
+    // Windows extended-length prefix) for `strip_prefix` to match, since
+    // `canonicalize_existing_path` now strips that prefix from `path`.
     let stable_path = canonicalize_existing_path(path).unwrap_or_else(|| path.to_path_buf());
+    let stable_cwd = strip_unc_prefix(cwd.to_path_buf());
     stable_path
-        .strip_prefix(cwd)
+        .strip_prefix(&stable_cwd)
         .unwrap_or(&stable_path)
         .to_string_lossy()
         .to_string()
@@ -262,14 +266,41 @@ pub fn normalize_flags_for_compile_cwd(flags: &[String], cwd: &Path) -> Vec<Stri
 
 fn canonicalize_existing_path(path: &Path) -> Option<PathBuf> {
     if let Ok(canonical) = path.canonicalize() {
-        return Some(canonical);
+        return Some(strip_unc_prefix(canonical));
     }
 
     let parent = path.parent()?.canonicalize().ok()?;
-    Some(match path.file_name() {
+    let joined = match path.file_name() {
         Some(name) => parent.join(name),
         None => parent,
-    })
+    };
+    Some(strip_unc_prefix(joined))
+}
+
+/// On Windows, `Path::canonicalize` returns paths prefixed with the
+/// extended-length namespace marker `\\?\`. That prefix only works with
+/// backslash path separators, but the response-file writer rewrites all
+/// backslashes to forward slashes (so GCC doesn't interpret them as escape
+/// sequences). The result is `//?/C:/…` which neither GCC nor mingw's path
+/// search code understands as a valid drive-letter path, so `#include`
+/// lookups against canonicalized include dirs silently fail (see FastLED
+/// issue #2507 — `soc/soc_caps.h` not found on esp32p4).
+///
+/// Stripping the prefix here turns `\\?\C:\…` into `C:\…`, which survives
+/// the backslash→slash rewrite as the standard `C:/…` form GCC accepts.
+/// The trade-off is that long-path support (>260 chars) is lost for the
+/// stripped paths, but the cache root is `<home>/.fbuild` which is well
+/// under the limit in practice.
+fn strip_unc_prefix(path: PathBuf) -> PathBuf {
+    if !cfg!(windows) {
+        return path;
+    }
+    let s = path.to_string_lossy();
+    // Handle both `\\?\C:\…` and (defensively) the already-rewritten `//?/C:/…`.
+    if let Some(rest) = s.strip_prefix(r"\\?\").or_else(|| s.strip_prefix("//?/")) {
+        return PathBuf::from(rest);
+    }
+    path
 }
 
 fn flag_takes_path_argument(flag: &str) -> bool {
@@ -399,12 +430,32 @@ mod tests {
         let workspace = tmp.path().join("project");
         let output = workspace.join(".fbuild/build/main.o");
         std::fs::create_dir_all(output.parent().unwrap()).unwrap();
-        let expected = workspace.canonicalize().unwrap();
+        // On Windows, canonicalize() yields a `\\?\` extended-length prefix
+        // that the response-file writer cannot use (forward-slash rewrite
+        // produces `//?/` which gcc rejects). The helper now strips that
+        // prefix on Windows, so the expected value must match.
+        let expected = strip_unc_prefix(workspace.canonicalize().unwrap());
 
         assert_eq!(
             compile_cwd_from_output(&output).as_deref(),
             Some(expected.as_path())
         );
+    }
+
+    #[test]
+    #[cfg(windows)]
+    fn strip_unc_prefix_removes_extended_length_marker() {
+        let raw = std::path::PathBuf::from(r"\\?\C:\Users\test\.fbuild\cache");
+        let stripped = strip_unc_prefix(raw);
+        assert_eq!(stripped, std::path::PathBuf::from(r"C:\Users\test\.fbuild\cache"));
+    }
+
+    #[test]
+    #[cfg(windows)]
+    fn strip_unc_prefix_is_idempotent_for_already_normal_paths() {
+        let raw = std::path::PathBuf::from(r"C:\Users\test\include");
+        let stripped = strip_unc_prefix(raw.clone());
+        assert_eq!(stripped, raw);
     }
 
     #[test]
