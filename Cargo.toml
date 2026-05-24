@@ -80,7 +80,11 @@ tracing-test = "0.2"
 # Process containment: all subprocess spawns the daemon performs (compilers,
 # esptool, qemu, simavr, node, npm, …) and any grandchildren they fork must
 # die with the daemon. See FastLED/fbuild#32.
-running-process-core = "3.4"
+# Migrated from `running-process-core 3.4` to `running-process 4.0.0` after
+# the upstream mono-crate consolidation. We only use the `core` feature
+# (spawn API + containment); the `client`/`daemon` features and the IPC
+# client/daemon binary remain unused, so we pin `default-features = false`.
+running-process = { version = "4.0.0", default-features = false }
 
 [profile.dev]
 debug = 0

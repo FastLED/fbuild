@@ -8,12 +8,12 @@
 # Include an inline comment explaining why.
 
 # The blessed wrappers themselves. `subprocess.rs` runs commands via
-# `running_process_core::NativeProcess::start()` (not `Command::spawn`),
+# `running_process::NativeProcess::start()` (not `Command::spawn`),
 # but defensively allowlist it so internal helpers/refactors stay
 # unconstrained. `containment.rs` is the entire point of the file —
 # raw `command.spawn()` is the implementation detail that gives us a
 # `std::process::Child` to attach to the Windows Job Object (the
-# published `running-process-core` 3.4 API returns `SpawnedChild`, not
+# published `running-process` 4.0 API returns `SpawnedChild`, not
 # `Child`, so this raw-spawn pattern is the bridge — see PR #254).
 crates/fbuild-core/src/subprocess.rs
 crates/fbuild-core/src/containment.rs
