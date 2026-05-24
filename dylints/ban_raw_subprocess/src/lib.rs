@@ -126,16 +126,22 @@ impl<'tcx> LateLintPass<'tcx> for BanRawSubprocess {
                     check_def_id(cx, expr.span, def_id);
                 }
             }
-            // Qualified-path call shape: `std::process::Command::spawn(&mut cmd)` /
+            // Qualified-path CALL shape: `std::process::Command::spawn(&mut cmd)` /
             // `tokio::process::Command::output(&mut cmd)` / `<Command>::status(&mut cmd)`.
-            // CR blocker #3 from #264: the prior prototype only
-            // handled `ExprKind::MethodCall` and missed this entire
-            // call shape. `qpath_res` is the resolver for any path
-            // expression — including ones written as fully-qualified
-            // calls and ones with explicit `<Type>::method` syntax.
-            ExprKind::Path(ref qpath) => {
-                if let Res::Def(_, def_id) = cx.qpath_res(qpath, expr.hir_id) {
-                    check_def_id(cx, expr.span, def_id);
+            // CR blocker #3 from #264: the prior prototype only handled
+            // `ExprKind::MethodCall` and missed this entire call shape.
+            //
+            // We hook on the Call (not on the inner Path) so that a
+            // path expression referenced as a *value* —
+            // `let f = Command::spawn; f(&mut cmd);` — does not trigger
+            // the lint; only the actual invocation site does.
+            // Matches the gating zccache's `ban_unrooted_tempdir` uses
+            // for its call-shape branch.
+            ExprKind::Call(func, _args) => {
+                if let ExprKind::Path(ref qpath) = func.kind {
+                    if let Res::Def(_, def_id) = cx.qpath_res(qpath, func.hir_id) {
+                        check_def_id(cx, expr.span, def_id);
+                    }
                 }
             }
             _ => {}

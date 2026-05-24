@@ -75,7 +75,7 @@ soldr cargo install cargo-dylint dylint-link --version 5.0.0
 uv run python ci/build_dylint_driver.py   # exports DYLINT_DRIVER_PATH
 
 # Run the lint over the workspace
-cargo dylint --all -- --workspace --all-targets
+soldr cargo dylint --all -- --workspace --all-targets
 ```
 
 CI runs this on every push/PR via `.github/workflows/dylint.yml`.

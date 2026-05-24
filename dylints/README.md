@@ -25,7 +25,7 @@ uv run python ci/build_dylint_driver.py   # builds a matching driver
 
 # Run all dylints over the workspace
 export PATH="${CARGO_HOME:-$HOME/.cargo}/bin:${PATH}"
-cargo dylint --all -- --workspace --all-targets
+soldr cargo dylint --all -- --workspace --all-targets
 ```
 
 CI runs this on every push/PR via `.github/workflows/dylint.yml`.
