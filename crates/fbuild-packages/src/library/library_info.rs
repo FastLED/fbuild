@@ -118,11 +118,18 @@ fn collect_sources(dir: &Path, out: &mut Vec<PathBuf>) {
     }
 }
 
-/// Check if a file is a C/C++ source file.
+/// Check if a file is a C/C++/assembly source file.
+///
+/// `.S` (preprocessed) and `.s` (raw) assembly are intentionally included so
+/// libraries that ship hand-written ISRs or arch-specific stubs (e.g.
+/// FastLED's `gpio_isr_rx/fast_isr.S` on RISC-V — symbol
+/// `gpio_fast_edge_isr`) actually get linked. Without this the library
+/// archive is missing the assembly symbols and the final link fails with
+/// `undefined reference` errors.
 fn is_source_file(path: &Path) -> bool {
     matches!(
         path.extension().and_then(|e| e.to_str()),
-        Some("c") | Some("cpp") | Some("cc") | Some("cxx")
+        Some("c") | Some("cpp") | Some("cc") | Some("cxx") | Some("S") | Some("s")
     )
 }
 
