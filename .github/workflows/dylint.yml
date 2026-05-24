@@ -1,0 +1,52 @@
+name: Dylint
+
+# Runs the custom `ban_raw_subprocess` dylint over the workspace.
+# Lives in its own job (and uses its own nightly toolchain pin) so the
+# stable workspace check on `check-ubuntu.yml` isn't blocked by dylint
+# infrastructure issues. See #264.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  CARGO_TERM_COLOR: always
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  dylint:
+    name: Dylint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v3
+      - uses: zackees/setup-soldr@v0
+        with:
+          cache: true
+          toolchain: 1.94.1
+          cache-key-suffix: dylint
+          prebuild-deps: none
+      - name: Install Dylint nightly toolchain
+        # Pin matches `dylints/ban_raw_subprocess/rust-toolchain.toml`
+        # and zccache's `ci/build_dylint_driver.py::TOOLCHAIN_CHANNEL`.
+        run: rustup toolchain install nightly-2026-03-26 --component llvm-tools-preview --component rust-src --component rustc-dev --profile minimal
+      - name: Install Dylint
+        run: soldr cargo install cargo-dylint dylint-link --version 5.0.0 --locked
+      - name: Build compatible Dylint driver
+        # Published dylint_driver 5.0.0 does not build against the
+        # nightly toolchain pinned by dylint_linting 5.0.0; this script
+        # builds a matching driver from the same git rev. Exports
+        # DYLINT_DRIVER_PATH into $GITHUB_ENV for subsequent steps.
+        run: uv run python ci/build_dylint_driver.py
+      - name: Check dylint crate formatting
+        run: soldr cargo fmt --manifest-path dylints/ban_raw_subprocess/Cargo.toml --all -- --check
+      - name: Test dylint crate
+        run: |
+          export PATH="${CARGO_HOME}/bin:${PATH}"
+          cargo +nightly-2026-03-26 test --manifest-path dylints/ban_raw_subprocess/Cargo.toml
+      - name: Run dylint over workspace
+        run: |
+          export PATH="${CARGO_HOME}/bin:${PATH}"
+          cargo dylint --all -- --workspace --all-targets
