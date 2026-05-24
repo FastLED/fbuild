@@ -16,6 +16,14 @@ members = [
     "crates/fbuild-library-select",
     "bench/fastled-examples",
 ]
+# Custom dylints have their own nightly toolchain pin (see
+# `dylints/*/rust-toolchain.toml`) and must not be part of the
+# stable workspace build — `cargo dylint --all` builds them with
+# the pinned nightly via the discovery below. See #264.
+exclude = ["dylints/ban_raw_subprocess"]
+
+[workspace.metadata.dylint]
+libraries = [{ path = "dylints/*" }]
 
 [workspace.package]
 version = "2.2.6"
