@@ -1,7 +1,7 @@
-//! Subprocess runner backed by `running-process-core`.
+//! Subprocess runner backed by `running-process`.
 //!
 //! Every synchronous spawn in fbuild flows through this module. We use
-//! [`running_process_core::NativeProcess`] so that stdout and stderr are
+//! [`running_process::NativeProcess`] so that stdout and stderr are
 //! drained concurrently from the moment the child starts — the manual
 //! drain loop that preceded this module deadlocked the moment a compiler
 //! filled its stderr pipe (see FastLED/fbuild#141).
@@ -17,12 +17,13 @@
 //! installed the global containment group; CLI binaries and unit tests
 //! run uncontained just as before. (Earlier code used a `containment:`
 //! field on `ProcessConfig` from a pre-release `running-process-core`;
-//! the published 3.4 API does not expose that field — see #32.)
+//! the published `running-process` 4.0 API does not expose that field —
+//! see #32.)
 
 use std::path::Path;
 use std::time::Duration;
 
-use running_process_core::{
+use running_process::{
     CommandSpec, NativeProcess, ProcessConfig, ProcessError, StderrMode, StdinMode,
 };
 

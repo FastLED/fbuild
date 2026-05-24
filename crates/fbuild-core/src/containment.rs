@@ -20,7 +20,7 @@
 //!   kernel sends SIGKILL when the daemon thread exits. Per-child groups
 //!   avoid the EPERM that the pre-publication
 //!   `ContainedProcessGroup::spawn_with_containment` (since removed from
-//!   `running-process-core` 3.4) hit when a second child tried to join a
+//!   `running-process` 4.0) hit when a second child tried to join a
 //!   stale, already-exited first child's pgid (see issue #129).
 //! * **macOS** — `prctl` is not available. Each child gets a fresh
 //!   process group; there is no drop-time `killpg` backstop because the
@@ -56,7 +56,7 @@
 use std::process::{Child, Command};
 use std::sync::OnceLock;
 
-use running_process_core::{ContainedProcessGroup, ORIGINATOR_ENV_VAR};
+use running_process::{ContainedProcessGroup, ORIGINATOR_ENV_VAR};
 
 /// Global process-wide containment group. Initialised once by the
 /// daemon; remains `None` in non-daemon contexts (CLI binary, tests).
@@ -102,8 +102,8 @@ pub fn is_initialised() -> bool {
 /// Object with `JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE`
 /// (via the private `windows_job::assign` helper) — the same containment
 /// mechanism the pre-publication `running-process-core` rev used internally,
-/// reimplemented locally since the published 3.4 API no longer exposes
-/// `spawn_with_containment(_, Containment::Contained)`.
+/// reimplemented locally since the published `running-process` 4.0 API no
+/// longer exposes `spawn_with_containment(_, Containment::Contained)`.
 ///
 /// **Unix**: installs a per-child `pre_exec` hook that creates a new
 /// process group (`setpgid(0, 0)`) and, on Linux, requests
@@ -125,9 +125,9 @@ pub fn spawn_contained(command: &mut Command) -> std::io::Result<Child> {
         use std::os::windows::io::AsRawHandle;
         if let Err(e) = windows_job::assign(child.as_raw_handle()) {
             // The atomic spawn+assign that `ContainedProcessGroup::spawn_with_containment`
-            // used to provide is gone in 3.4. If assign fails after spawn
-            // succeeds, kill the orphan so the caller can't leak an
-            // uncontained child by accident.
+            // used to provide is gone in `running-process` 4.0. If assign
+            // fails after spawn succeeds, kill the orphan so the caller
+            // can't leak an uncontained child by accident.
             let _ = child.kill();
             let _ = child.wait();
             return Err(e);
@@ -175,8 +175,8 @@ pub fn spawn_detached(command: &mut Command) -> std::io::Result<Child> {
 
 /// Mirror of `ContainedProcessGroup::inject_originator_env`: stamp
 /// `RUNNING_PROCESS_ORIGINATOR=TOOL:PID` onto the command's env. We do
-/// this manually because the published 3.4 API only exposes it via
-/// `ContainedProcessGroup::spawn` (which returns its own
+/// this manually because the published `running-process` 4.0 API only
+/// exposes it via `ContainedProcessGroup::spawn` (which returns its own
 /// `SpawnedChild`, not a `std::process::Child` — see #32).
 fn inject_originator_env(command: &mut Command, group: &ContainedProcessGroup) {
     if let Some(value) = group.originator_value() {
@@ -250,7 +250,7 @@ fn unix_install_detached_pre_exec(command: &mut Command) {
 ///   `JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE` flag, so daemon death still
 ///   kills every tokio-spawned child.
 ///
-/// Both job handles (the std-path one inside `running-process-core`,
+/// Both job handles (the std-path one inside `running-process`,
 /// and the one here) live for the lifetime of the daemon process and
 /// are closed automatically when the daemon exits, triggering
 /// kill-on-close for their respective children.

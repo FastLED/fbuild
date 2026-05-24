@@ -2,7 +2,7 @@ name: Lint subprocess spawns
 
 # Regression guard for FastLED/fbuild#141: every subprocess fbuild
 # starts must flow through the fbuild-core::subprocess wrappers (which
-# are backed by running-process-core). Direct std::process::Command /
+# are backed by running-process). Direct std::process::Command /
 # tokio::process::Command spawns are only allowed when annotated with
 # an // allow-direct-spawn: <reason> marker.
 #

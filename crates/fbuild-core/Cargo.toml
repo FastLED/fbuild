@@ -17,7 +17,7 @@ sha2 = { workspace = true }
 # `ContainedProcessGroup` owned by the daemon ensures every child process
 # spawned through `fbuild_core::subprocess::run_command` (and the emulator
 # helpers) dies with the daemon. See FastLED/fbuild#32.
-running-process-core = { workspace = true }
+running-process = { workspace = true }
 # Async helpers for the tokio integration in `containment::tokio_spawn` —
 # we need the `process` feature so `tokio::process::Command` is in scope.
 tokio = { workspace = true }

@@ -11,7 +11,7 @@ Every child process fbuild launches must flow through one of the blessed
 wrappers in `crates/fbuild-core/src/`:
 
 - `subprocess::run_command` — sync, captures stdout/stderr via
-  `running-process-core::NativeProcess` so the drain loop can't deadlock
+  `running-process::NativeProcess` so the drain loop can't deadlock
   on a full pipe buffer (see #141).
 - `containment::spawn_contained` /
   `containment::tokio_spawn::spawn_contained` — applies Windows Job
