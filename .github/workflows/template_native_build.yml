@@ -97,7 +97,7 @@ jobs:
       - name: Build release binaries
         shell: bash
         run: |
-          if [ "${{ inputs.linux_cross }}" = "true" ]; then
+          if [[ "${{ inputs.target }}" == *-unknown-linux-musl ]]; then
             soldr cargo zigbuild --release --target ${{ inputs.target }} \
               -p fbuild-cli \
               -p fbuild-daemon
