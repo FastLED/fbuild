@@ -135,7 +135,7 @@
   "esptool": {
     "elf_sha256_offset": "0xb0",
     "flash_offsets": {
-      "bootloader": "0x0",
+      "bootloader": "0x2000",
       "partitions": "0x8000",
       "firmware": "0x10000"
     },

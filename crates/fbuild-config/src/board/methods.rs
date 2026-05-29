@@ -24,6 +24,17 @@ impl BoardConfig {
             .collect()
     }
 
+    /// Name of the `esp32-arduino-libs/<name>` SDK directory to link against.
+    ///
+    /// Returns `build.chip_variant` when the board declares it, otherwise falls
+    /// back to `mcu`. This selects the prebuilt libraries, linker scripts, and
+    /// bootloader matching the chip's ROM revision — e.g. `esp32p4_es` for
+    /// ESP32-P4 eco0–eco2 silicon vs. `esp32p4` for eco5+. The MCU family used
+    /// for compiler flags and esptool `--chip` stays `mcu`.
+    pub fn sdk_variant(&self) -> &str {
+        self.chip_variant.as_deref().unwrap_or(&self.mcu)
+    }
+
     /// Check whether this board supports a specific emulator tool.
     pub fn has_emulator(&self, tool_name: &str) -> bool {
         self.debug_tools

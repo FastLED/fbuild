@@ -40,6 +40,16 @@ pub struct BoardConfig {
     pub variant: String,
     /// Variant header override for frameworks that use `#include VARIANT_H`
     pub variant_h: Option<String>,
+    /// ESP32 chip-variant SDK selector (Arduino `build.chip_variant`).
+    ///
+    /// Names the `esp32-arduino-libs/<chip_variant>` directory whose prebuilt
+    /// libraries, linker scripts, and bootloader are linked against a specific
+    /// ROM revision. When `None`, the SDK directory falls back to `mcu`.
+    /// ESP32-P4 needs this: `esp32p4_es` targets chip rev v0.x–v1.x (eco0–eco2),
+    /// while `esp32p4` targets rev v3.x (eco5+). Linking the wrong one boots
+    /// into an illegal-instruction panic at the bootloader entry point.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub chip_variant: Option<String>,
     /// USB vendor ID (optional)
     pub vid: Option<String>,
     /// USB product ID (optional)

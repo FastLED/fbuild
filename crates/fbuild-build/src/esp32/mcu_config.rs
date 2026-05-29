@@ -585,6 +585,34 @@ mod tests {
     }
 
     #[test]
+    fn test_bootloader_flash_offsets_match_rom() {
+        // The second-stage bootloader offset is ROM-defined per chip. Getting it
+        // wrong makes the ROM read garbage at its fixed load address and reboot-loop
+        // with `invalid header`. ESP32-P4 and ESP32-C5 load from 0x2000.
+        let expected = [
+            ("esp32", "0x1000"),
+            ("esp32s2", "0x1000"),
+            ("esp32s3", "0x0"),
+            ("esp32c2", "0x0"),
+            ("esp32c3", "0x0"),
+            ("esp32c6", "0x0"),
+            ("esp32h2", "0x0"),
+            ("esp32c5", "0x2000"),
+            ("esp32p4", "0x2000"),
+        ];
+        for (mcu, offset) in expected {
+            let config = get_mcu_config(mcu).unwrap();
+            assert_eq!(
+                config.bootloader_offset(),
+                offset,
+                "{} bootloader offset must be {}",
+                mcu,
+                offset
+            );
+        }
+    }
+
+    #[test]
     fn test_linker_flag_counts() {
         // ESP32 MCUs have 40+ linker flags (including -u symbols)
         for mcu in supported_mcus() {

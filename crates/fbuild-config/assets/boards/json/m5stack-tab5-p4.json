@@ -1,5 +1,6 @@
 {
   "build": {
+    "chip_variant": "esp32p4_es",
     "core": "esp32",
     "extra_flags": "-DBOARD_HAS_PSRAM -DARDUINO_USB_CDC_ON_BOOT=1 -DARDUINO_USB_MODE=1",
     "f_cpu": "360000000L",
