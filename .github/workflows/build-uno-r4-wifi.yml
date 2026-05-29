@@ -1,6 +1,7 @@
 name: Build Arduino Uno R4 WiFi
 
 on:
+  workflow_dispatch: {}
   push:
     branches: [main]
   pull_request:

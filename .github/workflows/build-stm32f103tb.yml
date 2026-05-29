@@ -1,6 +1,7 @@
 name: Build STM32F103TB
 
 on:
+  workflow_dispatch: {}
   push:
     branches: [main]
   pull_request:

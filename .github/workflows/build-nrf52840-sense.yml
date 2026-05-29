@@ -1,6 +1,7 @@
 name: Build Adafruit Feather NRF52840 Sense
 
 on:
+  workflow_dispatch: {}
   push:
     branches: [main]
   pull_request:

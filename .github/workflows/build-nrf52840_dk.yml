@@ -1,6 +1,7 @@
 name: Build nRF52840 DK
 
 on:
+  workflow_dispatch: {}
   push:
     branches: [main]
   pull_request:
