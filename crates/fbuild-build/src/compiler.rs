@@ -297,6 +297,22 @@ fn command_hash_path(object: &Path) -> PathBuf {
     object.with_extension("cmdhash")
 }
 
+/// Resolve `path` to an absolute path by joining it with the current working
+/// directory if it's relative. Equivalent in intent to `std::path::absolute`
+/// (stable in 1.79), written by hand to stay within the workspace MSRV
+/// enforced by `clippy.toml` (1.75). Does not canonicalize symlinks or `..`.
+/// Falls back to the original path if `current_dir()` fails (e.g. cwd was
+/// deleted) — callers should treat that as the path they originally got.
+fn absolute_from_cwd(path: &Path) -> PathBuf {
+    if path.is_absolute() {
+        path.to_path_buf()
+    } else {
+        std::env::current_dir()
+            .map(|cwd| cwd.join(path))
+            .unwrap_or_else(|_| path.to_path_buf())
+    }
+}
+
 pub fn build_rebuild_signature(
     compiler_path: &Path,
     flags: &[String],
@@ -556,6 +572,20 @@ pub fn compile_source(
 ) -> Result<CompileResult> {
     use fbuild_core::subprocess::run_command;
 
+    // #282: a relative `output` (from `fbuild build <relative project_dir>` -
+    // what CI does) collides with the asymmetry between
+    // `compile_cwd_from_output` (canonicalizes the workspace to absolute) and
+    // `path_arg_for_compile_cwd` (short-circuits on relative paths). The
+    // resulting gcc invocation would get `cwd = absolute project_dir` plus a
+    // relative `-o`, resolving to a doubled path whose parent dir was never
+    // created — and `-MMD -MF` fails. Promote both paths to absolute up front
+    // so the downstream cwd / `-o` pair stays consistent. (Equivalent to
+    // `std::path::absolute`, written by hand for MSRV 1.75 / clippy.toml.)
+    let source_buf = absolute_from_cwd(source);
+    let output_buf = absolute_from_cwd(output);
+    let source = source_buf.as_path();
+    let output = output_buf.as_path();
+
     if let Some(parent) = output.parent() {
         std::fs::create_dir_all(parent)?;
     }
@@ -636,6 +666,64 @@ pub fn compile_source(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// Regression for #282. compile_source promotes `output` to absolute
+    /// before computing `compile_cwd`. This test exercises the post-fix
+    /// invariant: when the downstream zccache helpers
+    /// (`compile_cwd_from_output` + `path_arg_for_compile_cwd`) are fed an
+    /// absolute output under a `.fbuild` workspace, `cwd.join(arg_for_o)`
+    /// must resolve to that same absolute output. The pre-fix bug was that
+    /// `compile_cwd_from_output` canonicalized the workspace to absolute
+    /// while `path_arg_for_compile_cwd` short-circuited on relative paths
+    /// and emitted the raw relative string — so gcc received absolute
+    /// `cwd` + relative `-o`, resolving to a doubled path whose parent
+    /// directory (`core/`) was never created.
+    #[test]
+    fn compile_path_contract_pairs_cwd_and_output_arg_for_282() {
+        use crate::zccache::{compile_cwd_from_output, path_arg_for_compile_cwd};
+        let tmp = tempfile::tempdir().unwrap();
+        // Workspace shape mirrors CI: <project>/.fbuild/build/<env>/quick/core
+        let workspace = tmp.path().join("proj_for_282");
+        let core = workspace
+            .join(".fbuild")
+            .join("build")
+            .join("x")
+            .join("quick")
+            .join("core");
+        std::fs::create_dir_all(&core).unwrap();
+        let abs_output = core.join("HWCDC_57cf.cpp.o");
+
+        let cwd = compile_cwd_from_output(&abs_output)
+            .expect("compile_cwd_from_output should locate the workspace");
+        let arg = path_arg_for_compile_cwd(&abs_output, &cwd);
+
+        // Contract: gcc's effective output (cwd joined with the `-o` arg)
+        // points at the same file as the absolute output.
+        let resolved = cwd.join(std::path::Path::new(&arg));
+        assert_eq!(
+            absolute_from_cwd(&resolved),
+            absolute_from_cwd(&abs_output),
+            "cwd.join(out_arg) must resolve to the absolute output"
+        );
+    }
+
+    #[test]
+    fn absolute_from_cwd_is_identity_on_absolute_paths() {
+        let p = if cfg!(windows) {
+            std::path::PathBuf::from(r"C:\some\absolute\path")
+        } else {
+            std::path::PathBuf::from("/some/absolute/path")
+        };
+        assert_eq!(absolute_from_cwd(&p), p);
+    }
+
+    #[test]
+    fn absolute_from_cwd_promotes_relative_paths() {
+        let rel = std::path::Path::new("some/rel/path");
+        let abs = absolute_from_cwd(rel);
+        assert!(abs.is_absolute());
+        assert!(abs.ends_with(rel));
+    }
 
     #[test]
     fn test_build_define_flags() {
