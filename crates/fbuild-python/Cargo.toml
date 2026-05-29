@@ -13,6 +13,10 @@ extension-module = ["pyo3/extension-module"]
 [lib]
 name = "_native"
 crate-type = ["cdylib", "rlib"]
+# PyO3 extension-module crates cannot be doctested: rustdoc links the doctest
+# harness without libpython, so the pyo3 macros fail to resolve. There are no
+# doc examples here anyway.
+doctest = false
 
 [build-dependencies]
 pyo3-build-config = "0.22"
