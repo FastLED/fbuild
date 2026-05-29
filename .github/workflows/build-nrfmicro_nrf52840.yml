@@ -1,6 +1,7 @@
 name: Build nRFMicro nRF52840
 
 on:
+  workflow_dispatch: {}
   push:
     branches: [main]
   pull_request:

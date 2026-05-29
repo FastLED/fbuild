@@ -1,6 +1,7 @@
 name: Build Apollo3 expLoRaBLE
 
 on:
+  workflow_dispatch: {}
   push:
     branches: [main]
   pull_request:

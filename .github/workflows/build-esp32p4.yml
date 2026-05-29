@@ -1,6 +1,7 @@
 name: Build ESP32-P4
 
 on:
+  workflow_dispatch: {}
   push:
     branches: [main]
   pull_request:

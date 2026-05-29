@@ -1,6 +1,7 @@
 name: Build ATmega8A
 
 on:
+  workflow_dispatch: {}
   push:
     branches: [main]
   pull_request:

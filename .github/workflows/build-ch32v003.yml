@@ -1,6 +1,7 @@
 name: Build CH32V003
 
 on:
+  workflow_dispatch: {}
   push:
     branches: [main]
   pull_request:

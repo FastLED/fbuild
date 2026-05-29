@@ -38,10 +38,19 @@ jobs:
         uses: zackees/setup-soldr@v0
         with:
           cache: true
+          # Lighter cache strategy (was: build-cache + heavy target-cache, keyed
+          # per-board). The Rust build here (`cargo build -p fbuild-cli
+          # -p fbuild-daemon`, debug) is board-INDEPENDENT, so:
+          #  - cook (Cargo.lock-keyed) prewarms deps in ONE cache shared across
+          #    every board, instead of a ~1.5GB target tree per board;
+          #  - build-cache (zccache compile-cache) under a SHARED key caches the
+          #    workspace compile once for all boards (was ~462MiB x board x SHA);
+          #  - the heavy whole-target cache (target-cache) is dropped.
+          # Safe to cook since soldr 0.7.44 fixed the cook project-restore bug.
           build-cache: true
-          target-cache: true
-          prebuild-deps: none
-          cache-key-suffix: board-${{ inputs.env-name }}
+          prebuild-deps: soldr-cook
+          prebuild-deps-flags: ""
+          cache-key-suffix: fbuild-rust-debug
 
       - name: Reset zccache daemon after cache warm
         run: pkill -f '[z]ccache-daemon' || true
