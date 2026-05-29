@@ -83,10 +83,14 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let core_build_dir = &ctx.core_build_dir;
         let src_build_dir = &ctx.src_build_dir;
 
+        // SDK directory selector: matches the chip's ROM revision (e.g.
+        // `esp32p4_es` for ESP32-P4 eco0–eco2). Falls back to `mcu`.
+        let sdk_variant = ctx.board.sdk_variant().to_string();
+
         // Read link-affecting config before the expensive include/library/source discovery steps
         // so the no-op fast path can return early on warm builds.
-        let sdk_ld_flags = framework.get_sdk_ld_flags(&ctx.board.mcu);
-        let sdk_defines = framework.get_sdk_defines(&ctx.board.mcu);
+        let sdk_ld_flags = framework.get_sdk_ld_flags(&sdk_variant);
+        let sdk_defines = framework.get_sdk_defines(&sdk_variant);
 
         if sdk_ld_flags.iter().any(|f| f == "-fno-lto") {
             mcu_config.disable_lto();
@@ -127,6 +131,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             board_core: ctx.board.core.clone(),
             board_variant: ctx.board.variant.clone(),
             board_variant_h: ctx.board.variant_h.clone(),
+            board_chip_variant: ctx.board.chip_variant.clone(),
             board_extra_flags: ctx.board.extra_flags.clone(),
             board_upload_protocol: ctx.board.upload_protocol.clone(),
             board_upload_speed: ctx.board.upload_speed.clone(),
@@ -250,7 +255,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         }
         // Add SDK include paths (294+ paths from ESP-IDF)
         include_dirs
-            .extend(framework.get_sdk_include_dirs(&ctx.board.mcu, sdk_memory_type.as_deref()));
+            .extend(framework.get_sdk_include_dirs(&sdk_variant, sdk_memory_type.as_deref()));
 
         // Add built-in Arduino library includes (Wire, SPI, WiFi, etc.)
         let builtin_libs_dir = framework.get_libraries_dir();
@@ -274,11 +279,11 @@ impl BuildOrchestrator for Esp32Orchestrator {
         include_dirs.extend(toolchain.get_include_dirs());
 
         // Read SDK flags early — needed to check LTO before compiling.
-        let sdk_ld_flags = framework.get_sdk_ld_flags(&ctx.board.mcu);
-        let sdk_lib_flags = framework.get_sdk_lib_flags(&ctx.board.mcu, sdk_memory_type.as_deref());
+        let sdk_ld_flags = framework.get_sdk_ld_flags(&sdk_variant);
+        let sdk_lib_flags = framework.get_sdk_lib_flags(&sdk_variant, sdk_memory_type.as_deref());
         let sdk_ld_scripts =
-            LinkerScripts::from_raw_flags(&framework.get_sdk_ld_scripts(&ctx.board.mcu));
-        let sdk_defines = framework.get_sdk_defines(&ctx.board.mcu);
+            LinkerScripts::from_raw_flags(&framework.get_sdk_ld_scripts(&sdk_variant));
+        let sdk_defines = framework.get_sdk_defines(&sdk_variant);
 
         // If SDK specifies -fno-lto, disable LTO in MCU config profiles to avoid
         // compiling objects with LTO that the linker can't handle.

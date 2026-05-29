@@ -13,6 +13,7 @@ pub(super) struct Esp32FingerprintMetadata {
     pub board_core: String,
     pub board_variant: String,
     pub board_variant_h: Option<String>,
+    pub board_chip_variant: Option<String>,
     pub board_extra_flags: Option<String>,
     pub board_upload_protocol: Option<String>,
     pub board_upload_speed: Option<String>,

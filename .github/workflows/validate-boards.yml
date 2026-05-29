@@ -37,3 +37,9 @@ jobs:
           pio pkg install -g -p "platformio/atmelmegaavr@${PLATFORMIO_ATMELMEGAAVR_VERSION}"
       - name: Validate board JSONs match PlatformIO
         run: python ci/validate_boards.py
+      - name: Validate ESP32 flash offsets match authoritative source
+        # Cross-checks each esp32*.json bootloader/partitions/firmware offset
+        # against arduino-esp32 boards.txt (build.bootloader_addr). The ESP32
+        # framework is not pre-installed in this job, so --download fetches the
+        # authoritative boards.txt/platform.txt from the pioarduino release tag.
+        run: python ci/check_flash_offsets.py --download

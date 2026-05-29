@@ -68,6 +68,7 @@ impl BoardConfig {
             core: get("core").unwrap_or_else(|| "arduino".to_string()),
             variant: get("variant").unwrap_or_else(|| "standard".to_string()),
             variant_h: get("variant_h"),
+            chip_variant: get("chip_variant"),
             vid: get("vid"),
             pid: get("pid"),
             extra_flags: get("extra_flags"),
@@ -147,6 +148,10 @@ impl BoardConfig {
                 .get("variant_h")
                 .cloned()
                 .or_else(|| defaults.get("variant_h").cloned()),
+            chip_variant: overrides
+                .get("chip_variant")
+                .cloned()
+                .or_else(|| defaults.get("chip_variant").cloned()),
             vid: overrides
                 .get("vid")
                 .cloned()

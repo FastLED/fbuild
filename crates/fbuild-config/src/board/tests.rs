@@ -355,6 +355,33 @@ fn test_esp32_effective_memory_type_tracks_effective_flash_mode() {
 }
 
 #[test]
+fn test_esp32p4_evboard_uses_es_chip_variant() {
+    // The ESP32-P4 Function EV Board ships eco0–eco2 silicon ("ES pre rev.300").
+    // It must link against the `esp32p4_es` SDK (base ROM), not `esp32p4` (eco5
+    // ROM) — otherwise the bootloader panics on an illegal instruction.
+    let config = BoardConfig::from_board_id("esp32-p4-evboard", &HashMap::new()).unwrap();
+    assert_eq!(config.mcu, "esp32p4");
+    assert_eq!(config.chip_variant, Some("esp32p4_es".to_string()));
+    assert_eq!(config.sdk_variant(), "esp32p4_es");
+}
+
+#[test]
+fn test_esp32p4_r3_uses_eco5_chip_variant() {
+    // The rev.300 board targets eco5 silicon and links the `esp32p4` SDK.
+    let config = BoardConfig::from_board_id("esp32-p4_r3", &HashMap::new()).unwrap();
+    assert_eq!(config.chip_variant, Some("esp32p4".to_string()));
+    assert_eq!(config.sdk_variant(), "esp32p4");
+}
+
+#[test]
+fn test_sdk_variant_falls_back_to_mcu() {
+    // Boards without an explicit chip_variant resolve the SDK dir from the MCU.
+    let config = BoardConfig::from_board_id("esp32c3", &HashMap::new()).unwrap();
+    assert_eq!(config.chip_variant, None);
+    assert_eq!(config.sdk_variant(), "esp32c3");
+}
+
+#[test]
 fn test_esp32_effective_memory_type_preserves_opi_flash_profiles() {
     let config = BoardConfig::from_board_id("esp32-s3-devkitc-1-n32r8v", &HashMap::new()).unwrap();
     assert_eq!(

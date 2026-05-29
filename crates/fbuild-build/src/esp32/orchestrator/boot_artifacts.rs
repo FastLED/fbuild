@@ -20,8 +20,13 @@ pub(super) fn prepare_boot_artifacts(
 ) -> Result<()> {
     let boot_artifacts_started = Instant::now();
     perf.checkpoint("boot-artifacts-start");
+    // SDK directory selector matching the chip's ROM revision (e.g. `esp32p4_es`
+    // for ESP32-P4 eco0–eco2). The bootloader ELF must come from the same SDK
+    // variant the app is linked against, or the ROM jumps into an illegal
+    // instruction at the bootloader entry point.
+    let sdk_variant = board.sdk_variant();
     let boot_dst = build_dir.join("bootloader.bin");
-    let boot_bin_src = framework.get_bootloader_bin(&board.mcu);
+    let boot_bin_src = framework.get_bootloader_bin(sdk_variant);
     if boot_bin_src.exists() {
         // Pre-built bootloader.bin available — just copy
         std::fs::copy(&boot_bin_src, &boot_dst)?;
@@ -59,7 +64,7 @@ pub(super) fn prepare_boot_artifacts(
         } else {
             "dio"
         };
-        let boot_elf = framework.get_bootloader_elf(&board.mcu, boot_flash_mode, flash_freq);
+        let boot_elf = framework.get_bootloader_elf(sdk_variant, boot_flash_mode, flash_freq);
         if boot_elf.exists() {
             let boot_elf_str = boot_elf.to_string_lossy();
             let boot_dst_str = boot_dst.to_string_lossy();
@@ -112,7 +117,7 @@ pub(super) fn prepare_boot_artifacts(
     }
 
     let parts_dst = build_dir.join("partitions.bin");
-    let parts_bin_src = framework.get_partitions_bin(&board.mcu);
+    let parts_bin_src = framework.get_partitions_bin(sdk_variant);
     if parts_bin_src.exists() {
         // Pre-built partitions.bin available — just copy
         std::fs::copy(&parts_bin_src, &parts_dst)?;

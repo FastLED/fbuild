@@ -447,7 +447,10 @@ mod tests {
     fn strip_unc_prefix_removes_extended_length_marker() {
         let raw = std::path::PathBuf::from(r"\\?\C:\Users\test\.fbuild\cache");
         let stripped = strip_unc_prefix(raw);
-        assert_eq!(stripped, std::path::PathBuf::from(r"C:\Users\test\.fbuild\cache"));
+        assert_eq!(
+            stripped,
+            std::path::PathBuf::from(r"C:\Users\test\.fbuild\cache")
+        );
     }
 
     #[test]

@@ -151,6 +151,9 @@ pub(super) fn get_board_defaults(board_id: &str) -> Option<HashMap<String, Strin
         if let Some(variant_h) = build.get("variant_h").and_then(|v| v.as_str()) {
             d.insert("variant_h".into(), variant_h.to_string());
         }
+        if let Some(chip_variant) = build.get("chip_variant").and_then(|v| v.as_str()) {
+            d.insert("chip_variant".into(), chip_variant.to_string());
+        }
         if let Some(flags) = build.get("extra_flags").and_then(|v| v.as_str()) {
             d.insert("extra_flags".into(), flags.to_string());
         }

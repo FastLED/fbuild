@@ -377,10 +377,18 @@ pub async fn deploy(
                             .unwrap()
                         });
                 // Load MCU config to get flash offsets and esptool defaults.
+                // Fail loudly on an unknown MCU instead of silently falling
+                // back to esp32's `0x1000` bootloader offset — that offset is
+                // wrong for RISC-V variants (need `0x0`) and C5/P4 (need
+                // `0x2000`), so the device would never boot (`invalid header`
+                // reboot loop). The build path propagates this error too.
                 let mcu_config = fbuild_build::esp32::mcu_config::get_mcu_config(&board_config.mcu)
-                    .unwrap_or_else(|_| {
-                        fbuild_build::esp32::mcu_config::get_mcu_config("esp32").unwrap()
-                    });
+                    .map_err(|e| {
+                        fbuild_core::FbuildError::DeployFailed(format!(
+                            "unsupported ESP32 MCU '{}' for board '{}': {} — cannot determine flash offsets",
+                            board_config.mcu, board_id, e
+                        ))
+                    })?;
                 // Flash mode: `board_config.flash_mode` is `None` for ESP32
                 // chips unless the user explicitly set `board_build.flash_mode`
                 // in their `[env:X]` section (see `BoardConfig::from_board_id`
