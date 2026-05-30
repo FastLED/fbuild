@@ -4282,9 +4282,9 @@ dependencies = [
 
 [[package]]
 name = "zccache-artifact"
-version = "1.8.2"
+version = "1.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a85b1a2851359f7f87bdaa44cb35d1d59c7b0dec346da8de466130fb9fbe03dd"
+checksum = "3524099f64acc4188c166d2f3981b7302e0b1622d7bf7172c69218cac31ca067"
 dependencies = [
  "bincode",
  "blake3",
@@ -4302,9 +4302,9 @@ dependencies = [
 
 [[package]]
 name = "zccache-core"
-version = "1.8.2"
+version = "1.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8a7bc2339b9244683e2e3cf72f338f5a963731370e9f4cd4705023bb1804b5f7"
+checksum = "8364d5db80125bce99cdb7c1ba487478c2a8124754314e79fdac1b22ca0192b8"
 dependencies = [
  "crash-handler",
  "libc",
@@ -4317,9 +4317,9 @@ dependencies = [
 
 [[package]]
 name = "zccache-hash"
-version = "1.8.2"
+version = "1.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1023a805e42f729dac4f19865e6fe365cc6430f30230aaaacb0aa662e2b4b254"
+checksum = "f8bbfcaf7a4932a267846108df3a250023706c601f6ba341d51b96812f76b9c1"
 dependencies = [
  "blake3",
  "memmap2",
