@@ -90,7 +90,7 @@ impl TeensyLinker {
         args.extend(["-o".to_string(), elf_path.to_string_lossy().to_string()]);
 
         // Always emit a linker map next to firmware.elf for debugging (#305).
-        let map_path = output_dir.join("firmware.map");
+        let map_path = elf_path.with_extension("map");
         args.push(format!("-Wl,-Map={}", map_path.to_string_lossy()));
 
         // Sketch objects first
@@ -321,6 +321,37 @@ mod tests {
         assert!(
             args.iter().any(|a| a == "-L/teensy3"),
             "expected -L/teensy3 for library search, got {:?}",
+            args
+        );
+    }
+
+    /// Regression test: `build_link_args` always emits `-Wl,-Map=` next to
+    /// the elf path so debug builds can inspect link decisions. Reverted
+    /// previously by an out-of-scope `output_dir` reference (see #313 hotfix).
+    #[test]
+    fn test_teensy_link_command_emits_linker_map_next_to_elf() {
+        let linker = TeensyLinker::new(
+            PathBuf::from("/bin/arm-none-eabi-gcc"),
+            PathBuf::from("/bin/arm-none-eabi-ar"),
+            PathBuf::from("/bin/arm-none-eabi-objcopy"),
+            PathBuf::from("/bin/arm-none-eabi-size"),
+            LinkerScripts::single(PathBuf::from("/teensy4"), "imxrt1062_t41.ld"),
+            crate::teensy::mcu_config::get_teensy_config_for_mcu("imxrt1062").unwrap(),
+            BuildProfile::Release,
+            Some(8126464),
+            Some(524288),
+            None,
+            false,
+        );
+        let args = linker.build_link_args(
+            &[],
+            &[],
+            &PathBuf::from("/build/firmware.elf"),
+            &LinkExtraArgs::default(),
+        );
+        assert!(
+            args.iter().any(|a| a == "-Wl,-Map=/build/firmware.map"),
+            "expected -Wl,-Map=/build/firmware.map next to firmware.elf. Args: {:?}",
             args
         );
     }
