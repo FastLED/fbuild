@@ -27,6 +27,12 @@ libiconv-2.dll
 # fbuild local build artifacts
 .fbuild/
 
+# Local cargo cache
+.cargo/.global-cache
+.cargo/.package-cache
+.cargo/.package-cache-mutate
+.cargo/registry/
+
 # Cargo lock is checked in for binaries
 # (workspace contains binary crates)
 .loop
