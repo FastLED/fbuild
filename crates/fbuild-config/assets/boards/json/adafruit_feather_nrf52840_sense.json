@@ -1,6 +1,7 @@
 {
   "build": {
     "core": "nRF5",
+    "extra_flags": "-DARDUINO_NRF52840_FEATHER_SENSE -DNRF52840_XXAA",
     "variant": "feather_nrf52840_sense",
     "arduino": {
       "ldscript": "nrf52840_s140_v6.ld"
