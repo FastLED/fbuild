@@ -1,4 +1,11 @@
 {
+  "build": {
+    "core": "naked",
+    "extra_flags": "-DSTC15W20XS -DIRC15W207S -DNAKED_ARCH_MCS51 -DNAKED_MCS51_STC15W20XS",
+    "f_cpu": "11059200L",
+    "mcu": "irc15w207s",
+    "variant": "stc15w20xs"
+  },
   "fcpu": 11059200,
   "frameworks": [],
   "id": "IRC15W207S",
@@ -7,6 +14,11 @@
   "platform": "intel_mcs51",
   "ram": 256,
   "rom": 7680,
+  "upload": {
+    "maximum_ram_size": 256,
+    "maximum_size": 7680,
+    "protocol": "stcgal"
+  },
   "url": "https://www.stcmicro.com/STC/STC15W204S.html",
   "vendor": "STC"
 }

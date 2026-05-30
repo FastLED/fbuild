@@ -1,4 +1,11 @@
 {
+  "build": {
+    "core": "naked",
+    "extra_flags": "-DSTC15F10X -DSTC15F101E -DNAKED_ARCH_MCS51 -DNAKED_MCS51_STC15F10X",
+    "f_cpu": "11059200L",
+    "mcu": "stc15f101e",
+    "variant": "stc15f10x"
+  },
   "fcpu": 11059200,
   "frameworks": [],
   "id": "STC15F101E",
@@ -7,6 +14,11 @@
   "platform": "intel_mcs51",
   "ram": 128,
   "rom": 1024,
+  "upload": {
+    "maximum_ram_size": 128,
+    "maximum_size": 1024,
+    "protocol": "stcgal"
+  },
   "url": "http://www.stcmicro.com/STC/STC15F100.html",
   "vendor": "STC"
 }

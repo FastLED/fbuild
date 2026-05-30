@@ -328,8 +328,7 @@ fn test_nrf52840_dk_carries_arduino_macro() {
 #[test]
 fn test_nrf52840_dk_adafruit_carries_arduino_macro() {
     // Same fbuild#298 root cause — used by FastLED's `supermini_nrf52840` board.
-    let config =
-        BoardConfig::from_board_id("nrf52840_dk_adafruit", &HashMap::new()).unwrap();
+    let config = BoardConfig::from_board_id("nrf52840_dk_adafruit", &HashMap::new()).unwrap();
     let defines = config.get_defines();
     assert_eq!(
         defines.get("ARDUINO_NRF52840_PCA10056"),
@@ -340,17 +339,97 @@ fn test_nrf52840_dk_adafruit_carries_arduino_macro() {
 
 #[test]
 fn test_adafruit_feather_nrf52840_sense_carries_arduino_macro() {
-    let config = BoardConfig::from_board_id(
-        "adafruit_feather_nrf52840_sense",
-        &HashMap::new(),
-    )
-    .unwrap();
+    let config =
+        BoardConfig::from_board_id("adafruit_feather_nrf52840_sense", &HashMap::new()).unwrap();
     let defines = config.get_defines();
     assert_eq!(
         defines.get("ARDUINO_NRF52840_FEATHER_SENSE"),
         Some(&"1".to_string())
     );
     assert_eq!(defines.get("NRF52840_XXAA"), Some(&"1".to_string()));
+}
+
+/// Representative nRF52840 boards from the broader fbuild#298 sweep.
+/// PR #299 only added 3 priority boards; this verifies the bulk
+/// `enrich_boards` re-run covered the rest of the family.
+#[test]
+fn test_nrf52840_sweep_arduino_macros() {
+    // (board_id, expected macros that must appear as defines)
+    let cases: &[(&str, &[&str])] = &[
+        (
+            "adafruit_feather_nrf52840",
+            &["ARDUINO_NRF52840_FEATHER", "NRF52840_XXAA"],
+        ),
+        (
+            "adafruit_clue_nrf52840",
+            &["ARDUINO_NRF52840_CLUE", "NRF52840_XXAA"],
+        ),
+        (
+            "adafruit_itsybitsy_nrf52840",
+            &[
+                "ARDUINO_NRF52840_ITSYBITSY",
+                "ARDUINO_NRF52_ITSYBITSY",
+                "NRF52840_XXAA",
+            ],
+        ),
+        (
+            "adafruit_metro_nrf52840",
+            &[
+                "ARDUINO_NRF52840_FEATHER",
+                "ARDUINO_NRF52840_METRO",
+                "NRF52840_XXAA",
+            ],
+        ),
+        (
+            "adafruit_ledglasses_nrf52840",
+            &["ARDUINO_NRF52840_LED_GLASSES", "NRF52840_XXAA"],
+        ),
+        (
+            "adafruit_cplaynrf52840",
+            &["ARDUINO_NRF52840_CIRCUITPLAY", "NRF52840_XXAA"],
+        ),
+    ];
+    for (board_id, required) in cases {
+        let config = BoardConfig::from_board_id(board_id, &HashMap::new())
+            .unwrap_or_else(|e| panic!("failed to load board '{board_id}': {e}"));
+        let defines = config.get_defines();
+        for define in *required {
+            assert_eq!(
+                defines.get(*define),
+                Some(&"1".to_string()),
+                "board '{board_id}' missing -D{define} (got defines: {:?})",
+                defines.keys().collect::<Vec<_>>()
+            );
+        }
+    }
+}
+
+/// Boards from non-nRF52 platforms swept in fbuild#298. Each should now
+/// carry its Arduino board macro from upstream PlatformIO `build.extra_flags`.
+#[test]
+fn test_non_nrf52_sweep_arduino_macros() {
+    let cases: &[(&str, &[&str])] = &[
+        // atmelsam SAMD boards
+        ("zero", &["ARDUINO_SAMD_ZERO"]),
+        ("mkrzero", &["ARDUINO_SAMD_MKRZERO"]),
+        ("adafruit_feather_m0", &["ARDUINO_SAMD_FEATHER_M0"]),
+        // 8051 (intel_mcs51): board-id macro
+        ("AT89S51", &["AT89S51", "NAKED_ARCH_MCS51"]),
+        // PIC32 (microchippic32)
+        ("chipkit_uc32", &["_BOARD_UC32_"]),
+    ];
+    for (board_id, required) in cases {
+        let config = BoardConfig::from_board_id(board_id, &HashMap::new())
+            .unwrap_or_else(|e| panic!("failed to load board '{board_id}': {e}"));
+        let defines = config.get_defines();
+        for define in *required {
+            assert!(
+                defines.contains_key(*define),
+                "board '{board_id}' missing -D{define} (got defines: {:?})",
+                defines.keys().collect::<Vec<_>>()
+            );
+        }
+    }
 }
 
 #[test]
@@ -365,8 +444,7 @@ fn test_pico_enriched_fields() {
 fn test_sparkfun_xrp_controller_board_config() {
     // SparkFun XRP Controller (RP2350B); maxgerhardt/platform-raspberrypi.
     // Regression for FastLED `rp2350B SparkfunXRP` workflow (#295).
-    let config =
-        BoardConfig::from_board_id("sparkfun_xrp_controller", &HashMap::new()).unwrap();
+    let config = BoardConfig::from_board_id("sparkfun_xrp_controller", &HashMap::new()).unwrap();
     assert_eq!(config.mcu, "rp2350");
     assert_eq!(config.core, "earlephilhower");
     assert_eq!(config.variant, "sparkfun_xrp_controller");
@@ -558,8 +636,7 @@ fn test_xiaoble_adafruit_board_config() {
 fn test_xiaoblesense_adafruit_board_config() {
     // Seeed XIAO BLE Sense (nRF52840 + IMU/mic).
     // Regression for FastLED `adafruit_xiaoblesense` workflow (#293).
-    let config =
-        BoardConfig::from_board_id("xiaoblesense_adafruit", &HashMap::new()).unwrap();
+    let config = BoardConfig::from_board_id("xiaoblesense_adafruit", &HashMap::new()).unwrap();
     assert_eq!(config.mcu, "nrf52840");
     assert_eq!(config.core, "nRF5");
     assert_eq!(config.variant, "Seeed_XIAO_nRF52840_Sense");

@@ -1,16 +1,20 @@
 {
+  "build": {
+    "f_cpu": "64000000L",
+    "mcu": "nrf52832"
+  },
   "connectivity": [
     "bluetooth"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
-      "jlink": {},
-      "stlink": {},
       "cmsis-dap": {
-        "onboard": true,
-        "default": true
-      }
+        "default": true,
+        "onboard": true
+      },
+      "jlink": {},
+      "stlink": {}
     }
   },
   "fcpu": 64000000,
@@ -23,6 +27,11 @@
   "platform": "nordicnrf52",
   "ram": 65536,
   "rom": 524288,
+  "upload": {
+    "maximum_ram_size": 65536,
+    "maximum_size": 524288,
+    "protocol": "cmsis-dap"
+  },
   "url": "https://wiki.makerdiary.com/nrf52832-mdk/",
   "vendor": "Makerdiary"
 }

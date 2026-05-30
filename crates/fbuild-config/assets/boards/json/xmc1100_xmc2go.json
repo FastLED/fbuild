@@ -1,4 +1,10 @@
 {
+  "build": {
+    "extra_flags": "-DXMC1100_XMC2GO -DXMC1100_T038x0064",
+    "f_cpu": "32000000L",
+    "mcu": "XMC1100",
+    "variant": "XMC1100"
+  },
   "debug": {
     "tools": {
       "jlink": {
@@ -16,6 +22,11 @@
   "platform": "infineonxmc",
   "ram": 16384,
   "rom": 65536,
+  "upload": {
+    "maximum_ram_size": 16384,
+    "maximum_size": 65536,
+    "protocol": "jlink"
+  },
   "url": "https://www.infineon.com",
   "vendor": "Infineon"
 }

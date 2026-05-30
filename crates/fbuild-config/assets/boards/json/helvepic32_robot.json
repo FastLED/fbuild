@@ -1,4 +1,14 @@
 {
+  "build": {
+    "arduino": {
+      "ldscript": "chipKIT-application-32MX270F256.ld"
+    },
+    "core": "pic32",
+    "extra_flags": "-D_BOARD_HELVEPIC32_SMDA_ -DPIO_ARDUINO_ENABLE_USB_SERIAL",
+    "f_cpu": "48000000L",
+    "mcu": "32MX270F256D",
+    "variant": "HelveKIT32robot"
+  },
   "fcpu": 48000000,
   "frameworks": [
     "arduino"
@@ -9,6 +19,13 @@
   "platform": "microchippic32",
   "ram": 63488,
   "rom": 249856,
+  "upload": {
+    "maximum_ram_size": 63488,
+    "maximum_size": 249856,
+    "protocol": "stk500v2",
+    "require_upload_port": true,
+    "speed": 115200
+  },
   "url": "https://www.helvepic32.org/shop-1/",
   "vendor": "BOXTEC"
 }

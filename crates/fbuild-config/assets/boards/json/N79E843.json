@@ -1,4 +1,11 @@
 {
+  "build": {
+    "core": "naked",
+    "extra_flags": "-DN79E84X -DN79E843 -DNAKED_ARCH_MCS51 -DNAKED_MCS51_N79E84X",
+    "f_cpu": "22118400L",
+    "mcu": "n79e843",
+    "variant": "n79e84x"
+  },
   "fcpu": 22118400,
   "frameworks": [],
   "id": "N79E843",
@@ -7,6 +14,11 @@
   "platform": "intel_mcs51",
   "ram": 512,
   "rom": 4096,
+  "upload": {
+    "maximum_ram_size": 512,
+    "maximum_size": 4096,
+    "protocol": "nuvoprog"
+  },
   "url": "https://www.nuvoton.com/products/microcontrollers/8bit-8051-mcus/",
   "vendor": "Nuvoton"
 }

@@ -1,18 +1,22 @@
 {
+  "build": {
+    "f_cpu": "64000000L",
+    "mcu": "nrf52833"
+  },
   "connectivity": [
     "bluetooth"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
-      "jlink": {
-        "onboard": true,
-        "default": true
-      },
-      "stlink": {},
       "cmsis-dap": {
         "onboard": true
-      }
+      },
+      "jlink": {
+        "default": true,
+        "onboard": true
+      },
+      "stlink": {}
     }
   },
   "fcpu": 64000000,
@@ -25,6 +29,11 @@
   "platform": "nordicnrf52",
   "ram": 131072,
   "rom": 524288,
+  "upload": {
+    "maximum_ram_size": 131072,
+    "maximum_size": 524288,
+    "protocol": "jlink"
+  },
   "url": "https://www.lairdconnect.com/wireless-modules/bluetooth-modules/bluetooth-5-modules/bl653-series-bluetooth-51-802154-nfc-module",
   "vendor": "Laird Connectivity"
 }

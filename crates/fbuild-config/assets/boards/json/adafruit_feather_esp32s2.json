@@ -3,7 +3,7 @@
     "arduino": {
       "ldscript": "esp32s2_out.ld",
       "memory_type": "qio_qspi",
-      "partitions": "partitions-4MB-tinyuf2.csv"
+      "partitions": "tinyuf2-partitions-4MB.csv"
     },
     "core": "esp32",
     "extra_flags": "-DARDUINO_ADAFRUIT_FEATHER_ESP32S2 -DBOARD_HAS_PSRAM -DARDUINO_USB_CDC_ON_BOOT=1",

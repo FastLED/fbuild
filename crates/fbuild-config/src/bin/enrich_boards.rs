@@ -215,6 +215,22 @@ fn extract_upload(pio_upload: &Map<String, Value>) -> Map<String, Value> {
     upload
 }
 
+/// Merge fields from `src` into `dst`, recursively merging nested objects so
+/// existing fbuild-only keys are preserved. PIO-supplied values overwrite
+/// any pre-existing value with the same key.
+fn merge_into(dst: &mut Map<String, Value>, src: Map<String, Value>) {
+    for (k, v) in src {
+        match (dst.get_mut(&k), v) {
+            (Some(Value::Object(existing)), Value::Object(new_obj)) => {
+                merge_into(existing, new_obj);
+            }
+            (_, new_val) => {
+                dst.insert(k, new_val);
+            }
+        }
+    }
+}
+
 /// Enrich a single board JSON. Returns true if the file was modified.
 fn enrich_board(board_path: &Path, pio_dir: &Path) -> Result<bool, String> {
     let contents = fs::read_to_string(board_path)
@@ -244,21 +260,34 @@ fn enrich_board(board_path: &Path, pio_dir: &Path) -> Result<bool, String> {
     let board_obj = board.as_object_mut().ok_or("board JSON is not an object")?;
     let mut changed = false;
 
-    // Extract and merge build section
+    // Merge build section. We MERGE rather than replace so existing fbuild
+    // fields that PIO doesn't ship (e.g. legacy `arduino.ldscript` that
+    // PlatformIO has since moved into its SCons builder scripts) survive a
+    // re-run of this tool. PIO-supplied fields still override existing values.
     if let Some(Value::Object(pio_build)) = pio_obj.get("build") {
         let build = extract_build(pio_build);
         if !build.is_empty() {
-            board_obj.insert("build".to_string(), Value::Object(build));
-            changed = true;
+            let existing = board_obj
+                .entry("build".to_string())
+                .or_insert_with(|| Value::Object(Map::new()));
+            if let Value::Object(existing_build) = existing {
+                merge_into(existing_build, build);
+                changed = true;
+            }
         }
     }
 
-    // Extract and merge upload section
+    // Merge upload section (same rationale as build).
     if let Some(Value::Object(pio_upload)) = pio_obj.get("upload") {
         let upload = extract_upload(pio_upload);
         if !upload.is_empty() {
-            board_obj.insert("upload".to_string(), Value::Object(upload));
-            changed = true;
+            let existing = board_obj
+                .entry("upload".to_string())
+                .or_insert_with(|| Value::Object(Map::new()));
+            if let Value::Object(existing_upload) = existing {
+                merge_into(existing_upload, upload);
+                changed = true;
+            }
         }
     }
 

@@ -1,4 +1,14 @@
 {
+  "build": {
+    "arduino": {
+      "ldscript": "nrf52_xxaa.ld"
+    },
+    "core": "nRF5",
+    "extra_flags": "-DARDUINO_GENERIC",
+    "f_cpu": "64000000L",
+    "mcu": "nrf52832",
+    "variant": "Generic"
+  },
   "connectivity": [
     "bluetooth",
     "nfc"
@@ -6,11 +16,11 @@
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {
         "onboard": true
       },
-      "stlink": {},
-      "cmsis-dap": {}
+      "stlink": {}
     }
   },
   "fcpu": 64000000,
@@ -23,6 +33,11 @@
   "platform": "nordicnrf52",
   "ram": 65536,
   "rom": 524288,
+  "upload": {
+    "maximum_ram_size": 65536,
+    "maximum_size": 524288,
+    "protocol": "jlink"
+  },
   "url": "https://os.mbed.com/platforms/u-blox-EVK-NINA-B1/",
   "vendor": "u-blox"
 }

@@ -1,4 +1,8 @@
 {
+  "build": {
+    "f_cpu": "12000000L",
+    "mcu": "ch559"
+  },
   "fcpu": 12000000,
   "frameworks": [],
   "id": "CH559",
@@ -7,6 +11,11 @@
   "platform": "intel_mcs51",
   "ram": 6400,
   "rom": 65536,
+  "upload": {
+    "maximum_ram_size": 6400,
+    "maximum_size": 65536,
+    "protocol": "ch55x"
+  },
   "url": "http://www.wch-ic.com/products/CH559.html",
   "vendor": "WCH"
 }

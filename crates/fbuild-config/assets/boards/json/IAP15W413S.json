@@ -1,4 +1,11 @@
 {
+  "build": {
+    "core": "naked",
+    "extra_flags": "-DSTC15W4XXS -DIAP15W413S -DNAKED_ARCH_MCS51 -DNAKED_MCS51_STC15W4XXS",
+    "f_cpu": "11059200L",
+    "mcu": "iap15w413s",
+    "variant": "stc15w4xxs"
+  },
   "fcpu": 11059200,
   "frameworks": [],
   "id": "IAP15W413S",
@@ -7,6 +14,11 @@
   "platform": "intel_mcs51",
   "ram": 512,
   "rom": 13312,
+  "upload": {
+    "maximum_ram_size": 512,
+    "maximum_size": 13312,
+    "protocol": "stcgal"
+  },
   "url": "http://www.stcmicro.com/STC/STC15W408S.html",
   "vendor": "STC"
 }

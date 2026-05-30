@@ -1,4 +1,8 @@
 {
+  "build": {
+    "mcu": "ln882hk",
+    "variant": "ln-02"
+  },
   "connectivity": [
     "wifi",
     "ble"

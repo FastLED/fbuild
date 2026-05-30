@@ -1,4 +1,11 @@
 {
+  "build": {
+    "core": "lgt8f",
+    "extra_flags": "-DARDUINO_ARCH_AVR -DARDUINO_AVR_LARDU_328P -DAVR_LARDU_328E",
+    "f_cpu": "32000000L",
+    "mcu": "atmega328p",
+    "variant": "lgt8fx8ps20"
+  },
   "fcpu": 32000000,
   "frameworks": [
     "arduino"
@@ -9,6 +16,13 @@
   "platform": "lgt8f",
   "ram": 2048,
   "rom": 29696,
+  "upload": {
+    "maximum_ram_size": 2048,
+    "maximum_size": 29696,
+    "protocol": "arduino",
+    "require_upload_port": true,
+    "speed": 57600
+  },
   "url": "http://www.lgtic.com/lgt8fx8p/",
   "vendor": "LogicGreen"
 }

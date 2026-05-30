@@ -1,9 +1,21 @@
 {
+  "build": {
+    "arduino": {
+      "ldscript": "flash_with_bootloader.ld"
+    },
+    "core": "sparkfun",
+    "extra_flags": "-DARDUINO_SAMD_ZERO -D__SAMD21G18A__",
+    "f_cpu": "48000000L",
+    "mcu": "samd21g18a",
+    "pid": "0x214F",
+    "variant": "SparkFun_ProRF",
+    "vid": "0x1B4F"
+  },
   "debug": {
     "tools": {
+      "atmel-ice": {},
       "blackmagic": {},
-      "jlink": {},
-      "atmel-ice": {}
+      "jlink": {}
     }
   },
   "fcpu": 48000000,
@@ -16,6 +28,14 @@
   "platform": "atmelsam",
   "ram": 32768,
   "rom": 262144,
+  "upload": {
+    "maximum_ram_size": 32768,
+    "maximum_size": 262144,
+    "protocol": "sam-ba",
+    "require_upload_port": true,
+    "use_1200bps_touch": true,
+    "wait_for_upload_port": true
+  },
   "url": "https://www.sparkfun.com/products/14916",
   "vendor": "SparkFun"
 }

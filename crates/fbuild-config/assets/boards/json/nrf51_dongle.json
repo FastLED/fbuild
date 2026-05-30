@@ -1,14 +1,24 @@
 {
+  "build": {
+    "arduino": {
+      "ldscript": "nrf51_xxac.ld"
+    },
+    "core": "nRF5",
+    "extra_flags": "-DARDUINO_GENERIC",
+    "f_cpu": "32000000L",
+    "mcu": "nrf51822",
+    "variant": "nRF51Dongle"
+  },
   "connectivity": [
     "bluetooth"
   ],
   "debug": {
     "tools": {
-      "jlink": {
-        "onboard": true,
-        "default": true
-      },
       "cmsis-dap": {
+        "onboard": true
+      },
+      "jlink": {
+        "default": true,
         "onboard": true
       }
     }
@@ -24,6 +34,11 @@
   "platform": "nordicnrf51",
   "ram": 32768,
   "rom": 262144,
+  "upload": {
+    "maximum_ram_size": 32768,
+    "maximum_size": 262144,
+    "protocol": "jlink"
+  },
   "url": "https://www.nordicsemi.com/Products/Development-hardware/nRF51-Dongle",
   "vendor": "Nordic"
 }

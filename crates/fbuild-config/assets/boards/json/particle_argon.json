@@ -1,12 +1,16 @@
 {
+  "build": {
+    "f_cpu": "64000000L",
+    "mcu": "nrf52840"
+  },
   "connectivity": [
     "bluetooth"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
-      "jlink": {},
-      "cmsis-dap": {}
+      "cmsis-dap": {},
+      "jlink": {}
     }
   },
   "fcpu": 64000000,
@@ -19,6 +23,13 @@
   "platform": "nordicnrf52",
   "ram": 248832,
   "rom": 815104,
+  "upload": {
+    "maximum_ram_size": 248832,
+    "maximum_size": 815104,
+    "protocol": "nrfutil",
+    "require_upload_port": true,
+    "speed": 115200
+  },
   "url": "https://docs.particle.io/argon",
   "vendor": "Particle"
 }

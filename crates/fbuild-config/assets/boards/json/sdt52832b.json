@@ -1,13 +1,21 @@
 {
+  "build": {
+    "arduino": {
+      "ldscript": "nrf52_xxaa.ld"
+    },
+    "extra_flags": "-DARDUINO_NRF52_DK",
+    "f_cpu": "64000000L",
+    "mcu": "nrf52832"
+  },
   "connectivity": [
     "bluetooth"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
+      "stlink": {}
     }
   },
   "fcpu": 64000000,
@@ -20,6 +28,11 @@
   "platform": "nordicnrf52",
   "ram": 65536,
   "rom": 524288,
+  "upload": {
+    "maximum_ram_size": 65536,
+    "maximum_size": 524288,
+    "protocol": "mbed"
+  },
   "url": "https://os.mbed.com/platforms/SDT52832B/",
   "vendor": "Sigma Delta Technologies"
 }

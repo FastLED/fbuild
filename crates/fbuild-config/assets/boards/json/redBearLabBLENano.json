@@ -1,15 +1,25 @@
 {
+  "build": {
+    "arduino": {
+      "ldscript": "nrf51_xxac.ld"
+    },
+    "core": "nRF5",
+    "extra_flags": "-DARDUINO_BLE_NANO",
+    "f_cpu": "16000000L",
+    "mcu": "nrf51822",
+    "variant": "BLENano"
+  },
   "connectivity": [
     "bluetooth"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
-      "jlink": {},
-      "stlink": {},
       "cmsis-dap": {
         "onboard": true
-      }
+      },
+      "jlink": {},
+      "stlink": {}
     }
   },
   "fcpu": 16000000,
@@ -23,6 +33,11 @@
   "platform": "nordicnrf51",
   "ram": 32768,
   "rom": 262144,
+  "upload": {
+    "maximum_ram_size": 32768,
+    "maximum_size": 262144,
+    "protocol": "cmsis-dap"
+  },
   "url": "https://www.sparkfun.com/products/retired/13730",
   "vendor": "RedBearLab"
 }

@@ -22,6 +22,8 @@
   "ram": 8192,
   "rom": 65536,
   "upload": {
+    "maximum_ram_size": 8192,
+    "maximum_size": 65536,
     "protocol": "mbed"
   },
   "url": "https://www.silabs.com/products/development-tools/mcu/32-bit/efm32-happy-gecko-starter-kit",

@@ -22,6 +22,8 @@
   "ram": 131072,
   "rom": 1048576,
   "upload": {
+    "maximum_ram_size": 131072,
+    "maximum_size": 1048576,
     "protocol": "mbed"
   },
   "url": "https://www.silabs.com/products/development-tools/mcu/32-bit/efm32-giant-gecko-starter-kit",

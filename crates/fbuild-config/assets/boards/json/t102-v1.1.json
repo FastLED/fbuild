@@ -1,4 +1,8 @@
 {
+  "build": {
+    "mcu": "rtl8710bn",
+    "variant": "t102-v1.1"
+  },
   "connectivity": [
     "wifi"
   ],

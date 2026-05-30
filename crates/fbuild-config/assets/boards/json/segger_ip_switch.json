@@ -1,4 +1,8 @@
 {
+  "build": {
+    "f_cpu": "180000000L",
+    "mcu": "mk66fn2m0vmd18"
+  },
   "connectivity": [
     "ethernet",
     "can"
@@ -18,6 +22,11 @@
   "platform": "freescalekinetis",
   "ram": 262144,
   "rom": 2097152,
+  "upload": {
+    "maximum_ram_size": 262144,
+    "maximum_size": 2097152,
+    "protocol": "jlink"
+  },
   "url": "https://www.segger.com/evaluate-our-software/segger/embosip-switch-board/",
   "vendor": "SEGGER"
 }

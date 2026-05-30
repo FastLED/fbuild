@@ -1,4 +1,8 @@
 {
+  "build": {
+    "f_cpu": "48000000L",
+    "mcu": "mkw41z512vht4"
+  },
   "connectivity": [
     "bluetooth"
   ],
@@ -21,6 +25,11 @@
   "platform": "freescalekinetis",
   "ram": 131072,
   "rom": 524288,
+  "upload": {
+    "maximum_ram_size": 131072,
+    "maximum_size": 524288,
+    "protocol": "mbed"
+  },
   "url": "https://os.mbed.com/platforms/FRDM-KW41Z/",
   "vendor": "Freescale"
 }

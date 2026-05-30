@@ -1,15 +1,25 @@
 {
+  "build": {
+    "arduino": {
+      "ldscript": "nrf52_xxaa.ld"
+    },
+    "core": "nRF5",
+    "extra_flags": "-DARDUINO_RB_BLE_NANO_2",
+    "f_cpu": "64000000L",
+    "mcu": "nrf52832",
+    "variant": "RedBear_BLENano2"
+  },
   "connectivity": [
     "bluetooth"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
-      "jlink": {},
-      "stlink": {},
       "cmsis-dap": {
         "onboard": true
-      }
+      },
+      "jlink": {},
+      "stlink": {}
     }
   },
   "fcpu": 64000000,
@@ -23,6 +33,11 @@
   "platform": "nordicnrf52",
   "ram": 65536,
   "rom": 524288,
+  "upload": {
+    "maximum_ram_size": 65536,
+    "maximum_size": 524288,
+    "protocol": "cmsis-dap"
+  },
   "url": "https://redbear.cc/product/ble-nano-2-soldered.html",
   "vendor": "RedBearLab"
 }

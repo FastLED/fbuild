@@ -1,4 +1,14 @@
 {
+  "build": {
+    "arduino": {
+      "ldscript": "chipKIT-application-32MX270F256_BLEBootloader.ld"
+    },
+    "core": "pic32",
+    "extra_flags": "-D_BOARD_RGB_STATION_ -DPIO_ARDUINO_ENABLE_USB_SERIAL",
+    "f_cpu": "48000000L",
+    "mcu": "32MX270F256D",
+    "variant": "RGB_Station"
+  },
   "fcpu": 48000000,
   "frameworks": [
     "arduino"
@@ -9,6 +19,13 @@
   "platform": "microchippic32",
   "ram": 63488,
   "rom": 245760,
+  "upload": {
+    "maximum_ram_size": 63488,
+    "maximum_size": 245760,
+    "protocol": "stk500v2",
+    "require_upload_port": true,
+    "speed": 115200
+  },
   "url": "https://github.com/chipKIT32/RGB_Station",
   "vendor": "ChipKIT"
 }

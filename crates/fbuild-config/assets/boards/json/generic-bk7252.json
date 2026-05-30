@@ -1,4 +1,8 @@
 {
+  "build": {
+    "mcu": "bk7252",
+    "variant": "generic-bk7252"
+  },
   "connectivity": [
     "wifi",
     "ble"

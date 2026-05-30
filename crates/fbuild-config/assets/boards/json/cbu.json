@@ -1,4 +1,8 @@
 {
+  "build": {
+    "mcu": "bk7231n",
+    "variant": "cbu"
+  },
   "connectivity": [
     "wifi",
     "ble"

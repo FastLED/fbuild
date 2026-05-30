@@ -1,4 +1,8 @@
 {
+  "build": {
+    "f_cpu": "96000000L",
+    "mcu": "max32625"
+  },
   "fcpu": 96000000,
   "frameworks": [
     "mbed"
@@ -9,6 +13,11 @@
   "platform": "maxim32",
   "ram": 163840,
   "rom": 524288,
+  "upload": {
+    "maximum_ram_size": 163840,
+    "maximum_size": 524288,
+    "protocol": "mbed"
+  },
   "url": "https://www.maximintegrated.com/en/products/microcontrollers/MAX32625PICO.html",
   "vendor": "Maxim"
 }

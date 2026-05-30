@@ -1,11 +1,15 @@
 {
   "build": {
-    "core": "nRF5",
-    "extra_flags": "-DARDUINO_NRF52840_PCA10056 -DNRF52840_XXAA",
-    "variant": "pca10056",
     "arduino": {
       "ldscript": "nrf52840_s140_v6.ld"
-    }
+    },
+    "core": "nRF5",
+    "extra_flags": "-DARDUINO_NRF52840_PCA10056 -DNRF52840_XXAA",
+    "f_cpu": "64000000L",
+    "mcu": "nrf52840",
+    "pid": "0x8029",
+    "variant": "pca10056",
+    "vid": "0x239A"
   },
   "connectivity": [
     "bluetooth"
@@ -13,11 +17,11 @@
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {
         "onboard": true
       },
-      "stlink": {},
-      "cmsis-dap": {}
+      "stlink": {}
     }
   },
   "fcpu": 64000000,
@@ -30,6 +34,13 @@
   "platform": "nordicnrf52",
   "ram": 248832,
   "rom": 815104,
+  "upload": {
+    "maximum_ram_size": 248832,
+    "maximum_size": 815104,
+    "protocol": "jlink",
+    "require_upload_port": true,
+    "speed": 115200
+  },
   "url": "https://os.mbed.com/platforms/Nordic-nRF52840-DK/",
   "vendor": "Nordic"
 }

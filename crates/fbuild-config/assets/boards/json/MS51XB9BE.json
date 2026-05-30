@@ -1,4 +1,11 @@
 {
+  "build": {
+    "core": "naked",
+    "extra_flags": "-DMS51XB -DMS51XB9BE -DNAKED_ARCH_MCS51 -DNAKED_MCS51_MS51XB",
+    "f_cpu": "16000000L",
+    "mcu": "ms51xb9be",
+    "variant": "ms51xb"
+  },
   "fcpu": 16000000,
   "frameworks": [],
   "id": "MS51XB9BE",
@@ -7,6 +14,11 @@
   "platform": "intel_mcs51",
   "ram": 1280,
   "rom": 16384,
+  "upload": {
+    "maximum_ram_size": 1280,
+    "maximum_size": 16384,
+    "protocol": "nuvoprog"
+  },
   "url": "https://www.nuvoton.com/products/microcontrollers/8bit-8051-mcus/industrial-8051-series/",
   "vendor": "Nuvoton"
 }

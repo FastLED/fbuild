@@ -1,4 +1,8 @@
 {
+  "build": {
+    "mcu": "rtl8710bx",
+    "variant": "afw121t"
+  },
   "connectivity": [
     "wifi"
   ],

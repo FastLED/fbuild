@@ -1,4 +1,8 @@
 {
+  "build": {
+    "mcu": "rtl8710bn",
+    "variant": "wr1"
+  },
   "connectivity": [
     "wifi"
   ],
