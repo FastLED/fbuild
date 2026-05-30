@@ -21,6 +21,30 @@ pub(crate) struct OpRequest {
     pub(crate) skip_build: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub(crate) baud_rate: Option<u32>,
+    /// Override for `PLATFORMIO_SRC_DIR` — the source directory to compile.
+    ///
+    /// Mirrors the `fbuild-cli` build/deploy paths which read the env var at
+    /// request-construction time and forward it to the daemon, so consumers
+    /// that go through the PyO3 binding (notably FastLED's autoresearch
+    /// runner) get the same `src_dir` override the CLI provides. The
+    /// daemon's `BuildRequest`/`DeployRequest` both honor a top-level
+    /// `src_dir` field. See FastLED/fbuild#274.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub(crate) src_dir: Option<String>,
+}
+
+/// Read `PLATFORMIO_SRC_DIR` from the current process env, returning `None`
+/// when unset or empty.
+///
+/// Centralized so the sync and async `DaemonConnection`s populate
+/// `OpRequest.src_dir` identically to `fbuild-cli`
+/// (`std::env::var(...).ok().filter(|s| !s.is_empty())`). Keeping this in
+/// one place avoids drift between the two surfaces and gives tests a single
+/// seam to exercise.
+pub(crate) fn platformio_src_dir_from_env() -> Option<String> {
+    std::env::var("PLATFORMIO_SRC_DIR")
+        .ok()
+        .filter(|s| !s.is_empty())
 }
 
 pub(crate) fn build_url() -> String {

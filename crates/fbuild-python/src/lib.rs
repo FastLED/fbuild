@@ -83,9 +83,55 @@ fn _native(m: &Bound<'_, PyModule>) -> PyResult<()> {
 #[cfg(test)]
 mod tests {
     use crate::json_rpc::{extract_remote_json_rpc_response, wait_for_remote_json_rpc_response};
-    use crate::outcome::{parse_outcome, send_op_async, OpRequest};
+    use crate::outcome::{parse_outcome, platformio_src_dir_from_env, send_op_async, OpRequest};
     use crate::PYTHON_MODULE_VERSION;
+    use std::sync::Mutex;
     use tokio::io::{AsyncReadExt, AsyncWriteExt};
+
+    /// Serializes tests that mutate `PLATFORMIO_SRC_DIR`.
+    ///
+    /// `std::env::set_var` and `remove_var` mutate process-global state, so
+    /// running env-var tests in parallel (cargo's default) creates races
+    /// where one test sees another's value and the assertions flake. A
+    /// single `Mutex` held across set → call → assert → restore keeps the
+    /// env-mutating tests strictly serial without forcing the whole crate
+    /// onto `--test-threads=1`.
+    static PLATFORMIO_SRC_DIR_LOCK: Mutex<()> = Mutex::new(());
+
+    /// RAII guard that restores `PLATFORMIO_SRC_DIR` on drop.
+    ///
+    /// Holds the env-var lock for its lifetime so concurrent env-var tests
+    /// queue rather than race. The previous value is restored exactly as
+    /// observed (including "unset") so tests don't leak state into siblings
+    /// that run after them.
+    struct PlatformioSrcDirGuard {
+        _lock: std::sync::MutexGuard<'static, ()>,
+        previous: Option<String>,
+    }
+
+    impl PlatformioSrcDirGuard {
+        fn acquire() -> Self {
+            // PoisonError is fine: the guard exists purely to serialize
+            // env-var access, and a poisoned mutex still serializes.
+            let lock = PLATFORMIO_SRC_DIR_LOCK
+                .lock()
+                .unwrap_or_else(|e| e.into_inner());
+            let previous = std::env::var("PLATFORMIO_SRC_DIR").ok();
+            Self {
+                _lock: lock,
+                previous,
+            }
+        }
+    }
+
+    impl Drop for PlatformioSrcDirGuard {
+        fn drop(&mut self) {
+            match &self.previous {
+                Some(v) => std::env::set_var("PLATFORMIO_SRC_DIR", v),
+                None => std::env::remove_var("PLATFORMIO_SRC_DIR"),
+            }
+        }
+    }
 
     /// `parse_outcome` must faithfully extract every field the daemon's
     /// `OperationResponse` populates so Python callers can branch on the
@@ -226,6 +272,7 @@ mod tests {
             monitor_after: false,
             skip_build: false,
             baud_rate: None,
+            src_dir: None,
         }
     }
 
@@ -317,5 +364,186 @@ mod tests {
                 outcome.message
             );
         });
+    }
+
+    /// When `PLATFORMIO_SRC_DIR` is set, the helper must return its value
+    /// verbatim. This is the env-read primitive both DaemonConnection
+    /// surfaces use to populate `OpRequest.src_dir`, so FastLED's
+    /// autoresearch override survives the Python -> daemon hop. See
+    /// FastLED/fbuild#274.
+    #[test]
+    fn platformio_src_dir_helper_returns_value_when_set() {
+        let _guard = PlatformioSrcDirGuard::acquire();
+        std::env::set_var("PLATFORMIO_SRC_DIR", "examples/AutoResearch");
+        assert_eq!(
+            platformio_src_dir_from_env().as_deref(),
+            Some("examples/AutoResearch")
+        );
+    }
+
+    /// When `PLATFORMIO_SRC_DIR` is unset, the helper must return `None`
+    /// so `OpRequest.src_dir` stays `None` and the daemon falls back to
+    /// `platformio.ini`'s configured `src_dir`. Mirrors the CLI's
+    /// `.ok().filter(|s| !s.is_empty())` contract.
+    #[test]
+    fn platformio_src_dir_helper_returns_none_when_unset() {
+        let _guard = PlatformioSrcDirGuard::acquire();
+        std::env::remove_var("PLATFORMIO_SRC_DIR");
+        assert_eq!(platformio_src_dir_from_env(), None);
+    }
+
+    /// An empty `PLATFORMIO_SRC_DIR` (`""`) must be treated as unset, not
+    /// forwarded as an empty string. The CLI uses the same `filter(|s|
+    /// !s.is_empty())` rule and a stray empty value would tell the daemon
+    /// to compile an empty directory.
+    #[test]
+    fn platformio_src_dir_helper_returns_none_when_empty() {
+        let _guard = PlatformioSrcDirGuard::acquire();
+        std::env::set_var("PLATFORMIO_SRC_DIR", "");
+        assert_eq!(platformio_src_dir_from_env(), None);
+    }
+
+    /// `DaemonConnection::build_request` must forward `PLATFORMIO_SRC_DIR`
+    /// into `OpRequest.src_dir` so the daemon receives the override the
+    /// caller set on the parent env, matching `fbuild-cli`'s `Build`
+    /// request construction. Regression guard for FastLED/fbuild#274.
+    #[test]
+    fn daemon_connection_build_request_forwards_platformio_src_dir() {
+        let _guard = PlatformioSrcDirGuard::acquire();
+        std::env::set_var("PLATFORMIO_SRC_DIR", "examples/AutoResearch");
+        let conn = crate::daemon_connection::DaemonConnection::new(
+            "tests/platform/uno".into(),
+            "uno".into(),
+        );
+        let req = conn.build_request(false, false);
+        assert_eq!(req.src_dir.as_deref(), Some("examples/AutoResearch"));
+    }
+
+    /// `DaemonConnection::deploy_request` must forward `PLATFORMIO_SRC_DIR`
+    /// for the same reason `build_request` does — the issue's "Done"
+    /// criteria explicitly call out deploy parity with the CLI.
+    #[test]
+    fn daemon_connection_deploy_request_forwards_platformio_src_dir() {
+        let _guard = PlatformioSrcDirGuard::acquire();
+        std::env::set_var("PLATFORMIO_SRC_DIR", "examples/AutoResearch");
+        let conn = crate::daemon_connection::DaemonConnection::new(
+            "tests/platform/uno".into(),
+            "uno".into(),
+        );
+        let req = conn.deploy_request(None, false, false, false);
+        assert_eq!(req.src_dir.as_deref(), Some("examples/AutoResearch"));
+    }
+
+    /// When the env var is unset, `build_request` must leave `src_dir` as
+    /// `None`. Omitting the field on the wire is what lets the daemon fall
+    /// back to `platformio.ini`'s `src_dir`; a forwarded `Some("")` would
+    /// break that fallback.
+    #[test]
+    fn daemon_connection_build_request_omits_src_dir_when_env_unset() {
+        let _guard = PlatformioSrcDirGuard::acquire();
+        std::env::remove_var("PLATFORMIO_SRC_DIR");
+        let conn = crate::daemon_connection::DaemonConnection::new(
+            "tests/platform/uno".into(),
+            "uno".into(),
+        );
+        let req = conn.build_request(false, false);
+        assert!(req.src_dir.is_none());
+    }
+
+    /// Same omission guarantee for deploy. The CLI and Python paths must
+    /// behave identically when the caller has not set
+    /// `PLATFORMIO_SRC_DIR`.
+    #[test]
+    fn daemon_connection_deploy_request_omits_src_dir_when_env_unset() {
+        let _guard = PlatformioSrcDirGuard::acquire();
+        std::env::remove_var("PLATFORMIO_SRC_DIR");
+        let conn = crate::daemon_connection::DaemonConnection::new(
+            "tests/platform/uno".into(),
+            "uno".into(),
+        );
+        let req = conn.deploy_request(None, false, false, false);
+        assert!(req.src_dir.is_none());
+    }
+
+    /// Async parity with the sync `build_request` forwarding check. The
+    /// AsyncDaemonConnection is what FastLED uses under asyncio, so a
+    /// regression here would surface the same wrong-sketch failure mode
+    /// even after the sync path is fixed.
+    #[test]
+    fn async_daemon_connection_build_request_forwards_platformio_src_dir() {
+        let _guard = PlatformioSrcDirGuard::acquire();
+        std::env::set_var("PLATFORMIO_SRC_DIR", "examples/AutoResearch");
+        let conn = crate::async_daemon_connection::AsyncDaemonConnection::new(
+            "tests/platform/uno".into(),
+            "uno".into(),
+        );
+        let req = conn.build_request(false, false);
+        assert_eq!(req.src_dir.as_deref(), Some("examples/AutoResearch"));
+    }
+
+    /// Async parity with the sync `deploy_request` forwarding check.
+    #[test]
+    fn async_daemon_connection_deploy_request_forwards_platformio_src_dir() {
+        let _guard = PlatformioSrcDirGuard::acquire();
+        std::env::set_var("PLATFORMIO_SRC_DIR", "examples/AutoResearch");
+        let conn = crate::async_daemon_connection::AsyncDaemonConnection::new(
+            "tests/platform/uno".into(),
+            "uno".into(),
+        );
+        let req = conn.deploy_request(None, false, false, false);
+        assert_eq!(req.src_dir.as_deref(), Some("examples/AutoResearch"));
+    }
+
+    /// Async omission parity: with the env var unset, the async
+    /// surface must also leave `src_dir` as `None` so the daemon's
+    /// `platformio.ini` fallback still kicks in.
+    #[test]
+    fn async_daemon_connection_build_request_omits_src_dir_when_env_unset() {
+        let _guard = PlatformioSrcDirGuard::acquire();
+        std::env::remove_var("PLATFORMIO_SRC_DIR");
+        let conn = crate::async_daemon_connection::AsyncDaemonConnection::new(
+            "tests/platform/uno".into(),
+            "uno".into(),
+        );
+        let req = conn.build_request(false, false);
+        assert!(req.src_dir.is_none());
+    }
+
+    /// Async omission parity for deploy.
+    #[test]
+    fn async_daemon_connection_deploy_request_omits_src_dir_when_env_unset() {
+        let _guard = PlatformioSrcDirGuard::acquire();
+        std::env::remove_var("PLATFORMIO_SRC_DIR");
+        let conn = crate::async_daemon_connection::AsyncDaemonConnection::new(
+            "tests/platform/uno".into(),
+            "uno".into(),
+        );
+        let req = conn.deploy_request(None, false, false, false);
+        assert!(req.src_dir.is_none());
+    }
+
+    /// `OpRequest` serializes `src_dir` with `skip_serializing_if =
+    /// "Option::is_none"`, so when the env var is unset the field must not
+    /// appear in the JSON sent to the daemon. The daemon's
+    /// `BuildRequest.src_dir` is `Option<String>` with `serde(default)`;
+    /// omitting the field is the only way to get the platformio.ini
+    /// fallback. A forwarded `null` would be equivalent here, but
+    /// historical CLI traffic doesn't include the key at all so we keep
+    /// parity.
+    #[test]
+    fn op_request_serializes_src_dir_only_when_set() {
+        let mut req = sample_op_request();
+        let json = serde_json::to_string(&req).unwrap();
+        assert!(
+            !json.contains("src_dir"),
+            "src_dir must be omitted when None, got {json}"
+        );
+
+        req.src_dir = Some("examples/AutoResearch".into());
+        let json = serde_json::to_string(&req).unwrap();
+        assert!(
+            json.contains(r#""src_dir":"examples/AutoResearch""#),
+            "src_dir must serialize verbatim when set, got {json}"
+        );
     }
 }

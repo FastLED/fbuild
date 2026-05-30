@@ -4,7 +4,8 @@
 use pyo3::prelude::*;
 
 use crate::outcome::{
-    build_url, deploy_url, monitor_url, outcome_to_pydict, send_op_async, OpRequest,
+    build_url, deploy_url, monitor_url, outcome_to_pydict, platformio_src_dir_from_env,
+    send_op_async, OpRequest,
 };
 
 /// Python-visible AsyncDaemonConnection class.
@@ -183,7 +184,7 @@ impl AsyncDaemonConnection {
 }
 
 impl AsyncDaemonConnection {
-    fn build_request(&self, clean: bool, verbose: bool) -> OpRequest {
+    pub(crate) fn build_request(&self, clean: bool, verbose: bool) -> OpRequest {
         OpRequest {
             project_dir: self.project_dir.clone(),
             environment: Some(self.environment.clone()),
@@ -193,10 +194,11 @@ impl AsyncDaemonConnection {
             monitor_after: false,
             skip_build: false,
             baud_rate: None,
+            src_dir: platformio_src_dir_from_env(),
         }
     }
 
-    fn deploy_request(
+    pub(crate) fn deploy_request(
         &self,
         port: Option<String>,
         clean: bool,
@@ -212,6 +214,7 @@ impl AsyncDaemonConnection {
             monitor_after,
             skip_build,
             baud_rate: None,
+            src_dir: platformio_src_dir_from_env(),
         }
     }
 
@@ -225,6 +228,7 @@ impl AsyncDaemonConnection {
             monitor_after: false,
             skip_build: false,
             baud_rate,
+            src_dir: None,
         }
     }
 }
