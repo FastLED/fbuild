@@ -324,6 +324,18 @@ fn test_pico_enriched_fields() {
 }
 
 #[test]
+fn test_sparkfun_xrp_controller_board_config() {
+    // SparkFun XRP Controller (RP2350B); maxgerhardt/platform-raspberrypi.
+    // Regression for FastLED `rp2350B SparkfunXRP` workflow (#295).
+    let config =
+        BoardConfig::from_board_id("sparkfun_xrp_controller", &HashMap::new()).unwrap();
+    assert_eq!(config.mcu, "rp2350");
+    assert_eq!(config.core, "earlephilhower");
+    assert_eq!(config.variant, "sparkfun_xrp_controller");
+    assert_eq!(config.upload_protocol, Some("picotool".to_string()));
+}
+
+#[test]
 fn test_extra_flags_produce_defines() {
     // Enriched extra_flags should produce correct ARDUINO_* defines
     let config = BoardConfig::from_board_id("uno", &HashMap::new()).unwrap();
