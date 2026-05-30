@@ -379,6 +379,18 @@ impl Linker for Esp32Linker {
         &self.size_path
     }
 
+    fn ar_tool_path(&self) -> Option<&Path> {
+        Some(&self.ar_path)
+    }
+
+    fn objcopy_tool_path(&self) -> Option<&Path> {
+        Some(&self.objcopy_path)
+    }
+
+    fn link_driver_path(&self) -> Option<&Path> {
+        Some(&self.gcc_path)
+    }
+
     fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
         if let Some(size_info) = self.load_cached_size(elf_path) {
             tracing::info!("size: firmware.elf is unchanged, reusing cached size report");

@@ -247,6 +247,42 @@ pub fn run_sequential_build_with_libs(
         )?
     };
 
+    // Emit build_info_<env>.json (and the generic fallback) so downstream
+    // tools (FastLED `ci/compiled_size.py`, etc.) can find the toolchain
+    // and firmware paths after a successful link. Failures degrade to
+    // tracing::warn! inside `emit_build_info` — never fail the build over
+    // a metadata-file write. See FastLED/fbuild#297.
+    {
+        let _g = perf.phase("build-info");
+        let prog_path = crate::build_info::pick_prog_path(
+            link_result.elf_path.as_deref(),
+            link_result.hex_path.as_deref(),
+            link_result.bin_path.as_deref(),
+        );
+        if let Some(prog) = prog_path {
+            let info = crate::build_info::BuildInfo::new(
+                &prog,
+                linker.link_driver_path(),
+                linker.link_driver_path(),
+                linker.ar_tool_path(),
+                linker.objcopy_tool_path(),
+                linker.size_tool_path(),
+                compiler.c_flags(),
+                compiler.cpp_flags(),
+                ctx.overlay_link_flags.clone(),
+                ctx.overlay_link_libs.clone(),
+                platform_label.to_string(),
+                ctx.board.board.clone(),
+                params.env_name.clone(),
+            );
+            if let Err(e) =
+                crate::build_info::emit_build_info(&params.project_dir, &params.env_name, &info)
+            {
+                tracing::warn!("emit_build_info failed: {e}");
+            }
+        }
+    }
+
     // Result
     handle_link_result(
         &link_result,
