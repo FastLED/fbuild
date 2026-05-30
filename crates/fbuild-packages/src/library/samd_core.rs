@@ -73,8 +73,17 @@ impl SamdCores {
     }
 
     /// Get the core source directory for a specific core name.
+    ///
+    /// PlatformIO's `build.core` field is a vendor-branding label more than
+    /// a real subdirectory name — Adafruit's ArduinoCore-samd (the SAMD
+    /// framework we install) ships only `cores/arduino/`, but every Adafruit
+    /// SAMD board declares `build.core = "adafruit"` so the literal
+    /// `cores/adafruit/` lookup misses. Mirror PlatformIO's atmelsam builder
+    /// fallback: if `cores/<core_name>/` doesn't exist on disk, fall back to
+    /// `cores/arduino/` (the canonical name for Arduino-compatible cores).
+    /// See FastLED/fbuild#319.
     pub fn get_core_dir(&self, core_name: &str) -> PathBuf {
-        self.get_cores_dir().join(core_name)
+        resolve_core_dir_with_arduino_fallback(&self.get_cores_dir(), core_name)
     }
 
     /// Get the variant directory for a specific variant name.
@@ -194,6 +203,25 @@ fn collect_sources(dir: &Path) -> Vec<PathBuf> {
     sources
 }
 
+/// Resolve a core source dir under `cores_dir`, falling back to
+/// `cores/arduino/` when the literal `<core_name>` subdirectory is missing.
+///
+/// Adafruit (and some other vendor) Arduino-compatible cores set
+/// `build.core = "<vendor>"` in their board JSON for branding even though
+/// the actual sources live in `cores/arduino/`. PlatformIO's atmelsam
+/// builder handles this transparently; fbuild needs to do the same.
+fn resolve_core_dir_with_arduino_fallback(cores_dir: &Path, core_name: &str) -> PathBuf {
+    let primary = cores_dir.join(core_name);
+    if primary.is_dir() {
+        return primary;
+    }
+    let fallback = cores_dir.join("arduino");
+    if fallback.is_dir() {
+        return fallback;
+    }
+    primary
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -248,5 +276,47 @@ mod tests {
         let tmp = tempfile::TempDir::new().unwrap();
         let result = SamdCores::validate(tmp.path());
         assert!(result.is_err());
+    }
+
+    /// FastLED/fbuild#319: Adafruit SAMD boards declare `build.core = "adafruit"`
+    /// (a vendor brand label) but the framework only ships `cores/arduino/`.
+    /// The resolver must fall back to `cores/arduino/` when the literal
+    /// `cores/<core_name>/` doesn't exist on disk, mirroring PIO's atmelsam
+    /// builder behavior.
+    #[test]
+    fn resolve_falls_back_to_arduino_when_named_dir_missing() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let cores_dir = tmp.path().join("cores");
+        std::fs::create_dir_all(cores_dir.join("arduino")).unwrap();
+        // No `cores/adafruit/` exists.
+
+        let resolved = resolve_core_dir_with_arduino_fallback(&cores_dir, "adafruit");
+        assert_eq!(resolved, cores_dir.join("arduino"));
+    }
+
+    /// Sanity: when the named core dir *does* exist, the fallback must not
+    /// kick in — honor the literal name.
+    #[test]
+    fn resolve_uses_literal_name_when_present() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let cores_dir = tmp.path().join("cores");
+        std::fs::create_dir_all(cores_dir.join("custom_vendor")).unwrap();
+        std::fs::create_dir_all(cores_dir.join("arduino")).unwrap();
+
+        let resolved = resolve_core_dir_with_arduino_fallback(&cores_dir, "custom_vendor");
+        assert_eq!(resolved, cores_dir.join("custom_vendor"));
+    }
+
+    /// When neither the named dir nor `cores/arduino/` exists, return the
+    /// literal `cores/<name>/` so the eventual file-open error surfaces with
+    /// a meaningful path (don't synthesize a nonexistent fallback).
+    #[test]
+    fn resolve_returns_literal_when_no_fallback_available() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let cores_dir = tmp.path().join("cores");
+        // No cores subdirs at all.
+
+        let resolved = resolve_core_dir_with_arduino_fallback(&cores_dir, "vendor");
+        assert_eq!(resolved, cores_dir.join("vendor"));
     }
 }
