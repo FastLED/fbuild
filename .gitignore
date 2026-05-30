@@ -24,6 +24,13 @@ libiconv-2.dll
 # zccache local dev cache
 .zccache/
 
+# Local CARGO_HOME caches (keep .cargo/config.toml and README.md tracked)
+.cargo/.global-cache
+.cargo/.package-cache
+.cargo/.package-cache-mutate
+.cargo/registry/
+.cargo/git/
+
 # fbuild local build artifacts
 .fbuild/
 
