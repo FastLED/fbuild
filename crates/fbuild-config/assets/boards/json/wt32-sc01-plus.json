@@ -2,7 +2,7 @@
   "build": {
     "arduino": {
       "memory_type": "qio_qspi",
-      "partitions": "tinyuf2-partitions-16MB.csv"
+      "partitions": "partitions-16MB-tinyuf2.csv"
     },
     "core": "esp32",
     "extra_flags": "-DARDUINO_WT32_SC01_PLUS -DBOARD_HAS_PSRAM -DARDUINO_USB_CDC_ON_BOOT=1 -DARDUINO_RUNNING_CORE=1 -DARDUINO_EVENT_RUNNING_CORE=1",
