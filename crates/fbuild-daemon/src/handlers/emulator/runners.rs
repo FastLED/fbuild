@@ -173,8 +173,15 @@ impl EmulatorRunner for Avr8jsRunner {
         let node_path = find_node()?;
         let avr8js_cache = ensure_avr8js_npm()?;
 
-        let session_dir = tempfile::TempDir::new()?;
-        let script_path = session_dir.path().join("headless.mjs");
+        // headless.mjs uses `import ... from "avr8js"` (a bare ESM
+        // specifier). Node's ESM resolver does NOT honor NODE_PATH —
+        // it only walks upward from the script's directory looking
+        // for node_modules. Stage the script directly inside the
+        // cache dir so its node_modules/avr8js is on that walk-up
+        // path. Script content is a compile-time constant
+        // (`include_str!`), so concurrent writes are idempotent.
+        // See FastLED/fbuild#291.
+        let script_path = avr8js_cache.join("headless.mjs");
         std::fs::write(&script_path, AVR8JS_HEADLESS_MJS)?;
 
         let f_cpu_hz: u32 = self
