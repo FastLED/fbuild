@@ -107,6 +107,7 @@ impl BoardConfig {
             partitions: get("partitions"),
             ldscript: get("ldscript"),
             platform_str: get("platform_str"),
+            cmsis_dsp_lib: get("cmsis_dsp_lib"),
             debug_tools: None, // boards.txt format does not contain debug metadata
         })
     }
@@ -231,6 +232,10 @@ impl BoardConfig {
                 .cloned()
                 .or_else(|| defaults.get("ldscript").cloned()),
             platform_str: defaults.get("platform_str").cloned(),
+            cmsis_dsp_lib: overrides
+                .get("cmsis_dsp_lib")
+                .cloned()
+                .or_else(|| defaults.get("cmsis_dsp_lib").cloned()),
             debug_tools: get_board_debug_tools(board_id),
         })
     }

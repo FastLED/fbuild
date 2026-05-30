@@ -199,24 +199,39 @@ mod tests {
             .contains(&"-mcpu=cortex-m7".to_string()));
     }
 
-    /// Regression test for issue #257: teensy4x must link
-    /// `libarm_cortexM7lfsp_math.a` (CMSIS-DSP) so Teensy Audio FFT
-    /// examples (`Ports/PJRCSpectrumAnalyzer`) resolve symbols like
-    /// `arm_cfft_radix4_q15`. The library ships in the Teensy 4.x core
-    /// dir, which the linker already gets as `-L<core_dir>` via
-    /// `LinkerScripts::single`.
+    /// Regression test for issues #257 and #300: Teensy boards that ship a
+    /// Teensyduino-bundled CMSIS-DSP math library must auto-link it so Teensy
+    /// `Audio.h` FFT examples (`Ports/PJRCSpectrumAnalyzer`) resolve symbols
+    /// like `arm_cfft_radix4_q15`. After #300 the per-MCU library name is
+    /// data-driven via `BoardConfig.cmsis_dsp_lib` (populated from board JSON
+    /// `build.cmsis_dsp_lib`), mirroring PlatformIO+Teensyduino's SCons
+    /// builder. The library ships in the Teensy core dir, which the linker
+    /// already gets as `-L<core_dir>` via `LinkerScripts::single`.
     #[test]
-    fn teensy4x_links_cmsis_dsp_math() {
-        let config = get_teensy_config_for_mcu("imxrt1062").expect("teensy4x config");
-        assert!(
-            config
-                .linker_libs
-                .contains(&"-larm_cortexM7lfsp_math".to_string()),
-            "teensy4x linker_libs must include -larm_cortexM7lfsp_math \
-             so Teensy Audio FFT examples link; see issue #257. \
-             Actual libs: {:?}",
-            config.linker_libs
-        );
+    fn teensy_boards_carry_cmsis_dsp_lib() {
+        let expectations: &[(&str, &str)] = &[
+            ("teensy30", "arm_cortexM4l_math"),
+            ("teensy31", "arm_cortexM4l_math"),
+            ("teensy35", "arm_cortexM4lf_math"),
+            ("teensy36", "arm_cortexM4lf_math"),
+            ("teensy40", "arm_cortexM7lfsp_math"),
+            ("teensy41", "arm_cortexM7lfsp_math"),
+            ("teensymm", "arm_cortexM7lfsp_math"),
+            ("teensylc", "arm_cortexM0l_math"),
+        ];
+        for (board_id, expected) in expectations {
+            let board = fbuild_config::BoardConfig::from_board_id(board_id, &HashMap::new())
+                .unwrap_or_else(|_| panic!("BoardConfig should load for {}", board_id));
+            assert_eq!(
+                board.cmsis_dsp_lib.as_deref(),
+                Some(*expected),
+                "{} must declare build.cmsis_dsp_lib={} so Teensy Audio FFT \
+                 examples link (mirrors PlatformIO+Teensyduino's per-MCU \
+                 auto-link). See FastLED/fbuild#300.",
+                board_id,
+                expected,
+            );
+        }
     }
 
     #[test]
