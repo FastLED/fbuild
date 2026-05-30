@@ -237,10 +237,13 @@ impl BuildOrchestrator for AvrOrchestrator {
         .with_build_unflags(ctx.build_unflags.clone())
         .with_eh_frame_policy(eh_frame_policy);
 
-        // 7. Create linker
+        // 7. Create linker — pass gcc-ar so framework .o inputs can be
+        // archived into libframework.a with the LTO bytecode plugin index
+        // intact (preserves `-fuse-linker-plugin`). See FastLED/fbuild#304.
         let linker = AvrLinker::new(
             toolchain.get_gcc_path(),
             toolchain.get_ar_path(),
+            toolchain.get_gcc_ar_path(),
             toolchain.get_objcopy_path(),
             toolchain.get_size_path(),
             &ctx.board.mcu,
