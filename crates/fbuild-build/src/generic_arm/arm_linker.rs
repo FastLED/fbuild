@@ -86,6 +86,10 @@ impl Linker for ArmLinker {
             elf_path.to_string_lossy().to_string(),
         ]);
 
+        // Always emit a linker map next to firmware.elf for debugging (#305).
+        let map_path = output_dir.join("firmware.map");
+        args.push(format!("-Wl,-Map={}", map_path.to_string_lossy()));
+
         // Sketch objects first
         for obj in objects {
             args.push(obj.to_string_lossy().to_string());
@@ -101,6 +105,7 @@ impl Linker for ArmLinker {
         args.extend(extra.libs.iter().cloned());
 
         if self.verbose {
+            eprintln!("link: {}", args.join(" "));
             tracing::info!("link: {}", args.join(" "));
         }
 
