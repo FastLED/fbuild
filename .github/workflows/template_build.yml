@@ -59,7 +59,7 @@ jobs:
         uses: actions/cache/restore@v5
         with:
           path: ~/.fbuild/prod/cache
-          key: fbuild-toolchain-${{ runner.os }}-${{ inputs.env-name }}-${{ github.sha }}
+          key: fbuild-toolchain-${{ runner.os }}-${{ inputs.env-name }}-${{ hashFiles(format('{0}/platformio.ini', inputs.test-dir)) }}
           restore-keys: |
             fbuild-toolchain-${{ runner.os }}-${{ inputs.env-name }}-
             fbuild-toolchain-${{ runner.os }}-
@@ -109,7 +109,7 @@ jobs:
         uses: actions/cache/save@v5
         with:
           path: ~/.fbuild/prod/cache
-          key: fbuild-toolchain-${{ runner.os }}-${{ inputs.env-name }}-${{ github.sha }}
+          key: fbuild-toolchain-${{ runner.os }}-${{ inputs.env-name }}-${{ hashFiles(format('{0}/platformio.ini', inputs.test-dir)) }}
 
       - name: Save platform build artifacts
         if: always()
