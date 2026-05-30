@@ -327,3 +327,27 @@ jobs:
           packages-dir: dist
           attestations: true
           skip-existing: true
+
+      - name: Verify all wheels visible on PyPI
+        shell: bash
+        env:
+          PYPI_VERSION: ${{ needs.prepare.outputs.project_version }}
+        run: |
+          set -euo pipefail
+          expected=4
+          deadline=$(( $(date +%s) + 300 ))
+          while :; do
+            count="$(curl -fsSL "https://pypi.org/pypi/fbuild/${PYPI_VERSION}/json" \
+              | python -c 'import json,sys; print(len(json.load(sys.stdin).get("urls",[])))' 2>/dev/null \
+              || echo 0)"
+            echo "PyPI reports ${count}/${expected} files for fbuild ${PYPI_VERSION}"
+            if [ "$count" -ge "$expected" ]; then
+              echo "All wheels visible on PyPI"
+              exit 0
+            fi
+            if [ "$(date +%s)" -ge "$deadline" ]; then
+              echo "Timed out waiting for ${expected} wheels on PyPI (saw ${count})" >&2
+              exit 1
+            fi
+            sleep 15
+          done
