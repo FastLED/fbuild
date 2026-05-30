@@ -3,6 +3,7 @@
     "arduino": {
       "ldscript": "imxrt1062.ld"
     },
+    "cmsis_dsp_lib": "arm_cortexM7lfsp_math",
     "core": "teensy4",
     "extra_flags": "-D__IMXRT1062__ -DARDUINO_TEENSY40",
     "f_cpu": "600000000",

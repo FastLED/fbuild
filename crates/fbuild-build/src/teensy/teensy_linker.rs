@@ -22,6 +22,11 @@ pub struct TeensyLinker {
     profile: BuildProfile,
     max_flash: Option<u64>,
     max_ram: Option<u64>,
+    /// Bare CMSIS-DSP math library name (e.g. `arm_cortexM4lf_math`) to link
+    /// via `-l<name>`. Mirrors PlatformIO+Teensyduino's per-MCU auto-link of
+    /// the appropriate `libarm_cortex*_math.a` so Teensy `Audio.h` FFT classes
+    /// resolve at link time. See FastLED/fbuild#300.
+    cmsis_dsp_lib: Option<String>,
     verbose: bool,
 }
 
@@ -37,6 +42,7 @@ impl TeensyLinker {
         profile: BuildProfile,
         max_flash: Option<u64>,
         max_ram: Option<u64>,
+        cmsis_dsp_lib: Option<String>,
         verbose: bool,
     ) -> Self {
         Self {
@@ -49,26 +55,26 @@ impl TeensyLinker {
             profile,
             max_flash,
             max_ram,
+            cmsis_dsp_lib,
             verbose,
         }
     }
-}
 
-impl Linker for TeensyLinker {
-    fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
-        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "arm-none-eabi-ar")
+    /// Bare CMSIS-DSP library name configured for this linker, if any.
+    pub fn cmsis_dsp_lib(&self) -> Option<&str> {
+        self.cmsis_dsp_lib.as_deref()
     }
 
-    fn link(
+    /// Build the full `arm-none-eabi-gcc` link command-line for the given
+    /// inputs. Exposed for unit-testing the auto-appended CMSIS-DSP lib
+    /// (FastLED/fbuild#300) without spawning the real linker.
+    fn build_link_args(
         &self,
         objects: &[PathBuf],
         archives: &[PathBuf],
-        output_dir: &Path,
+        elf_path: &Path,
         extra: &LinkExtraArgs,
-    ) -> Result<PathBuf> {
-        std::fs::create_dir_all(output_dir)?;
-        let elf_path = output_dir.join("firmware.elf");
-
+    ) -> Vec<String> {
         let mut args: Vec<String> = vec![self.gcc_path.to_string_lossy().to_string()];
 
         // Linker flags from config
@@ -99,7 +105,37 @@ impl Linker for TeensyLinker {
 
         // Linker libraries from config
         args.extend(self.mcu_config.linker_libs.iter().cloned());
+        // Per-board CMSIS-DSP math library auto-link (FastLED/fbuild#300).
+        // Mirrors PlatformIO+Teensyduino's behaviour: when the board defines
+        // `build.cmsis_dsp_lib`, append `-l<name>` so the linker resolves
+        // CMSIS-DSP symbols (`arm_cfft_*`, etc.) referenced by `Audio.h` FFT
+        // classes from `libarm_cortex*_math.a` that ships in the Teensy core
+        // dir (already on the search path via `-L<core_dir>`).
+        if let Some(ref lib) = self.cmsis_dsp_lib {
+            args.push(format!("-l{}", lib));
+        }
         args.extend(extra.libs.iter().cloned());
+
+        args
+    }
+}
+
+impl Linker for TeensyLinker {
+    fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
+        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "arm-none-eabi-ar")
+    }
+
+    fn link(
+        &self,
+        objects: &[PathBuf],
+        archives: &[PathBuf],
+        output_dir: &Path,
+        extra: &LinkExtraArgs,
+    ) -> Result<PathBuf> {
+        std::fs::create_dir_all(output_dir)?;
+        let elf_path = output_dir.join("firmware.elf");
+
+        let args = self.build_link_args(objects, archives, &elf_path, extra);
 
         if self.verbose {
             eprintln!("link: {}", args.join(" "));
@@ -198,10 +234,12 @@ mod tests {
             BuildProfile::Release,
             Some(8126464),
             Some(1048576),
+            None,
             false,
         );
         assert_eq!(linker.max_flash, Some(8126464));
         assert_eq!(linker.max_ram, Some(1048576));
+        assert!(linker.cmsis_dsp_lib().is_none());
     }
 
     #[test]
@@ -216,6 +254,7 @@ mod tests {
             BuildProfile::Release,
             Some(8126464),
             Some(1048576),
+            None,
             false,
         );
         assert!(linker
@@ -223,5 +262,97 @@ mod tests {
             .scripts
             .iter()
             .any(|s| s.contains("imxrt1062")));
+    }
+
+    /// Regression test for FastLED/fbuild#300: when a CMSIS-DSP library is
+    /// configured, the linker stores it so the `-l<lib>` flag is appended at
+    /// link time (mirrors PlatformIO+Teensyduino's auto-link behaviour).
+    #[test]
+    fn test_teensy_linker_stores_cmsis_dsp_lib() {
+        let linker = TeensyLinker::new(
+            PathBuf::from("/bin/arm-none-eabi-gcc"),
+            PathBuf::from("/bin/arm-none-eabi-ar"),
+            PathBuf::from("/bin/arm-none-eabi-objcopy"),
+            PathBuf::from("/bin/arm-none-eabi-size"),
+            LinkerScripts::single(PathBuf::from("/teensy3"), "mk66fx1m0.ld"),
+            crate::teensy::mcu_config::get_teensy_config_for_mcu("mk66fx1m0").unwrap(),
+            BuildProfile::Release,
+            Some(1048576),
+            Some(262144),
+            Some("arm_cortexM4lf_math".to_string()),
+            false,
+        );
+        assert_eq!(linker.cmsis_dsp_lib(), Some("arm_cortexM4lf_math"));
+    }
+
+    /// Regression test for FastLED/fbuild#300: the constructed link command
+    /// includes `-larm_cortexM4lf_math` for teensy36 (MK66FX1M0). Mirrors
+    /// PlatformIO+Teensyduino's per-MCU auto-link so Teensy `Audio.h` FFT
+    /// classes (e.g. `arm_cfft_radix4_q15`) resolve at link time.
+    #[test]
+    fn test_teensy36_link_command_includes_cmsis_dsp_lib() {
+        let linker = TeensyLinker::new(
+            PathBuf::from("/bin/arm-none-eabi-gcc"),
+            PathBuf::from("/bin/arm-none-eabi-ar"),
+            PathBuf::from("/bin/arm-none-eabi-objcopy"),
+            PathBuf::from("/bin/arm-none-eabi-size"),
+            LinkerScripts::single(PathBuf::from("/teensy3"), "mk66fx1m0.ld"),
+            crate::teensy::mcu_config::get_teensy_config_for_mcu("mk66fx1m0").unwrap(),
+            BuildProfile::Release,
+            Some(1048576),
+            Some(262144),
+            Some("arm_cortexM4lf_math".to_string()),
+            false,
+        );
+        let args = linker.build_link_args(
+            &[PathBuf::from("/build/sketch.o")],
+            &[PathBuf::from("/build/core.o")],
+            &PathBuf::from("/build/firmware.elf"),
+            &LinkExtraArgs::default(),
+        );
+        assert!(
+            args.iter().any(|a| a == "-larm_cortexM4lf_math"),
+            "teensy36 link command must include -larm_cortexM4lf_math \
+             so Audio.h FFT examples link (see fbuild#300). Args: {:?}",
+            args
+        );
+        // The `-L<core_dir>` flag from LinkerScripts is what lets the linker
+        // resolve the `-l` to `libarm_cortexM4lf_math.a` inside teensy3/.
+        assert!(
+            args.iter().any(|a| a == "-L/teensy3"),
+            "expected -L/teensy3 for library search, got {:?}",
+            args
+        );
+    }
+
+    /// Boards that do not declare a CMSIS-DSP lib (e.g. user override clears
+    /// it) must not have a spurious `-l` argument appended.
+    #[test]
+    fn test_teensy_link_command_omits_cmsis_dsp_lib_when_none() {
+        let linker = TeensyLinker::new(
+            PathBuf::from("/bin/arm-none-eabi-gcc"),
+            PathBuf::from("/bin/arm-none-eabi-ar"),
+            PathBuf::from("/bin/arm-none-eabi-objcopy"),
+            PathBuf::from("/bin/arm-none-eabi-size"),
+            LinkerScripts::single(PathBuf::from("/teensy4"), "imxrt1062_t41.ld"),
+            crate::teensy::mcu_config::get_teensy_config_for_mcu("imxrt1062").unwrap(),
+            BuildProfile::Release,
+            Some(8126464),
+            Some(524288),
+            None,
+            false,
+        );
+        let args = linker.build_link_args(
+            &[],
+            &[],
+            &PathBuf::from("/build/firmware.elf"),
+            &LinkExtraArgs::default(),
+        );
+        assert!(
+            !args.iter().any(|a| a.starts_with("-larm_cortex")),
+            "no CMSIS-DSP -l flag should be appended when cmsis_dsp_lib is None. \
+             Args: {:?}",
+            args
+        );
     }
 }

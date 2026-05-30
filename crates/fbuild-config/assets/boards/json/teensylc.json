@@ -3,6 +3,7 @@
     "arduino": {
       "ldscript": "mkl26z64.ld"
     },
+    "cmsis_dsp_lib": "arm_cortexM0l_math",
     "core": "teensy3",
     "extra_flags": "-D__MKL26Z64__ -DARDUINO_TEENSYLC",
     "f_cpu": "48000000L",

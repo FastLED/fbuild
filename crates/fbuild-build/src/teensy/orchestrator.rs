@@ -261,6 +261,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
             params.profile,
             ctx.board.max_flash,
             ctx.board.max_ram,
+            ctx.board.cmsis_dsp_lib.clone(),
             params.verbose,
         );
 

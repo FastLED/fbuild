@@ -83,6 +83,19 @@ pub struct BoardConfig {
     pub ldscript: Option<String>,
     /// Platform string from board JSON (e.g. "atmelmegaavr", "atmelavr")
     pub platform_str: Option<String>,
+    /// Bare CMSIS-DSP math library name to auto-link, without the leading `lib`
+    /// and `.a` (e.g. `arm_cortexM4lf_math`, `arm_cortexM7lfsp_math`).
+    ///
+    /// Populated from board JSON `build.cmsis_dsp_lib`. Mirrors the behaviour
+    /// of PlatformIO+Teensyduino's SCons builder, which auto-appends the right
+    /// CMSIS-DSP archive to the link command based on MCU so that Teensy
+    /// `Audio.h` FFT classes (and anything else referencing `arm_cfft_*`)
+    /// resolve at link time. The library ships inside the Teensyduino
+    /// toolchain (`framework-arduinoteensy.../cores/teensy*/`), which the
+    /// Teensy linker already adds to the library search path via `-L`.
+    /// See FastLED/fbuild#300.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub cmsis_dsp_lib: Option<String>,
     /// Debug tools from board JSON `debug.tools` section.
     /// Maps tool name (e.g. "simavr", "qemu", "renode") to its metadata.
     #[serde(default, skip_serializing_if = "Option::is_none")]

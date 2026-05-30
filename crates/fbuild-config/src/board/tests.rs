@@ -289,6 +289,79 @@ fn test_teensy41_core_teensy4() {
     assert_eq!(config.upload_protocol, Some("teensy-gui".to_string()));
 }
 
+/// Regression for FastLED/fbuild#300: every ARM-based Teensy board must
+/// declare its Teensyduino-bundled CMSIS-DSP math library via
+/// `build.cmsis_dsp_lib` so the linker can auto-link it (mirroring
+/// PlatformIO+Teensyduino's SCons behaviour). Without this, FastLED's
+/// `Ports/PJRCSpectrumAnalyzer` example and any sketch using `Audio.h`
+/// FFT classes fails with `undefined reference to arm_cfft_radix4_q15`.
+#[test]
+fn test_teensy_boards_declare_cmsis_dsp_lib() {
+    let cases: &[(&str, &str)] = &[
+        ("teensy30", "arm_cortexM4l_math"),
+        ("teensy31", "arm_cortexM4l_math"),
+        ("teensy35", "arm_cortexM4lf_math"),
+        ("teensy36", "arm_cortexM4lf_math"),
+        ("teensy40", "arm_cortexM7lfsp_math"),
+        ("teensy41", "arm_cortexM7lfsp_math"),
+        ("teensymm", "arm_cortexM7lfsp_math"),
+        ("teensylc", "arm_cortexM0l_math"),
+    ];
+    for (board_id, expected) in cases {
+        let config = BoardConfig::from_board_id(board_id, &HashMap::new()).unwrap();
+        assert_eq!(
+            config.cmsis_dsp_lib.as_deref(),
+            Some(*expected),
+            "{} should declare cmsis_dsp_lib={} (see fbuild#300)",
+            board_id,
+            expected
+        );
+    }
+}
+
+/// AVR-based Teensy 2.0 / Teensy++ 2.0 ship with the avr-libc math lib but
+/// no CMSIS-DSP — they're not Cortex-M parts. Their JSONs omit the field.
+#[test]
+fn test_teensy_avr_boards_no_cmsis_dsp_lib() {
+    for board_id in ["teensy2", "teensy2pp"] {
+        let config = BoardConfig::from_board_id(board_id, &HashMap::new()).unwrap();
+        assert_eq!(
+            config.cmsis_dsp_lib, None,
+            "{} is AVR-based and must not declare a CMSIS-DSP lib",
+            board_id
+        );
+    }
+}
+
+/// Non-Teensy boards must not have a CMSIS-DSP lib populated.
+#[test]
+fn test_non_teensy_boards_have_no_cmsis_dsp_lib() {
+    for board_id in ["uno", "mega", "esp32dev", "rpipico"] {
+        let config = BoardConfig::from_board_id(board_id, &HashMap::new()).unwrap();
+        assert_eq!(
+            config.cmsis_dsp_lib, None,
+            "{} should not declare a cmsis_dsp_lib",
+            board_id
+        );
+    }
+}
+
+/// Overrides (e.g. from `[env]` `board_build.cmsis_dsp_lib = ...`) should
+/// win over the bundled JSON value.
+#[test]
+fn test_cmsis_dsp_lib_override_wins() {
+    let mut overrides = HashMap::new();
+    overrides.insert(
+        "cmsis_dsp_lib".to_string(),
+        "arm_cortexM4lf_math_custom".to_string(),
+    );
+    let config = BoardConfig::from_board_id("teensy36", &overrides).unwrap();
+    assert_eq!(
+        config.cmsis_dsp_lib,
+        Some("arm_cortexM4lf_math_custom".to_string())
+    );
+}
+
 #[test]
 fn test_esp32dev_enriched_fields() {
     let config = BoardConfig::from_board_id("esp32dev", &HashMap::new()).unwrap();
