@@ -78,8 +78,16 @@ impl Nrf52Cores {
     }
 
     /// Get the variant directory for a specific variant name.
+    ///
+    /// fbuild ships Adafruit's `framework-arduinoadafruitnrf52`. PIO's board
+    /// JSON for some Nordic dev kits names the variant the way *another*
+    /// nRF52 Arduino framework (sandeepmistry's `arduino-nRF5`) names its
+    /// variant directory — but the Adafruit framework uses different names
+    /// for the same hardware. Apply a small alias map before falling back to
+    /// the literal name, so PIO-matching board JSONs still resolve.
+    /// See FastLED/fbuild#321.
     pub fn get_variant_dir(&self, variant_name: &str) -> PathBuf {
-        self.get_variants_dir().join(variant_name)
+        resolve_nrf52_variant_dir(&self.get_variants_dir(), variant_name)
     }
 
     /// Get the linker script for a given script name.
@@ -156,6 +164,43 @@ impl Framework for Nrf52Cores {
     fn get_libraries_dir(&self) -> PathBuf {
         self.resolved_dir().join("libraries")
     }
+}
+
+/// Map a PIO board-JSON variant name to the equivalent Adafruit variant
+/// directory name when they differ. Returns the literal input when no alias
+/// applies.
+///
+/// PCA10056 is Nordic's product code for the nRF52840-DK; Adafruit's
+/// framework ships `variants/pca10056/` for that board. PIO's nordicnrf52
+/// platform follows sandeepmistry's `arduino-nRF5` naming (`nRF52DK`) — when
+/// the board JSON tracks PIO upstream, we need this alias to find the
+/// matching directory in Adafruit's tree.
+///
+/// Keep this map small and only add entries for board JSONs that we ship.
+fn nrf52_variant_alias(variant_name: &str) -> Option<&'static str> {
+    match variant_name {
+        // nRF52840-DK: PIO/sandeepmistry name -> Adafruit/PCA product-code name.
+        "nRF52DK" => Some("pca10056"),
+        _ => None,
+    }
+}
+
+/// Resolve a variant directory under `variants_dir`, honoring the literal
+/// name first, then any PIO->Adafruit alias. Returns the literal path when
+/// neither exists so the eventual file-open error surfaces with a meaningful
+/// directory name.
+fn resolve_nrf52_variant_dir(variants_dir: &Path, variant_name: &str) -> PathBuf {
+    let primary = variants_dir.join(variant_name);
+    if primary.is_dir() {
+        return primary;
+    }
+    if let Some(aliased) = nrf52_variant_alias(variant_name) {
+        let candidate = variants_dir.join(aliased);
+        if candidate.is_dir() {
+            return candidate;
+        }
+    }
+    primary
 }
 
 /// Find the actual core root inside an extracted archive.
@@ -262,5 +307,57 @@ mod tests {
         let tmp = tempfile::TempDir::new().unwrap();
         let result = Nrf52Cores::validate(tmp.path());
         assert!(result.is_err());
+    }
+
+    /// FastLED/fbuild#321: nrf52840_dk board JSON says `variant = "nRF52DK"`
+    /// (the sandeepmistry/PIO name), but fbuild installs Adafruit's framework
+    /// which uses `variants/pca10056/` for the same hardware. The resolver
+    /// must accept the PIO name and resolve it to the Adafruit-equivalent
+    /// directory.
+    #[test]
+    fn nrf52dk_variant_resolves_to_pca10056_when_pio_name_missing() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let variants_dir = tmp.path().join("variants");
+        std::fs::create_dir_all(variants_dir.join("pca10056")).unwrap();
+
+        let resolved = resolve_nrf52_variant_dir(&variants_dir, "nRF52DK");
+        assert_eq!(resolved, variants_dir.join("pca10056"));
+    }
+
+    /// Sanity: when the literal variant dir *does* exist (e.g. Adafruit's own
+    /// `feather_nrf52840_sense`), honor it directly without alias lookup.
+    #[test]
+    fn variant_uses_literal_name_when_present() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let variants_dir = tmp.path().join("variants");
+        std::fs::create_dir_all(variants_dir.join("feather_nrf52840_sense")).unwrap();
+
+        let resolved = resolve_nrf52_variant_dir(&variants_dir, "feather_nrf52840_sense");
+        assert_eq!(resolved, variants_dir.join("feather_nrf52840_sense"));
+    }
+
+    /// When neither the literal name nor any alias exists, return the literal
+    /// so the eventual file-open error has a meaningful path.
+    #[test]
+    fn variant_returns_literal_when_no_match() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let variants_dir = tmp.path().join("variants");
+        std::fs::create_dir_all(&variants_dir).unwrap();
+
+        let resolved = resolve_nrf52_variant_dir(&variants_dir, "totally_unknown_board");
+        assert_eq!(resolved, variants_dir.join("totally_unknown_board"));
+    }
+
+    /// An aliased name (nRF52DK) that exists literally on disk should still
+    /// take the literal path — the alias is only a fallback.
+    #[test]
+    fn aliased_name_prefers_literal_when_present() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let variants_dir = tmp.path().join("variants");
+        std::fs::create_dir_all(variants_dir.join("nRF52DK")).unwrap();
+        std::fs::create_dir_all(variants_dir.join("pca10056")).unwrap();
+
+        let resolved = resolve_nrf52_variant_dir(&variants_dir, "nRF52DK");
+        assert_eq!(resolved, variants_dir.join("nRF52DK"));
     }
 }
