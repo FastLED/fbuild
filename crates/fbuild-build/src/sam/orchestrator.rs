@@ -365,6 +365,20 @@ fn install_samd_core(
     ];
     // Also include the variant dir for variant.h
     includes.push(variant_dir.clone());
+    // And the resolved core dir for Arduino.h / WVariant.h.
+    //
+    // `BoardConfig::get_include_paths` already emits
+    // `framework_root/cores/<board.core>`, which for Adafruit SAMD boards is
+    // a vendor-brand label (e.g. "adafruit") that the framework doesn't
+    // actually ship as a directory — only `cores/arduino/` exists. That
+    // literal path becomes a phantom `-I` and `#include "Arduino.h"` /
+    // `#include "WVariant.h"` lookups miss. `core_dir` here was produced by
+    // `SamdCores::get_core_dir` which falls back to `cores/arduino/` when the
+    // literal subdir is absent (FastLED/fbuild#319), so injecting it into the
+    // compile include path is what actually resolves the headers. Putting
+    // it BEFORE the phantom is a no-op but makes the active dir the first
+    // hit during search, matching what PlatformIO's atmelsam builder does.
+    includes.insert(0, core_dir.clone());
 
     Ok((
         framework_dir,
