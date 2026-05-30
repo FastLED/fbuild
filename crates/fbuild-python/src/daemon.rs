@@ -1,6 +1,70 @@
 //! Synchronous `Daemon` and asynchronous `AsyncDaemon` PyO3 bindings.
 
+use std::path::{Path, PathBuf};
+
 use pyo3::prelude::*;
+
+/// Filename of the daemon binary on this platform.
+///
+/// Windows ships `fbuild-daemon.exe`; Unix-like systems ship `fbuild-daemon`.
+/// Kept as a single constant so the venv-adjacent lookup and the PATH
+/// fallback agree on the name.
+#[cfg(windows)]
+const DAEMON_BIN_NAME: &str = "fbuild-daemon.exe";
+#[cfg(not(windows))]
+const DAEMON_BIN_NAME: &str = "fbuild-daemon";
+
+/// Look for `fbuild-daemon[.exe]` next to `sys.executable` (FastLED/fbuild#275).
+///
+/// When `fbuild-python` is imported from a venv whose `Scripts/` (Windows) or
+/// `bin/` (Unix) directory is NOT at the front of `PATH`, the bare
+/// `Command::new("fbuild-daemon")` spawn picks up a stale user-level binary
+/// (e.g. `~/.local/bin/fbuild-daemon.exe`) instead of the one shipped with the
+/// venv. That mismatch can produce wrong builds — the stale daemon may miss
+/// features the in-process `_native` extension depends on (e.g. `.S` source
+/// support exposed in FastLED's `library.json` srcFilter).
+///
+/// Strategy: query `sys.executable` via the GIL, look for a sibling daemon
+/// binary, return its absolute path if present. The caller falls back to the
+/// PATH-relative `DAEMON_BIN_NAME` when this returns `None`, preserving the
+/// previous behavior in non-venv installs.
+fn venv_adjacent_daemon() -> Option<PathBuf> {
+    Python::with_gil(|py| {
+        let sys = py.import_bound("sys").ok()?;
+        let exe_obj = sys.getattr("executable").ok()?;
+        let exe_str: String = exe_obj.extract().ok()?;
+        if exe_str.is_empty() {
+            return None;
+        }
+        let exe_path = PathBuf::from(exe_str);
+        let dir = exe_path.parent()?;
+        daemon_in_dir(dir)
+    })
+}
+
+/// Return the absolute path to `fbuild-daemon[.exe]` in `dir` if the file
+/// exists. Split out from `venv_adjacent_daemon` so the resolution rule can
+/// be exercised in unit tests without spinning up a Python interpreter.
+fn daemon_in_dir(dir: &Path) -> Option<PathBuf> {
+    let candidate = dir.join(DAEMON_BIN_NAME);
+    if candidate.is_file() {
+        Some(candidate)
+    } else {
+        None
+    }
+}
+
+/// Build the spawn target for the daemon: prefer the venv-adjacent absolute
+/// path (`Some`) and fall back to the PATH-relative bare name (`None`).
+///
+/// Returning an `Option<PathBuf>` rather than always materializing a
+/// `PathBuf` keeps the PATH search semantics intact when no venv-adjacent
+/// binary is found — passing a bare `"fbuild-daemon"` to `Command::new`
+/// triggers the OS-level executable search, which is the legacy behavior
+/// we must preserve for `pip install --user` / system installs.
+fn daemon_spawn_target() -> Option<PathBuf> {
+    venv_adjacent_daemon()
+}
 
 /// Python-visible Daemon class (high-level API).
 #[pyclass]
@@ -24,7 +88,14 @@ impl Daemon {
         // group, so `spawn()` is already uncontained; see the matching
         // comment in fbuild-cli/src/daemon_client.rs.
         // allow-direct-spawn: daemon must outlive the Python interpreter.
-        let mut cmd = std::process::Command::new("fbuild-daemon");
+        //
+        // Prefer the daemon binary sitting next to `sys.executable`
+        // (FastLED/fbuild#275) so a venv install never gets shadowed by a
+        // stale user-level daemon on PATH.
+        let mut cmd = match daemon_spawn_target() {
+            Some(path) => std::process::Command::new(path),
+            None => std::process::Command::new(DAEMON_BIN_NAME),
+        };
         if fbuild_paths::is_dev_mode() {
             cmd.arg("--dev");
         }
@@ -146,6 +217,10 @@ impl AsyncDaemon {
     fn ensure_running(py: Python<'_>) -> PyResult<Bound<'_, PyAny>> {
         let url = format!("{}/health", fbuild_paths::get_daemon_url());
         let dev_mode = fbuild_paths::is_dev_mode();
+        // Resolve `sys.executable` BEFORE entering the future: the GIL
+        // must not be held across `.await`, and the venv-adjacent lookup
+        // is cheap (one attribute read + one stat).
+        let spawn_target = daemon_spawn_target();
 
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
             let client = reqwest::Client::new();
@@ -164,8 +239,14 @@ impl AsyncDaemon {
 
             // INTENTIONALLY DETACHED (FastLED/fbuild#32): see the
             // matching comment in `Daemon::ensure_running` above.
+            // Venv-adjacent preference (FastLED/fbuild#275): resolved
+            // synchronously above the future so we never touch the GIL
+            // from inside this async block.
             // allow-direct-spawn: daemon must outlive the Python interpreter.
-            let mut cmd = std::process::Command::new("fbuild-daemon");
+            let mut cmd = match spawn_target {
+                Some(path) => std::process::Command::new(path),
+                None => std::process::Command::new(DAEMON_BIN_NAME),
+            };
             if dev_mode {
                 cmd.arg("--dev");
             }
@@ -210,5 +291,72 @@ impl AsyncDaemon {
                 .unwrap_or(false);
             Ok(ok)
         })
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    //! Tests for the venv-adjacent daemon resolution (FastLED/fbuild#275).
+    //!
+    //! We exercise `daemon_in_dir` rather than `venv_adjacent_daemon`
+    //! because the latter reads `sys.executable` at runtime — the
+    //! resolution rule (filename + `is_file()` check) is what we own and
+    //! what the bug hinged on. Mocking the Python interpreter just to
+    //! re-test stdlib attribute access would dilute the signal.
+    use super::{daemon_in_dir, DAEMON_BIN_NAME};
+    use std::fs;
+
+    #[test]
+    fn daemon_bin_name_matches_platform() {
+        // The lookup file name must agree with what gets installed by
+        // maturin / pip — on Windows that is `fbuild-daemon.exe`, on
+        // Unix it is unsuffixed.
+        #[cfg(windows)]
+        assert_eq!(DAEMON_BIN_NAME, "fbuild-daemon.exe");
+        #[cfg(not(windows))]
+        assert_eq!(DAEMON_BIN_NAME, "fbuild-daemon");
+    }
+
+    #[test]
+    fn daemon_in_dir_returns_path_when_file_present() {
+        let tmp = tempfile::tempdir().expect("create tempdir");
+        let target = tmp.path().join(DAEMON_BIN_NAME);
+        fs::write(&target, b"dummy").expect("write dummy daemon");
+
+        let resolved = daemon_in_dir(tmp.path()).expect("must find venv daemon");
+        assert_eq!(resolved, target);
+        assert!(
+            resolved.is_absolute(),
+            "resolved daemon path must be absolute so Command::new bypasses PATH"
+        );
+    }
+
+    #[test]
+    fn daemon_in_dir_returns_none_when_file_absent() {
+        let tmp = tempfile::tempdir().expect("create tempdir");
+        // Deliberately do not create any file — this mimics a venv whose
+        // scripts dir exists but does not ship the daemon binary
+        // (e.g. partial install, dev checkout without maturin build).
+        assert!(daemon_in_dir(tmp.path()).is_none());
+    }
+
+    #[test]
+    fn daemon_in_dir_ignores_directory_with_matching_name() {
+        // `is_file()` must reject the case where a directory shares the
+        // daemon's name — otherwise we'd hand Command::new a non-
+        // executable path and lose the legitimate PATH fallback.
+        let tmp = tempfile::tempdir().expect("create tempdir");
+        fs::create_dir(tmp.path().join(DAEMON_BIN_NAME)).expect("mkdir");
+        assert!(daemon_in_dir(tmp.path()).is_none());
+    }
+
+    #[test]
+    fn daemon_in_dir_returns_none_for_nonexistent_dir() {
+        // Defensive: if `sys.executable.parent()` ever points somewhere
+        // that no longer exists (e.g. a deleted venv), the lookup must
+        // gracefully fall back to PATH rather than surface an error.
+        let tmp = tempfile::tempdir().expect("create tempdir");
+        let missing = tmp.path().join("does-not-exist");
+        assert!(daemon_in_dir(&missing).is_none());
     }
 }
