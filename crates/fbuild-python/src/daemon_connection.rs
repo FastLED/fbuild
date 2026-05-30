@@ -2,7 +2,10 @@
 
 use pyo3::prelude::*;
 
-use crate::outcome::{build_url, deploy_url, monitor_url, outcome_to_pydict, send_op, OpRequest};
+use crate::outcome::{
+    build_url, deploy_url, monitor_url, outcome_to_pydict, platformio_src_dir_from_env, send_op,
+    OpRequest,
+};
 
 /// Python-visible DaemonConnection (context manager).
 #[pyclass]
@@ -121,7 +124,7 @@ impl DaemonConnection {
 }
 
 impl DaemonConnection {
-    fn build_request(&self, clean: bool, verbose: bool) -> OpRequest {
+    pub(crate) fn build_request(&self, clean: bool, verbose: bool) -> OpRequest {
         OpRequest {
             project_dir: self.project_dir.clone(),
             environment: Some(self.environment.clone()),
@@ -131,10 +134,11 @@ impl DaemonConnection {
             monitor_after: false,
             skip_build: false,
             baud_rate: None,
+            src_dir: platformio_src_dir_from_env(),
         }
     }
 
-    fn deploy_request(
+    pub(crate) fn deploy_request(
         &self,
         port: Option<String>,
         clean: bool,
@@ -150,6 +154,7 @@ impl DaemonConnection {
             monitor_after,
             skip_build,
             baud_rate: None,
+            src_dir: platformio_src_dir_from_env(),
         }
     }
 
@@ -163,6 +168,7 @@ impl DaemonConnection {
             monitor_after: false,
             skip_build: false,
             baud_rate,
+            src_dir: None,
         }
     }
 }
