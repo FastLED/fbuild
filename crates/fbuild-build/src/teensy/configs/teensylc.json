@@ -51,8 +51,9 @@
 
   "profiles": {
     "release": {
-      "compile_flags": ["-Os", "-flto=auto", "-fno-fat-lto-objects"],
-      "link_flags": ["-Os", "-flto=auto", "-fuse-linker-plugin"]
+      "_comment_no_lto": "Teensy LC is Cortex-M0+ (Thumb-1 only). Thumb-1 PC-relative loads have an immediate-offset limit (~1 KB / 0x400) that LTO output routinely overflows when whole-program optimization rearranges literal pools. Symptom: `Error: invalid offset, value too big (0x000004CC)` from the assembler on `.lto-tmp/*.s`, then `lto-wrapper: fatal error: make returned 2 exit status`. Drop LTO here; the cost is a slightly larger image but actual link success. Other Cortex-M (>=M3, Thumb-2) profiles keep LTO.",
+      "compile_flags": ["-Os"],
+      "link_flags": ["-Os"]
     },
     "quick": {
       "compile_flags": ["-O1"],
