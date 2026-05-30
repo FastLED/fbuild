@@ -1,15 +1,25 @@
 {
+  "build": {
+    "arduino": {
+      "ldscript": "nrf51_xxaa.ld"
+    },
+    "core": "nRF5",
+    "extra_flags": "-DARDUINO_REDBEARLAB_NRF51822",
+    "f_cpu": "16000000L",
+    "mcu": "nrf51822",
+    "variant": "RedBearLab_nRF51822"
+  },
   "connectivity": [
     "bluetooth"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
-      "jlink": {},
-      "stlink": {},
       "cmsis-dap": {
         "onboard": true
-      }
+      },
+      "jlink": {},
+      "stlink": {}
     }
   },
   "fcpu": 16000000,
@@ -22,6 +32,11 @@
   "platform": "nordicnrf51",
   "ram": 16384,
   "rom": 262144,
+  "upload": {
+    "maximum_ram_size": 16384,
+    "maximum_size": 262144,
+    "protocol": "cmsis-dap"
+  },
   "url": "https://www.seeedstudio.com/RedBearLab-nRF51822-p-2126.html",
   "vendor": "RedBearLab"
 }

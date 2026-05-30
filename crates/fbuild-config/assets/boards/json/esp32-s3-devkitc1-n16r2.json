@@ -49,7 +49,7 @@
   "ram": 327680,
   "rom": 16777216,
   "upload": {
-    "flash_size": "8MB",
+    "flash_size": "16MB",
     "maximum_ram_size": 327680,
     "maximum_size": 16777216,
     "require_upload_port": true,

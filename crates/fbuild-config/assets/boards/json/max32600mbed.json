@@ -1,4 +1,8 @@
 {
+  "build": {
+    "f_cpu": "24000000L",
+    "mcu": "max32600"
+  },
   "debug": {
     "tools": {
       "cmsis-dap": {
@@ -16,6 +20,11 @@
   "platform": "maxim32",
   "ram": 32768,
   "rom": 262144,
+  "upload": {
+    "maximum_ram_size": 32768,
+    "maximum_size": 262144,
+    "protocol": "mbed"
+  },
   "url": "https://developer.mbed.org/platforms/MAX32600mbed/",
   "vendor": "Maxim"
 }

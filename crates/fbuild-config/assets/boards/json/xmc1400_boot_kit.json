@@ -1,4 +1,10 @@
 {
+  "build": {
+    "extra_flags": "-DXMC1400_Boot_Kit -DARDUINO=1400 -DXMC1404_Q064x0200",
+    "f_cpu": "48000000L",
+    "mcu": "XMC1400",
+    "variant": "XMC1404"
+  },
   "debug": {
     "tools": {
       "jlink": {
@@ -16,6 +22,11 @@
   "platform": "infineonxmc",
   "ram": 16384,
   "rom": 2048000,
+  "upload": {
+    "maximum_ram_size": 16384,
+    "maximum_size": 2048000,
+    "protocol": "jlink"
+  },
   "url": "https://www.infineon.com",
   "vendor": "Infineon"
 }

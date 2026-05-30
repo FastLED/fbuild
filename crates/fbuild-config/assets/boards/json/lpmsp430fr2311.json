@@ -1,4 +1,13 @@
 {
+  "build": {
+    "core": "msp430",
+    "extra_flags": "-DENERGIA_ARCH_MSP430 -DENERGIA_MSP_EXP430FR2311LP",
+    "f_cpu": "16000000L",
+    "mcu": "msp430fr2311",
+    "pid": "0x0c9f",
+    "variant": "MSP-EXP430FR2311LP",
+    "vid": "0x2341"
+  },
   "debug": {
     "tools": {
       "mspdebug": {
@@ -16,6 +25,11 @@
   "platform": "timsp430",
   "ram": 1024,
   "rom": 3840,
+  "upload": {
+    "maximum_ram_size": 1024,
+    "maximum_size": 3840,
+    "protocol": "dslite"
+  },
   "url": "http://www.ti.com/product/MSP430FR2311",
   "vendor": "TI"
 }

@@ -1,15 +1,21 @@
 {
+  "build": {
+    "f_cpu": "64000000L",
+    "mcu": "nrf52840",
+    "pid": "0x0204",
+    "vid": "0x0D28"
+  },
   "connectivity": [
     "bluetooth"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
-      "jlink": {},
-      "stlink": {},
       "cmsis-dap": {
         "onboard": true
-      }
+      },
+      "jlink": {},
+      "stlink": {}
     }
   },
   "fcpu": 64000000,
@@ -22,6 +28,11 @@
   "platform": "nordicnrf52",
   "ram": 262144,
   "rom": 1048576,
+  "upload": {
+    "maximum_ram_size": 262144,
+    "maximum_size": 1048576,
+    "protocol": "cmsis-dap"
+  },
   "url": "https://www.phytec.eu/reelboard",
   "vendor": "PHYTEC"
 }

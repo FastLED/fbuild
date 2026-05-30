@@ -1,12 +1,24 @@
 {
+  "build": {
+    "arduino": {
+      "ldscript": "flash.ld"
+    },
+    "core": "arduino",
+    "extra_flags": "-D__SAM3X8E__ -DARDUINO_SAM_DUE",
+    "f_cpu": "84000000L",
+    "mcu": "at91sam3x8e",
+    "pid": "0x003E",
+    "variant": "arduino_due_x",
+    "vid": "0x2341"
+  },
   "connectivity": [
     "can"
   ],
   "debug": {
     "tools": {
+      "atmel-ice": {},
       "blackmagic": {},
       "jlink": {},
-      "atmel-ice": {},
       "stlink": {}
     }
   },
@@ -20,6 +32,14 @@
   "platform": "atmelsam",
   "ram": 98304,
   "rom": 524288,
+  "upload": {
+    "maximum_ram_size": 98304,
+    "maximum_size": 524288,
+    "protocol": "sam-ba",
+    "require_upload_port": true,
+    "use_1200bps_touch": true,
+    "wait_for_upload_port": true
+  },
   "url": "http://www.sainsmart.com/arduino/control-boards/sainsmart-due-atmel-sam3x8e-arm-cortex-m3-board-black.html",
   "vendor": "SainSmart"
 }

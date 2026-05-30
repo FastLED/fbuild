@@ -1,4 +1,11 @@
 {
+  "build": {
+    "core": "naked",
+    "extra_flags": "-DSTC15F20XA -DIAP15F206A -DNAKED_ARCH_MCS51 -DNAKED_MCS51_STC15F20XA",
+    "f_cpu": "11059200L",
+    "mcu": "iap15f206a",
+    "variant": "stc15f20xa"
+  },
   "fcpu": 11059200,
   "frameworks": [],
   "id": "IAP15F206A",
@@ -7,6 +14,11 @@
   "platform": "intel_mcs51",
   "ram": 256,
   "rom": 6144,
+  "upload": {
+    "maximum_ram_size": 256,
+    "maximum_size": 6144,
+    "protocol": "stcgal"
+  },
   "url": "https://www.stcmicro.com/STC/STC15F204EA.html",
   "vendor": "STC"
 }

@@ -1,4 +1,11 @@
 {
+  "build": {
+    "core": "naked",
+    "extra_flags": "-DSTC8H8KXXU -DSTC8H8K48U -DNAKED_ARCH_MCS51 -DNAKED_MCS51_STC8H8KXXU",
+    "f_cpu": "11059200L",
+    "mcu": "stc8h8k48u",
+    "variant": "stc8h8kxxu"
+  },
   "fcpu": 11059200,
   "frameworks": [],
   "id": "STC8H8K48U",
@@ -7,6 +14,11 @@
   "platform": "intel_mcs51",
   "ram": 8448,
   "rom": 49152,
+  "upload": {
+    "maximum_ram_size": 8448,
+    "maximum_size": 49152,
+    "protocol": "stcgal"
+  },
   "url": "http://www.stcmicro.com/stc/stc51.html",
   "vendor": "STC"
 }

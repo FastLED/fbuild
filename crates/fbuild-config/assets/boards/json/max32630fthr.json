@@ -1,4 +1,8 @@
 {
+  "build": {
+    "f_cpu": "96000000L",
+    "mcu": "max32630"
+  },
   "fcpu": 96000000,
   "frameworks": [
     "mbed"
@@ -9,6 +13,11 @@
   "platform": "maxim32",
   "ram": 524288,
   "rom": 2097152,
+  "upload": {
+    "maximum_ram_size": 524288,
+    "maximum_size": 2097152,
+    "protocol": "mbed"
+  },
   "url": "https://developer.mbed.org/platforms/MAX32630FTHR/",
   "vendor": "Maxim"
 }

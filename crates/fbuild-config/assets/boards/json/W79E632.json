@@ -1,4 +1,10 @@
 {
+  "build": {
+    "core": "naked",
+    "extra_flags": "-DW79E632 -DNAKED_ARCH_MCS51 -DNAKED_MCS51_W79E632",
+    "f_cpu": "11059200L",
+    "mcu": "w79e632"
+  },
   "fcpu": 11059200,
   "frameworks": [],
   "id": "W79E632",
@@ -7,6 +13,11 @@
   "platform": "intel_mcs51",
   "ram": 1280,
   "rom": 65536,
+  "upload": {
+    "maximum_ram_size": 1280,
+    "maximum_size": 65536,
+    "protocol": "nuvoprog"
+  },
   "url": "https://www.nuvoton.com/products/microcontrollers/8bit-8051-mcus/standard-8051-series/w79e632a/",
   "vendor": "Nuvoton"
 }

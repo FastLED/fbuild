@@ -1,4 +1,8 @@
 {
+  "build": {
+    "f_cpu": "16000000L",
+    "mcu": "nrf51822"
+  },
   "connectivity": [
     "bluetooth"
   ],
@@ -19,6 +23,11 @@
   "platform": "nordicnrf51",
   "ram": 32768,
   "rom": 131072,
+  "upload": {
+    "maximum_ram_size": 32768,
+    "maximum_size": 131072,
+    "protocol": "cmsis-dap"
+  },
   "url": "https://vngiotlab.github.io/vbluno/mydoc_introduction.html",
   "vendor": "VNG"
 }

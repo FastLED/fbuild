@@ -1,4 +1,11 @@
 {
+  "build": {
+    "core": "naked",
+    "extra_flags": "-DW79EX051 -DW79E2051 -DNAKED_ARCH_MCS51 -DNAKED_MCS51_W79EX051",
+    "f_cpu": "22118400L",
+    "mcu": "w79e2051",
+    "variant": "w79ex051"
+  },
   "fcpu": 22118400,
   "frameworks": [],
   "id": "W79E2051",
@@ -7,6 +14,11 @@
   "platform": "intel_mcs51",
   "ram": 256,
   "rom": 2048,
+  "upload": {
+    "maximum_ram_size": 256,
+    "maximum_size": 2048,
+    "protocol": "nuvoprog"
+  },
   "url": "https://www.nuvoton.com/products/microcontrollers/8bit-8051-mcus/low-pin-count-8051-series/w79e2051/",
   "vendor": "Nuvoton"
 }

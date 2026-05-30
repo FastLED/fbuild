@@ -1,4 +1,8 @@
 {
+  "build": {
+    "mcu": "bk7231t",
+    "variant": "wblc5"
+  },
   "connectivity": [
     "wifi",
     "ble"

@@ -1,4 +1,14 @@
 {
+  "build": {
+    "arduino": {
+      "ldscript": "nrf51_xxaa.ld"
+    },
+    "core": "nRF5",
+    "extra_flags": "-DARDUINO_NG_BEACON -DUSE_LFRC",
+    "f_cpu": "16000000L",
+    "mcu": "nrf51822",
+    "variant": "ng-beacon"
+  },
   "connectivity": [
     "bluetooth"
   ],
@@ -19,6 +29,11 @@
   "platform": "nordicnrf51",
   "ram": 32768,
   "rom": 262144,
+  "upload": {
+    "maximum_ram_size": 32768,
+    "maximum_size": 262144,
+    "protocol": "jlink"
+  },
   "url": "https://github.com/urish/ng-beacon",
   "vendor": "ng-beacon"
 }

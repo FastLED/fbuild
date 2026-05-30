@@ -1,4 +1,8 @@
 {
+  "build": {
+    "f_cpu": "48000000L",
+    "mcu": "mkl46z256vll4"
+  },
   "debug": {
     "tools": {
       "cmsis-dap": {
@@ -17,6 +21,11 @@
   "platform": "freescalekinetis",
   "ram": 32768,
   "rom": 262144,
+  "upload": {
+    "maximum_ram_size": 32768,
+    "maximum_size": 262144,
+    "protocol": "mbed"
+  },
   "url": "https://developer.mbed.org/platforms/FRDM-KL46Z/",
   "vendor": "Freescale"
 }

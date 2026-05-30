@@ -1,4 +1,8 @@
 {
+  "build": {
+    "f_cpu": "100000000L",
+    "mcu": "lpc54114j256bd64"
+  },
   "debug": {
     "tools": {
       "cmsis-dap": {
@@ -18,6 +22,11 @@
   "platform": "nxplpc",
   "ram": 196608,
   "rom": 262144,
+  "upload": {
+    "maximum_ram_size": 196608,
+    "maximum_size": 262144,
+    "protocol": "mbed"
+  },
   "url": "https://os.mbed.com/platforms/LPCXpresso54114/",
   "vendor": "NXP"
 }

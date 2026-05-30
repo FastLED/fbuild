@@ -1,16 +1,20 @@
 {
+  "build": {
+    "f_cpu": "64000000L",
+    "mcu": "nrf52840"
+  },
   "connectivity": [
     "bluetooth"
   ],
   "debug": {
     "tools": {
       "blackmagic": {
-        "onboard": true,
-        "default": true
+        "default": true,
+        "onboard": true
       },
+      "cmsis-dap": {},
       "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
+      "stlink": {}
     }
   },
   "fcpu": 64000000,
@@ -23,6 +27,11 @@
   "platform": "nordicnrf52",
   "ram": 262144,
   "rom": 1048576,
+  "upload": {
+    "maximum_ram_size": 262144,
+    "maximum_size": 1048576,
+    "protocol": "blackmagic"
+  },
   "url": "https://docs.electronut.in/papyr",
   "vendor": "ElectronutLabs"
 }

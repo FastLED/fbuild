@@ -1,9 +1,16 @@
 {
+  "build": {
+    "core": "sduino",
+    "extra_flags": "-DSTM8S_DISCOVERY -DSTM8S105",
+    "f_cpu": "16000000L",
+    "mcu": "stm8s105c6t6",
+    "variant": "stm8sdisco"
+  },
   "debug": {
     "tools": {
       "stlink": {
-        "onboard": true,
-        "default": true
+        "default": true,
+        "onboard": true
       }
     }
   },
@@ -18,6 +25,11 @@
   "platform": "ststm8",
   "ram": 2048,
   "rom": 32768,
+  "upload": {
+    "maximum_ram_size": 2048,
+    "maximum_size": 32768,
+    "protocol": "stlink"
+  },
   "url": "https://www.st.com/en/evaluation-tools/stm8s-discovery.html",
   "vendor": "ST"
 }

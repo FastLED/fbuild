@@ -1,4 +1,11 @@
 {
+  "build": {
+    "core": "sduino",
+    "extra_flags": "-DSTM8S_BLUE -DSTM8S103",
+    "f_cpu": "16000000L",
+    "mcu": "stm8s103f3p6",
+    "variant": "standard"
+  },
   "debug": {
     "tools": {
       "stlink": {}
@@ -15,6 +22,11 @@
   "platform": "ststm8",
   "ram": 1024,
   "rom": 8192,
+  "upload": {
+    "maximum_ram_size": 1024,
+    "maximum_size": 8192,
+    "protocol": "serial"
+  },
   "url": "https://tenbaht.github.io/sduino/hardware/stm8blue/",
   "vendor": "ST"
 }

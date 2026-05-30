@@ -1,13 +1,25 @@
 {
+  "build": {
+    "arduino": {
+      "ldscript": "nrf52832_s132_v6.ld"
+    },
+    "core": "nRF5",
+    "extra_flags": "-DNRF52832_XXAA -DNRF52",
+    "f_cpu": "64000000L",
+    "mcu": "nrf52832",
+    "pid": "0x8029",
+    "variant": "feather_nrf52832",
+    "vid": "0x239A"
+  },
   "connectivity": [
     "bluetooth"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
+      "cmsis-dap": {},
       "jlink": {},
-      "stlink": {},
-      "cmsis-dap": {}
+      "stlink": {}
     }
   },
   "fcpu": 64000000,
@@ -21,6 +33,13 @@
   "platform": "nordicnrf52",
   "ram": 65536,
   "rom": 524288,
+  "upload": {
+    "maximum_ram_size": 65536,
+    "maximum_size": 524288,
+    "protocol": "nrfutil",
+    "require_upload_port": true,
+    "speed": 115200
+  },
   "url": "https://www.adafruit.com/product/3406",
   "vendor": "Adafruit"
 }

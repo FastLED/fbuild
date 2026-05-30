@@ -1,4 +1,8 @@
 {
+  "build": {
+    "mcu": "rtl8710bx",
+    "variant": "generic-rtl8710bx-4mb-980k"
+  },
   "connectivity": [
     "wifi"
   ],

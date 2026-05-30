@@ -1,4 +1,8 @@
 {
+  "build": {
+    "mcu": "rtl8710bx",
+    "variant": "t103-v1.0"
+  },
   "connectivity": [
     "wifi"
   ],

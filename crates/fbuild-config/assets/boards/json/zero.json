@@ -1,12 +1,24 @@
 {
+  "build": {
+    "arduino": {
+      "ldscript": "flash_with_bootloader.ld"
+    },
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_SAMD_ZERO -D__SAMD21G18A__",
+    "f_cpu": "48000000L",
+    "mcu": "samd21g18a",
+    "pid": "0x804D",
+    "variant": "arduino_zero",
+    "vid": "0x2341"
+  },
   "debug": {
     "tools": {
-      "blackmagic": {},
-      "jlink": {},
       "atmel-ice": {},
+      "blackmagic": {},
       "cmsis-dap": {
         "onboard": true
-      }
+      },
+      "jlink": {}
     }
   },
   "fcpu": 48000000,
@@ -20,6 +32,14 @@
   "platform": "atmelsam",
   "ram": 32768,
   "rom": 262144,
+  "upload": {
+    "maximum_ram_size": 32768,
+    "maximum_size": 262144,
+    "protocol": "cmsis-dap",
+    "require_upload_port": false,
+    "use_1200bps_touch": false,
+    "wait_for_upload_port": false
+  },
   "url": "https://www.arduino.cc/en/Main/ArduinoBoardZero",
   "vendor": "Arduino"
 }

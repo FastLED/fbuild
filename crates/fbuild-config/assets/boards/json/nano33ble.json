@@ -1,12 +1,24 @@
 {
+  "build": {
+    "arduino": {
+      "ldscript": "linker_script.ld"
+    },
+    "core": "arduino",
+    "extra_flags": "-DARDUINO_ARDUINO_NANO33BLE -DARDUINO_ARCH_NRF52840",
+    "f_cpu": "64000000L",
+    "mcu": "nrf52840",
+    "pid": "0x005a",
+    "variant": "ARDUINO_NANO33BLE",
+    "vid": "0x2341"
+  },
   "connectivity": [
     "bluetooth"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
-      "jlink": {},
-      "cmsis-dap": {}
+      "cmsis-dap": {},
+      "jlink": {}
     }
   },
   "fcpu": 64000000,
@@ -19,6 +31,14 @@
   "platform": "nordicnrf52",
   "ram": 262144,
   "rom": 983040,
+  "upload": {
+    "maximum_ram_size": 262144,
+    "maximum_size": 983040,
+    "protocol": "sam-ba",
+    "require_upload_port": true,
+    "use_1200bps_touch": true,
+    "wait_for_upload_port": true
+  },
   "url": "https://store.arduino.cc/arduino-nano-33-ble",
   "vendor": "Arduino"
 }

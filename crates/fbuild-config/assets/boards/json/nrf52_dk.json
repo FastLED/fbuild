@@ -1,18 +1,28 @@
 {
+  "build": {
+    "arduino": {
+      "ldscript": "nrf52_xxaa.ld"
+    },
+    "core": "nRF5",
+    "extra_flags": "-DARDUINO_NRF52_DK",
+    "f_cpu": "64000000L",
+    "mcu": "nrf52832",
+    "variant": "nRF52DK"
+  },
   "connectivity": [
     "bluetooth"
   ],
   "debug": {
     "tools": {
       "blackmagic": {},
-      "jlink": {
-        "onboard": true,
-        "default": true
-      },
-      "stlink": {},
       "cmsis-dap": {
         "onboard": true
-      }
+      },
+      "jlink": {
+        "default": true,
+        "onboard": true
+      },
+      "stlink": {}
     }
   },
   "fcpu": 64000000,
@@ -27,6 +37,11 @@
   "platform": "nordicnrf52",
   "ram": 65536,
   "rom": 524288,
+  "upload": {
+    "maximum_ram_size": 65536,
+    "maximum_size": 524288,
+    "protocol": "jlink"
+  },
   "url": "https://developer.mbed.org/platforms/Nordic-nRF52-DK/",
   "vendor": "Nordic"
 }

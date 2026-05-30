@@ -1,4 +1,11 @@
 {
+  "build": {
+    "core": "sduino",
+    "extra_flags": "-DSTM8S_UNO -DSTM8S105",
+    "f_cpu": "16000000L",
+    "mcu": "stm8s105k6t6",
+    "variant": "s8uno"
+  },
   "debug": {
     "tools": {
       "stlink": {}
@@ -15,6 +22,11 @@
   "platform": "ststm8",
   "ram": 2048,
   "rom": 32768,
+  "upload": {
+    "maximum_ram_size": 2048,
+    "maximum_size": 32768,
+    "protocol": "serial"
+  },
   "url": "https://github.com/roybaer/sduino_uno",
   "vendor": "sduino"
 }

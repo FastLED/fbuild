@@ -1,4 +1,11 @@
 {
+  "build": {
+    "core": "naked",
+    "extra_flags": "-DSTC8C2KXXS2 -DSTC8C2K64S2 -DNAKED_ARCH_MCS51 -DNAKED_MCS51_STC8C2KXXS2",
+    "f_cpu": "11059200L",
+    "mcu": "stc8c2k64s2",
+    "variant": "stc8c2kxxs2"
+  },
   "fcpu": 11059200,
   "frameworks": [],
   "id": "STC8C2K64S2",
@@ -7,6 +14,11 @@
   "platform": "intel_mcs51",
   "ram": 2304,
   "rom": 65536,
+  "upload": {
+    "maximum_ram_size": 2304,
+    "maximum_size": 65536,
+    "protocol": "stcgal"
+  },
   "url": "http://www.stcmicro.com/stc/stc51.html",
   "vendor": "STC"
 }

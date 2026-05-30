@@ -1,4 +1,8 @@
 {
+  "build": {
+    "mcu": "bk7231n",
+    "variant": "lsc-lma35"
+  },
   "connectivity": [
     "wifi",
     "ble"

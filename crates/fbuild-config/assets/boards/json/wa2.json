@@ -1,4 +1,8 @@
 {
+  "build": {
+    "mcu": "bk7231q",
+    "variant": "wa2"
+  },
   "connectivity": [
     "wifi"
   ],

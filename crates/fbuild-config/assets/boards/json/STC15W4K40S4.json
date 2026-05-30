@@ -1,4 +1,11 @@
 {
+  "build": {
+    "core": "naked",
+    "extra_flags": "-DSTC15W4KXXS4 -DSTC15W4K40S4 -DNAKED_ARCH_MCS51 -DNAKED_MCS51_STC15W4KXXS4",
+    "f_cpu": "11059200L",
+    "mcu": "stc15w4k40s4",
+    "variant": "stc15w4kxxs4"
+  },
   "fcpu": 11059200,
   "frameworks": [],
   "id": "STC15W4K40S4",
@@ -7,6 +14,11 @@
   "platform": "intel_mcs51",
   "ram": 4096,
   "rom": 40960,
+  "upload": {
+    "maximum_ram_size": 4096,
+    "maximum_size": 40960,
+    "protocol": "stcgal"
+  },
   "url": "http://www.stcmicro.com/STC/STC15W4K32S4.html",
   "vendor": "STC"
 }

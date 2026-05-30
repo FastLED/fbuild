@@ -1,12 +1,16 @@
 {
+  "build": {
+    "f_cpu": "48000000L",
+    "mcu": "samc21j18a"
+  },
   "debug": {
     "tools": {
-      "blackmagic": {},
-      "jlink": {},
       "atmel-ice": {},
+      "blackmagic": {},
       "cmsis-dap": {
         "onboard": true
-      }
+      },
+      "jlink": {}
     }
   },
   "fcpu": 48000000,
@@ -17,6 +21,11 @@
   "platform": "atmelsam",
   "ram": 32768,
   "rom": 262144,
+  "upload": {
+    "maximum_ram_size": 32768,
+    "maximum_size": 262144,
+    "protocol": "cmsis-dap"
+  },
   "url": "https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/ATSAMC21-XPRO",
   "vendor": "Atmel"
 }

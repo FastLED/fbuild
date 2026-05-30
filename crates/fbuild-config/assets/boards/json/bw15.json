@@ -1,4 +1,8 @@
 {
+  "build": {
+    "mcu": "rtl8720cf",
+    "variant": "bw15"
+  },
   "connectivity": [
     "wifi",
     "ble"

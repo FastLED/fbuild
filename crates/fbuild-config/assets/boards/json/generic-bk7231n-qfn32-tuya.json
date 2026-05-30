@@ -1,4 +1,8 @@
 {
+  "build": {
+    "mcu": "bk7231n",
+    "variant": "generic-bk7231n-qfn32-tuya"
+  },
   "connectivity": [
     "wifi",
     "ble"

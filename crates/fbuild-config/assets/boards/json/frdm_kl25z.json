@@ -1,4 +1,8 @@
 {
+  "build": {
+    "f_cpu": "48000000L",
+    "mcu": "mkl25z128vlk4"
+  },
   "debug": {
     "tools": {
       "blackmagic": {},
@@ -19,6 +23,11 @@
   "platform": "freescalekinetis",
   "ram": 16384,
   "rom": 131072,
+  "upload": {
+    "maximum_ram_size": 16384,
+    "maximum_size": 131072,
+    "protocol": "mbed"
+  },
   "url": "https://developer.mbed.org/platforms/KL25Z/",
   "vendor": "Freescale"
 }

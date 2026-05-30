@@ -1,4 +1,11 @@
 {
+  "build": {
+    "core": "naked",
+    "extra_flags": "-DSTC15F2KXXAS -DSTC15F2K24AS -DNAKED_ARCH_MCS51 -DNAKED_MCS51_STC15F2KXXAS",
+    "f_cpu": "11059200L",
+    "mcu": "stc15f2k24as",
+    "variant": "stc15f2kxxas"
+  },
   "fcpu": 11059200,
   "frameworks": [],
   "id": "STC15F2K24AS",
@@ -7,6 +14,11 @@
   "platform": "intel_mcs51",
   "ram": 2048,
   "rom": 24576,
+  "upload": {
+    "maximum_ram_size": 2048,
+    "maximum_size": 24576,
+    "protocol": "stcgal"
+  },
   "url": "http://www.stcmicro.com/STC/STC15F2K32S2.html",
   "vendor": "STC"
 }

@@ -1,15 +1,27 @@
 {
+  "build": {
+    "arduino": {
+      "ldscript": "flash_without_bootloader.ld"
+    },
+    "core": "arduino",
+    "extra_flags": "-D__SAMD21G18A__",
+    "f_cpu": "48000000L",
+    "mcu": "samd21g18a",
+    "pid": "0x2111",
+    "variant": "w25_xplained_pro",
+    "vid": "0x03EB"
+  },
   "connectivity": [
     "wifi"
   ],
   "debug": {
     "tools": {
-      "blackmagic": {},
-      "jlink": {},
       "atmel-ice": {},
+      "blackmagic": {},
       "cmsis-dap": {
         "onboard": true
-      }
+      },
+      "jlink": {}
     }
   },
   "fcpu": 48000000,
@@ -22,6 +34,11 @@
   "platform": "atmelsam",
   "ram": 32768,
   "rom": 262144,
+  "upload": {
+    "maximum_ram_size": 32768,
+    "maximum_size": 262144,
+    "protocol": "cmsis-dap"
+  },
   "url": "https://www.microchip.com/en-us/development-tool/atsamw25-xpro",
   "vendor": "Atmel"
 }

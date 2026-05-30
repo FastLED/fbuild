@@ -1,4 +1,8 @@
 {
+  "build": {
+    "f_cpu": "64000000L",
+    "mcu": "nrf52840"
+  },
   "connectivity": [
     "bluetooth",
     "nfc"
@@ -6,14 +10,14 @@
   "debug": {
     "tools": {
       "blackmagic": {},
-      "jlink": {
-        "onboard": true,
-        "default": true
-      },
-      "stlink": {},
       "cmsis-dap": {
         "onboard": true
-      }
+      },
+      "jlink": {
+        "default": true,
+        "onboard": true
+      },
+      "stlink": {}
     }
   },
   "fcpu": 64000000,
@@ -26,6 +30,11 @@
   "platform": "nordicnrf52",
   "ram": 262144,
   "rom": 1048576,
+  "upload": {
+    "maximum_ram_size": 262144,
+    "maximum_size": 1048576,
+    "protocol": "jlink"
+  },
   "url": "https://www.u-blox.com/en/product/bmd-34-series-open-cpu",
   "vendor": "u-blox"
 }

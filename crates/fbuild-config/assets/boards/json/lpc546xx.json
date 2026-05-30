@@ -1,4 +1,8 @@
 {
+  "build": {
+    "f_cpu": "180000000L",
+    "mcu": "lpc54608et512"
+  },
   "connectivity": [
     "ethernet"
   ],
@@ -19,6 +23,11 @@
   "platform": "nxplpc",
   "ram": 204800,
   "rom": 524288,
+  "upload": {
+    "maximum_ram_size": 204800,
+    "maximum_size": 524288,
+    "protocol": "mbed"
+  },
   "url": "https://os.mbed.com/platforms/LPCXpresso54608/",
   "vendor": "NXP"
 }
