@@ -27,6 +27,20 @@ from pathlib import Path
 # Must match enrich_boards.rs exactly
 BUILD_FIELDS = ("core", "variant", "extra_flags", "f_cpu", "f_flash", "f_image", "flash_mode", "mcu")
 ARDUINO_FIELDS = ("ldscript", "partitions", "memory_type")
+
+# Intentional fbuild-only extensions to the board schema that PlatformIO does
+# not carry upstream. Stripped from the actual side before diffing so they
+# aren't reported as drift. Keep this list short and document why each entry
+# is here — every addition is a place where fbuild semantically extends PIO.
+FBUILD_EXTENSION_BUILD_FIELDS = frozenset(
+    {
+        # Teensy 3.x/4.x CMSIS-DSP per-MCU library name (FastLED/fbuild#300).
+        # PlatformIO leaves this implicit and lets Teensyduino's makefile pick
+        # the matching `-l...` flag; fbuild needs it declared so the linker can
+        # auto-link the right `arm_cortexM*_math` archive.
+        "cmsis_dsp_lib",
+    }
+)
 UPLOAD_FIELDS = (
     "protocol",
     "speed",
@@ -208,6 +222,10 @@ def validate_board(board_path: Path, pio_dir: Path) -> list[str] | None:
     if isinstance(pio_build, dict):
         expected_build = extract_build(pio_build)
         actual_build = board.get("build", {})
+        # Strip intentional fbuild-only extensions from the actual side so
+        # they aren't reported as drift (see FBUILD_EXTENSION_BUILD_FIELDS).
+        if isinstance(actual_build, dict) and any(k in actual_build for k in FBUILD_EXTENSION_BUILD_FIELDS):
+            actual_build = {k: v for k, v in actual_build.items() if k not in FBUILD_EXTENSION_BUILD_FIELDS}
         if expected_build and expected_build != actual_build:
             diffs.extend(diff_dicts(expected_build, actual_build, "build"))
 
@@ -268,13 +286,7 @@ def run_external_comparison(output_json: bool = False) -> int:
             "external_board_count": total_external,
             "missing_count": total_missing,
             "errors": [{"source": r.source_id, "error": r.error} for r in errors],
-            "missing_by_source": {
-                src: [
-                    {"name": b.name, "architecture": b.architecture, "vendor": b.vendor}
-                    for b in boards
-                ]
-                for src, boards in sorted(missing.items())
-            },
+            "missing_by_source": {src: [{"name": b.name, "architecture": b.architecture, "vendor": b.vendor} for b in boards] for src, boards in sorted(missing.items())},
         }
         print(json.dumps(out, indent=2))
     else:

@@ -3,7 +3,7 @@
     "arduino": {
       "ldscript": "esp32s3_out.ld",
       "memory_type": "qio_opi",
-      "partitions": "esp_sr_16.csv"
+      "partitions": "default_16MB.csv"
     },
     "core": "esp32",
     "extra_flags": "-DARDUINO_ESP32_S3R8N16 -DBOARD_HAS_PSRAM -DARDUINO_USB_MODE=1 -DARDUINO_USB_CDC_ON_BOOT=1 -DARDUINO_RUNNING_CORE=1 -DARDUINO_EVENT_RUNNING_CORE=1",
