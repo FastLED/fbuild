@@ -199,6 +199,10 @@ impl Linker for Esp8266Linker {
 
         args.extend(["-o".to_string(), elf_path.to_string_lossy().to_string()]);
 
+        // Always emit a linker map next to firmware.elf for debugging (#305).
+        let map_path = output_dir.join("firmware.map");
+        args.push(format!("-Wl,-Map={}", map_path.to_string_lossy()));
+
         // Sketch objects first
         for obj in objects {
             args.push(obj.to_string_lossy().to_string());
@@ -216,6 +220,7 @@ impl Linker for Esp8266Linker {
         args.push("-Wl,--end-group".to_string());
 
         if self.verbose {
+            eprintln!("link: {}", args.join(" "));
             tracing::info!("link: {}", args.join(" "));
         }
 

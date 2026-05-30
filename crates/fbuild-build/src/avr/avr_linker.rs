@@ -54,21 +54,19 @@ impl AvrLinker {
     }
 }
 
-impl Linker for AvrLinker {
-    fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
-        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "avr-ar")
-    }
-
-    fn link(
+impl AvrLinker {
+    /// Build the argv that will be passed to `avr-gcc` for the link step.
+    ///
+    /// Factored out so it can be unit-tested without invoking the toolchain
+    /// (see #305 — assert that `-Wl,-Map=` is present).
+    fn build_link_args(
         &self,
         objects: &[PathBuf],
         archives: &[PathBuf],
         output_dir: &Path,
+        elf_path: &Path,
         extra: &LinkExtraArgs,
-    ) -> Result<PathBuf> {
-        std::fs::create_dir_all(output_dir)?;
-        let elf_path = output_dir.join("firmware.elf");
-
+    ) -> Vec<String> {
         let mut args: Vec<String> = vec![
             self.gcc_path.to_string_lossy().to_string(),
             format!("-mmcu={}", self.mcu),
@@ -84,6 +82,10 @@ impl Linker for AvrLinker {
         args.extend(extra.flags.iter().cloned());
 
         args.extend(["-o".to_string(), elf_path.to_string_lossy().to_string()]);
+
+        // Always emit a linker map next to firmware.elf for debugging (#305).
+        let map_path = output_dir.join("firmware.map");
+        args.push(format!("-Wl,-Map={}", map_path.to_string_lossy()));
 
         // Sketch objects first
         for obj in objects {
@@ -102,7 +104,29 @@ impl Linker for AvrLinker {
         args.extend(extra.libs.iter().cloned());
         args.push("-Wl,--end-group".to_string());
 
+        args
+    }
+}
+
+impl Linker for AvrLinker {
+    fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
+        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "avr-ar")
+    }
+
+    fn link(
+        &self,
+        objects: &[PathBuf],
+        archives: &[PathBuf],
+        output_dir: &Path,
+        extra: &LinkExtraArgs,
+    ) -> Result<PathBuf> {
+        std::fs::create_dir_all(output_dir)?;
+        let elf_path = output_dir.join("firmware.elf");
+
+        let args = self.build_link_args(objects, archives, output_dir, &elf_path, extra);
+
         if self.verbose {
+            eprintln!("link: {}", args.join(" "));
             tracing::info!("link: {}", args.join(" "));
         }
 
@@ -167,5 +191,41 @@ mod tests {
         assert_eq!(linker.mcu, "atmega328p");
         assert_eq!(linker.max_flash, Some(32256));
         assert_eq!(linker.max_ram, Some(2048));
+    }
+
+    /// #305: every per-platform linker must emit a `firmware.map` next to
+    /// `firmware.elf`. Assert the generated argv contains a `-Wl,-Map=` token.
+    #[test]
+    fn test_avr_link_args_contain_map_flag() {
+        let linker = AvrLinker::new(
+            PathBuf::from("/bin/avr-gcc"),
+            PathBuf::from("/bin/avr-ar"),
+            PathBuf::from("/bin/avr-objcopy"),
+            PathBuf::from("/bin/avr-size"),
+            "atmega328p",
+            get_avr_config().unwrap(),
+            BuildProfile::Release,
+            Some(32256),
+            Some(2048),
+            false,
+        );
+
+        let tmp = tempfile::TempDir::new().unwrap();
+        let output_dir = tmp.path();
+        let elf_path = output_dir.join("firmware.elf");
+        let extra = LinkExtraArgs::default();
+        let args = linker.build_link_args(&[], &[], output_dir, &elf_path, &extra);
+
+        let map_flag = args
+            .iter()
+            .find(|a| a.starts_with("-Wl,-Map="))
+            .expect("link args must contain -Wl,-Map= for firmware.map emission");
+        let expected_map = output_dir.join("firmware.map");
+        assert!(
+            map_flag.contains(&*expected_map.to_string_lossy()),
+            "expected map flag to reference {}, got {}",
+            expected_map.display(),
+            map_flag
+        );
     }
 }
