@@ -1,0 +1,31 @@
+{
+  "build": {
+    "core": "nRF5",
+    "variant": "Seeed_XIAO_nRF52840",
+    "arduino": {
+      "ldscript": "nrf52840_s140_v7.ld"
+    }
+  },
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "tools": {
+      "blackmagic": {},
+      "jlink": {},
+      "cmsis-dap": {}
+    }
+  },
+  "fcpu": 64000000,
+  "frameworks": [
+    "arduino"
+  ],
+  "id": "xiaoble_adafruit",
+  "mcu": "NRF52840",
+  "name": "Seeed XIAO BLE nRF52840",
+  "platform": "nordicnrf52",
+  "ram": 237568,
+  "rom": 811008,
+  "url": "https://wiki.seeedstudio.com/XIAO_BLE",
+  "vendor": "Seeed"
+}

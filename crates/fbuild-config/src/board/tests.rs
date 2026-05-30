@@ -506,6 +506,27 @@ fn test_nano_every_board_config() {
     assert_eq!(config.platform(), Some(fbuild_core::Platform::AtmelMegaAvr));
 }
 
+#[test]
+fn test_xiaoble_adafruit_board_config() {
+    // Seeed XIAO BLE (nRF52840, no IMU); maxgerhardt platform-nordicnrf52.
+    // Regression for FastLED `nrf52_xiaoblesense` workflow (#293).
+    let config = BoardConfig::from_board_id("xiaoble_adafruit", &HashMap::new()).unwrap();
+    assert_eq!(config.mcu, "nrf52840");
+    assert_eq!(config.core, "nRF5");
+    assert_eq!(config.variant, "Seeed_XIAO_nRF52840");
+}
+
+#[test]
+fn test_xiaoblesense_adafruit_board_config() {
+    // Seeed XIAO BLE Sense (nRF52840 + IMU/mic).
+    // Regression for FastLED `adafruit_xiaoblesense` workflow (#293).
+    let config =
+        BoardConfig::from_board_id("xiaoblesense_adafruit", &HashMap::new()).unwrap();
+    assert_eq!(config.mcu, "nrf52840");
+    assert_eq!(config.core, "nRF5");
+    assert_eq!(config.variant, "Seeed_XIAO_nRF52840_Sense");
+}
+
 /// Validate that ALL megatinycore boards have the required framework-injected
 /// defines in extra_flags. PlatformIO's builder script injects these at build
 /// time, but fbuild must carry them in the board JSON since we don't run
