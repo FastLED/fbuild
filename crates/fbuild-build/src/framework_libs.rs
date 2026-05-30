@@ -74,38 +74,93 @@ pub fn filter_framework_libs_shadowed_by_project(
         .collect()
 }
 
-/// Walk every `shadowing_roots` entry once, collecting the lowercased
-/// basename of every C/C++ header file it contains. Uses the same
-/// dir-skip rules as [`collect_project_seeds`] so build outputs and
-/// VCS metadata don't pollute the shadowing set.
+/// Collect the lowercased basename of every project header that is
+/// reachable as a bare `<basename>` include — i.e., a header that sits
+/// at an include-root level the compiler would actually consult when
+/// resolving `<SPI.h>`-style includes.
+///
+/// Why this is not a plain recursive walk: nested headers like
+/// `lib/FastLED/fl/channels/spi.h` are includeable only as
+/// `<fl/channels/spi.h>` (relative to the FastLED library's include
+/// root), never as `<spi.h>`. A recursive walk would lowercase that
+/// nested basename to `"spi.h"` and incorrectly mark the framework
+/// `SPI` library as shadowed, dropping it from the link set and
+/// causing `undefined reference to SPIClass::*` failures on Teensy 4.x.
+/// See FastLED/fbuild#284.
+///
+/// Rules per Arduino library include resolution:
+/// * For a `lib/` root (PIO library meta-directory), walk the top
+///   level of each direct subdirectory plus that subdirectory's `src/`
+///   (Arduino 1.5 layout). Headers deeper in the tree are skipped —
+///   they can only be included via their full sub-path.
+/// * For any other root (sketch dir, project `src/`, project
+///   `include/`), walk only the root's top level.
 fn collect_header_basenames(roots: &[PathBuf]) -> HashSet<String> {
     let mut out = HashSet::new();
     for root in roots {
         if !root.exists() {
             continue;
         }
-        for entry in WalkDir::new(root)
-            .into_iter()
-            .filter_entry(should_scan_entry)
-            .flatten()
-        {
-            if !entry.file_type().is_file() {
+        let is_lib_dir = root
+            .file_name()
+            .and_then(|n| n.to_str())
+            .map(|n| n.eq_ignore_ascii_case("lib"))
+            .unwrap_or(false);
+        if is_lib_dir {
+            let Ok(entries) = std::fs::read_dir(root) else {
                 continue;
-            }
-            let path = entry.path();
-            let ext = path
-                .extension()
-                .and_then(|e| e.to_str())
-                .unwrap_or_default()
-                .to_lowercase();
-            if matches!(ext.as_str(), "h" | "hh" | "hpp" | "hxx") {
-                if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
-                    out.insert(name.to_lowercase());
+            };
+            for entry in entries.flatten() {
+                let dir = entry.path();
+                if !dir.is_dir() {
+                    continue;
+                }
+                let name = dir
+                    .file_name()
+                    .and_then(|n| n.to_str())
+                    .unwrap_or_default()
+                    .to_lowercase();
+                if matches!(
+                    name.as_str(),
+                    ".git" | ".pio" | ".fbuild" | ".zap" | ".build" | "build" | "target"
+                ) {
+                    continue;
+                }
+                collect_top_level_headers(&dir, &mut out);
+                let src = dir.join("src");
+                if src.is_dir() {
+                    collect_top_level_headers(&src, &mut out);
                 }
             }
+        } else {
+            collect_top_level_headers(root, &mut out);
         }
     }
     out
+}
+
+/// Insert the lowercased basename of every header file located directly
+/// inside `dir` (non-recursive).
+fn collect_top_level_headers(dir: &Path, out: &mut HashSet<String>) {
+    let Ok(entries) = std::fs::read_dir(dir) else {
+        return;
+    };
+    for entry in entries.flatten() {
+        let path = entry.path();
+        if !path.is_file() {
+            continue;
+        }
+        let ext = path
+            .extension()
+            .and_then(|e| e.to_str())
+            .unwrap_or_default()
+            .to_lowercase();
+        if matches!(ext.as_str(), "h" | "hh" | "hpp" | "hxx") {
+            if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
+                out.insert(name.to_lowercase());
+            }
+        }
+    }
 }
 
 /// Walk project roots for source seeds, delegate to the LDF-style resolver,
@@ -661,6 +716,84 @@ mod tests {
             "bundled FastLED must be filtered out because the user's repo owns \
              FastLED.h even when it's not in the per-example walker roots — see #263. \
              Got: {sources:?}"
+        );
+    }
+
+    /// Regression for FastLED/fbuild#284 — a nested project header whose
+    /// basename happens to collide with a framework library's primary
+    /// header must NOT trigger the shadowing filter. FastLED ships
+    /// `lib/FastLED/fl/channels/spi.h`, which is includeable only as
+    /// `<fl/channels/spi.h>`, never as `<SPI.h>`. The framework's `SPI`
+    /// library must therefore stay in the build set, otherwise every
+    /// Teensy 4.x example fails at link with `undefined reference to
+    /// SPIClass::*`.
+    ///
+    /// At the same time, the existing `#263` behaviour for headers
+    /// reachable as bare `<basename>` (e.g. `lib/FastLED/noise.h` or
+    /// `project/src/FastLED.h`) must still drop the matching framework
+    /// library.
+    #[test]
+    fn nested_basename_does_not_shadow_framework_library() {
+        let tmp = tempfile::TempDir::new().unwrap();
+
+        // PIO project layout: lib/FastLED/ contains FastLED's source
+        // tree directly (1.0 flat layout — no src/ subdir). spi.h is
+        // nested deep, noise.h sits at FastLED's include root.
+        let project_dir = tmp.path().join("project");
+        let lib_dir = project_dir.join("lib");
+        let fastled_dir = lib_dir.join("FastLED");
+        let nested_spi_dir = fastled_dir.join("fl").join("channels");
+        std::fs::create_dir_all(&nested_spi_dir).unwrap();
+        std::fs::write(nested_spi_dir.join("spi.h"), "// FastLED internal\n").unwrap();
+        std::fs::write(fastled_dir.join("FastLED.h"), "").unwrap();
+        std::fs::write(fastled_dir.join("noise.h"), "// shadows framework Noise\n").unwrap();
+
+        let src_dir = project_dir.join("src");
+        std::fs::create_dir_all(&src_dir).unwrap();
+
+        // Framework libs: SPI (must SURVIVE the filter) and Noise (must
+        // be dropped because the project owns noise.h at the FastLED
+        // library include root).
+        let spi_dir = tmp.path().join("framework").join("libraries").join("SPI");
+        std::fs::create_dir_all(&spi_dir).unwrap();
+        std::fs::write(spi_dir.join("SPI.h"), "").unwrap();
+        std::fs::write(spi_dir.join("SPI.cpp"), "").unwrap();
+
+        let noise_dir = tmp.path().join("framework").join("libraries").join("Noise");
+        std::fs::create_dir_all(&noise_dir).unwrap();
+        std::fs::write(noise_dir.join("noise.h"), "").unwrap();
+        std::fs::write(noise_dir.join("noise.cpp"), "").unwrap();
+
+        let libraries = vec![
+            FrameworkLibrary {
+                name: "Noise".to_string(),
+                dir: noise_dir.clone(),
+                include_dirs: vec![noise_dir.clone()],
+                source_files: vec![noise_dir.join("noise.cpp")],
+            },
+            FrameworkLibrary {
+                name: "SPI".to_string(),
+                dir: spi_dir.clone(),
+                include_dirs: vec![spi_dir.clone()],
+                source_files: vec![spi_dir.join("SPI.cpp")],
+            },
+        ];
+
+        let shadowing_roots = framework_include_scan_roots(&project_dir, &src_dir);
+        let filtered = filter_framework_libs_shadowed_by_project(&libraries, &shadowing_roots);
+
+        let surviving: Vec<&str> = filtered.iter().map(|l| l.name.as_str()).collect();
+        assert!(
+            surviving.contains(&"SPI"),
+            "framework SPI must SURVIVE — nested fl/channels/spi.h is not reachable \
+             as <SPI.h> and must not trigger the shadowing filter — see #284. \
+             Surviving libraries: {surviving:?}"
+        );
+        assert!(
+            !surviving.contains(&"Noise"),
+            "framework Noise must be dropped — lib/FastLED/noise.h sits at the \
+             FastLED library include root and is reachable as <noise.h> — see #263. \
+             Surviving libraries: {surviving:?}"
         );
     }
 
