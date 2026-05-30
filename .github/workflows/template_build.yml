@@ -37,18 +37,18 @@ jobs:
         id: setup-soldr
         uses: zackees/setup-soldr@v0
         with:
-          cache: true
-          # Lighter cache strategy (was: build-cache + heavy target-cache, keyed
-          # per-board). The Rust build here (`cargo build -p fbuild-cli
-          # -p fbuild-daemon`, debug) is board-INDEPENDENT, so:
-          #  - cook (Cargo.lock-keyed) prewarms deps in ONE cache shared across
-          #    every board, instead of a ~1.5GB target tree per board;
-          #  - build-cache (zccache compile-cache) under a SHARED key caches the
-          #    workspace compile once for all boards (was ~462MiB x board x SHA);
-          #  - the heavy whole-target cache (target-cache) is dropped.
-          # Safe to cook since soldr 0.7.44 fixed the cook project-restore bug.
-          build-cache: true
-          prebuild-deps: soldr-cook
+          # cache-preset: foundation expands to:
+          #   build-cache: true, target-cache: false,
+          #   cargo-registry-cache: false, prebuild-deps: soldr-cook
+          # (setup-soldr v0.9.17+, zackees/setup-soldr#251). One-line
+          # equivalent of the explicit per-input config PR #280 introduced;
+          # semantics are identical and explicit values still win if you
+          # ever need to override one input.
+          cache-preset: foundation
+          # The Rust build here (`cargo build -p fbuild-cli -p fbuild-daemon`,
+          # debug) is board-INDEPENDENT, so cook + build-cache live under a
+          # SHARED key across all boards (was ~462MiB × board × SHA before
+          # #280 made it coarse).
           prebuild-deps-flags: ""
           cache-key-suffix: fbuild-rust-debug
 
