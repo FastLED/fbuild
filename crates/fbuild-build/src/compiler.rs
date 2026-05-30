@@ -303,7 +303,7 @@ fn command_hash_path(object: &Path) -> PathBuf {
 /// enforced by `clippy.toml` (1.75). Does not canonicalize symlinks or `..`.
 /// Falls back to the original path if `current_dir()` fails (e.g. cwd was
 /// deleted) — callers should treat that as the path they originally got.
-fn absolute_from_cwd(path: &Path) -> PathBuf {
+pub fn absolute_from_cwd(path: &Path) -> PathBuf {
     if path.is_absolute() {
         path.to_path_buf()
     } else {
