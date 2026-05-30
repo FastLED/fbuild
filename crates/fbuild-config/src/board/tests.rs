@@ -316,6 +316,44 @@ fn test_esp32_flash_mode_env_override_honoured() {
 }
 
 #[test]
+fn test_nrf52840_dk_carries_arduino_macro() {
+    // Regression for FastLED CI fail: missing ARDUINO_NRF52_DK meant FastLED's
+    // nRF52 variants header fell through to the "Unknown variant" fallback
+    // (pin 1 invalid), blowing up Apa102.ino's static_assert. See fbuild#298.
+    let config = BoardConfig::from_board_id("nrf52840_dk", &HashMap::new()).unwrap();
+    let defines = config.get_defines();
+    assert_eq!(defines.get("ARDUINO_NRF52_DK"), Some(&"1".to_string()));
+}
+
+#[test]
+fn test_nrf52840_dk_adafruit_carries_arduino_macro() {
+    // Same fbuild#298 root cause — used by FastLED's `supermini_nrf52840` board.
+    let config =
+        BoardConfig::from_board_id("nrf52840_dk_adafruit", &HashMap::new()).unwrap();
+    let defines = config.get_defines();
+    assert_eq!(
+        defines.get("ARDUINO_NRF52840_PCA10056"),
+        Some(&"1".to_string())
+    );
+    assert_eq!(defines.get("NRF52840_XXAA"), Some(&"1".to_string()));
+}
+
+#[test]
+fn test_adafruit_feather_nrf52840_sense_carries_arduino_macro() {
+    let config = BoardConfig::from_board_id(
+        "adafruit_feather_nrf52840_sense",
+        &HashMap::new(),
+    )
+    .unwrap();
+    let defines = config.get_defines();
+    assert_eq!(
+        defines.get("ARDUINO_NRF52840_FEATHER_SENSE"),
+        Some(&"1".to_string())
+    );
+    assert_eq!(defines.get("NRF52840_XXAA"), Some(&"1".to_string()));
+}
+
+#[test]
 fn test_pico_enriched_fields() {
     let config = BoardConfig::from_board_id("rpipico", &HashMap::new()).unwrap();
     assert_eq!(config.core, "earlephilhower");

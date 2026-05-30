@@ -1,6 +1,7 @@
 {
   "build": {
     "core": "nRF5",
+    "extra_flags": "-DARDUINO_NRF52840_PCA10056 -DNRF52840_XXAA",
     "variant": "pca10056",
     "arduino": {
       "ldscript": "nrf52840_s140_v6.ld"
