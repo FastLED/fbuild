@@ -51,10 +51,21 @@ pub struct BuildRequest {
     /// Export a tooling-friendly artifact bundle to this directory after build.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub output_dir: Option<String>,
+    /// When true, request a PIO-compatible `build_info.json` (FastLED/fbuild#297).
+    #[serde(default, skip_serializing_if = "is_false")]
+    pub emit_build_info: bool,
+    /// Optional example name for `build_info_<example>.json`.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub example_name: Option<String>,
     /// Snapshot of all `PLATFORMIO_*` env vars from the caller's environment.
     /// The daemon does not inherit caller env vars, so they are forwarded here.
     #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
     pub pio_env: BTreeMap<String, String>,
+}
+
+#[allow(clippy::trivially_copy_pass_by_ref)]
+fn is_false(b: &bool) -> bool {
+    !*b
 }
 
 #[derive(Debug, Serialize)]

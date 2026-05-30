@@ -528,6 +528,22 @@ impl BuildOrchestrator for Esp32Orchestrator {
             .entry("ARDUINO_VARIANT".to_string())
             .or_insert_with(|| format!("\\\"{}\\\"", ctx.board.variant));
 
+        // Snapshot for the optional build_info.json emitter — captured
+        // here so `defines` / `include_dirs` survive the move into the
+        // compiler. See FastLED/fbuild#297.
+        let info_snapshot = if params.emit_build_info {
+            Some(crate::build_info::BuildInfoSnapshot {
+                board: ctx.board.clone(),
+                defines: defines.clone(),
+                include_dirs: include_dirs.clone(),
+                sketch_sources: sources.sketch_sources.clone(),
+                link_flags: ctx.overlay_link_flags.clone(),
+                link_libs: ctx.overlay_link_libs.clone(),
+            })
+        } else {
+            None
+        };
+
         let compiler = Esp32Compiler::with_temp_dir(
             toolchain.get_gcc_path(),
             toolchain.get_gxx_path(),
@@ -771,6 +787,40 @@ impl BuildOrchestrator for Esp32Orchestrator {
             params.symbol_analysis_path.as_deref(),
             params.verbose,
         );
+
+        // Emit build_info.json (PIO-compatible) for downstream FastLED
+        // tooling when the caller opted in. See FastLED/fbuild#297.
+        if let Some(snap) = info_snapshot {
+            let example_name = params
+                .example_name
+                .clone()
+                .or_else(|| crate::build_info::default_example_name(&params.project_dir));
+            let prog_path = link_result
+                .bin_path
+                .as_deref()
+                .or(link_result.hex_path.as_deref())
+                .or(link_result.elf_path.as_deref());
+            let inputs = crate::build_info::OrchestratorBuildInfoInputs {
+                project_dir: &params.project_dir,
+                env_name: &params.env_name,
+                board: &snap.board,
+                compiler: &compiler,
+                linker: &linker,
+                include_dirs: &snap.include_dirs,
+                defines: &snap.defines,
+                link_libs: &snap.link_libs,
+                link_flags: &snap.link_flags,
+                sketch_sources: &snap.sketch_sources,
+                frameworks: vec!["arduino".to_string()],
+                platform: "espressif32",
+                prog_path,
+                example_name: example_name.as_deref(),
+            };
+            if let Err(e) = crate::build_info::emit_build_info_for_orchestrator(inputs) {
+                tracing::warn!("failed to emit build_info.json: {}", e);
+            }
+        }
+
         let elapsed = start.elapsed().as_secs_f64();
         let platform_label = format!("ESP32 ({})", ctx.board.mcu);
         Ok(crate::pipeline::assemble_build_result(

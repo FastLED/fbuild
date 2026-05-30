@@ -97,6 +97,16 @@ pub enum Commands {
         /// Export build artifacts to a tooling-friendly directory
         #[arg(long)]
         output_dir: Option<String>,
+        /// Emit `<project>/.build/pio/<board>/build_info[_<example>].json`
+        /// after a successful link. PlatformIO-compatible blob consumed by
+        /// FastLED's size / symbol CI scripts (FastLED/fbuild#297). Off
+        /// by default — opt in from CI only.
+        #[arg(long)]
+        emit_build_info: bool,
+        /// Optional example name for the per-sketch `build_info_<example>.json`.
+        /// When omitted, the project directory's basename is used.
+        #[arg(long)]
+        example_name: Option<String>,
     },
     /// Deploy firmware to device
     Deploy {

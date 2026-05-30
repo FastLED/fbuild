@@ -7,6 +7,7 @@ pub mod apollo3;
 mod arduino_props;
 pub mod avr;
 pub mod build_fingerprint;
+pub mod build_info;
 pub mod build_output;
 pub mod ch32v;
 pub mod compile_database;
@@ -179,6 +180,17 @@ pub struct BuildParams {
     /// the orchestrator falls back to walking on every call, which is
     /// the pre-existing behaviour.
     pub watch_set_cache: Option<std::sync::Arc<dyn build_fingerprint::WatchSetStampCache>>,
+    /// When true, emit a PlatformIO-compatible `build_info.json` (or
+    /// `build_info_<example>.json`) under `<project>/.build/pio/<board>/`
+    /// after a successful link. Consumed by FastLED's size / symbol CI
+    /// scripts. Opt-in so non-CI users don't pay the I/O cost. See
+    /// FastLED/fbuild#297.
+    pub emit_build_info: bool,
+    /// Optional example name used to disambiguate per-sketch
+    /// `build_info_<example>.json` outputs. When `None`, the orchestrator
+    /// derives a default from the project directory basename. Ignored
+    /// when `emit_build_info` is `false`.
+    pub example_name: Option<String>,
 }
 
 /// Trait for platform-specific build orchestrators.

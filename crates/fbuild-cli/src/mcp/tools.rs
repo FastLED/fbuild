@@ -118,6 +118,8 @@ pub(super) async fn execute_tool(
                     .ok()
                     .filter(|s| !s.is_empty()),
                 output_dir: None,
+                emit_build_info: false,
+                example_name: None,
                 pio_env: crate::daemon_client::capture_pio_env(),
             };
 

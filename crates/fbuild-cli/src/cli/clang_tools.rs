@@ -48,6 +48,8 @@ pub async fn run_iwyu(
             None,
             true, // no_timestamp: compiledb generation doesn't need timestamps
             None,
+            false, // emit_build_info
+            None,  // example_name
         )
         .await?;
         if !db_path.exists() {
@@ -472,6 +474,8 @@ pub async fn run_clang_tool(
         None,
         true, // no_timestamp: compiledb generation doesn't need timestamps
         None,
+        false, // emit_build_info
+        None,  // example_name
     )
     .await?;
 

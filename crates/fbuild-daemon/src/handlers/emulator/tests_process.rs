@@ -133,6 +133,8 @@ fn run_real_esp32s3_fixture_in_qemu() {
             "-DARDUINO_USB_CDC_ON_BOOT=0".to_string(),
         ],
         watch_set_cache: None,
+        emit_build_info: false,
+        example_name: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;

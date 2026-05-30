@@ -154,6 +154,14 @@ impl Linker for ArmLinker {
         &self.size_path
     }
 
+    fn ar_path(&self) -> Option<&Path> {
+        Some(&self.ar_path)
+    }
+
+    fn objcopy_path(&self) -> Option<&Path> {
+        Some(&self.objcopy_path)
+    }
+
     fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
         crate::linker::LinkerBase::report_size(
             &self.size_path,

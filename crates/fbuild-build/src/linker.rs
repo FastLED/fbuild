@@ -72,6 +72,18 @@ pub trait Linker: Send + Sync {
     /// Used to derive the `nm` tool path for symbol analysis.
     fn size_tool_path(&self) -> &Path;
 
+    /// Path to the archiver (`ar`) used by this linker, if known.
+    /// Surfaced for `build_info.json` emission (FastLED/fbuild#297).
+    fn ar_path(&self) -> Option<&Path> {
+        None
+    }
+
+    /// Path to `objcopy` used by this linker, if known.
+    /// Surfaced for `build_info.json` emission (FastLED/fbuild#297).
+    fn objcopy_path(&self) -> Option<&Path> {
+        None
+    }
+
     /// Full link pipeline: archive core → link → convert → size → optional symbol analysis.
     ///
     /// Skips relinking when the existing firmware.elf is newer than all input

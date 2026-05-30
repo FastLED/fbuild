@@ -278,6 +278,8 @@ pub async fn test_emu(
                 Vec::new()
             },
             watch_set_cache: Some(std::sync::Arc::clone(&ctx.watch_set_cache) as std::sync::Arc<_>),
+            emit_build_info: false,
+            example_name: None,
         };
 
         let p = platform;

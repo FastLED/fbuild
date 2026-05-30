@@ -79,6 +79,8 @@ void loop() {
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
+        emit_build_info: false,
+        example_name: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -168,6 +170,8 @@ void loop() {
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
+        emit_build_info: false,
+        example_name: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -250,6 +254,8 @@ void loop() {
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
+        emit_build_info: false,
+        example_name: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -333,6 +339,8 @@ void loop() {
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
+        emit_build_info: false,
+        example_name: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -406,6 +414,8 @@ fn build_esp32s3_fixture() {
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
+        emit_build_info: false,
+        example_name: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -471,6 +481,8 @@ fn build_nightdriverstrip_demo() {
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
+        emit_build_info: false,
+        example_name: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -562,6 +574,8 @@ fn incremental_build_at(project_dir: &std::path::Path, env_name: &str) {
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
+        emit_build_info: false,
+        example_name: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
@@ -653,6 +667,8 @@ fn incremental_nightdriverstrip_one_file_changed() {
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
+        emit_build_info: false,
+        example_name: None,
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;

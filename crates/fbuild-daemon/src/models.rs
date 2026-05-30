@@ -44,6 +44,15 @@ pub struct BuildRequest {
     /// Export a tooling-friendly artifact bundle to this directory after build.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub output_dir: Option<String>,
+    /// When true, emit `<project>/.build/pio/<board>/build_info[_<example>].json`
+    /// after a successful link. PlatformIO-compatible blob consumed by
+    /// FastLED's size/symbol CI scripts. See FastLED/fbuild#297.
+    #[serde(default)]
+    pub emit_build_info: bool,
+    /// Optional example name for `build_info_<example>.json`. When omitted,
+    /// the orchestrator falls back to the project directory's basename.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub example_name: Option<String>,
     /// Snapshot of `PLATFORMIO_*` env vars from the CLI caller's environment.
     ///
     /// The daemon does not inherit caller env vars, so the CLI forwards them

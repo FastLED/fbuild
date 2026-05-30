@@ -37,6 +37,8 @@ pub async fn run_build(
     symbol_analysis: Option<String>,
     no_timestamp: bool,
     output_dir: Option<String>,
+    emit_build_info: bool,
+    example_name: Option<String>,
 ) -> fbuild_core::Result<()> {
     // FBUILD_PERF_LOG=1 enables coarse CLI-side timing (daemon handshake +
     // round-trip). Zero-overhead when unset.
@@ -100,6 +102,8 @@ pub async fn run_build(
             .ok()
             .filter(|s| !s.is_empty()),
         output_dir,
+        emit_build_info,
+        example_name,
         pio_env: daemon_client::capture_pio_env(),
     };
 
