@@ -208,7 +208,15 @@ pub async fn deploy_avr8js(
             }
         };
 
-        let script_path = session_dir.join("headless.mjs");
+        // headless.mjs uses `import ... from "avr8js"` (bare ESM specifier).
+        // Node's ESM resolver does NOT honor NODE_PATH — it only walks
+        // upward from the script's directory looking for node_modules.
+        // Stage the script inside the cache dir so node_modules/avr8js
+        // is on that walk-up path. Script content is a compile-time
+        // constant (`include_str!`), so concurrent writes are idempotent.
+        // The per-session firmware.hex and session.json continue to live
+        // under session_dir. See FastLED/fbuild#291.
+        let script_path = avr8js_cache.join("headless.mjs");
         if let Err(e) = std::fs::write(&script_path, AVR8JS_HEADLESS_MJS) {
             return (
                 StatusCode::INTERNAL_SERVER_ERROR,
