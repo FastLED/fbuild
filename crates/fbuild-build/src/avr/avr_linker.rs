@@ -158,6 +158,18 @@ impl Linker for AvrLinker {
         &self.size_path
     }
 
+    fn ar_tool_path(&self) -> Option<&Path> {
+        Some(&self.ar_path)
+    }
+
+    fn objcopy_tool_path(&self) -> Option<&Path> {
+        Some(&self.objcopy_path)
+    }
+
+    fn link_driver_path(&self) -> Option<&Path> {
+        Some(&self.gcc_path)
+    }
+
     fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
         crate::linker::LinkerBase::report_size(
             &self.size_path,

@@ -72,6 +72,32 @@ pub trait Linker: Send + Sync {
     /// Used to derive the `nm` tool path for symbol analysis.
     fn size_tool_path(&self) -> &Path;
 
+    /// Path to the platform's `ar` archiver, when the linker exposes one.
+    ///
+    /// Default: `None`. Per-platform linkers override to expose the binary
+    /// they store internally. Consumed by [`crate::build_info::emit_build_info`]
+    /// so downstream tools (FastLED `ci/compiled_size.py`, etc.) can locate
+    /// the toolchain that produced firmware.elf. See FastLED/fbuild#297.
+    fn ar_tool_path(&self) -> Option<&Path> {
+        None
+    }
+
+    /// Path to the platform's `objcopy`, when the link toolchain has one.
+    ///
+    /// Default: `None`. Platforms that produce an ELF directly (e.g. ESP8266
+    /// for the .elf output, before esptool processing) legitimately return
+    /// `None`. See [`Linker::ar_tool_path`].
+    fn objcopy_tool_path(&self) -> Option<&Path> {
+        None
+    }
+
+    /// Path to the link driver — typically the `gcc`/`g++` binary the linker
+    /// invokes (not `ld` directly). Used as the `cc_path`/`cxx_path` fallback
+    /// when downstream tools need a compiler. Default: `None`.
+    fn link_driver_path(&self) -> Option<&Path> {
+        None
+    }
+
     /// Full link pipeline: archive core → link → convert → size → optional symbol analysis.
     ///
     /// Skips relinking when the existing firmware.elf is newer than all input
