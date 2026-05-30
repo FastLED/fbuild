@@ -93,7 +93,9 @@ impl Daemon {
         // (FastLED/fbuild#275) so a venv install never gets shadowed by a
         // stale user-level daemon on PATH.
         let mut cmd = match daemon_spawn_target() {
+            // allow-direct-spawn: daemon must outlive the Python interpreter.
             Some(path) => std::process::Command::new(path),
+            // allow-direct-spawn: daemon must outlive the Python interpreter.
             None => std::process::Command::new(DAEMON_BIN_NAME),
         };
         if fbuild_paths::is_dev_mode() {
@@ -244,7 +246,9 @@ impl AsyncDaemon {
             // from inside this async block.
             // allow-direct-spawn: daemon must outlive the Python interpreter.
             let mut cmd = match spawn_target {
+                // allow-direct-spawn: daemon must outlive the Python interpreter.
                 Some(path) => std::process::Command::new(path),
+                // allow-direct-spawn: daemon must outlive the Python interpreter.
                 None => std::process::Command::new(DAEMON_BIN_NAME),
             };
             if dev_mode {
