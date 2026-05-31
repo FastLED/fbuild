@@ -30,6 +30,10 @@ inputs:
     description: "Override the cache directory. Default: $RUNNER_TEMP/fbuild-cache (runner-stable, survives across steps of the same job)."
     required: false
     default: ""
+  install-cache-key-extra:
+    description: "Extra string baked into the install cache key (separate from the build artifact cache). Use hashFiles('pyproject.toml') so a pin bump invalidates the cached binary. The install cache is intentionally board/platform-independent so it's shared across every job in a repo's matrix."
+    required: false
+    default: ""
 
 outputs:
   cache-hit:
@@ -65,13 +69,19 @@ runs:
           CACHE_DIR="${RUNNER_TEMP}/fbuild-cache"
         fi
         ZCCACHE_DIR="${RUNNER_TEMP}/zccache"
-        mkdir -p "$CACHE_DIR" "$ZCCACHE_DIR"
+        # Isolated --target dir for the fbuild wheel install. Caching this
+        # directory directly (instead of the hosted Python's site-packages)
+        # keeps the cache scoped, deterministic, and immune to whatever
+        # else other steps install into the system interpreter.
+        INSTALL_DIR="${RUNNER_TEMP}/fbuild-install"
+        mkdir -p "$CACHE_DIR" "$ZCCACHE_DIR" "$INSTALL_DIR"
 
         # Exported for every subsequent step in the user's job.
         echo "FBUILD_CACHE_DIR=$CACHE_DIR" >> "$GITHUB_ENV"
         echo "ZCCACHE_DIR=$ZCCACHE_DIR" >> "$GITHUB_ENV"
         echo "cache-dir=$CACHE_DIR" >> "$GITHUB_OUTPUT"
         echo "zccache-store-path=$ZCCACHE_DIR" >> "$GITHUB_OUTPUT"
+        echo "install-dir=$INSTALL_DIR" >> "$GITHUB_OUTPUT"
 
         if [ "${{ inputs.fbuild-version }}" = "latest" ]; then
           echo "pip-spec=fbuild" >> "$GITHUB_OUTPUT"
@@ -79,13 +89,65 @@ runs:
           echo "pip-spec=fbuild==${{ inputs.fbuild-version }}" >> "$GITHUB_OUTPUT"
         fi
 
+    - name: Restore fbuild install cache
+      id: fbuild-install-cache
+      uses: actions/cache@v5
+      with:
+        # Cache the entire isolated --target install directory. The fbuild
+        # wheel has zero PyPI deps (verified on PyPI), so caching this dir
+        # is enough — no separate dependency tree to track.
+        path: ${{ steps.resolve-paths.outputs.install-dir }}
+        # Key is intentionally board/platform-INDEPENDENT (no cache-key-extra)
+        # so every job in a repo's board matrix shares the same install cache.
+        # `install-cache-key-extra` is the consumer-supplied hash — typically
+        # hashFiles('pyproject.toml') — so a pin bump invalidates the cached
+        # binary across the whole repo at once.
+        key: fbuild-install-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-py${{ inputs.python-version }}-${{ steps.resolve-paths.outputs.pip-spec }}-${{ inputs.install-cache-key-extra }}
+        restore-keys: |
+          fbuild-install-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-py${{ inputs.python-version }}-${{ steps.resolve-paths.outputs.pip-spec }}-
+
     - name: Install fbuild
+      if: steps.fbuild-install-cache.outputs.cache-hit != 'true'
       shell: bash
       run: |
         set -euo pipefail
-        python -m pip install --upgrade pip
-        python -m pip install '${{ steps.resolve-paths.outputs.pip-spec }}'
-        fbuild --version || echo "fbuild --version not yet supported on this release" >&2
+        # --target installs into a single isolated dir we can cache cleanly.
+        # No --upgrade pip — that step alone took ~1s before and has zero
+        # functional impact on installing one wheel with no deps.
+        python -m pip install --target "${{ steps.resolve-paths.outputs.install-dir }}" '${{ steps.resolve-paths.outputs.pip-spec }}'
+
+    - name: Activate fbuild from install dir
+      shell: bash
+      run: |
+        set -euo pipefail
+        INSTALL_DIR="${{ steps.resolve-paths.outputs.install-dir }}"
+        # `pip install --target` drops console scripts in <target>/bin on
+        # POSIX and <target>/Scripts on Windows. Add both to GITHUB_PATH so
+        # the same action.yml works across runner.os without branching.
+        echo "$INSTALL_DIR/bin" >> "$GITHUB_PATH"
+        echo "$INSTALL_DIR/Scripts" >> "$GITHUB_PATH"
+        # Python needs to see the --target-installed package on import,
+        # otherwise `fbuild` (a console script) fails at module resolution
+        # despite being on PATH. Prepend, don't replace, any existing
+        # PYTHONPATH so downstream steps' Python imports keep working.
+        if [ -n "${PYTHONPATH:-}" ]; then
+          echo "PYTHONPATH=$INSTALL_DIR:$PYTHONPATH" >> "$GITHUB_ENV"
+        else
+          echo "PYTHONPATH=$INSTALL_DIR" >> "$GITHUB_ENV"
+        fi
+        # Smoke test using the resolved binary, not `fbuild` from PATH
+        # (GITHUB_PATH writes only take effect in subsequent steps).
+        if [ -x "$INSTALL_DIR/bin/fbuild" ]; then
+          PYTHONPATH="$INSTALL_DIR${PYTHONPATH:+:$PYTHONPATH}" "$INSTALL_DIR/bin/fbuild" --version \
+            || echo "fbuild --version not yet supported on this release" >&2
+        elif [ -x "$INSTALL_DIR/Scripts/fbuild.exe" ]; then
+          PYTHONPATH="$INSTALL_DIR${PYTHONPATH:+;$PYTHONPATH}" "$INSTALL_DIR/Scripts/fbuild.exe" --version \
+            || echo "fbuild --version not yet supported on this release" >&2
+        else
+          echo "::error::fbuild binary not found in $INSTALL_DIR/{bin,Scripts}; cache likely corrupt" >&2
+          ls -la "$INSTALL_DIR" >&2 || true
+          exit 1
+        fi
 
     - name: Resolve fbuild content hash
       id: fbuild-hash

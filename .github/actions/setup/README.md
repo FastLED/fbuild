@@ -97,6 +97,7 @@ Use `steps.<id>.outputs.zccache-store-path` inside workflow expressions. The sam
 | `cache-key-extra` | `""` | String baked into the cache key. Use `hashFiles(...)` over your graph inputs so edits invalidate stale artifacts. |
 | `cache-version` | `v1` | Manual cache bump. Increment when you want to force-invalidate across your matrix. |
 | `cache-dir` | `$RUNNER_TEMP/fbuild-cache` | Override if you need a different cache root. |
+| `install-cache-key-extra` | `""` | Extra string for the **install** cache (separate from the build artifact cache). Pass `hashFiles('pyproject.toml')` so a fbuild pin bump invalidates the cached binary. The install cache is intentionally board/platform-independent so every job in a matrix shares it. |
 
 ## Outputs
 
@@ -112,9 +113,11 @@ Use `steps.<id>.outputs.zccache-store-path` inside workflow expressions. The sam
 1. Sets up Python.
 2. Resolves a stable fbuild cache directory under `$RUNNER_TEMP` (survives across steps of the same job; not a surprise `$HOME` path) and the zccache store path the job will use for compiler-object caching.
 3. Exports `FBUILD_CACHE_DIR` and `ZCCACHE_DIR` via `$GITHUB_ENV` so every later step inherits them, and exposes the zccache location as the `zccache-store-path` output.
-4. Installs fbuild from PyPI at the requested version.
-5. **Computes the installed fbuild's content hash** (sha256 of its dist-info `RECORD`) and bakes it into the cache key. This guarantees the cache is tied to the exact fbuild you're running, not just the PyPI version string, so `latest` is safe and a re-released wheel won't poison the cache.
-6. Restores (and on job-end, saves) the fbuild cache via `actions/cache@v5`.
+4. **Restores the install cache** (binary + dist-info) into `$RUNNER_TEMP/fbuild-install` keyed by os/arch/python/pip-spec/`install-cache-key-extra`. On hit, the install step is skipped entirely. The key intentionally omits anything matrix-specific (board, OS-tag, etc.) so every job in a repo's matrix shares the cached binary.
+5. Installs fbuild from PyPI at the requested version (skipped on install-cache hit). Install uses `pip install --target=$RUNNER_TEMP/fbuild-install` so the cached directory is the entire install surface.
+6. Activates the install dir by appending `bin/` (POSIX) and `Scripts/` (Windows) to `$GITHUB_PATH` and prepending `PYTHONPATH`.
+7. **Computes the installed fbuild's content hash** (sha256 of its dist-info `RECORD`) and bakes it into the **build artifact** cache key. This guarantees the artifact cache is tied to the exact fbuild you're running, not just the PyPI version string, so `latest` is safe and a re-released wheel won't poison the cache.
+8. Restores (and on job-end, saves) the fbuild build artifact cache via `actions/cache@v5`.
 
 ### Why hash-pinning matters
 
