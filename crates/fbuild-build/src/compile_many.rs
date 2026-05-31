@@ -84,6 +84,96 @@ pub fn default_sketch_jobs() -> usize {
         .max(1)
 }
 
+/// Resolve the on-disk build root the orchestrator uses for a given sketch.
+///
+/// Matches the convention used by every per-platform orchestrator:
+/// `<sketch>/.fbuild/build/<env>/<profile>/`. Centralized here so the
+/// stage-1→stage-2 cache-seeding code can address that path without
+/// re-deriving the same string in three places. See FastLED/fbuild#335.
+pub fn project_build_dir(sketch: &Path, env: &str, profile: BuildProfile) -> PathBuf {
+    sketch
+        .join(".fbuild")
+        .join("build")
+        .join(env)
+        .join(match profile {
+            BuildProfile::Release => "release",
+            BuildProfile::Quick => "quick",
+        })
+}
+
+/// Seed a stage-2 project's framework `core/` from stage 1's, so the
+/// orchestrator's per-file `needs_rebuild` check (`.cmdhash` match +
+/// depfile-newer-than-object) reports "already built" for every framework
+/// translation unit and the worker only compiles the sketch + links.
+///
+/// Without this, every stage-2 project dir gets its own empty
+/// `.fbuild/build/<env>/<profile>/core/`, so the framework is rebuilt
+/// from scratch in every worker — the 25s-per-sketch path FastLED hit on
+/// its teensy41 / esp32s3 runs (FastLED/fbuild#335).
+///
+/// Uses hardlinks to keep the seed near-free; falls back to a byte copy
+/// if hardlinking fails (cross-filesystem, target FS lacks hardlink
+/// support, etc.). Both modes preserve the .o mtime — important because
+/// `needs_rebuild` consults dep-file mtimes against the .o mtime.
+///
+/// Idempotent: skips files that already exist at the target. A pre-
+/// existing stage-2 partial build won't get clobbered.
+///
+/// Errors are non-fatal and tracked by the caller — on any failure the
+/// orchestrator simply falls back to its full framework-recompile path
+/// (no worse than the pre-#335 behavior).
+fn seed_stage2_core_from_stage1(stage1_core: &Path, stage2_core: &Path) -> std::io::Result<()> {
+    if !stage1_core.is_dir() {
+        return Ok(());
+    }
+    std::fs::create_dir_all(stage2_core)?;
+    let mut n_linked = 0usize;
+    let mut n_copied = 0usize;
+    for entry in std::fs::read_dir(stage1_core)? {
+        let entry = entry?;
+        let ty = entry.file_type()?;
+        if !ty.is_file() {
+            // We only seed individual artifact files (.o/.d/.cmdhash). Any
+            // subdir is unexpected for the framework `core/` layout, but
+            // skip it defensively rather than fail the whole seed.
+            continue;
+        }
+        let src = entry.path();
+        let dst = stage2_core.join(entry.file_name());
+        if dst.exists() {
+            continue;
+        }
+        if std::fs::hard_link(&src, &dst).is_ok() {
+            n_linked += 1;
+        } else {
+            // Hardlink failed (cross-fs, NTFS junction, etc.) — fall
+            // back to a byte copy. `copy` preserves nothing about the
+            // source mtime by default; we explicitly set it from the
+            // stage-1 metadata so depfile freshness comparison still
+            // returns "object newer than deps" inside the orchestrator.
+            std::fs::copy(&src, &dst)?;
+            if let (Ok(meta), Ok(file)) = (
+                src.metadata(),
+                std::fs::File::options().write(true).open(&dst),
+            ) {
+                if let Ok(mtime) = meta.modified() {
+                    let _ = file.set_modified(mtime);
+                }
+            }
+            n_copied += 1;
+        }
+    }
+    tracing::info!(
+        "compile-many stage 2 seed: linked {} + copied {} framework artifacts \
+         from {} to {}",
+        n_linked,
+        n_copied,
+        stage1_core.display(),
+        stage2_core.display()
+    );
+    Ok(())
+}
+
 /// Compile parallelism to give each stage-2 worker, splitting the host's
 /// available cores across `sketch_jobs` workers.
 ///
@@ -429,6 +519,11 @@ pub fn compile_many_with(
     // hit those caches instead of re-building the framework.
     let stage1_start = Instant::now();
     let (first_sketch, first_env) = resolved[0].clone();
+    // Remember stage 1's resolved (sketch_dir, env) so stage 2 can find the
+    // pre-built framework artifacts and seed each worker's `core/` from
+    // them — see `seed_stage2_core_from_stage1` and FastLED/fbuild#335.
+    let stage1_sketch = first_sketch.clone();
+    let stage1_env = first_env.clone();
     let first_result = builder.build(SketchBuildInputs {
         sketch: first_sketch,
         env_name: first_env,
@@ -460,6 +555,15 @@ pub fn compile_many_with(
     // -------- Stage 2: fan out the remaining sketches in parallel. --------
     let stage2_start = Instant::now();
     let rest: Vec<(PathBuf, String)> = resolved[1..].to_vec();
+    // Stage-1 has finished and (on success) written its framework `core/`
+    // artifacts to disk. Compute that path once so every stage-2 worker
+    // can hardlink them into its own per-sketch `core/` and skip the
+    // framework recompile entirely — FastLED/fbuild#335.
+    let stage1_core_seed: Option<PathBuf> = if first_result.success {
+        Some(project_build_dir(&stage1_sketch, &stage1_env, req.profile).join("core"))
+    } else {
+        None
+    };
     let stage2_results = if rest.is_empty() {
         Vec::new()
     } else {
@@ -471,6 +575,8 @@ pub fn compile_many_with(
             req.verbose,
             builder,
             &req.pio_env,
+            stage1_core_seed.as_deref(),
+            &stage1_env,
         )
     };
     let stage2_secs = stage2_start.elapsed().as_secs_f64();
@@ -496,6 +602,14 @@ pub fn compile_many_with(
 
 /// Run stage-2 workers across `rest` with up to `sketch_jobs` concurrent
 /// threads. Preserves input order in the returned `Vec`.
+///
+/// `stage1_core_seed` is the path to stage 1's framework `core/` dir; when
+/// `Some` and the worker's resolved env matches `stage1_env`, the worker
+/// hardlinks every framework artifact into its own per-sketch `core/`
+/// before calling the orchestrator, so the framework recompile is skipped
+/// (FastLED/fbuild#335). Pass `None` to disable seeding (e.g. stage 1
+/// failed).
+#[allow(clippy::too_many_arguments)]
 fn run_stage2(
     rest: &[(PathBuf, String)],
     platform: Platform,
@@ -504,6 +618,8 @@ fn run_stage2(
     verbose: bool,
     builder: &dyn SketchBuilder,
     pio_env: &HashMap<String, String>,
+    stage1_core_seed: Option<&Path>,
+    stage1_env: &str,
 ) -> Vec<SketchResult> {
     let total = rest.len();
     let cap = sketch_jobs.min(total).max(1);
@@ -538,6 +654,28 @@ fn run_stage2(
                     }
                     let entry = &rest[idx];
                     let (sketch, env_name) = (&entry.0, &entry.1);
+                    // Seed framework `core/` from stage 1 when the env
+                    // matches. Different envs may bake different flags
+                    // into framework objects, so we only reuse when the
+                    // env name is identical (the common case for a single
+                    // board across many FastLED examples). Errors are
+                    // logged and ignored — orchestrator falls back to a
+                    // full framework recompile, no worse than pre-#335.
+                    if let Some(seed) = stage1_core_seed {
+                        if env_name == stage1_env {
+                            let target_core =
+                                project_build_dir(sketch, env_name, profile).join("core");
+                            if let Err(e) = seed_stage2_core_from_stage1(seed, &target_core) {
+                                tracing::warn!(
+                                    "compile-many stage 2: failed to seed core/ \
+                                     for {}: {} — falling back to full framework \
+                                     recompile",
+                                    sketch.display(),
+                                    e
+                                );
+                            }
+                        }
+                    }
                     let res = builder.build(SketchBuildInputs {
                         sketch: sketch.clone(),
                         env_name: env_name.clone(),
@@ -580,6 +718,81 @@ mod tests {
     #[test]
     fn default_sketch_jobs_is_at_least_one() {
         assert!(default_sketch_jobs() >= 1);
+    }
+
+    /// `seed_stage2_core_from_stage1` is the foundation of the
+    /// framework-archive-sharing fix for FastLED/fbuild#335. It must
+    /// (a) be a no-op when the source dir is missing, (b) populate the
+    /// target dir from the source, and (c) skip files that already
+    /// exist at the target so a pre-existing partial stage-2 build
+    /// isn't clobbered.
+    #[test]
+    fn seed_stage2_core_no_op_when_source_missing() {
+        let tmp = tempfile::tempdir().unwrap();
+        let absent_source = tmp.path().join("missing");
+        let target = tmp.path().join("target");
+        assert!(seed_stage2_core_from_stage1(&absent_source, &target).is_ok());
+        // Must not create the target dir for an absent source — otherwise
+        // we'd leave litter on disk for envs that don't match.
+        assert!(!target.exists());
+    }
+
+    #[test]
+    fn seed_stage2_core_copies_or_links_each_file() {
+        let tmp = tempfile::tempdir().unwrap();
+        let stage1 = tmp.path().join("stage1");
+        let stage2 = tmp.path().join("stage2");
+        std::fs::create_dir_all(&stage1).unwrap();
+        for (name, body) in [
+            ("CDC.cpp.o", b"OBJ"),
+            ("CDC.cpp.d", b"DEP"),
+            ("CDC.cpp.cmdhash", b"HSH"),
+        ] {
+            std::fs::write(stage1.join(name), body).unwrap();
+        }
+        seed_stage2_core_from_stage1(&stage1, &stage2).unwrap();
+        for name in ["CDC.cpp.o", "CDC.cpp.d", "CDC.cpp.cmdhash"] {
+            let dst = stage2.join(name);
+            assert!(dst.exists(), "expected seeded {name} at {}", dst.display());
+            // Same content, regardless of whether we hardlinked or copied.
+            assert_eq!(
+                std::fs::read(stage1.join(name)).unwrap(),
+                std::fs::read(&dst).unwrap(),
+            );
+        }
+    }
+
+    #[test]
+    fn seed_stage2_core_skips_files_already_present_at_target() {
+        // Mirrors the worker-restart case: a previous stage-2 attempt
+        // partially populated the target before crashing. The seed must
+        // not overwrite, because the existing file may already encode
+        // local progress (e.g. the orchestrator wrote a fresher
+        // `.cmdhash` while computing the same artifact).
+        let tmp = tempfile::tempdir().unwrap();
+        let stage1 = tmp.path().join("stage1");
+        let stage2 = tmp.path().join("stage2");
+        std::fs::create_dir_all(&stage1).unwrap();
+        std::fs::create_dir_all(&stage2).unwrap();
+        std::fs::write(stage1.join("CDC.cpp.o"), b"FROM_STAGE_1").unwrap();
+        std::fs::write(stage2.join("CDC.cpp.o"), b"FROM_STAGE_2_PARTIAL").unwrap();
+        seed_stage2_core_from_stage1(&stage1, &stage2).unwrap();
+        assert_eq!(
+            std::fs::read(stage2.join("CDC.cpp.o")).unwrap(),
+            b"FROM_STAGE_2_PARTIAL"
+        );
+    }
+
+    #[test]
+    fn project_build_dir_matches_orchestrator_convention() {
+        // Locks the on-disk convention the AVR/ESP32/etc. orchestrators
+        // all derive their per-(env,profile) build root from. Any change
+        // here that doesn't also update the orchestrators will silently
+        // break the stage-1→stage-2 core/ handoff in FastLED/fbuild#335.
+        let p = project_build_dir(Path::new("/tmp/sketch"), "uno", BuildProfile::Release);
+        assert!(p.ends_with("sketch/.fbuild/build/uno/release"));
+        let q = project_build_dir(Path::new("/tmp/sketch"), "esp32s3", BuildProfile::Quick);
+        assert!(q.ends_with("sketch/.fbuild/build/esp32s3/quick"));
     }
 
     #[test]
