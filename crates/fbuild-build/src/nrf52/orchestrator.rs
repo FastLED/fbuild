@@ -290,12 +290,13 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         .with_build_unflags(ctx.build_unflags.clone());
 
         // 7. Create linker (resolve linker script from board config).
-        // Use the alias-aware lookup so board JSONs that track PIO upstream
+        // The MCU-aware lookup makes board JSONs that track PIO upstream
         // (`ldscript = "nrf52_xxaa.ld"`) resolve to the SoftDevice-flavored
-        // Adafruit name actually on disk (`nrf52840_s140_v6.ld` /
-        // `nrf52832_s132_v6.ld`). Same fix shape as #322 for variant.h.
-        let linker_script_path =
-            framework.get_linker_script_with_mcu(ldscript_name, &ctx.board.mcu);
+        // Adafruit name actually on disk (`nrf52840_s140_v{N}.ld` /
+        // `nrf52832_s132_v{N}.ld`, picking the highest available version
+        // so the alias survives BSP bumps). Same fix shape as #322 for
+        // variant.h.
+        let linker_script_path = framework.get_linker_script(ldscript_name, &ctx.board.mcu);
         let linker = Nrf52Linker::new(
             toolchain.get_gcc_path(),
             toolchain.get_ar_path(),
