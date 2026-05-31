@@ -92,6 +92,18 @@ impl BuildOrchestrator for Nrf52Orchestrator {
             .ldscript
             .as_deref()
             .unwrap_or("nrf52840_s140_v6.ld");
+        // Resolve the linker script up front so the fingerprint reflects the
+        // file that will actually be linked. With the PIO -> Adafruit alias
+        // (e.g. nrf52_xxaa.ld -> nrf52840_s140_v{N}.ld) the resolved name can
+        // differ from the board JSON value, and a future BSP bump that moves
+        // resolution from `_v6.ld` to `_v7.ld` MUST invalidate the fast-path
+        // key so stale artifacts aren't reused. See CodeRabbit comment on
+        // PR #328 / FastLED/fbuild#327.
+        let linker_script_path = framework.get_linker_script(ldscript_name, &ctx.board.mcu);
+        let resolved_linker_script = linker_script_path
+            .file_name()
+            .map(|os| os.to_string_lossy().into_owned())
+            .unwrap_or_else(|| ldscript_name.to_string());
         let metadata_hash = stable_hash_json(&Nrf52FingerprintMetadata {
             version: BUILD_FINGERPRINT_VERSION,
             env_name: params.env_name.clone(),
@@ -103,7 +115,7 @@ impl BuildOrchestrator for Nrf52Orchestrator {
             board_variant: ctx.board.variant.clone(),
             board_f_cpu: ctx.board.f_cpu.clone(),
             board_extra_flags: ctx.board.extra_flags.clone(),
-            linker_script: ldscript_name.to_string(),
+            linker_script: resolved_linker_script,
             platform: "nordicnrf52".to_string(),
             max_flash: ctx.board.max_flash,
             max_ram: ctx.board.max_ram,
@@ -289,8 +301,9 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         )
         .with_build_unflags(ctx.build_unflags.clone());
 
-        // 7. Create linker (resolve linker script from board config)
-        let linker_script_path = framework.get_linker_script(ldscript_name);
+        // 7. Create linker (reuse the alias-resolved linker_script_path
+        // computed up front so the fingerprint hash and the actual linker
+        // input are always in sync — see comment above the metadata_hash).
         let linker = Nrf52Linker::new(
             toolchain.get_gcc_path(),
             toolchain.get_ar_path(),
