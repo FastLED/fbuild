@@ -210,7 +210,14 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         let mcu_config = super::mcu_config::get_nrf52_config_for_mcu(&mcu_lower)?;
         let mut defines = ctx.board.get_defines();
         defines.extend(mcu_config.defines_map());
-        let mut include_dirs = ctx.board.get_include_paths(&framework_dir);
+        // Reuse the alias-resolved core_dir/variant_dir computed at step 5.
+        // BoardConfig::get_include_paths joins variants/<self.variant> literally
+        // and would emit a non-existent path like variants/nRF52DK/ when the
+        // board JSON uses a PIO/sandeepmistry variant name that aliases to a
+        // different Adafruit directory (e.g. nRF52DK -> pca10056, see #321).
+        // That would surface as `fatal error: variant.h: No such file or
+        // directory` when compiling cores/nRF5/{Uart,delay}.h.
+        let mut include_dirs = vec![core_dir.clone(), variant_dir.clone()];
         include_dirs.push(ctx.src_dir.clone());
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
         // Toolchain sysroot includes
