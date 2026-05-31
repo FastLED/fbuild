@@ -235,7 +235,7 @@ fn pick_highest_version_ldscript(linker_dir: &Path, prefix: &str) -> Option<Path
             .find(|c: char| !c.is_ascii_digit())
             .unwrap_or(after_v.len());
         if let Ok(version) = after_v[..digit_end].parse::<u32>() {
-            if best.as_ref().is_none_or(|(b, _)| version > *b) {
+            if best.as_ref().map_or(true, |(b, _)| version > *b) {
                 best = Some((version, entry.path()));
             }
         }
@@ -493,8 +493,7 @@ mod tests {
         std::fs::create_dir_all(&linker_dir).unwrap();
         std::fs::write(linker_dir.join("nrf52840_s140_v6.ld"), "").unwrap();
 
-        let resolved =
-            resolve_nrf52_ldscript(&linker_dir, "nrf52840_s140_v6.ld", "nrf52840");
+        let resolved = resolve_nrf52_ldscript(&linker_dir, "nrf52840_s140_v6.ld", "nrf52840");
         assert_eq!(resolved, linker_dir.join("nrf52840_s140_v6.ld"));
     }
 
