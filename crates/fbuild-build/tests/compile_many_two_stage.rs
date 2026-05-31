@@ -14,7 +14,8 @@ use std::sync::{Arc, Barrier, Mutex};
 use std::time::Duration;
 
 use fbuild_build::compile_many::{
-    compile_many_with, CompileManyRequest, SketchBuildInputs, SketchBuilder, SketchResult, Stage,
+    compile_many_with, stage2_jobs_per_worker, CompileManyRequest, SketchBuildInputs,
+    SketchBuilder, SketchResult, Stage,
 };
 use fbuild_core::BuildProfile;
 
@@ -200,12 +201,16 @@ fn stage1_runs_exactly_once_and_stage2_handles_the_rest() {
         "sketch stage called once per remaining sketch"
     );
 
-    // Stage-1 honors framework_jobs; stage-2 always passes jobs=1.
+    // Stage-1 honors framework_jobs; stage-2 derives per-worker jobs
+    // from the host's core budget split across `sketch_jobs` workers
+    // (#335). With `sketch_jobs=4` here, every stage-2 worker must see
+    // the same `stage2_jobs_per_worker(4)` value the dispatcher passed.
     assert_eq!(stage1[0].3, 1, "framework_jobs=1 forwarded to stage 1");
+    let expected_stage2_jobs = stage2_jobs_per_worker(4);
     for (_, _, _, jobs) in &stage2 {
         assert_eq!(
-            *jobs, 1,
-            "stage 2 workers always invoke orchestrator with jobs=1"
+            *jobs, expected_stage2_jobs,
+            "stage-2 workers must receive jobs=stage2_jobs_per_worker(sketch_jobs)"
         );
     }
 
@@ -342,4 +347,76 @@ fn single_sketch_runs_only_stage1() {
     assert_eq!(result.stage1_count, 1);
     assert_eq!(result.stage2_count, 0);
     assert_eq!(result.results[0].stage, Stage::Stage1Framework);
+}
+
+/// AC: stage-2 workers must keep total in-flight compile slots at roughly
+/// the host's core count — never <1, never silently >cores. The previous
+/// `jobs=1` hardcoding (FastLED/fbuild#335) capped each worker to a single
+/// compile thread even when the orchestrator was re-building the framework
+/// inside the worker, producing a ~2x slowdown vs. a single `fbuild build`
+/// on a 16-core host. This locks the new core-split behavior so a future
+/// regression to `jobs=1` (or to an oversubscribing default like
+/// `cores` per worker) gets caught at unit-test speed instead of in CI.
+#[test]
+fn stage2_jobs_per_worker_splits_cores_across_workers() {
+    let cores = std::thread::available_parallelism()
+        .map(|n| n.get())
+        .unwrap_or(1)
+        .max(1);
+
+    // Always >= 1, never zero — the hot path multiplies this in, so a
+    // bug that produced 0 would silently turn every stage-2 build into a
+    // no-op.
+    for sketch_jobs in [1usize, 2, 3, 4, 8, 16, 32] {
+        let per = stage2_jobs_per_worker(sketch_jobs);
+        assert!(
+            per >= 1,
+            "stage2_jobs_per_worker({sketch_jobs}) returned {per}, expected >= 1"
+        );
+    }
+
+    // sketch_jobs=1 should grant the worker the whole core budget so
+    // serial-batch invocations don't regress vs `fbuild build` (which
+    // uses the same effective parallelism). On a single-core box this
+    // still resolves to 1 — `available_parallelism()` is the floor.
+    let lone_worker = stage2_jobs_per_worker(1);
+    assert_eq!(
+        lone_worker,
+        cores.max(1),
+        "with one stage-2 worker the worker should own the full core budget"
+    );
+
+    // Sum across all stage-2 workers must stay within the host's cores
+    // — the whole point of splitting is to avoid oversubscription. We
+    // tolerate a small undershoot when cores doesn't divide sketch_jobs
+    // evenly (each worker still gets a floor of 1).
+    for sketch_jobs in [2usize, 4, 8] {
+        let per = stage2_jobs_per_worker(sketch_jobs);
+        let total = per * sketch_jobs;
+        // Floor of 1 per worker means total can exceed cores when
+        // sketch_jobs > cores; bound only when sketch_jobs <= cores.
+        if sketch_jobs <= cores {
+            assert!(
+                total <= cores,
+                "{sketch_jobs} workers × {per} jobs = {total} exceeds {cores} cores"
+            );
+        }
+    }
+
+    // sketch_jobs > cores ⇒ each worker still gets a floor of 1 — better
+    // for the worker to spawn no extra parallelism than to stall at 0.
+    let many = stage2_jobs_per_worker(cores * 8);
+    assert_eq!(
+        many, 1,
+        "oversubscribed sketch_jobs should clamp per-worker jobs to the floor of 1"
+    );
+
+    // sketch_jobs=0 must not divide-by-zero — the public API takes
+    // Option<usize> but the helper takes usize, and callers in the wild
+    // can hand us a literal 0 (rounding, off-by-one). Treat 0 as 1.
+    assert_eq!(
+        stage2_jobs_per_worker(0),
+        cores.max(1),
+        "stage2_jobs_per_worker(0) must not panic and should treat 0 as 1"
+    );
 }

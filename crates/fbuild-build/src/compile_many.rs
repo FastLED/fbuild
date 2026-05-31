@@ -84,6 +84,30 @@ pub fn default_sketch_jobs() -> usize {
         .max(1)
 }
 
+/// Compile parallelism to give each stage-2 worker, splitting the host's
+/// available cores across `sketch_jobs` workers.
+///
+/// The original `jobs=1` hardcoding assumed stage-2 workers compile a
+/// single TU (sketch.cpp) against a pre-built framework archive. In
+/// practice consumers stage each sketch in its own project dir (so two
+/// sketches with different `.ino` content can build in parallel), and
+/// each project dir has its own `.fbuild/build/<env>/<profile>/` — which
+/// means stage 2 rebuilds the framework from scratch per sketch. With
+/// `jobs=1` that framework rebuild is serial inside each worker, and the
+/// per-sketch wall time becomes "sum of framework TU times" instead of
+/// "max of framework TU times". See FastLED/fbuild#335.
+///
+/// Splitting cores across workers keeps total in-flight compile slots
+/// at roughly `cores` so we don't oversubscribe small runners — each
+/// worker gets `max(1, cores / sketch_jobs)`.
+pub fn stage2_jobs_per_worker(sketch_jobs: usize) -> usize {
+    let cores = std::thread::available_parallelism()
+        .map(|n| n.get())
+        .unwrap_or(1)
+        .max(1);
+    (cores / sketch_jobs.max(1)).max(1)
+}
+
 /// Request parameters for [`compile_many`].
 #[derive(Debug, Clone)]
 pub struct CompileManyRequest {
@@ -496,6 +520,12 @@ fn run_stage2(
     let results_slot: Vec<Mutex<Option<SketchResult>>> =
         results.iter_mut().map(|_| Mutex::new(None)).collect();
 
+    // Split available cores across stage-2 workers so each worker has
+    // real compile parallelism. See `stage2_jobs_per_worker` for why the
+    // old `jobs=1` hardcoding was a 2-3x regression vs the single-build
+    // path on cold cache — FastLED/fbuild#335.
+    let jobs_per_worker = stage2_jobs_per_worker(cap);
+
     std::thread::scope(|scope| {
         let handles: Vec<_> = (0..cap)
             .map(|_| {
@@ -513,10 +543,7 @@ fn run_stage2(
                         env_name: env_name.clone(),
                         platform,
                         profile,
-                        // Per-sketch work is single-TU; framework archives
-                        // are already pre-built, so jobs=1 keeps memory
-                        // per worker minimal.
-                        jobs: 1,
+                        jobs: jobs_per_worker,
                         verbose,
                         stage: Stage::Stage2Sketch,
                         pio_env: pio_env.clone(),
