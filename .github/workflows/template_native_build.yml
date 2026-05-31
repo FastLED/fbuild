@@ -98,7 +98,11 @@ jobs:
         shell: bash
         run: |
           if [[ "${{ inputs.target }}" == *-unknown-linux-musl ]]; then
-            soldr cargo zigbuild --release --target ${{ inputs.target }} \
+            # Direct `cargo zigbuild` (pip-installed wrapper) bypasses
+            # soldr's bin cache, which has been serving a corrupted
+            # cargo-zigbuild binary (`Syntax error: ")" unexpected` at
+            # line 10) and blocking PyPI publishes. See #331.
+            cargo zigbuild --release --target ${{ inputs.target }} \
               -p fbuild-cli \
               -p fbuild-daemon
           else
@@ -128,7 +132,8 @@ jobs:
             ARCH="${TARGET%%-*}"
             PYO3_TARGET="${ARCH}-unknown-linux-gnu"
             rustup target add "$PYO3_TARGET"
-            PYO3_NO_PYTHON=1 soldr cargo zigbuild --release \
+            # Direct `cargo zigbuild` (pip-installed wrapper) — see #331.
+            PYO3_NO_PYTHON=1 cargo zigbuild --release \
               --target-dir "${PYTHON_TARGET_DIR}" \
               --target "${PYO3_TARGET}.2.17" -p fbuild-python \
               --features extension-module
