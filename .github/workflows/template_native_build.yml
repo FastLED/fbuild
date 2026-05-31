@@ -54,7 +54,7 @@ jobs:
 
       - name: Setup soldr
         id: setup-soldr
-        uses: zackees/setup-soldr@v0.9.24
+        uses: zackees/setup-soldr@v0.9.35
         with:
           cache: true
           build-cache: true
