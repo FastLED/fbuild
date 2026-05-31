@@ -99,6 +99,16 @@ impl Nrf52Cores {
         self.get_linker_dir().join(ldscript_name)
     }
 
+    /// Get the linker script for a given script name, with MCU-aware alias
+    /// resolution between PIO/sandeepmistry naming (`nrf52_xxaa.ld`) and the
+    /// SoftDevice-flavored Adafruit naming (`nrf52840_s140_v6.ld`,
+    /// `nrf52832_s132_v6.ld`). Mirrors the variant alias approach added in
+    /// #322 — same root cause: board JSONs that track PIO upstream don't
+    /// match the names actually shipped by Adafruit's BSP.
+    pub fn get_linker_script_with_mcu(&self, ldscript_name: &str, mcu: &str) -> PathBuf {
+        resolve_nrf52_ldscript(&self.get_linker_dir(), ldscript_name, mcu)
+    }
+
     /// Get the linker scripts directory (`cores/nRF5/linker/`).
     ///
     /// This must be added to the linker's library search path (`-L`) so that
@@ -197,6 +207,50 @@ fn resolve_nrf52_variant_dir(variants_dir: &Path, variant_name: &str) -> PathBuf
     if let Some(aliased) = nrf52_variant_alias(variant_name) {
         let candidate = variants_dir.join(aliased);
         if candidate.is_dir() {
+            return candidate;
+        }
+    }
+    primary
+}
+
+/// Map a PIO/sandeepmistry linker script name to the equivalent
+/// SoftDevice-flavored Adafruit name for a given MCU, when they differ.
+/// Returns `None` when no alias applies.
+///
+/// PIO board JSONs that track sandeepmistry's `arduino-nRF5` framework
+/// declare `ldscript = "nrf52_xxaa.ld"` (the bare-metal/no-SoftDevice
+/// script), but Adafruit's BSP ships SoftDevice-flavored scripts:
+/// `nrf52840_s140_v6.ld` for nrf52840, `nrf52832_s132_v6.ld` for nrf52832.
+/// When the literal `nrf52_xxaa.ld` isn't on disk, fall back to whichever
+/// SoftDevice script matches the board's MCU.
+fn nrf52_ldscript_alias(ldscript_name: &str, mcu_lower: &str) -> Option<&'static str> {
+    match ldscript_name {
+        "nrf52_xxaa.ld" => {
+            if mcu_lower.starts_with("nrf52840") {
+                Some("nrf52840_s140_v6.ld")
+            } else if mcu_lower.starts_with("nrf52832") {
+                Some("nrf52832_s132_v6.ld")
+            } else {
+                None
+            }
+        }
+        _ => None,
+    }
+}
+
+/// Resolve a linker script path under `linker_dir`, honoring the literal
+/// name first, then any PIO->Adafruit alias keyed by MCU. Returns the
+/// literal path when neither exists so the eventual file-open error has a
+/// meaningful name.
+fn resolve_nrf52_ldscript(linker_dir: &Path, ldscript_name: &str, mcu: &str) -> PathBuf {
+    let primary = linker_dir.join(ldscript_name);
+    if primary.is_file() {
+        return primary;
+    }
+    let mcu_lower = mcu.to_lowercase();
+    if let Some(aliased) = nrf52_ldscript_alias(ldscript_name, &mcu_lower) {
+        let candidate = linker_dir.join(aliased);
+        if candidate.is_file() {
             return candidate;
         }
     }
@@ -359,5 +413,69 @@ mod tests {
 
         let resolved = resolve_nrf52_variant_dir(&variants_dir, "nRF52DK");
         assert_eq!(resolved, variants_dir.join("nRF52DK"));
+    }
+
+    /// nrf52840_dk board JSON says `ldscript = "nrf52_xxaa.ld"` but Adafruit's
+    /// BSP ships `nrf52840_s140_v6.ld`. Resolver must accept the PIO name and
+    /// fall back to the Adafruit script that matches the board's MCU.
+    #[test]
+    fn nrf52_xxaa_ld_resolves_to_s140_for_nrf52840() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let linker_dir = tmp.path().join("linker");
+        std::fs::create_dir_all(&linker_dir).unwrap();
+        std::fs::write(linker_dir.join("nrf52840_s140_v6.ld"), "").unwrap();
+
+        let resolved = resolve_nrf52_ldscript(&linker_dir, "nrf52_xxaa.ld", "nrf52840");
+        assert_eq!(resolved, linker_dir.join("nrf52840_s140_v6.ld"));
+    }
+
+    /// Same alias gate but for nrf52832 boards — fall back to the s132 script.
+    #[test]
+    fn nrf52_xxaa_ld_resolves_to_s132_for_nrf52832() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let linker_dir = tmp.path().join("linker");
+        std::fs::create_dir_all(&linker_dir).unwrap();
+        std::fs::write(linker_dir.join("nrf52832_s132_v6.ld"), "").unwrap();
+
+        let resolved = resolve_nrf52_ldscript(&linker_dir, "nrf52_xxaa.ld", "nrf52832");
+        assert_eq!(resolved, linker_dir.join("nrf52832_s132_v6.ld"));
+    }
+
+    /// When the literal ldscript exists, prefer it — alias is only a fallback.
+    #[test]
+    fn ldscript_uses_literal_name_when_present() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let linker_dir = tmp.path().join("linker");
+        std::fs::create_dir_all(&linker_dir).unwrap();
+        std::fs::write(linker_dir.join("nrf52840_s140_v6.ld"), "").unwrap();
+
+        let resolved =
+            resolve_nrf52_ldscript(&linker_dir, "nrf52840_s140_v6.ld", "nrf52840");
+        assert_eq!(resolved, linker_dir.join("nrf52840_s140_v6.ld"));
+    }
+
+    /// When neither literal nor alias exists, return the literal so the
+    /// eventual file-open error has a meaningful name.
+    #[test]
+    fn ldscript_returns_literal_when_no_match() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let linker_dir = tmp.path().join("linker");
+        std::fs::create_dir_all(&linker_dir).unwrap();
+
+        let resolved = resolve_nrf52_ldscript(&linker_dir, "unknown_board.ld", "nrf52840");
+        assert_eq!(resolved, linker_dir.join("unknown_board.ld"));
+    }
+
+    /// MCU outside the {52832, 52840} aliases just returns the literal.
+    #[test]
+    fn ldscript_alias_only_applies_to_known_mcus() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let linker_dir = tmp.path().join("linker");
+        std::fs::create_dir_all(&linker_dir).unwrap();
+        std::fs::write(linker_dir.join("nrf52840_s140_v6.ld"), "").unwrap();
+
+        // nrf52833 — not in the alias map — should NOT pick up the 840 script.
+        let resolved = resolve_nrf52_ldscript(&linker_dir, "nrf52_xxaa.ld", "nrf52833");
+        assert_eq!(resolved, linker_dir.join("nrf52_xxaa.ld"));
     }
 }
