@@ -126,22 +126,7 @@ fn find_zccache_in_venv(start: &Path, exe_name: &str) -> Option<PathBuf> {
 /// Start the zccache daemon if it's not already running.
 ///
 /// This is idempotent — `zccache start` is a no-op when the daemon is up.
-///
-/// Bounded by a wall-clock timeout: if `zccache start` doesn't return
-/// within `FBUILD_ZCCACHE_START_TIMEOUT_SECS` (default 30s), kill the
-/// child and continue without zccache. A wedged zccache daemon used to
-/// hang the orchestrator silently for the lifetime of the fbuild client
-/// because `.status()` had no timeout — see FastLED/fbuild#346 finding
-/// (2). Falling through here is safe: the orchestrator runs the
-/// compiler directly when `find_zccache` later returns None (the daemon
-/// has separate readiness signals we don't gate on here).
 pub fn ensure_running(zccache: &Path) {
-    let timeout = std::env::var("FBUILD_ZCCACHE_START_TIMEOUT_SECS")
-        .ok()
-        .and_then(|s| s.parse::<u64>().ok())
-        .map(std::time::Duration::from_secs)
-        .unwrap_or(std::time::Duration::from_secs(30));
-
     // INTENTIONALLY DETACHED (FastLED/fbuild#32): zccache is itself a
     // long-running daemon with independent lifecycle management. `start`
     // is a no-op when it's already running, and either way the zccache
@@ -168,46 +153,16 @@ pub fn ensure_running(zccache: &Path) {
         }
     };
 
-    // Poll `try_wait` with a short backoff rather than blocking on
-    // `wait()`. This is std-only (no extra dep) and keeps the loop
-    // responsive enough that the deadline lands within a poll interval.
-    let deadline = std::time::Instant::now() + timeout;
-    let mut interval = std::time::Duration::from_millis(50);
-    loop {
-        match child.try_wait() {
-            Ok(Some(status)) if status.success() => {
-                tracing::info!("zccache daemon running");
-                return;
-            }
-            Ok(Some(status)) => {
-                tracing::warn!("zccache start exited with {}", status);
-                return;
-            }
-            Ok(None) => {
-                // Still running — back off and retry until the deadline.
-            }
-            Err(e) => {
-                tracing::warn!("failed to wait on zccache daemon: {}", e);
-                return;
-            }
+    match child.wait() {
+        Ok(status) if status.success() => {
+            tracing::info!("zccache daemon running");
         }
-        if std::time::Instant::now() >= deadline {
-            tracing::warn!(
-                "zccache start did not return within {:?} — killing child and \
-                 continuing without zccache (suspected wedged daemon, see \
-                 FastLED/fbuild#346). Set FBUILD_ZCCACHE_START_TIMEOUT_SECS to \
-                 override the timeout.",
-                timeout
-            );
-            let _ = child.kill();
-            let _ = child.wait();
-            return;
+        Ok(status) => {
+            tracing::warn!("zccache start exited with {}", status);
         }
-        std::thread::sleep(interval);
-        // Gentle exponential backoff capped at ~500ms so a quick start
-        // returns immediately but a slow-but-eventual start doesn't burn
-        // a tight poll loop for 30s.
-        interval = (interval * 2).min(std::time::Duration::from_millis(500));
+        Err(e) => {
+            tracing::warn!("failed to wait on zccache daemon: {}", e);
+        }
     }
 }
 

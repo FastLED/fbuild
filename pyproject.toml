@@ -4,7 +4,7 @@ version = "2.2.13"
 description = "PlatformIO-compatible embedded build tool (Rust implementation)"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = ["zccache>=1.11.9"]
+dependencies = ["zccache>=1.11.10"]
 
 [dependency-groups]
 dev = ["fbuild-dev-tools"]
