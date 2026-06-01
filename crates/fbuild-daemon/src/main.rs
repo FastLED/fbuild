@@ -63,7 +63,14 @@ async fn main() {
             tracing_subscriber::EnvFilter::from_default_env()
                 .add_directive(tracing::Level::INFO.into()),
         )
-        .with(tracing_subscriber::fmt::layer())
+        // Route fmt layer to stderr — the CLI captures the daemon's
+        // stderr into ~/.fbuild/<env>/daemon/daemon.log (see
+        // daemon_client.rs spawn_daemon). The MakeWriter default is
+        // stdout, but the CLI sets stdout to Null, so without
+        // .with_writer(stderr) every `tracing::*` event in the daemon
+        // is silently dropped on Windows and we have zero visibility
+        // into daemon-side hangs. See FastLED/fbuild#346.
+        .with(tracing_subscriber::fmt::layer().with_writer(std::io::stderr))
         .with(BroadcastLogLayer::new(log_tx))
         .init();
 
