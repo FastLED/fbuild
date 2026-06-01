@@ -143,10 +143,46 @@ pub async fn build(
                 fbuild_core::DaemonState::Building,
                 Some(format!("Building {}", project_dir_desc)),
             );
+            // Daemon state goes to `Building` *before* the lock is taken
+            // (the OperationGuard above). Without per-phase tracing, an
+            // indefinite stall here looks identical to an indefinite
+            // stall inside the build itself — both surface as
+            // "State: building" forever. Emit a tracing event around the
+            // lock acquire so daemon.log shows when the daemon is queued
+            // behind another build vs. actually compiling. See #346
+            // finding (2). The 10s warn-threshold is well above normal
+            // contention but below any human-perceptible "is it hung?"
+            // window, so a stuck lock surfaces in the log within seconds
+            // instead of being invisible.
             let lock_wait_start = std::time::Instant::now();
             let lock = ctx.project_lock(&project_dir);
-            let _lock_guard = lock.lock().await;
+            tracing::info!("waiting for project lock on {}", project_dir_desc);
+            const LOCK_WAIT_WARN: std::time::Duration = std::time::Duration::from_secs(10);
+            let _lock_guard = {
+                let acquire = lock.lock();
+                match tokio::time::timeout(LOCK_WAIT_WARN, acquire).await {
+                    Ok(guard) => guard,
+                    Err(_) => {
+                        tracing::warn!(
+                            "project lock on {} not acquired within {}s — \
+                             another build is still holding it. Continuing \
+                             to wait; if this persists the daemon may be \
+                             stuck. Inspect ~/.fbuild/<env>/daemon/daemon.log \
+                             or run `fbuild daemon locks` to see who is \
+                             holding the lock.",
+                            project_dir_desc,
+                            LOCK_WAIT_WARN.as_secs(),
+                        );
+                        lock.lock().await
+                    }
+                }
+            };
             let lock_wait = lock_wait_start.elapsed();
+            tracing::info!(
+                "project lock acquired on {} after {} ms",
+                project_dir_desc,
+                lock_wait.as_millis()
+            );
 
             // Bridge: sync log lines → async NDJSON chunks
             let bridge_tx = async_tx.clone();
