@@ -8,3 +8,4 @@ ARM Cortex-M variant used by STM32 microcontrollers.
 - `stm32f1.json` - STM32F1xx (Cortex-M3, no FPU)
 - `stm32f4.json` - STM32F4xx (Cortex-M4F, hardware FPU)
 - `stm32h7.json` - STM32H7xx (Cortex-M7, double-precision FPU)
+- `stm32u5.json` - STM32U5xx (Cortex-M33F, hardware FPU)

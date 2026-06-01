@@ -35,6 +35,26 @@ fn test_from_board_id_uno() {
 }
 
 #[test]
+fn test_from_board_id_arduino_uno_q() {
+    let config = BoardConfig::from_board_id("arduino_uno_q", &HashMap::new()).unwrap();
+    assert_eq!(config.name, "Arduino UNO Q");
+    assert_eq!(config.mcu, "stm32u585zit6q");
+    assert_eq!(config.variant, "STM32U5xx/U575Z(G-I)TxQ_U585ZITxQ");
+    assert_eq!(
+        config.variant_h.as_deref(),
+        Some("variant_NUCLEO_U575ZI_Q.h")
+    );
+    assert_eq!(config.board, "UNO_Q");
+    let defines = config.get_defines();
+    assert_eq!(defines.get("ARDUINO_UNO_Q"), Some(&"1".to_string()));
+    assert_eq!(
+        defines.get("ARDUINO_NUCLEO_U575ZI_Q"),
+        Some(&"1".to_string())
+    );
+    assert!(!defines.contains_key("ARDUINO_ARDUINO_UNO_Q"));
+}
+
+#[test]
 fn test_from_board_id_mega() {
     let config = BoardConfig::from_board_id("mega", &HashMap::new()).unwrap();
     assert_eq!(config.mcu, "atmega2560");
