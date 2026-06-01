@@ -685,6 +685,25 @@ fn test_get_embed_files_empty() {
 }
 
 #[test]
+fn test_get_board_overrides_keeps_flash_size_keys() {
+    let f = write_ini(
+        "\
+[env:esp32c6]
+platform = espressif32
+board = esp32-c6-devkitc-1
+framework = arduino
+board_build.flash_size = 4MB
+board_upload.flash_size = 4MB
+",
+    );
+    let config = PlatformIOConfig::from_path(f.path()).unwrap();
+    let overrides = config.get_board_overrides("esp32c6").unwrap();
+
+    assert_eq!(overrides.get("flash_size"), Some(&"4MB".to_string()));
+    assert_eq!(overrides.get("upload.flash_size"), Some(&"4MB".to_string()));
+}
+
+#[test]
 fn test_get_source_filter_prefers_build_src_filter() {
     let f = write_ini(
         "\

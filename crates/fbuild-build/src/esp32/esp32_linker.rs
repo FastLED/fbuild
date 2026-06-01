@@ -455,6 +455,37 @@ mod tests {
     }
 
     #[test]
+    fn test_flash_size_uses_board_max_flash_for_elf2image_and_cache() {
+        let config = get_mcu_config("esp32c6").unwrap();
+        let prefix = config.toolchain_prefix();
+        let linker = Esp32Linker::new(
+            PathBuf::from(format!("/usr/bin/{}gcc", prefix)),
+            PathBuf::from(format!("/usr/bin/{}ar", prefix)),
+            PathBuf::from(format!("/usr/bin/{}objcopy", prefix)),
+            PathBuf::from(format!("/usr/bin/{}size", prefix)),
+            config,
+            vec![],
+            vec![],
+            LinkerScripts::new(),
+            BuildProfile::Release,
+            None,
+            "80m",
+            Some(4 * 1024 * 1024),
+            Some(327680),
+            false,
+        );
+        let tmp = tempfile::TempDir::new().unwrap();
+        let elf = tmp.path().join("firmware.elf");
+        std::fs::write(&elf, b"elf").unwrap();
+
+        let flash_size = linker.flash_size();
+        let cache = linker.current_bin_cache(&elf, &flash_size).unwrap();
+
+        assert_eq!(flash_size, "4MB");
+        assert_eq!(cache.flash_size, "4MB");
+    }
+
+    #[test]
     fn test_linker_flags_use_sdk_ld_flags() {
         let linker = test_linker("esp32c6");
         let flags = linker.linker_flags();

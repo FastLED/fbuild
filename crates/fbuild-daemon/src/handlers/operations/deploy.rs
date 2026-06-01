@@ -411,6 +411,11 @@ pub async fn deploy(
                             mcu_config.default_flash_freq(),
                         )
                     },
+                    flash_size: fbuild_build::esp32::mcu_config::bytes_to_flash_size(
+                        board_config.max_flash,
+                        mcu_config.default_flash_size(),
+                    )
+                    .to_string(),
                     default_baud: mcu_config.default_baud().to_string(),
                     before_reset: mcu_config.before_reset().to_string(),
                     after_reset: mcu_config.after_reset().to_string(),

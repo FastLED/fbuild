@@ -26,6 +26,7 @@ fn test_esptool_params() -> EsptoolParams {
     EsptoolParams {
         flash_mode: "dio".to_string(),
         flash_freq: "80m".to_string(),
+        flash_size: "4MB".to_string(),
         default_baud: "460800".to_string(),
         before_reset: "default-reset".to_string(),
         after_reset: "hard-reset".to_string(),
@@ -43,6 +44,7 @@ fn test_esp32_deployer_creation() {
     assert_eq!(deployer.bootloader_offset, "0x0");
     assert_eq!(deployer.firmware_offset, "0x10000");
     assert_eq!(deployer.flash_mode, "dio");
+    assert_eq!(deployer.flash_size, "4MB");
     assert_eq!(deployer.before_reset, "default-reset");
 }
 
@@ -261,6 +263,37 @@ fn test_esp32_deployer_from_board_config() {
 }
 
 #[test]
+fn test_esp32_deployer_from_board_config_honors_flash_size_override() {
+    let mut overrides = std::collections::HashMap::new();
+    overrides.insert("flash_size".to_string(), "4MB".to_string());
+    let board =
+        fbuild_config::BoardConfig::from_board_id("esp32-c6-devkitc-1", &overrides).unwrap();
+    let params = test_esptool_params();
+
+    let deployer =
+        Esp32Deployer::from_board_config(&board, "0x0", "0x8000", "0x10000", &params, false);
+
+    assert_eq!(deployer.flash_size, "4MB");
+}
+
+#[test]
+#[cfg(feature = "espflash-native")]
+fn native_write_is_disabled_for_esp32c6() {
+    let params = test_esptool_params();
+    let c6 = Esp32Deployer::new(
+        "esp32c6", "460800", "0x0", "0x8000", "0x10000", &params, false,
+    )
+    .with_native_write(true);
+    let s3 = Esp32Deployer::new(
+        "esp32s3", "460800", "0x0", "0x8000", "0x10000", &params, false,
+    )
+    .with_native_write(true);
+
+    assert!(!c6.use_native_write);
+    assert!(s3.use_native_write);
+}
+
+#[test]
 fn test_deploy_requires_port() {
     let params = test_esptool_params();
     let deployer = Esp32Deployer::new(
@@ -442,6 +475,8 @@ fn build_write_flash_args_firmware_only_skips_bootloader_and_partitions() {
     let args = deployer.build_write_flash_args(&fw, "COM13", Some(&[FlashRegion::Firmware]));
 
     assert!(args.contains(&"write-flash".to_string()));
+    assert!(args.windows(2).any(|pair| pair == ["--flash-size", "4MB"]));
+    assert!(!args.contains(&"detect".to_string()));
     assert!(!args.iter().any(|a| a.ends_with("bootloader.bin")));
     assert!(!args.iter().any(|a| a.ends_with("partitions.bin")));
     assert!(args.contains(&"0x10000".to_string()));
@@ -467,6 +502,7 @@ fn build_write_flash_args_default_includes_all_regions() {
     assert!(args.contains(&"0x0".to_string()));
     assert!(args.contains(&"0x8000".to_string()));
     assert!(args.contains(&"0x10000".to_string()));
+    assert!(args.windows(2).any(|pair| pair == ["--flash-size", "4MB"]));
 }
 
 /// If a caller requests a region whose file is missing on disk, fail
@@ -595,6 +631,7 @@ fn run_verify_deployment_test(
     let params = EsptoolParams {
         flash_mode: "dio".to_string(),
         flash_freq: "80m".to_string(),
+        flash_size: "4MB".to_string(),
         default_baud: "921600".to_string(),
         before_reset: "default-reset".to_string(),
         after_reset: "hard-reset".to_string(),

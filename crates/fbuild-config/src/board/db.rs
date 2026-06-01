@@ -178,6 +178,9 @@ pub(super) fn get_board_defaults(board_id: &str) -> Option<HashMap<String, Strin
         if let Some(f_image) = build.get("f_image").and_then(|v| v.as_str()) {
             d.insert("f_image".into(), f_image.to_string());
         }
+        if let Some(flash_size) = build.get("flash_size").and_then(|v| v.as_str()) {
+            d.insert("flash_size".into(), flash_size.to_string());
+        }
         if let Some(cmsis_dsp_lib) = build.get("cmsis_dsp_lib").and_then(|v| v.as_str()) {
             d.insert("cmsis_dsp_lib".into(), cmsis_dsp_lib.to_string());
         }
@@ -214,6 +217,12 @@ pub(super) fn get_board_defaults(board_id: &str) -> Option<HashMap<String, Strin
         }
         if let Some(speed) = upload.get("speed").and_then(|v| v.as_u64()) {
             d.insert("upload.speed".into(), speed.to_string());
+        }
+        if let Some(flash_size) = upload.get("flash_size").and_then(|v| v.as_str()) {
+            d.insert("upload.flash_size".into(), flash_size.to_string());
+        }
+        if let Some(maximum_size) = upload.get("maximum_size").and_then(|v| v.as_u64()) {
+            d.insert("upload.maximum_size".into(), maximum_size.to_string());
         }
     }
 
