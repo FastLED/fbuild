@@ -409,6 +409,42 @@ fn test_esp32_flash_mode_env_override_honoured() {
 }
 
 #[test]
+fn test_esp32_flash_size_board_build_override_honoured() {
+    let mut overrides = HashMap::new();
+    overrides.insert("flash_size".to_string(), "4MB".to_string());
+
+    let config = BoardConfig::from_board_id("esp32-c6-devkitc-1", &overrides).unwrap();
+
+    assert_eq!(config.max_flash, Some(4 * 1024 * 1024));
+}
+
+#[test]
+fn test_esp32_flash_size_board_upload_override_honoured() {
+    let mut overrides = HashMap::new();
+    overrides.insert("upload.flash_size".to_string(), "4MB".to_string());
+
+    let config = BoardConfig::from_board_id("esp32-c6-devkitc-1", &overrides).unwrap();
+
+    assert_eq!(config.max_flash, Some(4 * 1024 * 1024));
+}
+
+#[test]
+fn test_boards_txt_upload_flash_size_sets_max_flash() {
+    let f = write_boards_txt(
+        "\
+demo.name=Demo ESP32-C6
+demo.build.mcu=esp32c6
+demo.build.f_cpu=160000000L
+demo.upload.flash_size=4MB
+",
+    );
+
+    let config = BoardConfig::from_boards_txt(f.path(), "demo", &HashMap::new()).unwrap();
+
+    assert_eq!(config.max_flash, Some(4 * 1024 * 1024));
+}
+
+#[test]
 fn test_nrf52840_dk_carries_arduino_macro() {
     // Regression for FastLED CI fail: missing ARDUINO_NRF52_DK meant FastLED's
     // nRF52 variants header fell through to the "Unknown variant" fallback

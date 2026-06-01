@@ -17,6 +17,7 @@ use crate::{DeployOutcome, Deployer, DeploymentResult};
 pub struct EsptoolParams {
     pub flash_mode: String,
     pub flash_freq: String,
+    pub flash_size: String,
     pub default_baud: String,
     pub before_reset: String,
     pub after_reset: String,
@@ -36,6 +37,8 @@ pub struct Esp32Deployer {
     pub(super) flash_mode: String,
     /// Flash frequency for esptool (e.g. "80m", "40m").
     pub(super) flash_freq: String,
+    /// Flash size for esptool (e.g. "4MB", "8MB").
+    pub(super) flash_size: String,
     /// Reset mode before flashing.
     pub(super) before_reset: String,
     /// Reset mode after flashing.
@@ -96,6 +99,26 @@ where
     }
 }
 
+fn bytes_to_flash_size(bytes: Option<u64>, default: &str) -> String {
+    match bytes {
+        Some(sz) if sz >= 128 * 1024 * 1024 => "128MB",
+        Some(sz) if sz >= 64 * 1024 * 1024 => "64MB",
+        Some(sz) if sz >= 32 * 1024 * 1024 => "32MB",
+        Some(sz) if sz >= 16 * 1024 * 1024 => "16MB",
+        Some(sz) if sz >= 8 * 1024 * 1024 => "8MB",
+        Some(sz) if sz >= 4 * 1024 * 1024 => "4MB",
+        Some(sz) if sz >= 2 * 1024 * 1024 => "2MB",
+        Some(sz) if sz >= 1024 * 1024 => "1MB",
+        _ => default,
+    }
+    .to_string()
+}
+
+#[cfg(feature = "espflash-native")]
+fn native_write_supported_for_chip(chip: &str) -> bool {
+    !chip.eq_ignore_ascii_case("esp32c6")
+}
+
 impl Esp32Deployer {
     #[allow(clippy::too_many_arguments)]
     pub fn new(
@@ -115,6 +138,7 @@ impl Esp32Deployer {
             firmware_offset: firmware_offset.to_string(),
             flash_mode: esptool_params.flash_mode.clone(),
             flash_freq: esptool_params.flash_freq.clone(),
+            flash_size: esptool_params.flash_size.clone(),
             before_reset: esptool_params.before_reset.clone(),
             after_reset: esptool_params.after_reset.clone(),
             verbose,
@@ -148,7 +172,13 @@ impl Esp32Deployer {
     #[cfg(feature = "espflash-native")]
     #[must_use]
     pub fn with_native_write(mut self, enabled: bool) -> Self {
-        self.use_native_write = enabled;
+        self.use_native_write = enabled && native_write_supported_for_chip(&self.chip);
+        if enabled && !self.use_native_write {
+            tracing::warn!(
+                chip = self.chip.as_str(),
+                "native write disabled for this chip; using esptool write-flash"
+            );
+        }
         self
     }
 
@@ -173,6 +203,7 @@ impl Esp32Deployer {
         let params = EsptoolParams {
             flash_mode: flash_mode.to_string(),
             flash_freq: esptool_params.flash_freq.clone(),
+            flash_size: bytes_to_flash_size(board.max_flash, &esptool_params.flash_size),
             default_baud: esptool_params.default_baud.clone(),
             before_reset: esptool_params.before_reset.clone(),
             after_reset: esptool_params.after_reset.clone(),
@@ -550,7 +581,7 @@ impl Esp32Deployer {
             "--flash-freq".to_string(),
             self.flash_freq.clone(),
             "--flash-size".to_string(),
-            "detect".to_string(),
+            self.flash_size.clone(),
         ]);
 
         let include = |r: FlashRegion| regions.map_or(true, |rs| rs.contains(&r));

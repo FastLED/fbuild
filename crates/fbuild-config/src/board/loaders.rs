@@ -10,6 +10,70 @@ use std::path::Path;
 use super::db::{board_id_to_board_define, get_board_debug_tools, get_board_defaults};
 use super::types::BoardConfig;
 
+fn parse_flash_size_bytes(raw: &str) -> Option<u64> {
+    let value = raw.trim().replace('_', "");
+    if value.is_empty() {
+        return None;
+    }
+    if let Ok(bytes) = value.parse::<u64>() {
+        return Some(bytes);
+    }
+
+    let lower = value.to_ascii_lowercase();
+    let (number, multiplier) = lower
+        .strip_suffix("mb")
+        .map(|n| (n, 1024_u64 * 1024))
+        .or_else(|| lower.strip_suffix('m').map(|n| (n, 1024_u64 * 1024)))
+        .or_else(|| lower.strip_suffix("kb").map(|n| (n, 1024_u64)))
+        .or_else(|| lower.strip_suffix('k').map(|n| (n, 1024_u64)))?;
+
+    number
+        .trim()
+        .parse::<u64>()
+        .ok()
+        .and_then(|n| n.checked_mul(multiplier))
+}
+
+fn first_parsed_size<'a>(
+    maps: impl IntoIterator<Item = &'a HashMap<String, String>>,
+    keys: &[&str],
+) -> Option<u64> {
+    for map in maps {
+        for key in keys {
+            if let Some(value) = map.get(*key).and_then(|s| parse_flash_size_bytes(s)) {
+                return Some(value);
+            }
+        }
+    }
+    None
+}
+
+fn resolve_max_flash(
+    overrides: &HashMap<String, String>,
+    defaults: &HashMap<String, String>,
+) -> Option<u64> {
+    first_parsed_size(
+        [overrides],
+        &[
+            "maximum_size",
+            "upload.maximum_size",
+            "flash_size",
+            "upload.flash_size",
+        ],
+    )
+    .or_else(|| {
+        first_parsed_size(
+            [defaults],
+            &[
+                "maximum_size",
+                "upload.maximum_size",
+                "flash_size",
+                "upload.flash_size",
+            ],
+        )
+    })
+}
+
 impl BoardConfig {
     /// Load board config from a boards.txt file.
     ///
@@ -75,9 +139,7 @@ impl BoardConfig {
             upload_protocol: get("upload.protocol")
                 .or_else(|| props.get("upload.protocol").cloned()),
             upload_speed: get("upload.speed").or_else(|| props.get("upload.speed").cloned()),
-            max_flash: get("maximum_size")
-                .or_else(|| props.get("maximum_size").cloned())
-                .and_then(|s| s.parse().ok()),
+            max_flash: resolve_max_flash(overrides, &props),
             max_ram: get("maximum_data_size")
                 .or_else(|| props.get("maximum_data_size").cloned())
                 .and_then(|s| s.parse().ok()),
@@ -173,10 +235,7 @@ impl BoardConfig {
                 .get("upload.speed")
                 .cloned()
                 .or_else(|| defaults.get("upload.speed").cloned()),
-            max_flash: overrides
-                .get("maximum_size")
-                .and_then(|s| s.parse().ok())
-                .or_else(|| defaults.get("maximum_size").and_then(|s| s.parse().ok())),
+            max_flash: resolve_max_flash(overrides, &defaults),
             max_ram: overrides
                 .get("maximum_data_size")
                 .and_then(|s| s.parse().ok())
