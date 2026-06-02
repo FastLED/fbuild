@@ -20,7 +20,7 @@ jobs:
       - uses: astral-sh/setup-uv@v3
       - name: Setup soldr
         id: setup-soldr
-        uses: zackees/setup-soldr@v0.9.59
+        uses: zackees/setup-soldr@v0.9.60
         with:
           cache: true
           build-cache: true
