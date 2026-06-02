@@ -317,6 +317,7 @@ pub async fn async_main() {
             quick,
             release,
             verbose,
+            diag_stage2,
             sketches,
         }) => {
             run_compile_many(CompileManyArgs {
@@ -326,6 +327,7 @@ pub async fn async_main() {
                 quick,
                 release,
                 verbose,
+                diag_stage2,
                 sketches,
                 pio_env: std::collections::HashMap::new(),
             })
@@ -342,6 +344,7 @@ pub async fn async_main() {
             quick,
             release,
             verbose,
+            diag_stage2,
             sketches,
         }) => {
             if let Some(bd) = &build_dir {
@@ -359,6 +362,7 @@ pub async fn async_main() {
                 quick,
                 release,
                 verbose,
+                diag_stage2,
                 sketches: normalized,
                 pio_env,
             })

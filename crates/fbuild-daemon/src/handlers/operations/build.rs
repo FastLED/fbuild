@@ -305,6 +305,16 @@ pub async fn build(
 
             let _ = bridge.await;
 
+            if !success && !msg.is_empty() {
+                let log_event = serde_json::json!({
+                    "type": "log",
+                    "message": msg,
+                });
+                let mut chunk = log_event.to_string();
+                chunk.push('\n');
+                let _ = async_tx.send(bytes::Bytes::from(chunk));
+            }
+
             let result_event = serde_json::json!({
                 "type": "result",
                 "success": success,

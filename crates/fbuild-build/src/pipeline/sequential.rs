@@ -115,6 +115,43 @@ pub fn run_sequential_build_with_libs(
     let jobs = crate::parallel::effective_jobs(params.jobs);
     let build_log_mutex = std::sync::Mutex::new(ctx.build_log);
 
+    let core_cache = if params.clean {
+        None
+    } else {
+        Some(crate::framework_core_cache::FrameworkCoreCache::new(
+            &params.project_dir,
+            platform_label,
+            &params.env_name,
+            params.profile,
+            compiler,
+            &core_and_variant,
+            &user_overlay,
+        ))
+    };
+    if let Some(cache) = core_cache.as_ref() {
+        let _g = perf.phase("core-cache-hydrate");
+        match cache.hydrate(&ctx.core_build_dir) {
+            Ok(stats) if stats.copied > 0 || stats.skipped > 0 => tracing::info!(
+                "framework core cache hydrate key={} copied={} skipped={} from {}",
+                cache.key(),
+                stats.copied,
+                stats.skipped,
+                cache.path().display()
+            ),
+            Ok(_) => tracing::debug!(
+                "framework core cache miss key={} at {}",
+                cache.key(),
+                cache.path().display()
+            ),
+            Err(e) => tracing::warn!(
+                "framework core cache hydrate failed key={} at {}: {}",
+                cache.key(),
+                cache.path().display(),
+                e
+            ),
+        }
+    }
+
     // Compile core + variant
     let mut core_objects = {
         let _g = perf.phase("compile-core");
@@ -139,6 +176,27 @@ pub fn run_sequential_build_with_libs(
         )?
     };
     core_objects.extend(variant_objects);
+    if let Some(cache) = core_cache.as_ref() {
+        let _g = perf.phase("core-cache-store");
+        match cache.store(&ctx.core_build_dir) {
+            Ok(stats) if stats.copied > 0 => tracing::info!(
+                "framework core cache store key={} copied={} to {}",
+                cache.key(),
+                stats.copied,
+                cache.path().display()
+            ),
+            Ok(_) => tracing::debug!(
+                "framework core cache store key={} had no new artifacts",
+                cache.key()
+            ),
+            Err(e) => tracing::warn!(
+                "framework core cache store failed key={} at {}: {}",
+                cache.key(),
+                cache.path().display(),
+                e
+            ),
+        }
+    }
 
     // Compile sketch
     let sketch_objects = {

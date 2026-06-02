@@ -7,6 +7,7 @@
 //!   toolchains/{stem}/{hash}/{version}/
 //!   platforms/{stem}/{hash}/{version}/
 //!   libraries/{stem}/{hash}/{version}/
+//!   core/{hash}/
 //!
 //! <project>/.fbuild/build/{env}/{profile}/
 //!   core/   (compiled core .o files)
@@ -61,6 +62,10 @@ impl Cache {
 
     pub fn libraries_dir(&self) -> PathBuf {
         self.cache_root.join("libraries")
+    }
+
+    pub fn core_artifacts_dir(&self) -> PathBuf {
+        self.cache_root.join("core")
     }
 
     // --- Package path resolution (stem/hash) ---
@@ -128,6 +133,7 @@ impl Cache {
         std::fs::create_dir_all(self.toolchains_dir())?;
         std::fs::create_dir_all(self.platforms_dir())?;
         std::fs::create_dir_all(self.libraries_dir())?;
+        std::fs::create_dir_all(self.core_artifacts_dir())?;
         Ok(())
     }
 
