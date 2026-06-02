@@ -63,6 +63,9 @@ pub async fn run_build(
     }
 
     let client = DaemonClient::new();
+    if verbose {
+        eprintln!("{}", daemon_client::runtime_diagnostic());
+    }
 
     let profile = if release {
         Some("release".to_string())
@@ -120,6 +123,9 @@ pub async fn run_build(
         eprintln!("{}", summary);
     }
     if !resp.success {
+        if !verbose {
+            eprintln!("{}", daemon_client::runtime_diagnostic());
+        }
         std::process::exit(resp.exit_code);
     }
     if generate_compiledb {

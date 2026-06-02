@@ -18,9 +18,12 @@ pub use cache::Cache;
 pub use disk_cache::DiskCache;
 pub use lnk::{ExtractMode, LnkFile};
 
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::future::Future;
 use std::path::{Path, PathBuf};
+use std::sync::{Mutex, OnceLock};
+
+static PACKAGE_TOUCHES: OnceLock<Mutex<HashSet<String>>> = OnceLock::new();
 
 /// Recursively compute the total size of a directory in bytes.
 ///
@@ -269,6 +272,11 @@ impl PackageBase {
     fn touch_disk_cache(&self) {
         if let Some(ref dc) = self.disk_cache {
             let kind = self.cache_subdir.into();
+            let touch_key =
+                package_touch_key(kind, &self.cache_key, &self.version, &self.install_path());
+            if !mark_package_touch_needed(touch_key) {
+                return;
+            }
             if let Ok(Some(entry)) = dc.lookup(kind, &self.cache_key, &self.version) {
                 let _ = dc.touch(&entry);
             }
@@ -387,6 +395,34 @@ impl PackageBase {
     }
 }
 
+fn package_touch_key(
+    kind: disk_cache::Kind,
+    cache_key: &str,
+    version: &str,
+    install_path: &Path,
+) -> String {
+    format!(
+        "{}|{}|{}|{}",
+        kind.as_str(),
+        cache_key,
+        version,
+        install_path.display()
+    )
+}
+
+fn mark_package_touch_needed(key: String) -> bool {
+    let touched = PACKAGE_TOUCHES.get_or_init(|| Mutex::new(HashSet::new()));
+    let mut touched = touched.lock().unwrap();
+    touched.insert(key)
+}
+
+#[cfg(test)]
+fn clear_package_touch_cache_for_tests() {
+    if let Some(touched) = PACKAGE_TOUCHES.get() {
+        touched.lock().unwrap().clear();
+    }
+}
+
 #[cfg(test)]
 mod toolchain_gcc_ar_tests {
     use super::*;
@@ -470,5 +506,50 @@ mod toolchain_gcc_ar_tests {
 
         let tc = TestToolchain { ar_path: ar };
         assert_eq!(tc.get_gcc_ar_path(), gcc_ar);
+    }
+
+    #[test]
+    fn package_cache_hit_touch_is_throttled_per_process() {
+        clear_package_touch_cache_for_tests();
+
+        let tmp = tempfile::TempDir::new().unwrap();
+        let cache_root = tmp.path().join("cache");
+        let cache_key = "https://example.com/tool.tar.gz";
+        let base = PackageBase::with_cache_root(
+            "tool",
+            "1.0",
+            cache_key,
+            cache_key,
+            None,
+            CacheSubdir::Toolchains,
+            tmp.path(),
+            &cache_root,
+        );
+        let install_path = base.install_path();
+        std::fs::create_dir_all(&install_path).unwrap();
+
+        let disk_cache = DiskCache::open_at(&cache_root).unwrap();
+        let rel_path = install_path.strip_prefix(disk_cache.cache_root()).unwrap();
+        disk_cache
+            .record_install(
+                disk_cache::Kind::Toolchains,
+                cache_key,
+                "1.0",
+                &rel_path.to_string_lossy(),
+                1,
+            )
+            .unwrap();
+
+        assert!(base.is_cached());
+        assert!(base.is_cached());
+
+        let entry = disk_cache
+            .lookup(disk_cache::Kind::Toolchains, cache_key, "1.0")
+            .unwrap()
+            .unwrap();
+        assert_eq!(
+            entry.use_count, 1,
+            "repeated cache hits for the same package should not repeatedly write the index"
+        );
     }
 }

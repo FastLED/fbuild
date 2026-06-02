@@ -138,3 +138,22 @@ fn ci_quick_and_release_are_mutually_exclusive() {
     let argv = ["fbuild", "ci", "-b", "uno", "--quick", "--release", "."];
     assert!(Cli::try_parse_from(argv).is_err());
 }
+
+#[test]
+fn compile_many_diag_stage2_flag_is_accepted() {
+    let argv = [
+        "fbuild",
+        "compile-many",
+        "--board",
+        "uno",
+        "--diag-stage2",
+        "examples/Blink",
+    ];
+    let cli = Cli::try_parse_from(argv).expect("parse");
+    match cli.command {
+        Some(Commands::CompileMany { diag_stage2, .. }) => {
+            assert!(diag_stage2);
+        }
+        _ => panic!("expected CompileMany subcommand"),
+    }
+}

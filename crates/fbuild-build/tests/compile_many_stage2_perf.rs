@@ -68,6 +68,7 @@ fn stage2_per_sketch_wall_is_a_fraction_of_stage1() {
         profile: BuildProfile::Release,
         verbose: false,
         pio_env: Default::default(),
+        diag_stage2: true,
     };
 
     let result = compile_many(req).expect("compile_many should not error");

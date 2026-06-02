@@ -332,6 +332,9 @@ pub enum Commands {
         /// Verbose compiler output.
         #[arg(short, long)]
         verbose: bool,
+        /// Emit JSONL per stage-2 worker with seed/build timing.
+        #[arg(long)]
+        diag_stage2: bool,
         /// Sketch project directories (each must contain `platformio.ini`).
         #[arg(required = true)]
         sketches: Vec<String>,
@@ -375,6 +378,9 @@ pub enum Commands {
         /// Verbose compiler output.
         #[arg(short, long)]
         verbose: bool,
+        /// Emit JSONL per stage-2 worker with seed/build timing.
+        #[arg(long)]
+        diag_stage2: bool,
         /// Sketches to build. Each entry is either a project directory
         /// containing `platformio.ini` or a `.ino` file whose parent
         /// directory is the project. Matches `pio ci` positional args.

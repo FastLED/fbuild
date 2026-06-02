@@ -597,6 +597,42 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
         // Compile core + variant sources in parallel
         let build_log_mutex = std::sync::Mutex::new(ctx.build_log);
+        let core_cache = if params.clean {
+            None
+        } else {
+            Some(crate::framework_core_cache::FrameworkCoreCache::new(
+                &params.project_dir,
+                "esp32",
+                &params.env_name,
+                params.profile,
+                &compiler,
+                &all_core_sources,
+                &user_overlay,
+            ))
+        };
+        if let Some(cache) = core_cache.as_ref() {
+            let _g = perf.phase("core-cache-hydrate");
+            match cache.hydrate(core_build_dir) {
+                Ok(stats) if stats.copied > 0 || stats.skipped > 0 => tracing::info!(
+                    "framework core cache hydrate key={} copied={} skipped={} from {}",
+                    cache.key(),
+                    stats.copied,
+                    stats.skipped,
+                    cache.path().display()
+                ),
+                Ok(_) => tracing::debug!(
+                    "framework core cache miss key={} at {}",
+                    cache.key(),
+                    cache.path().display()
+                ),
+                Err(e) => tracing::warn!(
+                    "framework core cache hydrate failed key={} at {}: {}",
+                    cache.key(),
+                    cache.path().display(),
+                    e
+                ),
+            }
+        }
         let core_result = {
             let _g = perf.phase("compile-core-variant");
             crate::parallel::compile_sources_parallel(
@@ -608,6 +644,27 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 Some(&build_log_mutex),
             )?
         };
+        if let Some(cache) = core_cache.as_ref() {
+            let _g = perf.phase("core-cache-store");
+            match cache.store(core_build_dir) {
+                Ok(stats) if stats.copied > 0 => tracing::info!(
+                    "framework core cache store key={} copied={} to {}",
+                    cache.key(),
+                    stats.copied,
+                    cache.path().display()
+                ),
+                Ok(_) => tracing::debug!(
+                    "framework core cache store key={} had no new artifacts",
+                    cache.key()
+                ),
+                Err(e) => tracing::warn!(
+                    "framework core cache store failed key={} at {}: {}",
+                    cache.key(),
+                    cache.path().display(),
+                    e
+                ),
+            }
+        }
 
         // Compile sketch sources in parallel
         let sketch_result = {

@@ -84,6 +84,7 @@ pub struct CompileManyArgs {
     pub quick: bool,
     pub release: bool,
     pub verbose: bool,
+    pub diag_stage2: bool,
     pub sketches: Vec<String>,
     pub pio_env: std::collections::HashMap<String, String>,
 }
@@ -98,6 +99,7 @@ pub async fn run_compile_many(args: CompileManyArgs) -> fbuild_core::Result<()> 
         quick,
         release,
         verbose,
+        diag_stage2,
         sketches,
         pio_env,
     } = args;
@@ -123,6 +125,7 @@ pub async fn run_compile_many(args: CompileManyArgs) -> fbuild_core::Result<()> 
         profile,
         verbose,
         pio_env,
+        diag_stage2,
     };
 
     let effective_framework = req
@@ -180,6 +183,28 @@ pub async fn run_compile_many(args: CompileManyArgs) -> fbuild_core::Result<()> 
         result.stage2_secs,
         result.total_secs,
     );
+    if diag_stage2 {
+        for r in result
+            .results
+            .iter()
+            .filter(|r| r.stage == Stage::Stage2Sketch)
+        {
+            println!(
+                "{}",
+                serde_json::json!({
+                    "type": "stage2",
+                    "worker": r.worker_index,
+                    "sketch": r.sketch.display().to_string(),
+                    "env": &r.env_name,
+                    "success": r.success,
+                    "seed_applied": r.seed_applied,
+                    "seed_secs": r.seed_time_secs,
+                    "build_secs": r.build_time_secs,
+                    "log": r.log_path.as_ref().map(|p| p.display().to_string()),
+                })
+            );
+        }
+    }
 
     if !result.all_success {
         return Err(fbuild_core::FbuildError::BuildFailed(format!(

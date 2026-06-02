@@ -20,8 +20,9 @@
 //!   workers. Each worker reuses the framework / library archives written
 //!   to disk by stage 1 (via the orchestrator's warm-build fast path and
 //!   zccache), and only pays for `sketch.cpp -> .o -> link` per sketch.
-//!   Each worker calls the orchestrator with `jobs = 1` since per-sketch
-//!   work is small and the outer thread pool already saturates cores.
+//!   Stage 2 splits the host's compile budget across the worker pool so
+//!   a cold per-sketch framework fallback can still make progress without
+//!   oversubscribing the machine.
 //!
 //! ## Concurrent-safety
 //!
@@ -223,6 +224,8 @@ pub struct CompileManyRequest {
     /// `BuildParams.pio_env`. Empty by default. Used by `fbuild ci` to
     /// surface `--lib` / `--project-conf` to the underlying orchestrator.
     pub pio_env: HashMap<String, String>,
+    /// Emit per-stage-2 worker diagnostics in the final result.
+    pub diag_stage2: bool,
 }
 
 /// Result for a single sketch.
@@ -246,6 +249,13 @@ pub struct SketchResult {
     pub message: String,
     /// Stage that produced this result.
     pub stage: Stage,
+    /// Stage-2 worker index, when this sketch was built by stage 2.
+    pub worker_index: Option<usize>,
+    /// Stage-2 framework seed wall-clock seconds. Zero for stage 1 and
+    /// stage-2 runs where seeding was unnecessary.
+    pub seed_time_secs: f64,
+    /// Whether the stage-2 core seed source existed for this sketch.
+    pub seed_applied: bool,
 }
 
 /// Which stage compiled a sketch.
@@ -397,6 +407,9 @@ fn build_one_sketch(inputs: SketchBuildInputs) -> SketchResult {
                 log_path,
                 message,
                 stage,
+                worker_index: None,
+                seed_time_secs: 0.0,
+                seed_applied: false,
             }
         }
         Err(e) => SketchResult {
@@ -409,6 +422,9 @@ fn build_one_sketch(inputs: SketchBuildInputs) -> SketchResult {
             log_path: None,
             message: format!("build error: {}", e),
             stage,
+            worker_index: None,
+            seed_time_secs: 0.0,
+            seed_applied: false,
         },
     }
 }
@@ -577,6 +593,7 @@ pub fn compile_many_with(
             &req.pio_env,
             stage1_core_seed.as_deref(),
             &stage1_env,
+            req.diag_stage2,
         )
     };
     let stage2_secs = stage2_start.elapsed().as_secs_f64();
@@ -620,6 +637,7 @@ fn run_stage2(
     pio_env: &HashMap<String, String>,
     stage1_core_seed: Option<&Path>,
     stage1_env: &str,
+    diag_stage2: bool,
 ) -> Vec<SketchResult> {
     let total = rest.len();
     let cap = sketch_jobs.min(total).max(1);
@@ -644,7 +662,7 @@ fn run_stage2(
 
     std::thread::scope(|scope| {
         let handles: Vec<_> = (0..cap)
-            .map(|_| {
+            .map(|worker_index| {
                 let next = &next;
                 let results_slot = &results_slot;
                 scope.spawn(move || loop {
@@ -661,10 +679,13 @@ fn run_stage2(
                     // board across many FastLED examples). Errors are
                     // logged and ignored — orchestrator falls back to a
                     // full framework recompile, no worse than pre-#335.
+                    let seed_started = Instant::now();
+                    let mut seed_applied = false;
                     if let Some(seed) = stage1_core_seed {
                         if env_name == stage1_env {
                             let target_core =
                                 project_build_dir(sketch, env_name, profile).join("core");
+                            seed_applied = seed.is_dir();
                             if let Err(e) = seed_stage2_core_from_stage1(seed, &target_core) {
                                 tracing::warn!(
                                     "compile-many stage 2: failed to seed core/ \
@@ -676,7 +697,8 @@ fn run_stage2(
                             }
                         }
                     }
-                    let res = builder.build(SketchBuildInputs {
+                    let seed_time_secs = seed_started.elapsed().as_secs_f64();
+                    let mut res = builder.build(SketchBuildInputs {
                         sketch: sketch.clone(),
                         env_name: env_name.clone(),
                         platform,
@@ -686,6 +708,22 @@ fn run_stage2(
                         stage: Stage::Stage2Sketch,
                         pio_env: pio_env.clone(),
                     });
+                    res.worker_index = Some(worker_index);
+                    res.seed_time_secs = seed_time_secs;
+                    res.seed_applied = seed_applied;
+                    if diag_stage2 {
+                        tracing::info!(
+                            "compile-many stage2 diag worker={} index={} sketch={} env={} seed_applied={} seed_secs={:.6} build_secs={:.6} success={}",
+                            worker_index,
+                            idx,
+                            sketch.display(),
+                            env_name,
+                            seed_applied,
+                            seed_time_secs,
+                            res.build_time_secs,
+                            res.success
+                        );
+                    }
                     *results_slot[idx].lock().unwrap() = Some(res);
                 })
             })
@@ -847,6 +885,7 @@ mod tests {
             profile: BuildProfile::Release,
             verbose: false,
             pio_env: HashMap::new(),
+            diag_stage2: false,
         };
         assert!(compile_many(req).is_err());
     }
@@ -863,6 +902,7 @@ mod tests {
             profile: BuildProfile::Release,
             verbose: false,
             pio_env: HashMap::new(),
+            diag_stage2: false,
         };
         assert!(compile_many(req).is_err());
     }
@@ -883,6 +923,7 @@ mod tests {
             profile: BuildProfile::Release,
             verbose: false,
             pio_env: HashMap::new(),
+            diag_stage2: false,
         };
         assert!(compile_many(req).is_err());
     }

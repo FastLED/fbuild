@@ -185,6 +185,37 @@ pub fn capture_pio_env() -> BTreeMap<String, String> {
         .collect()
 }
 
+pub fn runtime_diagnostic() -> String {
+    let exe = std::env::current_exe()
+        .ok()
+        .map(|p| p.display().to_string())
+        .unwrap_or_else(|| "<unknown>".to_string());
+    let daemon_exe = daemon_executable_hint();
+    format!(
+        "fbuild executable: {}\nfbuild version: {}\nfbuild-daemon executable: {}\ndaemon endpoint: {}",
+        exe,
+        env!("CARGO_PKG_VERSION"),
+        daemon_exe,
+        fbuild_paths::get_daemon_url()
+    )
+}
+
+fn daemon_executable_hint() -> String {
+    let Some(parent) = std::env::current_exe()
+        .ok()
+        .and_then(|p| p.parent().map(|d| d.to_path_buf()))
+    else {
+        return "fbuild-daemon".to_string();
+    };
+    let stem = parent.join("fbuild-daemon");
+    for candidate in [stem.clone(), stem.with_extension("exe")] {
+        if candidate.exists() {
+            return candidate.display().to_string();
+        }
+    }
+    "fbuild-daemon".to_string()
+}
+
 #[derive(Debug, Deserialize)]
 pub struct OperationResponse {
     pub success: bool,

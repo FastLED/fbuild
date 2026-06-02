@@ -147,6 +147,9 @@ impl SketchBuilder for MockBuilder {
             log_path: None,
             message: "mock build ok".to_string(),
             stage: inputs.stage,
+            worker_index: None,
+            seed_time_secs: 0.0,
+            seed_applied: false,
         }
     }
 }
@@ -164,6 +167,7 @@ fn make_request(
         profile: BuildProfile::Release,
         verbose: false,
         pio_env: std::collections::HashMap::new(),
+        diag_stage2: false,
     }
 }
 
@@ -314,6 +318,9 @@ fn stage1_failure_skips_stage2() {
                 log_path: None,
                 message: "mock failure".to_string(),
                 stage: inputs.stage,
+                worker_index: None,
+                seed_time_secs: 0.0,
+                seed_applied: false,
             }
         }
     }
@@ -419,4 +426,34 @@ fn stage2_jobs_per_worker_splits_cores_across_workers() {
         cores.max(1),
         "stage2_jobs_per_worker(0) must not panic and should treat 0 as 1"
     );
+}
+
+#[test]
+fn stage2_results_report_worker_and_seed_diagnostics() {
+    let tmp = tempfile::tempdir().unwrap();
+    let sketches: Vec<PathBuf> = (0..4)
+        .map(|i| make_sketch(tmp.path(), &format!("diag{i}"), "uno"))
+        .collect();
+
+    let mock = MockBuilder::new();
+    let mut req = make_request(sketches, 1, 2);
+    req.diag_stage2 = true;
+    let result = compile_many_with(req, &mock).expect("compile_many");
+
+    let stage2: Vec<_> = result
+        .results
+        .iter()
+        .filter(|r| r.stage == Stage::Stage2Sketch)
+        .collect();
+    assert_eq!(stage2.len(), 3);
+    for r in stage2 {
+        assert!(
+            r.worker_index.is_some(),
+            "stage-2 result should report worker index"
+        );
+        assert!(
+            r.seed_time_secs >= 0.0,
+            "stage-2 result should report seed timing"
+        );
+    }
 }
