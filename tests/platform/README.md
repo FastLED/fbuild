@@ -8,12 +8,15 @@ PlatformIO-compatible test projects for each supported hardware platform. Each s
 |-----------|-----|--------------|-----------|
 | `apollo3_red/` | Apollo3 Blue | ARM Cortex-M4F | Arduino |
 | `apollo3_thing_explorable/` | Apollo3 Blue | ARM Cortex-M4F | Arduino |
+| `atmega1284/` | ATmega1284P | AVR | Arduino |
 | `atmega8a/` | ATmega8A | AVR | Arduino |
 | `ATtiny1604/` | ATtiny1604 | MegaAVR | Arduino |
 | `ATtiny1616/` | ATtiny1616 | MegaAVR | Arduino |
+| `attiny13/` | ATtiny13 | AVR | Arduino (tracker — `MicroCore` unregistered) |
 | `attiny4313/` | ATtiny4313 | AVR | Arduino |
 | `attiny85/` | ATtiny85 | AVR | Arduino |
 | `attiny88/` | ATtiny88 | AVR | Arduino |
+| `avr128da64/` | AVR128DA64 | AVR-Dx | Arduino (tracker — `dxcore` unregistered) |
 | `ch32v003/` | CH32V003 | RISC-V | Arduino |
 | `esp32c2/` | ESP32-C2 | RISC-V | Arduino |
 | `esp32c3/` | ESP32-C3 | RISC-V | Arduino |
@@ -26,6 +29,7 @@ PlatformIO-compatible test projects for each supported hardware platform. Each s
 | `esp32s3/` | ESP32-S3 | Xtensa LX7 | Arduino |
 | `esp8266/` | ESP8266 | Xtensa L106 | Arduino |
 | `leonardo/` | ATmega32U4 | AVR | Arduino |
+| `mega/` | ATmega2560 | AVR | Arduino |
 | `mgm240/` | EFR32MG24 | ARM Cortex-M33 | Arduino |
 | `nano_every/` | ATmega4809 | MegaAVR | Arduino |
 | `nrf52840_dk/` | nRF52840 | ARM Cortex-M4F | Arduino |
