@@ -1,0 +1,17 @@
+name: Build Matrix Portal M4
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "Matrix Portal M4"
+      test-dir: "tests/platform/matrix_portal_m4"
+      env-name: "matrix_portal_m4"
+      firmware-ext: "bin"

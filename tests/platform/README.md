@@ -39,8 +39,10 @@ PlatformIO-compatible test projects for each supported hardware platform. Each s
 | `sam3x8e_due/` | SAM3X8E | ARM Cortex-M3 | Arduino |
 | `samd21/` | SAMD21G18A | ARM Cortex-M0+ | Arduino |
 | `samd21_zero/` | SAMD21G18A | ARM Cortex-M0+ | Arduino |
+| `qtpy_m0/` | SAMD21E18A | ARM Cortex-M0+ | Arduino |
 | `samd51j/` | SAMD51J19A | ARM Cortex-M4F | Arduino |
 | `samd51p/` | SAMD51P20A | ARM Cortex-M4F | Arduino |
+| `matrix_portal_m4/` | SAMD51J19A | ARM Cortex-M4F | Arduino |
 | `stm32f103c8/` | STM32F103C8 | ARM Cortex-M3 | Arduino |
 | `stm32f103cb/` | STM32F103CB | ARM Cortex-M3 | Arduino |
 | `stm32f103tb/` | STM32F103TB | ARM Cortex-M3 | Arduino |
