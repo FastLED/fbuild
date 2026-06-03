@@ -23,6 +23,15 @@ pub(super) fn resolve_pioarduino_packages(
     // Resolve toolchain via metadata
     let toolchain = resolve_and_create_toolchain(&platform, project_dir, mcu_config)?;
 
+    // Opportunistically provision any helper toolchains listed in
+    // `platform.json` alongside the MCU-primary toolchain — e.g.
+    // `toolchain-riscv32-esp` on ESP32-S3 (Xtensa cores + RISC-V ULP
+    // coprocessor). Best-effort: a missing helper isn't fatal because most
+    // FastLED sketches don't compile ULP code, but eagerly caching the
+    // helper means builds that DO need it never hit a cold-cache stall.
+    // See fbuild#401.
+    provision_helper_toolchains(&platform, project_dir, mcu_config);
+
     // Resolve framework
     let framework = match platform.get_package_url("framework-arduinoespressif32") {
         Ok(url) => {
@@ -54,6 +63,67 @@ pub(super) fn resolve_pioarduino_packages(
     }
 
     Ok((toolchain, framework))
+}
+
+/// Provision toolchain-* packages listed in `platform.json` other than the
+/// MCU-primary toolchain — e.g. `toolchain-riscv32-esp` on ESP32-S3 (Xtensa
+/// cores + RISC-V ULP coprocessor). Cache-aware: a helper toolchain whose
+/// cache directory already exists is skipped without touching the network,
+/// so the steady-state cost on a warm cache is zero. Each resolution miss
+/// is logged at warn level but never fails the caller. See fbuild#401.
+fn provision_helper_toolchains(
+    platform: &fbuild_packages::library::Esp32Platform,
+    project_dir: &Path,
+    mcu_config: &super::super::mcu_config::Esp32McuConfig,
+) {
+    let primary = if mcu_config.is_riscv() {
+        "toolchain-riscv32-esp"
+    } else {
+        "toolchain-xtensa-esp-elf"
+    };
+
+    let entries = match platform.enumerate_packages() {
+        Ok(e) => e,
+        Err(e) => {
+            tracing::warn!("could not enumerate platform.json packages: {}", e);
+            return;
+        }
+    };
+
+    let cache = fbuild_packages::Cache::new(project_dir);
+    let toolchains_dir = cache.toolchains_dir();
+    for (name, metadata_url) in entries {
+        if name == primary || !name.starts_with("toolchain-") {
+            continue;
+        }
+        let cache_dir = toolchains_dir.join(&name);
+        if cache_dir.exists() {
+            tracing::debug!("helper toolchain {} already cached, skipping", name);
+            continue;
+        }
+        match fbuild_packages::toolchain::esp32_metadata::resolve_toolchain_url_sync(
+            &metadata_url,
+            &name,
+            &cache_dir,
+        ) {
+            Ok(resolved) => {
+                tracing::info!(
+                    "provisioned helper toolchain {} from platform.json: {}",
+                    name,
+                    resolved.url
+                );
+            }
+            Err(e) => {
+                tracing::warn!(
+                    "could not provision helper toolchain {} from {}: {} \
+                     (builds that don't reference this toolchain will still work)",
+                    name,
+                    metadata_url,
+                    e
+                );
+            }
+        }
+    }
 }
 
 fn resolve_and_create_toolchain(

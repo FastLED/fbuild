@@ -9,6 +9,51 @@ use axum::Json;
 use std::path::PathBuf;
 use std::sync::Arc;
 
+/// Ensures a terminal `result` NDJSON event reaches the client, even if the
+/// streaming task panics or returns early. Without this, the body stream
+/// closes mid-frame and the client sees the opaque
+/// `stream error: error decoding response body` from reqwest with no clue
+/// what went wrong. See fbuild#401.
+struct StreamTerminationGuard {
+    tx: tokio::sync::mpsc::UnboundedSender<bytes::Bytes>,
+    request_id: String,
+    completed: bool,
+}
+
+impl StreamTerminationGuard {
+    fn new(tx: tokio::sync::mpsc::UnboundedSender<bytes::Bytes>, request_id: String) -> Self {
+        Self {
+            tx,
+            request_id,
+            completed: false,
+        }
+    }
+
+    fn mark_completed(&mut self) {
+        self.completed = true;
+    }
+}
+
+impl Drop for StreamTerminationGuard {
+    fn drop(&mut self) {
+        if self.completed {
+            return;
+        }
+        let event = serde_json::json!({
+            "type": "result",
+            "success": false,
+            "request_id": self.request_id,
+            "message": "daemon build worker terminated unexpectedly (panic or early return); check ~/.fbuild/daemon/daemon.log",
+            "exit_code": 1,
+            "output_file": null,
+            "output_dir": null,
+        });
+        let mut chunk = event.to_string();
+        chunk.push('\n');
+        let _ = self.tx.send(bytes::Bytes::from(chunk));
+    }
+}
+
 /// POST /api/build
 pub async fn build(
     State(ctx): State<Arc<DaemonContext>>,
@@ -130,7 +175,10 @@ pub async fn build(
         };
 
         let project_dir_desc = req.project_dir.clone();
+        let guard_request_id = request_id.clone();
         tokio::spawn(async move {
+            let mut termination_guard =
+                StreamTerminationGuard::new(async_tx.clone(), guard_request_id);
             // FBUILD_PERF_LOG=1 enables daemon-side coarse phase timing
             // (lock-wait + build). Zero overhead when unset.
             let perf_enabled = std::env::var("FBUILD_PERF_LOG")
@@ -327,6 +375,10 @@ pub async fn build(
             let mut chunk = result_event.to_string();
             chunk.push('\n');
             let _ = async_tx.send(bytes::Bytes::from(chunk));
+
+            // Final event sent successfully — disarm the termination guard so
+            // its Drop impl does not emit a duplicate fallback event.
+            termination_guard.mark_completed();
         });
 
         // Return streaming response immediately
@@ -476,5 +528,48 @@ pub async fn build(
             )
                 .into_response(),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// fbuild#401: when the streaming task panics or returns early without
+    /// emitting the result event, the guard's Drop impl must enqueue a
+    /// fallback terminal event so the CLI sees a meaningful error.
+    #[test]
+    fn termination_guard_emits_fallback_on_drop_when_not_completed() {
+        let (tx, mut rx) = tokio::sync::mpsc::unbounded_channel::<bytes::Bytes>();
+        {
+            let _guard = StreamTerminationGuard::new(tx, "req-123".to_string());
+            // Simulate panic / early return: drop without calling mark_completed.
+        }
+        let chunk = rx.try_recv().expect("guard should enqueue fallback event");
+        let line = std::str::from_utf8(&chunk).unwrap().trim_end();
+        let event: serde_json::Value = serde_json::from_str(line).unwrap();
+        assert_eq!(event["type"], "result");
+        assert_eq!(event["success"], false);
+        assert_eq!(event["exit_code"], 1);
+        assert_eq!(event["request_id"], "req-123");
+        let msg = event["message"].as_str().unwrap();
+        assert!(
+            msg.contains("terminated unexpectedly"),
+            "fallback message should be actionable, got: {msg}"
+        );
+    }
+
+    /// After mark_completed, drop must NOT emit a duplicate event.
+    #[test]
+    fn termination_guard_silent_on_drop_when_completed() {
+        let (tx, mut rx) = tokio::sync::mpsc::unbounded_channel::<bytes::Bytes>();
+        {
+            let mut guard = StreamTerminationGuard::new(tx, "req-456".to_string());
+            guard.mark_completed();
+        }
+        assert!(
+            rx.try_recv().is_err(),
+            "completed guard must not enqueue a fallback event"
+        );
     }
 }
