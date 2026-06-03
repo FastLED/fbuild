@@ -513,7 +513,11 @@ impl DaemonClient {
 
         while let Some(chunk) = stream.next().await {
             let chunk = chunk.map_err(|e| {
-                fbuild_core::FbuildError::DaemonError(format!("stream error: {}", e))
+                fbuild_core::FbuildError::DaemonError(format!(
+                    "lost connection to daemon mid-build ({}); the daemon \
+                     process may have died — check ~/.fbuild/daemon/daemon.log",
+                    e
+                ))
             })?;
             buffer.push_str(&String::from_utf8_lossy(&chunk));
 

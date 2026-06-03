@@ -110,6 +110,47 @@ impl Esp32Platform {
         Ok(url.to_string())
     }
 
+    /// Enumerate every package listed in `platform.json`'s `packages` section.
+    ///
+    /// Returns `(name, version_url)` pairs. The orchestrator uses this to
+    /// provision helper packages (e.g. `toolchain-riscv32-esp` for ULP code on
+    /// ESP32-S3) that are listed alongside the MCU-primary toolchain.
+    /// See fbuild#401.
+    pub fn enumerate_packages(&self) -> Result<Vec<(String, String)>> {
+        let platform_json_path = self.resolved_dir().join("platform.json");
+
+        let content = std::fs::read_to_string(&platform_json_path).map_err(|e| {
+            FbuildError::PackageError(format!(
+                "failed to read platform.json at {}: {}",
+                platform_json_path.display(),
+                e
+            ))
+        })?;
+
+        let data: serde_json::Value = serde_json::from_str(&content).map_err(|e| {
+            FbuildError::PackageError(format!("failed to parse platform.json: {}", e))
+        })?;
+
+        let packages = data
+            .get("packages")
+            .and_then(|p| p.as_object())
+            .ok_or_else(|| {
+                FbuildError::PackageError("platform.json has no `packages` section".to_string())
+            })?;
+
+        let mut entries: Vec<(String, String)> = packages
+            .iter()
+            .filter_map(|(name, value)| {
+                value
+                    .get("version")
+                    .and_then(|v| v.as_str())
+                    .map(|url| (name.clone(), url.to_string()))
+            })
+            .collect();
+        entries.sort_by(|a, b| a.0.cmp(&b.0));
+        Ok(entries)
+    }
+
     /// Validate the platform installation.
     fn validate_install(install_dir: &Path) -> Result<()> {
         let root = find_platform_root(install_dir);
@@ -225,5 +266,121 @@ mod tests {
     fn test_validate_install_missing_json() {
         let tmp = tempfile::TempDir::new().unwrap();
         assert!(Esp32Platform::validate_install(tmp.path()).is_err());
+    }
+
+    /// A pruned slice of pioarduino `platform-espressif32@54.03.20`'s
+    /// `platform.json`, capturing the packages section that an ESP32-S3 build
+    /// needs to resolve. Tracks fbuild#401: both the MCU-primary Xtensa
+    /// toolchain AND the RISC-V helper toolchain (used for ULP coprocessor
+    /// code) must be discoverable.
+    const PIOARDUINO_54_03_20_PACKAGES_FRAGMENT: &str = r#"{
+      "packages": {
+        "framework-arduinoespressif32": {
+          "type": "framework",
+          "version": "https://github.com/pioarduino/esp32-arduino-libs/releases/download/54.03.20/framework-arduinoespressif32-54.03.20.zip"
+        },
+        "framework-arduinoespressif32-libs": {
+          "type": "framework",
+          "version": "https://github.com/pioarduino/esp32-arduino-libs/releases/download/idf-release_v5.5-1f31a92e/esp32-arduino-libs-idf-release_v5.5-1f31a92e.zip"
+        },
+        "toolchain-xtensa-esp-elf": {
+          "type": "toolchain",
+          "version": "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20241119/xtensa-esp-elf-14.2.0_20241119-x86_64-w64-mingw32.zip"
+        },
+        "toolchain-riscv32-esp": {
+          "type": "toolchain",
+          "version": "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20241119/riscv32-esp-elf-14.2.0_20241119-x86_64-w64-mingw32.zip"
+        },
+        "tool-esptoolpy": {
+          "type": "uploader",
+          "version": "https://github.com/tasmota/esptool/releases/download/v5.1.0/esptool-v5.1.0-windows-amd64.zip"
+        }
+      }
+    }"#;
+
+    fn write_platform_json(dir: &Path, body: &str) {
+        std::fs::write(dir.join("platform.json"), body).unwrap();
+        std::fs::create_dir_all(dir.join("boards")).unwrap();
+    }
+
+    fn platform_with_install_dir(install_dir: &Path) -> Esp32Platform {
+        let mut p = Esp32Platform::new(install_dir);
+        p.install_dir = Some(install_dir.to_path_buf());
+        p
+    }
+
+    #[test]
+    fn test_get_toolchain_metadata_url_xtensa_pioarduino_54_03_20() {
+        // ESP32-S3 build: primary toolchain is Xtensa.
+        let tmp = tempfile::TempDir::new().unwrap();
+        write_platform_json(tmp.path(), PIOARDUINO_54_03_20_PACKAGES_FRAGMENT);
+        let p = platform_with_install_dir(tmp.path());
+        let url = p.get_toolchain_metadata_url(false).unwrap();
+        assert!(
+            url.contains("xtensa-esp-elf"),
+            "expected Xtensa URL, got {url}"
+        );
+    }
+
+    #[test]
+    fn test_get_riscv_helper_toolchain_for_esp32s3_pioarduino_54_03_20() {
+        // fbuild#401: even on Xtensa MCUs (ESP32-S3 has Xtensa cores + a
+        // RISC-V ULP coprocessor), platform.json lists the RISC-V toolchain.
+        // The orchestrator must be able to resolve it on demand so ULP code
+        // can be compiled.
+        let tmp = tempfile::TempDir::new().unwrap();
+        write_platform_json(tmp.path(), PIOARDUINO_54_03_20_PACKAGES_FRAGMENT);
+        let p = platform_with_install_dir(tmp.path());
+        let url = p.get_package_url("toolchain-riscv32-esp").unwrap();
+        assert!(
+            url.contains("riscv32-esp-elf"),
+            "expected RISC-V helper URL, got {url}"
+        );
+    }
+
+    #[test]
+    fn test_enumerate_packages_returns_all_entries() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        write_platform_json(tmp.path(), PIOARDUINO_54_03_20_PACKAGES_FRAGMENT);
+        let p = platform_with_install_dir(tmp.path());
+
+        let entries = p.enumerate_packages().unwrap();
+        let names: Vec<&str> = entries.iter().map(|(n, _)| n.as_str()).collect();
+        assert!(
+            names.contains(&"framework-arduinoespressif32"),
+            "missing framework, got {names:?}"
+        );
+        assert!(
+            names.contains(&"framework-arduinoespressif32-libs"),
+            "missing framework-libs, got {names:?}"
+        );
+        assert!(
+            names.contains(&"toolchain-xtensa-esp-elf"),
+            "missing Xtensa toolchain, got {names:?}"
+        );
+        assert!(
+            names.contains(&"toolchain-riscv32-esp"),
+            "missing RISC-V helper toolchain, got {names:?}"
+        );
+        assert!(
+            names.contains(&"tool-esptoolpy"),
+            "missing esptoolpy, got {names:?}"
+        );
+        // Sorted alphabetically for deterministic iteration order.
+        let mut sorted = names.clone();
+        sorted.sort();
+        assert_eq!(names, sorted, "enumerate_packages must return sorted list");
+    }
+
+    #[test]
+    fn test_enumerate_packages_errors_when_section_missing() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        write_platform_json(tmp.path(), r#"{"name": "espressif32"}"#);
+        let p = platform_with_install_dir(tmp.path());
+        let err = p.enumerate_packages().unwrap_err();
+        assert!(
+            format!("{err}").contains("no `packages` section"),
+            "wrong error: {err}"
+        );
     }
 }
