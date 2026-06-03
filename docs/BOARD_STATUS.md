@@ -69,8 +69,10 @@ Live per-platform CI status and supported-board reference for fbuild.
 [![Build Arduino Due](https://github.com/fastled/fbuild/actions/workflows/build-sam3x8e_due.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-sam3x8e_due.yml)
 [![Build SAMD21](https://github.com/fastled/fbuild/actions/workflows/build-samd21.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-samd21.yml)
 [![Build Arduino Zero](https://github.com/fastled/fbuild/actions/workflows/build-samd21_zero.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-samd21_zero.yml)
+[![Build QT Py M0](https://github.com/fastled/fbuild/actions/workflows/build-qtpy_m0.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-qtpy_m0.yml)
 [![Build SAMD51J](https://github.com/fastled/fbuild/actions/workflows/build-samd51j.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-samd51j.yml)
 [![Build SAMD51P](https://github.com/fastled/fbuild/actions/workflows/build-samd51p.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-samd51p.yml)
+[![Build Matrix Portal M4](https://github.com/fastled/fbuild/actions/workflows/build-matrix_portal_m4.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-matrix_portal_m4.yml)
 
 ### RP2040 / RP2350
 [![Build RP2040](https://github.com/fastled/fbuild/actions/workflows/build-rp2040.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-rp2040.yml)
@@ -377,8 +379,10 @@ STM32 is STMicroelectronics' extensive family of ARM Cortex-M microcontrollers, 
 - **Arduino Due** (SAM3X8E) - Supported
 - **SAMD21** (Adafruit Feather M0) - Supported
 - **SAMD21** (Arduino Zero) - Supported
+- **SAMD21E** (Adafruit QT Py M0) - Supported
 - **SAMD51J** (Adafruit Feather M4) - Supported
 - **SAMD51P** (Adafruit Grand Central M4) - Supported
+- **SAMD51J** (Adafruit Matrix Portal M4) - Supported
 
 <details>
 <summary><strong>About the SAM / SAMD Family</strong></summary>

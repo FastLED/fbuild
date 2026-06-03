@@ -1,0 +1,17 @@
+name: Build QT Py M0
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "QT Py M0"
+      test-dir: "tests/platform/qtpy_m0"
+      env-name: "qtpy_m0"
+      firmware-ext: "bin"
