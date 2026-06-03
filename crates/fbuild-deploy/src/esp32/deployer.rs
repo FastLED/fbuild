@@ -116,7 +116,10 @@ fn bytes_to_flash_size(bytes: Option<u64>, default: &str) -> String {
 
 #[cfg(feature = "espflash-native")]
 fn native_write_supported_for_chip(chip: &str) -> bool {
-    !chip.eq_ignore_ascii_case("esp32c6")
+    const NATIVE_WRITE_UNSUPPORTED_CHIPS: &[&str] = &["esp32c6", "esp32s3"];
+    !NATIVE_WRITE_UNSUPPORTED_CHIPS
+        .iter()
+        .any(|unsupported| chip.eq_ignore_ascii_case(unsupported))
 }
 
 impl Esp32Deployer {

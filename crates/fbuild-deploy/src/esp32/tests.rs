@@ -278,7 +278,7 @@ fn test_esp32_deployer_from_board_config_honors_flash_size_override() {
 
 #[test]
 #[cfg(feature = "espflash-native")]
-fn native_write_is_disabled_for_esp32c6() {
+fn native_write_is_disabled_for_known_stalling_chips() {
     let params = test_esptool_params();
     let c6 = Esp32Deployer::new(
         "esp32c6", "460800", "0x0", "0x8000", "0x10000", &params, false,
@@ -288,9 +288,14 @@ fn native_write_is_disabled_for_esp32c6() {
         "esp32s3", "460800", "0x0", "0x8000", "0x10000", &params, false,
     )
     .with_native_write(true);
+    let c3 = Esp32Deployer::new(
+        "esp32c3", "460800", "0x0", "0x8000", "0x10000", &params, false,
+    )
+    .with_native_write(true);
 
     assert!(!c6.use_native_write);
-    assert!(s3.use_native_write);
+    assert!(!s3.use_native_write);
+    assert!(c3.use_native_write);
 }
 
 #[test]
