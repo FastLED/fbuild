@@ -31,6 +31,7 @@ libiconv-2.dll
 .cargo/.global-cache
 .cargo/.package-cache
 .cargo/.package-cache-mutate
+.cargo/git/
 .cargo/registry/
 
 # Cargo lock is checked in for binaries
