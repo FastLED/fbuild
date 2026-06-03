@@ -397,4 +397,34 @@ mod tests {
         assert_eq!(entry.name, "digistump-avr-core");
         assert_eq!(entry.core_dir.as_deref(), Some("pro"));
     }
+
+    /// Tripwire: `MicroCore` (MCUdude/MicroCore, used by `attiny13` /
+    /// `attiny13a` board JSONs) is not yet wired into `avr_frameworks.json`.
+    /// Source issue FastLED/FastLED#581, tracker FastLED/fbuild#389. When
+    /// MicroCore lands in the registry, flip this assertion to
+    /// `is_ok()` and update the gap tracker in
+    /// `tests/platform/attiny13/README.md`.
+    #[test]
+    fn test_microcore_gap_tracked() {
+        assert!(
+            lookup_entry("MicroCore").is_err(),
+            "MicroCore lookup unexpectedly succeeded — see FastLED/fbuild#389; \
+             update test_microcore_gap_tracked and tests/platform/attiny13/README.md"
+        );
+    }
+
+    /// Tripwire: `dxcore` (SpenceKonde/DxCore, used by the AVR-Dx family —
+    /// `AVR128DA*`, `AVR128DB*`, `AVR64DA*`, `AVR64DB*`, `AVR64DD*`,
+    /// `AVR32DA*`, `AVR32DB*`) is not yet wired into `avr_frameworks.json`.
+    /// Source issue FastLED/FastLED#1307, tracker FastLED/fbuild#389. When
+    /// DxCore lands in the registry, flip this assertion to `is_ok()` and
+    /// update the gap tracker in `tests/platform/avr128da64/README.md`.
+    #[test]
+    fn test_dxcore_gap_tracked() {
+        assert!(
+            lookup_entry("dxcore").is_err(),
+            "dxcore lookup unexpectedly succeeded — see FastLED/fbuild#389; \
+             update test_dxcore_gap_tracked and tests/platform/avr128da64/README.md"
+        );
+    }
 }
