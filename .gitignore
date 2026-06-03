@@ -26,6 +26,7 @@ libiconv-2.dll
 
 # fbuild local build artifacts
 .fbuild/
+tests/platform/*/build_info*.json
 
 # Local cargo cache
 .cargo/.global-cache

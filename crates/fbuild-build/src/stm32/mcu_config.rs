@@ -20,6 +20,10 @@ const STM32U5_JSON: &str = include_str!("configs/stm32u5.json");
 /// - `stm32f4*` → STM32F4 (Cortex-M4F)
 /// - `stm32h7*` → STM32H7 (Cortex-M7)
 /// - `stm32u5*` → STM32U5 (Cortex-M33F)
+///
+/// Known gaps tracked by FastLED/fbuild#385:
+/// - STM32F0xx (Cortex-M0): blocks FastLED/FastLED#750
+/// - STM32L4xx (Cortex-M4F, no DSP): blocks FastLED/FastLED#975
 pub fn get_stm32_config_for_mcu(mcu: &str) -> Result<ArmMcuConfig> {
     let mcu_lower = mcu.to_lowercase();
     let json = if mcu_lower.starts_with("stm32f103") {
@@ -32,7 +36,7 @@ pub fn get_stm32_config_for_mcu(mcu: &str) -> Result<ArmMcuConfig> {
         STM32U5_JSON
     } else {
         return Err(fbuild_core::FbuildError::ConfigError(format!(
-            "unsupported STM32 MCU: '{}' (supported prefixes: stm32f103, stm32f4, stm32h7, stm32u5/stm32u585)",
+            "unsupported STM32 MCU: '{}' (supported prefixes: stm32f103, stm32f4, stm32h7, stm32u5/stm32u585; gaps tracked by FastLED/fbuild#385: stm32f0*, stm32l4*)",
             mcu
         )));
     };
