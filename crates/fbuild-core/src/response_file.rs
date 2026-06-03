@@ -121,9 +121,9 @@ pub fn replace_path_backslashes(s: &str) -> String {
 ///
 /// Returns the path to the response file.
 ///
-/// Flags containing `\"` (escaped quotes in define values) are wrapped in
-/// single quotes with `\"` converted to plain `"` — GCC's response file
-/// parser always preserves literal `"` inside single-quoted arguments.
+/// Flags containing either `\"` or bare `"` in define values are wrapped in
+/// single quotes with `\"` converted to plain `"`. GCC's response file
+/// parser preserves literal `"` inside single-quoted arguments.
 pub fn write_response_file(flags: &[String], temp_dir: &Path, prefix: &str) -> Result<PathBuf> {
     std::fs::create_dir_all(temp_dir).map_err(|e| {
         crate::FbuildError::BuildFailed(format!(
@@ -139,21 +139,25 @@ pub fn write_response_file(flags: &[String], temp_dir: &Path, prefix: &str) -> R
     // but preserve \" sequences which are intentional escape sequences (e.g., in
     // -DMBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\").
     //
-    // Flags containing \" (escaped quotes in define values like -DARDUINO_BOARD=\"...\")
-    // must be wrapped in single quotes with the \" converted to plain " — GCC's
-    // response file parser treats \" inconsistently across platforms, but single-quoted
-    // arguments always preserve literal " characters.
+    // Flags containing quoted define values need single-quote wrapping. Some
+    // define sources use escaped quotes (-DFOO=\"bar\"), while data-driven MCU
+    // configs can contain bare quotes (-DFOO="bar"). Normalize both forms to
+    // the response-file spelling GCC preserves as a string literal.
     let content = flags
         .iter()
         .map(|f| {
             let fwd = replace_path_backslashes(f);
-            if fwd.contains("\\\"") {
-                let unescaped = fwd.replace("\\\"", "\"");
-                format!("'{}'", unescaped)
-            } else if fwd.contains(' ') {
-                format!("\"{}\"", fwd)
+            let normalized = if fwd.contains("\\\"") {
+                fwd.replace("\\\"", "\"")
             } else {
                 fwd
+            };
+            if normalized.contains('"') {
+                format!("'{}'", normalized)
+            } else if normalized.contains(' ') {
+                format!("\"{}\"", normalized)
+            } else {
+                normalized
             }
         })
         .collect::<Vec<_>>()
@@ -230,6 +234,32 @@ mod tests {
         let second = write_response_file(&["-O3".to_string()], tmp.path(), "stable").unwrap();
 
         assert_ne!(first, second);
+    }
+
+    #[test]
+    fn test_write_response_file_wraps_escaped_quote_defines() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let rsp = write_response_file(
+            &[r#"-DARDUINO_BOARD=\"ESP32_DEV\""#.to_string()],
+            tmp.path(),
+            "define",
+        )
+        .unwrap();
+        let content = std::fs::read_to_string(rsp).unwrap();
+        assert_eq!(content, r#"'-DARDUINO_BOARD="ESP32_DEV"'"#);
+    }
+
+    #[test]
+    fn test_write_response_file_wraps_bare_quote_defines() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let rsp = write_response_file(
+            &[r#"-DARDUINO_BSP_VERSION="1.6.1""#.to_string()],
+            tmp.path(),
+            "define",
+        )
+        .unwrap();
+        let content = std::fs::read_to_string(rsp).unwrap();
+        assert_eq!(content, r#"'-DARDUINO_BSP_VERSION="1.6.1"'"#);
     }
 
     #[test]
