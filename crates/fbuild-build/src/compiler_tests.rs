@@ -208,6 +208,20 @@ fn test_prepare_flags_and_response_file_produce_same_define_value() {
 }
 
 #[test]
+fn test_response_file_preserves_bare_quoted_define_value() {
+    // nRF52 MCU config provides ARDUINO_BSP_VERSION as a bare quoted JSON
+    // value. Windows response files must preserve those quotes, otherwise
+    // GCC sees 1.6.1 as a numeric token and fails with "too many decimal
+    // points in number" in Adafruit nRF52 debug.cpp.
+    let input = r#"-DARDUINO_BSP_VERSION="1.6.1""#.to_string();
+
+    let tmp = tempfile::TempDir::new().unwrap();
+    let rsp = write_response_file(&[input], tmp.path(), "test").unwrap();
+    let content = std::fs::read_to_string(rsp).unwrap();
+    assert_eq!(content, r#"'-DARDUINO_BSP_VERSION="1.6.1"'"#);
+}
+
+#[test]
 fn test_response_file_dir_prefers_output_sibling_tmp() {
     let output = Path::new("C:/work/build/src/main.cpp.o");
     let fallback = Path::new("C:/temp");
