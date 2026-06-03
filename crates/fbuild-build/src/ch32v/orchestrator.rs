@@ -150,7 +150,10 @@ impl BuildOrchestrator for Ch32vOrchestrator {
             params.verbose,
             isystem_flags,
         )
-        .with_build_unflags(ctx.build_unflags.clone());
+        .with_build_unflags(ctx.build_unflags.clone())
+        // Scope third-party `-Wno-*` suppressions to the OpenWCH core/variant
+        // install only. See FastLED/fbuild#382.
+        .with_framework_root(framework_dir.clone());
 
         // 7. Create linker (resolve linker script from system dir)
         // CH32V linker scripts are in system/<SERIES>/SRC/Ld/, not in variants/
