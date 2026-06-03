@@ -515,8 +515,9 @@ impl DaemonClient {
             let chunk = chunk.map_err(|e| {
                 fbuild_core::FbuildError::DaemonError(format!(
                     "lost connection to daemon mid-build ({}); the daemon \
-                     process may have died — check ~/.fbuild/daemon/daemon.log",
-                    e
+                     process may have died — check {}",
+                    e,
+                    fbuild_paths::get_daemon_log_file().display()
                 ))
             })?;
             buffer.push_str(&String::from_utf8_lossy(&chunk));

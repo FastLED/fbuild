@@ -76,68 +76,61 @@ impl Esp32Platform {
         self.get_package_url(package_name)
     }
 
+    /// Read and parse the `packages` section of `platform.json`.
+    ///
+    /// Shared between [`Self::get_package_url`] and
+    /// [`Self::enumerate_packages`] so the read/parse/lookup logic stays in
+    /// one place and the error messages stay consistent.
+    fn read_packages_section(&self) -> Result<serde_json::Map<String, serde_json::Value>> {
+        let platform_json_path = self.resolved_dir().join("platform.json");
+
+        let content = std::fs::read_to_string(&platform_json_path).map_err(|e| {
+            FbuildError::PackageError(format!(
+                "failed to read platform.json at {}: {}",
+                platform_json_path.display(),
+                e
+            ))
+        })?;
+
+        let data: serde_json::Value = serde_json::from_str(&content).map_err(|e| {
+            FbuildError::PackageError(format!("failed to parse platform.json: {}", e))
+        })?;
+
+        data.get("packages")
+            .and_then(|p| p.as_object())
+            .cloned()
+            .ok_or_else(|| {
+                FbuildError::PackageError("platform.json has no `packages` section".to_string())
+            })
+    }
+
     /// Get a package URL from platform.json by package name.
     ///
     /// The `packages` section of platform.json maps package names to objects
     /// with a `version` field that contains the metadata URL.
     pub fn get_package_url(&self, package_name: &str) -> Result<String> {
-        let platform_json_path = self.resolved_dir().join("platform.json");
-
-        let content = std::fs::read_to_string(&platform_json_path).map_err(|e| {
-            FbuildError::PackageError(format!(
-                "failed to read platform.json at {}: {}",
-                platform_json_path.display(),
-                e
-            ))
-        })?;
-
-        let data: serde_json::Value = serde_json::from_str(&content).map_err(|e| {
-            FbuildError::PackageError(format!("failed to parse platform.json: {}", e))
-        })?;
-
-        let url = data
-            .get("packages")
-            .and_then(|p| p.get(package_name))
+        let packages = self.read_packages_section()?;
+        packages
+            .get(package_name)
             .and_then(|pkg| pkg.get("version"))
             .and_then(|v| v.as_str())
+            .map(|s| s.to_string())
             .ok_or_else(|| {
                 FbuildError::PackageError(format!(
                     "package '{}' not found in platform.json",
                     package_name
                 ))
-            })?;
-
-        Ok(url.to_string())
+            })
     }
 
     /// Enumerate every package listed in `platform.json`'s `packages` section.
     ///
-    /// Returns `(name, version_url)` pairs. The orchestrator uses this to
-    /// provision helper packages (e.g. `toolchain-riscv32-esp` for ULP code on
-    /// ESP32-S3) that are listed alongside the MCU-primary toolchain.
-    /// See fbuild#401.
+    /// Returns `(name, version_url)` pairs sorted by name. The orchestrator
+    /// uses this to surface helper packages (e.g. `toolchain-riscv32-esp` for
+    /// ULP code on ESP32-S3) that are listed alongside the MCU-primary
+    /// toolchain. See fbuild#401.
     pub fn enumerate_packages(&self) -> Result<Vec<(String, String)>> {
-        let platform_json_path = self.resolved_dir().join("platform.json");
-
-        let content = std::fs::read_to_string(&platform_json_path).map_err(|e| {
-            FbuildError::PackageError(format!(
-                "failed to read platform.json at {}: {}",
-                platform_json_path.display(),
-                e
-            ))
-        })?;
-
-        let data: serde_json::Value = serde_json::from_str(&content).map_err(|e| {
-            FbuildError::PackageError(format!("failed to parse platform.json: {}", e))
-        })?;
-
-        let packages = data
-            .get("packages")
-            .and_then(|p| p.as_object())
-            .ok_or_else(|| {
-                FbuildError::PackageError("platform.json has no `packages` section".to_string())
-            })?;
-
+        let packages = self.read_packages_section()?;
         let mut entries: Vec<(String, String)> = packages
             .iter()
             .filter_map(|(name, value)| {

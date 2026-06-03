@@ -65,9 +65,12 @@ pub(super) fn resolve_pioarduino_packages(
     Ok((toolchain, framework))
 }
 
-/// Eagerly resolve toolchain-* packages listed in `platform.json` other
-/// than the MCU-primary toolchain. Each resolution miss is logged at warn
-/// level but never fails the caller. See fbuild#401 for context.
+/// Provision toolchain-* packages listed in `platform.json` other than the
+/// MCU-primary toolchain — e.g. `toolchain-riscv32-esp` on ESP32-S3 (Xtensa
+/// cores + RISC-V ULP coprocessor). Cache-aware: a helper toolchain whose
+/// cache directory already exists is skipped without touching the network,
+/// so the steady-state cost on a warm cache is zero. Each resolution miss
+/// is logged at warn level but never fails the caller. See fbuild#401.
 fn provision_helper_toolchains(
     platform: &fbuild_packages::library::Esp32Platform,
     project_dir: &Path,
@@ -87,12 +90,17 @@ fn provision_helper_toolchains(
         }
     };
 
+    let cache = fbuild_packages::Cache::new(project_dir);
+    let toolchains_dir = cache.toolchains_dir();
     for (name, metadata_url) in entries {
         if name == primary || !name.starts_with("toolchain-") {
             continue;
         }
-        let cache = fbuild_packages::Cache::new(project_dir);
-        let cache_dir = cache.toolchains_dir().join(&name);
+        let cache_dir = toolchains_dir.join(&name);
+        if cache_dir.exists() {
+            tracing::debug!("helper toolchain {} already cached, skipping", name);
+            continue;
+        }
         match fbuild_packages::toolchain::esp32_metadata::resolve_toolchain_url_sync(
             &metadata_url,
             &name,
