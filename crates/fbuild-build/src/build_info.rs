@@ -124,6 +124,15 @@ fn extract_prefixed(flags: &[String], prefix: &str) -> Vec<String> {
 /// failures degrade to `tracing::warn!` rather than failing the build; an
 /// otherwise-successful link should never be reported as failed because the
 /// downstream metadata file couldn't be written.
+///
+/// `env_name` may contain forward or backward slashes when the caller is
+/// driving fbuild per-example with nested example names (e.g. FastLED's
+/// `Fx/FxNoisePalette`, `Multiple/ArrayOfLedArrays`, or
+/// `SpecialDrivers/Adafruit/AdafruitBridge`). FastLED's `_find_build_info()`
+/// expands those into a nested subdirectory path via
+/// `Path(".build/pio/<board>") / f"build_info_{example}.json"`, so to make
+/// the file land where the consumer looks for it we must create the parent
+/// directory tree before writing. See FastLED/fbuild#406.
 pub fn emit_build_info(project_dir: &Path, env_name: &str, info: &BuildInfo) -> Result<()> {
     let outer = std::collections::BTreeMap::from([(env_name.to_string(), info.clone())]);
     let json = serde_json::to_string_pretty(&outer).map_err(|e| {
@@ -134,6 +143,16 @@ pub fn emit_build_info(project_dir: &Path, env_name: &str, info: &BuildInfo) -> 
     let generic = project_dir.join("build_info.json");
 
     for path in [&env_specific, &generic] {
+        if let Some(parent) = path.parent() {
+            if let Err(e) = std::fs::create_dir_all(parent) {
+                tracing::warn!(
+                    "failed to create parent directory {} for build_info: {}",
+                    parent.display(),
+                    e
+                );
+                continue;
+            }
+        }
         if let Err(e) = std::fs::write(path, &json) {
             tracing::warn!("failed to write {}: {}", path.display(), e);
         }
@@ -224,6 +243,71 @@ mod tests {
         emit_build_info(tmp.path(), "uno", &info).unwrap();
         assert!(tmp.path().join("build_info_uno.json").exists());
         assert!(tmp.path().join("build_info.json").exists());
+    }
+
+    /// FastLED/fbuild#406: when FastLED drives fbuild per-example using a
+    /// nested example name like `Fx/FxNoisePalette`, the env-specific file
+    /// path expands to `build_info_Fx/FxNoisePalette.json` — i.e. a nested
+    /// subdirectory. Previously the write silently failed with
+    /// `Exception generating build_info.json: [Errno 2] No such file or
+    /// directory`, dropping 161 per-example metadata files across the ESP32
+    /// audit matrix. The emitter must create the parent directory tree
+    /// before writing.
+    #[test]
+    fn emit_creates_parent_dirs_for_nested_env_name() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let info = sample_info();
+        // Single-level nesting (e.g. FastLED `Fx/FxNoisePalette`).
+        emit_build_info(tmp.path(), "Fx/FxNoisePalette", &info).unwrap();
+        assert!(
+            tmp.path()
+                .join("build_info_Fx")
+                .join("FxNoisePalette.json")
+                .exists(),
+            "build_info_Fx/FxNoisePalette.json must exist after emit"
+        );
+        // Generic fallback also written at top level.
+        assert!(tmp.path().join("build_info.json").exists());
+    }
+
+    /// Two-level nesting matching FastLED's
+    /// `SpecialDrivers/Adafruit/AdafruitBridge` example layout. The emitter
+    /// must walk and create every intermediate directory, not just the
+    /// immediate parent.
+    #[test]
+    fn emit_creates_deeply_nested_parent_dirs() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let info = sample_info();
+        emit_build_info(tmp.path(), "SpecialDrivers/Adafruit/AdafruitBridge", &info).unwrap();
+        assert!(
+            tmp.path()
+                .join("build_info_SpecialDrivers")
+                .join("Adafruit")
+                .join("AdafruitBridge.json")
+                .exists(),
+            "build_info_SpecialDrivers/Adafruit/AdafruitBridge.json must exist after emit"
+        );
+    }
+
+    /// The outer JSON key must preserve the full nested env name — FastLED's
+    /// `_create_board_info` asserts there is exactly one outer key and
+    /// reads the inner value via `next(iter(...))`. Sanitizing the env name
+    /// would break that contract.
+    #[test]
+    fn emit_preserves_nested_env_name_as_json_key() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let info = sample_info();
+        emit_build_info(tmp.path(), "Fx/FxNoisePalette", &info).unwrap();
+
+        let path = tmp.path().join("build_info_Fx").join("FxNoisePalette.json");
+        let bytes = std::fs::read(&path).unwrap();
+        let parsed: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
+        let obj = parsed.as_object().expect("outer is object");
+        assert_eq!(obj.len(), 1);
+        assert!(
+            obj.contains_key("Fx/FxNoisePalette"),
+            "nested env name must be preserved as the outer JSON key"
+        );
     }
 
     #[test]
