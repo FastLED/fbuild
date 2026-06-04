@@ -700,37 +700,6 @@ fn test_esp32c3_no_psram() {
     );
 }
 
-// --- USB VID/PID defines ---
-
-#[test]
-fn test_get_defines_usb_vid_pid() {
-    let mut config = BoardConfig::from_board_id("uno", &HashMap::new()).unwrap();
-    config.vid = Some("0x2341".to_string());
-    config.pid = Some("0x8036".to_string());
-    let defines = config.get_defines();
-    assert_eq!(defines.get("USB_VID"), Some(&"0x2341".to_string()));
-    assert_eq!(defines.get("USB_PID"), Some(&"0x8036".to_string()));
-}
-
-#[test]
-fn test_get_defines_no_usb_when_absent() {
-    let config = BoardConfig::from_board_id("esp32dev", &HashMap::new()).unwrap();
-    assert!(config.vid.is_none());
-    let defines = config.get_defines();
-    assert!(!defines.contains_key("USB_VID"));
-    assert!(!defines.contains_key("USB_PID"));
-}
-
-#[test]
-fn test_leonardo_board_has_vid_pid() {
-    let config = BoardConfig::from_board_id("leonardo", &HashMap::new()).unwrap();
-    assert_eq!(config.vid, Some("0x2341".to_string()));
-    assert_eq!(config.pid, Some("0x8036".to_string()));
-    let defines = config.get_defines();
-    assert_eq!(defines.get("USB_VID"), Some(&"0x2341".to_string()));
-    assert_eq!(defines.get("USB_PID"), Some(&"0x8036".to_string()));
-}
-
 #[test]
 fn test_attiny1604_board_config() {
     let config = BoardConfig::from_board_id("ATtiny1604", &HashMap::new()).unwrap();

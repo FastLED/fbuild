@@ -25,4 +25,7 @@ mod types;
 #[cfg(test)]
 mod tests;
 
+#[cfg(test)]
+mod tests_usb_vid;
+
 pub use types::{BoardConfig, DebugToolMeta, Esp32QemuPsramConfig};
