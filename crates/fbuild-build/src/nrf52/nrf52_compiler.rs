@@ -21,6 +21,28 @@ pub struct Nrf52Compiler {
     temp_dir: PathBuf,
     /// PlatformIO `build_unflags`. See FastLED/fbuild#37.
     build_unflags: Vec<String>,
+    /// Optional framework root used to scope third-party warning
+    /// suppressions to vendor sources only. Set by the orchestrator after
+    /// `Esp32Framework::ensure_installed`. See FastLED/fbuild#407.
+    framework_root: Option<PathBuf>,
+}
+
+/// Per-source warning demotions scoped to Adafruit nRF52 BSP / NRFX HAL
+/// vendor sources only. `nordic/nrfx/hal/nrf_clock.h:800` casts a
+/// `nrf_clock_hfclk_t*` (1-element array) to `uint32_t*`, which GCC's
+/// array-bounds analysis correctly flags but is a benign upstream strict-
+/// aliasing pattern. Same shape for `dcd_nrf5x.c:919`. See
+/// FastLED/fbuild#407.
+fn framework_suppression_flags() -> &'static [&'static str] {
+    &["-Wno-array-bounds"]
+}
+
+/// `true` when `source` lives under the Adafruit nRF52 BSP install root.
+fn is_framework_source(source: &Path, framework_root: Option<&Path>) -> bool {
+    let Some(root) = framework_root else {
+        return false;
+    };
+    source.starts_with(root)
 }
 
 impl Nrf52Compiler {
@@ -50,12 +72,21 @@ impl Nrf52Compiler {
             profile,
             temp_dir: fbuild_core::response_file::windows_temp_dir(),
             build_unflags: Vec::new(),
+            framework_root: None,
         }
     }
 
     /// Attach PlatformIO `build_unflags`. See FastLED/fbuild#37.
     pub fn with_build_unflags(mut self, build_unflags: Vec<String>) -> Self {
         self.build_unflags = build_unflags;
+        self
+    }
+
+    /// Attach the Adafruit nRF52 BSP install root so per-source warning
+    /// suppressions can be scoped to vendor sources only. See
+    /// FastLED/fbuild#407.
+    pub fn with_framework_root(mut self, root: PathBuf) -> Self {
+        self.framework_root = Some(root);
         self
     }
 
@@ -84,12 +115,32 @@ impl Compiler for Nrf52Compiler {
         flags: &[String],
         extra_flags: &[String],
     ) -> Result<CompileResult> {
+        // Demote `-Warray-bounds` for Adafruit nRF52 BSP / NRFX HAL sources
+        // (e.g. `nordic/nrfx/hal/nrf_clock.h:800`) only. FastLED + user
+        // sketch code still sees the full `-Warray-bounds`. See
+        // FastLED/fbuild#407.
+        let suppressed_extra: Vec<String>;
+        let effective_extra: &[String] =
+            if is_framework_source(source, self.framework_root.as_deref()) {
+                suppressed_extra = extra_flags
+                    .iter()
+                    .cloned()
+                    .chain(
+                        framework_suppression_flags()
+                            .iter()
+                            .map(|s| (*s).to_string()),
+                    )
+                    .collect();
+                &suppressed_extra
+            } else {
+                extra_flags
+            };
         crate::compiler::compile_source(
             compiler_path,
             source,
             output,
             flags,
-            extra_flags,
+            effective_extra,
             &self.temp_dir,
             "nrf52",
             self.base.verbose,
@@ -195,5 +246,46 @@ mod tests {
         assert!(flags.contains(&"-fno-exceptions".to_string()));
         assert!(flags.contains(&"-fno-rtti".to_string()));
         assert!(flags.contains(&"-fno-threadsafe-statics".to_string()));
+    }
+
+    /// FastLED/fbuild#407: `-Wno-array-bounds` must NOT be in the
+    /// workspace-wide flag set. It belongs to the per-framework-source
+    /// scope only.
+    #[test]
+    fn test_array_bounds_suppression_is_not_global() {
+        let compiler = test_compiler();
+        let c_flags = compiler.c_flags();
+        let cpp_flags = compiler.cpp_flags();
+        for f in &c_flags {
+            assert_ne!(
+                f, "-Wno-array-bounds",
+                "-Wno-array-bounds must not be in the workspace-wide C flag set"
+            );
+        }
+        for f in &cpp_flags {
+            assert_ne!(
+                f, "-Wno-array-bounds",
+                "-Wno-array-bounds must not be in the workspace-wide C++ flag set"
+            );
+        }
+    }
+
+    /// FastLED/fbuild#407: framework-source detection.
+    #[test]
+    fn test_is_framework_source_detection() {
+        let root = PathBuf::from("/cache/nrf52/framework-arduinoadafruitnrf52");
+        let vendor = root.join("cores/nRF5/nordic/nrfx/hal/nrf_clock.h");
+        let sketch = PathBuf::from("/proj/src/main.cpp");
+        assert!(is_framework_source(&vendor, Some(&root)));
+        assert!(!is_framework_source(&sketch, Some(&root)));
+        assert!(!is_framework_source(&vendor, None));
+    }
+
+    /// FastLED/fbuild#407: the suppression list is exactly
+    /// `-Wno-array-bounds` — broader suppressions should be intentional.
+    #[test]
+    fn test_framework_suppression_flags_are_narrow() {
+        let flags = framework_suppression_flags();
+        assert_eq!(flags, &["-Wno-array-bounds"]);
     }
 }
