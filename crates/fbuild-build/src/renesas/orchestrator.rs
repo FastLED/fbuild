@@ -199,7 +199,14 @@ impl BuildOrchestrator for RenesasOrchestrator {
             params.profile,
             params.verbose,
         )
-        .with_build_unflags(ctx.build_unflags.clone());
+        .with_build_unflags(ctx.build_unflags.clone())
+        // Scope the four FSP `-Wno-error=` C demotions to ArduinoCore-renesas
+        // sources only. FastLED and user-sketch C code stays under the
+        // stricter default `-Werror=` posture so those bug-class diagnostics
+        // (return-mismatch, implicit-function-declaration, int-conversion,
+        // incompatible-pointer-types) still fail the build when introduced
+        // in user code. See FastLED/fbuild#404.
+        .with_framework_root(framework_dir.clone());
 
         // 7. Create linker (resolve linker script from framework variant)
         let linker_script_path = framework.get_linker_script(&ctx.board.variant);
