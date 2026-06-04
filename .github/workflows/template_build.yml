@@ -50,6 +50,21 @@ jobs:
           # SHARED key across all boards (was ~462MiB × board × SHA before
           # #280 made it coarse).
           prebuild-deps-flags: ""
+          # Override foundation's default `prebuild-deps: soldr-cook` — the
+          # cook recorded only misses (0 hits) in practice (issue #400 /
+          # setup-soldr#377), so skipping it removes a noisy warning and
+          # shaves ~20s off cold runs. The build-cache layer still warms
+          # the actual `soldr cargo build` step.
+          prebuild-deps: none
+          # Opt out of the implicit `SOLDR_LINKER=fast` injection so cargo /
+          # rust-toolchain.toml stays in charge of linker selection. Silences
+          # the routine "defaulting SOLDR_LINKER=fast" warning (issue #400 /
+          # setup-soldr#377).
+          linker: platform-default
+          # Raise the soft warn threshold above the realistic ~1.5–2 GiB
+          # zccache payload for this debug build (issue #400). Hard cap
+          # `cache-payload-max-bytes` still defaults to 6 GiB.
+          cache-payload-warn-bytes: 2GiB
           cache-key-suffix: fbuild-rust-debug
 
       - name: Reset zccache daemon after cache warm
