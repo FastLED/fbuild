@@ -700,7 +700,6 @@ fn test_esp32c3_no_psram() {
     );
 }
 
-
 #[test]
 fn test_attiny1604_board_config() {
     let config = BoardConfig::from_board_id("ATtiny1604", &HashMap::new()).unwrap();
