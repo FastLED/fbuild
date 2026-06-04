@@ -191,12 +191,22 @@ impl BoardConfig {
             defines.insert(format!("__{}__", mcu_upper), "1".to_string());
         }
 
-        // USB VID/PID defines for USB-native boards (Leonardo, Micro, etc.)
-        if let Some(ref vid) = self.vid {
-            defines.insert("USB_VID".to_string(), vid.clone());
-        }
-        if let Some(ref pid) = self.pid {
-            defines.insert("USB_PID".to_string(), pid.clone());
+        // USB VID/PID defines for USB-native boards (Leonardo, Micro, etc.).
+        //
+        // Skipped on ESP32-S2/S3 because the Arduino framework's
+        // `variants/<board>/pins_arduino.h` already #defines both — injecting
+        // the same value via -D causes a "USB_VID redefined" warning at every
+        // TU that includes pins_arduino.h (149-156 warnings per build observed
+        // in CI). When the user has overridden either via `build.extra_flags`
+        // they win via the loop below. See FastLED/fbuild#405.
+        let framework_defines_usb = mcu_upper == "ESP32S2" || mcu_upper == "ESP32S3";
+        if !framework_defines_usb {
+            if let Some(ref vid) = self.vid {
+                defines.insert("USB_VID".to_string(), vid.clone());
+            }
+            if let Some(ref pid) = self.pid {
+                defines.insert("USB_PID".to_string(), pid.clone());
+            }
         }
 
         // Extra flags
