@@ -299,7 +299,11 @@ impl BuildOrchestrator for Nrf52Orchestrator {
             params.profile,
             params.verbose,
         )
-        .with_build_unflags(ctx.build_unflags.clone());
+        .with_build_unflags(ctx.build_unflags.clone())
+        // Scope `-Wno-array-bounds` to Adafruit nRF52 BSP sources only —
+        // FastLED + user sketch code still sees the full diagnostic. See
+        // FastLED/fbuild#407.
+        .with_framework_root(framework_dir.clone());
 
         // 7. Create linker (reuse the alias-resolved linker_script_path
         // computed up front so the fingerprint hash and the actual linker
