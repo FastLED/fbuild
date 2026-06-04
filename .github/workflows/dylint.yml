@@ -28,6 +28,16 @@ jobs:
           toolchain: 1.94.1
           cache-key-suffix: dylint
           prebuild-deps: none
+          # Opt out of the implicit `SOLDR_LINKER=fast` injection so cargo /
+          # rust-toolchain.toml stays in charge. Silences the routine
+          # "defaulting SOLDR_LINKER=fast" warning (issue #400 /
+          # setup-soldr#377).
+          linker: platform-default
+          # Dylint's build pulls in a full rustc-dev tree on first run
+          # which can push the build-cache past the 512 MiB action default
+          # (issue #400). Raise the soft warn threshold; hard cap stays
+          # at the action default (6 GiB).
+          cache-payload-warn-bytes: 2GiB
       - name: Install Dylint nightly toolchain
         # Pin matches `dylints/ban_raw_subprocess/rust-toolchain.toml`
         # and zccache's `ci/build_dylint_driver.py::TOOLCHAIN_CHANNEL`.

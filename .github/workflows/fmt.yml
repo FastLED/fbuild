@@ -23,5 +23,11 @@ jobs:
           build-cache: true
           target-cache: false
           prebuild-deps: none
+          # Opt out of the implicit `SOLDR_LINKER=fast` injection so cargo /
+          # rust-toolchain.toml stays in charge. Silences the routine
+          # "defaulting SOLDR_LINKER=fast" warning (issue #400 /
+          # setup-soldr#377). `cargo fmt` does not link anything so this
+          # is purely cosmetic, but it removes the annotation.
+          linker: platform-default
       - name: Check formatting
         run: soldr cargo fmt --all -- --check

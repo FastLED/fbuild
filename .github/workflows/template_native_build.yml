@@ -67,6 +67,10 @@ jobs:
           # with "file in wrong format" on the cross crt1.o). Disable the
           # injection and let cargo + the toolchain decide.
           linker: platform-default
+          # Native release builds produce a payload larger than the
+          # 512 MiB action default (issue #400). Raise the soft warn
+          # threshold; hard cap stays at the action default (6 GiB).
+          cache-payload-warn-bytes: 2GiB
           cache-key-suffix: native-${{ inputs.target }}
 
       - uses: actions/setup-python@v6

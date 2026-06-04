@@ -24,6 +24,15 @@ jobs:
           target-cache: true
           prebuild-deps: none
           toolchain: 1.94.1
+          # Opt out of the implicit `SOLDR_LINKER=fast` injection so cargo /
+          # rust-toolchain.toml stays in charge. Silences the routine
+          # "defaulting SOLDR_LINKER=fast" warning (issue #400 /
+          # setup-soldr#377).
+          linker: platform-default
+          # Realistic zccache payload for the workspace check job is
+          # ~1.5–2 GiB (issue #400). Raise the soft warn threshold above
+          # the steady-state size. Hard cap stays at 6 GiB.
+          cache-payload-warn-bytes: 2GiB
 
       - name: Check MSRV
         run: soldr cargo check --workspace
