@@ -1,0 +1,38 @@
+{
+  "build": {
+    "core": "cmsis",
+    "cpu": "cortex-m0plus",
+    "extra_flags": "-DLPC845 -DCPU_LPC845M301JBD48",
+    "f_cpu": "30000000L",
+    "mcu": "lpc845",
+    "variant": "lpc845"
+  },
+  "debug": {
+    "tools": {
+      "cmsis-dap": {
+        "onboard": true
+      },
+      "jlink": {},
+      "pyocd": {}
+    }
+  },
+  "fcpu": 30000000,
+  "frameworks": [
+    "cmsis"
+  ],
+  "id": "lpc845",
+  "mcu": "LPC845",
+  "name": "NXP LPC845",
+  "platform": "nxplpc",
+  "ram": 16384,
+  "rom": 65536,
+  "upload": {
+    "maximum_ram_size": 16384,
+    "maximum_size": 65536,
+    "protocol": "lpc21isp",
+    "protocols": ["lpc21isp", "cmsis-dap", "jlink", "pyocd"],
+    "speed": 115200
+  },
+  "url": "https://www.nxp.com/products/processors-and-microcontrollers/arm-microcontrollers/general-purpose-mcus/lpc800-arm-cortex-m0-plus-/low-cost-microcontrollers-lpc84x-mcus-based-on-arm-cortex-m0-plus-cores:LPC84X",
+  "vendor": "NXP"
+}

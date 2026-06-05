@@ -1052,6 +1052,8 @@
   "lpc1768",
   "lpc54114",
   "lpc546xx",
+  "lpc804",
+  "lpc845",
   "lpcxpresso55s16",
   "lplm4f120h5qr",
   "lpmsp430f5529",

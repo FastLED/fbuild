@@ -82,6 +82,7 @@ pub enum Platform {
     Espressif32,
     Espressif8266,
     NordicNrf52,
+    NxpLpc,
     RaspberryPi,
     RenesasRa,
     SiliconLabs,
@@ -116,6 +117,8 @@ impl Platform {
             Some(Self::Ch32v)
         } else if s.contains("nordicnrf52") {
             Some(Self::NordicNrf52)
+        } else if s.contains("nxplpc") {
+            Some(Self::NxpLpc)
         } else if s.contains("renesas") {
             Some(Self::RenesasRa)
         } else if s.contains("siliconlabs") {
@@ -560,6 +563,22 @@ mod tests {
             Some(Platform::Ch32v)
         );
         assert_eq!(Platform::from_platform_str("CH32V"), Some(Platform::Ch32v));
+    }
+
+    #[test]
+    fn platform_from_str_nxplpc() {
+        assert_eq!(
+            Platform::from_platform_str("nxplpc"),
+            Some(Platform::NxpLpc)
+        );
+        assert_eq!(
+            Platform::from_platform_str("platformio/nxplpc"),
+            Some(Platform::NxpLpc)
+        );
+        assert_eq!(
+            Platform::from_platform_str("NXPLPC"),
+            Some(Platform::NxpLpc)
+        );
     }
 
     #[test]

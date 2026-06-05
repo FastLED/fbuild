@@ -1,0 +1,25 @@
+name: Build LPC845
+
+# Stage 1 of FastLED/FastLED#2836: build/toolchain wiring lands now, the
+# actual Stage-2 LPC8xx orchestrator lands in a follow-up FastLED-side PR.
+# Until Stage 2 lands, this workflow's `fbuild build` step fails fast with
+# a "Stage 2 required" error. `continue-on-error: true` keeps the overall
+# check status non-blocking on `main` while still surfacing red runs on the
+# Actions tab. Remove `continue-on-error` once Stage 2 lands.
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    continue-on-error: true
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "NXP LPC845"
+      test-dir: "tests/platform/lpc845"
+      env-name: "lpc845"
+      firmware-ext: "bin"

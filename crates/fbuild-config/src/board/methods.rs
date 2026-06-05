@@ -245,6 +245,7 @@ impl BoardConfig {
             Some(fbuild_core::Platform::Espressif32) => "ESP32".to_string(),
             Some(fbuild_core::Platform::Espressif8266) => "ESP8266".to_string(),
             Some(fbuild_core::Platform::NordicNrf52) => "NRF52".to_string(),
+            Some(fbuild_core::Platform::NxpLpc) => "NXPLPC".to_string(),
             Some(fbuild_core::Platform::RaspberryPi) => "RP2040".to_string(),
             Some(fbuild_core::Platform::RenesasRa) => "RENESAS".to_string(),
             Some(fbuild_core::Platform::SiliconLabs) => "SILABS".to_string(),

@@ -1,0 +1,36 @@
+{
+  "build": {
+    "core": "cmsis",
+    "cpu": "cortex-m0plus",
+    "extra_flags": "-DLPC804 -DCPU_LPC804M101JDH24",
+    "f_cpu": "15000000L",
+    "mcu": "lpc804",
+    "variant": "lpc804"
+  },
+  "debug": {
+    "tools": {
+      "cmsis-dap": {},
+      "jlink": {},
+      "pyocd": {}
+    }
+  },
+  "fcpu": 15000000,
+  "frameworks": [
+    "cmsis"
+  ],
+  "id": "lpc804",
+  "mcu": "LPC804",
+  "name": "NXP LPC804",
+  "platform": "nxplpc",
+  "ram": 4096,
+  "rom": 32768,
+  "upload": {
+    "maximum_ram_size": 4096,
+    "maximum_size": 32768,
+    "protocol": "lpc21isp",
+    "protocols": ["lpc21isp", "cmsis-dap", "jlink", "pyocd"],
+    "speed": 115200
+  },
+  "url": "https://www.nxp.com/products/processors-and-microcontrollers/arm-microcontrollers/general-purpose-mcus/lpc800-arm-cortex-m0-plus-/low-cost-microcontrollers-mcus-based-on-arm-cortex-m0-plus-cores:LPC80X",
+  "vendor": "NXP"
+}
