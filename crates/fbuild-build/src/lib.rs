@@ -23,6 +23,7 @@ pub mod framework_libs;
 pub mod generic_arm;
 pub mod linker;
 pub mod nrf52;
+pub mod nxplpc;
 pub mod parallel;
 pub mod perf_log;
 pub mod pipeline;
@@ -74,6 +75,7 @@ pub fn get_platform_support(platform: Platform) -> Result<Box<dyn PlatformSuppor
         Platform::Ststm32 => Ok(Box::new(stm32::Stm32PlatformSupport)),
         Platform::RaspberryPi => Ok(Box::new(rp2040::Rp2040PlatformSupport)),
         Platform::NordicNrf52 => Ok(Box::new(nrf52::Nrf52PlatformSupport)),
+        Platform::NxpLpc => Ok(Box::new(nxplpc::NxpLpcPlatformSupport)),
         Platform::AtmelSam => Ok(Box::new(sam::SamPlatformSupport)),
         Platform::RenesasRa => Ok(Box::new(renesas::RenesasPlatformSupport)),
         Platform::SiliconLabs => Ok(Box::new(silabs::SilabsPlatformSupport)),

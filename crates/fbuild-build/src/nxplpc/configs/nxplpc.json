@@ -1,0 +1,65 @@
+{
+  "name": "NXP LPC8xx",
+  "description": "NXP LPC804 / LPC845 (ARM Cortex-M0+, bare-metal CMSIS)",
+  "architecture": "arm-cortex-m0plus",
+  "compiler_flags": {
+    "common": [
+      "-mcpu=cortex-m0plus",
+      "-mthumb",
+      "-mfloat-abi=soft",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-fmessage-length=0",
+      "-fno-exceptions",
+      "-fomit-frame-pointer",
+      "-funsigned-char",
+      "-Wall",
+      "-Wextra",
+      "-Wno-unused-parameter",
+      "-MMD"
+    ],
+    "c": [
+      "-std=gnu11"
+    ],
+    "cxx": [
+      "-std=gnu++17",
+      "-fno-rtti",
+      "-fno-threadsafe-statics"
+    ]
+  },
+  "linker_flags": [
+    "-mcpu=cortex-m0plus",
+    "-mthumb",
+    "-mfloat-abi=soft",
+    "-specs=nano.specs",
+    "-specs=nosys.specs",
+    "-Wl,--gc-sections",
+    "-Wl,--print-memory-usage",
+    "-nostartfiles"
+  ],
+  "linker_libs": [
+    "-Wl,--start-group",
+    "-lgcc",
+    "-lc_nano",
+    "-lm",
+    "-lnosys",
+    "-Wl,--end-group"
+  ],
+  "objcopy": {
+    "output_format": "binary",
+    "remove_sections": []
+  },
+  "profiles": {
+    "release": {
+      "compile_flags": ["-Os", "-flto", "-fno-fat-lto-objects"],
+      "link_flags": ["-flto", "-fuse-linker-plugin"]
+    },
+    "quick": {
+      "compile_flags": ["-Os"],
+      "link_flags": []
+    }
+  },
+  "defines": [
+    "__NXPLPC__"
+  ]
+}

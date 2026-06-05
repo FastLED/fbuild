@@ -229,6 +229,14 @@ fn resolve_framework(
                     .to_string(),
             );
         }
+        Platform::NxpLpc => {
+            // NXP LPC8xx is bare-metal CMSIS — no Arduino-style libraries/ tree.
+            // lib-select has nothing to discover; FastLED is consumed as source.
+            return Err(
+                "NXP LPC8xx (bare-metal CMSIS) does not use a libraries/ tree; lib-select is not applicable"
+                    .to_string(),
+            );
+        }
     };
 
     if !libraries_dir.is_dir() {

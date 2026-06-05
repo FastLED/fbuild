@@ -85,6 +85,10 @@ Live per-platform CI status and supported-board reference for fbuild.
 [![Build Apollo3 RedBoard](https://github.com/fastled/fbuild/actions/workflows/build-apollo3_red.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-apollo3_red.yml)
 [![Build Apollo3 expLoRaBLE](https://github.com/fastled/fbuild/actions/workflows/build-apollo3_thing_explorable.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-apollo3_thing_explorable.yml)
 
+### NXP LPC (Cortex-M0+)
+[![Build LPC804](https://github.com/fastled/fbuild/actions/workflows/build-lpc804.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-lpc804.yml)
+[![Build LPC845](https://github.com/fastled/fbuild/actions/workflows/build-lpc845.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-lpc845.yml)
+
 ### Silicon Labs
 [![Build MGM240](https://github.com/fastled/fbuild/actions/workflows/build-mgm240.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-mgm240.yml)
 
