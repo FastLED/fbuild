@@ -73,6 +73,12 @@ pub fn demangle_batch(mangled: &[String], cppfilt_path: &Path) -> Result<Vec<Str
     }
     let stdin_data = mangled.join("\n");
 
+    // allow-direct-spawn: c++filt demangler. The captured `run_command`
+    // helper is stdin-Null; we need to pipe the mangled-symbol list
+    // through c++filt's stdin and concurrently drain stdout via
+    // wait_with_output to avoid the Windows pipe-buffer deadlock when
+    // the symbol pool is large (~3k symbols on a stock ESP32-S3 Blink
+    // ELF). Read-only analysis path; no containment side effects.
     let mut child = Command::new(cppfilt_path)
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
