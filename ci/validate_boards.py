@@ -52,6 +52,27 @@ UPLOAD_FIELDS = (
     "wait_for_upload_port",
 )
 
+# Board IDs that are intentionally fbuild-native: shipped in
+# crates/fbuild-config/assets/boards/json/ but have no upstream PlatformIO
+# board JSON to validate against. Without this allowlist they'd silently land
+# in the generic "skipped" bucket alongside boards whose platform just isn't
+# installed on this host, which masks the distinction between "intentional
+# skip" and "platform missing from CI install set."
+#
+# Reconciles FastLED/FastLED#2845 Stage 3 item 8 ("validate_boards.py
+# reconciliation"), option (b): document the skip as intentional for
+# non-PlatformIO platforms. See FastLED/FastLED#2836 / fbuild#419 /
+# fbuild#420 for the LPC8xx bare-metal target work that introduced these.
+FBUILD_NATIVE_BOARDS = frozenset(
+    {
+        # NXP LPC8xx bare-metal targets. PlatformIO's `nxplpc` platform
+        # ships lpc11u68 / lpc1768 / lpc54114 / lpc546xx / lpcxpresso55s16
+        # / seeedArchPro, but not these two — they are fbuild-only.
+        "lpc845",
+        "lpc804",
+    }
+)
+
 MEGATINYCORE_EXTRA_FLAGS = (
     "-DCLOCK_SOURCE=0",
     '-DMEGATINYCORE="2.6.11"',
@@ -376,6 +397,8 @@ def main() -> int:
     total = 0
     checked = 0
     skipped = 0
+    fbuild_native = 0
+    fbuild_native_ids: list[str] = []
     passed = 0
     failed = 0
     failures: list[tuple[str, list[str]]] = []
@@ -388,6 +411,16 @@ def main() -> int:
             board = json.loads(board_path.read_text(encoding="utf-8"))
         except (json.JSONDecodeError, OSError):
             skipped += 1
+            continue
+
+        board_id = board.get("id", board_path.stem)
+
+        # Boards with no upstream PlatformIO equivalent are tallied separately
+        # so the summary line distinguishes them from generic "platform not
+        # installed on this host" skips. See FBUILD_NATIVE_BOARDS rationale.
+        if board_id in FBUILD_NATIVE_BOARDS:
+            fbuild_native += 1
+            fbuild_native_ids.append(board_id)
             continue
 
         platform = board.get("platform", "")
@@ -405,13 +438,15 @@ def main() -> int:
 
         if diffs:
             failed += 1
-            board_id = board.get("id", board_path.stem)
             failures.append((board_id, diffs))
         else:
             passed += 1
 
     # Report results
-    print(f"Results: {total} total, {checked} checked, {passed} passed, {failed} failed, {skipped} skipped")
+    print(f"Results: {total} total, {checked} checked, {passed} passed, {failed} failed, {skipped} skipped, {fbuild_native} fbuild-native")
+    if fbuild_native:
+        ids_str = ", ".join(sorted(fbuild_native_ids))
+        print(f"  fbuild-native (intentional skip, no PlatformIO upstream — see FastLED/FastLED#2845): {ids_str}")
     print()
 
     if failures:
