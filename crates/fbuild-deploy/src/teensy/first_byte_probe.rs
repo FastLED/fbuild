@@ -127,6 +127,9 @@ mod tests {
 
     #[test]
     fn env_override_parses_zero() {
+        let _guard = crate::teensy::soft_reboot::TEST_ENV_LOCK
+            .lock()
+            .unwrap_or_else(|e| e.into_inner());
         std::env::set_var("FBUILD_TEENSY_FIRST_BYTE_TIMEOUT_SECS", "0");
         assert_eq!(env_first_byte_timeout_secs_override(), Some(0));
         std::env::set_var("FBUILD_TEENSY_FIRST_BYTE_TIMEOUT_SECS", "30");
