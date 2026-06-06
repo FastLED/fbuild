@@ -45,3 +45,12 @@ crates/fbuild-build/src/zccache.rs
 # `containment::tokio_spawn::spawn_contained` would be a no-op anyway;
 # documented inline at each call site.
 crates/fbuild-cli/src/cli/clang_tools.rs
+
+# `fbuild symbols` demangles via c++filt. We pipe the mangled symbol
+# list through c++filt's stdin and drain stdout via `wait_with_output`
+# from a separate writer thread to avoid the Windows pipe-buffer
+# deadlock that hits when the symbol pool is large. The captured
+# `subprocess::run_command` helper is stdin-Null only, so raw spawn is
+# the only way to feed the pipe. Read-only analysis path (no
+# containment side effects).
+crates/fbuild-build/src/symbol_analyzer.rs

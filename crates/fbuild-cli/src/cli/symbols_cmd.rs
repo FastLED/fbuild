@@ -47,7 +47,9 @@ pub fn run_symbols(
         }
     });
 
-    let map_path_owned = map.map(PathBuf::from).or_else(|| default_map_path(&elf_path));
+    let map_path_owned = map
+        .map(PathBuf::from)
+        .or_else(|| default_map_path(&elf_path));
     let map_path_ref: Option<&Path> = map_path_owned.as_deref();
 
     let cfg = AnalyzeConfig {
@@ -85,8 +87,7 @@ pub fn run_symbols(
 /// Locate `nm` on PATH. The user can always override with `--nm`.
 fn find_nm_on_path() -> Result<PathBuf> {
     let exe_name = if cfg!(windows) { "nm.exe" } else { "nm" };
-    let path = std::env::var_os("PATH")
-        .ok_or_else(|| FbuildError::Other("PATH not set".into()))?;
+    let path = std::env::var_os("PATH").ok_or_else(|| FbuildError::Other("PATH not set".into()))?;
     for dir in std::env::split_paths(&path) {
         let candidate = dir.join(exe_name);
         if candidate.exists() {
