@@ -180,3 +180,38 @@ fn symbols_alias_still_parses_as_bloat() {
         _ => panic!("expected Bloat subcommand (via `symbols` alias)"),
     }
 }
+
+/// #439: `fbuild build --bloat` is the canonical spelling for
+/// per-symbol bloat analysis on the build subcommand.
+#[test]
+fn build_bloat_flag_is_accepted() {
+    let argv = ["fbuild", "build", "--bloat", "."];
+    let cli = Cli::try_parse_from(argv).expect("parse");
+    match cli.command {
+        Some(Commands::Build {
+            symbol_analysis, ..
+        }) => {
+            assert!(
+                symbol_analysis.is_some(),
+                "--bloat should set the bloat (formerly symbol-analysis) option"
+            );
+        }
+        _ => panic!("expected Build subcommand"),
+    }
+}
+
+/// #439: `fbuild build --symbol-analysis` still works via clap alias
+/// for back-compat through 2.3.x.
+#[test]
+fn build_symbol_analysis_alias_still_accepted() {
+    let argv = ["fbuild", "build", "--symbol-analysis", "."];
+    let cli = Cli::try_parse_from(argv).expect("parse");
+    match cli.command {
+        Some(Commands::Build {
+            symbol_analysis, ..
+        }) => {
+            assert!(symbol_analysis.is_some());
+        }
+        _ => panic!("expected Build subcommand"),
+    }
+}
