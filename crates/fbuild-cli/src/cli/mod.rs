@@ -10,6 +10,8 @@
 //! byte-for-byte. Items remain reachable at `crate::cli::<submod>::<Item>`.
 
 pub mod args;
+pub mod bloat_cmd;
+pub mod bloat_diff_cmd;
 pub mod build;
 pub mod clang_tools;
 pub mod compile_many;
@@ -23,7 +25,6 @@ pub mod pio;
 pub mod purge;
 pub mod reset;
 pub mod show;
-pub mod bloat_cmd;
 
 #[cfg(test)]
 mod tests;
