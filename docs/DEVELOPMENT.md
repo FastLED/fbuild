@@ -108,15 +108,14 @@ The legacy Python linters (`./lint.sh` with `pylint`, `flake8`, `mypy`) remain f
 
 ### Distribution
 
-Native binaries are built via GitHub Actions and downloaded locally for packaging. PyPI is the distribution channel — no Python in the runtime hot path.
+Releases ship through the **Autonomous Release** GitHub Action (`.github/workflows/release-auto.yml`): per-platform native binaries are built on GitHub runners, assembled into wheels by `ci/publish.py`, and uploaded to PyPI via trusted publishing (OIDC). No Python in the runtime hot path.
 
-```bash
-# Build all platforms (triggers GH Actions, waits, downloads to dist/)
-uv run python ci/build_dist.py --ref main
+To cut a release:
 
-# Publish to PyPI
-./publish
-```
+1. Bump `[workspace.package].version` in `Cargo.toml` and `[project].version` in `pyproject.toml` (the workflow refuses to build if the two differ).
+2. Push the bump commit to `main`. **Do not push a tag** — the action only triggers when the tag for the candidate version is *absent*; it creates the tag itself after a successful upload.
+
+The full release flow + recovery for stalled / failed releases is documented in [`RELEASING.md`](RELEASING.md).
 
 ### Python / PyO3 extension
 
@@ -134,7 +133,7 @@ cp target/release/lib_native.so python/fbuild/_native.abi3.so
 cp target/release/lib_native.dylib python/fbuild/_native.abi3.so
 ```
 
-See [`../python/README.md`](../python/README.md) for more detail. PyPI wheels are assembled by `ci/publish.py` using native binaries built in GitHub Actions — this local step only affects in-tree Python tests and scripts.
+See [`../python/README.md`](../python/README.md) for more detail. PyPI wheels are assembled by the Autonomous Release GitHub Action via `ci/publish.py` using per-target binaries the action builds itself — the local extension build only affects in-tree Python tests and scripts.
 
 ### Hooks (enforced automatically)
 

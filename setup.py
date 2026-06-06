@@ -12,9 +12,11 @@ setuptools pack it into the wheel. The `ci.bin_launcher:main` entry point
 (declared in pyproject.toml) execs that binary, so `fbuild` on PATH after
 install Just Works.
 
-This is the LOCAL DEV install path. The RELEASE path is unchanged: it stays
-in `ci/build_dist.py` + `ci/publish.py` (build per-platform binaries on
-GitHub Actions, assemble platform-tagged wheels, upload to PyPI).
+This is the LOCAL DEV install path. The RELEASE path lives entirely in
+the Autonomous Release GitHub Action (`.github/workflows/release-auto.yml`):
+the action builds per-platform binaries on its own runners, calls
+`ci/publish.py::build_all_wheels` to assemble platform-tagged wheels, and
+uploads to PyPI via trusted publishing (OIDC). See `docs/RELEASING.md`.
 
 Why soldr (and not bare cargo)?
 
