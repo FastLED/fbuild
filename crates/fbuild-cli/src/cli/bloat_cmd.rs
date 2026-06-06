@@ -47,14 +47,95 @@ pub fn run_bloat(
         )));
     }
 
-    let elf_path = resolve_elf(&input_path)?;
-
-    let resolution = ToolPaths::resolve(
-        &elf_path,
+    let analysis = load_or_analyze(
+        &input_path,
+        map.as_deref(),
         nm.as_deref(),
         cppfilt.as_deref(),
         build_info.as_deref(),
     )?;
+    let report = analysis.report;
+    let elf_path = analysis.elf_path;
+    let project = analysis.project;
+
+    // Mode 1: explicit --json only → write JSON, stream text to stdout.
+    // Mode 2: explicit --output-dir → write both into that dir.
+    // Mode 3: neither → default to `<project>/.fbuild/build/<env>/bloat-report/`
+    //         (or `<elf-parent>/bloat-report/` when no build_info found).
+    if let Some(json_path) = json_out.as_deref() {
+        write_json(&report, json_path)?;
+        println!(
+            "Wrote {} symbols to {} (flash={} B, ram={} B)",
+            report.symbols.len(),
+            json_path,
+            report.total_flash,
+            report.total_ram
+        );
+        return Ok(());
+    }
+
+    let dir = match output_dir {
+        Some(s) => PathBuf::from(s),
+        None => default_output_dir(elf_path.as_deref(), project.as_ref()),
+    };
+    write_dual_report(&report, &dir, top)?;
+    print_bloat_summary(&report, &dir);
+
+    Ok(())
+}
+
+/// Result of resolving + analyzing a `fbuild bloat` input. Used by
+/// [`run_bloat`] and by `fbuild bloat-diff` (#440) so both share one
+/// resolution pipeline.
+pub(super) struct InputAnalysis {
+    pub(super) report: FineGrainedSymbolMap,
+    /// ELF that produced `report`, when known. `None` when the input
+    /// was already a `report.json` (no ELF to point at).
+    pub(super) elf_path: Option<PathBuf>,
+    /// Project layout discovered from `build_info.json`, when present.
+    pub(super) project: Option<ProjectContext>,
+}
+
+/// Resolve a CLI input into a [`FineGrainedSymbolMap`].
+///
+/// - If the path ends in `.json`, parse it as an existing
+///   `report.json`. Project + ELF context aren't recovered in this
+///   path; the caller falls back to the JSON's stem for default
+///   output naming.
+/// - Otherwise treat the input as either an ELF or a project
+///   directory and run the full analyzer pipeline. Reuses
+///   `ToolPaths::resolve` for toolchain discovery so the bloat-diff
+///   subcommand can drive the analyzer with no extra wiring.
+pub(super) fn load_or_analyze(
+    input: &Path,
+    map: Option<&str>,
+    nm: Option<&str>,
+    cppfilt: Option<&str>,
+    build_info: Option<&str>,
+) -> Result<InputAnalysis> {
+    if input.is_file() && input.extension().is_some_and(|e| e == "json") {
+        let bytes = std::fs::read(input).map_err(|e| {
+            FbuildError::Io(std::io::Error::new(
+                e.kind(),
+                format!("read {}: {e}", input.display()),
+            ))
+        })?;
+        let report: FineGrainedSymbolMap = serde_json::from_slice(&bytes).map_err(|e| {
+            FbuildError::BuildFailed(format!(
+                "{}: not a valid bloat report.json: {e}",
+                input.display()
+            ))
+        })?;
+        return Ok(InputAnalysis {
+            report,
+            elf_path: None,
+            project: None,
+        });
+    }
+
+    let elf_path = resolve_elf(input)?;
+
+    let resolution = ToolPaths::resolve(&elf_path, nm, cppfilt, build_info)?;
     let nm_path = resolution.tools.nm;
     let cppfilt_path = resolution.tools.cppfilt;
     if !nm_path.exists() {
@@ -79,33 +160,12 @@ pub fn run_bloat(
         nm_path: &nm_path,
         cppfilt_path: cppfilt_path.as_deref(),
     };
-
     let report = analyze_elf(cfg)?;
-
-    // Mode 1: explicit --json only → write JSON, stream text to stdout.
-    // Mode 2: explicit --output-dir → write both into that dir.
-    // Mode 3: neither → default to `<project>/.fbuild/build/<env>/bloat-report/`
-    //         (or `<elf-parent>/bloat-report/` when no build_info found).
-    if let Some(json_path) = json_out.as_deref() {
-        write_json(&report, json_path)?;
-        println!(
-            "Wrote {} symbols to {} (flash={} B, ram={} B)",
-            report.symbols.len(),
-            json_path,
-            report.total_flash,
-            report.total_ram
-        );
-        return Ok(());
-    }
-
-    let dir = match output_dir {
-        Some(s) => PathBuf::from(s),
-        None => default_output_dir(&elf_path, resolution.project.as_ref()),
-    };
-    write_dual_report(&report, &dir, top)?;
-    print_bloat_summary(&report, &dir);
-
-    Ok(())
+    Ok(InputAnalysis {
+        report,
+        elf_path: Some(elf_path),
+        project: resolution.project,
+    })
 }
 
 /// Print the standard end-of-run summary: a header with totals, then
@@ -143,7 +203,11 @@ fn print_bloat_summary(report: &FineGrainedSymbolMap, dir: &Path) {
 /// is given. Prefers the project layout
 /// `<project>/.fbuild/build/<env>/bloat-report/` so the report lands
 /// next to the build artefacts and is easy to find.
-fn default_output_dir(elf_path: &Path, project: Option<&ProjectContext>) -> PathBuf {
+///
+/// `elf_path` is `None` when the input was already a `report.json`
+/// (the analyzer didn't have an ELF to point at); the fallback then
+/// becomes the cwd.
+fn default_output_dir(elf_path: Option<&Path>, project: Option<&ProjectContext>) -> PathBuf {
     match project {
         Some(p) => p
             .project_dir
@@ -151,10 +215,10 @@ fn default_output_dir(elf_path: &Path, project: Option<&ProjectContext>) -> Path
             .join("build")
             .join(&p.env_name)
             .join("bloat-report"),
-        None => elf_path
-            .parent()
-            .unwrap_or_else(|| Path::new("."))
-            .join("bloat-report"),
+        None => match elf_path.and_then(|p| p.parent()) {
+            Some(parent) => parent.join("bloat-report"),
+            None => PathBuf::from("bloat-report"),
+        },
     }
 }
 
@@ -250,13 +314,13 @@ struct ToolPaths {
 
 /// Project layout pulled from `build_info.json`. Drives the default
 /// output directory in [`default_output_dir`] (#439).
-struct ProjectContext {
+pub(super) struct ProjectContext {
     /// Directory containing the `build_info.json` we read from —
     /// typically the project root.
-    project_dir: PathBuf,
+    pub(super) project_dir: PathBuf,
     /// PIO env name (e.g. `"esp32s3"`) from the build_info's `env`
     /// field. Used as the subdir under `.fbuild/build/`.
-    env_name: String,
+    pub(super) env_name: String,
 }
 
 /// Combined output of [`ToolPaths::resolve`]: the toolchain paths the
@@ -459,7 +523,7 @@ mod tests {
             env_name: "esp32s3".to_string(),
         };
         let elf = PathBuf::from("/abs/project/.fbuild/build/esp32s3/firmware.elf");
-        let dir = default_output_dir(&elf, Some(&project));
+        let dir = default_output_dir(Some(&elf), Some(&project));
         assert_eq!(
             dir,
             PathBuf::from("/abs/project")
@@ -475,7 +539,7 @@ mod tests {
     #[test]
     fn default_output_dir_falls_back_to_elf_parent() {
         let elf = PathBuf::from("/tmp/firmware.elf");
-        let dir = default_output_dir(&elf, None);
+        let dir = default_output_dir(Some(&elf), None);
         assert_eq!(dir, PathBuf::from("/tmp").join("bloat-report"));
     }
 

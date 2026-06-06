@@ -7,6 +7,7 @@ use crate::{daemon_client, lib_select, mcp};
 
 use super::args::{resolve_project_dir, rewrite_args, Cli, Commands};
 use super::bloat_cmd::run_bloat;
+use super::bloat_diff_cmd::run_bloat_diff;
 use super::build::run_build;
 use super::clang_tools::{run_clang_tool, run_iwyu};
 use super::compile_many::{
@@ -66,6 +67,21 @@ pub async fn async_main() {
             output_dir,
             top,
         }) => run_bloat(input, map, nm, cppfilt, build_info, json, output_dir, top),
+        Some(Commands::BloatDiff {
+            a,
+            b,
+            map_a,
+            map_b,
+            nm,
+            cppfilt,
+            build_info,
+            json,
+            output_dir,
+            top,
+            region,
+        }) => run_bloat_diff(
+            a, b, map_a, map_b, nm, cppfilt, build_info, json, output_dir, top, region,
+        ),
         Some(Commands::Build {
             project_dir,
             environment,

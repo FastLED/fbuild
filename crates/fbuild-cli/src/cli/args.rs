@@ -125,6 +125,53 @@ pub enum Commands {
         #[arg(long, default_value = "25")]
         top: usize,
     },
+    /// Per-symbol delta between two bloat reports.
+    ///
+    /// Each input may be a `report.json` produced by `fbuild bloat`,
+    /// an ELF, or a project directory (in which case fbuild runs the
+    /// analyzer first). Symbol identity is `(name, archive, object)`
+    /// so two symbols with the same name in different archives are
+    /// treated as distinct.
+    ///
+    /// Defaults: `--region flash`, `--top 25`, output directory
+    /// `<project>/.fbuild/build/<env>/bloat-diff/<a>__vs__<b>/` (or
+    /// `<cwd>/bloat-diff/<a>__vs__<b>/` when no project is shared).
+    /// Both `delta-report.json` and `delta-report.md` are written.
+    BloatDiff {
+        /// First input (baseline).
+        a: String,
+        /// Second input (compared against baseline).
+        b: String,
+        /// Linker map for input A (auto-detected if omitted).
+        #[arg(long = "map-a", hide = true)]
+        map_a: Option<String>,
+        /// Linker map for input B (auto-detected if omitted).
+        #[arg(long = "map-b", hide = true)]
+        map_b: Option<String>,
+        /// Override for `nm` (highest precedence).
+        #[arg(long, hide = true)]
+        nm: Option<String>,
+        /// Override for `c++filt` (highest precedence).
+        #[arg(long = "cppfilt", hide = true)]
+        cppfilt: Option<String>,
+        /// Path to a `build_info.json` for toolchain resolution.
+        #[arg(long = "build-info")]
+        build_info: Option<String>,
+        /// Write the diff to PATH as JSON only (no MD, no path printing).
+        #[arg(long)]
+        json: Option<String>,
+        /// Override the default output directory.
+        #[arg(long = "output-dir")]
+        output_dir: Option<String>,
+        /// Number of top movers to surface in the Markdown table.
+        #[arg(long, default_value = "25")]
+        top: usize,
+        /// Memory region to focus on in the per-symbol table:
+        /// `flash` (default) or `ram`. Net totals always cover both
+        /// regions.
+        #[arg(long)]
+        region: Option<String>,
+    },
     /// Build firmware
     Build {
         project_dir: Option<String>,

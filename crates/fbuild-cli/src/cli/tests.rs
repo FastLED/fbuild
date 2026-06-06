@@ -215,3 +215,45 @@ fn build_symbol_analysis_alias_still_accepted() {
         _ => panic!("expected Build subcommand"),
     }
 }
+
+/// #440: `fbuild bloat-diff <a> <b>` parses two positional inputs
+/// with the default region (`flash`) implicit.
+#[test]
+fn bloat_diff_command_parses_positional_args() {
+    let argv = ["fbuild", "bloat-diff", "old.json", "new.json"];
+    let cli = Cli::try_parse_from(argv).expect("parse");
+    match cli.command {
+        Some(Commands::BloatDiff {
+            a, b, region, top, ..
+        }) => {
+            assert_eq!(a, "old.json");
+            assert_eq!(b, "new.json");
+            // Region defaults to None at the args layer; handler
+            // resolves it to flash.
+            assert!(region.is_none());
+            assert_eq!(top, 25);
+        }
+        _ => panic!("expected BloatDiff subcommand"),
+    }
+}
+
+/// #440: `--region ram` flips the default region for the per-symbol
+/// table.
+#[test]
+fn bloat_diff_region_flag_is_accepted() {
+    let argv = [
+        "fbuild",
+        "bloat-diff",
+        "old.json",
+        "new.json",
+        "--region",
+        "ram",
+    ];
+    let cli = Cli::try_parse_from(argv).expect("parse");
+    match cli.command {
+        Some(Commands::BloatDiff { region, .. }) => {
+            assert_eq!(region.as_deref(), Some("ram"));
+        }
+        _ => panic!("expected BloatDiff subcommand"),
+    }
+}
