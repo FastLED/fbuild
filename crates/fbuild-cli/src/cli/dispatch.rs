@@ -96,6 +96,7 @@ pub async fn async_main() {
             symbol_analysis,
             no_timestamp,
             output_dir,
+            no_bloat_report,
         }) => {
             let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
             if platformio {
@@ -114,6 +115,7 @@ pub async fn async_main() {
                     symbol_analysis,
                     no_timestamp,
                     output_dir,
+                    no_bloat_report,
                 )
                 .await
             }
