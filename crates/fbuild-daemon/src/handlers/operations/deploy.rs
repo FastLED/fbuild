@@ -18,6 +18,55 @@ use std::sync::Arc;
 #[cfg(feature = "espflash-native")]
 use super::common::{native_verify_enabled, native_write_enabled};
 
+/// Resolve a usable `teensy_loader_cli` binary for the Teensy deploy arm.
+///
+/// Search order:
+///   1. `$PATH` (`teensy_loader_cli` on Unix, `teensy_loader_cli.exe` on Win)
+///   2. `~/.platformio/packages/tool-teensy/teensy_loader_cli{.exe}` — the
+///      well-known path PlatformIO installs it at on every PIO-using machine.
+///
+/// Returns `None` if neither is found; the TeensyDeployer's default will then
+/// try a bare `teensy_loader_cli` invocation, which will surface
+/// `command not found` to the user — clearer than a silent abort here.
+fn find_teensy_loader_cli() -> Option<PathBuf> {
+    let exe_name = if cfg!(windows) {
+        "teensy_loader_cli.exe"
+    } else {
+        "teensy_loader_cli"
+    };
+
+    if let Ok(path_env) = std::env::var("PATH") {
+        let sep = if cfg!(windows) { ';' } else { ':' };
+        for dir in path_env.split(sep) {
+            let candidate = PathBuf::from(dir).join(exe_name);
+            if candidate.is_file() {
+                return Some(candidate);
+            }
+        }
+    }
+
+    // PlatformIO drops the binary here on every platform. Reusing it means a
+    // user who already has PIO working doesn't need to install anything else
+    // to deploy via fbuild.
+    let pio_root = if cfg!(windows) {
+        std::env::var("USERPROFILE").ok()
+    } else {
+        std::env::var("HOME").ok()
+    };
+    if let Some(home) = pio_root {
+        let pio_candidate = PathBuf::from(home)
+            .join(".platformio")
+            .join("packages")
+            .join("tool-teensy")
+            .join(exe_name);
+        if pio_candidate.is_file() {
+            return Some(pio_candidate);
+        }
+    }
+
+    None
+}
+
 /// POST /api/deploy
 pub async fn deploy(
     State(ctx): State<Arc<DaemonContext>>,
@@ -632,6 +681,33 @@ pub async fn deploy(
                 } else {
                     deployer
                 };
+                Box::new(deployer)
+            }
+            fbuild_core::Platform::Teensy => {
+                // The TeensyDeployer in fbuild-deploy/src/teensy.rs has been
+                // fully implemented (incl. unit tests for teensy40 / teensy41
+                // board configs) but wasn't dispatched here — issue #430.
+                // Without this arm `bash autoresearch teensyXX --simd` (and
+                // every other Teensy autoresearch flag) failed at the deploy
+                // step with "deployer for Teensy not yet implemented",
+                // blocking FastLED/FastLED#2628 hardware bring-up.
+                let board_config =
+                    fbuild_config::BoardConfig::from_board_id(&board_id, &deploy_board_overrides)
+                        .unwrap_or_else(|_| {
+                            fbuild_config::BoardConfig::from_board_id(
+                                "teensy41",
+                                &deploy_board_overrides,
+                            )
+                            .unwrap()
+                        });
+                let loader_params = fbuild_deploy::teensy::TeensyLoaderParams::default();
+                let loader_path = find_teensy_loader_cli();
+                let deployer = fbuild_deploy::teensy::TeensyDeployer::new(
+                    &board_config.board.to_uppercase(),
+                    &loader_params,
+                    loader_path,
+                    false,
+                );
                 Box::new(deployer)
             }
             _ => {
