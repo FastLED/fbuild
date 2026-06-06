@@ -10,9 +10,12 @@
 
 use std::path::{Path, PathBuf};
 
+use std::collections::BTreeMap;
+
 use fbuild_core::subprocess::run_command_with_stdin;
 use fbuild_core::symbol_analysis::{
-    build_fine_grained_map, parse_linker_map, parse_nm_output, FineGrainedSymbolMap,
+    build_fine_grained_map_with_synth, collect_map_derived_owners, parse_linker_map,
+    parse_nm_output, FineGrainedSymbolMap,
 };
 use fbuild_core::{FbuildError, Result};
 
@@ -155,12 +158,36 @@ pub fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap> {
         Vec::new()
     };
 
-    Ok(build_fine_grained_map(
+    // Pre-walk the ranges to collect mangled owners for map-derived
+    // synthetic symbols (anonymous rodata pools, etc.) and demangle
+    // them in the same c++filt batch as the nm names — single
+    // subprocess, single threaded-stdin pass.
+    let mut nm_covered: BTreeMap<u64, u64> = BTreeMap::new();
+    for (addr, size, _, _) in nm_rows.iter() {
+        nm_covered.insert(*addr, *size);
+    }
+    let synth_owners = collect_map_derived_owners(&ranges, &nm_covered);
+    let synth_mangled: Vec<String> = synth_owners.iter().map(|(_, m, _)| m.clone()).collect();
+    let synth_demangled = if synth_mangled.is_empty() {
+        Vec::new()
+    } else if let Some(cppfilt) = cfg.cppfilt_path {
+        demangle_batch(&synth_mangled, cppfilt).unwrap_or_else(|e| {
+            tracing::warn!(
+                "c++filt unavailable for synthetic owners ({e}); falling back to mangled names"
+            );
+            synth_mangled.clone()
+        })
+    } else {
+        synth_mangled.clone()
+    };
+
+    Ok(build_fine_grained_map_with_synth(
         elf_s,
         cfg.map_path.map(|p| p.to_string_lossy().to_string()),
         nm_rows,
         demangled,
         ranges,
+        &synth_demangled,
     ))
 }
 
@@ -321,8 +348,11 @@ pub fn format_markdown_report(map: &FineGrainedSymbolMap, top_n: usize) -> Strin
             title.to_lowercase()
         );
         let _ = writeln!(out);
-        let _ = writeln!(out, "| Bytes | Archive | Object | Section | Symbol |");
-        let _ = writeln!(out, "|---:|---|---|---|---|");
+        let _ = writeln!(
+            out,
+            "| Bytes | Archive | Object | Section | Source | Symbol |"
+        );
+        let _ = writeln!(out, "|---:|---|---|---|---|---|");
         for s in syms.into_iter().take(top_n) {
             let archive = s.archive.as_deref().unwrap_or("(none)");
             let object = s.object.as_deref().unwrap_or("-");
@@ -332,8 +362,8 @@ pub fn format_markdown_report(map: &FineGrainedSymbolMap, top_n: usize) -> Strin
             let name = s.demangled.replace('|', "\\|");
             let _ = writeln!(
                 out,
-                "| {} | {} | {} | {} | `{}` |",
-                s.size, archive, object, sect, name
+                "| {} | {} | {} | {} | {} | `{}` |",
+                s.size, archive, object, sect, s.source, name
             );
         }
         let _ = writeln!(out);
@@ -593,6 +623,7 @@ mod tests {
                     archive: Some("libA.a".into()),
                     object: Some("foo.o".into()),
                     output_section: Some(".flash.text".into()),
+                    source: "nm".into(),
                 },
                 FineGrainedSymbol {
                     mangled: "_Z3barv".into(),
@@ -604,6 +635,7 @@ mod tests {
                     archive: Some("libB.a".into()),
                     object: Some("bar.o".into()),
                     output_section: Some(".dram0.bss".into()),
+                    source: "nm".into(),
                 },
             ],
             sections: Vec::<SectionBytes>::new(),
@@ -614,9 +646,9 @@ mod tests {
         assert!(md.contains("**Flash**: 100 B"));
         assert!(md.contains("**RAM**: 50 B"));
         assert!(md.contains("## Top 1 flash symbols"));
-        assert!(md.contains("| 100 | libA.a | foo.o | .flash.text | `foo(int)` |"));
+        assert!(md.contains("| 100 | libA.a | foo.o | .flash.text | nm | `foo(int)` |"));
         assert!(md.contains("## Top 1 ram symbols"));
-        assert!(md.contains("| 50 | libB.a | bar.o | .dram0.bss | `bar()` |"));
+        assert!(md.contains("| 50 | libB.a | bar.o | .dram0.bss | nm | `bar()` |"));
         assert!(md.contains("## Flash bytes by archive"));
         assert!(md.contains("| 100 | libA.a |"));
     }
@@ -640,6 +672,7 @@ mod tests {
                 archive: None,
                 object: None,
                 output_section: None,
+                source: "nm".into(),
             }],
             sections: Vec::<SectionBytes>::new(),
         };
