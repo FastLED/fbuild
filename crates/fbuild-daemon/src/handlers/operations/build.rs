@@ -1,6 +1,8 @@
 //! `POST /api/build` — kick off a build (streaming or buffered).
 
-use super::common::{export_artifacts_bundle, resolve_client_path, OperationGuard};
+use super::common::{
+    export_artifacts_bundle, resolve_build_dir, resolve_client_path, OperationGuard,
+};
 use crate::context::DaemonContext;
 use crate::models::{BuildRequest, OperationResponse};
 use axum::extract::State;
@@ -134,7 +136,14 @@ pub async fn build(
         _ => fbuild_core::BuildProfile::Release,
     };
 
-    let build_dir = fbuild_paths::get_project_build_root(&project_dir);
+    let build_dir = resolve_build_dir(
+        req.build_dir_override.as_deref(),
+        req.flatten_env,
+        req.caller_cwd.as_deref(),
+        &project_dir,
+        &env_name,
+        profile,
+    );
     let compiledb_env = std::env::var("FBUILD_COMPILEDB")
         .map(|v| v != "0")
         .unwrap_or(true);

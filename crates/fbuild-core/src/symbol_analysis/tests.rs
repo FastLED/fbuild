@@ -381,3 +381,115 @@ fn nm_range_covers_overlap_detection() {
     // Zero size — never covers
     assert!(!nm_range_covers(&nm_covered, 0x1000, 0));
 }
+
+// --- LoadedRegion / retain_loaded_symbols ---
+
+fn sample_symbol(addr: u64, size: u64, region: MemoryRegion, name: &str) -> FineGrainedSymbol {
+    FineGrainedSymbol {
+        mangled: name.to_string(),
+        demangled: name.to_string(),
+        address: addr,
+        size,
+        sym_type: match region {
+            MemoryRegion::Flash => 'T',
+            MemoryRegion::Ram => 'B',
+        },
+        region,
+        archive: None,
+        object: None,
+        output_section: None,
+        source: "nm".to_string(),
+    }
+}
+
+#[test]
+fn loaded_region_strict_containment() {
+    let r = LoadedRegion {
+        start: 0x1000,
+        end: 0x2000,
+    };
+    assert!(r.contains_range(0x1000, 0x100));
+    assert!(
+        r.contains_range(0x1f00, 0x100),
+        "end-aligned must be allowed"
+    );
+    // Past the end
+    assert!(!r.contains_range(0x1f00, 0x101));
+    // Below the start
+    assert!(!r.contains_range(0x0fff, 0x100));
+    // Symbol just past the end (boundary marker case)
+    assert!(!r.contains_range(0x2000, 0));
+    // Overflow guard
+    assert!(!r.contains_range(u64::MAX, 1));
+}
+
+/// FastLED/fbuild#XX (the bloat-filter fix): nm enumerates
+/// linker-script boundary markers (`__StackTop`, `__flash_arduino_end`,
+/// ...) with multi-GB sizes computed as the gap to the next symbol.
+/// `retain_loaded_symbols` must drop them so the bloat report shows
+/// only bytes actually in the final binary.
+#[test]
+fn retain_loaded_symbols_drops_boundary_markers() {
+    let symbols = vec![
+        // Real flash symbol — fully inside the .text PT_LOAD range.
+        sample_symbol(0x00026100, 0x40, MemoryRegion::Flash, "real_text"),
+        // Real ram symbol — fully inside the RAM PT_LOAD range.
+        sample_symbol(0x20006000, 0x80, MemoryRegion::Ram, "real_bss"),
+        // __StackTop: address at the very end of RAM, garbage size.
+        sample_symbol(0x20040000, 0xdffedfe4, MemoryRegion::Flash, "__StackTop"),
+        // __flash_arduino_end: address outside any PT_LOAD region.
+        sample_symbol(
+            0x000ed000,
+            0xfff40fe4,
+            MemoryRegion::Flash,
+            "__flash_arduino_end",
+        ),
+        // A symbol that fits in flash but with overflowing size.
+        sample_symbol(0x00026100, u64::MAX, MemoryRegion::Flash, "overflow"),
+    ];
+    let mut map = FineGrainedSymbolMap {
+        elf_path: "fixture.elf".into(),
+        map_path: None,
+        total_flash: 0,
+        total_ram: 0,
+        symbols,
+        sections: Vec::new(),
+    };
+    // Mirror the nrf52 test fixture's PT_LOAD ranges.
+    let regions = vec![
+        LoadedRegion {
+            start: 0x00026000,
+            end: 0x0002dfec,
+        },
+        LoadedRegion {
+            start: 0x20006000,
+            end: 0x2003f800,
+        },
+    ];
+    map.retain_loaded_symbols(&regions);
+    let kept: Vec<&str> = map.symbols.iter().map(|s| s.demangled.as_str()).collect();
+    assert_eq!(kept, vec!["real_text", "real_bss"]);
+    assert_eq!(map.total_flash, 0x40);
+    assert_eq!(map.total_ram, 0x80);
+}
+
+#[test]
+fn retain_loaded_symbols_no_op_when_regions_empty() {
+    // Defensive: if the caller couldn't probe PT_LOAD (corrupt ELF,
+    // non-ELF input), leave the map untouched rather than empty it.
+    let mut map = FineGrainedSymbolMap {
+        elf_path: "fixture.elf".into(),
+        map_path: None,
+        total_flash: 0x40,
+        total_ram: 0x80,
+        symbols: vec![
+            sample_symbol(0x00026100, 0x40, MemoryRegion::Flash, "real_text"),
+            sample_symbol(0x20006000, 0x80, MemoryRegion::Ram, "real_bss"),
+        ],
+        sections: Vec::new(),
+    };
+    map.retain_loaded_symbols(&[]);
+    assert_eq!(map.symbols.len(), 2);
+    assert_eq!(map.total_flash, 0x40);
+    assert_eq!(map.total_ram, 0x80);
+}

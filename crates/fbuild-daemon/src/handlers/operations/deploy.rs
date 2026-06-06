@@ -2,8 +2,8 @@
 
 use super::common::{
     compute_esp32_image_hash, export_artifacts_bundle, infer_default_emulator_kind,
-    parse_deploy_route, qemu_extra_build_flags, resolve_client_path, trust_device_hash_enabled,
-    DeployRoute, EmulatorKind, OperationGuard,
+    parse_deploy_route, qemu_extra_build_flags, resolve_build_dir, resolve_client_path,
+    trust_device_hash_enabled, DeployRoute, EmulatorKind, OperationGuard,
 };
 use super::monitor::{run_monitor_loop, MonitorOutcome};
 use crate::context::DaemonContext;
@@ -194,7 +194,14 @@ pub async fn deploy(
         let lock = ctx.project_lock(&project_dir);
         let _guard = lock.lock().await;
 
-        let build_dir = fbuild_paths::get_project_build_root(&project_dir);
+        let build_dir = resolve_build_dir(
+            req.build_dir_override.as_deref(),
+            req.flatten_env,
+            req.caller_cwd.as_deref(),
+            &project_dir,
+            &env_name,
+            fbuild_core::BuildProfile::Release,
+        );
         let params = fbuild_build::BuildParams {
             project_dir: project_dir.clone(),
             env_name: env_name.clone(),

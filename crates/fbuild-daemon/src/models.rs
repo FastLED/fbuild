@@ -50,6 +50,20 @@ pub struct BuildRequest {
     /// here per request. Consumed by `fbuild-config::PioEnvOverrides`.
     #[serde(default)]
     pub pio_env: BTreeMap<String, String>,
+    /// Optional explicit build-dir root override. Takes precedence over
+    /// `FBUILD_BUILD_DIR` and the default `<project>/.fbuild/build`.
+    /// `<env>/<profile>` is still appended (unless `flatten_env` is set).
+    /// See FastLED/fbuild#432.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub build_dir_override: Option<String>,
+    /// When true, drop the `<env>` segment of the build-dir path.
+    /// Useful when the project directory is already named after the env
+    /// (e.g. FastLED's `.build/pio/<board>/`). The auto-collapse rule
+    /// in [`fbuild_paths::BuildLayout`] does this automatically when the
+    /// project basename equals the env name; this flag lets callers force
+    /// the same behavior in other shapes.
+    #[serde(default)]
+    pub flatten_env: bool,
 }
 
 /// POST /api/deploy
@@ -96,6 +110,12 @@ pub struct DeployRequest {
     /// Snapshot of `PLATFORMIO_*` env vars from the CLI caller's environment.
     #[serde(default)]
     pub pio_env: BTreeMap<String, String>,
+    /// Optional explicit build-dir root override (see [`BuildRequest::build_dir_override`]).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub build_dir_override: Option<String>,
+    /// Drop the `<env>` segment of the build-dir path (see [`BuildRequest::flatten_env`]).
+    #[serde(default)]
+    pub flatten_env: bool,
 }
 
 fn default_qemu_timeout() -> u32 {
@@ -398,6 +418,12 @@ pub struct TestEmuRequest {
     /// Snapshot of `PLATFORMIO_*` env vars from the CLI caller's environment.
     #[serde(default)]
     pub pio_env: BTreeMap<String, String>,
+    /// Optional explicit build-dir root override (see [`BuildRequest::build_dir_override`]).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub build_dir_override: Option<String>,
+    /// Drop the `<env>` segment of the build-dir path (see [`BuildRequest::flatten_env`]).
+    #[serde(default)]
+    pub flatten_env: bool,
 }
 
 /// GET /api/cache/stats response.

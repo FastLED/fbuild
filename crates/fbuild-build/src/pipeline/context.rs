@@ -110,16 +110,22 @@ impl BuildContext {
         }
 
         // 4. Setup build directories
+        //
+        // `params.build_dir` is the authoritative env-rooted build dir
+        // (caller resolves it via `fbuild_paths::BuildLayout`). We never
+        // re-derive it from `project_dir` here, so callers can override
+        // the layout (e.g. flatten the env segment when their project
+        // dir is already named after the env — the FastLED
+        // `.build/pio/<board>/` case). See FastLED/fbuild#432.
         let t0 = std::time::Instant::now();
-        let cache = fbuild_packages::Cache::new(project_dir);
-        if params.clean {
-            cache.clean_build(env_name, params.profile)?;
+        let build_dir = params.build_dir.clone();
+        if params.clean && build_dir.exists() {
+            std::fs::remove_dir_all(&build_dir)?;
         }
-        cache.ensure_build_directories(env_name, params.profile)?;
-
-        let build_dir = cache.get_build_dir(env_name, params.profile);
-        let core_build_dir = cache.get_core_build_dir(env_name, params.profile);
-        let src_build_dir = cache.get_src_build_dir(env_name, params.profile);
+        let core_build_dir = build_dir.join("core");
+        let src_build_dir = build_dir.join("src");
+        std::fs::create_dir_all(&core_build_dir)?;
+        std::fs::create_dir_all(&src_build_dir)?;
         if let Some(p) = perf.as_mut() {
             p.record("build-dirs", t0.elapsed());
         }

@@ -19,7 +19,7 @@ use fbuild_build::{BuildOrchestrator, BuildParams};
 use fbuild_core::BuildProfile;
 
 fn make_params(project_dir: &Path) -> BuildParams {
-    let build_dir = project_dir.join(".fbuild/build");
+    let build_dir = project_dir.join(".fbuild/build/esp32dev/release");
     BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "esp32dev".to_string(),

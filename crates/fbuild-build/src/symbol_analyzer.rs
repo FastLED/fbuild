@@ -15,9 +15,92 @@ use std::collections::BTreeMap;
 use fbuild_core::subprocess::run_command_with_stdin;
 use fbuild_core::symbol_analysis::{
     build_fine_grained_map_with_synth, collect_map_derived_owners, parse_linker_map,
-    parse_nm_output, FineGrainedSymbolMap,
+    parse_nm_output, FineGrainedSymbolMap, LoadedRegion,
 };
 use fbuild_core::{FbuildError, Result};
+
+/// Read the `PT_LOAD` program-header ranges from an ELF. These are the
+/// regions that actually get programmed into the device's flash/RAM
+/// image at boot — every other byte in the ELF (debug info,
+/// `.ARM.attributes`, `.comment`, symbol tables) lives only in the
+/// host-side file and never reaches the binary.
+///
+/// Used by [`analyze_elf`] to drop linker-script boundary symbols
+/// (`__StackTop`, `__flash_arduino_end`, ...) that nm reports with
+/// nonsense sizes computed from the gap to the next symbol — these
+/// inflate the bloat report by gigabytes if not filtered.
+pub fn read_pt_load_regions(elf_path: &Path) -> Result<Vec<LoadedRegion>> {
+    use object::read::elf::{ElfFile32, ElfFile64, FileHeader, ProgramHeader};
+    use object::{Endianness, FileKind};
+
+    let bytes = std::fs::read(elf_path).map_err(|e| {
+        FbuildError::BuildFailed(format!(
+            "could not read ELF at {} for PT_LOAD probe: {e}",
+            elf_path.display()
+        ))
+    })?;
+    let kind = FileKind::parse(&bytes[..]).map_err(|e| {
+        FbuildError::BuildFailed(format!(
+            "could not identify file kind for {}: {e}",
+            elf_path.display()
+        ))
+    })?;
+
+    let mut regions = Vec::new();
+    match kind {
+        FileKind::Elf32 => {
+            let elf = ElfFile32::<Endianness>::parse(&bytes[..])
+                .map_err(|e| FbuildError::BuildFailed(format!("ELF32 parse failed: {e}")))?;
+            let endian = elf
+                .elf_header()
+                .endian()
+                .map_err(|e| FbuildError::BuildFailed(format!("ELF32 endian probe failed: {e}")))?;
+            for ph in elf.elf_program_headers() {
+                if ph.p_type(endian) != object::elf::PT_LOAD {
+                    continue;
+                }
+                let start = u64::from(ph.p_vaddr(endian));
+                let size = u64::from(ph.p_memsz(endian));
+                if size == 0 {
+                    continue;
+                }
+                regions.push(LoadedRegion {
+                    start,
+                    end: start.saturating_add(size),
+                });
+            }
+        }
+        FileKind::Elf64 => {
+            let elf = ElfFile64::<Endianness>::parse(&bytes[..])
+                .map_err(|e| FbuildError::BuildFailed(format!("ELF64 parse failed: {e}")))?;
+            let endian = elf
+                .elf_header()
+                .endian()
+                .map_err(|e| FbuildError::BuildFailed(format!("ELF64 endian probe failed: {e}")))?;
+            for ph in elf.elf_program_headers() {
+                if ph.p_type(endian) != object::elf::PT_LOAD {
+                    continue;
+                }
+                let start = ph.p_vaddr(endian);
+                let size = ph.p_memsz(endian);
+                if size == 0 {
+                    continue;
+                }
+                regions.push(LoadedRegion {
+                    start,
+                    end: start.saturating_add(size),
+                });
+            }
+        }
+        other => {
+            return Err(FbuildError::BuildFailed(format!(
+                "expected ELF, got {other:?} at {}",
+                elf_path.display()
+            )));
+        }
+    }
+    Ok(regions)
+}
 
 /// Auto-detect the cross-toolchain prefix from the directory containing
 /// an `nm` binary. e.g. `xtensa-esp32s3-elf-nm` → prefix
@@ -181,14 +264,38 @@ pub fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap> {
         synth_mangled.clone()
     };
 
-    Ok(build_fine_grained_map_with_synth(
+    let mut map = build_fine_grained_map_with_synth(
         elf_s,
         cfg.map_path.map(|p| p.to_string_lossy().to_string()),
         nm_rows,
         demangled,
         ranges,
         &synth_demangled,
-    ))
+    );
+
+    // Strip symbols that nm enumerated but that don't actually consume
+    // bytes in the final binary — most importantly linker-script
+    // boundary markers (`__StackTop`, `__flash_arduino_end`, ...)
+    // whose nm-reported "size" is the address gap to the next symbol
+    // and can be multiple gigabytes. The PT_LOAD probe is best-effort;
+    // when it fails (corrupt ELF, non-ELF input) we leave the map
+    // unfiltered rather than poisoning the report with an error.
+    match read_pt_load_regions(cfg.elf_path) {
+        Ok(regions) if !regions.is_empty() => map.retain_loaded_symbols(&regions),
+        Ok(_) => {
+            tracing::warn!(
+                "no PT_LOAD segments found in {}; emitting unfiltered symbol report",
+                cfg.elf_path.display()
+            );
+        }
+        Err(e) => {
+            tracing::warn!(
+                "PT_LOAD probe failed for {} ({e}); emitting unfiltered symbol report",
+                cfg.elf_path.display()
+            );
+        }
+    }
+    Ok(map)
 }
 
 /// Format a fine-grained per-symbol map as a human-readable text report

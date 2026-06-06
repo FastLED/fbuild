@@ -36,7 +36,7 @@ fn teensylc_blink_meets_205_acceptance_criteria() {
         env_name: "teensylc".to_string(),
         clean: true,
         profile: BuildProfile::Release,
-        build_dir: build_dir.path().to_path_buf(),
+        build_dir: build_dir.path().join("teensylc").join("release"),
         verbose: true,
         jobs: None,
         generate_compiledb: true,

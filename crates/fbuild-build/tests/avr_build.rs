@@ -75,9 +75,11 @@ fn build_uno_minimal() {
         return;
     }
 
-    // Use a temp build dir so we don't pollute the Python project
+    // Use a temp build dir so we don't pollute the Python project.
+    // `params.build_dir` is the resolved env-rooted dir per
+    // `BuildLayout::resolve()`.
     let tmp = tempfile::TempDir::new().unwrap();
-    let build_dir = tmp.path().join(".fbuild/build");
+    let build_dir = tmp.path().join(".fbuild/build/uno/release");
 
     let params = BuildParams {
         project_dir: project_dir.clone(),
@@ -172,7 +174,7 @@ fn compare_with_python_output() {
 
     // Build with Rust
     let tmp = tempfile::TempDir::new().unwrap();
-    let build_dir = tmp.path().join(".fbuild/build");
+    let build_dir = tmp.path().join(".fbuild/build/uno/release");
 
     let params = BuildParams {
         project_dir: project_dir.clone(),
@@ -258,7 +260,7 @@ void loop() {
     )
     .unwrap();
 
-    let build_dir = project_dir.join(".fbuild/build");
+    let build_dir = project_dir.join(".fbuild/build/uno/release");
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "uno".to_string(),
@@ -435,7 +437,7 @@ fn cache_survives_tar_extract_uno() {
     let cold_result = orchestrator
         .build(&uno_build_params(
             &proj_a,
-            proj_a.join(".fbuild/build"),
+            proj_a.join(".fbuild/build/uno/release"),
             true,
         ))
         .expect("cold AVR build should succeed");
@@ -467,7 +469,7 @@ fn cache_survives_tar_extract_uno() {
     let same_project_warm = orchestrator
         .build(&uno_build_params(
             &proj_a,
-            proj_a.join(".fbuild/build"),
+            proj_a.join(".fbuild/build/uno/release"),
             false,
         ))
         .expect("same-project warm build should succeed");
@@ -512,7 +514,7 @@ fn cache_survives_tar_extract_uno() {
     let warm_result = orchestrator
         .build(&uno_build_params(
             &proj_b,
-            proj_b.join(".fbuild/build"),
+            proj_b.join(".fbuild/build/uno/release"),
             false,
         ))
         .expect("warm AVR build (post tar-extract) should succeed");

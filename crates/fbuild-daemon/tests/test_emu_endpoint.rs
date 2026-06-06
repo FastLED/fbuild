@@ -164,6 +164,8 @@ async fn test_emu_registers_operation_guard() {
         caller_pid: None,
         caller_cwd: None,
         pio_env: Default::default(),
+        build_dir_override: None,
+        flatten_env: false,
     };
 
     let ctx_clone = Arc::clone(&ctx);

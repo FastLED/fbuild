@@ -60,7 +60,7 @@ fn stm32f103c8_blink_with_spi_auto_discovers_library_205_ac4() {
     )
     .unwrap();
 
-    let build_dir = project_dir.join(".fbuild/build");
+    let build_dir = project_dir.join(".fbuild/build/stm32f103c8/release");
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "stm32f103c8".to_string(),

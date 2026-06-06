@@ -317,6 +317,27 @@ pub(crate) fn resolve_client_path(
     }
 }
 
+/// Resolve the env-rooted build dir via [`fbuild_paths::BuildLayout`].
+///
+/// Centralises the override > `FBUILD_BUILD_DIR` > default precedence
+/// and the env-segment auto-collapse rule (see FastLED/fbuild#432)
+/// so every HTTP handler routes through the same resolver, keeping
+/// the per-file LOC budget for `deploy.rs` / `build.rs` sane.
+pub(crate) fn resolve_build_dir(
+    build_dir_override: Option<&str>,
+    flatten_env: bool,
+    caller_cwd: Option<&str>,
+    project_dir: &Path,
+    env_name: &str,
+    profile: fbuild_core::BuildProfile,
+) -> PathBuf {
+    let override_root = build_dir_override.map(|p| resolve_client_path(p, caller_cwd, project_dir));
+    fbuild_paths::BuildLayout::new(project_dir.to_path_buf(), env_name.to_string(), profile)
+        .with_override_root(override_root)
+        .with_flatten_env(flatten_env)
+        .resolve()
+}
+
 #[derive(Debug, Serialize)]
 struct ArtifactFileEntry {
     name: String,
