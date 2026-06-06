@@ -155,7 +155,15 @@ impl Deployer for TeensyDeployer {
     ) -> Result<DeploymentResult> {
         // ---- 1. Pre-flash port snapshot --------------------------------
         let pre_snapshot = port_discovery::snapshot_port_names();
-        let trigger_port = resolve_trigger_port(port);
+        // Normalize the caller-supplied port once: treat `Some("")` as
+        // `None` so we never propagate an empty string into
+        // `DeploymentResult.port` (the daemon would forward it verbatim to
+        // the monitor and produce a `failed to open ""` error).
+        let explicit_port: Option<String> = port
+            .map(str::trim)
+            .filter(|s| !s.is_empty())
+            .map(str::to_string);
+        let trigger_port = resolve_trigger_port(explicit_port.as_deref());
 
         // Best-effort `usb_type` advisory — log it now so the user sees the
         // hint *before* we discover the firmware is silent.
@@ -220,10 +228,15 @@ impl Deployer for TeensyDeployer {
             &flash_cfg,
             self.flash_retries,
             self.flash_retry_backoff_ms,
-            Duration::from_secs(
-                self.wait_for_halfkay_timeout_secs
-                    .max(self.flash_timeout_secs),
-            ),
+            // First attempt may need to wait for the user to press the
+            // program button on a fresh board — full HalfKay budget.
+            Duration::from_secs(self.wait_for_halfkay_timeout_secs),
+            // Subsequent retries: HalfKay was either already observed (the
+            // baud-134 trigger left a fresh window open) or the device is
+            // wedged in a way another retry won't fix — use the tighter
+            // per-flash budget so a wedged board can't burn many minutes
+            // before falling through to the structured diagnostic.
+            Duration::from_secs(self.flash_timeout_secs),
             self.verbose,
         )?;
 
@@ -237,7 +250,7 @@ impl Deployer for TeensyDeployer {
                     attempt_count,
                     flash_outcome.last_exit_code()
                 ),
-                port: port.map(|p| p.to_string()),
+                port: explicit_port.clone(),
                 stdout: flash_outcome.last_stdout().to_string(),
                 stderr: flash_outcome.last_stderr().to_string(),
                 outcome: DeployOutcome::FullFlash,
@@ -251,9 +264,12 @@ impl Deployer for TeensyDeployer {
         ) {
             port_discovery::NewPortOutcome::Found(name) => Some(name),
             port_discovery::NewPortOutcome::TimedOut => {
-                // Re-enumeration may simply have used the same port name — fall
-                // back to the caller-supplied port if any.
-                port.map(|p| p.to_string())
+                // Re-enumeration may have reused the same port name (the
+                // common case on Linux/macOS). Fall back to the explicit
+                // port the caller asked for, and if none was given, to the
+                // PJRC port we triggered against — that's the device the
+                // monitor wants to attach to.
+                explicit_port.clone().or_else(|| trigger_port.clone())
             }
         };
 
