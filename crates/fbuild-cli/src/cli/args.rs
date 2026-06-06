@@ -64,6 +64,35 @@ pub struct Cli {
 
 #[derive(Subcommand)]
 pub enum Commands {
+    /// Fine-grained per-symbol bloat analysis of an existing ELF.
+    ///
+    /// Runs `nm --print-size --size-sort -S` on the ELF, demangles via
+    /// `c++filt`, parses the alongside linker map (auto-detected as
+    /// `<elf-stem>.map` or `firmware.map`), and emits a table that
+    /// attributes each live symbol to its source archive + object +
+    /// output section. Useful for diffing two builds at the symbol
+    /// level. JSON output is suitable for scripted comparison.
+    Symbols {
+        /// Path to the ELF to analyze.
+        elf: String,
+        /// Path to the linker map (auto-detected if omitted).
+        #[arg(long)]
+        map: Option<String>,
+        /// Path to `nm` (auto-detected from PATH if omitted; pass the
+        /// cross-tool, e.g. `xtensa-esp32s3-elf-nm`).
+        #[arg(long)]
+        nm: Option<String>,
+        /// Path to `c++filt` (auto-derived from `nm` path if omitted).
+        #[arg(long = "cppfilt")]
+        cppfilt: Option<String>,
+        /// Write structured report to PATH as JSON instead of the text
+        /// table.
+        #[arg(long)]
+        json: Option<String>,
+        /// Number of top symbols / archives to show in the text report.
+        #[arg(long, default_value = "25")]
+        top: usize,
+    },
     /// Build firmware
     Build {
         project_dir: Option<String>,

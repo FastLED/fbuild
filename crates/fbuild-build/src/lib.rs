@@ -34,6 +34,7 @@ pub mod script_runtime;
 pub mod silabs;
 pub mod source_scanner;
 pub mod stm32;
+pub mod symbol_analyzer;
 pub mod teensy;
 pub mod zccache;
 
