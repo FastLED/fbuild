@@ -690,6 +690,5 @@ fn sym_type_for_synth(output_section: &str) -> char {
     }
 }
 
-
 #[cfg(test)]
 mod tests;
