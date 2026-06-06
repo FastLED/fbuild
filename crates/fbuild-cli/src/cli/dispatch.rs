@@ -57,13 +57,14 @@ pub async fn async_main() {
 
     let result = match cli.command {
         Some(Commands::Symbols {
-            elf,
+            input,
             map,
             nm,
             cppfilt,
             json,
+            output_dir,
             top,
-        }) => run_symbols(elf, map, nm, cppfilt, json, top),
+        }) => run_symbols(input, map, nm, cppfilt, json, output_dir, top),
         Some(Commands::Build {
             project_dir,
             environment,

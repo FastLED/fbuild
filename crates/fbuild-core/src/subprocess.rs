@@ -88,6 +88,61 @@ pub fn run_command(
     run_captured(config, args, timeout)
 }
 
+/// Run an external command, feed `stdin_bytes` to its stdin, and
+/// capture stdout+stderr. Used by tools that operate on a payload
+/// piped through a filter (e.g. `c++filt`, `clang-format`).
+///
+/// Routing through `NativeProcess` is critical for large stdin
+/// payloads: the running-process reader thread drains stdout in
+/// background while we write stdin, avoiding the Windows pipe-buffer
+/// deadlock that hits when ~3k mangled symbols (~250 KB) saturate
+/// the 4-8 KB stdout pipe before stdin EOF.
+pub fn run_command_with_stdin(
+    args: &[&str],
+    stdin_bytes: &[u8],
+    cwd: Option<&Path>,
+    env: Option<&[(&str, &str)]>,
+    timeout: Option<Duration>,
+) -> Result<ToolOutput> {
+    let config = build_config(args, cwd, env, /*capture=*/ true, StdinMode::Piped)?;
+    let process = NativeProcess::new(config);
+    process.start().map_err(|e| spawn_err(args, e))?;
+    // Writes the data then closes stdin (signals EOF). The reader
+    // threads spawned by `start()` keep stdout/stderr drained
+    // throughout the write.
+    if !stdin_bytes.is_empty() {
+        process
+            .write_stdin(stdin_bytes)
+            .map_err(|e| FbuildError::Other(format!("stdin write to {:?} failed: {}", args, e)))?;
+    } else {
+        // Empty payload: close stdin immediately so the child sees EOF.
+        let _ = process.close_stdin();
+    }
+    let exit_code = match process.wait(timeout) {
+        Ok(code) => code,
+        Err(ProcessError::Timeout) => {
+            let _ = process.kill();
+            return Err(FbuildError::Timeout(format!(
+                "command timed out after {}s",
+                timeout.map(|d| d.as_secs()).unwrap_or(0)
+            )));
+        }
+        Err(e) => {
+            return Err(FbuildError::Other(format!(
+                "command {:?} failed: {}",
+                args, e
+            )))
+        }
+    };
+    let stdout = join_lines(process.captured_stdout());
+    let stderr = join_lines(process.captured_stderr());
+    Ok(ToolOutput {
+        stdout,
+        stderr,
+        exit_code,
+    })
+}
+
 /// Run an external command with inherited stdin/stdout/stderr (no
 /// capture). Intended for pass-through cases like the `pio` CLI
 /// delegation where users expect the tool's live output.
