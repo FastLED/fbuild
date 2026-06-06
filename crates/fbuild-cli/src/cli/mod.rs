@@ -23,7 +23,7 @@ pub mod pio;
 pub mod purge;
 pub mod reset;
 pub mod show;
-pub mod symbols_cmd;
+pub mod bloat_cmd;
 
 #[cfg(test)]
 mod tests;

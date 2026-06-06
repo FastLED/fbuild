@@ -64,42 +64,48 @@ pub struct Cli {
 
 #[derive(Subcommand)]
 pub enum Commands {
-    /// Fine-grained per-symbol bloat analysis of an ELF or project.
+    /// Fine-grained per-symbol bloat analysis of a project or ELF.
     ///
-    /// `<input>` may be either an ELF file or a project directory; when
-    /// a directory is given, `fbuild symbols` walks `build_info.json`
-    /// first then `.fbuild/build/**/firmware.elf`, `.pio/build/**/firmware.elf`
-    /// and finally any `*.elf` directly inside the directory.
+    /// Aligns with `cargo bloat` and Google's `bloaty` — the de-facto
+    /// names for per-symbol size analysis. The legacy spelling
+    /// `fbuild symbols` keeps working as a hidden alias through 2.3.x.
+    ///
+    /// `<input>` may be a project directory (preferred) or an ELF file
+    /// directly. When a directory is given, fbuild walks
+    /// `build_info.json` first then `.fbuild/build/**/firmware.elf`,
+    /// `.pio/build/**/firmware.elf`, and any `*.elf` directly inside.
     ///
     /// Runs `nm --print-size --size-sort -S` on the ELF, demangles via
-    /// `c++filt`, parses the alongside linker map (auto-detected as
-    /// `<elf-stem>.map` or `firmware.map`), and emits a table that
-    /// attributes each live symbol to its source archive + object +
+    /// `c++filt`, parses the alongside linker map, and emits a table
+    /// attributing each live symbol to its source archive + object +
     /// output section. Map-derived rows for anonymous rodata pools
     /// (`.rodata.<owner>.str1.<N>` etc.) are tagged
     /// `source: "map-derived"`.
+    ///
+    /// Toolchain paths come from the same `build_info.json` that
+    /// `fbuild build` emits — no `--nm` flag needed for the common
+    /// case (see #428).
     ///
     /// Outputs:
     ///   * default: text report to stdout
     ///   * `--json <path>`: structured JSON only
     ///   * `--output-dir <dir>`: BOTH `report.json` (machine) and
     ///     `report.md` (human, GitHub-friendly tables) side by side
-    Symbols {
-        /// ELF file OR project directory.
+    #[command(alias = "symbols")]
+    Bloat {
+        /// Project directory (preferred) or ELF file.
         input: String,
         /// Path to the linker map (auto-detected if omitted).
-        #[arg(long)]
+        #[arg(long, hide = true)]
         map: Option<String>,
-        /// Path to `nm` (highest precedence; pass the cross-tool, e.g.
-        /// `xtensa-esp32s3-elf-nm`). When omitted, fbuild reads
-        /// `nm_path` from `build_info.json` (auto-located near the ELF
-        /// or via `--build-info`), then falls back to PATH lookup.
-        #[arg(long)]
+        /// Override for `nm` (highest precedence). Normally read from
+        /// `build_info.json`; pass this only when working against an
+        /// out-of-band ELF whose project has no build_info.
+        #[arg(long, hide = true)]
         nm: Option<String>,
-        /// Path to `c++filt` (highest precedence). When omitted, fbuild
-        /// reads `cppfilt_path` from `build_info.json`, then derives it
-        /// from the resolved nm path.
-        #[arg(long = "cppfilt")]
+        /// Override for `c++filt` (highest precedence). Normally read
+        /// from `build_info.json` or derived from `nm`.
+        #[arg(long = "cppfilt", hide = true)]
         cppfilt: Option<String>,
         /// Path to a `build_info.json` (or `build_info_<env>.json`) that
         /// carries toolchain paths. When omitted, fbuild walks up from

@@ -1,25 +1,29 @@
-# `fbuild symbols` — per-symbol bloat analysis
+# `fbuild bloat` — per-symbol bloat analysis
 
-`fbuild symbols` produces a fine-grained, attributed report of every
+`fbuild bloat` produces a fine-grained, attributed report of every
 live symbol in an ELF: name, size, region (`flash` / `ram`), source
 archive, object file, and output section. It's the same analysis the
 build orchestrator emits when you pass `--symbol-analysis` to
 `fbuild build`, but as a standalone subcommand that works against any
 ELF — fbuild-built, PlatformIO-built, or hand-compiled.
 
+> **Note:** the legacy spelling `fbuild symbols` is still accepted as
+> a hidden alias for back-compat through 2.3.x. Deprecation warning
+> lands in 2.4.0; alias removal in 3.0.
+
 ## TL;DR
 
 Point it at a project directory:
 
 ```bash
-fbuild symbols .
+fbuild bloat .
 ```
 
 Or at an ELF directly:
 
 ```bash
-fbuild symbols .fbuild/build/uno/firmware.elf
-fbuild symbols .pio/build/esp32s3/firmware.elf
+fbuild bloat .fbuild/build/uno/firmware.elf
+fbuild bloat .pio/build/esp32s3/firmware.elf
 ```
 
 No `--nm`. No `--cppfilt`. No manual ELF / map paths. Toolchain paths
@@ -53,7 +57,7 @@ $ fbuild build .
 # … link succeeds, writes .fbuild/build/esp32s3/firmware.elf +
 # build_info.json with toolchain paths …
 
-$ fbuild symbols .
+$ fbuild bloat .
 # resolves ELF via discover_elf_in_project()
 # resolves nm/c++filt via build_info.json
 # emits text report to stdout
@@ -65,7 +69,7 @@ into the directory side-by-side. Pass `--json <path>` for JSON only.
 ## Example: PlatformIO-built ESP32-S3
 
 PlatformIO emits its own `build_info_<env>.json` (with an `aliases`
-block) next to `platformio.ini`. `fbuild symbols .pio/build/esp32s3/firmware.elf`
+block) next to `platformio.ini`. `fbuild bloat .pio/build/esp32s3/firmware.elf`
 walks up from `.pio/build/esp32s3/` to the project root, finds it, and
 reads the toolchain paths from there. No `--nm` needed.
 
