@@ -61,10 +61,11 @@ pub async fn async_main() {
             map,
             nm,
             cppfilt,
+            build_info,
             json,
             output_dir,
             top,
-        }) => run_symbols(input, map, nm, cppfilt, json, output_dir, top),
+        }) => run_symbols(input, map, nm, cppfilt, build_info, json, output_dir, top),
         Some(Commands::Build {
             project_dir,
             environment,

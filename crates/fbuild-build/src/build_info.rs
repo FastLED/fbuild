@@ -14,6 +14,7 @@
 //!
 //! See FastLED/fbuild#297.
 
+use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 
 use fbuild_core::Result;
@@ -40,6 +41,23 @@ pub struct BuildInfo {
     pub objcopy_path: String,
     /// Absolute path to `size`.
     pub size_path: String,
+    /// Absolute path to `nm` (GCC convention: derived from `size_path` by
+    /// replacing the `size` suffix with `nm`). Consumed by `fbuild symbols`
+    /// (see #428) so users don't have to pass `--nm` on every invocation.
+    #[serde(default)]
+    pub nm_path: String,
+    /// Absolute path to `c++filt` (GCC convention). Used by the symbol
+    /// analyzer to demangle the names `nm` emits.
+    #[serde(default)]
+    pub cppfilt_path: String,
+    /// Absolute path to `readelf`. Useful for downstream section/segment
+    /// inspection.
+    #[serde(default)]
+    pub readelf_path: String,
+    /// Absolute path to `objdump`. Useful for downstream disassembly /
+    /// section dumps.
+    #[serde(default)]
+    pub objdump_path: String,
     /// Effective C compile flags as seen by the compiler driver.
     pub cc_flags: Vec<String>,
     /// Effective C++ compile flags as seen by the compiler driver.
@@ -58,6 +76,14 @@ pub struct BuildInfo {
     pub board: String,
     /// PlatformIO env name (e.g. `uno`, `teensy41-debug`).
     pub env: String,
+    /// PIO-shape mirror of the toolchain paths. PlatformIO emits an
+    /// `aliases` block keyed by short tool names (`nm`, `c++filt`,
+    /// `readelf`, `objdump`, `gcc`, etc.); FastLED's
+    /// `ci/util/symbol_analysis.py` and `ci/inspect_binary.py` read from
+    /// it. Mirroring keeps existing PIO consumers working drop-in
+    /// against fbuild-built artifacts. See #428.
+    #[serde(default)]
+    pub aliases: BTreeMap<String, String>,
 }
 
 impl BuildInfo {
@@ -65,6 +91,12 @@ impl BuildInfo {
     /// `-D` defines and `-I` includes out of `cxx_flags` (matching
     /// PlatformIO's metadata-emitter convention) without removing them
     /// from `cxx_flags` itself.
+    ///
+    /// The four diagnostic toolchain paths (`nm`, `c++filt`, `readelf`,
+    /// `objdump`) are derived from `size_path` using the GCC cross-tool
+    /// naming convention (`<prefix>-size` → `<prefix>-nm`, etc.). The
+    /// `aliases` block mirrors these onto short keys for PIO consumer
+    /// compatibility. See #428.
     #[allow(clippy::too_many_arguments)]
     pub fn new(
         prog_path: &Path,
@@ -83,6 +115,21 @@ impl BuildInfo {
     ) -> Self {
         let defines = extract_prefixed(&cxx_flags, "-D");
         let includes = extract_prefixed(&cxx_flags, "-I");
+        let nm_path = derive_gcc_tool_path(size_path, "nm");
+        let cppfilt_path = derive_gcc_tool_path(size_path, "c++filt");
+        let readelf_path = derive_gcc_tool_path(size_path, "readelf");
+        let objdump_path = derive_gcc_tool_path(size_path, "objdump");
+        let aliases = build_aliases(
+            cc_path,
+            cxx_path,
+            ar_path,
+            objcopy_path,
+            size_path,
+            &nm_path,
+            &cppfilt_path,
+            &readelf_path,
+            &objdump_path,
+        );
         Self {
             prog_path: path_to_string(Some(prog_path)),
             cc_path: path_to_string(cc_path),
@@ -90,6 +137,10 @@ impl BuildInfo {
             ar_path: path_to_string(ar_path),
             objcopy_path: path_to_string(objcopy_path),
             size_path: path_to_string(Some(size_path)),
+            nm_path: path_to_string(Some(nm_path.as_path())),
+            cppfilt_path: path_to_string(Some(cppfilt_path.as_path())),
+            readelf_path: path_to_string(Some(readelf_path.as_path())),
+            objdump_path: path_to_string(Some(objdump_path.as_path())),
             cc_flags,
             cxx_flags,
             link_flags,
@@ -99,8 +150,72 @@ impl BuildInfo {
             platform,
             board,
             env,
+            aliases,
         }
     }
+}
+
+/// Derive a sibling GCC cross-tool path from `size_path`.
+///
+/// For a `size_path` like `/toolchain/bin/xtensa-esp32-elf-size[.exe]`,
+/// returns `/toolchain/bin/xtensa-esp32-elf-<target>[.exe]`. When the
+/// stem doesn't end in `size` (rare — bare `size` on PATH), returns
+/// `<parent>/<target>` preserving any extension.
+pub fn derive_gcc_tool_path(size_path: &Path, target: &str) -> PathBuf {
+    let parent = size_path.parent().unwrap_or(Path::new("."));
+    let stem = size_path
+        .file_stem()
+        .map(|s| s.to_string_lossy().into_owned())
+        .unwrap_or_default();
+    let new_stem = if let Some(prefix) = stem.strip_suffix("size") {
+        format!("{prefix}{target}")
+    } else {
+        target.to_string()
+    };
+    match size_path.extension() {
+        Some(ext) if !ext.is_empty() => {
+            parent.join(format!("{new_stem}.{}", ext.to_string_lossy()))
+        }
+        _ => parent.join(new_stem),
+    }
+}
+
+/// Build the PIO-shape `aliases` block. Keys match PlatformIO's
+/// `pio project metadata` output so FastLED's existing Python
+/// consumers (`ci/util/symbol_analysis.py`, `ci/inspect_binary.py`)
+/// keep working unchanged. Empty paths are skipped so consumers can
+/// trust `aliases["nm"]` is non-empty whenever the key is present.
+#[allow(clippy::too_many_arguments)]
+fn build_aliases(
+    cc_path: Option<&Path>,
+    cxx_path: Option<&Path>,
+    ar_path: Option<&Path>,
+    objcopy_path: Option<&Path>,
+    size_path: &Path,
+    nm_path: &Path,
+    cppfilt_path: &Path,
+    readelf_path: &Path,
+    objdump_path: &Path,
+) -> BTreeMap<String, String> {
+    let mut aliases = BTreeMap::new();
+    let entries: &[(&str, Option<&Path>)] = &[
+        ("gcc", cc_path),
+        ("g++", cxx_path),
+        ("ar", ar_path),
+        ("objcopy", objcopy_path),
+        ("size", Some(size_path)),
+        ("nm", Some(nm_path)),
+        ("c++filt", Some(cppfilt_path)),
+        ("readelf", Some(readelf_path)),
+        ("objdump", Some(objdump_path)),
+    ];
+    for (key, path) in entries {
+        let s = path_to_string(*path);
+        if !s.is_empty() {
+            aliases.insert((*key).to_string(), s);
+        }
+    }
+    aliases
 }
 
 fn path_to_string(p: Option<&Path>) -> String {
@@ -171,6 +286,78 @@ pub fn pick_prog_path(
     bin.map(Path::to_path_buf)
         .or_else(|| hex.map(Path::to_path_buf))
         .or_else(|| elf.map(Path::to_path_buf))
+}
+
+/// Load a `build_info_<env>.json` (or `build_info.json`) file and return
+/// the inner [`BuildInfo`] for its single environment.
+///
+/// The PlatformIO + fbuild emitter convention is a one-key outer object
+/// (`{ "<env>": { ...BuildInfo } }`); this helper unwraps that
+/// transparently and errors out if the file doesn't match the shape.
+/// Consumed by `fbuild symbols` (#428) to resolve toolchain paths
+/// without the user passing `--nm`.
+pub fn load_build_info(path: &Path) -> Result<(String, BuildInfo)> {
+    let bytes = std::fs::read(path).map_err(|e| {
+        fbuild_core::FbuildError::BuildFailed(format!("read {}: {e}", path.display()))
+    })?;
+    let outer: BTreeMap<String, BuildInfo> = serde_json::from_slice(&bytes).map_err(|e| {
+        fbuild_core::FbuildError::BuildFailed(format!(
+            "{}: not a valid build_info.json: {e}",
+            path.display()
+        ))
+    })?;
+    let mut it = outer.into_iter();
+    let (env, info) = it.next().ok_or_else(|| {
+        fbuild_core::FbuildError::BuildFailed(format!(
+            "{}: build_info.json is empty (expected exactly one env)",
+            path.display()
+        ))
+    })?;
+    if it.next().is_some() {
+        return Err(fbuild_core::FbuildError::BuildFailed(format!(
+            "{}: build_info.json carries more than one env (expected exactly one)",
+            path.display()
+        )));
+    }
+    Ok((env, info))
+}
+
+/// Walk upward from `start` looking for a `build_info.json` (or any
+/// `build_info_<env>.json`). PIO and fbuild both write these next to
+/// `platformio.ini`, but `start` is typically the directory containing
+/// `firmware.elf` (`.fbuild/build/<env>/` or `.pio/build/<env>/`). We
+/// search `start` itself first, then walk parent directories.
+///
+/// Returns `None` when no metadata file is found before reaching the
+/// filesystem root. `fbuild symbols` falls back to PATH-based `nm`
+/// lookup in that case so the command keeps working against bare ELFs.
+pub fn find_build_info_near(start: &Path) -> Option<PathBuf> {
+    let mut cursor: Option<&Path> = Some(start);
+    while let Some(dir) = cursor {
+        if let Some(found) = scan_dir_for_build_info(dir) {
+            return Some(found);
+        }
+        cursor = dir.parent();
+    }
+    None
+}
+
+fn scan_dir_for_build_info(dir: &Path) -> Option<PathBuf> {
+    let generic = dir.join("build_info.json");
+    if generic.is_file() {
+        return Some(generic);
+    }
+    let entries = std::fs::read_dir(dir).ok()?;
+    for entry in entries.flatten() {
+        let path = entry.path();
+        let Some(name) = path.file_name().and_then(|n| n.to_str()) else {
+            continue;
+        };
+        if name.starts_with("build_info_") && name.ends_with(".json") && path.is_file() {
+            return Some(path);
+        }
+    }
+    None
 }
 
 #[cfg(test)]
@@ -384,6 +571,228 @@ mod tests {
         assert_eq!(
             extract_prefixed(&["-D".to_string(), "-DX".to_string()], "-D"),
             vec!["X".to_string()]
+        );
+    }
+
+    // ---- #428: toolchain path derivation + aliases mirror ----
+
+    /// Encode a derived path the same way [`BuildInfo::new`] does
+    /// (`Path::join` uses the platform separator, so test expectations
+    /// must too — `/bin/avr-nm` on Unix, `/bin\avr-nm` on Windows).
+    fn pj(parent: &str, name: &str) -> String {
+        PathBuf::from(parent)
+            .join(name)
+            .to_string_lossy()
+            .into_owned()
+    }
+
+    #[test]
+    fn derive_gcc_tool_path_avr_prefix() {
+        let size = PathBuf::from("/bin/avr-size");
+        assert_eq!(
+            derive_gcc_tool_path(&size, "nm"),
+            PathBuf::from("/bin").join("avr-nm")
+        );
+        assert_eq!(
+            derive_gcc_tool_path(&size, "c++filt"),
+            PathBuf::from("/bin").join("avr-c++filt")
+        );
+        assert_eq!(
+            derive_gcc_tool_path(&size, "readelf"),
+            PathBuf::from("/bin").join("avr-readelf")
+        );
+        assert_eq!(
+            derive_gcc_tool_path(&size, "objdump"),
+            PathBuf::from("/bin").join("avr-objdump")
+        );
+    }
+
+    #[test]
+    fn derive_gcc_tool_path_xtensa_with_exe_suffix() {
+        let size = PathBuf::from("C:/toolchain/bin/xtensa-esp32s3-elf-size.exe");
+        assert_eq!(
+            derive_gcc_tool_path(&size, "nm"),
+            PathBuf::from("C:/toolchain/bin").join("xtensa-esp32s3-elf-nm.exe")
+        );
+        assert_eq!(
+            derive_gcc_tool_path(&size, "c++filt"),
+            PathBuf::from("C:/toolchain/bin").join("xtensa-esp32s3-elf-c++filt.exe")
+        );
+    }
+
+    #[test]
+    fn derive_gcc_tool_path_bare_size_falls_back_to_bare_target() {
+        // PATH-resolved `size` with no prefix.
+        let size = PathBuf::from("/usr/bin/size");
+        assert_eq!(
+            derive_gcc_tool_path(&size, "nm"),
+            PathBuf::from("/usr/bin").join("nm")
+        );
+    }
+
+    #[test]
+    fn build_info_populates_new_toolchain_fields() {
+        let info = sample_info();
+        // GCC convention: /bin/avr-size → /bin/avr-{nm,c++filt,readelf,objdump}
+        assert_eq!(info.nm_path, pj("/bin", "avr-nm"));
+        assert_eq!(info.cppfilt_path, pj("/bin", "avr-c++filt"));
+        assert_eq!(info.readelf_path, pj("/bin", "avr-readelf"));
+        assert_eq!(info.objdump_path, pj("/bin", "avr-objdump"));
+    }
+
+    #[test]
+    fn build_info_aliases_block_mirrors_paths() {
+        let info = sample_info();
+        // The aliases block carries short PIO-shape keys. Every present
+        // long-form path must also appear under its alias key.
+        // cc/cxx/ar/objcopy/size are passed in verbatim, so they keep the
+        // literal "/" separator we constructed them with. The four derived
+        // tools (nm/c++filt/readelf/objdump) go through Path::join so they
+        // use the platform separator — match that via pj().
+        assert_eq!(info.aliases.get("gcc"), Some(&"/bin/avr-gcc".to_string()));
+        assert_eq!(info.aliases.get("g++"), Some(&"/bin/avr-g++".to_string()));
+        assert_eq!(info.aliases.get("ar"), Some(&"/bin/avr-ar".to_string()));
+        assert_eq!(
+            info.aliases.get("objcopy"),
+            Some(&"/bin/avr-objcopy".to_string())
+        );
+        assert_eq!(info.aliases.get("size"), Some(&"/bin/avr-size".to_string()));
+        assert_eq!(info.aliases.get("nm"), Some(&pj("/bin", "avr-nm")));
+        assert_eq!(
+            info.aliases.get("c++filt"),
+            Some(&pj("/bin", "avr-c++filt"))
+        );
+        assert_eq!(
+            info.aliases.get("readelf"),
+            Some(&pj("/bin", "avr-readelf"))
+        );
+        assert_eq!(
+            info.aliases.get("objdump"),
+            Some(&pj("/bin", "avr-objdump"))
+        );
+    }
+
+    #[test]
+    fn build_info_aliases_omit_empty_optional_tools() {
+        // ESP8266-style: no ar, no objcopy. Their alias keys must be absent
+        // so consumers can rely on `key in aliases` meaning the path is real.
+        let info = BuildInfo::new(
+            Path::new("/build/firmware.elf"),
+            Some(Path::new("/bin/gcc")),
+            Some(Path::new("/bin/g++")),
+            None,
+            None,
+            Path::new("/bin/size"),
+            vec![],
+            vec![],
+            vec![],
+            vec![],
+            "esp8266".to_string(),
+            "nodemcuv2".to_string(),
+            "nodemcuv2".to_string(),
+        );
+        assert!(!info.aliases.contains_key("ar"));
+        assert!(!info.aliases.contains_key("objcopy"));
+        // …but nm / c++filt / readelf / objdump are derived from size_path
+        // and always present.
+        assert!(info.aliases.contains_key("nm"));
+        assert!(info.aliases.contains_key("c++filt"));
+        assert!(info.aliases.contains_key("readelf"));
+        assert!(info.aliases.contains_key("objdump"));
+    }
+
+    /// #428: walking up from an ELF path should find the project's
+    /// `build_info.json`. Mirrors the FastLED `_find_build_info()` lookup.
+    #[test]
+    fn find_build_info_walks_up_from_elf_dir() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let project = tmp.path();
+        let build_dir = project.join(".fbuild").join("build").join("uno");
+        std::fs::create_dir_all(&build_dir).unwrap();
+        // Emit at the project root (where platformio.ini would live).
+        let info = sample_info();
+        emit_build_info(project, "uno", &info).unwrap();
+
+        // Search from the ELF directory walks up to the project root.
+        let found = find_build_info_near(&build_dir)
+            .expect("walk should reach the project root's build_info.json");
+        assert_eq!(found, project.join("build_info.json"));
+    }
+
+    #[test]
+    fn find_build_info_prefers_env_specific_in_same_dir() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let dir = tmp.path();
+        // Only write build_info_uno.json, no generic build_info.json.
+        let info = sample_info();
+        let outer = BTreeMap::from([("uno".to_string(), info)]);
+        let json = serde_json::to_string_pretty(&outer).unwrap();
+        std::fs::write(dir.join("build_info_uno.json"), json).unwrap();
+
+        let found = find_build_info_near(dir).expect("should find env-specific file");
+        assert_eq!(found.file_name().unwrap(), "build_info_uno.json");
+    }
+
+    #[test]
+    fn find_build_info_returns_none_when_absent() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let nested = tmp.path().join("a").join("b").join("c");
+        std::fs::create_dir_all(&nested).unwrap();
+        assert!(find_build_info_near(&nested).is_none());
+    }
+
+    #[test]
+    fn load_build_info_unwraps_single_env() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let info = sample_info();
+        emit_build_info(tmp.path(), "uno", &info).unwrap();
+        let (env, loaded) = load_build_info(&tmp.path().join("build_info_uno.json")).unwrap();
+        assert_eq!(env, "uno");
+        assert_eq!(loaded, info);
+    }
+
+    /// #428: existing PIO consumers (FastLED `ci/util/symbol_analysis.py`)
+    /// read tool paths from `board_info["aliases"]["<short>"]`. Make sure
+    /// the emitted JSON carries that block.
+    #[test]
+    fn emit_writes_aliases_into_json() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let info = sample_info();
+        emit_build_info(tmp.path(), "uno", &info).unwrap();
+
+        let bytes = std::fs::read(tmp.path().join("build_info_uno.json")).unwrap();
+        let parsed: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
+        let inner = parsed
+            .as_object()
+            .unwrap()
+            .get("uno")
+            .unwrap()
+            .as_object()
+            .unwrap();
+        let aliases = inner
+            .get("aliases")
+            .expect("aliases block must be emitted")
+            .as_object()
+            .expect("aliases must be an object");
+        let expected_nm = pj("/bin", "avr-nm");
+        let expected_cppfilt = pj("/bin", "avr-c++filt");
+        let expected_readelf = pj("/bin", "avr-readelf");
+        let expected_objdump = pj("/bin", "avr-objdump");
+        assert_eq!(
+            aliases.get("nm").and_then(|v| v.as_str()),
+            Some(expected_nm.as_str())
+        );
+        assert_eq!(
+            aliases.get("c++filt").and_then(|v| v.as_str()),
+            Some(expected_cppfilt.as_str())
+        );
+        assert_eq!(
+            aliases.get("readelf").and_then(|v| v.as_str()),
+            Some(expected_readelf.as_str())
+        );
+        assert_eq!(
+            aliases.get("objdump").and_then(|v| v.as_str()),
+            Some(expected_objdump.as_str())
         );
     }
 }
