@@ -11,6 +11,7 @@ pub mod compiler_flags;
 pub mod containment;
 pub mod elapsed;
 pub mod emulator;
+pub mod path;
 pub mod response_file;
 pub mod shell_split;
 pub mod subprocess;
