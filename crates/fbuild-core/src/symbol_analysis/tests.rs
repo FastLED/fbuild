@@ -19,9 +19,8 @@ fn parse_nm_line_skips_unsized() {
 
 #[test]
 fn extract_archive_from_pio_path() {
-    let (arc, obj) = extract_archive_and_object(
-        ".pio/build/esp32s3/lib0d9/libFastLED.a(fl.channels+.cpp.o)",
-    );
+    let (arc, obj) =
+        extract_archive_and_object(".pio/build/esp32s3/lib0d9/libFastLED.a(fl.channels+.cpp.o)");
     assert_eq!(arc.as_deref(), Some("libFastLED.a"));
     assert_eq!(obj, "fl.channels+.cpp.o");
 }

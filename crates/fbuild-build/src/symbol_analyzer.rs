@@ -408,6 +408,7 @@ pub fn format_markdown_report(map: &FineGrainedSymbolMap, top_n: usize) -> Strin
 ///   2. `<dir>/.fbuild/build/**/firmware.elf` (fbuild native output).
 ///   3. `<dir>/.pio/build/**/firmware.elf` (PlatformIO output).
 ///   4. Any `*.elf` directly inside `<dir>`.
+///
 /// Returns the most recently-modified candidate when multiple match.
 pub fn discover_elf_in_project(project_dir: &Path) -> Option<PathBuf> {
     // 1. build_info.json
