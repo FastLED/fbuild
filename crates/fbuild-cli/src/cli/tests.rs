@@ -216,6 +216,34 @@ fn build_symbol_analysis_alias_still_accepted() {
     }
 }
 
+/// #441: `fbuild build` defaults `no_bloat_report` to false — the
+/// CLI auto-runs the bloat analyzer post-link.
+#[test]
+fn build_no_bloat_report_defaults_to_false() {
+    let argv = ["fbuild", "build", "."];
+    let cli = Cli::try_parse_from(argv).expect("parse");
+    match cli.command {
+        Some(Commands::Build {
+            no_bloat_report, ..
+        }) => assert!(!no_bloat_report),
+        _ => panic!("expected Build subcommand"),
+    }
+}
+
+/// #441: `--no-bloat-report` opts out of the default post-link bloat
+/// report (for CI matrices where artifact size matters).
+#[test]
+fn build_no_bloat_report_flag_is_accepted() {
+    let argv = ["fbuild", "build", "--no-bloat-report", "."];
+    let cli = Cli::try_parse_from(argv).expect("parse");
+    match cli.command {
+        Some(Commands::Build {
+            no_bloat_report, ..
+        }) => assert!(no_bloat_report),
+        _ => panic!("expected Build subcommand"),
+    }
+}
+
 /// #440: `fbuild bloat-diff <a> <b>` parses two positional inputs
 /// with the default region (`flash`) implicit.
 #[test]

@@ -37,6 +37,7 @@ pub async fn run_build(
     symbol_analysis: Option<String>,
     no_timestamp: bool,
     output_dir: Option<String>,
+    no_bloat_report: bool,
 ) -> fbuild_core::Result<()> {
     // FBUILD_PERF_LOG=1 enables coarse CLI-side timing (daemon handshake +
     // round-trip). Zero-overhead when unset.
@@ -134,7 +135,40 @@ pub async fn run_build(
             println!("compile_commands.json written to {}", db_path.display());
         }
     }
+
+    // #441: auto-run the fine-grained bloat analyzer post-link unless
+    // opted out. compiledb-only runs don't produce an ELF, so skip
+    // there. An explicit `--bloat <path>` (i.e. `symbol_analysis`
+    // set to a non-empty path) is the legacy daemon-side spelling
+    // — leave it to the daemon and don't double up.
+    let explicit_bloat_path = req
+        .symbol_analysis_path
+        .as_deref()
+        .map(|s| !s.is_empty())
+        .unwrap_or(false);
+    if !no_bloat_report && !generate_compiledb && !explicit_bloat_path {
+        if let Err(e) = run_post_build_bloat(&project_dir) {
+            // Don't fail the build just because the report failed.
+            eprintln!("warning: post-build bloat report failed: {e}");
+        }
+    }
     Ok(())
+}
+
+/// Run the fine-grained bloat analyzer against the just-built
+/// project, writing the default `<project>/.fbuild/build/<env>/bloat-report/`
+/// pair. Errors are non-fatal — the build itself already succeeded.
+fn run_post_build_bloat(project_dir: &str) -> fbuild_core::Result<()> {
+    super::bloat_cmd::run_bloat(
+        project_dir.to_string(),
+        None, // map
+        None, // nm
+        None, // cppfilt
+        None, // build-info (auto-discover)
+        None, // json (use default output dir)
+        None, // output-dir (use default)
+        25,   // top
+    )
 }
 
 /// Convert MSYS/Git-Bash paths (/c/Users/...) to native Windows paths and canonicalize.

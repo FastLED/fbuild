@@ -207,6 +207,15 @@ pub enum Commands {
         /// Export build artifacts to a tooling-friendly directory
         #[arg(long)]
         output_dir: Option<String>,
+        /// Skip the default post-link bloat report
+        /// (`<project>/.fbuild/build/<env>/bloat-report/`).
+        ///
+        /// `fbuild build` runs the fine-grained bloat analyzer by
+        /// default and writes `report.json` + `report.md` alongside
+        /// the ELF — pass this flag in CI matrices where the extra
+        /// artefacts would blow up download size. See #441.
+        #[arg(long = "no-bloat-report")]
+        no_bloat_report: bool,
     },
     /// Deploy firmware to device
     Deploy {
