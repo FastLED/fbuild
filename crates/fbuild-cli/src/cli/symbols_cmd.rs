@@ -240,13 +240,15 @@ impl ToolPaths {
     }
 }
 
-/// Treat an empty BuildInfo string field (the schema's "missing"
-/// sentinel) as `None`.
-fn option_path(s: &str) -> Option<PathBuf> {
-    if s.is_empty() {
+/// Treat an empty BuildInfo path field (the schema's "missing"
+/// sentinel) as `None`. `BuildInfo`'s `*_path` fields became
+/// `NormalizedPath` in #437 Phase 2, so emptiness is checked on the
+/// underlying `OsStr` rather than on a `String`.
+fn option_path(p: &fbuild_core::path::NormalizedPath) -> Option<PathBuf> {
+    if p.as_path().as_os_str().is_empty() {
         None
     } else {
-        Some(PathBuf::from(s))
+        Some(p.as_path().to_path_buf())
     }
 }
 
@@ -274,8 +276,8 @@ mod tests {
             "test".to_string(),
             "test".to_string(),
         );
-        info.nm_path = nm.to_string();
-        info.cppfilt_path = cppfilt.to_string();
+        info.nm_path = fbuild_core::path::NormalizedPath::new(nm);
+        info.cppfilt_path = fbuild_core::path::NormalizedPath::new(cppfilt);
         info
     }
 
