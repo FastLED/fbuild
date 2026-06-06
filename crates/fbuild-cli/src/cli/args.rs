@@ -64,17 +64,29 @@ pub struct Cli {
 
 #[derive(Subcommand)]
 pub enum Commands {
-    /// Fine-grained per-symbol bloat analysis of an existing ELF.
+    /// Fine-grained per-symbol bloat analysis of an ELF or project.
+    ///
+    /// `<input>` may be either an ELF file or a project directory; when
+    /// a directory is given, `fbuild symbols` walks `build_info.json`
+    /// first then `.fbuild/build/**/firmware.elf`, `.pio/build/**/firmware.elf`
+    /// and finally any `*.elf` directly inside the directory.
     ///
     /// Runs `nm --print-size --size-sort -S` on the ELF, demangles via
     /// `c++filt`, parses the alongside linker map (auto-detected as
     /// `<elf-stem>.map` or `firmware.map`), and emits a table that
     /// attributes each live symbol to its source archive + object +
-    /// output section. Useful for diffing two builds at the symbol
-    /// level. JSON output is suitable for scripted comparison.
+    /// output section. Map-derived rows for anonymous rodata pools
+    /// (`.rodata.<owner>.str1.<N>` etc.) are tagged
+    /// `source: "map-derived"`.
+    ///
+    /// Outputs:
+    ///   * default: text report to stdout
+    ///   * `--json <path>`: structured JSON only
+    ///   * `--output-dir <dir>`: BOTH `report.json` (machine) and
+    ///     `report.md` (human, GitHub-friendly tables) side by side
     Symbols {
-        /// Path to the ELF to analyze.
-        elf: String,
+        /// ELF file OR project directory.
+        input: String,
         /// Path to the linker map (auto-detected if omitted).
         #[arg(long)]
         map: Option<String>,
@@ -86,10 +98,15 @@ pub enum Commands {
         #[arg(long = "cppfilt")]
         cppfilt: Option<String>,
         /// Write structured report to PATH as JSON instead of the text
-        /// table.
+        /// table. Mutually compatible with `--output-dir`.
         #[arg(long)]
         json: Option<String>,
-        /// Number of top symbols / archives to show in the text report.
+        /// Write BOTH `report.json` and `report.md` side by side in
+        /// this directory. Created if missing.
+        #[arg(long = "output-dir")]
+        output_dir: Option<String>,
+        /// Number of top symbols / archives to show in the text /
+        /// markdown report.
         #[arg(long, default_value = "25")]
         top: usize,
     },
