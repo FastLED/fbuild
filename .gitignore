@@ -4,6 +4,11 @@
 **/*.rs.bk
 **/compile_commands.json
 
+# Staged binary copied into the wheel by setup.py's BuildWithCargo cmdclass
+# (#423). Source is target/release/fbuild[.exe]; never check the staged
+# copy in.
+/ci/bin/
+
 # IDE
 .idea/
 .vscode/
