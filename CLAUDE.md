@@ -46,15 +46,19 @@ soldr cargo run -p fbuild-config --bin enrich_boards  # enrich from local Platfo
 
 ## Distribution
 
-Native binaries are built via GitHub Actions and downloaded locally for packaging. PyPI is the distribution channel — no Python in the runtime hot path.
+Releases ship via the **Autonomous Release** GitHub Action (`.github/workflows/release-auto.yml`). PyPI is the distribution channel; per-platform native binaries are built, assembled into wheels, and uploaded via PyPI trusted publishing — there is no local publish script.
+
+To cut a release:
 
 ```bash
-# Build all platforms (triggers GH Actions, waits, downloads to dist/)
-uv run python ci/build_dist.py --ref main
-
-# Publish to PyPI
-./publish
+# 1. Bump version in both files (must match)
+#    Cargo.toml  -> [workspace.package] version
+#    pyproject.toml -> [project] version
+# 2. Push the bump commit to main (do NOT push a tag manually —
+#    the action creates one only after the build + upload succeed)
 ```
+
+See [docs/RELEASING.md](docs/RELEASING.md) for the full flow, gating logic, and re-run instructions when a release stalls.
 
 Optional wrapper-mode only; do not use for standard soldr builds:
 

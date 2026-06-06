@@ -8,9 +8,10 @@ launcher. The launcher then `execv`s the real binary, replacing the Python
 process — so process semantics (PID, signal handling, stdio inheritance,
 exit code) match what bare-cargo `target/release/fbuild` would give.
 
-The release wheels published to PyPI by `ci/publish.py` follow the same
-layout: pre-built native binary at `ci/bin/fbuild[.exe]`, this launcher as
-the entry point.
+The release wheels published to PyPI by the Autonomous Release GitHub
+Action (`.github/workflows/release-auto.yml`, which calls into
+`ci/publish.py`) follow the same layout: pre-built native binary at
+`ci/bin/fbuild[.exe]`, this launcher as the entry point.
 """
 
 from __future__ import annotations

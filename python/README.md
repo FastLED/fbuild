@@ -29,4 +29,4 @@ cp target/release/lib_native.so python/fbuild/_native.abi3.so
 cp target/release/lib_native.dylib python/fbuild/_native.abi3.so
 ```
 
-Rebuild whenever `crates/fbuild-python/src/lib.rs` (or any crate it depends on) changes. Published PyPI wheels are assembled by `ci/publish.py` using native binaries built in GitHub Actions, so this local step only affects in-tree Python tests.
+Rebuild whenever `crates/fbuild-python/src/lib.rs` (or any crate it depends on) changes. Published PyPI wheels are assembled by the Autonomous Release GitHub Action (`.github/workflows/release-auto.yml`) via `ci/publish.py` from per-target binaries the action builds itself, so this local step only affects in-tree Python tests.
