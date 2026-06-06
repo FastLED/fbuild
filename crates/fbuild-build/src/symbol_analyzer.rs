@@ -12,8 +12,11 @@ use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 
+use std::collections::BTreeMap;
+
 use fbuild_core::symbol_analysis::{
-    build_fine_grained_map, parse_linker_map, parse_nm_output, FineGrainedSymbolMap,
+    build_fine_grained_map_with_synth, collect_map_derived_owners, parse_linker_map,
+    parse_nm_output, FineGrainedSymbolMap,
 };
 use fbuild_core::{FbuildError, Result};
 
@@ -87,9 +90,10 @@ pub fn demangle_batch(mangled: &[String], cppfilt_path: &Path) -> Result<Vec<Str
 
     // Move stdin into a writer thread so stdout draining can happen
     // concurrently in the main thread (avoids the pipe-buffer deadlock).
-    let stdin_handle = child.stdin.take().ok_or_else(|| {
-        FbuildError::BuildFailed("c++filt stdin pipe unavailable".to_string())
-    })?;
+    let stdin_handle = child
+        .stdin
+        .take()
+        .ok_or_else(|| FbuildError::BuildFailed("c++filt stdin pipe unavailable".to_string()))?;
     let writer = std::thread::spawn(move || -> std::io::Result<()> {
         let mut stdin = stdin_handle;
         stdin.write_all(stdin_data.as_bytes())?;
@@ -179,12 +183,36 @@ pub fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap> {
         Vec::new()
     };
 
-    Ok(build_fine_grained_map(
+    // Pre-walk the ranges to collect mangled owners for map-derived
+    // synthetic symbols (anonymous rodata pools, etc.) and demangle
+    // them in the same c++filt batch as the nm names — single
+    // subprocess, single threaded-stdin pass.
+    let mut nm_covered: BTreeMap<u64, u64> = BTreeMap::new();
+    for (addr, size, _, _) in nm_rows.iter() {
+        nm_covered.insert(*addr, *size);
+    }
+    let synth_owners = collect_map_derived_owners(&ranges, &nm_covered);
+    let synth_mangled: Vec<String> = synth_owners.iter().map(|(_, m, _)| m.clone()).collect();
+    let synth_demangled = if synth_mangled.is_empty() {
+        Vec::new()
+    } else if let Some(cppfilt) = cfg.cppfilt_path {
+        demangle_batch(&synth_mangled, cppfilt).unwrap_or_else(|e| {
+            tracing::warn!(
+                "c++filt unavailable for synthetic owners ({e}); falling back to mangled names"
+            );
+            synth_mangled.clone()
+        })
+    } else {
+        synth_mangled.clone()
+    };
+
+    Ok(build_fine_grained_map_with_synth(
         elf_s,
         cfg.map_path.map(|p| p.to_string_lossy().to_string()),
         nm_rows,
         demangled,
         ranges,
+        &synth_demangled,
     ))
 }
 
@@ -194,7 +222,10 @@ pub fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap> {
 /// archive + object + section attribution and demangled names.
 pub fn format_text_report(map: &FineGrainedSymbolMap, top_n: usize) -> String {
     let mut lines = Vec::new();
-    lines.push(format!("=== Fine-grained symbol analysis: {} ===", map.elf_path));
+    lines.push(format!(
+        "=== Fine-grained symbol analysis: {} ===",
+        map.elf_path
+    ));
     if let Some(ref m) = map.map_path {
         lines.push(format!("Map file: {m}"));
     }
@@ -225,7 +256,10 @@ pub fn format_text_report(map: &FineGrainedSymbolMap, top_n: usize) -> String {
     ) {
         let mut syms: Vec<_> = map.symbols.iter().filter(|s| s.region == region).collect();
         syms.sort_by(|a, b| b.size.cmp(&a.size));
-        lines.push(format!("--- Top {} {title} symbols ---", top_n.min(syms.len())));
+        lines.push(format!(
+            "--- Top {} {title} symbols ---",
+            top_n.min(syms.len())
+        ));
         lines.push(format!(
             "{:>8}  {:<24}  {:<28}  {:<14}  symbol",
             "BYTES", "ARCHIVE", "OBJECT", "SECTION"
@@ -259,7 +293,13 @@ pub fn format_text_report(map: &FineGrainedSymbolMap, top_n: usize) -> String {
         top_n,
         "FLASH",
     );
-    emit_region_block(&mut lines, map, fbuild_core::MemoryRegion::Ram, top_n, "RAM");
+    emit_region_block(
+        &mut lines,
+        map,
+        fbuild_core::MemoryRegion::Ram,
+        top_n,
+        "RAM",
+    );
 
     // Per-archive roll-ups (flash only — biggest leverage for bloat).
     let mut by_archive: std::collections::BTreeMap<String, u64> = std::collections::BTreeMap::new();
@@ -302,7 +342,9 @@ mod tests {
         let nm = PathBuf::from("/tools/xtensa-esp32s3-elf-nm.exe");
         let cppfilt = derive_cppfilt_path(&nm);
         assert!(
-            cppfilt.to_string_lossy().ends_with("xtensa-esp32s3-elf-c++filt.exe"),
+            cppfilt
+                .to_string_lossy()
+                .ends_with("xtensa-esp32s3-elf-c++filt.exe"),
             "got {}",
             cppfilt.display()
         );

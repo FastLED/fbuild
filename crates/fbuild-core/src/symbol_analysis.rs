@@ -28,17 +28,23 @@ use crate::MemoryRegion;
 /// A single live symbol with full attribution.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FineGrainedSymbol {
-    /// Mangled name as it appears in `nm` output.
+    /// Mangled name as it appears in `nm` output (or, for map-derived
+    /// rows, the mangled owner extracted from the input section name).
     pub mangled: String,
     /// Demangled name (== mangled for C symbols / when c++filt unavailable).
     pub demangled: String,
     /// Symbol load address (decimal).
     pub address: u64,
-    /// Size in bytes (from `nm --print-size`).
+    /// Size in bytes. For `nm` rows this is the value from
+    /// `--print-size`; for map-derived rows this is the size of the
+    /// input section attributed to the owner.
     pub size: u64,
-    /// nm type letter: T t W w R r D d B b ...
+    /// nm type letter: T t W w R r D d B b ... For map-derived
+    /// rodata rows this is set to `'r'` (read-only data, weak); for
+    /// map-derived literal rows it's `'r'` as well; for `.text` and
+    /// `.data` it follows the natural nm convention.
     pub sym_type: char,
-    /// Flash vs Ram, derived from sym_type.
+    /// Flash vs Ram, derived from sym_type or the output section.
     pub region: MemoryRegion,
     /// Source archive label (e.g. `"libFastLED.a"`) if attributable.
     pub archive: Option<String>,
@@ -48,6 +54,18 @@ pub struct FineGrainedSymbol {
     pub object: Option<String>,
     /// Output section the symbol lives in (e.g. `".flash.text"`).
     pub output_section: Option<String>,
+    /// Provenance: `"nm"` for rows produced by parsing nm output,
+    /// `"map-derived"` for rows synthesised from linker map input-
+    /// section names that carry the owning symbol but aren't enumerated
+    /// by nm (e.g. anonymous merged rodata string pools). Default
+    /// `"nm"` is used by `Deserialize` on JSON written by earlier
+    /// versions of `fbuild symbols`.
+    #[serde(default = "default_source_nm")]
+    pub source: String,
+}
+
+fn default_source_nm() -> String {
+    "nm".to_string()
 }
 
 /// Per `(archive, object, output_section)` byte roll-up taken straight
@@ -135,7 +153,7 @@ pub fn extract_archive_and_object(src: &str) -> (Option<String>, String) {
         let archive_end = open + 2; // include ".a"
         let archive_path = &trimmed[..archive_end];
         let archive = archive_path
-            .rsplit(|c| c == '/' || c == '\\')
+            .rsplit(['/', '\\'])
             .next()
             .unwrap_or(archive_path)
             .to_string();
@@ -149,7 +167,7 @@ pub fn extract_archive_and_object(src: &str) -> (Option<String>, String) {
     }
     // Form B: ".../<file>.o" — no archive, just an object on disk.
     let basename = trimmed
-        .rsplit(|c| c == '/' || c == '\\')
+        .rsplit(['/', '\\'])
         .next()
         .unwrap_or(trimmed)
         .to_string();
@@ -277,6 +295,104 @@ pub fn parse_linker_map(map_text: &str) -> Vec<InputSectionRange> {
     out
 }
 
+/// Extract the mangled owner symbol from a per-symbol input-section
+/// name. Returns `None` when the section doesn't carry an owner
+/// (typically: catch-all `.rodata` blocks, compiler-generated runtime
+/// helper sections without `-fdata-sections` granularity).
+///
+/// Recognised forms:
+/// - `.text.<owner>` / `.literal.<owner>` — code + Xtensa literal pool
+/// - `.rodata.<owner>` / `.rodata.<owner>.str1.<N>` / `.rodata.<owner>.cst<N>`
+/// - `.data.<owner>` / `.bss.<owner>` / `.data.rel.ro.<owner>`
+/// - `.gnu.linkonce.t.<owner>` / `.gnu.linkonce.r.<owner>` /
+///   `.gnu.linkonce.d.<owner>` (COMDAT)
+///
+/// `<owner>` is whatever non-empty token follows the recognised
+/// prefix once any sub-section suffix (`.str1.<N>`, `.cst<N>`) is
+/// trimmed. Compiler-emitted owners virtually always begin with `_Z`
+/// (C++ mangled) or are plain C identifiers — both are returned
+/// verbatim so the caller can demangle.
+pub fn extract_owner_from_section(input_section: &str) -> Option<String> {
+    // Try each prefix in turn; the first match wins. `.data.rel.ro.`
+    // and `.gnu.linkonce.*.` must come before their shorter prefixes
+    // so the longer match takes precedence.
+    const PREFIXES: &[&str] = &[
+        ".data.rel.ro.",
+        ".gnu.linkonce.t.",
+        ".gnu.linkonce.r.",
+        ".gnu.linkonce.d.",
+        ".gnu.linkonce.b.",
+        ".text.",
+        ".literal.",
+        ".rodata.",
+        ".data.",
+        ".bss.",
+    ];
+
+    let mut owner: Option<&str> = None;
+    for prefix in PREFIXES {
+        if let Some(rest) = input_section.strip_prefix(prefix) {
+            owner = Some(rest);
+            break;
+        }
+    }
+    let owner = owner?;
+    if owner.is_empty() {
+        return None;
+    }
+
+    // Strip trailing sub-section suffixes that appear on string and
+    // constant pools attached to the owner. Examples:
+    //   _ZN...getNameEv.str1.1   -> _ZN...getNameEv
+    //   foo.cst4                  -> foo
+    //   foo.cst16                 -> foo
+    // We strip only the *last* suffix we recognise; the owner itself
+    // may contain dots (rare but legal in templated names emitted by
+    // some toolchains), and over-stripping would corrupt it.
+    let trimmed = trim_pool_suffix(owner);
+    if trimmed.is_empty() {
+        None
+    } else {
+        Some(trimmed.to_string())
+    }
+}
+
+/// Trim a single `.str1.<N>` or `.cst<N>` suffix if present.
+fn trim_pool_suffix(s: &str) -> &str {
+    // .str1.<digits> at the end
+    if let Some(idx) = s.rfind(".str1.") {
+        let tail = &s[idx + ".str1.".len()..];
+        if !tail.is_empty() && tail.bytes().all(|b| b.is_ascii_digit()) {
+            return &s[..idx];
+        }
+    }
+    // .cst<digits> at the end
+    if let Some(idx) = s.rfind(".cst") {
+        let tail = &s[idx + ".cst".len()..];
+        if !tail.is_empty() && tail.bytes().all(|b| b.is_ascii_digit()) {
+            return &s[..idx];
+        }
+    }
+    s
+}
+
+/// Classify the firmware region (Flash vs Ram) from an output section
+/// name. Used for map-derived symbols where `nm` type letters aren't
+/// available.
+pub fn region_from_output_section(name: &str) -> Option<MemoryRegion> {
+    if name.starts_with(".flash") || name.starts_with(".rodata") || name.starts_with(".text") {
+        Some(MemoryRegion::Flash)
+    } else if name.starts_with(".iram") {
+        // IRAM is internal SRAM that the firmware image populates at
+        // boot — counts as Flash from a "in the binary image" POV.
+        Some(MemoryRegion::Flash)
+    } else if name.starts_with(".dram") || name.starts_with(".data") || name.starts_with(".bss") {
+        Some(MemoryRegion::Ram)
+    } else {
+        None
+    }
+}
+
 /// Classify an nm type letter into Flash vs Ram. Matches the existing
 /// `SymbolMap::classify` logic so reports compare apples-to-apples.
 pub fn classify_region(sym_type: char) -> Option<MemoryRegion> {
@@ -310,7 +426,7 @@ impl InputSectionIndex {
     pub fn lookup(&self, addr: u64) -> Option<&InputSectionRange> {
         let (_, &idx) = self.by_start.range(..=addr).next_back()?;
         let r = &self.ranges[idx];
-        if addr < r.addr.checked_add(r.size).unwrap_or(u64::MAX) {
+        if addr < r.addr.saturating_add(r.size) {
             Some(r)
         } else {
             None
@@ -334,7 +450,11 @@ pub fn rollup_sections(ranges: &[InputSectionRange]) -> Vec<SectionBytes> {
         if !is_firmware_section(&r.output_section) {
             continue;
         }
-        let key = (r.archive.clone(), r.object.clone(), r.output_section.clone());
+        let key = (
+            r.archive.clone(),
+            r.object.clone(),
+            r.output_section.clone(),
+        );
         *acc.entry(key).or_insert(0) += r.size;
     }
     let mut out: Vec<SectionBytes> = acc
@@ -385,13 +505,41 @@ pub fn build_fine_grained_map(
     demangled: Vec<String>,
     ranges: Vec<InputSectionRange>,
 ) -> FineGrainedSymbolMap {
+    build_fine_grained_map_with_synth(elf_path, map_path, nm_rows, demangled, ranges, &[])
+}
+
+/// Build a per-symbol view, optionally consuming pre-demangled names
+/// for map-derived synthetic symbols.
+///
+/// `synth_demangled` is a parallel slice to `synth_owners()` (the
+/// caller-collected owners, in iteration order matching what
+/// [`collect_map_derived_owners`] returns). When empty, synthetic
+/// rows carry their mangled name in the `demangled` field; callers
+/// who want demangled C++ names should pass the c++filt output.
+pub fn build_fine_grained_map_with_synth(
+    elf_path: String,
+    map_path: Option<String>,
+    nm_rows: Vec<(u64, u64, char, String)>,
+    demangled: Vec<String>,
+    ranges: Vec<InputSectionRange>,
+    synth_demangled: &[String],
+) -> FineGrainedSymbolMap {
     assert_eq!(
         nm_rows.len(),
         demangled.len(),
         "nm_rows and demangled must be parallel"
     );
     let sections = rollup_sections(&ranges);
-    let index = InputSectionIndex::build(ranges);
+
+    // Track addresses that nm covers so map-derived rows don't double-
+    // count text bytes that nm already enumerated. Map ranges that
+    // overlap an nm-covered range are skipped from synthesis.
+    let mut nm_covered: BTreeMap<u64, u64> = BTreeMap::new(); // addr -> size
+    for (addr, size, _, _) in nm_rows.iter() {
+        nm_covered.insert(*addr, *size);
+    }
+
+    let index = InputSectionIndex::build(ranges.clone());
     let mut symbols = Vec::with_capacity(nm_rows.len());
     let mut total_flash = 0u64;
     let mut total_ram = 0u64;
@@ -414,6 +562,48 @@ pub fn build_fine_grained_map(
             archive: attribution.and_then(|r| r.archive.clone()),
             object: attribution.map(|r| r.object.clone()),
             output_section: attribution.map(|r| r.output_section.clone()),
+            source: "nm".to_string(),
+        });
+    }
+
+    // Synthesise rows from map ranges whose input-section name carries
+    // an extractable owner but where nm produced no symbol covering
+    // those bytes (the merged rodata string pool case).
+    let owners = collect_map_derived_owners(&ranges, &nm_covered);
+    let resolved_synth: Vec<String> = if synth_demangled.len() == owners.len() {
+        synth_demangled.to_vec()
+    } else {
+        owners
+            .iter()
+            .map(|(_, mangled, _)| mangled.clone())
+            .collect()
+    };
+    for ((range_idx, mangled, owner_size), demangled) in owners.iter().zip(resolved_synth.iter()) {
+        let r = &ranges[*range_idx];
+        let Some(region) = region_from_output_section(&r.output_section) else {
+            continue;
+        };
+        match region {
+            MemoryRegion::Flash => total_flash += *owner_size,
+            MemoryRegion::Ram => total_ram += *owner_size,
+        }
+        // Pick a sym_type letter that matches the output section's
+        // nature so existing aggregators that classify by letter still
+        // make sense. Text → 'W' (weak text, since the owner has its
+        // canonical 'T' from nm if anywhere). Rodata/literal → 'r'.
+        // Data → 'd'. BSS → 'b'.
+        let sym_type = sym_type_for_synth(&r.output_section);
+        symbols.push(FineGrainedSymbol {
+            mangled: mangled.clone(),
+            demangled: demangled.clone(),
+            address: r.addr,
+            size: *owner_size,
+            sym_type,
+            region,
+            archive: r.archive.clone(),
+            object: Some(r.object.clone()),
+            output_section: Some(r.output_section.clone()),
+            source: "map-derived".to_string(),
         });
     }
     FineGrainedSymbolMap {
@@ -423,6 +613,80 @@ pub fn build_fine_grained_map(
         total_ram,
         symbols,
         sections,
+    }
+}
+
+/// Walk map ranges and return `(range_index, mangled_owner, size)` for
+/// every range that:
+/// 1. lives in a firmware-image section,
+/// 2. has an extractable owner from its input section name, and
+/// 3. is not covered by any nm-listed symbol's address range.
+///
+/// Sizes are accumulated per `(range_idx, owner)` — when several
+/// input sections share an owner (e.g. `.rodata.foo` and
+/// `.rodata.foo.str1.1`) the caller sees them as separate rows; this
+/// is the right granularity because each landed at its own address.
+pub fn collect_map_derived_owners(
+    ranges: &[InputSectionRange],
+    nm_covered: &BTreeMap<u64, u64>,
+) -> Vec<(usize, String, u64)> {
+    let mut out = Vec::new();
+    for (idx, r) in ranges.iter().enumerate() {
+        if !is_firmware_section(&r.output_section) {
+            continue;
+        }
+        if nm_range_covers(nm_covered, r.addr, r.size) {
+            continue;
+        }
+        let Some(owner) = extract_owner_from_section(&r.input_section) else {
+            continue;
+        };
+        out.push((idx, owner, r.size));
+    }
+    out
+}
+
+/// Return true when any nm-listed symbol's address range overlaps
+/// `[addr, addr + size)`.
+fn nm_range_covers(nm_covered: &BTreeMap<u64, u64>, addr: u64, size: u64) -> bool {
+    if size == 0 {
+        return false;
+    }
+    let end = addr.saturating_add(size);
+    // Check the largest nm symbol whose start ≤ end-1, then walk back
+    // far enough to catch any whose start+size overlaps.
+    let mut cur = nm_covered.range(..end).next_back();
+    while let Some((&start, &nsize)) = cur {
+        let nend = start.saturating_add(nsize);
+        if nend <= addr {
+            // This symbol ends before our range; earlier symbols only
+            // end even sooner. Done.
+            return false;
+        }
+        if start < end && nend > addr {
+            return true;
+        }
+        cur = nm_covered.range(..start).next_back();
+    }
+    false
+}
+
+/// Map an output section to the sym_type letter we attach to a
+/// synthetic row so downstream classifiers that key off the letter
+/// still bucket it correctly.
+fn sym_type_for_synth(output_section: &str) -> char {
+    if output_section.starts_with(".dram") || output_section.starts_with(".data") {
+        'd'
+    } else if output_section.starts_with(".bss") {
+        'b'
+    } else if output_section.starts_with(".iram") || output_section.starts_with(".text") {
+        // Text without an nm anchor is unusual but possible for
+        // linkonce/COMDAT collapses. Mark weak so it doesn't pretend
+        // to be a canonical strong symbol.
+        'W'
+    } else {
+        // .flash.rodata, .rodata, .literal — all rodata.
+        'r'
     }
 }
 
@@ -455,9 +719,7 @@ mod tests {
 
     #[test]
     fn extract_bare_object_no_archive() {
-        let (arc, obj) = extract_archive_and_object(
-            ".pio/build/esp32s3/src/main.cpp.o",
-        );
+        let (arc, obj) = extract_archive_and_object(".pio/build/esp32s3/src/main.cpp.o");
         assert!(arc.is_none());
         assert_eq!(obj, "main.cpp.o");
     }
@@ -557,7 +819,12 @@ Linker script and memory map
             archive: Some("libFastLED.a".into()),
             object: "fl.channels.cpp.o".into(),
         }];
-        let nm = vec![(0x42000020u64, 0x40u64, 'T', "_ZN2fl7Channel10showPixelsERS_".to_string())];
+        let nm = vec![(
+            0x42000020u64,
+            0x40u64,
+            'T',
+            "_ZN2fl7Channel10showPixelsERS_".to_string(),
+        )];
         let demangled = vec!["fl::Channel::showPixels(fl::Channel&)".to_string()];
         let map = build_fine_grained_map(
             "fw.elf".into(),
@@ -571,7 +838,239 @@ Linker script and memory map
         assert_eq!(sym.archive.as_deref(), Some("libFastLED.a"));
         assert_eq!(sym.output_section.as_deref(), Some(".flash.text"));
         assert_eq!(sym.demangled, "fl::Channel::showPixels(fl::Channel&)");
+        assert_eq!(sym.source, "nm");
         assert_eq!(map.total_flash, 0x40);
         assert_eq!(map.total_ram, 0);
+    }
+
+    // ---------------- Issue #425: map-derived owner extraction ----------------
+
+    #[test]
+    fn extract_owner_text() {
+        assert_eq!(
+            extract_owner_from_section(".text._ZN2fl7Channel10showPixelsEv").as_deref(),
+            Some("_ZN2fl7Channel10showPixelsEv")
+        );
+    }
+
+    #[test]
+    fn extract_owner_rodata_bare() {
+        assert_eq!(
+            extract_owner_from_section(".rodata._ZN2fl5audio8detector4VibeC1Ev").as_deref(),
+            Some("_ZN2fl5audio8detector4VibeC1Ev")
+        );
+    }
+
+    #[test]
+    fn extract_owner_rodata_str1() {
+        // The dominant case for the FL_WARN/FL_LOG string pool that
+        // motivated this issue: per-function string fragments.
+        assert_eq!(
+            extract_owner_from_section(".rodata._ZNK2fl5audio8detector4Vibe7getNameEv.str1.1")
+                .as_deref(),
+            Some("_ZNK2fl5audio8detector4Vibe7getNameEv")
+        );
+        assert_eq!(
+            extract_owner_from_section(".rodata.foo.str1.8").as_deref(),
+            Some("foo")
+        );
+    }
+
+    #[test]
+    fn extract_owner_rodata_cst() {
+        // Constant pool fragments (cst4 = 4-byte aligned, cst16 = 16-byte aligned).
+        assert_eq!(
+            extract_owner_from_section(".rodata.foo.cst4").as_deref(),
+            Some("foo")
+        );
+        assert_eq!(
+            extract_owner_from_section(".rodata.foo.cst16").as_deref(),
+            Some("foo")
+        );
+    }
+
+    #[test]
+    fn extract_owner_literal_xtensa() {
+        // Xtensa literal pools attached to a function.
+        assert_eq!(
+            extract_owner_from_section(".literal._ZN2fl7ChannelC2Ev").as_deref(),
+            Some("_ZN2fl7ChannelC2Ev")
+        );
+    }
+
+    #[test]
+    fn extract_owner_data_and_bss() {
+        assert_eq!(
+            extract_owner_from_section(".data.g_state").as_deref(),
+            Some("g_state")
+        );
+        assert_eq!(
+            extract_owner_from_section(".bss.g_buf").as_deref(),
+            Some("g_buf")
+        );
+    }
+
+    #[test]
+    fn extract_owner_gnu_linkonce_and_rel_ro() {
+        // COMDAT (older GCC) and vtable relocation-read-only sections.
+        assert_eq!(
+            extract_owner_from_section(".gnu.linkonce.t._ZN3foo3barEv").as_deref(),
+            Some("_ZN3foo3barEv")
+        );
+        assert_eq!(
+            extract_owner_from_section(".gnu.linkonce.r._ZTV3foo").as_deref(),
+            Some("_ZTV3foo")
+        );
+        assert_eq!(
+            extract_owner_from_section(".data.rel.ro._ZTV3foo").as_deref(),
+            Some("_ZTV3foo")
+        );
+    }
+
+    #[test]
+    fn extract_owner_returns_none_for_unknown_shapes() {
+        // Catch-all `.rodata` (no per-symbol granularity).
+        assert!(extract_owner_from_section(".rodata").is_none());
+        // Anonymous filler.
+        assert!(extract_owner_from_section(".comment").is_none());
+        // Bare `.text` (compiled without -ffunction-sections).
+        assert!(extract_owner_from_section(".text").is_none());
+        // Suffix-only would also be empty.
+        assert!(extract_owner_from_section(".rodata.").is_none());
+    }
+
+    #[test]
+    fn extract_owner_str1_with_non_digit_tail_is_owner() {
+        // Don't over-strip: a function named `foo.str1.bar` (legal,
+        // rare) should not have its tail trimmed since "bar" isn't
+        // digits.
+        assert_eq!(
+            extract_owner_from_section(".rodata.foo.str1.bar").as_deref(),
+            Some("foo.str1.bar")
+        );
+    }
+
+    #[test]
+    fn build_fine_grained_map_synthesises_rodata_pool() {
+        // Two ranges in libFastLED.a:
+        //   - .text.foo at 0x42000020 (nm-covered)
+        //   - .rodata.foo.str1.1 at 0x3c050000 (NOT nm-covered — anonymous string pool)
+        // After the fix the second range gets a synthetic "foo" row.
+        let ranges = vec![
+            InputSectionRange {
+                addr: 0x42000020,
+                size: 0x40,
+                output_section: ".flash.text".into(),
+                input_section: ".text.foo".into(),
+                archive: Some("libFastLED.a".into()),
+                object: "fl.foo.cpp.o".into(),
+            },
+            InputSectionRange {
+                addr: 0x3c050000,
+                size: 0x10,
+                output_section: ".flash.rodata".into(),
+                input_section: ".rodata.foo.str1.1".into(),
+                archive: Some("libFastLED.a".into()),
+                object: "fl.foo.cpp.o".into(),
+            },
+        ];
+        let nm = vec![(0x42000020u64, 0x40u64, 'T', "foo".to_string())];
+        let demangled = vec!["foo".to_string()];
+        let map = build_fine_grained_map(
+            "fw.elf".into(),
+            Some("fw.map".into()),
+            nm,
+            demangled,
+            ranges,
+        );
+
+        assert_eq!(
+            map.symbols.len(),
+            2,
+            "expected one nm + one map-derived row"
+        );
+        let nm_row = map.symbols.iter().find(|s| s.source == "nm").unwrap();
+        assert_eq!(nm_row.output_section.as_deref(), Some(".flash.text"));
+        assert_eq!(nm_row.size, 0x40);
+        let synth = map
+            .symbols
+            .iter()
+            .find(|s| s.source == "map-derived")
+            .unwrap();
+        assert_eq!(synth.mangled, "foo");
+        assert_eq!(synth.output_section.as_deref(), Some(".flash.rodata"));
+        assert_eq!(synth.size, 0x10);
+        assert_eq!(synth.archive.as_deref(), Some("libFastLED.a"));
+        assert_eq!(synth.sym_type, 'r');
+        assert_eq!(map.total_flash, 0x40 + 0x10);
+    }
+
+    #[test]
+    fn synthesised_rows_skip_nm_covered_text() {
+        // If nm already produces a symbol for an address range, we
+        // must not also emit a map-derived row for the same range.
+        let ranges = vec![InputSectionRange {
+            addr: 0x42000020,
+            size: 0x40,
+            output_section: ".flash.text".into(),
+            input_section: ".text._ZN3foo3barEv".into(),
+            archive: Some("libA.a".into()),
+            object: "foo.o".into(),
+        }];
+        let nm = vec![(0x42000020u64, 0x40u64, 'T', "_ZN3foo3barEv".to_string())];
+        let demangled = vec!["foo::bar()".to_string()];
+        let map = build_fine_grained_map(
+            "fw.elf".into(),
+            Some("fw.map".into()),
+            nm,
+            demangled,
+            ranges,
+        );
+        assert_eq!(map.symbols.len(), 1);
+        assert_eq!(map.symbols[0].source, "nm");
+    }
+
+    #[test]
+    fn region_from_output_section_classifies_correctly() {
+        assert_eq!(
+            region_from_output_section(".flash.text"),
+            Some(MemoryRegion::Flash)
+        );
+        assert_eq!(
+            region_from_output_section(".flash.rodata"),
+            Some(MemoryRegion::Flash)
+        );
+        assert_eq!(
+            region_from_output_section(".iram0.text"),
+            Some(MemoryRegion::Flash)
+        );
+        assert_eq!(
+            region_from_output_section(".dram0.data"),
+            Some(MemoryRegion::Ram)
+        );
+        assert_eq!(
+            region_from_output_section(".bss.foo"),
+            Some(MemoryRegion::Ram)
+        );
+        assert!(region_from_output_section(".debug_info").is_none());
+    }
+
+    #[test]
+    fn nm_range_covers_overlap_detection() {
+        let mut nm_covered = BTreeMap::new();
+        nm_covered.insert(0x1000u64, 0x10u64);
+        nm_covered.insert(0x2000u64, 0x20u64);
+        // Exact match
+        assert!(nm_range_covers(&nm_covered, 0x1000, 0x10));
+        // Overlap at start
+        assert!(nm_range_covers(&nm_covered, 0x1008, 0x8));
+        // Adjacent — does not overlap
+        assert!(!nm_range_covers(&nm_covered, 0x1010, 0x10));
+        // Completely past
+        assert!(!nm_range_covers(&nm_covered, 0x3000, 0x10));
+        // Completely before
+        assert!(!nm_range_covers(&nm_covered, 0x500, 0x10));
+        // Zero size — never covers
+        assert!(!nm_range_covers(&nm_covered, 0x1000, 0));
     }
 }
