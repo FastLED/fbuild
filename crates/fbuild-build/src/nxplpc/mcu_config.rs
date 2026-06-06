@@ -1,8 +1,12 @@
 //! Data-driven NXP LPC8xx MCU configuration from embedded JSON.
 //!
-//! Both LPC804 and LPC845 are Cortex-M0+ targets, share the same compiler/linker
-//! flag set, and differ only in memory map (carried by the board JSON) and
-//! linker script (selected in the Stage-2 orchestrator).
+//! Both LPC804 and LPC845 are Cortex-M0+ targets and share the same compiler /
+//! linker flag set, so the heavy lifting comes from a single JSON blob
+//! (`nxplpc.json`). Per-chip differences — primarily preprocessor defines that
+//! drivers use to select chip-specific code paths — are layered on top of the
+//! shared base by `get_lpc804_config` / `get_lpc845_config`.
+//!
+//! Tracking: FastLED/FastLED#2845 (Stage 3 — per-chip mcu_config split).
 
 use std::collections::HashMap;
 
@@ -14,7 +18,8 @@ use crate::esp32::mcu_config::DefineEntry;
 
 const NXPLPC_JSON: &str = include_str!("configs/nxplpc.json");
 
-/// Complete NXP LPC8xx MCU configuration parsed from JSON.
+/// Complete NXP LPC8xx MCU configuration parsed from JSON, with per-chip
+/// defines folded into `defines` after JSON deserialization.
 #[derive(Debug, Clone, Deserialize)]
 pub struct NxpLpcMcuConfig {
     pub name: String,
@@ -63,17 +68,61 @@ impl McuConfig for NxpLpcMcuConfig {
     }
 }
 
-/// Load the shared NXP LPC8xx MCU configuration.
-///
-/// Stage 1 ships a single config for both LPC804 and LPC845. If Stage 2
-/// needs per-chip variation (e.g. PLU defines on LPC804), branch on `mcu`.
-pub fn get_nxplpc_config(_mcu: &str) -> Result<NxpLpcMcuConfig> {
+/// Parse the shared base config from embedded JSON.
+fn parse_base_config() -> Result<NxpLpcMcuConfig> {
     serde_json::from_str(NXPLPC_JSON).map_err(|e| {
         fbuild_core::FbuildError::ConfigError(format!(
             "failed to parse NXP LPC8xx MCU config: {}",
             e
         ))
     })
+}
+
+/// LPC804-specific configuration.
+///
+/// Layers LPC804-only defines on top of the shared base:
+///   - `__LPC804__=1`        — drivers branch on this to enable PLU paths
+///   - `CPU_LPC804M101JDH24=1` — NXP CMSIS-style device identifier
+pub fn get_lpc804_config() -> Result<NxpLpcMcuConfig> {
+    let mut config = parse_base_config()?;
+    config
+        .defines
+        .push(DefineEntry::Simple("__LPC804__".to_string()));
+    config
+        .defines
+        .push(DefineEntry::Simple("CPU_LPC804M101JDH24".to_string()));
+    Ok(config)
+}
+
+/// LPC845-specific configuration.
+///
+/// Layers LPC845-only defines on top of the shared base:
+///   - `__LPC845__=1`        — drivers branch on this to enable SCT+DMA paths
+///   - `CPU_LPC845M301JBD48=1` — NXP CMSIS-style device identifier
+pub fn get_lpc845_config() -> Result<NxpLpcMcuConfig> {
+    let mut config = parse_base_config()?;
+    config
+        .defines
+        .push(DefineEntry::Simple("__LPC845__".to_string()));
+    config
+        .defines
+        .push(DefineEntry::Simple("CPU_LPC845M301JBD48".to_string()));
+    Ok(config)
+}
+
+/// Dispatch by MCU name.
+///
+/// Returns LPC804- or LPC845-specific config (each with the shared base flags
+/// plus per-chip defines). Anything else is a config error.
+pub fn get_nxplpc_config(mcu: &str) -> Result<NxpLpcMcuConfig> {
+    match mcu {
+        "lpc804" => get_lpc804_config(),
+        "lpc845" => get_lpc845_config(),
+        other => Err(fbuild_core::FbuildError::ConfigError(format!(
+            "unknown NXP LPC8xx MCU '{}'; expected one of: lpc804, lpc845",
+            other
+        ))),
+    }
 }
 
 #[cfg(test)]
@@ -121,5 +170,65 @@ mod tests {
         let config = get_nxplpc_config("lpc804").unwrap();
         let defines = config.defines_map();
         assert!(defines.contains_key("__NXPLPC__"));
+    }
+
+    #[test]
+    fn lpc804_config_has_lpc804_defines() {
+        let config = get_nxplpc_config("lpc804").unwrap();
+        let defines = config.defines_map();
+        assert!(
+            defines.contains_key("__LPC804__"),
+            "lpc804 must define __LPC804__ for driver dispatch"
+        );
+        assert!(
+            defines.contains_key("CPU_LPC804M101JDH24"),
+            "lpc804 must define CMSIS-style CPU id"
+        );
+        assert!(
+            !defines.contains_key("__LPC845__"),
+            "lpc804 must not leak __LPC845__"
+        );
+    }
+
+    #[test]
+    fn lpc845_config_has_lpc845_defines() {
+        let config = get_nxplpc_config("lpc845").unwrap();
+        let defines = config.defines_map();
+        assert!(
+            defines.contains_key("__LPC845__"),
+            "lpc845 must define __LPC845__ for driver dispatch"
+        );
+        assert!(
+            defines.contains_key("CPU_LPC845M301JBD48"),
+            "lpc845 must define CMSIS-style CPU id"
+        );
+        assert!(
+            !defines.contains_key("__LPC804__"),
+            "lpc845 must not leak __LPC804__"
+        );
+    }
+
+    #[test]
+    fn unknown_mcu_returns_config_error() {
+        let err = get_nxplpc_config("lpc999").unwrap_err();
+        let msg = format!("{}", err);
+        assert!(
+            msg.contains("lpc999"),
+            "error message should name the offending mcu, got: {}",
+            msg
+        );
+        assert!(
+            msg.contains("lpc804") && msg.contains("lpc845"),
+            "error message should list valid options, got: {}",
+            msg
+        );
+    }
+
+    #[test]
+    fn both_chips_share_base_compiler_flags() {
+        let lpc804 = get_nxplpc_config("lpc804").unwrap();
+        let lpc845 = get_nxplpc_config("lpc845").unwrap();
+        assert_eq!(lpc804.compiler_flags.common, lpc845.compiler_flags.common);
+        assert_eq!(lpc804.linker_flags, lpc845.linker_flags);
     }
 }
