@@ -80,6 +80,12 @@ pub fn baud_134_trigger_disabled() -> bool {
         .unwrap_or(false)
 }
 
+/// Shared mutex used by env-var-mutating tests across this `teensy` module
+/// tree so they cannot race the global process environment when the test
+/// runner schedules them in parallel.
+#[cfg(test)]
+pub(crate) static TEST_ENV_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -101,7 +107,11 @@ mod tests {
 
     #[test]
     fn disabled_by_env() {
-        // SAFETY: tests are single-threaded per process here.
+        // Hold the cross-module lock so concurrent env-mutating tests in
+        // sibling modules don't race the global process environment.
+        let _guard = super::TEST_ENV_LOCK
+            .lock()
+            .unwrap_or_else(|e| e.into_inner());
         std::env::set_var("FBUILD_TEENSY_DISABLE_BAUD_134_TRIGGER", "1");
         assert!(baud_134_trigger_disabled());
         std::env::set_var("FBUILD_TEENSY_DISABLE_BAUD_134_TRIGGER", "0");

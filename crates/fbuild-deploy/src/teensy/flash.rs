@@ -82,12 +82,17 @@ impl FlashRunOutcome {
 /// Run `teensy_loader_cli` up to `retries + 1` times, sleeping `backoff_ms`
 /// between attempts. Stops on the first success.
 ///
-/// `timeout` bounds each individual attempt — not the sum.
+/// Two-tier timeout: the *first* attempt is given `first_attempt_timeout` to
+/// cover the worst-case "user walks up and presses the program button" path
+/// after a baud-134 trigger; every subsequent retry uses the smaller
+/// `subsequent_attempt_timeout` since by then HalfKay has either already been
+/// observed or the device is wedged in a way another retry won't fix.
 pub fn run_with_retry(
     cfg: &FlashConfig,
     retries: u32,
     backoff_ms: u64,
-    timeout: Duration,
+    first_attempt_timeout: Duration,
+    subsequent_attempt_timeout: Duration,
     verbose: bool,
 ) -> Result<FlashRunOutcome> {
     let args: Vec<String> = vec![
@@ -109,7 +114,12 @@ pub fn run_with_retry(
     let mut attempts: Vec<FlashAttempt> = Vec::with_capacity(total_attempts as usize);
 
     for attempt in 1..=total_attempts {
-        let result = run_command(&args_ref, None, None, Some(timeout))?;
+        let attempt_timeout = if attempt == 1 {
+            first_attempt_timeout
+        } else {
+            subsequent_attempt_timeout
+        };
+        let result = run_command(&args_ref, None, None, Some(attempt_timeout))?;
         let success = result.success();
         let exit_code = result.exit_code;
         let stdout = result.stdout;
@@ -225,6 +235,9 @@ mod tests {
 
     #[test]
     fn env_override_parses() {
+        let _guard = crate::teensy::soft_reboot::TEST_ENV_LOCK
+            .lock()
+            .unwrap_or_else(|e| e.into_inner());
         std::env::set_var("FBUILD_TEENSY_FLASH_RETRIES", "9");
         assert_eq!(env_flash_retries_override(), Some(9));
         std::env::set_var("FBUILD_TEENSY_FLASH_RETRIES", "bogus");
