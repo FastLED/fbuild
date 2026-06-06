@@ -83,6 +83,16 @@ impl std::fmt::Display for NormalizedPath {
     }
 }
 
+impl Default for NormalizedPath {
+    /// Empty path. Mirrors the existing `BuildInfo` schema convention
+    /// where "missing toolchain" is encoded as an empty string in
+    /// `build_info.json`. Lets `#[serde(default)]` on
+    /// [`NormalizedPath`] fields preserve that semantic for free.
+    fn default() -> Self {
+        Self::new("")
+    }
+}
+
 impl NormalizedPath {
     /// Create a new normalized path. Runs `normalize_for_key` once and
     /// caches the result for subsequent `Hash`/`Ord`/`PartialEq`.
@@ -118,6 +128,28 @@ impl NormalizedPath {
     #[must_use]
     pub fn join(&self, path: impl AsRef<Path>) -> Self {
         Self::new(self.path.join(path))
+    }
+
+    /// Render the path with forward slashes, preserving original case.
+    ///
+    /// This is the form used for serialization (`build_info.json`,
+    /// cache fingerprints, anything that gets compared byte-for-byte
+    /// across platforms). Unlike [`key`](Self::key) it does *not*
+    /// case-fold, so it stays human-readable while still being
+    /// equality-stable across Linux/macOS/Windows when fed identical
+    /// paths.
+    ///
+    /// Cheap: walks the path once; no `Arc` clone, no normalization.
+    #[must_use]
+    pub fn display_slash(&self) -> String {
+        let mut s = self.path.to_string_lossy().into_owned();
+        if cfg!(windows) {
+            s = s.replace('\\', "/");
+            if let Some(stripped) = s.strip_prefix("//?/") {
+                s = stripped.to_string();
+            }
+        }
+        s
     }
 }
 
@@ -172,11 +204,23 @@ impl From<&String> for NormalizedPath {
 }
 
 impl Serialize for NormalizedPath {
+    /// Emits the slash-normalized, case-preserving form
+    /// ([`display_slash`](NormalizedPath::display_slash)). This is the
+    /// load-bearing invariant that makes `build_info.json` and every
+    /// other serialized `NormalizedPath` byte-identical across Linux,
+    /// macOS, and Windows — closing the regression PR #436 ran into
+    /// where `PathBuf::join` introduced `\` separators on Windows and
+    /// broke cache lookups + cross-platform JSON equality. See #437.
+    ///
+    /// Case is *not* folded here — the cache key
+    /// ([`key`](NormalizedPath::key)) folds case for hashing, but the
+    /// serialized form keeps original casing so emitted JSON stays
+    /// human-readable.
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
     {
-        self.path.serialize(serializer)
+        self.display_slash().serialize(serializer)
     }
 }
 
@@ -332,15 +376,53 @@ mod tests {
         assert_eq!(a.cmp(&b), Ordering::Equal);
     }
 
-    /// JSON round-trips preserve the original path form (we serialize
-    /// the underlying `path`, not the lowercase key).
+    /// JSON round-trips preserve original case and produce equal
+    /// `NormalizedPath`s on both ends — serialization emits the
+    /// slash-form (see `serialize_emits_slash_form`) so the round
+    /// trip is `PathBuf("/Some/Mixed/Case/Path")` on every platform.
     #[test]
     fn json_round_trip_preserves_path_form() {
         let original = NormalizedPath::new("/Some/Mixed/Case/Path");
         let json = serde_json::to_string(&original).unwrap();
         let back: NormalizedPath = serde_json::from_str(&json).unwrap();
-        // path() form is preserved literally.
-        assert_eq!(original.as_path(), back.as_path());
+        assert_eq!(original, back);
+        // Forward-slash form survives, case preserved.
+        assert!(json.contains("/Some/Mixed/Case/Path"));
+        assert!(!json.contains('\\'));
+    }
+
+    /// The point of [`NormalizedPath::serialize`] — JSON output is
+    /// byte-identical across platforms, so cache keys / file-content
+    /// equality assertions don't drift between Linux and Windows.
+    /// This is the regression that motivated #437 (and the test
+    /// PR #436 had to patch around with a `pj()` helper).
+    #[test]
+    fn serialize_emits_slash_form() {
+        let p = NormalizedPath::new("/bin/avr-nm");
+        let json = serde_json::to_string(&p).unwrap();
+        assert_eq!(json, "\"/bin/avr-nm\"");
+        // On Windows, a backslash-shaped input must round-trip to
+        // forward slashes in the JSON.
+        let mixed = NormalizedPath::new(r"C:\Users\zach\bin\avr-nm");
+        let json = serde_json::to_string(&mixed).unwrap();
+        assert!(
+            !json.contains('\\'),
+            "serialized JSON must not contain `\\`: {json}",
+        );
+    }
+
+    /// On Windows, the `\\?\` extended-length prefix is stripped from
+    /// the serialized form too — otherwise cache lookups against
+    /// hand-typed paths drift.
+    #[test]
+    #[cfg(windows)]
+    fn serialize_strips_extended_length_prefix() {
+        let p = NormalizedPath::new(r"\\?\C:\Users\test");
+        let json = serde_json::to_string(&p).unwrap();
+        assert!(
+            !json.contains("//?/"),
+            "extended-length prefix must be stripped: {json}",
+        );
     }
 
     /// Windows extended-length prefix (`\\?\`) is stripped from the

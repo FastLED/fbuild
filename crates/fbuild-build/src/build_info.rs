@@ -17,6 +17,7 @@
 use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::Result;
 use serde::{Deserialize, Serialize};
 
@@ -25,39 +26,45 @@ use serde::{Deserialize, Serialize};
 /// All paths are emitted as strings (matching `pio project metadata`
 /// output); empty / missing toolchain entries are emitted as empty strings
 /// so consumers that do `Path(board_info["objcopy_path"])` never KeyError.
+///
+/// The ten `*_path` fields are [`NormalizedPath`] (Phase 2 of #437), so
+/// the emitted JSON is byte-identical across Linux/macOS/Windows even
+/// when the source paths were constructed via `PathBuf::join` (which
+/// would otherwise leak `\` separators on Windows — the original
+/// regression from PR #436).
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct BuildInfo {
     /// Absolute path to the final firmware/program file (`.elf` if no
     /// `.hex`/`.bin` was produced, otherwise the converted firmware).
-    pub prog_path: String,
+    pub prog_path: NormalizedPath,
     /// Absolute path to the C compiler (`gcc`).
-    pub cc_path: String,
+    pub cc_path: NormalizedPath,
     /// Absolute path to the C++ compiler (`g++`).
-    pub cxx_path: String,
+    pub cxx_path: NormalizedPath,
     /// Absolute path to `ar` (empty when the linker doesn't expose it).
-    pub ar_path: String,
+    pub ar_path: NormalizedPath,
     /// Absolute path to `objcopy` (empty when the platform has no objcopy step,
     /// e.g. ESP8266 which produces ELF directly).
-    pub objcopy_path: String,
+    pub objcopy_path: NormalizedPath,
     /// Absolute path to `size`.
-    pub size_path: String,
+    pub size_path: NormalizedPath,
     /// Absolute path to `nm` (GCC convention: derived from `size_path` by
     /// replacing the `size` suffix with `nm`). Consumed by `fbuild symbols`
     /// (see #428) so users don't have to pass `--nm` on every invocation.
     #[serde(default)]
-    pub nm_path: String,
+    pub nm_path: NormalizedPath,
     /// Absolute path to `c++filt` (GCC convention). Used by the symbol
     /// analyzer to demangle the names `nm` emits.
     #[serde(default)]
-    pub cppfilt_path: String,
+    pub cppfilt_path: NormalizedPath,
     /// Absolute path to `readelf`. Useful for downstream section/segment
     /// inspection.
     #[serde(default)]
-    pub readelf_path: String,
+    pub readelf_path: NormalizedPath,
     /// Absolute path to `objdump`. Useful for downstream disassembly /
     /// section dumps.
     #[serde(default)]
-    pub objdump_path: String,
+    pub objdump_path: NormalizedPath,
     /// Effective C compile flags as seen by the compiler driver.
     pub cc_flags: Vec<String>,
     /// Effective C++ compile flags as seen by the compiler driver.
@@ -82,8 +89,13 @@ pub struct BuildInfo {
     /// `ci/util/symbol_analysis.py` and `ci/inspect_binary.py` read from
     /// it. Mirroring keeps existing PIO consumers working drop-in
     /// against fbuild-built artifacts. See #428.
+    ///
+    /// Values are [`NormalizedPath`] (Phase 2 of #437) so on-disk JSON
+    /// stays byte-identical across platforms; the `NormalizedPath`
+    /// serde impls produce / accept plain JSON strings, so Python
+    /// consumers see no schema change.
     #[serde(default)]
-    pub aliases: BTreeMap<String, String>,
+    pub aliases: BTreeMap<String, NormalizedPath>,
 }
 
 impl BuildInfo {
@@ -131,16 +143,16 @@ impl BuildInfo {
             &objdump_path,
         );
         Self {
-            prog_path: path_to_string(Some(prog_path)),
-            cc_path: path_to_string(cc_path),
-            cxx_path: path_to_string(cxx_path),
-            ar_path: path_to_string(ar_path),
-            objcopy_path: path_to_string(objcopy_path),
-            size_path: path_to_string(Some(size_path)),
-            nm_path: path_to_string(Some(nm_path.as_path())),
-            cppfilt_path: path_to_string(Some(cppfilt_path.as_path())),
-            readelf_path: path_to_string(Some(readelf_path.as_path())),
-            objdump_path: path_to_string(Some(objdump_path.as_path())),
+            prog_path: NormalizedPath::new(prog_path),
+            cc_path: normalize_optional(cc_path),
+            cxx_path: normalize_optional(cxx_path),
+            ar_path: normalize_optional(ar_path),
+            objcopy_path: normalize_optional(objcopy_path),
+            size_path: NormalizedPath::new(size_path),
+            nm_path: NormalizedPath::new(&nm_path),
+            cppfilt_path: NormalizedPath::new(&cppfilt_path),
+            readelf_path: NormalizedPath::new(&readelf_path),
+            objdump_path: NormalizedPath::new(&objdump_path),
             cc_flags,
             cxx_flags,
             link_flags,
@@ -196,7 +208,7 @@ fn build_aliases(
     cppfilt_path: &Path,
     readelf_path: &Path,
     objdump_path: &Path,
-) -> BTreeMap<String, String> {
+) -> BTreeMap<String, NormalizedPath> {
     let mut aliases = BTreeMap::new();
     let entries: &[(&str, Option<&Path>)] = &[
         ("gcc", cc_path),
@@ -210,17 +222,25 @@ fn build_aliases(
         ("objdump", Some(objdump_path)),
     ];
     for (key, path) in entries {
-        let s = path_to_string(*path);
-        if !s.is_empty() {
-            aliases.insert((*key).to_string(), s);
+        let Some(p) = *path else {
+            continue;
+        };
+        // Skip the empty-path sentinel so `aliases["nm"]` is
+        // guaranteed non-empty whenever the key is present.
+        if p.as_os_str().is_empty() {
+            continue;
         }
+        aliases.insert((*key).to_string(), NormalizedPath::new(p));
     }
     aliases
 }
 
-fn path_to_string(p: Option<&Path>) -> String {
-    p.map(|p| p.to_string_lossy().to_string())
-        .unwrap_or_default()
+/// Convert an optional `&Path` to [`NormalizedPath`], preserving the
+/// "missing → empty path" sentinel that `BuildInfo`'s schema requires
+/// for downstream Python consumers (`Path(board_info["objcopy_path"])`
+/// never throws KeyError).
+fn normalize_optional(p: Option<&Path>) -> NormalizedPath {
+    p.map(NormalizedPath::new).unwrap_or_default()
 }
 
 fn extract_prefixed(flags: &[String], prefix: &str) -> Vec<String> {
@@ -419,8 +439,13 @@ mod tests {
             "nodemcuv2".to_string(),
             "nodemcuv2".to_string(),
         );
-        assert_eq!(info.ar_path, "");
-        assert_eq!(info.objcopy_path, "");
+        // Missing → `NormalizedPath::default()` (empty path). This is
+        // the schema's "absent" sentinel that downstream Python
+        // consumers (`Path(board_info["objcopy_path"])`) rely on.
+        assert_eq!(info.ar_path, NormalizedPath::default());
+        assert_eq!(info.objcopy_path, NormalizedPath::default());
+        assert_eq!(info.ar_path.as_path().as_os_str(), "");
+        assert_eq!(info.objcopy_path.as_path().as_os_str(), "");
     }
 
     #[test]
@@ -430,6 +455,56 @@ mod tests {
         emit_build_info(tmp.path(), "uno", &info).unwrap();
         assert!(tmp.path().join("build_info_uno.json").exists());
         assert!(tmp.path().join("build_info.json").exists());
+    }
+
+    /// The motivating test for #437 Phase 2: when `BuildInfo`'s ten
+    /// `*_path` fields are constructed from `PathBuf::join` (which
+    /// uses the platform separator), the emitted JSON must still
+    /// contain only forward slashes — no `\` leakage on Windows.
+    ///
+    /// PR #436 had to gate this exact assertion behind a platform
+    /// `pj()` helper because the field type was `String` and just
+    /// carried whatever separator the source used. The
+    /// `NormalizedPath` migration removes that workaround entirely.
+    #[test]
+    fn emit_json_uses_forward_slashes_regardless_of_input_separators() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        // Construct the source paths via `Path::join` so that on
+        // Windows the in-memory strings contain `\`. The serialized
+        // JSON must still come out slash-form.
+        let bin = PathBuf::from("/bin");
+        let info = BuildInfo::new(
+            &bin.join("firmware.elf"),
+            Some(&bin.join("avr-gcc")),
+            Some(&bin.join("avr-g++")),
+            Some(&bin.join("avr-ar")),
+            Some(&bin.join("avr-objcopy")),
+            &bin.join("avr-size"),
+            vec![],
+            vec![],
+            vec![],
+            vec![],
+            "atmelavr".to_string(),
+            "uno".to_string(),
+            "uno".to_string(),
+        );
+        emit_build_info(tmp.path(), "uno", &info).unwrap();
+        let bytes = std::fs::read(tmp.path().join("build_info_uno.json")).unwrap();
+        let s = std::str::from_utf8(&bytes).unwrap();
+
+        // The literal Windows separator must not appear in any path
+        // string. (A JSON escape sequence `\\` is two backslashes in
+        // the raw file, so search for *any* backslash byte.)
+        assert!(
+            !s.contains('\\'),
+            "build_info JSON must not contain backslashes; got:\n{s}"
+        );
+        // Every path field is present in slash-form.
+        assert!(s.contains("\"/bin/avr-gcc\""));
+        assert!(s.contains("\"/bin/avr-nm\""));
+        assert!(s.contains("\"/bin/avr-c++filt\""));
+        assert!(s.contains("\"/bin/avr-readelf\""));
+        assert!(s.contains("\"/bin/avr-objdump\""));
     }
 
     /// FastLED/fbuild#406: when FastLED drives fbuild per-example using a
@@ -576,15 +651,11 @@ mod tests {
 
     // ---- #428: toolchain path derivation + aliases mirror ----
 
-    /// Encode a derived path the same way [`BuildInfo::new`] does
-    /// (`Path::join` uses the platform separator, so test expectations
-    /// must too — `/bin/avr-nm` on Unix, `/bin\avr-nm` on Windows).
-    fn pj(parent: &str, name: &str) -> String {
-        PathBuf::from(parent)
-            .join(name)
-            .to_string_lossy()
-            .into_owned()
-    }
+    // Phase 2 of #437 retired the `pj()` Windows-vs-Unix helper: all
+    // `BuildInfo` path fields are `NormalizedPath` now, so equality
+    // assertions can compare against literal slash-form strings on
+    // every platform. The `serialize_*` regression test below pins
+    // that contract directly.
 
     #[test]
     fn derive_gcc_tool_path_avr_prefix() {
@@ -633,42 +704,60 @@ mod tests {
     #[test]
     fn build_info_populates_new_toolchain_fields() {
         let info = sample_info();
-        // GCC convention: /bin/avr-size → /bin/avr-{nm,c++filt,readelf,objdump}
-        assert_eq!(info.nm_path, pj("/bin", "avr-nm"));
-        assert_eq!(info.cppfilt_path, pj("/bin", "avr-c++filt"));
-        assert_eq!(info.readelf_path, pj("/bin", "avr-readelf"));
-        assert_eq!(info.objdump_path, pj("/bin", "avr-objdump"));
+        // GCC convention: /bin/avr-size → /bin/avr-{nm,c++filt,readelf,objdump}.
+        // Stored as `NormalizedPath` (#437 Phase 2), so the comparison
+        // is platform-stable forward-slash form everywhere — no `pj()`
+        // helper needed.
+        assert_eq!(info.nm_path, NormalizedPath::new("/bin/avr-nm"));
+        assert_eq!(info.cppfilt_path, NormalizedPath::new("/bin/avr-c++filt"));
+        assert_eq!(info.readelf_path, NormalizedPath::new("/bin/avr-readelf"));
+        assert_eq!(info.objdump_path, NormalizedPath::new("/bin/avr-objdump"));
     }
 
     #[test]
     fn build_info_aliases_block_mirrors_paths() {
         let info = sample_info();
         // The aliases block carries short PIO-shape keys. Every present
-        // long-form path must also appear under its alias key.
-        // cc/cxx/ar/objcopy/size are passed in verbatim, so they keep the
-        // literal "/" separator we constructed them with. The four derived
-        // tools (nm/c++filt/readelf/objdump) go through Path::join so they
-        // use the platform separator — match that via pj().
-        assert_eq!(info.aliases.get("gcc"), Some(&"/bin/avr-gcc".to_string()));
-        assert_eq!(info.aliases.get("g++"), Some(&"/bin/avr-g++".to_string()));
-        assert_eq!(info.aliases.get("ar"), Some(&"/bin/avr-ar".to_string()));
+        // long-form path must also appear under its alias key, in
+        // `NormalizedPath` slash-form so the values are byte-identical
+        // across Linux, macOS, and Windows. See #437 Phase 2 —
+        // formerly this test had to use `pj()` to track the platform
+        // separator that `Path::join` leaked into the value strings.
+        assert_eq!(
+            info.aliases.get("gcc"),
+            Some(&NormalizedPath::new("/bin/avr-gcc")),
+        );
+        assert_eq!(
+            info.aliases.get("g++"),
+            Some(&NormalizedPath::new("/bin/avr-g++")),
+        );
+        assert_eq!(
+            info.aliases.get("ar"),
+            Some(&NormalizedPath::new("/bin/avr-ar")),
+        );
         assert_eq!(
             info.aliases.get("objcopy"),
-            Some(&"/bin/avr-objcopy".to_string())
+            Some(&NormalizedPath::new("/bin/avr-objcopy")),
         );
-        assert_eq!(info.aliases.get("size"), Some(&"/bin/avr-size".to_string()));
-        assert_eq!(info.aliases.get("nm"), Some(&pj("/bin", "avr-nm")));
+        assert_eq!(
+            info.aliases.get("size"),
+            Some(&NormalizedPath::new("/bin/avr-size")),
+        );
+        assert_eq!(
+            info.aliases.get("nm"),
+            Some(&NormalizedPath::new("/bin/avr-nm")),
+        );
         assert_eq!(
             info.aliases.get("c++filt"),
-            Some(&pj("/bin", "avr-c++filt"))
+            Some(&NormalizedPath::new("/bin/avr-c++filt")),
         );
         assert_eq!(
             info.aliases.get("readelf"),
-            Some(&pj("/bin", "avr-readelf"))
+            Some(&NormalizedPath::new("/bin/avr-readelf")),
         );
         assert_eq!(
             info.aliases.get("objdump"),
-            Some(&pj("/bin", "avr-objdump"))
+            Some(&NormalizedPath::new("/bin/avr-objdump")),
         );
     }
 
@@ -774,25 +863,25 @@ mod tests {
             .expect("aliases block must be emitted")
             .as_object()
             .expect("aliases must be an object");
-        let expected_nm = pj("/bin", "avr-nm");
-        let expected_cppfilt = pj("/bin", "avr-c++filt");
-        let expected_readelf = pj("/bin", "avr-readelf");
-        let expected_objdump = pj("/bin", "avr-objdump");
+        // Phase 2 of #437: `NormalizedPath::Serialize` emits forward
+        // slashes regardless of host platform, so these expected
+        // values are literal slash-form strings — the old `pj()`
+        // helper that papered over the cross-platform drift is gone.
         assert_eq!(
             aliases.get("nm").and_then(|v| v.as_str()),
-            Some(expected_nm.as_str())
+            Some("/bin/avr-nm"),
         );
         assert_eq!(
             aliases.get("c++filt").and_then(|v| v.as_str()),
-            Some(expected_cppfilt.as_str())
+            Some("/bin/avr-c++filt"),
         );
         assert_eq!(
             aliases.get("readelf").and_then(|v| v.as_str()),
-            Some(expected_readelf.as_str())
+            Some("/bin/avr-readelf"),
         );
         assert_eq!(
             aliases.get("objdump").and_then(|v| v.as_str()),
-            Some(expected_objdump.as_str())
+            Some("/bin/avr-objdump"),
         );
     }
 }
