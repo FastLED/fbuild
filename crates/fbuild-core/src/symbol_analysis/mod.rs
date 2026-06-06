@@ -98,6 +98,77 @@ pub struct FineGrainedSymbolMap {
     pub sections: Vec<SectionBytes>,
 }
 
+/// One contiguous loadable region of the final binary.
+///
+/// Conceptually this is one `PT_LOAD` program-header range (`addr`
+/// inclusive, `end` exclusive). A symbol is considered to be "in the
+/// binary" only when its `[address, address + size)` interval fits
+/// entirely inside one of these regions. Boundary symbols emitted by
+/// the linker script (`__StackTop`, `__flash_arduino_end`, ...) point
+/// just past the end of their region or have nonsense sizes that nm
+/// computes as the address gap to the next symbol — neither case
+/// satisfies strict containment, so the filter drops them. See
+/// `FineGrainedSymbolMap::retain_loaded_symbols`.
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
+pub struct LoadedRegion {
+    /// First byte of the region (inclusive).
+    pub start: u64,
+    /// One past the last byte of the region (exclusive).
+    pub end: u64,
+}
+
+impl LoadedRegion {
+    /// True when `[addr, addr + size)` is fully contained in this region.
+    ///
+    /// The lower bound is *strict*: `addr` must be strictly less than
+    /// `self.end`. This excludes the linker-script boundary-marker
+    /// case (`__StackTop` at `end-of-RAM` with `size = 0`) — such a
+    /// symbol points one past the last loaded byte and is metadata,
+    /// not binary content.
+    pub fn contains_range(&self, addr: u64, size: u64) -> bool {
+        if addr < self.start || addr >= self.end {
+            return false;
+        }
+        let end = match addr.checked_add(size) {
+            Some(e) => e,
+            None => return false,
+        };
+        end <= self.end
+    }
+}
+
+impl FineGrainedSymbolMap {
+    /// Drop symbols that did not land in any loaded region of the final
+    /// binary, then recompute `total_flash` / `total_ram` from the
+    /// surviving rows.
+    ///
+    /// Loaded regions are the `PT_LOAD` program-header ranges (caller
+    /// extracts them from the ELF, since this crate intentionally has
+    /// no ELF-parsing dep — see the module-level docs).
+    ///
+    /// This is the single point that turns "every sized symbol nm
+    /// enumerates" (which includes linker-script boundary markers like
+    /// `__StackTop` with multi-GB nonsense sizes) into "only symbols
+    /// that actually consume bytes in the final binary."
+    pub fn retain_loaded_symbols(&mut self, regions: &[LoadedRegion]) {
+        if regions.is_empty() {
+            return;
+        }
+        self.symbols
+            .retain(|s| regions.iter().any(|r| r.contains_range(s.address, s.size)));
+        let mut total_flash = 0u64;
+        let mut total_ram = 0u64;
+        for s in &self.symbols {
+            match s.region {
+                MemoryRegion::Flash => total_flash = total_flash.saturating_add(s.size),
+                MemoryRegion::Ram => total_ram = total_ram.saturating_add(s.size),
+            }
+        }
+        self.total_flash = total_flash;
+        self.total_ram = total_ram;
+    }
+}
+
 /// One address range placed by the linker into an output section.
 #[derive(Debug, Clone)]
 pub struct InputSectionRange {
