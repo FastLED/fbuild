@@ -148,9 +148,11 @@ pub enum Commands {
         /// Build target: 'compiledb' generates compile_commands.json without compiling
         #[arg(short = 't', long, value_parser = ["compiledb"])]
         target: Option<String>,
-        /// Run per-symbol memory analysis after building; optionally write report to PATH
-        /// instead of streaming to console
-        #[arg(long, num_args = 0..=1, default_missing_value = "")]
+        /// Run per-symbol bloat analysis after building; optionally write the
+        /// report to PATH instead of streaming to console. The legacy spelling
+        /// `--symbol-analysis` is still accepted as a hidden alias for
+        /// back-compat through 2.3.x (see #439).
+        #[arg(long = "bloat", alias = "symbol-analysis", num_args = 0..=1, default_missing_value = "")]
         symbol_analysis: Option<String>,
         /// Disable elapsed-time prefix on build output lines
         #[arg(long)]
