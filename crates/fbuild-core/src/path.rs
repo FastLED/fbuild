@@ -398,17 +398,49 @@ mod tests {
     /// PR #436 had to patch around with a `pj()` helper).
     #[test]
     fn serialize_emits_slash_form() {
+        // Forward-slash input survives round-trip unchanged on every
+        // platform. This is the load-bearing invariant for
+        // `build_info.json` cross-platform byte equality.
         let p = NormalizedPath::new("/bin/avr-nm");
         let json = serde_json::to_string(&p).unwrap();
         assert_eq!(json, "\"/bin/avr-nm\"");
-        // On Windows, a backslash-shaped input must round-trip to
-        // forward slashes in the JSON.
+    }
+
+    /// On Windows the platform separator is `\`, so any input
+    /// constructed via `Path::join` carries backslashes. Serialization
+    /// must convert them all to forward slashes — that's the original
+    /// regression from PR #436 / #437 this filter exists to fix.
+    ///
+    /// Unix-cfg note: on Linux/macOS the backslash is a valid filename
+    /// character, *not* a separator. Stripping it would mangle real
+    /// paths, so the conversion is deliberately Windows-only and this
+    /// test is cfg-gated to match.
+    #[test]
+    #[cfg(windows)]
+    fn serialize_converts_backslash_input_to_forward_slashes_on_windows() {
         let mixed = NormalizedPath::new(r"C:\Users\zach\bin\avr-nm");
         let json = serde_json::to_string(&mixed).unwrap();
         assert!(
             !json.contains('\\'),
-            "serialized JSON must not contain `\\`: {json}",
+            "serialized JSON must not contain `\\` on Windows: {json}",
         );
+    }
+
+    /// Mirror of the Windows case: on Unix, `\` is content, so the
+    /// serialized form must keep the backslashes intact (otherwise
+    /// real filenames containing `\` would be corrupted).
+    #[test]
+    #[cfg(not(windows))]
+    fn serialize_preserves_backslashes_as_content_on_unix() {
+        // A filename whose actual bytes contain `\` — legal on Linux,
+        // unusual but supported on macOS.
+        let unix = NormalizedPath::new(r"/tmp/weird\name");
+        let json = serde_json::to_string(&unix).unwrap();
+        // JSON encodes a literal `\` as `\\`, so the raw string
+        // representation has two characters per backslash. Just check
+        // that the underlying bytes survived.
+        let parsed: String = serde_json::from_str(&json).unwrap();
+        assert_eq!(parsed, r"/tmp/weird\name");
     }
 
     /// On Windows, the `\\?\` extended-length prefix is stripped from
