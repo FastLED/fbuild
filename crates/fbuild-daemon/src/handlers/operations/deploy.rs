@@ -684,13 +684,10 @@ pub async fn deploy(
                 Box::new(deployer)
             }
             fbuild_core::Platform::Teensy => {
-                // The TeensyDeployer in fbuild-deploy/src/teensy.rs has been
-                // fully implemented (incl. unit tests for teensy40 / teensy41
-                // board configs) but wasn't dispatched here — issue #430.
-                // Without this arm `bash autoresearch teensyXX --simd` (and
-                // every other Teensy autoresearch flag) failed at the deploy
-                // step with "deployer for Teensy not yet implemented",
-                // blocking FastLED/FastLED#2628 hardware bring-up.
+                // TeensyDeployer state machine (#433) is dispatched here.
+                // Initial wire-up was #430/#431; the deployer itself now owns
+                // baud-134 soft reboot, bounded retry, post-flash port
+                // discovery, and the optional first-byte advisory probe.
                 let board_config =
                     fbuild_config::BoardConfig::from_board_id(&board_id, &deploy_board_overrides)
                         .unwrap_or_else(|_| {
@@ -788,43 +785,44 @@ pub async fn deploy(
         }
     }
 
-    let (deploy_success, deploy_stdout, deploy_stderr, deploy_outcome) = match deploy_result {
-        Ok(Ok(r)) if r.success => (true, Some(r.stdout), Some(r.stderr), r.outcome),
-        Ok(Ok(r)) => {
-            return (
-                StatusCode::INTERNAL_SERVER_ERROR,
-                Json(OperationResponse {
-                    success: false,
-                    request_id,
-                    message: r.message,
-                    exit_code: 1,
-                    output_file: Some(reported_output_file.clone()),
-                    output_dir: reported_output_dir.clone(),
-                    launch_url: None,
-                    stdout: Some(r.stdout),
-                    stderr: Some(r.stderr),
-                }),
-            );
-        }
-        Ok(Err(e)) => {
-            return (
-                StatusCode::INTERNAL_SERVER_ERROR,
-                Json(OperationResponse::fail(
-                    request_id,
-                    format!("deploy error: {}", e),
-                )),
-            );
-        }
-        Err(e) => {
-            return (
-                StatusCode::INTERNAL_SERVER_ERROR,
-                Json(OperationResponse::fail(
-                    request_id,
-                    format!("deploy task panicked: {}", e),
-                )),
-            );
-        }
-    };
+    let (deploy_success, deploy_stdout, deploy_stderr, deploy_outcome, deploy_post_port) =
+        match deploy_result {
+            Ok(Ok(r)) if r.success => (true, Some(r.stdout), Some(r.stderr), r.outcome, r.port),
+            Ok(Ok(r)) => {
+                return (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    Json(OperationResponse {
+                        success: false,
+                        request_id,
+                        message: r.message,
+                        exit_code: 1,
+                        output_file: Some(reported_output_file.clone()),
+                        output_dir: reported_output_dir.clone(),
+                        launch_url: None,
+                        stdout: Some(r.stdout),
+                        stderr: Some(r.stderr),
+                    }),
+                );
+            }
+            Ok(Err(e)) => {
+                return (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    Json(OperationResponse::fail(
+                        request_id,
+                        format!("deploy error: {}", e),
+                    )),
+                );
+            }
+            Err(e) => {
+                return (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    Json(OperationResponse::fail(
+                        request_id,
+                        format!("deploy task panicked: {}", e),
+                    )),
+                );
+            }
+        };
     // Build the "deploy succeeded (...)" prefix used by every
     // monitor-attached and non-monitor-attached response below. Stable
     // wording — see GitHub issue #76 and the DeployOutcome::describe
@@ -834,7 +832,26 @@ pub async fn deploy(
     // Post-deploy monitoring: if monitor_after is set, open the serial port
     // and stream lines checking halt conditions (matching Python behavior).
     if deploy_success && req.monitor_after {
-        let monitor_port = deploy_port_str.unwrap_or_else(|| "/dev/ttyUSB0".to_string());
+        // Prefer the post-flash port name surfaced by the deployer (e.g. the
+        // Teensy state machine in #433 returns the freshly re-enumerated CDC
+        // ACM port, which can differ from the pre-flash `--port`). Fall back
+        // to the caller-supplied port, then to a platform default.
+        let monitor_port = deploy_post_port
+            .clone()
+            .or(deploy_port_str.clone())
+            .unwrap_or_else(|| "/dev/ttyUSB0".to_string());
+        if deploy_post_port
+            .as_deref()
+            .zip(deploy_port_str.as_deref())
+            .is_some_and(|(post, pre)| post != pre)
+        {
+            tracing::info!(
+                "device re-enumerated as {} after flash (was {}); monitor attaching to {}",
+                deploy_post_port.as_deref().unwrap_or(""),
+                deploy_port_str.as_deref().unwrap_or(""),
+                monitor_port,
+            );
+        }
         let baud_rate = 115200u32;
 
         // Open the port for monitoring
