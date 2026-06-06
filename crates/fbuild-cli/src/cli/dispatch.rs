@@ -20,6 +20,7 @@ use super::pio::{pio_build, pio_deploy, pio_monitor};
 use super::purge::{run_purge, run_purge_gc};
 use super::reset::run_reset;
 use super::show::run_show;
+use super::symbols_cmd::run_symbols;
 
 pub async fn async_main() {
     let cli = Cli::parse_from(rewrite_args());
@@ -55,6 +56,15 @@ pub async fn async_main() {
     let top_level_project_dir = cli.project_dir.clone();
 
     let result = match cli.command {
+        Some(Commands::Symbols {
+            input,
+            map,
+            nm,
+            cppfilt,
+            json,
+            output_dir,
+            top,
+        }) => run_symbols(input, map, nm, cppfilt, json, output_dir, top),
         Some(Commands::Build {
             project_dir,
             environment,
