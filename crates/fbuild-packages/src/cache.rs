@@ -109,10 +109,16 @@ impl Cache {
     // --- Build directories (per-project) ---
 
     /// Get the build directory for an environment and profile.
+    ///
+    /// Routes through [`fbuild_paths::BuildLayout`] so layout decisions
+    /// (env-segment collapse when the project basename already matches
+    /// the env, `FBUILD_BUILD_DIR` override, etc.) are made in exactly
+    /// one place. Embedders that need a non-default layout should set
+    /// `params.build_dir` directly via [`fbuild_paths::BuildLayout`];
+    /// this convenience helper is for the default path only.
     pub fn get_build_dir(&self, env_name: &str, profile: BuildProfile) -> PathBuf {
-        fbuild_paths::get_project_build_root(&self.project_dir)
-            .join(env_name)
-            .join(profile.as_dir_name())
+        fbuild_paths::BuildLayout::new(self.project_dir.clone(), env_name.to_string(), profile)
+            .resolve()
     }
 
     /// Get the core build subdirectory (for compiled core .o files).

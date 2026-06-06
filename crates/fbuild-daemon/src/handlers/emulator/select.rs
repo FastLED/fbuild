@@ -252,7 +252,23 @@ pub async fn test_emu(
             None
         };
 
-        let build_dir = fbuild_paths::get_project_build_root(&project_dir);
+        let build_dir = fbuild_paths::BuildLayout::new(
+            project_dir.clone(),
+            env_name.clone(),
+            fbuild_core::BuildProfile::Release,
+        )
+        .with_override_root(req.build_dir_override.as_deref().map(|p| {
+            let path = std::path::PathBuf::from(p);
+            if path.is_absolute() {
+                path
+            } else if let Some(cwd) = req.caller_cwd.as_deref() {
+                std::path::PathBuf::from(cwd).join(path)
+            } else {
+                project_dir.join(path)
+            }
+        }))
+        .with_flatten_env(req.flatten_env)
+        .resolve();
         let params = fbuild_build::BuildParams {
             project_dir: project_dir.clone(),
             env_name: env_name.clone(),

@@ -60,7 +60,7 @@ void loop() {
     )
     .unwrap();
 
-    let build_dir = project_dir.join(".fbuild/build");
+    let build_dir = project_dir.join(".fbuild/build/esp32dev/release");
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "esp32dev".to_string(),
@@ -149,7 +149,7 @@ void loop() {
     )
     .unwrap();
 
-    let build_dir = project_dir.join(".fbuild/build");
+    let build_dir = project_dir.join(".fbuild/build/esp32c6/release");
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "esp32c6".to_string(),
@@ -231,7 +231,7 @@ void loop() {
     )
     .unwrap();
 
-    let build_dir = project_dir.join(".fbuild/build");
+    let build_dir = project_dir.join(".fbuild/build/esp32c3/release");
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "esp32c3".to_string(),
@@ -314,7 +314,7 @@ void loop() {
     )
     .unwrap();
 
-    let build_dir = project_dir.join(".fbuild/build");
+    let build_dir = project_dir.join(".fbuild/build/esp32s3/release");
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
         env_name: "esp32s3".to_string(),
@@ -387,7 +387,7 @@ fn build_esp32s3_fixture() {
         return;
     }
 
-    let build_dir = project_dir.join(".fbuild/build");
+    let build_dir = project_dir.join(".fbuild/build/esp32s3/release");
     let params = BuildParams {
         project_dir: project_dir.clone(),
         env_name: "esp32s3".to_string(),
@@ -451,7 +451,7 @@ fn build_nightdriverstrip_demo() {
     }
 
     let tmp = tempfile::TempDir::new().unwrap();
-    let build_dir = tmp.path().join(".fbuild/build");
+    let build_dir = tmp.path().join(".fbuild/build/demo/release");
 
     let params = BuildParams {
         project_dir: project_dir.clone(),
@@ -549,7 +549,12 @@ fn incremental_build_at(project_dir: &std::path::Path, env_name: &str) {
         env_name: env_name.to_string(),
         clean: false,
         profile: BuildProfile::Release,
-        build_dir: project_dir.join(".fbuild/build"),
+        build_dir: fbuild_paths::BuildLayout::new(
+            project_dir.to_path_buf(),
+            env_name.to_string(),
+            BuildProfile::Release,
+        )
+        .resolve(),
         verbose: true,
         jobs: None,
         generate_compiledb: false,
@@ -640,7 +645,12 @@ fn incremental_nightdriverstrip_one_file_changed() {
         env_name: env_name.to_string(),
         clean: false,
         profile: BuildProfile::Release,
-        build_dir: project_dir.join(".fbuild/build"),
+        build_dir: fbuild_paths::BuildLayout::new(
+            project_dir.clone(),
+            env_name.to_string(),
+            BuildProfile::Release,
+        )
+        .resolve(),
         verbose: true,
         jobs: None,
         generate_compiledb: false,

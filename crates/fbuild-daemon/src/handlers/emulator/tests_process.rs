@@ -111,7 +111,18 @@ fn run_real_esp32s3_fixture_in_qemu() {
         return;
     }
 
-    let build_dir = project_dir.join(".fbuild/build-qemu");
+    // Override the build root so this qemu fixture's artifacts land in a
+    // dedicated `.fbuild/build-qemu/<env>/<profile>` tree, isolated from
+    // any non-qemu build the same project might have produced. The layout
+    // still appends `<env>/<profile>` because the pipeline reads
+    // `params.build_dir` as the resolved env-rooted dir.
+    let build_dir = fbuild_paths::BuildLayout::new(
+        project_dir.clone(),
+        "esp32s3".to_string(),
+        BuildProfile::Release,
+    )
+    .with_override_root(Some(project_dir.join(".fbuild").join("build-qemu")))
+    .resolve();
     let params = BuildParams {
         project_dir: project_dir.clone(),
         env_name: "esp32s3".to_string(),

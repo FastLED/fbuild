@@ -11,7 +11,8 @@ Single source of truth for all `.fbuild` directory paths, with dev/prod isolatio
 - `get_daemon_port()` -- Port resolution with four-level priority: env var, current mode port file, cross-mode port file, default (8865 dev / 8765 prod)
 - `get_daemon_url()` -- Daemon HTTP URL (`http://127.0.0.1:{port}`)
 - `get_cache_root()` -- Global cache dir (`FBUILD_CACHE_DIR` override or `~/.fbuild/{mode}/cache`)
-- `get_project_build_root()` -- Per-project build dir (`FBUILD_BUILD_DIR` override or `<project>/.fbuild/build`)
+- `get_project_build_root()` -- Per-project build-dir root (`FBUILD_BUILD_DIR` override or `<project>/.fbuild/build`). Returns the *root* — does not append `<env>/<profile>`. Most callers should use `BuildLayout` instead.
+- `BuildLayout` -- Single source of truth for the env-and-profile-rooted build dir. Encapsulates: explicit per-request `override_root` (highest precedence), `FBUILD_BUILD_DIR` env var, default `<project>/.fbuild/build`, and the `<env>/<profile>` append. Drops the `<env>` segment when `flatten_env` is set or when `project_dir.file_name() == env_name` (the FastLED `.build/pio/<board>/` case, FastLED/fbuild#432).
 - `get_platformio_home()` / `get_platformio_package()` -- PlatformIO directory resolution
 - `find_firmware()` / `find_firmware_dir()` -- Firmware file discovery across profile subdirs and legacy `.pio/build`
 

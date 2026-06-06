@@ -134,7 +134,18 @@ pub async fn build(
         _ => fbuild_core::BuildProfile::Release,
     };
 
-    let build_dir = fbuild_paths::get_project_build_root(&project_dir);
+    // Resolve the env-rooted build dir via the single `BuildLayout`
+    // resolver so layout decisions (override > FBUILD_BUILD_DIR >
+    // default; env-segment auto-collapse) match what `find_firmware`
+    // and the pipeline use. See FastLED/fbuild#432.
+    let build_dir = fbuild_paths::BuildLayout::new(project_dir.clone(), env_name.clone(), profile)
+        .with_override_root(
+            req.build_dir_override
+                .as_deref()
+                .map(|p| resolve_client_path(p, req.caller_cwd.as_deref(), &project_dir)),
+        )
+        .with_flatten_env(req.flatten_env)
+        .resolve();
     let compiledb_env = std::env::var("FBUILD_COMPILEDB")
         .map(|v| v != "0")
         .unwrap_or(true);

@@ -87,19 +87,14 @@ pub fn default_sketch_jobs() -> usize {
 
 /// Resolve the on-disk build root the orchestrator uses for a given sketch.
 ///
-/// Matches the convention used by every per-platform orchestrator:
-/// `<sketch>/.fbuild/build/<env>/<profile>/`. Centralized here so the
-/// stage-1→stage-2 cache-seeding code can address that path without
-/// re-deriving the same string in three places. See FastLED/fbuild#335.
+/// Routes through [`fbuild_paths::BuildLayout`] so layout decisions
+/// (env-segment auto-collapse, `FBUILD_BUILD_DIR` override) match
+/// what the daemon and the per-platform orchestrators use. Centralized
+/// here so the stage-1→stage-2 cache-seeding code can address that path
+/// without re-deriving the same string in three places. See
+/// FastLED/fbuild#335.
 pub fn project_build_dir(sketch: &Path, env: &str, profile: BuildProfile) -> PathBuf {
-    sketch
-        .join(".fbuild")
-        .join("build")
-        .join(env)
-        .join(match profile {
-            BuildProfile::Release => "release",
-            BuildProfile::Quick => "quick",
-        })
+    fbuild_paths::BuildLayout::new(sketch.to_path_buf(), env.to_string(), profile).resolve()
 }
 
 /// Seed a stage-2 project's framework `core/` from stage 1's, so the
@@ -831,6 +826,24 @@ mod tests {
         assert!(p.ends_with("sketch/.fbuild/build/uno/release"));
         let q = project_build_dir(Path::new("/tmp/sketch"), "esp32s3", BuildProfile::Quick);
         assert!(q.ends_with("sketch/.fbuild/build/esp32s3/quick"));
+    }
+
+    /// FastLED stages each board's project at
+    /// `<repo>/.build/pio/<board>/` and asks fbuild to build with
+    /// `env == board`. `project_build_dir` must collapse the duplicate
+    /// `<board>` segment (via `BuildLayout`'s auto-detect rule) so the
+    /// resulting tree fits under Windows' 260-char `MAX_PATH` limit and
+    /// matches what `find_firmware` looks for. See FastLED/fbuild#432.
+    #[test]
+    fn project_build_dir_collapses_when_sketch_basename_matches_env() {
+        let sketch = Path::new("/repo/.build/pio/teensy40");
+        let p = project_build_dir(sketch, "teensy40", BuildProfile::Release);
+        let s = p.to_string_lossy().to_string();
+        assert!(
+            !s.contains("build/teensy40/release") && !s.contains("build\\teensy40\\release"),
+            "stage-2 build dir kept duplicated env segment: {s}"
+        );
+        assert!(p.ends_with("release"));
     }
 
     #[test]

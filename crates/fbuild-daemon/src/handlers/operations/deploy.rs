@@ -194,7 +194,18 @@ pub async fn deploy(
         let lock = ctx.project_lock(&project_dir);
         let _guard = lock.lock().await;
 
-        let build_dir = fbuild_paths::get_project_build_root(&project_dir);
+        let build_dir = fbuild_paths::BuildLayout::new(
+            project_dir.clone(),
+            env_name.clone(),
+            fbuild_core::BuildProfile::Release,
+        )
+        .with_override_root(
+            req.build_dir_override
+                .as_deref()
+                .map(|p| resolve_client_path(p, req.caller_cwd.as_deref(), &project_dir)),
+        )
+        .with_flatten_env(req.flatten_env)
+        .resolve();
         let params = fbuild_build::BuildParams {
             project_dir: project_dir.clone(),
             env_name: env_name.clone(),

@@ -75,7 +75,7 @@ fn teensy30_analog_output_meets_205_ac2() {
     )
     .unwrap();
 
-    let build_dir = project_dir.join(".fbuild/build");
+    let build_dir = project_dir.join(".fbuild/build/teensy30/release");
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
         // WHY env_name = "teensy30": must match the [env:teensy30] key

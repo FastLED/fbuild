@@ -5,6 +5,8 @@
 
 use std::path::{Path, PathBuf};
 
+use fbuild_core::BuildProfile;
+
 /// Check if running in development mode.
 pub fn is_dev_mode() -> bool {
     std::env::var("FBUILD_DEV_MODE")
@@ -80,6 +82,101 @@ pub fn get_project_build_root(project_dir: &Path) -> PathBuf {
     get_project_fbuild_dir(project_dir).join("build")
 }
 
+/// Layout resolver for the per-environment build directory.
+///
+/// This is the single source of truth for "where does fbuild write
+/// `firmware.hex`, `core/`, `src/`, `libs/`?". Callers (daemon HTTP
+/// handlers, CLI, tests) construct a `BuildLayout` from the inputs
+/// they have, then ask it to resolve the on-disk path. The pipeline
+/// reads the resolved path off `BuildParams` instead of re-deriving
+/// it, which is why this struct exists rather than a free function.
+///
+/// Resolution precedence:
+///
+/// 1. `override_root` (an explicit per-request override from the HTTP
+///    API). Treated as the env-rooted dir base.
+/// 2. `FBUILD_BUILD_DIR` env var (process-wide override, primarily for
+///    Windows long-path workarounds).
+/// 3. `<project_dir>/.fbuild/build` (the default).
+///
+/// The `<env>/<profile>` segments are appended on top of whichever
+/// root was selected, *unless* `flatten_env` is true or the
+/// project_dir's basename already equals `env_name` — in which case
+/// the `<env>` segment is dropped to avoid path duplication like
+/// `.build/pio/teensy40/.fbuild/build/teensy40/release/`. See
+/// FastLED/fbuild#432.
+#[derive(Debug, Clone)]
+pub struct BuildLayout {
+    pub project_dir: PathBuf,
+    pub env_name: String,
+    pub profile: BuildProfile,
+    /// Explicit per-request override of the build root. When `Some`,
+    /// takes precedence over `FBUILD_BUILD_DIR` and the default.
+    pub override_root: Option<PathBuf>,
+    /// When true, the resolved path is `<root>/<profile>` — the `<env>`
+    /// segment is dropped. Embedders that already name their project
+    /// dir after the env (FastLED's `.build/pio/<board>/` convention)
+    /// should set this to keep paths short.
+    pub flatten_env: bool,
+}
+
+impl BuildLayout {
+    /// Construct a layout with the standard defaults (no override,
+    /// flatten only when project basename auto-matches env).
+    pub fn new(project_dir: PathBuf, env_name: String, profile: BuildProfile) -> Self {
+        Self {
+            project_dir,
+            env_name,
+            profile,
+            override_root: None,
+            flatten_env: false,
+        }
+    }
+
+    /// Builder: set an explicit per-request root override.
+    pub fn with_override_root(mut self, root: Option<PathBuf>) -> Self {
+        self.override_root = root;
+        self
+    }
+
+    /// Builder: force-flatten the `<env>` segment.
+    pub fn with_flatten_env(mut self, flatten: bool) -> Self {
+        self.flatten_env = flatten;
+        self
+    }
+
+    /// True when the project directory's basename already matches the
+    /// env name, so appending `<env>/` would duplicate the segment.
+    /// This is the FastLED `.build/pio/<board>/` shape.
+    pub fn project_basename_matches_env(&self) -> bool {
+        self.project_dir
+            .file_name()
+            .and_then(|s| s.to_str())
+            .map(|name| name == self.env_name)
+            .unwrap_or(false)
+    }
+
+    /// Resolve the env-rooted build directory.
+    pub fn resolve(&self) -> PathBuf {
+        let root = if let Some(ref r) = self.override_root {
+            r.clone()
+        } else if let Ok(dir) = std::env::var("FBUILD_BUILD_DIR") {
+            PathBuf::from(dir)
+        } else {
+            get_project_fbuild_dir(&self.project_dir).join("build")
+        };
+
+        let collapse_env = self.flatten_env || self.project_basename_matches_env();
+
+        let with_env = if collapse_env {
+            root
+        } else {
+            root.join(&self.env_name)
+        };
+        with_env.join(self.profile.as_dir_name())
+    }
+}
+
 /// Read and validate a port number from a port file.
 fn read_port_from_file(path: &Path) -> Option<u16> {
     let content = std::fs::read_to_string(path).ok()?;
@@ -149,8 +246,8 @@ pub fn get_platformio_package(package_name: &str) -> PathBuf {
     get_platformio_home().join("packages").join(package_name)
 }
 
-/// Build profile names, ordered by preference for firmware discovery.
-const BUILD_PROFILES: &[&str] = &["release", "quick"];
+/// Build profiles enumerated in firmware-discovery preference order.
+const BUILD_PROFILE_ORDER: &[BuildProfile] = &[BuildProfile::Release, BuildProfile::Quick];
 
 /// Firmware file names, ordered by preference.
 const FIRMWARE_NAMES: &[&str] = &["firmware.bin", "firmware.hex", "firmware.elf"];
@@ -159,6 +256,10 @@ const FIRMWARE_NAMES: &[&str] = &["firmware.bin", "firmware.hex", "firmware.elf"
 ///
 /// Searches profile subdirectories (release, quick) first, then the base
 /// environment directory, then the legacy `.pio/build` directory.
+///
+/// Layout discovery routes through [`BuildLayout`] so it tracks exactly
+/// where production wrote the artifact — including the env-segment
+/// auto-collapse used for the FastLED `.build/pio/<board>/` shape.
 ///
 /// If `firmware_name` is `None`, searches for all known firmware names
 /// in preference order.
@@ -172,16 +273,24 @@ pub fn find_firmware(
         None => FIRMWARE_NAMES.to_vec(),
     };
 
-    let base_build_dir = get_project_build_root(project_dir).join(env_name);
+    let mut search_dirs: Vec<PathBuf> = Vec::new();
+    for profile in BUILD_PROFILE_ORDER {
+        let layout = BuildLayout::new(project_dir.to_path_buf(), env_name.to_string(), *profile);
+        search_dirs.push(layout.resolve());
+    }
+    // Also probe the env dir itself (no profile subdir) — covers
+    // legacy fbuild layouts and the rare orchestrator that drops
+    // firmware one level up.
+    let env_dir_layout = BuildLayout::new(
+        project_dir.to_path_buf(),
+        env_name.to_string(),
+        BuildProfile::Release,
+    );
+    if let Some(env_dir) = env_dir_layout.resolve().parent() {
+        search_dirs.push(env_dir.to_path_buf());
+    }
 
-    // Check profile subdirectories first (release, quick), then base env dir
-    let mut search_dirs: Vec<PathBuf> = BUILD_PROFILES
-        .iter()
-        .map(|profile| base_build_dir.join(profile))
-        .collect();
-    search_dirs.push(base_build_dir);
-
-    // Also check legacy .pio/build location
+    // Legacy PlatformIO output: `.pio/build/<env>/`.
     search_dirs.push(project_dir.join(".pio").join("build").join(env_name));
 
     for search_dir in &search_dirs {
@@ -315,6 +424,36 @@ mod tests {
         std::fs::remove_dir_all(&tmp).ok();
     }
 
+    /// Regression: FastLED stages each board's project under
+    /// `<repo>/.build/pio/<board>/` and asks fbuild to build it with
+    /// `env == board`. The on-disk layout must collapse the duplicate
+    /// `<board>` segment, and `find_firmware` must still locate the
+    /// firmware in that collapsed layout. See FastLED/fbuild#432.
+    #[test]
+    fn find_firmware_in_collapsed_layout_when_basename_matches_env() {
+        let tmp = std::env::temp_dir().join("fbuild_test_find_fw_collapsed");
+        let _ = std::fs::remove_dir_all(&tmp);
+        let project_dir = tmp.join(".build").join("pio").join("teensy40");
+        // Collapsed layout: `<project_dir>/.fbuild/build/release/` —
+        // NO extra `teensy40/` segment.
+        let fw_dir = project_dir.join(".fbuild").join("build").join("release");
+        std::fs::create_dir_all(&fw_dir).unwrap();
+        std::fs::write(fw_dir.join("firmware.hex"), b"fake").unwrap();
+
+        let result = find_firmware(&project_dir, "teensy40", None).unwrap();
+        // The duplicated `teensy40` segment must NOT appear between
+        // `.fbuild/build/` and `release/`.
+        let s = result.to_string_lossy().to_string();
+        assert!(s.contains(".fbuild"));
+        assert!(s.contains("release"));
+        assert!(
+            !s.contains("build/teensy40/release") && !s.contains("build\\teensy40\\release"),
+            "find_firmware returned a duplicated-env path: {s}"
+        );
+
+        std::fs::remove_dir_all(&tmp).ok();
+    }
+
     #[test]
     fn find_firmware_legacy_pio_build() {
         let tmp = std::env::temp_dir().join("fbuild_test_find_fw_pio");
@@ -339,5 +478,81 @@ mod tests {
     fn platformio_package_appends_packages_subdir() {
         let pkg = get_platformio_package("tool-avrdude");
         assert!(pkg.ends_with("packages/tool-avrdude") || pkg.ends_with("packages\\tool-avrdude"));
+    }
+
+    // --- BuildLayout ---
+
+    #[test]
+    fn build_layout_default_includes_env_and_profile() {
+        let project = PathBuf::from("/work/sketch");
+        let layout = BuildLayout::new(project.clone(), "esp32dev".into(), BuildProfile::Release);
+        let resolved = layout.resolve();
+        // Either: <project>/.fbuild/build/esp32dev/release
+        //     or: $FBUILD_BUILD_DIR/esp32dev/release (when env var is set in CI).
+        // Both must end with esp32dev/release.
+        assert!(
+            resolved.ends_with(PathBuf::from("esp32dev").join("release")),
+            "default layout must end with <env>/<profile>, got: {}",
+            resolved.display()
+        );
+    }
+
+    #[test]
+    fn build_layout_override_root_takes_precedence() {
+        let project = PathBuf::from("/work/sketch");
+        let override_root = PathBuf::from("/tmp/short-build-dir");
+        let layout = BuildLayout::new(project, "uno".into(), BuildProfile::Quick)
+            .with_override_root(Some(override_root.clone()));
+        let resolved = layout.resolve();
+        assert_eq!(resolved, override_root.join("uno").join("quick"));
+    }
+
+    /// When project_dir's basename already matches env_name, the env
+    /// segment is collapsed automatically. This is the FastLED
+    /// `.build/pio/<board>/` case that this refactor exists to fix.
+    /// See FastLED/fbuild#432.
+    #[test]
+    fn build_layout_auto_collapses_when_project_basename_matches_env() {
+        let project = PathBuf::from("/repo/.build/pio/teensy40");
+        let layout = BuildLayout::new(project, "teensy40".into(), BuildProfile::Release);
+        // The override path is used so the test isn't perturbed by
+        // FBUILD_BUILD_DIR in the surrounding environment.
+        let layout = layout.with_override_root(Some(PathBuf::from("/tmp/root")));
+        let resolved = layout.resolve();
+        assert_eq!(resolved, PathBuf::from("/tmp/root/release"));
+        // The duplicated teensy40 segment must NOT appear.
+        assert!(!resolved.to_string_lossy().contains("teensy40"));
+    }
+
+    #[test]
+    fn build_layout_explicit_flatten_env_drops_env_segment() {
+        let project = PathBuf::from("/repo/sketch");
+        let layout = BuildLayout::new(project, "esp32dev".into(), BuildProfile::Release)
+            .with_override_root(Some(PathBuf::from("/tmp/root")))
+            .with_flatten_env(true);
+        let resolved = layout.resolve();
+        assert_eq!(resolved, PathBuf::from("/tmp/root/release"));
+    }
+
+    #[test]
+    fn build_layout_project_basename_mismatch_keeps_env() {
+        let project = PathBuf::from("/repo/sketch_dir");
+        let layout = BuildLayout::new(project, "esp32dev".into(), BuildProfile::Release)
+            .with_override_root(Some(PathBuf::from("/tmp/root")));
+        let resolved = layout.resolve();
+        assert_eq!(resolved, PathBuf::from("/tmp/root/esp32dev/release"));
+    }
+
+    #[test]
+    fn build_layout_profile_dir_name_matches_buildprofile() {
+        let project = PathBuf::from("/p");
+        let release = BuildLayout::new(project.clone(), "e".into(), BuildProfile::Release)
+            .with_override_root(Some(PathBuf::from("/r")))
+            .resolve();
+        let quick = BuildLayout::new(project, "e".into(), BuildProfile::Quick)
+            .with_override_root(Some(PathBuf::from("/r")))
+            .resolve();
+        assert!(release.ends_with("release"));
+        assert!(quick.ends_with("quick"));
     }
 }
