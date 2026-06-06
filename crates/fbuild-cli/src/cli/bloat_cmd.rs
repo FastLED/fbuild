@@ -1,8 +1,12 @@
-//! `fbuild symbols` — standalone fine-grained per-symbol bloat report.
+//! `fbuild bloat` — standalone fine-grained per-symbol bloat report.
 //!
-//! Accepts either an ELF or a project directory; runs the same
-//! analysis the build orchestrator's `--symbol-analysis` flag emits,
-//! but on any ELF the user points at — including one built by
+//! Aligns with `cargo bloat` / Google's `bloaty` for vocabulary. The
+//! legacy CLI spelling `fbuild symbols` is still accepted via clap
+//! alias for back-compat through 2.3.x.
+//!
+//! Accepts either a project directory (preferred) or an ELF; runs the
+//! same analysis the build orchestrator's `--symbol-analysis` flag
+//! emits, but on any ELF the user points at — including one built by
 //! PlatformIO or another out-of-band tool.
 //!
 //! Toolchain resolution (see #428):
@@ -24,7 +28,7 @@ use fbuild_build::symbol_analyzer::{
 use fbuild_core::{FbuildError, Result};
 
 #[allow(clippy::too_many_arguments)]
-pub fn run_symbols(
+pub fn run_bloat(
     input: String,
     map: Option<String>,
     nm: Option<String>,

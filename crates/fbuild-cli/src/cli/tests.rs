@@ -157,3 +157,26 @@ fn compile_many_diag_stage2_flag_is_accepted() {
         _ => panic!("expected CompileMany subcommand"),
     }
 }
+
+/// #438: `fbuild bloat .` parses as the new canonical name.
+#[test]
+fn bloat_command_parses() {
+    let argv = ["fbuild", "bloat", "."];
+    let cli = Cli::try_parse_from(argv).expect("parse");
+    match cli.command {
+        Some(Commands::Bloat { input, .. }) => assert_eq!(input, "."),
+        _ => panic!("expected Bloat subcommand"),
+    }
+}
+
+/// #438: `fbuild symbols .` still works through the clap alias for
+/// back-compat. Deprecation lands in 2.4.0.
+#[test]
+fn symbols_alias_still_parses_as_bloat() {
+    let argv = ["fbuild", "symbols", "."];
+    let cli = Cli::try_parse_from(argv).expect("parse");
+    match cli.command {
+        Some(Commands::Bloat { input, .. }) => assert_eq!(input, "."),
+        _ => panic!("expected Bloat subcommand (via `symbols` alias)"),
+    }
+}
