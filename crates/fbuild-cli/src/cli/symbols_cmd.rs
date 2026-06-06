@@ -4,20 +4,32 @@
 //! analysis the build orchestrator's `--symbol-analysis` flag emits,
 //! but on any ELF the user points at — including one built by
 //! PlatformIO or another out-of-band tool.
+//!
+//! Toolchain resolution (see #428):
+//!   1. `--nm` / `--cppfilt` CLI flags (user wins).
+//!   2. `--build-info <path>` if provided — `nm_path` / `cppfilt_path`
+//!      read from that file.
+//!   3. Auto-discovery: walk up from the ELF directory looking for
+//!      `build_info.json` or `build_info_<env>.json`.
+//!   4. PATH-based lookup of `nm`, with `c++filt` derived by stem.
+//!   5. Hard error.
 
 use std::path::{Path, PathBuf};
 
+use fbuild_build::build_info::{find_build_info_near, load_build_info};
 use fbuild_build::symbol_analyzer::{
     analyze_elf, default_map_path, derive_cppfilt_path, discover_elf_in_project,
     format_markdown_report, format_text_report, AnalyzeConfig,
 };
 use fbuild_core::{FbuildError, Result};
 
+#[allow(clippy::too_many_arguments)]
 pub fn run_symbols(
     input: String,
     map: Option<String>,
     nm: Option<String>,
     cppfilt: Option<String>,
+    build_info: Option<String>,
     json_out: Option<String>,
     output_dir: Option<String>,
     top: usize,
@@ -32,25 +44,24 @@ pub fn run_symbols(
 
     let elf_path = resolve_elf(&input_path)?;
 
-    let nm_path = match nm {
-        Some(p) => PathBuf::from(p),
-        None => find_nm_on_path()?,
-    };
+    let tool_paths = ToolPaths::resolve(
+        &elf_path,
+        nm.as_deref(),
+        cppfilt.as_deref(),
+        build_info.as_deref(),
+    )?;
+    let nm_path = tool_paths.nm;
+    let cppfilt_path = tool_paths.cppfilt;
     if !nm_path.exists() {
         return Err(FbuildError::BuildFailed(format!(
-            "nm not found at {}",
+            "nm not found at {}\n\
+             Resolution searched: --nm flag → --build-info → \
+             build_info.json near ELF → PATH.\n\
+             Pass --nm explicitly to point at a cross-toolchain nm,\n\
+             or run `fbuild build` first so build_info.json carries nm_path.",
             nm_path.display()
         )));
     }
-
-    let cppfilt_path = cppfilt.map(PathBuf::from).or_else(|| {
-        let derived = derive_cppfilt_path(&nm_path);
-        if derived.exists() {
-            Some(derived)
-        } else {
-            None
-        }
-    });
 
     let map_path_owned = map
         .map(PathBuf::from)
@@ -164,4 +175,171 @@ fn find_nm_on_path() -> Result<PathBuf> {
     Err(FbuildError::BuildFailed(format!(
         "{exe_name} not found on PATH; pass --nm to point at a cross toolchain nm"
     )))
+}
+
+/// Resolved toolchain paths for the symbol analyzer.
+struct ToolPaths {
+    nm: PathBuf,
+    cppfilt: Option<PathBuf>,
+}
+
+impl ToolPaths {
+    /// Resolve `nm` / `c++filt` using the precedence documented in the
+    /// module header. `build_info_arg` is the explicit `--build-info`
+    /// path; when absent, walk up from `elf_path`.
+    fn resolve(
+        elf_path: &Path,
+        nm: Option<&str>,
+        cppfilt: Option<&str>,
+        build_info_arg: Option<&str>,
+    ) -> Result<Self> {
+        // Try the build_info source (explicit flag wins over auto-discovery).
+        let build_info_path = build_info_arg
+            .map(PathBuf::from)
+            .or_else(|| elf_path.parent().and_then(find_build_info_near));
+
+        let (bi_nm, bi_cppfilt) = match build_info_path {
+            Some(path) => match load_build_info(&path) {
+                Ok((_env, info)) => {
+                    tracing::info!("symbols: read toolchain paths from {}", path.display());
+                    (option_path(&info.nm_path), option_path(&info.cppfilt_path))
+                }
+                Err(e) => {
+                    tracing::warn!(
+                        "symbols: ignoring {}: {} (falling back to PATH)",
+                        path.display(),
+                        e
+                    );
+                    (None, None)
+                }
+            },
+            None => (None, None),
+        };
+
+        let nm = match nm {
+            Some(p) => PathBuf::from(p),
+            None => match bi_nm {
+                Some(p) => p,
+                None => find_nm_on_path()?,
+            },
+        };
+
+        let cppfilt = match cppfilt {
+            Some(p) => Some(PathBuf::from(p)),
+            None => bi_cppfilt.or_else(|| {
+                let derived = derive_cppfilt_path(&nm);
+                if derived.exists() {
+                    Some(derived)
+                } else {
+                    None
+                }
+            }),
+        };
+
+        Ok(Self { nm, cppfilt })
+    }
+}
+
+/// Treat an empty BuildInfo string field (the schema's "missing"
+/// sentinel) as `None`.
+fn option_path(s: &str) -> Option<PathBuf> {
+    if s.is_empty() {
+        None
+    } else {
+        Some(PathBuf::from(s))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use fbuild_build::build_info::{emit_build_info, BuildInfo};
+
+    fn dummy_build_info(nm: &str, cppfilt: &str) -> BuildInfo {
+        // size_path drives the four derived tool paths; pretend size has
+        // a name that won't match anything on disk so derivation alone
+        // doesn't fool the test — we explicitly override nm/cppfilt below.
+        let mut info = BuildInfo::new(
+            Path::new("/build/firmware.elf"),
+            Some(Path::new("/bin/gcc")),
+            Some(Path::new("/bin/g++")),
+            None,
+            None,
+            Path::new("/bin/size"),
+            vec![],
+            vec![],
+            vec![],
+            vec![],
+            "test".to_string(),
+            "test".to_string(),
+            "test".to_string(),
+        );
+        info.nm_path = nm.to_string();
+        info.cppfilt_path = cppfilt.to_string();
+        info
+    }
+
+    /// #428: when `build_info.json` lives near the ELF and carries
+    /// `nm_path`, the symbols CLI must pick it up automatically.
+    #[test]
+    fn resolve_reads_nm_from_build_info_auto_discovery() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let project = tmp.path();
+        let build_dir = project.join(".fbuild").join("build").join("uno");
+        std::fs::create_dir_all(&build_dir).unwrap();
+        let elf = build_dir.join("firmware.elf");
+        std::fs::write(&elf, b"\x7fELF").unwrap();
+
+        // We point nm_path at a file that actually exists on disk so the
+        // resolver doesn't later trip the existence check.
+        let nm_file = project.join("fake-nm");
+        std::fs::write(&nm_file, b"#!/bin/false\n").unwrap();
+        let info = dummy_build_info(&nm_file.to_string_lossy(), "");
+        emit_build_info(project, "uno", &info).unwrap();
+
+        let tools = ToolPaths::resolve(&elf, None, None, None).unwrap();
+        assert_eq!(tools.nm, nm_file);
+    }
+
+    /// Explicit `--nm` overrides whatever build_info.json says.
+    #[test]
+    fn resolve_explicit_nm_wins_over_build_info() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let project = tmp.path();
+        let elf = project.join("firmware.elf");
+        std::fs::write(&elf, b"\x7fELF").unwrap();
+
+        // build_info points at one nm…
+        let bi_nm = project.join("from-buildinfo");
+        std::fs::write(&bi_nm, b"x").unwrap();
+        let info = dummy_build_info(&bi_nm.to_string_lossy(), "");
+        emit_build_info(project, "uno", &info).unwrap();
+
+        // …user overrides with --nm pointing at a different one.
+        let cli_nm = project.join("from-cli");
+        std::fs::write(&cli_nm, b"x").unwrap();
+
+        let tools = ToolPaths::resolve(&elf, Some(cli_nm.to_str().unwrap()), None, None).unwrap();
+        assert_eq!(tools.nm, cli_nm);
+    }
+
+    /// `--build-info <path>` is honoured even when the ELF isn't under
+    /// the project containing build_info.json.
+    #[test]
+    fn resolve_explicit_build_info_path_is_honoured() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let elf = tmp.path().join("firmware.elf");
+        std::fs::write(&elf, b"\x7fELF").unwrap();
+
+        let bi_dir = tmp.path().join("elsewhere");
+        std::fs::create_dir_all(&bi_dir).unwrap();
+        let nm_file = bi_dir.join("nm-from-explicit");
+        std::fs::write(&nm_file, b"x").unwrap();
+        let info = dummy_build_info(&nm_file.to_string_lossy(), "");
+        emit_build_info(&bi_dir, "uno", &info).unwrap();
+
+        let bi_path = bi_dir.join("build_info.json");
+        let tools = ToolPaths::resolve(&elf, None, None, Some(bi_path.to_str().unwrap())).unwrap();
+        assert_eq!(tools.nm, nm_file);
+    }
 }

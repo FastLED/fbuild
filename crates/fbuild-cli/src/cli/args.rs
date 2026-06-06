@@ -90,13 +90,22 @@ pub enum Commands {
         /// Path to the linker map (auto-detected if omitted).
         #[arg(long)]
         map: Option<String>,
-        /// Path to `nm` (auto-detected from PATH if omitted; pass the
-        /// cross-tool, e.g. `xtensa-esp32s3-elf-nm`).
+        /// Path to `nm` (highest precedence; pass the cross-tool, e.g.
+        /// `xtensa-esp32s3-elf-nm`). When omitted, fbuild reads
+        /// `nm_path` from `build_info.json` (auto-located near the ELF
+        /// or via `--build-info`), then falls back to PATH lookup.
         #[arg(long)]
         nm: Option<String>,
-        /// Path to `c++filt` (auto-derived from `nm` path if omitted).
+        /// Path to `c++filt` (highest precedence). When omitted, fbuild
+        /// reads `cppfilt_path` from `build_info.json`, then derives it
+        /// from the resolved nm path.
         #[arg(long = "cppfilt")]
         cppfilt: Option<String>,
+        /// Path to a `build_info.json` (or `build_info_<env>.json`) that
+        /// carries toolchain paths. When omitted, fbuild walks up from
+        /// the ELF directory looking for one. See #428.
+        #[arg(long = "build-info")]
+        build_info: Option<String>,
         /// Write structured report to PATH as JSON instead of the text
         /// table. Mutually compatible with `--output-dir`.
         #[arg(long)]

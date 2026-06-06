@@ -28,6 +28,7 @@ For a full FAQ-style index of every doc in this repo (human + LLM entry point), 
 - **[BOARD_STATUS.md](BOARD_STATUS.md)** - Per-platform CI badges and supported boards
 - **[DEVELOPMENT.md](DEVELOPMENT.md)** - Testing, troubleshooting, local setup
 - **[CI_CACHE.md](CI_CACHE.md)** - Consumer-facing cross-run CI cache strategy
+- **[symbols.md](symbols.md)** - `fbuild symbols` per-symbol bloat analysis (toolchain auto-resolve from build_info.json, #428)
 - **[DESIGN_DECISIONS.md](DESIGN_DECISIONS.md)** - ADR-style decisions with rationale
 - **[ROADMAP.md](ROADMAP.md)** - Implementation phases
 - **[ARCHITECTURE.md](ARCHITECTURE.md)** - Index of all architecture documents
