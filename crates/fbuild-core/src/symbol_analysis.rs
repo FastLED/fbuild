@@ -135,7 +135,7 @@ pub fn extract_archive_and_object(src: &str) -> (Option<String>, String) {
         let archive_end = open + 2; // include ".a"
         let archive_path = &trimmed[..archive_end];
         let archive = archive_path
-            .rsplit(|c| c == '/' || c == '\\')
+            .rsplit(['/', '\\'])
             .next()
             .unwrap_or(archive_path)
             .to_string();
@@ -149,7 +149,7 @@ pub fn extract_archive_and_object(src: &str) -> (Option<String>, String) {
     }
     // Form B: ".../<file>.o" — no archive, just an object on disk.
     let basename = trimmed
-        .rsplit(|c| c == '/' || c == '\\')
+        .rsplit(['/', '\\'])
         .next()
         .unwrap_or(trimmed)
         .to_string();
@@ -310,7 +310,7 @@ impl InputSectionIndex {
     pub fn lookup(&self, addr: u64) -> Option<&InputSectionRange> {
         let (_, &idx) = self.by_start.range(..=addr).next_back()?;
         let r = &self.ranges[idx];
-        if addr < r.addr.checked_add(r.size).unwrap_or(u64::MAX) {
+        if addr < r.addr.saturating_add(r.size) {
             Some(r)
         } else {
             None
@@ -334,7 +334,11 @@ pub fn rollup_sections(ranges: &[InputSectionRange]) -> Vec<SectionBytes> {
         if !is_firmware_section(&r.output_section) {
             continue;
         }
-        let key = (r.archive.clone(), r.object.clone(), r.output_section.clone());
+        let key = (
+            r.archive.clone(),
+            r.object.clone(),
+            r.output_section.clone(),
+        );
         *acc.entry(key).or_insert(0) += r.size;
     }
     let mut out: Vec<SectionBytes> = acc
@@ -455,9 +459,7 @@ mod tests {
 
     #[test]
     fn extract_bare_object_no_archive() {
-        let (arc, obj) = extract_archive_and_object(
-            ".pio/build/esp32s3/src/main.cpp.o",
-        );
+        let (arc, obj) = extract_archive_and_object(".pio/build/esp32s3/src/main.cpp.o");
         assert!(arc.is_none());
         assert_eq!(obj, "main.cpp.o");
     }
@@ -557,7 +559,12 @@ Linker script and memory map
             archive: Some("libFastLED.a".into()),
             object: "fl.channels.cpp.o".into(),
         }];
-        let nm = vec![(0x42000020u64, 0x40u64, 'T', "_ZN2fl7Channel10showPixelsERS_".to_string())];
+        let nm = vec![(
+            0x42000020u64,
+            0x40u64,
+            'T',
+            "_ZN2fl7Channel10showPixelsERS_".to_string(),
+        )];
         let demangled = vec!["fl::Channel::showPixels(fl::Channel&)".to_string()];
         let map = build_fine_grained_map(
             "fw.elf".into(),
