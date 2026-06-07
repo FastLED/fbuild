@@ -1,4 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.10"
+# ///
 """SessionStart hook: captures repo state fingerprint.
 
 Saves a fingerprint of the current git status so the Stop hook
