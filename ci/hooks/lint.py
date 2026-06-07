@@ -21,6 +21,9 @@ from pathlib import Path
 SCRIPT_DIR = Path(__file__).parent.resolve()
 PROJECT_ROOT = SCRIPT_DIR.parent.parent
 
+sys.path.insert(0, str(SCRIPT_DIR))
+from _output import truncate_output  # noqa: E402
+
 
 def main():
     try:
@@ -62,9 +65,9 @@ def main():
         rel_path = os.path.relpath(file_path, str(PROJECT_ROOT))
         print(f"Lint violations in {rel_path}:", file=sys.stderr)
         if result.stdout.strip():
-            print(result.stdout.strip(), file=sys.stderr)
+            print(truncate_output(result.stdout.strip()), file=sys.stderr)
         if result.stderr.strip():
-            print(result.stderr.strip(), file=sys.stderr)
+            print(truncate_output(result.stderr.strip()), file=sys.stderr)
         return 2
 
     return 0

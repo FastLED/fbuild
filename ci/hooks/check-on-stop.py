@@ -30,6 +30,9 @@ SCRIPT_DIR = Path(__file__).parent.resolve()
 PROJECT_ROOT = SCRIPT_DIR.parent.parent
 SESSION_FINGERPRINT_FILE = PROJECT_ROOT / ".cache" / "session_fingerprint.json"
 
+sys.path.insert(0, str(SCRIPT_DIR))
+from _output import truncate_output  # noqa: E402
+
 # Repo-root files whose change forces a workspace-wide lint+test —
 # they affect every crate (cross-crate deps, toolchain pin, lint config).
 WORKSPACE_TRIGGER_FILES = frozenset({
@@ -61,9 +64,9 @@ def run_cmd(cmd):
 def report_failure(label, result):
     print(f"{label}:", file=sys.stderr)
     if result.stdout.strip():
-        print(result.stdout.strip(), file=sys.stderr)
+        print(truncate_output(result.stdout.strip()), file=sys.stderr)
     if result.stderr.strip():
-        print(result.stderr.strip(), file=sys.stderr)
+        print(truncate_output(result.stderr.strip()), file=sys.stderr)
 
 
 def get_current_fingerprint():
