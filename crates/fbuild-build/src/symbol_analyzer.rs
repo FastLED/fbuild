@@ -13,6 +13,7 @@ use std::path::{Path, PathBuf};
 use std::collections::BTreeMap;
 
 use fbuild_core::subprocess::run_command_with_stdin;
+use fbuild_core::symbol_analysis::graph::{rank_callees_dual, Direction};
 use fbuild_core::symbol_analysis::{
     build_fine_grained_map_with_synth, collect_map_derived_owners, parse_cref_table,
     parse_linker_map, parse_nm_output, sanitize_filename, BackrefGraph, FineGrainedSymbolMap,
@@ -190,6 +191,12 @@ pub struct AnalyzeConfig<'a> {
     pub map_path: Option<&'a Path>,
     pub nm_path: &'a Path,
     pub cppfilt_path: Option<&'a Path>,
+    /// Optional objdump used to populate per-symbol forward refs
+    /// (`references_to`). When absent, the analyzer skips the
+    /// forward-call extraction and leaves `references_to` empty —
+    /// existing backref-only consumers don't see a behaviour change.
+    /// Wire from `build_info.json::objdump_path` (#428).
+    pub objdump_path: Option<&'a Path>,
 }
 
 /// Run nm + c++filt + map-file parse and return the fully-attributed
@@ -298,7 +305,80 @@ pub fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap> {
             );
         }
     }
+
+    // #471: per-symbol forward edges from `objdump -d`. When the
+    // analyzer was wired with an objdump path (typically from
+    // build_info.json::objdump_path), run it once on the linked ELF
+    // and pull `<callee>` annotations out of the disassembly. The
+    // resulting per-symbol callee map populates each row's
+    // `references_to` field, which the bidirectional graph + the
+    // dual-ranked callees sub-table consume. Failures are non-fatal
+    // — we'd rather ship a report without forward edges than fail
+    // the whole symbol-analysis post-link step.
+    if let Some(objdump_path) = cfg.objdump_path {
+        match run_objdump_and_attribute(objdump_path, cfg.elf_path, &mut map) {
+            Ok(edge_count) => {
+                tracing::info!(
+                    "objdump: extracted {edge_count} forward edges from {}",
+                    cfg.elf_path.display()
+                );
+            }
+            Err(e) => {
+                tracing::warn!(
+                    "objdump forward-edge extraction failed for {} ({e}); \
+                     references_to will be empty",
+                    cfg.elf_path.display()
+                );
+            }
+        }
+    }
+
     Ok(map)
+}
+
+/// Run `objdump -d --no-show-raw-insn <elf>` and populate
+/// `references_to` on every symbol in `map` that the parser found
+/// outgoing call edges for. Returns the total edge count surfaced
+/// (across all symbols) so the caller can log a one-liner.
+fn run_objdump_and_attribute(
+    objdump_path: &Path,
+    elf_path: &Path,
+    map: &mut FineGrainedSymbolMap,
+) -> Result<usize> {
+    use fbuild_core::subprocess::run_command;
+    use fbuild_core::symbol_analysis::callgraph::parse_disasm;
+
+    let objdump_s = objdump_path.to_string_lossy().to_string();
+    let elf_s = elf_path.to_string_lossy().to_string();
+    let args = [
+        objdump_s.as_str(),
+        "-d",
+        "--no-show-raw-insn",
+        elf_s.as_str(),
+    ];
+    let result = run_command(&args, None, None, None)?;
+    if !result.success() {
+        return Err(FbuildError::BuildFailed(format!(
+            "objdump exit={}: {}",
+            result.exit_code, result.stderr
+        )));
+    }
+
+    let edges = parse_disasm(&result.stdout);
+    let mut total = 0usize;
+    for sym in &mut map.symbols {
+        if let Some(callees) = edges.get(&sym.mangled) {
+            sym.references_to = callees.clone();
+            total += callees.len();
+        } else if let Some(callees) = edges.get(&sym.demangled) {
+            // Some toolchains demangle in-place when emitting the
+            // disassembly, so the function header uses the demangled
+            // name. Match against either.
+            sym.references_to = callees.clone();
+            total += callees.len();
+        }
+    }
+    Ok(total)
 }
 
 /// Format a fine-grained per-symbol map as a human-readable text report
@@ -584,14 +664,25 @@ fn emit_backref_graph_section(
     }
     let _ = writeln!(
         out,
-        "## Top {limit} back-reference graphs\n\n\
-         For each symbol below, the embedded `dot` block traces \"who pulled \
-         this in?\" outward from the symbol's `referenced_by` data. \
-         See fbuild #463 for the walker design (cross-archive termination + \
-         fan-out cap + collapse rules)."
+        "## Top {limit} symbol graphs\n\n\
+         For each symbol below: a bidirectional `dot` block (callers on \
+         the back-edge side, callees on the forward-edge side), plus a \
+         dual-ranked \"Top callees\" sub-table. The forward edges come \
+         from per-symbol `references_to` (objdump-derived), so the AI \
+         can tell what `ClocklessIdf5` actually calls vs. what its \
+         sibling symbols call. See fbuild #463 (backref walker) + \
+         #471 (forward edges)."
     );
     let _ = writeln!(out);
     let index = TuIndex::build(map);
+    // Per-symbol section: use a bidirectional config so the graph
+    // surfaces both axes when forward data is available. If
+    // references_to is empty on every row (older fbuild build with no
+    // objdump in the chain), the bidirectional walker degenerates
+    // gracefully into the same picture the backref-only config would
+    // have rendered.
+    let mut bidir_cfg = graph_opts.config.clone();
+    bidir_cfg.direction = Direction::Bidirectional;
     for (rank, s) in syms.iter().take(limit).enumerate() {
         let archive = s.archive.as_deref().unwrap_or("(none)");
         let object = s.object.as_deref().unwrap_or("-");
@@ -607,10 +698,21 @@ fn emit_backref_graph_section(
         let _ = writeln!(out, "- **Object**: `{object}`");
         let _ = writeln!(out, "- **Section**: `{sect}`");
         let _ = writeln!(out, "- **Referenced by**: {} TUs", s.referenced_by.len());
+        let _ = writeln!(
+            out,
+            "- **References (calls)**: {} symbols",
+            s.references_to.len()
+        );
         let _ = writeln!(out);
-        let graph = BackrefGraph::build_with_index(map, &index, &s.mangled, &graph_opts.config);
+
+        emit_dual_callees_subtable(out, map, s);
+
+        let graph = BackrefGraph::build_with_index(map, &index, &s.mangled, &bidir_cfg);
         let _ = writeln!(out, "<details>");
-        let _ = writeln!(out, "<summary>Back-reference graph (Graphviz)</summary>");
+        let _ = writeln!(
+            out,
+            "<summary>Bidirectional graph (callers ← root → callees, Graphviz)</summary>"
+        );
         let _ = writeln!(out);
         let _ = writeln!(out, "```dot");
         out.push_str(&graph.to_dot());
@@ -619,6 +721,80 @@ fn emit_backref_graph_section(
         let _ = writeln!(out, "</details>");
         let _ = writeln!(out);
     }
+}
+
+/// Emit the "Top callees" sub-table for one symbol: two side-by-side
+/// rankings (by callee flash bytes, by how widely the callee is
+/// shared) plus an `(… and N more)` other-bucket row when applicable.
+/// This is the data the user asked for in #471 so an AI optimization
+/// pass sees a symbol's actual heavy hitters, not just the symbol
+/// itself.
+fn emit_dual_callees_subtable(
+    out: &mut String,
+    map: &FineGrainedSymbolMap,
+    caller: &fbuild_core::symbol_analysis::FineGrainedSymbol,
+) {
+    use std::fmt::Write as _;
+    if caller.references_to.is_empty() {
+        let _ = writeln!(
+            out,
+            "_No forward-call data for this symbol — either the \
+             analyzer wasn't wired with an objdump or the symbol \
+             contains no recognised call instructions (data / weak \
+             ref / vtable-only dispatch)._"
+        );
+        let _ = writeln!(out);
+        return;
+    }
+    let (by_size, by_pop, other) = rank_callees_dual(map, caller, 3);
+    let _ = writeln!(out, "#### Top callees (dual ranking)");
+    let _ = writeln!(out);
+    let _ = writeln!(
+        out,
+        "| # | by callee size (B) | shared × | by callees \
+         shared with (×) | size (B) |"
+    );
+    let _ = writeln!(out, "|---:|---|---:|---|---:|");
+    for i in 0..3 {
+        let size_cell = by_size
+            .get(i)
+            .map(|c| format!("`{}` — {} B", c.demangled.replace('|', "\\|"), c.size))
+            .unwrap_or_else(|| "—".into());
+        let size_shared = by_size
+            .get(i)
+            .map(|c| c.callers_count.to_string())
+            .unwrap_or_else(|| "—".into());
+        let pop_cell = by_pop
+            .get(i)
+            .map(|c| {
+                format!(
+                    "`{}` — shared ×{}",
+                    c.demangled.replace('|', "\\|"),
+                    c.callers_count
+                )
+            })
+            .unwrap_or_else(|| "—".into());
+        let pop_size = by_pop
+            .get(i)
+            .map(|c| c.size.to_string())
+            .unwrap_or_else(|| "—".into());
+        let _ = writeln!(
+            out,
+            "| {} | {} | {} | {} | {} |",
+            i + 1,
+            size_cell,
+            size_shared,
+            pop_cell,
+            pop_size
+        );
+    }
+    if other > 0 {
+        let _ = writeln!(
+            out,
+            "| — | _(… and {other} more callees, see graph below)_ | | | |"
+        );
+    }
+    let _ = writeln!(out);
 }
 
 /// Configuration for [`write_sidecar_dot_files`].
@@ -951,6 +1127,7 @@ mod tests {
                     output_section: Some(".flash.text".into()),
                     source: "nm".into(),
                     referenced_by: Vec::new(),
+                    references_to: Vec::new(),
                 },
                 FineGrainedSymbol {
                     mangled: "_Z3barv".into(),
@@ -964,6 +1141,7 @@ mod tests {
                     output_section: Some(".dram0.bss".into()),
                     source: "nm".into(),
                     referenced_by: Vec::new(),
+                    references_to: Vec::new(),
                 },
             ],
             sections: Vec::<SectionBytes>::new(),
@@ -1002,6 +1180,7 @@ mod tests {
                 output_section: None,
                 source: "nm".into(),
                 referenced_by: Vec::new(),
+                references_to: Vec::new(),
             }],
             sections: Vec::<SectionBytes>::new(),
         };
@@ -1055,6 +1234,7 @@ mod tests {
                         object: "sha512.c.obj".into(),
                     },
                 ],
+                references_to: Vec::new(),
             }],
             sections: Vec::<SectionBytes>::new(),
         };
@@ -1100,6 +1280,7 @@ mod tests {
                     archive: Some("liblog.a".into()),
                     object: "log_write.c.obj".into(),
                 }],
+                references_to: Vec::new(),
             }],
             sections: Vec::<SectionBytes>::new(),
         };
@@ -1112,12 +1293,16 @@ mod tests {
                 config: GraphConfig::default(),
             },
         );
+        // #471 renamed this from "back-reference graphs" to
+        // "symbol graphs" because the section now shows bidirectional
+        // graphs (callers ← root → callees), not just backref.
         assert!(
-            md.contains("## Top 1 back-reference graphs"),
-            "missing back-ref section header in:\n{md}"
+            md.contains("## Top 1 symbol graphs"),
+            "missing symbol-graph section header in:\n{md}"
         );
         assert!(
-            md.contains("<details>") && md.contains("<summary>Back-reference graph (Graphviz)"),
+            md.contains("<details>")
+                && md.contains("<summary>Bidirectional graph (callers ← root → callees,"),
             "missing details summary in:\n{md}"
         );
         assert!(
@@ -1127,6 +1312,124 @@ mod tests {
         // Closure tag is present so the embedded block doesn't bleed
         // into the next section.
         assert!(md.contains("</details>"));
+    }
+
+    /// #471: the per-symbol section MUST embed a "Top callees"
+    /// dual-ranking sub-table when `references_to` is populated.
+    /// The sub-table shows the heaviest and the most-shared callees
+    /// side-by-side, so an AI optimisation pass can tell whether
+    /// to chase a fat callee or a popular hub.
+    #[test]
+    fn markdown_report_emits_dual_ranked_callees_subtable() {
+        use fbuild_core::symbol_analysis::{FineGrainedSymbol, FineGrainedSymbolMap, SectionBytes};
+        let root = FineGrainedSymbol {
+            mangled: "_Z13ClocklessIdf5v".into(),
+            demangled: "ClocklessIdf5".into(),
+            address: 0x1000,
+            size: 10_000,
+            sym_type: 'T',
+            region: fbuild_core::MemoryRegion::Flash,
+            archive: Some("libFastLED.a".into()),
+            object: Some("clockless_idf5.cpp.o".into()),
+            output_section: Some(".flash.text".into()),
+            source: "nm".into(),
+            referenced_by: Vec::new(),
+            references_to: vec![
+                "esp_log_write".into(),
+                "rmt_tx_start".into(),
+                "fl_lerp8".into(),
+                "small_helper_4".into(),
+                "small_helper_5".into(),
+            ],
+        };
+        let callees = vec![
+            FineGrainedSymbol {
+                mangled: "esp_log_write".into(),
+                demangled: "esp_log_write".into(),
+                address: 0x2000,
+                size: 2_000,
+                sym_type: 'T',
+                region: fbuild_core::MemoryRegion::Flash,
+                archive: Some("libesp.a".into()),
+                object: Some("log.c.o".into()),
+                output_section: Some(".flash.text".into()),
+                source: "nm".into(),
+                referenced_by: (0..10)
+                    .map(|i| SymbolReference {
+                        archive: None,
+                        object: format!("caller_{i}.o"),
+                    })
+                    .collect(),
+                references_to: Vec::new(),
+            },
+            FineGrainedSymbol {
+                mangled: "rmt_tx_start".into(),
+                demangled: "rmt_tx_start".into(),
+                address: 0x3000,
+                size: 800,
+                sym_type: 'T',
+                region: fbuild_core::MemoryRegion::Flash,
+                archive: Some("libesp.a".into()),
+                object: Some("rmt.c.o".into()),
+                output_section: Some(".flash.text".into()),
+                source: "nm".into(),
+                referenced_by: vec![SymbolReference {
+                    archive: None,
+                    object: "main.cpp.o".into(),
+                }],
+                references_to: Vec::new(),
+            },
+            FineGrainedSymbol {
+                mangled: "fl_lerp8".into(),
+                demangled: "fl_lerp8".into(),
+                address: 0x4000,
+                size: 60,
+                sym_type: 'T',
+                region: fbuild_core::MemoryRegion::Flash,
+                archive: Some("libFastLED.a".into()),
+                object: Some("math.cpp.o".into()),
+                output_section: Some(".flash.text".into()),
+                source: "nm".into(),
+                referenced_by: Vec::new(),
+                references_to: Vec::new(),
+            },
+        ];
+        let mut all = vec![root];
+        all.extend(callees);
+        let map = FineGrainedSymbolMap {
+            elf_path: "test.elf".into(),
+            map_path: None,
+            total_flash: 12_860,
+            total_ram: 0,
+            symbols: all,
+            sections: Vec::<SectionBytes>::new(),
+        };
+        let md = format_markdown_report_with_graphs(
+            &map,
+            5,
+            &MarkdownGraphOptions {
+                enabled: true,
+                graph_top: 10,
+                config: GraphConfig::default(),
+            },
+        );
+        assert!(
+            md.contains("#### Top callees (dual ranking)"),
+            "missing dual-ranking sub-table header in:\n{md}"
+        );
+        // esp_log_write is the heaviest callee (2000 B) AND the most
+        // shared (10 callers). Must appear on both axes.
+        assert!(md.contains("esp_log_write"));
+        // The "by callee size" column header must mention size; the
+        // "shared with" column header must mention sharing.
+        assert!(md.contains("by callee size (B)"));
+        assert!(md.contains("by callees shared with"));
+        // The "other" bucket: 5 callees, top-3 each, intersection at
+        // least esp_log_write, so other > 0.
+        assert!(
+            md.contains("more callees, see graph below"),
+            "missing 'other' bucket row in:\n{md}"
+        );
     }
 
     /// `format_markdown_report` (without `_with_graphs`) MUST NOT
@@ -1152,6 +1455,7 @@ mod tests {
                 output_section: Some(".flash.text".into()),
                 source: "nm".into(),
                 referenced_by: Vec::new(),
+                references_to: Vec::new(),
             }],
             sections: Vec::<SectionBytes>::new(),
         };
@@ -1184,6 +1488,7 @@ mod tests {
                     output_section: Some(".text".into()),
                     source: "nm".into(),
                     referenced_by: Vec::new(),
+                    references_to: Vec::new(),
                 },
                 FineGrainedSymbol {
                     mangled: "tiny".into(),
@@ -1197,6 +1502,7 @@ mod tests {
                     output_section: Some(".text".into()),
                     source: "nm".into(),
                     referenced_by: Vec::new(),
+                    references_to: Vec::new(),
                 },
             ],
             sections: Vec::<SectionBytes>::new(),
@@ -1250,6 +1556,7 @@ mod tests {
                 output_section: Some(".text".into()),
                 source: "nm".into(),
                 referenced_by: Vec::new(),
+                references_to: Vec::new(),
             }],
             sections: Vec::<SectionBytes>::new(),
         };
@@ -1288,6 +1595,7 @@ mod tests {
                 output_section: Some(".flash.text".into()),
                 source: "nm".into(),
                 referenced_by: Vec::new(),
+                references_to: Vec::new(),
             }],
             sections: Vec::<SectionBytes>::new(),
         };

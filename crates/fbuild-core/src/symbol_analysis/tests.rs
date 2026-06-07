@@ -400,6 +400,7 @@ fn sample_symbol(addr: u64, size: u64, region: MemoryRegion, name: &str) -> Fine
         output_section: None,
         source: "nm".to_string(),
         referenced_by: Vec::new(),
+        references_to: Vec::new(),
     }
 }
 

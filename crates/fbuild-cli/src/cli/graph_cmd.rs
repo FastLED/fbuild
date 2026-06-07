@@ -50,7 +50,7 @@ pub fn run_bloat_graph(
         input_path
     };
 
-    let (nm_path, cppfilt_path) = resolve_tool_paths_public(
+    let (nm_path, cppfilt_path, objdump_path) = resolve_tool_paths_public(
         &elf_path,
         nm.as_deref(),
         cppfilt.as_deref(),
@@ -66,6 +66,7 @@ pub fn run_bloat_graph(
         map_path: map_path_owned.as_deref(),
         nm_path: &nm_path,
         cppfilt_path: cppfilt_path.as_deref(),
+        objdump_path: objdump_path.as_deref(),
     };
     let report = analyze_elf(cfg)?;
 
@@ -128,6 +129,12 @@ pub fn parse_graph_config(
         max_depth: max_depth.max(1),
         collapse_archives,
         exclude_archives,
+        // The `fbuild bloat graph` CLI hasn't grown a `--direction`
+        // flag yet; preserve the pre-#471 behaviour (backref-only).
+        // A `--direction forward|both` flag is a small follow-up
+        // once Phase 4 (the markdown sub-table) demonstrates the
+        // forward graph is actually useful in practice.
+        direction: Default::default(),
     })
 }
 
