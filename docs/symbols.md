@@ -155,8 +155,36 @@ back-references; ask `nm`/`objdump`/`addr2line` for that.
 See [#459](https://github.com/FastLED/fbuild/issues/459) for the
 motivating bloat audit.
 
+## Gotcha: tree-shaken sections live in the map at address `0x00000000`
+
+This is the trap that bit FastLED `#2473`'s symbol audit: GNU `ld`
+keeps dropped sections in the `.map` for debugging, but assigns them
+placement address `0x00000000`. A naive map-file parser that sums
+sizes without filtering produces **phantom bloat** for sections that
+`--gc-sections` already harvested.
+
+`fbuild bloat` and `fbuild symbols` handle this for you — the
+`parse_linker_map` step in `fbuild_core::symbol_analysis` drops every
+input-section range whose `addr == 0` before attribution runs, and a
+`parse_linker_map_drops_fastled_2473_tombstones` regression test
+pins the exact rows from the original audit
+(`x509_crt_bundle.S.obj`, `mesh_parent.o`, `huffTable`,
+`PLM_AUDIO_SYNTHESIS_WINDOW`). PT_LOAD filtering on the nm side
+catches the sibling case (linker-script boundary symbols like
+`__StackTop` whose nm-reported "size" is just the gap to the next
+symbol). Together: anything `fbuild bloat`'s `report.json` lists as
+live is actually placed in the firmware image.
+
+If you're rolling your own analyzer outside fbuild, **always filter
+`address != 0x00000000`** before summing per-archive contributions.
+The exact `awk` invocation that catches the trap is captured in
+[fbuild#417](https://github.com/FastLED/fbuild/issues/417); the
+sanctioned answer is "use `fbuild bloat .` and skip the awk".
+
 ## Related
 
+- Issue [#417](https://github.com/FastLED/fbuild/issues/417) — the
+  tree-shaken-sections trap that motivated documenting this gotcha.
 - Issue [#428](https://github.com/FastLED/fbuild/issues/428) —
   toolchain-path schema and CLI auto-discovery (this doc).
 - Issue [#434](https://github.com/FastLED/fbuild/issues/434) — the

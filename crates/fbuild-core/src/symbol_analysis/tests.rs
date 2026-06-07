@@ -89,6 +89,59 @@ Linker script and memory map
     assert_eq!(ranges[0].input_section, ".text.live");
 }
 
+/// fbuild#417 regression: the exact rodata rows from the FastLED #2473
+/// symbol audit that led to a ~95 KB phantom-bloat report. Three of
+/// the four heaviest "rodata candidates" the audit picked were
+/// `--gc-sections`-tombstoned (address `0x00000000`); only the fourth
+/// — `esp_err_to_name` — was actually live. The parser MUST drop the
+/// three tombstones so downstream analysis can't sum phantom bytes.
+///
+/// The snippet below mirrors the map-file shape from the issue
+/// verbatim (output section header in the link view + four rodata
+/// input rows, three at `0x00000000` and one at a real flash
+/// address). See:
+///   - https://github.com/FastLED/fbuild/issues/417
+///   - https://github.com/FastLED/FastLED/issues/2473#issuecomment-4628287075
+#[test]
+fn parse_linker_map_drops_fastled_2473_tombstones() {
+    let text = "\
+Linker script and memory map
+
+.flash.rodata   0x3c000020    0x10000
+ .rodata.embedded
+                0x00000000    0x110f8 path/libmbedtls.a(x509_crt_bundle.S.obj)
+ .rodata.str1.1 0x00000000     0x2b64 path/libmesh.a(mesh_parent.o)
+ .rodata.huffTable
+                0x00000000     0x2124 path/libFastLED.a(third_party+.cpp.o)
+ .rodata.str1.1 0x3c000020     0x1776 path/libesp_common.a(esp_err_to_name.c.obj)
+";
+    let ranges = parse_linker_map(text);
+    // Exactly one live row survives — `esp_err_to_name`. The three
+    // tombstones (x509_crt_bundle, mesh_parent, huffTable) are
+    // dropped because their address is `0x00000000`.
+    assert_eq!(
+        ranges.len(),
+        1,
+        "expected exactly 1 live row, got {}: {:?}",
+        ranges.len(),
+        ranges.iter().map(|r| &r.input_section).collect::<Vec<_>>()
+    );
+    let live = &ranges[0];
+    assert_eq!(live.archive.as_deref(), Some("libesp_common.a"));
+    assert_eq!(live.object, "esp_err_to_name.c.obj");
+    assert_eq!(live.addr, 0x3c000020);
+    assert_eq!(live.size, 0x1776);
+    // Phantom row attribution must NOT appear under any archive name
+    // — guard against a future refactor that forgets the addr filter.
+    let mbedtls_phantom = ranges
+        .iter()
+        .any(|r| r.archive.as_deref() == Some("libmbedtls.a"));
+    assert!(
+        !mbedtls_phantom,
+        "fbuild#417: x509_crt_bundle tombstone must not be reported as a live mbedtls.a row"
+    );
+}
+
 #[test]
 fn input_section_index_lookup_inside_range() {
     let ranges = vec![
