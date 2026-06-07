@@ -190,6 +190,19 @@ fn is_real_call_target(name: &str) -> bool {
     if name.starts_with("0x") && name[2..].chars().all(|c| c.is_ascii_hexdigit() || c == '_') {
         return false;
     }
+    // Intra-function jump labels like `<funcname+0x15>` (#484).
+    // objdump emits these for branches landing at a known offset
+    // inside an existing function (basic-block branches, switch-
+    // table dispatch, loop back-edges). They are *not* calls —
+    // treating them as edges would inflate callee lists with bogus
+    // partial-callee noise and would also propagate through
+    // `invert()` into spurious `called_by` entries.
+    if let Some(plus_idx) = name.rfind("+0x") {
+        let suffix = &name[plus_idx + 3..];
+        if !suffix.is_empty() && suffix.chars().all(|c| c.is_ascii_hexdigit()) {
+            return false;
+        }
+    }
     true
 }
 
@@ -348,6 +361,49 @@ mod tests {
 ";
         let edges = parse_disasm(disasm);
         assert_eq!(edges.get("foo"), Some(&vec!["real_callee".to_string()]));
+    }
+
+    /// #484: objdump annotates intra-function jump targets as
+    /// `<funcname+0xNN>` for basic-block branches, switch dispatch,
+    /// loop back-edges, etc. Those are *not* calls — filtering them
+    /// out keeps the per-symbol call graph honest and prevents
+    /// `invert()` from propagating bogus `called_by` entries.
+    #[test]
+    fn intra_function_jump_labels_are_dropped() {
+        let disasm = "\
+00000500 <foo>:
+     500:	f7ff fffe 	bne	515 <foo+0x15>
+     504:	f7ff fffe 	b	520 <bar+0xc0>
+     508:	f7ff fffe 	bl	600 <real_callee>
+";
+        let edges = parse_disasm(disasm);
+        assert_eq!(edges.get("foo"), Some(&vec!["real_callee".to_string()]));
+        // Negative assertions: the intra-function labels must not
+        // appear anywhere in the edge set, in either direction.
+        for callees in edges.values() {
+            assert!(
+                !callees.iter().any(|c| c.contains("+0x")),
+                "found intra-function label in callees: {callees:?}"
+            );
+        }
+        let inverted = invert(&edges);
+        assert!(inverted.keys().all(|k| !k.contains("+0x")));
+    }
+
+    /// Symbols that legitimately end in `+0` but not a full hex suffix
+    /// must still pass through. The filter only drops `+0x<hex>` —
+    /// nothing else. Guards against an over-aggressive substring match.
+    #[test]
+    fn plus_without_hex_suffix_passes_through() {
+        let disasm = "\
+00000500 <foo>:
+     500:	f7ff fffe 	bl	600 <some_weird_name+oddstuff>
+";
+        let edges = parse_disasm(disasm);
+        assert_eq!(
+            edges.get("foo"),
+            Some(&vec!["some_weird_name+oddstuff".to_string()])
+        );
     }
 
     /// `<0x40123456>`-style absolute-address annotations (no known
