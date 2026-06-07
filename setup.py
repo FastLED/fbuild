@@ -47,9 +47,36 @@ from setuptools.dist import Distribution
 
 REPO_ROOT = Path(__file__).resolve().parent
 TARGET_BINARY_NAME = "fbuild.exe" if sys.platform == "win32" else "fbuild"
-TARGET_BINARY_PATH = REPO_ROOT / "target" / "release" / TARGET_BINARY_NAME
+TARGET_DIR = REPO_ROOT / "target"
 STAGED_BIN_DIR = REPO_ROOT / "ci" / "bin"
 STAGED_BINARY_PATH = STAGED_BIN_DIR / TARGET_BINARY_NAME
+
+
+def _find_release_binary() -> Path | None:
+    """Locate the release-built `fbuild` binary cargo just wrote.
+
+    Cargo emits to `target/release/<bin>` for the default host build but
+    to `target/<host-triple>/release/<bin>` whenever a target triple is
+    in effect — which is the common case under soldr because soldr
+    routes through the rustup-managed toolchain pinned by
+    `rust-toolchain.toml`. Both layouts are valid; probe both and
+    prefer the most recently modified hit so a stale top-level copy
+    from an older cargo run doesn't shadow the fresh triple-scoped one.
+    """
+    candidates: list[Path] = []
+    flat = TARGET_DIR / "release" / TARGET_BINARY_NAME
+    if flat.exists():
+        candidates.append(flat)
+    if TARGET_DIR.exists():
+        for entry in TARGET_DIR.iterdir():
+            if not entry.is_dir() or entry.name == "release" or entry.name == "debug":
+                continue
+            triple_bin = entry / "release" / TARGET_BINARY_NAME
+            if triple_bin.exists():
+                candidates.append(triple_bin)
+    if not candidates:
+        return None
+    return max(candidates, key=lambda p: p.stat().st_mtime)
 
 
 def _require_soldr() -> None:
@@ -80,13 +107,17 @@ class BuildWithCargo(build_py):
         sys.stderr.write(f"  $ {' '.join(cmd)}\n")
         subprocess.check_call(cmd, cwd=str(REPO_ROOT))
 
-        if not TARGET_BINARY_PATH.exists():
-            sys.stderr.write(f"ERROR: cargo build succeeded but binary not at {TARGET_BINARY_PATH}.\n")
+        binary = _find_release_binary()
+        if binary is None:
+            sys.stderr.write(
+                f"ERROR: cargo build succeeded but no `{TARGET_BINARY_NAME}` was "
+                f"found under {TARGET_DIR}/release or {TARGET_DIR}/<triple>/release.\n"
+            )
             sys.exit(1)
 
         STAGED_BIN_DIR.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(TARGET_BINARY_PATH, STAGED_BINARY_PATH)
-        sys.stderr.write(f"  staged binary -> {STAGED_BINARY_PATH}\n")
+        shutil.copy2(binary, STAGED_BINARY_PATH)
+        sys.stderr.write(f"  staged binary -> {STAGED_BINARY_PATH}  (source: {binary})\n")
 
         super().run()
 
