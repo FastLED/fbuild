@@ -4,7 +4,7 @@ version = "2.2.21"
 description = "PlatformIO-compatible embedded build tool (Rust implementation)"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = ["zccache>=1.11.15"]
+dependencies = ["zccache>=1.11.20"]
 
 # Console script: `fbuild` on PATH after `pip install .` execs the native
 # binary that setup.py stages into ci/bin/fbuild[.exe]. See setup.py +
