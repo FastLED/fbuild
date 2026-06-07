@@ -117,6 +117,7 @@ fn format_markdown_report_emits_tables() {
                 source: "nm".into(),
                 referenced_by: Vec::new(),
                 references_to: Vec::new(),
+                called_by: Vec::new(),
             },
             FineGrainedSymbol {
                 mangled: "_Z3barv".into(),
@@ -131,6 +132,7 @@ fn format_markdown_report_emits_tables() {
                 source: "nm".into(),
                 referenced_by: Vec::new(),
                 references_to: Vec::new(),
+                called_by: Vec::new(),
             },
         ],
         sections: Vec::<SectionBytes>::new(),
@@ -170,6 +172,7 @@ fn format_markdown_report_escapes_pipes_in_symbol_names() {
             source: "nm".into(),
             referenced_by: Vec::new(),
             references_to: Vec::new(),
+            called_by: Vec::new(),
         }],
         sections: Vec::<SectionBytes>::new(),
     };
@@ -224,6 +227,7 @@ fn format_markdown_report_renders_referenced_by_column() {
                 },
             ],
             references_to: Vec::new(),
+            called_by: Vec::new(),
         }],
         sections: Vec::<SectionBytes>::new(),
     };
@@ -268,6 +272,7 @@ fn markdown_report_with_graphs_embeds_dot_blocks_for_top_symbols() {
                 object: "log_write.c.obj".into(),
             }],
             references_to: Vec::new(),
+            called_by: Vec::new(),
         }],
         sections: Vec::<SectionBytes>::new(),
     };
@@ -330,6 +335,7 @@ fn markdown_report_emits_dual_ranked_callees_subtable() {
             "small_helper_4".into(),
             "small_helper_5".into(),
         ],
+        called_by: Vec::new(),
     };
     let callees = vec![
         FineGrainedSymbol {
@@ -350,6 +356,7 @@ fn markdown_report_emits_dual_ranked_callees_subtable() {
                 })
                 .collect(),
             references_to: Vec::new(),
+            called_by: Vec::new(),
         },
         FineGrainedSymbol {
             mangled: "rmt_tx_start".into(),
@@ -367,6 +374,7 @@ fn markdown_report_emits_dual_ranked_callees_subtable() {
                 object: "main.cpp.o".into(),
             }],
             references_to: Vec::new(),
+            called_by: Vec::new(),
         },
         FineGrainedSymbol {
             mangled: "fl_lerp8".into(),
@@ -381,6 +389,7 @@ fn markdown_report_emits_dual_ranked_callees_subtable() {
             source: "nm".into(),
             referenced_by: Vec::new(),
             references_to: Vec::new(),
+            called_by: Vec::new(),
         },
     ];
     let mut all = vec![root];
@@ -445,6 +454,7 @@ fn markdown_report_legacy_path_skips_graph_blocks() {
             source: "nm".into(),
             referenced_by: Vec::new(),
             references_to: Vec::new(),
+            called_by: Vec::new(),
         }],
         sections: Vec::<SectionBytes>::new(),
     };
@@ -478,6 +488,7 @@ fn sidecar_dot_files_written_for_symbols_above_min_bytes() {
                 source: "nm".into(),
                 referenced_by: Vec::new(),
                 references_to: Vec::new(),
+                called_by: Vec::new(),
             },
             FineGrainedSymbol {
                 mangled: "tiny".into(),
@@ -492,6 +503,7 @@ fn sidecar_dot_files_written_for_symbols_above_min_bytes() {
                 source: "nm".into(),
                 referenced_by: Vec::new(),
                 references_to: Vec::new(),
+                called_by: Vec::new(),
             },
         ],
         sections: Vec::<SectionBytes>::new(),
@@ -546,6 +558,7 @@ fn sidecar_disabled_writes_nothing() {
             source: "nm".into(),
             referenced_by: Vec::new(),
             references_to: Vec::new(),
+            called_by: Vec::new(),
         }],
         sections: Vec::<SectionBytes>::new(),
     };
@@ -585,6 +598,7 @@ fn format_markdown_report_referenced_by_empty_renders_dash() {
             source: "nm".into(),
             referenced_by: Vec::new(),
             references_to: Vec::new(),
+            called_by: Vec::new(),
         }],
         sections: Vec::<SectionBytes>::new(),
     };

@@ -27,6 +27,7 @@ fn sym(
         source: "nm".to_string(),
         referenced_by: refs,
         references_to: Vec::new(),
+        called_by: Vec::new(),
     }
 }
 
@@ -712,4 +713,122 @@ fn default_direction_is_backward_only() {
         .edges
         .iter()
         .all(|e| e.direction == EdgeDirection::Backward));
+}
+
+// ---- #478: per-symbol backward walker ----
+
+/// Helper: build a symbol with explicit `called_by`. Per-symbol
+/// inverse of [`sym_calls`] above.
+fn sym_called_by(
+    mangled: &str,
+    size: u64,
+    archive: Option<&str>,
+    object: &str,
+    callers: Vec<&str>,
+) -> FineGrainedSymbol {
+    let mut s = sym(mangled, mangled, size, archive, object, Vec::new());
+    s.called_by = callers.into_iter().map(|c| c.to_string()).collect();
+    s
+}
+
+/// When `called_by` is non-empty, the backward walker must emit
+/// per-symbol Caller nodes instead of TU-level TranslationUnit
+/// nodes. The picture answers "*which symbol* calls me?" with
+/// precision, which is the AI-optimisation use-case from #478.
+#[test]
+fn backward_uses_per_symbol_when_called_by_populated() {
+    let symbols = vec![
+        sym_called_by("root_sym", 5_000, None, "main.cpp.o", vec!["caller_big"]),
+        sym(
+            "caller_big",
+            "caller_big",
+            8_000,
+            None,
+            "main.cpp.o",
+            Vec::new(),
+        ),
+    ];
+    let g = BackrefGraph::build(&map(symbols), "root_sym", &GraphConfig::default());
+    let caller_nodes: Vec<&str> = g
+        .nodes
+        .iter()
+        .filter_map(|n| match &n.kind {
+            NodeKind::Caller { demangled, .. } => Some(demangled.as_str()),
+            _ => None,
+        })
+        .collect();
+    assert_eq!(caller_nodes, vec!["caller_big"]);
+    let tu_nodes: Vec<_> = g
+        .nodes
+        .iter()
+        .filter(|n| matches!(n.kind, NodeKind::TranslationUnit { .. }))
+        .collect();
+    assert!(
+        tu_nodes.is_empty(),
+        "per-symbol back-edges must not emit TU nodes"
+    );
+}
+
+/// Fallback path: when `called_by` is empty (no objdump in the
+/// chain, or all calls are indirect), the historical TU-level
+/// walker still runs from `referenced_by`. This preserves the
+/// pre-#478 picture for older reports and call sites that aren't
+/// reachable via direct disassembly edges (vtable / fn ptr).
+#[test]
+fn backward_falls_back_to_tu_when_called_by_empty() {
+    let referencer = refr(None, "main.cpp.o");
+    let symbols = vec![
+        sym(
+            "root_sym",
+            "root_sym",
+            5_000,
+            None,
+            "fl.cpp.o",
+            vec![referencer],
+        ),
+        sym(
+            "caller_sym",
+            "caller_sym",
+            8_000,
+            None,
+            "main.cpp.o",
+            Vec::new(),
+        ),
+    ];
+    let g = BackrefGraph::build(&map(symbols), "root_sym", &GraphConfig::default());
+    let tu_nodes: Vec<_> = g
+        .nodes
+        .iter()
+        .filter(|n| matches!(n.kind, NodeKind::TranslationUnit { .. }))
+        .collect();
+    assert_eq!(tu_nodes.len(), 1, "TU fallback should kick in");
+    assert!(g
+        .nodes
+        .iter()
+        .all(|n| !matches!(n.kind, NodeKind::Caller { .. })));
+}
+
+/// `rank_callers_dual` exposes both rankings the markdown sub-table
+/// renders side-by-side. The "by size" axis picks the heaviest caller;
+/// the "by breadth" axis picks the caller that calls the most other
+/// symbols (proxy for downstream-leverage if eliminated).
+#[test]
+fn rank_callers_dual_sorts_each_axis_independently() {
+    use super::rank_callers_dual;
+    let mut huge_narrow = sym("huge_narrow", "huge_narrow", 9_000, None, "a.o", Vec::new());
+    huge_narrow.references_to = vec!["x".into()];
+    let mut small_broad = sym("small_broad", "small_broad", 200, None, "b.o", Vec::new());
+    small_broad.references_to = vec!["x".into(), "y".into(), "z".into(), "w".into()];
+    let mut tiny = sym("tiny", "tiny", 50, None, "c.o", Vec::new());
+    tiny.references_to = vec!["x".into()];
+    let mut root = sym("root", "root", 5_000, None, "main.o", Vec::new());
+    root.called_by = vec!["huge_narrow".into(), "small_broad".into(), "tiny".into()];
+    let m = map(vec![root.clone(), huge_narrow, small_broad, tiny]);
+    let (by_size, by_breadth, other) = rank_callers_dual(&m, &root, 1);
+    assert_eq!(by_size.len(), 1);
+    assert_eq!(by_size[0].demangled, "huge_narrow");
+    assert_eq!(by_breadth.len(), 1);
+    assert_eq!(by_breadth[0].demangled, "small_broad");
+    // `tiny` was in neither bucket, so it counts as "other".
+    assert_eq!(other, 1);
 }

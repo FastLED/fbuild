@@ -651,6 +651,45 @@ pub enum BloatCmd {
         #[arg(long = "exclude-archive", default_value = "")]
         exclude_archive: String,
     },
+    /// Print the bloat metric for a single demangled (or mangled)
+    /// symbol — size, archive, object, region, per-symbol callers,
+    /// callees, TU-level referencers. Designed for AI optimisation
+    /// passes that know the symbol they want to query without
+    /// re-rendering the whole top-N report.
+    ///
+    /// Resolution: exact demangled match wins; falls back to a
+    /// substring search; `--symbol-mangled` is always exact (mangled
+    /// names are unambiguous).
+    Lookup {
+        /// ELF file OR project directory (same resolution as
+        /// `fbuild symbols`).
+        input: String,
+        /// Demangled symbol name. Exact match wins; falls back to
+        /// substring search when no exact match. Ambiguous substring
+        /// matches list all candidates.
+        #[arg(long, short = 's', group = "lookup_key")]
+        symbol: Option<String>,
+        /// Mangled symbol name. Exact match only — mangled names
+        /// are unambiguous by construction.
+        #[arg(long = "symbol-mangled", group = "lookup_key")]
+        symbol_mangled: Option<String>,
+        /// Emit the result as JSON instead of the human text block.
+        #[arg(long)]
+        json: bool,
+        /// Path to the linker map (auto-detected if omitted).
+        #[arg(long)]
+        map: Option<String>,
+        /// Cross-toolchain `nm` (auto-resolved when omitted).
+        #[arg(long)]
+        nm: Option<String>,
+        /// Cross-toolchain `c++filt` (derived from `nm` stem when
+        /// omitted).
+        #[arg(long = "cppfilt")]
+        cppfilt: Option<String>,
+        /// Path to a `build_info.json` that carries toolchain paths.
+        #[arg(long = "build-info")]
+        build_info: Option<String>,
+    },
 }
 
 /// Resolve project_dir: prefer the subcommand's value, fall back to the top-level positional arg,

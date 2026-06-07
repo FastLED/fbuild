@@ -38,8 +38,11 @@ use std::collections::{BTreeMap, BTreeSet, VecDeque};
 use super::{FineGrainedSymbolMap, SymbolReference};
 
 mod walker;
-use walker::{push_edge_dedup, rank_and_cap_referencers, walk_forward, CappedReferencer};
-pub use walker::{rank_callees_dual, CalleeRanked};
+use walker::{
+    push_edge_dedup, rank_and_cap_referencers, walk_backward_per_symbol, walk_forward,
+    CappedReferencer,
+};
+pub use walker::{rank_callees_dual, rank_callers_dual, CalleeRanked, CallerRanked};
 
 #[cfg(test)]
 mod tests;
@@ -156,6 +159,21 @@ pub enum NodeKind {
         demangled: String,
         size: u64,
         callers_count: usize,
+    },
+    /// A caller — a specific symbol that calls the root (or one of
+    /// its callers). The per-symbol-precision inverse of `Callee`,
+    /// populated from `FineGrainedSymbol::called_by` (objdump-derived,
+    /// #478). Distinct from `TranslationUnit` because the call-in
+    /// edge is per-symbol, not per-TU — answers "*which function* in
+    /// `main.cpp.o` calls this?" instead of just "`main.cpp.o`
+    /// references this." `size` is the caller's own flash footprint
+    /// (drives ranking + node sizing); `callees_count` is the number
+    /// of distinct symbols the caller itself calls (proxy for "how
+    /// many other things did pulling this caller in drag along?").
+    Caller {
+        demangled: String,
+        size: u64,
+        callees_count: usize,
     },
     /// A super-node bundling multiple TUs from the same archive
     /// because of `collapse_archives` OR fan-out overflow.
@@ -338,11 +356,23 @@ impl BackrefGraph {
         // only — the BFS expansion below short-circuits naturally on an
         // empty queue, so we get a clean forward-only graph without
         // editing the rest of this method.
+        //
+        // Skipped *also* when per-symbol back-reference data
+        // (`called_by`) is available: the per-symbol walker below
+        // produces a strictly more informative picture (caller *symbol*,
+        // not just caller *TU*), so running both would only stack two
+        // versions of the same edge in the rendered graph. The TU
+        // walker remains the fallback when `called_by` is empty —
+        // typical of pre-#478 reports, missing-objdump pipelines, and
+        // any symbol whose calls are all indirect (vtable / fn ptr)
+        // and therefore invisible to objdump.
         let want_backward = matches!(
             config.direction,
             Direction::Backward | Direction::Bidirectional
         );
-        let level1: Vec<CappedReferencer> = if want_backward {
+        let use_per_symbol_backward = want_backward && !root.called_by.is_empty();
+        let want_tu_backward = want_backward && !use_per_symbol_backward;
+        let level1: Vec<CappedReferencer> = if want_tu_backward {
             rank_and_cap_referencers(
                 &root.referenced_by,
                 index,
@@ -514,6 +544,27 @@ impl BackrefGraph {
             }
         }
 
+        // ---- Per-symbol backward direction (#478): walk
+        // ---- root.called_by outward when objdump-derived per-symbol
+        // ---- call-in data is available. Strictly more precise than
+        // ---- the TU walker above (caller *symbol*, not just caller
+        // ---- *TU*); gated on `use_per_symbol_backward` so we don't
+        // ---- double-render edges.
+        if use_per_symbol_backward {
+            let mut visited_syms: BTreeSet<String> = BTreeSet::new();
+            visited_syms.insert(root.mangled.clone());
+            walk_backward_per_symbol(
+                map,
+                config,
+                root,
+                &root_id,
+                /*depth=*/ 1,
+                &mut nodes,
+                &mut edges,
+                &mut visited_syms,
+            );
+        }
+
         // ---- Forward direction: walk root.references_to outward.
         //
         // Forward edges are per-symbol (not TU-level), so the node
@@ -624,6 +675,7 @@ fn node_width(n: &GraphNode) -> Option<f64> {
             size_hint: Some(b), ..
         } => *b,
         NodeKind::Callee { size, .. } => *size,
+        NodeKind::Caller { size, .. } => *size,
         _ => return None,
     };
     if bytes == 0 {
