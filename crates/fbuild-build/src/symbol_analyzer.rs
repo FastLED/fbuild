@@ -15,7 +15,8 @@ use std::collections::BTreeMap;
 use fbuild_core::subprocess::run_command_with_stdin;
 use fbuild_core::symbol_analysis::{
     build_fine_grained_map_with_synth, collect_map_derived_owners, parse_cref_table,
-    parse_linker_map, parse_nm_output, FineGrainedSymbolMap, LoadedRegion, SymbolReference,
+    parse_linker_map, parse_nm_output, sanitize_filename, BackrefGraph, FineGrainedSymbolMap,
+    GraphConfig, LoadedRegion, SymbolReference, TuIndex,
 };
 use fbuild_core::{FbuildError, Result};
 
@@ -405,12 +406,62 @@ pub fn format_text_report(map: &FineGrainedSymbolMap, top_n: usize) -> String {
     lines.join("\n")
 }
 
+/// Knobs controlling whether `format_markdown_report` embeds inline
+/// Graphviz `.dot` blocks for the top symbols and how the walker
+/// behaves while building them. `enabled = false` reproduces the
+/// pre-#463 markdown shape byte-for-byte.
+#[derive(Debug, Clone)]
+pub struct MarkdownGraphOptions {
+    /// Embed `.dot` fenced blocks under `<details>` summaries for
+    /// the top symbols.
+    pub enabled: bool,
+    /// How many top symbols (by flash bytes) get an embedded graph.
+    /// Capped further by the report's own `top_n`.
+    pub graph_top: usize,
+    /// Walker / rendering configuration for each embedded graph.
+    pub config: GraphConfig,
+}
+
+impl Default for MarkdownGraphOptions {
+    fn default() -> Self {
+        Self {
+            enabled: true,
+            graph_top: 10,
+            config: GraphConfig::default(),
+        }
+    }
+}
+
 /// Format the same fine-grained map as Markdown — same content as
 /// `format_text_report` but with real table syntax + headers so it
 /// renders nicely in GitHub / VS Code / any MD viewer. Designed to
 /// be saved as `report.md` alongside `report.json` so humans and
 /// scripts can consume the same analysis without diverging.
+///
+/// Pre-existing surface; defers to
+/// [`format_markdown_report_with_graphs`] with graphs disabled. Kept
+/// for legacy callers that don't (yet) want the embedded-graph view.
 pub fn format_markdown_report(map: &FineGrainedSymbolMap, top_n: usize) -> String {
+    format_markdown_report_with_graphs(
+        map,
+        top_n,
+        &MarkdownGraphOptions {
+            enabled: false,
+            graph_top: 0,
+            config: GraphConfig::default(),
+        },
+    )
+}
+
+/// Same as [`format_markdown_report`] but optionally embeds inline
+/// Graphviz `.dot` blocks under each top-N symbol entry (fbuild #463).
+/// AI-friendly: a single self-contained `report.md` answers "what
+/// pulls in X?" without forcing the agent to fetch a sidecar file.
+pub fn format_markdown_report_with_graphs(
+    map: &FineGrainedSymbolMap,
+    top_n: usize,
+    graph_opts: &MarkdownGraphOptions,
+) -> String {
     let mut out = String::new();
     use std::fmt::Write as _;
     let flash_count = map
@@ -488,6 +539,10 @@ pub fn format_markdown_report(map: &FineGrainedSymbolMap, top_n: usize) -> Strin
     );
     emit_md_table(&mut out, map, fbuild_core::MemoryRegion::Ram, top_n, "RAM");
 
+    if graph_opts.enabled && graph_opts.graph_top > 0 {
+        emit_backref_graph_section(&mut out, map, top_n, graph_opts);
+    }
+
     // Per-archive flash roll-up.
     let mut by_archive: std::collections::BTreeMap<String, u64> = std::collections::BTreeMap::new();
     for s in &map.symbols {
@@ -508,6 +563,132 @@ pub fn format_markdown_report(map: &FineGrainedSymbolMap, top_n: usize) -> Strin
     }
 
     out
+}
+
+/// Render embedded back-reference graphs for the top symbols
+/// directly into the markdown body. Each entry lives under a
+/// `<details>` so a long top-10 doesn't crowd the report's eye-line
+/// for users who only want the table.
+fn emit_backref_graph_section(
+    out: &mut String,
+    map: &FineGrainedSymbolMap,
+    top_n: usize,
+    graph_opts: &MarkdownGraphOptions,
+) {
+    use std::fmt::Write as _;
+    let mut syms: Vec<_> = map.symbols.iter().collect();
+    syms.sort_by(|a, b| b.size.cmp(&a.size));
+    let limit = graph_opts.graph_top.min(top_n).min(syms.len());
+    if limit == 0 {
+        return;
+    }
+    let _ = writeln!(
+        out,
+        "## Top {limit} back-reference graphs\n\n\
+         For each symbol below, the embedded `dot` block traces \"who pulled \
+         this in?\" outward from the symbol's `referenced_by` data. \
+         See fbuild #463 for the walker design (cross-archive termination + \
+         fan-out cap + collapse rules)."
+    );
+    let _ = writeln!(out);
+    let index = TuIndex::build(map);
+    for (rank, s) in syms.iter().take(limit).enumerate() {
+        let archive = s.archive.as_deref().unwrap_or("(none)");
+        let object = s.object.as_deref().unwrap_or("-");
+        let sect = s.output_section.as_deref().unwrap_or("-");
+        let _ = writeln!(
+            out,
+            "### #{} `{}` — {} B",
+            rank + 1,
+            s.demangled.replace('|', "\\|"),
+            s.size
+        );
+        let _ = writeln!(out, "- **Archive**: `{archive}`");
+        let _ = writeln!(out, "- **Object**: `{object}`");
+        let _ = writeln!(out, "- **Section**: `{sect}`");
+        let _ = writeln!(out, "- **Referenced by**: {} TUs", s.referenced_by.len());
+        let _ = writeln!(out);
+        let graph = BackrefGraph::build_with_index(map, &index, &s.mangled, &graph_opts.config);
+        let _ = writeln!(out, "<details>");
+        let _ = writeln!(out, "<summary>Back-reference graph (Graphviz)</summary>");
+        let _ = writeln!(out);
+        let _ = writeln!(out, "```dot");
+        out.push_str(&graph.to_dot());
+        let _ = writeln!(out, "```");
+        let _ = writeln!(out);
+        let _ = writeln!(out, "</details>");
+        let _ = writeln!(out);
+    }
+}
+
+/// Configuration for [`write_sidecar_dot_files`].
+#[derive(Debug, Clone)]
+pub struct SidecarOptions {
+    pub enabled: bool,
+    /// Minimum symbol size (bytes) for a sidecar `.dot` file to be
+    /// emitted. Default 256 — keeps the output directory to symbols
+    /// that meaningfully contribute to flash.
+    pub min_bytes: u64,
+    /// Walker / rendering configuration shared with the embedded
+    /// markdown graphs.
+    pub config: GraphConfig,
+}
+
+impl Default for SidecarOptions {
+    fn default() -> Self {
+        Self {
+            enabled: true,
+            min_bytes: 256,
+            config: GraphConfig::default(),
+        }
+    }
+}
+
+/// Write sidecar `.dot` files for every symbol whose size meets
+/// `options.min_bytes`. Files live at `<output_dir>/graphs/<rank>_<sanitized>.dot`
+/// where `rank` is the symbol's index in the size-descending order
+/// (1-based). Returns the number of files written.
+///
+/// Best-effort — never fails the whole report just because one
+/// filesystem write errored; logs a `tracing::warn!` and moves on.
+pub fn write_sidecar_dot_files(
+    map: &FineGrainedSymbolMap,
+    output_dir: &Path,
+    options: &SidecarOptions,
+) -> Result<usize> {
+    if !options.enabled {
+        return Ok(0);
+    }
+    let graphs_dir = output_dir.join("graphs");
+    std::fs::create_dir_all(&graphs_dir).map_err(|e| {
+        FbuildError::Io(std::io::Error::new(
+            e.kind(),
+            format!("create {}: {e}", graphs_dir.display()),
+        ))
+    })?;
+    let mut syms: Vec<_> = map.symbols.iter().collect();
+    syms.sort_by(|a, b| b.size.cmp(&a.size));
+    let index = TuIndex::build(map);
+    let mut written = 0usize;
+    for (i, s) in syms.iter().enumerate() {
+        if s.size < options.min_bytes {
+            continue;
+        }
+        let rank = i + 1;
+        let stem = sanitize_filename(&s.demangled);
+        let path = graphs_dir.join(format!("{rank:04}_{stem}.dot"));
+        let graph = BackrefGraph::build_with_index(map, &index, &s.mangled, &options.config);
+        let dot = graph.to_dot();
+        if let Err(e) = std::fs::write(&path, dot) {
+            tracing::warn!(
+                "sidecar graph {}: write failed ({e}); skipping",
+                path.display()
+            );
+            continue;
+        }
+        written += 1;
+    }
+    Ok(written)
 }
 
 /// Best-effort discovery of a `firmware.elf` (or any `.elf`) under
@@ -887,6 +1068,204 @@ mod tests {
             md.contains("libc.a(libc_a-vprintf.o), libc.a(libc_a-printf.o), libc.a(libc_a-fprintf.o), (… and 2 more)"),
             "expected top-3 + overflow in referenced_by cell, got:\n{md}"
         );
+    }
+
+    /// fbuild #463: when graph embedding is enabled, the top-N
+    /// symbols carry an inline `dot` fenced block under a
+    /// `<details>` summary. AI-friendliness is the design goal —
+    /// a fresh agent should be able to answer "what pulls in X?"
+    /// from `report.md` alone.
+    #[test]
+    fn markdown_report_with_graphs_embeds_dot_blocks_for_top_symbols() {
+        use fbuild_core::symbol_analysis::{
+            FineGrainedSymbol, FineGrainedSymbolMap, GraphConfig, SectionBytes, SymbolReference,
+        };
+        let map = FineGrainedSymbolMap {
+            elf_path: "fw.elf".into(),
+            map_path: None,
+            total_flash: 11_309,
+            total_ram: 0,
+            symbols: vec![FineGrainedSymbol {
+                mangled: "_vfprintf_r".into(),
+                demangled: "_vfprintf_r".into(),
+                address: 0x4000,
+                size: 11_309,
+                sym_type: 'T',
+                region: fbuild_core::MemoryRegion::Flash,
+                archive: Some("libc.a".into()),
+                object: Some("libc_a-vfprintf.o".into()),
+                output_section: Some(".flash.text".into()),
+                source: "nm".into(),
+                referenced_by: vec![SymbolReference {
+                    archive: Some("liblog.a".into()),
+                    object: "log_write.c.obj".into(),
+                }],
+            }],
+            sections: Vec::<SectionBytes>::new(),
+        };
+        let md = format_markdown_report_with_graphs(
+            &map,
+            5,
+            &MarkdownGraphOptions {
+                enabled: true,
+                graph_top: 10,
+                config: GraphConfig::default(),
+            },
+        );
+        assert!(
+            md.contains("## Top 1 back-reference graphs"),
+            "missing back-ref section header in:\n{md}"
+        );
+        assert!(
+            md.contains("<details>") && md.contains("<summary>Back-reference graph (Graphviz)"),
+            "missing details summary in:\n{md}"
+        );
+        assert!(
+            md.contains("```dot") && md.contains("digraph backref"),
+            "missing fenced dot block in:\n{md}"
+        );
+        // Closure tag is present so the embedded block doesn't bleed
+        // into the next section.
+        assert!(md.contains("</details>"));
+    }
+
+    /// `format_markdown_report` (without `_with_graphs`) MUST NOT
+    /// embed graphs — protects pre-#463 markdown for callers that
+    /// haven't opted in.
+    #[test]
+    fn markdown_report_legacy_path_skips_graph_blocks() {
+        use fbuild_core::symbol_analysis::{FineGrainedSymbol, FineGrainedSymbolMap, SectionBytes};
+        let map = FineGrainedSymbolMap {
+            elf_path: "fw.elf".into(),
+            map_path: None,
+            total_flash: 10,
+            total_ram: 0,
+            symbols: vec![FineGrainedSymbol {
+                mangled: "main".into(),
+                demangled: "main".into(),
+                address: 0x4000,
+                size: 10,
+                sym_type: 'T',
+                region: fbuild_core::MemoryRegion::Flash,
+                archive: None,
+                object: Some("main.cpp.o".into()),
+                output_section: Some(".flash.text".into()),
+                source: "nm".into(),
+                referenced_by: Vec::new(),
+            }],
+            sections: Vec::<SectionBytes>::new(),
+        };
+        let md = format_markdown_report(&map, 5);
+        assert!(!md.contains("```dot"));
+        assert!(!md.contains("back-reference graphs"));
+    }
+
+    #[test]
+    fn sidecar_dot_files_written_for_symbols_above_min_bytes() {
+        use fbuild_core::symbol_analysis::{
+            FineGrainedSymbol, FineGrainedSymbolMap, GraphConfig, SectionBytes,
+        };
+        let tmp = tempfile::tempdir().unwrap();
+        let map = FineGrainedSymbolMap {
+            elf_path: "fw.elf".into(),
+            map_path: None,
+            total_flash: 1_200,
+            total_ram: 0,
+            symbols: vec![
+                FineGrainedSymbol {
+                    mangled: "big".into(),
+                    demangled: "big".into(),
+                    address: 0x1000,
+                    size: 1_000,
+                    sym_type: 'T',
+                    region: fbuild_core::MemoryRegion::Flash,
+                    archive: None,
+                    object: Some("main.o".into()),
+                    output_section: Some(".text".into()),
+                    source: "nm".into(),
+                    referenced_by: Vec::new(),
+                },
+                FineGrainedSymbol {
+                    mangled: "tiny".into(),
+                    demangled: "tiny".into(),
+                    address: 0x2000,
+                    size: 100,
+                    sym_type: 'T',
+                    region: fbuild_core::MemoryRegion::Flash,
+                    archive: None,
+                    object: Some("main.o".into()),
+                    output_section: Some(".text".into()),
+                    source: "nm".into(),
+                    referenced_by: Vec::new(),
+                },
+            ],
+            sections: Vec::<SectionBytes>::new(),
+        };
+        let written = write_sidecar_dot_files(
+            &map,
+            tmp.path(),
+            &SidecarOptions {
+                enabled: true,
+                min_bytes: 500,
+                config: GraphConfig::default(),
+            },
+        )
+        .unwrap();
+        assert_eq!(written, 1, "only `big` (1000 B) clears the 500 B threshold");
+        // Locate the sidecar — rank 1 (largest), demangled "big".
+        let graphs = tmp.path().join("graphs");
+        assert!(graphs.is_dir());
+        let entries: Vec<_> = std::fs::read_dir(&graphs).unwrap().collect();
+        assert_eq!(entries.len(), 1);
+        let path = entries[0].as_ref().unwrap().path();
+        let name = path.file_name().unwrap().to_string_lossy().to_string();
+        assert!(
+            name.starts_with("0001_") && name.ends_with(".dot"),
+            "got {name}"
+        );
+        let content = std::fs::read_to_string(&path).unwrap();
+        assert!(content.starts_with("digraph"));
+    }
+
+    #[test]
+    fn sidecar_disabled_writes_nothing() {
+        use fbuild_core::symbol_analysis::{
+            FineGrainedSymbol, FineGrainedSymbolMap, GraphConfig, SectionBytes,
+        };
+        let tmp = tempfile::tempdir().unwrap();
+        let map = FineGrainedSymbolMap {
+            elf_path: "fw.elf".into(),
+            map_path: None,
+            total_flash: 1_000,
+            total_ram: 0,
+            symbols: vec![FineGrainedSymbol {
+                mangled: "x".into(),
+                demangled: "x".into(),
+                address: 0x1000,
+                size: 1_000,
+                sym_type: 'T',
+                region: fbuild_core::MemoryRegion::Flash,
+                archive: None,
+                object: Some("x.o".into()),
+                output_section: Some(".text".into()),
+                source: "nm".into(),
+                referenced_by: Vec::new(),
+            }],
+            sections: Vec::<SectionBytes>::new(),
+        };
+        let written = write_sidecar_dot_files(
+            &map,
+            tmp.path(),
+            &SidecarOptions {
+                enabled: false,
+                min_bytes: 0,
+                config: GraphConfig::default(),
+            },
+        )
+        .unwrap();
+        assert_eq!(written, 0);
+        // graphs/ dir should not have been created either.
+        assert!(!tmp.path().join("graphs").exists());
     }
 
     #[test]

@@ -118,6 +118,46 @@ pub enum Commands {
         /// markdown report.
         #[arg(long, default_value = "25")]
         top: usize,
+        /// Skip embedded Graphviz `.dot` blocks in `report.md` and
+        /// don't write sidecar `graphs/*.dot` files. Use when a slim
+        /// report is preferred (e.g. CI bloat-budget gates that diff
+        /// only the JSON).
+        #[arg(long = "no-graph")]
+        no_graph: bool,
+        /// How many top symbols get an embedded back-reference graph
+        /// in `report.md` (default 10, capped by `--top`).
+        #[arg(long = "graph-top", default_value = "10")]
+        graph_top: usize,
+        /// Minimum size in bytes for a sidecar `.dot` file to be
+        /// written under `<output-dir>/graphs/`. Default 256 keeps
+        /// the per-symbol output to non-trivial contributors.
+        #[arg(long = "graph-min-bytes", default_value = "256")]
+        graph_min_bytes: u64,
+        /// Traversal depth: `adaptive` stops the first time a branch
+        /// leaves the root archive; `<N>` forces an exact hop count.
+        #[arg(long = "graph-depth", default_value = "adaptive")]
+        graph_depth: String,
+        /// Per-node fan-out cap (default 5). Excess referencers
+        /// collapse into a single `(… and N more)` super-node.
+        #[arg(long = "graph-fan-out", default_value = "5")]
+        graph_fan_out: usize,
+        /// Comma-separated archive list to collapse into per-archive
+        /// super-nodes. Default `libc.a,libgcc.a` hides the libc
+        /// internal-wrapper layer so non-libc callers stand out.
+        #[arg(long = "graph-collapse-archive", default_value = "libc.a,libgcc.a")]
+        graph_collapse_archive: String,
+        /// Comma-separated archive list to drop from the graph
+        /// entirely. Default empty.
+        #[arg(long = "graph-exclude-archive", default_value = "")]
+        graph_exclude_archive: String,
+    },
+    /// Bloat-related subcommands. Today this hosts `graph` (back-
+    /// reference Graphviz export, fbuild #463); when #434 lands the
+    /// report-rename, the existing `fbuild symbols` becomes
+    /// `fbuild bloat` and lives here as a sibling subcommand.
+    Bloat {
+        #[command(subcommand)]
+        cmd: BloatCmd,
     },
     /// Build firmware
     Build {
@@ -558,6 +598,61 @@ pub enum DaemonAction {
     },
 }
 
+/// Subcommands under `fbuild bloat`. The parent enum lives so future
+/// `bloat`-themed actions (report, diff, budget gate) cohabit cleanly;
+/// today only `graph` ships — see fbuild #463.
+#[derive(Subcommand)]
+pub enum BloatCmd {
+    /// Render a Graphviz `.dot` back-reference graph rooted at one
+    /// symbol. Walks the `referenced_by` data emitted by
+    /// `fbuild symbols` (#459) outward, applying cross-archive
+    /// termination + per-node fan-out caps + collapse-archive rules
+    /// so dense hubs like `printf` stay readable.
+    Graph {
+        /// ELF file OR project directory (same resolution as
+        /// `fbuild symbols`).
+        input: String,
+        /// Target symbol (mangled OR demangled — fbuild matches on
+        /// either).
+        #[arg(long, short = 's')]
+        symbol: String,
+        /// Path to the linker map (auto-detected if omitted).
+        #[arg(long)]
+        map: Option<String>,
+        /// Cross-toolchain `nm` (auto-resolved when omitted).
+        #[arg(long)]
+        nm: Option<String>,
+        /// Cross-toolchain `c++filt` (derived from `nm` stem when
+        /// omitted).
+        #[arg(long = "cppfilt")]
+        cppfilt: Option<String>,
+        /// Path to a `build_info.json` that carries toolchain paths.
+        #[arg(long = "build-info")]
+        build_info: Option<String>,
+        /// Output path for the `.dot` file. Defaults to stdout.
+        #[arg(short = 'o', long = "output")]
+        output: Option<String>,
+        /// Traversal depth: `adaptive` (default) or `<N>` for a fixed
+        /// hop count.
+        #[arg(long, default_value = "adaptive")]
+        depth: String,
+        /// Per-node fan-out cap (excess collapses into a `(… and N
+        /// more)` super-node).
+        #[arg(long = "fan-out", default_value = "5")]
+        fan_out: usize,
+        /// Hard cap on traversal depth (safety belt for adaptive).
+        #[arg(long = "max-depth", default_value = "4")]
+        max_depth: u32,
+        /// Comma-separated archive list to collapse into per-archive
+        /// super-nodes.
+        #[arg(long = "collapse-archive", default_value = "libc.a,libgcc.a")]
+        collapse_archive: String,
+        /// Comma-separated archive list to drop from the graph.
+        #[arg(long = "exclude-archive", default_value = "")]
+        exclude_archive: String,
+    },
+}
+
 /// Resolve project_dir: prefer the subcommand's value, fall back to the top-level positional arg,
 /// then default to ".".  This lets callers write either `fbuild build <dir>` or `fbuild <dir> build`.
 pub fn resolve_project_dir(
@@ -587,6 +682,8 @@ pub const KNOWN_SUBCOMMANDS: &[&str] = &[
     "lib-select",
     "compile-many",
     "ci",
+    "symbols",
+    "bloat",
 ];
 
 /// Rewrite `fbuild <dir> <subcommand> ...` → `fbuild <subcommand> <dir> ...`
