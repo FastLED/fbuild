@@ -1,10 +1,17 @@
-//! NXP LPC8xx (Cortex-M0+) bare-metal CMSIS build support.
+//! NXP LPC8xx (Cortex-M0+) bare-metal build support.
 //!
-//! Stage 1 of FastLED/FastLED#2836: scaffolds board/toolchain wiring for
-//! LPC804 and LPC845. Stage 2 (FastLED C++ driver port) will land separately
-//! and unblock the per-platform CI workflows.
+//! - Stage 1 (shipped): board/toolchain wiring, board JSON, linker scripts,
+//!   startup `.S`, dispatch table entry.
+//! - Stage 2 (this module): real build orchestrator that compiles user
+//!   sources + the embedded `main.cpp` shim + startup `.S` and links
+//!   against the per-MCU linker script. See [`orchestrator`].
+//! - Stage 3 (#479 / [`zackees/ArduinoCore-LPC8xx`](https://github.com/zackees/ArduinoCore-LPC8xx)):
+//!   replace the embedded shim with a real Arduino framework.
+//!
+//! Tracked under #487.
 
 pub mod mcu_config;
+pub mod orchestrator;
 
 use std::path::Path;
 
@@ -28,24 +35,24 @@ pub const LPC804_STARTUP: &str = include_str!("assets/startup_lpc804.S");
 /// Minimal Reset_Handler + vector table for LPC845.
 pub const LPC845_STARTUP: &str = include_str!("assets/startup_lpc845.S");
 
+/// Hand-rolled Arduino `main()` shim. Wraps the user-provided `setup()`
+/// and `loop()` into the canonical `int main() { setup(); for(;;) loop(); }`
+/// pattern. Materialised to the build dir by the orchestrator and
+/// compiled alongside the user sketch. Replaced by the framework-owned
+/// `main.cpp` once #479 / ArduinoCore-LPC8xx is vendored (Stage 4 of #487).
+pub const MAIN_CPP_SHIM: &str = include_str!("assets/main.cpp");
+
 /// NXP LPC8xx platform support.
-///
-/// Stage 1 ships board/toolchain wiring only. `create_orchestrator()` returns
-/// a stub orchestrator that fails fast with a Stage-2-required message; the
-/// upstream `_ =>` arm in `crate::get_platform_support` already covers the
-/// "not yet implemented" path, but registering NxpLpc here keeps the dispatch
-/// table consistent with other platforms and lets Stage 2 plug in without
-/// touching `lib.rs` again.
 pub struct NxpLpcPlatformSupport;
 
 impl crate::PlatformSupport for NxpLpcPlatformSupport {
     fn create_orchestrator(&self) -> Box<dyn crate::BuildOrchestrator> {
-        Box::new(NxpLpcStubOrchestrator)
+        orchestrator::create()
     }
 
     fn install_deps(&self, project_dir: &Path) -> Result<()> {
         // ARM GCC is the right toolchain for Cortex-M0+ bare metal.
-        // Pre-install it so Stage 2's orchestrator can `ensure_installed` cheaply.
+        // Pre-install it so the orchestrator can `ensure_installed` cheaply.
         use fbuild_packages::Package;
         let tc = fbuild_packages::toolchain::ArmToolchain::new(project_dir);
         Package::ensure_installed(&tc)?;
@@ -55,27 +62,6 @@ impl crate::PlatformSupport for NxpLpcPlatformSupport {
 
     fn default_board_id(&self) -> &str {
         "lpc845"
-    }
-}
-
-/// Stage-1 placeholder orchestrator. Returns a clear "Stage 2 required" error
-/// so users running `fbuild build` against an LPC8xx board hit a useful
-/// message instead of a generic "not yet implemented".
-struct NxpLpcStubOrchestrator;
-
-impl crate::BuildOrchestrator for NxpLpcStubOrchestrator {
-    fn platform(&self) -> fbuild_core::Platform {
-        fbuild_core::Platform::NxpLpc
-    }
-
-    fn build(&self, _params: &crate::BuildParams) -> Result<crate::BuildResult> {
-        Err(fbuild_core::FbuildError::BuildFailed(
-            "NXP LPC8xx build orchestrator is Stage 2 of FastLED/FastLED#2836 \
-             and has not landed yet. Stage 1 (this PR) wires only the board \
-             definitions, Platform enum entry, linker scripts, and startup \
-             stubs. Track FastLED/fbuild for the Stage-2 follow-up."
-                .to_string(),
-        ))
     }
 }
 
@@ -103,9 +89,9 @@ mod tests {
     }
 
     #[test]
-    fn stub_orchestrator_reports_nxplpc_platform() {
-        use crate::BuildOrchestrator;
-        let orch = NxpLpcStubOrchestrator;
-        assert_eq!(orch.platform(), fbuild_core::Platform::NxpLpc);
+    fn main_cpp_shim_is_non_empty() {
+        // The orchestrator depends on this asset existing; assert it
+        // wasn't accidentally emptied.
+        assert!(!MAIN_CPP_SHIM.trim().is_empty());
     }
 }
