@@ -19,9 +19,13 @@
 //! no fs I/O for tool invocation) so it can be unit-tested without a
 //! cross toolchain. Subprocess drivers live in `fbuild_build`.
 
+pub mod cref;
+
 use std::collections::BTreeMap;
 
 use serde::{Deserialize, Serialize};
+
+pub use cref::{parse_cref_table, SymbolReference};
 
 use crate::MemoryRegion;
 
@@ -62,6 +66,15 @@ pub struct FineGrainedSymbol {
     /// versions of `fbuild symbols`.
     #[serde(default = "default_source_nm")]
     pub source: String,
+    /// Translation units that *referenced* this symbol, as parsed from
+    /// GNU ld's `Cross Reference Table` block in the map file.
+    /// Excludes the defining TU (already on `archive` + `object`).
+    /// Empty when the linker map lacks a cref block (older `ld`, or
+    /// `-Wl,--no-cref`), or when nothing references the symbol — both
+    /// cases are non-errors. Granularity is `(archive, object)`, not
+    /// per-symbol; that's a property of `ld --cref` itself.
+    #[serde(default)]
+    pub referenced_by: Vec<SymbolReference>,
 }
 
 fn default_source_nm() -> String {
@@ -576,7 +589,15 @@ pub fn build_fine_grained_map(
     demangled: Vec<String>,
     ranges: Vec<InputSectionRange>,
 ) -> FineGrainedSymbolMap {
-    build_fine_grained_map_with_synth(elf_path, map_path, nm_rows, demangled, ranges, &[])
+    build_fine_grained_map_with_synth(
+        elf_path,
+        map_path,
+        nm_rows,
+        demangled,
+        ranges,
+        &[],
+        &BTreeMap::new(),
+    )
 }
 
 /// Build a per-symbol view, optionally consuming pre-demangled names
@@ -587,6 +608,10 @@ pub fn build_fine_grained_map(
 /// [`collect_map_derived_owners`] returns). When empty, synthetic
 /// rows carry their mangled name in the `demangled` field; callers
 /// who want demangled C++ names should pass the c++filt output.
+///
+/// `cref` maps mangled-symbol-name → referencer list (see
+/// [`parse_cref_table`]). Empty when the map file has no cref block;
+/// in that case every row's `referenced_by` field is `[]`.
 pub fn build_fine_grained_map_with_synth(
     elf_path: String,
     map_path: Option<String>,
@@ -594,6 +619,7 @@ pub fn build_fine_grained_map_with_synth(
     demangled: Vec<String>,
     ranges: Vec<InputSectionRange>,
     synth_demangled: &[String],
+    cref: &BTreeMap<String, Vec<SymbolReference>>,
 ) -> FineGrainedSymbolMap {
     assert_eq!(
         nm_rows.len(),
@@ -623,6 +649,7 @@ pub fn build_fine_grained_map_with_synth(
             MemoryRegion::Ram => total_ram += size,
         }
         let attribution = index.lookup(addr);
+        let referenced_by = cref.get(&mangled).cloned().unwrap_or_default();
         symbols.push(FineGrainedSymbol {
             mangled,
             demangled,
@@ -634,6 +661,7 @@ pub fn build_fine_grained_map_with_synth(
             object: attribution.map(|r| r.object.clone()),
             output_section: attribution.map(|r| r.output_section.clone()),
             source: "nm".to_string(),
+            referenced_by,
         });
     }
 
@@ -664,6 +692,7 @@ pub fn build_fine_grained_map_with_synth(
         // canonical 'T' from nm if anywhere). Rodata/literal → 'r'.
         // Data → 'd'. BSS → 'b'.
         let sym_type = sym_type_for_synth(&r.output_section);
+        let referenced_by = cref.get(mangled).cloned().unwrap_or_default();
         symbols.push(FineGrainedSymbol {
             mangled: mangled.clone(),
             demangled: demangled.clone(),
@@ -675,6 +704,7 @@ pub fn build_fine_grained_map_with_synth(
             object: Some(r.object.clone()),
             output_section: Some(r.output_section.clone()),
             source: "map-derived".to_string(),
+            referenced_by,
         });
     }
     FineGrainedSymbolMap {

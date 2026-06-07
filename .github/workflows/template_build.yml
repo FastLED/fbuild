@@ -107,17 +107,26 @@ jobs:
         run: fbuild build ${{ inputs.test-dir }} -e ${{ inputs.env-name }} --quick
 
       - name: Verify quick firmware output
+        # BuildLayout (PR #455, FastLED/fbuild#432) collapses the
+        # `<env>` segment when the sketch dir basename == env-name.
+        # `tests/platform/lpc845/` (env `lpc845`) → collapses to
+        # `.fbuild/build/quick/firmware.<ext>`; but
+        # `tests/platform/giga_r1_m7/` (env `giga_r1`) → stays as
+        # `.fbuild/build/giga_r1/quick/firmware.<ext>`. Find both
+        # layouts so the verify works either way.
         run: |
-          test -f ${{ inputs.test-dir }}/.fbuild/build/${{ inputs.env-name }}/quick/firmware.${{ inputs.firmware-ext }}
-          echo "Quick build successful - firmware.${{ inputs.firmware-ext }} generated"
+          firmware=$(find ${{ inputs.test-dir }}/.fbuild/build -type f -name "firmware.${{ inputs.firmware-ext }}" -path "*/quick/*" 2>/dev/null | head -1)
+          test -n "$firmware" && test -f "$firmware"
+          echo "Quick build successful - firmware.${{ inputs.firmware-ext }} at $firmware"
 
       - name: Build ${{ inputs.workflow-name }} (release)
         run: fbuild build ${{ inputs.test-dir }} -e ${{ inputs.env-name }} --release
 
       - name: Verify release firmware output
         run: |
-          test -f ${{ inputs.test-dir }}/.fbuild/build/${{ inputs.env-name }}/release/firmware.${{ inputs.firmware-ext }}
-          echo "Release build successful - firmware.${{ inputs.firmware-ext }} generated"
+          firmware=$(find ${{ inputs.test-dir }}/.fbuild/build -type f -name "firmware.${{ inputs.firmware-ext }}" -path "*/release/*" 2>/dev/null | head -1)
+          test -n "$firmware" && test -f "$firmware"
+          echo "Release build successful - firmware.${{ inputs.firmware-ext }} at $firmware"
 
       - name: Save fbuild toolchains
         if: always()

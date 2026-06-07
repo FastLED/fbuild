@@ -399,6 +399,7 @@ fn sample_symbol(addr: u64, size: u64, region: MemoryRegion, name: &str) -> Fine
         object: None,
         output_section: None,
         source: "nm".to_string(),
+        referenced_by: Vec::new(),
     }
 }
 
@@ -471,6 +472,157 @@ fn retain_loaded_symbols_drops_boundary_markers() {
     assert_eq!(kept, vec!["real_text", "real_bss"]);
     assert_eq!(map.total_flash, 0x40);
     assert_eq!(map.total_ram, 0x80);
+}
+
+// ---- Issue #459: cref `referenced_by` integration -----------------
+
+#[test]
+fn build_fine_grained_map_populates_referenced_by_from_cref() {
+    // End-to-end check: an nm symbol whose mangled name appears in
+    // the cref table picks up its `referenced_by` list. The defining
+    // TU is excluded — it's already on the row's own attribution.
+    let ranges = vec![InputSectionRange {
+        addr: 0x42000020,
+        size: 0x40,
+        output_section: ".flash.text".into(),
+        input_section: ".text._vfprintf_r".into(),
+        archive: Some("libc.a".into()),
+        object: "libc_a-vfprintf.o".into(),
+    }];
+    let nm = vec![(0x42000020u64, 0x40u64, 'T', "_vfprintf_r".to_string())];
+    let demangled = vec!["_vfprintf_r".to_string()];
+    let mut cref: BTreeMap<String, Vec<SymbolReference>> = BTreeMap::new();
+    cref.insert(
+        "_vfprintf_r".to_string(),
+        vec![
+            SymbolReference {
+                archive: Some("libc.a".into()),
+                object: "libc_a-vprintf.o".into(),
+            },
+            SymbolReference {
+                archive: Some("libc.a".into()),
+                object: "libc_a-printf.o".into(),
+            },
+        ],
+    );
+    let map = build_fine_grained_map_with_synth(
+        "fw.elf".into(),
+        Some("fw.map".into()),
+        nm,
+        demangled,
+        ranges,
+        &[],
+        &cref,
+    );
+    assert_eq!(map.symbols.len(), 1);
+    assert_eq!(
+        map.symbols[0].referenced_by,
+        vec![
+            SymbolReference {
+                archive: Some("libc.a".into()),
+                object: "libc_a-vprintf.o".into(),
+            },
+            SymbolReference {
+                archive: Some("libc.a".into()),
+                object: "libc_a-printf.o".into(),
+            },
+        ]
+    );
+}
+
+#[test]
+fn build_fine_grained_map_referenced_by_empty_when_no_cref() {
+    // The acceptance contract from #459: missing cref data → empty
+    // `referenced_by`, never an error. Uses the convenience wrapper
+    // `build_fine_grained_map` which passes an empty cref map.
+    let ranges = vec![InputSectionRange {
+        addr: 0x42000020,
+        size: 0x40,
+        output_section: ".flash.text".into(),
+        input_section: ".text.foo".into(),
+        archive: Some("libA.a".into()),
+        object: "foo.o".into(),
+    }];
+    let nm = vec![(0x42000020u64, 0x40u64, 'T', "foo".to_string())];
+    let demangled = vec!["foo".to_string()];
+    let map = build_fine_grained_map("fw.elf".into(), None, nm, demangled, ranges);
+    assert_eq!(map.symbols.len(), 1);
+    assert!(
+        map.symbols[0].referenced_by.is_empty(),
+        "expected [] referenced_by when no cref data, got {:?}",
+        map.symbols[0].referenced_by
+    );
+}
+
+#[test]
+fn build_fine_grained_map_populates_referenced_by_on_synth_rows() {
+    // Map-derived synthetic rows (anonymous rodata pool case) also
+    // pick up cref data when the owning symbol is in the table.
+    let ranges = vec![
+        InputSectionRange {
+            addr: 0x42000020,
+            size: 0x40,
+            output_section: ".flash.text".into(),
+            input_section: ".text.foo".into(),
+            archive: Some("libA.a".into()),
+            object: "foo.o".into(),
+        },
+        InputSectionRange {
+            addr: 0x3c050000,
+            size: 0x10,
+            output_section: ".flash.rodata".into(),
+            input_section: ".rodata.foo.str1.1".into(),
+            archive: Some("libA.a".into()),
+            object: "foo.o".into(),
+        },
+    ];
+    let nm = vec![(0x42000020u64, 0x40u64, 'T', "foo".to_string())];
+    let demangled = vec!["foo".to_string()];
+    let mut cref: BTreeMap<String, Vec<SymbolReference>> = BTreeMap::new();
+    cref.insert(
+        "foo".to_string(),
+        vec![SymbolReference {
+            archive: None,
+            object: "main.cpp.o".into(),
+        }],
+    );
+    let map = build_fine_grained_map_with_synth(
+        "fw.elf".into(),
+        Some("fw.map".into()),
+        nm,
+        demangled,
+        ranges,
+        &[],
+        &cref,
+    );
+    // Both the nm row and the synthetic rodata row carry the same
+    // referenced_by since they share a mangled owner.
+    for sym in &map.symbols {
+        assert_eq!(sym.referenced_by.len(), 1, "row missing cref: {sym:?}");
+        assert_eq!(sym.referenced_by[0].object, "main.cpp.o");
+    }
+}
+
+#[test]
+fn fine_grained_symbol_json_roundtrip_with_legacy_schema() {
+    // Pre-#459 JSON omits `referenced_by` entirely; deserialise must
+    // tolerate the missing field by defaulting to an empty vec, so
+    // older `report.json` files keep loading after the upgrade.
+    let legacy_json = r#"{
+        "mangled": "foo",
+        "demangled": "foo",
+        "address": 16384,
+        "size": 64,
+        "sym_type": "T",
+        "region": "flash",
+        "archive": "libA.a",
+        "object": "foo.o",
+        "output_section": ".flash.text",
+        "source": "nm"
+    }"#;
+    let sym: FineGrainedSymbol =
+        serde_json::from_str(legacy_json).expect("legacy schema must still parse");
+    assert!(sym.referenced_by.is_empty());
 }
 
 #[test]
