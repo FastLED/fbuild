@@ -107,8 +107,13 @@ jobs:
         run: fbuild build ${{ inputs.test-dir }} -e ${{ inputs.env-name }} --quick
 
       - name: Verify quick firmware output
+        # `tests/platform/<env>/` has basename == env-name, so
+        # BuildLayout collapses the `<env>` segment (PR #455 / issue
+        # FastLED/fbuild#432). The output lives at
+        # `<test-dir>/.fbuild/build/<profile>/firmware.<ext>` with no
+        # `<env>` directory in between.
         run: |
-          test -f ${{ inputs.test-dir }}/.fbuild/build/${{ inputs.env-name }}/quick/firmware.${{ inputs.firmware-ext }}
+          test -f ${{ inputs.test-dir }}/.fbuild/build/quick/firmware.${{ inputs.firmware-ext }}
           echo "Quick build successful - firmware.${{ inputs.firmware-ext }} generated"
 
       - name: Build ${{ inputs.workflow-name }} (release)
@@ -116,7 +121,7 @@ jobs:
 
       - name: Verify release firmware output
         run: |
-          test -f ${{ inputs.test-dir }}/.fbuild/build/${{ inputs.env-name }}/release/firmware.${{ inputs.firmware-ext }}
+          test -f ${{ inputs.test-dir }}/.fbuild/build/release/firmware.${{ inputs.firmware-ext }}
           echo "Release build successful - firmware.${{ inputs.firmware-ext }} generated"
 
       - name: Save fbuild toolchains
