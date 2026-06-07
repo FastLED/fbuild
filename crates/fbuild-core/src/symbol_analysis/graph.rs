@@ -51,6 +51,35 @@ pub enum GraphDepth {
     Fixed(u32),
 }
 
+/// Which graph direction(s) to synthesize.
+///
+/// `Backward` is the historical default and what every caller pre-#463
+/// asked for: walk from the root symbol *outward* along
+/// `referenced_by` to surface "who pulled this in?".
+///
+/// `Forward` walks the inverse: along `references_to` (populated from
+/// `objdump -d`) to surface "what does this symbol call?". Forward
+/// edges are per-symbol, not per-TU — the AI-assisted-optimization
+/// use-case (see #471 motivation) wants exactly that precision so it
+/// can tell the difference between `ClocklessIdf5` calling `fl::sort`
+/// (which it doesn't) vs. its TU calling it (which it might).
+///
+/// `Bidirectional` walks both. The rendered `.dot` shows backward
+/// callers on one side of the root and forward callees on the other,
+/// so a single picture answers both "who pulled this in?" and "what
+/// did this end up dragging along?".
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum Direction {
+    /// Backward only. Compatible with the pre-#471 default.
+    #[default]
+    Backward,
+    /// Forward only. Useful when you want a small `.dot` focused on
+    /// callees without the noise of the call-in side.
+    Forward,
+    /// Both directions from the root.
+    Bidirectional,
+}
+
 /// User-visible knobs for back-reference graph synthesis.
 #[derive(Debug, Clone)]
 pub struct GraphConfig {
@@ -70,6 +99,9 @@ pub struct GraphConfig {
     /// Archives whose branches are dropped entirely. Use when the
     /// caller only cares about non-system referencers.
     pub exclude_archives: Vec<String>,
+    /// Which direction(s) to walk from the root. See [`Direction`].
+    /// Default `Backward` matches the pre-#471 behaviour exactly.
+    pub direction: Direction,
 }
 
 impl Default for GraphConfig {
@@ -80,6 +112,7 @@ impl Default for GraphConfig {
             max_depth: 4,
             collapse_archives: vec!["libc.a".to_string(), "libgcc.a".to_string()],
             exclude_archives: Vec::new(),
+            direction: Direction::Backward,
         }
     }
 }
@@ -108,17 +141,62 @@ pub enum NodeKind {
     /// `size_hint` is the sum of symbol sizes attributed to this TU
     /// in the report, used both for fan-out ranking and node sizing.
     TranslationUnit { size_hint: Option<u64> },
+    /// A callee — a symbol the root (or one of its callees) calls.
+    /// Distinct from `TranslationUnit` because forward edges are
+    /// per-symbol, not per-TU. `size` is the callee's own flash
+    /// footprint (drives ranking + node sizing).
+    Callee {
+        demangled: String,
+        size: u64,
+        callers_count: usize,
+    },
     /// A super-node bundling multiple TUs from the same archive
     /// because of `collapse_archives` OR fan-out overflow.
     Collapsed { archive: String, count: usize },
 }
 
-/// Directed edge from a referencer toward what it references.
-/// (`from` referenced `to`.)
+/// Direction of a single edge in the graph.
+///
+/// `Backward`: caller → callee, drawn from a referencer toward the
+/// root (matches the pre-#471 contract that `from referenced to`).
+///
+/// `Forward`: root → callee, drawn from the symbol toward the things
+/// it calls.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum EdgeDirection {
+    #[default]
+    Backward,
+    Forward,
+}
+
+/// Directed edge. For `Backward` edges `from` referenced `to`; for
+/// `Forward` edges `from` calls `to`. The renderer styles the two
+/// flavours differently so a bidirectional graph stays readable.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct GraphEdge {
     pub from: String,
     pub to: String,
+    pub direction: EdgeDirection,
+}
+
+impl GraphEdge {
+    /// A back-edge from a referencer toward what it references.
+    pub fn backward(from: String, to: String) -> Self {
+        Self {
+            from,
+            to,
+            direction: EdgeDirection::Backward,
+        }
+    }
+
+    /// A forward edge from a caller toward what it calls.
+    pub fn forward(from: String, to: String) -> Self {
+        Self {
+            from,
+            to,
+            direction: EdgeDirection::Forward,
+        }
+    }
 }
 
 /// Back-reference graph rooted at a single target symbol.
@@ -246,14 +324,28 @@ impl BackrefGraph {
         // BFS queue. Each entry: (current TU, target node id it points to, depth).
         let mut queue: VecDeque<((Option<String>, String), String, u32)> = VecDeque::new();
 
-        // Seed level 1: every TU that directly references the root.
-        let level1 = rank_and_cap_referencers(
-            &root.referenced_by,
-            index,
-            config,
-            &root_archive,
-            /*depth=*/ 1,
+        // ---- Backward direction: seed level 1 with the TUs that
+        // ---- directly reference the root.
+        //
+        // Skipped entirely when the caller asked for `Direction::Forward`
+        // only — the BFS expansion below short-circuits naturally on an
+        // empty queue, so we get a clean forward-only graph without
+        // editing the rest of this method.
+        let want_backward = matches!(
+            config.direction,
+            Direction::Backward | Direction::Bidirectional
         );
+        let level1: Vec<CappedReferencer> = if want_backward {
+            rank_and_cap_referencers(
+                &root.referenced_by,
+                index,
+                config,
+                &root_archive,
+                /*depth=*/ 1,
+            )
+        } else {
+            Vec::new()
+        };
         for entry in level1 {
             match entry {
                 CappedReferencer::Tu(tu_ref) => {
@@ -271,10 +363,7 @@ impl BackrefGraph {
                             depth: 1,
                         });
                         node_id_by_tu.insert(key.clone(), node_id.clone());
-                        edges.push(GraphEdge {
-                            from: node_id.clone(),
-                            to: root_id.clone(),
-                        });
+                        edges.push(GraphEdge::backward(node_id.clone(), root_id.clone()));
                         queue.push_back((key, node_id, 1));
                     }
                 }
@@ -290,10 +379,7 @@ impl BackrefGraph {
                             depth: 1,
                         });
                     }
-                    edges.push(GraphEdge {
-                        from: node_id,
-                        to: root_id.clone(),
-                    });
+                    edges.push(GraphEdge::backward(node_id, root_id.clone()));
                 }
                 CappedReferencer::FanOutOverflow { count } => {
                     let node_id = format!("ovf__d1__{}", count);
@@ -308,10 +394,7 @@ impl BackrefGraph {
                         },
                         depth: 1,
                     });
-                    edges.push(GraphEdge {
-                        from: node_id,
-                        to: root_id.clone(),
-                    });
+                    edges.push(GraphEdge::backward(node_id, root_id.clone()));
                 }
             }
         }
@@ -363,10 +446,7 @@ impl BackrefGraph {
                             if let Some(target_id) = node_id_by_tu.get(&key) {
                                 push_edge_dedup(
                                     &mut edges,
-                                    GraphEdge {
-                                        from: target_id.clone(),
-                                        to: current_id.clone(),
-                                    },
+                                    GraphEdge::backward(target_id.clone(), current_id.clone()),
                                 );
                             }
                             continue;
@@ -383,10 +463,7 @@ impl BackrefGraph {
                             depth: next_depth,
                         });
                         node_id_by_tu.insert(key.clone(), node_id.clone());
-                        edges.push(GraphEdge {
-                            from: node_id.clone(),
-                            to: current_id.clone(),
-                        });
+                        edges.push(GraphEdge::backward(node_id.clone(), current_id.clone()));
                         queue.push_back((key, node_id, next_depth));
                     }
                     CappedReferencer::CollapsedArchive { archive, count } => {
@@ -403,10 +480,7 @@ impl BackrefGraph {
                         }
                         push_edge_dedup(
                             &mut edges,
-                            GraphEdge {
-                                from: node_id,
-                                to: current_id.clone(),
-                            },
+                            GraphEdge::backward(node_id, current_id.clone()),
                         );
                     }
                     CappedReferencer::FanOutOverflow { count } => {
@@ -427,13 +501,36 @@ impl BackrefGraph {
                             },
                             depth: next_depth,
                         });
-                        edges.push(GraphEdge {
-                            from: node_id,
-                            to: current_id.clone(),
-                        });
+                        edges.push(GraphEdge::backward(node_id, current_id.clone()));
                     }
                 }
             }
+        }
+
+        // ---- Forward direction: walk root.references_to outward.
+        //
+        // Forward edges are per-symbol (not TU-level), so the node
+        // identity here is `sym__<mangled>` instead of `tu__<archive>__<obj>`.
+        // This is the side of the graph that answers "what does
+        // ClocklessIdf5 actually call?" — the motivating ask in #471
+        // when an AI optimization pass mistook `fl::sort` (a sibling
+        // in the same TU) for something the root symbol called.
+        if matches!(
+            config.direction,
+            Direction::Forward | Direction::Bidirectional
+        ) {
+            let mut visited_syms: BTreeSet<String> = BTreeSet::new();
+            visited_syms.insert(root.mangled.clone());
+            walk_forward(
+                map,
+                config,
+                root,
+                &root_id,
+                /*depth=*/ 1,
+                &mut nodes,
+                &mut edges,
+                &mut visited_syms,
+            );
         }
 
         Self {
@@ -467,7 +564,23 @@ impl BackrefGraph {
             ));
         }
         for e in &self.edges {
-            out.push_str(&format!("  \"{}\" -> \"{}\";\n", e.from, e.to));
+            // Forward edges (caller → callee) get a distinct dashed
+            // arrow + a `forward` label so a bidirectional graph
+            // doesn't blur the two directions together. Backward
+            // edges keep the historical solid arrow (no extra
+            // attributes) so existing `.dot` consumers don't see a
+            // diff from the visual they're used to.
+            match e.direction {
+                EdgeDirection::Backward => {
+                    out.push_str(&format!("  \"{}\" -> \"{}\";\n", e.from, e.to));
+                }
+                EdgeDirection::Forward => {
+                    out.push_str(&format!(
+                        "  \"{}\" -> \"{}\" [style=dashed, color=\"#0066cc\", fontcolor=\"#0066cc\", label=\"calls\"];\n",
+                        e.from, e.to
+                    ));
+                }
+            }
         }
         out.push_str("}\n");
         out
@@ -555,6 +668,263 @@ fn push_edge_dedup(edges: &mut Vec<GraphEdge>, candidate: GraphEdge) {
     }
 }
 
+/// BFS the per-symbol forward edges (`references_to`) outward from a
+/// starting symbol. Adds one `Callee` node per surviving callee, one
+/// `Forward` edge from caller → callee, and a single
+/// `(… and N more)` overflow super-node when the fan-out exceeds
+/// `config.fan_out`. Recurses to `config.max_depth`.
+///
+/// Ranking is by callee flash size (heaviest first), which matches
+/// the AI-optimization use-case (#471): when a model sees a top
+/// symbol it wants to know "what's the biggest thing this calls?",
+/// not "what's the most-shared thing this calls?". The
+/// most-shared view is surfaced via [`rank_callees_dual`] for the
+/// markdown sub-table — both axes coexist; the graph picks one.
+#[allow(clippy::too_many_arguments)]
+fn walk_forward(
+    map: &FineGrainedSymbolMap,
+    config: &GraphConfig,
+    caller_sym: &super::FineGrainedSymbol,
+    caller_node_id: &str,
+    depth: u32,
+    nodes: &mut Vec<GraphNode>,
+    edges: &mut Vec<GraphEdge>,
+    visited_syms: &mut BTreeSet<String>,
+) {
+    if depth > config.max_depth {
+        return;
+    }
+    // Resolve callee names to FineGrainedSymbols where possible. Names
+    // that don't resolve (typically platform/libc symbols not pulled
+    // into the report) are kept as raw mangled strings with size=0
+    // so the graph still surfaces the edge.
+    let mut callees: Vec<CalleeCandidate<'_>> = Vec::new();
+    for callee_mangled in &caller_sym.references_to {
+        if visited_syms.contains(callee_mangled) {
+            continue;
+        }
+        let resolved = map
+            .symbols
+            .iter()
+            .find(|s| s.mangled == *callee_mangled || s.demangled == *callee_mangled);
+        callees.push(CalleeCandidate {
+            mangled: callee_mangled.clone(),
+            sym: resolved,
+        });
+    }
+    if callees.is_empty() {
+        return;
+    }
+
+    // Apply exclude_archives to filter callees from system libs the
+    // caller doesn't want surfaced.
+    callees.retain(|c| match c.sym.and_then(|s| s.archive.as_ref()) {
+        Some(a) => !config.exclude_archives.iter().any(|x| x == a),
+        None => true,
+    });
+    if callees.is_empty() {
+        return;
+    }
+
+    // Rank by callee size (largest first); ties broken by
+    // referenced_by length (most-shared first) so the ranking is
+    // deterministic.
+    callees.sort_by(|a, b| {
+        b.size()
+            .cmp(&a.size())
+            .then_with(|| b.callers_count().cmp(&a.callers_count()))
+            .then_with(|| a.mangled.cmp(&b.mangled))
+    });
+
+    let total = callees.len();
+    let take_n = config.fan_out.min(total);
+    let overflow = total.saturating_sub(take_n);
+
+    for c in callees.iter().take(take_n) {
+        let callee_id = format!("sym__{}", sanitize_id(&c.mangled));
+        if visited_syms.insert(c.mangled.clone()) {
+            let (demangled, size) = match c.sym {
+                Some(s) => (s.demangled.clone(), s.size),
+                None => (c.mangled.clone(), 0),
+            };
+            let callers_count = c.callers_count();
+            let archive = c.sym.and_then(|s| s.archive.clone());
+            let object = c.sym.and_then(|s| s.object.clone());
+            nodes.push(GraphNode {
+                id: callee_id.clone(),
+                label: format_callee_label(&demangled, size, callers_count),
+                archive,
+                object,
+                kind: NodeKind::Callee {
+                    demangled,
+                    size,
+                    callers_count,
+                },
+                depth,
+            });
+            // Recurse — only if we have a resolved symbol with its
+            // own references_to.
+            if let Some(resolved) = c.sym {
+                if depth < config.max_depth && !resolved.references_to.is_empty() {
+                    walk_forward(
+                        map,
+                        config,
+                        resolved,
+                        &callee_id,
+                        depth + 1,
+                        nodes,
+                        edges,
+                        visited_syms,
+                    );
+                }
+            }
+        }
+        push_edge_dedup(
+            edges,
+            GraphEdge::forward(caller_node_id.to_string(), callee_id),
+        );
+    }
+
+    if overflow > 0 {
+        let overflow_id = format!(
+            "fwd_ovf__{}__d{}__{}",
+            sanitize_id(caller_node_id),
+            depth,
+            overflow
+        );
+        nodes.push(GraphNode {
+            id: overflow_id.clone(),
+            label: format!("(… and {overflow} more callees)"),
+            archive: None,
+            object: None,
+            kind: NodeKind::Collapsed {
+                archive: "(overflow)".to_string(),
+                count: overflow,
+            },
+            depth,
+        });
+        edges.push(GraphEdge::forward(caller_node_id.to_string(), overflow_id));
+    }
+}
+
+/// Working struct for ranking callees: carries the mangled name plus
+/// an optional resolved symbol pointer for size/popularity lookup.
+struct CalleeCandidate<'a> {
+    mangled: String,
+    sym: Option<&'a super::FineGrainedSymbol>,
+}
+
+impl<'a> CalleeCandidate<'a> {
+    fn size(&self) -> u64 {
+        self.sym.map(|s| s.size).unwrap_or(0)
+    }
+
+    fn callers_count(&self) -> usize {
+        self.sym.map(|s| s.referenced_by.len()).unwrap_or(0)
+    }
+}
+
+/// Per-callee node label: `<demangled>\n<size> B\nshared with <N>`.
+fn format_callee_label(demangled: &str, size: u64, callers_count: usize) -> String {
+    let truncated = if demangled.len() > 64 {
+        format!("{}…", &demangled[..63])
+    } else {
+        demangled.to_string()
+    };
+    if callers_count > 1 {
+        format!("{truncated}\n{size} B\nshared ×{callers_count}")
+    } else {
+        format!("{truncated}\n{size} B")
+    }
+}
+
+/// Rank a symbol's direct callees by two axes simultaneously and
+/// return the top-`top_n` from each — the data the markdown
+/// "Top N callees" sub-table renders side by side.
+///
+/// `(by_size, by_popularity, other_count)`:
+///   - `by_size`: heaviest callees (flash bytes), ranked by callee
+///     size descending.
+///   - `by_popularity`: most-shared callees (how many TUs / symbols
+///     also call them), ranked by `referenced_by.len()` descending.
+///   - `other_count`: number of unique callees that fell out of both
+///     top-N buckets (the "other" pile the user asked for).
+///
+/// Callees that don't resolve to a row in `map` (e.g. weak refs not
+/// pulled in) get `size=0` and contribute to neither axis.
+#[must_use]
+pub fn rank_callees_dual<'a>(
+    map: &'a FineGrainedSymbolMap,
+    caller: &super::FineGrainedSymbol,
+    top_n: usize,
+) -> (Vec<CalleeRanked<'a>>, Vec<CalleeRanked<'a>>, usize) {
+    // Resolve every callee once.
+    let mut resolved: Vec<CalleeRanked<'a>> = caller
+        .references_to
+        .iter()
+        .map(|m| {
+            let s = map
+                .symbols
+                .iter()
+                .find(|s| s.mangled == *m || s.demangled == *m);
+            CalleeRanked {
+                mangled: m.clone(),
+                demangled: s.map(|s| s.demangled.clone()).unwrap_or_else(|| m.clone()),
+                size: s.map(|s| s.size).unwrap_or(0),
+                callers_count: s.map(|s| s.referenced_by.len()).unwrap_or(0),
+                sym: s,
+            }
+        })
+        .collect();
+
+    // Sort copies by each axis. We clone the small structs because
+    // they're cheap (4 fields + a `&FineGrainedSymbol`).
+    let mut by_size = resolved.clone();
+    by_size.sort_by(|a, b| {
+        b.size
+            .cmp(&a.size)
+            .then_with(|| a.demangled.cmp(&b.demangled))
+    });
+    let mut by_popularity = resolved.clone();
+    by_popularity.sort_by(|a, b| {
+        b.callers_count
+            .cmp(&a.callers_count)
+            .then_with(|| b.size.cmp(&a.size))
+            .then_with(|| a.demangled.cmp(&b.demangled))
+    });
+
+    let size_top = by_size.iter().take(top_n).cloned().collect::<Vec<_>>();
+    let pop_top = by_popularity
+        .iter()
+        .take(top_n)
+        .cloned()
+        .collect::<Vec<_>>();
+
+    // "Other" is the unique callees NOT present in either top-N
+    // bucket.
+    let top_mangled: BTreeSet<&str> = size_top
+        .iter()
+        .chain(pop_top.iter())
+        .map(|c| c.mangled.as_str())
+        .collect();
+    let other_count = resolved
+        .drain(..)
+        .filter(|c| !top_mangled.contains(c.mangled.as_str()))
+        .count();
+
+    (size_top, pop_top, other_count)
+}
+
+/// Row in the dual-ranked callee table.
+#[derive(Debug, Clone)]
+pub struct CalleeRanked<'a> {
+    pub mangled: String,
+    pub demangled: String,
+    pub size: u64,
+    pub callers_count: usize,
+    pub sym: Option<&'a super::FineGrainedSymbol>,
+}
+
 /// Map an archive name to a Graphviz fill color. Coloring follows
 /// the ecosystem the archive lives in so the eye jumps to the
 /// non-system edges.
@@ -584,6 +954,7 @@ fn node_width(n: &GraphNode) -> Option<f64> {
         NodeKind::TranslationUnit {
             size_hint: Some(b), ..
         } => *b,
+        NodeKind::Callee { size, .. } => *size,
         _ => return None,
     };
     if bytes == 0 {
@@ -683,6 +1054,7 @@ mod tests {
             output_section: Some(".flash.text".to_string()),
             source: "nm".to_string(),
             referenced_by: refs,
+            references_to: Vec::new(),
         }
     }
 
@@ -982,5 +1354,391 @@ mod tests {
         assert_eq!(sanitize_filename(&long).len(), 80);
         assert_eq!(sanitize_filename("op<<(int)"), "op___int_");
         assert_eq!(sanitize_filename(""), "sym");
+    }
+
+    // ---- #471: forward + bidirectional traversal ----
+
+    /// Helper: build a symbol with explicit `references_to`.
+    fn sym_calls(
+        mangled: &str,
+        size: u64,
+        archive: Option<&str>,
+        object: &str,
+        calls: Vec<&str>,
+    ) -> FineGrainedSymbol {
+        let mut s = sym(mangled, mangled, size, archive, object, Vec::new());
+        s.references_to = calls.into_iter().map(|c| c.to_string()).collect();
+        s
+    }
+
+    /// Forward-only build with no back-references: just root + its
+    /// direct callees, ranked by callee size.
+    #[test]
+    fn forward_only_emits_callee_nodes() {
+        let symbols = vec![
+            sym_calls(
+                "ClocklessIdf5",
+                10_000,
+                Some("libFastLED.a"),
+                "clockless_idf5.cpp.o",
+                vec!["esp_log_write", "rmt_tx_start", "fl_lerp8"],
+            ),
+            sym(
+                "esp_log_write",
+                "esp_log_write",
+                2_000,
+                Some("libesp.a"),
+                "log.c.o",
+                Vec::new(),
+            ),
+            sym(
+                "rmt_tx_start",
+                "rmt_tx_start",
+                800,
+                Some("libesp.a"),
+                "rmt.c.o",
+                Vec::new(),
+            ),
+            sym(
+                "fl_lerp8",
+                "fl_lerp8",
+                60,
+                Some("libFastLED.a"),
+                "math.cpp.o",
+                Vec::new(),
+            ),
+        ];
+        let cfg = GraphConfig {
+            direction: Direction::Forward,
+            collapse_archives: Vec::new(),
+            ..GraphConfig::default()
+        };
+        let g = BackrefGraph::build(&map(symbols), "ClocklessIdf5", &cfg);
+        // Root + 3 callees.
+        let callees: Vec<_> = g
+            .nodes
+            .iter()
+            .filter(|n| matches!(n.kind, NodeKind::Callee { .. }))
+            .collect();
+        assert_eq!(callees.len(), 3, "expected three forward callees");
+        // All edges should be forward.
+        assert!(g
+            .edges
+            .iter()
+            .all(|e| e.direction == EdgeDirection::Forward));
+        // Heaviest callee (esp_log_write @ 2000) ranks first by size.
+        let heaviest = callees
+            .iter()
+            .max_by_key(|n| match &n.kind {
+                NodeKind::Callee { size, .. } => *size,
+                _ => 0,
+            })
+            .unwrap();
+        assert!(heaviest.label.starts_with("esp_log_write"));
+    }
+
+    /// The motivating bug from #471: when a symbol's TU has siblings,
+    /// the forward graph must show ONLY what the root symbol itself
+    /// calls — not what the sibling symbols call. The cref-inversion
+    /// approach would have surfaced `fl::sort` here (called by a
+    /// sibling in the same TU); the objdump-based per-symbol
+    /// `references_to` correctly omits it.
+    #[test]
+    fn forward_excludes_tu_siblings_callees() {
+        let symbols = vec![
+            // Root: calls only esp_log_write.
+            sym_calls(
+                "ClocklessIdf5",
+                10_000,
+                Some("libFastLED.a"),
+                "clockless_idf5.cpp.o",
+                vec!["esp_log_write"],
+            ),
+            // Sibling in the same TU: calls fl::sort. This must NOT
+            // appear on ClocklessIdf5's forward edges.
+            sym_calls(
+                "ClocklessIdf5_helper",
+                500,
+                Some("libFastLED.a"),
+                "clockless_idf5.cpp.o",
+                vec!["fl::sort"],
+            ),
+            sym(
+                "esp_log_write",
+                "esp_log_write",
+                2_000,
+                Some("libesp.a"),
+                "log.c.o",
+                Vec::new(),
+            ),
+            sym(
+                "fl::sort",
+                "fl::sort",
+                1_500,
+                Some("libFastLED.a"),
+                "sort.cpp.o",
+                Vec::new(),
+            ),
+        ];
+        let cfg = GraphConfig {
+            direction: Direction::Forward,
+            collapse_archives: Vec::new(),
+            ..GraphConfig::default()
+        };
+        let g = BackrefGraph::build(&map(symbols), "ClocklessIdf5", &cfg);
+        let callees: Vec<&str> = g
+            .nodes
+            .iter()
+            .filter_map(|n| match &n.kind {
+                NodeKind::Callee { demangled, .. } => Some(demangled.as_str()),
+                _ => None,
+            })
+            .collect();
+        assert!(callees.contains(&"esp_log_write"));
+        assert!(
+            !callees.contains(&"fl::sort"),
+            "fl::sort is a sibling's callee, not the root's; got callees: {callees:?}"
+        );
+    }
+
+    /// Bidirectional: root has BOTH a TU caller (backref) and a
+    /// resolved callee (forward).
+    #[test]
+    fn bidirectional_walks_both_sides() {
+        let symbols = vec![
+            // Root: called by main.cpp.o; itself calls esp_log_write.
+            {
+                let mut r = sym_calls(
+                    "ClocklessIdf5",
+                    10_000,
+                    Some("libFastLED.a"),
+                    "clockless_idf5.cpp.o",
+                    vec!["esp_log_write"],
+                );
+                r.referenced_by = vec![SymbolReference {
+                    archive: None,
+                    object: "main.cpp.o".to_string(),
+                }];
+                r
+            },
+            sym(
+                "esp_log_write",
+                "esp_log_write",
+                2_000,
+                Some("libesp.a"),
+                "log.c.o",
+                Vec::new(),
+            ),
+            sym("setup", "setup", 30, None, "main.cpp.o", Vec::new()),
+        ];
+        let cfg = GraphConfig {
+            direction: Direction::Bidirectional,
+            collapse_archives: Vec::new(),
+            ..GraphConfig::default()
+        };
+        let g = BackrefGraph::build(&map(symbols), "ClocklessIdf5", &cfg);
+        // Edges must include at least one of each direction.
+        let backward_count = g
+            .edges
+            .iter()
+            .filter(|e| e.direction == EdgeDirection::Backward)
+            .count();
+        let forward_count = g
+            .edges
+            .iter()
+            .filter(|e| e.direction == EdgeDirection::Forward)
+            .count();
+        assert!(backward_count >= 1, "expected at least 1 backward edge");
+        assert!(forward_count >= 1, "expected at least 1 forward edge");
+    }
+
+    /// Forward fan-out cap: 10 callees, cap = 3 → 3 callee nodes + 1
+    /// `(… and 7 more callees)` super-node.
+    #[test]
+    fn forward_fan_out_overflows_collapse() {
+        let mut callees: Vec<&'static str> = Vec::new();
+        let leak: Vec<String> = (0..10).map(|i| format!("callee_{i}")).collect();
+        let leaked: Vec<&'static str> = leak
+            .iter()
+            .map(|s| Box::leak(s.clone().into_boxed_str()) as &'static str)
+            .collect();
+        for c in &leaked {
+            callees.push(c);
+        }
+        let mut symbols = vec![sym_calls(
+            "hub",
+            1_000,
+            Some("libcore.a"),
+            "core.o",
+            callees,
+        )];
+        // Give each callee a distinct size so ranking is deterministic.
+        for (i, name) in leaked.iter().enumerate() {
+            symbols.push(sym(
+                name,
+                name,
+                (100 - i) as u64,
+                Some("libapp.a"),
+                &format!("{name}.o"),
+                Vec::new(),
+            ));
+        }
+        let cfg = GraphConfig {
+            direction: Direction::Forward,
+            fan_out: 3,
+            collapse_archives: Vec::new(),
+            ..GraphConfig::default()
+        };
+        let g = BackrefGraph::build(&map(symbols), "hub", &cfg);
+        let callee_nodes = g
+            .nodes
+            .iter()
+            .filter(|n| matches!(n.kind, NodeKind::Callee { .. }))
+            .count();
+        assert_eq!(callee_nodes, 3, "expected exactly 3 callee nodes after cap");
+        let overflow = g.nodes.iter().find(
+            |n| matches!(&n.kind, NodeKind::Collapsed { archive, .. } if archive == "(overflow)"),
+        );
+        assert!(overflow.is_some(), "expected an overflow super-node");
+        assert!(overflow.unwrap().label.contains("7 more callees"));
+    }
+
+    /// Forward edges in the .dot output must be styled distinctly
+    /// (dashed + blue) so a bidirectional graph stays readable.
+    #[test]
+    fn forward_edges_styled_in_dot() {
+        let symbols = vec![
+            sym_calls("a", 100, Some("libA.a"), "a.o", vec!["b"]),
+            sym("b", "b", 50, Some("libB.a"), "b.o", Vec::new()),
+        ];
+        let cfg = GraphConfig {
+            direction: Direction::Forward,
+            collapse_archives: Vec::new(),
+            ..GraphConfig::default()
+        };
+        let g = BackrefGraph::build(&map(symbols), "a", &cfg);
+        let dot = g.to_dot();
+        assert!(
+            dot.contains("style=dashed"),
+            "forward edge missing dashed style"
+        );
+        assert!(
+            dot.contains("label=\"calls\""),
+            "forward edge missing label"
+        );
+    }
+
+    /// `rank_callees_dual` returns top-N by both size and popularity,
+    /// plus an "other" count that excludes both top-N pickups.
+    #[test]
+    fn rank_callees_dual_separates_size_and_popularity() {
+        // Caller has 5 callees:
+        //   a: size=1000, shared by 1 caller   (heavy, unpopular)
+        //   b: size=500,  shared by 10 callers (medium, popular)
+        //   c: size=300,  shared by 3 callers
+        //   d: size=200,  shared by 2 callers
+        //   e: size=100,  shared by 1 caller
+        let symbols = vec![
+            sym_calls(
+                "root",
+                10_000,
+                None,
+                "main.o",
+                vec!["a", "b", "c", "d", "e"],
+            ),
+            {
+                let mut s = sym("a", "a", 1_000, Some("libX.a"), "a.o", Vec::new());
+                s.referenced_by = vec![SymbolReference {
+                    archive: None,
+                    object: "x.o".to_string(),
+                }];
+                s
+            },
+            {
+                let mut s = sym("b", "b", 500, Some("libX.a"), "b.o", Vec::new());
+                s.referenced_by = (0..10)
+                    .map(|i| SymbolReference {
+                        archive: None,
+                        object: format!("caller_{i}.o"),
+                    })
+                    .collect();
+                s
+            },
+            {
+                let mut s = sym("c", "c", 300, Some("libX.a"), "c.o", Vec::new());
+                s.referenced_by = (0..3)
+                    .map(|i| SymbolReference {
+                        archive: None,
+                        object: format!("caller_{i}.o"),
+                    })
+                    .collect();
+                s
+            },
+            {
+                let mut s = sym("d", "d", 200, Some("libX.a"), "d.o", Vec::new());
+                s.referenced_by = (0..2)
+                    .map(|i| SymbolReference {
+                        archive: None,
+                        object: format!("caller_{i}.o"),
+                    })
+                    .collect();
+                s
+            },
+            sym("e", "e", 100, Some("libX.a"), "e.o", Vec::new()),
+        ];
+        let m = map(symbols);
+        let root_sym = m.symbols.iter().find(|s| s.mangled == "root").unwrap();
+        let (by_size, by_pop, other) = rank_callees_dual(&m, root_sym, 3);
+        // By size: a > b > c.
+        assert_eq!(
+            by_size
+                .iter()
+                .map(|c| c.mangled.as_str())
+                .collect::<Vec<_>>(),
+            vec!["a", "b", "c"]
+        );
+        // By popularity: b (10) > c (3) > d (2).
+        assert_eq!(
+            by_pop
+                .iter()
+                .map(|c| c.mangled.as_str())
+                .collect::<Vec<_>>(),
+            vec!["b", "c", "d"]
+        );
+        // Other = unique callees not in either bucket. Top picks
+        // union: {a, b, c, d}. Total: {a, b, c, d, e}. Other: {e}.
+        assert_eq!(other, 1, "expected exactly e in the 'other' bucket");
+    }
+
+    /// Default config still gives the pre-#471 backward-only
+    /// behaviour: no callee nodes, no forward edges.
+    #[test]
+    fn default_direction_is_backward_only() {
+        let symbols = vec![
+            sym_calls(
+                "ClocklessIdf5",
+                10_000,
+                Some("libFastLED.a"),
+                "clockless_idf5.cpp.o",
+                vec!["esp_log_write"],
+            ),
+            sym(
+                "esp_log_write",
+                "esp_log_write",
+                2_000,
+                Some("libesp.a"),
+                "log.c.o",
+                Vec::new(),
+            ),
+        ];
+        let g = BackrefGraph::build(&map(symbols), "ClocklessIdf5", &GraphConfig::default());
+        assert!(g
+            .nodes
+            .iter()
+            .all(|n| !matches!(n.kind, NodeKind::Callee { .. })));
+        assert!(g
+            .edges
+            .iter()
+            .all(|e| e.direction == EdgeDirection::Backward));
     }
 }

@@ -83,6 +83,7 @@ pub fn run_symbols(
         map_path: map_path_ref,
         nm_path: &nm_path,
         cppfilt_path: cppfilt_path.as_deref(),
+        objdump_path: tool_paths.objdump.as_deref(),
     };
 
     let report = analyze_elf(cfg)?;
@@ -224,12 +225,20 @@ fn find_nm_on_path() -> Result<PathBuf> {
 struct ToolPaths {
     nm: PathBuf,
     cppfilt: Option<PathBuf>,
+    /// `objdump`, when discoverable. Populated from build_info.json
+    /// (`objdump_path`) or by deriving it from the nm path using the
+    /// GCC cross-tool naming convention. `None` when neither path
+    /// can be found — the analyzer falls back to an empty
+    /// `references_to` (forward graphs are unavailable; backref
+    /// graphs are unaffected).
+    objdump: Option<PathBuf>,
 }
 
 impl ToolPaths {
-    /// Resolve `nm` / `c++filt` using the precedence documented in the
-    /// module header. `build_info_arg` is the explicit `--build-info`
-    /// path; when absent, walk up from `elf_path`.
+    /// Resolve `nm` / `c++filt` / `objdump` using the precedence
+    /// documented in the module header. `build_info_arg` is the
+    /// explicit `--build-info` path; when absent, walk up from
+    /// `elf_path`.
     fn resolve(
         elf_path: &Path,
         nm: Option<&str>,
@@ -241,11 +250,15 @@ impl ToolPaths {
             .map(PathBuf::from)
             .or_else(|| elf_path.parent().and_then(find_build_info_near));
 
-        let (bi_nm, bi_cppfilt) = match build_info_path {
+        let (bi_nm, bi_cppfilt, bi_objdump) = match build_info_path {
             Some(path) => match load_build_info(&path) {
                 Ok((_env, info)) => {
                     tracing::info!("symbols: read toolchain paths from {}", path.display());
-                    (option_path(&info.nm_path), option_path(&info.cppfilt_path))
+                    (
+                        option_path(&info.nm_path),
+                        option_path(&info.cppfilt_path),
+                        option_path(&info.objdump_path),
+                    )
                 }
                 Err(e) => {
                     tracing::warn!(
@@ -253,10 +266,10 @@ impl ToolPaths {
                         path.display(),
                         e
                     );
-                    (None, None)
+                    (None, None, None)
                 }
             },
-            None => (None, None),
+            None => (None, None, None),
         };
 
         let nm = match nm {
@@ -279,20 +292,66 @@ impl ToolPaths {
             }),
         };
 
-        Ok(Self { nm, cppfilt })
+        // objdump: prefer build_info, else derive from nm using the
+        // GCC cross-tool prefix (`<prefix>-nm` → `<prefix>-objdump`).
+        // Same prefix-replacement strategy `derive_cppfilt_path`
+        // uses; inlined here to keep symbol_analyzer's public surface
+        // minimal — objdump derivation isn't useful outside this CLI.
+        let objdump = bi_objdump.or_else(|| derive_sibling_tool(&nm, "objdump"));
+
+        Ok(Self {
+            nm,
+            cppfilt,
+            objdump,
+        })
+    }
+}
+
+/// Replace the `nm` suffix on the file stem with `target` (e.g.
+/// `arm-none-eabi-nm` → `arm-none-eabi-objdump`). Returns `None`
+/// when the result doesn't exist on disk — caller treats absent as
+/// "skip the feature", not as an error.
+fn derive_sibling_tool(nm_path: &Path, target: &str) -> Option<PathBuf> {
+    let parent = nm_path.parent().unwrap_or(Path::new("."));
+    let stem = nm_path
+        .file_stem()
+        .map(|s| s.to_string_lossy().to_string())
+        .unwrap_or_default();
+    let ext = nm_path
+        .extension()
+        .map(|e| e.to_string_lossy().to_string())
+        .unwrap_or_default();
+    let new_stem = if let Some(prefix) = stem.strip_suffix("nm") {
+        format!("{prefix}{target}")
+    } else {
+        target.to_string()
+    };
+    let candidate = if ext.is_empty() {
+        parent.join(new_stem)
+    } else {
+        parent.join(format!("{new_stem}.{ext}"))
+    };
+    if candidate.exists() {
+        Some(candidate)
+    } else {
+        None
     }
 }
 
 /// Public wrapper around the internal toolchain resolver — used by
 /// `fbuild bloat graph` (`graph_cmd.rs`) so it shares the exact
 /// `--nm` / `--cppfilt` / `--build-info` resolution semantics as
-/// `fbuild symbols`. Returns `(nm_path, optional_cppfilt_path)`.
+/// `fbuild symbols`. Returns `(nm_path, optional_cppfilt_path,
+/// optional_objdump_path)` — the third field added in #471 carries
+/// the objdump used to populate per-symbol forward refs
+/// (`references_to`). Callers that don't care about forward graphs
+/// can discard the third field.
 pub fn resolve_tool_paths_public(
     elf_path: &Path,
     nm: Option<&str>,
     cppfilt: Option<&str>,
     build_info_arg: Option<&str>,
-) -> Result<(PathBuf, Option<PathBuf>)> {
+) -> Result<(PathBuf, Option<PathBuf>, Option<PathBuf>)> {
     let resolved = ToolPaths::resolve(elf_path, nm, cppfilt, build_info_arg)?;
     if !resolved.nm.exists() {
         return Err(FbuildError::BuildFailed(format!(
@@ -301,7 +360,7 @@ pub fn resolve_tool_paths_public(
             resolved.nm.display()
         )));
     }
-    Ok((resolved.nm, resolved.cppfilt))
+    Ok((resolved.nm, resolved.cppfilt, resolved.objdump))
 }
 
 /// Treat an empty BuildInfo path field (the schema's "missing"

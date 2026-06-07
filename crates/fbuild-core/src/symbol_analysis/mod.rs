@@ -19,6 +19,7 @@
 //! no fs I/O for tool invocation) so it can be unit-tested without a
 //! cross toolchain. Subprocess drivers live in `fbuild_build`.
 
+pub mod callgraph;
 pub mod cref;
 pub mod graph;
 
@@ -80,6 +81,17 @@ pub struct FineGrainedSymbol {
     /// per-symbol; that's a property of `ld --cref` itself.
     #[serde(default)]
     pub referenced_by: Vec<SymbolReference>,
+    /// Symbols that **this** symbol references — i.e. the callees of
+    /// this function. Parsed from the textual disassembly emitted by
+    /// `objdump -d` on the linked ELF; the strings here match the
+    /// `mangled` name of another row in the same report. Empty when
+    /// the analyzer didn't have an `objdump` to run, or when the
+    /// symbol contains no recognised call instructions (data, weak
+    /// references, indirect-only call sites, etc.). Per-symbol
+    /// granularity, complementing `referenced_by` which is TU-level.
+    /// See `symbol_analysis::callgraph`.
+    #[serde(default)]
+    pub references_to: Vec<String>,
 }
 
 fn default_source_nm() -> String {
@@ -667,6 +679,7 @@ pub fn build_fine_grained_map_with_synth(
             output_section: attribution.map(|r| r.output_section.clone()),
             source: "nm".to_string(),
             referenced_by,
+            references_to: Vec::new(),
         });
     }
 
@@ -710,6 +723,7 @@ pub fn build_fine_grained_map_with_synth(
             output_section: Some(r.output_section.clone()),
             source: "map-derived".to_string(),
             referenced_by,
+            references_to: Vec::new(),
         });
     }
     FineGrainedSymbolMap {
