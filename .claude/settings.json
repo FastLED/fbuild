@@ -21,6 +21,16 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --script ci/hooks/worktree_guard.py",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "PostToolUse": [
