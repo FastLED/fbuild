@@ -19,9 +19,12 @@ use std::path::{Path, PathBuf};
 use fbuild_build::build_info::{find_build_info_near, load_build_info};
 use fbuild_build::symbol_analyzer::{
     analyze_elf, default_map_path, derive_cppfilt_path, discover_elf_in_project,
-    format_markdown_report, format_text_report, AnalyzeConfig,
+    format_markdown_report, format_markdown_report_with_graphs, format_text_report,
+    write_sidecar_dot_files, AnalyzeConfig, MarkdownGraphOptions, SidecarOptions,
 };
 use fbuild_core::{FbuildError, Result};
+
+use super::graph_cmd::parse_graph_config;
 
 #[allow(clippy::too_many_arguments)]
 pub fn run_symbols(
@@ -33,6 +36,13 @@ pub fn run_symbols(
     json_out: Option<String>,
     output_dir: Option<String>,
     top: usize,
+    no_graph: bool,
+    graph_top: usize,
+    graph_min_bytes: u64,
+    graph_depth: String,
+    graph_fan_out: usize,
+    graph_collapse_archive: String,
+    graph_exclude_archive: String,
 ) -> Result<()> {
     let input_path = PathBuf::from(&input);
     if !input_path.exists() {
@@ -102,20 +112,53 @@ pub fn run_symbols(
         let json_target = dir.join("report.json");
         let md_target = dir.join("report.md");
         write_json(&report, &json_target.to_string_lossy())?;
-        let md = format_markdown_report(&report, top);
+        let graph_config = parse_graph_config(
+            &graph_depth,
+            graph_fan_out,
+            /*max_depth=*/ 4,
+            &graph_collapse_archive,
+            &graph_exclude_archive,
+        )?;
+        let md = if no_graph {
+            format_markdown_report(&report, top)
+        } else {
+            format_markdown_report_with_graphs(
+                &report,
+                top,
+                &MarkdownGraphOptions {
+                    enabled: true,
+                    graph_top,
+                    config: graph_config.clone(),
+                },
+            )
+        };
         std::fs::write(&md_target, md).map_err(|e| {
             FbuildError::Io(std::io::Error::new(
                 e.kind(),
                 format!("write {}: {e}", md_target.display()),
             ))
         })?;
+        let sidecar_count = if no_graph {
+            0
+        } else {
+            write_sidecar_dot_files(
+                &report,
+                &dir,
+                &SidecarOptions {
+                    enabled: true,
+                    min_bytes: graph_min_bytes,
+                    config: graph_config,
+                },
+            )?
+        };
         println!(
-            "Wrote {} symbols to {} and {} (flash={} B, ram={} B)",
+            "Wrote {} symbols to {} and {} (flash={} B, ram={} B); {} sidecar graphs",
             report.symbols.len(),
             json_target.display(),
             md_target.display(),
             report.total_flash,
-            report.total_ram
+            report.total_ram,
+            sidecar_count,
         );
         wrote_anything = true;
     }
@@ -238,6 +281,27 @@ impl ToolPaths {
 
         Ok(Self { nm, cppfilt })
     }
+}
+
+/// Public wrapper around the internal toolchain resolver — used by
+/// `fbuild bloat graph` (`graph_cmd.rs`) so it shares the exact
+/// `--nm` / `--cppfilt` / `--build-info` resolution semantics as
+/// `fbuild symbols`. Returns `(nm_path, optional_cppfilt_path)`.
+pub fn resolve_tool_paths_public(
+    elf_path: &Path,
+    nm: Option<&str>,
+    cppfilt: Option<&str>,
+    build_info_arg: Option<&str>,
+) -> Result<(PathBuf, Option<PathBuf>)> {
+    let resolved = ToolPaths::resolve(elf_path, nm, cppfilt, build_info_arg)?;
+    if !resolved.nm.exists() {
+        return Err(FbuildError::BuildFailed(format!(
+            "nm not found at {}\n\
+             Pass --nm explicitly or run `fbuild build` first so build_info.json carries nm_path.",
+            resolved.nm.display()
+        )));
+    }
+    Ok((resolved.nm, resolved.cppfilt))
 }
 
 /// Treat an empty BuildInfo path field (the schema's "missing"

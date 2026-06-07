@@ -20,12 +20,17 @@
 //! cross toolchain. Subprocess drivers live in `fbuild_build`.
 
 pub mod cref;
+pub mod graph;
 
 use std::collections::BTreeMap;
 
 use serde::{Deserialize, Serialize};
 
 pub use cref::{parse_cref_table, SymbolReference};
+pub use graph::{
+    sanitize_filename, sanitize_id, BackrefGraph, GraphConfig, GraphDepth, GraphEdge, GraphNode,
+    NodeKind, TuIndex,
+};
 
 use crate::MemoryRegion;
 

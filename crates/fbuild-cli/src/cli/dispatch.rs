@@ -5,7 +5,7 @@ use clap::Parser;
 
 use crate::{daemon_client, lib_select, mcp};
 
-use super::args::{resolve_project_dir, rewrite_args, Cli, Commands};
+use super::args::{resolve_project_dir, rewrite_args, BloatCmd, Cli, Commands};
 use super::build::run_build;
 use super::clang_tools::{run_clang_tool, run_iwyu};
 use super::compile_many::{
@@ -14,6 +14,7 @@ use super::compile_many::{
 use super::daemon_cmd::run_daemon;
 use super::deploy::{run_deploy, run_monitor, run_test_emu};
 use super::device::run_device;
+use super::graph_cmd::run_bloat_graph;
 use super::lnk::run_lnk;
 use super::monitor_parse::parse_monitor_flags;
 use super::pio::{pio_build, pio_deploy, pio_monitor};
@@ -65,7 +66,59 @@ pub async fn async_main() {
             json,
             output_dir,
             top,
-        }) => run_symbols(input, map, nm, cppfilt, build_info, json, output_dir, top),
+            no_graph,
+            graph_top,
+            graph_min_bytes,
+            graph_depth,
+            graph_fan_out,
+            graph_collapse_archive,
+            graph_exclude_archive,
+        }) => run_symbols(
+            input,
+            map,
+            nm,
+            cppfilt,
+            build_info,
+            json,
+            output_dir,
+            top,
+            no_graph,
+            graph_top,
+            graph_min_bytes,
+            graph_depth,
+            graph_fan_out,
+            graph_collapse_archive,
+            graph_exclude_archive,
+        ),
+        Some(Commands::Bloat { cmd }) => match cmd {
+            BloatCmd::Graph {
+                input,
+                symbol,
+                map,
+                nm,
+                cppfilt,
+                build_info,
+                output,
+                depth,
+                fan_out,
+                max_depth,
+                collapse_archive,
+                exclude_archive,
+            } => run_bloat_graph(
+                input,
+                symbol,
+                map,
+                nm,
+                cppfilt,
+                build_info,
+                output,
+                depth,
+                fan_out,
+                max_depth,
+                collapse_archive,
+                exclude_archive,
+            ),
+        },
         Some(Commands::Build {
             project_dir,
             environment,
