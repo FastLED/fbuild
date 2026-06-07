@@ -1,17 +1,27 @@
 name: Build LPC804
 
-# Stage 1 of FastLED/FastLED#2836: build/toolchain wiring lands now, the
-# actual Stage-2 LPC8xx orchestrator lands in a follow-up FastLED-side PR.
-# Until Stage 2 lands, this workflow's `fbuild build` step fails fast with
-# a "Stage 2 required" error.
+# Stage-1 stub for FastLED/FastLED#2836: the NXP LPC8xx orchestrator
+# isn't implemented yet (Stage 2 lives in a follow-up FastLED-side
+# PR). Until then this workflow is a no-op pass — keeps the CI slot
+# visible so consumers can see "this board is planned", without
+# polluting `main` with a perma-red build.
 #
-# This workflow stays out of branch protection's required-checks list, so
-# a red run here doesn't block merges on `main`. The previous attempt used
-# `continue-on-error: true` on the calling job, but that keyword is NOT in
-# the allow-list for jobs that call a reusable workflow — every push to
-# main went red with "workflow file issue" before any job actually ran.
-# See:
-# https://docs.github.com/en/actions/sharing-automations/reusing-workflows#supported-keywords-for-jobs-that-call-a-reusable-workflow
+# When Stage 2 ships: replace the `jobs.build` body below with
+#
+#   jobs:
+#     build:
+#       uses: ./.github/workflows/template_build.yml
+#       with:
+#         workflow-name: "NXP LPC804"
+#         test-dir: "tests/platform/lpc804"
+#         env-name: "lpc804"
+#         firmware-ext: "bin"
+#
+# History: a previous attempt used `continue-on-error: true` on the
+# reusable-workflow caller, but that keyword is NOT in GitHub's
+# allow-list for reusable callers — every push went red with a
+# "workflow file issue" before any job actually ran. The no-op pass
+# below sidesteps that limitation.
 
 on:
   workflow_dispatch: {}
@@ -22,9 +32,11 @@ on:
 
 jobs:
   build:
-    uses: ./.github/workflows/template_build.yml
-    with:
-      workflow-name: "NXP LPC804"
-      test-dir: "tests/platform/lpc804"
-      env-name: "lpc804"
-      firmware-ext: "bin"
+    name: NXP LPC804 (stub — Stage 2 pending)
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "NXP LPC8xx orchestrator (Stage 2) not yet implemented."
+          echo "See FastLED/FastLED#2836."
+          echo "This workflow stub passes intentionally; replace with the"
+          echo "template_build.yml caller once Stage 2 lands."
