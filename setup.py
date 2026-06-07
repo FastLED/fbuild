@@ -31,14 +31,40 @@ soldr is already the canonical build driver across this repo's dev,
 trampoline, and CI paths (see `ci/trampoline.py`). Keeping the single
 soldr-cargo invocation means there's only one place to look when iteration
 is slow.
+
+Locating the built binary
+-------------------------
+
+Cargo writes the `fbuild` executable to either
+
+  <target>/release/fbuild[.exe]
+
+(when no host triple is configured) or
+
+  <target>/<host-triple>/release/fbuild[.exe]
+
+(when soldr / zccache sets `CARGO_BUILD_TARGET=<host-triple>` to isolate
+its caches by host — which is what happens in this repo by default). The
+previous version of this file only checked the first path; on Windows
+where soldr was configured for a host triple, that path was empty even
+on a green build, so every `pip install .` failed with
+
+  ERROR: cargo build succeeded but binary not at target\release\fbuild.exe.
+
+To handle both layouts (and any future per-feature/per-profile target
+directory) we drive cargo with `--message-format=json-render-diagnostics`
+and pull the real artifact path out of cargo's structured output. That's
+how `cargo install` and most Rust packaging tools find their binaries.
 """
 
 from __future__ import annotations
 
+import json
 import shutil
 import subprocess
 import sys
 from pathlib import Path
+from typing import Optional
 
 from setuptools import setup
 from setuptools.command.build_py import build_py
@@ -47,36 +73,8 @@ from setuptools.dist import Distribution
 
 REPO_ROOT = Path(__file__).resolve().parent
 TARGET_BINARY_NAME = "fbuild.exe" if sys.platform == "win32" else "fbuild"
-TARGET_DIR = REPO_ROOT / "target"
 STAGED_BIN_DIR = REPO_ROOT / "ci" / "bin"
 STAGED_BINARY_PATH = STAGED_BIN_DIR / TARGET_BINARY_NAME
-
-
-def _find_release_binary() -> Path | None:
-    """Locate the release-built `fbuild` binary cargo just wrote.
-
-    Cargo emits to `target/release/<bin>` for the default host build but
-    to `target/<host-triple>/release/<bin>` whenever a target triple is
-    in effect — which is the common case under soldr because soldr
-    routes through the rustup-managed toolchain pinned by
-    `rust-toolchain.toml`. Both layouts are valid; probe both and
-    prefer the most recently modified hit so a stale top-level copy
-    from an older cargo run doesn't shadow the fresh triple-scoped one.
-    """
-    candidates: list[Path] = []
-    flat = TARGET_DIR / "release" / TARGET_BINARY_NAME
-    if flat.exists():
-        candidates.append(flat)
-    if TARGET_DIR.exists():
-        for entry in TARGET_DIR.iterdir():
-            if not entry.is_dir() or entry.name == "release" or entry.name == "debug":
-                continue
-            triple_bin = entry / "release" / TARGET_BINARY_NAME
-            if triple_bin.exists():
-                candidates.append(triple_bin)
-    if not candidates:
-        return None
-    return max(candidates, key=lambda p: p.stat().st_mtime)
 
 
 def _require_soldr() -> None:
@@ -97,28 +95,115 @@ def _require_soldr() -> None:
         sys.exit(1)
 
 
+def _find_fbuild_executable_from_json(stdout: str) -> Optional[Path]:
+    """Walk cargo's structured artifact stream and return the path to the
+    `fbuild` binary, or `None` if no compiler-artifact line for it appeared.
+
+    cargo emits one JSON object per line; the artifact we want has
+    `reason == "compiler-artifact"`, `target.name == "fbuild"`, and a non-
+    null `executable` field. We keep the *last* match because cargo emits
+    one artifact per crate target kind and the bin artifact is what we
+    want (matches `cargo install`'s selection rule).
+    """
+    binary_path: Optional[Path] = None
+    for line in stdout.splitlines():
+        line = line.strip()
+        if not line or not line.startswith("{"):
+            continue
+        try:
+            msg = json.loads(line)
+        except json.JSONDecodeError:
+            # Non-JSON noise (rare; cargo's renderer can inline human-
+            # readable progress on stdout when there's no compatible TTY).
+            continue
+        if msg.get("reason") != "compiler-artifact":
+            continue
+        target = msg.get("target") or {}
+        if target.get("name") != "fbuild":
+            continue
+        executable = msg.get("executable")
+        if executable:
+            binary_path = Path(executable)
+    return binary_path
+
+
+def _find_fbuild_executable_by_search() -> Optional[Path]:
+    """Fallback when cargo didn't emit a usable artifact line (e.g. a fully
+    cached build that reports `Fresh` and skips compiler-artifact). Probe
+    the canonical `target/release` path and every per-host-triple subdir.
+    """
+    candidates = [REPO_ROOT / "target" / "release" / TARGET_BINARY_NAME]
+    target_root = REPO_ROOT / "target"
+    if target_root.is_dir():
+        for child in target_root.iterdir():
+            candidate = child / "release" / TARGET_BINARY_NAME
+            if candidate.is_file():
+                candidates.append(candidate)
+    for candidate in candidates:
+        if candidate.is_file():
+            return candidate
+    return None
+
+
+def _build_fbuild_cli() -> Path:
+    """Run `soldr cargo build` and return the path to the built executable."""
+    cmd = [
+        "soldr",
+        "cargo",
+        "build",
+        "--release",
+        "-p",
+        "fbuild-cli",
+        "--message-format=json-render-diagnostics",
+    ]
+    sys.stderr.write(f"  $ {' '.join(cmd)}\n")
+    # stderr passes through so soldr's session summary stays visible; stdout
+    # is captured because that's where cargo writes its JSON artifact stream.
+    proc = subprocess.run(
+        cmd,
+        cwd=str(REPO_ROOT),
+        stdout=subprocess.PIPE,
+        stderr=None,
+        check=False,
+        text=True,
+        encoding="utf-8",
+    )
+    if proc.returncode != 0:
+        sys.stderr.write(
+            f"ERROR: `soldr cargo build` exited with code {proc.returncode}.\n"
+        )
+        sys.exit(proc.returncode)
+
+    binary_path = _find_fbuild_executable_from_json(proc.stdout)
+    if binary_path is None or not binary_path.is_file():
+        binary_path = _find_fbuild_executable_by_search()
+
+    if binary_path is None or not binary_path.is_file():
+        sys.stderr.write(
+            "ERROR: cargo build succeeded but no `fbuild` binary was found.\n"
+            "Searched:\n"
+            "  - cargo's structured JSON artifact stream\n"
+            "    (--message-format=json-render-diagnostics)\n"
+            f"  - {REPO_ROOT / 'target' / 'release' / TARGET_BINARY_NAME}\n"
+            f"  - {REPO_ROOT / 'target'}/<host-triple>/release/{TARGET_BINARY_NAME}\n"
+            "If you suspect cargo wrote the binary somewhere else, please\n"
+            "file an issue at https://github.com/FastLED/fbuild/issues and\n"
+            "attach the output of `soldr cargo build --release -p fbuild-cli -v`.\n"
+        )
+        sys.exit(1)
+
+    return binary_path
+
+
 class BuildWithCargo(build_py):
     """Run `soldr cargo build --release -p fbuild-cli` before packaging."""
 
     def run(self) -> None:  # noqa: D401 — setuptools API name
         _require_soldr()
-
-        cmd = ["soldr", "cargo", "build", "--release", "-p", "fbuild-cli"]
-        sys.stderr.write(f"  $ {' '.join(cmd)}\n")
-        subprocess.check_call(cmd, cwd=str(REPO_ROOT))
-
-        binary = _find_release_binary()
-        if binary is None:
-            sys.stderr.write(
-                f"ERROR: cargo build succeeded but no `{TARGET_BINARY_NAME}` was "
-                f"found under {TARGET_DIR}/release or {TARGET_DIR}/<triple>/release.\n"
-            )
-            sys.exit(1)
-
+        binary_path = _build_fbuild_cli()
         STAGED_BIN_DIR.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(binary, STAGED_BINARY_PATH)
-        sys.stderr.write(f"  staged binary -> {STAGED_BINARY_PATH}  (source: {binary})\n")
-
+        shutil.copy2(binary_path, STAGED_BINARY_PATH)
+        sys.stderr.write(f"  staged binary -> {STAGED_BINARY_PATH}\n")
         super().run()
 
 
