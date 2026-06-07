@@ -62,7 +62,7 @@
           {
             "type": "command",
             "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --script ci/hooks/check-on-stop.py",
-            "timeout": 600
+            "timeout": 120
           }
         ]
       }
