@@ -15,6 +15,7 @@ use serde::Deserialize;
 
 use crate::compiler::{CompilerFlags, McuConfig, ObjcopyConfig, ProfileFlags};
 use crate::esp32::mcu_config::DefineEntry;
+use crate::generic_arm::ArmMcuConfig;
 
 const NXPLPC_JSON: &str = include_str!("configs/nxplpc.json");
 
@@ -123,6 +124,45 @@ pub fn get_nxplpc_config(mcu: &str) -> Result<NxpLpcMcuConfig> {
             other
         ))),
     }
+}
+
+/// Return the same per-MCU configuration shaped as `ArmMcuConfig` so it can
+/// flow into the shared `generic_arm::ArmCompiler` / `ArmLinker` pipeline
+/// (Stage 2 of #487). `NxpLpcMcuConfig` and `ArmMcuConfig` deserialize from
+/// the same JSON shape; this function reparses the embedded JSON directly
+/// into `ArmMcuConfig` and folds the per-MCU defines back in.
+pub fn get_arm_mcu_config(mcu: &str) -> Result<ArmMcuConfig> {
+    let mut config: ArmMcuConfig = serde_json::from_str(NXPLPC_JSON).map_err(|e| {
+        fbuild_core::FbuildError::ConfigError(format!(
+            "failed to parse NXP LPC8xx MCU config as ArmMcuConfig: {}",
+            e
+        ))
+    })?;
+    match mcu {
+        "lpc804" => {
+            config
+                .defines
+                .push(DefineEntry::Simple("__LPC804__".to_string()));
+            config
+                .defines
+                .push(DefineEntry::Simple("CPU_LPC804M101JDH24".to_string()));
+        }
+        "lpc845" => {
+            config
+                .defines
+                .push(DefineEntry::Simple("__LPC845__".to_string()));
+            config
+                .defines
+                .push(DefineEntry::Simple("CPU_LPC845M301JBD48".to_string()));
+        }
+        other => {
+            return Err(fbuild_core::FbuildError::ConfigError(format!(
+                "unknown NXP LPC8xx MCU '{}'; expected one of: lpc804, lpc845",
+                other
+            )));
+        }
+    }
+    Ok(config)
 }
 
 #[cfg(test)]
