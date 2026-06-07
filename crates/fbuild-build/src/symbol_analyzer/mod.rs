@@ -357,7 +357,7 @@ fn run_objdump_and_attribute(
     map: &mut FineGrainedSymbolMap,
 ) -> Result<usize> {
     use fbuild_core::subprocess::run_command;
-    use fbuild_core::symbol_analysis::callgraph::parse_disasm;
+    use fbuild_core::symbol_analysis::callgraph::{invert, parse_disasm};
 
     let objdump_s = objdump_path.to_string_lossy().to_string();
     let elf_s = elf_path.to_string_lossy().to_string();
@@ -376,6 +376,11 @@ fn run_objdump_and_attribute(
     }
 
     let edges = parse_disasm(&result.stdout);
+    // #478: invert once so both per-symbol directions come from the
+    // same disassembly pass. `called_by[X]` = every symbol whose
+    // forward edge list contains X — the per-symbol-precision view
+    // that complements the TU-level `referenced_by` (cref-derived).
+    let backward = invert(&edges);
     let mut total = 0usize;
     for sym in &mut map.symbols {
         if let Some(callees) = edges.get(&sym.mangled) {
@@ -387,6 +392,11 @@ fn run_objdump_and_attribute(
             // name. Match against either.
             sym.references_to = callees.clone();
             total += callees.len();
+        }
+        if let Some(callers) = backward.get(&sym.mangled) {
+            sym.called_by = callers.clone();
+        } else if let Some(callers) = backward.get(&sym.demangled) {
+            sym.called_by = callers.clone();
         }
     }
     Ok(total)

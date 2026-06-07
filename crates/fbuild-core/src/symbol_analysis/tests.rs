@@ -457,6 +457,7 @@ fn sample_symbol(addr: u64, size: u64, region: MemoryRegion, name: &str) -> Fine
         source: "nm".to_string(),
         referenced_by: Vec::new(),
         references_to: Vec::new(),
+        called_by: Vec::new(),
     }
 }
 
@@ -701,4 +702,96 @@ fn retain_loaded_symbols_no_op_when_regions_empty() {
     assert_eq!(map.symbols.len(), 2);
     assert_eq!(map.total_flash, 0x40);
     assert_eq!(map.total_ram, 0x80);
+}
+
+/// #478: single-symbol lookup must distinguish exact, substring,
+/// ambiguous-substring, and miss outcomes.
+#[test]
+fn find_symbol_dispatches_correctly() {
+    let mut foo = sample_symbol(0x1000, 100, MemoryRegion::Flash, "fl::foo()");
+    foo.mangled = "_ZN2fl3fooEv".to_string();
+    let mut foo_bar = sample_symbol(0x2000, 50, MemoryRegion::Flash, "fl::foo_bar()");
+    foo_bar.mangled = "_ZN2fl7foo_barEv".to_string();
+    let mut other = sample_symbol(0x3000, 25, MemoryRegion::Flash, "ns::other()");
+    other.mangled = "_ZN2ns5otherEv".to_string();
+    let map = FineGrainedSymbolMap {
+        elf_path: "x.elf".into(),
+        map_path: None,
+        total_flash: 175,
+        total_ram: 0,
+        symbols: vec![foo, foo_bar, other],
+        sections: Vec::new(),
+    };
+
+    // Exact demangled wins.
+    match map.find_symbol(&SymbolQuery::ExactDemangled("fl::foo()")) {
+        SymbolLookup::Hit(s) => assert_eq!(s.size, 100),
+        other => panic!("expected Hit, got {other:?}"),
+    }
+    // Exact demangled miss is a miss, not a substring fallback.
+    assert!(matches!(
+        map.find_symbol(&SymbolQuery::ExactDemangled("fl::foo")),
+        SymbolLookup::Miss
+    ));
+
+    // Substring: exact-demangled match still wins even when the same
+    // string is a substring of another row's demangled name.
+    match map.find_symbol(&SymbolQuery::SubstringDemangled("fl::foo()")) {
+        SymbolLookup::Hit(s) => assert_eq!(s.demangled, "fl::foo()"),
+        other => panic!("expected exact-wins Hit, got {other:?}"),
+    }
+    // Substring: ambiguous returns all candidates.
+    match map.find_symbol(&SymbolQuery::SubstringDemangled("fl::foo")) {
+        SymbolLookup::Ambiguous(hits) => {
+            assert_eq!(hits.len(), 2);
+            let names: Vec<&str> = hits.iter().map(|s| s.demangled.as_str()).collect();
+            assert!(names.contains(&"fl::foo()"));
+            assert!(names.contains(&"fl::foo_bar()"));
+        }
+        other => panic!("expected Ambiguous, got {other:?}"),
+    }
+    // Substring: unique substring is a Hit.
+    match map.find_symbol(&SymbolQuery::SubstringDemangled("other")) {
+        SymbolLookup::Hit(s) => assert_eq!(s.demangled, "ns::other()"),
+        other => panic!("expected unique-substring Hit, got {other:?}"),
+    }
+    // Substring miss.
+    assert!(matches!(
+        map.find_symbol(&SymbolQuery::SubstringDemangled("not_present")),
+        SymbolLookup::Miss
+    ));
+
+    // Exact mangled.
+    match map.find_symbol(&SymbolQuery::ExactMangled("_ZN2fl3fooEv")) {
+        SymbolLookup::Hit(s) => assert_eq!(s.demangled, "fl::foo()"),
+        other => panic!("expected mangled Hit, got {other:?}"),
+    }
+}
+
+/// #478: called_by survives the FineGrainedSymbol JSON round-trip.
+/// Default empty when missing so older reports still deserialize.
+#[test]
+fn called_by_roundtrips_via_serde_with_default() {
+    let mut s = sample_symbol(0x1000, 50, MemoryRegion::Flash, "f");
+    s.called_by = vec!["caller_a".into(), "caller_b".into()];
+    let json = serde_json::to_string(&s).unwrap();
+    assert!(json.contains("called_by"));
+    let round: FineGrainedSymbol = serde_json::from_str(&json).unwrap();
+    assert_eq!(round.called_by, vec!["caller_a", "caller_b"]);
+
+    // Older reports without the field still parse with default empty.
+    let without = serde_json::json!({
+        "mangled": "x",
+        "demangled": "x",
+        "address": 0u64,
+        "size": 10u64,
+        "sym_type": "T",
+        "region": "flash",
+        "archive": null,
+        "object": null,
+        "output_section": null,
+    });
+    let parsed: FineGrainedSymbol = serde_json::from_value(without).unwrap();
+    assert!(parsed.called_by.is_empty());
+    assert!(parsed.references_to.is_empty());
 }

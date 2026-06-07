@@ -92,6 +92,20 @@ pub struct FineGrainedSymbol {
     /// See `symbol_analysis::callgraph`.
     #[serde(default)]
     pub references_to: Vec<String>,
+    /// Symbols that **call into** this symbol — the per-symbol inverse
+    /// of `references_to`. Populated by inverting the objdump-derived
+    /// forward map (`callgraph::invert`) so a single objdump pass
+    /// produces both directions. Strings match another row's `mangled`
+    /// in the same report. Empty for the same reasons `references_to`
+    /// would be empty (no objdump in the chain, indirect-only call
+    /// sites, etc.). Complementary to `referenced_by`, which is
+    /// TU-level — `called_by` answers "which specific *symbols* call
+    /// me?" where `referenced_by` answers "which *TUs* reference me?".
+    /// Per-symbol granularity is the AI-optimisation use-case (#478)
+    /// that wants to distinguish `f()` calling `g()` from `f()`'s
+    /// sibling-in-the-same-TU calling `g()`.
+    #[serde(default)]
+    pub called_by: Vec<String>,
 }
 
 fn default_source_nm() -> String {
@@ -167,7 +181,92 @@ impl LoadedRegion {
     }
 }
 
+/// A symbol-lookup query passed to [`FineGrainedSymbolMap::find_symbol`].
+///
+/// Three dispatch modes; the variant carries the precedence rules the
+/// `fbuild bloat lookup --symbol` CLI surface relies on:
+///
+/// - `ExactDemangled` — case-sensitive full-string match on `demangled`.
+///   Wins over substring matching because operator-overloads and templated
+///   functions are uniquely identified by their full demangled form.
+/// - `SubstringDemangled` — case-sensitive `contains()` match. Useful for
+///   one-shot queries from a human ("just give me the `ClocklessIdf5`
+///   row"); ambiguous matches return all hits so the caller can refine.
+/// - `ExactMangled` — case-sensitive full-string match on `mangled`.
+///   Never falls back to substring matching: mangled names are
+///   unambiguous by construction, so a substring match would just
+///   surface noise.
+#[derive(Debug, Clone)]
+pub enum SymbolQuery<'a> {
+    ExactDemangled(&'a str),
+    SubstringDemangled(&'a str),
+    ExactMangled(&'a str),
+}
+
+/// Outcome of a single-symbol lookup against [`FineGrainedSymbolMap`].
+///
+/// Distinguishes the three outcomes the AI / human caller actually
+/// wants to fork on:
+///   - `Hit` — exactly one symbol matched; render the focused per-symbol
+///     block straight from the contained row.
+///   - `Ambiguous` — multiple symbols matched (only possible from
+///     `SubstringDemangled`); the caller surfaces the candidates so
+///     the user can re-query with a more specific name.
+///   - `Miss` — no rows matched; the caller emits a "not found" message
+///     and suggests trying a substring search.
+#[derive(Debug)]
+pub enum SymbolLookup<'a> {
+    Hit(&'a FineGrainedSymbol),
+    Ambiguous(Vec<&'a FineGrainedSymbol>),
+    Miss,
+}
+
 impl FineGrainedSymbolMap {
+    /// Resolve a single-symbol query against this map.
+    ///
+    /// Lookup order for `SubstringDemangled` is: exact-demangled match
+    /// first (so `--symbol 'fl::ChannelXYZ::show()'` always picks the
+    /// exact row even if a longer demangled name also contains it as
+    /// a substring); if no exact hit, fall back to all rows whose
+    /// `demangled` contains the query as a substring. Multi-hit
+    /// substring matches return [`SymbolLookup::Ambiguous`] so the
+    /// caller can list candidates rather than guessing.
+    ///
+    /// `ExactDemangled` and `ExactMangled` skip the substring fallback
+    /// — for those modes a miss is a miss.
+    #[must_use]
+    pub fn find_symbol(&self, query: &SymbolQuery<'_>) -> SymbolLookup<'_> {
+        match query {
+            SymbolQuery::ExactDemangled(name) => self
+                .symbols
+                .iter()
+                .find(|s| s.demangled == *name)
+                .map(SymbolLookup::Hit)
+                .unwrap_or(SymbolLookup::Miss),
+            SymbolQuery::ExactMangled(name) => self
+                .symbols
+                .iter()
+                .find(|s| s.mangled == *name)
+                .map(SymbolLookup::Hit)
+                .unwrap_or(SymbolLookup::Miss),
+            SymbolQuery::SubstringDemangled(needle) => {
+                if let Some(exact) = self.symbols.iter().find(|s| s.demangled == *needle) {
+                    return SymbolLookup::Hit(exact);
+                }
+                let mut hits: Vec<&FineGrainedSymbol> = self
+                    .symbols
+                    .iter()
+                    .filter(|s| s.demangled.contains(needle))
+                    .collect();
+                match hits.len() {
+                    0 => SymbolLookup::Miss,
+                    1 => SymbolLookup::Hit(hits.remove(0)),
+                    _ => SymbolLookup::Ambiguous(hits),
+                }
+            }
+        }
+    }
+
     /// Drop symbols that did not land in any loaded region of the final
     /// binary, then recompute `total_flash` / `total_ram` from the
     /// surviving rows.
@@ -680,6 +779,7 @@ pub fn build_fine_grained_map_with_synth(
             source: "nm".to_string(),
             referenced_by,
             references_to: Vec::new(),
+            called_by: Vec::new(),
         });
     }
 
@@ -724,6 +824,7 @@ pub fn build_fine_grained_map_with_synth(
             source: "map-derived".to_string(),
             referenced_by,
             references_to: Vec::new(),
+            called_by: Vec::new(),
         });
     }
     FineGrainedSymbolMap {

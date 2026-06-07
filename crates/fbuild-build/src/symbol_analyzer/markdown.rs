@@ -8,7 +8,7 @@
 
 use std::path::Path;
 
-use fbuild_core::symbol_analysis::graph::{rank_callees_dual, Direction};
+use fbuild_core::symbol_analysis::graph::{rank_callees_dual, rank_callers_dual, Direction};
 use fbuild_core::symbol_analysis::{
     sanitize_filename, BackrefGraph, FineGrainedSymbolMap, GraphConfig, TuIndex,
 };
@@ -233,6 +233,7 @@ fn emit_backref_graph_section(
         );
         let _ = writeln!(out);
 
+        emit_dual_callers_subtable(out, map, s);
         emit_dual_callees_subtable(out, map, s);
 
         let graph = BackrefGraph::build_with_index(map, &index, &s.mangled, &bidir_cfg);
@@ -249,6 +250,80 @@ fn emit_backref_graph_section(
         let _ = writeln!(out, "</details>");
         let _ = writeln!(out);
     }
+}
+
+/// Emit the "Top callers" sub-table for one symbol: per-symbol
+/// inverse of [`emit_dual_callees_subtable`]. Two side-by-side
+/// rankings (by caller flash bytes, by how many other symbols the
+/// caller also calls — proxy for "downstream leverage if this caller
+/// were eliminated") plus an `(… and N more)` overflow row.
+///
+/// Populated from `FineGrainedSymbol::called_by` (objdump-derived,
+/// #478). Skipped when the analyzer ran without an objdump (the
+/// per-symbol back-reference data isn't available; the existing
+/// TU-level `Referenced by` column in the main table still carries
+/// the cref-derived view).
+fn emit_dual_callers_subtable(
+    out: &mut String,
+    map: &FineGrainedSymbolMap,
+    callee: &fbuild_core::symbol_analysis::FineGrainedSymbol,
+) {
+    use std::fmt::Write as _;
+    if callee.called_by.is_empty() {
+        // Don't emit the sub-table header when there's nothing to
+        // show — the parent template already prints the TU-level
+        // `Referenced by` count, so a blank caller table would just
+        // be noise.
+        return;
+    }
+    let (by_size, by_breadth, other) = rank_callers_dual(map, callee, 3);
+    let _ = writeln!(out, "#### Top callers (dual ranking)");
+    let _ = writeln!(out);
+    let _ = writeln!(
+        out,
+        "| # | by caller size (B) | calls × | by caller breadth (callees ×) | size (B) |"
+    );
+    let _ = writeln!(out, "|---:|---|---:|---|---:|");
+    for i in 0..3 {
+        let size_cell = by_size
+            .get(i)
+            .map(|c| format!("`{}` — {} B", c.demangled.replace('|', "\\|"), c.size))
+            .unwrap_or_else(|| "—".into());
+        let size_breadth = by_size
+            .get(i)
+            .map(|c| c.callees_count.to_string())
+            .unwrap_or_else(|| "—".into());
+        let breadth_cell = by_breadth
+            .get(i)
+            .map(|c| {
+                format!(
+                    "`{}` — calls ×{}",
+                    c.demangled.replace('|', "\\|"),
+                    c.callees_count
+                )
+            })
+            .unwrap_or_else(|| "—".into());
+        let breadth_size = by_breadth
+            .get(i)
+            .map(|c| c.size.to_string())
+            .unwrap_or_else(|| "—".into());
+        let _ = writeln!(
+            out,
+            "| {} | {} | {} | {} | {} |",
+            i + 1,
+            size_cell,
+            size_breadth,
+            breadth_cell,
+            breadth_size
+        );
+    }
+    if other > 0 {
+        let _ = writeln!(
+            out,
+            "| — | _(… and {other} more callers, see graph below)_ | | | |"
+        );
+    }
+    let _ = writeln!(out);
 }
 
 /// Emit the "Top callees" sub-table for one symbol: two side-by-side
