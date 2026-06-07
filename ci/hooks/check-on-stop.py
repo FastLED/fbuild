@@ -1,4 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.10"
+# ///
 """Stop hook: runs lint and tests scoped to the crates touched this session.
 
 Smart mode: only runs if files were actually changed during this session.

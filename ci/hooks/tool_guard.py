@@ -1,4 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.10"
+# ///
 """PreToolUse hook: blocks bare Rust commands and bare python/pip.
 
 All cargo/rustc/rustfmt must go through a globally-installed `soldr`

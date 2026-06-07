@@ -1,4 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.10"
+# ///
 """UserPromptSubmit hook: inject board-support skill guidance when the prompt
 mentions boards, hardware, or board-related errors.
 
