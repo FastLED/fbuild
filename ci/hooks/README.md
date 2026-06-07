@@ -10,3 +10,4 @@ Python scripts invoked by Claude Code lifecycle hooks, configured in `.claude/se
 - **`readme_guard.py`** -- PostToolUse: ensures every directory containing edited files has a `README.md`
 - **`check-on-start.py`** -- SessionStart: captures a git fingerprint so the stop hook can detect changes
 - **`check-on-stop.py`** -- Stop: runs full workspace lint + tests if files changed during the session
+- **`_output.py`** -- shared `truncate_output(text, max_lines)` helper used by `lint.py` and `check-on-stop.py` to bound subprocess stderr/stdout fed back to Claude (prevents cc-rs build-script PATH dumps and Windows MAX_PATH C1081 errors from overflowing the context window)
