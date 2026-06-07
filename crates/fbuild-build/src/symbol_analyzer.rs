@@ -14,8 +14,8 @@ use std::collections::BTreeMap;
 
 use fbuild_core::subprocess::run_command_with_stdin;
 use fbuild_core::symbol_analysis::{
-    build_fine_grained_map_with_synth, collect_map_derived_owners, parse_linker_map,
-    parse_nm_output, FineGrainedSymbolMap, LoadedRegion,
+    build_fine_grained_map_with_synth, collect_map_derived_owners, parse_cref_table,
+    parse_linker_map, parse_nm_output, FineGrainedSymbolMap, LoadedRegion, SymbolReference,
 };
 use fbuild_core::{FbuildError, Result};
 
@@ -226,19 +226,20 @@ pub fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap> {
         mangled.clone()
     };
 
-    let ranges = if let Some(map_path) = cfg.map_path {
+    let (ranges, cref_map) = if let Some(map_path) = cfg.map_path {
         match std::fs::read_to_string(map_path) {
-            Ok(text) => parse_linker_map(&text),
+            Ok(text) => (parse_linker_map(&text), parse_cref_table(&text)),
             Err(e) => {
                 tracing::warn!(
-                    "could not read map file {}: {e}; archive attribution will be unavailable",
+                    "could not read map file {}: {e}; archive attribution and \
+                     referenced_by will be unavailable",
                     map_path.display()
                 );
-                Vec::new()
+                (Vec::new(), BTreeMap::<String, Vec<SymbolReference>>::new())
             }
         }
     } else {
-        Vec::new()
+        (Vec::new(), BTreeMap::<String, Vec<SymbolReference>>::new())
     };
 
     // Pre-walk the ranges to collect mangled owners for map-derived
@@ -271,6 +272,7 @@ pub fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap> {
         demangled,
         ranges,
         &synth_demangled,
+        &cref_map,
     );
 
     // Strip symbols that nm enumerated but that don't actually consume
@@ -457,9 +459,9 @@ pub fn format_markdown_report(map: &FineGrainedSymbolMap, top_n: usize) -> Strin
         let _ = writeln!(out);
         let _ = writeln!(
             out,
-            "| Bytes | Archive | Object | Section | Source | Symbol |"
+            "| Bytes | Archive | Object | Section | Source | Referenced by | Symbol |"
         );
-        let _ = writeln!(out, "|---:|---|---|---|---|---|");
+        let _ = writeln!(out, "|---:|---|---|---|---|---|---|");
         for s in syms.into_iter().take(top_n) {
             let archive = s.archive.as_deref().unwrap_or("(none)");
             let object = s.object.as_deref().unwrap_or("-");
@@ -467,10 +469,11 @@ pub fn format_markdown_report(map: &FineGrainedSymbolMap, top_n: usize) -> Strin
             // Pipe-escape the demangled name so it doesn't break MD
             // table parsing (rare but possible with operator overloads).
             let name = s.demangled.replace('|', "\\|");
+            let refs = format_referenced_by(&s.referenced_by, 3);
             let _ = writeln!(
                 out,
-                "| {} | {} | {} | {} | {} | `{}` |",
-                s.size, archive, object, sect, s.source, name
+                "| {} | {} | {} | {} | {} | {} | `{}` |",
+                s.size, archive, object, sect, s.source, refs, name
             );
         }
         let _ = writeln!(out);
@@ -605,6 +608,40 @@ fn walk_for_elf(dir: &Path, newest: &mut Option<(std::time::SystemTime, PathBuf)
     }
 }
 
+/// Format up to `top_k` `referenced_by` entries for a Markdown table
+/// cell. Each referencer is rendered as `archive(object)` (or just
+/// `object` for bare TUs with no archive) and joined with `, `. When
+/// the list exceeds `top_k`, append ` (… and N more)`. Returns `-`
+/// for an empty list so the column stays scannable.
+///
+/// `top_k = 3` is the column-friendly default — the issue proposes
+/// K=5 as a follow-up-table value, but five `lib.a(obj.o)` strings
+/// per row makes the GitHub-rendered table awkward. Three keeps the
+/// signal-to-width ratio readable while still surfacing the most
+/// common "libc internal wrapper escapes to an ESP-IDF/mbedTLS TU"
+/// pattern documented in #459.
+fn format_referenced_by(
+    refs: &[fbuild_core::symbol_analysis::SymbolReference],
+    top_k: usize,
+) -> String {
+    if refs.is_empty() {
+        return "-".to_string();
+    }
+    let mut parts: Vec<String> = refs
+        .iter()
+        .take(top_k)
+        .map(|r| match &r.archive {
+            Some(a) => format!("{a}({})", r.object),
+            None => r.object.clone(),
+        })
+        .collect();
+    if refs.len() > top_k {
+        parts.push(format!("(… and {} more)", refs.len() - top_k));
+    }
+    // Pipe-escape so the joined string doesn't break MD table cells.
+    parts.join(", ").replace('|', "\\|")
+}
+
 fn truncate(s: &str, max: usize) -> String {
     if s.len() <= max {
         s.to_string()
@@ -732,6 +769,7 @@ mod tests {
                     object: Some("foo.o".into()),
                     output_section: Some(".flash.text".into()),
                     source: "nm".into(),
+                    referenced_by: Vec::new(),
                 },
                 FineGrainedSymbol {
                     mangled: "_Z3barv".into(),
@@ -744,6 +782,7 @@ mod tests {
                     object: Some("bar.o".into()),
                     output_section: Some(".dram0.bss".into()),
                     source: "nm".into(),
+                    referenced_by: Vec::new(),
                 },
             ],
             sections: Vec::<SectionBytes>::new(),
@@ -754,9 +793,9 @@ mod tests {
         assert!(md.contains("**Flash**: 100 B"));
         assert!(md.contains("**RAM**: 50 B"));
         assert!(md.contains("## Top 1 flash symbols"));
-        assert!(md.contains("| 100 | libA.a | foo.o | .flash.text | nm | `foo(int)` |"));
+        assert!(md.contains("| 100 | libA.a | foo.o | .flash.text | nm | - | `foo(int)` |"));
         assert!(md.contains("## Top 1 ram symbols"));
-        assert!(md.contains("| 50 | libB.a | bar.o | .dram0.bss | nm | `bar()` |"));
+        assert!(md.contains("| 50 | libB.a | bar.o | .dram0.bss | nm | - | `bar()` |"));
         assert!(md.contains("## Flash bytes by archive"));
         assert!(md.contains("| 100 | libA.a |"));
     }
@@ -781,10 +820,103 @@ mod tests {
                 object: None,
                 output_section: None,
                 source: "nm".into(),
+                referenced_by: Vec::new(),
             }],
             sections: Vec::<SectionBytes>::new(),
         };
         let md = format_markdown_report(&map, 5);
         assert!(md.contains("operator\\|(int const&, int const&)"));
+    }
+
+    #[test]
+    fn format_markdown_report_renders_referenced_by_column() {
+        // The motivating #459 case: a libc symbol like `_vfprintf_r`
+        // shows its non-libc referencers so the agent can answer
+        // "who pulled this in?" without spawning a separate query.
+        use fbuild_core::symbol_analysis::{
+            FineGrainedSymbol, FineGrainedSymbolMap, SectionBytes, SymbolReference,
+        };
+        let map = FineGrainedSymbolMap {
+            elf_path: "fw.elf".into(),
+            map_path: None,
+            total_flash: 11309,
+            total_ram: 0,
+            symbols: vec![FineGrainedSymbol {
+                mangled: "_vfprintf_r".into(),
+                demangled: "_vfprintf_r".into(),
+                address: 0x4000,
+                size: 11309,
+                sym_type: 'T',
+                region: fbuild_core::MemoryRegion::Flash,
+                archive: Some("libc.a".into()),
+                object: Some("libc_a-vfprintf.o".into()),
+                output_section: Some(".flash.text".into()),
+                source: "nm".into(),
+                referenced_by: vec![
+                    SymbolReference {
+                        archive: Some("libc.a".into()),
+                        object: "libc_a-vprintf.o".into(),
+                    },
+                    SymbolReference {
+                        archive: Some("libc.a".into()),
+                        object: "libc_a-printf.o".into(),
+                    },
+                    SymbolReference {
+                        archive: Some("libc.a".into()),
+                        object: "libc_a-fprintf.o".into(),
+                    },
+                    SymbolReference {
+                        archive: Some("liblog.a".into()),
+                        object: "log_write.c.obj".into(),
+                    },
+                    SymbolReference {
+                        archive: Some("libmbedcrypto.a".into()),
+                        object: "sha512.c.obj".into(),
+                    },
+                ],
+            }],
+            sections: Vec::<SectionBytes>::new(),
+        };
+        let md = format_markdown_report(&map, 5);
+        // Header includes the new column.
+        assert!(
+            md.contains("| Bytes | Archive | Object | Section | Source | Referenced by | Symbol |")
+        );
+        // Cell shows top-3 referencers + "(… and 2 more)" overflow.
+        assert!(
+            md.contains("libc.a(libc_a-vprintf.o), libc.a(libc_a-printf.o), libc.a(libc_a-fprintf.o), (… and 2 more)"),
+            "expected top-3 + overflow in referenced_by cell, got:\n{md}"
+        );
+    }
+
+    #[test]
+    fn format_markdown_report_referenced_by_empty_renders_dash() {
+        use fbuild_core::symbol_analysis::{FineGrainedSymbol, FineGrainedSymbolMap, SectionBytes};
+        let map = FineGrainedSymbolMap {
+            elf_path: "fw.elf".into(),
+            map_path: None,
+            total_flash: 10,
+            total_ram: 0,
+            symbols: vec![FineGrainedSymbol {
+                mangled: "main".into(),
+                demangled: "main".into(),
+                address: 0x4000,
+                size: 10,
+                sym_type: 'T',
+                region: fbuild_core::MemoryRegion::Flash,
+                archive: None,
+                object: Some("main.cpp.o".into()),
+                output_section: Some(".flash.text".into()),
+                source: "nm".into(),
+                referenced_by: Vec::new(),
+            }],
+            sections: Vec::<SectionBytes>::new(),
+        };
+        let md = format_markdown_report(&map, 5);
+        // The "Referenced by" cell is `-` when no cref data exists.
+        assert!(
+            md.contains("| 10 | (none) | main.cpp.o | .flash.text | nm | - | `main` |"),
+            "expected dash in referenced_by cell, got:\n{md}"
+        );
     }
 }

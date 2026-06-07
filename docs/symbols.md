@@ -116,11 +116,52 @@ both PIO- and fbuild-built artifacts uniformly:
 Alias keys are only present when the corresponding path is non-empty;
 consumers can rely on `"nm" in aliases` meaning the path is real.
 
+## `referenced_by` — who pulled this symbol in?
+
+Every row in `report.json` carries a `referenced_by` array of
+translation units that referenced the symbol, parsed from GNU `ld`'s
+`Cross Reference Table` block in the linker map:
+
+```json
+{
+  "demangled": "_vfprintf_r",
+  "size": 11309,
+  "archive": "libc.a",
+  "object": "libc_a-vfprintf.o",
+  "source": "nm",
+  "referenced_by": [
+    { "archive": "libc.a", "object": "libc_a-vprintf.o" },
+    { "archive": "libc.a", "object": "libc_a-printf.o" },
+    { "archive": "libc.a", "object": "libc_a-fprintf.o" }
+  ]
+}
+```
+
+The defining TU is intentionally omitted — that information is already
+on the row's own `archive` + `object` fields. The list contains only
+*referencers*, so a bloat audit can answer "why was this symbol
+linked?" without grepping the map file by hand.
+
+`report.md` exposes the same data as a `Referenced by` column on the
+top-N tables, rendered as `archive(object)` strings truncated to the
+top three with a `(… and N more)` overflow. The cell is `-` when the
+linker map has no `Cross Reference Table` block — possible with older
+`ld` versions or when the build was linked with `-Wl,--no-cref`.
+
+cref granularity is **archive-member (`.o`), not symbol** — that's a
+property of `ld --cref` itself. fbuild does not synthesize per-symbol
+back-references; ask `nm`/`objdump`/`addr2line` for that.
+
+See [#459](https://github.com/FastLED/fbuild/issues/459) for the
+motivating bloat audit.
+
 ## Related
 
 - Issue [#428](https://github.com/FastLED/fbuild/issues/428) —
   toolchain-path schema and CLI auto-discovery (this doc).
 - Issue [#434](https://github.com/FastLED/fbuild/issues/434) — the
   `fbuild bloat` meta that subsumes `symbols`.
+- Issue [#459](https://github.com/FastLED/fbuild/issues/459) —
+  `referenced_by` cref back-references on every row.
 - PR [#424] / PR [#427] — the fine-grained analyzer and map-derived
   rodata attribution this CLI drives.
