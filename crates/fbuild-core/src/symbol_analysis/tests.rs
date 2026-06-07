@@ -90,15 +90,15 @@ Linker script and memory map
 }
 
 /// fbuild#417 regression: the exact rodata rows from the FastLED #2473
-/// symbol audit that led to a ~95 KB phantom-bloat report. Three of
-/// the four heaviest "rodata candidates" the audit picked were
-/// `--gc-sections`-tombstoned (address `0x00000000`); only the fourth
+/// symbol audit that led to a ~95 KB phantom-bloat report. Four of
+/// the five heaviest "rodata candidates" the audit picked were
+/// `--gc-sections`-tombstoned (address `0x00000000`); only the fifth
 /// — `esp_err_to_name` — was actually live. The parser MUST drop the
-/// three tombstones so downstream analysis can't sum phantom bytes.
+/// four tombstones so downstream analysis can't sum phantom bytes.
 ///
 /// The snippet below mirrors the map-file shape from the issue
-/// verbatim (output section header in the link view + four rodata
-/// input rows, three at `0x00000000` and one at a real flash
+/// verbatim (output section header in the link view + five rodata
+/// input rows, four at `0x00000000` and one at a real flash
 /// address). See:
 ///   - https://github.com/FastLED/fbuild/issues/417
 ///   - https://github.com/FastLED/FastLED/issues/2473#issuecomment-4628287075
@@ -113,12 +113,15 @@ Linker script and memory map
  .rodata.str1.1 0x00000000     0x2b64 path/libmesh.a(mesh_parent.o)
  .rodata.huffTable
                 0x00000000     0x2124 path/libFastLED.a(third_party+.cpp.o)
+ .rodata.PLM_AUDIO_SYNTHESIS_WINDOW
+                0x00000000      0x800 path/libFastLED.a(third_party+.cpp.o)
  .rodata.str1.1 0x3c000020     0x1776 path/libesp_common.a(esp_err_to_name.c.obj)
 ";
     let ranges = parse_linker_map(text);
-    // Exactly one live row survives — `esp_err_to_name`. The three
-    // tombstones (x509_crt_bundle, mesh_parent, huffTable) are
-    // dropped because their address is `0x00000000`.
+    // Exactly one live row survives — `esp_err_to_name`. The four
+    // tombstones (x509_crt_bundle, mesh_parent, huffTable,
+    // PLM_AUDIO_SYNTHESIS_WINDOW) are dropped because their address
+    // is `0x00000000`.
     assert_eq!(
         ranges.len(),
         1,
