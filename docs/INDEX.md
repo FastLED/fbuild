@@ -33,6 +33,9 @@ A grep-friendly FAQ that maps common questions to the file that answers them. Bo
 | What does `FBUILD_PERF_LOG=1` do?                          | [PERF_WARM_BUILD.md](PERF_WARM_BUILD.md#instrumentation)   |
 | Does warm rebuild + deploy + monitor land under 4 s? (#114) | [PERF_WARM_DEPLOY.md](PERF_WARM_DEPLOY.md)                 |
 | How fast is `soldr` when building fbuild itself?            | [SOLDR_BUILD_PERF.md](SOLDR_BUILD_PERF.md)                 |
+| How can a user override ESP-IDF `CONFIG_*` / `sdkconfig` settings? | [sdkconfig.md](sdkconfig.md)                          |
+| Where does the framework's pre-baked `sdkconfig.h` come from? | [sdkconfig.md](sdkconfig.md#whats-there-today)            |
+| What's the precedence chain for `CONFIG_*` overrides?       | [sdkconfig.md](sdkconfig.md#tldr)                          |
 | Where do end-to-end perf benchmarks live (FastLED matrix, P-01)? | [../bench/fastled-examples/README.md](../bench/fastled-examples/README.md) |
 | What architecture docs should I read for a given crate?   | [CLAUDE.md](CLAUDE.md)                                     |
 

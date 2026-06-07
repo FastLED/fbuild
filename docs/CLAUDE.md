@@ -29,6 +29,7 @@ For a full FAQ-style index of every doc in this repo (human + LLM entry point), 
 - **[DEVELOPMENT.md](DEVELOPMENT.md)** - Testing, troubleshooting, local setup
 - **[CI_CACHE.md](CI_CACHE.md)** - Consumer-facing cross-run CI cache strategy
 - **[symbols.md](symbols.md)** - `fbuild symbols` per-symbol bloat analysis (toolchain auto-resolve from build_info.json, #428)
+- **[sdkconfig.md](sdkconfig.md)** - ESP `sdkconfig` user-override design (5-layer precedence chain, `sdkconfig.fragment`, `fbuild.toml` forward-compat — *design proposal, not yet implemented*)
 - **[DESIGN_DECISIONS.md](DESIGN_DECISIONS.md)** - ADR-style decisions with rationale
 - **[ROADMAP.md](ROADMAP.md)** - Implementation phases
 - **[ARCHITECTURE.md](ARCHITECTURE.md)** - Index of all architecture documents
