@@ -229,23 +229,21 @@ impl Esp32Linker {
             tracing::warn!("failed to write firmware size cache: {}", e);
         }
     }
-}
 
-impl Linker for Esp32Linker {
-    fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
-        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "ar")
-    }
-
-    fn link(
+    /// Build the linker argv that [`Self::link`] will invoke, without
+    /// touching the filesystem or running the subprocess. Extracted from
+    /// `link()` so unit tests can assert on the argv shape — in particular
+    /// the `-Wl,-Map=<elf-stem>.map` flag required by `fbuild bloat` for
+    /// archive / object / section attribution (see FastLED/fbuild#491,
+    /// #508). Every other platform linker (avr, teensy, generic_arm,
+    /// esp8266, ...) already does this; ESP32 was the outlier.
+    fn build_link_args(
         &self,
         objects: &[PathBuf],
         archives: &[PathBuf],
-        output_dir: &Path,
+        elf_path: &Path,
         extra: &LinkExtraArgs,
-    ) -> Result<PathBuf> {
-        std::fs::create_dir_all(output_dir)?;
-        let elf_path = output_dir.join("firmware.elf");
-
+    ) -> Vec<String> {
         let mut link_args: Vec<String> = Vec::new();
 
         // Compiler/driver
@@ -263,6 +261,12 @@ impl Linker for Esp32Linker {
 
         // Output
         link_args.extend(["-o".to_string(), elf_path.to_string_lossy().to_string()]);
+
+        // Always emit a linker map next to firmware.elf — required by
+        // `fbuild bloat` / `fbuild symbols` for archive / object / section
+        // attribution (#491, #508).
+        let map_path = elf_path.with_extension("map");
+        link_args.push(format!("-Wl,-Map={}", map_path.to_string_lossy()));
 
         // Sketch objects
         for obj in objects {
@@ -282,6 +286,26 @@ impl Linker for Esp32Linker {
         link_args.extend(extra.libs.iter().cloned());
 
         link_args.push("-Wl,--end-group".to_string());
+
+        link_args
+    }
+}
+
+impl Linker for Esp32Linker {
+    fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
+        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "ar")
+    }
+
+    fn link(
+        &self,
+        objects: &[PathBuf],
+        archives: &[PathBuf],
+        output_dir: &Path,
+        extra: &LinkExtraArgs,
+    ) -> Result<PathBuf> {
+        std::fs::create_dir_all(output_dir)?;
+        let elf_path = output_dir.join("firmware.elf");
+        let link_args = self.build_link_args(objects, archives, &elf_path, extra);
 
         if self.verbose {
             tracing::info!("link: {}", link_args.join(" "));
@@ -483,6 +507,26 @@ mod tests {
 
         assert_eq!(flash_size, "4MB");
         assert_eq!(cache.flash_size, "4MB");
+    }
+
+    /// Regression test: `build_link_args` always emits `-Wl,-Map=` next to
+    /// `firmware.elf`. ESP32 was the only platform linker not emitting the
+    /// map before #491 / #508; without it `fbuild bloat` cannot attribute
+    /// symbols to their source archives.
+    #[test]
+    fn test_esp32_link_command_emits_linker_map_next_to_elf() {
+        let linker = test_linker("esp32c6");
+        let args = linker.build_link_args(
+            &[],
+            &[],
+            &PathBuf::from("/build/firmware.elf"),
+            &LinkExtraArgs::default(),
+        );
+        assert!(
+            args.iter().any(|a| a == "-Wl,-Map=/build/firmware.map"),
+            "expected -Wl,-Map=/build/firmware.map next to firmware.elf. Args: {:?}",
+            args,
+        );
     }
 
     #[test]
