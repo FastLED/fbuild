@@ -28,6 +28,9 @@
 //! this PR stays small and fully unit-testable.
 
 use std::io;
+use std::path::PathBuf;
+
+use fbuild_core::subprocess::run_command_with_stdin;
 
 /// Detected libc family for a given toolchain.
 ///
@@ -120,6 +123,92 @@ pub fn probe_libc<P: Preprocessor + ?Sized>(p: &P) -> Libc {
     }
 }
 
+/// [`Preprocessor`] backed by an external GCC-style cross-compiler invoked
+/// via [`std::process::Command`] (FastLED/fbuild#493, #502).
+///
+/// The probe submits [`PROBE_SOURCE`] on the compiler's stdin with
+/// `-E -x c -`, discards stdout, and captures stderr. A non-zero exit code
+/// from a `#error` directive is the expected success signal — the trait's
+/// fail-closed contract reserves [`io::Error`] for subprocess failures
+/// (binary missing, stdin write failed, etc.).
+///
+/// Targets GCC-family cross-compilers (`xtensa-esp-elf-gcc`,
+/// `arm-none-eabi-gcc`, `avr-gcc`, ...). Clang's GCC-compatible driver
+/// also accepts the same flag set; MSVC's `cl.exe` does not and is out of
+/// scope for this probe.
+#[derive(Debug, Clone)]
+pub struct ExternalPreprocessor {
+    compiler: PathBuf,
+    extra_args: Vec<String>,
+}
+
+impl ExternalPreprocessor {
+    /// Construct a preprocessor that will invoke the binary at `compiler`.
+    ///
+    /// `compiler` may be an absolute path, a relative path, or a bare
+    /// name (in which case it is resolved via `PATH` by the OS).
+    pub fn new(compiler: impl Into<PathBuf>) -> Self {
+        Self {
+            compiler: compiler.into(),
+            extra_args: Vec::new(),
+        }
+    }
+
+    /// Append extra arguments to be passed before `-E -x c -` on every
+    /// invocation. Useful for `-target=...` / `-isysroot ...` / similar
+    /// cross-toolchain plumbing.
+    #[must_use]
+    pub fn with_args<I, S>(mut self, args: I) -> Self
+    where
+        I: IntoIterator<Item = S>,
+        S: Into<String>,
+    {
+        self.extra_args.extend(args.into_iter().map(Into::into));
+        self
+    }
+
+    /// Path to the underlying compiler binary.
+    #[must_use]
+    pub fn compiler(&self) -> &std::path::Path {
+        &self.compiler
+    }
+
+    /// Extra arguments appended to every invocation.
+    #[must_use]
+    pub fn extra_args(&self) -> &[String] {
+        &self.extra_args
+    }
+}
+
+impl Preprocessor for ExternalPreprocessor {
+    fn preprocess(&self, source: &str) -> io::Result<PreprocessResult> {
+        // Route through `fbuild_core::subprocess::run_command_with_stdin` so
+        // the child process inherits fbuild's containment / pipe-buffer
+        // handling rather than calling `std::process::Command` directly
+        // (forbidden by the `ci/find_direct_subprocess.py` lint, see
+        // FastLED/fbuild#141).
+        let compiler_str = self.compiler.to_string_lossy().into_owned();
+        let mut args: Vec<&str> = Vec::with_capacity(self.extra_args.len() + 5);
+        args.push(compiler_str.as_str());
+        for extra in &self.extra_args {
+            args.push(extra.as_str());
+        }
+        args.extend_from_slice(&["-E", "-x", "c", "-"]);
+
+        let output = run_command_with_stdin(&args, source.as_bytes(), None, None, None)
+            .map_err(|e| io::Error::other(e.to_string()))?;
+
+        Ok(PreprocessResult {
+            // `run_command_with_stdin` collapses signal-killed cases into a
+            // synthetic exit code, so this is always `Some(_)` — the
+            // `Option` here is purely for forward-compatibility with
+            // [`Preprocessor`] implementations that distinguish the two.
+            exit_code: Some(output.exit_code),
+            stderr: output.stderr,
+        })
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -206,5 +295,93 @@ mod tests {
         assert!(PROBE_SOURCE.contains("__NEWLIB__"));
         assert!(PROBE_SOURCE.contains("#error PICOLIBC"));
         assert!(PROBE_SOURCE.contains("#error NEWLIB"));
+    }
+
+    #[test]
+    fn external_preprocessor_constructor_stores_compiler_path() {
+        let pp = ExternalPreprocessor::new("/usr/bin/gcc");
+        assert_eq!(pp.compiler(), std::path::Path::new("/usr/bin/gcc"));
+        assert!(pp.extra_args().is_empty());
+    }
+
+    #[test]
+    fn external_preprocessor_with_args_appends() {
+        let pp = ExternalPreprocessor::new("cc")
+            .with_args(["-target", "thumb-none-eabi"])
+            .with_args(["-isysroot", "/opt/sdk"]);
+        assert_eq!(
+            pp.extra_args(),
+            &["-target", "thumb-none-eabi", "-isysroot", "/opt/sdk"],
+        );
+    }
+
+    #[test]
+    fn external_preprocessor_missing_compiler_is_io_error() {
+        let pp =
+            ExternalPreprocessor::new("definitely-not-a-real-compiler-binary-fastled-fbuild-502");
+        let r = pp.preprocess(PROBE_SOURCE);
+        assert!(
+            r.is_err(),
+            "expected I/O error when compiler binary is missing; got {r:?}",
+        );
+    }
+
+    #[test]
+    fn probe_libc_fails_closed_on_missing_compiler() {
+        // End-to-end fail-closed check: missing toolchain must resolve to
+        // Libc::Unknown, never panic, never claim a libc.
+        let pp =
+            ExternalPreprocessor::new("definitely-not-a-real-compiler-binary-fastled-fbuild-502");
+        assert_eq!(probe_libc(&pp), Libc::Unknown);
+    }
+
+    /// Locate a host C compiler on PATH. Returns the first of
+    /// `cc` / `gcc` / `clang` that responds to `--version`.
+    ///
+    /// On GitHub Actions runners (`ubuntu-latest`, `macos-latest`,
+    /// `windows-latest` with MSYS2/MinGW) at least one is preinstalled.
+    ///
+    /// Routes through `fbuild_core::subprocess::run_command` rather than
+    /// invoking `std::process::Command` directly — the `ban_raw_subprocess`
+    /// dylint forbids raw spawns even for benign `--version` probes.
+    fn find_host_cc() -> Option<&'static str> {
+        use fbuild_core::subprocess::run_command;
+        for candidate in ["cc", "gcc", "clang"] {
+            let args = [candidate, "--version"];
+            if matches!(
+                run_command(&args, None, None, Some(std::time::Duration::from_secs(5))),
+                Ok(o) if o.success()
+            ) {
+                return Some(candidate);
+            }
+        }
+        None
+    }
+
+    #[test]
+    fn host_cc_smoke_completes_preprocess_without_io_error() {
+        let Some(cc) = find_host_cc() else {
+            eprintln!("test skipped: no host C compiler (cc/gcc/clang) on PATH");
+            return;
+        };
+        let pp = ExternalPreprocessor::new(cc);
+        let result = pp
+            .preprocess(PROBE_SOURCE)
+            .expect("subprocess wiring should not error on a real host compiler");
+
+        // The libc the host ships isn't constrained by this test — it could
+        // be glibc, musl, BSD libc (macOS), MSVCRT/UCRT (MSYS2/MinGW), or
+        // newlib (Cygwin). All of those preprocess cleanly with our probe
+        // source. We only assert that the subprocess delivered an exit
+        // code and stderr that probe_libc can classify.
+        assert!(
+            result.exit_code.is_some(),
+            "expected a real exit code from the host preprocessor",
+        );
+
+        let libc = probe_libc(&pp);
+        // Any classification is acceptable as long as no panic / I/O error
+        // bubbled up; we just exercise the end-to-end wiring.
+        let _ = libc;
     }
 }
