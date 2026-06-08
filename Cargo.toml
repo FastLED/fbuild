@@ -76,6 +76,10 @@ bincode = "1"
 zccache-artifact = "1.9"
 rayon = "1"
 tracing-test = "0.2"
+# Terminal coloring for `fbuild build --shrink` reporting (FastLED/fbuild#493).
+# Auto-disables on non-tty and respects `NO_COLOR`, so the same code is safe
+# to call from anywhere — no `--color` flag plumbing needed.
+owo-colors = "4"
 
 # Process containment: all subprocess spawns the daemon performs (compilers,
 # esptool, qemu, simavr, node, npm, …) and any grandchildren they fork must

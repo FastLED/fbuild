@@ -31,6 +31,7 @@ pub mod renesas;
 pub mod rp2040;
 pub mod sam;
 pub mod script_runtime;
+pub mod shrink;
 pub mod silabs;
 pub mod source_scanner;
 pub mod stm32;
