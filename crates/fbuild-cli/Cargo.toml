@@ -31,3 +31,4 @@ blake3 = { workspace = true }
 sha2 = { workspace = true }
 tempfile = { workspace = true }
 walkdir = { workspace = true }
+owo-colors = { workspace = true }
