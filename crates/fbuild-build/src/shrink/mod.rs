@@ -17,6 +17,7 @@
 //! clap dependency. The CLI layer in `fbuild-cli` defines a tiny mirror enum
 //! with `#[derive(clap::ValueEnum)]` and converts via `From`.
 
+pub mod probe;
 pub mod registry;
 pub mod reporting;
 
