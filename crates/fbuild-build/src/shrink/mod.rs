@@ -20,6 +20,7 @@
 pub mod probe;
 pub mod registry;
 pub mod reporting;
+pub mod resolver;
 
 /// User-facing shrink level for `fbuild build --shrink[=MODE]`.
 ///
