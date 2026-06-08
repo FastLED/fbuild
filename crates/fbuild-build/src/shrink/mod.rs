@@ -18,6 +18,7 @@
 //! with `#[derive(clap::ValueEnum)]` and converts via `From`.
 
 pub mod probe;
+pub mod record;
 pub mod registry;
 pub mod reporting;
 pub mod resolver;
@@ -28,7 +29,14 @@ pub mod resolver;
 /// every variant as a no-op at the link level — only [`Off`](Self::Off) is
 /// observably distinct from "no flag", because the auto-resolver returns
 /// `Off` for every platform in this phase.
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Hash)]
+///
+/// `serde` derives let downstream JSON emission (`build_info_<env>.json`,
+/// Phase 1e / FastLED/fbuild#506) emit the same kebab-case names the CLI
+/// already accepts.
+#[derive(
+    Clone, Copy, Debug, Default, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize,
+)]
+#[serde(rename_all = "kebab-case")]
 pub enum ShrinkMode {
     /// Decide per framework + IDF version + libc probe. Default when the user
     /// passes `--shrink` with no value or omits the flag entirely.
