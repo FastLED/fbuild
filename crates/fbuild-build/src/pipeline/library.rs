@@ -380,7 +380,7 @@ mod extra_library_tests {
         std::fs::write(lib.join("src").join("FastLED.h"), "").unwrap();
 
         let mut include_dirs = Vec::new();
-        add_extra_library_include_dirs(&[lib.clone()], &mut include_dirs);
+        add_extra_library_include_dirs(std::slice::from_ref(&lib), &mut include_dirs);
 
         assert!(include_dirs.contains(&lib.join("src")));
         assert!(include_dirs.contains(&lib));
