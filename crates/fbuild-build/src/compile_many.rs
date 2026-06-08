@@ -328,8 +328,14 @@ fn resolve_env_for_board(project_dir: &Path, board: &str) -> Result<String> {
 }
 
 /// Determine the platform for a board id.
-fn platform_for_board(board: &str) -> Result<Platform> {
-    let cfg = fbuild_config::BoardConfig::from_board_id(board, &HashMap::new())?;
+///
+/// `project_dir`, when provided, also allows `<project_dir>/boards/<board>.json`
+/// to satisfy the lookup. This matches PlatformIO's auto-discovery of
+/// project-local board manifests and is how compile_many ingests boards
+/// shipped alongside a `platformio.ini` (FastLED/fbuild#515).
+fn platform_for_board(board: &str, project_dir: Option<&std::path::Path>) -> Result<Platform> {
+    let cfg =
+        fbuild_config::BoardConfig::from_board_id_in_project(board, &HashMap::new(), project_dir)?;
     cfg.platform().ok_or_else(|| {
         FbuildError::ConfigError(format!(
             "could not determine platform for board '{}' (mcu '{}')",
@@ -504,7 +510,14 @@ pub fn compile_many_with(
         .unwrap_or_else(default_framework_jobs)
         .max(1);
     let sketch_jobs = req.sketch_jobs.unwrap_or_else(default_sketch_jobs).max(1);
-    let platform = platform_for_board(&req.board)?;
+    // Use the first sketch's project_dir as the project-local boards/
+    // search root. The convention is that `fbuild build <dir> -e <env>`
+    // uses <dir> as the project_dir (it holds platformio.ini), and any
+    // boards/*.json next to it should resolve. With multiple sketches in
+    // one call, they typically share a parent project; the first one is
+    // a good-enough default.
+    let project_dir_for_boards = req.sketches.first().map(|p| p.as_path());
+    let platform = platform_for_board(&req.board, project_dir_for_boards)?;
 
     // Pre-resolve env names + assert each sketch dir exists.  Doing this
     // up front means we never half-build the batch and leave one worker
@@ -884,7 +897,7 @@ mod tests {
 
     #[test]
     fn platform_for_board_uno_is_avr() {
-        let p = platform_for_board("uno").unwrap();
+        let p = platform_for_board("uno", None).unwrap();
         assert_eq!(p, Platform::AtmelAvr);
     }
 

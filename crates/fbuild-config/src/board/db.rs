@@ -106,33 +106,110 @@ pub(super) fn get_board_debug_tools(board_id: &str) -> Option<HashMap<String, De
     Some(result)
 }
 
-pub(super) fn get_board_defaults(board_id: &str) -> Option<HashMap<String, String>> {
+/// Resolve board defaults with an optional project-local fallback.
+///
+/// Lookup order:
+/// 1. Built-in board database (enriched JSON baked into the binary).
+/// 2. `<project_dir>/boards/<board_id>.json` (PlatformIO-style project-local
+///    board manifest), when `project_dir` is provided.
+///
+/// This matches PlatformIO's behavior of auto-discovering project-local
+/// board manifests so well-formed `platformio.ini` projects that ship a
+/// `boards/` directory work without per-board upstream changes.
+///
+/// Precedence is fallback-only: built-in wins, project-local only fills
+/// the gap. Project-local override of a bundled board is intentionally
+/// not supported here (open a separate feature request if needed).
+pub(super) fn get_board_defaults_with_project_dir(
+    board_id: &str,
+    project_dir: Option<&std::path::Path>,
+) -> Option<HashMap<String, String>> {
+    // 1. Bundled DB lookup.
     let db = get_board_db();
     let resolved = resolve_board_alias(board_id);
-    let entry = db.get(board_id).or_else(|| db.get(resolved))?;
+    if let Some(entry) = db.get(board_id).or_else(|| db.get(resolved)) {
+        return Some(flatten_board_entry(entry, board_id));
+    }
 
+    // 2. Project-local fallback: <project_dir>/boards/<board_id>.json
+    //    Use the original (non-aliased) board_id only: aliases are a
+    //    bundled-DB convenience, not something users override locally.
+    if let Some(dir) = project_dir {
+        let path = dir.join("boards").join(format!("{}.json", board_id));
+        match std::fs::read_to_string(&path) {
+            Ok(contents) => match serde_json::from_str::<serde_json::Value>(&contents) {
+                Ok(value) => return Some(flatten_board_entry(&value, board_id)),
+                Err(e) => tracing::warn!(
+                    "project-local board {} at {} failed to parse: {}",
+                    board_id,
+                    path.display(),
+                    e
+                ),
+            },
+            Err(e) if e.kind() == std::io::ErrorKind::NotFound => {}
+            Err(e) => tracing::warn!(
+                "project-local board {} at {} unreadable: {}",
+                board_id,
+                path.display(),
+                e
+            ),
+        }
+    }
+
+    None
+}
+
+/// Project a board JSON entry (enriched format OR raw PlatformIO format)
+/// into the flat `HashMap<String, String>` consumed by [`BoardConfig::from_board_id`].
+///
+/// Enriched format has top-level `mcu`, `fcpu`, `ram`, `rom`, `platform`.
+/// PlatformIO project-local boards typically only have `build.mcu`,
+/// `build.f_cpu`, `upload.maximum_ram_size`, `upload.maximum_size`. Where
+/// a top-level field is missing we fall back to the PIO-style nested
+/// location so both shapes work uniformly.
+fn flatten_board_entry(entry: &serde_json::Value, board_id: &str) -> HashMap<String, String> {
     let mut d = HashMap::new();
+    let build = entry.get("build").and_then(|v| v.as_object());
 
     if let Some(name) = entry.get("name").and_then(|v| v.as_str()) {
         d.insert("name".into(), name.to_string());
     }
 
+    // mcu: enriched top-level wins; fall back to build.mcu (PIO format).
     let mcu = entry
         .get("mcu")
         .and_then(|v| v.as_str())
+        .or_else(|| build.and_then(|b| b.get("mcu")).and_then(|v| v.as_str()))
         .unwrap_or("unknown")
         .to_lowercase();
     d.insert("mcu".into(), mcu.clone());
 
+    // f_cpu: enriched top-level `fcpu` (u64) wins; fall back to PIO
+    // `build.f_cpu` (string, may already carry the trailing "L").
     if let Some(fcpu) = entry.get("fcpu").and_then(|v| v.as_u64()) {
         d.insert("f_cpu".into(), format!("{}L", fcpu));
+    } else if let Some(f_cpu_str) = build.and_then(|b| b.get("f_cpu")).and_then(|v| v.as_str()) {
+        d.insert("f_cpu".into(), f_cpu_str.to_string());
     }
 
+    // ram/rom: enriched top-level wins; fall back to PIO `upload.maximum_ram_size`
+    // and `upload.maximum_size` respectively.
+    let upload = entry.get("upload").and_then(|v| v.as_object());
     if let Some(ram) = entry.get("ram").and_then(|v| v.as_u64()) {
+        d.insert("maximum_data_size".into(), ram.to_string());
+    } else if let Some(ram) = upload
+        .and_then(|u| u.get("maximum_ram_size"))
+        .and_then(|v| v.as_u64())
+    {
         d.insert("maximum_data_size".into(), ram.to_string());
     }
 
     if let Some(rom) = entry.get("rom").and_then(|v| v.as_u64()) {
+        d.insert("maximum_size".into(), rom.to_string());
+    } else if let Some(rom) = upload
+        .and_then(|u| u.get("maximum_size"))
+        .and_then(|v| v.as_u64())
+    {
         d.insert("maximum_size".into(), rom.to_string());
     }
 
@@ -249,5 +326,5 @@ pub(super) fn get_board_defaults(board_id: &str) -> Option<HashMap<String, Strin
     d.entry("board".into())
         .or_insert_with(|| board_id_to_board_define(board_id));
 
-    Some(d)
+    d
 }

@@ -7,7 +7,9 @@
 use std::collections::HashMap;
 use std::path::Path;
 
-use super::db::{board_id_to_board_define, get_board_debug_tools, get_board_defaults};
+use super::db::{
+    board_id_to_board_define, get_board_debug_tools, get_board_defaults_with_project_dir,
+};
 use super::types::BoardConfig;
 
 fn parse_flash_size_bytes(raw: &str) -> Option<u64> {
@@ -179,12 +181,35 @@ impl BoardConfig {
         board_id: &str,
         overrides: &HashMap<String, String>,
     ) -> fbuild_core::Result<Self> {
-        let defaults = get_board_defaults(board_id).ok_or_else(|| {
-            fbuild_core::FbuildError::ConfigError(format!(
-                "unknown board '{}' (no built-in defaults)",
-                board_id
-            ))
-        })?;
+        Self::from_board_id_in_project(board_id, overrides, None)
+    }
+
+    /// Load board config from built-in defaults with a project-local fallback.
+    ///
+    /// When the built-in board database has no entry for `board_id`, fall
+    /// back to `<project_dir>/boards/<board_id>.json` (PlatformIO-style
+    /// project-local board manifest). This matches PlatformIO's behavior
+    /// of auto-discovering project-local board manifests next to
+    /// `platformio.ini`.
+    ///
+    /// Pass `None` for `project_dir` to disable the fallback (equivalent
+    /// to [`Self::from_board_id`]).
+    pub fn from_board_id_in_project(
+        board_id: &str,
+        overrides: &HashMap<String, String>,
+        project_dir: Option<&std::path::Path>,
+    ) -> fbuild_core::Result<Self> {
+        let defaults =
+            get_board_defaults_with_project_dir(board_id, project_dir).ok_or_else(|| {
+                let suffix = match project_dir {
+                    Some(d) => format!(" (also checked {}/boards/{}.json)", d.display(), board_id),
+                    None => String::new(),
+                };
+                fbuild_core::FbuildError::ConfigError(format!(
+                    "unknown board '{}' (no built-in defaults){}",
+                    board_id, suffix
+                ))
+            })?;
 
         let get = |key: &str, default: &str| -> String {
             overrides
