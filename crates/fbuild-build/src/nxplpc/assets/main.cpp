@@ -16,11 +16,10 @@
 // `zackees/ArduinoCore-LPC8xx::cores/lpc8xx/main.cpp` once #479 lands
 // (tracked in #487, Stage 4: "vendor the framework into fbuild").
 
-extern "C" {
-    // User-provided Arduino entry points.
-    void setup(void);
-    void loop(void);
-}
+// User-provided Arduino entry points. The .ino preprocessor emits normal
+// C++ prototypes, so keep these declarations in C++ linkage.
+void setup(void);
+void loop(void);
 
 int main(void) {
     setup();

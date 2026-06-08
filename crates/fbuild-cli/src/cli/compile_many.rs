@@ -54,6 +54,15 @@ pub fn build_ci_pio_env(
 ) -> std::collections::HashMap<String, String> {
     let mut env = std::collections::HashMap::new();
     if !libs.is_empty() {
+        let libs: Vec<String> = libs
+            .iter()
+            .map(|lib| {
+                std::fs::canonicalize(lib)
+                    .ok()
+                    .map(|p| p.to_string_lossy().to_string())
+                    .unwrap_or_else(|| lib.clone())
+            })
+            .collect();
         env.insert(
             "PLATFORMIO_LIB_EXTRA_DIRS".to_string(),
             libs.join(ci_lib_extra_dirs_sep()),

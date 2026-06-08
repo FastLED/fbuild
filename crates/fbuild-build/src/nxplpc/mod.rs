@@ -42,6 +42,65 @@ pub const LPC845_STARTUP: &str = include_str!("assets/startup_lpc845.S");
 /// `main.cpp` once #479 / ArduinoCore-LPC8xx is vendored (Stage 4 of #487).
 pub const MAIN_CPP_SHIM: &str = include_str!("assets/main.cpp");
 
+/// Minimal Arduino compatibility layer used until #479's external
+/// ArduinoCore-LPC8xx package is production-ready.
+pub const ARDUINO_STUB_ASSETS: &[(&str, &str)] = &[
+    (
+        "arduino_stub/Arduino.h",
+        include_str!("assets/arduino_stub/Arduino.h"),
+    ),
+    (
+        "arduino_stub/HardwareSerial.h",
+        include_str!("assets/arduino_stub/HardwareSerial.h"),
+    ),
+    (
+        "arduino_stub/HardwareSerial.cpp",
+        include_str!("assets/arduino_stub/HardwareSerial.cpp"),
+    ),
+    (
+        "arduino_stub/SPI.h",
+        include_str!("assets/arduino_stub/SPI.h"),
+    ),
+    (
+        "arduino_stub/SPI.cpp",
+        include_str!("assets/arduino_stub/SPI.cpp"),
+    ),
+    (
+        "arduino_stub/wiring_digital.c",
+        include_str!("assets/arduino_stub/wiring_digital.c"),
+    ),
+    (
+        "arduino_stub/wiring_time.c",
+        include_str!("assets/arduino_stub/wiring_time.c"),
+    ),
+];
+
+/// NXP device headers that bridge the generic CMSIS Core package to the
+/// LPC804/LPC845-specific symbols FastLED includes (`LPC804.h`, `LPC845.h`,
+/// and `fsl_device_registers.h`).
+pub const DEVICE_HEADER_ASSETS: &[(&str, &str)] = &[
+    (
+        "device_headers/LPC804.h",
+        include_str!("assets/device_headers/LPC804.h"),
+    ),
+    (
+        "device_headers/LPC845.h",
+        include_str!("assets/device_headers/LPC845.h"),
+    ),
+    (
+        "device_headers/fsl_device_registers.h",
+        include_str!("assets/device_headers/fsl_device_registers.h"),
+    ),
+    (
+        "device_headers/system_LPC804.h",
+        include_str!("assets/device_headers/system_LPC804.h"),
+    ),
+    (
+        "device_headers/system_LPC845.h",
+        include_str!("assets/device_headers/system_LPC845.h"),
+    ),
+];
+
 /// NXP LPC8xx platform support.
 pub struct NxpLpcPlatformSupport;
 
@@ -56,6 +115,8 @@ impl crate::PlatformSupport for NxpLpcPlatformSupport {
         use fbuild_packages::Package;
         let tc = fbuild_packages::toolchain::ArmToolchain::new(project_dir);
         Package::ensure_installed(&tc)?;
+        let cmsis = fbuild_packages::library::CmsisFramework::new(project_dir);
+        Package::ensure_installed(&cmsis)?;
         tracing::info!("ARM GCC toolchain installed for NXP LPC8xx");
         Ok(())
     }

@@ -20,7 +20,9 @@ use std::path::{Path, PathBuf};
 use crate::pio_env::PioEnvOverrides;
 
 use self::parser::{parse_ini, resolve_all_envs};
-use self::values::{parse_flags, parse_lib_deps, parse_list_values, strip_inline_comment};
+use self::values::{
+    parse_flags, parse_lib_deps, parse_list_values, parse_path_list, strip_inline_comment,
+};
 
 /// Parsed platformio.ini configuration.
 pub struct PlatformIOConfig {
@@ -248,6 +250,19 @@ impl PlatformIOConfig {
         let config = self.get_env_config(env_name)?;
         match config.get("lib_deps") {
             Some(deps) => Ok(parse_lib_deps(deps)),
+            None => Ok(Vec::new()),
+        }
+    }
+
+    /// Get extra library search directories for an environment.
+    pub fn get_lib_extra_dirs(&self, env_name: &str) -> fbuild_core::Result<Vec<String>> {
+        if let Some(dirs) = self.overrides.get_lib_extra_dirs() {
+            return Ok(parse_path_list(dirs));
+        }
+
+        let config = self.get_env_config(env_name)?;
+        match config.get("lib_extra_dirs") {
+            Some(dirs) => Ok(parse_list_values(dirs)),
             None => Ok(Vec::new()),
         }
     }

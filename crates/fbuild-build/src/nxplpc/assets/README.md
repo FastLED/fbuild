@@ -6,6 +6,8 @@
 | `lpc845.ld`       | GNU ld memory map for LPC845 (64 KB Flash / 16 KB RAM).    |
 | `startup_lpc804.S`| Reset_Handler + minimal vector table for LPC804.           |
 | `startup_lpc845.S`| Reset_Handler + minimal vector table for LPC845.           |
+| `arduino_stub/`   | Minimal Arduino.h / Serial / SPI / timing surface.         |
+| `device_headers/` | Minimal LPC804/LPC845 CMSIS device headers.                |
 
 All four files are embedded into the `fbuild-build` crate via `include_str!`
 in `mod.rs` so the Stage-2 orchestrator (FastLED/FastLED#2836) can emit them

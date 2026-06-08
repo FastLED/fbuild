@@ -26,7 +26,10 @@ use crate::generic_arm::{ArmCompiler, ArmLinker};
 use crate::pipeline;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
-use super::{mcu_config, LPC804_LD, LPC804_STARTUP, LPC845_LD, LPC845_STARTUP, MAIN_CPP_SHIM};
+use super::{
+    mcu_config, ARDUINO_STUB_ASSETS, DEVICE_HEADER_ASSETS, LPC804_LD, LPC804_STARTUP, LPC845_LD,
+    LPC845_STARTUP, MAIN_CPP_SHIM,
+};
 
 /// Per-MCU asset bundle: linker script + startup `.S`. Selected from
 /// the embedded `include_str!` constants based on the board's `mcu`
@@ -60,8 +63,21 @@ fn mcu_assets(mcu: &str) -> Result<McuAssets> {
 /// can consume them.
 fn write_asset(dir: &std::path::Path, filename: &str, content: &str) -> Result<PathBuf> {
     let path = dir.join(filename);
+    if let Some(parent) = path.parent() {
+        std::fs::create_dir_all(parent)?;
+    }
     std::fs::write(&path, content)?;
     Ok(path)
+}
+
+fn write_asset_group(
+    dir: &std::path::Path,
+    assets: &[(&'static str, &'static str)],
+) -> Result<Vec<PathBuf>> {
+    assets
+        .iter()
+        .map(|(filename, content)| write_asset(dir, filename, content))
+        .collect()
 }
 
 /// NXP LPC8xx (Cortex-M0+) build orchestrator.
@@ -90,6 +106,10 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
         tracing::info!("arm-none-eabi-gcc toolchain at {}", toolchain_dir.display());
 
+        let cmsis = fbuild_packages::library::CmsisFramework::new(&params.project_dir);
+        let cmsis_dir = fbuild_packages::Package::ensure_installed(&cmsis)?;
+        tracing::info!("CMSIS framework at {}", cmsis_dir.display());
+
         use fbuild_packages::Toolchain;
         pipeline::log_toolchain_version(
             &toolchain.get_gcc_path(),
@@ -111,6 +131,8 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
             assets.startup_asm,
         )?;
         let main_shim_path = write_asset(&ctx.build_dir, "lpc8xx_main.cpp", MAIN_CPP_SHIM)?;
+        let stub_paths = write_asset_group(&ctx.build_dir, ARDUINO_STUB_ASSETS)?;
+        write_asset_group(&ctx.build_dir, DEVICE_HEADER_ASSETS)?;
 
         // 6. Scan user sources. No external framework yet (Stage 3 / #479).
         let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
@@ -123,6 +145,14 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         // real implementations.
         sources.core_sources.push(startup_path);
         sources.core_sources.push(main_shim_path);
+        for path in stub_paths {
+            if matches!(
+                path.extension().and_then(|ext| ext.to_str()),
+                Some("c" | "cc" | "cpp" | "S" | "s")
+            ) {
+                sources.core_sources.push(path);
+            }
+        }
 
         tracing::info!(
             "sources: {} sketch, {} core (framework shim), {} variant",
@@ -136,12 +166,23 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         let mut defines = ctx.board.get_defines();
         defines.extend(mcu_config.defines_map());
 
-        // 8. Include dirs: sketch + project discovery (libs under lib/, etc.).
-        //    No framework include path yet — the bare CMSIS path will gain
-        //    the MCUXpresso SDK include dirs when Stage 4 vendors the
-        //    framework library.
-        let mut include_dirs = vec![ctx.src_dir.clone()];
+        // 8. Include dirs: framework stub + device headers + CMSIS core +
+        //    sketch/project discovery (libs under lib/, etc.). These fbuild-
+        //    owned roots replace the misplaced example-local include tree from
+        //    FastLED/FastLED#2988 and flow into build_info.json.
+        let build_dir = crate::compiler::absolute_from_cwd(&ctx.build_dir);
+        let src_dir = crate::compiler::absolute_from_cwd(&ctx.src_dir);
+        let mut include_dirs = vec![
+            build_dir.join("arduino_stub"),
+            build_dir.join("device_headers"),
+            cmsis.get_core_include_dir(),
+            src_dir,
+        ];
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
+        let lib_extra_dirs = ctx.config.get_lib_extra_dirs(&params.env_name)?;
+        let extra_library_roots =
+            pipeline::discover_extra_library_roots(&params.project_dir, &lib_extra_dirs);
+        pipeline::add_extra_library_include_dirs(&extra_library_roots, &mut include_dirs);
 
         let compiler = ArmCompiler::new(
             toolchain.get_gcc_path(),
@@ -149,7 +190,7 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
             &ctx.board.mcu,
             &ctx.board.f_cpu,
             defines,
-            include_dirs,
+            include_dirs.clone(),
             mcu_config.clone(),
             params.profile,
             params.verbose,
@@ -171,20 +212,37 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
             params.verbose,
         );
 
-        // 10. Run the shared sequential build pipeline.
-        //
-        // `lib_env = None` because there is no project-as-library path
-        // here — the bare LPC8xx target doesn't pre-build dependencies
-        // into archives (yet). Stage 4 may add this once an Arduino
-        // library ecosystem is in scope.
+        // 10. Compile extra library roots before the shared pipeline links them.
+        let gcc_path = toolchain.get_gcc_path();
+        let gxx_path = toolchain.get_gxx_path();
+        let ar_path = toolchain.get_ar_path();
+        let gcc_ar_path = toolchain.get_gcc_ar_path();
+        let c_flags = crate::compiler::Compiler::c_flags(&compiler);
+        let cpp_flags = crate::compiler::Compiler::cpp_flags(&compiler);
+        let lib_ar_path = pipeline::pick_archiver(&ar_path, &gcc_ar_path, &c_flags, &cpp_flags);
+        let lib_env = pipeline::LibraryBuildEnv {
+            gcc_path: &gcc_path,
+            gxx_path: &gxx_path,
+            ar_path: lib_ar_path,
+            c_flags: &c_flags,
+            cpp_flags: &cpp_flags,
+            include_dirs: &include_dirs,
+            verbose: params.verbose,
+            jobs: crate::parallel::effective_jobs(params.jobs),
+            compiler_cache: None,
+        };
+        let extra_link_inputs =
+            pipeline::compile_extra_libraries(&extra_library_roots, &ctx.build_dir, &lib_env)?;
+
+        // 11. Run the shared sequential build pipeline.
         pipeline::run_sequential_build_with_libs(
             &compiler,
             &linker,
             ctx,
             params,
             &sources,
-            &[],
-            None,
+            &extra_link_inputs,
+            Some(&lib_env),
             TargetArchitecture::Arm,
             "NXPLPC",
             start,

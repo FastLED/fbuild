@@ -20,7 +20,10 @@ pub use compile::{
     compile_local_libraries, compile_sources, generate_compile_db, log_toolchain_version,
 };
 pub use context::BuildContext;
-pub use library::{compile_project_as_library, pick_archiver, LibraryBuildEnv};
+pub use library::{
+    add_extra_library_include_dirs, compile_extra_libraries, compile_project_as_library,
+    discover_extra_library_roots, pick_archiver, LibraryBuildEnv,
+};
 pub use link::{assemble_build_result, handle_link_result};
 pub use project_discovery::{discover_project_includes, is_platform_project, is_project_a_library};
 pub use sequential::run_sequential_build_with_libs;
