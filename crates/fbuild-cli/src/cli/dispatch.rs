@@ -153,6 +153,8 @@ pub async fn async_main() {
             symbol_analysis,
             no_timestamp,
             output_dir,
+            shrink: _,
+            no_shrink: _,
         }) => {
             let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
             if platformio {
@@ -196,6 +198,8 @@ pub async fn async_main() {
             emulator,
             target,
             output_dir,
+            shrink: _,
+            no_shrink: _,
         }) => {
             let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
             if platformio {
@@ -336,6 +340,8 @@ pub async fn async_main() {
             project_dir,
             environment,
             verbose,
+            shrink: _,
+            no_shrink: _,
             timeout,
             halt_on_error,
             halt_on_success,
@@ -421,6 +427,8 @@ pub async fn async_main() {
             board,
             libs,
             project_conf,
+            shrink: _,
+            no_shrink: _,
             keep_build_dir: _keep_build_dir,
             build_dir,
             framework_jobs,

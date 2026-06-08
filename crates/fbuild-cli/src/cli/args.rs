@@ -4,9 +4,37 @@
 //! `KNOWN_SUBCOMMANDS` / `rewrite_args` / `resolve_project_dir` without
 //! pulling in the handler bodies.
 
-use clap::{Parser, Subcommand};
+use clap::{Parser, Subcommand, ValueEnum};
+use fbuild_build::shrink::ShrinkMode;
 
 use super::monitor_parse::parse_jobs;
+
+/// CLI mirror of [`ShrinkMode`] (FastLED/fbuild#493 / #496).
+///
+/// Carries the `#[derive(ValueEnum)]` so `clap` can parse `--shrink=<mode>`
+/// without pulling clap into `fbuild-build`. The two enums are kept in
+/// 1:1 correspondence via the `From` impl below.
+#[derive(ValueEnum, Clone, Copy, Debug, PartialEq, Eq)]
+#[clap(rename_all = "kebab-case")]
+pub enum CliShrinkMode {
+    Auto,
+    Off,
+    Safe,
+    Aggressive,
+    Printf,
+}
+
+impl From<CliShrinkMode> for ShrinkMode {
+    fn from(value: CliShrinkMode) -> Self {
+        match value {
+            CliShrinkMode::Auto => ShrinkMode::Auto,
+            CliShrinkMode::Off => ShrinkMode::Off,
+            CliShrinkMode::Safe => ShrinkMode::Safe,
+            CliShrinkMode::Aggressive => ShrinkMode::Aggressive,
+            CliShrinkMode::Printf => ShrinkMode::Printf,
+        }
+    }
+}
 
 #[derive(Parser)]
 #[command(
@@ -60,6 +88,16 @@ pub struct Cli {
     /// Expected output pattern for monitor
     #[arg(long)]
     pub expect: Option<String>,
+
+    /// Flash-size reduction mode (FastLED/fbuild#493). MODE: auto (default
+    /// when omitted), off, safe, aggressive, printf. Subcommand-level
+    /// `--shrink` overrides this; `--no-shrink` always wins.
+    #[arg(long, value_enum, num_args = 0..=1, default_missing_value = "auto", require_equals = true)]
+    pub shrink: Option<CliShrinkMode>,
+
+    /// Disable all shrink optimizations. Equivalent to `--shrink=off`.
+    #[arg(long = "no-shrink", conflicts_with = "shrink")]
+    pub no_shrink: bool,
 }
 
 #[derive(Subcommand)]
@@ -192,6 +230,13 @@ pub enum Commands {
         /// Export build artifacts to a tooling-friendly directory
         #[arg(long)]
         output_dir: Option<String>,
+        /// Flash-size reduction mode. MODE: auto, off, safe, aggressive,
+        /// printf. Overrides the global `--shrink`. See FastLED/fbuild#493.
+        #[arg(long, value_enum, num_args = 0..=1, default_missing_value = "auto", require_equals = true)]
+        shrink: Option<CliShrinkMode>,
+        /// Disable all shrink optimizations. Equivalent to `--shrink=off`.
+        #[arg(long = "no-shrink", conflicts_with = "shrink")]
+        no_shrink: bool,
     },
     /// Deploy firmware to device
     Deploy {
@@ -245,6 +290,13 @@ pub enum Commands {
         /// Export build artifacts to a tooling-friendly directory
         #[arg(long)]
         output_dir: Option<String>,
+        /// Flash-size reduction mode. MODE: auto, off, safe, aggressive,
+        /// printf. Overrides the global `--shrink`. See FastLED/fbuild#493.
+        #[arg(long, value_enum, num_args = 0..=1, default_missing_value = "auto", require_equals = true)]
+        shrink: Option<CliShrinkMode>,
+        /// Disable all shrink optimizations. Equivalent to `--shrink=off`.
+        #[arg(long = "no-shrink", conflicts_with = "shrink")]
+        no_shrink: bool,
     },
     /// Monitor serial output
     Monitor {
@@ -361,6 +413,13 @@ pub enum Commands {
         /// Emulator backend: "qemu", "avr8js", or "simavr" (auto-detected if omitted)
         #[arg(long, value_parser = ["avr8js", "qemu", "simavr"])]
         emulator: Option<String>,
+        /// Flash-size reduction mode. MODE: auto, off, safe, aggressive,
+        /// printf. Overrides the global `--shrink`. See FastLED/fbuild#493.
+        #[arg(long, value_enum, num_args = 0..=1, default_missing_value = "auto", require_equals = true)]
+        shrink: Option<CliShrinkMode>,
+        /// Disable all shrink optimizations. Equivalent to `--shrink=off`.
+        #[arg(long = "no-shrink", conflicts_with = "shrink")]
+        no_shrink: bool,
     },
     /// Run clang-query on project sources
     ClangQuery {
@@ -481,6 +540,13 @@ pub enum Commands {
         /// directory is the project. Matches `pio ci` positional args.
         #[arg(required = true)]
         sketches: Vec<String>,
+        /// Flash-size reduction mode. MODE: auto, off, safe, aggressive,
+        /// printf. Overrides the global `--shrink`. See FastLED/fbuild#493.
+        #[arg(long, value_enum, num_args = 0..=1, default_missing_value = "auto", require_equals = true)]
+        shrink: Option<CliShrinkMode>,
+        /// Disable all shrink optimizations. Equivalent to `--shrink=off`.
+        #[arg(long = "no-shrink", conflicts_with = "shrink")]
+        no_shrink: bool,
     },
 }
 
