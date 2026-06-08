@@ -1,5 +1,5 @@
 //! Library compilation helpers: `LibraryBuildEnv`, archiver selection,
-//! and the "project-as-library" compile path.
+//! extra library roots, and the "project-as-library" compile path.
 
 use std::path::{Path, PathBuf};
 
@@ -50,6 +50,154 @@ pub fn pick_archiver<'a>(
     } else {
         ar_path
     }
+}
+
+fn resolve_extra_library_path(project_dir: &Path, entry: &str) -> PathBuf {
+    let path = PathBuf::from(entry);
+    let path = if path.is_absolute() {
+        path
+    } else {
+        project_dir.join(path)
+    };
+    crate::compiler::absolute_from_cwd(&path)
+}
+
+fn looks_like_library_root(path: &Path) -> bool {
+    path.join("library.json").is_file()
+        || path.join("library.properties").is_file()
+        || path.join("src").is_dir()
+}
+
+fn library_name(path: &Path) -> String {
+    path.file_name()
+        .and_then(|n| n.to_str())
+        .unwrap_or("library")
+        .to_lowercase()
+}
+
+fn strip_windows_extended_prefix(path: PathBuf) -> PathBuf {
+    if !cfg!(windows) {
+        return path;
+    }
+    let s = path.to_string_lossy();
+    if let Some(rest) = s.strip_prefix(r"\\?\").or_else(|| s.strip_prefix("//?/")) {
+        return PathBuf::from(rest);
+    }
+    path
+}
+
+/// Resolve `lib_extra_dirs`/`PLATFORMIO_LIB_EXTRA_DIRS` entries to library roots.
+///
+/// `pio ci --lib <path>` commonly points directly at a library root (FastLED
+/// uses `--lib .`), while `lib_extra_dirs` can point at a directory containing
+/// multiple libraries. Support both forms.
+pub fn discover_extra_library_roots(project_dir: &Path, entries: &[String]) -> Vec<PathBuf> {
+    let mut roots = Vec::new();
+    let mut seen = std::collections::HashSet::new();
+
+    for entry in entries {
+        let path = resolve_extra_library_path(project_dir, entry);
+        if !path.is_dir() {
+            tracing::warn!(
+                "lib_extra_dirs entry is not a directory: {}",
+                path.display()
+            );
+            continue;
+        }
+
+        let mut candidates = Vec::new();
+        if looks_like_library_root(&path) {
+            candidates.push(path);
+        } else if let Ok(children) = std::fs::read_dir(&path) {
+            for child in children.flatten() {
+                let child_path = child.path();
+                if child_path.is_dir() && looks_like_library_root(&child_path) {
+                    candidates.push(child_path);
+                }
+            }
+        }
+
+        for candidate in candidates {
+            let key = std::fs::canonicalize(&candidate)
+                .map(strip_windows_extended_prefix)
+                .unwrap_or(candidate.clone());
+            if seen.insert(key.clone()) {
+                roots.push(key);
+            }
+        }
+    }
+
+    roots
+}
+
+/// Add include dirs for extra library roots to an orchestrator include list.
+pub fn add_extra_library_include_dirs(library_roots: &[PathBuf], include_dirs: &mut Vec<PathBuf>) {
+    for root in library_roots {
+        let lib_name = library_name(root);
+        let lib = fbuild_packages::library::library_info::InstalledLibrary::new(root, &lib_name);
+        let mut dirs = lib.get_include_dirs();
+        if !include_dirs.contains(root) {
+            dirs.push(root.clone());
+        }
+        for dir in dirs {
+            if !include_dirs.contains(&dir) {
+                include_dirs.push(dir);
+            }
+        }
+    }
+}
+
+/// Compile extra library roots from `lib_extra_dirs` into archives.
+pub fn compile_extra_libraries(
+    library_roots: &[PathBuf],
+    build_dir: &Path,
+    env: &LibraryBuildEnv<'_>,
+) -> Result<Vec<PathBuf>> {
+    let mut archives = Vec::new();
+    for root in library_roots {
+        let lib_name = library_name(root);
+        let lib_info =
+            fbuild_packages::library::library_info::InstalledLibrary::new(root, &lib_name);
+        let sources = lib_info.get_source_files();
+        if sources.is_empty() {
+            tracing::info!("extra library '{}' is header-only", lib_name);
+            continue;
+        }
+
+        tracing::info!(
+            "compiling extra library '{}': {} source files from {}",
+            lib_name,
+            sources.len(),
+            root.display()
+        );
+
+        let output_dir = build_dir.join("extra_lib").join(&lib_name);
+        std::fs::create_dir_all(&output_dir)?;
+        match fbuild_packages::library::library_compiler::compile_library_with_jobs(
+            &lib_name,
+            &sources,
+            env.include_dirs,
+            env.gcc_path,
+            env.gxx_path,
+            env.ar_path,
+            env.c_flags,
+            env.cpp_flags,
+            &output_dir,
+            env.verbose,
+            env.jobs,
+            env.compiler_cache,
+        ) {
+            Ok(Some(archive)) => archives.push(archive),
+            Ok(None) => {}
+            Err(e) => {
+                return Err(fbuild_core::FbuildError::BuildFailed(format!(
+                    "extra library '{}' compilation failed: {}",
+                    lib_name, e
+                )));
+            }
+        }
+    }
+    Ok(archives)
 }
 
 /// Compile the project's own `src/` as a library archive, when the project
@@ -186,6 +334,56 @@ mod pick_archiver_tests {
         let c_flags: Vec<String> = vec![];
         let cpp_flags = vec!["-flto=auto".to_string()];
         assert_eq!(pick_archiver(ar, gcc_ar, &c_flags, &cpp_flags), gcc_ar);
+    }
+}
+
+#[cfg(test)]
+mod extra_library_tests {
+    use super::*;
+
+    #[test]
+    fn discovers_direct_library_root() {
+        let tmp = tempfile::tempdir().unwrap();
+        std::fs::write(tmp.path().join("library.properties"), "name=FastLED\n").unwrap();
+        std::fs::create_dir_all(tmp.path().join("src")).unwrap();
+
+        let roots = discover_extra_library_roots(tmp.path(), &[".".to_string()]);
+
+        assert_eq!(roots.len(), 1);
+        assert_eq!(
+            roots[0],
+            strip_windows_extended_prefix(std::fs::canonicalize(tmp.path()).unwrap())
+        );
+    }
+
+    #[test]
+    fn discovers_libraries_inside_storage_dir() {
+        let tmp = tempfile::tempdir().unwrap();
+        let storage = tmp.path().join("libs");
+        let lib_a = storage.join("LibA");
+        let lib_b = storage.join("LibB");
+        std::fs::create_dir_all(lib_a.join("src")).unwrap();
+        std::fs::create_dir_all(lib_b.join("src")).unwrap();
+
+        let roots = discover_extra_library_roots(tmp.path(), &["libs".to_string()]);
+
+        assert_eq!(roots.len(), 2);
+        assert!(roots.iter().any(|root| root.ends_with("LibA")));
+        assert!(roots.iter().any(|root| root.ends_with("LibB")));
+    }
+
+    #[test]
+    fn adds_src_and_root_include_dirs() {
+        let tmp = tempfile::tempdir().unwrap();
+        let lib = tmp.path().join("FastLED");
+        std::fs::create_dir_all(lib.join("src")).unwrap();
+        std::fs::write(lib.join("src").join("FastLED.h"), "").unwrap();
+
+        let mut include_dirs = Vec::new();
+        add_extra_library_include_dirs(std::slice::from_ref(&lib), &mut include_dirs);
+
+        assert!(include_dirs.contains(&lib.join("src")));
+        assert!(include_dirs.contains(&lib));
     }
 }
 

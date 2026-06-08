@@ -284,6 +284,53 @@ fn test_get_lib_deps_absent() {
 }
 
 #[test]
+fn test_get_lib_extra_dirs_from_ini() {
+    let f = write_ini(
+        "\
+[env:uno]
+platform = atmelavr
+board = uno
+framework = arduino
+lib_extra_dirs =
+    ../FastLED
+    vendor/libs
+",
+    );
+    let config = PlatformIOConfig::from_path(f.path()).unwrap();
+    assert_eq!(
+        config.get_lib_extra_dirs("uno").unwrap(),
+        vec!["../FastLED", "vendor/libs"]
+    );
+}
+
+#[test]
+fn test_get_lib_extra_dirs_prefers_env_override() {
+    let f = write_ini(
+        "\
+[env:uno]
+platform = atmelavr
+board = uno
+framework = arduino
+lib_extra_dirs = ignored
+",
+    );
+    let sep = if cfg!(windows) { ";" } else { ":" };
+    let overrides = crate::pio_env::PioEnvOverrides::from_map(
+        [(
+            "PLATFORMIO_LIB_EXTRA_DIRS".to_string(),
+            format!("from-env{sep}more-env"),
+        )]
+        .into_iter()
+        .collect(),
+    );
+    let config = PlatformIOConfig::from_path_with_overrides(f.path(), overrides).unwrap();
+    assert_eq!(
+        config.get_lib_extra_dirs("uno").unwrap(),
+        vec!["from-env", "more-env"]
+    );
+}
+
+#[test]
 fn test_has_environment() {
     let f = write_ini("[env:uno]\nplatform = atmelavr\nboard = uno\nframework = arduino\n");
     let config = PlatformIOConfig::from_path(f.path()).unwrap();

@@ -96,6 +96,23 @@ pub(super) fn parse_lib_deps(deps_str: &str) -> Vec<String> {
     result
 }
 
+/// Parse a `PATH`-style list of paths from `PLATFORMIO_LIB_EXTRA_DIRS`.
+pub(super) fn parse_path_list(paths_str: &str) -> Vec<String> {
+    let separator = if cfg!(windows) { ';' } else { ':' };
+    let mut result = Vec::new();
+
+    for line in paths_str.lines() {
+        for path in line.split(separator) {
+            let cleaned = strip_inline_comment(path);
+            if !cleaned.is_empty() {
+                result.push(cleaned);
+            }
+        }
+    }
+
+    result
+}
+
 /// Parse a generic multi-value option from a multi-line or comma-separated string.
 pub(super) fn parse_list_values(value: &str) -> Vec<String> {
     let mut result = Vec::new();
