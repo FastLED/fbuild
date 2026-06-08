@@ -1,4 +1,4 @@
-name: Build LPC804
+name: Build LPCXpresso845-MAX
 
 on:
   workflow_dispatch: {}
@@ -11,7 +11,7 @@ jobs:
   build:
     uses: ./.github/workflows/template_build.yml
     with:
-      workflow-name: "NXP LPCXpresso804"
-      test-dir: "tests/platform/lpc804"
-      env-name: "lpc804"
+      workflow-name: "NXP LPCXpresso845-MAX"
+      test-dir: "tests/platform/lpcxpresso845max"
+      env-name: "lpcxpresso845max"
       firmware-ext: "bin"

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 #include "Arduino.h"
 
-#if defined(CPU_LPC845M301JBD48)
+#if defined(CPU_LPC845M301JBD48) || defined(CPU_LPC845M301JBD64)
 #include "LPC845.h"
 #elif defined(CPU_LPC804M101JDH24)
 #include "LPC804.h"

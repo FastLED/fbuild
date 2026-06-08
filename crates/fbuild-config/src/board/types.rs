@@ -81,6 +81,9 @@ pub struct BoardConfig {
     pub partitions: Option<String>,
     /// Linker script (e.g. "esp32s3_out.ld")
     pub ldscript: Option<String>,
+    /// OpenOCD target script from board metadata, when provided.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub openocd_target: Option<String>,
     /// Platform string from board JSON (e.g. "atmelmegaavr", "atmelavr")
     pub platform_str: Option<String>,
     /// Bare CMSIS-DSP math library name to auto-link, without the leading `lib`

@@ -5,12 +5,9 @@ use std::collections::BTreeMap;
 use serde::{Deserialize, Serialize};
 
 /// Percent-encode a port name for use in a URL path segment.
-/// Linux ports like `/dev/ttyUSB0` contain slashes that break URL routing.
 fn encode_port(port: &str) -> String {
     port.replace('%', "%25").replace('/', "%2F")
 }
-
-/// Request/response types (defined locally, no dependency on fbuild-daemon binary crate).
 
 #[derive(Debug, Serialize)]
 pub struct BuildRequest {

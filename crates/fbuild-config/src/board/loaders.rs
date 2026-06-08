@@ -170,6 +170,7 @@ impl BoardConfig {
             f_image: get("f_image"),
             partitions: get("partitions"),
             ldscript: get("ldscript"),
+            openocd_target: get("openocd_target"),
             platform_str: get("platform_str"),
             cmsis_dsp_lib: get("cmsis_dsp_lib"),
             debug_tools: None, // boards.txt format does not contain debug metadata
@@ -315,6 +316,10 @@ impl BoardConfig {
                 .get("ldscript")
                 .cloned()
                 .or_else(|| defaults.get("ldscript").cloned()),
+            openocd_target: overrides
+                .get("openocd_target")
+                .cloned()
+                .or_else(|| defaults.get("openocd_target").cloned()),
             platform_str: defaults.get("platform_str").cloned(),
             cmsis_dsp_lib: overrides
                 .get("cmsis_dsp_lib")
