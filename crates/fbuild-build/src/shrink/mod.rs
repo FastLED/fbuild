@@ -4,15 +4,21 @@
 //! registry, the libc probe, the auto-resolver, and the spec-file /
 //! shadow-archive / wrap-fallback link strategies.
 //!
-//! Phase 1a (FastLED/fbuild#496) lands only the [`ShrinkMode`] enum and the
+//! Phase 1a (FastLED/fbuild#496) lands the [`ShrinkMode`] enum and the
 //! [`resolve_explicit`] helper that combines the global `--shrink` flag, the
-//! per-subcommand `--shrink` flag, and `--no-shrink` into a single value. Real
-//! per-platform resolution (newlib vs picolibc detection, framework
-//! interrogation) lands in subsequent phases.
+//! per-subcommand `--shrink` flag, and `--no-shrink` into a single value.
+//!
+//! Phase 1d (FastLED/fbuild#498) lands the per-platform [`registry`] and the
+//! green `auto shrinking:` one-liner [`reporting`]. Every platform's registry
+//! is empty in Phase 1d, so the reporter stays silent on every build until
+//! subsequent phases populate it.
 //!
 //! `ShrinkMode` is deliberately clap-free so `fbuild-build` does not pick up a
 //! clap dependency. The CLI layer in `fbuild-cli` defines a tiny mirror enum
 //! with `#[derive(clap::ValueEnum)]` and converts via `From`.
+
+pub mod registry;
+pub mod reporting;
 
 /// User-facing shrink level for `fbuild build --shrink[=MODE]`.
 ///
