@@ -340,16 +340,18 @@ mod tests {
     ///
     /// On GitHub Actions runners (`ubuntu-latest`, `macos-latest`,
     /// `windows-latest` with MSYS2/MinGW) at least one is preinstalled.
+    ///
+    /// Routes through `fbuild_core::subprocess::run_command` rather than
+    /// invoking `std::process::Command` directly — the `ban_raw_subprocess`
+    /// dylint forbids raw spawns even for benign `--version` probes.
     fn find_host_cc() -> Option<&'static str> {
-        use std::process::{Command, Stdio};
+        use fbuild_core::subprocess::run_command;
         for candidate in ["cc", "gcc", "clang"] {
-            // allow-direct-spawn: best-effort `--version` presence check; no I/O contract or containment required.
-            let probe = Command::new(candidate)
-                .arg("--version")
-                .stdout(Stdio::null())
-                .stderr(Stdio::null())
-                .status();
-            if matches!(probe, Ok(status) if status.success()) {
+            let args = [candidate, "--version"];
+            if matches!(
+                run_command(&args, None, None, Some(std::time::Duration::from_secs(5))),
+                Ok(o) if o.success()
+            ) {
                 return Some(candidate);
             }
         }
