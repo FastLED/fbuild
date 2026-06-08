@@ -27,9 +27,10 @@
 //! backed by [`std::process::Command`] lands in a follow-up sub-issue so
 //! this PR stays small and fully unit-testable.
 
-use std::io::{self, Write};
+use std::io;
 use std::path::PathBuf;
-use std::process::{Command, Stdio};
+
+use fbuild_core::subprocess::run_command_with_stdin;
 
 /// Detected libc family for a given toolchain.
 ///
@@ -181,27 +182,29 @@ impl ExternalPreprocessor {
 
 impl Preprocessor for ExternalPreprocessor {
     fn preprocess(&self, source: &str) -> io::Result<PreprocessResult> {
-        let mut child = Command::new(&self.compiler)
-            .args(&self.extra_args)
-            .args(["-E", "-x", "c", "-"])
-            .stdin(Stdio::piped())
-            .stdout(Stdio::null())
-            .stderr(Stdio::piped())
-            .spawn()?;
+        // Route through `fbuild_core::subprocess::run_command_with_stdin` so
+        // the child process inherits fbuild's containment / pipe-buffer
+        // handling rather than calling `std::process::Command` directly
+        // (forbidden by the `ci/find_direct_subprocess.py` lint, see
+        // FastLED/fbuild#141).
+        let compiler_str = self.compiler.to_string_lossy().into_owned();
+        let mut args: Vec<&str> = Vec::with_capacity(self.extra_args.len() + 5);
+        args.push(compiler_str.as_str());
+        for extra in &self.extra_args {
+            args.push(extra.as_str());
+        }
+        args.extend_from_slice(&["-E", "-x", "c", "-"]);
 
-        // Take stdin so wait_with_output below can close it after we are
-        // done writing — otherwise the child would hang waiting for EOF.
-        let mut stdin = child
-            .stdin
-            .take()
-            .ok_or_else(|| io::Error::new(io::ErrorKind::BrokenPipe, "stdin missing"))?;
-        stdin.write_all(source.as_bytes())?;
-        drop(stdin);
+        let output = run_command_with_stdin(&args, source.as_bytes(), None, None, None)
+            .map_err(|e| io::Error::other(e.to_string()))?;
 
-        let output = child.wait_with_output()?;
         Ok(PreprocessResult {
-            exit_code: output.status.code(),
-            stderr: String::from_utf8_lossy(&output.stderr).into_owned(),
+            // `run_command_with_stdin` collapses signal-killed cases into a
+            // synthetic exit code, so this is always `Some(_)` — the
+            // `Option` here is purely for forward-compatibility with
+            // [`Preprocessor`] implementations that distinguish the two.
+            exit_code: Some(output.exit_code),
+            stderr: output.stderr,
         })
     }
 }
@@ -338,13 +341,15 @@ mod tests {
     /// On GitHub Actions runners (`ubuntu-latest`, `macos-latest`,
     /// `windows-latest` with MSYS2/MinGW) at least one is preinstalled.
     fn find_host_cc() -> Option<&'static str> {
+        use std::process::{Command, Stdio};
         for candidate in ["cc", "gcc", "clang"] {
+            // allow-direct-spawn: best-effort `--version` presence check; no I/O contract or containment required.
             let probe = Command::new(candidate)
                 .arg("--version")
                 .stdout(Stdio::null())
                 .stderr(Stdio::null())
                 .status();
-            if matches!(probe, Ok(s) if s.success()) {
+            if matches!(probe, Ok(status) if status.success()) {
                 return Some(candidate);
             }
         }
