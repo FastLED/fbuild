@@ -157,3 +157,85 @@ fn compile_many_diag_stage2_flag_is_accepted() {
         _ => panic!("expected CompileMany subcommand"),
     }
 }
+
+// `--shrink` / `--no-shrink` parsing (FastLED/fbuild#496, part of #493).
+// The flag is plumbed onto the global Cli and every build-adjacent subcommand
+// but is otherwise unused in Phase 1a — these tests just exercise clap's
+// surface so a future refactor doesn't silently break parsing.
+
+#[test]
+fn build_accepts_shrink_safe() {
+    let argv = ["fbuild", "build", "--shrink=safe", "tests/platform/uno"];
+    let cli = Cli::try_parse_from(argv).expect("parse");
+    match cli.command {
+        Some(Commands::Build { shrink, .. }) => {
+            assert_eq!(
+                shrink,
+                Some(super::args::CliShrinkMode::Safe),
+                "build --shrink=safe should parse to Safe",
+            );
+        }
+        _ => panic!("expected Build subcommand"),
+    }
+}
+
+#[test]
+fn build_bare_shrink_defaults_to_auto() {
+    let argv = ["fbuild", "build", "--shrink", "tests/platform/uno"];
+    let cli = Cli::try_parse_from(argv).expect("parse");
+    match cli.command {
+        Some(Commands::Build { shrink, .. }) => {
+            assert_eq!(shrink, Some(super::args::CliShrinkMode::Auto));
+        }
+        _ => panic!("expected Build subcommand"),
+    }
+}
+
+#[test]
+fn build_no_shrink_flag_is_accepted() {
+    let argv = ["fbuild", "build", "--no-shrink", "tests/platform/uno"];
+    let cli = Cli::try_parse_from(argv).expect("parse");
+    match cli.command {
+        Some(Commands::Build {
+            shrink, no_shrink, ..
+        }) => {
+            assert_eq!(shrink, None);
+            assert!(no_shrink);
+        }
+        _ => panic!("expected Build subcommand"),
+    }
+}
+
+#[test]
+fn shrink_and_no_shrink_together_is_rejected() {
+    // clap's `conflicts_with` should turn this into a parse error.
+    let argv = [
+        "fbuild",
+        "build",
+        "--shrink=safe",
+        "--no-shrink",
+        "tests/platform/uno",
+    ];
+    assert!(
+        Cli::try_parse_from(argv).is_err(),
+        "--shrink and --no-shrink must conflict",
+    );
+}
+
+#[test]
+fn build_accepts_all_shrink_modes() {
+    for mode in ["auto", "off", "safe", "aggressive", "printf"] {
+        let arg = format!("--shrink={mode}");
+        let argv = ["fbuild", "build", &arg, "tests/platform/uno"];
+        let cli = Cli::try_parse_from(argv)
+            .unwrap_or_else(|e| panic!("--shrink={mode} should parse but got: {e}"));
+        assert!(matches!(cli.command, Some(Commands::Build { .. })));
+    }
+}
+
+#[test]
+fn global_shrink_flag_is_accepted() {
+    let argv = ["fbuild", "--shrink=safe", "build", "tests/platform/uno"];
+    let cli = Cli::try_parse_from(argv).expect("parse");
+    assert_eq!(cli.shrink, Some(super::args::CliShrinkMode::Safe));
+}
