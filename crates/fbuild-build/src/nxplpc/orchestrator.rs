@@ -170,14 +170,39 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         //    sketch/project discovery (libs under lib/, etc.). These fbuild-
         //    owned roots replace the misplaced example-local include tree from
         //    FastLED/FastLED#2988 and flow into build_info.json.
+        //
+        //    Stage-3 hookup (partial, FastLED/fbuild#479): when the project
+        //    ships an Arduino-style hardware-package layout next to its
+        //    `platformio.ini` (`<project>/variants/<variant>/pins_arduino.h`,
+        //    a la zackees/ArduinoCore-LPC8xx), prepend that variant dir to
+        //    the include path. The bundled `Arduino.h` stub conditionally
+        //    `#include "pins_arduino.h"` when `__has_include` succeeds, so
+        //    LED_BUILTIN / PIN_SPI_* / pin maps become available with no
+        //    other code changes. Project-local takes precedence so symbols
+        //    from the real variant always win over any stub default.
         let build_dir = crate::compiler::absolute_from_cwd(&ctx.build_dir);
         let src_dir = crate::compiler::absolute_from_cwd(&ctx.src_dir);
-        let mut include_dirs = vec![
+        let project_dir_abs = crate::compiler::absolute_from_cwd(&params.project_dir);
+        let mut include_dirs: Vec<PathBuf> = Vec::with_capacity(8);
+        let project_variant_dir = project_dir_abs
+            .join("variants")
+            .join(&ctx.board.variant);
+        if project_variant_dir.join("pins_arduino.h").is_file() {
+            tracing::info!(
+                "nxplpc: using project-local variant include {}",
+                project_variant_dir.display()
+            );
+            include_dirs.push(project_variant_dir);
+            // Also expose the parent variants/ dir so that variant-chain
+            // includes like `#include "../<base>/variant.h"` resolve.
+            include_dirs.push(project_dir_abs.join("variants"));
+        }
+        include_dirs.extend([
             build_dir.join("arduino_stub"),
             build_dir.join("device_headers"),
             cmsis.get_core_include_dir(),
             src_dir,
-        ];
+        ]);
         pipeline::discover_project_includes(&params.project_dir, &mut include_dirs);
         let lib_extra_dirs = ctx.config.get_lib_extra_dirs(&params.env_name)?;
         let extra_library_roots =
