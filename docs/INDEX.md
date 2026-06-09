@@ -1,52 +1,68 @@
 # Documentation Index
 
-A grep-friendly FAQ that maps common questions to the file that answers them. Both humans and LLM agents should use this table as the entry point into the fbuild docs.
+A grep-friendly FAQ that maps common questions to the file that answers them.
+Both humans and LLM agents should use this table as the entry point into the
+fbuild docs.
 
-| Question                                                  | File                                                       |
-|-----------------------------------------------------------|------------------------------------------------------------|
-| How do I install fbuild?                                  | [../README.md](../README.md#installation)                  |
-| How do I run my first build / deploy / monitor?           | [../README.md](../README.md#quick-start)                   |
-| What does `platformio.ini` need to contain?               | [../README.md](../README.md#configuration)                 |
-| Why does fbuild exist?                                    | [WHY.md](WHY.md)                                           |
-| What are fbuild's key benefits and performance numbers?   | [WHY.md](WHY.md#key-benefits)                              |
-| Is my board supported?                                    | [BOARD_STATUS.md](BOARD_STATUS.md)                         |
-| How do I add a new board?                                  | [BOARD_STATUS.md](BOARD_STATUS.md#adding-a-new-board)      |
-| What's the crate dependency graph?                        | [../crates/CLAUDE.md](../crates/CLAUDE.md)                 |
-| How does fbuild's architecture fit together?              | [architecture/overview.md](architecture/overview.md)       |
-| How does the daemon work?                                 | [architecture/runtime.md](architecture/runtime.md)         |
-| How does the serial / monitor subsystem work?             | [architecture/serial.md](architecture/serial.md)           |
-| How do the PyO3 Python bindings work?                     | [architecture/pyo3-bindings.md](architecture/pyo3-bindings.md) |
-| How does deploy preemption work?                          | [architecture/deploy-preemption.md](architecture/deploy-preemption.md) |
-| What are the cross-platform portability constraints?      | [architecture/portability.md](architecture/portability.md) |
-| How does library selection (LDF) work in fbuild?          | [architecture/library-selection.md](architecture/library-selection.md) |
+| Question | File |
+|---|---|
+| How do I install fbuild? | [getting-started/README.md](getting-started/README.md#install) |
+| How do I run my first build? | [getting-started/README.md](getting-started/README.md#first-project) |
+| How do I deploy or monitor for the first time? | [getting-started/README.md](getting-started/README.md#first-deploy-and-monitor) |
+| What does `platformio.ini` need to contain? | [reference/platformio-ini.md](reference/platformio-ini.md) |
+| What CLI commands and options exist? | [reference/cli.md](reference/cli.md) |
+| How do I use `fbuild build` / `deploy` / `monitor` / `test-emu`? | [reference/cli.md](reference/cli.md#core-workflows) |
+| How do I use the emulator (QEMU / avr8js / simavr)? | [guides/emulator-testing.md](guides/emulator-testing.md) |
+| What is fbuild's PlatformIO compatibility policy? | [reference/platformio-compatibility.md](reference/platformio-compatibility.md) |
+| Why does fbuild strip `.eh_frame` on some builds? | [reference/platformio-compatibility.md#eh_frame-strip-policy](reference/platformio-compatibility.md#eh_frame-strip-policy) |
+| Why does fbuild exist? | [WHY.md](WHY.md) |
+| What are fbuild's key benefits and performance numbers? | [WHY.md](WHY.md#key-benefits) |
+| Is my board supported? | [BOARD_STATUS.md](BOARD_STATUS.md) |
+| Where is the canonical board/platform matrix? | [BOARD_STATUS.md](BOARD_STATUS.md#supported-platforms-and-boards) |
+| How do I add a new board? | [BOARD_STATUS.md](BOARD_STATUS.md#adding-a-new-board) |
+| What's the crate dependency graph? | [../crates/CLAUDE.md](../crates/CLAUDE.md) |
+| How does fbuild's architecture fit together? | [architecture/overview.md](architecture/overview.md) |
+| How does the daemon work? | [architecture/runtime.md](architecture/runtime.md) |
+| How does the serial / monitor subsystem work? | [architecture/serial.md](architecture/serial.md) |
+| How do the PyO3 Python bindings work? | [architecture/pyo3-bindings.md](architecture/pyo3-bindings.md) |
+| How does deploy preemption work? | [architecture/deploy-preemption.md](architecture/deploy-preemption.md) |
+| What are the cross-platform portability constraints? | [architecture/portability.md](architecture/portability.md) |
+| How does library selection (LDF) work in fbuild? | [architecture/library-selection.md](architecture/library-selection.md) |
 | Why was my library wrongly compiled (#204) / not found (#202)? | [architecture/library-selection.md](architecture/library-selection.md#why) |
-| Why did we choose X over Y?                               | [DESIGN_DECISIONS.md](DESIGN_DECISIONS.md)                 |
-| What's on the implementation roadmap?                     | [ROADMAP.md](ROADMAP.md)                                   |
-| How do I run tests / lint / fmt?                          | [DEVELOPMENT.md](DEVELOPMENT.md#testing)                   |
-| Why is my build failing?                                  | [DEVELOPMENT.md](DEVELOPMENT.md#troubleshooting)           |
-| How do I use the emulator (QEMU / avr8js / simavr)?       | [../README.md](../README.md#emulator-testing)              |
-| What CI cache block should consumers copy?                | [CI_CACHE.md](CI_CACHE.md#copy-paste-github-actions-block) |
-| What cache keys and invalidation pattern should CI use?   | [CI_CACHE.md](CI_CACHE.md#key-composition)                 |
-| How do I cache fbuild across CI runs?                     | [CI_CACHING.md](CI_CACHING.md)                             |
-| What's safe to cache in GitHub Actions?                   | [CI_CACHING.md](CI_CACHING.md#what-the-cache-holds)        |
-| Why does warm-pass build take ~30 s per sketch? (#91)     | [PERF_WARM_BUILD.md](PERF_WARM_BUILD.md)                   |
-| What does `FBUILD_PERF_LOG=1` do?                          | [PERF_WARM_BUILD.md](PERF_WARM_BUILD.md#instrumentation)   |
-| Does warm rebuild + deploy + monitor land under 4 s? (#114) | [PERF_WARM_DEPLOY.md](PERF_WARM_DEPLOY.md)                 |
-| How fast is `soldr` when building fbuild itself?            | [SOLDR_BUILD_PERF.md](SOLDR_BUILD_PERF.md)                 |
-| How can a user override ESP-IDF `CONFIG_*` / `sdkconfig` settings? | [sdkconfig.md](sdkconfig.md)                          |
-| Where does the framework's pre-baked `sdkconfig.h` come from? | [sdkconfig.md](sdkconfig.md#whats-there-today)            |
-| What's the precedence chain for `CONFIG_*` overrides?       | [sdkconfig.md](sdkconfig.md#tldr)                          |
+| Why did we choose X over Y? | [DESIGN_DECISIONS.md](DESIGN_DECISIONS.md) |
+| What's on the implementation roadmap? | [ROADMAP.md](ROADMAP.md) |
+| How do I run tests / lint / fmt? | [development/README.md](development/README.md) |
+| Why is my build failing? | [DEVELOPMENT.md](DEVELOPMENT.md#troubleshooting) |
+| What CI cache block should consumers copy? | [CI_CACHE.md](CI_CACHE.md#copy-paste-github-actions-block) |
+| What cache keys and invalidation pattern should CI use? | [CI_CACHE.md](CI_CACHE.md#key-composition) |
+| How do I cache fbuild across CI runs? | [CI_CACHING.md](CI_CACHING.md) |
+| What's safe to cache in GitHub Actions? | [CI_CACHING.md](CI_CACHING.md#what-the-cache-holds) |
+| Why does warm-pass build take ~30 s per sketch? (#91) | [PERF_WARM_BUILD.md](PERF_WARM_BUILD.md) |
+| What does `FBUILD_PERF_LOG=1` do? | [PERF_WARM_BUILD.md](PERF_WARM_BUILD.md#instrumentation) |
+| Does warm rebuild + deploy + monitor land under 4 s? (#114) | [PERF_WARM_DEPLOY.md](PERF_WARM_DEPLOY.md) |
+| How fast is `soldr` when building fbuild itself? | [SOLDR_BUILD_PERF.md](SOLDR_BUILD_PERF.md) |
+| How can a user override ESP-IDF `CONFIG_*` / `sdkconfig` settings? | [sdkconfig.md](sdkconfig.md) |
+| Where does the framework's pre-baked `sdkconfig.h` come from? | [sdkconfig.md](sdkconfig.md#whats-there-today) |
+| What's the precedence chain for `CONFIG_*` overrides? | [sdkconfig.md](sdkconfig.md#tldr) |
 | Where do end-to-end perf benchmarks live (FastLED matrix, P-01)? | [../bench/fastled-examples/README.md](../bench/fastled-examples/README.md) |
-| What architecture docs should I read for a given crate?   | [CLAUDE.md](CLAUDE.md)                                     |
+| What architecture docs should I read for a given crate? | [CLAUDE.md](CLAUDE.md) |
 
 ## Conventions
 
-- The top-level `README.md` is the install + Quick Start entry point for humans.
-- `CLAUDE.md` at the repo root is the LLM-entry file; `docs/CLAUDE.md` is the LLM map into architecture docs.
+- The top-level `README.md` is the concise project front door for humans.
+- `docs/getting-started/` owns first-run workflows.
+- `docs/guides/` owns task-oriented workflows.
+- `docs/reference/` owns stable user references such as CLI and configuration.
+- `docs/platforms/` routes platform questions; `BOARD_STATUS.md` remains the
+  canonical board-status and per-board CI badge document.
+- `CLAUDE.md` at the repo root is the LLM-entry file; `docs/CLAUDE.md` is the
+  LLM map into architecture docs.
 - Architecture docs live under `docs/architecture/`, one file per subsystem.
 - ADR-style decisions go in `docs/DESIGN_DECISIONS.md`.
-- Per-directory `README.md` files are enforced by a pre-commit hook — every directory with files needs one.
+- Per-directory `README.md` files are enforced by a pre-commit hook; every
+  directory with files needs one.
 
-## Keeping this index current
+## Keeping This Index Current
 
-When a new doc is added under `docs/`, add a row to the table above. Prefer one FAQ-style question per row so readers can grep for the question they have.
+When a new doc is added under `docs/`, add a row to the table above. Prefer one
+FAQ-style question per row so readers can grep for the question they have.
