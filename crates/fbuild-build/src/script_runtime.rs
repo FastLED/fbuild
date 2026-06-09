@@ -37,7 +37,7 @@ pub fn resolve_extra_script_overlay(
     }
 
     let project_options = config.get_env_config(env_name)?;
-    let board_config = build_script_runtime_board_config(project_options)?;
+    let board_config = build_script_runtime_board_config(project_options, Some(project_dir))?;
     let input = ScriptRuntimeInput {
         project_dir: &project_dir.to_string_lossy(),
         env_name,
@@ -290,13 +290,22 @@ fn find_python() -> Option<Vec<String>> {
 
 fn build_script_runtime_board_config(
     project_options: &HashMap<String, String>,
+    project_dir: Option<&Path>,
 ) -> fbuild_core::Result<HashMap<String, String>> {
     let mut result = HashMap::new();
     let Some(board_id) = project_options.get("board") else {
         return Ok(result);
     };
 
-    let board = fbuild_config::BoardConfig::from_board_id(board_id, &HashMap::new())?;
+    // Shares the same project-local boards/*.json resolution as the
+    // pipeline `BuildContext` and `compile_many::platform_for_board` so a
+    // user's `<project>/boards/<id>.json` is the single source of truth
+    // for every build-side board lookup. See FastLED/fbuild#515.
+    let board = fbuild_config::BoardConfig::from_board_id_in_project(
+        board_id,
+        &HashMap::new(),
+        project_dir,
+    )?;
     result.insert("name".to_string(), board.name.clone());
     result.insert("build.mcu".to_string(), board.mcu.clone());
     result.insert("build.f_cpu".to_string(), board.f_cpu.clone());
