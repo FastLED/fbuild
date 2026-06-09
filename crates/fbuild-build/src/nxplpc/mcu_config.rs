@@ -82,32 +82,28 @@ fn parse_base_config() -> Result<NxpLpcMcuConfig> {
 /// LPC804-specific configuration.
 ///
 /// Layers LPC804-only defines on top of the shared base:
-///   - `__LPC804__=1`        — drivers branch on this to enable PLU paths
-///   - `CPU_LPC804M101JDH24=1` — NXP CMSIS-style device identifier
+///   - `__LPC804__=1`        - drivers branch on this to enable PLU paths
+///
+/// Board-package CPU identifiers come from board metadata.
 pub fn get_lpc804_config() -> Result<NxpLpcMcuConfig> {
     let mut config = parse_base_config()?;
     config
         .defines
         .push(DefineEntry::Simple("__LPC804__".to_string()));
-    config
-        .defines
-        .push(DefineEntry::Simple("CPU_LPC804M101JDH24".to_string()));
     Ok(config)
 }
 
 /// LPC845-specific configuration.
 ///
 /// Layers LPC845-only defines on top of the shared base:
-///   - `__LPC845__=1`        — drivers branch on this to enable SCT+DMA paths
-///   - `CPU_LPC845M301JBD48=1` — NXP CMSIS-style device identifier
+///   - `__LPC845__=1`        - drivers branch on this to enable SCT+DMA paths
+///
+/// Board-package CPU identifiers come from board metadata.
 pub fn get_lpc845_config() -> Result<NxpLpcMcuConfig> {
     let mut config = parse_base_config()?;
     config
         .defines
         .push(DefineEntry::Simple("__LPC845__".to_string()));
-    config
-        .defines
-        .push(DefineEntry::Simple("CPU_LPC845M301JBD48".to_string()));
     Ok(config)
 }
 
@@ -143,17 +139,11 @@ pub fn get_arm_mcu_config(mcu: &str) -> Result<ArmMcuConfig> {
             config
                 .defines
                 .push(DefineEntry::Simple("__LPC804__".to_string()));
-            config
-                .defines
-                .push(DefineEntry::Simple("CPU_LPC804M101JDH24".to_string()));
         }
         "lpc845" => {
             config
                 .defines
                 .push(DefineEntry::Simple("__LPC845__".to_string()));
-            config
-                .defines
-                .push(DefineEntry::Simple("CPU_LPC845M301JBD48".to_string()));
         }
         other => {
             return Err(fbuild_core::FbuildError::ConfigError(format!(
@@ -210,6 +200,7 @@ mod tests {
         let config = get_nxplpc_config("lpc804").unwrap();
         let defines = config.defines_map();
         assert!(defines.contains_key("__NXPLPC__"));
+        assert!(defines.contains_key("ARDUINO_ARCH_LPC8XX"));
     }
 
     #[test]
@@ -221,8 +212,8 @@ mod tests {
             "lpc804 must define __LPC804__ for driver dispatch"
         );
         assert!(
-            defines.contains_key("CPU_LPC804M101JDH24"),
-            "lpc804 must define CMSIS-style CPU id"
+            !defines.contains_key("CPU_LPC804M101JDH24"),
+            "board package defines must come from board metadata"
         );
         assert!(
             !defines.contains_key("__LPC845__"),
@@ -239,8 +230,8 @@ mod tests {
             "lpc845 must define __LPC845__ for driver dispatch"
         );
         assert!(
-            defines.contains_key("CPU_LPC845M301JBD48"),
-            "lpc845 must define CMSIS-style CPU id"
+            !defines.contains_key("CPU_LPC845M301JBD48"),
+            "board package defines must come from board metadata"
         );
         assert!(
             !defines.contains_key("__LPC804__"),

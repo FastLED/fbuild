@@ -261,6 +261,12 @@ fn flatten_board_entry(entry: &serde_json::Value, board_id: &str) -> HashMap<Str
         if let Some(flash_size) = build.get("flash_size").and_then(|v| v.as_str()) {
             d.insert("flash_size".into(), flash_size.to_string());
         }
+        if let Some(ldscript) = build.get("ldscript").and_then(|v| v.as_str()) {
+            d.insert("ldscript".into(), ldscript.to_string());
+        }
+        if let Some(openocd_target) = build.get("openocd_target").and_then(|v| v.as_str()) {
+            d.insert("openocd_target".into(), openocd_target.to_string());
+        }
         if let Some(cmsis_dsp_lib) = build.get("cmsis_dsp_lib").and_then(|v| v.as_str()) {
             d.insert("cmsis_dsp_lib".into(), cmsis_dsp_lib.to_string());
         }

@@ -23,7 +23,9 @@ const BUILD_FIELDS: &[&str] = &[
     "f_flash",
     "f_image",
     "flash_mode",
+    "ldscript",
     "mcu",
+    "openocd_target",
 ];
 
 const ARDUINO_FIELDS: &[&str] = &["ldscript", "partitions", "memory_type"];

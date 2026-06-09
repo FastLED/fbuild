@@ -57,6 +57,30 @@ fn mcu_assets(mcu: &str) -> Result<McuAssets> {
     }
 }
 
+fn board_lpc_family(board: &fbuild_config::BoardConfig) -> Result<&'static str> {
+    let mut candidates = vec![
+        board.mcu.as_str(),
+        board.variant.as_str(),
+        board.board.as_str(),
+    ];
+    if let Some(ldscript) = board.ldscript.as_deref() {
+        candidates.push(ldscript);
+    }
+    for candidate in candidates {
+        let lower = candidate.to_ascii_lowercase();
+        if lower.contains("lpc804") {
+            return Ok("lpc804");
+        }
+        if lower.contains("lpc845") {
+            return Ok("lpc845");
+        }
+    }
+    Err(FbuildError::ConfigError(format!(
+        "unknown NXP LPC8xx board '{}' (mcu '{}', variant '{}'); expected LPC804 or LPC845 metadata",
+        board.name, board.mcu, board.variant
+    )))
+}
+
 /// Write an embedded asset string to `dir/filename` and return the path.
 /// Used to materialise the linker script, startup `.S`, and `main.cpp`
 /// shim from `include_str!` blobs into the build dir where the toolchain
@@ -118,7 +142,8 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         );
 
         // 4. Pick per-MCU assets (linker script + startup .S).
-        let assets = mcu_assets(&ctx.board.mcu)?;
+        let lpc_family = board_lpc_family(&ctx.board)?;
+        let assets = mcu_assets(lpc_family)?;
 
         // 5. Materialise the embedded assets into the build dir.
         //    - <build_dir>/lpc8xx.ld          → -T flag to the linker
@@ -127,7 +152,7 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         let linker_script_path = write_asset(&ctx.build_dir, "lpc8xx.ld", assets.linker_script)?;
         let startup_path = write_asset(
             &ctx.build_dir,
-            &format!("startup_{}.S", ctx.board.mcu),
+            &format!("startup_{}.S", lpc_family),
             assets.startup_asm,
         )?;
         let main_shim_path = write_asset(&ctx.build_dir, "lpc8xx_main.cpp", MAIN_CPP_SHIM)?;
@@ -162,7 +187,7 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         );
 
         // 7. Build the per-MCU ArmMcuConfig + defines.
-        let mcu_config = mcu_config::get_arm_mcu_config(&ctx.board.mcu)?;
+        let mcu_config = mcu_config::get_arm_mcu_config(lpc_family)?;
         let mut defines = ctx.board.get_defines();
         defines.extend(mcu_config.defines_map());
 
@@ -206,11 +231,12 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         let extra_library_roots =
             pipeline::discover_extra_library_roots(&params.project_dir, &lib_extra_dirs);
         pipeline::add_extra_library_include_dirs(&extra_library_roots, &mut include_dirs);
+        include_dirs.retain(|dir| !dir.as_os_str().is_empty());
 
         let compiler = ArmCompiler::new(
             toolchain.get_gcc_path(),
             toolchain.get_gxx_path(),
-            &ctx.board.mcu,
+            lpc_family,
             &ctx.board.f_cpu,
             defines,
             include_dirs.clone(),
@@ -308,6 +334,23 @@ mod tests {
         let msg = format!("{}", err);
         assert!(msg.contains("lpc999"));
         assert!(msg.contains("lpc804") && msg.contains("lpc845"));
+    }
+
+    #[test]
+    fn board_lpc_family_accepts_concrete_arduino_boards() {
+        let cases = [
+            ("lpc845brk", "lpc845"),
+            ("lpcxpresso804", "lpc804"),
+            ("lpcxpresso845max", "lpc845"),
+        ];
+        for (board_id, expected) in cases {
+            let board = fbuild_config::BoardConfig::from_board_id(
+                board_id,
+                &std::collections::HashMap::new(),
+            )
+            .unwrap();
+            assert_eq!(board_lpc_family(&board).unwrap(), expected);
+        }
     }
 
     #[test]

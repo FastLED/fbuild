@@ -222,11 +222,16 @@ pub fn path_arg_for_compile_cwd(path: &Path, cwd: &Path) -> String {
     // `canonicalize_existing_path` now strips that prefix from `path`.
     let stable_path = canonicalize_existing_path(path).unwrap_or_else(|| path.to_path_buf());
     let stable_cwd = strip_unc_prefix(cwd.to_path_buf());
-    stable_path
+    let relative = stable_path
         .strip_prefix(&stable_cwd)
         .unwrap_or(&stable_path)
         .to_string_lossy()
-        .to_string()
+        .to_string();
+    if relative.is_empty() {
+        ".".to_string()
+    } else {
+        relative
+    }
 }
 
 /// Normalize common path-bearing compiler flags for a zccache CWD.
@@ -484,6 +489,16 @@ mod tests {
     }
 
     #[test]
+    fn path_arg_for_compile_cwd_returns_dot_for_workspace_root() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let cwd = tmp.path().join("project");
+        std::fs::create_dir_all(&cwd).unwrap();
+        let cwd = cwd.canonicalize().unwrap();
+
+        assert_eq!(path_arg_for_compile_cwd(&cwd, &cwd), ".");
+    }
+
+    #[test]
     fn normalize_flags_for_compile_cwd_rewrites_include_paths() {
         let tmp = tempfile::TempDir::new().unwrap();
         let cwd = tmp.path().join("project");
@@ -497,7 +512,10 @@ mod tests {
         let flags = vec![
             "-I".to_string(),
             include.to_string_lossy().to_string(),
+            "-I".to_string(),
+            cwd.to_string_lossy().to_string(),
             format!("-I{}", vendor.display()),
+            format!("-I{}", cwd.display()),
             format!("--sysroot={}", sysroot.display()),
         ];
 
@@ -506,7 +524,10 @@ mod tests {
             vec![
                 "-I".to_string(),
                 "include".to_string(),
+                "-I".to_string(),
+                ".".to_string(),
                 "-Ivendor".to_string(),
+                "-I.".to_string(),
                 "--sysroot=sysroot".to_string(),
             ]
         );

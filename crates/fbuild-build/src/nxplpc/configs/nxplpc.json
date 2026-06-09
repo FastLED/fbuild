@@ -60,6 +60,7 @@
     }
   },
   "defines": [
-    "__NXPLPC__"
+    "__NXPLPC__",
+    "ARDUINO_ARCH_LPC8XX"
   ]
 }

@@ -29,6 +29,9 @@ mod tests;
 mod tests_project_local;
 
 #[cfg(test)]
+mod tests_lpc8xx;
+
+#[cfg(test)]
 mod tests_usb_vid;
 
 pub use types::{BoardConfig, DebugToolMeta, Esp32QemuPsramConfig};
