@@ -77,12 +77,23 @@ impl BuildContext {
         }
 
         // 2. Load board config
+        //
+        // Use `from_board_id_in_project` (not the legacy `from_board_id`) so
+        // a `<project_dir>/boards/<board_id>.json` file is picked up when
+        // the bundled DB has no entry. Matches PlatformIO's auto-discovery
+        // of project-local board manifests and is the only knob `fbuild
+        // build` had to honor FastLED/fbuild#515 — without this the daemon
+        // build path silently dropped the project_dir context.
         let t0 = std::time::Instant::now();
         let board_id = env_config.get("board").ok_or_else(|| {
             fbuild_core::FbuildError::ConfigError("missing 'board' in environment config".into())
         })?;
         let overrides = config.get_board_overrides(env_name)?;
-        let board = fbuild_config::BoardConfig::from_board_id(board_id, &overrides)?;
+        let board = fbuild_config::BoardConfig::from_board_id_in_project(
+            board_id,
+            &overrides,
+            Some(project_dir.as_path()),
+        )?;
         if let Some(p) = perf.as_mut() {
             p.record("board-load", t0.elapsed());
         }
