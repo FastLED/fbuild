@@ -8,6 +8,20 @@
 #include <stdbool.h>
 #endif
 
+// Stage-3 hookup (FastLED/fbuild#479, partial): if the project ships its own
+// Arduino-style variant directory (e.g. zackees/ArduinoCore-LPC8xx with
+// `<project>/variants/<variant>/pins_arduino.h`), fbuild's nxplpc
+// orchestrator prepends that directory to the include path. When that's the
+// case, the variant's `pins_arduino.h` (typically `#include "variant.h"` →
+// `LED_BUILTIN`, `PIN_SPI_*`, etc.) becomes available here transparently.
+// Without a project-local variant the include is a no-op and the bundled
+// stub's behavior is unchanged.
+#if defined(__has_include)
+#  if __has_include("pins_arduino.h")
+#    include "pins_arduino.h"
+#  endif
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
