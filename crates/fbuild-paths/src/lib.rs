@@ -7,6 +7,8 @@ use std::path::{Path, PathBuf};
 
 use fbuild_core::BuildProfile;
 
+pub mod running_process;
+
 /// Check if running in development mode.
 pub fn is_dev_mode() -> bool {
     std::env::var("FBUILD_DEV_MODE")
