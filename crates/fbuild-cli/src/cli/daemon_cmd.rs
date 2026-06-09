@@ -103,8 +103,98 @@ pub async fn run_daemon(action: DaemonAction) -> fbuild_core::Result<()> {
         DaemonAction::Monitor { no_follow, lines } => {
             return run_show("daemon", !no_follow, lines);
         }
+        DaemonAction::RunningProcess { json } => {
+            run_daemon_running_process(json)?;
+        }
     }
     Ok(())
+}
+
+fn run_daemon_running_process(json: bool) -> fbuild_core::Result<()> {
+    use fbuild_paths::running_process as rp;
+
+    let mode = rp::running_process_daemon_mode();
+    let service_definition_path = rp::running_process_service_definition_path();
+    let daemon_candidate = daemon_executable_candidate();
+    let daemon_candidate_exists = daemon_candidate.exists();
+    let deferred_items = [
+        "binary .servicedef encoding/install",
+        "active BackendHandle endpoint-response probing",
+        "running_process::broker::client::connect_to_backend",
+        "broker/direct integration matrix",
+        "full lint/dylint and broad three-OS acceptance",
+    ];
+
+    if json {
+        let payload = serde_json::json!({
+            "service_name": rp::SERVICE_NAME,
+            "broker_isolation": rp::BROKER_ISOLATION,
+            "service_definition": {
+                "file_name": rp::SERVICE_DEFINITION_FILE_NAME,
+                "template": rp::SERVICE_DEFINITION_TEMPLATE,
+                "path": service_definition_path.display().to_string(),
+                "binary_install": "stubbed",
+            },
+            "daemon": {
+                "binary_name": rp::DAEMON_BINARY_NAME,
+                "candidate_path": daemon_candidate.display().to_string(),
+                "candidate_exists": daemon_candidate_exists,
+            },
+            "mode": {
+                "current": mode.as_str(),
+                "uses_direct_fallback": mode.uses_direct_fallback(),
+                "running_process_disabled": rp::running_process_disabled(),
+                "broker_requested": rp::running_process_broker_requested(),
+                "summary": rp::running_process_adoption_summary(),
+            },
+            "deferred": deferred_items,
+        });
+        let output = serde_json::to_string_pretty(&payload)
+            .map_err(|e| fbuild_core::FbuildError::Other(format!("json serialize: {e}")))?;
+        println!("{output}");
+        return Ok(());
+    }
+
+    println!("running-process broker adoption");
+    println!("  Service:              {}", rp::SERVICE_NAME);
+    println!("  Isolation:            {}", rp::BROKER_ISOLATION);
+    println!(
+        "  Service definition:   {}",
+        service_definition_path.display()
+    );
+    println!(
+        "  Template:             {}",
+        rp::SERVICE_DEFINITION_TEMPLATE
+    );
+    println!("  Mode:                 {}", mode.as_str());
+    println!(
+        "  Direct fallback:      {}",
+        if mode.uses_direct_fallback() {
+            "yes"
+        } else {
+            "no"
+        }
+    );
+    println!("  Daemon binary:        {}", daemon_candidate.display());
+    println!(
+        "  Daemon binary exists: {}",
+        if daemon_candidate_exists { "yes" } else { "no" }
+    );
+    println!("  Deferred:");
+    for item in deferred_items {
+        println!("    - {item}");
+    }
+    Ok(())
+}
+
+fn daemon_executable_candidate() -> std::path::PathBuf {
+    let Some(parent) = std::env::current_exe()
+        .ok()
+        .and_then(|p| p.parent().map(|d| d.to_path_buf()))
+    else {
+        return std::path::PathBuf::from(fbuild_paths::running_process::DAEMON_BINARY_NAME);
+    };
+    parent.join(fbuild_paths::running_process::DAEMON_BINARY_NAME)
 }
 
 pub async fn run_daemon_list(client: &DaemonClient) -> fbuild_core::Result<()> {

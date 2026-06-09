@@ -1,6 +1,6 @@
 //! Unit tests for CLI argument normalization and `fbuild ci` parsing.
 
-use super::args::{Cli, Commands};
+use super::args::{Cli, Commands, DaemonAction};
 use super::compile_many::{build_ci_pio_env, normalize_ci_sketch_entry, normalize_ci_sketches};
 use clap::Parser;
 
@@ -131,6 +131,30 @@ fn ci_short_board_flag_b_is_accepted() {
 fn ci_requires_at_least_one_sketch() {
     let argv = ["fbuild", "ci", "--board", "uno"];
     assert!(Cli::try_parse_from(argv).is_err());
+}
+
+#[test]
+fn daemon_running_process_json_flag_is_accepted() {
+    let argv = ["fbuild", "daemon", "running-process", "--json"];
+    let cli = Cli::try_parse_from(argv).expect("parse");
+    match cli.command {
+        Some(Commands::Daemon {
+            action: DaemonAction::RunningProcess { json },
+        }) => assert!(json),
+        _ => panic!("expected daemon running-process subcommand"),
+    }
+}
+
+#[test]
+fn daemon_servicedef_alias_uses_running_process_action() {
+    let argv = ["fbuild", "daemon", "servicedef"];
+    let cli = Cli::try_parse_from(argv).expect("parse");
+    match cli.command {
+        Some(Commands::Daemon {
+            action: DaemonAction::RunningProcess { json },
+        }) => assert!(!json),
+        _ => panic!("expected daemon servicedef alias"),
+    }
 }
 
 #[test]
