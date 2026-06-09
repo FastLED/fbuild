@@ -662,6 +662,13 @@ pub enum DaemonAction {
         #[arg(long, default_value = "50")]
         lines: usize,
     },
+    /// Preview running-process service metadata and deferred broker wiring
+    #[command(alias = "servicedef")]
+    RunningProcess {
+        /// Emit machine-readable JSON instead of text
+        #[arg(long)]
+        json: bool,
+    },
 }
 
 /// Subcommands under `fbuild bloat`. The parent enum lives so future
