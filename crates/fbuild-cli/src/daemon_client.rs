@@ -191,12 +191,14 @@ pub fn runtime_diagnostic() -> String {
         .map(|p| p.display().to_string())
         .unwrap_or_else(|| "<unknown>".to_string());
     let daemon_exe = daemon_executable_hint();
+    let running_process = fbuild_paths::running_process::running_process_adoption_summary();
     format!(
-        "fbuild executable: {}\nfbuild version: {}\nfbuild-daemon executable: {}\ndaemon endpoint: {}",
+        "fbuild executable: {}\nfbuild version: {}\nfbuild-daemon executable: {}\ndaemon endpoint: {}\nrunning-process broker: {}",
         exe,
         env!("CARGO_PKG_VERSION"),
         daemon_exe,
-        fbuild_paths::get_daemon_url()
+        fbuild_paths::get_daemon_url(),
+        running_process
     )
 }
 
@@ -896,6 +898,10 @@ async fn spawn_daemon_process() -> fbuild_core::Result<()> {
     let daemon_exe = "fbuild-daemon";
     // allow-direct-spawn: daemon must outlive the CLI; see INTENTIONALLY DETACHED comment below.
     let mut cmd = tokio::process::Command::new(daemon_exe);
+    tracing::debug!(
+        "running-process broker adoption status: {}",
+        fbuild_paths::running_process::running_process_adoption_summary()
+    );
 
     if fbuild_paths::is_dev_mode() {
         cmd.arg("--dev");

@@ -1,0 +1,15 @@
+# Source template for the running-process broker-v1 ServiceDefinition.
+#
+# Packagers must render the placeholders to absolute install paths, encode the
+# result as protobuf, and install it as fbuild.servicedef in the platform service
+# directory returned by
+# fbuild_paths::running_process::running_process_service_definition_dir().
+# This PR intentionally leaves that packaging step stubbed for FastLED/fbuild#510.
+
+service_name: "fbuild"
+binary_path: "{absolute_path_to_fbuild-daemon}"
+isolation: SHARED_BROKER
+per_version_binary_dir: "{absolute_path_to_fbuild_binary_dir}"
+labels { key: "repo" value: "FastLED/fbuild" }
+labels { key: "tracker" value: "FastLED/fbuild#510" }
+labels { key: "running-process-tracker" value: "zackees/running-process#242" }
