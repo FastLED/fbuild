@@ -552,7 +552,11 @@ pub fn build_cpp_flags(common_flags: Vec<String>, config: &dyn McuConfig) -> Vec
 /// - `response_file_prefix`: "avr", "teensy", "esp32"
 /// - `extra_pre_flags`: additional flags inserted between base flags and extra_flags
 ///   (ESP32 uses this for include flags deferred from common_flags)
-/// - `compiler_cache`: optional zccache path (ESP32 only, None for others)
+/// - `compiler_cache`: optional zccache path. When `Some`, the gcc/g++
+///   invocation is rewritten as `<zccache> wrap <gcc> ...` for
+///   content-addressed object caching. Wired up by ESP32 and by the
+///   shared `ArmCompiler` (which covers apollo3, ch32v, nrf52, nxplpc,
+///   renesas, sam, silabs, teensy). Other compiler impls pass `None`.
 ///
 /// On Windows, response files are written into a stable `tmp` directory next to
 /// the output object so repeated builds can reuse the same path and avoid
