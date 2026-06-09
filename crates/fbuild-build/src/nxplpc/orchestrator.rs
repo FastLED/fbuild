@@ -184,9 +184,7 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         let src_dir = crate::compiler::absolute_from_cwd(&ctx.src_dir);
         let project_dir_abs = crate::compiler::absolute_from_cwd(&params.project_dir);
         let mut include_dirs: Vec<PathBuf> = Vec::with_capacity(8);
-        let project_variant_dir = project_dir_abs
-            .join("variants")
-            .join(&ctx.board.variant);
+        let project_variant_dir = project_dir_abs.join("variants").join(&ctx.board.variant);
         if project_variant_dir.join("pins_arduino.h").is_file() {
             tracing::info!(
                 "nxplpc: using project-local variant include {}",

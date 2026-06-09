@@ -1,6 +1,9 @@
 # Board Status
 
-Live per-platform CI status and supported-board reference for fbuild.
+Live per-platform CI status and supported-board reference for fbuild. This is
+the canonical board/platform status document; the root README keeps only a
+short platform summary so per-board badges and support notes do not drift
+between files.
 
 ## Per-platform CI badges
 
