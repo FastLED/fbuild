@@ -93,7 +93,11 @@ owo-colors = "4"
 # local-socket/named-pipe backends, and `/health` already provides the
 # liveness + staleness guarantees a BackendHandle probe would add. See
 # crates/fbuild-daemon/README.md "Why not the running-process broker".
-running-process = { version = "4.1.0", default-features = false }
+# 4.2.0 ships a broker backend SDK (`BackendEndpointMux`,
+# `probe_with_service_async`, conformance kit — zackees/running-process#412)
+# that lowers the adoption cost; that work is tracked in FastLED/fbuild#510
+# and does not change this core-only dependency.
+running-process = { version = "4.2.0", default-features = false }
 
 [profile.dev]
 debug = 0
