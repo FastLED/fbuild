@@ -119,6 +119,9 @@ that fbuild actively protects in CI.
 
 [![Build LPC804](https://github.com/fastled/fbuild/actions/workflows/build-lpc804.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-lpc804.yml)
 [![Build LPC845](https://github.com/fastled/fbuild/actions/workflows/build-lpc845.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-lpc845.yml)
+[![Build LPC845-BRK](https://github.com/fastled/fbuild/actions/workflows/build-lpc845brk.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-lpc845brk.yml)
+[![Build LPCXpresso804](https://github.com/fastled/fbuild/actions/workflows/build-lpcxpresso804.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-lpcxpresso804.yml)
+[![Build LPCXpresso845-MAX](https://github.com/fastled/fbuild/actions/workflows/build-lpcxpresso845max.yml/badge.svg)](https://github.com/fastled/fbuild/actions/workflows/build-lpcxpresso845max.yml)
 
 ### Silicon Labs
 
