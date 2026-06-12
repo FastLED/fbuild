@@ -49,3 +49,11 @@ evaluated and declined (zackees/running-process#384):
 
 Revisit only if daemon RPC ever moves off HTTP or broker-managed lifecycle
 becomes desirable.
+
+running-process 4.2.0 added a broker backend SDK (`BackendEndpointMux`
+sans-io probe serving, `probe_with_service_async`, identity sidecar helpers,
+and a consumer conformance kit — zackees/running-process#412 §7.4). The SDK
+removes most of the hand-rolled plumbing the decline cited, but the RPC
+transport decision above is unchanged: fbuild stays on loopback HTTP, and
+SDK-based active BackendHandle probing remains tracked (stubbed) in
+FastLED/fbuild#510.
