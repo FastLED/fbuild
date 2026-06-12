@@ -31,3 +31,21 @@ Locks: `GET /api/locks/status`; `POST /api/locks/clear`
 WebSocket: `/ws/serial-monitor`, `/ws/status`, `/ws/logs`, `/ws/monitor/{session_id}`
 
 See `docs/architecture/overview.md` and `docs/architecture/runtime.md` for architecture details.
+
+## Why not the running-process broker
+
+fbuild uses the `running-process` crate for process containment only
+(`core` feature). Adopting its broker/BackendHandle daemon-control layer was
+evaluated and declined (zackees/running-process#384):
+
+- **Transport mismatch** — the broker discovers and routes backends over
+  local sockets / named pipes; fbuild-daemon serves HTTP over loopback TCP
+  (axum). Multiplexing the broker's nonce probe onto the HTTP listener would
+  require a second raw listener.
+- **Equivalent guarantees exist** — `GET /health` returns the daemon pid and
+  `source_mtime`, covering the liveness and stale-daemon detection a
+  BackendHandle probe would provide, and the CLI self-heals via
+  `ensure_daemon_running()`.
+
+Revisit only if daemon RPC ever moves off HTTP or broker-managed lifecycle
+becomes desirable.
