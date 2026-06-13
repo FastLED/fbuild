@@ -154,6 +154,13 @@ Reset_Handler:
 4:
     /* SystemInit explicitly leaves FRO at 15 MHz default. */
     bl      SystemInit
+    /*
+     * Run C++ static/global constructors (.init_array) before main. Without
+     * this, vtable pointers of polymorphic globals are left uninitialised and
+     * the first virtual call HardFaults. See startup_lpc845.S for the full
+     * rationale.
+     */
+    bl      __libc_init_array
     bl      main
 LoopForever:
     b       LoopForever
@@ -167,6 +174,25 @@ LoopForever:
 Default_Handler:
     b       Default_Handler
     .size Default_Handler, . - Default_Handler
+
+/* ---------------------------------------------------------------------------
+ * _init / _fini — no-op stubs (see startup_lpc845.S for rationale). Needed
+ * because __libc_init_array references _init, normally from crti.o/crtn.o
+ * which a -nostartfiles bare-metal link omits.
+ * --------------------------------------------------------------------------- */
+    .thumb_func
+    .weak _init
+    .type _init, %function
+_init:
+    bx      lr
+    .size _init, . - _init
+
+    .thumb_func
+    .weak _fini
+    .type _fini, %function
+_fini:
+    bx      lr
+    .size _fini, . - _fini
 
 /* ---------------------------------------------------------------------------
  * SystemInit — minimal clock setup for LPC804 @ 15 MHz IRC default.
