@@ -8,6 +8,7 @@ class HardwareSerial {
 public:
     void begin(uint32_t baud);
     void end();
+    explicit operator bool() const;
     int available();
     int read();
     int peek();
