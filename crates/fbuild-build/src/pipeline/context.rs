@@ -69,7 +69,6 @@ impl BuildContext {
         let pio_overrides = fbuild_config::PioEnvOverrides::from_map(params.pio_env.clone());
         let config =
             fbuild_config::PlatformIOConfig::from_path_with_overrides(&ini_path, pio_overrides)?;
-        let env_config = config.get_env_config(env_name)?;
         let overlay =
             crate::script_runtime::resolve_extra_script_overlay(project_dir, env_name, &config)?;
         if let Some(p) = perf.as_mut() {
@@ -78,22 +77,14 @@ impl BuildContext {
 
         // 2. Load board config
         //
-        // Use `from_board_id_in_project` (not the legacy `from_board_id`) so
-        // a `<project_dir>/boards/<board_id>.json` file is picked up when
-        // the bundled DB has no entry. Matches PlatformIO's auto-discovery
-        // of project-local board manifests and is the only knob `fbuild
-        // build` had to honor FastLED/fbuild#515 — without this the daemon
-        // build path silently dropped the project_dir context.
+        // `ResolutionContext::resolve_board` is the single board-resolution
+        // entry point (FastLED/fbuild#519); it honors project-local
+        // `<project_dir>/boards/<board_id>.json` discovery (FastLED/fbuild#515)
+        // and `[env]` board overrides. New resolution knobs go on that
+        // context, not here.
         let t0 = std::time::Instant::now();
-        let board_id = env_config.get("board").ok_or_else(|| {
-            fbuild_core::FbuildError::ConfigError("missing 'board' in environment config".into())
-        })?;
-        let overrides = config.get_board_overrides(env_name)?;
-        let board = fbuild_config::BoardConfig::from_board_id_in_project(
-            board_id,
-            &overrides,
-            Some(project_dir.as_path()),
-        )?;
+        let board = crate::resolution::ResolutionContext::new(project_dir, env_name, &config)
+            .resolve_board()?;
         if let Some(p) = perf.as_mut() {
             p.record("board-load", t0.elapsed());
         }

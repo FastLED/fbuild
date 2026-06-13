@@ -28,6 +28,7 @@ pub mod parallel;
 pub mod perf_log;
 pub mod pipeline;
 pub mod renesas;
+pub mod resolution;
 pub mod rp2040;
 pub mod sam;
 pub mod script_runtime;
