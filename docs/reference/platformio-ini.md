@@ -107,6 +107,11 @@ overrides.
 
 ## Native `extra_scripts`
 
-Native fbuild supports only a narrow subset of PlatformIO `extra_scripts`.
-Unsupported behavior fails early with a recommendation to use `--platformio`.
-See [`crates/fbuild-build/README.md`](../../crates/fbuild-build/README.md).
+Native fbuild interprets `extra_scripts` against a mock SCons `env` — it does not
+run real SCons. It covers the common flag/path mutations (`Append`/`Replace`/etc.
+over `CPPDEFINES`, `CCFLAGS`, `CXXFLAGS`, `LINKFLAGS`, `LIBS`, …), `BUILD_FLAGS`,
+`DefaultEnvironment()`, and project introspection (`GetBuildType`,
+`GetProjectOptions`). Non-flag tool scopes are recorded as notes; genuinely
+unsupported behavior fails early with a recommendation to use `--platformio`.
+See [`crates/fbuild-build/README.md`](../../crates/fbuild-build/README.md) for the
+full supported/rejected list and the structural limitations of the mock.
