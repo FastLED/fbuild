@@ -203,6 +203,22 @@ impl BoardConfig {
         })
     }
 
+    /// Resolve `board_id` with `overrides`, retrying without overrides if the
+    /// override-applied resolution fails. Returns `None` only when `board_id`
+    /// is unknown even without overrides.
+    ///
+    /// Used by best-effort call sites (e.g. emulator-kind inference) that want
+    /// a board for hints but must not hard-fail when a user override is
+    /// malformed.
+    pub fn from_board_id_with_override_fallback(
+        board_id: &str,
+        overrides: &HashMap<String, String>,
+    ) -> Option<Self> {
+        Self::from_board_id(board_id, overrides)
+            .or_else(|_| Self::from_board_id(board_id, &HashMap::new()))
+            .ok()
+    }
+
     /// Load board config from built-in defaults with a project-local fallback.
     ///
     /// When the built-in board database has no entry for `board_id`, fall

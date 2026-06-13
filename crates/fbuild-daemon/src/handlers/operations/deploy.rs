@@ -11,7 +11,6 @@ use crate::models::{DeployRequest, OperationResponse};
 use axum::extract::State;
 use axum::http::StatusCode;
 use axum::Json;
-use std::collections::HashMap;
 use std::path::PathBuf;
 use std::sync::Arc;
 
@@ -151,9 +150,10 @@ pub async fn deploy(
             .unwrap_or_else(|_| "unknown".to_string())
     });
     let board_overrides = config.get_board_overrides(&env_name).unwrap_or_default();
-    let board = fbuild_config::BoardConfig::from_board_id(&board_id, &board_overrides)
-        .or_else(|_| fbuild_config::BoardConfig::from_board_id(&board_id, &HashMap::new()))
-        .ok();
+    let board = fbuild_config::BoardConfig::from_board_id_with_override_fallback(
+        &board_id,
+        &board_overrides,
+    );
     let deploy_route = match parse_deploy_route(
         &req,
         board

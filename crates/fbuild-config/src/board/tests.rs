@@ -125,6 +125,27 @@ fn test_from_board_id_or_default_carries_overrides_into_fallback() {
 }
 
 #[test]
+fn test_from_board_id_with_override_fallback_known() {
+    let board = BoardConfig::from_board_id_with_override_fallback("uno", &HashMap::new());
+    assert_eq!(board.unwrap().mcu, "atmega328p");
+}
+
+#[test]
+fn test_from_board_id_with_override_fallback_unknown_returns_none() {
+    let board =
+        BoardConfig::from_board_id_with_override_fallback("nonexistent_board", &HashMap::new());
+    assert!(board.is_none());
+}
+
+#[test]
+fn test_from_board_id_with_override_fallback_applies_overrides() {
+    let mut overrides = HashMap::new();
+    overrides.insert("f_cpu".to_string(), "8000000L".to_string());
+    let board = BoardConfig::from_board_id_with_override_fallback("uno", &overrides);
+    assert_eq!(board.unwrap().f_cpu, "8000000L");
+}
+
+#[test]
 fn test_from_board_id_with_overrides() {
     let mut overrides = HashMap::new();
     overrides.insert("f_cpu".to_string(), "8000000L".to_string());
