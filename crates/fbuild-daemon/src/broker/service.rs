@@ -9,20 +9,20 @@
 //! - **CI isolation** is `EXPLICIT_INSTANCE "ci-trusted"` — CI jobs that
 //!   intentionally isolate trust groups (see the inventory's CI-trust-grouping
 //!   record).
+//!
+//! The service metadata constants (`SERVICE_NAME`, `CI_TRUSTED_INSTANCE`,
+//! `MIN_VERSION`) and the dependency-free [`CacheRoots`] resolver live in
+//! `fbuild-paths::running_process` so the CLI diagnostic can print them without
+//! depending on this crate; they are re-exported here for the builders below.
 
 use std::path::{Path, PathBuf};
 
 use running_process::broker::builders::{CacheManifestBuilder, ServiceDefinitionBuilder};
 use running_process::broker::protocol::{CacheManifest, CacheRootKind, ServiceDefinition};
 
-/// fbuild's broker service name (matches the `.servicedef` and Hello).
-pub const SERVICE_NAME: &str = "fbuild";
-
-/// The trust-group label CI uses for `EXPLICIT_INSTANCE` isolation.
-pub const CI_TRUSTED_INSTANCE: &str = "ci-trusted";
-
-/// Minimum acceptable fbuild backend version the broker will negotiate.
-pub const MIN_VERSION: &str = "1.0.0";
+pub use fbuild_paths::running_process::{
+    CacheRoots, CI_TRUSTED_INSTANCE, MIN_VERSION, SERVICE_NAME,
+};
 
 /// Errors building or installing the fbuild service definition / manifest.
 #[derive(Debug, thiserror::Error)]
@@ -37,10 +37,7 @@ pub enum ServiceError {
     Manifest(#[from] running_process::broker::manifest::ManifestError),
 }
 
-/// The seven cache roots fbuild records in its manifest, resolved from
-/// `fbuild-paths` (the single source of truth for fbuild's on-disk layout).
-///
-/// Mapping to broker [`CacheRootKind`]s:
+/// Map fbuild's seven cache roots onto the broker [`CacheRootKind`]s:
 ///
 /// | fbuild root | path source                              | kind          |
 /// |-------------|------------------------------------------|---------------|
@@ -51,49 +48,16 @@ pub enum ServiceError {
 /// | lock        | `get_daemon_dir()` (pid/port/lock files) | `CacheLocks`  |
 /// | runtime     | daemon binary directory                  | `CacheRuntime`|
 /// | config      | `get_fbuild_root()`                       | `CacheConfig` |
-#[derive(Debug, Clone)]
-pub struct CacheRoots {
-    pub artifact: PathBuf,
-    pub index: PathBuf,
-    pub temp: PathBuf,
-    pub log: PathBuf,
-    pub lock: PathBuf,
-    pub runtime: PathBuf,
-    pub config: PathBuf,
-}
-
-impl CacheRoots {
-    /// Resolve fbuild's cache roots from `fbuild-paths`.
-    ///
-    /// `runtime_dir` is the directory holding the relocated `fbuild-daemon`
-    /// binary (typically the directory of the current executable); callers pass
-    /// it explicitly so this stays a pure function of its inputs and
-    /// `fbuild-paths`.
-    pub fn discover(runtime_dir: impl Into<PathBuf>) -> Self {
-        let cache = fbuild_paths::get_cache_root();
-        let daemon_dir = fbuild_paths::get_daemon_dir();
-        Self {
-            index: cache.join("index"),
-            artifact: cache,
-            temp: fbuild_paths::get_fbuild_root().join("tmp"),
-            log: daemon_dir.clone(),
-            lock: daemon_dir,
-            runtime: runtime_dir.into(),
-            config: fbuild_paths::get_fbuild_root(),
-        }
-    }
-
-    fn entries(&self) -> [(CacheRootKind, &Path); 7] {
-        [
-            (CacheRootKind::CacheData, self.artifact.as_path()),
-            (CacheRootKind::CacheIndex, self.index.as_path()),
-            (CacheRootKind::CacheTmp, self.temp.as_path()),
-            (CacheRootKind::CacheLogs, self.log.as_path()),
-            (CacheRootKind::CacheLocks, self.lock.as_path()),
-            (CacheRootKind::CacheRuntime, self.runtime.as_path()),
-            (CacheRootKind::CacheConfig, self.config.as_path()),
-        ]
-    }
+fn entries(roots: &CacheRoots) -> [(CacheRootKind, &Path); 7] {
+    [
+        (CacheRootKind::CacheData, roots.artifact.as_path()),
+        (CacheRootKind::CacheIndex, roots.index.as_path()),
+        (CacheRootKind::CacheTmp, roots.temp.as_path()),
+        (CacheRootKind::CacheLogs, roots.log.as_path()),
+        (CacheRootKind::CacheLocks, roots.lock.as_path()),
+        (CacheRootKind::CacheRuntime, roots.runtime.as_path()),
+        (CacheRootKind::CacheConfig, roots.config.as_path()),
+    ]
 }
 
 /// Build the validated `SHARED_BROKER` (per-user local) fbuild service
@@ -185,7 +149,7 @@ fn manifest_builder(
         // SHARED_BROKER local daemons advertise the "shared" instance.
         "shared",
     );
-    for (kind, path) in roots.entries() {
+    for (kind, path) in entries(roots) {
         builder = builder.root(kind, path.display().to_string());
     }
     builder

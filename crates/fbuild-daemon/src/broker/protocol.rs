@@ -35,7 +35,8 @@ use serde::{Deserialize, Serialize};
 // first-party-collision checks so the two sides can never drift.
 running_process::register_payload_protocol! {
     /// fbuild's opaque Frame v1 request/response lane (registered consumer ID
-    /// `0x7EB1`; see `crates/fbuild-broker/README.md`).
+    /// `0x7EB1`; see `crates/fbuild-daemon/src/broker/README.md`). The plain
+    /// display copy lives in `fbuild_paths::running_process::FBUILD_PAYLOAD_PROTOCOL`.
     pub const FBUILD_PAYLOAD_PROTOCOL: u32 = 0x7EB1;
 }
 
@@ -44,7 +45,7 @@ running_process::register_payload_protocol! {
 /// Bumped independently of the running-process broker `PROTOCOL_VERSION` (the
 /// v1 envelope). This versions the *fbuild payload* schema so the daemon can
 /// dual-read across a transition window if the internal model ever changes.
-pub const FBUILD_PROTOCOL_VERSION: u32 = 1;
+pub const FBUILD_PROTOCOL_VERSION: u32 = fbuild_paths::running_process::FBUILD_PROTOCOL_VERSION;
 
 /// The daemon control operations fbuild multiplexes over a single
 /// request/response model.
@@ -323,9 +324,17 @@ mod tests {
         // time that this lies in the registered-consumer range (0x7000..=0x7EFF)
         // and does not collide with any first-party running-process ID, so the
         // local constant is the authoritative pin on the consumer side.
-        // (The matching documentary constant upstream is added by
-        // zackees/running-process#440.)
         assert_eq!(FBUILD_PAYLOAD_PROTOCOL, 0x7EB1);
+    }
+
+    #[test]
+    fn payload_protocol_matches_paths_display_copy() {
+        // The CLI diagnostic prints the dependency-free copy in `fbuild-paths`;
+        // it must never drift from the authoritative macro pin here.
+        assert_eq!(
+            FBUILD_PAYLOAD_PROTOCOL,
+            fbuild_paths::running_process::FBUILD_PAYLOAD_PROTOCOL
+        );
     }
 
     #[test]

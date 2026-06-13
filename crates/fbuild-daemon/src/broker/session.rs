@@ -11,7 +11,7 @@
 use running_process::broker::adopt::{AdoptError, AsyncBrokerSession, OwnedConnectRequest};
 use running_process::broker::client::RefusalKind;
 
-use crate::protocol::{BrokerRequest, BrokerResponse, ProtocolError, FBUILD_PAYLOAD_PROTOCOL};
+use super::protocol::{BrokerRequest, BrokerResponse, ProtocolError, FBUILD_PAYLOAD_PROTOCOL};
 
 /// What `adopt` decided after consulting the escape hatch and the broker.
 #[derive(Debug)]
@@ -73,7 +73,7 @@ impl FbuildBrokerSession {
     ) -> Result<AdoptOutcome, BrokerError> {
         let request = OwnedConnectRequest::new(
             broker_endpoint,
-            crate::service::SERVICE_NAME,
+            super::service::SERVICE_NAME,
             wanted_version,
             env!("CARGO_PKG_VERSION"),
         );
@@ -118,7 +118,7 @@ impl FbuildBrokerSession {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::protocol::DaemonOp;
+    use crate::broker::protocol::DaemonOp;
 
     /// Both env-sensitive contracts in ONE test so the process-global
     /// `RUNNING_PROCESS_DISABLE` toggle can't race a sibling test running in

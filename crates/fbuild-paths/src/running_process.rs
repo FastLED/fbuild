@@ -13,6 +13,23 @@ pub const SERVICE_DEFINITION_TEMPLATE: &str =
     "crates/fbuild-daemon/running-process/fbuild-daemon.servicedef.textproto.in";
 pub const BROKER_ISOLATION: &str = "SHARED_BROKER";
 
+/// The trust-group label CI uses for `EXPLICIT_INSTANCE` isolation.
+pub const CI_TRUSTED_INSTANCE: &str = "ci-trusted";
+
+/// Minimum acceptable fbuild backend version the broker will negotiate.
+pub const MIN_VERSION: &str = "1.0.0";
+
+/// fbuild's registered v1 broker payload-protocol ID (registered-consumer range
+/// `0x7000..=0x7EFF`). The authoritative compile-time pin lives in
+/// `fbuild-daemon`'s broker module via `running_process::register_payload_protocol!`;
+/// this plain copy is the value the CLI diagnostic prints without pulling in the
+/// `running-process` dependency. A drift test in the daemon asserts the two agree.
+pub const FBUILD_PAYLOAD_PROTOCOL: u32 = 0x7EB1;
+
+/// fbuild's internal request/response payload-schema version (bumped
+/// independently of the running-process broker envelope version).
+pub const FBUILD_PROTOCOL_VERSION: u32 = 1;
+
 pub const RUNNING_PROCESS_DISABLE_ENV: &str = "RUNNING_PROCESS_DISABLE";
 pub const RUNNING_PROCESS_SERVICE_DEF_DIR_ENV: &str = "RUNNING_PROCESS_SERVICE_DEF_DIR";
 pub const FBUILD_RUNNING_PROCESS_BROKER_ENV: &str = "FBUILD_RUNNING_PROCESS_BROKER";
@@ -87,6 +104,46 @@ pub fn running_process_service_definition_path_in(root: impl AsRef<Path>) -> Pat
 
 fn env_flag_is_one(name: &str) -> bool {
     std::env::var(name).is_ok_and(|value| value == "1")
+}
+
+/// The seven cache roots fbuild records in its broker manifest, resolved from
+/// this crate (the single source of truth for fbuild's on-disk layout).
+///
+/// The broker's `CacheManifest` (built in `fbuild-daemon`) maps these to
+/// `running-process` `CacheRootKind`s. `CacheRoots` itself is dependency-free so
+/// the CLI diagnostic can resolve and print the same paths without pulling in
+/// `running-process`.
+#[derive(Debug, Clone)]
+pub struct CacheRoots {
+    pub artifact: PathBuf,
+    pub index: PathBuf,
+    pub temp: PathBuf,
+    pub log: PathBuf,
+    pub lock: PathBuf,
+    pub runtime: PathBuf,
+    pub config: PathBuf,
+}
+
+impl CacheRoots {
+    /// Resolve fbuild's cache roots.
+    ///
+    /// `runtime_dir` is the directory holding the relocated `fbuild-daemon`
+    /// binary (typically the directory of the current executable); callers pass
+    /// it explicitly so this stays a pure function of its inputs and the rest of
+    /// this crate's path resolution.
+    pub fn discover(runtime_dir: impl Into<PathBuf>) -> Self {
+        let cache = crate::get_cache_root();
+        let daemon_dir = crate::get_daemon_dir();
+        Self {
+            index: cache.join("index"),
+            artifact: cache,
+            temp: crate::get_fbuild_root().join("tmp"),
+            log: daemon_dir.clone(),
+            lock: daemon_dir,
+            runtime: runtime_dir.into(),
+            config: crate::get_fbuild_root(),
+        }
+    }
 }
 
 #[cfg(windows)]

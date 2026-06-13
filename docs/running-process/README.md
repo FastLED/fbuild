@@ -9,5 +9,8 @@ Documentation for fbuild's adoption of the
   before any runtime behavior change, per the running-process fbuild adoption
   guide.
 
-The implementation lives in the [`fbuild-broker`](../../crates/fbuild-broker)
-crate. Tracker: zackees/running-process#437 · FastLED/fbuild#510.
+The implementation lives in the
+[`broker`](../../crates/fbuild-daemon/src/broker) module of `fbuild-daemon`
+(folded in from the former standalone `fbuild-broker` crate so fbuild stays close
+to a monocrate — FastLED/fbuild#560). Tracker: zackees/running-process#437 ·
+FastLED/fbuild#510.

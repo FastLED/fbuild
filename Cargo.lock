@@ -911,21 +911,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "fbuild-broker"
-version = "2.2.27"
-dependencies = [
- "fbuild-paths",
- "prost",
- "running-process",
- "serde",
- "serde_json",
- "tempfile",
- "thiserror 2.0.18",
- "tokio",
- "tracing",
-]
-
-[[package]]
 name = "fbuild-build"
 version = "2.2.27"
 dependencies = [
@@ -960,7 +945,6 @@ dependencies = [
  "blake3",
  "clap",
  "ctrlc",
- "fbuild-broker",
  "fbuild-build",
  "fbuild-config",
  "fbuild-core",
@@ -1031,8 +1015,10 @@ dependencies = [
  "futures",
  "libc",
  "mimalloc",
+ "prost",
  "regex",
  "reqwest",
+ "running-process",
  "serde",
  "serde_json",
  "serialport",

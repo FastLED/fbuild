@@ -1,0 +1,20 @@
+name: Crate Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  crate-gate:
+    name: Reject new workspace crates (monocrate policy)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Check workspace members against the approved allowlist
+        run: uv run python ci/check_workspace_crates.py
