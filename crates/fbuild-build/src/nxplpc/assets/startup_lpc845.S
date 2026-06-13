@@ -141,6 +141,17 @@ Reset_Handler:
 4:
     /* SystemInit configures clocks + flash wait states. */
     bl      SystemInit
+    /*
+     * Run C++ static/global constructors (.init_array). Without this the
+     * vtable pointers of polymorphic globals (e.g. fl's default
+     * memory_resource singleton) are left as uninitialised RAM, so the first
+     * virtual call through one — the first heap allocation on the JSON-RPC
+     * path — dereferences a garbage vtable and HardFaults. newlib provides
+     * __libc_init_array; the .init_array section is emitted by the linker
+     * script. (Serial/FL_WARN survive without it because they touch no
+     * constructor-initialised global.)
+     */
+    bl      __libc_init_array
     bl      main
 LoopForever:
     b       LoopForever
@@ -154,6 +165,29 @@ LoopForever:
 Default_Handler:
     b       Default_Handler
     .size Default_Handler, . - Default_Handler
+
+/* ---------------------------------------------------------------------------
+ * _init / _fini — no-op stubs.
+ *
+ * newlib's __libc_init_array (which Reset_Handler now calls) ends with a call
+ * to _init; the matching __libc_fini_array calls _fini. These are normally
+ * supplied by crti.o/crtn.o, which a -nostartfiles bare-metal link does not
+ * pull in, leaving an undefined reference. We run constructors purely via the
+ * .init_array section, so empty stubs are sufficient.
+ * --------------------------------------------------------------------------- */
+    .thumb_func
+    .weak _init
+    .type _init, %function
+_init:
+    bx      lr
+    .size _init, . - _init
+
+    .thumb_func
+    .weak _fini
+    .type _fini, %function
+_fini:
+    bx      lr
+    .size _fini, . - _fini
 
 /* ---------------------------------------------------------------------------
  * SystemInit — clock + flash setup for LPC845 @ 24 MHz from FRO (FRO direct).
