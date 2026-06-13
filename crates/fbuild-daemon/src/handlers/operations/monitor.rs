@@ -28,6 +28,11 @@ pub(crate) struct MonitorState {
     timeout_dur: Option<std::time::Duration>,
     expect_found: bool,
     show_timestamp: bool,
+    /// Set once an ESP ROM download-mode signal has been diagnosed, so the
+    /// boot-mode warning is emitted at most once per monitor session rather
+    /// than on every repeated `waiting for download` line. See
+    /// FastLED/fbuild#532.
+    boot_mode_warned: bool,
 }
 
 impl MonitorState {
@@ -64,6 +69,7 @@ impl MonitorState {
             timeout_dur: timeout_secs.map(std::time::Duration::from_secs_f64),
             expect_found: false,
             show_timestamp,
+            boot_mode_warned: false,
         }
     }
 
@@ -95,6 +101,13 @@ impl MonitorState {
             tracing::info!("{:02}:{:05.2} {}", minutes, seconds, line);
         } else {
             tracing::info!("{}", line);
+        }
+
+        if !self.boot_mode_warned {
+            if let Some(signal) = fbuild_serial::boot_mode::detect_download_mode(line) {
+                self.boot_mode_warned = true;
+                tracing::warn!("{}", signal.diagnostic());
+            }
         }
 
         if let Some(ref re) = self.expect_re {
