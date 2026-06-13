@@ -51,7 +51,7 @@ impl<'a> ResolutionContext<'a> {
     pub fn resolve_board(&self) -> Result<BoardConfig> {
         let board_id = self.board_id()?;
         let overrides = self.config.get_board_overrides(self.env_name)?;
-        BoardConfig::from_board_id_in_project(&board_id, &overrides, Some(self.project_dir))
+        resolve_board(&board_id, &overrides, Some(self.project_dir))
     }
 
     /// Resolve the [`Platform`] for this env's board.
@@ -61,13 +61,26 @@ impl<'a> ResolutionContext<'a> {
     }
 }
 
+/// The single build-side funnel for board resolution. Every build-side site
+/// that needs a [`BoardConfig`] from a board id routes through here instead of
+/// calling [`BoardConfig::from_board_id_in_project`] directly, so a new
+/// resolution input (the next `project_dir`-style knob) is threaded in one
+/// place rather than re-plumbed into each consumer (FastLED/fbuild#519).
+pub fn resolve_board(
+    board_id: &str,
+    overrides: &HashMap<String, String>,
+    project_dir: Option<&Path>,
+) -> Result<BoardConfig> {
+    BoardConfig::from_board_id_in_project(board_id, overrides, project_dir)
+}
+
 /// Determine the [`Platform`] for a bare board id (no `[env]` overrides),
 /// honoring a project-local `boards/<id>.json`. This is the lookup used by
 /// sites that only know a board string — e.g. `compile_many`'s per-sketch
 /// dispatch — and shares the single "could not determine platform" error
 /// with [`ResolutionContext::resolve_platform`] (FastLED/fbuild#519).
 pub fn platform_for_board(board_id: &str, project_dir: Option<&Path>) -> Result<Platform> {
-    let board = BoardConfig::from_board_id_in_project(board_id, &HashMap::new(), project_dir)?;
+    let board = resolve_board(board_id, &HashMap::new(), project_dir)?;
     platform_of(&board, board_id)
 }
 
@@ -102,6 +115,20 @@ mod tests {
         assert_eq!(ctx.board_id().unwrap(), "uno");
         assert_eq!(ctx.resolve_board().unwrap().mcu, "atmega328p");
         assert_eq!(ctx.resolve_platform().unwrap(), Platform::AtmelAvr);
+    }
+
+    #[test]
+    fn resolve_board_free_fn_matches_context() {
+        let dir = write_project("[env:uno]\nplatform = atmelavr\nboard = uno\n");
+        let config = PlatformIOConfig::from_path(&dir.path().join("platformio.ini")).unwrap();
+        let ctx = ResolutionContext::new(dir.path(), "uno", &config);
+        let via_funnel = super::resolve_board("uno", &HashMap::new(), None).unwrap();
+        assert_eq!(via_funnel.mcu, ctx.resolve_board().unwrap().mcu);
+    }
+
+    #[test]
+    fn resolve_board_unknown_errors() {
+        assert!(super::resolve_board("nonexistent_board", &HashMap::new(), None).is_err());
     }
 
     #[test]
