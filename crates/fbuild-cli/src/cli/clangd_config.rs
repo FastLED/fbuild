@@ -66,11 +66,7 @@ pub async fn run_clangd_config(
     // Step 5: Write/merge .vscode/settings.json (only the clangd-related keys).
     let vscode_dir = project_path.join(".vscode");
     std::fs::create_dir_all(&vscode_dir).map_err(|e| {
-        fbuild_core::FbuildError::Other(format!(
-            "failed to create {}: {}",
-            vscode_dir.display(),
-            e
-        ))
+        fbuild_core::FbuildError::Other(format!("failed to create {}: {}", vscode_dir.display(), e))
     })?;
     let settings_path = vscode_dir.join("settings.json");
     let merged_settings = merge_vscode_settings(&settings_path, &query_driver)?;
@@ -302,9 +298,10 @@ mod tests {
 
     #[test]
     fn compiler_from_command_string_fallback() {
-        let entries: Vec<serde_json::Value> =
-            serde_json::from_str(r#"[{"file":"a.cpp","command":"/tc/bin/xtensa-esp32-elf-gcc -c a.cpp"}]"#)
-                .unwrap();
+        let entries: Vec<serde_json::Value> = serde_json::from_str(
+            r#"[{"file":"a.cpp","command":"/tc/bin/xtensa-esp32-elf-gcc -c a.cpp"}]"#,
+        )
+        .unwrap();
         assert_eq!(
             compiler_from_entries(&entries).as_deref(),
             Some("/tc/bin/xtensa-esp32-elf-gcc")
