@@ -1,33 +1,5 @@
 name: Build LPC845-BRK
 
-# No-op stub. The NxpLpc orchestrator DOES build this variant —
-# proof: `fbuild build . -e lpc845brk` is green on `main` in upstream
-# `zackees/ArduinoCore-LPC8xx` CI (variant source of truth). This
-# stub only exists because there's no in-tree fixture for it yet
-# (no `tests/platform/lpc845brk/`; the board JSON
-# `boards/json/lpc845brk.json` landed in PR #514).
-#
-# Tracked: FastLED/fbuild#528 — Stage 8 of META #487. When the
-# fixture lands, swap this `jobs.build` body for:
-#
-#   jobs:
-#     build:
-#       uses: ./.github/workflows/template_build.yml
-#       with:
-#         workflow-name: "NXP LPC845-BRK"
-#         test-dir: "tests/platform/lpc845brk"
-#         env-name: "lpc845brk"
-#         firmware-ext: "bin"
-#
-# Variant source: https://github.com/zackees/ArduinoCore-LPC8xx
-# (variants/lpc845brk).
-#
-# History: a previous attempt used `continue-on-error: true` on the
-# reusable-workflow caller, but that keyword is NOT in GitHub's
-# allow-list for reusable callers — every push went red with a
-# "workflow file issue" before any job actually ran. The no-op pass
-# below sidesteps that limitation.
-
 on:
   workflow_dispatch: {}
   push:
@@ -37,11 +9,9 @@ on:
 
 jobs:
   build:
-    name: NXP LPC845-BRK (stub — fixture pending)
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo "No in-tree fixture for lpc845brk yet (tests/platform/lpc845brk/)."
-          echo "See FastLED/fbuild#528 (Stage 8 of META #487)."
-          echo "This workflow stub passes intentionally; replace with the"
-          echo "template_build.yml caller once the fixture lands."
+    uses: ./.github/workflows/template_build.yml
+    with:
+      workflow-name: "NXP LPC845-BRK"
+      test-dir: "tests/platform/lpc845brk"
+      env-name: "lpc845brk"
+      firmware-ext: "bin"
