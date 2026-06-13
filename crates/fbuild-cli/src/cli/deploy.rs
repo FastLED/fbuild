@@ -45,6 +45,7 @@ pub fn infer_cli_default_emulator_kind(
     let board = fbuild_config::BoardConfig::from_board_id_with_override_fallback(
         &board_id,
         &board_overrides,
+        Some(project_dir),
     );
     Ok(
         match (platform, board.as_ref().map(|board| board.mcu.as_str())) {

@@ -153,6 +153,7 @@ pub async fn deploy(
     let board = fbuild_config::BoardConfig::from_board_id_with_override_fallback(
         &board_id,
         &board_overrides,
+        Some(project_dir.as_path()),
     );
     let deploy_route = match parse_deploy_route(
         &req,
@@ -427,6 +428,7 @@ pub async fn deploy(
                     &board_id,
                     "esp32dev",
                     &deploy_board_overrides,
+                    Some(deploy_project.as_path()),
                 );
                 // Load MCU config to get flash offsets and esptool defaults.
                 // Fail loudly on an unknown MCU instead of silently falling
@@ -663,6 +665,7 @@ pub async fn deploy(
                     &board_id,
                     "uno",
                     &deploy_board_overrides,
+                    Some(deploy_project.as_path()),
                 );
                 let avr_config = fbuild_build::avr::mcu_config::get_avr_config().unwrap();
                 let avrdude_params = fbuild_deploy::avr::AvrdudeParams {
@@ -691,6 +694,7 @@ pub async fn deploy(
                     &board_id,
                     "teensy41",
                     &deploy_board_overrides,
+                    Some(deploy_project.as_path()),
                 );
                 let loader_params = fbuild_deploy::teensy::TeensyLoaderParams::default();
                 let loader_path = find_teensy_loader_cli();

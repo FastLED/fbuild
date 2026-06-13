@@ -105,13 +105,14 @@ fn test_from_board_id_unknown() {
 
 #[test]
 fn test_from_board_id_or_default_uses_primary_when_known() {
-    let config = BoardConfig::from_board_id_or_default("mega", "uno", &HashMap::new());
+    let config = BoardConfig::from_board_id_or_default("mega", "uno", &HashMap::new(), None);
     assert_eq!(config.mcu, "atmega2560");
 }
 
 #[test]
 fn test_from_board_id_or_default_falls_back_when_unknown() {
-    let config = BoardConfig::from_board_id_or_default("nonexistent_board", "uno", &HashMap::new());
+    let config =
+        BoardConfig::from_board_id_or_default("nonexistent_board", "uno", &HashMap::new(), None);
     assert_eq!(config.mcu, "atmega328p");
 }
 
@@ -119,21 +120,51 @@ fn test_from_board_id_or_default_falls_back_when_unknown() {
 fn test_from_board_id_or_default_carries_overrides_into_fallback() {
     let mut overrides = HashMap::new();
     overrides.insert("f_cpu".to_string(), "8000000L".to_string());
-    let config = BoardConfig::from_board_id_or_default("nonexistent_board", "uno", &overrides);
+    let config =
+        BoardConfig::from_board_id_or_default("nonexistent_board", "uno", &overrides, None);
     assert_eq!(config.f_cpu, "8000000L");
     assert_eq!(config.mcu, "atmega328p");
 }
 
 #[test]
+fn test_from_board_id_or_default_resolves_project_local_board() {
+    // A board id absent from the built-in DB but present as
+    // <project>/boards/<id>.json must resolve via the project_dir path
+    // instead of silently falling back to the platform default (#519).
+    let dir = tempfile::tempdir().unwrap();
+    let boards = dir.path().join("boards");
+    std::fs::create_dir(&boards).unwrap();
+    std::fs::write(
+        boards.join("widget123.json"),
+        r#"{"mcu":"atmega328p","f_cpu":"16000000L","core":"arduino","variant":"standard"}"#,
+    )
+    .unwrap();
+    let config = BoardConfig::from_board_id_or_default(
+        "widget123",
+        "uno",
+        &HashMap::new(),
+        Some(dir.path()),
+    );
+    assert!(
+        config.board.eq_ignore_ascii_case("widget123"),
+        "expected project-local board, got '{}'",
+        config.board
+    );
+}
+
+#[test]
 fn test_from_board_id_with_override_fallback_known() {
-    let board = BoardConfig::from_board_id_with_override_fallback("uno", &HashMap::new());
+    let board = BoardConfig::from_board_id_with_override_fallback("uno", &HashMap::new(), None);
     assert_eq!(board.unwrap().mcu, "atmega328p");
 }
 
 #[test]
 fn test_from_board_id_with_override_fallback_unknown_returns_none() {
-    let board =
-        BoardConfig::from_board_id_with_override_fallback("nonexistent_board", &HashMap::new());
+    let board = BoardConfig::from_board_id_with_override_fallback(
+        "nonexistent_board",
+        &HashMap::new(),
+        None,
+    );
     assert!(board.is_none());
 }
 
@@ -141,8 +172,31 @@ fn test_from_board_id_with_override_fallback_unknown_returns_none() {
 fn test_from_board_id_with_override_fallback_applies_overrides() {
     let mut overrides = HashMap::new();
     overrides.insert("f_cpu".to_string(), "8000000L".to_string());
-    let board = BoardConfig::from_board_id_with_override_fallback("uno", &overrides);
+    let board = BoardConfig::from_board_id_with_override_fallback("uno", &overrides, None);
     assert_eq!(board.unwrap().f_cpu, "8000000L");
+}
+
+#[test]
+fn test_from_board_id_with_override_fallback_resolves_project_local_board() {
+    let dir = tempfile::tempdir().unwrap();
+    let boards = dir.path().join("boards");
+    std::fs::create_dir(&boards).unwrap();
+    std::fs::write(
+        boards.join("widget456.json"),
+        r#"{"mcu":"atmega328p","f_cpu":"16000000L","core":"arduino","variant":"standard"}"#,
+    )
+    .unwrap();
+    let board = BoardConfig::from_board_id_with_override_fallback(
+        "widget456",
+        &HashMap::new(),
+        Some(dir.path()),
+    );
+    let board = board.expect("project-local board must resolve");
+    assert!(
+        board.board.eq_ignore_ascii_case("widget456"),
+        "expected project-local board, got '{}'",
+        board.board
+    );
 }
 
 #[test]
