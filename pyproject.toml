@@ -1,10 +1,14 @@
 [project]
 name = "fbuild"
-version = "2.2.27"
+version = "2.2.28"
 description = "PlatformIO-compatible embedded build tool (Rust implementation)"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = ["zccache>=1.11.20"]
+# fbuild embeds its own pinned zccache (downloaded + managed internally by
+# fbuild-build::managed_zccache) rather than declaring it as a Python
+# dependency. Pinning zccache here forced every package sharing the venv to
+# agree on one version; embedding the binary removes that conflict.
+dependencies = []
 
 # Console script: `fbuild` on PATH after `pip install .` execs the native
 # binary that setup.py stages into ci/bin/fbuild[.exe]. See setup.py +

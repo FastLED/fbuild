@@ -22,6 +22,7 @@ pub mod framework_core_cache;
 pub mod framework_libs;
 pub mod generic_arm;
 pub mod linker;
+pub mod managed_zccache;
 pub mod nrf52;
 pub mod nxplpc;
 pub mod parallel;
