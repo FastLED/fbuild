@@ -50,6 +50,8 @@
     .extern _sbss
     .extern _ebss
     .extern main
+    /* Boot-ROM vector checksum, computed by the linker script (see lpc804.ld). */
+    .extern _isr_vector_checksum
 
 /* ---------------------------------------------------------------------------
  * Vector table — placed in flash at 0x00000000 via .isr_vector.
@@ -71,7 +73,7 @@ g_pfnVectors:
     .word 0                    /* 0x10 reserved */
     .word 0                    /* 0x14 reserved */
     .word 0                    /* 0x18 reserved */
-    .word 0                    /* 0x1C reserved (boot code App CRC slot) */
+    .word _isr_vector_checksum /* 0x1C boot-ROM checksum (vectors 0..7 sum to 0) */
     .word 0                    /* 0x20 reserved */
     .word 0                    /* 0x24 reserved */
     .word 0                    /* 0x28 reserved */

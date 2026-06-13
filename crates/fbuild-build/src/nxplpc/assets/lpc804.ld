@@ -22,6 +22,24 @@ MEMORY
 /* Top of RAM — initial stack pointer. */
 _estack = ORIGIN(RAM) + LENGTH(RAM);
 
+/*
+ * LPC8xx boot-ROM validity check: the first 8 vector words must sum to
+ * zero (mod 2^32) or the boot ROM rejects the image as "no valid user
+ * code". lpc21isp patches this slot during ISP flashing, but raw SWD
+ * programmers (pyocd/jlink/cmsis-dap) do not — so the checksum must be
+ * baked into the image itself. Only the linker can sum these relocatable
+ * symbols, so it is computed here and emitted at vector offset 0x1C by
+ * `.word _isr_vector_checksum` in startup_lpc804.S.
+ *
+ * The `+ 1` terms add the thumb bit: in linker-script expressions a
+ * function symbol resolves to its raw (even) address, whereas the boot
+ * ROM sums the table as written, where thumb entries carry bit 0 set
+ * (the assembler's `.word Reset_Handler` emits Reset_Handler|1). Reserved
+ * vectors at 0x10/0x14/0x18 are zero and drop out of the sum.
+ */
+_isr_vector_checksum =
+    0 - (_estack + (Reset_Handler + 1) + (NMI_Handler + 1) + (HardFault_Handler + 1));
+
 SECTIONS
 {
     .isr_vector :

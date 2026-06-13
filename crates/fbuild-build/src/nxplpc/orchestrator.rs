@@ -354,6 +354,39 @@ mod tests {
     }
 
     #[test]
+    fn boot_checksum_is_baked_into_assets() {
+        // The LPC8xx boot ROM rejects an image unless the first 8 vector
+        // words sum to zero (mod 2^32). The linker script computes the slot
+        // value and the startup table emits it at 0x1C. If either half is
+        // dropped, raw SWD flashing produces a non-booting image — guard
+        // both halves for every supported MCU.
+        for mcu in ["lpc845", "lpc804"] {
+            let assets = mcu_assets(mcu).expect("mcu must be supported");
+            assert!(
+                assets.linker_script.contains("_isr_vector_checksum ="),
+                "{mcu}.ld must define the boot checksum symbol"
+            );
+            assert!(
+                assets.linker_script.contains(
+                    "0 - (_estack + (Reset_Handler + 1) + (NMI_Handler + 1) + (HardFault_Handler + 1))"
+                ),
+                "{mcu}.ld checksum formula must include the thumb-bit (+1) terms"
+            );
+            assert!(
+                assets.startup_asm.contains(".word _isr_vector_checksum"),
+                "startup_{mcu}.S must emit the checksum at the 0x1C vector slot"
+            );
+            // The old placeholder that left the slot zero must be gone.
+            assert!(
+                !assets
+                    .startup_asm
+                    .contains(".word 0                    /* 0x1C"),
+                "startup_{mcu}.S must not leave the 0x1C boot-checksum slot zero"
+            );
+        }
+    }
+
+    #[test]
     fn write_asset_round_trips_through_disk() {
         let dir = tempfile::tempdir().expect("tempdir");
         let written = write_asset(dir.path(), "demo.txt", "hello\nworld\n").unwrap();
