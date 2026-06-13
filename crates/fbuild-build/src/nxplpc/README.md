@@ -35,3 +35,14 @@ References:
 Primary path: ISP-via-UART with the on-die boot ROM, driven by `lpc21isp`.
 Alternative: SWD via CMSIS-DAP / J-Link / pyOCD (entries in the board JSON
 `debug.tools` map).
+
+### Boot-ROM vector checksum
+
+The LPC8xx boot ROM only runs an image whose first 8 vector words sum to
+zero (mod 2^32); the word at offset `0x1C` is reserved for the two's
+complement that makes the sum zero. `lpc21isp` patches this slot during ISP
+flashing, but raw SWD programmers do **not** — so the checksum is baked into
+the linked image: the linker script (`assets/lpc8xx.ld`) computes
+`_isr_vector_checksum` and the startup table emits it at `0x1C`. No external
+linker script or `board_build.ldscript` declaration is required anywhere for
+the produced firmware to boot.
