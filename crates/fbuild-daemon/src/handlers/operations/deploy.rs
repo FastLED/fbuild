@@ -423,15 +423,11 @@ pub async fn deploy(
         let mut trusted_hash_update: Option<([u8; 32], String)> = None;
         let deployer: Box<dyn fbuild_deploy::Deployer> = match platform {
             fbuild_core::Platform::Espressif32 => {
-                let board_config =
-                    fbuild_config::BoardConfig::from_board_id(&board_id, &deploy_board_overrides)
-                        .unwrap_or_else(|_| {
-                            fbuild_config::BoardConfig::from_board_id(
-                                "esp32dev",
-                                &deploy_board_overrides,
-                            )
-                            .unwrap()
-                        });
+                let board_config = fbuild_config::BoardConfig::from_board_id_or_default(
+                    &board_id,
+                    "esp32dev",
+                    &deploy_board_overrides,
+                );
                 // Load MCU config to get flash offsets and esptool defaults.
                 // Fail loudly on an unknown MCU instead of silently falling
                 // back to esp32's `0x1000` bootloader offset — that offset is
@@ -663,15 +659,11 @@ pub async fn deploy(
                 Box::new(deployer)
             }
             fbuild_core::Platform::AtmelAvr | fbuild_core::Platform::AtmelMegaAvr => {
-                let board_config =
-                    fbuild_config::BoardConfig::from_board_id(&board_id, &deploy_board_overrides)
-                        .unwrap_or_else(|_| {
-                            fbuild_config::BoardConfig::from_board_id(
-                                "uno",
-                                &deploy_board_overrides,
-                            )
-                            .unwrap()
-                        });
+                let board_config = fbuild_config::BoardConfig::from_board_id_or_default(
+                    &board_id,
+                    "uno",
+                    &deploy_board_overrides,
+                );
                 let avr_config = fbuild_build::avr::mcu_config::get_avr_config().unwrap();
                 let avrdude_params = fbuild_deploy::avr::AvrdudeParams {
                     default_programmer: avr_config.avrdude.default_programmer.clone(),
@@ -695,15 +687,11 @@ pub async fn deploy(
                 // Initial wire-up was #430/#431; the deployer itself now owns
                 // baud-134 soft reboot, bounded retry, post-flash port
                 // discovery, and the optional first-byte advisory probe.
-                let board_config =
-                    fbuild_config::BoardConfig::from_board_id(&board_id, &deploy_board_overrides)
-                        .unwrap_or_else(|_| {
-                            fbuild_config::BoardConfig::from_board_id(
-                                "teensy41",
-                                &deploy_board_overrides,
-                            )
-                            .unwrap()
-                        });
+                let board_config = fbuild_config::BoardConfig::from_board_id_or_default(
+                    &board_id,
+                    "teensy41",
+                    &deploy_board_overrides,
+                );
                 let loader_params = fbuild_deploy::teensy::TeensyLoaderParams::default();
                 let loader_path = find_teensy_loader_cli();
                 let deployer = fbuild_deploy::teensy::TeensyDeployer::new(

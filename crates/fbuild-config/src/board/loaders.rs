@@ -185,6 +185,24 @@ impl BoardConfig {
         Self::from_board_id_in_project(board_id, overrides, None)
     }
 
+    /// Load `board_id`, falling back to a known-good `default_board_id`
+    /// (e.g. `"esp32dev"`, `"uno"`, `"teensy41"`) when the primary id is
+    /// unknown, carrying the same `overrides` through to the fallback.
+    ///
+    /// `default_board_id` is expected to be a compile-time platform default
+    /// that always exists in the board database, so a failure to resolve it
+    /// is a programming error and panics rather than being swallowed.
+    pub fn from_board_id_or_default(
+        board_id: &str,
+        default_board_id: &str,
+        overrides: &HashMap<String, String>,
+    ) -> Self {
+        Self::from_board_id(board_id, overrides).unwrap_or_else(|_| {
+            Self::from_board_id(default_board_id, overrides)
+                .unwrap_or_else(|e| panic!("default board '{default_board_id}' must resolve: {e}"))
+        })
+    }
+
     /// Load board config from built-in defaults with a project-local fallback.
     ///
     /// When the built-in board database has no entry for `board_id`, fall
