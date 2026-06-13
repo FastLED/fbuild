@@ -923,9 +923,11 @@ dependencies = [
  "fbuild-paths",
  "fbuild-test-support",
  "filetime",
+ "flate2",
  "object 0.36.7",
  "owo-colors",
  "regex",
+ "reqwest",
  "serde",
  "serde_json",
  "sha2",
@@ -936,6 +938,7 @@ dependencies = [
  "tracing",
  "walkdir",
  "zccache-artifact",
+ "zip",
 ]
 
 [[package]]

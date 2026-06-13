@@ -1,0 +1,496 @@
+//! Internal managed zccache binary.
+//!
+//! fbuild downloads its own pinned zccache release into
+//! `~/.fbuild/<mode>/bin/zccache-<ver>/` and runs that binary, instead of
+//! resolving whatever `zccache` happens to be installed in the ambient
+//! Python environment. Pinning a hard zccache version as a `pyproject`
+//! dependency forces every package that shares the venv to agree on one
+//! version; embedding the binary here removes fbuild from that
+//! dependency-resolution tug-of-war.
+//!
+//! Resolution is owned by [`crate::zccache::find_zccache`]; this module
+//! provides [`ensure`], which guarantees the pinned binaries are on disk
+//! (downloading + verifying once) and returns the path to the `zccache`
+//! CLI.
+
+use std::collections::BTreeSet;
+use std::path::{Path, PathBuf};
+
+use fbuild_core::{FbuildError, Result};
+
+/// The zccache release fbuild pins. Bump in lockstep with the floor that
+/// the rest of the toolchain expects.
+pub const MANAGED_ZCCACHE_VERSION: &str = "1.12.0";
+
+/// GitHub release tag for [`MANAGED_ZCCACHE_VERSION`]. The zccache release
+/// workflow tags without a `v` prefix, while the per-asset filenames carry
+/// `v<version>` — keep both spellings in sync when bumping.
+const RELEASE_TAG: &str = "1.12.0";
+
+/// Source repository for managed downloads.
+const REPO: &str = "zackees/zccache";
+
+/// Binaries shipped inside every zccache release archive. fbuild only
+/// invokes `zccache` directly, but `zccache start` spawns `zccache-daemon`,
+/// so all three must land side by side.
+const ZCCACHE_BINARIES: [&str; 3] = ["zccache", "zccache-daemon", "zccache-fp"];
+
+/// Platform binary suffix.
+fn binary_ext() -> &'static str {
+    if cfg!(windows) {
+        ".exe"
+    } else {
+        ""
+    }
+}
+
+/// Directory holding the managed binaries: `~/.fbuild/<mode>/bin/zccache-<ver>/`.
+pub fn managed_dir() -> PathBuf {
+    fbuild_paths::get_fbuild_root()
+        .join("bin")
+        .join(format!("zccache-{MANAGED_ZCCACHE_VERSION}"))
+}
+
+/// Path to the managed `zccache` CLI binary (whether or not it exists yet).
+pub fn managed_zccache_exe() -> PathBuf {
+    managed_dir().join(format!("zccache{}", binary_ext()))
+}
+
+/// Ensure the pinned zccache is present on disk, downloading + verifying it
+/// once if needed, and return the path to the `zccache` CLI binary.
+///
+/// The download runs on a dedicated thread: the build orchestrators call
+/// this from inside the daemon's Tokio runtime, and `reqwest::blocking`
+/// panics if it constructs its current-thread runtime while another runtime
+/// is already active on the calling thread.
+pub fn ensure() -> Result<PathBuf> {
+    let exe = managed_zccache_exe();
+    if exe.is_file() {
+        return Ok(exe);
+    }
+
+    std::thread::spawn(download_and_install)
+        .join()
+        .map_err(|_| {
+            FbuildError::Other("managed zccache download thread panicked".to_string())
+        })??;
+
+    if !exe.is_file() {
+        return Err(FbuildError::Other(format!(
+            "managed zccache missing after install: {}",
+            exe.display()
+        )));
+    }
+    Ok(exe)
+}
+
+fn download_and_install() -> Result<()> {
+    let triple = host_triple()?;
+    let archive_ext = if cfg!(windows) { "zip" } else { "tar.gz" };
+    let asset = format!("zccache-v{MANAGED_ZCCACHE_VERSION}-{triple}.{archive_ext}");
+    let base = format!("https://github.com/{REPO}/releases/download/{RELEASE_TAG}");
+
+    let client = http_client()?;
+
+    let sums = http_get_text(&client, &format!("{base}/SHA256SUMS"))?;
+    let expected = sha256_for_asset(&sums, &asset)
+        .ok_or_else(|| FbuildError::Other(format!("SHA256SUMS has no entry for {asset}")))?;
+
+    tracing::info!("fbuild: downloading managed zccache {MANAGED_ZCCACHE_VERSION} ({asset})");
+    let bytes = http_get_bytes(&client, &format!("{base}/{asset}"))?;
+
+    let actual = sha256_hex(&bytes);
+    if !actual.eq_ignore_ascii_case(&expected) {
+        return Err(FbuildError::Other(format!(
+            "managed zccache checksum mismatch for {asset}: expected {expected}, got {actual}"
+        )));
+    }
+
+    let final_dir = managed_dir();
+    let parent = final_dir
+        .parent()
+        .ok_or_else(|| FbuildError::Other("managed zccache dir has no parent".to_string()))?;
+    std::fs::create_dir_all(parent)?;
+
+    // Extract into a unique sibling temp dir, then atomically rename into
+    // place so a concurrent fbuild process never observes a half-extracted
+    // directory.
+    let staging = parent.join(format!(
+        ".zccache-{}-{}.tmp",
+        std::process::id(),
+        unique_suffix()
+    ));
+    let _ = std::fs::remove_dir_all(&staging);
+    std::fs::create_dir_all(&staging)?;
+
+    let extracted = if archive_ext == "zip" {
+        extract_zip(&bytes, &staging)
+    } else {
+        extract_tar_gz(&bytes, &staging)
+    };
+    if let Err(e) = extracted {
+        let _ = std::fs::remove_dir_all(&staging);
+        return Err(e);
+    }
+
+    #[cfg(unix)]
+    if let Err(e) = set_executable(&staging) {
+        let _ = std::fs::remove_dir_all(&staging);
+        return Err(e);
+    }
+
+    match std::fs::rename(&staging, &final_dir) {
+        Ok(()) => Ok(()),
+        // Lost a race with a concurrent installer — the winner's directory
+        // is already in place, so discard our staging copy and succeed.
+        Err(_) if final_dir.join(format!("zccache{}", binary_ext())).is_file() => {
+            let _ = std::fs::remove_dir_all(&staging);
+            Ok(())
+        }
+        Err(e) => {
+            let _ = std::fs::remove_dir_all(&staging);
+            Err(FbuildError::Other(format!(
+                "failed to install managed zccache into {}: {e}",
+                final_dir.display()
+            )))
+        }
+    }
+}
+
+/// Map the running host to the release triple zccache publishes for it.
+fn host_triple() -> Result<&'static str> {
+    Ok(match (std::env::consts::ARCH, std::env::consts::OS) {
+        ("x86_64", "windows") => "x86_64-pc-windows-msvc",
+        ("aarch64", "windows") => "aarch64-pc-windows-msvc",
+        ("x86_64", "macos") => "x86_64-apple-darwin",
+        ("aarch64", "macos") => "aarch64-apple-darwin",
+        // zccache ships static musl Linux builds; they run on glibc hosts.
+        ("x86_64", "linux") => "x86_64-unknown-linux-musl",
+        ("aarch64", "linux") => "aarch64-unknown-linux-musl",
+        (arch, os) => {
+            return Err(FbuildError::Other(format!(
+                "no managed zccache build for {arch}-{os}"
+            )))
+        }
+    })
+}
+
+fn http_client() -> Result<reqwest::blocking::Client> {
+    reqwest::blocking::Client::builder()
+        .user_agent(concat!("fbuild/", env!("CARGO_PKG_VERSION")))
+        .build()
+        .map_err(|e| FbuildError::Other(format!("failed to build http client: {e}")))
+}
+
+fn http_get_bytes(client: &reqwest::blocking::Client, url: &str) -> Result<Vec<u8>> {
+    let resp = client
+        .get(url)
+        .send()
+        .map_err(|e| FbuildError::Other(format!("download failed for {url}: {e}")))?;
+    if !resp.status().is_success() {
+        return Err(FbuildError::Other(format!(
+            "download failed for {url}: HTTP {}",
+            resp.status()
+        )));
+    }
+    resp.bytes()
+        .map(|b| b.to_vec())
+        .map_err(|e| FbuildError::Other(format!("reading body of {url} failed: {e}")))
+}
+
+fn http_get_text(client: &reqwest::blocking::Client, url: &str) -> Result<String> {
+    let resp = client
+        .get(url)
+        .send()
+        .map_err(|e| FbuildError::Other(format!("download failed for {url}: {e}")))?;
+    if !resp.status().is_success() {
+        return Err(FbuildError::Other(format!(
+            "download failed for {url}: HTTP {}",
+            resp.status()
+        )));
+    }
+    resp.text()
+        .map_err(|e| FbuildError::Other(format!("reading body of {url} failed: {e}")))
+}
+
+/// Look up the checksum for `asset` in a `SHA256SUMS` body.
+///
+/// Lines are `<hex>  ./<asset>`; the leading `./` is optional.
+fn sha256_for_asset(sums: &str, asset: &str) -> Option<String> {
+    sums.lines().find_map(|line| {
+        let mut it = line.split_whitespace();
+        let hash = it.next()?;
+        let name = it.next()?.trim_start_matches("./");
+        (name == asset).then(|| hash.to_string())
+    })
+}
+
+fn sha256_hex(bytes: &[u8]) -> String {
+    use sha2::{Digest, Sha256};
+    let mut hasher = Sha256::new();
+    hasher.update(bytes);
+    to_hex(&hasher.finalize())
+}
+
+fn to_hex(bytes: &[u8]) -> String {
+    use std::fmt::Write;
+    let mut out = String::with_capacity(bytes.len() * 2);
+    for b in bytes {
+        let _ = write!(out, "{b:02x}");
+    }
+    out
+}
+
+fn unique_suffix() -> u128 {
+    std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map(|d| d.as_nanos())
+        .unwrap_or(0)
+}
+
+/// Desired on-disk binary filenames for this platform.
+fn desired_filenames() -> Vec<String> {
+    let ext = binary_ext();
+    ZCCACHE_BINARIES
+        .iter()
+        .map(|name| format!("{name}{ext}"))
+        .collect()
+}
+
+/// Match an archive entry's basename to a desired binary filename,
+/// tolerating a `.exe` difference between archive and host conventions.
+fn match_desired<'a>(file_name: &str, desired: &'a [String]) -> Option<&'a String> {
+    desired
+        .iter()
+        .find(|d| d.as_str() == file_name || d.trim_end_matches(".exe") == file_name)
+}
+
+fn extract_zip(data: &[u8], dest: &Path) -> Result<()> {
+    let desired = desired_filenames();
+    let reader = std::io::Cursor::new(data);
+    let mut archive =
+        zip::ZipArchive::new(reader).map_err(|e| FbuildError::Other(format!("zip open: {e}")))?;
+    let mut found = BTreeSet::new();
+
+    for i in 0..archive.len() {
+        let mut file = archive
+            .by_index(i)
+            .map_err(|e| FbuildError::Other(format!("zip entry: {e}")))?;
+        if file.is_dir() {
+            continue;
+        }
+        let file_name = Path::new(file.name())
+            .file_name()
+            .and_then(|f| f.to_str())
+            .unwrap_or("")
+            .to_string();
+        if let Some(target) = match_desired(&file_name, &desired) {
+            let mut out = std::fs::File::create(dest.join(target))?;
+            std::io::copy(&mut file, &mut out)?;
+            found.insert(target.clone());
+        }
+    }
+
+    ensure_all_found(&desired, &found)
+}
+
+fn extract_tar_gz(data: &[u8], dest: &Path) -> Result<()> {
+    let desired = desired_filenames();
+    let reader = std::io::Cursor::new(data);
+    let gz = flate2::read::GzDecoder::new(reader);
+    let mut archive = tar::Archive::new(gz);
+    let mut found = BTreeSet::new();
+
+    for entry in archive
+        .entries()
+        .map_err(|e| FbuildError::Other(format!("tar entries: {e}")))?
+    {
+        let mut entry = entry.map_err(|e| FbuildError::Other(format!("tar entry: {e}")))?;
+        let file_name = entry
+            .path()
+            .map_err(|e| FbuildError::Other(format!("tar path: {e}")))?
+            .file_name()
+            .and_then(|f| f.to_str())
+            .unwrap_or("")
+            .to_string();
+        if let Some(target) = match_desired(&file_name, &desired) {
+            let mut out = std::fs::File::create(dest.join(target))?;
+            std::io::copy(&mut entry, &mut out)?;
+            found.insert(target.clone());
+        }
+    }
+
+    ensure_all_found(&desired, &found)
+}
+
+fn ensure_all_found(desired: &[String], found: &BTreeSet<String>) -> Result<()> {
+    let missing: Vec<String> = desired
+        .iter()
+        .filter(|d| !found.contains(*d))
+        .cloned()
+        .collect();
+    if missing.is_empty() {
+        Ok(())
+    } else {
+        Err(FbuildError::Other(format!(
+            "managed zccache archive missing binaries: {}",
+            missing.join(", ")
+        )))
+    }
+}
+
+#[cfg(unix)]
+fn set_executable(dir: &Path) -> Result<()> {
+    use std::os::unix::fs::PermissionsExt;
+    for name in desired_filenames() {
+        let path = dir.join(&name);
+        if path.is_file() {
+            let mut perms = std::fs::metadata(&path)?.permissions();
+            perms.set_mode(0o755);
+            std::fs::set_permissions(&path, perms)?;
+        }
+    }
+    Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn host_triple_resolves_for_current_platform() {
+        // On any supported CI host this must succeed and name a known triple.
+        let triple = host_triple().expect("supported host");
+        assert!(
+            triple.contains("windows") || triple.contains("darwin") || triple.contains("linux"),
+            "unexpected triple: {triple}"
+        );
+    }
+
+    #[test]
+    fn desired_filenames_lists_all_three_binaries() {
+        let names = desired_filenames();
+        assert_eq!(names.len(), 3);
+        assert!(names.iter().any(|n| n.starts_with("zccache-daemon")));
+        assert!(names.iter().any(|n| n.starts_with("zccache-fp")));
+    }
+
+    #[test]
+    fn sha256_for_asset_parses_dot_slash_entries() {
+        let sums = "\
+601f68d19f2bfdc0f277636851dc582989fbcb697c6754952416dd6a2a9b2adb  ./zccache-v1.12.0-x86_64-unknown-linux-musl.tar.gz
+0fe54afd0c87e4d64a34b903107d9a4e1f4c5cf5274400482cbb64f45ea31c14  ./zccache-v1.12.0-x86_64-pc-windows-msvc.zip
+";
+        assert_eq!(
+            sha256_for_asset(sums, "zccache-v1.12.0-x86_64-unknown-linux-musl.tar.gz").as_deref(),
+            Some("601f68d19f2bfdc0f277636851dc582989fbcb697c6754952416dd6a2a9b2adb")
+        );
+        assert_eq!(
+            sha256_for_asset(sums, "zccache-v1.12.0-x86_64-pc-windows-msvc.zip").as_deref(),
+            Some("0fe54afd0c87e4d64a34b903107d9a4e1f4c5cf5274400482cbb64f45ea31c14")
+        );
+        assert!(sha256_for_asset(sums, "does-not-exist.tar.gz").is_none());
+    }
+
+    #[test]
+    fn to_hex_lowercases_bytes() {
+        assert_eq!(to_hex(&[0x00, 0x0f, 0xab, 0xff]), "000fabff");
+    }
+
+    #[test]
+    fn match_desired_tolerates_exe_suffix() {
+        let desired = vec!["zccache.exe".to_string(), "zccache-fp.exe".to_string()];
+        assert_eq!(
+            match_desired("zccache", &desired).map(String::as_str),
+            Some("zccache.exe")
+        );
+        assert_eq!(
+            match_desired("zccache.exe", &desired).map(String::as_str),
+            Some("zccache.exe")
+        );
+        assert!(match_desired("README.md", &desired).is_none());
+    }
+
+    #[test]
+    fn extract_tar_gz_pulls_binaries_by_basename_from_nested_dir() {
+        let tar_gz = build_tar_gz(&[
+            ("zccache-v1.12.0-host/README.md", b"readme"),
+            ("zccache-v1.12.0-host/zccache", b"cli"),
+            ("zccache-v1.12.0-host/zccache-daemon", b"daemon"),
+            ("zccache-v1.12.0-host/zccache-fp", b"fp"),
+        ]);
+
+        let tmp = tempfile::tempdir().unwrap();
+        extract_tar_gz(&tar_gz, tmp.path()).unwrap();
+
+        for name in desired_filenames() {
+            assert!(
+                tmp.path().join(&name).is_file(),
+                "expected extracted binary {name}"
+            );
+        }
+        // Non-binary entries are skipped.
+        assert!(!tmp.path().join("README.md").exists());
+    }
+
+    #[test]
+    fn extract_tar_gz_errors_when_a_binary_is_missing() {
+        let tar_gz = build_tar_gz(&[
+            ("top/zccache", b"cli"),
+            ("top/zccache-daemon", b"daemon"),
+            // zccache-fp intentionally absent
+        ]);
+        let tmp = tempfile::tempdir().unwrap();
+        let err = extract_tar_gz(&tar_gz, tmp.path()).expect_err("missing binary should fail");
+        assert!(
+            err.to_string().contains("zccache-fp"),
+            "error must name the missing binary: {err}"
+        );
+    }
+
+    /// Real end-to-end download against GitHub Releases. Ignored by
+    /// default (needs network); run manually with
+    /// `soldr cargo test -p fbuild-build --lib managed_zccache -- --ignored`.
+    #[test]
+    #[ignore = "network: downloads the pinned zccache release from GitHub"]
+    fn ensure_downloads_and_extracts_real_release() {
+        let tmp = tempfile::tempdir().unwrap();
+        // get_fbuild_root() reads USERPROFILE (Windows) / HOME (unix).
+        let home_var = if cfg!(windows) { "USERPROFILE" } else { "HOME" };
+        let prev = std::env::var_os(home_var);
+        std::env::set_var(home_var, tmp.path());
+
+        let result = download_and_install();
+        // Capture the resolved dir while the home override is still active.
+        let install_dir = managed_dir();
+
+        // Restore before asserting so a failure doesn't leak the override.
+        match prev {
+            Some(v) => std::env::set_var(home_var, v),
+            None => std::env::remove_var(home_var),
+        }
+        result.expect("real download should succeed");
+
+        for name in desired_filenames() {
+            assert!(
+                install_dir.join(&name).is_file(),
+                "expected downloaded binary {name} under {}",
+                install_dir.display()
+            );
+        }
+    }
+
+    fn build_tar_gz(entries: &[(&str, &[u8])]) -> Vec<u8> {
+        let enc = flate2::write::GzEncoder::new(Vec::new(), flate2::Compression::fast());
+        let mut builder = tar::Builder::new(enc);
+        for (path, data) in entries {
+            let mut header = tar::Header::new_gnu();
+            header.set_size(data.len() as u64);
+            header.set_mode(0o644);
+            header.set_cksum();
+            builder.append_data(&mut header, path, *data).unwrap();
+        }
+        let enc = builder.into_inner().unwrap();
+        enc.finish().unwrap()
+    }
+}
