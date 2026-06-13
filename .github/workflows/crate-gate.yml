@@ -17,4 +17,8 @@ jobs:
         uses: astral-sh/setup-uv@v3
 
       - name: Check workspace members against the approved allowlist
-        run: uv run python ci/check_workspace_crates.py
+        # `--script` runs the standalone PEP-723 script in isolation. Plain
+        # `uv run python ...` would first build the `fbuild` project package,
+        # which requires `soldr` (absent in this job) and fails the gate for an
+        # unrelated reason. The script declares its own inline metadata.
+        run: uv run --script ci/check_workspace_crates.py
