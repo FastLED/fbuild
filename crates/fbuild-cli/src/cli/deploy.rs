@@ -42,11 +42,10 @@ pub fn infer_cli_default_emulator_kind(
         return Ok(None);
     };
     let board_overrides = config.get_board_overrides(&env_name).unwrap_or_default();
-    let board = fbuild_config::BoardConfig::from_board_id(&board_id, &board_overrides)
-        .or_else(|_| {
-            fbuild_config::BoardConfig::from_board_id(&board_id, &std::collections::HashMap::new())
-        })
-        .ok();
+    let board = fbuild_config::BoardConfig::from_board_id_with_override_fallback(
+        &board_id,
+        &board_overrides,
+    );
     Ok(
         match (platform, board.as_ref().map(|board| board.mcu.as_str())) {
             (fbuild_core::Platform::AtmelAvr, _) | (fbuild_core::Platform::AtmelMegaAvr, _) => {
