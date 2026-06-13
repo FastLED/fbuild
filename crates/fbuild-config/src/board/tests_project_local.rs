@@ -138,3 +138,48 @@ fn from_board_id_is_equivalent_to_in_project_with_none() {
     assert_eq!(a.max_flash, b.max_flash);
     assert_eq!(a.max_ram, b.max_ram);
 }
+
+/// A board id absent from the built-in DB but present as
+/// `<project>/boards/<id>.json` must resolve via the project_dir path
+/// instead of silently falling back to the platform default (#519).
+#[test]
+fn from_board_id_or_default_resolves_project_local_board() {
+    let dir = tempfile::tempdir().unwrap();
+    write_project_board(
+        &dir,
+        "widget123",
+        r#"{"mcu":"atmega328p","f_cpu":"16000000L","core":"arduino","variant":"standard"}"#,
+    );
+    let config = BoardConfig::from_board_id_or_default(
+        "widget123",
+        "uno",
+        &HashMap::new(),
+        Some(dir.path()),
+    );
+    assert!(
+        config.board.eq_ignore_ascii_case("widget123"),
+        "expected project-local board, got '{}'",
+        config.board
+    );
+}
+
+#[test]
+fn from_board_id_with_override_fallback_resolves_project_local_board() {
+    let dir = tempfile::tempdir().unwrap();
+    write_project_board(
+        &dir,
+        "widget456",
+        r#"{"mcu":"atmega328p","f_cpu":"16000000L","core":"arduino","variant":"standard"}"#,
+    );
+    let board = BoardConfig::from_board_id_with_override_fallback(
+        "widget456",
+        &HashMap::new(),
+        Some(dir.path()),
+    )
+    .expect("project-local board must resolve");
+    assert!(
+        board.board.eq_ignore_ascii_case("widget456"),
+        "expected project-local board, got '{}'",
+        board.board
+    );
+}
