@@ -334,14 +334,7 @@ fn resolve_env_for_board(project_dir: &Path, board: &str) -> Result<String> {
 /// project-local board manifests and is how compile_many ingests boards
 /// shipped alongside a `platformio.ini` (FastLED/fbuild#515).
 fn platform_for_board(board: &str, project_dir: Option<&std::path::Path>) -> Result<Platform> {
-    let cfg =
-        fbuild_config::BoardConfig::from_board_id_in_project(board, &HashMap::new(), project_dir)?;
-    cfg.platform().ok_or_else(|| {
-        FbuildError::ConfigError(format!(
-            "could not determine platform for board '{}' (mcu '{}')",
-            board, cfg.mcu
-        ))
-    })
+    crate::resolution::platform_for_board(board, project_dir)
 }
 
 /// Build a single sketch through the platform orchestrator.

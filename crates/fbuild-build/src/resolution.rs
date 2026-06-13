@@ -13,6 +13,7 @@
 
 use fbuild_config::{BoardConfig, PlatformIOConfig};
 use fbuild_core::{FbuildError, Platform, Result};
+use std::collections::HashMap;
 use std::path::Path;
 
 /// All context needed to resolve a board (and its platform) for one
@@ -56,13 +57,29 @@ impl<'a> ResolutionContext<'a> {
     /// Resolve the [`Platform`] for this env's board.
     pub fn resolve_platform(&self) -> Result<Platform> {
         let board = self.resolve_board()?;
-        board.platform().ok_or_else(|| {
-            FbuildError::ConfigError(format!(
-                "could not determine platform for board '{}' (mcu '{}')",
-                board.board, board.mcu
-            ))
-        })
+        platform_of(&board, &board.board)
     }
+}
+
+/// Determine the [`Platform`] for a bare board id (no `[env]` overrides),
+/// honoring a project-local `boards/<id>.json`. This is the lookup used by
+/// sites that only know a board string — e.g. `compile_many`'s per-sketch
+/// dispatch — and shares the single "could not determine platform" error
+/// with [`ResolutionContext::resolve_platform`] (FastLED/fbuild#519).
+pub fn platform_for_board(board_id: &str, project_dir: Option<&Path>) -> Result<Platform> {
+    let board = BoardConfig::from_board_id_in_project(board_id, &HashMap::new(), project_dir)?;
+    platform_of(&board, board_id)
+}
+
+/// Shared mapping from a resolved [`BoardConfig`] to its [`Platform`], with a
+/// uniform error keyed by `label` (a board id or define) for diagnostics.
+fn platform_of(board: &BoardConfig, label: &str) -> Result<Platform> {
+    board.platform().ok_or_else(|| {
+        FbuildError::ConfigError(format!(
+            "could not determine platform for board '{}' (mcu '{}')",
+            label, board.mcu
+        ))
+    })
 }
 
 #[cfg(test)]
@@ -85,6 +102,19 @@ mod tests {
         assert_eq!(ctx.board_id().unwrap(), "uno");
         assert_eq!(ctx.resolve_board().unwrap().mcu, "atmega328p");
         assert_eq!(ctx.resolve_platform().unwrap(), Platform::AtmelAvr);
+    }
+
+    #[test]
+    fn platform_for_board_free_fn_matches_context() {
+        assert_eq!(
+            super::platform_for_board("uno", None).unwrap(),
+            Platform::AtmelAvr
+        );
+    }
+
+    #[test]
+    fn platform_for_board_unknown_errors() {
+        assert!(super::platform_for_board("nonexistent_board", None).is_err());
     }
 
     #[test]
