@@ -16,6 +16,7 @@
   },
   "fcpu": 15000000,
   "frameworks": [
+    "arduino",
     "cmsis"
   ],
   "id": "lpc804",

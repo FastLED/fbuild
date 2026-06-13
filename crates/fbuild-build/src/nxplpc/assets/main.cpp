@@ -1,20 +1,19 @@
 // SPDX-License-Identifier: MIT
 //
-// NXP LPC8xx — hand-rolled Arduino `main()` shim (Stage 2 of #487).
+// NXP LPC8xx — bundled Arduino `main()` (#487 Stage 3, #479).
 //
-// The Stage-1 LPC8xx test fixtures (tests/platform/lpc845/lpc845.ino,
-// tests/platform/lpc804/lpc804.ino) define `setup()` and `loop()` but
-// have no `main()`. The orchestrator embeds this file and emits it into
-// the build dir as a third source so the linker has an entry point.
+// The LPC8xx test fixtures (tests/platform/lpc804/lpc804.ino,
+// tests/platform/lpc845/lpc845.ino) define `setup()` and `loop()` but
+// have no `main()`. The orchestrator embeds this file alongside the rest
+// of the bundled `arduino_stub` core (Arduino.h, wiring_digital.c,
+// wiring_time.c, …) and emits it into the build dir so the linker has an
+// entry point. It mirrors `zackees/ArduinoCore-LPC8xx`'s framework-owned
+// `main()`; a project that ships that variant core simply overrides it.
 //
-// This shim is intentionally minimal — it does NOT touch peripherals,
-// does NOT initialise GPIO, does NOT set up timing. Stage-1 startup_.S
-// runs SystemInit() (clock + flash wait states) before this `main()` is
+// This `main()` is intentionally minimal — it does NOT touch peripherals,
+// does NOT initialise GPIO, does NOT set up timing. startup_.S runs
+// SystemInit() (clock + flash wait states) before this `main()` is
 // reached. Anything else the sketch needs must be done in `setup()`.
-//
-// This shim is replaced by the framework-owned `main()` in
-// `zackees/ArduinoCore-LPC8xx::cores/lpc8xx/main.cpp` once #479 lands
-// (tracked in #487, Stage 4: "vendor the framework into fbuild").
 
 // User-provided Arduino entry points. The .ino preprocessor emits normal
 // C++ prototypes, so keep these declarations in C++ linkage.
