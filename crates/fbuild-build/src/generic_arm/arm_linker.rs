@@ -18,6 +18,7 @@ pub struct ArmLinker {
     objcopy_path: PathBuf,
     size_path: PathBuf,
     linker_script_path: PathBuf,
+    lib_search_dirs: Vec<PathBuf>,
     mcu_config: ArmMcuConfig,
     profile: BuildProfile,
     max_flash: Option<u64>,
@@ -45,12 +46,22 @@ impl ArmLinker {
             objcopy_path,
             size_path,
             linker_script_path,
+            lib_search_dirs: Vec::new(),
             mcu_config,
             profile,
             max_flash,
             max_ram,
             verbose,
         }
+    }
+
+    /// Add linker search directories emitted as `-L<dir>`. Needed when the
+    /// linker script uses a relative `INCLUDE` directive (ld searches `-L`
+    /// paths for it), e.g. ArduinoCore-LPC8xx's `lpc845_flash.ld` which does
+    /// `INCLUDE linker_scripts/gcc/lpc8xx_common.ld`.
+    pub fn with_lib_search_dirs(mut self, dirs: Vec<PathBuf>) -> Self {
+        self.lib_search_dirs = dirs;
+        self
     }
 }
 
@@ -79,6 +90,12 @@ impl Linker for ArmLinker {
             args.extend(profile.link_flags.iter().cloned());
         }
         args.extend(extra.flags.iter().cloned());
+
+        // Linker-script search dirs (-L). ld resolves a relative `INCLUDE`
+        // in the linker script against these paths.
+        for dir in &self.lib_search_dirs {
+            args.push(format!("-L{}", dir.display()));
+        }
 
         args.extend([
             format!("-T{}", self.linker_script_path.display()),

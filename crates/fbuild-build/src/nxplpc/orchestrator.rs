@@ -26,36 +26,7 @@ use crate::generic_arm::{ArmCompiler, ArmLinker};
 use crate::pipeline;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
-use super::{
-    mcu_config, ARDUINO_STUB_ASSETS, DEVICE_HEADER_ASSETS, LPC804_LD, LPC804_STARTUP, LPC845_LD,
-    LPC845_STARTUP, MAIN_CPP_SHIM,
-};
-
-/// Per-MCU asset bundle: linker script + startup `.S`. Selected from
-/// the embedded `include_str!` constants based on the board's `mcu`
-/// field.
-#[derive(Debug)]
-struct McuAssets {
-    linker_script: &'static str,
-    startup_asm: &'static str,
-}
-
-fn mcu_assets(mcu: &str) -> Result<McuAssets> {
-    match mcu {
-        "lpc804" => Ok(McuAssets {
-            linker_script: LPC804_LD,
-            startup_asm: LPC804_STARTUP,
-        }),
-        "lpc845" => Ok(McuAssets {
-            linker_script: LPC845_LD,
-            startup_asm: LPC845_STARTUP,
-        }),
-        other => Err(FbuildError::ConfigError(format!(
-            "unknown NXP LPC8xx MCU '{}'; expected one of: lpc804, lpc845",
-            other
-        ))),
-    }
-}
+use super::mcu_config;
 
 fn board_lpc_family(board: &fbuild_config::BoardConfig) -> Result<&'static str> {
     let mut candidates = vec![
@@ -81,27 +52,28 @@ fn board_lpc_family(board: &fbuild_config::BoardConfig) -> Result<&'static str> 
     )))
 }
 
-/// Write an embedded asset string to `dir/filename` and return the path.
-/// Used to materialise the linker script, startup `.S`, and `main.cpp`
-/// shim from `include_str!` blobs into the build dir where the toolchain
-/// can consume them.
-fn write_asset(dir: &std::path::Path, filename: &str, content: &str) -> Result<PathBuf> {
-    let path = dir.join(filename);
-    if let Some(parent) = path.parent() {
-        std::fs::create_dir_all(parent)?;
+/// Enumerate compilable translation units (`.c/.cc/.cpp/.S/.s`) directly
+/// inside `dir`. Pulls the vendored ArduinoCore-LPC8xx core sources into the
+/// build as "core" sources.
+fn collect_compilable_sources(dir: &std::path::Path) -> Result<Vec<PathBuf>> {
+    let mut out = Vec::new();
+    for entry in std::fs::read_dir(dir).map_err(|e| {
+        FbuildError::BuildFailed(format!("failed to read core dir {}: {}", dir.display(), e))
+    })? {
+        let path = entry
+            .map_err(|e| FbuildError::BuildFailed(format!("core dir entry error: {}", e)))?
+            .path();
+        if path.is_file()
+            && matches!(
+                path.extension().and_then(|ext| ext.to_str()),
+                Some("c" | "cc" | "cpp" | "S" | "s")
+            )
+        {
+            out.push(path);
+        }
     }
-    std::fs::write(&path, content)?;
-    Ok(path)
-}
-
-fn write_asset_group(
-    dir: &std::path::Path,
-    assets: &[(&'static str, &'static str)],
-) -> Result<Vec<PathBuf>> {
-    assets
-        .iter()
-        .map(|(filename, content)| write_asset(dir, filename, content))
-        .collect()
+    out.sort();
+    Ok(out)
 }
 
 /// NXP LPC8xx (Cortex-M0+) build orchestrator.
@@ -141,46 +113,53 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
             &mut ctx.build_log,
         );
 
-        // 4. Pick per-MCU assets (linker script + startup .S).
+        // 4. Vendor the Arduino LPC8xx core framework. This supersedes the
+        //    embedded `arduino_stub/` shim (FastLED/fbuild#479, #487): the
+        //    framework owns `main()`, startup + vector table, wiring,
+        //    HardwareSerial, SPI, and the device headers.
+        let core = fbuild_packages::library::ArduinoCoreLpc8xx::new(&params.project_dir);
+        let core_root = fbuild_packages::Package::ensure_installed(&core)?;
+        tracing::info!("ArduinoCore-LPC8xx at {}", core_root.display());
+
+        // 5. Family + linker script. The board's `ldscript` is relative to
+        //    the framework package root (e.g.
+        //    `linker_scripts/gcc/lpc845_flash.ld`); fall back to the
+        //    per-family default when the board omits it.
         let lpc_family = board_lpc_family(&ctx.board)?;
-        let assets = mcu_assets(lpc_family)?;
+        let ldscript_rel = ctx
+            .board
+            .ldscript
+            .as_deref()
+            .filter(|s| !s.is_empty())
+            .map(str::to_string)
+            .unwrap_or_else(|| format!("linker_scripts/gcc/{}_flash.ld", lpc_family));
+        let linker_script_path = core.linker_script(&ldscript_rel);
+        if !linker_script_path.is_file() {
+            return Err(FbuildError::ConfigError(format!(
+                "ArduinoCore-LPC8xx linker script not found: {} (board ldscript '{}')",
+                linker_script_path.display(),
+                ldscript_rel
+            )));
+        }
 
-        // 5. Materialise the embedded assets into the build dir.
-        //    - <build_dir>/lpc8xx.ld          → -T flag to the linker
-        //    - <build_dir>/startup_<mcu>.S    → compiled like any source
-        //    - <build_dir>/lpc8xx_main.cpp    → compiled like any source
-        let linker_script_path = write_asset(&ctx.build_dir, "lpc8xx.ld", assets.linker_script)?;
-        let startup_path = write_asset(
-            &ctx.build_dir,
-            &format!("startup_{}.S", lpc_family),
-            assets.startup_asm,
-        )?;
-        let main_shim_path = write_asset(&ctx.build_dir, "lpc8xx_main.cpp", MAIN_CPP_SHIM)?;
-        let stub_paths = write_asset_group(&ctx.build_dir, ARDUINO_STUB_ASSETS)?;
-        write_asset_group(&ctx.build_dir, DEVICE_HEADER_ASSETS)?;
-
-        // 6. Scan user sources. No external framework yet (Stage 3 / #479).
+        // 6. Scan user sources, then add the vendored core sources
+        //    (framework main(), startup, wiring, HardwareSerial, SPI, ...)
+        //    plus the board variant glue as "core" sources.
         let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
         let mut sources = scanner.scan_all_filtered(None, None, ctx.source_filter.as_deref())?;
 
-        // The framework-owned files (startup + main shim) get treated as
-        // "core" sources so they're compiled and linked exactly like any
-        // other dependency. Stage 4 (#487) replaces these with the
-        // framework-library extraction when ArduinoCore-LPC8xx ships
-        // real implementations.
-        sources.core_sources.push(startup_path);
-        sources.core_sources.push(main_shim_path);
-        for path in stub_paths {
-            if matches!(
-                path.extension().and_then(|ext| ext.to_str()),
-                Some("c" | "cc" | "cpp" | "S" | "s")
-            ) {
-                sources.core_sources.push(path);
-            }
+        for path in collect_compilable_sources(&core.core_dir())? {
+            sources.core_sources.push(path);
+        }
+        // The board variant.cpp pulls its base variant in via a relative
+        // include, so compiling the board's translation unit is sufficient.
+        let variant_cpp = core.variant_dir(&ctx.board.variant).join("variant.cpp");
+        if variant_cpp.is_file() {
+            sources.core_sources.push(variant_cpp);
         }
 
         tracing::info!(
-            "sources: {} sketch, {} core (framework shim), {} variant",
+            "sources: {} sketch, {} core (ArduinoCore-LPC8xx), {} variant",
             sources.sketch_sources.len(),
             sources.core_sources.len(),
             sources.variant_sources.len(),
@@ -191,21 +170,13 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         let mut defines = ctx.board.get_defines();
         defines.extend(mcu_config.defines_map());
 
-        // 8. Include dirs: framework stub + device headers + CMSIS core +
-        //    sketch/project discovery (libs under lib/, etc.). These fbuild-
-        //    owned roots replace the misplaced example-local include tree from
-        //    FastLED/FastLED#2988 and flow into build_info.json.
+        // 8. Include dirs: vendored core + board/base variant + CMSIS core +
+        //    sketch/project discovery (libs under lib/, etc.).
         //
-        //    Stage-3 hookup (partial, FastLED/fbuild#479): when the project
-        //    ships an Arduino-style hardware-package layout next to its
-        //    `platformio.ini` (`<project>/variants/<variant>/pins_arduino.h`,
-        //    a la zackees/ArduinoCore-LPC8xx), prepend that variant dir to
-        //    the include path. The bundled `Arduino.h` stub conditionally
-        //    `#include "pins_arduino.h"` when `__has_include` succeeds, so
-        //    LED_BUILTIN / PIN_SPI_* / pin maps become available with no
-        //    other code changes. Project-local takes precedence so symbols
-        //    from the real variant always win over any stub default.
-        let build_dir = crate::compiler::absolute_from_cwd(&ctx.build_dir);
+        //    Project-local override (FastLED/fbuild#479): when the project
+        //    ships its own `variants/<variant>/pins_arduino.h` next to
+        //    `platformio.ini`, that dir is prepended so its symbols win over
+        //    the vendored variant default.
         let src_dir = crate::compiler::absolute_from_cwd(&ctx.src_dir);
         let project_dir_abs = crate::compiler::absolute_from_cwd(&params.project_dir);
         let mut include_dirs: Vec<PathBuf> = Vec::with_capacity(8);
@@ -221,8 +192,9 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
             include_dirs.push(project_dir_abs.join("variants"));
         }
         include_dirs.extend([
-            build_dir.join("arduino_stub"),
-            build_dir.join("device_headers"),
+            core.core_dir(),
+            core.variant_dir(&ctx.board.variant),
+            core.variant_dir(lpc_family),
             cmsis.get_core_include_dir(),
             src_dir,
         ]);
@@ -247,7 +219,9 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         .with_build_unflags(ctx.build_unflags.clone())
         .with_eh_frame_policy(eh_frame_policy);
 
-        // 9. Linker. Uses the per-MCU linker script we just wrote.
+        // 9. Linker. Uses the vendored per-board linker script; `-L` the
+        //    framework root so the script's relative
+        //    `INCLUDE linker_scripts/gcc/lpc8xx_common.ld` resolves.
         let linker = ArmLinker::new(
             toolchain.get_gcc_path(),
             toolchain.get_ar_path(),
@@ -259,7 +233,8 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
             ctx.board.max_flash,
             ctx.board.max_ram,
             params.verbose,
-        );
+        )
+        .with_lib_search_dirs(vec![core.install_path()]);
 
         // 10. Compile extra library roots before the shared pipeline links them.
         let gcc_path = toolchain.get_gcc_path();
@@ -315,28 +290,6 @@ mod tests {
     }
 
     #[test]
-    fn mcu_assets_dispatch_lpc845() {
-        let assets = mcu_assets("lpc845").expect("lpc845 must be supported");
-        assert!(assets.linker_script.contains("LENGTH = 64K"));
-        assert!(assets.startup_asm.contains("Reset_Handler"));
-    }
-
-    #[test]
-    fn mcu_assets_dispatch_lpc804() {
-        let assets = mcu_assets("lpc804").expect("lpc804 must be supported");
-        assert!(assets.linker_script.contains("LENGTH = 32K"));
-        assert!(assets.startup_asm.contains("Reset_Handler"));
-    }
-
-    #[test]
-    fn mcu_assets_rejects_unknown_mcu() {
-        let err = mcu_assets("lpc999").unwrap_err();
-        let msg = format!("{}", err);
-        assert!(msg.contains("lpc999"));
-        assert!(msg.contains("lpc804") && msg.contains("lpc845"));
-    }
-
-    #[test]
     fn board_lpc_family_accepts_concrete_arduino_boards() {
         let cases = [
             ("lpc845brk", "lpc845"),
@@ -354,56 +307,24 @@ mod tests {
     }
 
     #[test]
-    fn boot_checksum_is_baked_into_assets() {
-        // The LPC8xx boot ROM rejects an image unless the first 8 vector
-        // words sum to zero (mod 2^32). The linker script computes the slot
-        // value and the startup table emits it at 0x1C. If either half is
-        // dropped, raw SWD flashing produces a non-booting image — guard
-        // both halves for every supported MCU.
-        for mcu in ["lpc845", "lpc804"] {
-            let assets = mcu_assets(mcu).expect("mcu must be supported");
-            assert!(
-                assets.linker_script.contains("_isr_vector_checksum ="),
-                "{mcu}.ld must define the boot checksum symbol"
-            );
-            assert!(
-                assets.linker_script.contains(
-                    "0 - (_estack + (Reset_Handler + 1) + (NMI_Handler + 1) + (HardFault_Handler + 1))"
-                ),
-                "{mcu}.ld checksum formula must include the thumb-bit (+1) terms"
-            );
-            assert!(
-                assets.startup_asm.contains(".word _isr_vector_checksum"),
-                "startup_{mcu}.S must emit the checksum at the 0x1C vector slot"
-            );
-            // The old placeholder that left the slot zero must be gone.
-            assert!(
-                !assets
-                    .startup_asm
-                    .contains(".word 0                    /* 0x1C"),
-                "startup_{mcu}.S must not leave the 0x1C boot-checksum slot zero"
-            );
-        }
-    }
-
-    #[test]
-    fn write_asset_round_trips_through_disk() {
+    fn collect_compilable_sources_filters_and_sorts() {
         let dir = tempfile::tempdir().expect("tempdir");
-        let written = write_asset(dir.path(), "demo.txt", "hello\nworld\n").unwrap();
-        let read_back = std::fs::read_to_string(&written).unwrap();
-        assert_eq!(read_back, "hello\nworld\n");
-        assert_eq!(written, dir.path().join("demo.txt"));
+        for name in ["b.cpp", "a.c", "startup.S", "header.h", "notes.txt"] {
+            std::fs::write(dir.path().join(name), "x").unwrap();
+        }
+        let found = collect_compilable_sources(dir.path()).unwrap();
+        let names: Vec<String> = found
+            .iter()
+            .map(|p| p.file_name().unwrap().to_string_lossy().into_owned())
+            .collect();
+        // Only translation units, sorted; headers/text excluded.
+        assert_eq!(names, vec!["a.c", "b.cpp", "startup.S"]);
     }
 
     #[test]
-    fn main_cpp_shim_calls_setup_and_loop() {
-        // Guarantees the embedded shim hasn't been gutted by an unrelated
-        // edit — the framework-owned `main()` is the *only* user-visible
-        // entry point until #479 ships the ArduinoCore-LPC8xx framework.
-        assert!(MAIN_CPP_SHIM.contains("void setup(void)"));
-        assert!(MAIN_CPP_SHIM.contains("void loop(void)"));
-        assert!(MAIN_CPP_SHIM.contains("int main(void)"));
-        assert!(MAIN_CPP_SHIM.contains("setup();"));
-        assert!(MAIN_CPP_SHIM.contains("loop();"));
+    fn collect_compilable_sources_errors_on_missing_dir() {
+        let dir = tempfile::tempdir().expect("tempdir");
+        let missing = dir.path().join("does-not-exist");
+        assert!(collect_compilable_sources(&missing).is_err());
     }
 }
