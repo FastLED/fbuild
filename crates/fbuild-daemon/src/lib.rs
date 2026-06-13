@@ -29,6 +29,7 @@
 //! - GET  /ws/logs
 //! - GET  /ws/monitor/{session_id}
 
+pub mod broker;
 pub mod context;
 pub mod device_manager;
 pub mod handlers;

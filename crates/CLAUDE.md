@@ -1,5 +1,28 @@
 # Crates Architecture
 
+## Monocrate policy — do not add new crates
+
+fbuild is kept as close to a monocrate as possible. The set of crates below is
+intentionally fixed. **New functionality is folded into an existing crate as a
+module, never introduced as a new crate.** Examples that already follow this:
+per-platform build orchestrators are modules under `fbuild-build`, and the
+running-process v1 broker adoption is a module under `fbuild-daemon/src/broker/`
+(it was deliberately *not* kept as a standalone `fbuild-broker` crate —
+FastLED/fbuild#560).
+
+When something is needed by two crates that cannot depend on each other (the
+classic case: `fbuild-cli` is a thin HTTP client and must not depend on
+`fbuild-daemon`), put the shared, dependency-free pieces in a crate both already
+depend on — `fbuild-core` or `fbuild-paths` — and keep the heavy/transport code
+in the consuming crate. (That is exactly how the broker's display constants and
+`CacheRoots` live in `fbuild-paths::running_process` while the prost/session
+machinery stays in `fbuild-daemon`.)
+
+This is enforced by CI: `crate-gate.yml` runs `ci/check_workspace_crates.py`,
+which fails if `[workspace] members` gains an entry outside the approved
+allowlist. A genuinely-justified new crate requires adding it to that allowlist
+in the same PR with a maintainer-reviewed rationale.
+
 ## Dependency Graph
 
 ```

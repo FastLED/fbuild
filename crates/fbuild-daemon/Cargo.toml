@@ -44,6 +44,10 @@ uuid = { workspace = true }
 serialport = { workspace = true }
 base64 = { workspace = true }
 bytes = { workspace = true }
+# running-process + prost back the v1 broker adoption module (src/broker/),
+# folded in from the former standalone fbuild-broker crate (FastLED/fbuild#560).
+running-process = { workspace = true }
+prost = { workspace = true }
 futures = { workspace = true }
 regex = { workspace = true }
 async-trait = { workspace = true }

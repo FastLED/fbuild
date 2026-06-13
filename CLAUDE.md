@@ -1,9 +1,10 @@
 # CLAUDE.md
 
-fbuild is a PlatformIO-compatible embedded build tool (11 crates). See @docs/CLAUDE.md for which architecture doc to read based on what you're working on.
+fbuild is a PlatformIO-compatible embedded build tool, organized as a small fixed set of crates (kept as close to a monocrate as possible — see the "Never add a new crate" rule below). See @docs/CLAUDE.md for which architecture doc to read based on what you're working on.
 
 ## Essential Rules
 
+- **Never add a new crate.** fbuild is kept as close to a monocrate as possible. New functionality is folded into an existing crate as a *module*, not introduced as a new crate or workspace member. Per-platform orchestrators live as modules under `fbuild-build`; the running-process broker adoption lives under `fbuild-daemon/src/broker/` (FastLED/fbuild#560) — follow that pattern. If code is needed by two crates that can't depend on each other (e.g. the CLI and the daemon), put the shared, dependency-free pieces in a crate both already depend on (`fbuild-core` / `fbuild-paths`). This is enforced by CI (`crate-gate.yml` → `ci/check_workspace_crates.py`): adding a workspace member fails the build unless you also add it to the approved allowlist with a maintainer-reviewed rationale.
 - **Always use a globally-installed `soldr` to execute Rust commands.** Bare cargo/rustc and legacy `uv run cargo` shims are blocked by hook. soldr uses `rustup which` to pick the rustup-managed toolchain from `rust-toolchain.toml`. The standard Cargo path is `soldr cargo ...`, so repo Rust builds get soldr's managed zccache path by default; do not add repo-specific `RUSTC_WRAPPER` wiring for normal builds. Install soldr globally via `uv tool install soldr` (or see https://github.com/zackees/soldr).
 - **Always use `uv` for Python.** Bare `python`/`pip` are blocked by hook. Use `uv run ...` or `uv pip ...`.
 - MSRV: 1.94.1 | Edition: 2021 | Toolchain: 1.94.1 pinned in `rust-toolchain.toml` (clippy + rustfmt)

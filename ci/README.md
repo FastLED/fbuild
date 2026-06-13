@@ -5,6 +5,7 @@ Python scripts for CI, packaging, and development tooling. All invoked via `uv r
 ## Contents
 
 - **`build_dist.py`** -- Triggers GitHub Actions native builds, downloads artifacts, and assembles `dist/` for PyPI packaging
+- **`check_workspace_crates.py`** -- Monocrate guard: fails if the root `Cargo.toml` `[workspace] members` list gains a crate outside the approved allowlist (run by `crate-gate.yml`)
 - **`env.py`** -- Centralized PATH activation ensuring `.cargo/bin` is on PATH before invoking Rust tools
 - **`extract_pio_build_flags.py`** -- Extracts compiler/linker flags from PlatformIO for each board and writes reference JSONs
 - **`lint.py`** -- Workspace linting (rustfmt + clippy), supports single-file and auto-fix modes

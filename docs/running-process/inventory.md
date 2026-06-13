@@ -34,7 +34,7 @@ path therefore wraps the **verbatim** JSON body inside a thin prost envelope
 the v1 `Frame` lane (`FBUILD_PAYLOAD_PROTOCOL = 0x7EB1`). The daemon dispatches
 on `op` and feeds `payload_json` to its existing parser — so the broker path is a
 **pure framing change, not a schema fork**. The single internal model
-(`BrokerRequest` / `BrokerResponse`, in `crates/fbuild-broker/src/protocol.rs`)
+(`BrokerRequest` / `BrokerResponse`, in `crates/fbuild-daemon/src/broker/protocol.rs`)
 serializes to JSON for the direct path and to prost for the broker path, and the
 parity tests assert the two encodings of the same message stay in lock-step.
 

@@ -9,7 +9,6 @@ members = [
     "crates/fbuild-build",
     "crates/fbuild-deploy",
     "crates/fbuild-daemon",
-    "crates/fbuild-broker",
     "crates/fbuild-cli",
     "crates/fbuild-python",
     "crates/fbuild-test-support",
@@ -77,7 +76,7 @@ bincode = "1"
 # prost: hand-derived `#[derive(prost::Message)]` payload structs for the
 # fbuild v1 broker request/response lane (no .proto/build.rs needed). Pinned
 # to the version running-process 4.3.0 re-exports so the wire types stay
-# compatible. See crates/fbuild-broker.
+# compatible. See crates/fbuild-daemon/src/broker.
 prost = "0.14"
 zccache-artifact = "1.9"
 rayon = "1"
@@ -94,11 +93,12 @@ owo-colors = "4"
 # the upstream mono-crate consolidation.
 #
 # v1 broker adoption (zackees/running-process#437 / FastLED/fbuild#510):
-# `fbuild-broker` adopts the frozen v1 broker session API (`#433`) for daemon
-# discovery + version negotiation, so we now enable the `client-async` feature
-# (fbuild-daemon is a tokio runtime — `AsyncBrokerSession::adopt`). The
-# `core` feature stays on for process containment. `RUNNING_PROCESS_DISABLE=1`
-# still selects the legacy direct loopback-HTTP path (see fbuild-broker docs).
+# `fbuild-daemon`'s `broker` module adopts the frozen v1 broker session API
+# (`#433`) for daemon discovery + version negotiation, so we now enable the
+# `client-async` feature (fbuild-daemon is a tokio runtime —
+# `AsyncBrokerSession::adopt`). The `core` feature stays on for process
+# containment. `RUNNING_PROCESS_DISABLE=1` still selects the legacy direct
+# loopback-HTTP path (see crates/fbuild-daemon/src/broker).
 running-process = { version = "4.3.0", default-features = false, features = ["client-async"] }
 
 [profile.dev]
