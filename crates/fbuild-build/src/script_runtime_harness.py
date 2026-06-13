@@ -3,8 +3,10 @@ import json
 import os
 import re
 import sys
+import types
 
 
+# Compiler/linker scopes the runtime knows how to translate into native flags.
 SUPPORTED_SCOPES = {
     "CPPDEFINES",
     "CPPPATH",
@@ -15,6 +17,28 @@ SUPPORTED_SCOPES = {
     "LINKFLAGS",
     "LIBPATH",
     "LIBS",
+}
+
+# `BUILD_FLAGS` is PlatformIO's aggregate compile-flag list. Scripts commonly
+# append to it (e.g. Marlin `common-cxxflags.py`); fold it into the common
+# compile flags on export. Tracked as a mutable scope but not a direct
+# compiler scope, so it is kept separate from SUPPORTED_SCOPES.
+MUTABLE_SCOPES = SUPPORTED_SCOPES | {"BUILD_FLAGS"}
+
+# Non-flag construction variables that real scripts mutate (tool paths, output
+# naming, upload settings). They have no effect on native compile/link flags,
+# so the runtime records them as notes instead of failing — this keeps
+# tool-path scripts (e.g. m5panel `littlefsbuilder.py`) from aborting the build.
+# Genuinely unknown scopes still fail fast to surface real divergence.
+KNOWN_IGNORED_SCOPES = {
+    "MKSPIFFSTOOL",
+    "MKFSTOOL",
+    "BUILD_DIR",
+    "PROGNAME",
+    "PROGSUFFIX",
+    "UPLOAD_PROTOCOL",
+    "UPLOADER",
+    "UPLOADCMD",
 }
 
 NOOP_METHODS = {
@@ -67,17 +91,30 @@ class MockEnv:
         self._pio_platform = MockPioPlatform(platform_name, platformio_home)
         self._notes = notes
         self._unsupported = unsupported
-        self._scopes = {key: [] for key in SUPPORTED_SCOPES}
+        self._scopes = {key: [] for key in MUTABLE_SCOPES}
         self._vars = {
             "PROJECT_DIR": project_dir,
             "PIOENV": env_name,
         }
 
+    def _export_cppdefines(self):
+        # In-place mutations (`env["CPPDEFINES"].append((name, value))`) bypass
+        # `Append`/`_normalize_items`, so re-normalize every entry on export to
+        # keep tuple-shaped defines from leaking out as raw JSON arrays the
+        # Rust side cannot decode.
+        out = []
+        for entry in self._scopes["CPPDEFINES"]:
+            out.extend(self._normalize_cppdefine(entry))
+        return out
+
     def export_state(self):
+        # `BUILD_FLAGS` folds into the common compile flags (`CCFLAGS`).
+        ccflags = [str(item) for item in self._scopes["BUILD_FLAGS"]]
+        ccflags.extend(self._scopes["CCFLAGS"])
         return {
-            "cppdefines": self._scopes["CPPDEFINES"],
+            "cppdefines": self._export_cppdefines(),
             "cpppath": self._scopes["CPPPATH"],
-            "ccflags": self._scopes["CCFLAGS"],
+            "ccflags": ccflags,
             "cflags": self._scopes["CFLAGS"],
             "cxxflags": self._scopes["CXXFLAGS"],
             "asflags": self._scopes["ASFLAGS"],
@@ -147,7 +184,13 @@ class MockEnv:
 
     def _mutate(self, mode, kwargs):
         for scope, value in kwargs.items():
-            if scope not in SUPPORTED_SCOPES:
+            if scope not in MUTABLE_SCOPES:
+                if scope in KNOWN_IGNORED_SCOPES:
+                    self._notes.append(
+                        f"{self._label}.{mode} on non-flag scope '{scope}' ignored "
+                        "by native extra_scripts runtime"
+                    )
+                    continue
                 self._record_unsupported(
                     f"{self._label}.{mode} on unsupported scope '{scope}'"
                 )
@@ -217,10 +260,21 @@ class MockEnv:
         return re.sub(r"\$([A-Za-z_][A-Za-z0-9_]*)|\$\{([^}]+)\}", repl, text)
 
     def get(self, key, default=None):
-        return self._vars.get(key, default)
+        if key in self._vars:
+            return self._vars[key]
+        return self._project_options.get(key, default)
 
     def GetProjectOption(self, key, default=None):
         return self._project_options.get(key, default)
+
+    def GetProjectOptions(self):
+        return list(self._project_options.items())
+
+    def GetBuildType(self):
+        return self._project_options.get("build_type", "release")
+
+    def __contains__(self, key):
+        return key in self._vars or key in self._scopes
 
     def __getitem__(self, key):
         if key in self._vars:
@@ -230,7 +284,7 @@ class MockEnv:
         raise KeyError(key)
 
     def __setitem__(self, key, value):
-        if key in SUPPORTED_SCOPES:
+        if key in MUTABLE_SCOPES:
             self._scopes[key] = self._normalize_items(key, value)
         else:
             self._vars[key] = value
@@ -254,12 +308,30 @@ def resolve_script_entry(env, raw):
     return "post", os.path.abspath(env.subst(raw))
 
 
-def execute_script(path, import_fn, project_dir):
+def install_scons_module():
+    # Many real extra_scripts obtain the environment via
+    # `from SCons.Script import DefaultEnvironment` rather than `Import("env")`.
+    # Provide a stub `SCons.Script` module so that import resolves; its
+    # `Import`/`DefaultEnvironment` attributes are rebound per script in
+    # `execute_script` to the currently-running script's dispatcher.
+    scons = sys.modules.get("SCons") or types.ModuleType("SCons")
+    script_mod = sys.modules.get("SCons.Script") or types.ModuleType("SCons.Script")
+    scons.Script = script_mod
+    sys.modules["SCons"] = scons
+    sys.modules["SCons.Script"] = script_mod
+    return script_mod
+
+
+def execute_script(path, import_fn, project_dir, scons_script_mod):
     script_dir = os.path.dirname(path)
     old_sys_path = list(sys.path)
     sys.path.insert(0, script_dir)
     if project_dir not in sys.path:
         sys.path.insert(0, project_dir)
+    scons_script_mod.Import = import_fn
+    scons_script_mod.DefaultEnvironment = import_fn.default_environment
+    scons_script_mod.COMMAND_LINE_TARGETS = []
+    scons_script_mod.ARGUMENTS = {}
     scope = {
         "__file__": path,
         "__name__": "__main__",
@@ -340,11 +412,12 @@ def main():
     pre_scripts = [path for scope, path in script_entries if scope == "pre"]
     post_scripts = [path for scope, path in script_entries if scope == "post"]
 
+    scons_script_mod = install_scons_module()
     try:
         for path in pre_scripts:
-            execute_script(path, ImportDispatcher(env, projenv, False), project_dir)
+            execute_script(path, ImportDispatcher(env, projenv, False), project_dir, scons_script_mod)
         for path in post_scripts:
-            execute_script(path, ImportDispatcher(env, projenv, True), project_dir)
+            execute_script(path, ImportDispatcher(env, projenv, True), project_dir, scons_script_mod)
     except RuntimeFailure as exc:
         unsupported.append(str(exc))
 

@@ -732,4 +732,255 @@ Import(\"env\")
         );
         assert!(err.contains("Recommendation: use --platformio"), "{err}");
     }
+
+    /// Write a project whose `platformio.ini` carries extra `[env:demo]` lines
+    /// (e.g. `build_type = debug`) alongside a single `extra_scripts` entry.
+    fn write_runtime_project_with_config(
+        env_lines: &str,
+        extra_scripts: &str,
+        script_name: &str,
+        script_body: &str,
+    ) -> tempfile::TempDir {
+        let temp = tempfile::tempdir().unwrap();
+        let project_dir = temp.path();
+        fs::write(
+            project_dir.join("platformio.ini"),
+            format!(
+                "\
+[env:demo]
+platform = atmelavr
+board = uno
+framework = arduino
+{env_lines}extra_scripts = {extra_scripts}
+"
+            ),
+        )
+        .unwrap();
+        fs::write(project_dir.join(script_name), script_body).unwrap();
+        temp
+    }
+
+    fn resolve_runtime_overlay(project_dir: &Path) -> BuildOverlay {
+        let config =
+            fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini"))
+                .unwrap();
+        resolve_extra_script_overlay(project_dir, "demo", &config).unwrap()
+    }
+
+    // ---- SIMPLE tier ------------------------------------------------------
+
+    /// Marlin `common-cxxflags.py`-style script: language-specific append,
+    /// `GetBuildType()` gating, in-place `BUILD_FLAGS` append, and a no-op
+    /// `AddPostAction`. Source: MarlinFirmware/Marlin buildroot scripts.
+    #[test]
+    fn test_shim_simple_marlin_cxxflags_style() {
+        if find_python().is_none() {
+            return;
+        }
+
+        let temp = write_runtime_project_with_config(
+            "build_type = debug\n",
+            "post:common_cxxflags.py",
+            "common_cxxflags.py",
+            "\
+Import(\"env\")
+flags = []
+if \"teensy\" not in env[\"PIOENV\"]:
+    flags.append(\"-Wno-register\")
+env.Append(CXXFLAGS=flags)
+if env.GetBuildType() == \"debug\":
+    env.Append(CPPDEFINES=[\"MARLIN_DEBUG\"])
+env[\"BUILD_FLAGS\"].append(\"-DBOARD_F_CPU=16000000\")
+env.AddPostAction(\"$PROGPATH\", lambda *a, **k: None)
+",
+        );
+
+        let overlay = resolve_runtime_overlay(temp.path());
+        assert!(
+            overlay
+                .global_compile
+                .cxx
+                .contains(&"-Wno-register".to_string()),
+            "{overlay:?}"
+        );
+        assert!(
+            overlay
+                .global_compile
+                .common
+                .contains(&"-DMARLIN_DEBUG".to_string()),
+            "{overlay:?}"
+        );
+        assert!(
+            overlay
+                .global_compile
+                .common
+                .contains(&"-DBOARD_F_CPU=16000000".to_string()),
+            "BUILD_FLAGS should fold into common compile flags: {overlay:?}"
+        );
+    }
+
+    /// Tuple-shaped `CPPDEFINES` appended in place via `__getitem__` must still
+    /// emit `-Dkey=value`, not a malformed array entry.
+    #[test]
+    fn test_shim_simple_inplace_tuple_cppdefine() {
+        if find_python().is_none() {
+            return;
+        }
+
+        let temp = write_runtime_project_with_config(
+            "",
+            "post:tuple_define.py",
+            "tuple_define.py",
+            "\
+Import(\"env\")
+env[\"CPPDEFINES\"].append((\"VERSION\", 7))
+env.Append(CPPDEFINES=[\"PLAIN\"])
+",
+        );
+
+        let overlay = resolve_runtime_overlay(temp.path());
+        assert!(
+            overlay
+                .global_compile
+                .common
+                .contains(&"-DVERSION=7".to_string()),
+            "{overlay:?}"
+        );
+        assert!(
+            overlay
+                .global_compile
+                .common
+                .contains(&"-DPLAIN".to_string()),
+            "{overlay:?}"
+        );
+    }
+
+    // ---- MEDIUM tier ------------------------------------------------------
+
+    /// namf `platformio_script.py`-style script: obtains env via
+    /// `from SCons.Script import DefaultEnvironment`, reads + rewrites
+    /// `LINKFLAGS`, and registers a no-op post action.
+    #[test]
+    fn test_shim_medium_default_environment_linkflags() {
+        if find_python().is_none() {
+            return;
+        }
+
+        let temp = write_runtime_project_with_config(
+            "",
+            "post:namf_style.py",
+            "namf_style.py",
+            "\
+from SCons.Script import DefaultEnvironment
+env = DefaultEnvironment()
+flags = \" \".join(env[\"LINKFLAGS\"])
+flags = flags.replace(\"-u _printf_float\", \"\")
+env.Replace(LINKFLAGS=flags.split())
+env.Append(LINKFLAGS=[\"-Wl,--gc-sections\"])
+def after_build(*a, **k):
+    pass
+env.AddPostAction(\"$BUILD_DIR/firmware.bin\", after_build)
+",
+        );
+
+        let overlay = resolve_runtime_overlay(temp.path());
+        assert!(
+            overlay
+                .link
+                .flags
+                .contains(&"-Wl,--gc-sections".to_string()),
+            "{overlay:?}"
+        );
+    }
+
+    /// m5panel `littlefsbuilder.py`-style script: `env.get()` plus a
+    /// `Replace` on a non-flag tool scope. The tool scope must be recorded as
+    /// a note (not a hard failure) while the real flag mutation lands.
+    #[test]
+    fn test_shim_medium_nonflag_scope_recorded_not_rejected() {
+        if find_python().is_none() {
+            return;
+        }
+
+        let temp = write_runtime_project_with_config(
+            "",
+            "post:littlefs.py",
+            "littlefs.py",
+            "\
+Import(\"env\")
+env.Replace(MKSPIFFSTOOL=env.get(\"PROJECT_DIR\") + \"/tools/mklittlefs\")
+env.Append(CPPDEFINES=[\"LFS_OK\"])
+",
+        );
+
+        let overlay = resolve_runtime_overlay(temp.path());
+        assert!(
+            overlay
+                .global_compile
+                .common
+                .contains(&"-DLFS_OK".to_string()),
+            "{overlay:?}"
+        );
+        assert!(
+            overlay.notes.iter().any(|n| n.contains("MKSPIFFSTOOL")),
+            "non-flag scope should be recorded as a note: {overlay:?}"
+        );
+    }
+
+    // ---- COMPLEX tier (graceful refusal / no-op) --------------------------
+
+    /// amsreader `generate_includes.py`-style script: a no-op `Execute` of a
+    /// `VerboseAction`. The script makes no flag mutations; the runtime must
+    /// succeed, collect nothing, and note the ignored action.
+    #[test]
+    fn test_shim_complex_execute_verbose_action_is_noop() {
+        if find_python().is_none() {
+            return;
+        }
+
+        let temp = write_runtime_project_with_config(
+            "",
+            "post:generate_includes.py",
+            "generate_includes.py",
+            "\
+from SCons.Script import DefaultEnvironment
+env = DefaultEnvironment()
+env.Execute(env.VerboseAction(\"$PYTHONEXE -m pip install css_html_js_minify\", \"Installing\"))
+",
+        );
+
+        let overlay = resolve_runtime_overlay(temp.path());
+        assert!(
+            overlay.global_compile.is_empty() && overlay.project_compile.is_empty(),
+            "effectful codegen script should contribute no flags: {overlay:?}"
+        );
+        assert!(
+            overlay.notes.iter().any(|n| n.contains("Execute")),
+            "{overlay:?}"
+        );
+    }
+
+    /// Marlin `common-dependencies.py`-style script: `SConscript` recursion is
+    /// structurally unshimmable and must bail with a `--platformio` hint
+    /// rather than silently producing wrong flags.
+    #[test]
+    fn test_shim_complex_sconscript_bails() {
+        if find_python().is_none() {
+            return;
+        }
+
+        let temp = write_runtime_project_with_config(
+            "",
+            "post:common_dependencies.py",
+            "common_dependencies.py",
+            "\
+Import(\"env\")
+env.Append(CPPDEFINES=[\"EARLY\"])
+env.SConscript(\"feature.py\", exports=\"env\")
+",
+        );
+        let err = resolve_runtime_error(temp.path());
+        assert!(err.contains("SConscript is not supported"), "{err}");
+        assert!(err.contains("Recommendation: use --platformio"), "{err}");
+    }
 }
