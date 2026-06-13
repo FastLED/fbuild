@@ -28,11 +28,6 @@ pub(crate) struct MonitorState {
     timeout_dur: Option<std::time::Duration>,
     expect_found: bool,
     show_timestamp: bool,
-    /// Set once an ESP ROM download-mode signal has been diagnosed, so the
-    /// boot-mode warning is emitted at most once per monitor session rather
-    /// than on every repeated `waiting for download` line. See
-    /// FastLED/fbuild#532.
-    boot_mode_warned: bool,
 }
 
 impl MonitorState {
@@ -69,7 +64,6 @@ impl MonitorState {
             timeout_dur: timeout_secs.map(std::time::Duration::from_secs_f64),
             expect_found: false,
             show_timestamp,
-            boot_mode_warned: false,
         }
     }
 
@@ -103,17 +97,25 @@ impl MonitorState {
             tracing::info!("{}", line);
         }
 
-        if !self.boot_mode_warned {
-            if let Some(signal) = fbuild_serial::boot_mode::detect_download_mode(line) {
-                self.boot_mode_warned = true;
-                tracing::warn!("{}", signal.diagnostic());
-            }
-        }
-
         if let Some(ref re) = self.expect_re {
             if re.is_match(line) {
                 self.expect_found = true;
             }
+        }
+
+        // A board stuck in the ESP ROM serial bootloader ("download mode")
+        // never emits application output, so a monitor that keeps waiting for
+        // the full timeout looks like a host-side deadlock and returns a bland
+        // "completed (timeout)" success while the board is effectively bricked.
+        // Halt immediately and surface the exact boot-mode problem so callers
+        // (and the post-deploy monitor) fail fast with an actionable message.
+        // See FastLED/fbuild#532.
+        if let Some(signal) = fbuild_serial::boot_mode::detect_download_mode(line) {
+            tracing::warn!("{}", signal.diagnostic());
+            return Some(MonitorOutcome::Error(format!(
+                "ESP ROM download-mode detected: {}",
+                signal.diagnostic()
+            )));
         }
 
         if let Some(ref re) = self.halt_error_re {
@@ -293,4 +295,62 @@ pub async fn monitor(
             format!("monitoring {} at {} baud", port, baud_rate),
         )),
     )
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn state() -> MonitorState {
+        MonitorState::new(Some(5.0), None, Some("READY"), Some("BOOT_OK"), false)
+    }
+
+    #[test]
+    fn download_mode_line_halts_with_diagnostic() {
+        let mut s = state();
+        let outcome = s
+            .process_line("rst:0x1 (POWERON),boot:0x23 DOWNLOAD(USB/UART0)")
+            .expect("download-mode line must halt the monitor");
+        match outcome {
+            MonitorOutcome::Error(msg) => {
+                assert!(
+                    msg.contains("download-mode"),
+                    "diagnostic should name the boot-mode problem, got: {msg}"
+                );
+            }
+            other => panic!("expected Error outcome, got {other:?}"),
+        }
+    }
+
+    #[test]
+    fn waiting_for_download_halts() {
+        let mut s = state();
+        assert!(
+            matches!(
+                s.process_line("waiting for download"),
+                Some(MonitorOutcome::Error(_))
+            ),
+            "`waiting for download` must surface as an error, not a silent wait"
+        );
+    }
+
+    #[test]
+    fn normal_app_output_does_not_halt() {
+        let mut s = state();
+        assert!(s.process_line("Hello from app_main").is_none());
+        assert!(s.process_line("boot:0x13 (SPI_FAST_FLASH_BOOT)").is_none());
+    }
+
+    #[test]
+    fn halt_on_success_and_expect_still_work() {
+        let mut s = state();
+        // expect is observed without halting.
+        assert!(s.process_line("BOOT_OK reached").is_none());
+        assert!(s.expect_found());
+        // halt-on-success still terminates the loop.
+        match s.process_line("system READY now") {
+            Some(MonitorOutcome::Success(msg)) => assert!(msg.contains("READY")),
+            other => panic!("expected Success outcome, got {other:?}"),
+        }
+    }
 }
