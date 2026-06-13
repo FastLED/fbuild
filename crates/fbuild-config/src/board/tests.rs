@@ -104,6 +104,27 @@ fn test_from_board_id_unknown() {
 }
 
 #[test]
+fn test_from_board_id_or_default_uses_primary_when_known() {
+    let config = BoardConfig::from_board_id_or_default("mega", "uno", &HashMap::new());
+    assert_eq!(config.mcu, "atmega2560");
+}
+
+#[test]
+fn test_from_board_id_or_default_falls_back_when_unknown() {
+    let config = BoardConfig::from_board_id_or_default("nonexistent_board", "uno", &HashMap::new());
+    assert_eq!(config.mcu, "atmega328p");
+}
+
+#[test]
+fn test_from_board_id_or_default_carries_overrides_into_fallback() {
+    let mut overrides = HashMap::new();
+    overrides.insert("f_cpu".to_string(), "8000000L".to_string());
+    let config = BoardConfig::from_board_id_or_default("nonexistent_board", "uno", &overrides);
+    assert_eq!(config.f_cpu, "8000000L");
+    assert_eq!(config.mcu, "atmega328p");
+}
+
+#[test]
 fn test_from_board_id_with_overrides() {
     let mut overrides = HashMap::new();
     overrides.insert("f_cpu".to_string(), "8000000L".to_string());
