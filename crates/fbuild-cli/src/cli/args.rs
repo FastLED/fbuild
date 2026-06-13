@@ -388,6 +388,16 @@ pub enum Commands {
         #[arg(short, long)]
         verbose: bool,
     },
+    /// Emit clangd / VS Code config (.clangd, .vscode/settings.json) for the
+    /// default env so go-to-definition and include resolution work in the IDE
+    #[command(name = "clangd-config")]
+    ClangdConfig {
+        project_dir: Option<String>,
+        #[arg(short = 'e', long)]
+        environment: Option<String>,
+        #[arg(short, long)]
+        verbose: bool,
+    },
     /// Build firmware and run it in an emulator for testing
     TestEmu {
         project_dir: Option<String>,
@@ -789,6 +799,7 @@ pub const KNOWN_SUBCOMMANDS: &[&str] = &[
     "mcp",
     "clang-tidy",
     "iwyu",
+    "clangd-config",
     "clang-query",
     "test-emu",
     "lib-select",
