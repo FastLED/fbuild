@@ -27,7 +27,11 @@ pub fn select_runner(
     board_overrides: &HashMap<String, String>,
     emulator: Option<&str>,
 ) -> fbuild_core::Result<Box<dyn EmulatorRunner>> {
-    let board = fbuild_config::BoardConfig::from_board_id(board_id, board_overrides)?;
+    let board = fbuild_config::BoardConfig::from_board_id_in_project(
+        board_id,
+        board_overrides,
+        Some(project_dir),
+    )?;
 
     if let Some(explicit) = emulator {
         return match explicit {
@@ -247,7 +251,12 @@ pub async fn test_emu(
         let needs_qemu_flags = platform == fbuild_core::Platform::Espressif32
             && req.emulator.as_deref() != Some("avr8js");
         let board_for_flags = if needs_qemu_flags {
-            fbuild_config::BoardConfig::from_board_id(&board_id, &board_overrides).ok()
+            fbuild_config::BoardConfig::from_board_id_in_project(
+                &board_id,
+                &board_overrides,
+                Some(project_dir.as_path()),
+            )
+            .ok()
         } else {
             None
         };

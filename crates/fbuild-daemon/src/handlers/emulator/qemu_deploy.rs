@@ -128,7 +128,11 @@ pub async fn deploy_qemu(
         );
     }
 
-    let board = match fbuild_config::BoardConfig::from_board_id(&board_id, &board_overrides) {
+    let board = match fbuild_config::BoardConfig::from_board_id_in_project(
+        &board_id,
+        &board_overrides,
+        Some(project_dir.as_path()),
+    ) {
         Ok(board) => board,
         Err(e) => {
             return (

@@ -93,7 +93,11 @@ pub async fn deploy_avr8js(
         );
     }
 
-    let board = match fbuild_config::BoardConfig::from_board_id(&board_id, &HashMap::new()) {
+    let board = match fbuild_config::BoardConfig::from_board_id_in_project(
+        &board_id,
+        &HashMap::new(),
+        Some(project_dir.as_path()),
+    ) {
         Ok(board) => board,
         Err(e) => {
             return (
