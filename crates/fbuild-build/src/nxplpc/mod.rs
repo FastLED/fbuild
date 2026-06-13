@@ -73,6 +73,10 @@ pub const ARDUINO_STUB_ASSETS: &[(&str, &str)] = &[
         "arduino_stub/wiring_time.c",
         include_str!("assets/arduino_stub/wiring_time.c"),
     ),
+    (
+        "arduino_stub/new_delete.cpp",
+        include_str!("assets/arduino_stub/new_delete.cpp"),
+    ),
 ];
 
 /// NXP device headers that bridge the generic CMSIS Core package to the

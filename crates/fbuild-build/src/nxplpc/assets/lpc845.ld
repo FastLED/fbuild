@@ -116,12 +116,27 @@ SECTIONS
         __bss_end__ = _ebss;
     } > RAM
 
-    /DISCARD/ :
-    {
-        libc.a ( * )
-        libm.a ( * )
-        libgcc.a ( * )
-    }
+    /*
+     * Heap. newlib-nano's nosys `_sbrk` grows the heap upward from the `end`
+     * symbol toward the descending stack, so dynamic allocation (malloc, and
+     * the operator new/new[] we provide in arduino_stub/new_delete.cpp) needs
+     * `end`/`_end` defined at the top of .bss. Without it _sbrk has no heap
+     * base and every allocation fails — required for any C++ that uses
+     * fl::vector / fl::string / fl::json (e.g. the JSON-RPC stack).
+     *
+     * These MUST be forced assignments, not PROVIDE: an LTO partition object
+     * can emit its own strong `end` symbol inside .bss, which silently
+     * suppresses a PROVIDE(end) and leaves the heap base BELOW _ebss —
+     * overlapping live .bss (including _sbrk's own `heap_end` state). The
+     * first heap-growing malloc then corrupts .bss and the core HardFaults.
+     * A forced assignment overrides the object symbol and pins the heap base
+     * past the real end of .bss.
+     */
+    . = ALIGN(8);
+    end = .;
+    _end = .;
+    __heap_start = .;
+    __HeapBase = .;
 
     .ARM.attributes 0 : { *(.ARM.attributes) }
 }

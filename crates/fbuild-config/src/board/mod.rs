@@ -26,6 +26,9 @@ mod types;
 mod tests;
 
 #[cfg(test)]
+mod tests_enriched_json;
+
+#[cfg(test)]
 mod tests_project_local;
 
 #[cfg(test)]
