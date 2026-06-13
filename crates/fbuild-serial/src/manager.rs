@@ -603,4 +603,69 @@ mod tests {
              leaked id kept has_clients() true forever"
         );
     }
+
+    /// Regression guard for FastLED/fbuild#531: after a timeout/halt monitor
+    /// session ends, the HTTP `monitor` handler detaches its reader and then
+    /// closes the port when no clients remain, releasing the OS serial handle
+    /// so a follow-up pyserial/esptool open of the same port succeeds without
+    /// `fbuild daemon stop`. This locks in the manager contract that the
+    /// handler relies on: detach drops the last client, and close removes the
+    /// session (and its serial handle) from the manager entirely.
+    #[tokio::test]
+    async fn detach_then_close_releases_port_for_lone_monitor() {
+        let mgr = SharedSerialManager::new();
+        let port = "COM_TEST_531";
+        let client = "monitor-client";
+
+        // Simulate an open, single-reader monitor session (the timeout path):
+        // a broadcaster is present and one reader is attached.
+        let (tx, _rx) = broadcast::channel(BROADCAST_CHANNEL_SIZE);
+        mgr.broadcasters.insert(port.to_string(), tx);
+        let mut readers = std::collections::HashSet::new();
+        readers.insert(client.to_string());
+        mgr.sessions.insert(
+            port.to_string(),
+            super::SerialSession {
+                port: port.to_string(),
+                baud_rate: 115200,
+                is_open: true,
+                writer_client_id: None,
+                reader_client_ids: readers,
+                output_buffer: Default::default(),
+                total_bytes_read: 0,
+                total_bytes_written: 0,
+                started_at: 0.0,
+                owner_client_id: Some(client.to_string()),
+                elf_path: None,
+                serial_handle: None,
+                reader_handle: None,
+                stop_flag: Arc::new(std::sync::atomic::AtomicBool::new(false)),
+            },
+        );
+
+        assert!(
+            mgr.has_clients(port),
+            "precondition: the lone monitor reader keeps the port busy"
+        );
+
+        // Mirror the handler cleanup sequence.
+        mgr.detach_reader(port, client);
+        assert!(
+            !mgr.has_clients(port),
+            "after the lone monitor detaches, no clients should remain"
+        );
+        mgr.close_port(port, client).await.expect("close_port");
+
+        // The session (and its serial handle) must be gone — the OS port is
+        // released, so a non-fbuild client can reopen it.
+        assert!(
+            mgr.sessions.get(port).is_none(),
+            "close_port must remove the session so the OS handle is released \
+             (regression of FastLED/fbuild#531)"
+        );
+        assert!(
+            mgr.broadcasters.get(port).is_none(),
+            "close_port must also drop the broadcaster for the released port"
+        );
+    }
 }
