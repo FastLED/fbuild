@@ -6,8 +6,8 @@
  *   - Reset_Handler (copies .data, zeros .bss, calls SystemInit then main)
  *   - Expanded vector table covering ARMv6-M system vectors + LPC845
  *     peripheral IRQs (see UM11029 table 5 "Interrupt sources")
- *   - SystemInit that brings core to 30 MHz from the on-chip FRO, with
- *     flash wait states programmed per UM11029 section 4.5 (FMC FLASHCFG)
+ *   - SystemInit that brings core to 24 MHz from the on-chip FRO (FRO direct),
+ *     with flash wait states programmed per UM11029 section 4.5 (FMC FLASHCFG)
  *
  * All non-Reset vectors alias Default_Handler (weak). Drivers may override
  * any IRQ by defining the corresponding `<Name>_IRQHandler` symbol.
@@ -156,7 +156,7 @@ Default_Handler:
     .size Default_Handler, . - Default_Handler
 
 /* ---------------------------------------------------------------------------
- * SystemInit — clock + flash setup for LPC845 @ 30 MHz from FRO.
+ * SystemInit — clock + flash setup for LPC845 @ 24 MHz from FRO (FRO direct).
  *
  * UM11029 section 4 procedure (FRO direct, no PLL needed up to 30 MHz):
  *   1. Configure flash wait states in FMC->FLASHCFG before raising the
@@ -165,36 +165,31 @@ Default_Handler:
  *        - 1 wait state up to 30 MHz
  *        - 2 wait states up to 60 MHz (LPC845 max is 30 MHz, so 1 WS suffices)
  *      FLASHCFG.FLASHTIM (bits[1:0]): 0=1 cycle, 1=2 cycles, 2=3 cycles.
- *      The LPC845 datasheet encodes "FLASHTIM = 1" as "1 wait state",
- *      matching 30 MHz operation. Other bits in FLASHCFG must be preserved.
- *   2. The FRO defaults to 24 MHz on reset (post-divider = /2 from 48 MHz
- *      FRO oscillator). To reach 30 MHz the FRO must be reconfigured.
+ *      "FLASHTIM = 1" = 1 wait state, valid for the 24 MHz core clock here.
+ *      Other bits in FLASHCFG must be preserved.
+ *   2. The FRO post-divider (/2) leaves the core at 12 MHz on reset. Setting
+ *      FROOSCCTRL.DIRECT (bit 17) bypasses the divider so the core runs the
+ *      undivided 24 MHz FRO output, which divides accurately to 115200 baud.
  *
- * NOTE — Stage 3 design decision (FastLED/FastLED#2845):
- *   The FRO frequency / divider register layout for "30 MHz direct" mode
- *   (SYSCON->FROOSCCTRL bits) requires device-on-hand validation; the
- *   datasheet describes 18 / 24 / 30 MHz FRO settings, but the exact
- *   sequence (ROM helper `IAP_ReadPartID` + `set_fro_frequency()` vs.
- *   direct register write) varies by silicon revision. We program flash
- *   wait states (safe — only affects timing), set SYSAHBCLKDIV = 1 (safe
- *   reset default), and leave the FRO at its reset frequency. Drivers
- *   that need exact 30 MHz timing should override SystemInit with a
- *   board-specific implementation that uses the boot ROM API.
- *
- * TODO(2845): Once a real LPCXpresso845 is available, replace the
- * "leave FRO at reset default" block with a verified FRO-to-30 MHz
- * sequence per UM11029 §4 and update F_CPU consumers accordingly.
+ * Per UM11029 section 4 (FastLED/FastLED#2845):
+ *   FRO direct at 24 MHz divides accurately to 115200 baud and feeds SysTick
+ *   timing. F_CPU consumers must use 24000000UL to match. The boot ROM API is
+ *   not required — the direct register sequence below is sufficient. Targeting
+ *   LPC845-BRK; on-device confirmation tracked in FastLED/FastLED#2845.
  *
  * Register addresses (UM11029, CMSIS LPC845.h):
  *   SYSCON base   = 0x40048000
- *     SYSAHBCLKDIV @ 0x078
- *     MAINCLKSEL   @ 0x070, MAINCLKUEN @ 0x074
+ *     FROOSCCTRL      @ 0x028, FRODIRECTCLKUEN @ 0x030
+ *     SYSAHBCLKDIV    @ 0x078
+ *     MAINCLKSEL      @ 0x070, MAINCLKUEN @ 0x074
  *   FMC base      = 0x40040000
  *     FLASHCFG     @ 0x010
  * --------------------------------------------------------------------------- */
     .equ LPC845_FMC_BASE,         0x40040000
     .equ LPC845_FMC_FLASHCFG_OFS, 0x010
     .equ LPC845_SYSCON_BASE,      0x40048000
+    .equ LPC845_SYSCON_FROOSCCTRL_OFS,      0x028
+    .equ LPC845_SYSCON_FRODIRECTCLKUEN_OFS, 0x030
     .equ LPC845_SYSCON_MAINCLKSEL_OFS,    0x070
     .equ LPC845_SYSCON_MAINCLKUEN_OFS,    0x074
     .equ LPC845_SYSCON_SYSAHBCLKDIV_OFS,  0x078
@@ -230,9 +225,22 @@ SystemInit:
     movs    r1, #1
     str     r1, [r0, #LPC845_SYSCON_MAINCLKUEN_OFS]
 
-    /* TODO(2845): FRO-to-30 MHz reconfiguration goes here, gated on
-     * device validation. Until then the core runs at the FRO reset
-     * default (typically 24 MHz on LPC845 post-divide-by-2). */
+    /* (4) FRO direct: bypass the /2 post-divider so the core runs the
+     *     undivided 24 MHz FRO output (FROOSCCTRL bit 17 = DIRECT). The reset
+     *     default leaves the core at 12 MHz, which cannot divide to an accurate
+     *     115200 baud; 24 MHz divides at 0.16% error. Validated on LPC845-BRK
+     *     hardware. Latch via FRODIRECTCLKUEN 0->1 (UM11029 §4.6: software must
+     *     toggle the UEN register to apply the update). r0 still holds
+     *     SYSCON_BASE from step (2). */
+    ldr     r1, [r0, #LPC845_SYSCON_FROOSCCTRL_OFS]
+    movs    r2, #1
+    lsls    r2, r2, #17
+    orrs    r1, r2
+    str     r1, [r0, #LPC845_SYSCON_FROOSCCTRL_OFS]
+    movs    r1, #0
+    str     r1, [r0, #LPC845_SYSCON_FRODIRECTCLKUEN_OFS]
+    movs    r1, #1
+    str     r1, [r0, #LPC845_SYSCON_FRODIRECTCLKUEN_OFS]
 
     bx      lr
     .size SystemInit, . - SystemInit
