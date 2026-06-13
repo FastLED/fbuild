@@ -189,6 +189,12 @@ impl BoardConfig {
     /// (e.g. `"esp32dev"`, `"uno"`, `"teensy41"`) when the primary id is
     /// unknown, carrying the same `overrides` through to the fallback.
     ///
+    /// `project_dir` enables project-local `boards/<id>.json` discovery for
+    /// both the primary and the default lookup (pass `None` to disable). This
+    /// is threaded through [`Self::from_board_id_in_project`] so deploy-side
+    /// callers honor the same project-local boards as the build path
+    /// (FastLED/fbuild#519).
+    ///
     /// `default_board_id` is expected to be a compile-time platform default
     /// that always exists in the board database, so a failure to resolve it
     /// is a programming error and panics rather than being swallowed.
@@ -196,9 +202,10 @@ impl BoardConfig {
         board_id: &str,
         default_board_id: &str,
         overrides: &HashMap<String, String>,
+        project_dir: Option<&std::path::Path>,
     ) -> Self {
-        Self::from_board_id(board_id, overrides).unwrap_or_else(|_| {
-            Self::from_board_id(default_board_id, overrides)
+        Self::from_board_id_in_project(board_id, overrides, project_dir).unwrap_or_else(|_| {
+            Self::from_board_id_in_project(default_board_id, overrides, project_dir)
                 .unwrap_or_else(|e| panic!("default board '{default_board_id}' must resolve: {e}"))
         })
     }
@@ -207,15 +214,21 @@ impl BoardConfig {
     /// override-applied resolution fails. Returns `None` only when `board_id`
     /// is unknown even without overrides.
     ///
+    /// `project_dir` enables project-local `boards/<id>.json` discovery (pass
+    /// `None` to disable), threaded through [`Self::from_board_id_in_project`]
+    /// so this best-effort lookup honors the same project-local boards as the
+    /// build path (FastLED/fbuild#519).
+    ///
     /// Used by best-effort call sites (e.g. emulator-kind inference) that want
     /// a board for hints but must not hard-fail when a user override is
     /// malformed.
     pub fn from_board_id_with_override_fallback(
         board_id: &str,
         overrides: &HashMap<String, String>,
+        project_dir: Option<&std::path::Path>,
     ) -> Option<Self> {
-        Self::from_board_id(board_id, overrides)
-            .or_else(|_| Self::from_board_id(board_id, &HashMap::new()))
+        Self::from_board_id_in_project(board_id, overrides, project_dir)
+            .or_else(|_| Self::from_board_id_in_project(board_id, &HashMap::new(), project_dir))
             .ok()
     }
 
