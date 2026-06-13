@@ -300,12 +300,9 @@ fn build_script_runtime_board_config(
     // Shares the same project-local boards/*.json resolution as the
     // pipeline `BuildContext` and `compile_many::platform_for_board` so a
     // user's `<project>/boards/<id>.json` is the single source of truth
-    // for every build-side board lookup. See FastLED/fbuild#515.
-    let board = fbuild_config::BoardConfig::from_board_id_in_project(
-        board_id,
-        &HashMap::new(),
-        project_dir,
-    )?;
+    // for every build-side board lookup. Routes through the shared
+    // `resolution::resolve_board` funnel (FastLED/fbuild#515, #519).
+    let board = crate::resolution::resolve_board(board_id, &HashMap::new(), project_dir)?;
     result.insert("name".to_string(), board.name.clone());
     result.insert("build.mcu".to_string(), board.mcu.clone());
     result.insert("build.f_cpu".to_string(), board.f_cpu.clone());
