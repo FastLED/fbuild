@@ -3,7 +3,7 @@
     "core": "cmsis",
     "cpu": "cortex-m0plus",
     "extra_flags": "-DLPC845 -DCPU_LPC845M301JBD48",
-    "f_cpu": "30000000L",
+    "f_cpu": "24000000L",
     "mcu": "lpc845",
     "variant": "lpc845"
   },
@@ -16,7 +16,7 @@
       "pyocd": {}
     }
   },
-  "fcpu": 30000000,
+  "fcpu": 24000000,
   "frameworks": [
     "arduino",
     "cmsis"

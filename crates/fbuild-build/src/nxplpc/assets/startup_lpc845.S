@@ -171,11 +171,10 @@ Default_Handler:
  *      FROOSCCTRL.DIRECT (bit 17) bypasses the divider so the core runs the
  *      undivided 24 MHz FRO output, which divides accurately to 115200 baud.
  *
- * Per UM11029 section 4 (FastLED/FastLED#2845):
- *   FRO direct at 24 MHz divides accurately to 115200 baud and feeds SysTick
- *   timing. F_CPU consumers must use 24000000UL to match. The boot ROM API is
- *   not required — the direct register sequence below is sufficient. Targeting
- *   LPC845-BRK; on-device confirmation tracked in FastLED/FastLED#2845.
+ * Validated on LPC845-BRK hardware (FastLED/FastLED#2845, fbuild#456):
+ *   FRO direct at 24 MHz produces clean 115200 UART and correct SysTick
+ *   timing. F_CPU consumers must use 24000000UL to match. The boot ROM API
+ *   is not required — the direct register sequence below is sufficient.
  *
  * Register addresses (UM11029, CMSIS LPC845.h):
  *   SYSCON base   = 0x40048000

@@ -4,7 +4,7 @@
     "core": "lpc8xx",
     "cpu": "cortex-m0plus",
     "extra_flags": "-DCPU_LPC845M301JBD64 -D__LPC845__ -DLPC845 -DARDUINO_LPCXPRESSO845MAX",
-    "f_cpu": "30000000L",
+    "f_cpu": "24000000L",
     "ldscript": "linker_scripts/gcc/lpc845_flash.ld",
     "mcu": "lpc845",
     "openocd_target": "target/lpc84x.cfg",
@@ -17,7 +17,7 @@
       }
     }
   },
-  "fcpu": 30000000,
+  "fcpu": 24000000,
   "frameworks": [
     "arduino"
   ],
