@@ -9,6 +9,7 @@ members = [
     "crates/fbuild-build",
     "crates/fbuild-deploy",
     "crates/fbuild-daemon",
+    "crates/fbuild-broker",
     "crates/fbuild-cli",
     "crates/fbuild-python",
     "crates/fbuild-test-support",
@@ -73,6 +74,11 @@ object = { version = "0.36", default-features = false, features = ["read", "std"
 rusqlite = { version = "0.31", features = ["bundled"] }
 shell-words = "1"
 bincode = "1"
+# prost: hand-derived `#[derive(prost::Message)]` payload structs for the
+# fbuild v1 broker request/response lane (no .proto/build.rs needed). Pinned
+# to the version running-process 4.3.0 re-exports so the wire types stay
+# compatible. See crates/fbuild-broker.
+prost = "0.14"
 zccache-artifact = "1.9"
 rayon = "1"
 tracing-test = "0.2"
@@ -85,19 +91,15 @@ owo-colors = "4"
 # esptool, qemu, simavr, node, npm, …) and any grandchildren they fork must
 # die with the daemon. See FastLED/fbuild#32.
 # Migrated from `running-process-core 3.4` to `running-process 4.x` after
-# the upstream mono-crate consolidation. We only use the `core` feature
-# (spawn API + containment); the `client`/`daemon` features and the IPC
-# client/daemon binary remain unused, so we pin `default-features = false`.
-# Broker adoption was evaluated and declined (zackees/running-process#384):
-# fbuild-daemon speaks HTTP over loopback TCP, while the broker routes
-# local-socket/named-pipe backends, and `/health` already provides the
-# liveness + staleness guarantees a BackendHandle probe would add. See
-# crates/fbuild-daemon/README.md "Why not the running-process broker".
-# 4.2.0 ships a broker backend SDK (`BackendEndpointMux`,
-# `probe_with_service_async`, conformance kit — zackees/running-process#412)
-# that lowers the adoption cost; that work is tracked in FastLED/fbuild#510
-# and does not change this core-only dependency.
-running-process = { version = "4.2.0", default-features = false }
+# the upstream mono-crate consolidation.
+#
+# v1 broker adoption (zackees/running-process#437 / FastLED/fbuild#510):
+# `fbuild-broker` adopts the frozen v1 broker session API (`#433`) for daemon
+# discovery + version negotiation, so we now enable the `client-async` feature
+# (fbuild-daemon is a tokio runtime — `AsyncBrokerSession::adopt`). The
+# `core` feature stays on for process containment. `RUNNING_PROCESS_DISABLE=1`
+# still selects the legacy direct loopback-HTTP path (see fbuild-broker docs).
+running-process = { version = "4.3.0", default-features = false, features = ["client-async"] }
 
 [profile.dev]
 debug = 0

@@ -117,37 +117,61 @@ fn run_daemon_running_process(json: bool) -> fbuild_core::Result<()> {
     let service_definition_path = rp::running_process_service_definition_path();
     let daemon_candidate = daemon_executable_candidate();
     let daemon_candidate_exists = daemon_candidate.exists();
-    let deferred_items = [
-        "binary .servicedef encoding/install",
-        "active BackendHandle endpoint-response probing",
-        "running_process::broker::client::connect_to_backend",
-        "broker/direct integration matrix",
-        "full lint/dylint and broad three-OS acceptance",
-    ];
+
+    // v1 broker adoption is now wired through the `fbuild-broker` crate
+    // (zackees/running-process#437 / FastLED/fbuild#510). The diagnostics
+    // command surfaces the live adoption facts (registered payload protocol,
+    // isolation modes, encoding lane, cache roots) instead of the prior
+    // stubbed preview.
+    let runtime_dir = daemon_candidate
+        .parent()
+        .map(std::path::Path::to_path_buf)
+        .unwrap_or_else(|| std::path::PathBuf::from("."));
+    let cache_roots = fbuild_broker::CacheRoots::discover(runtime_dir);
+    let selected_path = if rp::running_process_disabled() {
+        "direct"
+    } else {
+        "broker"
+    };
 
     if json {
         let payload = serde_json::json!({
-            "service_name": rp::SERVICE_NAME,
+            "service_name": fbuild_broker::service::SERVICE_NAME,
             "broker_isolation": rp::BROKER_ISOLATION,
+            "ci_isolation": "EXPLICIT_INSTANCE",
+            "ci_instance": fbuild_broker::service::CI_TRUSTED_INSTANCE,
+            "min_version": fbuild_broker::service::MIN_VERSION,
+            "payload_protocol": format!("{:#06X}", fbuild_broker::FBUILD_PAYLOAD_PROTOCOL),
+            "fbuild_protocol_version": fbuild_broker::FBUILD_PROTOCOL_VERSION,
+            "encoding_lane": "json-direct + prost-broker (parity-tested)",
             "service_definition": {
                 "file_name": rp::SERVICE_DEFINITION_FILE_NAME,
                 "template": rp::SERVICE_DEFINITION_TEMPLATE,
                 "path": service_definition_path.display().to_string(),
-                "binary_install": "stubbed",
+            },
+            "cache_roots": {
+                "artifact": cache_roots.artifact.display().to_string(),
+                "index": cache_roots.index.display().to_string(),
+                "temp": cache_roots.temp.display().to_string(),
+                "log": cache_roots.log.display().to_string(),
+                "lock": cache_roots.lock.display().to_string(),
+                "runtime": cache_roots.runtime.display().to_string(),
+                "config": cache_roots.config.display().to_string(),
             },
             "daemon": {
                 "binary_name": rp::DAEMON_BINARY_NAME,
                 "candidate_path": daemon_candidate.display().to_string(),
                 "candidate_exists": daemon_candidate_exists,
+                "endpoint": fbuild_paths::get_daemon_url(),
             },
             "mode": {
                 "current": mode.as_str(),
+                "selected_path": selected_path,
                 "uses_direct_fallback": mode.uses_direct_fallback(),
                 "running_process_disabled": rp::running_process_disabled(),
                 "broker_requested": rp::running_process_broker_requested(),
                 "summary": rp::running_process_adoption_summary(),
             },
-            "deferred": deferred_items,
         });
         let output = serde_json::to_string_pretty(&payload)
             .map_err(|e| fbuild_core::FbuildError::Other(format!("json serialize: {e}")))?;
@@ -156,34 +180,48 @@ fn run_daemon_running_process(json: bool) -> fbuild_core::Result<()> {
     }
 
     println!("running-process broker adoption");
-    println!("  Service:              {}", rp::SERVICE_NAME);
-    println!("  Isolation:            {}", rp::BROKER_ISOLATION);
+    println!(
+        "  Service:              {}",
+        fbuild_broker::service::SERVICE_NAME
+    );
+    println!("  Isolation (local):    {}", rp::BROKER_ISOLATION);
+    println!(
+        "  Isolation (CI):       EXPLICIT_INSTANCE \"{}\"",
+        fbuild_broker::service::CI_TRUSTED_INSTANCE
+    );
+    println!(
+        "  Min version:          {}",
+        fbuild_broker::service::MIN_VERSION
+    );
+    println!(
+        "  Payload protocol:     {:#06X}",
+        fbuild_broker::FBUILD_PAYLOAD_PROTOCOL
+    );
+    println!(
+        "  fbuild proto version: {}",
+        fbuild_broker::FBUILD_PROTOCOL_VERSION
+    );
+    println!("  Encoding lane:        json-direct + prost-broker (parity-tested)");
     println!(
         "  Service definition:   {}",
         service_definition_path.display()
     );
-    println!(
-        "  Template:             {}",
-        rp::SERVICE_DEFINITION_TEMPLATE
-    );
+    println!("  Selected path:        {selected_path}");
     println!("  Mode:                 {}", mode.as_str());
-    println!(
-        "  Direct fallback:      {}",
-        if mode.uses_direct_fallback() {
-            "yes"
-        } else {
-            "no"
-        }
-    );
+    println!("  Daemon endpoint:      {}", fbuild_paths::get_daemon_url());
     println!("  Daemon binary:        {}", daemon_candidate.display());
     println!(
         "  Daemon binary exists: {}",
         if daemon_candidate_exists { "yes" } else { "no" }
     );
-    println!("  Deferred:");
-    for item in deferred_items {
-        println!("    - {item}");
-    }
+    println!("  Cache roots:");
+    println!("    - artifact: {}", cache_roots.artifact.display());
+    println!("    - index:    {}", cache_roots.index.display());
+    println!("    - temp:     {}", cache_roots.temp.display());
+    println!("    - log:      {}", cache_roots.log.display());
+    println!("    - lock:     {}", cache_roots.lock.display());
+    println!("    - runtime:  {}", cache_roots.runtime.display());
+    println!("    - config:   {}", cache_roots.config.display());
     Ok(())
 }
 
