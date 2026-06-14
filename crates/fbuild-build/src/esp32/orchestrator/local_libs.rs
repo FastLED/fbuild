@@ -5,9 +5,8 @@ use std::path::{Path, PathBuf};
 use fbuild_core::Result;
 
 use super::super::esp32_compiler::Esp32Compiler;
-use super::helpers::apply_overlay_flags;
 use crate::compiler::Compiler as _;
-use crate::flag_overlay::LanguageExtraFlags;
+use crate::flag_overlay::{apply_overlay_flags, LanguageExtraFlags};
 
 /// Walk `project_dir/lib/*` and compile each subdirectory as a library archive.
 /// Archives are appended to `library_archives`.

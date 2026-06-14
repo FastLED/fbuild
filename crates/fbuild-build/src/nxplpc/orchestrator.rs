@@ -22,6 +22,7 @@ use std::time::Instant;
 use fbuild_core::{FbuildError, Platform, Result};
 
 use crate::compile_database::TargetArchitecture;
+use crate::flag_overlay::{apply_overlay_flags, LanguageExtraFlags};
 use crate::generic_arm::{ArmCompiler, ArmLinker};
 use crate::pipeline;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
@@ -237,12 +238,34 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         .with_lib_search_dirs(vec![core.install_path()]);
 
         // 10. Compile extra library roots before the shared pipeline links them.
+        //
+        // Fold `ctx.user_flags` (parsed from `[env:*] build_flags`) and the
+        // global compile-overlay into the library flag set so library sources
+        // see the same -D defines / -std overrides the sketch will see.
+        // Without this fold, the only way to get `build_flags` defines into a
+        // library compile was to bake them into the board JSON's `extra_flags`
+        // — exactly the workaround #576 installed for `lpc845brk` and that
+        // this PR retires. Mirrors the ESP32 library-compile path at
+        // `esp32/orchestrator/build.rs`; see FastLED/fbuild#587.
         let gcc_path = toolchain.get_gcc_path();
         let gxx_path = toolchain.get_gxx_path();
         let ar_path = toolchain.get_ar_path();
         let gcc_ar_path = toolchain.get_gcc_ar_path();
-        let c_flags = crate::compiler::Compiler::c_flags(&compiler);
-        let cpp_flags = crate::compiler::Compiler::cpp_flags(&compiler);
+        let raw_c_flags = crate::compiler::Compiler::c_flags(&compiler);
+        let raw_cpp_flags = crate::compiler::Compiler::cpp_flags(&compiler);
+        let user_overlay = LanguageExtraFlags {
+            common: ctx
+                .user_flags
+                .iter()
+                .cloned()
+                .chain(ctx.global_compile_overlay.common.iter().cloned())
+                .collect(),
+            c: ctx.global_compile_overlay.c.clone(),
+            cxx: ctx.global_compile_overlay.cxx.clone(),
+            asm: ctx.global_compile_overlay.asm.clone(),
+        };
+        let c_flags = apply_overlay_flags(&raw_c_flags, &user_overlay, "dummy.c");
+        let cpp_flags = apply_overlay_flags(&raw_cpp_flags, &user_overlay, "dummy.cpp");
         let lib_ar_path = pipeline::pick_archiver(&ar_path, &gcc_ar_path, &c_flags, &cpp_flags);
         let lib_env = pipeline::LibraryBuildEnv {
             gcc_path: &gcc_path,

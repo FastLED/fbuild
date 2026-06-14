@@ -11,11 +11,11 @@ use fbuild_packages::Framework;
 use super::super::esp32_compiler::Esp32Compiler;
 use super::super::mcu_config::Esp32McuConfig;
 use super::helpers::{
-    apply_overlay_flags, framework_failure_marker, framework_signature,
-    record_failed_framework_lib, should_skip_failed_framework_lib,
+    framework_failure_marker, framework_signature, record_failed_framework_lib,
+    should_skip_failed_framework_lib,
 };
 use crate::compiler::Compiler as _;
-use crate::flag_overlay::LanguageExtraFlags;
+use crate::flag_overlay::{apply_overlay_flags, LanguageExtraFlags};
 use crate::BuildParams;
 
 /// Compile every Arduino built-in library shipped with the ESP32 framework.

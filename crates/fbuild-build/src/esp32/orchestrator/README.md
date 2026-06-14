@@ -14,7 +14,7 @@ exceeds the 1000-LOC gate.
 | `embed_stage.rs` | `.lnk` resolution and target selection wrapper around `embed`. |
 | `boot_artifacts.rs` | Produces `bootloader.bin`, `partitions.bin`, `boot_app0.bin`. |
 | `fingerprint.rs` | Serialised metadata struct used for the fast-path hash. |
-| `helpers.rs` | Flag merging (`apply_user_flags`), failure markers, signature, etc. |
+| `helpers.rs` | Failure markers, signature, profile labels, compile-db freshness. (Flag merging — `apply_user_flags` / `apply_overlay_flags` — moved up to `crate::flag_overlay` so the nxplpc orchestrator can share it; see fbuild#587.) |
 | `cdc.rs` | USB-CDC-on-boot warning + small public convenience helpers. |
 | `tests.rs` | Unit tests for the helpers + the public surface. |
 

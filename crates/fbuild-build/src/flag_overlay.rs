@@ -257,3 +257,142 @@ pub(crate) fn absolutize_if_relative(project_dir: &Path, raw: &str) -> PathBuf {
         project_dir.join(path)
     }
 }
+
+/// Apply user `build_flags` from `platformio.ini` onto a base compiler flag set.
+///
+/// Matches PlatformIO behavior: user flags are appended to the base, but
+/// `-std=` flags replace the existing standard (instead of stacking), and
+/// `-D<NAME>` / `-D<NAME>=<value>` flags are deduplicated by macro name so a
+/// later override drops the earlier value (which would otherwise produce a GCC
+/// redefinition warning).
+pub(crate) fn apply_user_flags(base_flags: &[String], user_flags: &[String]) -> Vec<String> {
+    let mut result = base_flags.to_vec();
+    for flag in user_flags {
+        if flag.starts_with("-std=") {
+            result.retain(|f| !f.starts_with("-std="));
+        } else if let Some(define_name) = define_flag_name(flag) {
+            result.retain(|f| define_flag_name(f) != Some(define_name));
+        }
+        result.push(flag.clone());
+    }
+    result
+}
+
+/// Apply a [`LanguageExtraFlags`] overlay onto a base flag set, picking the
+/// language-specific scope from `probe_name`'s extension (`dummy.c` for C,
+/// `dummy.cpp` for C++).
+pub(crate) fn apply_overlay_flags(
+    base_flags: &[String],
+    overlay: &LanguageExtraFlags,
+    probe_name: &str,
+) -> Vec<String> {
+    apply_user_flags(base_flags, &overlay.for_source(Path::new(probe_name)))
+}
+
+fn define_flag_name(flag: &str) -> Option<&str> {
+    let define = flag.strip_prefix("-D")?;
+    let name = define
+        .split_once('=')
+        .map_or(define, |(name, _)| name)
+        .trim();
+    if name.is_empty() {
+        None
+    } else {
+        Some(name)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_apply_user_flags_replaces_std_flag() {
+        let base = vec!["-Os".to_string(), "-std=gnu++2b".to_string()];
+        let user = vec!["-std=gnu++20".to_string()];
+
+        let result = apply_user_flags(&base, &user);
+
+        assert_eq!(result, vec!["-Os", "-std=gnu++20"]);
+    }
+
+    #[test]
+    fn test_apply_user_flags_replaces_define_with_same_name() {
+        let base = vec![
+            r#"-DIDF_VER=\"v5.5.1-710-g8410210c9a\""#.to_string(),
+            r#"-DESP_MDNS_VERSION_NUMBER=\"1.9.0\""#.to_string(),
+            "-Os".to_string(),
+        ];
+        let user = vec![
+            r#"-DESP_MDNS_VERSION_NUMBER=\"1.9.1\""#.to_string(),
+            r#"-DIDF_VER=\"v5.5.2-729-g87912cd291\""#.to_string(),
+        ];
+
+        let result = apply_user_flags(&base, &user);
+
+        assert_eq!(
+            result,
+            vec![
+                "-Os",
+                r#"-DESP_MDNS_VERSION_NUMBER=\"1.9.1\""#,
+                r#"-DIDF_VER=\"v5.5.2-729-g87912cd291\""#,
+            ]
+        );
+    }
+
+    #[test]
+    fn test_apply_user_flags_replaces_bare_define_with_value_define() {
+        let base = vec!["-DFOO".to_string(), "-DBAR=1".to_string()];
+        let user = vec!["-DFOO=2".to_string()];
+
+        let result = apply_user_flags(&base, &user);
+
+        assert_eq!(result, vec!["-DBAR=1", "-DFOO=2"]);
+    }
+
+    #[test]
+    fn test_apply_user_flags_replaces_existing_define_by_key() {
+        let merged = apply_user_flags(
+            &[r#"-DIDF_VER=\"old\""#.to_string(), "-O2".to_string()],
+            &[r#"-DIDF_VER=\"new\""#.to_string()],
+        );
+        assert_eq!(
+            merged,
+            vec![r#"-O2"#.to_string(), r#"-DIDF_VER=\"new\""#.to_string()]
+        );
+    }
+
+    #[test]
+    fn test_apply_user_flags_keeps_last_user_define() {
+        let merged = apply_user_flags(
+            &[],
+            &[
+                r#"-DMBEDTLS_CONFIG_FILE=\"a.h\""#.to_string(),
+                r#"-DMBEDTLS_CONFIG_FILE=\"b.h\""#.to_string(),
+            ],
+        );
+        assert_eq!(merged, vec![r#"-DMBEDTLS_CONFIG_FILE=\"b.h\""#.to_string()]);
+    }
+
+    #[test]
+    fn test_apply_overlay_flags_uses_c_scope_for_c_source() {
+        let base = vec!["-Os".to_string()];
+        let overlay = LanguageExtraFlags {
+            common: vec!["-DCOMMON=1".to_string()],
+            c: vec!["-DONLY_C=1".to_string()],
+            cxx: vec!["-DONLY_CXX=1".to_string()],
+            asm: vec![],
+        };
+
+        let c_out = apply_overlay_flags(&base, &overlay, "dummy.c");
+        let cpp_out = apply_overlay_flags(&base, &overlay, "dummy.cpp");
+
+        assert!(c_out.contains(&"-DCOMMON=1".to_string()));
+        assert!(c_out.contains(&"-DONLY_C=1".to_string()));
+        assert!(!c_out.contains(&"-DONLY_CXX=1".to_string()));
+
+        assert!(cpp_out.contains(&"-DCOMMON=1".to_string()));
+        assert!(cpp_out.contains(&"-DONLY_CXX=1".to_string()));
+        assert!(!cpp_out.contains(&"-DONLY_C=1".to_string()));
+    }
+}

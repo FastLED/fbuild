@@ -3,7 +3,7 @@
     "board": "LPC845BRK",
     "core": "lpc8xx",
     "cpu": "cortex-m0plus",
-    "extra_flags": "-DCPU_LPC845M301JBD48 -D__LPC845__ -DLPC845 -DARDUINO_LPC845BRK -DRELEASE=1 -DFASTLED_DISABLE_DBG=1",
+    "extra_flags": "-DCPU_LPC845M301JBD48 -D__LPC845__ -DLPC845 -DARDUINO_LPC845BRK",
     "f_cpu": "24000000L",
     "ldscript": "linker_scripts/gcc/lpc845_flash.ld",
     "mcu": "lpc845",
