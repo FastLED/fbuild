@@ -896,19 +896,23 @@ pub async fn deploy(
             }
         };
 
-        let monitor_result = run_monitor_loop(
+        // #532 fold: post-deploy monitor opts out; collapse unreachable RecoverDownloadMode → Error.
+        let monitor_result = match run_monitor_loop(
             &mut rx,
             req.monitor_timeout,
             req.monitor_halt_on_error.as_deref(),
             req.monitor_halt_on_success.as_deref(),
             req.monitor_expect.as_deref(),
             req.monitor_show_timestamp,
-            // Post-deploy monitor does not opt in to auto-recovery from ROM
-            // download mode. The standalone monitor handler is the only path
-            // that wires the FastLED/fbuild#532 recovery flag today.
             false,
         )
-        .await;
+        .await
+        {
+            MonitorOutcome::RecoverDownloadMode { signal } => MonitorOutcome::Error(
+                format!("internal: RecoverDownloadMode without opt-in ({})", signal.diagnostic()),
+            ),
+            other => other,
+        };
 
         ctx.serial_manager.detach_reader(&monitor_port, &request_id);
 
@@ -941,6 +945,8 @@ pub async fn deploy(
                     stderr: deploy_stderr,
                 }),
             ),
+            // Eliminated by the fold above; the compiler can't narrow the type.
+            MonitorOutcome::RecoverDownloadMode { .. } => unreachable!(),
             MonitorOutcome::Timeout { expect_found } => {
                 let (success, code) = if expect_found {
                     (true, 0)
@@ -974,29 +980,6 @@ pub async fn deploy(
                     }),
                 )
             }
-            // Post-deploy monitor passes `auto_recover_from_download_mode=false`
-            // (see the `run_monitor_loop` call above), so this variant is
-            // unreachable here. Translate it to a clean error rather than
-            // panicking if the flag is wired in a future PR without updating
-            // this match.
-            MonitorOutcome::RecoverDownloadMode { signal } => (
-                StatusCode::OK,
-                Json(OperationResponse {
-                    success: false,
-                    request_id,
-                    message: format!(
-                        "{}; monitor returned RecoverDownloadMode without opt-in: {}",
-                        deploy_prefix,
-                        signal.diagnostic()
-                    ),
-                    exit_code: 1,
-                    output_file: Some(reported_output_file.clone()),
-                    output_dir: reported_output_dir.clone(),
-                    launch_url: None,
-                    stdout: deploy_stdout,
-                    stderr: deploy_stderr,
-                }),
-            ),
         };
     }
 

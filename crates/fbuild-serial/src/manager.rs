@@ -320,14 +320,15 @@ impl SharedSerialManager {
     ///
     /// The caller must **own** the port (i.e. opened it via
     /// [`SharedSerialManager::open_port`] with this `client_id`). Unlike
-    /// [`write_to_port`] this does NOT require a writer lock — by the
-    /// time auto-recovery is invoked, detection has already established
-    /// that the board is stuck in ROM, and a competing writer would have
-    /// nothing useful to do anyway.
+    /// [`SharedSerialManager::write_to_port`] this does NOT require a
+    /// writer lock — by the time auto-recovery is invoked, detection has
+    /// already established that the board is stuck in ROM, and a competing
+    /// writer would have nothing useful to do anyway.
     ///
     /// Wraps [`crate::esp_reset::hard_reset_blocking`] in `spawn_blocking`
     /// because every `serialport` line-control call is a synchronous
-    /// Win32/POSIX syscall — matches the pattern in [`open_port`].
+    /// Win32/POSIX syscall — matches the pattern in
+    /// [`SharedSerialManager::open_port`].
     ///
     /// See FastLED/fbuild#532 (auto-recover-from-download-mode path).
     pub async fn esp_hard_reset(&self, port: &str, client_id: &str) -> fbuild_core::Result<()> {
