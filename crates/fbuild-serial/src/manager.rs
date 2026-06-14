@@ -109,12 +109,18 @@ impl SharedSerialManager {
                     .open()?;
                 // Set DTR=true, RTS=true for flow control. Failures here are
                 // non-fatal — some adapters (e.g. CP210x in CDC mode) reject
-                // the request but the port is still usable.
-                if let Err(e) = serial.write_data_terminal_ready(true) {
-                    tracing::warn!("failed to set DTR: {}", e);
+                // the request but the port is still usable. Log both the
+                // success and failure paths at `debug!` so a complete log
+                // scan can reconstruct the DTR/RTS history end-to-end
+                // (FastLED/fbuild#532 acceptance: "logs show enough DTR/RTS
+                // /reset context to diagnose future S3 boot-mode lockups").
+                match serial.write_data_terminal_ready(true) {
+                    Ok(()) => tracing::debug!("manager: open-time DTR=high asserted"),
+                    Err(e) => tracing::warn!("failed to set DTR: {}", e),
                 }
-                if let Err(e) = serial.write_request_to_send(true) {
-                    tracing::warn!("failed to set RTS: {}", e);
+                match serial.write_request_to_send(true) {
+                    Ok(()) => tracing::debug!("manager: open-time RTS=high asserted"),
+                    Err(e) => tracing::warn!("failed to set RTS: {}", e),
                 }
                 Ok(serial)
             })
@@ -305,6 +311,72 @@ impl SharedSerialManager {
         }
 
         Ok(bytes_written)
+    }
+
+    /// Pulse the ESP DTR/RTS hard-reset sequence on `port` to bring an
+    /// ESP chip out of ROM download mode and back into normal firmware
+    /// boot — the recovery counterpart of
+    /// [`crate::boot_mode::detect_download_mode`].
+    ///
+    /// The caller must **own** the port (i.e. opened it via
+    /// [`SharedSerialManager::open_port`] with this `client_id`). Unlike
+    /// [`SharedSerialManager::write_to_port`] this does NOT require a
+    /// writer lock — by the time auto-recovery is invoked, detection has
+    /// already established that the board is stuck in ROM, and a competing
+    /// writer would have nothing useful to do anyway.
+    ///
+    /// Wraps [`crate::esp_reset::hard_reset_blocking`] in `spawn_blocking`
+    /// because every `serialport` line-control call is a synchronous
+    /// Win32/POSIX syscall — matches the pattern in
+    /// [`SharedSerialManager::open_port`].
+    ///
+    /// See FastLED/fbuild#532 (auto-recover-from-download-mode path).
+    pub async fn esp_hard_reset(&self, port: &str, client_id: &str) -> fbuild_core::Result<()> {
+        let handle = {
+            let session = self.sessions.get(port).ok_or_else(|| {
+                fbuild_core::FbuildError::SerialError(format!("port {} not open", port))
+            })?;
+            if session.owner_client_id.as_deref() != Some(client_id) {
+                return Err(fbuild_core::FbuildError::SerialError(format!(
+                    "client {} does not own {} (cannot issue ESP hard-reset)",
+                    client_id, port
+                )));
+            }
+            session
+                .serial_handle
+                .as_ref()
+                .ok_or_else(|| {
+                    fbuild_core::FbuildError::SerialError(format!(
+                        "port {} has no serial handle",
+                        port
+                    ))
+                })?
+                .clone()
+        };
+
+        let port_owned = port.to_string();
+        let port_for_log = port_owned.clone();
+        let join_result = tokio::task::spawn_blocking(move || {
+            tracing::info!(
+                port = port_for_log,
+                "esp_hard_reset: starting DTR/RTS recovery sequence"
+            );
+            let mut guard = handle.blocking_lock();
+            crate::esp_reset::hard_reset_blocking(&mut **guard)
+        })
+        .await;
+
+        match join_result {
+            Ok(Ok(())) => Ok(()),
+            Ok(Err(e)) => Err(fbuild_core::FbuildError::SerialError(format!(
+                "esp_hard_reset on {}: {}",
+                port_owned, e
+            ))),
+            Err(join_err) => Err(fbuild_core::FbuildError::SerialError(format!(
+                "esp_hard_reset task panicked on {}: {}",
+                port_owned, join_err
+            ))),
+        }
     }
 
     /// Close a serial port.

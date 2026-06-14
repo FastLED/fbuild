@@ -896,15 +896,23 @@ pub async fn deploy(
             }
         };
 
-        let monitor_result = run_monitor_loop(
+        // #532 fold: post-deploy monitor opts out; collapse unreachable RecoverDownloadMode → Error.
+        let monitor_result = match run_monitor_loop(
             &mut rx,
             req.monitor_timeout,
             req.monitor_halt_on_error.as_deref(),
             req.monitor_halt_on_success.as_deref(),
             req.monitor_expect.as_deref(),
             req.monitor_show_timestamp,
+            false,
         )
-        .await;
+        .await
+        {
+            MonitorOutcome::RecoverDownloadMode { signal } => MonitorOutcome::Error(
+                format!("internal: RecoverDownloadMode without opt-in ({})", signal.diagnostic()),
+            ),
+            other => other,
+        };
 
         ctx.serial_manager.detach_reader(&monitor_port, &request_id);
 
@@ -937,6 +945,8 @@ pub async fn deploy(
                     stderr: deploy_stderr,
                 }),
             ),
+            // Eliminated by the fold above; the compiler can't narrow the type.
+            MonitorOutcome::RecoverDownloadMode { .. } => unreachable!(),
             MonitorOutcome::Timeout { expect_found } => {
                 let (success, code) = if expect_found {
                     (true, 0)

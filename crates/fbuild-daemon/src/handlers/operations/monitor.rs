@@ -18,6 +18,14 @@ pub(crate) enum MonitorOutcome {
     Error(String),
     /// Timeout reached
     Timeout { expect_found: bool },
+    /// ESP ROM download-mode was detected AND the caller opted in to
+    /// auto-recovery via `MonitorRequest.auto_recover_from_download_mode`.
+    /// The HTTP handler issues an `esp_hard_reset` against the same port,
+    /// then folds the recovery outcome back into Success/Error.
+    /// See FastLED/fbuild#532.
+    RecoverDownloadMode {
+        signal: fbuild_serial::boot_mode::BootModeSignal,
+    },
 }
 
 pub(crate) struct MonitorState {
@@ -28,6 +36,7 @@ pub(crate) struct MonitorState {
     timeout_dur: Option<std::time::Duration>,
     expect_found: bool,
     show_timestamp: bool,
+    auto_recover_from_download_mode: bool,
 }
 
 impl MonitorState {
@@ -37,6 +46,7 @@ impl MonitorState {
         halt_on_success: Option<&str>,
         expect: Option<&str>,
         show_timestamp: bool,
+        auto_recover_from_download_mode: bool,
     ) -> Self {
         let halt_error_re = halt_on_error.and_then(|p| {
             regex::RegexBuilder::new(p)
@@ -64,6 +74,7 @@ impl MonitorState {
             timeout_dur: timeout_secs.map(std::time::Duration::from_secs_f64),
             expect_found: false,
             show_timestamp,
+            auto_recover_from_download_mode,
         }
     }
 
@@ -112,6 +123,12 @@ impl MonitorState {
         // See FastLED/fbuild#532.
         if let Some(signal) = fbuild_serial::boot_mode::detect_download_mode(line) {
             tracing::warn!("{}", signal.diagnostic());
+            if self.auto_recover_from_download_mode {
+                // Caller opted in; let the HTTP handler issue the DTR/RTS
+                // hard-reset against the owned port and fold the recovery
+                // outcome back into Success/Error.
+                return Some(MonitorOutcome::RecoverDownloadMode { signal });
+            }
             return Some(MonitorOutcome::Error(format!(
                 "ESP ROM download-mode detected: {}",
                 signal.diagnostic()
@@ -149,6 +166,7 @@ pub(crate) async fn run_monitor_loop(
     halt_on_success: Option<&str>,
     expect: Option<&str>,
     show_timestamp: bool,
+    auto_recover_from_download_mode: bool,
 ) -> MonitorOutcome {
     let mut state = MonitorState::new(
         timeout_secs,
@@ -156,6 +174,7 @@ pub(crate) async fn run_monitor_loop(
         halt_on_success,
         expect,
         show_timestamp,
+        auto_recover_from_download_mode,
     );
     loop {
         if state.timed_out() {
@@ -237,15 +256,42 @@ pub async fn monitor(
             }
         };
 
-        let result = run_monitor_loop(
+        let raw_result = run_monitor_loop(
             &mut rx,
             req.timeout,
             req.halt_on_error.as_deref(),
             req.halt_on_success.as_deref(),
             req.expect.as_deref(),
             req.show_timestamp,
+            req.auto_recover_from_download_mode,
         )
         .await;
+
+        // Fold the ESP auto-recovery branch into Success/Error BEFORE we
+        // detach the reader and close the port — `esp_hard_reset` borrows
+        // the same `serial_handle` we'd be tearing down below. See
+        // FastLED/fbuild#532.
+        let result = match raw_result {
+            MonitorOutcome::RecoverDownloadMode { signal } => {
+                tracing::info!(
+                    port,
+                    "monitor: attempting ESP auto-recovery from ROM download mode"
+                );
+                match ctx.serial_manager.esp_hard_reset(&port, &request_id).await {
+                    Ok(()) => MonitorOutcome::Success(format!(
+                        "ESP auto-recovery succeeded after detecting {}: pulsed DTR/RTS \
+                         hard-reset; chip should now boot from flash",
+                        signal.diagnostic()
+                    )),
+                    Err(e) => MonitorOutcome::Error(format!(
+                        "ESP auto-recovery failed after detecting {}: {}",
+                        signal.diagnostic(),
+                        e
+                    )),
+                }
+            }
+            other => other,
+        };
 
         ctx.serial_manager.detach_reader(&port, &request_id);
         // Release the OS serial handle once no clients remain so a follow-up
@@ -285,6 +331,21 @@ pub async fn monitor(
                     )
                 }
             }
+            // Unreachable: the fold above folds `RecoverDownloadMode` into
+            // Success or Error before this match runs. Defensive arm rather
+            // than `unreachable!()` so a future caller that bypasses the fold
+            // gets a clean error response instead of a daemon panic.
+            MonitorOutcome::RecoverDownloadMode { signal } => (
+                StatusCode::OK,
+                Json(OperationResponse::fail(
+                    request_id,
+                    format!(
+                        "internal: RecoverDownloadMode escaped the auto-recovery \
+                         fold ({})",
+                        signal.diagnostic()
+                    ),
+                )),
+            ),
         };
     }
 
@@ -302,7 +363,18 @@ mod tests {
     use super::*;
 
     fn state() -> MonitorState {
-        MonitorState::new(Some(5.0), None, Some("READY"), Some("BOOT_OK"), false)
+        MonitorState::new(
+            Some(5.0),
+            None,
+            Some("READY"),
+            Some("BOOT_OK"),
+            false,
+            false,
+        )
+    }
+
+    fn state_with_auto_recover() -> MonitorState {
+        MonitorState::new(Some(5.0), None, Some("READY"), Some("BOOT_OK"), false, true)
     }
 
     #[test]
@@ -320,6 +392,40 @@ mod tests {
             }
             other => panic!("expected Error outcome, got {other:?}"),
         }
+    }
+
+    #[test]
+    fn download_mode_routes_to_recover_when_auto_recover_enabled() {
+        let mut s = state_with_auto_recover();
+        let outcome = s
+            .process_line("waiting for download")
+            .expect("download-mode line must halt the monitor");
+        match outcome {
+            MonitorOutcome::RecoverDownloadMode { signal } => {
+                assert_eq!(
+                    signal,
+                    fbuild_serial::boot_mode::BootModeSignal::WaitingForDownload,
+                    "the WaitingForDownload signal should propagate so the HTTP \
+                     handler can attribute the recovery in its response"
+                );
+            }
+            other => panic!("expected RecoverDownloadMode outcome, got {other:?}"),
+        }
+    }
+
+    #[test]
+    fn auto_recover_flag_does_not_affect_normal_halt_paths() {
+        let mut s = state_with_auto_recover();
+        // Application output that is NOT a download-mode signal must still
+        // flow through the regular halt-on-success / halt-on-error / expect
+        // pipeline; the auto-recover flag only changes the download-mode
+        // branch. In `state_with_auto_recover` the halt-on-success regex is
+        // "READY" and the expect regex is "BOOT_OK" (matches `state()`).
+        assert!(s.process_line("Hello from app_main").is_none());
+        assert!(matches!(
+            s.process_line("system READY now"),
+            Some(MonitorOutcome::Success(_))
+        ));
     }
 
     #[test]

@@ -109,6 +109,8 @@ pub(crate) async fn run_avr8js_headless(
         options.halt_on_success,
         options.expect,
         options.show_timestamp,
+        // No ESP hardware behind avr8js — auto-recovery has nothing to do.
+        false,
     );
     let mut stdout_buf = String::new();
     let mut stderr_buf = String::new();

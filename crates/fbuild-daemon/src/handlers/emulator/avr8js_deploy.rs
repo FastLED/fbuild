@@ -308,6 +308,25 @@ pub async fn deploy_avr8js(
                     }),
                 )
             }
+            // avr8js has no real ESP DTR/RTS lines; the auto-recover signal
+            // is unreachable from this emulator path. Defensive arm.
+            MonitorOutcome::RecoverDownloadMode { signal } => (
+                StatusCode::OK,
+                Json(OperationResponse {
+                    success: false,
+                    request_id,
+                    message: format!(
+                        "internal: avr8js emitted ESP RecoverDownloadMode ({})",
+                        signal.diagnostic()
+                    ),
+                    exit_code: 1,
+                    output_file: Some(output_file),
+                    output_dir,
+                    launch_url: None,
+                    stdout: Some(avr8js_result.stdout),
+                    stderr: Some(avr8js_result.stderr),
+                }),
+            ),
         }
     } else {
         // Browser path: return URL for the avr8js web UI
