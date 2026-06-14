@@ -12,9 +12,8 @@
 //!   4. `env.SConscript("child.py")` recursive chained mutation
 //!   5. `env.ParseFlagsExtended(...)` routing both `-Ipath` and `-I path`
 //!
-//! Each test pins the harness choice via
-//! `resolve_extra_script_overlay_with_mode(..., true)` so the
-//! `FBUILD_LITE_SCONS` env var can't leak across the parallel test runner.
+//! lite-SCons is the only backend post-#584 (#553 step 4 — MockEnv retired),
+//! so these tests just call `resolve_extra_script_overlay` directly.
 //!
 //! Verifies the three bugs the spike caught and fixed:
 //!   * `env.get(key)` falls through to `project_options`
@@ -26,7 +25,7 @@ use std::fs;
 use std::path::Path;
 
 use fbuild_build::flag_overlay::BuildOverlay;
-use fbuild_build::script_runtime::resolve_extra_script_overlay_with_mode;
+use fbuild_build::script_runtime::resolve_extra_script_overlay;
 
 /// Test runner gate. `find_python` is private to script_runtime; the
 /// integration tests probe the same `python --version` / `py -3 --version`
@@ -74,7 +73,7 @@ fn write_project(extra_scripts: &str, scripts: &[(&str, &str)]) -> tempfile::Tem
 fn resolve_lite(project_dir: &Path) -> BuildOverlay {
     let config = fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini"))
         .expect("parse platformio.ini");
-    resolve_extra_script_overlay_with_mode(project_dir, "demo", &config, true)
+    resolve_extra_script_overlay(project_dir, "demo", &config)
         .expect("lite-SCons harness must succeed for the 5 spike patterns")
 }
 
