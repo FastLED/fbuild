@@ -50,9 +50,7 @@ fn test_esp32_deployer_creation() {
 
 #[test]
 fn qemu_flash_size_resolution_accepts_supported_sizes() {
-    let mut board =
-        fbuild_config::BoardConfig::from_board_id("esp32-s3-devkitc-1", &Default::default())
-            .unwrap();
+    let mut board = fbuild_test_support::board_for_test("esp32-s3-devkitc-1");
     board.max_flash = Some(8 * 1024 * 1024);
     assert_eq!(
         resolve_qemu_flash_size_bytes(&board, "4MB").unwrap(),
@@ -62,9 +60,7 @@ fn qemu_flash_size_resolution_accepts_supported_sizes() {
 
 #[test]
 fn qemu_flash_size_resolution_rejects_unsupported_size() {
-    let mut board =
-        fbuild_config::BoardConfig::from_board_id("esp32-s3-devkitc-1", &Default::default())
-            .unwrap();
+    let mut board = fbuild_test_support::board_for_test("esp32-s3-devkitc-1");
     board.max_flash = Some(32 * 1024 * 1024);
     let err = resolve_qemu_flash_size_bytes(&board, "4MB").unwrap_err();
     assert!(err
@@ -252,9 +248,7 @@ fn qemu_command_builder_adds_psram_args_when_requested() {
 
 #[test]
 fn test_esp32_deployer_from_board_config() {
-    let board =
-        fbuild_config::BoardConfig::from_board_id("esp32c6", &std::collections::HashMap::new())
-            .unwrap();
+    let board = fbuild_test_support::board_for_test("esp32c6");
     let params = test_esptool_params();
     let deployer =
         Esp32Deployer::from_board_config(&board, "0x0", "0x8000", "0x10000", &params, false);
@@ -267,7 +261,7 @@ fn test_esp32_deployer_from_board_config_honors_flash_size_override() {
     let mut overrides = std::collections::HashMap::new();
     overrides.insert("flash_size".to_string(), "4MB".to_string());
     let board =
-        fbuild_config::BoardConfig::from_board_id("esp32-c6-devkitc-1", &overrides).unwrap();
+        fbuild_test_support::board_for_test_with_overrides("esp32-c6-devkitc-1", &overrides);
     let params = test_esptool_params();
 
     let deployer =

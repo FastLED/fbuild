@@ -158,9 +158,7 @@ fn run_real_esp32s3_fixture_in_qemu() {
         .expect("should produce firmware.bin");
     let elf_path = build_result.elf_path.clone();
 
-    let board =
-        fbuild_config::BoardConfig::from_board_id("esp32-s3-devkitc-1", &Default::default())
-            .unwrap();
+    let board = fbuild_test_support::board_for_test("esp32-s3-devkitc-1");
     let mcu_config = fbuild_build::esp32::mcu_config::get_mcu_config("esp32s3").unwrap();
     let flash_size_bytes = fbuild_deploy::esp32::resolve_qemu_flash_size_bytes(
         &board,

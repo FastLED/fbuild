@@ -341,11 +341,7 @@ mod tests {
 
     #[test]
     fn test_teensy_deployer_from_board_config() {
-        let board = fbuild_config::BoardConfig::from_board_id(
-            "teensy41",
-            &std::collections::HashMap::new(),
-        )
-        .unwrap();
+        let board = fbuild_test_support::board_for_test("teensy41");
         let deployer =
             TeensyDeployer::from_board_config(&board, &TeensyLoaderParams::default(), false);
         assert_eq!(deployer.mcu_name, "TEENSY41");
@@ -353,11 +349,7 @@ mod tests {
 
     #[test]
     fn test_teensy_deployer_teensy40() {
-        let board = fbuild_config::BoardConfig::from_board_id(
-            "teensy40",
-            &std::collections::HashMap::new(),
-        )
-        .unwrap();
+        let board = fbuild_test_support::board_for_test("teensy40");
         let deployer =
             TeensyDeployer::from_board_config(&board, &TeensyLoaderParams::default(), false);
         assert_eq!(deployer.mcu_name, "TEENSY40");

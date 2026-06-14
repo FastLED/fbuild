@@ -130,8 +130,7 @@ fn select_runner_auto_detects_avr8js_for_uno() {
 #[test]
 fn select_runner_simavr_name_matches() {
     use super::runners::EmulatorRunner;
-    let board =
-        fbuild_config::BoardConfig::from_board_id("megaatmega2560", &HashMap::new()).unwrap();
+    let board = fbuild_test_support::board_for_test("megaatmega2560");
     let runner = SimavrRunner::new(board);
     assert_eq!(runner.name(), "simavr");
 }

@@ -1,9 +1,11 @@
 //! Test utilities and fixtures for fbuild.
 
+pub mod board;
 pub mod compile_db;
 pub mod elf_probe;
 pub mod mini_framework;
 
+pub use board::{board_for_test, board_for_test_with_overrides};
 pub use compile_db::{CompileDb, CompileDbError, CompileEntry};
 pub use elf_probe::{ElfProbe, ElfProbeError, SectionInfo, SymbolInfo};
 pub use mini_framework::{LibraryBuilder, MiniFramework};

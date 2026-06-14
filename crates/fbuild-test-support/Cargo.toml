@@ -15,6 +15,7 @@ thiserror = { workspace = true }
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
 tokio = { workspace = true }
+fbuild-config = { path = "../fbuild-config" }
 fbuild-packages = { path = "../fbuild-packages" }
 fbuild-header-scan = { path = "../fbuild-header-scan" }
 fbuild-library-select = { path = "../fbuild-library-select" }
