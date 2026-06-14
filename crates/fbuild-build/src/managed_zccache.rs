@@ -178,6 +178,8 @@ fn host_triple() -> Result<&'static str> {
 fn http_client() -> Result<reqwest::blocking::Client> {
     reqwest::blocking::Client::builder()
         .user_agent(concat!("fbuild/", env!("CARGO_PKG_VERSION")))
+        .connect_timeout(std::time::Duration::from_secs(10))
+        .timeout(std::time::Duration::from_secs(120))
         .build()
         .map_err(|e| FbuildError::Other(format!("failed to build http client: {e}")))
 }
