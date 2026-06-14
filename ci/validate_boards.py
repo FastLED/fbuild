@@ -67,9 +67,20 @@ FBUILD_NATIVE_BOARDS = frozenset(
     {
         # NXP LPC8xx bare-metal targets. PlatformIO's `nxplpc` platform
         # ships lpc11u68 / lpc1768 / lpc54114 / lpc546xx / lpcxpresso55s16
-        # / seeedArchPro, but not these two — they are fbuild-only.
+        # / seeedArchPro, but not these five — they are fbuild-only.
+        # The bare MCU ids (`lpc845`, `lpc804`) plus the three Arduino-style
+        # board variants ship under the vendored ArduinoCore-LPC8xx framework
+        # (FastLED/fbuild#456 item 3.8, #479, #487). Without listing the
+        # variants here, validate_boards.py silently skips them via the
+        # "platform not installed" code path (find_pio_board → None) even
+        # though the platform IS installed — the board just doesn't exist
+        # upstream. Listing them surfaces them in the fbuild-native tally
+        # and keeps future drift from being silently masked.
         "lpc845",
         "lpc804",
+        "lpc845brk",
+        "lpcxpresso804",
+        "lpcxpresso845max",
     }
 )
 
