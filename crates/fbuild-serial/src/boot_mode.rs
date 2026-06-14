@@ -10,6 +10,12 @@
 //! humans reading the logs) recognise the boot-mode lockup and recover, rather
 //! than mistaking a stuck-in-ROM board for a host-side deadlock. See
 //! FastLED/fbuild#532.
+//!
+//! The matching *recovery* primitive — a single DTR/RTS-driven hard-reset
+//! sequence — lives in [`crate::esp_reset`]. Callers that want to attempt
+//! automatic recovery before propagating the error can invoke
+//! [`crate::esp_reset::hard_reset_blocking`] on the same port that produced
+//! the detection.
 
 /// A detected ESP ROM download-mode signal on the serial stream.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
