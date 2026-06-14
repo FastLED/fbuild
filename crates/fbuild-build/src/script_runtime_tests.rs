@@ -1,4 +1,3 @@
-
 use super::*;
 use crate::flag_overlay::ScriptScopeState;
 use std::fs;
@@ -31,7 +30,10 @@ extra_scripts = {}
 fn resolve_runtime_error(project_dir: &Path) -> String {
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
-    resolve_extra_script_overlay(project_dir, "demo", &config)
+    // Pin to MockEnv (FBUILD_LITE_SCONS off) — these tests assert on
+    // MockEnv's hard-fail semantics (Execute / SConscript / unsupported
+    // scopes) that the lite-SCons default (#553 step 3) diverges from.
+    resolve_extra_script_overlay_with_mode(project_dir, "demo", &config, false)
         .unwrap_err()
         .to_string()
 }
@@ -158,7 +160,9 @@ env.Append(CPPDEFINES=[\"DUMP_SHIM_OK\"])
 
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
-    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).unwrap();
+    // Pinned to MockEnv (see resolve_runtime_overlay note).
+    let overlay =
+        resolve_extra_script_overlay_with_mode(project_dir, "demo", &config, false).unwrap();
     assert!(overlay
         .global_compile
         .common
@@ -203,7 +207,9 @@ env.Append(CPPDEFINES=[\"HELPERS_SHIM_OK\"])
 
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
-    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).unwrap();
+    // Pinned to MockEnv (see resolve_runtime_overlay note).
+    let overlay =
+        resolve_extra_script_overlay_with_mode(project_dir, "demo", &config, false).unwrap();
     assert!(overlay
         .global_compile
         .common
@@ -245,7 +251,9 @@ env.Append(CPPDEFINES=[\"BOARD_CONFIG_SHIM_OK\"])
 
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
-    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).unwrap();
+    // Pinned to MockEnv (see resolve_runtime_overlay note).
+    let overlay =
+        resolve_extra_script_overlay_with_mode(project_dir, "demo", &config, false).unwrap();
     assert!(overlay
         .global_compile
         .common
@@ -290,7 +298,9 @@ env.Append(CPPDEFINES=[\"PIO_PLATFORM_SHIM_OK\"])
 
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
-    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).unwrap();
+    // Pinned to MockEnv (see resolve_runtime_overlay note).
+    let overlay =
+        resolve_extra_script_overlay_with_mode(project_dir, "demo", &config, false).unwrap();
     assert!(overlay
         .global_compile
         .common
@@ -409,7 +419,8 @@ framework = arduino
 fn resolve_runtime_overlay(project_dir: &Path) -> BuildOverlay {
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
-    resolve_extra_script_overlay(project_dir, "demo", &config).unwrap()
+    // Pinned to MockEnv (see resolve_runtime_error note above).
+    resolve_extra_script_overlay_with_mode(project_dir, "demo", &config, false).unwrap()
 }
 
 // ---- SIMPLE tier ------------------------------------------------------
@@ -627,4 +638,43 @@ env.SConscript(\"feature.py\", exports=\"env\")
     let err = resolve_runtime_error(temp.path());
     assert!(err.contains("SConscript is not supported"), "{err}");
     assert!(err.contains("Recommendation: use --platformio"), "{err}");
+}
+
+/// Locks down the post-#553-step-3 flip. The env var name + opt-out
+/// vocabulary is the user-facing contract; the lite-vs-MockEnv default
+/// is the semantic change. Don't rely on the rest of the test suite
+/// to catch a future regression on either dimension — that suite
+/// pins through `_with_mode(..., false)` and won't notice if the
+/// default silently reverts.
+#[test]
+fn use_lite_scons_default_and_opt_out_vocabulary() {
+    use std::sync::Mutex;
+    // env vars are process-global; serialise just this one test.
+    static GUARD: Mutex<()> = Mutex::new(());
+    let _g = GUARD.lock().unwrap();
+    let prev = std::env::var("FBUILD_LITE_SCONS").ok();
+
+    std::env::remove_var("FBUILD_LITE_SCONS");
+    assert!(use_lite_scons(), "unset → default lite (#553 step 3 flip)");
+
+    for opt_in_or_unrecognised in ["", "1", "true", "yes", "wat"] {
+        std::env::set_var("FBUILD_LITE_SCONS", opt_in_or_unrecognised);
+        assert!(
+            use_lite_scons(),
+            "FBUILD_LITE_SCONS={opt_in_or_unrecognised:?} keeps the lite default"
+        );
+    }
+
+    for opt_out in ["0", "false", "FALSE", "no", "Off", "  0  "] {
+        std::env::set_var("FBUILD_LITE_SCONS", opt_out);
+        assert!(
+            !use_lite_scons(),
+            "FBUILD_LITE_SCONS={opt_out:?} opts out to legacy MockEnv"
+        );
+    }
+
+    match prev {
+        Some(v) => std::env::set_var("FBUILD_LITE_SCONS", v),
+        None => std::env::remove_var("FBUILD_LITE_SCONS"),
+    }
 }

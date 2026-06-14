@@ -1,9 +1,29 @@
-//! Native compatibility layer for a constrained subset of PlatformIO `extra_scripts`.
+//! Native compatibility layer for PlatformIO `extra_scripts`.
 //!
-//! Supported shapes are intentionally narrow: `pre:`/`post:` entries, `Import("env")`
-//! in PRE/POST scripts, `Import("projenv")` in POST scripts only, and flag/path
-//! mutations over the known compiler/linker scopes. Unsupported behavior fails fast
-//! with a recommendation to use `--platformio`.
+//! Two harness backends ship side-by-side:
+//!
+//! * **lite-SCons** (`lite_scons_harness.py`) — the **default** as of #553
+//!   step 3. Covers effectful `Execute`, `AddPreAction`/`AddPostAction`,
+//!   `AddBuildMiddleware`, `SConscript` recursion, `ParseFlagsExtended`
+//!   (joined + space forms), `AddCustomTarget`, `AddMethod`, and the read-
+//!   only `BoardConfig`/`PioPlatform`/`GetProjectConfig`/`GetBuildType`
+//!   helpers — plus everything MockEnv handled.
+//! * **MockEnv** (`script_runtime_harness.py`) — the legacy shim, available
+//!   as the emergency opt-out via `FBUILD_LITE_SCONS=0` / `false` / `no` /
+//!   `off`. Tracks an explicit retirement schedule per the
+//!   [#553 retirement plan](https://github.com/FastLED/fbuild/issues/553).
+//!
+//! The default backend selection is governed by [`use_lite_scons`]; callers
+//! that need deterministic pinning (e.g. unit tests across the parallel
+//! runner) use [`resolve_extra_script_overlay_with_mode`] directly. Both
+//! harnesses produce the same flag-scope contract on the output side, plus
+//! the lite path optionally emits `lite_scons_records` for the effectful /
+//! deferred ops MockEnv can't model.
+//!
+//! Anything that neither backend can model (real DAG / incremental
+//! rebuilds, scanner-driven dep discovery, PlatformIO-defined chip-family
+//! builders without a native fbuild equivalent) falls through to the
+//! `--platformio` passthrough.
 
 use std::collections::HashMap;
 use std::path::Path;
@@ -21,14 +41,24 @@ const HARNESS: &str = include_str!("script_runtime_harness.py");
 /// `SConscript` recursion, and `ParseFlagsExtended` (joined + space forms).
 const LITE_HARNESS: &str = include_str!("lite_scons_harness.py");
 
-/// Returns `true` when the FBUILD_LITE_SCONS env var requests the lite
-/// harness instead of MockEnv. Accepts `"1"`, `"true"`, `"yes"` (case
-/// insensitive). Anything else — including unset — keeps the legacy
-/// MockEnv behaviour the existing call sites depend on.
-fn lite_scons_requested() -> bool {
-    matches!(
-        std::env::var("FBUILD_LITE_SCONS").as_deref().map(str::trim),
-        Ok("1" | "true" | "TRUE" | "True" | "yes" | "YES")
+/// Returns `true` when the lite-SCons harness should be used (the
+/// post-#553-step-3 **default**), `false` only when `FBUILD_LITE_SCONS`
+/// explicitly opts out to the legacy MockEnv shim.
+///
+/// Opt-out values (case-insensitive, leading/trailing whitespace
+/// tolerated): `"0"`, `"false"`, `"no"`, `"off"`. Anything else —
+/// including unset, empty, the legacy opt-in values `"1"`/`"true"`,
+/// or unrecognised text — keeps the lite-SCons default. This makes the
+/// opt-in→opt-out semantics symmetric and means `FBUILD_LITE_SCONS=1`
+/// remains a valid (now redundant) request for the lite path during
+/// the migration window.
+fn use_lite_scons() -> bool {
+    let Ok(raw) = std::env::var("FBUILD_LITE_SCONS") else {
+        return true; // unset → default lite
+    };
+    !matches!(
+        raw.trim().to_ascii_lowercase().as_str(),
+        "0" | "false" | "no" | "off"
     )
 }
 
@@ -48,7 +78,7 @@ pub fn resolve_extra_script_overlay(
     env_name: &str,
     config: &fbuild_config::PlatformIOConfig,
 ) -> fbuild_core::Result<BuildOverlay> {
-    resolve_extra_script_overlay_with_mode(project_dir, env_name, config, lite_scons_requested())
+    resolve_extra_script_overlay_with_mode(project_dir, env_name, config, use_lite_scons())
 }
 
 /// Same as [`resolve_extra_script_overlay`], but with the harness choice
