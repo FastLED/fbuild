@@ -542,6 +542,15 @@ class Environment:
 class _BoardConfig:
     def __init__(self, data): self._data = data
     def get(self, key, default=None):
+        # fbuild's Rust side hands us a flat dict whose keys are already
+        # dotted (e.g. {"build.mcu": "atmega328p"}), matching the existing
+        # MockEnv contract. Real-SCons / PlatformIO scripts call
+        # `BoardConfig.get("build.mcu")` against that flat dict directly,
+        # so a flat lookup wins. Fall back to a nested walk only if the
+        # caller did pass a nested dict (defensive — keeps the lite path
+        # working if future board_config shapes change).
+        if isinstance(self._data, dict) and key in self._data:
+            return self._data[key]
         ref = self._data
         for part in str(key).split("."):
             if isinstance(ref, dict) and part in ref: ref = ref[part]

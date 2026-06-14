@@ -89,11 +89,12 @@ pub struct BuildOverlay {
     pub link: LinkExtraFlags,
     /// User-facing notes emitted by the runtime (e.g. ignored no-op actions).
     pub notes: Vec<String>,
-    /// Records the lite-SCons harness captures that the MockEnv shim
-    /// structurally can't model: effectful `Execute`, recorded pre/post
-    /// actions, middleware, custom targets, and unmapped builder calls.
-    /// Only `Some(...)` when `FBUILD_LITE_SCONS=1` was set and the lite
-    /// harness ran. See FastLED/fbuild#553.
+    /// Records the lite-SCons harness's effectful captures: `Execute` runs,
+    /// generated files, recorded pre/post actions, middleware, custom
+    /// targets, and unmapped builder calls. Optional (rather than always
+    /// present) because builds without `extra_scripts` short-circuit
+    /// before invoking the harness; populated whenever at least one
+    /// script ran. See FastLED/fbuild#553.
     pub lite_scons_records: Option<LiteSconsRecords>,
 }
 

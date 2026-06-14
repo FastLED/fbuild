@@ -30,10 +30,7 @@ extra_scripts = {}
 fn resolve_runtime_error(project_dir: &Path) -> String {
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
-    // Pin to MockEnv (FBUILD_LITE_SCONS off) — these tests assert on
-    // MockEnv's hard-fail semantics (Execute / SConscript / unsupported
-    // scopes) that the lite-SCons default (#553 step 3) diverges from.
-    resolve_extra_script_overlay_with_mode(project_dir, "demo", &config, false)
+    resolve_extra_script_overlay(project_dir, "demo", &config)
         .unwrap_err()
         .to_string()
 }
@@ -161,8 +158,7 @@ env.Append(CPPDEFINES=[\"DUMP_SHIM_OK\"])
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
     // Pinned to MockEnv (see resolve_runtime_overlay note).
-    let overlay =
-        resolve_extra_script_overlay_with_mode(project_dir, "demo", &config, false).unwrap();
+    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).unwrap();
     assert!(overlay
         .global_compile
         .common
@@ -208,8 +204,7 @@ env.Append(CPPDEFINES=[\"HELPERS_SHIM_OK\"])
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
     // Pinned to MockEnv (see resolve_runtime_overlay note).
-    let overlay =
-        resolve_extra_script_overlay_with_mode(project_dir, "demo", &config, false).unwrap();
+    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).unwrap();
     assert!(overlay
         .global_compile
         .common
@@ -252,8 +247,7 @@ env.Append(CPPDEFINES=[\"BOARD_CONFIG_SHIM_OK\"])
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
     // Pinned to MockEnv (see resolve_runtime_overlay note).
-    let overlay =
-        resolve_extra_script_overlay_with_mode(project_dir, "demo", &config, false).unwrap();
+    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).unwrap();
     assert!(overlay
         .global_compile
         .common
@@ -299,73 +293,11 @@ env.Append(CPPDEFINES=[\"PIO_PLATFORM_SHIM_OK\"])
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
     // Pinned to MockEnv (see resolve_runtime_overlay note).
-    let overlay =
-        resolve_extra_script_overlay_with_mode(project_dir, "demo", &config, false).unwrap();
+    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).unwrap();
     assert!(overlay
         .global_compile
         .common
         .contains(&"-DPIO_PLATFORM_SHIM_OK".to_string()));
-}
-
-#[test]
-fn test_resolve_extra_script_overlay_rejects_unsupported_import_name() {
-    if find_python().is_none() {
-        return;
-    }
-
-    let temp = write_runtime_project(
-        "post:bad_import_test.py",
-        "bad_import_test.py",
-        "\
-Import(\"board\")
-",
-    );
-    let err = resolve_runtime_error(temp.path());
-    assert!(err.contains("Import('board') is not supported"), "{err}");
-    assert!(err.contains("Recommendation: use --platformio"), "{err}");
-}
-
-#[test]
-fn test_resolve_extra_script_overlay_rejects_projenv_in_pre_script() {
-    if find_python().is_none() {
-        return;
-    }
-
-    let temp = write_runtime_project(
-        "pre:pre_projenv_test.py",
-        "pre_projenv_test.py",
-        "\
-Import(\"env\", \"projenv\")
-",
-    );
-    let err = resolve_runtime_error(temp.path());
-    assert!(
-        err.contains("projenv is not available in PRE extra_scripts"),
-        "{err}"
-    );
-    assert!(err.contains("Recommendation: use --platformio"), "{err}");
-}
-
-#[test]
-fn test_resolve_extra_script_overlay_rejects_unsupported_scope_mutation() {
-    if find_python().is_none() {
-        return;
-    }
-
-    let temp = write_runtime_project(
-        "post:unsupported_scope_test.py",
-        "unsupported_scope_test.py",
-        "\
-Import(\"env\")
-env.Append(FOO=[\"x\"])
-",
-    );
-    let err = resolve_runtime_error(temp.path());
-    assert!(
-        err.contains("env.append on unsupported scope 'FOO'"),
-        "{err}"
-    );
-    assert!(err.contains("Recommendation: use --platformio"), "{err}");
 }
 
 #[test]
@@ -419,8 +351,7 @@ framework = arduino
 fn resolve_runtime_overlay(project_dir: &Path) -> BuildOverlay {
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
-    // Pinned to MockEnv (see resolve_runtime_error note above).
-    resolve_extra_script_overlay_with_mode(project_dir, "demo", &config, false).unwrap()
+    resolve_extra_script_overlay(project_dir, "demo", &config).unwrap()
 }
 
 // ---- SIMPLE tier ------------------------------------------------------
@@ -550,10 +481,12 @@ env.AddPostAction(\"$BUILD_DIR/firmware.bin\", after_build)
 }
 
 /// m5panel `littlefsbuilder.py`-style script: `env.get()` plus a
-/// `Replace` on a non-flag tool scope. The tool scope must be recorded as
-/// a note (not a hard failure) while the real flag mutation lands.
+/// `Replace` on a non-flag tool scope. Under MockEnv this recorded a
+/// note; under lite-SCons (the only backend post-#553 step 4) the value
+/// is stored on the construction env without a note. Either way the
+/// script must not hard-fail and the parallel flag mutation must land.
 #[test]
-fn test_shim_medium_nonflag_scope_recorded_not_rejected() {
+fn test_shim_medium_nonflag_scope_does_not_reject() {
     if find_python().is_none() {
         return;
     }
@@ -577,104 +510,4 @@ env.Append(CPPDEFINES=[\"LFS_OK\"])
             .contains(&"-DLFS_OK".to_string()),
         "{overlay:?}"
     );
-    assert!(
-        overlay.notes.iter().any(|n| n.contains("MKSPIFFSTOOL")),
-        "non-flag scope should be recorded as a note: {overlay:?}"
-    );
-}
-
-// ---- COMPLEX tier (graceful refusal / no-op) --------------------------
-
-/// amsreader `generate_includes.py`-style script: a no-op `Execute` of a
-/// `VerboseAction`. The script makes no flag mutations; the runtime must
-/// succeed, collect nothing, and note the ignored action.
-#[test]
-fn test_shim_complex_execute_verbose_action_is_noop() {
-    if find_python().is_none() {
-        return;
-    }
-
-    let temp = write_runtime_project_with_config(
-        "",
-        "post:generate_includes.py",
-        "generate_includes.py",
-        "\
-from SCons.Script import DefaultEnvironment
-env = DefaultEnvironment()
-env.Execute(env.VerboseAction(\"$PYTHONEXE -m pip install css_html_js_minify\", \"Installing\"))
-",
-    );
-
-    let overlay = resolve_runtime_overlay(temp.path());
-    assert!(
-        overlay.global_compile.is_empty() && overlay.project_compile.is_empty(),
-        "effectful codegen script should contribute no flags: {overlay:?}"
-    );
-    assert!(
-        overlay.notes.iter().any(|n| n.contains("Execute")),
-        "{overlay:?}"
-    );
-}
-
-/// Marlin `common-dependencies.py`-style script: `SConscript` recursion is
-/// structurally unshimmable and must bail with a `--platformio` hint
-/// rather than silently producing wrong flags.
-#[test]
-fn test_shim_complex_sconscript_bails() {
-    if find_python().is_none() {
-        return;
-    }
-
-    let temp = write_runtime_project_with_config(
-        "",
-        "post:common_dependencies.py",
-        "common_dependencies.py",
-        "\
-Import(\"env\")
-env.Append(CPPDEFINES=[\"EARLY\"])
-env.SConscript(\"feature.py\", exports=\"env\")
-",
-    );
-    let err = resolve_runtime_error(temp.path());
-    assert!(err.contains("SConscript is not supported"), "{err}");
-    assert!(err.contains("Recommendation: use --platformio"), "{err}");
-}
-
-/// Locks down the post-#553-step-3 flip. The env var name + opt-out
-/// vocabulary is the user-facing contract; the lite-vs-MockEnv default
-/// is the semantic change. Don't rely on the rest of the test suite
-/// to catch a future regression on either dimension — that suite
-/// pins through `_with_mode(..., false)` and won't notice if the
-/// default silently reverts.
-#[test]
-fn use_lite_scons_default_and_opt_out_vocabulary() {
-    use std::sync::Mutex;
-    // env vars are process-global; serialise just this one test.
-    static GUARD: Mutex<()> = Mutex::new(());
-    let _g = GUARD.lock().unwrap();
-    let prev = std::env::var("FBUILD_LITE_SCONS").ok();
-
-    std::env::remove_var("FBUILD_LITE_SCONS");
-    assert!(use_lite_scons(), "unset → default lite (#553 step 3 flip)");
-
-    for opt_in_or_unrecognised in ["", "1", "true", "yes", "wat"] {
-        std::env::set_var("FBUILD_LITE_SCONS", opt_in_or_unrecognised);
-        assert!(
-            use_lite_scons(),
-            "FBUILD_LITE_SCONS={opt_in_or_unrecognised:?} keeps the lite default"
-        );
-    }
-
-    for opt_out in ["0", "false", "FALSE", "no", "Off", "  0  "] {
-        std::env::set_var("FBUILD_LITE_SCONS", opt_out);
-        assert!(
-            !use_lite_scons(),
-            "FBUILD_LITE_SCONS={opt_out:?} opts out to legacy MockEnv"
-        );
-    }
-
-    match prev {
-        Some(v) => std::env::set_var("FBUILD_LITE_SCONS", v),
-        None => std::env::remove_var("FBUILD_LITE_SCONS"),
-    }
 }

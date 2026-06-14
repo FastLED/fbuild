@@ -1,29 +1,20 @@
 //! Native compatibility layer for PlatformIO `extra_scripts`.
 //!
-//! Two harness backends ship side-by-side:
+//! fbuild evaluates `extra_scripts` via a Python subprocess sidecar that
+//! interprets a working subset of SCons against the project's `[env]` —
+//! see [`crate::flag_overlay::BuildOverlay`] for what flows back into the
+//! native compile/link/deploy pipeline. The harness lives at
+//! `lite_scons_harness.py`; see that file's docstring for the API surface.
 //!
-//! * **lite-SCons** (`lite_scons_harness.py`) — the **default** as of #553
-//!   step 3. Covers effectful `Execute`, `AddPreAction`/`AddPostAction`,
-//!   `AddBuildMiddleware`, `SConscript` recursion, `ParseFlagsExtended`
-//!   (joined + space forms), `AddCustomTarget`, `AddMethod`, and the read-
-//!   only `BoardConfig`/`PioPlatform`/`GetProjectConfig`/`GetBuildType`
-//!   helpers — plus everything MockEnv handled.
-//! * **MockEnv** (`script_runtime_harness.py`) — the legacy shim, available
-//!   as the emergency opt-out via `FBUILD_LITE_SCONS=0` / `false` / `no` /
-//!   `off`. Tracks an explicit retirement schedule per the
-//!   [#553 retirement plan](https://github.com/FastLED/fbuild/issues/553).
+//! What this backend deliberately does NOT model — single-pass instead of
+//! a real DAG, no scanner-driven header dep discovery, no
+//! PlatformIO-defined chip-family builders without a native fbuild
+//! equivalent — falls through to the `--platformio` passthrough.
 //!
-//! The default backend selection is governed by [`use_lite_scons`]; callers
-//! that need deterministic pinning (e.g. unit tests across the parallel
-//! runner) use [`resolve_extra_script_overlay_with_mode`] directly. Both
-//! harnesses produce the same flag-scope contract on the output side, plus
-//! the lite path optionally emits `lite_scons_records` for the effectful /
-//! deferred ops MockEnv can't model.
-//!
-//! Anything that neither backend can model (real DAG / incremental
-//! rebuilds, scanner-driven dep discovery, PlatformIO-defined chip-family
-//! builders without a native fbuild equivalent) falls through to the
-//! `--platformio` passthrough.
+//! History: the original MockEnv shim (`script_runtime_harness.py`) lived
+//! alongside the lite-SCons harness behind `FBUILD_LITE_SCONS=0` from #581
+//! through #583. It was retired in step 4 of the [#553 plan](https://github.com/FastLED/fbuild/issues/553)
+//! once lite-SCons proved a functional superset.
 
 use std::collections::HashMap;
 use std::path::Path;
@@ -33,34 +24,7 @@ use crate::flag_overlay::{
     ScriptRuntimeResult, ScriptScopeState,
 };
 
-const HARNESS: &str = include_str!("script_runtime_harness.py");
-
-/// Lite-SCons backend (FastLED/fbuild#553). An opt-in alternative to
-/// `script_runtime_harness.py`'s MockEnv shim that adds effectful
-/// `Execute`, recorded pre/post actions, middleware, custom targets,
-/// `SConscript` recursion, and `ParseFlagsExtended` (joined + space forms).
-const LITE_HARNESS: &str = include_str!("lite_scons_harness.py");
-
-/// Returns `true` when the lite-SCons harness should be used (the
-/// post-#553-step-3 **default**), `false` only when `FBUILD_LITE_SCONS`
-/// explicitly opts out to the legacy MockEnv shim.
-///
-/// Opt-out values (case-insensitive, leading/trailing whitespace
-/// tolerated): `"0"`, `"false"`, `"no"`, `"off"`. Anything else —
-/// including unset, empty, the legacy opt-in values `"1"`/`"true"`,
-/// or unrecognised text — keeps the lite-SCons default. This makes the
-/// opt-in→opt-out semantics symmetric and means `FBUILD_LITE_SCONS=1`
-/// remains a valid (now redundant) request for the lite path during
-/// the migration window.
-fn use_lite_scons() -> bool {
-    let Ok(raw) = std::env::var("FBUILD_LITE_SCONS") else {
-        return true; // unset → default lite
-    };
-    !matches!(
-        raw.trim().to_ascii_lowercase().as_str(),
-        "0" | "false" | "no" | "off"
-    )
-}
+const HARNESS: &str = include_str!("lite_scons_harness.py");
 
 #[derive(Debug, serde::Serialize)]
 struct ScriptRuntimeInput<'a> {
@@ -77,19 +41,6 @@ pub fn resolve_extra_script_overlay(
     project_dir: &Path,
     env_name: &str,
     config: &fbuild_config::PlatformIOConfig,
-) -> fbuild_core::Result<BuildOverlay> {
-    resolve_extra_script_overlay_with_mode(project_dir, env_name, config, use_lite_scons())
-}
-
-/// Same as [`resolve_extra_script_overlay`], but with the harness choice
-/// passed in explicitly. Lets tests pin the backend deterministically
-/// without leaking the `FBUILD_LITE_SCONS` env var across the parallel
-/// test runner. See FastLED/fbuild#553.
-pub fn resolve_extra_script_overlay_with_mode(
-    project_dir: &Path,
-    env_name: &str,
-    config: &fbuild_config::PlatformIOConfig,
-    use_lite_scons: bool,
 ) -> fbuild_core::Result<BuildOverlay> {
     let extra_scripts = config.get_extra_scripts(env_name)?;
     if extra_scripts.is_empty() {
@@ -124,19 +75,9 @@ pub fn resolve_extra_script_overlay_with_mode(
             e
         ))
     })?;
-    let harness_filename = if use_lite_scons {
-        "fbuild_lite_scons_harness.py"
-    } else {
-        "fbuild_extra_scripts_runtime.py"
-    };
-    let harness_path = temp_dir.path().join(harness_filename);
+    let harness_path = temp_dir.path().join("fbuild_lite_scons_harness.py");
     let input_path = temp_dir.path().join("input.json");
-    let harness_body = if use_lite_scons {
-        LITE_HARNESS
-    } else {
-        HARNESS
-    };
-    std::fs::write(&harness_path, harness_body).map_err(|e| {
+    std::fs::write(&harness_path, HARNESS).map_err(|e| {
         fbuild_core::FbuildError::BuildFailed(format!(
             "failed to write extra_scripts harness: {}",
             e
