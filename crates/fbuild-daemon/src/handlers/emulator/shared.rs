@@ -74,6 +74,13 @@ pub(crate) fn monitor_outcome_to_emulator(
             EmulatorOutcome::Failed(msg)
         }
         MonitorOutcome::Timeout { expect_found } => EmulatorOutcome::TimedOut { expect_found },
+        // Emulators never opt into ESP DTR/RTS recovery (no real hardware),
+        // so this variant is unreachable from the emulator pipeline. Map it
+        // to Failed defensively rather than panic if the future wires it up.
+        MonitorOutcome::RecoverDownloadMode { signal } => EmulatorOutcome::Failed(format!(
+            "unexpected ROM download-mode signal from emulator: {}",
+            signal.diagnostic()
+        )),
     }
 }
 
@@ -215,6 +222,9 @@ pub(crate) async fn run_qemu_process(
         options.halt_on_success,
         options.expect,
         options.show_timestamp,
+        // Emulator path: no real DTR/RTS lines to drive, so the
+        // auto-recovery from-ROM-download flag has nothing to do.
+        false,
     );
     let mut crash_decoder =
         fbuild_serial::crash_decoder::CrashDecoder::new(options.elf_path, options.addr2line_path);

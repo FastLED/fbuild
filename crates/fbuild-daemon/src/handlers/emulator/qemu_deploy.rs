@@ -339,5 +339,24 @@ pub async fn deploy_qemu(
                 }),
             )
         }
+        // QEMU does not drive real DTR/RTS lines; ESP auto-recovery is
+        // unreachable from this path. Defensive arm.
+        MonitorOutcome::RecoverDownloadMode { signal } => (
+            StatusCode::OK,
+            Json(OperationResponse {
+                success: false,
+                request_id,
+                message: format!(
+                    "internal: QEMU emitted ESP RecoverDownloadMode ({})",
+                    signal.diagnostic()
+                ),
+                exit_code: real_exit_code.unwrap_or(1),
+                output_file: Some(output_file),
+                output_dir,
+                launch_url: None,
+                stdout: Some(qemu_result.stdout),
+                stderr: Some(qemu_result.stderr),
+            }),
+        ),
     }
 }

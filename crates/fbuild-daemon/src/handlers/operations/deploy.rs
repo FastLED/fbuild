@@ -903,6 +903,10 @@ pub async fn deploy(
             req.monitor_halt_on_success.as_deref(),
             req.monitor_expect.as_deref(),
             req.monitor_show_timestamp,
+            // Post-deploy monitor does not opt in to auto-recovery from ROM
+            // download mode. The standalone monitor handler is the only path
+            // that wires the FastLED/fbuild#532 recovery flag today.
+            false,
         )
         .await;
 
@@ -970,6 +974,29 @@ pub async fn deploy(
                     }),
                 )
             }
+            // Post-deploy monitor passes `auto_recover_from_download_mode=false`
+            // (see the `run_monitor_loop` call above), so this variant is
+            // unreachable here. Translate it to a clean error rather than
+            // panicking if the flag is wired in a future PR without updating
+            // this match.
+            MonitorOutcome::RecoverDownloadMode { signal } => (
+                StatusCode::OK,
+                Json(OperationResponse {
+                    success: false,
+                    request_id,
+                    message: format!(
+                        "{}; monitor returned RecoverDownloadMode without opt-in: {}",
+                        deploy_prefix,
+                        signal.diagnostic()
+                    ),
+                    exit_code: 1,
+                    output_file: Some(reported_output_file.clone()),
+                    output_dir: reported_output_dir.clone(),
+                    launch_url: None,
+                    stdout: deploy_stdout,
+                    stderr: deploy_stderr,
+                }),
+            ),
         };
     }
 

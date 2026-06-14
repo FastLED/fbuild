@@ -439,5 +439,8 @@ async fn simavr_runner_timeout() {
         MonitorOutcome::Error(_) => {
             // Process exited before halt pattern found — also acceptable
         }
+        MonitorOutcome::RecoverDownloadMode { .. } => {
+            panic!("emulator process must never emit ESP RecoverDownloadMode");
+        }
     }
 }

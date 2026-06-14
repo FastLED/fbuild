@@ -138,6 +138,12 @@ pub struct MonitorRequest {
     pub request_id: Option<String>,
     pub caller_pid: Option<u32>,
     pub caller_cwd: Option<String>,
+    /// Attempt one ESP DTR/RTS hard-reset when ROM download-mode is
+    /// detected mid-monitor, instead of fast-failing with the diagnostic.
+    /// Default `false` preserves the pre-#577 behaviour. See
+    /// FastLED/fbuild#532.
+    #[serde(default)]
+    pub auto_recover_from_download_mode: bool,
 }
 
 fn default_true() -> bool {
