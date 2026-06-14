@@ -16,13 +16,22 @@ use std::path::{Path, PathBuf};
 use crate::{CacheSubdir, PackageBase, PackageInfo};
 
 /// Pinned upstream commit. Bump alongside `URL` + `CHECKSUM`.
-/// Pinned to the `_init`/`_fini` stub fix (zackees/ArduinoCore-LPC8xx#23) so
-/// `-nostartfiles` links resolve; fold back to a merged `main` SHA later.
-const ACLPC_COMMIT: &str = "6031232432601d6174a1b8fc7dd361cfb1f9fbea";
-const ACLPC_VERSION: &str = "0.1.0+g6031232";
+///
+/// Pinned to the Wire/SPI proxy-singleton refactor merge
+/// (zackees/ArduinoCore-LPC8xx#27): `TwoWire Wire;` and `SPIClass SPI;` are
+/// now trivial proxy facades that lazily construct their impl via a Meyers
+/// singleton — `--gc-sections` can drop the entire I2C / SPI driver from
+/// sketches that don't reference `Wire` / `SPI`.
+///
+/// Earlier merges still in effect:
+///   #24: `operator new`/`new[]`, `.ARM.exidx`, forced heap base, F_CPU=24MHz
+///   #25: drop unsigned-long operator new overloads (32-bit ABI)
+///   #26: collapse operator delete variants to a single free thunk
+const ACLPC_COMMIT: &str = "195a2eddd31eba8472ceaffa6a1a1902f72439ae";
+const ACLPC_VERSION: &str = "0.1.0+g195a2ed";
 const ACLPC_URL: &str =
-    "https://github.com/zackees/ArduinoCore-LPC8xx/archive/6031232432601d6174a1b8fc7dd361cfb1f9fbea.tar.gz";
-const ACLPC_CHECKSUM: &str = "7f4ec8fced3b023ae49818b668e387d3056d05e4e170b190a5b4b1a62805b406";
+    "https://github.com/zackees/ArduinoCore-LPC8xx/archive/195a2eddd31eba8472ceaffa6a1a1902f72439ae.tar.gz";
+const ACLPC_CHECKSUM: &str = "366de74b93179ba4b5e8ac9e527f15f189d9e26bcedd030fe11c11a2c907f3e4";
 
 /// Arduino LPC8xx core framework manager.
 pub struct ArduinoCoreLpc8xx {
@@ -67,12 +76,13 @@ impl ArduinoCoreLpc8xx {
 
     /// Validate the extracted package has the expected core layout.
     fn validate(install_dir: &Path) -> fbuild_core::Result<()> {
+        let root = find_core_root(install_dir);
         for rel in ["cores/lpc8xx/main.cpp", "cores/lpc8xx/startup_lpc8xx.c"] {
-            if !install_dir.join(rel).exists() {
+            if !root.join(rel).exists() {
                 return Err(fbuild_core::FbuildError::PackageError(format!(
                     "ArduinoCore-LPC8xx missing {} (in {})",
                     rel,
-                    install_dir.display()
+                    root.display()
                 )));
             }
         }
@@ -82,26 +92,49 @@ impl ArduinoCoreLpc8xx {
     /// Repository root of the vendored package. Used as the linker `-L`
     /// search root so a linker script's relative `INCLUDE` directive
     /// (e.g. `INCLUDE linker_scripts/gcc/lpc8xx_common.ld`) resolves.
+    ///
+    /// GitHub's archive tarball wraps the repo contents in a top-level
+    /// `ArduinoCore-LPC8xx-<sha>/` directory; `find_core_root` strips that.
     pub fn install_path(&self) -> PathBuf {
-        self.base.install_path()
+        find_core_root(&self.base.install_path())
     }
 
     /// `cores/lpc8xx/` — the core sources + headers (Arduino.h,
     /// HardwareSerial, startup, main, wiring, etc.).
     pub fn core_dir(&self) -> PathBuf {
-        self.base.install_path().join("cores").join("lpc8xx")
+        self.install_path().join("cores").join("lpc8xx")
     }
 
     /// `variants/<variant>/` — board pin map + variant glue.
     pub fn variant_dir(&self, variant: &str) -> PathBuf {
-        self.base.install_path().join("variants").join(variant)
+        self.install_path().join("variants").join(variant)
     }
 
     /// Resolve a board-relative `ldscript` path (e.g.
     /// `linker_scripts/gcc/lpc845_flash.ld`) against the install root.
     pub fn linker_script(&self, ldscript_rel: &str) -> PathBuf {
-        self.base.install_path().join(ldscript_rel)
+        self.install_path().join(ldscript_rel)
     }
+}
+
+/// Find the actual repository root inside an extracted GitHub archive.
+///
+/// GitHub's archive tarball extracts as `ArduinoCore-LPC8xx-<sha>/<contents>`,
+/// wrapping all repo files inside an extra directory. Descend one level if the
+/// expected `cores/` layout isn't directly at `install_dir`.
+fn find_core_root(install_dir: &Path) -> PathBuf {
+    if install_dir.join("cores").exists() {
+        return install_dir.to_path_buf();
+    }
+    if let Ok(entries) = std::fs::read_dir(install_dir) {
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_dir() && path.join("cores").exists() {
+                return path;
+            }
+        }
+    }
+    install_dir.to_path_buf()
 }
 
 impl crate::Package for ArduinoCoreLpc8xx {
@@ -128,9 +161,7 @@ impl crate::Package for ArduinoCoreLpc8xx {
 
     fn is_installed(&self) -> bool {
         self.base.is_cached()
-            && self
-                .base
-                .install_path()
+            && find_core_root(&self.base.install_path())
                 .join("cores")
                 .join("lpc8xx")
                 .join("main.cpp")
