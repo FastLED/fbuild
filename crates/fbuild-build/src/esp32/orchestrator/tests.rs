@@ -2,7 +2,7 @@
 
 use super::cdc::{cdc_on_boot_enabled, is_esp32_project, warn_if_cdc_on_boot};
 use super::helpers::{
-    apply_user_flags, framework_failure_marker, framework_signature, record_failed_framework_lib,
+    framework_failure_marker, framework_signature, record_failed_framework_lib,
     should_skip_failed_framework_lib,
 };
 use super::Esp32Orchestrator;
@@ -10,50 +10,6 @@ use crate::BuildOrchestrator;
 use fbuild_core::Platform;
 use std::path::PathBuf;
 use std::time::Duration;
-
-#[test]
-fn test_apply_user_flags_replaces_std_flag() {
-    let base = vec!["-Os".to_string(), "-std=gnu++2b".to_string()];
-    let user = vec!["-std=gnu++20".to_string()];
-
-    let result = apply_user_flags(&base, &user);
-
-    assert_eq!(result, vec!["-Os", "-std=gnu++20"]);
-}
-
-#[test]
-fn test_apply_user_flags_replaces_define_with_same_name() {
-    let base = vec![
-        r#"-DIDF_VER=\"v5.5.1-710-g8410210c9a\""#.to_string(),
-        r#"-DESP_MDNS_VERSION_NUMBER=\"1.9.0\""#.to_string(),
-        "-Os".to_string(),
-    ];
-    let user = vec![
-        r#"-DESP_MDNS_VERSION_NUMBER=\"1.9.1\""#.to_string(),
-        r#"-DIDF_VER=\"v5.5.2-729-g87912cd291\""#.to_string(),
-    ];
-
-    let result = apply_user_flags(&base, &user);
-
-    assert_eq!(
-        result,
-        vec![
-            "-Os",
-            r#"-DESP_MDNS_VERSION_NUMBER=\"1.9.1\""#,
-            r#"-DIDF_VER=\"v5.5.2-729-g87912cd291\""#,
-        ]
-    );
-}
-
-#[test]
-fn test_apply_user_flags_replaces_bare_define_with_value_define() {
-    let base = vec!["-DFOO".to_string(), "-DBAR=1".to_string()];
-    let user = vec!["-DFOO=2".to_string()];
-
-    let result = apply_user_flags(&base, &user);
-
-    assert_eq!(result, vec!["-DBAR=1", "-DFOO=2"]);
-}
 
 #[test]
 fn test_esp32_orchestrator_platform() {
@@ -191,30 +147,6 @@ fn test_framework_signature_changes_with_flags() {
         &["-std=gnu++17".to_string()],
     );
     assert_ne!(sig_a, sig_b);
-}
-
-#[test]
-fn test_apply_user_flags_replaces_existing_define_by_key() {
-    let merged = apply_user_flags(
-        &[r#"-DIDF_VER=\"old\""#.to_string(), "-O2".to_string()],
-        &[r#"-DIDF_VER=\"new\""#.to_string()],
-    );
-    assert_eq!(
-        merged,
-        vec![r#"-O2"#.to_string(), r#"-DIDF_VER=\"new\""#.to_string()]
-    );
-}
-
-#[test]
-fn test_apply_user_flags_keeps_last_user_define() {
-    let merged = apply_user_flags(
-        &[],
-        &[
-            r#"-DMBEDTLS_CONFIG_FILE=\"a.h\""#.to_string(),
-            r#"-DMBEDTLS_CONFIG_FILE=\"b.h\""#.to_string(),
-        ],
-    );
-    assert_eq!(merged, vec![r#"-DMBEDTLS_CONFIG_FILE=\"b.h\""#.to_string()]);
 }
 
 #[test]

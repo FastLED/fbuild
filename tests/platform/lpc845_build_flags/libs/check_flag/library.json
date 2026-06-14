@@ -1,0 +1,5 @@
+{
+  "name": "check_flag",
+  "version": "0.0.1",
+  "description": "Asserts that platformio.ini build_flags reach the nxplpc library compile path. See FastLED/fbuild#587."
+}

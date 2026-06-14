@@ -1,11 +1,16 @@
 //! Helper functions for the ESP32 orchestrator: failure markers, fingerprinting,
-//! flag merging, and small utilities used across orchestration phases.
+//! and small utilities used across orchestration phases.
+//!
+//! Flag merging primitives (`apply_user_flags`, `apply_overlay_flags`) used to
+//! live here and were shared across ESP32 orchestration phases. They were
+//! lifted to `crate::flag_overlay` so the NXP LPC8xx orchestrator (and any
+//! future platform that compiles its libraries against the `[env:*] build_flags`
+//! overlay) can reach them without depending on `esp32::orchestrator::helpers`.
+//! See FastLED/fbuild#587.
 
 use std::path::{Path, PathBuf};
 
 use fbuild_core::Result;
-
-use crate::flag_overlay::LanguageExtraFlags;
 
 pub(super) fn framework_failure_marker(build_dir: &Path, lib_name: &str) -> PathBuf {
     build_dir.join(format!(".{lib_name}.failed"))
@@ -81,46 +86,4 @@ pub(super) fn compile_db_is_current(build_dir: &Path, project_dir: &Path) -> boo
         return false;
     }
     crate::compile_database::CompileDatabase::expected_output_path(build_dir, project_dir).exists()
-}
-
-/// Apply user build_flags from platformio.ini onto base compiler flags.
-///
-/// Matches PlatformIO behavior: user flags are appended to common flags,
-/// but `-std=` flags replace the existing standard (not stack). `-D` flags are
-/// deduplicated by macro name so later values override earlier defaults without
-/// tripping GCC redefinition warnings.
-pub(super) fn apply_user_flags(base_flags: &[String], user_flags: &[String]) -> Vec<String> {
-    let mut result = base_flags.to_vec();
-    for flag in user_flags {
-        if flag.starts_with("-std=") {
-            // Replace any existing -std= flag
-            result.retain(|f| !f.starts_with("-std="));
-        } else if let Some(define_name) = define_flag_name(flag) {
-            // Replace any existing -DNAME / -DNAME=value flag with the same macro name.
-            result.retain(|f| define_flag_name(f) != Some(define_name));
-        }
-        result.push(flag.clone());
-    }
-    result
-}
-
-pub(super) fn apply_overlay_flags(
-    base_flags: &[String],
-    overlay: &LanguageExtraFlags,
-    probe_name: &str,
-) -> Vec<String> {
-    apply_user_flags(base_flags, &overlay.for_source(Path::new(probe_name)))
-}
-
-pub(super) fn define_flag_name(flag: &str) -> Option<&str> {
-    let define = flag.strip_prefix("-D")?;
-    let name = define
-        .split_once('=')
-        .map_or(define, |(name, _)| name)
-        .trim();
-    if name.is_empty() {
-        None
-    } else {
-        Some(name)
-    }
 }
