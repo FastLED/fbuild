@@ -220,8 +220,7 @@ mod tests {
             ("teensylc", "arm_cortexM0l_math"),
         ];
         for (board_id, expected) in expectations {
-            let board = fbuild_config::BoardConfig::from_board_id(board_id, &HashMap::new())
-                .unwrap_or_else(|_| panic!("BoardConfig should load for {}", board_id));
+            let board = fbuild_test_support::board_for_test(board_id);
             assert_eq!(
                 board.cmsis_dsp_lib.as_deref(),
                 Some(*expected),
@@ -485,8 +484,7 @@ mod tests {
         for (board_id, mcu, ref_json) in reference_configs {
             let reference: serde_json::Value =
                 serde_json::from_str(ref_json).expect("reference JSON should parse");
-            let board_config = fbuild_config::BoardConfig::from_board_id(board_id, &HashMap::new())
-                .unwrap_or_else(|_| panic!("BoardConfig should load for {}", board_id));
+            let board_config = fbuild_test_support::board_for_test(board_id);
             let mcu_config = get_teensy_config_for_mcu(mcu)
                 .unwrap_or_else(|_| panic!("MCU config should load for {}", mcu));
             let mut actual_defines = board_config.get_defines();

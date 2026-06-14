@@ -823,8 +823,7 @@ mod tests {
         let build_dir = tmp.path().join("build");
         std::fs::create_dir_all(&build_dir).unwrap();
         let framework = fbuild_packages::library::Rp2040Cores::new(tmp.path());
-        let mut board =
-            fbuild_config::BoardConfig::from_board_id("rpipico", &HashMap::new()).unwrap();
+        let mut board = fbuild_test_support::board_for_test("rpipico");
         board.variant = "fbuild-test-rpipico".to_string();
         board.max_flash = Some(2_097_152);
         board.max_ram = Some(262_144);

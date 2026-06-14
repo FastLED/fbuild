@@ -297,11 +297,7 @@ mod tests {
             ("lpcxpresso845max", "lpc845"),
         ];
         for (board_id, expected) in cases {
-            let board = fbuild_config::BoardConfig::from_board_id(
-                board_id,
-                &std::collections::HashMap::new(),
-            )
-            .unwrap();
+            let board = fbuild_test_support::board_for_test(board_id);
             assert_eq!(board_lpc_family(&board).unwrap(), expected);
         }
     }

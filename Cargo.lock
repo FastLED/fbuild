@@ -1046,6 +1046,7 @@ dependencies = [
  "fbuild-core",
  "fbuild-paths",
  "fbuild-serial",
+ "fbuild-test-support",
  "md-5 0.10.6",
  "object 0.36.7",
  "serde",
@@ -1167,6 +1168,7 @@ dependencies = [
 name = "fbuild-test-support"
 version = "2.2.27"
 dependencies = [
+ "fbuild-config",
  "fbuild-header-scan",
  "fbuild-library-select",
  "fbuild-packages",

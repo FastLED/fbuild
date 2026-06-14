@@ -166,9 +166,7 @@ mod tests {
 
     #[test]
     fn test_avr_deployer_from_board_config() {
-        let board =
-            fbuild_config::BoardConfig::from_board_id("uno", &std::collections::HashMap::new())
-                .unwrap();
+        let board = fbuild_test_support::board_for_test("uno");
         let params = AvrdudeParams {
             default_programmer: "arduino".to_string(),
             default_baud: "115200".to_string(),
