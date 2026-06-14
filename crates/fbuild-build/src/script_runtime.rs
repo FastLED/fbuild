@@ -15,6 +15,23 @@ use crate::flag_overlay::{
 
 const HARNESS: &str = include_str!("script_runtime_harness.py");
 
+/// Lite-SCons backend (FastLED/fbuild#553). An opt-in alternative to
+/// `script_runtime_harness.py`'s MockEnv shim that adds effectful
+/// `Execute`, recorded pre/post actions, middleware, custom targets,
+/// `SConscript` recursion, and `ParseFlagsExtended` (joined + space forms).
+const LITE_HARNESS: &str = include_str!("lite_scons_harness.py");
+
+/// Returns `true` when the FBUILD_LITE_SCONS env var requests the lite
+/// harness instead of MockEnv. Accepts `"1"`, `"true"`, `"yes"` (case
+/// insensitive). Anything else — including unset — keeps the legacy
+/// MockEnv behaviour the existing call sites depend on.
+fn lite_scons_requested() -> bool {
+    matches!(
+        std::env::var("FBUILD_LITE_SCONS").as_deref().map(str::trim),
+        Ok("1" | "true" | "TRUE" | "True" | "yes" | "YES")
+    )
+}
+
 #[derive(Debug, serde::Serialize)]
 struct ScriptRuntimeInput<'a> {
     project_dir: &'a str,
@@ -30,6 +47,19 @@ pub fn resolve_extra_script_overlay(
     project_dir: &Path,
     env_name: &str,
     config: &fbuild_config::PlatformIOConfig,
+) -> fbuild_core::Result<BuildOverlay> {
+    resolve_extra_script_overlay_with_mode(project_dir, env_name, config, lite_scons_requested())
+}
+
+/// Same as [`resolve_extra_script_overlay`], but with the harness choice
+/// passed in explicitly. Lets tests pin the backend deterministically
+/// without leaking the `FBUILD_LITE_SCONS` env var across the parallel
+/// test runner. See FastLED/fbuild#553.
+pub fn resolve_extra_script_overlay_with_mode(
+    project_dir: &Path,
+    env_name: &str,
+    config: &fbuild_config::PlatformIOConfig,
+    use_lite_scons: bool,
 ) -> fbuild_core::Result<BuildOverlay> {
     let extra_scripts = config.get_extra_scripts(env_name)?;
     if extra_scripts.is_empty() {
@@ -64,9 +94,19 @@ pub fn resolve_extra_script_overlay(
             e
         ))
     })?;
-    let harness_path = temp_dir.path().join("fbuild_extra_scripts_runtime.py");
+    let harness_filename = if use_lite_scons {
+        "fbuild_lite_scons_harness.py"
+    } else {
+        "fbuild_extra_scripts_runtime.py"
+    };
+    let harness_path = temp_dir.path().join(harness_filename);
     let input_path = temp_dir.path().join("input.json");
-    std::fs::write(&harness_path, HARNESS).map_err(|e| {
+    let harness_body = if use_lite_scons {
+        LITE_HARNESS
+    } else {
+        HARNESS
+    };
+    std::fs::write(&harness_path, harness_body).map_err(|e| {
         fbuild_core::FbuildError::BuildFailed(format!(
             "failed to write extra_scripts harness: {}",
             e
@@ -137,6 +177,10 @@ pub fn resolve_extra_script_overlay(
         project_compile: scope_to_compile_overlay(project_dir, &runtime.projenv)?,
         link: scope_to_link_overlay(project_dir, &runtime.env)?,
         notes: runtime.notes,
+        // Only populated when the lite harness ran. The MockEnv harness
+        // never emits this field, so serde leaves it None for legacy
+        // call sites. See FastLED/fbuild#553.
+        lite_scons_records: runtime.lite_scons_records,
     };
     // Project-only scope can also contribute link flags in user scripts.
     overlay
@@ -979,5 +1023,281 @@ env.SConscript(\"feature.py\", exports=\"env\")
         let err = resolve_runtime_error(temp.path());
         assert!(err.contains("SConscript is not supported"), "{err}");
         assert!(err.contains("Recommendation: use --platformio"), "{err}");
+    }
+
+    // -----------------------------------------------------------------
+    // Lite-SCons harness tests (FastLED/fbuild#553)
+    // -----------------------------------------------------------------
+    //
+    // These five tests exercise the five spike patterns (see
+    // https://github.com/FastLED/fbuild/issues/553#issuecomment-4702659508)
+    // that the MockEnv shim structurally can't model. Each uses
+    // `resolve_extra_script_overlay_with_mode(..., true)` so the harness
+    // choice doesn't depend on the FBUILD_LITE_SCONS env var leaking
+    // across the parallel test runner.
+
+    fn resolve_lite_overlay(project_dir: &Path) -> BuildOverlay {
+        let config =
+            fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini"))
+                .unwrap();
+        resolve_extra_script_overlay_with_mode(project_dir, "demo", &config, true).unwrap()
+    }
+
+    /// Effectful `env.Execute(env.Action(callable))`: a generator script
+    /// materialises a file on disk at resolve time, and fbuild sees both
+    /// the executed-action record AND the generated-files manifest.
+    /// MockEnv can't do this — it no-op-records `Execute` and the file
+    /// never lands.
+    #[test]
+    fn test_lite_scons_executes_generator_action() {
+        if find_python().is_none() {
+            return;
+        }
+
+        let temp = write_runtime_project(
+            "pre:generator.py",
+            "generator.py",
+            "\
+import os
+from SCons.Script import Import
+
+Import(\"env\")
+
+
+def write_buildinfo(target, source, env):
+    out = os.path.join(env[\"PROJECT_DIR\"], \"buildinfo.h\")
+    with open(out, \"w\", encoding=\"utf-8\") as fh:
+        fh.write('#pragma once\\n#define BUILDINFO_RAN 1\\n')
+    return 0
+
+
+env.Execute(env.Action(write_buildinfo, \"Generating buildinfo.h\"))
+env.Append(CPPDEFINES=[(\"BUILDINFO_PRESENT\", \"1\")])
+",
+        );
+
+        let overlay = resolve_lite_overlay(temp.path());
+        let records = overlay
+            .lite_scons_records
+            .as_ref()
+            .expect("lite-SCons records must be present when FBUILD_LITE_SCONS path runs");
+        assert_eq!(
+            records.executed_actions.len(),
+            1,
+            "Execute(...) must record one executed action: {overlay:?}"
+        );
+        // Confirm the file was actually materialised on disk — the whole
+        // point of effectful Execute is that fbuild sees the generated
+        // input before it kicks off the native compile.
+        let generated = temp.path().join("buildinfo.h");
+        assert!(
+            generated.is_file(),
+            "generator script must materialise buildinfo.h on disk at {}",
+            generated.display()
+        );
+        assert!(
+            records.generated_files.iter().any(|f| f
+                .get("path")
+                .and_then(|p| p.as_str())
+                .is_some_and(|p| p.replace('\\', "/").ends_with("/buildinfo.h"))),
+            "generated_files manifest must include buildinfo.h: {:?}",
+            records.generated_files
+        );
+        assert!(
+            overlay
+                .global_compile
+                .common
+                .contains(&"-DBUILDINFO_PRESENT=1".to_string()),
+            "Append(CPPDEFINES=...) after Execute must still land: {overlay:?}"
+        );
+    }
+
+    /// `env.AddBuildMiddleware(callback, regex)`: recorded with the
+    /// callback's `__name__` and the glob pattern so fbuild can invoke
+    /// the callback per matching source file during native compile.
+    #[test]
+    fn test_lite_scons_records_middleware() {
+        if find_python().is_none() {
+            return;
+        }
+
+        let temp = write_runtime_project(
+            "post:middleware.py",
+            "middleware.py",
+            "\
+from SCons.Script import Import
+
+Import(\"env\")
+
+
+def tweak_arduino_core_flags(env, node):
+    return env.Object(node, CCFLAGS=env[\"CCFLAGS\"] + [\"-DCORE_BUILD=1\"])
+
+
+env.AddBuildMiddleware(tweak_arduino_core_flags, \"*ArduinoCore-*/cores/arduino/*.cpp\")
+env.Append(CCFLAGS=[\"-Wno-unused-parameter\"])
+",
+        );
+
+        let overlay = resolve_lite_overlay(temp.path());
+        let records = overlay
+            .lite_scons_records
+            .as_ref()
+            .expect("lite-SCons records expected");
+        assert_eq!(records.middleware.len(), 1);
+        let entry = &records.middleware[0];
+        assert_eq!(
+            entry.get("callback_repr").and_then(|v| v.as_str()),
+            Some("tweak_arduino_core_flags")
+        );
+        assert_eq!(
+            entry.get("regex").and_then(|v| v.as_str()),
+            Some("*ArduinoCore-*/cores/arduino/*.cpp")
+        );
+        assert!(
+            overlay
+                .global_compile
+                .common
+                .contains(&"-Wno-unused-parameter".to_string()),
+            "ordinary Append still applies alongside middleware: {overlay:?}"
+        );
+    }
+
+    /// `env.AddPostAction(target, action)`: target template (unresolved)
+    /// + callable record so fbuild's native deploy pipeline can run the
+    /// callback post-link.
+    #[test]
+    fn test_lite_scons_records_post_action() {
+        if find_python().is_none() {
+            return;
+        }
+
+        let temp = write_runtime_project(
+            "post:postaction.py",
+            "postaction.py",
+            "\
+from SCons.Script import Import
+
+Import(\"env\")
+
+
+def merge_firmware(target, source, env):
+    return 0
+
+
+env.AddPostAction(\"$BUILD_DIR/$PROGNAME$PROGSUFFIX\", merge_firmware)
+",
+        );
+
+        let overlay = resolve_lite_overlay(temp.path());
+        let records = overlay
+            .lite_scons_records
+            .as_ref()
+            .expect("lite-SCons records expected");
+        assert_eq!(records.recorded_post_actions.len(), 1);
+        let entry = &records.recorded_post_actions[0];
+        assert_eq!(
+            entry.get("target").and_then(|v| v.as_str()),
+            Some("$BUILD_DIR/$PROGNAME$PROGSUFFIX"),
+            "target template must be preserved unresolved so fbuild can subst at deploy time"
+        );
+        assert!(
+            entry
+                .get("action_repr")
+                .and_then(|v| v.as_str())
+                .is_some_and(|s| s.contains("merge_firmware")),
+            "action_repr must identify the callback: {entry:?}"
+        );
+    }
+
+    /// `env.SConscript(\"child.py\")`: paths resolve relative to the
+    /// *calling* script's directory (one of the 3 bugs the spike caught
+    /// — see issue comment). Child mutations land on the same env.
+    #[test]
+    fn test_lite_scons_sconscript_recursion_lands_child_mutations() {
+        if find_python().is_none() {
+            return;
+        }
+
+        let temp = write_runtime_project(
+            "post:parent.py",
+            "parent.py",
+            "\
+from SCons.Script import Import
+
+Import(\"env\")
+
+env.Append(CPPDEFINES=[\"PARENT_DEFINE\"])
+env.SConscript(\"child.py\")
+",
+        );
+        // Drop the child next to the parent so caller-relative resolution
+        // picks it up correctly.
+        std::fs::write(
+            temp.path().join("child.py"),
+            "env.Append(CPPDEFINES=[(\"CHILD_DEFINE\", \"1\")])\n",
+        )
+        .unwrap();
+
+        let overlay = resolve_lite_overlay(temp.path());
+        assert!(
+            overlay
+                .global_compile
+                .common
+                .contains(&"-DPARENT_DEFINE".to_string()),
+            "parent's define must land: {overlay:?}"
+        );
+        assert!(
+            overlay
+                .global_compile
+                .common
+                .contains(&"-DCHILD_DEFINE=1".to_string()),
+            "child SConscript's define must land via recursive eval: {overlay:?}"
+        );
+    }
+
+    /// `env.ParseFlagsExtended(...)` routes both `-Ipath` AND `-I path`
+    /// (space-separated) into `CPPPATH`. The space form is the second of
+    /// the 3 spike-caught bugs — see issue comment.
+    #[test]
+    fn test_lite_scons_parseflags_handles_joined_and_space_forms() {
+        if find_python().is_none() {
+            return;
+        }
+
+        let temp = write_runtime_project(
+            "post:parseflags.py",
+            "parseflags.py",
+            "\
+from SCons.Script import Import
+
+Import(\"env\")
+
+parsed = env.ParseFlagsExtended(\"-Ijoined/inc -I separated/inc -DKEY=VAL -lextrasym\")
+env.Append(**parsed)
+",
+        );
+
+        let overlay = resolve_lite_overlay(temp.path());
+        let common = &overlay.global_compile.common;
+        let common_joined = common.join(" ");
+        assert!(
+            common_joined.contains("joined/inc"),
+            "joined -Ipath form must reach CPPPATH (common: {common:?})"
+        );
+        assert!(
+            common_joined.contains("separated/inc"),
+            "space-separated -I path form must reach CPPPATH (common: {common:?})"
+        );
+        assert!(
+            common.contains(&"-DKEY=VAL".to_string()),
+            "-D KEY=VAL must reach CPPDEFINES (common: {common:?})"
+        );
+        // Library tokens land on the link side.
+        assert!(
+            overlay.link.libs.contains(&"-lextrasym".to_string()),
+            "-l name must reach link.libs: {:?}",
+            overlay.link.libs
+        );
     }
 }
