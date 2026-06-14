@@ -908,10 +908,9 @@ pub async fn deploy(
         )
         .await
         {
-            MonitorOutcome::RecoverDownloadMode { signal } => MonitorOutcome::Error(format!(
-                "internal: RecoverDownloadMode without opt-in ({})",
-                signal.diagnostic()
-            )),
+            MonitorOutcome::RecoverDownloadMode { .. } => {
+                unreachable!("post-deploy monitor passes auto_recover_from_download_mode=false")
+            }
             other => other,
         };
 

@@ -89,6 +89,12 @@ pub struct BuildOverlay {
     pub link: LinkExtraFlags,
     /// User-facing notes emitted by the runtime (e.g. ignored no-op actions).
     pub notes: Vec<String>,
+    /// Records the lite-SCons harness captures that the MockEnv shim
+    /// structurally can't model: effectful `Execute`, recorded pre/post
+    /// actions, middleware, custom targets, and unmapped builder calls.
+    /// Only `Some(...)` when `FBUILD_LITE_SCONS=1` was set and the lite
+    /// harness ran. See FastLED/fbuild#553.
+    pub lite_scons_records: Option<LiteSconsRecords>,
 }
 
 impl BuildOverlay {
@@ -97,7 +103,38 @@ impl BuildOverlay {
             && self.project_compile.is_empty()
             && self.link.is_empty()
             && self.notes.is_empty()
+            && self.lite_scons_records.is_none()
     }
+}
+
+/// Captures from the lite-SCons harness — exists in parallel to the
+/// flag-scope overlay because these records describe side-effects and
+/// deferred actions that fbuild's native compile/link/deploy pipeline
+/// has to consume separately. See FastLED/fbuild#553.
+#[derive(Debug, Clone, Default, PartialEq, Eq, serde::Deserialize)]
+#[serde(default)]
+pub struct LiteSconsRecords {
+    /// Each effectful `env.Execute(action)` call. `kind` is `"callable"`
+    /// or `"command"`.
+    pub executed_actions: Vec<serde_json::Value>,
+    /// Files materialised by `Execute` callables (mtime > pre-script
+    /// snapshot, or new file). fbuild treats these as build inputs.
+    pub generated_files: Vec<serde_json::Value>,
+    /// `env.AddPreAction(target, action)` records, with the unresolved
+    /// target template (e.g. `"$BUILD_DIR/$PROGNAME$PROGSUFFIX"`).
+    pub recorded_pre_actions: Vec<serde_json::Value>,
+    /// `env.AddPostAction(target, action)` records.
+    pub recorded_post_actions: Vec<serde_json::Value>,
+    /// `env.AddCustomTarget(name, deps, actions, **kwargs)` records.
+    pub custom_targets: Vec<serde_json::Value>,
+    /// `env.AddBuildMiddleware(callback, regex=None)` records.
+    pub middleware: Vec<serde_json::Value>,
+    /// Builder invocations (e.g. `env.MergeFlashImage(...)`). fbuild maps
+    /// known builder names to native ops; unknown names surface as a
+    /// targeted "needs `--platformio` for builder X" error at the call site.
+    pub builder_calls: Vec<serde_json::Value>,
+    /// Tracebacks from script exceptions that the harness swallowed.
+    pub errors: Vec<String>,
 }
 
 /// Serializable form returned by the Python script runtime.
@@ -109,6 +146,9 @@ pub(crate) struct ScriptRuntimeResult {
     pub notes: Vec<String>,
     #[serde(default)]
     pub unsupported: Vec<String>,
+    /// Lite-SCons-only extension. Always absent when the MockEnv harness ran.
+    #[serde(default)]
+    pub lite_scons_records: Option<LiteSconsRecords>,
 }
 
 #[derive(Debug, Clone, Default, serde::Deserialize)]
