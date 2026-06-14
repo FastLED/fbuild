@@ -38,6 +38,11 @@ fn python_available() -> bool {
         &[&["python3", "--version"], &["python", "--version"]]
     };
     for argv in probes {
+        // allow-direct-spawn: test-only Python availability probe; routing
+        // through fbuild_core::subprocess::run_command would require the
+        // daemon's containment plumbing which is out of scope for an
+        // integration-test gate. Mirrors the same pattern in script_runtime
+        // tests' find_python helper.
         if let Ok(out) = std::process::Command::new(argv[0])
             .args(&argv[1..])
             .output()
