@@ -32,6 +32,7 @@
 
 pub mod boot_mode;
 pub mod crash_decoder;
+pub mod esp_reset;
 pub mod manager;
 pub mod messages;
 pub mod preemption;
