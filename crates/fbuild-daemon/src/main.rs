@@ -188,10 +188,7 @@ async fn main() {
                 ),
             }
         }
-        Err(e) => tracing::warn!(
-            "cannot resolve current_exe() for servicedef install: {}",
-            e
-        ),
+        Err(e) => tracing::warn!("cannot resolve current_exe() for servicedef install: {}", e),
     }
 
     // On Windows, `tokio::signal::ctrl_c()` catches CTRL_C_EVENT and
