@@ -164,6 +164,36 @@ async fn main() {
         tracing::warn!("failed to write port file: {}", e);
     }
 
+    // Install the running-process `fbuild.servicedef` so the broker can
+    // discover this daemon binary in subsequent fbuild invocations. Without
+    // this file the broker stays in `Mode: direct-fallback` even after
+    // FastLED/fbuild#510 lands `connect_to_backend`. Best-effort: any
+    // failure (read-only AppData, sandbox, etc.) is logged but does not
+    // block daemon startup. See FastLED/fbuild#592.
+    match std::env::current_exe() {
+        Ok(this_exe) => {
+            let daemon_binary = this_exe
+                .parent()
+                .map(|d| d.join(fbuild_paths::running_process::DAEMON_BINARY_NAME))
+                .unwrap_or(this_exe);
+            match fbuild_daemon::broker::install_fbuild_service_definition(&daemon_binary) {
+                Ok(written) => tracing::info!(
+                    "installed running-process service definition: {}",
+                    written.display()
+                ),
+                Err(e) => tracing::warn!(
+                    "failed to install running-process service definition for {}: {}",
+                    daemon_binary.display(),
+                    e
+                ),
+            }
+        }
+        Err(e) => tracing::warn!(
+            "cannot resolve current_exe() for servicedef install: {}",
+            e
+        ),
+    }
+
     // On Windows, `tokio::signal::ctrl_c()` catches CTRL_C_EVENT and
     // CTRL_BREAK_EVENT but NOT CTRL_CLOSE_EVENT (terminal window closed),
     // CTRL_LOGOFF_EVENT, or CTRL_SHUTDOWN_EVENT. Without a console ctrl
