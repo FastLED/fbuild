@@ -706,12 +706,8 @@ pub async fn deploy(
                 );
                 Box::new(deployer)
             }
-            _ => {
-                return Err(fbuild_core::FbuildError::DeployFailed(format!(
-                    "deployer for {:?} not yet implemented",
-                    platform
-                )));
-            }
+            fbuild_core::Platform::NxpLpc => fbuild_deploy::lpc::dispatch_box(&board_id, &deploy_board_overrides, deploy_project.as_path(), baud_override),
+            _ => return Err(fbuild_core::FbuildError::DeployFailed(format!("deployer for {:?} not yet implemented", platform))),
         };
         let result = deployer.deploy(
             &deploy_project,
