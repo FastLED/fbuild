@@ -706,6 +706,29 @@ pub async fn deploy(
                 );
                 Box::new(deployer)
             }
+            fbuild_core::Platform::NxpLpc => {
+                // LpcDeployer (#551 Phase 1) — lpc21isp ISP-over-UART path.
+                // Side-steps #565's pyOCD-VCOM-wedge by never opening the
+                // composite-device HID. SWD / pyOCD fallbacks are a follow-up.
+                let board_config = fbuild_config::BoardConfig::from_board_id_or_default(
+                    &board_id,
+                    "lpc845",
+                    &deploy_board_overrides,
+                    Some(deploy_project.as_path()),
+                );
+                let lpc_params = fbuild_deploy::lpc::Lpc21IspParams::default();
+                let deployer = fbuild_deploy::lpc::LpcDeployer::from_board_config(
+                    &board_config,
+                    &lpc_params,
+                    false,
+                );
+                let deployer = if let Some(baud) = baud_override {
+                    deployer.with_baud_rate(&baud.to_string())
+                } else {
+                    deployer
+                };
+                Box::new(deployer)
+            }
             _ => {
                 return Err(fbuild_core::FbuildError::DeployFailed(format!(
                     "deployer for {:?} not yet implemented",
