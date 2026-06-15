@@ -234,7 +234,7 @@ jobs:
           paths=()
           for p in "$HOME/.fbuild" "$HOME/.fastled/global_cache" \
                    "$GITHUB_WORKSPACE/fastled/.build/pio/${BENCH_BOARD}" \
-                   "$GITHUB_WORKSPACE/fastled/.venv" \
+                   "${UV_CACHE_DIR}" \
                    "${ZCCACHE_CACHE_DIR}"; do
             if [ -d "$p" ]; then paths+=("$p"); fi
           done
@@ -242,11 +242,15 @@ jobs:
             echo "no cache dirs to pack" >&2
             exit 1
           fi
-          # --dereference: follow Python interpreter symlinks in fastled/.venv so
-          # the restored venv carries its own bin/python copy and survives across
-          # runs where actions/setup-python may pick a different interpreter path
-          # (see #239).
-          tar --dereference --use-compress-program='zstd -T0 -3' -cPf "$BENCH_CACHE_TARBALL" "${paths[@]}"
+          # iter9: pack UV_CACHE_DIR (content-addressed wheel cache) instead of
+          # fastled/.venv. The .venv approach (iter8b) was 22s -> <5s on warm but
+          # broke entirely on the first warm rerun: a venv carries absolute paths
+          # into pyvenv.cfg and bin/python that don't survive a runner change
+          # (ModuleNotFoundError: No module named 'encodings' from a Python interp
+          # that no longer exists on the new runner). The wheel cache IS portable
+          # — uv sync replays it locally without network — so warm uv_sync stays
+          # short while remaining structurally sound. See FastLED/fbuild#112.
+          tar --use-compress-program='zstd -T0 -3' -cPf "$BENCH_CACHE_TARBALL" "${paths[@]}"
           t1=$(date +%s.%N)
           printf 'pack_cache\t%.3f\n' "$(awk "BEGIN{print $t1-$t0}")" >> "$BENCH_TIMINGS"
           ls -lh "$BENCH_CACHE_TARBALL"
