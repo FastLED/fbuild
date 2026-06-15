@@ -129,6 +129,39 @@ impl LpcDeployer {
     }
 }
 
+/// Boxed-Deployer constructor used by the daemon dispatch site
+/// (`crates/fbuild-daemon/src/handlers/operations/deploy.rs`, the
+/// `Platform::NxpLpc` arm). Kept here so the dispatch arm fits in one
+/// line — the daemon's deploy.rs lives under a hard 1000-LOC per-file
+/// rule and would otherwise need a structural refactor for every new
+/// platform.
+///
+/// The behaviour is the same as inlining all of this in the dispatch
+/// arm: build a `BoardConfig` from the env's overrides (defaulting to
+/// `lpc845` when no board id is specified), construct an `LpcDeployer`
+/// with the family defaults from `Lpc21IspParams::default()`, then
+/// apply the CLI's `--baud` override if one was passed.
+pub fn dispatch_box(
+    board_id: &str,
+    board_overrides: &std::collections::HashMap<String, String>,
+    project_path: &Path,
+    baud_override: Option<u32>,
+) -> Box<dyn Deployer> {
+    let board_config = fbuild_config::BoardConfig::from_board_id_or_default(
+        board_id,
+        "lpc845",
+        board_overrides,
+        Some(project_path),
+    );
+    let params = Lpc21IspParams::default();
+    let deployer = LpcDeployer::from_board_config(&board_config, &params, false);
+    let deployer = match baud_override {
+        Some(b) => deployer.with_baud_rate(&b.to_string()),
+        None => deployer,
+    };
+    Box::new(deployer)
+}
+
 impl Deployer for LpcDeployer {
     fn deploy(
         &self,
