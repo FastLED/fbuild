@@ -98,6 +98,7 @@ fn download_and_install() -> Result<()> {
     std::fs::create_dir_all(parent)?;
 
     let _install_lock = acquire_install_lock(parent)?;
+    cleanup_stale_install_staging(parent, INSTALL_LOCK_STALE_AFTER)?;
     if managed_zccache_exe().is_file() {
         return Ok(());
     }
@@ -196,6 +197,46 @@ fn download_and_install() -> Result<()> {
 
 fn install_lock_dir(parent: &Path) -> PathBuf {
     parent.join(format!(".zccache-{MANAGED_ZCCACHE_VERSION}.install.lock"))
+}
+
+fn cleanup_stale_install_staging(parent: &Path, stale_after: Duration) -> Result<usize> {
+    let mut removed = 0;
+    let entries = std::fs::read_dir(parent).map_err(|e| {
+        FbuildError::Other(format!(
+            "failed to scan managed zccache install dir {}: {e}",
+            parent.display()
+        ))
+    })?;
+
+    for entry in entries {
+        let entry = entry?;
+        let path = entry.path();
+        if !is_zccache_staging_dir(&path) || !path.is_dir() {
+            continue;
+        }
+        if path_is_stale(&path, stale_after) {
+            tracing::warn!(
+                "fbuild: removing stale managed zccache staging dir {}",
+                path.display()
+            );
+            std::fs::remove_dir_all(&path).map_err(|e| {
+                FbuildError::Other(format!(
+                    "failed to remove stale managed zccache staging dir {}: {e}",
+                    path.display()
+                ))
+            })?;
+            removed += 1;
+        }
+    }
+
+    Ok(removed)
+}
+
+fn is_zccache_staging_dir(path: &Path) -> bool {
+    path.file_name()
+        .and_then(|name| name.to_str())
+        .map(|name| name.starts_with(".zccache-") && name.ends_with(".tmp"))
+        .unwrap_or(false)
 }
 
 fn acquire_install_lock(parent: &Path) -> Result<InstallLockGuard> {
@@ -300,7 +341,11 @@ fn write_lock_owner(lock_dir: &Path) -> Result<()> {
 }
 
 fn lock_is_stale(lock_dir: &Path, stale_after: Duration) -> bool {
-    let Ok(metadata) = std::fs::metadata(lock_dir) else {
+    path_is_stale(lock_dir, stale_after)
+}
+
+fn path_is_stale(path: &Path, stale_after: Duration) -> bool {
+    let Ok(metadata) = std::fs::metadata(path) else {
         return true;
     };
     let Ok(modified) = metadata.modified() else {
@@ -661,6 +706,45 @@ mod tests {
 
         let owner = std::fs::read_to_string(lock_dir.join("owner.txt")).unwrap();
         assert!(owner.contains("version="));
+    }
+
+    #[test]
+    fn cleanup_stale_install_staging_removes_only_old_zccache_temp_dirs() {
+        let tmp = tempfile::tempdir().unwrap();
+        let stale = tmp.path().join(".zccache-deadbeef.tmp");
+        let fresh = tmp.path().join(".zccache-active.tmp");
+        let unrelated = tmp.path().join(".other-tool.tmp");
+        std::fs::create_dir_all(&stale).unwrap();
+        std::fs::create_dir_all(&fresh).unwrap();
+        std::fs::create_dir_all(&unrelated).unwrap();
+        std::fs::write(stale.join("zccache"), b"partial").unwrap();
+
+        let old = filetime::FileTime::from_unix_time(1, 0);
+        filetime::set_file_mtime(&stale, old).unwrap();
+        filetime::set_file_mtime(&unrelated, old).unwrap();
+
+        let removed = cleanup_stale_install_staging(tmp.path(), Duration::from_secs(60)).unwrap();
+
+        assert_eq!(removed, 1);
+        assert!(!stale.exists());
+        assert!(fresh.exists());
+        assert!(unrelated.exists());
+    }
+
+    #[test]
+    fn cleanup_stale_install_staging_ignores_final_install_dir() {
+        let tmp = tempfile::tempdir().unwrap();
+        let final_dir = tmp
+            .path()
+            .join(format!("zccache-{MANAGED_ZCCACHE_VERSION}"));
+        std::fs::create_dir_all(&final_dir).unwrap();
+        let old = filetime::FileTime::from_unix_time(1, 0);
+        filetime::set_file_mtime(&final_dir, old).unwrap();
+
+        let removed = cleanup_stale_install_staging(tmp.path(), Duration::from_secs(60)).unwrap();
+
+        assert_eq!(removed, 0);
+        assert!(final_dir.exists());
     }
 
     /// Real end-to-end download against GitHub Releases. Ignored by
