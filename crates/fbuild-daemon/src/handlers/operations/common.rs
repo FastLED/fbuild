@@ -162,6 +162,7 @@ pub(crate) struct OperationGuard {
     flag: Arc<std::sync::atomic::AtomicBool>,
     state: Arc<std::sync::RwLock<fbuild_core::DaemonState>>,
     operation: Arc<std::sync::RwLock<Option<String>>>,
+    dependency_install: Arc<std::sync::RwLock<Option<fbuild_core::install_status::InstallStatus>>>,
 }
 
 impl OperationGuard {
@@ -182,6 +183,7 @@ impl OperationGuard {
             flag: Arc::clone(&ctx.operation_in_progress),
             state: Arc::clone(&ctx.daemon_state),
             operation: Arc::clone(&ctx.current_operation),
+            dependency_install: Arc::clone(&ctx.dependency_install),
         }
     }
 }
@@ -194,6 +196,9 @@ impl Drop for OperationGuard {
         }
         if let Ok(mut op) = self.operation.write() {
             *op = None;
+        }
+        if let Ok(mut status) = self.dependency_install.write() {
+            *status = None;
         }
     }
 }

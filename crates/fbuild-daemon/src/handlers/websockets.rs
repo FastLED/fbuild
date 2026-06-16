@@ -316,26 +316,7 @@ fn now_unix() -> f64 {
 
 /// Build a JSON status snapshot from the current daemon context.
 fn build_status_snapshot(ctx: &DaemonContext) -> String {
-    let state = ctx
-        .daemon_state
-        .read()
-        .map(|s| *s)
-        .unwrap_or(fbuild_core::DaemonState::Idle);
-    let current_op = ctx.current_operation.read().ok().and_then(|o| o.clone());
-    let op_in_progress = ctx
-        .operation_in_progress
-        .load(std::sync::atomic::Ordering::Relaxed);
-
-    serde_json::json!({
-        "type": "status",
-        "state": state,
-        "message": format!("Daemon {}", serde_json::to_value(state).unwrap_or_default().as_str().unwrap_or("unknown")),
-        "current_operation": current_op,
-        "operation_in_progress": op_in_progress,
-        "progress_percent": null,
-        "timestamp": now_unix(),
-    })
-    .to_string()
+    ctx.status_snapshot_json()
 }
 
 async fn handle_status_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {

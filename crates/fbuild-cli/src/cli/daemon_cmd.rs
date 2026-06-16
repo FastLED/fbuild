@@ -46,6 +46,16 @@ pub async fn run_daemon(action: DaemonAction) -> fbuild_core::Result<()> {
                                 println!("  Operation: (in progress)");
                             }
                         }
+                        if let Some(ref install) = info.dependency_install {
+                            println!(
+                                "  Install: {} {} ({:?}, {:?})",
+                                install.name,
+                                install.version.as_deref().unwrap_or(""),
+                                install.phase,
+                                install.role
+                            );
+                            println!("           {}", install.message);
+                        }
                         if info.client_count > 0 {
                             println!("  Clients: {}", info.client_count);
                         }

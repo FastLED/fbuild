@@ -21,7 +21,7 @@ use running_process::broker::builders::{CacheManifestBuilder, ServiceDefinitionB
 use running_process::broker::protocol::{CacheManifest, CacheRootKind, ServiceDefinition};
 
 pub use fbuild_paths::running_process::{
-    CacheRoots, CI_TRUSTED_INSTANCE, MIN_VERSION, SERVICE_NAME,
+    CacheRoots, DaemonCacheIdentity, CI_TRUSTED_INSTANCE, MIN_VERSION, SERVICE_NAME,
 };
 
 /// Errors building or installing the fbuild service definition / manifest.
@@ -93,14 +93,22 @@ pub fn install_fbuild_service_definition_in(
 }
 
 fn shared_broker_builder(daemon_binary: impl AsRef<Path>) -> ServiceDefinitionBuilder {
+    let identity = DaemonCacheIdentity::discover();
     ServiceDefinitionBuilder::shared_broker(
         SERVICE_NAME,
         daemon_binary.as_ref().display().to_string(),
     )
     .min_version(MIN_VERSION)
     .label("consumer", "fbuild")
+    .label("cache-owner", "fbuild-global-artifact-repository")
+    .label("cache-identity", identity.label_value())
+    .label("cache-identity-mode", identity.mode)
+    .label("cache-root", identity.cache_root_key)
+    .label("cache-dir-source", identity.cache_dir_source)
+    .label("trust-domain", identity.trust_domain)
     .label("repo", "FastLED/fbuild")
     .label("tracker", "FastLED/fbuild#510")
+    .label("cache-tracker", "FastLED/fbuild#603")
     .label("running-process-tracker", "zackees/running-process#437")
 }
 
@@ -112,6 +120,7 @@ fn ci_builder(daemon_binary: impl AsRef<Path>) -> ServiceDefinitionBuilder {
     )
     .min_version(MIN_VERSION)
     .label("consumer", "fbuild")
+    .label("cache-owner", "fbuild-global-artifact-repository")
     .label("trust-domain", CI_TRUSTED_INSTANCE)
     .label("repo", "FastLED/fbuild")
 }
@@ -121,7 +130,15 @@ pub fn fbuild_cache_manifest(
     service_version: impl Into<String>,
     roots: &CacheRoots,
 ) -> Result<CacheManifest, ServiceError> {
-    Ok(manifest_builder(service_version, roots).build()?)
+    Ok(manifest_builder(service_version, roots, "shared").build()?)
+}
+
+/// Build the fbuild `CacheManifest` for CI's explicit trust-domain instance.
+pub fn fbuild_ci_cache_manifest(
+    service_version: impl Into<String>,
+    roots: &CacheRoots,
+) -> Result<CacheManifest, ServiceError> {
+    Ok(manifest_builder(service_version, roots, CI_TRUSTED_INSTANCE).build()?)
 }
 
 /// Publish the fbuild `CacheManifest` into the central registry.
@@ -129,7 +146,15 @@ pub fn publish_fbuild_cache_manifest(
     service_version: impl Into<String>,
     roots: &CacheRoots,
 ) -> Result<PathBuf, ServiceError> {
-    Ok(manifest_builder(service_version, roots).publish()?)
+    Ok(manifest_builder(service_version, roots, "shared").publish()?)
+}
+
+/// Publish the fbuild `CacheManifest` for CI's explicit trust-domain instance.
+pub fn publish_fbuild_ci_cache_manifest(
+    service_version: impl Into<String>,
+    roots: &CacheRoots,
+) -> Result<PathBuf, ServiceError> {
+    Ok(manifest_builder(service_version, roots, CI_TRUSTED_INSTANCE).publish()?)
 }
 
 /// Publish the manifest into an explicit registry root (tests).
@@ -138,17 +163,25 @@ pub fn publish_fbuild_cache_manifest_in(
     roots: &CacheRoots,
     registry_dir: &Path,
 ) -> Result<PathBuf, ServiceError> {
-    Ok(manifest_builder(service_version, roots).publish_in(registry_dir)?)
+    Ok(manifest_builder(service_version, roots, "shared").publish_in(registry_dir)?)
+}
+
+/// Publish the CI manifest into an explicit registry root (tests).
+pub fn publish_fbuild_ci_cache_manifest_in(
+    service_version: impl Into<String>,
+    roots: &CacheRoots,
+    registry_dir: &Path,
+) -> Result<PathBuf, ServiceError> {
+    Ok(manifest_builder(service_version, roots, CI_TRUSTED_INSTANCE).publish_in(registry_dir)?)
 }
 
 fn manifest_builder(
     service_version: impl Into<String>,
     roots: &CacheRoots,
+    broker_instance: impl Into<String>,
 ) -> CacheManifestBuilder {
-    let mut builder = CacheManifestBuilder::new(SERVICE_NAME, service_version).broker_instance(
-        // SHARED_BROKER local daemons advertise the "shared" instance.
-        "shared",
-    );
+    let mut builder =
+        CacheManifestBuilder::new(SERVICE_NAME, service_version).broker_instance(broker_instance);
     for (kind, path) in entries(roots) {
         builder = builder.root(kind, path.display().to_string());
     }
@@ -181,6 +214,28 @@ mod tests {
             def.labels.get("consumer").map(String::as_str),
             Some("fbuild")
         );
+        assert_eq!(
+            def.labels.get("cache-owner").map(String::as_str),
+            Some("fbuild-global-artifact-repository")
+        );
+        assert_eq!(
+            def.labels.get("cache-identity-mode").map(String::as_str),
+            Some(if fbuild_paths::is_dev_mode() {
+                "dev"
+            } else {
+                "prod"
+            })
+        );
+        assert_eq!(
+            def.labels.get("trust-domain").map(String::as_str),
+            Some(fbuild_paths::running_process::LOCAL_TRUST_DOMAIN)
+        );
+        assert!(
+            def.labels
+                .get("cache-identity")
+                .is_some_and(|value| value.contains("cache=")),
+            "shared broker definition must publish the cache identity"
+        );
     }
 
     #[test]
@@ -195,6 +250,10 @@ mod tests {
         assert_eq!(
             def.labels.get("trust-domain").map(String::as_str),
             Some(CI_TRUSTED_INSTANCE)
+        );
+        assert_eq!(
+            def.labels.get("cache-owner").map(String::as_str),
+            Some("fbuild-global-artifact-repository")
         );
     }
 
@@ -223,6 +282,7 @@ mod tests {
         let roots = CacheRoots::discover(runtime);
         let manifest = fbuild_cache_manifest("2.2.27", &roots).expect("build manifest");
         assert_eq!(manifest.service_name, "fbuild");
+        assert_eq!(manifest.broker_instance, "shared");
         assert_eq!(manifest.roots.len(), 7, "all 7 cache roots must be present");
 
         // Every required kind must appear exactly once.
@@ -241,6 +301,65 @@ mod tests {
                 "manifest missing cache root kind {kind:?}"
             );
         }
+    }
+
+    #[test]
+    fn cache_data_root_is_stable_across_backend_versions() {
+        let runtime_v1 = if cfg!(windows) {
+            PathBuf::from(r"C:\opt\fbuild-1\bin")
+        } else {
+            PathBuf::from("/opt/fbuild-1/bin")
+        };
+        let runtime_v2 = if cfg!(windows) {
+            PathBuf::from(r"C:\opt\fbuild-2\bin")
+        } else {
+            PathBuf::from("/opt/fbuild-2/bin")
+        };
+        let manifest_v1 = fbuild_cache_manifest("2.2.27", &CacheRoots::discover(runtime_v1))
+            .expect("build manifest v1");
+        let manifest_v2 = fbuild_cache_manifest("2.3.0", &CacheRoots::discover(runtime_v2))
+            .expect("build manifest v2");
+
+        let cache_data = |manifest: &CacheManifest| {
+            manifest
+                .roots
+                .iter()
+                .find(|root| root.kind == CacheRootKind::CacheData as i32)
+                .map(|root| root.path.clone())
+                .expect("CacheData root")
+        };
+        let runtime = |manifest: &CacheManifest| {
+            manifest
+                .roots
+                .iter()
+                .find(|root| root.kind == CacheRootKind::CacheRuntime as i32)
+                .map(|root| root.path.clone())
+                .expect("CacheRuntime root")
+        };
+
+        assert_eq!(
+            cache_data(&manifest_v1),
+            cache_data(&manifest_v2),
+            "backend version/runtime must not fork the artifact repository"
+        );
+        assert_ne!(
+            runtime(&manifest_v1),
+            runtime(&manifest_v2),
+            "runtime remains daemon provenance, not cache ownership"
+        );
+    }
+
+    #[test]
+    fn ci_cache_manifest_uses_explicit_trust_instance() {
+        let runtime = if cfg!(windows) {
+            PathBuf::from(r"C:\opt\fbuild\bin")
+        } else {
+            PathBuf::from("/opt/fbuild/bin")
+        };
+        let roots = CacheRoots::discover(runtime);
+        let manifest = fbuild_ci_cache_manifest("2.2.27", &roots).expect("build ci manifest");
+        assert_eq!(manifest.service_name, "fbuild");
+        assert_eq!(manifest.broker_instance, CI_TRUSTED_INSTANCE);
     }
 
     #[test]

@@ -14,6 +14,8 @@ pub mod library;
 pub mod lnk;
 pub mod toolchain;
 
+mod install_lock;
+
 pub use cache::Cache;
 pub use disk_cache::DiskCache;
 pub use lnk::{ExtractMode, LnkFile};
@@ -22,6 +24,8 @@ use std::collections::{HashMap, HashSet};
 use std::future::Future;
 use std::path::{Path, PathBuf};
 use std::sync::{Mutex, OnceLock};
+
+use fbuild_core::install_status::{self, InstallPhase, InstallRole};
 
 static PACKAGE_TOUCHES: OnceLock<Mutex<HashSet<String>>> = OnceLock::new();
 
@@ -329,6 +333,12 @@ impl PackageBase {
         }
 
         // Append _staging to dir name (can't use with_extension — version has dots)
+        let _install_lock =
+            install_lock::acquire_for_install(&install_path, &self.name, &self.version).await?;
+        if install_path.exists() {
+            return Ok(install_path);
+        }
+
         let staging_path = install_path.with_file_name(format!(
             "{}_staging",
             install_path
@@ -347,15 +357,39 @@ impl PackageBase {
         })?;
 
         // Download
+        install_status::publish_install_status(install_status::status(
+            &self.name,
+            Some(&self.version),
+            InstallPhase::Downloading,
+            InstallRole::Installer,
+            format!("downloading {} {}", self.name, self.version),
+            None::<String>,
+        ));
         tracing::info!("downloading {} v{}", self.name, self.version);
         let archive_path = downloader::download_file(&self.url, &staging_path).await?;
 
         // Verify checksum
         if let Some(ref expected) = self.checksum {
+            install_status::publish_install_status(install_status::status(
+                &self.name,
+                Some(&self.version),
+                InstallPhase::Verifying,
+                InstallRole::Installer,
+                format!("verifying {} {}", self.name, self.version),
+                None::<String>,
+            ));
             downloader::verify_checksum(&archive_path, expected)?;
         }
 
         // Extract
+        install_status::publish_install_status(install_status::status(
+            &self.name,
+            Some(&self.version),
+            InstallPhase::Extracting,
+            InstallRole::Installer,
+            format!("extracting {} {}", self.name, self.version),
+            None::<String>,
+        ));
         tracing::info!("extracting {} v{}", self.name, self.version);
         extractor::extract(&archive_path, &staging_path)?;
 
@@ -381,6 +415,14 @@ impl PackageBase {
         // Best-effort: record in DiskCache index for LRU tracking
         self.record_install_in_disk_cache(&install_path);
 
+        install_status::publish_install_status(install_status::status(
+            &self.name,
+            Some(&self.version),
+            InstallPhase::Installed,
+            InstallRole::Installer,
+            format!("installed {} {}", self.name, self.version),
+            None::<String>,
+        ));
         tracing::info!("installed {} v{}", self.name, self.version);
         Ok(install_path)
     }

@@ -83,6 +83,7 @@ async fn main() {
         args.spawner_cwd,
         broadcast_hub,
     ));
+    DaemonContext::install_dependency_status_subscriber(&context);
     fbuild_daemon::broker::backend::spawn_backend_endpoint_if_requested(context.clone());
 
     let app = Router::new()

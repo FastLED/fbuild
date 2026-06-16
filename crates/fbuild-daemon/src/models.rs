@@ -226,6 +226,8 @@ pub struct DaemonInfoResponse {
     pub daemon_state: fbuild_core::DaemonState,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub current_operation: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub dependency_install: Option<fbuild_core::install_status::InstallStatus>,
     pub client_count: usize,
     pub cache_dir: String,
     pub daemon_dir: String,
@@ -719,6 +721,7 @@ mod tests {
             operation_in_progress: false,
             daemon_state: fbuild_core::DaemonState::Idle,
             current_operation: None,
+            dependency_install: None,
             client_count: 3,
             cache_dir: "/home/user/.fbuild/prod/cache".into(),
             daemon_dir: "/home/user/.fbuild/prod/daemon".into(),
@@ -758,6 +761,7 @@ mod tests {
             operation_in_progress: false,
             daemon_state: fbuild_core::DaemonState::Idle,
             current_operation: None,
+            dependency_install: None,
             client_count: 0,
             cache_dir: "/tmp/cache".into(),
             daemon_dir: "/tmp/daemon".into(),
@@ -784,6 +788,14 @@ mod tests {
             operation_in_progress: true,
             daemon_state: fbuild_core::DaemonState::Building,
             current_operation: Some("Building /tmp/myproject".into()),
+            dependency_install: Some(fbuild_core::install_status::status(
+                "zccache",
+                Some("1.12.7"),
+                fbuild_core::install_status::InstallPhase::WaitingForLock,
+                fbuild_core::install_status::InstallRole::Waiter,
+                "waiting for managed zccache",
+                Some(".zccache-1.12.7.install.lock"),
+            )),
             client_count: 1,
             cache_dir: "/tmp/cache".into(),
             daemon_dir: "/tmp/daemon".into(),
@@ -796,6 +808,8 @@ mod tests {
         assert!(json.contains("\"current_operation\""));
         assert!(json.contains("Building /tmp/myproject"));
         assert!(json.contains("\"building\""));
+        assert!(json.contains("\"dependency_install\""));
+        assert!(json.contains("\"waiting_for_lock\""));
     }
 
     // --- DeviceListResponse ---
