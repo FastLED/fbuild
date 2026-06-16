@@ -75,3 +75,7 @@ vscode-fbuild/*.vsix
 # generated per-session; not a stable doc and not part of the repo.
 /LOOP.md
 tasks/loop-runs/
+
+# clud project settings
+!.clud/
+!.clud/settings.json
