@@ -215,7 +215,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         }
 
         if let Some(ref zcc) = compiler_cache {
-            crate::zccache::ensure_running(zcc);
+            crate::zccache::ensure_running(zcc)?;
         }
 
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
