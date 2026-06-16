@@ -300,6 +300,83 @@ fn test_all_migrations_recorded_after_open() {
     }
 }
 
+/// Existing migration ids are compatibility state. New migrations may be
+/// appended, but historical ids must not be renamed or reordered because
+/// production databases record them in `schema_migrations`.
+#[test]
+fn test_existing_migration_ids_remain_append_only() {
+    let expected_prefix = ["m001_initial_schema", "m002_add_leases_refcount"];
+    let ids: Vec<&str> = MIGRATIONS.iter().map(|m| m.id).collect();
+
+    assert!(
+        ids.starts_with(&expected_prefix),
+        "existing migration ids must remain a stable prefix"
+    );
+
+    let unique_ids: std::collections::HashSet<&str> = ids.iter().copied().collect();
+    assert_eq!(
+        unique_ids.len(),
+        ids.len(),
+        "migration ids must remain unique"
+    );
+}
+
+/// Dead-process leases must not pin cache entries forever. Reaping should
+/// remove stale lease rows and refresh the denormalized `entries.pinned`
+/// count from the remaining live leases.
+#[test]
+fn test_dead_pid_lease_reap_clears_pinned_count() {
+    let idx = CacheIndex::open_in_memory().unwrap();
+    let entry = idx
+        .record_archive(
+            Kind::Packages,
+            "https://example.com/dead-lease",
+            "1.0",
+            "archives/dead-lease.tar.gz",
+            1024,
+            "sha256",
+        )
+        .unwrap();
+
+    let dead_pid = (900_000_u32..1_000_000)
+        .find(|pid| !super::pid::is_pid_alive(*pid))
+        .expect("test requires an unused high PID") as i64;
+    {
+        let conn = idx.conn.lock().unwrap();
+        conn.execute(
+            "INSERT INTO leases (entry_id, holder_pid, holder_nonce, refcount, acquired_at)
+             VALUES (?1, ?2, ?3, ?4, ?5)",
+            params![entry.id, dead_pid, 7_i64, 3_i64, CacheIndex::now_epoch()],
+        )
+        .unwrap();
+        conn.execute(
+            "UPDATE entries SET pinned = 3 WHERE id = ?1",
+            params![entry.id],
+        )
+        .unwrap();
+    }
+
+    let before = idx
+        .lookup(Kind::Packages, "https://example.com/dead-lease", "1.0")
+        .unwrap()
+        .unwrap();
+    assert_eq!(before.pinned, 3);
+
+    assert_eq!(idx.reap_dead_leases().unwrap(), 1);
+
+    let after = idx
+        .lookup(Kind::Packages, "https://example.com/dead-lease", "1.0")
+        .unwrap()
+        .unwrap();
+    assert_eq!(after.pinned, 0);
+
+    let conn = idx.conn.lock().unwrap();
+    let remaining: i64 = conn
+        .query_row("SELECT COUNT(*) FROM leases", [], |row| row.get(0))
+        .unwrap();
+    assert_eq!(remaining, 0);
+}
+
 /// Pre-migration schema: `leases` without `refcount`. Opening via
 /// `CacheIndex::open` must transparently add the column, and
 /// subsequent `pin()` calls must succeed.
