@@ -196,6 +196,32 @@ fn manifest_builder(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::ffi::OsString;
+    use std::sync::Mutex;
+
+    static ENV_LOCK: Mutex<()> = Mutex::new(());
+
+    struct EnvVarGuard {
+        name: &'static str,
+        previous: Option<OsString>,
+    }
+
+    impl EnvVarGuard {
+        fn set(name: &'static str, value: impl AsRef<std::ffi::OsStr>) -> Self {
+            let previous = std::env::var_os(name);
+            std::env::set_var(name, value);
+            Self { name, previous }
+        }
+    }
+
+    impl Drop for EnvVarGuard {
+        fn drop(&mut self) {
+            match self.previous.take() {
+                Some(value) => std::env::set_var(self.name, value),
+                None => std::env::remove_var(self.name),
+            }
+        }
+    }
 
     fn abs_daemon() -> PathBuf {
         if cfg!(windows) {
@@ -367,6 +393,50 @@ mod tests {
             root(CacheRootKind::CacheData),
             root(CacheRootKind::CacheRuntime),
             "broker runtime path must not become artifact repository ownership"
+        );
+    }
+
+    #[test]
+    fn cache_manifest_respects_fbuild_cache_dir_as_artifact_owner() {
+        let _env = ENV_LOCK.lock().unwrap();
+        let tmp = tempfile::tempdir().expect("tempdir");
+        let cache_root = tmp.path().join("shared-cache");
+        let runtime = tmp.path().join("versioned-runtime").join("bin");
+        let _cache_guard = EnvVarGuard::set(
+            fbuild_paths::running_process::FBUILD_CACHE_DIR_ENV,
+            &cache_root,
+        );
+
+        let roots = CacheRoots::discover(&runtime);
+        let manifest = fbuild_cache_manifest("2.2.30", &roots).expect("build manifest");
+        let root = |kind: CacheRootKind| {
+            manifest
+                .roots
+                .iter()
+                .find(|root| root.kind == kind as i32)
+                .map(|root| root.path.clone())
+                .unwrap_or_else(|| panic!("manifest missing {kind:?}"))
+        };
+
+        assert_eq!(
+            root(CacheRootKind::CacheData),
+            cache_root.display().to_string(),
+            "FBUILD_CACHE_DIR must be the broker-visible artifact owner"
+        );
+        assert_eq!(
+            root(CacheRootKind::CacheIndex),
+            cache_root.join("index").display().to_string(),
+            "CacheIndex must stay below FBUILD_CACHE_DIR"
+        );
+        assert_eq!(
+            root(CacheRootKind::CacheRuntime),
+            runtime.display().to_string(),
+            "CacheRuntime remains daemon provenance"
+        );
+        assert_ne!(
+            root(CacheRootKind::CacheData),
+            root(CacheRootKind::CacheRuntime),
+            "broker runtime path must not fork artifact ownership"
         );
     }
 
