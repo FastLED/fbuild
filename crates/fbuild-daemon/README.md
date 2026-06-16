@@ -32,28 +32,20 @@ WebSocket: `/ws/serial-monitor`, `/ws/status`, `/ws/logs`, `/ws/monitor/{session
 
 See `docs/architecture/overview.md` and `docs/architecture/runtime.md` for architecture details.
 
-## Why not the running-process broker
+## running-process broker
 
-fbuild uses the `running-process` crate for process containment only
-(`core` feature). Adopting its broker/BackendHandle daemon-control layer was
-evaluated and declined (zackees/running-process#384):
+fbuild uses the `running-process` broker for daemon discovery and versioned
+backend launch while preserving the HTTP API as the operation transport.
 
-- **Transport mismatch** — the broker discovers and routes backends over
-  local sockets / named pipes; fbuild-daemon serves HTTP over loopback TCP
-  (axum). Multiplexing the broker's nonce probe onto the HTTP listener would
-  require a second raw listener.
-- **Equivalent guarantees exist** — `GET /health` returns the daemon pid and
-  `source_mtime`, covering the liveness and stale-daemon detection a
-  BackendHandle probe would provide, and the CLI self-heals via
-  `ensure_daemon_running()`.
+When the broker launches `fbuild-daemon`, it provides
+`RUNNING_PROCESS_BROKER_V1_BACKEND_PIPE`. The daemon binds that local socket in
+`src/broker/backend.rs`, answers `BackendHandle` identity probes, and supports
+broker-framed health/daemon-info requests over fbuild's registered payload
+protocol (`0x7EB1`). That makes the broker-selected daemon process verifiable
+before CLI/PyO3 callers continue through the existing loopback HTTP endpoints.
 
-Revisit only if daemon RPC ever moves off HTTP or broker-managed lifecycle
-becomes desirable.
-
-running-process 4.2.0 added a broker backend SDK (`BackendEndpointMux`
-sans-io probe serving, `probe_with_service_async`, identity sidecar helpers,
-and a consumer conformance kit — zackees/running-process#412 §7.4). The SDK
-removes most of the hand-rolled plumbing the decline cited, but the RPC
-transport decision above is unchanged: fbuild stays on loopback HTTP, and
-SDK-based active BackendHandle probing remains tracked (stubbed) in
-FastLED/fbuild#510.
+The current migration slice deliberately leaves build/deploy/monitor operations
+on HTTP, including streaming NDJSON builds. `RUNNING_PROCESS_DISABLE=1` keeps
+the legacy direct-spawn/direct-HTTP path for rollback, and broker-unavailable
+cases fall back to that path unless the broker explicitly refuses the requested
+fbuild version.

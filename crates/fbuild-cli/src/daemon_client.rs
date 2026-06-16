@@ -1,7 +1,10 @@
 //! HTTP client for communicating with the fbuild daemon.
 
 use std::collections::BTreeMap;
+use std::sync::{Mutex, OnceLock};
 
+use running_process::broker::adopt::{AdoptError, AsyncBrokerSession, OwnedConnectRequest};
+use running_process::broker::client::RefusalKind;
 use serde::{Deserialize, Serialize};
 
 /// Percent-encode a port name for use in a URL path segment.
@@ -188,7 +191,11 @@ pub fn runtime_diagnostic() -> String {
         .map(|p| p.display().to_string())
         .unwrap_or_else(|| "<unknown>".to_string());
     let daemon_exe = daemon_executable_hint();
-    let running_process = fbuild_paths::running_process::running_process_adoption_summary();
+    let running_process = last_daemon_acquisition()
+        .map(|a| a.summary())
+        .unwrap_or_else(|| {
+            fbuild_paths::running_process::running_process_adoption_summary().to_string()
+        });
     format!(
         "fbuild executable: {}\nfbuild version: {}\nfbuild-daemon executable: {}\ndaemon endpoint: {}\nrunning-process broker: {}",
         exe,
@@ -197,6 +204,84 @@ pub fn runtime_diagnostic() -> String {
         fbuild_paths::get_daemon_url(),
         running_process
     )
+}
+
+#[derive(Debug, Clone)]
+pub enum DaemonAcquisition {
+    BrokerNegotiated {
+        endpoint: String,
+        daemon_version: Option<String>,
+    },
+    DirectFallback {
+        reason: String,
+    },
+    DisabledDirectFallback,
+}
+
+impl DaemonAcquisition {
+    pub fn mode(&self) -> &'static str {
+        match self {
+            Self::BrokerNegotiated { .. } => "broker-negotiated",
+            Self::DirectFallback { .. } => "direct-fallback",
+            Self::DisabledDirectFallback => "disabled",
+        }
+    }
+
+    pub fn endpoint(&self) -> Option<&str> {
+        match self {
+            Self::BrokerNegotiated { endpoint, .. } => Some(endpoint.as_str()),
+            _ => None,
+        }
+    }
+
+    pub fn daemon_version(&self) -> Option<&str> {
+        match self {
+            Self::BrokerNegotiated { daemon_version, .. } => daemon_version.as_deref(),
+            _ => None,
+        }
+    }
+
+    pub fn reason(&self) -> Option<&str> {
+        match self {
+            Self::DirectFallback { reason } => Some(reason.as_str()),
+            _ => None,
+        }
+    }
+
+    fn summary(&self) -> String {
+        match self {
+            Self::BrokerNegotiated {
+                endpoint,
+                daemon_version,
+            } => format!(
+                "broker-negotiated daemon{} at {}",
+                daemon_version
+                    .as_deref()
+                    .map(|v| format!(" version {v}"))
+                    .unwrap_or_default(),
+                endpoint
+            ),
+            Self::DirectFallback { reason } => format!("direct daemon fallback ({reason})"),
+            Self::DisabledDirectFallback => {
+                "direct daemon fallback (RUNNING_PROCESS_DISABLE=1)".to_string()
+            }
+        }
+    }
+}
+
+static LAST_DAEMON_ACQUISITION: OnceLock<Mutex<Option<DaemonAcquisition>>> = OnceLock::new();
+
+fn record_daemon_acquisition(acquisition: DaemonAcquisition) {
+    let slot = LAST_DAEMON_ACQUISITION.get_or_init(|| Mutex::new(None));
+    if let Ok(mut guard) = slot.lock() {
+        *guard = Some(acquisition);
+    }
+}
+
+pub fn last_daemon_acquisition() -> Option<DaemonAcquisition> {
+    LAST_DAEMON_ACQUISITION
+        .get()
+        .and_then(|slot| slot.lock().ok().and_then(|guard| guard.clone()))
 }
 
 fn daemon_executable_hint() -> String {
@@ -810,6 +895,88 @@ fn compute_daemon_binary_mtime() -> f64 {
 /// If the daemon binary has been updated since the running daemon started,
 /// gracefully restart it (stale source detection, matching Python behavior).
 pub async fn ensure_daemon_running() -> fbuild_core::Result<()> {
+    if try_acquire_broker_daemon().await? {
+        return Ok(());
+    }
+    ensure_direct_daemon_running().await
+}
+
+async fn try_acquire_broker_daemon() -> fbuild_core::Result<bool> {
+    if fbuild_paths::running_process::running_process_disabled() {
+        record_daemon_acquisition(DaemonAcquisition::DisabledDirectFallback);
+        return Ok(false);
+    }
+
+    let broker_endpoint = match running_process::broker::doctor::default_broker_endpoint() {
+        Ok(endpoint) => endpoint,
+        Err(err) => {
+            record_daemon_acquisition(DaemonAcquisition::DirectFallback {
+                reason: format!("could not derive broker endpoint: {err}"),
+            });
+            return Ok(false);
+        }
+    };
+
+    let request = OwnedConnectRequest::new(
+        broker_endpoint,
+        fbuild_paths::running_process::SERVICE_NAME,
+        env!("CARGO_PKG_VERSION"),
+        env!("CARGO_PKG_VERSION"),
+    );
+
+    match AsyncBrokerSession::adopt(request).await {
+        Ok(session) => {
+            let endpoint = session.endpoint().to_string();
+            let daemon_version = session.negotiated().map(|n| n.daemon_version.clone());
+            record_daemon_acquisition(DaemonAcquisition::BrokerNegotiated {
+                endpoint,
+                daemon_version,
+            });
+
+            let client = DaemonClient::new();
+            for _ in 0..100 {
+                if client.health().await {
+                    return Ok(true);
+                }
+                tokio::time::sleep(std::time::Duration::from_millis(100)).await;
+            }
+            Err(fbuild_core::FbuildError::DaemonError(
+                "broker negotiated fbuild-daemon, but its HTTP endpoint did not become healthy"
+                    .to_string(),
+            ))
+        }
+        Err(AdoptError::BrokerDisabled) => {
+            record_daemon_acquisition(DaemonAcquisition::DisabledDirectFallback);
+            Ok(false)
+        }
+        Err(AdoptError::DisableEnv(err)) => {
+            Err(fbuild_core::FbuildError::DaemonError(err.to_string()))
+        }
+        Err(AdoptError::Connect(err)) => {
+            if matches!(
+                err.refusal_kind(),
+                Some(RefusalKind::VersionUnsupported | RefusalKind::VersionBlocked)
+            ) {
+                return Err(fbuild_core::FbuildError::DaemonError(format!(
+                    "running-process broker refused fbuild daemon version: {err}"
+                )));
+            }
+            record_daemon_acquisition(DaemonAcquisition::DirectFallback {
+                reason: err.to_string(),
+            });
+            Ok(false)
+        }
+        Err(AdoptError::AsyncJoin(err)) => {
+            record_daemon_acquisition(DaemonAcquisition::DirectFallback {
+                reason: format!("broker adoption worker failed: {err}"),
+            });
+            Ok(false)
+        }
+    }
+}
+
+/// Legacy direct HTTP daemon acquisition path.
+async fn ensure_direct_daemon_running() -> fbuild_core::Result<()> {
     let client = DaemonClient::new();
 
     // Check if already running
@@ -996,5 +1163,37 @@ fn strip_std_handle_inheritance() {
                 SetHandleInformation(h, HANDLE_FLAG_INHERIT, 0);
             }
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::DaemonAcquisition;
+
+    #[test]
+    fn broker_acquisition_reports_negotiated_state() {
+        let acquisition = DaemonAcquisition::BrokerNegotiated {
+            endpoint: "rp-backend".to_string(),
+            daemon_version: Some("2.2.29".to_string()),
+        };
+
+        assert_eq!(acquisition.mode(), "broker-negotiated");
+        assert_eq!(acquisition.endpoint(), Some("rp-backend"));
+        assert_eq!(acquisition.daemon_version(), Some("2.2.29"));
+        assert_eq!(acquisition.reason(), None);
+        assert!(acquisition.summary().contains("version 2.2.29"));
+    }
+
+    #[test]
+    fn direct_acquisition_reports_fallback_reason() {
+        let acquisition = DaemonAcquisition::DirectFallback {
+            reason: "broker unavailable".to_string(),
+        };
+
+        assert_eq!(acquisition.mode(), "direct-fallback");
+        assert_eq!(acquisition.endpoint(), None);
+        assert_eq!(acquisition.daemon_version(), None);
+        assert_eq!(acquisition.reason(), Some("broker unavailable"));
+        assert!(acquisition.summary().contains("broker unavailable"));
     }
 }

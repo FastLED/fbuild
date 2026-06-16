@@ -3,6 +3,10 @@
 use std::path::{Path, PathBuf};
 
 use pyo3::prelude::*;
+use running_process::broker::adopt::{
+    AdoptError, AsyncBrokerSession, BrokerSession, OwnedConnectRequest,
+};
+use running_process::broker::client::{ConnectBackendRequest, RefusalKind};
 
 /// Filename of the daemon binary on this platform.
 ///
@@ -66,6 +70,109 @@ fn daemon_spawn_target() -> Option<PathBuf> {
     venv_adjacent_daemon()
 }
 
+fn direct_health_url() -> String {
+    format!("{}/health", fbuild_paths::get_daemon_url())
+}
+
+fn broker_endpoint() -> Option<String> {
+    if fbuild_paths::running_process::running_process_disabled() {
+        return None;
+    }
+    running_process::broker::doctor::default_broker_endpoint().ok()
+}
+
+fn ensure_running_via_broker_blocking(url: &str) -> Result<bool, String> {
+    let Some(endpoint) = broker_endpoint() else {
+        return Ok(false);
+    };
+    let request = ConnectBackendRequest::new(
+        &endpoint,
+        fbuild_paths::running_process::SERVICE_NAME,
+        env!("CARGO_PKG_VERSION"),
+        env!("CARGO_PKG_VERSION"),
+    );
+    match BrokerSession::adopt(request) {
+        Ok(_session) => {
+            for _ in 0..100 {
+                std::thread::sleep(std::time::Duration::from_millis(100));
+                if let Ok(resp) = reqwest::blocking::get(url) {
+                    if resp.status().is_success() {
+                        return Ok(true);
+                    }
+                }
+            }
+            Err(
+                "broker negotiated fbuild-daemon, but its HTTP endpoint did not become healthy"
+                    .to_string(),
+            )
+        }
+        Err(AdoptError::BrokerDisabled) => Ok(false),
+        Err(AdoptError::DisableEnv(err)) => Err(err.to_string()),
+        Err(AdoptError::Connect(err)) => {
+            if matches!(
+                err.refusal_kind(),
+                Some(RefusalKind::VersionUnsupported | RefusalKind::VersionBlocked)
+            ) {
+                Err(format!(
+                    "running-process broker refused fbuild daemon version: {err}"
+                ))
+            } else {
+                Ok(false)
+            }
+        }
+        Err(AdoptError::AsyncJoin(_)) => Ok(false),
+    }
+}
+
+async fn ensure_running_via_broker_async(url: &str) -> Result<bool, String> {
+    let Some(endpoint) = broker_endpoint() else {
+        return Ok(false);
+    };
+    let request = OwnedConnectRequest::new(
+        endpoint,
+        fbuild_paths::running_process::SERVICE_NAME,
+        env!("CARGO_PKG_VERSION"),
+        env!("CARGO_PKG_VERSION"),
+    );
+    match AsyncBrokerSession::adopt(request).await {
+        Ok(_session) => {
+            let client = reqwest::Client::new();
+            for _ in 0..100 {
+                if let Ok(resp) = client
+                    .get(url)
+                    .timeout(std::time::Duration::from_secs(5))
+                    .send()
+                    .await
+                {
+                    if resp.status().is_success() {
+                        return Ok(true);
+                    }
+                }
+                tokio::time::sleep(std::time::Duration::from_millis(100)).await;
+            }
+            Err(
+                "broker negotiated fbuild-daemon, but its HTTP endpoint did not become healthy"
+                    .to_string(),
+            )
+        }
+        Err(AdoptError::BrokerDisabled) => Ok(false),
+        Err(AdoptError::DisableEnv(err)) => Err(err.to_string()),
+        Err(AdoptError::Connect(err)) => {
+            if matches!(
+                err.refusal_kind(),
+                Some(RefusalKind::VersionUnsupported | RefusalKind::VersionBlocked)
+            ) {
+                Err(format!(
+                    "running-process broker refused fbuild daemon version: {err}"
+                ))
+            } else {
+                Ok(false)
+            }
+        }
+        Err(AdoptError::AsyncJoin(_)) => Ok(false),
+    }
+}
+
 /// Python-visible Daemon class (high-level API).
 #[pyclass]
 pub(crate) struct Daemon;
@@ -74,7 +181,13 @@ pub(crate) struct Daemon;
 impl Daemon {
     #[staticmethod]
     fn ensure_running() -> bool {
-        let url = format!("{}/health", fbuild_paths::get_daemon_url());
+        let url = direct_health_url();
+        match ensure_running_via_broker_blocking(&url) {
+            Ok(true) => return true,
+            Ok(false) => {}
+            Err(_) => return false,
+        }
+
         if let Ok(resp) = reqwest::blocking::get(&url) {
             if resp.status().is_success() {
                 return true;
@@ -217,7 +330,7 @@ impl AsyncDaemon {
     /// event loop thread.
     #[staticmethod]
     fn ensure_running(py: Python<'_>) -> PyResult<Bound<'_, PyAny>> {
-        let url = format!("{}/health", fbuild_paths::get_daemon_url());
+        let url = direct_health_url();
         let dev_mode = fbuild_paths::is_dev_mode();
         // Resolve `sys.executable` BEFORE entering the future: the GIL
         // must not be held across `.await`, and the venv-adjacent lookup
@@ -225,6 +338,12 @@ impl AsyncDaemon {
         let spawn_target = daemon_spawn_target();
 
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            match ensure_running_via_broker_async(&url).await {
+                Ok(true) => return Ok(true),
+                Ok(false) => {}
+                Err(_) => return Ok(false),
+            }
+
             let client = reqwest::Client::new();
 
             // Fast path: daemon is already up.
