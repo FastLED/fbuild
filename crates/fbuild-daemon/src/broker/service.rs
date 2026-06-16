@@ -100,6 +100,7 @@ fn shared_broker_builder(daemon_binary: impl AsRef<Path>) -> ServiceDefinitionBu
         daemon_binary.as_ref().display().to_string(),
     )
     .min_version(MIN_VERSION)
+    .allow_version(env!("CARGO_PKG_VERSION"))
     .label("consumer", "fbuild")
     .label("cache-owner", "fbuild-global-artifact-repository")
     .label("cache-identity", identity.label_value())
@@ -121,6 +122,7 @@ fn ci_builder(daemon_binary: impl AsRef<Path>) -> ServiceDefinitionBuilder {
         CI_TRUSTED_INSTANCE,
     )
     .min_version(MIN_VERSION)
+    .allow_version(env!("CARGO_PKG_VERSION"))
     .label("consumer", "fbuild")
     .label("cache-owner", "fbuild-global-artifact-repository")
     .label("cache-schema-version", CACHE_SCHEMA_VERSION.to_string())
@@ -208,6 +210,7 @@ mod tests {
         let def = fbuild_service_definition(abs_daemon()).expect("build shared definition");
         assert_eq!(def.service_name, "fbuild");
         assert_eq!(def.min_version, MIN_VERSION);
+        assert_eq!(def.version_allow_list, [env!("CARGO_PKG_VERSION")]);
         // SHARED_BROKER isolation discriminant.
         assert_eq!(
             def.isolation,
@@ -255,6 +258,8 @@ mod tests {
     fn ci_explicit_instance_service_definition_validates() {
         let def = fbuild_ci_service_definition(abs_daemon()).expect("build ci definition");
         assert_eq!(def.service_name, "fbuild");
+        assert_eq!(def.min_version, MIN_VERSION);
+        assert_eq!(def.version_allow_list, [env!("CARGO_PKG_VERSION")]);
         assert_eq!(def.explicit_instance, CI_TRUSTED_INSTANCE);
         assert_eq!(
             def.isolation,
