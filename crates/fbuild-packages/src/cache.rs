@@ -352,6 +352,28 @@ mod tests {
     }
 
     #[test]
+    fn global_artifact_roots_stay_under_authoritative_cache_root() {
+        let tmp = TempDir::new().unwrap();
+        let cache_root = tmp.path().join("cache-root");
+        let cache = Cache::with_cache_root(tmp.path(), cache_root.as_path());
+
+        assert_eq!(cache.packages_dir(), cache_root.join("packages"));
+        assert_eq!(cache.toolchains_dir(), cache_root.join("toolchains"));
+        assert_eq!(cache.platforms_dir(), cache_root.join("platforms"));
+        assert_eq!(cache.libraries_dir(), cache_root.join("libraries"));
+        assert_eq!(cache.core_artifacts_dir(), cache_root.join("core"));
+        assert!(cache
+            .get_package_path("https://example.test/pkg.tar.gz", "1.0.0")
+            .starts_with(cache_root.join("packages")));
+        assert!(cache
+            .get_toolchain_path("https://example.test/tool.tar.gz", "1.0.0")
+            .starts_with(cache_root.join("toolchains")));
+        assert!(cache
+            .get_platform_path("https://example.test/platform.tar.gz", "1.0.0")
+            .starts_with(cache_root.join("platforms")));
+    }
+
+    #[test]
     fn test_get_package_path_with_stem_hash() {
         let tmp = TempDir::new().unwrap();
         let cache = Cache::with_cache_root(tmp.path(), tmp.path().join("cache").as_path());
