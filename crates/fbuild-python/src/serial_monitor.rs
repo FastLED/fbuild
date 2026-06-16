@@ -375,12 +375,10 @@ impl SerialMonitor {
         // in front of the reply; ignore them and keep waiting for the
         // typed answer until the 2s deadline expires.
         let mut read = ws_read.lock().unwrap();
-        let deadline =
-            std::time::Instant::now() + std::time::Duration::from_secs(2);
+        let deadline = std::time::Instant::now() + std::time::Duration::from_secs(2);
         while std::time::Instant::now() < deadline {
             let remaining = deadline - std::time::Instant::now();
-            let result =
-                rt.block_on(async { tokio::time::timeout(remaining, read.next()).await });
+            let result = rt.block_on(async { tokio::time::timeout(remaining, read.next()).await });
             match result {
                 Ok(Some(Ok(tungstenite::Message::Text(text)))) => {
                     if let Ok(ServerMessage::InWaiting { count }) =

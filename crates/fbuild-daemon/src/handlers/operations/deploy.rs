@@ -544,9 +544,7 @@ pub async fn deploy(
                                     port,
                                     "trusted-hash: session-trusted match; skipping verify-flash entirely"
                                 );
-                                // VerifySkip → no flash happened, no
-                                // recovery needed. Pass `None` so the
-                                // async caller skips the recovery hook.
+                                // VerifySkip → recovery skipped (#605).
                                 return Ok((None, fbuild_deploy::DeploymentResult {
                                     success: true,
                                     message: format!(
@@ -584,7 +582,7 @@ pub async fn deploy(
                                 port,
                                 "verify-flash: device already running this exact image; skipping write"
                             );
-                            // VerifySkip → no recovery needed. Pass `None`.
+                            // VerifySkip → recovery skipped (#605).
                             return Ok((None, fbuild_deploy::DeploymentResult {
                                 success: true,
                                 message: format!(
@@ -744,43 +742,28 @@ pub async fn deploy(
                 }
             }
         }
-        // Return the deployer alongside the result so the post-deploy
-        // recovery hook (FastLED/fbuild#605) can be invoked from the
-        // async caller after `clear_preemption().await`. The early-return
-        // verify-skip paths above pass `None` since recovery is a no-op
-        // when no flash actually happened.
+        // Return the deployer so the async caller can invoke
+        // `post_deploy_recovery` after `clear_preemption().await` (#605).
         result.map(|r| (Some(deployer), r))
     })
     .await;
 
-    // Split the deployer out of the spawn_blocking result so it can drive
-    // post-deploy recovery while `deploy_result` retains its original shape
-    // for the downstream match. The deployer is `None` for verify-skip
-    // early returns (no flash happened → no recovery needed), for
-    // unsupported-platform errors, and for spawn_blocking task failures.
+    // Split the deployer out so it can drive recovery while `deploy_result`
+    // retains its original shape for the downstream match. `None` covers
+    // verify-skip early returns, unsupported platforms, and join errors.
     let (deployer_for_recovery, deploy_result) = match deploy_result {
         Ok(Ok((d, r))) => (d, Ok(Ok(r))),
         Ok(Err(e)) => (None, Ok(Err(e))),
         Err(e) => (None, Err(e)),
     };
 
-    // Clear preemption then invoke the deployer's post-deploy recovery
-    // hook. The default `Deployer::post_deploy_recovery` impl is a 3-second
-    // 100ms fast-poll on the port (most ESP32-S3 boards with native USB
-    // re-enumerate in <500ms). Platform-specific deployers can override the
-    // hook to perform OS-level re-enumeration — see FastLED/fbuild#605.
-    //
-    // Skip the recovery entirely when the deploy didn't actually touch
-    // flash (VerifySkip): no reset happened, no USB re-enumeration is
-    // coming, and the poll's `open()` probe would conflict with any
-    // already-attached monitor and burn the full 3 s timeout. This is
-    // load-bearing for the < 4 s warm-trust-skip budget.
+    // Skip recovery when the deploy didn't touch flash (VerifySkip): no
+    // reset, no USB re-enumeration, and the poll's `open()` probe would
+    // conflict with any already-attached monitor — load-bearing for the
+    // <4 s warm-trust-skip budget.
     let deploy_skipped_bus_work = matches!(
         &deploy_result,
-        Ok(Ok(r)) if r.success && matches!(
-            r.outcome,
-            fbuild_deploy::DeployOutcome::VerifySkip
-        )
+        Ok(Ok(r)) if r.success && matches!(r.outcome, fbuild_deploy::DeployOutcome::VerifySkip)
     );
     if let Some(ref p) = deploy_port_str {
         ctx.serial_manager.clear_preemption(p).await;
@@ -789,11 +772,7 @@ pub async fn deploy(
                 let port_name = p.clone();
                 let _ = tokio::task::spawn_blocking(move || {
                     if let Err(e) = deployer.post_deploy_recovery(&port_name) {
-                        tracing::warn!(
-                            "post_deploy_recovery failed for {}: {}",
-                            port_name,
-                            e
-                        );
+                        tracing::warn!("post_deploy_recovery failed for {}: {}", port_name, e);
                     }
                 })
                 .await;

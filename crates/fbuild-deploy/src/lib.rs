@@ -128,10 +128,7 @@ pub trait Deployer: Send + Sync {
             }
             std::thread::sleep(std::time::Duration::from_millis(100));
         }
-        tracing::warn!(
-            "USB re-enumeration: port {} not available after 3s",
-            port
-        );
+        tracing::warn!("USB re-enumeration: port {} not available after 3s", port);
         Ok(())
     }
 }
@@ -256,7 +253,8 @@ mod post_deploy_recovery_tests {
             port_seen: Arc::clone(&port_seen),
         });
 
-        dep.post_deploy_recovery("COM-fake").expect("override returns Ok");
+        dep.post_deploy_recovery("COM-fake")
+            .expect("override returns Ok");
 
         assert!(called.load(Ordering::SeqCst), "override must run");
         assert_eq!(
