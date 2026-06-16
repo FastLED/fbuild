@@ -321,6 +321,51 @@ mod tests {
     }
 
     #[test]
+    fn cache_manifest_uses_artifact_roots_not_runtime_roots() {
+        let tmp = tempfile::tempdir().expect("tempdir");
+        let roots = CacheRoots {
+            artifact: tmp.path().join("explicit-cache"),
+            index: tmp.path().join("explicit-cache").join("index"),
+            temp: tmp.path().join("fbuild-root").join("tmp"),
+            log: tmp.path().join("fbuild-root").join("daemon"),
+            lock: tmp.path().join("fbuild-root").join("daemon"),
+            runtime: tmp.path().join("versioned-runtime").join("bin"),
+            config: tmp.path().join("fbuild-root"),
+        };
+        let manifest = fbuild_cache_manifest("2.2.27", &roots).expect("build manifest");
+
+        let root = |kind: CacheRootKind| {
+            manifest
+                .roots
+                .iter()
+                .find(|root| root.kind == kind as i32)
+                .map(|root| root.path.clone())
+                .unwrap_or_else(|| panic!("manifest missing {kind:?}"))
+        };
+
+        assert_eq!(
+            root(CacheRootKind::CacheData),
+            roots.artifact.display().to_string(),
+            "CacheData must advertise the fbuild artifact/cache root"
+        );
+        assert_eq!(
+            root(CacheRootKind::CacheIndex),
+            roots.index.display().to_string(),
+            "CacheIndex must stay below the artifact/cache root"
+        );
+        assert_eq!(
+            root(CacheRootKind::CacheRuntime),
+            roots.runtime.display().to_string(),
+            "CacheRuntime is daemon provenance only"
+        );
+        assert_ne!(
+            root(CacheRootKind::CacheData),
+            root(CacheRootKind::CacheRuntime),
+            "broker runtime path must not become artifact repository ownership"
+        );
+    }
+
+    #[test]
     fn cache_data_root_is_stable_across_backend_versions() {
         let runtime_v1 = if cfg!(windows) {
             PathBuf::from(r"C:\opt\fbuild-1\bin")
