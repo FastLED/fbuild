@@ -479,4 +479,38 @@ mod tests {
         assert!(report.orphan_files_removed > 0);
         assert!(!partial.exists());
     }
+
+    #[test]
+    fn test_reconcile_removes_recorded_install_without_complete_sentinel() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let idx = CacheIndex::open(tmp.path()).unwrap();
+        let rel_path = "installed/packages/example/abc123/1.0";
+        let installed = tmp.path().join(rel_path);
+        std::fs::create_dir_all(&installed).unwrap();
+        std::fs::write(installed.join("payload.txt"), b"incomplete").unwrap();
+
+        let entry = idx
+            .record_install(
+                Kind::Packages,
+                "https://example.com/pkg.tar.gz",
+                "1.0",
+                rel_path,
+                10,
+            )
+            .unwrap();
+        assert!(entry.installed_path.is_some());
+        assert!(installed.exists());
+        assert!(!super::super::paths::install_complete_sentinel(&installed).exists());
+
+        let report = reconcile(&idx).unwrap();
+
+        assert!(report.orphan_files_removed >= 1);
+        assert!(!installed.exists());
+        let entry = idx
+            .lookup(Kind::Packages, "https://example.com/pkg.tar.gz", "1.0")
+            .unwrap()
+            .unwrap();
+        assert!(entry.installed_path.is_none());
+        assert!(entry.installed_bytes.is_none());
+    }
 }
