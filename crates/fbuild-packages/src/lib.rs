@@ -469,6 +469,39 @@ fn clear_package_touch_cache_for_tests() {
 mod toolchain_gcc_ar_tests {
     use super::*;
 
+    async fn serve_once(body: Vec<u8>) -> String {
+        use tokio::io::{AsyncReadExt, AsyncWriteExt};
+        use tokio::net::TcpListener;
+
+        let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let url = format!("http://{}/package.zip", listener.local_addr().unwrap());
+        tokio::spawn(async move {
+            let (mut stream, _) = listener.accept().await.expect("accept download");
+            let mut buf = [0u8; 1024];
+            let _ = stream.read(&mut buf).await;
+            let header = format!(
+                "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",
+                body.len()
+            );
+            stream.write_all(header.as_bytes()).await.unwrap();
+            stream.write_all(&body).await.unwrap();
+            let _ = stream.shutdown().await;
+        });
+        url
+    }
+
+    fn zip_bytes(entry_name: &str, content: &[u8]) -> Vec<u8> {
+        use std::io::{Cursor, Write};
+        use zip::write::SimpleFileOptions;
+
+        let cursor = Cursor::new(Vec::new());
+        let mut zip = zip::ZipWriter::new(cursor);
+        zip.start_file(entry_name, SimpleFileOptions::default())
+            .expect("start zip entry");
+        zip.write_all(content).expect("write zip entry");
+        zip.finish().expect("finish zip").into_inner()
+    }
+
     /// Test toolchain that lets the test set the `ar_path`.
     struct TestToolchain {
         ar_path: PathBuf,
@@ -593,5 +626,58 @@ mod toolchain_gcc_ar_tests {
             entry.use_count, 1,
             "repeated cache hits for the same package should not repeatedly write the index"
         );
+    }
+
+    #[tokio::test]
+    async fn staged_install_removes_stale_legacy_staging_dir_before_retry() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let cache_root = tmp.path().join("cache");
+        let cache_key = "stale-staging-tool";
+        let url = serve_once(zip_bytes("fresh.txt", b"fresh install")).await;
+        let base = PackageBase::with_cache_root(
+            "tool",
+            "1.0",
+            &url,
+            cache_key,
+            None,
+            CacheSubdir::Toolchains,
+            tmp.path(),
+            &cache_root,
+        );
+
+        let install_path = base.install_path();
+        let staging_path = install_path.with_file_name(format!(
+            "{}_staging",
+            install_path
+                .file_name()
+                .unwrap_or_default()
+                .to_string_lossy()
+        ));
+        std::fs::create_dir_all(&staging_path).unwrap();
+        std::fs::write(staging_path.join("stale.txt"), b"stale interrupted install").unwrap();
+
+        let installed = base
+            .staged_install(|staging| {
+                assert!(
+                    !staging.join("stale.txt").exists(),
+                    "stale interrupted install content must be removed before retry"
+                );
+                assert!(
+                    staging.join("fresh.txt").exists(),
+                    "fresh archive contents must be extracted into clean staging"
+                );
+                Ok(())
+            })
+            .await
+            .expect("staged install should succeed");
+
+        assert_eq!(installed, install_path);
+        assert!(installed.join("fresh.txt").exists());
+        assert!(!installed.join("stale.txt").exists());
+        assert!(
+            !staging_path.exists(),
+            "staging dir is renamed away on commit"
+        );
+        assert!(disk_cache::paths::install_complete_sentinel(&installed).exists());
     }
 }
