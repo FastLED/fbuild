@@ -226,8 +226,12 @@ pub struct DaemonInfoResponse {
     pub daemon_state: fbuild_core::DaemonState,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub current_operation: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub dependency_install: Option<fbuild_core::install_status::InstallStatus>,
     pub client_count: usize,
     pub cache_dir: String,
+    pub cache_identity: String,
+    pub cache_schema_version: u32,
     pub daemon_dir: String,
     pub source_mtime: f64,
     pub spawner_cwd: String,
@@ -719,8 +723,12 @@ mod tests {
             operation_in_progress: false,
             daemon_state: fbuild_core::DaemonState::Idle,
             current_operation: None,
+            dependency_install: None,
             client_count: 3,
             cache_dir: "/home/user/.fbuild/prod/cache".into(),
+            cache_identity:
+                "mode=prod;trust=local-shared;schema=1;cache=/home/user/.fbuild/prod/cache".into(),
+            cache_schema_version: 1,
             daemon_dir: "/home/user/.fbuild/prod/daemon".into(),
             source_mtime: 1700000000.0,
             spawner_cwd: "/home/user/project".into(),
@@ -738,6 +746,8 @@ mod tests {
         assert!(json.contains("\"idle\""));
         assert!(json.contains("\"client_count\":3"));
         assert!(json.contains("\"cache_dir\""));
+        assert!(json.contains("\"cache_identity\""));
+        assert!(json.contains("\"cache_schema_version\":1"));
         assert!(json.contains("\"daemon_dir\""));
         assert!(json.contains("\"source_mtime\""));
         assert!(json.contains("\"spawner_cwd\""));
@@ -758,8 +768,11 @@ mod tests {
             operation_in_progress: false,
             daemon_state: fbuild_core::DaemonState::Idle,
             current_operation: None,
+            dependency_install: None,
             client_count: 0,
             cache_dir: "/tmp/cache".into(),
+            cache_identity: "mode=prod;trust=local-shared;schema=1;cache=/tmp/cache".into(),
+            cache_schema_version: 1,
             daemon_dir: "/tmp/daemon".into(),
             source_mtime: 0.0,
             spawner_cwd: "unknown".into(),
@@ -784,8 +797,18 @@ mod tests {
             operation_in_progress: true,
             daemon_state: fbuild_core::DaemonState::Building,
             current_operation: Some("Building /tmp/myproject".into()),
+            dependency_install: Some(fbuild_core::install_status::status(
+                "zccache",
+                Some("1.12.7"),
+                fbuild_core::install_status::InstallPhase::WaitingForLock,
+                fbuild_core::install_status::InstallRole::Waiter,
+                "waiting for managed zccache",
+                Some(".zccache-1.12.7.install.lock"),
+            )),
             client_count: 1,
             cache_dir: "/tmp/cache".into(),
+            cache_identity: "mode=prod;trust=local-shared;schema=1;cache=/tmp/cache".into(),
+            cache_schema_version: 1,
             daemon_dir: "/tmp/daemon".into(),
             source_mtime: 0.0,
             spawner_cwd: "unknown".into(),
@@ -796,6 +819,8 @@ mod tests {
         assert!(json.contains("\"current_operation\""));
         assert!(json.contains("Building /tmp/myproject"));
         assert!(json.contains("\"building\""));
+        assert!(json.contains("\"dependency_install\""));
+        assert!(json.contains("\"waiting_for_lock\""));
     }
 
     // --- DeviceListResponse ---

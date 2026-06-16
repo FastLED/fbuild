@@ -3,11 +3,12 @@
 use crate::device_manager::DeviceManager;
 use crate::status_manager::StatusManager;
 use dashmap::DashMap;
+use fbuild_core::install_status::InstallStatus;
 use fbuild_core::DaemonState;
 use fbuild_serial::SharedSerialManager;
 use std::path::PathBuf;
 use std::sync::atomic::{AtomicBool, AtomicUsize};
-use std::sync::Arc;
+use std::sync::{Arc, Weak};
 use std::time::Instant;
 use tokio::sync::Mutex;
 
@@ -148,6 +149,8 @@ pub struct DaemonContext {
     pub daemon_state: Arc<std::sync::RwLock<DaemonState>>,
     /// Description of the current operation (e.g. project dir being built).
     pub current_operation: Arc<std::sync::RwLock<Option<String>>>,
+    /// Latest dependency/package install status emitted by lower-level crates.
+    pub dependency_install: Arc<std::sync::RwLock<Option<InstallStatus>>>,
     /// Per-project build locks to serialize builds on the same project.
     pub project_locks: DashMap<PathBuf, Arc<Mutex<()>>>,
     /// Device lease manager.
@@ -216,6 +219,7 @@ impl DaemonContext {
             pending_serial_attaches: Arc::new(AtomicUsize::new(0)),
             daemon_state: Arc::new(std::sync::RwLock::new(DaemonState::Idle)),
             current_operation: Arc::new(std::sync::RwLock::new(None)),
+            dependency_install: Arc::new(std::sync::RwLock::new(None)),
             project_locks: DashMap::new(),
             device_manager: DeviceManager::new(),
             status_manager: StatusManager::new(
@@ -308,6 +312,64 @@ impl DaemonContext {
             .unwrap_or_default()
     }
 
+    pub fn install_dependency_status_subscriber(ctx: &Arc<Self>) {
+        let weak: Weak<Self> = Arc::downgrade(ctx);
+        fbuild_core::install_status::set_install_status_subscriber(move |status| {
+            let Some(ctx) = weak.upgrade() else {
+                return;
+            };
+            ctx.set_dependency_install(status);
+        });
+    }
+
+    pub fn dependency_install_snapshot(&self) -> Option<InstallStatus> {
+        self.dependency_install
+            .read()
+            .ok()
+            .and_then(|status| status.clone())
+    }
+
+    pub fn clear_dependency_install(&self) {
+        if let Ok(mut status) = self.dependency_install.write() {
+            *status = None;
+        }
+        self.broadcast_hub
+            .broadcast_status(&self.status_snapshot_json());
+    }
+
+    pub fn set_dependency_install(&self, status: InstallStatus) {
+        if let Ok(mut current) = self.dependency_install.write() {
+            *current = Some(status);
+        }
+        self.broadcast_hub
+            .broadcast_status(&self.status_snapshot_json());
+    }
+
+    pub fn status_snapshot_json(&self) -> String {
+        let state = self
+            .daemon_state
+            .read()
+            .map(|s| *s)
+            .unwrap_or(fbuild_core::DaemonState::Idle);
+        let current_op = self.current_operation.read().ok().and_then(|o| o.clone());
+        let op_in_progress = self
+            .operation_in_progress
+            .load(std::sync::atomic::Ordering::Relaxed);
+        let dependency_install = self.dependency_install_snapshot();
+
+        serde_json::json!({
+            "type": "status",
+            "state": state,
+            "message": format!("Daemon {}", serde_json::to_value(state).unwrap_or_default().as_str().unwrap_or("unknown")),
+            "current_operation": current_op,
+            "operation_in_progress": op_in_progress,
+            "dependency_install": dependency_install,
+            "progress_percent": null,
+            "timestamp": now_unix(),
+        })
+        .to_string()
+    }
+
     /// Get or create a per-project lock.
     pub fn project_lock(&self, project_dir: &std::path::Path) -> Arc<Mutex<()>> {
         self.project_locks
@@ -315,6 +377,13 @@ impl DaemonContext {
             .or_insert_with(|| Arc::new(Mutex::new(())))
             .clone()
     }
+}
+
+fn now_unix() -> f64 {
+    std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap_or_default()
+        .as_secs_f64()
 }
 
 #[cfg(test)]
@@ -389,6 +458,24 @@ mod tests {
             reason
         );
         assert!(!ctx.is_empty());
+    }
+
+    #[test]
+    fn status_snapshot_includes_dependency_install() {
+        let ctx = make_ctx();
+        ctx.set_dependency_install(fbuild_core::install_status::status(
+            "toolchain",
+            Some("1.0"),
+            fbuild_core::install_status::InstallPhase::WaitingForLock,
+            fbuild_core::install_status::InstallRole::Waiter,
+            "waiting for toolchain",
+            Some(".toolchain.install.lock"),
+        ));
+
+        let snap = ctx.status_snapshot_json();
+        let json: serde_json::Value = serde_json::from_str(&snap).unwrap();
+        assert_eq!(json["dependency_install"]["name"], "toolchain");
+        assert_eq!(json["dependency_install"]["phase"], "waiting_for_lock");
     }
 
     /// A pending serial attach (WebSocket client mid-handshake) must keep

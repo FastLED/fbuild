@@ -5,162 +5,56 @@ use std::sync::{Mutex, OnceLock};
 
 use running_process::broker::adopt::{AdoptError, AsyncBrokerSession, OwnedConnectRequest};
 use running_process::broker::client::RefusalKind;
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
+
+mod types;
+pub use types::*;
+
+const LONG_OPERATION_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(1800);
 
 /// Percent-encode a port name for use in a URL path segment.
 fn encode_port(port: &str) -> String {
     port.replace('%', "%25").replace('/', "%2F")
 }
 
-#[derive(Debug, Serialize)]
-pub struct BuildRequest {
-    pub project_dir: String,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub environment: Option<String>,
-    pub clean_build: bool,
-    pub verbose: bool,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub jobs: Option<usize>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub profile: Option<String>,
-    #[serde(default)]
-    pub generate_compiledb: bool,
-    #[serde(default)]
-    pub compiledb_only: bool,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub request_id: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub caller_pid: Option<u32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub caller_cwd: Option<String>,
-    /// When true, request a streaming NDJSON response.
-    #[serde(default)]
-    pub stream: bool,
-    /// When true, run symbol-level memory analysis after linking.
-    #[serde(default)]
-    pub symbol_analysis: bool,
-    /// Optional path to write the symbol analysis report to.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub symbol_analysis_path: Option<String>,
-    /// Disable elapsed-time prefix on build output lines.
-    #[serde(default)]
-    pub no_timestamp: bool,
-    /// Override for PLATFORMIO_SRC_DIR — forwarded from caller's environment.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub src_dir: Option<String>,
-    /// Export a tooling-friendly artifact bundle to this directory after build.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub output_dir: Option<String>,
-    /// Snapshot of all `PLATFORMIO_*` env vars from the caller's environment.
-    /// The daemon does not inherit caller env vars, so they are forwarded here.
-    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
-    pub pio_env: BTreeMap<String, String>,
+fn stream_status_message(event: &StreamEvent) -> Option<String> {
+    event
+        .dependency_install
+        .as_ref()
+        .map(|status| match status.version.as_deref() {
+            Some(version) => format!("{} {}: {}", status.name, version, status.message),
+            None => format!("{}: {}", status.name, status.message),
+        })
+        .or_else(|| event.message.clone())
+        .or_else(|| {
+            event.current_operation.as_ref().map(|op| {
+                if event.operation_in_progress.unwrap_or(false) {
+                    format!("daemon busy: {}", op)
+                } else {
+                    op.clone()
+                }
+            })
+        })
 }
 
-#[derive(Debug, Serialize)]
-pub struct DeployRequest {
-    pub project_dir: String,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub environment: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub port: Option<String>,
-    pub monitor_after: bool,
-    pub skip_build: bool,
-    pub clean_build: bool,
-    pub verbose: bool,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub monitor_timeout: Option<f64>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub monitor_halt_on_error: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub monitor_halt_on_success: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub monitor_expect: Option<String>,
-    pub monitor_show_timestamp: bool,
-    /// Override the board's default upload baud rate for flashing.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub baud_rate: Option<u32>,
-    /// Deploy destination: "device", "emu", or "emulator".
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub to: Option<String>,
-    /// Emulator backend when deploying to `emu`/`emulator`.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub emulator: Option<String>,
-    /// Legacy deploy target alias: "device", "qemu", or "avr8js".
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub target: Option<String>,
-    #[serde(default)]
-    pub qemu: bool,
-    #[serde(default)]
-    pub qemu_timeout: u32,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub request_id: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub caller_pid: Option<u32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub caller_cwd: Option<String>,
-    /// Override for PLATFORMIO_SRC_DIR — forwarded from caller's environment.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub src_dir: Option<String>,
-    /// Export a tooling-friendly artifact bundle to this directory after build.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub output_dir: Option<String>,
-    /// Snapshot of all `PLATFORMIO_*` env vars from the caller's environment.
-    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
-    pub pio_env: BTreeMap<String, String>,
-}
-
-#[derive(Debug, Serialize)]
-pub struct MonitorRequest {
-    pub project_dir: String,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub environment: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub port: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub baud_rate: Option<u32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub halt_on_error: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub halt_on_success: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub expect: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub timeout: Option<f64>,
-    pub show_timestamp: bool,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub request_id: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub caller_pid: Option<u32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub caller_cwd: Option<String>,
-}
-
-#[derive(Debug, Serialize)]
-pub struct TestEmuRequest {
-    pub project_dir: String,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub environment: Option<String>,
-    pub verbose: bool,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub timeout: Option<f64>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub halt_on_error: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub halt_on_success: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub expect: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub emulator: Option<String>,
-    pub show_timestamp: bool,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub request_id: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub caller_pid: Option<u32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub caller_cwd: Option<String>,
-    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
-    pub pio_env: BTreeMap<String, String>,
+fn daemon_cache_identity_error(info: &DaemonInfoResponse) -> Option<String> {
+    let expected = fbuild_paths::running_process::DaemonCacheIdentity::discover();
+    let expected_label = expected.label_value();
+    if info.cache_identity.as_deref() != Some(expected_label.as_str()) {
+        return Some(format!(
+            "broker negotiated fbuild-daemon with cache identity {:?}, expected {:?}",
+            info.cache_identity.as_deref(),
+            expected_label
+        ));
+    }
+    let expected_schema = fbuild_paths::running_process::CACHE_SCHEMA_VERSION;
+    if info.cache_schema_version != Some(expected_schema) {
+        return Some(format!(
+            "broker negotiated fbuild-daemon with cache schema {:?}, expected {}",
+            info.cache_schema_version, expected_schema
+        ));
+    }
+    None
 }
 
 /// Return the current process PID and working directory for request auditing.
@@ -300,193 +194,6 @@ fn daemon_executable_hint() -> String {
     "fbuild-daemon".to_string()
 }
 
-#[derive(Debug, Deserialize)]
-pub struct OperationResponse {
-    pub success: bool,
-    #[allow(dead_code)]
-    pub request_id: String,
-    pub message: String,
-    pub exit_code: i32,
-    #[allow(dead_code)]
-    pub output_file: Option<String>,
-    #[allow(dead_code)]
-    pub output_dir: Option<String>,
-    #[allow(dead_code)]
-    pub launch_url: Option<String>,
-    #[serde(default)]
-    pub stdout: Option<String>,
-    #[serde(default)]
-    pub stderr: Option<String>,
-}
-
-/// NDJSON event from a streaming build response.
-#[derive(Debug, Deserialize)]
-struct StreamEvent {
-    #[serde(rename = "type")]
-    event_type: String,
-    message: Option<String>,
-    success: Option<bool>,
-    request_id: Option<String>,
-    exit_code: Option<i32>,
-    output_file: Option<String>,
-    output_dir: Option<String>,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct DaemonInfoResponse {
-    #[allow(dead_code)]
-    pub status: String,
-    pub uptime_seconds: f64,
-    pub version: String,
-    pub pid: u32,
-    pub port: u16,
-    pub dev_mode: bool,
-    #[serde(default)]
-    pub operation_in_progress: bool,
-    #[serde(default)]
-    pub daemon_state: fbuild_core::DaemonState,
-    pub current_operation: Option<String>,
-    #[serde(default)]
-    pub client_count: usize,
-    #[serde(default)]
-    pub spawner_cwd: Option<String>,
-    #[serde(default)]
-    pub source_mtime: Option<f64>,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct LockStatusResponse {
-    #[allow(dead_code)]
-    pub success: bool,
-    pub port_locks: Vec<PortLockInfo>,
-    pub project_locks: Vec<ProjectLockInfo>,
-    pub stale_locks: Vec<String>,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct PortLockInfo {
-    pub port: String,
-    pub is_held: bool,
-    #[allow(dead_code)]
-    pub holder_description: Option<String>,
-    pub is_open: bool,
-    pub writer_client_id: Option<String>,
-    pub reader_count: usize,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct ProjectLockInfo {
-    pub project_dir: String,
-    pub is_held: bool,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct ClearLocksResponse {
-    #[allow(dead_code)]
-    pub success: bool,
-    pub cleared_count: usize,
-    pub message: String,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct CacheStatsResponse {
-    pub success: bool,
-    pub archive_bytes: u64,
-    pub installed_bytes: u64,
-    pub total_bytes: u64,
-    pub entry_count: i64,
-    pub high_watermark: u64,
-    pub low_watermark: u64,
-    pub archive_budget: u64,
-    #[serde(default)]
-    #[allow(dead_code)]
-    pub installed_budget: u64,
-    pub message: Option<String>,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct GcResponse {
-    pub success: bool,
-    pub installed_evicted: u64,
-    pub installed_bytes_freed: u64,
-    pub archives_evicted: u64,
-    pub archive_bytes_freed: u64,
-    pub total_bytes_freed: u64,
-    #[serde(default)]
-    pub orphan_files_removed: usize,
-    #[serde(default)]
-    pub orphan_rows_cleaned: usize,
-    pub message: Option<String>,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct HealthResponseFull {
-    #[allow(dead_code)]
-    pub status: String,
-    #[allow(dead_code)]
-    pub uptime_seconds: f64,
-    #[allow(dead_code)]
-    pub version: String,
-    #[allow(dead_code)]
-    pub pid: u32,
-    #[serde(default)]
-    pub source_mtime: f64,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct DeviceListResponse {
-    #[allow(dead_code)]
-    pub success: bool,
-    pub devices: Vec<DeviceInfoResponse>,
-}
-
-#[derive(Debug, Deserialize)]
-#[allow(dead_code)]
-pub struct DeviceInfoResponse {
-    pub port: String,
-    pub device_id: Option<String>,
-    pub vid: Option<u16>,
-    pub pid: Option<u16>,
-    pub description: String,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct DeviceStatusResponse {
-    pub success: bool,
-    pub port: String,
-    pub device_id: String,
-    pub description: String,
-    pub is_connected: bool,
-    pub available_for_exclusive: bool,
-    pub exclusive_holder: Option<String>,
-    pub monitor_count: usize,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct DeviceLeaseResponse {
-    pub success: bool,
-    pub lease_id: Option<String>,
-    #[allow(dead_code)]
-    pub lease_type: Option<String>,
-    pub message: String,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct DeviceReleaseResponse {
-    pub success: bool,
-    #[allow(dead_code)]
-    pub released_count: usize,
-    pub message: String,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct DevicePreemptResponse {
-    pub success: bool,
-    #[allow(dead_code)]
-    pub lease_id: Option<String>,
-    pub message: String,
-}
-
 /// HTTP client for the fbuild daemon.
 pub struct DaemonClient {
     base_url: String,
@@ -556,7 +263,11 @@ impl DaemonClient {
 
     /// Send a build request (non-streaming, returns full response at end).
     pub async fn build(&self, req: &BuildRequest) -> fbuild_core::Result<OperationResponse> {
-        self.post("/api/build", req).await
+        // Non-streaming build is used by API/MCP callers. It can legitimately
+        // wait behind another client's global package/toolchain/sidecar
+        // install; do not let a client-side total timeout turn that wait into
+        // a spurious failure.
+        self.post_operation("/api/build", req, None).await
     }
 
     /// Send a streaming build request. Prints log lines in real-time,
@@ -569,7 +280,7 @@ impl DaemonClient {
             .client
             .post(format!("{}/api/build", self.base_url))
             .json(req)
-            .timeout(std::time::Duration::from_secs(1800))
+            .timeout(LONG_OPERATION_TIMEOUT)
             .send()
             .await
             .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("request failed: {}", e)))?;
@@ -623,6 +334,11 @@ impl DaemonClient {
                                 println!("{}", msg);
                             }
                         }
+                        "status" => {
+                            if let Some(msg) = stream_status_message(&event) {
+                                eprintln!("{}", msg);
+                            }
+                        }
                         "result" => {
                             final_response = Some(OperationResponse {
                                 success: event.success.unwrap_or(false),
@@ -649,17 +365,20 @@ impl DaemonClient {
 
     /// Send a deploy request.
     pub async fn deploy(&self, req: &DeployRequest) -> fbuild_core::Result<OperationResponse> {
-        self.post("/api/deploy", req).await
+        self.post_operation("/api/deploy", req, Some(LONG_OPERATION_TIMEOUT))
+            .await
     }
 
     /// Send a monitor request.
     pub async fn monitor(&self, req: &MonitorRequest) -> fbuild_core::Result<OperationResponse> {
-        self.post("/api/monitor", req).await
+        self.post_operation("/api/monitor", req, Some(LONG_OPERATION_TIMEOUT))
+            .await
     }
 
     /// Send a test-emu request (build + emulator run).
     pub async fn test_emu(&self, req: &TestEmuRequest) -> fbuild_core::Result<OperationResponse> {
-        self.post("/api/test-emu", req).await
+        self.post_operation("/api/test-emu", req, Some(LONG_OPERATION_TIMEOUT))
+            .await
     }
 
     /// Get daemon info (PID, port, uptime, etc.).
@@ -849,16 +568,21 @@ impl DaemonClient {
             .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("invalid response: {}", e)))
     }
 
-    async fn post<T: Serialize>(
+    async fn post_operation<T: Serialize>(
         &self,
         path: &str,
         body: &T,
+        timeout: Option<std::time::Duration>,
     ) -> fbuild_core::Result<OperationResponse> {
-        let resp = self
+        let request = self
             .client
             .post(format!("{}{}", self.base_url, path))
-            .json(body)
-            .timeout(std::time::Duration::from_secs(1800))
+            .json(body);
+        let request = match timeout {
+            Some(timeout) => request.timeout(timeout),
+            None => request,
+        };
+        let resp = request
             .send()
             .await
             .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("request failed: {}", e)))?;
@@ -936,6 +660,10 @@ async fn try_acquire_broker_daemon() -> fbuild_core::Result<bool> {
             let client = DaemonClient::new();
             for _ in 0..100 {
                 if client.health().await {
+                    let info = client.daemon_info().await?;
+                    if let Some(err) = daemon_cache_identity_error(&info) {
+                        return Err(fbuild_core::FbuildError::DaemonError(err));
+                    }
                     return Ok(true);
                 }
                 tokio::time::sleep(std::time::Duration::from_millis(100)).await;
@@ -1168,7 +896,7 @@ fn strip_std_handle_inheritance() {
 
 #[cfg(test)]
 mod tests {
-    use super::DaemonAcquisition;
+    use super::{daemon_cache_identity_error, DaemonAcquisition, DaemonInfoResponse};
 
     #[test]
     fn broker_acquisition_reports_negotiated_state() {
@@ -1195,5 +923,59 @@ mod tests {
         assert_eq!(acquisition.daemon_version(), None);
         assert_eq!(acquisition.reason(), Some("broker unavailable"));
         assert!(acquisition.summary().contains("broker unavailable"));
+    }
+
+    fn daemon_info_for_cache_identity(
+        cache_identity: Option<String>,
+        cache_schema_version: Option<u32>,
+    ) -> DaemonInfoResponse {
+        DaemonInfoResponse {
+            status: "running".to_string(),
+            uptime_seconds: 1.0,
+            version: "2.2.29".to_string(),
+            pid: 123,
+            port: 8765,
+            dev_mode: fbuild_paths::is_dev_mode(),
+            operation_in_progress: false,
+            daemon_state: fbuild_core::DaemonState::Idle,
+            current_operation: None,
+            dependency_install: None,
+            client_count: 0,
+            cache_identity,
+            cache_schema_version,
+            spawner_cwd: None,
+            source_mtime: None,
+        }
+    }
+
+    #[test]
+    fn daemon_cache_identity_accepts_current_identity() {
+        let identity = fbuild_paths::running_process::DaemonCacheIdentity::discover();
+        let info = daemon_info_for_cache_identity(
+            Some(identity.label_value()),
+            Some(fbuild_paths::running_process::CACHE_SCHEMA_VERSION),
+        );
+
+        assert!(daemon_cache_identity_error(&info).is_none());
+    }
+
+    #[test]
+    fn daemon_cache_identity_rejects_missing_identity() {
+        let info = daemon_info_for_cache_identity(
+            None,
+            Some(fbuild_paths::running_process::CACHE_SCHEMA_VERSION),
+        );
+
+        let err = daemon_cache_identity_error(&info).expect("missing identity must fail closed");
+        assert!(err.contains("cache identity"));
+    }
+
+    #[test]
+    fn daemon_cache_identity_rejects_wrong_schema() {
+        let identity = fbuild_paths::running_process::DaemonCacheIdentity::discover();
+        let info = daemon_info_for_cache_identity(Some(identity.label_value()), Some(u32::MAX));
+
+        let err = daemon_cache_identity_error(&info).expect("schema mismatch must fail closed");
+        assert!(err.contains("cache schema"));
     }
 }

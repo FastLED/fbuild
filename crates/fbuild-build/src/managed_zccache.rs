@@ -14,8 +14,12 @@
 //! CLI.
 
 use std::collections::BTreeSet;
+use std::fs::OpenOptions;
+use std::io::Write;
 use std::path::{Path, PathBuf};
+use std::time::{Duration, Instant};
 
+use fbuild_core::install_status::{self, InstallPhase, InstallRole};
 use fbuild_core::{FbuildError, Result};
 
 /// The zccache release fbuild pins. Bump in lockstep with the floor that
@@ -34,6 +38,8 @@ const REPO: &str = "zackees/zccache";
 /// invokes `zccache` directly, but `zccache start` spawns `zccache-daemon`,
 /// so all three must land side by side.
 const ZCCACHE_BINARIES: [&str; 3] = ["zccache", "zccache-daemon", "zccache-fp"];
+const INSTALL_LOCK_STALE_AFTER: Duration = Duration::from_secs(15 * 60);
+const INSTALL_LOCK_POLL: Duration = Duration::from_millis(250);
 
 /// Platform binary suffix.
 fn binary_ext() -> &'static str {
@@ -85,6 +91,17 @@ pub fn ensure() -> Result<PathBuf> {
 }
 
 fn download_and_install() -> Result<()> {
+    let final_dir = managed_dir();
+    let parent = final_dir
+        .parent()
+        .ok_or_else(|| FbuildError::Other("managed zccache dir has no parent".to_string()))?;
+    std::fs::create_dir_all(parent)?;
+
+    let _install_lock = acquire_install_lock(parent)?;
+    if managed_zccache_exe().is_file() {
+        return Ok(());
+    }
+
     let triple = host_triple()?;
     let archive_ext = if cfg!(windows) { "zip" } else { "tar.gz" };
     let asset = format!("zccache-v{MANAGED_ZCCACHE_VERSION}-{triple}.{archive_ext}");
@@ -96,21 +113,27 @@ fn download_and_install() -> Result<()> {
     let expected = sha256_for_asset(&sums, &asset)
         .ok_or_else(|| FbuildError::Other(format!("SHA256SUMS has no entry for {asset}")))?;
 
+    publish_status(
+        InstallPhase::Downloading,
+        InstallRole::Installer,
+        format!("downloading managed zccache {MANAGED_ZCCACHE_VERSION}"),
+        None,
+    );
     tracing::info!("fbuild: downloading managed zccache {MANAGED_ZCCACHE_VERSION} ({asset})");
     let bytes = http_get_bytes(&client, &format!("{base}/{asset}"))?;
 
+    publish_status(
+        InstallPhase::Verifying,
+        InstallRole::Installer,
+        format!("verifying managed zccache {MANAGED_ZCCACHE_VERSION}"),
+        None,
+    );
     let actual = sha256_hex(&bytes);
     if !actual.eq_ignore_ascii_case(&expected) {
         return Err(FbuildError::Other(format!(
             "managed zccache checksum mismatch for {asset}: expected {expected}, got {actual}"
         )));
     }
-
-    let final_dir = managed_dir();
-    let parent = final_dir
-        .parent()
-        .ok_or_else(|| FbuildError::Other("managed zccache dir has no parent".to_string()))?;
-    std::fs::create_dir_all(parent)?;
 
     // Extract into a unique sibling temp dir, then atomically rename into
     // place so a concurrent fbuild process never observes a half-extracted
@@ -123,6 +146,12 @@ fn download_and_install() -> Result<()> {
     let _ = std::fs::remove_dir_all(&staging);
     std::fs::create_dir_all(&staging)?;
 
+    publish_status(
+        InstallPhase::Extracting,
+        InstallRole::Installer,
+        format!("extracting managed zccache {MANAGED_ZCCACHE_VERSION}"),
+        None,
+    );
     let extracted = if archive_ext == "zip" {
         extract_zip(&bytes, &staging)
     } else {
@@ -140,7 +169,15 @@ fn download_and_install() -> Result<()> {
     }
 
     match std::fs::rename(&staging, &final_dir) {
-        Ok(()) => Ok(()),
+        Ok(()) => {
+            publish_status(
+                InstallPhase::Installed,
+                InstallRole::Installer,
+                format!("installed managed zccache {MANAGED_ZCCACHE_VERSION}"),
+                None,
+            );
+            Ok(())
+        }
         // Lost a race with a concurrent installer — the winner's directory
         // is already in place, so discard our staging copy and succeed.
         Err(_) if final_dir.join(format!("zccache{}", binary_ext())).is_file() => {
@@ -154,6 +191,134 @@ fn download_and_install() -> Result<()> {
                 final_dir.display()
             )))
         }
+    }
+}
+
+fn install_lock_dir(parent: &Path) -> PathBuf {
+    parent.join(format!(".zccache-{MANAGED_ZCCACHE_VERSION}.install.lock"))
+}
+
+fn acquire_install_lock(parent: &Path) -> Result<InstallLockGuard> {
+    acquire_install_lock_at(
+        &install_lock_dir(parent),
+        INSTALL_LOCK_STALE_AFTER,
+        INSTALL_LOCK_POLL,
+    )
+}
+
+fn acquire_install_lock_at(
+    lock_dir: &Path,
+    stale_after: Duration,
+    poll: Duration,
+) -> Result<InstallLockGuard> {
+    let started = Instant::now();
+    let mut logged_wait = false;
+    loop {
+        match std::fs::create_dir(lock_dir) {
+            Ok(()) => {
+                if let Err(e) = write_lock_owner(lock_dir) {
+                    let _ = std::fs::remove_dir_all(lock_dir);
+                    return Err(e);
+                }
+                if started.elapsed() > poll {
+                    tracing::info!(
+                        "fbuild: acquired managed zccache install lock after waiting {:?}",
+                        started.elapsed()
+                    );
+                }
+                return Ok(InstallLockGuard {
+                    path: lock_dir.to_path_buf(),
+                });
+            }
+            Err(e) if e.kind() == std::io::ErrorKind::AlreadyExists => {
+                if lock_is_stale(lock_dir, stale_after) {
+                    tracing::warn!(
+                        "fbuild: removing stale managed zccache install lock {}",
+                        lock_dir.display()
+                    );
+                    if let Err(e) = std::fs::remove_dir_all(lock_dir) {
+                        return Err(FbuildError::Other(format!(
+                            "failed to remove stale managed zccache install lock {}: {e}",
+                            lock_dir.display()
+                        )));
+                    }
+                    logged_wait = false;
+                    continue;
+                }
+                if !logged_wait {
+                    tracing::info!(
+                        "fbuild: waiting for another process to install managed zccache {}",
+                        MANAGED_ZCCACHE_VERSION
+                    );
+                    publish_status(
+                        InstallPhase::WaitingForLock,
+                        InstallRole::Waiter,
+                        format!(
+                            "waiting for another process to install managed zccache {MANAGED_ZCCACHE_VERSION}"
+                        ),
+                        Some(lock_dir.display().to_string()),
+                    );
+                    logged_wait = true;
+                }
+                std::thread::sleep(poll);
+            }
+            Err(e) => {
+                return Err(FbuildError::Other(format!(
+                    "failed to acquire managed zccache install lock {}: {e}",
+                    lock_dir.display()
+                )));
+            }
+        }
+    }
+}
+
+fn publish_status(phase: InstallPhase, role: InstallRole, message: String, lock: Option<String>) {
+    install_status::publish_install_status(install_status::status(
+        "zccache",
+        Some(MANAGED_ZCCACHE_VERSION),
+        phase,
+        role,
+        message,
+        lock,
+    ));
+}
+
+fn write_lock_owner(lock_dir: &Path) -> Result<()> {
+    let mut file = OpenOptions::new()
+        .create(true)
+        .truncate(true)
+        .write(true)
+        .open(lock_dir.join("owner.txt"))?;
+    writeln!(
+        file,
+        "pid={}\nversion={}\nstarted_unix_nanos={}",
+        std::process::id(),
+        MANAGED_ZCCACHE_VERSION,
+        unique_suffix()
+    )?;
+    Ok(())
+}
+
+fn lock_is_stale(lock_dir: &Path, stale_after: Duration) -> bool {
+    let Ok(metadata) = std::fs::metadata(lock_dir) else {
+        return true;
+    };
+    let Ok(modified) = metadata.modified() else {
+        return false;
+    };
+    modified
+        .elapsed()
+        .map(|age| age > stale_after)
+        .unwrap_or(false)
+}
+
+struct InstallLockGuard {
+    path: PathBuf,
+}
+
+impl Drop for InstallLockGuard {
+    fn drop(&mut self) {
+        let _ = std::fs::remove_dir_all(&self.path);
     }
 }
 
@@ -448,6 +613,54 @@ mod tests {
             err.to_string().contains("zccache-fp"),
             "error must name the missing binary: {err}"
         );
+    }
+
+    #[test]
+    fn install_lock_blocks_second_caller_until_released() {
+        let tmp = tempfile::tempdir().unwrap();
+        let lock_dir = tmp.path().join("zccache.lock");
+        let first = acquire_install_lock_at(
+            &lock_dir,
+            Duration::from_secs(60),
+            Duration::from_millis(10),
+        )
+        .expect("first lock");
+        assert!(lock_dir.is_dir());
+
+        let lock_for_thread = lock_dir.clone();
+        let waiter = std::thread::spawn(move || {
+            let started = Instant::now();
+            let _second = acquire_install_lock_at(
+                &lock_for_thread,
+                Duration::from_secs(60),
+                Duration::from_millis(10),
+            )
+            .expect("second lock");
+            started.elapsed()
+        });
+
+        std::thread::sleep(Duration::from_millis(50));
+        drop(first);
+
+        let waited = waiter.join().expect("waiter thread");
+        assert!(
+            waited >= Duration::from_millis(40),
+            "second lock should block behind the first, waited {waited:?}"
+        );
+    }
+
+    #[test]
+    fn install_lock_recovers_stale_lock_dir() {
+        let tmp = tempfile::tempdir().unwrap();
+        let lock_dir = tmp.path().join("zccache.lock");
+        std::fs::create_dir(&lock_dir).unwrap();
+
+        let _guard =
+            acquire_install_lock_at(&lock_dir, Duration::from_secs(0), Duration::from_millis(1))
+                .expect("stale lock should be replaced");
+
+        let owner = std::fs::read_to_string(lock_dir.join("owner.txt")).unwrap();
+        assert!(owner.contains("version="));
     }
 
     /// Real end-to-end download against GitHub Releases. Ignored by

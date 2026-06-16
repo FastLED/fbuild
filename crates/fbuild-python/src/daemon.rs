@@ -74,6 +74,64 @@ fn direct_health_url() -> String {
     format!("{}/health", fbuild_paths::get_daemon_url())
 }
 
+fn direct_info_url() -> String {
+    format!("{}/api/daemon/info", fbuild_paths::get_daemon_url())
+}
+
+fn daemon_cache_identity_error(info: &serde_json::Value) -> Option<String> {
+    let expected = fbuild_paths::running_process::DaemonCacheIdentity::discover();
+    let expected_label = expected.label_value();
+    if info.get("cache_identity").and_then(|v| v.as_str()) != Some(expected_label.as_str()) {
+        return Some(format!(
+            "broker negotiated fbuild-daemon with cache identity {:?}, expected {:?}",
+            info.get("cache_identity").and_then(|v| v.as_str()),
+            expected_label
+        ));
+    }
+    let expected_schema = fbuild_paths::running_process::CACHE_SCHEMA_VERSION as u64;
+    if info.get("cache_schema_version").and_then(|v| v.as_u64()) != Some(expected_schema) {
+        return Some(format!(
+            "broker negotiated fbuild-daemon with cache schema {:?}, expected {}",
+            info.get("cache_schema_version").and_then(|v| v.as_u64()),
+            expected_schema
+        ));
+    }
+    None
+}
+
+fn verify_broker_daemon_cache_identity_blocking() -> Result<(), String> {
+    let client = reqwest::blocking::Client::builder()
+        .timeout(std::time::Duration::from_secs(5))
+        .build()
+        .map_err(|e| format!("failed to build HTTP client: {e}"))?;
+    let info: serde_json::Value = client
+        .get(direct_info_url())
+        .send()
+        .map_err(|e| format!("daemon info request failed: {e}"))?
+        .json()
+        .map_err(|e| format!("daemon info response was invalid JSON: {e}"))?;
+    if let Some(err) = daemon_cache_identity_error(&info) {
+        return Err(err);
+    }
+    Ok(())
+}
+
+async fn verify_broker_daemon_cache_identity_async() -> Result<(), String> {
+    let info: serde_json::Value = reqwest::Client::new()
+        .get(direct_info_url())
+        .timeout(std::time::Duration::from_secs(5))
+        .send()
+        .await
+        .map_err(|e| format!("daemon info request failed: {e}"))?
+        .json()
+        .await
+        .map_err(|e| format!("daemon info response was invalid JSON: {e}"))?;
+    if let Some(err) = daemon_cache_identity_error(&info) {
+        return Err(err);
+    }
+    Ok(())
+}
+
 fn broker_endpoint() -> Option<String> {
     if fbuild_paths::running_process::running_process_disabled() {
         return None;
@@ -97,6 +155,7 @@ fn ensure_running_via_broker_blocking(url: &str) -> Result<bool, String> {
                 std::thread::sleep(std::time::Duration::from_millis(100));
                 if let Ok(resp) = reqwest::blocking::get(url) {
                     if resp.status().is_success() {
+                        verify_broker_daemon_cache_identity_blocking()?;
                         return Ok(true);
                     }
                 }
@@ -145,6 +204,7 @@ async fn ensure_running_via_broker_async(url: &str) -> Result<bool, String> {
                     .await
                 {
                     if resp.status().is_success() {
+                        verify_broker_daemon_cache_identity_async().await?;
                         return Ok(true);
                     }
                 }
@@ -426,7 +486,7 @@ mod tests {
     //! resolution rule (filename + `is_file()` check) is what we own and
     //! what the bug hinged on. Mocking the Python interpreter just to
     //! re-test stdlib attribute access would dilute the signal.
-    use super::{daemon_in_dir, DAEMON_BIN_NAME};
+    use super::{daemon_cache_identity_error, daemon_in_dir, DAEMON_BIN_NAME};
     use std::fs;
 
     #[test]
@@ -481,5 +541,50 @@ mod tests {
         let tmp = tempfile::tempdir().expect("create tempdir");
         let missing = tmp.path().join("does-not-exist");
         assert!(daemon_in_dir(&missing).is_none());
+    }
+
+    fn daemon_info_for_cache_identity(
+        cache_identity: Option<String>,
+        cache_schema_version: Option<u64>,
+    ) -> serde_json::Value {
+        let mut value = serde_json::json!({});
+        if let Some(cache_identity) = cache_identity {
+            value["cache_identity"] = serde_json::Value::String(cache_identity);
+        }
+        if let Some(cache_schema_version) = cache_schema_version {
+            value["cache_schema_version"] = serde_json::Value::Number(cache_schema_version.into());
+        }
+        value
+    }
+
+    #[test]
+    fn daemon_cache_identity_accepts_current_identity() {
+        let identity = fbuild_paths::running_process::DaemonCacheIdentity::discover();
+        let info = daemon_info_for_cache_identity(
+            Some(identity.label_value()),
+            Some(fbuild_paths::running_process::CACHE_SCHEMA_VERSION as u64),
+        );
+
+        assert!(daemon_cache_identity_error(&info).is_none());
+    }
+
+    #[test]
+    fn daemon_cache_identity_rejects_missing_identity() {
+        let info = daemon_info_for_cache_identity(
+            None,
+            Some(fbuild_paths::running_process::CACHE_SCHEMA_VERSION as u64),
+        );
+
+        let err = daemon_cache_identity_error(&info).expect("missing identity must fail closed");
+        assert!(err.contains("cache identity"));
+    }
+
+    #[test]
+    fn daemon_cache_identity_rejects_wrong_schema() {
+        let identity = fbuild_paths::running_process::DaemonCacheIdentity::discover();
+        let info = daemon_info_for_cache_identity(Some(identity.label_value()), Some(u64::MAX));
+
+        let err = daemon_cache_identity_error(&info).expect("schema mismatch must fail closed");
+        assert!(err.contains("cache schema"));
     }
 }

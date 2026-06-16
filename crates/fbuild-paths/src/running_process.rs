@@ -30,9 +30,19 @@ pub const FBUILD_PAYLOAD_PROTOCOL: u32 = 0x7EB1;
 /// independently of the running-process broker envelope version).
 pub const FBUILD_PROTOCOL_VERSION: u32 = 1;
 
+/// Compatibility version for fbuild-owned shared artifact repository layout.
+///
+/// Backend package version is deliberately not a cache-owner dimension. This
+/// value is the broker-visible compatibility key that future resolver policy
+/// should compare before allowing multiple fbuild daemon versions to share the
+/// same cache-root identity.
+pub const CACHE_SCHEMA_VERSION: u32 = 1;
+
 pub const RUNNING_PROCESS_DISABLE_ENV: &str = "RUNNING_PROCESS_DISABLE";
 pub const RUNNING_PROCESS_SERVICE_DEF_DIR_ENV: &str = "RUNNING_PROCESS_SERVICE_DEF_DIR";
 pub const FBUILD_RUNNING_PROCESS_BROKER_ENV: &str = "FBUILD_RUNNING_PROCESS_BROKER";
+pub const FBUILD_CACHE_DIR_ENV: &str = "FBUILD_CACHE_DIR";
+pub const LOCAL_TRUST_DOMAIN: &str = "local-shared";
 
 #[cfg(windows)]
 pub const DAEMON_BINARY_NAME: &str = "fbuild-daemon.exe";
@@ -104,6 +114,56 @@ pub fn running_process_service_definition_path_in(root: impl AsRef<Path>) -> Pat
 
 fn env_flag_is_one(name: &str) -> bool {
     std::env::var(name).is_ok_and(|value| value == "1")
+}
+
+/// Broker/cache identity for local fbuild daemons.
+///
+/// This is the policy boundary for large shared artifacts. Backend version is
+/// deliberately not part of the identity: package, toolchain, framework, and
+/// sidecar artifacts are owned by the canonical cache root and trust domain,
+/// not by whichever fbuild daemon version the broker negotiates.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct DaemonCacheIdentity {
+    pub mode: &'static str,
+    pub cache_root: PathBuf,
+    pub cache_root_key: String,
+    pub cache_dir_source: &'static str,
+    pub trust_domain: &'static str,
+}
+
+impl DaemonCacheIdentity {
+    pub fn discover() -> Self {
+        let cache_root = crate::get_cache_root();
+        Self {
+            mode: if crate::is_dev_mode() { "dev" } else { "prod" },
+            cache_root_key: stable_path_key(&cache_root),
+            cache_dir_source: if std::env::var_os(FBUILD_CACHE_DIR_ENV).is_some() {
+                FBUILD_CACHE_DIR_ENV
+            } else {
+                "default"
+            },
+            cache_root,
+            trust_domain: LOCAL_TRUST_DOMAIN,
+        }
+    }
+
+    pub fn label_value(&self) -> String {
+        format!(
+            "mode={};trust={};schema={};cache={}",
+            self.mode, self.trust_domain, CACHE_SCHEMA_VERSION, self.cache_root_key
+        )
+    }
+}
+
+fn stable_path_key(path: &Path) -> String {
+    let absolute = if path.is_absolute() {
+        path.to_path_buf()
+    } else {
+        std::env::current_dir()
+            .map(|cwd| cwd.join(path))
+            .unwrap_or_else(|_| path.to_path_buf())
+    };
+    absolute.to_string_lossy().replace('\\', "/")
 }
 
 /// The seven cache roots fbuild records in its broker manifest, resolved from
@@ -206,5 +266,26 @@ mod tests {
         let mode = RunningProcessDaemonMode::BrokerRequested;
         assert_eq!(mode.as_str(), "broker-requested-direct-fallback");
         assert!(mode.uses_direct_fallback());
+    }
+
+    #[test]
+    fn daemon_cache_identity_excludes_backend_version() {
+        let identity = DaemonCacheIdentity::discover();
+        assert_eq!(identity.trust_domain, LOCAL_TRUST_DOMAIN);
+        assert!(matches!(identity.mode, "dev" | "prod"));
+        assert!(
+            identity.label_value().contains("cache="),
+            "identity label must include the cache root key"
+        );
+        assert!(
+            identity
+                .label_value()
+                .contains(&format!("schema={CACHE_SCHEMA_VERSION}")),
+            "identity label must include the cache schema compatibility version"
+        );
+        assert!(
+            !identity.label_value().contains(env!("CARGO_PKG_VERSION")),
+            "backend crate version must not be a cache-owner dimension"
+        );
     }
 }

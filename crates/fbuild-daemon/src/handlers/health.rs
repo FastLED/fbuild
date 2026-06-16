@@ -40,6 +40,7 @@ pub async fn daemon_info(State(ctx): State<Arc<DaemonContext>>) -> Json<DaemonIn
         .read()
         .unwrap_or_else(|e| e.into_inner())
         .clone();
+    let cache_identity = fbuild_paths::running_process::DaemonCacheIdentity::discover();
     Json(DaemonInfoResponse {
         status: "running".to_string(),
         uptime_seconds: ctx.started_at.elapsed().as_secs_f64(),
@@ -52,8 +53,11 @@ pub async fn daemon_info(State(ctx): State<Arc<DaemonContext>>) -> Json<DaemonIn
         operation_in_progress: ctx.operation_in_progress.load(Ordering::Relaxed),
         daemon_state,
         current_operation,
+        dependency_install: ctx.dependency_install_snapshot(),
         client_count: ctx.serial_manager.get_port_sessions().len(),
-        cache_dir: fbuild_paths::get_cache_root().to_string_lossy().to_string(),
+        cache_dir: cache_identity.cache_root.to_string_lossy().to_string(),
+        cache_identity: cache_identity.label_value(),
+        cache_schema_version: fbuild_paths::running_process::CACHE_SCHEMA_VERSION,
         daemon_dir: fbuild_paths::get_daemon_dir().to_string_lossy().to_string(),
         source_mtime: ctx.source_mtime,
         spawner_cwd: ctx.spawner_cwd.clone(),

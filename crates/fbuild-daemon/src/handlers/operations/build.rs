@@ -9,6 +9,7 @@ use axum::extract::State;
 use axum::http::StatusCode;
 use axum::Json;
 use std::path::PathBuf;
+use std::sync::atomic::Ordering;
 use std::sync::Arc;
 
 /// Ensures a terminal `result` NDJSON event reaches the client, even if the
@@ -54,6 +55,43 @@ impl Drop for StreamTerminationGuard {
         chunk.push('\n');
         let _ = self.tx.send(bytes::Bytes::from(chunk));
     }
+}
+
+fn send_stream_status_event(
+    tx: &tokio::sync::mpsc::UnboundedSender<bytes::Bytes>,
+    ctx: &DaemonContext,
+    request_id: &str,
+    message: impl Into<String>,
+) {
+    let current_operation = ctx.current_operation.read().ok().and_then(|op| op.clone());
+    let operation_in_progress = ctx.operation_in_progress.load(Ordering::Relaxed);
+    let dependency_install = ctx.dependency_install_snapshot();
+    let event = serde_json::json!({
+        "type": "status",
+        "request_id": request_id,
+        "message": message.into(),
+        "current_operation": current_operation,
+        "operation_in_progress": operation_in_progress,
+        "dependency_install": dependency_install,
+    });
+    let mut chunk = event.to_string();
+    chunk.push('\n');
+    let _ = tx.send(bytes::Bytes::from(chunk));
+}
+
+fn dependency_install_message(status: &fbuild_core::install_status::InstallStatus) -> String {
+    match status.version.as_deref() {
+        Some(version) => format!("{} {}: {}", status.name, version, status.message),
+        None => format!("{}: {}", status.name, status.message),
+    }
+}
+
+fn should_emit_dependency_status(status: &fbuild_core::install_status::InstallStatus) -> bool {
+    !matches!(
+        status.phase,
+        fbuild_core::install_status::InstallPhase::Installed
+            | fbuild_core::install_status::InstallPhase::Failed
+    )
 }
 
 /// POST /api/build
@@ -215,26 +253,55 @@ pub async fn build(
             let lock = ctx.project_lock(&project_dir);
             tracing::info!("waiting for project lock on {}", project_dir_desc);
             const LOCK_WAIT_WARN: std::time::Duration = std::time::Duration::from_secs(10);
+            const STREAM_STATUS_INTERVAL: std::time::Duration = std::time::Duration::from_secs(10);
             let _lock_guard = {
-                let acquire = lock.lock();
-                match tokio::time::timeout(LOCK_WAIT_WARN, acquire).await {
-                    Ok(guard) => guard,
-                    Err(_) => {
-                        tracing::warn!(
-                            "project lock on {} not acquired within {}s — \
+                let mut acquire = Box::pin(lock.lock());
+                let mut warned = false;
+                loop {
+                    match tokio::time::timeout(LOCK_WAIT_WARN, &mut acquire).await {
+                        Ok(guard) => break guard,
+                        Err(_) => {
+                            let elapsed = lock_wait_start.elapsed();
+                            if !warned {
+                                tracing::warn!(
+                                    "project lock on {} not acquired within {}s — \
                              another build is still holding it. Continuing \
                              to wait; if this persists the daemon may be \
                              stuck. Inspect ~/.fbuild/<env>/daemon/daemon.log \
                              or run `fbuild daemon locks` to see who is \
                              holding the lock.",
-                            project_dir_desc,
-                            LOCK_WAIT_WARN.as_secs(),
-                        );
-                        lock.lock().await
+                                    project_dir_desc,
+                                    LOCK_WAIT_WARN.as_secs(),
+                                );
+                                warned = true;
+                            }
+                            send_stream_status_event(
+                                &async_tx,
+                                &ctx,
+                                &request_id,
+                                format!(
+                                    "waiting for another build of {} to finish ({}s)",
+                                    project_dir_desc,
+                                    elapsed.as_secs()
+                                ),
+                            );
+                        }
                     }
                 }
             };
             let lock_wait = lock_wait_start.elapsed();
+            if lock_wait >= STREAM_STATUS_INTERVAL {
+                send_stream_status_event(
+                    &async_tx,
+                    &ctx,
+                    &request_id,
+                    format!(
+                        "project lock acquired for {} after {}s",
+                        project_dir_desc,
+                        lock_wait.as_secs()
+                    ),
+                );
+            }
             tracing::info!(
                 "project lock acquired on {} after {} ms",
                 project_dir_desc,
@@ -256,11 +323,27 @@ pub async fn build(
 
             // Run build
             let build_wallclock_start = std::time::Instant::now();
-            let build_result = tokio::task::spawn_blocking(move || {
+            let mut build_task = tokio::task::spawn_blocking(move || {
                 let orchestrator = fbuild_build::get_orchestrator(platform)?;
                 orchestrator.build(&params)
-            })
-            .await;
+            });
+            let build_result = loop {
+                match tokio::time::timeout(STREAM_STATUS_INTERVAL, &mut build_task).await {
+                    Ok(result) => break result,
+                    Err(_) => {
+                        if let Some(status) = ctx.dependency_install_snapshot() {
+                            if should_emit_dependency_status(&status) {
+                                send_stream_status_event(
+                                    &async_tx,
+                                    &ctx,
+                                    &request_id,
+                                    dependency_install_message(&status),
+                                );
+                            }
+                        }
+                    }
+                }
+            };
             let build_wallclock = build_wallclock_start.elapsed();
             if perf_enabled {
                 let summary = format!(
@@ -580,5 +663,53 @@ mod tests {
             rx.try_recv().is_err(),
             "completed guard must not enqueue a fallback event"
         );
+    }
+
+    #[test]
+    fn stream_status_event_includes_dependency_install_snapshot() {
+        let (shutdown_tx, _shutdown_rx) = tokio::sync::watch::channel(false);
+        let ctx = DaemonContext::new(0, shutdown_tx, ".".to_string());
+        ctx.set_dependency_install(fbuild_core::install_status::status(
+            "zccache",
+            Some("0.9.1"),
+            fbuild_core::install_status::InstallPhase::WaitingForLock,
+            fbuild_core::install_status::InstallRole::Waiter,
+            "waiting for zccache download lock",
+            Some(".zccache.install.lock"),
+        ));
+
+        let (tx, mut rx) = tokio::sync::mpsc::unbounded_channel::<bytes::Bytes>();
+        send_stream_status_event(&tx, &ctx, "req-789", "waiting for dependency install");
+
+        let chunk = rx.try_recv().expect("status event should be queued");
+        let line = std::str::from_utf8(&chunk).unwrap().trim_end();
+        let event: serde_json::Value = serde_json::from_str(line).unwrap();
+        assert_eq!(event["type"], "status");
+        assert_eq!(event["request_id"], "req-789");
+        assert_eq!(event["message"], "waiting for dependency install");
+        assert_eq!(event["dependency_install"]["name"], "zccache");
+        assert_eq!(event["dependency_install"]["phase"], "waiting_for_lock");
+    }
+
+    #[test]
+    fn dependency_status_heartbeat_skips_terminal_phases() {
+        let waiting = fbuild_core::install_status::status(
+            "toolchain",
+            Some("1.0"),
+            fbuild_core::install_status::InstallPhase::WaitingForLock,
+            fbuild_core::install_status::InstallRole::Waiter,
+            "waiting",
+            None::<String>,
+        );
+        let installed = fbuild_core::install_status::status(
+            "toolchain",
+            Some("1.0"),
+            fbuild_core::install_status::InstallPhase::Installed,
+            fbuild_core::install_status::InstallRole::Installer,
+            "installed",
+            None::<String>,
+        );
+        assert!(should_emit_dependency_status(&waiting));
+        assert!(!should_emit_dependency_status(&installed));
     }
 }

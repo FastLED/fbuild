@@ -159,6 +159,7 @@ pub(crate) fn qemu_extra_build_flags(platform: fbuild_core::Platform, mcu: &str)
 /// RAII guard that sets `operation_in_progress` to true on creation
 /// and false on drop. Also tracks daemon state and current operation description.
 pub(crate) struct OperationGuard {
+    ctx: Arc<DaemonContext>,
     flag: Arc<std::sync::atomic::AtomicBool>,
     state: Arc<std::sync::RwLock<fbuild_core::DaemonState>>,
     operation: Arc<std::sync::RwLock<Option<String>>>,
@@ -166,7 +167,7 @@ pub(crate) struct OperationGuard {
 
 impl OperationGuard {
     pub(crate) fn new(
-        ctx: &DaemonContext,
+        ctx: &Arc<DaemonContext>,
         daemon_state: fbuild_core::DaemonState,
         description: Option<String>,
     ) -> Self {
@@ -179,6 +180,7 @@ impl OperationGuard {
             *op = description;
         }
         Self {
+            ctx: Arc::clone(ctx),
             flag: Arc::clone(&ctx.operation_in_progress),
             state: Arc::clone(&ctx.daemon_state),
             operation: Arc::clone(&ctx.current_operation),
@@ -195,6 +197,37 @@ impl Drop for OperationGuard {
         if let Ok(mut op) = self.operation.write() {
             *op = None;
         }
+        self.ctx.clear_dependency_install();
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn operation_guard_drop_clears_dependency_install_through_context() {
+        let (shutdown_tx, _shutdown_rx) = tokio::sync::watch::channel(false);
+        let ctx = Arc::new(DaemonContext::new(0, shutdown_tx, ".".to_string()));
+        ctx.set_dependency_install(fbuild_core::install_status::status(
+            "toolchain",
+            Some("1.0"),
+            fbuild_core::install_status::InstallPhase::WaitingForLock,
+            fbuild_core::install_status::InstallRole::Waiter,
+            "waiting for toolchain",
+            Some(".toolchain.install.lock"),
+        ));
+
+        {
+            let _guard = OperationGuard::new(
+                &ctx,
+                fbuild_core::DaemonState::Building,
+                Some("building test".to_string()),
+            );
+            assert!(ctx.dependency_install_snapshot().is_some());
+        }
+
+        assert!(ctx.dependency_install_snapshot().is_none());
     }
 }
 
