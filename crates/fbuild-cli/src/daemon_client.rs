@@ -37,6 +37,26 @@ fn stream_status_message(event: &StreamEvent) -> Option<String> {
         })
 }
 
+fn daemon_cache_identity_error(info: &DaemonInfoResponse) -> Option<String> {
+    let expected = fbuild_paths::running_process::DaemonCacheIdentity::discover();
+    let expected_label = expected.label_value();
+    if info.cache_identity.as_deref() != Some(expected_label.as_str()) {
+        return Some(format!(
+            "broker negotiated fbuild-daemon with cache identity {:?}, expected {:?}",
+            info.cache_identity.as_deref(),
+            expected_label
+        ));
+    }
+    let expected_schema = fbuild_paths::running_process::CACHE_SCHEMA_VERSION;
+    if info.cache_schema_version != Some(expected_schema) {
+        return Some(format!(
+            "broker negotiated fbuild-daemon with cache schema {:?}, expected {}",
+            info.cache_schema_version, expected_schema
+        ));
+    }
+    None
+}
+
 /// Return the current process PID and working directory for request auditing.
 pub fn caller_info() -> (Option<u32>, Option<String>) {
     let pid = Some(std::process::id());
@@ -640,6 +660,10 @@ async fn try_acquire_broker_daemon() -> fbuild_core::Result<bool> {
             let client = DaemonClient::new();
             for _ in 0..100 {
                 if client.health().await {
+                    let info = client.daemon_info().await?;
+                    if let Some(err) = daemon_cache_identity_error(&info) {
+                        return Err(fbuild_core::FbuildError::DaemonError(err));
+                    }
                     return Ok(true);
                 }
                 tokio::time::sleep(std::time::Duration::from_millis(100)).await;
@@ -872,7 +896,7 @@ fn strip_std_handle_inheritance() {
 
 #[cfg(test)]
 mod tests {
-    use super::DaemonAcquisition;
+    use super::{daemon_cache_identity_error, DaemonAcquisition, DaemonInfoResponse};
 
     #[test]
     fn broker_acquisition_reports_negotiated_state() {
@@ -899,5 +923,59 @@ mod tests {
         assert_eq!(acquisition.daemon_version(), None);
         assert_eq!(acquisition.reason(), Some("broker unavailable"));
         assert!(acquisition.summary().contains("broker unavailable"));
+    }
+
+    fn daemon_info_for_cache_identity(
+        cache_identity: Option<String>,
+        cache_schema_version: Option<u32>,
+    ) -> DaemonInfoResponse {
+        DaemonInfoResponse {
+            status: "running".to_string(),
+            uptime_seconds: 1.0,
+            version: "2.2.29".to_string(),
+            pid: 123,
+            port: 8765,
+            dev_mode: fbuild_paths::is_dev_mode(),
+            operation_in_progress: false,
+            daemon_state: fbuild_core::DaemonState::Idle,
+            current_operation: None,
+            dependency_install: None,
+            client_count: 0,
+            cache_identity,
+            cache_schema_version,
+            spawner_cwd: None,
+            source_mtime: None,
+        }
+    }
+
+    #[test]
+    fn daemon_cache_identity_accepts_current_identity() {
+        let identity = fbuild_paths::running_process::DaemonCacheIdentity::discover();
+        let info = daemon_info_for_cache_identity(
+            Some(identity.label_value()),
+            Some(fbuild_paths::running_process::CACHE_SCHEMA_VERSION),
+        );
+
+        assert!(daemon_cache_identity_error(&info).is_none());
+    }
+
+    #[test]
+    fn daemon_cache_identity_rejects_missing_identity() {
+        let info = daemon_info_for_cache_identity(
+            None,
+            Some(fbuild_paths::running_process::CACHE_SCHEMA_VERSION),
+        );
+
+        let err = daemon_cache_identity_error(&info).expect("missing identity must fail closed");
+        assert!(err.contains("cache identity"));
+    }
+
+    #[test]
+    fn daemon_cache_identity_rejects_wrong_schema() {
+        let identity = fbuild_paths::running_process::DaemonCacheIdentity::discover();
+        let info = daemon_info_for_cache_identity(Some(identity.label_value()), Some(u32::MAX));
+
+        let err = daemon_cache_identity_error(&info).expect("schema mismatch must fail closed");
+        assert!(err.contains("cache schema"));
     }
 }

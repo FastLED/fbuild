@@ -206,6 +206,9 @@ pub struct DaemonInfoResponse {
     pub dependency_install: Option<fbuild_core::install_status::InstallStatus>,
     #[serde(default)]
     pub client_count: usize,
+    pub cache_identity: Option<String>,
+    #[serde(default)]
+    pub cache_schema_version: Option<u32>,
     #[serde(default)]
     pub spawner_cwd: Option<String>,
     #[serde(default)]

@@ -230,6 +230,8 @@ pub struct DaemonInfoResponse {
     pub dependency_install: Option<fbuild_core::install_status::InstallStatus>,
     pub client_count: usize,
     pub cache_dir: String,
+    pub cache_identity: String,
+    pub cache_schema_version: u32,
     pub daemon_dir: String,
     pub source_mtime: f64,
     pub spawner_cwd: String,
@@ -724,6 +726,9 @@ mod tests {
             dependency_install: None,
             client_count: 3,
             cache_dir: "/home/user/.fbuild/prod/cache".into(),
+            cache_identity:
+                "mode=prod;trust=local-shared;schema=1;cache=/home/user/.fbuild/prod/cache".into(),
+            cache_schema_version: 1,
             daemon_dir: "/home/user/.fbuild/prod/daemon".into(),
             source_mtime: 1700000000.0,
             spawner_cwd: "/home/user/project".into(),
@@ -741,6 +746,8 @@ mod tests {
         assert!(json.contains("\"idle\""));
         assert!(json.contains("\"client_count\":3"));
         assert!(json.contains("\"cache_dir\""));
+        assert!(json.contains("\"cache_identity\""));
+        assert!(json.contains("\"cache_schema_version\":1"));
         assert!(json.contains("\"daemon_dir\""));
         assert!(json.contains("\"source_mtime\""));
         assert!(json.contains("\"spawner_cwd\""));
@@ -764,6 +771,8 @@ mod tests {
             dependency_install: None,
             client_count: 0,
             cache_dir: "/tmp/cache".into(),
+            cache_identity: "mode=prod;trust=local-shared;schema=1;cache=/tmp/cache".into(),
+            cache_schema_version: 1,
             daemon_dir: "/tmp/daemon".into(),
             source_mtime: 0.0,
             spawner_cwd: "unknown".into(),
@@ -798,6 +807,8 @@ mod tests {
             )),
             client_count: 1,
             cache_dir: "/tmp/cache".into(),
+            cache_identity: "mode=prod;trust=local-shared;schema=1;cache=/tmp/cache".into(),
+            cache_schema_version: 1,
             daemon_dir: "/tmp/daemon".into(),
             source_mtime: 0.0,
             spawner_cwd: "unknown".into(),
