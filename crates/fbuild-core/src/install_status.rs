@@ -1,6 +1,7 @@
 //! Best-effort install/download status events shared across fbuild crates.
 
 use std::sync::{Arc, OnceLock, RwLock};
+use std::{fmt, fmt::Display};
 
 use serde::{Deserialize, Serialize};
 
@@ -19,11 +20,33 @@ pub enum InstallPhase {
     Failed,
 }
 
+impl Display for InstallPhase {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(match self {
+            Self::WaitingForLock => "waiting_for_lock",
+            Self::Downloading => "downloading",
+            Self::Verifying => "verifying",
+            Self::Extracting => "extracting",
+            Self::Installed => "installed",
+            Self::Failed => "failed",
+        })
+    }
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum InstallRole {
     Installer,
     Waiter,
+}
+
+impl Display for InstallRole {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(match self {
+            Self::Installer => "installer",
+            Self::Waiter => "waiter",
+        })
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -114,5 +137,17 @@ mod tests {
         assert_eq!(statuses[0].name, "toolchain");
         assert_eq!(statuses[0].phase, InstallPhase::WaitingForLock);
         clear_install_status_subscriber();
+    }
+
+    #[test]
+    fn phase_and_role_display_match_json_names() {
+        assert_eq!(InstallPhase::WaitingForLock.to_string(), "waiting_for_lock");
+        assert_eq!(InstallPhase::Downloading.to_string(), "downloading");
+        assert_eq!(InstallPhase::Verifying.to_string(), "verifying");
+        assert_eq!(InstallPhase::Extracting.to_string(), "extracting");
+        assert_eq!(InstallPhase::Installed.to_string(), "installed");
+        assert_eq!(InstallPhase::Failed.to_string(), "failed");
+        assert_eq!(InstallRole::Installer.to_string(), "installer");
+        assert_eq!(InstallRole::Waiter.to_string(), "waiter");
     }
 }

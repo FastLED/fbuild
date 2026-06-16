@@ -212,6 +212,7 @@ fn acquire_install_lock_at(
     poll: Duration,
 ) -> Result<InstallLockGuard> {
     let started = Instant::now();
+    let mut logged_wait = false;
     loop {
         match std::fs::create_dir(lock_dir) {
             Ok(()) => {
@@ -235,21 +236,30 @@ fn acquire_install_lock_at(
                         "fbuild: removing stale managed zccache install lock {}",
                         lock_dir.display()
                     );
-                    let _ = std::fs::remove_dir_all(lock_dir);
+                    if let Err(e) = std::fs::remove_dir_all(lock_dir) {
+                        return Err(FbuildError::Other(format!(
+                            "failed to remove stale managed zccache install lock {}: {e}",
+                            lock_dir.display()
+                        )));
+                    }
+                    logged_wait = false;
                     continue;
                 }
-                tracing::info!(
-                    "fbuild: waiting for another process to install managed zccache {}",
-                    MANAGED_ZCCACHE_VERSION
-                );
-                publish_status(
-                    InstallPhase::WaitingForLock,
-                    InstallRole::Waiter,
-                    format!(
-                        "waiting for another process to install managed zccache {MANAGED_ZCCACHE_VERSION}"
-                    ),
-                    Some(lock_dir.display().to_string()),
-                );
+                if !logged_wait {
+                    tracing::info!(
+                        "fbuild: waiting for another process to install managed zccache {}",
+                        MANAGED_ZCCACHE_VERSION
+                    );
+                    publish_status(
+                        InstallPhase::WaitingForLock,
+                        InstallRole::Waiter,
+                        format!(
+                            "waiting for another process to install managed zccache {MANAGED_ZCCACHE_VERSION}"
+                        ),
+                        Some(lock_dir.display().to_string()),
+                    );
+                    logged_wait = true;
+                }
                 std::thread::sleep(poll);
             }
             Err(e) => {

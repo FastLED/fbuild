@@ -48,7 +48,7 @@ pub async fn run_daemon(action: DaemonAction) -> fbuild_core::Result<()> {
                         }
                         if let Some(ref install) = info.dependency_install {
                             println!(
-                                "  Install: {} {} ({:?}, {:?})",
+                                "  Install: {} {} ({}, {})",
                                 install.name,
                                 install.version.as_deref().unwrap_or(""),
                                 install.phase,

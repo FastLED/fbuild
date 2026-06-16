@@ -79,7 +79,13 @@ async fn acquire_install_lock_at(
                         package_version,
                         lock_dir.display()
                     );
-                    let _ = std::fs::remove_dir_all(lock_dir);
+                    if let Err(e) = std::fs::remove_dir_all(lock_dir) {
+                        return Err(FbuildError::PackageError(format!(
+                            "failed to remove stale install lock {}: {e}",
+                            lock_dir.display()
+                        )));
+                    }
+                    logged_wait = false;
                     continue;
                 }
                 if !logged_wait {
