@@ -681,10 +681,7 @@ async fn try_acquire_broker_daemon() -> fbuild_core::Result<bool> {
             Err(fbuild_core::FbuildError::DaemonError(err.to_string()))
         }
         Err(AdoptError::Connect(err)) => {
-            if matches!(
-                err.refusal_kind(),
-                Some(RefusalKind::VersionUnsupported | RefusalKind::VersionBlocked)
-            ) {
+            if broker_refusal_is_fatal(err.refusal_kind()) {
                 return Err(fbuild_core::FbuildError::DaemonError(format!(
                     "running-process broker refused fbuild daemon version: {err}"
                 )));
@@ -701,6 +698,13 @@ async fn try_acquire_broker_daemon() -> fbuild_core::Result<bool> {
             Ok(false)
         }
     }
+}
+
+fn broker_refusal_is_fatal(kind: Option<RefusalKind>) -> bool {
+    matches!(
+        kind,
+        Some(RefusalKind::VersionUnsupported | RefusalKind::VersionBlocked)
+    )
 }
 
 /// Legacy direct HTTP daemon acquisition path.
@@ -896,7 +900,21 @@ fn strip_std_handle_inheritance() {
 
 #[cfg(test)]
 mod tests {
-    use super::{daemon_cache_identity_error, DaemonAcquisition, DaemonInfoResponse};
+    use super::{
+        broker_refusal_is_fatal, daemon_cache_identity_error, DaemonAcquisition, DaemonInfoResponse,
+    };
+    use running_process::broker::client::RefusalKind::{VersionBlocked, VersionUnsupported};
+
+    #[test]
+    fn broker_version_refusals_are_fatal() {
+        assert!(broker_refusal_is_fatal(Some(VersionUnsupported)));
+        assert!(broker_refusal_is_fatal(Some(VersionBlocked)));
+    }
+
+    #[test]
+    fn broker_non_refusal_errors_can_fallback() {
+        assert!(!broker_refusal_is_fatal(None));
+    }
 
     #[test]
     fn broker_acquisition_reports_negotiated_state() {
