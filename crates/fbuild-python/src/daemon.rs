@@ -100,7 +100,13 @@ fn daemon_cache_identity_error(info: &serde_json::Value) -> Option<String> {
 }
 
 fn verify_broker_daemon_cache_identity_blocking() -> Result<(), String> {
-    let info: serde_json::Value = reqwest::blocking::get(direct_info_url())
+    let client = reqwest::blocking::Client::builder()
+        .timeout(std::time::Duration::from_secs(5))
+        .build()
+        .map_err(|e| format!("failed to build HTTP client: {e}"))?;
+    let info: serde_json::Value = client
+        .get(direct_info_url())
+        .send()
         .map_err(|e| format!("daemon info request failed: {e}"))?
         .json()
         .map_err(|e| format!("daemon info response was invalid JSON: {e}"))?;
@@ -113,6 +119,7 @@ fn verify_broker_daemon_cache_identity_blocking() -> Result<(), String> {
 async fn verify_broker_daemon_cache_identity_async() -> Result<(), String> {
     let info: serde_json::Value = reqwest::Client::new()
         .get(direct_info_url())
+        .timeout(std::time::Duration::from_secs(5))
         .send()
         .await
         .map_err(|e| format!("daemon info request failed: {e}"))?
