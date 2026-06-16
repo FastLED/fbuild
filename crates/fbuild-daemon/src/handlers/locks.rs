@@ -72,3 +72,65 @@ pub async fn clear_locks(State(ctx): State<Arc<DaemonContext>>) -> Json<ClearLoc
         message,
     })
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::path::PathBuf;
+    use tokio::sync::Mutex;
+
+    fn test_context() -> Arc<DaemonContext> {
+        let (shutdown_tx, _shutdown_rx) = tokio::sync::watch::channel(false);
+        Arc::new(DaemonContext::new(
+            0,
+            shutdown_tx,
+            "lock-handler-test".to_string(),
+        ))
+    }
+
+    #[tokio::test]
+    async fn lock_status_reports_held_project_locks_without_stale_entries() {
+        let ctx = test_context();
+        let project = PathBuf::from("/tmp/fbuild-held-project");
+        let lock = Arc::new(Mutex::new(()));
+        let guard = lock.lock().await;
+        ctx.project_locks.insert(project.clone(), lock.clone());
+
+        let Json(status) = lock_status(State(ctx)).await;
+
+        assert!(status.success);
+        assert!(
+            status.stale_locks.is_empty(),
+            "stale_locks is reserved for future durable stale-lock detection"
+        );
+        assert_eq!(status.project_locks.len(), 1);
+        assert_eq!(
+            status.project_locks[0].project_dir,
+            project.to_string_lossy()
+        );
+        assert!(status.project_locks[0].is_held);
+
+        drop(guard);
+    }
+
+    #[tokio::test]
+    async fn clear_locks_removes_only_unheld_project_lock_entries() {
+        let ctx = test_context();
+        let unheld = PathBuf::from("/tmp/fbuild-unheld-project");
+        let held = PathBuf::from("/tmp/fbuild-held-project");
+        let held_lock = Arc::new(Mutex::new(()));
+        let guard = held_lock.lock().await;
+        ctx.project_locks
+            .insert(unheld.clone(), Arc::new(Mutex::new(())));
+        ctx.project_locks.insert(held.clone(), held_lock.clone());
+
+        let Json(response) = clear_locks(State(ctx.clone())).await;
+
+        assert!(response.success);
+        assert_eq!(response.cleared_count, 1);
+        assert!(!ctx.project_locks.contains_key(&unheld));
+        assert!(ctx.project_locks.contains_key(&held));
+
+        drop(guard);
+    }
+}
