@@ -163,6 +163,7 @@ fn run_daemon_running_process(json: bool) -> fbuild_core::Result<()> {
             "min_version": rp::MIN_VERSION,
             "payload_protocol": format!("{:#06X}", rp::FBUILD_PAYLOAD_PROTOCOL),
             "fbuild_protocol_version": rp::FBUILD_PROTOCOL_VERSION,
+            "cache_schema_version": rp::CACHE_SCHEMA_VERSION,
             "encoding_lane": "json-direct + prost-broker (parity-tested)",
             "service_definition": {
                 "file_name": rp::SERVICE_DEFINITION_FILE_NAME,
@@ -215,6 +216,7 @@ fn run_daemon_running_process(json: bool) -> fbuild_core::Result<()> {
         rp::FBUILD_PAYLOAD_PROTOCOL
     );
     println!("  fbuild proto version: {}", rp::FBUILD_PROTOCOL_VERSION);
+    println!("  Cache schema version: {}", rp::CACHE_SCHEMA_VERSION);
     println!("  Encoding lane:        json-direct + prost-broker (parity-tested)");
     println!(
         "  Service definition:   {}",

@@ -29,3 +29,10 @@ prints — the cache roots and the display constants (`SERVICE_NAME`,
 does not need to depend on `fbuild-daemon` or pull in `running-process`. The
 authoritative compile-time payload-protocol pin stays here (the real broker
 consumer); a drift test asserts it equals the `fbuild-paths` copy.
+
+## Cache Schema Compatibility
+
+`CACHE_SCHEMA_VERSION` is the compatibility key for fbuild-owned shared artifact
+repository layout. Broker/backend package version is not a cache-owner
+dimension; future resolver policy should compare cache identity plus this schema
+version before reusing an already-running daemon for the same cache root.

@@ -30,6 +30,14 @@ pub const FBUILD_PAYLOAD_PROTOCOL: u32 = 0x7EB1;
 /// independently of the running-process broker envelope version).
 pub const FBUILD_PROTOCOL_VERSION: u32 = 1;
 
+/// Compatibility version for fbuild-owned shared artifact repository layout.
+///
+/// Backend package version is deliberately not a cache-owner dimension. This
+/// value is the broker-visible compatibility key that future resolver policy
+/// should compare before allowing multiple fbuild daemon versions to share the
+/// same cache-root identity.
+pub const CACHE_SCHEMA_VERSION: u32 = 1;
+
 pub const RUNNING_PROCESS_DISABLE_ENV: &str = "RUNNING_PROCESS_DISABLE";
 pub const RUNNING_PROCESS_SERVICE_DEF_DIR_ENV: &str = "RUNNING_PROCESS_SERVICE_DEF_DIR";
 pub const FBUILD_RUNNING_PROCESS_BROKER_ENV: &str = "FBUILD_RUNNING_PROCESS_BROKER";
@@ -141,8 +149,8 @@ impl DaemonCacheIdentity {
 
     pub fn label_value(&self) -> String {
         format!(
-            "mode={};trust={};cache={}",
-            self.mode, self.trust_domain, self.cache_root_key
+            "mode={};trust={};schema={};cache={}",
+            self.mode, self.trust_domain, CACHE_SCHEMA_VERSION, self.cache_root_key
         )
     }
 }
@@ -268,6 +276,12 @@ mod tests {
         assert!(
             identity.label_value().contains("cache="),
             "identity label must include the cache root key"
+        );
+        assert!(
+            identity
+                .label_value()
+                .contains(&format!("schema={CACHE_SCHEMA_VERSION}")),
+            "identity label must include the cache schema compatibility version"
         );
         assert!(
             !identity.label_value().contains(env!("CARGO_PKG_VERSION")),

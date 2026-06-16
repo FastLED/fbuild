@@ -21,7 +21,8 @@ use running_process::broker::builders::{CacheManifestBuilder, ServiceDefinitionB
 use running_process::broker::protocol::{CacheManifest, CacheRootKind, ServiceDefinition};
 
 pub use fbuild_paths::running_process::{
-    CacheRoots, DaemonCacheIdentity, CI_TRUSTED_INSTANCE, MIN_VERSION, SERVICE_NAME,
+    CacheRoots, DaemonCacheIdentity, CACHE_SCHEMA_VERSION, CI_TRUSTED_INSTANCE, MIN_VERSION,
+    SERVICE_NAME,
 };
 
 /// Errors building or installing the fbuild service definition / manifest.
@@ -103,6 +104,7 @@ fn shared_broker_builder(daemon_binary: impl AsRef<Path>) -> ServiceDefinitionBu
     .label("cache-owner", "fbuild-global-artifact-repository")
     .label("cache-identity", identity.label_value())
     .label("cache-identity-mode", identity.mode)
+    .label("cache-schema-version", CACHE_SCHEMA_VERSION.to_string())
     .label("cache-root", identity.cache_root_key)
     .label("cache-dir-source", identity.cache_dir_source)
     .label("trust-domain", identity.trust_domain)
@@ -121,6 +123,7 @@ fn ci_builder(daemon_binary: impl AsRef<Path>) -> ServiceDefinitionBuilder {
     .min_version(MIN_VERSION)
     .label("consumer", "fbuild")
     .label("cache-owner", "fbuild-global-artifact-repository")
+    .label("cache-schema-version", CACHE_SCHEMA_VERSION.to_string())
     .label("trust-domain", CI_TRUSTED_INSTANCE)
     .label("repo", "FastLED/fbuild")
 }
@@ -230,11 +233,21 @@ mod tests {
             def.labels.get("trust-domain").map(String::as_str),
             Some(fbuild_paths::running_process::LOCAL_TRUST_DOMAIN)
         );
+        assert_eq!(
+            def.labels.get("cache-schema-version").cloned(),
+            Some(CACHE_SCHEMA_VERSION.to_string())
+        );
         assert!(
             def.labels
                 .get("cache-identity")
                 .is_some_and(|value| value.contains("cache=")),
             "shared broker definition must publish the cache identity"
+        );
+        assert!(
+            def.labels
+                .get("cache-identity")
+                .is_some_and(|value| value.contains(&format!("schema={CACHE_SCHEMA_VERSION}"))),
+            "shared broker definition must publish the cache schema compatibility key"
         );
     }
 
@@ -254,6 +267,10 @@ mod tests {
         assert_eq!(
             def.labels.get("cache-owner").map(String::as_str),
             Some("fbuild-global-artifact-repository")
+        );
+        assert_eq!(
+            def.labels.get("cache-schema-version").cloned(),
+            Some(CACHE_SCHEMA_VERSION.to_string())
         );
     }
 
