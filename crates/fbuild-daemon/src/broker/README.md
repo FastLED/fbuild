@@ -33,6 +33,18 @@ consumer); a drift test asserts it equals the `fbuild-paths` copy.
 ## Cache Schema Compatibility
 
 `CACHE_SCHEMA_VERSION` is the compatibility key for fbuild-owned shared artifact
-repository layout. Broker/backend package version is not a cache-owner
-dimension; future resolver policy should compare cache identity plus this schema
-version before reusing an already-running daemon for the same cache root.
+repository layout. Broker/backend package version is not a cache-owner dimension:
+package, toolchain, framework, and managed sidecar artifacts belong to the
+canonical fbuild cache root.
+
+The current broker policy is intentionally strict. The generated
+`ServiceDefinition` publishes a `version_allow_list` containing only the current
+installed fbuild version, so the broker returns a version-block refusal instead
+of spawning or reusing an arbitrary parallel daemon version for the same
+`SHARED_BROKER` cache root. CLI and Python callers treat those refusals as fatal,
+then verify `/api/daemon/info` cache identity plus `CACHE_SCHEMA_VERSION` after a
+successful negotiation.
+
+Future multi-version reuse should relax the allow-list only after fbuild owns an
+explicit cache-schema compatibility matrix and resolver policy for safely sharing
+one artifact repository across daemon versions.
