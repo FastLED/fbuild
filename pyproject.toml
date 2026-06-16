@@ -1,6 +1,6 @@
 [project]
 name = "fbuild"
-version = "2.2.29"
+version = "2.2.30"
 description = "PlatformIO-compatible embedded build tool (Rust implementation)"
 readme = "README.md"
 requires-python = ">=3.10"
