@@ -5,9 +5,10 @@
 //! serve cached object files instead of re-invoking gcc/g++.
 
 use std::path::{Path, PathBuf};
+use std::process::Stdio;
 use std::sync::OnceLock;
 
-use fbuild_core::Result;
+use fbuild_core::{FbuildError, Result};
 
 /// Cached result of searching for zccache on PATH.
 static ZCCACHE_PATH: OnceLock<Option<PathBuf>> = OnceLock::new();
@@ -177,7 +178,7 @@ fn find_zccache_in_venv(start: &Path, exe_name: &str) -> Option<PathBuf> {
 /// Start the zccache daemon if it's not already running.
 ///
 /// This is idempotent — `zccache start` is a no-op when the daemon is up.
-pub fn ensure_running(zccache: &Path) {
+pub fn ensure_running(zccache: &Path) -> Result<()> {
     // INTENTIONALLY DETACHED (FastLED/fbuild#32): zccache is itself a
     // long-running daemon with independent lifecycle management. `start`
     // is a no-op when it's already running, and either way the zccache
@@ -186,8 +187,8 @@ pub fn ensure_running(zccache: &Path) {
     // allow-direct-spawn: zccache daemon must outlive the fbuild daemon.
     let mut cmd = std::process::Command::new(zccache);
     cmd.arg("start")
-        .stdout(std::process::Stdio::null())
-        .stderr(std::process::Stdio::null());
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped());
 
     #[cfg(windows)]
     {
@@ -196,25 +197,62 @@ pub fn ensure_running(zccache: &Path) {
         cmd.creation_flags(CREATE_NO_WINDOW);
     }
 
-    let mut child = match cmd.spawn() {
-        Ok(c) => c,
+    let output = match cmd.output() {
+        Ok(output) => output,
         Err(e) => {
-            tracing::warn!("failed to spawn zccache daemon: {}", e);
-            return;
+            let message = format!(
+                "failed to spawn zccache daemon via `{}` start: {}",
+                zccache.display(),
+                e
+            );
+            tracing::warn!("{message}");
+            return Err(FbuildError::BuildFailed(message));
         }
     };
 
-    match child.wait() {
-        Ok(status) if status.success() => {
-            tracing::info!("zccache daemon running");
-        }
-        Ok(status) => {
-            tracing::warn!("zccache start exited with {}", status);
-        }
-        Err(e) => {
-            tracing::warn!("failed to wait on zccache daemon: {}", e);
-        }
+    if output.status.success() {
+        tracing::info!("zccache daemon running");
+        Ok(())
+    } else {
+        let message = format_zccache_start_failure(
+            zccache,
+            output.status.to_string(),
+            &output.stdout,
+            &output.stderr,
+        );
+        tracing::warn!("{message}");
+        Err(FbuildError::BuildFailed(message))
     }
+}
+
+fn format_zccache_start_failure(
+    zccache: &Path,
+    status: impl std::fmt::Display,
+    stdout: &[u8],
+    stderr: &[u8],
+) -> String {
+    let stdout = String::from_utf8_lossy(stdout).trim().to_string();
+    let stderr = String::from_utf8_lossy(stderr).trim().to_string();
+    let mut message = format!("zccache start failed for {} ({status})", zccache.display());
+
+    if !stderr.is_empty() {
+        message.push_str(":\n");
+        message.push_str(&stderr);
+    }
+    if !stdout.is_empty() {
+        if stderr.is_empty() {
+            message.push_str(":\n");
+        } else {
+            message.push_str("\n");
+        }
+        message.push_str("zccache stdout:\n");
+        message.push_str(&stdout);
+    }
+    if stderr.is_empty() && stdout.is_empty() {
+        message.push_str(" with no stdout/stderr; check fbuild daemon logs for details");
+    }
+
+    message
 }
 
 /// Prepend zccache explicit-wrap mode to a compiler command line.
@@ -521,6 +559,42 @@ mod tests {
         let raw = std::path::PathBuf::from(r"C:\Users\test\include");
         let stripped = strip_unc_prefix(raw.clone());
         assert_eq!(stripped, raw);
+    }
+
+    #[test]
+    fn zccache_start_failure_includes_stderr() {
+        let message = format_zccache_start_failure(
+            Path::new("/tools/zccache"),
+            "exit status: 1",
+            b"",
+            b"zccache[err][D]: cannot start daemon",
+        );
+
+        assert!(message.contains("/tools/zccache"));
+        assert!(message.contains("exit status: 1"));
+        assert!(message.contains("zccache[err][D]: cannot start daemon"));
+    }
+
+    #[test]
+    fn zccache_start_failure_includes_stdout_when_stderr_empty() {
+        let message = format_zccache_start_failure(
+            Path::new("/tools/zccache"),
+            "exit status: 1",
+            b"daemon process 123 exists but not accepting connections",
+            b"",
+        );
+
+        assert!(message.contains("zccache stdout:"));
+        assert!(message.contains("daemon process 123 exists but not accepting connections"));
+    }
+
+    #[test]
+    fn zccache_start_failure_points_to_logs_when_output_empty() {
+        let message =
+            format_zccache_start_failure(Path::new("/tools/zccache"), "exit status: 1", b"", b"");
+
+        assert!(message.contains("with no stdout/stderr"));
+        assert!(message.contains("fbuild daemon logs"));
     }
 
     #[test]
