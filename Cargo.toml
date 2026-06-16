@@ -81,7 +81,6 @@ prost = "0.14"
 # fbuild-daemon binds the running-process backend endpoint directly so the
 # broker can verify and route to versioned daemon processes.
 interprocess = "2.4.2"
-zccache-artifact = "1.9"
 rayon = "1"
 tracing-test = "0.2"
 # Terminal coloring for `fbuild build --shrink` reporting (FastLED/fbuild#493).

@@ -26,7 +26,7 @@ soldr cargo bench -p fbuild-library-select --bench resolve_cold
 
 Warm cache-hit path through `resolve_cached()` against the same synthetic
 ~30-library `MiniFramework` tree. The bench builds the fixture once, opens a
-`KvStore` in a tempdir, primes the cache with one untimed `resolve_cached`
+`FileKvStore` in a tempdir, primes the cache with one untimed `resolve_cached`
 call (which misses), then times only the second invocation. Each iteration
 asserts `from_cache == true` and panics otherwise — that way we can never
 silently regress to measuring miss work.

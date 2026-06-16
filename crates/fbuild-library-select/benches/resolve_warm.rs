@@ -1,7 +1,7 @@
 //! P-01 (mini) warm-resolver benchmark.
 //!
 //! Phase 4 of <https://github.com/FastLED/fbuild/issues/205> shipped
-//! [`fbuild_library_select::cache::resolve_cached`], a `KvStore`-backed memo
+//! [`fbuild_library_select::cache::resolve_cached`], a file-backed memo
 //! in front of [`fbuild_library_select::resolve`]. AC#5 / P-01 of #205 sets
 //! a "warm library-selection ≤ current fbuild + 50 ms" goal; the real
 //! per-board matrix lives under `bench/fastled-examples/` and waits on a
@@ -11,7 +11,7 @@
 //! hit code path independent of the larger matrix.
 //!
 //! Structure mirrors `resolve_cold.rs`: build the ~30-library tree once,
-//! open a `KvStore` once, prime the cache with one untimed `resolve_cached`
+//! open a `FileKvStore` once, prime the cache with one untimed `resolve_cached`
 //! call, then time only the second invocation (the hit path).
 //!
 //! Run with:
@@ -25,11 +25,10 @@
 use std::path::PathBuf;
 
 use criterion::{black_box, criterion_group, criterion_main, Criterion, Throughput};
-use fbuild_library_select::cache::{resolve_cached, CacheKeyInputs};
+use fbuild_library_select::cache::{resolve_cached, CacheKeyInputs, FileKvStore};
 use fbuild_packages::library::framework_library::discover_framework_libraries;
 use fbuild_packages::library::FrameworkLibrary;
 use fbuild_test_support::MiniFramework;
-use zccache_artifact::KvStore;
 
 const LIB_COUNT: usize = 30;
 const CHAIN_LEN: usize = 5;
@@ -67,7 +66,8 @@ fn build_fixture() -> (
 fn bench_resolve_warm(c: &mut Criterion) {
     let (mf, seeds, search_paths, libs) = build_fixture();
     let kv_dir = tempfile::tempdir().expect("resolve_warm: failed to create kv tempdir");
-    let kv = KvStore::open(kv_dir.path().join("kv")).expect("resolve_warm: KvStore::open failed");
+    let kv = FileKvStore::open(kv_dir.path().join("kv"))
+        .expect("resolve_warm: FileKvStore::open failed");
 
     let framework_root = mf.framework_root().to_path_buf();
     let inputs = CacheKeyInputs {

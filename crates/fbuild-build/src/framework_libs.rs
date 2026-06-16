@@ -16,11 +16,10 @@ use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
-use fbuild_library_select::cache::{resolve_cached, CacheKeyInputs};
+use fbuild_library_select::cache::{resolve_cached, CacheKeyInputs, FileKvStore};
 use fbuild_library_select::resolve as resolve_library_selection;
 use fbuild_packages::library::FrameworkLibrary;
 use walkdir::{DirEntry, WalkDir};
-use zccache_artifact::KvStore;
 
 /// Resolve framework library source files needed by a project.
 pub fn resolve_framework_library_sources(
@@ -195,7 +194,7 @@ pub fn resolve_framework_library_sources_from_libraries(
 ///
 /// Routes the same `(libraries, project_dir, src_dir)` resolution through
 /// `fbuild_library_select::cache::resolve_cached` using the supplied
-/// `KvStore`. On a backend failure (open, read, write) we log a warning and
+/// `FileKvStore`. On a backend failure (open, read, write) we log a warning and
 /// fall back to the uncached `resolve(...)` so a degraded cache can never
 /// poison a build — same philosophy as the corrupt-entry handling already
 /// inside `cache.rs`.
@@ -204,7 +203,7 @@ pub fn resolve_framework_library_sources_cached(
     project_dir: &Path,
     src_dir: &Path,
     key_inputs: &CacheKeyInputs<'_>,
-    store: &KvStore,
+    store: &FileKvStore,
 ) -> Vec<PathBuf> {
     let (sources, _hit) = resolve_framework_library_sources_cached_with_hit(
         libraries,
@@ -225,7 +224,7 @@ pub(crate) fn resolve_framework_library_sources_cached_with_hit(
     project_dir: &Path,
     src_dir: &Path,
     key_inputs: &CacheKeyInputs<'_>,
-    store: &KvStore,
+    store: &FileKvStore,
 ) -> (Vec<PathBuf>, bool) {
     let roots = framework_include_scan_roots(project_dir, src_dir);
     if libraries.is_empty() {
@@ -274,21 +273,21 @@ pub(crate) fn resolve_framework_library_sources_cached_with_hit(
     }
 }
 
-/// Process-shared `KvStore` for the library-selection cache.
+/// Process-shared file store for the library-selection cache.
 ///
 /// Opens lazily on first call and caches the handle for the rest of the
 /// process. Returns `None` on open failure — callers must skip caching
 /// (and route through the uncached resolver) rather than crash.
-pub fn library_select_kv_store() -> Option<&'static KvStore> {
-    static STORE: OnceLock<Option<KvStore>> = OnceLock::new();
+pub fn library_select_kv_store() -> Option<&'static FileKvStore> {
+    static STORE: OnceLock<Option<FileKvStore>> = OnceLock::new();
     STORE
         .get_or_init(|| {
             let dir = library_select_cache_dir();
-            match KvStore::open(&dir) {
+            match FileKvStore::open(&dir) {
                 Ok(store) => {
                     tracing::info!(
                         path = %dir.display(),
-                        "library-select cache: opened KvStore"
+                        "library-select cache: opened file store"
                     );
                     Some(store)
                 }
@@ -296,7 +295,7 @@ pub fn library_select_kv_store() -> Option<&'static KvStore> {
                     tracing::warn!(
                         path = %dir.display(),
                         error = %err,
-                        "library-select cache: failed to open KvStore; \
+                        "library-select cache: failed to open file store; \
                          resolution will run uncached"
                     );
                     None
@@ -306,7 +305,7 @@ pub fn library_select_kv_store() -> Option<&'static KvStore> {
         .as_ref()
 }
 
-/// Filesystem location of the library-selection KvStore.
+/// Filesystem location of the library-selection file store.
 ///
 /// Routes through `fbuild_paths::get_cache_root()` so the cache obeys the
 /// dev/prod isolation contract (`FBUILD_DEV_MODE=1` → `~/.fbuild/dev/cache`)
@@ -798,7 +797,7 @@ mod tests {
     }
 
     #[test]
-    fn cached_resolution_round_trips_through_kvstore() {
+    fn cached_resolution_round_trips_through_file_store() {
         let tmp = tempfile::TempDir::new().unwrap();
         let project_dir = tmp.path().join("project");
         let src_dir = project_dir.join("src");
@@ -824,7 +823,7 @@ mod tests {
             framework_version: "0.0.0-test",
         };
 
-        let kv = KvStore::open(tmp.path().join("kv")).unwrap();
+        let kv = FileKvStore::open(tmp.path().join("kv")).unwrap();
 
         let (first, hit_first) = resolve_framework_library_sources_cached_with_hit(
             &libraries,

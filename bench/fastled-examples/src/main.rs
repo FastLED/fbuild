@@ -2,7 +2,7 @@
 //!
 //! This is the AC#5 / P-01 measurement for FastLED/fbuild#205: for each
 //! example sketch under `$FASTLED_DIR/examples/`, runs the resolver cold
-//! (empty `KvStore`) and warm (cache pre-populated by the cold call) and
+//! (empty `FileKvStore`) and warm (cache pre-populated by the cold call) and
 //! reports the timings as a Markdown table.
 //!
 //! ## Inputs
@@ -17,9 +17,9 @@
 //!
 //! For each `(example, framework_lib_set)` pair:
 //!
-//! - **Cold**: open a fresh `KvStore`, call `resolve_cached(...)`. Wall-clock
+//! - **Cold**: open a fresh `FileKvStore`, call `resolve_cached(...)`. Wall-clock
 //!   includes scanner walk, LDF reconciliation, and cache write.
-//! - **Warm**: call `resolve_cached(...)` again against the same `KvStore`.
+//! - **Warm**: call `resolve_cached(...)` again against the same `FileKvStore`.
 //!   Wall-clock includes cache-key compute (sorted seed/header hashing —
 //!   bounded by `cache_key` itself) and bincode decode of the cached
 //!   `Selection`. Asserts `from_cache = true` so silent re-misses surface
@@ -49,12 +49,11 @@
 use std::path::{Path, PathBuf};
 use std::time::Instant;
 
-use fbuild_library_select::cache::{resolve_cached, CacheKeyInputs};
+use fbuild_library_select::cache::{resolve_cached, CacheKeyInputs, FileKvStore};
 use fbuild_library_select::CachedSelection;
 use fbuild_packages::library::framework_library::discover_framework_libraries;
 use fbuild_packages::library::FrameworkLibrary;
 use fbuild_test_support::MiniFramework;
-use zccache_artifact::KvStore;
 
 /// Curated subset that spans the simple/complex spectrum without dragging
 /// in every one of the ~80 FastLED examples. Bench iteration time at six
@@ -208,7 +207,7 @@ fn measure_example(
     let search_paths = vec![stage_src, fastled_src.to_path_buf()];
 
     let kv_dir = tempfile::tempdir()?;
-    let kv = KvStore::open(kv_dir.path().join("kv"))?;
+    let kv = FileKvStore::open(kv_dir.path().join("kv"))?;
 
     let inputs = CacheKeyInputs {
         toolchain_triple: "teensy-arm-none-eabi",
