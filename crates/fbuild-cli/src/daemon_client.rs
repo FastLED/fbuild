@@ -10,6 +10,8 @@ use serde::Serialize;
 mod types;
 pub use types::*;
 
+const LONG_OPERATION_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(1800);
+
 /// Percent-encode a port name for use in a URL path segment.
 fn encode_port(port: &str) -> String {
     port.replace('%', "%25").replace('/', "%2F")
@@ -241,7 +243,11 @@ impl DaemonClient {
 
     /// Send a build request (non-streaming, returns full response at end).
     pub async fn build(&self, req: &BuildRequest) -> fbuild_core::Result<OperationResponse> {
-        self.post("/api/build", req).await
+        // Non-streaming build is used by API/MCP callers. It can legitimately
+        // wait behind another client's global package/toolchain/sidecar
+        // install; do not let a client-side total timeout turn that wait into
+        // a spurious failure.
+        self.post_operation("/api/build", req, None).await
     }
 
     /// Send a streaming build request. Prints log lines in real-time,
@@ -254,7 +260,7 @@ impl DaemonClient {
             .client
             .post(format!("{}/api/build", self.base_url))
             .json(req)
-            .timeout(std::time::Duration::from_secs(1800))
+            .timeout(LONG_OPERATION_TIMEOUT)
             .send()
             .await
             .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("request failed: {}", e)))?;
@@ -339,17 +345,20 @@ impl DaemonClient {
 
     /// Send a deploy request.
     pub async fn deploy(&self, req: &DeployRequest) -> fbuild_core::Result<OperationResponse> {
-        self.post("/api/deploy", req).await
+        self.post_operation("/api/deploy", req, Some(LONG_OPERATION_TIMEOUT))
+            .await
     }
 
     /// Send a monitor request.
     pub async fn monitor(&self, req: &MonitorRequest) -> fbuild_core::Result<OperationResponse> {
-        self.post("/api/monitor", req).await
+        self.post_operation("/api/monitor", req, Some(LONG_OPERATION_TIMEOUT))
+            .await
     }
 
     /// Send a test-emu request (build + emulator run).
     pub async fn test_emu(&self, req: &TestEmuRequest) -> fbuild_core::Result<OperationResponse> {
-        self.post("/api/test-emu", req).await
+        self.post_operation("/api/test-emu", req, Some(LONG_OPERATION_TIMEOUT))
+            .await
     }
 
     /// Get daemon info (PID, port, uptime, etc.).
@@ -539,16 +548,21 @@ impl DaemonClient {
             .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("invalid response: {}", e)))
     }
 
-    async fn post<T: Serialize>(
+    async fn post_operation<T: Serialize>(
         &self,
         path: &str,
         body: &T,
+        timeout: Option<std::time::Duration>,
     ) -> fbuild_core::Result<OperationResponse> {
-        let resp = self
+        let request = self
             .client
             .post(format!("{}{}", self.base_url, path))
-            .json(body)
-            .timeout(std::time::Duration::from_secs(1800))
+            .json(body);
+        let request = match timeout {
+            Some(timeout) => request.timeout(timeout),
+            None => request,
+        };
+        let resp = request
             .send()
             .await
             .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("request failed: {}", e)))?;
