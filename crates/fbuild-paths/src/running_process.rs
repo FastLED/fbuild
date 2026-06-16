@@ -272,6 +272,12 @@ mod tests {
             std::env::set_var(name, value);
             Self { name, previous }
         }
+
+        fn remove(name: &'static str) -> Self {
+            let previous = std::env::var_os(name);
+            std::env::remove_var(name);
+            Self { name, previous }
+        }
     }
 
     impl Drop for EnvVarGuard {
@@ -365,6 +371,36 @@ mod tests {
         assert_eq!(roots_v1.log, roots_v2.log);
         assert_eq!(roots_v1.lock, roots_v2.lock);
         assert_eq!(roots_v1.config, roots_v2.config);
+        assert_ne!(
+            roots_v1.runtime, roots_v2.runtime,
+            "runtime changes are daemon provenance, not cache ownership"
+        );
+    }
+
+    #[test]
+    fn dev_mode_default_cache_roots_stay_stable_across_runtime_dirs() {
+        let _env = ENV_LOCK.lock().unwrap();
+        let _dev_guard = EnvVarGuard::set("FBUILD_DEV_MODE", "1");
+        let _cache_guard = EnvVarGuard::remove(FBUILD_CACHE_DIR_ENV);
+        let runtime_v1 = PathBuf::from("/opt/fbuild-dev-1/bin");
+        let runtime_v2 = PathBuf::from("/opt/fbuild-dev-2/bin");
+
+        let identity = DaemonCacheIdentity::discover();
+        let roots_v1 = CacheRoots::discover(&runtime_v1);
+        let roots_v2 = CacheRoots::discover(&runtime_v2);
+
+        assert_eq!(identity.mode, "dev");
+        assert_eq!(identity.cache_dir_source, "default");
+        assert!(
+            identity
+                .cache_root
+                .ends_with(Path::new(".fbuild").join("dev").join("cache")),
+            "dev identity must own the default dev cache root, got {}",
+            identity.cache_root.display()
+        );
+        assert_eq!(roots_v1.artifact, identity.cache_root);
+        assert_eq!(roots_v1.artifact, roots_v2.artifact);
+        assert_eq!(roots_v1.index, roots_v2.index);
         assert_ne!(
             roots_v1.runtime, roots_v2.runtime,
             "runtime changes are daemon provenance, not cache ownership"
