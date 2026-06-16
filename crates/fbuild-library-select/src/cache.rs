@@ -3,8 +3,8 @@
 //! The resolver is a pure function of (project sources, search paths, library
 //! set, toolchain triple, framework version, scanner/LDF semantics). Computing
 //! it costs ~tens of ms cold; restoring from a cache hit is sub-ms. On a warm
-//! CI build this should round-trip through `zccache_artifact::KvStore` instead
-//! of re-walking the framework `libraries/` tree.
+//! CI build this should round-trip through a small fbuild-owned file cache
+//! instead of re-walking the framework `libraries/` tree.
 //!
 //! ## Cache key (Q9 from #205)
 //!
@@ -27,7 +27,7 @@
 use std::path::{Path, PathBuf};
 
 use fbuild_packages::library::FrameworkLibrary;
-use zccache_artifact::{Key, KvError, KvStore};
+use prost::Message;
 
 use crate::{resolve, Selection};
 
@@ -39,8 +39,136 @@ pub const SCANNER_VERSION: u32 = 1;
 /// attribution, convergence rule, etc.).
 pub const LDF_MODE_VERSION: u32 = 1;
 
-/// zccache namespace for this cache. Reserved per the zccache#130 design note.
+/// Namespace for the library-selection file cache.
 pub const NAMESPACE: &str = "library-selection";
+
+const CACHE_ENVELOPE_VERSION: u32 = 1;
+
+/// Content-addressed cache key for library-selection memoization.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub struct CacheKey([u8; 32]);
+
+impl CacheKey {
+    fn from_hash(hash: blake3::Hash) -> Self {
+        Self(*hash.as_bytes())
+    }
+
+    pub fn as_bytes(&self) -> &[u8; 32] {
+        &self.0
+    }
+
+    pub fn to_hex(&self) -> String {
+        let mut out = String::with_capacity(64);
+        for byte in self.0 {
+            use std::fmt::Write as _;
+            let _ = write!(&mut out, "{byte:02x}");
+        }
+        out
+    }
+}
+
+/// Minimal file-backed K/V cache for best-effort memoized resolver output.
+///
+/// This deliberately avoids a database engine. Values are deterministic and
+/// disposable: corrupt, missing, or stale entries are treated as cache misses.
+#[derive(Debug, Clone)]
+pub struct FileKvStore {
+    root: PathBuf,
+}
+
+impl FileKvStore {
+    pub fn open<P: AsRef<Path>>(root: P) -> CacheResult<Self> {
+        let root = root.as_ref().to_path_buf();
+        std::fs::create_dir_all(&root)?;
+        Ok(Self { root })
+    }
+
+    pub fn get(&self, namespace: &str, key: &CacheKey) -> CacheResult<Option<Vec<u8>>> {
+        validate_namespace(namespace)?;
+        let path = self.entry_path(namespace, key);
+        let bytes = match std::fs::read(&path) {
+            Ok(bytes) => bytes,
+            Err(err) if err.kind() == std::io::ErrorKind::NotFound => return Ok(None),
+            Err(err) => return Err(err.into()),
+        };
+        let envelope = match CacheEnvelope::decode(bytes.as_slice()) {
+            Ok(envelope) => envelope,
+            Err(err) => {
+                tracing::warn!(
+                    path = %path.display(),
+                    error = %err,
+                    "library-select cache: corrupt protobuf envelope; treating as miss"
+                );
+                return Ok(None);
+            }
+        };
+        if envelope.schema_version != CACHE_ENVELOPE_VERSION {
+            return Ok(None);
+        }
+        Ok(Some(envelope.payload))
+    }
+
+    pub fn put(&self, namespace: &str, key: &CacheKey, value: &[u8]) -> CacheResult<usize> {
+        validate_namespace(namespace)?;
+        let path = self.entry_path(namespace, key);
+        if let Some(parent) = path.parent() {
+            std::fs::create_dir_all(parent)?;
+        }
+
+        let envelope = CacheEnvelope {
+            schema_version: CACHE_ENVELOPE_VERSION,
+            payload: value.to_vec(),
+        };
+        let bytes = envelope.encode_to_vec();
+        let nonce = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap_or_default()
+            .as_nanos();
+        let tmp = path.with_extension(format!("tmp.{}.{}", std::process::id(), nonce));
+        std::fs::write(&tmp, bytes)?;
+        std::fs::rename(&tmp, &path).or_else(|err| {
+            let _ = std::fs::remove_file(&path);
+            std::fs::rename(&tmp, &path).map_err(|_| err)
+        })?;
+        Ok(value.len())
+    }
+
+    fn entry_path(&self, namespace: &str, key: &CacheKey) -> PathBuf {
+        self.root
+            .join(namespace)
+            .join(format!("{}.pb", key.to_hex()))
+    }
+}
+
+#[derive(Clone, PartialEq, Message)]
+struct CacheEnvelope {
+    #[prost(uint32, tag = "1")]
+    schema_version: u32,
+    #[prost(bytes, tag = "2")]
+    payload: Vec<u8>,
+}
+
+pub type CacheResult<T> = Result<T, CacheError>;
+
+#[derive(Debug, thiserror::Error)]
+pub enum CacheError {
+    #[error(transparent)]
+    Io(#[from] std::io::Error),
+    #[error("bad cache namespace")]
+    BadNamespace,
+}
+
+fn validate_namespace(namespace: &str) -> CacheResult<()> {
+    if !namespace.is_empty()
+        && namespace
+            .bytes()
+            .all(|b| b.is_ascii_lowercase() || b.is_ascii_digit() || b == b'-')
+    {
+        Ok(())
+    } else {
+        Err(CacheError::BadNamespace)
+    }
+}
 
 /// Inputs that vary independently of the (seeds, search_paths, libraries)
 /// triple and must contribute to the cache key — toolchain + framework
@@ -63,7 +191,7 @@ pub struct CacheKeyInputs<'a> {
 #[derive(Debug, Clone)]
 pub struct CachedSelection {
     pub selection: Selection,
-    pub key: Key,
+    pub key: CacheKey,
     pub from_cache: bool,
 }
 
@@ -80,7 +208,7 @@ pub fn cache_key(
     search_paths: &[PathBuf],
     libraries: &[FrameworkLibrary],
     inputs: &CacheKeyInputs<'_>,
-) -> Key {
+) -> CacheKey {
     let mut h = blake3::Hasher::new();
 
     h.update(b"fbuild.library-select.v1\n");
@@ -148,7 +276,7 @@ pub fn cache_key(
         h.update(content);
     }
 
-    Key::from_hash(h.finalize())
+    CacheKey::from_hash(h.finalize())
 }
 
 fn canonical_header_hash(lib: &FrameworkLibrary) -> [u8; 32] {
@@ -174,16 +302,16 @@ fn canonical_header_hash(lib: &FrameworkLibrary) -> [u8; 32] {
 /// never poison a build. The tainted entry is overwritten by the fresh
 /// computation's `put`.
 ///
-/// Errors propagate only from the underlying [`KvStore`] backend
-/// (filesystem, redb commit). Construction-time validation of the
+/// Errors propagate only from the underlying [`FileKvStore`] backend
+/// (filesystem or protobuf decode). Construction-time validation of the
 /// namespace is impossible to fail because [`NAMESPACE`] is a const.
 pub fn resolve_cached(
     seeds: &[PathBuf],
     search_paths: &[PathBuf],
     libraries: &[FrameworkLibrary],
     inputs: &CacheKeyInputs<'_>,
-    store: &KvStore,
-) -> Result<CachedSelection, KvError> {
+    store: &FileKvStore,
+) -> CacheResult<CachedSelection> {
     let key = cache_key(seeds, search_paths, libraries, inputs);
 
     if let Some(bytes) = store.get(NAMESPACE, &key)? {
@@ -285,7 +413,7 @@ mod tests {
     #[test]
     fn c01_cache_miss_then_hit() {
         let (tmp, seeds, search_paths, libs) = build_simple_project();
-        let kv = KvStore::open(tmp.path().join("kv")).unwrap();
+        let kv = FileKvStore::open(tmp.path().join("kv")).unwrap();
         let inputs = fixture_inputs(tmp.path());
 
         let first = resolve_cached(&seeds, &search_paths, &libs, &inputs, &kv).unwrap();
@@ -399,7 +527,7 @@ mod tests {
     #[test]
     fn c07_corrupt_entry_falls_through_to_recompute() {
         let (tmp, seeds, search_paths, libs) = build_simple_project();
-        let kv = KvStore::open(tmp.path().join("kv")).unwrap();
+        let kv = FileKvStore::open(tmp.path().join("kv")).unwrap();
         let inputs = fixture_inputs(tmp.path());
 
         let key = cache_key(&seeds, &search_paths, &libs, &inputs);

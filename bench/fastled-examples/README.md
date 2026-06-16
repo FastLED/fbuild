@@ -8,7 +8,7 @@ matrix. This is the AC#5 / P-01 measurement for
 
 For each example sketch under `$FASTLED_DIR/examples/`, runs the
 `fbuild_library_select::cache::resolve_cached` resolver twice against a
-fresh `KvStore`:
+fresh `FileKvStore`:
 
 - **Cold** — empty cache. Wall-clock includes the scanner walk over the
   FastLED `src/` tree (~1000 files), the 2-pass LDF reconciliation, and
@@ -46,7 +46,7 @@ FASTLED_DIR=/path/to/fastled \
   -- --max-warm-ms 50
 ```
 
-If any example fails to measure (missing sketch, KvStore error, warm
+If any example fails to measure (missing sketch, cache error, warm
 miss) the binary exits non-zero rather than skipping the row. CI must
 treat a partial matrix as a failure, not a pass.
 
@@ -85,7 +85,7 @@ release build:
 
 The warm path comfortably clears AC#5 (≤ +50 ms over current fbuild) at
 ~11 ms per example. The ~75x speedup reflects the cost asymmetry between
-walking the FastLED `src/` tree (~1000 files) and a `KvStore`
+walking the FastLED `src/` tree (~1000 files) and a `FileKvStore`
 get + bincode decode of a serialized `Selection`.
 
 ## Curated example set

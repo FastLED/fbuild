@@ -10,11 +10,12 @@ license.workspace = true
 fbuild-header-scan = { path = "../fbuild-header-scan" }
 fbuild-packages = { path = "../fbuild-packages" }
 tracing = { workspace = true }
+thiserror = { workspace = true }
 walkdir = { workspace = true }
 serde = { workspace = true }
 bincode = { workspace = true }
 blake3 = { workspace = true }
-zccache-artifact = { workspace = true }
+prost = { workspace = true }
 
 [dev-dependencies]
 tempfile = { workspace = true }
