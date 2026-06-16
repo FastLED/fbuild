@@ -98,6 +98,42 @@ pub trait Deployer: Send + Sync {
         firmware_path: &Path,
         port: Option<&str>,
     ) -> Result<DeploymentResult>;
+
+    /// Post-deploy serial-port recovery.
+    ///
+    /// Called by the daemon's deploy handler after `clear_preemption()`
+    /// and before serial monitors are notified to reconnect. The default
+    /// impl is a 3-second 100ms fast-poll on the port — most ESP32-S3
+    /// boards with native USB re-enumerate in <500ms, so polling returns
+    /// far faster than a hard sleep would. Platform-specific deployers
+    /// can override this to perform OS-level re-enumeration.
+    ///
+    /// FastLED/fbuild#605 — this hook is the seam where the LPC + CMSIS-DAP
+    /// composite-USB wedge recovery will land. The default fast-poll cannot
+    /// clear the Windows error-31 state on a composite USB device whose HID
+    /// interface was touched by pyocd; an LPC-specific override calling
+    /// `CM_Reenumerate_DevNode_Ex` on the parent hub devnode is the planned
+    /// Phase 1 follow-up.
+    ///
+    // TODO(#605 Phase 1): LPC + CMSIS-DAP wedge-recovery override.
+    fn post_deploy_recovery(&self, port: &str) -> Result<()> {
+        let deadline = std::time::Instant::now() + std::time::Duration::from_secs(3);
+        while std::time::Instant::now() < deadline {
+            if serialport::new(port, 115200)
+                .timeout(std::time::Duration::from_millis(50))
+                .open()
+                .is_ok()
+            {
+                return Ok(());
+            }
+            std::thread::sleep(std::time::Duration::from_millis(100));
+        }
+        tracing::warn!(
+            "USB re-enumeration: port {} not available after 3s",
+            port
+        );
+        Ok(())
+    }
 }
 
 #[cfg(test)]
@@ -146,6 +182,112 @@ mod outcome_tests {
         assert_eq!(
             outcome.describe(),
             "selective flash: bootloader, partitions, firmware"
+        );
+    }
+}
+
+#[cfg(test)]
+mod post_deploy_recovery_tests {
+    use super::*;
+    use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
+    use std::sync::Arc;
+
+    /// Test deployer whose `deploy()` is unimplemented (never invoked
+    /// here) but whose `post_deploy_recovery` is observable: it records
+    /// the port it saw and that it ran. FastLED/fbuild#605 acceptance
+    /// gate — verifies the trait method exists, is dispatched via
+    /// `Box<dyn Deployer>`, and that overrides win over the default.
+    struct ObservableDeployer {
+        called: Arc<AtomicBool>,
+        port_seen: Arc<std::sync::Mutex<Option<String>>>,
+    }
+
+    impl Deployer for ObservableDeployer {
+        fn deploy(
+            &self,
+            _project_dir: &Path,
+            _env_name: &str,
+            _firmware_path: &Path,
+            _port: Option<&str>,
+        ) -> Result<DeploymentResult> {
+            unreachable!("deploy not exercised by post_deploy_recovery tests")
+        }
+
+        fn post_deploy_recovery(&self, port: &str) -> Result<()> {
+            self.called.store(true, Ordering::SeqCst);
+            *self.port_seen.lock().unwrap() = Some(port.to_string());
+            Ok(())
+        }
+    }
+
+    /// A deployer that uses the default `post_deploy_recovery`. Counts
+    /// `deploy()` calls so the default-impl test can confirm it didn't
+    /// accidentally dispatch through `deploy()`.
+    struct DefaultRecoveryDeployer {
+        deploy_calls: Arc<AtomicUsize>,
+    }
+
+    impl Deployer for DefaultRecoveryDeployer {
+        fn deploy(
+            &self,
+            _project_dir: &Path,
+            _env_name: &str,
+            _firmware_path: &Path,
+            _port: Option<&str>,
+        ) -> Result<DeploymentResult> {
+            self.deploy_calls.fetch_add(1, Ordering::SeqCst);
+            Ok(DeploymentResult {
+                success: true,
+                message: "ok".into(),
+                port: None,
+                stdout: String::new(),
+                stderr: String::new(),
+                outcome: DeployOutcome::FullFlash,
+            })
+        }
+    }
+
+    #[test]
+    fn override_is_dispatched_through_box_dyn() {
+        let called = Arc::new(AtomicBool::new(false));
+        let port_seen = Arc::new(std::sync::Mutex::new(None));
+        let dep: Box<dyn Deployer> = Box::new(ObservableDeployer {
+            called: Arc::clone(&called),
+            port_seen: Arc::clone(&port_seen),
+        });
+
+        dep.post_deploy_recovery("COM-fake").expect("override returns Ok");
+
+        assert!(called.load(Ordering::SeqCst), "override must run");
+        assert_eq!(
+            port_seen.lock().unwrap().as_deref(),
+            Some("COM-fake"),
+            "override receives the port verbatim"
+        );
+    }
+
+    #[test]
+    fn default_impl_returns_ok_for_nonexistent_port_within_budget() {
+        // The default impl polls the port for up to 3 seconds and then
+        // returns Ok regardless. Using a port name that cannot possibly
+        // exist exercises the slow path. Budget is 4s — the impl itself
+        // is bounded at 3s plus scheduling jitter.
+        let dep = DefaultRecoveryDeployer {
+            deploy_calls: Arc::new(AtomicUsize::new(0)),
+        };
+        let start = std::time::Instant::now();
+        let result = dep.post_deploy_recovery("a-port-that-does-not-exist-zzz");
+        let elapsed = start.elapsed();
+        assert!(result.is_ok(), "default impl returns Ok even on timeout");
+        assert!(
+            elapsed < std::time::Duration::from_secs(4),
+            "default impl bounded by ~3s, took {:?}",
+            elapsed
+        );
+        assert_eq!(
+            dep.deploy_calls.load(Ordering::SeqCst),
+            0,
+            "post_deploy_recovery must not invoke deploy()"
         );
     }
 }

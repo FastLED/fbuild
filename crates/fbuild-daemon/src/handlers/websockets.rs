@@ -263,6 +263,41 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                             Ok(SerialClientMessage::Detach) => {
                                 break;
                             }
+                            Ok(SerialClientMessage::ClearBuffer) => {
+                                // FastLED/fbuild#605 — drop every line the
+                                // client's broadcast receiver has buffered
+                                // but not yet observed. Mirrors pyserial's
+                                // `Serial.reset_input_buffer()` semantic
+                                // (modulo bytes vs lines).
+                                let mut drained: usize = 0;
+                                while rx.try_recv().is_ok() {
+                                    drained += 1;
+                                }
+                                tracing::debug!(
+                                    client_id,
+                                    port,
+                                    drained,
+                                    "clear_buffer drained pending lines"
+                                );
+                            }
+                            Ok(SerialClientMessage::GetInWaiting) => {
+                                // FastLED/fbuild#605 — answer with the
+                                // current per-client broadcast queue depth
+                                // (lines buffered but not yet observed).
+                                // Distinct from pyserial's `in_waiting`
+                                // (bytes) — see the issue for the rationale.
+                                let count = rx.len();
+                                let reply = SerialServerMessage::InWaiting { count };
+                                if socket
+                                    .send(Message::Text(
+                                        serde_json::to_string(&reply).unwrap(),
+                                    ))
+                                    .await
+                                    .is_err()
+                                {
+                                    break;
+                                }
+                            }
                             Ok(_) => {}
                             Err(e) => {
                                 tracing::warn!(client_id, "invalid ws message: {}", e);

@@ -341,6 +341,78 @@ impl SerialMonitor {
         )))
     }
 
+    /// Number of buffered serial lines the daemon has produced for this
+    /// session but the client has not yet drained via `read_lines()`.
+    ///
+    /// Maps to pyserial's `Serial.in_waiting`, modulo a units difference:
+    /// the daemon brokers serial data as already-split lines, not raw
+    /// bytes, so this is a line count. Returns 0 when the WebSocket
+    /// session is not open (i.e. before `__enter__` or after `__exit__`).
+    ///
+    /// FastLED/fbuild#605 — added as part of the deprecation of direct
+    /// pyserial use by fbuild clients.
+    #[getter]
+    fn in_waiting(&self) -> usize {
+        let (Some(ref rt), Some(ref ws_write), Some(ref ws_read)) =
+            (&self.runtime, &self.ws_write, &self.ws_read)
+        else {
+            return 0;
+        };
+
+        let msg = serde_json::to_string(&ClientMessage::GetInWaiting).unwrap();
+        {
+            let mut write = ws_write.lock().unwrap();
+            if rt
+                .block_on(write.send(tungstenite::Message::Text(msg)))
+                .is_err()
+            {
+                return 0;
+            }
+        }
+
+        // Read until we see an InWaiting reply. Other messages (e.g.
+        // streaming Data frames or Preempted notifications) can arrive
+        // in front of the reply; ignore them and keep waiting for the
+        // typed answer until the 2s deadline expires.
+        let mut read = ws_read.lock().unwrap();
+        let deadline =
+            std::time::Instant::now() + std::time::Duration::from_secs(2);
+        while std::time::Instant::now() < deadline {
+            let remaining = deadline - std::time::Instant::now();
+            let result =
+                rt.block_on(async { tokio::time::timeout(remaining, read.next()).await });
+            match result {
+                Ok(Some(Ok(tungstenite::Message::Text(text)))) => {
+                    if let Ok(ServerMessage::InWaiting { count }) =
+                        serde_json::from_str::<ServerMessage>(&text)
+                    {
+                        return count;
+                    }
+                    continue;
+                }
+                Ok(Some(Ok(tungstenite::Message::Close(_)))) | Ok(None) => break,
+                Err(_) => break,
+                _ => continue,
+            }
+        }
+        0
+    }
+
+    /// Drop any serial-line data the daemon has buffered for this
+    /// session. Matches pyserial's `Serial.reset_input_buffer()`. No-op
+    /// when the WebSocket session is not open.
+    ///
+    /// FastLED/fbuild#605 — added as part of the deprecation of direct
+    /// pyserial use by fbuild clients.
+    fn reset_input_buffer(&self) {
+        let (Some(ref rt), Some(ref ws_write)) = (&self.runtime, &self.ws_write) else {
+            return;
+        };
+        let msg = serde_json::to_string(&ClientMessage::ClearBuffer).unwrap();
+        let mut write = ws_write.lock().unwrap();
+        let _ = rt.block_on(write.send(tungstenite::Message::Text(msg)));
+    }
+
     /// Reset the device via the daemon's DTR/RTS reset endpoint.
     ///
     /// Sends POST /api/reset to the daemon, which preempts any active

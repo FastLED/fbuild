@@ -22,6 +22,16 @@ pub enum SerialClientMessage {
         data: String,
     },
     Detach,
+    /// Drop any serial-line data the daemon has buffered for this
+    /// client's broadcast receiver so the next read returns only data
+    /// produced after this message. Matches pyserial's
+    /// `Serial.reset_input_buffer()` semantic. See FastLED/fbuild#605.
+    ClearBuffer,
+    /// Ask the daemon for the number of buffered lines the client's
+    /// broadcast receiver has not yet observed. Maps to pyserial's
+    /// `Serial.in_waiting` (modulo bytes-vs-lines — see #605). The
+    /// daemon replies with `SerialServerMessage::InWaiting`.
+    GetInWaiting,
 }
 
 /// Messages sent by the daemon to the client.
@@ -49,6 +59,12 @@ pub enum SerialServerMessage {
         bytes_written: usize,
         #[serde(skip_serializing_if = "Option::is_none")]
         message: Option<String>,
+    },
+    /// Reply to `SerialClientMessage::GetInWaiting`. `count` is the
+    /// number of buffered lines this client's broadcast receiver has
+    /// not yet observed. See FastLED/fbuild#605.
+    InWaiting {
+        count: usize,
     },
     Error {
         message: String,
@@ -244,6 +260,39 @@ mod tests {
         match parsed {
             SerialServerMessage::Error { message } => assert_eq!(message, "bad"),
             _ => panic!("expected Error"),
+        }
+    }
+
+    // --- FastLED/fbuild#605 ClearBuffer / GetInWaiting / InWaiting ---
+
+    #[test]
+    fn client_clear_buffer_roundtrip() {
+        let msg = SerialClientMessage::ClearBuffer;
+        let json = serde_json::to_string(&msg).unwrap();
+        assert!(json.contains("\"type\":\"clear_buffer\""));
+        let parsed: SerialClientMessage = serde_json::from_str(&json).unwrap();
+        assert!(matches!(parsed, SerialClientMessage::ClearBuffer));
+    }
+
+    #[test]
+    fn client_get_in_waiting_roundtrip() {
+        let msg = SerialClientMessage::GetInWaiting;
+        let json = serde_json::to_string(&msg).unwrap();
+        assert!(json.contains("\"type\":\"get_in_waiting\""));
+        let parsed: SerialClientMessage = serde_json::from_str(&json).unwrap();
+        assert!(matches!(parsed, SerialClientMessage::GetInWaiting));
+    }
+
+    #[test]
+    fn server_in_waiting_roundtrip() {
+        let msg = SerialServerMessage::InWaiting { count: 42 };
+        let json = serde_json::to_string(&msg).unwrap();
+        assert!(json.contains("\"type\":\"in_waiting\""));
+        assert!(json.contains("\"count\":42"));
+        let parsed: SerialServerMessage = serde_json::from_str(&json).unwrap();
+        match parsed {
+            SerialServerMessage::InWaiting { count } => assert_eq!(count, 42),
+            _ => panic!("expected InWaiting"),
         }
     }
 }
