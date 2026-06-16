@@ -135,6 +135,14 @@ fn run_daemon_running_process(json: bool) -> fbuild_core::Result<()> {
     } else {
         "broker"
     };
+    let last_acquisition = daemon_client::last_daemon_acquisition();
+    let live_mode = last_acquisition
+        .as_ref()
+        .map(|a| a.mode())
+        .unwrap_or_else(|| mode.as_str());
+    let negotiated_endpoint = last_acquisition.as_ref().and_then(|a| a.endpoint());
+    let negotiated_daemon_version = last_acquisition.as_ref().and_then(|a| a.daemon_version());
+    let fallback_reason = last_acquisition.as_ref().and_then(|a| a.reason());
 
     if json {
         let payload = serde_json::json!({
@@ -167,12 +175,15 @@ fn run_daemon_running_process(json: bool) -> fbuild_core::Result<()> {
                 "endpoint": fbuild_paths::get_daemon_url(),
             },
             "mode": {
-                "current": mode.as_str(),
+                "current": live_mode,
                 "selected_path": selected_path,
-                "uses_direct_fallback": mode.uses_direct_fallback(),
+                "uses_direct_fallback": live_mode != "broker-negotiated",
                 "running_process_disabled": rp::running_process_disabled(),
                 "broker_requested": rp::running_process_broker_requested(),
                 "summary": rp::running_process_adoption_summary(),
+                "negotiated_endpoint": negotiated_endpoint,
+                "negotiated_daemon_version": negotiated_daemon_version,
+                "fallback_reason": fallback_reason,
             },
         });
         let output = serde_json::to_string_pretty(&payload)
@@ -200,7 +211,16 @@ fn run_daemon_running_process(json: bool) -> fbuild_core::Result<()> {
         service_definition_path.display()
     );
     println!("  Selected path:        {selected_path}");
-    println!("  Mode:                 {}", mode.as_str());
+    println!("  Mode:                 {live_mode}");
+    if let Some(endpoint) = negotiated_endpoint {
+        println!("  Negotiated endpoint:  {endpoint}");
+    }
+    if let Some(version) = negotiated_daemon_version {
+        println!("  Negotiated version:   {version}");
+    }
+    if let Some(reason) = fallback_reason {
+        println!("  Fallback reason:      {reason}");
+    }
     println!("  Daemon endpoint:      {}", fbuild_paths::get_daemon_url());
     println!("  Daemon binary:        {}", daemon_candidate.display());
     println!(

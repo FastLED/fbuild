@@ -14,3 +14,19 @@ The implementation lives in the
 (folded in from the former standalone `fbuild-broker` crate so fbuild stays close
 to a monocrate — FastLED/fbuild#560). Tracker: zackees/running-process#437 ·
 FastLED/fbuild#510.
+
+## Current Runtime Slice
+
+- `fbuild-daemon` binds the broker-provided
+  `RUNNING_PROCESS_BROKER_V1_BACKEND_PIPE` endpoint when launched by
+  running-process, answers broker identity probes, and serves broker-framed
+  health/daemon-info diagnostics.
+- CLI and PyO3 daemon acquisition prefer running-process negotiation when
+  `RUNNING_PROCESS_DISABLE` is unset, then continue to use the existing HTTP
+  endpoint for the operation surface.
+- `RUNNING_PROCESS_DISABLE=1` and broker-unavailable cases keep the legacy
+  direct HTTP spawn path.
+
+Build/deploy/monitor requests, including streaming NDJSON builds, intentionally
+remain on the HTTP path in this slice. Moving those long-running operation
+payloads onto broker frames needs a separate streaming/cancellation design.

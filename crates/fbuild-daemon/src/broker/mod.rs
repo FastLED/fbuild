@@ -23,6 +23,7 @@
 //! The inventory that motivated these choices is recorded in
 //! `docs/running-process/inventory.md`.
 
+pub mod backend;
 pub mod protocol;
 pub mod service;
 pub mod session;

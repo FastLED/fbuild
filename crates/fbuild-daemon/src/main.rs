@@ -83,6 +83,7 @@ async fn main() {
         args.spawner_cwd,
         broadcast_hub,
     ));
+    fbuild_daemon::broker::backend::spawn_backend_endpoint_if_requested(context.clone());
 
     let app = Router::new()
         .route("/", get(health::root))

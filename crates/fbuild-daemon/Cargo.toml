@@ -48,6 +48,7 @@ bytes = { workspace = true }
 # folded in from the former standalone fbuild-broker crate (FastLED/fbuild#560).
 running-process = { workspace = true }
 prost = { workspace = true }
+interprocess = { workspace = true }
 futures = { workspace = true }
 regex = { workspace = true }
 async-trait = { workspace = true }
