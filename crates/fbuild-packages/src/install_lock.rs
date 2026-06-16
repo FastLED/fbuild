@@ -175,6 +175,15 @@ impl Drop for InstallLockGuard {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::sync::{Arc, Mutex};
+
+    struct InstallStatusSubscriberGuard;
+
+    impl Drop for InstallStatusSubscriberGuard {
+        fn drop(&mut self) {
+            fbuild_core::install_status::clear_install_status_subscriber();
+        }
+    }
 
     #[test]
     fn lock_path_is_sibling_of_install_path() {
@@ -204,6 +213,64 @@ mod tests {
 
         tokio::time::sleep(Duration::from_millis(50)).await;
         assert!(!waiter.is_finished());
+
+        drop(first);
+        let second = tokio::time::timeout(Duration::from_secs(2), waiter)
+            .await
+            .unwrap()
+            .unwrap();
+        drop(second);
+    }
+
+    #[tokio::test]
+    async fn lock_waiter_publishes_structured_wait_status() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let install_path = tmp.path().join("framework").join("3.0");
+        std::fs::create_dir_all(install_path.parent().unwrap()).unwrap();
+        let lock_dir = install_lock_dir(&install_path).unwrap();
+        let seen = Arc::new(Mutex::new(Vec::new()));
+        let seen_for_callback = Arc::clone(&seen);
+        let _subscriber_guard = InstallStatusSubscriberGuard;
+        fbuild_core::install_status::set_install_status_subscriber(move |status| {
+            seen_for_callback.lock().unwrap().push(status);
+        });
+
+        let first = acquire_for_install(&install_path, "framework", "3.0")
+            .await
+            .unwrap();
+        let waiter_path = install_path.clone();
+        let waiter = tokio::spawn(async move {
+            acquire_for_install(&waiter_path, "framework", "3.0")
+                .await
+                .unwrap()
+        });
+
+        let status = tokio::time::timeout(Duration::from_secs(2), async {
+            loop {
+                if let Some(status) = {
+                    let statuses = seen.lock().unwrap();
+                    statuses
+                        .iter()
+                        .find(|status| {
+                            status.name == "framework" && status.version.as_deref() == Some("3.0")
+                        })
+                        .cloned()
+                } {
+                    break status;
+                }
+                tokio::time::sleep(Duration::from_millis(10)).await;
+            }
+        })
+        .await
+        .expect("timed out waiting for framework waiter status");
+        assert_eq!(status.phase, InstallPhase::WaitingForLock);
+        assert_eq!(status.role, InstallRole::Waiter);
+        assert_eq!(status.lock.as_deref(), Some(lock_dir.to_str().unwrap()));
+        assert!(
+            status.message.contains("waiting for another process"),
+            "unexpected wait message: {}",
+            status.message
+        );
 
         drop(first);
         let second = tokio::time::timeout(Duration::from_secs(2), waiter)
