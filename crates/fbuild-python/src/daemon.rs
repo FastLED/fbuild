@@ -168,10 +168,7 @@ fn ensure_running_via_broker_blocking(url: &str) -> Result<bool, String> {
         Err(AdoptError::BrokerDisabled) => Ok(false),
         Err(AdoptError::DisableEnv(err)) => Err(err.to_string()),
         Err(AdoptError::Connect(err)) => {
-            if matches!(
-                err.refusal_kind(),
-                Some(RefusalKind::VersionUnsupported | RefusalKind::VersionBlocked)
-            ) {
+            if broker_refusal_is_fatal(err.refusal_kind()) {
                 Err(format!(
                     "running-process broker refused fbuild daemon version: {err}"
                 ))
@@ -218,10 +215,7 @@ async fn ensure_running_via_broker_async(url: &str) -> Result<bool, String> {
         Err(AdoptError::BrokerDisabled) => Ok(false),
         Err(AdoptError::DisableEnv(err)) => Err(err.to_string()),
         Err(AdoptError::Connect(err)) => {
-            if matches!(
-                err.refusal_kind(),
-                Some(RefusalKind::VersionUnsupported | RefusalKind::VersionBlocked)
-            ) {
+            if broker_refusal_is_fatal(err.refusal_kind()) {
                 Err(format!(
                     "running-process broker refused fbuild daemon version: {err}"
                 ))
@@ -231,6 +225,13 @@ async fn ensure_running_via_broker_async(url: &str) -> Result<bool, String> {
         }
         Err(AdoptError::AsyncJoin(_)) => Ok(false),
     }
+}
+
+fn broker_refusal_is_fatal(kind: Option<RefusalKind>) -> bool {
+    matches!(
+        kind,
+        Some(RefusalKind::VersionUnsupported | RefusalKind::VersionBlocked)
+    )
 }
 
 /// Python-visible Daemon class (high-level API).
@@ -486,8 +487,24 @@ mod tests {
     //! resolution rule (filename + `is_file()` check) is what we own and
     //! what the bug hinged on. Mocking the Python interpreter just to
     //! re-test stdlib attribute access would dilute the signal.
-    use super::{daemon_cache_identity_error, daemon_in_dir, DAEMON_BIN_NAME};
+    use super::{
+        broker_refusal_is_fatal, daemon_cache_identity_error, daemon_in_dir, DAEMON_BIN_NAME,
+    };
+    use running_process::broker::client::RefusalKind;
     use std::fs;
+
+    #[test]
+    fn broker_version_refusals_are_fatal() {
+        assert!(broker_refusal_is_fatal(Some(
+            RefusalKind::VersionUnsupported
+        )));
+        assert!(broker_refusal_is_fatal(Some(RefusalKind::VersionBlocked)));
+    }
+
+    #[test]
+    fn broker_non_refusal_errors_can_fallback() {
+        assert!(!broker_refusal_is_fatal(None));
+    }
 
     #[test]
     fn daemon_bin_name_matches_platform() {
