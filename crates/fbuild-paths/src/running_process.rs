@@ -169,6 +169,20 @@ fn stable_path_key(path: &Path) -> String {
 /// The seven cache roots fbuild records in its broker manifest, resolved from
 /// this crate (the single source of truth for fbuild's on-disk layout).
 ///
+/// Ownership contract:
+///
+/// - `artifact` is the authoritative fbuild global artifact repository root.
+///   It comes from `FBUILD_CACHE_DIR` when set, otherwise
+///   `~/.fbuild/{dev|prod}/cache`. Package/toolchain/framework archives,
+///   installed payloads, `.lnk` blobs, and the disk-cache database live below
+///   this root.
+/// - `index` is broker metadata for the same artifact repository, not a
+///   daemon-version partition.
+/// - `temp`, `log`, `lock`, and `config` are fbuild-owned support roots under
+///   `~/.fbuild/{dev|prod}`.
+/// - `runtime` identifies daemon binary provenance only. Broker runtime
+///   version/path changes must not fork `artifact` or `index`.
+///
 /// The broker's `CacheManifest` (built in `fbuild-daemon`) maps these to
 /// `running-process` `CacheRootKind`s. `CacheRoots` itself is dependency-free so
 /// the CLI diagnostic can resolve and print the same paths without pulling in
@@ -243,6 +257,31 @@ fn platform_service_definition_dir() -> PathBuf {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::sync::Mutex;
+
+    static ENV_LOCK: Mutex<()> = Mutex::new(());
+
+    struct EnvVarGuard {
+        name: &'static str,
+        previous: Option<std::ffi::OsString>,
+    }
+
+    impl EnvVarGuard {
+        fn set(name: &'static str, value: impl AsRef<std::ffi::OsStr>) -> Self {
+            let previous = std::env::var_os(name);
+            std::env::set_var(name, value);
+            Self { name, previous }
+        }
+    }
+
+    impl Drop for EnvVarGuard {
+        fn drop(&mut self) {
+            match self.previous.take() {
+                Some(value) => std::env::set_var(self.name, value),
+                None => std::env::remove_var(self.name),
+            }
+        }
+    }
 
     #[test]
     fn service_definition_metadata_matches_tracker() {
@@ -286,6 +325,49 @@ mod tests {
         assert!(
             !identity.label_value().contains(env!("CARGO_PKG_VERSION")),
             "backend crate version must not be a cache-owner dimension"
+        );
+    }
+
+    #[test]
+    fn cache_roots_respect_fbuild_cache_dir_as_artifact_owner() {
+        let _env = ENV_LOCK.lock().unwrap();
+        let cache_root =
+            std::env::temp_dir().join(format!("fbuild-cache-roots-{}", std::process::id()));
+        let _cache_guard = EnvVarGuard::set(FBUILD_CACHE_DIR_ENV, &cache_root);
+        let runtime = PathBuf::from("/opt/fbuild/bin");
+
+        let roots = CacheRoots::discover(&runtime);
+
+        assert_eq!(roots.artifact, cache_root);
+        assert_eq!(roots.index, cache_root.join("index"));
+        assert_eq!(roots.runtime, runtime);
+        assert_ne!(
+            roots.artifact, roots.runtime,
+            "daemon runtime provenance must not become the artifact repository"
+        );
+    }
+
+    #[test]
+    fn cache_roots_keep_artifacts_stable_across_runtime_dirs() {
+        let _env = ENV_LOCK.lock().unwrap();
+        let cache_root =
+            std::env::temp_dir().join(format!("fbuild-cache-roots-stable-{}", std::process::id()));
+        let _cache_guard = EnvVarGuard::set(FBUILD_CACHE_DIR_ENV, &cache_root);
+        let runtime_v1 = PathBuf::from("/opt/fbuild-1/bin");
+        let runtime_v2 = PathBuf::from("/opt/fbuild-2/bin");
+
+        let roots_v1 = CacheRoots::discover(&runtime_v1);
+        let roots_v2 = CacheRoots::discover(&runtime_v2);
+
+        assert_eq!(roots_v1.artifact, roots_v2.artifact);
+        assert_eq!(roots_v1.index, roots_v2.index);
+        assert_eq!(roots_v1.temp, roots_v2.temp);
+        assert_eq!(roots_v1.log, roots_v2.log);
+        assert_eq!(roots_v1.lock, roots_v2.lock);
+        assert_eq!(roots_v1.config, roots_v2.config);
+        assert_ne!(
+            roots_v1.runtime, roots_v2.runtime,
+            "runtime changes are daemon provenance, not cache ownership"
         );
     }
 }
