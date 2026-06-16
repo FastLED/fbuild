@@ -15,6 +15,26 @@ fn encode_port(port: &str) -> String {
     port.replace('%', "%25").replace('/', "%2F")
 }
 
+fn stream_status_message(event: &StreamEvent) -> Option<String> {
+    event
+        .dependency_install
+        .as_ref()
+        .map(|status| match status.version.as_deref() {
+            Some(version) => format!("{} {}: {}", status.name, version, status.message),
+            None => format!("{}: {}", status.name, status.message),
+        })
+        .or_else(|| event.message.clone())
+        .or_else(|| {
+            event.current_operation.as_ref().map(|op| {
+                if event.operation_in_progress.unwrap_or(false) {
+                    format!("daemon busy: {}", op)
+                } else {
+                    op.clone()
+                }
+            })
+        })
+}
+
 /// Return the current process PID and working directory for request auditing.
 pub fn caller_info() -> (Option<u32>, Option<String>) {
     let pid = Some(std::process::id());
@@ -286,6 +306,11 @@ impl DaemonClient {
                         "log" => {
                             if let Some(msg) = event.message {
                                 println!("{}", msg);
+                            }
+                        }
+                        "status" => {
+                            if let Some(msg) = stream_status_message(&event) {
+                                eprintln!("{}", msg);
                             }
                         }
                         "result" => {

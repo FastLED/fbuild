@@ -183,6 +183,9 @@ pub(super) struct StreamEvent {
     pub exit_code: Option<i32>,
     pub output_file: Option<String>,
     pub output_dir: Option<String>,
+    pub current_operation: Option<String>,
+    pub operation_in_progress: Option<bool>,
+    pub dependency_install: Option<fbuild_core::install_status::InstallStatus>,
 }
 
 #[derive(Debug, Deserialize)]
