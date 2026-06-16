@@ -32,6 +32,12 @@ pub(crate) enum ServerMessage {
         #[allow(dead_code)]
         message: Option<String>,
     },
+    /// Reply to `ClientMessage::GetInWaiting` — the number of buffered
+    /// lines this client's broadcast receiver has not yet observed.
+    /// See FastLED/fbuild#605.
+    InWaiting {
+        count: usize,
+    },
     Preempted {
         #[allow(dead_code)]
         reason: String,
@@ -64,4 +70,11 @@ pub(crate) enum ClientMessage {
         data: String,
     },
     Detach,
+    /// Drop buffered serial-line data on the daemon side. Matches
+    /// pyserial's `Serial.reset_input_buffer()`. See FastLED/fbuild#605.
+    ClearBuffer,
+    /// Ask the daemon for the count of buffered lines this client has
+    /// not yet observed. Maps to pyserial's `Serial.in_waiting`. The
+    /// daemon replies with `ServerMessage::InWaiting`. See FastLED/fbuild#605.
+    GetInWaiting,
 }

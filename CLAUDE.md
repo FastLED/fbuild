@@ -115,6 +115,7 @@ Custom Claude Code skills in `.claude/skills/`:
 - **HTTP API compatibility** — same endpoints and JSON schemas as the Python daemon
 - **Windows USB-CDC** — 30 retries, aggressive buffer drain, DTR/RTS toggling after flash
 - **Emulator CLI convention** — prefer `fbuild test-emu` for CI; `fbuild deploy --to emu [--emulator <kind>]` for interactive use; keep `--target` and `--qemu` only as compatibility aliases
+- **Serial recovery & client API** — post-deploy serial-port recovery is owned by `Deployer::post_deploy_recovery` (default: 3 s fast-poll; platform-specific deployers can override for e.g. LPC + CMSIS-DAP wedge recovery). Clients consume serial through `fbuild.api.SerialMonitor` exclusively — direct pyserial use by clients is deprecated and will be lint-enforced in a follow-up sweep (FastLED/fbuild#605 Phase 1).
 
 ## Reference Implementations
 

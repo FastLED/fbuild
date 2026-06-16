@@ -416,7 +416,7 @@ pub async fn deploy(
         ctx.device_manager
             .refresh_devices_if_stale(std::time::Duration::from_secs(2));
     }
-    let deploy_result = tokio::task::spawn_blocking(move || {
+    let deploy_result = tokio::task::spawn_blocking(move || -> fbuild_core::Result<(Option<Box<dyn fbuild_deploy::Deployer>>, fbuild_deploy::DeploymentResult)> {
         // Populated by the Espressif32 arm with (image_hash, port).
         // The tail of the closure consults it after `deployer.deploy`
         // returns to record or invalidate the daemon's trusted-hash
@@ -544,7 +544,8 @@ pub async fn deploy(
                                     port,
                                     "trusted-hash: session-trusted match; skipping verify-flash entirely"
                                 );
-                                return Ok(fbuild_deploy::DeploymentResult {
+                                // VerifySkip → recovery skipped (#605).
+                                return Ok((None, fbuild_deploy::DeploymentResult {
                                     success: true,
                                     message: format!(
                                         "firmware already current on {} (skipped via session trust)",
@@ -554,7 +555,7 @@ pub async fn deploy(
                                     stdout: String::new(),
                                     stderr: String::new(),
                                     outcome: fbuild_deploy::DeployOutcome::VerifySkip,
-                                });
+                                }));
                             }
                         }
                     }
@@ -581,7 +582,8 @@ pub async fn deploy(
                                 port,
                                 "verify-flash: device already running this exact image; skipping write"
                             );
-                            return Ok(fbuild_deploy::DeploymentResult {
+                            // VerifySkip → recovery skipped (#605).
+                            return Ok((None, fbuild_deploy::DeploymentResult {
                                 success: true,
                                 message: format!(
                                     "firmware already current on {} (skipped via verify-flash)",
@@ -591,7 +593,7 @@ pub async fn deploy(
                                 stdout,
                                 stderr,
                                 outcome: fbuild_deploy::DeployOutcome::VerifySkip,
-                            });
+                            }));
                         }
                         Ok(fbuild_deploy::esp32::VerifyOutcome::Mismatch { regions, .. }) => {
                             // Pick only the regions that actually differ
@@ -644,7 +646,12 @@ pub async fn deploy(
                             }
                         }
                     }
-                    return result;
+                    // Selective flash did write to flash — return the
+                    // deployer so post-deploy recovery runs.
+                    return result.map(|r| {
+                        let boxed: Box<dyn fbuild_deploy::Deployer> = Box::new(deployer);
+                        (Some(boxed), r)
+                    });
                 }
 
                 // Capture the hash into the boxed deployer closure
@@ -735,48 +742,41 @@ pub async fn deploy(
                 }
             }
         }
-        result
+        // Return the deployer so the async caller can invoke
+        // `post_deploy_recovery` after `clear_preemption().await` (#605).
+        result.map(|r| (Some(deployer), r))
     })
     .await;
 
-    // Clear preemption then wait for USB re-enumeration.
-    // Fast-poll the serial port instead of a hard 2s sleep — most ESP32-S3
-    // boards with native USB re-enumerate in <500ms.
-    //
-    // Skip the poll entirely when the deploy didn't actually touch
-    // flash (VerifySkip): no reset happened, no USB re-enumeration
-    // is coming, and the poll's `open()` probe would conflict with
-    // any already-attached monitor and burn the full 3 s timeout.
-    // This is load-bearing for the < 4 s warm-trust-skip budget.
+    // Split the deployer out so it can drive recovery while `deploy_result`
+    // retains its original shape for the downstream match. `None` covers
+    // verify-skip early returns, unsupported platforms, and join errors.
+    let (deployer_for_recovery, deploy_result) = match deploy_result {
+        Ok(Ok((d, r))) => (d, Ok(Ok(r))),
+        Ok(Err(e)) => (None, Ok(Err(e))),
+        Err(e) => (None, Err(e)),
+    };
+
+    // Skip recovery when the deploy didn't touch flash (VerifySkip): no
+    // reset, no USB re-enumeration, and the poll's `open()` probe would
+    // conflict with any already-attached monitor — load-bearing for the
+    // <4 s warm-trust-skip budget.
     let deploy_skipped_bus_work = matches!(
         &deploy_result,
-        Ok(Ok(r)) if r.success && matches!(
-            r.outcome,
-            fbuild_deploy::DeployOutcome::VerifySkip
-        )
+        Ok(Ok(r)) if r.success && matches!(r.outcome, fbuild_deploy::DeployOutcome::VerifySkip)
     );
     if let Some(ref p) = deploy_port_str {
         ctx.serial_manager.clear_preemption(p).await;
         if !deploy_skipped_bus_work {
-            let port_name = p.clone();
-            let _ = tokio::task::spawn_blocking(move || {
-                let deadline = std::time::Instant::now() + std::time::Duration::from_secs(3);
-                while std::time::Instant::now() < deadline {
-                    if serialport::new(&port_name, 115200)
-                        .timeout(std::time::Duration::from_millis(50))
-                        .open()
-                        .is_ok()
-                    {
-                        return;
+            if let Some(deployer) = deployer_for_recovery {
+                let port_name = p.clone();
+                let _ = tokio::task::spawn_blocking(move || {
+                    if let Err(e) = deployer.post_deploy_recovery(&port_name) {
+                        tracing::warn!("post_deploy_recovery failed for {}: {}", port_name, e);
                     }
-                    std::thread::sleep(std::time::Duration::from_millis(100));
-                }
-                tracing::warn!(
-                    "USB re-enumeration: port {} not available after 3s",
-                    port_name
-                );
-            })
-            .await;
+                })
+                .await;
+            }
         }
     }
 
