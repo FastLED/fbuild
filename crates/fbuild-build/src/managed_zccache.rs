@@ -543,6 +543,22 @@ mod tests {
     }
 
     #[test]
+    fn managed_zccache_lives_under_mode_root_bin_not_cache_runtime() {
+        let root = fbuild_paths::get_fbuild_root();
+        let cache_root = fbuild_paths::get_cache_root();
+        let dir = managed_dir();
+        let managed_version_dir = format!("zccache-{MANAGED_ZCCACHE_VERSION}");
+
+        assert!(dir.starts_with(root.join("bin")));
+        assert!(!dir.starts_with(&cache_root));
+        assert_eq!(
+            dir.file_name().and_then(|name| name.to_str()),
+            Some(managed_version_dir.as_str())
+        );
+        assert_eq!(managed_zccache_exe().parent(), Some(dir.as_path()));
+    }
+
+    #[test]
     fn sha256_for_asset_parses_dot_slash_entries() {
         let sums = "\
 601f68d19f2bfdc0f277636851dc582989fbcb697c6754952416dd6a2a9b2adb  ./zccache-v1.12.0-x86_64-unknown-linux-musl.tar.gz

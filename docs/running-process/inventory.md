@@ -16,7 +16,7 @@ payload-protocol registration: zackees/running-process#440.
 | **daemon model** | A single **persistent per-user daemon** (`fbuild-daemon`), an axum HTTP/WebSocket server. The CLI spawns it detached (`ensure_daemon_running`) and it self-evicts on idle. It is **not** one-worker-per-build and **not** direct child processes. Dev/prod isolation: `FBUILD_DEV_MODE=1` → port 8865 + `~/.fbuild/dev/`; prod → port 8765 + `~/.fbuild/prod/`. |
 | **request wire** | **JSON over loopback HTTP** (`http://127.0.0.1:<port>`). Requests are `serde_json`-serialized structs POSTed to fixed paths: `/api/build`, `/api/deploy`, `/api/monitor`, `/api/test-emu`, plus `GET /api/daemon/info`, `GET /api/cache/stats`, `POST /api/cache/gc`, `GET /api/locks/status`, `GET /health`. Build supports an NDJSON streaming variant. **No explicit protocol-version constant exists today** — compatibility is the implicit "same endpoints + JSON schemas as the Python FastAPI daemon" contract (see `crates/fbuild-daemon/README.md`). This PR introduces an explicit `FBUILD_PROTOCOL_VERSION = 1` for the fbuild payload schema. |
 | **response wire** | **JSON** (`OperationResponse`, `DaemonInfoResponse`, `CacheStatsResponse`, …). Error envelope: non-2xx HTTP status with a JSON body (or a plain `OperationResponse { success: false, message }`). Retry behavior: the **client** retries daemon *spawn* with backoff `[0.0s, 0.5s, 2.0s]` and polls `/health`; individual RPCs are not auto-retried (the 100 ms connect-timeout fails fast on ECONNREFUSED). |
-| **cache roots** | Resolved from `fbuild-paths`: **artifact** = `get_cache_root()` (`~/.fbuild/<mode>/cache`, or `FBUILD_CACHE_DIR`); **index** = `<cache>/index`; **temp** = `<fbuild_root>/tmp`; **log** = daemon dir (`~/.fbuild/<mode>/daemon/daemon.log`); **lock** = daemon dir (`fbuild_daemon.pid`, `daemon.port`, in-memory project/port locks) plus per-install lock dirs co-located with package/toolchain/framework final install paths; **runtime** = directory holding the relocated `fbuild-daemon` binary; **config** = `get_fbuild_root()` (`~/.fbuild/<mode>`). The artifact root is the ownership boundary for large shared packages/toolchains/frameworks/sidecars. Runtime is provenance only and must not fork artifact ownership by daemon version. |
+| **cache roots** | Resolved from `fbuild-paths`: **artifact** = `get_cache_root()` (`~/.fbuild/<mode>/cache`, or `FBUILD_CACHE_DIR`); **index** = `<cache>/index`; **temp** = `<fbuild_root>/tmp`; **log** = daemon dir (`~/.fbuild/<mode>/daemon/daemon.log`); **lock** = daemon dir (`fbuild_daemon.pid`, `daemon.port`, in-memory project/port locks) plus per-install lock dirs co-located with package/toolchain/framework final install paths; **runtime** = directory holding the relocated `fbuild-daemon` binary; **config** = `get_fbuild_root()` (`~/.fbuild/<mode>`). The artifact root owns large shared package/toolchain/framework/cache artifacts. Managed sidecar binaries such as zccache live under `<fbuild_root>/bin/` and are shared by mode/trust domain, not by broker backend version. Runtime is provenance only and must not fork artifact ownership by daemon version. |
 | **CI trust grouping** | Local dev = a single per-user shared cache (`SHARED_BROKER`). CI jobs that intentionally isolate trust groups use a dedicated `EXPLICIT_INSTANCE` named **`ci-trusted`** so a poisoned/untrusted job cannot reach another group's negotiated backend. |
 | **rollback path** | `RUNNING_PROCESS_DISABLE=1` selects the legacy direct loopback-HTTP path (`DaemonClient`). `FbuildBrokerSession::adopt` honours it first and returns `AdoptOutcome::UseDirectPath` without dialing the broker. (`FBUILD_RUNNING_PROCESS_BROKER=1` remains the opt-in broker request flag from the prior minimal seam.) |
 
@@ -45,6 +45,25 @@ Package/toolchain/framework installs take a process-shared sibling lock before
 network fetch or extraction begins, then re-check the final install path while
 holding that lock. This keeps different projects or daemon processes from
 duplicating large downloads for the same global artifact root.
+
+### Global Artifact Ownership
+
+The following paths are fbuild-owned and must not gain broker-instance or daemon
+package-version path segments:
+
+| Root | Owner | Shared across daemon versions? |
+|---|---|---|
+| `get_cache_root()/packages` | downloaded and extracted package archives | yes, subject to cache schema compatibility |
+| `get_cache_root()/toolchains` | toolchain archives, metadata, and extracted toolchains | yes, subject to cache schema compatibility |
+| `get_cache_root()/platforms` | platform packages | yes, subject to cache schema compatibility |
+| `get_cache_root()/libraries` | library and framework packages | yes, subject to cache schema compatibility |
+| `get_cache_root()/core` | shared compiled core artifacts | yes, subject to cache schema compatibility |
+| `get_cache_root()/index` | disk-cache index and migration state | yes only when schema checks pass |
+| `get_fbuild_root()/bin/zccache-<version>` | managed zccache sidecar binaries | yes for the mode/trust domain; independent of broker runtime |
+| `get_fbuild_root()/tmp` | shared staging/temp area | yes, guarded by install locks and atomic finalization |
+| `get_daemon_dir()` | daemon PID, port, status, and log files | no; daemon-state/provenance only |
+| broker `CacheRuntime` | relocated `fbuild-daemon` binary directory | no; provenance only |
+| `get_fbuild_root()` | mode config root | yes for local shared mode, separated by CI trust domain |
 
 Dependency installs publish best-effort phase updates (`waiting_for_lock`,
 `downloading`, `verifying`, `extracting`, `installed`) through daemon status.
