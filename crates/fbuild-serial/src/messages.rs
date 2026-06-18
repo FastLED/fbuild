@@ -70,6 +70,12 @@ pub enum SerialServerMessage {
         port: String,
         previous_port: String,
     },
+    PortRebindFailed {
+        port: String,
+        new_port: String,
+        reason: String,
+        message: String,
+    },
     WriteAck {
         success: bool,
         bytes_written: usize,
@@ -105,6 +111,12 @@ pub enum SerialStreamEvent {
     PortReattached {
         port: String,
         previous_port: String,
+    },
+    PortRebindFailed {
+        port: String,
+        new_port: String,
+        reason: String,
+        message: String,
     },
 }
 
@@ -312,6 +324,33 @@ mod tests {
                 assert_eq!(previous_port, "COM21");
             }
             _ => panic!("expected PortReattached"),
+        }
+    }
+
+    #[test]
+    fn server_port_rebind_failed_roundtrip() {
+        let msg = SerialServerMessage::PortRebindFailed {
+            port: "COM21".into(),
+            new_port: "COM20".into(),
+            reason: "open_failed".into(),
+            message: "access denied".into(),
+        };
+        let json = serde_json::to_string(&msg).unwrap();
+        assert!(json.contains("\"type\":\"port_rebind_failed\""));
+        let parsed: SerialServerMessage = serde_json::from_str(&json).unwrap();
+        match parsed {
+            SerialServerMessage::PortRebindFailed {
+                port,
+                new_port,
+                reason,
+                message,
+            } => {
+                assert_eq!(port, "COM21");
+                assert_eq!(new_port, "COM20");
+                assert_eq!(reason, "open_failed");
+                assert_eq!(message, "access denied");
+            }
+            _ => panic!("expected PortRebindFailed"),
         }
     }
 

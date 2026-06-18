@@ -378,27 +378,58 @@ impl DaemonContext {
             .clone()
     }
 
-    pub fn refresh_devices_and_broadcast_serial_moves(&self) {
+    pub async fn refresh_devices_and_broadcast_serial_moves(&self) {
         self.device_manager.refresh_devices();
-        self.broadcast_recent_device_port_moves();
+        self.rebind_recent_device_port_moves().await;
     }
 
-    pub fn refresh_devices_if_stale_and_broadcast_serial_moves(&self, max_age: Duration) -> bool {
+    pub async fn refresh_devices_if_stale_and_broadcast_serial_moves(
+        &self,
+        max_age: Duration,
+    ) -> bool {
         let refreshed = self.device_manager.refresh_devices_if_stale(max_age);
         if refreshed {
-            self.broadcast_recent_device_port_moves();
+            self.rebind_recent_device_port_moves().await;
         }
         refreshed
     }
 
-    fn broadcast_recent_device_port_moves(&self) {
+    async fn rebind_recent_device_port_moves(&self) {
         for move_event in self.device_manager.take_recent_port_moves() {
-            self.serial_manager.notify_port_renumbered(
-                &move_event.previous_port,
-                &move_event.port,
-                "tracked_serial_move",
-                move_event.serial_number,
-            );
+            match self
+                .serial_manager
+                .rebind_port_session(
+                    &move_event.previous_port,
+                    &move_event.port,
+                    "tracked_serial_move",
+                    move_event.serial_number.clone(),
+                )
+                .await
+            {
+                Ok(true) => {}
+                Ok(false) => {
+                    self.serial_manager.notify_port_renumbered(
+                        &move_event.previous_port,
+                        &move_event.port,
+                        "tracked_serial_move",
+                        move_event.serial_number,
+                    );
+                }
+                Err(err) => {
+                    self.serial_manager.notify_port_rebind_failed(
+                        &move_event.previous_port,
+                        &move_event.port,
+                        "open_failed",
+                        err.to_string(),
+                    );
+                    tracing::warn!(
+                        previous_port = move_event.previous_port,
+                        port = move_event.port,
+                        "failed to rebind serial session after tracked port move: {}",
+                        err
+                    );
+                }
+            }
         }
     }
 }

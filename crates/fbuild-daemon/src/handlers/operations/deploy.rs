@@ -364,7 +364,7 @@ pub async fn deploy(
     }
 
     let deploy_port_choice = if req.port.is_none() {
-        ctx.refresh_devices_and_broadcast_serial_moves();
+        ctx.refresh_devices_and_broadcast_serial_moves().await;
         choose_deploy_port(
             None,
             platform,
@@ -412,7 +412,8 @@ pub async fn deploy(
     // the trust-check still requires `is_connected == true` on the
     // cached DeviceState, which the most-recent refresh supplied.
     if trusted_hash_enabled {
-        ctx.refresh_devices_if_stale_and_broadcast_serial_moves(std::time::Duration::from_secs(2));
+        ctx.refresh_devices_if_stale_and_broadcast_serial_moves(std::time::Duration::from_secs(2))
+            .await;
     }
     let deploy_result = tokio::task::spawn_blocking(move || -> fbuild_core::Result<(Option<Box<dyn fbuild_deploy::Deployer>>, fbuild_deploy::DeploymentResult)> {
         // Populated by the Espressif32 arm with (image_hash, port).

@@ -235,6 +235,17 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                             break;
                         }
                     }
+                    Ok(SerialStreamEvent::PortRebindFailed { port, new_port, reason, message }) => {
+                        let msg = SerialServerMessage::PortRebindFailed {
+                            port,
+                            new_port,
+                            reason,
+                            message,
+                        };
+                        if socket.send(Message::Text(serde_json::to_string(&msg).unwrap())).await.is_err() {
+                            break;
+                        }
+                    }
                     Err(tokio::sync::broadcast::error::RecvError::Lagged(n)) => {
                         tracing::warn!(client_id, port, n, "reader lagged, skipping lines");
                     }
