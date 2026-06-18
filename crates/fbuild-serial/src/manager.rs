@@ -19,6 +19,7 @@
 //! 5. Toggle DTR/RTS for flow control
 
 use crate::crash_decoder::CrashDecoder;
+use crate::messages::SerialStreamEvent;
 use crate::preemption::PreemptionTracker;
 use crate::session::SerialSession;
 use dashmap::DashMap;
@@ -43,7 +44,7 @@ struct PortOutputBuffer {
 pub struct SharedSerialManager {
     sessions: DashMap<String, SerialSession>,
     /// Broadcast channels per port for output distribution.
-    broadcasters: DashMap<String, broadcast::Sender<String>>,
+    broadcasters: DashMap<String, broadcast::Sender<SerialStreamEvent>>,
     /// Monotonic per-port generation that invalidates delayed physical closes.
     close_generations: DashMap<String, u64>,
     preemption: Arc<PreemptionTracker>,
@@ -195,7 +196,7 @@ impl SharedSerialManager {
                                             }
 
                                             // Broadcast the line
-                                            let _ = tx.send(line.clone());
+                                            let _ = tx.send(SerialStreamEvent::Data(line.clone()));
 
                                             // Append to output buffer
                                             if let Ok(mut ob) = port_buf.buffer.lock() {
@@ -218,11 +219,17 @@ impl SharedSerialManager {
                                         std::thread::sleep(Duration::from_millis(10));
                                     }
                                     Err(e) => {
+                                        let message = e.to_string();
                                         tracing::error!(
                                             port = port_clone,
                                             "serial read error: {}",
-                                            e
+                                            message
                                         );
+                                        let _ = tx.send(SerialStreamEvent::PortDisconnected {
+                                            port: port_clone.clone(),
+                                            reason: "read_error".to_string(),
+                                            message,
+                                        });
                                         break;
                                     }
                                 }
@@ -462,7 +469,7 @@ impl SharedSerialManager {
         &self,
         port: &str,
         client_id: &str,
-    ) -> Option<broadcast::Receiver<String>> {
+    ) -> Option<broadcast::Receiver<SerialStreamEvent>> {
         let rx = self.broadcasters.get(port).map(|tx| tx.subscribe())?;
         if let Some(mut session) = self.sessions.get_mut(port) {
             session.reader_client_ids.insert(client_id.to_string());

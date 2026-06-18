@@ -7,6 +7,7 @@ use crate::models::{MonitorRequest, OperationResponse};
 use axum::extract::State;
 use axum::http::StatusCode;
 use axum::Json;
+use fbuild_serial::SerialStreamEvent;
 use std::sync::Arc;
 
 /// Outcome of a post-deploy monitor session.
@@ -160,7 +161,7 @@ impl MonitorState {
 /// Run a monitor loop reading lines from broadcast, checking halt conditions
 /// using case-insensitive regex (matching Python's re.search behavior).
 pub(crate) async fn run_monitor_loop(
-    rx: &mut tokio::sync::broadcast::Receiver<String>,
+    rx: &mut tokio::sync::broadcast::Receiver<SerialStreamEvent>,
     timeout_secs: Option<f64>,
     halt_on_error: Option<&str>,
     halt_on_success: Option<&str>,
@@ -186,10 +187,19 @@ pub(crate) async fn run_monitor_loop(
             .unwrap_or(std::time::Duration::from_secs(1));
 
         match tokio::time::timeout(recv_timeout, rx.recv()).await {
-            Ok(Ok(line)) => {
+            Ok(Ok(SerialStreamEvent::Data(line))) => {
                 if let Some(outcome) = state.process_line(&line) {
                     return outcome;
                 }
+            }
+            Ok(Ok(SerialStreamEvent::PortDisconnected {
+                port,
+                reason,
+                message,
+            })) => {
+                return MonitorOutcome::Error(format!(
+                    "serial port {port} disconnected ({reason}): {message}"
+                ));
             }
             Ok(Err(tokio::sync::broadcast::error::RecvError::Lagged(n))) => {
                 tracing::warn!("monitor lagged, skipped {} messages", n);
@@ -458,6 +468,29 @@ mod tests {
         match s.process_line("system READY now") {
             Some(MonitorOutcome::Success(msg)) => assert!(msg.contains("READY")),
             other => panic!("expected Success outcome, got {other:?}"),
+        }
+    }
+
+    #[tokio::test]
+    async fn monitor_loop_errors_on_port_disconnected_event() {
+        let (tx, mut rx) = tokio::sync::broadcast::channel(4);
+        tx.send(SerialStreamEvent::PortDisconnected {
+            port: "COM3".to_string(),
+            reason: "read_error".to_string(),
+            message: "device disconnected".to_string(),
+        })
+        .unwrap();
+
+        let outcome =
+            run_monitor_loop(&mut rx, Some(5.0), None, Some("READY"), None, false, false).await;
+
+        match outcome {
+            MonitorOutcome::Error(msg) => {
+                assert!(msg.contains("COM3"));
+                assert!(msg.contains("read_error"));
+                assert!(msg.contains("device disconnected"));
+            }
+            other => panic!("expected Error outcome, got {other:?}"),
         }
     }
 }

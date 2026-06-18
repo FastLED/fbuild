@@ -54,6 +54,11 @@ pub enum SerialServerMessage {
     Reconnected {
         message: String,
     },
+    PortDisconnected {
+        port: String,
+        reason: String,
+        message: String,
+    },
     WriteAck {
         success: bool,
         bytes_written: usize,
@@ -67,6 +72,17 @@ pub enum SerialServerMessage {
         count: usize,
     },
     Error {
+        message: String,
+    },
+}
+
+/// Internal stream event broadcast by the shared serial manager.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum SerialStreamEvent {
+    Data(String),
+    PortDisconnected {
+        port: String,
+        reason: String,
         message: String,
     },
 }
@@ -204,6 +220,30 @@ mod tests {
         };
         let json = serde_json::to_string(&msg).unwrap();
         assert!(json.contains("\"type\":\"reconnected\""));
+    }
+
+    #[test]
+    fn server_port_disconnected_roundtrip() {
+        let msg = SerialServerMessage::PortDisconnected {
+            port: "COM3".into(),
+            reason: "read_error".into(),
+            message: "device disconnected".into(),
+        };
+        let json = serde_json::to_string(&msg).unwrap();
+        assert!(json.contains("\"type\":\"port_disconnected\""));
+        let parsed: SerialServerMessage = serde_json::from_str(&json).unwrap();
+        match parsed {
+            SerialServerMessage::PortDisconnected {
+                port,
+                reason,
+                message,
+            } => {
+                assert_eq!(port, "COM3");
+                assert_eq!(reason, "read_error");
+                assert_eq!(message, "device disconnected");
+            }
+            _ => panic!("expected PortDisconnected"),
+        }
     }
 
     #[test]

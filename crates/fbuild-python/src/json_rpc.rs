@@ -80,6 +80,7 @@ pub(crate) async fn read_lines_async(
                         break;
                     }
                     Ok(ServerMessage::Reconnected { .. }) => continue,
+                    Ok(ServerMessage::PortDisconnected { .. }) => break,
                     _ => continue,
                 }
             }

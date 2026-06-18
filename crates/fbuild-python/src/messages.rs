@@ -48,6 +48,14 @@ pub(crate) enum ServerMessage {
         #[allow(dead_code)]
         message: String,
     },
+    PortDisconnected {
+        #[allow(dead_code)]
+        port: String,
+        #[allow(dead_code)]
+        reason: String,
+        #[allow(dead_code)]
+        message: String,
+    },
     Error {
         message: String,
     },
