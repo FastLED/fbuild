@@ -5,6 +5,7 @@ use super::common::{
     parse_deploy_route, qemu_extra_build_flags, resolve_build_dir, resolve_client_path,
     trust_device_hash_enabled, DeployRoute, EmulatorKind, OperationGuard,
 };
+use super::deploy_port::{append_warning_to_stderr, choose_deploy_port};
 use super::monitor::{run_monitor_loop, MonitorOutcome};
 use crate::context::DaemonContext;
 use crate::models::{DeployRequest, OperationResponse};
@@ -361,30 +362,27 @@ pub async fn deploy(
         .await;
     }
 
-    // Preempt serial if port specified
-    let deploy_port_str = req.port.clone();
+    let deploy_port_choice = if req.port.is_none() {
+        ctx.device_manager.refresh_devices();
+        choose_deploy_port(
+            None,
+            platform,
+            board.as_ref(),
+            ctx.device_manager.get_all_devices().into_values().collect(),
+        )
+    } else {
+        choose_deploy_port(req.port.clone(), platform, board.as_ref(), Vec::new())
+    };
+    let deploy_port_warning = deploy_port_choice.warning.clone();
+
+    // Preempt serial if port specified or auto-selected.
+    let deploy_port_str = deploy_port_choice.port;
     if let Some(ref p) = deploy_port_str {
         let _ = ctx
             .serial_manager
             .preempt_for_deploy(p, "deploy".to_string(), request_id.clone())
             .await;
     }
-
-    // Extract board ID before spawn_blocking (env_config borrows config)
-    let board_id = env_config.get("board").cloned().unwrap_or_else(|| {
-        fbuild_build::get_platform_support(platform)
-            .map(|s| s.default_board_id().to_string())
-            .unwrap_or_else(|_| "unknown".to_string())
-    });
-
-    // Extract env-section board_build.* / board_upload.* overrides BEFORE
-    // spawn_blocking (env_config borrows config). Without these, fbuild
-    // would silently ignore `board_build.flash_mode = dio` (and friends)
-    // from the user's [env:X] section and fall back to whatever the board
-    // JSON says — producing a firmware/bootloader that doesn't match the
-    // hardware. The build phase already passes overrides; the deploy phase
-    // must do the same so esptool flashes with the right --flash-mode.
-    let board_overrides = config.get_board_overrides(&env_name).unwrap_or_default();
 
     // Deploy
     let deploy_env = env_name.clone();
@@ -780,7 +778,7 @@ pub async fn deploy(
         }
     }
 
-    let (deploy_success, deploy_stdout, deploy_stderr, deploy_outcome, deploy_post_port) =
+    let (deploy_success, deploy_stdout, mut deploy_stderr, deploy_outcome, deploy_post_port) =
         match deploy_result {
             Ok(Ok(r)) if r.success => (true, Some(r.stdout), Some(r.stderr), r.outcome, r.port),
             Ok(Ok(r)) => {
@@ -818,6 +816,7 @@ pub async fn deploy(
                 );
             }
         };
+    append_warning_to_stderr(&mut deploy_stderr, deploy_port_warning);
     // Build the "deploy succeeded (...)" prefix used by every
     // monitor-attached and non-monitor-attached response below. Stable
     // wording — see GitHub issue #76 and the DeployOutcome::describe
