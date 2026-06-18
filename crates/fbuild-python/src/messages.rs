@@ -56,6 +56,22 @@ pub(crate) enum ServerMessage {
         #[allow(dead_code)]
         message: String,
     },
+    PortRenumbered {
+        #[allow(dead_code)]
+        port: String,
+        #[allow(dead_code)]
+        new_port: String,
+        #[allow(dead_code)]
+        reason: String,
+        #[allow(dead_code)]
+        serial: Option<String>,
+    },
+    PortReattached {
+        #[allow(dead_code)]
+        port: String,
+        #[allow(dead_code)]
+        previous_port: String,
+    },
     Error {
         message: String,
     },

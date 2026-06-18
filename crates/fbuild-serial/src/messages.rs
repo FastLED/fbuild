@@ -59,6 +59,17 @@ pub enum SerialServerMessage {
         reason: String,
         message: String,
     },
+    PortRenumbered {
+        port: String,
+        new_port: String,
+        reason: String,
+        #[serde(skip_serializing_if = "Option::is_none")]
+        serial: Option<String>,
+    },
+    PortReattached {
+        port: String,
+        previous_port: String,
+    },
     WriteAck {
         success: bool,
         bytes_written: usize,
@@ -84,6 +95,16 @@ pub enum SerialStreamEvent {
         port: String,
         reason: String,
         message: String,
+    },
+    PortRenumbered {
+        port: String,
+        new_port: String,
+        reason: String,
+        serial: Option<String>,
+    },
+    PortReattached {
+        port: String,
+        previous_port: String,
     },
 }
 
@@ -243,6 +264,54 @@ mod tests {
                 assert_eq!(message, "device disconnected");
             }
             _ => panic!("expected PortDisconnected"),
+        }
+    }
+
+    #[test]
+    fn server_port_renumbered_roundtrip() {
+        let msg = SerialServerMessage::PortRenumbered {
+            port: "COM21".into(),
+            new_port: "COM20".into(),
+            reason: "tracked_serial_move".into(),
+            serial: Some("15821020".into()),
+        };
+        let json = serde_json::to_string(&msg).unwrap();
+        assert!(json.contains("\"type\":\"port_renumbered\""));
+        let parsed: SerialServerMessage = serde_json::from_str(&json).unwrap();
+        match parsed {
+            SerialServerMessage::PortRenumbered {
+                port,
+                new_port,
+                reason,
+                serial,
+            } => {
+                assert_eq!(port, "COM21");
+                assert_eq!(new_port, "COM20");
+                assert_eq!(reason, "tracked_serial_move");
+                assert_eq!(serial.as_deref(), Some("15821020"));
+            }
+            _ => panic!("expected PortRenumbered"),
+        }
+    }
+
+    #[test]
+    fn server_port_reattached_roundtrip() {
+        let msg = SerialServerMessage::PortReattached {
+            port: "COM20".into(),
+            previous_port: "COM21".into(),
+        };
+        let json = serde_json::to_string(&msg).unwrap();
+        assert!(json.contains("\"type\":\"port_reattached\""));
+        let parsed: SerialServerMessage = serde_json::from_str(&json).unwrap();
+        match parsed {
+            SerialServerMessage::PortReattached {
+                port,
+                previous_port,
+            } => {
+                assert_eq!(port, "COM20");
+                assert_eq!(previous_port, "COM21");
+            }
+            _ => panic!("expected PortReattached"),
         }
     }
 

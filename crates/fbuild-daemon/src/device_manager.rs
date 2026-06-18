@@ -118,6 +118,13 @@ pub struct DeviceState {
     pub last_disconnect_at: Option<Instant>,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct DevicePortMove {
+    pub previous_port: String,
+    pub port: String,
+    pub serial_number: Option<String>,
+}
+
 impl DeviceState {
     pub fn is_available_for_exclusive(&self) -> bool {
         self.exclusive_lease.is_none()
@@ -155,6 +162,7 @@ pub struct DeviceManager {
     /// enumeration cache is still fresh — the dominant cost on
     /// back-to-back warm deploys.
     last_refresh_at: Mutex<Option<Instant>>,
+    recent_port_moves: Mutex<Vec<DevicePortMove>>,
 }
 
 impl Default for DeviceManager {
@@ -168,6 +176,7 @@ impl DeviceManager {
         Self {
             devices: Mutex::new(HashMap::new()),
             last_refresh_at: Mutex::new(None),
+            recent_port_moves: Mutex::new(Vec::new()),
         }
     }
 
@@ -279,6 +288,7 @@ impl DeviceManager {
                     });
                     if let Some(old_port) = moved_from {
                         if let Some(mut state) = devices.remove(&old_port) {
+                            let serial_number = device.serial_number.clone();
                             state.previous_port = Some(old_port);
                             state.port = key.clone();
                             state.is_connected = true;
@@ -288,6 +298,13 @@ impl DeviceManager {
                             state.vid = device.vid;
                             state.pid = device.pid;
                             state.serial_number = device.serial_number;
+                            if let Some(previous_port) = state.previous_port.clone() {
+                                self.recent_port_moves.lock().unwrap().push(DevicePortMove {
+                                    previous_port,
+                                    port: key.clone(),
+                                    serial_number,
+                                });
+                            }
                             devices.insert(key, state);
                             continue;
                         }
@@ -339,6 +356,11 @@ impl DeviceManager {
     /// Get all devices.
     pub fn get_all_devices(&self) -> HashMap<String, DeviceState> {
         self.devices.lock().unwrap().clone()
+    }
+
+    pub fn take_recent_port_moves(&self) -> Vec<DevicePortMove> {
+        let mut moves = self.recent_port_moves.lock().unwrap();
+        std::mem::take(&mut *moves)
     }
 
     /// Get status for a specific device (by port name).
@@ -828,6 +850,18 @@ mod tests {
         assert!(
             moved.exclusive_lease.as_ref().unwrap().track_serial,
             "moved lease must retain track_serial"
+        );
+        assert_eq!(
+            mgr.take_recent_port_moves(),
+            vec![DevicePortMove {
+                previous_port: "COM3".to_string(),
+                port: "COM4".to_string(),
+                serial_number: Some("TEST-SERIAL".to_string()),
+            }]
+        );
+        assert!(
+            mgr.take_recent_port_moves().is_empty(),
+            "taking recent moves should drain the queue"
         );
     }
 

@@ -201,6 +201,8 @@ pub(crate) async fn run_monitor_loop(
                     "serial port {port} disconnected ({reason}): {message}"
                 ));
             }
+            Ok(Ok(SerialStreamEvent::PortRenumbered { .. }))
+            | Ok(Ok(SerialStreamEvent::PortReattached { .. })) => {}
             Ok(Err(tokio::sync::broadcast::error::RecvError::Lagged(n))) => {
                 tracing::warn!("monitor lagged, skipped {} messages", n);
             }

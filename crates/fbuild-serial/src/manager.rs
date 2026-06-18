@@ -486,6 +486,35 @@ impl SharedSerialManager {
         }
     }
 
+    /// Notify subscribers on the old port that a tracked USB serial moved to a
+    /// new OS port and is available again there.
+    pub fn notify_port_renumbered(
+        &self,
+        old_port: &str,
+        new_port: &str,
+        reason: &str,
+        serial: Option<String>,
+    ) -> bool {
+        let Some(tx) = self.broadcasters.get(old_port) else {
+            return false;
+        };
+        let sent_renumbered = tx
+            .send(SerialStreamEvent::PortRenumbered {
+                port: old_port.to_string(),
+                new_port: new_port.to_string(),
+                reason: reason.to_string(),
+                serial,
+            })
+            .is_ok();
+        let sent_reattached = tx
+            .send(SerialStreamEvent::PortReattached {
+                port: new_port.to_string(),
+                previous_port: old_port.to_string(),
+            })
+            .is_ok();
+        sent_renumbered || sent_reattached
+    }
+
     /// Returns the number of attached readers for a port (0 if not open).
     pub fn reader_count(&self, port: &str) -> usize {
         self.sessions
@@ -894,5 +923,38 @@ mod tests {
             "new reader activity should cancel the pending physical close"
         );
         assert!(mgr.has_clients(port));
+    }
+
+    #[test]
+    fn notify_port_renumbered_broadcasts_events_to_old_port() {
+        let mgr = SharedSerialManager::new();
+        let old_port = "COM21";
+        let new_port = "COM20";
+        let (tx, mut rx) = broadcast::channel(BROADCAST_CHANNEL_SIZE);
+        mgr.broadcasters.insert(old_port.to_string(), tx);
+
+        assert!(mgr.notify_port_renumbered(
+            old_port,
+            new_port,
+            "tracked_serial_move",
+            Some("15821020".to_string())
+        ));
+
+        assert_eq!(
+            rx.try_recv().unwrap(),
+            SerialStreamEvent::PortRenumbered {
+                port: old_port.to_string(),
+                new_port: new_port.to_string(),
+                reason: "tracked_serial_move".to_string(),
+                serial: Some("15821020".to_string()),
+            }
+        );
+        assert_eq!(
+            rx.try_recv().unwrap(),
+            SerialStreamEvent::PortReattached {
+                port: new_port.to_string(),
+                previous_port: old_port.to_string(),
+            }
+        );
     }
 }
