@@ -1,6 +1,6 @@
 # Tasks
 
-Planning and tracking for the fbuild Rust port.
+Historical planning notes for the fbuild Rust port. Active planning and tracking live in GitHub issues for `FastLED/fbuild`.
 
 ## Contents
 
