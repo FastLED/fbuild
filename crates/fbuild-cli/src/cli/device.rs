@@ -1,6 +1,8 @@
 //! `fbuild device` subcommand: list / status / lease / release / take.
 
-use crate::daemon_client::{self, DaemonClient};
+use crate::daemon_client::{
+    self, DaemonClient, DeviceLeaseConflictResponse, DeviceLeaseInfoResponse,
+};
 
 use super::args::DeviceAction;
 
@@ -15,11 +17,23 @@ pub async fn run_device(action: DeviceAction) -> fbuild_core::Result<()> {
                 println!("no devices found");
                 return Ok(());
             }
-            println!("{:<20} {:<12} {:<20}", "PORT", "DEVICE ID", "DESCRIPTION");
-            println!("{}", "-".repeat(52));
+            println!(
+                "{:<20} {:<12} {:<12} {:<24} DESCRIPTION",
+                "PORT", "DEVICE ID", "LEASE", "HOLDER"
+            );
+            println!("{}", "-".repeat(88));
             for dev in &resp.devices {
                 let id = dev.device_id.as_deref().unwrap_or("-");
-                println!("{:<20} {:<12} {:<20}", dev.port, id, dev.description);
+                let lease = lease_summary(dev.exclusive_lease.as_ref(), dev.monitor_count);
+                let holder = dev
+                    .exclusive_lease
+                    .as_ref()
+                    .map(|l| l.client_id.as_str())
+                    .unwrap_or("-");
+                println!(
+                    "{:<20} {:<12} {:<12} {:<24} {}",
+                    dev.port, id, lease, holder, dev.description
+                );
             }
             println!("\n{} device(s) found", resp.devices.len());
         }
@@ -49,8 +63,14 @@ pub async fn run_device(action: DeviceAction) -> fbuild_core::Result<()> {
             if let Some(ref holder) = resp.exclusive_holder {
                 println!("    Exclusive holder: {}", holder);
             }
+            if let Some(ref lease) = resp.exclusive_lease {
+                print_lease("    Exclusive lease", lease);
+            }
             if resp.monitor_count > 0 {
                 println!("    Monitor sessions: {}", resp.monitor_count);
+                for lease in &resp.monitor_leases {
+                    print_lease("      Monitor lease", lease);
+                }
             }
         }
         DeviceAction::Lease {
@@ -68,6 +88,9 @@ pub async fn run_device(action: DeviceAction) -> fbuild_core::Result<()> {
                 }
             } else {
                 eprintln!("error: {}", resp.message);
+                if let Some(ref conflict) = resp.conflict {
+                    print_conflict(conflict);
+                }
             }
         }
         DeviceAction::Release { port, lease_id } => {
@@ -88,4 +111,41 @@ pub async fn run_device(action: DeviceAction) -> fbuild_core::Result<()> {
         }
     }
     Ok(())
+}
+
+fn lease_summary(exclusive: Option<&DeviceLeaseInfoResponse>, monitor_count: usize) -> String {
+    match (exclusive, monitor_count) {
+        (Some(_), 0) => "exclusive".to_string(),
+        (Some(_), n) => format!("exclusive+{n}m"),
+        (None, 0) => "-".to_string(),
+        (None, n) => format!("{n} monitor"),
+    }
+}
+
+fn print_lease(label: &str, lease: &DeviceLeaseInfoResponse) {
+    println!("{}:", label);
+    println!("      lease_id: {}", lease.lease_id);
+    println!("      type: {}", lease.lease_type);
+    println!("      client_id: {}", lease.client_id);
+    println!("      description: {}", empty_dash(&lease.description));
+    println!("      acquired_at: {:.3}", lease.acquired_at);
+}
+
+fn print_conflict(conflict: &DeviceLeaseConflictResponse) {
+    eprintln!(
+        "  holder: {} ({})",
+        conflict.holder.client_id,
+        empty_dash(&conflict.holder.description)
+    );
+    eprintln!("  lease_id: {}", conflict.holder.lease_id);
+    eprintln!("  device: {} {}", conflict.port, conflict.device_id);
+    eprintln!("  description: {}", empty_dash(&conflict.description));
+}
+
+fn empty_dash(value: &str) -> &str {
+    if value.is_empty() {
+        "-"
+    } else {
+        value
+    }
 }

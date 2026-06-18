@@ -315,6 +315,12 @@ pub struct DeviceInfoResponse {
     pub vid: Option<u16>,
     pub pid: Option<u16>,
     pub description: String,
+    #[serde(default)]
+    pub available_for_exclusive: bool,
+    #[serde(default)]
+    pub exclusive_lease: Option<DeviceLeaseInfoResponse>,
+    #[serde(default)]
+    pub monitor_count: usize,
 }
 
 #[derive(Debug, Deserialize)]
@@ -326,7 +332,11 @@ pub struct DeviceStatusResponse {
     pub is_connected: bool,
     pub available_for_exclusive: bool,
     pub exclusive_holder: Option<String>,
+    #[serde(default)]
+    pub exclusive_lease: Option<DeviceLeaseInfoResponse>,
     pub monitor_count: usize,
+    #[serde(default)]
+    pub monitor_leases: Vec<DeviceLeaseInfoResponse>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -336,6 +346,25 @@ pub struct DeviceLeaseResponse {
     #[allow(dead_code)]
     pub lease_type: Option<String>,
     pub message: String,
+    #[serde(default)]
+    pub conflict: Option<DeviceLeaseConflictResponse>,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct DeviceLeaseInfoResponse {
+    pub lease_id: String,
+    pub client_id: String,
+    pub lease_type: String,
+    pub description: String,
+    pub acquired_at: f64,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DeviceLeaseConflictResponse {
+    pub port: String,
+    pub device_id: String,
+    pub description: String,
+    pub holder: DeviceLeaseInfoResponse,
 }
 
 #[derive(Debug, Deserialize)]
