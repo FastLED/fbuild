@@ -243,7 +243,7 @@ fn format_zccache_start_failure(
         if stderr.is_empty() {
             message.push_str(":\n");
         } else {
-            message.push_str("\n");
+            message.push('\n');
         }
         message.push_str("zccache stdout:\n");
         message.push_str(&stdout);
