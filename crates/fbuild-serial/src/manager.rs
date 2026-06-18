@@ -44,6 +44,8 @@ pub struct SharedSerialManager {
     sessions: DashMap<String, SerialSession>,
     /// Broadcast channels per port for output distribution.
     broadcasters: DashMap<String, broadcast::Sender<String>>,
+    /// Monotonic per-port generation that invalidates delayed physical closes.
+    close_generations: DashMap<String, u64>,
     preemption: Arc<PreemptionTracker>,
     /// Per-port crash decoders for translating crash addresses to source locations.
     crash_decoders: DashMap<String, CrashDecoder>,
@@ -56,6 +58,7 @@ impl SharedSerialManager {
         Self {
             sessions: DashMap::new(),
             broadcasters: DashMap::new(),
+            close_generations: DashMap::new(),
             preemption: Arc::new(PreemptionTracker::new()),
             crash_decoders: DashMap::new(),
             output_buffers: DashMap::new(),
@@ -72,6 +75,7 @@ impl SharedSerialManager {
         // If already open, just return Ok
         if let Some(session) = self.sessions.get(port) {
             if session.is_open {
+                self.bump_close_generation(port);
                 tracing::info!(port, client_id, "port already open, reusing");
                 return Ok(());
             }
@@ -239,6 +243,7 @@ impl SharedSerialManager {
                         .as_secs_f64();
 
                     self.sessions.insert(port_name.clone(), session);
+                    self.bump_close_generation(&port_name);
 
                     tracing::info!(port, client_id, attempt, "port opened successfully");
                     return Ok(());
@@ -381,6 +386,7 @@ impl SharedSerialManager {
 
     /// Close a serial port.
     pub async fn close_port(&self, port: &str, client_id: &str) -> fbuild_core::Result<()> {
+        self.bump_close_generation(port);
         if let Some((_, mut session)) = self.sessions.remove(port) {
             // Signal the background reader to stop
             session.stop_flag.store(true, Ordering::Relaxed);
@@ -396,8 +402,54 @@ impl SharedSerialManager {
         }
         self.broadcasters.remove(port);
         self.output_buffers.remove(port);
+        self.close_generations.remove(port);
         tracing::info!(port, client_id, "port closed");
         Ok(())
+    }
+
+    /// Schedule physical close after a grace window if the port is still idle.
+    ///
+    /// This keeps `SerialProxy.close()` logical from the client's point of
+    /// view: the subscriber detaches immediately, but a rapid reconnect can
+    /// reuse the existing OS handle instead of forcing a USB CDC close/open
+    /// cycle. Immediate force-close paths such as deploy preemption still call
+    /// [`Self::close_port`] directly.
+    pub fn close_port_after_grace_if_idle(
+        self: &Arc<Self>,
+        port: &str,
+        client_id: &str,
+        grace: Duration,
+    ) -> bool {
+        if self.has_clients(port) || !self.sessions.contains_key(port) {
+            return false;
+        }
+
+        let generation = self.bump_close_generation(port);
+        let manager = Arc::clone(self);
+        let port = port.to_string();
+        let client_id = client_id.to_string();
+        tokio::spawn(async move {
+            tracing::debug!(
+                port,
+                client_id,
+                grace_ms = grace.as_millis(),
+                "scheduled idle serial port close"
+            );
+            tokio::time::sleep(grace).await;
+            let current_generation = manager.close_generation(&port);
+            if current_generation != Some(generation) || manager.has_clients(&port) {
+                tracing::debug!(
+                    port,
+                    client_id,
+                    "idle serial port close canceled by new activity"
+                );
+                return;
+            }
+            if let Err(err) = manager.close_port(&port, &client_id).await {
+                tracing::warn!(port, client_id, "delayed close failed: {}", err);
+            }
+        });
+        true
     }
 
     /// Attach a reader to receive broadcast output.
@@ -414,6 +466,8 @@ impl SharedSerialManager {
         let rx = self.broadcasters.get(port).map(|tx| tx.subscribe())?;
         if let Some(mut session) = self.sessions.get_mut(port) {
             session.reader_client_ids.insert(client_id.to_string());
+            drop(session);
+            self.bump_close_generation(port);
         }
         Some(rx)
     }
@@ -451,6 +505,8 @@ impl SharedSerialManager {
                 )));
             }
             session.writer_client_id = Some(client_id.to_string());
+            drop(session);
+            self.bump_close_generation(port);
             Ok(())
         } else {
             Err(fbuild_core::FbuildError::SerialError(format!(
@@ -531,6 +587,18 @@ impl SharedSerialManager {
                 }
             })
             .collect()
+    }
+
+    fn bump_close_generation(&self, port: &str) -> u64 {
+        let mut generation = self.close_generations.entry(port.to_string()).or_insert(0);
+        *generation += 1;
+        *generation
+    }
+
+    fn close_generation(&self, port: &str) -> Option<u64> {
+        self.close_generations
+            .get(port)
+            .map(|generation| *generation)
     }
 }
 
@@ -739,5 +807,85 @@ mod tests {
             mgr.broadcasters.get(port).is_none(),
             "close_port must also drop the broadcaster for the released port"
         );
+    }
+
+    #[tokio::test]
+    async fn grace_close_removes_idle_port_after_delay() {
+        let mgr = Arc::new(SharedSerialManager::new());
+        let port = "COM_TEST_GRACE_CLOSE";
+        let client = "monitor-client";
+
+        mgr.sessions.insert(
+            port.to_string(),
+            super::SerialSession {
+                port: port.to_string(),
+                baud_rate: 115200,
+                is_open: true,
+                writer_client_id: None,
+                reader_client_ids: Default::default(),
+                output_buffer: Default::default(),
+                total_bytes_read: 0,
+                total_bytes_written: 0,
+                started_at: 0.0,
+                owner_client_id: Some(client.to_string()),
+                elf_path: None,
+                serial_handle: None,
+                reader_handle: None,
+                stop_flag: Arc::new(std::sync::atomic::AtomicBool::new(false)),
+            },
+        );
+
+        assert!(mgr.close_port_after_grace_if_idle(port, client, Duration::from_millis(10)));
+        tokio::time::sleep(Duration::from_millis(50)).await;
+
+        assert!(
+            mgr.sessions.get(port).is_none(),
+            "idle grace close should physically release the port after delay"
+        );
+    }
+
+    #[tokio::test]
+    async fn grace_close_is_canceled_by_new_reader() {
+        let mgr = Arc::new(SharedSerialManager::new());
+        let port = "COM_TEST_GRACE_CANCEL";
+        let client = "monitor-client";
+        let next_client = "next-client";
+
+        let (tx, _rx) = broadcast::channel(BROADCAST_CHANNEL_SIZE);
+        mgr.broadcasters.insert(port.to_string(), tx);
+        mgr.sessions.insert(
+            port.to_string(),
+            super::SerialSession {
+                port: port.to_string(),
+                baud_rate: 115200,
+                is_open: true,
+                writer_client_id: None,
+                reader_client_ids: Default::default(),
+                output_buffer: Default::default(),
+                total_bytes_read: 0,
+                total_bytes_written: 0,
+                started_at: 0.0,
+                owner_client_id: Some(client.to_string()),
+                elf_path: None,
+                serial_handle: None,
+                reader_handle: None,
+                stop_flag: Arc::new(std::sync::atomic::AtomicBool::new(false)),
+            },
+        );
+
+        assert!(mgr.close_port_after_grace_if_idle(port, client, Duration::from_millis(25)));
+        let rx = mgr.attach_reader(port, next_client);
+        assert!(
+            rx.is_some(),
+            "new reader should attach during pending close grace window"
+        );
+
+        tokio::time::sleep(Duration::from_millis(75)).await;
+
+        assert!(
+            mgr.sessions.get(port).is_some(),
+            "new reader activity should cancel the pending physical close"
+        );
+        assert!(mgr.has_clients(port));
     }
 }
