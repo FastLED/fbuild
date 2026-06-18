@@ -399,13 +399,22 @@ impl DaemonClient {
     /// Shut down the daemon.
     #[allow(dead_code)]
     pub async fn shutdown(&self) -> fbuild_core::Result<()> {
-        self.client
+        let resp = self
+            .client
             .post(format!("{}/api/daemon/shutdown", self.base_url))
+            .headers(shutdown_caller_headers())
             .send()
             .await
             .map_err(|e| {
                 fbuild_core::FbuildError::DaemonError(format!("shutdown failed: {}", e))
             })?;
+        if !resp.status().is_success() {
+            let status = resp.status();
+            let body = resp.text().await.unwrap_or_default();
+            return Err(fbuild_core::FbuildError::DaemonError(format!(
+                "shutdown failed with {status}: {body}"
+            )));
+        }
         Ok(())
     }
 
@@ -590,6 +599,45 @@ impl DaemonClient {
         resp.json::<OperationResponse>()
             .await
             .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("invalid response: {}", e)))
+    }
+}
+
+fn shutdown_caller_headers() -> reqwest::header::HeaderMap {
+    let mut headers = reqwest::header::HeaderMap::new();
+    insert_shutdown_header(
+        &mut headers,
+        "x-fbuild-client-pid",
+        std::process::id().to_string(),
+    );
+    if let Ok(cwd) = std::env::current_dir() {
+        insert_shutdown_header(
+            &mut headers,
+            "x-fbuild-client-cwd",
+            cwd.to_string_lossy().into_owned(),
+        );
+    }
+    if let Ok(exe) = std::env::current_exe() {
+        insert_shutdown_header(
+            &mut headers,
+            "x-fbuild-client-exe",
+            exe.to_string_lossy().into_owned(),
+        );
+    }
+    insert_shutdown_header(
+        &mut headers,
+        "x-fbuild-client-argv",
+        std::env::args().collect::<Vec<_>>().join(" "),
+    );
+    headers
+}
+
+fn insert_shutdown_header(
+    headers: &mut reqwest::header::HeaderMap,
+    name: &'static str,
+    value: String,
+) {
+    if let Ok(value) = reqwest::header::HeaderValue::from_str(&value) {
+        headers.insert(reqwest::header::HeaderName::from_static(name), value);
     }
 }
 

@@ -366,7 +366,7 @@ async fn main() {
     let shutdown_tx_signal = context.shutdown_tx.clone();
     let op_in_progress = context.operation_in_progress.clone();
 
-    axum::serve(listener, app)
+    axum::serve(listener, app.into_make_service_with_connect_info::<std::net::SocketAddr>())
         .with_graceful_shutdown(async move {
             // Wait for either the HTTP shutdown endpoint or Ctrl+C / SIGTERM
             tokio::select! {
