@@ -38,6 +38,7 @@ fn make_params(project_dir: &Path) -> BuildParams {
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
+        bloat_analysis: false,
     }
 }
 

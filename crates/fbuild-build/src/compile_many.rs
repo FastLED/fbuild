@@ -372,6 +372,7 @@ fn build_one_sketch(inputs: SketchBuildInputs) -> SketchResult {
         pio_env: pio_env.into_iter().collect(),
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
+        bloat_analysis: false,
     };
 
     let outcome = match get_orchestrator(platform) {

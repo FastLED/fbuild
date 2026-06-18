@@ -237,6 +237,11 @@ pub enum Commands {
         /// Disable all shrink optimizations. Equivalent to `--shrink=off`.
         #[arg(long = "no-shrink", conflicts_with = "shrink")]
         no_shrink: bool,
+        /// Build with -Wl,--noinhibit-exec so over-budget regions still emit
+        /// firmware.elf for bloat analysis. The link exit code remains non-zero
+        /// but the ELF survives. See FastLED/fbuild#594.
+        #[arg(long)]
+        bloat_analysis: bool,
     },
     /// Deploy firmware to device
     Deploy {

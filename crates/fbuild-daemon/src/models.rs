@@ -64,6 +64,12 @@ pub struct BuildRequest {
     /// the same behavior in other shapes.
     #[serde(default)]
     pub flatten_env: bool,
+    /// When true, append `-Wl,--noinhibit-exec` to the linker command and
+    /// treat post-link "failure" as success when `firmware.elf` was emitted
+    /// (so over-budget builds can still be bloat-analyzed).
+    /// See FastLED/fbuild#594.
+    #[serde(default)]
+    pub bloat_analysis: bool,
 }
 
 /// POST /api/deploy

@@ -119,6 +119,7 @@ pub(super) async fn execute_tool(
                     .filter(|s| !s.is_empty()),
                 output_dir: None,
                 pio_env: crate::daemon_client::capture_pio_env(),
+                bloat_analysis: false,
             };
 
             let resp = client

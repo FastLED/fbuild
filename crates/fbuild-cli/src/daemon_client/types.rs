@@ -45,6 +45,12 @@ pub struct BuildRequest {
     /// The daemon does not inherit caller env vars, so they are forwarded here.
     #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
     pub pio_env: BTreeMap<String, String>,
+    /// When true, append `-Wl,--noinhibit-exec` to the linker command and
+    /// treat post-link "failure" as success when `firmware.elf` was emitted
+    /// (so over-budget builds can still be bloat-analyzed).
+    /// See FastLED/fbuild#594.
+    #[serde(default)]
+    pub bloat_analysis: bool,
 }
 
 #[derive(Debug, Serialize)]

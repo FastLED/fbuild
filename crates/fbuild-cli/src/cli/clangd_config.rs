@@ -43,6 +43,7 @@ pub async fn run_clangd_config(
             None,
             true, // no_timestamp
             None,
+            false, // bloat_analysis
         )
         .await?;
         if !db_path.exists() {

@@ -69,6 +69,7 @@ fn lpc845brk_propagates_build_flags_to_library_compile_587() {
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
+        bloat_analysis: false,
     };
 
     let orchestrator = fbuild_build::nxplpc::orchestrator::NxpLpcOrchestrator;
