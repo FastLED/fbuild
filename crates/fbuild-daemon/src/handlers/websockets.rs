@@ -8,6 +8,7 @@ use axum::extract::{Path, State, WebSocketUpgrade};
 use axum::response::IntoResponse;
 use fbuild_serial::{SerialClientMessage, SerialServerMessage};
 use std::sync::Arc;
+use std::time::Duration;
 
 // ---------------------------------------------------------------------------
 // /ws/serial-monitor — existing serial monitor WebSocket
@@ -60,14 +61,8 @@ async fn cleanup_ws_serial_session(
         ctx.serial_manager.release_writer(port, client_id);
     }
     if !ctx.serial_manager.has_clients(port) {
-        if let Err(e) = ctx.serial_manager.close_port(port, client_id).await {
-            tracing::warn!(
-                client_id,
-                port,
-                "failed to close port on last detach: {}",
-                e
-            );
-        }
+        ctx.serial_manager
+            .close_port_after_grace_if_idle(port, client_id, Duration::from_secs(2));
     }
 }
 

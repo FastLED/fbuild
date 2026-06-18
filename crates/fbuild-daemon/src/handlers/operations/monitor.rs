@@ -294,14 +294,15 @@ pub async fn monitor(
         };
 
         ctx.serial_manager.detach_reader(&port, &request_id);
-        // Release the OS serial handle once no clients remain so a follow-up
-        // pyserial/esptool open of the same port succeeds without requiring
-        // `fbuild daemon stop`. Mirrors the WebSocket cleanup path.
-        // See FastLED/fbuild#531.
+        // Delay physical close briefly so close -> immediate reconnect
+        // patterns remain logical and don't thrash the USB CDC handle.
+        // Mirrors the WebSocket cleanup path. See FastLED/fbuild#592/#632.
         if !ctx.serial_manager.has_clients(&port) {
-            if let Err(e) = ctx.serial_manager.close_port(&port, &request_id).await {
-                tracing::warn!(port, "failed to close port after monitor exit: {}", e);
-            }
+            ctx.serial_manager.close_port_after_grace_if_idle(
+                &port,
+                &request_id,
+                std::time::Duration::from_secs(2),
+            );
         }
 
         return match result {
