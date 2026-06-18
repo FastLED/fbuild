@@ -281,6 +281,10 @@ pub struct DeviceInfo {
     pub vid: Option<u16>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub pid: Option<u16>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub serial_number: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub previous_port: Option<String>,
     pub description: String,
     pub available_for_exclusive: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -351,6 +355,9 @@ pub struct DeviceLeaseRequest {
     pub description: String,
     /// Client identifier (auto-generated if omitted)
     pub client_id: Option<String>,
+    /// Follow a USB device by serial number across port renumbering.
+    #[serde(default)]
+    pub track_serial: bool,
 }
 
 fn default_exclusive() -> String {
@@ -378,6 +385,7 @@ pub struct DeviceLeaseInfo {
     pub lease_type: String,
     pub description: String,
     pub acquired_at: f64,
+    pub track_serial: bool,
 }
 
 /// Structured details for an exclusive lease conflict.
@@ -431,6 +439,10 @@ pub struct DeviceStatusResponse {
     pub port: String,
     pub device_id: String,
     pub description: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub serial_number: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub previous_port: Option<String>,
     pub is_connected: bool,
     pub available_for_exclusive: bool,
     #[serde(skip_serializing_if = "Option::is_none")]

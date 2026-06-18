@@ -41,6 +41,8 @@ pub async fn device_status(
             port: port.clone(),
             device_id: String::new(),
             description: format!("device '{}' not found", port),
+            serial_number: None,
+            previous_port: None,
             is_connected: false,
             available_for_exclusive: false,
             exclusive_holder: None,
@@ -57,6 +59,8 @@ fn device_info(state: &DeviceState) -> DeviceInfo {
         device_id: Some(state.device_id.clone()),
         vid: state.vid,
         pid: state.pid,
+        serial_number: state.serial_number.clone(),
+        previous_port: state.previous_port.clone(),
         description: state.description.clone(),
         available_for_exclusive: state.is_available_for_exclusive(),
         exclusive_lease: state.exclusive_lease.as_ref().map(lease_info),
@@ -75,6 +79,8 @@ fn device_status_response(state: DeviceState) -> DeviceStatusResponse {
         port: state.port,
         device_id: state.device_id,
         description: state.description,
+        serial_number: state.serial_number,
+        previous_port: state.previous_port,
         is_connected: state.is_connected,
         available_for_exclusive: available,
         exclusive_holder: holder,
@@ -96,12 +102,18 @@ pub async fn device_lease(
     state.device_manager.refresh_devices();
 
     let result = match req.lease_type.as_str() {
-        "exclusive" => state
-            .device_manager
-            .acquire_exclusive(&port, &client_id, &req.description),
-        "monitor" => state
-            .device_manager
-            .acquire_monitor(&port, &client_id, &req.description),
+        "exclusive" => state.device_manager.acquire_exclusive(
+            &port,
+            &client_id,
+            &req.description,
+            req.track_serial,
+        ),
+        "monitor" => state.device_manager.acquire_monitor(
+            &port,
+            &client_id,
+            &req.description,
+            req.track_serial,
+        ),
         other => Err(DeviceLeaseError::InvalidLeaseType {
             lease_type: other.to_string(),
         }),
@@ -197,6 +209,7 @@ fn lease_info(lease: &DeviceLease) -> DeviceLeaseInfo {
         },
         description: lease.description.clone(),
         acquired_at: lease.acquired_at,
+        track_serial: lease.track_serial,
     }
 }
 
@@ -227,10 +240,10 @@ mod tests {
         let manager = DeviceManager::new();
         manager.insert_test_device("COM3");
         manager
-            .acquire_exclusive("COM3", "pid 100 alice", "deploy")
+            .acquire_exclusive("COM3", "pid 100 alice", "deploy", true)
             .unwrap();
         manager
-            .acquire_monitor("COM3", "pid 200 bob", "monitor")
+            .acquire_monitor("COM3", "pid 200 bob", "monitor", false)
             .unwrap();
 
         let state = manager.get_device_status("COM3").unwrap();
@@ -252,7 +265,7 @@ mod tests {
         let manager = DeviceManager::new();
         manager.insert_test_device("COM4");
         manager
-            .acquire_exclusive("COM4", "pid 300 carol", "autoresearch")
+            .acquire_exclusive("COM4", "pid 300 carol", "autoresearch", true)
             .unwrap();
 
         let state = manager.get_device_status("COM4").unwrap();
@@ -272,10 +285,10 @@ mod tests {
         let manager = DeviceManager::new();
         manager.insert_test_device("COM5");
         manager
-            .acquire_exclusive("COM5", "pid 400 dave", "first deploy")
+            .acquire_exclusive("COM5", "pid 400 dave", "first deploy", true)
             .unwrap();
         let err = manager
-            .acquire_exclusive("COM5", "pid 500 erin", "second deploy")
+            .acquire_exclusive("COM5", "pid 500 erin", "second deploy", false)
             .unwrap_err();
 
         let conflict = lease_conflict(&err).expect("exclusive conflict payload");

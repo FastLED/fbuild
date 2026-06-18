@@ -177,6 +177,8 @@ mod tests {
             description: "USB Serial Device".to_string(),
             vid,
             pid,
+            serial_number: None,
+            previous_port: None,
             exclusive_lease: None,
             monitor_leases: HashMap::new(),
             last_seen_at: 0.0,
