@@ -58,6 +58,45 @@ fn daemon_in_dir(dir: &Path) -> Option<PathBuf> {
     }
 }
 
+fn shutdown_caller_headers() -> reqwest::header::HeaderMap {
+    let mut headers = reqwest::header::HeaderMap::new();
+    insert_shutdown_header(
+        &mut headers,
+        "x-fbuild-client-pid",
+        std::process::id().to_string(),
+    );
+    if let Ok(cwd) = std::env::current_dir() {
+        insert_shutdown_header(
+            &mut headers,
+            "x-fbuild-client-cwd",
+            cwd.to_string_lossy().into_owned(),
+        );
+    }
+    if let Ok(exe) = std::env::current_exe() {
+        insert_shutdown_header(
+            &mut headers,
+            "x-fbuild-client-exe",
+            exe.to_string_lossy().into_owned(),
+        );
+    }
+    insert_shutdown_header(
+        &mut headers,
+        "x-fbuild-client-argv",
+        std::env::args().collect::<Vec<_>>().join(" "),
+    );
+    headers
+}
+
+fn insert_shutdown_header(
+    headers: &mut reqwest::header::HeaderMap,
+    name: &'static str,
+    value: String,
+) {
+    if let Ok(value) = reqwest::header::HeaderValue::from_str(&value) {
+        headers.insert(reqwest::header::HeaderName::from_static(name), value);
+    }
+}
+
 /// Build the spawn target for the daemon: prefer the venv-adjacent absolute
 /// path (`Some`) and fall back to the PATH-relative bare name (`None`).
 ///
@@ -299,6 +338,7 @@ impl Daemon {
         let url = format!("{}/api/daemon/shutdown", fbuild_paths::get_daemon_url());
         reqwest::blocking::Client::new()
             .post(&url)
+            .headers(shutdown_caller_headers())
             .send()
             .map(|r| r.status().is_success())
             .unwrap_or(false)
@@ -468,6 +508,7 @@ impl AsyncDaemon {
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
             let ok = reqwest::Client::new()
                 .post(&url)
+                .headers(shutdown_caller_headers())
                 .timeout(std::time::Duration::from_secs(10))
                 .send()
                 .await
