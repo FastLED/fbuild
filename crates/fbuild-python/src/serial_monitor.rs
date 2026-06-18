@@ -213,6 +213,7 @@ impl SerialMonitor {
                                 // Resume after deploy
                                 continue;
                             }
+                            Ok(ServerMessage::PortDisconnected { .. }) => break,
                             _ => continue,
                         }
                     }
@@ -554,6 +555,7 @@ impl SerialMonitor {
                         Ok(ServerMessage::Reconnected { .. }) => {
                             continue;
                         }
+                        Ok(ServerMessage::PortDisconnected { .. }) => break,
                         _ => continue,
                     }
                 }

@@ -6,7 +6,7 @@ use crate::context::DaemonContext;
 use axum::extract::ws::{Message, WebSocket};
 use axum::extract::{Path, State, WebSocketUpgrade};
 use axum::response::IntoResponse;
-use fbuild_serial::{SerialClientMessage, SerialServerMessage};
+use fbuild_serial::{SerialClientMessage, SerialServerMessage, SerialStreamEvent};
 use std::sync::Arc;
 use std::time::Duration;
 
@@ -177,7 +177,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
             // Forward serial output to WebSocket
             result = rx.recv() => {
                 match result {
-                    Ok(line) => {
+                    Ok(SerialStreamEvent::Data(line)) => {
                         line_index += 1;
                         // A streaming serial monitor is "active" — bump
                         // last_activity on every line so the 12-hour
@@ -204,6 +204,15 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                         if socket.send(Message::Text(serde_json::to_string(&data_msg).unwrap())).await.is_err() {
                             break;
                         }
+                    }
+                    Ok(SerialStreamEvent::PortDisconnected { port, reason, message }) => {
+                        let msg = SerialServerMessage::PortDisconnected {
+                            port,
+                            reason,
+                            message,
+                        };
+                        let _ = socket.send(Message::Text(serde_json::to_string(&msg).unwrap())).await;
+                        break;
                     }
                     Err(tokio::sync::broadcast::error::RecvError::Lagged(n)) => {
                         tracing::warn!(client_id, port, n, "reader lagged, skipping lines");
