@@ -282,6 +282,10 @@ pub struct DeviceInfo {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub pid: Option<u16>,
     pub description: String,
+    pub available_for_exclusive: bool,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub exclusive_lease: Option<DeviceLeaseInfo>,
+    pub monitor_count: usize,
 }
 
 /// POST /api/devices/list response.
@@ -362,6 +366,27 @@ pub struct DeviceLeaseResponse {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub lease_type: Option<String>,
     pub message: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub conflict: Option<DeviceLeaseConflict>,
+}
+
+/// Public lease attribution record.
+#[derive(Debug, Clone, Serialize)]
+pub struct DeviceLeaseInfo {
+    pub lease_id: String,
+    pub client_id: String,
+    pub lease_type: String,
+    pub description: String,
+    pub acquired_at: f64,
+}
+
+/// Structured details for an exclusive lease conflict.
+#[derive(Debug, Serialize)]
+pub struct DeviceLeaseConflict {
+    pub port: String,
+    pub device_id: String,
+    pub description: String,
+    pub holder: DeviceLeaseInfo,
 }
 
 /// POST /api/devices/{port}/release request.
@@ -410,7 +435,10 @@ pub struct DeviceStatusResponse {
     pub available_for_exclusive: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub exclusive_holder: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub exclusive_lease: Option<DeviceLeaseInfo>,
     pub monitor_count: usize,
+    pub monitor_leases: Vec<DeviceLeaseInfo>,
 }
 
 /// POST /api/test-emu — build firmware then run it in an emulator.

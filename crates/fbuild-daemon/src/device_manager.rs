@@ -27,6 +27,55 @@ pub struct DeviceLease {
     pub acquired_at: f64,
 }
 
+/// Structured error for lease acquisition failures.
+#[derive(Debug, Clone)]
+pub enum DeviceLeaseError {
+    NotFound {
+        port: String,
+    },
+    Disconnected {
+        port: String,
+    },
+    ExclusiveConflict {
+        port: String,
+        device_id: String,
+        description: String,
+        holder: Box<DeviceLease>,
+    },
+    InvalidLeaseType {
+        lease_type: String,
+    },
+    InvalidPreemption {
+        message: String,
+    },
+}
+
+impl DeviceLeaseError {
+    pub fn message(&self) -> String {
+        match self {
+            Self::NotFound { port } => format!("device '{}' not found", port),
+            Self::Disconnected { port } => format!("device '{}' is disconnected", port),
+            Self::ExclusiveConflict { port, holder, .. } => format!(
+                "device '{}' already has exclusive lease held by client '{}' ({})",
+                port, holder.client_id, holder.description
+            ),
+            Self::InvalidLeaseType { lease_type } => format!(
+                "invalid lease_type '{}', must be 'exclusive' or 'monitor'",
+                lease_type
+            ),
+            Self::InvalidPreemption { message } => message.clone(),
+        }
+    }
+}
+
+impl std::fmt::Display for DeviceLeaseError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str(&self.message())
+    }
+}
+
+impl std::error::Error for DeviceLeaseError {}
+
 /// In-memory record of the firmware image the daemon *last observed*
 /// on a given port (either written by us, or confirmed by
 /// `verify-flash` MD5 match). Used by the session-trusted verify-skip
@@ -238,21 +287,27 @@ impl DeviceManager {
         port: &str,
         client_id: &str,
         description: &str,
-    ) -> Result<DeviceLease, String> {
+    ) -> Result<DeviceLease, DeviceLeaseError> {
         let mut devices = self.devices.lock().unwrap();
         let state = devices
             .get_mut(port)
-            .ok_or_else(|| format!("device '{}' not found", port))?;
+            .ok_or_else(|| DeviceLeaseError::NotFound {
+                port: port.to_string(),
+            })?;
 
         if !state.is_connected {
-            return Err(format!("device '{}' is disconnected", port));
+            return Err(DeviceLeaseError::Disconnected {
+                port: port.to_string(),
+            });
         }
 
         if let Some(ref existing) = state.exclusive_lease {
-            return Err(format!(
-                "device '{}' already has exclusive lease held by client '{}' ({})",
-                port, existing.client_id, existing.description
-            ));
+            return Err(DeviceLeaseError::ExclusiveConflict {
+                port: port.to_string(),
+                device_id: state.device_id.clone(),
+                description: state.description.clone(),
+                holder: Box::new(existing.clone()),
+            });
         }
 
         let lease = DeviceLease {
@@ -278,14 +333,18 @@ impl DeviceManager {
         port: &str,
         client_id: &str,
         description: &str,
-    ) -> Result<DeviceLease, String> {
+    ) -> Result<DeviceLease, DeviceLeaseError> {
         let mut devices = self.devices.lock().unwrap();
         let state = devices
             .get_mut(port)
-            .ok_or_else(|| format!("device '{}' not found", port))?;
+            .ok_or_else(|| DeviceLeaseError::NotFound {
+                port: port.to_string(),
+            })?;
 
         if !state.is_connected {
-            return Err(format!("device '{}' is disconnected", port));
+            return Err(DeviceLeaseError::Disconnected {
+                port: port.to_string(),
+            });
         }
 
         let lease = DeviceLease {
@@ -353,18 +412,24 @@ impl DeviceManager {
         port: &str,
         client_id: &str,
         reason: &str,
-    ) -> Result<(DeviceLease, Option<String>), String> {
+    ) -> Result<(DeviceLease, Option<String>), DeviceLeaseError> {
         if reason.is_empty() {
-            return Err("preemption reason is required".to_string());
+            return Err(DeviceLeaseError::InvalidPreemption {
+                message: "preemption reason is required".to_string(),
+            });
         }
 
         let mut devices = self.devices.lock().unwrap();
         let state = devices
             .get_mut(port)
-            .ok_or_else(|| format!("device '{}' not found", port))?;
+            .ok_or_else(|| DeviceLeaseError::NotFound {
+                port: port.to_string(),
+            })?;
 
         if !state.is_connected {
-            return Err(format!("device '{}' is disconnected", port));
+            return Err(DeviceLeaseError::Disconnected {
+                port: port.to_string(),
+            });
         }
 
         // Capture preempted client before clearing
@@ -468,6 +533,27 @@ impl DeviceManager {
         }
         count
     }
+
+    #[cfg(test)]
+    pub(crate) fn insert_test_device(&self, port: &str) {
+        let mut devices = self.devices.lock().unwrap();
+        devices.insert(
+            port.to_string(),
+            DeviceState {
+                device_id: "1234:5678".to_string(),
+                port: port.to_string(),
+                description: "Test Device".to_string(),
+                vid: Some(0x1234),
+                pid: Some(0x5678),
+                exclusive_lease: None,
+                monitor_leases: HashMap::new(),
+                last_seen_at: Self::now_unix(),
+                is_connected: true,
+                trusted_firmware: None,
+                last_disconnect_at: None,
+            },
+        );
+    }
 }
 
 #[cfg(test)]
@@ -476,25 +562,7 @@ mod tests {
 
     fn make_manager_with_device(port: &str) -> DeviceManager {
         let mgr = DeviceManager::new();
-        {
-            let mut devices = mgr.devices.lock().unwrap();
-            devices.insert(
-                port.to_string(),
-                DeviceState {
-                    device_id: "1234:5678".to_string(),
-                    port: port.to_string(),
-                    description: "Test Device".to_string(),
-                    vid: Some(0x1234),
-                    pid: Some(0x5678),
-                    exclusive_lease: None,
-                    monitor_leases: HashMap::new(),
-                    last_seen_at: DeviceManager::now_unix(),
-                    is_connected: true,
-                    trusted_firmware: None,
-                    last_disconnect_at: None,
-                },
-            );
-        }
+        mgr.insert_test_device(port);
         mgr
     }
 
@@ -519,8 +587,20 @@ mod tests {
         let mgr = make_manager_with_device("COM3");
         mgr.acquire_exclusive("COM3", "client-1", "first").unwrap();
         let result = mgr.acquire_exclusive("COM3", "client-2", "second");
-        assert!(result.is_err());
-        assert!(result.unwrap_err().contains("already has exclusive lease"));
+        match result.unwrap_err() {
+            DeviceLeaseError::ExclusiveConflict {
+                port,
+                device_id,
+                holder,
+                ..
+            } => {
+                assert_eq!(port, "COM3");
+                assert_eq!(device_id, "1234:5678");
+                assert_eq!(holder.client_id, "client-1");
+                assert_eq!(holder.description, "first");
+            }
+            other => panic!("expected exclusive conflict, got {other:?}"),
+        }
     }
 
     #[test]
@@ -574,7 +654,7 @@ mod tests {
         mgr.acquire_exclusive("COM3", "c1", "holder").unwrap();
         let result = mgr.preempt_device("COM3", "c2", "");
         assert!(result.is_err());
-        assert!(result.unwrap_err().contains("reason is required"));
+        assert!(result.unwrap_err().message().contains("reason is required"));
     }
 
     #[test]
