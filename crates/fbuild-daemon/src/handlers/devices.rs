@@ -15,7 +15,7 @@ use uuid::Uuid;
 /// POST /api/devices/list
 pub async fn list_devices(state: State<Arc<DaemonContext>>) -> Json<DeviceListResponse> {
     // Refresh device inventory
-    state.refresh_devices_and_broadcast_serial_moves();
+    state.refresh_devices_and_broadcast_serial_moves().await;
 
     let all = state.device_manager.get_all_devices();
     let devices = all.values().map(device_info).collect();
@@ -32,7 +32,7 @@ pub async fn device_status(
     Path(port): Path<String>,
 ) -> Json<DeviceStatusResponse> {
     // Refresh to get latest state
-    state.refresh_devices_and_broadcast_serial_moves();
+    state.refresh_devices_and_broadcast_serial_moves().await;
 
     match state.device_manager.get_device_status(&port) {
         Some(ds) => Json(device_status_response(ds)),
@@ -99,7 +99,7 @@ pub async fn device_lease(
     let client_id = req.client_id.unwrap_or_else(|| Uuid::new_v4().to_string());
 
     // Ensure devices are refreshed
-    state.refresh_devices_and_broadcast_serial_moves();
+    state.refresh_devices_and_broadcast_serial_moves().await;
 
     let result = match req.lease_type.as_str() {
         "exclusive" => state.device_manager.acquire_exclusive(
@@ -178,7 +178,7 @@ pub async fn device_preempt(
     let client_id = req.client_id.unwrap_or_else(|| Uuid::new_v4().to_string());
 
     // Refresh first
-    state.refresh_devices_and_broadcast_serial_moves();
+    state.refresh_devices_and_broadcast_serial_moves().await;
 
     match state
         .device_manager

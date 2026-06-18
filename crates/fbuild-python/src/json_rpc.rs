@@ -82,6 +82,7 @@ pub(crate) async fn read_lines_async(
                     Ok(ServerMessage::Reconnected { .. }) => continue,
                     Ok(ServerMessage::PortRenumbered { .. })
                     | Ok(ServerMessage::PortReattached { .. }) => continue,
+                    Ok(ServerMessage::PortRebindFailed { .. }) => break,
                     Ok(ServerMessage::PortDisconnected { .. }) => break,
                     _ => continue,
                 }

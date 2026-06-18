@@ -203,6 +203,16 @@ pub(crate) async fn run_monitor_loop(
             }
             Ok(Ok(SerialStreamEvent::PortRenumbered { .. }))
             | Ok(Ok(SerialStreamEvent::PortReattached { .. })) => {}
+            Ok(Ok(SerialStreamEvent::PortRebindFailed {
+                port,
+                new_port,
+                reason,
+                message,
+            })) => {
+                return MonitorOutcome::Error(format!(
+                    "serial port {port} failed to rebind to {new_port} ({reason}): {message}"
+                ));
+            }
             Ok(Err(tokio::sync::broadcast::error::RecvError::Lagged(n))) => {
                 tracing::warn!("monitor lagged, skipped {} messages", n);
             }
