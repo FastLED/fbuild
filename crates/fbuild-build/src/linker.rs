@@ -24,6 +24,14 @@ pub struct LinkResult {
 pub struct LinkExtraArgs {
     pub flags: Vec<String>,
     pub libs: Vec<String>,
+    /// When true, the linker appends `-Wl,--noinhibit-exec` and treats
+    /// link failure as success when `firmware.elf` was emitted (so
+    /// over-budget builds can be bloat-analyzed). The link exit code
+    /// from `gcc`/`ld` is still non-zero, but the pipeline continues
+    /// to symbol analysis instead of bailing.
+    ///
+    /// See FastLED/fbuild#594.
+    pub bloat_analysis: bool,
 }
 
 /// Check whether `elf_path` is newer than every file in `inputs`.

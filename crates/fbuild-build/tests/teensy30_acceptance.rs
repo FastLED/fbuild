@@ -97,6 +97,7 @@ fn teensy30_analog_output_meets_205_ac2() {
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
+        bloat_analysis: false,
     };
 
     let result = fbuild_build::teensy::orchestrator::TeensyOrchestrator

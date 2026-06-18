@@ -80,6 +80,7 @@ void loop() {
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
+        bloat_analysis: false,
     };
 
     let orchestrator = fbuild_build::teensy::orchestrator::TeensyOrchestrator;
@@ -152,6 +153,7 @@ void loop() {}
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
+        bloat_analysis: false,
     };
 
     let orchestrator = fbuild_build::teensy::orchestrator::TeensyOrchestrator;
@@ -202,6 +204,7 @@ fn build_teensy41_fixture() {
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
+        bloat_analysis: false,
     };
 
     let orchestrator = fbuild_build::teensy::orchestrator::TeensyOrchestrator;
@@ -311,6 +314,7 @@ void loop() {
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
+        bloat_analysis: false,
     };
 
     let orchestrator = fbuild_build::teensy::orchestrator::TeensyOrchestrator;

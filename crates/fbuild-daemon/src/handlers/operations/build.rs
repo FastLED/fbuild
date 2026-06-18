@@ -219,6 +219,7 @@ pub async fn build(
             pio_env: req.pio_env.clone(),
             extra_build_flags: Vec::new(),
             watch_set_cache: Some(Arc::clone(&ctx.watch_set_cache) as Arc<_>),
+            bloat_analysis: req.bloat_analysis,
         };
 
         let project_dir_desc = req.project_dir.clone();
@@ -513,6 +514,7 @@ pub async fn build(
             pio_env: req.pio_env,
             extra_build_flags: Vec::new(),
             watch_set_cache: Some(Arc::clone(&ctx.watch_set_cache) as Arc<_>),
+            bloat_analysis: req.bloat_analysis,
         };
 
         let result = tokio::task::spawn_blocking(move || {

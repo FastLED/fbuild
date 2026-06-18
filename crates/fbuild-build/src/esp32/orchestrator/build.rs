@@ -781,6 +781,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 &crate::linker::LinkExtraArgs {
                     flags: ctx.overlay_link_flags.clone(),
                     libs: ctx.overlay_link_libs.clone(),
+                    bloat_analysis: false,
                 },
                 params.symbol_analysis,
             )?

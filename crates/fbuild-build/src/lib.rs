@@ -187,6 +187,12 @@ pub struct BuildParams {
     /// the orchestrator falls back to walking on every call, which is
     /// the pre-existing behaviour.
     pub watch_set_cache: Option<std::sync::Arc<dyn build_fingerprint::WatchSetStampCache>>,
+    /// When true, append `-Wl,--noinhibit-exec` to the linker command line so
+    /// GNU `ld` writes `firmware.elf` even when a memory region overflows, and
+    /// treat post-link "failure" as success-with-warning when an ELF was
+    /// actually emitted. This unblocks per-symbol bloat analysis on
+    /// over-budget builds. See FastLED/fbuild#594.
+    pub bloat_analysis: bool,
 }
 
 /// Trait for platform-specific build orchestrators.

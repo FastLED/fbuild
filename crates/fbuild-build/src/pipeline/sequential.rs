@@ -300,6 +300,7 @@ pub fn run_sequential_build_with_libs(
             &crate::linker::LinkExtraArgs {
                 flags: ctx.overlay_link_flags.clone(),
                 libs: ctx.overlay_link_libs.clone(),
+                bloat_analysis: params.bloat_analysis,
             },
             params.symbol_analysis,
         )?

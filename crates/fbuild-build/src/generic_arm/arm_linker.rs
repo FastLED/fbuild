@@ -63,6 +63,70 @@ impl ArmLinker {
         self.lib_search_dirs = dirs;
         self
     }
+
+    /// Build the full linker command line for a given link.
+    ///
+    /// Extracted from `link()` so unit tests can verify flag composition
+    /// (e.g. `-Wl,--noinhibit-exec` for bloat-analysis mode, FastLED/fbuild#594)
+    /// without invoking the actual toolchain.
+    fn build_link_args(
+        &self,
+        objects: &[PathBuf],
+        archives: &[PathBuf],
+        elf_path: &Path,
+        map_path: &Path,
+        extra: &LinkExtraArgs,
+    ) -> Vec<String> {
+        let mut args: Vec<String> = vec![self.gcc_path.to_string_lossy().to_string()];
+
+        // Linker flags from config
+        args.extend(self.mcu_config.linker_flags.iter().cloned());
+
+        // Profile-specific link flags
+        if let Some(profile) = self.mcu_config.get_profile(self.profile.as_dir_name()) {
+            args.extend(profile.link_flags.iter().cloned());
+        }
+        args.extend(extra.flags.iter().cloned());
+
+        // Bloat-analysis mode: `-Wl,--noinhibit-exec` tells GNU ld to write
+        // firmware.elf even when a memory region overflows. The link exit
+        // code is still non-zero, but the ELF survives so downstream `nm` /
+        // symbol analysis has something to chew on. See FastLED/fbuild#594.
+        if extra.bloat_analysis {
+            args.push("-Wl,--noinhibit-exec".to_string());
+        }
+
+        // Linker-script search dirs (-L). ld resolves a relative `INCLUDE`
+        // in the linker script against these paths.
+        for dir in &self.lib_search_dirs {
+            args.push(format!("-L{}", dir.display()));
+        }
+
+        args.extend([
+            format!("-T{}", self.linker_script_path.display()),
+            "-o".to_string(),
+            elf_path.to_string_lossy().to_string(),
+        ]);
+
+        // Always emit a linker map next to firmware.elf for debugging (#305).
+        args.push(format!("-Wl,-Map={}", map_path.to_string_lossy()));
+
+        // Sketch objects first
+        for obj in objects {
+            args.push(obj.to_string_lossy().to_string());
+        }
+
+        // Core objects passed directly (not archived) for LTO compatibility
+        for archive in archives {
+            args.push(archive.to_string_lossy().to_string());
+        }
+
+        // Linker libraries from config
+        args.extend(self.mcu_config.linker_libs.iter().cloned());
+        args.extend(extra.libs.iter().cloned());
+
+        args
+    }
 }
 
 impl Linker for ArmLinker {
@@ -79,47 +143,8 @@ impl Linker for ArmLinker {
     ) -> Result<PathBuf> {
         std::fs::create_dir_all(output_dir)?;
         let elf_path = output_dir.join("firmware.elf");
-
-        let mut args: Vec<String> = vec![self.gcc_path.to_string_lossy().to_string()];
-
-        // Linker flags from config
-        args.extend(self.mcu_config.linker_flags.iter().cloned());
-
-        // Profile-specific link flags
-        if let Some(profile) = self.mcu_config.get_profile(self.profile.as_dir_name()) {
-            args.extend(profile.link_flags.iter().cloned());
-        }
-        args.extend(extra.flags.iter().cloned());
-
-        // Linker-script search dirs (-L). ld resolves a relative `INCLUDE`
-        // in the linker script against these paths.
-        for dir in &self.lib_search_dirs {
-            args.push(format!("-L{}", dir.display()));
-        }
-
-        args.extend([
-            format!("-T{}", self.linker_script_path.display()),
-            "-o".to_string(),
-            elf_path.to_string_lossy().to_string(),
-        ]);
-
-        // Always emit a linker map next to firmware.elf for debugging (#305).
         let map_path = output_dir.join("firmware.map");
-        args.push(format!("-Wl,-Map={}", map_path.to_string_lossy()));
-
-        // Sketch objects first
-        for obj in objects {
-            args.push(obj.to_string_lossy().to_string());
-        }
-
-        // Core objects passed directly (not archived) for LTO compatibility
-        for archive in archives {
-            args.push(archive.to_string_lossy().to_string());
-        }
-
-        // Linker libraries from config
-        args.extend(self.mcu_config.linker_libs.iter().cloned());
-        args.extend(extra.libs.iter().cloned());
+        let args = self.build_link_args(objects, archives, &elf_path, &map_path, extra);
 
         if self.verbose {
             eprintln!("link: {}", args.join(" "));
@@ -152,6 +177,25 @@ impl Linker for ArmLinker {
         };
 
         if !result.success() {
+            // Bloat-analysis recovery: if the user asked for noinhibit-exec
+            // and an ELF actually landed on disk with non-zero size, treat
+            // the link as a warning instead of a hard error so the bloat
+            // pipeline can still measure per-symbol cost on over-budget
+            // builds. See FastLED/fbuild#594.
+            if extra.bloat_analysis {
+                let elf_size = elf_path
+                    .metadata()
+                    .map(|m| m.len())
+                    .unwrap_or(0);
+                if elf_path.exists() && elf_size > 0 {
+                    tracing::warn!(
+                        "bloat-analysis: link returned non-zero but firmware.elf survived \
+                         ({} bytes); proceeding with bloat measurement",
+                        elf_size
+                    );
+                    return Ok(elf_path);
+                }
+            }
             return Err(fbuild_core::FbuildError::BuildFailed(format!(
                 "arm-none-eabi-gcc link failed:\n{}",
                 result.stderr
@@ -242,6 +286,48 @@ mod tests {
         );
         assert_eq!(linker.max_flash, Some(65536));
         assert_eq!(linker.max_ram, Some(20480));
+    }
+
+    #[test]
+    fn bloat_analysis_appends_noinhibit_exec_flag() {
+        // Verify that LinkExtraArgs.bloat_analysis = true causes the linker
+        // command line to include `-Wl,--noinhibit-exec` so over-budget
+        // builds still produce firmware.elf for bloat analysis.
+        // See FastLED/fbuild#594.
+        let linker = ArmLinker::new(
+            PathBuf::from("/bin/arm-none-eabi-gcc"),
+            PathBuf::from("/bin/arm-none-eabi-ar"),
+            PathBuf::from("/bin/arm-none-eabi-objcopy"),
+            PathBuf::from("/bin/arm-none-eabi-size"),
+            PathBuf::from("/cores/variant/linker.ld"),
+            test_config(),
+            BuildProfile::Release,
+            Some(65536),
+            Some(20480),
+            false,
+        );
+        let elf = PathBuf::from("/tmp/firmware.elf");
+        let map = PathBuf::from("/tmp/firmware.map");
+
+        let with_bloat = LinkExtraArgs {
+            flags: Vec::new(),
+            libs: Vec::new(),
+            bloat_analysis: true,
+        };
+        let args_on = linker.build_link_args(&[], &[], &elf, &map, &with_bloat);
+        assert!(
+            args_on.iter().any(|a| a == "-Wl,--noinhibit-exec"),
+            "expected -Wl,--noinhibit-exec when bloat_analysis = true; got: {:?}",
+            args_on
+        );
+
+        let without_bloat = LinkExtraArgs::default();
+        let args_off = linker.build_link_args(&[], &[], &elf, &map, &without_bloat);
+        assert!(
+            !args_off.iter().any(|a| a == "-Wl,--noinhibit-exec"),
+            "did not expect -Wl,--noinhibit-exec when bloat_analysis = false; got: {:?}",
+            args_off
+        );
     }
 
     #[test]

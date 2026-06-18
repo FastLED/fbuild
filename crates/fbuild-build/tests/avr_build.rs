@@ -99,6 +99,7 @@ fn build_uno_minimal() {
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
+        bloat_analysis: false,
     };
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
@@ -194,6 +195,7 @@ fn compare_with_python_output() {
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
+        bloat_analysis: false,
     };
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
@@ -279,6 +281,7 @@ void loop() {
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
+        bloat_analysis: false,
     };
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
@@ -343,6 +346,7 @@ fn uno_build_params(project_dir: &Path, build_dir: PathBuf, clean: bool) -> Buil
         pio_env: Default::default(),
         extra_build_flags: Vec::new(),
         watch_set_cache: None,
+        bloat_analysis: false,
     }
 }
 

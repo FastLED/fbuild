@@ -228,6 +228,7 @@ pub async fn deploy(
                 Vec::new()
             },
             watch_set_cache: Some(Arc::clone(&ctx.watch_set_cache) as Arc<_>),
+            bloat_analysis: false,
         };
 
         let build_result = {
