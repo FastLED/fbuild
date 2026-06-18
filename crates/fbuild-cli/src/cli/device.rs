@@ -32,7 +32,11 @@ pub async fn run_device(action: DeviceAction) -> fbuild_core::Result<()> {
                     .unwrap_or("-");
                 println!(
                     "{:<20} {:<12} {:<12} {:<24} {}",
-                    dev.port, id, lease, holder, dev.description
+                    dev.port,
+                    id,
+                    lease,
+                    holder,
+                    device_description(&dev.description, dev.previous_port.as_deref())
                 );
             }
             println!("\n{} device(s) found", resp.devices.len());
@@ -51,6 +55,12 @@ pub async fn run_device(action: DeviceAction) -> fbuild_core::Result<()> {
             println!("  {}", resp.port);
             println!("    Device ID: {}", resp.device_id);
             println!("    Description: {}", resp.description);
+            if let Some(ref serial) = resp.serial_number {
+                println!("    Serial: {}", serial);
+            }
+            if let Some(ref previous_port) = resp.previous_port {
+                println!("    Previous port: {}", previous_port);
+            }
             println!("    Status: {}", connected);
             println!(
                 "    Available: {}",
@@ -77,9 +87,10 @@ pub async fn run_device(action: DeviceAction) -> fbuild_core::Result<()> {
             port,
             lease_type,
             description,
+            track_serial,
         } => {
             let resp = client
-                .device_lease(&port, &lease_type, &description)
+                .device_lease(&port, &lease_type, &description, track_serial)
                 .await?;
             if resp.success {
                 println!("lease acquired on '{}'", port);
@@ -129,6 +140,7 @@ fn print_lease(label: &str, lease: &DeviceLeaseInfoResponse) {
     println!("      client_id: {}", lease.client_id);
     println!("      description: {}", empty_dash(&lease.description));
     println!("      acquired_at: {:.3}", lease.acquired_at);
+    println!("      track_serial: {}", lease.track_serial);
 }
 
 fn print_conflict(conflict: &DeviceLeaseConflictResponse) {
@@ -147,5 +159,12 @@ fn empty_dash(value: &str) -> &str {
         "-"
     } else {
         value
+    }
+}
+
+fn device_description(description: &str, previous_port: Option<&str>) -> String {
+    match previous_port {
+        Some(port) => format!("{description} (renum from {port})"),
+        None => description.to_string(),
     }
 }

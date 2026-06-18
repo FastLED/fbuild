@@ -25,6 +25,7 @@ pub struct DeviceLease {
     pub lease_type: LeaseType,
     pub description: String,
     pub acquired_at: f64,
+    pub track_serial: bool,
 }
 
 /// Structured error for lease acquisition failures.
@@ -100,6 +101,8 @@ pub struct DeviceState {
     pub description: String,
     pub vid: Option<u16>,
     pub pid: Option<u16>,
+    pub serial_number: Option<String>,
+    pub previous_port: Option<String>,
     pub exclusive_lease: Option<DeviceLease>,
     pub monitor_leases: HashMap<String, DeviceLease>,
     pub last_seen_at: f64,
@@ -123,6 +126,24 @@ impl DeviceState {
     pub fn monitor_count(&self) -> usize {
         self.monitor_leases.len()
     }
+
+    pub fn has_tracked_serial_lease(&self) -> bool {
+        self.exclusive_lease
+            .as_ref()
+            .map(|lease| lease.track_serial)
+            .unwrap_or(false)
+            || self.monitor_leases.values().any(|lease| lease.track_serial)
+    }
+}
+
+#[derive(Debug, Clone)]
+struct DiscoveredDevice {
+    port: String,
+    device_id: String,
+    description: String,
+    vid: Option<u16>,
+    pid: Option<u16>,
+    serial_number: Option<String>,
 }
 
 /// Thread-safe device manager.
@@ -189,6 +210,47 @@ impl DeviceManager {
             }
         };
 
+        let discovered: Vec<DiscoveredDevice> = ports
+            .into_iter()
+            .map(|port_info| {
+                let (vid, pid, desc) = match &port_info.port_type {
+                    serialport::SerialPortType::UsbPort(usb) => (
+                        Some(usb.vid),
+                        Some(usb.pid),
+                        usb.product
+                            .clone()
+                            .unwrap_or_else(|| "USB Serial Device".to_string()),
+                    ),
+                    serialport::SerialPortType::BluetoothPort => {
+                        (None, None, "Bluetooth Serial".to_string())
+                    }
+                    serialport::SerialPortType::PciPort => (None, None, "PCI Serial".to_string()),
+                    serialport::SerialPortType::Unknown => (None, None, "Unknown".to_string()),
+                };
+                let serial_number = match &port_info.port_type {
+                    serialport::SerialPortType::UsbPort(usb) => usb.serial_number.clone(),
+                    _ => None,
+                };
+                let device_id = vid
+                    .map(|v| format!("{:04x}:{:04x}", v, pid.unwrap_or(0)))
+                    .unwrap_or_else(|| port_info.port_name.clone());
+
+                DiscoveredDevice {
+                    port: port_info.port_name,
+                    device_id,
+                    description: desc,
+                    vid,
+                    pid,
+                    serial_number,
+                }
+            })
+            .collect();
+
+        self.refresh_from_discovered(discovered);
+        *self.last_refresh_at.lock().unwrap() = Some(Instant::now());
+    }
+
+    fn refresh_from_discovered(&self, discovered: Vec<DiscoveredDevice>) {
         let mut devices = self.devices.lock().unwrap();
         let now = Self::now_unix();
 
@@ -205,35 +267,42 @@ impl DeviceManager {
         }
 
         // Update from discovered ports
-        for port_info in ports {
-            let (vid, pid, desc) = match &port_info.port_type {
-                serialport::SerialPortType::UsbPort(usb) => (
-                    Some(usb.vid),
-                    Some(usb.pid),
-                    usb.product
-                        .clone()
-                        .unwrap_or_else(|| "USB Serial Device".to_string()),
-                ),
-                serialport::SerialPortType::BluetoothPort => {
-                    (None, None, "Bluetooth Serial".to_string())
+        for device in discovered {
+            let key = device.port.clone();
+            if !devices.contains_key(&key) {
+                if let Some(serial) = device.serial_number.as_deref() {
+                    let moved_from = devices.iter().find_map(|(old_port, state)| {
+                        (state.serial_number.as_deref() == Some(serial)
+                            && !state.is_connected
+                            && state.has_tracked_serial_lease())
+                        .then(|| old_port.clone())
+                    });
+                    if let Some(old_port) = moved_from {
+                        if let Some(mut state) = devices.remove(&old_port) {
+                            state.previous_port = Some(old_port);
+                            state.port = key.clone();
+                            state.is_connected = true;
+                            state.last_seen_at = now;
+                            state.description = device.description;
+                            state.device_id = device.device_id;
+                            state.vid = device.vid;
+                            state.pid = device.pid;
+                            state.serial_number = device.serial_number;
+                            devices.insert(key, state);
+                            continue;
+                        }
+                    }
                 }
-                serialport::SerialPortType::PciPort => (None, None, "PCI Serial".to_string()),
-                serialport::SerialPortType::Unknown => (None, None, "Unknown".to_string()),
-            };
-
-            let device_id = vid
-                .map(|v| format!("{:04x}:{:04x}", v, pid.unwrap_or(0)))
-                .unwrap_or_else(|| port_info.port_name.clone());
-
-            // Use port name as the unique key (device_id can have duplicates for same VID:PID)
-            let key = port_info.port_name.clone();
+            }
 
             let entry = devices.entry(key).or_insert_with(|| DeviceState {
-                device_id: device_id.clone(),
-                port: port_info.port_name.clone(),
-                description: desc.clone(),
-                vid,
-                pid,
+                device_id: device.device_id.clone(),
+                port: device.port.clone(),
+                description: device.description.clone(),
+                vid: device.vid,
+                pid: device.pid,
+                serial_number: device.serial_number.clone(),
+                previous_port: None,
                 exclusive_lease: None,
                 monitor_leases: HashMap::new(),
                 last_seen_at: now,
@@ -244,10 +313,11 @@ impl DeviceManager {
 
             entry.is_connected = true;
             entry.last_seen_at = now;
-            entry.description = desc;
-            entry.device_id = device_id;
-            entry.vid = vid;
-            entry.pid = pid;
+            entry.description = device.description;
+            entry.device_id = device.device_id;
+            entry.vid = device.vid;
+            entry.pid = device.pid;
+            entry.serial_number = device.serial_number;
         }
 
         // Stamp `last_disconnect_at` for every device that went from
@@ -264,11 +334,6 @@ impl DeviceManager {
                 }
             }
         }
-        drop(devices);
-        // Record the successful enumeration so `refresh_devices_if_stale`
-        // can short-circuit subsequent calls inside the freshness
-        // window.
-        *self.last_refresh_at.lock().unwrap() = Some(Instant::now());
     }
 
     /// Get all devices.
@@ -287,6 +352,7 @@ impl DeviceManager {
         port: &str,
         client_id: &str,
         description: &str,
+        track_serial: bool,
     ) -> Result<DeviceLease, DeviceLeaseError> {
         let mut devices = self.devices.lock().unwrap();
         let state = devices
@@ -316,6 +382,7 @@ impl DeviceManager {
             lease_type: LeaseType::Exclusive,
             description: description.to_string(),
             acquired_at: Self::now_unix(),
+            track_serial,
         };
 
         state.exclusive_lease = Some(lease.clone());
@@ -333,6 +400,7 @@ impl DeviceManager {
         port: &str,
         client_id: &str,
         description: &str,
+        track_serial: bool,
     ) -> Result<DeviceLease, DeviceLeaseError> {
         let mut devices = self.devices.lock().unwrap();
         let state = devices
@@ -353,6 +421,7 @@ impl DeviceManager {
             lease_type: LeaseType::Monitor,
             description: description.to_string(),
             acquired_at: Self::now_unix(),
+            track_serial,
         };
 
         state
@@ -457,6 +526,7 @@ impl DeviceManager {
             lease_type: LeaseType::Exclusive,
             description: format!("preempted: {}", reason),
             acquired_at: Self::now_unix(),
+            track_serial: false,
         };
 
         state.exclusive_lease = Some(lease.clone());
@@ -545,6 +615,8 @@ impl DeviceManager {
                 description: "Test Device".to_string(),
                 vid: Some(0x1234),
                 pid: Some(0x5678),
+                serial_number: Some("TEST-SERIAL".to_string()),
+                previous_port: None,
                 exclusive_lease: None,
                 monitor_leases: HashMap::new(),
                 last_seen_at: Self::now_unix(),
@@ -576,7 +648,7 @@ mod tests {
     fn acquire_exclusive_succeeds() {
         let mgr = make_manager_with_device("COM3");
         let lease = mgr
-            .acquire_exclusive("COM3", "client-1", "testing")
+            .acquire_exclusive("COM3", "client-1", "testing", false)
             .unwrap();
         assert_eq!(lease.lease_type, LeaseType::Exclusive);
         assert_eq!(lease.client_id, "client-1");
@@ -585,8 +657,9 @@ mod tests {
     #[test]
     fn acquire_exclusive_twice_fails() {
         let mgr = make_manager_with_device("COM3");
-        mgr.acquire_exclusive("COM3", "client-1", "first").unwrap();
-        let result = mgr.acquire_exclusive("COM3", "client-2", "second");
+        mgr.acquire_exclusive("COM3", "client-1", "first", false)
+            .unwrap();
+        let result = mgr.acquire_exclusive("COM3", "client-2", "second", false);
         match result.unwrap_err() {
             DeviceLeaseError::ExclusiveConflict {
                 port,
@@ -607,7 +680,7 @@ mod tests {
     fn acquire_monitor_succeeds() {
         let mgr = make_manager_with_device("COM3");
         let lease = mgr
-            .acquire_monitor("COM3", "client-1", "monitoring")
+            .acquire_monitor("COM3", "client-1", "monitoring", false)
             .unwrap();
         assert_eq!(lease.lease_type, LeaseType::Monitor);
     }
@@ -615,8 +688,10 @@ mod tests {
     #[test]
     fn multiple_monitor_leases_allowed() {
         let mgr = make_manager_with_device("COM3");
-        mgr.acquire_monitor("COM3", "client-1", "m1").unwrap();
-        mgr.acquire_monitor("COM3", "client-2", "m2").unwrap();
+        mgr.acquire_monitor("COM3", "client-1", "m1", false)
+            .unwrap();
+        mgr.acquire_monitor("COM3", "client-2", "m2", false)
+            .unwrap();
         let state = mgr.get_device_status("COM3").unwrap();
         assert_eq!(state.monitor_count(), 2);
     }
@@ -624,7 +699,9 @@ mod tests {
     #[test]
     fn release_lease_by_id() {
         let mgr = make_manager_with_device("COM3");
-        let lease = mgr.acquire_exclusive("COM3", "client-1", "test").unwrap();
+        let lease = mgr
+            .acquire_exclusive("COM3", "client-1", "test", false)
+            .unwrap();
         mgr.release_lease(&lease.lease_id).unwrap();
         let state = mgr.get_device_status("COM3").unwrap();
         assert!(state.exclusive_lease.is_none());
@@ -639,8 +716,8 @@ mod tests {
     #[test]
     fn release_device_leases_clears_all() {
         let mgr = make_manager_with_device("COM3");
-        mgr.acquire_exclusive("COM3", "c1", "exc").unwrap();
-        mgr.acquire_monitor("COM3", "c2", "mon").unwrap();
+        mgr.acquire_exclusive("COM3", "c1", "exc", false).unwrap();
+        mgr.acquire_monitor("COM3", "c2", "mon", false).unwrap();
         let count = mgr.release_device_leases("COM3").unwrap();
         assert_eq!(count, 2); // 1 exclusive + 1 monitor
         let state = mgr.get_device_status("COM3").unwrap();
@@ -651,7 +728,8 @@ mod tests {
     #[test]
     fn preempt_requires_reason() {
         let mgr = make_manager_with_device("COM3");
-        mgr.acquire_exclusive("COM3", "c1", "holder").unwrap();
+        mgr.acquire_exclusive("COM3", "c1", "holder", false)
+            .unwrap();
         let result = mgr.preempt_device("COM3", "c2", "");
         assert!(result.is_err());
         assert!(result.unwrap_err().message().contains("reason is required"));
@@ -660,7 +738,8 @@ mod tests {
     #[test]
     fn preempt_replaces_holder() {
         let mgr = make_manager_with_device("COM3");
-        mgr.acquire_exclusive("COM3", "c1", "original").unwrap();
+        mgr.acquire_exclusive("COM3", "c1", "original", false)
+            .unwrap();
         let (lease, preempted) = mgr.preempt_device("COM3", "c2", "urgent deploy").unwrap();
         assert_eq!(lease.client_id, "c2");
         assert_eq!(lease.lease_type, LeaseType::Exclusive);
@@ -673,8 +752,8 @@ mod tests {
     #[test]
     fn device_not_found_errors() {
         let mgr = DeviceManager::new();
-        assert!(mgr.acquire_exclusive("COM99", "c1", "x").is_err());
-        assert!(mgr.acquire_monitor("COM99", "c1", "x").is_err());
+        assert!(mgr.acquire_exclusive("COM99", "c1", "x", false).is_err());
+        assert!(mgr.acquire_monitor("COM99", "c1", "x", false).is_err());
         assert!(mgr.preempt_device("COM99", "c1", "reason").is_err());
     }
 
@@ -685,8 +764,8 @@ mod tests {
             let mut devices = mgr.devices.lock().unwrap();
             devices.get_mut("COM3").unwrap().is_connected = false;
         }
-        assert!(mgr.acquire_exclusive("COM3", "c1", "x").is_err());
-        assert!(mgr.acquire_monitor("COM3", "c1", "x").is_err());
+        assert!(mgr.acquire_exclusive("COM3", "c1", "x", false).is_err());
+        assert!(mgr.acquire_monitor("COM3", "c1", "x", false).is_err());
         assert!(mgr.preempt_device("COM3", "c1", "reason").is_err());
     }
 
@@ -722,6 +801,56 @@ mod tests {
         let mgr = DeviceManager::new();
         assert!(mgr.refresh_devices_if_stale(std::time::Duration::from_secs(5)));
         assert!(mgr.refresh_devices_if_stale(std::time::Duration::ZERO));
+    }
+
+    #[test]
+    fn tracked_serial_lease_moves_to_new_port_on_refresh() {
+        let mgr = make_manager_with_device("COM3");
+        mgr.acquire_exclusive("COM3", "c1", "tracked deploy", true)
+            .unwrap();
+
+        mgr.refresh_from_discovered(vec![DiscoveredDevice {
+            port: "COM4".to_string(),
+            device_id: "1234:5678".to_string(),
+            description: "Test Device Renumbered".to_string(),
+            vid: Some(0x1234),
+            pid: Some(0x5678),
+            serial_number: Some("TEST-SERIAL".to_string()),
+        }]);
+
+        assert!(mgr.get_device_status("COM3").is_none());
+        let moved = mgr.get_device_status("COM4").unwrap();
+        assert_eq!(moved.previous_port.as_deref(), Some("COM3"));
+        assert_eq!(
+            moved.exclusive_lease.as_ref().map(|l| l.client_id.as_str()),
+            Some("c1")
+        );
+        assert!(
+            moved.exclusive_lease.as_ref().unwrap().track_serial,
+            "moved lease must retain track_serial"
+        );
+    }
+
+    #[test]
+    fn untracked_serial_lease_stays_on_old_disconnected_port() {
+        let mgr = make_manager_with_device("COM3");
+        mgr.acquire_exclusive("COM3", "c1", "untracked deploy", false)
+            .unwrap();
+
+        mgr.refresh_from_discovered(vec![DiscoveredDevice {
+            port: "COM4".to_string(),
+            device_id: "1234:5678".to_string(),
+            description: "Test Device Renumbered".to_string(),
+            vid: Some(0x1234),
+            pid: Some(0x5678),
+            serial_number: Some("TEST-SERIAL".to_string()),
+        }]);
+
+        let old = mgr.get_device_status("COM3").unwrap();
+        assert!(!old.is_connected);
+        assert!(old.exclusive_lease.is_some());
+        let new = mgr.get_device_status("COM4").unwrap();
+        assert!(new.exclusive_lease.is_none());
     }
 
     #[test]
@@ -794,7 +923,8 @@ mod tests {
     #[test]
     fn cleanup_preserves_leased_disconnected() {
         let mgr = make_manager_with_device("COM3");
-        mgr.acquire_exclusive("COM3", "c1", "deploy").unwrap();
+        mgr.acquire_exclusive("COM3", "c1", "deploy", false)
+            .unwrap();
         {
             let mut devices = mgr.devices.lock().unwrap();
             devices.get_mut("COM3").unwrap().is_connected = false;

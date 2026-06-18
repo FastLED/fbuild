@@ -458,6 +458,7 @@ impl DaemonClient {
         port: &str,
         lease_type: &str,
         description: &str,
+        track_serial: bool,
     ) -> fbuild_core::Result<DeviceLeaseResponse> {
         let resp = self
             .client
@@ -469,6 +470,7 @@ impl DaemonClient {
             .json(&serde_json::json!({
                 "lease_type": lease_type,
                 "description": description,
+                "track_serial": track_serial,
             }))
             .timeout(std::time::Duration::from_secs(10))
             .send()

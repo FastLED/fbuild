@@ -616,6 +616,9 @@ pub enum DeviceAction {
         /// Description for the lease
         #[arg(short, long, default_value = "")]
         description: String,
+        /// Follow this USB device by serial number across port renumbering
+        #[arg(long)]
+        track_serial: bool,
     },
     /// Release a lease on a device
     Release {

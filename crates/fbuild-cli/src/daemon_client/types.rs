@@ -314,6 +314,10 @@ pub struct DeviceInfoResponse {
     pub device_id: Option<String>,
     pub vid: Option<u16>,
     pub pid: Option<u16>,
+    #[serde(default)]
+    pub serial_number: Option<String>,
+    #[serde(default)]
+    pub previous_port: Option<String>,
     pub description: String,
     #[serde(default)]
     pub available_for_exclusive: bool,
@@ -329,6 +333,10 @@ pub struct DeviceStatusResponse {
     pub port: String,
     pub device_id: String,
     pub description: String,
+    #[serde(default)]
+    pub serial_number: Option<String>,
+    #[serde(default)]
+    pub previous_port: Option<String>,
     pub is_connected: bool,
     pub available_for_exclusive: bool,
     pub exclusive_holder: Option<String>,
@@ -357,6 +365,8 @@ pub struct DeviceLeaseInfoResponse {
     pub lease_type: String,
     pub description: String,
     pub acquired_at: f64,
+    #[serde(default)]
+    pub track_serial: bool,
 }
 
 #[derive(Debug, Deserialize)]
