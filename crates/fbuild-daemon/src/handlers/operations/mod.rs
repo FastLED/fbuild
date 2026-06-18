@@ -8,6 +8,7 @@
 mod build;
 mod common;
 mod deploy;
+mod deploy_port;
 mod install_deps;
 mod monitor;
 mod reset;
