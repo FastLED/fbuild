@@ -106,7 +106,7 @@ Custom Claude Code skills in `.claude/skills/`:
 - Simplicity first. Minimal code impact. No over-engineering.
 - No laziness. Root causes only. Senior developer standards.
 - Verify before done. Run tests, demonstrate correctness.
-- Plan non-trivial work in `tasks/todo.md`. Capture lessons in `tasks/lessons.md`.
+- Plan non-trivial work in GitHub issues for `FastLED/fbuild`. Capture lessons in the relevant issue or PR discussion; only add repo docs when the information is durable reference material.
 
 ## Key Constraints
 
