@@ -211,8 +211,29 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                             reason,
                             message,
                         };
-                        let _ = socket.send(Message::Text(serde_json::to_string(&msg).unwrap())).await;
-                        break;
+                        if socket.send(Message::Text(serde_json::to_string(&msg).unwrap())).await.is_err() {
+                            break;
+                        }
+                    }
+                    Ok(SerialStreamEvent::PortRenumbered { port, new_port, reason, serial }) => {
+                        let msg = SerialServerMessage::PortRenumbered {
+                            port,
+                            new_port,
+                            reason,
+                            serial,
+                        };
+                        if socket.send(Message::Text(serde_json::to_string(&msg).unwrap())).await.is_err() {
+                            break;
+                        }
+                    }
+                    Ok(SerialStreamEvent::PortReattached { port, previous_port }) => {
+                        let msg = SerialServerMessage::PortReattached {
+                            port,
+                            previous_port,
+                        };
+                        if socket.send(Message::Text(serde_json::to_string(&msg).unwrap())).await.is_err() {
+                            break;
+                        }
                     }
                     Err(tokio::sync::broadcast::error::RecvError::Lagged(n)) => {
                         tracing::warn!(client_id, port, n, "reader lagged, skipping lines");
