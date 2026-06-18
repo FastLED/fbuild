@@ -183,10 +183,7 @@ impl Linker for ArmLinker {
             // pipeline can still measure per-symbol cost on over-budget
             // builds. See FastLED/fbuild#594.
             if extra.bloat_analysis {
-                let elf_size = elf_path
-                    .metadata()
-                    .map(|m| m.len())
-                    .unwrap_or(0);
+                let elf_size = elf_path.metadata().map(|m| m.len()).unwrap_or(0);
                 if elf_path.exists() && elf_size > 0 {
                     tracing::warn!(
                         "bloat-analysis: link returned non-zero but firmware.elf survived \
