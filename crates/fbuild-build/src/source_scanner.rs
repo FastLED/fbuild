@@ -1,6 +1,6 @@
 //! Source file scanning and .ino preprocessing.
 //!
-//! Finds .cpp, .c, .S, .ino files in project source directories.
+//! Finds .cpp, .cc, .cxx, .c, .S, .ino files in project source directories.
 //! Preprocesses .ino files into valid .cpp with function prototypes and an
 //! Arduino.h include when the active include roots provide that header.
 
@@ -16,7 +16,7 @@ use walkdir::WalkDir;
 /// Collection of source files found by the scanner.
 #[derive(Debug, Default)]
 pub struct SourceCollection {
-    /// User sketch sources (.cpp, .c, .S — and preprocessed .ino)
+    /// User sketch sources (.cpp/.cc/.cxx, .c, .S — and preprocessed .ino)
     pub sketch_sources: Vec<PathBuf>,
     /// Arduino core sources
     pub core_sources: Vec<PathBuf>,
@@ -85,7 +85,7 @@ impl SourceScanner {
 
     /// Scan the project source directory for sketch files.
     ///
-    /// Returns preprocessed .ino files as .cpp, plus existing .cpp/.c/.S files.
+    /// Returns preprocessed .ino files as .cpp, plus existing .cpp/.cc/.cxx/.c/.S files.
     ///
     /// When a `main.cpp` already `#include`s `.ino` files (PlatformIO convention),
     /// the `.ino` files are NOT preprocessed separately to avoid duplicate symbols.
@@ -128,7 +128,7 @@ impl SourceScanner {
                 .to_lowercase();
             match ext.as_str() {
                 "ino" => ino_files.push(entry),
-                "cpp" | "c" | "s" | "cc" => {
+                "cpp" | "c" | "s" | "cc" | "cxx" => {
                     if entry.file_name().is_some_and(|n| n == "main.cpp") {
                         main_cpp_path = Some(entry.clone());
                     }
@@ -167,7 +167,7 @@ impl SourceScanner {
                     .unwrap_or_default()
                     .to_string_lossy()
                     .to_lowercase();
-                matches!(ext.as_str(), "cpp" | "c" | "s" | "cc")
+                matches!(ext.as_str(), "cpp" | "c" | "s" | "cc" | "cxx")
             })
             .collect()
     }
@@ -185,7 +185,7 @@ impl SourceScanner {
                     .unwrap_or_default()
                     .to_string_lossy()
                     .to_lowercase();
-                matches!(ext.as_str(), "cpp" | "c" | "s" | "cc")
+                matches!(ext.as_str(), "cpp" | "c" | "s" | "cc" | "cxx")
             })
             .collect()
     }
@@ -962,6 +962,15 @@ mod tests {
     }
 
     #[test]
+    fn test_scan_cxx_files() {
+        let (_tmp, src_dir, build_dir) = setup_project(&[("helper.cxx", "void helper() {}")]);
+        let scanner = SourceScanner::new(&src_dir, &build_dir);
+        let sources = scanner.scan_sketch_sources().unwrap();
+        assert_eq!(sources.len(), 1);
+        assert!(sources[0].to_string_lossy().contains("helper.cxx"));
+    }
+
+    #[test]
     fn test_scan_c_files() {
         let (_tmp, src_dir, build_dir) = setup_project(&[("helper.c", "void helper() {}")]);
         let scanner = SourceScanner::new(&src_dir, &build_dir);
@@ -1154,11 +1163,13 @@ mod tests {
         fs::create_dir_all(&core_dir).unwrap();
         fs::write(core_dir.join("main.cpp"), "int main() {}").unwrap();
         fs::write(core_dir.join("wiring.c"), "void init() {}").unwrap();
+        fs::write(core_dir.join("helper.cxx"), "void helper() {}").unwrap();
         fs::write(core_dir.join("Arduino.h"), "#pragma once").unwrap();
 
         let scanner = SourceScanner::new(&tmp.path().join("src"), &tmp.path().join("build"));
         let sources = scanner.scan_core_sources(&core_dir);
-        assert_eq!(sources.len(), 2); // .cpp and .c, not .h
+        assert_eq!(sources.len(), 3); // .cpp, .c, and .cxx, not .h
+        assert!(sources.iter().any(|p| p.ends_with("helper.cxx")));
     }
 
     #[test]
@@ -1167,6 +1178,20 @@ mod tests {
         let scanner = SourceScanner::new(&tmp.path().join("src"), &tmp.path().join("build"));
         let sources = scanner.scan_core_sources(&tmp.path().join("nonexistent"));
         assert!(sources.is_empty());
+    }
+
+    #[test]
+    fn test_scan_variant_cxx_sources() {
+        let tmp = TempDir::new().unwrap();
+        let variant_dir = tmp.path().join("variants/demo");
+        fs::create_dir_all(&variant_dir).unwrap();
+        fs::write(variant_dir.join("variant.cxx"), "void variant() {}").unwrap();
+        fs::write(variant_dir.join("variant.h"), "#pragma once").unwrap();
+
+        let scanner = SourceScanner::new(&tmp.path().join("src"), &tmp.path().join("build"));
+        let sources = scanner.scan_variant_sources(&variant_dir);
+
+        assert_eq!(sources, vec![variant_dir.join("variant.cxx")]);
     }
 
     #[test]
