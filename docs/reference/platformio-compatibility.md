@@ -61,3 +61,34 @@ Implementation details and the original decision matrix are in
 
 `fbuild ci` is a drop-in replacement for `pio ci` for supported workflows. See
 the [`fbuild ci` reference](cli.md#fbuild-ci) for flag mapping and examples.
+
+## Multiple `.ino` Files
+
+Arduino CLI documents sketch preprocessing as concatenating `.ino` and `.pde`
+files into one generated `.cpp`: the file matching the sketch folder name comes
+first, then the remaining files are appended alphabetically.
+
+PlatformIO preprocesses top-level `PROJECT_SRC_DIR/*.ino` and `*.pde` files
+through its `InoToCPPConverter`. In PlatformIO projects this commonly makes
+`src/main.ino` the primary file; when there is no named primary, PlatformIO
+detects a file containing `setup()` or `loop()` and treats that file as the main
+input. The generated output name is based on the selected main `.ino` path.
+
+fbuild follows that combined compatibility rule:
+
+- Arduino-style sketch folders use `<sketch-folder>/<sketch-folder>.ino` as the
+  primary file when present.
+- PlatformIO-style `src/` folders use `src/main.ino` as the primary file when
+  present, then fall back to a file containing `setup()` or `loop()`.
+- Additional `.ino` tabs are concatenated after the primary file in
+  case-insensitive alphabetical order, with exact filename order as the tie
+  breaker.
+- The generated file is named `<primary>.ino.cpp`, matching the chosen primary
+  `.ino` stem.
+
+References:
+
+- Arduino CLI sketch build process:
+  <https://arduino.github.io/arduino-cli/1.5/sketch-build-process/#pre-processing>
+- PlatformIO `InoToCPPConverter`:
+  <https://github.com/platformio/platformio-core/blob/develop/platformio/builder/tools/pioino.py>
