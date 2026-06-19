@@ -4,9 +4,11 @@
 //! Preprocesses .ino files into valid .cpp with function prototypes and an
 //! Arduino.h include when the active include roots provide that header.
 
+use owo_colors::OwoColorize;
 use regex::Regex;
 use std::cmp::Ordering;
 use std::collections::HashSet;
+use std::io::{self, Write};
 use std::path::{Path, PathBuf};
 use tree_sitter::{Node, Parser};
 use walkdir::WalkDir;
@@ -111,7 +113,7 @@ impl SourceScanner {
 
         let mut sources = Vec::new();
         let mut ino_files = Vec::new();
-        let mut has_main_cpp = false;
+        let mut main_cpp_path = None;
         let filter = SourceFilter::parse(filter_spec)?;
 
         for entry in walk_sources(&self.src_dir) {
@@ -128,7 +130,7 @@ impl SourceScanner {
                 "ino" => ino_files.push(entry),
                 "cpp" | "c" | "s" | "cc" => {
                     if entry.file_name().is_some_and(|n| n == "main.cpp") {
-                        has_main_cpp = true;
+                        main_cpp_path = Some(entry.clone());
                     }
                     sources.push(entry);
                 }
@@ -136,9 +138,13 @@ impl SourceScanner {
             }
         }
 
-        // If main.cpp exists and includes .ino files, skip preprocessing —
+        if let Some(main_cpp) = main_cpp_path.as_deref() {
+            emit_main_cpp_skips_ino_warning(main_cpp, &ino_files);
+        }
+
+        // If main.cpp exists, skip preprocessing to avoid duplicate symbols when
         // the .ino content is already compiled via #include in main.cpp.
-        if !ino_files.is_empty() && !has_main_cpp {
+        if !ino_files.is_empty() && main_cpp_path.is_none() {
             let ino_files = order_ino_files(&self.src_dir, ino_files);
             let preprocessed =
                 self.preprocess_ino_files(&ino_files, arduino_header_available(include_roots))?;
@@ -404,6 +410,36 @@ fn arduino_header_available(include_roots: &[&Path]) -> bool {
     include_roots
         .iter()
         .any(|root| root.join("Arduino.h").is_file())
+}
+
+fn emit_main_cpp_skips_ino_warning(main_cpp: &Path, ino_files: &[PathBuf]) {
+    let mut stderr = io::stderr().lock();
+    let _ = write_main_cpp_skips_ino_warning(&mut stderr, main_cpp, ino_files);
+}
+
+fn write_main_cpp_skips_ino_warning(
+    out: &mut impl Write,
+    main_cpp: &Path,
+    ino_files: &[PathBuf],
+) -> io::Result<()> {
+    if ino_files.is_empty() {
+        return Ok(());
+    }
+
+    let prefix = "warning:".bold().yellow().to_string();
+    let skipped = ino_files
+        .iter()
+        .map(|path| normalize_generated_source_path(path))
+        .collect::<Vec<_>>()
+        .join(", ");
+    let message = format!(
+        "{} takes precedence; skipping automatic .ino preprocessing for: {}",
+        normalize_generated_source_path(main_cpp),
+        skipped
+    )
+    .yellow()
+    .to_string();
+    writeln!(out, "{prefix} {message}")
 }
 
 fn normalize_generated_source_path(path: &Path) -> String {
@@ -1042,6 +1078,49 @@ mod tests {
         let scanner = SourceScanner::new(&src_dir, &build_dir);
         let sources = scanner.scan_sketch_sources().unwrap();
         assert_eq!(sources.len(), 3); // 1 preprocessed ino + 2 others
+    }
+
+    #[test]
+    fn test_scan_main_cpp_with_ino_skips_preprocessing_but_keeps_main_cpp() {
+        let (_tmp, src_dir, build_dir) = setup_project(&[
+            ("main.cpp", "#include \"sketch.ino\"\n"),
+            ("sketch.ino", "void setup() {}\nvoid loop() {}\n"),
+        ]);
+        let scanner = SourceScanner::new(&src_dir, &build_dir);
+
+        let sources = scanner.scan_sketch_sources().unwrap();
+
+        assert_eq!(sources.len(), 1);
+        assert!(sources[0].ends_with("main.cpp"));
+        assert!(!build_dir.join("sketch.ino.cpp").exists());
+    }
+
+    #[test]
+    fn test_main_cpp_with_ino_warning_is_yellow_and_clear() {
+        let tmp = TempDir::new().unwrap();
+        let main_cpp = tmp.path().join("src").join("main.cpp");
+        let ino = tmp.path().join("src").join("sketch.ino");
+        let mut out = Vec::new();
+
+        write_main_cpp_skips_ino_warning(&mut out, &main_cpp, &[ino]).unwrap();
+        let warning = String::from_utf8(out).unwrap();
+
+        assert!(warning.contains("\u{1b}["));
+        assert!(warning.contains("warning:"));
+        assert!(warning.contains("main.cpp takes precedence"));
+        assert!(warning.contains("skipping automatic .ino preprocessing"));
+        assert!(warning.contains("sketch.ino"));
+    }
+
+    #[test]
+    fn test_main_cpp_without_ino_warning_is_silent() {
+        let tmp = TempDir::new().unwrap();
+        let main_cpp = tmp.path().join("src").join("main.cpp");
+        let mut out = Vec::new();
+
+        write_main_cpp_skips_ino_warning(&mut out, &main_cpp, &[]).unwrap();
+
+        assert!(out.is_empty());
     }
 
     #[test]
