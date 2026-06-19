@@ -92,3 +92,16 @@ References:
   <https://arduino.github.io/arduino-cli/1.5/sketch-build-process/#pre-processing>
 - PlatformIO `InoToCPPConverter`:
   <https://github.com/platformio/platformio-core/blob/develop/platformio/builder/tools/pioino.py>
+
+## `.ino` Prototype Generation
+
+Arduino-style `.ino` preprocessing inserts forward declarations for free
+functions so sketches can call functions before their definitions. fbuild uses
+an embedded tree-sitter C++ parser for this step instead of regex matching.
+
+This keeps prototype generation structural enough to avoid control-flow blocks,
+lambdas, class methods, macro fragments, scoped `Class::method` definitions, and
+namespace-local definitions. It also handles common C++ signature syntax such as
+templates, attributes, references, and default arguments.
+
+No clang or libclang runtime install is required for this preprocessing path.
