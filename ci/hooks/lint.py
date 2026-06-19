@@ -50,10 +50,21 @@ def main():
     if not os.path.isfile(file_path):
         return 0
 
-    # Delegate to ./lint in single-file mode
+    # Skip files outside this project (e.g. when editing inside a worktree
+    # of another repo). detect_crate() would otherwise read the worktree's
+    # `crates/<x>` segment and run clippy with -p <x> against fbuild, which
+    # either fails or — when names collide — lints the wrong code.
+    project_root_norm = str(PROJECT_ROOT).replace("\\", "/").rstrip("/") + "/"
+    if not file_path.startswith(project_root_norm):
+        return 0
+
+    # Delegate to ./lint in single-file mode. Use the active interpreter
+    # directly instead of `uv run --script` so we don't trigger another
+    # editable-build of the fbuild project (which would re-run
+    # `soldr cargo build --release -p fbuild-cli` on every Edit).
     lint_script = str(PROJECT_ROOT / "lint")
     result = subprocess.run(
-        ["uv", "run", "--script", lint_script, file_path],
+        [sys.executable, lint_script, file_path],
         capture_output=True,
         text=True,
         encoding="utf-8",

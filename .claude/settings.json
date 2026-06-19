@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --script ci/hooks/board_context.py",
+            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --no-project --script ci/hooks/board_context.py",
             "timeout": 5
           }
         ]
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --script ci/hooks/tool_guard.py",
+            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --no-project --script ci/hooks/tool_guard.py",
             "timeout": 5
           }
         ]
@@ -29,12 +29,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --script ci/hooks/lint.py",
+            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --no-project --script ci/hooks/lint.py",
             "timeout": 120
           },
           {
             "type": "command",
-            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --script ci/hooks/readme_guard.py",
+            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --no-project --script ci/hooks/readme_guard.py",
             "timeout": 5
           }
         ]
@@ -45,7 +45,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --script ci/hooks/check-on-start.py",
+            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --no-project --script ci/hooks/check-on-start.py",
             "timeout": 10
           }
         ]
@@ -56,12 +56,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --script ci/hooks/code-review-on-stop.py",
+            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --no-project --script ci/hooks/code-review-on-stop.py",
             "timeout": 10
           },
           {
             "type": "command",
-            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --script ci/hooks/check-on-stop.py",
+            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --no-project --script ci/hooks/check-on-stop.py",
             "timeout": 120
           }
         ]

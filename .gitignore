@@ -79,3 +79,4 @@ tasks/loop-runs/
 # clud project settings
 !.clud/
 !.clud/settings.json
+.claude/tmp/
