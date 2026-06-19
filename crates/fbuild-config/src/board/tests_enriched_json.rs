@@ -140,6 +140,23 @@ fn test_esp32dev_enriched_fields() {
 }
 
 #[test]
+fn test_esp32dev_defaults_monitor_filters() {
+    let config = BoardConfig::from_board_id("esp32dev", &HashMap::new()).unwrap();
+
+    assert_eq!(
+        config.monitor_filters,
+        Some(vec![
+            "default".to_string(),
+            "esp32_exception_decoder".to_string()
+        ])
+    );
+    assert_eq!(
+        config.monitor_filters_ini_value(),
+        Some("default, esp32_exception_decoder".to_string())
+    );
+}
+
+#[test]
 fn test_esp32_flash_mode_env_override_honoured() {
     // The user can opt back into QIO via `board_build.flash_mode = qio`
     // in their [env:X] section, which the daemon translates into a

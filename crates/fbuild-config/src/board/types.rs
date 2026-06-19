@@ -60,6 +60,12 @@ pub struct BoardConfig {
     pub upload_protocol: Option<String>,
     /// Upload speed
     pub upload_speed: Option<String>,
+    /// PlatformIO serial monitor filters.
+    ///
+    /// ESP32-family boards default to `default, esp32_exception_decoder` when
+    /// unset. An explicit empty list in project config suppresses that default.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub monitor_filters: Option<Vec<String>>,
     /// Maximum flash size in bytes
     pub max_flash: Option<u64>,
     /// Maximum RAM size in bytes

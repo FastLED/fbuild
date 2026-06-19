@@ -43,6 +43,14 @@ impl BoardConfig {
             && EMULATOR_TOOL_NAMES.contains(&tool_name)
     }
 
+    /// PlatformIO `monitor_filters` value to emit for this board.
+    pub fn monitor_filters_ini_value(&self) -> Option<String> {
+        self.monitor_filters
+            .as_ref()
+            .filter(|filters| !filters.is_empty())
+            .map(|filters| filters.join(", "))
+    }
+
     /// Resolve the effective ESP32 SDK memory profile used for variant headers/libs.
     ///
     /// This keeps the SDK `sdkconfig.h` and memory-profile libraries aligned
