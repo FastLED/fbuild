@@ -8,6 +8,7 @@ use regex::Regex;
 use std::cmp::Ordering;
 use std::collections::HashSet;
 use std::path::{Path, PathBuf};
+use tree_sitter::{Node, Parser};
 use walkdir::WalkDir;
 
 /// Collection of source files found by the scanner.
@@ -575,56 +576,270 @@ fn walk_sources(dir: &Path) -> Vec<PathBuf> {
     files
 }
 
-/// Extract function prototypes from concatenated .ino source.
-///
-/// Finds function definitions and generates forward declarations.
+/// Extract function prototypes from concatenated .ino source using a C++ parser.
 pub fn extract_function_prototypes(source: &str) -> Vec<String> {
-    let func_re =
-        Regex::new(r"(?m)^([a-zA-Z_][\w\s\*&:<>,]*?)\s+([a-zA-Z_]\w*)\s*\(([^)]*)\)\s*\{").unwrap();
+    let Some(tree) = parse_cpp_source(source) else {
+        return Vec::new();
+    };
 
-    // Keywords that look like function definitions but aren't
-    let skip_keywords: HashSet<&str> = ["if", "while", "for", "switch", "catch", "else"]
-        .iter()
-        .copied()
-        .collect();
-
-    let mut prototypes = Vec::new();
+    let mut raw_prototypes = Vec::new();
+    collect_function_prototypes(tree.root_node(), source, &mut raw_prototypes);
     let mut seen = HashSet::new();
+    raw_prototypes
+        .into_iter()
+        .filter(|proto| seen.insert(proto.clone()))
+        .collect()
+}
 
-    for cap in func_re.captures_iter(source) {
-        let return_type = cap[1].trim();
-        let func_name = &cap[2];
-        let params = cap[3].trim();
+/// Find existing forward declarations in source.
+fn find_existing_forward_declarations(source: &str) -> Vec<String> {
+    let Some(tree) = parse_cpp_source(source) else {
+        return Vec::new();
+    };
 
-        if skip_keywords.contains(func_name) {
+    let mut declarations = Vec::new();
+    collect_forward_declarations(tree.root_node(), source, &mut declarations);
+    declarations
+}
+
+fn parse_cpp_source(source: &str) -> Option<tree_sitter::Tree> {
+    let mut parser = Parser::new();
+    let language = tree_sitter_cpp::LANGUAGE.into();
+    parser.set_language(&language).ok()?;
+    parser.parse(source, None)
+}
+
+fn collect_function_prototypes(node: Node<'_>, source: &str, prototypes: &mut Vec<String>) {
+    if node.kind() == "function_definition" {
+        if let Some(prototype) = prototype_from_function_definition(node, source) {
+            prototypes.push(prototype);
+        }
+        return;
+    }
+
+    let mut cursor = node.walk();
+    for child in node.children(&mut cursor) {
+        collect_function_prototypes(child, source, prototypes);
+    }
+}
+
+fn prototype_from_function_definition(node: Node<'_>, source: &str) -> Option<String> {
+    if has_skipped_function_context(node) {
+        return None;
+    }
+
+    let signature_node = node
+        .parent()
+        .filter(|parent| parent.kind() == "template_declaration")
+        .unwrap_or(node);
+    let body = node.child_by_field_name("body")?;
+    let signature_start = signature_node.start_byte();
+    let signature = source.get(signature_start..body.start_byte())?;
+    let parameter_list = find_descendant_kind(node, "parameter_list")?;
+    let params_start = parameter_list.start_byte().checked_sub(signature_start)?;
+    let params_end = parameter_list.end_byte().checked_sub(signature_start)?;
+    let signature = strip_default_arguments(signature, params_start, params_end);
+    let signature = normalize_signature(&signature)?;
+
+    if signature.contains("::") || signature.starts_with('#') {
+        return None;
+    }
+
+    Some(signature)
+}
+
+fn has_skipped_function_context(node: Node<'_>) -> bool {
+    let mut current = node.parent();
+    while let Some(parent) = current {
+        match parent.kind() {
+            "namespace_definition"
+            | "class_specifier"
+            | "struct_specifier"
+            | "union_specifier"
+            | "field_declaration_list" => return true,
+            _ => current = parent.parent(),
+        }
+    }
+    false
+}
+
+fn collect_forward_declarations(node: Node<'_>, source: &str, declarations: &mut Vec<String>) {
+    if node.kind() == "declaration"
+        && !has_skipped_function_context(node)
+        && has_descendant_kind(node, "function_declarator")
+    {
+        if let Some(text) = source.get(node.start_byte()..node.end_byte()) {
+            let declaration = text.trim();
+            if declaration.ends_with(';') && !declaration.contains("::") {
+                declarations.push(declaration.to_string());
+            }
+        }
+        return;
+    }
+
+    let mut cursor = node.walk();
+    for child in node.children(&mut cursor) {
+        collect_forward_declarations(child, source, declarations);
+    }
+}
+
+fn has_descendant_kind(node: Node<'_>, kind: &str) -> bool {
+    find_descendant_kind(node, kind).is_some()
+}
+
+fn find_descendant_kind<'a>(node: Node<'a>, kind: &str) -> Option<Node<'a>> {
+    let mut cursor = node.walk();
+    for child in node.children(&mut cursor) {
+        if child.kind() == kind {
+            return Some(child);
+        }
+        if let Some(found) = find_descendant_kind(child, kind) {
+            return Some(found);
+        }
+    }
+    None
+}
+
+fn normalize_signature(signature: &str) -> Option<String> {
+    let lines: Vec<&str> = signature
+        .lines()
+        .map(str::trim)
+        .filter(|line| !line.is_empty())
+        .collect();
+    if lines.is_empty() {
+        return None;
+    }
+    Some(lines.join(" "))
+}
+
+fn strip_default_arguments(signature: &str, params_start: usize, params_end: usize) -> String {
+    let Some(params) = signature.get(params_start..params_end) else {
+        return signature.to_string();
+    };
+    let Some(params_inner) = params.strip_prefix('(').and_then(|p| p.strip_suffix(')')) else {
+        return signature.to_string();
+    };
+
+    let mut output = String::new();
+    output.push_str(&signature[..params_start + 1]);
+    output.push_str(&strip_defaults_from_params(params_inner));
+    output.push_str(&signature[params_end - 1..]);
+    output
+}
+
+fn strip_defaults_from_params(params: &str) -> String {
+    let mut output = String::new();
+    let mut skip_default = false;
+    let mut paren_depth = 0usize;
+    let mut bracket_depth = 0usize;
+    let mut brace_depth = 0usize;
+    let mut angle_depth = 0usize;
+    let mut quote: Option<char> = None;
+    let mut escaped = false;
+
+    for ch in params.chars() {
+        if let Some(quote_char) = quote {
+            if !skip_default {
+                output.push(ch);
+            }
+            if escaped {
+                escaped = false;
+            } else if ch == '\\' {
+                escaped = true;
+            } else if ch == quote_char {
+                quote = None;
+            }
             continue;
         }
 
-        // Skip if it looks like a macro or class method
-        if return_type.contains('#') || return_type.contains("::") {
-            continue;
-        }
-
-        let proto = format!("{} {}({})", return_type, func_name, params);
-        if seen.insert(proto.clone()) {
-            prototypes.push(proto);
+        match ch {
+            '"' | '\'' => {
+                if !skip_default {
+                    output.push(ch);
+                }
+                quote = Some(ch);
+            }
+            '(' => {
+                paren_depth += 1;
+                if !skip_default {
+                    output.push(ch);
+                }
+            }
+            ')' => {
+                paren_depth = paren_depth.saturating_sub(1);
+                if !skip_default {
+                    output.push(ch);
+                }
+            }
+            '[' => {
+                bracket_depth += 1;
+                if !skip_default {
+                    output.push(ch);
+                }
+            }
+            ']' => {
+                bracket_depth = bracket_depth.saturating_sub(1);
+                if !skip_default {
+                    output.push(ch);
+                }
+            }
+            '{' => {
+                brace_depth += 1;
+                if !skip_default {
+                    output.push(ch);
+                }
+            }
+            '}' => {
+                brace_depth = brace_depth.saturating_sub(1);
+                if !skip_default {
+                    output.push(ch);
+                }
+            }
+            '<' => {
+                angle_depth += 1;
+                if !skip_default {
+                    output.push(ch);
+                }
+            }
+            '>' => {
+                angle_depth = angle_depth.saturating_sub(1);
+                if !skip_default {
+                    output.push(ch);
+                }
+            }
+            '=' if paren_depth == 0
+                && bracket_depth == 0
+                && brace_depth == 0
+                && angle_depth == 0 =>
+            {
+                skip_default = true;
+                trim_trailing_spaces(&mut output);
+            }
+            ',' if paren_depth == 0
+                && bracket_depth == 0
+                && brace_depth == 0
+                && angle_depth == 0 =>
+            {
+                skip_default = false;
+                trim_trailing_spaces(&mut output);
+                output.push(ch);
+            }
+            _ => {
+                if !skip_default {
+                    output.push(ch);
+                }
+            }
         }
     }
 
-    prototypes
+    trim_trailing_spaces(&mut output);
+    output
 }
 
-/// Find existing forward declarations in source (lines ending with `);`
-/// that look like function prototypes).
-fn find_existing_forward_declarations(source: &str) -> Vec<String> {
-    let decl_re =
-        Regex::new(r"(?m)^([a-zA-Z_][\w\s\*&:<>,]*?)\s+([a-zA-Z_]\w*)\s*\([^)]*\)\s*;\s*$")
-            .unwrap();
-
-    decl_re
-        .find_iter(source)
-        .map(|m| m.as_str().to_string())
-        .collect()
+fn trim_trailing_spaces(text: &mut String) {
+    while text.chars().last().is_some_and(char::is_whitespace) {
+        text.pop();
+    }
 }
 
 #[cfg(test)]
@@ -912,11 +1127,61 @@ mod tests {
     }
 
     #[test]
-    fn test_prototype_extraction_skips_keywords() {
-        let source = "void setup() {\n  if (true) {\n  }\n  while (false) {\n  }\n}\n";
+    fn test_prototype_extraction_handles_complex_cpp_signatures() {
+        let source = r#"
+template <typename T>
+T twice(T value) {
+  return value + value;
+}
+
+[[nodiscard]] const char* label(const char* fallback = "demo") {
+  return fallback;
+}
+
+int& ref_value(int& value) {
+  return value;
+}
+"#;
         let protos = extract_function_prototypes(source);
+        assert!(protos.contains(&"template <typename T> T twice(T value)".to_string()));
+        assert!(
+            protos.contains(&"[[nodiscard]] const char* label(const char* fallback)".to_string())
+        );
+        assert!(protos.contains(&"int& ref_value(int& value)".to_string()));
+        assert!(!protos.iter().any(|p| p.contains("= \"demo\"")));
+    }
+
+    #[test]
+    fn test_prototype_extraction_skips_non_free_functions() {
+        let source = r#"
+#define MAKE_FUNC(name) void name() {}
+
+void setup() {
+  if (true) {
+  }
+  while (false) {
+  }
+  auto callback = []() { return 1; };
+}
+
+class Controller {
+  void tick() {}
+};
+
+namespace hidden {
+void helper() {}
+}
+
+void Controller::external_tick() {}
+"#;
+        let protos = extract_function_prototypes(source);
+        assert!(protos.iter().any(|p| p == "void setup()"));
         assert!(!protos.iter().any(|p| p.contains("if")));
         assert!(!protos.iter().any(|p| p.contains("while")));
+        assert!(!protos.iter().any(|p| p.contains("callback")));
+        assert!(!protos.iter().any(|p| p.contains("tick")));
+        assert!(!protos.iter().any(|p| p.contains("helper")));
+        assert!(!protos.iter().any(|p| p.contains("MAKE_FUNC")));
     }
 
     #[test]
