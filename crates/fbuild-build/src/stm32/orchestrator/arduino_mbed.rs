@@ -47,7 +47,10 @@ pub(super) fn build_arduino_mbed_stm32(
 
     let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
     let sources = SourceCollection {
-        sketch_sources: scanner.scan_sketch_sources_filtered(ctx.source_filter.as_deref())?,
+        sketch_sources: scanner.scan_sketch_sources_filtered_with_include_roots(
+            ctx.source_filter.as_deref(),
+            &[core_dir.as_path(), variant_dir.as_path()],
+        )?,
         core_sources: framework.get_core_sources(),
         variant_sources: framework.get_variant_sources(&ctx.board.variant),
         headers: Vec::new(),
