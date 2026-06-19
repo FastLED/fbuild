@@ -176,6 +176,7 @@ impl BoardConfig {
                 .or_else(|| props.get("upload.protocol").cloned()),
             upload_speed: get("upload.speed").or_else(|| props.get("upload.speed").cloned()),
             monitor_filters: resolve_monitor_filters(overrides, &props, is_esp32_family),
+            check_tool: get("check_tool"),
             max_flash: resolve_max_flash(overrides, &props),
             max_ram: get("maximum_data_size")
                 .or_else(|| props.get("maximum_data_size").cloned())
@@ -344,6 +345,10 @@ impl BoardConfig {
                 .cloned()
                 .or_else(|| defaults.get("upload.speed").cloned()),
             monitor_filters: resolve_monitor_filters(overrides, &defaults, is_esp32_family),
+            check_tool: overrides
+                .get("check_tool")
+                .cloned()
+                .or_else(|| defaults.get("check_tool").cloned()),
             max_flash: resolve_max_flash(overrides, &defaults),
             max_ram: overrides
                 .get("maximum_data_size")

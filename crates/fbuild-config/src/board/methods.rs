@@ -51,6 +51,14 @@ impl BoardConfig {
             .map(|filters| filters.join(", "))
     }
 
+    /// PlatformIO `check_tool` value to emit for static-analysis configs.
+    pub fn check_tool_ini_value(&self) -> Option<&str> {
+        self.check_tool
+            .as_deref()
+            .map(str::trim)
+            .filter(|tool| !tool.is_empty())
+    }
+
     /// Resolve the effective ESP32 SDK memory profile used for variant headers/libs.
     ///
     /// This keeps the SDK `sdkconfig.h` and memory-profile libraries aligned

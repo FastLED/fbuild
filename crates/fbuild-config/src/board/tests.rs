@@ -326,6 +326,35 @@ fn test_empty_monitor_filters_suppresses_emit() {
 }
 
 #[test]
+fn test_check_tool_default_absent() {
+    let config = BoardConfig::from_board_id("esp32dev", &HashMap::new()).unwrap();
+    assert_eq!(config.check_tool, None);
+    assert_eq!(config.check_tool_ini_value(), None);
+}
+
+#[test]
+fn test_check_tool_override_emits_static_analysis_tool() {
+    let mut overrides = HashMap::new();
+    overrides.insert("check_tool".to_string(), "clangtidy".to_string());
+
+    let config = BoardConfig::from_board_id("uno", &overrides).unwrap();
+
+    assert_eq!(config.check_tool.as_deref(), Some("clangtidy"));
+    assert_eq!(config.check_tool_ini_value(), Some("clangtidy"));
+}
+
+#[test]
+fn test_empty_check_tool_does_not_emit() {
+    let mut overrides = HashMap::new();
+    overrides.insert("check_tool".to_string(), "   ".to_string());
+
+    let config = BoardConfig::from_board_id("uno", &overrides).unwrap();
+
+    assert_eq!(config.check_tool.as_deref(), Some("   "));
+    assert_eq!(config.check_tool_ini_value(), None);
+}
+
+#[test]
 fn test_parse_boards_txt_with_comments() {
     let props = parse_boards_txt(
         "# This is a comment\nuno.name=Arduino Uno\n# Another comment\nuno.build.mcu=atmega328p\n",

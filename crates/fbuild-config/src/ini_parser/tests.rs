@@ -773,6 +773,28 @@ monitor_filters =
 }
 
 #[test]
+fn test_get_board_overrides_preserves_check_tool() {
+    let f = write_ini(
+        "\
+[env:esp32dev]
+platform = espressif32
+board = esp32dev
+framework = arduino
+check_tool = clangtidy
+build_flags = -DREAL_BUILD_FLAG
+",
+    );
+    let config = PlatformIOConfig::from_path(f.path()).unwrap();
+    let overrides = config.get_board_overrides("esp32dev").unwrap();
+
+    assert_eq!(overrides.get("check_tool"), Some(&"clangtidy".to_string()));
+    assert_eq!(
+        config.get_build_flags("esp32dev").unwrap(),
+        vec!["-DREAL_BUILD_FLAG"]
+    );
+}
+
+#[test]
 fn test_get_source_filter_prefers_build_src_filter() {
     let f = write_ini(
         "\
