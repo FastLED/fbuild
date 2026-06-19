@@ -5,6 +5,7 @@
 //! Arduino.h include when the active include roots provide that header.
 
 use regex::Regex;
+use std::cmp::Ordering;
 use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use walkdir::WalkDir;
@@ -137,7 +138,7 @@ impl SourceScanner {
         // If main.cpp exists and includes .ino files, skip preprocessing —
         // the .ino content is already compiled via #include in main.cpp.
         if !ino_files.is_empty() && !has_main_cpp {
-            ino_files.sort();
+            let ino_files = order_ino_files(&self.src_dir, ino_files);
             let preprocessed =
                 self.preprocess_ino_files(&ino_files, arduino_header_available(include_roots))?;
             sources.insert(0, preprocessed);
@@ -244,7 +245,7 @@ impl SourceScanner {
 
     /// Preprocess .ino files into a single .cpp file.
     ///
-    /// 1. Concatenate .ino files (alphabetically sorted)
+    /// 1. Concatenate .ino files (primary sketch first, then tabs alphabetically)
     /// 2. Add `#include <Arduino.h>` at top when available
     /// 3. Extract function prototypes
     /// 4. Add prototypes before first function definition
@@ -396,6 +397,80 @@ fn arduino_header_available(include_roots: &[&Path]) -> bool {
     include_roots
         .iter()
         .any(|root| root.join("Arduino.h").is_file())
+}
+
+fn order_ino_files(src_dir: &Path, mut ino_files: Vec<PathBuf>) -> Vec<PathBuf> {
+    ino_files.sort_by(|a, b| compare_ino_paths(a, b));
+
+    if let Some(primary_index) = find_primary_ino_index(src_dir, &ino_files) {
+        let primary = ino_files.remove(primary_index);
+        ino_files.insert(0, primary);
+    }
+
+    ino_files
+}
+
+fn find_primary_ino_index(src_dir: &Path, ino_files: &[PathBuf]) -> Option<usize> {
+    for primary_stem in primary_ino_stems(src_dir) {
+        if let Some(index) = ino_files
+            .iter()
+            .position(|path| file_stem_eq_ignore_ascii_case(path, &primary_stem))
+        {
+            return Some(index);
+        }
+    }
+
+    let setup_or_loop = Regex::new(r"(?m)\bvoid\s+(setup|loop)\s*\(").expect("valid regex");
+    ino_files.iter().position(|path| {
+        std::fs::read_to_string(path)
+            .map(|content| setup_or_loop.is_match(&content))
+            .unwrap_or(false)
+    })
+}
+
+fn primary_ino_stems(src_dir: &Path) -> Vec<String> {
+    let src_name = src_dir
+        .file_name()
+        .map(|name| name.to_string_lossy().to_string());
+
+    let mut stems = Vec::new();
+    if let Some(src_name) = src_name {
+        if src_name.eq_ignore_ascii_case("src") {
+            stems.push("main".to_string());
+            if let Some(project_name) = src_dir
+                .parent()
+                .and_then(Path::file_name)
+                .map(|name| name.to_string_lossy().to_string())
+            {
+                stems.push(project_name);
+            }
+        } else {
+            stems.push(src_name);
+        }
+    }
+
+    stems
+}
+
+fn file_stem_eq_ignore_ascii_case(path: &Path, expected: &str) -> bool {
+    path.file_stem()
+        .map(|stem| stem.to_string_lossy().eq_ignore_ascii_case(expected))
+        .unwrap_or(false)
+}
+
+fn compare_ino_paths(a: &Path, b: &Path) -> Ordering {
+    let a_name = file_name_for_sort(a);
+    let b_name = file_name_for_sort(b);
+    a_name
+        .to_ascii_lowercase()
+        .cmp(&b_name.to_ascii_lowercase())
+        .then_with(|| a_name.cmp(&b_name))
+}
+
+fn file_name_for_sort(path: &Path) -> String {
+    path.file_name()
+        .map(|name| name.to_string_lossy().to_string())
+        .unwrap_or_default()
 }
 
 fn compile_source_filter_pattern(pattern: &str) -> fbuild_core::Result<Regex> {
@@ -642,6 +717,76 @@ mod tests {
         let content = fs::read_to_string(&sources[0]).unwrap();
         assert!(content.contains("helperA"));
         assert!(content.contains("helperB"));
+    }
+
+    #[test]
+    fn test_scan_multiple_ino_files_uses_platformio_main_first() {
+        let (_tmp, src_dir, build_dir) = setup_project(&[
+            ("z_tab.ino", "void zTab() {}\n"),
+            ("main.ino", "void setup() {}\nvoid loop() {}\n"),
+            ("a_tab.ino", "void aTab() {}\n"),
+        ]);
+        let scanner = SourceScanner::new(&src_dir, &build_dir);
+
+        let sources = scanner.scan_sketch_sources().unwrap();
+        assert_eq!(sources.len(), 1);
+        assert!(sources[0].ends_with("main.ino.cpp"));
+        let content = fs::read_to_string(&sources[0]).unwrap();
+
+        let main_pos = content.find("void setup()").unwrap();
+        let a_pos = content.find("void aTab()").unwrap();
+        let z_pos = content.find("void zTab()").unwrap();
+        assert!(main_pos < a_pos);
+        assert!(a_pos < z_pos);
+    }
+
+    #[test]
+    fn test_scan_multiple_ino_files_uses_arduino_named_primary_first() {
+        let tmp = TempDir::new().unwrap();
+        let src_dir = tmp.path().join("Blink");
+        let build_dir = tmp.path().join("build");
+        fs::create_dir_all(&src_dir).unwrap();
+        fs::create_dir_all(&build_dir).unwrap();
+        fs::write(src_dir.join("z_tab.ino"), "void zTab() {}\n").unwrap();
+        fs::write(
+            src_dir.join("Blink.ino"),
+            "void setup() {}\nvoid loop() {}\n",
+        )
+        .unwrap();
+        fs::write(src_dir.join("a_tab.ino"), "void aTab() {}\n").unwrap();
+        let scanner = SourceScanner::new(&src_dir, &build_dir);
+
+        let sources = scanner.scan_sketch_sources().unwrap();
+        assert_eq!(sources.len(), 1);
+        assert!(sources[0].ends_with("Blink.ino.cpp"));
+        let content = fs::read_to_string(&sources[0]).unwrap();
+
+        let primary_pos = content.find("void setup()").unwrap();
+        let a_pos = content.find("void aTab()").unwrap();
+        let z_pos = content.find("void zTab()").unwrap();
+        assert!(primary_pos < a_pos);
+        assert!(a_pos < z_pos);
+    }
+
+    #[test]
+    fn test_scan_multiple_ino_files_falls_back_to_setup_loop_primary() {
+        let (_tmp, src_dir, build_dir) = setup_project(&[
+            ("a_tab.ino", "void aTab() {}\n"),
+            ("z_entry.ino", "void setup() {}\nvoid loop() {}\n"),
+            ("b_tab.ino", "void bTab() {}\n"),
+        ]);
+        let scanner = SourceScanner::new(&src_dir, &build_dir);
+
+        let sources = scanner.scan_sketch_sources().unwrap();
+        assert_eq!(sources.len(), 1);
+        assert!(sources[0].ends_with("z_entry.ino.cpp"));
+        let content = fs::read_to_string(&sources[0]).unwrap();
+
+        let primary_pos = content.find("void setup()").unwrap();
+        let a_pos = content.find("void aTab()").unwrap();
+        let b_pos = content.find("void bTab()").unwrap();
+        assert!(primary_pos < a_pos);
+        assert!(a_pos < b_pos);
     }
 
     #[test]
