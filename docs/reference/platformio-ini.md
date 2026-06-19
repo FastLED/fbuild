@@ -31,6 +31,7 @@ framework = arduino
 upload_port = COM3
 monitor_speed = 9600
 monitor_filters = default, esp32_exception_decoder
+check_tool = clangtidy
 build_flags =
     -DDEBUG
     -DLED_PIN=13
@@ -50,6 +51,7 @@ Common keys:
 | `upload_port` | Preferred deploy port. |
 | `monitor_speed` | Serial monitor baud rate. |
 | `monitor_filters` | Serial monitor filters. ESP32-family boards default to `default, esp32_exception_decoder` when unset; use `monitor_filters = []` to suppress. |
+| `check_tool` | Static-analysis tool for PlatformIO `pio check` compatibility; ignored by normal fbuild compilation. |
 | `build_flags` | Extra compiler flags. |
 | `lib_deps` | Library dependencies, including GitHub URLs. |
 | `build_type` | Build profile; `debug` preserves unwind metadata. |

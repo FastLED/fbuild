@@ -66,6 +66,12 @@ pub struct BoardConfig {
     /// unset. An explicit empty list in project config suppresses that default.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub monitor_filters: Option<Vec<String>>,
+    /// PlatformIO static-analysis tool name.
+    ///
+    /// This is metadata for `pio check` compatibility and is not consumed by
+    /// fbuild's compile path.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub check_tool: Option<String>,
     /// Maximum flash size in bytes
     pub max_flash: Option<u64>,
     /// Maximum RAM size in bytes
