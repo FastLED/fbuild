@@ -119,3 +119,13 @@ Generated `#line` paths are normalized before writing:
   `src/main.ino`.
 - Path separators are emitted as `/` on all hosts, including Windows.
 - Windows drive letters are lowercased when an absolute fallback path is needed.
+
+## `main.cpp` and `.ino` Files
+
+When a project contains both `main.cpp` and one or more `.ino` files, fbuild
+uses `main.cpp` as the sketch source and skips automatic `.ino` preprocessing.
+This matches projects where `main.cpp` includes the `.ino` file manually and
+avoids duplicate symbols.
+
+Because that behavior can otherwise hide ignored `.ino` files, fbuild prints a
+yellow warning before continuing the compile.
