@@ -9,7 +9,7 @@ Build orchestration for all supported embedded platforms.
 - **`linker.rs`** -- `Linker` trait and `LinkerBase` shared logic (ar, objcopy, size reporting)
 - **`parallel.rs`** -- Multi-threaded source compilation using `std::thread::scope` with work-stealing
 - **`pipeline.rs`** -- Shared build pipeline (config parse, board load, build dir setup, compile, link)
-- **`source_scanner.rs`** -- Finds .cpp/.c/.S/.ino files; preprocesses .ino into valid .cpp
+- **`source_scanner.rs`** -- Finds .cpp/.cc/.cxx/.c/.S/.ino files; preprocesses .ino into valid .cpp
 - **`compile_database.rs`** -- Generates `compile_commands.json` for clangd/IDE support
 - **`build_output.rs`** -- Uniform build log formatting across all platforms
 - **`zccache.rs`** -- Optional zccache compiler cache wrapper integration
