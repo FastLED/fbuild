@@ -1,7 +1,8 @@
 //! Source file scanning and .ino preprocessing.
 //!
 //! Finds .cpp, .c, .S, .ino files in project source directories.
-//! Preprocesses .ino files into valid .cpp with Arduino.h include and function prototypes.
+//! Preprocesses .ino files into valid .cpp with function prototypes and an
+//! Arduino.h include when the active include roots provide that header.
 
 use regex::Regex;
 use std::collections::HashSet;
@@ -93,6 +94,15 @@ impl SourceScanner {
         &self,
         filter_spec: Option<&str>,
     ) -> fbuild_core::Result<Vec<PathBuf>> {
+        self.scan_sketch_sources_filtered_with_include_roots(filter_spec, &[])
+    }
+
+    /// Scan sketch sources with known include roots for conditional .ino preprocessing.
+    pub fn scan_sketch_sources_filtered_with_include_roots(
+        &self,
+        filter_spec: Option<&str>,
+        include_roots: &[&Path],
+    ) -> fbuild_core::Result<Vec<PathBuf>> {
         if !self.src_dir.exists() {
             return Ok(Vec::new());
         }
@@ -128,7 +138,8 @@ impl SourceScanner {
         // the .ino content is already compiled via #include in main.cpp.
         if !ino_files.is_empty() && !has_main_cpp {
             ino_files.sort();
-            let preprocessed = self.preprocess_ino_files(&ino_files)?;
+            let preprocessed =
+                self.preprocess_ino_files(&ino_files, arduino_header_available(include_roots))?;
             sources.insert(0, preprocessed);
         }
 
@@ -205,7 +216,9 @@ impl SourceScanner {
         variant_dir: Option<&Path>,
         filter_spec: Option<&str>,
     ) -> fbuild_core::Result<SourceCollection> {
-        let sketch_sources = self.scan_sketch_sources_filtered(filter_spec)?;
+        let include_roots: Vec<&Path> = [core_dir, variant_dir].into_iter().flatten().collect();
+        let sketch_sources =
+            self.scan_sketch_sources_filtered_with_include_roots(filter_spec, &include_roots)?;
         let core_sources = core_dir
             .map(|d| self.scan_core_sources(d))
             .unwrap_or_default();
@@ -232,11 +245,15 @@ impl SourceScanner {
     /// Preprocess .ino files into a single .cpp file.
     ///
     /// 1. Concatenate .ino files (alphabetically sorted)
-    /// 2. Add `#include <Arduino.h>` at top
+    /// 2. Add `#include <Arduino.h>` at top when available
     /// 3. Extract function prototypes
     /// 4. Add prototypes before first function definition
     /// 5. Add `#line` directives for debugging
-    fn preprocess_ino_files(&self, ino_files: &[PathBuf]) -> fbuild_core::Result<PathBuf> {
+    fn preprocess_ino_files(
+        &self,
+        ino_files: &[PathBuf],
+        include_arduino_h: bool,
+    ) -> fbuild_core::Result<PathBuf> {
         let mut combined = String::new();
         let mut line_offsets: Vec<(usize, &Path)> = Vec::new();
         let mut current_line = 1;
@@ -263,8 +280,9 @@ impl SourceScanner {
         // Build output
         let mut output = String::new();
 
-        // Arduino.h include
-        output.push_str("#include <Arduino.h>\n");
+        if include_arduino_h {
+            output.push_str("#include <Arduino.h>\n");
+        }
 
         // Function prototypes
         if !prototypes.is_empty() {
@@ -372,6 +390,12 @@ impl SourceFilter {
         }
         included
     }
+}
+
+fn arduino_header_available(include_roots: &[&Path]) -> bool {
+    include_roots
+        .iter()
+        .any(|root| root.join("Arduino.h").is_file())
 }
 
 fn compile_source_filter_pattern(pattern: &str) -> fbuild_core::Result<Regex> {
@@ -601,9 +625,9 @@ mod tests {
         assert_eq!(sources.len(), 1);
         assert!(sources[0].to_string_lossy().contains(".ino.cpp"));
 
-        // Check preprocessed content
+        // Direct sketch scans do not know framework include roots.
         let content = fs::read_to_string(&sources[0]).unwrap();
-        assert!(content.contains("#include <Arduino.h>"));
+        assert!(!content.contains("#include <Arduino.h>"));
     }
 
     #[test]
@@ -688,9 +712,34 @@ mod tests {
         let sources = scanner.scan_sketch_sources().unwrap();
         let content = fs::read_to_string(&sources[0]).unwrap();
 
-        assert!(content.contains("#include <Arduino.h>"));
+        assert!(!content.contains("#include <Arduino.h>"));
         assert!(content.contains("void setup()"));
         assert!(content.contains("void loop()"));
+    }
+
+    #[test]
+    fn test_preprocess_includes_arduino_h_when_header_available() {
+        let tmp = TempDir::new().unwrap();
+        let src_dir = tmp.path().join("src");
+        let build_dir = tmp.path().join("build");
+        let core_dir = tmp.path().join("core");
+        fs::create_dir_all(&src_dir).unwrap();
+        fs::create_dir_all(&core_dir).unwrap();
+        fs::write(
+            src_dir.join("sketch.ino"),
+            "void setup() {}\nvoid loop() {}\n",
+        )
+        .unwrap();
+        fs::write(core_dir.join("Arduino.h"), "#pragma once\n").unwrap();
+
+        let scanner = SourceScanner::new(&src_dir, &build_dir);
+        let sources = scanner
+            .scan_all(Some(&core_dir), None)
+            .unwrap()
+            .sketch_sources;
+        let content = fs::read_to_string(&sources[0]).unwrap();
+
+        assert!(content.contains("#include <Arduino.h>"));
     }
 
     #[test]
@@ -748,6 +797,41 @@ mod tests {
         std::thread::sleep(std::time::Duration::from_millis(20));
 
         let second = scanner.scan_sketch_sources().unwrap();
+        assert_eq!(second[0], output);
+        let second_mtime = fs::metadata(&output).unwrap().modified().unwrap();
+
+        assert_eq!(first_mtime, second_mtime);
+    }
+
+    #[test]
+    fn test_preprocess_with_arduino_h_does_not_rewrite_unchanged_output() {
+        let tmp = TempDir::new().unwrap();
+        let src_dir = tmp.path().join("src");
+        let build_dir = tmp.path().join("build");
+        let core_dir = tmp.path().join("core");
+        fs::create_dir_all(&src_dir).unwrap();
+        fs::create_dir_all(&core_dir).unwrap();
+        fs::write(
+            src_dir.join("sketch.ino"),
+            "void setup() {}\nvoid loop() {}\n",
+        )
+        .unwrap();
+        fs::write(core_dir.join("Arduino.h"), "#pragma once\n").unwrap();
+        let scanner = SourceScanner::new(&src_dir, &build_dir);
+
+        let first = scanner
+            .scan_all(Some(&core_dir), None)
+            .unwrap()
+            .sketch_sources;
+        let output = first[0].clone();
+        let first_mtime = fs::metadata(&output).unwrap().modified().unwrap();
+
+        std::thread::sleep(std::time::Duration::from_millis(20));
+
+        let second = scanner
+            .scan_all(Some(&core_dir), None)
+            .unwrap()
+            .sketch_sources;
         assert_eq!(second[0], output);
         let second_mtime = fs::metadata(&output).unwrap().modified().unwrap();
 
