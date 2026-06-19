@@ -76,6 +76,40 @@ fn resolve_max_flash(
     })
 }
 
+fn parse_monitor_filters(value: &str) -> Vec<String> {
+    let trimmed = value.trim();
+    if trimmed.is_empty() || trimmed == "[]" {
+        return Vec::new();
+    }
+
+    trimmed
+        .lines()
+        .flat_map(|line| line.split(','))
+        .map(str::trim)
+        .filter(|filter| !filter.is_empty())
+        .map(ToString::to_string)
+        .collect()
+}
+
+fn resolve_monitor_filters(
+    overrides: &HashMap<String, String>,
+    defaults: &HashMap<String, String>,
+    is_esp32_family: bool,
+) -> Option<Vec<String>> {
+    overrides
+        .get("monitor_filters")
+        .map(|value| parse_monitor_filters(value))
+        .or_else(|| {
+            defaults
+                .get("monitor_filters")
+                .map(|value| parse_monitor_filters(value))
+        })
+        .or_else(|| {
+            is_esp32_family
+                .then(|| vec!["default".to_string(), "esp32_exception_decoder".to_string()])
+        })
+}
+
 impl BoardConfig {
     /// Load board config from a boards.txt file.
     ///
@@ -141,6 +175,7 @@ impl BoardConfig {
             upload_protocol: get("upload.protocol")
                 .or_else(|| props.get("upload.protocol").cloned()),
             upload_speed: get("upload.speed").or_else(|| props.get("upload.speed").cloned()),
+            monitor_filters: resolve_monitor_filters(overrides, &props, is_esp32_family),
             max_flash: resolve_max_flash(overrides, &props),
             max_ram: get("maximum_data_size")
                 .or_else(|| props.get("maximum_data_size").cloned())
@@ -308,6 +343,7 @@ impl BoardConfig {
                 .get("upload.speed")
                 .cloned()
                 .or_else(|| defaults.get("upload.speed").cloned()),
+            monitor_filters: resolve_monitor_filters(overrides, &defaults, is_esp32_family),
             max_flash: resolve_max_flash(overrides, &defaults),
             max_ram: overrides
                 .get("maximum_data_size")

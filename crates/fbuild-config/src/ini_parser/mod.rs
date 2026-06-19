@@ -348,6 +348,8 @@ impl PlatformIOConfig {
                 overrides.insert(stripped.to_string(), value.clone());
             } else if let Some(stripped) = key.strip_prefix("board_upload.") {
                 overrides.insert(format!("upload.{}", stripped), value.clone());
+            } else if key == "monitor_filters" {
+                overrides.insert(key.clone(), value.clone());
             }
         }
 

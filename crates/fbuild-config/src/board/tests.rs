@@ -284,6 +284,48 @@ fn test_platform_detection() {
 }
 
 #[test]
+fn test_non_esp32_monitor_filters_default_absent() {
+    let config = BoardConfig::from_board_id("uno", &HashMap::new()).unwrap();
+    assert_eq!(config.monitor_filters, None);
+    assert_eq!(config.monitor_filters_ini_value(), None);
+}
+
+#[test]
+fn test_custom_monitor_filters_emit_in_platformio_format() {
+    let mut overrides = HashMap::new();
+    overrides.insert(
+        "monitor_filters".to_string(),
+        "default, time, log2file".to_string(),
+    );
+
+    let config = BoardConfig::from_board_id("uno", &overrides).unwrap();
+
+    assert_eq!(
+        config.monitor_filters,
+        Some(vec![
+            "default".to_string(),
+            "time".to_string(),
+            "log2file".to_string()
+        ])
+    );
+    assert_eq!(
+        config.monitor_filters_ini_value(),
+        Some("default, time, log2file".to_string())
+    );
+}
+
+#[test]
+fn test_empty_monitor_filters_suppresses_emit() {
+    let mut overrides = HashMap::new();
+    overrides.insert("monitor_filters".to_string(), "[]".to_string());
+
+    let config = BoardConfig::from_board_id("esp32dev", &overrides).unwrap();
+
+    assert_eq!(config.monitor_filters, Some(Vec::new()));
+    assert_eq!(config.monitor_filters_ini_value(), None);
+}
+
+#[test]
 fn test_parse_boards_txt_with_comments() {
     let props = parse_boards_txt(
         "# This is a comment\nuno.name=Arduino Uno\n# Another comment\nuno.build.mcu=atmega328p\n",

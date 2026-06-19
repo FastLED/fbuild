@@ -751,6 +751,28 @@ board_upload.flash_size = 4MB
 }
 
 #[test]
+fn test_get_board_overrides_preserves_monitor_filters() {
+    let f = write_ini(
+        "\
+[env:esp32dev]
+platform = espressif32
+board = esp32dev
+framework = arduino
+monitor_filters =
+    default
+    esp32_exception_decoder
+",
+    );
+    let config = PlatformIOConfig::from_path(f.path()).unwrap();
+    let overrides = config.get_board_overrides("esp32dev").unwrap();
+
+    assert_eq!(
+        overrides.get("monitor_filters"),
+        Some(&"default\nesp32_exception_decoder".to_string())
+    );
+}
+
+#[test]
 fn test_get_source_filter_prefers_build_src_filter() {
     let f = write_ini(
         "\
