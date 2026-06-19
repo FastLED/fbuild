@@ -845,11 +845,11 @@ mod tests {
             current_operation: Some("Building /tmp/myproject".into()),
             dependency_install: Some(fbuild_core::install_status::status(
                 "zccache",
-                Some("1.12.8"),
+                Some("1.12.9"),
                 fbuild_core::install_status::InstallPhase::WaitingForLock,
                 fbuild_core::install_status::InstallRole::Waiter,
                 "waiting for managed zccache",
-                Some(".zccache-1.12.8.install.lock"),
+                Some(".zccache-1.12.9.install.lock"),
             )),
             client_count: 1,
             cache_dir: "/tmp/cache".into(),
