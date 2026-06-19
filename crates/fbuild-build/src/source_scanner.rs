@@ -261,7 +261,7 @@ impl SourceScanner {
         let mut current_line = 1;
 
         for ino in ino_files {
-            let content = std::fs::read_to_string(ino)?;
+            let content = normalize_generated_source_line_endings(&std::fs::read_to_string(ino)?);
             line_offsets.push((current_line, ino.as_path()));
             current_line += content.lines().count();
             if !combined.is_empty() {
@@ -300,7 +300,7 @@ impl SourceScanner {
         if let Some((_, first_file)) = line_offsets.first() {
             output.push_str(&format!(
                 "#line 1 \"{}\"\n",
-                first_file.display().to_string().replace('\\', "/")
+                self.line_directive_path(first_file)
             ));
         }
 
@@ -318,6 +318,12 @@ impl SourceScanner {
         write_if_changed(&output_path, &output)?;
 
         Ok(output_path)
+    }
+
+    fn line_directive_path(&self, path: &Path) -> String {
+        let project_root = self.src_dir.parent().unwrap_or(&self.src_dir);
+        let display_path = path.strip_prefix(project_root).unwrap_or(path);
+        normalize_generated_source_path(display_path)
     }
 }
 
@@ -398,6 +404,28 @@ fn arduino_header_available(include_roots: &[&Path]) -> bool {
     include_roots
         .iter()
         .any(|root| root.join("Arduino.h").is_file())
+}
+
+fn normalize_generated_source_path(path: &Path) -> String {
+    normalize_generated_source_path_text(&path.display().to_string())
+}
+
+fn normalize_generated_source_path_text(path: &str) -> String {
+    let mut normalized = path.replace('\\', "/");
+    let bytes = normalized.as_bytes();
+    if bytes.len() >= 3
+        && bytes[1] == b':'
+        && bytes[2] == b'/'
+        && bytes[0].is_ascii_alphabetic()
+        && bytes[0].is_ascii_uppercase()
+    {
+        normalized.replace_range(0..1, &normalized[0..1].to_ascii_lowercase());
+    }
+    normalized
+}
+
+fn normalize_generated_source_line_endings(source: &str) -> String {
+    source.replace("\r\n", "\n").replace('\r', "\n")
 }
 
 fn order_ino_files(src_dir: &Path, mut ino_files: Vec<PathBuf>) -> Vec<PathBuf> {
@@ -1192,6 +1220,45 @@ void Controller::external_tick() {}
         let sources = scanner.scan_sketch_sources().unwrap();
         let content = fs::read_to_string(&sources[0]).unwrap();
         assert!(content.contains("#line 1"));
+    }
+
+    #[test]
+    fn test_line_directive_path_is_project_relative_and_slash_normalized() {
+        let (_tmp, src_dir, build_dir) =
+            setup_project(&[("sketch.ino", "void setup() {}\nvoid loop() {}\n")]);
+        let scanner = SourceScanner::new(&src_dir, &build_dir);
+        let sources = scanner.scan_sketch_sources().unwrap();
+        let content = fs::read_to_string(&sources[0]).unwrap();
+
+        assert!(content.contains("#line 1 \"src/sketch.ino\""));
+        assert!(!content.contains('\\'));
+    }
+
+    #[test]
+    fn test_generated_ino_cpp_uses_lf_line_endings() {
+        let (_tmp, src_dir, build_dir) =
+            setup_project(&[("sketch.ino", "void setup() {}\r\nvoid loop() {}\r\n")]);
+        let scanner = SourceScanner::new(&src_dir, &build_dir);
+        let sources = scanner.scan_sketch_sources().unwrap();
+        let content = fs::read_to_string(&sources[0]).unwrap();
+
+        assert!(!content.contains("\r\n"));
+    }
+
+    #[test]
+    fn test_windows_style_generated_path_text_is_stable() {
+        assert_eq!(
+            normalize_generated_source_path_text(r"C:\Users\dev\project\src\main.ino"),
+            "c:/Users/dev/project/src/main.ino"
+        );
+        assert_eq!(
+            normalize_generated_source_path_text(r"C:\Users\dev\project/src\main.ino"),
+            "c:/Users/dev/project/src/main.ino"
+        );
+        assert_eq!(
+            normalize_generated_source_path_text("src\\main.ino"),
+            "src/main.ino"
+        );
     }
 
     #[test]
