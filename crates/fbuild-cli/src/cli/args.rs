@@ -563,6 +563,13 @@ pub enum Commands {
         #[arg(long = "no-shrink", conflicts_with = "shrink")]
         no_shrink: bool,
     },
+    /// Serial-port utilities (FastLED/fbuild#686 mirror of FastLED's
+    /// `ci/util/serial_probe.py`). The current actions are all under
+    /// `fbuild serial probe …` — `list`, `find`, and `read`.
+    Serial {
+        #[command(subcommand)]
+        action: super::serial_probe::SerialAction,
+    },
 }
 
 /// Subcommands for `fbuild lnk`.

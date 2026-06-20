@@ -22,6 +22,7 @@ use super::monitor_parse::parse_monitor_flags;
 use super::pio::{pio_build, pio_deploy, pio_monitor};
 use super::purge::{run_purge, run_purge_gc};
 use super::reset::run_reset;
+use super::serial_probe::run_serial;
 use super::show::run_show;
 use super::symbols_cmd::run_symbols;
 
@@ -514,6 +515,7 @@ pub async fn async_main() {
                 .await
             }
         }
+        Some(Commands::Serial { action }) => run_serial(action),
     };
 
     if let Err(e) = result {

@@ -30,6 +30,7 @@
 //! 3. Deploy preemption forcibly closes sessions, notifies monitors via WebSocket
 //! 4. Windows USB-CDC needs 30 retries with exponential backoff after hard reset
 
+pub mod boards;
 pub mod boot_mode;
 pub mod crash_decoder;
 pub mod esp_reset;
