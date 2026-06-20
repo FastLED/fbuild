@@ -1,23 +1,39 @@
 # `online-data` branch + nightly refresh
 
 The repo carries a long-lived orphan branch called `online-data` that holds
-periodically-refreshed reference datasets fbuild reads at runtime. Today
-the only dataset is the USB VID:PID → vendor/product map; the format is
-**future-forward** so additional datasets (PCI vendor IDs, board feature
-matrices, etc.) can be added later without breaking clients.
+periodically-refreshed reference datasets fbuild reads at runtime. Datasets
+currently published:
 
-The companion in-process resolver lives at `fbuild_core::usb` — see
+| Dataset | Path | Description |
+|---|---|---|
+| `usb-vid` | `data/usb-vid.json` | USB VID:PID → `{vendor, product}` (union of multiple sources) |
+| `usb-vid-conflicts` | `data/usb-vid-conflicts.json` | Per-key disagreements between USB-VID sources (observability) |
+| `pio-boards` | `data/pio-boards.json` | Full PlatformIO board catalog (vendor, mcu, frameworks, debug tools, etc.) |
+| `vendor_boards` | `data/vendor_boards.json` | Slim view of `pio-boards` — only `{vendor, name, mcu}` per board id, for cheap "what board is plugged in?" lookups |
+
+The format is **future-forward** — new datasets are added by writing a new
+JSON file under `data/`; `tools/build_manifest.py` auto-discovers them on
+the next workflow run. No client breakage when datasets are added.
+
+The companion in-process USB resolver lives at `fbuild_core::usb` — see
 `crates/fbuild-core/src/usb/`. The branch is the **tier-2 fallback** when
 the bundled `usb-ids` crate doesn't know a VID:PID.
 
 ## URLs
 
+Always start from the manifest — direct dataset URLs may change in the
+future, but the manifest's `datasets.<name>.url` field is the contract.
+
 - Manifest (entry point — clients fetch this first):
   `https://raw.githubusercontent.com/fastled/fbuild/online-data/manifest.json`
-- Live dataset (also exposed in the manifest):
+- USB VID:PID dataset:
   `https://raw.githubusercontent.com/fastled/fbuild/online-data/data/usb-vid.json`
-- Conflict log (visibility, not consumed by fbuild at runtime):
+- USB-VID source-conflict log:
   `https://raw.githubusercontent.com/fastled/fbuild/online-data/data/usb-vid-conflicts.json`
+- PlatformIO full board catalog:
+  `https://raw.githubusercontent.com/fastled/fbuild/online-data/data/pio-boards.json`
+- PlatformIO slim vendor-name lookup (small, ~200 KB):
+  `https://raw.githubusercontent.com/fastled/fbuild/online-data/data/vendor_boards.json`
 
 The matching constants in code: `fbuild_core::usb::MANIFEST_URL` and
 `fbuild_core::usb::USB_VID_JSON_URL`.

@@ -1,32 +1,47 @@
-# Nightly refresh of the `online-data` branch's USB VID:PID database.
+# Nightly refresh of the `online-data` branch's published datasets.
 #
-# The tooling (Python merger, README, data files) lives on the orphan
-# `online-data` branch — NOT on `main`. This workflow file lives on `main`
-# only because GitHub Actions requires `schedule` and `workflow_dispatch`
-# triggers to be defined on the default branch. At runtime the job:
+# Today the branch carries two datasets — USB VID:PID name resolution and
+# the PlatformIO board catalog. The workflow file lives on `main` only
+# because GitHub Actions requires `schedule` / `workflow_dispatch` to be
+# defined on the default branch. All actual data + the merger scripts
+# live on the orphan `online-data` branch (see `docs/online-data.md`).
+#
+# At runtime the job:
 #
 #   1. checks out `main` (default) so it can build the `dump_usb_ids`
 #      example from `crates/fbuild-core/examples/dump_usb_ids.rs`;
 #   2. fetches + worktrees the `online-data` branch into a sibling dir so
-#      the merger script lives at `online-data/tools/merge_sources.py`;
-#   3. dumps the bundled `usb-ids` Rust crate to JSON;
-#   4. downloads several upstream `usb.ids` text mirrors (fault-tolerant —
-#      a single source failure does NOT abort the run);
-#   5. runs the merger to produce sorted `usb-vid.json`,
-#      `usb-vid-conflicts.json`, and a future-forward `manifest.json`;
-#   6. commits the resulting data files back to `online-data` if they
-#      actually changed, force-pushing only after history pruning.
+#      the merger scripts live at `online-data/tools/{merge_sources,
+#      merge_pio_boards,build_manifest}.py`;
+#   3. **in parallel** produces:
+#        - `usb-ids` Rust crate dump (tier-1 USB-VID source)
+#        - two upstream `usb.ids` text mirror fetches
+#        - the full PlatformIO board catalog (`pio boards --json-output`)
+#      Each source has its own step + `continue-on-error: true` so any
+#      single failure is non-fatal — the merger downstream sees only the
+#      sources that actually arrived intact;
+#   4. runs the USB-VID merger → sorted `usb-vid.json` + conflict log +
+#      per-dataset manifest fragment;
+#   5. runs the PlatformIO board merger → `pio-boards.json` (deep-union
+#      with the previously committed copy so transient field drops in
+#      `pio boards` don't lose data) + per-dataset manifest fragment;
+#   6. assembles the future-forward `manifest.json` from both fragments;
+#   7. commits + pushes only if any data file actually changed, with
+#      history pruned to 200 commits.
 #
 # Fault tolerance summary:
-#   - Rust build failure → keep the existing committed data (no commit).
-#   - Any individual upstream fetch failure → workflow continues with the
-#     sources that succeeded; merger refuses to write if the union is
-#     implausibly small (< 1000 entries) and the existing data stays put.
+#   - Any single source failure → workflow continues with the rest.
+#   - USB-VID merger refuses to write below 1000 entries.
+#   - PIO merger refuses to write below 1500 boards AND deep-unions with
+#     the previously committed data so a feature drop upstream is repaired
+#     from history.
+#   - All-sources-fail → no commit happens; the existing online-data
+#     branch keeps its last good snapshot.
 #   - History is pruned to the most recent 200 commits per the design.
 #
-# Manual trigger: Actions tab → "Nightly USB IDs refresh" → Run workflow.
+# Manual trigger: Actions tab → "Nightly online-data refresh" → Run.
 
-name: Nightly USB IDs refresh
+name: Nightly online-data refresh
 
 on:
   schedule:
@@ -39,7 +54,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: nightly-usb-ids
+  group: nightly-online-data
   cancel-in-progress: false
 
 env:
@@ -50,15 +65,12 @@ env:
 
 jobs:
   refresh:
-    name: Refresh online-data/usb-vid.json
+    name: Refresh online-data datasets
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main (default branch)
         uses: actions/checkout@v6
         with:
-          # We need the git history available so `git worktree add` against
-          # the `online-data` branch works, and so the history-prune step
-          # can rewrite commits without confusing a shallow clone.
           fetch-depth: 0
 
       - name: Configure git identity for the commit
@@ -67,9 +79,6 @@ jobs:
           git config user.email "fbuild-bot+nightly@users.noreply.github.com"
 
       - name: Fetch + worktree the online-data branch
-        # Creates a sibling directory containing the orphan branch. If the
-        # branch does not yet exist on the remote (very first run), we
-        # bootstrap an empty orphan worktree so the rest of the job works.
         run: |
           set -euo pipefail
           if git ls-remote --heads origin "${ONLINE_BRANCH}" | grep -q .; then
@@ -80,6 +89,7 @@ jobs:
             git worktree add --detach "${ONLINE_WORKTREE}"
             (cd "${ONLINE_WORKTREE}" && git checkout --orphan "${ONLINE_BRANCH}" && git rm -rf . 2>/dev/null || true)
           fi
+          mkdir -p "${ONLINE_WORKTREE}/data"
           ls -la "${ONLINE_WORKTREE}"
 
       - uses: astral-sh/setup-uv@v3
@@ -93,15 +103,19 @@ jobs:
           prebuild-deps: none
           linker: platform-default
 
-      - name: Build dump_usb_ids example (tier-1 source)
+      # ────────────────────────────────────────────────────────────────────
+      # Parallel data-source acquisition. Each fetch is its own step so
+      # `steps.<id>.outcome` cleanly attributes blame; the merge step
+      # downstream consumes only sources that succeeded. The Rust build
+      # is the longest step (~1–2 min cold, seconds warm); the pio dump
+      # and curl fetches are each <90 s — the wall-time cost is bounded by
+      # the slowest single source.
+      # ────────────────────────────────────────────────────────────────────
+
+      - name: Build dump_usb_ids example (USB-VID tier-1)
         id: build-dump
-        # Failure is tolerated: we still try to merge whatever upstream
-        # text sources arrived this run. The merger will fall back to the
-        # previously committed data if too few entries survive.
         continue-on-error: true
-        run: |
-          set -euo pipefail
-          soldr cargo build --release --example dump_usb_ids -p fbuild-core
+        run: soldr cargo build --release --example dump_usb_ids -p fbuild-core
 
       - name: Run dump_usb_ids → /tmp/usb-ids-rs.json
         id: run-dump
@@ -112,7 +126,7 @@ jobs:
           ./target/release/examples/dump_usb_ids > /tmp/usb-ids-rs.json
           wc -l /tmp/usb-ids-rs.json
 
-      - name: Fetch linux-usb.org/usb.ids (tier-2)
+      - name: Fetch linux-usb.org/usb.ids (USB-VID tier-2)
         id: fetch-linux-usb
         continue-on-error: true
         run: |
@@ -123,7 +137,7 @@ jobs:
             "http://www.linux-usb.org/usb.ids"
           wc -l /tmp/linux-usb.txt
 
-      - name: Fetch usbids/usbids GitHub mirror (tier-3)
+      - name: Fetch usbids/usbids GitHub mirror (USB-VID tier-3)
         id: fetch-github
         continue-on-error: true
         run: |
@@ -133,8 +147,34 @@ jobs:
             "https://raw.githubusercontent.com/usbids/usbids/master/usb.ids"
           wc -l /tmp/usbids-github.txt
 
-      - name: Run merger (only if at least one source loaded)
-        id: merge
+      - name: Dump PlatformIO board catalog → /tmp/all_boards.json
+        id: dump-pio
+        continue-on-error: true
+        run: |
+          # `dump_platformio.py` declares `platformio` as an inline
+          # dependency so `uv run --no-project --script` materializes it
+          # in an ephemeral env. No global pio install needed.
+          uv run --no-project --script \
+            "${ONLINE_WORKTREE}/tools/dump_platformio.py" \
+            /tmp/all_boards.json
+          # jq isn't on minimal runners — use python for the sanity print.
+          uv run --no-project --script - "/tmp/all_boards.json" <<'PY'
+          # /// script
+          # requires-python = ">=3.10"
+          # ///
+          import json, sys
+          data = json.loads(open(sys.argv[1], encoding="utf-8").read())
+          print(f"pio boards: {len(data)} entries")
+          PY
+
+      # ────────────────────────────────────────────────────────────────────
+      # Per-dataset merge steps. Each writes its own data file + a
+      # manifest fragment. The fragments are then consumed by
+      # build_manifest.py to assemble the unified manifest.json.
+      # ────────────────────────────────────────────────────────────────────
+
+      - name: Merge USB-VID sources
+        id: merge-usb
         continue-on-error: true
         run: |
           set -euo pipefail
@@ -149,29 +189,64 @@ jobs:
             args+=(--txt "usbids-github=/tmp/usbids-github.txt")
           fi
           if [ "${#args[@]}" -eq 0 ]; then
-            echo "::error::all sources failed; preserving previously committed data"
+            echo "::warning::all USB-VID sources failed; preserving previously committed data"
             exit 1
           fi
+          mkdir -p /tmp/fragments
           uv run --no-project --script \
             "${ONLINE_WORKTREE}/tools/merge_sources.py" \
             "${args[@]}" \
             --out-dir "${ONLINE_WORKTREE}/data" \
-            --branch-base-url "${BRANCH_BASE_URL}"
+            --branch-base-url "${BRANCH_BASE_URL}" \
+            --manifest-fragment /tmp/fragments/usb-vid.json
 
-      - name: Refresh manifest.json (always — even if data unchanged)
-        # The manifest carries `generated_at`, so we always update it; that
-        # gives the branch a heartbeat for downstream consumers even on a
-        # no-op data day. If the merge step failed we deliberately skip
-        # this — we don't want to advertise stale `sources` listings.
-        if: steps.merge.outcome == 'success'
+      - name: Merge PlatformIO board dump (full + slim vendor view)
+        id: merge-pio
+        continue-on-error: true
+        if: steps.dump-pio.outcome == 'success'
         run: |
-          if [ -f "${ONLINE_WORKTREE}/data/manifest.json" ]; then
-            mv "${ONLINE_WORKTREE}/data/manifest.json" "${ONLINE_WORKTREE}/manifest.json"
+          set -euo pipefail
+          mkdir -p /tmp/fragments
+          uv run --no-project --script \
+            "${ONLINE_WORKTREE}/tools/merge_pio_boards.py" \
+            --new /tmp/all_boards.json \
+            --old "${ONLINE_WORKTREE}/data/pio-boards.json" \
+            --out "${ONLINE_WORKTREE}/data/pio-boards.json" \
+            --out-slim "${ONLINE_WORKTREE}/data/vendor_boards.json" \
+            --manifest-fragment /tmp/fragments/pio-boards.json \
+            --manifest-fragment-slim /tmp/fragments/vendor_boards.json
+
+      - name: Assemble manifest.json
+        id: build-manifest
+        # We rebuild the manifest whenever at least one dataset succeeded,
+        # so generated_at moves even on a no-op data day (heartbeat).
+        # Datasets that didn't merge this run get marked status=missing in
+        # the manifest but keep their committed data file untouched.
+        if: |
+          steps.merge-usb.outcome == 'success' ||
+          steps.merge-pio.outcome == 'success'
+        run: |
+          set -euo pipefail
+          fragments=()
+          if [ -f /tmp/fragments/usb-vid.json ]; then
+            fragments+=(--fragment "usb-vid=/tmp/fragments/usb-vid.json")
           fi
+          if [ -f /tmp/fragments/pio-boards.json ]; then
+            fragments+=(--fragment "pio-boards=/tmp/fragments/pio-boards.json")
+          fi
+          if [ -f /tmp/fragments/vendor_boards.json ]; then
+            fragments+=(--fragment "vendor_boards=/tmp/fragments/vendor_boards.json")
+          fi
+          uv run --no-project --script \
+            "${ONLINE_WORKTREE}/tools/build_manifest.py" \
+            --branch-base-url "${BRANCH_BASE_URL}" \
+            --data-dir "${ONLINE_WORKTREE}/data" \
+            --out "${ONLINE_WORKTREE}/manifest.json" \
+            "${fragments[@]}"
 
       - name: Commit + push if data actually changed
         id: commit
-        if: steps.merge.outcome == 'success'
+        if: steps.build-manifest.outcome == 'success'
         working-directory: ${{ env.ONLINE_WORKTREE }}
         run: |
           set -euo pipefail
@@ -182,7 +257,12 @@ jobs:
             exit 0
           fi
           ts="$(date -u +%Y-%m-%d)"
-          git commit -m "chore(usb-ids): nightly refresh ${ts}"
+          # Include which datasets actually refreshed in the commit body.
+          parts=()
+          [ "${{ steps.merge-usb.outcome }}" = "success" ] && parts+=("usb-vid")
+          [ "${{ steps.merge-pio.outcome }}" = "success" ] && parts+=("pio-boards")
+          body="$(printf 'datasets: %s' "$(IFS=, ; echo "${parts[*]}")")"
+          git commit -m "chore(online-data): nightly refresh ${ts}" -m "${body}"
           echo "changed=true" >> "$GITHUB_OUTPUT"
 
       - name: Prune history to last ${{ env.HISTORY_LIMIT }} commits
@@ -196,9 +276,6 @@ jobs:
             echo "no prune needed (<= ${HISTORY_LIMIT} commits)"
             exit 0
           fi
-          # Find the commit `HISTORY_LIMIT-1` back from HEAD and make it
-          # a new root via a graft. Then `git filter-repo` (preinstalled on
-          # GitHub-hosted Ubuntu runners) rewrites history accordingly.
           target="$(git rev-list --max-count="${HISTORY_LIMIT}" HEAD | tail -n 1)"
           git replace --graft "${target}"
           pip install --quiet git-filter-repo
@@ -209,20 +286,23 @@ jobs:
       - name: Push
         if: steps.commit.outputs.changed == 'true'
         working-directory: ${{ env.ONLINE_WORKTREE }}
-        # Force-with-lease is needed only after a history-prune rewrite.
-        # In the no-prune path it is a no-op compared to a fast-forward.
         run: |
           git push --force-with-lease origin "${ONLINE_BRANCH}"
 
       - name: Summary
         if: always()
         run: |
-          echo "## Nightly USB IDs refresh" >> "$GITHUB_STEP_SUMMARY"
-          echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "| source | outcome |" >> "$GITHUB_STEP_SUMMARY"
-          echo "|---|---|" >> "$GITHUB_STEP_SUMMARY"
-          echo "| usb-ids-rs (dump example) | ${{ steps.run-dump.outcome }} |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| linux-usb.org             | ${{ steps.fetch-linux-usb.outcome }} |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| usbids/usbids github      | ${{ steps.fetch-github.outcome }} |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| merge                     | ${{ steps.merge.outcome }} |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| committed                 | ${{ steps.commit.outputs.changed || 'n/a' }} |" >> "$GITHUB_STEP_SUMMARY"
+          {
+            echo "## Nightly online-data refresh"
+            echo ""
+            echo "| source / step | outcome |"
+            echo "|---|---|"
+            echo "| usb-ids-rs (dump example)  | ${{ steps.run-dump.outcome }} |"
+            echo "| linux-usb.org              | ${{ steps.fetch-linux-usb.outcome }} |"
+            echo "| usbids/usbids github       | ${{ steps.fetch-github.outcome }} |"
+            echo "| pio boards (platformio)    | ${{ steps.dump-pio.outcome }} |"
+            echo "| merge usb-vid              | ${{ steps.merge-usb.outcome }} |"
+            echo "| merge pio-boards           | ${{ steps.merge-pio.outcome }} |"
+            echo "| build manifest             | ${{ steps.build-manifest.outcome }} |"
+            echo "| committed                  | ${{ steps.commit.outputs.changed || 'n/a' }} |"
+          } >> "$GITHUB_STEP_SUMMARY"
