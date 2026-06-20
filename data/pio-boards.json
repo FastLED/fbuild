@@ -5871,44 +5871,6 @@
     "url": "https://www.adafruit.com/product/5400",
     "vendor": "Adafruit"
   },
-  "adafruit_feather_esp32c6": {
-    "connectivity": [
-      "wifi",
-      "bluetooth",
-      "zigbee",
-      "thread"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 160000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "adafruit_feather_esp32c6",
-    "mcu": "ESP32C6",
-    "name": "Adafruit Feather ESP32-C6",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 4194304,
-    "url": "https://www.adafruit.com/product/5933",
-    "vendor": "Adafruit"
-  },
   "adafruit_feather_esp32s2": {
     "connectivity": [
       "wifi"
@@ -7710,42 +7672,6 @@
     "url": "https://docs.arduino.cc/hardware/nano-esp32",
     "vendor": "Arduino"
   },
-  "arduino_nesso_n1": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 160000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "arduino_nesso_n1",
-    "mcu": "ESP32C6",
-    "name": "Arduino Nesso-N1",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 16777216,
-    "url": "https://store.arduino.cc/products/nesso-n1",
-    "vendor": "Arduino"
-  },
   "armed_v1": {
     "connectivity": [
       "can"
@@ -9473,42 +9399,6 @@
     "ram": 327680,
     "rom": 4194304,
     "url": "https://en.wikipedia.org/wiki/ESP32",
-    "vendor": "BPI Tech"
-  },
-  "bpi-centi-s3": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "bpi-centi-s3",
-    "mcu": "ESP32S3",
-    "name": "BPI-Centi-S3",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 8388608,
-    "url": "https://wiki.banana-pi.org/BPI-Leaf-S3",
     "vendor": "BPI Tech"
   },
   "bpi_leaf_s3": {
@@ -11382,44 +11272,6 @@
     "url": "https://www.dfrobot.com/product-2566.html",
     "vendor": "DFRobot"
   },
-  "dfrobot_firebeetle2_esp32c6": {
-    "connectivity": [
-      "wifi",
-      "bluetooth",
-      "zigbee",
-      "thread"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 160000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "dfrobot_firebeetle2_esp32c6",
-    "mcu": "ESP32C6",
-    "name": "DFRobot FireBeetle 2 ESP32-C6",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 4194304,
-    "url": "https://wiki.dfrobot.com/SKU_DFR1075_FireBeetle_2_Board_ESP32_C6/",
-    "vendor": "DFRobot"
-  },
   "dfrobot_firebeetle2_esp32e": {
     "connectivity": [
       "wifi",
@@ -13023,7 +12875,7 @@
     "name": "Seeed Studio Edgebox-ESP-100",
     "platform": "espressif32",
     "ram": 327680,
-    "rom": 4194304,
+    "rom": 16777216,
     "url": "https://www.seeedstudio.com/EdgeBox-ESP-100-p-5490.html",
     "vendor": "Seeed Studio"
   },
@@ -13492,7 +13344,7 @@
     "platform": "espressif32",
     "ram": 327680,
     "rom": 4194304,
-    "url": "https://espressif.com/en/products/hardware/esp-wrover-kit/overview",
+    "url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32/esp-wrover-kit/index.html",
     "vendor": "Espressif"
   },
   "esp01": {
@@ -13609,40 +13461,6 @@
     "url": "http://wiki.sweetpeas.se/index.php?title=ESP-210",
     "vendor": "SweetPea"
   },
-  "esp32-c2-devkitm-1": {
-    "connectivity": [
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 120000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32-c2-devkitm-1",
-    "mcu": "ESP32C2",
-    "name": "Espressif ESP32-C2-DevKitM-1",
-    "platform": "espressif32",
-    "ram": 278528,
-    "rom": 4194304,
-    "url": "https://docs.espressif.com/projects/espressif-esp-dev-kits/en/latest/esp8684/esp8684-devkitm-1/user_guide.html",
-    "vendor": "Espressif"
-  },
   "esp32-c3-devkitc-02": {
     "connectivity": [
       "wifi",
@@ -13750,153 +13568,8 @@
     "url": "https://docs.ai-thinker.com/en/esp32c3",
     "vendor": "Ai-Thinker"
   },
-  "esp32-c5-devkitc-1": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32-c5-devkitc-1",
-    "mcu": "ESP32C5",
-    "name": "Espressif ESP32-C5-DevKitC-1 4MB no PSRAM",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 4194304,
-    "url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32c5/esp32-c5-devkitc-1/user_guide.html",
-    "vendor": "Espressif"
-  },
-  "esp32-c5-devkitc1-n16r4": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32-c5-devkitc1-n16r4",
-    "mcu": "ESP32C5",
-    "name": "Espressif ESP32-C5-DevKitC-1 N16R4 (16 MB Flash Quad, 4 MB PSRAM Quad)",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 16777216,
-    "url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32c5/esp32-c5-devkitc-1/user_guide.html",
-    "vendor": "Espressif"
-  },
-  "esp32-c5-devkitc1-n4": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32-c5-devkitc1-n4",
-    "mcu": "ESP32C5",
-    "name": "Espressif ESP32-C5-DevKitC-1 N4 (4MB no PSRAM)",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 4194304,
-    "url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32c5/esp32-c5-devkitc-1/user_guide.html",
-    "vendor": "Espressif"
-  },
-  "esp32-c5-devkitc1-n8r4": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32-c5-devkitc1-n8r4",
-    "mcu": "ESP32C5",
-    "name": "Espressif ESP32-C5-DevKitC-1 N8R4 (8 MB Flash Quad, 4 MB PSRAM Quad)",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 8388608,
-    "url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32c5/esp32-c5-devkitc-1/user_guide.html",
-    "vendor": "Espressif"
-  },
   "esp32-c6-devkitc-1": {
     "connectivity": [
-      "bluetooth",
       "wifi"
     ],
     "debug": {
@@ -13918,7 +13591,6 @@
     },
     "fcpu": 160000000,
     "frameworks": [
-      "arduino",
       "espidf"
     ],
     "id": "esp32-c6-devkitc-1",
@@ -13953,7 +13625,6 @@
     },
     "fcpu": 160000000,
     "frameworks": [
-      "arduino",
       "espidf"
     ],
     "id": "esp32-c6-devkitm-1",
@@ -13963,78 +13634,6 @@
     "ram": 327680,
     "rom": 4194304,
     "url": "https://docs.espressif.com/projects/espressif-esp-dev-kits/en/latest/esp32c6/esp32-c6-devkitm-1/index.html",
-    "vendor": "Espressif"
-  },
-  "esp32-c61-devkitc1": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 160000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32-c61-devkitc1",
-    "mcu": "ESP32C61",
-    "name": "Espressif ESP32-C61-DevKitC-1 (4 MB Flash)",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 4194304,
-    "url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32c61/esp32-c61-devkitc-1/user_guide.html",
-    "vendor": "Espressif"
-  },
-  "esp32-c61-devkitc1-n8r2": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 160000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32-c61-devkitc1-n8r2",
-    "mcu": "ESP32C61",
-    "name": "Espressif ESP32-C61-DevKitC-1 N8R2 (8 MB Flash Quad, 2 MB PSRAM Quad)",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 8388608,
-    "url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32c61/esp32-c61-devkitc-1/user_guide.html",
     "vendor": "Espressif"
   },
   "esp32-devkitlipo": {
@@ -14147,184 +13746,6 @@
     "rom": 4194304,
     "url": "https://www.olimex.com/Products/IoT/ESP32-GATEWAY/open-source-hardware",
     "vendor": "OLIMEX"
-  },
-  "esp32-h2-devkitm-1": {
-    "connectivity": [
-      "bluetooth",
-      "zigbee"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 96000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32-h2-devkitm-1",
-    "mcu": "ESP32H2",
-    "name": "Espressif ESP32-H2-DevKit",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 4194304,
-    "url": "https://docs.espressif.com/projects/espressif-esp-dev-kits/en/latest/esp32h2/esp32-h2-devkitm-1/index.html",
-    "vendor": "Espressif"
-  },
-  "esp32-p4": {
-    "connectivity": [
-      "bluetooth",
-      "openthread"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-prog": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 360000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32-p4",
-    "mcu": "ESP32P4",
-    "name": "Espressif ESP32-P4 generic",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 4194304,
-    "url": "https://docs.espressif.com",
-    "vendor": "Espressif"
-  },
-  "esp32-p4-evboard": {
-    "connectivity": [
-      "bluetooth",
-      "openthread"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 360000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32-p4-evboard",
-    "mcu": "ESP32P4",
-    "name": "Espressif ESP32-P4 Function EV Board (ES pre rev.300)",
-    "platform": "espressif32",
-    "ram": 512000,
-    "rom": 16777216,
-    "url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32p4/esp32-p4-function-ev-board/index.html",
-    "vendor": "Espressif"
-  },
-  "esp32-p4_r3": {
-    "connectivity": [
-      "bluetooth",
-      "openthread"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 400000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32-p4_r3",
-    "mcu": "ESP32P4",
-    "name": "Espressif ESP32-P4 rev.300 generic",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 16777216,
-    "url": "https://docs.espressif.com",
-    "vendor": "Espressif"
-  },
-  "esp32-p4_r3-evboard": {
-    "connectivity": [
-      "bluetooth",
-      "openthread"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 400000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32-p4_r3-evboard",
-    "mcu": "ESP32P4",
-    "name": "Espressif ESP32-P4 Function EV Board v1.6 (rev.301)",
-    "platform": "espressif32",
-    "ram": 512000,
-    "rom": 16777216,
-    "url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32p4/esp32-p4-function-ev-board/index.html",
-    "vendor": "Espressif"
   },
   "esp32-pico-devkitm-2": {
     "connectivity": [
@@ -14618,313 +14039,6 @@
     "url": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/hw-reference/esp32s3/user-guide-devkitc-1.html",
     "vendor": "Espressif"
   },
-  "esp32-s3-devkitc-1-n32r8v": {
-    "connectivity": [
-      "wifi",
-      "bluetooth"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {
-          "default": true,
-          "onboard": true
-        },
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32-s3-devkitc-1-n32r8v",
-    "mcu": "ESP32S3",
-    "name": "Espressif ESP32-S3-DevKitC-1-N32R8V (32 MB Flash Octal, 8 MB PSRAM Octal)",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 33554432,
-    "url": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/hw-reference/esp32s3/user-guide-devkitc-1.html",
-    "vendor": "Espressif"
-  },
-  "esp32-s3-devkitc1-n16r16": {
-    "connectivity": [
-      "wifi",
-      "bluetooth"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {
-          "default": true,
-          "onboard": true
-        },
-        "esp-prog": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32-s3-devkitc1-n16r16",
-    "mcu": "ESP32S3",
-    "name": "Espressif ESP32-S3-DevKitC-1-N16R8V (16 MB Flash Quad, 16 MB PSRAM Octal)",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 16777216,
-    "url": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/hw-reference/esp32s3/user-guide-devkitc-1.html",
-    "vendor": "Espressif"
-  },
-  "esp32-s3-devkitc1-n16r2": {
-    "connectivity": [
-      "wifi",
-      "bluetooth"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {
-          "default": true,
-          "onboard": true
-        },
-        "esp-prog": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32-s3-devkitc1-n16r2",
-    "mcu": "ESP32S3",
-    "name": "Espressif ESP32-S3-DevKitC-1-N8R8 (16 MB Flash Quad, 2 MB PSRAM Quad)",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 16777216,
-    "url": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/hw-reference/esp32s3/user-guide-devkitc-1.html",
-    "vendor": "Espressif"
-  },
-  "esp32-s3-devkitc1-n16r8": {
-    "connectivity": [
-      "wifi",
-      "bluetooth"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {
-          "default": true,
-          "onboard": true
-        },
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32-s3-devkitc1-n16r8",
-    "mcu": "ESP32S3",
-    "name": "Espressif ESP32-S3-DevKitC-1-N16R8V (16 MB Flash Quad, 8 MB PSRAM Octal)",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 16777216,
-    "url": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/hw-reference/esp32s3/user-guide-devkitc-1.html",
-    "vendor": "Espressif"
-  },
-  "esp32-s3-devkitc1-n4r2": {
-    "connectivity": [
-      "wifi",
-      "bluetooth"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {
-          "default": true,
-          "onboard": true
-        },
-        "esp-prog": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32-s3-devkitc1-n4r2",
-    "mcu": "ESP32S3",
-    "name": "Espressif ESP32-S3-DevKitC-1-N8R8 (4 MB Flash Quad, 2 MB PSRAM Quad)",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 4194304,
-    "url": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/hw-reference/esp32s3/user-guide-devkitc-1.html",
-    "vendor": "Espressif"
-  },
-  "esp32-s3-devkitc1-n4r8": {
-    "connectivity": [
-      "wifi",
-      "bluetooth"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {
-          "default": true,
-          "onboard": true
-        },
-        "esp-prog": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32-s3-devkitc1-n4r8",
-    "mcu": "ESP32S3",
-    "name": "Espressif ESP32-S3-DevKitC-1-N8R8 (4 MB Flash Quad, 8 MB PSRAM Octal)",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 4194304,
-    "url": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/hw-reference/esp32s3/user-guide-devkitc-1.html",
-    "vendor": "Espressif"
-  },
-  "esp32-s3-devkitc1-n8r2": {
-    "connectivity": [
-      "wifi",
-      "bluetooth"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {
-          "default": true,
-          "onboard": true
-        },
-        "esp-prog": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32-s3-devkitc1-n8r2",
-    "mcu": "ESP32S3",
-    "name": "Espressif ESP32-S3-DevKitC-1-N8R8 (8 MB Flash Quad, 2 MB PSRAM quad)",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 8388608,
-    "url": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/hw-reference/esp32s3/user-guide-devkitc-1.html",
-    "vendor": "Espressif"
-  },
-  "esp32-s3-devkitc1-n8r8": {
-    "connectivity": [
-      "wifi",
-      "bluetooth"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {
-          "default": true,
-          "onboard": true
-        },
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32-s3-devkitc1-n8r8",
-    "mcu": "ESP32S3",
-    "name": "Espressif ESP32-S3-DevKitC-1-N8R8 (8 MB Flash Quad, 8 MB PSRAM Octal)",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 8388608,
-    "url": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/hw-reference/esp32s3/user-guide-devkitc-1.html",
-    "vendor": "Espressif"
-  },
   "esp32-s3-devkitm-1": {
     "connectivity": [
       "bluetooth",
@@ -14962,82 +14076,6 @@
     "ram": 327680,
     "rom": 8388608,
     "url": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/hw-reference/esp32s3/user-guide-devkitm-1.html",
-    "vendor": "Espressif"
-  },
-  "esp32-s3-fh4r2": {
-    "connectivity": [
-      "wifi",
-      "bluetooth"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {
-          "default": true,
-          "onboard": true
-        },
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32-s3-fh4r2",
-    "mcu": "ESP32S3",
-    "name": "Espressif ESP32-S3-FH4R2 (4 MB QD, 2MB PSRAM)",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 4194304,
-    "url": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/hw-reference/esp32s3/user-guide-devkitc-1.html",
-    "vendor": "Espressif"
-  },
-  "esp32-solo1": {
-    "connectivity": [
-      "wifi",
-      "bluetooth",
-      "ethernet",
-      "can"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 160000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32-solo1",
-    "mcu": "ESP32",
-    "name": "Espressif Generic ESP32-solo1 4M Flash",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 4194304,
-    "url": "https://www.espressif.com/sites/default/files/documentation/esp32-solo-1_datasheet_en.pdf",
     "vendor": "Espressif"
   },
   "esp320": {
@@ -15224,42 +14262,6 @@
     "rom": 4194304,
     "url": "http://www.doit.am/",
     "vendor": "DOIT"
-  },
-  "esp32s3_120_16_8-qio_opi": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "esp32s3_120_16_8-qio_opi",
-    "mcu": "ESP32S3",
-    "name": "ESP32-S3 16MB QIO, 8MB OPI PSRAM",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 16777216,
-    "url": "https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_en.pdf",
-    "vendor": "espressif"
   },
   "esp32s3_powerfeather": {
     "connectivity": [
@@ -16098,44 +15100,6 @@
     "url": "https://www.adafruit.com/product/4769",
     "vendor": "Adafruit"
   },
-  "feenove-esp32-s3-n8r8": {
-    "connectivity": [
-      "wifi",
-      "bluetooth"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {
-          "default": true,
-          "onboard": true
-        },
-        "esp-prog": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "feenove-esp32-s3-n8r8",
-    "mcu": "ESP32S3",
-    "name": "Freenove ESP32-S3 WROOM N8R8 (8MB Flash / 8MB PSRAM)",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 8388608,
-    "url": "https://github.com/Freenove/Freenove_ESP32_S3_WROOM_Board",
-    "vendor": "Freenove"
-  },
   "fio": {
     "debug": {
       "tools": {
@@ -16570,45 +15534,6 @@
     "rom": 524288,
     "url": "https://os.mbed.com/platforms/FRDM-KW41Z/",
     "vendor": "Freescale"
-  },
-  "freenove-esp32-s3-n8r8": {
-    "connectivity": [
-      "wifi",
-      "bluetooth"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {
-          "default": true,
-          "onboard": true
-        },
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "freenove-esp32-s3-n8r8",
-    "mcu": "ESP32S3",
-    "name": "Freenove ESP32-S3 WROOM N8R8 (8MB Flash / 8MB PSRAM)",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 8388608,
-    "url": "https://github.com/Freenove/Freenove_ESP32_S3_WROOM_Board",
-    "vendor": "Freenove"
   },
   "freenove_esp32_s3_wroom": {
     "connectivity": [
@@ -19742,118 +18667,6 @@
     "url": "https://hackaday.io/project/18997-hornbill",
     "vendor": "Hornbill"
   },
-  "huidu_hd_wf1": {
-    "connectivity": [
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "huidu_hd_wf1",
-    "mcu": "ESP32S2",
-    "name": "Huidu HD-WF1",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 4194304,
-    "url": "https://www.hdwell.com/Product/index46.html",
-    "vendor": "Huidu Tech"
-  },
-  "huidu_hd_wf2": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {
-          "default": true,
-          "onboard": true
-        },
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "huidu_hd_wf2",
-    "mcu": "ESP32S3",
-    "name": "Huidu HD-WF2",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 8388608,
-    "url": "https://www.hdwell.com/Product/index46.html",
-    "vendor": "Huidu Tech"
-  },
-  "huidu_hd_wf4": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {
-          "default": true,
-          "onboard": true
-        },
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "huidu_hd_wf4",
-    "mcu": "ESP32S3",
-    "name": "Huidu HD-WF4",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 8388608,
-    "url": "https://www.hdwell.com/Product/index46.html",
-    "vendor": "Huidu Tech"
-  },
   "huzzah": {
     "connectivity": [
       "wifi"
@@ -20277,41 +19090,6 @@
     "rom": 28672,
     "url": "https://www.adafruit.com/product/3677",
     "vendor": "Adafruit"
-  },
-  "jczn_2432s028r": {
-    "connectivity": [
-      "wifi",
-      "bluetooth"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "jczn_2432s028r",
-    "mcu": "ESP32",
-    "name": "ESP32-2432S028R CYD",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 4194304,
-    "url": "http://pan.jczn1688.com/directlink/1/ESP32%20module/2.8inch_ESP32-2432S028R.rar",
-    "vendor": "JCZN"
   },
   "kb32-ft": {
     "connectivity": [
@@ -20869,7 +19647,7 @@
     "platform": "espressif32",
     "ram": 327680,
     "rom": 4194304,
-    "url": "https://lilygo.cc/products/t-display",
+    "url": "https://www.lilygo.cc/products/lilygo%C2%AE-ttgo-t-display-1-14-inch-lcd-esp32-control-board",
     "vendor": "LilyGo"
   },
   "lilygo-t-display-s3": {
@@ -20905,43 +19683,7 @@
     "platform": "espressif32",
     "ram": 327680,
     "rom": 16777216,
-    "url": "https://lilygo.cc/products/t-display-s3",
-    "vendor": "LilyGo"
-  },
-  "lilygo-t-energy-s3": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "lilygo-t-energy-s3",
-    "mcu": "ESP32S3",
-    "name": "LilyGo T-Energy-S3",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 16777216,
-    "url": "https://www.lilygo.cc/products/t-energy-s3",
+    "url": "https://www.lilygo.cc/products/t-display-s3",
     "vendor": "LilyGo"
   },
   "lilygo-t3-s3": {
@@ -21485,42 +20227,6 @@
     "url": "https://www.wemos.cc/en/latest/s3/index.html",
     "vendor": "WEMOS"
   },
-  "lolin_s3_mini_pro": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "lolin_s3_mini_pro",
-    "mcu": "ESP32S3",
-    "name": "WEMOS LOLIN S3 Mini Pro",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 4194304,
-    "url": "https://www.wemos.cc/en/latest/s3/index.html",
-    "vendor": "WEMOS"
-  },
   "lolin_s3_pro": {
     "connectivity": [
       "wifi",
@@ -21789,29 +20495,6 @@
     "url": "https://os.mbed.com/platforms/LPCXpresso54608/",
     "vendor": "NXP"
   },
-  "lpc845brk": {
-    "debug": {
-      "tools": {
-        "blackmagic": {},
-        "cmsis-dap": {
-          "onboard": true
-        },
-        "jlink": {}
-      }
-    },
-    "fcpu": 24000000,
-    "frameworks": [
-      "arduino"
-    ],
-    "id": "lpc845brk",
-    "mcu": "LPC845",
-    "name": "NXP LPC845-BRK",
-    "platform": "nxplpc-arduino",
-    "ram": 16384,
-    "rom": 65536,
-    "url": "https://www.nxp.com/design/microcontrollers-developer-resources/lpc845-breakout-board-for-lpc84x-family-mcus:LPC845-BRK",
-    "vendor": "NXP"
-  },
   "lpcxpresso55s16": {
     "connectivity": [
       "ethernet"
@@ -21834,52 +20517,6 @@
     "ram": 98304,
     "rom": 262144,
     "url": "https://www.nxp.com/design/development-boards/lpcxpresso-boards/lpcxpresso55s16-development-board:LPC55S16-EVK",
-    "vendor": "NXP"
-  },
-  "lpcxpresso804": {
-    "debug": {
-      "tools": {
-        "blackmagic": {},
-        "cmsis-dap": {
-          "onboard": true
-        },
-        "jlink": {}
-      }
-    },
-    "fcpu": 15000000,
-    "frameworks": [
-      "arduino"
-    ],
-    "id": "lpcxpresso804",
-    "mcu": "LPC804",
-    "name": "NXP LPCXpresso804",
-    "platform": "nxplpc-arduino",
-    "ram": 4096,
-    "rom": 32768,
-    "url": "https://www.nxp.com/design/microcontrollers-developer-resources/lpcxpresso-boards/lpcxpresso804-development-board:OM40001",
-    "vendor": "NXP"
-  },
-  "lpcxpresso845max": {
-    "debug": {
-      "tools": {
-        "blackmagic": {},
-        "cmsis-dap": {
-          "onboard": true
-        },
-        "jlink": {}
-      }
-    },
-    "fcpu": 30000000,
-    "frameworks": [
-      "arduino"
-    ],
-    "id": "lpcxpresso845max",
-    "mcu": "LPC845",
-    "name": "NXP LPCXpresso845-MAX",
-    "platform": "nxplpc-arduino",
-    "ram": 16384,
-    "rom": 65536,
-    "url": "https://www.nxp.com/design/microcontrollers-developer-resources/lpcxpresso-boards/lpcxpresso845-max-development-board:OM13097",
     "vendor": "NXP"
   },
   "lplm4f120h5qr": {
@@ -22382,42 +21019,6 @@
     "url": "https://docs.m5stack.com/en/core/AtomS3",
     "vendor": "M5Stack"
   },
-  "m5stack-atoms3u": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "m5stack-atoms3u",
-    "mcu": "ESP32S3",
-    "name": "M5Stack AtomS3U",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 8388608,
-    "url": "https://docs.m5stack.com/en/core/AtomS3U",
-    "vendor": "M5Stack"
-  },
   "m5stack-core-esp32": {
     "connectivity": [
       "wifi",
@@ -22749,42 +21350,6 @@
     "url": "http://www.m5stack.com",
     "vendor": "M5Stack"
   },
-  "m5stack-tab5-p4": {
-    "connectivity": [
-      "bluetooth",
-      "openthread"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 360000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "m5stack-tab5-p4",
-    "mcu": "ESP32P4",
-    "name": "M5STACK Tab5 esp32-p4 Board (ES pre rev.300)",
-    "platform": "espressif32",
-    "ram": 512000,
-    "rom": 16777216,
-    "url": "https://docs.m5stack.com/en/core/Tab5",
-    "vendor": "M5STACK"
-  },
   "m5stack-timer-cam": {
     "connectivity": [
       "wifi",
@@ -22819,43 +21384,6 @@
     "platform": "espressif32",
     "ram": 327680,
     "rom": 4194304,
-    "url": "http://www.m5stack.com",
-    "vendor": "M5Stack"
-  },
-  "m5stack_paper": {
-    "connectivity": [
-      "wifi",
-      "bluetooth",
-      "ethernet",
-      "can"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "m5stack_paper",
-    "mcu": "ESP32",
-    "name": "M5Stack Paper",
-    "platform": "espressif32",
-    "ram": 4521984,
-    "rom": 16777216,
     "url": "http://www.m5stack.com",
     "vendor": "M5Stack"
   },
@@ -25377,42 +23905,6 @@
     "url": "http://www.pontech.com/products",
     "vendor": "Pontech"
   },
-  "nologo_esp32c3_super_mini": {
-    "connectivity": [
-      "wifi",
-      "bluetooth"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 160000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "nologo_esp32c3_super_mini",
-    "mcu": "ESP32C3",
-    "name": "Nologo ESP32C3 SuperMini",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 4194304,
-    "url": "https://www.nologo.tech/product/esp32/esp32c3/esp32c3supermini/esp32C3SuperMini.html",
-    "vendor": "Nologo"
-  },
   "nrf51_beacon": {
     "connectivity": [
       "bluetooth"
@@ -27495,7 +25987,8 @@
     "fcpu": 160000000,
     "frameworks": [
       "arduino",
-      "mbed"
+      "mbed",
+      "zephyr"
     ],
     "id": "nucleo_u575zi_q",
     "mcu": "STM32U575ZIT6Q",
@@ -30364,42 +28857,6 @@
     "url": "https://www.seeedstudio.com/Seeeduino-XIAO-Arduino-Microcontroller-SAMD21-Cortex-M0+-p-4426.html",
     "vendor": "Seeed"
   },
-  "seeed_xiao_esp32_s3_plus": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "seeed_xiao_esp32_s3_plus",
-    "mcu": "ESP32S3",
-    "name": "Seeed Studio XIAO ESP32S3 Plus",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 16777216,
-    "url": "https://wiki.seeedstudio.com/xiao_esp32s3_getting_started/",
-    "vendor": "Seeed Studio"
-  },
   "seeed_xiao_esp32c3": {
     "connectivity": [
       "wifi"
@@ -30435,44 +28892,6 @@
     "url": "https://wiki.seeedstudio.com/XIAO_ESP32C3_Getting_Started/",
     "vendor": "Seeed Studio"
   },
-  "seeed_xiao_esp32c5": {
-    "connectivity": [
-      "wifi",
-      "bluetooth",
-      "zigbee",
-      "thread"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "seeed_xiao_esp32c5",
-    "mcu": "ESP32C5",
-    "name": "Seeed Studio XIAO ESP32C5",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 8388608,
-    "url": "https://wiki.seeedstudio.com/xiao_esp32c5_getting_started/",
-    "vendor": "Seeed Studio"
-  },
   "seeed_xiao_esp32c6": {
     "connectivity": [
       "wifi",
@@ -30499,7 +28918,6 @@
     },
     "fcpu": 160000000,
     "frameworks": [
-      "arduino",
       "espidf"
     ],
     "id": "seeed_xiao_esp32c6",
@@ -30508,7 +28926,7 @@
     "platform": "espressif32",
     "ram": 327680,
     "rom": 4194304,
-    "url": "https://wiki.seeedstudio.com/xiao_esp32c6_getting_started/",
+    "url": "https://wiki.seeedstudio.com/XIAO_ESP32C6_Getting_Started/",
     "vendor": "Seeed Studio"
   },
   "seeed_xiao_esp32s3": {
@@ -31372,44 +29790,6 @@
     "url": "https://www.sparkfun.com/products/19177",
     "vendor": "SparkFun"
   },
-  "sparkfun_esp32c6_thing_plus": {
-    "connectivity": [
-      "wifi",
-      "bluetooth",
-      "zigbee",
-      "thread"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 160000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "sparkfun_esp32c6_thing_plus",
-    "mcu": "ESP32C6",
-    "name": "Sparkfun ESP32-C6 Thing Plus",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 16777216,
-    "url": "https://www.sparkfun.com/products/22924",
-    "vendor": "Sparkfun"
-  },
   "sparkfun_esp32micromod": {
     "connectivity": [
       "wifi",
@@ -31516,45 +29896,6 @@
     "ram": 327680,
     "rom": 16777216,
     "url": "https://www.sparkfun.com/products/18018",
-    "vendor": "SparkFun"
-  },
-  "sparkfun_esp32s3_thing_plus": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {
-          "default": true,
-          "onboard": true
-        },
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "sparkfun_esp32s3_thing_plus",
-    "mcu": "ESP32S3",
-    "name": "SPARKFUN_ESP32S3_THING_PLUS",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 4194304,
-    "url": "https://www.sparkfun.com/products/24408",
     "vendor": "SparkFun"
   },
   "sparkfun_fiov3": {
@@ -31717,42 +30058,6 @@
     "url": "https://www.sparkfun.com/products/17713",
     "vendor": "SparkFun"
   },
-  "sparkfun_pro_micro_esp32c3": {
-    "connectivity": [
-      "wifi",
-      "bluetooth"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 160000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "sparkfun_pro_micro_esp32c3",
-    "mcu": "ESP32C3",
-    "name": "SparkFun Pro Micro ESP32-C3",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 4194304,
-    "url": "https://www.sparkfun.com/sparkfun-pro-micro-esp32-c3.html",
-    "vendor": "Sparkfun"
-  },
   "sparkfun_promicro16": {
     "debug": {
       "tools": {
@@ -31829,44 +30134,6 @@
     "ram": 32768,
     "rom": 262144,
     "url": "https://www.sparkfun.com/products/15423",
-    "vendor": "SparkFun"
-  },
-  "sparkfun_qwiic_pocket_esp32c6": {
-    "connectivity": [
-      "wifi",
-      "bluetooth",
-      "zigbee",
-      "thread"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 160000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "sparkfun_qwiic_pocket_esp32c6",
-    "mcu": "ESP32C6",
-    "name": "SparkFun ESP32-C6 Qwiic Pocket",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 4194304,
-    "url": "https://www.sparkfun.com/products/22925",
     "vendor": "SparkFun"
   },
   "sparkfun_redboard": {
@@ -33723,78 +31990,6 @@
     "url": "http://www.schmalzhaus.com/UBW32/",
     "vendor": "UBW32"
   },
-  "um_bling": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "um_bling",
-    "mcu": "ESP32S3",
-    "name": "Unexpected Maker BLING!",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 8388608,
-    "url": "https://unexpectedmaker.com/shop/bling",
-    "vendor": "Unexpected Maker"
-  },
-  "um_edges3_d": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "um_edges3_d",
-    "mcu": "ESP32S3",
-    "name": "Unexpected Maker EDGES3[D]",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 8388608,
-    "url": "https://unexpectedmaker.com/",
-    "vendor": "Unexpected Maker"
-  },
   "um_feathers2": {
     "connectivity": [
       "wifi"
@@ -33899,42 +32094,6 @@
     "url": "https://unexpectedmaker.com/shop/feathers3",
     "vendor": "Unexpected Maker"
   },
-  "um_feathers3_neo": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "um_feathers3_neo",
-    "mcu": "ESP32S3",
-    "name": "Unexpected Maker FeatherS3 Neo",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 8388608,
-    "url": "https://unexpectedmaker.com/shop/feathers3neo",
-    "vendor": "Unexpected Maker"
-  },
   "um_nanos3": {
     "connectivity": [
       "bluetooth",
@@ -33969,42 +32128,6 @@
     "ram": 327680,
     "rom": 8388608,
     "url": "https://unexpectedmaker.com/shop/nanoS3",
-    "vendor": "Unexpected Maker"
-  },
-  "um_omgs3": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "um_omgs3",
-    "mcu": "ESP32S3",
-    "name": "Unexpected Maker OMGS3",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 8388608,
-    "url": "https://unexpectedmaker.com/shop/omgs3",
     "vendor": "Unexpected Maker"
   },
   "um_pros3": {
@@ -34077,78 +32200,6 @@
     "url": "https://unexpectedmaker.com/esp32s2",
     "vendor": "Unexpected Maker"
   },
-  "um_squixl": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "um_squixl",
-    "mcu": "ESP32S3",
-    "name": "Unexpected Maker SQUiXL",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 16777216,
-    "url": "https://unexpectedmaker.com/shop/squixl",
-    "vendor": "Unexpected Maker"
-  },
-  "um_tinyc6": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "um_tinyc6",
-    "mcu": "ESP32C6",
-    "name": "Unexpected Maker TinyC6",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 8388608,
-    "url": "https://unexpectedmaker.com/shop/tinyc6",
-    "vendor": "Unexpected Maker"
-  },
   "um_tinys2": {
     "connectivity": [
       "wifi"
@@ -34216,7 +32267,7 @@
     "platform": "espressif32",
     "ram": 327680,
     "rom": 8388608,
-    "url": "https://unexpectedmaker.com/shop/tinys3",
+    "url": "https://unexpectedmaker.com/shop/ttinys3-esp32s3",
     "vendor": "Unexpected Maker"
   },
   "uno": {
@@ -34980,81 +33031,6 @@
     "url": "http://www.waveshare.com/wiki/BLE400",
     "vendor": "Waveshare"
   },
-  "waveshare_esp32_s3_zero": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "waveshare_esp32_s3_zero",
-    "mcu": "ESP32S3",
-    "name": "Waveshare ESP32-S3-Zero",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 4194304,
-    "url": "https://www.waveshare.com/wiki/ESP32-S3-Zero",
-    "vendor": "Waveshare"
-  },
-  "waveshare_esp32s3_touch_lcd_128": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {
-          "default": true,
-          "onboard": true
-        },
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "waveshare_esp32s3_touch_lcd_128",
-    "mcu": "ESP32S3",
-    "name": "Waveshare ESP32-S3-Touch-LCD-1.28 (16 MB QD, 2MB PSRAM)",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 16777216,
-    "url": "https://www.waveshare.com/wiki/ESP32-S3-Touch-LCD-1.28",
-    "vendor": "Waveshare"
-  },
   "waveshare_open103z": {
     "debug": {
       "tools": {
@@ -35352,7 +33328,9 @@
     },
     "fcpu": 170000000,
     "frameworks": [
+      "arduino",
       "cmsis",
+      "libopencm3",
       "stm32cube"
     ],
     "id": "weact_g474ceu6",
@@ -36307,42 +34285,6 @@
     "url": "https://store.myairbot.com/esc/4in1-esc.html",
     "vendor": "Airbot"
   },
-  "ws_esp32_s3_matrix": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "ws_esp32_s3_matrix",
-    "mcu": "ESP32S3",
-    "name": "Waveshare ESP32-S3-Matrix",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 4194304,
-    "url": "https://www.waveshare.com/wiki/ESP32-S3-Matrix",
-    "vendor": "Waveshare"
-  },
   "wt32-eth01": {
     "connectivity": [
       "wifi",
@@ -36378,42 +34320,6 @@
     "ram": 327680,
     "rom": 4194304,
     "url": "http://www.wireless-tag.com/portfolio/wt32-eth01/",
-    "vendor": "Wireless-Tag"
-  },
-  "wt32-sc01-plus": {
-    "connectivity": [
-      "bluetooth",
-      "wifi"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "wt32-sc01-plus",
-    "mcu": "ESP32S3",
-    "name": "wt32-sc01-plus",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 16777216,
-    "url": "http://www.wireless-tag.com/portfolio/wt32-eth01",
     "vendor": "Wireless-Tag"
   },
   "xdot_l151cc": {
@@ -36692,232 +34598,6 @@
     "rom": 49152,
     "url": "https://www.microchip.com/developmenttools/ProductDetails/atmega4809-xpro",
     "vendor": "Microchip"
-  },
-  "yb_esp32s3_amp": {
-    "connectivity": [
-      "wifi",
-      "bluetooth"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {
-          "default": true,
-          "onboard": true
-        },
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "yb_esp32s3_amp",
-    "mcu": "ESP32S3",
-    "name": "YelloByte YB-ESP32-S3-AMP",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 8388608,
-    "url": "https://github.com/yellobyte/YB-ESP32-S3-AMP",
-    "vendor": "YelloByte"
-  },
-  "yb_esp32s3_amp_v2": {
-    "connectivity": [
-      "wifi",
-      "bluetooth"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "yb_esp32s3_amp_v2",
-    "mcu": "ESP32S3",
-    "name": "YelloByte YB-ESP32-S3-AMP (Rev.2)",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 8388608,
-    "url": "https://github.com/yellobyte/YB-ESP32-S3-AMP",
-    "vendor": "YelloByte"
-  },
-  "yb_esp32s3_amp_v3": {
-    "connectivity": [
-      "wifi",
-      "bluetooth"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "yb_esp32s3_amp_v3",
-    "mcu": "ESP32S3",
-    "name": "YelloByte YB-ESP32-S3-AMP (Rev.3)",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 8388608,
-    "url": "https://github.com/yellobyte/YB-ESP32-S3-AMP",
-    "vendor": "YelloByte"
-  },
-  "yb_esp32s3_dac": {
-    "connectivity": [
-      "wifi",
-      "bluetooth"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {
-          "default": true,
-          "onboard": true
-        },
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "yb_esp32s3_dac",
-    "mcu": "ESP32S3",
-    "name": "YelloByte YB-ESP32-S3-DAC",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 8388608,
-    "url": "https://github.com/yellobyte/YB-ESP32-S3-DAC",
-    "vendor": "YelloByte"
-  },
-  "yb_esp32s3_drv": {
-    "connectivity": [
-      "wifi",
-      "bluetooth"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {},
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "yb_esp32s3_drv",
-    "mcu": "ESP32S3",
-    "name": "YelloByte YB-ESP32-S3-DRV",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 8388608,
-    "url": "https://github.com/yellobyte/YB-ESP32-S3-DRV",
-    "vendor": "YelloByte"
-  },
-  "yb_esp32s3_eth": {
-    "connectivity": [
-      "wifi",
-      "bluetooth",
-      "ethernet"
-    ],
-    "debug": {
-      "tools": {
-        "cmsis-dap": {},
-        "esp-bridge": {},
-        "esp-builtin": {
-          "default": true,
-          "onboard": true
-        },
-        "esp-prog": {},
-        "esp-prog-2": {},
-        "iot-bus-jtag": {},
-        "jlink": {},
-        "minimodule": {},
-        "olimex-arm-usb-ocd": {},
-        "olimex-arm-usb-ocd-h": {},
-        "olimex-arm-usb-tiny-h": {},
-        "olimex-jtag-tiny": {},
-        "tumpa": {}
-      }
-    },
-    "fcpu": 240000000,
-    "frameworks": [
-      "arduino",
-      "espidf"
-    ],
-    "id": "yb_esp32s3_eth",
-    "mcu": "ESP32S3",
-    "name": "YelloByte YB-ESP32-S3-ETH",
-    "platform": "espressif32",
-    "ram": 327680,
-    "rom": 4194304,
-    "url": "https://github.com/yellobyte/YB-ESP32-S3-ETH",
-    "vendor": "YelloByte"
   },
   "yun": {
     "connectivity": [

@@ -1,37 +1,37 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-06-20T22:14:11Z",
+  "generated_at": "2026-06-20T22:23:46Z",
   "datasets": {
     "pio-boards": {
-      "url": "https://raw.githubusercontent.com/fastled/fbuild/online-data/data/pio-boards.json",
+      "url": "https://raw.githubusercontent.com/FastLED/fbuild/online-data/data/pio-boards.json",
       "format": "json-object",
-      "entries": 1617,
+      "entries": 1553,
       "status": "ok",
       "description": "PlatformIO board catalog — every board the PlatformIO registry knows about, keyed by board id, alphabetically sorted. Fields the previous dump carried are preserved across regressions in the live `pio boards` output.",
       "key_format": "board-id",
-      "generated_at": "2026-06-20T22:14:10Z",
+      "generated_at": "2026-06-20T22:23:46Z",
       "sources": [
         {
           "name": "platformio",
           "kind": "pio-boards",
-          "entries": "1617"
+          "entries": "1553"
         }
       ],
       "merge_stats": {
-        "common": 1617,
+        "common": 1553,
         "added": 0,
-        "dropped": 0,
-        "fields_preserved": 0
+        "dropped": 64,
+        "fields_preserved": 56
       }
     },
     "usb-vid-conflicts": {
-      "url": "https://raw.githubusercontent.com/fastled/fbuild/online-data/data/usb-vid-conflicts.json",
+      "url": "https://raw.githubusercontent.com/FastLED/fbuild/online-data/data/usb-vid-conflicts.json",
       "format": "json-object",
       "entries": 4,
       "status": "ok"
     },
     "usb-vid": {
-      "url": "https://raw.githubusercontent.com/fastled/fbuild/online-data/data/usb-vid.json",
+      "url": "https://raw.githubusercontent.com/FastLED/fbuild/online-data/data/usb-vid.json",
       "format": "json-object",
       "entries": 1942,
       "status": "ok",
@@ -45,8 +45,8 @@
           }
         }
       },
-      "conflicts_url": "https://raw.githubusercontent.com/fastled/fbuild/online-data/data/usb-vid-conflicts.json",
-      "generated_at": "2026-06-20T22:13:48Z",
+      "conflicts_url": "https://raw.githubusercontent.com/FastLED/fbuild/online-data/data/usb-vid-conflicts.json",
+      "generated_at": "2026-06-20T22:23:46Z",
       "sources": [
         {
           "name": "usb-ids-rs",
@@ -66,18 +66,18 @@
       ]
     },
     "vendor_boards": {
-      "url": "https://raw.githubusercontent.com/fastled/fbuild/online-data/data/vendor_boards.json",
+      "url": "https://raw.githubusercontent.com/FastLED/fbuild/online-data/data/vendor_boards.json",
       "format": "json-object",
-      "entries": 1617,
+      "entries": 1553,
       "status": "ok",
       "description": "Slim view of pio-boards keyed by board id — only {vendor, name, mcu} per board. Use this when only the human-readable identity is needed (\"what board is plugged in?\").",
       "key_format": "board-id",
-      "generated_at": "2026-06-20T22:14:10Z",
+      "generated_at": "2026-06-20T22:23:46Z",
       "sources": [
         {
           "name": "platformio",
           "kind": "pio-boards-slim",
-          "entries": "1617"
+          "entries": "1553"
         }
       ]
     }

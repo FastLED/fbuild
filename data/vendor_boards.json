@@ -2144,11 +2144,6 @@
     "name": "Adafruit Feather ESP32 V2",
     "vendor": "Adafruit"
   },
-  "adafruit_feather_esp32c6": {
-    "mcu": "ESP32C6",
-    "name": "Adafruit Feather ESP32-C6",
-    "vendor": "Adafruit"
-  },
   "adafruit_feather_esp32s2": {
     "mcu": "ESP32S2",
     "name": "Adafruit Feather ESP32-S2",
@@ -2497,11 +2492,6 @@
   "arduino_nano_esp32": {
     "mcu": "ESP32S3",
     "name": "Arduino Nano ESP32",
-    "vendor": "Arduino"
-  },
-  "arduino_nesso_n1": {
-    "mcu": "ESP32C6",
-    "name": "Arduino Nesso-N1",
     "vendor": "Arduino"
   },
   "armed_v1": {
@@ -2870,11 +2860,6 @@
   "bpi-bit": {
     "mcu": "ESP32",
     "name": "BPI-Bit",
-    "vendor": "BPI Tech"
-  },
-  "bpi-centi-s3": {
-    "mcu": "ESP32S3",
-    "name": "BPI-Centi-S3",
     "vendor": "BPI Tech"
   },
   "bpi_leaf_s3": {
@@ -3285,11 +3270,6 @@
   "dfrobot_beetle_esp32c3": {
     "mcu": "ESP32C3",
     "name": "DFRobot Beetle ESP32-C3",
-    "vendor": "DFRobot"
-  },
-  "dfrobot_firebeetle2_esp32c6": {
-    "mcu": "ESP32C6",
-    "name": "DFRobot FireBeetle 2 ESP32-C6",
     "vendor": "DFRobot"
   },
   "dfrobot_firebeetle2_esp32e": {
@@ -3727,11 +3707,6 @@
     "name": "SweetPea ESP-210",
     "vendor": "SweetPea"
   },
-  "esp32-c2-devkitm-1": {
-    "mcu": "ESP32C2",
-    "name": "Espressif ESP32-C2-DevKitM-1",
-    "vendor": "Espressif"
-  },
   "esp32-c3-devkitc-02": {
     "mcu": "ESP32C3",
     "name": "Espressif ESP32-C3-DevKitC-02",
@@ -3747,26 +3722,6 @@
     "name": "Ai-Thinker ESP-C3-M1-I-Kit",
     "vendor": "Ai-Thinker"
   },
-  "esp32-c5-devkitc-1": {
-    "mcu": "ESP32C5",
-    "name": "Espressif ESP32-C5-DevKitC-1 4MB no PSRAM",
-    "vendor": "Espressif"
-  },
-  "esp32-c5-devkitc1-n16r4": {
-    "mcu": "ESP32C5",
-    "name": "Espressif ESP32-C5-DevKitC-1 N16R4 (16 MB Flash Quad, 4 MB PSRAM Quad)",
-    "vendor": "Espressif"
-  },
-  "esp32-c5-devkitc1-n4": {
-    "mcu": "ESP32C5",
-    "name": "Espressif ESP32-C5-DevKitC-1 N4 (4MB no PSRAM)",
-    "vendor": "Espressif"
-  },
-  "esp32-c5-devkitc1-n8r4": {
-    "mcu": "ESP32C5",
-    "name": "Espressif ESP32-C5-DevKitC-1 N8R4 (8 MB Flash Quad, 4 MB PSRAM Quad)",
-    "vendor": "Espressif"
-  },
   "esp32-c6-devkitc-1": {
     "mcu": "ESP32C6",
     "name": "Espressif ESP32-C6-DevKitC-1",
@@ -3775,16 +3730,6 @@
   "esp32-c6-devkitm-1": {
     "mcu": "ESP32C6",
     "name": "Espressif ESP32-C6-DevKitM-1",
-    "vendor": "Espressif"
-  },
-  "esp32-c61-devkitc1": {
-    "mcu": "ESP32C61",
-    "name": "Espressif ESP32-C61-DevKitC-1 (4 MB Flash)",
-    "vendor": "Espressif"
-  },
-  "esp32-c61-devkitc1-n8r2": {
-    "mcu": "ESP32C61",
-    "name": "Espressif ESP32-C61-DevKitC-1 N8R2 (8 MB Flash Quad, 2 MB PSRAM Quad)",
     "vendor": "Espressif"
   },
   "esp32-devkitlipo": {
@@ -3801,31 +3746,6 @@
     "mcu": "ESP32",
     "name": "OLIMEX ESP32-GATEWAY",
     "vendor": "OLIMEX"
-  },
-  "esp32-h2-devkitm-1": {
-    "mcu": "ESP32H2",
-    "name": "Espressif ESP32-H2-DevKit",
-    "vendor": "Espressif"
-  },
-  "esp32-p4": {
-    "mcu": "ESP32P4",
-    "name": "Espressif ESP32-P4 generic",
-    "vendor": "Espressif"
-  },
-  "esp32-p4-evboard": {
-    "mcu": "ESP32P4",
-    "name": "Espressif ESP32-P4 Function EV Board (ES pre rev.300)",
-    "vendor": "Espressif"
-  },
-  "esp32-p4_r3": {
-    "mcu": "ESP32P4",
-    "name": "Espressif ESP32-P4 rev.300 generic",
-    "vendor": "Espressif"
-  },
-  "esp32-p4_r3-evboard": {
-    "mcu": "ESP32P4",
-    "name": "Espressif ESP32-P4 Function EV Board v1.6 (rev.301)",
-    "vendor": "Espressif"
   },
   "esp32-pico-devkitm-2": {
     "mcu": "ESP32",
@@ -3867,59 +3787,9 @@
     "name": "Espressif ESP32-S3-DevKitC-1-N8 (8 MB QD, No PSRAM)",
     "vendor": "Espressif"
   },
-  "esp32-s3-devkitc-1-n32r8v": {
-    "mcu": "ESP32S3",
-    "name": "Espressif ESP32-S3-DevKitC-1-N32R8V (32 MB Flash Octal, 8 MB PSRAM Octal)",
-    "vendor": "Espressif"
-  },
-  "esp32-s3-devkitc1-n16r16": {
-    "mcu": "ESP32S3",
-    "name": "Espressif ESP32-S3-DevKitC-1-N16R8V (16 MB Flash Quad, 16 MB PSRAM Octal)",
-    "vendor": "Espressif"
-  },
-  "esp32-s3-devkitc1-n16r2": {
-    "mcu": "ESP32S3",
-    "name": "Espressif ESP32-S3-DevKitC-1-N8R8 (16 MB Flash Quad, 2 MB PSRAM Quad)",
-    "vendor": "Espressif"
-  },
-  "esp32-s3-devkitc1-n16r8": {
-    "mcu": "ESP32S3",
-    "name": "Espressif ESP32-S3-DevKitC-1-N16R8V (16 MB Flash Quad, 8 MB PSRAM Octal)",
-    "vendor": "Espressif"
-  },
-  "esp32-s3-devkitc1-n4r2": {
-    "mcu": "ESP32S3",
-    "name": "Espressif ESP32-S3-DevKitC-1-N8R8 (4 MB Flash Quad, 2 MB PSRAM Quad)",
-    "vendor": "Espressif"
-  },
-  "esp32-s3-devkitc1-n4r8": {
-    "mcu": "ESP32S3",
-    "name": "Espressif ESP32-S3-DevKitC-1-N8R8 (4 MB Flash Quad, 8 MB PSRAM Octal)",
-    "vendor": "Espressif"
-  },
-  "esp32-s3-devkitc1-n8r2": {
-    "mcu": "ESP32S3",
-    "name": "Espressif ESP32-S3-DevKitC-1-N8R8 (8 MB Flash Quad, 2 MB PSRAM quad)",
-    "vendor": "Espressif"
-  },
-  "esp32-s3-devkitc1-n8r8": {
-    "mcu": "ESP32S3",
-    "name": "Espressif ESP32-S3-DevKitC-1-N8R8 (8 MB Flash Quad, 8 MB PSRAM Octal)",
-    "vendor": "Espressif"
-  },
   "esp32-s3-devkitm-1": {
     "mcu": "ESP32S3",
     "name": "Espressif ESP32-S3-DevKitM-1",
-    "vendor": "Espressif"
-  },
-  "esp32-s3-fh4r2": {
-    "mcu": "ESP32S3",
-    "name": "Espressif ESP32-S3-FH4R2 (4 MB QD, 2MB PSRAM)",
-    "vendor": "Espressif"
-  },
-  "esp32-solo1": {
-    "mcu": "ESP32",
-    "name": "Espressif Generic ESP32-solo1 4M Flash",
     "vendor": "Espressif"
   },
   "esp320": {
@@ -3946,11 +3816,6 @@
     "mcu": "ESP32",
     "name": "DOIT ESPduino32",
     "vendor": "DOIT"
-  },
-  "esp32s3_120_16_8-qio_opi": {
-    "mcu": "ESP32S3",
-    "name": "ESP32-S3 16MB QIO, 8MB OPI PSRAM",
-    "vendor": "espressif"
   },
   "esp32s3_powerfeather": {
     "mcu": "ESP32S3",
@@ -4102,11 +3967,6 @@
     "name": "Adafruit ESP32-S2 Feather Development Board",
     "vendor": "Adafruit"
   },
-  "feenove-esp32-s3-n8r8": {
-    "mcu": "ESP32S3",
-    "name": "Freenove ESP32-S3 WROOM N8R8 (8MB Flash / 8MB PSRAM)",
-    "vendor": "Freenove"
-  },
   "fio": {
     "mcu": "ATMEGA328P",
     "name": "Arduino Fio",
@@ -4191,11 +4051,6 @@
     "mcu": "MKW41Z512VHT4",
     "name": "Freescale Kinetis FRDM-KW41Z",
     "vendor": "Freescale"
-  },
-  "freenove-esp32-s3-n8r8": {
-    "mcu": "ESP32S3",
-    "name": "Freenove ESP32-S3 WROOM N8R8 (8MB Flash / 8MB PSRAM)",
-    "vendor": "Freenove"
   },
   "freenove_esp32_s3_wroom": {
     "mcu": "ESP32S3",
@@ -4822,21 +4677,6 @@
     "name": "Hornbill ESP32 Minima",
     "vendor": "Hornbill"
   },
-  "huidu_hd_wf1": {
-    "mcu": "ESP32S2",
-    "name": "Huidu HD-WF1",
-    "vendor": "Huidu Tech"
-  },
-  "huidu_hd_wf2": {
-    "mcu": "ESP32S3",
-    "name": "Huidu HD-WF2",
-    "vendor": "Huidu Tech"
-  },
-  "huidu_hd_wf4": {
-    "mcu": "ESP32S3",
-    "name": "Huidu HD-WF4",
-    "vendor": "Huidu Tech"
-  },
   "huzzah": {
     "mcu": "ESP8266",
     "name": "Adafruit HUZZAH ESP8266",
@@ -4911,11 +4751,6 @@
     "mcu": "ATMEGA32U4",
     "name": "Adafruit ItsyBitsy 5V/16MHz",
     "vendor": "Adafruit"
-  },
-  "jczn_2432s028r": {
-    "mcu": "ESP32",
-    "name": "ESP32-2432S028R CYD",
-    "vendor": "JCZN"
   },
   "kb32-ft": {
     "mcu": "ESP32",
@@ -5037,11 +4872,6 @@
     "name": "LilyGo T-Display-S3",
     "vendor": "LilyGo"
   },
-  "lilygo-t-energy-s3": {
-    "mcu": "ESP32S3",
-    "name": "LilyGo T-Energy-S3",
-    "vendor": "LilyGo"
-  },
   "lilygo-t3-s3": {
     "mcu": "ESP32S3",
     "name": "LilyGo T3-S3",
@@ -5127,11 +4957,6 @@
     "name": "WEMOS LOLIN S3 Mini",
     "vendor": "WEMOS"
   },
-  "lolin_s3_mini_pro": {
-    "mcu": "ESP32S3",
-    "name": "WEMOS LOLIN S3 Mini Pro",
-    "vendor": "WEMOS"
-  },
   "lolin_s3_pro": {
     "mcu": "ESP32S3",
     "name": "WEMOS LOLIN S3 PRO",
@@ -5182,24 +5007,9 @@
     "name": "NXP LPCXpresso54608",
     "vendor": "NXP"
   },
-  "lpc845brk": {
-    "mcu": "LPC845",
-    "name": "NXP LPC845-BRK",
-    "vendor": "NXP"
-  },
   "lpcxpresso55s16": {
     "mcu": "LPC55S16",
     "name": "NXP LPCXpresso55S16",
-    "vendor": "NXP"
-  },
-  "lpcxpresso804": {
-    "mcu": "LPC804",
-    "name": "NXP LPCXpresso804",
-    "vendor": "NXP"
-  },
-  "lpcxpresso845max": {
-    "mcu": "LPC845",
-    "name": "NXP LPCXpresso845-MAX",
     "vendor": "NXP"
   },
   "lplm4f120h5qr": {
@@ -5312,11 +5122,6 @@
     "name": "M5Stack AtomS3",
     "vendor": "M5Stack"
   },
-  "m5stack-atoms3u": {
-    "mcu": "ESP32S3",
-    "name": "M5Stack AtomS3U",
-    "vendor": "M5Stack"
-  },
   "m5stack-core-esp32": {
     "mcu": "ESP32",
     "name": "M5Stack Core ESP32",
@@ -5362,19 +5167,9 @@
     "name": "M5Stack Station",
     "vendor": "M5Stack"
   },
-  "m5stack-tab5-p4": {
-    "mcu": "ESP32P4",
-    "name": "M5STACK Tab5 esp32-p4 Board (ES pre rev.300)",
-    "vendor": "M5STACK"
-  },
   "m5stack-timer-cam": {
     "mcu": "ESP32",
     "name": "M5Stack Timer CAM",
-    "vendor": "M5Stack"
-  },
-  "m5stack_paper": {
-    "mcu": "ESP32",
-    "name": "M5Stack Paper",
     "vendor": "M5Stack"
   },
   "m5stamp-pico": {
@@ -5895,11 +5690,6 @@
     "mcu": "32MZ2048EFG100",
     "name": "Pontech NoFire",
     "vendor": "Pontech"
-  },
-  "nologo_esp32c3_super_mini": {
-    "mcu": "ESP32C3",
-    "name": "Nologo ESP32C3 SuperMini",
-    "vendor": "Nologo"
   },
   "nrf51_beacon": {
     "mcu": "NRF51822",
@@ -6841,19 +6631,9 @@
     "name": "Seeeduino XIAO",
     "vendor": "Seeed"
   },
-  "seeed_xiao_esp32_s3_plus": {
-    "mcu": "ESP32S3",
-    "name": "Seeed Studio XIAO ESP32S3 Plus",
-    "vendor": "Seeed Studio"
-  },
   "seeed_xiao_esp32c3": {
     "mcu": "ESP32C3",
     "name": "Seeed Studio XIAO ESP32C3",
-    "vendor": "Seeed Studio"
-  },
-  "seeed_xiao_esp32c5": {
-    "mcu": "ESP32C5",
-    "name": "Seeed Studio XIAO ESP32C5",
     "vendor": "Seeed Studio"
   },
   "seeed_xiao_esp32c6": {
@@ -7036,11 +6816,6 @@
     "name": "SparkFun ESP32 IoT RedBoard",
     "vendor": "SparkFun"
   },
-  "sparkfun_esp32c6_thing_plus": {
-    "mcu": "ESP32C6",
-    "name": "Sparkfun ESP32-C6 Thing Plus",
-    "vendor": "Sparkfun"
-  },
   "sparkfun_esp32micromod": {
     "mcu": "ESP32",
     "name": "SparkFun ESP32 MicroMod",
@@ -7054,11 +6829,6 @@
   "sparkfun_esp32s2_thing_plus_c": {
     "mcu": "ESP32",
     "name": "SparkFun ESP32 Thing Plus C",
-    "vendor": "SparkFun"
-  },
-  "sparkfun_esp32s3_thing_plus": {
-    "mcu": "ESP32S3",
-    "name": "SPARKFUN_ESP32S3_THING_PLUS",
     "vendor": "SparkFun"
   },
   "sparkfun_fiov3": {
@@ -7096,11 +6866,6 @@
     "name": "SparkFun MicroMod STM32F405",
     "vendor": "SparkFun"
   },
-  "sparkfun_pro_micro_esp32c3": {
-    "mcu": "ESP32C3",
-    "name": "SparkFun Pro Micro ESP32-C3",
-    "vendor": "Sparkfun"
-  },
   "sparkfun_promicro16": {
     "mcu": "ATMEGA32U4",
     "name": "SparkFun Pro Micro 5V/16MHz",
@@ -7119,11 +6884,6 @@
   "sparkfun_qwiic_micro_samd21e": {
     "mcu": "SAMD21E18A",
     "name": "SparkFun Qwiic Micro",
-    "vendor": "SparkFun"
-  },
-  "sparkfun_qwiic_pocket_esp32c6": {
-    "mcu": "ESP32C6",
-    "name": "SparkFun ESP32-C6 Qwiic Pocket",
     "vendor": "SparkFun"
   },
   "sparkfun_redboard": {
@@ -7490,16 +7250,6 @@
     "name": "UBW32 MX795",
     "vendor": "UBW32"
   },
-  "um_bling": {
-    "mcu": "ESP32S3",
-    "name": "Unexpected Maker BLING!",
-    "vendor": "Unexpected Maker"
-  },
-  "um_edges3_d": {
-    "mcu": "ESP32S3",
-    "name": "Unexpected Maker EDGES3[D]",
-    "vendor": "Unexpected Maker"
-  },
   "um_feathers2": {
     "mcu": "ESP32S2",
     "name": "Unexpected Maker FeatherS2",
@@ -7515,19 +7265,9 @@
     "name": "Unexpected Maker FeatherS3",
     "vendor": "Unexpected Maker"
   },
-  "um_feathers3_neo": {
-    "mcu": "ESP32S3",
-    "name": "Unexpected Maker FeatherS3 Neo",
-    "vendor": "Unexpected Maker"
-  },
   "um_nanos3": {
     "mcu": "ESP32S3",
     "name": "Unexpected Maker NanoS3",
-    "vendor": "Unexpected Maker"
-  },
-  "um_omgs3": {
-    "mcu": "ESP32S3",
-    "name": "Unexpected Maker OMGS3",
     "vendor": "Unexpected Maker"
   },
   "um_pros3": {
@@ -7538,16 +7278,6 @@
   "um_rmp": {
     "mcu": "ESP32S2",
     "name": "Unexpected Maker RMP",
-    "vendor": "Unexpected Maker"
-  },
-  "um_squixl": {
-    "mcu": "ESP32S3",
-    "name": "Unexpected Maker SQUiXL",
-    "vendor": "Unexpected Maker"
-  },
-  "um_tinyc6": {
-    "mcu": "ESP32C6",
-    "name": "Unexpected Maker TinyC6",
     "vendor": "Unexpected Maker"
   },
   "um_tinys2": {
@@ -7703,16 +7433,6 @@
   "waveshare_ble400": {
     "mcu": "NRF51822",
     "name": "Waveshare BLE400",
-    "vendor": "Waveshare"
-  },
-  "waveshare_esp32_s3_zero": {
-    "mcu": "ESP32S3",
-    "name": "Waveshare ESP32-S3-Zero",
-    "vendor": "Waveshare"
-  },
-  "waveshare_esp32s3_touch_lcd_128": {
-    "mcu": "ESP32S3",
-    "name": "Waveshare ESP32-S3-Touch-LCD-1.28 (16 MB QD, 2MB PSRAM)",
     "vendor": "Waveshare"
   },
   "waveshare_open103z": {
@@ -7945,19 +7665,9 @@
     "name": "Wraith V1 ESC",
     "vendor": "Airbot"
   },
-  "ws_esp32_s3_matrix": {
-    "mcu": "ESP32S3",
-    "name": "Waveshare ESP32-S3-Matrix",
-    "vendor": "Waveshare"
-  },
   "wt32-eth01": {
     "mcu": "ESP32",
     "name": "Wireless-Tag WT32-ETH01 Ethernet Module",
-    "vendor": "Wireless-Tag"
-  },
-  "wt32-sc01-plus": {
-    "mcu": "ESP32S3",
-    "name": "wt32-sc01-plus",
     "vendor": "Wireless-Tag"
   },
   "xdot_l151cc": {
@@ -8024,36 +7734,6 @@
     "mcu": "ATMEGA4809",
     "name": "Xplained Pro ATmega4809",
     "vendor": "Microchip"
-  },
-  "yb_esp32s3_amp": {
-    "mcu": "ESP32S3",
-    "name": "YelloByte YB-ESP32-S3-AMP",
-    "vendor": "YelloByte"
-  },
-  "yb_esp32s3_amp_v2": {
-    "mcu": "ESP32S3",
-    "name": "YelloByte YB-ESP32-S3-AMP (Rev.2)",
-    "vendor": "YelloByte"
-  },
-  "yb_esp32s3_amp_v3": {
-    "mcu": "ESP32S3",
-    "name": "YelloByte YB-ESP32-S3-AMP (Rev.3)",
-    "vendor": "YelloByte"
-  },
-  "yb_esp32s3_dac": {
-    "mcu": "ESP32S3",
-    "name": "YelloByte YB-ESP32-S3-DAC",
-    "vendor": "YelloByte"
-  },
-  "yb_esp32s3_drv": {
-    "mcu": "ESP32S3",
-    "name": "YelloByte YB-ESP32-S3-DRV",
-    "vendor": "YelloByte"
-  },
-  "yb_esp32s3_eth": {
-    "mcu": "ESP32S3",
-    "name": "YelloByte YB-ESP32-S3-ETH",
-    "vendor": "YelloByte"
   },
   "yun": {
     "mcu": "ATMEGA32U4",
