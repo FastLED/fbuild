@@ -48,6 +48,26 @@ pub enum FbuildError {
         percent_used: f64,
     },
 
+    /// Requested deploy method is not in the board's supported list.
+    /// FastLED/fbuild#692.
+    ///
+    /// Fail-fast guard so a user picking the wrong `upload_protocol`
+    /// gets "this board doesn't do OTA" instead of a 30-180 s
+    /// backend-specific timeout. The `Display` impl spells out every
+    /// supported alternative so the next attempt has a chance of
+    /// being right.
+    #[error(
+        "deploy method `{requested}` is not supported on board `{board}`. \
+         Supported: {supported}. Use one of those instead."
+    )]
+    UnsupportedDeployMethod {
+        board: String,
+        requested: String,
+        /// Comma-separated for the `Display` impl; structured access
+        /// via `.supported_methods()` if reconstruction is needed.
+        supported: String,
+    },
+
     #[error("serial error: {0}")]
     SerialError(String),
 
