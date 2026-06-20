@@ -87,7 +87,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                     if open_if_needed {
                         if let Err(e) = ctx
                             .serial_manager
-                            .open_port(&port, baud_rate, &client_id)
+                            .open_port(&port, baud_rate, &client_id, None)
                             .await
                         {
                             let err_msg = SerialServerMessage::Error {

@@ -243,7 +243,7 @@ pub async fn monitor(
 
     if let Err(e) = ctx
         .serial_manager
-        .open_port(&port, baud_rate, &request_id)
+        .open_port(&port, baud_rate, &request_id, None)
         .await
     {
         return (

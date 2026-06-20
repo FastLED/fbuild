@@ -71,11 +71,21 @@ impl SharedSerialManager {
     }
 
     /// Open a serial port. Retries with backoff for Windows USB-CDC.
+    ///
+    /// `family` (FastLED/fbuild#687) consults
+    /// [`crate::boards::BoardFamily::idle_dtr_rts`] for the post-open
+    /// DTR/RTS state. `None` falls back to the safe default of
+    /// `(true, true)` — works for every CDC-ACM bridge plus
+    /// ESP-via-DevKit-autoreset; the only case it's wrong is when the
+    /// caller knows the chip is a native ESP USB CDC AND wants the
+    /// "(false, false) = run firmware" post-open idle. Pass
+    /// `Some(BoardFamily::Esp32NativeUsbCdc)` in that case.
     pub async fn open_port(
         &self,
         port: &str,
         baud_rate: u32,
         client_id: &str,
+        family: Option<crate::boards::BoardFamily>,
     ) -> fbuild_core::Result<()> {
         let session_key = self.resolve_port_key(port);
         // If already open, just return Ok
@@ -110,6 +120,7 @@ impl SharedSerialManager {
             // self-eviction tick, HTTP handlers) keep making progress. See
             // ISSUES.md "Issue C".
             let port_for_open = port_name.clone();
+            let family_for_open = family;
             let open_result: std::result::Result<
                 std::result::Result<Box<dyn serialport::SerialPort>, serialport::Error>,
                 tokio::task::JoinError,
@@ -117,7 +128,7 @@ impl SharedSerialManager {
                 let mut serial = serialport::new(&port_for_open, baud_rate)
                     .timeout(Duration::from_millis(timeout_ms))
                     .open()?;
-                // Set DTR=true, RTS=true for flow control. Failures here are
+                // Set the post-open DTR/RTS idle state. Failures here are
                 // non-fatal — some adapters (e.g. CP210x in CDC mode) reject
                 // the request but the port is still usable. Log both the
                 // success and failure paths at `debug!` so a complete log
@@ -125,17 +136,29 @@ impl SharedSerialManager {
                 // (FastLED/fbuild#532 acceptance: "logs show enough DTR/RTS
                 // /reset context to diagnose future S3 boot-mode lockups").
                 //
-                // For the full per-chip DTR/RTS semantics matrix — why
-                // DTR=true/RTS=true is the universal safe default, and
-                // which chips treat it differently — see
-                // `docs/usb-cdc-control-line-matrix.md` (FastLED/fbuild#689).
-                match serial.write_data_terminal_ready(true) {
-                    Ok(()) => tracing::debug!("manager: open-time DTR=high asserted"),
-                    Err(e) => tracing::warn!("failed to set DTR: {}", e),
+                // `family.idle_dtr_rts()` (FastLED/fbuild#687) picks
+                // `(false, false)` for ESP native USB CDC (post-reset idle
+                // = run firmware) vs `(true, true)` for CDC-ACM bridges,
+                // Teensy, RP2040, SAMD, Arduino (host-ready / no
+                // accidental reset). `None` falls back to `(true, true)`
+                // — the universal safe default per the LPC845-BRK
+                // incident (FastLED/FastLED#3300). For the full per-chip
+                // matrix see `docs/usb-cdc-control-line-matrix.md`
+                // (FastLED/fbuild#689).
+                let (dtr, rts) = family.map(|f| f.idle_dtr_rts()).unwrap_or((true, true));
+                match serial.write_data_terminal_ready(dtr) {
+                    Ok(()) => tracing::debug!(
+                        family = ?family_for_open,
+                        "manager: open-time DTR={dtr} asserted"
+                    ),
+                    Err(e) => tracing::warn!("failed to set DTR={dtr}: {}", e),
                 }
-                match serial.write_request_to_send(true) {
-                    Ok(()) => tracing::debug!("manager: open-time RTS=high asserted"),
-                    Err(e) => tracing::warn!("failed to set RTS: {}", e),
+                match serial.write_request_to_send(rts) {
+                    Ok(()) => tracing::debug!(
+                        family = ?family_for_open,
+                        "manager: open-time RTS={rts} asserted"
+                    ),
+                    Err(e) => tracing::warn!("failed to set RTS={rts}: {}", e),
                 }
                 Ok(serial)
             })
@@ -1096,7 +1119,9 @@ mod tests {
             let bogus_port = "FBUILD_TEST_NONEXISTENT_PORT_xyz_zzz".to_string();
 
             let open_task = tokio::spawn(async move {
-                let _ = mgr_open.open_port(&bogus_port, 115200, "test_client").await;
+                let _ = mgr_open
+                    .open_port(&bogus_port, 115200, "test_client", None)
+                    .await;
             });
 
             // Concurrent keepalive: should tick at least 5 times (5 × 50ms

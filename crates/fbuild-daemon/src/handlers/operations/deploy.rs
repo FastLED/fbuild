@@ -852,7 +852,7 @@ pub async fn deploy(
         // Open the port for monitoring
         if let Err(e) = ctx
             .serial_manager
-            .open_port(&monitor_port, baud_rate, &request_id)
+            .open_port(&monitor_port, baud_rate, &request_id, None)
             .await
         {
             return (
