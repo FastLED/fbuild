@@ -343,7 +343,7 @@ impl SharedSerialManager {
     /// already established that the board is stuck in ROM, and a competing
     /// writer would have nothing useful to do anyway.
     ///
-    /// Wraps [`crate::esp_reset::hard_reset_blocking`] in `spawn_blocking`
+    /// Wraps [`crate::esp_reset::esp_hard_reset_blocking`] in `spawn_blocking`
     /// because every `serialport` line-control call is a synchronous
     /// Win32/POSIX syscall — matches the pattern in
     /// [`SharedSerialManager::open_port`].
@@ -381,7 +381,7 @@ impl SharedSerialManager {
                 "esp_hard_reset: starting DTR/RTS recovery sequence"
             );
             let mut guard = handle.blocking_lock();
-            crate::esp_reset::hard_reset_blocking(&mut **guard)
+            crate::esp_reset::esp_hard_reset_blocking(&mut **guard)
         })
         .await;
 
