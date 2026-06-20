@@ -1,7 +1,7 @@
 //! Dump the bundled `usb-ids` database as a JSON object to stdout.
 //!
 //! Used by the `online-data` branch's nightly workflow (see
-//! `.github/workflows/nightly-usb-ids.yml`) as one of the input sources
+//! `.github/workflows/update-data.yml`) as one of the input sources
 //! for the merged `usb-vid.json`. Running this example via
 //! `soldr cargo run --release --example dump_usb_ids -p fbuild-core`
 //! captures the exact data the bundled `usb-ids` crate version we depend

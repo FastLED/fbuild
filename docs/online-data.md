@@ -61,7 +61,7 @@ the merger script and commit results.
 
 ## How a refresh happens
 
-`.github/workflows/nightly-usb-ids.yml` is the only workflow that touches
+`.github/workflows/update-data.yml` is the only workflow that touches
 `online-data`. It lives on `main` because GitHub Actions requires `schedule`
 and `workflow_dispatch` triggers to be defined on the default branch.
 
@@ -92,7 +92,7 @@ Per run:
 9. `git push --force-with-lease origin online-data` (the force is needed
    only when history was pruned).
 
-Manual trigger: Actions → "Nightly USB IDs refresh" → Run workflow.
+Manual trigger: Actions → "Update data" → Run workflow.
 
 ## Fault tolerance contract
 
