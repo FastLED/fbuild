@@ -14,6 +14,7 @@
 
 pub mod mcu_config;
 pub mod orchestrator;
+pub mod platform_packages;
 
 use std::path::Path;
 

@@ -118,7 +118,33 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         //    embedded `arduino_stub/` shim (FastLED/fbuild#479, #487): the
         //    framework owns `main()`, startup + vector table, wiring,
         //    HardwareSerial, SPI, and the device headers.
-        let core = fbuild_packages::library::ArduinoCoreLpc8xx::new(&params.project_dir);
+        //
+        //    Consumer override (FastLED/fbuild#663): when `platformio.ini`
+        //    carries `platform_packages = framework-arduino-lpc8xx@<spec>`,
+        //    fetch and use that commit instead of the const-pinned default
+        //    — needed for bisection workflows like FastLED/FastLED#3325.
+        let env_config = ctx.config.get_env_config(&params.env_name)?;
+        let core_override =
+            super::platform_packages::lookup_override(env_config, "framework-arduino-lpc8xx");
+        let core = match &core_override {
+            Some(ovr) => {
+                let short = &ovr.git_ref[..7.min(ovr.git_ref.len())];
+                let version = format!("override+g{}", short);
+                let banner = format!(
+                    "ArduinoCore-LPC8xx OVERRIDE: {} (default pinned: {})",
+                    ovr.archive_url,
+                    fbuild_packages::library::ArduinoCoreLpc8xx::commit()
+                );
+                tracing::info!("{}", banner);
+                ctx.build_log.push(banner);
+                fbuild_packages::library::ArduinoCoreLpc8xx::with_override(
+                    &params.project_dir,
+                    &ovr.archive_url,
+                    &version,
+                )
+            }
+            None => fbuild_packages::library::ArduinoCoreLpc8xx::new(&params.project_dir),
+        };
         let core_root = fbuild_packages::Package::ensure_installed(&core)?;
         tracing::info!("ArduinoCore-LPC8xx at {}", core_root.display());
 

@@ -53,6 +53,33 @@ impl ArduinoCoreLpc8xx {
         }
     }
 
+    /// Consumer-overridden core source (FastLED/fbuild#663).
+    ///
+    /// Used when `platformio.ini` carries a
+    /// `platform_packages = framework-arduino-lpc8xx@<URL>#<sha>` line so
+    /// the consumer can swap in an arbitrary upstream commit for
+    /// development or bisection (e.g. FastLED/FastLED#3325). The cache
+    /// subdir keys on `url` + `version`, so an override never collides
+    /// with the default-pinned install.
+    ///
+    /// `url` must resolve to a downloadable archive (`.tar.gz` / `.zip`);
+    /// `version` is the synthetic cache-version string (e.g.
+    /// `override+g<short-sha>`). No sha256 check is performed — the
+    /// consumer is explicitly pinning their own commit.
+    pub fn with_override(project_dir: &Path, url: &str, version: &str) -> Self {
+        Self {
+            base: PackageBase::new(
+                "framework-arduino-lpc8xx",
+                version,
+                url,
+                url,
+                None,
+                CacheSubdir::Platforms,
+                project_dir,
+            ),
+        }
+    }
+
     #[cfg(test)]
     fn with_cache_root(project_dir: &Path, cache_root: &Path) -> Self {
         Self {
@@ -62,6 +89,27 @@ impl ArduinoCoreLpc8xx {
                 ACLPC_URL,
                 ACLPC_URL,
                 Some(ACLPC_CHECKSUM),
+                CacheSubdir::Platforms,
+                project_dir,
+                cache_root,
+            ),
+        }
+    }
+
+    #[cfg(test)]
+    fn with_override_and_cache_root(
+        project_dir: &Path,
+        url: &str,
+        version: &str,
+        cache_root: &Path,
+    ) -> Self {
+        Self {
+            base: PackageBase::with_cache_root(
+                "framework-arduino-lpc8xx",
+                version,
+                url,
+                url,
+                None,
                 CacheSubdir::Platforms,
                 project_dir,
                 cache_root,
@@ -205,5 +253,22 @@ mod tests {
     #[test]
     fn commit_is_pinned() {
         assert_eq!(ArduinoCoreLpc8xx::commit().len(), 40);
+    }
+
+    #[test]
+    fn override_uses_distinct_cache_path() {
+        // FastLED/fbuild#663: an override must cache to a different
+        // subdir than the default pin so the two installs don't collide.
+        let tmp = tempfile::TempDir::new().unwrap();
+        let cache_root = tmp.path().join("cache");
+        let default_pkg = ArduinoCoreLpc8xx::with_cache_root(tmp.path(), &cache_root);
+        let override_pkg = ArduinoCoreLpc8xx::with_override_and_cache_root(
+            tmp.path(),
+            "https://github.com/zackees/ArduinoCore-LPC8xx/archive/deadbeefdeadbeefdeadbeefdeadbeefdeadbeef.tar.gz",
+            "override+gdeadbee",
+            &cache_root,
+        );
+        assert_ne!(default_pkg.install_path(), override_pkg.install_path());
+        assert!(!override_pkg.is_installed());
     }
 }
