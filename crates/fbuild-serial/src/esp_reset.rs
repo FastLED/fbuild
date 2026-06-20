@@ -38,6 +38,11 @@
 //! root cause, and FastLED/fbuild#684 for the audit that brought the
 //! lesson here.
 //!
+//! **For the full per-chip DTR/RTS semantics matrix, see
+//! `docs/usb-cdc-control-line-matrix.md`** (FastLED/fbuild#689) — it
+//! pins down `(BoardFamily, DTR-state, RTS-state) → effect` for every
+//! USB CDC chip we ship support for, with datasheet citations.
+//!
 //! For CDC-ACM bridge boards:
 //!
 //! - Reset via SWD/CMSIS-DAP (e.g. pyOCD for LPC8xx), not DTR/RTS.

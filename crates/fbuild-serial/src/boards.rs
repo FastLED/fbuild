@@ -7,6 +7,14 @@
 //! of the FastLED ↔ fbuild boundary speaks from one source of truth.
 //! See the issue for the cross-repo-sync acceptance criterion.
 //!
+//! **For the per-chip DTR/RTS semantics matrix that backs every row in
+//! this table — i.e., the *why* behind which family ends up at
+//! `(DTR=true, RTS=true)` vs `(false, false)` for its
+//! `idle_dtr_rts()` — see `docs/usb-cdc-control-line-matrix.md`
+//! (FastLED/fbuild#689).** Every time a new entry is added here, the
+//! matrix doc should gain (or already cover) the corresponding chip
+//! row.
+//!
 //! # What lives here
 //!
 //! - [`BOARD_FINGERPRINTS`] — every `(vid, pid)` we know how to
