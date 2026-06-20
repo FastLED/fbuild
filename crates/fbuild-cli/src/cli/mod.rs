@@ -25,6 +25,7 @@ pub mod monitor_parse;
 pub mod pio;
 pub mod purge;
 pub mod reset;
+pub mod serial_probe;
 pub mod show;
 pub mod symbols_cmd;
 
