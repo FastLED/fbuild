@@ -38,6 +38,7 @@ pub mod esp_reset;
 pub mod manager;
 pub mod messages;
 pub mod preemption;
+pub mod rpc_validate;
 pub mod session;
 
 pub use manager::{PortSessionInfo, SharedSerialManager};
