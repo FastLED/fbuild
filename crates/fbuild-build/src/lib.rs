@@ -25,6 +25,7 @@ pub mod linker;
 pub mod managed_zccache;
 pub mod nrf52;
 pub mod nxplpc;
+pub mod package_override;
 pub mod parallel;
 pub mod perf_log;
 pub mod pipeline;
