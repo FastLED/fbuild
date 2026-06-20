@@ -1,0 +1,131 @@
+name: Hardware CI
+
+# FastLED/fbuild#696 — nightly hardware-attached bring-up CI runner.
+#
+# Activates when a self-hosted runner with the `self-hosted` + `hw-ci`
+# labels is registered. Until that runner exists, the job skips
+# silently (the `if:` guard on each step checks `runner.environment`
+# and the per-board fingerprint set, both of which only resolve on
+# the self-hosted runner).
+#
+# To register a runner, see `agents/docs/hardware-ci-setup.md`.
+
+on:
+  schedule:
+    # 02:30 UTC nightly — quiet hours for the runner host.
+    - cron: '30 2 * * *'
+  pull_request:
+    # Per-PR optional path: PRs touching the deploy / serial stack
+    # can opt in by adding the `hw-ci` label.
+    types: [labeled, synchronize]
+    paths:
+      - 'crates/fbuild-serial/**'
+      - 'crates/fbuild-deploy/**'
+      - '.github/workflows/hw-ci.yml'
+      - 'tests/hw/**'
+  workflow_dispatch:
+    inputs:
+      board:
+        description: 'Board family to test (all|esp32s3|lpc845brk|pico|teensy41|samd51)'
+        required: false
+        default: 'all'
+
+jobs:
+  bringup:
+    # Skip on hosted runners; this job is meant for the self-hosted
+    # `hw-ci` farm. The `if:` on the matrix steps below double-guards
+    # so a misconfigured hosted runner can't accidentally pretend to
+    # have hardware attached.
+    if: |
+      github.event_name == 'schedule'
+      || github.event_name == 'workflow_dispatch'
+      || (github.event_name == 'pull_request'
+          && contains(github.event.pull_request.labels.*.name, 'hw-ci'))
+    runs-on: [self-hosted, hw-ci]
+    strategy:
+      # Each board runs in its own job step so a single-board
+      # hardware fault doesn't mask the others.
+      fail-fast: false
+      matrix:
+        board:
+          - esp32s3
+          - lpc845brk
+          - pico
+          - teensy41
+          - samd51
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Detect attached hardware
+        id: detect
+        run: |
+          set -e
+          # Each board family's expected USB fingerprint lives in
+          # tests/hw/fingerprints/<board>.txt — one VID:PID per line.
+          # If the runner can't see any of the expected USB devices,
+          # the rest of the steps skip.
+          if [ ! -f "tests/hw/fingerprints/${{ matrix.board }}.txt" ]; then
+            echo "no fingerprint file for ${{ matrix.board }} — skipping"
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          present=false
+          while IFS= read -r vidpid; do
+            [ -z "$vidpid" ] && continue
+            # `fbuild serial probe find --vid-pid VID:PID` returns the
+            # device path or exits 1 — perfect for a presence check.
+            if cargo run --quiet --bin fbuild -- serial probe find --vid-pid "$vidpid" > /dev/null 2>&1; then
+              present=true
+              break
+            fi
+          done < "tests/hw/fingerprints/${{ matrix.board }}.txt"
+          echo "present=${present}" >> "$GITHUB_OUTPUT"
+
+      - name: Skip if hardware absent
+        if: steps.detect.outputs.present != 'true'
+        run: |
+          echo "::warning::Board family ${{ matrix.board }} is not attached to this runner — skipping bring-up."
+          exit 0
+
+      - name: Deploy known-good firmware
+        if: steps.detect.outputs.present == 'true'
+        run: |
+          # The known-good firmware lives in
+          # tests/hw/known_good_<board>.bin (or .elf for ARM). Pinned
+          # in the repo so the test target is stable — any change
+          # requires a deliberate PR.
+          firmware="tests/hw/known_good_${{ matrix.board }}.bin"
+          if [ ! -f "$firmware" ]; then
+            firmware="tests/hw/known_good_${{ matrix.board }}.elf"
+          fi
+          if [ ! -f "$firmware" ]; then
+            echo "::error::No known-good firmware pinned for ${{ matrix.board }} — see tests/hw/README.md"
+            exit 1
+          fi
+          cargo run --quiet --bin fbuild -- deploy -e "${{ matrix.board }}"
+
+      - name: Run bring-up tests
+        if: steps.detect.outputs.present == 'true'
+        timeout-minutes: 5
+        run: |
+          # The bring-up suite — analogous to FastLED's
+          # `bash autoresearch <board>` 3-way (remote_ok / log_ok /
+          # echo_ok). Encapsulates the actual hardware contract.
+          cargo run --quiet --bin fbuild -- test-emu -e "${{ matrix.board }}" \
+            || (
+              echo "::error::Bring-up failed on ${{ matrix.board }}"
+              # On nightly cron, file/update a tracker issue.
+              if [ "${{ github.event_name }}" = "schedule" ]; then
+                gh issue list --label hw-ci-failure --search "in:title ${{ matrix.board }}" --state open --json number --jq '.[0].number' > /tmp/existing.txt
+                if [ -s /tmp/existing.txt ]; then
+                  num=$(cat /tmp/existing.txt)
+                  gh issue comment "$num" --body "Hardware CI failed on $(date -u +%Y-%m-%dT%H:%MZ). Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                else
+                  gh issue create --title "hw-ci: ${{ matrix.board }} bring-up failure" --label hw-ci-failure --body "Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                fi
+              fi
+              exit 1
+            )
+        env:
+          GH_TOKEN: ${{ github.token }}

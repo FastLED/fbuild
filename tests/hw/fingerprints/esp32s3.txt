@@ -1,0 +1,4 @@
+# ESP32-S3 native USB CDC (and DevKit variants with CP2102 / CH340)
+303A:1001
+10C4:EA60
+1A86:7523

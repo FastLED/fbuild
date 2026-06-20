@@ -1,0 +1,4 @@
+# RP2040 Raspberry Pi Pico — native USB CDC during app run.
+# The BOOTSEL VID:PID (2E8A:0003) is intentionally not listed —
+# that's the post-touch state, not the "board is attached" state.
+2E8A:000A
