@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.2",
+  "generated_at": "2026-06-20T22:14:11Z",
+  "datasets": {
+    "pio-boards": {
+      "url": "https://raw.githubusercontent.com/fastled/fbuild/online-data/data/pio-boards.json",
+      "format": "json-object",
+      "entries": 1617,
+      "status": "ok",
+      "description": "PlatformIO board catalog — every board the PlatformIO registry knows about, keyed by board id, alphabetically sorted. Fields the previous dump carried are preserved across regressions in the live `pio boards` output.",
+      "key_format": "board-id",
+      "generated_at": "2026-06-20T22:14:10Z",
+      "sources": [
+        {
+          "name": "platformio",
+          "kind": "pio-boards",
+          "entries": "1617"
+        }
+      ],
+      "merge_stats": {
+        "common": 1617,
+        "added": 0,
+        "dropped": 0,
+        "fields_preserved": 0
+      }
+    },
+    "usb-vid-conflicts": {
+      "url": "https://raw.githubusercontent.com/fastled/fbuild/online-data/data/usb-vid-conflicts.json",
+      "format": "json-object",
+      "entries": 4,
+      "status": "ok"
+    },
+    "usb-vid": {
+      "url": "https://raw.githubusercontent.com/fastled/fbuild/online-data/data/usb-vid.json",
+      "format": "json-object",
+      "entries": 1942,
+      "status": "ok",
+      "description": "USB vendor catalog — keyed by 4-hex-digit VID, each entry carries the vendor name and a `products` map of PID → product name. Union of multiple usb.ids sources, alphabetically sorted, lowercase hex keys throughout.",
+      "key_format": "vvvv (top-level); products: pppp -> product_name",
+      "schema": {
+        "<vid>": {
+          "vendor": "<vendor name>",
+          "products": {
+            "<pid>": "<product name>"
+          }
+        }
+      },
+      "conflicts_url": "https://raw.githubusercontent.com/fastled/fbuild/online-data/data/usb-vid-conflicts.json",
+      "generated_at": "2026-06-20T22:13:48Z",
+      "sources": [
+        {
+          "name": "usb-ids-rs",
+          "kind": "json",
+          "entries": "20480"
+        },
+        {
+          "name": "linux-usb.org",
+          "kind": "usb.ids-text",
+          "entries": "20536"
+        },
+        {
+          "name": "usbids-github",
+          "kind": "usb.ids-text",
+          "entries": "20536"
+        }
+      ]
+    },
+    "vendor_boards": {
+      "url": "https://raw.githubusercontent.com/fastled/fbuild/online-data/data/vendor_boards.json",
+      "format": "json-object",
+      "entries": 1617,
+      "status": "ok",
+      "description": "Slim view of pio-boards keyed by board id — only {vendor, name, mcu} per board. Use this when only the human-readable identity is needed (\"what board is plugged in?\").",
+      "key_format": "board-id",
+      "generated_at": "2026-06-20T22:14:10Z",
+      "sources": [
+        {
+          "name": "platformio",
+          "kind": "pio-boards-slim",
+          "entries": "1617"
+        }
+      ]
+    }
+  }
+}

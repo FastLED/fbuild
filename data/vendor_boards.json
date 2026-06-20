@@ -1,0 +1,8083 @@
+{
+  "1284p16m": {
+    "mcu": "ATMEGA1284P",
+    "name": "Microduino Core+ (ATmega1284P@16M,5V)",
+    "vendor": "Microduino"
+  },
+  "1284p8m": {
+    "mcu": "ATMEGA1284P",
+    "name": "Microduino Core+ (ATmega1284P@8M,3.3V)",
+    "vendor": "Microduino"
+  },
+  "168pa16m": {
+    "mcu": "ATMEGA168P",
+    "name": "Microduino Core (Atmega168PA@16M,5V)",
+    "vendor": "Microduino"
+  },
+  "168pa8m": {
+    "mcu": "ATMEGA168P",
+    "name": "Microduino Core (Atmega168PA@8M,3.3V)",
+    "vendor": "Microduino"
+  },
+  "1bitsy_stm32f415rgt": {
+    "mcu": "STM32F415RGT",
+    "name": "1Bitsy",
+    "vendor": "1BitSquared"
+  },
+  "328p16m": {
+    "mcu": "ATMEGA328P",
+    "name": "Microduino Core (Atmega328P@16M,5V)",
+    "vendor": "Microduino"
+  },
+  "328p8m": {
+    "mcu": "ATMEGA328P",
+    "name": "Microduino Core (Atmega328P@8M,3.3V)",
+    "vendor": "Microduino"
+  },
+  "32u416m": {
+    "mcu": "ATMEGA32U4",
+    "name": "Microduino Core USB (ATmega32U4@16M,5V)",
+    "vendor": "Microduino"
+  },
+  "4d_systems_esp32s3_gen4_r8n16": {
+    "mcu": "ESP32S3",
+    "name": "4D Systems GEN4-ESP32 16MB (ESP32S3-R8N16)",
+    "vendor": "4D Systems"
+  },
+  "644pa16m": {
+    "mcu": "ATMEGA644P",
+    "name": "Microduino Core+ (Atmega644PA@16M,5V)",
+    "vendor": "Microduino"
+  },
+  "644pa8m": {
+    "mcu": "ATMEGA644P",
+    "name": "Microduino Core+ (Atmega644PA@8M,3.3V)",
+    "vendor": "Microduino"
+  },
+  "96b_nitrogen": {
+    "mcu": "NRF52832",
+    "name": "96Boards Nitrogen",
+    "vendor": "96Boards"
+  },
+  "AT89S51": {
+    "mcu": "AT89S51",
+    "name": "Generic AT89S51",
+    "vendor": "Microchip & Atmel"
+  },
+  "AT89S52": {
+    "mcu": "AT89S52",
+    "name": "Generic AT89S52",
+    "vendor": "Microchip & Atmel"
+  },
+  "AT90CAN128": {
+    "mcu": "AT90CAN128",
+    "name": "AT90CAN128",
+    "vendor": "Microchip"
+  },
+  "AT90CAN32": {
+    "mcu": "AT90CAN32",
+    "name": "AT90CAN32",
+    "vendor": "Microchip"
+  },
+  "AT90CAN64": {
+    "mcu": "AT90CAN64",
+    "name": "AT90CAN64",
+    "vendor": "Microchip"
+  },
+  "ATmega128": {
+    "mcu": "ATMEGA128",
+    "name": "ATmega128/A",
+    "vendor": "Microchip"
+  },
+  "ATmega1280": {
+    "mcu": "ATMEGA1280",
+    "name": "ATmega1280",
+    "vendor": "Microchip"
+  },
+  "ATmega1281": {
+    "mcu": "ATMEGA1281",
+    "name": "ATmega1281",
+    "vendor": "Microchip"
+  },
+  "ATmega1284": {
+    "mcu": "ATMEGA1284",
+    "name": "ATmega1284",
+    "vendor": "Microchip"
+  },
+  "ATmega1284P": {
+    "mcu": "ATMEGA1284P",
+    "name": "ATmega1284P",
+    "vendor": "Microchip"
+  },
+  "ATmega16": {
+    "mcu": "ATMEGA16",
+    "name": "ATmega16",
+    "vendor": "Microchip"
+  },
+  "ATmega1608": {
+    "mcu": "ATMEGA1608",
+    "name": "ATmega1608",
+    "vendor": "Microchip"
+  },
+  "ATmega1609": {
+    "mcu": "ATMEGA1609",
+    "name": "ATmega1609",
+    "vendor": "Microchip"
+  },
+  "ATmega162": {
+    "mcu": "ATMEGA162",
+    "name": "ATmega162",
+    "vendor": "Microchip"
+  },
+  "ATmega164A": {
+    "mcu": "ATMEGA164A",
+    "name": "ATmega164A",
+    "vendor": "Microchip"
+  },
+  "ATmega164P": {
+    "mcu": "ATMEGA164P",
+    "name": "ATmega164P/PA",
+    "vendor": "Microchip"
+  },
+  "ATmega165": {
+    "mcu": "ATMEGA165A",
+    "name": "ATmega165/A",
+    "vendor": "Microchip"
+  },
+  "ATmega165P": {
+    "mcu": "ATMEGA165P",
+    "name": "ATmega165P/PA",
+    "vendor": "Microchip"
+  },
+  "ATmega168": {
+    "mcu": "ATMEGA168",
+    "name": "ATmega168/A",
+    "vendor": "Microchip"
+  },
+  "ATmega168P": {
+    "mcu": "ATMEGA168P",
+    "name": "ATmega168P/PA",
+    "vendor": "Microchip"
+  },
+  "ATmega168PB": {
+    "mcu": "ATMEGA168PB",
+    "name": "ATmega168PB",
+    "vendor": "Microchip"
+  },
+  "ATmega169A": {
+    "mcu": "ATMEGA169A",
+    "name": "ATmega169A",
+    "vendor": "Microchip"
+  },
+  "ATmega169P": {
+    "mcu": "ATMEGA169P",
+    "name": "ATmega169/P/PA",
+    "vendor": "Microchip"
+  },
+  "ATmega2560": {
+    "mcu": "ATMEGA2560",
+    "name": "ATmega2560",
+    "vendor": "Microchip"
+  },
+  "ATmega2561": {
+    "mcu": "ATMEGA2561",
+    "name": "ATmega2561",
+    "vendor": "Microchip"
+  },
+  "ATmega32": {
+    "mcu": "ATMEGA32",
+    "name": "ATmega32",
+    "vendor": "Microchip"
+  },
+  "ATmega3208": {
+    "mcu": "ATMEGA3208",
+    "name": "ATmega3208",
+    "vendor": "Microchip"
+  },
+  "ATmega3209": {
+    "mcu": "ATMEGA3209",
+    "name": "ATmega3209",
+    "vendor": "Microchip"
+  },
+  "ATmega324A": {
+    "mcu": "ATMEGA324A",
+    "name": "ATmega324A",
+    "vendor": "Microchip"
+  },
+  "ATmega324P": {
+    "mcu": "ATMEGA324P",
+    "name": "ATmega324P",
+    "vendor": "Microchip"
+  },
+  "ATmega324PA": {
+    "mcu": "ATMEGA324PA",
+    "name": "ATmega324PA",
+    "vendor": "Microchip"
+  },
+  "ATmega324PB": {
+    "mcu": "ATMEGA324PB",
+    "name": "ATmega324PB",
+    "vendor": "Microchip"
+  },
+  "ATmega325": {
+    "mcu": "ATMEGA325",
+    "name": "ATmega325/A",
+    "vendor": "Microchip"
+  },
+  "ATmega3250": {
+    "mcu": "ATMEGA3250",
+    "name": "ATmega3250/A",
+    "vendor": "Microchip"
+  },
+  "ATmega3250P": {
+    "mcu": "ATMEGA3250P",
+    "name": "ATmega3250P/PA",
+    "vendor": "Microchip"
+  },
+  "ATmega325P": {
+    "mcu": "ATMEGA325P",
+    "name": "ATmega325P/PA",
+    "vendor": "Microchip"
+  },
+  "ATmega328": {
+    "mcu": "ATMEGA328",
+    "name": "ATmega328",
+    "vendor": "Microchip"
+  },
+  "ATmega328P": {
+    "mcu": "ATMEGA328P",
+    "name": "ATmega328P/PA",
+    "vendor": "Microchip"
+  },
+  "ATmega328PB": {
+    "mcu": "ATMEGA328PB",
+    "name": "ATmega328PB",
+    "vendor": "Microchip"
+  },
+  "ATmega329": {
+    "mcu": "ATMEGA329",
+    "name": "ATmega329/A",
+    "vendor": "Microchip"
+  },
+  "ATmega3290": {
+    "mcu": "ATMEGA3290",
+    "name": "ATmega3290/A",
+    "vendor": "Microchip"
+  },
+  "ATmega3290P": {
+    "mcu": "ATMEGA3290P",
+    "name": "ATmega3290P/PA",
+    "vendor": "Microchip"
+  },
+  "ATmega329P": {
+    "mcu": "ATMEGA329P",
+    "name": "ATmega329P/PA",
+    "vendor": "Microchip"
+  },
+  "ATmega48": {
+    "mcu": "ATMEGA48",
+    "name": "ATmega48/A",
+    "vendor": "Microchip"
+  },
+  "ATmega4808": {
+    "mcu": "ATMEGA4808",
+    "name": "ATmega4808",
+    "vendor": "Microchip"
+  },
+  "ATmega4809": {
+    "mcu": "ATMEGA4809",
+    "name": "ATmega4809",
+    "vendor": "Microchip"
+  },
+  "ATmega48P": {
+    "mcu": "ATMEGA48P",
+    "name": "ATmega48P/PA",
+    "vendor": "Microchip"
+  },
+  "ATmega48PB": {
+    "mcu": "ATMEGA48PB",
+    "name": "ATmega48PB",
+    "vendor": "Microchip"
+  },
+  "ATmega64": {
+    "mcu": "ATMEGA64",
+    "name": "ATmega64/A",
+    "vendor": "Microchip"
+  },
+  "ATmega640": {
+    "mcu": "ATMEGA640",
+    "name": "ATmega640",
+    "vendor": "Microchip"
+  },
+  "ATmega644A": {
+    "mcu": "ATMEGA644A",
+    "name": "ATmega644/A",
+    "vendor": "Microchip"
+  },
+  "ATmega644P": {
+    "mcu": "ATMEGA644P",
+    "name": "ATmega644P/PA",
+    "vendor": "Microchip"
+  },
+  "ATmega645": {
+    "mcu": "ATMEGA645",
+    "name": "ATmega645/A",
+    "vendor": "Microchip"
+  },
+  "ATmega6450": {
+    "mcu": "ATMEGA6450",
+    "name": "ATmega6450/A",
+    "vendor": "Microchip"
+  },
+  "ATmega6450P": {
+    "mcu": "ATMEGA6450P",
+    "name": "ATmega6450P",
+    "vendor": "Microchip"
+  },
+  "ATmega645P": {
+    "mcu": "ATMEGA645P",
+    "name": "ATmega645P",
+    "vendor": "Microchip"
+  },
+  "ATmega649": {
+    "mcu": "ATMEGA649",
+    "name": "ATmega649/A",
+    "vendor": "Microchip"
+  },
+  "ATmega6490": {
+    "mcu": "ATMEGA6490",
+    "name": "ATmega6490/A",
+    "vendor": "Microchip"
+  },
+  "ATmega6490P": {
+    "mcu": "ATMEGA6490P",
+    "name": "ATmega6490P",
+    "vendor": "Microchip"
+  },
+  "ATmega649P": {
+    "mcu": "ATMEGA649P",
+    "name": "ATmega649P",
+    "vendor": "Microchip"
+  },
+  "ATmega8": {
+    "mcu": "ATMEGA8",
+    "name": "ATmega8/A",
+    "vendor": "Microchip"
+  },
+  "ATmega808": {
+    "mcu": "ATMEGA808",
+    "name": "ATmega808",
+    "vendor": "Microchip"
+  },
+  "ATmega809": {
+    "mcu": "ATMEGA809",
+    "name": "ATmega809",
+    "vendor": "Microchip"
+  },
+  "ATmega8515": {
+    "mcu": "ATMEGA8515",
+    "name": "ATmega8515",
+    "vendor": "Microchip"
+  },
+  "ATmega8535": {
+    "mcu": "ATMEGA8535",
+    "name": "ATmega8535",
+    "vendor": "Microchip"
+  },
+  "ATmega88": {
+    "mcu": "ATMEGA88",
+    "name": "ATmega88/A",
+    "vendor": "Microchip"
+  },
+  "ATmega88P": {
+    "mcu": "ATMEGA88P",
+    "name": "ATmega88P/PA",
+    "vendor": "Microchip"
+  },
+  "ATmega88PB": {
+    "mcu": "ATMEGA88PB",
+    "name": "ATmega88PB",
+    "vendor": "Microchip"
+  },
+  "ATtiny1604": {
+    "mcu": "ATTINY1604",
+    "name": "ATtiny1604",
+    "vendor": "Microchip"
+  },
+  "ATtiny1606": {
+    "mcu": "ATTINY1606",
+    "name": "ATtiny1606",
+    "vendor": "Microchip"
+  },
+  "ATtiny1607": {
+    "mcu": "ATTINY1607",
+    "name": "ATtiny1607",
+    "vendor": "Microchip"
+  },
+  "ATtiny1614": {
+    "mcu": "ATTINY1614",
+    "name": "ATtiny1614",
+    "vendor": "Microchip"
+  },
+  "ATtiny1616": {
+    "mcu": "ATTINY1616",
+    "name": "ATtiny1616",
+    "vendor": "Microchip"
+  },
+  "ATtiny1617": {
+    "mcu": "ATTINY1617",
+    "name": "ATtiny1617",
+    "vendor": "Microchip"
+  },
+  "ATtiny1624": {
+    "mcu": "ATTINY1624",
+    "name": "ATtiny1624",
+    "vendor": "Microchip"
+  },
+  "ATtiny1626": {
+    "mcu": "ATTINY1626",
+    "name": "ATtiny1626",
+    "vendor": "Microchip"
+  },
+  "ATtiny1627": {
+    "mcu": "ATTINY1627",
+    "name": "ATtiny1627",
+    "vendor": "Microchip"
+  },
+  "ATtiny202": {
+    "mcu": "ATTINY202",
+    "name": "ATtiny202",
+    "vendor": "Microchip"
+  },
+  "ATtiny204": {
+    "mcu": "ATTINY204",
+    "name": "ATtiny204",
+    "vendor": "Microchip"
+  },
+  "ATtiny212": {
+    "mcu": "ATTINY212",
+    "name": "ATtiny212",
+    "vendor": "Microchip"
+  },
+  "ATtiny214": {
+    "mcu": "ATTINY214",
+    "name": "ATtiny214",
+    "vendor": "Microchip"
+  },
+  "ATtiny3216": {
+    "mcu": "ATTINY3216",
+    "name": "ATtiny3216",
+    "vendor": "Microchip"
+  },
+  "ATtiny3217": {
+    "mcu": "ATTINY3217",
+    "name": "ATtiny3217",
+    "vendor": "Microchip"
+  },
+  "ATtiny3224": {
+    "mcu": "ATTINY3224",
+    "name": "ATtiny3224",
+    "vendor": "Microchip"
+  },
+  "ATtiny3226": {
+    "mcu": "ATTINY3226",
+    "name": "ATtiny3226",
+    "vendor": "Microchip"
+  },
+  "ATtiny3227": {
+    "mcu": "ATTINY3227",
+    "name": "ATtiny3227",
+    "vendor": "Microchip"
+  },
+  "ATtiny402": {
+    "mcu": "ATTINY402",
+    "name": "ATtiny402",
+    "vendor": "Microchip"
+  },
+  "ATtiny404": {
+    "mcu": "ATTINY404",
+    "name": "ATtiny404",
+    "vendor": "Microchip"
+  },
+  "ATtiny406": {
+    "mcu": "ATTINY406",
+    "name": "ATtiny406",
+    "vendor": "Microchip"
+  },
+  "ATtiny412": {
+    "mcu": "ATTINY412",
+    "name": "ATtiny412",
+    "vendor": "Microchip"
+  },
+  "ATtiny414": {
+    "mcu": "ATTINY414",
+    "name": "ATtiny414",
+    "vendor": "Microchip"
+  },
+  "ATtiny416": {
+    "mcu": "ATTINY416",
+    "name": "ATtiny416",
+    "vendor": "Microchip"
+  },
+  "ATtiny417": {
+    "mcu": "ATTINY417",
+    "name": "ATtiny417",
+    "vendor": "Microchip"
+  },
+  "ATtiny424": {
+    "mcu": "ATTINY424",
+    "name": "ATtiny424",
+    "vendor": "Microchip"
+  },
+  "ATtiny426": {
+    "mcu": "ATTINY426",
+    "name": "ATtiny426",
+    "vendor": "Microchip"
+  },
+  "ATtiny427": {
+    "mcu": "ATTINY427",
+    "name": "ATtiny427",
+    "vendor": "Microchip"
+  },
+  "ATtiny804": {
+    "mcu": "ATTINY804",
+    "name": "ATtiny804",
+    "vendor": "Microchip"
+  },
+  "ATtiny806": {
+    "mcu": "ATTINY806",
+    "name": "ATtiny806",
+    "vendor": "Microchip"
+  },
+  "ATtiny807": {
+    "mcu": "ATTINY807",
+    "name": "ATtiny807",
+    "vendor": "Microchip"
+  },
+  "ATtiny814": {
+    "mcu": "ATTINY814",
+    "name": "ATtiny814",
+    "vendor": "Microchip"
+  },
+  "ATtiny816": {
+    "mcu": "ATTINY816",
+    "name": "ATtiny816",
+    "vendor": "Microchip"
+  },
+  "ATtiny817": {
+    "mcu": "ATTINY817",
+    "name": "ATtiny817",
+    "vendor": "Microchip"
+  },
+  "ATtiny824": {
+    "mcu": "ATTINY824",
+    "name": "ATtiny824",
+    "vendor": "Microchip"
+  },
+  "ATtiny826": {
+    "mcu": "ATTINY826",
+    "name": "ATtiny826",
+    "vendor": "Microchip"
+  },
+  "ATtiny827": {
+    "mcu": "ATTINY827",
+    "name": "ATtiny827",
+    "vendor": "Microchip"
+  },
+  "AVR128DA28": {
+    "mcu": "AVR128DA28",
+    "name": "AVR128DA28",
+    "vendor": "Microchip"
+  },
+  "AVR128DA32": {
+    "mcu": "AVR128DA32",
+    "name": "AVR128DA32",
+    "vendor": "Microchip"
+  },
+  "AVR128DA48": {
+    "mcu": "AVR128DA48",
+    "name": "AVR128DA48",
+    "vendor": "Microchip"
+  },
+  "AVR128DA64": {
+    "mcu": "AVR128DA64",
+    "name": "AVR128DA64",
+    "vendor": "Microchip"
+  },
+  "AVR128DB28": {
+    "mcu": "AVR128DB28",
+    "name": "AVR128DB28",
+    "vendor": "Microchip"
+  },
+  "AVR128DB32": {
+    "mcu": "AVR128DB32",
+    "name": "AVR128DB32",
+    "vendor": "Microchip"
+  },
+  "AVR128DB48": {
+    "mcu": "AVR128DB48",
+    "name": "AVR128DB48",
+    "vendor": "Microchip"
+  },
+  "AVR128DB64": {
+    "mcu": "AVR128DB64",
+    "name": "AVR128DB64",
+    "vendor": "Microchip"
+  },
+  "AVR32DA28": {
+    "mcu": "AVR32DA28",
+    "name": "AVR32DA28",
+    "vendor": "Microchip"
+  },
+  "AVR32DA32": {
+    "mcu": "AVR32DA32",
+    "name": "AVR32DA32",
+    "vendor": "Microchip"
+  },
+  "AVR32DA48": {
+    "mcu": "AVR32DA48",
+    "name": "AVR32DA48",
+    "vendor": "Microchip"
+  },
+  "AVR32DB28": {
+    "mcu": "AVR32DB28",
+    "name": "AVR32DB28",
+    "vendor": "Microchip"
+  },
+  "AVR32DB32": {
+    "mcu": "AVR32DB32",
+    "name": "AVR32DB32",
+    "vendor": "Microchip"
+  },
+  "AVR32DB48": {
+    "mcu": "AVR32DB48",
+    "name": "AVR32DB48",
+    "vendor": "Microchip"
+  },
+  "AVR64DA28": {
+    "mcu": "AVR64DA28",
+    "name": "AVR64DA28",
+    "vendor": "Microchip"
+  },
+  "AVR64DA32": {
+    "mcu": "AVR64DA32",
+    "name": "AVR64DA32",
+    "vendor": "Microchip"
+  },
+  "AVR64DA48": {
+    "mcu": "AVR64DA48",
+    "name": "AVR64DA48",
+    "vendor": "Microchip"
+  },
+  "AVR64DA64": {
+    "mcu": "AVR64DA64",
+    "name": "AVR64DA64",
+    "vendor": "Microchip"
+  },
+  "AVR64DB28": {
+    "mcu": "AVR64DB28",
+    "name": "AVR64DB28",
+    "vendor": "Microchip"
+  },
+  "AVR64DB32": {
+    "mcu": "AVR64DB32",
+    "name": "AVR64DB32",
+    "vendor": "Microchip"
+  },
+  "AVR64DB48": {
+    "mcu": "AVR64DB48",
+    "name": "AVR64DB48",
+    "vendor": "Microchip"
+  },
+  "AVR64DB64": {
+    "mcu": "AVR64DB64",
+    "name": "AVR64DB64",
+    "vendor": "Microchip"
+  },
+  "AVR64DD14": {
+    "mcu": "AVR64DD14",
+    "name": "AVR64DD14",
+    "vendor": "Microchip"
+  },
+  "AVR64DD20": {
+    "mcu": "AVR64DD20",
+    "name": "AVR64DD20",
+    "vendor": "Microchip"
+  },
+  "AVR64DD28": {
+    "mcu": "AVR64DD28",
+    "name": "AVR64DD28",
+    "vendor": "Microchip"
+  },
+  "AVR64DD32": {
+    "mcu": "AVR64DD32",
+    "name": "AVR64DD32",
+    "vendor": "Microchip"
+  },
+  "CH559": {
+    "mcu": "CH559",
+    "name": "CH559",
+    "vendor": "WCH"
+  },
+  "Generic8051": {
+    "mcu": "8051",
+    "name": "Generic 8051",
+    "vendor": "Intel & Licensees"
+  },
+  "Generic8052": {
+    "mcu": "8052",
+    "name": "Generic 8052",
+    "vendor": "Intel & licensees"
+  },
+  "IAP12C5A62S2": {
+    "mcu": "IAP12C5A62S2",
+    "name": "Generic IAP12C5A62S2",
+    "vendor": "STC"
+  },
+  "IAP15F106": {
+    "mcu": "IAP15F106",
+    "name": "Generic IAP15F106",
+    "vendor": "STC"
+  },
+  "IAP15F206A": {
+    "mcu": "IAP15F206A",
+    "name": "Generic IAP15F206A",
+    "vendor": "STC"
+  },
+  "IAP15F2K61S": {
+    "mcu": "IAP15F2K61S",
+    "name": "Generic IAP15F2K61S",
+    "vendor": "STC"
+  },
+  "IAP15F2K61S2": {
+    "mcu": "IAP15F2K61S2",
+    "name": "Generic IAP15F2K61S2",
+    "vendor": "STC"
+  },
+  "IAP15F413AD": {
+    "mcu": "IAP15F413AD",
+    "name": "Generic IAP15F413AD",
+    "vendor": "STC"
+  },
+  "IAP15W105": {
+    "mcu": "IAP15W105",
+    "name": "Generic IAP15W105",
+    "vendor": "STC"
+  },
+  "IAP15W1K29S": {
+    "mcu": "IAP15W1K29S",
+    "name": "Generic IAP15W1K29S",
+    "vendor": "STC"
+  },
+  "IAP15W205S": {
+    "mcu": "IAP15W205S",
+    "name": "Generic IAP15W205S",
+    "vendor": "STC"
+  },
+  "IAP15W413AS": {
+    "mcu": "IAP15W413AS",
+    "name": "Generic IAP15W413AS",
+    "vendor": "STC"
+  },
+  "IAP15W413S": {
+    "mcu": "IAP15W413S",
+    "name": "Generic IAP15W413S",
+    "vendor": "STC"
+  },
+  "IAP15W4K58S4": {
+    "mcu": "IAP15W4K58S4",
+    "name": "Generic IAP15W4K58S4",
+    "vendor": "STC"
+  },
+  "IAP15W4K61S4": {
+    "mcu": "IAP15W4K61S4",
+    "name": "Generic IAP15W4K61S4",
+    "vendor": "STC"
+  },
+  "IAP15W4K63S4": {
+    "mcu": "IAP15W4K63S4",
+    "name": "Generic IAP15W4K63S4",
+    "vendor": "STC"
+  },
+  "IBMEthernetKit": {
+    "mcu": "MK64FN1M0VLL12",
+    "name": "Ethernet IoT Starter Kit",
+    "vendor": "Freescale"
+  },
+  "IRC15F107W": {
+    "mcu": "IRC15F107W",
+    "name": "Generic IRC15F107W",
+    "vendor": "STC"
+  },
+  "IRC15F2K63S2": {
+    "mcu": "IRC15F2K63S2",
+    "name": "Generic IRC15F2K63S2",
+    "vendor": "STC"
+  },
+  "IRC15W107": {
+    "mcu": "IRC15W107",
+    "name": "Generic IRC15W107",
+    "vendor": "STC"
+  },
+  "IRC15W1K31S": {
+    "mcu": "IRC15W1K31S",
+    "name": "Generic IRC15W1K31S",
+    "vendor": "STC"
+  },
+  "IRC15W207S": {
+    "mcu": "IRC15W207S",
+    "name": "Generic IRC15W207S",
+    "vendor": "STC"
+  },
+  "IRC15W415AS": {
+    "mcu": "IRC15W415AS",
+    "name": "Generic IRC15W415AS",
+    "vendor": "STC"
+  },
+  "IRC15W415S": {
+    "mcu": "IRC15W415S",
+    "name": "Generic IRC15W415S",
+    "vendor": "STC"
+  },
+  "LGT8F328P": {
+    "mcu": "ATMEGA328P",
+    "name": "LGT8F328P",
+    "vendor": "LogicGreen"
+  },
+  "LGT8F328P-SSOP20": {
+    "mcu": "ATMEGA328P",
+    "name": "LGT8F328P-SSOP20",
+    "vendor": "LogicGreen"
+  },
+  "LilyPadUSB": {
+    "mcu": "ATMEGA32U4",
+    "name": "Arduino LilyPad USB",
+    "vendor": "Arduino"
+  },
+  "LowCostRTK": {
+    "mcu": "STM32F469NIH6",
+    "name": "Aceinna Low Cost RTK",
+    "vendor": "Aceinna"
+  },
+  "ML51BB9AE": {
+    "mcu": "ML51BB9AE",
+    "name": "Generic ML51BB9AE",
+    "vendor": "Nuvoton"
+  },
+  "ML51DB9AE": {
+    "mcu": "ML51DB9AE",
+    "name": "Generic ML51DB9AE",
+    "vendor": "Nuvoton"
+  },
+  "ML51EB9AE": {
+    "mcu": "ML51EB9AE",
+    "name": "Generic ML51EB9AE",
+    "vendor": "Nuvoton"
+  },
+  "ML51EC0AE": {
+    "mcu": "ML51EC0AE",
+    "name": "Generic ML51EC0AE",
+    "vendor": "Nuvoton"
+  },
+  "ML51FB9AE": {
+    "mcu": "ML51FB9AE",
+    "name": "Generic ML51FB9AE",
+    "vendor": "Nuvoton"
+  },
+  "ML51LD1AE": {
+    "mcu": "ML51LD1AE",
+    "name": "Generic ML51LD1AE",
+    "vendor": "Nuvoton"
+  },
+  "ML51OB9AE": {
+    "mcu": "ML51OB9AE",
+    "name": "Generic ML51OB9AE",
+    "vendor": "Nuvoton"
+  },
+  "ML51PB9AE": {
+    "mcu": "ML51PB9AE",
+    "name": "Generic ML51PB9AE",
+    "vendor": "Nuvoton"
+  },
+  "ML51PC0AE": {
+    "mcu": "ML51PC0AE",
+    "name": "Generic ML51PC0AE",
+    "vendor": "Nuvoton"
+  },
+  "ML51SD1AE": {
+    "mcu": "ML51SD1AE",
+    "name": "Generic ML51SD1AE",
+    "vendor": "Nuvoton"
+  },
+  "ML51TB9AE": {
+    "mcu": "ML51TB9AE",
+    "name": "Generic ML51TB9AE",
+    "vendor": "Nuvoton"
+  },
+  "ML51TC0AE": {
+    "mcu": "ML51TC0AE",
+    "name": "Generic ML51TC0AE",
+    "vendor": "Nuvoton"
+  },
+  "ML51TC1AE": {
+    "mcu": "ML51TC1AE",
+    "name": "Generic ML51TC1AE",
+    "vendor": "Nuvoton"
+  },
+  "ML51TD1AE": {
+    "mcu": "ML51TD1AE",
+    "name": "Generic ML51TD1AE",
+    "vendor": "Nuvoton"
+  },
+  "ML51UB9AE": {
+    "mcu": "ML51UB9AE",
+    "name": "Generic ML51UB9AE",
+    "vendor": "Nuvoton"
+  },
+  "ML51UC0AE": {
+    "mcu": "ML51UC0AE",
+    "name": "Generic ML51UC0AE",
+    "vendor": "Nuvoton"
+  },
+  "ML51XB9AE": {
+    "mcu": "ML51XB9AE",
+    "name": "Generic ML51XB9AE",
+    "vendor": "Nuvoton"
+  },
+  "ML54LD1AE": {
+    "mcu": "ML54LD1AE",
+    "name": "Generic ML54LD1AE",
+    "vendor": "Nuvoton"
+  },
+  "ML54MD1AE": {
+    "mcu": "ML54MD1AE",
+    "name": "Generic ML54MD1AE",
+    "vendor": "Nuvoton"
+  },
+  "ML54SD1AE": {
+    "mcu": "ML54SD1AE",
+    "name": "Generic ML54SD1AE",
+    "vendor": "Nuvoton"
+  },
+  "ML56LD1AE": {
+    "mcu": "ML56LD1AE",
+    "name": "Generic ML56LD1AE",
+    "vendor": "Nuvoton"
+  },
+  "ML56MD1AE": {
+    "mcu": "ML56MD1AE",
+    "name": "Generic ML56MD1AE",
+    "vendor": "Nuvoton"
+  },
+  "ML56SD1AE": {
+    "mcu": "ML56SD1AE",
+    "name": "Generic ML56SD1AE",
+    "vendor": "Nuvoton"
+  },
+  "MS51BA9AE": {
+    "mcu": "MS51BA9AE",
+    "name": "Generic MS51BA9AE",
+    "vendor": "Nuvoton"
+  },
+  "MS51DA9AE": {
+    "mcu": "MS51DA9AE",
+    "name": "Generic MS51DA9AE",
+    "vendor": "Nuvoton"
+  },
+  "MS51EC0AE": {
+    "mcu": "MS51EC0AE",
+    "name": "Generic MS51EC0AE",
+    "vendor": "Nuvoton"
+  },
+  "MS51FB9AE": {
+    "mcu": "MS51FB9AE",
+    "name": "Generic MS51FB9AE",
+    "vendor": "Nuvoton"
+  },
+  "MS51FC0AE": {
+    "mcu": "MS51FC0AE",
+    "name": "Generic MS51FC0AE",
+    "vendor": "Nuvoton"
+  },
+  "MS51IA9AE": {
+    "mcu": "MS51IA9AE",
+    "name": "Generic MS51IA9AE",
+    "vendor": "Nuvoton"
+  },
+  "MS51PC0AE": {
+    "mcu": "MS51PC0AE",
+    "name": "Generic MS51PC0AE",
+    "vendor": "Nuvoton"
+  },
+  "MS51TC0AE": {
+    "mcu": "MS51TC0AE",
+    "name": "Generic MS51TC0AE",
+    "vendor": "Nuvoton"
+  },
+  "MS51XB9AE": {
+    "mcu": "MS51XB9AE",
+    "name": "Generic MS51XB9AE",
+    "vendor": "Nuvoton"
+  },
+  "MS51XB9BE": {
+    "mcu": "MS51XB9BE",
+    "name": "Generic MS51XB9BE",
+    "vendor": "Nuvoton"
+  },
+  "MS51XC0BE": {
+    "mcu": "MS51XC0BE",
+    "name": "Generic MS51XC0BE",
+    "vendor": "Nuvoton"
+  },
+  "N76E003": {
+    "mcu": "N76E003",
+    "name": "Generic N76E003",
+    "vendor": "Nuvoton"
+  },
+  "N76E616": {
+    "mcu": "N76E616",
+    "name": "Generic N76E616",
+    "vendor": "Nuvoton"
+  },
+  "N76E885": {
+    "mcu": "N76E885",
+    "name": "Generic N76E885",
+    "vendor": "Nuvoton"
+  },
+  "N78E055": {
+    "mcu": "N78E055",
+    "name": "Generic N78E055",
+    "vendor": "Nuvoton"
+  },
+  "N78E059": {
+    "mcu": "N78E059",
+    "name": "Generic N78E059",
+    "vendor": "Nuvoton"
+  },
+  "N78E366": {
+    "mcu": "N78E366",
+    "name": "Generic N78E366",
+    "vendor": "Nuvoton"
+  },
+  "N78E517": {
+    "mcu": "N78E517",
+    "name": "Generic N78E517",
+    "vendor": "Nuvoton"
+  },
+  "N79E352": {
+    "mcu": "N79E352",
+    "name": "Generic N79E352",
+    "vendor": "Nuvoton"
+  },
+  "N79E715": {
+    "mcu": "N79E715",
+    "name": "Generic N79E715",
+    "vendor": "Nuvoton"
+  },
+  "N79E813": {
+    "mcu": "N79E813",
+    "name": "Generic N79E813",
+    "vendor": "Nuvoton"
+  },
+  "N79E8132": {
+    "mcu": "N79E8132",
+    "name": "Generic N79E8132",
+    "vendor": "Nuvoton"
+  },
+  "N79E814": {
+    "mcu": "N79E814",
+    "name": "Generic N79E814",
+    "vendor": "Nuvoton"
+  },
+  "N79E815": {
+    "mcu": "N79E815",
+    "name": "Generic N79E815",
+    "vendor": "Nuvoton"
+  },
+  "N79E822": {
+    "mcu": "N79E822",
+    "name": "Generic N79E822",
+    "vendor": "Nuvoton"
+  },
+  "N79E823": {
+    "mcu": "N79E823",
+    "name": "Generic N79E823",
+    "vendor": "Nuvoton"
+  },
+  "N79E824": {
+    "mcu": "N79E824",
+    "name": "Generic N79E824",
+    "vendor": "Nuvoton"
+  },
+  "N79E825": {
+    "mcu": "N79E825",
+    "name": "Generic N79E825",
+    "vendor": "Nuvoton"
+  },
+  "N79E843": {
+    "mcu": "N79E843",
+    "name": "Generic N79E843",
+    "vendor": "Nuvoton"
+  },
+  "N79E8432": {
+    "mcu": "N79E8432",
+    "name": "Generic N79E8432",
+    "vendor": "Nuvoton"
+  },
+  "N79E844": {
+    "mcu": "N79E844",
+    "name": "Generic N79E844",
+    "vendor": "Nuvoton"
+  },
+  "N79E845": {
+    "mcu": "N79E845",
+    "name": "Generic N79E845",
+    "vendor": "Nuvoton"
+  },
+  "N79E854": {
+    "mcu": "N79E854",
+    "name": "Generic N79E854",
+    "vendor": "Nuvoton"
+  },
+  "N79E855": {
+    "mcu": "N79E855",
+    "name": "Generic N79E855",
+    "vendor": "Nuvoton"
+  },
+  "N79E875": {
+    "mcu": "N79E875",
+    "name": "Generic N79E875",
+    "vendor": "Nuvoton"
+  },
+  "OpenIMU300": {
+    "mcu": "STM32F405RG",
+    "name": "Aceinna OpenIMU 300",
+    "vendor": "Aceinna"
+  },
+  "OpenIMU300ZA": {
+    "mcu": "STM32F405RG",
+    "name": "Aceinna OpenIMU 300ZA",
+    "vendor": "Aceinna"
+  },
+  "OpenIMU330": {
+    "mcu": "STM32L431CB",
+    "name": "Aceinna OpenIMU 330",
+    "vendor": "Aceinna"
+  },
+  "OpenIMU335": {
+    "mcu": "STM32F405RG",
+    "name": "Aceinna MTLT335",
+    "vendor": "Aceinna"
+  },
+  "OpenRTK": {
+    "mcu": "STM32F469IG",
+    "name": "Aceinna OpenIMU 330ZA",
+    "vendor": "Aceinna"
+  },
+  "OpenRTK330L": {
+    "mcu": "STM32F469IG",
+    "name": "Aceinna OpenRTK330L",
+    "vendor": "Aceinna"
+  },
+  "STC12C5A08S2": {
+    "mcu": "STC12C5A08S2",
+    "name": "Generic STC12C5A08S2",
+    "vendor": "STC"
+  },
+  "STC12C5A16S2": {
+    "mcu": "STC12C5A16S2",
+    "name": "Generic STC12C5A16S2",
+    "vendor": "STC"
+  },
+  "STC12C5A32S2": {
+    "mcu": "STC12C5A32S2",
+    "name": "Generic STC12C5A32S2",
+    "vendor": "STC"
+  },
+  "STC12C5A40S2": {
+    "mcu": "STC12C5A40S2",
+    "name": "Generic STC12C5A40S2",
+    "vendor": "STC"
+  },
+  "STC12C5A48S2": {
+    "mcu": "STC12C5A48S2",
+    "name": "Generic STC12C5A48S2",
+    "vendor": "STC"
+  },
+  "STC12C5A52S2": {
+    "mcu": "STC12C5A52S2",
+    "name": "Generic STC12C5A52S2",
+    "vendor": "STC"
+  },
+  "STC12C5A56S2": {
+    "mcu": "STC12C5A56S2",
+    "name": "Generic STC12C5A56S2",
+    "vendor": "STC"
+  },
+  "STC12C5A60S2": {
+    "mcu": "STC12C5A60S2",
+    "name": "Generic STC12C5A60S2",
+    "vendor": "STC"
+  },
+  "STC15F100": {
+    "mcu": "STC15F100",
+    "name": "Generic STC15F100",
+    "vendor": "STC"
+  },
+  "STC15F100W": {
+    "mcu": "STC15F100W",
+    "name": "Generic STC15F100W",
+    "vendor": "STC"
+  },
+  "STC15F101": {
+    "mcu": "STC15F101",
+    "name": "Generic STC15F101",
+    "vendor": "STC"
+  },
+  "STC15F101E": {
+    "mcu": "STC15F101E",
+    "name": "Generic STC15F101E",
+    "vendor": "STC"
+  },
+  "STC15F101W": {
+    "mcu": "STC15F101W",
+    "name": "Generic STC15F101W",
+    "vendor": "STC"
+  },
+  "STC15F102": {
+    "mcu": "STC15F102",
+    "name": "Generic STC15F102",
+    "vendor": "STC"
+  },
+  "STC15F102E": {
+    "mcu": "STC15F102E",
+    "name": "Generic STC15F102E",
+    "vendor": "STC"
+  },
+  "STC15F102W": {
+    "mcu": "STC15F102W",
+    "name": "Generic STC15F102W",
+    "vendor": "STC"
+  },
+  "STC15F103": {
+    "mcu": "STC15F103",
+    "name": "Generic STC15F103",
+    "vendor": "STC"
+  },
+  "STC15F103E": {
+    "mcu": "STC15F103E",
+    "name": "Generic STC15F103E",
+    "vendor": "STC"
+  },
+  "STC15F103W": {
+    "mcu": "STC15F103W",
+    "name": "Generic STC15F103W",
+    "vendor": "STC"
+  },
+  "STC15F104": {
+    "mcu": "STC15F104",
+    "name": "Generic STC15F104",
+    "vendor": "STC"
+  },
+  "STC15F104E": {
+    "mcu": "STC15F104E",
+    "name": "Generic STC15F104E",
+    "vendor": "STC"
+  },
+  "STC15F104W": {
+    "mcu": "STC15F104W",
+    "name": "Generic STC15F104W",
+    "vendor": "STC"
+  },
+  "STC15F105": {
+    "mcu": "STC15F105",
+    "name": "Generic STC15F105",
+    "vendor": "STC"
+  },
+  "STC15F105E": {
+    "mcu": "STC15F105E",
+    "name": "Generic STC15F105E",
+    "vendor": "STC"
+  },
+  "STC15F105W": {
+    "mcu": "STC15F105W",
+    "name": "Generic STC15F105W",
+    "vendor": "STC"
+  },
+  "STC15F201A": {
+    "mcu": "STC15F201A",
+    "name": "Generic STC15F201A",
+    "vendor": "STC"
+  },
+  "STC15F201EA": {
+    "mcu": "STC15F201EA",
+    "name": "Generic STC15F201EA",
+    "vendor": "STC"
+  },
+  "STC15F202A": {
+    "mcu": "STC15F202A",
+    "name": "Generic STC15F202A",
+    "vendor": "STC"
+  },
+  "STC15F202EA": {
+    "mcu": "STC15F202EA",
+    "name": "Generic STC15F202EA",
+    "vendor": "STC"
+  },
+  "STC15F203A": {
+    "mcu": "STC15F203A",
+    "name": "Generic STC15F203A",
+    "vendor": "STC"
+  },
+  "STC15F203EA": {
+    "mcu": "STC15F203EA",
+    "name": "Generic STC15F203EA",
+    "vendor": "STC"
+  },
+  "STC15F204A": {
+    "mcu": "STC15F204A",
+    "name": "Generic STC15F204A",
+    "vendor": "STC"
+  },
+  "STC15F204EA": {
+    "mcu": "STC15F204EA",
+    "name": "Generic STC15F204EA",
+    "vendor": "STC"
+  },
+  "STC15F205A": {
+    "mcu": "STC15F205A",
+    "name": "Generic STC15F205A",
+    "vendor": "STC"
+  },
+  "STC15F205EA": {
+    "mcu": "STC15F205EA",
+    "name": "Generic STC15F205EA",
+    "vendor": "STC"
+  },
+  "STC15F2K08S2": {
+    "mcu": "STC15F2K08S2",
+    "name": "Generic STC15F2K08S2",
+    "vendor": "STC"
+  },
+  "STC15F2K16S2": {
+    "mcu": "STC15F2K16S2",
+    "name": "Generic STC15F2K16S2",
+    "vendor": "STC"
+  },
+  "STC15F2K24AS": {
+    "mcu": "STC15F2K24AS",
+    "name": "Generic STC15F2K24AS",
+    "vendor": "STC"
+  },
+  "STC15F2K24S2": {
+    "mcu": "STC15F2K24S2",
+    "name": "Generic STC15F2K24S2",
+    "vendor": "STC"
+  },
+  "STC15F2K32S2": {
+    "mcu": "STC15F2K32S2",
+    "name": "Generic STC15F2K32S2",
+    "vendor": "STC"
+  },
+  "STC15F2K40S2": {
+    "mcu": "STC15F2K40S2",
+    "name": "Generic STC15F2K40S2",
+    "vendor": "STC"
+  },
+  "STC15F2K48S2": {
+    "mcu": "STC15F2K48S2",
+    "name": "Generic STC15F2K48S2",
+    "vendor": "STC"
+  },
+  "STC15F2K52S2": {
+    "mcu": "STC15F2K52S2",
+    "name": "Generic STC15F2K52S2",
+    "vendor": "STC"
+  },
+  "STC15F2K56S2": {
+    "mcu": "STC15F2K56S2",
+    "name": "Generic STC15F2K56S2",
+    "vendor": "STC"
+  },
+  "STC15F2K60S2": {
+    "mcu": "STC15F2K60S2",
+    "name": "Generic STC15F2K60S2",
+    "vendor": "STC"
+  },
+  "STC15F408AD": {
+    "mcu": "STC15F408AD",
+    "name": "Generic STC15F408AD",
+    "vendor": "STC"
+  },
+  "STC15W100": {
+    "mcu": "STC15W100",
+    "name": "Generic STC15W100",
+    "vendor": "STC"
+  },
+  "STC15W101": {
+    "mcu": "STC15W101",
+    "name": "Generic STC15W101",
+    "vendor": "STC"
+  },
+  "STC15W102": {
+    "mcu": "STC15W102",
+    "name": "Generic STC15W102",
+    "vendor": "STC"
+  },
+  "STC15W103": {
+    "mcu": "STC15W103",
+    "name": "Generic STC15W103",
+    "vendor": "STC"
+  },
+  "STC15W104": {
+    "mcu": "STC15W104",
+    "name": "Generic STC15W104",
+    "vendor": "STC"
+  },
+  "STC15W1K16S": {
+    "mcu": "STC15W1K16S",
+    "name": "Generic STC15W1K16S",
+    "vendor": "STC"
+  },
+  "STC15W1K20S": {
+    "mcu": "STC15W1K20S",
+    "name": "Generic STC15W1K20S",
+    "vendor": "STC"
+  },
+  "STC15W1K24S": {
+    "mcu": "STC15W1K24S",
+    "name": "Generic STC15W1K24S",
+    "vendor": "STC"
+  },
+  "STC15W201S": {
+    "mcu": "STC15W201S",
+    "name": "Generic STC15W201S",
+    "vendor": "STC"
+  },
+  "STC15W202S": {
+    "mcu": "STC15W202S",
+    "name": "Generic STC15W202S",
+    "vendor": "STC"
+  },
+  "STC15W203S": {
+    "mcu": "STC15W203S",
+    "name": "Generic STC15W203S",
+    "vendor": "STC"
+  },
+  "STC15W204S": {
+    "mcu": "STC15W204S",
+    "name": "Generic STC15W204S",
+    "vendor": "STC"
+  },
+  "STC15W401AS": {
+    "mcu": "STC15W401AS",
+    "name": "Generic STC15W401AS",
+    "vendor": "STC"
+  },
+  "STC15W402AS": {
+    "mcu": "STC15W402AS",
+    "name": "Generic STC15W402AS",
+    "vendor": "STC"
+  },
+  "STC15W404AS": {
+    "mcu": "STC15W404AS",
+    "name": "Generic STC15W404AS",
+    "vendor": "STC"
+  },
+  "STC15W404S": {
+    "mcu": "STC15W404S",
+    "name": "Generic STC15W404S",
+    "vendor": "STC"
+  },
+  "STC15W408AS": {
+    "mcu": "STC15W408AS",
+    "name": "Generic STC15W408AS",
+    "vendor": "STC"
+  },
+  "STC15W408S": {
+    "mcu": "STC15W408S",
+    "name": "Generic STC15W408S",
+    "vendor": "STC"
+  },
+  "STC15W410S": {
+    "mcu": "STC15W410S",
+    "name": "Generic STC15W410S",
+    "vendor": "STC"
+  },
+  "STC15W4K16S4": {
+    "mcu": "STC15W4K16S4",
+    "name": "Generic STC15W4K16S4",
+    "vendor": "STC"
+  },
+  "STC15W4K32S4": {
+    "mcu": "STC15W4K32S4",
+    "name": "Generic STC15W4K32S4",
+    "vendor": "STC"
+  },
+  "STC15W4K40S4": {
+    "mcu": "STC15W4K40S4",
+    "name": "Generic STC15W4K40S4",
+    "vendor": "STC"
+  },
+  "STC15W4K48S4": {
+    "mcu": "STC15W4K48S4",
+    "name": "Generic STC15W4K48S4",
+    "vendor": "STC"
+  },
+  "STC15W4K56S4": {
+    "mcu": "STC15W4K56S4",
+    "name": "Generic STC15W4K56S4",
+    "vendor": "STC"
+  },
+  "STC89C516RD+": {
+    "mcu": "STC89C516RD+",
+    "name": "Generic STC89C516RD+",
+    "vendor": "STC"
+  },
+  "STC89C51RC": {
+    "mcu": "STC89C51RC",
+    "name": "Generic STC89C51RC",
+    "vendor": "STC"
+  },
+  "STC89C52RC": {
+    "mcu": "STC89C52RC",
+    "name": "Generic STC89C52RC",
+    "vendor": "STC"
+  },
+  "STC89C53RC": {
+    "mcu": "STC89C53RC",
+    "name": "Generic STC89C53RC",
+    "vendor": "STC"
+  },
+  "STC89C54RD+": {
+    "mcu": "STC89C54RD+",
+    "name": "Generic STC89C54RD+",
+    "vendor": "STC"
+  },
+  "STC89C58RD+": {
+    "mcu": "STC89C58RD+",
+    "name": "Generic STC89C58RD+",
+    "vendor": "STC"
+  },
+  "STC8A4K16S2A12": {
+    "mcu": "STC8A4K16S2A12",
+    "name": "Generic STC8A4K16S2A12",
+    "vendor": "STC"
+  },
+  "STC8A4K32S2A12": {
+    "mcu": "STC8A4K32S2A12",
+    "name": "Generic STC8A4K32S2A12",
+    "vendor": "STC"
+  },
+  "STC8A4K60S2A12": {
+    "mcu": "STC8A4K60S2A12",
+    "name": "Generic STC8A4K60S2A12",
+    "vendor": "STC"
+  },
+  "STC8A4K64S2A12": {
+    "mcu": "STC8A4K64S2A12",
+    "name": "Generic STC8A4K64S2A12",
+    "vendor": "STC"
+  },
+  "STC8A8K16D4": {
+    "mcu": "STC8A8K16D4",
+    "name": "Generic STC8A8K16D4",
+    "vendor": "STC"
+  },
+  "STC8A8K16S4A12": {
+    "mcu": "STC8A8K16S4A12",
+    "name": "Generic STC8A8K16S4A12",
+    "vendor": "STC"
+  },
+  "STC8A8K32D4": {
+    "mcu": "STC8A8K32D4",
+    "name": "Generic STC8A8K32D4",
+    "vendor": "STC"
+  },
+  "STC8A8K32S4A12": {
+    "mcu": "STC8A8K32S4A12",
+    "name": "Generic STC8A8K32S4A12",
+    "vendor": "STC"
+  },
+  "STC8A8K60D4": {
+    "mcu": "STC8A8K60D4",
+    "name": "Generic STC8A8K60D4",
+    "vendor": "STC"
+  },
+  "STC8A8K60S4A12": {
+    "mcu": "STC8A8K60S4A12",
+    "name": "Generic STC8A8K60S4A12",
+    "vendor": "STC"
+  },
+  "STC8A8K64D4": {
+    "mcu": "STC8A8K64D4",
+    "name": "Generic STC8A8K64D4",
+    "vendor": "STC"
+  },
+  "STC8A8K64S4A12": {
+    "mcu": "STC8A8K64S4A12",
+    "name": "Generic STC8A8K64S4A12",
+    "vendor": "STC"
+  },
+  "STC8C1K08": {
+    "mcu": "STC8C1K08",
+    "name": "Generic STC8C1K08",
+    "vendor": "STC"
+  },
+  "STC8C1K12": {
+    "mcu": "STC8C1K12",
+    "name": "Generic STC8C1K12",
+    "vendor": "STC"
+  },
+  "STC8C2K16S2": {
+    "mcu": "STC8C2K16S2",
+    "name": "Generic STC8C2K16S2",
+    "vendor": "STC"
+  },
+  "STC8C2K16S4": {
+    "mcu": "STC8C2K16S4",
+    "name": "Generic STC8C2K16S4",
+    "vendor": "STC"
+  },
+  "STC8C2K32S2": {
+    "mcu": "STC8C2K32S2",
+    "name": "Generic STC8C2K32S2",
+    "vendor": "STC"
+  },
+  "STC8C2K32S4": {
+    "mcu": "STC8C2K32S4",
+    "name": "Generic STC8C2K32S4",
+    "vendor": "STC"
+  },
+  "STC8C2K60S2": {
+    "mcu": "STC8C2K60S2",
+    "name": "Generic STC8C2K60S2",
+    "vendor": "STC"
+  },
+  "STC8C2K60S4": {
+    "mcu": "STC8C2K60S4",
+    "name": "Generic STC8C2K60S4",
+    "vendor": "STC"
+  },
+  "STC8C2K64S2": {
+    "mcu": "STC8C2K64S2",
+    "name": "Generic STC8C2K64S2",
+    "vendor": "STC"
+  },
+  "STC8C2K64S4": {
+    "mcu": "STC8C2K64S4",
+    "name": "Generic STC8C2K64S4",
+    "vendor": "STC"
+  },
+  "STC8F1K08": {
+    "mcu": "STC8F1K08",
+    "name": "Generic STC8F1K08",
+    "vendor": "STC"
+  },
+  "STC8F1K08S": {
+    "mcu": "STC8F1K08S",
+    "name": "Generic STC8F1K08S",
+    "vendor": "STC"
+  },
+  "STC8F1K08S2": {
+    "mcu": "STC8F1K08S2",
+    "name": "Generic STC8F1K08S2",
+    "vendor": "STC"
+  },
+  "STC8F1K08S2A10": {
+    "mcu": "STC8F1K08S2A10",
+    "name": "Generic STC8F1K08S2A10",
+    "vendor": "STC"
+  },
+  "STC8F1K17": {
+    "mcu": "STC8F1K17",
+    "name": "Generic STC8F1K17",
+    "vendor": "STC"
+  },
+  "STC8F1K17S2": {
+    "mcu": "STC8F1K17S2",
+    "name": "Generic STC8F1K17S2",
+    "vendor": "STC"
+  },
+  "STC8F2K08S2": {
+    "mcu": "STC8F2K08S2",
+    "name": "Generic STC8F2K08S2",
+    "vendor": "STC"
+  },
+  "STC8F2K16S2": {
+    "mcu": "STC8F2K16S2",
+    "name": "Generic STC8F2K16S2",
+    "vendor": "STC"
+  },
+  "STC8F2K16S4": {
+    "mcu": "STC8F2K16S4",
+    "name": "Generic STC8F2K16S4",
+    "vendor": "STC"
+  },
+  "STC8F2K32S2": {
+    "mcu": "STC8F2K32S2",
+    "name": "Generic STC8F2K32S2",
+    "vendor": "STC"
+  },
+  "STC8F2K32S4": {
+    "mcu": "STC8F2K32S4",
+    "name": "Generic STC8F2K32S4",
+    "vendor": "STC"
+  },
+  "STC8F2K60S2": {
+    "mcu": "STC8F2K60S2",
+    "name": "Generic STC8F2K60S2",
+    "vendor": "STC"
+  },
+  "STC8F2K60S4": {
+    "mcu": "STC8F2K60S4",
+    "name": "Generic STC8F2K60S4",
+    "vendor": "STC"
+  },
+  "STC8F2K64S2": {
+    "mcu": "STC8F2K64S2",
+    "name": "Generic STC8F2K64S2",
+    "vendor": "STC"
+  },
+  "STC8F2K64S4": {
+    "mcu": "STC8F2K64S4",
+    "name": "Generic STC8F2K64S4",
+    "vendor": "STC"
+  },
+  "STC8G1K08": {
+    "mcu": "STC8G1K08",
+    "name": "Generic STC8G1K08",
+    "vendor": "STC"
+  },
+  "STC8G1K08A": {
+    "mcu": "STC8G1K08A",
+    "name": "Generic STC8G1K08A",
+    "vendor": "STC"
+  },
+  "STC8G1K08T": {
+    "mcu": "STC8G1K08T",
+    "name": "Generic STC8G1K08T",
+    "vendor": "STC"
+  },
+  "STC8G1K12": {
+    "mcu": "STC8G1K12",
+    "name": "Generic STC8G1K12",
+    "vendor": "STC"
+  },
+  "STC8G1K12A": {
+    "mcu": "STC8G1K12A",
+    "name": "Generic STC8G1K12A",
+    "vendor": "STC"
+  },
+  "STC8G1K17": {
+    "mcu": "STC8G1K17",
+    "name": "Generic STC8G1K17",
+    "vendor": "STC"
+  },
+  "STC8G1K17A": {
+    "mcu": "STC8G1K17A",
+    "name": "Generic STC8G1K17A",
+    "vendor": "STC"
+  },
+  "STC8G1K17T": {
+    "mcu": "STC8G1K17T",
+    "name": "Generic STC8G1K17T",
+    "vendor": "STC"
+  },
+  "STC8G2K16S2": {
+    "mcu": "STC8G2K16S2",
+    "name": "Generic STC8G2K16S2",
+    "vendor": "STC"
+  },
+  "STC8G2K16S4": {
+    "mcu": "STC8G2K16S4",
+    "name": "Generic STC8G2K16S4",
+    "vendor": "STC"
+  },
+  "STC8G2K32S2": {
+    "mcu": "STC8G2K32S2",
+    "name": "Generic STC8G2K32S2",
+    "vendor": "STC"
+  },
+  "STC8G2K32S4": {
+    "mcu": "STC8G2K32S4",
+    "name": "Generic STC8G2K32S4",
+    "vendor": "STC"
+  },
+  "STC8G2K60S2": {
+    "mcu": "STC8G2K60S2",
+    "name": "Generic STC8G2K60S2",
+    "vendor": "STC"
+  },
+  "STC8G2K60S4": {
+    "mcu": "STC8G2K60S4",
+    "name": "Generic STC8G2K60S4",
+    "vendor": "STC"
+  },
+  "STC8G2K64S2": {
+    "mcu": "STC8G2K64S2",
+    "name": "Generic STC8G2K64S2",
+    "vendor": "STC"
+  },
+  "STC8G2K64S4": {
+    "mcu": "STC8G2K64S4",
+    "name": "Generic STC8G2K64S4",
+    "vendor": "STC"
+  },
+  "STC8H04": {
+    "mcu": "STC8H04",
+    "name": "Generic STC8H04",
+    "vendor": "STC"
+  },
+  "STC8H04A10": {
+    "mcu": "STC8H04A10",
+    "name": "Generic STC8H04A10",
+    "vendor": "STC"
+  },
+  "STC8H1K08": {
+    "mcu": "STC8H1K08",
+    "name": "Generic STC8H1K08",
+    "vendor": "STC"
+  },
+  "STC8H1K08S2": {
+    "mcu": "STC8H1K08S2",
+    "name": "Generic STC8H1K08S2",
+    "vendor": "STC"
+  },
+  "STC8H1K08S2A10": {
+    "mcu": "STC8H1K08S2A10",
+    "name": "Generic STC8H1K08S2A10",
+    "vendor": "STC"
+  },
+  "STC8H1K12": {
+    "mcu": "STC8H1K12",
+    "name": "Generic STC8H1K12",
+    "vendor": "STC"
+  },
+  "STC8H1K16": {
+    "mcu": "STC8H1K16",
+    "name": "Generic STC8H1K16",
+    "vendor": "STC"
+  },
+  "STC8H1K16S2": {
+    "mcu": "STC8H1K16S2",
+    "name": "Generic STC8H1K16S2",
+    "vendor": "STC"
+  },
+  "STC8H1K16S2A10": {
+    "mcu": "STC8H1K16S2A10",
+    "name": "Generic STC8H1K16S2A10",
+    "vendor": "STC"
+  },
+  "STC8H1K17": {
+    "mcu": "STC8H1K17",
+    "name": "Generic STC8H1K17",
+    "vendor": "STC"
+  },
+  "STC8H1K24": {
+    "mcu": "STC8H1K24",
+    "name": "Generic STC8H1K24",
+    "vendor": "STC"
+  },
+  "STC8H1K28": {
+    "mcu": "STC8H1K28",
+    "name": "Generic STC8H1K28",
+    "vendor": "STC"
+  },
+  "STC8H1K32S2": {
+    "mcu": "STC8H1K32S2",
+    "name": "Generic STC8H1K32S2",
+    "vendor": "STC"
+  },
+  "STC8H1K32S2A10": {
+    "mcu": "STC8H1K32S2A10",
+    "name": "Generic STC8H1K32S2A10",
+    "vendor": "STC"
+  },
+  "STC8H1K33": {
+    "mcu": "STC8H1K33",
+    "name": "Generic STC8H1K33",
+    "vendor": "STC"
+  },
+  "STC8H1K64S2A10": {
+    "mcu": "STC8H1K64S2A10",
+    "name": "Generic STC8H1K64S2A10",
+    "vendor": "STC"
+  },
+  "STC8H2K32T": {
+    "mcu": "STC8H2K32T",
+    "name": "Generic STC8H2K32T",
+    "vendor": "STC"
+  },
+  "STC8H2K48T": {
+    "mcu": "STC8H2K48T",
+    "name": "Generic STC8H2K48T",
+    "vendor": "STC"
+  },
+  "STC8H2K60T": {
+    "mcu": "STC8H2K60T",
+    "name": "Generic STC8H2K60T",
+    "vendor": "STC"
+  },
+  "STC8H2K64T": {
+    "mcu": "STC8H2K64T",
+    "name": "Generic STC8H2K64T",
+    "vendor": "STC"
+  },
+  "STC8H3K32S2": {
+    "mcu": "STC8H3K32S2",
+    "name": "Generic STC8H3K32S2",
+    "vendor": "STC"
+  },
+  "STC8H3K32S4": {
+    "mcu": "STC8H3K32S4",
+    "name": "Generic STC8H3K32S4",
+    "vendor": "STC"
+  },
+  "STC8H3K48S2": {
+    "mcu": "STC8H3K48S2",
+    "name": "Generic STC8H3K48S2",
+    "vendor": "STC"
+  },
+  "STC8H3K48S4": {
+    "mcu": "STC8H3K48S4",
+    "name": "Generic STC8H3K48S4",
+    "vendor": "STC"
+  },
+  "STC8H3K60S2": {
+    "mcu": "STC8H3K60S2",
+    "name": "Generic STC8H3K60S2",
+    "vendor": "STC"
+  },
+  "STC8H3K60S4": {
+    "mcu": "STC8H3K60S4",
+    "name": "Generic STC8H3K60S4",
+    "vendor": "STC"
+  },
+  "STC8H3K64S2": {
+    "mcu": "STC8H3K64S2",
+    "name": "Generic STC8H3K64S2",
+    "vendor": "STC"
+  },
+  "STC8H3K64S4": {
+    "mcu": "STC8H3K64S4",
+    "name": "Generic STC8H3K64S4",
+    "vendor": "STC"
+  },
+  "STC8H4K32LCD": {
+    "mcu": "STC8H4K32LCD",
+    "name": "Generic STC8H4K32LCD",
+    "vendor": "STC"
+  },
+  "STC8H4K32TLCD": {
+    "mcu": "STC8H4K32TLCD",
+    "name": "Generic STC8H4K32TLCD",
+    "vendor": "STC"
+  },
+  "STC8H4K32TLR": {
+    "mcu": "STC8H4K32TLR",
+    "name": "Generic STC8H4K32TLR",
+    "vendor": "STC"
+  },
+  "STC8H4K48LCD": {
+    "mcu": "STC8H4K48LCD",
+    "name": "Generic STC8H4K48LCD",
+    "vendor": "STC"
+  },
+  "STC8H4K48TLCD": {
+    "mcu": "STC8H4K48TLCD",
+    "name": "Generic STC8H4K48TLCD",
+    "vendor": "STC"
+  },
+  "STC8H4K48TLR": {
+    "mcu": "STC8H4K48TLR",
+    "name": "Generic STC8H4K48TLR",
+    "vendor": "STC"
+  },
+  "STC8H4K60LCD": {
+    "mcu": "STC8H4K60LCD",
+    "name": "Generic STC8H4K60LCD",
+    "vendor": "STC"
+  },
+  "STC8H4K60TLCD": {
+    "mcu": "STC8H4K60TLCD",
+    "name": "Generic STC8H4K60TLCD",
+    "vendor": "STC"
+  },
+  "STC8H4K60TLR": {
+    "mcu": "STC8H4K60TLR",
+    "name": "Generic STC8H4K60TLR",
+    "vendor": "STC"
+  },
+  "STC8H4K64LCD": {
+    "mcu": "STC8H4K64LCD",
+    "name": "Generic STC8H4K64LCD",
+    "vendor": "STC"
+  },
+  "STC8H4K64TLCD": {
+    "mcu": "STC8H4K64TLCD",
+    "name": "Generic STC8H4K64TLCD",
+    "vendor": "STC"
+  },
+  "STC8H4K64TLR": {
+    "mcu": "STC8H4K64TLR",
+    "name": "Generic STC8H4K64TLR",
+    "vendor": "STC"
+  },
+  "STC8H8K32U": {
+    "mcu": "STC8H8K32U",
+    "name": "Generic STC8H8K32U",
+    "vendor": "STC"
+  },
+  "STC8H8K48U": {
+    "mcu": "STC8H8K48U",
+    "name": "Generic STC8H8K48U",
+    "vendor": "STC"
+  },
+  "STC8H8K60U": {
+    "mcu": "STC8H8K60U",
+    "name": "Generic STC8H8K60U",
+    "vendor": "STC"
+  },
+  "STC8H8K64U": {
+    "mcu": "STC8H8K64U",
+    "name": "Generic STC8H8K64U",
+    "vendor": "STC"
+  },
+  "Sinobit": {
+    "mcu": "NRF51822",
+    "name": "Sino:Bit",
+    "vendor": "sino:bit"
+  },
+  "W79E2051": {
+    "mcu": "W79E2051",
+    "name": "Generic W79E2051",
+    "vendor": "Nuvoton"
+  },
+  "W79E4051": {
+    "mcu": "W79E4051",
+    "name": "Generic W79E4051",
+    "vendor": "Nuvoton"
+  },
+  "W79E632": {
+    "mcu": "W79E632",
+    "name": "Generic W79E632",
+    "vendor": "Nuvoton"
+  },
+  "W79E633": {
+    "mcu": "W79E633",
+    "name": "Generic W79E633",
+    "vendor": "Nuvoton"
+  },
+  "W79E658": {
+    "mcu": "W79E658",
+    "name": "Generic W79E658",
+    "vendor": "Nuvoton"
+  },
+  "W79E659": {
+    "mcu": "W79E659",
+    "name": "Generic W79E659",
+    "vendor": "Nuvoton"
+  },
+  "W79E8213": {
+    "mcu": "W79E8213",
+    "name": "Generic W79E8213",
+    "vendor": "Nuvoton"
+  },
+  "a-star32U4": {
+    "mcu": "ATMEGA32U4",
+    "name": "Pololu A-Star 32U4",
+    "vendor": "Pololu Corporation"
+  },
+  "a7670": {
+    "mcu": "ASR1601",
+    "name": "SIMCOM A7670X LTE Cat.1 Module",
+    "vendor": "SIMCom"
+  },
+  "a9": {
+    "mcu": "RDA8955",
+    "name": "AI-Thinker A9 GSM Module",
+    "vendor": "Ai-Thinker Co., Ltd."
+  },
+  "a9g": {
+    "mcu": "RDA8955",
+    "name": "AI-Thinker A9G GSM Module",
+    "vendor": "Ai-Thinker Co., Ltd."
+  },
+  "acsip_s76s": {
+    "mcu": "STM32L073RZ",
+    "name": "ACSIP S76S",
+    "vendor": "ACSIP"
+  },
+  "adafruit_blm_badge": {
+    "mcu": "SAMD21E18A",
+    "name": "Adafruit BLM Badge",
+    "vendor": "Adafruit"
+  },
+  "adafruit_camera_esp32s3": {
+    "mcu": "ESP32S3",
+    "name": "Adafruit pyCamera S3",
+    "vendor": "Adafruit"
+  },
+  "adafruit_circuitplayground_m0": {
+    "mcu": "SAMD21G18A",
+    "name": "Adafruit Circuit Playground Express",
+    "vendor": "Adafruit"
+  },
+  "adafruit_clue_nrf52840": {
+    "mcu": "NRF52840",
+    "name": "Adafruit CLUE nRF52840",
+    "vendor": "Adafruit"
+  },
+  "adafruit_cplaynrf52840": {
+    "mcu": "NRF52840",
+    "name": "Circuit Playground Bluefruit",
+    "vendor": "Adafruit"
+  },
+  "adafruit_crickit_m0": {
+    "mcu": "SAMD21G18A",
+    "name": "Adafruit Crickit M0",
+    "vendor": "Adafruit"
+  },
+  "adafruit_feather_esp32_v2": {
+    "mcu": "ESP32",
+    "name": "Adafruit Feather ESP32 V2",
+    "vendor": "Adafruit"
+  },
+  "adafruit_feather_esp32c6": {
+    "mcu": "ESP32C6",
+    "name": "Adafruit Feather ESP32-C6",
+    "vendor": "Adafruit"
+  },
+  "adafruit_feather_esp32s2": {
+    "mcu": "ESP32S2",
+    "name": "Adafruit Feather ESP32-S2",
+    "vendor": "Adafruit"
+  },
+  "adafruit_feather_esp32s2_reversetft": {
+    "mcu": "ESP32S2",
+    "name": "Adafruit Feather ESP32-S2 Reverse TFT",
+    "vendor": "Adafruit"
+  },
+  "adafruit_feather_esp32s2_tft": {
+    "mcu": "ESP32S2",
+    "name": "Adafruit Feather ESP32-S2 TFT",
+    "vendor": "Adafruit"
+  },
+  "adafruit_feather_esp32s3": {
+    "mcu": "ESP32S3",
+    "name": "Adafruit Feather ESP32-S3 2MB PSRAM",
+    "vendor": "Adafruit"
+  },
+  "adafruit_feather_esp32s3_nopsram": {
+    "mcu": "ESP32S3",
+    "name": "Adafruit Feather ESP32-S3 No PSRAM",
+    "vendor": "Adafruit"
+  },
+  "adafruit_feather_esp32s3_reversetft": {
+    "mcu": "ESP32S3",
+    "name": "Adafruit Feather ESP32-S3 Reverse TFT",
+    "vendor": "Adafruit"
+  },
+  "adafruit_feather_esp32s3_tft": {
+    "mcu": "ESP32S3",
+    "name": "Adafruit Feather ESP32-S3 TFT",
+    "vendor": "Adafruit"
+  },
+  "adafruit_feather_f405": {
+    "mcu": "STM32F405RGT6",
+    "name": "Adafruit Feather STM32F405",
+    "vendor": "Adafruit"
+  },
+  "adafruit_feather_m0": {
+    "mcu": "SAMD21G18A",
+    "name": "Adafruit Feather M0",
+    "vendor": "Adafruit"
+  },
+  "adafruit_feather_m0_express": {
+    "mcu": "SAMD21G18A",
+    "name": "Adafruit Feather M0 Express",
+    "vendor": "Adafruit"
+  },
+  "adafruit_feather_m4": {
+    "mcu": "SAMD51J19A",
+    "name": "Adafruit Feather M4 Express",
+    "vendor": "Adafruit"
+  },
+  "adafruit_feather_m4_can": {
+    "mcu": "SAME51J19A",
+    "name": "Adafruit Feather M4 CAN",
+    "vendor": "Adafruit"
+  },
+  "adafruit_feather_nrf52832": {
+    "mcu": "NRF52832",
+    "name": "Adafruit Bluefruit nRF52832 Feather",
+    "vendor": "Adafruit"
+  },
+  "adafruit_feather_nrf52840": {
+    "mcu": "NRF52840",
+    "name": "Adafruit Feather nRF52840 Express",
+    "vendor": "Adafruit"
+  },
+  "adafruit_feather_nrf52840_sense": {
+    "mcu": "NRF52840",
+    "name": "Adafruit Feather Bluefruit Sense",
+    "vendor": "Adafruit"
+  },
+  "adafruit_funhouse_esp32s2": {
+    "mcu": "ESP32S2",
+    "name": "Adafruit FunHouse",
+    "vendor": "Adafruit"
+  },
+  "adafruit_gemma_m0": {
+    "mcu": "SAMD21E18A",
+    "name": "Adafruit Gemma M0",
+    "vendor": "Adafruit"
+  },
+  "adafruit_grandcentral_m4": {
+    "mcu": "SAMD51P20A",
+    "name": "Adafruit Grand Central M4",
+    "vendor": "Adafruit"
+  },
+  "adafruit_hallowing": {
+    "mcu": "SAMD21G18A",
+    "name": "Adafruit Hallowing M0",
+    "vendor": "Adafruit"
+  },
+  "adafruit_hallowing_m4": {
+    "mcu": "SAMD51J19A",
+    "name": "Adafruit Hallowing M4",
+    "vendor": "Adafruit"
+  },
+  "adafruit_itsybitsy_esp32": {
+    "mcu": "ESP32",
+    "name": "Adafruit ItsyBitsy ESP32",
+    "vendor": "Adafruit"
+  },
+  "adafruit_itsybitsy_m0": {
+    "mcu": "SAMD21G18A",
+    "name": "Adafruit ItsyBitsy M0",
+    "vendor": "Adafruit"
+  },
+  "adafruit_itsybitsy_m4": {
+    "mcu": "SAMD51G19A",
+    "name": "Adafruit ItsyBitsy M4",
+    "vendor": "Adafruit"
+  },
+  "adafruit_itsybitsy_nrf52840": {
+    "mcu": "NRF52840",
+    "name": "ItsyBitsy nRF52840 Express",
+    "vendor": "Adafruit"
+  },
+  "adafruit_ledglasses_nrf52840": {
+    "mcu": "NRF52840",
+    "name": "Adafruit LED Glasses Driver nRF52840",
+    "vendor": "Adafruit"
+  },
+  "adafruit_magtag29_esp32s2": {
+    "mcu": "ESP32S2",
+    "name": "Adafruit MagTag 2.9",
+    "vendor": "Adafruit"
+  },
+  "adafruit_matrix_portal_m4": {
+    "mcu": "SAMD51J19A",
+    "name": "Adafruit Matrix Portal M4",
+    "vendor": "Adafruit"
+  },
+  "adafruit_matrixportal_esp32s3": {
+    "mcu": "ESP32S3",
+    "name": "Adafruit MatrixPortal ESP32-S3",
+    "vendor": "Adafruit"
+  },
+  "adafruit_metro_esp32s2": {
+    "mcu": "ESP32S2",
+    "name": "Adafruit Metro ESP32-S2",
+    "vendor": "Adafruit"
+  },
+  "adafruit_metro_esp32s3": {
+    "mcu": "ESP32S3",
+    "name": "Adafruit Metro ESP32-S3",
+    "vendor": "Adafruit"
+  },
+  "adafruit_metro_m0": {
+    "mcu": "SAMD21G18A",
+    "name": "Adafruit Metro M0 Expresss",
+    "vendor": "Adafruit"
+  },
+  "adafruit_metro_m4": {
+    "mcu": "SAMD51J19A",
+    "name": "Adafruit Metro M4",
+    "vendor": "Adafruit"
+  },
+  "adafruit_metro_m4_airliftlite": {
+    "mcu": "SAMD51J19A",
+    "name": "Adafruit Metro M4 AirLift Lite",
+    "vendor": "Adafruit"
+  },
+  "adafruit_metro_nrf52840": {
+    "mcu": "NRF52840",
+    "name": "Metro nRF52840 Express",
+    "vendor": "Adafruit"
+  },
+  "adafruit_monster_m4sk": {
+    "mcu": "SAMD51G19A",
+    "name": "Adafruit MONSTER M4SK",
+    "vendor": "Adafruit"
+  },
+  "adafruit_neokeytrinkey_m0": {
+    "mcu": "SAMD21E18A",
+    "name": "Adafruit NeoKey Trinkey",
+    "vendor": "Adafruit"
+  },
+  "adafruit_neotrinkey_m0": {
+    "mcu": "SAMD21E18A",
+    "name": "Adafruit NeoPixel Trinkey",
+    "vendor": "Adafruit"
+  },
+  "adafruit_pirkey": {
+    "mcu": "SAMD21E18A",
+    "name": "Adafruit pIRkey",
+    "vendor": "Adafruit"
+  },
+  "adafruit_proxlighttrinkey_m0": {
+    "mcu": "SAMD21E18A",
+    "name": "Adafruit ProxLight Trinkey",
+    "vendor": "Adafruit"
+  },
+  "adafruit_pybadge_airlift_m4": {
+    "mcu": "SAMD51J20A",
+    "name": "Adafruit pyBadge AirLift M4",
+    "vendor": "Adafruit"
+  },
+  "adafruit_pybadge_m4": {
+    "mcu": "SAMD51J19A",
+    "name": "Adafruit pyBadge M4 Express",
+    "vendor": "Adafruit"
+  },
+  "adafruit_pygamer_advance_m4": {
+    "mcu": "SAMD51J20A",
+    "name": "Adafruit PyGamer Advance M4",
+    "vendor": "Adafruit"
+  },
+  "adafruit_pygamer_m4": {
+    "mcu": "SAMD51J19A",
+    "name": "Adafruit PyGamer M4 Express",
+    "vendor": "Adafruit"
+  },
+  "adafruit_pyportal_m4": {
+    "mcu": "SAMD51J20A",
+    "name": "Adafruit PyPortal M4",
+    "vendor": "Adafruit"
+  },
+  "adafruit_pyportal_m4_titano": {
+    "mcu": "SAMD51J20A",
+    "name": "Adafruit PyPortal M4 Titano",
+    "vendor": "Adafruit"
+  },
+  "adafruit_qt_py_m0": {
+    "mcu": "SAMD21E18A",
+    "name": "Adafruit QT Py M0",
+    "vendor": "Adafruit"
+  },
+  "adafruit_qtpy_esp32": {
+    "mcu": "ESP32",
+    "name": "Adafruit QT Py ESP32",
+    "vendor": "Adafruit"
+  },
+  "adafruit_qtpy_esp32c3": {
+    "mcu": "ESP32C3",
+    "name": "Adafruit QT Py ESP32-C3",
+    "vendor": "Adafruit"
+  },
+  "adafruit_qtpy_esp32s2": {
+    "mcu": "ESP32S2",
+    "name": "Adafruit QT Py ESP32-S2",
+    "vendor": "Adafruit"
+  },
+  "adafruit_qtpy_esp32s3_n4r2": {
+    "mcu": "ESP32S3",
+    "name": "Adafruit QT Py ESP32-S3 (4M Flash 2M PSRAM)",
+    "vendor": "Adafruit"
+  },
+  "adafruit_qtpy_esp32s3_nopsram": {
+    "mcu": "ESP32S3",
+    "name": "Adafruit QT Py ESP32-S3 No PSRAM",
+    "vendor": "Adafruit"
+  },
+  "adafruit_qualia_s3_rgb666": {
+    "mcu": "ESP32S3",
+    "name": "Adafruit Qualia ESP32-S3 RGB666",
+    "vendor": "Adafruit"
+  },
+  "adafruit_rotarytrinkey_m0": {
+    "mcu": "SAMD21E18A",
+    "name": "Adafruit Rotary Trinkey",
+    "vendor": "Adafruit"
+  },
+  "adafruit_slidetrinkey_m0": {
+    "mcu": "SAMD21E18A",
+    "name": "Adafruit Slide Trinkey",
+    "vendor": "Adafruit"
+  },
+  "adafruit_trellis_m4": {
+    "mcu": "SAMD51J19A",
+    "name": "Adafruit Trellis M4",
+    "vendor": "Adafruit"
+  },
+  "adafruit_trinket_m0": {
+    "mcu": "SAMD21E18A",
+    "name": "Adafruit Trinket M0",
+    "vendor": "Adafruit"
+  },
+  "afroflight_f103cb": {
+    "mcu": "STM32F103CBT6",
+    "name": "AfroFlight Rev5 (8MHz)",
+    "vendor": "AfroFlight"
+  },
+  "afw121t": {
+    "mcu": "RTL8710BX",
+    "name": "AFW121T",
+    "vendor": "99iot(Shenzhen)co.,ltd"
+  },
+  "agafia_sg0": {
+    "mcu": "STM32G071RBT6",
+    "name": "Sigma IC AGAFIA SG0",
+    "vendor": "Sigma IC"
+  },
+  "agruminolemon": {
+    "mcu": "ESP8266",
+    "name": "Lifely Agrumino Lemon v4",
+    "vendor": "Lifely.cc"
+  },
+  "airm2m_core_esp32c3": {
+    "mcu": "ESP32C3",
+    "name": "AirM2M CORE ESP32C3",
+    "vendor": "AirM2M"
+  },
+  "alksesp32": {
+    "mcu": "ESP32",
+    "name": "ALKS ESP32",
+    "vendor": "RoboticsBrno"
+  },
+  "alorium_hinj": {
+    "mcu": "ATMEGA328P",
+    "name": "Alorium Hinj",
+    "vendor": "Alorium Technology"
+  },
+  "alorium_sno": {
+    "mcu": "ATMEGA328P",
+    "name": "Alorium Sno",
+    "vendor": "Alorium Technology"
+  },
+  "alorium_xlr8": {
+    "mcu": "ATMEGA328P",
+    "name": "Alorium XLR8",
+    "vendor": "Alorium Technology"
+  },
+  "altair": {
+    "mcu": "ATMEGA256RFR2",
+    "name": "Altair",
+    "vendor": "makerlab.mx"
+  },
+  "ardhat": {
+    "mcu": "ATMEGA328P",
+    "name": "ubIQio Ardhat",
+    "vendor": "ubIQio"
+  },
+  "arduboy": {
+    "mcu": "ATMEGA32U4",
+    "name": "Arduboy",
+    "vendor": "Arduboy"
+  },
+  "arduboy_devkit": {
+    "mcu": "ATMEGA32U4",
+    "name": "Arduboy DevKit",
+    "vendor": "Arduboy"
+  },
+  "arduino_nano_esp32": {
+    "mcu": "ESP32S3",
+    "name": "Arduino Nano ESP32",
+    "vendor": "Arduino"
+  },
+  "arduino_nesso_n1": {
+    "mcu": "ESP32C6",
+    "name": "Arduino Nesso-N1",
+    "vendor": "Arduino"
+  },
+  "armed_v1": {
+    "mcu": "STM32F407VET6",
+    "name": "3D Printer Controller",
+    "vendor": "Armed"
+  },
+  "armstrap_eagle1024": {
+    "mcu": "STM32F417VGT6",
+    "name": "Armstrap Eagle 1024",
+    "vendor": "Armstrap"
+  },
+  "armstrap_eagle2048": {
+    "mcu": "STM32F427VIT6",
+    "name": "Armstrap Eagle 2048",
+    "vendor": "Armstrap"
+  },
+  "armstrap_eagle512": {
+    "mcu": "STM32F407VET6",
+    "name": "Armstrap Eagle 512",
+    "vendor": "Armstrap"
+  },
+  "artix7-35t": {
+    "mcu": "AM130",
+    "name": "Artix-7 35T",
+    "vendor": "Xilinx"
+  },
+  "artix7_100t": {
+    "mcu": "C-CLASS",
+    "name": "Arty A7-100: Artix-7 FPGA Development Board",
+    "vendor": "Xilinx"
+  },
+  "artix7_35t": {
+    "mcu": "E-CLASS",
+    "name": "Artix-7 35T Arty FPGA Evaluation Kit",
+    "vendor": "Xilinx"
+  },
+  "arty-axi-dram": {
+    "name": "Bonfire on Arty, 256MB DRAM",
+    "vendor": "Bonfire Project"
+  },
+  "at90pwm216": {
+    "mcu": "AT90PWM216",
+    "name": "Atmel AT90PWM216",
+    "vendor": "Microchip"
+  },
+  "at90pwm316": {
+    "mcu": "AT90PWM316",
+    "name": "Atmel AT90PWM316",
+    "vendor": "Microchip"
+  },
+  "atd147_s3": {
+    "mcu": "ESP32S3",
+    "name": "ArtronShop ATD1.47-S3",
+    "vendor": "ArtronShop"
+  },
+  "atmegangatmega168": {
+    "mcu": "ATMEGA168",
+    "name": "Arduino NG or older ATmega168",
+    "vendor": "Arduino"
+  },
+  "atmegangatmega8": {
+    "mcu": "ATMEGA8",
+    "name": "Arduino NG or older ATmega8",
+    "vendor": "Arduino"
+  },
+  "atmegazero_esp32s2": {
+    "mcu": "ESP32S2",
+    "name": "EspinalLab ATMegaZero ESP32-S2",
+    "vendor": "EspinalLab"
+  },
+  "attiny13": {
+    "mcu": "ATTINY13",
+    "name": "ATtiny13",
+    "vendor": "Microchip"
+  },
+  "attiny13a": {
+    "mcu": "ATTINY13A",
+    "name": "ATtiny13A",
+    "vendor": "Microchip"
+  },
+  "attiny1634": {
+    "mcu": "ATTINY1634",
+    "name": "Generic ATtiny1634",
+    "vendor": "Atmel"
+  },
+  "attiny167": {
+    "mcu": "ATTINY167",
+    "name": "Generic ATtiny167",
+    "vendor": "Atmel"
+  },
+  "attiny2313": {
+    "mcu": "ATTINY2313",
+    "name": "Generic ATtiny2313",
+    "vendor": "Atmel"
+  },
+  "attiny24": {
+    "mcu": "ATTINY24",
+    "name": "Generic ATtiny24",
+    "vendor": "Atmel"
+  },
+  "attiny25": {
+    "mcu": "ATTINY25",
+    "name": "Generic ATtiny25",
+    "vendor": "Atmel"
+  },
+  "attiny261": {
+    "mcu": "ATTINY261",
+    "name": "Generic ATtiny261",
+    "vendor": "Atmel"
+  },
+  "attiny43": {
+    "mcu": "ATTINY43U",
+    "name": "Generic ATtiny43U",
+    "vendor": "Atmel"
+  },
+  "attiny4313": {
+    "mcu": "ATTINY4313",
+    "name": "Generic ATtiny4313",
+    "vendor": "Atmel"
+  },
+  "attiny44": {
+    "mcu": "ATTINY44",
+    "name": "Generic ATtiny44",
+    "vendor": "Atmel"
+  },
+  "attiny441": {
+    "mcu": "ATTINY441",
+    "name": "Generic ATtiny441",
+    "vendor": "Atmel"
+  },
+  "attiny45": {
+    "mcu": "ATTINY45",
+    "name": "Generic ATtiny45",
+    "vendor": "Atmel"
+  },
+  "attiny461": {
+    "mcu": "ATTINY461",
+    "name": "Generic ATtiny461",
+    "vendor": "Atmel"
+  },
+  "attiny48": {
+    "mcu": "ATTINY48",
+    "name": "Generic ATtiny48",
+    "vendor": "Atmel"
+  },
+  "attiny828": {
+    "mcu": "ATTINY828",
+    "name": "Generic ATtiny828",
+    "vendor": "Atmel"
+  },
+  "attiny84": {
+    "mcu": "ATTINY84",
+    "name": "Generic ATtiny84",
+    "vendor": "Atmel"
+  },
+  "attiny841": {
+    "mcu": "ATTINY841",
+    "name": "Generic ATtiny841",
+    "vendor": "Atmel"
+  },
+  "attiny85": {
+    "mcu": "ATTINY85",
+    "name": "Generic ATtiny85",
+    "vendor": "Atmel"
+  },
+  "attiny861": {
+    "mcu": "ATTINY861",
+    "name": "Generic ATtiny861",
+    "vendor": "Atmel"
+  },
+  "attiny87": {
+    "mcu": "ATTINY87",
+    "name": "Generic ATtiny87",
+    "vendor": "Atmel"
+  },
+  "attiny88": {
+    "mcu": "ATTINY88",
+    "name": "Generic ATtiny88",
+    "vendor": "Atmel"
+  },
+  "aventen_s3_sync": {
+    "mcu": "ESP32S3",
+    "name": "Aventen S3 Sync",
+    "vendor": "Aventen"
+  },
+  "avr_iot_wg": {
+    "mcu": "ATMEGA4808",
+    "name": "AVR-IoT WG Development Board",
+    "vendor": "Microchip"
+  },
+  "az-delivery-devkit-v4": {
+    "mcu": "ESP32",
+    "name": "AZ-Delivery ESP-32 Dev Kit C V4",
+    "vendor": "AZ-Delivery"
+  },
+  "b96b_aerocore2": {
+    "mcu": "STM32F427VIT6",
+    "name": "96Boards Neonkey",
+    "vendor": "96Boards"
+  },
+  "b96b_argonkey": {
+    "mcu": "STM32F412CG",
+    "name": "96Boards Argonkey (STEVAL-MKI187V1)",
+    "vendor": "96Boards"
+  },
+  "b96b_f446ve": {
+    "mcu": "STM32F446VET6",
+    "name": "96Boards B96B-F446VE",
+    "vendor": "96Boards"
+  },
+  "b96b_neonkey": {
+    "mcu": "STM32F411CE",
+    "name": "96Boards Neonkey",
+    "vendor": "96Boards"
+  },
+  "bbcmicrobit": {
+    "mcu": "NRF51822",
+    "name": "BBC micro:bit",
+    "vendor": "BBC"
+  },
+  "bbcmicrobit_v2": {
+    "mcu": "NRF52833",
+    "name": "BBC micro:bit V2",
+    "vendor": "BBC"
+  },
+  "bee_data_logger": {
+    "mcu": "ESP32S3",
+    "name": "Smart Bee Data Logger",
+    "vendor": "Smart Bee"
+  },
+  "bee_motion": {
+    "mcu": "ESP32S2",
+    "name": "Smart Bee Motion",
+    "vendor": "Smart Bee"
+  },
+  "bee_motion_mini": {
+    "mcu": "ESP32C3",
+    "name": "Smart Bee Motion Mini",
+    "vendor": "Smart Bee"
+  },
+  "bee_motion_s3": {
+    "mcu": "ESP32S3",
+    "name": "Smart Bee Motion S3",
+    "vendor": "Smart Bee"
+  },
+  "bee_s3": {
+    "mcu": "ESP32S3",
+    "name": "Smart Bee S3",
+    "vendor": "Smart Bee"
+  },
+  "black_f407ve": {
+    "mcu": "STM32F407VET6",
+    "name": "Black STM32F407VE",
+    "vendor": "ST"
+  },
+  "black_f407vg": {
+    "mcu": "STM32F407VGT6",
+    "name": "Black STM32F407VG",
+    "vendor": "ST"
+  },
+  "black_f407ze": {
+    "mcu": "STM32F407ZET6",
+    "name": "Black STM32F407ZE",
+    "vendor": "ST"
+  },
+  "black_f407zg": {
+    "mcu": "STM32F407ZGT6",
+    "name": "Black STM32F407ZG",
+    "vendor": "ST"
+  },
+  "blackpill_f103c8": {
+    "mcu": "STM32F103C8T6",
+    "name": "BlackPill F103C8",
+    "vendor": "Generic"
+  },
+  "blackpill_f103c8_128": {
+    "mcu": "STM32F103C8T6",
+    "name": "BlackPill F103C8 (128k)",
+    "vendor": "Generic"
+  },
+  "blackpill_f401cc": {
+    "mcu": "STM32F401CCU6",
+    "name": "WeAct Studio BlackPill V2.0 (STM32F401CC)",
+    "vendor": "WeAct Studio"
+  },
+  "blackpill_f401ce": {
+    "mcu": "STM32F401CEU6",
+    "name": "WeAct Studio BlackPill V3.0 (STM32F401CE)",
+    "vendor": "WeAct Studio"
+  },
+  "blackpill_f411ce": {
+    "mcu": "STM32F411CEU6",
+    "name": "WeAct Studio BlackPill V2.0 (STM32F411CE)",
+    "vendor": "WeAct Studio"
+  },
+  "blend": {
+    "mcu": "ATMEGA32U4",
+    "name": "RedBearLab Blend",
+    "vendor": "RedBearLab"
+  },
+  "blendmicro16": {
+    "mcu": "ATMEGA32U4",
+    "name": "RedBearLab Blend Micro 3.3V/16MHz (overclock)",
+    "vendor": "RedBearLab"
+  },
+  "blendmicro8": {
+    "mcu": "ATMEGA32U4",
+    "name": "RedBearLab Blend Micro 3.3V/8MHz",
+    "vendor": "RedBearLab"
+  },
+  "blue_f407ve_mini": {
+    "mcu": "STM32F407VET6",
+    "name": "Blue STM32F407VE Mini",
+    "vendor": "ST"
+  },
+  "bluefruitmicro": {
+    "mcu": "ATMEGA32U4",
+    "name": "Adafruit Bluefruit Micro",
+    "vendor": "Adafruit"
+  },
+  "bluepill_f103c6": {
+    "mcu": "STM32F103C6T6",
+    "name": "BluePill F103C6",
+    "vendor": "Generic"
+  },
+  "bluepill_f103c8": {
+    "mcu": "STM32F103C8T6",
+    "name": "BluePill F103C8",
+    "vendor": "Generic"
+  },
+  "bluepill_f103c8_128k": {
+    "mcu": "STM32F103C8T6",
+    "name": "BluePill F103C8 (128k)",
+    "vendor": "Generic"
+  },
+  "blues_cygnet": {
+    "mcu": "STM32L433CCT6",
+    "name": "Blues Cygnet",
+    "vendor": "Blues"
+  },
+  "blues_swan_r5": {
+    "mcu": "STM32L4R5ZIY6",
+    "name": "Blues Swan R5",
+    "vendor": "Blues"
+  },
+  "bluey": {
+    "mcu": "NRF52832",
+    "name": "Bluey nRF52832 IoT",
+    "vendor": "Electronut Labs"
+  },
+  "bluz_dk": {
+    "mcu": "NRF51822",
+    "name": "BluzDK",
+    "vendor": "BluzDK"
+  },
+  "bob3": {
+    "mcu": "ATMEGA88",
+    "name": "nicai-systems BOB3 coding bot",
+    "vendor": "nicai-systems"
+  },
+  "bonfire-basic-dram": {
+    "name": "Bonfire Basic SOC, 32MB DRAM",
+    "vendor": "Bonfire Project"
+  },
+  "bpi-bit": {
+    "mcu": "ESP32",
+    "name": "BPI-Bit",
+    "vendor": "BPI Tech"
+  },
+  "bpi-centi-s3": {
+    "mcu": "ESP32S3",
+    "name": "BPI-Centi-S3",
+    "vendor": "BPI Tech"
+  },
+  "bpi_leaf_s3": {
+    "mcu": "ESP32S3",
+    "name": "BPI-Leaf-S3",
+    "vendor": "BPI Tech"
+  },
+  "btatmega168": {
+    "mcu": "ATMEGA168",
+    "name": "Arduino BT ATmega168",
+    "vendor": "Arduino"
+  },
+  "btatmega328": {
+    "mcu": "ATMEGA328P",
+    "name": "Arduino BT ATmega328",
+    "vendor": "Arduino"
+  },
+  "btt_ebb42_v1_1": {
+    "mcu": "STM32G0B1RET6",
+    "name": "Big Tree Tech EBB42 V1.1",
+    "vendor": "Big Tree Tech"
+  },
+  "bw12": {
+    "mcu": "RTL8710BX",
+    "name": "BW12",
+    "vendor": "Ai-Thinker Co., Ltd."
+  },
+  "bw15": {
+    "mcu": "RTL8720CF",
+    "name": "BW15",
+    "vendor": "Ai-Thinker Co., Ltd."
+  },
+  "bw_swan_r5": {
+    "mcu": "STM32L4R5ZIY6",
+    "name": "BluesWireless Swan R5",
+    "vendor": "BluesWireless"
+  },
+  "calliope_mini": {
+    "mcu": "NRF51822",
+    "name": "Calliope mini",
+    "vendor": "Calliope"
+  },
+  "calliopemini_v3": {
+    "mcu": "NRF52833",
+    "name": "Calliope Mini v3",
+    "vendor": "Calliope"
+  },
+  "cb1s": {
+    "mcu": "BK7231N",
+    "name": "CB1S Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "cb2l": {
+    "mcu": "BK7231N",
+    "name": "CB2L Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "cb2s": {
+    "mcu": "BK7231N",
+    "name": "CB2S Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "cb3l": {
+    "mcu": "BK7231N",
+    "name": "CB3L Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "cb3s": {
+    "mcu": "BK7231N",
+    "name": "CB3S Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "cb3se": {
+    "mcu": "BK7231N",
+    "name": "CB3SE Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "cblc5": {
+    "mcu": "BK7231N",
+    "name": "CBLC5 Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "cbu": {
+    "mcu": "BK7231N",
+    "name": "CBU Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "cerebot32mx4": {
+    "mcu": "32MX460F512L",
+    "name": "Digilent Cerebot 32MX4",
+    "vendor": "Digilent"
+  },
+  "cerebot32mx7": {
+    "mcu": "32MX795F512L",
+    "name": "Digilent Cerebot 32MX7",
+    "vendor": "Digilent"
+  },
+  "cezerio_dev_esp32c6": {
+    "mcu": "ESP32C6",
+    "name": "cezerio dev ESP32C6",
+    "vendor": "cezerio"
+  },
+  "cezerio_mini_dev_esp32c6": {
+    "mcu": "ESP32C6",
+    "name": "cezerio mini dev ESP32C6",
+    "vendor": "cezerio"
+  },
+  "chipkit_cmod": {
+    "mcu": "32MX150F128D",
+    "name": "Digilent chipKIT Cmod",
+    "vendor": "Digilent"
+  },
+  "chipkit_dp32": {
+    "mcu": "32MX250F128B",
+    "name": "Digilent chipKIT DP32",
+    "vendor": "Digilent"
+  },
+  "chipkit_mx3": {
+    "mcu": "32MX320F128H",
+    "name": "Digilent chipKIT MX3",
+    "vendor": "Digilent"
+  },
+  "chipkit_pi": {
+    "mcu": "32MX250F128B",
+    "name": "Element14 chipKIT Pi",
+    "vendor": "element14"
+  },
+  "chipkit_pro_mx4": {
+    "mcu": "32MX460F512L",
+    "name": "Digilent chipKIT Pro MX4",
+    "vendor": "Digilent"
+  },
+  "chipkit_pro_mx7": {
+    "mcu": "32MX795F512L",
+    "name": "Digilent chipKIT Pro MX7",
+    "vendor": "Digilent"
+  },
+  "chipkit_uc32": {
+    "mcu": "32MX340F512H",
+    "name": "Digilent chipKIT uC32",
+    "vendor": "Digilent"
+  },
+  "chipkit_wf32": {
+    "mcu": "32MX695F512L",
+    "name": "Digilent chipKIT WF32",
+    "vendor": "Digilent"
+  },
+  "chipkit_wifire": {
+    "mcu": "32MZ2048ECG100",
+    "name": "Digilent chipKIT WiFire",
+    "vendor": "Digilent"
+  },
+  "chipkit_wifire_revc": {
+    "mcu": "32MZ2048EFG100",
+    "name": "chipKIT WiFire rev. C",
+    "vendor": "Digilent"
+  },
+  "chiwawa": {
+    "mcu": "ATMEGA32U4",
+    "name": "Arduino Industrial 101",
+    "vendor": "Arduino"
+  },
+  "cicada_l082cz": {
+    "mcu": "STM32L082CZY6",
+    "name": "Cicada-L082CZ",
+    "vendor": "Tlera Corporation"
+  },
+  "circuitplay_classic": {
+    "mcu": "ATMEGA32U4",
+    "name": "Adafruit Circuit Playground Classic",
+    "vendor": "Adafruit"
+  },
+  "clicker2": {
+    "mcu": "32MX460F512L",
+    "name": "MikroElektronika Clicker 2",
+    "vendor": "MikroElektronika"
+  },
+  "cloud_jam": {
+    "mcu": "STM32F401RET6",
+    "name": "RushUp Cloud-JAM",
+    "vendor": "RushUp"
+  },
+  "cloud_jam_l4": {
+    "mcu": "STM32L476RGT6",
+    "name": "RushUp Cloud-JAM L4",
+    "vendor": "RushUp"
+  },
+  "cnrs_aw2eth": {
+    "mcu": "ESP32",
+    "name": "CNRS AW2ETH",
+    "vendor": "CNRS"
+  },
+  "connaxio_espoir": {
+    "mcu": "ESP32",
+    "name": "Connaxio's Espoir",
+    "vendor": "Connaxio"
+  },
+  "controllino_maxi": {
+    "mcu": "ATMEGA2560",
+    "name": "Controllino Maxi",
+    "vendor": "Controllino"
+  },
+  "controllino_maxi_automation": {
+    "mcu": "ATMEGA2560",
+    "name": "Controllino Maxi Automation",
+    "vendor": "Controllino"
+  },
+  "controllino_mega": {
+    "mcu": "ATMEGA2560",
+    "name": "Controllino Mega",
+    "vendor": "Controllino"
+  },
+  "controllino_mini": {
+    "mcu": "ATMEGA328P",
+    "name": "Controllino Mini",
+    "vendor": "Controllino"
+  },
+  "coreboard_f401rc": {
+    "mcu": "STM32F401RCT6",
+    "name": "Core board F401RCT6",
+    "vendor": "ST"
+  },
+  "cricket_l082cz": {
+    "mcu": "STM32L082CZY6",
+    "name": "Cricket-L082CZ",
+    "vendor": "Tlera Corporation"
+  },
+  "cubecell_board": {
+    "mcu": "ASR6501",
+    "name": "Heltec CubeCell-Board (HTCC-AB01)",
+    "vendor": "Heltec"
+  },
+  "cubecell_board_plus": {
+    "mcu": "ASR6502",
+    "name": "Heltec CubeCell-Board Plus (HTCC-AB02)",
+    "vendor": "Heltec"
+  },
+  "cubecell_board_pro": {
+    "mcu": "ASR6601",
+    "name": "Heltec CubeCell-Board PRO (HTCC-AB03)",
+    "vendor": "Heltec"
+  },
+  "cubecell_board_v2": {
+    "mcu": "ASR6501",
+    "name": "Heltec CubeCell-Board-V2 (HTCC-AB01-V2)",
+    "vendor": "Heltec"
+  },
+  "cubecell_capsule": {
+    "mcu": "ASR6501",
+    "name": "Heltec CubeCell-Capsule (HTCC-AC01)",
+    "vendor": "Heltec"
+  },
+  "cubecell_capsule_solar_sensor": {
+    "mcu": "ASR6051",
+    "name": "Heltec CubeCell Capsule Solar Sensor (HTCC-AC02)",
+    "vendor": "Heltec"
+  },
+  "cubecell_gps": {
+    "mcu": "ASR6502",
+    "name": "Heltec CubeCell-GPS (HTCC-AB02S)",
+    "vendor": "Heltec"
+  },
+  "cubecell_module": {
+    "mcu": "ASR6501",
+    "name": "Heltec CubeCell-Module (HTCC-AM01)",
+    "vendor": "Heltec"
+  },
+  "cubecell_module_plus": {
+    "mcu": "ASR6502",
+    "name": "Heltec CubeCell-Module Plus (HTCC-AM02)",
+    "vendor": "Heltec"
+  },
+  "cubecell_module_v2": {
+    "mcu": "ASR6501",
+    "name": "Heltec CubeCell-Module-V2 (HTCC-AM01-V2)",
+    "vendor": "Heltec"
+  },
+  "cubecell_node": {
+    "mcu": "ASR6502",
+    "name": "Heltec CubeCell-1/2AA Node (HTCC-AB02A)",
+    "vendor": "Heltec"
+  },
+  "cui32": {
+    "mcu": "32MX440F512H",
+    "name": "Pic32 CUI32-Development Stick",
+    "vendor": "SparkFun"
+  },
+  "cui32stem": {
+    "mcu": "32MX795F512H",
+    "name": "SeeedStudio CUI32stem",
+    "vendor": "SeeedStudio"
+  },
+  "curiosity_nano_4809": {
+    "mcu": "ATMEGA4809",
+    "name": "Curiosity Nano ATmega4809",
+    "vendor": "Microchip"
+  },
+  "curiosity_nano_da": {
+    "mcu": "AVR128DA48",
+    "name": "Curiosity Nano AVR128DA48",
+    "vendor": "Microchip"
+  },
+  "curiosity_nano_db": {
+    "mcu": "AVR128DB48",
+    "name": "Curiosity Nano AVR128DB48",
+    "vendor": "Microchip"
+  },
+  "current_ranger": {
+    "mcu": "SAMD21G18A",
+    "name": "LowPowerLab CurrentRanger",
+    "vendor": "LowPowerLab"
+  },
+  "cytron_maker_feather_aiot_s3": {
+    "mcu": "ESP32S3",
+    "name": "Cytron Maker Feather AIoT S3",
+    "vendor": "Cytron Technologies"
+  },
+  "d-duino-32": {
+    "mcu": "ESP32",
+    "name": "D-duino-32",
+    "vendor": "DSTIKE"
+  },
+  "d1": {
+    "mcu": "ESP8266",
+    "name": "WEMOS D1 R1",
+    "vendor": "WEMOS"
+  },
+  "d1_mini": {
+    "mcu": "ESP8266",
+    "name": "WeMos D1 R2 and mini",
+    "vendor": "WEMOS"
+  },
+  "d1_mini_lite": {
+    "mcu": "ESP8266",
+    "name": "WeMos D1 mini Lite",
+    "vendor": "WEMOS"
+  },
+  "d1_mini_pro": {
+    "mcu": "ESP8266",
+    "name": "WeMos D1 mini Pro",
+    "vendor": "WEMOS"
+  },
+  "d1_wroom_02": {
+    "mcu": "ESP8266",
+    "name": "WeMos D1 ESP-WROOM-02",
+    "vendor": "WeMos"
+  },
+  "delta_dfbm_nq620": {
+    "mcu": "NRF52832",
+    "name": "Delta DFBM-NQ620",
+    "vendor": "Delta"
+  },
+  "demo_f030f4": {
+    "mcu": "STM32F030F4P6",
+    "name": "Demo F030F4",
+    "vendor": "Generic"
+  },
+  "deneyapkart": {
+    "mcu": "ESP32",
+    "name": "Deneyap Kart",
+    "vendor": "T3 Foundation"
+  },
+  "deneyapkart1A": {
+    "mcu": "ESP32",
+    "name": "Deneyap Kart 1A",
+    "vendor": "T3 Foundation"
+  },
+  "deneyapkart1Av2": {
+    "mcu": "ESP32S3",
+    "name": "Deneyap Kart 1A v2",
+    "vendor": "T3 Foundation"
+  },
+  "deneyapkartg": {
+    "mcu": "ESP32C3",
+    "name": "Deneyap Kart G",
+    "vendor": "T3 Foundation"
+  },
+  "deneyapmini": {
+    "mcu": "ESP32S2",
+    "name": "Deneyap Mini",
+    "vendor": "T3 Foundation"
+  },
+  "deneyapminiv2": {
+    "mcu": "ESP32S2",
+    "name": "Deneyap Mini v2",
+    "vendor": "T3 Foundation"
+  },
+  "denky32": {
+    "mcu": "ESP32",
+    "name": "Denky32 (WROOM32)",
+    "vendor": "Denky"
+  },
+  "denky_d4": {
+    "mcu": "ESP32",
+    "name": "Denky D4 (PICO-V3-02)",
+    "vendor": "Denky"
+  },
+  "devebox_h743vitx": {
+    "mcu": "STM32H743VIT6",
+    "name": "DevEBox H743VITX",
+    "vendor": "DevEBox"
+  },
+  "devebox_h750vbtx": {
+    "mcu": "STM32H750VBT6",
+    "name": "DevEBox H750VBTX",
+    "vendor": "DevEBox"
+  },
+  "dfrobot_beetle_esp32c3": {
+    "mcu": "ESP32C3",
+    "name": "DFRobot Beetle ESP32-C3",
+    "vendor": "DFRobot"
+  },
+  "dfrobot_firebeetle2_esp32c6": {
+    "mcu": "ESP32C6",
+    "name": "DFRobot FireBeetle 2 ESP32-C6",
+    "vendor": "DFRobot"
+  },
+  "dfrobot_firebeetle2_esp32e": {
+    "mcu": "ESP32",
+    "name": "DFRobot Firebeetle 2 ESP32-E",
+    "vendor": "DFRobot"
+  },
+  "dfrobot_firebeetle2_esp32s3": {
+    "mcu": "ESP32S3",
+    "name": "DFRobot Firebeetle 2 ESP32-S3",
+    "vendor": "DFRobot"
+  },
+  "dfrobot_romeo_esp32s3": {
+    "mcu": "ESP32S3",
+    "name": "DFRobot Romeo ESP32-S3",
+    "vendor": "DFRobot"
+  },
+  "diecimilaatmega168": {
+    "mcu": "ATMEGA168",
+    "name": "Arduino Duemilanove or Diecimila ATmega168",
+    "vendor": "Arduino"
+  },
+  "diecimilaatmega328": {
+    "mcu": "ATMEGA328P",
+    "name": "Arduino Duemilanove or Diecimila ATmega328",
+    "vendor": "Arduino"
+  },
+  "digispark-pro": {
+    "mcu": "ATTINY167",
+    "name": "Digispark Pro",
+    "vendor": "Digistump"
+  },
+  "digispark-pro32": {
+    "mcu": "ATTINY167",
+    "name": "Digispark Pro (32 byte buffer)",
+    "vendor": "Digistump"
+  },
+  "digispark-pro64": {
+    "mcu": "ATTINY167",
+    "name": "Digispark Pro (16 MHz) (64 byte buffer)",
+    "vendor": "Digistump"
+  },
+  "digispark-tiny": {
+    "mcu": "ATTINY85",
+    "name": "Digispark USB",
+    "vendor": "Digistump"
+  },
+  "digix": {
+    "mcu": "AT91SAM3X8E",
+    "name": "Digistump DigiX",
+    "vendor": "Digistump"
+  },
+  "disco_b_g431b_esc1": {
+    "mcu": "STM32G431CBU6",
+    "name": "ST B-G431B-ESC1 Discovery",
+    "vendor": "ST"
+  },
+  "disco_b_u585i_iot02a": {
+    "mcu": "STM32U585AII6Q",
+    "name": "ST B-U585I-IOT02A Discovery",
+    "vendor": "ST"
+  },
+  "disco_f030r8": {
+    "mcu": "STM32F030R8T6",
+    "name": "ST STM32F0308DISCOVERY",
+    "vendor": "ST"
+  },
+  "disco_f051r8": {
+    "mcu": "STM32F051R8T6",
+    "name": "ST STM32F0DISCOVERY",
+    "vendor": "ST"
+  },
+  "disco_f072rb": {
+    "mcu": "STM32F072RBT6",
+    "name": "ST Discovery F072RB",
+    "vendor": "ST"
+  },
+  "disco_f100rb": {
+    "mcu": "STM32F100RBT6",
+    "name": "ST STM32VLDISCOVERY",
+    "vendor": "ST"
+  },
+  "disco_f303vc": {
+    "mcu": "STM32F303VCT6",
+    "name": "ST STM32F3DISCOVERY",
+    "vendor": "ST"
+  },
+  "disco_f334c8": {
+    "mcu": "STM32F334C8T6",
+    "name": "ST 32F3348DISCOVERY",
+    "vendor": "ST"
+  },
+  "disco_f401vc": {
+    "mcu": "STM32F401VCT6",
+    "name": "ST 32F401CDISCOVERY",
+    "vendor": "ST"
+  },
+  "disco_f407vg": {
+    "mcu": "STM32F407VGT6",
+    "name": "ST STM32F4DISCOVERY",
+    "vendor": "ST"
+  },
+  "disco_f411ve": {
+    "mcu": "STM32F411VET6",
+    "name": "ST 32F411EDISCOVERY",
+    "vendor": "ST"
+  },
+  "disco_f412zg": {
+    "mcu": "STM32F412ZGT6",
+    "name": "32F412GDISCOVERY",
+    "vendor": "ST"
+  },
+  "disco_f413zh": {
+    "mcu": "STM32F413ZHT6",
+    "name": "ST 32F413HDISCOVERY",
+    "vendor": "ST"
+  },
+  "disco_f429zi": {
+    "mcu": "STM32F429ZIT6",
+    "name": "ST 32F429IDISCOVERY",
+    "vendor": "ST"
+  },
+  "disco_f469ni": {
+    "mcu": "STM32F469NIH6",
+    "name": "ST 32F469IDISCOVERY",
+    "vendor": "ST"
+  },
+  "disco_f723ie": {
+    "mcu": "STM32F723IEK6",
+    "name": "32F723EDISCOVERY",
+    "vendor": "ST"
+  },
+  "disco_f746ng": {
+    "mcu": "STM32F746NGH6",
+    "name": "ST 32F746GDISCOVERY",
+    "vendor": "ST"
+  },
+  "disco_f750n8": {
+    "mcu": "STM32F750N8H6",
+    "name": "STM32F7508-DK",
+    "vendor": "ST"
+  },
+  "disco_f769ni": {
+    "mcu": "STM32F769NIH6",
+    "name": "ST 32F769IDISCOVERY",
+    "vendor": "ST"
+  },
+  "disco_g031j6": {
+    "mcu": "STM32G031J6",
+    "name": "ST STM32G0316-DISCO",
+    "vendor": "ST"
+  },
+  "disco_g071rb": {
+    "mcu": "STM32G071RBT6",
+    "name": "ST STM32G071B Discovery",
+    "vendor": "ST"
+  },
+  "disco_h735ig": {
+    "mcu": "STM32H735IGK6",
+    "name": "STM32H735G-DK Discovery kit",
+    "vendor": "ST"
+  },
+  "disco_h747xi": {
+    "mcu": "STM32H747XIH6",
+    "name": "STM32H747I-DISCO",
+    "vendor": "ST"
+  },
+  "disco_l053c8": {
+    "mcu": "STM32L053C8T6",
+    "name": "ST 32L0538DISCOVERY",
+    "vendor": "ST"
+  },
+  "disco_l072cz_lrwan1": {
+    "mcu": "STM32L072CZ",
+    "name": "ST DISCO-L072CZ-LRWAN1",
+    "vendor": "ST"
+  },
+  "disco_l100rc": {
+    "mcu": "STM32L100RCT6",
+    "name": "ST 32L100DISCOVERY",
+    "vendor": "ST"
+  },
+  "disco_l152rb": {
+    "mcu": "STM32L152RBT6",
+    "name": "ST STM32LDISCOVERY",
+    "vendor": "ST"
+  },
+  "disco_l475vg_iot01a": {
+    "mcu": "STM32L475VGT6",
+    "name": "ST B-L475E-IOT01A Discovery kit",
+    "vendor": "ST"
+  },
+  "disco_l476vg": {
+    "mcu": "STM32L476VGT6",
+    "name": "ST 32L476GDISCOVERY",
+    "vendor": "ST"
+  },
+  "disco_l496ag": {
+    "mcu": "STM32L496AGI6",
+    "name": "ST 32L496GDISCOVERY",
+    "vendor": "ST"
+  },
+  "disco_l4s5i_iot01a": {
+    "mcu": "STM32L4S5VIT6",
+    "name": "ST STM32L4+ Discovery kit IoT node",
+    "vendor": "ST"
+  },
+  "diymore_f407vgt": {
+    "mcu": "STM32F407VGT6",
+    "name": "F407VG",
+    "vendor": "Diymore"
+  },
+  "dpu_esp32": {
+    "mcu": "ESP32",
+    "name": "TAMC DPU ESP32",
+    "vendor": "TAMC"
+  },
+  "dsmini": {
+    "mcu": "32MX150F128C",
+    "name": "DataStation Mini",
+    "vendor": "Makerology"
+  },
+  "due": {
+    "mcu": "AT91SAM3X8E",
+    "name": "Arduino Due (Programming Port)",
+    "vendor": "Arduino"
+  },
+  "dueUSB": {
+    "mcu": "AT91SAM3X8E",
+    "name": "Arduino Due (USB Native Port)",
+    "vendor": "Arduino"
+  },
+  "dwenguino": {
+    "mcu": "AT90USB646",
+    "name": "Dwenguino",
+    "vendor": "Dwengo"
+  },
+  "dwm1001_dev": {
+    "mcu": "NRF52832",
+    "name": "decaWave DWM1001 Module Development Board",
+    "vendor": "decaWave"
+  },
+  "e310-arty": {
+    "mcu": "FE310",
+    "name": "Arty FPGA Dev Kit",
+    "vendor": "Xilinx"
+  },
+  "ebyte_e77_dev": {
+    "mcu": "STM32WLE5CC",
+    "name": "Ebyte E77 Dev Board",
+    "vendor": "Ebyte"
+  },
+  "ec100n": {
+    "mcu": "ASR1603",
+    "name": "Quectel EC100N LTE Cat.1 Module",
+    "vendor": "Quectel Wireless Solutions Co., Ltd."
+  },
+  "ec100s": {
+    "mcu": "ASR1601",
+    "name": "Quectel EC100S LTE Cat.1 Module",
+    "vendor": "Quectel Wireless Solutions Co., Ltd."
+  },
+  "ec100y": {
+    "mcu": "ASR1601",
+    "name": "Quectel EC100Y LTE Cat.1 Module",
+    "vendor": "Quectel Wireless Solutions Co., Ltd."
+  },
+  "ec200n": {
+    "mcu": "ASR1603",
+    "name": "Quectel EC200N LTE Cat.1 Module",
+    "vendor": "Quectel Wireless Solutions Co., Ltd."
+  },
+  "ec200s": {
+    "mcu": "ASR1601",
+    "name": "Quectel EC200S LTE Cat.1 Module",
+    "vendor": "Quectel Wireless Solutions Co., Ltd."
+  },
+  "ec200u": {
+    "mcu": "RDA8910",
+    "name": "Quectel EC200U LTE Cat.1 Module",
+    "vendor": "Quectel Wireless Solutions Co., Ltd."
+  },
+  "ec600n": {
+    "mcu": "ASR1603",
+    "name": "Quectel EC600N LTE Cat.1 Module",
+    "vendor": "Quectel Wireless Solutions Co., Ltd."
+  },
+  "ec600s": {
+    "mcu": "ASR1601",
+    "name": "Quectel EC600S LTE Cat.1 Module",
+    "vendor": "Quectel Wireless Solutions Co., Ltd."
+  },
+  "ec600u": {
+    "mcu": "RDA8910",
+    "name": "Quectel EC600U LTE Cat.1 Module",
+    "vendor": "Quectel Wireless Solutions Co., Ltd."
+  },
+  "econode_l082cz": {
+    "mcu": "STM32L082CZY6",
+    "name": "Econode-L082CZ",
+    "vendor": "Econode"
+  },
+  "edgebox-esp-100": {
+    "mcu": "ESP32S3",
+    "name": "Seeed Studio Edgebox-ESP-100",
+    "vendor": "Seeed Studio"
+  },
+  "eduinowifi": {
+    "mcu": "ESP8266",
+    "name": "Schirmilabs Eduino WiFi",
+    "vendor": "Schirmilabs"
+  },
+  "efm32gg11_stk3701": {
+    "mcu": "EFM32GG11B820F2048GL192",
+    "name": "SLSTK3701A Giant Gecko S1",
+    "vendor": "Silicon Labs"
+  },
+  "efm32gg_stk3700": {
+    "mcu": "EFM32GG990F1024",
+    "name": "EFM32GG-STK3700 Giant Gecko",
+    "vendor": "Silicon Labs"
+  },
+  "efm32hg_stk3400": {
+    "mcu": "EFM32HG322F64",
+    "name": "SLSTK3400A USB-enabled Happy Gecko",
+    "vendor": "Silicon Labs"
+  },
+  "efm32wg_stk3800": {
+    "mcu": "EFM32WG990F256",
+    "name": "EFM32WG-STK3800 Wonder Gecko",
+    "vendor": "Silicon Labs"
+  },
+  "eg912y": {
+    "mcu": "ASR1603",
+    "name": "Quectel EG912Y LTE Cat.1 Module",
+    "vendor": "Quectel Wireless Solutions Co., Ltd."
+  },
+  "eg915n": {
+    "mcu": "ASR1603",
+    "name": "Quectel EG915N LTE Cat.1 Module",
+    "vendor": "Quectel Wireless Solutions Co., Ltd."
+  },
+  "eg915u": {
+    "mcu": "RDA8910",
+    "name": "Quectel EG915U LTE Cat.1 Module",
+    "vendor": "Quectel Wireless Solutions Co., Ltd."
+  },
+  "electronut_blip": {
+    "mcu": "NRF52840",
+    "name": "ElectronutLabs Blip",
+    "vendor": "ElectronutLabs"
+  },
+  "electronut_papyr": {
+    "mcu": "NRF52840",
+    "name": "ElectronutLabs Papyr",
+    "vendor": "ElectronutLabs"
+  },
+  "electrosmith_daisy": {
+    "mcu": "STM32H750IBK6",
+    "name": "Electrosmith Daisy",
+    "vendor": "Electrosmith"
+  },
+  "electrosmith_daisy_patch_sm": {
+    "mcu": "STM32H750IBK6",
+    "name": "Electrosmith Daisy Patch SM",
+    "vendor": "Electrosmith"
+  },
+  "electrosmith_daisy_petal_sm": {
+    "mcu": "STM32H750IBK6",
+    "name": "Electrosmith Daisy Petal SM",
+    "vendor": "Electrosmith"
+  },
+  "elektor_f072c8": {
+    "mcu": "STM32F072C8T6",
+    "name": "Elektor LoRa Node Core F072C8 (64 kB)",
+    "vendor": "Elektor"
+  },
+  "elektor_f072cb": {
+    "mcu": "STM32F072C8T6",
+    "name": "Elektor LoRa Node Core F072C8 (128 kB)",
+    "vendor": "Elektor"
+  },
+  "elektor_uno_r4": {
+    "mcu": "ATMEGA328PB",
+    "name": "Elektor Uno R4",
+    "vendor": "Elektor"
+  },
+  "elmo_f411re": {
+    "mcu": "STM32F411RET6",
+    "name": "Espotel LoRa Module",
+    "vendor": "Espotel"
+  },
+  "emonpi": {
+    "mcu": "ATMEGA328P",
+    "name": "OpenEnergyMonitor emonPi",
+    "vendor": "OpenEnergyMonitor"
+  },
+  "engduinov3": {
+    "mcu": "ATMEGA32U4",
+    "name": "Engduino 3",
+    "vendor": "Engduino"
+  },
+  "esp-wrover-kit": {
+    "mcu": "ESP32",
+    "name": "Espressif ESP-WROVER-KIT",
+    "vendor": "Espressif"
+  },
+  "esp01": {
+    "mcu": "ESP8266",
+    "name": "Espressif Generic ESP8266 ESP-01 512k",
+    "vendor": "Espressif"
+  },
+  "esp01_1m": {
+    "mcu": "ESP8266",
+    "name": "Espressif Generic ESP8266 ESP-01 1M",
+    "vendor": "Espressif"
+  },
+  "esp07": {
+    "mcu": "ESP8266",
+    "name": "Espressif Generic ESP8266 ESP-07 1MB",
+    "vendor": "Espressif"
+  },
+  "esp07s": {
+    "mcu": "ESP8266",
+    "name": "Espressif Generic ESP8266 ESP-07S",
+    "vendor": "Espressif"
+  },
+  "esp12e": {
+    "mcu": "ESP8266",
+    "name": "Espressif ESP8266 ESP-12E",
+    "vendor": "Espressif"
+  },
+  "esp210": {
+    "mcu": "ESP8266",
+    "name": "SweetPea ESP-210",
+    "vendor": "SweetPea"
+  },
+  "esp32-c2-devkitm-1": {
+    "mcu": "ESP32C2",
+    "name": "Espressif ESP32-C2-DevKitM-1",
+    "vendor": "Espressif"
+  },
+  "esp32-c3-devkitc-02": {
+    "mcu": "ESP32C3",
+    "name": "Espressif ESP32-C3-DevKitC-02",
+    "vendor": "Espressif"
+  },
+  "esp32-c3-devkitm-1": {
+    "mcu": "ESP32C3",
+    "name": "Espressif ESP32-C3-DevKitM-1",
+    "vendor": "Espressif"
+  },
+  "esp32-c3-m1i-kit": {
+    "mcu": "ESP32C3",
+    "name": "Ai-Thinker ESP-C3-M1-I-Kit",
+    "vendor": "Ai-Thinker"
+  },
+  "esp32-c5-devkitc-1": {
+    "mcu": "ESP32C5",
+    "name": "Espressif ESP32-C5-DevKitC-1 4MB no PSRAM",
+    "vendor": "Espressif"
+  },
+  "esp32-c5-devkitc1-n16r4": {
+    "mcu": "ESP32C5",
+    "name": "Espressif ESP32-C5-DevKitC-1 N16R4 (16 MB Flash Quad, 4 MB PSRAM Quad)",
+    "vendor": "Espressif"
+  },
+  "esp32-c5-devkitc1-n4": {
+    "mcu": "ESP32C5",
+    "name": "Espressif ESP32-C5-DevKitC-1 N4 (4MB no PSRAM)",
+    "vendor": "Espressif"
+  },
+  "esp32-c5-devkitc1-n8r4": {
+    "mcu": "ESP32C5",
+    "name": "Espressif ESP32-C5-DevKitC-1 N8R4 (8 MB Flash Quad, 4 MB PSRAM Quad)",
+    "vendor": "Espressif"
+  },
+  "esp32-c6-devkitc-1": {
+    "mcu": "ESP32C6",
+    "name": "Espressif ESP32-C6-DevKitC-1",
+    "vendor": "Espressif"
+  },
+  "esp32-c6-devkitm-1": {
+    "mcu": "ESP32C6",
+    "name": "Espressif ESP32-C6-DevKitM-1",
+    "vendor": "Espressif"
+  },
+  "esp32-c61-devkitc1": {
+    "mcu": "ESP32C61",
+    "name": "Espressif ESP32-C61-DevKitC-1 (4 MB Flash)",
+    "vendor": "Espressif"
+  },
+  "esp32-c61-devkitc1-n8r2": {
+    "mcu": "ESP32C61",
+    "name": "Espressif ESP32-C61-DevKitC-1 N8R2 (8 MB Flash Quad, 2 MB PSRAM Quad)",
+    "vendor": "Espressif"
+  },
+  "esp32-devkitlipo": {
+    "mcu": "ESP32",
+    "name": "OLIMEX ESP32-DevKit-LiPo",
+    "vendor": "OLIMEX"
+  },
+  "esp32-evb": {
+    "mcu": "ESP32",
+    "name": "OLIMEX ESP32-EVB",
+    "vendor": "OLIMEX"
+  },
+  "esp32-gateway": {
+    "mcu": "ESP32",
+    "name": "OLIMEX ESP32-GATEWAY",
+    "vendor": "OLIMEX"
+  },
+  "esp32-h2-devkitm-1": {
+    "mcu": "ESP32H2",
+    "name": "Espressif ESP32-H2-DevKit",
+    "vendor": "Espressif"
+  },
+  "esp32-p4": {
+    "mcu": "ESP32P4",
+    "name": "Espressif ESP32-P4 generic",
+    "vendor": "Espressif"
+  },
+  "esp32-p4-evboard": {
+    "mcu": "ESP32P4",
+    "name": "Espressif ESP32-P4 Function EV Board (ES pre rev.300)",
+    "vendor": "Espressif"
+  },
+  "esp32-p4_r3": {
+    "mcu": "ESP32P4",
+    "name": "Espressif ESP32-P4 rev.300 generic",
+    "vendor": "Espressif"
+  },
+  "esp32-p4_r3-evboard": {
+    "mcu": "ESP32P4",
+    "name": "Espressif ESP32-P4 Function EV Board v1.6 (rev.301)",
+    "vendor": "Espressif"
+  },
+  "esp32-pico-devkitm-2": {
+    "mcu": "ESP32",
+    "name": "Espressif ESP32-PICO-DevKitM-2",
+    "vendor": "Espressif Systems"
+  },
+  "esp32-poe": {
+    "mcu": "ESP32",
+    "name": "OLIMEX ESP32-PoE",
+    "vendor": "OLIMEX"
+  },
+  "esp32-poe-iso": {
+    "mcu": "ESP32",
+    "name": "OLIMEX ESP32-PoE-ISO",
+    "vendor": "OLIMEX"
+  },
+  "esp32-pro": {
+    "mcu": "ESP32",
+    "name": "OLIMEX ESP32-PRO",
+    "vendor": "OLIMEX"
+  },
+  "esp32-s2-franzininho": {
+    "mcu": "ESP32S2",
+    "name": "Franzininho WiFi Board",
+    "vendor": "Franzininho"
+  },
+  "esp32-s2-kaluga-1": {
+    "mcu": "ESP32S2",
+    "name": "Espressif ESP32-S2-Kaluga-1 Kit",
+    "vendor": "Espressif"
+  },
+  "esp32-s2-saola-1": {
+    "mcu": "ESP32S2",
+    "name": "Espressif ESP32-S2-Saola-1",
+    "vendor": "Espressif"
+  },
+  "esp32-s3-devkitc-1": {
+    "mcu": "ESP32S3",
+    "name": "Espressif ESP32-S3-DevKitC-1-N8 (8 MB QD, No PSRAM)",
+    "vendor": "Espressif"
+  },
+  "esp32-s3-devkitc-1-n32r8v": {
+    "mcu": "ESP32S3",
+    "name": "Espressif ESP32-S3-DevKitC-1-N32R8V (32 MB Flash Octal, 8 MB PSRAM Octal)",
+    "vendor": "Espressif"
+  },
+  "esp32-s3-devkitc1-n16r16": {
+    "mcu": "ESP32S3",
+    "name": "Espressif ESP32-S3-DevKitC-1-N16R8V (16 MB Flash Quad, 16 MB PSRAM Octal)",
+    "vendor": "Espressif"
+  },
+  "esp32-s3-devkitc1-n16r2": {
+    "mcu": "ESP32S3",
+    "name": "Espressif ESP32-S3-DevKitC-1-N8R8 (16 MB Flash Quad, 2 MB PSRAM Quad)",
+    "vendor": "Espressif"
+  },
+  "esp32-s3-devkitc1-n16r8": {
+    "mcu": "ESP32S3",
+    "name": "Espressif ESP32-S3-DevKitC-1-N16R8V (16 MB Flash Quad, 8 MB PSRAM Octal)",
+    "vendor": "Espressif"
+  },
+  "esp32-s3-devkitc1-n4r2": {
+    "mcu": "ESP32S3",
+    "name": "Espressif ESP32-S3-DevKitC-1-N8R8 (4 MB Flash Quad, 2 MB PSRAM Quad)",
+    "vendor": "Espressif"
+  },
+  "esp32-s3-devkitc1-n4r8": {
+    "mcu": "ESP32S3",
+    "name": "Espressif ESP32-S3-DevKitC-1-N8R8 (4 MB Flash Quad, 8 MB PSRAM Octal)",
+    "vendor": "Espressif"
+  },
+  "esp32-s3-devkitc1-n8r2": {
+    "mcu": "ESP32S3",
+    "name": "Espressif ESP32-S3-DevKitC-1-N8R8 (8 MB Flash Quad, 2 MB PSRAM quad)",
+    "vendor": "Espressif"
+  },
+  "esp32-s3-devkitc1-n8r8": {
+    "mcu": "ESP32S3",
+    "name": "Espressif ESP32-S3-DevKitC-1-N8R8 (8 MB Flash Quad, 8 MB PSRAM Octal)",
+    "vendor": "Espressif"
+  },
+  "esp32-s3-devkitm-1": {
+    "mcu": "ESP32S3",
+    "name": "Espressif ESP32-S3-DevKitM-1",
+    "vendor": "Espressif"
+  },
+  "esp32-s3-fh4r2": {
+    "mcu": "ESP32S3",
+    "name": "Espressif ESP32-S3-FH4R2 (4 MB QD, 2MB PSRAM)",
+    "vendor": "Espressif"
+  },
+  "esp32-solo1": {
+    "mcu": "ESP32",
+    "name": "Espressif Generic ESP32-solo1 4M Flash",
+    "vendor": "Espressif"
+  },
+  "esp320": {
+    "mcu": "ESP32",
+    "name": "Electronic SweetPeas ESP320",
+    "vendor": "Electronic SweetPeas"
+  },
+  "esp32cam": {
+    "mcu": "ESP32",
+    "name": "AI Thinker ESP32-CAM",
+    "vendor": "AI Thinker"
+  },
+  "esp32dev": {
+    "mcu": "ESP32",
+    "name": "Espressif ESP32 Dev Module",
+    "vendor": "Espressif"
+  },
+  "esp32doit-devkit-v1": {
+    "mcu": "ESP32",
+    "name": "DOIT ESP32 DEVKIT V1",
+    "vendor": "DOIT"
+  },
+  "esp32doit-espduino": {
+    "mcu": "ESP32",
+    "name": "DOIT ESPduino32",
+    "vendor": "DOIT"
+  },
+  "esp32s3_120_16_8-qio_opi": {
+    "mcu": "ESP32S3",
+    "name": "ESP32-S3 16MB QIO, 8MB OPI PSRAM",
+    "vendor": "espressif"
+  },
+  "esp32s3_powerfeather": {
+    "mcu": "ESP32S3",
+    "name": "ESP32-S3 PowerFeather",
+    "vendor": "PowerFeather"
+  },
+  "esp32s3box": {
+    "mcu": "ESP32S3",
+    "name": "Espressif ESP32-S3-Box",
+    "vendor": "Espressif"
+  },
+  "esp32s3camlcd": {
+    "mcu": "ESP32S3",
+    "name": "ESP32S3 CAM LCD",
+    "vendor": "Espressif"
+  },
+  "esp32s3usbotg": {
+    "mcu": "ESP32S3",
+    "name": "Espressif ESP32-S3-USB-OTG",
+    "vendor": "Espressif"
+  },
+  "esp32thing": {
+    "mcu": "ESP32",
+    "name": "SparkFun ESP32 Thing",
+    "vendor": "SparkFun Electronics"
+  },
+  "esp32thing_plus": {
+    "mcu": "ESP32",
+    "name": "SparkFun ESP32 Thing Plus",
+    "vendor": "SparkFun Electronics"
+  },
+  "esp32vn-iot-uno": {
+    "mcu": "ESP32",
+    "name": "ESP32vn IoT Uno",
+    "vendor": "ESP32vn"
+  },
+  "esp8285": {
+    "mcu": "ESP8266",
+    "name": "Generic ESP8285 Module",
+    "vendor": "Espressif"
+  },
+  "esp_wroom_02": {
+    "mcu": "ESP8266",
+    "name": "Espressif ESP-WROOM-02",
+    "vendor": "Espressif"
+  },
+  "espduino": {
+    "mcu": "ESP8266",
+    "name": "ESPDuino (ESP-13 Module)",
+    "vendor": "Doit"
+  },
+  "espea32": {
+    "mcu": "ESP32",
+    "name": "April Brother ESPea32",
+    "vendor": "April Brother"
+  },
+  "espectro": {
+    "mcu": "ESP8266",
+    "name": "ESPectro Core",
+    "vendor": "DycodeX"
+  },
+  "espectro32": {
+    "mcu": "ESP32",
+    "name": "ESPectro32",
+    "vendor": "DycodeX"
+  },
+  "espino": {
+    "mcu": "ESP8266",
+    "name": "ESPino",
+    "vendor": "ESPino"
+  },
+  "espino32": {
+    "mcu": "ESP32",
+    "name": "ESPino32",
+    "vendor": "ThaiEasyElec"
+  },
+  "espinotee": {
+    "mcu": "ESP8266",
+    "name": "ThaiEasyElec ESPino",
+    "vendor": "ThaiEasyElec"
+  },
+  "esplora": {
+    "mcu": "ATMEGA32U4",
+    "name": "Arduino Esplora",
+    "vendor": "Arduino"
+  },
+  "espmxdevkit": {
+    "mcu": "ESP8266",
+    "name": "ESP-Mx DevKit (ESP8285)",
+    "vendor": "Doit"
+  },
+  "espresso_lite_v1": {
+    "mcu": "ESP8266",
+    "name": "ESPresso Lite 1.0",
+    "vendor": "ESPert"
+  },
+  "espresso_lite_v2": {
+    "mcu": "ESP8266",
+    "name": "ESPresso Lite 2.0",
+    "vendor": "ESPert"
+  },
+  "etboard": {
+    "mcu": "ESP32",
+    "name": "ETBoard",
+    "vendor": "ETBoard"
+  },
+  "ethernet": {
+    "mcu": "ATMEGA328P",
+    "name": "Arduino Ethernet",
+    "vendor": "Arduino"
+  },
+  "eval_f072vb": {
+    "mcu": "STM32F072VBT6",
+    "name": "STM32F072-EVAL",
+    "vendor": "ST"
+  },
+  "eval_f107vc": {
+    "mcu": "STM32F107VCT6",
+    "name": "STM3210C-EVAL",
+    "vendor": "ST"
+  },
+  "eval_f373vc": {
+    "mcu": "STM32F373VCT6",
+    "name": "STM32373C-EVAL",
+    "vendor": "ST"
+  },
+  "eval_l073z": {
+    "mcu": "STM32L073VZT6",
+    "name": "ST STM32L073Z-EVAL",
+    "vendor": "ST"
+  },
+  "feather328p": {
+    "mcu": "ATMEGA328P",
+    "name": "Adafruit Feather 328P",
+    "vendor": "Adafruit"
+  },
+  "feather32u4": {
+    "mcu": "ATMEGA32U4",
+    "name": "Adafruit Feather 32u4",
+    "vendor": "Adafruit"
+  },
+  "featheresp32": {
+    "mcu": "ESP32",
+    "name": "Adafruit ESP32 Feather",
+    "vendor": "Adafruit"
+  },
+  "featheresp32-s2": {
+    "mcu": "ESP32S2",
+    "name": "Adafruit ESP32-S2 Feather Development Board",
+    "vendor": "Adafruit"
+  },
+  "feenove-esp32-s3-n8r8": {
+    "mcu": "ESP32S3",
+    "name": "Freenove ESP32-S3 WROOM N8R8 (8MB Flash / 8MB PSRAM)",
+    "vendor": "Freenove"
+  },
+  "fio": {
+    "mcu": "ATMEGA328P",
+    "name": "Arduino Fio",
+    "vendor": "Arduino"
+  },
+  "firebeetle32": {
+    "mcu": "ESP32",
+    "name": "FireBeetle-ESP32",
+    "vendor": "DFRobot"
+  },
+  "fk407m1": {
+    "mcu": "STM32F407VET6",
+    "name": "FK407M1",
+    "vendor": "Generic"
+  },
+  "flipnclickmz": {
+    "mcu": "32MZ2048EFH100",
+    "name": "MikroElektronika Flip N Click MZ",
+    "vendor": "MikroElektronika"
+  },
+  "flora8": {
+    "mcu": "ATMEGA32U4",
+    "name": "Adafruit Flora",
+    "vendor": "Adafruit"
+  },
+  "fm-devkit": {
+    "mcu": "ESP32",
+    "name": "ESP32 FM DevKit",
+    "vendor": "Unknown"
+  },
+  "franzininho_wifi_esp32s2": {
+    "mcu": "ESP32S2",
+    "name": "Franzininho WiFi",
+    "vendor": "Franzininho"
+  },
+  "franzininho_wifi_msc_esp32s2": {
+    "mcu": "ESP32S2",
+    "name": "Franzininho WiFi MSC",
+    "vendor": "Franzininho"
+  },
+  "frdm_k22f": {
+    "mcu": "MK22FN512VLH12",
+    "name": "Freescale Kinetis FRDM-K22F",
+    "vendor": "Freescale"
+  },
+  "frdm_k64f": {
+    "mcu": "MK64FN1M0VLL12",
+    "name": "Freescale Kinetis FRDM-K64F",
+    "vendor": "Freescale"
+  },
+  "frdm_k66f": {
+    "mcu": "MK66FN2M0VMD18",
+    "name": "Freescale Kinetis FRDM-K66F",
+    "vendor": "Freescale"
+  },
+  "frdm_k82f": {
+    "mcu": "MK82FN256VLL15",
+    "name": "Freescale Kinetis FRDM-K82F",
+    "vendor": "Freescale"
+  },
+  "frdm_kl25z": {
+    "mcu": "MKL25Z128VLK4",
+    "name": "Freescale Kinetis FRDM-KL25Z",
+    "vendor": "Freescale"
+  },
+  "frdm_kl43z": {
+    "mcu": "MKL43Z256VLH4",
+    "name": "Freescale Kinetis FRDM-KL43Z",
+    "vendor": "Freescale"
+  },
+  "frdm_kl46z": {
+    "mcu": "MKL46Z256VLL4",
+    "name": "Freescale Kinetis FRDM-KL46Z",
+    "vendor": "Freescale"
+  },
+  "frdm_kw24d": {
+    "mcu": "MKW24D512",
+    "name": "Freescale Kinetis FRDM-KW24D512",
+    "vendor": "Freescale"
+  },
+  "frdm_kw41z": {
+    "mcu": "MKW41Z512VHT4",
+    "name": "Freescale Kinetis FRDM-KW41Z",
+    "vendor": "Freescale"
+  },
+  "freenove-esp32-s3-n8r8": {
+    "mcu": "ESP32S3",
+    "name": "Freenove ESP32-S3 WROOM N8R8 (8MB Flash / 8MB PSRAM)",
+    "vendor": "Freenove"
+  },
+  "freenove_esp32_s3_wroom": {
+    "mcu": "ESP32S3",
+    "name": "Freenove ESP32-S3 WROOM N8R8 (8MB Flash / 8MB PSRAM)",
+    "vendor": "Freenove"
+  },
+  "freenove_esp32_wrover": {
+    "mcu": "ESP32",
+    "name": "Freenove ESP32-Wrover",
+    "vendor": "Freenove"
+  },
+  "frogboard": {
+    "mcu": "ESP32",
+    "name": "Frog Board ESP32",
+    "vendor": "Fred"
+  },
+  "ftduino": {
+    "mcu": "ATMEGA32U4",
+    "name": "ftDuino",
+    "vendor": "Till Harbaum"
+  },
+  "fubarino_mini": {
+    "mcu": "32MX250F128D",
+    "name": "Fubarino Mini",
+    "vendor": "Fubarino"
+  },
+  "fubarino_mini_20": {
+    "mcu": "32MX270F256D",
+    "name": "Mini 2.0",
+    "vendor": "Fubarino"
+  },
+  "fubarino_sd": {
+    "mcu": "32MX795F512H",
+    "name": "Fubarino SD (1.5)",
+    "vendor": "Fubarino"
+  },
+  "fysetc_f6_13": {
+    "mcu": "ATMEGA2560",
+    "name": "FYSETC F6 V1.3",
+    "vendor": "FYSETC"
+  },
+  "fysetc_s6": {
+    "mcu": "STM32F446VET6",
+    "name": "FYSETC S6",
+    "vendor": "FYSETC"
+  },
+  "gapuino": {
+    "mcu": "GAP8",
+    "name": "GAPuino GAP8",
+    "vendor": "GreenWaves Technologies"
+  },
+  "gd32vf103c_longan_nano": {
+    "mcu": "GD32VF103CBT6",
+    "name": "Sipeed Longan Nano",
+    "vendor": "GigaDevice"
+  },
+  "gd32vf103v_eval": {
+    "mcu": "GD32VF103VBT6",
+    "name": "GD32VF103V Evaluation Kit",
+    "vendor": "GigaDevice"
+  },
+  "gd32vf103v_rvstar": {
+    "mcu": "GD32VF103VBT6",
+    "name": "GD32VF103V RVStar Kit",
+    "vendor": "Nuclei"
+  },
+  "gemma": {
+    "mcu": "ATTINY85",
+    "name": "Adafruit Gemma",
+    "vendor": "Adafruit"
+  },
+  "gen4iod": {
+    "mcu": "ESP8266",
+    "name": "4D Systems gen4 IoD Range",
+    "vendor": "4D Systems"
+  },
+  "generic-bk7231n-qfn32-tuya": {
+    "mcu": "BK7231N",
+    "name": "Generic - BK7231N (Tuya QFN32)",
+    "vendor": "Generic"
+  },
+  "generic-bk7231t-qfn32-tuya": {
+    "mcu": "BK7231T",
+    "name": "Generic - BK7231T (Tuya QFN32)",
+    "vendor": "Generic"
+  },
+  "generic-bk7252": {
+    "mcu": "BK7252",
+    "name": "Generic - BK7252",
+    "vendor": "Generic"
+  },
+  "generic-ln882hki": {
+    "mcu": "LN882HK",
+    "name": "Generic - LN882HKI",
+    "vendor": "Generic"
+  },
+  "generic-rtl8710bn-2mb-468k": {
+    "mcu": "RTL8710BN",
+    "name": "Generic - RTL8710BN (2M/468k)",
+    "vendor": "Generic"
+  },
+  "generic-rtl8710bn-2mb-788k": {
+    "mcu": "RTL8710BN",
+    "name": "Generic - RTL8710BN (2M/788k)",
+    "vendor": "Generic"
+  },
+  "generic-rtl8710bx-4mb-980k": {
+    "mcu": "RTL8710BX",
+    "name": "Generic - RTL8710BX (4M/980k)",
+    "vendor": "Generic"
+  },
+  "generic-rtl8720cf-2mb-896k": {
+    "mcu": "RTL8720CF",
+    "name": "Generic - RTL8720CF (2M/896k)",
+    "vendor": "Generic"
+  },
+  "generic-rtl8720cf-2mb-992k": {
+    "mcu": "RTL8720CF",
+    "name": "Generic - RTL8720CF (2M/992k)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103C4": {
+    "mcu": "STM32F103C4T6",
+    "name": "STM32F103C4 (6k RAM. 16k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103C6": {
+    "mcu": "STM32F103C6T6",
+    "name": "STM32F103C6 (10k RAM. 32k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103C8": {
+    "mcu": "STM32F103C8T6",
+    "name": "STM32F103C8 (20k RAM. 64k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103CB": {
+    "mcu": "STM32F103CBT6",
+    "name": "STM32F103CB (20k RAM. 128k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103R4": {
+    "mcu": "STM32F103R4T6",
+    "name": "STM32F103R4 (6k RAM. 16k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103R6": {
+    "mcu": "STM32F103R6T6",
+    "name": "STM32F103R6 (10k RAM. 32k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103R8": {
+    "mcu": "STM32F103R8T6",
+    "name": "STM32F103R8 (20k RAM. 64 Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103RB": {
+    "mcu": "STM32F103RBT6",
+    "name": "STM32F103RB (20k RAM. 128k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103RC": {
+    "mcu": "STM32F103RCT6",
+    "name": "STM32F103RC (48k RAM. 256k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103RD": {
+    "mcu": "STM32F103RDT6",
+    "name": "STM32F103RD (64k RAM. 384k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103RE": {
+    "mcu": "STM32F103RET6",
+    "name": "STM32F103RE (64k RAM. 512k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103RF": {
+    "mcu": "STM32F103RFT6",
+    "name": "STM32F103RF (96k RAM. 768k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103RG": {
+    "mcu": "STM32F103RGT6",
+    "name": "STM32F103RG (96k RAM. 1024k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103T4": {
+    "mcu": "STM32F103T4U6",
+    "name": "STM32F103T4 (6k RAM. 16k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103T6": {
+    "mcu": "STM32F103T6U6",
+    "name": "STM32F103T6 (10k RAM. 32k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103T8": {
+    "mcu": "STM32F103T8U6",
+    "name": "STM32F103T8 (20k RAM. 64k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103TB": {
+    "mcu": "STM32F103TBU6",
+    "name": "STM32F103TB (20k RAM. 128k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103V8": {
+    "mcu": "STM32F103V8T6",
+    "name": "STM32F103V8 (20k RAM. 64k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103VB": {
+    "mcu": "STM32F103VBT6",
+    "name": "STM32F103VB (20k RAM. 128k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103VC": {
+    "mcu": "STM32F103VCT6",
+    "name": "STM32F103VC (48k RAM. 256k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103VD": {
+    "mcu": "STM32F103VDT6",
+    "name": "STM32F103VD (64k RAM. 384k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103VE": {
+    "mcu": "STM32F103VET6",
+    "name": "STM32F103VE (64k RAM. 512k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103VF": {
+    "mcu": "STM32F103VFT6",
+    "name": "STM32F103VF (96k RAM. 768k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103VG": {
+    "mcu": "STM32F103VGT6",
+    "name": "STM32F103VG (96k RAM. 1024k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103ZC": {
+    "mcu": "STM32F103ZCT6",
+    "name": "STM32F103ZC (48k RAM. 256k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103ZD": {
+    "mcu": "STM32F103ZDT6",
+    "name": "STM32F103ZD (64k RAM. 384k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103ZE": {
+    "mcu": "STM32F103ZET6",
+    "name": "STM32F103ZE (64k RAM. 512k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103ZF": {
+    "mcu": "STM32F103ZFT6",
+    "name": "STM32F103ZF (96k RAM. 768k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F103ZG": {
+    "mcu": "STM32F103ZGT6",
+    "name": "STM32F103ZG (96k RAM. 1024k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F303CB": {
+    "mcu": "STM32F303CBT6",
+    "name": "STM32F303CB (32k RAM. 128k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F373RC": {
+    "mcu": "STM32F373RCT6",
+    "name": "STM32F373RC (32k RAM. 256k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F401CB": {
+    "mcu": "STM32F401CBU6",
+    "name": "STM32F401CB (64k RAM. 128k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F401CC": {
+    "mcu": "STM32F401CCU6",
+    "name": "STM32F401CC (64k RAM. 256k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F401CD": {
+    "mcu": "STM32F401CDU6",
+    "name": "STM32F401CD (96k RAM. 384k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F401CE": {
+    "mcu": "STM32F401CEU6",
+    "name": "STM32F401CE (96k RAM. 512k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F401RB": {
+    "mcu": "STM32F401RBT6",
+    "name": "STM32F401RB (64k RAM. 128k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F401RC": {
+    "mcu": "STM32F401RCT6",
+    "name": "STM32F401RC (64k RAM. 256k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F401RD": {
+    "mcu": "STM32F401RDT6",
+    "name": "STM32F401RD (96k RAM. 384k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F401RE": {
+    "mcu": "STM32F401RET6",
+    "name": "STM32F401RE (96k RAM. 512k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F405RG": {
+    "mcu": "STM32F405RGT6",
+    "name": "STM32F405RG (128k RAM. 1024k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F407IGT6": {
+    "mcu": "STM32F407IGT6",
+    "name": "STM32F407IG (192k RAM. 1024k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F407VET6": {
+    "mcu": "STM32F407VET6",
+    "name": "STM32F407VE (192k RAM. 512k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F407VGT6": {
+    "mcu": "STM32F407VGT6",
+    "name": "STM32F407VG (128k RAM. 1024k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F410C8": {
+    "mcu": "STM32F410C8T6",
+    "name": "STM32F410C8 (32k RAM. 64k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F410CB": {
+    "mcu": "STM32F410CBT6",
+    "name": "STM32F410CB (32k RAM. 128k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F410R8": {
+    "mcu": "STM32F410R8T6",
+    "name": "STM32F410R8 (32k RAM. 64k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F410RB": {
+    "mcu": "STM32F410RBT6",
+    "name": "STM32F410RB (32k RAM. 128k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F411CC": {
+    "mcu": "STM32F411CCU6",
+    "name": "STM32F411CC (128k RAM. 256k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F411CE": {
+    "mcu": "STM32F411CEU6",
+    "name": "STM32F411CE (128k RAM. 512k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F411RC": {
+    "mcu": "STM32F411RCT6",
+    "name": "STM32F411RC (128k RAM. 256k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F411RE": {
+    "mcu": "STM32F411RET6",
+    "name": "STM32F411RE (128k RAM. 512k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F412CE": {
+    "mcu": "STM32F412CEU6",
+    "name": "STM32F412CE (256k RAM. 512k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F412CG": {
+    "mcu": "STM32F412CGU6",
+    "name": "STM32F412CG (256k RAM. 1024k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F412RE": {
+    "mcu": "STM32F412RET6",
+    "name": "STM32F412RE (256k RAM. 512k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F412RG": {
+    "mcu": "STM32F412RGT6",
+    "name": "STM32F412RG (256k RAM. 1024k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F413CG": {
+    "mcu": "STM32F413CGU6",
+    "name": "STM32F413CG (320k RAM. 1024k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F413CH": {
+    "mcu": "STM32F413CHU6",
+    "name": "STM32F413CH (320k RAM. 1536k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F413RG": {
+    "mcu": "STM32F413RGT6",
+    "name": "STM32F413RG (320k RAM. 1024k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F413RH": {
+    "mcu": "STM32F413RHT6",
+    "name": "STM32F413RH (320k RAM. 1536k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F415RG": {
+    "mcu": "STM32F415RGT6",
+    "name": "STM32F415RG (128k RAM. 1024k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F417VE": {
+    "mcu": "STM32F417VET6",
+    "name": "STM32F417VE (128k RAM. 512k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F417VG": {
+    "mcu": "STM32F417VGT6",
+    "name": "STM32F417VG (128k RAM. 1024k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F423CH": {
+    "mcu": "STM32F423CHU6",
+    "name": "STM32F423CH (320k RAM. 1536k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F423RH": {
+    "mcu": "STM32F423RHT6",
+    "name": "STM32F423RH (320k RAM. 1536k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F446RC": {
+    "mcu": "STM32F446RCT6",
+    "name": "STM32F446RC (128k RAM. 256k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32F446RE": {
+    "mcu": "STM32F446RET6",
+    "name": "STM32F446RE (128k RAM. 512k Flash)",
+    "vendor": "Generic"
+  },
+  "genericSTM32G431CB": {
+    "mcu": "STM32G431CBU6",
+    "name": "STM32G431CB (32k RAM. 128k Flash)",
+    "vendor": "ST"
+  },
+  "genericSTM32H750VB": {
+    "mcu": "STM32H750VBT6",
+    "name": "STM32H750VBT6 (1024k RAM. 128k Flash)",
+    "vendor": "Generic"
+  },
+  "generic_K1921VK01T": {
+    "mcu": "K1921VK01T",
+    "name": "Generic K1921VK01T",
+    "vendor": "Generic"
+  },
+  "generic_K1921VK035": {
+    "mcu": "K1921VK035",
+    "name": "Generic K1921VK035",
+    "vendor": "Generic"
+  },
+  "genuino101": {
+    "mcu": "ARCV2EM",
+    "name": "Arduino/Genuino 101",
+    "vendor": "Intel"
+  },
+  "giga_r1_m4": {
+    "mcu": "STM32H747XIH6",
+    "name": "Arduino Giga R1 (M4 core)",
+    "vendor": "Arduino"
+  },
+  "giga_r1_m7": {
+    "mcu": "STM32H747XIH6",
+    "name": "Arduino Giga R1 (M7 core)",
+    "vendor": "Arduino"
+  },
+  "gnat_l082cz": {
+    "mcu": "STM32L082CZY6",
+    "name": "Gnat-L082CZ",
+    "vendor": "Tlera Corporation"
+  },
+  "grasshopper_l082cz": {
+    "mcu": "STM32L082CZY6",
+    "name": "Grasshopper-L082CZ",
+    "vendor": "Tlera Corporation"
+  },
+  "hackaBLE": {
+    "mcu": "NRF52832",
+    "name": "hackaBLE",
+    "vendor": "Electronut Labs"
+  },
+  "hbird_eval": {
+    "mcu": "HUMMINGBIRD",
+    "name": "HummingBird Evaluation Kit",
+    "vendor": "Nuclei"
+  },
+  "healthypi4": {
+    "mcu": "ESP32",
+    "name": "ProtoCentral HealthyPi 4",
+    "vendor": "ProtoCentral"
+  },
+  "heltec_wifi_kit_32": {
+    "mcu": "ESP32",
+    "name": "Heltec WiFi Kit 32",
+    "vendor": "Heltec Automation"
+  },
+  "heltec_wifi_kit_32_V3": {
+    "mcu": "ESP32S3",
+    "name": "Heltec WiFi Kit 32 (V3)",
+    "vendor": "Heltec"
+  },
+  "heltec_wifi_kit_32_v2": {
+    "mcu": "ESP32",
+    "name": "Heltec WiFi Kit 32 (V2)",
+    "vendor": "Heltec Automation"
+  },
+  "heltec_wifi_kit_8": {
+    "mcu": "ESP8266",
+    "name": "Heltec Wifi kit 8",
+    "vendor": "Heltec"
+  },
+  "heltec_wifi_lora_32": {
+    "mcu": "ESP32",
+    "name": "Heltec WiFi LoRa 32",
+    "vendor": "Heltec Automation"
+  },
+  "heltec_wifi_lora_32_V2": {
+    "mcu": "ESP32",
+    "name": "Heltec WiFi LoRa 32 (V2)",
+    "vendor": "Heltec Automation"
+  },
+  "heltec_wifi_lora_32_V3": {
+    "mcu": "ESP32S3",
+    "name": "Heltec WiFi LoRa 32 (V3)",
+    "vendor": "Heltec"
+  },
+  "heltec_wireless_stick": {
+    "mcu": "ESP32",
+    "name": "Heltec Wireless Stick",
+    "vendor": "Heltec Automation"
+  },
+  "heltec_wireless_stick_lite": {
+    "mcu": "ESP32",
+    "name": "Heltec Wireless Stick Lite",
+    "vendor": "Heltec Automation"
+  },
+  "helvepic32": {
+    "mcu": "32MX250F128B",
+    "name": "HelvePic32",
+    "vendor": "BOXTEC"
+  },
+  "helvepic32_breadboardside": {
+    "mcu": "32MX250F128B",
+    "name": "HelvePic32",
+    "vendor": "BOXTEC"
+  },
+  "helvepic32_mx270": {
+    "mcu": "32MX270F256B",
+    "name": "HelvePic32 MX270",
+    "vendor": "BOXTEC"
+  },
+  "helvepic32_robot": {
+    "mcu": "32MX270F256D",
+    "name": "HelvePic32 Robot",
+    "vendor": "BOXTEC"
+  },
+  "helvepic32_smd": {
+    "mcu": "32MX250F128D",
+    "name": "HelvePic32",
+    "vendor": "BOXTEC"
+  },
+  "helvepic32_smd_mx270": {
+    "mcu": "32MX270F256D",
+    "name": "HelvePic32 SMD MX270",
+    "vendor": "BOXTEC"
+  },
+  "hexiwear": {
+    "mcu": "MK64FN1M0VDC12",
+    "name": "Hexiwear",
+    "vendor": "MikroElektronika"
+  },
+  "hifive-unleashed": {
+    "mcu": "FU540",
+    "name": "HiFive Unleashed",
+    "vendor": "SiFive"
+  },
+  "hifive1": {
+    "mcu": "FE310",
+    "name": "HiFive1",
+    "vendor": "SiFive"
+  },
+  "hifive1-revb": {
+    "mcu": "FE310",
+    "name": "HiFive1 Rev B",
+    "vendor": "SiFive"
+  },
+  "holyiot_yj16019": {
+    "mcu": "NRF52832",
+    "name": "Holyiot YJ-16019",
+    "vendor": "Holyiot"
+  },
+  "honeylemon": {
+    "mcu": "ESP32",
+    "name": "HONEYLemon",
+    "vendor": "HONEYLemon"
+  },
+  "hornbill32dev": {
+    "mcu": "ESP32",
+    "name": "Hornbill ESP32 Dev",
+    "vendor": "Hornbill"
+  },
+  "hornbill32minima": {
+    "mcu": "ESP32",
+    "name": "Hornbill ESP32 Minima",
+    "vendor": "Hornbill"
+  },
+  "huidu_hd_wf1": {
+    "mcu": "ESP32S2",
+    "name": "Huidu HD-WF1",
+    "vendor": "Huidu Tech"
+  },
+  "huidu_hd_wf2": {
+    "mcu": "ESP32S3",
+    "name": "Huidu HD-WF2",
+    "vendor": "Huidu Tech"
+  },
+  "huidu_hd_wf4": {
+    "mcu": "ESP32S3",
+    "name": "Huidu HD-WF4",
+    "vendor": "Huidu Tech"
+  },
+  "huzzah": {
+    "mcu": "ESP8266",
+    "name": "Adafruit HUZZAH ESP8266",
+    "vendor": "Adafruit"
+  },
+  "hy_tinystm103tb": {
+    "mcu": "STM32F103TBU6",
+    "name": "Tiny STM103T",
+    "vendor": "HY"
+  },
+  "icestick": {
+    "mcu": "ICE40-HX1K-TQ144",
+    "name": "Lattice iCEstick FPGA Evaluation Kit",
+    "vendor": "Lattice"
+  },
+  "icezum": {
+    "mcu": "ICE40-HX1K-TQ144",
+    "name": "IceZUM Alhambra FPGA",
+    "vendor": "FPGAwars"
+  },
+  "imbrios-logsens-v1p1": {
+    "mcu": "ESP32",
+    "name": "Imbrios LogSens V1P1",
+    "vendor": "Imbrios"
+  },
+  "inex_openkb": {
+    "mcu": "ESP32",
+    "name": "INEX OpenKB",
+    "vendor": "INEX"
+  },
+  "intorobot": {
+    "mcu": "ESP32",
+    "name": "IntoRobot Fig",
+    "vendor": "IntoRobot"
+  },
+  "inventone": {
+    "mcu": "ESP8266",
+    "name": "Invent One",
+    "vendor": "Invent One"
+  },
+  "iotaap_magnolia": {
+    "mcu": "ESP32",
+    "name": "IoTaaP Magnolia",
+    "vendor": "IoTaaP"
+  },
+  "iotbusio": {
+    "mcu": "ESP32",
+    "name": "oddWires IoT-Bus Io",
+    "vendor": "oddWires"
+  },
+  "iotbusproteus": {
+    "mcu": "ESP32",
+    "name": "oddWires IoT-Bus Proteus",
+    "vendor": "oddWires"
+  },
+  "ioxesp32": {
+    "mcu": "ESP32",
+    "name": "ArtronShop IOXESP32",
+    "vendor": "ArtronShop"
+  },
+  "ioxesp32ps": {
+    "mcu": "ESP32",
+    "name": "ArtronShop IOXESP32PS",
+    "vendor": "ArtronShop"
+  },
+  "itsybitsy32u4_3V": {
+    "mcu": "ATMEGA32U4",
+    "name": "Adafruit ItsyBitsy 3V/8MHz",
+    "vendor": "Adafruit"
+  },
+  "itsybitsy32u4_5V": {
+    "mcu": "ATMEGA32U4",
+    "name": "Adafruit ItsyBitsy 5V/16MHz",
+    "vendor": "Adafruit"
+  },
+  "jczn_2432s028r": {
+    "mcu": "ESP32",
+    "name": "ESP32-2432S028R CYD",
+    "vendor": "JCZN"
+  },
+  "kb32-ft": {
+    "mcu": "ESP32",
+    "name": "MakerAsia KB32-FT",
+    "vendor": "MakerAsia"
+  },
+  "kfdl441546": {
+    "mcu": "K1921VK01T",
+    "name": "kfdl441546",
+    "vendor": "NIIET"
+  },
+  "kits-edu": {
+    "mcu": "ESP32",
+    "name": "KITS ESP32 EDU",
+    "vendor": "KITS"
+  },
+  "l610": {
+    "mcu": "RDA8910",
+    "name": "Fibocom L610 LTE Cat.1 Module",
+    "vendor": "Fibocom Wireless Inc."
+  },
+  "labplus_mpython": {
+    "mcu": "ESP32",
+    "name": "Labplus mPython",
+    "vendor": "Labplus"
+  },
+  "laird_bl652_dvk": {
+    "mcu": "NRF52832",
+    "name": "BL652 Development Kit",
+    "vendor": "Laird Connectivity"
+  },
+  "laird_bl653_dvk": {
+    "mcu": "NRF52833",
+    "name": "BL653 Development Kit",
+    "vendor": "Laird Connectivity"
+  },
+  "laird_bl654_dvk": {
+    "mcu": "NRF52840",
+    "name": "BL654 Development Kit",
+    "vendor": "Laird Connectivity"
+  },
+  "laird_pinnacle_100_dvk": {
+    "mcu": "NRF52840",
+    "name": "Laird Connectivity Pinnacle 100 DVK",
+    "vendor": "Laird Connectivity"
+  },
+  "leafony_ap03": {
+    "mcu": "STM32L452RET6",
+    "name": "Leafony Systems AP03",
+    "vendor": "Leafony Systems"
+  },
+  "lenny": {
+    "mcu": "32MX270F256D",
+    "name": "chipKIT Lenny",
+    "vendor": "chipKIT"
+  },
+  "leonardo": {
+    "mcu": "ATMEGA32U4",
+    "name": "Arduino Leonardo",
+    "vendor": "Arduino"
+  },
+  "leonardoeth": {
+    "mcu": "ATMEGA32U4",
+    "name": "Arduino Leonardo ETH",
+    "vendor": "Arduino"
+  },
+  "lgt8f328d": {
+    "mcu": "ATMEGA328P",
+    "name": "LGT8F328D",
+    "vendor": "LogicGreen"
+  },
+  "lgt8f328ds20": {
+    "mcu": "ATMEGA328P",
+    "name": "LGT8F328D-SSOP20",
+    "vendor": "LogicGreen"
+  },
+  "lgt8f328p-LQFP48": {
+    "mcu": "ATMEGA328P",
+    "name": "LGT8F328P-LQFP48",
+    "vendor": "LogicGreen"
+  },
+  "lgt8f328p-wemos-TTGO-XI": {
+    "mcu": "ATMEGA328P",
+    "name": "LGT8F328P-wemos-TTGO-XI",
+    "vendor": "LogicGreen"
+  },
+  "lgt8f328ps20": {
+    "mcu": "ATMEGA328P",
+    "name": "LGT8F328P-SSOP20",
+    "vendor": "LogicGreen"
+  },
+  "lightblue-bean": {
+    "mcu": "ATMEGA328P",
+    "name": "LightBlue Bean",
+    "vendor": "Punch Through"
+  },
+  "lightblue-beanplus": {
+    "mcu": "ATMEGA328P",
+    "name": "LightBlue Bean+",
+    "vendor": "Punch Through"
+  },
+  "lightup": {
+    "mcu": "ATMEGA32U4",
+    "name": "LightUp",
+    "vendor": "LightUp"
+  },
+  "lilka_v2": {
+    "mcu": "ESP32S3",
+    "name": "Lilka v2",
+    "vendor": "Anderson & friends"
+  },
+  "lilygo-t-display": {
+    "mcu": "ESP32",
+    "name": "LilyGo T-Display",
+    "vendor": "LilyGo"
+  },
+  "lilygo-t-display-s3": {
+    "mcu": "ESP32S3",
+    "name": "LilyGo T-Display-S3",
+    "vendor": "LilyGo"
+  },
+  "lilygo-t-energy-s3": {
+    "mcu": "ESP32S3",
+    "name": "LilyGo T-Energy-S3",
+    "vendor": "LilyGo"
+  },
+  "lilygo-t3-s3": {
+    "mcu": "ESP32S3",
+    "name": "LilyGo T3-S3",
+    "vendor": "LilyGo"
+  },
+  "lilygo_t3_stm32_v1": {
+    "mcu": "STM32WLE5CCU7",
+    "name": "LilyGo T3-STM32",
+    "vendor": "LilyGo"
+  },
+  "lilypadatmega168": {
+    "mcu": "ATMEGA168",
+    "name": "Arduino LilyPad ATmega168",
+    "vendor": "Arduino"
+  },
+  "lilypadatmega328": {
+    "mcu": "ATMEGA328P",
+    "name": "Arduino LilyPad ATmega328",
+    "vendor": "Arduino"
+  },
+  "lionbit": {
+    "mcu": "ESP32",
+    "name": "Lion:Bit Dev Board",
+    "vendor": "Lion:Bit"
+  },
+  "lionbits3": {
+    "mcu": "ESP32S3",
+    "name": "Lion:Bit S3 STEM Dev Board",
+    "vendor": "Lion:Bit"
+  },
+  "ln-02": {
+    "mcu": "LN882HK",
+    "name": "LN-02 Wi-Fi/BLE Module",
+    "vendor": "Unknown"
+  },
+  "logicrom_spark": {
+    "mcu": "RDA8910",
+    "name": "logicrom Spark LTE-G (EC200U)",
+    "vendor": "Waybyte Solutions"
+  },
+  "lolin32": {
+    "mcu": "ESP32",
+    "name": "WEMOS LOLIN32",
+    "vendor": "WEMOS"
+  },
+  "lolin32_lite": {
+    "mcu": "ESP32",
+    "name": "WEMOS LOLIN32 Lite",
+    "vendor": "WEMOS"
+  },
+  "lolin_c3_mini": {
+    "mcu": "ESP32C3",
+    "name": "WEMOS LOLIN C3 Mini",
+    "vendor": "WEMOS"
+  },
+  "lolin_d32": {
+    "mcu": "ESP32",
+    "name": "WEMOS LOLIN D32",
+    "vendor": "WEMOS"
+  },
+  "lolin_d32_pro": {
+    "mcu": "ESP32",
+    "name": "WEMOS LOLIN D32 PRO",
+    "vendor": "WEMOS"
+  },
+  "lolin_s2_mini": {
+    "mcu": "ESP32S2",
+    "name": "WEMOS LOLIN S2 Mini",
+    "vendor": "WEMOS"
+  },
+  "lolin_s2_pico": {
+    "mcu": "ESP32S2",
+    "name": "WEMOS LOLIN S2 PICO",
+    "vendor": "WEMOS"
+  },
+  "lolin_s3": {
+    "mcu": "ESP32S3",
+    "name": "WEMOS LOLIN S3",
+    "vendor": "WEMOS"
+  },
+  "lolin_s3_mini": {
+    "mcu": "ESP32S3",
+    "name": "WEMOS LOLIN S3 Mini",
+    "vendor": "WEMOS"
+  },
+  "lolin_s3_mini_pro": {
+    "mcu": "ESP32S3",
+    "name": "WEMOS LOLIN S3 Mini Pro",
+    "vendor": "WEMOS"
+  },
+  "lolin_s3_pro": {
+    "mcu": "ESP32S3",
+    "name": "WEMOS LOLIN S3 PRO",
+    "vendor": "WEMOS"
+  },
+  "lopy": {
+    "mcu": "ESP32",
+    "name": "Pycom LoPy",
+    "vendor": "Pycom Ltd."
+  },
+  "lopy4": {
+    "mcu": "ESP32",
+    "name": "Pycom LoPy4",
+    "vendor": "Pycom Ltd."
+  },
+  "lora32u4II": {
+    "mcu": "ATMEGA32U4",
+    "name": "LoRa32u4II (868-915MHz)",
+    "vendor": "BSFrance"
+  },
+  "lora_e5_dev_board": {
+    "mcu": "STM32WLE5JC",
+    "name": "SeeedStudio LoRa E5 Dev Board",
+    "vendor": "SeeedStudio"
+  },
+  "lora_e5_mini": {
+    "mcu": "STM32WLE5JC",
+    "name": "SeeedStudio LoRa-E5 mini",
+    "vendor": "SeeedStudio"
+  },
+  "lpc11u68": {
+    "mcu": "LPC11U68",
+    "name": "LPCXpresso11U68",
+    "vendor": "NXP"
+  },
+  "lpc1768": {
+    "mcu": "LPC1768",
+    "name": "NXP mbed LPC1768",
+    "vendor": "NXP"
+  },
+  "lpc54114": {
+    "mcu": "LPC54114J256BD64",
+    "name": "NXP LPCXpresso54114",
+    "vendor": "NXP"
+  },
+  "lpc546xx": {
+    "mcu": "LPC54608ET512",
+    "name": "NXP LPCXpresso54608",
+    "vendor": "NXP"
+  },
+  "lpc845brk": {
+    "mcu": "LPC845",
+    "name": "NXP LPC845-BRK",
+    "vendor": "NXP"
+  },
+  "lpcxpresso55s16": {
+    "mcu": "LPC55S16",
+    "name": "NXP LPCXpresso55S16",
+    "vendor": "NXP"
+  },
+  "lpcxpresso804": {
+    "mcu": "LPC804",
+    "name": "NXP LPCXpresso804",
+    "vendor": "NXP"
+  },
+  "lpcxpresso845max": {
+    "mcu": "LPC845",
+    "name": "NXP LPCXpresso845-MAX",
+    "vendor": "NXP"
+  },
+  "lplm4f120h5qr": {
+    "mcu": "LPLM4F120H5QR",
+    "name": "TI LaunchPad (Stellaris) w/ lm4f120 (80MHz)",
+    "vendor": "TI"
+  },
+  "lpmsp430f5529": {
+    "mcu": "MSP430F5529",
+    "name": "TI LaunchPad MSP-EXP430F5529LP",
+    "vendor": "TI"
+  },
+  "lpmsp430fr2311": {
+    "mcu": "MSP430FR2311",
+    "name": "TI LaunchPad MSP-EXP430FR2311LP",
+    "vendor": "TI"
+  },
+  "lpmsp430fr2355": {
+    "mcu": "MSP430FR2355",
+    "name": "TI LaunchPad MSP-EXP430FR2355LP",
+    "vendor": "TI"
+  },
+  "lpmsp430fr2433": {
+    "mcu": "MSP430FR2433",
+    "name": "TI LaunchPad MSP-EXP430FR2433LP",
+    "vendor": "TI"
+  },
+  "lpmsp430fr2476": {
+    "mcu": "MSP430FR2476",
+    "name": "TI LaunchPad MSP-EXP430FR2476LP",
+    "vendor": "TI"
+  },
+  "lpmsp430fr4133": {
+    "mcu": "MSP430FR4133",
+    "name": "TI LaunchPad MSP-EXP430FR4133LP",
+    "vendor": "TI"
+  },
+  "lpmsp430fr5739": {
+    "mcu": "MSP430FR5739",
+    "name": "TI FraunchPad MSP-EXP430FR5739LP",
+    "vendor": "TI"
+  },
+  "lpmsp430fr5969": {
+    "mcu": "MSP430FR5969",
+    "name": "TI LaunchPad MSP-EXP430FR5969LP",
+    "vendor": "TI"
+  },
+  "lpmsp430fr5994": {
+    "mcu": "MSP430FR5994",
+    "name": "TI LaunchPad MSP-EXP430FR5994LP",
+    "vendor": "TI"
+  },
+  "lpmsp430fr6989": {
+    "mcu": "MSP430FR6989",
+    "name": "TI LaunchPad MSP-EXP430FR6989LP",
+    "vendor": "TI"
+  },
+  "lpmsp430g2231": {
+    "mcu": "MSP430G2231",
+    "name": "TI LaunchPad MSP-EXP430G2 w/ MSP430G2231",
+    "vendor": "TI"
+  },
+  "lpmsp430g2452": {
+    "mcu": "MSP430G2452",
+    "name": "TI LaunchPad MSP-EXP430G2 w/ MSP430G2452",
+    "vendor": "TI"
+  },
+  "lpmsp430g2553": {
+    "mcu": "MSP430G2553",
+    "name": "TI LaunchPad MSP-EXP430G2553LP",
+    "vendor": "TI"
+  },
+  "lpmsp432p401r": {
+    "mcu": "CORTEX-M4",
+    "name": "TI LaunchPad MSP‑EXP432P401R",
+    "vendor": "TI"
+  },
+  "lptm4c123gh6pm": {
+    "mcu": "LPTM4C123GH6PM",
+    "name": "TI LaunchPad (Tiva C) w/ tm4c123 (80MHz)",
+    "vendor": "TI"
+  },
+  "lptm4c1294ncpdt": {
+    "mcu": "LPTM4C1294NCPDT",
+    "name": "TI LaunchPad (Tiva C) w/ tm4c129 (120MHz)",
+    "vendor": "TI"
+  },
+  "lsc-lma35": {
+    "mcu": "BK7231N",
+    "name": "LSC LMA35 BK7231N",
+    "vendor": "Unknown"
+  },
+  "lsc-lma35-t": {
+    "mcu": "BK7231T",
+    "name": "LSC LMA35 BK7231T",
+    "vendor": "Unknown"
+  },
+  "m590": {
+    "mcu": "RDA8955",
+    "name": "Neoway M590 GSM Module",
+    "vendor": "Neoway Technology Co.Ltd."
+  },
+  "m5stack-atom": {
+    "mcu": "ESP32",
+    "name": "M5Stack-ATOM",
+    "vendor": "M5Stack"
+  },
+  "m5stack-atoms3": {
+    "mcu": "ESP32S3",
+    "name": "M5Stack AtomS3",
+    "vendor": "M5Stack"
+  },
+  "m5stack-atoms3u": {
+    "mcu": "ESP32S3",
+    "name": "M5Stack AtomS3U",
+    "vendor": "M5Stack"
+  },
+  "m5stack-core-esp32": {
+    "mcu": "ESP32",
+    "name": "M5Stack Core ESP32",
+    "vendor": "M5Stack"
+  },
+  "m5stack-core-esp32-16M": {
+    "mcu": "ESP32",
+    "name": "M5Stack Core ESP32 16M",
+    "vendor": "M5Stack"
+  },
+  "m5stack-core2": {
+    "mcu": "ESP32",
+    "name": "M5Stack Core2",
+    "vendor": "M5Stack"
+  },
+  "m5stack-coreink": {
+    "mcu": "ESP32",
+    "name": "M5Stack-Core Ink",
+    "vendor": "M5Stack"
+  },
+  "m5stack-cores3": {
+    "mcu": "ESP32S3",
+    "name": "M5Stack CoreS3",
+    "vendor": "M5Stack"
+  },
+  "m5stack-fire": {
+    "mcu": "ESP32",
+    "name": "M5Stack FIRE",
+    "vendor": "M5Stack"
+  },
+  "m5stack-grey": {
+    "mcu": "ESP32",
+    "name": "M5Stack GREY ESP32",
+    "vendor": "M5Stack"
+  },
+  "m5stack-stamps3": {
+    "mcu": "ESP32S3",
+    "name": "M5Stack StampS3",
+    "vendor": "M5Stack"
+  },
+  "m5stack-station": {
+    "mcu": "ESP32",
+    "name": "M5Stack Station",
+    "vendor": "M5Stack"
+  },
+  "m5stack-tab5-p4": {
+    "mcu": "ESP32P4",
+    "name": "M5STACK Tab5 esp32-p4 Board (ES pre rev.300)",
+    "vendor": "M5STACK"
+  },
+  "m5stack-timer-cam": {
+    "mcu": "ESP32",
+    "name": "M5Stack Timer CAM",
+    "vendor": "M5Stack"
+  },
+  "m5stack_paper": {
+    "mcu": "ESP32",
+    "name": "M5Stack Paper",
+    "vendor": "M5Stack"
+  },
+  "m5stamp-pico": {
+    "mcu": "ESP32",
+    "name": "M5Stamp-Pico",
+    "vendor": "M5Stack"
+  },
+  "m5stick-c": {
+    "mcu": "ESP32",
+    "name": "M5Stick-C",
+    "vendor": "M5Stack"
+  },
+  "magicbit": {
+    "mcu": "ESP32",
+    "name": "MagicBit",
+    "vendor": "Magicblocks.io"
+  },
+  "malyanm200_f070cb": {
+    "mcu": "STM32F070CBT6",
+    "name": "M200 V2",
+    "vendor": "Malyan"
+  },
+  "malyanm200_f103cb": {
+    "mcu": "STM32F103CBT6",
+    "name": "Malyan M200 V1",
+    "vendor": "Malyan"
+  },
+  "malyanm300_f070cb": {
+    "mcu": "STM32F070CBT6",
+    "name": "M300",
+    "vendor": "Malyan"
+  },
+  "maple": {
+    "mcu": "STM32F103RBT6",
+    "name": "Maple",
+    "vendor": "LeafLabs"
+  },
+  "maple_mini_b20": {
+    "mcu": "STM32F103CBT6",
+    "name": "Maple Mini Bootloader 2.0",
+    "vendor": "LeafLabs"
+  },
+  "maple_mini_origin": {
+    "mcu": "STM32F103CBT6",
+    "name": "Maple Mini Original",
+    "vendor": "LeafLabs"
+  },
+  "maple_ret6": {
+    "mcu": "STM32F103RET6",
+    "name": "Maple (RET6)",
+    "vendor": "LeafLabs"
+  },
+  "max32600mbed": {
+    "mcu": "MAX32600",
+    "name": "Maxim ARM mbed Enabled Development Platform for MAX32600",
+    "vendor": "Maxim"
+  },
+  "max32620fthr": {
+    "mcu": "MAX32620FTHR",
+    "name": "MAX32620FTHR",
+    "vendor": "Maxim"
+  },
+  "max32620hsp": {
+    "mcu": "MAX32620",
+    "name": "Maxim Health Sensor Platform",
+    "vendor": "Maxim"
+  },
+  "max32625mbed": {
+    "mcu": "MAX32625",
+    "name": "MAX32625MBED",
+    "vendor": "Maxim"
+  },
+  "max32625pico": {
+    "mcu": "MAX32625",
+    "name": "MAX32625PICO",
+    "vendor": "Maxim"
+  },
+  "max32630fthr": {
+    "mcu": "MAX32630",
+    "name": "Maxim MAX32630FTHR Application Platform",
+    "vendor": "Maxim"
+  },
+  "maxwsnenv": {
+    "mcu": "MAX32610",
+    "name": "Maxim Wireless Sensor Node Demonstrator",
+    "vendor": "Maxim"
+  },
+  "mayfly": {
+    "mcu": "ATMEGA1284P",
+    "name": "EnviroDIY Mayfly",
+    "vendor": "EnviroDIY"
+  },
+  "mb208": {
+    "mcu": "STM8S208MBT6",
+    "name": "sduino MB (STM8S208MBT6B)",
+    "vendor": "sduino"
+  },
+  "mbed_connect_odin": {
+    "mcu": "STM32F439ZIY6",
+    "name": "Mbed Connect Cloud",
+    "vendor": "u-blox"
+  },
+  "mc25": {
+    "mcu": "RDA8955",
+    "name": "Quectel MC25 GSM Module",
+    "vendor": "Quectel Wireless Solutions Co., Ltd."
+  },
+  "mc65": {
+    "mcu": "RDA8955",
+    "name": "Quectel MC65 GSM Module",
+    "vendor": "Quectel Wireless Solutions Co., Ltd."
+  },
+  "megaADK": {
+    "mcu": "ATMEGA2560",
+    "name": "Arduino Mega ADK",
+    "vendor": "Arduino"
+  },
+  "mega_pic32": {
+    "mcu": "32MX795F512L",
+    "name": "Digilent chipKIT MAX32",
+    "vendor": "Digilent"
+  },
+  "megaatmega1280": {
+    "mcu": "ATMEGA1280",
+    "name": "Arduino Mega or Mega 2560 ATmega1280",
+    "vendor": "Arduino"
+  },
+  "megaatmega2560": {
+    "mcu": "ATMEGA2560",
+    "name": "Arduino Mega or Mega 2560 ATmega2560 (Mega 2560)",
+    "vendor": "Arduino"
+  },
+  "metro": {
+    "mcu": "ATMEGA328P",
+    "name": "Adafruit Metro",
+    "vendor": "Adafruit"
+  },
+  "mgbot-iotik32a": {
+    "mcu": "ESP32",
+    "name": "MGBOT IOTIK 32A",
+    "vendor": "MGBOT"
+  },
+  "mgbot-iotik32b": {
+    "mcu": "ESP32",
+    "name": "MGBOT IOTIK 32B",
+    "vendor": "MGBOT"
+  },
+  "mhetesp32devkit": {
+    "mcu": "ESP32",
+    "name": "MH ET LIVE ESP32DevKIT",
+    "vendor": "MH-ET Live"
+  },
+  "mhetesp32minikit": {
+    "mcu": "ESP32",
+    "name": "MH ET LIVE ESP32MiniKit",
+    "vendor": "MH-ET Live"
+  },
+  "micro": {
+    "mcu": "ATMEGA32U4",
+    "name": "Arduino Micro",
+    "vendor": "Arduino"
+  },
+  "microduino-core-esp32": {
+    "mcu": "ESP32",
+    "name": "Microduino Core ESP32",
+    "vendor": "Microduino"
+  },
+  "microduino32_flash": {
+    "mcu": "STM32F103CBT6",
+    "name": "Microduino Core STM32 to Flash",
+    "vendor": "Microduino"
+  },
+  "micros2": {
+    "mcu": "ESP32S2",
+    "name": "microS2",
+    "vendor": "microS2"
+  },
+  "mightyhat": {
+    "mcu": "ATMEGA328P",
+    "name": "LowPowerLab MightyHat",
+    "vendor": "LowPowerLab"
+  },
+  "mimxrt1010_evk": {
+    "mcu": "MIMXRT1011DAE5A",
+    "name": "NXP i.MX RT1010 Evaluation Kit",
+    "vendor": "NXP"
+  },
+  "mimxrt1015_evk": {
+    "mcu": "MIMXRT1015DAF5A",
+    "name": "NXP i.MX RT1015 Evaluation Kit",
+    "vendor": "NXP"
+  },
+  "mimxrt1020_evk": {
+    "mcu": "MIMXRT1021DAG5A",
+    "name": "NXP i.MX RT1020 Evaluation Kit",
+    "vendor": "NXP"
+  },
+  "mimxrt1050_evk": {
+    "mcu": "MIMXRT1052DVL6B",
+    "name": "NXP i.MX RT1050 Evaluation Kit",
+    "vendor": "NXP"
+  },
+  "mimxrt1060_evk": {
+    "mcu": "MIMXRT1062DVL6A",
+    "name": "NXP i.MX RT1060 Evaluation Kit",
+    "vendor": "NXP"
+  },
+  "mimxrt1064_evk": {
+    "mcu": "MIMXRT1064DVL6A",
+    "name": "NXP i.MX RT1064 Evaluation Kit",
+    "vendor": "NXP"
+  },
+  "miniatmega168": {
+    "mcu": "ATMEGA168",
+    "name": "Arduino Mini ATmega168",
+    "vendor": "Arduino"
+  },
+  "miniatmega328": {
+    "mcu": "ATMEGA328P",
+    "name": "Arduino Mini ATmega328",
+    "vendor": "Arduino"
+  },
+  "minimain_esp32s2": {
+    "mcu": "ESP32S2",
+    "name": "Department of Alchemy MiniMain ESP32-S2",
+    "vendor": "Department of Alchemy"
+  },
+  "minitronics20": {
+    "mcu": "SAMD21J18A",
+    "name": "Minitronics v2.0",
+    "vendor": "ReprapWorld"
+  },
+  "miniwireless": {
+    "mcu": "ATMEGA328P",
+    "name": "Anarduino MiniWireless",
+    "vendor": "Anarduino"
+  },
+  "mkr1000USB": {
+    "mcu": "SAMD21G18A",
+    "name": "Arduino MKR1000",
+    "vendor": "Arduino"
+  },
+  "mkr_sharky": {
+    "mcu": "STM32WB55CG",
+    "name": "MKR Sharky",
+    "vendor": "Midatronics"
+  },
+  "mkrfox1200": {
+    "mcu": "SAMD21G18A",
+    "name": "Arduino MKR FOX 1200",
+    "vendor": "Arduino"
+  },
+  "mkrgsm1400": {
+    "mcu": "SAMD21G18A",
+    "name": "Arduino MKR GSM 1400",
+    "vendor": "Arduino"
+  },
+  "mkrnb1500": {
+    "mcu": "SAMD21G18A",
+    "name": "Arduino MKR NB 1500",
+    "vendor": "Arduino"
+  },
+  "mkrvidor4000": {
+    "mcu": "SAMD21G18A",
+    "name": "MKR Vidor 4000",
+    "vendor": "Arduino"
+  },
+  "mkrwan1300": {
+    "mcu": "SAMD21G18A",
+    "name": "Arduino MKR WAN 1300",
+    "vendor": "Arduino"
+  },
+  "mkrwan1310": {
+    "mcu": "SAMD21G18A",
+    "name": "Arduino MKR WAN 1310",
+    "vendor": "Arduino"
+  },
+  "mkrwifi1010": {
+    "mcu": "SAMD21G18A",
+    "name": "Arduino MKR WiFi 1010",
+    "vendor": "Arduino"
+  },
+  "mkrzero": {
+    "mcu": "SAMD21G18A",
+    "name": "Arduino MKRZERO",
+    "vendor": "Arduino"
+  },
+  "modwifi": {
+    "mcu": "ESP8266",
+    "name": "Olimex MOD-WIFI-ESP8266(-DEV)",
+    "vendor": "Olimex"
+  },
+  "mote_l152rc": {
+    "mcu": "STM32L152RC",
+    "name": "NAMote72",
+    "vendor": "Semtech"
+  },
+  "moteino": {
+    "mcu": "ATMEGA328P",
+    "name": "LowPowerLab Moteino",
+    "vendor": "LowPowerLab"
+  },
+  "moteino8mhz": {
+    "mcu": "ATMEGA328P",
+    "name": "LowPowerLab Moteino (8Mhz)",
+    "vendor": "LowPowerLab"
+  },
+  "moteino_zero": {
+    "mcu": "SAMD21G18A",
+    "name": "Moteino M0",
+    "vendor": "LowPowerLab"
+  },
+  "moteinomega": {
+    "mcu": "ATMEGA1284P",
+    "name": "LowPowerLab MoteinoMEGA",
+    "vendor": "LowPowerLab"
+  },
+  "motorgo_mini_1": {
+    "mcu": "ESP32S3",
+    "name": "MotorGo Mini 1 (ESP32-S3)",
+    "vendor": "MotorGo"
+  },
+  "mtb_ublox_odin_w2": {
+    "mcu": "STM32F439ZIY6",
+    "name": "u-blox ODIN-W2",
+    "vendor": "u-blox"
+  },
+  "mts_dragonfly_f411re": {
+    "mcu": "STM32F411RET6",
+    "name": "MTS Dragonfly",
+    "vendor": "MultiTech"
+  },
+  "mts_mdot_f405rg": {
+    "mcu": "STM32F411RET6",
+    "name": "MultiTech mDot",
+    "vendor": "MultiTech"
+  },
+  "mts_mdot_f411re": {
+    "mcu": "STM32F411RET6",
+    "name": "MultiTech mDot F411",
+    "vendor": "MultiTech"
+  },
+  "mxchip_az3166": {
+    "mcu": "STM32F412ZGT6",
+    "name": "Microsoft Azure IoT Development Kit (MXChip AZ3166)",
+    "vendor": "MXChip"
+  },
+  "mzeroUSB": {
+    "mcu": "SAMD21G18A",
+    "name": "Arduino M0",
+    "vendor": "Arduino"
+  },
+  "mzeropro": {
+    "mcu": "SAMD21G18A",
+    "name": "Arduino M0 Pro (Programming/Debug Port)",
+    "vendor": "Arduino"
+  },
+  "mzeroproUSB": {
+    "mcu": "SAMD21G18A",
+    "name": "Arduino M0 Pro (Native USB Port)",
+    "vendor": "Arduino"
+  },
+  "n58": {
+    "mcu": "RDA8910",
+    "name": "Neoway N58 LTE Cat.1 Module",
+    "vendor": "Neoway Technology Co.Ltd."
+  },
+  "n716": {
+    "mcu": "RDA8910",
+    "name": "Neoway N716 LTE Cat.1 Module",
+    "vendor": "Neoway Technology Co.Ltd."
+  },
+  "namino_arancio": {
+    "mcu": "ESP32S3",
+    "name": "Namino Arancio",
+    "vendor": "MECT SRL"
+  },
+  "namino_rosso": {
+    "mcu": "ESP32S3",
+    "name": "Namino Rosso",
+    "vendor": "MECT SRL"
+  },
+  "nano32": {
+    "mcu": "ESP32",
+    "name": "MakerAsia Nano32",
+    "vendor": "MakerAsia"
+  },
+  "nano33ble": {
+    "mcu": "NRF52840",
+    "name": "Arduino Nano 33 BLE",
+    "vendor": "Arduino"
+  },
+  "nano_33_iot": {
+    "mcu": "SAMD21G18A",
+    "name": "NANO 33 IoT",
+    "vendor": "Arduino"
+  },
+  "nano_every": {
+    "mcu": "ATMEGA4809",
+    "name": "Arduino Nano Every",
+    "vendor": "Arduino"
+  },
+  "nano_r4": {
+    "mcu": "RA4M1",
+    "name": "Arduino Nano R4",
+    "vendor": "Arduino"
+  },
+  "nanoatmega168": {
+    "mcu": "ATMEGA168",
+    "name": "Arduino Nano ATmega168",
+    "vendor": "Arduino"
+  },
+  "nanoatmega328": {
+    "mcu": "ATMEGA328P",
+    "name": "Arduino Nano ATmega328",
+    "vendor": "Arduino"
+  },
+  "nanoatmega328new": {
+    "mcu": "ATMEGA328P",
+    "name": "Arduino Nano ATmega328 (New Bootloader)",
+    "vendor": "Arduino"
+  },
+  "nanorp2040connect": {
+    "mcu": "RP2040",
+    "name": "Arduino Nano RP2040 Connect",
+    "vendor": "Arduino"
+  },
+  "nebulas3": {
+    "mcu": "ESP32S3",
+    "name": "Kinetic Dynamics Nebula S3",
+    "vendor": "Kinetic Dynamics"
+  },
+  "netduino2plus": {
+    "mcu": "STM32F405RGT6",
+    "name": "N2+",
+    "vendor": "Netduino"
+  },
+  "nexys_a7": {
+    "name": "Digilent Nexys A7",
+    "vendor": "Digilent"
+  },
+  "ng_beacon": {
+    "mcu": "NRF51822",
+    "name": "ng-beacon",
+    "vendor": "ng-beacon"
+  },
+  "nibo2": {
+    "mcu": "ATMEGA128",
+    "name": "nicai-systems NIBO 2 robot",
+    "vendor": "nicai-systems"
+  },
+  "nibobee": {
+    "mcu": "ATMEGA16",
+    "name": "nicai-systems NIBObee robot",
+    "vendor": "nicai-systems"
+  },
+  "nibobee_1284": {
+    "mcu": "ATMEGA1284P",
+    "name": "nicai-systems NIBObee robot with Tuning Kit",
+    "vendor": "nicai-systems"
+  },
+  "niboburger": {
+    "mcu": "ATMEGA16",
+    "name": "nicai-systems NIBO burger robot",
+    "vendor": "nicai-systems"
+  },
+  "niboburger_1284": {
+    "mcu": "ATMEGA1284P",
+    "name": "nicai-systems NIBO burger robot with Tuning Kit",
+    "vendor": "nicai-systems"
+  },
+  "nicla_sense_me": {
+    "mcu": "NRF52832",
+    "name": "Arduino Nicla Sense ME",
+    "vendor": "Arduino"
+  },
+  "nicla_vision": {
+    "mcu": "STM32H747XIH6",
+    "name": "Arduino Nicla Vision",
+    "vendor": "Arduino"
+  },
+  "nicla_vision_m4": {
+    "mcu": "STM32H747XIH6",
+    "name": "Arduino Nicla Vision (M4 core)",
+    "vendor": "Arduino"
+  },
+  "nina_w10": {
+    "mcu": "ESP32",
+    "name": "u-blox NINA-W10 series",
+    "vendor": "u-blox"
+  },
+  "node32s": {
+    "mcu": "ESP32",
+    "name": "Node32s",
+    "vendor": "Aiyarafun"
+  },
+  "nodemcu": {
+    "mcu": "ESP8266",
+    "name": "NodeMCU 0.9 (ESP-12 Module)",
+    "vendor": "NodeMCU"
+  },
+  "nodemcu-32s": {
+    "mcu": "ESP32",
+    "name": "NodeMCU-32S",
+    "vendor": "NodeMCU"
+  },
+  "nodemcu-32s2": {
+    "mcu": "ESP32S2",
+    "name": "Ai-Thinker NodeMCU-32S2 (ESP-12K)",
+    "vendor": "Ai-Thinker"
+  },
+  "nodemcuv2": {
+    "mcu": "ESP8266",
+    "name": "NodeMCU 1.0 (ESP-12E Module)",
+    "vendor": "NodeMCU"
+  },
+  "nofire": {
+    "mcu": "32MZ2048EFG100",
+    "name": "Pontech NoFire",
+    "vendor": "Pontech"
+  },
+  "nologo_esp32c3_super_mini": {
+    "mcu": "ESP32C3",
+    "name": "Nologo ESP32C3 SuperMini",
+    "vendor": "Nologo"
+  },
+  "nrf51_beacon": {
+    "mcu": "NRF51822",
+    "name": "Nordic Beacon Kit (PCA20006)",
+    "vendor": "Nordic"
+  },
+  "nrf51_dk": {
+    "mcu": "NRF51822",
+    "name": "Nordic nRF51X22 Development Kit(PCA1000X)",
+    "vendor": "Nordic"
+  },
+  "nrf51_dongle": {
+    "mcu": "NRF51822",
+    "name": "Nordic nRF51 Dongle (PCA10031)",
+    "vendor": "Nordic"
+  },
+  "nrf52832_mdk": {
+    "mcu": "NRF52832",
+    "name": "Makerdiary nRF52832-MDK",
+    "vendor": "Makerdiary"
+  },
+  "nrf52833_dk": {
+    "mcu": "NRF52833",
+    "name": "Nordic nRF52833-DK",
+    "vendor": "Nordic"
+  },
+  "nrf52840_dk": {
+    "mcu": "NRF52840",
+    "name": "Nordic nRF52840-DK",
+    "vendor": "Nordic"
+  },
+  "nrf52840_dk_adafruit": {
+    "mcu": "NRF52840",
+    "name": "Nordic nRF52840-DK (Adafruit BSP)",
+    "vendor": "Nordic"
+  },
+  "nrf52840_mdk": {
+    "mcu": "NRF52840",
+    "name": "Makerdiary nRF52840-MDK",
+    "vendor": "Makerdiary"
+  },
+  "nrf52_dk": {
+    "mcu": "NRF52832",
+    "name": "Nordic nRF52-DK",
+    "vendor": "Nordic"
+  },
+  "nscreen-32": {
+    "mcu": "ESP32",
+    "name": "YeaCreate NSCREEN-32",
+    "vendor": "YeaCreate"
+  },
+  "nucleo_8s207k8": {
+    "mcu": "STM8S207K8T6",
+    "name": "NUCLEO-8S207K8",
+    "vendor": "STMicroelectronics"
+  },
+  "nucleo_8s208rb": {
+    "mcu": "STM8S208RBT6",
+    "name": "NUCLEO-8S208RB",
+    "vendor": "STMicroelectronics"
+  },
+  "nucleo_f030r8": {
+    "mcu": "STM32F030R8T6",
+    "name": "ST Nucleo F030R8",
+    "vendor": "ST"
+  },
+  "nucleo_f031k6": {
+    "mcu": "STM32F031K6T6",
+    "name": "ST Nucleo F031K6",
+    "vendor": "ST"
+  },
+  "nucleo_f042k6": {
+    "mcu": "STM32F042K6T6",
+    "name": "ST Nucleo F042K6",
+    "vendor": "ST"
+  },
+  "nucleo_f070rb": {
+    "mcu": "STM32F070RBT6",
+    "name": "ST Nucleo F070RB",
+    "vendor": "ST"
+  },
+  "nucleo_f072rb": {
+    "mcu": "STM32F072RBT6",
+    "name": "ST Nucleo F072RB",
+    "vendor": "ST"
+  },
+  "nucleo_f091rc": {
+    "mcu": "STM32F091RCT6",
+    "name": "ST Nucleo F091RC",
+    "vendor": "ST"
+  },
+  "nucleo_f103rb": {
+    "mcu": "STM32F103RBT6",
+    "name": "ST Nucleo F103RB",
+    "vendor": "ST"
+  },
+  "nucleo_f207zg": {
+    "mcu": "STM32F207ZGT6",
+    "name": "ST Nucleo F207ZG",
+    "vendor": "ST"
+  },
+  "nucleo_f302r8": {
+    "mcu": "STM32F302R8T6",
+    "name": "ST Nucleo F302R8",
+    "vendor": "ST"
+  },
+  "nucleo_f303k8": {
+    "mcu": "STM32F303K8T6",
+    "name": "ST Nucleo F303K8",
+    "vendor": "ST"
+  },
+  "nucleo_f303re": {
+    "mcu": "STM32F303RET6",
+    "name": "ST Nucleo F303RE",
+    "vendor": "ST"
+  },
+  "nucleo_f303ze": {
+    "mcu": "STM32F303ZET6",
+    "name": "ST Nucleo F303ZE",
+    "vendor": "ST"
+  },
+  "nucleo_f334r8": {
+    "mcu": "STM32F334R8T6",
+    "name": "ST Nucleo F334R8",
+    "vendor": "ST"
+  },
+  "nucleo_f401re": {
+    "mcu": "STM32F401RET6",
+    "name": "ST Nucleo F401RE",
+    "vendor": "ST"
+  },
+  "nucleo_f410rb": {
+    "mcu": "STM32F410RBT6",
+    "name": "ST Nucleo F410RB",
+    "vendor": "ST"
+  },
+  "nucleo_f411re": {
+    "mcu": "STM32F411RET6",
+    "name": "ST Nucleo F411RE",
+    "vendor": "ST"
+  },
+  "nucleo_f412zg": {
+    "mcu": "STM32F412ZGT6",
+    "name": "ST Nucleo F412ZG",
+    "vendor": "ST"
+  },
+  "nucleo_f413zh": {
+    "mcu": "STM32F413ZHT6",
+    "name": "ST Nucleo F413ZH",
+    "vendor": "ST"
+  },
+  "nucleo_f429zi": {
+    "mcu": "STM32F429ZIT6",
+    "name": "ST Nucleo F429ZI",
+    "vendor": "ST"
+  },
+  "nucleo_f439zi": {
+    "mcu": "STM32F439ZIT6",
+    "name": "ST Nucleo F439ZI",
+    "vendor": "ST"
+  },
+  "nucleo_f446re": {
+    "mcu": "STM32F446RET6",
+    "name": "ST Nucleo F446RE",
+    "vendor": "ST"
+  },
+  "nucleo_f446ze": {
+    "mcu": "STM32F446ZET6",
+    "name": "ST Nucleo F446ZE",
+    "vendor": "ST"
+  },
+  "nucleo_f722ze": {
+    "mcu": "STM32F722ZET6",
+    "name": "ST Nucleo F722ZE",
+    "vendor": "ST"
+  },
+  "nucleo_f746zg": {
+    "mcu": "STM32F746ZGT6",
+    "name": "ST Nucleo F746ZG",
+    "vendor": "ST"
+  },
+  "nucleo_f756zg": {
+    "mcu": "STM32F756ZG",
+    "name": "ST Nucleo F756ZG",
+    "vendor": "ST"
+  },
+  "nucleo_f767zi": {
+    "mcu": "STM32F767ZIT6",
+    "name": "ST Nucleo F767ZI",
+    "vendor": "ST"
+  },
+  "nucleo_g031k8": {
+    "mcu": "STM32G031K8",
+    "name": "ST NUCLEO-G031K8",
+    "vendor": "ST"
+  },
+  "nucleo_g070rb": {
+    "mcu": "STM32G070RBT6",
+    "name": "Nucleo G070RB",
+    "vendor": "ST"
+  },
+  "nucleo_g071rb": {
+    "mcu": "STM32G071RBT6",
+    "name": "Nucleo G071RB",
+    "vendor": "ST"
+  },
+  "nucleo_g0b1re": {
+    "mcu": "STM32G0B1RET6",
+    "name": "ST Nucleo G0B1RE",
+    "vendor": "ST"
+  },
+  "nucleo_g431kb": {
+    "mcu": "STM32G431KBT6",
+    "name": "Nucleo G431KB",
+    "vendor": "ST"
+  },
+  "nucleo_g431rb": {
+    "mcu": "STM32G431RBT6",
+    "name": "Nucleo G431RB",
+    "vendor": "ST"
+  },
+  "nucleo_g474re": {
+    "mcu": "STM32G474RET6",
+    "name": "Nucleo G474RE",
+    "vendor": "ST"
+  },
+  "nucleo_g491re": {
+    "mcu": "STM32G491RET6",
+    "name": "Nucleo G491RE",
+    "vendor": "ST"
+  },
+  "nucleo_h563zi": {
+    "mcu": "STM32H563ZIT6U",
+    "name": "ST Nucleo H563ZI",
+    "vendor": "ST"
+  },
+  "nucleo_h723zg": {
+    "mcu": "STM32H723ZGT6",
+    "name": "ST Nucleo H723ZG",
+    "vendor": "ST"
+  },
+  "nucleo_h743zi": {
+    "mcu": "STM32H743ZIT6",
+    "name": "ST Nucleo H743ZI",
+    "vendor": "ST"
+  },
+  "nucleo_h745zi_q": {
+    "mcu": "STM32H745ZIT6",
+    "name": "ST Nucleo H745ZI-Q",
+    "vendor": "ST"
+  },
+  "nucleo_h753zi": {
+    "mcu": "STM32H753ZIT6",
+    "name": "ST Nucleo H753ZI",
+    "vendor": "ST"
+  },
+  "nucleo_l010rb": {
+    "mcu": "STM32L010RBT6",
+    "name": "ST Nucleo L010RB",
+    "vendor": "ST"
+  },
+  "nucleo_l011k4": {
+    "mcu": "STM32L011K4T6",
+    "name": "ST Nucleo L011K4",
+    "vendor": "ST"
+  },
+  "nucleo_l031k6": {
+    "mcu": "STM32L031K6T6",
+    "name": "ST Nucleo L031K6",
+    "vendor": "ST"
+  },
+  "nucleo_l053r8": {
+    "mcu": "STM32L053R8T6",
+    "name": "ST Nucleo L053R8",
+    "vendor": "ST"
+  },
+  "nucleo_l073rz": {
+    "mcu": "STM32L073RZ",
+    "name": "ST Nucleo L073RZ",
+    "vendor": "ST"
+  },
+  "nucleo_l152re": {
+    "mcu": "STM32L152RET6",
+    "name": "ST Nucleo L152RE",
+    "vendor": "ST"
+  },
+  "nucleo_l412kb": {
+    "mcu": "STM32L412KBU6",
+    "name": "ST Nucleo L412KB",
+    "vendor": "ST"
+  },
+  "nucleo_l412rb_p": {
+    "mcu": "STM32L412RBT6P",
+    "name": "ST Nucleo L412RB-P",
+    "vendor": "ST"
+  },
+  "nucleo_l432kc": {
+    "mcu": "STM32L432KCU6",
+    "name": "ST Nucleo L432KC",
+    "vendor": "ST"
+  },
+  "nucleo_l433rc_p": {
+    "mcu": "STM32L433RC",
+    "name": "ST Nucleo L433RC-P",
+    "vendor": "ST"
+  },
+  "nucleo_l452re": {
+    "mcu": "STM32L452RET6",
+    "name": "ST Nucleo L452RE",
+    "vendor": "ST"
+  },
+  "nucleo_l476rg": {
+    "mcu": "STM32L476RGT6",
+    "name": "ST Nucleo L476RG",
+    "vendor": "ST"
+  },
+  "nucleo_l486rg": {
+    "mcu": "STM32L486RGT6",
+    "name": "ST Nucleo L486RG",
+    "vendor": "ST"
+  },
+  "nucleo_l496zg": {
+    "mcu": "STM32L496ZGT6",
+    "name": "ST Nucleo L496ZG",
+    "vendor": "ST"
+  },
+  "nucleo_l496zg_p": {
+    "mcu": "STM32L496ZGT6P",
+    "name": "ST Nucleo L496ZG-P",
+    "vendor": "ST"
+  },
+  "nucleo_l4r5zi": {
+    "mcu": "STM32L4R5ZIT6",
+    "name": "ST Nucleo L4R5ZI",
+    "vendor": "ST"
+  },
+  "nucleo_l552ze_q": {
+    "mcu": "STM32L552ZET6",
+    "name": "ST Nucleo L552ZE-Q",
+    "vendor": "ST"
+  },
+  "nucleo_u575zi_q": {
+    "mcu": "STM32U575ZIT6Q",
+    "name": "ST Nucleo U575ZI-Q",
+    "vendor": "ST"
+  },
+  "nucleo_wb55rg_p": {
+    "mcu": "STM32WB55RG",
+    "name": "P-Nucleo WB55RG",
+    "vendor": "ST"
+  },
+  "nucleo_wl55jc": {
+    "mcu": "STM32WL55JC",
+    "name": "ST Nucleo WL55JC",
+    "vendor": "ST"
+  },
+  "oak": {
+    "mcu": "ESP8266",
+    "name": "DigiStump Oak",
+    "vendor": "DigiStump"
+  },
+  "odroid_esp32": {
+    "mcu": "ESP32",
+    "name": "ODROID-GO",
+    "vendor": "Hardkernel"
+  },
+  "olimex_e407": {
+    "mcu": "STM32F407ZGT6",
+    "name": "STM32-E407",
+    "vendor": "Olimex"
+  },
+  "olimex_f103": {
+    "mcu": "STM32F103RBT6",
+    "name": "Olimex STM32-H103",
+    "vendor": "Olimex"
+  },
+  "olimex_h407": {
+    "mcu": "STM32F407ZGT6",
+    "name": "STM32-H407",
+    "vendor": "Olimex"
+  },
+  "olimex_p405": {
+    "mcu": "STM32F405RGT6",
+    "name": "Olimex STM32-P405",
+    "vendor": "Olimex"
+  },
+  "olimexino": {
+    "mcu": "STM32F103RBT6",
+    "name": "OLIMEXINO-STM32",
+    "vendor": "Olimex"
+  },
+  "olimexino_stm32f3": {
+    "mcu": "STM32F303RCT6",
+    "name": "Olimex OLIMEXINO-STM32F3",
+    "vendor": "Olimex"
+  },
+  "one": {
+    "mcu": "ATMEGA32U4",
+    "name": "Linino One",
+    "vendor": "Linino"
+  },
+  "onehorse32dev": {
+    "mcu": "ESP32",
+    "name": "Onehorse ESP32 Dev Module",
+    "vendor": "Onehorse"
+  },
+  "openbci": {
+    "mcu": "32MX250F128B",
+    "name": "OpenBCI 32bit",
+    "vendor": "OpenBCI"
+  },
+  "openscope": {
+    "mcu": "32MZ2048EFG124",
+    "name": "Digilent OpenScope",
+    "vendor": "Digilent"
+  },
+  "opta": {
+    "mcu": "STM32H747XIH6",
+    "name": "Arduino Opta",
+    "vendor": "Arduino"
+  },
+  "opta_m4": {
+    "mcu": "STM32H747XIH6",
+    "name": "Arduino Opta (M4 core)",
+    "vendor": "Arduino"
+  },
+  "oroca_edubot": {
+    "mcu": "ESP32",
+    "name": "OROCA EduBot",
+    "vendor": "OROCA"
+  },
+  "oshchip": {
+    "mcu": "NRF51822",
+    "name": "OSHChip",
+    "vendor": "OSHChip"
+  },
+  "panStampAVR": {
+    "mcu": "ATMEGA328P",
+    "name": "PanStamp AVR",
+    "vendor": "PanStamp"
+  },
+  "parashu": {
+    "mcu": "E-CLASS",
+    "name": "Parashu on Artix-7 100T Arty FPGA Evaluation Kit",
+    "vendor": "Xilinx"
+  },
+  "particle_argon": {
+    "mcu": "NRF52840",
+    "name": "Particle Argon",
+    "vendor": "Particle"
+  },
+  "particle_boron": {
+    "mcu": "NRF52840",
+    "name": "Particle Boron",
+    "vendor": "Particle"
+  },
+  "particle_xenon": {
+    "mcu": "NRF52840",
+    "name": "Particle Xenon",
+    "vendor": "Particle"
+  },
+  "phoenix_v1": {
+    "mcu": "ESP8266",
+    "name": "Phoenix 1.0",
+    "vendor": "Espressif"
+  },
+  "phoenix_v2": {
+    "mcu": "ESP8266",
+    "name": "Phoenix 2.0",
+    "vendor": "Espressif"
+  },
+  "picadillo_35t": {
+    "mcu": "32MX795F512L",
+    "name": "4D Systems PICadillo 35T",
+    "vendor": "4D Systems"
+  },
+  "pico": {
+    "mcu": "RP2040",
+    "name": "Raspberry Pi Pico",
+    "vendor": "Raspberry Pi"
+  },
+  "pico32": {
+    "mcu": "ESP32",
+    "name": "ESP32 Pico Kit",
+    "vendor": "Espressif"
+  },
+  "piconomix_px_her0": {
+    "mcu": "STM32L072RB",
+    "name": "Piconomix PX-HER0",
+    "vendor": "Piconomix"
+  },
+  "pinaka": {
+    "mcu": "E-CLASS",
+    "name": "Pinaka on Artix-7 35T Arty FPGA Evaluation Kit",
+    "vendor": "Xilinx"
+  },
+  "pinguino32": {
+    "mcu": "32MX440F256H",
+    "name": "Olimex PIC32-PINGUINO",
+    "vendor": "Olimex"
+  },
+  "pinoccio": {
+    "mcu": "ATMEGA256RFR2",
+    "name": "Pinoccio Scout",
+    "vendor": "Pinoccio"
+  },
+  "piranha_esp32": {
+    "mcu": "ESP32",
+    "name": "Fishino Piranha ESP-32",
+    "vendor": "Fishino"
+  },
+  "pocket_32": {
+    "mcu": "ESP32",
+    "name": "Dongsen Tech Pocket 32",
+    "vendor": "Dongsen Technology"
+  },
+  "portenta_c33": {
+    "mcu": "R7FA6M5BH2CBG",
+    "name": "Arduino Portenta C33",
+    "vendor": "Arduino"
+  },
+  "portenta_h7_m4": {
+    "mcu": "STM32H747XIH6",
+    "name": "Arduino Portenta H7 (M4 core)",
+    "vendor": "Arduino"
+  },
+  "portenta_h7_m7": {
+    "mcu": "STM32H747XIH6",
+    "name": "Arduino Portenta H7 (M7 core)",
+    "vendor": "Arduino"
+  },
+  "prntr_v2": {
+    "mcu": "STM32F407VET6",
+    "name": "PrntrBoard V2",
+    "vendor": "PrntrBoard"
+  },
+  "pro16MHzatmega168": {
+    "mcu": "ATMEGA168",
+    "name": "Arduino Pro or Pro Mini ATmega168 (5V, 16 MHz)",
+    "vendor": "Arduino"
+  },
+  "pro16MHzatmega328": {
+    "mcu": "ATMEGA328P",
+    "name": "Arduino Pro or Pro Mini ATmega328 (5V, 16 MHz)",
+    "vendor": "Arduino"
+  },
+  "pro8MHzatmega168": {
+    "mcu": "ATMEGA168",
+    "name": "Arduino Pro or Pro Mini ATmega168 (3.3V, 8 MHz)",
+    "vendor": "Arduino"
+  },
+  "pro8MHzatmega328": {
+    "mcu": "ATMEGA328P",
+    "name": "Arduino Pro or Pro Mini ATmega328 (3.3V, 8 MHz)",
+    "vendor": "Arduino"
+  },
+  "protrinket3": {
+    "mcu": "ATMEGA328P",
+    "name": "Adafruit Pro Trinket 3V/12MHz (USB)",
+    "vendor": "Adafruit"
+  },
+  "protrinket3ftdi": {
+    "mcu": "ATMEGA328P",
+    "name": "Adafruit Pro Trinket 3V/12MHz (FTDI)",
+    "vendor": "Adafruit"
+  },
+  "protrinket5": {
+    "mcu": "ATMEGA328P",
+    "name": "Adafruit Pro Trinket 5V/16MHz (USB)",
+    "vendor": "Adafruit"
+  },
+  "protrinket5ftdi": {
+    "mcu": "ATMEGA328P",
+    "name": "Adafruit Pro Trinket 5V/16MHz (FTDI)",
+    "vendor": "Adafruit"
+  },
+  "prusa_mm_control": {
+    "mcu": "ATMEGA32U4",
+    "name": "Original Prusa i3 MK3 Multi Material 2.0 Upgrade",
+    "vendor": "Prusa 3D"
+  },
+  "prusa_rambo": {
+    "mcu": "ATMEGA2560",
+    "name": "Prusa RAMBo",
+    "vendor": "Prusa 3D"
+  },
+  "pybstick26_duino": {
+    "mcu": "STM32F072RB",
+    "name": "PYBSTICK26 Duino",
+    "vendor": "PYBStick"
+  },
+  "pybstick26_lite": {
+    "mcu": "STM32F401CEU6",
+    "name": "PYBStick Lite 26",
+    "vendor": "PYBStick"
+  },
+  "pybstick26_pro": {
+    "mcu": "STM32F412RE",
+    "name": "PYBStick 26 Pro",
+    "vendor": "PYBStick"
+  },
+  "pybstick26_std": {
+    "mcu": "STM32F411CEU6",
+    "name": "PYBStick Standard 26",
+    "vendor": "PYBStick"
+  },
+  "pycom_gpy": {
+    "mcu": "ESP32",
+    "name": "Pycom GPy",
+    "vendor": "Pycom Ltd."
+  },
+  "qchip": {
+    "mcu": "ESP32",
+    "name": "Qchip",
+    "vendor": "Qmobot LLP"
+  },
+  "quantum": {
+    "mcu": "ESP32",
+    "name": "Noduino Quantum",
+    "vendor": "Noduino"
+  },
+  "quectelbc20": {
+    "mcu": "MT2625",
+    "name": "Quectel BC20",
+    "vendor": "Quectel Wireless Solutions Co., Ltd."
+  },
+  "quectelm56": {
+    "mcu": "MT6261",
+    "name": "Quectel M56",
+    "vendor": "Quectel Wireless Solutions Co., Ltd."
+  },
+  "quectelm66": {
+    "mcu": "MT6261",
+    "name": "Quectel M66",
+    "vendor": "Quectel Wireless Solutions Co., Ltd."
+  },
+  "quectelmc20": {
+    "mcu": "MT2503",
+    "name": "Quectel MC20",
+    "vendor": "Quectel Wireless Solutions Co., Ltd."
+  },
+  "quectelmc20u": {
+    "mcu": "MT2503",
+    "name": "Quectel MC20UCB",
+    "vendor": "Quectel Wireless Solutions Co., Ltd."
+  },
+  "quectelmc60": {
+    "mcu": "MT2503",
+    "name": "Quectel MC60",
+    "vendor": "Quectel Wireless Solutions Co., Ltd."
+  },
+  "quick240_usb": {
+    "mcu": "32MX795F512L",
+    "name": "Pontech Quick240",
+    "vendor": "Pontech"
+  },
+  "quirkbot": {
+    "mcu": "ATMEGA32U4",
+    "name": "Quirkbot",
+    "vendor": "Quirkbot"
+  },
+  "rak811_tracker": {
+    "mcu": "STM32L151RBT6",
+    "name": "RAK811 LoRa Tracker",
+    "vendor": "RAK"
+  },
+  "rak811_tracker_32": {
+    "mcu": "STM32L151RBT6",
+    "name": "RAK811 LoRa Tracker",
+    "vendor": "RAK"
+  },
+  "raspberrypi_1b": {
+    "mcu": "BCM2835",
+    "name": "Raspberry Pi 1 Model B",
+    "vendor": "Raspberry Pi"
+  },
+  "raspberrypi_2b": {
+    "mcu": "BCM2836",
+    "name": "Raspberry Pi 2 Model B",
+    "vendor": "Raspberry Pi"
+  },
+  "raspberrypi_3b": {
+    "mcu": "BCM2837",
+    "name": "Raspberry Pi 3 Model B",
+    "vendor": "Raspberry Pi"
+  },
+  "raspberrypi_zero": {
+    "mcu": "BCM2835",
+    "name": "Raspberry Pi Zero",
+    "vendor": "Raspberry Pi"
+  },
+  "raspduino": {
+    "mcu": "ATMEGA328P",
+    "name": "BitWizard Raspduino",
+    "vendor": "BitWizard"
+  },
+  "raytac_mdbt50q_rx": {
+    "mcu": "NRF52840",
+    "name": "Raytac MDBT50Q-RX Dongle",
+    "vendor": "Raytac"
+  },
+  "redBearLab": {
+    "mcu": "NRF51822",
+    "name": "RedBearLab nRF51822",
+    "vendor": "RedBearLab"
+  },
+  "redBearLabBLENano": {
+    "mcu": "NRF51822",
+    "name": "RedBearLab BLE Nano 1.5",
+    "vendor": "RedBearLab"
+  },
+  "redbear_blenano2": {
+    "mcu": "NRF52832",
+    "name": "RedBearLab BLE Nano 2",
+    "vendor": "RedBearLab"
+  },
+  "redbear_blend2": {
+    "mcu": "NRF52832",
+    "name": "RedBearLab Blend 2",
+    "vendor": "RedBearLab"
+  },
+  "redpill_esp32s3": {
+    "mcu": "ESP32S3",
+    "name": "Munich Labs RedPill ESP32-S3",
+    "vendor": "Munich Labs"
+  },
+  "reel_board": {
+    "mcu": "NRF52840",
+    "name": "PHYTEC reel board",
+    "vendor": "PHYTEC"
+  },
+  "reel_board_v2": {
+    "mcu": "NRF52840",
+    "name": "PHYTEC reel board v2",
+    "vendor": "PHYTEC"
+  },
+  "remram_v1": {
+    "mcu": "STM32F765VIT6",
+    "name": "3D printer controller",
+    "vendor": "RemRam"
+  },
+  "reprap_rambo": {
+    "mcu": "ATMEGA2560",
+    "name": "RepRap RAMBo",
+    "vendor": "RepRap"
+  },
+  "rgb_station": {
+    "mcu": "32MX270F256D",
+    "name": "RGB Station",
+    "vendor": "ChipKIT"
+  },
+  "rhf76_052": {
+    "mcu": "STM32L051C8T6",
+    "name": "RHF76 052",
+    "vendor": "ST"
+  },
+  "rhombio_l476dmw1k": {
+    "mcu": "STM32L476VGT6",
+    "name": "L476DMW1K",
+    "vendor": "rhomb.io"
+  },
+  "roboheart_hercules": {
+    "mcu": "ESP32",
+    "name": "RoboHeart Hercules",
+    "vendor": "RoboHeart"
+  },
+  "robotControl": {
+    "mcu": "ATMEGA32U4",
+    "name": "Arduino Robot Control",
+    "vendor": "Arduino"
+  },
+  "robotMotor": {
+    "mcu": "ATMEGA32U4",
+    "name": "Arduino Robot Motor",
+    "vendor": "Arduino"
+  },
+  "robotdyn_blackpill_f303cc": {
+    "mcu": "STM32F303CCT6",
+    "name": "BlackPill F303CC",
+    "vendor": "RobotDyn"
+  },
+  "rumba32_f446ve": {
+    "mcu": "STM32F446RET6",
+    "name": "3D Printer control board",
+    "vendor": "RUMBA"
+  },
+  "ruuvitag": {
+    "mcu": "NRF52832",
+    "name": "Ruuvi Tag",
+    "vendor": "Ruuvi"
+  },
+  "rymcu-esp32-c3-devkitm-1": {
+    "mcu": "ESP32C3",
+    "name": "RYMCU ESP32-C3-DevKitM-1",
+    "vendor": "RYMCU"
+  },
+  "rymcu-esp32-devkitc": {
+    "mcu": "ESP32",
+    "name": "RYMCU ESP32-DevKitC",
+    "vendor": "RYMCU"
+  },
+  "rymcu-esp32-s3-devkitc-1": {
+    "mcu": "ESP32S3",
+    "name": "RYMCU ESP32-S3-DevKitC-1-N8R2 (8 MB QD, 2 MB PSRAM)",
+    "vendor": "RYMCU"
+  },
+  "rymcu_f407ve": {
+    "mcu": "STM32F407VET6",
+    "name": "RYMCU STM32F407VE (192k RAM. 512k Flash)",
+    "vendor": "RYMCU"
+  },
+  "rymcu_nebulapi_f103ve": {
+    "mcu": "STM32F103VET6",
+    "name": "RYMCU Nebula Pi F103VE (64k RAM. 512k Flash)",
+    "vendor": "RYMCU"
+  },
+  "s8uno": {
+    "mcu": "STM8S105K6T6",
+    "name": "sduino UNO (STM8S105K6)",
+    "vendor": "sduino"
+  },
+  "s_odi_ultra": {
+    "mcu": "ESP32",
+    "name": "S.ODI Ultra v1",
+    "vendor": "S.ODI"
+  },
+  "sainSmartDue": {
+    "mcu": "AT91SAM3X8E",
+    "name": "SainSmart Due (Programming Port)",
+    "vendor": "SainSmart"
+  },
+  "sainSmartDueUSB": {
+    "mcu": "AT91SAM3X8E",
+    "name": "SainSmart Due (USB Native Port)",
+    "vendor": "SainSmart"
+  },
+  "sakuraio_evb_01": {
+    "mcu": "STM32F411RET6",
+    "name": "sakura.io Evaluation Board",
+    "vendor": "sakura.io"
+  },
+  "samc21_xpro": {
+    "mcu": "SAMC21J18A",
+    "name": "Atmel SAMC21-XPRO",
+    "vendor": "Atmel"
+  },
+  "samd21_xpro": {
+    "mcu": "SAMD21J18A",
+    "name": "Atmel SAMD21-XPRO",
+    "vendor": "Atmel"
+  },
+  "samd21g18a": {
+    "mcu": "SAMD21G18A",
+    "name": "Atmel ATSAMW25-XPRO",
+    "vendor": "Atmel"
+  },
+  "samr21_xpro": {
+    "mcu": "SAMR21G18A",
+    "name": "Atmel ATSAMR21-XPRO",
+    "vendor": "Atmel"
+  },
+  "sanguino_atmega1284_8m": {
+    "mcu": "ATMEGA1284P",
+    "name": "Sanguino ATmega1284p (8MHz)",
+    "vendor": "Sanguino"
+  },
+  "sanguino_atmega1284p": {
+    "mcu": "ATMEGA1284P",
+    "name": "Sanguino ATmega1284p (16MHz)",
+    "vendor": "Sanguino"
+  },
+  "sanguino_atmega644": {
+    "mcu": "ATMEGA644",
+    "name": "Sanguino ATmega644 or ATmega644A (16 MHz)",
+    "vendor": "Sanguino"
+  },
+  "sanguino_atmega644_8m": {
+    "mcu": "ATMEGA644",
+    "name": "Sanguino ATmega644 or ATmega644A (8 MHz)",
+    "vendor": "Sanguino"
+  },
+  "sanguino_atmega644p": {
+    "mcu": "ATMEGA644P",
+    "name": "Sanguino ATmega644P or ATmega644PA (16 MHz)",
+    "vendor": "Sanguino"
+  },
+  "sanguino_atmega644p_8m": {
+    "mcu": "ATMEGA644P",
+    "name": "Sanguino ATmega644P or ATmega644PA (8 MHz)",
+    "vendor": "Sanguino"
+  },
+  "sdt32620b": {
+    "mcu": "MAX32620IWG",
+    "name": "SDT32620B",
+    "vendor": "Sigma Delta Technologies"
+  },
+  "sdt32625b": {
+    "mcu": "MAX32625ITK",
+    "name": "SDT32625B",
+    "vendor": "Sigma Delta Technologies"
+  },
+  "sdt52832b": {
+    "mcu": "NRF52832",
+    "name": "SDT52832B",
+    "vendor": "Sigma Delta Technologies"
+  },
+  "seeedArchMax": {
+    "mcu": "STM32F407VET6",
+    "name": "Seeed Arch Max",
+    "vendor": "SeeedStudio"
+  },
+  "seeedArchPro": {
+    "mcu": "LPC1768",
+    "name": "Seeed Arch Pro",
+    "vendor": "SeeedStudio"
+  },
+  "seeedTinyBLE": {
+    "mcu": "NRF51822",
+    "name": "Seeed Tiny BLE",
+    "vendor": "SeeedStudio"
+  },
+  "seeed_femto": {
+    "mcu": "SAMD21G18A",
+    "name": "Seeeduino Femto M0",
+    "vendor": "Seeed"
+  },
+  "seeed_wio_lite_mg126": {
+    "mcu": "SAMD21G18A",
+    "name": "Seeeduino Wio Lite MG126",
+    "vendor": "Seeed"
+  },
+  "seeed_wio_terminal": {
+    "mcu": "SAMD51P19A",
+    "name": "Seeeduino Wio Terminal",
+    "vendor": "Seeed"
+  },
+  "seeed_xiao": {
+    "mcu": "SAMD21G18A",
+    "name": "Seeeduino XIAO",
+    "vendor": "Seeed"
+  },
+  "seeed_xiao_esp32_s3_plus": {
+    "mcu": "ESP32S3",
+    "name": "Seeed Studio XIAO ESP32S3 Plus",
+    "vendor": "Seeed Studio"
+  },
+  "seeed_xiao_esp32c3": {
+    "mcu": "ESP32C3",
+    "name": "Seeed Studio XIAO ESP32C3",
+    "vendor": "Seeed Studio"
+  },
+  "seeed_xiao_esp32c5": {
+    "mcu": "ESP32C5",
+    "name": "Seeed Studio XIAO ESP32C5",
+    "vendor": "Seeed Studio"
+  },
+  "seeed_xiao_esp32c6": {
+    "mcu": "ESP32C6",
+    "name": "Seeed Studio XIAO ESP32C6",
+    "vendor": "Seeed Studio"
+  },
+  "seeed_xiao_esp32s3": {
+    "mcu": "ESP32S3",
+    "name": "Seeed Studio XIAO ESP32S3",
+    "vendor": "Seeed Studio"
+  },
+  "seeed_zero": {
+    "mcu": "SAMD21G18A",
+    "name": "Seeeduino Zero",
+    "vendor": "Seeed"
+  },
+  "seeeduino": {
+    "mcu": "ATMEGA328P",
+    "name": "Seeeduino",
+    "vendor": "SeeedStudio"
+  },
+  "seeeduino_lorawan": {
+    "mcu": "SAMD21G18A",
+    "name": "Seeeduino LoRaWAN",
+    "vendor": "Seeed"
+  },
+  "segger_ip_switch": {
+    "mcu": "MK66FN2M0VMD18",
+    "name": "SEGGER IP Switch Board",
+    "vendor": "SEGGER"
+  },
+  "sensebox_mcu_esp32s2": {
+    "mcu": "ESP32S2",
+    "name": "senseBox MCU-S2 ESP32-S2",
+    "vendor": "senseBox"
+  },
+  "sensesiot_weizen": {
+    "mcu": "ESP32",
+    "name": "LOGISENSES Senses Weizen",
+    "vendor": "LOGISENSES"
+  },
+  "sg-o_airMon": {
+    "mcu": "ESP32",
+    "name": "SG-O AirMon",
+    "vendor": "SG-O"
+  },
+  "silica_sensor_node": {
+    "mcu": "STM32L476JG",
+    "name": "ST Sensor Node",
+    "vendor": "Avnet Silica"
+  },
+  "sim868": {
+    "mcu": "MT2503",
+    "name": "SIMCOM SIM868 GSM Module",
+    "vendor": "SIMCom"
+  },
+  "sipeed-MF1": {
+    "mcu": "K210",
+    "name": "Sipeed MF1 MF1",
+    "vendor": "Sipeed"
+  },
+  "sipeed-maix-bit": {
+    "mcu": "K210",
+    "name": "Sipeed MAIX BiT",
+    "vendor": "Sipeed"
+  },
+  "sipeed-maix-bit-mic": {
+    "mcu": "K210",
+    "name": "Sipeed MAIX BiT with Mic",
+    "vendor": "Sipeed"
+  },
+  "sipeed-maix-go": {
+    "mcu": "K210",
+    "name": "Sipeed MAIX GO",
+    "vendor": "Sipeed"
+  },
+  "sipeed-maix-one-dock": {
+    "mcu": "K210",
+    "name": "Sipeed MAIX ONE DOCK",
+    "vendor": "Sipeed"
+  },
+  "sipeed-maixduino": {
+    "mcu": "K210",
+    "name": "Sipeed MAIXDUINO",
+    "vendor": "Sipeed"
+  },
+  "sleepypi": {
+    "mcu": "ATMEGA328P",
+    "name": "SpellFoundry Sleepy Pi 2",
+    "vendor": "SpellFoundry"
+  },
+  "smart7688": {
+    "mcu": "ATMEGA32U4",
+    "name": "LinkIt Smart 7688 Duo",
+    "vendor": "MediaTek Labs"
+  },
+  "sodaq_autonomo": {
+    "mcu": "SAMD21J18A",
+    "name": "SODAQ Autonomo",
+    "vendor": "SODAQ"
+  },
+  "sodaq_explorer": {
+    "mcu": "SAMD21J18A",
+    "name": "SODAQ ExpLoRer",
+    "vendor": "SODAQ"
+  },
+  "sodaq_galora": {
+    "mcu": "ATMEGA1284P",
+    "name": "SODAQ GaLoRa",
+    "vendor": "SODAQ"
+  },
+  "sodaq_mbili": {
+    "mcu": "ATMEGA1284P",
+    "name": "SODAQ Mbili",
+    "vendor": "SODAQ"
+  },
+  "sodaq_moja": {
+    "mcu": "ATMEGA328P",
+    "name": "SODAQ Moja",
+    "vendor": "SODAQ"
+  },
+  "sodaq_ndogo": {
+    "mcu": "ATMEGA1284P",
+    "name": "SODAQ Ndogo",
+    "vendor": "SODAQ"
+  },
+  "sodaq_one": {
+    "mcu": "SAMD21G18A",
+    "name": "SODAQ ONE",
+    "vendor": "SODAQ"
+  },
+  "sodaq_sara": {
+    "mcu": "SAMD21J18A",
+    "name": "SODAQ SARA",
+    "vendor": "SODAQ"
+  },
+  "sodaq_sff": {
+    "mcu": "SAMD21G18A",
+    "name": "SODAQ SFF",
+    "vendor": "SODAQ"
+  },
+  "sodaq_tatu": {
+    "mcu": "ATMEGA1284P",
+    "name": "SODAQ Tatu",
+    "vendor": "SODAQ"
+  },
+  "sonoff_basic": {
+    "mcu": "ESP8266",
+    "name": "Sonoff Basic",
+    "vendor": "ITEAD"
+  },
+  "sonoff_s20": {
+    "mcu": "ESP8266",
+    "name": "Sonoff S20",
+    "vendor": "ITEAD"
+  },
+  "sonoff_sv": {
+    "mcu": "ESP8266",
+    "name": "Sonoff SV",
+    "vendor": "ITEAD"
+  },
+  "sonoff_th": {
+    "mcu": "ESP8266",
+    "name": "Sonoff TH",
+    "vendor": "ITEAD"
+  },
+  "sparkfunBlynk": {
+    "mcu": "ESP8266",
+    "name": "SparkFun Blynk Board",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_digitalsandbox": {
+    "mcu": "ATMEGA328P",
+    "name": "SparkFun Digital Sandbox",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_esp32_iot_redboard": {
+    "mcu": "ESP32",
+    "name": "SparkFun ESP32 IoT RedBoard",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_esp32c6_thing_plus": {
+    "mcu": "ESP32C6",
+    "name": "Sparkfun ESP32-C6 Thing Plus",
+    "vendor": "Sparkfun"
+  },
+  "sparkfun_esp32micromod": {
+    "mcu": "ESP32",
+    "name": "SparkFun ESP32 MicroMod",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_esp32s2_thing_plus": {
+    "mcu": "ESP32S2",
+    "name": "SparkFun ESP32-S2 Thing Plus",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_esp32s2_thing_plus_c": {
+    "mcu": "ESP32",
+    "name": "SparkFun ESP32 Thing Plus C",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_esp32s3_thing_plus": {
+    "mcu": "ESP32S3",
+    "name": "SPARKFUN_ESP32S3_THING_PLUS",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_fiov3": {
+    "mcu": "ATMEGA32U4",
+    "name": "SparkFun Fio V3 3.3V/8MHz",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_lora_gateway_1-channel": {
+    "mcu": "ESP32",
+    "name": "SparkFun LoRa Gateway 1-Channel",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_makeymakey": {
+    "mcu": "ATMEGA32U4",
+    "name": "SparkFun Makey Makey",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_megamini": {
+    "mcu": "ATMEGA2560",
+    "name": "SparkFun Mega Pro Mini 3.3V",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_megapro16MHz": {
+    "mcu": "ATMEGA2560",
+    "name": "SparkFun Mega Pro 5V/16MHz",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_megapro8MHz": {
+    "mcu": "ATMEGA2560",
+    "name": "SparkFun Mega Pro 3.3V/8MHz",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_micromod_f405": {
+    "mcu": "STM32F405RGT6",
+    "name": "SparkFun MicroMod STM32F405",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_pro_micro_esp32c3": {
+    "mcu": "ESP32C3",
+    "name": "SparkFun Pro Micro ESP32-C3",
+    "vendor": "Sparkfun"
+  },
+  "sparkfun_promicro16": {
+    "mcu": "ATMEGA32U4",
+    "name": "SparkFun Pro Micro 5V/16MHz",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_promicro8": {
+    "mcu": "ATMEGA32U4",
+    "name": "SparkFun Pro Micro 3.3V/8MHz",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_qduinomini": {
+    "mcu": "ATMEGA32U4",
+    "name": "SparkFun Qduino Mini",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_qwiic_micro_samd21e": {
+    "mcu": "SAMD21E18A",
+    "name": "SparkFun Qwiic Micro",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_qwiic_pocket_esp32c6": {
+    "mcu": "ESP32C6",
+    "name": "SparkFun ESP32-C6 Qwiic Pocket",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_redboard": {
+    "mcu": "ATMEGA328P",
+    "name": "SparkFun RedBoard",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_redboard_turbo": {
+    "mcu": "SAMD21G18A",
+    "name": "SparkFun RedBoard Turbo",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_redboard_v": {
+    "mcu": "FE310",
+    "name": "SparkFun RED-V RedBoard",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_samd21_9dof": {
+    "mcu": "SAMD21G18A",
+    "name": "SparkFun 9DoF Razor IMU M0",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_samd21_dev_usb": {
+    "mcu": "SAMD21G18A",
+    "name": "SparkFun SAMD21 Dev Breakout",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_samd21_mini_usb": {
+    "mcu": "SAMD21G18A",
+    "name": "SparkFun SAMD21 Mini Breakout",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_samd21_proRF": {
+    "mcu": "SAMD21G18A",
+    "name": "SparkFun SAMD21 Pro RF",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_samd51_micromod": {
+    "mcu": "SAMD51J20A",
+    "name": "SparkFun SAMD51 MicroMod",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_samd51_thing_plus": {
+    "mcu": "SAMD51J20A",
+    "name": "SparkFun SAMD51 Thing Plus",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_satmega128rfa1": {
+    "mcu": "ATMEGA128RFA1",
+    "name": "SparkFun ATmega128RFA1 Dev Board",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_serial7seg": {
+    "mcu": "ATMEGA328P",
+    "name": "SparkFun Serial 7-Segment Display",
+    "vendor": "SparkFun"
+  },
+  "sparkfun_thing_plus_v": {
+    "mcu": "FE310",
+    "name": "SparkFun RED-V Thing Plus",
+    "vendor": "SparkFun"
+  },
+  "sparky_v1": {
+    "mcu": "STM32F303CCT6",
+    "name": "Sparky V1 F303",
+    "vendor": "TauLabs"
+  },
+  "st3dp001_eval": {
+    "mcu": "STM32F401VET6",
+    "name": "3DP001V1 Evaluation board for 3D printer",
+    "vendor": "ST"
+  },
+  "stct_nrf52_minidev": {
+    "mcu": "NRF52832",
+    "name": "Taida Century nRF52 mini board",
+    "vendor": "Taida Century"
+  },
+  "steval_fcu001v1": {
+    "mcu": "STM32F401CCU6",
+    "name": "STEVAL-FCU001V1 Flight controller unit evaluation board",
+    "vendor": "ST"
+  },
+  "steval_mksboxv1": {
+    "mcu": "STM32L4R9ZI",
+    "name": "SensorTile.box",
+    "vendor": "ST"
+  },
+  "stm32f4stamp": {
+    "mcu": "STM32F405RGT6",
+    "name": "STM32F4Stamp F405",
+    "vendor": "Generic"
+  },
+  "stm8s003f3": {
+    "mcu": "STM8S003F3P6",
+    "name": "ST STM8S003F3 chip",
+    "vendor": "ST"
+  },
+  "stm8sblack": {
+    "mcu": "STM8S105K4T6",
+    "name": "ST STM8S105K4T6 Breakout Board",
+    "vendor": "ST"
+  },
+  "stm8sblue": {
+    "mcu": "STM8S103F3P6",
+    "name": "ST STM8S103F3 Breakout Board",
+    "vendor": "ST"
+  },
+  "stm8sdisco": {
+    "mcu": "STM8S105C6T6",
+    "name": "ST STM8S-DISCOVERY",
+    "vendor": "ST"
+  },
+  "storm32_v1_31_rc": {
+    "mcu": "STM32F103RCT6",
+    "name": "STorM32 BGC v1.31 RC",
+    "vendor": "STorM32"
+  },
+  "swervolf_nexys": {
+    "name": "RVfpga: Digilent Nexys A7",
+    "vendor": "Digilent"
+  },
+  "t102-v1.1": {
+    "mcu": "RTL8710BN",
+    "name": "T102_V1.1",
+    "vendor": "Unknown"
+  },
+  "t103-v1.0": {
+    "mcu": "RTL8710BX",
+    "name": "T103_V1.0",
+    "vendor": "Unknown"
+  },
+  "t112-v1.1": {
+    "mcu": "RTL8710BN",
+    "name": "T112_V1.1",
+    "vendor": "Unknown"
+  },
+  "tamc_termod_s3": {
+    "mcu": "ESP32S3",
+    "name": "TAMC Termod S3",
+    "vendor": "TAMC"
+  },
+  "tb_sense_12": {
+    "mcu": "EFR32MG12P432F1024",
+    "name": "Thunderboard Sense 2 Sensor-to-Cloud Advanced IoT",
+    "vendor": "Silicon Labs"
+  },
+  "teensy2": {
+    "mcu": "ATMEGA32U4",
+    "name": "Teensy 2.0",
+    "vendor": "Teensy"
+  },
+  "teensy2pp": {
+    "mcu": "AT90USB1286",
+    "name": "Teensy++ 2.0",
+    "vendor": "Teensy"
+  },
+  "teensy30": {
+    "mcu": "MK20DX128",
+    "name": "Teensy 3.0",
+    "vendor": "Teensy"
+  },
+  "teensy31": {
+    "mcu": "MK20DX256",
+    "name": "Teensy 3.1 / 3.2",
+    "vendor": "Teensy"
+  },
+  "teensy35": {
+    "mcu": "MK64FX512",
+    "name": "Teensy 3.5",
+    "vendor": "Teensy"
+  },
+  "teensy36": {
+    "mcu": "MK66FX1M0",
+    "name": "Teensy 3.6",
+    "vendor": "Teensy"
+  },
+  "teensy40": {
+    "mcu": "IMXRT1062",
+    "name": "Teensy 4.0",
+    "vendor": "Teensy"
+  },
+  "teensy41": {
+    "mcu": "IMXRT1062",
+    "name": "Teensy 4.1",
+    "vendor": "Teensy"
+  },
+  "teensylc": {
+    "mcu": "MKL26Z64",
+    "name": "Teensy LC",
+    "vendor": "Teensy"
+  },
+  "teensymm": {
+    "mcu": "IMXRT1062",
+    "name": "SparkFun MicroMod Teensy",
+    "vendor": "SparkFun"
+  },
+  "the_things_uno": {
+    "mcu": "ATMEGA32U4",
+    "name": "The Things Uno",
+    "vendor": "The Things Network"
+  },
+  "thing": {
+    "mcu": "ESP8266",
+    "name": "SparkFun ESP8266 Thing",
+    "vendor": "SparkFun"
+  },
+  "thingdev": {
+    "mcu": "ESP8266",
+    "name": "SparkFun ESP8266 Thing Dev",
+    "vendor": "SparkFun"
+  },
+  "thingy_52": {
+    "mcu": "NRF52832",
+    "name": "Nordic Thingy:52 (nRF52-PCA20020)",
+    "vendor": "Nordic"
+  },
+  "thunder_pack": {
+    "mcu": "STM32L072KZ",
+    "name": "ThunderPack v1.0",
+    "vendor": "ThunderPack"
+  },
+  "thunder_pack_f411": {
+    "mcu": "STM32F411CEU6",
+    "name": "ThunderPack v1.1+",
+    "vendor": "ThunderPack"
+  },
+  "tian": {
+    "mcu": "SAMD21G18A",
+    "name": "Arduino Tian",
+    "vendor": "Arduino"
+  },
+  "tinyduino": {
+    "mcu": "ATMEGA328P",
+    "name": "TinyCircuits TinyDuino Processor Board",
+    "vendor": "TinyCircuits"
+  },
+  "tinylily": {
+    "mcu": "ATMEGA328P",
+    "name": "TinyCircuits TinyLily Mini Processor",
+    "vendor": "TinyCircuits"
+  },
+  "tinypico": {
+    "mcu": "ESP32",
+    "name": "Unexpected Maker TinyPICO",
+    "vendor": "Unexpected Maker"
+  },
+  "trinket3": {
+    "mcu": "ATTINY85",
+    "name": "Adafruit Trinket 3V/8MHz",
+    "vendor": "Adafruit"
+  },
+  "trinket5": {
+    "mcu": "ATTINY85",
+    "name": "Adafruit Trinket 5V/16MHz",
+    "vendor": "Adafruit"
+  },
+  "trueverit-iot-driver": {
+    "mcu": "ESP32",
+    "name": "Trueverit ESP32 Universal IoT Driver",
+    "vendor": "Trueverit"
+  },
+  "trueverit-iot-driver-mk2": {
+    "mcu": "ESP32",
+    "name": "Trueverit ESP32 Universal IoT Driver MK II",
+    "vendor": "Trueverit"
+  },
+  "trueverit-iot-driver-mk3": {
+    "mcu": "ESP32",
+    "name": "Trueverit ESP32 Universal IoT Driver MK III",
+    "vendor": "Trueverit"
+  },
+  "ttgo-lora32-v1": {
+    "mcu": "ESP32",
+    "name": "TTGO LoRa32-OLED V1",
+    "vendor": "TTGO"
+  },
+  "ttgo-lora32-v2": {
+    "mcu": "ESP32",
+    "name": "TTGO LoRa32-OLED V2",
+    "vendor": "TTGO"
+  },
+  "ttgo-lora32-v21": {
+    "mcu": "ESP32",
+    "name": "TTGO LoRa32-OLED v2.1.6",
+    "vendor": "TTGO"
+  },
+  "ttgo-t-beam": {
+    "mcu": "ESP32",
+    "name": "TTGO T-Beam",
+    "vendor": "TTGO"
+  },
+  "ttgo-t-oi-plus": {
+    "mcu": "ESP32C3",
+    "name": "TTGO T-OI PLUS RISC-V ESP32-C3",
+    "vendor": "TTGO"
+  },
+  "ttgo-t-watch": {
+    "mcu": "ESP32",
+    "name": "TTGO T-Watch",
+    "vendor": "TTGO"
+  },
+  "ttgo-t1": {
+    "mcu": "ESP32",
+    "name": "TTGO T1",
+    "vendor": "TTGO"
+  },
+  "ttgo-t7-v13-mini32": {
+    "mcu": "ESP32",
+    "name": "TTGO T7 V1.3 Mini32",
+    "vendor": "TTGO"
+  },
+  "ttgo-t7-v14-mini32": {
+    "mcu": "ESP32",
+    "name": "TTGO T7 V1.4 Mini32",
+    "vendor": "TTGO"
+  },
+  "tuinozero96": {
+    "mcu": "SAMD21G18A",
+    "name": "Tuino 096",
+    "vendor": "Gimasi"
+  },
+  "turta_iot_node": {
+    "mcu": "ESP32",
+    "name": "Turta IoT Node",
+    "vendor": "Turta"
+  },
+  "ublox_bmd345eval_nrf52840": {
+    "mcu": "NRF52840",
+    "name": "u-blox BMD-345-EVAL",
+    "vendor": "u-blox"
+  },
+  "ublox_c030_n211": {
+    "mcu": "STM32F437VG",
+    "name": "u-blox C030-N211 IoT Starter Kit",
+    "vendor": "u-blox"
+  },
+  "ublox_c030_r410m": {
+    "mcu": "STM32F437VG",
+    "name": "u-blox C030-R410M IoT",
+    "vendor": "u-blox"
+  },
+  "ublox_c030_u201": {
+    "mcu": "STM32F437VG",
+    "name": "u-blox C030-U201 IoT Starter Kit",
+    "vendor": "u-blox"
+  },
+  "ublox_evk_nina_b1": {
+    "mcu": "NRF52832",
+    "name": "u-blox EVK-NINA-B1",
+    "vendor": "u-blox"
+  },
+  "ublox_evk_odin_w2": {
+    "mcu": "STM32F439ZIY6",
+    "name": "u-blox EVK-ODIN-W2",
+    "vendor": "u-blox"
+  },
+  "ubw32_mx460": {
+    "mcu": "32MX460F512L",
+    "name": "UBW32 MX460",
+    "vendor": "UBW32"
+  },
+  "ubw32_mx795": {
+    "mcu": "32MX795F512L",
+    "name": "UBW32 MX795",
+    "vendor": "UBW32"
+  },
+  "um_bling": {
+    "mcu": "ESP32S3",
+    "name": "Unexpected Maker BLING!",
+    "vendor": "Unexpected Maker"
+  },
+  "um_edges3_d": {
+    "mcu": "ESP32S3",
+    "name": "Unexpected Maker EDGES3[D]",
+    "vendor": "Unexpected Maker"
+  },
+  "um_feathers2": {
+    "mcu": "ESP32S2",
+    "name": "Unexpected Maker FeatherS2",
+    "vendor": "Unexpected Maker"
+  },
+  "um_feathers2_neo": {
+    "mcu": "ESP32S2",
+    "name": "Unexpected Maker FeatherS2 Neo",
+    "vendor": "Unexpected Maker"
+  },
+  "um_feathers3": {
+    "mcu": "ESP32S3",
+    "name": "Unexpected Maker FeatherS3",
+    "vendor": "Unexpected Maker"
+  },
+  "um_feathers3_neo": {
+    "mcu": "ESP32S3",
+    "name": "Unexpected Maker FeatherS3 Neo",
+    "vendor": "Unexpected Maker"
+  },
+  "um_nanos3": {
+    "mcu": "ESP32S3",
+    "name": "Unexpected Maker NanoS3",
+    "vendor": "Unexpected Maker"
+  },
+  "um_omgs3": {
+    "mcu": "ESP32S3",
+    "name": "Unexpected Maker OMGS3",
+    "vendor": "Unexpected Maker"
+  },
+  "um_pros3": {
+    "mcu": "ESP32S3",
+    "name": "Unexpected Maker PROS3",
+    "vendor": "Unexpected Maker"
+  },
+  "um_rmp": {
+    "mcu": "ESP32S2",
+    "name": "Unexpected Maker RMP",
+    "vendor": "Unexpected Maker"
+  },
+  "um_squixl": {
+    "mcu": "ESP32S3",
+    "name": "Unexpected Maker SQUiXL",
+    "vendor": "Unexpected Maker"
+  },
+  "um_tinyc6": {
+    "mcu": "ESP32C6",
+    "name": "Unexpected Maker TinyC6",
+    "vendor": "Unexpected Maker"
+  },
+  "um_tinys2": {
+    "mcu": "ESP32S2",
+    "name": "Unexpected Maker TinyS2",
+    "vendor": "Unexpected Maker"
+  },
+  "um_tinys3": {
+    "mcu": "ESP32S3",
+    "name": "Unexpected Maker TinyS3",
+    "vendor": "Unexpected Maker"
+  },
+  "uno": {
+    "mcu": "ATMEGA328P",
+    "name": "Arduino Uno",
+    "vendor": "Arduino"
+  },
+  "uno_mini": {
+    "mcu": "ATMEGA328P",
+    "name": "Arduino Uno Mini",
+    "vendor": "Arduino"
+  },
+  "uno_pic32": {
+    "mcu": "32MX320F128H",
+    "name": "Digilent chipKIT UNO32",
+    "vendor": "Digilent"
+  },
+  "uno_r4_minima": {
+    "mcu": "RA4M1",
+    "name": "Arduino Uno R4 Minima",
+    "vendor": "Arduino"
+  },
+  "uno_r4_wifi": {
+    "mcu": "RA4M1",
+    "name": "Arduino Uno R4 WiFi",
+    "vendor": "Arduino"
+  },
+  "uno_wifi_rev2": {
+    "mcu": "ATMEGA4809",
+    "name": "Arduino Uno WiFi Rev2",
+    "vendor": "Arduino"
+  },
+  "unphone7": {
+    "mcu": "ESP32",
+    "name": "unPhone 7",
+    "vendor": "University of Sheffield"
+  },
+  "unphone8": {
+    "mcu": "ESP32S3",
+    "name": "unPhone 8",
+    "vendor": "University of Sheffield"
+  },
+  "unphone9": {
+    "mcu": "ESP32S3",
+    "name": "unPhone 9",
+    "vendor": "University of Sheffield"
+  },
+  "upesy_wroom": {
+    "mcu": "ESP32",
+    "name": "uPesy ESP32 Wroom DevKit",
+    "vendor": "uPesy"
+  },
+  "upesy_wrover": {
+    "mcu": "ESP32",
+    "name": "uPesy ESP32 Wrover DevKit",
+    "vendor": "uPesy"
+  },
+  "usbasp": {
+    "mcu": "ATMEGA8",
+    "name": "USBasp stick",
+    "vendor": "Atmel"
+  },
+  "usbono_pic32": {
+    "mcu": "32MX440F512H",
+    "name": "PONTECH UAV100",
+    "vendor": "PONTECH"
+  },
+  "uview": {
+    "mcu": "ATMEGA328P",
+    "name": "SparkFun MicroView",
+    "vendor": "SparkFun"
+  },
+  "vajra": {
+    "mcu": "C-CLASS",
+    "name": "Vajra on Arty A7-100: Artix-7 FPGA Development Board",
+    "vendor": "Xilinx"
+  },
+  "vake_v1": {
+    "mcu": "STM32F446RET6",
+    "name": "VAkE v1.0",
+    "vendor": "VAE"
+  },
+  "valtrack_v4_mfw_esp32_c3": {
+    "mcu": "ESP32C3",
+    "name": "Valetron Systems VALTRACK-V4MVF",
+    "vendor": "Valetron Systems"
+  },
+  "valtrack_v4_vts_esp32_c3": {
+    "mcu": "ESP32C3",
+    "name": "Valetron Systems VALTRACK-V4VTS",
+    "vendor": "Valetron Systems"
+  },
+  "vbluno51": {
+    "mcu": "NRF51822",
+    "name": "VNG VBLUNO51",
+    "vendor": "VNG"
+  },
+  "vbluno52": {
+    "mcu": "NRF52832",
+    "name": "VNG VBLUno52",
+    "vendor": "VNG"
+  },
+  "vccgnd_f103zet6": {
+    "mcu": "STM32F103ZET6",
+    "name": "VCCGND F103ZET6 Mini",
+    "vendor": "VCCGND"
+  },
+  "vccgnd_f407zg_mini": {
+    "mcu": "STM32F407ZGT6",
+    "name": "VCCGND F407ZGT6 Mini",
+    "vendor": "VCCGND"
+  },
+  "vintlabs-devkit-v1": {
+    "mcu": "ESP32",
+    "name": "VintLabs ESP32 Devkit",
+    "vendor": "VintLabs"
+  },
+  "vostok_mega_vn01t": {
+    "mcu": "K1921VK01T",
+    "name": "Vostok MEGA-VN01T",
+    "vendor": "Vostok"
+  },
+  "vostok_uno_vn035": {
+    "mcu": "K1921VK035",
+    "name": "Vostok UNO-VN035",
+    "vendor": "Vostok"
+  },
+  "vostok_uno_vn035_revC": {
+    "mcu": "K1921VK035",
+    "name": "Vostok UNO-VN035-revC",
+    "vendor": "Vostok"
+  },
+  "wa2": {
+    "mcu": "BK7231Q",
+    "name": "WA2 Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "watchy": {
+    "mcu": "ESP32",
+    "name": "SQFMI Watchy v2.0",
+    "vendor": "SQFMI"
+  },
+  "waveshare_ble400": {
+    "mcu": "NRF51822",
+    "name": "Waveshare BLE400",
+    "vendor": "Waveshare"
+  },
+  "waveshare_esp32_s3_zero": {
+    "mcu": "ESP32S3",
+    "name": "Waveshare ESP32-S3-Zero",
+    "vendor": "Waveshare"
+  },
+  "waveshare_esp32s3_touch_lcd_128": {
+    "mcu": "ESP32S3",
+    "name": "Waveshare ESP32-S3-Touch-LCD-1.28 (16 MB QD, 2MB PSRAM)",
+    "vendor": "Waveshare"
+  },
+  "waveshare_open103z": {
+    "mcu": "STM32F103ZET6",
+    "name": "Waveshare Open103Z",
+    "vendor": "Waveshare"
+  },
+  "wb02a": {
+    "mcu": "LN882HK",
+    "name": "WB02A Wi-Fi/BLE Module",
+    "vendor": "Unknown"
+  },
+  "wb1s": {
+    "mcu": "BK7231T",
+    "name": "WB1S Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "wb2l": {
+    "mcu": "BK7231T",
+    "name": "WB2L Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "wb2l-m1": {
+    "mcu": "BK7231N",
+    "name": "WB2L_M1 Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "wb2s": {
+    "mcu": "BK7231T",
+    "name": "WB2S Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "wb3l": {
+    "mcu": "BK7231T",
+    "name": "WB3L Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "wb3s": {
+    "mcu": "BK7231T",
+    "name": "WB3S Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "wblc5": {
+    "mcu": "BK7231T",
+    "name": "WBLC5 Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "we_oceanus1": {
+    "mcu": "STM32WLE5CCU6 ",
+    "name": "WE Oceanus-I Module",
+    "vendor": "WE"
+  },
+  "we_oceanus1_ev": {
+    "mcu": "STM32WLE5CCU6 ",
+    "name": "WE Oceanus-I EV",
+    "vendor": "WE"
+  },
+  "weact_g474ceu6": {
+    "mcu": "STM32G474CEU6",
+    "name": "WeAct Studio STM32G474 CoreBoard",
+    "vendor": "WeAct Studio"
+  },
+  "weact_mini_h743vitx": {
+    "mcu": "STM32H743VIT6",
+    "name": "WeAct Studio MiniSTM32H743VITX",
+    "vendor": "WeAct Studio"
+  },
+  "weact_mini_h750vbtx": {
+    "mcu": "STM32H750VBT6",
+    "name": "WeAct Studio MiniSTM32H750VBTX",
+    "vendor": "WeAct Studio"
+  },
+  "weactstudio_esp32c3coreboard": {
+    "mcu": "ESP32C3",
+    "name": "WeAct Studio ESP32C3CoreBoard",
+    "vendor": "WeAct Studio"
+  },
+  "wemos_d1_mini32": {
+    "mcu": "ESP32",
+    "name": "WEMOS D1 MINI ESP32",
+    "vendor": "WEMOS"
+  },
+  "wemos_d1_uno32": {
+    "mcu": "ESP32",
+    "name": "WEMOS D1 R32",
+    "vendor": "WEMOS"
+  },
+  "wemosbat": {
+    "mcu": "ESP32",
+    "name": "WeMos WiFi and Bluetooth Battery",
+    "vendor": "WEMOS"
+  },
+  "wesp32": {
+    "mcu": "ESP32",
+    "name": "Silicognition wESP32",
+    "vendor": "Silicognition"
+  },
+  "whispernode": {
+    "mcu": "ATMEGA328P",
+    "name": "Talk2 Whisper Node",
+    "vendor": "Wisen"
+  },
+  "widora-air": {
+    "mcu": "ESP32",
+    "name": "Widora AIR",
+    "vendor": "Widora"
+  },
+  "wifi_slot": {
+    "mcu": "ESP8266",
+    "name": "WiFi Slot",
+    "vendor": "Amperka"
+  },
+  "wifiduino": {
+    "mcu": "ESP8266",
+    "name": "WiFiduino",
+    "vendor": "WifiDuino"
+  },
+  "wifiduino32": {
+    "mcu": "ESP32",
+    "name": "Blinker WiFiduino32",
+    "vendor": "Blinker"
+  },
+  "wifiduino32c3": {
+    "mcu": "ESP32C3",
+    "name": "Blinker WiFiduinoV2 (ESP32-C3)",
+    "vendor": "Blinker"
+  },
+  "wifiduino32s3": {
+    "mcu": "ESP32S3",
+    "name": "Blinker WiFiduino32S3",
+    "vendor": "Blinker"
+  },
+  "wifinfo": {
+    "mcu": "ESP8266",
+    "name": "WifInfo",
+    "vendor": "Espressif"
+  },
+  "wildfirev2": {
+    "mcu": "ATMEGA1284P",
+    "name": "Wicked Device WildFire V2",
+    "vendor": "Wicked Device"
+  },
+  "wildfirev3": {
+    "mcu": "ATMEGA1284P",
+    "name": "Wicked Device WildFire V3",
+    "vendor": "Wicked Device"
+  },
+  "wio_3g": {
+    "mcu": "STM32F439VI",
+    "name": "Seeed Wio 3G",
+    "vendor": "SeeedStudio"
+  },
+  "wio_link": {
+    "mcu": "ESP8266",
+    "name": "Wio Link",
+    "vendor": "SeeedStudio"
+  },
+  "wio_node": {
+    "mcu": "ESP8266",
+    "name": "Wio Node",
+    "vendor": "SeeedStudio"
+  },
+  "wipy3": {
+    "mcu": "ESP32",
+    "name": "Pycom WiPy3",
+    "vendor": "Pycom Ltd."
+  },
+  "wl2s": {
+    "mcu": "LN882HK",
+    "name": "WL2S Wi-Fi/BLE Module",
+    "vendor": "Unknown"
+  },
+  "wr1": {
+    "mcu": "RTL8710BN",
+    "name": "WR1 Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "wr1e": {
+    "mcu": "RTL8710BN",
+    "name": "WR1E Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "wr2": {
+    "mcu": "RTL8710BN",
+    "name": "WR2 Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "wr2e": {
+    "mcu": "RTL8710BN",
+    "name": "WR2E Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "wr2l": {
+    "mcu": "RTL8710BX",
+    "name": "WR2L Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "wr2le": {
+    "mcu": "RTL8710BX",
+    "name": "WR2LE Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "wr3": {
+    "mcu": "RTL8710BN",
+    "name": "WR3 Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "wr3e": {
+    "mcu": "RTL8710BN",
+    "name": "WR3E Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "wr3l": {
+    "mcu": "RTL8710BX",
+    "name": "WR3L Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "wr3le": {
+    "mcu": "RTL8710BX",
+    "name": "WR3LE Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "wr3n": {
+    "mcu": "RTL8710BN",
+    "name": "WR3N Wi-Fi Module",
+    "vendor": "Tuya Inc."
+  },
+  "wraith32_v1": {
+    "mcu": "STM32F051K6",
+    "name": "Wraith V1 ESC",
+    "vendor": "Airbot"
+  },
+  "ws_esp32_s3_matrix": {
+    "mcu": "ESP32S3",
+    "name": "Waveshare ESP32-S3-Matrix",
+    "vendor": "Waveshare"
+  },
+  "wt32-eth01": {
+    "mcu": "ESP32",
+    "name": "Wireless-Tag WT32-ETH01 Ethernet Module",
+    "vendor": "Wireless-Tag"
+  },
+  "wt32-sc01-plus": {
+    "mcu": "ESP32S3",
+    "name": "wt32-sc01-plus",
+    "vendor": "Wireless-Tag"
+  },
+  "xdot_l151cc": {
+    "mcu": "STM32L151CCU6",
+    "name": "MultiTech xDot",
+    "vendor": "MultiTech"
+  },
+  "xinabox_cw01": {
+    "mcu": "ESP8266",
+    "name": "XinaBox CW01",
+    "vendor": "XinaBox"
+  },
+  "xinabox_cw02": {
+    "mcu": "ESP32",
+    "name": "XinaBox CW02",
+    "vendor": "XinaBox"
+  },
+  "xmc1100_boot_kit": {
+    "mcu": "XMC1100",
+    "name": "XMC1100 Boot Kit",
+    "vendor": "Infineon"
+  },
+  "xmc1100_h_bridge2go": {
+    "mcu": "XMC1100",
+    "name": "XMC1100 H-Bridge 2Go",
+    "vendor": "Infineon"
+  },
+  "xmc1100_xmc2go": {
+    "mcu": "XMC1100",
+    "name": "XMC1100 XMC2Go",
+    "vendor": "Infineon"
+  },
+  "xmc1300_boot_kit": {
+    "mcu": "XMC1300",
+    "name": "XMC1300 Boot Kit",
+    "vendor": "Infineon"
+  },
+  "xmc1300_sense2gol": {
+    "mcu": "XMC1300",
+    "name": "XMC1300 Sense2GoL",
+    "vendor": "Infineon"
+  },
+  "xmc1400_boot_kit": {
+    "mcu": "XMC1400",
+    "name": "XMC1400 Boot Kit",
+    "vendor": "Infineon"
+  },
+  "xmc4200_distance2go": {
+    "mcu": "XMC4200",
+    "name": "XMC4200 Distance2Go",
+    "vendor": "Infineon"
+  },
+  "xmc4700_relax_kit": {
+    "mcu": "XMC4700",
+    "name": "XMC4700 Relax Kit",
+    "vendor": "Infineon"
+  },
+  "xplained_nano_416": {
+    "mcu": "ATTINY416",
+    "name": "ATtiny416 Xplained Nano",
+    "vendor": "Microchip"
+  },
+  "xplained_pro_4809": {
+    "mcu": "ATMEGA4809",
+    "name": "Xplained Pro ATmega4809",
+    "vendor": "Microchip"
+  },
+  "yb_esp32s3_amp": {
+    "mcu": "ESP32S3",
+    "name": "YelloByte YB-ESP32-S3-AMP",
+    "vendor": "YelloByte"
+  },
+  "yb_esp32s3_amp_v2": {
+    "mcu": "ESP32S3",
+    "name": "YelloByte YB-ESP32-S3-AMP (Rev.2)",
+    "vendor": "YelloByte"
+  },
+  "yb_esp32s3_amp_v3": {
+    "mcu": "ESP32S3",
+    "name": "YelloByte YB-ESP32-S3-AMP (Rev.3)",
+    "vendor": "YelloByte"
+  },
+  "yb_esp32s3_dac": {
+    "mcu": "ESP32S3",
+    "name": "YelloByte YB-ESP32-S3-DAC",
+    "vendor": "YelloByte"
+  },
+  "yb_esp32s3_drv": {
+    "mcu": "ESP32S3",
+    "name": "YelloByte YB-ESP32-S3-DRV",
+    "vendor": "YelloByte"
+  },
+  "yb_esp32s3_eth": {
+    "mcu": "ESP32S3",
+    "name": "YelloByte YB-ESP32-S3-ETH",
+    "vendor": "YelloByte"
+  },
+  "yun": {
+    "mcu": "ATMEGA32U4",
+    "name": "Arduino Yun",
+    "vendor": "Arduino"
+  },
+  "yunmini": {
+    "mcu": "ATMEGA32U4",
+    "name": "Arduino Yun Mini",
+    "vendor": "Arduino"
+  },
+  "zero": {
+    "mcu": "SAMD21G18A",
+    "name": "Arduino Zero (Programming/Debug Port)",
+    "vendor": "Arduino"
+  },
+  "zeroUSB": {
+    "mcu": "SAMD21G18A",
+    "name": "Arduino Zero (USB Native Port)",
+    "vendor": "Arduino"
+  },
+  "zumbt328": {
+    "mcu": "ATMEGA328P",
+    "name": "BQ ZUM BT-328",
+    "vendor": "BQ"
+  }
+}

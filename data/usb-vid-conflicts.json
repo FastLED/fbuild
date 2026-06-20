@@ -1,0 +1,70 @@
+{
+  "0ccd:10ad": [
+    {
+      "product": " Cinergy H5 Rev. 2",
+      "source": "usb-ids-rs",
+      "vendor": "TerraTec Electronic GmbH"
+    },
+    {
+      "product": "Cinergy H5 Rev. 2",
+      "source": "linux-usb.org",
+      "vendor": "TerraTec Electronic GmbH"
+    },
+    {
+      "product": "Cinergy H5 Rev. 2",
+      "source": "usbids-github",
+      "vendor": "TerraTec Electronic GmbH"
+    }
+  ],
+  "0df6:001a": [
+    {
+      "product": "Bluetooth 2.0 adapter 100m CN-521v2 001 ",
+      "source": "usb-ids-rs",
+      "vendor": "Sitecom Europe B.V."
+    },
+    {
+      "product": "Bluetooth 2.0 adapter 100m CN-521v2 001",
+      "source": "linux-usb.org",
+      "vendor": "Sitecom Europe B.V."
+    },
+    {
+      "product": "Bluetooth 2.0 adapter 100m CN-521v2 001",
+      "source": "usbids-github",
+      "vendor": "Sitecom Europe B.V."
+    }
+  ],
+  "0df6:002d": [
+    {
+      "product": "WL-302 Wireless Network 300N USB dongle ",
+      "source": "usb-ids-rs",
+      "vendor": "Sitecom Europe B.V."
+    },
+    {
+      "product": "WL-302 Wireless Network 300N USB dongle",
+      "source": "linux-usb.org",
+      "vendor": "Sitecom Europe B.V."
+    },
+    {
+      "product": "WL-302 Wireless Network 300N USB dongle",
+      "source": "usbids-github",
+      "vendor": "Sitecom Europe B.V."
+    }
+  ],
+  "0fce:e0d4": [
+    {
+      "product": "C902 Phone [Mass Storage] ",
+      "source": "usb-ids-rs",
+      "vendor": "Sony Ericsson Mobile Communications AB"
+    },
+    {
+      "product": "C902 Phone [Mass Storage]",
+      "source": "linux-usb.org",
+      "vendor": "Sony Ericsson Mobile Communications AB"
+    },
+    {
+      "product": "C902 Phone [Mass Storage]",
+      "source": "usbids-github",
+      "vendor": "Sony Ericsson Mobile Communications AB"
+    }
+  ]
+}
