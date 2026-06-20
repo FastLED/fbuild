@@ -119,29 +119,28 @@ impl BuildOrchestrator for NxpLpcOrchestrator {
         //    framework owns `main()`, startup + vector table, wiring,
         //    HardwareSerial, SPI, and the device headers.
         //
-        //    Consumer override (FastLED/fbuild#663): when `platformio.ini`
-        //    carries `platform_packages = framework-arduino-lpc8xx@<spec>`,
-        //    fetch and use that commit instead of the const-pinned default
-        //    — needed for bisection workflows like FastLED/FastLED#3325.
-        let env_config = ctx.config.get_env_config(&params.env_name)?;
-        let core_override =
-            super::platform_packages::lookup_override(env_config, "framework-arduino-lpc8xx");
-        let core = match &core_override {
+        //    Honor `platform_packages = framework-arduino-lpc8xx@<URL>#<sha>`
+        //    from the env section (FastLED/fbuild#663, #681): if set, the
+        //    override URL replaces the const-pinned default and gets its own
+        //    cache subdir via `PackageBase::with_override`. The parser
+        //    + resolver are shared across every framework orchestrator so
+        //    nxplpc carries no platform-specific platform_packages logic.
+        let core_override = ctx
+            .config
+            .get_env_config(&params.env_name)
+            .ok()
+            .and_then(|env| {
+                crate::package_override::resolve_override(env, "framework-arduino-lpc8xx")
+            });
+        let core = match core_override {
             Some(ovr) => {
-                let short = &ovr.git_ref[..7.min(ovr.git_ref.len())];
-                let version = format!("override+g{}", short);
                 let banner = format!(
                     "ArduinoCore-LPC8xx OVERRIDE: {} (default pinned: {})",
-                    ovr.archive_url,
+                    ovr.url,
                     fbuild_packages::library::ArduinoCoreLpc8xx::commit()
                 );
-                tracing::info!("{}", banner);
                 ctx.build_log.push(banner);
-                fbuild_packages::library::ArduinoCoreLpc8xx::with_override(
-                    &params.project_dir,
-                    &ovr.archive_url,
-                    &version,
-                )
+                fbuild_packages::library::ArduinoCoreLpc8xx::with_override(&params.project_dir, ovr)
             }
             None => fbuild_packages::library::ArduinoCoreLpc8xx::new(&params.project_dir),
         };

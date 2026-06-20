@@ -678,6 +678,20 @@ mod tests {
 
     #[test]
     fn install_lock_blocks_second_caller_until_released() {
+        // What this test proves: holding the install lock makes a contending
+        // acquire wait until the first holder releases.
+        //
+        // Earlier shape — `std::thread::sleep(50ms); drop(first); assert waited >= 40ms` —
+        // was flaky under parallel-test contention: `std::thread::spawn` doesn't
+        // guarantee the spawned thread is scheduled before the main thread's sleep
+        // ends. If the waiter wasn't scheduled until after `drop(first)`, it would
+        // acquire instantly and report `waited ≈ 0ms`, failing the deadline.
+        //
+        // New shape: use `JoinHandle::is_finished` to prove the waiter is *still*
+        // blocked while we hold the lock — that's the actual invariant we care
+        // about. The wall-clock elapsed assertion becomes a much softer "waiter
+        // observed at least one polling sleep," which doesn't race with scheduler
+        // latency.
         let tmp = tempfile::tempdir().unwrap();
         let lock_dir = tmp.path().join("zccache.lock");
         let first = acquire_install_lock_at(
@@ -700,13 +714,28 @@ mod tests {
             started.elapsed()
         });
 
-        std::thread::sleep(Duration::from_millis(50));
+        // Give the waiter a generous window to start polling. 100ms is far
+        // longer than any reasonable scheduler latency, so on a healthy run
+        // the waiter is definitely inside `acquire_install_lock_at` by now.
+        std::thread::sleep(Duration::from_millis(100));
+
+        // Load-bearing assertion: the waiter MUST still be blocked while we
+        // hold the lock. If it isn't, the lock isn't actually contended.
+        assert!(
+            !waiter.is_finished(),
+            "second lock acquire completed while the first lock was still held — \
+             the install lock is not blocking contended callers"
+        );
+
         drop(first);
 
         let waited = waiter.join().expect("waiter thread");
+        // Soft sanity check: at least some elapsed time. Don't pin a tight
+        // deadline — scheduler jitter on parallel test runs can hide between
+        // `Instant::now()` and the first `create_dir` call.
         assert!(
-            waited >= Duration::from_millis(40),
-            "second lock should block behind the first, waited {waited:?}"
+            waited > Duration::from_millis(0),
+            "waiter should have measured a non-zero acquire duration, got {waited:?}"
         );
     }
 

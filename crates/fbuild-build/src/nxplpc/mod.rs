@@ -14,7 +14,11 @@
 
 pub mod mcu_config;
 pub mod orchestrator;
-pub mod platform_packages;
+// `platform_packages` lookup is now shared at the workspace level
+// (FastLED/fbuild#681) — see `crate::package_override`. The per-platform
+// parser introduced in #663 has been folded into
+// `fbuild_config::platform_packages` so every orchestrator gets the same
+// parser without duplication.
 
 use std::path::Path;
 
