@@ -2,6 +2,21 @@
 
 fbuild is a PlatformIO-compatible embedded build tool, organized as a small fixed set of crates (kept as close to a monocrate as possible — see the "Never add a new crate" rule below). See @docs/CLAUDE.md for which architecture doc to read based on what you're working on.
 
+## Agent docs routing (FastLED/fbuild#695)
+
+When operating in this repo on a task that isn't covered by the architectural overview, jump to the right per-topic doc instead of grepping for it:
+
+| Task | Read |
+|---|---|
+| "Which `fbuild` subcommand do I run?" | [`agents/docs/commands-reference.md`](agents/docs/commands-reference.md) |
+| "How does deploy actually get firmware to the board?" | [`agents/docs/deploy-architecture.md`](agents/docs/deploy-architecture.md) |
+| "What DTR/RTS state do I open this CDC port at?" | [`docs/usb-cdc-control-line-matrix.md`](docs/usb-cdc-control-line-matrix.md) |
+| "Which crate owns this code?" | [`crates/CLAUDE.md`](crates/CLAUDE.md) |
+| "Which architecture doc maps to my crate?" | [`docs/CLAUDE.md`](docs/CLAUDE.md) |
+| "Is this serial port the right device?" | `fbuild serial probe list` (FastLED/fbuild#686) |
+
+The four rules an agent must internalize before doing anything else (all listed in "Essential Rules" below): **never bypass `soldr`**, **never bypass `uv`**, **every directory needs a README.md**, **never invoke `pyocd` / `esptool` / `dfu-util` / `picotool` directly — go through `fbuild deploy`** (the last is FastLED/fbuild#694's scope; the hook ban lands separately).
+
 ## Essential Rules
 
 - **Never add a new crate.** fbuild is kept as close to a monocrate as possible. New functionality is folded into an existing crate as a *module*, not introduced as a new crate or workspace member. Per-platform orchestrators live as modules under `fbuild-build`; the running-process broker adoption lives under `fbuild-daemon/src/broker/` (FastLED/fbuild#560) — follow that pattern. If code is needed by two crates that can't depend on each other (e.g. the CLI and the daemon), put the shared, dependency-free pieces in a crate both already depend on (`fbuild-core` / `fbuild-paths`). This is enforced by CI (`crate-gate.yml` → `ci/check_workspace_crates.py`): adding a workspace member fails the build unless you also add it to the approved allowlist with a maintainer-reviewed rationale.

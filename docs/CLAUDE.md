@@ -1,5 +1,12 @@
 # Documentation Guide
 
+> **Agents:** for task-specific routing (which `fbuild` subcommand to
+> run, how deploy actually works, DTR/RTS rules), see the root
+> [`../CLAUDE.md`](../CLAUDE.md) routing table and
+> [`../agents/docs/`](../agents/docs/README.md). This doc maps each
+> *crate* to the right *architecture* doc; the agents/ docs map
+> each *task* to the right command and contract.
+
 Architecture docs are split by subsystem. Read only what's relevant to your current work.
 
 For a full FAQ-style index of every doc in this repo (human + LLM entry point), see [INDEX.md](INDEX.md).

@@ -1,5 +1,11 @@
 # Crates Architecture
 
+> **Agents:** for task-specific routing (which `fbuild` subcommand,
+> how deploy actually works, DTR/RTS rules), see the root
+> [`../CLAUDE.md`](../CLAUDE.md) routing table and
+> [`../agents/docs/`](../agents/docs/README.md). This doc covers
+> crate boundaries and dependency policy — not "how to do task X".
+
 ## Monocrate policy — do not add new crates
 
 fbuild is kept as close to a monocrate as possible. The set of crates below is
