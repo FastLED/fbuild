@@ -35,12 +35,11 @@ def main():
     if not file_path:
         return 0
 
-    # Normalize path
-    file_path = file_path.replace("\\", "/")
-
     # Resolve relative paths against project root
     if not os.path.isabs(file_path):
-        file_path = os.path.join(str(PROJECT_ROOT), file_path).replace("\\", "/")
+        file_path = os.path.join(str(PROJECT_ROOT), file_path)
+
+    file_path = os.path.realpath(file_path)
 
     # Only lint Rust files
     if not file_path.endswith(".rs"):
@@ -54,8 +53,9 @@ def main():
     # of another repo). detect_crate() would otherwise read the worktree's
     # `crates/<x>` segment and run clippy with -p <x> against fbuild, which
     # either fails or — when names collide — lints the wrong code.
-    project_root_norm = str(PROJECT_ROOT).replace("\\", "/").rstrip("/") + "/"
-    if not file_path.startswith(project_root_norm):
+    project_root_real = os.path.normcase(os.path.realpath(str(PROJECT_ROOT)))
+    file_path_check = os.path.normcase(file_path)
+    if os.path.commonpath([project_root_real, file_path_check]) != project_root_real:
         return 0
 
     # Delegate to ./lint in single-file mode. Use the active interpreter
