@@ -570,6 +570,12 @@ pub enum Commands {
         #[command(subcommand)]
         action: super::serial_probe::SerialAction,
     },
+    /// End-to-end bring-up orchestrator (FastLED/fbuild#697).
+    /// Consolidates the build → flash → reset → monitor → RPC
+    /// pipeline that today is split between fbuild and FastLED's
+    /// Python `bash autoresearch`. Scaffold today; full
+    /// implementation per #697 follow-ups.
+    Bringup(super::bringup::BringupArgs),
 }
 
 /// Subcommands for `fbuild lnk`.
