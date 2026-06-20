@@ -7,6 +7,7 @@ use crate::{daemon_client, lib_select, mcp};
 
 use super::args::{resolve_project_dir, rewrite_args, BloatCmd, Cli, Commands};
 use super::bloat_lookup::run_bloat_lookup;
+use super::bringup::run_bringup;
 use super::build::run_build;
 use super::clang_tools::{run_clang_tool, run_iwyu};
 use super::clangd_config::run_clangd_config;
@@ -516,6 +517,7 @@ pub async fn async_main() {
             }
         }
         Some(Commands::Serial { action }) => run_serial(action),
+        Some(Commands::Bringup(args)) => run_bringup(args),
     };
 
     if let Err(e) = result {

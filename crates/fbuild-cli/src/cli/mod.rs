@@ -11,6 +11,7 @@
 
 pub mod args;
 pub mod bloat_lookup;
+pub mod bringup;
 pub mod build;
 pub mod clang_tools;
 pub mod clangd_config;
