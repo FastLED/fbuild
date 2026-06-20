@@ -252,6 +252,112 @@ impl BoardFamily {
     pub fn reset_is_serial_native(&self) -> bool {
         matches!(self.reset_method(), ResetMethod::DtrRtsPulse)
     }
+
+    /// Per-family flash → monitor handoff timing.
+    ///
+    /// FastLED/fbuild#691. Numbers track FastLED/FastLED#3339's LPC
+    /// bring-up plus observed values from earlier ESP + RP2040 +
+    /// Teensy + Arduino sessions. See
+    /// `docs/usb-cdc-control-line-matrix.md` (#689) for the per-row
+    /// table and citations.
+    ///
+    /// Consumed by `Deployer::post_deploy_recovery` (#605) instead of
+    /// per-deployer inline magic numbers.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fbuild_serial::boards::BoardFamily;
+    ///
+    /// let esp = BoardFamily::Esp32NativeUsbCdc.handoff_timing();
+    /// assert_eq!(esp.post_reset_settle_ms, 200);
+    /// assert_eq!(esp.boot_drain_ms, 0);
+    ///
+    /// let lpc = BoardFamily::CdcAcmBridge.handoff_timing();
+    /// assert_eq!(lpc.post_reset_settle_ms, 500);
+    /// assert_eq!(lpc.boot_drain_ms, 2000);  // LPC11U35 bridge needs the drain
+    /// ```
+    #[must_use]
+    pub fn handoff_timing(&self) -> HandoffTiming {
+        use BoardFamily::*;
+        match self {
+            // ESP32 native + external UART: short settle, no drain
+            // (peripheral elides pre-app garbage), 5 retries through
+            // CDC re-enum.
+            Esp32NativeUsbCdc | Esp32ExternalUart => HandoffTiming {
+                post_reset_settle_ms: 200,
+                boot_drain_ms: 0,
+                port_reappear_timeout_ms: 3000,
+                open_retry_count: 5,
+            },
+            // CDC-ACM bridge (LPC11U35): pyOCD reset settles in ~500
+            // ms but the bridge re-emits ~2 s of boot-banner garbage
+            // that must be drained before the bring-up RPC. From
+            // FastLED/FastLED#3339.
+            CdcAcmBridge => HandoffTiming {
+                post_reset_settle_ms: 500,
+                boot_drain_ms: 2000,
+                port_reappear_timeout_ms: 3000,
+                open_retry_count: 3,
+            },
+            // 1200-bps-touch bootloaders (Teensy HalfKay, SAMD UF2,
+            // RP2040 BOOTSEL): the port DROPS for ~1-2 s then
+            // reappears at the *bootloader* VID/PID, then drops
+            // again and reappears at the app VID/PID after flash.
+            // Tolerate up to 5 s reappear + 10 open retries to ride
+            // out the double-enumeration window.
+            Teensy | NativeUsbCdcReset1200Bps => HandoffTiming {
+                post_reset_settle_ms: 100,
+                boot_drain_ms: 500,
+                port_reappear_timeout_ms: 5000,
+                open_retry_count: 10,
+            },
+            // Arduino auto-reset: the bootloader's "wait for upload"
+            // window is ~1.5 s — must sleep through it before reading
+            // app output. Port doesn't drop (USB endpoint stays on
+            // the bridge chip, not the AVR), so reappear timeout is
+            // 0 and only 1 open is needed.
+            ArduinoAutoReset => HandoffTiming {
+                post_reset_settle_ms: 1500,
+                boot_drain_ms: 0,
+                port_reappear_timeout_ms: 0,
+                open_retry_count: 1,
+            },
+        }
+    }
+}
+
+/// Flash → monitor handoff timing for a board family.
+///
+/// FastLED/fbuild#691 — concrete numbers from the FastLED/FastLED#3339
+/// LPC845-BRK bring-up incident + observed values across the ESP /
+/// Teensy / RP2040 / Arduino ecosystems. Used by
+/// `Deployer::post_deploy_recovery` (FastLED/fbuild#605) instead of
+/// per-deployer inline magic numbers.
+///
+/// All fields are `u32` milliseconds; consume via
+/// `Duration::from_millis(timing.field)`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct HandoffTiming {
+    /// How long to sleep after `reset` returns before the first byte
+    /// is expected on the serial port. Covers the device's boot-ROM
+    /// → app-firmware-entry latency.
+    pub post_reset_settle_ms: u32,
+    /// How long to drain residual boot-banner / boot-up junk before
+    /// the bring-up RPC sends its first request. Bridges (LPC11U35)
+    /// and stretched-boot devices benefit; ESP native USB is
+    /// zero-drain because the CDC peripheral itself elides the
+    /// pre-app garbage.
+    pub boot_drain_ms: u32,
+    /// How long to wait for the port to reappear after the USB endpoint
+    /// drops (CDC re-enum, 1200-bps-touch bootloader, BOOTSEL). Set
+    /// to `0` for boards that don't drop the port at all (Arduino
+    /// classic auto-reset).
+    pub port_reappear_timeout_ms: u32,
+    /// Max retries on transient open failures during the reappear
+    /// window. Higher for boards with longer re-enumeration windows
+    /// (Teensy / RP2040 — HalfKay / BOOTSEL).
+    pub open_retry_count: u8,
 }
 
 /// The hardware primitive that resets a board.
@@ -573,6 +679,61 @@ mod tests {
                 "family {family:?} must idle at (true, true) — FastLED/FastLED#3300"
             );
         }
+    }
+
+    // ─── FastLED/fbuild#691: HandoffTiming per-family table ───────
+
+    #[test]
+    fn handoff_timing_matches_fastled_3339_lpc_numbers() {
+        // The whole point of #691 is that the LPC845-BRK numbers from
+        // FastLED/FastLED#3339 don't drift in three places. Pin them.
+        let t = BoardFamily::CdcAcmBridge.handoff_timing();
+        assert_eq!(t.post_reset_settle_ms, 500);
+        assert_eq!(t.boot_drain_ms, 2000);
+        assert_eq!(t.port_reappear_timeout_ms, 3000);
+        assert_eq!(t.open_retry_count, 3);
+    }
+
+    #[test]
+    fn handoff_timing_esp_families_short_settle_no_drain() {
+        for family in [
+            BoardFamily::Esp32NativeUsbCdc,
+            BoardFamily::Esp32ExternalUart,
+        ] {
+            let t = family.handoff_timing();
+            assert_eq!(t.post_reset_settle_ms, 200);
+            assert_eq!(t.boot_drain_ms, 0, "ESP CDC peripheral elides boot garbage");
+        }
+    }
+
+    #[test]
+    fn handoff_timing_1200bps_families_tolerate_double_enum() {
+        for family in [BoardFamily::Teensy, BoardFamily::NativeUsbCdcReset1200Bps] {
+            let t = family.handoff_timing();
+            // 1200-bps-touch bootloaders enumerate TWICE — bootloader
+            // VID/PID, then app VID/PID after flash. Tolerate both.
+            assert!(
+                t.port_reappear_timeout_ms >= 3000,
+                "family {family:?} needs ≥3 s reappear window"
+            );
+            assert!(
+                t.open_retry_count >= 5,
+                "family {family:?} needs ≥5 retries through double-enum"
+            );
+        }
+    }
+
+    #[test]
+    fn handoff_timing_arduino_long_settle_no_reappear() {
+        let t = BoardFamily::ArduinoAutoReset.handoff_timing();
+        assert!(
+            t.post_reset_settle_ms >= 1000,
+            "Arduino bootloader 'wait for upload' window is ~1.5 s"
+        );
+        assert_eq!(
+            t.port_reappear_timeout_ms, 0,
+            "Arduino USB endpoint stays on the bridge chip; no reappear"
+        );
     }
 
     #[test]

@@ -236,6 +236,19 @@ data and which triggers reset — would let a new board's row be
 filled in empirically without datasheet archaeology. Mentioned in
 [FastLED/fbuild#686]'s discussion; not yet implemented.
 
+## Flash → monitor handoff timing (FastLED/fbuild#691)
+
+| BoardFamily | `post_reset_settle_ms` | `boot_drain_ms` | `port_reappear_timeout_ms` | `open_retry_count` |
+|---|---:|---:|---:|---:|
+| `Esp32NativeUsbCdc` | 200 | 0 | 3000 | 5 |
+| `Esp32ExternalUart` | 200 | 0 | 3000 | 5 |
+| `CdcAcmBridge` (LPC11U35) | 500 | 2000 | 3000 | 3 |
+| `Teensy` | 100 | 500 | 5000 | 10 |
+| `NativeUsbCdcReset1200Bps` (RP2040/SAMD) | 100 | 500 | 5000 | 10 |
+| `ArduinoAutoReset` | 1500 | 0 | 0 | 1 |
+
+Source: `crates/fbuild-serial/src/boards.rs::BoardFamily::handoff_timing`. The LPC11U35 row is from FastLED/FastLED#3339 (the bring-up incident). 1200-bps-touch rows tolerate the double-enumeration window (bootloader VID/PID then app VID/PID). Arduino has zero `port_reappear_timeout_ms` because the USB endpoint lives on the bridge chip and never drops.
+
 ## When to update this doc
 
 - A new board family lands in `crates/fbuild-build/src/<family>/`.
