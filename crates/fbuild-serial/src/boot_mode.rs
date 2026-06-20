@@ -14,7 +14,7 @@
 //! The matching *recovery* primitive — a single DTR/RTS-driven hard-reset
 //! sequence — lives in [`crate::esp_reset`]. Callers that want to attempt
 //! automatic recovery before propagating the error can invoke
-//! [`crate::esp_reset::hard_reset_blocking`] on the same port that produced
+//! [`crate::esp_reset::esp_hard_reset_blocking`] on the same port that produced
 //! the detection.
 
 /// A detected ESP ROM download-mode signal on the serial stream.
