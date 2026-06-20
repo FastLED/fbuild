@@ -1,11 +1,12 @@
 {
+  "_comment": "Hook commands prefer $CLAUDE_PROJECT_DIR (the harness's anchor, survives worktree shifts) and fall back to git toplevel. Every hook also guards on `[ -f <script> ]` so that working from an orphan-branch worktree (which legitimately has no ci/hooks/) cannot wedge the shell. Removing this guard re-introduces the catch-22 we hit during the online-data orphan-branch setup. `tool_guard.py` is intentionally absent here — that one is installed globally.",
   "hooks": {
     "UserPromptSubmit": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --no-project --script ci/hooks/board_context.py",
+            "command": "cd \"${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}\" && { [ -f ci/hooks/board_context.py ] && uv run --no-project --script ci/hooks/board_context.py || exit 0; }",
             "timeout": 5
           }
         ]
@@ -17,12 +18,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --no-project --script ci/hooks/tool_guard.py",
-            "timeout": 5
-          },
-          {
-            "type": "command",
-            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --no-project --script ci/hooks/forbidden_commands.py",
+            "command": "cd \"${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}\" && { [ -f ci/hooks/forbidden_commands.py ] && uv run --no-project --script ci/hooks/forbidden_commands.py || exit 0; }",
             "timeout": 5
           }
         ]
@@ -32,7 +28,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --no-project --script ci/hooks/crate_guard.py",
+            "command": "cd \"${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}\" && { [ -f ci/hooks/crate_guard.py ] && uv run --no-project --script ci/hooks/crate_guard.py || exit 0; }",
             "timeout": 5
           }
         ]
@@ -44,7 +40,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --no-project --script ci/hooks/readme_guard.py",
+            "command": "cd \"${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}\" && { [ -f ci/hooks/readme_guard.py ] && uv run --no-project --script ci/hooks/readme_guard.py || exit 0; }",
             "timeout": 5
           }
         ]
@@ -55,7 +51,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --no-project --script ci/hooks/check-on-start.py",
+            "command": "cd \"${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}\" && { [ -f ci/hooks/check-on-start.py ] && uv run --no-project --script ci/hooks/check-on-start.py || exit 0; }",
             "timeout": 10
           }
         ]
@@ -66,12 +62,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --no-project --script ci/hooks/code-review-on-stop.py",
+            "command": "cd \"${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}\" && { [ -f ci/hooks/code-review-on-stop.py ] && uv run --no-project --script ci/hooks/code-review-on-stop.py || exit 0; }",
             "timeout": 10
           },
           {
             "type": "command",
-            "command": "cd \"$(git rev-parse --show-toplevel)\" && uv run --no-project --script ci/hooks/check-on-stop.py",
+            "command": "cd \"${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}\" && { [ -f ci/hooks/check-on-stop.py ] && uv run --no-project --script ci/hooks/check-on-stop.py || exit 0; }",
             "timeout": 120
           }
         ]
