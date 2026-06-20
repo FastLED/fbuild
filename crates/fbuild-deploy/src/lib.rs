@@ -17,6 +17,7 @@ pub mod esp32;
 #[cfg(feature = "espflash-native")]
 pub mod esp32_native;
 pub mod lpc;
+pub mod method_validation;
 pub mod reset;
 pub mod size_check;
 pub mod teensy;
