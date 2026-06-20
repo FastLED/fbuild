@@ -1,0 +1,11 @@
+# SAMD21/SAMD51 native USB CDC during normal app run. Adafruit /
+# Sparkfun UF2 boards typically use VID 239A; the PID varies per
+# board model so listing a small representative set covers the
+# common families. Extend per Pi 5 / NUC host's fleet.
+#
+# (UF2 bootloader VID 239A with PID variant is intentionally NOT
+# listed here — that's the post-touch state.)
+239A:8014
+239A:802B
+# Atmel/Microchip generic SAMD CDC
+03EB:2402

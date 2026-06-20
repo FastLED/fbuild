@@ -1,0 +1,4 @@
+# PJRC Teensy 4.x USB-Serial. Same VID:PID as the LPC11U35 VCOM
+# bridge — disambiguation requires the operator to know which
+# is plugged in.
+16C0:0483

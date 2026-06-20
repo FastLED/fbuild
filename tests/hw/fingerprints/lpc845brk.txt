@@ -1,0 +1,6 @@
+# LPC845-BRK has TWO USB endpoints — the LPC11U35 USB-VCOM bridge
+# (data port) AND the NXP CMSIS-DAP debug probe (flash port). Listing
+# either as a presence indicator is fine for hardware-attached
+# detection.
+16C0:0483
+1FC9:0132
