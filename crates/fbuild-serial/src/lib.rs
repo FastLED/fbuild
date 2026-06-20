@@ -32,6 +32,7 @@
 
 pub mod boards;
 pub mod boot_mode;
+pub mod bootloader_watcher;
 pub mod crash_decoder;
 pub mod esp_reset;
 pub mod manager;
