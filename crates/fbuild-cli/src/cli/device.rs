@@ -30,13 +30,19 @@ pub async fn run_device(action: DeviceAction) -> fbuild_core::Result<()> {
                     .as_ref()
                     .map(|l| l.client_id.as_str())
                     .unwrap_or("-");
+                // Prefer the resolver-derived "vendor product (VID:PID)"
+                // display over the raw daemon `description`. When no
+                // vendor/product was resolved (non-USB ports, or daemon
+                // older than the resolver wiring), fall back to the raw
+                // description so behavior is identical to pre-resolver.
+                let pretty = device_pretty_name(dev);
                 println!(
                     "{:<20} {:<12} {:<12} {:<24} {}",
                     dev.port,
                     id,
                     lease,
                     holder,
-                    device_description(&dev.description, dev.previous_port.as_deref())
+                    device_description(&pretty, dev.previous_port.as_deref())
                 );
             }
             println!("\n{} device(s) found", resp.devices.len());
@@ -54,6 +60,12 @@ pub async fn run_device(action: DeviceAction) -> fbuild_core::Result<()> {
             };
             println!("  {}", resp.port);
             println!("    Device ID: {}", resp.device_id);
+            if let Some(ref vendor) = resp.vendor_name {
+                println!("    Vendor: {}", vendor);
+            }
+            if let Some(ref product) = resp.product_name {
+                println!("    Product: {}", product);
+            }
             println!("    Description: {}", resp.description);
             if let Some(ref serial) = resp.serial_number {
                 println!("    Serial: {}", serial);
@@ -166,5 +178,24 @@ fn device_description(description: &str, previous_port: Option<&str>) -> String 
     match previous_port {
         Some(port) => format!("{description} (renum from {port})"),
         None => description.to_string(),
+    }
+}
+
+/// Compose the canonical `"vendor product (VVVV:PPPP)"` display string
+/// for a device row. Falls back to the daemon-provided `description`
+/// (and bare hex VID:PID, when available) so this code remains usable
+/// against older daemons that don't yet emit `vendor_name`/`product_name`.
+fn device_pretty_name(dev: &crate::daemon_client::DeviceInfoResponse) -> String {
+    match (
+        dev.vid,
+        dev.pid,
+        dev.vendor_name.as_deref(),
+        dev.product_name.as_deref(),
+    ) {
+        (Some(v), Some(p), Some(vendor), Some(product)) => {
+            format!("{vendor} {product} ({v:04X}:{p:04X})")
+        }
+        (Some(v), Some(p), _, _) => format!("{} ({:04X}:{:04X})", dev.description, v, p),
+        _ => dev.description.clone(),
     }
 }

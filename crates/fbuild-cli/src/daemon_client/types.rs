@@ -314,6 +314,13 @@ pub struct DeviceInfoResponse {
     pub device_id: Option<String>,
     pub vid: Option<u16>,
     pub pid: Option<u16>,
+    /// Pretty USB vendor name resolved by the daemon (tier-1 bundled
+    /// `usb-ids` + tier-2 online overlay). `None` for non-USB ports.
+    #[serde(default)]
+    pub vendor_name: Option<String>,
+    /// Pretty USB product name (same provenance as `vendor_name`).
+    #[serde(default)]
+    pub product_name: Option<String>,
     #[serde(default)]
     pub serial_number: Option<String>,
     #[serde(default)]
@@ -333,6 +340,13 @@ pub struct DeviceStatusResponse {
     pub port: String,
     pub device_id: String,
     pub description: String,
+    /// Pretty USB vendor name resolved by the daemon. `None` for
+    /// bluetooth/PCI/unknown serials.
+    #[serde(default)]
+    pub vendor_name: Option<String>,
+    /// Pretty USB product name (same provenance as `vendor_name`).
+    #[serde(default)]
+    pub product_name: Option<String>,
     #[serde(default)]
     pub serial_number: Option<String>,
     #[serde(default)]

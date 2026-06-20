@@ -1,0 +1,228 @@
+# Nightly refresh of the `online-data` branch's USB VID:PID database.
+#
+# The tooling (Python merger, README, data files) lives on the orphan
+# `online-data` branch — NOT on `main`. This workflow file lives on `main`
+# only because GitHub Actions requires `schedule` and `workflow_dispatch`
+# triggers to be defined on the default branch. At runtime the job:
+#
+#   1. checks out `main` (default) so it can build the `dump_usb_ids`
+#      example from `crates/fbuild-core/examples/dump_usb_ids.rs`;
+#   2. fetches + worktrees the `online-data` branch into a sibling dir so
+#      the merger script lives at `online-data/tools/merge_sources.py`;
+#   3. dumps the bundled `usb-ids` Rust crate to JSON;
+#   4. downloads several upstream `usb.ids` text mirrors (fault-tolerant —
+#      a single source failure does NOT abort the run);
+#   5. runs the merger to produce sorted `usb-vid.json`,
+#      `usb-vid-conflicts.json`, and a future-forward `manifest.json`;
+#   6. commits the resulting data files back to `online-data` if they
+#      actually changed, force-pushing only after history pruning.
+#
+# Fault tolerance summary:
+#   - Rust build failure → keep the existing committed data (no commit).
+#   - Any individual upstream fetch failure → workflow continues with the
+#     sources that succeeded; merger refuses to write if the union is
+#     implausibly small (< 1000 entries) and the existing data stays put.
+#   - History is pruned to the most recent 200 commits per the design.
+#
+# Manual trigger: Actions tab → "Nightly USB IDs refresh" → Run workflow.
+
+name: Nightly USB IDs refresh
+
+on:
+  schedule:
+    # 04:17 UTC daily — off-peak, avoids the top-of-hour stampede on shared
+    # GitHub-hosted runners.
+    - cron: "17 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nightly-usb-ids
+  cancel-in-progress: false
+
+env:
+  ONLINE_BRANCH: online-data
+  ONLINE_WORKTREE: ${{ github.workspace }}/.online-data
+  BRANCH_BASE_URL: https://raw.githubusercontent.com/${{ github.repository }}/online-data
+  HISTORY_LIMIT: 200
+
+jobs:
+  refresh:
+    name: Refresh online-data/usb-vid.json
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main (default branch)
+        uses: actions/checkout@v6
+        with:
+          # We need the git history available so `git worktree add` against
+          # the `online-data` branch works, and so the history-prune step
+          # can rewrite commits without confusing a shallow clone.
+          fetch-depth: 0
+
+      - name: Configure git identity for the commit
+        run: |
+          git config user.name  "fbuild-bot[nightly]"
+          git config user.email "fbuild-bot+nightly@users.noreply.github.com"
+
+      - name: Fetch + worktree the online-data branch
+        # Creates a sibling directory containing the orphan branch. If the
+        # branch does not yet exist on the remote (very first run), we
+        # bootstrap an empty orphan worktree so the rest of the job works.
+        run: |
+          set -euo pipefail
+          if git ls-remote --heads origin "${ONLINE_BRANCH}" | grep -q .; then
+            git fetch origin "${ONLINE_BRANCH}:${ONLINE_BRANCH}"
+            git worktree add "${ONLINE_WORKTREE}" "${ONLINE_BRANCH}"
+          else
+            echo "::warning::online-data branch missing on remote; bootstrapping empty orphan worktree"
+            git worktree add --detach "${ONLINE_WORKTREE}"
+            (cd "${ONLINE_WORKTREE}" && git checkout --orphan "${ONLINE_BRANCH}" && git rm -rf . 2>/dev/null || true)
+          fi
+          ls -la "${ONLINE_WORKTREE}"
+
+      - uses: astral-sh/setup-uv@v3
+
+      - name: Setup soldr
+        uses: zackees/setup-soldr@v0.9.62
+        with:
+          cache: true
+          build-cache: true
+          target-cache: true
+          prebuild-deps: none
+          linker: platform-default
+
+      - name: Build dump_usb_ids example (tier-1 source)
+        id: build-dump
+        # Failure is tolerated: we still try to merge whatever upstream
+        # text sources arrived this run. The merger will fall back to the
+        # previously committed data if too few entries survive.
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          soldr cargo build --release --example dump_usb_ids -p fbuild-core
+
+      - name: Run dump_usb_ids → /tmp/usb-ids-rs.json
+        id: run-dump
+        continue-on-error: true
+        if: steps.build-dump.outcome == 'success'
+        run: |
+          set -euo pipefail
+          ./target/release/examples/dump_usb_ids > /tmp/usb-ids-rs.json
+          wc -l /tmp/usb-ids-rs.json
+
+      - name: Fetch linux-usb.org/usb.ids (tier-2)
+        id: fetch-linux-usb
+        continue-on-error: true
+        run: |
+          # HTTP only — the linux-usb.org HTTPS endpoint has a SAN mismatch.
+          curl --silent --show-error --retry 5 --retry-delay 10 --fail \
+            --max-time 90 \
+            -o /tmp/linux-usb.txt \
+            "http://www.linux-usb.org/usb.ids"
+          wc -l /tmp/linux-usb.txt
+
+      - name: Fetch usbids/usbids GitHub mirror (tier-3)
+        id: fetch-github
+        continue-on-error: true
+        run: |
+          curl --silent --show-error --retry 5 --retry-delay 10 --fail \
+            --max-time 90 \
+            -o /tmp/usbids-github.txt \
+            "https://raw.githubusercontent.com/usbids/usbids/master/usb.ids"
+          wc -l /tmp/usbids-github.txt
+
+      - name: Run merger (only if at least one source loaded)
+        id: merge
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          args=()
+          if [ "${{ steps.run-dump.outcome }}" = "success" ] && [ -s /tmp/usb-ids-rs.json ]; then
+            args+=(--json "usb-ids-rs=/tmp/usb-ids-rs.json")
+          fi
+          if [ "${{ steps.fetch-linux-usb.outcome }}" = "success" ] && [ -s /tmp/linux-usb.txt ]; then
+            args+=(--txt "linux-usb.org=/tmp/linux-usb.txt")
+          fi
+          if [ "${{ steps.fetch-github.outcome }}" = "success" ] && [ -s /tmp/usbids-github.txt ]; then
+            args+=(--txt "usbids-github=/tmp/usbids-github.txt")
+          fi
+          if [ "${#args[@]}" -eq 0 ]; then
+            echo "::error::all sources failed; preserving previously committed data"
+            exit 1
+          fi
+          uv run --no-project --script \
+            "${ONLINE_WORKTREE}/tools/merge_sources.py" \
+            "${args[@]}" \
+            --out-dir "${ONLINE_WORKTREE}/data" \
+            --branch-base-url "${BRANCH_BASE_URL}"
+
+      - name: Refresh manifest.json (always — even if data unchanged)
+        # The manifest carries `generated_at`, so we always update it; that
+        # gives the branch a heartbeat for downstream consumers even on a
+        # no-op data day. If the merge step failed we deliberately skip
+        # this — we don't want to advertise stale `sources` listings.
+        if: steps.merge.outcome == 'success'
+        run: |
+          if [ -f "${ONLINE_WORKTREE}/data/manifest.json" ]; then
+            mv "${ONLINE_WORKTREE}/data/manifest.json" "${ONLINE_WORKTREE}/manifest.json"
+          fi
+
+      - name: Commit + push if data actually changed
+        id: commit
+        if: steps.merge.outcome == 'success'
+        working-directory: ${{ env.ONLINE_WORKTREE }}
+        run: |
+          set -euo pipefail
+          git add manifest.json data/
+          if git diff --cached --quiet; then
+            echo "no changes to commit"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          ts="$(date -u +%Y-%m-%d)"
+          git commit -m "chore(usb-ids): nightly refresh ${ts}"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Prune history to last ${{ env.HISTORY_LIMIT }} commits
+        if: steps.commit.outputs.changed == 'true'
+        working-directory: ${{ env.ONLINE_WORKTREE }}
+        run: |
+          set -euo pipefail
+          total="$(git rev-list --count HEAD)"
+          echo "current history length: ${total}"
+          if [ "${total}" -le "${HISTORY_LIMIT}" ]; then
+            echo "no prune needed (<= ${HISTORY_LIMIT} commits)"
+            exit 0
+          fi
+          # Find the commit `HISTORY_LIMIT-1` back from HEAD and make it
+          # a new root via a graft. Then `git filter-repo` (preinstalled on
+          # GitHub-hosted Ubuntu runners) rewrites history accordingly.
+          target="$(git rev-list --max-count="${HISTORY_LIMIT}" HEAD | tail -n 1)"
+          git replace --graft "${target}"
+          pip install --quiet git-filter-repo
+          git filter-repo --force --refs HEAD
+          git for-each-ref --format='delete %(refname)' refs/replace/ | \
+            git update-ref --stdin
+
+      - name: Push
+        if: steps.commit.outputs.changed == 'true'
+        working-directory: ${{ env.ONLINE_WORKTREE }}
+        # Force-with-lease is needed only after a history-prune rewrite.
+        # In the no-prune path it is a no-op compared to a fast-forward.
+        run: |
+          git push --force-with-lease origin "${ONLINE_BRANCH}"
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## Nightly USB IDs refresh" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| source | outcome |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|---|---|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| usb-ids-rs (dump example) | ${{ steps.run-dump.outcome }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| linux-usb.org             | ${{ steps.fetch-linux-usb.outcome }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| usbids/usbids github      | ${{ steps.fetch-github.outcome }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| merge                     | ${{ steps.merge.outcome }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| committed                 | ${{ steps.commit.outputs.changed || 'n/a' }} |" >> "$GITHUB_STEP_SUMMARY"

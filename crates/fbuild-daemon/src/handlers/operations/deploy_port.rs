@@ -56,12 +56,14 @@ pub(super) fn choose_deploy_port(
 
     if matches.len() == 1 {
         let selected = matches[0];
+        log_connect("deploy", selected);
         DeployPortChoice {
             port: Some(selected.port.clone()),
             warning: None,
         }
     } else if !matches.is_empty() {
         let selected = matches[0];
+        log_connect("deploy", selected);
         DeployPortChoice {
             port: Some(selected.port.clone()),
             warning: Some(format!(
@@ -73,6 +75,7 @@ pub(super) fn choose_deploy_port(
         }
     } else if !candidates.is_empty() {
         let selected = &candidates[0];
+        log_connect("deploy", selected);
         DeployPortChoice {
                 port: Some(selected.port.clone()),
                 warning: Some(format!(
@@ -152,15 +155,34 @@ fn format_vids(vids: &[u16]) -> String {
 fn format_candidates<'a>(candidates: impl Iterator<Item = &'a PortCandidate>) -> String {
     candidates
         .map(|d| {
-            let id = match (d.vid, d.pid) {
-                (Some(vid), Some(pid)) => format!("{vid:04X}:{pid:04X}"),
-                (Some(vid), None) => format!("{vid:04X}:????"),
-                _ => "unknown".to_string(),
+            // For candidates we have a resolved VID:PID for, emit the
+            // canonical `vendor product (VVVV:PPPP)` form via the shared
+            // resolver — this is what the user sees in `fbuild device list`
+            // and what we log on connect, so warnings stay consistent.
+            let pretty = match (d.vid, d.pid) {
+                (Some(vid), Some(pid)) => fbuild_core::usb::pretty(vid, pid),
+                (Some(vid), None) => format!("{} ({vid:04X}:????)", d.description),
+                _ => d.description.clone(),
             };
-            format!("{} ({}, {})", d.port, id, d.description)
+            format!("{} ({})", d.port, pretty)
         })
         .collect::<Vec<_>>()
         .join(", ")
+}
+
+/// Emit the canonical connect-time log line:
+/// `"<op>: selected <port> — <vendor> <product> (VVVV:PPPP)"`. Falls back
+/// to the raw `description` when no VID:PID is known. Called by
+/// [`choose_deploy_port`] at the moment a device is bound to a deploy
+/// operation; the same format is used by the scan log lines so the user
+/// sees identical strings in `fbuild device list` and `fbuild deploy`.
+fn log_connect(op: &str, candidate: &PortCandidate) {
+    let pretty = match (candidate.vid, candidate.pid) {
+        (Some(vid), Some(pid)) => fbuild_core::usb::pretty(vid, pid),
+        (Some(vid), None) => format!("{} ({vid:04X}:????)", candidate.description),
+        _ => candidate.description.clone(),
+    };
+    tracing::info!("{op}: selected {} — {}", candidate.port, pretty);
 }
 
 #[cfg(test)]
@@ -177,6 +199,8 @@ mod tests {
             description: "USB Serial Device".to_string(),
             vid,
             pid,
+            vendor_name: None,
+            product_name: None,
             serial_number: None,
             previous_port: None,
             exclusive_lease: None,

@@ -281,6 +281,14 @@ pub struct DeviceInfo {
     pub vid: Option<u16>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub pid: Option<u16>,
+    /// Human-readable USB vendor name resolved via `fbuild_core::usb`. Only
+    /// emitted when the device has a USB VID (bluetooth/PCI/unknown serials
+    /// omit this).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub vendor_name: Option<String>,
+    /// Human-readable USB product name (same provenance as `vendor_name`).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub product_name: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub serial_number: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -439,6 +447,12 @@ pub struct DeviceStatusResponse {
     pub port: String,
     pub device_id: String,
     pub description: String,
+    /// Human-readable USB vendor name (only present for USB ports).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub vendor_name: Option<String>,
+    /// Human-readable USB product name (only present for USB ports).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub product_name: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub serial_number: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]

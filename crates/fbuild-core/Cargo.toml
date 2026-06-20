@@ -12,6 +12,8 @@ tracing = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 sha2 = { workspace = true }
+# Tier-1 USB VID:PID resolver — see `crate::usb`.
+usb-ids = { workspace = true }
 # Process containment primitive (Job Objects on Windows; process groups +
 # PR_SET_PDEATHSIG on Linux; process groups on macOS). The single global
 # `ContainedProcessGroup` owned by the daemon ensures every child process

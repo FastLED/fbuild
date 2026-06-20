@@ -101,6 +101,13 @@ pub struct DeviceState {
     pub description: String,
     pub vid: Option<u16>,
     pub pid: Option<u16>,
+    /// Human-readable USB vendor name, resolved from `vid` via
+    /// [`fbuild_core::usb::resolve`]. `None` only when the device has no
+    /// `vid` (e.g. bluetooth/PCI serial). Tier-1/2/3 fallbacks guarantee a
+    /// string when a `vid` exists. See [`crate::device_manager`].
+    pub vendor_name: Option<String>,
+    /// Human-readable USB product name (same provenance as `vendor_name`).
+    pub product_name: Option<String>,
     pub serial_number: Option<String>,
     pub previous_port: Option<String>,
     pub exclusive_lease: Option<DeviceLease>,
@@ -150,6 +157,8 @@ struct DiscoveredDevice {
     description: String,
     vid: Option<u16>,
     pid: Option<u16>,
+    vendor_name: Option<String>,
+    product_name: Option<String>,
     serial_number: Option<String>,
 }
 
@@ -222,7 +231,7 @@ impl DeviceManager {
         let discovered: Vec<DiscoveredDevice> = ports
             .into_iter()
             .map(|port_info| {
-                let (vid, pid, desc) = match &port_info.port_type {
+                let (vid, pid, fallback_desc) = match &port_info.port_type {
                     serialport::SerialPortType::UsbPort(usb) => (
                         Some(usb.vid),
                         Some(usb.pid),
@@ -236,6 +245,20 @@ impl DeviceManager {
                     serialport::SerialPortType::PciPort => (None, None, "PCI Serial".to_string()),
                     serialport::SerialPortType::Unknown => (None, None, "Unknown".to_string()),
                 };
+                // Resolve VID:PID → pretty (vendor, product) via the bundled
+                // `usb-ids` snapshot + any online overlay the daemon has
+                // installed. When both are present, the resolver-derived
+                // description wins over the (often blank or generic) string
+                // returned by the OS-level enumerator. Bluetooth / PCI /
+                // unknown ports keep their static fallback descriptor.
+                let (vendor_name, product_name, description) = match (vid, pid) {
+                    (Some(v), Some(p)) => {
+                        let info = fbuild_core::usb::resolve(v, p);
+                        let desc = format!("{} {}", info.vendor, info.product);
+                        (Some(info.vendor), Some(info.product), desc)
+                    }
+                    _ => (None, None, fallback_desc),
+                };
                 let serial_number = match &port_info.port_type {
                     serialport::SerialPortType::UsbPort(usb) => usb.serial_number.clone(),
                     _ => None,
@@ -247,9 +270,11 @@ impl DeviceManager {
                 DiscoveredDevice {
                     port: port_info.port_name,
                     device_id,
-                    description: desc,
+                    description,
                     vid,
                     pid,
+                    vendor_name,
+                    product_name,
                     serial_number,
                 }
             })
@@ -297,6 +322,8 @@ impl DeviceManager {
                             state.device_id = device.device_id;
                             state.vid = device.vid;
                             state.pid = device.pid;
+                            state.vendor_name = device.vendor_name;
+                            state.product_name = device.product_name;
                             state.serial_number = device.serial_number;
                             if let Some(previous_port) = state.previous_port.clone() {
                                 self.recent_port_moves.lock().unwrap().push(DevicePortMove {
@@ -318,6 +345,8 @@ impl DeviceManager {
                 description: device.description.clone(),
                 vid: device.vid,
                 pid: device.pid,
+                vendor_name: device.vendor_name.clone(),
+                product_name: device.product_name.clone(),
                 serial_number: device.serial_number.clone(),
                 previous_port: None,
                 exclusive_lease: None,
@@ -334,6 +363,8 @@ impl DeviceManager {
             entry.device_id = device.device_id;
             entry.vid = device.vid;
             entry.pid = device.pid;
+            entry.vendor_name = device.vendor_name;
+            entry.product_name = device.product_name;
             entry.serial_number = device.serial_number;
         }
 
@@ -637,6 +668,8 @@ impl DeviceManager {
                 description: "Test Device".to_string(),
                 vid: Some(0x1234),
                 pid: Some(0x5678),
+                vendor_name: Some("Test Vendor".to_string()),
+                product_name: Some("Test Device".to_string()),
                 serial_number: Some("TEST-SERIAL".to_string()),
                 previous_port: None,
                 exclusive_lease: None,
@@ -837,6 +870,8 @@ mod tests {
             description: "Test Device Renumbered".to_string(),
             vid: Some(0x1234),
             pid: Some(0x5678),
+            vendor_name: Some("Test Vendor".to_string()),
+            product_name: Some("Test Device".to_string()),
             serial_number: Some("TEST-SERIAL".to_string()),
         }]);
 
@@ -877,6 +912,8 @@ mod tests {
             description: "Test Device Renumbered".to_string(),
             vid: Some(0x1234),
             pid: Some(0x5678),
+            vendor_name: Some("Test Vendor".to_string()),
+            product_name: Some("Test Device".to_string()),
             serial_number: Some("TEST-SERIAL".to_string()),
         }]);
 
