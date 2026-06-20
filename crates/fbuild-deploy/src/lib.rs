@@ -18,6 +18,7 @@ pub mod esp32;
 pub mod esp32_native;
 pub mod lpc;
 pub mod reset;
+pub mod size_check;
 pub mod teensy;
 
 use fbuild_core::Result;

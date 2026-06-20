@@ -31,6 +31,23 @@ pub enum FbuildError {
     #[error("deploy failed: {0}")]
     DeployFailed(String),
 
+    /// Pre-deploy artifact size check failed — the firmware binary
+    /// would not fit in the board's flash region. FastLED/fbuild#690.
+    ///
+    /// Carries structured fields so `bash autoresearch <board>` can
+    /// show the user exactly what overflowed without parsing the
+    /// `Display` string.
+    #[error(
+        "firmware too large for board `{board}`: artifact is {actual} bytes, \
+         board flash region is {max} bytes ({percent_used:.1}% required vs 100%)"
+    )]
+    FirmwareTooLarge {
+        board: String,
+        actual: u64,
+        max: u64,
+        percent_used: f64,
+    },
+
     #[error("serial error: {0}")]
     SerialError(String),
 
