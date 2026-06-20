@@ -198,7 +198,7 @@ impl BoardFamily {
     /// assert_eq!(BoardFamily::CdcAcmBridge.idle_dtr_rts(),              (true,  true));
     /// assert_eq!(BoardFamily::Teensy.idle_dtr_rts(),                    (true,  true));
     /// assert_eq!(BoardFamily::NativeUsbCdcReset1200Bps.idle_dtr_rts(),  (true,  true));
-    /// assert_eq!(BoardFamily::ArduinoAutoResetAutoReset.idle_dtr_rts(),          (true,  true));
+    /// assert_eq!(BoardFamily::ArduinoAutoReset.idle_dtr_rts(),          (true,  true));
     /// ```
     #[must_use]
     pub fn idle_dtr_rts(&self) -> (bool, bool) {
@@ -228,7 +228,7 @@ impl BoardFamily {
     /// assert_eq!(BoardFamily::CdcAcmBridge.reset_method(),             ResetMethod::SwdViaCmsisDap);
     /// assert_eq!(BoardFamily::Teensy.reset_method(),                   ResetMethod::TouchBaud1200);
     /// assert_eq!(BoardFamily::NativeUsbCdcReset1200Bps.reset_method(), ResetMethod::TouchBaud1200);
-    /// assert_eq!(BoardFamily::ArduinoAutoResetAutoReset.reset_method(),         ResetMethod::DtrPulse);
+    /// assert_eq!(BoardFamily::ArduinoAutoReset.reset_method(),         ResetMethod::DtrPulse);
     /// ```
     #[must_use]
     pub fn reset_method(&self) -> ResetMethod {
