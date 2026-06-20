@@ -167,6 +167,56 @@ pub fn cdc_vcom_safe_assert<P: DtrRtsControl + ?Sized>(port: &mut P) -> serialpo
     Ok(())
 }
 
+/// Outcome of a polymorphic reset attempt.
+///
+/// FastLED/fbuild#687. `dispatch_reset` returns either `Done` (the
+/// reset completed in `fbuild-serial`) or `DelegateToCaller(method)`
+/// (the caller has to drive the reset somewhere else — e.g.
+/// pyOCD/`probe-rs` for SWD, `serialport::new(...).baud_rate(1200).open()`
+/// then close for 1200-bps touch).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ResetDispatchOutcome {
+    /// Reset completed by this crate. No further action required.
+    Done,
+    /// `fbuild-serial` does not own this reset path; the caller must
+    /// dispatch the named primitive elsewhere.
+    DelegateToCaller(crate::boards::ResetMethod),
+}
+
+/// Polymorphic reset entry point — pick the right primitive for the
+/// board family and run it.
+///
+/// FastLED/fbuild#687. Today the only primitive `fbuild-serial` owns
+/// is the ESP DTR/RTS pulse ([`esp_hard_reset_blocking`]); the other
+/// three primitives (`DtrPulse`, `TouchBaud1200`, `SwdViaCmsisDap`)
+/// each get their own follow-up issue. Until those land, the
+/// dispatcher returns `DelegateToCaller` so the caller can route the
+/// reset elsewhere.
+///
+/// Acts as the debug-assert that #687 acceptance criterion 3 asks
+/// for: a non-ESP family ends at `DelegateToCaller(other)` instead of
+/// pulsing DTR=low on an LPC VCOM bridge and silently dropping every
+/// target byte (the FastLED/FastLED#3300 trap).
+pub fn dispatch_reset<P: DtrRtsControl + ?Sized>(
+    family: crate::boards::BoardFamily,
+    port: &mut P,
+) -> serialport::Result<ResetDispatchOutcome> {
+    use crate::boards::ResetMethod::*;
+    match family.reset_method() {
+        DtrRtsPulse => {
+            esp_hard_reset_blocking(port)?;
+            Ok(ResetDispatchOutcome::Done)
+        }
+        other @ (DtrPulse | TouchBaud1200 | SwdViaCmsisDap) => {
+            tracing::debug!(
+                "dispatch_reset: family={family:?} requires {other:?} \
+                 — delegating to caller (not implemented in fbuild-serial)"
+            );
+            Ok(ResetDispatchOutcome::DelegateToCaller(other))
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -289,5 +339,78 @@ mod tests {
             ..RecordedPort::default()
         };
         assert!(cdc_vcom_safe_assert(&mut port).is_err());
+    }
+
+    // ─── FastLED/fbuild#687: dispatch_reset polymorphic routing ───
+
+    /// ESP families route through `esp_hard_reset_blocking` and report
+    /// `Done` — the canonical happy path.
+    #[test]
+    fn dispatch_reset_esp_families_run_inline_and_report_done() {
+        for family in [
+            crate::boards::BoardFamily::Esp32NativeUsbCdc,
+            crate::boards::BoardFamily::Esp32ExternalUart,
+        ] {
+            let mut port = RecordedPort::default();
+            let outcome = dispatch_reset(family, &mut port).expect("dispatch_reset Ok");
+            assert_eq!(outcome, ResetDispatchOutcome::Done);
+            assert_eq!(
+                port.events,
+                vec![("DTR", false), ("RTS", true), ("RTS", false)],
+                "ESP family {family:?} must emit the canonical reset sequence"
+            );
+        }
+    }
+
+    /// CDC-ACM bridge → DelegateToCaller(SwdViaCmsisDap). MUST NOT
+    /// touch DTR/RTS — that's the FastLED/FastLED#3300 silent-byte-
+    /// drop trap.
+    #[test]
+    fn dispatch_reset_cdc_acm_delegates_without_touching_dtr_rts() {
+        let mut port = RecordedPort::default();
+        let outcome = dispatch_reset(crate::boards::BoardFamily::CdcAcmBridge, &mut port)
+            .expect("dispatch_reset Ok");
+        assert_eq!(
+            outcome,
+            ResetDispatchOutcome::DelegateToCaller(crate::boards::ResetMethod::SwdViaCmsisDap)
+        );
+        assert!(
+            port.events.is_empty(),
+            "CDC-ACM dispatch must NOT pulse DTR/RTS — that's the #3300 trap"
+        );
+    }
+
+    /// Teensy / SAMD / RP2040 → DelegateToCaller(TouchBaud1200).
+    #[test]
+    fn dispatch_reset_1200bps_families_delegate() {
+        for family in [
+            crate::boards::BoardFamily::Teensy,
+            crate::boards::BoardFamily::NativeUsbCdcReset1200Bps,
+        ] {
+            let mut port = RecordedPort::default();
+            let outcome = dispatch_reset(family, &mut port).expect("dispatch_reset Ok");
+            assert_eq!(
+                outcome,
+                ResetDispatchOutcome::DelegateToCaller(crate::boards::ResetMethod::TouchBaud1200),
+                "family {family:?} must route to TouchBaud1200"
+            );
+            assert!(port.events.is_empty(), "no DTR/RTS pulse for {family:?}");
+        }
+    }
+
+    /// Arduino auto-reset → DelegateToCaller(DtrPulse).
+    #[test]
+    fn dispatch_reset_arduino_delegates_to_dtr_pulse() {
+        let mut port = RecordedPort::default();
+        let outcome = dispatch_reset(crate::boards::BoardFamily::ArduinoAutoReset, &mut port)
+            .expect("dispatch_reset Ok");
+        assert_eq!(
+            outcome,
+            ResetDispatchOutcome::DelegateToCaller(crate::boards::ResetMethod::DtrPulse)
+        );
+        assert!(
+            port.events.is_empty(),
+            "no pulse — caller drives Arduino auto-reset"
+        );
     }
 }

@@ -107,12 +107,17 @@ pub const ENVIRONMENT_TO_VCOM: &[(&str, u16, u16)] = &[
 /// on port open + post-reset paths.
 ///
 /// FastLED/fbuild#684's closing analysis identified this as the right
-/// abstraction; this enum is the minimum needed to satisfy #686's
+/// abstraction. The enum + [`Self::idle_dtr_rts`] satisfies #686's
 /// fourth acceptance criterion ("the probe API picks the right DTR/RTS
-/// for the target board family"). The full polymorphic dispatch
-/// registry that this enum eventually backs (`ResetMethod`,
-/// `BootModeClassifier`, `HandoffTiming`) is the scope of
-/// FastLED/fbuild#687, #688, and #691 respectively.
+/// for the target board family"); the [`Self::reset_method`] +
+/// [`crate::esp_reset::dispatch_reset`] pair satisfies #687's
+/// polymorphic-dispatch criterion.
+///
+/// Co-evolving with FastLED/FastLED#3300 / #3325 / #3339 (the LPC845-BRK
+/// bring-up incident that cost two debugging sessions because the
+/// "is this an ESP or a CDC bridge?" decision had no single point of
+/// consultation). See `docs/usb-cdc-control-line-matrix.md` (#689) for
+/// the per-chip DTR/RTS semantics this enum encodes.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum BoardFamily {
     /// ESP32 native USB CDC (ESP32-S3/C3/C6/H2/P4). The chip enumerates
@@ -127,49 +132,154 @@ pub enum BoardFamily {
     /// host → CP2102 → ESP32 UART instead of host → ESP32 directly.
     Esp32ExternalUart,
 
-    /// Bridge-based USB VCOM (LPC11U35 on LPC845-BRK, RP2040 board
-    /// bridges). Reset is via SWD/CMSIS-DAP, NOT DTR/RTS — calling
+    /// Bridge-based USB VCOM (LPC11U35 on LPC845-BRK, mbed DAPLink
+    /// boards). Reset is via SWD/CMSIS-DAP, NOT DTR/RTS — calling
     /// [`crate::esp_reset::esp_hard_reset_blocking`] on these boards
     /// leaves DTR=low which the bridge treats as "host not ready"
     /// and silently drops every byte the target MCU transmits
     /// (the FastLED/FastLED#3300 failure).
     /// Post-open idle: DTR=true, RTS=true (host-ready for the bridge).
+    ///
+    /// **Future enhancement** (FastLED/fbuild#687 follow-up): carry the
+    /// CMSIS-DAP probe's `(vid, pid)` as a payload so the dispatcher
+    /// can route SWD reset to the right probe endpoint without an
+    /// external lookup. Not in scope for the first cut — adding it
+    /// later is a non-breaking enum-variant evolution under the
+    /// `#[non_exhaustive]` annotation.
     CdcAcmBridge,
 
-    /// Generic Arduino path — FTDI / CP2102 / CH340 as the primary
-    /// USB endpoint on a board with the Arduino auto-reset capacitor.
-    /// DTR-pulse-on-open may reset the chip; the idle state is
-    /// DTR=true / RTS=true so the bridge passes target bytes through.
-    Arduino,
+    /// PJRC Teensy 3.x / 4.x. Reset trigger is the "1200-bps touch"
+    /// idiom: open port at 1200 baud, close → HalfKay bootloader
+    /// engages on disconnect. Post-open idle: DTR=true, RTS=true.
+    ///
+    /// **Naming-collision caveat:** Teensy enumerates as VID 0x16C0,
+    /// PID 0x0483 — *the same pair* as the LPC11U35 VCOM bridge. The
+    /// VID/PID lookup in [`family_for_vid_pid`] returns
+    /// [`Self::CdcAcmBridge`] for that pair (LPC is the more common
+    /// case in this codebase's deployment ecosystem); callers who
+    /// know they're on a Teensy must construct [`Self::Teensy`]
+    /// explicitly.
+    Teensy,
+
+    /// Native USB CDC with a 1200-bps touch reset (SAMD21/SAMD51,
+    /// RP2040, Adafruit UF2 boards). The host opens the port at
+    /// 1200 baud and closes; the device's TinyUSB stack watches for
+    /// the disconnect and reboots into the UF2/BOOTSEL bootloader.
+    /// Post-open idle: DTR=true, RTS=true.
+    NativeUsbCdcReset1200Bps,
+
+    /// Classic Arduino with capacitor-coupled DTR auto-reset
+    /// (UNO / Mega / Nano). Reset trigger is a single
+    /// DTR=true→false transition through the 100nF cap on the
+    /// ATmega's RESET pin. Post-open idle: DTR=true, RTS=true.
+    /// **Be aware of capacitor-charge timing** — opening the port
+    /// resets the target by side-effect; the first ~2 s of output
+    /// is the bootloader's "wait for upload" window.
+    ArduinoAutoReset,
 }
 
 impl BoardFamily {
-    /// The universal "host attached, data flow OK" port-open / post-
-    /// reset idle DTR/RTS state for this board family.
+    /// Universal post-attach / post-reset idle state for this family
+    /// — what `manager::open_port` sets after acquiring the port
+    /// handle.
     ///
-    /// Return shape is `(dtr, rts)` — both `true` means "drive the line
-    /// high", which depending on the bridge chip is either "host
-    /// ready" (CDC-ACM bridge) or "BOOT/EN held high → run firmware"
-    /// (ESP via DevKit autoreset).
+    /// Return shape is `(dtr, rts)` — both `true` means "drive the
+    /// line high", which depending on the bridge chip is either
+    /// "host ready" (CDC-ACM bridge, Teensy, native CDC, Arduino) or
+    /// "BOOT/EN held high → run firmware" (ESP via DevKit autoreset).
     ///
     /// # Examples
     ///
     /// ```
     /// use fbuild_serial::boards::BoardFamily;
     ///
-    /// assert_eq!(BoardFamily::Esp32NativeUsbCdc.idle_dtr_rts(), (false, false));
-    /// assert_eq!(BoardFamily::Esp32ExternalUart.idle_dtr_rts(), (false, false));
-    /// assert_eq!(BoardFamily::CdcAcmBridge.idle_dtr_rts(),     (true,  true));
-    /// assert_eq!(BoardFamily::Arduino.idle_dtr_rts(),          (true,  true));
+    /// assert_eq!(BoardFamily::Esp32NativeUsbCdc.idle_dtr_rts(),         (false, false));
+    /// assert_eq!(BoardFamily::Esp32ExternalUart.idle_dtr_rts(),         (false, false));
+    /// assert_eq!(BoardFamily::CdcAcmBridge.idle_dtr_rts(),              (true,  true));
+    /// assert_eq!(BoardFamily::Teensy.idle_dtr_rts(),                    (true,  true));
+    /// assert_eq!(BoardFamily::NativeUsbCdcReset1200Bps.idle_dtr_rts(),  (true,  true));
+    /// assert_eq!(BoardFamily::ArduinoAutoReset.idle_dtr_rts(),          (true,  true));
     /// ```
     #[must_use]
     pub fn idle_dtr_rts(&self) -> (bool, bool) {
         use BoardFamily::*;
         match self {
             Esp32NativeUsbCdc | Esp32ExternalUart => (false, false),
-            CdcAcmBridge | Arduino => (true, true),
+            CdcAcmBridge | Teensy | NativeUsbCdcReset1200Bps | ArduinoAutoReset => (true, true),
         }
     }
+
+    /// Reset primitive this family responds to. The companion to
+    /// [`Self::idle_dtr_rts`] — `idle_dtr_rts` is the state AFTER a
+    /// reset / port-open settles; `reset_method` is HOW the reset
+    /// gets triggered.
+    ///
+    /// FastLED/fbuild#687 — polymorphic dispatch lives in
+    /// [`crate::esp_reset::dispatch_reset`] which calls this to pick
+    /// the implementation primitive.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fbuild_serial::boards::{BoardFamily, ResetMethod};
+    ///
+    /// assert_eq!(BoardFamily::Esp32NativeUsbCdc.reset_method(),        ResetMethod::DtrRtsPulse);
+    /// assert_eq!(BoardFamily::Esp32ExternalUart.reset_method(),        ResetMethod::DtrRtsPulse);
+    /// assert_eq!(BoardFamily::CdcAcmBridge.reset_method(),             ResetMethod::SwdViaCmsisDap);
+    /// assert_eq!(BoardFamily::Teensy.reset_method(),                   ResetMethod::TouchBaud1200);
+    /// assert_eq!(BoardFamily::NativeUsbCdcReset1200Bps.reset_method(), ResetMethod::TouchBaud1200);
+    /// assert_eq!(BoardFamily::ArduinoAutoReset.reset_method(),         ResetMethod::DtrPulse);
+    /// ```
+    #[must_use]
+    pub fn reset_method(&self) -> ResetMethod {
+        use BoardFamily::*;
+        use ResetMethod::*;
+        match self {
+            Esp32NativeUsbCdc | Esp32ExternalUart => DtrRtsPulse,
+            CdcAcmBridge => SwdViaCmsisDap,
+            Teensy | NativeUsbCdcReset1200Bps => TouchBaud1200,
+            ArduinoAutoReset => DtrPulse,
+        }
+    }
+
+    /// `true` if this family's reset is driven by serial-port DTR/RTS
+    /// (i.e. [`crate::esp_reset::esp_hard_reset_blocking`] /
+    /// [`crate::esp_reset::dispatch_reset`] can handle it internally).
+    /// Used by `dispatch_reset` to decide between "do the pulse here"
+    /// and "return DelegateToCaller so the caller can dispatch SWD /
+    /// 1200-bps touch elsewhere."
+    #[must_use]
+    pub fn reset_is_serial_native(&self) -> bool {
+        matches!(self.reset_method(), ResetMethod::DtrRtsPulse)
+    }
+}
+
+/// The hardware primitive that resets a board.
+///
+/// FastLED/fbuild#687 — the enum that backs polymorphic reset
+/// dispatch. Not every variant has an implementation in
+/// `fbuild-serial` yet; the unimplemented ones either delegate out
+/// (SWD via pyOCD / probe-rs) or return a typed "caller must do this
+/// elsewhere" from [`crate::esp_reset::dispatch_reset`].
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ResetMethod {
+    /// esptool's classic-hardware ClassicReset sequence — DTR=low,
+    /// RTS=high pulse, RTS=low. Implemented in
+    /// [`crate::esp_reset::esp_hard_reset_blocking`].
+    DtrRtsPulse,
+    /// Single DTR=true→false transition. Drives the Arduino auto-reset
+    /// capacitor's edge. **Not yet implemented in fbuild-serial** —
+    /// dispatch returns `DelegateToCaller`. Follow-up issue.
+    DtrPulse,
+    /// Open port at 1200 baud, close → SAMD21/SAMD51 / RP2040 / Teensy
+    /// bootloader engages. **Not yet implemented in fbuild-serial** —
+    /// dispatch returns `DelegateToCaller`. Follow-up issue.
+    TouchBaud1200,
+    /// CMSIS-DAP probe via pyOCD / `probe-rs` — out of
+    /// `fbuild-serial`'s jurisdiction entirely (the SWD path doesn't
+    /// touch the data port). Dispatch always returns
+    /// `DelegateToCaller`.
+    SwdViaCmsisDap,
 }
 
 /// Look up the human-readable hint for a `(vid, pid)` pair.
@@ -239,7 +349,8 @@ pub fn vcom_for_env(env: &str) -> Option<(u16, u16)> {
 /// assert_eq!(family_for_vid_pid(0x303A, 0x1001), Some(BoardFamily::Esp32NativeUsbCdc));
 /// assert_eq!(family_for_vid_pid(0x16C0, 0x0483), Some(BoardFamily::CdcAcmBridge));
 /// assert_eq!(family_for_vid_pid(0x10C4, 0xEA60), Some(BoardFamily::Esp32ExternalUart));
-/// assert_eq!(family_for_vid_pid(0x2341, 0x0043), Some(BoardFamily::Arduino));
+/// assert_eq!(family_for_vid_pid(0x2341, 0x0043), Some(BoardFamily::ArduinoAutoReset));
+/// assert_eq!(family_for_vid_pid(0x2E8A, 0x000A), Some(BoardFamily::NativeUsbCdcReset1200Bps));
 /// assert_eq!(family_for_vid_pid(0xDEAD, 0xBEEF), None);
 /// ```
 #[must_use]
@@ -260,13 +371,14 @@ pub fn family_for_vid_pid(vid: u16, pid: u16) -> Option<BoardFamily> {
         // line-control bits drive ESP32 BOOT/EN through the autoreset
         // transistor pair. Classify as Esp32ExternalUart.
         (0x10C4, _) | (0x1A86, _) | (0x0403, _) => Some(Esp32ExternalUart),
-        // Arduino official
-        (0x2341, _) => Some(Arduino),
-        // RP2040 — treat as CDC bridge for the post-open DTR/RTS=true
-        // safety default; reset is a 1200-baud touch, not DTR/RTS, so
-        // the choice here only matters for "monitor / probe doesn't
-        // drop bytes."
-        (0x2E8A, _) => Some(CdcAcmBridge),
+        // Arduino official — capacitor-coupled DTR auto-reset path
+        (0x2341, _) => Some(ArduinoAutoReset),
+        // RP2040 — native USB CDC; bootloader entry is a 1200-bps touch
+        // (per RP2040 datasheet §USB Controller + pico-sdk's
+        // `pico_stdio_usb`). Classify as NativeUsbCdcReset1200Bps so
+        // the dispatcher routes to the right primitive instead of the
+        // ESP DTR/RTS pulse.
+        (0x2E8A, _) => Some(NativeUsbCdcReset1200Bps),
         _ => None,
     }
 }
@@ -339,7 +451,7 @@ mod tests {
         // CDC) MUST see DTR=true and RTS=true to forward target-MCU
         // bytes. Pin this invariant.
         assert_eq!(BoardFamily::CdcAcmBridge.idle_dtr_rts(), (true, true));
-        assert_eq!(BoardFamily::Arduino.idle_dtr_rts(), (true, true));
+        assert_eq!(BoardFamily::ArduinoAutoReset.idle_dtr_rts(), (true, true));
     }
 
     #[test]
@@ -383,13 +495,13 @@ mod tests {
         // Arduino official
         assert_eq!(
             family_for_vid_pid(0x2341, 0x0043),
-            Some(BoardFamily::Arduino)
+            Some(BoardFamily::ArduinoAutoReset)
         );
 
-        // RP2040 / Pico → CDC bridge
+        // RP2040 / Pico → native CDC with 1200-bps touch reset (#687)
         assert_eq!(
             family_for_vid_pid(0x2E8A, 0x000A),
-            Some(BoardFamily::CdcAcmBridge)
+            Some(BoardFamily::NativeUsbCdcReset1200Bps)
         );
     }
 
@@ -409,8 +521,79 @@ mod tests {
         let lpc = family_for_vid_pid(0x16C0, 0x0483).unwrap();
         assert_eq!(lpc.idle_dtr_rts(), (true, true));
 
-        // RP2040 / Pico
+        // RP2040 / Pico — even though it's NativeUsbCdcReset1200Bps
+        // now (#687), idle is still host-ready
         let pico = family_for_vid_pid(0x2E8A, 0x000A).unwrap();
         assert_eq!(pico.idle_dtr_rts(), (true, true));
+    }
+
+    // ─── FastLED/fbuild#687: ResetMethod + reset_method() invariants ───
+
+    #[test]
+    fn reset_method_maps_each_family_to_its_primitive() {
+        use BoardFamily::*;
+        use ResetMethod::*;
+
+        assert_eq!(Esp32NativeUsbCdc.reset_method(), DtrRtsPulse);
+        assert_eq!(Esp32ExternalUart.reset_method(), DtrRtsPulse);
+        assert_eq!(CdcAcmBridge.reset_method(), SwdViaCmsisDap);
+        assert_eq!(Teensy.reset_method(), TouchBaud1200);
+        assert_eq!(NativeUsbCdcReset1200Bps.reset_method(), TouchBaud1200);
+        assert_eq!(ArduinoAutoReset.reset_method(), DtrPulse);
+    }
+
+    #[test]
+    fn reset_is_serial_native_true_only_for_esp_families() {
+        use BoardFamily::*;
+        assert!(Esp32NativeUsbCdc.reset_is_serial_native());
+        assert!(Esp32ExternalUart.reset_is_serial_native());
+        assert!(!CdcAcmBridge.reset_is_serial_native());
+        assert!(!Teensy.reset_is_serial_native());
+        assert!(!NativeUsbCdcReset1200Bps.reset_is_serial_native());
+        assert!(!ArduinoAutoReset.reset_is_serial_native());
+    }
+
+    /// FastLED/FastLED#3300 regression guard: every NON-Esp family
+    /// MUST end at `(true, true)` idle so a generic open_port that
+    /// doesn't know to pulse DTR/RTS still ends at "host ready". If
+    /// this test fails after a refactor, the open_port path is
+    /// reintroducing the silent-byte-drop bug.
+    #[test]
+    fn non_esp_families_all_idle_at_host_ready() {
+        use BoardFamily::*;
+        for family in [
+            CdcAcmBridge,
+            Teensy,
+            NativeUsbCdcReset1200Bps,
+            ArduinoAutoReset,
+        ] {
+            assert_eq!(
+                family.idle_dtr_rts(),
+                (true, true),
+                "family {family:?} must idle at (true, true) — FastLED/FastLED#3300"
+            );
+        }
+    }
+
+    #[test]
+    fn new_variants_appear_in_family_for_vid_pid_classification() {
+        // RP2040 → NativeUsbCdcReset1200Bps
+        assert_eq!(
+            family_for_vid_pid(0x2E8A, 0x000A),
+            Some(BoardFamily::NativeUsbCdcReset1200Bps)
+        );
+        // Arduino → ArduinoAutoReset
+        assert_eq!(
+            family_for_vid_pid(0x2341, 0x0043),
+            Some(BoardFamily::ArduinoAutoReset)
+        );
+        // Teensy shares VID:PID with LPC11U35 — kept as CdcAcmBridge
+        // (the more common case in this codebase's deployment
+        // ecosystem). Caller wanting Teensy must construct the
+        // variant explicitly.
+        assert_eq!(
+            family_for_vid_pid(0x16C0, 0x0483),
+            Some(BoardFamily::CdcAcmBridge)
+        );
     }
 }
