@@ -76,6 +76,13 @@ vscode-fbuild/*.vsix
 /LOOP.md
 tasks/loop-runs/
 
+# Local staging dir for the orphan `online-data` branch's tooling.
+# The actual files live on that branch only — see
+# `.github/workflows/nightly-usb-ids.yml` and `docs/online-data.md`.
+.online-data-staging/
+# `git worktree add` location used by the nightly workflow.
+.online-data/
+
 # clud project settings
 !.clud/
 !.clud/settings.json
