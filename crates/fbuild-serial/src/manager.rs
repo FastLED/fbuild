@@ -124,6 +124,11 @@ impl SharedSerialManager {
                 // scan can reconstruct the DTR/RTS history end-to-end
                 // (FastLED/fbuild#532 acceptance: "logs show enough DTR/RTS
                 // /reset context to diagnose future S3 boot-mode lockups").
+                //
+                // For the full per-chip DTR/RTS semantics matrix — why
+                // DTR=true/RTS=true is the universal safe default, and
+                // which chips treat it differently — see
+                // `docs/usb-cdc-control-line-matrix.md` (FastLED/fbuild#689).
                 match serial.write_data_terminal_ready(true) {
                     Ok(()) => tracing::debug!("manager: open-time DTR=high asserted"),
                     Err(e) => tracing::warn!("failed to set DTR: {}", e),
