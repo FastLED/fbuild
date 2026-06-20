@@ -39,9 +39,9 @@
 #     branch keeps its last good snapshot.
 #   - History is pruned to the most recent 200 commits per the design.
 #
-# Manual trigger: Actions tab → "Nightly online-data refresh" → Run.
+# Manual trigger: Actions tab → "Update data" → Run workflow.
 
-name: Nightly online-data refresh
+name: Update data
 
 on:
   schedule:
@@ -54,7 +54,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: nightly-online-data
+  group: update-data
   cancel-in-progress: false
 
 env:
@@ -64,8 +64,8 @@ env:
   HISTORY_LIMIT: 200
 
 jobs:
-  refresh:
-    name: Refresh online-data datasets
+  update:
+    name: Update online-data datasets
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main (default branch)
@@ -293,7 +293,7 @@ jobs:
         if: always()
         run: |
           {
-            echo "## Nightly online-data refresh"
+            echo "## Update online-data"
             echo ""
             echo "| source / step | outcome |"
             echo "|---|---|"
