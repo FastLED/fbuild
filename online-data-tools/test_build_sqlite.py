@@ -333,6 +333,66 @@ def test_canned_query_vid_pid_to_boards_totally_unknown(built_db: Path) -> None:
     assert rows == [], "totally unknown VID:PID must return an empty set"
 
 
+def test_mcu_to_vid_injects_missing_usb_vendor(tmp_path: Path) -> None:
+    """Regression for the production bug found on first dispatch: upstream
+    usb.ids text databases don't carry 0x303a (Espressif) or 0x2e8a
+    (Raspberry Pi). When mcu_to_vid references such a VID and carries a
+    `vid_vendor` field, build_db must inject the vendor so the
+    board_vid_guess join doesn't silently drop the most relevant rows.
+    """
+    data = tmp_path / "data"
+    data.mkdir()
+    # Upstream usb-vid.json is missing 0x303a entirely.
+    (data / "usb-vid.json").write_text(json.dumps({
+        "10c4": {"vendor": "Silicon Labs", "products": [["ea60", "CP210x"]]},
+    }), encoding="utf-8")
+    (data / "pio-boards.json").write_text(json.dumps({
+        "esp32-s3-devkitc-1": {
+            "id": "esp32-s3-devkitc-1", "name": "Espressif ESP32-S3-DevKitC-1",
+            "vendor": "Espressif", "mcu": "ESP32S3",
+            "platform": "espressif32", "frameworks": ["arduino"],
+            "url": "https://example.invalid",
+        },
+    }), encoding="utf-8")
+    (data / "vendor_boards.json").write_text("{}", encoding="utf-8")
+    (data / "mcu_to_vid.json").write_text(json.dumps([
+        {"mcu_family": "ESP32S3", "vid": "303a",
+         "vid_vendor": "Espressif Systems", "score": 0.95,
+         "reason": "Espressif native USB"},
+        {"mcu_family": "ESP32S3", "vid": "10c4",
+         "vid_vendor": "Silicon Labs", "score": 0.55,
+         "reason": "CP210x bridge (legacy)"},
+    ]), encoding="utf-8")
+    out = tmp_path / "regression.db"
+    build_sqlite.build_db(
+        usb_vid_json       = data / "usb-vid.json",
+        pio_boards_json    = data / "pio-boards.json",
+        vendor_boards_json = data / "vendor_boards.json",
+        mcu_to_vid_json    = data / "mcu_to_vid.json",
+        out_path           = out,
+    )
+    with sqlite3.connect(out) as conn:
+        # 0x303a was missing upstream → must be auto-injected.
+        row = conn.execute(
+            "SELECT vendor FROM usb_vendor WHERE vid = ?", (int("303a", 16),),
+        ).fetchone()
+        assert row is not None, "vid_vendor seed must inject missing 0x303a"
+        assert row[0] == "Espressif Systems"
+        # 0x10c4 was already present upstream — injection must NOT clobber.
+        row = conn.execute(
+            "SELECT vendor FROM usb_vendor WHERE vid = ?", (int("10c4", 16),),
+        ).fetchone()
+        assert row[0] == "Silicon Labs"
+        # board_vid_guess now includes the ESP32S3 → 0x303a row.
+        rows = conn.execute(
+            "SELECT vid, confidence FROM board_vid_guess "
+            "WHERE board_id = 'esp32-s3-devkitc-1' "
+            "ORDER BY confidence DESC"
+        ).fetchall()
+    assert rows, "view must yield rows now that vendor is injected"
+    assert rows[0][0] == int("303a", 16), f"0x303a should rank first; got {rows}"
+
+
 def test_canned_query_vid_pid_to_boards_rp2040(built_db: Path) -> None:
     with sqlite3.connect(built_db) as conn:
         rows = conn.execute(

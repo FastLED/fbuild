@@ -187,6 +187,23 @@ def _populate_mcu_to_vid(conn: sqlite3.Connection, mcu_to_vid: list[dict]) -> No
         "VALUES (?, ?, ?, ?)",
         rows,
     )
+    # Inject any usb_vendor rows referenced by mcu_to_vid but missing from
+    # the upstream usb-vid.json. The canonical linux-usb.org / usbids text
+    # mirrors are slow to add newer VIDs (e.g. 0x303a Espressif, 0x2e8a
+    # Raspberry Pi), so without this the JOIN in board_vid_guess silently
+    # drops the most useful rows. mcu_to_vid entries carrying a
+    # `vid_vendor` field are the seed of truth for these gaps; existing
+    # usb_vendor rows are NOT overwritten (`INSERT OR IGNORE`).
+    overrides = [
+        (_ensure_int(entry["vid"]), entry["vid_vendor"])
+        for entry in mcu_to_vid
+        if entry.get("vid_vendor")
+    ]
+    if overrides:
+        conn.executemany(
+            "INSERT OR IGNORE INTO usb_vendor (vid, vendor) VALUES (?, ?)",
+            overrides,
+        )
 
 
 def build_db(
