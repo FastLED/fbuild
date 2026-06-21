@@ -8983,7 +8983,7 @@
       ],
       [
         "000e",
-        "SideWinder® Freestyle Pro"
+        "SideWinder\u00ae Freestyle Pro"
       ],
       [
         "0014",
@@ -13916,7 +13916,7 @@
       ],
       [
         "2015",
-        "TouchChip® Fingerprint Reader"
+        "TouchChip\u00ae Fingerprint Reader"
       ],
       [
         "2016",
@@ -20118,7 +20118,7 @@
       ],
       [
         "705a",
-        "HD Webcam (960×540)"
+        "HD Webcam (960\u00d7540)"
       ],
       [
         "9304",
@@ -21741,19 +21741,19 @@
       ],
       [
         "0004",
-        "4000U CarrollTouch® Touchmonitor Interface"
+        "4000U CarrollTouch\u00ae Touchmonitor Interface"
       ],
       [
         "0007",
-        "2500U IntelliTouch® Touchmonitor Interface"
+        "2500U IntelliTouch\u00ae Touchmonitor Interface"
       ],
       [
         "0008",
-        "3000U AccuTouch® Touchmonitor Interface"
+        "3000U AccuTouch\u00ae Touchmonitor Interface"
       ],
       [
         "0009",
-        "4000U CarrollTouch® Touchmonitor Interface"
+        "4000U CarrollTouch\u00ae Touchmonitor Interface"
       ],
       [
         "0020",
@@ -21765,7 +21765,7 @@
       ],
       [
         "0030",
-        "4500U CarrollTouch® Touchmonitor Interface"
+        "4500U CarrollTouch\u00ae Touchmonitor Interface"
       ],
       [
         "0032",
@@ -21785,7 +21785,7 @@
       ],
       [
         "0050",
-        "2216 AccuTouch® Touchmonitor Interface"
+        "2216 AccuTouch\u00ae Touchmonitor Interface"
       ],
       [
         "0071",
@@ -47369,7 +47369,7 @@
       ],
       [
         "2353",
-        "Nüvi 205T"
+        "N\u00fcvi 205T"
       ],
       [
         "2380",
@@ -47377,7 +47377,7 @@
       ],
       [
         "23cc",
-        "nüvi 1350"
+        "n\u00fcvi 1350"
       ],
       [
         "2459",
@@ -54074,7 +54074,7 @@
       ],
       [
         "57b3",
-        "Acer 640 × 480 laptop camera"
+        "Acer 640 \u00d7 480 laptop camera"
       ],
       [
         "57cc",
@@ -56136,7 +56136,7 @@
       ],
       [
         "0038",
-        "Cinergy T² DVB-T Receiver"
+        "Cinergy T\u00b2 DVB-T Receiver"
       ],
       [
         "0039",
@@ -56172,7 +56172,7 @@
       ],
       [
         "005c",
-        "Cinergy T²"
+        "Cinergy T\u00b2"
       ],
       [
         "0069",
@@ -76923,6 +76923,23 @@
     ],
     "vendor": "Energizer Holdings, Inc."
   },
+  "1b4f": {
+    "products": [
+      [
+        "2b75",
+        ""
+      ],
+      [
+        "9205",
+        ""
+      ],
+      [
+        "9208",
+        "LilyPad Arduino"
+      ]
+    ],
+    "vendor": "SparkFun"
+  },
   "1b52": {
     "products": [
       [
@@ -79773,7 +79790,7 @@
       ],
       [
         "0405",
-        "FTDI232 [MotorPrüfstand]"
+        "FTDI232 [MotorPr\u00fcfstand]"
       ],
       [
         "0406",
@@ -87880,6 +87897,23 @@
     ],
     "vendor": "Swift Navigation"
   },
+  "2e8a": {
+    "products": [
+      [
+        "0003",
+        ""
+      ],
+      [
+        "000a",
+        ""
+      ],
+      [
+        "000c",
+        ""
+      ]
+    ],
+    "vendor": "Raspberry Pi Foundation"
+  },
   "2e95": {
     "products": [
       [
@@ -88001,6 +88035,27 @@
       ]
     ],
     "vendor": "Control iD"
+  },
+  "303a": {
+    "products": [
+      [
+        "0002",
+        ""
+      ],
+      [
+        "1001",
+        ""
+      ],
+      [
+        "4001",
+        ""
+      ],
+      [
+        "8293",
+        ""
+      ]
+    ],
+    "vendor": "Espressif Systems"
   },
   "3057": {
     "products": [
@@ -90831,11 +90886,11 @@
       ],
       [
         "3240",
-        "AnyPoint® 3240 Modem - WAN"
+        "AnyPoint\u00ae 3240 Modem - WAN"
       ],
       [
         "3241",
-        "AnyPoint® 3240 Modem"
+        "AnyPoint\u00ae 3240 Modem"
       ],
       [
         "8602",
