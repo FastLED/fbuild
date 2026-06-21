@@ -1,4 +1,8 @@
 {
+  "0000": {
+    "products": [],
+    "vendor": "Wrong vendor ID"
+  },
   "0001": {
     "products": [
       [
@@ -21,6 +25,10 @@
     ],
     "vendor": "Ingram"
   },
+  "0010": {
+    "products": [],
+    "vendor": "TSI Incorporated"
+  },
   "0011": {
     "products": [
       [
@@ -30,6 +38,10 @@
     ],
     "vendor": "Unknown"
   },
+  "0017": {
+    "products": [],
+    "vendor": "Meyer Instruments (MIS)"
+  },
   "001f": {
     "products": [
       [
@@ -38,6 +50,14 @@
       ]
     ],
     "vendor": "Walmart"
+  },
+  "0024": {
+    "products": [],
+    "vendor": "Numark Mixtrack"
+  },
+  "0028": {
+    "products": [],
+    "vendor": "beyerdynamic GmbH & Co. KG beyerdynamic PRO X"
   },
   "0040": {
     "products": [
@@ -113,6 +133,10 @@
     ],
     "vendor": "Boeye Technology Co., Ltd."
   },
+  "00f9": {
+    "products": [],
+    "vendor": "UWP WBDI Device"
+  },
   "0105": {
     "products": [
       [
@@ -143,6 +167,14 @@
       ]
     ],
     "vendor": "Unknown"
+  },
+  "0154": {
+    "products": [],
+    "vendor": "LW154 Wireless 150N Adapter"
+  },
+  "015c": {
+    "products": [],
+    "vendor": "Tecno World"
   },
   "017c": {
     "products": [
@@ -192,6 +224,14 @@
       ]
     ],
     "vendor": "Hangzhou Worlde"
+  },
+  "0280": {
+    "products": [],
+    "vendor": "CAM(Dongle) [Freenet TV-Stick]"
+  },
+  "0284": {
+    "products": [],
+    "vendor": "\"FX-USB-AW/-BD\" USB/RS482 Converters, Mitsubishi Electric Corp."
   },
   "02ad": {
     "products": [
@@ -52617,6 +52657,10 @@
     ],
     "vendor": "O2 Micro, Inc."
   },
+  "0b9a": {
+    "products": [],
+    "vendor": "Namco Limited"
+  },
   "0b9b": {
     "products": [
       [
@@ -55893,6 +55937,10 @@
     ],
     "vendor": "Sipix Group, Ltd"
   },
+  "0c7c": {
+    "products": [],
+    "vendor": "TMS International BV"
+  },
   "0c88": {
     "products": [
       [
@@ -56087,6 +56135,10 @@
       ]
     ],
     "vendor": "Palmax Technology Co., Ltd"
+  },
+  "0cc7": {
+    "products": [],
+    "vendor": "Kontron Medical AG"
   },
   "0ccd": {
     "products": [
@@ -59312,6 +59364,10 @@
     ],
     "vendor": "Ours Technology, Inc."
   },
+  "0ea3": {
+    "products": [],
+    "vendor": "RION NL-52 Sound Level Meter"
+  },
   "0eb0": {
     "products": [
       [
@@ -59952,6 +60008,10 @@
       ]
     ],
     "vendor": "Hyun Won, Inc."
+  },
+  "0fb4": {
+    "products": [],
+    "vendor": "TiiTuii Co., Ltd."
   },
   "0fb6": {
     "products": [
@@ -61024,6 +61084,10 @@
     ],
     "vendor": "Labtec"
   },
+  "1021": {
+    "products": [],
+    "vendor": "Western Digital External HDD"
+  },
   "1025": {
     "products": [
       [
@@ -61130,6 +61194,10 @@
       ]
     ],
     "vendor": "Stanton"
+  },
+  "103e": {
+    "products": [],
+    "vendor": "Aim-TTi"
   },
   "1043": {
     "products": [
@@ -62283,6 +62351,10 @@
     ],
     "vendor": "eSOL Co., Ltd"
   },
+  "10a4": {
+    "products": [],
+    "vendor": "Gunding Cosmopolit 7 Web"
+  },
   "10a9": {
     "products": [
       [
@@ -63177,6 +63249,14 @@
     ],
     "vendor": "EasyPass Industrial Co., Ltd"
   },
+  "1105": {
+    "products": [],
+    "vendor": "Sigma Designs Inc."
+  },
+  "1106": {
+    "products": [],
+    "vendor": "VIA Technologies, Inc."
+  },
   "110a": {
     "products": [
       [
@@ -63537,6 +63617,10 @@
       ]
     ],
     "vendor": "Silicon 10 Technology Corp."
+  },
+  "1180": {
+    "products": [],
+    "vendor": "Ricoh Company, Ltd."
   },
   "1183": {
     "products": [
@@ -65952,6 +66036,10 @@
     ],
     "vendor": "Autocue Group Ltd"
   },
+  "12c9": {
+    "products": [],
+    "vendor": "Newmen Tech., Ltd."
+  },
   "12cf": {
     "products": [
       [
@@ -66274,6 +66362,10 @@
       ]
     ],
     "vendor": "Fascinating Electronics, Inc."
+  },
+  "1305": {
+    "products": [],
+    "vendor": "Star Micronics"
   },
   "1307": {
     "products": [
@@ -66884,6 +66976,10 @@
       ]
     ],
     "vendor": "PanJit International Inc."
+  },
+  "1354": {
+    "products": [],
+    "vendor": "FACTS Engineering LLC"
   },
   "1357": {
     "products": [
@@ -69048,6 +69144,10 @@
     ],
     "vendor": "Ralink Technology, Corp."
   },
+  "14b7": {
+    "products": [],
+    "vendor": "In2Games Limited"
+  },
   "14c2": {
     "products": [
       [
@@ -69161,6 +69261,10 @@
       ]
     ],
     "vendor": "Dialogue Technology Corp."
+  },
+  "14e4": {
+    "products": [],
+    "vendor": "Broadcom Corp."
   },
   "14ea": {
     "products": [
@@ -70736,6 +70840,10 @@
     ],
     "vendor": "Prolink Microsystems Corp."
   },
+  "1556": {
+    "products": [],
+    "vendor": "CERN"
+  },
   "1557": {
     "products": [
       [
@@ -71125,6 +71233,10 @@
       ]
     ],
     "vendor": "Textech International Ltd."
+  },
+  "15d3": {
+    "products": [],
+    "vendor": "Symmetric Research"
   },
   "15d9": {
     "products": [
@@ -71688,6 +71800,10 @@
     ],
     "vendor": "Inside Out Networks [hex]"
   },
+  "1609": {
+    "products": [],
+    "vendor": "Flash"
+  },
   "160a": {
     "products": [
       [
@@ -71787,6 +71903,10 @@
       ]
     ],
     "vendor": "AIM GmbH"
+  },
+  "1642": {
+    "products": [],
+    "vendor": "DataTraveler 101 8GB"
   },
   "1645": {
     "products": [
@@ -71949,6 +72069,10 @@
       ]
     ],
     "vendor": "Kondo Kagaku"
+  },
+  "1662": {
+    "products": [],
+    "vendor": "Quantum Mini"
   },
   "1667": {
     "products": [
@@ -72408,6 +72532,10 @@
       ]
     ],
     "vendor": "Persentec, Inc."
+  },
+  "16bd": {
+    "products": [],
+    "vendor": "Leica Geosystems AG"
   },
   "16c0": {
     "products": [
@@ -73165,6 +73293,10 @@
     ],
     "vendor": "Senao"
   },
+  "1747": {
+    "products": [],
+    "vendor": "CML Microcircuits"
+  },
   "1748": {
     "products": [
       [
@@ -73339,6 +73471,10 @@
     ],
     "vendor": "ASUSTek Computer, Inc. (wrong ID)"
   },
+  "1768": {
+    "products": [],
+    "vendor": "Unify Software and Solutions GmbH & Co. KG OpenStage WL3 VoWLAN IP phone"
+  },
   "1770": {
     "products": [
       [
@@ -73365,6 +73501,10 @@
       ]
     ],
     "vendor": "Microscan Systems, Inc."
+  },
+  "1778": {
+    "products": [],
+    "vendor": "IPEVO Inc."
   },
   "177f": {
     "products": [
@@ -74256,6 +74396,10 @@
     ],
     "vendor": "Unicomp, Inc."
   },
+  "1802": {
+    "products": [],
+    "vendor": "TS5000 series"
+  },
   "1809": {
     "products": [
       [
@@ -74281,6 +74425,14 @@
       ]
     ],
     "vendor": "Twinhan"
+  },
+  "1825": {
+    "products": [],
+    "vendor": "STAR-Dundee Ltd."
+  },
+  "182d": {
+    "products": [],
+    "vendor": "Sitecom Europe B.V."
   },
   "183d": {
     "products": [
@@ -74316,6 +74468,10 @@
       ]
     ],
     "vendor": "GYROCOM C&C Co., LTD"
+  },
+  "1856": {
+    "products": [],
+    "vendor": "PIXMA TS6250"
   },
   "185b": {
     "products": [
@@ -74962,6 +75118,10 @@
     ],
     "vendor": "GE Healthcare"
   },
+  "1902": {
+    "products": [],
+    "vendor": "Endoscope Camera HD"
+  },
   "1908": {
     "products": [
       [
@@ -74994,6 +75154,10 @@
       ]
     ],
     "vendor": "GEMBIRD"
+  },
+  "1912": {
+    "products": [],
+    "vendor": "Renesas Technology Corp."
   },
   "1915": {
     "products": [
@@ -75798,6 +75962,10 @@
     ],
     "vendor": "ZTE WCDMA Technologies MSM"
   },
+  "19d9": {
+    "products": [],
+    "vendor": "Denso Ten Limited"
+  },
   "19db": {
     "products": [
       [
@@ -75863,6 +76031,10 @@
     ],
     "vendor": "USB-IF non-workshop"
   },
+  "1a17": {
+    "products": [],
+    "vendor": "Oticon A/S"
+  },
   "1a1d": {
     "products": [
       [
@@ -75871,6 +76043,10 @@
       ]
     ],
     "vendor": "Veho"
+  },
+  "1a29": {
+    "products": [],
+    "vendor": "ABOV Semiconductor Co., Ltd."
   },
   "1a2c": {
     "products": [
@@ -75936,6 +76112,10 @@
       ]
     ],
     "vendor": "VASCO Data Security International"
+  },
+  "1a59": {
+    "products": [],
+    "vendor": "000A RM01 [Haag Streit]"
   },
   "1a61": {
     "products": [
@@ -76122,6 +76302,10 @@
     ],
     "vendor": "BandRich, Inc."
   },
+  "1a90": {
+    "products": [],
+    "vendor": "Corsair Voyager GT 16GB"
+  },
   "1aab": {
     "products": [
       [
@@ -76181,6 +76365,10 @@
       ]
     ],
     "vendor": "Allied Vision"
+  },
+  "1ac2": {
+    "products": [],
+    "vendor": "DESKO GmbH"
   },
   "1acc": {
     "products": [
@@ -76591,6 +76779,10 @@
     ],
     "vendor": "Eventide"
   },
+  "1b17": {
+    "products": [],
+    "vendor": "EXO S.A."
+  },
   "1b1c": {
     "products": [
       [
@@ -76778,6 +76970,10 @@
     ],
     "vendor": "eQ-3 Entwicklung GmbH"
   },
+  "1b21": {
+    "products": [],
+    "vendor": "ASMedia Technology Inc."
+  },
   "1b24": {
     "products": [
       [
@@ -76897,6 +77093,10 @@
     ],
     "vendor": "iPassion Technology Inc."
   },
+  "1b3d": {
+    "products": [],
+    "vendor": "Matrix Orbital"
+  },
   "1b3f": {
     "products": [
       [
@@ -76924,20 +77124,7 @@
     "vendor": "Energizer Holdings, Inc."
   },
   "1b4f": {
-    "products": [
-      [
-        "2b75",
-        ""
-      ],
-      [
-        "9205",
-        ""
-      ],
-      [
-        "9208",
-        "LilyPad Arduino"
-      ]
-    ],
+    "products": [],
     "vendor": "SparkFun"
   },
   "1b52": {
@@ -78030,6 +78217,10 @@
     ],
     "vendor": "Luminary Micro Inc."
   },
+  "1cd7": {
+    "products": [],
+    "vendor": "GMC-Instruments GmbH"
+  },
   "1cf1": {
     "products": [
       [
@@ -78209,6 +78400,10 @@
       ]
     ],
     "vendor": "Dream Cheeky"
+  },
+  "1d37": {
+    "products": [],
+    "vendor": "Signal Processing Devices Sweden AB"
   },
   "1d45": {
     "products": [
@@ -79624,6 +79819,14 @@
     ],
     "vendor": "Linux Foundation"
   },
+  "1d6c": {
+    "products": [],
+    "vendor": "AUKEY Technology Co., Ltd."
+  },
+  "1d73": {
+    "products": [],
+    "vendor": "Signal Processing Devices Sweden AB"
+  },
   "1d88": {
     "products": [
       [
@@ -79696,6 +79899,10 @@
       ]
     ],
     "vendor": "Actions Microelectronics Co."
+  },
+  "1de7": {
+    "products": [],
+    "vendor": "0113 [Duet Executive]"
   },
   "1df7": {
     "products": [
@@ -79883,6 +80090,10 @@
       ]
     ],
     "vendor": "Gemalto M2M GmbH"
+  },
+  "1e3a": {
+    "products": [],
+    "vendor": "Continental Automotive Systems Inc."
   },
   "1e3d": {
     "products": [
@@ -80219,6 +80430,10 @@
       ]
     ],
     "vendor": "Other World Computing"
+  },
+  "1e9b": {
+    "products": [],
+    "vendor": "NetCom Sicherheitstechnik GmbH"
   },
   "1ea7": {
     "products": [
@@ -80599,6 +80814,10 @@
     ],
     "vendor": "CMX Systems"
   },
+  "1f18": {
+    "products": [],
+    "vendor": "TESEQ"
+  },
   "1f28": {
     "products": [
       [
@@ -80611,6 +80830,14 @@
       ]
     ],
     "vendor": "Cal-Comp"
+  },
+  "1f29": {
+    "products": [],
+    "vendor": "Analogix Semiconductor, Inc."
+  },
+  "1f36": {
+    "products": [],
+    "vendor": "ddm hopt+schuler"
   },
   "1f3a": {
     "products": [
@@ -80710,6 +80937,10 @@
     ],
     "vendor": "Aliph"
   },
+  "1f71": {
+    "products": [],
+    "vendor": "Gadmei Electronic Technology Corporation"
+  },
   "1f75": {
     "products": [
       [
@@ -80760,6 +80991,10 @@
       ]
     ],
     "vendor": "Alere, Inc."
+  },
+  "1f85": {
+    "products": [],
+    "vendor": "Netronix, Inc. / Obreey"
   },
   "1f87": {
     "products": [
@@ -80822,6 +81057,10 @@
       ]
     ],
     "vendor": "Withings"
+  },
+  "1fb9": {
+    "products": [],
+    "vendor": "Lake Shore Cryotronics, Inc."
   },
   "1fbd": {
     "products": [
@@ -80892,6 +81131,10 @@
       ]
     ],
     "vendor": "NXP Semiconductors"
+  },
+  "1fd2": {
+    "products": [],
+    "vendor": "MELFAS Co. Ltd."
   },
   "1fde": {
     "products": [
@@ -81264,6 +81507,10 @@
     ],
     "vendor": "detectomat"
   },
+  "2008": {
+    "products": [],
+    "vendor": "Novanta Inc."
+  },
   "2009": {
     "products": [
       [
@@ -81338,6 +81585,10 @@
       ]
     ],
     "vendor": "PCTV Systems"
+  },
+  "2017": {
+    "products": [],
+    "vendor": "NAL Research Corporation"
   },
   "2018": {
     "products": [
@@ -81453,6 +81704,10 @@
     ],
     "vendor": "PLANEX"
   },
+  "201b": {
+    "products": [],
+    "vendor": "UNI-TEC Electronics"
+  },
   "201e": {
     "products": [
       [
@@ -81461,6 +81716,14 @@
       ]
     ],
     "vendor": "Haier"
+  },
+  "2020": {
+    "products": [],
+    "vendor": "BroadMobi"
+  },
+  "2022": {
+    "products": [],
+    "vendor": "Antec"
   },
   "203d": {
     "products": [
@@ -82151,6 +82414,10 @@
     ],
     "vendor": "Minicircuits"
   },
+  "20d6": {
+    "products": [],
+    "vendor": "Bensussen Deutsch & Associates"
+  },
   "20df": {
     "products": [
       [
@@ -82159,6 +82426,10 @@
       ]
     ],
     "vendor": "Simtec Electronics"
+  },
+  "20e7": {
+    "products": [],
+    "vendor": "Atik CCD Camera"
   },
   "20f0": {
     "products": [
@@ -82506,6 +82777,10 @@
     ],
     "vendor": "Broadxent (Creative Labs)"
   },
+  "2164": {
+    "products": [],
+    "vendor": "Witek System Inc."
+  },
   "2166": {
     "products": [
       [
@@ -82514,6 +82789,14 @@
       ]
     ],
     "vendor": "JVC Kenwood"
+  },
+  "2179": {
+    "products": [],
+    "vendor": "Flex design tablet"
+  },
+  "217c": {
+    "products": [],
+    "vendor": "TempTale, Sensitech"
   },
   "2184": {
     "products": [
@@ -82642,6 +82925,10 @@
     ],
     "vendor": "Planeta Informatica"
   },
+  "21b0": {
+    "products": [],
+    "vendor": "Grace Industries"
+  },
   "21b4": {
     "products": [
       [
@@ -82655,6 +82942,10 @@
     ],
     "vendor": "AudioQuest"
   },
+  "21c4": {
+    "products": [],
+    "vendor": "Longsys Electronics (HK) Co., Ltd."
+  },
   "21d6": {
     "products": [
       [
@@ -82663,6 +82954,10 @@
       ]
     ],
     "vendor": "Agecodagis SARL"
+  },
+  "21e1": {
+    "products": [],
+    "vendor": "CAEN S.p.A."
   },
   "2207": {
     "products": [
@@ -82797,6 +83092,10 @@
     ],
     "vendor": "ILI Technology Corp."
   },
+  "222d": {
+    "products": [],
+    "vendor": "Leifheit - Soehnle"
+  },
   "2230": {
     "products": [
       [
@@ -82865,6 +83164,14 @@
     ],
     "vendor": "Kobo Inc."
   },
+  "2239": {
+    "products": [],
+    "vendor": "PEIKER acustic GmbH & Co., KG"
+  },
+  "223b": {
+    "products": [],
+    "vendor": "Crystalfontz America, Inc."
+  },
   "2245": {
     "products": [
       [
@@ -82907,6 +83214,10 @@
     ],
     "vendor": "APDM"
   },
+  "2252": {
+    "products": [],
+    "vendor": "HBGIC Technology Co., Ltd."
+  },
   "2256": {
     "products": [
       [
@@ -82915,6 +83226,10 @@
       ]
     ],
     "vendor": "Faderfox"
+  },
+  "2257": {
+    "products": [],
+    "vendor": "On-The-Go-Video"
   },
   "225d": {
     "products": [
@@ -83615,6 +83930,10 @@
     ],
     "vendor": "Cambridge Audio"
   },
+  "22f4": {
+    "products": [],
+    "vendor": "Olive V-ME102 CDMA modem"
+  },
   "2304": {
     "products": [
       [
@@ -83829,6 +84148,10 @@
     ],
     "vendor": "TimeLink Technology Co., Ltd"
   },
+  "230a": {
+    "products": [],
+    "vendor": "DataLocker"
+  },
   "230d": {
     "products": [
       [
@@ -83837,6 +84160,10 @@
       ]
     ],
     "vendor": "Teracom"
+  },
+  "2312": {
+    "products": [],
+    "vendor": "LP320B Wireless Presenter [August International]"
   },
   "2318": {
     "products": [
@@ -83855,6 +84182,14 @@
       ]
     ],
     "vendor": "Tronsmart"
+  },
+  "231d": {
+    "products": [],
+    "vendor": "VKB-sim"
+  },
+  "2321": {
+    "products": [],
+    "vendor": "iKingdom Corp. [iConnectivity]"
   },
   "232b": {
     "products": [
@@ -83938,6 +84273,10 @@
       ]
     ],
     "vendor": "Arduino SA"
+  },
+  "2342": {
+    "products": [],
+    "vendor": "NIKO"
   },
   "234b": {
     "products": [
@@ -84044,6 +84383,10 @@
       ]
     ],
     "vendor": "TP-Link"
+  },
+  "2358": {
+    "products": [],
+    "vendor": "NuTesla Composite HID+CDC"
   },
   "2366": {
     "products": [
@@ -84252,6 +84595,18 @@
     ],
     "vendor": "Gemini"
   },
+  "23e3": {
+    "products": [],
+    "vendor": "Christie Digital Systems"
+  },
+  "23e5": {
+    "products": [],
+    "vendor": "Antelope Audio"
+  },
+  "23e8": {
+    "products": [],
+    "vendor": "Propellerhead"
+  },
   "23fc": {
     "products": [
       [
@@ -84394,6 +84749,10 @@
     ],
     "vendor": "Fractal Audio Systems"
   },
+  "2472": {
+    "products": [],
+    "vendor": "TOP"
+  },
   "2476": {
     "products": [
       [
@@ -84411,6 +84770,10 @@
       ]
     ],
     "vendor": "Tripp-Lite"
+  },
+  "247f": {
+    "products": [],
+    "vendor": "Lynx"
   },
   "248a": {
     "products": [
@@ -84788,6 +85151,10 @@
     ],
     "vendor": "Norelsys"
   },
+  "2541": {
+    "products": [],
+    "vendor": "Chipsailing"
+  },
   "2546": {
     "products": [
       [
@@ -84818,6 +85185,10 @@
       ]
     ],
     "vendor": "SHF Communication Technologies AG"
+  },
+  "2550": {
+    "products": [],
+    "vendor": "Shenzhen EDUP Electronics Technology Co., Ltd."
   },
   "2555": {
     "products": [
@@ -84875,6 +85246,10 @@
       ]
     ],
     "vendor": "Perreaux Industries Ltd"
+  },
+  "256c": {
+    "products": [],
+    "vendor": "HUION"
   },
   "256f": {
     "products": [
@@ -85006,6 +85381,10 @@
     ],
     "vendor": "Plug-up"
   },
+  "258a": {
+    "products": [],
+    "vendor": "<Multi-Vendor> [USB chips by: Sino Wealth Electronic Ltd.]"
+  },
   "25a7": {
     "products": [
       [
@@ -85084,6 +85463,10 @@
       ]
     ],
     "vendor": "Brunner Elektronik AG"
+  },
+  "25bc": {
+    "products": [],
+    "vendor": "CETRTA POT"
   },
   "25bf": {
     "products": [
@@ -85216,6 +85599,10 @@
     ],
     "vendor": "Tenda"
   },
+  "2622": {
+    "products": [],
+    "vendor": "MISSION"
+  },
   "2626": {
     "products": [
       [
@@ -85336,6 +85723,10 @@
     ],
     "vendor": "Xsens"
   },
+  "263c": {
+    "products": [],
+    "vendor": "SCHULTES"
+  },
   "264a": {
     "products": [
       [
@@ -85414,6 +85805,14 @@
       ]
     ],
     "vendor": "Sundtek"
+  },
+  "2660": {
+    "products": [],
+    "vendor": "Test"
+  },
+  "2669": {
+    "products": [],
+    "vendor": "M4S PSK Series Device [M4S PSK]"
   },
   "2672": {
     "products": [
@@ -85749,6 +86148,10 @@
     ],
     "vendor": "Integral Memory"
   },
+  "26ce": {
+    "products": [],
+    "vendor": "ASRock"
+  },
   "26f2": {
     "products": [
       [
@@ -86037,6 +86440,10 @@
     ],
     "vendor": "Hughski Limited"
   },
+  "2752": {
+    "products": [],
+    "vendor": "miniDSP"
+  },
   "2756": {
     "products": [
       [
@@ -86055,6 +86462,10 @@
     ],
     "vendor": "Philip Morris Products S.A."
   },
+  "2763": {
+    "products": [],
+    "vendor": "Primes GmbH"
+  },
   "2765": {
     "products": [
       [
@@ -86072,6 +86483,10 @@
       ]
     ],
     "vendor": "LifeScan"
+  },
+  "276d": {
+    "products": [],
+    "vendor": "276d:1101"
   },
   "2770": {
     "products": [
@@ -86334,6 +86749,10 @@
     ],
     "vendor": "Oculus VR, Inc."
   },
+  "2853": {
+    "products": [],
+    "vendor": "Ralston Instruments, LLC"
+  },
   "286b": {
     "products": [
       [
@@ -86492,6 +86911,10 @@
     ],
     "vendor": "Seek Thermal, Inc."
   },
+  "28ba": {
+    "products": [],
+    "vendor": "Materialise Motion NV"
+  },
   "28bd": {
     "products": [
       [
@@ -86616,6 +87039,10 @@
     ],
     "vendor": "Profitap HQ BV"
   },
+  "2909": {
+    "products": [],
+    "vendor": "Game Golf Live"
+  },
   "290c": {
     "products": [
       [
@@ -86637,6 +87064,14 @@
       ]
     ],
     "vendor": "Audioengine"
+  },
+  "2914": {
+    "products": [],
+    "vendor": "Kent Displays, Inc."
+  },
+  "291a": {
+    "products": [],
+    "vendor": "Anker Innovation Ltd"
   },
   "2931": {
     "products": [
@@ -86704,6 +87139,10 @@
     ],
     "vendor": "Zaber Technologies Inc."
   },
+  "2947": {
+    "products": [],
+    "vendor": "Kapelse"
+  },
   "2957": {
     "products": [
       [
@@ -86739,6 +87178,14 @@
       ]
     ],
     "vendor": "FiiO Electronics Technology"
+  },
+  "2982": {
+    "products": [],
+    "vendor": "Ableton AG"
+  },
+  "2983": {
+    "products": [],
+    "vendor": "Coyote System SAS"
   },
   "298d": {
     "products": [
@@ -86792,6 +87239,14 @@
     ],
     "vendor": "Lewitt GmbH"
   },
+  "29cc": {
+    "products": [],
+    "vendor": "Kodak Alaris, Inc"
+  },
+  "29df": {
+    "products": [],
+    "vendor": "CAM(Dongle) [Freenet TV-Stick]"
+  },
   "29ea": {
     "products": [
       [
@@ -86821,6 +87276,14 @@
       ]
     ],
     "vendor": "Canaan Creative Co., Ltd"
+  },
+  "29f3": {
+    "products": [],
+    "vendor": "Resonessence Labs"
+  },
+  "29fe": {
+    "products": [],
+    "vendor": "Geo Semiconductor"
   },
   "2a03": {
     "products": [
@@ -87124,6 +87587,10 @@
     ],
     "vendor": "EMULEX Corporation"
   },
+  "2a52": {
+    "products": [],
+    "vendor": "L Card, LLC"
+  },
   "2a62": {
     "products": [
       [
@@ -87136,6 +87603,10 @@
       ]
     ],
     "vendor": "Flymaster Avionics"
+  },
+  "2a65": {
+    "products": [],
+    "vendor": "FreeWave Technologies"
   },
   "2a6e": {
     "products": [
@@ -87175,6 +87646,10 @@
       ]
     ],
     "vendor": "DFU Technology Ltd"
+  },
+  "2a94": {
+    "products": [],
+    "vendor": "G2touch Co., LTD."
   },
   "2ab6": {
     "products": [
@@ -87318,6 +87793,10 @@
     ],
     "vendor": "ROLI Ltd."
   },
+  "2afd": {
+    "products": [],
+    "vendor": "McIntosh HD USB Audio [McIntosh DA1]"
+  },
   "2b03": {
     "products": [
       [
@@ -87350,6 +87829,10 @@
       ]
     ],
     "vendor": "STEREOLABS"
+  },
+  "2b04": {
+    "products": [],
+    "vendor": "Duo with WiFi and BLE"
   },
   "2b0e": {
     "products": [
@@ -87392,6 +87875,10 @@
     ],
     "vendor": "LeEco"
   },
+  "2b16": {
+    "products": [],
+    "vendor": "Doccamera"
+  },
   "2b23": {
     "products": [
       [
@@ -87432,6 +87919,22 @@
     ],
     "vendor": "ZUK"
   },
+  "2b71": {
+    "products": [],
+    "vendor": "Flashforge [FlashForge Creator Pro 2 3D Printer]"
+  },
+  "2b73": {
+    "products": [],
+    "vendor": "Pioneer DJ Corporation"
+  },
+  "2b89": {
+    "products": [],
+    "vendor": "Unknown"
+  },
+  "2b98": {
+    "products": [],
+    "vendor": "Glenair Inc."
+  },
   "2bc5": {
     "products": [
       [
@@ -87457,6 +87960,14 @@
       ]
     ],
     "vendor": "Coroware, Inc."
+  },
+  "2bd9": {
+    "products": [],
+    "vendor": "Huddly"
+  },
+  "2beb": {
+    "products": [],
+    "vendor": "Gateworks Corporation"
   },
   "2c02": {
     "products": [
@@ -87484,6 +87995,10 @@
       ]
     ],
     "vendor": "Supermicro Computer Incorporated"
+  },
+  "2c33": {
+    "products": [],
+    "vendor": "Wizapply"
   },
   "2c4e": {
     "products": [
@@ -87639,6 +88154,10 @@
     ],
     "vendor": "Fibocom"
   },
+  "2cc8": {
+    "products": [],
+    "vendor": "Hewlett Packard Enterprise"
+  },
   "2ccf": {
     "products": [
       [
@@ -87666,6 +88185,10 @@
     ],
     "vendor": "Sea & Sun Technology GmbH"
   },
+  "2ce4": {
+    "products": [],
+    "vendor": "ESMART"
+  },
   "2ce5": {
     "products": [
       [
@@ -87687,6 +88210,10 @@
       ]
     ],
     "vendor": "Nuand LLC"
+  },
+  "2d01": {
+    "products": [],
+    "vendor": "Guangdong Zike Technology Co., Ltd"
   },
   "2d2d": {
     "products": [
@@ -87723,6 +88250,10 @@
       ]
     ],
     "vendor": "Zhuhai Poskey Technology Co.,Ltd"
+  },
+  "2dbc": {
+    "products": [],
+    "vendor": "Mikroelektronika d.o.o"
   },
   "2dc8": {
     "products": [
@@ -87773,6 +88304,10 @@
       ]
     ],
     "vendor": "Dialog Semiconductor"
+  },
+  "2dee": {
+    "products": [],
+    "vendor": "QUALCOMM MeigLink"
   },
   "2def": {
     "products": [
@@ -87871,6 +88406,14 @@
     ],
     "vendor": "Hyperkin"
   },
+  "2e3c": {
+    "products": [],
+    "vendor": "Joy-IT"
+  },
+  "2e50": {
+    "products": [],
+    "vendor": "beyerdynamic GmbH & Co. KG"
+  },
   "2e57": {
     "products": [
       [
@@ -87898,20 +88441,7 @@
     "vendor": "Swift Navigation"
   },
   "2e8a": {
-    "products": [
-      [
-        "0003",
-        ""
-      ],
-      [
-        "000a",
-        ""
-      ],
-      [
-        "000c",
-        ""
-      ]
-    ],
+    "products": [],
     "vendor": "Raspberry Pi Foundation"
   },
   "2e95": {
@@ -87922,6 +88452,14 @@
       ]
     ],
     "vendor": "SCUF Gaming"
+  },
+  "2ea1": {
+    "products": [],
+    "vendor": "DASAN Electron Co"
+  },
+  "2eb9": {
+    "products": [],
+    "vendor": "Realtek or Sabrent?"
   },
   "2ecc": {
     "products": [
@@ -87939,6 +88477,14 @@
       ]
     ],
     "vendor": "ASR Microelectronics"
+  },
+  "2efd": {
+    "products": [],
+    "vendor": "Filco Co., Ltd."
+  },
+  "2f68": {
+    "products": [],
+    "vendor": "Hoksi Technology"
   },
   "2f76": {
     "products": [
@@ -87975,6 +88521,10 @@
     ],
     "vendor": "Comtrue Inc."
   },
+  "2fd0": {
+    "products": [],
+    "vendor": "C*Core Technology Co., Ltd."
+  },
   "2fe0": {
     "products": [
       [
@@ -88005,6 +88555,10 @@
     ],
     "vendor": "ELGIN S.A."
   },
+  "2fe9": {
+    "products": [],
+    "vendor": "Shenzhen Xintai Technology Co. Ltd"
+  },
   "2feb": {
     "products": [
       [
@@ -88013,6 +88567,14 @@
       ]
     ],
     "vendor": "Beijing Veikk E-Commerce Co., Ltd."
+  },
+  "2fee": {
+    "products": [],
+    "vendor": "Holitech"
+  },
+  "300c": {
+    "products": [],
+    "vendor": "Gyrfalcon Technology Inc."
   },
   "3016": {
     "products": [
@@ -88037,24 +88599,7 @@
     "vendor": "Control iD"
   },
   "303a": {
-    "products": [
-      [
-        "0002",
-        ""
-      ],
-      [
-        "1001",
-        ""
-      ],
-      [
-        "4001",
-        ""
-      ],
-      [
-        "8293",
-        ""
-      ]
-    ],
+    "products": [],
     "vendor": "Espressif Systems"
   },
   "3057": {
@@ -88208,6 +88753,14 @@
     ],
     "vendor": "Blues Wireless"
   },
+  "30b1": {
+    "products": [],
+    "vendor": "Bitmain Technologies Inc."
+  },
+  "30be": {
+    "products": [],
+    "vendor": "Schiit Audio"
+  },
   "30c2": {
     "products": [
       [
@@ -88217,6 +88770,14 @@
     ],
     "vendor": "UNPARALLEL Innovation, Lda"
   },
+  "30d6": {
+    "products": [],
+    "vendor": "Chroma-Q"
+  },
+  "30de": {
+    "products": [],
+    "vendor": "KIOXIA EXCERIA PLUS"
+  },
   "30ee": {
     "products": [
       [
@@ -88225,6 +88786,10 @@
       ]
     ],
     "vendor": "Fujitsu Connected Technologies Limited"
+  },
+  "30fa": {
+    "products": [],
+    "vendor": "Wuxi Instant Microelectronics Co., Ltd."
   },
   "3111": {
     "products": [
@@ -88256,6 +88821,10 @@
     ],
     "vendor": "Meteca SA"
   },
+  "311f": {
+    "products": [],
+    "vendor": "TrustKey Co., Ltd."
+  },
   "3125": {
     "products": [
       [
@@ -88264,6 +88833,14 @@
       ]
     ],
     "vendor": "Eagletron"
+  },
+  "3131": {
+    "products": [],
+    "vendor": "Authentik Systems"
+  },
+  "3151": {
+    "products": [],
+    "vendor": "Yichip Microelectronics (Hangzhou) Co., Ltd"
   },
   "316d": {
     "products": [
@@ -88358,6 +88935,14 @@
     ],
     "vendor": "Katusha"
   },
+  "31b1": {
+    "products": [],
+    "vendor": "Shenzhen Jinduan Electronics Co., Ltd."
+  },
+  "31b2": {
+    "products": [],
+    "vendor": "KTMicro"
+  },
   "31c9": {
     "products": [
       [
@@ -88374,6 +88959,14 @@
       ]
     ],
     "vendor": "BeiJing LanXum Computer Technology Co., Ltd."
+  },
+  "31e3": {
+    "products": [],
+    "vendor": "Wooting"
+  },
+  "31e9": {
+    "products": [],
+    "vendor": "Solid State Logic, Ltd"
   },
   "3200": {
     "products": [
@@ -88392,6 +88985,10 @@
     ],
     "vendor": "Alcatel-Lucent Enterprise"
   },
+  "320f": {
+    "products": [],
+    "vendor": "Glorious LLC"
+  },
   "3219": {
     "products": [
       [
@@ -88400,6 +88997,14 @@
       ]
     ],
     "vendor": "Smak Tecnologia e Automacao LTDA"
+  },
+  "3231": {
+    "products": [],
+    "vendor": "Kneron, Inc."
+  },
+  "3232": {
+    "products": [],
+    "vendor": "Shenzhen Trusda Industrial Co., Ltd."
   },
   "326d": {
     "products": [
@@ -88410,6 +89015,10 @@
     ],
     "vendor": "Agile Display Solutions Co., Ltd"
   },
+  "3274": {
+    "products": [],
+    "vendor": "MicroArray"
+  },
   "3275": {
     "products": [
       [
@@ -88418,6 +89027,22 @@
       ]
     ],
     "vendor": "VidzMedia Pte Ltd"
+  },
+  "3285": {
+    "products": [],
+    "vendor": "Nacon"
+  },
+  "3297": {
+    "products": [],
+    "vendor": "ZSA Technology Labs Inc."
+  },
+  "32a3": {
+    "products": [],
+    "vendor": "GoTrust"
+  },
+  "32ac": {
+    "products": [],
+    "vendor": "Framework Computer BV"
   },
   "32b3": {
     "products": [
@@ -88431,6 +89056,18 @@
       ]
     ],
     "vendor": "TEXA"
+  },
+  "32cd": {
+    "products": [],
+    "vendor": "NEC"
+  },
+  "32e4": {
+    "products": [],
+    "vendor": "ELP-USBFHD06H-BL36IR"
+  },
+  "32e6": {
+    "products": [],
+    "vendor": "IcSpring Technology"
   },
   "3310": {
     "products": [
@@ -88448,6 +89085,10 @@
       ]
     ],
     "vendor": "MUDITA Sp. z o.o."
+  },
+  "332d": {
+    "products": [],
+    "vendor": "Verbatim GmbH"
   },
   "3333": {
     "products": [
@@ -88497,6 +89138,14 @@
     ],
     "vendor": "Leaguer Microelectronics (LME)"
   },
+  "3346": {
+    "products": [],
+    "vendor": "Cvitek Co. Ltd."
+  },
+  "335e": {
+    "products": [],
+    "vendor": "Eight Amps"
+  },
   "3384": {
     "products": [
       [
@@ -88510,6 +89159,62 @@
     ],
     "vendor": "System76"
   },
+  "33be": {
+    "products": [],
+    "vendor": "Syncopated Engineering, Inc."
+  },
+  "33c4": {
+    "products": [],
+    "vendor": "Tomahawk Robotics"
+  },
+  "33c8": {
+    "products": [],
+    "vendor": "Seidl Technologies UG"
+  },
+  "33dd": {
+    "products": [],
+    "vendor": "Zuki Inc"
+  },
+  "33f7": {
+    "products": [],
+    "vendor": "Linux Automation GmbH"
+  },
+  "33f8": {
+    "products": [],
+    "vendor": "Rolling Wireless S.a.r.l."
+  },
+  "33ff": {
+    "products": [],
+    "vendor": "nyantec GmbH"
+  },
+  "3434": {
+    "products": [],
+    "vendor": "Keychron"
+  },
+  "344f": {
+    "products": [],
+    "vendor": "SCX-3400 Series"
+  },
+  "3455": {
+    "products": [],
+    "vendor": "Atomos Global Pty Ltd"
+  },
+  "345f": {
+    "products": [],
+    "vendor": "MacroSilicon"
+  },
+  "3464": {
+    "products": [],
+    "vendor": "Senscomm Semiconductor, Inc"
+  },
+  "346d": {
+    "products": [],
+    "vendor": "VendorCo"
+  },
+  "346e": {
+    "products": [],
+    "vendor": "Gudsen Technology (HK) Co., Ltd (MOZA)"
+  },
   "348f": {
     "products": [
       [
@@ -88518,6 +89223,14 @@
       ]
     ],
     "vendor": "ISY"
+  },
+  "349c": {
+    "products": [],
+    "vendor": "Zhuhai Hongxin Technology Co., Ltd"
+  },
+  "349e": {
+    "products": [],
+    "vendor": "Token2"
   },
   "3504": {
     "products": [
@@ -88557,6 +89270,18 @@
     ],
     "vendor": "Power Quotient International Co., Ltd"
   },
+  "3542": {
+    "products": [],
+    "vendor": "Sonova Consumer Hearing"
+  },
+  "3544": {
+    "products": [],
+    "vendor": "Rusoku technologijos UAB"
+  },
+  "3553": {
+    "products": [],
+    "vendor": "PCsensor"
+  },
   "3579": {
     "products": [
       [
@@ -88575,6 +89300,34 @@
     ],
     "vendor": "Sharkoon"
   },
+  "359f": {
+    "products": [],
+    "vendor": "Shenzhen Sipeed Technology Co., Ltd."
+  },
+  "35b6": {
+    "products": [],
+    "vendor": "Orqa d.o.o"
+  },
+  "35f0": {
+    "products": [],
+    "vendor": "Bitcraze AB"
+  },
+  "35f1": {
+    "products": [],
+    "vendor": "INFICON"
+  },
+  "369a": {
+    "products": [],
+    "vendor": "HighSecLabs, Ltd"
+  },
+  "36da": {
+    "products": [],
+    "vendor": "Record Sure Limited [Recordsure]"
+  },
+  "36e9": {
+    "products": [],
+    "vendor": "ifanr Inc."
+  },
   "3752": {
     "products": [
       [
@@ -88584,6 +89337,10 @@
     ],
     "vendor": "Arculus Holdings, LLC"
   },
+  "3760": {
+    "products": [],
+    "vendor": "CIN-ergy B.V."
+  },
   "3767": {
     "products": [
       [
@@ -88592,6 +89349,18 @@
       ]
     ],
     "vendor": "Fanatec"
+  },
+  "37c5": {
+    "products": [],
+    "vendor": "OpenMV, LLC"
+  },
+  "3802": {
+    "products": [],
+    "vendor": "LDA Technologies LTD"
+  },
+  "3817": {
+    "products": [],
+    "vendor": "SleepImage"
   },
   "3838": {
     "products": [
@@ -88605,6 +89374,22 @@
       ]
     ],
     "vendor": "WEM"
+  },
+  "3842": {
+    "products": [],
+    "vendor": "EVGA"
+  },
+  "386e": {
+    "products": [],
+    "vendor": "XTX Markets"
+  },
+  "3876": {
+    "products": [],
+    "vendor": "Fenice Power Co., Ltd"
+  },
+  "38c5": {
+    "products": [],
+    "vendor": "JetHome LLC"
   },
   "3923": {
     "products": [
@@ -88766,6 +89551,14 @@
       ]
     ],
     "vendor": "National Instruments Corp."
+  },
+  "3938": {
+    "products": [],
+    "vendor": "MOSART Semiconductor"
+  },
+  "3c93": {
+    "products": [],
+    "vendor": "QingDao Topscomm"
   },
   "40bb": {
     "products": [
@@ -89447,6 +90240,10 @@
     ],
     "vendor": "Dell Computer Corp."
   },
+  "413d": {
+    "products": [],
+    "vendor": "RDing Technology Ltd [PCsensor]"
+  },
   "4146": {
     "products": [
       [
@@ -89595,6 +90392,10 @@
     ],
     "vendor": "Aceeca"
   },
+  "4816": {
+    "products": [],
+    "vendor": "Integrated Webcam"
+  },
   "4855": {
     "products": [
       [
@@ -89657,6 +90458,10 @@
     ],
     "vendor": "SimpleTech"
   },
+  "4c4a": {
+    "products": [],
+    "vendor": "JieLi Technology"
+  },
   "4d46": {
     "products": [
       [
@@ -89669,6 +90474,10 @@
       ]
     ],
     "vendor": "Musical Fidelity"
+  },
+  "4e4c": {
+    "products": [],
+    "vendor": "NieLTM TechSolution"
   },
   "5032": {
     "products": [
@@ -89690,6 +90499,10 @@
       ]
     ],
     "vendor": "Grandtec"
+  },
+  "5041": {
+    "products": [],
+    "vendor": "Linksys (?)"
   },
   "50c2": {
     "products": [
@@ -89726,6 +90539,18 @@
       ]
     ],
     "vendor": "I-Tetra"
+  },
+  "5246": {
+    "products": [],
+    "vendor": "bladeRF Software Defined Radio"
+  },
+  "5262": {
+    "products": [],
+    "vendor": "X.Tips"
+  },
+  "5325": {
+    "products": [],
+    "vendor": "Woolworth GmbH"
   },
   "5332": {
     "products": [
@@ -89961,6 +90786,14 @@
     ],
     "vendor": "Uni-Trend Group Limited"
   },
+  "573c": {
+    "products": [],
+    "vendor": "Xreal Light Microcontroller"
+  },
+  "5888": {
+    "products": [],
+    "vendor": "3Tronics MU30"
+  },
   "595a": {
     "products": [
       [
@@ -90180,6 +91013,14 @@
       ]
     ],
     "vendor": "Beholder International Ltd."
+  },
+  "6004": {
+    "products": [],
+    "vendor": "ISD-V4 Tablet Pen"
+  },
+  "6005": {
+    "products": [],
+    "vendor": "Hewlett-Packard"
   },
   "601a": {
     "products": [
@@ -90407,6 +91248,10 @@
     ],
     "vendor": "Sony Corp."
   },
+  "6495": {
+    "products": [],
+    "vendor": "GoDEX International Co."
+  },
   "6547": {
     "products": [
       [
@@ -90515,6 +91360,10 @@
     ],
     "vendor": "Opera1"
   },
+  "6964": {
+    "products": [],
+    "vendor": "Idobo"
+  },
   "6993": {
     "products": [
       [
@@ -90572,6 +91421,10 @@
       ]
     ],
     "vendor": "Beijing STONE Technology Co. Ltd."
+  },
+  "7374": {
+    "products": [],
+    "vendor": "DATA MODUL"
   },
   "7392": {
     "products": [
@@ -90687,6 +91540,14 @@
       ]
     ],
     "vendor": "Venable Instruments"
+  },
+  "7712": {
+    "products": [],
+    "vendor": "2711 Temperature sensor HUB [SEIICHI]"
+  },
+  "7777": {
+    "products": [],
+    "vendor": "SEIICHI Technology Co., Ltd."
   },
   "7825": {
     "products": [
@@ -91092,6 +91953,10 @@
     ],
     "vendor": "EGO Systems, Inc."
   },
+  "8347": {
+    "products": [],
+    "vendor": "VisTrend Co., Ltd."
+  },
   "8564": {
     "products": [
       [
@@ -91129,6 +91994,10 @@
       ]
     ],
     "vendor": "Intenso GmbG"
+  },
+  "8888": {
+    "products": [],
+    "vendor": "inLight"
   },
   "8e06": {
     "products": [
@@ -91173,6 +92042,10 @@
       ]
     ],
     "vendor": "TeVii Technology Ltd."
+  },
+  "9048": {
+    "products": [],
+    "vendor": "NuTesla CDC Serial Emulator"
   },
   "9148": {
     "products": [
@@ -91297,6 +92170,10 @@
       ]
     ],
     "vendor": "Marvell Semiconductor, Inc."
+  },
+  "9e8f": {
+    "products": [],
+    "vendor": "Plug Computer Basic [SheevaPlug]"
   },
   "a014": {
     "products": [
@@ -91456,6 +92333,10 @@
     ],
     "vendor": "ASIX s.r.o."
   },
+  "a69c": {
+    "products": [],
+    "vendor": "AICSEMI"
+  },
   "a727": {
     "products": [
       [
@@ -91481,6 +92362,10 @@
       ]
     ],
     "vendor": "Clas Ohlsson"
+  },
+  "a8f8": {
+    "products": [],
+    "vendor": "Bastard Keyboards"
   },
   "aaaa": {
     "products": [
@@ -91521,6 +92406,10 @@
     ],
     "vendor": "LogiLink"
   },
+  "b2c3": {
+    "products": [],
+    "vendor": "GNDHog"
+  },
   "b58e": {
     "products": [
       [
@@ -91530,6 +92419,10 @@
     ],
     "vendor": "Blue Microphones"
   },
+  "b711": {
+    "products": [],
+    "vendor": "VuPlus"
+  },
   "ba77": {
     "products": [
       [
@@ -91538,6 +92431,18 @@
       ]
     ],
     "vendor": "Clockmaker"
+  },
+  "c069": {
+    "products": [],
+    "vendor": "M500 Laser Mouse"
+  },
+  "c07c": {
+    "products": [],
+    "vendor": "M-R0017 [G700s Rechargeable Gaming Mouse]"
+  },
+  "c0f4": {
+    "products": [],
+    "vendor": "DualMiner"
   },
   "c216": {
     "products": [
@@ -91574,6 +92479,14 @@
     ],
     "vendor": "AGPTek"
   },
+  "c580": {
+    "products": [],
+    "vendor": "HID UNIKEYdongle [F-Response]"
+  },
+  "c5cb": {
+    "products": [],
+    "vendor": "ARTECH (Artech Technology Design Co., Ltd.)"
+  },
   "cace": {
     "products": [
       [
@@ -91586,6 +92499,10 @@
       ]
     ],
     "vendor": "CACE Technologies Inc."
+  },
+  "d13e": {
+    "products": [],
+    "vendor": "Coldcard Wallet"
   },
   "d208": {
     "products": [
@@ -91622,6 +92539,14 @@
     ],
     "vendor": "LogiLink"
   },
+  "dff0": {
+    "products": [],
+    "vendor": "shapinb"
+  },
+  "e2b5": {
+    "products": [],
+    "vendor": "JieLi Technology"
+  },
   "e2b7": {
     "products": [
       [
@@ -91634,6 +92559,10 @@
       ]
     ],
     "vendor": "Jie Li"
+  },
+  "e3b5": {
+    "products": [],
+    "vendor": "JieLi Technology"
   },
   "e4e4": {
     "products": [
@@ -91687,6 +92616,10 @@
       ]
     ],
     "vendor": "Xorcom Ltd."
+  },
+  "e5b7": {
+    "products": [],
+    "vendor": "JieLi Technology"
   },
   "eb03": {
     "products": [
@@ -91798,6 +92731,14 @@
     ],
     "vendor": "eMPIA Technology, Inc."
   },
+  "eb57": {
+    "products": [],
+    "vendor": "ZhuHai JieLi Technology"
+  },
+  "eba4": {
+    "products": [],
+    "vendor": "Aoboco"
+  },
   "f003": {
     "products": [
       [
@@ -91899,6 +92840,14 @@
     ],
     "vendor": "Conrad Electronic SE"
   },
+  "feed": {
+    "products": [],
+    "vendor": "DOIO Keyboard"
+  },
+  "ffd2": {
+    "products": [],
+    "vendor": "ZHONG-HUI ELECTRONICS CORP."
+  },
   "ffee": {
     "products": [
       [
@@ -91907,5 +92856,13 @@
       ]
     ],
     "vendor": "FNK Tech"
+  },
+  "fffe": {
+    "products": [],
+    "vendor": "Inland (MicroCenter brand)"
+  },
+  "ffff": {
+    "products": [],
+    "vendor": "Wrong vendor ID"
   }
 }
