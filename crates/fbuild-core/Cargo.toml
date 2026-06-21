@@ -12,8 +12,17 @@ tracing = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 sha2 = { workspace = true }
-# Tier-1 USB VID:PID resolver — see `crate::usb`.
+# Aggregator backend for the `online-data` workflow only: `examples/dump_usb_ids.rs`
+# uses this to feed tier-1 into `online-data/data/usb-vid.json`. The fbuild
+# runtime resolver no longer touches this crate — it goes through the
+# compile-time-embedded `usb-vendors.tar.zst` archive instead (see
+# `crate::usb::embedded`).
 usb-ids = { workspace = true }
+# Embedded USB-vendor archive decompression + extraction at first use.
+# Pulled in as workspace deps so other crates can share the same zstd / tar
+# wire format without per-crate version drift.
+zstd = { workspace = true }
+tar = { workspace = true }
 # Process containment primitive (Job Objects on Windows; process groups +
 # PR_SET_PDEATHSIG on Linux; process groups on macOS). The single global
 # `ContainedProcessGroup` owned by the daemon ensures every child process

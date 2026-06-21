@@ -130,7 +130,7 @@ def test_collect_skips_vendors_with_no_name_on_page() -> None:
 # overlay_usb_vid
 # --------------------------------------------------------------------------- #
 
-def test_overlay_adds_missing_vids_only() -> None:
+def test_overlay_gap_fill_adds_missing_vids_only() -> None:
     upstream = {
         "10c4": {"vendor": "Silicon Labs", "products": [["ea60", "CP210x"]]},
     }
@@ -138,8 +138,8 @@ def test_overlay_adds_missing_vids_only() -> None:
         "303a": {"vendor": "Espressif Systems", "products": [["4002", ""]]},
         "10c4": {"vendor": "WRONG NAME", "products": [["dead", "bad"]]},  # must NOT win
     }
-    merged, added = overlay_usb_vid.overlay(upstream, supplement)
-    assert added == 1
+    merged, changed = overlay_usb_vid.overlay(upstream, supplement, mode="gap-fill")
+    assert changed == 1
     # Upstream wins for 10c4 — no merging of name OR products.
     assert merged["10c4"]["vendor"] == "Silicon Labs"
     assert merged["10c4"]["products"] == [["ea60", "CP210x"]]
@@ -149,10 +149,61 @@ def test_overlay_adds_missing_vids_only() -> None:
     assert list(merged.keys()) == ["10c4", "303a"]
 
 
+def test_overlay_vendor_override_replaces_name_keeps_products() -> None:
+    """In vendor-override mode the supplement is the higher-authority source
+    for the vendor NAME but never disturbs the upstream products list."""
+    upstream = {
+        "10c4": {
+            "vendor": "Silicon Labs",
+            "products": [["ea60", "CP210x"], ["ea71", "CP2102N"]],
+        },
+        "0403": {"vendor": "Future Technology Devices", "products": [["6001", "FT232"]]},
+    }
+    supplement = {
+        "10c4": {"vendor": "Silicon Laboratories Inc.", "products": []},
+        "303a": {"vendor": "Espressif Systems",         "products": []},
+    }
+    merged, changed = overlay_usb_vid.overlay(
+        upstream, supplement, mode="vendor-override",
+    )
+    # 10c4 renamed; 303a added → 2 changes.
+    assert changed == 2
+    # Renamed vendor; products preserved verbatim.
+    assert merged["10c4"]["vendor"] == "Silicon Laboratories Inc."
+    assert merged["10c4"]["products"] == [["ea60", "CP210x"], ["ea71", "CP2102N"]]
+    # Untouched upstream entry stays as-is.
+    assert merged["0403"]["vendor"] == "Future Technology Devices"
+    # New entry added (products empty because supplement is vendor-only).
+    assert merged["303a"]["vendor"] == "Espressif Systems"
+    assert merged["303a"]["products"] == []
+
+
+def test_overlay_vendor_override_skips_when_name_unchanged() -> None:
+    """If the supplement repeats the upstream name verbatim, no change."""
+    upstream    = {"10c4": {"vendor": "Silicon Labs", "products": []}}
+    supplement  = {"10c4": {"vendor": "Silicon Labs", "products": []}}
+    _merged, changed = overlay_usb_vid.overlay(
+        upstream, supplement, mode="vendor-override",
+    )
+    assert changed == 0
+
+
+def test_overlay_invalid_mode_rejected() -> None:
+    with pytest.raises(ValueError):
+        overlay_usb_vid.overlay({}, {}, mode="bogus")
+
+
 def test_overlay_does_not_mutate_input() -> None:
     upstream = {"10c4": {"vendor": "Silicon Labs", "products": []}}
     overlay_usb_vid.overlay(upstream, {"303a": {"vendor": "X", "products": []}})
     assert "303a" not in upstream
+    # vendor-override case
+    upstream2 = {"10c4": {"vendor": "Silicon Labs", "products": []}}
+    overlay_usb_vid.overlay(
+        upstream2, {"10c4": {"vendor": "Other", "products": []}},
+        mode="vendor-override",
+    )
+    assert upstream2["10c4"]["vendor"] == "Silicon Labs"
 
 
 def test_overlay_main_emits_file(tmp_path: Path) -> None:

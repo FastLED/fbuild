@@ -237,36 +237,53 @@ jobs:
             --manifest-fragment-slim /tmp/fragments/vendor_boards.json
 
       # ────────────────────────────────────────────────────────────────────
-      # Tier-4 USB-VID source: scrape usb-ids.gowdy.us for VIDs the public
-      # text databases (Rust crate, linux-usb.org, hwdata) don't yet carry.
-      # Notable holes today: 0x303A Espressif, 0x2E8A Raspberry Pi Foundation
-      # — both confirmed missing from upstreams as of 2026-06-21. Gowdy.us
-      # is the authoritative submission/discussion view; we scrape it only
-      # for VIDs referenced by `mcu_to_vid` so the request volume stays tiny
-      # and the data added is fully attributable (the URL is the audit trail).
+      # Tier-4 USB-VID source: inlined supplement curated from
+      # usb-ids.gowdy.us. The public text databases (Rust crate,
+      # linux-usb.org, hwdata) don't carry newer VIDs like 0x303A Espressif
+      # or 0x2E8A Raspberry Pi Foundation. The 253-entry overlay lives in
+      # online-data-tools/vendor_names_inlined.py — committed to main so
+      # the workflow is reproducible offline (no nightly live-scrape) and
+      # auditable (each entry traces back to ids.txt -> ids4.json).
       # ────────────────────────────────────────────────────────────────────
 
-      - name: Fetch usb-ids.gowdy.us supplement (USB-VID tier-4)
-        id: fetch-gowdy
+      - name: Emit inlined vendor-name supplement (USB-VID tier-4)
+        id: emit-inlined
         continue-on-error: true
         if: steps.merge-usb.outcome == 'success'
         run: |
           uv run --no-project --script \
-            "${{ github.workspace }}/online-data-tools/fetch_gowdy_supplement.py" \
-            --mcu-to-vid "${{ github.workspace }}/online-data-tools/seed_mcu_to_vid.json" \
-            --existing   "${ONLINE_WORKTREE}/data/usb-vid.json" \
-            --out        /tmp/gowdy-supplement.json
+            "${{ github.workspace }}/online-data-tools/vendor_names_inlined.py" \
+            --out /tmp/inlined-supplement.json
 
-      - name: Overlay gowdy supplement onto usb-vid.json
-        id: overlay-gowdy
+      - name: Overlay inlined supplement onto usb-vid.json
+        id: overlay-inlined
         continue-on-error: true
-        if: steps.fetch-gowdy.outcome == 'success'
+        if: steps.emit-inlined.outcome == 'success'
+        # vendor-override: the curated inlined names WIN over the upstream
+        # text databases. Upstream products lists are preserved untouched —
+        # only the vendor name field gets replaced for VIDs present in both.
         run: |
           uv run --no-project --script \
             "${{ github.workspace }}/online-data-tools/overlay_usb_vid.py" \
             --upstream   "${ONLINE_WORKTREE}/data/usb-vid.json" \
-            --supplement /tmp/gowdy-supplement.json \
-            --out        "${ONLINE_WORKTREE}/data/usb-vid.json"
+            --supplement /tmp/inlined-supplement.json \
+            --out        "${ONLINE_WORKTREE}/data/usb-vid.json" \
+            --mode       vendor-override
+
+      - name: Package usb-vendors.tar.zst (embeddable into fbuild)
+        id: package-archive
+        continue-on-error: true
+        if: steps.overlay-inlined.outcome == 'success'
+        # Compact {vid: vendor} dict in tar.zst form. fbuild include_bytes!()s
+        # this at compile time so its USB-vendor lookup needs no runtime
+        # network access and no `usb-ids` Rust crate dependency. PID-level
+        # lookups live in the www-branch SQLite-over-HTTP DB.
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/build_vendor_archive.py" \
+            --upstream "${ONLINE_WORKTREE}/data/usb-vid.json" \
+            --out      "${ONLINE_WORKTREE}/data/usb-vendors.tar.zst"
+          ls -la "${ONLINE_WORKTREE}/data/usb-vendors.tar.zst"
 
       - name: Assemble manifest.json
         id: build-manifest
@@ -362,8 +379,9 @@ jobs:
             echo "| usbids/usbids github       | ${{ steps.fetch-github.outcome }} |"
             echo "| pio boards (platformio)    | ${{ steps.dump-pio.outcome }} |"
             echo "| merge usb-vid              | ${{ steps.merge-usb.outcome }} |"
-            echo "| fetch gowdy (tier-4)       | ${{ steps.fetch-gowdy.outcome }} |"
-            echo "| overlay gowdy              | ${{ steps.overlay-gowdy.outcome }} |"
+            echo "| emit inlined supplement    | ${{ steps.emit-inlined.outcome }} |"
+            echo "| overlay inlined supplement | ${{ steps.overlay-inlined.outcome }} |"
+            echo "| package vendor archive     | ${{ steps.package-archive.outcome }} |"
             echo "| merge pio-boards           | ${{ steps.merge-pio.outcome }} |"
             echo "| build manifest             | ${{ steps.build-manifest.outcome }} |"
             echo "| build sqlite (www)         | ${{ steps.build-sqlite.outcome }} |"
