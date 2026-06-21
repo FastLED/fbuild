@@ -125,8 +125,7 @@ mod tests {
         let s = pretty(0x0403, 0x6001);
         assert!(s.ends_with("(0403:6001)"), "tail format wrong: {s}");
         assert!(
-            s.to_lowercase().contains("future technology")
-                || s.to_lowercase().contains("ftdi"),
+            s.to_lowercase().contains("future technology") || s.to_lowercase().contains("ftdi"),
             "missing vendor: {s}"
         );
         // Unknown path stays deterministic.

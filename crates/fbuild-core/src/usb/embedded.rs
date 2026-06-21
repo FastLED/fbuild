@@ -95,7 +95,10 @@ fn load() -> Result<HashMap<u16, String>, LoadError> {
     let mut payload: Option<String> = None;
     let mut manifest: Option<String> = None;
     let mut archive = tar::Archive::new(decoded.as_slice());
-    for entry in archive.entries().map_err(|e| LoadError::Tar(e.to_string()))? {
+    for entry in archive
+        .entries()
+        .map_err(|e| LoadError::Tar(e.to_string()))?
+    {
         let mut entry = entry.map_err(|e| LoadError::Tar(e.to_string()))?;
         let path = entry
             .path()
@@ -162,9 +165,7 @@ fn unescape(s: &str) -> String {
     let mut i = 0;
     while i < bytes.len() {
         if bytes[i] == b'%' && i + 2 < bytes.len() {
-            if let (Some(hi), Some(lo)) =
-                (hex_nibble(bytes[i + 1]), hex_nibble(bytes[i + 2]))
-            {
+            if let (Some(hi), Some(lo)) = (hex_nibble(bytes[i + 1]), hex_nibble(bytes[i + 2])) {
                 let byte = hi * 16 + lo;
                 if byte < 0x80 {
                     out.push(byte as char);
@@ -219,18 +220,18 @@ mod tests {
         // mode semantics in online-data-tools/overlay_usb_vid.py). VIDs
         // 0x303a and 0x2e8a are the ones the inlined supplement contributes.
         for (vid, expected_substr) in [
-            (0x303a_u16, "Espressif"),                 // inlined supplement only
-            (0x2e8a, "Raspberry Pi"),                  // inlined supplement only
-            (0x0403, "Future Technology"),             // upstream
-            (0x10c4, "Silicon Lab"),                   // upstream may say "Cygnal"
-            (0x1a86, "QinHeng"),                       // upstream
-            (0x16c0, "Van Ooijen Technische"),         // PJRC/Teensy via VOTI alloc
+            (0x303a_u16, "Espressif"),         // inlined supplement only
+            (0x2e8a, "Raspberry Pi"),          // inlined supplement only
+            (0x0403, "Future Technology"),     // upstream
+            (0x10c4, "Silicon Lab"),           // upstream may say "Cygnal"
+            (0x1a86, "QinHeng"),               // upstream
+            (0x16c0, "Van Ooijen Technische"), // PJRC/Teensy via VOTI alloc
         ] {
-            let name = vendor_name(vid).unwrap_or_else(|| {
-                panic!("embedded archive missing vendor for VID 0x{vid:04X}")
-            });
+            let name = vendor_name(vid)
+                .unwrap_or_else(|| panic!("embedded archive missing vendor for VID 0x{vid:04X}"));
             assert!(
-                name.to_lowercase().contains(&expected_substr.to_lowercase()),
+                name.to_lowercase()
+                    .contains(&expected_substr.to_lowercase()),
                 "VID 0x{vid:04X}: expected substring {expected_substr:?}, got {name:?}"
             );
         }
@@ -241,8 +242,11 @@ mod tests {
         // 0xBADD is in the unallocated portion of the USB-IF range as of
         // the 2026 snapshot. If a future archive picks it up the test
         // can move to another reserved range.
-        assert!(vendor_name(0xBADD).is_none(),
-                "0xBADD unexpectedly present: {:?}", vendor_name(0xBADD));
+        assert!(
+            vendor_name(0xBADD).is_none(),
+            "0xBADD unexpectedly present: {:?}",
+            vendor_name(0xBADD)
+        );
     }
 
     #[test]
