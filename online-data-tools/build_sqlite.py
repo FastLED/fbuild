@@ -87,6 +87,39 @@ CREATE INDEX idx_mcu_to_vid_vid  ON mcu_to_vid (vid);
 CREATE VIRTUAL TABLE board_fts
   USING fts5(id, name, vendor, mcu, content='board', content_rowid='rowid');
 
+-- ──────────────────────────────────────────────────────────────────────
+-- String-keyed fuzzy-search tables (see #719 follow-up):
+--   vid_vendor: 4-hex-digit VID -> vendor name. PK is the string itself
+--               so prefix LIKE queries hit the implicit B-tree index. A
+--               sibling FTS5 table (vid_vendor_fts) covers token search
+--               over the vendor name (case-insensitive, stemming-free).
+--   vidpid:     8-hex-digit `VVVVPPPP` (concatenated, no separator) ->
+--               product name. Same prefix-index + fuzzy-FTS pattern.
+-- Both tables shadow the integer-keyed `usb_vendor` / `usb_product` so
+-- the existing canned queries keep working; consumers that prefer
+-- string keys + fuzzy search use these.
+-- ──────────────────────────────────────────────────────────────────────
+
+CREATE TABLE vid_vendor (
+  vid    TEXT PRIMARY KEY,    -- 4-hex-digit lowercase (e.g. "303a")
+  vendor TEXT NOT NULL
+);
+CREATE INDEX idx_vid_vendor_vendor ON vid_vendor (vendor);
+
+CREATE VIRTUAL TABLE vid_vendor_fts
+  USING fts5(vid UNINDEXED, vendor,
+             content='vid_vendor', content_rowid='rowid');
+
+CREATE TABLE vidpid (
+  vidpid TEXT PRIMARY KEY,    -- 8-hex-digit lowercase (e.g. "303a4002")
+  name   TEXT NOT NULL
+);
+CREATE INDEX idx_vidpid_name ON vidpid (name);
+
+CREATE VIRTUAL TABLE vidpid_fts
+  USING fts5(vidpid UNINDEXED, name,
+             content='vidpid', content_rowid='rowid');
+
 -- Per-board headline ranking view. Joins boards to their likely USB
 -- vendors via mcu_to_vid. The board_id column carries the original id even
 -- when the mcu prefix-match expands to multiple families.
@@ -118,9 +151,13 @@ LEFT JOIN usb_vendor v
 def _populate_usb(conn: sqlite3.Connection, usb_vid: dict) -> None:
     vendor_rows = []
     product_rows = []
+    vid_vendor_str_rows: list[tuple[str, str]] = []
+    vidpid_str_rows: list[tuple[str, str]] = []
     for vid_str, payload in usb_vid.items():
         vid = _ensure_int(vid_str)
         vendor_rows.append((vid, payload["vendor"]))
+        vid_lower = f"{vid:04x}"
+        vid_vendor_str_rows.append((vid_lower, payload["vendor"]))
         for pid_entry in payload.get("products", []):
             # The online-data JSON uses [pid_hex, name] pairs; tolerate the
             # alternate dict shape just in case the upstream format drifts.
@@ -128,13 +165,35 @@ def _populate_usb(conn: sqlite3.Connection, usb_vid: dict) -> None:
                 pid_str, name = pid_entry[0], pid_entry[1]
             else:
                 pid_str, name = pid_entry["pid"], pid_entry["name"]
-            product_rows.append((vid, _ensure_int(pid_str), name))
+            pid = _ensure_int(pid_str)
+            product_rows.append((vid, pid, name))
+            vidpid_str_rows.append((f"{vid:04x}{pid:04x}", name))
     conn.executemany(
         "INSERT INTO usb_vendor (vid, vendor) VALUES (?, ?)", vendor_rows
     )
     conn.executemany(
         "INSERT INTO usb_product (vid, pid, product) VALUES (?, ?, ?)",
         product_rows,
+    )
+    # String-keyed parallel tables (see schema for rationale).
+    conn.executemany(
+        "INSERT INTO vid_vendor (vid, vendor) VALUES (?, ?)",
+        vid_vendor_str_rows,
+    )
+    conn.executemany(
+        "INSERT OR IGNORE INTO vidpid (vidpid, name) VALUES (?, ?)",
+        vidpid_str_rows,
+    )
+    # Push into external-content FTS5 mirrors. The triggers approach would
+    # need separate INSERT/UPDATE/DELETE triggers; for a build-once DB,
+    # an explicit SELECT-INTO is simpler and equally fast.
+    conn.execute(
+        "INSERT INTO vid_vendor_fts (rowid, vid, vendor) "
+        "SELECT rowid, vid, vendor FROM vid_vendor"
+    )
+    conn.execute(
+        "INSERT INTO vidpid_fts (rowid, vidpid, name) "
+        "SELECT rowid, vidpid, name FROM vidpid"
     )
 
 

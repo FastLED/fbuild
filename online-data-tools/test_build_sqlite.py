@@ -192,6 +192,65 @@ def test_db_creates_expected_tables(built_db: Path) -> None:
     assert not missing, f"missing tables/views: {missing}; got {names}"
 
 
+def test_vid_vendor_string_table_is_populated(built_db: Path, sample_usb_vid: dict) -> None:
+    with sqlite3.connect(built_db) as conn:
+        for vid_hex, payload in sample_usb_vid.items():
+            row = conn.execute(
+                "SELECT vendor FROM vid_vendor WHERE vid = ?",
+                (vid_hex.lower(),),
+            ).fetchone()
+            assert row is not None, f"vid {vid_hex!r} missing from vid_vendor"
+            assert row[0] == payload["vendor"]
+
+
+def test_vidpid_concat_table_is_populated(built_db: Path, sample_usb_vid: dict) -> None:
+    with sqlite3.connect(built_db) as conn:
+        for vid_hex, payload in sample_usb_vid.items():
+            for pid_hex, product in payload["products"]:
+                key = f"{int(vid_hex, 16):04x}{int(pid_hex, 16):04x}"
+                row = conn.execute(
+                    "SELECT name FROM vidpid WHERE vidpid = ?", (key,),
+                ).fetchone()
+                assert row is not None, f"vidpid {key!r} missing"
+                assert row[0] == product
+
+
+def test_vid_vendor_fts5_matches_partial_vendor_name(built_db: Path) -> None:
+    # 'Espressif' is the canonical Espressif Systems entry in our fixture.
+    with sqlite3.connect(built_db) as conn:
+        rows = conn.execute(
+            "SELECT vid, vendor FROM vid_vendor "
+            "WHERE rowid IN (SELECT rowid FROM vid_vendor_fts WHERE vendor MATCH ?)",
+            ("Espressif",),
+        ).fetchall()
+    assert rows, "FTS5 vendor search must match 'Espressif'"
+    assert any(v == "303a" for v, _ in rows)
+
+
+def test_vidpid_fts5_matches_partial_product_name(built_db: Path) -> None:
+    with sqlite3.connect(built_db) as conn:
+        rows = conn.execute(
+            "SELECT vidpid, name FROM vidpid "
+            "WHERE rowid IN (SELECT rowid FROM vidpid_fts WHERE name MATCH ?)",
+            ('"ESP32-S3"',),  # quote-wrap so the FTS5 tokenizer treats hyphen as content
+        ).fetchall()
+    assert rows, "FTS5 name search must match 'ESP32-S3'"
+    # Headline mapping: ESP32-S3 product lives under 303a:4002 → '303a4002'.
+    assert any(k == "303a4002" for k, _ in rows)
+
+
+def test_vid_vendor_prefix_lookup_via_like(built_db: Path) -> None:
+    """The PRIMARY KEY on `vid TEXT` lets us do fast prefix searches with
+    `LIKE 'vendor_substr%'` against the explicit btree index on the
+    vendor column. Mostly a smoke test for the index existing."""
+    with sqlite3.connect(built_db) as conn:
+        rows = conn.execute(
+            "SELECT vid FROM vid_vendor WHERE vendor LIKE ? ORDER BY vid",
+            ("Espressif%",),
+        ).fetchall()
+    assert ("303a",) in rows
+
+
 def test_db_has_fts5_index(built_db: Path) -> None:
     with sqlite3.connect(built_db) as conn:
         names = {
