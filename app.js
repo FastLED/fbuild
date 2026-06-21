@@ -83,10 +83,10 @@
         (
           m.score
           + CASE WHEN p.pid IS NOT NULL THEN 0.25 ELSE 0.0 END
-          + CASE WHEN LOWER(b.vendor) = LOWER(v.vendor) THEN 0.10 ELSE 0.0 END
+          + CASE WHEN v.vendor IS NOT NULL AND LOWER(b.vendor) = LOWER(v.vendor) THEN 0.10 ELSE 0.0 END
         )               AS score
       FROM mcu_to_vid m
-      JOIN usb_vendor v
+      LEFT JOIN usb_vendor v
         ON v.vid = m.vid
       LEFT JOIN usb_product p
         ON p.vid = m.vid AND p.pid = ?2
