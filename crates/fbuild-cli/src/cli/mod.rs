@@ -24,6 +24,7 @@ pub mod graph_cmd;
 pub mod lnk;
 pub mod monitor_parse;
 pub mod pio;
+pub mod port_scan;
 pub mod purge;
 pub mod reset;
 pub mod serial_probe;

@@ -21,6 +21,7 @@ use super::graph_cmd::run_bloat_graph;
 use super::lnk::run_lnk;
 use super::monitor_parse::parse_monitor_flags;
 use super::pio::{pio_build, pio_deploy, pio_monitor};
+use super::port_scan::run_port;
 use super::purge::{run_purge, run_purge_gc};
 use super::reset::run_reset;
 use super::serial_probe::run_serial;
@@ -518,6 +519,7 @@ pub async fn async_main() {
         }
         Some(Commands::Serial { action }) => run_serial(action),
         Some(Commands::Bringup(args)) => run_bringup(args),
+        Some(Commands::Port { action }) => run_port(action),
     };
 
     if let Err(e) = result {

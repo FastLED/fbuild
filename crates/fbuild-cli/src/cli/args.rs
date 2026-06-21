@@ -576,6 +576,15 @@ pub enum Commands {
     /// Python `bash autoresearch`. Scaffold today; full
     /// implementation per #697 follow-ups.
     Bringup(super::bringup::BringupArgs),
+    /// Serial-port enumeration with FastLED/boards-backed
+    /// vendor/product resolution (FastLED/fbuild#741). Renders a
+    /// two-row block per port: row 1 = port + VID:PID + descriptor,
+    /// row 2 = `└─ vendor / product` from the tiered USB resolver
+    /// (`fbuild_core::usb::resolve`).
+    Port {
+        #[command(subcommand)]
+        action: super::port_scan::PortAction,
+    },
 }
 
 /// Subcommands for `fbuild lnk`.
