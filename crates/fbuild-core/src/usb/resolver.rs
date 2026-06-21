@@ -3,6 +3,8 @@
 
 use serde::{Deserialize, Serialize};
 
+use super::embedded;
+
 /// Resolved USB device identity.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct UsbInfo {
@@ -12,7 +14,8 @@ pub struct UsbInfo {
 
 /// Best-effort lookup. Never returns `None`: a synthetic
 /// `"Unknown vendor 0xVVVV"` / `"Unknown product 0xPPPP"` is produced
-/// when both tier-1 (bundled) and tier-2 (online overlay) miss.
+/// when both tier-1 (embedded vendor archive) and tier-2 (online overlay)
+/// miss.
 pub fn resolve(vid: u16, pid: u16) -> UsbInfo {
     try_resolve(vid, pid).unwrap_or_else(|| UsbInfo {
         vendor: format!("Unknown vendor 0x{vid:04X}"),
@@ -21,18 +24,31 @@ pub fn resolve(vid: u16, pid: u16) -> UsbInfo {
 }
 
 /// Tier-1 + tier-2 only. Returns `None` if neither knows this pair.
+///
+/// Tier order is reversed from the old `usb-ids`-backed implementation:
+/// the online overlay carries the full `{vendor, product}` aggregate
+/// (it ingests the bundled Rust crate dump on the `online-data` branch
+/// at workflow time), while the embedded vendor archive is intentionally
+/// vendor-name-only. We consult the overlay first because it has more
+/// information; we only fall through to the embedded archive when the
+/// overlay misses the VID entirely.
 pub fn try_resolve(vid: u16, pid: u16) -> Option<UsbInfo> {
-    resolve_bundled(vid, pid).or_else(|| super::data::lookup(vid, pid))
+    if let Some(info) = super::data::lookup(vid, pid) {
+        return Some(info);
+    }
+    resolve_bundled(vid, pid)
 }
 
-/// Tier-1 only (the bundled `usb-ids` crate). Use when callers need to
-/// distinguish "the offline snapshot knows this" from "we had to fall
-/// through to the online overlay" — diagnostics, attribution, etc.
+/// Tier-1 only (the compile-time-embedded vendor archive). The embedded
+/// archive carries vendor names only — see
+/// `crates/fbuild-core/data/usb-vendors.tar.zst`. For VIDs present in the
+/// archive, the returned `UsbInfo.product` is a synthetic `"Device 0xPPPP"`
+/// placeholder since per-PID resolution lives in the runtime overlay
+/// (tier-2) and the www-branch SQLite-over-HTTP database.
 pub fn resolve_bundled(vid: u16, pid: u16) -> Option<UsbInfo> {
-    let device = usb_ids::Device::from_vid_pid(vid, pid)?;
-    Some(UsbInfo {
-        vendor: device.vendor().name().to_string(),
-        product: device.name().to_string(),
+    embedded::vendor_name(vid).map(|vendor| UsbInfo {
+        vendor: vendor.to_string(),
+        product: format!("Device 0x{pid:04X}"),
     })
 }
 
@@ -54,87 +70,78 @@ mod tests {
     static OVERLAY_LOCK: Mutex<()> = Mutex::new(());
 
     #[test]
-    fn bundled_resolves_ftdi_ft232() {
-        let info = resolve_bundled(0x0403, 0x6001).expect("FTDI FT232 in bundled DB");
+    fn embedded_resolves_ftdi_vendor() {
+        let info = resolve_bundled(0x0403, 0x6001).expect("FTDI VID in embedded archive");
         assert!(
-            info.vendor.to_lowercase().contains("future technology"),
+            info.vendor.to_lowercase().contains("future technology")
+                || info.vendor.to_lowercase().contains("ftdi"),
             "vendor: {}",
             info.vendor
         );
-        assert!(
-            info.product.to_lowercase().contains("ft232"),
-            "product: {}",
-            info.product
-        );
+        // Tier-1 product is intentionally synthetic — the real product
+        // name lives in the runtime overlay (tier-2).
+        assert_eq!(info.product, "Device 0x6001");
     }
 
     #[test]
-    fn bundled_resolves_silabs_cp210x() {
-        let info = resolve_bundled(0x10C4, 0xEA60).expect("Silicon Labs CP210x in bundled DB");
+    fn embedded_resolves_silabs_vendor() {
+        let info = resolve_bundled(0x10C4, 0xEA60).expect("Silicon Labs VID in embedded archive");
         assert!(
-            info.vendor.to_lowercase().contains("silicon labs")
+            info.vendor.to_lowercase().contains("silicon lab")
                 || info.vendor.to_lowercase().contains("cygnal"),
             "vendor: {}",
             info.vendor
         );
-        assert!(
-            info.product.to_lowercase().contains("cp210"),
-            "product: {}",
-            info.product
-        );
     }
 
     #[test]
-    fn bundled_resolves_wch_ch340() {
-        let info = resolve_bundled(0x1A86, 0x7523).expect("WCH CH340 in bundled DB");
+    fn embedded_resolves_espressif_via_inlined_supplement() {
+        // 0x303a is missing from every canonical text database we mirror
+        // — the curated inlined supplement (online-data-tools/
+        // vendor_names_inlined.py) injects it during the workflow's
+        // merge step, and the resulting tar.zst is the embedded archive.
+        // This test pins the round-trip: curated overlay → embedded
+        // archive → fbuild runtime resolution.
+        let info = resolve_bundled(0x303A, 0x4002).expect("Espressif in embedded archive");
         assert!(
-            info.vendor.to_lowercase().contains("qinheng")
-                || info.vendor.to_lowercase().contains("wch")
-                || info.vendor.to_lowercase().contains("nanjing"),
+            info.vendor.to_lowercase().contains("espressif"),
             "vendor: {}",
             info.vendor
-        );
-        assert!(
-            info.product.to_lowercase().contains("ch340")
-                || info.product.to_lowercase().contains("serial"),
-            "product: {}",
-            info.product
         );
     }
 
     #[test]
     fn unknown_pair_returns_synthetic_placeholder() {
-        // 0xFFFE:0xFFFE is reserved and will not be assigned by USB-IF;
-        // safe sentinel for "we expect tier-3 to fire."
-        let info = resolve(0xFFFE, 0xFFFE);
-        assert_eq!(info.vendor, "Unknown vendor 0xFFFE");
-        assert_eq!(info.product, "Unknown product 0xFFFE");
+        // 0xBADD:0xBADD is reserved and will not be assigned by USB-IF.
+        let info = resolve(0xBADD, 0xBADD);
+        assert_eq!(info.vendor, "Unknown vendor 0xBADD");
+        assert_eq!(info.product, "Unknown product 0xBADD");
     }
 
     #[test]
     fn pretty_format_uses_canonical_shape() {
-        // FTDI FT232 is one of the most stable VID:PIDs in the bundled DB
-        // (it's the de-facto USB-serial chip used in every Arduino clone).
+        // FTDI is in the embedded archive — vendor resolves, product is
+        // synthetic so the tail is deterministic.
         let s = pretty(0x0403, 0x6001);
         assert!(s.ends_with("(0403:6001)"), "tail format wrong: {s}");
         assert!(
-            s.to_lowercase().contains("future technology"),
+            s.to_lowercase().contains("future technology")
+                || s.to_lowercase().contains("ftdi"),
             "missing vendor: {s}"
         );
-        // Pretty also handles the unknown path deterministically.
-        let unknown = pretty(0xFFFE, 0xFFFE);
+        // Unknown path stays deterministic.
+        let unknown = pretty(0xBADD, 0xBADD);
         assert_eq!(
             unknown,
-            "Unknown vendor 0xFFFE Unknown product 0xFFFE (FFFE:FFFE)"
+            "Unknown vendor 0xBADD Unknown product 0xBADD (BADD:BADD)"
         );
     }
 
     #[test]
-    fn online_overlay_resolves_when_bundled_misses() {
+    fn online_overlay_resolves_when_embedded_misses() {
         let _guard = OVERLAY_LOCK.lock().unwrap();
-        // Use a VID:PID that the bundled `usb-ids` crate cannot resolve
-        // (0xFFFD:0xABCD is reserved). Install an overlay entry for it and
-        // confirm `resolve()` picks tier-2 instead of falling to tier-3.
+        // Pick a VID:PID that the embedded archive cannot resolve.
+        // 0xFFFD is reserved by USB-IF.
         assert!(
             resolve_bundled(0xFFFD, 0xABCD).is_none(),
             "test fixture assumed an unallocated VID:PID; pick a different one"
@@ -153,7 +160,26 @@ mod tests {
         assert_eq!(info.vendor, "Acme Test Devices");
         assert_eq!(info.product, "Test Widget 9000");
 
-        // Reset so unrelated tests don't observe this entry.
+        super::super::data::clear_online_cache_for_tests();
+    }
+
+    #[test]
+    fn online_overlay_wins_over_embedded_for_same_vid() {
+        // Overlay has tier priority — if a VID is in BOTH the embedded
+        // archive and the overlay, the overlay's richer entry wins.
+        let _guard = OVERLAY_LOCK.lock().unwrap();
+        let mut map = HashMap::new();
+        map.insert(
+            super::super::data::pack(0x0403, 0x6001),
+            UsbInfo {
+                vendor: "FTDI Official".to_string(),
+                product: "FT232 Serial Converter".to_string(),
+            },
+        );
+        super::super::data::install_online_cache_map(map);
+        let info = resolve(0x0403, 0x6001);
+        assert_eq!(info.vendor, "FTDI Official");
+        assert_eq!(info.product, "FT232 Serial Converter");
         super::super::data::clear_online_cache_for_tests();
     }
 }

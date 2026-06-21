@@ -1,10 +1,13 @@
-# Nightly refresh of the `online-data` branch's published datasets.
+# Nightly refresh of the `online-data` and `www` branches.
 #
-# Today the branch carries two datasets — USB VID:PID name resolution and
-# the PlatformIO board catalog. The workflow file lives on `main` only
-# because GitHub Actions requires `schedule` / `workflow_dispatch` to be
-# defined on the default branch. All actual data + the merger scripts
-# live on the orphan `online-data` branch (see `docs/online-data.md`).
+# `online-data` (orphan) carries the merged JSON datasets — USB VID:PID name
+# resolution and the PlatformIO board catalog — plus their merger scripts.
+# `www` (orphan, GH Pages source) carries a day-rotated SQLite database
+# (`<YYYY-MM-DD>.db`) built from the same JSON plus the static-site front-end
+# that serves it via sql.js. See FastLED/fbuild#718 for the www design.
+#
+# This workflow file lives on `main` only because GitHub Actions requires
+# `schedule` / `workflow_dispatch` to be defined on the default branch.
 #
 # At runtime the job:
 #
@@ -62,6 +65,15 @@ env:
   ONLINE_WORKTREE: ${{ github.workspace }}/.online-data
   BRANCH_BASE_URL: https://raw.githubusercontent.com/${{ github.repository }}/online-data
   HISTORY_LIMIT: 200
+  # www branch (GH Pages source): see FastLED/fbuild#718.
+  WWW_BRANCH: www
+  WWW_WORKTREE: ${{ github.workspace }}/.www
+  # sql.js is downloaded from a pinned release with an SRI check (below)
+  # and staged onto the www branch fresh on every run.
+  SQLJS_VERSION: "1.10.3"
+  SQLJS_BASE_URL: https://github.com/sql-js/sql.js/releases/download/v1.10.3/sqljs-wasm.zip
+  # Public site URL (overridden if GitHub Pages is configured elsewhere).
+  WEBSITE_URL: https://fastled.github.io/fbuild/
 
 jobs:
   update:
@@ -93,6 +105,14 @@ jobs:
           ls -la "${ONLINE_WORKTREE}"
 
       - uses: astral-sh/setup-uv@v3
+
+      - name: Setup www worktree (orphan, GH Pages source)
+        # Wraps fetch / orphan-bootstrap logic in Python — unit-tested in
+        # online-data-tools/test_orchestrators.py.
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/setup_www_worktree.py" \
+            --worktree "${WWW_WORKTREE}" --branch "${WWW_BRANCH}"
 
       - name: Setup soldr
         uses: zackees/setup-soldr@v0.9.62
@@ -216,6 +236,55 @@ jobs:
             --manifest-fragment /tmp/fragments/pio-boards.json \
             --manifest-fragment-slim /tmp/fragments/vendor_boards.json
 
+      # ────────────────────────────────────────────────────────────────────
+      # Tier-4 USB-VID source: inlined supplement curated from
+      # usb-ids.gowdy.us. The public text databases (Rust crate,
+      # linux-usb.org, hwdata) don't carry newer VIDs like 0x303A Espressif
+      # or 0x2E8A Raspberry Pi Foundation. The 253-entry overlay lives in
+      # online-data-tools/vendor_names_inlined.py — committed to main so
+      # the workflow is reproducible offline (no nightly live-scrape) and
+      # auditable (each entry traces back to ids.txt -> ids4.json).
+      # ────────────────────────────────────────────────────────────────────
+
+      - name: Emit inlined vendor-name supplement (USB-VID tier-4)
+        id: emit-inlined
+        continue-on-error: true
+        if: steps.merge-usb.outcome == 'success'
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/vendor_names_inlined.py" \
+            --out /tmp/inlined-supplement.json
+
+      - name: Overlay inlined supplement onto usb-vid.json
+        id: overlay-inlined
+        continue-on-error: true
+        if: steps.emit-inlined.outcome == 'success'
+        # vendor-override: the curated inlined names WIN over the upstream
+        # text databases. Upstream products lists are preserved untouched —
+        # only the vendor name field gets replaced for VIDs present in both.
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/overlay_usb_vid.py" \
+            --upstream   "${ONLINE_WORKTREE}/data/usb-vid.json" \
+            --supplement /tmp/inlined-supplement.json \
+            --out        "${ONLINE_WORKTREE}/data/usb-vid.json" \
+            --mode       vendor-override
+
+      - name: Package usb-vendors.tar.zst (embeddable into fbuild)
+        id: package-archive
+        continue-on-error: true
+        if: steps.overlay-inlined.outcome == 'success'
+        # Compact {vid: vendor} dict in tar.zst form. fbuild include_bytes!()s
+        # this at compile time so its USB-vendor lookup needs no runtime
+        # network access and no `usb-ids` Rust crate dependency. PID-level
+        # lookups live in the www-branch SQLite-over-HTTP DB.
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/build_vendor_archive.py" \
+            --upstream "${ONLINE_WORKTREE}/data/usb-vid.json" \
+            --out      "${ONLINE_WORKTREE}/data/usb-vendors.tar.zst"
+          ls -la "${ONLINE_WORKTREE}/data/usb-vendors.tar.zst"
+
       - name: Assemble manifest.json
         id: build-manifest
         # We rebuild the manifest whenever at least one dataset succeeded,
@@ -244,50 +313,58 @@ jobs:
             --out "${ONLINE_WORKTREE}/manifest.json" \
             "${fragments[@]}"
 
-      - name: Commit + push if data actually changed
+      # ────────────────────────────────────────────────────────────────────
+      # www branch: build today's SQLite, refresh static assets, download
+      # sql.js, rotate old DBs, write www/manifest.json, annotate online
+      # manifest with the link-out. All seven sub-steps run inside one
+      # Python orchestrator (online-data-tools/update_www.py) and are
+      # exercised end-to-end in test_orchestrators.py.
+      # ────────────────────────────────────────────────────────────────────
+
+      - name: Refresh www (sqlite + static site + manifests)
+        id: build-sqlite
+        # Only attempt if at least one upstream merger produced fresh JSON —
+        # otherwise we'd be rebuilding yesterday's DB under a new filename,
+        # which the rotation step would then evict tomorrow.
+        if: steps.build-manifest.outcome == 'success'
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/update_www.py" \
+            --workspace       "${{ github.workspace }}" \
+            --online-worktree "${ONLINE_WORKTREE}" \
+            --www-worktree    "${WWW_WORKTREE}" \
+            --website-url     "${WEBSITE_URL}" \
+            --sqljs-zip-url   "${SQLJS_BASE_URL}"
+
+      # ────────────────────────────────────────────────────────────────────
+      # Publish both branches via the same Python orchestrator. It handles
+      # `git add` / commit-if-changed / 200-commit history prune /
+      # first-push-falls-back-to-plain. End-to-end tested in
+      # test_orchestrators.py against a bare local remote.
+      # ────────────────────────────────────────────────────────────────────
+
+      - name: Publish online-data branch
         id: commit
         if: steps.build-manifest.outcome == 'success'
-        working-directory: ${{ env.ONLINE_WORKTREE }}
         run: |
-          set -euo pipefail
-          git add manifest.json data/
-          if git diff --cached --quiet; then
-            echo "no changes to commit"
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          ts="$(date -u +%Y-%m-%d)"
-          # Include which datasets actually refreshed in the commit body.
-          parts=()
-          [ "${{ steps.merge-usb.outcome }}" = "success" ] && parts+=("usb-vid")
-          [ "${{ steps.merge-pio.outcome }}" = "success" ] && parts+=("pio-boards")
-          body="$(printf 'datasets: %s' "$(IFS=, ; echo "${parts[*]}")")"
-          git commit -m "chore(online-data): nightly refresh ${ts}" -m "${body}"
-          echo "changed=true" >> "$GITHUB_OUTPUT"
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/publish_branch.py" \
+            --worktree      "${ONLINE_WORKTREE}" \
+            --branch        "${ONLINE_BRANCH}" \
+            --message       "chore(online-data): nightly refresh" \
+            --history-limit "${HISTORY_LIMIT}"
 
-      - name: Prune history to last ${{ env.HISTORY_LIMIT }} commits
-        if: steps.commit.outputs.changed == 'true'
-        working-directory: ${{ env.ONLINE_WORKTREE }}
+      - name: Publish www branch
+        id: commit-www
+        if: steps.build-sqlite.outcome == 'success'
         run: |
-          set -euo pipefail
-          total="$(git rev-list --count HEAD)"
-          echo "current history length: ${total}"
-          if [ "${total}" -le "${HISTORY_LIMIT}" ]; then
-            echo "no prune needed (<= ${HISTORY_LIMIT} commits)"
-            exit 0
-          fi
-          target="$(git rev-list --max-count="${HISTORY_LIMIT}" HEAD | tail -n 1)"
-          git replace --graft "${target}"
-          pip install --quiet git-filter-repo
-          git filter-repo --force --refs HEAD
-          git for-each-ref --format='delete %(refname)' refs/replace/ | \
-            git update-ref --stdin
-
-      - name: Push
-        if: steps.commit.outputs.changed == 'true'
-        working-directory: ${{ env.ONLINE_WORKTREE }}
-        run: |
-          git push --force-with-lease origin "${ONLINE_BRANCH}"
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/publish_branch.py" \
+            --worktree      "${WWW_WORKTREE}" \
+            --branch        "${WWW_BRANCH}" \
+            --message       "chore(www): nightly refresh" \
+            --body          "sqlite + static site rebuild from latest online-data" \
+            --history-limit "${HISTORY_LIMIT}"
 
       - name: Summary
         if: always()
@@ -302,7 +379,12 @@ jobs:
             echo "| usbids/usbids github       | ${{ steps.fetch-github.outcome }} |"
             echo "| pio boards (platformio)    | ${{ steps.dump-pio.outcome }} |"
             echo "| merge usb-vid              | ${{ steps.merge-usb.outcome }} |"
+            echo "| emit inlined supplement    | ${{ steps.emit-inlined.outcome }} |"
+            echo "| overlay inlined supplement | ${{ steps.overlay-inlined.outcome }} |"
+            echo "| package vendor archive     | ${{ steps.package-archive.outcome }} |"
             echo "| merge pio-boards           | ${{ steps.merge-pio.outcome }} |"
             echo "| build manifest             | ${{ steps.build-manifest.outcome }} |"
-            echo "| committed                  | ${{ steps.commit.outputs.changed || 'n/a' }} |"
+            echo "| build sqlite (www)         | ${{ steps.build-sqlite.outcome }} |"
+            echo "| committed (online-data)    | ${{ steps.commit.outputs.changed || 'n/a' }} |"
+            echo "| committed (www)            | ${{ steps.commit-www.outputs.changed || 'n/a' }} |"
           } >> "$GITHUB_STEP_SUMMARY"

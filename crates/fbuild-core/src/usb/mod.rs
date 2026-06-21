@@ -2,15 +2,17 @@
 //!
 //! Three resolution tiers, queried in order:
 //!
-//! 1. **Bundled** — the [`usb-ids`](https://crates.io/crates/usb-ids) crate,
-//!    compiled in at build time as a `phf` perfect-hash table. Zero IO, zero
-//!    allocations for the lookup itself. Tracks the upstream
-//!    `linux-usb.org` snapshot the crate was published against.
-//! 2. **Online overlay** — an optional `{ "VVVV:PPPP": {vendor, product} }`
-//!    JSON map loaded at runtime (typically from a daemon-managed cache file
-//!    that mirrors the `online-data` branch of this repo). The overlay
-//!    provides newly-assigned VID/PID pairs that the bundled snapshot
-//!    doesn't yet know about.
+//! 1. **Online overlay** — an optional `{ "VVVV:PPPP": {vendor, product} }`
+//!    JSON map loaded at runtime (typically from a daemon-managed cache
+//!    file that mirrors the `online-data` branch of this repo). This is
+//!    the richest source — it has both vendor AND product names — and is
+//!    queried first.
+//! 2. **Embedded vendor archive** — a 22 KB `tar.zst` blob compiled in
+//!    via `include_bytes!` (see [`embedded`]). Vendor names only — for
+//!    VIDs the overlay doesn't carry, we resolve the vendor offline and
+//!    synthesize `"Device 0xPPPP"` as the product placeholder. Per-PID
+//!    detail is intentionally not bundled — clients can hit the
+//!    SQLite-over-HTTP database on the `www` branch for that.
 //! 3. **Fallback** — synthetic `"Unknown vendor 0xVVVV"` placeholder so
 //!    callers can always print something deterministic.
 //!
@@ -25,7 +27,9 @@
 //! branch — see [`MANIFEST_URL`] and [`USB_VID_JSON_URL`].
 
 pub mod data;
+pub mod embedded;
 pub mod resolver;
 
 pub use data::{install_online_cache, MANIFEST_URL, USB_VID_JSON_URL};
+pub use embedded::vendor_name as embedded_vendor_name;
 pub use resolver::{pretty, resolve, resolve_bundled, try_resolve, UsbInfo};
