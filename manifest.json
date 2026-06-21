@@ -1,7 +1,13 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-06-21T00:29:20Z",
+  "generated_at": "2026-06-21T00:38:36Z",
   "datasets": {
+    "mcu_to_vid": {
+      "url": "https://raw.githubusercontent.com/FastLED/fbuild/online-data/data/mcu_to_vid.json",
+      "format": "json-object",
+      "entries": 53,
+      "status": "ok"
+    },
     "pio-boards": {
       "url": "https://raw.githubusercontent.com/FastLED/fbuild/online-data/data/pio-boards.json",
       "format": "json-object",
@@ -9,7 +15,7 @@
       "status": "ok",
       "description": "PlatformIO board catalog \u2014 every board the PlatformIO registry knows about, keyed by board id, alphabetically sorted. Fields the previous dump carried are preserved across regressions in the live `pio boards` output.",
       "key_format": "board-id",
-      "generated_at": "2026-06-21T00:29:20Z",
+      "generated_at": "2026-06-21T00:38:35Z",
       "sources": [
         {
           "name": "platformio",
@@ -46,7 +52,7 @@
         }
       },
       "conflicts_url": "https://raw.githubusercontent.com/FastLED/fbuild/online-data/data/usb-vid-conflicts.json",
-      "generated_at": "2026-06-21T00:29:20Z",
+      "generated_at": "2026-06-21T00:38:35Z",
       "sources": [
         {
           "name": "usb-ids-rs",
@@ -72,7 +78,7 @@
       "status": "ok",
       "description": "Slim view of pio-boards keyed by board id \u2014 only {vendor, name, mcu} per board. Use this when only the human-readable identity is needed (\"what board is plugged in?\").",
       "key_format": "board-id",
-      "generated_at": "2026-06-21T00:29:20Z",
+      "generated_at": "2026-06-21T00:38:35Z",
       "sources": [
         {
           "name": "platformio",
