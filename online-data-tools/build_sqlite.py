@@ -87,9 +87,16 @@ CREATE INDEX idx_mcu_to_vid_vid  ON mcu_to_vid (vid);
 CREATE VIRTUAL TABLE board_fts
   USING fts5(id, name, vendor, mcu, content='board', content_rowid='rowid');
 
--- Per-board headline ranking view. Joins boards to their likely USB vendors
--- via mcu_to_vid. The board_id column carries the original id even when the
--- mcu prefix-match expands to multiple families.
+-- Per-board headline ranking view. Joins boards to their likely USB
+-- vendors via mcu_to_vid. The board_id column carries the original id even
+-- when the mcu prefix-match expands to multiple families.
+--
+-- LEFT JOIN on usb_vendor: some real, allocated VIDs are not present in
+-- the public usb.ids text databases we mirror (the Rust `usb-ids` crate,
+-- linux-usb.org, Fedora hwdata). 0x303a (Espressif) and 0x2e8a (Raspberry
+-- Pi) are the prominent examples. We still want those rows to surface so
+-- the heuristic answer (e.g. "ESP32-S3 → 0x303a") is visible; the UI
+-- renders a missing vendor name as a hyphen.
 CREATE VIEW board_vid_guess AS
 SELECT
   b.id     AS board_id,
@@ -103,7 +110,7 @@ FROM board b
 JOIN mcu_to_vid m
   ON m.mcu_family = b.mcu
   OR b.mcu LIKE m.mcu_family || '%'
-JOIN usb_vendor v
+LEFT JOIN usb_vendor v
   ON v.vid = m.vid;
 """
 
@@ -187,23 +194,6 @@ def _populate_mcu_to_vid(conn: sqlite3.Connection, mcu_to_vid: list[dict]) -> No
         "VALUES (?, ?, ?, ?)",
         rows,
     )
-    # Inject any usb_vendor rows referenced by mcu_to_vid but missing from
-    # the upstream usb-vid.json. The canonical linux-usb.org / usbids text
-    # mirrors are slow to add newer VIDs (e.g. 0x303a Espressif, 0x2e8a
-    # Raspberry Pi), so without this the JOIN in board_vid_guess silently
-    # drops the most useful rows. mcu_to_vid entries carrying a
-    # `vid_vendor` field are the seed of truth for these gaps; existing
-    # usb_vendor rows are NOT overwritten (`INSERT OR IGNORE`).
-    overrides = [
-        (_ensure_int(entry["vid"]), entry["vid_vendor"])
-        for entry in mcu_to_vid
-        if entry.get("vid_vendor")
-    ]
-    if overrides:
-        conn.executemany(
-            "INSERT OR IGNORE INTO usb_vendor (vid, vendor) VALUES (?, ?)",
-            overrides,
-        )
 
 
 def build_db(

@@ -236,6 +236,38 @@ jobs:
             --manifest-fragment /tmp/fragments/pio-boards.json \
             --manifest-fragment-slim /tmp/fragments/vendor_boards.json
 
+      # ────────────────────────────────────────────────────────────────────
+      # Tier-4 USB-VID source: scrape usb-ids.gowdy.us for VIDs the public
+      # text databases (Rust crate, linux-usb.org, hwdata) don't yet carry.
+      # Notable holes today: 0x303A Espressif, 0x2E8A Raspberry Pi Foundation
+      # — both confirmed missing from upstreams as of 2026-06-21. Gowdy.us
+      # is the authoritative submission/discussion view; we scrape it only
+      # for VIDs referenced by `mcu_to_vid` so the request volume stays tiny
+      # and the data added is fully attributable (the URL is the audit trail).
+      # ────────────────────────────────────────────────────────────────────
+
+      - name: Fetch usb-ids.gowdy.us supplement (USB-VID tier-4)
+        id: fetch-gowdy
+        continue-on-error: true
+        if: steps.merge-usb.outcome == 'success'
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/fetch_gowdy_supplement.py" \
+            --mcu-to-vid "${{ github.workspace }}/online-data-tools/seed_mcu_to_vid.json" \
+            --existing   "${ONLINE_WORKTREE}/data/usb-vid.json" \
+            --out        /tmp/gowdy-supplement.json
+
+      - name: Overlay gowdy supplement onto usb-vid.json
+        id: overlay-gowdy
+        continue-on-error: true
+        if: steps.fetch-gowdy.outcome == 'success'
+        run: |
+          uv run --no-project --script \
+            "${{ github.workspace }}/online-data-tools/overlay_usb_vid.py" \
+            --upstream   "${ONLINE_WORKTREE}/data/usb-vid.json" \
+            --supplement /tmp/gowdy-supplement.json \
+            --out        "${ONLINE_WORKTREE}/data/usb-vid.json"
+
       - name: Assemble manifest.json
         id: build-manifest
         # We rebuild the manifest whenever at least one dataset succeeded,
@@ -330,6 +362,8 @@ jobs:
             echo "| usbids/usbids github       | ${{ steps.fetch-github.outcome }} |"
             echo "| pio boards (platformio)    | ${{ steps.dump-pio.outcome }} |"
             echo "| merge usb-vid              | ${{ steps.merge-usb.outcome }} |"
+            echo "| fetch gowdy (tier-4)       | ${{ steps.fetch-gowdy.outcome }} |"
+            echo "| overlay gowdy              | ${{ steps.overlay-gowdy.outcome }} |"
             echo "| merge pio-boards           | ${{ steps.merge-pio.outcome }} |"
             echo "| build manifest             | ${{ steps.build-manifest.outcome }} |"
             echo "| build sqlite (www)         | ${{ steps.build-sqlite.outcome }} |"

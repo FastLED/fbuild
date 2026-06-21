@@ -270,6 +270,10 @@ def test_mcu_to_vid_round_trip(built_db: Path, sample_mcu_to_vid: list[dict]) ->
 # --------------------------------------------------------------------------- #
 
 # The headline query: given a VID + PID, what board is most likely?
+# LEFT JOIN on usb_vendor / usb_product because some real VIDs are missing
+# from the public usb.ids text databases (see board_vid_guess in
+# build_sqlite.py). We want the heuristic answer ("ESP32-S3 → 0x303a")
+# to surface even when no friendly vendor name is available.
 QUERY_VID_PID_TO_BOARDS = """
 SELECT
   b.id            AS board_id,
@@ -281,10 +285,10 @@ SELECT
   (
     m.score
     + CASE WHEN p.pid IS NOT NULL THEN 0.25 ELSE 0.0 END
-    + CASE WHEN LOWER(b.vendor) = LOWER(v.vendor) THEN 0.10 ELSE 0.0 END
+    + CASE WHEN v.vendor IS NOT NULL AND LOWER(b.vendor) = LOWER(v.vendor) THEN 0.10 ELSE 0.0 END
   )               AS score
 FROM mcu_to_vid m
-JOIN usb_vendor v
+LEFT JOIN usb_vendor v
   ON v.vid = m.vid
 LEFT JOIN usb_product p
   ON p.vid = m.vid AND p.pid = ?2
@@ -333,16 +337,19 @@ def test_canned_query_vid_pid_to_boards_totally_unknown(built_db: Path) -> None:
     assert rows == [], "totally unknown VID:PID must return an empty set"
 
 
-def test_mcu_to_vid_injects_missing_usb_vendor(tmp_path: Path) -> None:
-    """Regression for the production bug found on first dispatch: upstream
-    usb.ids text databases don't carry 0x303a (Espressif) or 0x2e8a
-    (Raspberry Pi). When mcu_to_vid references such a VID and carries a
-    `vid_vendor` field, build_db must inject the vendor so the
-    board_vid_guess join doesn't silently drop the most relevant rows.
+def test_board_vid_guess_survives_missing_usb_vendor(tmp_path: Path) -> None:
+    """Regression: upstream usb.ids text databases (Rust usb-ids crate,
+    linux-usb.org, Fedora hwdata) don't carry 0x303a (Espressif) or
+    0x2e8a (Raspberry Pi). The www workflow plugs that gap via the
+    gowdy.us tier-4 scraper (fetch_gowdy_supplement.py + overlay_usb_vid).
+    If for any reason the supplement is unavailable, the SQLite view must
+    still surface the heuristic answer with usb_vendor = NULL — never
+    silently drop the row.
     """
     data = tmp_path / "data"
     data.mkdir()
-    # Upstream usb-vid.json is missing 0x303a entirely.
+    # Upstream usb-vid.json is missing 0x303a entirely (simulates the case
+    # where the gowdy.us tier-4 fetch failed this run).
     (data / "usb-vid.json").write_text(json.dumps({
         "10c4": {"vendor": "Silicon Labs", "products": [["ea60", "CP210x"]]},
     }), encoding="utf-8")
@@ -356,11 +363,9 @@ def test_mcu_to_vid_injects_missing_usb_vendor(tmp_path: Path) -> None:
     }), encoding="utf-8")
     (data / "vendor_boards.json").write_text("{}", encoding="utf-8")
     (data / "mcu_to_vid.json").write_text(json.dumps([
-        {"mcu_family": "ESP32S3", "vid": "303a",
-         "vid_vendor": "Espressif Systems", "score": 0.95,
+        {"mcu_family": "ESP32S3", "vid": "303a", "score": 0.95,
          "reason": "Espressif native USB"},
-        {"mcu_family": "ESP32S3", "vid": "10c4",
-         "vid_vendor": "Silicon Labs", "score": 0.55,
+        {"mcu_family": "ESP32S3", "vid": "10c4", "score": 0.55,
          "reason": "CP210x bridge (legacy)"},
     ]), encoding="utf-8")
     out = tmp_path / "regression.db"
@@ -372,25 +377,18 @@ def test_mcu_to_vid_injects_missing_usb_vendor(tmp_path: Path) -> None:
         out_path           = out,
     )
     with sqlite3.connect(out) as conn:
-        # 0x303a was missing upstream → must be auto-injected.
-        row = conn.execute(
-            "SELECT vendor FROM usb_vendor WHERE vid = ?", (int("303a", 16),),
-        ).fetchone()
-        assert row is not None, "vid_vendor seed must inject missing 0x303a"
-        assert row[0] == "Espressif Systems"
-        # 0x10c4 was already present upstream — injection must NOT clobber.
-        row = conn.execute(
-            "SELECT vendor FROM usb_vendor WHERE vid = ?", (int("10c4", 16),),
-        ).fetchone()
-        assert row[0] == "Silicon Labs"
-        # board_vid_guess now includes the ESP32S3 → 0x303a row.
+        # board_vid_guess still yields the 0x303a row, just with NULL vendor.
         rows = conn.execute(
-            "SELECT vid, confidence FROM board_vid_guess "
+            "SELECT vid, usb_vendor, confidence FROM board_vid_guess "
             "WHERE board_id = 'esp32-s3-devkitc-1' "
             "ORDER BY confidence DESC"
         ).fetchall()
-    assert rows, "view must yield rows now that vendor is injected"
+    assert rows, "view must yield rows even when vendor is missing upstream"
     assert rows[0][0] == int("303a", 16), f"0x303a should rank first; got {rows}"
+    # The headline row's vendor name is None — UI renders as hyphen.
+    assert rows[0][1] is None
+    # The 0x10c4 fallback row also surfaces, with its real vendor name.
+    assert any(r[0] == int("10c4", 16) and r[1] == "Silicon Labs" for r in rows)
 
 
 def test_canned_query_vid_pid_to_boards_rp2040(built_db: Path) -> None:
