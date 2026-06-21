@@ -60,6 +60,7 @@ how `cargo install` and most Rust packaging tools find their binaries.
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -75,6 +76,51 @@ REPO_ROOT = Path(__file__).resolve().parent
 TARGET_BINARY_NAME = "fbuild.exe" if sys.platform == "win32" else "fbuild"
 STAGED_BIN_DIR = REPO_ROOT / "ci" / "bin"
 STAGED_BINARY_PATH = STAGED_BIN_DIR / TARGET_BINARY_NAME
+
+# Pin cargo's target directory to a stable absolute path so PEP 517
+# isolated builds (pip copies the source tree to a temp dir, so
+# `<cwd>/target/` lives in that temp dir and is discarded after the
+# build) reuse cargo's incremental fingerprint cache across invocations.
+# Without this, every isolated `pip install .` runs cargo cold — 25-30s
+# wall-clock per invocation.
+#
+# We deliberately do NOT share `<repo>/target/` with the dev CLI: the
+# dev CLI often runs `cargo check` or different `--features`/`--profile`
+# combos, and sharing the target dir means each `pip install` invalidates
+# whatever the dev CLI just compiled (and vice versa). A separate
+# wheel-build target dir gives both paths a stable, hot cache.
+WHEEL_BUILD_TARGET_DIR = Path.home() / ".fbuild" / "cargo-target" / "wheel-build"
+os.environ.setdefault("CARGO_TARGET_DIR", str(WHEEL_BUILD_TARGET_DIR))
+
+
+def _iter_cargo_inputs() -> "list[Path]":
+    """Files that, if newer than the staged binary, invalidate the cached build."""
+    patterns = (
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        "crates/**/Cargo.toml",
+        "crates/**/*.rs",
+    )
+    paths: list[Path] = []
+    for pat in patterns:
+        paths.extend(REPO_ROOT.glob(pat))
+    return paths
+
+
+def _staged_binary_is_up_to_date() -> bool:
+    """True if the staged binary exists and is newer than every cargo input."""
+    if not STAGED_BINARY_PATH.is_file():
+        return False
+    staged_mtime = STAGED_BINARY_PATH.stat().st_mtime
+    for path in _iter_cargo_inputs():
+        try:
+            if path.stat().st_mtime > staged_mtime:
+                return False
+        except FileNotFoundError:
+            # File disappeared between glob and stat — treat as changed.
+            return False
+    return True
 
 
 def _require_soldr() -> None:
@@ -199,6 +245,18 @@ class BuildWithCargo(build_py):
     """Run `soldr cargo build --release -p fbuild-cli` before packaging."""
 
     def run(self) -> None:  # noqa: D401 — setuptools API name
+        # Fast path: if the staged binary is newer than every cargo input,
+        # skip the cargo invocation entirely. Even cargo's "Fresh" pass walks
+        # the workspace and takes wall-clock seconds; this short-circuits it.
+        # Triggered when uv/pip reinstall fbuild without any actual source
+        # change (e.g. version bump, lockfile churn, --reinstall-package).
+        if _staged_binary_is_up_to_date():
+            sys.stderr.write(
+                f"  staged binary up-to-date ({STAGED_BINARY_PATH}); skipping cargo\n"
+            )
+            super().run()
+            return
+
         _require_soldr()
         binary_path = _build_fbuild_cli()
         STAGED_BIN_DIR.mkdir(parents=True, exist_ok=True)

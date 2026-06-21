@@ -1,0 +1,139 @@
+{
+  "label": "baseline_v3",
+  "platform": "win32",
+  "python": "3.13.7",
+  "rust_file": "crates\\fbuild-core\\src\\lib.rs",
+  "python_file": "python\\fbuild\\__init__.py",
+  "scenarios": {
+    "warm": {
+      "commands": [
+        {
+          "label": "uv_run_noop",
+          "cmd": [
+            "uv",
+            "run",
+            "python",
+            "-c",
+            "pass"
+          ],
+          "elapsed_s": 0.13639749982394278,
+          "returncode": 0
+        },
+        {
+          "label": "uv_sync",
+          "cmd": [
+            "uv",
+            "sync"
+          ],
+          "elapsed_s": 0.03396599995903671,
+          "returncode": 0
+        }
+      ]
+    },
+    "rust_touched": {
+      "commands": [
+        {
+          "label": "uv_sync",
+          "cmd": [
+            "uv",
+            "sync"
+          ],
+          "elapsed_s": 0.051997199887409806,
+          "returncode": 0
+        },
+        {
+          "label": "uv_run_noop",
+          "cmd": [
+            "uv",
+            "run",
+            "python",
+            "-c",
+            "pass"
+          ],
+          "elapsed_s": 0.1266333998646587,
+          "returncode": 0
+        }
+      ]
+    },
+    "python_touched": {
+      "commands": [
+        {
+          "label": "uv_sync",
+          "cmd": [
+            "uv",
+            "sync"
+          ],
+          "elapsed_s": 0.03099639993160963,
+          "returncode": 0
+        },
+        {
+          "label": "uv_run_noop",
+          "cmd": [
+            "uv",
+            "run",
+            "python",
+            "-c",
+            "pass"
+          ],
+          "elapsed_s": 0.11129509983584285,
+          "returncode": 0
+        }
+      ]
+    },
+    "both_touched": {
+      "commands": [
+        {
+          "label": "uv_sync",
+          "cmd": [
+            "uv",
+            "sync"
+          ],
+          "elapsed_s": 0.0293310999404639,
+          "returncode": 0
+        },
+        {
+          "label": "uv_run_noop",
+          "cmd": [
+            "uv",
+            "run",
+            "python",
+            "-c",
+            "pass"
+          ],
+          "elapsed_s": 0.09985570004209876,
+          "returncode": 0
+        }
+      ]
+    },
+    "forced_reinstall_clean": {
+      "commands": [
+        {
+          "label": "uv_sync_reinstall",
+          "cmd": [
+            "uv",
+            "sync",
+            "--reinstall-package",
+            "fbuild"
+          ],
+          "elapsed_s": 14.947807800024748,
+          "returncode": 0
+        }
+      ]
+    },
+    "forced_reinstall_dirty": {
+      "commands": [
+        {
+          "label": "uv_sync_reinstall",
+          "cmd": [
+            "uv",
+            "sync",
+            "--reinstall-package",
+            "fbuild"
+          ],
+          "elapsed_s": 16.144708199892193,
+          "returncode": 1
+        }
+      ]
+    }
+  }
+}

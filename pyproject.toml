@@ -17,21 +17,62 @@ dependencies = []
 fbuild = "ci.bin_launcher:main"
 
 [dependency-groups]
-dev = ["fbuild-dev-tools"]
+# setuptools is in dev (not project deps) because fbuild uses
+# no-build-isolation: the build runs in the project venv, so setuptools
+# must already be installed when uv tries to (re)build the wheel.
+# default-groups below makes uv install dev (and hence setuptools)
+# before attempting to build, breaking the chicken-and-egg.
+dev = ["fbuild-dev-tools", "setuptools>=64"]
 
 [tool.uv.sources]
 fbuild-dev-tools = { path = "ci/dev-tools", editable = true }
+
+# Skip PEP 517 build isolation for fbuild. Default isolation copies the
+# source tree to a temp dir before invoking setup.py, which (a) breaks
+# setup.py's mtime-skip cache because the staged binary in `ci/bin/`
+# isn't visible from the temp copy, and (b) makes cargo's incremental
+# fingerprint cache useless because cwd changes between invocations.
+# `extra-build-dependencies` is currently a uv preview feature; it
+# triggers an "experimental and may change without warning" notice on
+# every invocation, but it works and injects setuptools just for the
+# build (no chicken-and-egg with dev dep install order, no runtime
+# taint). Suppress the warning by exporting `UV_PREVIEW=1` if desired.
+[tool.uv]
+no-build-isolation-package = ["fbuild"]
+default-groups = ["dev"]
+# Tell uv to re-sync the editable install when these change. Without
+# this, `uv run` after a .rs edit silently uses a stale _native.pyd
+# because uv's default cache-keys only watch pyproject.toml.
+cache-keys = [
+    { file = "pyproject.toml" },
+    { file = "Cargo.toml" },
+    { file = "Cargo.lock" },
+    { file = "crates/**/*.rs" },
+    { file = "crates/**/Cargo.toml" },
+]
 
 [build-system]
 requires = ["setuptools>=64"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["ci"]
+packages = ["ci", "fbuild", "fbuild.api"]
 include-package-data = true
+
+# Map the `fbuild` and `fbuild.api` Python packages to their on-disk
+# location under python/. Without this, `pip install .` would skip the
+# python/ tree entirely (only `ci` is at the repo root), and downstream
+# consumers like FastLED would hit `ModuleNotFoundError: No module named
+# 'fbuild'` on `from fbuild.api import SerialMonitor`.
+[tool.setuptools.package-dir]
+fbuild = "python/fbuild"
+"fbuild.api" = "python/fbuild/api"
 
 # Ship the native binary that setup.py's BuildWithCargo cmdclass stages
 # into ci/bin/ during the build_py phase. Glob is broad enough to match
-# fbuild + fbuild.exe across platforms.
+# fbuild + fbuild.exe across platforms. Also ship the _native.pyd that
+# python/fbuild/__init__.py imports from.
 [tool.setuptools.package-data]
 ci = ["bin/fbuild*"]
+fbuild = ["_native.pyd", "_native.so"]
+
