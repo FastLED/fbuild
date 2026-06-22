@@ -7,6 +7,12 @@ on:
       - Cargo.toml
       - pyproject.toml
   workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "Build all targets but skip GitHub Release + PyPI publish"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -40,6 +46,8 @@ jobs:
       - name: Check release eligibility
         id: prepare
         shell: bash
+        env:
+          DRY_RUN: ${{ inputs.dry-run }}
         run: |
           set -euo pipefail
 
@@ -97,6 +105,14 @@ jobs:
             should_publish_pypi="true"
           fi
 
+          # Dry-run override: force build, suppress publish.
+          if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ] && [ "${DRY_RUN:-false}" = "true" ]; then
+            should_build="true"
+            should_publish_github="false"
+            should_publish_pypi="false"
+            echo "DRY-RUN: build forced on, publish suppressed"
+          fi
+
           {
             echo "version=${version}"
             echo "project_version=${cargo_version}"
@@ -126,36 +142,17 @@ jobs:
       matrix:
         include:
           - target: x86_64-unknown-linux-musl
-            runner: ubuntu-latest
             binary_ext: ""
-            linux_cross: false
-            macos_cross: false
-
           - target: aarch64-unknown-linux-musl
-            runner: ubuntu-latest
             binary_ext: ""
-            linux_cross: true
-            macos_cross: false
-
           - target: aarch64-apple-darwin
-            runner: macos-latest
             binary_ext: ""
-            linux_cross: false
-            macos_cross: false
-
           - target: x86_64-pc-windows-msvc
-            runner: windows-latest
             binary_ext: ".exe"
-            linux_cross: false
-            macos_cross: false
-
     uses: ./.github/workflows/template_native_build.yml
     with:
       target: ${{ matrix.target }}
-      runner: ${{ matrix.runner }}
       binary_ext: ${{ matrix.binary_ext }}
-      linux_cross: ${{ matrix.linux_cross }}
-      macos_cross: ${{ matrix.macos_cross }}
       ref: ${{ needs.prepare.outputs.release_ref }}
 
   publish:
