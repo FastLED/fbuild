@@ -89,15 +89,16 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y musl-tools pkg-config
 
-      # Windows MSVC release artifacts are built from Linux with cargo-xwin.
+      # Windows MSVC release artifacts can be cross-built from Linux with
+      # cargo-xwin, but native Windows runners use the standard cargo path.
       - name: Install cargo-xwin
-        if: contains(inputs.target, 'pc-windows-msvc')
+        if: runner.os == 'Linux' && contains(inputs.target, 'pc-windows-msvc')
         uses: taiki-e/install-action@v2
         with:
           tool: cargo-xwin
 
       - name: Install xwin system dependencies
-        if: contains(inputs.target, 'pc-windows-msvc')
+        if: runner.os == 'Linux' && contains(inputs.target, 'pc-windows-msvc')
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends clang lld zip
@@ -112,7 +113,7 @@ jobs:
         run: pip install cargo-zigbuild
 
       - name: Fetch Windows Python lib for PyO3 cross-compile
-        if: contains(inputs.target, 'pc-windows-msvc')
+        if: runner.os == 'Linux' && contains(inputs.target, 'pc-windows-msvc')
         shell: bash
         run: |
           set -euo pipefail
@@ -138,7 +139,7 @@ jobs:
       - name: Build release binaries
         shell: bash
         run: |
-          if [[ "${{ inputs.target }}" == *-pc-windows-msvc ]]; then
+          if [ "${{ runner.os }}" = "Linux" ] && [[ "${{ inputs.target }}" == *-pc-windows-msvc ]]; then
             cargo xwin build --release --target ${{ inputs.target }} \
               -p fbuild-cli \
               -p fbuild-daemon
@@ -172,7 +173,7 @@ jobs:
         shell: bash
         run: |
           PYTHON_TARGET_DIR="target/python-extension"
-          if [[ "${{ inputs.target }}" == *-pc-windows-msvc ]]; then
+          if [ "${{ runner.os }}" = "Linux" ] && [[ "${{ inputs.target }}" == *-pc-windows-msvc ]]; then
             PYO3_NO_PYTHON=1 cargo xwin build --release \
               --target-dir "${PYTHON_TARGET_DIR}" \
               --target ${{ inputs.target }} -p fbuild-python \
