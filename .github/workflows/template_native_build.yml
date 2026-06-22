@@ -101,6 +101,49 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends llvm lld clang zip
 
+      # macOS SDK for darwin lanes — zigbuild's bundled SDK lacks Apple
+      # framework headers (CommonCrypto, Security, etc.) that
+      # libmimalloc-sys and other native deps require. joseluisq/setup-macos-sdk
+      # downloads a complete SDK and exports SDKROOT for the build.
+      - name: Setup macOS SDK (darwin lanes only)
+        if: ${{ contains(inputs.target, 'apple-darwin') }}
+        uses: joseluisq/setup-macos-sdk@v1
+        with:
+          sdk: "14"
+
+      # Windows Python lib for PyO3 cross-compile — PyO3 extension on
+      # MSVC links against python3.lib at the end. python3.lib isn't
+      # available on a linux runner, so we fetch a Windows Python
+      # distribution via NuGet and point PYO3_CROSS_LIB_DIR at its libs
+      # directory. The python.nuget package is the simplest authoritative
+      # source for the official Windows python3.lib import library.
+      - name: Fetch Windows Python lib for PyO3 cross-compile (windows-msvc lanes only)
+        if: ${{ contains(inputs.target, 'pc-windows-msvc') }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHON_VERSION="3.13.0"
+          # NuGet packages for python use arch-suffixed names.
+          if [[ "${{ inputs.target }}" == aarch64-* ]]; then
+            PKG="pythonarm64"
+          else
+            PKG="python"
+          fi
+          curl -fsSL -o python.zip "https://www.nuget.org/api/v2/package/${PKG}/${PYTHON_VERSION}"
+          mkdir -p python-windows
+          unzip -q python.zip -d python-windows
+          # NuGet layout: tools/libs/{python3.lib, python313.lib, ...}
+          libs_dir="$(pwd)/python-windows/tools/libs"
+          if [ ! -f "$libs_dir/python3.lib" ]; then
+            echo "ERROR: python3.lib not found in extracted NuGet package" >&2
+            find python-windows -name "python3*.lib" || true
+            exit 1
+          fi
+          echo "PYO3_CROSS_LIB_DIR=$libs_dir" >> "$GITHUB_ENV"
+          echo "PYO3_CROSS_PYTHON_VERSION=3.13" >> "$GITHUB_ENV"
+          echo "PYO3_CROSS_PYTHON_IMPLEMENTATION=CPython" >> "$GITHUB_ENV"
+          echo "Configured PYO3 cross for Windows: PYO3_CROSS_LIB_DIR=$libs_dir"
+
       # IMPORTANT — direct `cargo` invocation (not `soldr cargo`):
       #
       # soldr's cargo front door routes through its own bin cache for
