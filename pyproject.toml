@@ -60,14 +60,19 @@ build-backend = "setuptools.build_meta"
 packages = ["fbuild", "fbuild.api"]
 include-package-data = true
 
-# Map the `fbuild` and `fbuild.api` Python packages to their on-disk
-# location under python/. Without this, `pip install .` would skip the
-# python/ tree entirely, and downstream consumers like FastLED would hit
-# `ModuleNotFoundError: No module named 'fbuild'` on
-# `from fbuild.api import SerialMonitor`.
+# Tell setuptools the package root is `python/` — `python/fbuild/`,
+# `python/fbuild/api/`, and any future submodule are discovered relative
+# to it. The previous per-package map (`fbuild = "python/fbuild"`,
+# `"fbuild.api" = "python/fbuild/api"`) worked for the wheel build but
+# confused setuptools' editable install: it emitted a PEP 660 meta-path
+# finder whose MAPPING only registered the top-level `fbuild` package,
+# so static analyzers (ty, pyright, mypy) saw `Cannot resolve imported
+# module 'fbuild.api'` in downstream consumers even though runtime
+# imports worked via the finder's PathFinder fallback. With this
+# src-layout mapping, setuptools instead emits a plain `.pth` pointing
+# at `python/`, which every static analyzer handles.
 [tool.setuptools.package-dir]
-fbuild = "python/fbuild"
-"fbuild.api" = "python/fbuild/api"
+"" = "python"
 
 # Ship `_native.pyd`/.so that `python/fbuild/__init__.py` imports from.
 # The cargo-built `fbuild[.exe]` CLI binary is NOT package data — it is
