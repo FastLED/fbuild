@@ -83,6 +83,12 @@ tasks/loop-runs/
 # `git worktree add` location used by the nightly workflow.
 .online-data/
 
+# Cross-repo checkouts created by the `clud-extern-repos` skill —
+# dependent-repo clones that live here only for the duration of a
+# multi-repo change. Each subdir is its own independent git repo and
+# must never be committed into fbuild.
+.extern-repos/
+
 # clud project settings
 !.clud/
 !.clud/settings.json
