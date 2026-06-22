@@ -20,19 +20,39 @@ jobs:
       matrix:
         include:
           - target: x86_64-unknown-linux-musl
+            runner: ubuntu-latest
             binary_ext: ""
+            linux_cross: false
+            macos_cross: false
+
           - target: aarch64-unknown-linux-musl
+            runner: ubuntu-latest
             binary_ext: ""
-          # x86_64-apple-darwin: was previously blocked on cross-compiling
-          # `ring` ARM->x86 from a macos-arm runner. zigbuild from a
-          # linux-x86 runner handles this cleanly via `zig cc`, so we can
-          # re-enable it whenever the release matrix wants the extra wheel.
+            linux_cross: true
+            macos_cross: false
+
+          # x86_64-apple-darwin removed: Intel Macs use ARM wheel via Rosetta.
+          # Cross-compiling ring crate ARM→x86 fails; native macos-13 runners
+          # are perpetually unavailable. Re-enable when ring supports cross or
+          # GitHub restores Intel runner capacity.
+
           - target: aarch64-apple-darwin
+            runner: macos-latest
             binary_ext: ""
+            linux_cross: false
+            macos_cross: false
+
           - target: x86_64-pc-windows-msvc
+            runner: windows-latest
             binary_ext: ".exe"
+            linux_cross: false
+            macos_cross: false
+
     uses: ./.github/workflows/template_native_build.yml
     with:
       target: ${{ matrix.target }}
+      runner: ${{ matrix.runner }}
       binary_ext: ${{ matrix.binary_ext }}
+      linux_cross: ${{ matrix.linux_cross }}
+      macos_cross: ${{ matrix.macos_cross }}
       ref: ${{ github.event.inputs.ref || 'main' }}

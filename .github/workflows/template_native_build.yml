@@ -1,7 +1,4 @@
-name: Native Build Template (cross-compiled from linux-x86)
-# Single linux-x86 runner family. zigbuild handles Linux/macOS targets;
-# xwin handles Windows-MSVC. Per-OS native runners are gone — same compiler,
-# same flags, same linker semantics across every artifact.
+name: Native Build Template
 
 on:
   workflow_call:
@@ -10,11 +7,25 @@ on:
         required: true
         type: string
         description: "Rust target triple (e.g. x86_64-unknown-linux-musl)"
+      runner:
+        required: true
+        type: string
+        description: "GitHub Actions runner label (e.g. ubuntu-latest)"
       binary_ext:
         required: false
         type: string
         default: ""
         description: "Binary extension (.exe for Windows, empty otherwise)"
+      linux_cross:
+        required: false
+        type: boolean
+        default: false
+        description: "Linux aarch64 cross-compilation"
+      macos_cross:
+        required: false
+        type: boolean
+        default: false
+        description: "macOS x86_64 cross-compilation on ARM runner"
       ref:
         required: false
         type: string
@@ -34,19 +45,13 @@ permissions:
 jobs:
   build:
     name: Build (${{ inputs.target }})
-    runs-on: ubuntu-24.04
+    runs-on: ${{ inputs.runner }}
+
     steps:
       - uses: actions/checkout@v6
         with:
           ref: ${{ inputs.ref || github.sha }}
 
-      # `linker: platform-default` opts out of setup-soldr's `fast` linker
-      # override. SOLDR_LINKER=fast injects rust-lld as the cargo target
-      # linker which defaults to the host arch (x86_64) and fails to link
-      # aarch64 object files (incompatible with elf64-x86-64). zigbuild's
-      # `zig cc` wrapper needs to own the toolchain end-to-end on cross
-      # lanes; the xwin lane gets its MSVC linker from soldr's cargo
-      # front door regardless.
       - name: Setup soldr
         id: setup-soldr
         uses: zackees/setup-soldr@v0.9.62
@@ -55,10 +60,16 @@ jobs:
           build-cache: true
           target-cache: true
           prebuild-deps: none
+          # `fast` (the default) injects mold-or-rust-lld via SOLDR_LINKER,
+          # which clobbers the per-target linker config that
+          # `cargo zigbuild` needs for aarch64-unknown-linux-musl
+          # cross-compile (clang tries to use host /usr/bin/ld and fails
+          # with "file in wrong format" on the cross crt1.o). Disable the
+          # injection and let cargo + the toolchain decide.
           linker: platform-default
-          # Native release builds produce a payload larger than the 512 MiB
-          # action default (issue #400). Raise the soft warn threshold; hard
-          # cap stays at the action default (6 GiB).
+          # Native release builds produce a payload larger than the
+          # 512 MiB action default (issue #400). Raise the soft warn
+          # threshold; hard cap stays at the action default (6 GiB).
           cache-payload-warn-bytes: 2GiB
           cache-key-suffix: native-${{ inputs.target }}
 
@@ -66,133 +77,40 @@ jobs:
         with:
           python-version: "3.13"
 
-      # rust-toolchain.toml pins 1.94.1; ensure the target stdlib is
-      # installed for the pinned toolchain.
+      # rust-toolchain.toml pins 1.94.1 which overrides the above;
+      # ensure the target stdlib is installed for the pinned toolchain too
       - name: Add Rust target
         run: rustup target add ${{ inputs.target }}
 
-      # Pre-install cargo-zigbuild / cargo-xwin via taiki-e/install-action
-      # so soldr's cargo front door takes its PATH-first deferral branch
-      # (avoids fanning out unauthenticated GitHub API calls across the
-      # release matrix and getting 403'd).
-      - name: Install cross-compile cargo subcommand
-        uses: taiki-e/install-action@v2
-        with:
-          tool: ${{ contains(inputs.target, 'pc-windows-msvc') && 'cargo-xwin' || 'cargo-zigbuild' }}
-
-      # zig is needed for cargo-zigbuild lanes (Linux + macOS). xwin lanes
-      # don't need zig — cargo-xwin uses cargo's built-in MSVC support
-      # plus a soldr-managed LLVM toolchain bootstrap.
-      - name: Install zig (zigbuild lanes only)
-        if: ${{ !contains(inputs.target, 'pc-windows-msvc') }}
-        uses: mlugg/setup-zig@v2
-        with:
-          version: 0.14.0
-
-      # System tools:
-      #   * llvm-strip: universal (ELF + Mach-O) strip
-      #   * zip: needed for the windows-msvc archive path downstream
-      #   * clang/lld: needed for cargo-xwin's linker step on the windows-msvc
-      #     lanes. soldr's cargo front door auto-bootstraps these, but we
-      #     invoke cargo directly (see "Build release binaries" rationale)
-      #     so we install them via apt instead.
-      - name: Install llvm + lld + zip
+      # Linux musl toolchain (libudev is auto-excluded for musl targets by serialport)
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux' && !inputs.linux_cross
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends llvm lld clang zip
+          sudo apt-get install -y musl-tools pkg-config
 
-      # macOS SDK for darwin lanes — zigbuild's bundled SDK lacks Apple
-      # framework headers (CommonCrypto, Security, etc.) that
-      # libmimalloc-sys and other native deps require. Fetched directly
-      # from phracker/MacOSX-SDKs releases (the canonical mirror of the
-      # Xcode-shipped SDKs used by cross-compile toolchains). 11.3
-      # is the most recent release on that mirror and includes the
-      # CommonCrypto + Security headers libmimalloc-sys needs.
-      - name: Setup macOS SDK (darwin lanes only)
-        if: ${{ contains(inputs.target, 'apple-darwin') }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          SDK_VERSION="11.3"
-          SDK_URL="https://github.com/phracker/MacOSX-SDKs/releases/download/${SDK_VERSION}/MacOSX${SDK_VERSION}.sdk.tar.xz"
-          curl -fsSL -o /tmp/macosx-sdk.tar.xz "$SDK_URL"
-          sudo mkdir -p /opt/macosx-sdk
-          sudo tar -xJf /tmp/macosx-sdk.tar.xz -C /opt/macosx-sdk
-          SDK_PATH="/opt/macosx-sdk/MacOSX${SDK_VERSION}.sdk"
-          if [ ! -d "$SDK_PATH" ]; then
-            SDK_PATH="$(sudo find /opt/macosx-sdk -maxdepth 2 -type d -name 'MacOSX*.sdk' | head -1)"
-          fi
-          [ -d "$SDK_PATH" ] || { echo "ERROR: macOS SDK not found after extract" >&2; sudo ls -la /opt/macosx-sdk; exit 1; }
-          # Confirm the headers libmimalloc-sys actually needs.
-          [ -f "$SDK_PATH/usr/include/CommonCrypto/CommonCryptoError.h" ] \
-            || { echo "ERROR: CommonCrypto headers missing from extracted SDK" >&2; exit 1; }
-          echo "SDKROOT=$SDK_PATH" >> "$GITHUB_ENV"
-          echo "Configured macOS SDK: $SDK_PATH"
+      # cargo-zigbuild — used for two reasons on Linux:
+      #   1. musl cross-compilation (linux_cross targets)
+      #   2. Building the PyO3 extension with a pinned glibc symbol version
+      #      so manylinux_2_17 wheels actually run on glibc 2.17. The native
+      #      ubuntu-latest linker would otherwise pull in glibc 2.39 symbols.
+      - name: Install cross-compilation tools
+        if: runner.os == 'Linux'
+        run: pip install cargo-zigbuild
 
-      # Windows Python lib for PyO3 cross-compile — PyO3 extension on
-      # MSVC links against python3.lib at the end. python3.lib isn't
-      # available on a linux runner, so we fetch a Windows Python
-      # distribution via NuGet and point PYO3_CROSS_LIB_DIR at its libs
-      # directory. The python.nuget package is the simplest authoritative
-      # source for the official Windows python3.lib import library.
-      - name: Fetch Windows Python lib for PyO3 cross-compile (windows-msvc lanes only)
-        if: ${{ contains(inputs.target, 'pc-windows-msvc') }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          PYTHON_VERSION="3.13.0"
-          # NuGet packages for python use arch-suffixed names.
-          if [[ "${{ inputs.target }}" == aarch64-* ]]; then
-            PKG="pythonarm64"
-          else
-            PKG="python"
-          fi
-          curl -fsSL -o python.zip "https://www.nuget.org/api/v2/package/${PKG}/${PYTHON_VERSION}"
-          mkdir -p python-windows
-          unzip -q python.zip -d python-windows
-          # NuGet layout: tools/libs/{python3.lib, python313.lib, ...}
-          libs_dir="$(pwd)/python-windows/tools/libs"
-          if [ ! -f "$libs_dir/python3.lib" ]; then
-            echo "ERROR: python3.lib not found in extracted NuGet package" >&2
-            find python-windows -name "python3*.lib" || true
-            exit 1
-          fi
-          echo "PYO3_CROSS_LIB_DIR=$libs_dir" >> "$GITHUB_ENV"
-          echo "PYO3_CROSS_PYTHON_VERSION=3.13" >> "$GITHUB_ENV"
-          echo "PYO3_CROSS_PYTHON_IMPLEMENTATION=CPython" >> "$GITHUB_ENV"
-          echo "Configured PYO3 cross for Windows: PYO3_CROSS_LIB_DIR=$libs_dir"
-
-      # IMPORTANT — direct `cargo` invocation (not `soldr cargo`):
-      #
-      # soldr's cargo front door routes through its own bin cache for
-      # cargo-zigbuild / cargo-xwin lookup. That cache has been serving a
-      # corrupted cargo-zigbuild binary (`Syntax error: ")" unexpected`
-      # at line 4) — see soldr#331 and the original fbuild template's
-      # workaround note. Going through `soldr cargo zigbuild` reproduces
-      # the failure even when a working cargo-zigbuild is on PATH via
-      # taiki-e/install-action.
-      #
-      # Calling cargo directly here lets cargo's built-in `cargo-<sub>`
-      # resolution find the taiki-e binary on PATH. setup-soldr still
-      # exports RUSTC_WRAPPER=zccache, so per-rustc caching engages on
-      # every invocation regardless of whether soldr's cargo front door
-      # is in the loop.
-      #
-      # Targets:
-      #   * windows-msvc -> `cargo xwin build --release` (cargo-xwin uses
-      #     clang/lld for the linker, MSVC CRT/SDK auto-fetched by xwin)
-      #   * linux-musl   -> `cargo zigbuild --release` (static, no glibc dep)
-      #   * macos/other  -> `cargo zigbuild --release`
       - name: Build release binaries
         shell: bash
         run: |
-          set -euo pipefail
-          if [[ "${{ inputs.target }}" == *-pc-windows-msvc ]]; then
-            cargo xwin build --release --target ${{ inputs.target }} \
+          if [[ "${{ inputs.target }}" == *-unknown-linux-musl ]]; then
+            # Direct `cargo zigbuild` (pip-installed wrapper) bypasses
+            # soldr's bin cache, which has been serving a corrupted
+            # cargo-zigbuild binary (`Syntax error: ")" unexpected` at
+            # line 10) and blocking PyPI publishes. See #331.
+            cargo zigbuild --release --target ${{ inputs.target }} \
               -p fbuild-cli \
               -p fbuild-daemon
           else
-            cargo zigbuild --release --target ${{ inputs.target }} \
+            soldr cargo build --release --target ${{ inputs.target }} \
               -p fbuild-cli \
               -p fbuild-daemon
           fi
@@ -201,78 +119,93 @@ jobs:
       # Notes:
       #   - PYO3_NO_PYTHON=1 + abi3-py310 feature lets pyo3-build-config skip
       #     the host interpreter lookup on cross builds.
-      #   - For Linux: build against `<arch>-unknown-linux-gnu.2.17` so the
-      #     manylinux_2_17 wheel actually runs on glibc 2.17+. The CLI
-      #     binaries stay on musl for static-link portability.
-      #   - For macOS: zigbuild against the target directly.
-      #   - For Windows MSVC: xwin against the target directly.
-      # Same direct-cargo invocation rationale as above.
+      #   - All Linux builds (native AND cross) use cargo-zigbuild against
+      #     <arch>-unknown-linux-gnu.2.17 — manylinux wheels are glibc-based
+      #     and must work on glibc >= 2.17 (the manylinux_2_17 floor). Native
+      #     ubuntu-latest's system linker would otherwise pull in glibc 2.39
+      #     symbols, breaking the wheel on every distro older than ubuntu-24.04.
+      #     The CLI binaries stay on musl for static-link portability.
+      #   - macOS cross: cargo rustc with -undefined dynamic_lookup works the
+      #     same as native; just add --target.
       - name: Build Python extension
         shell: bash
         run: |
-          set -euo pipefail
           PYTHON_TARGET_DIR="target/python-extension"
-          if [[ "${{ inputs.target }}" == *-pc-windows-msvc ]]; then
-            PYO3_NO_PYTHON=1 cargo xwin build --release \
-              --target-dir "${PYTHON_TARGET_DIR}" \
-              --target ${{ inputs.target }} -p fbuild-python \
-              --features extension-module
-          elif [[ "${{ inputs.target }}" == *-unknown-linux-* ]]; then
+          if [ "${{ runner.os }}" = "Linux" ]; then
             TARGET="${{ inputs.target }}"
             ARCH="${TARGET%%-*}"
             PYO3_TARGET="${ARCH}-unknown-linux-gnu"
             rustup target add "$PYO3_TARGET"
+            # Direct `cargo zigbuild` (pip-installed wrapper) — see #331.
             PYO3_NO_PYTHON=1 cargo zigbuild --release \
               --target-dir "${PYTHON_TARGET_DIR}" \
               --target "${PYO3_TARGET}.2.17" -p fbuild-python \
               --features extension-module
-          else
-            PYO3_NO_PYTHON=1 cargo zigbuild --release \
+          elif [ "${{ inputs.macos_cross }}" = "true" ]; then
+            PYO3_NO_PYTHON=1 soldr cargo build --release \
               --target-dir "${PYTHON_TARGET_DIR}" \
               --target ${{ inputs.target }} -p fbuild-python \
+              --features extension-module
+          elif [ "${{ runner.os }}" = "macOS" ]; then
+            soldr cargo build --release --target-dir "${PYTHON_TARGET_DIR}" \
+              --target ${{ inputs.target }} \
+              -p fbuild-python \
+              --features extension-module
+          else
+            soldr cargo build --release --target-dir "${PYTHON_TARGET_DIR}" \
+              --target ${{ inputs.target }} \
+              -p fbuild-python \
               --features extension-module
           fi
 
       - name: Stage artifacts
         shell: bash
         run: |
-          set -euo pipefail
           PYTHON_TARGET_DIR="target/python-extension"
           mkdir -p staging
           cp target/${{ inputs.target }}/release/fbuild${{ inputs.binary_ext }} staging/
           cp target/${{ inputs.target }}/release/fbuild-daemon${{ inputs.binary_ext }} staging/
 
-          # Stage Python extension — location depends on how it was built.
-          if [[ "${{ inputs.target }}" == *-pc-windows-msvc ]]; then
-            for ext_src in \
-              "${PYTHON_TARGET_DIR}/${{ inputs.target }}/release/_native.dll" \
-              "${PYTHON_TARGET_DIR}/release/_native.dll"; do
-              [ -f "$ext_src" ] && cp "$ext_src" staging/_native.pyd && break
-            done
-          elif [[ "${{ inputs.target }}" == *-unknown-linux-* ]]; then
+          # Stage Python extension — location depends on how it was built
+          if [ "${{ runner.os }}" = "Linux" ]; then
             TARGET="${{ inputs.target }}"
             ARCH="${TARGET%%-*}"
             ext_src="${PYTHON_TARGET_DIR}/${ARCH}-unknown-linux-gnu.2.17/release/lib_native.so"
             [ -f "$ext_src" ] || ext_src="${PYTHON_TARGET_DIR}/${ARCH}-unknown-linux-gnu/release/lib_native.so"
             [ -f "$ext_src" ] && cp "$ext_src" staging/_native.abi3.so
-          elif [[ "${{ inputs.target }}" == *-apple-darwin ]]; then
+          elif [ "${{ runner.os }}" = "macOS" ]; then
             ext_src="${PYTHON_TARGET_DIR}/${{ inputs.target }}/release/lib_native.dylib"
             [ -f "$ext_src" ] && cp "$ext_src" staging/_native.abi3.so
+          elif [ "${{ inputs.binary_ext }}" = ".exe" ]; then
+            for ext_src in \
+              "${PYTHON_TARGET_DIR}/${{ inputs.target }}/release/_native.dll" \
+              "${PYTHON_TARGET_DIR}/release/_native.dll"; do
+              [ -f "$ext_src" ] && cp "$ext_src" staging/_native.pyd && break
+            done
+          else
+            for ext in so dylib; do
+              src="${PYTHON_TARGET_DIR}/release/lib_native.$ext"
+              [ -f "$src" ] && cp "$src" staging/_native.abi3.so && break
+            done
           fi
 
-          # Fail fast if the extension is missing — we expect it on all targets.
-          if [[ "${{ inputs.target }}" == *-pc-windows-msvc ]]; then
+          # Fail fast if the extension is missing — we expect it on all targets
+          if [ "${{ inputs.binary_ext }}" = ".exe" ]; then
             [ -f staging/_native.pyd ] || { echo "ERROR: _native.pyd missing"; exit 1; }
           else
             [ -f staging/_native.abi3.so ] || { echo "ERROR: _native.abi3.so missing"; exit 1; }
           fi
 
-          # Strip with llvm-strip — universal across ELF + Mach-O. Skip
-          # Windows PE (cross-compiled, debug info already split).
-          if [[ "${{ inputs.target }}" != *-pc-windows-msvc ]]; then
-            llvm-strip staging/fbuild 2>/dev/null || true
-            llvm-strip staging/fbuild-daemon 2>/dev/null || true
+          # Strip binaries (reduces size significantly)
+          if [ "${{ inputs.linux_cross }}" = "true" ]; then
+            llvm-strip staging/fbuild || true
+            llvm-strip staging/fbuild-daemon || true
             llvm-strip staging/_native.abi3.so 2>/dev/null || true
+          elif command -v strip &> /dev/null; then
+            strip staging/fbuild${{ inputs.binary_ext }} || true
+            strip staging/fbuild-daemon${{ inputs.binary_ext }} || true
+            strip staging/_native.abi3.so 2>/dev/null || true
+            strip staging/_native.pyd 2>/dev/null || true
           fi
 
       - name: Generate checksums
