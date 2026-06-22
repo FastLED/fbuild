@@ -103,13 +103,31 @@ jobs:
 
       # macOS SDK for darwin lanes — zigbuild's bundled SDK lacks Apple
       # framework headers (CommonCrypto, Security, etc.) that
-      # libmimalloc-sys and other native deps require. joseluisq/setup-macos-sdk
-      # downloads a complete SDK and exports SDKROOT for the build.
+      # libmimalloc-sys and other native deps require. Fetched directly
+      # from phracker/MacOSX-SDKs releases (the canonical mirror of the
+      # Xcode-shipped SDKs used by cross-compile toolchains). 11.3
+      # is the most recent release on that mirror and includes the
+      # CommonCrypto + Security headers libmimalloc-sys needs.
       - name: Setup macOS SDK (darwin lanes only)
         if: ${{ contains(inputs.target, 'apple-darwin') }}
-        uses: joseluisq/setup-macos-sdk@v1
-        with:
-          sdk: "14"
+        shell: bash
+        run: |
+          set -euo pipefail
+          SDK_VERSION="11.3"
+          SDK_URL="https://github.com/phracker/MacOSX-SDKs/releases/download/${SDK_VERSION}/MacOSX${SDK_VERSION}.sdk.tar.xz"
+          curl -fsSL -o /tmp/macosx-sdk.tar.xz "$SDK_URL"
+          sudo mkdir -p /opt/macosx-sdk
+          sudo tar -xJf /tmp/macosx-sdk.tar.xz -C /opt/macosx-sdk
+          SDK_PATH="/opt/macosx-sdk/MacOSX${SDK_VERSION}.sdk"
+          if [ ! -d "$SDK_PATH" ]; then
+            SDK_PATH="$(sudo find /opt/macosx-sdk -maxdepth 2 -type d -name 'MacOSX*.sdk' | head -1)"
+          fi
+          [ -d "$SDK_PATH" ] || { echo "ERROR: macOS SDK not found after extract" >&2; sudo ls -la /opt/macosx-sdk; exit 1; }
+          # Confirm the headers libmimalloc-sys actually needs.
+          [ -f "$SDK_PATH/usr/include/CommonCrypto/CommonCryptoError.h" ] \
+            || { echo "ERROR: CommonCrypto headers missing from extracted SDK" >&2; exit 1; }
+          echo "SDKROOT=$SDK_PATH" >> "$GITHUB_ENV"
+          echo "Configured macOS SDK: $SDK_PATH"
 
       # Windows Python lib for PyO3 cross-compile — PyO3 extension on
       # MSVC links against python3.lib at the end. python3.lib isn't
