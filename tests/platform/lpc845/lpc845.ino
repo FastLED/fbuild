@@ -6,6 +6,8 @@
 // its own variant core (zackees/ArduinoCore-LPC8xx) provides the real
 // register-level GPIO implementation.
 
+#include <Arduino.h>
+
 #ifndef LED_BUILTIN
 #define LED_BUILTIN 0
 #endif
