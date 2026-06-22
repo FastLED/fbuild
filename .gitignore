@@ -87,3 +87,9 @@ tasks/loop-runs/
 !.clud/
 !.clud/settings.json
 .claude/tmp/
+
+# `fbuild port scan` ad-hoc diagnostic captures (added with PR #741).
+# Users sometimes redirect stderr/stdout to inspect the device list;
+# the captures are local-only and should never be checked in.
+port_scan_stderr*.txt
+port_scan_stdout*.txt
