@@ -170,7 +170,7 @@ jobs:
             macos_cross: false
 
           - target: x86_64-pc-windows-msvc
-            runner: ubuntu-24.04
+            runner: windows-latest
             binary_ext: ".exe"
             linux_cross: false
             macos_cross: false
