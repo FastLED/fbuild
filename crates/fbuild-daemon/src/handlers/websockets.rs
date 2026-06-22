@@ -430,18 +430,20 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                                     .await
                                 {
                                     Ok(n) => {
-                                        let _ = out_tx_inbound.send(SerialServerMessage::WriteAck {
-                                            success: true,
-                                            bytes_written: n,
-                                            message: None,
-                                        });
+                                        let _ =
+                                            out_tx_inbound.send(SerialServerMessage::WriteAck {
+                                                success: true,
+                                                bytes_written: n,
+                                                message: None,
+                                            });
                                     }
                                     Err(e) => {
-                                        let _ = out_tx_inbound.send(SerialServerMessage::WriteAck {
-                                            success: false,
-                                            bytes_written: 0,
-                                            message: Some(format!("write error: {}", e)),
-                                        });
+                                        let _ =
+                                            out_tx_inbound.send(SerialServerMessage::WriteAck {
+                                                success: false,
+                                                bytes_written: 0,
+                                                message: Some(format!("write error: {}", e)),
+                                            });
                                         tracing::warn!(
                                             client_id = %client_id_owned,
                                             port = %port_owned,
@@ -479,9 +481,8 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                                 // honest (the client's view of "buffered"
                                 // lines lives in the daemon -> client
                                 // mpsc queue, which is unbounded).
-                                let _ = out_tx_inbound.send(SerialServerMessage::InWaiting {
-                                    count: 0,
-                                });
+                                let _ = out_tx_inbound
+                                    .send(SerialServerMessage::InWaiting { count: 0 });
                             }
                             Ok(_) => {}
                             Err(e) => {
