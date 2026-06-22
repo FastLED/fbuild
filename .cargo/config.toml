@@ -4,3 +4,11 @@ protocol = "sparse"
 [net]
 retry = 2
 git-fetch-with-cli = true
+
+# Use `rust-lld` instead of MSVC `link.exe` on Windows. rust-lld ships
+# with the Rust toolchain (no install), is typically 2-5x faster than
+# link.exe, and produces the same executable format. Applied to all
+# profiles — release builds also benefit. If something ever fails to
+# link, override per-invocation with `RUSTFLAGS="-C linker=link.exe"`.
+[target.x86_64-pc-windows-msvc]
+linker = "rust-lld.exe"

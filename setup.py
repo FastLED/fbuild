@@ -173,16 +173,34 @@ def _find_fbuild_executable_from_json(stdout: str) -> Optional[Path]:
     return binary_path
 
 
+def _use_release_profile() -> bool:
+    """True when this build should produce a release-optimized binary.
+
+    Default is `False` — pip/uv-driven builds use the dev profile so the
+    iteration loop is fast (workspace's third-party deps stay at opt-level
+    3 via `[profile.dev.package."*"]`, only our own crates compile
+    unoptimized). Set `FBUILD_BUILD_RELEASE=1` to opt into a release
+    build when you actually want a fast binary (CI, packaging, perf
+    tests).
+    """
+    return os.environ.get("FBUILD_BUILD_RELEASE", "").lower() in ("1", "true", "yes")
+
+
+def _profile_subdir() -> str:
+    return "release" if _use_release_profile() else "debug"
+
+
 def _find_fbuild_executable_by_search() -> Optional[Path]:
     """Fallback when cargo didn't emit a usable artifact line (e.g. a fully
     cached build that reports `Fresh` and skips compiler-artifact). Probe
-    the canonical `target/release` path and every per-host-triple subdir.
+    the canonical `target/<profile>` path and every per-host-triple subdir.
     """
-    candidates = [REPO_ROOT / "target" / "release" / TARGET_BINARY_NAME]
-    target_root = REPO_ROOT / "target"
+    profile_dir = _profile_subdir()
+    target_root = Path(os.environ.get("CARGO_TARGET_DIR", REPO_ROOT / "target"))
+    candidates = [target_root / profile_dir / TARGET_BINARY_NAME]
     if target_root.is_dir():
         for child in target_root.iterdir():
-            candidate = child / "release" / TARGET_BINARY_NAME
+            candidate = child / profile_dir / TARGET_BINARY_NAME
             if candidate.is_file():
                 candidates.append(candidate)
     for candidate in candidates:
@@ -197,11 +215,12 @@ def _build_fbuild_cli() -> Path:
         "soldr",
         "cargo",
         "build",
-        "--release",
         "-p",
         "fbuild-cli",
         "--message-format=json-render-diagnostics",
     ]
+    if _use_release_profile():
+        cmd.insert(3, "--release")
     sys.stderr.write(f"  $ {' '.join(cmd)}\n")
     # stderr passes through so soldr's session summary stays visible; stdout
     # is captured because that's where cargo writes its JSON artifact stream.

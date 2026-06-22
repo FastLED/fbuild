@@ -114,3 +114,17 @@ running-process = { version = "4.3.0", default-features = false, features = ["cl
 
 [profile.dev]
 debug = 0
+# Cargo's dev defaults: opt-level = 0 for first-party (fast compile +
+# fast link), incremental = true (cargo + linker keep state across
+# builds), codegen-units = 256 (parallel compile units). We accept
+# those for our own crates so `pip install`/`uv sync` rebuilds finish
+# quickly when iterating.
+
+# Optimize third-party deps even in dev so runtime perf doesn't tank
+# just because we want a fast local-rebuild loop. Cargo compiles each
+# upstream crate exactly once and caches it, so this only costs the
+# first build — every subsequent rebuild of fbuild's source is still
+# the fast dev-profile path.
+[profile.dev.package."*"]
+opt-level = 3
+debug = false
