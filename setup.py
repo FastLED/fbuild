@@ -2,15 +2,19 @@
 
 `pip install ~/dev/fbuild` (or any `pip install .` from the repo root) goes
 through this file because `pyproject.toml` declares the setuptools build
-backend. The plain backend would ship only `ci/` Python helpers — no working
-`fbuild` command — because the actual CLI is a Rust crate (`fbuild-cli`)
-that lives in the cargo workspace under `crates/`.
+backend. The plain backend would ship only the `python/fbuild` Python
+package — no working `fbuild` command — because the actual CLI is a Rust
+crate (`fbuild-cli`) that lives in the cargo workspace under `crates/`.
 
 This file wires the install path through `soldr cargo build --release -p
-fbuild-cli`, copies the resulting binary to `ci/bin/fbuild[.exe]`, and lets
-setuptools pack it into the wheel. The `ci.bin_launcher:main` entry point
-(declared in pyproject.toml) execs that binary, so `fbuild` on PATH after
-install Just Works.
+fbuild-cli`, copies the resulting binary to `ci/bin/fbuild[.exe]`, and
+hands that path to setuptools as a raw wheel script (the `scripts=`
+argument to `setup()` below). Pip drops raw scripts straight into the
+venv's `Scripts/` (Windows) or `bin/` (POSIX) directory as-is — `.exe`
+files are NOT wrapped, so `fbuild` on PATH is the literal cargo-built
+binary with no Python shim in front of it (see #746 for why the previous
+`[project.scripts] fbuild = "ci.bin_launcher:main"` approach broke stdout
+ordering on Windows).
 
 This is the LOCAL DEV install path. The RELEASE path lives entirely in
 the Autonomous Release GitHub Action (`.github/workflows/release-auto.yml`):
@@ -67,9 +71,17 @@ import sys
 from pathlib import Path
 from typing import Optional
 
+# Import setuptools FIRST so its distutils shim is installed before we
+# pull `distutils.command.build_scripts` off the shim. Importing the
+# distutils module without setuptools loaded first either misses the
+# shim or (depending on Python/setuptools version) yields the stdlib
+# distutils, which is deprecated and gone in Python 3.12+.
 from setuptools import setup
 from setuptools.command.build_py import build_py
 from setuptools.dist import Distribution
+from distutils.command.build_scripts import (  # type: ignore[import-untyped]
+    build_scripts,
+)
 
 
 REPO_ROOT = Path(__file__).resolve().parent
@@ -291,7 +303,71 @@ class BinaryDistribution(Distribution):
         return True
 
 
+class BuildBinaryScripts(build_scripts):
+    """Byte-copy variant of `build_scripts` for raw native binaries.
+
+    Stock `build_scripts.copy_scripts` calls `tokenize.open(script)` on
+    each entry to detect a coding cookie and patch a shebang for source
+    scripts. That's right for `.py` files but wrong for a Rust-built
+    `.exe` / ELF binary — `tokenize.open` raises `SyntaxError: invalid or
+    missing encoding declaration` on the very first read. We override
+    `copy_scripts` to do a plain byte-level `shutil.copy2`, preserving
+    the executable bit on POSIX (cargo already sets it). The file lands
+    in `<name>-<version>.data/scripts/` in the wheel; pip then copies it
+    straight into the install's `Scripts/` (Windows) or `bin/` (POSIX)
+    directory verbatim — no shebang, no Python wrapper. See #746.
+    """
+
+    def copy_scripts(self):  # noqa: D401 — distutils API name
+        self.mkpath(self.build_dir)
+        outfiles: list[str] = []
+        updated_files: list[str] = []
+        for script in self.scripts:
+            outfile = os.path.join(self.build_dir, os.path.basename(script))
+            # `dep_util.newer` returns True if `script` is newer than
+            # `outfile`, mirroring stock build_scripts' "update or skip"
+            # behavior — avoids spurious rebuilds breaking caching.
+            try:
+                from distutils import dep_util  # type: ignore[import-untyped]
+
+                up_to_date = (
+                    os.path.exists(outfile) and not dep_util.newer(script, outfile)
+                )
+            except ImportError:
+                # Python 3.12+ removed distutils.dep_util; fall back to
+                # an mtime compare.
+                up_to_date = os.path.exists(outfile) and (
+                    os.path.getmtime(script) <= os.path.getmtime(outfile)
+                )
+            if up_to_date and not self.force:
+                outfiles.append(outfile)
+                continue
+            shutil.copy2(script, outfile)
+            outfiles.append(outfile)
+            updated_files.append(outfile)
+        return outfiles, updated_files
+
+
+# `scripts=` is the legacy setuptools mechanism for shipping raw files
+# (no shebang/no entry-point wrapping) into the install's Scripts/bin
+# directory. Files land in `<name>-<version>.data/scripts/` inside the
+# wheel; `pip install` then copies them straight into the venv as-is —
+# on Windows pip does NOT generate a Python wrapper for `.exe` files
+# (only for shebang-style script text). This is the same mechanism
+# maturin's "bin" mode and cargo-dist use to ship native binaries via
+# PyPI without a Python shim. See #746.
+#
+# Stock `build_scripts` parses each script as Python source to find a
+# coding cookie / shebang — we override with `BuildBinaryScripts` to do
+# a plain byte-copy instead. `STAGED_BINARY_PATH` doesn't exist until
+# `BuildWithCargo` runs, which happens during the `build_py` phase.
+# Setuptools' build pipeline runs `build_py` before `build_scripts`, so
+# by the time `build_scripts` reads this list, the file is on disk.
 setup(
-    cmdclass={"build_py": BuildWithCargo},
+    cmdclass={
+        "build_py": BuildWithCargo,
+        "build_scripts": BuildBinaryScripts,
+    },
     distclass=BinaryDistribution,
+    scripts=[str(STAGED_BINARY_PATH)],
 )
