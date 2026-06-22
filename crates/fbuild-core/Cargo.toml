@@ -23,6 +23,7 @@ usb-ids = { workspace = true }
 # wire format without per-crate version drift.
 zstd = { workspace = true }
 tar = { workspace = true }
+prost = { workspace = true }
 # Process containment primitive (Job Objects on Windows; process groups +
 # PR_SET_PDEATHSIG on Linux; process groups on macOS). The single global
 # `ContainedProcessGroup` owned by the daemon ensures every child process
