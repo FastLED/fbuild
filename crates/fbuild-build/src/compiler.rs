@@ -652,7 +652,20 @@ pub fn compile_source(
         tracing::info!("compile: {}", args.join(" "));
     }
 
-    let result = run_command(&args_ref, compile_cwd.as_deref(), None, None)?;
+    let mut result = run_command(&args_ref, compile_cwd.as_deref(), None, None)?;
+
+    if !result.success() {
+        if let Some(zccache) = compiler_cache {
+            if crate::zccache::output_has_stale_daemon_error(&result.stdout, &result.stderr) {
+                tracing::warn!(
+                    "zccache protocol mismatch detected; stopping daemon and retrying compile"
+                );
+                crate::zccache::stop(zccache)?;
+                crate::zccache::ensure_running(zccache)?;
+                result = run_command(&args_ref, compile_cwd.as_deref(), None, None)?;
+            }
+        }
+    }
 
     if result.success() {
         std::fs::write(command_hash_path(output), rebuild_signature)?;
