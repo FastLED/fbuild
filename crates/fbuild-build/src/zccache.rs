@@ -213,6 +213,47 @@ pub fn ensure_running(zccache: &Path) -> Result<()> {
     if output.status.success() {
         tracing::info!("zccache daemon running");
         Ok(())
+    } else if output_has_stale_daemon_error(
+        &String::from_utf8_lossy(&output.stdout),
+        &String::from_utf8_lossy(&output.stderr),
+    ) {
+        tracing::warn!("zccache daemon appears stale; stopping and retrying start");
+        let _ = stop(zccache);
+        std::thread::sleep(std::time::Duration::from_millis(250));
+
+        let mut retry_cmd = std::process::Command::new(zccache);
+        retry_cmd
+            .arg("start")
+            .stdout(Stdio::piped())
+            .stderr(Stdio::piped());
+
+        #[cfg(windows)]
+        {
+            use std::os::windows::process::CommandExt;
+            const CREATE_NO_WINDOW: u32 = 0x08000000;
+            retry_cmd.creation_flags(CREATE_NO_WINDOW);
+        }
+
+        let retry = retry_cmd.output().map_err(|e| {
+            FbuildError::BuildFailed(format!(
+                "failed to spawn zccache daemon via `{}` start: {}",
+                zccache.display(),
+                e
+            ))
+        })?;
+        if retry.status.success() {
+            tracing::info!("zccache daemon running after stale-daemon recovery");
+            Ok(())
+        } else {
+            let message = format_zccache_start_failure(
+                zccache,
+                retry.status.to_string(),
+                &retry.stdout,
+                &retry.stderr,
+            );
+            tracing::warn!("{message}");
+            Err(FbuildError::BuildFailed(message))
+        }
     } else {
         let message = format_zccache_start_failure(
             zccache,
@@ -223,6 +264,55 @@ pub fn ensure_running(zccache: &Path) -> Result<()> {
         tracing::warn!("{message}");
         Err(FbuildError::BuildFailed(message))
     }
+}
+
+/// Stop the zccache daemon for this user, if one is running.
+pub fn stop(zccache: &Path) -> Result<()> {
+    let mut cmd = std::process::Command::new(zccache);
+    cmd.arg("stop")
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped());
+
+    #[cfg(windows)]
+    {
+        use std::os::windows::process::CommandExt;
+        const CREATE_NO_WINDOW: u32 = 0x08000000;
+        cmd.creation_flags(CREATE_NO_WINDOW);
+    }
+
+    let output = cmd.output().map_err(|e| {
+        FbuildError::BuildFailed(format!(
+            "failed to spawn zccache daemon via `{}` stop: {}",
+            zccache.display(),
+            e
+        ))
+    })?;
+
+    if output.status.success() {
+        Ok(())
+    } else {
+        Err(FbuildError::BuildFailed(format_zccache_start_failure(
+            zccache,
+            output.status,
+            &output.stdout,
+            &output.stderr,
+        )))
+    }
+}
+
+/// zccache can leave a previous-version daemon running across fbuild upgrades.
+/// The new client then fails wrapped compiles with a protocol mismatch until
+/// the old daemon is stopped.
+pub fn output_has_protocol_mismatch(stdout: &str, stderr: &str) -> bool {
+    stdout.contains("protocol version mismatch") || stderr.contains("protocol version mismatch")
+}
+
+pub fn output_has_stale_daemon_error(stdout: &str, stderr: &str) -> bool {
+    output_has_protocol_mismatch(stdout, stderr)
+        || stdout.contains("lost connection to daemon")
+        || stderr.contains("lost connection to daemon")
+        || stdout.contains("not accepting connections")
+        || stderr.contains("not accepting connections")
 }
 
 fn format_zccache_start_failure(
@@ -595,6 +685,23 @@ mod tests {
 
         assert!(message.contains("with no stdout/stderr"));
         assert!(message.contains("fbuild daemon logs"));
+    }
+
+    #[test]
+    fn detects_zccache_protocol_mismatch_from_stderr_or_stdout() {
+        let mismatch =
+            "zccache[err][R]: broken connection to daemon: protocol error: protocol version mismatch: expected v16, received v15";
+
+        assert!(output_has_protocol_mismatch("", mismatch));
+        assert!(output_has_protocol_mismatch(mismatch, ""));
+        assert!(output_has_stale_daemon_error(
+            "",
+            "zccache[err][R]: lost connection to daemon (no response)"
+        ));
+        assert!(!output_has_protocol_mismatch(
+            "ordinary stdout",
+            "ordinary stderr"
+        ));
     }
 
     #[test]
