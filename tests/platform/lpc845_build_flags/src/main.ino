@@ -7,7 +7,7 @@
 
 #include <Arduino.h>
 
-extern void check_flag_no_op();
+extern "C" void check_flag_no_op(void);
 
 void setup() {
     check_flag_no_op();

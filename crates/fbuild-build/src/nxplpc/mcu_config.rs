@@ -176,16 +176,35 @@ mod tests {
         assert!(config.compiler_flags.common.iter().any(|f| f == "-mthumb"));
         assert!(config
             .compiler_flags
-            .common
+            .cxx
             .iter()
-            .any(|f| f == "-mfloat-abi=soft"));
+            .any(|f| f == "-std=gnu++11"));
+        assert!(
+            !config
+                .compiler_flags
+                .common
+                .iter()
+                .any(|f| f == "-mfloat-abi=soft"),
+            "nxplpc should mirror ArduinoCore-LPC8xx platform.txt, which does not pass -mfloat-abi"
+        );
     }
 
     #[test]
-    fn linker_flags_include_gc_sections() {
+    fn linker_flags_match_arduino_core_recipe() {
         let config = get_nxplpc_config("lpc845").unwrap();
         assert!(config.linker_flags.iter().any(|f| f == "-Wl,--gc-sections"));
-        assert!(config.linker_flags.iter().any(|f| f == "-nostartfiles"));
+        assert!(
+            !config.linker_flags.iter().any(|f| f == "-nostartfiles"),
+            "ArduinoCore-LPC8xx platform.txt does not pass -nostartfiles"
+        );
+        assert!(
+            config.linker_libs.iter().any(|f| f == "-lc"),
+            "ArduinoCore-LPC8xx links the standard C library name under nano.specs"
+        );
+        assert!(
+            !config.linker_libs.iter().any(|f| f == "-lc_nano"),
+            "ArduinoCore-LPC8xx platform.txt uses -lc, not -lc_nano"
+        );
     }
 
     #[test]

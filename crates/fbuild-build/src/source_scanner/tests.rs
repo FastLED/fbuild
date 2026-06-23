@@ -113,9 +113,9 @@ fn test_scan_multiple_ino_files_uses_platformio_main_first() {
     assert!(sources[0].ends_with("main.ino.cpp"));
     let content = fs::read_to_string(&sources[0]).unwrap();
 
-    let main_pos = content.find("void setup()").unwrap();
-    let a_pos = content.find("void aTab()").unwrap();
-    let z_pos = content.find("void zTab()").unwrap();
+    let main_pos = content.rfind("void setup()").unwrap();
+    let a_pos = content.rfind("void aTab()").unwrap();
+    let z_pos = content.rfind("void zTab()").unwrap();
     assert!(main_pos < a_pos);
     assert!(a_pos < z_pos);
 }
@@ -141,9 +141,9 @@ fn test_scan_multiple_ino_files_uses_arduino_named_primary_first() {
     assert!(sources[0].ends_with("Blink.ino.cpp"));
     let content = fs::read_to_string(&sources[0]).unwrap();
 
-    let primary_pos = content.find("void setup()").unwrap();
-    let a_pos = content.find("void aTab()").unwrap();
-    let z_pos = content.find("void zTab()").unwrap();
+    let primary_pos = content.rfind("void setup()").unwrap();
+    let a_pos = content.rfind("void aTab()").unwrap();
+    let z_pos = content.rfind("void zTab()").unwrap();
     assert!(primary_pos < a_pos);
     assert!(a_pos < z_pos);
 }
@@ -162,9 +162,9 @@ fn test_scan_multiple_ino_files_falls_back_to_setup_loop_primary() {
     assert!(sources[0].ends_with("z_entry.ino.cpp"));
     let content = fs::read_to_string(&sources[0]).unwrap();
 
-    let primary_pos = content.find("void setup()").unwrap();
-    let a_pos = content.find("void aTab()").unwrap();
-    let b_pos = content.find("void bTab()").unwrap();
+    let primary_pos = content.rfind("void setup()").unwrap();
+    let a_pos = content.rfind("void aTab()").unwrap();
+    let b_pos = content.rfind("void bTab()").unwrap();
     assert!(primary_pos < a_pos);
     assert!(a_pos < b_pos);
 }
@@ -336,9 +336,24 @@ fn test_preprocess_with_custom_functions() {
     let sources = scanner.scan_sketch_sources().unwrap();
     let content = fs::read_to_string(&sources[0]).unwrap();
 
-    // Should have auto-generated prototypes
+    // Should have auto-generated prototypes for custom helpers, but not for
+    // Arduino-owned setup()/loop().
     assert!(content.contains("int add(int a, int b)"));
-    assert!(content.contains("void setup()"));
+    assert!(!content.contains("void setup();"));
+    assert!(!content.contains("void loop();"));
+}
+
+#[test]
+fn test_preprocess_preserves_existing_forward_declarations() {
+    let (_tmp, src_dir, build_dir) = setup_project(&[(
+        "sketch.ino",
+        "extern void helper();\n\nvoid setup() {\n  helper();\n}\n\nvoid loop() {}\n",
+    )]);
+    let scanner = SourceScanner::new(&src_dir, &build_dir);
+    let sources = scanner.scan_sketch_sources().unwrap();
+    let content = fs::read_to_string(&sources[0]).unwrap();
+
+    assert!(content.contains("extern void helper();"));
 }
 
 #[test]
@@ -346,7 +361,10 @@ fn test_function_prototype_extraction() {
     let source = "void setup() {\n}\nint compute(float x, int y) {\n  return 0;\n}\nconst char* getName() {\n  return \"\";\n}\n";
     let protos = extract_function_prototypes(source);
     assert!(protos.len() >= 2);
-    assert!(protos.iter().any(|p| p.contains("setup")));
+    assert!(
+        !protos.iter().any(|p| p.contains("setup")),
+        "Arduino entry points are declared by Arduino.h and should not be auto-prototyped"
+    );
     assert!(protos.iter().any(|p| p.contains("compute")));
 }
 
@@ -397,7 +415,7 @@ void helper() {}
 void Controller::external_tick() {}
 "#;
     let protos = extract_function_prototypes(source);
-    assert!(protos.iter().any(|p| p == "void setup()"));
+    assert!(!protos.iter().any(|p| p == "void setup()"));
     assert!(!protos.iter().any(|p| p.contains("if")));
     assert!(!protos.iter().any(|p| p.contains("while")));
     assert!(!protos.iter().any(|p| p.contains("callback")));
