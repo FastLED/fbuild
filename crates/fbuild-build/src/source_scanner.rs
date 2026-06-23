@@ -277,13 +277,6 @@ impl SourceScanner {
         }
 
         let prototypes = extract_function_prototypes(&combined);
-        let existing_decls = find_existing_forward_declarations(&combined);
-
-        // Remove existing forward declarations from the body
-        let mut body = combined.clone();
-        for decl in &existing_decls {
-            body = body.replace(decl, "");
-        }
 
         // Build output
         let mut output = String::new();
@@ -310,7 +303,7 @@ impl SourceScanner {
             ));
         }
 
-        output.push_str(&body);
+        output.push_str(&combined);
 
         // Write to build directory
         std::fs::create_dir_all(&self.build_dir)?;
@@ -655,17 +648,6 @@ pub fn extract_function_prototypes(source: &str) -> Vec<String> {
         .collect()
 }
 
-/// Find existing forward declarations in source.
-fn find_existing_forward_declarations(source: &str) -> Vec<String> {
-    let Some(tree) = parse_cpp_source(source) else {
-        return Vec::new();
-    };
-
-    let mut declarations = Vec::new();
-    collect_forward_declarations(tree.root_node(), source, &mut declarations);
-    declarations
-}
-
 fn parse_cpp_source(source: &str) -> Option<tree_sitter::Tree> {
     let mut parser = Parser::new();
     let language = tree_sitter_cpp::LANGUAGE.into();
@@ -708,8 +690,18 @@ fn prototype_from_function_definition(node: Node<'_>, source: &str) -> Option<St
     if signature.contains("::") || signature.starts_with('#') {
         return None;
     }
+    if is_arduino_entry_point_signature(&signature) {
+        return None;
+    }
 
     Some(signature)
+}
+
+fn is_arduino_entry_point_signature(signature: &str) -> bool {
+    matches!(
+        signature.trim(),
+        "void setup()" | "void setup(void)" | "void loop()" | "void loop(void)"
+    )
 }
 
 fn has_skipped_function_context(node: Node<'_>) -> bool {
@@ -725,30 +717,6 @@ fn has_skipped_function_context(node: Node<'_>) -> bool {
         }
     }
     false
-}
-
-fn collect_forward_declarations(node: Node<'_>, source: &str, declarations: &mut Vec<String>) {
-    if node.kind() == "declaration"
-        && !has_skipped_function_context(node)
-        && has_descendant_kind(node, "function_declarator")
-    {
-        if let Some(text) = source.get(node.start_byte()..node.end_byte()) {
-            let declaration = text.trim();
-            if declaration.ends_with(';') && !declaration.contains("::") {
-                declarations.push(declaration.to_string());
-            }
-        }
-        return;
-    }
-
-    let mut cursor = node.walk();
-    for child in node.children(&mut cursor) {
-        collect_forward_declarations(child, source, declarations);
-    }
-}
-
-fn has_descendant_kind(node: Node<'_>, kind: &str) -> bool {
-    find_descendant_kind(node, kind).is_some()
 }
 
 fn find_descendant_kind<'a>(node: Node<'a>, kind: &str) -> Option<Node<'a>> {

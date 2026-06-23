@@ -6,42 +6,34 @@
     "common": [
       "-mcpu=cortex-m0plus",
       "-mthumb",
-      "-mfloat-abi=soft",
       "-fdata-sections",
       "-ffunction-sections",
-      "-fmessage-length=0",
       "-fno-exceptions",
-      "-fomit-frame-pointer",
-      "-funsigned-char",
       "-Wall",
-      "-Wextra",
-      "-Wno-unused-parameter",
       "-MMD"
     ],
     "c": [
       "-std=gnu11"
     ],
     "cxx": [
-      "-std=gnu++17",
+      "-std=gnu++11",
       "-fno-rtti",
+      "-fno-use-cxa-atexit",
       "-fno-threadsafe-statics"
     ]
   },
   "linker_flags": [
     "-mcpu=cortex-m0plus",
     "-mthumb",
-    "-mfloat-abi=soft",
     "-specs=nano.specs",
     "-specs=nosys.specs",
-    "-Wl,--gc-sections",
-    "-Wl,--print-memory-usage",
-    "-nostartfiles"
+    "-Wl,--gc-sections"
   ],
   "linker_libs": [
     "-Wl,--start-group",
-    "-lgcc",
-    "-lc_nano",
+    "-lc",
     "-lm",
+    "-lgcc",
     "-lnosys",
     "-Wl,--end-group"
   ],
@@ -51,8 +43,8 @@
   },
   "profiles": {
     "release": {
-      "compile_flags": ["-Os", "-flto", "-fno-fat-lto-objects"],
-      "link_flags": ["-flto", "-fuse-linker-plugin"]
+      "compile_flags": ["-Os"],
+      "link_flags": []
     },
     "quick": {
       "compile_flags": ["-Os"],

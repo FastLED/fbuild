@@ -5,7 +5,9 @@
 // nxplpc library compile path. A working build proves the orchestrator now
 // folds `ctx.user_flags` into the `LibraryBuildEnv` flag set.
 
-extern void check_flag_no_op();
+#include <Arduino.h>
+
+extern "C" void check_flag_no_op(void);
 
 void setup() {
     check_flag_no_op();
