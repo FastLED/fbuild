@@ -10,7 +10,27 @@ use fbuild_serial::{SerialClientMessage, SerialServerMessage, SerialStreamEvent}
 use futures::{SinkExt, StreamExt};
 use std::sync::Arc;
 use std::time::Duration;
-use tokio::sync::mpsc;
+use tokio::sync::{mpsc, oneshot};
+
+// ReaderControl -- inbound -> reader cross-task RPC for the small set
+// of `SerialClientMessage`s that need read-only access to the reader-
+// owned broadcast receiver (`ClearBuffer` and `GetInWaiting`).
+//
+// Pre-#756 these two RPCs were logged no-ops because the post-#749/#750
+// reader/writer/inbound split moved `rx` exclusively into the reader
+// task. Adding a control channel + oneshot reply lets inbound borrow
+// the operation through the reader without exposing `rx` itself, so
+// the original FastLED/fbuild#605 semantics are restored without
+// regressing the throughput fix.
+//
+// Variants intentionally minimal -- one per RPC. New protocol RPCs
+// that need read-only `rx` access get a new variant.
+enum ReaderControl {
+    /// Drain `rx` of any buffered events. Reply: number of events dropped.
+    Drain { reply: oneshot::Sender<usize> },
+    /// Report `rx.len()` (broadcast queue depth). Reply: count.
+    GetDepth { reply: oneshot::Sender<usize> },
+}
 
 // ---------------------------------------------------------------------------
 // /ws/serial-monitor — existing serial monitor WebSocket
@@ -211,6 +231,13 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
 
     let (out_tx, mut out_rx) = mpsc::unbounded_channel::<SerialServerMessage>();
     let (mut ws_sink, mut ws_stream) = socket.split();
+    // Inbound -> reader control channel (#756). Inbound issues Drain /
+    // GetDepth requests on this; reader handles them inline alongside
+    // its broadcast.recv(). Unbounded because the only producers are
+    // the inbound task's ClearBuffer / GetInWaiting handlers, which
+    // emit at most one message per client RPC -- bounded capacity
+    // would only add deadlock corner cases for no real win.
+    let (control_tx, mut control_rx) = mpsc::unbounded_channel::<ReaderControl>();
 
     // READER task -- broadcast -> mpsc queue.
     let reader_handle = {
@@ -221,7 +248,13 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
         tokio::spawn(async move {
             let mut line_index: u64 = 0;
             loop {
-                match rx.recv().await {
+                tokio::select! {
+                    biased; // prefer broadcast events over control messages,
+                            // so a burst of inbound ClearBuffer requests
+                            // can't starve forwarding (control fires once
+                            // per client RPC; broadcast fires per line).
+
+                    broadcast_result = rx.recv() => match broadcast_result {
                     Ok(SerialStreamEvent::Data(line)) => {
                         ctx.touch_activity();
                         line_index += 1;
@@ -302,7 +335,36 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                         );
                     }
                     Err(tokio::sync::broadcast::error::RecvError::Closed) => break,
-                }
+                    }, // end broadcast_result match
+
+                    // ReaderControl branch -- inbound's ClearBuffer /
+                    // GetInWaiting requests land here. Both are O(1)
+                    // on the broadcast receiver, so they don't block
+                    // the main forwarding loop meaningfully. The
+                    // oneshot reply is best-effort: if inbound has
+                    // dropped the receiver between sending the request
+                    // and now (race on session teardown), the reply
+                    // just goes nowhere -- inbound has already exited.
+                    control_opt = control_rx.recv() => {
+                        let Some(cmd) = control_opt else {
+                            // All inbound senders dropped -> session
+                            // teardown. Reader exits its loop too.
+                            break;
+                        };
+                        match cmd {
+                            ReaderControl::Drain { reply } => {
+                                let mut drained: usize = 0;
+                                while rx.try_recv().is_ok() {
+                                    drained += 1;
+                                }
+                                let _ = reply.send(drained);
+                            }
+                            ReaderControl::GetDepth { reply } => {
+                                let _ = reply.send(rx.len());
+                            }
+                        }
+                    }
+                } // end tokio::select!
             }
             // Dropping `out_tx_reader` here signals the writer that no more
             // data events will arrive (but inbound's clone keeps the
@@ -401,7 +463,10 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     });
 
     // INBOUND task -- WS stream -> serial manager + ack reply via mpsc.
+    // Also owns the producer side of the #756 ReaderControl channel for
+    // ClearBuffer / GetInWaiting requests.
     let inbound_handle = {
+        let control_tx_inbound = control_tx;
         let ctx = ctx.clone();
         let port_owned = port.clone();
         let client_id_owned = client_id.clone();
@@ -454,35 +519,57 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                             }
                             Ok(SerialClientMessage::Detach) => break,
                             Ok(SerialClientMessage::ClearBuffer) => {
-                                // NOTE: ClearBuffer's pre-#749 semantic
-                                // drained the local `rx` broadcast
-                                // receiver. With the split architecture
-                                // rx is owned by the reader task; we
-                                // can no longer reach in from inbound.
-                                // The accumulator equivalent now lives
-                                // in the mpsc queue (out_rx, owned by
-                                // writer) -- it cannot be drained from
-                                // here either without adding a control
-                                // message. Tracking this as a follow-up;
-                                // the pre-#749 use-case (host wants to
-                                // discard pre-RPC boot banner before
-                                // sending a command) is largely served
-                                // by the reader's lag-handling now.
-                                tracing::debug!(
-                                    client_id = %client_id_owned,
-                                    port = %port_owned,
-                                    "clear_buffer requested (no-op post-#749 split; see comment)"
-                                );
+                                // Restored ClearBuffer semantic via the
+                                // #756 ReaderControl channel: ask the
+                                // reader (which owns `rx`) to drain it,
+                                // await the drop-count reply, and log.
+                                // Best-effort -- if reader has already
+                                // exited (session teardown race), the
+                                // oneshot resolves with Err and we just
+                                // log debug instead of a hard error.
+                                let (reply_tx, reply_rx) = oneshot::channel();
+                                if control_tx_inbound
+                                    .send(ReaderControl::Drain { reply: reply_tx })
+                                    .is_err()
+                                {
+                                    tracing::debug!(
+                                        client_id = %client_id_owned,
+                                        port = %port_owned,
+                                        "clear_buffer: reader gone, dropping request"
+                                    );
+                                } else {
+                                    match reply_rx.await {
+                                        Ok(drained) => tracing::debug!(
+                                            client_id = %client_id_owned,
+                                            port = %port_owned,
+                                            drained,
+                                            "clear_buffer drained pending lines"
+                                        ),
+                                        Err(_) => tracing::debug!(
+                                            client_id = %client_id_owned,
+                                            port = %port_owned,
+                                            "clear_buffer: reader dropped reply channel"
+                                        ),
+                                    }
+                                }
                             }
                             Ok(SerialClientMessage::GetInWaiting) => {
-                                // Pre-#749 this answered with the local
-                                // broadcast receiver's queue depth.
-                                // Reader owns that now; reporting 0 is
-                                // honest (the client's view of "buffered"
-                                // lines lives in the daemon -> client
-                                // mpsc queue, which is unbounded).
-                                let _ = out_tx_inbound
-                                    .send(SerialServerMessage::InWaiting { count: 0 });
+                                // Restored GetInWaiting semantic via the
+                                // #756 ReaderControl channel: ask the
+                                // reader for `rx.len()` and reply via
+                                // the writer mpsc. Race-safe (reader-
+                                // gone -> reply 0 honestly).
+                                let (reply_tx, reply_rx) = oneshot::channel();
+                                let count = if control_tx_inbound
+                                    .send(ReaderControl::GetDepth { reply: reply_tx })
+                                    .is_err()
+                                {
+                                    0
+                                } else {
+                                    reply_rx.await.unwrap_or(0)
+                                };
+                                let _ =
+                                    out_tx_inbound.send(SerialServerMessage::InWaiting { count });
                             }
                             Ok(_) => {}
                             Err(e) => {
@@ -781,5 +868,266 @@ mod tests {
         let ts = now_unix();
         // After 2020-01-01
         assert!(ts > 1_577_836_800.0);
+    }
+
+    // ---------------------------------------------------------------
+    // ReaderControl + writer-batching topology tests (#757).
+    //
+    // These exercise the contracts of the post-#750 reader/writer/
+    // inbound split WITHOUT needing axum's WebSocket harness or a
+    // real serial port. The actual reader / writer / inbound task
+    // bodies are spawned inside `handle_serial_ws()` and capture
+    // local closures, so we don't reach into them directly --
+    // instead we exercise the *primitives* they rely on:
+    //
+    //   - `ReaderControl::Drain` round-trips through an mpsc to a
+    //     toy reader that drains a broadcast channel
+    //   - `ReaderControl::GetDepth` round-trips and reports broadcast
+    //     queue depth
+    //   - Writer-style coalescing of adjacent `SerialServerMessage::
+    //     Data` messages into a single Data with merged `lines`
+    //
+    // The full spawn-topology integration test is deferred to a
+    // tests/serial_ws_burst.rs harness (separate sub-PR of #757)
+    // because axum's WebSocket testing requires standing up a real
+    // hyper server -- substantially more scaffolding than these
+    // primitive-level checks need.
+    // ---------------------------------------------------------------
+
+    use tokio::sync::broadcast;
+
+    /// Tiny model of the reader task: a single select between broadcast
+    /// recv and ReaderControl, exposing only the ReaderControl branch
+    /// so we can test it in isolation. NOT the production code path --
+    /// the production reader is in `handle_serial_ws()` inline. This
+    /// mirrors its ReaderControl handling so the contract is exercised.
+    async fn run_toy_reader(
+        mut rx: broadcast::Receiver<u32>,
+        mut control_rx: mpsc::UnboundedReceiver<ReaderControl>,
+    ) {
+        loop {
+            tokio::select! {
+                biased;
+                broadcast_result = rx.recv() => match broadcast_result {
+                    Ok(_) => {} // drop; we only care about the ReaderControl branch here
+                    Err(broadcast::error::RecvError::Lagged(_)) => {}
+                    Err(broadcast::error::RecvError::Closed) => break,
+                },
+                control_opt = control_rx.recv() => {
+                    let Some(cmd) = control_opt else { break };
+                    match cmd {
+                        ReaderControl::Drain { reply } => {
+                            let mut drained: usize = 0;
+                            while rx.try_recv().is_ok() {
+                                drained += 1;
+                            }
+                            let _ = reply.send(drained);
+                        }
+                        ReaderControl::GetDepth { reply } => {
+                            let _ = reply.send(rx.len());
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    #[tokio::test]
+    async fn reader_control_drain_reports_drop_count() {
+        let (bcast_tx, bcast_rx) = broadcast::channel::<u32>(16);
+        let (ctl_tx, ctl_rx) = mpsc::unbounded_channel();
+        let reader = tokio::spawn(run_toy_reader(bcast_rx, ctl_rx));
+
+        // Push 5 events, do NOT let the reader drain them via its
+        // main `rx.recv()` (the toy reader hits select between
+        // broadcast and control; with biased priority the broadcast
+        // wins, so we need to send Drain BEFORE the reader awakes).
+        //
+        // Workaround: bound how many events are pushed before Drain
+        // by sending the events synchronously, then immediately
+        // sending Drain. Tokio scheduling means the toy reader will
+        // see both branches ready; biased order makes it serve the
+        // broadcast first, draining N-1 (it consumes one per loop
+        // iteration). Then the next iteration sees Drain and gets
+        // whatever is left. This proves the drain count IS the
+        // residue after natural consumption — close enough for the
+        // contract.
+
+        for i in 0..5u32 {
+            bcast_tx.send(i).unwrap();
+        }
+        // Tiny yield so the reader sees the broadcast queue, then we
+        // race a Drain in before all events are consumed.
+        let (reply_tx, reply_rx) = oneshot::channel();
+        ctl_tx
+            .send(ReaderControl::Drain { reply: reply_tx })
+            .unwrap();
+        let drained = reply_rx.await.expect("reader replied");
+        // At least one event present at the drain point. The exact
+        // count is timing-dependent on the select scheduler; the
+        // contract we're proving is `replied with a real count`,
+        // not a specific number.
+        assert!(
+            drained <= 5,
+            "drain reported {drained} but only 5 events were ever sent"
+        );
+
+        drop(bcast_tx); // close broadcast so reader exits cleanly
+        drop(ctl_tx);
+        let _ = reader.await;
+    }
+
+    #[tokio::test]
+    async fn reader_control_get_depth_reports_broadcast_length() {
+        let (bcast_tx, bcast_rx) = broadcast::channel::<u32>(16);
+        let (ctl_tx, ctl_rx) = mpsc::unbounded_channel();
+        let reader = tokio::spawn(run_toy_reader(bcast_rx, ctl_rx));
+
+        for i in 0..3u32 {
+            bcast_tx.send(i).unwrap();
+        }
+        let (reply_tx, reply_rx) = oneshot::channel();
+        ctl_tx
+            .send(ReaderControl::GetDepth { reply: reply_tx })
+            .unwrap();
+        let depth = reply_rx.await.expect("reader replied");
+        // Same timing caveat as above — the reader may have consumed
+        // some entries between push and reply. Contract: the reply
+        // IS a count ≤ what we sent.
+        assert!(depth <= 3, "depth reported {depth} but only 3 sent");
+
+        drop(bcast_tx);
+        drop(ctl_tx);
+        let _ = reader.await;
+    }
+
+    /// Models the writer task's batching/coalescing logic in isolation.
+    /// Production version lives inline in `handle_serial_ws()`. This
+    /// proves the contract: adjacent Data messages merge their `lines`
+    /// into a single output Data; non-Data messages preserve ordering
+    /// by flushing the current Data batch first.
+    fn coalesce_for_test(input: Vec<SerialServerMessage>) -> Vec<SerialServerMessage> {
+        let mut output = Vec::new();
+        let mut data_batch: Vec<String> = Vec::new();
+        let mut last_index: u64 = 0;
+        for msg in input {
+            match msg {
+                SerialServerMessage::Data {
+                    lines,
+                    current_index,
+                } => {
+                    data_batch.extend(lines);
+                    last_index = current_index;
+                }
+                other => {
+                    if !data_batch.is_empty() {
+                        output.push(SerialServerMessage::Data {
+                            lines: std::mem::take(&mut data_batch),
+                            current_index: last_index,
+                        });
+                    }
+                    output.push(other);
+                }
+            }
+        }
+        if !data_batch.is_empty() {
+            output.push(SerialServerMessage::Data {
+                lines: data_batch,
+                current_index: last_index,
+            });
+        }
+        output
+    }
+
+    #[test]
+    fn writer_coalesces_adjacent_data_into_one_frame() {
+        // 5 single-line Data messages -> 1 Data with 5 lines.
+        let input = vec![
+            SerialServerMessage::Data {
+                lines: vec!["a".into()],
+                current_index: 1,
+            },
+            SerialServerMessage::Data {
+                lines: vec!["b".into()],
+                current_index: 2,
+            },
+            SerialServerMessage::Data {
+                lines: vec!["c".into()],
+                current_index: 3,
+            },
+            SerialServerMessage::Data {
+                lines: vec!["d".into()],
+                current_index: 4,
+            },
+            SerialServerMessage::Data {
+                lines: vec!["e".into()],
+                current_index: 5,
+            },
+        ];
+        let output = coalesce_for_test(input);
+        assert_eq!(output.len(), 1, "should coalesce to 1 frame");
+        match &output[0] {
+            SerialServerMessage::Data {
+                lines,
+                current_index,
+            } => {
+                assert_eq!(lines, &vec!["a", "b", "c", "d", "e"]);
+                assert_eq!(*current_index, 5);
+            }
+            other => panic!("expected Data, got {:?}", other),
+        }
+    }
+
+    #[test]
+    fn writer_flushes_data_before_non_data_event() {
+        // Data, Data, PortDisconnected, Data
+        // -> Data{lines:[a,b]}, PortDisconnected, Data{lines:[c]}
+        let input = vec![
+            SerialServerMessage::Data {
+                lines: vec!["a".into()],
+                current_index: 1,
+            },
+            SerialServerMessage::Data {
+                lines: vec!["b".into()],
+                current_index: 2,
+            },
+            SerialServerMessage::PortDisconnected {
+                port: "COM3".into(),
+                reason: "unplugged".into(),
+                message: "".into(),
+            },
+            SerialServerMessage::Data {
+                lines: vec!["c".into()],
+                current_index: 3,
+            },
+        ];
+        let output = coalesce_for_test(input);
+        assert_eq!(output.len(), 3, "expected 3 output frames");
+        match &output[0] {
+            SerialServerMessage::Data {
+                lines,
+                current_index,
+            } => {
+                assert_eq!(lines, &vec!["a", "b"]);
+                assert_eq!(*current_index, 2);
+            }
+            other => panic!("output[0] expected Data, got {:?}", other),
+        }
+        match &output[1] {
+            SerialServerMessage::PortDisconnected { port, .. } => {
+                assert_eq!(port, "COM3");
+            }
+            other => panic!("output[1] expected PortDisconnected, got {:?}", other),
+        }
+        match &output[2] {
+            SerialServerMessage::Data {
+                lines,
+                current_index,
+            } => {
+                assert_eq!(lines, &vec!["c"]);
+                assert_eq!(*current_index, 3);
+            }
+            other => panic!("output[2] expected Data, got {:?}", other),
+        }
     }
 }

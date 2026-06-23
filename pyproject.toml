@@ -1,6 +1,6 @@
 [project]
 name = "fbuild"
-version = "2.3.0"
+version = "2.3.2"
 description = "PlatformIO-compatible embedded build tool (Rust implementation)"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -81,4 +81,3 @@ include-package-data = true
 # wrapper). See #746.
 [tool.setuptools.package-data]
 fbuild = ["_native.pyd", "_native.so"]
-

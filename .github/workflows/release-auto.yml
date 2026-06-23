@@ -7,6 +7,12 @@ on:
       - Cargo.toml
       - pyproject.toml
   workflow_dispatch:
+    inputs:
+      publish:
+        description: "Publish GitHub Release and PyPI after building"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -40,6 +46,8 @@ jobs:
       - name: Check release eligibility
         id: prepare
         shell: bash
+        env:
+          PUBLISH_REQUESTED: ${{ inputs.publish }}
         run: |
           set -euo pipefail
 
@@ -88,13 +96,30 @@ jobs:
           should_publish_pypi="false"
           newest="$(printf '%s\n%s\n' "$latest" "$cargo_version" | sort -V | tail -n1)"
 
-          if [ "$tag_exists" != "true" ] && [ "$newest" = "$cargo_version" ] && [ "$pypi_file_count" -lt 4 ]; then
+          if [ "${GITHUB_EVENT_NAME}" != "workflow_dispatch" ] \
+            && [ "$tag_exists" != "true" ] \
+            && [ "$newest" = "$cargo_version" ] \
+            && [ "$pypi_file_count" -lt 4 ]; then
             should_build="true"
             should_publish_github="true"
             should_publish_pypi="true"
-          elif [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ] && [ "$tag_exists" = "true" ] && [ "$pypi_file_count" -lt 4 ]; then
+          fi
+
+          # Manual dispatch is always at least a build. Publishing is an
+          # explicit opt-in checkbox so release dry-runs are the default.
+          if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]; then
             should_build="true"
-            should_publish_pypi="true"
+            release_ref="${commit_sha}"
+            should_publish_github="false"
+            should_publish_pypi="false"
+
+            if [ "${PUBLISH_REQUESTED:-false}" = "true" ]; then
+              should_publish_github="true"
+              should_publish_pypi="true"
+              if [ "$tag_exists" = "true" ]; then
+                release_ref="${version}"
+              fi
+            fi
           fi
 
           {
@@ -114,6 +139,7 @@ jobs:
           echo "Tag SHA: ${tag_sha:-<none>}"
           echo "Release ref: ${release_ref}"
           echo "Should build: ${should_build}"
+          echo "Publish requested: ${PUBLISH_REQUESTED:-false}"
           echo "Should publish GitHub release: ${should_publish_github}"
           echo "Should publish PyPI: ${should_publish_pypi}"
 
@@ -144,7 +170,7 @@ jobs:
             macos_cross: false
 
           - target: x86_64-pc-windows-msvc
-            runner: ubuntu-24.04
+            runner: windows-latest
             binary_ext: ".exe"
             linux_cross: false
             macos_cross: false

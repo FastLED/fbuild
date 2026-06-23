@@ -67,9 +67,8 @@ fn run_scan(offline: bool) -> Result<()> {
     Ok(())
 }
 
-/// Fetch the FastLED/fbuild `online-data` branch's `usb-vid.json` (the
-/// tier-2 overlay backing [`fbuild_core::usb::resolve`]) into the
-/// local cache root, then install it.
+/// Fetch the FastLED/boards `usb-vids.proto.zstd` tier-2 overlay backing
+/// [`fbuild_core::usb::resolve`] into the local cache root, then install it.
 ///
 /// Best-effort: any I/O / network / parse failure is swallowed and the
 /// resolver degrades to tier-1 (embedded vendor archive). The cache is
@@ -86,14 +85,14 @@ fn populate_online_overlay() {
             );
         }
     }
-    fbuild_core::usb::install_online_cache(&cache_path);
+    fbuild_core::usb::install_online_cache_proto_zstd(&cache_path);
 }
 
 fn overlay_cache_path() -> Option<std::path::PathBuf> {
     let root = fbuild_paths::get_cache_root();
     let dir = root.join("usb");
     std::fs::create_dir_all(&dir).ok()?;
-    Some(dir.join("usb-vid.json"))
+    Some(dir.join("usb-vids.proto.zstd"))
 }
 
 /// 7-day cache TTL — fbuild's online-data branch refreshes nightly;
@@ -131,8 +130,16 @@ fn fetch_overlay_to_inner(path: &std::path::Path) -> std::result::Result<(), Str
         .timeout(Duration::from_secs(15))
         .build()
         .map_err(|e| format!("client build: {e}"))?;
+    fetch_overlay_to_inner_with_client(path, &client, fbuild_core::usb::USB_VIDS_PROTO_ZSTD_URL)
+}
+
+fn fetch_overlay_to_inner_with_client(
+    path: &std::path::Path,
+    client: &reqwest::blocking::Client,
+    url: &str,
+) -> std::result::Result<(), String> {
     let response = client
-        .get(fbuild_core::usb::USB_VID_JSON_URL)
+        .get(url)
         .send()
         .map_err(|e| format!("http get: {e}"))?;
     if !response.status().is_success() {
@@ -141,7 +148,7 @@ fn fetch_overlay_to_inner(path: &std::path::Path) -> std::result::Result<(), Str
     let body = response.bytes().map_err(|e| format!("body read: {e}"))?;
     // Atomic write via a `.tmp` sibling + rename — partial writes from
     // a Ctrl+C mid-fetch don't poison the cache.
-    let tmp = path.with_extension("json.tmp");
+    let tmp = path.with_extension("proto.zstd.tmp");
     std::fs::write(&tmp, &body).map_err(|e| format!("tmp write: {e}"))?;
     std::fs::rename(&tmp, path).map_err(|e| format!("rename: {e}"))?;
     tracing::debug!(
@@ -315,6 +322,33 @@ fn render_non_usb(out: &mut String, name: &str, kind: &str) {
 mod tests {
     use super::*;
     use serialport::{SerialPortInfo, SerialPortType, UsbPortInfo};
+    use std::io::{Read, Write};
+    use std::net::TcpListener;
+    use std::sync::Mutex;
+
+    static ENV_LOCK: Mutex<()> = Mutex::new(());
+
+    struct EnvVarGuard {
+        name: &'static str,
+        previous: Option<std::ffi::OsString>,
+    }
+
+    impl EnvVarGuard {
+        fn set(name: &'static str, value: impl AsRef<std::ffi::OsStr>) -> Self {
+            let previous = std::env::var_os(name);
+            std::env::set_var(name, value);
+            Self { name, previous }
+        }
+    }
+
+    impl Drop for EnvVarGuard {
+        fn drop(&mut self) {
+            match self.previous.take() {
+                Some(value) => std::env::set_var(self.name, value),
+                None => std::env::remove_var(self.name),
+            }
+        }
+    }
 
     fn usb_port(
         name: &str,
@@ -333,6 +367,51 @@ mod tests {
                 product: product.map(String::from),
             }),
         }
+    }
+
+    #[test]
+    fn overlay_cache_path_uses_fbuild_cache_dir() {
+        let _env = ENV_LOCK.lock().unwrap();
+        let tmp = tempfile::tempdir().unwrap();
+        let _guard = EnvVarGuard::set("FBUILD_CACHE_DIR", tmp.path());
+
+        let path = overlay_cache_path().expect("cache path");
+
+        assert_eq!(path, tmp.path().join("usb").join("usb-vids.proto.zstd"));
+        assert!(tmp.path().join("usb").is_dir());
+    }
+
+    #[test]
+    fn fetch_overlay_writes_cache_file_atomically() {
+        let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+        let addr = listener.local_addr().unwrap();
+        let expected = b"fake proto zstd bytes".to_vec();
+        let server_expected = expected.clone();
+        let handle = std::thread::spawn(move || {
+            let (mut stream, _) = listener.accept().unwrap();
+            let mut request = [0_u8; 1024];
+            let _ = stream.read(&mut request).unwrap();
+            let response = format!(
+                "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",
+                server_expected.len()
+            );
+            stream.write_all(response.as_bytes()).unwrap();
+            stream.write_all(&server_expected).unwrap();
+        });
+
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("usb-vids.proto.zstd");
+        let client = reqwest::blocking::Client::builder()
+            .timeout(Duration::from_secs(5))
+            .build()
+            .unwrap();
+
+        fetch_overlay_to_inner_with_client(&path, &client, &format!("http://{addr}/data"))
+            .expect("fetch should write cache");
+
+        handle.join().unwrap();
+        assert_eq!(std::fs::read(&path).unwrap(), expected);
+        assert!(!path.with_extension("proto.zstd.tmp").exists());
     }
 
     #[test]
