@@ -105,9 +105,23 @@ jobs:
           python-version: "3.13"
 
       # rust-toolchain.toml pins 1.94.1 which overrides the above;
-      # ensure the target stdlib is installed for the pinned toolchain too
+      # ensure the target stdlib is installed for the pinned toolchain too.
+      #
+      # The remove + add dance is required for aarch64-pc-windows-msvc
+      # (and a known-good safety belt for other targets): setup-soldr's
+      # thin-mode build cache can leave rustup's component-manifest
+      # claiming a target is installed while the actual rust-std .rlib
+      # files have been trimmed from the toolchain dir. `rustup target
+      # add` would then say "is up to date" and skip the install, and
+      # rustc would later fail with `E0463: can't find crate for 'core'`
+      # / `the <triple> target may not be installed`. Forcing the remove
+      # first wipes the manifest entry so the subsequent add reinstalls
+      # the files for real. `|| true` because remove on an already-
+      # missing target exits non-zero.
       - name: Add Rust target
-        run: rustup target add ${{ inputs.target }}
+        run: |
+          rustup target remove ${{ inputs.target }} || true
+          rustup target add ${{ inputs.target }}
 
       # Linux musl toolchain (libudev is auto-excluded for musl targets by serialport)
       - name: Install Linux dependencies
