@@ -3,6 +3,7 @@
 use crate::device_manager::DeviceManager;
 use crate::status_manager::StatusManager;
 use dashmap::DashMap;
+use fbuild_build::compile_backend::CompileBackend;
 use fbuild_core::install_status::InstallStatus;
 use fbuild_core::DaemonState;
 use fbuild_serial::SharedSerialManager;
@@ -182,6 +183,13 @@ pub struct DaemonContext {
     pub watch_set_cache: Arc<crate::watch_set_cache::DaemonWatchSetCache>,
     /// Serializes GC runs so background and manual `/api/cache/gc` don't interleave.
     pub gc_mutex: Arc<tokio::sync::Mutex<()>>,
+    /// Selected zccache compile backend (FastLED/fbuild#790 / #789
+    /// Phase 1). Today the daemon only inspects this for logging at
+    /// startup — per-compile dispatch through
+    /// `CompileBackend::Embedded` lands in Phase 2 (#791). The handle
+    /// is held here so the embedded `ZccacheService` (when active)
+    /// survives for the daemon's full lifetime.
+    pub compile_backend: CompileBackend,
 }
 
 impl DaemonContext {
@@ -190,7 +198,13 @@ impl DaemonContext {
         shutdown_tx: tokio::sync::watch::Sender<bool>,
         spawner_cwd: String,
     ) -> Self {
-        Self::with_hub(port, shutdown_tx, spawner_cwd, BroadcastHub::new())
+        Self::with_hub_and_backend(
+            port,
+            shutdown_tx,
+            spawner_cwd,
+            BroadcastHub::new(),
+            CompileBackend::default(),
+        )
     }
 
     /// Construct with a caller-supplied [`BroadcastHub`]. Used by
@@ -203,6 +217,31 @@ impl DaemonContext {
         shutdown_tx: tokio::sync::watch::Sender<bool>,
         spawner_cwd: String,
         broadcast_hub: BroadcastHub,
+    ) -> Self {
+        Self::with_hub_and_backend(
+            port,
+            shutdown_tx,
+            spawner_cwd,
+            broadcast_hub,
+            CompileBackend::default(),
+        )
+    }
+
+    /// Construct with both a caller-supplied [`BroadcastHub`] and a
+    /// pre-resolved [`CompileBackend`].
+    ///
+    /// `main.rs` uses this so the embedded `ZccacheService` (when
+    /// the runtime opt-in fires) is started inside the daemon's
+    /// tokio runtime BEFORE the context is shared with handlers.
+    /// Tests use [`Self::new`] / [`Self::with_hub`] which default the
+    /// backend to `CompileBackend::Wrapped` so unit-test contexts
+    /// don't pay any embedded-service start cost.
+    pub fn with_hub_and_backend(
+        port: u16,
+        shutdown_tx: tokio::sync::watch::Sender<bool>,
+        spawner_cwd: String,
+        broadcast_hub: BroadcastHub,
+        compile_backend: CompileBackend,
     ) -> Self {
         let now_unix = std::time::SystemTime::now()
             .duration_since(std::time::UNIX_EPOCH)
@@ -238,6 +277,7 @@ impl DaemonContext {
                 watch_set_cache_window_from_env(),
             )),
             gc_mutex: Arc::new(tokio::sync::Mutex::new(())),
+            compile_backend,
         }
     }
 

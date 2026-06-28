@@ -56,3 +56,29 @@ After every build, fbuild generates a [JSON Compilation Database](https://clang.
 - `file` field points to the actual source path, not a build-directory copy
 - Cache wrappers (sccache/zccache/ccache) are stripped from compiler paths
 - **Library projects** (detected via `library.json` at project root) suppress the project-root copy to avoid overwriting meson/cmake-generated files
+
+## zccache backend (`embedded` Cargo feature)
+
+Two backends route compiles through zccache:
+
+| Backend | Built when | Selected when | What runs per compile |
+|---|---|---|---|
+| `CompileBackend::Wrapped` | always | default | `zccache wrap <compiler> <args>` child process from the managed binary |
+| `CompileBackend::Embedded` | `--features fbuild-build/embedded` | `FBUILD_ZCCACHE_EMBEDDED=1` at daemon startup | in-process `ZccacheService` inside `fbuild-daemon`'s tokio runtime |
+
+Phase 1 of [FastLED/fbuild#789](https://github.com/FastLED/fbuild/issues/789)
+(this code: [#790](https://github.com/FastLED/fbuild/issues/790)) only
+*resolves* the backend at startup and *holds* the service handle on
+[`crates::fbuild_daemon::context::DaemonContext`]; per-compile routing
+through the embedded path is Phase 2 ([#791](https://github.com/FastLED/fbuild/issues/791)).
+Until Phase 2 lands, setting `FBUILD_ZCCACHE_EMBEDDED=1` starts the
+embedded service (which logs `zccache backend: embedded …`) but every
+compile still spawns the wrapper child — Phase 1 is **scaffolding
+only**, no behavior change on the hot path.
+
+If the runtime opt-in is set but the binary was built without
+`--features embedded`, the daemon logs a warning and falls back to the
+wrapper path. Same fallback if the embedded service fails to start
+(e.g. permissions on the cache root). No build is ever *prevented*
+by the embedded path — wrapper-mode is always the safety net until
+Phase 4 ([#793](https://github.com/FastLED/fbuild/issues/793)) retires it.
