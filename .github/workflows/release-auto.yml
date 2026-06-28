@@ -188,8 +188,19 @@ jobs:
             macos_cross: false
             mac_cross_linux: true
 
+          # Windows targets cross-compile from Linux via cargo-xwin.
+          # The template already has the linux→windows-msvc path wired
+          # (lines 109+: `Install cargo-xwin`, line 142+ `cargo xwin build`).
+          # Both x64 and arm64 use the same lane — xwin handles the
+          # arch via `--arch <arch>`. soldr#1006 Lanes 1 + 2.
           - target: x86_64-pc-windows-msvc
-            runner: windows-latest
+            runner: ubuntu-latest
+            binary_ext: ".exe"
+            linux_cross: false
+            macos_cross: false
+
+          - target: aarch64-pc-windows-msvc
+            runner: ubuntu-latest
             binary_ext: ".exe"
             linux_cross: false
             macos_cross: false
