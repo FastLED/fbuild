@@ -1,7 +1,7 @@
-//! Arduino core framework for NXP LPC8xx (`zackees/ArduinoCore-LPC8xx`).
+//! Arduino core framework for NXP LPC8xx (`FastLED/framework-arduino-lpc8xx`).
 //!
 //! Downloads and vendors the real Arduino-compatible core
-//! ([zackees/ArduinoCore-LPC8xx](https://github.com/zackees/ArduinoCore-LPC8xx))
+//! ([FastLED/framework-arduino-lpc8xx](https://github.com/FastLED/framework-arduino-lpc8xx))
 //! that supersedes the embedded `arduino_stub/` shim the nxplpc orchestrator
 //! previously materialised (FastLED/fbuild#479, #487). The package ships the
 //! framework `main()`, startup, wiring/HardwareSerial/SPI implementations
@@ -18,7 +18,7 @@ use crate::{CacheSubdir, PackageBase, PackageInfo};
 /// Pinned upstream commit. Bump alongside `URL` + `CHECKSUM`.
 ///
 /// Pinned to the full-NXP-CMSIS-PAL merge
-/// (zackees/ArduinoCore-LPC8xx#34): `variants/lpc845/LPC845.h` and
+/// (FastLED/framework-arduino-lpc8xx#34): `variants/lpc845/LPC845.h` and
 /// `variants/lpc804/LPC804.h` now carry the full NXP CMSIS Peripheral
 /// Access Layer (~10K / 7K lines, BSD-3-Clause, rev. 1.2) instead of the
 /// previous 54/49-line IRQn-only stubs. This unblocks downstream FastLED
@@ -33,7 +33,7 @@ use crate::{CacheSubdir, PackageBase, PackageInfo};
 const ACLPC_COMMIT: &str = "50d76e0d63c2d2a2b365b29de47100d93c530c83";
 const ACLPC_VERSION: &str = "0.2.0+g50d76e0";
 const ACLPC_URL: &str =
-    "https://github.com/zackees/ArduinoCore-LPC8xx/archive/50d76e0d63c2d2a2b365b29de47100d93c530c83.tar.gz";
+    "https://github.com/FastLED/framework-arduino-lpc8xx/archive/50d76e0d63c2d2a2b365b29de47100d93c530c83.tar.gz";
 const ACLPC_CHECKSUM: &str = "e6bbcc3392ae9da44c5c92268d7cd953770e0011fcf285561104633e36087428";
 
 /// Arduino LPC8xx core framework manager.
