@@ -175,6 +175,19 @@ jobs:
             macos_cross: false
             mac_cross_linux: true
 
+          # x86_64-apple-darwin shares the mac_cross_linux template
+          # branch — soldr's apple_sdk fetcher auto-picks
+          # `darwin-x86_64` (thin-x86_64) when the target triple is
+          # `x86_64-apple-darwin`, and `cargo zigbuild --target
+          # x86_64-apple-darwin` resolves the SDKROOT + frameworks
+          # identically to the arm64 lane. Closes Lane 3 of soldr#1006.
+          - target: x86_64-apple-darwin
+            runner: ubuntu-latest
+            binary_ext: ""
+            linux_cross: false
+            macos_cross: false
+            mac_cross_linux: true
+
           - target: x86_64-pc-windows-msvc
             runner: windows-latest
             binary_ext: ".exe"

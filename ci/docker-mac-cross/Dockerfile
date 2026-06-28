@@ -1,19 +1,23 @@
-# Simulate the FastLED/fbuild GitHub Actions release runner for the
-# `aarch64-apple-darwin` lane on **Linux x86_64**, with no Apple-side
-# tooling and no pre-installed Rust toolchain. Soldr bootstraps
-# everything else.
+# Simulate the FastLED/fbuild GitHub Actions release runners for both
+# Apple targets — aarch64-apple-darwin AND x86_64-apple-darwin — on
+# **Linux x86_64**, with no Apple-side tooling and no pre-installed
+# Rust toolchain. Soldr bootstraps everything else.
 #
-# This is the "NO CHEATING" proof: we ship a vanilla Debian base + the
+# This is the "NO CHEATING" proof: we ship a vanilla Ubuntu base + the
 # absolute minimum apt deps, and soldr brings rustup, the pinned
 # toolchain, zig, the Apple SDK, and `cargo-zigbuild` — exactly the
 # story soldr#997 promised for cross-compile completeness.
 #
 # Build:
-#   docker build -f ci/docker-mac-arm64-cross/Dockerfile -t fbuild-mac-arm64-cross .
+#   docker build -f ci/docker-mac-cross/Dockerfile -t fbuild-mac-cross .
 #
 # Run (from repo root):
-#   docker run --rm -v "$PWD:/src" -w /src fbuild-mac-arm64-cross \
-#       ./ci/docker-mac-arm64-cross/build.sh
+#   # aarch64 (default):
+#   docker run --rm -v "$PWD:/src" -w /src fbuild-mac-cross \
+#       ./ci/docker-mac-cross/build.sh
+#   # x86_64:
+#   docker run --rm -v "$PWD:/src" -w /src fbuild-mac-cross \
+#       ./ci/docker-mac-cross/build.sh x86_64-apple-darwin
 
 # ubuntu:24.04 is exactly what `ubuntu-latest` is on GitHub Actions
 # right now (the runners moved off 22.04 in 2025-Q4). Picking it

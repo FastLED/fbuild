@@ -1,28 +1,38 @@
-# `ci/docker-mac-arm64-cross/` — Linux → `aarch64-apple-darwin` simulator
+# `ci/docker-mac-cross/` — Linux → `(aarch64|x86_64)-apple-darwin` simulator
 
-Reproduces fbuild's `aarch64-apple-darwin` release lane on **Linux x86_64**
-with **no Apple-side tooling and no pre-installed Rust toolchain**. Soldr
+Reproduces fbuild's Apple release lanes on **Linux x86_64** with **no
+Apple-side tooling and no pre-installed Rust toolchain**. Soldr
 bootstraps rustup, the pinned 1.94.1 channel, zig, the Apple SDK, and
 `cargo-zigbuild` from a vanilla `ubuntu:24.04` base.
 
 This is the proof-of-concept that lets fbuild's release pipeline drop
-its `macos-latest` runner for the mac-arm64 lane and replace it with the
+its `macos-latest` runners entirely and route both mac arches to the
 same `ubuntu-latest` lane every other target already uses.
 
 ## Build + run
 
 ```bash
-# From the fbuild repo root:
-docker build -f ci/docker-mac-arm64-cross/Dockerfile -t fbuild-mac-arm64-cross .
-docker run --rm -v "$PWD:/src" -w /src fbuild-mac-arm64-cross \
-    bash ci/docker-mac-arm64-cross/build.sh
+# From the fbuild repo root, build the docker image once:
+docker build -f ci/docker-mac-cross/Dockerfile -t fbuild-mac-cross .
+
+# Default: aarch64-apple-darwin (Apple Silicon)
+docker run --rm -v "$PWD:/src" -w /src fbuild-mac-cross \
+    bash ci/docker-mac-cross/build.sh
+
+# Intel mac:
+docker run --rm -v "$PWD:/src" -w /src fbuild-mac-cross \
+    bash ci/docker-mac-cross/build.sh x86_64-apple-darwin
 ```
 
-`build.sh` produces three artifacts under `$PWD/staging/` and asserts via
-`file(1)` that each is a `Mach-O 64-bit arm64` binary — the
+`build.sh` produces three artifacts under `$PWD/staging/` and asserts
+via `file(1)` that each is a `Mach-O 64-bit <arch>` binary — the
 `NO CHEATING` gate. If anything regressed and we accidentally produced
 the host Linux binary, `file` reports `ELF 64-bit LSB pie executable,
 x86-64` and the script fails loudly.
+
+The arch check is per-target (`arm64|aarch64` for the Apple Silicon
+lane, `x86_64` for the Intel lane), so neither lane can silently
+fall back to the host triple.
 
 ## Why `ubuntu:24.04` (not `debian:bookworm-slim`)
 
