@@ -72,15 +72,17 @@ jobs:
 
       - name: Setup soldr
         id: setup-soldr
-        # Bumped from 0.7.59 → 0.7.63 to pull soldr#1012 PRs 1+4+5+6:
-        # `soldr build` blessed verb, soldr-clang-shim binary, and
-        # Commands::Build blessed-cross-compile prep. Required for
-        # the aarch64-pc-windows-msvc lane re-added in this PR to
-        # sidestep the ring 0.17.x build.rs:563 oversight via the
-        # clang shim.
-        uses: zackees/setup-soldr@v0.9.63
+        # FastLED/fbuild#800 release: temporarily pinned to v0.7.59
+        # (the latest soldr release published as of 2026-06-28).
+        # The 0.7.63 pin landed in #797/#799 for the blessed-cross-
+        # compile + soldr-clang-shim work, but v0.7.63 hadn't shipped
+        # by the time the 2.3.12 version bump fired, blocking the
+        # release-auto pipeline with a setup-soldr 404. Restore to
+        # 0.7.63 (and the matching setup-soldr@v0.9.63) once soldr
+        # cuts that release.
+        uses: zackees/setup-soldr@v0.9.62
         with:
-          version: "0.7.63"
+          version: "0.7.59"
           cache: true
           build-cache: true
           target-cache: true
