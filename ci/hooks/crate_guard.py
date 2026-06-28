@@ -93,7 +93,26 @@ def relative_dir(file_path: str) -> str | None:
     parent = rel.parent
     # `Path('.').as_posix()` -> '.', normalize the root manifest case to '':
     posix = PurePosixPath(parent).as_posix()
+    posix = _strip_worktree_prefix(posix)
     return "" if posix == "." else posix
+
+
+# `/clud-pr` (and related skills) work inside disposable worktrees under
+# `.claude/worktrees/<branch>/`. The harness pins `$CLAUDE_PROJECT_DIR`
+# to the **main** checkout even when the edit target is inside a
+# worktree, so the path that reaches this hook looks like
+# `.claude/worktrees/<branch>/crates/fbuild-build/Cargo.toml`. Without
+# this prefix-strip, the same allowlist check that passes on a direct
+# `crates/fbuild-build/Cargo.toml` edit fails inside a worktree — which
+# is a bug, not a policy: a worktree of this repo is still this repo
+# with the same approved-crates contract. See FastLED/fbuild#794.
+_WORKTREE_PREFIX_RE = re.compile(r"^\.claude/worktrees/[^/]+(?:/|$)")
+
+
+def _strip_worktree_prefix(posix: str) -> str:
+    """Strip a leading `.claude/worktrees/<branch>/` if present."""
+    stripped = _WORKTREE_PREFIX_RE.sub("", posix, count=1)
+    return stripped or "."
 
 
 def is_cargo_toml(file_path: str) -> bool:
