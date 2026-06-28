@@ -32,32 +32,15 @@ zip = { workspace = true }
 tree-sitter = { workspace = true }
 tree-sitter-cpp = { workspace = true }
 
-# FastLED/fbuild#790 (Phase 1 of #789): optional embedded zccache library
-# dep used to host `ZccacheService` in-process inside `fbuild-daemon`.
+# FastLED/fbuild#800 (Phase 4 stage 2 of #789): zccache embedded
+# library is an unconditional dep. The wrapper-binary path
+# (`crates/fbuild-build/src/managed_zccache.rs`, `zccache wrap …`
+# child processes) was deleted in the same PR; there is no
+# `--no-default-features` escape hatch.
 #
-# Pinned at the same revision soldr uses (`73d3f84`, zackees/soldr#994 +
-# zccache#922/#923/#925/#926), which post-dates the 1.12.11 wrapper-binary
-# release. The wire-format/artifact compatibility contract held by
-# `MANAGED_ZCCACHE_VERSION` still tracks the latest *tagged* wrapper
-# release (1.12.11 today); the embedded library can run ahead of the
-# wrapper because they don't share an artifact store under Phase 1 —
-# embedded points at `~/.fbuild/<mode>/zccache/` (`zccache_embedded.rs`)
-# while wrapper inherits the wrapper binary's default root. Phase 4
-# (#793) unifies the two when wrapper is retired.
-zccache = { git = "https://github.com/zackees/zccache", rev = "73d3f84542deb16f762352668f3f2a8fb407462a", optional = true }
-
-[features]
-# FastLED/fbuild#789 Phase 4 (#793): `embedded` is now part of the
-# default feature set so every fbuild build ships with the in-process
-# zccache backend wired in and runs through it by default. Build with
-# `--no-default-features` to drop the embedded path (e.g. for size-
-# constrained CI lanes that don't have network access at build time).
-default = ["embedded"]
-# Pulls in the zccache library + the `zccache_embedded` module and
-# the `CompileBackend::Embedded` variant. With the Phase 4 default
-# flip this is enabled in the standard build — disabling it is the
-# explicit opt-out, not the explicit opt-in.
-embedded = ["dep:zccache"]
+# Pinned at the same revision soldr uses (`73d3f84`,
+# zackees/soldr#994 + zccache#922/#923/#925/#926).
+zccache = { git = "https://github.com/zackees/zccache", rev = "73d3f84542deb16f762352668f3f2a8fb407462a" }
 
 [dev-dependencies]
 filetime = { workspace = true }

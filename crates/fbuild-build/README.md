@@ -57,45 +57,48 @@ After every build, fbuild generates a [JSON Compilation Database](https://clang.
 - Cache wrappers (sccache/zccache/ccache) are stripped from compiler paths
 - **Library projects** (detected via `library.json` at project root) suppress the project-root copy to avoid overwriting meson/cmake-generated files
 
-## zccache backend (`embedded` Cargo feature)
+## How zccache is wired
 
-Two backends route compiles through zccache:
+Every per-TU compile and every fingerprint check goes through an
+in-process `ZccacheService` running inside `fbuild-daemon`'s tokio
+runtime. The wrapper-binary backend (`zccache wrap <compiler> <args>`
+child processes, managed binary download, `zccache fp` shellouts)
+was deleted in
+[FastLED/fbuild#800](https://github.com/FastLED/fbuild/issues/800)
+(Phase 4 stage 2 of #789) — there is no alternative path.
 
-| Backend | Built when | Selected when | What runs per compile |
-|---|---|---|---|
-| `CompileBackend::Embedded` | `embedded` feature (default) | default | in-process `ZccacheService` inside `fbuild-daemon`'s tokio runtime |
-| `CompileBackend::Wrapped` | always | `FBUILD_ZCCACHE_EMBEDDED=0` opt-out, or `--no-default-features` build | `zccache wrap <compiler> <args>` child process from the managed binary |
+- Service handle lives in `compile_backend::CompileBackend`
+  (a newtype around `Arc<FbuildZccacheService>` + the daemon's
+  `tokio::runtime::Handle`).
+- `fbuild-daemon`'s `main.rs` calls `CompileBackend::start().await`
+  inside `#[tokio::main]` BEFORE the daemon serves any requests; the
+  handle is published process-wide via
+  `compile_backend::install_global` so synchronous per-compile call
+  sites (which run on rayon workers, not tokio worker threads) can
+  `runtime.block_on(svc.compile(...))` without a `DaemonContext`
+  threaded through every signature.
+- `compile_source` in `compiler.rs` dispatches every compile through
+  `FbuildZccacheService::compile_blocking` — no fork, no command
+  line, no Windows response-file dance.
+- `zccache::check_fingerprint` / `mark_fingerprint_success` route
+  through `zccache::fingerprint::TwoLayerCache` directly.
 
-**As of Phase 4 ([FastLED/fbuild#793](https://github.com/FastLED/fbuild/issues/793))**
-the embedded backend is the default. Every compile dispatches
-through the in-process `ZccacheService::compile` running on the
-daemon's tokio runtime — no per-TU `zccache.exe` child process is
-spawned. Fingerprint operations (`check`, `mark_success`) likewise
-route through the embedded `TwoLayerCache` instead of `zccache fp`
-shellouts ([Phase 3 / #792](https://github.com/FastLED/fbuild/issues/792)).
+### Failure handling
 
-### Opting out
+If `CompileBackend::start` fails (cache-root permissions, disk
+full), the daemon exits with a fatal error — there is no wrapper-
+binary fallback to degrade to. Recover by clearing
+`~/.fbuild/<mode>/zccache/` and restarting the daemon.
 
-Set `FBUILD_ZCCACHE_EMBEDDED=0` at daemon startup to force the
-legacy wrapper path. This is the recommended way to debug regressions
-attributable to the embedded service — it pins the wrapper-mode
-code path for the running daemon without changing the binary.
+### History
 
-Building with `--no-default-features` drops the `embedded` feature
-entirely, so the daemon ships without the zccache library and falls
-back to wrapper mode unconditionally. Use this for size-constrained
-CI lanes that can't pay the zccache library's compile-time cost.
-
-### Embedded service fallback
-
-If the embedded service fails to start (e.g. permissions on the
-cache root, disk full), the daemon logs a warning and falls back
-to wrapper mode for that run — no build is ever *prevented* by an
-embedded-service failure. Same fallback applies if an individual
-per-compile dispatch fails; the wrapper-mode arms remain in the
-source tree as the safety net.
-
-The wrapper-mode code (`managed_zccache.rs`,
-`zccache::ensure_running`, `zccache::wrap_args`, the `compile_source`
-wrapper arms) will be retired in a follow-up after one release cycle
-of validation in the embedded default (Phase 4 stage 2).
+The migration arc was four phases under FastLED/fbuild#789:
+[#790](https://github.com/FastLED/fbuild/issues/790) (scaffolding,
+opt-in),
+[#791](https://github.com/FastLED/fbuild/issues/791) (per-compile
+routing),
+[#792](https://github.com/FastLED/fbuild/issues/792) (embedded
+fingerprint API),
+[#793](https://github.com/FastLED/fbuild/issues/793) (default flip),
+[#800](https://github.com/FastLED/fbuild/issues/800) (this page —
+wrapper deleted, embedded mandatory).

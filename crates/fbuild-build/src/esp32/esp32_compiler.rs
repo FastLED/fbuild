@@ -96,7 +96,7 @@ impl Esp32Compiler {
             mcu_config,
             profile,
             temp_dir,
-            compiler_cache: crate::zccache::find_zccache().map(PathBuf::from),
+            compiler_cache: None,
             build_unflags: Vec::new(),
             eh_frame_policy: EhFramePolicy::default(),
         }

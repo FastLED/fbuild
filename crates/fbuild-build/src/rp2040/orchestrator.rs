@@ -65,7 +65,7 @@ impl BuildOrchestrator for Rp2040Orchestrator {
 
     fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
-        let compiler_cache = crate::zccache::find_zccache().map(std::path::Path::to_path_buf);
+        let compiler_cache: Option<std::path::PathBuf> = None;
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
         let mut ctx = pipeline::BuildContext::new(params)?;

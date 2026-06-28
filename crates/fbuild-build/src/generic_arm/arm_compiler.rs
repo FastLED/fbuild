@@ -27,15 +27,11 @@ pub struct ArmCompiler {
     /// callers see no behavior change; orchestrators set this via
     /// [`Self::with_eh_frame_policy`]. See FastLED/fbuild#244.
     eh_frame_policy: EhFramePolicy,
-    /// Optional zccache binary path. When present, every `compile_one`
-    /// call routes the underlying `arm-none-eabi-gcc` / `g++` invocation
-    /// through `zccache wrap <gcc> ...` so repeated compilations of the
-    /// same translation unit hit the content-addressed object cache.
-    /// Mirrors the pattern already in `Esp32Compiler`; benefits every
-    /// ARM platform (apollo3, ch32v, nrf52, nxplpc, renesas, sam, silabs,
-    /// teensy) that constructs an `ArmCompiler`. Auto-discovered in
-    /// [`Self::new`] via `crate::zccache::find_zccache()`; falls back to
-    /// `None` (un-wrapped gcc) when zccache isn't on PATH.
+    /// Dead pass-through (FastLED/fbuild#800). The wrapper-binary
+    /// `zccache wrap <gcc>` path was deleted; every compile dispatches
+    /// through the embedded `ZccacheService::compile` instead. Field
+    /// kept as `None` to preserve the per-platform compiler API
+    /// surface until a future PR rewrites those signatures.
     compiler_cache: Option<PathBuf>,
 }
 
@@ -67,7 +63,7 @@ impl ArmCompiler {
             temp_dir: fbuild_core::response_file::windows_temp_dir(),
             build_unflags: Vec::new(),
             eh_frame_policy: EhFramePolicy::default(),
-            compiler_cache: crate::zccache::find_zccache().map(PathBuf::from),
+            compiler_cache: None,
         }
     }
 

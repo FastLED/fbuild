@@ -77,31 +77,35 @@ async fn main() {
 
     tracing::info!("fbuild daemon starting on port {}", port);
 
-    // FastLED/fbuild#789 Phase 1 (#790) + Phase 2 (#791): resolve the
-    // zccache compile backend BEFORE constructing the daemon context
-    // so the (optional) embedded `ZccacheService` starts inside this
-    // tokio runtime. The default path (`FBUILD_ZCCACHE_EMBEDDED`
-    // unset) returns `CompileBackend::Wrapped` without any service
-    // spawn — every wrapper-mode call site continues to fire the
-    // managed `zccache wrap …` child process per compile.
-    //
-    // After resolution, [`fbuild_build::compile_backend::install_global`]
-    // captures the backend + the current runtime handle into a
-    // process-wide `OnceLock` so per-compile call sites in
-    // `compile_source` (which run on rayon workers, not tokio worker
-    // threads) can `runtime.block_on(svc.compile(...))` without
-    // needing a `DaemonContext` handle threaded through every
-    // signature.
-    let compile_backend = CompileBackend::from_env().await;
+    // FastLED/fbuild#800 (Phase 4 stage 2 of #789): start the embedded
+    // zccache service inside this tokio runtime and install the global
+    // handle BEFORE any compile work begins. The wrapper-binary path is
+    // gone; failing to start here is a hard error — the daemon refuses
+    // to come up rather than silently degrading.
+    let compile_backend = match CompileBackend::start().await {
+        Ok(backend) => backend,
+        Err(err) => {
+            eprintln!(
+                "fatal: failed to start embedded zccache service: {err}\n\
+                 fbuild-daemon cannot start without an embedded zccache \
+                 backend. Check ~/.fbuild/<mode>/zccache/ permissions and \
+                 disk space."
+            );
+            std::process::exit(1);
+        }
+    };
     fbuild_build::compile_backend::install_global(compile_backend.clone());
 
+    // The handle is held inside `install_global`'s `OnceLock` for the
+    // daemon's full lifetime — no need to duplicate it on the context.
+    drop(compile_backend);
+
     let (shutdown_tx, mut shutdown_rx) = tokio::sync::watch::channel(false);
-    let context = Arc::new(DaemonContext::with_hub_and_backend(
+    let context = Arc::new(DaemonContext::with_hub(
         port,
         shutdown_tx,
         args.spawner_cwd,
         broadcast_hub,
-        compile_backend,
     ));
     DaemonContext::install_dependency_status_subscriber(&context);
     fbuild_daemon::broker::backend::spawn_backend_endpoint_if_requested(context.clone());

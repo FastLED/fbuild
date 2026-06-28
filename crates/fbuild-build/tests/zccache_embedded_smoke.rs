@@ -1,23 +1,8 @@
-//! Phase 1 smoke test for FastLED/fbuild#790.
-//!
-//! Acceptance criterion: "starting the daemon with
-//! `FBUILD_ZCCACHE_EMBEDDED=1` constructs the embedded service
-//! without panicking, and the daemon logs which backend is active."
-//!
-//! This file covers the construct-without-panic half: we drive
-//! [`FbuildZccacheService::start_in`] under the `embedded` feature
-//! and assert it produces a working handle with a real on-disk cache
-//! root. The daemon-startup log line is exercised by
-//! `compile_backend::tests::name_is_wrapped_by_default` (the string
-//! contract) and by the daemon's own startup path
-//! (`crates/fbuild-daemon/src/main.rs`) at runtime.
-//!
-//! Gated `cfg(feature = "embedded")`: without the feature, the
-//! `zccache_embedded` module + the `zccache` dep are not compiled
-//! in. The test must not exist as a `#[test]` symbol when the
-//! feature is off.
-
-#![cfg(feature = "embedded")]
+//! Smoke test for the embedded zccache service. Originally added
+//! for FastLED/fbuild#790; reframed in #800 once the embedded
+//! backend became mandatory (the `embedded` Cargo feature was
+//! deleted, the `embedded` cfg gate at the top of this file went
+//! with it).
 
 use fbuild_build::zccache_embedded::FbuildZccacheService;
 use zccache::embedded::ShutdownMode;
