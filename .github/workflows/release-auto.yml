@@ -188,22 +188,28 @@ jobs:
             macos_cross: false
             mac_cross_linux: true
 
-          # Windows targets cross-compile from Linux via cargo-xwin.
-          # The template already has the linux→windows-msvc path wired
-          # (lines 109+: `Install cargo-xwin`, line 142+ `cargo xwin build`).
-          # Both x64 and arm64 use the same lane — xwin handles the
-          # arch via `--arch <arch>`. soldr#1006 Lanes 1 + 2.
+          # Windows x86_64 cross-compiles from Linux via cargo-xwin.
+          # The template has the linux→windows-msvc path wired (lines
+          # 109+: `Install cargo-xwin`, line 142+ `cargo xwin build`).
+          # soldr#1006 Lane 1.
           - target: x86_64-pc-windows-msvc
             runner: ubuntu-latest
             binary_ext: ".exe"
             linux_cross: false
             macos_cross: false
 
-          - target: aarch64-pc-windows-msvc
-            runner: ubuntu-latest
-            binary_ext: ".exe"
-            linux_cross: false
-            macos_cross: false
+          # NOTE: aarch64-pc-windows-msvc deliberately not in the
+          # matrix today. cargo-xwin + ring 0.17.x has a known
+          # incompatibility on linux-cross-to-arm64-windows: cc-rs
+          # selects plain `clang` (not `clang-cl`) for the aarch64
+          # MSVC target despite identical `CC_<target>=clang-cl` env
+          # vars working for the x86_64 lane. Ring's `curve25519.c`
+          # compile then fails at clang receiving `/imsvc <path>`
+          # (clang-cl-style include flags) and rejecting them. Adding
+          # this back blocks on either: ring 0.18+ with arm-msvc
+          # cross-fix; a cc-rs version bump that respects target env
+          # for arm64; or fbuild switching off `rustls-tls` (drops
+          # ring). Tracked in soldr#1006 Lane 2.
 
     uses: ./.github/workflows/template_native_build.yml
     with:
