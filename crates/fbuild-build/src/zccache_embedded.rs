@@ -40,13 +40,16 @@
 //! `<fbuild_root>/zccache/` (i.e. `~/.fbuild/<mode>/zccache/`).
 //! Created if missing during [`FbuildZccacheService::start`].
 
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use zccache::audit::AuditMode;
+use zccache::audit::{AuditContext, AuditId, AuditMode};
 use zccache::embedded::{
-    AuditConfig, HostIdentity, RuntimeHooks, ServiceLimits, ShutdownMode, ZccacheConfig,
-    ZccacheService,
+    AuditConfig, CompileRequest as ZccacheCompileRequest, HostIdentity, RuntimeHooks, ServiceLimits,
+    ShutdownMode, ZccacheConfig, ZccacheService,
+};
+use zccache::fingerprint::{
+    decision::CacheDecision, scan::walk_files, TwoLayerCache,
 };
 
 /// fbuild-side handle around a started [`ZccacheService`].
@@ -70,8 +73,25 @@ pub enum EmbeddedServiceError {
     Flush(String),
     #[error("zccache embedded shutdown failed: {0}")]
     Shutdown(String),
+    /// Per-compile dispatch (Phase 2 / #791) — the underlying
+    /// `ZccacheService::compile` failed. Surfaced so the
+    /// `compile_source` call site can log a warning and fall back to
+    /// the wrapper path.
+    #[error("zccache embedded compile failed: {0}")]
+    Compile(String),
     #[error("io while preparing zccache cache root: {0}")]
     Io(#[from] std::io::Error),
+}
+
+/// Per-compile outcome surfaced to fbuild's wrapper-mode call sites
+/// (Phase 2 / #791). Mirrors the shape of `CompileResult` field-by-
+/// field minus the path/object metadata that's not zccache-owned.
+#[derive(Debug, Clone)]
+pub struct EmbeddedCompileOutcome {
+    pub exit_code: i32,
+    pub stdout: Vec<u8>,
+    pub stderr: Vec<u8>,
+    pub cached: bool,
 }
 
 impl FbuildZccacheService {
@@ -149,6 +169,62 @@ impl FbuildZccacheService {
         &self.identity
     }
 
+    /// Internal handle to the underlying `ZccacheService` for the
+    /// sync-from-blocking call path. Phase 2 (#791) only — the field
+    /// itself is private.
+    pub(crate) fn inner(&self) -> &Arc<ZccacheService> {
+        &self.inner
+    }
+
+    /// Synchronous per-compile dispatch (Phase 2 / FastLED/fbuild#791).
+    ///
+    /// Builds a [`ZccacheCompileRequest`] from the wrapper-mode
+    /// inputs, blocks on the underlying async
+    /// [`ZccacheService::compile`] via the caller-supplied
+    /// `tokio::runtime::Handle`, and returns an
+    /// [`EmbeddedCompileOutcome`] shaped to drop into
+    /// [`crate::compiler::CompileResult`]. Designed to slot into
+    /// `compile_source` exactly where the wrapper-mode
+    /// `run_command(["zccache", "wrap", compiler, …])` runs today.
+    ///
+    /// `runtime` must be a multi-thread tokio runtime handle — the
+    /// daemon's `#[tokio::main]` default. Calling from inside a
+    /// current-thread runtime will panic per tokio's `Handle::block_on`
+    /// contract.
+    ///
+    /// `env` is forwarded as a `Vec<(String, String)>` — zccache's
+    /// embedded API takes the same shape. fbuild does NOT inherit
+    /// caller env here; the call site must pass exactly the env vars
+    /// the compile needs (typically the empty vec — gcc reads no env
+    /// fbuild cares about for caching).
+    pub fn compile_blocking(
+        &self,
+        runtime: &tokio::runtime::Handle,
+        compiler: &Path,
+        args: Vec<String>,
+        cwd: PathBuf,
+        env: Vec<(String, String)>,
+    ) -> Result<EmbeddedCompileOutcome, EmbeddedServiceError> {
+        let req = ZccacheCompileRequest {
+            audit: default_audit_context(),
+            compiler: compiler.to_path_buf().into(),
+            args,
+            cwd: cwd.into(),
+            env,
+            stdin: Vec::new(),
+        };
+        let inner = self.inner.clone();
+        let resp = runtime
+            .block_on(async move { inner.compile(req).await })
+            .map_err(|e| EmbeddedServiceError::Compile(e.to_string()))?;
+        Ok(EmbeddedCompileOutcome {
+            exit_code: resp.exit_code,
+            stdout: resp.stdout,
+            stderr: resp.stderr,
+            cached: resp.cached,
+        })
+    }
+
     /// Drain pending writes. Useful at end-of-session boundaries.
     pub async fn flush(&self) -> Result<(), EmbeddedServiceError> {
         self.inner
@@ -158,11 +234,20 @@ impl FbuildZccacheService {
             .map_err(|e| EmbeddedServiceError::Flush(e.to_string()))
     }
 
+    /// Suppress dead-code warnings under the embedded-feature build
+    /// for the (intentionally currently-unused) `inner` accessor. The
+    /// helper exists for Phase 3+ callers that need direct
+    /// `ZccacheService` access (e.g. the fingerprint API in #792).
+    #[doc(hidden)]
+    #[allow(dead_code)]
+    fn _keep_inner_alive(&self) -> &Arc<ZccacheService> {
+        self.inner()
+    }
+
     /// Graceful shutdown. Called from the daemon's normal exit path.
     ///
     /// If other clones of the underlying `Arc<ZccacheService>` exist
-    /// (which Phase 1 does not exercise but Phase 2 will once it
-    /// holds handles in per-compile call sites), fall back to a
+    /// (Phase 2 holds one per `GlobalCompileBackend`), fall back to a
     /// `flush()` and let `Drop` reap the rest.
     pub async fn shutdown(self, mode: ShutdownMode) -> Result<(), EmbeddedServiceError> {
         match Arc::try_unwrap(self.inner) {
@@ -177,4 +262,96 @@ impl FbuildZccacheService {
             }
         }
     }
+}
+
+/// Embedded fingerprint check (Phase 3 of FastLED/fbuild#789 / #792).
+///
+/// Drives the upstream `TwoLayerCache` directly instead of shelling
+/// out to `zccache fp check`. Returns the wrapper-mode-equivalent
+/// `(Changed | Unchanged)` verdict so the caller in
+/// [`crate::zccache::check_fingerprint`] can dispatch to either path
+/// behind a single API.
+///
+/// Synchronous because `TwoLayerCache::check` is synchronous —
+/// fingerprint walking is rayon-parallel internally but no tokio
+/// runtime is involved.
+pub fn check_fingerprint_embedded(
+    cache_file: &Path,
+    root: &Path,
+    extensions: &[String],
+    excludes: &[String],
+) -> Result<EmbeddedFingerprintCheck, EmbeddedServiceError> {
+    if let Some(parent) = cache_file.parent() {
+        std::fs::create_dir_all(parent)?;
+    }
+    let ext_refs: Vec<&str> = extensions.iter().map(String::as_str).collect();
+    let exc_refs: Vec<&str> = excludes.iter().map(String::as_str).collect();
+    let files = walk_files(root, &ext_refs, &exc_refs)
+        .map_err(|e| EmbeddedServiceError::Compile(format!("fp walk_files: {e}")))?;
+    let cache = TwoLayerCache::new(cache_file.to_path_buf());
+    let decision = cache
+        .check(&files)
+        .map_err(|e| EmbeddedServiceError::Compile(format!("fp check: {e}")))?;
+    Ok(match decision {
+        CacheDecision::Skip => EmbeddedFingerprintCheck::Unchanged,
+        CacheDecision::Run(_) => EmbeddedFingerprintCheck::Changed,
+    })
+}
+
+/// Promote the pending fingerprint snapshot written by the last
+/// [`check_fingerprint_embedded`] call to the success state.
+pub fn mark_fingerprint_success_embedded(cache_file: &Path) -> Result<(), EmbeddedServiceError> {
+    if let Some(parent) = cache_file.parent() {
+        std::fs::create_dir_all(parent)?;
+    }
+    let cache = TwoLayerCache::new(cache_file.to_path_buf());
+    cache
+        .mark_success()
+        .map_err(|e| EmbeddedServiceError::Compile(format!("fp mark_success: {e}")))
+}
+
+/// Conservative fingerprint verdict (Phase 3 / #792). Matches the
+/// shape of the wrapper-mode [`crate::zccache::FingerprintCheck`]
+/// enum so the caller can normalize without an intermediate type
+/// in non-embedded builds.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum EmbeddedFingerprintCheck {
+    Changed,
+    Unchanged,
+}
+
+/// Per-call `AuditContext` for fbuild-issued compiles.
+///
+/// fbuild does not consume zccache audit events (the host service is
+/// configured with `AuditMode::Off`), so the IDs here are placeholders
+/// — `ZccacheService::compile` uses them only as opaque correlation
+/// values. A 32-hex-char synthetic id is plenty unique for the
+/// in-process case and avoids a new uuid-on-call dep.
+fn default_audit_context() -> AuditContext {
+    let id = synthetic_audit_id();
+    let run_id = AuditId::new(id.clone()).expect("non-empty audit id");
+    let trace_id = AuditId::new(id).expect("non-empty audit id");
+    AuditContext::new(run_id, trace_id)
+}
+
+fn synthetic_audit_id() -> String {
+    use std::time::{SystemTime, UNIX_EPOCH};
+    let nanos = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .map(|d| d.as_nanos())
+        .unwrap_or(0);
+    let pid = std::process::id();
+    // blake3-hash (pid, nanos) → first 16 bytes → hex. Avoids the uuid
+    // crate purely for this module while still being adequately unique
+    // for per-call correlation.
+    let mut hasher = blake3::Hasher::new();
+    hasher.update(&pid.to_le_bytes());
+    hasher.update(&nanos.to_le_bytes());
+    let bytes = hasher.finalize();
+    let mut hex = String::with_capacity(32);
+    for byte in &bytes.as_bytes()[..16] {
+        use std::fmt::Write;
+        let _ = write!(hex, "{byte:02x}");
+    }
+    hex
 }

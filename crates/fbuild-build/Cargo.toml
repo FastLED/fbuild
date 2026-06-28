@@ -47,13 +47,16 @@ tree-sitter-cpp = { workspace = true }
 zccache = { git = "https://github.com/zackees/zccache", rev = "73d3f84542deb16f762352668f3f2a8fb407462a", optional = true }
 
 [features]
-default = []
-# Opt-in (#790 / #789 Phase 1): pulls in the zccache library + the
-# `zccache_embedded` module and the `CompileBackend::Embedded` variant.
-# Without this feature, the embedded code path does not compile in, the
-# variant does not exist, and `CompileBackend::from_env` always returns
-# `Wrapped`. Off by default for Phase 1 — flipping it on is the Phase 4
-# (#793) deliverable.
+# FastLED/fbuild#789 Phase 4 (#793): `embedded` is now part of the
+# default feature set so every fbuild build ships with the in-process
+# zccache backend wired in and runs through it by default. Build with
+# `--no-default-features` to drop the embedded path (e.g. for size-
+# constrained CI lanes that don't have network access at build time).
+default = ["embedded"]
+# Pulls in the zccache library + the `zccache_embedded` module and
+# the `CompileBackend::Embedded` variant. With the Phase 4 default
+# flip this is enabled in the standard build — disabling it is the
+# explicit opt-out, not the explicit opt-in.
 embedded = ["dep:zccache"]
 
 [dev-dependencies]

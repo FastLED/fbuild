@@ -178,7 +178,28 @@ fn find_zccache_in_venv(start: &Path, exe_name: &str) -> Option<PathBuf> {
 /// Start the zccache daemon if it's not already running.
 ///
 /// This is idempotent — `zccache start` is a no-op when the daemon is up.
+///
+/// **No-op in embedded mode** (FastLED/fbuild#789 Phase 2 / #791): when
+/// the embedded backend is the active global, fbuild owns the
+/// in-process `ZccacheService` directly and the external `zccache`
+/// daemon is not needed. Skipping the spawn here keeps embedded mode
+/// from leaving an orphaned wrapper daemon behind.
 pub fn ensure_running(zccache: &Path) -> Result<()> {
+    #[cfg(feature = "embedded")]
+    {
+        if let Some(global) = crate::compile_backend::get_global() {
+            if matches!(
+                &global.backend,
+                crate::compile_backend::CompileBackend::Embedded(_)
+            ) {
+                tracing::debug!(
+                    "zccache::ensure_running skipped — embedded backend active"
+                );
+                return Ok(());
+            }
+        }
+    }
+
     // INTENTIONALLY DETACHED (FastLED/fbuild#32): zccache is itself a
     // long-running daemon with independent lifecycle management. `start`
     // is a no-op when it's already running, and either way the zccache
@@ -528,7 +549,46 @@ fn split_joined_path_flag(flag: &str) -> Option<(&'static str, &str)> {
 /// Exit code semantics come from `zccache fp check`:
 /// - `0`: changed, build work should run
 /// - `1`: unchanged, the watched root can be reused
+///
+/// **Embedded mode (FastLED/fbuild#789 Phase 3 / #792):** when the
+/// embedded backend is active, routes through
+/// [`crate::zccache_embedded::check_fingerprint_embedded`] which
+/// drives the upstream `TwoLayerCache` directly. No `zccache fp
+/// check` child process is spawned.
 pub fn check_fingerprint(zccache: &Path, watch: &FingerprintWatch) -> Result<FingerprintCheck> {
+    #[cfg(feature = "embedded")]
+    {
+        if let Some(global) = crate::compile_backend::get_global() {
+            if matches!(
+                &global.backend,
+                crate::compile_backend::CompileBackend::Embedded(_)
+            ) {
+                use crate::zccache_embedded::EmbeddedFingerprintCheck;
+                match crate::zccache_embedded::check_fingerprint_embedded(
+                    &watch.cache_file,
+                    &watch.root,
+                    &watch.extensions,
+                    &watch.excludes,
+                ) {
+                    Ok(EmbeddedFingerprintCheck::Changed) => {
+                        return Ok(FingerprintCheck::Changed);
+                    }
+                    Ok(EmbeddedFingerprintCheck::Unchanged) => {
+                        return Ok(FingerprintCheck::Unchanged);
+                    }
+                    Err(err) => {
+                        tracing::warn!(
+                            "embedded fingerprint check failed for {}: {err}; \
+                             falling back to wrapper path",
+                            watch.root.display(),
+                        );
+                        // Fall through to the wrapper-mode body below.
+                    }
+                }
+            }
+        }
+    }
+
     if let Some(parent) = watch.cache_file.parent() {
         std::fs::create_dir_all(parent)?;
     }
@@ -567,7 +627,36 @@ pub fn check_fingerprint(zccache: &Path, watch: &FingerprintWatch) -> Result<Fin
 }
 
 /// Mark a previously checked watch as successful.
+///
+/// **Embedded mode (FastLED/fbuild#789 Phase 3 / #792):** when the
+/// embedded backend is active, routes through
+/// [`crate::zccache_embedded::mark_fingerprint_success_embedded`].
+/// No `zccache fp mark-success` child process is spawned.
 pub fn mark_fingerprint_success(zccache: &Path, watch: &FingerprintWatch) -> Result<()> {
+    #[cfg(feature = "embedded")]
+    {
+        if let Some(global) = crate::compile_backend::get_global() {
+            if matches!(
+                &global.backend,
+                crate::compile_backend::CompileBackend::Embedded(_)
+            ) {
+                match crate::zccache_embedded::mark_fingerprint_success_embedded(
+                    &watch.cache_file,
+                ) {
+                    Ok(()) => return Ok(()),
+                    Err(err) => {
+                        tracing::warn!(
+                            "embedded fingerprint mark-success failed for {}: {err}; \
+                             falling back to wrapper path",
+                            watch.root.display(),
+                        );
+                        // Fall through to the wrapper-mode body below.
+                    }
+                }
+            }
+        }
+    }
+
     if let Some(parent) = watch.cache_file.parent() {
         std::fs::create_dir_all(parent)?;
     }

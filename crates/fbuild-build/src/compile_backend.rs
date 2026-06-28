@@ -12,6 +12,8 @@
 //! feature is enabled. Without that feature the runtime opt-in
 //! gracefully degrades to `Wrapped` with a `tracing::warn!`.
 
+use std::sync::OnceLock;
+
 #[cfg(feature = "embedded")]
 use std::sync::Arc;
 
@@ -58,25 +60,31 @@ impl CompileBackend {
 
     /// Resolve the backend at daemon startup.
     ///
-    /// Reads `FBUILD_ZCCACHE_EMBEDDED` (truthy = `"1"`):
-    /// - `=1` AND `embedded` feature on → starts `ZccacheService` and
-    ///   returns `Embedded`. If the service fails to start, logs a
-    ///   warning and falls back to `Wrapped`.
-    /// - `=1` AND `embedded` feature off → logs a warning that the
-    ///   binary was built without embedded support, returns
+    /// **Phase 4 default flip (FastLED/fbuild#789 / #793):** the
+    /// embedded backend is now the default. The env var has flipped
+    /// from an opt-in (`=1` to enable) to an opt-out (`=0` to
+    /// disable). Reads `FBUILD_ZCCACHE_EMBEDDED`:
+    /// - unset / `=1` / any non-`"0"` value AND `embedded` feature on
+    ///   → starts `ZccacheService` and returns `Embedded`. If the
+    ///   service fails to start, logs a warning and falls back to
     ///   `Wrapped`.
-    /// - unset / any other value → returns `Wrapped`.
+    /// - `=0` → returns `Wrapped` (explicit opt-out, e.g. for
+    ///   debugging the wrapper-mode code path).
+    /// - unset AND `embedded` feature off → returns `Wrapped` (the
+    ///   `embedded` Cargo feature wasn't compiled in).
     ///
     /// Must be called from inside the daemon's tokio runtime — the
     /// embedded service's `start` is `async` and spawns background
     /// tasks via `tokio::spawn`.
     pub async fn from_env() -> Self {
-        let want_embedded = std::env::var("FBUILD_ZCCACHE_EMBEDDED")
-            .map(|v| v == "1")
+        let opted_out = std::env::var("FBUILD_ZCCACHE_EMBEDDED")
+            .map(|v| v == "0")
             .unwrap_or(false);
 
-        if !want_embedded {
-            tracing::info!("zccache backend: wrapped (default)");
+        if opted_out {
+            tracing::info!(
+                "zccache backend: wrapped (FBUILD_ZCCACHE_EMBEDDED=0 opt-out)"
+            );
             return Self::Wrapped;
         }
 
@@ -85,39 +93,108 @@ impl CompileBackend {
             match FbuildZccacheService::start().await {
                 Ok(svc) => {
                     tracing::info!(
-                        "zccache backend: embedded \
-                         (FBUILD_ZCCACHE_EMBEDDED=1, cache_root={})",
+                        "zccache backend: embedded (default; cache_root={})",
                         svc.cache_root().display()
                     );
                     return Self::Embedded(Arc::new(svc));
                 }
                 Err(EmbeddedServiceError::Start(err)) => {
                     tracing::warn!(
-                        "FBUILD_ZCCACHE_EMBEDDED=1 but embedded service \
-                         failed to start: {err}; falling back to wrapped"
+                        "embedded zccache service failed to start: {err}; \
+                         falling back to wrapped"
                     );
                 }
                 Err(other) => {
                     tracing::warn!(
-                        "FBUILD_ZCCACHE_EMBEDDED=1 but embedded service \
-                         start raised an unexpected error: {other}; \
-                         falling back to wrapped"
+                        "embedded zccache service start raised an \
+                         unexpected error: {other}; falling back to wrapped"
                     );
                 }
             }
         }
         #[cfg(not(feature = "embedded"))]
         {
-            tracing::warn!(
-                "FBUILD_ZCCACHE_EMBEDDED=1 but this binary was built \
-                 without --features fbuild-build/embedded; falling back \
-                 to wrapped. Rebuild with the feature to enable \
-                 in-process zccache."
+            tracing::info!(
+                "zccache backend: wrapped (binary built without \
+                 `embedded` Cargo feature)"
             );
         }
 
         Self::Wrapped
     }
+}
+
+/// Process-wide global compile backend, installed once at daemon
+/// startup by [`install_global`].
+///
+/// Phase 2 of FastLED/fbuild#789 (#791): per-compile call sites
+/// (`compile_source` and friends) live in `fbuild-build` and don't
+/// have a handle to `DaemonContext`. The global handle bridges that
+/// gap without touching every signature. The handle is set once
+/// from the daemon's `#[tokio::main]` before any compile fires, and
+/// read lock-free thereafter.
+static GLOBAL: OnceLock<GlobalCompileBackend> = OnceLock::new();
+
+/// Bundle of `CompileBackend` + the tokio runtime handle needed to
+/// dispatch async compiles from synchronous call sites.
+///
+/// The runtime is only required for `CompileBackend::Embedded`; for
+/// `Wrapped` it's `None`. Captured at [`install_global`] time
+/// because `tokio::runtime::Handle::current()` only works from
+/// inside a tokio runtime — `compile_source` is called from rayon
+/// workers and arbitrary threads that don't have one.
+pub struct GlobalCompileBackend {
+    pub backend: CompileBackend,
+    #[cfg(feature = "embedded")]
+    runtime: Option<tokio::runtime::Handle>,
+}
+
+impl GlobalCompileBackend {
+    /// Runtime handle suitable for `Handle::block_on(...)`. Always
+    /// `Some` when `backend` is `Embedded`, `None` otherwise.
+    #[cfg(feature = "embedded")]
+    pub fn runtime(&self) -> Option<&tokio::runtime::Handle> {
+        self.runtime.as_ref()
+    }
+}
+
+/// Install the process-wide compile backend.
+///
+/// Must be called from inside the daemon's tokio runtime when
+/// `backend` is `Embedded` — captures the current runtime handle so
+/// later synchronous `compile_blocking` calls can `block_on(...)`
+/// the async dispatch.
+///
+/// Idempotent on second-call (logs a warning, second call is a
+/// no-op). Tests that exercise multiple backends in one process
+/// must instead call into the type-level constructors directly —
+/// the global is for the daemon's single-resolution-at-startup
+/// case.
+pub fn install_global(backend: CompileBackend) {
+    #[cfg(feature = "embedded")]
+    let runtime = if matches!(backend, CompileBackend::Embedded(_)) {
+        Some(tokio::runtime::Handle::current())
+    } else {
+        None
+    };
+    let global = GlobalCompileBackend {
+        backend,
+        #[cfg(feature = "embedded")]
+        runtime,
+    };
+    if GLOBAL.set(global).is_err() {
+        tracing::warn!(
+            "compile_backend::install_global called more than once; second call ignored"
+        );
+    }
+}
+
+/// Read the process-wide compile backend, if installed.
+///
+/// `None` means "no global resolved yet" — call sites should
+/// behave as if the backend were [`CompileBackend::Wrapped`].
+pub fn get_global() -> Option<&'static GlobalCompileBackend> {
+    GLOBAL.get()
 }
 
 #[cfg(test)]
@@ -134,29 +211,33 @@ mod tests {
         assert_eq!(CompileBackend::default().name(), "wrapped");
     }
 
-    /// `from_env` with the env var unset / not "1" returns `Wrapped`
-    /// regardless of the `embedded` feature flag. The opt-in is
-    /// exact-match `"1"`; anything else is no-op.
+    /// Phase 4 (FastLED/fbuild#793): `FBUILD_ZCCACHE_EMBEDDED=0` is
+    /// the explicit opt-out and forces `Wrapped` regardless of the
+    /// `embedded` feature flag.
     #[tokio::test(flavor = "current_thread")]
-    async fn from_env_returns_wrapped_when_var_unset() {
+    async fn from_env_returns_wrapped_when_var_is_zero() {
+        let prior = std::env::var_os("FBUILD_ZCCACHE_EMBEDDED");
+        unsafe { std::env::set_var("FBUILD_ZCCACHE_EMBEDDED", "0") };
+        let backend = CompileBackend::from_env().await;
+        assert_eq!(backend.name(), "wrapped");
+        match prior {
+            Some(v) => unsafe { std::env::set_var("FBUILD_ZCCACHE_EMBEDDED", v) },
+            None => unsafe { std::env::remove_var("FBUILD_ZCCACHE_EMBEDDED") },
+        }
+    }
+
+    /// Without the `embedded` Cargo feature, `from_env` always
+    /// returns `Wrapped`. Phase 4 only flips the *default* — if the
+    /// library wasn't compiled in, there's no embedded path to take.
+    #[cfg(not(feature = "embedded"))]
+    #[tokio::test(flavor = "current_thread")]
+    async fn from_env_returns_wrapped_when_feature_off() {
         let prior = std::env::var_os("FBUILD_ZCCACHE_EMBEDDED");
         unsafe { std::env::remove_var("FBUILD_ZCCACHE_EMBEDDED") };
         let backend = CompileBackend::from_env().await;
         assert_eq!(backend.name(), "wrapped");
         if let Some(v) = prior {
             unsafe { std::env::set_var("FBUILD_ZCCACHE_EMBEDDED", v) };
-        }
-    }
-
-    #[tokio::test(flavor = "current_thread")]
-    async fn from_env_returns_wrapped_when_var_is_truthy_string_not_one() {
-        let prior = std::env::var_os("FBUILD_ZCCACHE_EMBEDDED");
-        unsafe { std::env::set_var("FBUILD_ZCCACHE_EMBEDDED", "true") };
-        let backend = CompileBackend::from_env().await;
-        assert_eq!(backend.name(), "wrapped");
-        match prior {
-            Some(v) => unsafe { std::env::set_var("FBUILD_ZCCACHE_EMBEDDED", v) },
-            None => unsafe { std::env::remove_var("FBUILD_ZCCACHE_EMBEDDED") },
         }
     }
 }
