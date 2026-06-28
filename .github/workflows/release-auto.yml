@@ -163,11 +163,17 @@ jobs:
             linux_cross: true
             macos_cross: false
 
+          # FastLED/fbuild#XXX (TBD): aarch64-apple-darwin now
+          # cross-compiles from the linux runner via soldr + cargo-zigbuild
+          # + soldr's managed Apple SDK. This drops one macos-latest
+          # runner-minute from every release and removes the only
+          # mac-host dependency from the matrix.
           - target: aarch64-apple-darwin
-            runner: macos-latest
+            runner: ubuntu-latest
             binary_ext: ""
             linux_cross: false
             macos_cross: false
+            mac_cross_linux: true
 
           - target: x86_64-pc-windows-msvc
             runner: windows-latest
@@ -182,6 +188,7 @@ jobs:
       binary_ext: ${{ matrix.binary_ext }}
       linux_cross: ${{ matrix.linux_cross }}
       macos_cross: ${{ matrix.macos_cross }}
+      mac_cross_linux: ${{ matrix.mac_cross_linux == true }}
       ref: ${{ needs.prepare.outputs.release_ref }}
 
   publish:
