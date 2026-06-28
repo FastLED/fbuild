@@ -646,16 +646,24 @@ pub fn compile_source(
         .or_else(|| std::env::current_dir().ok())
         .unwrap_or_else(|| PathBuf::from("."));
 
+    // Sanitize for direct exec — same pass the wrapper-mode arms used
+    // before #800. `prepare_flags_for_exec` un-quotes shell-escaped
+    // include args (`-I"path with spaces"` → `-Ipath with spaces`),
+    // collapses adjacent `-I path` pairs, and rewrites Windows
+    // backslashes in path-bearing flags. Skipping it produced
+    // malformed `#include` directives in the ARM/RISC-V CI builds.
+    let sanitized = prepare_flags_for_exec(all_flags);
+
     if verbose {
         tracing::info!(
             "compile (embedded): {} {}",
             compiler.display(),
-            all_flags.join(" ")
+            sanitized.join(" ")
         );
     }
 
     let outcome = svc
-        .compile_blocking(runtime, compiler, all_flags, cwd, Vec::new())
+        .compile_blocking(runtime, compiler, sanitized, cwd, Vec::new())
         .map_err(|err| {
             fbuild_core::FbuildError::BuildFailed(format!(
                 "embedded zccache compile failed for {}: {err}",
