@@ -41,6 +41,19 @@ env:
   CARGO_TERM_COLOR: always
   RUSTFLAGS: "-D warnings"
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+  # cc-rs env vars for the xwin lanes. ring's build.rs uses cc-rs;
+  # without these, cc-rs invokes plain `clang` and the curve25519.c
+  # compile fails with `error: no such file or directory: '/imsvc'`
+  # (clang-cl-style include flags on a clang driver). The vars are
+  # ignored by non-MSVC targets, so it's safe to set them globally.
+  # AR_<target>=llvm-lib mirrors cargo-xwin's expectation so cc-rs
+  # archiving matches the linker side.
+  CC_x86_64_pc_windows_msvc: clang-cl
+  CXX_x86_64_pc_windows_msvc: clang-cl
+  AR_x86_64_pc_windows_msvc: llvm-lib
+  CC_aarch64_pc_windows_msvc: clang-cl
+  CXX_aarch64_pc_windows_msvc: clang-cl
+  AR_aarch64_pc_windows_msvc: llvm-lib
 
 permissions:
   contents: read
