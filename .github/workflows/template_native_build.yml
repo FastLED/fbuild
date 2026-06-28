@@ -115,7 +115,11 @@ jobs:
         if: runner.os == 'Linux' && contains(inputs.target, 'pc-windows-msvc')
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends clang lld zip
+          # llvm provides llvm-lib + llvm-rc which cc-rs invokes when
+          # compiling C build scripts (e.g. blake3's blake3.c) under
+          # cargo-xwin. Without it the win-msvc lane fails at
+          # `error: failed to find tool "llvm-lib"`.
+          sudo apt-get install -y --no-install-recommends clang lld llvm zip
 
       # cargo-zigbuild — used for two reasons on Linux:
       #   1. musl cross-compilation (linux_cross targets)
