@@ -59,8 +59,17 @@ jobs:
 
       - name: Setup soldr
         id: setup-soldr
-        uses: zackees/setup-soldr@v0.9.62
+        # v0.9.62 defaults to soldr 0.7.51 — predates the `soldr prepare`
+        # builtin (added 0.7.54). v0.9.63 ships with 0.7.59 as the default
+        # which is what the mac-cross-from-linux lane needs to fetch the
+        # Apple SDK. Bump in one place so the whole template benefits.
+        uses: zackees/setup-soldr@v0.9.63
         with:
+          # Pin the soldr version explicitly so a future bump of the
+          # action's default doesn't silently change build behavior in
+          # this template. 0.7.59 is the latest PyPI/npm/GH-Releases
+          # release at time of authoring (next release will be 0.7.60).
+          version: "0.7.59"
           cache: true
           build-cache: true
           target-cache: true
