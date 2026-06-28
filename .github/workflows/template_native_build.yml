@@ -219,7 +219,10 @@ jobs:
               -p fbuild-cli \
               -p fbuild-daemon
           else
-            soldr cargo build --release --target ${{ inputs.target }} \
+            # soldr#1012 PR 2 followup: blessed default surface (was
+            # `soldr cargo build`). Same byte-identical artifact today;
+            # gains catalogue-driven sysroot prep as #1012 phases ship.
+            soldr build --release --target ${{ inputs.target }} \
               -p fbuild-cli \
               -p fbuild-daemon
           fi
@@ -253,7 +256,12 @@ jobs:
               --target ${{ inputs.target }} -p fbuild-python \
               --features extension-module
           elif [ "${{ runner.os }}" = "Linux" ] && [[ "${{ inputs.target }}" == *-pc-windows-msvc ]]; then
-            PYO3_NO_PYTHON=1 cargo xwin build --release \
+            # Blessed Linux→Windows MSVC path for PyO3 ext
+            # (soldr#1012 PR 2 followup). soldr build's
+            # Commands::Build installs the soldr-clang-shim so
+            # ring + cc-rs route through clang-cl correctly even
+            # for aarch64 PyO3 dylib compilation.
+            PYO3_NO_PYTHON=1 soldr build --release \
               --target-dir "${PYTHON_TARGET_DIR}" \
               --target ${{ inputs.target }} -p fbuild-python \
               --features extension-module
@@ -268,17 +276,20 @@ jobs:
               --target "${PYO3_TARGET}.2.17" -p fbuild-python \
               --features extension-module
           elif [ "${{ inputs.macos_cross }}" = "true" ]; then
-            PYO3_NO_PYTHON=1 soldr cargo build --release \
+            # soldr#1012 PR 2 followup: blessed default surface.
+            PYO3_NO_PYTHON=1 soldr build --release \
               --target-dir "${PYTHON_TARGET_DIR}" \
               --target ${{ inputs.target }} -p fbuild-python \
               --features extension-module
           elif [ "${{ runner.os }}" = "macOS" ]; then
-            soldr cargo build --release --target-dir "${PYTHON_TARGET_DIR}" \
+            # soldr#1012 PR 2 followup: blessed default surface.
+            soldr build --release --target-dir "${PYTHON_TARGET_DIR}" \
               --target ${{ inputs.target }} \
               -p fbuild-python \
               --features extension-module
           else
-            soldr cargo build --release --target-dir "${PYTHON_TARGET_DIR}" \
+            # soldr#1012 PR 2 followup: blessed default surface.
+            soldr build --release --target-dir "${PYTHON_TARGET_DIR}" \
               --target ${{ inputs.target }} \
               -p fbuild-python \
               --features extension-module
