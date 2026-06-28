@@ -626,6 +626,69 @@ pub fn compile_source(
     let rebuild_signature = build_rebuild_signature(compiler, flags, extra_pre_flags, extra_flags);
     all_flags.extend(["-c".to_string(), source_arg, "-o".to_string(), output_arg]);
 
+    // Phase 2 of FastLED/fbuild#789 (#791): when the embedded zccache
+    // backend is the active global, dispatch the compile directly
+    // through `ZccacheService::compile` instead of spawning a
+    // `zccache wrap …` child process. The wrapper-mode arms below run
+    // unchanged when the global is absent or `Wrapped`.
+    //
+    // The embedded path passes `all_flags` as-is (no Windows response
+    // file dance — embedded API takes a `Vec<String>` not a command
+    // line). Cache-key compatibility with wrapper mode is preserved
+    // because `all_flags` has already been through
+    // `normalize_flags_for_compile_cwd` + `path_arg_for_compile_cwd`
+    // above. Cwd is the same workspace-relative root the wrapper
+    // would have used.
+    #[cfg(feature = "embedded")]
+    {
+        if let Some(global) = crate::compile_backend::get_global() {
+            if let crate::compile_backend::CompileBackend::Embedded(svc) = &global.backend {
+                if let Some(runtime) = global.runtime() {
+                    let cwd = compile_cwd
+                        .clone()
+                        .or_else(|| std::env::current_dir().ok())
+                        .unwrap_or_else(|| PathBuf::from("."));
+                    if verbose {
+                        tracing::info!(
+                            "compile (embedded): {} {}",
+                            compiler.display(),
+                            all_flags.join(" ")
+                        );
+                    }
+                    match svc.compile_blocking(
+                        runtime,
+                        compiler,
+                        all_flags.clone(),
+                        cwd,
+                        Vec::new(),
+                    ) {
+                        Ok(outcome) => {
+                            let success = outcome.exit_code == 0;
+                            if success {
+                                std::fs::write(command_hash_path(output), rebuild_signature)?;
+                            }
+                            return Ok(CompileResult {
+                                success,
+                                object_file: output.to_path_buf(),
+                                stdout: String::from_utf8_lossy(&outcome.stdout).into_owned(),
+                                stderr: String::from_utf8_lossy(&outcome.stderr).into_owned(),
+                                exit_code: outcome.exit_code,
+                            });
+                        }
+                        Err(err) => {
+                            tracing::warn!(
+                                "embedded zccache compile failed for {}: {err}; \
+                                 falling back to wrapper path",
+                                source.display(),
+                            );
+                            // Fall through to the wrapper-mode arms below.
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     // On Windows, write all flags to a response file to avoid command-line
     // length limits and backslash-quote escaping issues with CreateProcessW.
     let args = if cfg!(windows) {

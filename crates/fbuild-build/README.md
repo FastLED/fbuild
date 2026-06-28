@@ -63,22 +63,39 @@ Two backends route compiles through zccache:
 
 | Backend | Built when | Selected when | What runs per compile |
 |---|---|---|---|
-| `CompileBackend::Wrapped` | always | default | `zccache wrap <compiler> <args>` child process from the managed binary |
-| `CompileBackend::Embedded` | `--features fbuild-build/embedded` | `FBUILD_ZCCACHE_EMBEDDED=1` at daemon startup | in-process `ZccacheService` inside `fbuild-daemon`'s tokio runtime |
+| `CompileBackend::Embedded` | `embedded` feature (default) | default | in-process `ZccacheService` inside `fbuild-daemon`'s tokio runtime |
+| `CompileBackend::Wrapped` | always | `FBUILD_ZCCACHE_EMBEDDED=0` opt-out, or `--no-default-features` build | `zccache wrap <compiler> <args>` child process from the managed binary |
 
-Phase 1 of [FastLED/fbuild#789](https://github.com/FastLED/fbuild/issues/789)
-(this code: [#790](https://github.com/FastLED/fbuild/issues/790)) only
-*resolves* the backend at startup and *holds* the service handle on
-[`crates::fbuild_daemon::context::DaemonContext`]; per-compile routing
-through the embedded path is Phase 2 ([#791](https://github.com/FastLED/fbuild/issues/791)).
-Until Phase 2 lands, setting `FBUILD_ZCCACHE_EMBEDDED=1` starts the
-embedded service (which logs `zccache backend: embedded …`) but every
-compile still spawns the wrapper child — Phase 1 is **scaffolding
-only**, no behavior change on the hot path.
+**As of Phase 4 ([FastLED/fbuild#793](https://github.com/FastLED/fbuild/issues/793))**
+the embedded backend is the default. Every compile dispatches
+through the in-process `ZccacheService::compile` running on the
+daemon's tokio runtime — no per-TU `zccache.exe` child process is
+spawned. Fingerprint operations (`check`, `mark_success`) likewise
+route through the embedded `TwoLayerCache` instead of `zccache fp`
+shellouts ([Phase 3 / #792](https://github.com/FastLED/fbuild/issues/792)).
 
-If the runtime opt-in is set but the binary was built without
-`--features embedded`, the daemon logs a warning and falls back to the
-wrapper path. Same fallback if the embedded service fails to start
-(e.g. permissions on the cache root). No build is ever *prevented*
-by the embedded path — wrapper-mode is always the safety net until
-Phase 4 ([#793](https://github.com/FastLED/fbuild/issues/793)) retires it.
+### Opting out
+
+Set `FBUILD_ZCCACHE_EMBEDDED=0` at daemon startup to force the
+legacy wrapper path. This is the recommended way to debug regressions
+attributable to the embedded service — it pins the wrapper-mode
+code path for the running daemon without changing the binary.
+
+Building with `--no-default-features` drops the `embedded` feature
+entirely, so the daemon ships without the zccache library and falls
+back to wrapper mode unconditionally. Use this for size-constrained
+CI lanes that can't pay the zccache library's compile-time cost.
+
+### Embedded service fallback
+
+If the embedded service fails to start (e.g. permissions on the
+cache root, disk full), the daemon logs a warning and falls back
+to wrapper mode for that run — no build is ever *prevented* by an
+embedded-service failure. Same fallback applies if an individual
+per-compile dispatch fails; the wrapper-mode arms remain in the
+source tree as the safety net.
+
+The wrapper-mode code (`managed_zccache.rs`,
+`zccache::ensure_running`, `zccache::wrap_args`, the `compile_source`
+wrapper arms) will be retired in a follow-up after one release cycle
+of validation in the embedded default (Phase 4 stage 2).

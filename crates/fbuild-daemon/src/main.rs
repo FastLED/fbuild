@@ -77,15 +77,23 @@ async fn main() {
 
     tracing::info!("fbuild daemon starting on port {}", port);
 
-    // FastLED/fbuild#790 (Phase 1 of #789): resolve the zccache
-    // compile backend BEFORE constructing the daemon context so the
-    // (optional) embedded `ZccacheService` starts inside this tokio
-    // runtime. The default path (`FBUILD_ZCCACHE_EMBEDDED` unset)
-    // returns `CompileBackend::Wrapped` without any service spawn —
-    // every existing wrapper-mode call site continues to fire the
-    // managed `zccache wrap …` child process per compile. Phase 2
-    // (#791) wires the routing through `CompileBackend::Embedded`.
+    // FastLED/fbuild#789 Phase 1 (#790) + Phase 2 (#791): resolve the
+    // zccache compile backend BEFORE constructing the daemon context
+    // so the (optional) embedded `ZccacheService` starts inside this
+    // tokio runtime. The default path (`FBUILD_ZCCACHE_EMBEDDED`
+    // unset) returns `CompileBackend::Wrapped` without any service
+    // spawn — every wrapper-mode call site continues to fire the
+    // managed `zccache wrap …` child process per compile.
+    //
+    // After resolution, [`fbuild_build::compile_backend::install_global`]
+    // captures the backend + the current runtime handle into a
+    // process-wide `OnceLock` so per-compile call sites in
+    // `compile_source` (which run on rayon workers, not tokio worker
+    // threads) can `runtime.block_on(svc.compile(...))` without
+    // needing a `DaemonContext` handle threaded through every
+    // signature.
     let compile_backend = CompileBackend::from_env().await;
+    fbuild_build::compile_backend::install_global(compile_backend.clone());
 
     let (shutdown_tx, mut shutdown_rx) = tokio::sync::watch::channel(false);
     let context = Arc::new(DaemonContext::with_hub_and_backend(
