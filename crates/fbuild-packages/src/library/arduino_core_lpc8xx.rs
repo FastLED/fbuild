@@ -17,21 +17,24 @@ use crate::{CacheSubdir, PackageBase, PackageInfo};
 
 /// Pinned upstream commit. Bump alongside `URL` + `CHECKSUM`.
 ///
-/// Pinned to the Wire/SPI proxy-singleton refactor merge
-/// (zackees/ArduinoCore-LPC8xx#27): `TwoWire Wire;` and `SPIClass SPI;` are
-/// now trivial proxy facades that lazily construct their impl via a Meyers
-/// singleton — `--gc-sections` can drop the entire I2C / SPI driver from
-/// sketches that don't reference `Wire` / `SPI`.
+/// Pinned to the full-NXP-CMSIS-PAL merge
+/// (zackees/ArduinoCore-LPC8xx#34): `variants/lpc845/LPC845.h` and
+/// `variants/lpc804/LPC804.h` now carry the full NXP CMSIS Peripheral
+/// Access Layer (~10K / 7K lines, BSD-3-Clause, rev. 1.2) instead of the
+/// previous 54/49-line IRQn-only stubs. This unblocks downstream FastLED
+/// #3437 — the FastLED LPC drivers now consume canonical NXP typedefs
+/// (`SCT_Type`, `DMA_Type`, `SYSCON_Type`, `SPI_Type`, `PLU_Type`,
+/// pointer macros `SCT0`/`DMA0`/`SYSCON`/`SPI0`/`SPI1`/`PLU`) directly
+/// instead of hand-rolling parallel register-map shims.
 ///
 /// Earlier merges still in effect:
-///   #24: `operator new`/`new[]`, `.ARM.exidx`, forced heap base, F_CPU=24MHz
-///   #25: drop unsigned-long operator new overloads (32-bit ABI)
-///   #26: collapse operator delete variants to a single free thunk
-const ACLPC_COMMIT: &str = "195a2eddd31eba8472ceaffa6a1a1902f72439ae";
-const ACLPC_VERSION: &str = "0.1.0+g195a2ed";
+///   #27: Wire/SPI proxy-singleton refactor (--gc-sections drops unused I2C/SPI)
+///   #24-#26: operator new/delete + .ARM.exidx + heap base + F_CPU=24MHz
+const ACLPC_COMMIT: &str = "50d76e0d63c2d2a2b365b29de47100d93c530c83";
+const ACLPC_VERSION: &str = "0.2.0+g50d76e0";
 const ACLPC_URL: &str =
-    "https://github.com/zackees/ArduinoCore-LPC8xx/archive/195a2eddd31eba8472ceaffa6a1a1902f72439ae.tar.gz";
-const ACLPC_CHECKSUM: &str = "366de74b93179ba4b5e8ac9e527f15f189d9e26bcedd030fe11c11a2c907f3e4";
+    "https://github.com/zackees/ArduinoCore-LPC8xx/archive/50d76e0d63c2d2a2b365b29de47100d93c530c83.tar.gz";
+const ACLPC_CHECKSUM: &str = "e6bbcc3392ae9da44c5c92268d7cd953770e0011fcf285561104633e36087428";
 
 /// Arduino LPC8xx core framework manager.
 pub struct ArduinoCoreLpc8xx {
