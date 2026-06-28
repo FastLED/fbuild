@@ -10,6 +10,7 @@ pub mod build_fingerprint;
 pub mod build_info;
 pub mod build_output;
 pub mod ch32v;
+pub mod compile_backend;
 pub mod compile_database;
 pub mod compile_many;
 pub mod compiler;
@@ -41,6 +42,8 @@ pub mod stm32;
 pub mod symbol_analyzer;
 pub mod teensy;
 pub mod zccache;
+#[cfg(feature = "embedded")]
+pub mod zccache_embedded;
 
 pub use source_scanner::SourceScanner;
 

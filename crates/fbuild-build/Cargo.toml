@@ -32,6 +32,30 @@ zip = { workspace = true }
 tree-sitter = { workspace = true }
 tree-sitter-cpp = { workspace = true }
 
+# FastLED/fbuild#790 (Phase 1 of #789): optional embedded zccache library
+# dep used to host `ZccacheService` in-process inside `fbuild-daemon`.
+#
+# Pinned at the same revision soldr uses (`73d3f84`, zackees/soldr#994 +
+# zccache#922/#923/#925/#926), which post-dates the 1.12.11 wrapper-binary
+# release. The wire-format/artifact compatibility contract held by
+# `MANAGED_ZCCACHE_VERSION` still tracks the latest *tagged* wrapper
+# release (1.12.11 today); the embedded library can run ahead of the
+# wrapper because they don't share an artifact store under Phase 1 —
+# embedded points at `~/.fbuild/<mode>/zccache/` (`zccache_embedded.rs`)
+# while wrapper inherits the wrapper binary's default root. Phase 4
+# (#793) unifies the two when wrapper is retired.
+zccache = { git = "https://github.com/zackees/zccache", rev = "73d3f84542deb16f762352668f3f2a8fb407462a", optional = true }
+
+[features]
+default = []
+# Opt-in (#790 / #789 Phase 1): pulls in the zccache library + the
+# `zccache_embedded` module and the `CompileBackend::Embedded` variant.
+# Without this feature, the embedded code path does not compile in, the
+# variant does not exist, and `CompileBackend::from_env` always returns
+# `Wrapped`. Off by default for Phase 1 — flipping it on is the Phase 4
+# (#793) deliverable.
+embedded = ["dep:zccache"]
+
 [dev-dependencies]
 filetime = { workspace = true }
 fbuild-test-support = { path = "../fbuild-test-support" }

@@ -24,12 +24,12 @@ use fbuild_core::{FbuildError, Result};
 
 /// The zccache release fbuild pins. Bump in lockstep with the floor that
 /// the rest of the toolchain expects.
-pub const MANAGED_ZCCACHE_VERSION: &str = "1.12.10";
+pub const MANAGED_ZCCACHE_VERSION: &str = "1.12.11";
 
 /// GitHub release tag for [`MANAGED_ZCCACHE_VERSION`]. The zccache release
 /// workflow tags without a `v` prefix, while the per-asset filenames carry
 /// `v<version>` — keep both spellings in sync when bumping.
-const RELEASE_TAG: &str = "1.12.10";
+const RELEASE_TAG: &str = "1.12.11";
 
 /// Source repository for managed downloads.
 const REPO: &str = "zackees/zccache";

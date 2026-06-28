@@ -4,6 +4,7 @@ static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 use axum::routing::{get, post};
 use axum::Router;
 use clap::Parser;
+use fbuild_build::compile_backend::CompileBackend;
 use fbuild_daemon::context::{
     self_eviction_timeout, BroadcastHub, DaemonContext, IDLE_TIMEOUT, STALE_LOCK_CHECK_INTERVAL,
 };
@@ -76,12 +77,23 @@ async fn main() {
 
     tracing::info!("fbuild daemon starting on port {}", port);
 
+    // FastLED/fbuild#790 (Phase 1 of #789): resolve the zccache
+    // compile backend BEFORE constructing the daemon context so the
+    // (optional) embedded `ZccacheService` starts inside this tokio
+    // runtime. The default path (`FBUILD_ZCCACHE_EMBEDDED` unset)
+    // returns `CompileBackend::Wrapped` without any service spawn —
+    // every existing wrapper-mode call site continues to fire the
+    // managed `zccache wrap …` child process per compile. Phase 2
+    // (#791) wires the routing through `CompileBackend::Embedded`.
+    let compile_backend = CompileBackend::from_env().await;
+
     let (shutdown_tx, mut shutdown_rx) = tokio::sync::watch::channel(false);
-    let context = Arc::new(DaemonContext::with_hub(
+    let context = Arc::new(DaemonContext::with_hub_and_backend(
         port,
         shutdown_tx,
         args.spawner_cwd,
         broadcast_hub,
+        compile_backend,
     ));
     DaemonContext::install_dependency_status_subscriber(&context);
     fbuild_daemon::broker::backend::spawn_backend_endpoint_if_requested(context.clone());

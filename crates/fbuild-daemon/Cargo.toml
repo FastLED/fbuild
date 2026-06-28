@@ -20,6 +20,12 @@ path = "src/lib.rs"
 # the native path fails on a board/host combination.
 default = ["espflash-native"]
 espflash-native = ["fbuild-deploy/espflash-native"]
+# FastLED/fbuild#790 (Phase 1 of #789): propagate fbuild-build's
+# `embedded` feature so the daemon binary pulls in the
+# `zccache_embedded` module + the `CompileBackend::Embedded` variant.
+# Off by default for Phase 1 — flipping it on is the Phase 4 (#793)
+# deliverable. Runtime opt-in: `FBUILD_ZCCACHE_EMBEDDED=1`.
+embedded = ["fbuild-build/embedded"]
 
 [dependencies]
 fbuild-core = { path = "../fbuild-core" }
