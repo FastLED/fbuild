@@ -77,13 +77,12 @@ impl BuildOrchestrator for AvrOrchestrator {
         // Env-gated per-phase timer (FBUILD_PERF_LOG=1); zero-overhead when unset.
         let mut perf = crate::perf_log::PerfTimer::new("avr-orchestrator");
 
-        // 0. Discover zccache compiler cache (startup is deferred until
-        // compile work begins). Also used by the fast-path check to short-
-        // circuit the watch walk on warm rebuilds.
-        let compiler_cache = {
-            let _g = perf.phase("zccache-discover");
-            crate::zccache::find_zccache().map(std::path::Path::to_path_buf)
-        };
+        // Wrapper-binary discovery removed in FastLED/fbuild#800 — every
+        // compile dispatches through the embedded zccache service. The
+        // `compiler_cache: Option<PathBuf>` slot is retained as a dead
+        // pass-through for the per-platform compiler API until a future
+        // PR rewrites those signatures.
+        let compiler_cache: Option<std::path::PathBuf> = None;
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir,
         //      collect flags. `new_with_perf` records its own sub-phases

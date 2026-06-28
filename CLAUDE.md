@@ -76,12 +76,6 @@ To cut a release:
 
 See [docs/RELEASING.md](docs/RELEASING.md) for the full flow, gating logic, and re-run instructions when a release stalls.
 
-Optional wrapper-mode only; do not use for standard soldr builds:
-
-```bash
-uv run python ci/zccache_setup.py  # writes rustc-wrapper = "zccache"
-```
-
 ## Hooks (enforced automatically)
 
 All hooks are Python scripts in `ci/hooks/`, invoked via `uv run`:

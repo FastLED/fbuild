@@ -290,12 +290,16 @@ pub fn fast_path_check(
         }
     }
 
-    // Watch-set fingerprint: prefer zccache's daemon fingerprint (it
-    // already does an in-process walk cached across invocations).
-    // On zccache miss/error, fall back to the recorded
-    // `file_set_hash` using the in-memory WatchSetStampCache.
-    let file_set_matches = if let Some(zcc) = inputs.compiler_cache {
-        check_with_zccache(zcc, contract.watches(), &previous, inputs.watch_set_cache)
+    // Watch-set fingerprint: when the caller opts into the embedded
+    // zccache fingerprint engine (`compiler_cache.is_some()`, a
+    // marker now that the wrapper path is gone — FastLED/fbuild#800),
+    // route through that. Otherwise fall back to the recorded
+    // `file_set_hash` using the in-memory WatchSetStampCache. The
+    // orchestrators all pass `None` today, so the stamps path is the
+    // production default; the embedded-fingerprint path is wired for
+    // a future caller that wants it.
+    let file_set_matches = if inputs.compiler_cache.is_some() {
+        check_with_zccache(contract.watches(), &previous, inputs.watch_set_cache)
     } else {
         check_with_stamps(contract.watches(), &previous, inputs.watch_set_cache)
     };
@@ -331,9 +335,13 @@ pub fn persist_fast_path_success(contract: &FastPathContract, inputs: &FastPathP
     if let Err(e) = save_json(contract.fingerprint_path(), &persisted_fingerprint) {
         tracing::warn!("failed to write build fingerprint: {}", e);
     }
-    if let Some(zcc) = inputs.compiler_cache {
+    // Same gating as `fast_path_check`: only mark zccache success
+    // when the caller opted into the embedded zccache path. The
+    // stamps fallback has no per-watch marker — `persisted_fingerprint`
+    // above is the only state it persists.
+    if inputs.compiler_cache.is_some() {
         for watch in contract.watches() {
-            if let Err(e) = crate::zccache::mark_fingerprint_success(zcc, watch) {
+            if let Err(e) = crate::zccache::mark_fingerprint_success(watch) {
                 tracing::warn!(
                     "failed to mark zccache fingerprint success for {}: {}",
                     watch.root.display(),
@@ -345,8 +353,12 @@ pub fn persist_fast_path_success(contract: &FastPathContract, inputs: &FastPathP
 }
 
 /// zccache-powered fingerprint check with graceful fallback.
+///
+/// FastLED/fbuild#800: the wrapper-binary path is gone; this routes
+/// through the embedded fingerprint API
+/// ([`crate::zccache_embedded`]) directly. The `zcc: &Path` arg from
+/// the wrapper-era signature was deleted.
 fn check_with_zccache(
-    zcc: &Path,
     watches: &[FingerprintWatch],
     previous: &PersistedBuildFingerprint,
     watch_set_cache: Option<&dyn WatchSetStampCache>,
@@ -354,7 +366,7 @@ fn check_with_zccache(
     let mut changed = false;
     let mut zccache_ok = true;
     for watch in watches {
-        match zccache::check_fingerprint(zcc, watch) {
+        match zccache::check_fingerprint(watch) {
             Ok(zccache::FingerprintCheck::Unchanged) => {}
             Ok(zccache::FingerprintCheck::Changed) => {
                 changed = true;

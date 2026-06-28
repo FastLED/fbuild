@@ -383,11 +383,13 @@ fn fingerprint_path(project_dir: &Path) -> PathBuf {
 /// RAII guard for an env var: sets it on construction, restores the previous
 /// value on drop. Test-only helper so the env var leak does not pollute other
 /// tests that share this process.
+#[allow(dead_code)]
 struct EnvVarGuard {
     key: &'static str,
     previous: Option<std::ffi::OsString>,
 }
 
+#[allow(dead_code)]
 impl EnvVarGuard {
     fn set(key: &'static str, value: &str) -> Self {
         let previous = std::env::var_os(key);
@@ -417,19 +419,17 @@ impl Drop for EnvVarGuard {
 ///   * Absolute paths baked into a build artifact that the fast-path check actually
 ///     reads (compile DB, build_fingerprint.json) but the unit test does not cover.
 ///
-/// `FBUILD_NO_ZCCACHE=1` is set for this test on purpose: the zccache layer has its
-/// own fingerprint-state machinery that may not survive a tar-restore on every
-/// platform, and that concern is already covered by
-/// `zccache_hit_across_workspace_rename.rs`. This test isolates the fbuild-owned
-/// fast-path predicate (build_fingerprint.json + watch-set stamps) -- which is the
-/// machinery the #147 fix actually changed.
+/// Pre-FastLED/fbuild#800 the test set `FBUILD_NO_ZCCACHE=1` to skip the
+/// wrapper-binary path; that env var is gone now. The embedded zccache
+/// service runs unconditionally — the fast-path predicate this test
+/// covers (build_fingerprint.json + watch-set stamps) is independent
+/// of zccache and still owned by fbuild itself.
 ///
 /// Gated `#[ignore]` because it downloads avr-gcc + Arduino-AVR core (cached globally
 /// after first run, but still adds 30s+ to first invocation).
 #[test]
 #[ignore]
 fn cache_survives_tar_extract_uno() {
-    let _no_zccache = EnvVarGuard::set("FBUILD_NO_ZCCACHE", "1");
 
     let tmp_a = tempfile::TempDir::new().unwrap();
     let proj_a = tmp_a.path().join("proj");

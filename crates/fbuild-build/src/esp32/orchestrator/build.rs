@@ -40,11 +40,9 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // Env-gated per-phase timer (FBUILD_PERF_LOG=1); zero overhead when unset.
         let mut perf = crate::perf_log::PerfTimer::new("esp32-orchestrator");
 
-        // 0. Discover zccache compiler cache (startup is deferred until compile work begins)
-        let compiler_cache = {
-            let _g = perf.phase("zccache-discover");
-            crate::zccache::find_zccache().map(std::path::Path::to_path_buf)
-        };
+        // Wrapper-binary discovery removed in FastLED/fbuild#800 — every
+        // compile dispatches through the embedded zccache service.
+        let compiler_cache: Option<std::path::PathBuf> = None;
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
         let mut ctx = crate::pipeline::BuildContext::new_with_perf(params, Some(&mut perf))?;
@@ -214,10 +212,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
             }
         }
 
-        if let Some(ref zcc) = compiler_cache {
-            crate::zccache::ensure_running(zcc)?;
-        }
-
+        // FastLED/fbuild#800: the `zccache start` daemon-spawn was deleted.
+        // The embedded service is part of fbuild-daemon's own lifecycle.
         let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
         tracing::info!(
             "ESP32 {} toolchain at {}",

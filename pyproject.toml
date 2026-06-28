@@ -4,10 +4,12 @@ version = "2.3.11"
 description = "PlatformIO-compatible embedded build tool (Rust implementation)"
 readme = "README.md"
 requires-python = ">=3.10"
-# fbuild embeds its own pinned zccache (downloaded + managed internally by
-# fbuild-build::managed_zccache) rather than declaring it as a Python
-# dependency. Pinning zccache here forced every package sharing the venv to
-# agree on one version; embedding the binary removes that conflict.
+# FastLED/fbuild#800: fbuild's daemon hosts an in-process zccache
+# service (see `crates/fbuild-build/src/zccache_embedded.rs`). The
+# library dep is pinned in `crates/fbuild-build/Cargo.toml`, NOT here
+# — fbuild does not declare zccache as a Python distribution dep, and
+# the legacy "pinned managed binary download" path was deleted along
+# with `MANAGED_ZCCACHE_VERSION`.
 dependencies = []
 
 # `fbuild` on PATH is the native cargo-built binary itself, shipped as a

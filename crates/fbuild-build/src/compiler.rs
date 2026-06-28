@@ -499,6 +499,13 @@ pub fn write_response_file(flags: &[String], temp_dir: &Path, prefix: &str) -> R
     fbuild_core::response_file::write_response_file(flags, temp_dir, prefix)
 }
 
+/// Response-file directory for a given output object. Used by the
+/// per-platform compilers when they construct response files for
+/// out-of-band invocation; the embedded `compile_source` path no
+/// longer routes through here. Retained because the compiler-tests
+/// module exercises it directly and `fbuild-packages` has its own
+/// copy for library compiles.
+#[allow(dead_code)]
 fn response_file_dir(output: &Path, fallback_temp_dir: &Path) -> PathBuf {
     output
         .parent()
@@ -507,6 +514,7 @@ fn response_file_dir(output: &Path, fallback_temp_dir: &Path) -> PathBuf {
         .unwrap_or_else(|| fallback_temp_dir.to_path_buf())
 }
 
+#[allow(dead_code)]
 fn invocation_response_file_path(path: &Path) -> std::io::Result<PathBuf> {
     if path.is_absolute() {
         Ok(path.to_path_buf())
@@ -545,22 +553,22 @@ pub fn build_cpp_flags(common_flags: Vec<String>, config: &dyn McuConfig) -> Vec
     flags
 }
 
-/// Compile a single source file: assemble flags, handle response files, execute.
+/// Compile a single source file through the embedded zccache service.
 ///
-/// This is the shared core of all platform compilers. Platform-specific
-/// differences are expressed through parameters:
-/// - `response_file_prefix`: "avr", "teensy", "esp32"
-/// - `extra_pre_flags`: additional flags inserted between base flags and extra_flags
-///   (ESP32 uses this for include flags deferred from common_flags)
-/// - `compiler_cache`: optional zccache path. When `Some`, the gcc/g++
-///   invocation is rewritten as `<zccache> wrap <gcc> ...` for
-///   content-addressed object caching. Wired up by ESP32 and by the
-///   shared `ArmCompiler` (which covers apollo3, ch32v, nrf52, nxplpc,
-///   renesas, sam, silabs, teensy). Other compiler impls pass `None`.
+/// Phase 4 stage 2 of FastLED/fbuild#789 (#800): the wrapper-binary
+/// `zccache wrap …` path is gone. Every per-TU compile dispatches
+/// through `ZccacheService::compile` on the daemon's tokio runtime.
+/// The `_compiler_cache: Option<&Path>` parameter is retained for
+/// API stability across the per-platform compilers; the value is
+/// ignored.
 ///
-/// On Windows, response files are written into a stable `tmp` directory next to
-/// the output object so repeated builds can reuse the same path and avoid
-/// timestamp churn from ephemeral temp files.
+/// Platform-specific differences expressed through parameters:
+/// - `response_file_prefix`: "avr", "teensy", "esp32" (unused under
+///   embedded — the in-process API takes args as `Vec<String>`, no
+///   command line).
+/// - `extra_pre_flags`: additional flags inserted between base flags
+///   and `extra_flags` (ESP32 uses this for include flags deferred
+///   from `common_flags`).
 #[allow(clippy::too_many_arguments)]
 pub fn compile_source(
     compiler: &Path,
@@ -568,23 +576,20 @@ pub fn compile_source(
     output: &Path,
     flags: &[String],
     extra_flags: &[String],
-    temp_dir: &Path,
-    response_file_prefix: &str,
+    _temp_dir: &Path,
+    _response_file_prefix: &str,
     verbose: bool,
-    compiler_cache: Option<&Path>,
+    _compiler_cache: Option<&Path>,
     extra_pre_flags: &[String],
 ) -> Result<CompileResult> {
-    use fbuild_core::subprocess::run_command;
-
-    // #282: a relative `output` (from `fbuild build <relative project_dir>` -
+    // #282: a relative `output` (from `fbuild build <relative project_dir>` —
     // what CI does) collides with the asymmetry between
     // `compile_cwd_from_output` (canonicalizes the workspace to absolute) and
     // `path_arg_for_compile_cwd` (short-circuits on relative paths). The
     // resulting gcc invocation would get `cwd = absolute project_dir` plus a
     // relative `-o`, resolving to a doubled path whose parent dir was never
     // created — and `-MMD -MF` fails. Promote both paths to absolute up front
-    // so the downstream cwd / `-o` pair stays consistent. (Equivalent to
-    // `std::path::absolute`, written by hand for MSRV 1.75 / clippy.toml.)
+    // so the downstream cwd / `-o` pair stays consistent.
     let source_buf = absolute_from_cwd(source);
     let output_buf = absolute_from_cwd(output);
     let source = source_buf.as_path();
@@ -594,7 +599,7 @@ pub fn compile_source(
         std::fs::create_dir_all(parent)?;
     }
 
-    let compile_cwd = compiler_cache.and_then(|_| crate::zccache::compile_cwd_from_output(output));
+    let compile_cwd = crate::zccache::compile_cwd_from_output(output);
     let (source_arg, output_arg) = if let Some(cwd) = compile_cwd.as_deref() {
         (
             crate::zccache::path_arg_for_compile_cwd(source, cwd),
@@ -626,120 +631,48 @@ pub fn compile_source(
     let rebuild_signature = build_rebuild_signature(compiler, flags, extra_pre_flags, extra_flags);
     all_flags.extend(["-c".to_string(), source_arg, "-o".to_string(), output_arg]);
 
-    // Phase 2 of FastLED/fbuild#789 (#791): when the embedded zccache
-    // backend is the active global, dispatch the compile directly
-    // through `ZccacheService::compile` instead of spawning a
-    // `zccache wrap …` child process. The wrapper-mode arms below run
-    // unchanged when the global is absent or `Wrapped`.
-    //
-    // The embedded path passes `all_flags` as-is (no Windows response
-    // file dance — embedded API takes a `Vec<String>` not a command
-    // line). Cache-key compatibility with wrapper mode is preserved
-    // because `all_flags` has already been through
-    // `normalize_flags_for_compile_cwd` + `path_arg_for_compile_cwd`
-    // above. Cwd is the same workspace-relative root the wrapper
-    // would have used.
-    #[cfg(feature = "embedded")]
-    {
-        if let Some(global) = crate::compile_backend::get_global() {
-            if let crate::compile_backend::CompileBackend::Embedded(svc) = &global.backend {
-                if let Some(runtime) = global.runtime() {
-                    let cwd = compile_cwd
-                        .clone()
-                        .or_else(|| std::env::current_dir().ok())
-                        .unwrap_or_else(|| PathBuf::from("."));
-                    if verbose {
-                        tracing::info!(
-                            "compile (embedded): {} {}",
-                            compiler.display(),
-                            all_flags.join(" ")
-                        );
-                    }
-                    match svc.compile_blocking(
-                        runtime,
-                        compiler,
-                        all_flags.clone(),
-                        cwd,
-                        Vec::new(),
-                    ) {
-                        Ok(outcome) => {
-                            let success = outcome.exit_code == 0;
-                            if success {
-                                std::fs::write(command_hash_path(output), rebuild_signature)?;
-                            }
-                            return Ok(CompileResult {
-                                success,
-                                object_file: output.to_path_buf(),
-                                stdout: String::from_utf8_lossy(&outcome.stdout).into_owned(),
-                                stderr: String::from_utf8_lossy(&outcome.stderr).into_owned(),
-                                exit_code: outcome.exit_code,
-                            });
-                        }
-                        Err(err) => {
-                            tracing::warn!(
-                                "embedded zccache compile failed for {}: {err}; \
-                                 falling back to wrapper path",
-                                source.display(),
-                            );
-                            // Fall through to the wrapper-mode arms below.
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    // On Windows, write all flags to a response file to avoid command-line
-    // length limits and backslash-quote escaping issues with CreateProcessW.
-    let args = if cfg!(windows) {
-        let response_dir = response_file_dir(output, temp_dir);
-        let response_file = write_response_file(&all_flags, &response_dir, response_file_prefix)?;
-        let response_file = invocation_response_file_path(&response_file)?;
-        let raw_args = [
-            compiler.to_string_lossy().to_string(),
-            format!("@{}", response_file.display()),
-        ];
-        let raw_refs: Vec<&str> = raw_args.iter().map(|s| s.as_str()).collect();
-        crate::zccache::wrap_args(&raw_refs, compiler_cache)
-    } else {
-        let sanitized = prepare_flags_for_exec(all_flags);
-        let mut raw_args: Vec<String> = vec![compiler.to_string_lossy().to_string()];
-        raw_args.extend(sanitized);
-        let raw_refs: Vec<&str> = raw_args.iter().map(|s| s.as_str()).collect();
-        crate::zccache::wrap_args(&raw_refs, compiler_cache)
-    };
-
-    let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
+    let global = crate::compile_backend::get_global().ok_or_else(|| {
+        fbuild_core::FbuildError::BuildFailed(
+            "compile_backend not installed — fbuild-daemon must call \
+             compile_backend::install_global at startup before any compile \
+             fires (FastLED/fbuild#800)"
+                .to_string(),
+        )
+    })?;
+    let svc = global.service();
+    let runtime = global.runtime();
+    let cwd = compile_cwd
+        .clone()
+        .or_else(|| std::env::current_dir().ok())
+        .unwrap_or_else(|| PathBuf::from("."));
 
     if verbose {
-        tracing::info!("compile: {}", args.join(" "));
+        tracing::info!(
+            "compile (embedded): {} {}",
+            compiler.display(),
+            all_flags.join(" ")
+        );
     }
 
-    let mut result = run_command(&args_ref, compile_cwd.as_deref(), None, None)?;
+    let outcome = svc
+        .compile_blocking(runtime, compiler, all_flags, cwd, Vec::new())
+        .map_err(|err| {
+            fbuild_core::FbuildError::BuildFailed(format!(
+                "embedded zccache compile failed for {}: {err}",
+                source.display(),
+            ))
+        })?;
 
-    if !result.success() {
-        if let Some(zccache) = compiler_cache {
-            if crate::zccache::output_has_stale_daemon_error(&result.stdout, &result.stderr) {
-                tracing::warn!(
-                    "zccache protocol mismatch detected; stopping daemon and retrying compile"
-                );
-                crate::zccache::stop(zccache)?;
-                crate::zccache::ensure_running(zccache)?;
-                result = run_command(&args_ref, compile_cwd.as_deref(), None, None)?;
-            }
-        }
-    }
-
-    if result.success() {
+    if outcome.exit_code == 0 {
         std::fs::write(command_hash_path(output), rebuild_signature)?;
     }
 
     Ok(CompileResult {
-        success: result.success(),
+        success: outcome.exit_code == 0,
         object_file: output.to_path_buf(),
-        stdout: result.stdout,
-        stderr: result.stderr,
-        exit_code: result.exit_code,
+        stdout: String::from_utf8_lossy(&outcome.stdout).into_owned(),
+        stderr: String::from_utf8_lossy(&outcome.stderr).into_owned(),
+        exit_code: outcome.exit_code,
     })
 }
 

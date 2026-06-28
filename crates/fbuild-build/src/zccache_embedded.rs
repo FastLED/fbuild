@@ -1,31 +1,29 @@
-//! Embedded zccache service wrapper.
+//! Embedded zccache service.
 //!
-//! Phase 1 of FastLED/fbuild#789 (this module, #790): hosts the
-//! upstream `zccache::embedded::ZccacheService` inside fbuild-daemon's
-//! tokio runtime so a future phase can route per-compile dispatch
-//! through it without spawning a `zccache wrap …` child process per
-//! TU. Phase 1 only constructs the service — Phase 2 (#791) wires
-//! the dispatch.
+//! Hosts the upstream `zccache::embedded::ZccacheService` inside
+//! `fbuild-daemon`'s tokio runtime. Every per-TU compile and every
+//! fingerprint check dispatches through this module — there is no
+//! wrapper-binary fallback as of
+//! [FastLED/fbuild#800](https://github.com/FastLED/fbuild/issues/800)
+//! (Phase 4 stage 2 of #789).
 //!
 //! ## Design constraint: daemon-only
 //!
 //! The embedded `ZccacheService` lives **inside the long-lived
 //! fbuild-daemon process and nowhere else**. Transient processes
-//! (the CLI, build orchestrators called outside the daemon) keep
-//! talking to the wrapper binary because paying
-//! `ZccacheService::start` for a one-shot invocation would erase
-//! every saving the embedded model offers.
+//! (CLI invocations, in-process diagnostic subcommands) do not pay
+//! `ZccacheService::start` cost — the daemon owns the service and
+//! every compile flows through the daemon's HTTP API.
 //!
 //! ## Tokio runtime sharing
 //!
-//! `ZccacheConfig::runtime.handle` is left `None` for Phase 1.
-//! `ZccacheService::start` is `async`, so the persistent background
-//! tasks it spawns via `tokio::spawn` land on the **ambient**
-//! runtime — which means the daemon's tokio runtime. Single-runtime
-//! attach for tokio-console therefore works without explicit
-//! handle plumbing. The explicit-handle path
+//! `ZccacheConfig::runtime.handle` is left `None`. `ZccacheService::
+//! start` is `async`, so the persistent background tasks it spawns
+//! via `tokio::spawn` land on the **ambient** runtime — which is
+//! the daemon's. Single-runtime attach for tokio-console therefore
+//! works without explicit handle plumbing. The explicit-handle path
 //! ([zccache#922](https://github.com/zackees/zccache/issues/922))
-//! is a Phase 2+ refinement.
+//! is an optional future refinement.
 //!
 //! ## Identity defaults
 //!
