@@ -82,7 +82,12 @@ jobs:
           # action's default doesn't silently change build behavior in
           # this template. 0.7.59 is the latest PyPI/npm/GH-Releases
           # release at time of authoring (next release will be 0.7.60).
-          version: "0.7.59"
+          # Bumped from 0.7.59 → 0.7.61 to pull soldr#1013 which adds
+          # `soldr build` as a clap-captured native verb. Required by
+          # the template's "Build release binaries" step below; earlier
+          # soldr versions would treat `soldr build` as the External
+          # crate-fetch path and fail loudly.
+          version: "0.7.61"
           cache: true
           build-cache: true
           target-cache: true
@@ -191,6 +196,16 @@ jobs:
 
       - name: Build release binaries
         shell: bash
+        # soldr#1012 PR 2: the `else` arm (the soldr-surface dispatch
+        # path) migrates from `soldr cargo build` to `soldr build` —
+        # the new blessed-default surface added in soldr#1013. Today
+        # the two are byte-for-byte identical (soldr build is a clap-
+        # captured alias forwarding to the same cargo_front_door); the
+        # rename is a forward-compat surface change so subsequent
+        # #1012 PRs (3-5) can layer catalogue-driven sysroot prep on
+        # the same arm without needing a second fbuild PR. The xwin /
+        # zigbuild branches stay on their explicit legacy tools until
+        # PR 5 absorbs them — see #1012 for the ordering rationale.
         run: |
           if [ "${{ inputs.mac_cross_linux }}" = "true" ]; then
             # Linux → aarch64-apple-darwin: zigbuild + soldr-managed SDK.
@@ -212,7 +227,8 @@ jobs:
               -p fbuild-cli \
               -p fbuild-daemon
           else
-            soldr cargo build --release --target ${{ inputs.target }} \
+            # Blessed default surface (soldr#1012 PR 2).
+            soldr build --release --target ${{ inputs.target }} \
               -p fbuild-cli \
               -p fbuild-daemon
           fi
@@ -261,17 +277,23 @@ jobs:
               --target "${PYO3_TARGET}.2.17" -p fbuild-python \
               --features extension-module
           elif [ "${{ inputs.macos_cross }}" = "true" ]; then
-            PYO3_NO_PYTHON=1 soldr cargo build --release \
+            # soldr#1012 PR 2: blessed default surface (was `soldr
+            # cargo build`).
+            PYO3_NO_PYTHON=1 soldr build --release \
               --target-dir "${PYTHON_TARGET_DIR}" \
               --target ${{ inputs.target }} -p fbuild-python \
               --features extension-module
           elif [ "${{ runner.os }}" = "macOS" ]; then
-            soldr cargo build --release --target-dir "${PYTHON_TARGET_DIR}" \
+            # soldr#1012 PR 2: blessed default surface (was `soldr
+            # cargo build`).
+            soldr build --release --target-dir "${PYTHON_TARGET_DIR}" \
               --target ${{ inputs.target }} \
               -p fbuild-python \
               --features extension-module
           else
-            soldr cargo build --release --target-dir "${PYTHON_TARGET_DIR}" \
+            # soldr#1012 PR 2: blessed default surface (was `soldr
+            # cargo build`).
+            soldr build --release --target-dir "${PYTHON_TARGET_DIR}" \
               --target ${{ inputs.target }} \
               -p fbuild-python \
               --features extension-module
