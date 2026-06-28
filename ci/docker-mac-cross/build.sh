@@ -1,16 +1,30 @@
 #!/usr/bin/env bash
-# Run inside the `fbuild-mac-arm64-cross` docker image (see Dockerfile).
-# Cross-compiles fbuild + fbuild-daemon + the PyO3 extension to
-# aarch64-apple-darwin using soldr + cargo-zigbuild + soldr's Apple SDK.
+# Run inside the `fbuild-mac-cross` docker image (see Dockerfile).
+# Cross-compiles fbuild + fbuild-daemon + the PyO3 extension to one of
+# the Apple targets using soldr + cargo-zigbuild + soldr's Apple SDK.
+#
+# Usage:
+#   ./build.sh                         # default aarch64-apple-darwin
+#   TARGET=x86_64-apple-darwin ./build.sh  # mac intel
+#   ./build.sh aarch64-apple-darwin    # explicit positional arg
 #
 # Output layout (in $PWD/staging):
-#   fbuild                  ← Mach-O 64-bit executable arm64
-#   fbuild-daemon           ← Mach-O 64-bit executable arm64
-#   _native.abi3.so         ← Mach-O 64-bit dylib arm64 (PyO3 extension)
+#   fbuild                  ← Mach-O 64-bit executable <arch>
+#   fbuild-daemon           ← Mach-O 64-bit executable <arch>
+#   _native.abi3.so         ← Mach-O 64-bit dylib <arch> (PyO3 extension)
 
 set -euo pipefail
 
-TARGET="aarch64-apple-darwin"
+TARGET="${1:-${TARGET:-aarch64-apple-darwin}}"
+case "$TARGET" in
+    aarch64-apple-darwin) MACHO_ARCH_PATTERN="arm64|aarch64" ;;
+    x86_64-apple-darwin)  MACHO_ARCH_PATTERN="x86_64" ;;
+    *)
+        echo "ERROR: unsupported TARGET=$TARGET (expected aarch64-apple-darwin or x86_64-apple-darwin)" >&2
+        exit 2
+        ;;
+esac
+echo "::notice::TARGET=$TARGET (expect Mach-O $MACHO_ARCH_PATTERN)"
 STAGING="${STAGING:-$PWD/staging}"
 mkdir -p "$STAGING"
 
@@ -56,19 +70,19 @@ if [ ! -f "$EXT_SRC" ]; then
 fi
 cp "$EXT_SRC" "$STAGING/_native.abi3.so"
 
-# Verify the output is actually a Mach-O ARM64 binary — this is the
+# Verify the output is actually a Mach-O <arch> binary — this is the
 # `NO CHEATING` gate. If file(1) reports anything other than
-# `Mach-O 64-bit ... arm64` for all three artifacts, the cross-compile
+# `Mach-O 64-bit ... <arch>` for all three artifacts, the cross-compile
 # silently produced the host binary instead and we must fail loudly.
 for f in fbuild fbuild-daemon _native.abi3.so; do
     desc="$(file "$STAGING/$f")"
     echo "  $desc"
-    if ! echo "$desc" | grep -qE "Mach-O.*(arm64|aarch64)"; then
-        echo "ERROR: $f is not Mach-O arm64 — got: $desc" >&2
+    if ! echo "$desc" | grep -qE "Mach-O.*($MACHO_ARCH_PATTERN)"; then
+        echo "ERROR: $f is not Mach-O matching '$MACHO_ARCH_PATTERN' — got: $desc" >&2
         exit 1
     fi
 done
 echo "::endgroup::"
 
-echo "All three artifacts are valid Mach-O arm64. Staging dir: $STAGING"
+echo "All three artifacts are valid Mach-O for $TARGET. Staging dir: $STAGING"
 ls -lh "$STAGING"

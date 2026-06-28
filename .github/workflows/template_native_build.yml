@@ -163,7 +163,7 @@ jobs:
         run: |
           if [ "${{ inputs.mac_cross_linux }}" = "true" ]; then
             # Linux → aarch64-apple-darwin: zigbuild + soldr-managed SDK.
-            # Identical recipe to ci/docker-mac-arm64-cross/build.sh, which
+            # Identical recipe to ci/docker-mac-cross/build.sh, which
             # validates this same path against a minimal ubuntu:24.04 image.
             soldr cargo zigbuild --release --target ${{ inputs.target }} \
               -p fbuild-cli \
