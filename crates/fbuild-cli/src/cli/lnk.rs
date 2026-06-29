@@ -166,9 +166,14 @@ pub async fn run_lnk(
             }
 
             // Download to a temp dir, hash it, then write the .lnk.
-            let tmp = tempfile::tempdir().map_err(|e| {
-                fbuild_core::FbuildError::PackageError(format!("failed to create temp dir: {e}"))
-            })?;
+            // Rooted under `~/.fbuild/{dev|prod}/tmp/lnk-download/` —
+            // FastLED/fbuild#844 bridge pair 10.
+            let tmp =
+                tempfile::tempdir_in(fbuild_paths::temp_subdir("lnk-download")).map_err(|e| {
+                    fbuild_core::FbuildError::PackageError(format!(
+                        "failed to create temp dir: {e}"
+                    ))
+                })?;
             let downloaded = fbuild_packages::downloader::download_file(&url, tmp.path()).await?;
             let bytes = std::fs::read(&downloaded).map_err(|e| {
                 fbuild_core::FbuildError::PackageError(format!(

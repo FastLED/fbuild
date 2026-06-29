@@ -19,7 +19,6 @@
 #     dumps that report the OS temp dir, dev-only helpers), open an
 #     issue first and add the entry with an inline justification.
 
-bench/fastled-examples/src/main.rs
 crates/fbuild-build/src/arduino_props.rs
 crates/fbuild-build/src/avr/avr_linker.rs
 crates/fbuild-build/src/avr/orchestrator.rs
@@ -52,7 +51,6 @@ crates/fbuild-build/src/symbol_analyzer/tests.rs
 crates/fbuild-build/src/teensy/orchestrator.rs
 crates/fbuild-build/src/zccache.rs
 crates/fbuild-cli/src/cli/clangd_config.rs
-crates/fbuild-cli/src/cli/lnk.rs
 crates/fbuild-cli/src/cli/port_scan.rs
 crates/fbuild-cli/src/cli/symbols_cmd.rs
 crates/fbuild-config/src/board/tests_project_local.rs
@@ -118,5 +116,3 @@ crates/fbuild-packages/src/toolchain/rp2040_pqt.rs
 crates/fbuild-packages/src/toolchain/teensy_arm.rs
 crates/fbuild-python/src/daemon.rs
 crates/fbuild-test-support/src/compile_db.rs
-crates/fbuild-test-support/src/lib.rs
-crates/fbuild-test-support/src/mini_framework.rs

@@ -73,7 +73,10 @@ impl MiniFramework {
     /// [`add_project_include`]: MiniFramework::add_project_include
     /// [`project_search_paths`]: MiniFramework::project_search_paths
     pub fn new() -> Self {
-        let tmp = tempfile::tempdir().expect("MiniFramework: failed to create temp dir");
+        // Root scratch dirs under `~/.fbuild/{dev|prod}/tmp/mini-framework/`
+        // — FastLED/fbuild#844 bridge pair 10.
+        let tmp = tempfile::tempdir_in(fbuild_paths::temp_subdir("mini-framework"))
+            .expect("MiniFramework: failed to create temp dir");
         let framework_root = tmp.path().join("framework");
         let project_root = tmp.path().join("project");
 
