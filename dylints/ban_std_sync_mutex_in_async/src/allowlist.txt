@@ -1,0 +1,49 @@
+# Each non-empty, non-comment line is matched against the tail of each
+# source file path (slashes normalized to /). Use forward-slash paths
+# only — the lint normalizes \ to / before matching.
+#
+# Test files (path tail matches `*tests*.rs`) and code inside a
+# `#[cfg(test)] mod` block are UNCONDITIONALLY exempt in lib.rs. They
+# do NOT need entries here.
+#
+# Rollout strategy:
+#   - The lint is ON and denies new `std::sync::{Mutex,RwLock}` uses
+#     in daemon / serial code.
+#   - This file lists the *existing* production call sites at the
+#     time the lint was first enabled (FastLED/fbuild#826). Each is
+#     justified inline.
+#   - New files MUST NOT be added here without a one-line reason and
+#     a PR review.
+
+# `DaemonState`, `current_operation`, `dependency_install`, and
+# `last_activity` are read under `std::sync::RwLock` / `Mutex` from
+# request handlers but the critical sections are tiny (single struct
+# field updates) and never cross an await — the daemon's policy is
+# "snapshot under the lock, drop the guard, then await". Migrating
+# to `tokio::sync` would force every probe / observer to be async
+# without changing the actual concurrency surface.
+crates/fbuild-daemon/src/context.rs
+
+# Daemon device manager: per-port state machine kept under a
+# `std::sync::Mutex`. The lock is held only across in-memory DashMap
+# updates and never across `.await`.
+crates/fbuild-daemon/src/device_manager.rs
+
+# Daemon status manager: append-only ring of recent build/deploy
+# outcomes under a `std::sync::Mutex`. Same discipline as the
+# device manager — short critical sections, no await held.
+crates/fbuild-daemon/src/status_manager.rs
+
+# Handlers/operations/common.rs reads the Arc<RwLock<DaemonState>>
+# and Arc<RwLock<Option<String>>> defined in context.rs. The lock
+# types flow through here only as parameter / field types — no new
+# `std::sync` lock is constructed.
+crates/fbuild-daemon/src/handlers/operations/common.rs
+
+# fbuild-serial's per-session output buffer is a small VecDeque
+# guarded by `std::sync::Mutex` to serialize pushes from the
+# background read task and pops from `read_lines()` consumers. The
+# mutex is never held across `.await` — pushes hand off via a
+# `tokio::sync::broadcast` channel; this lock only protects the
+# in-memory snapshot used for late-joiner replay.
+crates/fbuild-serial/src/manager.rs

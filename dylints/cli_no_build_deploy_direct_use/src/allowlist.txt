@@ -1,0 +1,32 @@
+# Each non-empty, non-comment line is matched against the tail of each
+# source file path (slashes normalized to /).
+#
+# Files listed here are "diagnostic subcommands" — read-only,
+# in-process inspectors that don't need the build pipeline and would
+# only add latency by going through HTTP. See `crates/CLAUDE.md`
+# §"Diagnostic subcommand exception".
+#
+# Adding a new entry needs a one-line justification comment and a PR
+# review — the diff to this file is the audit trail.
+
+# `args.rs` declares clap-derived enums (e.g. `CliShrinkMode`) that
+# mirror `fbuild_build::shrink::ShrinkMode`. The CLI must own the
+# clap layer; importing the corresponding `ShrinkMode` enum is a
+# presentation type, not a build-pipeline call.
+crates/fbuild-cli/src/cli/args.rs
+
+# `bloat-lookup`, `graph`, `symbols`, `compile-many` diagnostic
+# subcommands run the build-info / symbol-analyzer code paths
+# in-process — they're read-only inspectors over an already-built
+# project's artifacts, no daemon round-trip needed.
+crates/fbuild-cli/src/cli/bloat_lookup.rs
+crates/fbuild-cli/src/cli/graph_cmd.rs
+crates/fbuild-cli/src/cli/symbols_cmd.rs
+crates/fbuild-cli/src/cli/compile_many.rs
+
+# `fbuild reset` calls into `fbuild_deploy::reset` directly because
+# resetting a device is a single, fast, no-build-state operation —
+# wrapping it in a daemon HTTP round-trip adds latency for no
+# benefit. This may migrate to the daemon if/when reset gains state
+# (lock holding, port multiplexing).
+crates/fbuild-cli/src/cli/reset.rs

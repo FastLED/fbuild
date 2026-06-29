@@ -1,0 +1,20 @@
+[package]
+name = "require_multi_thread_flavor_when_spawning"
+version = "0.1.0"
+description = "Require tokio::test(flavor = \"multi_thread\") when the test body calls tokio::spawn"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+# Pinned to the same dylint_linting rev the other fbuild dylints use —
+# same rustup channel in rust-toolchain.toml, same upstream commit.
+dylint_linting = { git = "https://github.com/trailofbits/dylint", rev = "4bd91ce7729b74c7ee5664bbb588f7baf30b4a09" }
+
+[dev-dependencies]
+dylint_testing = { git = "https://github.com/trailofbits/dylint", rev = "4bd91ce7729b74c7ee5664bbb588f7baf30b4a09" }
+
+[package.metadata.rust-analyzer]
+rustc_private = true

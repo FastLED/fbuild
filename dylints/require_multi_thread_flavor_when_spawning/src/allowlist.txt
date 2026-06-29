@@ -1,0 +1,28 @@
+# Each non-empty, non-comment line is matched against the tail of each
+# source file path (slashes normalized to /). Use forward-slash paths
+# only — the lint normalizes \ to / before matching.
+#
+# Rollout strategy:
+#   - The lint is ON and denies new `#[tokio::test]` annotations on
+#     async fns that call `tokio::spawn` in their body without
+#     `flavor = "multi_thread"`.
+#   - This file lists the *legacy* call sites that existed when the
+#     lint was first enabled (FastLED/fbuild#826). They are exempted
+#     so the lint can land without an upfront audit of every test —
+#     each entry must be migrated and removed in follow-up PRs.
+#   - New files MUST NOT be added here.
+
+# Daemon WebSocket reader-control tests: spawn a "toy reader" inside
+# the test body, then synchronously poke a control channel. Under
+# `current_thread` this happens to work because the reader's
+# `select!` polls broadcast-then-control with biased ordering and
+# the broadcast events are pre-queued before the test awaits. The
+# test is racy under `multi_thread` until reworked. Tracked.
+crates/fbuild-daemon/src/handlers/websockets_tests.rs
+
+# Packages install-lock tests: spawn a waiter to verify the
+# acquire/release contract. Single-threaded scheduling happens to
+# serialize the spawn relative to the parent's `.await`, which is
+# the timing the test asserts. Reworking for `multi_thread`
+# requires explicit synchronization. Tracked.
+crates/fbuild-packages/src/install_lock.rs
