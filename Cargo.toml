@@ -28,7 +28,7 @@ exclude = [
     "dylints/ban_file_based_locks",
     "dylints/ban_deploy_tool_direct_invocation",
     "dylints/ban_process_exit_outside_main",
-    "dylints/ban_unwrap_in_daemon_handlers",
+    "dylints/ban_unwrap_in_production",
     "dylints/cli_no_build_deploy_direct_use",
     "dylints/require_multi_thread_flavor_when_spawning",
     "dylints/ban_std_sync_mutex_in_async",

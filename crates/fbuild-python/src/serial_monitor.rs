@@ -84,7 +84,8 @@ impl SerialMonitor {
             open_if_needed: true,
             pre_acquire_writer: true,
         };
-        let attach_json = serde_json::to_string(&attach).unwrap();
+        let attach_json = serde_json::to_string(&attach)
+            .expect("fbuild-python: ClientMessage::Attach serialization is infallible");
 
         let send_result = rt.block_on(async {
             tokio::time::timeout(HANDSHAKE_TIMEOUT, write.send(tungstenite::Message::Text(attach_json)))
@@ -154,7 +155,8 @@ impl SerialMonitor {
 
     fn close_ws(&mut self) {
         if let (Some(rt), Some(ws_write)) = (&self.runtime, &self.ws_write) {
-            let detach = serde_json::to_string(&ClientMessage::Detach).unwrap();
+            let detach = serde_json::to_string(&ClientMessage::Detach)
+                .expect("fbuild-python: ClientMessage::Detach serialization is infallible");
             if let Ok(mut write) = ws_write.lock() {
                 let _ = rt.block_on(write.send(tungstenite::Message::Text(detach)));
                 let _ = rt.block_on(write.send(tungstenite::Message::Close(None)));
@@ -254,7 +256,7 @@ impl SerialMonitor {
             while std::time::Instant::now() < deadline {
                 let remaining = deadline - std::time::Instant::now();
                 let result = {
-                    let mut read = ws_read.lock().unwrap();
+                    let mut read = ws_read.lock().unwrap_or_else(|e| e.into_inner());
                     // tokio::time::timeout MUST be constructed inside the
                     // runtime context, otherwise it panics with "there is
                     // no reactor running" because the Sleep future needs
@@ -326,10 +328,11 @@ impl SerialMonitor {
         };
 
         let encoded = base64::engine::general_purpose::STANDARD.encode(data.as_bytes());
-        let msg = serde_json::to_string(&ClientMessage::Write { data: encoded }).unwrap();
+        let msg = serde_json::to_string(&ClientMessage::Write { data: encoded })
+            .expect("fbuild-python: ClientMessage::Write serialization is infallible");
 
         {
-            let mut write = ws_write.lock().unwrap();
+            let mut write = ws_write.lock().unwrap_or_else(|e| e.into_inner());
             if rt
                 .block_on(write.send(tungstenite::Message::Text(msg)))
                 .is_err()
@@ -339,7 +342,7 @@ impl SerialMonitor {
         }
 
         // Wait for write_ack
-        let mut read = ws_read.lock().unwrap();
+        let mut read = ws_read.lock().unwrap_or_else(|e| e.into_inner());
         let timeout = std::time::Duration::from_secs(5);
         // tokio::time::timeout must be created inside the runtime context.
         match rt.block_on(async { tokio::time::timeout(timeout, read.next()).await }) {
@@ -434,9 +437,10 @@ impl SerialMonitor {
             return 0;
         };
 
-        let msg = serde_json::to_string(&ClientMessage::GetInWaiting).unwrap();
+        let msg = serde_json::to_string(&ClientMessage::GetInWaiting)
+            .expect("fbuild-python: ClientMessage::GetInWaiting serialization is infallible");
         {
-            let mut write = ws_write.lock().unwrap();
+            let mut write = ws_write.lock().unwrap_or_else(|e| e.into_inner());
             if rt
                 .block_on(write.send(tungstenite::Message::Text(msg)))
                 .is_err()
@@ -449,7 +453,7 @@ impl SerialMonitor {
         // streaming Data frames or Preempted notifications) can arrive
         // in front of the reply; ignore them and keep waiting for the
         // typed answer until the 2s deadline expires.
-        let mut read = ws_read.lock().unwrap();
+        let mut read = ws_read.lock().unwrap_or_else(|e| e.into_inner());
         let deadline = std::time::Instant::now() + std::time::Duration::from_secs(2);
         while std::time::Instant::now() < deadline {
             let remaining = deadline - std::time::Instant::now();
@@ -481,8 +485,9 @@ impl SerialMonitor {
         let (Some(rt), Some(ws_write)) = (&self.runtime, &self.ws_write) else {
             return;
         };
-        let msg = serde_json::to_string(&ClientMessage::ClearBuffer).unwrap();
-        let mut write = ws_write.lock().unwrap();
+        let msg = serde_json::to_string(&ClientMessage::ClearBuffer)
+            .expect("fbuild-python: ClientMessage::ClearBuffer serialization is infallible");
+        let mut write = ws_write.lock().unwrap_or_else(|e| e.into_inner());
         let _ = rt.block_on(write.send(tungstenite::Message::Text(msg)));
     }
 
@@ -599,7 +604,7 @@ impl SerialMonitor {
         while std::time::Instant::now() < deadline {
             let remaining = deadline - std::time::Instant::now();
             let result = {
-                let mut read = ws_read.lock().unwrap();
+                let mut read = ws_read.lock().unwrap_or_else(|e| e.into_inner());
                 // tokio::time::timeout must be created inside the runtime
                 // context (otherwise: "there is no reactor running" panic).
                 rt.block_on(async { tokio::time::timeout(remaining, read.next()).await })

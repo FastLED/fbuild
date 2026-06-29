@@ -73,7 +73,10 @@ pub async fn run_bloat_lookup(
     };
     let report = analyze_elf(cfg).await?;
 
-    let query_str = symbol.clone().or_else(|| symbol_mangled.clone()).unwrap();
+    let query_str = symbol
+        .clone()
+        .or_else(|| symbol_mangled.clone())
+        .expect("fbuild-cli: bloat_lookup guards that symbol or symbol_mangled is Some");
     let query = match (&symbol, &symbol_mangled) {
         (Some(s), _) => SymbolQuery::SubstringDemangled(s),
         (None, Some(m)) => SymbolQuery::ExactMangled(m),

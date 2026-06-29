@@ -230,7 +230,9 @@ pub async fn run_sequential_build_with_libs(
 
     // Unwrap the build log Mutex back into the context for the remaining
     // single-threaded phases (link, result assembly).
-    ctx.build_log = build_log_mutex.into_inner().unwrap();
+    ctx.build_log = build_log_mutex
+        .into_inner()
+        .unwrap_or_else(|e| e.into_inner());
 
     // Project-as-library: compile project root's src/ as an archive when
     // building an example sketch from a library project (e.g. FastLED examples).

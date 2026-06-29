@@ -684,7 +684,9 @@ impl BuildOrchestrator for Esp32Orchestrator {
         };
 
         // Unwrap build log and flush collected warnings
-        let mut build_log = build_log_mutex.into_inner().unwrap();
+        let mut build_log = build_log_mutex
+            .into_inner()
+            .unwrap_or_else(|e| e.into_inner());
         for w in core_result.warnings.iter().chain(&sketch_result.warnings) {
             crate::build_output::collect_warnings(w, &mut build_log);
         }

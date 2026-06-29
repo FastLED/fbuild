@@ -342,7 +342,11 @@ pub fn find_firmware(
 /// Like `find_firmware()` but returns the directory, not the file.
 /// Useful when you need sibling files (bootloader.bin, partitions.bin).
 pub fn find_firmware_dir(project_dir: &Path, env_name: &str) -> Option<PathBuf> {
-    find_firmware(project_dir, env_name, None).map(|p| p.parent().unwrap().to_path_buf())
+    find_firmware(project_dir, env_name, None).map(|p| {
+        p.parent()
+            .expect("fbuild-paths: find_firmware always returns a file under a directory")
+            .to_path_buf()
+    })
 }
 
 fn dirs_next() -> Option<PathBuf> {

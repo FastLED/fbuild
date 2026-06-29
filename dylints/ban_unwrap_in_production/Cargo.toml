@@ -1,7 +1,7 @@
-[package]
-name = "ban_unwrap_in_daemon_handlers"
+﻿[package]
+name = "ban_unwrap_in_production"
 version = "0.1.0"
-description = "Ban .unwrap() inside fbuild-daemon HTTP/WS handler code"
+description = "Ban .unwrap() inside fbuild production code (daemon + cli/cli/**)"
 edition = "2021"
 publish = false
 
@@ -9,7 +9,7 @@ publish = false
 crate-type = ["cdylib"]
 
 [dependencies]
-# Pinned to the same dylint_linting rev the other fbuild dylints use —
+# Pinned to the same dylint_linting rev the other fbuild dylints use --
 # same rustup channel in rust-toolchain.toml, same upstream commit.
 dylint_linting = { git = "https://github.com/trailofbits/dylint", rev = "4bd91ce7729b74c7ee5664bbb588f7baf30b4a09" }
 

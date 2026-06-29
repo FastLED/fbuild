@@ -151,8 +151,12 @@ async fn main() {
         .layer(
             tower_http::cors::CorsLayer::new()
                 .allow_origin([
-                    "http://localhost".parse().unwrap(),
-                    "http://127.0.0.1".parse().unwrap(),
+                    "http://localhost"
+                        .parse()
+                        .expect("fbuild-daemon: 'http://localhost' is a valid CORS origin"),
+                    "http://127.0.0.1"
+                        .parse()
+                        .expect("fbuild-daemon: 'http://127.0.0.1' is a valid CORS origin"),
                 ])
                 .allow_methods(tower_http::cors::Any)
                 .allow_headers(tower_http::cors::Any),

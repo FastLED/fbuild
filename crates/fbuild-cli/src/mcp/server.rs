@@ -62,7 +62,9 @@ pub async fn run_mcp_server() -> i32 {
             continue;
         }
 
-        let id = request.id.unwrap();
+        let id = request
+            .id
+            .expect("fbuild-cli: notification (id.is_none()) handled above; id is Some here");
         let params = request.params.unwrap_or(Value::Null);
 
         let response = match request.method.as_str() {

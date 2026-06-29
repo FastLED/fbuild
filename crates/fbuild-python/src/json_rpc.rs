@@ -105,7 +105,8 @@ pub(crate) async fn write_async(
     ws_read_slot: Arc<tokio::sync::Mutex<Option<WsSource>>>,
     encoded: String,
 ) -> bool {
-    let msg = serde_json::to_string(&ClientMessage::Write { data: encoded }).unwrap();
+    let msg = serde_json::to_string(&ClientMessage::Write { data: encoded })
+        .expect("fbuild-python: ClientMessage::Write serialization is infallible");
 
     {
         let mut guard = ws_write_slot.lock().await;

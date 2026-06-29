@@ -41,11 +41,16 @@ itself stays on stable 1.94.1).
   destructors leaks temp files, kills containment guards, and
   truncates in-flight HTTP/WS responses. Legacy CLI subcommand
   dispatchers exempted via `src/allowlist.txt`. See #826.
-- **`ban_unwrap_in_daemon_handlers/`** — bans `.unwrap()` inside
-  `crates/fbuild-daemon/src/handlers/**/*.rs` production code (tests
-  exempt by filename and by `#[cfg(test)]` module walking). Locks in
-  PR #833's hardening; new violations would crash the daemon. See
-  #826.
+- **`ban_unwrap_in_production/`** — bans `.unwrap()` inside production
+  code under `crates/fbuild-daemon/src/**/*.rs` and
+  `crates/fbuild-cli/src/cli/**/*.rs` (tests exempt by sibling-file
+  name — `tests.rs`, `*_tests.rs`, `tests_*.rs` — and by
+  `#[cfg(test)]` module walking). PR #833 first landed this lint for
+  the daemon-handler subdirectory; FastLED/fbuild#844 item 11
+  widened it to all of `fbuild-daemon/src/` plus `fbuild-cli/src/cli/`
+  and tightened sibling-test-file detection. New violations would
+  crash the daemon or drop CLI users into a Rust backtrace. See #826
+  and #844.
 - **`cli_no_build_deploy_direct_use/`** — bans `fbuild_build::*` /
   `fbuild_deploy::*` references in `crates/fbuild-cli/src/` outside
   the diagnostic-subcommand allowlist. Enforces the "thin HTTP

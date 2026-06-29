@@ -424,7 +424,12 @@ fn looks_like_absolute_path(path: &Path, raw: &str) -> bool {
 
 fn compiler_identity(path: &Path) -> String {
     let cache = COMPILER_IDENTITY_CACHE.get_or_init(|| Mutex::new(HashMap::new()));
-    if let Some(identity) = cache.lock().unwrap().get(path).cloned() {
+    if let Some(identity) = cache
+        .lock()
+        .unwrap_or_else(|e| e.into_inner())
+        .get(path)
+        .cloned()
+    {
         return identity;
     }
 
@@ -437,7 +442,7 @@ fn compiler_identity(path: &Path) -> String {
     let identity = format!("{stem}\0{version}");
     cache
         .lock()
-        .unwrap()
+        .unwrap_or_else(|e| e.into_inner())
         .insert(path.to_path_buf(), identity.clone());
     identity
 }

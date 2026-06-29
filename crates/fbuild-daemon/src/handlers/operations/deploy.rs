@@ -734,7 +734,7 @@ pub async fn deploy(
                     &deploy_board_overrides,
                     Some(deploy_project.as_path()),
                 );
-                let avr_config = fbuild_build::avr::mcu_config::get_avr_config().unwrap();
+                let avr_config = fbuild_build::avr::mcu_config::get_avr_config()?;
                 let avrdude_params = fbuild_deploy::avr::AvrdudeParams {
                     default_programmer: avr_config.avrdude.default_programmer.clone(),
                     default_baud: avr_config.avrdude.default_baud.to_string(),

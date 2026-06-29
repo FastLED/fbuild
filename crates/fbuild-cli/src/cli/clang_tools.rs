@@ -270,7 +270,10 @@ pub async fn run_iwyu(
         let emap = entry_map_arc.clone();
         let verbose_flag = verbose;
         let handle = tokio::spawn(async move {
-            let _permit = sem.acquire().await.unwrap();
+            let _permit = sem
+                .acquire()
+                .await
+                .expect("fbuild-cli: clang-tool semaphore is never closed before all tasks finish");
             let src_path = src.as_ref().clone();
 
             // Compute blake3 cache key from source content + compile entry
@@ -570,7 +573,10 @@ pub async fn run_clang_tool(
         let pd = project_dir_arc.clone();
         let extra = extra_owned.clone();
         let handle = tokio::spawn(async move {
-            let _permit = sem.acquire().await.unwrap();
+            let _permit = sem
+                .acquire()
+                .await
+                .expect("fbuild-cli: clang-tool semaphore is never closed before all tasks finish");
             // allow-direct-spawn: parallel async fan-out (clang-tidy) in CLI binary.
             let mut cmd = tokio::process::Command::new(tool.as_ref());
             cmd.arg("-p").arg(pd.as_ref());

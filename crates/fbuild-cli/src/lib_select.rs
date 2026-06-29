@@ -427,5 +427,9 @@ fn emit_json(
         "unresolved": sel.unresolved,
     });
 
-    println!("{}", serde_json::to_string_pretty(&payload).unwrap());
+    println!(
+        "{}",
+        serde_json::to_string_pretty(&payload)
+            .expect("fbuild-cli: lib-select JSON payload is built from primitives, serialization is infallible")
+    );
 }

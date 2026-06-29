@@ -214,7 +214,8 @@ pub(super) fn substitute_vars(
     sections: &HashMap<String, HashMap<String, String>>,
     config: &HashMap<String, String>,
 ) -> HashMap<String, String> {
-    let re = Regex::new(r"\$\{([^}]+)\}").unwrap();
+    let re = Regex::new(r"\$\{([^}]+)\}")
+        .expect("fbuild-config: ini variable substitution regex is a valid pattern");
     let max_depth = 10;
     let mut result = config.clone();
 

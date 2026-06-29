@@ -33,7 +33,7 @@ pub async fn compile_sources(
     )
     .await?;
     if !result.warnings.is_empty() {
-        let mut log = build_log.lock().unwrap();
+        let mut log = build_log.lock().unwrap_or_else(|e| e.into_inner());
         for w in &result.warnings {
             crate::build_output::collect_warnings(w, &mut log);
         }
@@ -106,7 +106,7 @@ pub async fn compile_local_libraries(
         })?;
         library_objects.extend(result.objects);
         if !result.warnings.is_empty() {
-            let mut log = build_log.lock().unwrap();
+            let mut log = build_log.lock().unwrap_or_else(|e| e.into_inner());
             for w in &result.warnings {
                 crate::build_output::collect_warnings(w, &mut log);
             }
