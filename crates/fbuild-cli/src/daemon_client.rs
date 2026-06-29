@@ -265,9 +265,11 @@ impl DaemonClient {
     pub async fn build(&self, req: &BuildRequest) -> fbuild_core::Result<OperationResponse> {
         // Non-streaming build is used by API/MCP callers. It can legitimately
         // wait behind another client's global package/toolchain/sidecar
-        // install; do not let a client-side total timeout turn that wait into
-        // a spurious failure.
-        self.post_operation("/api/build", req, None).await
+        // install, but we still cap the wait at LONG_OPERATION_TIMEOUT (30 min)
+        // so a hung daemon doesn't translate to an unbounded hang for the
+        // caller. FastLED/fbuild#810 — matches the streaming variant's ceiling.
+        self.post_operation("/api/build", req, Some(LONG_OPERATION_TIMEOUT))
+            .await
     }
 
     /// Send a streaming build request. Prints log lines in real-time,
@@ -399,10 +401,14 @@ impl DaemonClient {
     /// Shut down the daemon.
     #[allow(dead_code)]
     pub async fn shutdown(&self) -> fbuild_core::Result<()> {
+        // FastLED/fbuild#810: cap the shutdown POST so the auto-restart path
+        // in `ensure_direct_daemon_running` (and `fbuild daemon stop`) can't
+        // wedge if the daemon accepts the connection but never replies.
         let resp = self
             .client
             .post(format!("{}/api/daemon/shutdown", self.base_url))
             .headers(shutdown_caller_headers())
+            .timeout(std::time::Duration::from_secs(10))
             .send()
             .await
             .map_err(|e| {

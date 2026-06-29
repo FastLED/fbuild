@@ -186,7 +186,15 @@ impl Linker for AvrLinker {
         }
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, None, None).await?;
+        // FastLED/fbuild#809: bound the link step at 3 min — generous
+        // upper bound for the largest AVR sketches.
+        let result = run_command(
+            &args_ref,
+            None,
+            None,
+            Some(std::time::Duration::from_secs(180)),
+        )
+        .await?;
 
         if !result.success() {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(

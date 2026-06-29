@@ -455,7 +455,16 @@ fn compiler_version(path: &Path) -> String {
         Ok(handle) => tokio::task::block_in_place(|| {
             handle.block_on(async {
                 let args = [program.as_str(), "-dumpversion"];
-                fbuild_core::subprocess::run_command(&args, None, None, None).await
+                // FastLED/fbuild#809: `gcc -dumpversion` is trivial; a
+                // hung toolchain binary (corrupt EXE, missing-DLL hang
+                // on Windows) should not block the whole pipeline.
+                fbuild_core::subprocess::run_command(
+                    &args,
+                    None,
+                    None,
+                    Some(std::time::Duration::from_secs(5)),
+                )
+                .await
             })
         }),
         Err(_) => {
@@ -703,9 +712,21 @@ pub async fn compile_source(
     // — every per-TU compile is reached through the async build trait
     // chain, so the daemon's tokio runtime drives `ZccacheService::
     // compile` natively.
-    let outcome = svc
-        .compile(compiler, sanitized, cwd, Vec::new())
+    //
+    // FastLED/fbuild#809: per-TU compile bounded by `tokio::time::timeout`
+    // so a wedged backend (network-mode cache, deadlocked fingerprint
+    // scan, …) can never park a daemon worker thread forever. 5 min is
+    // a generous upper bound for any single translation-unit compile;
+    // every legitimately-long step (linking, image gen) lives elsewhere.
+    let compile_fut = svc.compile(compiler, sanitized, cwd, Vec::new());
+    let outcome = tokio::time::timeout(std::time::Duration::from_secs(300), compile_fut)
         .await
+        .map_err(|_| {
+            fbuild_core::FbuildError::BuildFailed(format!(
+                "embedded zccache compile timed out after 300s for {}",
+                source.display(),
+            ))
+        })?
         .map_err(|err| {
             fbuild_core::FbuildError::BuildFailed(format!(
                 "embedded zccache compile failed for {}: {err}",

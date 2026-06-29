@@ -23,7 +23,12 @@ SESSION_FINGERPRINT_FILE = PROJECT_ROOT / ".cache" / "session_fingerprint.json"
 
 
 def run_cmd(cmd):
-    """Run a command rooted at PROJECT_ROOT."""
+    """Run a command rooted at PROJECT_ROOT.
+
+    FastLED/fbuild#812: 60-second watchdog. A stuck filesystem can wedge
+    `git status` on Windows; without the cap the SessionStart hook
+    would silently hang the entire session.
+    """
     return subprocess.run(
         cmd,
         capture_output=True,
@@ -31,6 +36,7 @@ def run_cmd(cmd):
         encoding="utf-8",
         errors="replace",
         cwd=str(PROJECT_ROOT),
+        timeout=60,
     )
 
 

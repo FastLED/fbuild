@@ -49,8 +49,17 @@ DIST_DIR = Path("dist")
 
 
 def run(cmd: list[str], **kwargs) -> subprocess.CompletedProcess:
-    """Run a command, print it, and return the result."""
+    """Run a command, print it, and return the result.
+
+    FastLED/fbuild#812: 5-minute default watchdog. All callers here are
+    short `gh workflow run` / `gh run view` / `gh run download` / `git`
+    invocations — none of them should ever take more than a few seconds.
+    The outer `wait_for_run` loop has its own deadline + sleep(15) cadence,
+    so individual `gh run view` calls being stuck is the failure mode this
+    cap exists to bound.
+    """
     print(f"  $ {' '.join(cmd)}", file=sys.stderr)
+    kwargs.setdefault("timeout", 300)
     return subprocess.run(cmd, check=True, **kwargs)
 
 

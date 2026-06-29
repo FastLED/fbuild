@@ -271,7 +271,15 @@ async fn preprocess_linker_script(
     args.push(output.to_string_lossy().to_string());
 
     let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-    let result = fbuild_core::subprocess::run_command(&args_ref, None, None, None).await?;
+    // FastLED/fbuild#809: linker-script preprocessing is a trivial
+    // g++ -E invocation; bound to 30s.
+    let result = fbuild_core::subprocess::run_command(
+        &args_ref,
+        None,
+        None,
+        Some(std::time::Duration::from_secs(30)),
+    )
+    .await?;
     if !result.success() {
         return Err(fbuild_core::FbuildError::BuildFailed(format!(
             "failed to preprocess Arduino mbed linker script for {}:\n{}",

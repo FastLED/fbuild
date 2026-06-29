@@ -39,9 +39,28 @@ pub async fn install_deps(
         Some(format!("Installing deps for {}", req.project_dir)),
     );
 
-    // Acquire per-project lock
+    // Acquire per-project lock.
+    // FastLED/fbuild#808 (CRITICAL): hard ceiling so a wedged previous
+    // build / deploy / install cannot leave install-deps waiting forever.
+    const INSTALL_DEPS_LOCK_HARD_DEADLINE: std::time::Duration =
+        std::time::Duration::from_secs(30 * 60);
     let lock = ctx.project_lock(&project_dir);
-    let _guard = lock.lock().await;
+    let _guard = match tokio::time::timeout(INSTALL_DEPS_LOCK_HARD_DEADLINE, lock.lock()).await {
+        Ok(g) => g,
+        Err(_) => {
+            return (
+                StatusCode::SERVICE_UNAVAILABLE,
+                Json(OperationResponse::fail(
+                    request_id,
+                    format!(
+                        "project lock not acquired within {}s; previous build may be wedged — \
+                         run `fbuild daemon locks` to see who is holding it",
+                        INSTALL_DEPS_LOCK_HARD_DEADLINE.as_secs()
+                    ),
+                )),
+            );
+        }
+    };
 
     // Parse platformio.ini to determine platform and resolve packages
     let config =

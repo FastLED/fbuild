@@ -18,6 +18,19 @@ use std::path::Path;
 use fbuild_build::{BuildOrchestrator, BuildParams};
 use fbuild_core::BuildProfile;
 
+/// 15-min wall-clock cap for `--ignored` real-toolchain tests (FastLED/fbuild#806).
+const REAL_BUILD_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(900);
+
+async fn under_test_timeout<F: std::future::Future>(fut: F) -> F::Output {
+    match tokio::time::timeout(REAL_BUILD_TIMEOUT, fut).await {
+        Ok(v) => v,
+        Err(_) => panic!(
+            "real-toolchain test exceeded {:.0}s budget — see FastLED/fbuild#806",
+            REAL_BUILD_TIMEOUT.as_secs_f64()
+        ),
+    }
+}
+
 fn make_params(project_dir: &Path) -> BuildParams {
     let build_dir = project_dir.join(".fbuild/build/esp32dev/release");
     BuildParams {
@@ -93,8 +106,7 @@ async fn eh_frame_strip_drops_firmware_at_least_150kb() {
     std::env::set_var("FBUILD_KEEP_EH_FRAME", "1");
     std::env::remove_var("FBUILD_STRIP_EH_FRAME");
     let preserve_params = make_params(&preserve_dir);
-    let preserve_result = orchestrator
-        .build(&preserve_params)
+    let preserve_result = under_test_timeout(orchestrator.build(&preserve_params))
         .await
         .expect("preserve build should succeed");
     assert!(
@@ -112,8 +124,7 @@ async fn eh_frame_strip_drops_firmware_at_least_150kb() {
     std::env::set_var("FBUILD_STRIP_EH_FRAME", "1");
     std::env::remove_var("FBUILD_KEEP_EH_FRAME");
     let strip_params = make_params(&strip_dir);
-    let strip_result = orchestrator
-        .build(&strip_params)
+    let strip_result = under_test_timeout(orchestrator.build(&strip_params))
         .await
         .expect("strip build should succeed");
     assert!(strip_result.success, "strip build should report success");

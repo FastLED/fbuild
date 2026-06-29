@@ -49,8 +49,14 @@ WORKSPACE_PREFIXES = (".cargo/",)
 RUST_EXTENSIONS = (".rs",)
 
 
-def run_cmd(cmd):
-    """Run a command rooted at PROJECT_ROOT."""
+def run_cmd(cmd, timeout=1800):
+    """Run a command rooted at PROJECT_ROOT.
+
+    FastLED/fbuild#812: every subprocess gets a watchdog so a wedged
+    cold cargo build / clippy / test on Stop can't hang the hook
+    indefinitely. Default 30 min — comfortably above the longest legit
+    cold workspace test run on this repo.
+    """
     return subprocess.run(
         cmd,
         capture_output=True,
@@ -58,6 +64,7 @@ def run_cmd(cmd):
         encoding="utf-8",
         errors="replace",
         cwd=str(PROJECT_ROOT),
+        timeout=timeout,
     )
 
 
@@ -71,7 +78,7 @@ def report_failure(label, result):
 
 def get_current_fingerprint():
     """Get MD5 fingerprint of current git status."""
-    result = run_cmd(["git", "status", "--porcelain"])
+    result = run_cmd(["git", "status", "--porcelain"], timeout=60)
     if result.returncode != 0:
         return None
     status_output = result.stdout
@@ -122,7 +129,7 @@ def get_dirty_files():
     source and destination — we count the destination (the path that
     exists on disk and might compile).
     """
-    result = run_cmd(["git", "status", "--porcelain", "-z"])
+    result = run_cmd(["git", "status", "--porcelain", "-z"], timeout=60)
     if result.returncode != 0 or not result.stdout:
         return []
     out = []

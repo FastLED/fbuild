@@ -40,6 +40,7 @@ permissions:
 jobs:
   add:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     if: ${{ vars.PROJECT_APP_CLIENT_ID != '' && vars.PROJECT_OWNER != '' }}
     steps:
       - name: Generate App token

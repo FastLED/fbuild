@@ -23,6 +23,40 @@ use sha2::{Digest, Sha256};
 use fbuild_packages::lnk::{materialize_all, scan_for_lnk};
 use fbuild_packages::DiskCache;
 
+/// Hard wall-clock budget for each lnk e2e tokio test (FastLED/fbuild#806).
+///
+/// The audit flagged these because `materialize_all` (sync, internally calls
+/// `download_file`) and `resolve` are invoked from inside `#[tokio::test]`
+/// with no enclosing `tokio::time::timeout`. Server lives in-process on
+/// loopback, so 15 s is generous — a wedge in the resolver, a missing
+/// `server_handle.abort()`, or a deadlocked sha-verify path all surface as
+/// a hard test failure within 15 s instead of letting CI sit on its 6 h job
+/// budget.
+///
+/// Caveat: the materialize/resolve calls are sync, so a true deadlock inside
+/// them can't be cancelled by `tokio::time::timeout` — the test task survives
+/// the timeout panic on its blocking thread. But the wrap still serves the
+/// audit's goal: it bounds the *test's* wall-clock so CI fails fast rather
+/// than hanging the whole job. Promoting these to true cancellation requires
+/// `spawn_blocking`, which is overkill for loopback-only fixtures.
+const LNK_TEST_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(15);
+
+/// Run `body` under `LNK_TEST_TIMEOUT`; panic with a clear message if it
+/// trips. Keeps each `#[tokio::test]` body free of right-shift indentation.
+async fn with_timeout<F, Fut>(name: &str, body: F)
+where
+    F: FnOnce() -> Fut,
+    Fut: std::future::Future<Output = ()>,
+{
+    match tokio::time::timeout(LNK_TEST_TIMEOUT, body()).await {
+        Ok(()) => {}
+        Err(_) => panic!(
+            "lnk e2e test `{name}` exceeded {:.0}s budget — see #806 audit",
+            LNK_TEST_TIMEOUT.as_secs_f64()
+        ),
+    }
+}
+
 fn sha256_of(bytes: &[u8]) -> String {
     let mut h = Sha256::new();
     h.update(bytes);
@@ -68,6 +102,9 @@ async fn spawn_test_server(blobs: Vec<(String, Vec<u8>)>) -> (u16, tokio::task::
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 async fn lnk_pipeline_e2e_fetches_verifies_and_materializes() {
+    with_timeout(
+        "lnk_pipeline_e2e_fetches_verifies_and_materializes",
+        || async {
     let blob_bytes = b"hello from the lnk e2e test".to_vec();
     let blob_sha = sha256_of(&blob_bytes);
 
@@ -117,10 +154,14 @@ async fn lnk_pipeline_e2e_fetches_verifies_and_materializes() {
     assert_eq!(std::fs::read(&target).unwrap(), blob_bytes);
 
     server_handle.abort();
+        },
+    )
+    .await;
 }
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 async fn lnk_pipeline_rejects_sha_mismatch() {
+    with_timeout("lnk_pipeline_rejects_sha_mismatch", || async {
     let blob_bytes = b"actual bytes from server".to_vec();
     let wrong_sha = sha256_of(b"different content"); // claims something else
 
@@ -160,10 +201,13 @@ async fn lnk_pipeline_rejects_sha_mismatch() {
     );
 
     server_handle.abort();
+    })
+    .await;
 }
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 async fn lnk_pipeline_handles_404() {
+    with_timeout("lnk_pipeline_handles_404", || async {
     let (port, server_handle) = spawn_test_server(vec![]).await;
     let url = format!("http://127.0.0.1:{port}/nope.bin");
     // 404 still produces *some* response body; sha matches that won't be
@@ -197,10 +241,15 @@ async fn lnk_pipeline_handles_404() {
     );
 
     server_handle.abort();
+    })
+    .await;
 }
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 async fn lnk_resolver_cache_hit_skips_network_on_second_call() {
+    with_timeout(
+        "lnk_resolver_cache_hit_skips_network_on_second_call",
+        || async {
     let blob_bytes = b"cache me".to_vec();
     let sha = sha256_of(&blob_bytes);
 
@@ -233,4 +282,7 @@ async fn lnk_resolver_cache_hit_skips_network_on_second_call() {
     let r2 = fbuild_packages::lnk::resolve(&lnk, &cache).unwrap();
     assert_eq!(r2.sha256, sha);
     assert_eq!(r2.path, blob_path);
+        },
+    )
+    .await;
 }

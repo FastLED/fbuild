@@ -104,14 +104,37 @@ async fn cleanup_ws_serial_session(
     }
 }
 
+/// Cap on how long the daemon will wait for a WebSocket client to send
+/// its first frame after upgrade. A client that completes the WS upgrade
+/// then sends nothing used to keep this handler suspended until the OS
+/// TCP keepalive fired (potentially hours), consuming a tokio task slot
+/// for every dead connection. See FastLED/fbuild#808.
+const WS_ATTACH_HANDSHAKE_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(10);
+
 async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
     // Mark this attach as pending so the self-eviction loop won't shut the
     // daemon down while we're waiting for `open_port` to finish (USB
     // re-enumeration on Windows can take 10+ seconds).
     let _attach_guard = PendingAttachGuard::new(ctx.clone());
 
-    // Wait for the attach message
-    let (client_id, port, baud_rate, pre_acquire_writer) = match socket.recv().await {
+    // Wait for the attach message (FastLED/fbuild#808: bounded so an
+    // idle client cannot tie up a tokio task slot forever).
+    let first_frame = match tokio::time::timeout(WS_ATTACH_HANDSHAKE_TIMEOUT, socket.recv()).await {
+        Ok(frame) => frame,
+        Err(_) => {
+            let err_msg = SerialServerMessage::Error {
+                message: format!(
+                    "attach handshake not received within {}s; closing connection",
+                    WS_ATTACH_HANDSHAKE_TIMEOUT.as_secs()
+                ),
+            };
+            let _ = socket
+                .send(Message::Text(serialize_or_fallback(&err_msg)))
+                .await;
+            return;
+        }
+    };
+    let (client_id, port, baud_rate, pre_acquire_writer) = match first_frame {
         Some(Ok(Message::Text(text))) => {
             match serde_json::from_str::<SerialClientMessage>(&text) {
                 Ok(SerialClientMessage::Attach {
@@ -826,38 +849,52 @@ async fn handle_monitor_session_ws(
         return;
     }
 
-    // Keep connection alive and handle client messages
+    // Keep connection alive and handle client messages.
+    // FastLED/fbuild#808: idle clients used to keep this task pinned
+    // forever; close the socket if no frame arrives within
+    // `MONITOR_SESSION_IDLE_TIMEOUT`.
+    const MONITOR_SESSION_IDLE_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(300);
     loop {
-        match socket.recv().await {
-            Some(Ok(Message::Text(text))) => {
-                if let Ok(obj) = serde_json::from_str::<serde_json::Value>(&text) {
-                    match obj.get("type").and_then(|t| t.as_str()) {
-                        Some("ping") => {
-                            let pong = serde_json::json!({"type": "pong", "timestamp": now_unix()})
-                                .to_string();
-                            let _ = socket.send(Message::Text(pong)).await;
+        tokio::select! {
+            recv = socket.recv() => match recv {
+                Some(Ok(Message::Text(text))) => {
+                    if let Ok(obj) = serde_json::from_str::<serde_json::Value>(&text) {
+                        match obj.get("type").and_then(|t| t.as_str()) {
+                            Some("ping") => {
+                                let pong = serde_json::json!({"type": "pong", "timestamp": now_unix()})
+                                    .to_string();
+                                let _ = socket.send(Message::Text(pong)).await;
+                            }
+                            Some("write") => {
+                                // Acknowledge write (actual serial routing is done via
+                                // /ws/serial-monitor which has full attach/detach protocol)
+                                let ack = serde_json::json!({"type": "ack", "timestamp": now_unix()})
+                                    .to_string();
+                                let _ = socket.send(Message::Text(ack)).await;
+                            }
+                            _ => {}
                         }
-                        Some("write") => {
-                            // Acknowledge write (actual serial routing is done via
-                            // /ws/serial-monitor which has full attach/detach protocol)
-                            let ack = serde_json::json!({"type": "ack", "timestamp": now_unix()})
-                                .to_string();
-                            let _ = socket.send(Message::Text(ack)).await;
-                        }
-                        _ => {}
+                    } else {
+                        let err = serde_json::json!({
+                            "type": "error",
+                            "error": "Invalid JSON",
+                            "detail": "Could not parse message",
+                        })
+                        .to_string();
+                        let _ = socket.send(Message::Text(err)).await;
                     }
-                } else {
-                    let err = serde_json::json!({
-                        "type": "error",
-                        "error": "Invalid JSON",
-                        "detail": "Could not parse message",
-                    })
-                    .to_string();
-                    let _ = socket.send(Message::Text(err)).await;
                 }
+                Some(Ok(Message::Close(_))) | None => break,
+                _ => {}
+            },
+            _ = tokio::time::sleep(MONITOR_SESSION_IDLE_TIMEOUT) => {
+                tracing::info!(
+                    session_id,
+                    "Monitor session WebSocket idle for {}s; closing",
+                    MONITOR_SESSION_IDLE_TIMEOUT.as_secs()
+                );
+                break;
             }
-            Some(Ok(Message::Close(_))) | None => break,
-            _ => {}
         }
     }
 

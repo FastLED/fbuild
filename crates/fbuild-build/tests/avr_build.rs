@@ -4,6 +4,15 @@
 //! minimal blink sketch, and validates the output firmware.hex.
 //!
 //! Run with: `soldr cargo test -p fbuild-build --test avr_build -- --ignored`
+//!
+//! ## Timeout cap (FastLED/fbuild#806, MEDIUM)
+//!
+//! All `orchestrator.build(...).await` calls are wrapped in
+//! `under_test_timeout(...)` (defined below) which trips after 15 min.
+//! Without this, a stuck TCP read from a slow GitHub mirror or a wedged
+//! avr-gcc process can hold the `--ignored` CI job hostage for the full
+//! 6 h GHA cap. 15 min is generous for a clean AVR build (~30 s warm,
+//! ~3 min cold).
 
 use std::fs;
 use std::io::Cursor;
@@ -14,6 +23,23 @@ use tar::{Archive, Builder};
 
 use fbuild_build::{BuildOrchestrator, BuildParams};
 use fbuild_core::BuildProfile;
+
+/// 15-min wall-clock cap for `--ignored` real-toolchain tests (FastLED/fbuild#806).
+const REAL_BUILD_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(900);
+
+/// Wrap any future in a 15-min `tokio::time::timeout`. Panics with a
+/// pointed message on timeout so a stuck network read or wedged toolchain
+/// process surfaces as a fast test failure instead of holding the
+/// `--ignored` CI job hostage for the full 6 h GHA cap.
+async fn under_test_timeout<F: std::future::Future>(fut: F) -> F::Output {
+    match tokio::time::timeout(REAL_BUILD_TIMEOUT, fut).await {
+        Ok(v) => v,
+        Err(_) => panic!(
+            "real-toolchain test exceeded {:.0}s budget — see FastLED/fbuild#806",
+            REAL_BUILD_TIMEOUT.as_secs_f64()
+        ),
+    }
+}
 
 fn home_dir() -> PathBuf {
     #[cfg(windows)]
@@ -103,8 +129,7 @@ async fn build_uno_minimal() {
     };
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
-    let result = orchestrator
-        .build(&params)
+    let result = under_test_timeout(orchestrator.build(&params))
         .await
         .expect("AVR build should succeed");
 
@@ -200,8 +225,7 @@ async fn compare_with_python_output() {
     };
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
-    let result = orchestrator
-        .build(&params)
+    let result = under_test_timeout(orchestrator.build(&params))
         .await
         .expect("build should succeed");
     let rust_hex = result.firmware_path.expect("should produce hex");
@@ -289,8 +313,7 @@ void loop() {
     };
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
-    let result = orchestrator
-        .build(&params)
+    let result = under_test_timeout(orchestrator.build(&params))
         .await
         .expect("self-contained build should succeed");
 
@@ -442,14 +465,13 @@ async fn cache_survives_tar_extract_uno() {
 
     let orchestrator = fbuild_build::avr::orchestrator::AvrOrchestrator;
 
-    let cold_result = orchestrator
-        .build(&uno_build_params(
-            &proj_a,
-            proj_a.join(".fbuild/build/uno/release"),
-            true,
-        ))
-        .await
-        .expect("cold AVR build should succeed");
+    let cold_result = under_test_timeout(orchestrator.build(&uno_build_params(
+        &proj_a,
+        proj_a.join(".fbuild/build/uno/release"),
+        true,
+    )))
+    .await
+    .expect("cold AVR build should succeed");
     assert!(cold_result.success, "cold build should report success");
     assert!(
         !cold_result.message.contains("reused cached artifacts"),
@@ -475,14 +497,13 @@ async fn cache_survives_tar_extract_uno() {
     // Sanity gate: a same-project warm rebuild MUST hit the fast path before we
     // bother testing the tar-extract case. If this asserts, the test is failing
     // because of an orchestrator/fast-path bug unrelated to tar restoration.
-    let same_project_warm = orchestrator
-        .build(&uno_build_params(
-            &proj_a,
-            proj_a.join(".fbuild/build/uno/release"),
-            false,
-        ))
-        .await
-        .expect("same-project warm build should succeed");
+    let same_project_warm = under_test_timeout(orchestrator.build(&uno_build_params(
+        &proj_a,
+        proj_a.join(".fbuild/build/uno/release"),
+        false,
+    )))
+    .await
+    .expect("same-project warm build should succeed");
     assert!(
         same_project_warm
             .message
@@ -521,14 +542,13 @@ async fn cache_survives_tar_extract_uno() {
 
     stomp_mtimes(&proj_b, FileTime::from_unix_time(1_577_836_800, 0)); // 2020-01-01 UTC
 
-    let warm_result = orchestrator
-        .build(&uno_build_params(
-            &proj_b,
-            proj_b.join(".fbuild/build/uno/release"),
-            false,
-        ))
-        .await
-        .expect("warm AVR build (post tar-extract) should succeed");
+    let warm_result = under_test_timeout(orchestrator.build(&uno_build_params(
+        &proj_b,
+        proj_b.join(".fbuild/build/uno/release"),
+        false,
+    )))
+    .await
+    .expect("warm AVR build (post tar-extract) should succeed");
     assert!(warm_result.success, "warm build should report success");
     assert!(
         warm_result.message.contains("reused cached artifacts"),

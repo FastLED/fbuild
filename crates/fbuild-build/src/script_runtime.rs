@@ -108,15 +108,24 @@ pub async fn resolve_extra_script_overlay(
     let mut argv: Vec<&str> = python.iter().map(|s| s.as_str()).collect();
     argv.push(harness_path_str.as_ref());
     argv.push(input_path_str.as_ref());
-    let output = fbuild_core::subprocess::run_command(&argv, Some(project_dir), None, None)
-        .await
-        .map_err(|e| {
-            fbuild_core::FbuildError::BuildFailed(format!(
-                "failed to run extra_scripts runtime via '{}': {}",
-                python.join(" "),
-                e
-            ))
-        })?;
+    // FastLED/fbuild#809: user-supplied `extra_scripts` Python harness
+    // — config-time evaluation, never legitimately long. Bound to 60s
+    // so a buggy or hostile script cannot wedge the daemon's build
+    // pipeline indefinitely.
+    let output = fbuild_core::subprocess::run_command(
+        &argv,
+        Some(project_dir),
+        None,
+        Some(std::time::Duration::from_secs(60)),
+    )
+    .await
+    .map_err(|e| {
+        fbuild_core::FbuildError::BuildFailed(format!(
+            "failed to run extra_scripts runtime via '{}': {}",
+            python.join(" "),
+            e
+        ))
+    })?;
 
     if !output.success() {
         let stderr = output.stderr.trim();
@@ -295,7 +304,16 @@ async fn find_python() -> Option<Vec<String>> {
     for candidate in candidates {
         let mut argv: Vec<&str> = candidate.to_vec();
         argv.push("--version");
-        if let Ok(output) = fbuild_core::subprocess::run_command(&argv, None, None, None).await {
+        // FastLED/fbuild#809: `python --version` on the startup path —
+        // bound tightly so a hung interpreter cannot wedge build init.
+        if let Ok(output) = fbuild_core::subprocess::run_command(
+            &argv,
+            None,
+            None,
+            Some(std::time::Duration::from_secs(5)),
+        )
+        .await
+        {
             if output.success() {
                 return Some(candidate.iter().map(|s| (*s).to_string()).collect());
             }

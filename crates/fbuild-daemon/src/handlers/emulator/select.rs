@@ -243,10 +243,27 @@ pub async fn test_emu(
         }
     };
 
-    // Build firmware (hold project lock only during build, not the emulator phase)
+    // Build firmware (hold project lock only during build, not the emulator phase).
+    // FastLED/fbuild#808 (CRITICAL): hard ceiling on lock-wait so a
+    // wedged previous build cannot wedge the emulator select path.
+    const EMU_LOCK_HARD_DEADLINE: std::time::Duration = std::time::Duration::from_secs(30 * 60);
     let build_result = {
         let lock = ctx.project_lock(&project_dir);
-        let _guard = lock.lock().await;
+        let _guard = match tokio::time::timeout(EMU_LOCK_HARD_DEADLINE, lock.lock()).await {
+            Ok(g) => g,
+            Err(_) => {
+                return (
+                    StatusCode::SERVICE_UNAVAILABLE,
+                    Json(OperationResponse::fail(
+                        request_id,
+                        format!(
+                            "project lock not acquired within {}s; previous build may be wedged",
+                            EMU_LOCK_HARD_DEADLINE.as_secs()
+                        ),
+                    )),
+                );
+            }
+        };
 
         let needs_qemu_flags = platform == fbuild_core::Platform::Espressif32
             && req.emulator.as_deref() != Some("avr8js");
@@ -307,8 +324,23 @@ pub async fn test_emu(
         };
 
         let p = platform;
+        // FastLED/fbuild#808 (CRITICAL): wall-clock cap on the
+        // pre-emulator build so a wedged compiler doesn't hang the
+        // test-emu handler indefinitely.
+        const EMU_BUILD_HARD_DEADLINE: std::time::Duration = std::time::Duration::from_secs(60 * 60);
         match fbuild_build::get_orchestrator(p) {
-            Ok(orchestrator) => orchestrator.build(&params).await,
+            Ok(orchestrator) => match tokio::time::timeout(
+                EMU_BUILD_HARD_DEADLINE,
+                orchestrator.build(&params),
+            )
+            .await
+            {
+                Ok(r) => r,
+                Err(_) => Err(fbuild_core::FbuildError::Other(format!(
+                    "pre-emulator build exceeded hard deadline ({}s); aborting",
+                    EMU_BUILD_HARD_DEADLINE.as_secs()
+                ))),
+            },
             Err(e) => Err(e),
         }
     };

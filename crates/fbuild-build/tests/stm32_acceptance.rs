@@ -32,6 +32,19 @@ use fbuild_build::{BuildOrchestrator, BuildParams};
 use fbuild_core::BuildProfile;
 use fbuild_test_support::{CompileDb, ElfProbe};
 
+/// 15-min wall-clock cap for `--ignored` real-toolchain tests (FastLED/fbuild#806).
+const REAL_BUILD_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(900);
+
+async fn under_test_timeout<F: std::future::Future>(fut: F) -> F::Output {
+    match tokio::time::timeout(REAL_BUILD_TIMEOUT, fut).await {
+        Ok(v) => v,
+        Err(_) => panic!(
+            "real-toolchain test exceeded {:.0}s budget — see FastLED/fbuild#806",
+            REAL_BUILD_TIMEOUT.as_secs_f64()
+        ),
+    }
+}
+
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads STM32duino + builds firmware; CI-only"]
 async fn stm32f103c8_blink_with_spi_auto_discovers_library_205_ac4() {
@@ -83,8 +96,7 @@ async fn stm32f103c8_blink_with_spi_auto_discovers_library_205_ac4() {
     };
 
     let orchestrator = fbuild_build::stm32::orchestrator::Stm32Orchestrator;
-    let result = orchestrator
-        .build(&params)
+    let result = under_test_timeout(orchestrator.build(&params))
         .await
         .expect("stm32f103c8 build with SPI must succeed");
     assert!(result.success, "build did not report success");

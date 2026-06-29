@@ -118,7 +118,15 @@ impl Esp8266Linker {
         args.extend(["-o".to_string(), output_ld.to_string_lossy().to_string()]);
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, None, None).await?;
+        // FastLED/fbuild#809: linker-script preprocessing is trivial;
+        // bound to 30s.
+        let result = run_command(
+            &args_ref,
+            None,
+            None,
+            Some(std::time::Duration::from_secs(30)),
+        )
+        .await?;
         if !result.success() {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(
                 "ESP8266 linker script preprocessing failed:\n{}",
@@ -227,7 +235,14 @@ impl Linker for Esp8266Linker {
         }
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, None, None).await?;
+        // FastLED/fbuild#809: bound the link step at 3 min.
+        let result = run_command(
+            &args_ref,
+            None,
+            None,
+            Some(std::time::Duration::from_secs(180)),
+        )
+        .await?;
 
         if !result.success() {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(

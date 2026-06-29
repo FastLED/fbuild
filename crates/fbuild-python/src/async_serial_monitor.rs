@@ -97,14 +97,33 @@ impl AsyncSerialMonitor {
             let daemon_port = fbuild_paths::get_daemon_port();
             let ws_url = format!("ws://127.0.0.1:{}/ws/serial-monitor", daemon_port);
 
-            let (ws_stream, _) = tokio_tungstenite::connect_async(&ws_url)
-                .await
-                .map_err(|e| {
-                    pyo3::exceptions::PyConnectionError::new_err(format!(
+            // FastLED/fbuild#810: cap the WS upgrade and the attach handshake
+            // at 5s each. A daemon that accepts the TCP socket but never
+            // completes the WebSocket handshake (or never replies to attach)
+            // must surface a `ConnectionError` rather than blocking the
+            // asyncio event loop forever.
+            const HANDSHAKE_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(5);
+
+            let (ws_stream, _) = match tokio::time::timeout(
+                HANDSHAKE_TIMEOUT,
+                tokio_tungstenite::connect_async(&ws_url),
+            )
+            .await
+            {
+                Ok(Ok(ok)) => ok,
+                Ok(Err(e)) => {
+                    return Err(pyo3::exceptions::PyConnectionError::new_err(format!(
                         "failed to connect to daemon WebSocket at {}: {}",
                         ws_url, e
-                    ))
-                })?;
+                    )));
+                }
+                Err(_) => {
+                    return Err(pyo3::exceptions::PyConnectionError::new_err(format!(
+                        "daemon WebSocket handshake at {} timed out after 5s",
+                        ws_url
+                    )));
+                }
+            };
 
             let (mut write, mut read) = ws_stream.split();
 
@@ -117,25 +136,45 @@ impl AsyncSerialMonitor {
             };
             let attach_json = serde_json::to_string(&attach).unwrap();
 
-            write
-                .send(tungstenite::Message::Text(attach_json))
-                .await
-                .map_err(|e| {
-                    pyo3::exceptions::PyConnectionError::new_err(format!(
+            match tokio::time::timeout(
+                HANDSHAKE_TIMEOUT,
+                write.send(tungstenite::Message::Text(attach_json)),
+            )
+            .await
+            {
+                Ok(Ok(())) => {}
+                Ok(Err(e)) => {
+                    return Err(pyo3::exceptions::PyConnectionError::new_err(format!(
                         "failed to send attach: {}",
                         e
-                    ))
-                })?;
+                    )));
+                }
+                Err(_) => {
+                    return Err(pyo3::exceptions::PyConnectionError::new_err(
+                        "daemon did not accept attach frame within 5s",
+                    ));
+                }
+            }
 
-            let msg = read
-                .next()
-                .await
-                .ok_or_else(|| {
-                    pyo3::exceptions::PyConnectionError::new_err("WebSocket closed before attach")
-                })?
-                .map_err(|e| {
-                    pyo3::exceptions::PyConnectionError::new_err(format!("WebSocket error: {}", e))
-                })?;
+            let msg = match tokio::time::timeout(HANDSHAKE_TIMEOUT, read.next()).await {
+                Ok(Some(Ok(msg))) => msg,
+                Ok(Some(Err(e))) => {
+                    return Err(pyo3::exceptions::PyConnectionError::new_err(format!(
+                        "WebSocket error: {}",
+                        e
+                    )));
+                }
+                Ok(None) => {
+                    return Err(pyo3::exceptions::PyConnectionError::new_err(
+                        "WebSocket closed before attach",
+                    ));
+                }
+                Err(_) => {
+                    return Err(pyo3::exceptions::PyConnectionError::new_err(
+                        "daemon did not reply to attach within 5s",
+                    ));
+                }
+            };
 
             if let tungstenite::Message::Text(text) = msg {
                 match serde_json::from_str::<ServerMessage>(&text) {

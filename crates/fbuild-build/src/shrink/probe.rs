@@ -205,7 +205,16 @@ impl Preprocessor for ExternalPreprocessor {
         let output = match tokio::runtime::Handle::try_current() {
             Ok(handle) => tokio::task::block_in_place(|| {
                 handle.block_on(async {
-                    run_command_with_stdin(&args, source.as_bytes(), None, None, None).await
+                    // FastLED/fbuild#809: shrink-libc probe is a tiny
+                    // `gcc -E -x c -` invocation; bound to 30s.
+                    run_command_with_stdin(
+                        &args,
+                        source.as_bytes(),
+                        None,
+                        None,
+                        Some(std::time::Duration::from_secs(30)),
+                    )
+                    .await
                 })
             }),
             Err(_) => {
@@ -217,7 +226,16 @@ impl Preprocessor for ExternalPreprocessor {
                     .build()
                     .map_err(io::Error::other)?;
                 rt.block_on(async {
-                    run_command_with_stdin(&args, source.as_bytes(), None, None, None).await
+                    // FastLED/fbuild#809: shrink-libc probe is a tiny
+                    // `gcc -E -x c -` invocation; bound to 30s.
+                    run_command_with_stdin(
+                        &args,
+                        source.as_bytes(),
+                        None,
+                        None,
+                        Some(std::time::Duration::from_secs(30)),
+                    )
+                    .await
                 })
             }
         }

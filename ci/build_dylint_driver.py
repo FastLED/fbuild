@@ -23,6 +23,11 @@ TOOLCHAIN_CHANNEL = "nightly-2026-03-26"
 
 def run(args: list[str], **kwargs) -> subprocess.CompletedProcess[str]:  # noqa: ANN003
     print("+", " ".join(args), flush=True)
+    # FastLED/fbuild#812: every subprocess in this CI script gets a
+    # watchdog so a stuck `git clone` / cargo build can't burn the GHA
+    # job's full 6h default. Per-call timeout can be overridden via
+    # kwargs (e.g. cargo builds use 600s).
+    kwargs.setdefault("timeout", 600)
     return subprocess.run(args, check=True, text=True, **kwargs)
 
 
@@ -34,6 +39,7 @@ def rustc_host() -> str:
     output = subprocess.check_output(
         ["rustup", "run", TOOLCHAIN_CHANNEL, "rustc", "-vV"],
         text=True,
+        timeout=60,
     )
     for line in output.splitlines():
         if line.startswith("host: "):
@@ -45,6 +51,7 @@ def rustc_toolchain_root(full_toolchain: str) -> Path:
     rustc = subprocess.check_output(
         ["rustup", "which", "--toolchain", full_toolchain, "rustc"],
         text=True,
+        timeout=30,
     ).strip()
     return Path(rustc).resolve().parent.parent
 

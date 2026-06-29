@@ -20,6 +20,7 @@ jobs:
   dylint:
     name: Dylint
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v6
       - uses: astral-sh/setup-uv@v3
@@ -42,14 +43,17 @@ jobs:
       - name: Install Dylint nightly toolchain
         # Pin matches `dylints/ban_raw_subprocess/rust-toolchain.toml`
         # and zccache's `ci/build_dylint_driver.py::TOOLCHAIN_CHANNEL`.
+        timeout-minutes: 10
         run: rustup toolchain install nightly-2026-03-26 --component llvm-tools-preview --component rust-src --component rustc-dev --profile minimal
       - name: Install Dylint
+        timeout-minutes: 10
         run: soldr cargo install cargo-dylint dylint-link --version 5.0.0 --locked
       - name: Build compatible Dylint driver
         # Published dylint_driver 5.0.0 does not build against the
         # nightly toolchain pinned by dylint_linting 5.0.0; this script
         # builds a matching driver from the same git rev. Exports
         # DYLINT_DRIVER_PATH into $GITHUB_ENV for subsequent steps.
+        timeout-minutes: 15
         run: uv run python ci/build_dylint_driver.py
       - name: Check dylint crate formatting
         run: soldr cargo fmt --manifest-path dylints/ban_raw_subprocess/Cargo.toml --all -- --check

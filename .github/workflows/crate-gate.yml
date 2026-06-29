@@ -10,6 +10,7 @@ jobs:
   crate-gate:
     name: Reject new workspace crates (monocrate policy)
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 

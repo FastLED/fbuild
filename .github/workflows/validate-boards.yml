@@ -11,6 +11,7 @@ jobs:
   validate-boards:
     name: Validate Board Definitions
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     env:
       PLATFORMIO_CORE_VERSION: "6.1.19"
       PLATFORMIO_ATMELAVR_VERSION: "5.1.0"
@@ -26,8 +27,10 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install PlatformIO
-        run: pip install "platformio==${PLATFORMIO_CORE_VERSION}"
+        timeout-minutes: 5
+        run: pip install --timeout 60 "platformio==${PLATFORMIO_CORE_VERSION}"
       - name: Install PlatformIO platforms
+        timeout-minutes: 15
         run: |
           pio pkg install -g -p "platformio/atmelavr@${PLATFORMIO_ATMELAVR_VERSION}"
           pio pkg install -g -p "platformio/espressif32@${PLATFORMIO_ESPRESSIF32_VERSION}"

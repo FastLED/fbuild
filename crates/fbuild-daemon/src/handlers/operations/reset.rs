@@ -41,13 +41,38 @@ pub async fn reset(
         .await;
 
     let platform_str = platform.to_string();
-    let result = tokio::task::spawn_blocking(move || {
-        fbuild_deploy::reset::reset_device(&platform_str, &port, verbose)
-    })
+    // FastLED/fbuild#808 (CRITICAL): DTR/RTS toggling is fundamentally
+    // a fast operation, but a wedged Windows USB CDC driver can stall
+    // a serial open forever. 10 s is more than enough headroom for a
+    // legitimate reset; anything longer is a driver failure.
+    const RESET_HARD_DEADLINE: std::time::Duration = std::time::Duration::from_secs(10);
+    let result = tokio::time::timeout(
+        RESET_HARD_DEADLINE,
+        tokio::task::spawn_blocking(move || {
+            fbuild_deploy::reset::reset_device(&platform_str, &port, verbose)
+        }),
+    )
     .await;
 
     // Clear preemption
     ctx.serial_manager.clear_preemption(&req.port).await;
+
+    let result = match result {
+        Ok(inner) => inner,
+        Err(_) => {
+            return (
+                StatusCode::GATEWAY_TIMEOUT,
+                Json(OperationResponse::fail(
+                    request_id,
+                    format!(
+                        "reset on {} exceeded {}s — serial driver may be wedged",
+                        req.port,
+                        RESET_HARD_DEADLINE.as_secs()
+                    ),
+                )),
+            );
+        }
+    };
 
     match result {
         Ok(Ok(true)) => (

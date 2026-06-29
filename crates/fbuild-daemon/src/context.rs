@@ -154,7 +154,12 @@ pub struct DaemonContext {
     /// Per-project build locks to serialize builds on the same project.
     pub project_locks: DashMap<PathBuf, Arc<Mutex<()>>>,
     /// Device lease manager.
-    pub device_manager: DeviceManager,
+    ///
+    /// Wrapped in `Arc` (FastLED/fbuild#808) so refresh paths that call
+    /// the sync `serialport::available_ports()` can be moved off the
+    /// tokio worker via `tokio::task::spawn_blocking` without forcing
+    /// `DeviceManager: Clone`.
+    pub device_manager: Arc<DeviceManager>,
     /// Persistent status file manager (`daemon_status.json`).
     pub status_manager: StatusManager,
     /// Shutdown signal sender.
@@ -226,7 +231,7 @@ impl DaemonContext {
             current_operation: Arc::new(std::sync::RwLock::new(None)),
             dependency_install: Arc::new(std::sync::RwLock::new(None)),
             project_locks: DashMap::new(),
-            device_manager: DeviceManager::new(),
+            device_manager: Arc::new(DeviceManager::new()),
             status_manager: StatusManager::new(
                 fbuild_paths::get_daemon_status_file(),
                 std::process::id(),
@@ -384,7 +389,20 @@ impl DaemonContext {
     }
 
     pub async fn refresh_devices_and_broadcast_serial_moves(&self) {
-        self.device_manager.refresh_devices();
+        // FastLED/fbuild#808: `serialport::available_ports()` is a sync
+        // OS-level call. On Windows USB enumeration can stall for
+        // seconds under driver contention. Push the sync call off the
+        // tokio worker via `spawn_blocking` and cap with a wall-clock
+        // timeout so a wedged USB stack cannot lock a worker.
+        let dm = Arc::clone(&self.device_manager);
+        let join = tokio::task::spawn_blocking(move || dm.refresh_devices());
+        match tokio::time::timeout(Duration::from_secs(5), join).await {
+            Ok(Ok(())) => {}
+            Ok(Err(e)) => tracing::warn!("device refresh task panicked: {}", e),
+            Err(_) => tracing::warn!(
+                "device refresh exceeded 5s; continuing — USB stack may be wedged"
+            ),
+        }
         self.rebind_recent_device_port_moves().await;
     }
 
@@ -392,7 +410,24 @@ impl DaemonContext {
         &self,
         max_age: Duration,
     ) -> bool {
-        let refreshed = self.device_manager.refresh_devices_if_stale(max_age);
+        // FastLED/fbuild#808: route the sync enumeration through
+        // `spawn_blocking` + a 5 s wall-clock cap, matching the eager
+        // refresh path above.
+        let dm = Arc::clone(&self.device_manager);
+        let join = tokio::task::spawn_blocking(move || dm.refresh_devices_if_stale(max_age));
+        let refreshed = match tokio::time::timeout(Duration::from_secs(5), join).await {
+            Ok(Ok(refreshed)) => refreshed,
+            Ok(Err(e)) => {
+                tracing::warn!("device refresh task panicked: {}", e);
+                false
+            }
+            Err(_) => {
+                tracing::warn!(
+                    "device refresh exceeded 5s; continuing — USB stack may be wedged"
+                );
+                false
+            }
+        };
         if refreshed {
             self.rebind_recent_device_port_moves().await;
         }

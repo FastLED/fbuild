@@ -79,6 +79,7 @@ jobs:
   update:
     name: Update online-data datasets
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout main (default branch)
         uses: actions/checkout@v6
@@ -91,6 +92,10 @@ jobs:
           git config user.email "fbuild-bot+nightly@users.noreply.github.com"
 
       - name: Fetch + worktree the online-data branch
+        timeout-minutes: 5
+        env:
+          GIT_HTTP_LOW_SPEED_TIME: "30"
+          GIT_HTTP_LOW_SPEED_LIMIT: "1000"
         run: |
           set -euo pipefail
           if git ls-remote --heads origin "${ONLINE_BRANCH}" | grep -q .; then

@@ -173,7 +173,7 @@ async fn main() {
         let _ = std::fs::remove_file(fbuild_paths::get_daemon_pid_file());
     }
 
-    let listener = bind_listener_with_retry(&addr);
+    let listener = bind_listener_with_retry(&addr).await;
 
     tracing::info!("listening on {}", addr);
 
@@ -359,25 +359,32 @@ async fn main() {
                     // Serialize with manual /api/cache/gc endpoint.
                     // Scope the guard so it's dropped before the sleep.
                     let _guard = gc_mutex.lock().await;
-                    match fbuild_packages::DiskCache::open() {
-                        Ok(dc) => match dc.run_gc() {
-                            Ok(report) => {
-                                if report.total_bytes_freed() > 0 {
-                                    tracing::info!(
-                                        "background GC: freed {} installed ({} entries) + {} archives ({} entries)",
-                                        format_bytes_compact(report.installed_bytes_freed),
-                                        report.installed_evicted,
-                                        format_bytes_compact(report.archive_bytes_freed),
-                                        report.archives_evicted,
-                                    );
-                                }
+                    // FastLED/fbuild#808 (HIGH): `run_gc` does sync
+                    // filesystem I/O over the cache tree. Match the
+                    // `/api/cache/gc` handler and push the work onto
+                    // `spawn_blocking` so a slow disk does not peg a
+                    // tokio worker.
+                    let join = tokio::task::spawn_blocking(|| {
+                        let dc = fbuild_packages::DiskCache::open()?;
+                        dc.run_gc()
+                    });
+                    match join.await {
+                        Ok(Ok(report)) => {
+                            if report.total_bytes_freed() > 0 {
+                                tracing::info!(
+                                    "background GC: freed {} installed ({} entries) + {} archives ({} entries)",
+                                    format_bytes_compact(report.installed_bytes_freed),
+                                    report.installed_evicted,
+                                    format_bytes_compact(report.archive_bytes_freed),
+                                    report.archives_evicted,
+                                );
                             }
-                            Err(e) => {
-                                tracing::warn!("background GC failed: {}", e);
-                            }
-                        },
+                        }
+                        Ok(Err(e)) => {
+                            tracing::warn!("background GC failed: {}", e);
+                        }
                         Err(e) => {
-                            tracing::debug!("background GC: could not open cache: {}", e);
+                            tracing::warn!("background GC task panicked: {}", e);
                         }
                     }
                 }
@@ -512,7 +519,7 @@ fn is_pid_alive(pid: u32) -> bool {
 /// window where a hard-killed previous instance still has kernel TCP
 /// state. Permanent failures (port owned by a live process, permission
 /// denied) bubble up after the retries are exhausted.
-fn bind_listener_with_retry(addr: &str) -> tokio::net::TcpListener {
+async fn bind_listener_with_retry(addr: &str) -> tokio::net::TcpListener {
     use socket2::{Domain, Protocol, Socket, Type};
     let std_addr: std::net::SocketAddr = addr.parse().unwrap_or_else(|e| {
         eprintln!("invalid bind address {}: {}", addr, e);
@@ -577,7 +584,10 @@ fn bind_listener_with_retry(addr: &str) -> tokio::net::TcpListener {
                     e
                 );
                 last_err = Some(e);
-                std::thread::sleep(std::time::Duration::from_millis(500));
+                // FastLED/fbuild#808: replace sync `thread::sleep` with
+                // `tokio::time::sleep` so the runtime can still service
+                // other tasks during the bind-retry backoff.
+                tokio::time::sleep(std::time::Duration::from_millis(500)).await;
             }
         }
     }

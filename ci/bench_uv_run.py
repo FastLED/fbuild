@@ -40,6 +40,9 @@ def time_command(cmd: list[str]) -> tuple[float, int]:
     # Bypass the soldr#805 hook that intercepts `uv run` / `uv sync` on
     # hybrid Python+Rust projects. The hook is good guidance for humans
     # but blocks the actual measurement we're trying to take here.
+    # FastLED/fbuild#812: 10-minute per-invocation cap so a wedged
+    # `uv sync --reinstall-package fbuild` (which compiles fbuild from
+    # scratch) can't quietly hang the bench harness.
     start = time.perf_counter()
     proc = subprocess.run(
         cmd,
@@ -47,6 +50,7 @@ def time_command(cmd: list[str]) -> tuple[float, int]:
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         env=_bench_env(),
+        timeout=600,
     )
     elapsed = time.perf_counter() - start
     return elapsed, proc.returncode
@@ -64,15 +68,20 @@ def _bench_env() -> dict:
 
 
 def warm_state() -> None:
+    # FastLED/fbuild#812: 10-minute cap on the pre-warm uv sync.
     subprocess.run(UV_SYNC, cwd=str(REPO_ROOT), check=False,
                    stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                   env=_bench_env())
+                   env=_bench_env(),
+                   timeout=600)
 
 
 def force_rebuild() -> None:
+    # FastLED/fbuild#812: 10-minute cap on the reinstall (rebuilds fbuild
+    # from source, which is the dominant time in a cold scenario).
     subprocess.run(UV_REINSTALL, cwd=str(REPO_ROOT), check=False,
                    stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                   env=_bench_env())
+                   env=_bench_env(),
+                   timeout=600)
 
 
 def measure_scenario(name: str, before: callable, cmds: list[tuple[str, list[str]]]) -> dict:

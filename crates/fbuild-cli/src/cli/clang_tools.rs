@@ -289,7 +289,24 @@ pub async fn run_iwyu(
                 cmd.arg("-Xiwyu").arg("--verbose=3");
             }
             cmd.arg(&file);
-            let output = cmd.output().await;
+            // FastLED/fbuild#810: cap each IWYU invocation at 120s so a wedged
+            // subprocess can't hang the whole fan-out forever.
+            let output = match tokio::time::timeout(
+                std::time::Duration::from_secs(120),
+                cmd.output(),
+            )
+            .await
+            {
+                Ok(res) => res,
+                Err(_) => {
+                    return (
+                        file,
+                        Err("include-what-you-use timed out after 120s".to_string()),
+                        false,
+                        src_path,
+                    );
+                }
+            };
 
             match output {
                 Ok(out) => {
@@ -543,7 +560,20 @@ pub async fn run_clang_tool(
             if !verbose_flag {
                 cmd.arg("--quiet");
             }
-            let output = cmd.output().await;
+            // FastLED/fbuild#810: cap each clang-tidy invocation at 120s so a
+            // wedged subprocess can't hang the whole fan-out forever.
+            let output = match tokio::time::timeout(
+                std::time::Duration::from_secs(120),
+                cmd.output(),
+            )
+            .await
+            {
+                Ok(res) => res,
+                Err(_) => Err(std::io::Error::new(
+                    std::io::ErrorKind::TimedOut,
+                    "clang-tidy timed out after 120s",
+                )),
+            };
             (file, output)
         });
         handles.push(handle);

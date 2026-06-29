@@ -6,10 +6,16 @@
 
 /// Find the `pio` binary. Checks PATH first, then the fbuild cache.
 pub async fn find_pio() -> fbuild_core::Result<std::path::PathBuf> {
-    // Check PATH
+    // Check PATH. FastLED/fbuild#810: cap `where` / `which` at 5s; they should
+    // return instantly, but we don't want a wedged invocation to hang fbuild.
     let locator = if cfg!(windows) { "where" } else { "which" };
-    if let Ok(output) =
-        fbuild_core::subprocess::run_command(&[locator, "pio"], None, None, None).await
+    if let Ok(output) = fbuild_core::subprocess::run_command(
+        &[locator, "pio"],
+        None,
+        None,
+        Some(std::time::Duration::from_secs(5)),
+    )
+    .await
     {
         if output.success() {
             let path = output

@@ -24,6 +24,19 @@ use std::path::{Path, PathBuf};
 use fbuild_build::compile_many::{compile_many, CompileManyRequest, Stage};
 use fbuild_core::BuildProfile;
 
+/// 15-min wall-clock cap for `--ignored` real-toolchain tests (FastLED/fbuild#806).
+const REAL_BUILD_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(900);
+
+async fn under_test_timeout<F: std::future::Future>(fut: F) -> F::Output {
+    match tokio::time::timeout(REAL_BUILD_TIMEOUT, fut).await {
+        Ok(v) => v,
+        Err(_) => panic!(
+            "real-toolchain test exceeded {:.0}s budget — see FastLED/fbuild#806",
+            REAL_BUILD_TIMEOUT.as_secs_f64()
+        ),
+    }
+}
+
 const UNO_PLATFORMIO_INI: &str =
     "[env:uno]\nplatform = atmelavr\nboard = uno\nframework = arduino\n";
 
@@ -71,7 +84,7 @@ async fn stage2_per_sketch_wall_is_a_fraction_of_stage1() {
         diag_stage2: true,
     };
 
-    let result = compile_many(req)
+    let result = under_test_timeout(compile_many(req))
         .await
         .expect("compile_many should not error");
     assert!(

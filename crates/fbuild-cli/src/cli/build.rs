@@ -10,9 +10,17 @@ pub async fn open_in_browser(url: &str) -> fbuild_core::Result<()> {
     } else {
         vec!["xdg-open", url]
     };
-    let output = fbuild_core::subprocess::run_command(&args, None, None, None)
-        .await
-        .map_err(|e| fbuild_core::FbuildError::Other(format!("failed to launch browser: {}", e)))?;
+    // FastLED/fbuild#810: cap the browser launcher at 10s — `start` / `open` /
+    // `xdg-open` return effectively instantly in practice, but we shouldn't
+    // let a wedged shell hang `--launch-browser` indefinitely.
+    let output = fbuild_core::subprocess::run_command(
+        &args,
+        None,
+        None,
+        Some(std::time::Duration::from_secs(10)),
+    )
+    .await
+    .map_err(|e| fbuild_core::FbuildError::Other(format!("failed to launch browser: {}", e)))?;
 
     if output.success() {
         Ok(())

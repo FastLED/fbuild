@@ -42,6 +42,7 @@ jobs:
       || (github.event_name == 'pull_request'
           && contains(github.event.pull_request.labels.*.name, 'hw-ci'))
     runs-on: [self-hosted, hw-ci]
+    timeout-minutes: 30
     strategy:
       # Each board runs in its own job step so a single-board
       # hardware fault doesn't mask the others.

@@ -340,7 +340,16 @@ impl LinkerBase {
         }
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, None, None).await?;
+        // FastLED/fbuild#809: `ar rcs` can have very large arg lists on
+        // teensy41 / NRF52 builds; bound at 2 min so a wedged `ar` does
+        // not block the build pipeline.
+        let result = run_command(
+            &args_ref,
+            None,
+            None,
+            Some(std::time::Duration::from_secs(120)),
+        )
+        .await?;
 
         if !result.success() {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(
@@ -368,7 +377,14 @@ impl LinkerBase {
         ];
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, None, None).await?;
+        // FastLED/fbuild#809: size tool is trivial; bound to 15s.
+        let result = run_command(
+            &args_ref,
+            None,
+            None,
+            Some(std::time::Duration::from_secs(15)),
+        )
+        .await?;
 
         if !result.success() {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(
@@ -421,7 +437,14 @@ impl LinkerBase {
             elf_path.to_string_lossy().to_string(),
         ];
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, None, None).await?;
+        // FastLED/fbuild#809: bound the symbol-map analysis nm invocation.
+        let result = run_command(
+            &args_ref,
+            None,
+            None,
+            Some(std::time::Duration::from_secs(30)),
+        )
+        .await?;
 
         if !result.success() {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(
@@ -467,7 +490,14 @@ impl LinkerBase {
         args.push(hex_path.to_string_lossy().to_string());
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, None, None).await?;
+        // FastLED/fbuild#809: objcopy ELF→HEX/BIN bounded at 1 min.
+        let result = run_command(
+            &args_ref,
+            None,
+            None,
+            Some(std::time::Duration::from_secs(60)),
+        )
+        .await?;
 
         if !result.success() {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(
