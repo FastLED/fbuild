@@ -198,16 +198,13 @@ jobs:
             linux_cross: false
             macos_cross: false
 
-          # aarch64-pc-windows-msvc — restored once soldr v0.7.65
-          # shipped the soldr-clang-shim that routes ring 0.17.x's
-          # hardcoded `c.compiler("clang")` to clang-cl when
-          # `--target=*-pc-windows-msvc`. See soldr#1015/#1016 for
-          # the shim mechanism.
-          - target: aarch64-pc-windows-msvc
-            runner: ubuntu-latest
-            binary_ext: ".exe"
-            linux_cross: false
-            macos_cross: false
+          # aarch64-pc-windows-msvc removed again — soldr v0.7.65's
+          # release archive is missing the soldr-clang-shim binary,
+          # so the shim path that #797 was authored against doesn't
+          # work end-to-end. Without the shim, ring 0.17.x's
+          # build.rs:563 hardcoded `c.compiler("clang")` breaks
+          # cross-compile to aarch64-pc-windows-msvc. Restore once
+          # soldr ships a release with the shim binary in the archive.
 
     uses: ./.github/workflows/template_native_build.yml
     with:
