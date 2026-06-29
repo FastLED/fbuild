@@ -70,7 +70,7 @@ pub async fn ensure_libraries(
 
     let libs_dir_owned = libs_dir.to_path_buf();
     let mut tasks: tokio::task::JoinSet<
-        Result<(std::path::PathBuf, String, String), fbuild_core::FbuildError>,
+        std::result::Result<(std::path::PathBuf, String, String), fbuild_core::FbuildError>,
     > = tokio::task::JoinSet::new();
     for spec in &specs {
         let spec_clone = spec.clone();

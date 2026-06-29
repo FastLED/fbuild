@@ -14,7 +14,7 @@ fn arduino_core_repo() -> Option<PathBuf> {
     repo.join("platformio.ini").is_file().then_some(repo)
 }
 
-fn build_core_repo(repo: &Path, env_name: &str) -> tempfile::TempDir {
+async fn build_core_repo(repo: &Path, env_name: &str) -> tempfile::TempDir {
     let tmp = tempfile::TempDir::new().expect("tempdir");
     let build_dir = tmp
         .path()
@@ -59,7 +59,7 @@ async fn arduino_core_lpc845brk_compile_commands_match_platform_txt() {
         eprintln!("skipping: ~/dev/ArduinoCore-LPC8xx not found");
         return;
     };
-    let tmp = build_core_repo(&repo, "lpc845brk");
+    let tmp = build_core_repo(&repo, "lpc845brk").await;
     let compile_db = tmp
         .path()
         .join(".fbuild/build/lpc845brk/release/compile_commands.json");

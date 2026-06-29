@@ -68,10 +68,11 @@ fn write_project(extra_scripts: &str, scripts: &[(&str, &str)]) -> tempfile::Tem
     temp
 }
 
-fn resolve_lite(project_dir: &Path) -> BuildOverlay {
+async fn resolve_lite(project_dir: &Path) -> BuildOverlay {
     let config = fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini"))
         .expect("parse platformio.ini");
     resolve_extra_script_overlay(project_dir, "demo", &config)
+        .await
         .expect("lite-SCons harness must succeed for the 5 spike patterns")
 }
 
@@ -82,8 +83,8 @@ fn resolve_lite(project_dir: &Path) -> BuildOverlay {
 /// MockEnv treats Execute as a no-op; the lite harness actually invokes
 /// the callable, captures the executed-action record, and notices the
 /// new file via the generated-files manifest. Tests both halves.
-#[test]
-fn lite_scons_executes_generator_action_and_records_file() {
+#[tokio::test]
+async fn lite_scons_executes_generator_action_and_records_file() {
     if !python_available() {
         return;
     }
@@ -112,7 +113,7 @@ env.Append(CPPDEFINES=[("BUILDINFO_PRESENT", "1")])
         )],
     );
 
-    let overlay = resolve_lite(temp.path());
+    let overlay = resolve_lite(temp.path()).await;
     let records = overlay
         .lite_scons_records
         .as_ref()
@@ -159,8 +160,8 @@ env.Append(CPPDEFINES=[("BUILDINFO_PRESENT", "1")])
 
 /// Marlin-class hook: glob pattern + callback name captured so fbuild's
 /// native compile pipeline can call the middleware per matching source.
-#[test]
-fn lite_scons_records_build_middleware() {
+#[tokio::test]
+async fn lite_scons_records_build_middleware() {
     if !python_available() {
         return;
     }
@@ -185,7 +186,7 @@ env.Append(CCFLAGS=["-Wno-unused-parameter"])
         )],
     );
 
-    let overlay = resolve_lite(temp.path());
+    let overlay = resolve_lite(temp.path()).await;
     let records = overlay
         .lite_scons_records
         .as_ref()
@@ -220,8 +221,8 @@ env.Append(CCFLAGS=["-Wno-unused-parameter"])
 /// OTA-style merge_bin packager: target template MUST come back
 /// unresolved so fbuild can subst it (`$BUILD_DIR/$PROGNAME$PROGSUFFIX`)
 /// after link, when it knows the actual values.
-#[test]
-fn lite_scons_records_post_action_with_unresolved_target_template() {
+#[tokio::test]
+async fn lite_scons_records_post_action_with_unresolved_target_template() {
     if !python_available() {
         return;
     }
@@ -245,7 +246,7 @@ env.AddPostAction("$BUILD_DIR/$PROGNAME$PROGSUFFIX", merge_firmware)
         )],
     );
 
-    let overlay = resolve_lite(temp.path());
+    let overlay = resolve_lite(temp.path()).await;
     let records = overlay
         .lite_scons_records
         .as_ref()
@@ -275,8 +276,8 @@ env.AddPostAction("$BUILD_DIR/$PROGNAME$PROGSUFFIX", merge_firmware)
 /// SCons resolves SConscript paths relative to the *calling* script's
 /// directory, not the project root. Spike bug #3 — the first iteration
 /// looked in PROJECT_DIR and the child was missing.
-#[test]
-fn lite_scons_sconscript_recursion_resolves_caller_relative_and_lands_child_mutations() {
+#[tokio::test]
+async fn lite_scons_sconscript_recursion_resolves_caller_relative_and_lands_child_mutations() {
     if !python_available() {
         return;
     }
@@ -303,7 +304,7 @@ env.SConscript("child.py")
     )
     .expect("write child.py");
 
-    let overlay = resolve_lite(temp.path());
+    let overlay = resolve_lite(temp.path()).await;
 
     assert!(
         overlay
@@ -327,8 +328,8 @@ env.SConscript("child.py")
 
 /// Real SCons handles both `-Ipath` and `-I path`. The spike's first
 /// iteration only handled the joined form — bug #2 of the 3 caught.
-#[test]
-fn lite_scons_parseflags_handles_joined_and_space_separated_forms() {
+#[tokio::test]
+async fn lite_scons_parseflags_handles_joined_and_space_separated_forms() {
     if !python_available() {
         return;
     }
@@ -348,7 +349,7 @@ env.Append(**parsed)
         )],
     );
 
-    let overlay = resolve_lite(temp.path());
+    let overlay = resolve_lite(temp.path()).await;
     let common = &overlay.global_compile.common;
     let common_joined = common.join(" ");
 

@@ -181,8 +181,11 @@ async fn run_real_esp32s3_fixture_in_qemu() {
     )
     .unwrap();
 
-    let qemu = fbuild_packages::toolchain::EspQemuXtensa::new(&project_dir)
-        .and_then(|pkg| pkg.resolve_executable())
+    let pkg = fbuild_packages::toolchain::EspQemuXtensa::new(&project_dir)
+        .expect("EspQemuXtensa::new should succeed for ignored integration test");
+    let qemu = pkg
+        .resolve_executable()
+        .await
         .expect("native QEMU should resolve for ignored integration test");
     let args = fbuild_deploy::esp32::build_qemu_args(
         &board.mcu,

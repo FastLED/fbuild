@@ -71,9 +71,9 @@ void loop() {
     .unwrap();
 }
 
-#[test]
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads ESP32 toolchain (~hundreds of MB)"]
-fn eh_frame_strip_drops_firmware_at_least_150kb() {
+async fn eh_frame_strip_drops_firmware_at_least_150kb() {
     // Use two separate tempdirs so .fbuild/build/... paths don't collide.
     let preserve_tmp = tempfile::TempDir::new().unwrap();
     let strip_tmp = tempfile::TempDir::new().unwrap();
@@ -95,6 +95,7 @@ fn eh_frame_strip_drops_firmware_at_least_150kb() {
     let preserve_params = make_params(&preserve_dir);
     let preserve_result = orchestrator
         .build(&preserve_params)
+        .await
         .expect("preserve build should succeed");
     assert!(
         preserve_result.success,
@@ -113,6 +114,7 @@ fn eh_frame_strip_drops_firmware_at_least_150kb() {
     let strip_params = make_params(&strip_dir);
     let strip_result = orchestrator
         .build(&strip_params)
+        .await
         .expect("strip build should succeed");
     assert!(strip_result.success, "strip build should report success");
     let strip_elf = strip_result

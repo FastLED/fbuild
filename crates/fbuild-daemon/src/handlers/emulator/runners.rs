@@ -80,7 +80,7 @@ impl EmulatorRunner for QemuRunner {
             mcu_config.default_flash_size(),
         )?;
 
-        let qemu = resolve_esp_qemu_for_mcu(&self.project_dir, &self.board.mcu)?;
+        let qemu = resolve_esp_qemu_for_mcu(&self.project_dir, &self.board.mcu).await?;
 
         let session_dir = qemu_session_dir(&self.project_dir, &self.env_name);
         std::fs::create_dir_all(&session_dir)?;

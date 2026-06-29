@@ -536,13 +536,13 @@ async fn incremental_nightdriverstrip_no_changes() {
             return;
         }
         // Use the test copy
-        return incremental_build_at(&alt, "demo");
+        return incremental_build_at(&alt, "demo").await;
     };
 
-    incremental_build_at(&project_dir, &env_name);
+    incremental_build_at(&project_dir, &env_name).await;
 }
 
-fn incremental_build_at(project_dir: &std::path::Path, env_name: &str) {
+async fn incremental_build_at(project_dir: &std::path::Path, env_name: &str) {
     // Verify there's an existing build
     let build_marker = project_dir
         .join(".fbuild/build")
