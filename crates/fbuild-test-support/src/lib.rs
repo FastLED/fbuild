@@ -11,8 +11,12 @@ pub use elf_probe::{ElfProbe, ElfProbeError, SectionInfo, SymbolInfo};
 pub use mini_framework::{LibraryBuilder, MiniFramework};
 
 /// Create a temporary project directory with a minimal platformio.ini.
+///
+/// Rooted under `~/.fbuild/{dev|prod}/tmp/test-support/` —
+/// FastLED/fbuild#844 bridge pair 10.
 pub fn create_test_project(env_name: &str, platform: &str, board: &str) -> tempfile::TempDir {
-    let dir = tempfile::tempdir().expect("failed to create temp dir");
+    let dir = tempfile::tempdir_in(fbuild_paths::temp_subdir("test-support"))
+        .expect("failed to create temp dir");
     let ini_content =
         format!("[env:{env_name}]\nplatform = {platform}\nboard = {board}\nframework = arduino\n");
     std::fs::write(dir.path().join("platformio.ini"), ini_content)

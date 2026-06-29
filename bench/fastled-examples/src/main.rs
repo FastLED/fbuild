@@ -197,7 +197,9 @@ fn measure_example(
         return Err(format!("missing sketch {ino_path:?}").into());
     }
 
-    let stage = tempfile::tempdir()?;
+    // Root scratch dirs under `~/.fbuild/{dev|prod}/tmp/fastled-examples-bench/`
+    // — FastLED/fbuild#844 bridge pair 10.
+    let stage = tempfile::tempdir_in(fbuild_paths::temp_subdir("fastled-examples-bench"))?;
     let stage_src = stage.path().join("src");
     std::fs::create_dir_all(&stage_src)?;
     let main_cpp = stage_src.join("main.cpp");
@@ -206,7 +208,7 @@ fn measure_example(
     let seeds = vec![main_cpp];
     let search_paths = vec![stage_src, fastled_src.to_path_buf()];
 
-    let kv_dir = tempfile::tempdir()?;
+    let kv_dir = tempfile::tempdir_in(fbuild_paths::temp_subdir("fastled-examples-bench"))?;
     let kv = FileKvStore::open(kv_dir.path().join("kv"))?;
 
     let inputs = CacheKeyInputs {

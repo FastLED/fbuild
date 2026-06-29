@@ -1143,6 +1143,7 @@ version = "2.3.13"
 dependencies = [
  "fbuild-library-select",
  "fbuild-packages",
+ "fbuild-paths",
  "fbuild-test-support",
  "serde_json",
  "tempfile",
@@ -1425,6 +1426,7 @@ dependencies = [
  "fbuild-header-scan",
  "fbuild-library-select",
  "fbuild-packages",
+ "fbuild-paths",
  "object 0.36.7",
  "serde_json",
  "shell-words",
