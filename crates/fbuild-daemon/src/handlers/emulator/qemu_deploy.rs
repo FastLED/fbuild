@@ -215,7 +215,7 @@ pub async fn deploy_qemu(
     };
 
     let session_dir = qemu_session_dir(&project_dir, &env_name);
-    if let Err(e) = std::fs::create_dir_all(&session_dir) {
+    if let Err(e) = tokio::fs::create_dir_all(&session_dir).await {
         return (
             StatusCode::INTERNAL_SERVER_ERROR,
             Json(OperationResponse::fail(

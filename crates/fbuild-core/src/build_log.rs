@@ -8,17 +8,22 @@
 //! the elapsed time since that epoch (e.g. `"   0.46 compiling foo.cpp"`).
 
 use std::collections::VecDeque;
-use std::sync::mpsc::Sender;
 use std::time::Instant;
+use tokio::sync::mpsc::UnboundedSender;
 
 /// Centralized build output log.
 ///
 /// Accumulates build output lines (compilation steps, warnings, size info, etc.)
 /// and optionally streams each line through a channel for real-time delivery
 /// from the daemon to the CLI.
+///
+/// The streaming sender is a `tokio::sync::mpsc::UnboundedSender` so that
+/// push-from-sync-code and recv-from-async-code share one channel without an
+/// intermediate `spawn_blocking` bridge — `UnboundedSender::send` is sync and
+/// callable from any context (see fbuild#818 async-audit follow-up).
 pub struct BuildLog {
     lines: VecDeque<String>,
-    sender: Option<Sender<String>>,
+    sender: Option<UnboundedSender<String>>,
     epoch: Option<Instant>,
 }
 
@@ -33,7 +38,7 @@ impl BuildLog {
     }
 
     /// Create a log that streams each line through the given sender (no timestamps).
-    pub fn with_sender(sender: Sender<String>) -> Self {
+    pub fn with_sender(sender: UnboundedSender<String>) -> Self {
         Self {
             lines: VecDeque::new(),
             sender: Some(sender),
@@ -51,7 +56,7 @@ impl BuildLog {
     }
 
     /// Create a log that streams each line and prefixes with elapsed time.
-    pub fn with_sender_and_epoch(sender: Sender<String>, epoch: Instant) -> Self {
+    pub fn with_sender_and_epoch(sender: UnboundedSender<String>, epoch: Instant) -> Self {
         Self {
             lines: VecDeque::new(),
             sender: Some(sender),
@@ -116,7 +121,7 @@ mod tests {
 
     #[test]
     fn streams_through_sender() {
-        let (tx, rx) = std::sync::mpsc::channel();
+        let (tx, mut rx) = tokio::sync::mpsc::unbounded_channel();
         let mut log = BuildLog::with_sender(tx);
         log.push("hello");
         log.push("world");
@@ -129,7 +134,7 @@ mod tests {
 
     #[test]
     fn sender_dropped_does_not_panic() {
-        let (tx, rx) = std::sync::mpsc::channel();
+        let (tx, rx) = tokio::sync::mpsc::unbounded_channel::<String>();
         drop(rx);
         let mut log = BuildLog::with_sender(tx);
         // Should not panic even though receiver is gone
@@ -160,7 +165,7 @@ mod tests {
 
     #[test]
     fn with_sender_and_epoch_streams_prefixed() {
-        let (tx, rx) = std::sync::mpsc::channel();
+        let (tx, mut rx) = tokio::sync::mpsc::unbounded_channel();
         let epoch = Instant::now();
         let mut log = BuildLog::with_sender_and_epoch(tx, epoch);
         log.push("test");

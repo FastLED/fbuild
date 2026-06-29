@@ -281,43 +281,53 @@ impl AsyncSerialMonitor {
         py: Python<'py>,
         board: Option<String>,
     ) -> PyResult<Bound<'py, PyAny>> {
-        let url = format!("{}/api/reset", fbuild_paths::get_daemon_url());
         let port = self.port.clone();
-
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
-            #[derive(Serialize)]
-            struct ResetPayload {
-                port: String,
-                #[serde(skip_serializing_if = "Option::is_none")]
-                board: Option<String>,
-            }
-
-            let payload = ResetPayload { port, board };
-
-            let resp = reqwest::Client::new()
-                .post(&url)
-                .json(&payload)
-                .timeout(std::time::Duration::from_secs(10))
-                .send()
-                .await
-                .map_err(|e| {
-                    pyo3::exceptions::PyConnectionError::new_err(format!(
-                        "failed to send reset request to daemon: {}",
-                        e
-                    ))
-                })?;
-
-            let body: serde_json::Value = resp.json().await.map_err(|e| {
-                pyo3::exceptions::PyRuntimeError::new_err(format!(
-                    "failed to parse reset response: {}",
-                    e
-                ))
-            })?;
-
-            Ok(body
-                .get("success")
-                .and_then(|v| v.as_bool())
-                .unwrap_or(false))
+            post_reset_request_async(port, board).await
         })
     }
+}
+
+/// Issue the daemon's `POST /api/reset` and return whether the daemon
+/// reported success. Shared between `AsyncSerialMonitor::reset_device` and
+/// the sync `SerialMonitor::reset_device` (FastLED/fbuild#817) so the HTTP
+/// transport is implemented exactly once.
+pub(crate) async fn post_reset_request_async(
+    port: String,
+    board: Option<String>,
+) -> PyResult<bool> {
+    #[derive(Serialize)]
+    struct ResetPayload {
+        port: String,
+        #[serde(skip_serializing_if = "Option::is_none")]
+        board: Option<String>,
+    }
+
+    let url = format!("{}/api/reset", fbuild_paths::get_daemon_url());
+    let payload = ResetPayload { port, board };
+
+    let resp = reqwest::Client::new()
+        .post(&url)
+        .json(&payload)
+        .timeout(std::time::Duration::from_secs(10))
+        .send()
+        .await
+        .map_err(|e| {
+            pyo3::exceptions::PyConnectionError::new_err(format!(
+                "failed to send reset request to daemon: {}",
+                e
+            ))
+        })?;
+
+    let body: serde_json::Value = resp.json().await.map_err(|e| {
+        pyo3::exceptions::PyRuntimeError::new_err(format!(
+            "failed to parse reset response: {}",
+            e
+        ))
+    })?;
+
+    Ok(body
+        .get("success")
+        .and_then(|v| v.as_bool())
+        .unwrap_or(false))
 }

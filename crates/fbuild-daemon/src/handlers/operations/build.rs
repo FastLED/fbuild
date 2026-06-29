@@ -198,7 +198,16 @@ pub async fn build(
     if stream {
         // --- STREAMING PATH ---
         // Build runs in a background task; log lines stream to client as NDJSON.
-        let (sync_tx, sync_rx) = std::sync::mpsc::channel::<String>();
+        //
+        // fbuild#818 async-audit follow-up: `BuildLog`'s sender is now a
+        // `tokio::sync::mpsc::UnboundedSender`, so the orchestrator (which
+        // may push from blocking compile workers via `spawn_blocking`) and
+        // this async forwarder share a single tokio channel. The previous
+        // `std::sync::mpsc::channel` + `spawn_blocking` recv-bridge has
+        // been removed — `UnboundedSender::send` is sync and callable from
+        // any context, and `UnboundedReceiver::recv` is awaited directly
+        // from the async forwarder task.
+        let (log_tx, mut log_rx) = tokio::sync::mpsc::unbounded_channel::<String>();
         let (async_tx, async_rx) = tokio::sync::mpsc::unbounded_channel::<bytes::Bytes>();
 
         let params = fbuild_build::BuildParams {
@@ -211,7 +220,7 @@ pub async fn build(
             jobs: req.jobs,
             generate_compiledb,
             compiledb_only: req.compiledb_only,
-            log_sender: Some(sync_tx),
+            log_sender: Some(log_tx),
             symbol_analysis: req.symbol_analysis,
             symbol_analysis_path: resolved_symbol_analysis_path.clone(),
             no_timestamp: req.no_timestamp,
@@ -309,14 +318,17 @@ pub async fn build(
                 lock_wait.as_millis()
             );
 
-            // Bridge: sync log lines → async NDJSON chunks
-            let bridge_tx = async_tx.clone();
-            let bridge = tokio::task::spawn_blocking(move || {
-                for line in sync_rx {
+            // Forwarder: log lines → async NDJSON chunks.
+            // fbuild#818: both endpoints are now tokio channels, so the
+            // earlier `spawn_blocking` sync→async bridge is gone — this
+            // task just awaits on the same runtime.
+            let forwarder_tx = async_tx.clone();
+            let forwarder = tokio::spawn(async move {
+                while let Some(line) = log_rx.recv().await {
                     let event = serde_json::json!({"type": "log", "message": line});
                     let mut chunk = event.to_string();
                     chunk.push('\n');
-                    if bridge_tx.send(bytes::Bytes::from(chunk)).is_err() {
+                    if forwarder_tx.send(bytes::Bytes::from(chunk)).is_err() {
                         break;
                     }
                 }
@@ -366,20 +378,36 @@ pub async fn build(
                 Ok(Ok(br)) => {
                     let exported = if br.success {
                         if let Some(ref out_dir) = resolved_output_dir {
-                            Some(export_artifacts_bundle(
-                                out_dir,
-                                platform,
-                                &env_name,
-                                br.firmware_path.as_deref(),
-                                br.elf_path.as_deref(),
-                            ))
+                            // fbuild#815: export_artifacts_bundle does sync
+                            // std::fs I/O — move it off the axum worker.
+                            let out_dir_owned = out_dir.clone();
+                            let env_name_owned = env_name.clone();
+                            let firmware_path_owned = br.firmware_path.clone();
+                            let elf_path_owned = br.elf_path.clone();
+                            let join_result = tokio::task::spawn_blocking(move || {
+                                export_artifacts_bundle(
+                                    &out_dir_owned,
+                                    platform,
+                                    &env_name_owned,
+                                    firmware_path_owned.as_deref(),
+                                    elf_path_owned.as_deref(),
+                                )
+                            })
+                            .await;
+                            Some(match join_result {
+                                Ok(inner) => inner,
+                                Err(join_err) => Err(fbuild_core::FbuildError::Other(format!(
+                                    "artifact export task panicked: {}",
+                                    join_err
+                                ))),
+                            })
                         } else {
                             None
                         }
                     } else {
                         None
                     };
-                    let _lines = br.build_log.into_lines(); // drop sender
+                    let _lines = br.build_log.into_lines(); // drop sender so forwarder exits
                     let summary = if br.success {
                         let size_str = br
                             .size_info
@@ -448,7 +476,7 @@ pub async fn build(
                 ),
             };
 
-            let _ = bridge.await;
+            let _ = forwarder.await;
 
             if !success && !msg.is_empty() {
                 let log_event = serde_json::json!({
@@ -531,13 +559,29 @@ pub async fn build(
             Ok(build_result) => {
                 let exported = if build_result.success {
                     if let Some(ref out_dir) = resolved_output_dir {
-                        Some(export_artifacts_bundle(
-                            out_dir,
-                            platform,
-                            &env_name,
-                            build_result.firmware_path.as_deref(),
-                            build_result.elf_path.as_deref(),
-                        ))
+                        // fbuild#815: export_artifacts_bundle does sync
+                        // std::fs I/O — move it off the axum worker.
+                        let out_dir_owned = out_dir.clone();
+                        let env_name_owned = env_name.clone();
+                        let firmware_path_owned = build_result.firmware_path.clone();
+                        let elf_path_owned = build_result.elf_path.clone();
+                        let join_result = tokio::task::spawn_blocking(move || {
+                            export_artifacts_bundle(
+                                &out_dir_owned,
+                                platform,
+                                &env_name_owned,
+                                firmware_path_owned.as_deref(),
+                                elf_path_owned.as_deref(),
+                            )
+                        })
+                        .await;
+                        Some(match join_result {
+                            Ok(inner) => inner,
+                            Err(join_err) => Err(fbuild_core::FbuildError::Other(format!(
+                                "artifact export task panicked: {}",
+                                join_err
+                            ))),
+                        })
                     } else {
                         None
                     }

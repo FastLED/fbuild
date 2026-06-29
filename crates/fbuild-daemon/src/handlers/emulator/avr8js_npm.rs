@@ -122,12 +122,26 @@ pub(crate) async fn ensure_avr8js_npm_in(
     cache_dir: &Path,
     force_refresh: bool,
 ) -> fbuild_core::Result<()> {
-    if prepare_avr8js_cache_for_install(cache_dir, force_refresh) == Avr8jsCachePrep::AlreadyIntact
-    {
+    // `prepare_avr8js_cache_for_install` is sync (tested from sync contexts)
+    // and may perform `remove_dir_all` on a large `node_modules/` tree.
+    // Push the blocking I/O off the async runtime via `spawn_blocking` so
+    // we don't stall other handlers while a corrupt cache is wiped.
+    let cache_dir_owned = cache_dir.to_path_buf();
+    let prep = tokio::task::spawn_blocking(move || {
+        prepare_avr8js_cache_for_install(&cache_dir_owned, force_refresh)
+    })
+    .await
+    .map_err(|e| {
+        fbuild_core::FbuildError::DeployFailed(format!(
+            "avr8js cache prep task failed to join: {}",
+            e
+        ))
+    })?;
+    if prep == Avr8jsCachePrep::AlreadyIntact {
         return Ok(());
     }
 
-    std::fs::create_dir_all(cache_dir).map_err(|e| {
+    tokio::fs::create_dir_all(cache_dir).await.map_err(|e| {
         fbuild_core::FbuildError::DeployFailed(format!(
             "failed to create avr8js cache dir at {}: {}",
             cache_dir.display(),

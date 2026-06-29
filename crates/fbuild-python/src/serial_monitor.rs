@@ -3,7 +3,6 @@
 use base64::Engine;
 use futures::{SinkExt, StreamExt};
 use pyo3::prelude::*;
-use serde::Serialize;
 use std::sync::Mutex;
 use tokio::runtime::Runtime;
 use tokio_tungstenite::tungstenite;
@@ -462,43 +461,30 @@ impl SerialMonitor {
         wait_for_output: bool,
         timeout: f64,
     ) -> PyResult<bool> {
-        let url = format!("{}/api/reset", fbuild_paths::get_daemon_url());
-
-        #[derive(Serialize)]
-        struct ResetPayload {
-            port: String,
-            #[serde(skip_serializing_if = "Option::is_none")]
-            board: Option<String>,
-        }
-
-        let payload = ResetPayload {
-            port: self.port.clone(),
-            board,
+        // FastLED/fbuild#817: delegate the HTTP transport to the shared
+        // async helper. `reset_device` may be called WITHOUT `__enter__`
+        // (no WebSocket session), so `self.runtime` may be `None` — fall
+        // back to a one-shot current-thread runtime in that case.
+        let port = self.port.clone();
+        let success = match self.runtime.as_ref() {
+            Some(rt) => rt.block_on(crate::async_serial_monitor::post_reset_request_async(
+                port, board,
+            ))?,
+            None => {
+                let rt = tokio::runtime::Builder::new_current_thread()
+                    .enable_all()
+                    .build()
+                    .map_err(|e| {
+                        pyo3::exceptions::PyRuntimeError::new_err(format!(
+                            "failed to build tokio runtime: {}",
+                            e
+                        ))
+                    })?;
+                rt.block_on(crate::async_serial_monitor::post_reset_request_async(
+                    port, board,
+                ))?
+            }
         };
-
-        let resp = reqwest::blocking::Client::new()
-            .post(&url)
-            .json(&payload)
-            .timeout(std::time::Duration::from_secs(10))
-            .send()
-            .map_err(|e| {
-                pyo3::exceptions::PyConnectionError::new_err(format!(
-                    "failed to send reset request to daemon: {}",
-                    e
-                ))
-            })?;
-
-        let body: serde_json::Value = resp.json().map_err(|e| {
-            pyo3::exceptions::PyRuntimeError::new_err(format!(
-                "failed to parse reset response: {}",
-                e
-            ))
-        })?;
-
-        let success = body
-            .get("success")
-            .and_then(|v| v.as_bool())
-            .unwrap_or(false);
 
         let was_connected =
             self.runtime.is_some() && self.ws_write.is_some() && self.ws_read.is_some();

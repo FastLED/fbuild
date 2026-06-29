@@ -128,7 +128,7 @@ pub async fn deploy_avr8js(
         .join("avr8js")
         .join(&env_name)
         .join(&session_id);
-    if let Err(e) = std::fs::create_dir_all(&session_dir) {
+    if let Err(e) = tokio::fs::create_dir_all(&session_dir).await {
         return (
             StatusCode::INTERNAL_SERVER_ERROR,
             Json(OperationResponse::fail(
@@ -139,7 +139,7 @@ pub async fn deploy_avr8js(
     }
 
     let staged_hex = session_dir.join("firmware.hex");
-    if let Err(e) = std::fs::copy(&firmware_path, &staged_hex) {
+    if let Err(e) = tokio::fs::copy(&firmware_path, &staged_hex).await {
         return (
             StatusCode::INTERNAL_SERVER_ERROR,
             Json(OperationResponse::fail(
@@ -151,7 +151,7 @@ pub async fn deploy_avr8js(
 
     let staged_elf = if let Some(ref elf) = elf_path {
         let dest = session_dir.join("firmware.elf");
-        match std::fs::copy(elf, &dest) {
+        match tokio::fs::copy(elf, &dest).await {
             Ok(_) => Some(dest),
             Err(_) => None,
         }
@@ -176,10 +176,12 @@ pub async fn deploy_avr8js(
         created_at_unix: now_unix(),
     };
     let manifest_path = session_dir.join("session.json");
-    if let Err(e) = std::fs::write(
+    if let Err(e) = tokio::fs::write(
         &manifest_path,
         serde_json::to_vec_pretty(&manifest).unwrap_or_default(),
-    ) {
+    )
+    .await
+    {
         return (
             StatusCode::INTERNAL_SERVER_ERROR,
             Json(OperationResponse::fail(
@@ -221,7 +223,7 @@ pub async fn deploy_avr8js(
         // The per-session firmware.hex and session.json continue to live
         // under session_dir. See FastLED/fbuild#291.
         let script_path = avr8js_cache.join("headless.mjs");
-        if let Err(e) = std::fs::write(&script_path, AVR8JS_HEADLESS_MJS) {
+        if let Err(e) = tokio::fs::write(&script_path, AVR8JS_HEADLESS_MJS).await {
             return (
                 StatusCode::INTERNAL_SERVER_ERROR,
                 Json(OperationResponse::fail(
