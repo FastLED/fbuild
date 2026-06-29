@@ -114,13 +114,22 @@ jobs:
       # files have been trimmed from the toolchain dir. `rustup target
       # add` would then say "is up to date" and skip the install, and
       # rustc would later fail with `E0463: can't find crate for 'core'`
-      # / `the <triple> target may not be installed`. Forcing the remove
-      # first wipes the manifest entry so the subsequent add reinstalls
-      # the files for real. `|| true` because remove on an already-
-      # missing target exits non-zero.
+      # / `the <triple> target may not be installed`.
+      #
+      # The previous "remove then add" dance silently rolled back when
+      # the rust-std manifest file was missing (No such file or
+      # directory), and the subsequent `rustup target add` then said
+      # "is up to date" while the .rlib files stayed missing — see the
+      # 2.3.12 release failures.
+      #
+      # The fix: `rustup component add rust-std-<target>` accepts a
+      # specific component name and refreshes the files regardless of
+      # what the component-manifest claims. `rustup target add` still
+      # runs as a belt-and-suspenders so `rustup show` reports the
+      # target installed downstream.
       - name: Add Rust target
         run: |
-          rustup target remove ${{ inputs.target }} || true
+          rustup component add --target ${{ inputs.target }} rust-std
           rustup target add ${{ inputs.target }}
 
       # Linux musl toolchain (libudev is auto-excluded for musl targets by serialport)
