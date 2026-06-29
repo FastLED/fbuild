@@ -39,6 +39,95 @@ pub(crate) struct SerialMonitor {
     preempted: bool,
 }
 
+impl SerialMonitor {
+    fn connect_ws(&self, rt: &Runtime) -> PyResult<(WsSink, WsSource)> {
+        let daemon_port = fbuild_paths::get_daemon_port();
+        let ws_url = format!("ws://127.0.0.1:{}/ws/serial-monitor", daemon_port);
+
+        let (ws_stream, _) = rt
+            .block_on(tokio_tungstenite::connect_async(&ws_url))
+            .map_err(|e| {
+                pyo3::exceptions::PyConnectionError::new_err(format!(
+                    "failed to connect to daemon WebSocket at {}: {}",
+                    ws_url, e
+                ))
+            })?;
+
+        let (mut write, mut read) = ws_stream.split();
+
+        let attach = ClientMessage::Attach {
+            client_id: self.client_id.clone(),
+            port: self.port.clone(),
+            baud_rate: self.baud_rate,
+            open_if_needed: true,
+            pre_acquire_writer: true,
+        };
+        let attach_json = serde_json::to_string(&attach).unwrap();
+
+        rt.block_on(write.send(tungstenite::Message::Text(attach_json)))
+            .map_err(|e| {
+                pyo3::exceptions::PyConnectionError::new_err(format!(
+                    "failed to send attach: {}",
+                    e
+                ))
+            })?;
+
+        let msg: tungstenite::Message = rt
+            .block_on(read.next())
+            .ok_or_else(|| {
+                pyo3::exceptions::PyConnectionError::new_err("WebSocket closed before attach")
+            })?
+            .map_err(|e| {
+                pyo3::exceptions::PyConnectionError::new_err(format!("WebSocket error: {}", e))
+            })?;
+
+        if let tungstenite::Message::Text(text) = msg {
+            match serde_json::from_str::<ServerMessage>(&text) {
+                Ok(ServerMessage::Attached { success, .. }) if success => {
+                    if self.verbose {
+                        eprintln!("attached to {} at {} baud", self.port, self.baud_rate);
+                    }
+                }
+                Ok(ServerMessage::Error { message }) => {
+                    return Err(pyo3::exceptions::PyRuntimeError::new_err(format!(
+                        "attach failed: {}",
+                        message
+                    )));
+                }
+                _ => {
+                    return Err(pyo3::exceptions::PyRuntimeError::new_err(
+                        "unexpected response to attach",
+                    ));
+                }
+            }
+        }
+
+        Ok((write, read))
+    }
+
+    fn close_ws(&mut self) {
+        if let (Some(ref rt), Some(ref ws_write)) = (&self.runtime, &self.ws_write) {
+            let detach = serde_json::to_string(&ClientMessage::Detach).unwrap();
+            if let Ok(mut write) = ws_write.lock() {
+                let _ = rt.block_on(write.send(tungstenite::Message::Text(detach)));
+                let _ = rt.block_on(write.send(tungstenite::Message::Close(None)));
+            }
+        }
+        self.ws_write = None;
+        self.ws_read = None;
+    }
+
+    fn reconnect_ws(&mut self) -> PyResult<()> {
+        let rt = self.runtime.as_ref().ok_or_else(|| {
+            pyo3::exceptions::PyRuntimeError::new_err("SerialMonitor runtime is not active")
+        })?;
+        let (write, read) = self.connect_ws(rt)?;
+        self.ws_write = Some(Mutex::new(write));
+        self.ws_read = Some(Mutex::new(read));
+        Ok(())
+    }
+}
+
 #[pymethods]
 impl SerialMonitor {
     #[new]
@@ -70,70 +159,7 @@ impl SerialMonitor {
             pyo3::exceptions::PyRuntimeError::new_err(format!("failed to create runtime: {}", e))
         })?;
 
-        // Connect to daemon WebSocket
-        let daemon_port = fbuild_paths::get_daemon_port();
-        let ws_url = format!("ws://127.0.0.1:{}/ws/serial-monitor", daemon_port);
-
-        let (ws_stream, _) = rt
-            .block_on(tokio_tungstenite::connect_async(&ws_url))
-            .map_err(|e| {
-                pyo3::exceptions::PyConnectionError::new_err(format!(
-                    "failed to connect to daemon WebSocket at {}: {}",
-                    ws_url, e
-                ))
-            })?;
-
-        let (mut write, mut read) = ws_stream.split();
-
-        // Send attach message
-        let attach = ClientMessage::Attach {
-            client_id: slf.client_id.clone(),
-            port: slf.port.clone(),
-            baud_rate: slf.baud_rate,
-            open_if_needed: true,
-            pre_acquire_writer: true,
-        };
-        let attach_json = serde_json::to_string(&attach).unwrap();
-
-        rt.block_on(write.send(tungstenite::Message::Text(attach_json)))
-            .map_err(|e| {
-                pyo3::exceptions::PyConnectionError::new_err(format!(
-                    "failed to send attach: {}",
-                    e
-                ))
-            })?;
-
-        // Wait for attached response
-        let msg: tungstenite::Message = rt
-            .block_on(read.next())
-            .ok_or_else(|| {
-                pyo3::exceptions::PyConnectionError::new_err("WebSocket closed before attach")
-            })?
-            .map_err(|e| {
-                pyo3::exceptions::PyConnectionError::new_err(format!("WebSocket error: {}", e))
-            })?;
-
-        if let tungstenite::Message::Text(text) = msg {
-            match serde_json::from_str::<ServerMessage>(&text) {
-                Ok(ServerMessage::Attached { success, .. }) if success => {
-                    if slf.verbose {
-                        eprintln!("attached to {} at {} baud", slf.port, slf.baud_rate);
-                    }
-                }
-                Ok(ServerMessage::Error { message }) => {
-                    return Err(pyo3::exceptions::PyRuntimeError::new_err(format!(
-                        "attach failed: {}",
-                        message
-                    )));
-                }
-                _ => {
-                    return Err(pyo3::exceptions::PyRuntimeError::new_err(
-                        "unexpected response to attach",
-                    ));
-                }
-            }
-        }
-
+        let (write, read) = slf.connect_ws(&rt)?;
         slf.ws_write = Some(Mutex::new(write));
         slf.ws_read = Some(Mutex::new(read));
         slf.runtime = Some(rt);
@@ -147,15 +173,7 @@ impl SerialMonitor {
         _exc_val: Option<&Bound<'_, PyAny>>,
         _exc_tb: Option<&Bound<'_, PyAny>>,
     ) -> bool {
-        if let (Some(ref rt), Some(ref ws_write)) = (&self.runtime, &self.ws_write) {
-            let detach = serde_json::to_string(&ClientMessage::Detach).unwrap();
-            if let Ok(mut write) = ws_write.lock() {
-                let _ = rt.block_on(write.send(tungstenite::Message::Text(detach)));
-                let _ = rt.block_on(write.send(tungstenite::Message::Close(None)));
-            }
-        }
-        self.ws_write = None;
-        self.ws_read = None;
+        self.close_ws();
         self.runtime = None;
         false
     }
@@ -439,7 +457,7 @@ impl SerialMonitor {
     ///     False on failure or timeout.
     #[pyo3(signature = (board=None, wait_for_output=false, timeout=5.0))]
     fn reset_device(
-        &self,
+        &mut self,
         board: Option<String>,
         wait_for_output: bool,
         timeout: f64,
@@ -481,6 +499,15 @@ impl SerialMonitor {
             .get("success")
             .and_then(|v| v.as_bool())
             .unwrap_or(false);
+
+        let was_connected =
+            self.runtime.is_some() && self.ws_write.is_some() && self.ws_read.is_some();
+        if was_connected {
+            self.close_ws();
+            if success && self.auto_reconnect {
+                self.reconnect_ws()?;
+            }
+        }
 
         if !success || !wait_for_output {
             return Ok(success);
