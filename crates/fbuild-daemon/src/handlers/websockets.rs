@@ -12,6 +12,22 @@ use std::sync::Arc;
 use std::time::Duration;
 use tokio::sync::{mpsc, oneshot};
 
+/// Serialize a `SerialServerMessage` (or any `serde::Serialize` value)
+/// to JSON, falling back to a hardcoded JSON error frame if serialization
+/// somehow fails. Used on WebSocket error-reply paths where panicking
+/// would tear the whole socket down instead of just dropping one frame.
+///
+/// `serde_json::to_string` only fails for values whose `Serialize` impl
+/// returns an error or that contain non-finite floats inside a map key
+/// — neither shape occurs in `SerialServerMessage`. The fallback exists
+/// purely as a panic-free guarantee for the cold path; FastLED/fbuild#826
+/// flagged the prior `.unwrap()` calls as a stability hazard.
+fn serialize_or_fallback<T: serde::Serialize>(value: &T) -> String {
+    serde_json::to_string(value).unwrap_or_else(|_| {
+        r#"{"type":"error","message":"<internal serde failure>"}"#.to_string()
+    })
+}
+
 // ReaderControl -- inbound -> reader cross-task RPC for the small set
 // of `SerialClientMessage`s that need read-only access to the reader-
 // owned broadcast receiver (`ClearBuffer` and `GetInWaiting`).
@@ -116,7 +132,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                                 message: format!("failed to open port: {}", e),
                             };
                             let _ = socket
-                                .send(Message::Text(serde_json::to_string(&err_msg).unwrap()))
+                                .send(Message::Text(serialize_or_fallback(&err_msg)))
                                 .await;
                             return;
                         }
@@ -128,7 +144,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                         message: "expected attach message first".to_string(),
                     };
                     let _ = socket
-                        .send(Message::Text(serde_json::to_string(&err_msg).unwrap()))
+                        .send(Message::Text(serialize_or_fallback(&err_msg)))
                         .await;
                     return;
                 }
@@ -137,7 +153,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                         message: format!("invalid message: {}", e),
                     };
                     let _ = socket
-                        .send(Message::Text(serde_json::to_string(&err_msg).unwrap()))
+                        .send(Message::Text(serialize_or_fallback(&err_msg)))
                         .await;
                     return;
                 }
@@ -170,7 +186,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                 message: format!("port {} not open", port),
             };
             let _ = socket
-                .send(Message::Text(serde_json::to_string(&err_msg).unwrap()))
+                .send(Message::Text(serialize_or_fallback(&err_msg)))
                 .await;
             cleanup_ws_serial_session(&ctx, &port, &client_id, writer_acquired).await;
             return;
@@ -184,7 +200,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
         writer_pre_acquired: writer_acquired,
     };
     if socket
-        .send(Message::Text(serde_json::to_string(&attached).unwrap()))
+        .send(Message::Text(serialize_or_fallback(&attached)))
         .await
         .is_err()
     {
