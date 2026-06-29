@@ -423,14 +423,24 @@ impl Esp32Deployer {
         // `serialport` under the hood). Offload to a blocking thread so
         // the daemon's tokio runtime keeps draining other I/O while the
         // ~6-10s verify happens.
+        //
+        // Wall-clock cap (FastLED/fbuild#804): the per-read serialport
+        // timeout (3s) only bounds individual UART reads, not the total
+        // espflash sequence (handshake + stub upload + baud renegotiate
+        // + per-region MD5). On a wedged USB-CDC stack the call could
+        // spin for minutes. A 30s outer cap matches the esptool
+        // subprocess path's timeout and is the documented "fast skip"
+        // budget. On timeout the blocking task is detached (the
+        // `Flasher` drops, closing the serial port) and the caller can
+        // fall back to a full flash via the esptool path.
         let chip = self.chip.clone();
-        let port = port.to_string();
+        let port_str = port.to_string();
         let before_reset = self.before_reset.clone();
         let after_reset = self.after_reset.clone();
-        tokio::task::spawn_blocking(move || {
+        let join_handle = tokio::task::spawn_blocking(move || {
             crate::esp32_native::try_verify_deployment_native(
                 &chip,
-                &port,
+                &port_str,
                 baud,
                 &before_reset,
                 &after_reset,
@@ -439,14 +449,18 @@ impl Esp32Deployer {
                 parts_off,
                 fw_off,
             )
-        })
-        .await
-        .map_err(|e| {
-            fbuild_core::FbuildError::DeployFailed(format!(
+        });
+        match tokio::time::timeout(std::time::Duration::from_secs(30), join_handle).await {
+            Ok(Ok(result)) => result,
+            Ok(Err(e)) => Err(fbuild_core::FbuildError::DeployFailed(format!(
                 "native verify: blocking task panicked: {}",
                 e
-            ))
-        })?
+            ))),
+            Err(_) => Err(fbuild_core::FbuildError::DeployFailed(format!(
+                "native verify timed out after 30s on {}",
+                port
+            ))),
+        }
     }
 
     /// Native `write-flash` via the [`espflash`] crate (issue #66).
@@ -491,28 +505,42 @@ impl Esp32Deployer {
 
         // espflash write is blocking (sync serialport + protocol);
         // offload to a blocking thread so the runtime keeps moving.
+        //
+        // Wall-clock cap (FastLED/fbuild#804): the per-read serialport
+        // timeout (10s) only bounds individual UART reads — espflash
+        // can retry blocks internally with no overall cap. On a wedged
+        // stub flasher mid-write this hangs the daemon's `/api/deploy`
+        // handler indefinitely. 180s comfortably covers a worst-case
+        // full-image write (~2.4 MB at 460800 baud + erase) while
+        // bounding the wedge surface; on timeout the blocking task is
+        // detached (the `Flasher` drops, closing the port) and we
+        // surface a clear error so the caller can retry / fall back.
         let chip = self.chip.clone();
-        let port = port.to_string();
+        let port_str = port.to_string();
         let before_reset = self.before_reset.clone();
         let after_reset = self.after_reset.clone();
-        tokio::task::spawn_blocking(move || {
+        let join_handle = tokio::task::spawn_blocking(move || {
             crate::esp32_native::try_write_deployment_native(
                 &chip,
-                &port,
+                &port_str,
                 baud,
                 &before_reset,
                 &after_reset,
                 &regions,
                 /* selective */ false,
             )
-        })
-        .await
-        .map_err(|e| {
-            fbuild_core::FbuildError::DeployFailed(format!(
+        });
+        match tokio::time::timeout(std::time::Duration::from_secs(180), join_handle).await {
+            Ok(Ok(result)) => result,
+            Ok(Err(e)) => Err(fbuild_core::FbuildError::DeployFailed(format!(
                 "native write: blocking task panicked: {}",
                 e
-            ))
-        })?
+            ))),
+            Err(_) => Err(fbuild_core::FbuildError::DeployFailed(format!(
+                "native write timed out after 180s on {}",
+                port
+            ))),
+        }
     }
 
     /// Native `write-flash` for a caller-chosen subset of regions
@@ -554,28 +582,36 @@ impl Esp32Deployer {
             self.chip
         );
 
+        // Same 180s wall-clock cap as the full-flash path
+        // (FastLED/fbuild#804). Selective writes are typically faster
+        // (firmware-only ≪ 2.4 MB), but the worst case is identical
+        // bytes-wise, so reuse the same budget for predictability.
         let chip = self.chip.clone();
-        let port = port.to_string();
+        let port_str = port.to_string();
         let before_reset = self.before_reset.clone();
         let after_reset = self.after_reset.clone();
-        tokio::task::spawn_blocking(move || {
+        let join_handle = tokio::task::spawn_blocking(move || {
             crate::esp32_native::try_write_deployment_native(
                 &chip,
-                &port,
+                &port_str,
                 baud,
                 &before_reset,
                 &after_reset,
                 &write_regions,
                 /* selective */ true,
             )
-        })
-        .await
-        .map_err(|e| {
-            fbuild_core::FbuildError::DeployFailed(format!(
+        });
+        match tokio::time::timeout(std::time::Duration::from_secs(180), join_handle).await {
+            Ok(Ok(result)) => result,
+            Ok(Err(e)) => Err(fbuild_core::FbuildError::DeployFailed(format!(
                 "native write (selective): blocking task panicked: {}",
                 e
-            ))
-        })?
+            ))),
+            Err(_) => Err(fbuild_core::FbuildError::DeployFailed(format!(
+                "native write (selective) timed out after 180s on {}",
+                port
+            ))),
+        }
     }
 
     #[cfg(feature = "espflash-native")]

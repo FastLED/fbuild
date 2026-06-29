@@ -13,6 +13,15 @@ use running_process::broker::client::RefusalKind;
 
 use super::protocol::{BrokerRequest, BrokerResponse, ProtocolError, FBUILD_PAYLOAD_PROTOCOL};
 
+/// Cap on broker negotiation / dial. An unhealthy broker that accepts
+/// the connection but never replies to the negotiation frame used to
+/// hang the entire daemon startup sequence here. See FastLED/fbuild#808.
+const BROKER_ADOPT_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(10);
+/// Cap on a single broker frame round-trip from this session. Without
+/// this, any HTTP/WS handler that routes through the broker frame path
+/// could be wedged by a non-responding broker. See FastLED/fbuild#808.
+const BROKER_REQUEST_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(10);
+
 /// What `adopt` decided after consulting the escape hatch and the broker.
 #[derive(Debug)]
 pub enum AdoptOutcome {
@@ -78,7 +87,21 @@ impl FbuildBrokerSession {
             env!("CARGO_PKG_VERSION"),
         );
 
-        match AsyncBrokerSession::adopt(request).await {
+        // FastLED/fbuild#808: bound broker negotiation so an
+        // unhealthy broker cannot wedge daemon startup.
+        let adopt_result =
+            match tokio::time::timeout(BROKER_ADOPT_TIMEOUT, AsyncBrokerSession::adopt(request))
+                .await
+            {
+                Ok(r) => r,
+                Err(_) => {
+                    return Err(BrokerError::Connect(format!(
+                        "broker negotiation timed out after {}s",
+                        BROKER_ADOPT_TIMEOUT.as_secs()
+                    )));
+                }
+            };
+        match adopt_result {
             Ok(inner) => Ok(AdoptOutcome::Negotiated(Box::new(Self { inner }))),
             Err(AdoptError::BrokerDisabled) => Ok(AdoptOutcome::UseDirectPath),
             Err(AdoptError::DisableEnv(err)) => Err(BrokerError::DisableEnv(err.to_string())),
@@ -106,11 +129,20 @@ impl FbuildBrokerSession {
     /// Send one fbuild request over the broker frame lane and decode the
     /// response into the shared internal model.
     pub async fn request(&mut self, req: &BrokerRequest) -> Result<BrokerResponse, BrokerError> {
-        let frame = self
+        // FastLED/fbuild#808: bound broker frame round-trips.
+        let request_fut = self
             .inner
-            .request(FBUILD_PAYLOAD_PROTOCOL, req.to_prost_bytes())
-            .await
-            .map_err(|e| BrokerError::Request(e.to_string()))?;
+            .request(FBUILD_PAYLOAD_PROTOCOL, req.to_prost_bytes());
+        let frame = match tokio::time::timeout(BROKER_REQUEST_TIMEOUT, request_fut).await {
+            Ok(Ok(frame)) => frame,
+            Ok(Err(e)) => return Err(BrokerError::Request(e.to_string())),
+            Err(_) => {
+                return Err(BrokerError::Request(format!(
+                    "broker request timed out after {}s",
+                    BROKER_REQUEST_TIMEOUT.as_secs()
+                )));
+            }
+        };
         Ok(BrokerResponse::from_prost_bytes(&frame.payload)?)
     }
 }

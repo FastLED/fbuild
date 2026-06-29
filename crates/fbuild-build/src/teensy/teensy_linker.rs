@@ -154,6 +154,10 @@ impl Linker for TeensyLinker {
 
         // On Windows, use a response file to avoid command-line length limits
         // (teensy41 produces ~500 .o files; see issue #234).
+        //
+        // FastLED/fbuild#809: bound the link step at 3 min — teensy41
+        // links comfortably under this budget.
+        let link_timeout = Some(std::time::Duration::from_secs(180));
         let result = if cfg!(windows) && args.len() > 50 {
             let temp_dir = output_dir.join("tmp");
             std::fs::create_dir_all(&temp_dir)?;
@@ -165,10 +169,16 @@ impl Linker for TeensyLinker {
             )
             .await?;
             let rsp_arg = format!("@{}", rsp_path.display());
-            run_command(&[args[0].as_str(), &rsp_arg], None, Some(&env_slice), None).await?
+            run_command(
+                &[args[0].as_str(), &rsp_arg],
+                None,
+                Some(&env_slice),
+                link_timeout,
+            )
+            .await?
         } else {
             let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-            run_command(&args_ref, None, Some(&env_slice), None).await?
+            run_command(&args_ref, None, Some(&env_slice), link_timeout).await?
         };
 
         if !result.success() {

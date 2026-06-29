@@ -31,6 +31,7 @@ jobs:
   prepare:
     name: Prepare release
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     outputs:
       should_build: ${{ steps.prepare.outputs.should_build }}
       should_publish_github: ${{ steps.prepare.outputs.should_publish_github }}
@@ -83,7 +84,7 @@ jobs:
           fi
 
           pypi_json="$(mktemp)"
-          if curl -fsSL https://pypi.org/pypi/fbuild/json -o "$pypi_json"; then
+          if curl -fsSL --connect-timeout 10 --max-time 30 https://pypi.org/pypi/fbuild/json -o "$pypi_json"; then
             latest="$(python -c 'import json,sys; print(json.load(open(sys.argv[1]))["info"]["version"])' "$pypi_json")"
             pypi_file_count="$(python -c 'import json,sys; data=json.load(open(sys.argv[1])); print(len(data.get("releases", {}).get(sys.argv[2], [])))' "$pypi_json" "$cargo_version")"
           else
@@ -226,6 +227,7 @@ jobs:
     needs: [prepare, build]
     if: needs.prepare.outputs.should_publish_github == 'true'
     runs-on: ubuntu-24.04
+    timeout-minutes: 30
 
     steps:
       - uses: actions/checkout@v6
@@ -295,6 +297,7 @@ jobs:
     needs: [prepare, build]
     if: needs.prepare.outputs.should_publish_pypi == 'true'
     runs-on: ubuntu-24.04
+    timeout-minutes: 30
 
     steps:
       - uses: actions/checkout@v6
@@ -346,13 +349,14 @@ jobs:
           PY
 
       - name: Smoke test Linux x86_64 wheel
+        timeout-minutes: 5
         shell: bash
         run: |
           set -euo pipefail
           python -m venv .venv
           . .venv/bin/activate
-          python -m pip install --upgrade pip
-          python -m pip install dist/wheels/*manylinux_2_17_x86_64*.whl
+          python -m pip install --upgrade --timeout 60 pip
+          python -m pip install --timeout 60 dist/wheels/*manylinux_2_17_x86_64*.whl
           fbuild --version
           python -c "import fbuild; print(fbuild.__version__)"
 
@@ -368,6 +372,7 @@ jobs:
     needs: [prepare, build-pypi]
     if: needs.prepare.outputs.should_publish_pypi == 'true'
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     environment: pypi
     permissions:
       contents: read
@@ -400,7 +405,7 @@ jobs:
           expected=4
           deadline=$(( $(date +%s) + 300 ))
           while :; do
-            count="$(curl -fsSL "https://pypi.org/pypi/fbuild/${PYPI_VERSION}/json" \
+            count="$(curl -fsSL --connect-timeout 5 --max-time 10 "https://pypi.org/pypi/fbuild/${PYPI_VERSION}/json" \
               | python -c 'import json,sys; print(len(json.load(sys.stdin).get("urls",[])))' 2>/dev/null \
               || echo 0)"
             echo "PyPI reports ${count}/${expected} files for fbuild ${PYPI_VERSION}"

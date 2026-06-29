@@ -13,10 +13,16 @@
 //! - Detect boot crashes early and trigger hardware reset
 
 use std::collections::HashMap;
-use std::sync::Arc;
-use tokio::sync::Mutex;
+use std::sync::{Arc, Mutex};
 
 /// Tracks which ports are currently preempted by deploy operations.
+///
+/// Uses `std::sync::Mutex` (not `tokio::sync::Mutex`) on purpose: no
+/// `.await` ever happens inside the critical sections below, so a
+/// blocking mutex is both faster and removes the
+/// `lock().await`-without-`try_lock_for` foot-gun flagged in
+/// FastLED/fbuild#803 MEDIUM. The methods remain `async` to preserve
+/// the call-site signature for callers that already `.await` them.
 pub struct PreemptionTracker {
     preempted_ports: Arc<Mutex<HashMap<String, PreemptionInfo>>>,
 }
@@ -35,7 +41,14 @@ impl PreemptionTracker {
     }
 
     pub async fn preempt(&self, port: &str, reason: String, preempted_by: String) {
-        let mut ports = self.preempted_ports.lock().await;
+        // No `.await` inside this critical section — `std::sync::Mutex`
+        // is the right choice. `expect` is safe: the only path that
+        // could poison the lock is a panic while holding it, and we
+        // hold it only across a single `HashMap::insert`.
+        let mut ports = self
+            .preempted_ports
+            .lock()
+            .expect("preemption mutex poisoned");
         ports.insert(
             port.to_string(),
             PreemptionInfo {
@@ -47,12 +60,18 @@ impl PreemptionTracker {
     }
 
     pub async fn clear(&self, port: &str) {
-        let mut ports = self.preempted_ports.lock().await;
+        let mut ports = self
+            .preempted_ports
+            .lock()
+            .expect("preemption mutex poisoned");
         ports.remove(port);
     }
 
     pub async fn is_preempted(&self, port: &str) -> bool {
-        let ports = self.preempted_ports.lock().await;
+        let ports = self
+            .preempted_ports
+            .lock()
+            .expect("preemption mutex poisoned");
         ports.contains_key(port)
     }
 }

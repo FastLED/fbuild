@@ -314,6 +314,11 @@ impl Linker for Esp32Linker {
 
         // On Windows, always use a response file to normalize paths
         // (forward slashes, quoting) and avoid command-line length issues.
+        //
+        // FastLED/fbuild#809: ESP32 links are the longest legitimate
+        // link step in the codebase (LTO + large SDK archive). 5 min
+        // is a generous upper bound — anything past that is a wedge.
+        let link_timeout = Some(std::time::Duration::from_secs(300));
         let result = if cfg!(windows) {
             let flags_for_rsp: Vec<String> = link_args[1..].to_vec();
             let rsp_dir = output_dir.join("tmp");
@@ -324,10 +329,10 @@ impl Linker for Esp32Linker {
             )
             .await?;
             let rsp_args = [link_args[0].as_str(), &format!("@{}", rsp_path.display())];
-            run_command(&rsp_args, None, None, None).await?
+            run_command(&rsp_args, None, None, link_timeout).await?
         } else {
             let args_ref: Vec<&str> = link_args.iter().map(|s| s.as_str()).collect();
-            run_command(&args_ref, None, None, None).await?
+            run_command(&args_ref, None, None, link_timeout).await?
         };
 
         if !result.success() {

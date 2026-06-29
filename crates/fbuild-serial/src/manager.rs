@@ -297,6 +297,14 @@ impl SharedSerialManager {
     }
 
     /// Write data to a serial port. Caller must hold writer lock.
+    ///
+    /// Both `write()` and `flush()` are synchronous Win32/POSIX syscalls.
+    /// To keep the tokio reactor free and to bound how long a wedged
+    /// USB-CDC adapter can pin a worker, the blocking call is moved to
+    /// `tokio::task::spawn_blocking` (matching the `open_port` and
+    /// `esp_hard_reset` pattern) and wrapped in an outer
+    /// `tokio::time::timeout` budget. See FastLED/fbuild#803 HIGH
+    /// finding.
     pub async fn write_to_port(
         &self,
         port: &str,
@@ -327,15 +335,43 @@ impl SharedSerialManager {
                 .clone()
         };
 
-        let mut serial = handle.lock().await;
-        use std::io::Write;
-        let bytes_written = serial
-            .write(data)
-            .map_err(|e| fbuild_core::FbuildError::SerialError(format!("write failed: {}", e)))?;
-        serial
-            .flush()
-            .map_err(|e| fbuild_core::FbuildError::SerialError(format!("flush failed: {}", e)))?;
-        drop(serial);
+        let port_owned = port.to_string();
+        let data_owned = data.to_vec();
+        let write_future = tokio::task::spawn_blocking(move || {
+            use std::io::Write;
+            let mut serial = handle.blocking_lock();
+            let n = serial
+                .write(&data_owned)
+                .map_err(|e| format!("write failed: {}", e))?;
+            serial
+                .flush()
+                .map_err(|e| format!("flush failed: {}", e))?;
+            Ok::<usize, String>(n)
+        });
+
+        // 2s budget: covers normal Windows USB-CDC drain + headroom but
+        // bounds the worst case so a wedged adapter cannot stall the
+        // daemon indefinitely on a write/flush syscall.
+        let join_result =
+            tokio::time::timeout(Duration::from_secs(2), write_future)
+                .await
+                .map_err(|_| {
+                    fbuild_core::FbuildError::SerialError(format!(
+                        "write to {} timed out after 2s",
+                        port_owned
+                    ))
+                })?;
+
+        let bytes_written = match join_result {
+            Ok(Ok(n)) => n,
+            Ok(Err(msg)) => return Err(fbuild_core::FbuildError::SerialError(msg)),
+            Err(join_err) => {
+                return Err(fbuild_core::FbuildError::SerialError(format!(
+                    "write task panicked on {}: {}",
+                    port_owned, join_err
+                )))
+            }
+        };
 
         // Update stats
         if let Some(mut session) = self.sessions.get_mut(&session_key) {
@@ -389,15 +425,28 @@ impl SharedSerialManager {
 
         let port_owned = port.to_string();
         let port_for_log = port_owned.clone();
-        let join_result = tokio::task::spawn_blocking(move || {
+        let reset_future = tokio::task::spawn_blocking(move || {
             tracing::info!(
                 port = port_for_log,
                 "esp_hard_reset: starting DTR/RTS recovery sequence"
             );
             let mut guard = handle.blocking_lock();
             crate::esp_reset::esp_hard_reset_blocking(&mut **guard)
-        })
-        .await;
+        });
+
+        // 3s budget: HARD_RESET_PULSE_MS is 100ms, plus a few DTR/RTS
+        // line-control syscalls (USB control transfers on CDC-ACM). A
+        // healthy adapter completes in well under 250ms; the 3s cap
+        // bounds the worst case where a misbehaving/unplugged adapter
+        // makes a kernel ioctl block (FastLED/fbuild#803 MEDIUM).
+        let join_result = tokio::time::timeout(Duration::from_secs(3), reset_future)
+            .await
+            .map_err(|_| {
+                fbuild_core::FbuildError::SerialError(format!(
+                    "esp_hard_reset on {} timed out after 3s",
+                    port_owned
+                ))
+            })?;
 
         match join_result {
             Ok(Ok(())) => Ok(()),
@@ -420,9 +469,25 @@ impl SharedSerialManager {
             // Signal the background reader to stop
             session.stop_flag.store(true, Ordering::Relaxed);
 
-            // Wait for the reader task to finish
+            // Wait for the reader task to finish, but cap how long
+            // close can hang. The reader's per-iteration `serial.read()`
+            // has a 100ms timeout, so a healthy reader exits well under
+            // 1s once `stop_flag` is set. A wedged Windows USB-CDC
+            // driver can occasionally ignore the configured read
+            // timeout — in that case we leak the JoinHandle and proceed
+            // so the daemon stays responsive (FastLED/fbuild#803 HIGH).
             if let Some(handle) = session.reader_handle.take() {
-                let _ = handle.await;
+                match tokio::time::timeout(Duration::from_secs(2), handle).await {
+                    Ok(_join_result) => {}
+                    Err(_) => {
+                        tracing::warn!(
+                            port,
+                            client_id,
+                            "reader task did not exit within 2s of close — \
+                             leaking JoinHandle and proceeding"
+                        );
+                    }
+                }
             }
 
             // Drop the serial handle (closes the port)
@@ -651,7 +716,20 @@ impl SharedSerialManager {
             return Ok(false);
         };
         if let Some(handle) = old_reader {
-            let _ = handle.await;
+            // Bound how long the rebind can stall on a wedged reader.
+            // See `close_port` for the same rationale
+            // (FastLED/fbuild#803 HIGH).
+            match tokio::time::timeout(Duration::from_secs(2), handle).await {
+                Ok(_) => {}
+                Err(_) => {
+                    tracing::warn!(
+                        port = session_key,
+                        new_port,
+                        "old reader did not exit within 2s during rebind — \
+                         leaking JoinHandle and proceeding"
+                    );
+                }
+            }
         }
 
         let stop_flag = Arc::new(AtomicBool::new(false));

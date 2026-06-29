@@ -307,9 +307,28 @@ pub(crate) async fn run_qemu_process(
     }
 
     if child_exit.is_none() {
-        child_exit = Some(child.wait().await.map_err(|e| {
-            fbuild_core::FbuildError::DeployFailed(format!("{} wait failed: {}", label, e))
-        })?);
+        // FastLED/fbuild#808 (HIGH): cap the post-kill reap. If the OS
+        // kill is processed but the exit-status reaper hangs (rare but
+        // observed on Windows with driver-resident children), let the
+        // containment group reap the child on daemon exit instead of
+        // blocking this handler forever.
+        const CHILD_WAIT_REAP_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(5);
+        match tokio::time::timeout(CHILD_WAIT_REAP_TIMEOUT, child.wait()).await {
+            Ok(Ok(status)) => child_exit = Some(status),
+            Ok(Err(e)) => {
+                return Err(fbuild_core::FbuildError::DeployFailed(format!(
+                    "{} wait failed: {}",
+                    label, e
+                )));
+            }
+            Err(_) => {
+                tracing::warn!(
+                    "{} child.wait() exceeded {}s after kill; containment group will reap",
+                    label,
+                    CHILD_WAIT_REAP_TIMEOUT.as_secs()
+                );
+            }
+        }
     }
 
     let _ = stdout_task.await;

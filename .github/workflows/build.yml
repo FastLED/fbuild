@@ -15,6 +15,10 @@ permissions:
 
 jobs:
   build:
+    # timeout-minutes is set on the reusable workflow's job
+    # (template_native_build.yml -> jobs.build.timeout-minutes: 90).
+    # GHA does not allow `timeout-minutes:` at the caller `jobs.<id>:`
+    # level when the job uses `uses:` (reusable workflow).
     strategy:
       fail-fast: false
       matrix:

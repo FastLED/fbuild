@@ -192,9 +192,29 @@ pub async fn deploy(
             }
         }
     } else {
-        // Run build first
+        // Run build first.
+        // FastLED/fbuild#808 (CRITICAL): hard ceiling on lock-wait so a
+        // wedged previous deploy cannot keep every subsequent deploy
+        // for this project queued indefinitely.
+        const DEPLOY_LOCK_HARD_DEADLINE: std::time::Duration =
+            std::time::Duration::from_secs(30 * 60);
         let lock = ctx.project_lock(&project_dir);
-        let _guard = lock.lock().await;
+        let _guard = match tokio::time::timeout(DEPLOY_LOCK_HARD_DEADLINE, lock.lock()).await {
+            Ok(g) => g,
+            Err(_) => {
+                return (
+                    StatusCode::SERVICE_UNAVAILABLE,
+                    Json(OperationResponse::fail(
+                        request_id,
+                        format!(
+                            "project lock not acquired within {}s; a previous build/deploy may be wedged — \
+                             run `fbuild daemon locks` to see who is holding it",
+                            DEPLOY_LOCK_HARD_DEADLINE.as_secs()
+                        ),
+                    )),
+                );
+            }
+        };
 
         let build_dir = resolve_build_dir(
             req.build_dir_override.as_deref(),
@@ -236,8 +256,24 @@ pub async fn deploy(
         // no spawn_blocking. The daemon runtime is multi-threaded so
         // any heavy CPU work the orchestrator schedules (compile jobs)
         // still runs in parallel via the executor.
+        // FastLED/fbuild#808 (CRITICAL): wall-clock cap on the
+        // pre-deploy build path so a wedged compiler does not hang
+        // the deploy handler indefinitely.
+        const DEPLOY_BUILD_HARD_DEADLINE: std::time::Duration =
+            std::time::Duration::from_secs(60 * 60);
         let build_result = match fbuild_build::get_orchestrator(platform) {
-            Ok(orch) => orch.build(&params).await,
+            Ok(orch) => match tokio::time::timeout(
+                DEPLOY_BUILD_HARD_DEADLINE,
+                orch.build(&params),
+            )
+            .await
+            {
+                Ok(r) => r,
+                Err(_) => Err(fbuild_core::FbuildError::Other(format!(
+                    "pre-deploy build exceeded hard deadline ({}s); aborting — a compiler may be wedged",
+                    DEPLOY_BUILD_HARD_DEADLINE.as_secs()
+                ))),
+            },
             Err(e) => Err(e),
         };
 
@@ -432,10 +468,15 @@ pub async fn deploy(
     // tokio-aware via fbuild_core::subprocess::run_command, and the
     // remaining espflash/native paths self-offload to spawn_blocking
     // inside the Esp32Deployer.
-    let deploy_result: fbuild_core::Result<(
-        Option<Box<dyn fbuild_deploy::Deployer>>,
-        fbuild_deploy::DeploymentResult,
-    )> = async {
+    //
+    // FastLED/fbuild#808 (CRITICAL): wall-clock cap on the deploy
+    // pipeline so a wedged esptool / avrdude / picotool process (stuck
+    // on a flaky USB CDC line or an unresponsive bootloader) cannot
+    // hang the handler forever. 10 min is generous for the slowest
+    // legitimate ESP32 full-flash and well below a kernel-level stall.
+    const DEPLOY_PIPELINE_HARD_DEADLINE: std::time::Duration =
+        std::time::Duration::from_secs(10 * 60);
+    let deploy_pipeline_fut = async {
         // Populated by the Espressif32 arm with (image_hash, port).
         // The tail of the closure consults it after `deployer.deploy`
         // returns to record or invalidate the daemon's trusted-hash
@@ -766,8 +807,24 @@ pub async fn deploy(
         // Return the deployer so the async caller can invoke
         // `post_deploy_recovery` after `clear_preemption().await` (#605).
         result.map(|r| (Some(deployer), r))
-    }
-    .await;
+    };
+    let deploy_result: fbuild_core::Result<(
+        Option<Box<dyn fbuild_deploy::Deployer>>,
+        fbuild_deploy::DeploymentResult,
+    )> = match tokio::time::timeout(DEPLOY_PIPELINE_HARD_DEADLINE, deploy_pipeline_fut).await {
+        Ok(r) => r,
+        Err(_) => {
+            // Clear preemption so the port can be reused once the
+            // stuck flasher process is reaped by the OS.
+            if let Some(ref p) = deploy_port_str {
+                ctx.serial_manager.clear_preemption(p).await;
+            }
+            Err(fbuild_core::FbuildError::DeployFailed(format!(
+                "deploy pipeline exceeded hard deadline ({}s); flasher may be wedged on USB",
+                DEPLOY_PIPELINE_HARD_DEADLINE.as_secs()
+            )))
+        }
+    };
 
     // Split the deployer out so it can drive recovery while `deploy_result`
     // retains its original shape for the downstream match. The async-block
@@ -794,8 +851,28 @@ pub async fn deploy(
                 // post_deploy_recovery is now async (the default impl
                 // polls via tokio sleeps + spawn_blocking serialport
                 // probes); call it directly on the runtime.
-                if let Err(e) = deployer.post_deploy_recovery(&port_name).await {
-                    tracing::warn!("post_deploy_recovery failed for {}: {}", port_name, e);
+                // FastLED/fbuild#808: cap recovery on a wall-clock so a
+                // wedged USB stack cannot stall the handler past the
+                // legitimate ~3-30 s recovery window.
+                const POST_DEPLOY_RECOVERY_DEADLINE: std::time::Duration =
+                    std::time::Duration::from_secs(60);
+                match tokio::time::timeout(
+                    POST_DEPLOY_RECOVERY_DEADLINE,
+                    deployer.post_deploy_recovery(&port_name),
+                )
+                .await
+                {
+                    Ok(Ok(())) => {}
+                    Ok(Err(e)) => {
+                        tracing::warn!("post_deploy_recovery failed for {}: {}", port_name, e);
+                    }
+                    Err(_) => {
+                        tracing::warn!(
+                            "post_deploy_recovery on {} exceeded {}s; continuing",
+                            port_name,
+                            POST_DEPLOY_RECOVERY_DEADLINE.as_secs()
+                        );
+                    }
                 }
             }
         }
@@ -862,12 +939,27 @@ pub async fn deploy(
         }
         let baud_rate = 115200u32;
 
-        // Open the port for monitoring
-        if let Err(e) = ctx
-            .serial_manager
-            .open_port(&monitor_port, baud_rate, &request_id, None)
-            .await
-        {
+        // Open the port for monitoring.
+        // FastLED/fbuild#808: timeout-bound the serial open so a wedged
+        // USB CDC handle cannot leave the deploy handler waiting forever
+        // after a successful flash.
+        const POST_DEPLOY_OPEN_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(30);
+        let open_result = tokio::time::timeout(
+            POST_DEPLOY_OPEN_TIMEOUT,
+            ctx.serial_manager
+                .open_port(&monitor_port, baud_rate, &request_id, None),
+        )
+        .await;
+        let open_err: Option<String> = match open_result {
+            Ok(Ok(_)) => None,
+            Ok(Err(e)) => Some(e.to_string()),
+            Err(_) => Some(format!(
+                "open_port({}) exceeded {}s",
+                monitor_port,
+                POST_DEPLOY_OPEN_TIMEOUT.as_secs()
+            )),
+        };
+        if let Some(e) = open_err {
             return (
                 StatusCode::OK,
                 Json(OperationResponse {
@@ -906,9 +998,18 @@ pub async fn deploy(
         };
 
         // #532 fold: post-deploy monitor opts out; collapse unreachable RecoverDownloadMode → Error.
+        // FastLED/fbuild#808: default the post-deploy monitor to a
+        // hard wall-clock ceiling when the caller didn't pass one. A
+        // monitor with `monitor_timeout: None` used to leave the deploy
+        // handler hanging on a quiet serial channel indefinitely.
+        // Explicit caller-supplied timeouts are honoured as-is.
+        const POST_DEPLOY_MONITOR_DEFAULT_TIMEOUT: f64 = 300.0;
+        let post_deploy_monitor_timeout = req
+            .monitor_timeout
+            .or(Some(POST_DEPLOY_MONITOR_DEFAULT_TIMEOUT));
         let monitor_result = match run_monitor_loop(
             &mut rx,
-            req.monitor_timeout,
+            post_deploy_monitor_timeout,
             req.monitor_halt_on_error.as_deref(),
             req.monitor_halt_on_success.as_deref(),
             req.monitor_expect.as_deref(),

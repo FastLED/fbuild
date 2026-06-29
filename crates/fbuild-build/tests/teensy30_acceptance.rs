@@ -39,6 +39,19 @@ use fbuild_build::{BuildOrchestrator, BuildParams};
 use fbuild_core::BuildProfile;
 use fbuild_test_support::{CompileDb, ElfProbe};
 
+/// 15-min wall-clock cap for `--ignored` real-toolchain tests (FastLED/fbuild#806).
+const REAL_BUILD_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(900);
+
+async fn under_test_timeout<F: std::future::Future>(fut: F) -> F::Output {
+    match tokio::time::timeout(REAL_BUILD_TIMEOUT, fut).await {
+        Ok(v) => v,
+        Err(_) => panic!(
+            "real-toolchain test exceeded {:.0}s budget — see FastLED/fbuild#806",
+            REAL_BUILD_TIMEOUT.as_secs_f64()
+        ),
+    }
+}
+
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads Teensyduino + arm-gcc; CI-only"]
 async fn teensy30_analog_output_meets_205_ac2() {
@@ -100,10 +113,11 @@ async fn teensy30_analog_output_meets_205_ac2() {
         bloat_analysis: false,
     };
 
-    let result = fbuild_build::teensy::orchestrator::TeensyOrchestrator
-        .build(&params)
-        .await
-        .expect("teensy30 AnalogOutput build must succeed for AC#2 gate");
+    let result = under_test_timeout(
+        fbuild_build::teensy::orchestrator::TeensyOrchestrator.build(&params),
+    )
+    .await
+    .expect("teensy30 AnalogOutput build must succeed for AC#2 gate");
     assert!(result.success, "build did not report success");
 
     // ── ELF probes (AC#2 + #204 regression guard) ───────────────────────

@@ -22,6 +22,19 @@ use fbuild_build::{BuildOrchestrator, BuildParams};
 use fbuild_core::BuildProfile;
 use fbuild_test_support::{CompileDb, ElfProbe};
 
+/// 15-min wall-clock cap for `--ignored` real-toolchain tests (FastLED/fbuild#806).
+const REAL_BUILD_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(900);
+
+async fn under_test_timeout<F: std::future::Future>(fut: F) -> F::Output {
+    match tokio::time::timeout(REAL_BUILD_TIMEOUT, fut).await {
+        Ok(v) => v,
+        Err(_) => panic!(
+            "real-toolchain test exceeded {:.0}s budget — see FastLED/fbuild#806",
+            REAL_BUILD_TIMEOUT.as_secs_f64()
+        ),
+    }
+}
+
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads Teensyduino + builds firmware; CI-only"]
 async fn teensylc_blink_meets_205_acceptance_criteria() {
@@ -52,10 +65,11 @@ async fn teensylc_blink_meets_205_acceptance_criteria() {
         bloat_analysis: false,
     };
 
-    let result = fbuild_build::teensy::orchestrator::TeensyOrchestrator
-        .build(&params)
-        .await
-        .expect("teensyLC build must succeed for acceptance gate");
+    let result = under_test_timeout(
+        fbuild_build::teensy::orchestrator::TeensyOrchestrator.build(&params),
+    )
+    .await
+    .expect("teensyLC build must succeed for acceptance gate");
     assert!(result.success, "build did not report success");
 
     // ── ELF probes (AC#1) ───────────────────────────────────────────────

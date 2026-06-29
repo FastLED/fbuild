@@ -25,7 +25,12 @@ REVIEW_MARKER = PROJECT_ROOT / ".cache" / "code_review_done"
 
 
 def run_cmd(cmd):
-    """Run a command rooted at PROJECT_ROOT."""
+    """Run a command rooted at PROJECT_ROOT.
+
+    FastLED/fbuild#812: 60-second watchdog. Same rationale as
+    check-on-start.py — stuck `git status`/`git diff` on Windows would
+    otherwise wedge the Stop hook indefinitely.
+    """
     return subprocess.run(
         cmd,
         capture_output=True,
@@ -33,6 +38,7 @@ def run_cmd(cmd):
         encoding="utf-8",
         errors="replace",
         cwd=str(PROJECT_ROOT),
+        timeout=60,
     )
 
 

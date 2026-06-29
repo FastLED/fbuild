@@ -230,6 +230,19 @@ pub(crate) async fn run_monitor_loop(
     }
 }
 
+/// Hard ceiling on a single `/api/monitor` request when the caller did
+/// not specify a `timeout`. Without this, a CLI client that disconnects
+/// would leave the handler awaiting on a never-firing serial channel
+/// indefinitely. 300 s is well above any normal interactive monitor
+/// session and well below "the daemon is wedged". See FastLED/fbuild#808.
+const MONITOR_DEFAULT_HARD_DEADLINE_SECS: f64 = 300.0;
+
+/// Cap on the `open_port` await inside the handler entry path. USB
+/// re-enumeration on Windows can legitimately stall an `open_port` for
+/// 10+ seconds; 30 s is a generous ceiling that still beats a stuck
+/// serial driver hanging the HTTP response forever. See FastLED/fbuild#808.
+const SERIAL_OPEN_PORT_TIMEOUT_SECS: u64 = 30;
+
 /// POST /api/monitor
 pub async fn monitor(
     State(ctx): State<Arc<DaemonContext>>,
@@ -241,18 +254,38 @@ pub async fn monitor(
     let port = req.port.unwrap_or_else(|| "/dev/ttyUSB0".to_string());
     let baud_rate = req.baud_rate.unwrap_or(115200);
 
-    if let Err(e) = ctx
-        .serial_manager
-        .open_port(&port, baud_rate, &request_id, None)
-        .await
-    {
-        return (
-            StatusCode::INTERNAL_SERVER_ERROR,
-            Json(OperationResponse::fail(
-                request_id,
-                format!("failed to open port: {}", e),
-            )),
-        );
+    // FastLED/fbuild#808 (CRITICAL): wrap `open_port` in a wall-clock
+    // timeout. USB re-enumeration / a wedged kernel serial driver can
+    // otherwise stall this handler for an unbounded interval.
+    let open_result = tokio::time::timeout(
+        std::time::Duration::from_secs(SERIAL_OPEN_PORT_TIMEOUT_SECS),
+        ctx.serial_manager
+            .open_port(&port, baud_rate, &request_id, None),
+    )
+    .await;
+    match open_result {
+        Ok(Ok(_)) => {}
+        Ok(Err(e)) => {
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(OperationResponse::fail(
+                    request_id,
+                    format!("failed to open port: {}", e),
+                )),
+            );
+        }
+        Err(_) => {
+            return (
+                StatusCode::GATEWAY_TIMEOUT,
+                Json(OperationResponse::fail(
+                    request_id,
+                    format!(
+                        "open_port({}) exceeded {}s — serial driver may be wedged",
+                        port, SERIAL_OPEN_PORT_TIMEOUT_SECS
+                    ),
+                )),
+            );
+        }
     }
 
     // If halt conditions or timeout are set, run a monitor loop
@@ -278,9 +311,19 @@ pub async fn monitor(
             }
         };
 
+        // FastLED/fbuild#808 (CRITICAL): apply a default hard ceiling
+        // to monitor sessions that opted out of an explicit timeout.
+        // Callers that pass `timeout: None` (the common CLI case) used
+        // to hang the handler indefinitely whenever the broadcast
+        // channel stayed quiet; the default ceiling ensures the
+        // request always returns to the client even when no halt
+        // pattern fires. Explicit caller-supplied timeouts are
+        // honoured as-is (the user opted in to whatever ceiling they
+        // wrote).
+        let effective_timeout = req.timeout.or(Some(MONITOR_DEFAULT_HARD_DEADLINE_SECS));
         let raw_result = run_monitor_loop(
             &mut rx,
-            req.timeout,
+            effective_timeout,
             req.halt_on_error.as_deref(),
             req.halt_on_success.as_deref(),
             req.expect.as_deref(),

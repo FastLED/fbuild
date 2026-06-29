@@ -44,12 +44,16 @@ def main():
         cmd += ["--include-ignored"]
     cmd += test_args
 
+    # FastLED/fbuild#812: 1-hour watchdog on the workspace test run.
+    # Comfortably above the longest legit cold workspace test cycle;
+    # well below the GHA / dev-session "this is broken" threshold.
     result = subprocess.run(
         cmd,
         text=True,
         encoding="utf-8",
         errors="replace",
         cwd=str(SCRIPT_DIR),
+        timeout=3600,
     )
     return result.returncode
 

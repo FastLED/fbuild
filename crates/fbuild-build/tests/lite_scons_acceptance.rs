@@ -30,7 +30,14 @@ use fbuild_build::script_runtime::resolve_extra_script_overlay;
 /// Test runner gate. `find_python` is private to script_runtime; the
 /// integration tests probe the same `python --version` / `py -3 --version`
 /// surface and skip when neither is available.
+///
+/// #806: the prior implementation called `.output()` directly, which blocks
+/// indefinitely if a wedged Python interpreter binds (e.g. an alias to a
+/// hung shim). We now spawn + poll with a 5 s budget and treat timeout as
+/// "python unavailable" so the test skips cleanly instead of hanging.
 fn python_available() -> bool {
+    use std::time::{Duration, Instant};
+
     let probes: &[&[&str]] = if cfg!(windows) {
         &[&["python", "--version"], &["py", "-3", "--version"]]
     } else {
@@ -40,13 +47,30 @@ fn python_available() -> bool {
         // Test-only Python availability probe. The direct-spawn marker must
         // sit directly above the call for ci/find_direct_subprocess.py.
         // allow-direct-spawn: integration-test Python availability probe.
-        if let Ok(out) = std::process::Command::new(argv[0])
-            .args(&argv[1..])
-            .output()
-        {
-            if out.status.success() {
-                return true;
+        let mut cmd = std::process::Command::new(argv[0]);
+        cmd.args(&argv[1..]);
+        let Ok(mut child) = cmd.spawn() else {
+            continue;
+        };
+        let budget = Duration::from_secs(5);
+        let deadline = Instant::now() + budget;
+        let success = loop {
+            match child.try_wait() {
+                Ok(Some(status)) => break status.success(),
+                Ok(None) => {
+                    if Instant::now() >= deadline {
+                        // Timeout: treat as "unavailable" and force-kill.
+                        let _ = child.kill();
+                        let _ = child.wait();
+                        break false;
+                    }
+                    std::thread::sleep(Duration::from_millis(20));
+                }
+                Err(_) => break false,
             }
+        };
+        if success {
+            return true;
         }
     }
     false

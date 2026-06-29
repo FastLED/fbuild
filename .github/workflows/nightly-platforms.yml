@@ -21,6 +21,7 @@ jobs:
   guard:
     name: Guard (skip on quiet days)
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     outputs:
       should_run: ${{ steps.check.outputs.should_run }}
     steps:

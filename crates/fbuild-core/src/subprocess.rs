@@ -26,6 +26,7 @@
 
 use std::path::Path;
 use std::process::Stdio;
+use std::sync::OnceLock;
 use std::time::Duration;
 
 use tokio::io::AsyncWriteExt;
@@ -36,6 +37,57 @@ use crate::{FbuildError, Result};
 
 #[cfg(windows)]
 const CREATE_NO_WINDOW: u32 = 0x08000000;
+
+/// Default cap applied to every `run_command*` call that passes
+/// `timeout: None`. Picked at 15 minutes so even the slowest real
+/// production invocation (a cold ESP32 toolchain link + lto) finishes
+/// well inside the budget, while a wedged child can no longer hang the
+/// daemon thread forever (FastLED/fbuild#807, #802).
+///
+/// Override via the `FBUILD_SUBPROCESS_DEFAULT_TIMEOUT_SECS` env var:
+///   * any positive integer → that many seconds
+///   * `0` → no implicit cap (preserve historical `None` behaviour)
+///   * unparseable / unset → 900 s (15 min)
+///
+/// Callers that need a longer, explicit budget should pass
+/// `Some(Duration)` — the explicit value always wins over the default.
+/// Callers that intentionally want no timeout at all (interactive
+/// `pio` passthrough, long QEMU runs) should use
+/// [`run_command_no_timeout`] / [`run_command_passthrough_no_timeout`]
+/// so the choice is auditable.
+const DEFAULT_SUBPROCESS_TIMEOUT_SECS: u64 = 900;
+
+/// Sentinel passed internally to mean "actually run with no timeout".
+/// `None` from a public caller is translated into the default cap
+/// (see [`resolve_default_timeout`]); only the `*_no_timeout` helpers
+/// thread this sentinel through.
+const UNBOUNDED_TIMEOUT: Option<Duration> = None;
+
+/// Resolve the effective timeout for a public `run_command*` call.
+///
+/// * `Some(d)` from the caller → use `d` verbatim (explicit override).
+/// * `None` from the caller → apply the configured default cap
+///   (controlled by `FBUILD_SUBPROCESS_DEFAULT_TIMEOUT_SECS`).
+fn resolve_default_timeout(explicit: Option<Duration>) -> Option<Duration> {
+    if let Some(d) = explicit {
+        return Some(d);
+    }
+    default_subprocess_timeout()
+}
+
+fn default_subprocess_timeout() -> Option<Duration> {
+    static CACHED: OnceLock<Option<Duration>> = OnceLock::new();
+    *CACHED.get_or_init(|| {
+        match std::env::var("FBUILD_SUBPROCESS_DEFAULT_TIMEOUT_SECS") {
+            Ok(raw) => match raw.trim().parse::<u64>() {
+                Ok(0) => None, // explicit opt-out: behave like pre-#807
+                Ok(secs) => Some(Duration::from_secs(secs)),
+                Err(_) => Some(Duration::from_secs(DEFAULT_SUBPROCESS_TIMEOUT_SECS)),
+            },
+            Err(_) => Some(Duration::from_secs(DEFAULT_SUBPROCESS_TIMEOUT_SECS)),
+        }
+    })
+}
 
 /// Build the env overlay that GCC link steps should pass to
 /// [`run_command`] so that `lto-wrapper`'s temp files (the `*.ltrans*.o`
@@ -90,7 +142,34 @@ impl ToolOutput {
 /// Async-first: callers in an async context should `.await` this.
 /// Use [`run_command_blocking`] from sync contexts (CLI diagnostic
 /// subcommands, tests).
+///
+/// Timeout policy: passing `timeout: None` applies the workspace
+/// default cap (see [`DEFAULT_SUBPROCESS_TIMEOUT_SECS`] /
+/// `FBUILD_SUBPROCESS_DEFAULT_TIMEOUT_SECS`). Pass `Some(Duration)` for
+/// an explicit budget. For the (rare) legitimately-unbounded case use
+/// [`run_command_no_timeout`].
 pub async fn run_command(
+    args: &[&str],
+    cwd: Option<&Path>,
+    env: Option<&[(&str, &str)]>,
+    timeout: Option<Duration>,
+) -> Result<ToolOutput> {
+    run_command_inner(args, cwd, env, resolve_default_timeout(timeout)).await
+}
+
+/// Explicitly-unbounded variant of [`run_command`]. Use ONLY for cases
+/// where a timeout would be wrong (interactive `pio` passthrough, long
+/// QEMU runs). Every call site is auditable — `grep` for
+/// `run_command_no_timeout`.
+pub async fn run_command_no_timeout(
+    args: &[&str],
+    cwd: Option<&Path>,
+    env: Option<&[(&str, &str)]>,
+) -> Result<ToolOutput> {
+    run_command_inner(args, cwd, env, UNBOUNDED_TIMEOUT).await
+}
+
+async fn run_command_inner(
     args: &[&str],
     cwd: Option<&Path>,
     env: Option<&[(&str, &str)]>,
@@ -114,7 +193,21 @@ pub async fn run_command(
 /// run on the tokio runtime concurrently — no risk of the Windows
 /// pipe-buffer deadlock that hits when a multi-hundred-KB symbol
 /// payload saturates the stdout pipe before stdin EOF.
+///
+/// Timeout policy: same as [`run_command`] — `None` applies the
+/// workspace default cap.
 pub async fn run_command_with_stdin(
+    args: &[&str],
+    stdin_bytes: &[u8],
+    cwd: Option<&Path>,
+    env: Option<&[(&str, &str)]>,
+    timeout: Option<Duration>,
+) -> Result<ToolOutput> {
+    run_command_with_stdin_inner(args, stdin_bytes, cwd, env, resolve_default_timeout(timeout))
+        .await
+}
+
+async fn run_command_with_stdin_inner(
     args: &[&str],
     stdin_bytes: &[u8],
     cwd: Option<&Path>,
@@ -179,7 +272,30 @@ pub async fn run_command_with_stdin(
 /// delegation where users expect the tool's live output.
 ///
 /// Returns the exit code.
+///
+/// Timeout policy: same as [`run_command`]. Genuinely-unbounded
+/// passthrough callers should use [`run_command_passthrough_no_timeout`].
 pub async fn run_command_passthrough(
+    args: &[&str],
+    cwd: Option<&Path>,
+    env: Option<&[(&str, &str)]>,
+    timeout: Option<Duration>,
+) -> Result<i32> {
+    run_command_passthrough_inner(args, cwd, env, resolve_default_timeout(timeout)).await
+}
+
+/// Explicitly-unbounded variant of [`run_command_passthrough`]. Use
+/// ONLY for interactive CLI passthrough (e.g. `pio` delegation) where
+/// the user, not fbuild, decides when the command is done.
+pub async fn run_command_passthrough_no_timeout(
+    args: &[&str],
+    cwd: Option<&Path>,
+    env: Option<&[(&str, &str)]>,
+) -> Result<i32> {
+    run_command_passthrough_inner(args, cwd, env, UNBOUNDED_TIMEOUT).await
+}
+
+async fn run_command_passthrough_inner(
     args: &[&str],
     cwd: Option<&Path>,
     env: Option<&[(&str, &str)]>,
@@ -707,6 +823,60 @@ mod tests {
         let result = run_command(&args, None, None, None).await.unwrap();
         assert!(result.success());
         assert!(result.stderr.contains("err"), "got: {:?}", result);
+    }
+
+    #[test]
+    fn default_subprocess_timeout_constant_is_sane() {
+        // Pinned by #807: the implicit cap must be long enough that
+        // legitimate cold-cache builds finish (15 min is the agreed
+        // budget from #802) and short enough that a wedged child does
+        // not hang the daemon indefinitely.
+        const _: () = assert!(DEFAULT_SUBPROCESS_TIMEOUT_SECS >= 60);
+        const _: () = assert!(DEFAULT_SUBPROCESS_TIMEOUT_SECS <= 60 * 60);
+    }
+
+    #[test]
+    fn resolve_default_timeout_passes_explicit_through() {
+        let explicit = Duration::from_secs(5);
+        assert_eq!(resolve_default_timeout(Some(explicit)), Some(explicit));
+    }
+
+    #[tokio::test]
+    async fn run_command_default_timeout_fires_when_overridden_short() {
+        // Bypass the cached `default_subprocess_timeout()` (which reads
+        // the env var only once per process) by going through the
+        // `_inner` path with a short explicit cap — that exercises the
+        // same wait/kill code path the default would take.
+        //
+        // Use a portable long-running command:
+        //   * Windows: `ping -n 30 127.0.0.1` waits ~29 s (sends 30
+        //     pings 1 s apart) — far longer than our 200 ms cap.
+        //   * Unix: `sleep 30`.
+        let args = if cfg!(windows) {
+            vec!["ping", "-n", "30", "127.0.0.1"]
+        } else {
+            vec!["sleep", "30"]
+        };
+        let result = run_command_inner(&args, None, None, Some(Duration::from_millis(200))).await;
+        match result {
+            Err(FbuildError::Timeout(_)) => {} // expected
+            other => panic!("expected Timeout, got {:?}", other),
+        }
+    }
+
+    #[tokio::test]
+    async fn run_command_no_timeout_runs_fast_command() {
+        // Audit-helper API still has to work for the legit unbounded
+        // case — verify it returns Ok for a command that finishes
+        // promptly.
+        let args = if cfg!(windows) {
+            vec!["cmd", "/C", "echo no-timeout"]
+        } else {
+            vec!["echo", "no-timeout"]
+        };
+        let result = run_command_no_timeout(&args, None, None).await.unwrap();
+        assert!(result.success());
+        assert!(result.stdout.trim().contains("no-timeout"));
     }
 
     #[tokio::test]

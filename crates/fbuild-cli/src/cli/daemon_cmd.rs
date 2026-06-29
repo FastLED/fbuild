@@ -555,11 +555,19 @@ pub async fn kill_process(pid: u32, force: bool) -> fbuild_core::Result<()> {
         vec!["kill", signal, &pid_str]
     };
 
-    let output = fbuild_core::subprocess::run_command(&argv, None, None, None)
-        .await
-        .map_err(|e| {
-            fbuild_core::FbuildError::Other(format!("failed to execute kill command: {}", e))
-        })?;
+    // FastLED/fbuild#810: cap taskkill/kill at 10s — these are OS utilities that
+    // should return effectively instantly; a wedged invocation must not hang
+    // `fbuild daemon kill`.
+    let output = fbuild_core::subprocess::run_command(
+        &argv,
+        None,
+        None,
+        Some(std::time::Duration::from_secs(10)),
+    )
+    .await
+    .map_err(|e| {
+        fbuild_core::FbuildError::Other(format!("failed to execute kill command: {}", e))
+    })?;
 
     if !output.success() {
         return Err(fbuild_core::FbuildError::Other(format!(
@@ -572,6 +580,7 @@ pub async fn kill_process(pid: u32, force: bool) -> fbuild_core::Result<()> {
 
 pub async fn find_daemon_pids() -> fbuild_core::Result<Vec<u32>> {
     if cfg!(windows) {
+        // FastLED/fbuild#810: cap tasklist at 10s.
         let output = fbuild_core::subprocess::run_command(
             &[
                 "tasklist",
@@ -583,7 +592,7 @@ pub async fn find_daemon_pids() -> fbuild_core::Result<Vec<u32>> {
             ],
             None,
             None,
-            None,
+            Some(std::time::Duration::from_secs(10)),
         )
         .await
         .map_err(|e| fbuild_core::FbuildError::Other(format!("failed to run tasklist: {}", e)))?;
@@ -602,11 +611,12 @@ pub async fn find_daemon_pids() -> fbuild_core::Result<Vec<u32>> {
         }
         Ok(pids)
     } else {
+        // FastLED/fbuild#810: cap pgrep at 10s.
         let output = fbuild_core::subprocess::run_command(
             &["pgrep", "-f", "fbuild-daemon"],
             None,
             None,
-            None,
+            Some(std::time::Duration::from_secs(10)),
         )
         .await
         .map_err(|e| fbuild_core::FbuildError::Other(format!("failed to run pgrep: {}", e)))?;

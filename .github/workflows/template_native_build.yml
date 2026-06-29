@@ -64,6 +64,7 @@ jobs:
   build:
     name: Build (${{ inputs.target }})
     runs-on: ${{ inputs.runner }}
+    timeout-minutes: 90
 
     steps:
       - uses: actions/checkout@v6
@@ -72,6 +73,7 @@ jobs:
 
       - name: Setup soldr
         id: setup-soldr
+        timeout-minutes: 10
         # FastLED/fbuild#800 release: pinned back to v0.7.59 after
         # observing two v0.7.65 release-archive bugs that block the
         # release matrix:
@@ -162,9 +164,10 @@ jobs:
       # Linux musl toolchain (libudev is auto-excluded for musl targets by serialport)
       - name: Install Linux dependencies
         if: runner.os == 'Linux' && !inputs.linux_cross && !contains(inputs.target, 'pc-windows-msvc')
+        timeout-minutes: 5
         run: |
-          sudo apt-get update
-          sudo apt-get install -y musl-tools pkg-config
+          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 update
+          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 install -y musl-tools pkg-config
 
       # Windows MSVC release artifacts can be cross-built from Linux with
       # cargo-xwin, but native Windows runners use the standard cargo path.
@@ -176,13 +179,14 @@ jobs:
 
       - name: Install xwin system dependencies
         if: runner.os == 'Linux' && contains(inputs.target, 'pc-windows-msvc')
+        timeout-minutes: 10
         run: |
-          sudo apt-get update
+          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 update
           # llvm provides llvm-lib + llvm-rc which cc-rs invokes when
           # compiling C build scripts (e.g. blake3's blake3.c) under
           # cargo-xwin. Without it the win-msvc lane fails at
           # `error: failed to find tool "llvm-lib"`.
-          sudo apt-get install -y --no-install-recommends clang lld llvm zip
+          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 install -y --no-install-recommends clang lld llvm zip
           # `clang-cl` is a driver-mode symlink, not a separate apt
           # package. On Ubuntu the `clang` binary supports MSVC
           # compatibility mode (`clang --driver-mode=cl`) but the
@@ -207,10 +211,12 @@ jobs:
       #      ubuntu-latest linker would otherwise pull in glibc 2.39 symbols.
       - name: Install cross-compilation tools
         if: runner.os == 'Linux' && !contains(inputs.target, 'pc-windows-msvc')
-        run: pip install cargo-zigbuild
+        timeout-minutes: 10
+        run: pip install --timeout 60 cargo-zigbuild
 
       - name: Fetch Windows Python lib for PyO3 cross-compile
         if: runner.os == 'Linux' && contains(inputs.target, 'pc-windows-msvc')
+        timeout-minutes: 5
         shell: bash
         run: |
           set -euo pipefail
@@ -220,7 +226,7 @@ jobs:
           else
             PKG="python"
           fi
-          curl -fsSL -o python.zip "https://www.nuget.org/api/v2/package/${PKG}/${PYTHON_VERSION}"
+          curl -fsSL --connect-timeout 15 --max-time 120 --retry 3 --retry-delay 5 -o python.zip "https://www.nuget.org/api/v2/package/${PKG}/${PYTHON_VERSION}"
           mkdir -p python-windows
           unzip -q python.zip -d python-windows
           libs_dir="$(pwd)/python-windows/tools/libs"
@@ -238,10 +244,12 @@ jobs:
       # of the build itself.
       - name: Prepare Apple SDK (Linux → mac cross)
         if: inputs.mac_cross_linux
+        timeout-minutes: 15
         shell: bash
         run: soldr prepare --target ${{ inputs.target }}
 
       - name: Build release binaries
+        timeout-minutes: 45
         shell: bash
         run: |
           if [ "${{ inputs.mac_cross_linux }}" = "true" ]; then
@@ -289,6 +297,7 @@ jobs:
       #   - macOS cross: cargo rustc with -undefined dynamic_lookup works the
       #     same as native; just add --target.
       - name: Build Python extension
+        timeout-minutes: 30
         shell: bash
         run: |
           PYTHON_TARGET_DIR="target/python-extension"

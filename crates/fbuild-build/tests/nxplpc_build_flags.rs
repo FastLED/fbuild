@@ -26,6 +26,19 @@
 use fbuild_build::{BuildOrchestrator, BuildParams};
 use fbuild_core::BuildProfile;
 
+/// 15-min wall-clock cap for `--ignored` real-toolchain tests (FastLED/fbuild#806).
+const REAL_BUILD_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(900);
+
+async fn under_test_timeout<F: std::future::Future>(fut: F) -> F::Output {
+    match tokio::time::timeout(REAL_BUILD_TIMEOUT, fut).await {
+        Ok(v) => v,
+        Err(_) => panic!(
+            "real-toolchain test exceeded {:.0}s budget — see FastLED/fbuild#806",
+            REAL_BUILD_TIMEOUT.as_secs_f64()
+        ),
+    }
+}
+
 /// Locate the in-tree fixture so the test is independent of CWD.
 fn fixture_dir() -> std::path::PathBuf {
     // CARGO_MANIFEST_DIR is `…/crates/fbuild-build`; the fixture lives at
@@ -73,8 +86,7 @@ async fn lpc845brk_propagates_build_flags_to_library_compile_587() {
     };
 
     let orchestrator = fbuild_build::nxplpc::orchestrator::NxpLpcOrchestrator;
-    let result = orchestrator
-        .build(&params)
+    let result = under_test_timeout(orchestrator.build(&params))
         .await
         .expect("#587 regression: lpc845brk build with check_flag library must succeed");
     assert!(

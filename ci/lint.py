@@ -19,13 +19,18 @@ SCRIPT_DIR = Path(__file__).parent.resolve()
 
 
 def run_cmd(cmd):
-    """Run a command rooted at the project directory."""
+    """Run a command rooted at the project directory.
+
+    FastLED/fbuild#812: 30-minute watchdog so a wedged clippy / rustfmt
+    invocation can't silently burn an entire local dev session.
+    """
     return subprocess.run(
         cmd,
         text=True,
         encoding="utf-8",
         errors="replace",
         cwd=str(SCRIPT_DIR),
+        timeout=1800,
     )
 
 

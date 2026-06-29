@@ -29,8 +29,33 @@
 //! ```
 
 use std::io::{BufRead, BufReader};
-use std::process::{Command, Stdio};
+use std::process::{Child, Command, Stdio};
 use std::time::{Duration, Instant};
+
+/// Bounded `Child::wait()` (FastLED/fbuild#806).
+///
+/// The audit flagged `parent.wait()` after `kill_hard(parent_pid)` because
+/// if `taskkill /F` fails silently on Windows (AV interference, permissions)
+/// `wait()` blocks forever — the polling-loop deadline further down only
+/// fires after that wait returns. This helper polls `try_wait` with its own
+/// deadline and force-kills the child handle if the deadline passes.
+fn wait_with_timeout(child: &mut Child, budget: Duration) -> bool {
+    let deadline = Instant::now() + budget;
+    loop {
+        match child.try_wait() {
+            Ok(Some(_)) => return true,
+            Ok(None) => {
+                if Instant::now() >= deadline {
+                    let _ = child.kill();
+                    let _ = child.wait();
+                    return false;
+                }
+                std::thread::sleep(Duration::from_millis(100));
+            }
+            Err(_) => return false,
+        }
+    }
+}
 
 #[test]
 #[ignore = "spawns real subprocesses and issues hard-kills; run with --ignored"]
@@ -90,7 +115,15 @@ fn daemon_children_die_when_daemon_dies() {
     // because the Job Object's kill-on-close only fires after the job
     // handle goes away, which requires the parent process to have fully
     // exited and its HANDLE to be closed by the test driver's `Child`.
-    let _ = parent.wait();
+    //
+    // #806: bound the wait so a missed taskkill can't wedge the test
+    // before the polling-loop deadline below has a chance to fire.
+    let parent_exited = wait_with_timeout(&mut parent, Duration::from_secs(30));
+    assert!(
+        parent_exited,
+        "parent process did not exit within 30s after kill_hard — \
+         taskkill/SIGKILL failed to land"
+    );
 
     // Poll for up to 10 s: after containment fires, both child and
     // grandchild must be gone.

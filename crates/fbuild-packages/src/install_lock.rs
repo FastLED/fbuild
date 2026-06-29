@@ -6,8 +6,34 @@ use std::time::{Duration, Instant};
 use fbuild_core::install_status::{self, InstallPhase, InstallRole};
 use fbuild_core::{FbuildError, Result};
 
+/// Default ceiling on how old a sibling install-lock can be before a
+/// waiter considers it stale and tears it down. Two hours covers the
+/// worst-case legit toolchain install on a slow first-build behind a
+/// flaky CDN. With FastLED/fbuild#805's per-request HTTP timeouts now
+/// in place every download has its own 5 min total deadline, so this
+/// ceiling is mostly defense-in-depth; CI runners can shorten it via
+/// the `FBUILD_INSTALL_LOCK_STALE_SECS` env var when the job's own
+/// wall-clock budget is tighter than 2 h.
 const INSTALL_LOCK_STALE_AFTER: Duration = Duration::from_secs(2 * 60 * 60);
 const INSTALL_LOCK_POLL: Duration = Duration::from_millis(250);
+
+/// Read the install-lock staleness ceiling, honoring the
+/// `FBUILD_INSTALL_LOCK_STALE_SECS` env var override (FastLED/fbuild#805).
+///
+/// CI jobs whose wall-clock budget is shorter than the 2 h default can
+/// set e.g. `FBUILD_INSTALL_LOCK_STALE_SECS=600` so a wedged peer's
+/// lock is reclaimed inside the job timeout. Invalid / non-positive
+/// values fall back to the compile-time default.
+fn install_lock_stale_after() -> Duration {
+    if let Ok(s) = std::env::var("FBUILD_INSTALL_LOCK_STALE_SECS") {
+        if let Ok(n) = s.parse::<u64>() {
+            if n > 0 {
+                return Duration::from_secs(n);
+            }
+        }
+    }
+    INSTALL_LOCK_STALE_AFTER
+}
 
 pub(crate) async fn acquire_for_install(
     install_path: &Path,
@@ -18,7 +44,7 @@ pub(crate) async fn acquire_for_install(
         &install_lock_dir(install_path)?,
         package_name,
         package_version,
-        INSTALL_LOCK_STALE_AFTER,
+        install_lock_stale_after(),
         INSTALL_LOCK_POLL,
     )
     .await
@@ -278,6 +304,29 @@ mod tests {
             .unwrap()
             .unwrap();
         drop(second);
+    }
+
+    #[test]
+    fn install_lock_stale_after_honors_env_override() {
+        // FastLED/fbuild#805 MEDIUM: env override for CI runners that
+        // can't wait 2 h on a wedged peer. Sequential within this
+        // single test so we don't race other tests that read the env.
+        let prev = std::env::var("FBUILD_INSTALL_LOCK_STALE_SECS").ok();
+        std::env::set_var("FBUILD_INSTALL_LOCK_STALE_SECS", "600");
+        assert_eq!(install_lock_stale_after(), Duration::from_secs(600));
+        // Garbage value falls back to default.
+        std::env::set_var("FBUILD_INSTALL_LOCK_STALE_SECS", "not-a-number");
+        assert_eq!(install_lock_stale_after(), INSTALL_LOCK_STALE_AFTER);
+        // Zero falls back to default (zero would make every lock instantly stale).
+        std::env::set_var("FBUILD_INSTALL_LOCK_STALE_SECS", "0");
+        assert_eq!(install_lock_stale_after(), INSTALL_LOCK_STALE_AFTER);
+        // Unset → default.
+        std::env::remove_var("FBUILD_INSTALL_LOCK_STALE_SECS");
+        assert_eq!(install_lock_stale_after(), INSTALL_LOCK_STALE_AFTER);
+        // Restore prior value if any.
+        if let Some(v) = prev {
+            std::env::set_var("FBUILD_INSTALL_LOCK_STALE_SECS", v);
+        }
     }
 
     #[tokio::test]

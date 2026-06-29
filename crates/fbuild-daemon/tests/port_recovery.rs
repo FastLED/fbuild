@@ -25,8 +25,34 @@
 //! sockets + `SO_EXCLUSIVEADDRUSE` on the listener. Once that lands, this
 //! test should still pass — but for the right reason.
 
-use std::process::{Command, Stdio};
-use std::time::Duration;
+use std::process::{Child, Command, Stdio};
+use std::time::{Duration, Instant};
+
+/// Bounded `Child::wait()` (FastLED/fbuild#806).
+///
+/// The audit flagged the prior `let _ = d1.wait();` / `let _ = d2.wait();`
+/// because if `taskkill /F` fails silently on Windows (AV interference,
+/// permissions) or the signal doesn't reach the daemon, `wait()` blocks
+/// forever. This helper polls `try_wait` with a deadline and force-kills
+/// the child if the deadline passes, then waits a final round. Returns
+/// `true` if the child exited within the budget.
+fn wait_with_timeout(child: &mut Child, budget: Duration) -> bool {
+    let deadline = Instant::now() + budget;
+    loop {
+        match child.try_wait() {
+            Ok(Some(_)) => return true,
+            Ok(None) => {
+                if Instant::now() >= deadline {
+                    let _ = child.kill();
+                    let _ = child.wait();
+                    return false;
+                }
+                std::thread::sleep(Duration::from_millis(100));
+            }
+            Err(_) => return false,
+        }
+    }
+}
 
 #[test]
 #[ignore = "expects a real fbuild-daemon binary; run with --ignored"]
@@ -67,7 +93,13 @@ fn daemon_rebinds_cleanly_after_hard_kill_with_open_connection() {
             .args(["/F", "/PID", &d1.id().to_string()])
             .status();
     }
-    let _ = d1.wait();
+    // #806: bound the wait so a missed signal can't wedge the test.
+    let exited_d1 = wait_with_timeout(&mut d1, Duration::from_secs(30));
+    assert!(
+        exited_d1,
+        "daemon #1 did not exit within 30s after hard-kill — \
+         signal/taskkill failed to reach it"
+    );
 
     // 4) The kernel may still report the listener as LISTENING for
     //    a short window. Spawn a second daemon and assert it binds.
@@ -83,7 +115,9 @@ fn daemon_rebinds_cleanly_after_hard_kill_with_open_connection() {
 
     let healthy = try_health(port, Duration::from_secs(10));
     let _ = d2.kill();
-    let _ = d2.wait();
+    // #806: bound the post-kill wait too — d2.kill() already issued the
+    // terminate signal, but the same Windows AV/permissions race applies.
+    let _ = wait_with_timeout(&mut d2, Duration::from_secs(30));
 
     assert!(
         healthy,

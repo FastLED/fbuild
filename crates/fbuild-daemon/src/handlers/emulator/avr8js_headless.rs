@@ -173,9 +173,25 @@ pub(crate) async fn run_avr8js_headless(
     }
 
     if child_exit.is_none() {
-        child_exit = Some(child.wait().await.map_err(|e| {
-            fbuild_core::FbuildError::DeployFailed(format!("avr8js wait failed: {}", e))
-        })?);
+        // FastLED/fbuild#808 (HIGH): cap the post-kill reap so a
+        // driver-resident Node child stuck mid-exit cannot wedge the
+        // handler. The containment group will eventually reap it.
+        const AVR8JS_WAIT_REAP_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(5);
+        match tokio::time::timeout(AVR8JS_WAIT_REAP_TIMEOUT, child.wait()).await {
+            Ok(Ok(status)) => child_exit = Some(status),
+            Ok(Err(e)) => {
+                return Err(fbuild_core::FbuildError::DeployFailed(format!(
+                    "avr8js wait failed: {}",
+                    e
+                )));
+            }
+            Err(_) => {
+                tracing::warn!(
+                    "avr8js child.wait() exceeded {}s after kill; containment group will reap",
+                    AVR8JS_WAIT_REAP_TIMEOUT.as_secs()
+                );
+            }
+        }
     }
 
     let _ = stdout_task.await;

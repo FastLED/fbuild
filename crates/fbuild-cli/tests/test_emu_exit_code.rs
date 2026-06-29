@@ -15,10 +15,44 @@
 
 use std::io::{BufRead, BufReader, Read, Write};
 use std::net::{TcpListener, TcpStream};
-use std::process::{Command, Stdio};
+use std::process::{Command, Output, Stdio};
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
-use std::time::Duration;
+use std::time::{Duration, Instant};
+
+/// Run a `Command` with a hard wall-clock budget (FastLED/fbuild#806).
+///
+/// `Command::output()` blocks indefinitely if the spawned process wedges
+/// (mock thread panics before responding, the CLI regresses to an infinite
+/// loop, etc.). This helper spawns the child, polls `try_wait` until the
+/// deadline, then force-kills if it exceeds the budget. Returns the
+/// process output on clean exit, or an `Err(String)` describing the
+/// timeout.
+fn run_cli_with_timeout(mut cmd: Command, budget: Duration) -> Result<Output, String> {
+    let mut child = cmd.spawn().expect("spawn child");
+    let deadline = Instant::now() + budget;
+    loop {
+        match child.try_wait() {
+            Ok(Some(_)) => {
+                return child
+                    .wait_with_output()
+                    .map_err(|e| format!("wait_with_output: {e}"));
+            }
+            Ok(None) => {
+                if Instant::now() >= deadline {
+                    let _ = child.kill();
+                    let _ = child.wait();
+                    return Err(format!(
+                        "CLI child did not exit within {:.0}s — #806 timeout fired",
+                        budget.as_secs_f64()
+                    ));
+                }
+                std::thread::sleep(Duration::from_millis(50));
+            }
+            Err(e) => return Err(format!("try_wait error: {e}")),
+        }
+    }
+}
 
 /// Minimal HTTP/1.1 request parser — reads headers, then the body based
 /// on `Content-Length`. Keeps the test hermetic (no reqwest-server-side
@@ -138,24 +172,27 @@ fn test_emu_exits_non_zero_when_daemon_returns_failure() {
     // CLI sticks to prod-mode path assumptions, and pin
     // FBUILD_DAEMON_PORT so the client calls 127.0.0.1:<port>.
     // allow-direct-spawn: integration test driver that invokes the compiled fbuild binary.
-    let output = Command::new(bin)
-        .args([
-            "test-emu",
-            project.path().to_str().expect("utf-8 path"),
-            "-e",
-            "uno",
-            "--emulator",
-            "simavr",
-            "--timeout",
-            "1",
-        ])
-        .env("FBUILD_DAEMON_PORT", port.to_string())
-        .env_remove("FBUILD_DEV_MODE")
-        .stdin(Stdio::null())
-        .stdout(Stdio::piped())
-        .stderr(Stdio::piped())
-        .output()
-        .expect("spawn fbuild");
+    let mut cmd = Command::new(bin);
+    cmd.args([
+        "test-emu",
+        project.path().to_str().expect("utf-8 path"),
+        "-e",
+        "uno",
+        "--emulator",
+        "simavr",
+        "--timeout",
+        "1",
+    ])
+    .env("FBUILD_DAEMON_PORT", port.to_string())
+    .env_remove("FBUILD_DEV_MODE")
+    .stdin(Stdio::null())
+    .stdout(Stdio::piped())
+    .stderr(Stdio::piped());
+
+    // #806: cap the CLI invocation at 30 s. If the mock thread panics
+    // before responding, the CLI's reqwest call has no top-level timeout
+    // in this path — without this cap the test wedges indefinitely.
+    let output = run_cli_with_timeout(cmd, Duration::from_secs(30)).expect("CLI wedged");
 
     stop.store(true, Ordering::Relaxed);
 

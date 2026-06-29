@@ -11,6 +11,22 @@ use std::path::PathBuf;
 use fbuild_build::{BuildOrchestrator, BuildParams};
 use fbuild_core::BuildProfile;
 
+/// 15-min wall-clock cap for `--ignored` real-toolchain tests (FastLED/fbuild#806).
+/// Without this, a stuck TCP read against the Espressif toolchain mirror or a
+/// wedged xtensa-gcc process can hold the `--ignored` CI job hostage for the
+/// full 6 h GHA cap. 15 min is generous for ESP32 cold builds (~5–8 min).
+const REAL_BUILD_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(900);
+
+async fn under_test_timeout<F: std::future::Future>(fut: F) -> F::Output {
+    match tokio::time::timeout(REAL_BUILD_TIMEOUT, fut).await {
+        Ok(v) => v,
+        Err(_) => panic!(
+            "real-toolchain test exceeded {:.0}s budget — see FastLED/fbuild#806",
+            REAL_BUILD_TIMEOUT.as_secs_f64()
+        ),
+    }
+}
+
 fn home_dir() -> PathBuf {
     #[cfg(windows)]
     {
@@ -83,8 +99,7 @@ void loop() {
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
-    let result = orchestrator
-        .build(&params)
+    let result = under_test_timeout(orchestrator.build(&params))
         .await
         .expect("ESP32 build should succeed");
 
@@ -174,8 +189,7 @@ void loop() {
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
-    let result = orchestrator
-        .build(&params)
+    let result = under_test_timeout(orchestrator.build(&params))
         .await
         .expect("ESP32-C6 build should succeed");
 
@@ -258,8 +272,7 @@ void loop() {
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
-    let result = orchestrator
-        .build(&params)
+    let result = under_test_timeout(orchestrator.build(&params))
         .await
         .expect("ESP32-C3 build should succeed");
 
@@ -343,8 +356,7 @@ void loop() {
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
-    let result = orchestrator
-        .build(&params)
+    let result = under_test_timeout(orchestrator.build(&params))
         .await
         .expect("ESP32-S3 build should succeed");
 
@@ -418,8 +430,7 @@ async fn build_esp32s3_fixture() {
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
-    let result = orchestrator
-        .build(&params)
+    let result = under_test_timeout(orchestrator.build(&params))
         .await
         .expect("ESP32-S3 fixture build should succeed");
 
@@ -485,8 +496,7 @@ async fn build_nightdriverstrip_demo() {
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
-    let result = orchestrator
-        .build(&params)
+    let result = under_test_timeout(orchestrator.build(&params))
         .await
         .expect("NightDriverStrip demo build should succeed");
 
@@ -583,8 +593,7 @@ async fn incremental_build_at(project_dir: &std::path::Path, env_name: &str) {
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
-    let result = orchestrator
-        .build(&params)
+    let result = under_test_timeout(orchestrator.build(&params))
         .await
         .expect("incremental build should succeed");
 
@@ -681,8 +690,7 @@ async fn incremental_nightdriverstrip_one_file_changed() {
     };
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
-    let result = orchestrator
-        .build(&params)
+    let result = under_test_timeout(orchestrator.build(&params))
         .await
         .expect("incremental build should succeed");
 

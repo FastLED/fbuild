@@ -251,11 +251,32 @@ pub async fn download_file_with_progress(
     let mut last_pct: u32 = 0;
 
     let mut stream = response;
-    while let Some(chunk) = stream
-        .chunk()
-        .await
-        .map_err(|e| FbuildError::PackageError(format!("failed to read response body: {}", e)))?
-    {
+    // FastLED/fbuild#805 CRITICAL: per-chunk deadline. The shared
+    // `http::client()` already enforces a 300 s total-request timeout,
+    // but defense-in-depth — wrap each `chunk().await` in a 60 s
+    // tokio timeout so a stalled mid-download fails *this* attempt
+    // promptly instead of waiting out the 5 min total. This is what
+    // the audit calls out specifically: streaming body reads have no
+    // per-chunk wake-up signal otherwise.
+    const CHUNK_READ_TIMEOUT: Duration = Duration::from_secs(60);
+    loop {
+        let chunk = match tokio::time::timeout(CHUNK_READ_TIMEOUT, stream.chunk()).await {
+            Ok(Ok(Some(chunk))) => chunk,
+            Ok(Ok(None)) => break, // end of stream
+            Ok(Err(e)) => {
+                return Err(FbuildError::PackageError(format!(
+                    "failed to read response body: {}",
+                    e
+                )));
+            }
+            Err(_) => {
+                return Err(FbuildError::PackageError(format!(
+                    "body read stalled > {}s while downloading {}",
+                    CHUNK_READ_TIMEOUT.as_secs(),
+                    filename
+                )));
+            }
+        };
         buf.extend_from_slice(&chunk);
         downloaded += chunk.len() as u64;
 

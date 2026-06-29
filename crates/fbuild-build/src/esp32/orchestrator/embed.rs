@@ -69,7 +69,14 @@ pub(super) async fn process_embed_files(
         }
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, Some(project_dir), None, None).await?;
+        // FastLED/fbuild#809: bound objcopy embed at 30s per file.
+        let result = run_command(
+            &args_ref,
+            Some(project_dir),
+            None,
+            Some(std::time::Duration::from_secs(30)),
+        )
+        .await?;
 
         if !result.success() {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(
@@ -129,7 +136,14 @@ pub(super) async fn process_embed_files(
 
         // Run from embed_dir so objcopy generates symbols from the relative path
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, Some(embed_dir), None, None).await?;
+        // FastLED/fbuild#809: bound objcopy embed at 30s per file.
+        let result = run_command(
+            &args_ref,
+            Some(embed_dir),
+            None,
+            Some(std::time::Duration::from_secs(30)),
+        )
+        .await?;
 
         if !result.success() {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(

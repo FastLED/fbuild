@@ -166,11 +166,13 @@ pub fn generate_compile_db(
 
 /// Log the version of a GCC toolchain by running `gcc -dumpversion`.
 pub async fn log_toolchain_version(gcc_path: &Path, label: &str, build_log: &mut BuildLog) {
+    // FastLED/fbuild#809: `gcc -dumpversion` is a trivial probe; bound
+    // it tightly so a wedged toolchain binary cannot stall build init.
     if let Ok(ver_out) = fbuild_core::subprocess::run_command(
         &[gcc_path.to_string_lossy().as_ref(), "-dumpversion"],
         None,
         None,
-        None,
+        Some(std::time::Duration::from_secs(5)),
     )
     .await
     {

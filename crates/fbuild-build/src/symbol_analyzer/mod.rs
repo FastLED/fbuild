@@ -174,14 +174,22 @@ pub async fn demangle_batch(mangled: &[String], cppfilt_path: &Path) -> Result<V
     let stdin_data = mangled.join("\n");
     let cppfilt_s = cppfilt_path.to_string_lossy().to_string();
     let args = [cppfilt_s.as_str()];
-    let result = run_command_with_stdin(&args, stdin_data.as_bytes(), None, None, None)
-        .await
-        .map_err(|e| {
-            FbuildError::BuildFailed(format!(
-                "failed to run c++filt at {}: {e}",
-                cppfilt_path.display()
-            ))
-        })?;
+    // FastLED/fbuild#809: bound the c++filt batch at 60s. Inputs are
+    // hundreds of KB; a wedged child would freeze the symbol report.
+    let result = run_command_with_stdin(
+        &args,
+        stdin_data.as_bytes(),
+        None,
+        None,
+        Some(std::time::Duration::from_secs(60)),
+    )
+    .await
+    .map_err(|e| {
+        FbuildError::BuildFailed(format!(
+            "failed to run c++filt at {}: {e}",
+            cppfilt_path.display()
+        ))
+    })?;
     if !result.success() {
         return Err(FbuildError::BuildFailed(format!(
             "c++filt failed (exit={}): {}",
@@ -226,7 +234,8 @@ pub async fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap>
         "-S",
         elf_s.as_str(),
     ];
-    let result = run_command(&args, None, None, None).await?;
+    // FastLED/fbuild#809: bound the symbol-analysis nm at 60s.
+    let result = run_command(&args, None, None, Some(std::time::Duration::from_secs(60))).await?;
     if !result.success() {
         return Err(FbuildError::BuildFailed(format!(
             "nm failed: {}",
@@ -374,7 +383,16 @@ async fn run_objdump_and_attribute(
         "--no-show-raw-insn",
         elf_s.as_str(),
     ];
-    let result = run_command(&args, None, None, None).await?;
+    // FastLED/fbuild#809: `objdump -d` on a large ESP32 ELF can emit
+    // 100+ MB; bound to 2 min so a wedge cannot stall the post-link
+    // analysis step (which is off the critical build path).
+    let result = run_command(
+        &args,
+        None,
+        None,
+        Some(std::time::Duration::from_secs(120)),
+    )
+    .await?;
     if !result.success() {
         return Err(FbuildError::BuildFailed(format!(
             "objdump exit={}: {}",

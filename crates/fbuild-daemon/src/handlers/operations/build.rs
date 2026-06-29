@@ -264,12 +264,27 @@ pub async fn build(
             tracing::info!("waiting for project lock on {}", project_dir_desc);
             const LOCK_WAIT_WARN: std::time::Duration = std::time::Duration::from_secs(10);
             const STREAM_STATUS_INTERVAL: std::time::Duration = std::time::Duration::from_secs(10);
-            let _lock_guard = {
+            // FastLED/fbuild#808 (CRITICAL): hard ceiling on lock-wait
+            // so a wedged previous build (esptool/avrdude hung at the
+            // OS-driver level) can't keep every subsequent build for
+            // the same project queued forever. 30 min is well above
+            // any legitimate cold build and well below "daemon is
+            // structurally stuck".
+            const LOCK_WAIT_HARD_DEADLINE: std::time::Duration =
+                std::time::Duration::from_secs(30 * 60);
+            let lock_guard_result = {
                 let mut acquire = Box::pin(lock.lock());
                 let mut warned = false;
+                let mut acquired: Option<_> = None;
                 loop {
+                    if lock_wait_start.elapsed() >= LOCK_WAIT_HARD_DEADLINE {
+                        break;
+                    }
                     match tokio::time::timeout(LOCK_WAIT_WARN, &mut acquire).await {
-                        Ok(guard) => break guard,
+                        Ok(guard) => {
+                            acquired = Some(guard);
+                            break;
+                        }
                         Err(_) => {
                             let elapsed = lock_wait_start.elapsed();
                             if !warned {
@@ -297,6 +312,33 @@ pub async fn build(
                             );
                         }
                     }
+                }
+                acquired
+            };
+            let _lock_guard = match lock_guard_result {
+                Some(g) => g,
+                None => {
+                    let msg = format!(
+                        "project lock for {} not acquired within {}s; previous build may be wedged — \
+                         run `fbuild daemon locks` to see who is holding it",
+                        project_dir_desc,
+                        LOCK_WAIT_HARD_DEADLINE.as_secs()
+                    );
+                    tracing::error!("{}", msg);
+                    let result_event = serde_json::json!({
+                        "type": "result",
+                        "success": false,
+                        "request_id": request_id.clone(),
+                        "message": msg,
+                        "exit_code": 1,
+                        "output_file": null,
+                        "output_dir": null,
+                    });
+                    let mut chunk = result_event.to_string();
+                    chunk.push('\n');
+                    let _ = async_tx.send(bytes::Bytes::from(chunk));
+                    termination_guard.mark_completed();
+                    return;
                 }
             };
             let lock_wait = lock_wait_start.elapsed();
@@ -344,7 +386,23 @@ pub async fn build(
                 let orchestrator = fbuild_build::get_orchestrator(platform)?;
                 orchestrator.build(&params).await
             });
+            // FastLED/fbuild#808 (CRITICAL): wall-clock cap on the
+            // streaming build so a wedged C compiler (process stuck
+            // on an OS lock) cannot keep the handler awake forever.
+            // 60 min is well above any legitimate cold-toolchain
+            // first build and well below "daemon is hung".
+            const BUILD_HARD_DEADLINE: std::time::Duration =
+                std::time::Duration::from_secs(60 * 60);
             let build_result = loop {
+                if build_wallclock_start.elapsed() >= BUILD_HARD_DEADLINE {
+                    build_task.abort();
+                    let abort_msg = format!(
+                        "build exceeded hard deadline ({}s); aborting — a compiler may be wedged",
+                        BUILD_HARD_DEADLINE.as_secs()
+                    );
+                    tracing::error!("{}", abort_msg);
+                    break Ok(Err(fbuild_core::FbuildError::Other(abort_msg)));
+                }
                 match tokio::time::timeout(STREAM_STATUS_INTERVAL, &mut build_task).await {
                     Ok(result) => break result,
                     Err(_) => {
@@ -525,8 +583,30 @@ pub async fn build(
             fbuild_core::DaemonState::Building,
             Some(format!("Building {}", req.project_dir)),
         );
+        // FastLED/fbuild#808 (CRITICAL): hard ceiling on the project
+        // lock so a wedged previous build cannot wedge every
+        // subsequent build of the same project. Mirrors the streaming
+        // path's `LOCK_WAIT_HARD_DEADLINE`.
+        const NON_STREAM_LOCK_HARD_DEADLINE: std::time::Duration =
+            std::time::Duration::from_secs(30 * 60);
         let lock = ctx.project_lock(&project_dir);
-        let _guard = lock.lock().await;
+        let _guard = match tokio::time::timeout(NON_STREAM_LOCK_HARD_DEADLINE, lock.lock()).await {
+            Ok(g) => g,
+            Err(_) => {
+                return (
+                    StatusCode::SERVICE_UNAVAILABLE,
+                    Json(OperationResponse::fail(
+                        request_id,
+                        format!(
+                            "project lock not acquired within {}s; previous build may be wedged — \
+                             run `fbuild daemon locks` to see who is holding it",
+                            NON_STREAM_LOCK_HARD_DEADLINE.as_secs()
+                        ),
+                    )),
+                )
+                    .into_response();
+            }
+        };
 
         let params = fbuild_build::BuildParams {
             project_dir: project_dir.clone(),
@@ -550,8 +630,23 @@ pub async fn build(
         };
 
         // fbuild#813 / #815: orchestrator.build is async, call directly.
+        // FastLED/fbuild#808 (CRITICAL): wall-clock cap on the build so
+        // a wedged compiler cannot lock up the HTTP handler indefinitely.
+        const NON_STREAM_BUILD_HARD_DEADLINE: std::time::Duration =
+            std::time::Duration::from_secs(60 * 60);
         let result = match fbuild_build::get_orchestrator(platform) {
-            Ok(orch) => orch.build(&params).await,
+            Ok(orch) => match tokio::time::timeout(
+                NON_STREAM_BUILD_HARD_DEADLINE,
+                orch.build(&params),
+            )
+            .await
+            {
+                Ok(r) => r,
+                Err(_) => Err(fbuild_core::FbuildError::Other(format!(
+                    "build exceeded hard deadline ({}s); aborting — a compiler may be wedged",
+                    NON_STREAM_BUILD_HARD_DEADLINE.as_secs()
+                ))),
+            },
             Err(e) => Err(e),
         };
 

@@ -63,6 +63,8 @@ def main():
     # editable-build of the fbuild project (which would re-run
     # `soldr cargo build --release -p fbuild-cli` on every Edit).
     lint_script = str(PROJECT_ROOT / "lint")
+    # FastLED/fbuild#812: 10-minute watchdog. A wedged single-file
+    # clippy would otherwise block the PostToolUse hook forever.
     result = subprocess.run(
         [sys.executable, lint_script, file_path],
         capture_output=True,
@@ -70,6 +72,7 @@ def main():
         encoding="utf-8",
         errors="replace",
         cwd=str(PROJECT_ROOT),
+        timeout=600,
     )
 
     if result.returncode != 0:

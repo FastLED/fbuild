@@ -134,7 +134,14 @@ impl Linker for SilabsLinker {
             .collect();
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, Some(&env_slice), None).await?;
+        // FastLED/fbuild#809: bound the link step at 3 min.
+        let result = run_command(
+            &args_ref,
+            None,
+            Some(&env_slice),
+            Some(std::time::Duration::from_secs(180)),
+        )
+        .await?;
 
         if !result.success() {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(

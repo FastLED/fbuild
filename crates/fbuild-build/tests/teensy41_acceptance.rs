@@ -37,6 +37,21 @@ use fbuild_library_select::resolve;
 use fbuild_packages::library::TeensyCores;
 use fbuild_packages::Package;
 
+/// 15-min wall-clock cap for `--ignored` real-toolchain tests (FastLED/fbuild#806).
+/// Covers `Package::ensure_installed` (Teensyduino download). The cold
+/// resolve itself is bounded by AC#6's own 200 ms gate.
+const REAL_BUILD_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(900);
+
+async fn under_test_timeout<F: std::future::Future>(fut: F) -> F::Output {
+    match tokio::time::timeout(REAL_BUILD_TIMEOUT, fut).await {
+        Ok(v) => v,
+        Err(_) => panic!(
+            "real-toolchain test exceeded {:.0}s budget — see FastLED/fbuild#806",
+            REAL_BUILD_TIMEOUT.as_secs_f64()
+        ),
+    }
+}
+
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore = "downloads Teensyduino + arm-gcc; CI-only"]
 async fn teensy41_cold_library_selection_meets_205_ac6() {
@@ -78,7 +93,7 @@ async fn teensy41_cold_library_selection_meets_205_ac6() {
     // Materialize Teensyduino. Idempotent — cached across runs on the
     // CI runner once the package has been downloaded once.
     let teensy_cores = TeensyCores::new(project_dir);
-    let framework_dir = Package::ensure_installed(&teensy_cores)
+    let framework_dir = under_test_timeout(Package::ensure_installed(&teensy_cores))
         .await
         .expect("Teensyduino must install for AC#6 gate");
     println!(
