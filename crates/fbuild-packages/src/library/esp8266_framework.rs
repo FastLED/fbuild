@@ -243,6 +243,7 @@ fn find_framework_root(install_dir: &Path) -> PathBuf {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::Package;
 
     #[test]
     fn test_esp8266_framework_not_installed() {

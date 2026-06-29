@@ -214,6 +214,7 @@ fn resolve_core_dir_with_arduino_fallback(cores_dir: &Path, core_name: &str) -> 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::Package;
 
     #[test]
     fn test_samd_cores_not_installed() {

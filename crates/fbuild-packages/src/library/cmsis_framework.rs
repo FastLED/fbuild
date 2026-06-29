@@ -114,6 +114,7 @@ impl crate::Package for CmsisFramework {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::Package;
 
     #[test]
     fn test_cmsis_not_installed() {

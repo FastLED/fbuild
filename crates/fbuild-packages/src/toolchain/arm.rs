@@ -254,6 +254,7 @@ fn tool_binary(bin_dir: &Path, name: &str) -> PathBuf {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::Package;
     use std::collections::HashMap;
 
     #[test]

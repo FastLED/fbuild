@@ -157,6 +157,7 @@ fn find_core_root(install_dir: &Path) -> PathBuf {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::Package;
 
     #[test]
     fn test_attiny_core_not_installed() {

@@ -249,6 +249,7 @@ fn tool_binary(bin_dir: &Path, name: &str) -> PathBuf {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::Package;
 
     #[test]
     fn test_platform_package_returns_url() {

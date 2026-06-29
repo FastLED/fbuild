@@ -127,6 +127,7 @@ impl crate::Package for CmsisAtmel {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::Package;
 
     #[test]
     fn test_cmsis_atmel_not_installed() {
