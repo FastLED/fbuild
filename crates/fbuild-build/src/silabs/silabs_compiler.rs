@@ -75,8 +75,9 @@ impl SilabsCompiler {
     }
 }
 
+#[async_trait::async_trait]
 impl Compiler for SilabsCompiler {
-    fn compile_one(
+    async fn compile_one(
         &self,
         compiler_path: &Path,
         source: &Path,
@@ -96,6 +97,7 @@ impl Compiler for SilabsCompiler {
             None,
             &[],
         )
+        .await
     }
 
     fn gcc_path(&self) -> &Path {

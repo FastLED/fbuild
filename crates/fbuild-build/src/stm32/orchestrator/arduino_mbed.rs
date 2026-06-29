@@ -28,7 +28,7 @@ pub(super) fn is_arduino_mbed_stm32_variant(variant: &str) -> bool {
     )
 }
 
-pub(super) fn build_arduino_mbed_stm32(
+pub(super) async fn build_arduino_mbed_stm32(
     params: &BuildParams,
     ctx: pipeline::BuildContext,
     toolchain: &fbuild_packages::toolchain::ArmToolchain,
@@ -39,7 +39,7 @@ pub(super) fn build_arduino_mbed_stm32(
         crate::eh_frame_policy_compute::compute_eh_frame_policy(&ctx, params.profile, None);
 
     let framework = fbuild_packages::library::ArduinoMbedCore::new(&params.project_dir);
-    let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
+    let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
     tracing::info!("Arduino mbed core at {}", framework_dir.display());
 
     let core_dir = framework.get_core_dir("arduino");
@@ -105,7 +105,8 @@ pub(super) fn build_arduino_mbed_stm32(
         &ctx.board.variant,
         &ctx.build_dir,
         &variant_ldflags,
-    )?;
+    )
+    .await?;
 
     let mcu_config = build_arduino_mbed_mcu_config(
         &framework,
@@ -172,6 +173,7 @@ pub(super) fn build_arduino_mbed_stm32(
         "STM32",
         start,
     )
+    .await
 }
 
 fn build_arduino_mbed_mcu_config(
@@ -247,7 +249,7 @@ fn build_arduino_mbed_mcu_config(
     }
 }
 
-fn preprocess_linker_script(
+async fn preprocess_linker_script(
     gxx_path: PathBuf,
     variant_dir: &Path,
     variant_name: &str,
@@ -269,7 +271,7 @@ fn preprocess_linker_script(
     args.push(output.to_string_lossy().to_string());
 
     let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-    let result = fbuild_core::subprocess::run_command(&args_ref, None, None, None)?;
+    let result = fbuild_core::subprocess::run_command(&args_ref, None, None, None).await?;
     if !result.success() {
         return Err(fbuild_core::FbuildError::BuildFailed(format!(
             "failed to preprocess Arduino mbed linker script for {}:\n{}",

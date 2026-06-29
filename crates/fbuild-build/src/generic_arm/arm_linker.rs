@@ -1,4 +1,4 @@
-//! Generic ARM linker implementation.
+﻿//! Generic ARM linker implementation.
 //!
 //! Links ARM Cortex-M object files into firmware.elf, converts to firmware.hex,
 //! and reports size using arm-none-eabi-size. Used by STM32, RP2040, NRF52, etc.
@@ -129,12 +129,14 @@ impl ArmLinker {
     }
 }
 
+#[async_trait::async_trait]
 impl Linker for ArmLinker {
-    fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
+    async fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
         crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "arm-none-eabi-ar")
+            .await
     }
 
-    fn link(
+    async fn link(
         &self,
         objects: &[PathBuf],
         archives: &[PathBuf],
@@ -151,7 +153,7 @@ impl Linker for ArmLinker {
             tracing::info!("link: {}", args.join(" "));
         }
 
-        // GCC LTO temp dir for MSYS-safe paths — see FastLED/fbuild#261.
+        // GCC LTO temp dir for MSYS-safe paths â€” see FastLED/fbuild#261.
         let lto_env = fbuild_core::subprocess::link_env_for_build(output_dir)?;
         let env_slice: Vec<(&str, &str)> = lto_env
             .iter()
@@ -170,10 +172,10 @@ impl Linker for ArmLinker {
                 "arm_link",
             )?;
             let rsp_arg = format!("@{}", rsp_path.display());
-            run_command(&[args[0].as_str(), &rsp_arg], None, Some(&env_slice), None)?
+            run_command(&[args[0].as_str(), &rsp_arg], None, Some(&env_slice), None).await?
         } else {
             let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-            run_command(&args_ref, None, Some(&env_slice), None)?
+            run_command(&args_ref, None, Some(&env_slice), None).await?
         };
 
         if !result.success() {
@@ -202,7 +204,7 @@ impl Linker for ArmLinker {
         Ok(elf_path)
     }
 
-    fn convert_firmware(&self, elf_path: &Path, output_dir: &Path) -> Result<PathBuf> {
+    async fn convert_firmware(&self, elf_path: &Path, output_dir: &Path) -> Result<PathBuf> {
         crate::linker::LinkerBase::objcopy_firmware(
             &self.objcopy_path,
             elf_path,
@@ -211,6 +213,7 @@ impl Linker for ArmLinker {
             &self.mcu_config.objcopy.remove_sections,
             "arm-none-eabi-objcopy",
         )
+        .await
     }
 
     fn size_tool_path(&self) -> &Path {
@@ -229,7 +232,7 @@ impl Linker for ArmLinker {
         Some(&self.gcc_path)
     }
 
-    fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
+    async fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
         crate::linker::LinkerBase::report_size(
             &self.size_path,
             elf_path,
@@ -237,6 +240,7 @@ impl Linker for ArmLinker {
             self.max_ram,
             "arm-none-eabi-size",
         )
+        .await
     }
 }
 

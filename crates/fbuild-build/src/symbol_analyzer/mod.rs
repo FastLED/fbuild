@@ -212,7 +212,7 @@ pub struct AnalyzeConfig<'a> {
 
 /// Run nm + c++filt + map-file parse and return the fully-attributed
 /// per-symbol map.
-pub fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap> {
+pub async fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap> {
     use fbuild_core::subprocess::run_command;
 
     let nm_path_s = cfg.nm_path.to_string_lossy().to_string();
@@ -225,7 +225,7 @@ pub fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap> {
         "-S",
         elf_s.as_str(),
     ];
-    let result = run_command(&args, None, None, None)?;
+    let result = run_command(&args, None, None, None).await?;
     if !result.success() {
         return Err(FbuildError::BuildFailed(format!(
             "nm failed: {}",
@@ -327,7 +327,7 @@ pub fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap> {
     // — we'd rather ship a report without forward edges than fail
     // the whole symbol-analysis post-link step.
     if let Some(objdump_path) = cfg.objdump_path {
-        match run_objdump_and_attribute(objdump_path, cfg.elf_path, &mut map) {
+        match run_objdump_and_attribute(objdump_path, cfg.elf_path, &mut map).await {
             Ok(edge_count) => {
                 tracing::info!(
                     "objdump: extracted {edge_count} forward edges from {}",
@@ -351,7 +351,7 @@ pub fn analyze_elf(cfg: AnalyzeConfig<'_>) -> Result<FineGrainedSymbolMap> {
 /// `references_to` on every symbol in `map` that the parser found
 /// outgoing call edges for. Returns the total edge count surfaced
 /// (across all symbols) so the caller can log a one-liner.
-fn run_objdump_and_attribute(
+async fn run_objdump_and_attribute(
     objdump_path: &Path,
     elf_path: &Path,
     map: &mut FineGrainedSymbolMap,
@@ -367,7 +367,7 @@ fn run_objdump_and_attribute(
         "--no-show-raw-insn",
         elf_s.as_str(),
     ];
-    let result = run_command(&args, None, None, None)?;
+    let result = run_command(&args, None, None, None).await?;
     if !result.success() {
         return Err(FbuildError::BuildFailed(format!(
             "objdump exit={}: {}",

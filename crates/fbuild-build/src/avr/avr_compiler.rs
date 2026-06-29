@@ -98,8 +98,9 @@ impl AvrCompiler {
     }
 }
 
+#[async_trait::async_trait]
 impl Compiler for AvrCompiler {
-    fn compile_one(
+    async fn compile_one(
         &self,
         compiler_path: &Path,
         source: &Path,
@@ -119,6 +120,7 @@ impl Compiler for AvrCompiler {
             None,
             &[],
         )
+        .await
     }
 
     fn build_unflags(&self) -> &[String] {

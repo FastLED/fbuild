@@ -200,8 +200,9 @@ mod tests {
         }
     }
 
+    #[async_trait::async_trait]
     impl Compiler for FakeCompiler {
-        fn compile_one(
+        async fn compile_one(
             &self,
             _compiler_path: &Path,
             _source: &Path,

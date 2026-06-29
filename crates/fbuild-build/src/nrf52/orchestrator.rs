@@ -1,4 +1,4 @@
-//! NRF52 build orchestrator — wires together config, packages, compiler, linker.
+﻿//! NRF52 build orchestrator â€” wires together config, packages, compiler, linker.
 //!
 //! Build phases:
 //! 1. Parse platformio.ini
@@ -57,21 +57,22 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     }
 }
 
+#[async_trait::async_trait]
 impl BuildOrchestrator for Nrf52Orchestrator {
     fn platform(&self) -> Platform {
         Platform::NordicNrf52
     }
 
-    fn build(&self, params: &BuildParams) -> Result<BuildResult> {
+    async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
         let compiler_cache: Option<std::path::PathBuf> = None;
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
-        let mut ctx = pipeline::BuildContext::new(params)?;
+        let mut ctx = pipeline::BuildContext::new(params).await?;
 
         // 3. Ensure ARM GCC toolchain
         let toolchain = fbuild_packages::toolchain::ArmToolchain::new(&params.project_dir);
-        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
+        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("arm-none-eabi toolchain at {}", toolchain_dir.display());
 
         use fbuild_packages::Toolchain;
@@ -79,11 +80,12 @@ impl BuildOrchestrator for Nrf52Orchestrator {
             &toolchain.get_gcc_path(),
             "arm-none-eabi-gcc",
             &mut ctx.build_log,
-        );
+        )
+        .await;
 
         // 4. Ensure NRF52 cores (Adafruit nRF52 Arduino core)
         let framework = fbuild_packages::library::Nrf52Cores::new(&params.project_dir);
-        let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
+        let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("NRF52 cores at {}", framework_dir.display());
 
         let build_dir = &ctx.build_dir;
@@ -236,7 +238,7 @@ impl BuildOrchestrator for Nrf52Orchestrator {
         include_dirs.extend(toolchain.get_include_dirs());
         // CMSIS Core includes (core_cm4.h, etc.)
         let cmsis = fbuild_packages::library::CmsisFramework::new(&params.project_dir);
-        let _cmsis_dir = fbuild_packages::Package::ensure_installed(&cmsis)?;
+        let _cmsis_dir = fbuild_packages::Package::ensure_installed(&cmsis).await?;
         tracing::info!("CMSIS framework installed");
         include_dirs.push(cmsis.get_core_include_dir());
         include_dirs.push(cmsis.get_dsp_include_dir());
@@ -300,14 +302,14 @@ impl BuildOrchestrator for Nrf52Orchestrator {
             params.verbose,
         )
         .with_build_unflags(ctx.build_unflags.clone())
-        // Scope `-Wno-array-bounds` to Adafruit nRF52 BSP sources only —
+        // Scope `-Wno-array-bounds` to Adafruit nRF52 BSP sources only â€”
         // FastLED + user sketch code still sees the full diagnostic. See
         // FastLED/fbuild#407.
         .with_framework_root(framework_dir.clone());
 
         // 7. Create linker (reuse the alias-resolved linker_script_path
         // computed up front so the fingerprint hash and the actual linker
-        // input are always in sync — see comment above the metadata_hash).
+        // input are always in sync â€” see comment above the metadata_hash).
         let linker = Nrf52Linker::new(
             toolchain.get_gcc_path(),
             toolchain.get_ar_path(),
@@ -355,7 +357,7 @@ impl BuildOrchestrator for Nrf52Orchestrator {
             TargetArchitecture::Arm,
             "NRF52",
             start,
-        )?;
+        ).await?;
 
         if build_result.success
             && !params.compiledb_only

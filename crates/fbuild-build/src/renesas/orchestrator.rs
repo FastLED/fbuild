@@ -1,4 +1,4 @@
-//! Renesas RA build orchestrator — wires together config, packages, compiler, linker.
+﻿//! Renesas RA build orchestrator â€” wires together config, packages, compiler, linker.
 //!
 //! Build phases:
 //! 1. Parse platformio.ini
@@ -58,21 +58,22 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     }
 }
 
+#[async_trait::async_trait]
 impl BuildOrchestrator for RenesasOrchestrator {
     fn platform(&self) -> Platform {
         Platform::RenesasRa
     }
 
-    fn build(&self, params: &BuildParams) -> Result<BuildResult> {
+    async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
         let compiler_cache: Option<std::path::PathBuf> = None;
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
-        let mut ctx = pipeline::BuildContext::new(params)?;
+        let mut ctx = pipeline::BuildContext::new(params).await?;
 
         // 3. Ensure ARM GCC toolchain
         let toolchain = fbuild_packages::toolchain::ArmToolchain::new(&params.project_dir);
-        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
+        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("arm-gcc toolchain at {}", toolchain_dir.display());
 
         use fbuild_packages::Toolchain;
@@ -80,11 +81,12 @@ impl BuildOrchestrator for RenesasOrchestrator {
             &toolchain.get_gcc_path(),
             "arm-none-eabi-gcc",
             &mut ctx.build_log,
-        );
+        )
+        .await;
 
         // 4. Ensure Renesas cores (ArduinoCore-renesas)
         let framework = fbuild_packages::library::RenesasCores::new(&params.project_dir);
-        let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
+        let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("Renesas cores at {}", framework_dir.display());
 
         // 5. Scan sources
@@ -256,7 +258,7 @@ impl BuildOrchestrator for RenesasOrchestrator {
             TargetArchitecture::Arm,
             "Renesas RA",
             start,
-        )?;
+        ).await?;
 
         if build_result.success
             && !params.compiledb_only

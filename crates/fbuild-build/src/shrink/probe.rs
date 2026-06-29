@@ -187,6 +187,13 @@ impl Preprocessor for ExternalPreprocessor {
         // handling rather than calling `std::process::Command` directly
         // (forbidden by the `ci/find_direct_subprocess.py` lint, see
         // FastLED/fbuild#141).
+        //
+        // FastLED/fbuild#820 (Phase B of #813): `run_command_with_stdin`
+        // is now `async`. The `Preprocessor` trait keeps a sync signature
+        // for backward compatibility, so we bridge here via the ambient
+        // tokio runtime + `block_in_place`. The shrink-libc probe is on
+        // the cold path (one call per build at most) so a single
+        // synchronous bridge is fine here.
         let compiler_str = self.compiler.to_string_lossy().into_owned();
         let mut args: Vec<&str> = Vec::with_capacity(self.extra_args.len() + 5);
         args.push(compiler_str.as_str());
@@ -195,8 +202,26 @@ impl Preprocessor for ExternalPreprocessor {
         }
         args.extend_from_slice(&["-E", "-x", "c", "-"]);
 
-        let output = run_command_with_stdin(&args, source.as_bytes(), None, None, None)
-            .map_err(|e| io::Error::other(e.to_string()))?;
+        let output = match tokio::runtime::Handle::try_current() {
+            Ok(handle) => tokio::task::block_in_place(|| {
+                handle.block_on(async {
+                    run_command_with_stdin(&args, source.as_bytes(), None, None, None).await
+                })
+            }),
+            Err(_) => {
+                // No ambient runtime — spin up a single-thread runtime
+                // just for this call. Acceptable because the probe is
+                // invoked at most once per build.
+                let rt = tokio::runtime::Builder::new_current_thread()
+                    .enable_all()
+                    .build()
+                    .map_err(io::Error::other)?;
+                rt.block_on(async {
+                    run_command_with_stdin(&args, source.as_bytes(), None, None, None).await
+                })
+            }
+        }
+        .map_err(|e| io::Error::other(e.to_string()))?;
 
         Ok(PreprocessResult {
             // `run_command_with_stdin` collapses signal-killed cases into a
@@ -346,12 +371,19 @@ mod tests {
     /// dylint forbids raw spawns even for benign `--version` probes.
     fn find_host_cc() -> Option<&'static str> {
         use fbuild_core::subprocess::run_command;
+        // Bridge to async via a current-thread runtime since this test
+        // helper runs in a `#[test]` (sync) context that may not have an
+        // ambient tokio runtime.
+        let rt = tokio::runtime::Builder::new_current_thread()
+            .enable_all()
+            .build()
+            .ok()?;
         for candidate in ["cc", "gcc", "clang"] {
             let args = [candidate, "--version"];
-            if matches!(
-                run_command(&args, None, None, Some(std::time::Duration::from_secs(5))),
-                Ok(o) if o.success()
-            ) {
+            let outcome = rt.block_on(async {
+                run_command(&args, None, None, Some(std::time::Duration::from_secs(5))).await
+            });
+            if matches!(outcome, Ok(o) if o.success()) {
                 return Some(candidate);
             }
         }

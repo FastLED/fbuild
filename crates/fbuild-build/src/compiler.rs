@@ -63,12 +63,20 @@ pub struct CompileResult {
 static COMPILER_IDENTITY_CACHE: OnceLock<Mutex<HashMap<PathBuf, String>>> = OnceLock::new();
 
 /// Trait for platform-specific compilers.
+///
+/// FastLED/fbuild#820 (Phase B of #813): `compile_one` is `async` so
+/// per-TU zccache dispatch can `.await` `ZccacheService::compile`
+/// directly, with no `Handle::block_on`. The default-method bodies
+/// (`compile_c` / `compile_cpp` / `compile`) are `async fn` too so
+/// they propagate the `.await` to platform-specific `compile_one`
+/// impls.
+#[async_trait::async_trait]
 pub trait Compiler: Send + Sync {
     /// Platform-specific compilation dispatch.
     ///
     /// Routes to `compile_source()` with platform-specific parameters
     /// (temp dir, response file prefix, compiler cache, extra pre-flags).
-    fn compile_one(
+    async fn compile_one(
         &self,
         compiler_path: &Path,
         source: &Path,
@@ -91,7 +99,7 @@ pub trait Compiler: Send + Sync {
     }
 
     /// Compile a C source file to an object file.
-    fn compile_c(
+    async fn compile_c(
         &self,
         source: &Path,
         output: &Path,
@@ -100,10 +108,11 @@ pub trait Compiler: Send + Sync {
         let flags = self.c_flags();
         let (flags, extra) = apply_compile_unflags(flags, extra_flags, self.build_unflags());
         self.compile_one(self.gcc_path(), source, output, &flags, &extra)
+            .await
     }
 
     /// Compile a C++ source file to an object file.
-    fn compile_cpp(
+    async fn compile_cpp(
         &self,
         source: &Path,
         output: &Path,
@@ -112,10 +121,11 @@ pub trait Compiler: Send + Sync {
         let flags = self.cpp_flags();
         let (flags, extra) = apply_compile_unflags(flags, extra_flags, self.build_unflags());
         self.compile_one(self.gxx_path(), source, output, &flags, &extra)
+            .await
     }
 
     /// Compile a source file (auto-detect C vs C++).
-    fn compile(
+    async fn compile(
         &self,
         source: &Path,
         output: &Path,
@@ -127,8 +137,8 @@ pub trait Compiler: Send + Sync {
             .to_string_lossy()
             .to_lowercase();
         match ext.as_str() {
-            "c" | "s" => self.compile_c(source, output, extra_flags),
-            _ => self.compile_cpp(source, output, extra_flags),
+            "c" | "s" => self.compile_c(source, output, extra_flags).await,
+            _ => self.compile_cpp(source, output, extra_flags).await,
         }
     }
 
@@ -433,9 +443,32 @@ fn compiler_identity(path: &Path) -> String {
 }
 
 fn compiler_version(path: &Path) -> String {
-    let program = path.to_string_lossy();
-    let args = [program.as_ref(), "-dumpversion"];
-    match fbuild_core::subprocess::run_command(&args, None, None, None) {
+    // FastLED/fbuild#820 (Phase B of #813): `fbuild_core::subprocess::
+    // run_command` is now `async`. `compiler_version` is called from
+    // the sync `rebuild_signature` trait method (which is in turn
+    // called from sync rebuild-check code paths), so we bridge to the
+    // ambient tokio runtime via `block_in_place` + `block_on`. This is
+    // safe because the daemon runs on a multi-thread tokio runtime and
+    // `block_in_place` permits this exact pattern.
+    let program = path.to_string_lossy().to_string();
+    let result = match tokio::runtime::Handle::try_current() {
+        Ok(handle) => tokio::task::block_in_place(|| {
+            handle.block_on(async {
+                let args = [program.as_str(), "-dumpversion"];
+                fbuild_core::subprocess::run_command(&args, None, None, None).await
+            })
+        }),
+        Err(_) => {
+            // No ambient runtime — happens in unit-test contexts that
+            // don't spin up a tokio runtime. Returning an empty version
+            // is a graceful degradation: rebuild-signature loses the
+            // compiler-version contribution but still encodes path +
+            // flags, which is enough for the tests that don't touch a
+            // real toolchain.
+            return String::new();
+        }
+    };
+    match result {
         Ok(output) if output.success() => output.stdout.trim().to_string(),
         _ => String::new(),
     }
@@ -570,7 +603,7 @@ pub fn build_cpp_flags(common_flags: Vec<String>, config: &dyn McuConfig) -> Vec
 ///   and `extra_flags` (ESP32 uses this for include flags deferred
 ///   from `common_flags`).
 #[allow(clippy::too_many_arguments)]
-pub fn compile_source(
+pub async fn compile_source(
     compiler: &Path,
     source: &Path,
     output: &Path,
@@ -640,7 +673,6 @@ pub fn compile_source(
         )
     })?;
     let svc = global.service();
-    let runtime = global.runtime();
     let cwd = compile_cwd
         .clone()
         .or_else(|| std::env::current_dir().ok())
@@ -662,8 +694,14 @@ pub fn compile_source(
         );
     }
 
+    // FastLED/fbuild#820 (Phase B of #813): direct `.await` on the
+    // async zccache service. The legacy `compile_blocking` path is gone
+    // — every per-TU compile is reached through the async build trait
+    // chain, so the daemon's tokio runtime drives `ZccacheService::
+    // compile` natively.
     let outcome = svc
-        .compile_blocking(runtime, compiler, sanitized, cwd, Vec::new())
+        .compile(compiler, sanitized, cwd, Vec::new())
+        .await
         .map_err(|err| {
             fbuild_core::FbuildError::BuildFailed(format!(
                 "embedded zccache compile failed for {}: {err}",

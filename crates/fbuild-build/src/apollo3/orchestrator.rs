@@ -1,4 +1,4 @@
-//! Apollo3 build orchestrator — wires together config, packages, compiler, linker.
+﻿//! Apollo3 build orchestrator â€” wires together config, packages, compiler, linker.
 //!
 //! Build phases:
 //! 1. Parse platformio.ini
@@ -25,16 +25,17 @@ use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 /// Apollo3 platform build orchestrator.
 pub struct Apollo3Orchestrator;
 
+#[async_trait::async_trait]
 impl BuildOrchestrator for Apollo3Orchestrator {
     fn platform(&self) -> Platform {
         Platform::Apollo3
     }
 
-    fn build(&self, params: &BuildParams) -> Result<BuildResult> {
+    async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
-        let mut ctx = pipeline::BuildContext::new(params)?;
+        let mut ctx = pipeline::BuildContext::new(params).await?;
 
         // Compute eh_frame strip policy once per build (FastLED/fbuild#244).
         let eh_frame_policy =
@@ -42,7 +43,7 @@ impl BuildOrchestrator for Apollo3Orchestrator {
 
         // 3. Ensure ARM GCC 8 toolchain (Apollo3/mbed-os requires GCC 8)
         let toolchain = fbuild_packages::toolchain::ArmGcc8Toolchain::new(&params.project_dir);
-        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
+        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("arm-gcc8 toolchain at {}", toolchain_dir.display());
 
         use fbuild_packages::Toolchain;
@@ -50,11 +51,12 @@ impl BuildOrchestrator for Apollo3Orchestrator {
             &toolchain.get_gcc_path(),
             "arm-none-eabi-gcc",
             &mut ctx.build_log,
-        );
+        )
+        .await;
 
         // 4. Ensure Apollo3 cores (SparkFun Arduino Apollo3 core)
         let framework = fbuild_packages::library::Apollo3Cores::new(&params.project_dir);
-        let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
+        let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("Apollo3 cores at {}", framework_dir.display());
 
         // 5. Scan sources (core + variant)
@@ -270,6 +272,7 @@ impl BuildOrchestrator for Apollo3Orchestrator {
             "APOLLO3",
             start,
         )
+        .await
     }
 }
 

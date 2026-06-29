@@ -1,4 +1,4 @@
-use super::*;
+﻿use super::*;
 use crate::flag_overlay::ScriptScopeState;
 use std::fs;
 
@@ -27,10 +27,10 @@ extra_scripts = {}
     temp
 }
 
-fn resolve_runtime_error(project_dir: &Path) -> String {
+async fn resolve_runtime_error(project_dir: &Path) -> String {
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
-    resolve_extra_script_overlay(project_dir, "demo", &config)
+    resolve_extra_script_overlay(project_dir, "demo", &config).await
         .unwrap_err()
         .to_string()
 }
@@ -123,8 +123,8 @@ fn test_scope_to_link_overlay_maps_libpath_and_libs() {
     );
 }
 
-#[test]
-fn test_resolve_extra_script_overlay_supports_dump_shim() {
+#[tokio::test]
+async fn test_resolve_extra_script_overlay_supports_dump_shim() {
     if find_python().is_none() {
         return;
     }
@@ -158,15 +158,15 @@ env.Append(CPPDEFINES=[\"DUMP_SHIM_OK\"])
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
     // Pinned to MockEnv (see resolve_runtime_overlay note).
-    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).unwrap();
+    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).await.unwrap();
     assert!(overlay
         .global_compile
         .common
         .contains(&"-DDUMP_SHIM_OK".to_string()));
 }
 
-#[test]
-fn test_resolve_extra_script_overlay_supports_common_noop_scons_helpers() {
+#[tokio::test]
+async fn test_resolve_extra_script_overlay_supports_common_noop_scons_helpers() {
     if find_python().is_none() {
         return;
     }
@@ -204,15 +204,15 @@ env.Append(CPPDEFINES=[\"HELPERS_SHIM_OK\"])
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
     // Pinned to MockEnv (see resolve_runtime_overlay note).
-    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).unwrap();
+    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).await.unwrap();
     assert!(overlay
         .global_compile
         .common
         .contains(&"-DHELPERS_SHIM_OK".to_string()));
 }
 
-#[test]
-fn test_resolve_extra_script_overlay_supports_board_config_shim() {
+#[tokio::test]
+async fn test_resolve_extra_script_overlay_supports_board_config_shim() {
     if find_python().is_none() {
         return;
     }
@@ -247,15 +247,15 @@ env.Append(CPPDEFINES=[\"BOARD_CONFIG_SHIM_OK\"])
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
     // Pinned to MockEnv (see resolve_runtime_overlay note).
-    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).unwrap();
+    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).await.unwrap();
     assert!(overlay
         .global_compile
         .common
         .contains(&"-DBOARD_CONFIG_SHIM_OK".to_string()));
 }
 
-#[test]
-fn test_resolve_extra_script_overlay_supports_pio_platform_shim() {
+#[tokio::test]
+async fn test_resolve_extra_script_overlay_supports_pio_platform_shim() {
     if find_python().is_none() {
         return;
     }
@@ -293,15 +293,15 @@ env.Append(CPPDEFINES=[\"PIO_PLATFORM_SHIM_OK\"])
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
     // Pinned to MockEnv (see resolve_runtime_overlay note).
-    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).unwrap();
+    let overlay = resolve_extra_script_overlay(project_dir, "demo", &config).await.unwrap();
     assert!(overlay
         .global_compile
         .common
         .contains(&"-DPIO_PLATFORM_SHIM_OK".to_string()));
 }
 
-#[test]
-fn test_resolve_extra_script_overlay_rejects_unsupported_script_prefix() {
+#[tokio::test]
+async fn test_resolve_extra_script_overlay_rejects_unsupported_script_prefix() {
     if find_python().is_none() {
         return;
     }
@@ -313,7 +313,7 @@ fn test_resolve_extra_script_overlay_rejects_unsupported_script_prefix() {
 Import(\"env\")
 ",
     );
-    let err = resolve_runtime_error(temp.path());
+    let err = resolve_runtime_error(temp.path()).await;
     assert!(
         err.contains("unsupported extra_scripts prefix 'mid'"),
         "{err}"
@@ -351,7 +351,7 @@ framework = arduino
 fn resolve_runtime_overlay(project_dir: &Path) -> BuildOverlay {
     let config =
         fbuild_config::PlatformIOConfig::from_path(&project_dir.join("platformio.ini")).unwrap();
-    resolve_extra_script_overlay(project_dir, "demo", &config).unwrap()
+    resolve_extra_script_overlay(project_dir, "demo", &config).await.unwrap()
 }
 
 // ---- SIMPLE tier ------------------------------------------------------

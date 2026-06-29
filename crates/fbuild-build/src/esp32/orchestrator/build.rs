@@ -1,4 +1,4 @@
-//! `impl BuildOrchestrator for Esp32Orchestrator` — the high-level build flow.
+﻿//! `impl BuildOrchestrator for Esp32Orchestrator` â€” the high-level build flow.
 //!
 //! Most heavy work delegates to sibling submodules (`packages`, `framework_libs`,
 //! `local_libs`, `boot_artifacts`, `embed_stage`, `helpers`).
@@ -30,22 +30,23 @@ use crate::flag_overlay::{apply_overlay_flags, LanguageExtraFlags};
 use crate::linker::LinkerScripts;
 use crate::{BuildOrchestrator, BuildParams, BuildResult, SourceScanner};
 
+#[async_trait::async_trait]
 impl BuildOrchestrator for Esp32Orchestrator {
     fn platform(&self) -> Platform {
         Platform::Espressif32
     }
 
-    fn build(&self, params: &BuildParams) -> Result<BuildResult> {
+    async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
         // Env-gated per-phase timer (FBUILD_PERF_LOG=1); zero overhead when unset.
         let mut perf = crate::perf_log::PerfTimer::new("esp32-orchestrator");
 
-        // Wrapper-binary discovery removed in FastLED/fbuild#800 — every
+        // Wrapper-binary discovery removed in FastLED/fbuild#800 â€” every
         // compile dispatches through the embedded zccache service.
         let compiler_cache: Option<std::path::PathBuf> = None;
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
-        let mut ctx = crate::pipeline::BuildContext::new_with_perf(params, Some(&mut perf))?;
+        let mut ctx = crate::pipeline::BuildContext::new_with_perf(params, Some(&mut perf)).await?;
 
         // Compute eh_frame strip policy once per build (FastLED/fbuild#243).
         // Reads sdkconfig from the project dir (ESP32 only) so panic-backtrace
@@ -71,7 +72,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // 4-6. Resolve platform, toolchain, and framework
         let _resolve_phase = perf.phase("pioarduino-resolve");
         let (toolchain, framework) =
-            resolve_pioarduino_packages(&params.project_dir, &ctx.board.mcu, &mcu_config)?;
+            resolve_pioarduino_packages(&params.project_dir, &ctx.board.mcu, &mcu_config).await?;
         drop(_resolve_phase);
         let _toolchain_cache_dir = fbuild_packages::Package::get_info(&toolchain).install_path;
         let _framework_cache_dir = fbuild_packages::Package::get_info(&framework).install_path;
@@ -82,7 +83,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let src_build_dir = &ctx.src_build_dir;
 
         // SDK directory selector: matches the chip's ROM revision (e.g.
-        // `esp32p4_es` for ESP32-P4 eco0–eco2). Falls back to `mcu`.
+        // `esp32p4_es` for ESP32-P4 eco0â€“eco2). Falls back to `mcu`.
         let sdk_variant = ctx.board.sdk_variant().to_string();
 
         // Read link-affecting config before the expensive include/library/source discovery steps
@@ -214,7 +215,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
 
         // FastLED/fbuild#800: the `zccache start` daemon-spawn was deleted.
         // The embedded service is part of fbuild-daemon's own lifecycle.
-        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
+        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!(
             "ESP32 {} toolchain at {}",
             if mcu_config.is_riscv() {
@@ -225,7 +226,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             toolchain_dir.display()
         );
 
-        let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
+        let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("ESP32 framework at {}", framework_dir.display());
 
         let tc_label = if mcu_config.is_riscv() {
@@ -237,7 +238,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &toolchain.get_gcc_path(),
             tc_label,
             &mut ctx.build_log,
-        );
+        )
+        .await;
 
         let core_dir = framework.get_core_dir(&ctx.board.core);
         let variant_dir = framework.get_variant_dir(&ctx.board.variant);
@@ -274,7 +276,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // Toolchain sysroot includes (xtensa headers, etc.)
         include_dirs.extend(toolchain.get_include_dirs());
 
-        // Read SDK flags early — needed to check LTO before compiling.
+        // Read SDK flags early â€” needed to check LTO before compiling.
         let sdk_ld_flags = framework.get_sdk_ld_flags(&sdk_variant);
         let sdk_lib_flags = framework.get_sdk_lib_flags(&sdk_variant, sdk_memory_type.as_deref());
         let sdk_ld_scripts =
@@ -294,7 +296,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         use fbuild_packages::Toolchain;
         let mut library_archives = Vec::new();
 
-        // Read user build_flags early — needed for both library and sketch compilation.
+        // Read user build_flags early â€” needed for both library and sketch compilation.
         // SDK defines (from flags/defines) are prepended so user flags can override them.
         let mut user_flags = sdk_defines;
         let mut user_build_flags = ctx.config.get_build_flags(&params.env_name)?;
@@ -379,7 +381,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 params.verbose,
                 jobs,
                 compiler_cache.as_deref(),
-            )?;
+            )
+            .await?;
 
             // Add library include dirs to the main include list
             include_dirs.extend(lib_result.include_dirs);
@@ -392,7 +395,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             );
         }
 
-        // 8.5b. Project-as-library compilation — shared with sequential pipeline.
+        // 8.5b. Project-as-library compilation â€” shared with sequential pipeline.
         // When the project root contains library.json or library.properties (e.g., FastLED),
         // the project's own src/ directory is compiled as a library archive so that example
         // sketches can link against it. Centralized in pipeline::compile_project_as_library
@@ -460,7 +463,9 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 build_dir,
                 &lib_env,
                 &existing_lib_names,
-            )? {
+            )
+            .await?
+            {
                 library_archives.push(archive);
             }
         }
@@ -485,7 +490,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 build_dir,
                 compiler_cache.as_deref(),
                 &mut library_archives,
-            )?;
+            )
+            .await?;
         }
 
         // 9. Scan sources
@@ -638,7 +644,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 &user_overlay,
                 jobs,
                 Some(&build_log_mutex),
-            )?
+            )
+            .await?
         };
         if let Some(cache) = core_cache.as_ref() {
             let _g = perf.phase("core-cache-store");
@@ -672,7 +679,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 &src_overlay,
                 jobs,
                 Some(&build_log_mutex),
-            )?
+            )
+            .await?
         };
 
         // Unwrap build log and flush collected warnings
@@ -699,7 +707,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 params.verbose,
                 compiler_cache.as_deref(),
                 &mut library_archives,
-            )?;
+            )
+            .await?;
         }
 
         // 11.5. Process embedded files (board_build.embed_files + embed_txtfiles)
@@ -720,7 +729,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 &objcopy_path,
                 &mcu_config,
                 params.verbose,
-            )?;
+            )
+            .await?;
             sketch_objects.extend(embed_objects);
         }
 
@@ -780,7 +790,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
                     bloat_analysis: false,
                 },
                 params.symbol_analysis,
-            )?
+            )
+            .await?
         };
 
         // 14. Prepare boot artifacts for deployment / emulation
@@ -791,7 +802,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &mcu_config,
             &flash_freq,
             &mut perf,
-        )?;
+        )
+        .await?;
 
         // 15. Size reporting + result assembly
         let fingerprint_started = Instant::now();

@@ -1,4 +1,4 @@
-//! STM32 build orchestrator — wires together config, packages, compiler, linker.
+﻿//! STM32 build orchestrator â€” wires together config, packages, compiler, linker.
 //!
 //! Build phases:
 //! 1. Parse platformio.ini
@@ -13,10 +13,10 @@
 //! 10. Convert to hex + report size
 //!
 //! Module layout (refactored to keep each .rs file under the 1000-LOC gate):
-//! - `arduino_mbed` — Arduino mbed-core build path (GIGA, PORTENTA, ...)
-//! - `framework_props` — STM32duino `boards.txt` parser
-//! - `includes` — include-path/define helpers and small shared utilities
-//! - `variant_files` — variant_*.{h,cpp} / PeripheralPins_*.c selection
+//! - `arduino_mbed` â€” Arduino mbed-core build path (GIGA, PORTENTA, ...)
+//! - `framework_props` â€” STM32duino `boards.txt` parser
+//! - `includes` â€” include-path/define helpers and small shared utilities
+//! - `variant_files` â€” variant_*.{h,cpp} / PeripheralPins_*.c selection
 //!
 //! All four submodules are private internals of the STM32 orchestrator.
 
@@ -48,16 +48,17 @@ use self::variant_files::{keep_variant_source, select_variant_files};
 /// STM32 platform build orchestrator.
 pub struct Stm32Orchestrator;
 
+#[async_trait::async_trait]
 impl BuildOrchestrator for Stm32Orchestrator {
     fn platform(&self) -> Platform {
         Platform::Ststm32
     }
 
-    fn build(&self, params: &BuildParams) -> Result<BuildResult> {
+    async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
-        let mut ctx = pipeline::BuildContext::new(params)?;
+        let mut ctx = pipeline::BuildContext::new(params).await?;
 
         // Compute eh_frame strip policy once per build (FastLED/fbuild#244).
         let eh_frame_policy =
@@ -65,22 +66,23 @@ impl BuildOrchestrator for Stm32Orchestrator {
 
         // 3. Ensure ARM GCC toolchain
         let toolchain = fbuild_packages::toolchain::ArmToolchain::new(&params.project_dir);
-        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
+        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("arm-gcc toolchain at {}", toolchain_dir.display());
 
         pipeline::log_toolchain_version(
             &toolchain.get_gcc_path(),
             "arm-none-eabi-gcc",
             &mut ctx.build_log,
-        );
+        )
+        .await;
 
         if is_arduino_mbed_stm32_variant(&ctx.board.variant) {
-            return build_arduino_mbed_stm32(params, ctx, &toolchain, start);
+            return build_arduino_mbed_stm32(params, ctx, &toolchain, start).await;
         }
 
         // 4. Ensure STM32duino cores
         let framework = fbuild_packages::library::Stm32Cores::new(&params.project_dir);
-        let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
+        let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("STM32 cores at {}", framework_dir.display());
 
         // 5. Scan sources (core + variant)
@@ -104,7 +106,7 @@ impl BuildOrchestrator for Stm32Orchestrator {
         );
 
         let scanner = SourceScanner::new(&ctx.src_dir, &ctx.src_build_dir);
-        // Scan core + variant, but pass None for variant — we'll filter variant
+        // Scan core + variant, but pass None for variant â€” we'll filter variant
         // sources manually because the variant dir contains files for multiple
         // board variants (MALYAN, AFROFLIGHT, etc.) and startup files that
         // conflict with the generic one in cores/arduino/stm32/.
@@ -116,7 +118,7 @@ impl BuildOrchestrator for Stm32Orchestrator {
             .filter(|p| keep_variant_source(p, &selected_variant))
             .collect();
 
-        // SrcWrapper is a core library in STM32duino — its sources must be
+        // SrcWrapper is a core library in STM32duino â€” its sources must be
         // compiled alongside the Arduino core (HAL wrappers, syscalls, etc.)
         // scan_core_sources is recursive, so one call covers all subdirs.
         let libs_dir = framework.get_libraries_dir();
@@ -137,7 +139,7 @@ impl BuildOrchestrator for Stm32Orchestrator {
         // through M7 (H7xx) but the toolchain triple is constant
         // (`arm-none-eabi`). The cache key already includes
         // `framework_install_path` + `framework_version`, so per-MCU drift
-        // is handled there — this string only needs to disambiguate stm32
+        // is handled there â€” this string only needs to disambiguate stm32
         // from teensy etc. so cross-platform key collisions are impossible.
         let framework_info = fbuild_packages::Package::get_info(&framework);
         let framework_library_sources = match library_select_kv_store() {
@@ -207,7 +209,7 @@ impl BuildOrchestrator for Stm32Orchestrator {
         // JSON extra_flags may only have STM32F1, so ensure the full family define.
         defines.insert(family.to_string(), "1".to_string());
         // STM32duino variant sources are guarded by ARDUINO_GENERIC_<MCU> defines.
-        // Derive from the MCU name: stm32f103c8t6 → ARDUINO_GENERIC_F103C8TX
+        // Derive from the MCU name: stm32f103c8t6 â†’ ARDUINO_GENERIC_F103C8TX
         let generic_board = stm32_generic_board_define(&ctx.board.mcu);
         defines.insert(format!("ARDUINO_{generic_board}"), "1".to_string());
         // STM32duino requires these defines for HAL/LL and variant header resolution.
@@ -217,7 +219,7 @@ impl BuildOrchestrator for Stm32Orchestrator {
             "VARIANT_H".to_string(),
             format!("\\\"{}\\\"", selected_variant.header),
         );
-        // UART HAL module is disabled by default in stm32yyxx_hal_conf.h — enable it
+        // UART HAL module is disabled by default in stm32yyxx_hal_conf.h â€” enable it
         // so WSerial.h can create the Serial instance.
         defines.insert("HAL_UART_MODULE_ENABLED".to_string(), "1".to_string());
         defines.insert("HAL_PCD_MODULE_ENABLED".to_string(), "1".to_string());
@@ -247,9 +249,9 @@ impl BuildOrchestrator for Stm32Orchestrator {
         let system_dir = framework.get_system_dir();
         add_stm32_system_includes(&system_dir, family, &mut include_dirs);
 
-        // CMSIS Core includes (core_cm3.h, core_cm4.h, etc.) — not bundled in STM32duino
+        // CMSIS Core includes (core_cm3.h, core_cm4.h, etc.) â€” not bundled in STM32duino
         let cmsis = fbuild_packages::library::CmsisFramework::new(&params.project_dir);
-        let _cmsis_dir = fbuild_packages::Package::ensure_installed(&cmsis)?;
+        let _cmsis_dir = fbuild_packages::Package::ensure_installed(&cmsis).await?;
         tracing::info!("CMSIS framework installed");
         include_dirs.push(cmsis.get_core_include_dir());
 
@@ -322,6 +324,7 @@ impl BuildOrchestrator for Stm32Orchestrator {
             "STM32",
             start,
         )
+        .await
     }
 }
 

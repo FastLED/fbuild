@@ -55,12 +55,16 @@ use fbuild_core::{BuildProfile, Platform, Result, SizeInfo};
 /// dependency installation, and configuration. Adding a new platform requires:
 /// 1. Implement this trait in the platform module
 /// 2. Register in `get_platform_support()`
+///
+/// FastLED/fbuild#820 (Phase B of #813): `install_deps` is `async` so
+/// per-platform impls can `.await` `fbuild_packages::Package::ensure_installed`.
+#[async_trait::async_trait]
 pub trait PlatformSupport: Send + Sync {
     /// Create the build orchestrator for this platform.
     fn create_orchestrator(&self) -> Box<dyn BuildOrchestrator>;
 
     /// Install platform-specific dependencies (toolchain, framework).
-    fn install_deps(&self, project_dir: &Path) -> Result<()>;
+    async fn install_deps(&self, project_dir: &Path) -> Result<()>;
 
     /// Default board ID used as fallback when none is specified.
     fn default_board_id(&self) -> &str;
@@ -198,9 +202,15 @@ pub struct BuildParams {
 }
 
 /// Trait for platform-specific build orchestrators.
+///
+/// FastLED/fbuild#820 (Phase B of #813): `build` is `async` so per-platform
+/// orchestrators can `.await` toolchain install, subprocess invocation,
+/// and per-TU zccache dispatch directly instead of `Handle::block_on`-ing
+/// from a sync entry point.
+#[async_trait::async_trait]
 pub trait BuildOrchestrator: Send + Sync {
     fn platform(&self) -> Platform;
-    fn build(&self, params: &BuildParams) -> Result<BuildResult>;
+    async fn build(&self, params: &BuildParams) -> Result<BuildResult>;
 }
 
 /// Select the appropriate orchestrator for a platform.
@@ -209,8 +219,8 @@ pub fn get_orchestrator(platform: Platform) -> Result<Box<dyn BuildOrchestrator>
 }
 
 /// Install platform-specific dependencies (toolchain, framework).
-pub fn install_platform_deps(platform: Platform, project_dir: &Path) -> Result<()> {
-    get_platform_support(platform)?.install_deps(project_dir)
+pub async fn install_platform_deps(platform: Platform, project_dir: &Path) -> Result<()> {
+    get_platform_support(platform)?.install_deps(project_dir).await
 }
 
 #[cfg(test)]

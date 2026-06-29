@@ -125,8 +125,9 @@ fn framework_suppression_flags() -> &'static [&'static str] {
     &["-w"]
 }
 
+#[async_trait::async_trait]
 impl Compiler for Ch32vCompiler {
-    fn compile_one(
+    async fn compile_one(
         &self,
         compiler_path: &Path,
         source: &Path,
@@ -166,6 +167,7 @@ impl Compiler for Ch32vCompiler {
             None,
             &[],
         )
+        .await
     }
 
     fn gcc_path(&self) -> &Path {

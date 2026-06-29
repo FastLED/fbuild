@@ -33,9 +33,9 @@ use super::link::{assemble_build_result, handle_link_result};
 /// with the rest of the build. See [`compile_project_as_library`] and
 /// ISSUES.md Issue 1.
 #[allow(clippy::too_many_arguments)]
-pub fn run_sequential_build_with_libs(
-    compiler: &dyn Compiler,
-    linker: &dyn crate::linker::Linker,
+pub async fn run_sequential_build_with_libs(
+    compiler: &(dyn Compiler + Send + Sync),
+    linker: &(dyn crate::linker::Linker + Send + Sync),
     mut ctx: BuildContext,
     params: &BuildParams,
     sources: &SourceCollection,
@@ -162,7 +162,8 @@ pub fn run_sequential_build_with_libs(
             &user_overlay,
             jobs,
             &build_log_mutex,
-        )?
+        )
+        .await?
     };
     let variant_objects = {
         let _g = perf.phase("compile-variant");
@@ -173,7 +174,8 @@ pub fn run_sequential_build_with_libs(
             &user_overlay,
             jobs,
             &build_log_mutex,
-        )?
+        )
+        .await?
     };
     core_objects.extend(variant_objects);
     if let Some(cache) = core_cache.as_ref() {
@@ -208,7 +210,8 @@ pub fn run_sequential_build_with_libs(
             &src_overlay,
             jobs,
             &build_log_mutex,
-        )?
+        )
+        .await?
     };
 
     // Compile local libraries (lib/* — loose objects, LTO-safe; per-lib parallel)
@@ -221,7 +224,8 @@ pub fn run_sequential_build_with_libs(
             &src_overlay,
             jobs,
             &build_log_mutex,
-        )?
+        )
+        .await?
     };
 
     // Unwrap the build log Mutex back into the context for the remaining
@@ -255,7 +259,8 @@ pub fn run_sequential_build_with_libs(
                 &ctx.build_dir,
                 env,
                 &existing_lib_names,
-            )?
+            )
+            .await?
         } else {
             None
         }
@@ -303,7 +308,8 @@ pub fn run_sequential_build_with_libs(
                 bloat_analysis: params.bloat_analysis,
             },
             params.symbol_analysis,
-        )?
+        )
+        .await?
     };
 
     // Emit build_info_<env>.json (and the generic fallback) so downstream

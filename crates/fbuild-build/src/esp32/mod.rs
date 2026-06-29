@@ -1,4 +1,4 @@
-//! ESP32 platform build support (all variants: ESP32, C2, C3, C5, C6, P4, S3)
+﻿//! ESP32 platform build support (all variants: ESP32, C2, C3, C5, C6, P4, S3)
 
 pub mod esp32_compiler;
 pub mod esp32_linker;
@@ -13,19 +13,20 @@ pub use orchestrator::Esp32Orchestrator;
 /// ESP32 platform support.
 pub struct Esp32PlatformSupport;
 
+#[async_trait::async_trait]
 impl crate::PlatformSupport for Esp32PlatformSupport {
     fn create_orchestrator(&self) -> Box<dyn crate::BuildOrchestrator> {
         orchestrator::create()
     }
 
-    fn install_deps(&self, project_dir: &std::path::Path) -> fbuild_core::Result<()> {
+    async fn install_deps(&self, project_dir: &std::path::Path) -> fbuild_core::Result<()> {
         use fbuild_packages::Package;
         let tc = fbuild_packages::toolchain::esp32::Esp32Toolchain::new(
             project_dir,
             false,
             "xtensa-esp-elf",
         );
-        Package::ensure_installed(&tc)?;
+        Package::ensure_installed(&tc).await?;
         tracing::info!("ESP32 toolchain installed");
         Ok(())
     }

@@ -1,4 +1,4 @@
-//! Teensy build orchestrator — wires together config, packages, compiler, linker.
+﻿//! Teensy build orchestrator â€” wires together config, packages, compiler, linker.
 //!
 //! Build phases:
 //! 1. Parse platformio.ini
@@ -62,17 +62,18 @@ fn profile_label(profile: fbuild_core::BuildProfile) -> &'static str {
     }
 }
 
+#[async_trait::async_trait]
 impl BuildOrchestrator for TeensyOrchestrator {
     fn platform(&self) -> Platform {
         Platform::Teensy
     }
 
-    fn build(&self, params: &BuildParams) -> Result<BuildResult> {
+    async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
         let compiler_cache: Option<std::path::PathBuf> = None;
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
-        let mut ctx = pipeline::BuildContext::new(params)?;
+        let mut ctx = pipeline::BuildContext::new(params).await?;
 
         // Compute eh_frame strip policy once per build (FastLED/fbuild#244).
         // No sdkconfig on Teensy.
@@ -87,7 +88,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
 
         // 3. Ensure Teensy-compatible ARM GCC toolchain
         let toolchain = fbuild_packages::toolchain::TeensyArmToolchain::new(&params.project_dir);
-        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
+        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("Teensy ARM GCC toolchain at {}", toolchain_dir.display());
 
         use fbuild_packages::Toolchain;
@@ -95,11 +96,12 @@ impl BuildOrchestrator for TeensyOrchestrator {
             &toolchain.get_gcc_path(),
             "arm-none-eabi-gcc",
             &mut ctx.build_log,
-        );
+        )
+        .await;
 
         // 4. Ensure Teensy cores
         let framework = fbuild_packages::library::TeensyCores::new(&params.project_dir);
-        let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
+        let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("Teensy cores at {}", framework_dir.display());
 
         let core_dir = framework.get_core_dir(&ctx.board.core);
@@ -173,7 +175,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
 
         let framework_libs = framework.get_framework_libraries();
         // WHY: Teensy 3.x/4.x and TeensyLC all share teensyduino's
-        // arm-none-eabi toolchain — a single stable triple covers every
+        // arm-none-eabi toolchain â€” a single stable triple covers every
         // board this orchestrator handles. The triple feeds the cache key
         // so bumping it invalidates the entire teensy slice without
         // touching SCANNER_VERSION / LDF_MODE_VERSION.
@@ -298,7 +300,7 @@ impl BuildOrchestrator for TeensyOrchestrator {
             TargetArchitecture::Arm,
             "Teensy",
             start,
-        )?;
+        ).await?;
 
         if build_result.success
             && !params.compiledb_only

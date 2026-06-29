@@ -120,12 +120,14 @@ impl TeensyLinker {
     }
 }
 
+#[async_trait::async_trait]
 impl Linker for TeensyLinker {
-    fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
+    async fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
         crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "arm-none-eabi-ar")
+            .await
     }
 
-    fn link(
+    async fn link(
         &self,
         objects: &[PathBuf],
         archives: &[PathBuf],
@@ -163,10 +165,10 @@ impl Linker for TeensyLinker {
                 "teensy_link",
             )?;
             let rsp_arg = format!("@{}", rsp_path.display());
-            run_command(&[args[0].as_str(), &rsp_arg], None, Some(&env_slice), None)?
+            run_command(&[args[0].as_str(), &rsp_arg], None, Some(&env_slice), None).await?
         } else {
             let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-            run_command(&args_ref, None, Some(&env_slice), None)?
+            run_command(&args_ref, None, Some(&env_slice), None).await?
         };
 
         if !result.success() {
@@ -179,7 +181,7 @@ impl Linker for TeensyLinker {
         Ok(elf_path)
     }
 
-    fn convert_firmware(&self, elf_path: &Path, output_dir: &Path) -> Result<PathBuf> {
+    async fn convert_firmware(&self, elf_path: &Path, output_dir: &Path) -> Result<PathBuf> {
         crate::linker::LinkerBase::objcopy_firmware(
             &self.objcopy_path,
             elf_path,
@@ -188,6 +190,7 @@ impl Linker for TeensyLinker {
             &self.mcu_config.objcopy.remove_sections,
             "arm-none-eabi-objcopy",
         )
+        .await
     }
 
     fn size_tool_path(&self) -> &Path {
@@ -206,7 +209,7 @@ impl Linker for TeensyLinker {
         Some(&self.gcc_path)
     }
 
-    fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
+    async fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
         crate::linker::LinkerBase::report_size(
             &self.size_path,
             elf_path,
@@ -214,6 +217,7 @@ impl Linker for TeensyLinker {
             self.max_ram,
             "arm-none-eabi-size",
         )
+        .await
     }
 }
 

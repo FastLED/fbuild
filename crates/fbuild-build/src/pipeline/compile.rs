@@ -15,7 +15,7 @@ use crate::flag_overlay::LanguageExtraFlags;
 /// [`super::run_sequential_build_with_libs`]; ESP32 calls `compile_sources_parallel`
 /// directly because it interleaves multiple compile phases through the same
 /// log Mutex.
-pub fn compile_sources(
+pub async fn compile_sources(
     compiler: &dyn Compiler,
     sources: &[PathBuf],
     build_dir: &Path,
@@ -30,7 +30,8 @@ pub fn compile_sources(
         extra_flags,
         jobs,
         Some(build_log),
-    )?;
+    )
+    .await?;
     if !result.warnings.is_empty() {
         let mut log = build_log.lock().unwrap();
         for w in &result.warnings {
@@ -45,7 +46,7 @@ pub fn compile_sources(
 /// Each library's source files are compiled in parallel via
 /// [`crate::parallel::compile_sources_parallel`]. Libraries themselves are
 /// processed one after another so the per-lib `jobs` budget isn't oversubscribed.
-pub fn compile_local_libraries(
+pub async fn compile_local_libraries(
     compiler: &dyn Compiler,
     project_dir: &Path,
     build_dir: &Path,
@@ -96,6 +97,7 @@ pub fn compile_local_libraries(
             jobs,
             Some(build_log),
         )
+        .await
         .map_err(|e| {
             fbuild_core::FbuildError::BuildFailed(format!(
                 "local library '{}' compilation failed: {}",
@@ -163,13 +165,15 @@ pub fn generate_compile_db(
 }
 
 /// Log the version of a GCC toolchain by running `gcc -dumpversion`.
-pub fn log_toolchain_version(gcc_path: &Path, label: &str, build_log: &mut BuildLog) {
+pub async fn log_toolchain_version(gcc_path: &Path, label: &str, build_log: &mut BuildLog) {
     if let Ok(ver_out) = fbuild_core::subprocess::run_command(
         &[gcc_path.to_string_lossy().as_ref(), "-dumpversion"],
         None,
         None,
         None,
-    ) {
+    )
+    .await
+    {
         let version = ver_out.stdout.trim().to_string();
         if !version.is_empty() {
             crate::build_output::log_toolchain_version(build_log, label, &version);

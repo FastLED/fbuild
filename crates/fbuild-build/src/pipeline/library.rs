@@ -148,7 +148,7 @@ pub fn add_extra_library_include_dirs(library_roots: &[PathBuf], include_dirs: &
 }
 
 /// Compile extra library roots from `lib_extra_dirs` into archives.
-pub fn compile_extra_libraries(
+pub async fn compile_extra_libraries(
     library_roots: &[PathBuf],
     build_dir: &Path,
     env: &LibraryBuildEnv<'_>,
@@ -186,7 +186,9 @@ pub fn compile_extra_libraries(
             env.verbose,
             env.jobs,
             env.compiler_cache,
-        ) {
+        )
+        .await
+        {
             Ok(Some(archive)) => archives.push(archive),
             Ok(None) => {}
             Err(e) => {
@@ -210,7 +212,7 @@ pub fn compile_extra_libraries(
 /// library archive was produced.
 ///
 /// Matches PlatformIO's project-as-library convention; see ISSUES.md Issue 1.
-pub fn compile_project_as_library(
+pub async fn compile_project_as_library(
     project_dir: &Path,
     src_dir: &Path,
     build_dir: &Path,
@@ -288,7 +290,9 @@ pub fn compile_project_as_library(
         env.verbose,
         env.jobs,
         env.compiler_cache,
-    ) {
+    )
+    .await
+    {
         Ok(Some(archive)) => {
             tracing::info!(
                 "project-as-library compiled: {} sources -> {}",

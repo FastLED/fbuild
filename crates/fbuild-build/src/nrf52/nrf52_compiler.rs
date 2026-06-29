@@ -106,8 +106,9 @@ impl Nrf52Compiler {
     }
 }
 
+#[async_trait::async_trait]
 impl Compiler for Nrf52Compiler {
-    fn compile_one(
+    async fn compile_one(
         &self,
         compiler_path: &Path,
         source: &Path,
@@ -147,6 +148,7 @@ impl Compiler for Nrf52Compiler {
             None,
             &[],
         )
+        .await
     }
 
     fn gcc_path(&self) -> &Path {

@@ -110,8 +110,9 @@ impl Esp8266Compiler {
     }
 }
 
+#[async_trait::async_trait]
 impl Compiler for Esp8266Compiler {
-    fn compile_one(
+    async fn compile_one(
         &self,
         compiler_path: &Path,
         source: &Path,
@@ -131,21 +132,23 @@ impl Compiler for Esp8266Compiler {
             None,
             &[],
         )
+        .await
     }
 
-    fn compile(
+    async fn compile(
         &self,
         source: &Path,
         output: &Path,
         extra_flags: &[String],
     ) -> Result<CompileResult> {
         match source.extension().and_then(|ext| ext.to_str()) {
-            Some("c") => self.compile_c(source, output, extra_flags),
+            Some("c") => self.compile_c(source, output, extra_flags).await,
             Some("S") | Some("s") => {
                 let flags = self.asm_flags();
                 self.compile_one(self.gcc_path(), source, output, &flags, extra_flags)
+                    .await
             }
-            _ => self.compile_cpp(source, output, extra_flags),
+            _ => self.compile_cpp(source, output, extra_flags).await,
         }
     }
 

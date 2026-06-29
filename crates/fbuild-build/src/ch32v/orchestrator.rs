@@ -1,4 +1,4 @@
-//! CH32V build orchestrator — wires together config, packages, compiler, linker.
+﻿//! CH32V build orchestrator â€” wires together config, packages, compiler, linker.
 //!
 //! Build phases:
 //! 1. Parse platformio.ini
@@ -27,20 +27,21 @@ use super::ch32v_linker::Ch32vLinker;
 /// CH32V platform build orchestrator.
 pub struct Ch32vOrchestrator;
 
+#[async_trait::async_trait]
 impl BuildOrchestrator for Ch32vOrchestrator {
     fn platform(&self) -> Platform {
         Platform::Ch32v
     }
 
-    fn build(&self, params: &BuildParams) -> Result<BuildResult> {
+    async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
 
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
-        let mut ctx = pipeline::BuildContext::new(params)?;
+        let mut ctx = pipeline::BuildContext::new(params).await?;
 
         // 3. Ensure RISC-V GCC toolchain
         let toolchain = fbuild_packages::toolchain::RiscvToolchain::new(&params.project_dir);
-        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
+        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("riscv-gcc toolchain at {}", toolchain_dir.display());
 
         use fbuild_packages::Toolchain;
@@ -48,11 +49,12 @@ impl BuildOrchestrator for Ch32vOrchestrator {
             &toolchain.get_gcc_path(),
             "riscv-none-elf-gcc",
             &mut ctx.build_log,
-        );
+        )
+        .await;
 
         // 4. Ensure OpenWCH CH32V cores
         let framework = fbuild_packages::library::Ch32vCores::new(&params.project_dir);
-        let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
+        let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("CH32V cores at {}", framework_dir.display());
 
         // 5. Resolve series/variant selection used by both scanning and compile flags.
@@ -97,14 +99,14 @@ impl BuildOrchestrator for Ch32vOrchestrator {
         let mut defines = ctx.board.get_defines();
         defines.extend(mcu_config.defines_map());
         defines.insert(system_series.clone(), "1".to_string());
-        // CH32V cores use `#include VARIANT_H` — define it from the variant dir
+        // CH32V cores use `#include VARIANT_H` â€” define it from the variant dir
         if let Some(vh) = resolve_variant_h(&variant_dir, ctx.board.variant_h.as_deref()) {
             defines.insert("VARIANT_H".to_string(), format!("\\\"{}\\\"", vh));
         }
         if series == "ch32x035" {
             defines.insert("RCC_BackupResetCmd(x)".to_string(), "((void)0)".to_string());
         }
-        // Use resolved core_dir/variant_dir directly — board.get_include_paths()
+        // Use resolved core_dir/variant_dir directly â€” board.get_include_paths()
         // uses the raw board core name which may differ from the actual directory
         // (e.g. OpenWCH core dir is "arduino", not "openwch").
         let mut include_dirs = vec![core_dir.clone(), variant_dir.clone()];
@@ -210,6 +212,7 @@ impl BuildOrchestrator for Ch32vOrchestrator {
             "CH32V",
             start,
         )
+        .await
     }
 }
 

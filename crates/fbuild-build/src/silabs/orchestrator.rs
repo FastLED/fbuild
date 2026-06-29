@@ -1,4 +1,4 @@
-//! Silicon Labs build orchestrator.
+﻿//! Silicon Labs build orchestrator.
 
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
@@ -14,18 +14,19 @@ use super::{SilabsCompiler, SilabsLinker};
 /// Silicon Labs platform build orchestrator.
 pub struct SilabsOrchestrator;
 
+#[async_trait::async_trait]
 impl BuildOrchestrator for SilabsOrchestrator {
     fn platform(&self) -> Platform {
         Platform::SiliconLabs
     }
 
-    fn build(&self, params: &BuildParams) -> Result<BuildResult> {
+    async fn build(&self, params: &BuildParams) -> Result<BuildResult> {
         let start = Instant::now();
 
-        let mut ctx = pipeline::BuildContext::new(params)?;
+        let mut ctx = pipeline::BuildContext::new(params).await?;
 
         let toolchain = fbuild_packages::toolchain::ArmToolchain::new(&params.project_dir);
-        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain)?;
+        let toolchain_dir = fbuild_packages::Package::ensure_installed(&toolchain).await?;
         tracing::info!("arm-gcc toolchain at {}", toolchain_dir.display());
 
         use fbuild_packages::Toolchain;
@@ -33,10 +34,11 @@ impl BuildOrchestrator for SilabsOrchestrator {
             &toolchain.get_gcc_path(),
             "arm-none-eabi-gcc",
             &mut ctx.build_log,
-        );
+        )
+        .await;
 
         let framework = fbuild_packages::library::SilabsCores::new(&params.project_dir);
-        let framework_dir = fbuild_packages::Package::ensure_installed(&framework)?;
+        let framework_dir = fbuild_packages::Package::ensure_installed(&framework).await?;
         tracing::info!("Silicon Labs cores at {}", framework_dir.display());
 
         let core_dir = framework.get_core_dir(&ctx.board.core);
@@ -155,6 +157,7 @@ impl BuildOrchestrator for SilabsOrchestrator {
             "Silicon Labs",
             start,
         )
+        .await
     }
 }
 

@@ -21,7 +21,7 @@ use crate::BuildParams;
 /// Compile every Arduino built-in library shipped with the ESP32 framework.
 /// Library archives are appended to `library_archives`.
 #[allow(clippy::too_many_arguments)]
-pub(super) fn compile_framework_builtin_libs(
+pub(super) async fn compile_framework_builtin_libs(
     params: &BuildParams,
     perf: &mut crate::perf_log::PerfTimer,
     framework: &fbuild_packages::library::Esp32Framework,
@@ -174,7 +174,9 @@ pub(super) fn compile_framework_builtin_libs(
                 params.verbose,
                 fw_jobs,
                 compiler_cache,
-            ) {
+            )
+            .await
+            {
                 Ok(Some(archive)) => {
                     let _ = std::fs::remove_file(&failure_marker);
                     library_archives.push(archive);

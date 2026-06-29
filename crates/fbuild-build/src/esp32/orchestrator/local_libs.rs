@@ -11,7 +11,7 @@ use crate::flag_overlay::{apply_overlay_flags, LanguageExtraFlags};
 /// Walk `project_dir/lib/*` and compile each subdirectory as a library archive.
 /// Archives are appended to `library_archives`.
 #[allow(clippy::too_many_arguments)]
-pub(super) fn compile_local_libraries(
+pub(super) async fn compile_local_libraries(
     project_dir: &Path,
     build_dir: &Path,
     compiler: &Esp32Compiler,
@@ -83,7 +83,9 @@ pub(super) fn compile_local_libraries(
             verbose,
             jobs,
             compiler_cache,
-        ) {
+        )
+        .await
+        {
             Ok(Some(archive)) => {
                 library_archives.push(archive);
             }

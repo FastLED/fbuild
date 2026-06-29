@@ -135,12 +135,13 @@ impl AvrLinker {
     }
 }
 
+#[async_trait::async_trait]
 impl Linker for AvrLinker {
-    fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
-        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "avr-ar")
+    async fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
+        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "avr-ar").await
     }
 
-    fn link(
+    async fn link(
         &self,
         objects: &[PathBuf],
         archives: &[PathBuf],
@@ -171,7 +172,8 @@ impl Linker for AvrLinker {
                 &raw_objects,
                 &framework_archive,
                 "avr-gcc-ar",
-            )?;
+            )
+            .await?;
             linker_archives.push(framework_archive);
         }
         linker_archives.extend(existing_archives);
@@ -184,7 +186,7 @@ impl Linker for AvrLinker {
         }
 
         let args_ref: Vec<&str> = args.iter().map(|s| s.as_str()).collect();
-        let result = run_command(&args_ref, None, None, None)?;
+        let result = run_command(&args_ref, None, None, None).await?;
 
         if !result.success() {
             return Err(fbuild_core::FbuildError::BuildFailed(format!(
@@ -196,7 +198,7 @@ impl Linker for AvrLinker {
         Ok(elf_path)
     }
 
-    fn convert_firmware(&self, elf_path: &Path, output_dir: &Path) -> Result<PathBuf> {
+    async fn convert_firmware(&self, elf_path: &Path, output_dir: &Path) -> Result<PathBuf> {
         crate::linker::LinkerBase::objcopy_firmware(
             &self.objcopy_path,
             elf_path,
@@ -205,6 +207,7 @@ impl Linker for AvrLinker {
             &self.mcu_config.objcopy.remove_sections,
             "avr-objcopy",
         )
+        .await
     }
 
     fn size_tool_path(&self) -> &Path {
@@ -223,7 +226,7 @@ impl Linker for AvrLinker {
         Some(&self.gcc_path)
     }
 
-    fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
+    async fn report_size(&self, elf_path: &Path) -> Result<SizeInfo> {
         crate::linker::LinkerBase::report_size(
             &self.size_path,
             elf_path,
@@ -231,6 +234,7 @@ impl Linker for AvrLinker {
             self.max_ram,
             "avr-size",
         )
+        .await
     }
 }
 

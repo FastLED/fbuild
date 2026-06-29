@@ -150,8 +150,9 @@ impl Esp32Compiler {
     }
 }
 
+#[async_trait::async_trait]
 impl Compiler for Esp32Compiler {
-    fn compile_one(
+    async fn compile_one(
         &self,
         compiler_path: &Path,
         source: &Path,
@@ -172,6 +173,7 @@ impl Compiler for Esp32Compiler {
             self.compiler_cache.as_deref(),
             &include_flags,
         )
+        .await
     }
 
     fn build_unflags(&self) -> &[String] {
