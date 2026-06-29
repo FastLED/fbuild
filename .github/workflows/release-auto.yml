@@ -188,12 +188,17 @@ jobs:
             macos_cross: false
             mac_cross_linux: true
 
-          # Windows x86_64 cross-compiles from Linux via cargo-xwin.
-          # The template has the linux→windows-msvc path wired (lines
-          # 109+: `Install cargo-xwin`, line 142+ `cargo xwin build`).
-          # soldr#1006 Lane 1.
+          # Windows x86_64 native build (windows-latest runner).
+          # Cross-compile from Linux via cargo-xwin kept hitting
+          # Windows SDK header issues (assert.h missing during
+          # ring 0.17.x's cc-rs invocation) because cargo-xwin's
+          # CFLAGS injection isn't reaching build scripts on the
+          # current toolchain combo. Native Windows runner uses
+          # the real MSVC toolchain and avoids the xwin SDK
+          # extraction entirely. Trades cross-compile portability
+          # for release reliability on the 2.3.12 cut.
           - target: x86_64-pc-windows-msvc
-            runner: ubuntu-latest
+            runner: windows-latest
             binary_ext: ".exe"
             linux_cross: false
             macos_cross: false

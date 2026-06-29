@@ -136,7 +136,16 @@ jobs:
       # is already healthy, the install is a no-op refresh and the
       # target add succeeds.
       - name: Add Rust target
+        shell: bash
         run: |
+          # On native Windows runner the toolchain dir lives outside
+          # $RUSTUP_HOME's `toolchains/1.94.1-x86_64-unknown-linux-gnu`
+          # path used by setup-soldr's Linux solo-cache. Skip the
+          # stale-cache reinstall there; rustup is already healthy.
+          if [ "${{ runner.os }}" != "Linux" ]; then
+            rustup target add ${{ inputs.target }}
+            exit 0
+          fi
           TOOLCHAIN_DIR="$RUSTUP_HOME/toolchains/1.94.1-x86_64-unknown-linux-gnu"
           if [ -d "$TOOLCHAIN_DIR" ] && [ ! -f "$TOOLCHAIN_DIR/lib/rustlib/manifest-rust-std-${{ inputs.target }}" ]; then
             # Cache restored an older toolchain manifest that doesn't
@@ -243,18 +252,12 @@ jobs:
               -p fbuild-cli \
               -p fbuild-daemon
           elif [ "${{ runner.os }}" = "Linux" ] && [[ "${{ inputs.target }}" == *-pc-windows-msvc ]]; then
-            # Blessed Linux→Windows MSVC path (soldr#1012 PR 6).
-            # `soldr build` installs the soldr-clang-shim ahead of
-            # system clang on PATH so ring's hardcoded
-            # `c.compiler("clang")` (build.rs:563) routes to clang-cl
-            # for aarch64-windows-msvc. For x64 the shim is harmless
-            # passthrough. cargo-xwin is still installed (handles
-            # SDK download); soldr build delegates to cargo-xwin via
-            # internal env vars when the catalogue xwin-cache row is
-            # absent for the target arch.
-            soldr build --release --target ${{ inputs.target }} \
-              -p fbuild-cli \
-              -p fbuild-daemon
+            # Disabled — the 2.3.12 release runs the Windows MSVC
+            # lane on a native `windows-latest` runner (see
+            # release-auto.yml matrix). Falls into the `else` arm
+            # below via `cargo build --release --target …`.
+            echo "ERROR: this branch should not be reached on the v2.3.12 matrix" >&2
+            exit 1
           elif [[ "${{ inputs.target }}" == *-unknown-linux-musl ]]; then
             # Direct `cargo zigbuild` (pip-installed wrapper) bypasses
             # soldr's bin cache, which has been serving a corrupted
@@ -264,10 +267,11 @@ jobs:
               -p fbuild-cli \
               -p fbuild-daemon
           else
-            # soldr#1012 PR 2 followup: blessed default surface (was
-            # `soldr cargo build`). Same byte-identical artifact today;
-            # gains catalogue-driven sysroot prep as #1012 phases ship.
-            soldr build --release --target ${{ inputs.target }} \
+            # Default: `soldr cargo build` (pre-v0.7.61 `soldr build`
+            # blessed verb is unavailable in our v0.7.59 pin). On the
+            # native windows-latest runner this picks up MSVC's
+            # link.exe / cl.exe automatically.
+            soldr cargo build --release --target ${{ inputs.target }} \
               -p fbuild-cli \
               -p fbuild-daemon
           fi
@@ -301,15 +305,9 @@ jobs:
               --target ${{ inputs.target }} -p fbuild-python \
               --features extension-module
           elif [ "${{ runner.os }}" = "Linux" ] && [[ "${{ inputs.target }}" == *-pc-windows-msvc ]]; then
-            # Blessed Linux→Windows MSVC path for PyO3 ext
-            # (soldr#1012 PR 2 followup). soldr build's
-            # Commands::Build installs the soldr-clang-shim so
-            # ring + cc-rs route through clang-cl correctly even
-            # for aarch64 PyO3 dylib compilation.
-            PYO3_NO_PYTHON=1 soldr build --release \
-              --target-dir "${PYTHON_TARGET_DIR}" \
-              --target ${{ inputs.target }} -p fbuild-python \
-              --features extension-module
+            # Disabled for v2.3.12 — Windows MSVC runs on native
+            # windows-latest now.
+            echo "ERROR: unreachable on the v2.3.12 matrix" >&2; exit 1
           elif [ "${{ runner.os }}" = "Linux" ]; then
             TARGET="${{ inputs.target }}"
             ARCH="${TARGET%%-*}"
@@ -321,20 +319,19 @@ jobs:
               --target "${PYO3_TARGET}.2.17" -p fbuild-python \
               --features extension-module
           elif [ "${{ inputs.macos_cross }}" = "true" ]; then
-            # soldr#1012 PR 2 followup: blessed default surface.
-            PYO3_NO_PYTHON=1 soldr build --release \
+            PYO3_NO_PYTHON=1 soldr cargo build --release \
               --target-dir "${PYTHON_TARGET_DIR}" \
               --target ${{ inputs.target }} -p fbuild-python \
               --features extension-module
           elif [ "${{ runner.os }}" = "macOS" ]; then
-            # soldr#1012 PR 2 followup: blessed default surface.
-            soldr build --release --target-dir "${PYTHON_TARGET_DIR}" \
+            soldr cargo build --release --target-dir "${PYTHON_TARGET_DIR}" \
               --target ${{ inputs.target }} \
               -p fbuild-python \
               --features extension-module
           else
-            # soldr#1012 PR 2 followup: blessed default surface.
-            soldr build --release --target-dir "${PYTHON_TARGET_DIR}" \
+            # native windows-latest runner: cargo build picks up the
+            # MSVC toolchain auto-installed on the runner image.
+            soldr cargo build --release --target-dir "${PYTHON_TARGET_DIR}" \
               --target ${{ inputs.target }} \
               -p fbuild-python \
               --features extension-module
