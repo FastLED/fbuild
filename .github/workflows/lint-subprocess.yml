@@ -9,6 +9,7 @@ name: Lint subprocess spawns
 # Keeps pipe-deadlock and containment-drift bugs from creeping back in.
 
 on:
+  workflow_dispatch: {}
   push:
     branches: [main]
   pull_request:

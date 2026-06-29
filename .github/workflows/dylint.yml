@@ -6,6 +6,7 @@ name: Dylint
 # infrastructure issues. See #264.
 
 on:
+  workflow_dispatch: {}
   push:
     branches: [main]
   pull_request:
