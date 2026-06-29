@@ -1,4 +1,4 @@
-﻿//! Generic ARM linker implementation.
+//! Generic ARM linker implementation.
 //!
 //! Links ARM Cortex-M object files into firmware.elf, converts to firmware.hex,
 //! and reports size using arm-none-eabi-size. Used by STM32, RP2040, NRF52, etc.
@@ -132,8 +132,7 @@ impl ArmLinker {
 #[async_trait::async_trait]
 impl Linker for ArmLinker {
     async fn archive(&self, objects: &[PathBuf], output: &Path) -> Result<()> {
-        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "arm-none-eabi-ar")
-            .await
+        crate::linker::LinkerBase::archive(&self.ar_path, objects, output, "arm-none-eabi-ar").await
     }
 
     async fn link(

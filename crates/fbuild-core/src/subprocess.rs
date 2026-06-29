@@ -99,7 +99,9 @@ pub async fn run_command(
     if args.is_empty() {
         return Err(FbuildError::Other("empty command".to_string()));
     }
-    let mut cmd = build_command(args, cwd, env, /*capture=*/ true, /*stdin_piped=*/ false)?;
+    let mut cmd = build_command(
+        args, cwd, env, /*capture=*/ true, /*stdin_piped=*/ false,
+    )?;
     let child = tokio_spawn::spawn_contained(&mut cmd).map_err(|e| spawn_err(args, e))?;
     wait_and_capture(child, args, timeout).await
 }
@@ -122,7 +124,9 @@ pub async fn run_command_with_stdin(
     if args.is_empty() {
         return Err(FbuildError::Other("empty command".to_string()));
     }
-    let mut cmd = build_command(args, cwd, env, /*capture=*/ true, /*stdin_piped=*/ true)?;
+    let mut cmd = build_command(
+        args, cwd, env, /*capture=*/ true, /*stdin_piped=*/ true,
+    )?;
     let mut child = tokio_spawn::spawn_contained(&mut cmd).map_err(|e| spawn_err(args, e))?;
 
     // Take the stdin handle and concurrently write the payload while
@@ -184,7 +188,9 @@ pub async fn run_command_passthrough(
     if args.is_empty() {
         return Err(FbuildError::Other("empty command".to_string()));
     }
-    let mut cmd = build_command(args, cwd, env, /*capture=*/ false, /*stdin_piped=*/ false)?;
+    let mut cmd = build_command(
+        args, cwd, env, /*capture=*/ false, /*stdin_piped=*/ false,
+    )?;
     let mut child = tokio_spawn::spawn_contained(&mut cmd).map_err(|e| spawn_err(args, e))?;
     let status = match wait_with_timeout(&mut child, timeout).await? {
         Some(status) => status,
@@ -262,7 +268,9 @@ async fn wait_and_capture(
     let wait_fut = child.wait_with_output();
     let output = match timeout {
         Some(d) => match tokio::time::timeout(d, wait_fut).await {
-            Ok(res) => res.map_err(|e| FbuildError::Other(format!("command {:?} failed: {}", args, e)))?,
+            Ok(res) => {
+                res.map_err(|e| FbuildError::Other(format!("command {:?} failed: {}", args, e)))?
+            }
             Err(_) => {
                 return Err(FbuildError::Timeout(format!(
                     "command timed out after {}s",

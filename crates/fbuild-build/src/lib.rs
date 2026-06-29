@@ -220,7 +220,9 @@ pub fn get_orchestrator(platform: Platform) -> Result<Box<dyn BuildOrchestrator>
 
 /// Install platform-specific dependencies (toolchain, framework).
 pub async fn install_platform_deps(platform: Platform, project_dir: &Path) -> Result<()> {
-    get_platform_support(platform)?.install_deps(project_dir).await
+    get_platform_support(platform)?
+        .install_deps(project_dir)
+        .await
 }
 
 #[cfg(test)]

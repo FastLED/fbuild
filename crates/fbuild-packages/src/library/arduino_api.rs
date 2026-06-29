@@ -50,9 +50,16 @@ pub async fn ensure_arduino_api(core_dir: &Path) -> Result<()> {
     })?;
 
     // Async HTTP via the shared client (FastLED/fbuild#813).
-    let response = http::client().get(ARDUINO_API_URL).send().await.map_err(|e| {
-        fbuild_core::FbuildError::PackageError(format!("failed to download ArduinoCore-API: {}", e))
-    })?;
+    let response = http::client()
+        .get(ARDUINO_API_URL)
+        .send()
+        .await
+        .map_err(|e| {
+            fbuild_core::FbuildError::PackageError(format!(
+                "failed to download ArduinoCore-API: {}",
+                e
+            ))
+        })?;
 
     if !response.status().is_success() {
         return Err(fbuild_core::FbuildError::PackageError(format!(

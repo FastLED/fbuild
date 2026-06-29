@@ -1,4 +1,4 @@
-﻿//! RP2040/RP2350 build orchestrator â€” wires together config, packages, compiler, linker.
+//! RP2040/RP2350 build orchestrator â€” wires together config, packages, compiler, linker.
 //!
 //! Build phases:
 //! 1. Parse platformio.ini
@@ -324,7 +324,8 @@ impl BuildOrchestrator for Rp2040Orchestrator {
             TargetArchitecture::Arm,
             "RP2040",
             start,
-        ).await?;
+        )
+        .await?;
 
         if build_result.success
             && !params.compiledb_only
